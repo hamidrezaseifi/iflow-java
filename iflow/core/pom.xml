@@ -1,0 +1,145 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.pth.ifow</groupId>
+    <artifactId>iflow</artifactId>
+    <version>0.0.1</version>
+  </parent>
+  <artifactId>core</artifactId>
+
+	<properties>
+	  <fb.module.db.database>futurebim</fb.module.db.database>
+	  <fb.module.db.owner>bim</fb.module.db.owner>
+	  <fb.module.db.owner.password>bim</fb.module.db.owner.password>
+	  <fb.module.db.user>bim</fb.module.db.user>
+	  <fb.module.db.user.password>bim</fb.module.db.user.password>
+	  <fb.module.db.skip>false</fb.module.db.skip>
+	</properties>
+
+	<profiles>
+		<profile>
+		    <!-- takes the DB coords from the environment vars if MDM_MODULE_DB_URL, is configured -->
+		<!-- WORKAROUND: setting the properties thru a profile like so, must be done in each child module, 
+		     otherwise they wont overide the ones defind in <properties> -->
+			<id>db-from-env</id>
+			<activation>
+				<property>
+					<name>env.FB_MODULE_DB_URL</name>
+				</property>
+			</activation>
+			<properties>
+				<fb.module.db.url>${env.FB_MODULE_DB_URL}</fb.module.db.url>
+				<fb.module.db.database>${env.FB_MODULE_DB_DATABASE}</fb.module.db.database>
+				<fb.module.db.owner>${env.FB_MODULE_DB_OWNER}</fb.module.db.owner>
+				<fb.module.db.owner.password>${env.FB_MODULE_DB_OWNER_PASSWORD}</fb.module.db.owner.password>
+				<fb.module.db.user>${env.FB_MODULE_DB_USER}</fb.module.db.user>
+				<fb.module.db.user.password>${env.FB_MODULE_DB_USER_PASSWORD}</fb.module.db.user.password>
+			</properties>
+		</profile>
+	</profiles>
+	 
+	<dependencies>
+
+		<dependency>
+		    <groupId>com.pth.ifow</groupId>
+		    <artifactId>common</artifactId>
+		    <version>0.0.1</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-test</artifactId>
+		    <scope>test</scope>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-jetty</artifactId>
+		    
+		</dependency>
+		
+		<dependency>
+		    <groupId>com.fasterxml.jackson.dataformat</groupId>
+		    <artifactId>jackson-dataformat-xml</artifactId>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-devtools</artifactId>
+		    <optional>true</optional>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-jdbc</artifactId>
+		</dependency>
+		
+		<dependency>
+		    <groupId>mysql</groupId>
+		    <artifactId>mysql-connector-java</artifactId>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-orm</artifactId>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.apache.tomcat</groupId>
+		    <artifactId>tomcat-dbcp</artifactId>
+		    <version>9.0.1</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
+
+      			
+	</dependencies>
+
+
+	<build>
+	  <plugins>
+	    <plugin>
+	      <groupId>org.springframework.boot</groupId>
+	      <artifactId>spring-boot-maven-plugin</artifactId>
+	      <executions>
+	      	<execution>
+	      		<goals>
+	      			<goal>build-info</goal>
+	      		</goals>
+	            <configuration>
+	              <additionalProperties>
+	                <encoding.source>UTF-8</encoding.source>
+	                <encoding.reporting>UTF-8</encoding.reporting>
+	                <java.source>${maven.compiler.source}</java.source>
+	                <java.target>${maven.compiler.target}</java.target>
+	              </additionalProperties>
+	            </configuration>
+	      	</execution>
+	      </executions>
+	    </plugin>
+	
+          <plugin>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-maven-plugin</artifactId>
+            <configuration>
+              <skip>false</skip>
+            </configuration>
+          </plugin>
+	
+	  </plugins>
+	</build>
+
+</project>
