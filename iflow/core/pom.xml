@@ -8,35 +8,16 @@
   <artifactId>core</artifactId>
 
 	<properties>
-	  <fb.module.db.database>futurebim</fb.module.db.database>
-	  <fb.module.db.owner>bim</fb.module.db.owner>
-	  <fb.module.db.owner.password>bim</fb.module.db.owner.password>
-	  <fb.module.db.user>bim</fb.module.db.user>
-	  <fb.module.db.user.password>bim</fb.module.db.user.password>
-	  <fb.module.db.skip>false</fb.module.db.skip>
+    <ifw.module.db.database>iflow</ifw.module.db.database>
+    <ifw.module.db.root.database>iflow</ifw.module.db.root.database>
+    <ifw.module.db.root>iflow</ifw.module.db.root>
+    <ifw.module.db.root.pwd>iflow</ifw.module.db.root.pwd>
+    <ifw.module.db.url>jdbc:mysql://localhost:3306/</ifw.module.db.url>
+    <ifw.module.db.driver>com.mysql.jdbc.Driver</ifw.module.db.driver>
+    
+    <ifw.module.db.skip>false</ifw.module.db.skip>
 	</properties>
 
-	<profiles>
-		<profile>
-		    <!-- takes the DB coords from the environment vars if MDM_MODULE_DB_URL, is configured -->
-		<!-- WORKAROUND: setting the properties thru a profile like so, must be done in each child module, 
-		     otherwise they wont overide the ones defind in <properties> -->
-			<id>db-from-env</id>
-			<activation>
-				<property>
-					<name>env.FB_MODULE_DB_URL</name>
-				</property>
-			</activation>
-			<properties>
-				<fb.module.db.url>${env.FB_MODULE_DB_URL}</fb.module.db.url>
-				<fb.module.db.database>${env.FB_MODULE_DB_DATABASE}</fb.module.db.database>
-				<fb.module.db.owner>${env.FB_MODULE_DB_OWNER}</fb.module.db.owner>
-				<fb.module.db.owner.password>${env.FB_MODULE_DB_OWNER_PASSWORD}</fb.module.db.owner.password>
-				<fb.module.db.user>${env.FB_MODULE_DB_USER}</fb.module.db.user>
-				<fb.module.db.user.password>${env.FB_MODULE_DB_USER_PASSWORD}</fb.module.db.user.password>
-			</properties>
-		</profile>
-	</profiles>
 	 
 	<dependencies>
 

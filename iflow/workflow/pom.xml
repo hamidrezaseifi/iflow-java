@@ -47,7 +47,7 @@
 		  <groupId>org.flywaydb</groupId>
 		  <artifactId>flyway-maven-plugin</artifactId>
 		  <configuration>
-		    <skip>false</skip>
+		    <skip>true</skip>
 		  </configuration>
 		</plugin>
 	
