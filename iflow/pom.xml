@@ -15,4 +15,114 @@
   	<module>profile</module>
   	<module>workflow</module>
   </modules>
+
+  <properties>
+    <!-- the .root props are only needed for the db-create profile -->
+    <ifw.module.db.database>iflow</ifw.module.db.database>
+    <ifw.module.db.root.database>iflow</ifw.module.db.root.database>
+    <ifw.module.db.root>iflow</ifw.module.db.root>
+    <ifw.module.db.owner>iflow</ifw.module.db.owner>
+    <ifw.module.db.root.pwd>iflow</ifw.module.db.root.pwd>
+    <ifw.module.db.owner.password>iflow</ifw.module.db.owner.password>
+    <ifw.module.db.url>jdbc:mysql://localhost:3306/</ifw.module.db.url>
+    <ifw.module.db.driver>com.mysql.jdbc.Driver</ifw.module.db.driver>
+    
+    <!-- Only run SQL stuff on core and tasks projects. Default to TRUE to skip execution of db-create and/or db-clean -->
+    <ifw.module.db.skip>true</ifw.module.db.skip>
+    <maven.gitcommitid.skip>true</maven.gitcommitid.skip>
+
+    <failIfNoTests>no</failIfNoTests>
+    
+    <!-- VERSIONS -->
+    <springfox.swagger.version>2.9.2</springfox.swagger.version>
+    <spring.boot.version>2.0.0.RELEASE</spring.boot.version>
+
+    <aws.sdk.version>1.11.487</aws.sdk.version>
+    
+    <ifw.releng.version.detail>test-stage</ifw.releng.version.detail>
+
+  </properties>
+
+  <profiles>
+
+    <profile>
+      <!-- runs all migratrion scripts and by default creates the needed schema/db if still missing -->
+      <id>migrate-db</id>
+      <activation>
+        <property>
+          <name>!env.mdm_skip_migrate_db</name>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <!-- semi-automatic migration of DB -->
+          <plugin>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <!-- default is pre-integration-test but some of our unit test go to the DB -->
+                <phase>process-test-resources</phase>
+                <goals>
+                  <goal>info</goal>
+                  <goal>migrate</goal>
+                  <goal>info</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <!-- set this to default, for otherwise its executed in all modules and parent pom - and needs the password etc causing a failure 
+                activate it only for the modules that have their own DB, e.g. core and tasks -->
+              <skip>true</skip>
+              <!-- otherwise we get the warning: Unable to restore connection to having no default schema: -->
+              <url>${ifw.module.db.url}${ifw.module.db.database}</url>
+              <user>${ifw.module.db.owner}</user>
+              <password>${ifw.module.db.owner.password}</password>
+              <locations>
+                <location>filesystem:${basedir}/database/flyway/one-time</location>
+                <location>filesystem:${basedir}/database/flyway/all-time</location>
+              </locations>
+
+              <sqlMigrationPrefix>V</sqlMigrationPrefix>
+              <repeatableSqlMigrationPrefix>R</repeatableSqlMigrationPrefix>
+              <sqlMigrationSeparator>_</sqlMigrationSeparator>
+              <sqlMigrationSuffixes>
+                <sqlMigrationSuffix>.sql</sqlMigrationSuffix>
+              </sqlMigrationSuffixes>
+              <encoding>UTF-8</encoding>
+              <outOfOrder>false</outOfOrder>
+              <validateOnMigrate>true</validateOnMigrate>
+              <cleanOnValidationError>false</cleanOnValidationError>
+              <mixed>false</mixed>
+              <group>false</group>
+              <ignoreMissingMigrations>false</ignoreMissingMigrations>
+              <ignoreFutureMigrations>false</ignoreFutureMigrations>
+              <cleanDisabled>true</cleanDisabled>
+              <baselineOnMigrate>false</baselineOnMigrate>
+              <baselineVersion>1</baselineVersion>
+              <baselineDescription>Initial version</baselineDescription>
+              <installedBy>system</installedBy>
+
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+
+  </profiles>
+
+
+	<build>	
+	  <plugins>
+          <plugin>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-maven-plugin</artifactId>
+            <configuration>
+              <skip>true</skip>
+            </configuration>
+          </plugin>
+	
+	  </plugins>
+	</build>
 </project>
