@@ -1,8 +1,8 @@
 package com.pth.iflow.core.model;
 
-import com.pth.iflow.common.edo.models.DerpartmentGroupEdo;
+import com.pth.iflow.common.edo.models.DepartmentGroupEdo;
 
-public class DerpartmentGroup {
+public class DepartmentGroup {
   private Long id;
   private Long departmentId;
   private String title;
@@ -40,8 +40,8 @@ public class DerpartmentGroup {
     this.status = status;
   }
 
-  public DerpartmentGroupEdo toEdo() {
-    final DerpartmentGroupEdo edo = new DerpartmentGroupEdo();
+  public DepartmentGroupEdo toEdo() {
+    final DepartmentGroupEdo edo = new DepartmentGroupEdo();
     edo.setTitle(title);
     edo.setStatus(status);
     edo.setId(id);
@@ -50,8 +50,8 @@ public class DerpartmentGroup {
     return edo;
   }
 
-  public static DerpartmentGroup fromEdo(final DerpartmentGroupEdo edo) {
-    final DerpartmentGroup model = new DerpartmentGroup();
+  public static DepartmentGroup fromEdo(final DepartmentGroupEdo edo) {
+    final DepartmentGroup model = new DepartmentGroup();
 
     model.setTitle(edo.getTitle());
     model.setStatus(edo.getStatus());

@@ -1,6 +1,6 @@
 package com.pth.iflow.common.edo.models;
 
-public class DerpartmentGroupEdo {
+public class DepartmentGroupEdo {
   private Long id;
   private Long departmentId;
   private String title;

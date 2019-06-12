@@ -92,7 +92,7 @@ public class UserDao implements IUserDao {
   private User userFromResultSet(final ResultSet rs) throws SQLException {
     final User user = new User();
     user.setId(rs.getLong("id"));
-    user.setCompanyIid(rs.getLong("companyid"));
+    user.setCompanyId(rs.getLong("companyid"));
     user.setEmail(rs.getString("email"));
     user.setFirstName(rs.getString("firstname"));
     user.setPassword(rs.getString("password"));
