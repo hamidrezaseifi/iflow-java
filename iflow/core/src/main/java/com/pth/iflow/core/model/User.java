@@ -1,13 +1,15 @@
 package com.pth.iflow.core.model;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.pth.iflow.common.edo.models.UserEdo;
 import com.pth.iflow.common.enums.EUserStatus;
 
 public class User {
   private Long id;
-  private Long companyIid;
+  private Long companyId;
   private String email;
   private String password;
   private String firstName;
@@ -17,6 +19,10 @@ public class User {
   private Integer version;
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
+  private final Set<Integer> groups = new HashSet<>();
+  private final Set<Integer> departments = new HashSet<>();
+  private final Set<Integer> departmentGroups = new HashSet<>();
+  private final Set<Integer> deputies = new HashSet<>();
 
   public User() {
 
@@ -43,15 +49,15 @@ public class User {
   /**
    * @return the companyIid
    */
-  public Long getCompanyIid() {
-    return companyIid;
+  public Long getCompanyId() {
+    return companyId;
   }
 
   /**
    * @param companyIid the companyIid to set
    */
-  public void setCompanyIid(final Long companyIid) {
-    this.companyIid = companyIid;
+  public void setCompanyId(final Long companyId) {
+    this.companyId = companyId;
   }
 
   public String getEmail() {
@@ -182,6 +188,66 @@ public class User {
     this.permission = permission;
   }
 
+  public Set<Integer> getGroups() {
+    return groups;
+  }
+
+  public void setGroups(final Set<Integer> groups) {
+    this.groups.clear();
+    if (groups != null) {
+      this.groups.addAll(groups);
+    }
+  }
+
+  public void addGroup(final Integer groupId) {
+    this.groups.add(groupId);
+  }
+
+  public Set<Integer> getDepartments() {
+    return departments;
+  }
+
+  public void setDepartments(final Set<Integer> departments) {
+    this.departments.clear();
+    if (departments != null) {
+      this.departments.addAll(departments);
+    }
+  }
+
+  public void addDepartment(final Integer departmentId) {
+    this.departments.add(departmentId);
+  }
+
+  public Set<Integer> getDepartmentGroups() {
+    return departmentGroups;
+  }
+
+  public void setDepartmentGroups(final Set<Integer> departmentGroups) {
+    this.departmentGroups.clear();
+    if (departmentGroups != null) {
+      this.departmentGroups.addAll(departmentGroups);
+    }
+  }
+
+  public void addDepartmentGroup(final Integer departmentGroupId) {
+    this.departmentGroups.add(departmentGroupId);
+  }
+
+  public Set<Integer> getDeputies() {
+    return deputies;
+  }
+
+  public void setDeputies(final Set<Integer> deputies) {
+    this.deputies.clear();
+    if (deputies != null) {
+      this.deputies.addAll(deputies);
+    }
+  }
+
+  public void addDeputy(final Integer deputyId) {
+    this.deputies.add(deputyId);
+  }
+
   public UserEdo toEdo() {
     final UserEdo edo = new UserEdo();
     edo.setFirstName(firstName);
@@ -191,7 +257,11 @@ public class User {
     edo.setStatus(status);
     edo.setEmail(email);
     edo.setId(id);
-    edo.setCompanyIid(companyIid);
+    edo.setCompanyId(companyId);
+    edo.setGroups(groups);
+    edo.setDepartments(departments);
+    edo.setDepartmentGroups(departmentGroups);
+    edo.setDeputies(deputies);
 
     return edo;
   }
@@ -206,7 +276,11 @@ public class User {
     user.setStatus(edo.getStatus());
     user.setEmail(edo.getEmail());
     user.setId(edo.getId());
-    user.setCompanyIid(edo.getCompanyIid());
+    user.setCompanyId(edo.getCompanyId());
+    user.setGroups(edo.getGroups());
+    user.setDepartments(edo.getDepartments());
+    user.setDepartmentGroups(edo.getDepartmentGroups());
+    user.setDeputies(edo.getDeputies());
 
     return user;
   }
