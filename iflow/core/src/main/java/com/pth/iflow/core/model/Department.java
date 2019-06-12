@@ -5,7 +5,7 @@ import java.util.Set;
 
 import com.pth.iflow.common.edo.models.DepartmentEdo;
 
-public class Department {
+public class Department extends ModelBase<DepartmentEdo> {
   private Long id;
   private Long companyId;
   private String title;
@@ -59,6 +59,7 @@ public class Department {
     this.groups.add(groupId);
   }
 
+  @Override
   public DepartmentEdo toEdo() {
     final DepartmentEdo edo = new DepartmentEdo();
     edo.setTitle(title);

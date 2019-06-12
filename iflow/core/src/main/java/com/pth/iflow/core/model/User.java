@@ -7,7 +7,7 @@ import java.util.Set;
 import com.pth.iflow.common.edo.models.UserEdo;
 import com.pth.iflow.common.enums.EUserStatus;
 
-public class User {
+public class User extends ModelBase<UserEdo> {
   private Long id;
   private Long companyId;
   private String email;
@@ -23,10 +23,6 @@ public class User {
   private final Set<Integer> departments = new HashSet<>();
   private final Set<Integer> departmentGroups = new HashSet<>();
   private final Set<Integer> deputies = new HashSet<>();
-
-  public User() {
-
-  }
 
   /**
    * @return the id
@@ -248,6 +244,7 @@ public class User {
     this.deputies.add(deputyId);
   }
 
+  @Override
   public UserEdo toEdo() {
     final UserEdo edo = new UserEdo();
     edo.setFirstName(firstName);

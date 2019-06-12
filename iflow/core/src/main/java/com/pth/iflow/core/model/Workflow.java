@@ -5,7 +5,7 @@ import java.util.Set;
 
 import com.pth.iflow.common.edo.models.WorkflowEdo;
 
-public class Workflow {
+public class Workflow extends ModelBase<WorkflowEdo> {
   private Long id;
   private Long companyId;
   private String title;
@@ -68,6 +68,7 @@ public class Workflow {
     this.steps.add(stepId);
   }
 
+  @Override
   public WorkflowEdo toEdo() {
     final WorkflowEdo edo = new WorkflowEdo();
     edo.setTitle(title);

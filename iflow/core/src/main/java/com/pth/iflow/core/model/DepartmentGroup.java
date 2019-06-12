@@ -2,7 +2,7 @@ package com.pth.iflow.core.model;
 
 import com.pth.iflow.common.edo.models.DepartmentGroupEdo;
 
-public class DepartmentGroup {
+public class DepartmentGroup extends ModelBase<DepartmentGroupEdo> {
   private Long id;
   private Long departmentId;
   private String title;
@@ -40,6 +40,7 @@ public class DepartmentGroup {
     this.status = status;
   }
 
+  @Override
   public DepartmentGroupEdo toEdo() {
     final DepartmentGroupEdo edo = new DepartmentGroupEdo();
     edo.setTitle(title);

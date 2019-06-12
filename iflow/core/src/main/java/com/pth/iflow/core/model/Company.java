@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 import com.pth.iflow.common.edo.models.CompanyEdo;
 
-public class Company {
+public class Company extends ModelBase<CompanyEdo> {
   private Long id;
   private String identifyid;
   private String companyName;
@@ -115,6 +115,7 @@ public class Company {
     this.updatedAt = updatedAt;
   }
 
+  @Override
   public CompanyEdo toEdo() {
     final CompanyEdo edo = new CompanyEdo();
     edo.setCompanyName(companyName);

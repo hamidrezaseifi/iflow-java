@@ -2,7 +2,7 @@ package com.pth.iflow.core.model;
 
 import com.pth.iflow.common.edo.models.WorkflowStepEdo;
 
-public class WorkflowStep {
+public class WorkflowStep extends ModelBase<WorkflowStepEdo> {
   private Long id;
   private Long workflowId;
   private String title;
@@ -49,6 +49,7 @@ public class WorkflowStep {
     this.status = status;
   }
 
+  @Override
   public WorkflowStepEdo toEdo() {
     final WorkflowStepEdo edo = new WorkflowStepEdo();
     edo.setTitle(title);

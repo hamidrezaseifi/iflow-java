@@ -2,7 +2,7 @@ package com.pth.iflow.core.model;
 
 import com.pth.iflow.common.edo.models.UserGroupEdo;
 
-public class UserGroup {
+public class UserGroup extends ModelBase<UserGroupEdo> {
   private Long id;
   private Long companyId;
   private String title;
@@ -40,6 +40,7 @@ public class UserGroup {
     this.status = status;
   }
 
+  @Override
   public UserGroupEdo toEdo() {
     final UserGroupEdo edo = new UserGroupEdo();
     edo.setTitle(title);
