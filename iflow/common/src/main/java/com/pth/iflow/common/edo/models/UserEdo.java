@@ -1,14 +1,21 @@
 package com.pth.iflow.common.edo.models;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class UserEdo {
   private Long id;
-  private Long companyIid;
+  private Long companyId;
   private String email;
   private String password;
   private String firstName;
   private String lastName;
   private Integer status;
   private Integer permission;
+  private final Set<Integer> groups = new HashSet<>();
+  private final Set<Integer> departments = new HashSet<>();
+  private final Set<Integer> departmentGroups = new HashSet<>();
+  private final Set<Integer> deputies = new HashSet<>();
 
   /**
    * @return the id
@@ -22,21 +29,20 @@ public class UserEdo {
    */
   public void setId(final Long id) {
     this.id = id;
-  }  
-  
+  }
+
   /**
    * @return the companyIid
    */
-  public Long getCompanyIid() {
-    return companyIid;
+  public Long getCompanyId() {
+    return companyId;
   }
 
-  
   /**
    * @param companyIid the companyIid to set
    */
-  public void setCompanyIid(Long companyIid) {
-    this.companyIid = companyIid;
+  public void setCompanyId(final Long companyIid) {
+    this.companyId = companyIid;
   }
 
   /**
@@ -125,6 +131,66 @@ public class UserEdo {
    */
   public void setPermission(final Integer permission) {
     this.permission = permission;
+  }
+
+  public Set<Integer> getGroups() {
+    return groups;
+  }
+
+  public void setGroups(final Set<Integer> groups) {
+    this.groups.clear();
+    if (groups != null) {
+      this.groups.addAll(groups);
+    }
+  }
+
+  public void addGroup(final Integer groupId) {
+    this.groups.add(groupId);
+  }
+
+  public Set<Integer> getDepartments() {
+    return departments;
+  }
+
+  public void setDepartments(final Set<Integer> departments) {
+    this.departments.clear();
+    if (departments != null) {
+      this.departments.addAll(departments);
+    }
+  }
+
+  public void addDepartment(final Integer departmentId) {
+    this.departments.add(departmentId);
+  }
+
+  public Set<Integer> getDepartmentGroups() {
+    return departmentGroups;
+  }
+
+  public void setDepartmentGroups(final Set<Integer> departmentGroups) {
+    this.departmentGroups.clear();
+    if (departmentGroups != null) {
+      this.departmentGroups.addAll(departmentGroups);
+    }
+  }
+
+  public void addDepartmentGroup(final Integer departmentGroupId) {
+    this.departmentGroups.add(departmentGroupId);
+  }
+
+  public Set<Integer> getDeputies() {
+    return deputies;
+  }
+
+  public void setDeputies(final Set<Integer> deputies) {
+    this.deputies.clear();
+    if (deputies != null) {
+      this.deputies.addAll(deputies);
+    }
+  }
+
+  public void addDeputy(final Integer deputyId) {
+    this.deputies.add(deputyId);
   }
 
 }
