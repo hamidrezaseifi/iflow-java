@@ -6,6 +6,10 @@ public class IflowRestPaths {
 
     public static final String USER_READ_BY_ID = "/users/readbyid/{userid}";
     public static final String USER_READ_BY_EMAIL = "/users/readbyemail/{email}";
+    public static final String USER_USERGROUPS_LIST = "/users/user/groups/{userid}";
+    public static final String USER_DEPARTMENTS_LIST = "/users/user/departments/{userid}";
+    public static final String USER_DEPARTMENTGROUPS_LIST = "/users/user/departmentgroups/{userid}";
+    public static final String USER_DEPUTIES_LIST = "/users/user/deputies/{userid}";
 
     public static final String COMPANY_READ_BY_ID = "/companies/readbyid/{companyid}";
 
