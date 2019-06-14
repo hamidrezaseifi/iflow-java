@@ -9,6 +9,15 @@ public class WorkflowStep extends ModelBase<WorkflowStepEdo> {
   private String comments;
   private Integer status;
 
+  @Override
+  public void initFromEdo(final WorkflowStepEdo edo) {
+    setTitle(edo.getTitle());
+    setComments(edo.getComments());
+    setStatus(edo.getStatus());
+    setId(edo.getId());
+    setWorkflowId(edo.getWorkflowId());
+  }
+
   public Long getId() {
     return id;
   }

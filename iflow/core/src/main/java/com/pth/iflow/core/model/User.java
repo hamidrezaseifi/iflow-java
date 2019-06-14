@@ -2,6 +2,7 @@ package com.pth.iflow.core.model;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.pth.iflow.common.edo.models.UserEdo;
@@ -19,10 +20,10 @@ public class User extends ModelBase<UserEdo> {
   private Integer version;
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
-  private final Set<Integer> groups = new HashSet<>();
-  private final Set<Integer> departments = new HashSet<>();
-  private final Set<Integer> departmentGroups = new HashSet<>();
-  private final Set<Integer> deputies = new HashSet<>();
+  private final Set<Long> groups = new HashSet<>();
+  private final Set<Long> departments = new HashSet<>();
+  private final Set<Long> departmentGroups = new HashSet<>();
+  private final Set<Long> deputies = new HashSet<>();
 
   /**
    * @return the id
@@ -184,63 +185,84 @@ public class User extends ModelBase<UserEdo> {
     this.permission = permission;
   }
 
-  public Set<Integer> getGroups() {
+  public Set<Long> getGroups() {
     return groups;
   }
 
-  public void setGroups(final Set<Integer> groups) {
+  public void setGroups(final Set<Long> groups) {
     this.groups.clear();
     if (groups != null) {
       this.groups.addAll(groups);
     }
   }
 
-  public void addGroup(final Integer groupId) {
+  public void setGroups(final List<Long> groups) {
+    this.groups.clear();
+    if (groups != null) {
+      this.groups.addAll(groups);
+    }
+  }
+
+  public void addGroup(final Long groupId) {
     this.groups.add(groupId);
   }
 
-  public Set<Integer> getDepartments() {
+  public Set<Long> getDepartments() {
     return departments;
   }
 
-  public void setDepartments(final Set<Integer> departments) {
+  public void setDepartments(final Set<Long> departments) {
     this.departments.clear();
     if (departments != null) {
       this.departments.addAll(departments);
     }
   }
 
-  public void addDepartment(final Integer departmentId) {
+  public void setDepartments(final List<Long> departments) {
+    this.departments.clear();
+    if (departments != null) {
+      this.departments.addAll(departments);
+    }
+  }
+
+  public void addDepartment(final Long departmentId) {
     this.departments.add(departmentId);
   }
 
-  public Set<Integer> getDepartmentGroups() {
+  public Set<Long> getDepartmentGroups() {
     return departmentGroups;
   }
 
-  public void setDepartmentGroups(final Set<Integer> departmentGroups) {
+  public void setDepartmentGroups(final Set<Long> departmentGroups) {
     this.departmentGroups.clear();
     if (departmentGroups != null) {
       this.departmentGroups.addAll(departmentGroups);
     }
   }
 
-  public void addDepartmentGroup(final Integer departmentGroupId) {
+  public void addDepartmentGroup(final Long departmentGroupId) {
     this.departmentGroups.add(departmentGroupId);
   }
 
-  public Set<Integer> getDeputies() {
+  public Set<Long> getDeputies() {
     return deputies;
   }
 
-  public void setDeputies(final Set<Integer> deputies) {
+  public void setDeputies(final Set<Long> deputies) {
     this.deputies.clear();
     if (deputies != null) {
       this.deputies.addAll(deputies);
     }
   }
 
-  public void addDeputy(final Integer deputyId) {
+  public void setDeputies(final List<Long> deputies) {
+    this.deputies.clear();
+    if (deputies != null) {
+      this.deputies.addAll(deputies);
+    }
+  }
+
+  public void addDeputy(final Long deputyId) {
     this.deputies.add(deputyId);
   }
 
@@ -280,6 +302,22 @@ public class User extends ModelBase<UserEdo> {
     user.setDeputies(edo.getDeputies());
 
     return user;
+  }
+
+  @Override
+  public void initFromEdo(final UserEdo edo) {
+    setFirstName(edo.getFirstName());
+    setLastName(edo.getLastName());
+    setPassword(edo.getPassword());
+    setPermission(edo.getPermission());
+    setStatus(edo.getStatus());
+    setEmail(edo.getEmail());
+    setId(edo.getId());
+    setCompanyId(edo.getCompanyId());
+    setGroups(edo.getGroups());
+    setDepartments(edo.getDepartments());
+    setDepartmentGroups(edo.getDepartmentGroups());
+    setDeputies(edo.getDeputies());
   }
 
 }

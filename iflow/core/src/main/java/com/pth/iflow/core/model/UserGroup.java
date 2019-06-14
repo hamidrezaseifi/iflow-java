@@ -62,4 +62,12 @@ public class UserGroup extends ModelBase<UserGroupEdo> {
     return model;
   }
 
+  @Override
+  public void initFromEdo(final UserGroupEdo edo) {
+    setTitle(edo.getTitle());
+    setStatus(edo.getStatus());
+    setId(edo.getId());
+    setCompanyId(edo.getCompanyId());
+  }
+
 }

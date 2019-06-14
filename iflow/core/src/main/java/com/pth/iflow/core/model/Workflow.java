@@ -94,4 +94,14 @@ public class Workflow extends ModelBase<WorkflowEdo> {
     return model;
   }
 
+  @Override
+  public void initFromEdo(final WorkflowEdo edo) {
+    setTitle(edo.getTitle());
+    setComments(edo.getComments());
+    setStatus(edo.getStatus());
+    setId(edo.getId());
+    setCompanyId(edo.getCompanyId());
+    setSteps(edo.getSteps());
+  }
+
 }

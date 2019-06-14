@@ -62,4 +62,12 @@ public class DepartmentGroup extends ModelBase<DepartmentGroupEdo> {
     return model;
   }
 
+  @Override
+  public void initFromEdo(final DepartmentGroupEdo edo) {
+    setTitle(edo.getTitle());
+    setStatus(edo.getStatus());
+    setId(edo.getId());
+    setDerpartmentId(edo.getDerpartmentId());
+  }
+
 }

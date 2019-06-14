@@ -82,4 +82,13 @@ public class Department extends ModelBase<DepartmentEdo> {
 
     return model;
   }
+
+  @Override
+  public void initFromEdo(final DepartmentEdo edo) {
+    setTitle(edo.getTitle());
+    setStatus(edo.getStatus());
+    setId(edo.getId());
+    setCompanyId(edo.getCompanyId());
+    setGroups(edo.getGroups());
+  }
 }
