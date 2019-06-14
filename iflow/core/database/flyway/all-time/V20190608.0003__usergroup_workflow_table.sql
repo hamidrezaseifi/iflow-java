@@ -19,7 +19,7 @@ CREATE TABLE `user_usergroup` (
   `user_id` int(11) NOT NULL,
   `user_group` int(11) DEFAULT NULL,
   `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-  PRIMARY KEY (`user_id`),
+  PRIMARY KEY (`user_id`, `user_group`),
   KEY `FK_USERGROUPUSER_GROUP_idx` (`user_group`),
   CONSTRAINT `FK_USERGROUPUSER_GROUP` FOREIGN KEY (`user_group`) REFERENCES `user_group` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_USERGROUPUSER_USER` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
