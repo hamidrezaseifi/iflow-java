@@ -1,5 +1,54 @@
 
+DROP TABLE IF EXISTS `user_usergroup`;
+
 DROP TABLE IF EXISTS `user_group`;
+
+DROP TABLE IF EXISTS `user_departments`;
+
+DROP TABLE IF EXISTS `workflow_step`;
+
+DROP TABLE IF EXISTS `workflow`;
+
+DROP TABLE IF EXISTS `departments_group`;
+
+DROP TABLE IF EXISTS `departments`;
+
+DROP TABLE IF EXISTS `user_deputy`;
+
+DROP TABLE IF EXISTS `users`;
+
+DROP TABLE IF EXISTS `companies`;
+
+CREATE TABLE `companies` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `identifyid` varchar(45) DEFAULT NULL,
+  `company_name` varchar(45) NOT NULL,
+  `status` smallint(6) NOT NULL DEFAULT '1',
+  `version` int(11) NOT NULL DEFAULT '1',
+  `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  `updated_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `identifyid_UNIQUE` (`identifyid`)
+) ENGINE=InnoDB AUTO_INCREMENT=2;
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `companyid` int(11) NOT NULL DEFAULT '1',
+  `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `firstname` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `lastname` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `permission` smallint(6) NOT NULL DEFAULT '1',
+  `status` smallint(6) NOT NULL DEFAULT '1',
+  `version` int(11) NOT NULL DEFAULT '1',
+  `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  `updated_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`),
+  KEY `FK_USERS_COMPANIES_idx` (`companyid`),
+  CONSTRAINT `FK_USERS_COMPANIES` FOREIGN KEY (`companyid`) REFERENCES `companies` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3;
+
 CREATE TABLE `user_group` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(200) NOT NULL,
@@ -14,10 +63,9 @@ CREATE TABLE `user_group` (
 ) ENGINE=InnoDB;
 
 
-DROP TABLE IF EXISTS `user_usergroup`;
 CREATE TABLE `user_usergroup` (
   `user_id` int(11) NOT NULL,
-  `user_group` int(11) DEFAULT NULL,
+  `user_group` int(11) NOT NULL,
   `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   PRIMARY KEY (`user_id`, `user_group`),
   KEY `FK_USERGROUPUSER_GROUP_idx` (`user_group`),
@@ -26,7 +74,6 @@ CREATE TABLE `user_usergroup` (
 ) ENGINE=InnoDB;
 
 
-DROP TABLE IF EXISTS `workflow`;
 CREATE TABLE `workflow` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `comapny_id` int(11) NOT NULL,
@@ -42,7 +89,6 @@ CREATE TABLE `workflow` (
   CONSTRAINT `FK_WORKFLOW_COMPANY` FOREIGN KEY (`comapny_id`) REFERENCES `companies` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
-DROP TABLE IF EXISTS `workflow_step`;
 CREATE TABLE `workflow_step` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `workflow_id` int(11) NOT NULL,
@@ -57,7 +103,6 @@ CREATE TABLE `workflow_step` (
   CONSTRAINT `FK_WORKFLOWSTEP_WORKFLOW` FOREIGN KEY (`workflow_id`) REFERENCES `workflow` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
-DROP TABLE IF EXISTS `departments`;
 CREATE TABLE `departments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `companyid` int(11) NOT NULL DEFAULT '1',
@@ -72,7 +117,6 @@ CREATE TABLE `departments` (
 ) ENGINE=InnoDB;
 
 
-DROP TABLE IF EXISTS `user_departments`;
 CREATE TABLE `user_departments` (
   `user_id` int(11) NOT NULL,
   `department_id` int(11) NOT NULL,
@@ -83,7 +127,6 @@ CREATE TABLE `user_departments` (
   CONSTRAINT `FK_USERDEPARTMENTS_USERS` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
-DROP TABLE IF EXISTS `departments_group`;
 CREATE TABLE `departments_group` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `department_id` int(11) NOT NULL,
@@ -97,7 +140,6 @@ CREATE TABLE `departments_group` (
   CONSTRAINT `FK_DEPARTMENTGROUP_DEPARTMENT` FOREIGN KEY (`department_id`) REFERENCES `departments` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
-DROP TABLE IF EXISTS `user_deputy`;
 CREATE TABLE `user_deputy` (
   `user_id` int(11) NOT NULL,
   `deputy_id` int(11) NOT NULL,
