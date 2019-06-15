@@ -8,7 +8,7 @@ public class DepartmentEdo {
   private Long companyId;
   private String title;
   private Integer status;
-  private final Set<Integer> groups = new HashSet<>();
+  private final Set<Long> groups = new HashSet<>();
 
   public Long getId() {
     return id;
@@ -42,18 +42,18 @@ public class DepartmentEdo {
     this.status = status;
   }
 
-  public Set<Integer> getGroups() {
+  public Set<Long> getGroups() {
     return groups;
   }
 
-  public void setGroups(final Set<Integer> groups) {
+  public void setGroups(final Set<Long> groups) {
     this.groups.clear();
     if (groups != null) {
       this.groups.addAll(groups);
     }
   }
 
-  public void addGroup(final Integer groupId) {
+  public void addGroup(final Long groupId) {
     this.groups.add(groupId);
   }
 }

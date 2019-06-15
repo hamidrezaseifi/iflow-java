@@ -1,6 +1,8 @@
 package com.pth.iflow.core.model;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.pth.iflow.common.edo.models.DepartmentEdo;
@@ -10,7 +12,10 @@ public class Department extends ModelMapperBase<DepartmentEdo, Department> {
   private Long companyId;
   private String title;
   private Integer status;
-  private final Set<Integer> groups = new HashSet<>();
+  private Integer version;
+  private LocalDateTime createdAt;
+  private LocalDateTime updatedAt;
+  private final Set<Long> groups = new HashSet<>();
 
   public Long getId() {
     return id;
@@ -44,18 +49,49 @@ public class Department extends ModelMapperBase<DepartmentEdo, Department> {
     this.status = status;
   }
 
-  public Set<Integer> getGroups() {
+  public Integer getVersion() {
+    return version;
+  }
+
+  public void setVersion(final Integer version) {
+    this.version = version;
+  }
+
+  public LocalDateTime getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(final LocalDateTime createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  public LocalDateTime getUpdatedAt() {
+    return updatedAt;
+  }
+
+  public void setUpdatedAt(final LocalDateTime updatedAt) {
+    this.updatedAt = updatedAt;
+  }
+
+  public Set<Long> getGroups() {
     return groups;
   }
 
-  public void setGroups(final Set<Integer> groups) {
+  public void setGroups(final Set<Long> groups) {
     this.groups.clear();
     if (groups != null) {
       this.groups.addAll(groups);
     }
   }
 
-  public void addGroup(final Integer groupId) {
+  public void setGroups(final List<Long> groups) {
+    this.groups.clear();
+    if (groups != null) {
+      this.groups.addAll(groups);
+    }
+  }
+
+  public void addGroup(final Long groupId) {
     this.groups.add(groupId);
   }
 
