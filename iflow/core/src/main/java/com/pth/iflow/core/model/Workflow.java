@@ -5,7 +5,7 @@ import java.util.Set;
 
 import com.pth.iflow.common.edo.models.WorkflowEdo;
 
-public class Workflow extends ModelBase<WorkflowEdo> {
+public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
   private Long id;
   private Long companyId;
   private String title;
@@ -81,7 +81,8 @@ public class Workflow extends ModelBase<WorkflowEdo> {
     return edo;
   }
 
-  public static Workflow fromEdo(final WorkflowEdo edo) {
+  @Override
+  public Workflow fromEdo(final WorkflowEdo edo) {
     final Workflow model = new Workflow();
 
     model.setTitle(edo.getTitle());
@@ -92,16 +93,6 @@ public class Workflow extends ModelBase<WorkflowEdo> {
     model.setSteps(edo.getSteps());
 
     return model;
-  }
-
-  @Override
-  public void initFromEdo(final WorkflowEdo edo) {
-    setTitle(edo.getTitle());
-    setComments(edo.getComments());
-    setStatus(edo.getStatus());
-    setId(edo.getId());
-    setCompanyId(edo.getCompanyId());
-    setSteps(edo.getSteps());
   }
 
 }

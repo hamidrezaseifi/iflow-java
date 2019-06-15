@@ -5,7 +5,7 @@ import java.util.Set;
 
 import com.pth.iflow.common.edo.models.DepartmentEdo;
 
-public class Department extends ModelBase<DepartmentEdo> {
+public class Department extends ModelMapperBase<DepartmentEdo, Department> {
   private Long id;
   private Long companyId;
   private String title;
@@ -71,7 +71,8 @@ public class Department extends ModelBase<DepartmentEdo> {
     return edo;
   }
 
-  public static Department fromEdo(final DepartmentEdo edo) {
+  @Override
+  public Department fromEdo(final DepartmentEdo edo) {
     final Department model = new Department();
 
     model.setTitle(edo.getTitle());
@@ -83,12 +84,4 @@ public class Department extends ModelBase<DepartmentEdo> {
     return model;
   }
 
-  @Override
-  public void initFromEdo(final DepartmentEdo edo) {
-    setTitle(edo.getTitle());
-    setStatus(edo.getStatus());
-    setId(edo.getId());
-    setCompanyId(edo.getCompanyId());
-    setGroups(edo.getGroups());
-  }
 }

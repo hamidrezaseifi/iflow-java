@@ -2,21 +2,12 @@ package com.pth.iflow.core.model;
 
 import com.pth.iflow.common.edo.models.WorkflowStepEdo;
 
-public class WorkflowStep extends ModelBase<WorkflowStepEdo> {
+public class WorkflowStep extends ModelMapperBase<WorkflowStepEdo, WorkflowStep> {
   private Long id;
   private Long workflowId;
   private String title;
   private String comments;
   private Integer status;
-
-  @Override
-  public void initFromEdo(final WorkflowStepEdo edo) {
-    setTitle(edo.getTitle());
-    setComments(edo.getComments());
-    setStatus(edo.getStatus());
-    setId(edo.getId());
-    setWorkflowId(edo.getWorkflowId());
-  }
 
   public Long getId() {
     return id;
@@ -70,7 +61,8 @@ public class WorkflowStep extends ModelBase<WorkflowStepEdo> {
     return edo;
   }
 
-  public static WorkflowStep fromEdo(final WorkflowStepEdo edo) {
+  @Override
+  public WorkflowStep fromEdo(final WorkflowStepEdo edo) {
     final WorkflowStep model = new WorkflowStep();
 
     model.setTitle(edo.getTitle());

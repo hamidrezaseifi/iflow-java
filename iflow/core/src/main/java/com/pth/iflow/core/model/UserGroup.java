@@ -2,7 +2,7 @@ package com.pth.iflow.core.model;
 
 import com.pth.iflow.common.edo.models.UserGroupEdo;
 
-public class UserGroup extends ModelBase<UserGroupEdo> {
+public class UserGroup extends ModelMapperBase<UserGroupEdo, UserGroup> {
   private Long id;
   private Long companyId;
   private String title;
@@ -51,7 +51,8 @@ public class UserGroup extends ModelBase<UserGroupEdo> {
     return edo;
   }
 
-  public static UserGroup fromEdo(final UserGroupEdo edo) {
+  @Override
+  public UserGroup fromEdo(final UserGroupEdo edo) {
     final UserGroup model = new UserGroup();
 
     model.setTitle(edo.getTitle());
@@ -60,14 +61,6 @@ public class UserGroup extends ModelBase<UserGroupEdo> {
     model.setCompanyId(edo.getCompanyId());
 
     return model;
-  }
-
-  @Override
-  public void initFromEdo(final UserGroupEdo edo) {
-    setTitle(edo.getTitle());
-    setStatus(edo.getStatus());
-    setId(edo.getId());
-    setCompanyId(edo.getCompanyId());
   }
 
 }

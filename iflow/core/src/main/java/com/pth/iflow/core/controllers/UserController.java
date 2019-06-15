@@ -19,7 +19,7 @@ import com.pth.iflow.common.edo.models.UserGroupEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.core.model.Department;
 import com.pth.iflow.core.model.DepartmentGroup;
-import com.pth.iflow.core.model.ModelBase;
+import com.pth.iflow.core.model.ModelMapperBase;
 import com.pth.iflow.core.model.User;
 import com.pth.iflow.core.model.UserGroup;
 import com.pth.iflow.core.service.IUsersService;
@@ -58,7 +58,7 @@ public class UserController {
 
     final List<UserGroup> groups = usersService.getUserGroups(userid);
 
-    final List<UserGroupEdo> edoList = ModelBase.toEdoList(groups);
+    final List<UserGroupEdo> edoList = ModelMapperBase.toEdoList(groups);
 
     return new ResponseEntity<>(edoList, HttpStatus.OK);
   }
@@ -69,7 +69,7 @@ public class UserController {
 
     final List<Department> list = usersService.getUserDepartments(userid);
 
-    final List<DepartmentEdo> edoList = ModelBase.toEdoList(list);
+    final List<DepartmentEdo> edoList = ModelMapperBase.toEdoList(list);
 
     return new ResponseEntity<>(edoList, HttpStatus.OK);
   }
@@ -81,7 +81,7 @@ public class UserController {
 
     final List<DepartmentGroup> list = usersService.getUserDepartmentGroups(userid);
 
-    final List<DepartmentGroupEdo> edoList = ModelBase.toEdoList(list);
+    final List<DepartmentGroupEdo> edoList = ModelMapperBase.toEdoList(list);
 
     return new ResponseEntity<>(edoList, HttpStatus.OK);
   }
@@ -92,7 +92,7 @@ public class UserController {
 
     final List<User> list = usersService.getUserDeputies(userid);
 
-    final List<UserEdo> edoList = ModelBase.toEdoList(list);
+    final List<UserEdo> edoList = ModelMapperBase.toEdoList(list);
 
     return new ResponseEntity<>(edoList, HttpStatus.OK);
   }

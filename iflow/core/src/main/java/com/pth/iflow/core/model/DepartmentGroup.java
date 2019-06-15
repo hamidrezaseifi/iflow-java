@@ -2,7 +2,7 @@ package com.pth.iflow.core.model;
 
 import com.pth.iflow.common.edo.models.DepartmentGroupEdo;
 
-public class DepartmentGroup extends ModelBase<DepartmentGroupEdo> {
+public class DepartmentGroup extends ModelMapperBase<DepartmentGroupEdo, DepartmentGroup> {
   private Long id;
   private Long departmentId;
   private String title;
@@ -51,7 +51,8 @@ public class DepartmentGroup extends ModelBase<DepartmentGroupEdo> {
     return edo;
   }
 
-  public static DepartmentGroup fromEdo(final DepartmentGroupEdo edo) {
+  @Override
+  public DepartmentGroup fromEdo(final DepartmentGroupEdo edo) {
     final DepartmentGroup model = new DepartmentGroup();
 
     model.setTitle(edo.getTitle());
@@ -60,14 +61,6 @@ public class DepartmentGroup extends ModelBase<DepartmentGroupEdo> {
     model.setDerpartmentId(edo.getDerpartmentId());
 
     return model;
-  }
-
-  @Override
-  public void initFromEdo(final DepartmentGroupEdo edo) {
-    setTitle(edo.getTitle());
-    setStatus(edo.getStatus());
-    setId(edo.getId());
-    setDerpartmentId(edo.getDerpartmentId());
   }
 
 }

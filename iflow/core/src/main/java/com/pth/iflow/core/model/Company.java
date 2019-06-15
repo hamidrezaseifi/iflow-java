@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 import com.pth.iflow.common.edo.models.CompanyEdo;
 
-public class Company extends ModelBase<CompanyEdo> {
+public class Company extends ModelMapperBase<CompanyEdo, Company> {
 
   private Long id;
   private String identifyid;
@@ -13,14 +13,6 @@ public class Company extends ModelBase<CompanyEdo> {
   private Integer version;
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
-
-  @Override
-  public void initFromEdo(final CompanyEdo edo) {
-    setCompanyName(edo.getCompanyName());
-    setIdentifyid(edo.getIdentifyid());
-    setStatus(edo.getStatus());
-    setId(edo.getId());
-  }
 
   /**
    * @return the id
@@ -131,9 +123,13 @@ public class Company extends ModelBase<CompanyEdo> {
     return edo;
   }
 
-  public static Company fromEdo(final CompanyEdo edo) {
+  @Override
+  public Company fromEdo(final CompanyEdo edo) {
     final Company company = new Company();
-    company.initFromEdo(edo);
+    company.setCompanyName(edo.getCompanyName());
+    company.setIdentifyid(edo.getIdentifyid());
+    company.setStatus(edo.getStatus());
+    company.setId(edo.getId());
 
     return company;
   }
