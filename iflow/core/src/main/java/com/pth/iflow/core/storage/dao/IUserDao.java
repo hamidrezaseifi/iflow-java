@@ -9,8 +9,6 @@ public interface IUserDao {
 
   public User getById(Long id) throws IFlowStorageException;
 
-  public User getUserByUsername(final String username);
-
   public User getByEmail(final String email) throws IFlowStorageException;
 
   public List<User> getListByIdList(List<Long> idList) throws IFlowStorageException;
