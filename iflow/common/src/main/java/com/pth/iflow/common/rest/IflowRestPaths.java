@@ -13,5 +13,13 @@ public class IflowRestPaths {
 
     public static final String COMPANY_READ_BY_ID = "/companies/readbyid/{companyid}";
 
+    public static final String DEPARTMENT_READ_BY_ID = "/departments/readbyid/{id}";
+    public static final String DEPARTMENT_READ_LIST = "/departments/list";
+    public static final String DEPARTMENT_READ_LIST_BY_COMPANY = "/departments/company/list/{id}";
+
+    public static final String DEPARTMENTGRPUP_READ_BY_ID = "/departmentgropup/readbyid/{id}";
+    public static final String DEPARTMENTGRPUP_READ_LIST_BY_DEPARTMENT = "/departmentgropup/department/list/{id}";
+    public static final String DEPARTMENTGRPUP_READ_LIST = "/departmentgropup/list";
+
   }
 }

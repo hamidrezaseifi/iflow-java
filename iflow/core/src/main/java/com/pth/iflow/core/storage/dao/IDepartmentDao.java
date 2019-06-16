@@ -9,6 +9,8 @@ public interface IDepartmentDao {
 
   public Department getById(Long id) throws IFlowStorageException;
 
+  public List<Department> getListByCompanyId(Long id) throws IFlowStorageException;
+
   public List<Department> getListByIdList(List<Long> idList) throws IFlowStorageException;
 
 }

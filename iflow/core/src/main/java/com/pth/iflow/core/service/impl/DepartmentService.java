@@ -36,4 +36,15 @@ public class DepartmentService implements IDepartmentService {
     return departmentGroupDao.getListByIdList(department.getGroups().stream().collect(Collectors.toList()));
   }
 
+  @Override
+  public List<Department> getListByIdList(final List<Long> idList) {
+
+    return departmentDao.getListByIdList(idList);
+  }
+
+  @Override
+  public List<Department> getListByIdCompanyId(final Long id) {
+    return departmentDao.getListByCompanyId(id);
+  }
+
 }

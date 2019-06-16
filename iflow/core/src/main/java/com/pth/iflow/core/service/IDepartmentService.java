@@ -7,7 +7,11 @@ import com.pth.iflow.core.model.DepartmentGroup;
 
 public interface IDepartmentService {
 
-  public Department getById(Long id);
+  public Department getById(final Long id);
+
+  public List<Department> getListByIdList(final List<Long> idList);
+
+  public List<Department> getListByIdCompanyId(final Long id);
 
   public List<DepartmentGroup> getDepartmentGroups(final Long id);
 }
