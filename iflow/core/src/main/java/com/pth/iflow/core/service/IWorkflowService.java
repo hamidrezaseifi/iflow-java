@@ -9,5 +9,5 @@ public interface IWorkflowService {
 
   public Workflow getById(Long id);
 
-  public List<WorkflowStep> getStrpsById(final Long id);
+  public List<WorkflowStep> getStepsById(final Long id);
 }
