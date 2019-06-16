@@ -1,6 +1,8 @@
 package com.pth.iflow.core.model;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.pth.iflow.common.edo.models.WorkflowEdo;
@@ -11,7 +13,10 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
   private String title;
   private String comments;
   private Integer status;
-  private final Set<Integer> steps = new HashSet<>();
+  private Integer version;
+  private LocalDateTime createdAt;
+  private LocalDateTime updatedAt;
+  private final Set<Long> steps = new HashSet<>();
 
   public Long getId() {
     return id;
@@ -53,18 +58,49 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
     this.status = status;
   }
 
-  public Set<Integer> getSteps() {
+  public Integer getVersion() {
+    return version;
+  }
+
+  public void setVersion(final Integer version) {
+    this.version = version;
+  }
+
+  public LocalDateTime getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(final LocalDateTime createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  public LocalDateTime getUpdatedAt() {
+    return updatedAt;
+  }
+
+  public void setUpdatedAt(final LocalDateTime updatedAt) {
+    this.updatedAt = updatedAt;
+  }
+
+  public Set<Long> getSteps() {
     return steps;
   }
 
-  public void setSteps(final Set<Integer> steps) {
+  public void setSteps(final Set<Long> steps) {
     this.steps.clear();
     if (steps != null) {
       this.steps.addAll(steps);
     }
   }
 
-  public void addStep(final Integer stepId) {
+  public void setSteps(final List<Long> steps) {
+    this.steps.clear();
+    if (steps != null) {
+      this.steps.addAll(steps);
+    }
+  }
+
+  public void addStep(final Long stepId) {
     this.steps.add(stepId);
   }
 

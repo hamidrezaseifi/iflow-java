@@ -1,5 +1,7 @@
 package com.pth.iflow.core.model;
 
+import java.time.LocalDateTime;
+
 import com.pth.iflow.common.edo.models.WorkflowStepEdo;
 
 public class WorkflowStep extends ModelMapperBase<WorkflowStepEdo, WorkflowStep> {
@@ -8,6 +10,9 @@ public class WorkflowStep extends ModelMapperBase<WorkflowStepEdo, WorkflowStep>
   private String title;
   private String comments;
   private Integer status;
+  private Integer version;
+  private LocalDateTime createdAt;
+  private LocalDateTime updatedAt;
 
   public Long getId() {
     return id;
@@ -47,6 +52,30 @@ public class WorkflowStep extends ModelMapperBase<WorkflowStepEdo, WorkflowStep>
 
   public void setStatus(final Integer status) {
     this.status = status;
+  }
+
+  public Integer getVersion() {
+    return version;
+  }
+
+  public void setVersion(final Integer version) {
+    this.version = version;
+  }
+
+  public LocalDateTime getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(final LocalDateTime createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  public LocalDateTime getUpdatedAt() {
+    return updatedAt;
+  }
+
+  public void setUpdatedAt(final LocalDateTime updatedAt) {
+    this.updatedAt = updatedAt;
   }
 
   @Override

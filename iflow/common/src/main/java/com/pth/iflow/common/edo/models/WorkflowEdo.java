@@ -9,7 +9,7 @@ public class WorkflowEdo {
   private String title;
   private String comments;
   private Integer status;
-  private final Set<Integer> steps = new HashSet<>();
+  private final Set<Long> steps = new HashSet<>();
 
   public Long getId() {
     return id;
@@ -51,18 +51,18 @@ public class WorkflowEdo {
     this.status = status;
   }
 
-  public Set<Integer> getSteps() {
+  public Set<Long> getSteps() {
     return steps;
   }
 
-  public void setSteps(final Set<Integer> steps) {
+  public void setSteps(final Set<Long> steps) {
     this.steps.clear();
     if (steps != null) {
       this.steps.addAll(steps);
     }
   }
 
-  public void addStep(final Integer stepId) {
+  public void addStep(final Long stepId) {
     this.steps.add(stepId);
   }
 }

@@ -14,12 +14,12 @@ public class DepartmentGroupEdo {
     this.id = id;
   }
 
-  public Long getDerpartmentId() {
+  public Long getDepartmentId() {
     return departmentId;
   }
 
-  public void setDerpartmentId(final Long workflowId) {
-    this.departmentId = workflowId;
+  public void setDepartmentId(final Long departmentId) {
+    this.departmentId = departmentId;
   }
 
   public String getTitle() {

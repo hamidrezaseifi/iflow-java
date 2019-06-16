@@ -1,5 +1,9 @@
 package com.pth.iflow.core.storage.dao.impl;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -10,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.futurebim.core.dao.utils.SqlUtils;
 import com.pth.iflow.core.model.WorkflowStep;
 import com.pth.iflow.core.storage.dao.IWorkflowStepDao;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
@@ -29,14 +34,87 @@ public class WorkflowStepDao implements IWorkflowStepDao {
 
   @Override
   public WorkflowStep getById(final Long id) throws IFlowStorageException {
-    // TODO Auto-generated method stub
-    return null;
+    logger.info("Dao Read WorkflowStep by id: " + id);
+    final String sqlSelect = "SELECT * FROM workflow_step where id=?";
+
+    WorkflowStep model;
+
+    try {
+
+      model = this.jdbcTemplate.query(con -> {
+        final PreparedStatement ps = con.prepareStatement(sqlSelect);
+        ps.setLong(1, id);
+        return ps;
+
+      }, (rs) -> {
+        if (rs.next()) {
+          return workflowStepGroupFromResultSet(rs);
+        } else {
+          return null;
+        }
+      });
+
+    } catch (final Exception e) {
+      throw new IFlowStorageException("Unable to retrieve WorkflowStep data: " + e.toString());
+    }
+
+    return model;
   }
 
   @Override
   public List<WorkflowStep> getListByIdList(final List<Long> idList) throws IFlowStorageException {
-    // TODO Auto-generated method stub
-    return null;
+    logger.info("Dao read WorkflowStep list: ");
+
+    List<WorkflowStep> list = new ArrayList<>();
+
+    if (idList.isEmpty()) {
+      return list;
+    }
+
+    String sqlSelect = "SELECT * FROM workflow_step where id in (";
+    for (final Long id : idList) {
+      sqlSelect += "?, ";
+    }
+
+    sqlSelect = sqlSelect.trim();
+    sqlSelect = sqlSelect.endsWith(",") ? sqlSelect.substring(0, sqlSelect.length() - 1) : sqlSelect;
+    sqlSelect += ")";
+
+    final String sqlSelectFinal = sqlSelect;
+
+    try {
+      list = jdbcTemplate.query(con -> {
+        final PreparedStatement ps = con.prepareStatement(sqlSelectFinal);
+        int index = 1;
+        for (final Long id : idList) {
+          ps.setLong(index++, id);
+        }
+
+        return ps;
+
+      }, (rs, rowNum) -> {
+
+        return workflowStepGroupFromResultSet(rs);
+
+      });
+
+    } catch (final Exception e) {
+      throw new IFlowStorageException("Unable to Read WorkflowStep list from list: " + e.toString());
+    }
+
+    return list;
   }
 
+  private WorkflowStep workflowStepGroupFromResultSet(final ResultSet rs) throws SQLException {
+    final WorkflowStep model = new WorkflowStep();
+    model.setId(rs.getLong("id"));
+    model.setWorkflowId(rs.getLong("workflow_id"));
+    model.setTitle(rs.getString("title"));
+    model.setStatus(rs.getInt("status"));
+    model.setCreatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("created_at")));
+    model.setUpdatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("updated_at")));
+    model.setVersion(rs.getInt("version"));
+
+    return model;
+  }
 }

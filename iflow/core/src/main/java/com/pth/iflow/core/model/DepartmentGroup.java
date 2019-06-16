@@ -1,5 +1,7 @@
 package com.pth.iflow.core.model;
 
+import java.time.LocalDateTime;
+
 import com.pth.iflow.common.edo.models.DepartmentGroupEdo;
 
 public class DepartmentGroup extends ModelMapperBase<DepartmentGroupEdo, DepartmentGroup> {
@@ -7,6 +9,9 @@ public class DepartmentGroup extends ModelMapperBase<DepartmentGroupEdo, Departm
   private Long departmentId;
   private String title;
   private Integer status;
+  private Integer version;
+  private LocalDateTime createdAt;
+  private LocalDateTime updatedAt;
 
   public Long getId() {
     return id;
@@ -16,12 +21,12 @@ public class DepartmentGroup extends ModelMapperBase<DepartmentGroupEdo, Departm
     this.id = id;
   }
 
-  public Long getDerpartmentId() {
+  public Long getDepartmentId() {
     return departmentId;
   }
 
-  public void setDerpartmentId(final Long workflowId) {
-    this.departmentId = workflowId;
+  public void setDepartmentId(final Long departmentId) {
+    this.departmentId = departmentId;
   }
 
   public String getTitle() {
@@ -40,13 +45,37 @@ public class DepartmentGroup extends ModelMapperBase<DepartmentGroupEdo, Departm
     this.status = status;
   }
 
+  public Integer getVersion() {
+    return version;
+  }
+
+  public void setVersion(final Integer version) {
+    this.version = version;
+  }
+
+  public LocalDateTime getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(final LocalDateTime createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  public LocalDateTime getUpdatedAt() {
+    return updatedAt;
+  }
+
+  public void setUpdatedAt(final LocalDateTime updatedAt) {
+    this.updatedAt = updatedAt;
+  }
+
   @Override
   public DepartmentGroupEdo toEdo() {
     final DepartmentGroupEdo edo = new DepartmentGroupEdo();
     edo.setTitle(title);
     edo.setStatus(status);
     edo.setId(id);
-    edo.setDerpartmentId(departmentId);
+    edo.setDepartmentId(departmentId);
 
     return edo;
   }
@@ -58,7 +87,7 @@ public class DepartmentGroup extends ModelMapperBase<DepartmentGroupEdo, Departm
     model.setTitle(edo.getTitle());
     model.setStatus(edo.getStatus());
     model.setId(edo.getId());
-    model.setDerpartmentId(edo.getDerpartmentId());
+    model.setDepartmentId(edo.getDepartmentId());
 
     return model;
   }
