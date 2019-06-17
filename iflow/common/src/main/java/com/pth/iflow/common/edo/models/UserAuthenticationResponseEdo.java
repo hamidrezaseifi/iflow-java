@@ -3,25 +3,19 @@ package com.pth.iflow.common.edo.models;
 import java.time.LocalDateTime;
 
 public class UserAuthenticationResponseEdo {
-  private UserEdo user;
+  private String email;
   private CompanyEdo company;
   private String token;
   private String sessionid;
   private LocalDateTime created;
   private LocalDateTime lastAccess;
 
-  /**
-   * @return the user
-   */
-  public UserEdo getUser() {
-    return user;
+  public String getEmail() {
+    return email;
   }
 
-  /**
-   * @param user the user to set
-   */
-  public void setUser(final UserEdo user) {
-    this.user = user;
+  public void setEmail(final String email) {
+    this.email = email;
   }
 
   /**
