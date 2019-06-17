@@ -18,6 +18,7 @@ import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 @Transactional
 @Repository
 public class WorkflowStepDao extends DaoBasicClass<WorkflowStep> implements IWorkflowStepDao {
+
   public WorkflowStepDao(final @Autowired JdbcTemplate jdbcTemplate,
       final @Autowired PlatformTransactionManager platformTransactionManager) {
     super(jdbcTemplate, platformTransactionManager);
@@ -54,5 +55,10 @@ public class WorkflowStepDao extends DaoBasicClass<WorkflowStep> implements IWor
     model.setVersion(rs.getInt("version"));
 
     return model;
+  }
+
+  @Override
+  public List<WorkflowStep> getListByWorkflowId(final Long workflowId) throws IFlowStorageException {
+    return getModelListById(workflowId, "SELECT * FROM workflow where workflow_id=?", "WorkflowStep");
   }
 }

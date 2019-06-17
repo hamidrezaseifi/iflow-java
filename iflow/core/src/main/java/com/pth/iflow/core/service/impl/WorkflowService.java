@@ -14,23 +14,34 @@ import com.pth.iflow.core.storage.dao.IWorkflowStepDao;
 
 @Service
 public class WorkflowService implements IWorkflowService {
-  private final IWorkflowDao workflowDao;
+  
+  private final IWorkflowDao     workflowDao;
   private final IWorkflowStepDao workflowStepDao;
-
+  
   WorkflowService(@Autowired final IWorkflowDao workflowDao, @Autowired final IWorkflowStepDao workflowStepDao) {
     this.workflowDao = workflowDao;
     this.workflowStepDao = workflowStepDao;
   }
-
+  
   @Override
   public Workflow getById(final Long id) {
-    return workflowDao.getById(id);
+    return this.workflowDao.getById(id);
   }
-
+  
   @Override
   public List<WorkflowStep> getStepsById(final Long id) {
     final Workflow workflow = getById(id);
-    return workflowStepDao.getListByIdList(workflow.getSteps().stream().collect(Collectors.toList()));
+    return this.workflowStepDao.getListByIdList(workflow.getSteps().stream().collect(Collectors.toList()));
   }
-
+  
+  @Override
+  public List<Workflow> getListByIdCompanyId(final Long id) {
+    return this.workflowDao.getListByCompanyId(id);
+  }
+  
+  @Override
+  public List<Workflow> getListByIdList(final List<Long> idList) {
+    return this.workflowDao.getListByIdList(idList);
+  }
+  
 }

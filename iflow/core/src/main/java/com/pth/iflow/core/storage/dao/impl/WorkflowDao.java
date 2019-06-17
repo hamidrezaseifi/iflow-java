@@ -18,30 +18,31 @@ import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 @Transactional
 @Repository
 public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao {
+  
   public WorkflowDao(final @Autowired JdbcTemplate jdbcTemplate,
       final @Autowired PlatformTransactionManager platformTransactionManager) {
     super(jdbcTemplate, platformTransactionManager);
   }
-
+  
   @Override
   public Workflow getById(final Long id) throws IFlowStorageException {
     return getModelById(id, "SELECT * FROM workflow where id=?", "Workflow");
   }
-
+  
   @Override
   public List<Workflow> getListByIdList(final List<Long> idList) throws IFlowStorageException {
     String sqlSelect = "SELECT * FROM workflow where id in (";
     for (final Long id : idList) {
       sqlSelect += "?, ";
     }
-
+    
     sqlSelect = sqlSelect.trim();
     sqlSelect = sqlSelect.endsWith(",") ? sqlSelect.substring(0, sqlSelect.length() - 1) : sqlSelect;
     sqlSelect += ")";
-
+    
     return getModelListByIdList(idList, sqlSelect, "Workflow");
   }
-
+  
   @Override
   protected Workflow modelFromResultSet(final ResultSet rs) throws SQLException {
     final Workflow model = new Workflow();
@@ -53,11 +54,16 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
     model.setUpdatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("updated_at")));
     model.setVersion(rs.getInt("version"));
     model.setSteps(getworkflowStepIdListById(model.getId()));
-
+    
     return model;
   }
-
+  
   private List<Long> getworkflowStepIdListById(final Long id) throws IFlowStorageException {
     return getIdListById(id, "SELECT * FROM workflow where workflow_id=?", "id", "Workflow Step IDs");
+  }
+  
+  @Override
+  public List<Workflow> getListByCompanyId(final Long id) throws IFlowStorageException {
+    return getModelListById(id, "SELECT * FROM workflow where comapny_id=?", "Workflow");
   }
 }
