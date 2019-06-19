@@ -18,53 +18,53 @@ import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 @Transactional
 @Repository
 public class DepartmentDao extends DaoBasicClass<Department> implements IDepartmentDao {
-
+  
   public DepartmentDao(final @Autowired JdbcTemplate jdbcTemplate,
       final @Autowired PlatformTransactionManager platformTransactionManager) {
     super(jdbcTemplate, platformTransactionManager);
   }
-
+  
   @Override
   protected Department modelFromResultSet(final ResultSet rs) throws SQLException {
     final Department model = new Department();
     model.setId(rs.getLong("id"));
-    model.setCompanyId(rs.getLong("companyid"));
+    model.setCompanyId(rs.getLong("company_id"));
     model.setTitle(rs.getString("title"));
     model.setStatus(rs.getInt("status"));
     model.setCreatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("created_at")));
     model.setUpdatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("updated_at")));
     model.setVersion(rs.getInt("version"));
     model.setGroups(getGroupIdListById(model.getId()));
-
+    
     return model;
   }
-
+  
   @Override
   public Department getById(final Long id) throws IFlowStorageException {
     return getModelById(id, "SELECT * FROM departments where id=?", "Department");
   }
-
+  
   @Override
   public List<Department> getListByIdList(final List<Long> idList) throws IFlowStorageException {
     String sqlSelect = "SELECT * FROM departments where id in (";
     for (final Long id : idList) {
       sqlSelect += "?, ";
     }
-
+    
     sqlSelect = sqlSelect.trim();
     sqlSelect = sqlSelect.endsWith(",") ? sqlSelect.substring(0, sqlSelect.length() - 1) : sqlSelect;
     sqlSelect += ")";
-
+    
     return getModelListByIdList(idList, sqlSelect, "User");
   }
-
+  
   private List<Long> getGroupIdListById(final Long id) throws IFlowStorageException {
     return getIdListById(id, "SELECT * FROM departments_group where department_id=?", "id", "Department Groups");
   }
-
+  
   @Override
   public List<Department> getListByCompanyId(final Long id) throws IFlowStorageException {
-    return getModelListById(id, "SELECT * FROM departments where companyid=?", "Department");
+    return getModelListById(id, "SELECT * FROM departments where company_id=?", "Department");
   }
-
+  
 }
