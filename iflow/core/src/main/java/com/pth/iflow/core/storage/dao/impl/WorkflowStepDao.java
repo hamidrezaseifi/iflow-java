@@ -59,6 +59,6 @@ public class WorkflowStepDao extends DaoBasicClass<WorkflowStep> implements IWor
 
   @Override
   public List<WorkflowStep> getListByWorkflowId(final Long workflowId) throws IFlowStorageException {
-    return getModelListById(workflowId, "SELECT * FROM workflow where workflow_id=?", "WorkflowStep");
+    return getModelListById(workflowId, "SELECT * FROM workflow_step where workflow_id=?", "WorkflowStep");
   }
 }
