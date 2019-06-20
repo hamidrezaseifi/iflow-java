@@ -5,32 +5,25 @@ import java.time.LocalDateTime;
 import com.pth.iflow.common.edo.models.UserAuthenticationResponseEdo;
 
 public class UserAuthenticationSession {
-  private User user;
+  private String email;
   private String token;
   private String sessionid;
   private LocalDateTime created;
   private LocalDateTime lastAccess;
   private final int ageLimit;
 
-
-  public UserAuthenticationSession(final int ageLimit){
+  public UserAuthenticationSession(final int ageLimit) {
     created = LocalDateTime.now();
     lastAccess = LocalDateTime.now();
     this.ageLimit = ageLimit;
   }
 
-  /**
-   * @return the user
-   */
-  public User getUser() {
-    return user;
+  public String getEmail() {
+    return email;
   }
 
-  /**
-   * @param user the user to set
-   */
-  public UserAuthenticationSession setUser(final User user) {
-    this.user = user;
+  public UserAuthenticationSession setEmail(final String email) {
+    this.email = email;
     return this;
   }
 
@@ -78,7 +71,6 @@ public class UserAuthenticationSession {
     this.created = created;
   }
 
-
   /**
    * @return the lastAccess
    */
@@ -88,6 +80,7 @@ public class UserAuthenticationSession {
 
   /**
    * update lastAccess
+   *
    * @return the lastAccess
    */
   public LocalDateTime update() {
@@ -97,12 +90,12 @@ public class UserAuthenticationSession {
 
   /**
    * check the session timeout
+   *
    * @return boolean
    */
   public boolean isValid() {
     return lastAccess.plusSeconds(ageLimit).isAfter(LocalDateTime.now());
   }
-
 
   /**
    * @param lastAccess the lastAccess to set
@@ -111,11 +104,11 @@ public class UserAuthenticationSession {
     this.lastAccess = lastAccess;
   }
 
-  public UserAuthenticationResponseEdo toEdo(){
+  public UserAuthenticationResponseEdo toEdo() {
     final UserAuthenticationResponseEdo edo = new UserAuthenticationResponseEdo();
     edo.setSessionid(sessionid);
     edo.setToken(token);
-    edo.setUser(user.toEdo());
+    edo.setEmail(email);
     edo.setCreated(created);
     edo.setLastAccess(lastAccess);
 

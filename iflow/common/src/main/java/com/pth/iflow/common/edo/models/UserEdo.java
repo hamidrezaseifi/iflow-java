@@ -1,14 +1,21 @@
 package com.pth.iflow.common.edo.models;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class UserEdo {
   private Long id;
-  private Long companyIid;
+  private Long companyId;
   private String email;
   private String password;
   private String firstName;
   private String lastName;
   private Integer status;
   private Integer permission;
+  private final Set<Long> groups = new HashSet<>();
+  private final Set<Long> departments = new HashSet<>();
+  private final Set<Long> departmentGroups = new HashSet<>();
+  private final Set<Long> deputies = new HashSet<>();
 
   /**
    * @return the id
@@ -22,21 +29,20 @@ public class UserEdo {
    */
   public void setId(final Long id) {
     this.id = id;
-  }  
-  
+  }
+
   /**
    * @return the companyIid
    */
-  public Long getCompanyIid() {
-    return companyIid;
+  public Long getCompanyId() {
+    return companyId;
   }
 
-  
   /**
    * @param companyIid the companyIid to set
    */
-  public void setCompanyIid(Long companyIid) {
-    this.companyIid = companyIid;
+  public void setCompanyId(final Long companyIid) {
+    this.companyId = companyIid;
   }
 
   /**
@@ -125,6 +131,66 @@ public class UserEdo {
    */
   public void setPermission(final Integer permission) {
     this.permission = permission;
+  }
+
+  public Set<Long> getGroups() {
+    return groups;
+  }
+
+  public void setGroups(final Set<Long> groups) {
+    this.groups.clear();
+    if (groups != null) {
+      this.groups.addAll(groups);
+    }
+  }
+
+  public void addGroup(final Long groupId) {
+    this.groups.add(groupId);
+  }
+
+  public Set<Long> getDepartments() {
+    return departments;
+  }
+
+  public void setDepartments(final Set<Long> departments) {
+    this.departments.clear();
+    if (departments != null) {
+      this.departments.addAll(departments);
+    }
+  }
+
+  public void addDepartment(final Long departmentId) {
+    this.departments.add(departmentId);
+  }
+
+  public Set<Long> getDepartmentGroups() {
+    return departmentGroups;
+  }
+
+  public void setDepartmentGroups(final Set<Long> departmentGroups) {
+    this.departmentGroups.clear();
+    if (departmentGroups != null) {
+      this.departmentGroups.addAll(departmentGroups);
+    }
+  }
+
+  public void addDepartmentGroup(final Long departmentGroupId) {
+    this.departmentGroups.add(departmentGroupId);
+  }
+
+  public Set<Long> getDeputies() {
+    return deputies;
+  }
+
+  public void setDeputies(final Set<Long> deputies) {
+    this.deputies.clear();
+    if (deputies != null) {
+      this.deputies.addAll(deputies);
+    }
+  }
+
+  public void addDeputy(final Long deputyId) {
+    this.deputies.add(deputyId);
   }
 
 }

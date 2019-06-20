@@ -81,7 +81,7 @@ public class AuthenticationController {
           EIFlowErrorType.USER_NOTFOUND);
     }
 
-    final Company foundCompany = companyService.getById(foundUser.getCompanyIid());
+    final Company foundCompany = companyService.getById(foundUser.getCompanyId());
 
     if (foundCompany == null) {
       throw new ProfileCustomizedException("Company Not Found", "", EModule.PROFILE.getModuleName(),

@@ -1,13 +1,16 @@
 package com.pth.iflow.core.model;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import com.pth.iflow.common.edo.models.UserEdo;
 import com.pth.iflow.common.enums.EUserStatus;
 
-public class User {
+public class User extends ModelMapperBase<UserEdo, User> {
   private Long id;
-  private Long companyIid;
+  private Long companyId;
   private String email;
   private String password;
   private String firstName;
@@ -17,10 +20,10 @@ public class User {
   private Integer version;
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
-
-  public User() {
-
-  }
+  private final Set<Long> groups = new HashSet<>();
+  private final Set<Long> departments = new HashSet<>();
+  private final Set<Long> departmentGroups = new HashSet<>();
+  private final Set<Long> deputies = new HashSet<>();
 
   /**
    * @return the id
@@ -43,15 +46,15 @@ public class User {
   /**
    * @return the companyIid
    */
-  public Long getCompanyIid() {
-    return companyIid;
+  public Long getCompanyId() {
+    return companyId;
   }
 
   /**
    * @param companyIid the companyIid to set
    */
-  public void setCompanyIid(final Long companyIid) {
-    this.companyIid = companyIid;
+  public void setCompanyId(final Long companyId) {
+    this.companyId = companyId;
   }
 
   public String getEmail() {
@@ -182,6 +185,88 @@ public class User {
     this.permission = permission;
   }
 
+  public Set<Long> getGroups() {
+    return groups;
+  }
+
+  public void setGroups(final Set<Long> groups) {
+    this.groups.clear();
+    if (groups != null) {
+      this.groups.addAll(groups);
+    }
+  }
+
+  public void setGroups(final List<Long> groups) {
+    this.groups.clear();
+    if (groups != null) {
+      this.groups.addAll(groups);
+    }
+  }
+
+  public void addGroup(final Long groupId) {
+    this.groups.add(groupId);
+  }
+
+  public Set<Long> getDepartments() {
+    return departments;
+  }
+
+  public void setDepartments(final Set<Long> departments) {
+    this.departments.clear();
+    if (departments != null) {
+      this.departments.addAll(departments);
+    }
+  }
+
+  public void setDepartments(final List<Long> departments) {
+    this.departments.clear();
+    if (departments != null) {
+      this.departments.addAll(departments);
+    }
+  }
+
+  public void addDepartment(final Long departmentId) {
+    this.departments.add(departmentId);
+  }
+
+  public Set<Long> getDepartmentGroups() {
+    return departmentGroups;
+  }
+
+  public void setDepartmentGroups(final Set<Long> departmentGroups) {
+    this.departmentGroups.clear();
+    if (departmentGroups != null) {
+      this.departmentGroups.addAll(departmentGroups);
+    }
+  }
+
+  public void addDepartmentGroup(final Long departmentGroupId) {
+    this.departmentGroups.add(departmentGroupId);
+  }
+
+  public Set<Long> getDeputies() {
+    return deputies;
+  }
+
+  public void setDeputies(final Set<Long> deputies) {
+    this.deputies.clear();
+    if (deputies != null) {
+      this.deputies.addAll(deputies);
+    }
+  }
+
+  public void setDeputies(final List<Long> deputies) {
+    this.deputies.clear();
+    if (deputies != null) {
+      this.deputies.addAll(deputies);
+    }
+  }
+
+  public void addDeputy(final Long deputyId) {
+    this.deputies.add(deputyId);
+  }
+
+  @Override
   public UserEdo toEdo() {
     final UserEdo edo = new UserEdo();
     edo.setFirstName(firstName);
@@ -191,12 +276,17 @@ public class User {
     edo.setStatus(status);
     edo.setEmail(email);
     edo.setId(id);
-    edo.setCompanyIid(companyIid);
+    edo.setCompanyId(companyId);
+    edo.setGroups(groups);
+    edo.setDepartments(departments);
+    edo.setDepartmentGroups(departmentGroups);
+    edo.setDeputies(deputies);
 
     return edo;
   }
 
-  public static User fromEdo(final UserEdo edo) {
+  @Override
+  public User fromEdo(final UserEdo edo) {
     final User user = new User();
 
     user.setFirstName(edo.getFirstName());
@@ -206,7 +296,11 @@ public class User {
     user.setStatus(edo.getStatus());
     user.setEmail(edo.getEmail());
     user.setId(edo.getId());
-    user.setCompanyIid(edo.getCompanyIid());
+    user.setCompanyId(edo.getCompanyId());
+    user.setGroups(edo.getGroups());
+    user.setDepartments(edo.getDepartments());
+    user.setDepartmentGroups(edo.getDepartmentGroups());
+    user.setDeputies(edo.getDeputies());
 
     return user;
   }

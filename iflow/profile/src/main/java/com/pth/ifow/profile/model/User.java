@@ -5,7 +5,7 @@ import com.pth.iflow.common.enums.EUserStatus;
 
 public class User {
   private Long id;
-  private Long companyIid;
+  private Long companyId;
   private String email;
   private String password;
   private String firstName;
@@ -38,16 +38,15 @@ public class User {
   /**
    * @return the companyIid
    */
-  public Long getCompanyIid() {
-    return companyIid;
+  public Long getCompanyId() {
+    return companyId;
   }
-
 
   /**
    * @param companyIid the companyIid to set
    */
-  public void setCompanyIid(final Long companyIid) {
-    this.companyIid = companyIid;
+  public void setCompanyId(final Long companyId) {
+    this.companyId = companyId;
   }
 
   /**
@@ -151,7 +150,7 @@ public class User {
     edo.setStatus(status);
     edo.setEmail(email);
     edo.setId(id);
-    edo.setCompanyIid(companyIid);
+    edo.setCompanyId(companyId);
 
     return edo;
   }
@@ -169,7 +168,7 @@ public class User {
     user.setStatus(edo.getStatus());
     user.setEmail(edo.getEmail());
     user.setId(edo.getId());
-    user.setCompanyIid(edo.getCompanyIid());
+    user.setCompanyId(edo.getCompanyId());
 
     return user;
   }

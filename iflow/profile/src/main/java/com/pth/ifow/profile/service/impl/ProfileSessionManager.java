@@ -26,12 +26,12 @@ public class ProfileSessionManager implements ISessionManager {
   @Override
   public UserAuthenticationSession findByEmail(final String email) {
 
-    logger.debug("Finding session by email:{}" , email);
+    logger.debug("Finding session by email:{}", email);
 
-    for(final String sessionId : sessions.keySet()) {
+    for (final String sessionId : sessions.keySet()) {
       final UserAuthenticationSession session = sessions.get(sessionId);
-      if(session.getUser().getEmail().equals(email)) {
-        logger.debug("Session {} found for email:{}" , sessionId, email);
+      if (session.getEmail().equals(email)) {
+        logger.debug("Session {} found for email:{}", sessionId, email);
         return session;
       }
     }
@@ -48,7 +48,7 @@ public class ProfileSessionManager implements ISessionManager {
   public UserAuthenticationSession updateByToken(final String token) {
 
     final UserAuthenticationSession session = findByToken(token);
-    if(session != null) {
+    if (session != null) {
       session.update();
       return session;
     }
@@ -58,10 +58,10 @@ public class ProfileSessionManager implements ISessionManager {
 
   @Override
   public UserAuthenticationSession findByToken(final String token) {
-    for(final String sessionId : sessions.keySet()) {
+    for (final String sessionId : sessions.keySet()) {
       final UserAuthenticationSession session = sessions.get(sessionId);
-      if(session.getToken().equals(token)) {
-        logger.debug("Session {} found for token:{}" , sessionId, token);
+      if (session.getToken().equals(token)) {
+        logger.debug("Session {} found for token:{}", sessionId, token);
         return session;
       }
     }
@@ -72,38 +72,37 @@ public class ProfileSessionManager implements ISessionManager {
   @Override
   public UserAuthenticationSession addSession(final User user) {
     final String ts = String.valueOf(System.currentTimeMillis());
-    final String rand  = UUID.randomUUID().toString() + ts;
+    final String rand = UUID.randomUUID().toString() + ts;
     final String sessionid = DigestUtils.md5Hex(rand);
 
     final UserAuthenticationSession session = new UserAuthenticationSession(SESSION_AGE_LIMIT);
     session.setSessionid(sessionid);
     session.setToken(generateToken(user));
-    session.setUser(user);
+    session.setEmail(user.getEmail());
     session.update();
 
     sessions.put(sessionid, session);
 
-    logger.debug("Session {} with token {] add for email:{}" , sessionid, session.getToken(), user.getEmail());
+    logger.debug("Session {} with token {] add for email:{}", sessionid, session.getToken(), user.getEmail());
 
     return session;
   }
 
-
   @Override
   public UserAuthenticationSession updateUser(final User user, final String sessionId) {
-    findBySessionId(sessionId).setUser(user).update();
+    findBySessionId(sessionId).setEmail(user.getEmail()).update();
 
     return findBySessionId(sessionId);
   }
 
-  private String generateToken(final User user){
+  private String generateToken(final User user) {
 
-    final String token = "PFTKS{" + encodeBase64(user.getEmail())  + "}PFTKE";
+    final String token = "PFTKS{" + encodeBase64(user.getEmail()) + "}PFTKE";
 
     return token;
   }
 
-  private String encodeBase64(final String text){
+  private String encodeBase64(final String text) {
     return Base64.getEncoder().encodeToString(text.getBytes(Charset.forName("UTF-8")));
   }
 
@@ -111,11 +110,10 @@ public class ProfileSessionManager implements ISessionManager {
   public UserAuthenticationSession findValidateByEmail(final String email, final boolean removeInvalid) {
 
     final UserAuthenticationSession session = findByEmail(email);
-    if(session != null) {
-      if(session.isValid()) {
+    if (session != null) {
+      if (session.isValid()) {
         return session;
-      }
-      else {
+      } else {
         sessions.remove(session.getSessionid());
       }
     }
