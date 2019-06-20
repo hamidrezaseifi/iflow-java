@@ -1,4 +1,4 @@
-package com.pth.iflow.core.controllers.helper;
+package com.pth.iflow.common.controllers.helper;
 
 import javax.servlet.http.HttpServletRequest;
 
