@@ -45,7 +45,7 @@ public class ProfileConfiguration {
      * @throws URISyntaxException
      */
     public URL getReadUserByEmailUrl() throws MalformedURLException {
-      String path = coreBaseUrl + "/" + IflowRestPaths.Core.USER_READ_BY_EMAIL;
+      String path = coreBaseUrl + "/" + IflowRestPaths.CoreModul.USER_READ_BY_EMAIL;
       path = path.replace("//", "/");
       path = path.replace("http:/", "http://");
 
@@ -58,7 +58,7 @@ public class ProfileConfiguration {
      * @throws URISyntaxException
      */
     public URL getReadCompanyByIdUrl() throws MalformedURLException {
-      String path = coreBaseUrl + "/" + IflowRestPaths.Core.COMPANY_READ_BY_ID;
+      String path = coreBaseUrl + "/" + IflowRestPaths.CoreModul.COMPANY_READ_BY_ID;
       path = path.replace("//", "/");
       path = path.replace("http:/", "http://");
 

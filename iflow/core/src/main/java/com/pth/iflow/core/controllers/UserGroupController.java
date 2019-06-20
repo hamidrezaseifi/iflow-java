@@ -33,7 +33,7 @@ public class UserGroupController {
   }
   
   @ResponseStatus(HttpStatus.OK)
-  @GetMapping(path = IflowRestPaths.Core.USERGROUP_READ_BY_ID, produces = {
+  @GetMapping(path = IflowRestPaths.CoreModul.USERGROUP_READ_BY_ID, produces = {
       MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE })
   public ResponseEntity<UserGroupEdo> readUserGroup(@PathVariable(name = "id") final Long groupid, final HttpServletRequest request)
       throws Exception {
@@ -44,7 +44,7 @@ public class UserGroupController {
   }
   
   @ResponseStatus(HttpStatus.OK)
-  @PostMapping(path = IflowRestPaths.Core.USERGROUP_READ_LIST, produces = {
+  @PostMapping(path = IflowRestPaths.CoreModul.USERGROUP_READ_LIST, produces = {
       MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE }, consumes = MediaType.APPLICATION_XML_VALUE)
   public ResponseEntity<List<UserGroupEdo>> readUserGroupList(@RequestBody final List<Long> idList, final HttpServletRequest request)
       throws Exception {
@@ -55,7 +55,7 @@ public class UserGroupController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @GetMapping(path = IflowRestPaths.Core.USERGROUP_READ_LIST_BY_COMPANY, produces = {
+  @GetMapping(path = IflowRestPaths.CoreModul.USERGROUP_READ_LIST_BY_COMPANY, produces = {
       MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE })
   public ResponseEntity<List<UserGroupEdo>> readUserGroupListByCompany(@PathVariable(name = "id") final Long id, final HttpServletRequest request)
       throws Exception {

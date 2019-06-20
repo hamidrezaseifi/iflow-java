@@ -37,7 +37,7 @@ public class UserController {
   }
   
   @ResponseStatus(HttpStatus.OK)
-  @GetMapping(path = IflowRestPaths.Core.USER_READ_BY_ID, produces = {
+  @GetMapping(path = IflowRestPaths.CoreModul.USER_READ_BY_ID, produces = {
       MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE })
   public ResponseEntity<UserEdo> readUser(@PathVariable final Long userid, final HttpServletRequest request) throws Exception {
     
@@ -47,7 +47,7 @@ public class UserController {
   }
   
   @ResponseStatus(HttpStatus.OK)
-  @GetMapping(path = IflowRestPaths.Core.USER_READ_BY_EMAIL, produces = {
+  @GetMapping(path = IflowRestPaths.CoreModul.USER_READ_BY_EMAIL, produces = {
       MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE })
   public ResponseEntity<UserEdo> readUserByEmail(@PathVariable final String email, final HttpServletRequest request) throws Exception {
     
@@ -57,7 +57,7 @@ public class UserController {
   }
   
   @ResponseStatus(HttpStatus.OK)
-  @GetMapping(path = IflowRestPaths.Core.USER_USERGROUPS_LIST, produces = {
+  @GetMapping(path = IflowRestPaths.CoreModul.USER_USERGROUPS_LIST, produces = {
       MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE })
   public ResponseEntity<List<UserGroupEdo>> readUserGroups(@PathVariable final Long userid, final HttpServletRequest request) throws Exception {
     
@@ -67,7 +67,7 @@ public class UserController {
   }
   
   @ResponseStatus(HttpStatus.OK)
-  @GetMapping(path = IflowRestPaths.Core.USER_DEPARTMENTS_LIST, produces = {
+  @GetMapping(path = IflowRestPaths.CoreModul.USER_DEPARTMENTS_LIST, produces = {
       MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE })
   public ResponseEntity<List<DepartmentEdo>> readUserDepartments(@PathVariable final Long userid, final HttpServletRequest request) throws Exception {
     
@@ -77,7 +77,7 @@ public class UserController {
   }
   
   @ResponseStatus(HttpStatus.OK)
-  @GetMapping(path = IflowRestPaths.Core.USER_DEPARTMENTGROUPS_LIST, produces = {
+  @GetMapping(path = IflowRestPaths.CoreModul.USER_DEPARTMENTGROUPS_LIST, produces = {
       MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE })
   public ResponseEntity<List<DepartmentGroupEdo>> readUserDepartmentGroups(@PathVariable final Long userid, final HttpServletRequest request)
       throws Exception {
@@ -88,7 +88,7 @@ public class UserController {
   }
   
   @ResponseStatus(HttpStatus.OK)
-  @GetMapping(path = IflowRestPaths.Core.USER_DEPUTIES_LIST, produces = {
+  @GetMapping(path = IflowRestPaths.CoreModul.USER_DEPUTIES_LIST, produces = {
       MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE })
   public ResponseEntity<List<UserEdo>> readUserDeputies(@PathVariable final Long userid, final HttpServletRequest request) throws Exception {
     
