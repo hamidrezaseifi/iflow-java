@@ -18,6 +18,7 @@ import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 @Transactional
 @Repository
 public class UserGroupDao extends DaoBasicClass<UserGroup> implements IUserGroupDao {
+
   public UserGroupDao(final @Autowired JdbcTemplate jdbcTemplate,
       final @Autowired PlatformTransactionManager platformTransactionManager) {
     super(jdbcTemplate, platformTransactionManager);
@@ -47,7 +48,7 @@ public class UserGroupDao extends DaoBasicClass<UserGroup> implements IUserGroup
   protected UserGroup modelFromResultSet(final ResultSet rs) throws SQLException {
     final UserGroup model = new UserGroup();
     model.setId(rs.getLong("id"));
-    model.setCompanyId(rs.getLong("companyid"));
+    model.setCompanyId(rs.getLong("company_id"));
     model.setTitle(rs.getString("title"));
     model.setStatus(rs.getInt("status"));
     model.setCreatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("created_at")));
@@ -55,6 +56,17 @@ public class UserGroupDao extends DaoBasicClass<UserGroup> implements IUserGroup
     model.setVersion(rs.getInt("version"));
 
     return model;
+  }
+
+  @Override
+  public List<UserGroup> getListByIdCompanyId(final Long companyId) throws IFlowStorageException {
+    
+    return getModelListById(companyId, "SELECT * FROM user_group where company_id=?", "User Group");
+  }
+
+  @Override
+  public List<Long> listGroupUserId(final Long groupId) throws IFlowStorageException {
+    return getIdListById(groupId, "SELECT * FROM user_usergroup where user_group=?", "user_id", "User List");
   }
 
 }
