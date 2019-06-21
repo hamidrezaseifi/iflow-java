@@ -7,7 +7,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
 
 @Configuration
-public class WebMvcConfig implements WebMvcConfigurer {
+public class WorkflowWebMvcConfig implements WebMvcConfigurer {
 
   TokenVerficationHandlerInterceptor authenticationVerficationHandler;
 
