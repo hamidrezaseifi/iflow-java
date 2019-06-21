@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
 import com.pth.iflow.common.edo.models.UserGroupEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
+import com.pth.iflow.core.model.ModelMapperBase;
 import com.pth.iflow.core.model.UserGroup;
 import com.pth.iflow.core.service.IUserGroupService;
 
@@ -33,8 +34,8 @@ public class UserGroupController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @GetMapping(path = IflowRestPaths.CoreModul.USERGROUP_READ_BY_ID, produces = { MediaType.APPLICATION_XML_VALUE,
-      MediaType.APPLICATION_JSON_UTF8_VALUE })
+  @GetMapping(path = IflowRestPaths.CoreModul.USERGROUP_READ_BY_ID, consumes = { MediaType.APPLICATION_XML_VALUE,
+      MediaType.APPLICATION_JSON_UTF8_VALUE }, produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE })
   public ResponseEntity<UserGroupEdo> readUserGroup(@PathVariable(name = "id") final Long groupid, final HttpServletRequest request)
       throws Exception {
 
@@ -44,25 +45,25 @@ public class UserGroupController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @PostMapping(path = IflowRestPaths.CoreModul.USERGROUP_READ_LIST, produces = { MediaType.APPLICATION_XML_VALUE,
-      MediaType.APPLICATION_JSON_UTF8_VALUE }, consumes = MediaType.APPLICATION_XML_VALUE)
+  @PostMapping(path = IflowRestPaths.CoreModul.USERGROUP_READ_LIST, consumes = { MediaType.APPLICATION_XML_VALUE,
+      MediaType.APPLICATION_JSON_UTF8_VALUE }, produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE })
   public ResponseEntity<List<UserGroupEdo>> readUserGroupList(@RequestBody final List<Long> idList, final HttpServletRequest request)
       throws Exception {
 
     final List<UserGroup> modelList = this.userGroupService.getListByIdList(idList);
 
-    return ControllerHelper.createResponseEntity(request, UserGroup.toEdoList(modelList), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, ModelMapperBase.toEdoList(modelList), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @GetMapping(path = IflowRestPaths.CoreModul.USERGROUP_READ_LIST_BY_COMPANY, produces = { MediaType.APPLICATION_XML_VALUE,
-      MediaType.APPLICATION_JSON_UTF8_VALUE })
+  @GetMapping(path = IflowRestPaths.CoreModul.USERGROUP_READ_LIST_BY_COMPANY, consumes = { MediaType.APPLICATION_XML_VALUE,
+      MediaType.APPLICATION_JSON_UTF8_VALUE }, produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE })
   public ResponseEntity<List<UserGroupEdo>> readUserGroupListByCompany(@PathVariable(name = "id") final Long id,
       final HttpServletRequest request) throws Exception {
 
     final List<UserGroup> modelList = this.userGroupService.getListByIdCompanyId(id);
 
-    return ControllerHelper.createResponseEntity(request, UserGroup.toEdoList(modelList), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, ModelMapperBase.toEdoList(modelList), HttpStatus.OK);
   }
 
 }

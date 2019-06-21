@@ -42,8 +42,8 @@ public class AuthenticationController {
   }
 
   @ResponseStatus(HttpStatus.ACCEPTED)
-  @PostMapping(value = "/auth/authenticate", consumes = MediaType.APPLICATION_XML_VALUE, produces = { MediaType.APPLICATION_XML_VALUE,
-      MediaType.APPLICATION_JSON_UTF8_VALUE })
+  @PostMapping(value = "/auth/authenticate", consumes = { MediaType.APPLICATION_XML_VALUE,
+      MediaType.APPLICATION_JSON_UTF8_VALUE }, produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE })
   @ResponseBody
   public ResponseEntity<UserAuthenticationResponseEdo> authenticate(@RequestBody final UserAuthenticationRequestEdo userEdo,
       final HttpServletRequest request) throws ProfileCustomizedException, URISyntaxException, MalformedURLException {
