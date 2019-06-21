@@ -3,6 +3,8 @@ package com.pth.ifow.profile.controller;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pth.iflow.common.controllers.helper.ControllerHelper;
 import com.pth.iflow.common.edo.models.UserAuthenticationRequestEdo;
 import com.pth.iflow.common.edo.models.UserAuthenticationResponseEdo;
 import com.pth.iflow.common.enums.EModule;
@@ -31,29 +34,21 @@ public class AuthenticationController {
   private final IAuthenticationService authService;
   private final ISessionManager sessionManager;
 
-  public AuthenticationController(@Autowired final IAuthenticationService authService, @Autowired final ISessionManager sessionManager) {
+  public AuthenticationController(@Autowired final IAuthenticationService authService,
+      @Autowired final ISessionManager sessionManager) {
+
     this.authService = authService;
     this.sessionManager = sessionManager;
-   }
-
-  @ResponseStatus(HttpStatus.ACCEPTED)
-  @PostMapping(value = "/auth/authenticate", consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
-  @ResponseBody
-  public ResponseEntity<UserAuthenticationResponseEdo> authenticate(
-      @RequestBody final UserAuthenticationRequestEdo userEdo)
-      throws ProfileCustomizedException, URISyntaxException, MalformedURLException {
-
-    return new ResponseEntity<>(authenticateUser(userEdo), HttpStatus.ACCEPTED);
   }
 
   @ResponseStatus(HttpStatus.ACCEPTED)
-  @PostMapping(value = "/auth/authenticatejson", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+  @PostMapping(value = "/auth/authenticate", consumes = { MediaType.APPLICATION_XML_VALUE,
+      MediaType.APPLICATION_JSON_UTF8_VALUE }, produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE })
   @ResponseBody
-  public ResponseEntity<UserAuthenticationResponseEdo> authenticateJson(
-      @RequestBody final UserAuthenticationRequestEdo userEdo)
-      throws ProfileCustomizedException, URISyntaxException, MalformedURLException {
+  public ResponseEntity<UserAuthenticationResponseEdo> authenticate(@RequestBody final UserAuthenticationRequestEdo userEdo,
+      final HttpServletRequest request) throws ProfileCustomizedException, URISyntaxException, MalformedURLException {
 
-    return new ResponseEntity<>(authenticateUser(userEdo), HttpStatus.ACCEPTED);
+    return ControllerHelper.createResponseEntity(request, authenticateUser(userEdo), HttpStatus.ACCEPTED);
   }
 
   private UserAuthenticationResponseEdo authenticateUser(final UserAuthenticationRequestEdo userEdo)
@@ -63,8 +58,6 @@ public class AuthenticationController {
       throw new ProfileCustomizedException("Invalid Username or Password", "", EModule.PROFILE.getModuleName(),
           EIFlowErrorType.INVALID_USERNAMEPASSWORD);
     }
-
-    
 
     UserAuthenticationSession session = sessionManager.findValidateByEmail(authUser.getEmail(), true);
     if (session == null) {
