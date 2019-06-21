@@ -10,10 +10,10 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.futurebim.core.dao.utils.SqlUtils;
 import com.pth.iflow.core.model.Department;
 import com.pth.iflow.core.storage.dao.IDepartmentDao;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
+import com.pth.iflow.core.storage.dao.utils.SqlUtils;
 
 @Transactional
 @Repository

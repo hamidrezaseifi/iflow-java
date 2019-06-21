@@ -1,4 +1,4 @@
-package com.pth.iflow.core.controllers;
+package com.pth.ifow.workflow.controllers;
 
 import java.util.List;
 
@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
 import com.pth.iflow.common.edo.models.WorkflowStepEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
-import com.pth.iflow.core.model.ModelMapperBase;
-import com.pth.iflow.core.model.WorkflowStep;
-import com.pth.iflow.core.service.IWorkflowStepService;
+import com.pth.ifow.workflow.bl.IWorkflowStepService;
+import com.pth.ifow.workflow.models.ModelMapperBase;
+import com.pth.ifow.workflow.models.WorkflowStep;
 
 @RestController
 @RequestMapping
@@ -34,8 +34,8 @@ public class WorkflowStepController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @GetMapping(path = IflowRestPaths.CoreModul.WORKFLOWSTEP_READ_BY_ID, consumes = { MediaType.APPLICATION_XML_VALUE,
-      MediaType.APPLICATION_JSON_UTF8_VALUE }, produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE })
+  @GetMapping(path = IflowRestPaths.WorkflowModule.WORKFLOWSTEP_READ_BY_ID, produces = { MediaType.APPLICATION_XML_VALUE,
+      MediaType.APPLICATION_JSON_UTF8_VALUE })
   public ResponseEntity<WorkflowStepEdo> readDepartmentGroup(@PathVariable final Long id, final HttpServletRequest request)
       throws Exception {
 
@@ -45,8 +45,8 @@ public class WorkflowStepController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @PostMapping(path = IflowRestPaths.CoreModul.WORKFLOWSTEP_READ_LIST, consumes = { MediaType.APPLICATION_XML_VALUE,
-      MediaType.APPLICATION_JSON_UTF8_VALUE }, produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE })
+  @PostMapping(path = IflowRestPaths.WorkflowModule.WORKFLOWSTEP_READ_LIST, produces = { MediaType.APPLICATION_XML_VALUE,
+      MediaType.APPLICATION_JSON_UTF8_VALUE }, consumes = MediaType.APPLICATION_XML_VALUE)
   public ResponseEntity<List<WorkflowStepEdo>> readDepartmentList(@RequestBody final List<Long> idList,
       final HttpServletRequest request) throws Exception {
 
@@ -56,8 +56,8 @@ public class WorkflowStepController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @GetMapping(path = IflowRestPaths.CoreModul.WORKFLOWSTEP_READ_LIST_BY_WORKFLOW, consumes = { MediaType.APPLICATION_XML_VALUE,
-      MediaType.APPLICATION_JSON_UTF8_VALUE }, produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE })
+  @GetMapping(path = IflowRestPaths.WorkflowModule.WORKFLOWSTEP_READ_LIST_BY_WORKFLOW, produces = { MediaType.APPLICATION_XML_VALUE,
+      MediaType.APPLICATION_JSON_UTF8_VALUE })
   public ResponseEntity<List<WorkflowStepEdo>> readDepartmentListByCompany(@PathVariable final Long id,
       final HttpServletRequest request) throws Exception {
 
