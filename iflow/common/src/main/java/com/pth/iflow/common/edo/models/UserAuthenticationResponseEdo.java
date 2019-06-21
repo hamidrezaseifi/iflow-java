@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 
 public class UserAuthenticationResponseEdo {
   private String email;
-  private CompanyEdo company;
   private String token;
   private String sessionid;
   private LocalDateTime created;
@@ -16,20 +15,6 @@ public class UserAuthenticationResponseEdo {
 
   public void setEmail(final String email) {
     this.email = email;
-  }
-
-  /**
-   * @return the company
-   */
-  public CompanyEdo getCompany() {
-    return company;
-  }
-
-  /**
-   * @param company the company to set
-   */
-  public void setCompany(final CompanyEdo company) {
-    this.company = company;
   }
 
   /**
