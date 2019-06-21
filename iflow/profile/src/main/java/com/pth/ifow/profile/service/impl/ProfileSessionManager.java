@@ -70,34 +70,34 @@ public class ProfileSessionManager implements ISessionManager {
   }
 
   @Override
-  public UserAuthenticationSession addSession(final User user) {
+  public UserAuthenticationSession addSession(String email) {
     final String ts = String.valueOf(System.currentTimeMillis());
     final String rand = UUID.randomUUID().toString() + ts;
     final String sessionid = DigestUtils.md5Hex(rand);
 
     final UserAuthenticationSession session = new UserAuthenticationSession(SESSION_AGE_LIMIT);
     session.setSessionid(sessionid);
-    session.setToken(generateToken(user));
-    session.setEmail(user.getEmail());
+    session.setToken(generateToken(email));
+    session.setEmail(email);
     session.update();
 
     sessions.put(sessionid, session);
 
-    logger.debug("Session {} with token {] add for email:{}", sessionid, session.getToken(), user.getEmail());
+    logger.debug("Session {} with token {] add for email:{}", sessionid, session.getToken(), email);
 
     return session;
   }
 
   @Override
-  public UserAuthenticationSession updateUser(final User user, final String sessionId) {
-    findBySessionId(sessionId).setEmail(user.getEmail()).update();
+  public UserAuthenticationSession updateUser(final String email, final String sessionId) {
+    findBySessionId(sessionId).setEmail(email).update();
 
     return findBySessionId(sessionId);
   }
 
-  private String generateToken(final User user) {
+  private String generateToken(String email) {
 
-    final String token = "PFTKS{" + encodeBase64(user.getEmail()) + "}PFTKE";
+    final String token = "PFTKS{" + encodeBase64(email) + "}PFTKE";
 
     return token;
   }
