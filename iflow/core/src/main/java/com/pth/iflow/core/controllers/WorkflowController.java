@@ -34,8 +34,8 @@ public class WorkflowController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @GetMapping(path = IflowRestPaths.CoreModul.WORKFLOW_READ_BY_ID, consumes = { MediaType.APPLICATION_XML_VALUE,
-      MediaType.APPLICATION_JSON_UTF8_VALUE }, produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE })
+  @GetMapping(path = IflowRestPaths.CoreModul.WORKFLOW_READ_BY_ID, produces = { MediaType.APPLICATION_XML_VALUE,
+      MediaType.APPLICATION_JSON_UTF8_VALUE })
   public ResponseEntity<WorkflowEdo> readWorkflow(@PathVariable final Long id, final HttpServletRequest request) throws Exception {
 
     final Workflow model = this.workflowService.getById(id);
@@ -55,8 +55,8 @@ public class WorkflowController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @GetMapping(path = IflowRestPaths.CoreModul.WORKFLOW_READ_LIST_BY_COMPANY, consumes = { MediaType.APPLICATION_XML_VALUE,
-      MediaType.APPLICATION_JSON_UTF8_VALUE }, produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE })
+  @GetMapping(path = IflowRestPaths.CoreModul.WORKFLOW_READ_LIST_BY_COMPANY, produces = { MediaType.APPLICATION_XML_VALUE,
+      MediaType.APPLICATION_JSON_UTF8_VALUE })
   public ResponseEntity<List<WorkflowEdo>> readWorkflowListByCompany(@PathVariable final Long id, final HttpServletRequest request)
       throws Exception {
 

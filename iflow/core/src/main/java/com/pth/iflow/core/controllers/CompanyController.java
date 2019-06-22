@@ -29,10 +29,10 @@ public class CompanyController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @GetMapping(path = IflowRestPaths.CoreModul.COMPANY_READ_BY_ID, consumes = { MediaType.APPLICATION_XML_VALUE,
-      MediaType.APPLICATION_JSON_UTF8_VALUE }, produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE })
-  public ResponseEntity<CompanyEdo> readCompany(@PathVariable final Long companyid, final HttpServletRequest request)
-      throws Exception {
+  @GetMapping(path = IflowRestPaths.CoreModul.COMPANY_READ_BY_ID, produces = { MediaType.APPLICATION_XML_VALUE,
+      MediaType.APPLICATION_JSON_UTF8_VALUE })
+  public ResponseEntity<CompanyEdo> readCompany(@PathVariable(name = "companyid") final Long companyid,
+      final HttpServletRequest request) throws Exception {
 
     final Company company = this.companyService.getById(companyid);
 
