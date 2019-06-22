@@ -34,8 +34,8 @@ public class DepartmentController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @GetMapping(path = IflowRestPaths.CoreModul.DEPARTMENT_READ_BY_ID, consumes = { MediaType.APPLICATION_XML_VALUE,
-      MediaType.APPLICATION_JSON_UTF8_VALUE }, produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE })
+  @GetMapping(path = IflowRestPaths.CoreModul.DEPARTMENT_READ_BY_ID, produces = { MediaType.APPLICATION_XML_VALUE,
+      MediaType.APPLICATION_JSON_UTF8_VALUE })
   public ResponseEntity<DepartmentEdo> readDepartments(@PathVariable final Long id, final HttpServletRequest request)
       throws Exception {
 
@@ -56,8 +56,8 @@ public class DepartmentController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @GetMapping(path = IflowRestPaths.CoreModul.DEPARTMENT_READ_LIST_BY_COMPANY, consumes = { MediaType.APPLICATION_XML_VALUE,
-      MediaType.APPLICATION_JSON_UTF8_VALUE }, produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE })
+  @GetMapping(path = IflowRestPaths.CoreModul.DEPARTMENT_READ_LIST_BY_COMPANY, produces = { MediaType.APPLICATION_XML_VALUE,
+      MediaType.APPLICATION_JSON_UTF8_VALUE })
   public ResponseEntity<List<DepartmentEdo>> readDepartmentListByCompany(@PathVariable final Long id, final HttpServletRequest request)
       throws Exception {
 
