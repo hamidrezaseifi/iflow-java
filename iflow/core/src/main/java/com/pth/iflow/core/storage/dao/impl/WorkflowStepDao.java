@@ -10,14 +10,14 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.pth.iflow.core.model.WorkflowStep;
+import com.pth.iflow.core.model.WorkflowTypeStep;
 import com.pth.iflow.core.storage.dao.IWorkflowStepDao;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 import com.pth.iflow.core.storage.dao.utils.SqlUtils;
 
 @Transactional
 @Repository
-public class WorkflowStepDao extends DaoBasicClass<WorkflowStep> implements IWorkflowStepDao {
+public class WorkflowStepDao extends DaoBasicClass<WorkflowTypeStep> implements IWorkflowStepDao {
   
   public WorkflowStepDao(final @Autowired JdbcTemplate jdbcTemplate,
       final @Autowired PlatformTransactionManager platformTransactionManager) {
@@ -25,12 +25,12 @@ public class WorkflowStepDao extends DaoBasicClass<WorkflowStep> implements IWor
   }
   
   @Override
-  public WorkflowStep getById(final Long id) throws IFlowStorageException {
+  public WorkflowTypeStep getById(final Long id) throws IFlowStorageException {
     return getModelById(id, "SELECT * FROM workflow_step where id=?", "WorkflowStep");
   }
   
   @Override
-  public List<WorkflowStep> getListByIdList(final List<Long> idList) throws IFlowStorageException {
+  public List<WorkflowTypeStep> getListByIdList(final List<Long> idList) throws IFlowStorageException {
     String sqlSelect = "SELECT * FROM workflow_step where id in (";
     for (final Long id : idList) {
       sqlSelect += "?, ";
@@ -44,8 +44,8 @@ public class WorkflowStepDao extends DaoBasicClass<WorkflowStep> implements IWor
   }
   
   @Override
-  protected WorkflowStep modelFromResultSet(final ResultSet rs) throws SQLException {
-    final WorkflowStep model = new WorkflowStep();
+  protected WorkflowTypeStep modelFromResultSet(final ResultSet rs) throws SQLException {
+    final WorkflowTypeStep model = new WorkflowTypeStep();
     model.setId(rs.getLong("id"));
     model.setWorkflowTypeId(rs.getLong("workflow_type_id"));
     model.setTitle(rs.getString("title"));
@@ -58,7 +58,7 @@ public class WorkflowStepDao extends DaoBasicClass<WorkflowStep> implements IWor
   }
   
   @Override
-  public List<WorkflowStep> getListByWorkflowId(final Long workflowId) throws IFlowStorageException {
+  public List<WorkflowTypeStep> getListByWorkflowId(final Long workflowId) throws IFlowStorageException {
     return getModelListById(workflowId, "SELECT * FROM workflow_step where workflow_type_id=?", "WorkflowStep");
   }
 }

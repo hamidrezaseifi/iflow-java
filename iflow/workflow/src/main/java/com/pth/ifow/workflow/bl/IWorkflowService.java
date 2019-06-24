@@ -4,16 +4,16 @@ import java.net.MalformedURLException;
 import java.util.List;
 
 import com.pth.ifow.workflow.exceptions.WorkflowCustomizedException;
-import com.pth.ifow.workflow.models.Workflow;
-import com.pth.ifow.workflow.models.WorkflowStep;
+import com.pth.ifow.workflow.models.WorkflowType;
+import com.pth.ifow.workflow.models.WorkflowTypeStep;
 
 public interface IWorkflowService {
 
-  public Workflow getById(Long id) throws WorkflowCustomizedException, MalformedURLException;
+  public WorkflowType getById(Long id) throws WorkflowCustomizedException, MalformedURLException;
 
-  public List<Workflow> getListByIdCompanyId(final Long id) throws WorkflowCustomizedException, MalformedURLException;
+  public List<WorkflowType> getListByIdCompanyId(final Long id) throws WorkflowCustomizedException, MalformedURLException;
 
-  public List<WorkflowStep> getStepsById(final Long id) throws WorkflowCustomizedException, MalformedURLException;
+  public List<WorkflowTypeStep> getStepsById(final Long id) throws WorkflowCustomizedException, MalformedURLException;
 
-  public List<Workflow> getListByIdList(final List<Long> idList) throws WorkflowCustomizedException, MalformedURLException;
+  public List<WorkflowType> getListByIdList(final List<Long> idList) throws WorkflowCustomizedException, MalformedURLException;
 }
