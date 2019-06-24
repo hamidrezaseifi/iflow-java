@@ -9,15 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 
-import com.pth.iflow.common.edo.models.WorkflowEdo;
-import com.pth.iflow.common.edo.models.WorkflowStepEdo;
+import com.pth.iflow.common.edo.models.WorkflowTypeEdo;
+import com.pth.iflow.common.edo.models.WorkflowTypeStepEdo;
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.ifow.workflow.bl.IWorkflowService;
 import com.pth.ifow.workflow.config.WorkflowConfiguration;
 import com.pth.ifow.workflow.exceptions.WorkflowCustomizedException;
-import com.pth.ifow.workflow.models.Workflow;
-import com.pth.ifow.workflow.models.WorkflowStep;
+import com.pth.ifow.workflow.models.WorkflowType;
+import com.pth.ifow.workflow.models.WorkflowTypeStep;
 import com.pth.ifow.workflow.services.IRestTemplateCall;
 
 @Service
@@ -35,57 +35,57 @@ public class WorkflowService implements IWorkflowService {
   }
 
   @Override
-  public Workflow getById(final Long id) throws WorkflowCustomizedException, MalformedURLException {
+  public WorkflowType getById(final Long id) throws WorkflowCustomizedException, MalformedURLException {
 
     logger.debug("Request workflow data for id {}", id);
 
-    final WorkflowEdo edo = restTemplate.callRestGet(
-        moduleAccessConfig.generateCoreSunUrlUrl(IflowRestPaths.CoreModul.WORKFLOW_READ_BY_ID).toString(), EModule.CORE,
-        WorkflowEdo.class, true, id);
+    final WorkflowTypeEdo edo = restTemplate.callRestGet(
+        moduleAccessConfig.generateCoreSunUrlUrl(IflowRestPaths.CoreModul.WORKFLOWTYPE_READ_BY_ID).toString(), EModule.CORE,
+        WorkflowTypeEdo.class, true, id);
 
-    return new Workflow().fromEdo(edo);
+    return new WorkflowType().fromEdo(edo);
   }
 
   @Override
-  public List<Workflow> getListByIdCompanyId(final Long id) throws WorkflowCustomizedException, MalformedURLException {
+  public List<WorkflowType> getListByIdCompanyId(final Long id) throws WorkflowCustomizedException, MalformedURLException {
     logger.debug("Request workflow list for company id {}", id);
 
-    final ParameterizedTypeReference<List<WorkflowEdo>> typeRef = new ParameterizedTypeReference<List<WorkflowEdo>>() {
+    final ParameterizedTypeReference<List<WorkflowTypeEdo>> typeRef = new ParameterizedTypeReference<List<WorkflowTypeEdo>>() {
     };
 
-    final List<WorkflowEdo> edoList = restTemplate.callRestGet(
-        moduleAccessConfig.generateCoreSunUrlUrl(IflowRestPaths.CoreModul.WORKFLOW_READ_LIST_BY_COMPANY).toString(), EModule.CORE,
+    final List<WorkflowTypeEdo> edoList = restTemplate.callRestGet(
+        moduleAccessConfig.generateCoreSunUrlUrl(IflowRestPaths.CoreModul.WORKFLOWTYPE_READ_LIST_BY_COMPANY).toString(), EModule.CORE,
         typeRef, true, id);
 
-    return new Workflow().fromEdo(edoList);
+    return new WorkflowType().fromEdo(edoList);
   }
 
   @Override
-  public List<Workflow> getListByIdList(final List<Long> idList) throws WorkflowCustomizedException, MalformedURLException {
+  public List<WorkflowType> getListByIdList(final List<Long> idList) throws WorkflowCustomizedException, MalformedURLException {
     logger.debug("Request workflow list for id list {}", idList);
 
-    final ParameterizedTypeReference<List<WorkflowEdo>> typeRef = new ParameterizedTypeReference<List<WorkflowEdo>>() {
+    final ParameterizedTypeReference<List<WorkflowTypeEdo>> typeRef = new ParameterizedTypeReference<List<WorkflowTypeEdo>>() {
     };
 
-    final List<WorkflowEdo> edoList = restTemplate.callRestPost(
-        moduleAccessConfig.generateCoreSunUrlUrl(IflowRestPaths.CoreModul.WORKFLOW_READ_LIST).toString(), EModule.CORE, idList,
+    final List<WorkflowTypeEdo> edoList = restTemplate.callRestPost(
+        moduleAccessConfig.generateCoreSunUrlUrl(IflowRestPaths.CoreModul.WORKFLOWTYPE_READ_LIST).toString(), EModule.CORE, idList,
         typeRef, true);
 
-    return new Workflow().fromEdo(edoList);
+    return new WorkflowType().fromEdo(edoList);
   }
 
   @Override
-  public List<WorkflowStep> getStepsById(final Long id) throws WorkflowCustomizedException, MalformedURLException {
+  public List<WorkflowTypeStep> getStepsById(final Long id) throws WorkflowCustomizedException, MalformedURLException {
     logger.debug("Request workflow-step list for workflow id {}", id);
 
-    final ParameterizedTypeReference<List<WorkflowStepEdo>> typeRef = new ParameterizedTypeReference<List<WorkflowStepEdo>>() {
+    final ParameterizedTypeReference<List<WorkflowTypeStepEdo>> typeRef = new ParameterizedTypeReference<List<WorkflowTypeStepEdo>>() {
     };
 
-    final List<WorkflowStepEdo> edoList = restTemplate.callRestGet(
-        moduleAccessConfig.generateCoreSunUrlUrl(IflowRestPaths.CoreModul.WORKFLOWSTEP_READ_LIST_BY_WORKFLOW).toString(), EModule.CORE,
+    final List<WorkflowTypeStepEdo> edoList = restTemplate.callRestGet(
+        moduleAccessConfig.generateCoreSunUrlUrl(IflowRestPaths.CoreModul.WORKFLOWTYPESTEP_READ_LIST_BY_WORKFLOW).toString(), EModule.CORE,
         typeRef, true, id);
 
-    return new WorkflowStep().fromEdo(edoList);
+    return new WorkflowTypeStep().fromEdo(edoList);
   }
 
 }

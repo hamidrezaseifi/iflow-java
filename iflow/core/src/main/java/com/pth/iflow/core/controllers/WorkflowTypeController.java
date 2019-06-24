@@ -17,56 +17,55 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
-import com.pth.iflow.common.edo.models.DepartmentEdo;
+import com.pth.iflow.common.edo.models.WorkflowTypeEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
-import com.pth.iflow.core.model.Department;
-import com.pth.iflow.core.service.IDepartmentService;
+import com.pth.iflow.core.model.WorkflowType;
+import com.pth.iflow.core.service.IWorkflowService;
 
 @RestController
 @RequestMapping
-public class DepartmentController {
+public class WorkflowTypeController {
   
-  final IDepartmentService departmentService;
+  final IWorkflowService workflowService;
   
-  public DepartmentController(@Autowired final IDepartmentService departmentService) {
-    this.departmentService = departmentService;
+  public WorkflowTypeController(@Autowired final IWorkflowService workflowService) {
+    this.workflowService = workflowService;
   }
   
   @ResponseStatus(HttpStatus.OK)
-  @GetMapping(path = IflowRestPaths.CoreModul.DEPARTMENT_READ_BY_ID, produces = {
+  @GetMapping(path = IflowRestPaths.CoreModul.WORKFLOWTYPE_READ_BY_ID, produces = {
       MediaType.APPLICATION_XML_VALUE,
       MediaType.APPLICATION_JSON_UTF8_VALUE })
-  public ResponseEntity<DepartmentEdo> readDepartments(@PathVariable final Long id, final HttpServletRequest request)
-      throws Exception {
+  public ResponseEntity<WorkflowTypeEdo> readWorkflow(@PathVariable final Long id, final HttpServletRequest request) throws Exception {
     
-    final Department model = this.departmentService.getById(id);
+    final WorkflowType model = this.workflowService.getById(id);
     
     return ControllerHelper.createResponseEntity(request, model.toEdo(), HttpStatus.OK);
   }
   
   @ResponseStatus(HttpStatus.OK)
-  @PostMapping(path = IflowRestPaths.CoreModul.DEPARTMENT_READ_LIST, consumes = {
+  @PostMapping(path = IflowRestPaths.CoreModul.WORKFLOWTYPE_READ_LIST, consumes = {
       MediaType.APPLICATION_XML_VALUE,
       MediaType.APPLICATION_JSON_UTF8_VALUE }, produces = {
           MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE })
-  public ResponseEntity<List<DepartmentEdo>> readDepartmentList(@RequestBody final List<Long> idList, final HttpServletRequest request)
+  public ResponseEntity<List<WorkflowTypeEdo>> readWorkflowList(@RequestBody final List<Long> idList, final HttpServletRequest request)
       throws Exception {
     
-    final List<Department> modelList = this.departmentService.getListByIdList(idList);
+    final List<WorkflowType> modelList = this.workflowService.getListByIdList(idList);
     
-    return ControllerHelper.createResponseEntity(request, Department.toEdoList(modelList), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, WorkflowType.toEdoList(modelList), HttpStatus.OK);
   }
   
   @ResponseStatus(HttpStatus.OK)
-  @GetMapping(path = IflowRestPaths.CoreModul.DEPARTMENT_READ_LIST_BY_COMPANY, produces = {
+  @GetMapping(path = IflowRestPaths.CoreModul.WORKFLOWTYPE_READ_LIST_BY_COMPANY, produces = {
       MediaType.APPLICATION_XML_VALUE,
       MediaType.APPLICATION_JSON_UTF8_VALUE })
-  public ResponseEntity<List<DepartmentEdo>> readDepartmentListByCompany(@PathVariable final Long id, final HttpServletRequest request)
+  public ResponseEntity<List<WorkflowTypeEdo>> readWorkflowListByCompany(@PathVariable final Long id, final HttpServletRequest request)
       throws Exception {
     
-    final List<Department> modelList = this.departmentService.getListByIdCompanyId(id);
+    final List<WorkflowType> modelList = this.workflowService.getListByIdCompanyId(id);
     
-    return ControllerHelper.createResponseEntity(request, Department.toEdoList(modelList), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, WorkflowType.toEdoList(modelList), HttpStatus.OK);
   }
   
 }

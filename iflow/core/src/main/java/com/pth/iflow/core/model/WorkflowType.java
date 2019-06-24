@@ -5,21 +5,24 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.pth.iflow.common.edo.models.WorkflowEdo;
+import com.pth.iflow.common.edo.models.WorkflowTypeEdo;
+import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 
-public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
-  private Long id;
-  private Long companyId;
-  private String title;
-  private String comments;
-  private Integer status;
-  private Integer version;
-  private LocalDateTime createdAt;
-  private LocalDateTime updatedAt;
+public class WorkflowType extends ModelMapperBase<WorkflowTypeEdo, WorkflowType> {
+
+  private Long            id;
+  private Long            companyId;
+  private Long            baseTypeId;
+  private String          title;
+  private String          comments;
+  private Integer         status;
+  private Integer         version;
+  private LocalDateTime   createdAt;
+  private LocalDateTime   updatedAt;
   private final Set<Long> steps = new HashSet<>();
 
   public Long getId() {
-    return id;
+    return this.id;
   }
 
   public void setId(final Long id) {
@@ -27,15 +30,29 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
   }
 
   public Long getCompanyId() {
-    return companyId;
+    return this.companyId;
   }
 
   public void setCompanyId(final Long companyId) {
     this.companyId = companyId;
   }
 
+  /**
+   * @return the baseTypeId
+   */
+  public Long getBaseTypeId() {
+    return this.baseTypeId;
+  }
+
+  /**
+   * @param baseTypeId the baseTypeId to set
+   */
+  public void setBaseTypeId(final Long baseTypeId) {
+    this.baseTypeId = baseTypeId;
+  }
+
   public String getTitle() {
-    return title;
+    return this.title;
   }
 
   public void setTitle(final String title) {
@@ -43,7 +60,7 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
   }
 
   public String getComments() {
-    return comments;
+    return this.comments;
   }
 
   public void setComments(final String comments) {
@@ -51,7 +68,7 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
   }
 
   public Integer getStatus() {
-    return status;
+    return this.status;
   }
 
   public void setStatus(final Integer status) {
@@ -59,7 +76,7 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
   }
 
   public Integer getVersion() {
-    return version;
+    return this.version;
   }
 
   public void setVersion(final Integer version) {
@@ -67,7 +84,7 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
   }
 
   public LocalDateTime getCreatedAt() {
-    return createdAt;
+    return this.createdAt;
   }
 
   public void setCreatedAt(final LocalDateTime createdAt) {
@@ -75,7 +92,7 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
   }
 
   public LocalDateTime getUpdatedAt() {
-    return updatedAt;
+    return this.updatedAt;
   }
 
   public void setUpdatedAt(final LocalDateTime updatedAt) {
@@ -83,7 +100,7 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
   }
 
   public Set<Long> getSteps() {
-    return steps;
+    return this.steps;
   }
 
   public void setSteps(final Set<Long> steps) {
@@ -105,27 +122,29 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
   }
 
   @Override
-  public WorkflowEdo toEdo() {
-    final WorkflowEdo edo = new WorkflowEdo();
-    edo.setTitle(title);
-    edo.setComments(comments);
-    edo.setStatus(status);
-    edo.setId(id);
-    edo.setCompanyId(companyId);
-    edo.setSteps(steps);
+  public WorkflowTypeEdo toEdo() {
+    final WorkflowTypeEdo edo = new WorkflowTypeEdo();
+    edo.setTitle(this.title);
+    edo.setComments(this.comments);
+    edo.setStatus(this.status);
+    edo.setId(this.id);
+    edo.setCompanyId(this.companyId);
+    edo.setBaseTypeId(this.baseTypeId);
+    edo.setSteps(this.steps);
 
     return edo;
   }
 
   @Override
-  public Workflow fromEdo(final WorkflowEdo edo) {
-    final Workflow model = new Workflow();
+  public WorkflowType fromEdo(final WorkflowTypeEdo edo) {
+    final WorkflowType model = new WorkflowType();
 
     model.setTitle(edo.getTitle());
     model.setComments(edo.getComments());
     model.setStatus(edo.getStatus());
     model.setId(edo.getId());
     model.setCompanyId(edo.getCompanyId());
+    model.setBaseTypeId(edo.getBaseTypeId());
     model.setSteps(edo.getSteps());
 
     return model;

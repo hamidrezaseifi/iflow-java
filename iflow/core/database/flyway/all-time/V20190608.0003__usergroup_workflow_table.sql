@@ -5,9 +5,9 @@ DROP TABLE IF EXISTS `user_group`;
 
 DROP TABLE IF EXISTS `user_departments`;
 
-DROP TABLE IF EXISTS `workflow_step`;
+DROP TABLE IF EXISTS `workflow_type_step`;
 
-DROP TABLE IF EXISTS `workflow`;
+DROP TABLE IF EXISTS `workflow_type`;
 
 DROP TABLE IF EXISTS `departments_group`;
 
@@ -74,10 +74,10 @@ CREATE TABLE `user_usergroup` (
 ) ENGINE=InnoDB;
 
 
-CREATE TABLE `workflow` (
+CREATE TABLE `workflow_type` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `company_id` int(11) NOT NULL,
-  `workflow_type` int(11) NOT NULL DEFAULT '0',
+  `workflow_base_type` int(11) NOT NULL DEFAULT '0',
   `title` varchar(200) NOT NULL,
   `commecnts` text,
   `status` smallint(6) NOT NULL DEFAULT '1',
@@ -85,13 +85,13 @@ CREATE TABLE `workflow` (
   `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   `updated_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   PRIMARY KEY (`id`),
-  KEY `FK_WORKFLOW_COMPANY_idx` (`company_id`),
-  CONSTRAINT `FK_WORKFLOW_COMPANY` FOREIGN KEY (`company_id`) REFERENCES `companies` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `FK_WORKFLOWTYPE_COMPANY_idx` (`company_id`),
+  CONSTRAINT `FK_WORKFLOWTYPE_COMPANY` FOREIGN KEY (`company_id`) REFERENCES `companies` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
-CREATE TABLE `workflow_step` (
+CREATE TABLE `workflow_type_step` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `workflow_id` int(11) NOT NULL,
+  `workflow_type_id` int(11) NOT NULL,
   `title` varchar(200) NOT NULL,
   `commecnts` text,
   `status` smallint(6) NOT NULL DEFAULT '1',
@@ -99,8 +99,8 @@ CREATE TABLE `workflow_step` (
   `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   `updated_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   PRIMARY KEY (`id`),
-  KEY `FK_WORKFLOWTYPE_WORKFLOW_idx` (`workflow_id`),
-  CONSTRAINT `FK_WORKFLOWSTEP_WORKFLOW` FOREIGN KEY (`workflow_id`) REFERENCES `workflow` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `FK_WORKFLOWTYPESTEP_WORKFLOWTYPE_idx` (`workflow_type_id`),
+  CONSTRAINT `FK_WORKFLOWTYPESTEP_WORKFLOWTYPE` FOREIGN KEY (`workflow_type_id`) REFERENCES `workflow_type` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
 CREATE TABLE `departments` (

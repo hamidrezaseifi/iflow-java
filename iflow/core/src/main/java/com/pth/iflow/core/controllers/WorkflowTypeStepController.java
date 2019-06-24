@@ -17,56 +17,56 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
-import com.pth.iflow.common.edo.models.DepartmentGroupEdo;
+import com.pth.iflow.common.edo.models.WorkflowTypeStepEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
-import com.pth.iflow.core.model.DepartmentGroup;
-import com.pth.iflow.core.service.IDepartmentGroupService;
+import com.pth.iflow.core.model.WorkflowTypeStep;
+import com.pth.iflow.core.service.IWorkflowStepService;
 
 @RestController
 @RequestMapping
-public class DepartmentGroupController {
+public class WorkflowTypeStepController {
   
-  final IDepartmentGroupService departmentGroupService;
+  final IWorkflowStepService workflowStepService;
   
-  public DepartmentGroupController(@Autowired final IDepartmentGroupService departmentGroupService) {
-    this.departmentGroupService = departmentGroupService;
+  public WorkflowTypeStepController(@Autowired final IWorkflowStepService workflowStepService) {
+    this.workflowStepService = workflowStepService;
   }
   
   @ResponseStatus(HttpStatus.OK)
-  @GetMapping(path = IflowRestPaths.CoreModul.DEPARTMENTGRPUP_READ_BY_ID, produces = {
+  @GetMapping(path = IflowRestPaths.CoreModul.WORKFLOWTYPESTEP_READ_BY_ID, produces = {
       MediaType.APPLICATION_XML_VALUE,
       MediaType.APPLICATION_JSON_UTF8_VALUE })
-  public ResponseEntity<DepartmentGroupEdo> readDepartmentGroup(@PathVariable final Long id, final HttpServletRequest request)
+  public ResponseEntity<WorkflowTypeStepEdo> readDepartmentGroup(@PathVariable final Long id, final HttpServletRequest request)
       throws Exception {
     
-    final DepartmentGroup model = this.departmentGroupService.getById(id);
+    final WorkflowTypeStep model = this.workflowStepService.getById(id);
     
     return ControllerHelper.createResponseEntity(request, model.toEdo(), HttpStatus.OK);
   }
   
   @ResponseStatus(HttpStatus.OK)
-  @PostMapping(path = IflowRestPaths.CoreModul.DEPARTMENTGRPUP_READ_LIST, consumes = {
+  @PostMapping(path = IflowRestPaths.CoreModul.WORKFLOWTYPESTEP_READ_LIST, consumes = {
       MediaType.APPLICATION_XML_VALUE,
       MediaType.APPLICATION_JSON_UTF8_VALUE }, produces = {
           MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE })
-  public ResponseEntity<List<DepartmentGroupEdo>> readDepartmentList(@RequestBody final List<Long> idList,
+  public ResponseEntity<List<WorkflowTypeStepEdo>> readDepartmentList(@RequestBody final List<Long> idList,
       final HttpServletRequest request) throws Exception {
     
-    final List<DepartmentGroup> modelList = this.departmentGroupService.getListByIdList(idList);
+    final List<WorkflowTypeStep> modelList = this.workflowStepService.getListByIdList(idList);
     
-    return ControllerHelper.createResponseEntity(request, DepartmentGroup.toEdoList(modelList), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, WorkflowTypeStep.toEdoList(modelList), HttpStatus.OK);
   }
   
   @ResponseStatus(HttpStatus.OK)
-  @GetMapping(path = IflowRestPaths.CoreModul.DEPARTMENTGRPUP_READ_LIST_BY_DEPARTMENT, produces = {
+  @GetMapping(path = IflowRestPaths.CoreModul.WORKFLOWTYPESTEP_READ_LIST_BY_WORKFLOW, produces = {
       MediaType.APPLICATION_XML_VALUE,
       MediaType.APPLICATION_JSON_UTF8_VALUE })
-  public ResponseEntity<List<DepartmentGroupEdo>> readDepartmentListByCompany(@PathVariable final Long id,
+  public ResponseEntity<List<WorkflowTypeStepEdo>> readDepartmentListByCompany(@PathVariable final Long id,
       final HttpServletRequest request) throws Exception {
     
-    final List<DepartmentGroup> modelList = this.departmentGroupService.getListByDepartmentId(id);
+    final List<WorkflowTypeStep> modelList = this.workflowStepService.getListByWorkflowId(id);
     
-    return ControllerHelper.createResponseEntity(request, DepartmentGroup.toEdoList(modelList), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, WorkflowTypeStep.toEdoList(modelList), HttpStatus.OK);
   }
   
 }

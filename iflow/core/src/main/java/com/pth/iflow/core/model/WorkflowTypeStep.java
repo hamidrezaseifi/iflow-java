@@ -2,14 +2,15 @@ package com.pth.iflow.core.model;
 
 import java.time.LocalDateTime;
 
-import com.pth.iflow.common.edo.models.DepartmentGroupEdo;
+import com.pth.iflow.common.edo.models.WorkflowTypeStepEdo;
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 
-public class DepartmentGroup extends ModelMapperBase<DepartmentGroupEdo, DepartmentGroup> {
+public class WorkflowTypeStep extends ModelMapperBase<WorkflowTypeStepEdo, WorkflowTypeStep> {
   
   private Long          id;
-  private Long          departmentId;
+  private Long          workflowTypeId;
   private String        title;
+  private String        comments;
   private Integer       status;
   private Integer       version;
   private LocalDateTime createdAt;
@@ -23,12 +24,12 @@ public class DepartmentGroup extends ModelMapperBase<DepartmentGroupEdo, Departm
     this.id = id;
   }
   
-  public Long getDepartmentId() {
-    return this.departmentId;
+  public Long getWorkflowTypeId() {
+    return this.workflowTypeId;
   }
   
-  public void setDepartmentId(final Long departmentId) {
-    this.departmentId = departmentId;
+  public void setWorkflowTypeId(final Long workflowTypeId) {
+    this.workflowTypeId = workflowTypeId;
   }
   
   public String getTitle() {
@@ -37,6 +38,14 @@ public class DepartmentGroup extends ModelMapperBase<DepartmentGroupEdo, Departm
   
   public void setTitle(final String title) {
     this.title = title;
+  }
+  
+  public String getComments() {
+    return this.comments;
+  }
+  
+  public void setComments(final String comments) {
+    this.comments = comments;
   }
   
   public Integer getStatus() {
@@ -72,24 +81,26 @@ public class DepartmentGroup extends ModelMapperBase<DepartmentGroupEdo, Departm
   }
   
   @Override
-  public DepartmentGroupEdo toEdo() {
-    final DepartmentGroupEdo edo = new DepartmentGroupEdo();
+  public WorkflowTypeStepEdo toEdo() {
+    final WorkflowTypeStepEdo edo = new WorkflowTypeStepEdo();
     edo.setTitle(this.title);
+    edo.setComments(this.comments);
     edo.setStatus(this.status);
     edo.setId(this.id);
-    edo.setDepartmentId(this.departmentId);
+    edo.setWorkflowTypeId(this.workflowTypeId);
     
     return edo;
   }
   
   @Override
-  public DepartmentGroup fromEdo(final DepartmentGroupEdo edo) {
-    final DepartmentGroup model = new DepartmentGroup();
+  public WorkflowTypeStep fromEdo(final WorkflowTypeStepEdo edo) {
+    final WorkflowTypeStep model = new WorkflowTypeStep();
     
     model.setTitle(edo.getTitle());
+    model.setComments(edo.getComments());
     model.setStatus(edo.getStatus());
     model.setId(edo.getId());
-    model.setDepartmentId(edo.getDepartmentId());
+    model.setWorkflowTypeId(edo.getWorkflowTypeId());
     
     return model;
   }

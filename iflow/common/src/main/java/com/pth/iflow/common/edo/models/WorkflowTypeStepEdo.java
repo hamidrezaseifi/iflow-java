@@ -1,50 +1,51 @@
 package com.pth.iflow.common.edo.models;
 
-public class WorkflowStepEdo {
-  private Long id;
-  private Long workflowId;
-  private String title;
-  private String comments;
+public class WorkflowTypeStepEdo {
+  
+  private Long    id;
+  private Long    workflowTypeId;
+  private String  title;
+  private String  comments;
   private Integer status;
-
+  
   public Long getId() {
-    return id;
+    return this.id;
   }
-
+  
   public void setId(final Long id) {
     this.id = id;
   }
-
-  public Long getWorkflowId() {
-    return workflowId;
+  
+  public Long getWorkflowTypeId() {
+    return this.workflowTypeId;
   }
-
-  public void setWorkflowId(final Long workflowId) {
-    this.workflowId = workflowId;
+  
+  public void setWorkflowTypeId(final Long workflowId) {
+    this.workflowTypeId = workflowId;
   }
-
+  
   public String getTitle() {
-    return title;
+    return this.title;
   }
-
+  
   public void setTitle(final String title) {
     this.title = title;
   }
-
+  
   public String getComments() {
-    return comments;
+    return this.comments;
   }
-
+  
   public void setComments(final String comments) {
     this.comments = comments;
   }
-
+  
   public Integer getStatus() {
-    return status;
+    return this.status;
   }
-
+  
   public void setStatus(final Integer status) {
     this.status = status;
   }
-
+  
 }

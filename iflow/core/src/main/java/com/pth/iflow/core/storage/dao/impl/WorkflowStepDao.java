@@ -10,55 +10,55 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.pth.iflow.core.model.WorkflowStep;
+import com.pth.iflow.core.model.WorkflowTypeStep;
 import com.pth.iflow.core.storage.dao.IWorkflowStepDao;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 import com.pth.iflow.core.storage.dao.utils.SqlUtils;
 
 @Transactional
 @Repository
-public class WorkflowStepDao extends DaoBasicClass<WorkflowStep> implements IWorkflowStepDao {
-
+public class WorkflowStepDao extends DaoBasicClass<WorkflowTypeStep> implements IWorkflowStepDao {
+  
   public WorkflowStepDao(final @Autowired JdbcTemplate jdbcTemplate,
       final @Autowired PlatformTransactionManager platformTransactionManager) {
     super(jdbcTemplate, platformTransactionManager);
   }
-
+  
   @Override
-  public WorkflowStep getById(final Long id) throws IFlowStorageException {
+  public WorkflowTypeStep getById(final Long id) throws IFlowStorageException {
     return getModelById(id, "SELECT * FROM workflow_step where id=?", "WorkflowStep");
   }
-
+  
   @Override
-  public List<WorkflowStep> getListByIdList(final List<Long> idList) throws IFlowStorageException {
+  public List<WorkflowTypeStep> getListByIdList(final List<Long> idList) throws IFlowStorageException {
     String sqlSelect = "SELECT * FROM workflow_step where id in (";
     for (final Long id : idList) {
       sqlSelect += "?, ";
     }
-
+    
     sqlSelect = sqlSelect.trim();
     sqlSelect = sqlSelect.endsWith(",") ? sqlSelect.substring(0, sqlSelect.length() - 1) : sqlSelect;
     sqlSelect += ")";
-
+    
     return getModelListByIdList(idList, sqlSelect, "WorkflowStep");
   }
-
+  
   @Override
-  protected WorkflowStep modelFromResultSet(final ResultSet rs) throws SQLException {
-    final WorkflowStep model = new WorkflowStep();
+  protected WorkflowTypeStep modelFromResultSet(final ResultSet rs) throws SQLException {
+    final WorkflowTypeStep model = new WorkflowTypeStep();
     model.setId(rs.getLong("id"));
-    model.setWorkflowId(rs.getLong("workflow_id"));
+    model.setWorkflowTypeId(rs.getLong("workflow_type_id"));
     model.setTitle(rs.getString("title"));
     model.setStatus(rs.getInt("status"));
     model.setCreatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("created_at")));
     model.setUpdatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("updated_at")));
     model.setVersion(rs.getInt("version"));
-
+    
     return model;
   }
-
+  
   @Override
-  public List<WorkflowStep> getListByWorkflowId(final Long workflowId) throws IFlowStorageException {
-    return getModelListById(workflowId, "SELECT * FROM workflow_step where workflow_id=?", "WorkflowStep");
+  public List<WorkflowTypeStep> getListByWorkflowId(final Long workflowId) throws IFlowStorageException {
+    return getModelListById(workflowId, "SELECT * FROM workflow_step where workflow_type_id=?", "WorkflowStep");
   }
 }
