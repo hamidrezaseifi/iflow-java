@@ -2,9 +2,9 @@ package com.pth.ifow.workflow.models;
 
 import java.time.LocalDateTime;
 
-import com.pth.iflow.common.edo.models.WorkflowStepEdo;
+import com.pth.iflow.common.edo.models.WorkflowTypeStepEdo;
 
-public class WorkflowStep extends ModelMapperBase<WorkflowStepEdo, WorkflowStep> {
+public class WorkflowStep extends ModelMapperBase<WorkflowTypeStepEdo, WorkflowStep> {
   private Long id;
   private Long workflowId;
   private String title;
@@ -79,8 +79,8 @@ public class WorkflowStep extends ModelMapperBase<WorkflowStepEdo, WorkflowStep>
   }
 
   @Override
-  public WorkflowStepEdo toEdo() {
-    final WorkflowStepEdo edo = new WorkflowStepEdo();
+  public WorkflowTypeStepEdo toEdo() {
+    final WorkflowTypeStepEdo edo = new WorkflowTypeStepEdo();
     edo.setTitle(title);
     edo.setComments(comments);
     edo.setStatus(status);
@@ -91,7 +91,7 @@ public class WorkflowStep extends ModelMapperBase<WorkflowStepEdo, WorkflowStep>
   }
 
   @Override
-  public WorkflowStep fromEdo(final WorkflowStepEdo edo) {
+  public WorkflowStep fromEdo(final WorkflowTypeStepEdo edo) {
     final WorkflowStep model = new WorkflowStep();
 
     model.setTitle(edo.getTitle());

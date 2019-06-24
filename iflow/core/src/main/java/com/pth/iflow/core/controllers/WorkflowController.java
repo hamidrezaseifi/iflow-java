@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
-import com.pth.iflow.common.edo.models.WorkflowEdo;
+import com.pth.iflow.common.edo.models.WorkflowTypeEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.core.model.ModelMapperBase;
-import com.pth.iflow.core.model.Workflow;
+import com.pth.iflow.core.model.WorkflowType;
 import com.pth.iflow.core.service.IWorkflowService;
 
 @RestController
@@ -36,9 +36,9 @@ public class WorkflowController {
   @ResponseStatus(HttpStatus.OK)
   @GetMapping(path = IflowRestPaths.CoreModul.WORKFLOW_READ_BY_ID, produces = { MediaType.APPLICATION_XML_VALUE,
       MediaType.APPLICATION_JSON_UTF8_VALUE })
-  public ResponseEntity<WorkflowEdo> readWorkflow(@PathVariable final Long id, final HttpServletRequest request) throws Exception {
+  public ResponseEntity<WorkflowTypeEdo> readWorkflow(@PathVariable final Long id, final HttpServletRequest request) throws Exception {
 
-    final Workflow model = this.workflowService.getById(id);
+    final WorkflowType model = this.workflowService.getById(id);
 
     return ControllerHelper.createResponseEntity(request, model.toEdo(), HttpStatus.OK);
   }
@@ -46,10 +46,10 @@ public class WorkflowController {
   @ResponseStatus(HttpStatus.OK)
   @PostMapping(path = IflowRestPaths.CoreModul.WORKFLOW_READ_LIST, consumes = { MediaType.APPLICATION_XML_VALUE,
       MediaType.APPLICATION_JSON_UTF8_VALUE }, produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE })
-  public ResponseEntity<List<WorkflowEdo>> readWorkflowList(@RequestBody final List<Long> idList, final HttpServletRequest request)
+  public ResponseEntity<List<WorkflowTypeEdo>> readWorkflowList(@RequestBody final List<Long> idList, final HttpServletRequest request)
       throws Exception {
 
-    final List<Workflow> modelList = this.workflowService.getListByIdList(idList);
+    final List<WorkflowType> modelList = this.workflowService.getListByIdList(idList);
 
     return ControllerHelper.createResponseEntity(request, ModelMapperBase.toEdoList(modelList), HttpStatus.OK);
   }
@@ -57,10 +57,10 @@ public class WorkflowController {
   @ResponseStatus(HttpStatus.OK)
   @GetMapping(path = IflowRestPaths.CoreModul.WORKFLOW_READ_LIST_BY_COMPANY, produces = { MediaType.APPLICATION_XML_VALUE,
       MediaType.APPLICATION_JSON_UTF8_VALUE })
-  public ResponseEntity<List<WorkflowEdo>> readWorkflowListByCompany(@PathVariable final Long id, final HttpServletRequest request)
+  public ResponseEntity<List<WorkflowTypeEdo>> readWorkflowListByCompany(@PathVariable final Long id, final HttpServletRequest request)
       throws Exception {
 
-    final List<Workflow> modelList = this.workflowService.getListByIdCompanyId(id);
+    final List<WorkflowType> modelList = this.workflowService.getListByIdCompanyId(id);
 
     return ControllerHelper.createResponseEntity(request, ModelMapperBase.toEdoList(modelList), HttpStatus.OK);
   }

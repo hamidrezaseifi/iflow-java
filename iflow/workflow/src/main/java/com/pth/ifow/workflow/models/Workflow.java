@@ -5,9 +5,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.pth.iflow.common.edo.models.WorkflowEdo;
+import com.pth.iflow.common.edo.models.WorkflowTypeEdo;
 
-public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
+public class Workflow extends ModelMapperBase<WorkflowTypeEdo, Workflow> {
   private Long id;
   private Long companyId;
   private String title;
@@ -105,8 +105,8 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
   }
 
   @Override
-  public WorkflowEdo toEdo() {
-    final WorkflowEdo edo = new WorkflowEdo();
+  public WorkflowTypeEdo toEdo() {
+    final WorkflowTypeEdo edo = new WorkflowTypeEdo();
     edo.setTitle(title);
     edo.setComments(comments);
     edo.setStatus(status);
@@ -118,7 +118,7 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
   }
 
   @Override
-  public Workflow fromEdo(final WorkflowEdo edo) {
+  public Workflow fromEdo(final WorkflowTypeEdo edo) {
     final Workflow model = new Workflow();
 
     model.setTitle(edo.getTitle());

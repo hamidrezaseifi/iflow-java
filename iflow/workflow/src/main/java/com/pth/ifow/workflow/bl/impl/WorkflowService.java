@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 
-import com.pth.iflow.common.edo.models.WorkflowEdo;
-import com.pth.iflow.common.edo.models.WorkflowStepEdo;
+import com.pth.iflow.common.edo.models.WorkflowTypeEdo;
+import com.pth.iflow.common.edo.models.WorkflowTypeStepEdo;
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.ifow.workflow.bl.IWorkflowService;
@@ -39,9 +39,9 @@ public class WorkflowService implements IWorkflowService {
 
     logger.debug("Request workflow data for id {}", id);
 
-    final WorkflowEdo edo = restTemplate.callRestGet(
+    final WorkflowTypeEdo edo = restTemplate.callRestGet(
         moduleAccessConfig.generateCoreSunUrlUrl(IflowRestPaths.CoreModul.WORKFLOW_READ_BY_ID).toString(), EModule.CORE,
-        WorkflowEdo.class, true, id);
+        WorkflowTypeEdo.class, true, id);
 
     return new Workflow().fromEdo(edo);
   }
@@ -50,10 +50,10 @@ public class WorkflowService implements IWorkflowService {
   public List<Workflow> getListByIdCompanyId(final Long id) throws WorkflowCustomizedException, MalformedURLException {
     logger.debug("Request workflow list for company id {}", id);
 
-    final ParameterizedTypeReference<List<WorkflowEdo>> typeRef = new ParameterizedTypeReference<List<WorkflowEdo>>() {
+    final ParameterizedTypeReference<List<WorkflowTypeEdo>> typeRef = new ParameterizedTypeReference<List<WorkflowTypeEdo>>() {
     };
 
-    final List<WorkflowEdo> edoList = restTemplate.callRestGet(
+    final List<WorkflowTypeEdo> edoList = restTemplate.callRestGet(
         moduleAccessConfig.generateCoreSunUrlUrl(IflowRestPaths.CoreModul.WORKFLOW_READ_LIST_BY_COMPANY).toString(), EModule.CORE,
         typeRef, true, id);
 
@@ -64,10 +64,10 @@ public class WorkflowService implements IWorkflowService {
   public List<Workflow> getListByIdList(final List<Long> idList) throws WorkflowCustomizedException, MalformedURLException {
     logger.debug("Request workflow list for id list {}", idList);
 
-    final ParameterizedTypeReference<List<WorkflowEdo>> typeRef = new ParameterizedTypeReference<List<WorkflowEdo>>() {
+    final ParameterizedTypeReference<List<WorkflowTypeEdo>> typeRef = new ParameterizedTypeReference<List<WorkflowTypeEdo>>() {
     };
 
-    final List<WorkflowEdo> edoList = restTemplate.callRestPost(
+    final List<WorkflowTypeEdo> edoList = restTemplate.callRestPost(
         moduleAccessConfig.generateCoreSunUrlUrl(IflowRestPaths.CoreModul.WORKFLOW_READ_LIST).toString(), EModule.CORE, idList,
         typeRef, true);
 
@@ -78,10 +78,10 @@ public class WorkflowService implements IWorkflowService {
   public List<WorkflowStep> getStepsById(final Long id) throws WorkflowCustomizedException, MalformedURLException {
     logger.debug("Request workflow-step list for workflow id {}", id);
 
-    final ParameterizedTypeReference<List<WorkflowStepEdo>> typeRef = new ParameterizedTypeReference<List<WorkflowStepEdo>>() {
+    final ParameterizedTypeReference<List<WorkflowTypeStepEdo>> typeRef = new ParameterizedTypeReference<List<WorkflowTypeStepEdo>>() {
     };
 
-    final List<WorkflowStepEdo> edoList = restTemplate.callRestGet(
+    final List<WorkflowTypeStepEdo> edoList = restTemplate.callRestGet(
         moduleAccessConfig.generateCoreSunUrlUrl(IflowRestPaths.CoreModul.WORKFLOWSTEP_READ_LIST_BY_WORKFLOW).toString(), EModule.CORE,
         typeRef, true, id);
 
