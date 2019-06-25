@@ -25,25 +25,25 @@ import com.pth.iflow.core.service.IDepartmentService;
 @RestController
 @RequestMapping
 public class DepartmentController {
-  
+
   final IDepartmentService departmentService;
-  
+
   public DepartmentController(@Autowired final IDepartmentService departmentService) {
     this.departmentService = departmentService;
   }
-  
+
   @ResponseStatus(HttpStatus.OK)
   @GetMapping(path = IflowRestPaths.CoreModul.DEPARTMENT_READ_BY_ID, produces = {
       MediaType.APPLICATION_XML_VALUE,
       MediaType.APPLICATION_JSON_UTF8_VALUE })
-  public ResponseEntity<DepartmentEdo> readDepartments(@PathVariable final Long id, final HttpServletRequest request)
+  public ResponseEntity<DepartmentEdo> readDepartment(@PathVariable final Long id, final HttpServletRequest request)
       throws Exception {
-    
+
     final Department model = this.departmentService.getById(id);
-    
+
     return ControllerHelper.createResponseEntity(request, model.toEdo(), HttpStatus.OK);
   }
-  
+
   @ResponseStatus(HttpStatus.OK)
   @PostMapping(path = IflowRestPaths.CoreModul.DEPARTMENT_READ_LIST, consumes = {
       MediaType.APPLICATION_XML_VALUE,
@@ -51,22 +51,22 @@ public class DepartmentController {
           MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE })
   public ResponseEntity<List<DepartmentEdo>> readDepartmentList(@RequestBody final List<Long> idList, final HttpServletRequest request)
       throws Exception {
-    
+
     final List<Department> modelList = this.departmentService.getListByIdList(idList);
-    
+
     return ControllerHelper.createResponseEntity(request, Department.toEdoList(modelList), HttpStatus.OK);
   }
-  
+
   @ResponseStatus(HttpStatus.OK)
   @GetMapping(path = IflowRestPaths.CoreModul.DEPARTMENT_READ_LIST_BY_COMPANY, produces = {
       MediaType.APPLICATION_XML_VALUE,
       MediaType.APPLICATION_JSON_UTF8_VALUE })
   public ResponseEntity<List<DepartmentEdo>> readDepartmentListByCompany(@PathVariable final Long id, final HttpServletRequest request)
       throws Exception {
-    
+
     final List<Department> modelList = this.departmentService.getListByIdCompanyId(id);
-    
+
     return ControllerHelper.createResponseEntity(request, Department.toEdoList(modelList), HttpStatus.OK);
   }
-  
+
 }
