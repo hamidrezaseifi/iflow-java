@@ -24,75 +24,74 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pth.iflow.common.edo.models.CompanyEdo;
+import com.pth.iflow.common.edo.models.UserEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.core.TestDataProducer;
-import com.pth.iflow.core.model.Company;
-import com.pth.iflow.core.service.ICompanyService;
+import com.pth.iflow.core.model.User;
+import com.pth.iflow.core.service.IUsersService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class CompanyControllerTest extends TestDataProducer {
-  
+public class UserControllerTest extends TestDataProducer {
+
   @Autowired
   private MockMvc mockMvc;
-
+  
   @Autowired
   private MappingJackson2XmlHttpMessageConverter xmlConverter;
-
+  
   @Autowired
   private ObjectMapper mapper;
-
+  
   @MockBean
-  private ICompanyService companyService;
-
+  private IUsersService usersService;
+  
   @Before
   public void setUp() throws Exception {
   }
-
+  
   @After
   public void tearDown() throws Exception {
   }
-
+  
   @Test
   public void testReadCompany() throws Exception {
     
-    final Company company = getTestCompany();
-    when(this.companyService.getById(any(Long.class))).thenReturn(company);
+    final User user = getTestUser();
+    when(this.usersService.getUserById(any(Long.class))).thenReturn(user);
 
-    final CompanyEdo companyEdo = company.toEdo();
-
-    final String companyAsString = this.xmlConverter.getObjectMapper().writeValueAsString(companyEdo);
+    final UserEdo userEdo = user.toEdo();
     
+    final String userAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(userEdo);
+
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModul.COMPANY_READ_BY_ID, company.getId()))
+        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModul.USER_READ_BY_ID, user.getId()))
         .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
-        .andExpect(content().xml(companyAsString));
-
-    verify(this.companyService, times(1)).getById(any(Long.class));
+        .andExpect(content().xml(userAsXmlString));
     
-    final String userAsJsonString = this.mapper.writeValueAsString(companyEdo);
+    verify(this.usersService, times(1)).getUserById(any(Long.class));
+
+    final String userAsJsonString = this.mapper.writeValueAsString(userEdo);
     final MvcResult res = this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModul.COMPANY_READ_BY_ID + "?produces=json", company.getId()))
+        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModul.USER_READ_BY_ID + "?produces=json", user.getId()))
         .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
         .andExpect(content().json(userAsJsonString))
         .andReturn();
-    
+
     final String contentAsString = res.getResponse().getContentAsString();
     System.out.println(contentAsString);
-    
-    final ObjectMapper objectMapper = new ObjectMapper();
-    final CompanyEdo resCompanyEdo = objectMapper.readValue(contentAsString, CompanyEdo.class);
-    
-    Assert.assertNotNull("Result company is not null!", resCompanyEdo);
-    Assert.assertEquals("Result company has id 1!", resCompanyEdo.getId(), (Long) 1L);
-    Assert.assertEquals("Result company has companyName 'companyName'!", resCompanyEdo.getCompanyName(), "companyName");
-    Assert.assertEquals("Result company has identifyid 'identifyid'!", resCompanyEdo.getIdentifyid(), "identifyid");
-    Assert.assertEquals("Result company has status 1!", resCompanyEdo.getStatus(), (Integer) 1);
-    
-  }
 
+    final UserEdo resUserEdo = this.mapper.readValue(contentAsString, UserEdo.class);
+
+    Assert.assertNotNull("Result user is not null!", resUserEdo);
+    Assert.assertEquals("Result user has id 1!", resUserEdo.getId(), (Long) 1L);
+    Assert.assertEquals("Result user has companyName 'companyName'!", resUserEdo.getFirstName(), user.getFirstName());
+    Assert.assertEquals("Result user has identifyid 'identifyid'!", resUserEdo.getLastName(), user.getLastName());
+    Assert.assertEquals("Result user has status 1!", resUserEdo.getStatus(), (Integer) 1);
+
+  }
+  
 }
