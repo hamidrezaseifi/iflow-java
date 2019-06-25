@@ -4,12 +4,12 @@ import com.pth.iflow.common.edo.models.UserEdo;
 import com.pth.iflow.common.enums.EUserStatus;
 
 public class User {
-  private Long id;
-  private Long companyId;
-  private String email;
-  private String password;
-  private String firstName;
-  private String lastName;
+
+  private Long    id;
+  private Long    companyId;
+  private String  email;
+  private String  firstName;
+  private String  lastName;
   private Integer status;
   private Integer permission;
 
@@ -21,7 +21,7 @@ public class User {
    * @return the id
    */
   public Long getId() {
-    return id;
+    return this.id;
   }
 
   public boolean hasId(final Long id) {
@@ -39,7 +39,7 @@ public class User {
    * @return the companyIid
    */
   public Long getCompanyId() {
-    return companyId;
+    return this.companyId;
   }
 
   /**
@@ -53,7 +53,7 @@ public class User {
    * @return the email
    */
   public String getEmail() {
-    return email;
+    return this.email;
   }
 
   /**
@@ -64,28 +64,10 @@ public class User {
   }
 
   /**
-   * @return the password
-   */
-  public String getPassword() {
-    return password;
-  }
-
-  public boolean hasPassword(final String password) {
-    return this.password.equals(password);
-  }
-
-  /**
-   * @param password the password to set
-   */
-  public void setPassword(final String password) {
-    this.password = password;
-  }
-
-  /**
    * @return the firstName
    */
   public String getFirstName() {
-    return firstName;
+    return this.firstName;
   }
 
   /**
@@ -99,7 +81,7 @@ public class User {
    * @return the lastName
    */
   public String getLastName() {
-    return lastName;
+    return this.lastName;
   }
 
   /**
@@ -113,7 +95,7 @@ public class User {
    * @return the status
    */
   public Integer getStatus() {
-    return status;
+    return this.status;
   }
 
   /**
@@ -124,14 +106,14 @@ public class User {
   }
 
   public boolean isActive() {
-    return status == EUserStatus.ACTIVE.getValue().intValue();
+    return this.status == EUserStatus.ACTIVE.getValue().intValue();
   }
 
   /**
    * @return the permission
    */
   public Integer getPermission() {
-    return permission;
+    return this.permission;
   }
 
   /**
@@ -143,14 +125,13 @@ public class User {
 
   public UserEdo toEdo() {
     final UserEdo edo = new UserEdo();
-    edo.setFirstName(firstName);
-    edo.setLastName(lastName);
-    edo.setPassword(password);
-    edo.setPermission(permission);
-    edo.setStatus(status);
-    edo.setEmail(email);
-    edo.setId(id);
-    edo.setCompanyId(companyId);
+    edo.setFirstName(this.firstName);
+    edo.setLastName(this.lastName);
+    edo.setPermission(this.permission);
+    edo.setStatus(this.status);
+    edo.setEmail(this.email);
+    edo.setId(this.id);
+    edo.setCompanyId(this.companyId);
 
     return edo;
   }
@@ -163,7 +144,6 @@ public class User {
 
     user.setFirstName(edo.getFirstName());
     user.setLastName(edo.getLastName());
-    user.setPassword(edo.getPassword());
     user.setPermission(edo.getPermission());
     user.setStatus(edo.getStatus());
     user.setEmail(edo.getEmail());
