@@ -24,16 +24,16 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pth.iflow.common.edo.models.DepartmentGroupEdo;
+import com.pth.iflow.common.edo.models.WorkflowTypeStepEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.core.TestDataProducer;
-import com.pth.iflow.core.model.DepartmentGroup;
-import com.pth.iflow.core.service.IDepartmentGroupService;
+import com.pth.iflow.core.model.WorkflowTypeStep;
+import com.pth.iflow.core.service.IWorkflowStepService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class DepartmentGroupControllerTest extends TestDataProducer {
+public class WorkflowTypeStepControllerTest extends TestDataProducer {
 
   @Autowired
   private MockMvc mockMvc;
@@ -45,7 +45,7 @@ public class DepartmentGroupControllerTest extends TestDataProducer {
   private ObjectMapper mapper;
   
   @MockBean
-  private IDepartmentGroupService departmentGroupService;
+  private IWorkflowStepService workflowStepService;
   
   @Before
   public void setUp() throws Exception {
@@ -56,26 +56,26 @@ public class DepartmentGroupControllerTest extends TestDataProducer {
   }
   
   @Test
-  public void testReadDepartmentGroupById() throws Exception {
+  public void testReadWorkflowTypeStepById() throws Exception {
     
-    final DepartmentGroup model = getTestDepartmentGroup();
-    when(this.departmentGroupService.getById(any(Long.class))).thenReturn(model);
+    final WorkflowTypeStep model = getTestWorkflowTypeStep();
+    when(this.workflowStepService.getById(any(Long.class))).thenReturn(model);
 
-    final DepartmentGroupEdo modelEdo = model.toEdo();
+    final WorkflowTypeStepEdo modelEdo = model.toEdo();
     
     final String modelAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelEdo);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModul.DEPARTMENTGRPUP_READ_BY_ID, model.getId()))
+        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModul.WORKFLOWTYPESTEP_READ_BY_ID, model.getId()))
         .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(modelAsXmlString));
     
-    verify(this.departmentGroupService, times(1)).getById(any(Long.class));
+    verify(this.workflowStepService, times(1)).getById(any(Long.class));
 
     final String modelAsJsonString = this.mapper.writeValueAsString(modelEdo);
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModul.DEPARTMENTGRPUP_READ_BY_ID + "?produces=json", model.getId()))
+        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModul.WORKFLOWTYPESTEP_READ_BY_ID + "?produces=json", model.getId()))
         .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
         .andExpect(content().json(modelAsJsonString));
@@ -83,33 +83,33 @@ public class DepartmentGroupControllerTest extends TestDataProducer {
   }
 
   @Test
-  public void testReadDepartmentGroupList() throws Exception {
+  public void testReadWorkflowTypeStepList() throws Exception {
 
-    final List<Long> idList = getTestDepartmentGroupIdList();
-    final List<DepartmentGroup> list = getTestDepartmentGroupList();
-    when(this.departmentGroupService.getListByIdList(any(List.class))).thenReturn(list);
+    final List<Long> idList = getTestWorkflowTypeStepIdList();
+    final List<WorkflowTypeStep> list = getTestWorkflowTypeStepList();
+    when(this.workflowStepService.getListByIdList(any(List.class))).thenReturn(list);
 
-    final List<DepartmentGroupEdo> edoList = DepartmentGroup.toEdoList(list);
+    final List<WorkflowTypeStepEdo> edoList = WorkflowTypeStep.toEdoList(list);
 
     final String contentAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(idList).replace("ArrayList", "List");
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList).replace("ArrayList", "List");
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.post(IflowRestPaths.CoreModul.DEPARTMENTGRPUP_READ_LIST)
+        .perform(MockMvcRequestBuilders.post(IflowRestPaths.CoreModul.WORKFLOWTYPESTEP_READ_LIST)
             .content(contentAsXmlString)
             .contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(listAsXmlString));
 
-    verify(this.departmentGroupService, times(1)).getListByIdList(any(List.class));
+    verify(this.workflowStepService, times(1)).getListByIdList(any(List.class));
 
     final String contentAsJsonString = this.mapper.writeValueAsString(idList);
     final String listAsJsonString = this.mapper.writeValueAsString(edoList);
 
     this.mockMvc
         .perform(
-            MockMvcRequestBuilders.post(IflowRestPaths.CoreModul.DEPARTMENTGRPUP_READ_LIST + "?produces=json")
+            MockMvcRequestBuilders.post(IflowRestPaths.CoreModul.WORKFLOWTYPESTEP_READ_LIST + "?produces=json")
                 .content(contentAsJsonString)
                 .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
         .andExpect(status().isOk())
@@ -119,26 +119,26 @@ public class DepartmentGroupControllerTest extends TestDataProducer {
   }
 
   @Test
-  public void testReadDepartmentGroupListByCompany() throws Exception {
+  public void testReadWorkflowTypeStepListByCompany() throws Exception {
 
-    final List<DepartmentGroup> list = getTestDepartmentGroupList();
-    when(this.departmentGroupService.getListByDepartmentId(any(Long.class))).thenReturn(list);
+    final List<WorkflowTypeStep> list = getTestWorkflowTypeStepList();
+    when(this.workflowStepService.getListByWorkflowId(any(Long.class))).thenReturn(list);
 
-    final List<DepartmentGroupEdo> edoList = DepartmentGroup.toEdoList(list);
+    final List<WorkflowTypeStepEdo> edoList = WorkflowTypeStep.toEdoList(list);
 
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList).replace("ArrayList", "List");
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModul.DEPARTMENTGRPUP_READ_LIST_BY_DEPARTMENT, 1L))
+        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModul.WORKFLOWTYPESTEP_READ_LIST_BY_WORKFLOW, 1L))
         .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(listAsXmlString));
     
-    verify(this.departmentGroupService, times(1)).getListByDepartmentId(any(Long.class));
+    verify(this.workflowStepService, times(1)).getListByWorkflowId(any(Long.class));
 
     final String listAsJsonString = this.mapper.writeValueAsString(edoList);
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModul.DEPARTMENTGRPUP_READ_LIST_BY_DEPARTMENT + "?produces=json", 1L))
+        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModul.WORKFLOWTYPESTEP_READ_LIST_BY_WORKFLOW + "?produces=json", 1L))
         .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
         .andExpect(content().json(listAsJsonString));

@@ -34,45 +34,45 @@ import com.pth.iflow.core.service.ICompanyService;
 @SpringBootTest
 @AutoConfigureMockMvc
 public class CompanyControllerTest extends TestDataProducer {
-  
+
   @Autowired
   private MockMvc mockMvc;
-
+  
   @Autowired
   private MappingJackson2XmlHttpMessageConverter xmlConverter;
-
+  
   @Autowired
   private ObjectMapper mapper;
-
+  
   @MockBean
   private ICompanyService companyService;
-
+  
   @Before
   public void setUp() throws Exception {
   }
-
+  
   @After
   public void tearDown() throws Exception {
   }
-
+  
   @Test
   public void testReadCompany() throws Exception {
-    
+
     final Company company = getTestCompany();
     when(this.companyService.getById(any(Long.class))).thenReturn(company);
-
-    final CompanyEdo companyEdo = company.toEdo();
-
-    final String companyAsString = this.xmlConverter.getObjectMapper().writeValueAsString(companyEdo);
     
+    final CompanyEdo companyEdo = company.toEdo();
+    
+    final String companyAsString = this.xmlConverter.getObjectMapper().writeValueAsString(companyEdo);
+
     this.mockMvc
         .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModul.COMPANY_READ_BY_ID, company.getId()))
         .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(companyAsString));
-
-    verify(this.companyService, times(1)).getById(any(Long.class));
     
+    verify(this.companyService, times(1)).getById(any(Long.class));
+
     final String userAsJsonString = this.mapper.writeValueAsString(companyEdo);
     final MvcResult res = this.mockMvc
         .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModul.COMPANY_READ_BY_ID + "?produces=json", company.getId()))
@@ -80,19 +80,18 @@ public class CompanyControllerTest extends TestDataProducer {
         .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
         .andExpect(content().json(userAsJsonString))
         .andReturn();
-    
+
     final String contentAsString = res.getResponse().getContentAsString();
-    System.out.println(contentAsString);
-    
+
     final ObjectMapper objectMapper = new ObjectMapper();
     final CompanyEdo resCompanyEdo = objectMapper.readValue(contentAsString, CompanyEdo.class);
-    
+
     Assert.assertNotNull("Result company is not null!", resCompanyEdo);
     Assert.assertEquals("Result company has id 1!", resCompanyEdo.getId(), (Long) 1L);
     Assert.assertEquals("Result company has companyName 'companyName'!", resCompanyEdo.getCompanyName(), "companyName");
     Assert.assertEquals("Result company has identifyid 'identifyid'!", resCompanyEdo.getIdentifyid(), "identifyid");
     Assert.assertEquals("Result company has status 1!", resCompanyEdo.getStatus(), (Integer) 1);
-    
-  }
 
+  }
+  
 }

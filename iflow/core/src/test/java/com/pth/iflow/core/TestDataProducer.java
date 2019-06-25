@@ -36,7 +36,7 @@ public class TestDataProducer {
     model.setDepartmentGroups(getTestDepartmentGroupIdList());
     model.setDepartments(getTestDepartmentIdList());
     model.setDeputies(getTestDeputiyIdList());
-    model.setGroups(getTestGroupIdList());
+    model.setGroups(getTestUserGroupIdList());
 
     return model;
   }
@@ -53,7 +53,7 @@ public class TestDataProducer {
     model.setDepartmentGroups(getTestDepartmentGroupIdList());
     model.setDepartments(getTestDepartmentIdList());
     model.setDeputies(getTestDeputiyIdList());
-    model.setGroups(getTestGroupIdList());
+    model.setGroups(getTestUserGroupIdList());
 
     return model;
   }
@@ -219,7 +219,7 @@ public class TestDataProducer {
     return list;
   }
   
-  protected List<Long> getTestGroupIdList() {
+  protected List<Long> getTestUserGroupIdList() {
     return Arrays.asList(1L, 2L, 3L);
   }
 
