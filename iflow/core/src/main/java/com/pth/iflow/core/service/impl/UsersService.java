@@ -28,7 +28,7 @@ public class UsersService implements IUsersService {
   private final IWorkflowDao workflowDao;
   private final IWorkflowStepDao workflowStepDao;
 
-  UsersService(@Autowired final IUserDao userDao, @Autowired final IUserGroupDao userGroupDao,
+  public UsersService(@Autowired final IUserDao userDao, @Autowired final IUserGroupDao userGroupDao,
       @Autowired final IDepartmentDao departmentDao, @Autowired final IDepartmentGroupDao departmentGroupDao,
       @Autowired final IWorkflowDao workflowDao, @Autowired final IWorkflowStepDao workflowStepDao) {
     this.userDao = userDao;
@@ -61,8 +61,7 @@ public class UsersService implements IUsersService {
   @Override
   public List<Department> getUserDepartments(final Long id) {
     final User user = getUserById(id);
-    final List<Department> list = departmentDao
-        .getListByIdList(user.getDepartments().stream().collect(Collectors.toList()));
+    final List<Department> list = departmentDao.getListByIdList(user.getDepartments().stream().collect(Collectors.toList()));
     return list;
   }
 
