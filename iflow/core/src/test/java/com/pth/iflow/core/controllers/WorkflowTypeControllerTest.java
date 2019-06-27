@@ -28,7 +28,7 @@ import com.pth.iflow.common.edo.models.WorkflowTypeEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.WorkflowType;
-import com.pth.iflow.core.service.IWorkflowService;
+import com.pth.iflow.core.service.IWorkflowTypeService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -45,7 +45,7 @@ public class WorkflowTypeControllerTest extends TestDataProducer {
   private ObjectMapper mapper;
 
   @MockBean
-  private IWorkflowService workflowService;
+  private IWorkflowTypeService workflowService;
 
   @Before
   public void setUp() throws Exception {

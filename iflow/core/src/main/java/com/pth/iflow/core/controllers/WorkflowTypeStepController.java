@@ -20,15 +20,15 @@ import com.pth.iflow.common.controllers.helper.ControllerHelper;
 import com.pth.iflow.common.edo.models.WorkflowTypeStepEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.core.model.WorkflowTypeStep;
-import com.pth.iflow.core.service.IWorkflowStepService;
+import com.pth.iflow.core.service.IWorkflowTypeStepService;
 
 @RestController
 @RequestMapping
 public class WorkflowTypeStepController {
   
-  final IWorkflowStepService workflowStepService;
+  final IWorkflowTypeStepService workflowStepService;
   
-  public WorkflowTypeStepController(@Autowired final IWorkflowStepService workflowStepService) {
+  public WorkflowTypeStepController(@Autowired final IWorkflowTypeStepService workflowStepService) {
     this.workflowStepService = workflowStepService;
   }
   
@@ -64,7 +64,7 @@ public class WorkflowTypeStepController {
   public ResponseEntity<List<WorkflowTypeStepEdo>> readDepartmentListByCompany(@PathVariable final Long id,
       final HttpServletRequest request) throws Exception {
     
-    final List<WorkflowTypeStep> modelList = this.workflowStepService.getListByWorkflowId(id);
+    final List<WorkflowTypeStep> modelList = this.workflowStepService.getListByWorkflowTypeId(id);
     
     return ControllerHelper.createResponseEntity(request, WorkflowTypeStep.toEdoList(modelList), HttpStatus.OK);
   }

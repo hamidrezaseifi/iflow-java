@@ -5,7 +5,7 @@ import java.util.List;
 import com.pth.iflow.core.model.WorkflowType;
 import com.pth.iflow.core.model.WorkflowTypeStep;
 
-public interface IWorkflowService {
+public interface IWorkflowTypeService {
 
   public WorkflowType getById(Long id);
 

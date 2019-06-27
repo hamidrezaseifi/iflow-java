@@ -28,7 +28,7 @@ import com.pth.iflow.common.edo.models.WorkflowTypeStepEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.WorkflowTypeStep;
-import com.pth.iflow.core.service.IWorkflowStepService;
+import com.pth.iflow.core.service.IWorkflowTypeStepService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -45,7 +45,7 @@ public class WorkflowTypeStepControllerTest extends TestDataProducer {
   private ObjectMapper mapper;
   
   @MockBean
-  private IWorkflowStepService workflowStepService;
+  private IWorkflowTypeStepService workflowStepService;
   
   @Before
   public void setUp() throws Exception {
@@ -122,7 +122,7 @@ public class WorkflowTypeStepControllerTest extends TestDataProducer {
   public void testReadWorkflowTypeStepListByCompany() throws Exception {
 
     final List<WorkflowTypeStep> list = getTestWorkflowTypeStepList();
-    when(this.workflowStepService.getListByWorkflowId(any(Long.class))).thenReturn(list);
+    when(this.workflowStepService.getListByWorkflowTypeId(any(Long.class))).thenReturn(list);
 
     final List<WorkflowTypeStepEdo> edoList = WorkflowTypeStep.toEdoList(list);
 
@@ -134,7 +134,7 @@ public class WorkflowTypeStepControllerTest extends TestDataProducer {
         .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(listAsXmlString));
     
-    verify(this.workflowStepService, times(1)).getListByWorkflowId(any(Long.class));
+    verify(this.workflowStepService, times(1)).getListByWorkflowTypeId(any(Long.class));
 
     final String listAsJsonString = this.mapper.writeValueAsString(edoList);
     this.mockMvc

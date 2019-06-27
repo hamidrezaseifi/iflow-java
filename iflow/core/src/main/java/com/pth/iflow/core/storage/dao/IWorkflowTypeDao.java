@@ -5,7 +5,7 @@ import java.util.List;
 import com.pth.iflow.core.model.WorkflowType;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 
-public interface IWorkflowDao {
+public interface IWorkflowTypeDao {
   
   public WorkflowType getById(Long id) throws IFlowStorageException;
   
