@@ -19,16 +19,16 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
 import com.pth.iflow.common.edo.models.WorkflowTypeStepEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
-import com.pth.ifow.workflow.bl.IWorkflowStepService;
+import com.pth.ifow.workflow.bl.IWorkflowTypeStepService;
 import com.pth.ifow.workflow.models.WorkflowTypeStep;
 
 @RestController
 @RequestMapping
-public class WorkflowStepController {
+public class WorkflowTypeStepController {
   
-  final IWorkflowStepService workflowStepService;
+  final IWorkflowTypeStepService workflowStepService;
   
-  public WorkflowStepController(@Autowired final IWorkflowStepService workflowStepService) {
+  public WorkflowTypeStepController(@Autowired final IWorkflowTypeStepService workflowStepService) {
     this.workflowStepService = workflowStepService;
   }
   
