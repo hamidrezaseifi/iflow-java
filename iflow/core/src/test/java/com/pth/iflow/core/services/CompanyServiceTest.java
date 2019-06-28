@@ -23,12 +23,12 @@ import com.pth.iflow.core.storage.dao.ICompanyDao;
 @SpringBootTest
 @AutoConfigureMockMvc
 public class CompanyServiceTest extends TestDataProducer {
-  
+
   private ICompanyService companyService;
-  
+
   @MockBean
   private ICompanyDao companyDao;
-  
+
   @Before
   public void setUp() throws Exception {
     this.companyService = new CompanyService(this.companyDao);
@@ -40,18 +40,18 @@ public class CompanyServiceTest extends TestDataProducer {
 
   @Test
   public void testReadCompany() throws Exception {
-    
+
     final Company company = getTestCompany();
     when(this.companyDao.getById(any(Long.class))).thenReturn(company);
 
     final Company resCompany = this.companyService.getById(1L);
-    
+
     Assert.assertNotNull("Result company is not null!", resCompany);
     Assert.assertEquals("Result company has id 1!", resCompany.getId(), company.getId());
     Assert.assertEquals("Result company has companyName 'companyName'!", resCompany.getCompanyName(), company.getCompanyName());
     Assert.assertEquals("Result company has identifyid 'identifyid'!", resCompany.getIdentifyid(), company.getIdentifyid());
     Assert.assertEquals("Result company has status 1!", resCompany.getStatus(), company.getStatus());
-    
+
   }
-  
+
 }

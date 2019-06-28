@@ -3,9 +3,9 @@ package com.pth.iflow.core.storage.dao.impl;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -19,45 +19,18 @@ import com.pth.iflow.core.storage.dao.utils.SqlUtils;
 
 @Transactional
 @Repository
-public class CompanyDao implements ICompanyDao {
-
-  private static final Logger logger = LoggerFactory.getLogger(CompanyDao.class);
-  private final JdbcTemplate jdbcTemplate;
-  private final PlatformTransactionManager platformTransactionManager;
+public class CompanyDao extends DaoBasicClass<Company> implements ICompanyDao {
 
   public CompanyDao(final @Autowired JdbcTemplate jdbcTemplate,
       final @Autowired PlatformTransactionManager platformTransactionManager) {
-    this.jdbcTemplate = jdbcTemplate;
-    this.platformTransactionManager = platformTransactionManager;
+    super(jdbcTemplate, platformTransactionManager);
   }
 
   @Override
   public Company getById(final Long id) throws IFlowStorageException {
-    logger.info("Dao Read Company by id: " + id);
-    final String sqlSelect = "SELECT * FROM companies where id=?";
 
-    Company company;
+    return getModelById(id, "SELECT * FROM companies where id=?", "Company");
 
-    try {
-
-      company = this.jdbcTemplate.query(con -> {
-        final PreparedStatement ps = con.prepareStatement(sqlSelect);
-        ps.setLong(1, id);
-        return ps;
-
-      }, (rs) -> {
-        if (rs.next()) {
-          return companyFromResultSet(rs);
-        } else {
-          return null;
-        }
-      });
-
-    } catch (final Exception e) {
-      throw new IFlowStorageException("Unable to retrieve Company data: " + e.toString());
-    }
-
-    return company;
   }
 
   @Override
@@ -66,7 +39,24 @@ public class CompanyDao implements ICompanyDao {
     return null;
   }
 
-  private Company companyFromResultSet(final ResultSet rs) throws SQLException {
+  private List<Long> getDepartmentIdList(final Long id) {
+    return getIdListById(id, "SELECT * FROM departments where company_id=?", "id", "Company Departments");
+  }
+
+  private List<Long> getGroupIdList(final Long id) {
+    return getIdListById(id, "SELECT * FROM user_group where company_id=?", "id", "Company Groups");
+  }
+
+  private List<Long> getWorkflowTypeIdList(final Long id) {
+    return getIdListById(id, "SELECT * FROM workflow_type where company_id=?", "id", "Company WorkflowTypes");
+  }
+
+  private List<Long> getUserIdList(final Long id) {
+    return getIdListById(id, "SELECT * FROM users where company_id=?", "id", "Company Users");
+  }
+
+  @Override
+  protected Company modelFromResultSet(final ResultSet rs) throws SQLException {
     final Company company = new Company();
     company.setId(rs.getLong("id"));
     company.setCompanyName(rs.getString("company_name"));
@@ -76,7 +66,37 @@ public class CompanyDao implements ICompanyDao {
     company.setCreatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("created_at")));
     company.setUpdatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("updated_at")));
 
+    company.setDepartmentIds(getDepartmentIdList(company.getId()));
+    company.setGroupIds(getGroupIdList(company.getId()));
+    company.setWorkflowTypeIds(getWorkflowTypeIdList(company.getId()));
+    company.setUserIds(getUserIdList(company.getId()));
+
     return company;
+  }
+
+  @Override
+  public List<Long> getAllCompanyIdList() {
+    logger.info("Dao read all companies");
+
+    List<Long> list = new ArrayList<>();
+
+    try {
+      list = jdbcTemplate.query(con -> {
+        final PreparedStatement ps = con.prepareStatement("SELECT * FROM companies");
+
+        return ps;
+
+      }, (rs, rowNum) -> {
+
+        return rs.getLong("id");
+
+      });
+
+    } catch (final Exception e) {
+      throw new IFlowStorageException("Unable to read companies : " + e.toString());
+    }
+
+    return list;
   }
 
 }

@@ -58,8 +58,7 @@ public abstract class DaoBasicClass<M> {
     return model;
   }
 
-  protected List<M> getModelListById(final Long id, final String sqlSelect, final String modelName)
-      throws IFlowStorageException {
+  protected List<M> getModelListById(final Long id, final String sqlSelect, final String modelName) throws IFlowStorageException {
     logger.info("Dao read {} by id: {}", modelName, id);
 
     List<M> list = new ArrayList<>();
@@ -84,8 +83,8 @@ public abstract class DaoBasicClass<M> {
     return list;
   }
 
-  protected List<Long> getIdListById(final Long id, final String sqlSelect, final String columnName,
-      final String modelName) throws IFlowStorageException {
+  protected List<Long> getIdListById(final Long id, final String sqlSelect, final String columnName, final String modelName)
+      throws IFlowStorageException {
     logger.info("Dao read {} by id: {}", modelName, id);
 
     List<Long> list = new ArrayList<>();

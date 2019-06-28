@@ -16,28 +16,31 @@ import com.pth.iflow.common.controllers.helper.ControllerHelper;
 import com.pth.iflow.common.edo.models.CompanyEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.core.model.Company;
+import com.pth.iflow.core.service.ICompanyCachedDataService;
 import com.pth.iflow.core.service.ICompanyService;
 
 @RestController
 @RequestMapping
 public class CompanyController {
-  
+
   final ICompanyService companyService;
-  
-  public CompanyController(@Autowired final ICompanyService companyService) {
+  final ICompanyCachedDataService companyCachedDataService;
+
+  public CompanyController(@Autowired final ICompanyService companyService,
+      @Autowired final ICompanyCachedDataService companyCachedDataService) {
     this.companyService = companyService;
+    this.companyCachedDataService = companyCachedDataService;
   }
-  
+
   @ResponseStatus(HttpStatus.OK)
-  @GetMapping(path = IflowRestPaths.CoreModul.COMPANY_READ_BY_ID, produces = {
-      MediaType.APPLICATION_XML_VALUE,
+  @GetMapping(path = IflowRestPaths.CoreModul.COMPANY_READ_BY_ID, produces = { MediaType.APPLICATION_XML_VALUE,
       MediaType.APPLICATION_JSON_UTF8_VALUE })
   public ResponseEntity<CompanyEdo> readCompany(@PathVariable(name = "companyid") final Long companyid,
       final HttpServletRequest request) throws Exception {
-    
+
     final Company company = this.companyService.getById(companyid);
-    
+
     return ControllerHelper.createResponseEntity(request, company.toEdo(), HttpStatus.OK);
   }
-  
+
 }

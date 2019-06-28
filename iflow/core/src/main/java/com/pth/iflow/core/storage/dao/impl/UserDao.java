@@ -37,9 +37,9 @@ public class UserDao extends DaoBasicClass<User> implements IUserDao {
     user.setCreatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("created_at")));
     user.setUpdatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("updated_at")));
     user.setVersion(rs.getInt("version"));
-    user.setGroups(getGroupIdListById(user.getId()));
-    user.setDepartments(getDepartmentIdListIdById(user.getId()));
-    user.setDeputies(getDeputyIdListById(user.getId()));
+    user.setGroupIds(getGroupIdListById(user.getId()));
+    user.setDepartmentIds(getDepartmentIdListIdById(user.getId()));
+    user.setDeputyIds(getDeputyIdListById(user.getId()));
 
     return user;
   }

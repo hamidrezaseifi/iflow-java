@@ -13,6 +13,7 @@ public class Company extends ModelMapperBase<CompanyEdo, Company> {
   /**
    * @return the id
    */
+  @Override
   public Long getId() {
     return this.id;
   }
@@ -86,6 +87,14 @@ public class Company extends ModelMapperBase<CompanyEdo, Company> {
     company.setId(edo.getId());
 
     return company;
+  }
+
+  @Override
+  public void fromExists(final Company exist) {
+    setCompanyName(exist.getCompanyName());
+    setIdentifyid(exist.getIdentifyid());
+    setStatus(exist.getStatus());
+    setId(exist.getId());
   }
 
 }

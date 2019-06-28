@@ -12,24 +12,25 @@ import com.pth.iflow.common.enums.EUserStatus;
 
 public class User extends ModelMapperBase<UserEdo, User> {
 
-  private Long            id;
-  private Long            companyId;
-  private String          email;
-  private String          firstName;
-  private String          lastName;
-  private Integer         status;
-  private Integer         permission;
-  private Integer         version;
-  private LocalDateTime   createdAt;
-  private LocalDateTime   updatedAt;
-  private final Set<Long> groups           = new HashSet<>();
-  private final Set<Long> departments      = new HashSet<>();
-  private final Set<Long> departmentGroups = new HashSet<>();
-  private final Set<Long> deputies         = new HashSet<>();
+  protected Long id;
+  protected Long companyId;
+  protected String email;
+  protected String firstName;
+  protected String lastName;
+  protected Integer status;
+  protected Integer permission;
+  protected Integer version;
+  protected LocalDateTime createdAt;
+  protected LocalDateTime updatedAt;
+  protected final Set<Long> groupIds = new HashSet<>();
+  protected final Set<Long> departmentIds = new HashSet<>();
+  protected final Set<Long> departmentGroupIds = new HashSet<>();
+  protected final Set<Long> deputyIds = new HashSet<>();
 
   /**
    * @return the id
    */
+  @Override
   public Long getId() {
     return this.id;
   }
@@ -169,82 +170,82 @@ public class User extends ModelMapperBase<UserEdo, User> {
     this.permission = permission;
   }
 
-  public Set<Long> getGroups() {
-    return this.groups;
+  public Set<Long> getGroupIds() {
+    return this.groupIds;
   }
 
-  public void setGroups(final Set<Long> groups) {
-    this.groups.clear();
+  public void setGroupIds(final Set<Long> groups) {
+    this.groupIds.clear();
     if (groups != null) {
-      this.groups.addAll(groups);
+      this.groupIds.addAll(groups);
     }
   }
 
-  public void setGroups(final List<Long> groups) {
-    setGroups(groups.stream().collect(Collectors.toSet()));
+  public void setGroupIds(final List<Long> groups) {
+    setGroupIds(groups.stream().collect(Collectors.toSet()));
   }
 
-  public void addGroup(final Long groupId) {
-    this.groups.add(groupId);
+  public void addGroupId(final Long groupId) {
+    this.groupIds.add(groupId);
   }
 
-  public Set<Long> getDepartments() {
-    return this.departments;
+  public Set<Long> getDepartmentIds() {
+    return this.departmentIds;
   }
 
-  public void setDepartments(final Set<Long> departments) {
-    this.departments.clear();
+  public void setDepartmentIds(final Set<Long> departments) {
+    this.departmentIds.clear();
     if (departments != null) {
-      this.departments.addAll(departments);
+      this.departmentIds.addAll(departments);
     }
   }
 
-  public void setDepartments(final List<Long> departments) {
-    setDepartments(departments.stream().collect(Collectors.toSet()));
-    
+  public void setDepartmentIds(final List<Long> departments) {
+    setDepartmentIds(departments.stream().collect(Collectors.toSet()));
+
   }
 
-  public void addDepartment(final Long departmentId) {
-    this.departments.add(departmentId);
+  public void addDepartmentId(final Long departmentId) {
+    this.departmentIds.add(departmentId);
   }
 
-  public Set<Long> getDepartmentGroups() {
-    return this.departmentGroups;
+  public Set<Long> getDepartmentGroupIds() {
+    return this.departmentGroupIds;
   }
 
-  public void setDepartmentGroups(final Set<Long> departmentGroups) {
-    this.departmentGroups.clear();
+  public void setDepartmentGroupIds(final Set<Long> departmentGroups) {
+    this.departmentGroupIds.clear();
     if (departmentGroups != null) {
-      this.departmentGroups.addAll(departmentGroups);
+      this.departmentGroupIds.addAll(departmentGroups);
     }
   }
 
-  public void setDepartmentGroups(final List<Long> departmentGroups) {
-    setDepartmentGroups(departmentGroups.stream().collect(Collectors.toSet()));
+  public void setDepartmentGroupIds(final List<Long> departmentGroups) {
+    setDepartmentGroupIds(departmentGroups.stream().collect(Collectors.toSet()));
   }
 
-  public void addDepartmentGroup(final Long departmentGroupId) {
-    this.departmentGroups.add(departmentGroupId);
+  public void addDepartmentGroupId(final Long departmentGroupId) {
+    this.departmentGroupIds.add(departmentGroupId);
   }
 
-  public Set<Long> getDeputies() {
-    return this.deputies;
+  public Set<Long> getDeputyIds() {
+    return this.deputyIds;
   }
 
-  public void setDeputies(final Set<Long> deputies) {
-    this.deputies.clear();
+  public void setDeputyIds(final Set<Long> deputies) {
+    this.deputyIds.clear();
     if (deputies != null) {
-      this.deputies.addAll(deputies);
+      this.deputyIds.addAll(deputies);
     }
   }
 
-  public void setDeputies(final List<Long> deputies) {
-    setDeputies(deputies.stream().collect(Collectors.toSet()));
+  public void setDeputyIds(final List<Long> deputies) {
+    setDeputyIds(deputies.stream().collect(Collectors.toSet()));
 
   }
 
-  public void addDeputy(final Long deputyId) {
-    this.deputies.add(deputyId);
+  public void addDeputyId(final Long deputyId) {
+    this.deputyIds.add(deputyId);
   }
 
   @Override
@@ -257,10 +258,10 @@ public class User extends ModelMapperBase<UserEdo, User> {
     edo.setEmail(this.email);
     edo.setId(this.id);
     edo.setCompanyId(this.companyId);
-    edo.setGroups(this.groups);
-    edo.setDepartments(this.departments);
-    edo.setDepartmentGroups(this.departmentGroups);
-    edo.setDeputies(this.deputies);
+    edo.setGroups(this.groupIds);
+    edo.setDepartments(this.departmentIds);
+    edo.setDepartmentGroups(this.departmentGroupIds);
+    edo.setDeputies(this.deputyIds);
 
     return edo;
   }
@@ -276,12 +277,32 @@ public class User extends ModelMapperBase<UserEdo, User> {
     user.setEmail(edo.getEmail());
     user.setId(edo.getId());
     user.setCompanyId(edo.getCompanyId());
-    user.setGroups(edo.getGroups());
-    user.setDepartments(edo.getDepartments());
-    user.setDepartmentGroups(edo.getDepartmentGroups());
-    user.setDeputies(edo.getDeputies());
+    user.setGroupIds(edo.getGroups());
+    user.setDepartmentIds(edo.getDepartments());
+    user.setDepartmentGroupIds(edo.getDepartmentGroups());
+    user.setDeputyIds(edo.getDeputies());
 
     return user;
+  }
+
+  @Override
+  public void fromExists(final User exist) {
+
+    setFirstName(exist.getFirstName());
+    setLastName(exist.getLastName());
+    setPermission(exist.getPermission());
+    setStatus(exist.getStatus());
+    setEmail(exist.getEmail());
+    setId(exist.getId());
+    setCompanyId(exist.getCompanyId());
+    setGroupIds(exist.getGroupIds());
+    setDepartmentIds(exist.getDepartmentIds());
+    setDepartmentGroupIds(exist.getDepartmentGroupIds());
+    setDeputyIds(exist.getDeputyIds());
+    setVersion(exist.getVersion());
+    setCreatedAt(exist.getCreatedAt());
+    setUpdatedAt(exist.getUpdatedAt());
+
   }
 
 }

@@ -4,23 +4,25 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.pth.iflow.common.edo.models.WorkflowTypeEdo;
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 
 public class WorkflowType extends ModelMapperBase<WorkflowTypeEdo, WorkflowType> {
 
-  private Long            id;
-  private Long            companyId;
-  private Long            baseTypeId;
-  private String          title;
-  private String          comments;
-  private Integer         status;
-  private Integer         version;
-  private LocalDateTime   createdAt;
-  private LocalDateTime   updatedAt;
-  private final Set<Long> steps = new HashSet<>();
+  protected Long id;
+  protected Long companyId;
+  protected Long baseTypeId;
+  protected String title;
+  protected String comments;
+  protected Integer status;
+  protected Integer version;
+  protected LocalDateTime createdAt;
+  protected LocalDateTime updatedAt;
+  protected final Set<Long> stepIds = new HashSet<>();
 
+  @Override
   public Long getId() {
     return this.id;
   }
@@ -99,26 +101,23 @@ public class WorkflowType extends ModelMapperBase<WorkflowTypeEdo, WorkflowType>
     this.updatedAt = updatedAt;
   }
 
-  public Set<Long> getSteps() {
-    return this.steps;
+  public Set<Long> getStepIds() {
+    return this.stepIds;
   }
 
-  public void setSteps(final Set<Long> steps) {
-    this.steps.clear();
-    if (steps != null) {
-      this.steps.addAll(steps);
+  public void setStepIds(final Set<Long> stepIds) {
+    this.stepIds.clear();
+    if (stepIds != null) {
+      this.stepIds.addAll(stepIds);
     }
   }
 
-  public void setSteps(final List<Long> steps) {
-    this.steps.clear();
-    if (steps != null) {
-      this.steps.addAll(steps);
-    }
+  public void setStepIds(final List<Long> stepIds) {
+    setStepIds(stepIds.stream().collect(Collectors.toSet()));
   }
 
-  public void addStep(final Long stepId) {
-    this.steps.add(stepId);
+  public void addStepId(final Long stepId) {
+    this.stepIds.add(stepId);
   }
 
   @Override
@@ -130,7 +129,7 @@ public class WorkflowType extends ModelMapperBase<WorkflowTypeEdo, WorkflowType>
     edo.setId(this.id);
     edo.setCompanyId(this.companyId);
     edo.setBaseTypeId(this.baseTypeId);
-    edo.setSteps(this.steps);
+    edo.setSteps(this.stepIds);
 
     return edo;
   }
@@ -145,9 +144,24 @@ public class WorkflowType extends ModelMapperBase<WorkflowTypeEdo, WorkflowType>
     model.setId(edo.getId());
     model.setCompanyId(edo.getCompanyId());
     model.setBaseTypeId(edo.getBaseTypeId());
-    model.setSteps(edo.getSteps());
+    model.setStepIds(edo.getSteps());
 
     return model;
+  }
+
+  @Override
+  public void fromExists(final WorkflowType exist) {
+    setTitle(exist.getTitle());
+    setComments(exist.getComments());
+    setStatus(exist.getStatus());
+    setId(exist.getId());
+    setCompanyId(exist.getCompanyId());
+    setBaseTypeId(exist.getBaseTypeId());
+    setStepIds(exist.getStepIds());
+    setVersion(exist.getVersion());
+    setCreatedAt(exist.getCreatedAt());
+    setUpdatedAt(exist.getUpdatedAt());
+
   }
 
 }

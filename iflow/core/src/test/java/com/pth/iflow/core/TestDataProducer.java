@@ -20,7 +20,7 @@ public class TestDataProducer {
     company.setIdentifyid("identifyid");
     company.setStatus(1);
     company.setVersion(1);
-    
+
     return company;
   }
 
@@ -33,11 +33,11 @@ public class TestDataProducer {
     model.setLastName("lastName");
     model.setStatus(1);
     model.setVersion(1);
-    model.setDepartmentGroups(getTestDepartmentGroupIdList());
-    model.setDepartments(getTestDepartmentIdList());
-    model.setDeputies(getTestDeputiyIdList());
-    model.setGroups(getTestUserGroupIdList());
-    
+    model.setDepartmentGroupIds(getTestDepartmentGroupIdList());
+    model.setDepartmentIds(getTestDepartmentIdList());
+    model.setDeputyIds(getTestDeputiyIdList());
+    model.setGroupIds(getTestUserGroupIdList());
+
     return model;
   }
 
@@ -50,18 +50,18 @@ public class TestDataProducer {
     model.setLastName(lname);
     model.setStatus(1);
     model.setVersion(1);
-    model.setDepartmentGroups(getTestDepartmentGroupIdList());
-    model.setDepartments(getTestDepartmentIdList());
-    model.setDeputies(getTestDeputiyIdList());
-    model.setGroups(getTestUserGroupIdList());
-    
+    model.setDepartmentGroupIds(getTestDepartmentGroupIdList());
+    model.setDepartmentIds(getTestDepartmentIdList());
+    model.setDeputyIds(getTestDeputiyIdList());
+    model.setGroupIds(getTestUserGroupIdList());
+
     return model;
   }
 
   protected List<User> getTestUserList() {
-    final List<User> list = Arrays.asList(getTestUser(1L, "fname 1", "lname 1", "email 1"), getTestUser(2L, "fname 2", "lname 2", "email 2"),
-        getTestUser(3L, "fname 3", "lname 3", "email 3"));
-    
+    final List<User> list = Arrays.asList(getTestUser(1L, "fname 1", "lname 1", "email 1"),
+        getTestUser(2L, "fname 2", "lname 2", "email 2"), getTestUser(3L, "fname 3", "lname 3", "email 3"));
+
     return list;
   }
 
@@ -72,8 +72,8 @@ public class TestDataProducer {
     model.setTitle("title");
     model.setStatus(1);
     model.setVersion(1);
-    model.setGroups(getTestDepartmentGroupIdList());
-    
+    model.setGroupIds(getTestDepartmentGroupIdList());
+
     return model;
   }
 
@@ -84,15 +84,15 @@ public class TestDataProducer {
     model.setTitle(title);
     model.setStatus(1);
     model.setVersion(1);
-    model.setGroups(getTestDepartmentGroupIdList());
-    
+    model.setGroupIds(getTestDepartmentGroupIdList());
+
     return model;
   }
 
   protected List<Department> getTestDepartmentList() {
     final List<Department> list = Arrays.asList(getTestDepartment(1L, "Department 1"), getTestDepartment(2L, "Department 2"),
         getTestDepartment(3L, "Department 3"));
-    
+
     return list;
   }
 
@@ -103,7 +103,7 @@ public class TestDataProducer {
     model.setTitle("title");
     model.setStatus(1);
     model.setVersion(1);
-    
+
     return model;
   }
 
@@ -114,14 +114,14 @@ public class TestDataProducer {
     model.setTitle(title);
     model.setStatus(1);
     model.setVersion(1);
-    
+
     return model;
   }
 
   protected List<DepartmentGroup> getTestDepartmentGroupList() {
-    final List<DepartmentGroup> list = Arrays.asList(getTestDepartmentGroup(1L, "DepartmentGroup 1"), getTestDepartmentGroup(2L, "DepartmentGroup 2"),
-        getTestDepartmentGroup(3L, "DepartmentGroup 3"));
-    
+    final List<DepartmentGroup> list = Arrays.asList(getTestDepartmentGroup(1L, "DepartmentGroup 1"),
+        getTestDepartmentGroup(2L, "DepartmentGroup 2"), getTestDepartmentGroup(3L, "DepartmentGroup 3"));
+
     return list;
   }
 
@@ -132,7 +132,7 @@ public class TestDataProducer {
     model.setTitle("title");
     model.setStatus(1);
     model.setVersion(1);
-    
+
     return model;
   }
 
@@ -143,14 +143,14 @@ public class TestDataProducer {
     model.setTitle(title);
     model.setStatus(1);
     model.setVersion(1);
-    
+
     return model;
   }
 
   protected List<UserGroup> getTestUserGroupList() {
     final List<UserGroup> list = Arrays.asList(getTestUserGroup(1L, "UserGroup 1"), getTestUserGroup(2L, "UserGroup 2"),
         getTestUserGroup(3L, "UserGroup 3"));
-    
+
     return list;
   }
 
@@ -161,9 +161,9 @@ public class TestDataProducer {
     model.setTitle("title");
     model.setStatus(1);
     model.setVersion(1);
-    model.setSteps(getTestWorkflowTypeStepIdList());
+    model.setStepIds(getTestWorkflowTypeStepIdList());
     model.setComments("comments");
-    
+
     return model;
   }
 
@@ -174,19 +174,19 @@ public class TestDataProducer {
     model.setTitle(title);
     model.setStatus(1);
     model.setVersion(1);
-    model.setSteps(getTestWorkflowTypeStepIdList());
+    model.setStepIds(getTestWorkflowTypeStepIdList());
     model.setComments("comments");
-    
+
     return model;
   }
 
   protected List<WorkflowType> getTestWorkflowTypeList() {
     final List<WorkflowType> list = Arrays.asList(getTestWorkflowType(1L, "WorkflowType 1"), getTestWorkflowType(2L, "WorkflowType 2"),
         getTestWorkflowType(3L, "WorkflowType 3"));
-    
+
     return list;
   }
-  
+
   protected WorkflowTypeStep getTestWorkflowTypeStep() {
     final WorkflowTypeStep model = new WorkflowTypeStep();
     model.setWorkflowTypeId(1L);
@@ -195,7 +195,7 @@ public class TestDataProducer {
     model.setStatus(1);
     model.setVersion(1);
     model.setComments("comments");
-    
+
     return model;
   }
 
@@ -207,42 +207,41 @@ public class TestDataProducer {
     model.setStatus(1);
     model.setVersion(1);
     model.setComments("comments");
-    
+
     return model;
   }
 
   protected List<WorkflowTypeStep> getTestWorkflowTypeStepList() {
     final List<WorkflowTypeStep> list = Arrays.asList(getTestWorkflowTypeStep(1L, "WorkflowTypeStep 1"),
-        getTestWorkflowTypeStep(2L, "WorkflowTypeStep 2"),
-        getTestWorkflowTypeStep(3L, "WorkflowTypeStep 3"));
-    
+        getTestWorkflowTypeStep(2L, "WorkflowTypeStep 2"), getTestWorkflowTypeStep(3L, "WorkflowTypeStep 3"));
+
     return list;
   }
 
   protected List<Long> getTestUserGroupIdList() {
     return Arrays.asList(1L, 2L, 3L);
   }
-  
+
   protected List<Long> getTestDepartmentIdList() {
     return Arrays.asList(1L, 2L, 3L);
   }
-  
+
   protected List<Long> getTestDepartmentGroupIdList() {
     return Arrays.asList(1L, 2L, 3L);
   }
-  
+
   protected List<Long> getTestWorkflowTypeIdList() {
     return Arrays.asList(1L, 2L, 3L);
   }
-  
+
   protected List<Long> getTestWorkflowTypeStepIdList() {
     return Arrays.asList(1L, 2L, 3L);
   }
-  
+
   protected List<Long> getTestDeputiyIdList() {
     return Arrays.asList(1L, 2L, 3L);
   }
-  
+
   protected List<Long> getTestUserIdList() {
     return Arrays.asList(1L, 2L, 3L);
   }

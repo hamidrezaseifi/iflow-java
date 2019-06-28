@@ -26,6 +26,7 @@ public class User extends ModelMapperBase<UserEdo, User> {
   /**
    * @return the id
    */
+  @Override
   public Long getId() {
     return this.id;
   }
@@ -236,6 +237,22 @@ public class User extends ModelMapperBase<UserEdo, User> {
     user.setDeputies(edo.getDeputies());
 
     return user;
+  }
+
+  @Override
+  public void fromExists(final User exist) {
+    setFirstName(exist.getFirstName());
+    setLastName(exist.getLastName());
+    setPermission(exist.getPermission());
+    setStatus(exist.getStatus());
+    setEmail(exist.getEmail());
+    setId(exist.getId());
+    setCompanyId(exist.getCompanyId());
+    setGroups(exist.getGroups());
+    setDepartments(exist.getDepartments());
+    setDepartmentGroups(exist.getDepartmentGroups());
+    setDeputies(exist.getDeputies());
+
   }
 
 }

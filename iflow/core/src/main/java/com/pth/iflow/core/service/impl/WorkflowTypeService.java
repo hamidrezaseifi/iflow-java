@@ -15,7 +15,7 @@ import com.pth.iflow.core.storage.dao.IWorkflowTypeStepDao;
 @Service
 public class WorkflowTypeService implements IWorkflowTypeService {
 
-  private final IWorkflowTypeDao     workflowTypeDao;
+  private final IWorkflowTypeDao workflowTypeDao;
   private final IWorkflowTypeStepDao workflowTypeStepDao;
 
   public WorkflowTypeService(@Autowired final IWorkflowTypeDao workflowDao, @Autowired final IWorkflowTypeStepDao workflowStepDao) {
@@ -31,7 +31,7 @@ public class WorkflowTypeService implements IWorkflowTypeService {
   @Override
   public List<WorkflowTypeStep> getStepsById(final Long id) {
     final WorkflowType workflow = getById(id);
-    return this.workflowTypeStepDao.getListByIdList(workflow.getSteps().stream().collect(Collectors.toList()));
+    return this.workflowTypeStepDao.getListByIdList(workflow.getStepIds().stream().collect(Collectors.toList()));
   }
 
   @Override

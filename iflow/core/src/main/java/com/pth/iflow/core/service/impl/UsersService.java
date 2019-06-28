@@ -25,8 +25,8 @@ public class UsersService implements IUsersService {
   private final IUserGroupDao userGroupDao;
   private final IDepartmentDao departmentDao;
   private final IDepartmentGroupDao departmentGroupDao;
-  private final IWorkflowTypeDao workflowDao;
-  private final IWorkflowTypeStepDao workflowStepDao;
+  private final IWorkflowTypeDao workflowTypeDao;
+  private final IWorkflowTypeStepDao workflowTypeStepDao;
 
   public UsersService(@Autowired final IUserDao userDao, @Autowired final IUserGroupDao userGroupDao,
       @Autowired final IDepartmentDao departmentDao, @Autowired final IDepartmentGroupDao departmentGroupDao,
@@ -35,8 +35,8 @@ public class UsersService implements IUsersService {
     this.userGroupDao = userGroupDao;
     this.departmentDao = departmentDao;
     this.departmentGroupDao = departmentGroupDao;
-    this.workflowDao = workflowDao;
-    this.workflowStepDao = workflowStepDao;
+    this.workflowTypeDao = workflowDao;
+    this.workflowTypeStepDao = workflowStepDao;
   }
 
   @Override
@@ -54,14 +54,14 @@ public class UsersService implements IUsersService {
   @Override
   public List<UserGroup> getUserGroups(final Long id) {
     final User user = getUserById(id);
-    final List<UserGroup> list = userGroupDao.getListByIdList(user.getGroups().stream().collect(Collectors.toList()));
+    final List<UserGroup> list = userGroupDao.getListByIdList(user.getGroupIds().stream().collect(Collectors.toList()));
     return list;
   }
 
   @Override
   public List<Department> getUserDepartments(final Long id) {
     final User user = getUserById(id);
-    final List<Department> list = departmentDao.getListByIdList(user.getDepartments().stream().collect(Collectors.toList()));
+    final List<Department> list = departmentDao.getListByIdList(user.getDepartmentIds().stream().collect(Collectors.toList()));
     return list;
   }
 
@@ -69,14 +69,14 @@ public class UsersService implements IUsersService {
   public List<DepartmentGroup> getUserDepartmentGroups(final Long id) {
     final User user = getUserById(id);
     final List<DepartmentGroup> list = departmentGroupDao
-        .getListByIdList(user.getDepartmentGroups().stream().collect(Collectors.toList()));
+        .getListByIdList(user.getDepartmentGroupIds().stream().collect(Collectors.toList()));
     return list;
   }
 
   @Override
   public List<User> getUserDeputies(final Long id) {
     final User user = getUserById(id);
-    final List<User> list = userDao.getListByIdList(user.getDeputies().stream().collect(Collectors.toList()));
+    final List<User> list = userDao.getListByIdList(user.getDeputyIds().stream().collect(Collectors.toList()));
     return list;
   }
 

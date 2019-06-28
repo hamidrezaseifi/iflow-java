@@ -66,6 +66,4 @@ public class CompanyEdo {
     this.status = status;
   }
 
-
-
 }

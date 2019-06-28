@@ -14,37 +14,36 @@ import com.pth.iflow.core.storage.dao.IDepartmentGroupDao;
 
 @Service
 public class DepartmentService implements IDepartmentService {
-  
-  private final IDepartmentDao      departmentDao;
+
+  private final IDepartmentDao departmentDao;
   private final IDepartmentGroupDao departmentGroupDao;
-  
-  public DepartmentService(@Autowired final IDepartmentDao departmentDao,
-      @Autowired final IDepartmentGroupDao departmentGroupDao) {
+
+  public DepartmentService(@Autowired final IDepartmentDao departmentDao, @Autowired final IDepartmentGroupDao departmentGroupDao) {
     this.departmentDao = departmentDao;
     this.departmentGroupDao = departmentGroupDao;
   }
-  
+
   @Override
   public Department getById(final Long id) {
     return this.departmentDao.getById(id);
   }
-  
+
   @Override
   public List<DepartmentGroup> getDepartmentGroups(final Long id) {
     final Department department = getById(id);
-    
-    return this.departmentGroupDao.getListByIdList(department.getGroups().stream().collect(Collectors.toList()));
+
+    return this.departmentGroupDao.getListByIdList(department.getGroupIds().stream().collect(Collectors.toList()));
   }
-  
+
   @Override
   public List<Department> getListByIdList(final List<Long> idList) {
-    
+
     return this.departmentDao.getListByIdList(idList);
   }
-  
+
   @Override
   public List<Department> getListByIdCompanyId(final Long id) {
     return this.departmentDao.getListByCompanyId(id);
   }
-  
+
 }
