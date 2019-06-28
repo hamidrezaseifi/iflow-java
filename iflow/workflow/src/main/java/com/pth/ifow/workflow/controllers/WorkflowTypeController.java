@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
 import com.pth.iflow.common.edo.models.WorkflowTypeEdo;
+import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.ifow.workflow.bl.IWorkflowTypeService;
 import com.pth.ifow.workflow.models.WorkflowType;
@@ -44,13 +45,13 @@ public class WorkflowTypeController {
 
   @ResponseStatus(HttpStatus.OK)
   @PostMapping(path = IflowRestPaths.WorkflowModule.WORKFLOWTYPE_READ_LIST, produces = { MediaType.APPLICATION_XML_VALUE,
-      MediaType.APPLICATION_JSON_UTF8_VALUE }, consumes = MediaType.APPLICATION_XML_VALUE)
+      MediaType.APPLICATION_JSON_UTF8_VALUE }, consumes = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE })
   public ResponseEntity<List<WorkflowTypeEdo>> readWorkflowList(@RequestBody final List<Long> idList, final HttpServletRequest request)
       throws Exception {
 
     final List<WorkflowType> modelList = this.workflowTypeService.getListByIdList(idList);
 
-    return ControllerHelper.createResponseEntity(request, WorkflowType.toEdoList(modelList), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, ModelMapperBase.toEdoList(modelList), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -61,7 +62,7 @@ public class WorkflowTypeController {
 
     final List<WorkflowType> modelList = this.workflowTypeService.getListByIdCompanyId(id);
 
-    return ControllerHelper.createResponseEntity(request, WorkflowType.toEdoList(modelList), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, ModelMapperBase.toEdoList(modelList), HttpStatus.OK);
   }
 
 }
