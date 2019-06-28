@@ -11,7 +11,7 @@ public interface IUserGroupDao {
   
   public List<UserGroup> getListByIdList(List<Long> idList) throws IFlowStorageException;
   
-  public List<UserGroup> getListByIdCompanyId(Long companyId) throws IFlowStorageException;
+  public List<UserGroup> getListByCompanyId(Long companyId) throws IFlowStorageException;
   
   public List<Long> listGroupUserId(Long groupId) throws IFlowStorageException;
   

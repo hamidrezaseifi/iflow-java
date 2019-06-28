@@ -20,15 +20,15 @@ import com.pth.iflow.common.controllers.helper.ControllerHelper;
 import com.pth.iflow.common.edo.models.WorkflowTypeEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.core.model.WorkflowType;
-import com.pth.iflow.core.service.IWorkflowService;
+import com.pth.iflow.core.service.IWorkflowTypeService;
 
 @RestController
 @RequestMapping
 public class WorkflowTypeController {
   
-  final IWorkflowService workflowService;
+  final IWorkflowTypeService workflowService;
   
-  public WorkflowTypeController(@Autowired final IWorkflowService workflowService) {
+  public WorkflowTypeController(@Autowired final IWorkflowTypeService workflowService) {
     this.workflowService = workflowService;
   }
   

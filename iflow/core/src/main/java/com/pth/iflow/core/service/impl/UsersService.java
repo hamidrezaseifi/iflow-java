@@ -15,8 +15,8 @@ import com.pth.iflow.core.storage.dao.IDepartmentDao;
 import com.pth.iflow.core.storage.dao.IDepartmentGroupDao;
 import com.pth.iflow.core.storage.dao.IUserDao;
 import com.pth.iflow.core.storage.dao.IUserGroupDao;
-import com.pth.iflow.core.storage.dao.IWorkflowDao;
-import com.pth.iflow.core.storage.dao.IWorkflowStepDao;
+import com.pth.iflow.core.storage.dao.IWorkflowTypeDao;
+import com.pth.iflow.core.storage.dao.IWorkflowTypeStepDao;
 
 @Service
 public class UsersService implements IUsersService {
@@ -25,12 +25,12 @@ public class UsersService implements IUsersService {
   private final IUserGroupDao userGroupDao;
   private final IDepartmentDao departmentDao;
   private final IDepartmentGroupDao departmentGroupDao;
-  private final IWorkflowDao workflowDao;
-  private final IWorkflowStepDao workflowStepDao;
+  private final IWorkflowTypeDao workflowDao;
+  private final IWorkflowTypeStepDao workflowStepDao;
 
-  UsersService(@Autowired final IUserDao userDao, @Autowired final IUserGroupDao userGroupDao,
+  public UsersService(@Autowired final IUserDao userDao, @Autowired final IUserGroupDao userGroupDao,
       @Autowired final IDepartmentDao departmentDao, @Autowired final IDepartmentGroupDao departmentGroupDao,
-      @Autowired final IWorkflowDao workflowDao, @Autowired final IWorkflowStepDao workflowStepDao) {
+      @Autowired final IWorkflowTypeDao workflowDao, @Autowired final IWorkflowTypeStepDao workflowStepDao) {
     this.userDao = userDao;
     this.userGroupDao = userGroupDao;
     this.departmentDao = departmentDao;
@@ -61,8 +61,7 @@ public class UsersService implements IUsersService {
   @Override
   public List<Department> getUserDepartments(final Long id) {
     final User user = getUserById(id);
-    final List<Department> list = departmentDao
-        .getListByIdList(user.getDepartments().stream().collect(Collectors.toList()));
+    final List<Department> list = departmentDao.getListByIdList(user.getDepartments().stream().collect(Collectors.toList()));
     return list;
   }
 

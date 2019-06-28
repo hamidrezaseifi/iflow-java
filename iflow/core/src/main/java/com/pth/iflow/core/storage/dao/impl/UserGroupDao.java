@@ -59,7 +59,7 @@ public class UserGroupDao extends DaoBasicClass<UserGroup> implements IUserGroup
   }
 
   @Override
-  public List<UserGroup> getListByIdCompanyId(final Long companyId) throws IFlowStorageException {
+  public List<UserGroup> getListByCompanyId(final Long companyId) throws IFlowStorageException {
     
     return getModelListById(companyId, "SELECT * FROM user_group where company_id=?", "User Group");
   }

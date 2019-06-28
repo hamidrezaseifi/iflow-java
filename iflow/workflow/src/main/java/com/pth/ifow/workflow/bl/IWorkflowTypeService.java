@@ -7,7 +7,7 @@ import com.pth.ifow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.ifow.workflow.models.WorkflowType;
 import com.pth.ifow.workflow.models.WorkflowTypeStep;
 
-public interface IWorkflowService {
+public interface IWorkflowTypeService {
 
   public WorkflowType getById(Long id) throws WorkflowCustomizedException, MalformedURLException;
 

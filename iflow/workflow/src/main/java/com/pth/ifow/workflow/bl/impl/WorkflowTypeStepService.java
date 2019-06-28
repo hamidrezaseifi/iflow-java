@@ -12,21 +12,21 @@ import org.springframework.stereotype.Service;
 import com.pth.iflow.common.edo.models.WorkflowTypeStepEdo;
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.rest.IflowRestPaths;
-import com.pth.ifow.workflow.bl.IWorkflowStepService;
+import com.pth.ifow.workflow.bl.IWorkflowTypeStepService;
 import com.pth.ifow.workflow.config.WorkflowConfiguration;
 import com.pth.ifow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.ifow.workflow.models.WorkflowTypeStep;
 import com.pth.ifow.workflow.services.IRestTemplateCall;
 
 @Service
-public class WorkflowStepService implements IWorkflowStepService {
+public class WorkflowTypeStepService implements IWorkflowTypeStepService {
 
-  private static final Logger logger = LoggerFactory.getLogger(WorkflowStepService.class);
+  private static final Logger logger = LoggerFactory.getLogger(WorkflowTypeStepService.class);
 
   private final IRestTemplateCall restTemplate;
   private final WorkflowConfiguration.ModuleAccessConfig moduleAccessConfig;
 
-  WorkflowStepService(@Autowired final IRestTemplateCall restTemplate,
+  public WorkflowTypeStepService(@Autowired final IRestTemplateCall restTemplate,
       @Autowired final WorkflowConfiguration.ModuleAccessConfig moduleAccessConfig) {
     this.restTemplate = restTemplate;
     this.moduleAccessConfig = moduleAccessConfig;
@@ -38,7 +38,7 @@ public class WorkflowStepService implements IWorkflowStepService {
     logger.debug("Request workflow-step data for id {}", id);
 
     final WorkflowTypeStepEdo edo = restTemplate.callRestGet(
-        moduleAccessConfig.generateCoreSunUrlUrl(IflowRestPaths.CoreModul.WORKFLOWTYPESTEP_READ_BY_ID).toString(), EModule.CORE,
+        moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModul.WORKFLOWTYPESTEP_READ_BY_ID).toString(), EModule.CORE,
         WorkflowTypeStepEdo.class, true, id);
 
     return new WorkflowTypeStep().fromEdo(edo);
@@ -52,8 +52,8 @@ public class WorkflowStepService implements IWorkflowStepService {
     };
 
     final List<WorkflowTypeStepEdo> edoList = restTemplate.callRestGet(
-        moduleAccessConfig.generateCoreSunUrlUrl(IflowRestPaths.CoreModul.WORKFLOWTYPESTEP_READ_LIST_BY_WORKFLOW).toString(), EModule.CORE,
-        typeRef, true, workflowId);
+        moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModul.WORKFLOWTYPESTEP_READ_LIST_BY_WORKFLOW).toString(),
+        EModule.CORE, typeRef, true, workflowId);
 
     return new WorkflowTypeStep().fromEdo(edoList);
   }
@@ -66,7 +66,7 @@ public class WorkflowStepService implements IWorkflowStepService {
     };
 
     final List<WorkflowTypeStepEdo> edoList = restTemplate.callRestPost(
-        moduleAccessConfig.generateCoreSunUrlUrl(IflowRestPaths.CoreModul.WORKFLOWTYPESTEP_READ_LIST).toString(), EModule.CORE, idList,
+        moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModul.WORKFLOWTYPESTEP_READ_LIST).toString(), EModule.CORE, idList,
         typeRef, true);
 
     return new WorkflowTypeStep().fromEdo(edoList);

@@ -9,23 +9,23 @@ import com.pth.iflow.core.storage.dao.ICompanyDao;
 
 @Service
 public class CompanyService implements ICompanyService {
-
+  
   private final ICompanyDao companyDao;
-
-  CompanyService(@Autowired final ICompanyDao companyDao) {
+  
+  public CompanyService(@Autowired final ICompanyDao companyDao) {
     this.companyDao = companyDao;
   }
-
+  
   @Override
   public Company getById(final Long id) {
-
-    return companyDao.getById(id);
+    
+    return this.companyDao.getById(id);
   }
-
+  
   @Override
   public Company getByIdentifyId(final String identifyId) {
-
-    return companyDao.getByIdentifyId(identifyId);
+    
+    return this.companyDao.getByIdentifyId(identifyId);
   }
-
+  
 }

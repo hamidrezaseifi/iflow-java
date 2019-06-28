@@ -13,10 +13,10 @@ import com.pth.iflow.common.response.IFlowErrorRestResponse;
 
 @ControllerAdvice
 public class IFlowCoreControllerExceptionHandler {
-
+  
   @ExceptionHandler(Exception.class)
   @ResponseStatus(HttpStatus.CONFLICT)
-  protected ResponseEntity<IFlowErrorRestResponse> handleConflict(final RuntimeException ex, final WebRequest request) {
+  protected ResponseEntity<IFlowErrorRestResponse> handleConflict(final Exception ex, final WebRequest request) {
     // return new FBRestResponse(HttpStatus.CONFLICT, ex);
     final HttpHeaders headers = new HttpHeaders();
     headers.set("Content-Type", MediaType.APPLICATION_XML_VALUE + ";charset=UTF-8");
