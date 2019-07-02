@@ -10,15 +10,16 @@ import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 
 public class WorkflowType extends ModelMapperBase<WorkflowTypeEdo, WorkflowType> {
 
-  private Long            id;
-  private Long            companyId;
-  private Long            baseTypeId;
-  private String          title;
-  private String          comments;
-  private Integer         status;
-  private Integer         version;
-  private LocalDateTime   createdAt;
-  private LocalDateTime   updatedAt;
+  private Long id;
+  private Long companyId;
+  private Long baseTypeId;
+  private String title;
+  private String comments;
+  private Integer status;
+  private Boolean sendToController;
+  private Integer version;
+  private LocalDateTime createdAt;
+  private LocalDateTime updatedAt;
   private final Set<Long> steps = new HashSet<>();
 
   public Long getId() {
@@ -73,6 +74,14 @@ public class WorkflowType extends ModelMapperBase<WorkflowTypeEdo, WorkflowType>
 
   public void setStatus(final Integer status) {
     this.status = status;
+  }
+
+  public Boolean getSendToController() {
+    return sendToController;
+  }
+
+  public void setSendToController(final Boolean sendToController) {
+    this.sendToController = sendToController;
   }
 
   public Integer getVersion() {
@@ -130,6 +139,7 @@ public class WorkflowType extends ModelMapperBase<WorkflowTypeEdo, WorkflowType>
     edo.setId(this.id);
     edo.setCompanyId(this.companyId);
     edo.setBaseTypeId(this.baseTypeId);
+    edo.setSendToController(sendToController);
     edo.setSteps(this.steps);
 
     return edo;
@@ -145,6 +155,7 @@ public class WorkflowType extends ModelMapperBase<WorkflowTypeEdo, WorkflowType>
     model.setId(edo.getId());
     model.setCompanyId(edo.getCompanyId());
     model.setBaseTypeId(edo.getBaseTypeId());
+    model.setSendToController(edo.getSendToController());
     model.setSteps(edo.getSteps());
 
     return model;
