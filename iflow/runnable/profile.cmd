@@ -1,0 +1,1 @@
+java -jar profile-0.0.1.jar

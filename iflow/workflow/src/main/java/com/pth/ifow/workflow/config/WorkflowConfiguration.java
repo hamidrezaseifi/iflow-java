@@ -47,7 +47,7 @@ public class WorkflowConfiguration {
 
     }
 
-    public URL generateCoreSunUrlUrl(final String subUrl) throws MalformedURLException {
+    public URL generateCoreUrl(final String subUrl) throws MalformedURLException {
       String path = coreBaseUrl + "/" + subUrl;
       path = path.replace("//", "/");
       path = path.replace("http:/", "http://");
@@ -55,7 +55,7 @@ public class WorkflowConfiguration {
       return new URL(path);
     }
 
-    public URL generateProfileSunUrlUrl(final String subUrl) throws MalformedURLException {
+    public URL generateProfileUrl(final String subUrl) throws MalformedURLException {
       String path = profileBaseUrl + "/" + subUrl;
       path = path.replace("//", "/");
       path = path.replace("http:/", "http://");

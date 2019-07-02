@@ -21,13 +21,13 @@ public class IflowRestPaths {
     public static final String DEPARTMENTGRPUP_READ_LIST_BY_DEPARTMENT = "/departmentgroup/department/list/{id}";
     public static final String DEPARTMENTGRPUP_READ_LIST = "/departmentgroup/list";
 
-    public static final String WORKFLOW_READ_BY_ID = "/workflow/readbyid/{id}";
-    public static final String WORKFLOW_READ_LIST = "/workflow/list";
-    public static final String WORKFLOW_READ_LIST_BY_COMPANY = "/workflow/company/list/{id}";
+    public static final String WORKFLOWTYPE_READ_BY_ID = "/workflowtype/readbyid/{id}";
+    public static final String WORKFLOWTYPE_READ_LIST = "/workflowtype/list";
+    public static final String WORKFLOWTYPE_READ_LIST_BY_COMPANY = "/workflowtype/company/list/{id}";
 
-    public static final String WORKFLOWSTEP_READ_BY_ID = "/workflowstep/readbyid/{id}";
-    public static final String WORKFLOWSTEP_READ_LIST_BY_WORKFLOW = "/workflowstep/workflow/list/{id}";
-    public static final String WORKFLOWSTEP_READ_LIST = "/workflowstep/list";
+    public static final String WORKFLOWTYPESTEP_READ_BY_ID = "/workflowtypestep/readbyid/{id}";
+    public static final String WORKFLOWTYPESTEP_READ_LIST_BY_WORKFLOW = "/workflowtypestep/workflowtype/list/{id}";
+    public static final String WORKFLOWTYPESTEP_READ_LIST = "/workflowtypestep/list";
 
     public static final String USERGROUP_READ_BY_ID = "/usergroup/readbyid/{id}";
     public static final String USERGROUP_READ_LIST = "/usergroup/list";
@@ -37,13 +37,19 @@ public class IflowRestPaths {
 
   public static class WorkflowModule {
 
-    public static final String WORKFLOW_READ_BY_ID = "/workflow/readbyid/{id}";
-    public static final String WORKFLOW_READ_LIST = "/workflow/list";
-    public static final String WORKFLOW_READ_LIST_BY_COMPANY = "/workflow/company/list/{id}";
+    public static final String WORKFLOWTYPE_READ_BY_ID = "/workflowtype/readbyid/{id}";
+    public static final String WORKFLOWTYPE_READ_LIST = "/workflowtype/list";
+    public static final String WORKFLOWTYPE_READ_LIST_BY_COMPANY = "/workflowtype/company/list/{id}";
 
-    public static final String WORKFLOWSTEP_READ_BY_ID = "/workflowstep/readbyid/{id}";
-    public static final String WORKFLOWSTEP_READ_LIST_BY_WORKFLOW = "/workflowstep/workflow/list/{id}";
-    public static final String WORKFLOWSTEP_READ_LIST = "/workflowstep/list";
+    public static final String WORKFLOWTYPESTEP_READ_BY_ID = "/workflowtypestep/readbyid/{id}";
+    public static final String WORKFLOWTYPESTEP_READ_LIST_BY_WORKFLOW = "/workflowtypestep/workflowtype/list/{id}";
+    public static final String WORKFLOWTYPESTEP_READ_LIST = "/workflowtypestep/list";
+
+  }
+
+  public static class ProfileModule {
+
+    public static final String AUTHENTICATION_AUTHENTICATE = "/auth/authenticate";
 
   }
 }

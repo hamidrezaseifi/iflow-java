@@ -4,32 +4,34 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.pth.iflow.common.edo.models.UserEdo;
+import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 import com.pth.iflow.common.enums.EUserStatus;
 
 public class User extends ModelMapperBase<UserEdo, User> {
-  private Long id;
-  private Long companyId;
-  private String email;
-  private String password;
-  private String firstName;
-  private String lastName;
-  private Integer status;
-  private Integer permission;
-  private Integer version;
-  private LocalDateTime createdAt;
-  private LocalDateTime updatedAt;
-  private final Set<Long> groups = new HashSet<>();
-  private final Set<Long> departments = new HashSet<>();
+
+  private Long            id;
+  private Long            companyId;
+  private String          email;
+  private String          firstName;
+  private String          lastName;
+  private Integer         status;
+  private Integer         permission;
+  private Integer         version;
+  private LocalDateTime   createdAt;
+  private LocalDateTime   updatedAt;
+  private final Set<Long> groups           = new HashSet<>();
+  private final Set<Long> departments      = new HashSet<>();
   private final Set<Long> departmentGroups = new HashSet<>();
-  private final Set<Long> deputies = new HashSet<>();
+  private final Set<Long> deputies         = new HashSet<>();
 
   /**
    * @return the id
    */
   public Long getId() {
-    return id;
+    return this.id;
   }
 
   public boolean hasId(final Long id) {
@@ -47,7 +49,7 @@ public class User extends ModelMapperBase<UserEdo, User> {
    * @return the companyIid
    */
   public Long getCompanyId() {
-    return companyId;
+    return this.companyId;
   }
 
   /**
@@ -58,7 +60,7 @@ public class User extends ModelMapperBase<UserEdo, User> {
   }
 
   public String getEmail() {
-    return email;
+    return this.email;
   }
 
   public void setEmail(final String email) {
@@ -66,28 +68,10 @@ public class User extends ModelMapperBase<UserEdo, User> {
   }
 
   /**
-   * @return the password
-   */
-  public String getPassword() {
-    return password;
-  }
-
-  public boolean hasPassword(final String password) {
-    return this.password.equals(password);
-  }
-
-  /**
-   * @param password the password to set
-   */
-  public void setPassword(final String password) {
-    this.password = password;
-  }
-
-  /**
    * @return the firstName
    */
   public String getFirstName() {
-    return firstName;
+    return this.firstName;
   }
 
   /**
@@ -101,7 +85,7 @@ public class User extends ModelMapperBase<UserEdo, User> {
    * @return the lastName
    */
   public String getLastName() {
-    return lastName;
+    return this.lastName;
   }
 
   /**
@@ -115,7 +99,7 @@ public class User extends ModelMapperBase<UserEdo, User> {
    * @return the status
    */
   public Integer getStatus() {
-    return status;
+    return this.status;
   }
 
   /**
@@ -133,14 +117,14 @@ public class User extends ModelMapperBase<UserEdo, User> {
    * @return the permission
    */
   public Integer getPermission() {
-    return permission;
+    return this.permission;
   }
 
   /**
    * @return the version
    */
   public Integer getVersion() {
-    return version;
+    return this.version;
   }
 
   /**
@@ -154,7 +138,7 @@ public class User extends ModelMapperBase<UserEdo, User> {
    * @return the createdAt
    */
   public LocalDateTime getCreatedAt() {
-    return createdAt;
+    return this.createdAt;
   }
 
   /**
@@ -168,7 +152,7 @@ public class User extends ModelMapperBase<UserEdo, User> {
    * @return the updatedAt
    */
   public LocalDateTime getUpdatedAt() {
-    return updatedAt;
+    return this.updatedAt;
   }
 
   /**
@@ -186,7 +170,7 @@ public class User extends ModelMapperBase<UserEdo, User> {
   }
 
   public Set<Long> getGroups() {
-    return groups;
+    return this.groups;
   }
 
   public void setGroups(final Set<Long> groups) {
@@ -197,10 +181,7 @@ public class User extends ModelMapperBase<UserEdo, User> {
   }
 
   public void setGroups(final List<Long> groups) {
-    this.groups.clear();
-    if (groups != null) {
-      this.groups.addAll(groups);
-    }
+    setGroups(groups.stream().collect(Collectors.toSet()));
   }
 
   public void addGroup(final Long groupId) {
@@ -208,7 +189,7 @@ public class User extends ModelMapperBase<UserEdo, User> {
   }
 
   public Set<Long> getDepartments() {
-    return departments;
+    return this.departments;
   }
 
   public void setDepartments(final Set<Long> departments) {
@@ -219,10 +200,8 @@ public class User extends ModelMapperBase<UserEdo, User> {
   }
 
   public void setDepartments(final List<Long> departments) {
-    this.departments.clear();
-    if (departments != null) {
-      this.departments.addAll(departments);
-    }
+    setDepartments(departments.stream().collect(Collectors.toSet()));
+    
   }
 
   public void addDepartment(final Long departmentId) {
@@ -230,7 +209,7 @@ public class User extends ModelMapperBase<UserEdo, User> {
   }
 
   public Set<Long> getDepartmentGroups() {
-    return departmentGroups;
+    return this.departmentGroups;
   }
 
   public void setDepartmentGroups(final Set<Long> departmentGroups) {
@@ -240,12 +219,16 @@ public class User extends ModelMapperBase<UserEdo, User> {
     }
   }
 
+  public void setDepartmentGroups(final List<Long> departmentGroups) {
+    setDepartmentGroups(departmentGroups.stream().collect(Collectors.toSet()));
+  }
+
   public void addDepartmentGroup(final Long departmentGroupId) {
     this.departmentGroups.add(departmentGroupId);
   }
 
   public Set<Long> getDeputies() {
-    return deputies;
+    return this.deputies;
   }
 
   public void setDeputies(final Set<Long> deputies) {
@@ -256,10 +239,8 @@ public class User extends ModelMapperBase<UserEdo, User> {
   }
 
   public void setDeputies(final List<Long> deputies) {
-    this.deputies.clear();
-    if (deputies != null) {
-      this.deputies.addAll(deputies);
-    }
+    setDeputies(deputies.stream().collect(Collectors.toSet()));
+
   }
 
   public void addDeputy(final Long deputyId) {
@@ -269,18 +250,17 @@ public class User extends ModelMapperBase<UserEdo, User> {
   @Override
   public UserEdo toEdo() {
     final UserEdo edo = new UserEdo();
-    edo.setFirstName(firstName);
-    edo.setLastName(lastName);
-    edo.setPassword(password);
-    edo.setPermission(permission);
-    edo.setStatus(status);
-    edo.setEmail(email);
-    edo.setId(id);
-    edo.setCompanyId(companyId);
-    edo.setGroups(groups);
-    edo.setDepartments(departments);
-    edo.setDepartmentGroups(departmentGroups);
-    edo.setDeputies(deputies);
+    edo.setFirstName(this.firstName);
+    edo.setLastName(this.lastName);
+    edo.setPermission(this.permission);
+    edo.setStatus(this.status);
+    edo.setEmail(this.email);
+    edo.setId(this.id);
+    edo.setCompanyId(this.companyId);
+    edo.setGroups(this.groups);
+    edo.setDepartments(this.departments);
+    edo.setDepartmentGroups(this.departmentGroups);
+    edo.setDeputies(this.deputies);
 
     return edo;
   }
@@ -291,7 +271,6 @@ public class User extends ModelMapperBase<UserEdo, User> {
 
     user.setFirstName(edo.getFirstName());
     user.setLastName(edo.getLastName());
-    user.setPassword(edo.getPassword());
     user.setPermission(edo.getPermission());
     user.setStatus(edo.getStatus());
     user.setEmail(edo.getEmail());

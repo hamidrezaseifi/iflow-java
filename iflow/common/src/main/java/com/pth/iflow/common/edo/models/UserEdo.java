@@ -4,24 +4,24 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class UserEdo {
-  private Long id;
-  private Long companyId;
-  private String email;
-  private String password;
-  private String firstName;
-  private String lastName;
-  private Integer status;
-  private Integer permission;
-  private final Set<Long> groups = new HashSet<>();
-  private final Set<Long> departments = new HashSet<>();
+
+  private Long            id;
+  private Long            companyId;
+  private String          email;
+  private String          firstName;
+  private String          lastName;
+  private Integer         status;
+  private Integer         permission;
+  private final Set<Long> groups           = new HashSet<>();
+  private final Set<Long> departments      = new HashSet<>();
   private final Set<Long> departmentGroups = new HashSet<>();
-  private final Set<Long> deputies = new HashSet<>();
+  private final Set<Long> deputies         = new HashSet<>();
 
   /**
    * @return the id
    */
   public Long getId() {
-    return id;
+    return this.id;
   }
 
   /**
@@ -35,7 +35,7 @@ public class UserEdo {
    * @return the companyIid
    */
   public Long getCompanyId() {
-    return companyId;
+    return this.companyId;
   }
 
   /**
@@ -49,7 +49,7 @@ public class UserEdo {
    * @return the email
    */
   public String getEmail() {
-    return email;
+    return this.email;
   }
 
   /**
@@ -58,30 +58,12 @@ public class UserEdo {
   public void setEmail(final String email) {
     this.email = email;
   }
-
-  /**
-   * @return the password
-   */
-  public String getPassword() {
-    return password;
-  }
-
-  public boolean hasPassword(final String password) {
-    return this.password.equals(password);
-  }
-
-  /**
-   * @param password the password to set
-   */
-  public void setPassword(final String password) {
-    this.password = password;
-  }
-
+  
   /**
    * @return the firstName
    */
   public String getFirstName() {
-    return firstName;
+    return this.firstName;
   }
 
   /**
@@ -95,7 +77,7 @@ public class UserEdo {
    * @return the lastName
    */
   public String getLastName() {
-    return lastName;
+    return this.lastName;
   }
 
   /**
@@ -109,7 +91,7 @@ public class UserEdo {
    * @return the status
    */
   public Integer getStatus() {
-    return status;
+    return this.status;
   }
 
   /**
@@ -123,7 +105,7 @@ public class UserEdo {
    * @return the permission
    */
   public Integer getPermission() {
-    return permission;
+    return this.permission;
   }
 
   /**
@@ -134,7 +116,7 @@ public class UserEdo {
   }
 
   public Set<Long> getGroups() {
-    return groups;
+    return this.groups;
   }
 
   public void setGroups(final Set<Long> groups) {
@@ -149,7 +131,7 @@ public class UserEdo {
   }
 
   public Set<Long> getDepartments() {
-    return departments;
+    return this.departments;
   }
 
   public void setDepartments(final Set<Long> departments) {
@@ -164,7 +146,7 @@ public class UserEdo {
   }
 
   public Set<Long> getDepartmentGroups() {
-    return departmentGroups;
+    return this.departmentGroups;
   }
 
   public void setDepartmentGroups(final Set<Long> departmentGroups) {
@@ -179,7 +161,7 @@ public class UserEdo {
   }
 
   public Set<Long> getDeputies() {
-    return deputies;
+    return this.deputies;
   }
 
   public void setDeputies(final Set<Long> deputies) {
