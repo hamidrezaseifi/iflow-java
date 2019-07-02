@@ -18,31 +18,31 @@ import com.pth.iflow.core.storage.dao.utils.SqlUtils;
 @Transactional
 @Repository
 public class WorkflowTypeDao extends DaoBasicClass<WorkflowType> implements IWorkflowTypeDao {
-
+  
   public WorkflowTypeDao(final @Autowired JdbcTemplate jdbcTemplate,
       final @Autowired PlatformTransactionManager platformTransactionManager) {
     super(jdbcTemplate, platformTransactionManager);
   }
-
+  
   @Override
   public WorkflowType getById(final Long id) throws IFlowStorageException {
-    return getModelById(id, "SELECT * FROM workflow where id=?", "Workflow");
+    return getModelById(id, "SELECT * FROM workflow_type where id=?", "Workflow");
   }
-
+  
   @Override
   public List<WorkflowType> getListByIdList(final List<Long> idList) throws IFlowStorageException {
-    String sqlSelect = "SELECT * FROM workflow where id in (";
+    String sqlSelect = "SELECT * FROM workflow_type where id in (";
     for (final Long id : idList) {
       sqlSelect += "?, ";
     }
-
+    
     sqlSelect = sqlSelect.trim();
     sqlSelect = sqlSelect.endsWith(",") ? sqlSelect.substring(0, sqlSelect.length() - 1) : sqlSelect;
     sqlSelect += ")";
-
+    
     return getModelListByIdList(idList, sqlSelect, "Workflow");
   }
-
+  
   @Override
   protected WorkflowType modelFromResultSet(final ResultSet rs) throws SQLException {
     final WorkflowType model = new WorkflowType();
@@ -55,16 +55,16 @@ public class WorkflowTypeDao extends DaoBasicClass<WorkflowType> implements IWor
     model.setUpdatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("updated_at")));
     model.setVersion(rs.getInt("version"));
     model.setSteps(getworkflowStepIdListById(model.getId()));
-
+    
     return model;
   }
-
+  
   private List<Long> getworkflowStepIdListById(final Long id) throws IFlowStorageException {
-    return getIdListById(id, "SELECT * FROM workflow_step where workflow_type_id=?", "id", "Workflow Step IDs");
+    return getIdListById(id, "SELECT * FROM workflow_type_step where workflow_type_id=?", "id", "Workflow Step IDs");
   }
-
+  
   @Override
   public List<WorkflowType> getListByCompanyId(final Long id) throws IFlowStorageException {
-    return getModelListById(id, "SELECT * FROM workflow where company_id=?", "Workflow");
+    return getModelListById(id, "SELECT * FROM workflow_type where company_id=?", "Workflow");
   }
 }
