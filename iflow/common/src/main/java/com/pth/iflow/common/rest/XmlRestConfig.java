@@ -23,6 +23,8 @@ public class XmlRestConfig {
 
   private final Logger log = LoggerFactory.getLogger(getClass());
 
+  public static final String REQUEST_HEADER_IFLOW_CLIENT_ID = "IFLOW-CLIENT-ID";
+
   /**
    * needed so that jackson understands the JAXB Annotations.
    *
@@ -30,7 +32,7 @@ public class XmlRestConfig {
    */
   @Bean
   public Module enableJaxbForJackson() {
-    log.info("JAXB Annotations enabled");
+    this.log.info("JAXB Annotations enabled");
     final JaxbAnnotationModule jaxbAnnotationModule = new JaxbAnnotationModule();
     return jaxbAnnotationModule;
   }
@@ -45,33 +47,25 @@ public class XmlRestConfig {
     filter.setAfterMessagePrefix("REQUEST DATA: ");
     return filter;
   }
-
-  /**
-   * threadsafe once created
-   *
-   * @see https://spring.io/blog/2009/03/27/rest-in-spring-3-resttemplate
-   *
-   * @lazy i marked this lazy b/c ResTemplate is not needed for all unit tests but
-   *       this config is; in fact those unit test often dont have the dependant
-   *       {@link MappingJackson2XmlHttpMessageConverter} in its spring context
-   *       causing the context startup to fail.
-   */
+  
   @Lazy
   @Bean
   public RestTemplate jaxbRestTemplate(final MappingJackson2XmlHttpMessageConverter converter) {
     /*
-     * BETTER: there is likely a more spring way of configuring the rest template to
-     * use the JAXB stuff...| TM @ 21.07.2018
+     * BETTER: there is likely a more spring way of configuring the rest template to use the JAXB stuff...| TM @ 21.07.2018
      */
     final RestTemplate restTemplate = new RestTemplate();
     final List<HttpMessageConverter<?>> messageConverters = restTemplate.getMessageConverters();
     for (int i = 0; i < messageConverters.size(); i++) {
-      /*
-       * if (messageConverters.get(i).canRead(CustomerEdo.class,
-       * MediaType.APPLICATION_XML)) { messageConverters.set(i, converter); }
-       */
+
     }
 
+    restTemplate.getInterceptors()
+        .add((request, body, execution) -> {
+          request.getHeaders().set(REQUEST_HEADER_IFLOW_CLIENT_ID, "inner-module");
+          return execution.execute(request, body);
+        });
+    
     return restTemplate;
   }
 

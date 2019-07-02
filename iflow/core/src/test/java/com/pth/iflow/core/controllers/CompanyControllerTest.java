@@ -13,6 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -26,6 +27,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pth.iflow.common.edo.models.CompanyEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
+import com.pth.iflow.common.rest.XmlRestConfig;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.Company;
 import com.pth.iflow.core.service.ICompanyService;
@@ -51,6 +53,9 @@ public class CompanyControllerTest extends TestDataProducer {
   public void setUp() throws Exception {
   }
   
+  @Value("${iflow.common.rest.api.security.client-id.internal}")
+  private String innerModulesRequestHeaderValue;
+
   @After
   public void tearDown() throws Exception {
   }
@@ -66,7 +71,8 @@ public class CompanyControllerTest extends TestDataProducer {
     final String companyAsString = this.xmlConverter.getObjectMapper().writeValueAsString(companyEdo);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModul.COMPANY_READ_BY_ID, company.getId()))
+        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModul.COMPANY_READ_BY_ID, company.getId())
+            .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
         .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(companyAsString));
@@ -75,7 +81,8 @@ public class CompanyControllerTest extends TestDataProducer {
 
     final String userAsJsonString = this.mapper.writeValueAsString(companyEdo);
     final MvcResult res = this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModul.COMPANY_READ_BY_ID + "?produces=json", company.getId()))
+        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModul.COMPANY_READ_BY_ID + "?produces=json", company.getId())
+            .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
         .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
         .andExpect(content().json(userAsJsonString))
