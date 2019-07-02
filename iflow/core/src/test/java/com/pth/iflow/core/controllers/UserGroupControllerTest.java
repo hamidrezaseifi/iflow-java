@@ -14,6 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -26,6 +27,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pth.iflow.common.edo.models.UserGroupEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
+import com.pth.iflow.common.rest.XmlRestConfig;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.UserGroup;
 import com.pth.iflow.core.service.IUserGroupService;
@@ -47,6 +49,9 @@ public class UserGroupControllerTest extends TestDataProducer {
   @MockBean
   private IUserGroupService userGroupService;
   
+  @Value("${iflow.common.rest.api.security.client-id.internal}")
+  private String innerModulesRequestHeaderValue;
+
   @Before
   public void setUp() throws Exception {
   }
@@ -66,7 +71,8 @@ public class UserGroupControllerTest extends TestDataProducer {
     final String modelAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelEdo);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModul.USERGROUP_READ_BY_ID, model.getId()))
+        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModul.USERGROUP_READ_BY_ID, model.getId())
+            .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
         .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(modelAsXmlString));
@@ -75,7 +81,8 @@ public class UserGroupControllerTest extends TestDataProducer {
 
     final String modelAsJsonString = this.mapper.writeValueAsString(modelEdo);
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModul.USERGROUP_READ_BY_ID + "?produces=json", model.getId()))
+        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModul.USERGROUP_READ_BY_ID + "?produces=json", model.getId())
+            .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
         .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
         .andExpect(content().json(modelAsJsonString));
@@ -97,7 +104,7 @@ public class UserGroupControllerTest extends TestDataProducer {
     this.mockMvc
         .perform(MockMvcRequestBuilders.post(IflowRestPaths.CoreModul.USERGROUP_READ_LIST)
             .content(contentAsXmlString)
-            .contentType(MediaType.APPLICATION_XML_VALUE))
+            .contentType(MediaType.APPLICATION_XML_VALUE).header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
         .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(listAsXmlString));
@@ -111,7 +118,8 @@ public class UserGroupControllerTest extends TestDataProducer {
         .perform(
             MockMvcRequestBuilders.post(IflowRestPaths.CoreModul.USERGROUP_READ_LIST + "?produces=json")
                 .content(contentAsJsonString)
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
         .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
         .andExpect(content().json(listAsJsonString));
@@ -129,7 +137,8 @@ public class UserGroupControllerTest extends TestDataProducer {
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList).replace("ArrayList", "List");
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModul.USERGROUP_READ_LIST_BY_COMPANY, 1L))
+        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModul.USERGROUP_READ_LIST_BY_COMPANY, 1L)
+            .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
         .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(listAsXmlString));
@@ -138,7 +147,8 @@ public class UserGroupControllerTest extends TestDataProducer {
 
     final String listAsJsonString = this.mapper.writeValueAsString(edoList);
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModul.USERGROUP_READ_LIST_BY_COMPANY + "?produces=json", 1L))
+        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModul.USERGROUP_READ_LIST_BY_COMPANY + "?produces=json", 1L)
+            .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
         .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
         .andExpect(content().json(listAsJsonString));
