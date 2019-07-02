@@ -1,4 +1,6 @@
 
+DROP TABLE IF EXISTS `workflow_type_properties`;
+
 DROP TABLE IF EXISTS `user_usergroup`;
 
 DROP TABLE IF EXISTS `user_group`;
