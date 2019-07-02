@@ -109,14 +109,60 @@
 
 
 	<build>	
+	
 		<plugins>
+	    
 			<plugin>
-            	<groupId>org.flywaydb</groupId>
+			    <artifactId>maven-clean-plugin</artifactId>
+		        <executions>
+		          <execution>
+		            <id>auto-clean</id>
+		            <phase>clean</phase>
+		            <goals>
+		              <goal>clean</goal>
+		            </goals>
+		          </execution>
+		        </executions>
+			    <configuration>
+			      <filesets>
+			        <fileset>
+			          <directory>${basedir}/../runnable</directory>
+			          <includes>
+			            <include>${project.artifactId}-${project.version}.jar</include>
+			          </includes>
+			          <followSymlinks>false</followSymlinks>
+			        </fileset>
+			      </filesets>
+			    </configuration>
+			</plugin>
+		  	    
+		
+			<plugin>
+				<groupId>org.flywaydb</groupId>
 				<artifactId>flyway-maven-plugin</artifactId>
 				<configuration>
 					<skip>true</skip>              
-            	</configuration>
-          </plugin>
+			    </configuration>
+			</plugin>
+
+		<plugin>
+		  <groupId>com.coderplus.maven.plugins</groupId>
+		  <artifactId>copy-rename-maven-plugin</artifactId>
+		  <version>1.0</version>
+		  <executions>
+		    <execution>
+		      <id>copy-file</id>
+		      <phase>package</phase>
+		      <goals>
+		        <goal>copy</goal>
+		      </goals>
+		      <configuration>
+		        <sourceFile>${basedir}/target/${project.artifactId}-${project.version}.jar</sourceFile>
+		        <destinationFile>${basedir}/../runnable/${project.artifactId}-${project.version}.jar</destinationFile>
+		      </configuration>
+		    </execution>
+		  </executions>
+		</plugin>     
 	
 	  </plugins>
 	</build>
