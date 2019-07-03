@@ -4,6 +4,8 @@ public class IflowRestPaths {
 
   public static class CoreModul {
 
+    public static final int PORT = 1010;
+
     public static final String USER_READ_BY_ID = "/users/readbyid/{userid}";
     public static final String USER_READ_BY_EMAIL = "/users/readbyemail/{email}";
     public static final String USER_USERGROUPS_LIST = "/users/user/groups/{userid}";
@@ -37,6 +39,8 @@ public class IflowRestPaths {
 
   public static class WorkflowModule {
 
+    public static final int PORT = 1030;
+
     public static final String WORKFLOWTYPE_READ_BY_ID = "/workflowtype/readbyid/{id}";
     public static final String WORKFLOWTYPE_READ_LIST = "/workflowtype/list";
     public static final String WORKFLOWTYPE_READ_LIST_BY_COMPANY = "/workflowtype/company/list/{id}";
@@ -48,6 +52,8 @@ public class IflowRestPaths {
   }
 
   public static class ProfileModule {
+
+    public static final int PORT = 1020;
 
     public static final String AUTHENTICATION_AUTHENTICATE = "/auth/authenticate";
 
