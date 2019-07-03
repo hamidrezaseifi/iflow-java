@@ -4,6 +4,7 @@ public class IflowRestPaths {
 
   public static class CoreModul {
 
+    public static final String USER_SAVE = "/users/save";
     public static final String USER_READ_BY_ID = "/users/readbyid/{userid}";
     public static final String USER_READ_BY_EMAIL = "/users/readbyemail/{email}";
     public static final String USER_USERGROUPS_LIST = "/users/user/groups/{userid}";
@@ -32,6 +33,11 @@ public class IflowRestPaths {
     public static final String USERGROUP_READ_BY_ID = "/usergroup/readbyid/{id}";
     public static final String USERGROUP_READ_LIST = "/usergroup/list";
     public static final String USERGROUP_READ_LIST_BY_COMPANY = "/usergroup/company/list/{id}";
+
+    public static final String WORKFLOW_SAVE = "/workflow/save";
+    public static final String WORKFLOW_READ_BY_ID = "/workflow/readbyid/{id}";
+    public static final String WORKFLOW_READ_LIST = "/workflow/list";
+    public static final String WORKFLOW_READ_LIST_BY_TYPE = "/workflow/type/list/{id}";
 
   }
 

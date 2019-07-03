@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pth.iflow.common.annotations.IflowGetRequestMapping;
+import com.pth.iflow.common.annotations.IflowPostRequestMapping;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
 import com.pth.iflow.common.edo.models.DepartmentEdo;
 import com.pth.iflow.common.edo.models.DepartmentGroupEdo;
@@ -43,6 +44,15 @@ public class UserController {
     final User user = this.usersService.getUserById(userid);
 
     return ControllerHelper.createResponseEntity(request, user.toEdo(), HttpStatus.OK);
+  }
+
+  @ResponseStatus(HttpStatus.ACCEPTED)
+  @IflowPostRequestMapping(path = IflowRestPaths.CoreModul.USER_SAVE)
+  public ResponseEntity<UserEdo> saveUser(@PathVariable final UserEdo userEdo, final HttpServletRequest request) throws Exception {
+
+    final User user = this.usersService.save(new User().fromEdo(userEdo));
+
+    return ControllerHelper.createResponseEntity(request, user.toEdo(), HttpStatus.ACCEPTED);
   }
 
   @ResponseStatus(HttpStatus.OK)

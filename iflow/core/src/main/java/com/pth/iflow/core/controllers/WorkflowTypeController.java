@@ -26,17 +26,17 @@ import com.pth.iflow.core.service.IWorkflowTypeService;
 @RequestMapping
 public class WorkflowTypeController {
 
-  final IWorkflowTypeService workflowService;
+  final IWorkflowTypeService workflowTypeService;
 
-  public WorkflowTypeController(@Autowired final IWorkflowTypeService workflowService) {
-    this.workflowService = workflowService;
+  public WorkflowTypeController(@Autowired final IWorkflowTypeService workflowTypeService) {
+    this.workflowTypeService = workflowTypeService;
   }
 
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(path = IflowRestPaths.CoreModul.WORKFLOWTYPE_READ_BY_ID)
   public ResponseEntity<WorkflowTypeEdo> readWorkflow(@PathVariable final Long id, final HttpServletRequest request) throws Exception {
 
-    final WorkflowType model = this.workflowService.getById(id);
+    final WorkflowType model = this.workflowTypeService.getById(id);
 
     return ControllerHelper.createResponseEntity(request, model.toEdo(), HttpStatus.OK);
   }
@@ -46,7 +46,7 @@ public class WorkflowTypeController {
   public ResponseEntity<List<WorkflowTypeEdo>> readWorkflowList(@RequestBody final List<Long> idList, final HttpServletRequest request)
       throws Exception {
 
-    final List<WorkflowType> modelList = this.workflowService.getListByIdList(idList);
+    final List<WorkflowType> modelList = this.workflowTypeService.getListByIdList(idList);
 
     return ControllerHelper.createResponseEntity(request, ModelMapperBase.toEdoList(modelList), HttpStatus.OK);
   }
@@ -56,7 +56,7 @@ public class WorkflowTypeController {
   public ResponseEntity<List<WorkflowTypeEdo>> readWorkflowListByCompany(@PathVariable final Long id, final HttpServletRequest request)
       throws Exception {
 
-    final List<WorkflowType> modelList = this.workflowService.getListByIdCompanyId(id);
+    final List<WorkflowType> modelList = this.workflowTypeService.getListByIdCompanyId(id);
 
     return ControllerHelper.createResponseEntity(request, ModelMapperBase.toEdoList(modelList), HttpStatus.OK);
   }
