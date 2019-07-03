@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pth.iflow.core.model.Company;
 import com.pth.iflow.core.storage.dao.ICompanyDao;
+import com.pth.iflow.core.storage.dao.basic.DaoBasicClass;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 import com.pth.iflow.core.storage.dao.utils.SqlUtils;
 
@@ -50,14 +51,39 @@ public class CompanyDao extends DaoBasicClass<Company> implements ICompanyDao {
 
   @Override
   protected PreparedStatement prepareInsertPreparedStatement(final Company model, final PreparedStatement ps) throws SQLException {
-    // TODO Auto-generated method stub
-    return null;
+    ps.setString(1, model.getIdentifyid());
+    ps.setString(2, model.getCompanyName());
+    ps.setInt(3, model.getVersion());
+    ps.setInt(4, model.getStatus());
+
+    return ps;
   }
 
   @Override
   protected PreparedStatement prepareUpdatePreparedStatement(final Company model, final PreparedStatement ps) throws SQLException {
-    // TODO Auto-generated method stub
-    return null;
+    ps.setString(1, model.getIdentifyid());
+    ps.setString(2, model.getCompanyName());
+    ps.setInt(3, model.getVersion());
+    ps.setInt(4, model.getStatus());
+    ps.setLong(5, model.getId());
+
+    return ps;
+  }
+
+  @Override
+  public Company create(final Company model) throws IFlowStorageException {
+    final String sql = "INSERT INTO companies (identifyid, company_name, version, status)" + "VALUES (?, ?, ?, ?)";
+
+    return getById(createModel(model, "Company", sql));
+  }
+
+  @Override
+  public Company update(final Company model) throws IFlowStorageException {
+    final String sql = "UPDATE companies SET identifyid = ?, company_name = ?, version = ?, status =  WHERE id = ?";
+
+    updateModel(model, "Company", sql);
+
+    return getById(model.getId());
   }
 
 }

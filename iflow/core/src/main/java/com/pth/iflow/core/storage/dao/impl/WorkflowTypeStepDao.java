@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pth.iflow.core.model.WorkflowTypeStep;
 import com.pth.iflow.core.storage.dao.IWorkflowTypeStepDao;
+import com.pth.iflow.core.storage.dao.basic.DaoBasicClass;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 import com.pth.iflow.core.storage.dao.utils.SqlUtils;
 
@@ -65,14 +66,43 @@ public class WorkflowTypeStepDao extends DaoBasicClass<WorkflowTypeStep> impleme
   @Override
   protected PreparedStatement prepareInsertPreparedStatement(final WorkflowTypeStep model, final PreparedStatement ps)
       throws SQLException {
-    // TODO Auto-generated method stub
-    return null;
+    ps.setLong(1, model.getWorkflowTypeId());
+    ps.setString(2, model.getTitle());
+    ps.setString(3, model.getComments());
+    ps.setInt(4, model.getVersion());
+    ps.setInt(5, model.getStatus());
+
+    return ps;
   }
 
   @Override
   protected PreparedStatement prepareUpdatePreparedStatement(final WorkflowTypeStep model, final PreparedStatement ps)
       throws SQLException {
-    // TODO Auto-generated method stub
-    return null;
+    ps.setLong(1, model.getWorkflowTypeId());
+    ps.setString(2, model.getTitle());
+    ps.setString(3, model.getComments());
+    ps.setInt(4, model.getVersion());
+    ps.setInt(5, model.getStatus());
+    ps.setLong(6, model.getId());
+
+    return ps;
+  }
+
+  @Override
+  public WorkflowTypeStep create(final WorkflowTypeStep model) throws IFlowStorageException {
+    final String sql = "INSERT INTO workflow_type_step (workflow_type_id, title, comments, version, status)"
+        + "VALUES (?, ?, ?, ?, ?)";
+
+    return getById(createModel(model, "WorkflowTypeStep", sql));
+  }
+
+  @Override
+  public WorkflowTypeStep update(final WorkflowTypeStep model) throws IFlowStorageException {
+    final String sql = "UPDATE workflow_type_step SET workflow_type_id = ?, title = ?, comments = ?,"
+        + " version = ?, status = ? WHERE id = ?";
+
+    updateModel(model, "WorkflowTypeStep", sql);
+
+    return getById(model.getId());
   }
 }

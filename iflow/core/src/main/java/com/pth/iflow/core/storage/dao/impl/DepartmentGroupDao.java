@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pth.iflow.core.model.DepartmentGroup;
 import com.pth.iflow.core.storage.dao.IDepartmentGroupDao;
+import com.pth.iflow.core.storage.dao.basic.DaoBasicClass;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 import com.pth.iflow.core.storage.dao.utils.SqlUtils;
 
@@ -66,15 +67,40 @@ public class DepartmentGroupDao extends DaoBasicClass<DepartmentGroup> implement
   @Override
   protected PreparedStatement prepareInsertPreparedStatement(final DepartmentGroup model, final PreparedStatement ps)
       throws SQLException {
-    // TODO Auto-generated method stub
-    return null;
+    ps.setLong(1, model.getDepartmentId());
+    ps.setString(2, model.getTitle());
+    ps.setInt(3, model.getVersion());
+    ps.setInt(4, model.getStatus());
+
+    return ps;
   }
 
   @Override
   protected PreparedStatement prepareUpdatePreparedStatement(final DepartmentGroup model, final PreparedStatement ps)
       throws SQLException {
-    // TODO Auto-generated method stub
-    return null;
+    ps.setLong(1, model.getDepartmentId());
+    ps.setString(2, model.getTitle());
+    ps.setInt(3, model.getVersion());
+    ps.setInt(4, model.getStatus());
+    ps.setLong(5, model.getId());
+
+    return ps;
+  }
+
+  @Override
+  public DepartmentGroup create(final DepartmentGroup model) throws IFlowStorageException {
+    final String sql = "INSERT INTO departments_group (department_id, title, version, status)" + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+    return getById(createModel(model, "DepartmentGroup", sql));
+  }
+
+  @Override
+  public DepartmentGroup update(final DepartmentGroup model) throws IFlowStorageException {
+    final String sql = "UPDATE departments_group SET department_id = ?, title = ?, version = ?, status = ? WHERE id = ?";
+
+    updateModel(model, "DepartmentGroup", sql);
+
+    return getById(model.getId());
   }
 
 }

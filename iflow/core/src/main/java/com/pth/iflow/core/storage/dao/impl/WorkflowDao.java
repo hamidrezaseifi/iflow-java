@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pth.iflow.core.model.Workflow;
 import com.pth.iflow.core.storage.dao.IWorkflowDao;
+import com.pth.iflow.core.storage.dao.basic.DaoBasicClass;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 import com.pth.iflow.core.storage.dao.utils.SqlUtils;
 
@@ -73,7 +74,6 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
         + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
     return getById(createModel(workflow, "Workflow", sql));
-
   }
 
   @Override
@@ -84,7 +84,6 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
     updateModel(workflow, "Workflow", sql);
 
     return getById(workflow.getId());
-
   }
 
   @Override

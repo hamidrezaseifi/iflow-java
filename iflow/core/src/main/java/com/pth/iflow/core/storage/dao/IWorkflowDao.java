@@ -7,9 +7,9 @@ import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 
 public interface IWorkflowDao {
 
-  public Workflow create(Workflow workflow) throws IFlowStorageException;
+  public Workflow create(Workflow model) throws IFlowStorageException;
 
-  public Workflow update(Workflow workflow) throws IFlowStorageException;
+  public Workflow update(Workflow model) throws IFlowStorageException;
 
   public Workflow getById(Long id) throws IFlowStorageException;
 

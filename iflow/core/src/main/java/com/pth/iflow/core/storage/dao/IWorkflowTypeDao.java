@@ -6,11 +6,15 @@ import com.pth.iflow.core.model.WorkflowType;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 
 public interface IWorkflowTypeDao {
-  
+
+  public WorkflowType create(WorkflowType model) throws IFlowStorageException;
+
+  public WorkflowType update(WorkflowType model) throws IFlowStorageException;
+
   public WorkflowType getById(Long id) throws IFlowStorageException;
-  
+
   public List<WorkflowType> getListByIdList(List<Long> idList) throws IFlowStorageException;
-  
+
   public List<WorkflowType> getListByCompanyId(Long id) throws IFlowStorageException;
-  
+
 }

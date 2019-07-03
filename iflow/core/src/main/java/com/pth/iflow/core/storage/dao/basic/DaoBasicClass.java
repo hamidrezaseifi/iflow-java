@@ -1,4 +1,4 @@
-package com.pth.iflow.core.storage.dao.impl;
+package com.pth.iflow.core.storage.dao.basic;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

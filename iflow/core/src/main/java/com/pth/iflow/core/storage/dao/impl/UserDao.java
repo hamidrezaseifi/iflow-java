@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pth.iflow.core.model.User;
 import com.pth.iflow.core.storage.dao.IUserDao;
+import com.pth.iflow.core.storage.dao.basic.DaoBasicClass;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 import com.pth.iflow.core.storage.dao.utils.SqlUtils;
 
@@ -107,14 +108,47 @@ public class UserDao extends DaoBasicClass<User> implements IUserDao {
 
   @Override
   protected PreparedStatement prepareInsertPreparedStatement(final User model, final PreparedStatement ps) throws SQLException {
-    // TODO Auto-generated method stub
-    return null;
+    ps.setLong(1, model.getCompanyId());
+    ps.setString(2, model.getEmail());
+    ps.setString(3, model.getFirstName());
+    ps.setString(4, model.getLastName());
+    ps.setInt(5, model.getPermission());
+    ps.setInt(6, model.getVersion());
+    ps.setInt(7, model.getStatus());
+
+    return ps;
   }
 
   @Override
   protected PreparedStatement prepareUpdatePreparedStatement(final User model, final PreparedStatement ps) throws SQLException {
-    // TODO Auto-generated method stub
-    return null;
+    ps.setLong(1, model.getCompanyId());
+    ps.setString(2, model.getEmail());
+    ps.setString(3, model.getFirstName());
+    ps.setString(4, model.getLastName());
+    ps.setInt(5, model.getPermission());
+    ps.setInt(6, model.getVersion());
+    ps.setInt(7, model.getStatus());
+    ps.setLong(8, model.getId());
+
+    return ps;
+  }
+
+  @Override
+  public User create(final User model) throws IFlowStorageException {
+    final String sql = "INSERT INTO users (company_id, email, firstname, lastname, permission, version, status)"
+        + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+    return getById(createModel(model, "User", sql));
+  }
+
+  @Override
+  public User update(final User model) throws IFlowStorageException {
+    final String sql = "UPDATE users SET company_id = ?, email = ?, firstname = ?, lastname = ?,"
+        + " permission = ?, version = ?, status = ? WHERE id = ?";
+
+    updateModel(model, "User", sql);
+
+    return getById(model.getId());
   }
 
 }

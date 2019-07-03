@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pth.iflow.core.model.UserGroup;
 import com.pth.iflow.core.storage.dao.IUserGroupDao;
+import com.pth.iflow.core.storage.dao.basic.DaoBasicClass;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 import com.pth.iflow.core.storage.dao.utils.SqlUtils;
 
@@ -71,14 +72,39 @@ public class UserGroupDao extends DaoBasicClass<UserGroup> implements IUserGroup
 
   @Override
   protected PreparedStatement prepareInsertPreparedStatement(final UserGroup model, final PreparedStatement ps) throws SQLException {
-    // TODO Auto-generated method stub
-    return null;
+    ps.setLong(1, model.getCompanyId());
+    ps.setString(2, model.getTitle());
+    ps.setInt(3, model.getVersion());
+    ps.setInt(4, model.getStatus());
+
+    return ps;
   }
 
   @Override
   protected PreparedStatement prepareUpdatePreparedStatement(final UserGroup model, final PreparedStatement ps) throws SQLException {
-    // TODO Auto-generated method stub
-    return null;
+    ps.setLong(1, model.getCompanyId());
+    ps.setString(2, model.getTitle());
+    ps.setInt(3, model.getVersion());
+    ps.setInt(4, model.getStatus());
+    ps.setLong(5, model.getId());
+
+    return ps;
+  }
+
+  @Override
+  public UserGroup create(final UserGroup model) throws IFlowStorageException {
+    final String sql = "INSERT INTO user_group (company_id, title, version, status)" + "VALUES (?, ?, ?, ?)";
+
+    return getById(createModel(model, "UserGroup", sql));
+  }
+
+  @Override
+  public UserGroup update(final UserGroup model) throws IFlowStorageException {
+    final String sql = "UPDATE user_group SET company_id = ?, title = ?, version = ?, status =  WHERE id = ?";
+
+    updateModel(model, "UserGroup", sql);
+
+    return getById(model.getId());
   }
 
 }
