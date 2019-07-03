@@ -67,6 +67,11 @@ public class Company extends ModelMapperBase<CompanyEdo, Company> {
   }
 
   @Override
+  public boolean isNew() {
+    return id == null || id <= 0;
+  }
+
+  @Override
   public CompanyEdo toEdo() {
     final CompanyEdo edo = new CompanyEdo();
     edo.setCompanyName(this.companyName);

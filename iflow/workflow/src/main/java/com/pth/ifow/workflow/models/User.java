@@ -202,6 +202,11 @@ public class User extends ModelMapperBase<UserEdo, User> {
   }
 
   @Override
+  public boolean isNew() {
+    return id == null || id <= 0;
+  }
+
+  @Override
   public UserEdo toEdo() {
     final UserEdo edo = new UserEdo();
     edo.setFirstName(this.firstName);

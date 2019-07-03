@@ -9,6 +9,8 @@ public abstract class ModelMapperBase<E, M> {
 
   }
 
+  public abstract boolean isNew();
+
   public abstract E toEdo();
 
   public abstract M fromEdo(E edo);

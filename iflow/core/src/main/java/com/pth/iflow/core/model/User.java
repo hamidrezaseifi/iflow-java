@@ -12,20 +12,20 @@ import com.pth.iflow.common.enums.EUserStatus;
 
 public class User extends ModelMapperBase<UserEdo, User> {
 
-  private Long            id;
-  private Long            companyId;
-  private String          email;
-  private String          firstName;
-  private String          lastName;
-  private Integer         status;
-  private Integer         permission;
-  private Integer         version;
-  private LocalDateTime   createdAt;
-  private LocalDateTime   updatedAt;
-  private final Set<Long> groups           = new HashSet<>();
-  private final Set<Long> departments      = new HashSet<>();
+  private Long id;
+  private Long companyId;
+  private String email;
+  private String firstName;
+  private String lastName;
+  private Integer status;
+  private Integer permission;
+  private Integer version;
+  private LocalDateTime createdAt;
+  private LocalDateTime updatedAt;
+  private final Set<Long> groups = new HashSet<>();
+  private final Set<Long> departments = new HashSet<>();
   private final Set<Long> departmentGroups = new HashSet<>();
-  private final Set<Long> deputies         = new HashSet<>();
+  private final Set<Long> deputies = new HashSet<>();
 
   /**
    * @return the id
@@ -201,7 +201,7 @@ public class User extends ModelMapperBase<UserEdo, User> {
 
   public void setDepartments(final List<Long> departments) {
     setDepartments(departments.stream().collect(Collectors.toSet()));
-    
+
   }
 
   public void addDepartment(final Long departmentId) {
@@ -245,6 +245,11 @@ public class User extends ModelMapperBase<UserEdo, User> {
 
   public void addDeputy(final Long deputyId) {
     this.deputies.add(deputyId);
+  }
+
+  @Override
+  public boolean isNew() {
+    return id == null || id <= 0;
   }
 
   @Override

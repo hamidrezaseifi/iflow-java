@@ -131,6 +131,11 @@ public class WorkflowType extends ModelMapperBase<WorkflowTypeEdo, WorkflowType>
   }
 
   @Override
+  public boolean isNew() {
+    return id == null || id <= 0;
+  }
+
+  @Override
   public WorkflowTypeEdo toEdo() {
     final WorkflowTypeEdo edo = new WorkflowTypeEdo();
     edo.setTitle(this.title);

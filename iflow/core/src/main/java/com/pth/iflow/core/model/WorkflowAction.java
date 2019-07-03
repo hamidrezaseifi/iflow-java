@@ -108,6 +108,11 @@ public class WorkflowAction extends ModelMapperBase<WorkflowActionEdo, WorkflowA
   }
 
   @Override
+  public boolean isNew() {
+    return id == null || id <= 0;
+  }
+
+  @Override
   public WorkflowActionEdo toEdo() {
     final WorkflowActionEdo edo = new WorkflowActionEdo();
     edo.setAction(this.action);

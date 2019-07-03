@@ -108,6 +108,11 @@ public class WorkflowFile extends ModelMapperBase<WorkflowFileEdo, WorkflowFile>
   }
 
   @Override
+  public boolean isNew() {
+    return id == null || id <= 0;
+  }
+
+  @Override
   public WorkflowFileEdo toEdo() {
     final WorkflowFileEdo edo = new WorkflowFileEdo();
     edo.setTitle(this.title);
