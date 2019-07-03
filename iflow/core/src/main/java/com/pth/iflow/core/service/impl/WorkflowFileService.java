@@ -22,7 +22,7 @@ public class WorkflowFileService implements IWorkflowFileService {
   @Override
   public WorkflowFile save(final WorkflowFile model) {
     if (model.isNew()) {
-      model.setVersion(0);
+      model.increaseVersion();
       return workflowFileDao.create(model);
     }
 

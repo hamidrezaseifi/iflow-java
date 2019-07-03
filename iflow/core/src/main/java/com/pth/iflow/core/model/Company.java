@@ -18,6 +18,7 @@ public class Company extends ModelMapperBase<CompanyEdo, Company> {
   /**
    * @return the id
    */
+  @Override
   public Long getId() {
     return this.id;
   }
@@ -74,6 +75,7 @@ public class Company extends ModelMapperBase<CompanyEdo, Company> {
   /**
    * @return the version
    */
+  @Override
   public Integer getVersion() {
     return this.version;
   }
@@ -81,6 +83,7 @@ public class Company extends ModelMapperBase<CompanyEdo, Company> {
   /**
    * @param version the version to set
    */
+  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
@@ -111,11 +114,6 @@ public class Company extends ModelMapperBase<CompanyEdo, Company> {
    */
   public void setUpdatedAt(final LocalDateTime updatedAt) {
     this.updatedAt = updatedAt;
-  }
-
-  @Override
-  public boolean isNew() {
-    return id == null || id <= 0;
   }
 
   @Override

@@ -23,6 +23,7 @@ public class WorkflowType extends ModelMapperBase<WorkflowTypeEdo, WorkflowType>
   private LocalDateTime updatedAt;
   private final Set<Long> steps = new HashSet<>();
 
+  @Override
   public Long getId() {
     return this.id;
   }
@@ -93,10 +94,12 @@ public class WorkflowType extends ModelMapperBase<WorkflowTypeEdo, WorkflowType>
     this.manualAssign = manualAssign;
   }
 
+  @Override
   public Integer getVersion() {
     return this.version;
   }
 
+  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
@@ -137,11 +140,6 @@ public class WorkflowType extends ModelMapperBase<WorkflowTypeEdo, WorkflowType>
 
   public void addStep(final Long stepId) {
     this.steps.add(stepId);
-  }
-
-  @Override
-  public boolean isNew() {
-    return id == null || id <= 0;
   }
 
   @Override

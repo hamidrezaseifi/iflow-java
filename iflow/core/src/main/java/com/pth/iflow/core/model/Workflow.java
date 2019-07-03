@@ -19,6 +19,7 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
 
+  @Override
   public Long getId() {
     return this.id;
   }
@@ -83,10 +84,12 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
     this.status = status;
   }
 
+  @Override
   public Integer getVersion() {
     return this.version;
   }
 
+  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
@@ -105,11 +108,6 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
 
   public void setUpdatedAt(final LocalDateTime updatedAt) {
     this.updatedAt = updatedAt;
-  }
-
-  @Override
-  public boolean isNew() {
-    return id == null || id <= 0;
   }
 
   @Override

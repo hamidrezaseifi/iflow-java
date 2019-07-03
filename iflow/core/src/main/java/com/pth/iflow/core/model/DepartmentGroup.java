@@ -15,6 +15,7 @@ public class DepartmentGroup extends ModelMapperBase<DepartmentGroupEdo, Departm
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
 
+  @Override
   public Long getId() {
     return this.id;
   }
@@ -47,10 +48,12 @@ public class DepartmentGroup extends ModelMapperBase<DepartmentGroupEdo, Departm
     this.status = status;
   }
 
+  @Override
   public Integer getVersion() {
     return this.version;
   }
 
+  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
@@ -69,11 +72,6 @@ public class DepartmentGroup extends ModelMapperBase<DepartmentGroupEdo, Departm
 
   public void setUpdatedAt(final LocalDateTime updatedAt) {
     this.updatedAt = updatedAt;
-  }
-
-  @Override
-  public boolean isNew() {
-    return id == null || id <= 0;
   }
 
   @Override

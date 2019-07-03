@@ -50,7 +50,7 @@ public class DepartmentService implements IDepartmentService {
   @Override
   public Department save(final Department model) {
     if (model.isNew()) {
-      model.setVersion(0);
+      model.increaseVersion();
       return departmentDao.create(model);
     }
 

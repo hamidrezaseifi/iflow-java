@@ -48,7 +48,7 @@ public class UserGroupService implements IUserGroupService {
   @Override
   public UserGroup save(final UserGroup model) {
     if (model.isNew()) {
-      model.setVersion(0);
+      model.increaseVersion();
       return userGroupDao.create(model);
     }
 

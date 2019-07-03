@@ -30,6 +30,7 @@ public class User extends ModelMapperBase<UserEdo, User> {
   /**
    * @return the id
    */
+  @Override
   public Long getId() {
     return this.id;
   }
@@ -123,6 +124,7 @@ public class User extends ModelMapperBase<UserEdo, User> {
   /**
    * @return the version
    */
+  @Override
   public Integer getVersion() {
     return this.version;
   }
@@ -130,6 +132,7 @@ public class User extends ModelMapperBase<UserEdo, User> {
   /**
    * @param version the version to set
    */
+  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
@@ -245,11 +248,6 @@ public class User extends ModelMapperBase<UserEdo, User> {
 
   public void addDeputy(final Long deputyId) {
     this.deputies.add(deputyId);
-  }
-
-  @Override
-  public boolean isNew() {
-    return id == null || id <= 0;
   }
 
   @Override

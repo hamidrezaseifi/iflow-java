@@ -40,7 +40,7 @@ public class WorkflowTypeStepService implements IWorkflowTypeStepService {
   @Override
   public WorkflowTypeStep save(final WorkflowTypeStep model) {
     if (model.isNew()) {
-      model.setVersion(0);
+      model.increaseVersion();
       return workflowStepDao.create(model);
     }
 

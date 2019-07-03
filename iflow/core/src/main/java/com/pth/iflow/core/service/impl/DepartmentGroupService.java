@@ -38,7 +38,7 @@ public class DepartmentGroupService implements IDepartmentGroupService {
   @Override
   public DepartmentGroup save(final DepartmentGroup model) {
     if (model.isNew()) {
-      model.setVersion(0);
+      model.increaseVersion();
       return departmentGroupDao.create(model);
     }
 

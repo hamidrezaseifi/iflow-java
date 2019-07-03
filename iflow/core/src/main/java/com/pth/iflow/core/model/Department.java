@@ -19,6 +19,7 @@ public class Department extends ModelMapperBase<DepartmentEdo, Department> {
   private LocalDateTime updatedAt;
   private final Set<Long> groups = new HashSet<>();
 
+  @Override
   public Long getId() {
     return this.id;
   }
@@ -51,10 +52,12 @@ public class Department extends ModelMapperBase<DepartmentEdo, Department> {
     this.status = status;
   }
 
+  @Override
   public Integer getVersion() {
     return this.version;
   }
 
+  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
@@ -95,11 +98,6 @@ public class Department extends ModelMapperBase<DepartmentEdo, Department> {
 
   public void addGroup(final Long groupId) {
     this.groups.add(groupId);
-  }
-
-  @Override
-  public boolean isNew() {
-    return id == null || id <= 0;
   }
 
   @Override
