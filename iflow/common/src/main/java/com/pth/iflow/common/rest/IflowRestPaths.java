@@ -43,6 +43,9 @@ public class IflowRestPaths {
     public static final String WORKFLOW_ACTION_SAVE = "/workflow/action/save";
     public static final String WORKFLOW_ACTION_READ_BY_ID = "/workflow/action/readbyid/{id}";
     public static final String WORKFLOW_ACTION_READ_LIST_BY_WORKFLOW = "/workflow/action/workflow/list/{id}";
+    public static final String WORKFLOW_FILE_SAVE = "/workflow/file/save";
+    public static final String WORKFLOW_FILE_READ_BY_ID = "/workflow/file/readbyid/{id}";
+    public static final String WORKFLOW_FILE_READ_LIST_BY_WORKFLOW = "/workflow/file/workflow/list/{id}";
 
   }
 

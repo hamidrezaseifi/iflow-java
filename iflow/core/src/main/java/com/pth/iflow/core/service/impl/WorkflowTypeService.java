@@ -48,6 +48,7 @@ public class WorkflowTypeService implements IWorkflowTypeService {
   @Override
   public WorkflowType save(final WorkflowType model) {
     if (model.isNew()) {
+      model.setVersion(0);
       return workflowTypeDao.create(model);
     }
 

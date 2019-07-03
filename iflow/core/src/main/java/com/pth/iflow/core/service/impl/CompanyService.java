@@ -32,6 +32,7 @@ public class CompanyService implements ICompanyService {
   @Override
   public Company save(final Company model) {
     if (model.isNew()) {
+      model.setVersion(0);
       return companyDao.create(model);
     }
 

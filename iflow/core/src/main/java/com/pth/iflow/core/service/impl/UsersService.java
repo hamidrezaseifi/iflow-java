@@ -84,6 +84,7 @@ public class UsersService implements IUsersService {
   @Override
   public User save(final User model) {
     if (model.isNew()) {
+      model.setVersion(0);
       return userDao.create(model);
     }
 

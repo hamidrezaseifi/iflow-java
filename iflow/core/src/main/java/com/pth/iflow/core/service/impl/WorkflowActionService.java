@@ -22,7 +22,7 @@ public class WorkflowActionService implements IWorkflowActionService {
   @Override
   public WorkflowAction save(final WorkflowAction model) {
     if (model.isNew()) {
-      model.setVersion(1);
+      model.setVersion(0);
       return workflowActionDao.create(model);
     }
 
