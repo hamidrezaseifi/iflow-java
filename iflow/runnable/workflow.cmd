@@ -1,0 +1,1 @@
+java -jar workflow-0.0.1.jar

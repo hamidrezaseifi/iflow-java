@@ -2,6 +2,8 @@ package com.pth.ifow.workflow.config;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 
@@ -18,6 +20,11 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class WorkflowConfiguration {
+
+  public static final String NO_ACCESS_URL = "/noaccess";
+  public static final String INVALID_TOKEN_URL = "/invalidtoken";
+
+  public static final List<String> NOAUTHENTICATED_URL_LIST = Arrays.asList(NO_ACCESS_URL, INVALID_TOKEN_URL);
 
   /**
    * configs regarding core
