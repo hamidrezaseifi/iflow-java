@@ -1,9 +1,11 @@
 package com.pth.iflow.core.storage.dao.impl;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -18,32 +20,30 @@ import com.pth.iflow.core.storage.dao.utils.SqlUtils;
 @Transactional
 @Repository
 public class DepartmentGroupDao extends DaoBasicClass<DepartmentGroup> implements IDepartmentGroupDao {
-  
+
   public DepartmentGroupDao(final @Autowired JdbcTemplate jdbcTemplate,
       final @Autowired PlatformTransactionManager platformTransactionManager) {
     super(jdbcTemplate, platformTransactionManager);
   }
-  
+
   @Override
   public DepartmentGroup getById(final Long id) throws IFlowStorageException {
     return getModelById(id, "SELECT * FROM departments_group where id=?", "Department Group");
   }
-  
+
   @Override
   public List<DepartmentGroup> getListByIdList(final List<Long> idList) throws IFlowStorageException {
-    
+
     String sqlSelect = "SELECT * FROM departments_group where id in (";
-    for (final Long id : idList) {
-      sqlSelect += "?, ";
-    }
-    
+    sqlSelect += StringUtils.repeat("?, ", idList.size());
+
     sqlSelect = sqlSelect.trim();
     sqlSelect = sqlSelect.endsWith(",") ? sqlSelect.substring(0, sqlSelect.length() - 1) : sqlSelect;
     sqlSelect += ")";
-    
+
     return getModelListByIdList(idList, sqlSelect, "Department Group");
   }
-  
+
   @Override
   protected DepartmentGroup modelFromResultSet(final ResultSet rs) throws SQLException {
     final DepartmentGroup model = new DepartmentGroup();
@@ -54,13 +54,27 @@ public class DepartmentGroupDao extends DaoBasicClass<DepartmentGroup> implement
     model.setCreatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("created_at")));
     model.setUpdatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("updated_at")));
     model.setVersion(rs.getInt("version"));
-    
+
     return model;
   }
-  
+
   @Override
   public List<DepartmentGroup> getListByDepartmentId(final Long departmentId) {
     return getModelListById(departmentId, "SELECT * FROM departments_group where department_id=?", "Department Group");
   }
-  
+
+  @Override
+  protected PreparedStatement prepareInsertPreparedStatement(final DepartmentGroup model, final PreparedStatement ps)
+      throws SQLException {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  protected PreparedStatement prepareUpdatePreparedStatement(final DepartmentGroup model, final PreparedStatement ps)
+      throws SQLException {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
 }

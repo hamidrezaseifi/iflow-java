@@ -1,9 +1,11 @@
 package com.pth.iflow.core.storage.dao.impl;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -32,9 +34,7 @@ public class WorkflowTypeDao extends DaoBasicClass<WorkflowType> implements IWor
   @Override
   public List<WorkflowType> getListByIdList(final List<Long> idList) throws IFlowStorageException {
     String sqlSelect = "SELECT * FROM workflow_type where id in (";
-    for (final Long id : idList) {
-      sqlSelect += "?, ";
-    }
+    sqlSelect += StringUtils.repeat("?, ", idList.size());
 
     sqlSelect = sqlSelect.trim();
     sqlSelect = sqlSelect.endsWith(",") ? sqlSelect.substring(0, sqlSelect.length() - 1) : sqlSelect;
@@ -55,6 +55,7 @@ public class WorkflowTypeDao extends DaoBasicClass<WorkflowType> implements IWor
     model.setUpdatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("updated_at")));
     model.setVersion(rs.getInt("version"));
     model.setSendToController(rs.getInt("send_to_controller") == 1);
+    model.setManualAssign(rs.getInt("manual_assign") == 1);
     model.setSteps(getworkflowStepIdListById(model.getId()));
 
     return model;
@@ -67,5 +68,19 @@ public class WorkflowTypeDao extends DaoBasicClass<WorkflowType> implements IWor
   @Override
   public List<WorkflowType> getListByCompanyId(final Long id) throws IFlowStorageException {
     return getModelListById(id, "SELECT * FROM workflow_type where company_id=?", "Workflow");
+  }
+
+  @Override
+  protected PreparedStatement prepareInsertPreparedStatement(final WorkflowType model, final PreparedStatement ps)
+      throws SQLException {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  protected PreparedStatement prepareUpdatePreparedStatement(final WorkflowType model, final PreparedStatement ps)
+      throws SQLException {
+    // TODO Auto-generated method stub
+    return null;
   }
 }

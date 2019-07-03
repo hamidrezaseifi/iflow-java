@@ -12,6 +12,8 @@ public class WorkflowTypeEdo {
   private String comments;
   private Integer status;
   private Boolean sendToController;
+  private Boolean manualAssign;
+
   private final Set<Long> steps = new HashSet<>();
 
   public Long getId() {
@@ -74,6 +76,14 @@ public class WorkflowTypeEdo {
 
   public void setSendToController(final Boolean sendToController) {
     this.sendToController = sendToController;
+  }
+
+  public Boolean getManualAssign() {
+    return manualAssign;
+  }
+
+  public void setManualAssign(final Boolean manualAssign) {
+    this.manualAssign = manualAssign;
   }
 
   public Set<Long> getSteps() {

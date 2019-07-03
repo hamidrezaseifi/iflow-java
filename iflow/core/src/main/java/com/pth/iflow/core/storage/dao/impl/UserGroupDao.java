@@ -1,9 +1,11 @@
 package com.pth.iflow.core.storage.dao.impl;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -33,9 +35,7 @@ public class UserGroupDao extends DaoBasicClass<UserGroup> implements IUserGroup
   public List<UserGroup> getListByIdList(final List<Long> idList) throws IFlowStorageException {
 
     String sqlSelect = "SELECT * FROM user_group where id in (";
-    for (final Long id : idList) {
-      sqlSelect += "?, ";
-    }
+    sqlSelect += StringUtils.repeat("?, ", idList.size());
 
     sqlSelect = sqlSelect.trim();
     sqlSelect = sqlSelect.endsWith(",") ? sqlSelect.substring(0, sqlSelect.length() - 1) : sqlSelect;
@@ -60,13 +60,25 @@ public class UserGroupDao extends DaoBasicClass<UserGroup> implements IUserGroup
 
   @Override
   public List<UserGroup> getListByCompanyId(final Long companyId) throws IFlowStorageException {
-    
+
     return getModelListById(companyId, "SELECT * FROM user_group where company_id=?", "User Group");
   }
 
   @Override
   public List<Long> listGroupUserId(final Long groupId) throws IFlowStorageException {
     return getIdListById(groupId, "SELECT * FROM user_usergroup where user_group=?", "user_id", "User List");
+  }
+
+  @Override
+  protected PreparedStatement prepareInsertPreparedStatement(final UserGroup model, final PreparedStatement ps) throws SQLException {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  protected PreparedStatement prepareUpdatePreparedStatement(final UserGroup model, final PreparedStatement ps) throws SQLException {
+    // TODO Auto-generated method stub
+    return null;
   }
 
 }

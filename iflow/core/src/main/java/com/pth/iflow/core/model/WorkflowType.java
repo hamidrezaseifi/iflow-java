@@ -17,6 +17,7 @@ public class WorkflowType extends ModelMapperBase<WorkflowTypeEdo, WorkflowType>
   private String comments;
   private Integer status;
   private Boolean sendToController;
+  private Boolean manualAssign;
   private Integer version;
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
@@ -84,6 +85,14 @@ public class WorkflowType extends ModelMapperBase<WorkflowTypeEdo, WorkflowType>
     this.sendToController = sendToController;
   }
 
+  public Boolean getManualAssign() {
+    return manualAssign;
+  }
+
+  public void setManualAssign(final Boolean manualAssign) {
+    this.manualAssign = manualAssign;
+  }
+
   public Integer getVersion() {
     return this.version;
   }
@@ -140,6 +149,7 @@ public class WorkflowType extends ModelMapperBase<WorkflowTypeEdo, WorkflowType>
     edo.setCompanyId(this.companyId);
     edo.setBaseTypeId(this.baseTypeId);
     edo.setSendToController(sendToController);
+    edo.setManualAssign(manualAssign);
     edo.setSteps(this.steps);
 
     return edo;
@@ -156,6 +166,7 @@ public class WorkflowType extends ModelMapperBase<WorkflowTypeEdo, WorkflowType>
     model.setCompanyId(edo.getCompanyId());
     model.setBaseTypeId(edo.getBaseTypeId());
     model.setSendToController(edo.getSendToController());
+    model.setManualAssign(edo.getManualAssign());
     model.setSteps(edo.getSteps());
 
     return model;
