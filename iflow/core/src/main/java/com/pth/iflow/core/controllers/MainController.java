@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.pth.iflow.common.edo.models.WorkflowEdo;
+import com.pth.iflow.common.edo.models.WorkflowActionEdo;
 import com.pth.iflow.core.helper.BuildInfoProperties;
 
 @RestController(value = "/")
@@ -24,8 +24,8 @@ public class MainController {
 
   @ResponseStatus(HttpStatus.OK)
   @GetMapping(path = "/test", produces = MediaType.APPLICATION_XML_VALUE)
-  public WorkflowEdo test() {
-    final WorkflowEdo edo = new WorkflowEdo();
+  public WorkflowActionEdo test() {
+    final WorkflowActionEdo edo = new WorkflowActionEdo();
 
     return edo;
   }
