@@ -10,6 +10,7 @@ public class WorkflowFileEdo {
   private String comments;
   private Integer fileVersion;
   private Integer status;
+  private Integer version;
 
   public Long getId() {
     return this.id;
@@ -73,6 +74,14 @@ public class WorkflowFileEdo {
 
   public void setStatus(final Integer status) {
     this.status = status;
+  }
+
+  public Integer getVersion() {
+    return this.version;
+  }
+
+  public void setVersion(final Integer version) {
+    this.version = version;
   }
 
 }

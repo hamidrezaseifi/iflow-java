@@ -266,27 +266,29 @@ public class User extends ModelMapperBase<UserEdo, User> {
     edo.setDepartments(this.departments);
     edo.setDepartmentGroups(this.departmentGroups);
     edo.setDeputies(this.deputies);
+    edo.setVersion(version);
 
     return edo;
   }
 
   @Override
   public User fromEdo(final UserEdo edo) {
-    final User user = new User();
+    final User model = new User();
 
-    user.setFirstName(edo.getFirstName());
-    user.setLastName(edo.getLastName());
-    user.setPermission(edo.getPermission());
-    user.setStatus(edo.getStatus());
-    user.setEmail(edo.getEmail());
-    user.setId(edo.getId());
-    user.setCompanyId(edo.getCompanyId());
-    user.setGroups(edo.getGroups());
-    user.setDepartments(edo.getDepartments());
-    user.setDepartmentGroups(edo.getDepartmentGroups());
-    user.setDeputies(edo.getDeputies());
+    model.setFirstName(edo.getFirstName());
+    model.setLastName(edo.getLastName());
+    model.setPermission(edo.getPermission());
+    model.setStatus(edo.getStatus());
+    model.setEmail(edo.getEmail());
+    model.setId(edo.getId());
+    model.setCompanyId(edo.getCompanyId());
+    model.setGroups(edo.getGroups());
+    model.setDepartments(edo.getDepartments());
+    model.setDepartmentGroups(edo.getDepartmentGroups());
+    model.setDeputies(edo.getDeputies());
+    model.setVersion(edo.getVersion());
 
-    return user;
+    return model;
   }
 
 }

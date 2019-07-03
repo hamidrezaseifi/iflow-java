@@ -5,17 +5,18 @@ import java.util.Set;
 
 public class UserEdo {
 
-  private Long            id;
-  private Long            companyId;
-  private String          email;
-  private String          firstName;
-  private String          lastName;
-  private Integer         status;
-  private Integer         permission;
-  private final Set<Long> groups           = new HashSet<>();
-  private final Set<Long> departments      = new HashSet<>();
+  private Long id;
+  private Long companyId;
+  private String email;
+  private String firstName;
+  private String lastName;
+  private Integer status;
+  private Integer version;
+  private Integer permission;
+  private final Set<Long> groups = new HashSet<>();
+  private final Set<Long> departments = new HashSet<>();
   private final Set<Long> departmentGroups = new HashSet<>();
-  private final Set<Long> deputies         = new HashSet<>();
+  private final Set<Long> deputies = new HashSet<>();
 
   /**
    * @return the id
@@ -58,7 +59,7 @@ public class UserEdo {
   public void setEmail(final String email) {
     this.email = email;
   }
-  
+
   /**
    * @return the firstName
    */
@@ -99,6 +100,14 @@ public class UserEdo {
    */
   public void setStatus(final Integer status) {
     this.status = status;
+  }
+
+  public Integer getVersion() {
+    return this.version;
+  }
+
+  public void setVersion(final Integer version) {
+    this.version = version;
   }
 
   /**

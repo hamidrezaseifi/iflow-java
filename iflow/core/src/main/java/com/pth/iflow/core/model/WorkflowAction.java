@@ -123,6 +123,7 @@ public class WorkflowAction extends ModelMapperBase<WorkflowActionEdo, WorkflowA
     edo.setOldStep(oldStep);
     edo.setNewStep(newStep);
     edo.setWorkflowId(workflowId);
+    edo.setVersion(version);
 
     return edo;
   }
@@ -139,6 +140,7 @@ public class WorkflowAction extends ModelMapperBase<WorkflowActionEdo, WorkflowA
     model.setOldStep(edo.getOldStep());
     model.setNewStep(edo.getNewStep());
     model.setWorkflowId(edo.getWorkflowId());
+    model.setVersion(edo.getVersion());
 
     return model;
   }

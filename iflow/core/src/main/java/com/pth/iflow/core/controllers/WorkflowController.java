@@ -42,8 +42,8 @@ public class WorkflowController {
   }
 
   @ResponseStatus(HttpStatus.ACCEPTED)
-  @IflowGetRequestMapping(path = IflowRestPaths.CoreModul.WORKFLOW_SAVE)
-  public ResponseEntity<WorkflowEdo> saveWorkflow(@PathVariable final WorkflowEdo workflowEdo, final HttpServletRequest request)
+  @IflowPostRequestMapping(path = IflowRestPaths.CoreModul.WORKFLOW_SAVE)
+  public ResponseEntity<WorkflowEdo> saveWorkflow(@RequestBody final WorkflowEdo workflowEdo, final HttpServletRequest request)
       throws Exception {
 
     final Workflow model = this.workflowService.save(new Workflow().fromEdo(workflowEdo));

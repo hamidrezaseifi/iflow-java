@@ -11,6 +11,7 @@ public class WorkflowTypeEdo {
   private String title;
   private String comments;
   private Integer status;
+  private Integer version;
   private Boolean sendToController;
   private Boolean manualAssign;
 
@@ -64,6 +65,14 @@ public class WorkflowTypeEdo {
 
   public Integer getStatus() {
     return this.status;
+  }
+
+  public Integer getVersion() {
+    return this.version;
+  }
+
+  public void setVersion(final Integer version) {
+    this.version = version;
   }
 
   public void setStatus(final Integer status) {

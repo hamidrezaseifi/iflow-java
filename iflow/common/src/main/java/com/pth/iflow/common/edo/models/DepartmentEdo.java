@@ -8,6 +8,7 @@ public class DepartmentEdo {
   private Long companyId;
   private String title;
   private Integer status;
+  private Integer version;
   private final Set<Long> groups = new HashSet<>();
 
   public Long getId() {
@@ -40,6 +41,14 @@ public class DepartmentEdo {
 
   public void setStatus(final Integer status) {
     this.status = status;
+  }
+
+  public Integer getVersion() {
+    return this.version;
+  }
+
+  public void setVersion(final Integer version) {
+    this.version = version;
   }
 
   public Set<Long> getGroups() {

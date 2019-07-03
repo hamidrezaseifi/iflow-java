@@ -156,6 +156,7 @@ public class WorkflowType extends ModelMapperBase<WorkflowTypeEdo, WorkflowType>
     edo.setSendToController(sendToController);
     edo.setManualAssign(manualAssign);
     edo.setSteps(this.steps);
+    edo.setVersion(version);
 
     return edo;
   }
@@ -172,6 +173,7 @@ public class WorkflowType extends ModelMapperBase<WorkflowTypeEdo, WorkflowType>
     model.setBaseTypeId(edo.getBaseTypeId());
     model.setSendToController(edo.getSendToController());
     model.setManualAssign(edo.getManualAssign());
+    model.setVersion(edo.getVersion());
     model.setSteps(edo.getSteps());
 
     return model;

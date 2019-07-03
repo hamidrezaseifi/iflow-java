@@ -125,19 +125,21 @@ public class Company extends ModelMapperBase<CompanyEdo, Company> {
     edo.setIdentifyid(this.identifyid);
     edo.setStatus(this.status);
     edo.setId(this.id);
+    edo.setVersion(version);
 
     return edo;
   }
 
   @Override
   public Company fromEdo(final CompanyEdo edo) {
-    final Company company = new Company();
-    company.setCompanyName(edo.getCompanyName());
-    company.setIdentifyid(edo.getIdentifyid());
-    company.setStatus(edo.getStatus());
-    company.setId(edo.getId());
+    final Company model = new Company();
+    model.setCompanyName(edo.getCompanyName());
+    model.setIdentifyid(edo.getIdentifyid());
+    model.setStatus(edo.getStatus());
+    model.setId(edo.getId());
+    model.setVersion(edo.getVersion());
 
-    return company;
+    return model;
   }
 
 }

@@ -123,6 +123,7 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
     edo.setCurrentStep(currentStep);
     edo.setCreatedBy(createdBy);
     edo.setWorkflowTypeId(workflowTypeId);
+    edo.setVersion(version);
 
     return edo;
   }
@@ -139,6 +140,7 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
     model.setCurrentStep(edo.getCurrentStep());
     model.setCreatedBy(edo.getCreatedBy());
     model.setWorkflowTypeId(edo.getWorkflowTypeId());
+    model.setVersion(edo.getVersion());
 
     return model;
   }

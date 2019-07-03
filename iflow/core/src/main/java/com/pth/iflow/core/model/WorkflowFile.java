@@ -123,6 +123,7 @@ public class WorkflowFile extends ModelMapperBase<WorkflowFileEdo, WorkflowFile>
     edo.setFilePath(filePath);
     edo.setFileVersion(fileVersion);
     edo.setWorkflowId(workflowId);
+    edo.setVersion(version);
 
     return edo;
   }
@@ -139,6 +140,7 @@ public class WorkflowFile extends ModelMapperBase<WorkflowFileEdo, WorkflowFile>
     model.setFilePath(edo.getFilePath());
     model.setFileVersion(edo.getFileVersion());
     model.setWorkflowId(edo.getWorkflowId());
+    model.setVersion(edo.getVersion());
 
     return model;
   }

@@ -83,6 +83,7 @@ public class DepartmentGroup extends ModelMapperBase<DepartmentGroupEdo, Departm
     edo.setStatus(this.status);
     edo.setId(this.id);
     edo.setDepartmentId(this.departmentId);
+    edo.setVersion(version);
 
     return edo;
   }
@@ -95,6 +96,7 @@ public class DepartmentGroup extends ModelMapperBase<DepartmentGroupEdo, Departm
     model.setStatus(edo.getStatus());
     model.setId(edo.getId());
     model.setDepartmentId(edo.getDepartmentId());
+    model.setVersion(edo.getVersion());
 
     return model;
   }

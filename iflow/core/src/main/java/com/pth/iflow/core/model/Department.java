@@ -110,6 +110,7 @@ public class Department extends ModelMapperBase<DepartmentEdo, Department> {
     edo.setId(this.id);
     edo.setCompanyId(this.companyId);
     edo.setGroups(this.groups);
+    edo.setVersion(version);
 
     return edo;
   }
@@ -123,6 +124,7 @@ public class Department extends ModelMapperBase<DepartmentEdo, Department> {
     model.setId(edo.getId());
     model.setCompanyId(edo.getCompanyId());
     model.setGroups(edo.getGroups());
+    model.setVersion(edo.getVersion());
 
     return model;
   }
