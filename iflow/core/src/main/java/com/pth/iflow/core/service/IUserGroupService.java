@@ -7,11 +7,13 @@ import com.pth.iflow.core.model.UserGroup;
 
 public interface IUserGroupService {
 
-  public UserGroup getById(final Long id);
+  UserGroup save(UserGroup model);
 
-  public List<UserGroup> getListByIdList(final List<Long> idList);
+  UserGroup getById(final Long id);
 
-  public List<UserGroup> getListByIdCompanyId(final Long companyId);
+  List<UserGroup> getListByIdList(final List<Long> idList);
 
-  public List<User> listGroupUsers(final Long id);
+  List<UserGroup> getListByIdCompanyId(final Long companyId);
+
+  List<User> listGroupUsers(final Long id);
 }

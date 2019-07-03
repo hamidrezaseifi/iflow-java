@@ -5,11 +5,13 @@ import java.util.List;
 import com.pth.iflow.core.model.DepartmentGroup;
 
 public interface IDepartmentGroupService {
-  
-  public DepartmentGroup getById(final Long id);
-  
-  public List<DepartmentGroup> getListByDepartmentId(final Long departmentId);
-  
-  public List<DepartmentGroup> getListByIdList(final List<Long> idList);
-  
+
+  DepartmentGroup save(DepartmentGroup model);
+
+  DepartmentGroup getById(final Long id);
+
+  List<DepartmentGroup> getListByDepartmentId(final Long departmentId);
+
+  List<DepartmentGroup> getListByIdList(final List<Long> idList);
+
 }

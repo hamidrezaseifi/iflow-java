@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.pth.iflow.core.model.Company;
 import com.pth.iflow.core.service.ICompanyService;
 import com.pth.iflow.core.storage.dao.ICompanyDao;
+import com.pth.iflow.core.storage.dao.exception.IFlowOptimisticLockException;
 
 @Service
 public class CompanyService implements ICompanyService {
@@ -30,8 +31,18 @@ public class CompanyService implements ICompanyService {
 
   @Override
   public Company save(final Company model) {
+    if (model.isNew()) {
+      return companyDao.create(model);
+    }
 
-    return null;
+    final Company exists = companyDao.getById(model.getId());
+    if (exists.getVersion() > model.getVersion()) {
+      throw new IFlowOptimisticLockException("Company with id " + model.getId() + " is old!");
+    }
+
+    model.setVersion(model.getVersion() + 1);
+
+    return companyDao.update(model);
   }
 
 }
