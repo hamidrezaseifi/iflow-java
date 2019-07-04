@@ -1,16 +1,22 @@
 package com.pth.iflow.common.edo.models;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 public class WorkflowFileEdo {
 
   private Long id;
   private Long workflowId;
   private Long createdBy;
   private String title;
-  private String filePath;
+  private String activeFilePath;
   private String comments;
-  private Integer fileVersion;
+  private Integer activeFileVersion;
   private Integer status;
   private Integer version;
+  private Set<WorkflowFileVersionEdo> fileVersions = new HashSet<>();
 
   public Long getId() {
     return this.id;
@@ -28,12 +34,12 @@ public class WorkflowFileEdo {
     this.workflowId = workflowId;
   }
 
-  public String getFilePath() {
-    return filePath;
+  public String getActiveFilePath() {
+    return activeFilePath;
   }
 
-  public void setFilePath(final String filePath) {
-    this.filePath = filePath;
+  public void setActiveFilePath(final String filePath) {
+    this.activeFilePath = filePath;
   }
 
   public Long getCreatedBy() {
@@ -60,12 +66,12 @@ public class WorkflowFileEdo {
     this.comments = comments;
   }
 
-  public Integer getFileVersion() {
-    return fileVersion;
+  public Integer getActiveFileVersion() {
+    return activeFileVersion;
   }
 
-  public void setFileVersion(final Integer fileVersion) {
-    this.fileVersion = fileVersion;
+  public void setActiveFileVersion(final Integer fileVersion) {
+    this.activeFileVersion = fileVersion;
   }
 
   public Integer getStatus() {
@@ -82,6 +88,21 @@ public class WorkflowFileEdo {
 
   public void setVersion(final Integer version) {
     this.version = version;
+  }
+
+  public Set<WorkflowFileVersionEdo> getFileVersions() {
+    return fileVersions;
+  }
+
+  public void setFileVersions(final List<WorkflowFileVersionEdo> fileVersions) {
+    setFileVersions(fileVersions.stream().collect(Collectors.toSet()));
+  }
+
+  public void setFileVersions(final Set<WorkflowFileVersionEdo> fileVersions) {
+    this.fileVersions = new HashSet<>();
+    if (fileVersions != null) {
+      this.fileVersions.addAll(fileVersions);
+    }
   }
 
 }

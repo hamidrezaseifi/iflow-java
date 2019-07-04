@@ -1,6 +1,6 @@
 
 
-
+DROP TABLE IF EXISTS `workflow_files_versions`;
 
 DROP TABLE IF EXISTS `workflow_properties_value`;
 
@@ -237,9 +237,9 @@ CREATE TABLE `workflow_files` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `workflow_id` int(11) NOT NULL,
   `title` varchar(200) NOT NULL,
-  `filepath` varchar(500) NOT NULL,
+  `active_filepath` varchar(500) NOT NULL,
   `comments` text,
-  `file_version` int(11) NOT NULL DEFAULT '1',
+  `active_version` int(11) NOT NULL DEFAULT '1',
   `status` smallint(6) NOT NULL DEFAULT '1',
   `version` int(11) NOT NULL DEFAULT '1',
   `created_by` int(11) DEFAULT NULL,
@@ -266,4 +266,22 @@ CREATE TABLE `workflow_properties_value` (
   CONSTRAINT `FK_WORKFLOWPROPERTYVALUE_PROPERTY` FOREIGN KEY (`workflow_properties_id`) REFERENCES `workflow_type_properties` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_WORKFLOWPROPERTYVALUE_WORKFLOW` FOREIGN KEY (`workflow_id`) REFERENCES `workflow` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB ;
+
+
+CREATE TABLE `workflow_files_versions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `workflow_file_id` int(11) NOT NULL,
+  `filepath` varchar(500) NOT NULL,
+  `comments` text,
+  `file_version` int(11) NOT NULL DEFAULT '1',
+  `status` smallint(6) NOT NULL DEFAULT '1',
+  `version` int(11) NOT NULL DEFAULT '1',
+  `created_by` int(11) DEFAULT NULL,
+  `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  `updated_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  PRIMARY KEY (`id`),
+  KEY `FK_WORKFLOWFILEVERSION_WORKFLOWFILE_idx` (`workflow_file_id`),
+  CONSTRAINT `FK_WORKFLOWFILEVERSION_WORKFLOWFILE` FOREIGN KEY (`workflow_file_id`) REFERENCES `workflow_files` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
 

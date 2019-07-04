@@ -50,13 +50,13 @@ public class WorkflowFileDao extends DaoBasicClass<WorkflowFile> implements IWor
 
     model.setId(rs.getLong("id"));
     model.setTitle(rs.getString("title"));
-    model.setFilePath(rs.getString("filepath"));
+    model.setActiveFilePath(rs.getString("active_filepath"));
     model.setStatus(rs.getInt("status"));
     model.setCreatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("created_at")));
     model.setUpdatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("updated_at")));
     model.setVersion(rs.getInt("version"));
     model.setComments(rs.getString("comments"));
-    model.setFileVersion(rs.getInt("file_version"));
+    model.setActiveFileVersion(rs.getInt("active_file_version"));
     model.setCreatedBy(rs.getLong("created_by"));
     model.setWorkflowId(rs.getLong("workflow_id"));
 
@@ -70,7 +70,7 @@ public class WorkflowFileDao extends DaoBasicClass<WorkflowFile> implements IWor
 
   @Override
   public WorkflowFile create(final WorkflowFile workflow) throws IFlowStorageException {
-    final String sql = "INSERT INTO workflow_files (workflow_id, title, filepath, file_version, comments, created_by, version, status)"
+    final String sql = "INSERT INTO workflow_files (workflow_id, title, active_filepath, active_file_version, comments, created_by, version, status)"
         + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
     return getById(createModel(workflow, "WorkflowFile", sql));
@@ -78,7 +78,7 @@ public class WorkflowFileDao extends DaoBasicClass<WorkflowFile> implements IWor
 
   @Override
   public WorkflowFile update(final WorkflowFile workflow) throws IFlowStorageException {
-    final String sql = "UPDATE workflow_files SET workflow_id = ?, title = ?, filepath = ?, file_version = ?, comments = ?,"
+    final String sql = "UPDATE workflow_files SET workflow_id = ?, title = ?, active_filepath = ?, active_file_version = ?, comments = ?,"
         + " created_by = ?, version = ?, status = ? WHERE id = ?";
 
     updateModel(workflow, "WorkflowFile", sql);
@@ -91,8 +91,8 @@ public class WorkflowFileDao extends DaoBasicClass<WorkflowFile> implements IWor
       throws SQLException {
     ps.setLong(1, model.getWorkflowId());
     ps.setString(2, model.getTitle());
-    ps.setString(3, model.getFilePath());
-    ps.setInt(4, model.getFileVersion());
+    ps.setString(3, model.getActiveFilePath());
+    ps.setInt(4, model.getActiveFileVersion());
     ps.setString(5, model.getComments());
     ps.setLong(6, model.getCreatedBy());
     ps.setInt(7, model.getVersion());
@@ -106,8 +106,8 @@ public class WorkflowFileDao extends DaoBasicClass<WorkflowFile> implements IWor
       throws SQLException {
     ps.setLong(1, model.getWorkflowId());
     ps.setString(2, model.getTitle());
-    ps.setString(3, model.getFilePath());
-    ps.setInt(4, model.getFileVersion());
+    ps.setString(3, model.getActiveFilePath());
+    ps.setInt(4, model.getActiveFileVersion());
     ps.setString(5, model.getComments());
     ps.setLong(6, model.getCreatedBy());
     ps.setInt(7, model.getVersion());

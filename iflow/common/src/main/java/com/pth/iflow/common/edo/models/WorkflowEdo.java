@@ -1,5 +1,10 @@
 package com.pth.iflow.common.edo.models;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 public class WorkflowEdo {
 
   private Long id;
@@ -11,6 +16,9 @@ public class WorkflowEdo {
   private String comments;
   private Integer status;
   private Integer version;
+
+  private Set<WorkflowFileEdo> files = new HashSet<>();
+  private Set<WorkflowActionEdo> actions = new HashSet<>();
 
   public Long getId() {
     return this.id;
@@ -82,6 +90,36 @@ public class WorkflowEdo {
 
   public void setVersion(final Integer version) {
     this.version = version;
+  }
+
+  public Set<WorkflowFileEdo> getFiles() {
+    return files;
+  }
+
+  public void setFiles(final List<WorkflowFileEdo> files) {
+    setFiles(files.stream().collect(Collectors.toSet()));
+  }
+
+  public void setFiles(final Set<WorkflowFileEdo> files) {
+    this.files = new HashSet<>();
+    if (files != null) {
+      this.files.addAll(files);
+    }
+  }
+
+  public Set<WorkflowActionEdo> getActions() {
+    return actions;
+  }
+
+  public void setActions(final List<WorkflowActionEdo> actions) {
+    setActions(actions.stream().collect(Collectors.toSet()));
+  }
+
+  public void setActions(final Set<WorkflowActionEdo> actions) {
+    this.actions = new HashSet<>();
+    if (actions != null) {
+      this.actions.addAll(actions);
+    }
   }
 
 }

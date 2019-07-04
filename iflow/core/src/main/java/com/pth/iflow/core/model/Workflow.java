@@ -1,6 +1,10 @@
 package com.pth.iflow.core.model;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.pth.iflow.common.edo.models.WorkflowEdo;
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
@@ -18,6 +22,9 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
   private Integer version;
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
+
+  private Set<WorkflowFile> files = new HashSet<>();
+  private Set<WorkflowAction> actions = new HashSet<>();
 
   @Override
   public Long getId() {
@@ -110,6 +117,36 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
     this.updatedAt = updatedAt;
   }
 
+  public Set<WorkflowFile> getFiles() {
+    return files;
+  }
+
+  public void setFiles(final List<WorkflowFile> files) {
+    setFiles(files.stream().collect(Collectors.toSet()));
+  }
+
+  public void setFiles(final Set<WorkflowFile> files) {
+    this.files = new HashSet<>();
+    if (files != null) {
+      this.files.addAll(files);
+    }
+  }
+
+  public Set<WorkflowAction> getActions() {
+    return actions;
+  }
+
+  public void setActions(final List<WorkflowAction> actions) {
+    setActions(actions.stream().collect(Collectors.toSet()));
+  }
+
+  public void setActions(final Set<WorkflowAction> actions) {
+    this.actions = new HashSet<>();
+    if (actions != null) {
+      this.actions.addAll(actions);
+    }
+  }
+
   @Override
   public WorkflowEdo toEdo() {
     final WorkflowEdo edo = new WorkflowEdo();
@@ -122,6 +159,9 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
     edo.setCreatedBy(createdBy);
     edo.setWorkflowTypeId(workflowTypeId);
     edo.setVersion(version);
+
+    edo.setFiles(ModelMapperBase.toEdoList(files));
+    edo.setActions(ModelMapperBase.toEdoList(actions));
 
     return edo;
   }
@@ -139,6 +179,9 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
     model.setCreatedBy(edo.getCreatedBy());
     model.setWorkflowTypeId(edo.getWorkflowTypeId());
     model.setVersion(edo.getVersion());
+
+    model.setFiles(new WorkflowFile().fromEdoList(edo.getFiles()));
+    model.setActions(new WorkflowAction().fromEdoList(edo.getActions()));
 
     return model;
   }
