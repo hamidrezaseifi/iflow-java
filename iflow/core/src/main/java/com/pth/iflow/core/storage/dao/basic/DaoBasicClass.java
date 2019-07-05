@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
@@ -27,8 +28,7 @@ public abstract class DaoBasicClass<M> {
   protected static final Logger logger = LoggerFactory.getLogger(DaoBasicClass.class);
   protected final JdbcTemplate jdbcTemplate;
   protected final PlatformTransactionManager platformTransactionManager;
-
-  protected abstract M modelFromResultSet(final ResultSet rs) throws SQLException;
+  protected TransactionStatus transactionStatus;
 
   public DaoBasicClass(final @Autowired JdbcTemplate jdbcTemplate,
       final @Autowired PlatformTransactionManager platformTransactionManager) {
@@ -174,21 +174,23 @@ public abstract class DaoBasicClass<M> {
     return list;
   }
 
-  public Long createModel(final M model, final String modelName, final String insertSql) throws IFlowStorageException {
+  public Long createModel(final M model, final String modelName, final String insertSql, final boolean withTransaction)
+      throws IFlowStorageException {
     logger.debug("insert " + modelName + " ...");
-    final TransactionStatus transactionStatus = this.platformTransactionManager.getTransaction(new DefaultTransactionDefinition());
+    startTransaction(withTransaction);
     final KeyHolder keyHolder = new GeneratedKeyHolder();
 
     try {
 
       this.jdbcTemplate.update(con -> {
-        final PreparedStatement ps = con.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS);
-        return prepareInsertPreparedStatement(model, ps);
+        PreparedStatement ps = con.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS);
+        ps = prepareInsertPreparedStatement(model, ps);
+        return ps;
       }, keyHolder);
 
-      this.platformTransactionManager.commit(transactionStatus);
+      commitTransaction(withTransaction);
     } catch (final Exception e) {
-      platformTransactionManager.rollback(transactionStatus);
+      rollbackTransaction();
       logger.error("Unable to insert \" + modelName + \": {}", modelName, e.toString(), e);
       throw new IFlowStorageException(e.toString(), e);
     }
@@ -196,9 +198,21 @@ public abstract class DaoBasicClass<M> {
 
   }
 
-  public void updateModel(final M model, final String modelName, final String updateSql) throws IFlowStorageException {
+  public Long createModelWithStatementNoTransaction(final String modelName, final PreparedStatementCreator statement)
+      throws IFlowStorageException {
+    logger.debug("insert " + modelName + " ...");
+    final KeyHolder keyHolder = new GeneratedKeyHolder();
+
+    this.jdbcTemplate.update(statement, keyHolder);
+
+    return keyHolder.getKey().longValue();
+
+  }
+
+  public void updateModel(final M model, final String modelName, final String updateSql, final boolean withTransaction)
+      throws IFlowStorageException {
     logger.debug("Updating {}...", modelName);
-    final TransactionStatus transactionStatus = this.platformTransactionManager.getTransaction(new DefaultTransactionDefinition());
+    startTransaction(withTransaction);
     try {
 
       final int changedRows = jdbcTemplate.update(con -> {
@@ -210,14 +224,74 @@ public abstract class DaoBasicClass<M> {
         throw new IFlowStorageException(String.format("Unable to update {}", modelName));
       }
 
-      this.platformTransactionManager.commit(transactionStatus);
+      commitTransaction(withTransaction);
+
     } catch (final Exception e) {
-      platformTransactionManager.rollback(transactionStatus);
+      rollbackTransaction();
       logger.error("Unable to update {}: {}", modelName, e.toString(), e);
       throw new IFlowStorageException(e.toString(), e);
     }
 
   }
+
+  public void updateModelWithStatementNoTransaction(final String modelName, final PreparedStatementCreator statement)
+      throws IFlowStorageException {
+    logger.debug("Updating {}...", modelName);
+
+    final int changedRows = jdbcTemplate.update(statement);
+
+    if (changedRows != 1) {
+      throw new IFlowStorageException(String.format("Unable to update {}", modelName));
+    }
+
+  }
+
+  public void deleteModel(final Long id, final String modelName, final String deleteSql, final boolean withTransaction,
+      final boolean checkDeleted) throws IFlowStorageException {
+    logger.debug("Deleting {} by id:{} ...", modelName, id);
+
+    startTransaction(withTransaction);
+
+    try {
+
+      final int deletedRows = this.jdbcTemplate.update(con -> {
+        final PreparedStatement ps = con.prepareStatement(deleteSql);
+        ps.setLong(1, id);
+        return ps;
+      });
+
+      if (checkDeleted && deletedRows != 1) {
+        throw new IFlowStorageException(String.format("Unable to delete {}  [{}]", modelName, id));
+      }
+
+      commitTransaction(withTransaction);
+
+    } catch (final Exception e) {
+      rollbackTransaction();
+      logger.error("Error by deleting {} by id:{}: {}", modelName, id, e.toString(), e);
+      throw new IFlowStorageException(e.toString(), e);
+    }
+
+  }
+
+  protected void startTransaction(final boolean withTransaction) {
+    if (withTransaction) {
+      transactionStatus = this.platformTransactionManager.getTransaction(new DefaultTransactionDefinition());
+    }
+
+  }
+
+  protected void rollbackTransaction() {
+    platformTransactionManager.rollback(transactionStatus);
+  }
+
+  protected void commitTransaction(final boolean withTransaction) {
+    if (withTransaction && transactionStatus != null) {
+      this.platformTransactionManager.commit(transactionStatus);
+    }
+  }
+
+  protected abstract M modelFromResultSet(final ResultSet rs) throws SQLException;
 
   protected abstract PreparedStatement prepareInsertPreparedStatement(M model, final PreparedStatement ps) throws SQLException;
 

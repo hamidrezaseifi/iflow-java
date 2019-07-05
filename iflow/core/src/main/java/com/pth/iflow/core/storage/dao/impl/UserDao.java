@@ -138,7 +138,7 @@ public class UserDao extends DaoBasicClass<User> implements IUserDao {
     final String sql = "INSERT INTO users (company_id, email, firstname, lastname, permission, version, status)"
         + "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-    return getById(createModel(model, "User", sql));
+    return getById(createModel(model, "User", sql, true));
   }
 
   @Override
@@ -146,7 +146,7 @@ public class UserDao extends DaoBasicClass<User> implements IUserDao {
     final String sql = "UPDATE users SET company_id = ?, email = ?, firstname = ?, lastname = ?,"
         + " permission = ?, version = ?, status = ? WHERE id = ?";
 
-    updateModel(model, "User", sql);
+    updateModel(model, "User", sql, true);
 
     return getById(model.getId());
   }

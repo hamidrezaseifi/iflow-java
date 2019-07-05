@@ -74,14 +74,14 @@ public class CompanyDao extends DaoBasicClass<Company> implements ICompanyDao {
   public Company create(final Company model) throws IFlowStorageException {
     final String sql = "INSERT INTO companies (identifyid, company_name, version, status)" + "VALUES (?, ?, ?, ?)";
 
-    return getById(createModel(model, "Company", sql));
+    return getById(createModel(model, "Company", sql, true));
   }
 
   @Override
   public Company update(final Company model) throws IFlowStorageException {
     final String sql = "UPDATE companies SET identifyid = ?, company_name = ?, version = ?, status =  WHERE id = ?";
 
-    updateModel(model, "Company", sql);
+    updateModel(model, "Company", sql, true);
 
     return getById(model.getId());
   }

@@ -56,7 +56,7 @@ public class WorkflowFileDao extends DaoBasicClass<WorkflowFile> implements IWor
     model.setUpdatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("updated_at")));
     model.setVersion(rs.getInt("version"));
     model.setComments(rs.getString("comments"));
-    model.setActiveFileVersion(rs.getInt("active_file_version"));
+    model.setActiveFileVersion(rs.getInt("active_version"));
     model.setCreatedBy(rs.getLong("created_by"));
     model.setWorkflowId(rs.getLong("workflow_id"));
 
@@ -70,18 +70,18 @@ public class WorkflowFileDao extends DaoBasicClass<WorkflowFile> implements IWor
 
   @Override
   public WorkflowFile create(final WorkflowFile workflow) throws IFlowStorageException {
-    final String sql = "INSERT INTO workflow_files (workflow_id, title, active_filepath, active_file_version, comments, created_by, version, status)"
+    final String sql = "INSERT INTO workflow_files (workflow_id, title, active_filepath, active_version, comments, created_by, version, status)"
         + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-    return getById(createModel(workflow, "WorkflowFile", sql));
+    return getById(createModel(workflow, "WorkflowFile", sql, true));
   }
 
   @Override
   public WorkflowFile update(final WorkflowFile workflow) throws IFlowStorageException {
-    final String sql = "UPDATE workflow_files SET workflow_id = ?, title = ?, active_filepath = ?, active_file_version = ?, comments = ?,"
+    final String sql = "UPDATE workflow_files SET workflow_id = ?, title = ?, active_filepath = ?, active_version = ?, comments = ?,"
         + " created_by = ?, version = ?, status = ? WHERE id = ?";
 
-    updateModel(workflow, "WorkflowFile", sql);
+    updateModel(workflow, "WorkflowFile", sql, true);
 
     return getById(workflow.getId());
   }

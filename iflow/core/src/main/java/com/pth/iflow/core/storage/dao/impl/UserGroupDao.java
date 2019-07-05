@@ -95,14 +95,14 @@ public class UserGroupDao extends DaoBasicClass<UserGroup> implements IUserGroup
   public UserGroup create(final UserGroup model) throws IFlowStorageException {
     final String sql = "INSERT INTO user_group (company_id, title, version, status)" + "VALUES (?, ?, ?, ?)";
 
-    return getById(createModel(model, "UserGroup", sql));
+    return getById(createModel(model, "UserGroup", sql, true));
   }
 
   @Override
   public UserGroup update(final UserGroup model) throws IFlowStorageException {
     final String sql = "UPDATE user_group SET company_id = ?, title = ?, version = ?, status =  WHERE id = ?";
 
-    updateModel(model, "UserGroup", sql);
+    updateModel(model, "UserGroup", sql, true);
 
     return getById(model.getId());
   }

@@ -93,7 +93,7 @@ public class WorkflowTypeStepDao extends DaoBasicClass<WorkflowTypeStep> impleme
     final String sql = "INSERT INTO workflow_type_step (workflow_type_id, title, comments, version, status)"
         + "VALUES (?, ?, ?, ?, ?)";
 
-    return getById(createModel(model, "WorkflowTypeStep", sql));
+    return getById(createModel(model, "WorkflowTypeStep", sql, true));
   }
 
   @Override
@@ -101,7 +101,7 @@ public class WorkflowTypeStepDao extends DaoBasicClass<WorkflowTypeStep> impleme
     final String sql = "UPDATE workflow_type_step SET workflow_type_id = ?, title = ?, comments = ?,"
         + " version = ?, status = ? WHERE id = ?";
 
-    updateModel(model, "WorkflowTypeStep", sql);
+    updateModel(model, "WorkflowTypeStep", sql, true);
 
     return getById(model.getId());
   }

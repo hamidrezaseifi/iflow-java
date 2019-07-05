@@ -73,7 +73,7 @@ public class WorkflowActionDao extends DaoBasicClass<WorkflowAction> implements 
     final String sql = "INSERT INTO workflow_actions (workflow_id, action, old_step, new_step, comments, created_by, version, status)"
         + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-    return getById(createModel(workflow, "WorkflowAction", sql));
+    return getById(createModel(workflow, "WorkflowAction", sql, true));
   }
 
   @Override
@@ -81,7 +81,7 @@ public class WorkflowActionDao extends DaoBasicClass<WorkflowAction> implements 
     final String sql = "UPDATE workflow_actions SET workflow_id = ?, action = ?, old_step = ?, new_step = ?, comments = ?,"
         + " created_by = ?, version = ?, status = ? WHERE id = ?";
 
-    updateModel(workflow, "WorkflowAction", sql);
+    updateModel(workflow, "WorkflowAction", sql, true);
 
     return getById(workflow.getId());
   }

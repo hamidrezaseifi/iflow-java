@@ -107,7 +107,7 @@ public class WorkflowTypeDao extends DaoBasicClass<WorkflowType> implements IWor
     final String sql = "INSERT INTO workflow_type (company_id, workflow_base_type, title, manual_assign, send_to_controller, comments, version, status)"
         + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-    return getById(createModel(model, "WorkflowType", sql));
+    return getById(createModel(model, "WorkflowType", sql, true));
   }
 
   @Override
@@ -115,7 +115,7 @@ public class WorkflowTypeDao extends DaoBasicClass<WorkflowType> implements IWor
     final String sql = "UPDATE workflow_type SET company_id = ?, workflow_base_type = ?, title = ?, manual_assign = ?, send_to_controller = ?, comments = ?,"
         + " version = ?, status = ? WHERE id = ?";
 
-    updateModel(model, "WorkflowType", sql);
+    updateModel(model, "WorkflowType", sql, true);
 
     return getById(model.getId());
   }

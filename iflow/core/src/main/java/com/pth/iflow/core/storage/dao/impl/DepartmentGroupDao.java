@@ -91,14 +91,14 @@ public class DepartmentGroupDao extends DaoBasicClass<DepartmentGroup> implement
   public DepartmentGroup create(final DepartmentGroup model) throws IFlowStorageException {
     final String sql = "INSERT INTO departments_group (department_id, title, version, status)" + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-    return getById(createModel(model, "DepartmentGroup", sql));
+    return getById(createModel(model, "DepartmentGroup", sql, true));
   }
 
   @Override
   public DepartmentGroup update(final DepartmentGroup model) throws IFlowStorageException {
     final String sql = "UPDATE departments_group SET department_id = ?, title = ?, version = ?, status = ? WHERE id = ?";
 
-    updateModel(model, "DepartmentGroup", sql);
+    updateModel(model, "DepartmentGroup", sql, true);
 
     return getById(model.getId());
   }
