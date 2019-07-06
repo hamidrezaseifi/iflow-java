@@ -1,5 +1,8 @@
 package com.pth.iflow.core.dao;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,8 +33,12 @@ public class WorkflowDaoTest extends TestDataProducer {
 
   @Before
   public void setUp() throws Exception {
+
+  }
+
+  private void createWorlflowList() throws Exception {
     for (int i = 1; i <= 3; i++) {
-      final Workflow workflow = getTestWorkflow(1L);
+      final Workflow workflow = getTestNewWorkflow();
       workflow.setId(null);
       workflow.setTitle("title " + i);
       final Workflow res = workflowDao.create(workflow);
@@ -50,19 +57,23 @@ public class WorkflowDaoTest extends TestDataProducer {
   @Test
   public void testGetById() throws Exception {
 
+    createWorlflowList();
+
     final Workflow workflow = createdWorkflows.get(0);
 
     final Workflow resWorkflow = this.workflowDao.getById(createdWorkflows.get(0).getId());
 
-    Assert.assertNotNull("Result workflow-type is not null!", resWorkflow);
-    Assert.assertEquals("Result workflow-type has id 1!", resWorkflow.getId(), workflow.getId());
-    Assert.assertEquals("Result workflow-type has title '" + workflow.getTitle() + "'!", resWorkflow.getTitle(), workflow.getTitle());
-    Assert.assertEquals("Result workflow-type has status 1!", resWorkflow.getStatus(), workflow.getStatus());
+    Assert.assertNotNull("Result workflow is not null!", resWorkflow);
+    Assert.assertEquals("Result workflow has id 1!", resWorkflow.getId(), workflow.getId());
+    Assert.assertEquals("Result workflow has title '" + workflow.getTitle() + "'!", resWorkflow.getTitle(), workflow.getTitle());
+    Assert.assertEquals("Result workflow has status 1!", resWorkflow.getStatus(), workflow.getStatus());
 
   }
 
   @Test
   public void testGetListByIdList() throws Exception {
+
+    createWorlflowList();
 
     final List<Long> idList = createdWorkflows.stream().map(w -> w.getId()).collect(Collectors.toList());
 
@@ -76,70 +87,73 @@ public class WorkflowDaoTest extends TestDataProducer {
   @Test
   public void testGetListByIdTypeId() throws Exception {
 
-    final List<Workflow> resList = this.workflowDao.getListByWorkflowTypeId(1L);
+    createWorlflowList();
+
+    final List<Workflow> resList = this.workflowDao.getListByWorkflowTypeId(createdWorkflows.get(0).getWorkflowTypeId());
 
     Assert.assertNotNull("Result list is not null!", resList);
-    Assert.assertEquals("Result list has " + createdWorkflows.size() + " items.", resList.size(), createdWorkflows.size());
+
+    assertThat("Result list has " + createdWorkflows.size() + " items.", resList.size(),
+        greaterThanOrEqualTo(createdWorkflows.size()));
 
   }
 
   @Test
   public void testCreate() throws Exception {
 
-    final Workflow workflow = getTestWorkflow(1L);
-    workflow.setId(null);
+    final Workflow workflow = getTestNewWorkflow();
     workflow.setTitle("title test");
     workflow.setVersion(10);
     final Workflow resWorkflow = workflowDao.create(workflow);
     createdWorkflows.add(resWorkflow);
 
-    Assert.assertNotNull("Result workflow-type is not null!", resWorkflow);
-    Assert.assertEquals("Result workflow-type has id 1!", resWorkflow.getId(), workflow.getId());
-    Assert.assertEquals("Result workflow-type has title '" + workflow.getTitle() + "'!", resWorkflow.getTitle(), workflow.getTitle());
-    Assert.assertEquals("Result workflow-type has status 1!", resWorkflow.getStatus(), workflow.getStatus());
-    Assert.assertEquals("Result workflow-type has version 22!", resWorkflow.getVersion(), workflow.getVersion());
+    Assert.assertNotNull("Result workflow is not null!", resWorkflow);
+    Assert.assertEquals("Result workflow has title '" + workflow.getTitle() + "'!", resWorkflow.getTitle(), workflow.getTitle());
+    Assert.assertEquals("Result workflow has status 1!", resWorkflow.getStatus(), workflow.getStatus());
+    Assert.assertEquals("Result workflow has version " + workflow.getVersion() + "!", resWorkflow.getVersion(), workflow.getVersion());
 
   }
 
   @Test
   public void testUpdate() throws Exception {
 
-    final Workflow workflow = getTestWorkflow(1L);
-    workflow.setId(null);
+    final Workflow workflow = getTestNewWorkflow();
     workflow.setTitle("title test");
     workflow.setVersion(10);
-    Workflow resWorkflow = workflowDao.create(workflow);
-    createdWorkflows.add(resWorkflow);
+    final Workflow createdWorkflow = workflowDao.create(workflow);
+    createdWorkflows.add(createdWorkflow);
 
-    resWorkflow.setTitle("new title test");
-    resWorkflow.setVersion(22);
+    Assert.assertNotNull("Result created workflow is not null!", createdWorkflow);
 
-    resWorkflow = workflowDao.update(resWorkflow);
+    createdWorkflow.setTitle("new updated title test");
+    createdWorkflow.setVersion(22);
+    createdWorkflow.setStatus(10);
 
-    Assert.assertNotNull("Result workflow-type is not null!", resWorkflow);
-    Assert.assertEquals("Result workflow-type has id 1!", resWorkflow.getId(), workflow.getId());
-    Assert.assertEquals("Result workflow-type has title '" + workflow.getTitle() + "'!", resWorkflow.getTitle(), workflow.getTitle());
-    Assert.assertEquals("Result workflow-type has status 1!", resWorkflow.getStatus(), workflow.getStatus());
-    Assert.assertEquals("Result workflow-type has version 22!", resWorkflow.getVersion().intValue(), 22);
+    final Workflow updatedWorkflow = workflowDao.update(createdWorkflow);
+
+    Assert.assertNotNull("Result workflow is not null!", updatedWorkflow);
+    Assert.assertEquals("Result workflow has the same id as created!", createdWorkflow.getId(), updatedWorkflow.getId());
+    Assert.assertEquals("Result workflow has title 'new updated title test'!", createdWorkflow.getTitle(), "new updated title test");
+    Assert.assertEquals("Result workflow has status 10!", updatedWorkflow.getStatus().intValue(), 10);
+    Assert.assertEquals("Result workflow has version 22!", updatedWorkflow.getVersion().intValue(), 22);
 
   }
 
   @Test
   public void testDelete() throws Exception {
 
-    final Workflow workflow = getTestWorkflow(1L);
-    workflow.setId(null);
+    final Workflow workflow = getTestNewWorkflow();
     workflow.setTitle("title test");
     workflow.setVersion(10);
     final Workflow resWorkflow = workflowDao.create(workflow);
 
-    Assert.assertNotNull("Result workflow-type is not null!", resWorkflow);
+    Assert.assertNotNull("Result workflow is not null!", resWorkflow);
 
     workflowDao.deleteWorkflow(resWorkflow.getId());
 
     final Workflow deletedWorkflow = this.workflowDao.getById(resWorkflow.getId());
 
-    Assert.assertNotNull("Result workflow-type is null!", deletedWorkflow);
+    Assert.assertNull("Result workflow is null!", deletedWorkflow);
 
   }
 

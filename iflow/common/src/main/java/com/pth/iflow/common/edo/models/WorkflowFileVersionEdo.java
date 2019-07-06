@@ -5,7 +5,6 @@ public class WorkflowFileVersionEdo {
   private Long id;
   private Long workflowFileId;
   private Long createdBy;
-  private String title;
   private String filePath;
   private String comments;
   private Integer fileVersion;
@@ -42,14 +41,6 @@ public class WorkflowFileVersionEdo {
 
   public void setCreatedBy(final Long createdBy) {
     this.createdBy = createdBy;
-  }
-
-  public String getTitle() {
-    return this.title;
-  }
-
-  public void setTitle(final String title) {
-    this.title = title;
   }
 
   public String getComments() {

@@ -18,7 +18,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 
@@ -26,14 +25,15 @@ import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 @Repository
 public abstract class DaoBasicClass<M> {
   protected static final Logger logger = LoggerFactory.getLogger(DaoBasicClass.class);
-  protected final JdbcTemplate jdbcTemplate;
-  protected final PlatformTransactionManager platformTransactionManager;
-  protected TransactionStatus transactionStatus;
 
-  public DaoBasicClass(final @Autowired JdbcTemplate jdbcTemplate,
-      final @Autowired PlatformTransactionManager platformTransactionManager) {
-    this.jdbcTemplate = jdbcTemplate;
-    this.platformTransactionManager = platformTransactionManager;
+  @Autowired
+  protected JdbcTemplate jdbcTemplate;
+
+  @Autowired
+  protected PlatformTransactionManager platformTransactionManager;
+
+  public DaoBasicClass() {
+
   }
 
   protected M getModelById(final Long id, final String sqlSelect, final String modelName) throws IFlowStorageException {
@@ -115,6 +115,32 @@ public abstract class DaoBasicClass<M> {
     return list;
   }
 
+  protected List<Long> getModelIdListById(final Long id, final String sqlSelect, final String modelName, final String idFieldName)
+      throws IFlowStorageException {
+    logger.info("Dao read {} id list by id: {}", modelName, id);
+
+    List<Long> list = new ArrayList<>();
+
+    try {
+      list = jdbcTemplate.query(con -> {
+        final PreparedStatement ps = con.prepareStatement(sqlSelect);
+        ps.setLong(1, id);
+
+        return ps;
+
+      }, (rs, rowNum) -> {
+
+        return rs.getLong(idFieldName);
+
+      });
+
+    } catch (final Exception e) {
+      throw new IFlowStorageException("Unable to Read " + modelName + " : " + e.toString());
+    }
+
+    return list;
+  }
+
   protected List<Long> getIdListById(final Long id, final String sqlSelect, final String columnName, final String modelName)
       throws IFlowStorageException {
     logger.info("Dao read {} by id: {}", modelName, id);
@@ -177,7 +203,7 @@ public abstract class DaoBasicClass<M> {
   public Long createModel(final M model, final String modelName, final String insertSql, final boolean withTransaction)
       throws IFlowStorageException {
     logger.debug("insert " + modelName + " ...");
-    startTransaction(withTransaction);
+    final TransactionStatus transactionStatus = startTransaction(withTransaction);
     final KeyHolder keyHolder = new GeneratedKeyHolder();
 
     try {
@@ -188,9 +214,9 @@ public abstract class DaoBasicClass<M> {
         return ps;
       }, keyHolder);
 
-      commitTransaction(withTransaction);
+      commitTransaction(withTransaction, transactionStatus);
     } catch (final Exception e) {
-      rollbackTransaction();
+      rollbackTransaction(withTransaction, transactionStatus);
       logger.error("Unable to insert \" + modelName + \": {}", modelName, e.toString(), e);
       throw new IFlowStorageException(e.toString(), e);
     }
@@ -212,7 +238,7 @@ public abstract class DaoBasicClass<M> {
   public void updateModel(final M model, final String modelName, final String updateSql, final boolean withTransaction)
       throws IFlowStorageException {
     logger.debug("Updating {}...", modelName);
-    startTransaction(withTransaction);
+    final TransactionStatus transactionStatus = startTransaction(withTransaction);
     try {
 
       final int changedRows = jdbcTemplate.update(con -> {
@@ -224,10 +250,10 @@ public abstract class DaoBasicClass<M> {
         throw new IFlowStorageException(String.format("Unable to update {}", modelName));
       }
 
-      commitTransaction(withTransaction);
+      commitTransaction(withTransaction, transactionStatus);
 
     } catch (final Exception e) {
-      rollbackTransaction();
+      rollbackTransaction(withTransaction, transactionStatus);
       logger.error("Unable to update {}: {}", modelName, e.toString(), e);
       throw new IFlowStorageException(e.toString(), e);
     }
@@ -250,7 +276,7 @@ public abstract class DaoBasicClass<M> {
       final boolean checkDeleted) throws IFlowStorageException {
     logger.debug("Deleting {} by id:{} ...", modelName, id);
 
-    startTransaction(withTransaction);
+    final TransactionStatus transactionStatus = startTransaction(withTransaction);
 
     try {
 
@@ -264,30 +290,33 @@ public abstract class DaoBasicClass<M> {
         throw new IFlowStorageException(String.format("Unable to delete {}  [{}]", modelName, id));
       }
 
-      commitTransaction(withTransaction);
+      commitTransaction(withTransaction, transactionStatus);
 
     } catch (final Exception e) {
-      rollbackTransaction();
+      rollbackTransaction(withTransaction, transactionStatus);
       logger.error("Error by deleting {} by id:{}: {}", modelName, id, e.toString(), e);
       throw new IFlowStorageException(e.toString(), e);
     }
 
   }
 
-  protected void startTransaction(final boolean withTransaction) {
+  protected TransactionStatus startTransaction(final boolean withTransaction) {
     if (withTransaction) {
-      transactionStatus = this.platformTransactionManager.getTransaction(new DefaultTransactionDefinition());
+      return DaoControlHelper.createNewTransaction(platformTransactionManager);
+
     }
-
+    return null;
   }
 
-  protected void rollbackTransaction() {
-    platformTransactionManager.rollback(transactionStatus);
-  }
-
-  protected void commitTransaction(final boolean withTransaction) {
+  protected void rollbackTransaction(final boolean withTransaction, final TransactionStatus transactionStatus) {
     if (withTransaction && transactionStatus != null) {
-      this.platformTransactionManager.commit(transactionStatus);
+      DaoControlHelper.rollbackCurrentTransaction(platformTransactionManager, transactionStatus);
+    }
+  }
+
+  protected void commitTransaction(final boolean withTransaction, final TransactionStatus transactionStatus) {
+    if (withTransaction && transactionStatus != null) {
+      DaoControlHelper.commitCurrentTransaction(platformTransactionManager, transactionStatus);
     }
   }
 

@@ -23,7 +23,7 @@ public class WorkflowFileService implements IWorkflowFileService {
   public WorkflowFile save(final WorkflowFile model) {
     if (model.isNew()) {
       model.increaseVersion();
-      return workflowFileDao.create(model);
+      return workflowFileDao.create(model, true);
     }
 
     final WorkflowFile exists = workflowFileDao.getById(model.getId());
@@ -33,7 +33,7 @@ public class WorkflowFileService implements IWorkflowFileService {
 
     model.setVersion(model.getVersion() + 1);
 
-    return workflowFileDao.update(model);
+    return workflowFileDao.update(model, true);
   }
 
   @Override

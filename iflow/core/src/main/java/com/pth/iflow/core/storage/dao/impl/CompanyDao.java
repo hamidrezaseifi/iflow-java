@@ -4,10 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pth.iflow.core.model.Company;
@@ -20,9 +17,8 @@ import com.pth.iflow.core.storage.dao.utils.SqlUtils;
 @Repository
 public class CompanyDao extends DaoBasicClass<Company> implements ICompanyDao {
 
-  public CompanyDao(final @Autowired JdbcTemplate jdbcTemplate,
-      final @Autowired PlatformTransactionManager platformTransactionManager) {
-    super(jdbcTemplate, platformTransactionManager);
+  public CompanyDao() {
+
   }
 
   @Override

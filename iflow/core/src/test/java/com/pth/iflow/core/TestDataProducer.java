@@ -74,7 +74,7 @@ public class TestDataProducer {
     final Department model = new Department();
     model.setCompanyId(1L);
     model.setId(1L);
-    model.setTitle("title");
+    model.setTitle("utest title");
     model.setStatus(1);
     model.setVersion(1);
     model.setGroups(getTestDepartmentGroupIdList());
@@ -105,7 +105,7 @@ public class TestDataProducer {
     final DepartmentGroup model = new DepartmentGroup();
     model.setDepartmentId(1L);
     model.setId(1L);
-    model.setTitle("title");
+    model.setTitle("utest title");
     model.setStatus(1);
     model.setVersion(1);
 
@@ -134,7 +134,7 @@ public class TestDataProducer {
     final UserGroup model = new UserGroup();
     model.setCompanyId(1L);
     model.setId(1L);
-    model.setTitle("title");
+    model.setTitle("utest title");
     model.setStatus(1);
     model.setVersion(1);
 
@@ -176,6 +176,23 @@ public class TestDataProducer {
     return model;
   }
 
+  protected Workflow getTestNewWorkflow() {
+    final Workflow model = new Workflow();
+    model.setWorkflowTypeId(1L);
+    model.setId(null);
+    model.setTitle("utest title new");
+    model.setStatus(1);
+    model.setVersion(1);
+    model.setComments("comments");
+    model.setController(1L);
+    model.setCurrentStep(1L);
+    model.setCreatedBy(1L);
+    model.setActions(Arrays.asList(getTestNewWorkflowAction(), getTestNewWorkflowAction(), getTestNewWorkflowAction()));
+    model.setFiles(Arrays.asList(getTestNewWorkflowFile(), getTestNewWorkflowFile(), getTestNewWorkflowFile()));
+
+    return model;
+  }
+
   protected List<Workflow> getTestWorkflowList() {
 
     return Arrays.asList(getTestWorkflow(1L), getTestWorkflow(2L), getTestWorkflow(3L));
@@ -191,6 +208,21 @@ public class TestDataProducer {
     model.setWorkflowId(workflowId);
     model.setId(Id);
     model.setAction("action " + Id);
+    model.setStatus(1);
+    model.setVersion(1);
+    model.setCreatedBy(1L);
+    model.setNewStep(2L);
+    model.setOldStep(1L);
+    model.setComments("comments");
+
+    return model;
+  }
+
+  protected WorkflowAction getTestNewWorkflowAction() {
+    final WorkflowAction model = new WorkflowAction();
+    model.setWorkflowId(null);
+    model.setId(null);
+    model.setAction("action new");
     model.setStatus(1);
     model.setVersion(1);
     model.setCreatedBy(1L);
@@ -218,6 +250,23 @@ public class TestDataProducer {
     return model;
   }
 
+  protected WorkflowFile getTestNewWorkflowFile() {
+    final WorkflowFile model = new WorkflowFile();
+    model.setWorkflowId(null);
+    model.setId(null);
+    model.setStatus(1);
+    model.setVersion(1);
+    model.setCreatedBy(1L);
+    model.setComments("comments");
+    model.setActiveFilePath("filePath");
+    model.setActiveFileVersion(1);
+    model.setTitle("utest title new");
+    model.setFileVersions(
+        Arrays.asList(getTestNewWorkflowFileVersion(1), getTestNewWorkflowFileVersion(2), getTestNewWorkflowFileVersion(3)));
+
+    return model;
+  }
+
   protected WorkflowFileVersion getTestWorkflowFileVersion(final Long Id, final int version, final Long workflowFileId) {
     final WorkflowFileVersion model = new WorkflowFileVersion();
     model.setWorkflowFileId(workflowFileId);
@@ -228,7 +277,20 @@ public class TestDataProducer {
     model.setComments("comments");
     model.setFilePath("filePath");
     model.setFileVersion(version);
-    model.setTitle("title " + Id);
+
+    return model;
+  }
+
+  protected WorkflowFileVersion getTestNewWorkflowFileVersion(final int version) {
+    final WorkflowFileVersion model = new WorkflowFileVersion();
+    model.setWorkflowFileId(null);
+    model.setId(null);
+    model.setStatus(1);
+    model.setVersion(1);
+    model.setCreatedBy(1L);
+    model.setComments("comments");
+    model.setFilePath("filePath");
+    model.setFileVersion(version);
 
     return model;
   }
@@ -237,7 +299,7 @@ public class TestDataProducer {
     final WorkflowType model = new WorkflowType();
     model.setCompanyId(1L);
     model.setId(1L);
-    model.setTitle("title");
+    model.setTitle("utest title");
     model.setStatus(1);
     model.setVersion(1);
     model.setSteps(getTestWorkflowTypeStepIdList());
@@ -270,7 +332,7 @@ public class TestDataProducer {
     final WorkflowTypeStep model = new WorkflowTypeStep();
     model.setWorkflowTypeId(1L);
     model.setId(1L);
-    model.setTitle("title");
+    model.setTitle("utest title");
     model.setStatus(1);
     model.setVersion(1);
     model.setComments("comments");

@@ -10,7 +10,6 @@ public class WorkflowFileVersion extends ModelMapperBase<WorkflowFileVersionEdo,
   private Long id;
   private Long workflowFileId;
   private Long createdBy;
-  private String title;
   private String filePath;
   private String comments;
   private Integer fileVersion;
@@ -50,14 +49,6 @@ public class WorkflowFileVersion extends ModelMapperBase<WorkflowFileVersionEdo,
 
   public void setCreatedBy(final Long createdBy) {
     this.createdBy = createdBy;
-  }
-
-  public String getTitle() {
-    return this.title;
-  }
-
-  public void setTitle(final String title) {
-    this.title = title;
   }
 
   public String getComments() {
@@ -113,7 +104,6 @@ public class WorkflowFileVersion extends ModelMapperBase<WorkflowFileVersionEdo,
   @Override
   public WorkflowFileVersionEdo toEdo() {
     final WorkflowFileVersionEdo edo = new WorkflowFileVersionEdo();
-    edo.setTitle(this.title);
     edo.setComments(this.comments);
     edo.setStatus(this.status);
     edo.setId(this.id);
@@ -130,7 +120,6 @@ public class WorkflowFileVersion extends ModelMapperBase<WorkflowFileVersionEdo,
   public WorkflowFileVersion fromEdo(final WorkflowFileVersionEdo edo) {
     final WorkflowFileVersion model = new WorkflowFileVersion();
 
-    model.setTitle(edo.getTitle());
     model.setComments(edo.getComments());
     model.setStatus(edo.getStatus());
     model.setId(edo.getId());

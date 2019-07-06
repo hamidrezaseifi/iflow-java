@@ -6,10 +6,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pth.iflow.core.model.User;
@@ -22,8 +19,8 @@ import com.pth.iflow.core.storage.dao.utils.SqlUtils;
 @Repository
 public class UserDao extends DaoBasicClass<User> implements IUserDao {
 
-  public UserDao(final @Autowired JdbcTemplate jdbcTemplate, final @Autowired PlatformTransactionManager platformTransactionManager) {
-    super(jdbcTemplate, platformTransactionManager);
+  public UserDao() {
+
   }
 
   @Override

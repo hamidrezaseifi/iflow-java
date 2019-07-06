@@ -23,7 +23,7 @@ public class WorkflowActionService implements IWorkflowActionService {
   public WorkflowAction save(final WorkflowAction model) {
     if (model.isNew()) {
       model.increaseVersion();
-      return workflowActionDao.create(model);
+      return workflowActionDao.create(model, true);
     }
 
     final WorkflowAction exists = workflowActionDao.getById(model.getId());
@@ -33,7 +33,7 @@ public class WorkflowActionService implements IWorkflowActionService {
 
     model.setVersion(model.getVersion() + 1);
 
-    return workflowActionDao.update(model);
+    return workflowActionDao.update(model, true);
   }
 
   @Override

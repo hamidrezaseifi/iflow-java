@@ -6,10 +6,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pth.iflow.core.model.WorkflowAction;
@@ -22,9 +19,8 @@ import com.pth.iflow.core.storage.dao.utils.SqlUtils;
 @Repository
 public class WorkflowActionDao extends DaoBasicClass<WorkflowAction> implements IWorkflowActionDao {
 
-  public WorkflowActionDao(final @Autowired JdbcTemplate jdbcTemplate,
-      final @Autowired PlatformTransactionManager platformTransactionManager) {
-    super(jdbcTemplate, platformTransactionManager);
+  public WorkflowActionDao() {
+
   }
 
   @Override
@@ -69,19 +65,19 @@ public class WorkflowActionDao extends DaoBasicClass<WorkflowAction> implements 
   }
 
   @Override
-  public WorkflowAction create(final WorkflowAction workflow) throws IFlowStorageException {
+  public WorkflowAction create(final WorkflowAction workflow, final boolean withTransaction) throws IFlowStorageException {
     final String sql = "INSERT INTO workflow_actions (workflow_id, action, old_step, new_step, comments, created_by, version, status)"
         + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-    return getById(createModel(workflow, "WorkflowAction", sql, true));
+    return getById(createModel(workflow, "WorkflowAction", sql, withTransaction));
   }
 
   @Override
-  public WorkflowAction update(final WorkflowAction workflow) throws IFlowStorageException {
+  public WorkflowAction update(final WorkflowAction workflow, final boolean withTransaction) throws IFlowStorageException {
     final String sql = "UPDATE workflow_actions SET workflow_id = ?, action = ?, old_step = ?, new_step = ?, comments = ?,"
         + " created_by = ?, version = ?, status = ? WHERE id = ?";
 
-    updateModel(workflow, "WorkflowAction", sql, true);
+    updateModel(workflow, "WorkflowAction", sql, withTransaction);
 
     return getById(workflow.getId());
   }
@@ -115,6 +111,16 @@ public class WorkflowActionDao extends DaoBasicClass<WorkflowAction> implements 
     ps.setLong(9, model.getId());
 
     return ps;
+  }
+
+  @Override
+  public void deleteById(final Long id, final boolean withTransaction) throws IFlowStorageException {
+    deleteModel(id, "WorkflowAction", "Delete from workflow_actions where id=?", withTransaction, true);
+  }
+
+  @Override
+  public void deleteByWorkflowId(final Long id, final boolean withTransaction) throws IFlowStorageException {
+    deleteModel(id, "WorkflowAction", "Delete from workflow_actions where workflow_id=?", withTransaction, false);
   }
 
 }
