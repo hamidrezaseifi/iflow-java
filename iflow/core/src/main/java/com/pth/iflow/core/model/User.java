@@ -12,24 +12,25 @@ import com.pth.iflow.common.enums.EUserStatus;
 
 public class User extends ModelMapperBase<UserEdo, User> {
 
-  private Long            id;
-  private Long            companyId;
-  private String          email;
-  private String          firstName;
-  private String          lastName;
-  private Integer         status;
-  private Integer         permission;
-  private Integer         version;
-  private LocalDateTime   createdAt;
-  private LocalDateTime   updatedAt;
-  private final Set<Long> groups           = new HashSet<>();
-  private final Set<Long> departments      = new HashSet<>();
+  private Long id;
+  private Long companyId;
+  private String email;
+  private String firstName;
+  private String lastName;
+  private Integer status;
+  private Integer permission;
+  private Integer version;
+  private LocalDateTime createdAt;
+  private LocalDateTime updatedAt;
+  private final Set<Long> groups = new HashSet<>();
+  private final Set<Long> departments = new HashSet<>();
   private final Set<Long> departmentGroups = new HashSet<>();
-  private final Set<Long> deputies         = new HashSet<>();
+  private final Set<Long> deputies = new HashSet<>();
 
   /**
    * @return the id
    */
+  @Override
   public Long getId() {
     return this.id;
   }
@@ -123,6 +124,7 @@ public class User extends ModelMapperBase<UserEdo, User> {
   /**
    * @return the version
    */
+  @Override
   public Integer getVersion() {
     return this.version;
   }
@@ -130,6 +132,7 @@ public class User extends ModelMapperBase<UserEdo, User> {
   /**
    * @param version the version to set
    */
+  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
@@ -201,7 +204,7 @@ public class User extends ModelMapperBase<UserEdo, User> {
 
   public void setDepartments(final List<Long> departments) {
     setDepartments(departments.stream().collect(Collectors.toSet()));
-    
+
   }
 
   public void addDepartment(final Long departmentId) {
@@ -261,27 +264,29 @@ public class User extends ModelMapperBase<UserEdo, User> {
     edo.setDepartments(this.departments);
     edo.setDepartmentGroups(this.departmentGroups);
     edo.setDeputies(this.deputies);
+    edo.setVersion(version);
 
     return edo;
   }
 
   @Override
   public User fromEdo(final UserEdo edo) {
-    final User user = new User();
+    final User model = new User();
 
-    user.setFirstName(edo.getFirstName());
-    user.setLastName(edo.getLastName());
-    user.setPermission(edo.getPermission());
-    user.setStatus(edo.getStatus());
-    user.setEmail(edo.getEmail());
-    user.setId(edo.getId());
-    user.setCompanyId(edo.getCompanyId());
-    user.setGroups(edo.getGroups());
-    user.setDepartments(edo.getDepartments());
-    user.setDepartmentGroups(edo.getDepartmentGroups());
-    user.setDeputies(edo.getDeputies());
+    model.setFirstName(edo.getFirstName());
+    model.setLastName(edo.getLastName());
+    model.setPermission(edo.getPermission());
+    model.setStatus(edo.getStatus());
+    model.setEmail(edo.getEmail());
+    model.setId(edo.getId());
+    model.setCompanyId(edo.getCompanyId());
+    model.setGroups(edo.getGroups());
+    model.setDepartments(edo.getDepartments());
+    model.setDepartmentGroups(edo.getDepartmentGroups());
+    model.setDeputies(edo.getDeputies());
+    model.setVersion(edo.getVersion());
 
-    return user;
+    return model;
   }
 
 }

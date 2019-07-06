@@ -9,6 +9,7 @@ public class Company extends ModelMapperBase<CompanyEdo, Company> {
   private String identifyid;
   private String companyName;
   private Integer status;
+  private Integer version;
 
   /**
    * @return the id
@@ -64,6 +65,21 @@ public class Company extends ModelMapperBase<CompanyEdo, Company> {
    */
   public void setStatus(final Integer status) {
     this.status = status;
+  }
+
+  @Override
+  public Integer getVersion() {
+    return version;
+  }
+
+  @Override
+  public void setVersion(final Integer version) {
+    this.version = version;
+  }
+
+  @Override
+  public boolean isNew() {
+    return id == null || id <= 0;
   }
 
   @Override

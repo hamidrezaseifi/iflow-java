@@ -9,6 +9,8 @@ import com.pth.iflow.core.model.UserGroup;
 
 public interface IUsersService {
 
+  User save(User model);
+
   User getUserById(final Long id);
 
   User getUserByEmail(final String email);

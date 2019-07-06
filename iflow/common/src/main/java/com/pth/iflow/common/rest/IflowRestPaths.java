@@ -6,6 +6,7 @@ public class IflowRestPaths {
 
     public static final int PORT = 1010;
 
+    public static final String USER_SAVE = "/users/save";
     public static final String USER_READ_BY_ID = "/users/readbyid/{userid}";
     public static final String USER_READ_BY_EMAIL = "/users/readbyemail/{email}";
     public static final String USER_USERGROUPS_LIST = "/users/user/groups/{userid}";
@@ -34,6 +35,17 @@ public class IflowRestPaths {
     public static final String USERGROUP_READ_BY_ID = "/usergroup/readbyid/{id}";
     public static final String USERGROUP_READ_LIST = "/usergroup/list";
     public static final String USERGROUP_READ_LIST_BY_COMPANY = "/usergroup/company/list/{id}";
+
+    public static final String WORKFLOW_SAVE = "/workflow/save";
+    public static final String WORKFLOW_READ_BY_ID = "/workflow/readbyid/{id}";
+    public static final String WORKFLOW_READ_LIST = "/workflow/list";
+    public static final String WORKFLOW_READ_LIST_BY_TYPE = "/workflow/type/list/{id}";
+    public static final String WORKFLOW_ACTION_SAVE = "/workflow/action/save";
+    public static final String WORKFLOW_ACTION_READ_BY_ID = "/workflow/action/readbyid/{id}";
+    public static final String WORKFLOW_ACTION_READ_LIST_BY_WORKFLOW = "/workflow/action/workflow/list/{id}";
+    public static final String WORKFLOW_FILE_SAVE = "/workflow/file/save";
+    public static final String WORKFLOW_FILE_READ_BY_ID = "/workflow/file/readbyid/{id}";
+    public static final String WORKFLOW_FILE_READ_LIST_BY_WORKFLOW = "/workflow/file/workflow/list/{id}";
 
   }
 

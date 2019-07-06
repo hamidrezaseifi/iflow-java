@@ -5,14 +5,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pth.iflow.core.model.User;
 import com.pth.iflow.core.storage.dao.IUserDao;
+import com.pth.iflow.core.storage.dao.basic.DaoBasicClass;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 import com.pth.iflow.core.storage.dao.utils.SqlUtils;
 
@@ -20,9 +19,8 @@ import com.pth.iflow.core.storage.dao.utils.SqlUtils;
 @Repository
 public class UserDao extends DaoBasicClass<User> implements IUserDao {
 
-  public UserDao(final @Autowired JdbcTemplate jdbcTemplate,
-      final @Autowired PlatformTransactionManager platformTransactionManager) {
-    super(jdbcTemplate, platformTransactionManager);
+  public UserDao() {
+
   }
 
   @Override
@@ -52,9 +50,7 @@ public class UserDao extends DaoBasicClass<User> implements IUserDao {
   @Override
   public List<User> getListByIdList(final List<Long> idList) throws IFlowStorageException {
     String sqlSelect = "SELECT * FROM users where id in (";
-    for (final Long id : idList) {
-      sqlSelect += "?, ";
-    }
+    sqlSelect += StringUtils.repeat("?, ", idList.size());
 
     sqlSelect = sqlSelect.trim();
     sqlSelect = sqlSelect.endsWith(",") ? sqlSelect.substring(0, sqlSelect.length() - 1) : sqlSelect;
@@ -95,18 +91,61 @@ public class UserDao extends DaoBasicClass<User> implements IUserDao {
       }, (rs) -> {
         if (rs.next()) {
           return modelFromResultSet(rs);
-        }
-        else {
+        } else {
           return null;
         }
       });
 
-    }
-    catch (final Exception e) {
+    } catch (final Exception e) {
       throw new IFlowStorageException("Unable to retrieve User data: " + e.toString());
     }
 
     return user;
+  }
+
+  @Override
+  protected PreparedStatement prepareInsertPreparedStatement(final User model, final PreparedStatement ps) throws SQLException {
+    ps.setLong(1, model.getCompanyId());
+    ps.setString(2, model.getEmail());
+    ps.setString(3, model.getFirstName());
+    ps.setString(4, model.getLastName());
+    ps.setInt(5, model.getPermission());
+    ps.setInt(6, model.getVersion());
+    ps.setInt(7, model.getStatus());
+
+    return ps;
+  }
+
+  @Override
+  protected PreparedStatement prepareUpdatePreparedStatement(final User model, final PreparedStatement ps) throws SQLException {
+    ps.setLong(1, model.getCompanyId());
+    ps.setString(2, model.getEmail());
+    ps.setString(3, model.getFirstName());
+    ps.setString(4, model.getLastName());
+    ps.setInt(5, model.getPermission());
+    ps.setInt(6, model.getVersion());
+    ps.setInt(7, model.getStatus());
+    ps.setLong(8, model.getId());
+
+    return ps;
+  }
+
+  @Override
+  public User create(final User model) throws IFlowStorageException {
+    final String sql = "INSERT INTO users (company_id, email, firstname, lastname, permission, version, status)"
+        + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+    return getById(createModel(model, "User", sql, true));
+  }
+
+  @Override
+  public User update(final User model) throws IFlowStorageException {
+    final String sql = "UPDATE users SET company_id = ?, email = ?, firstname = ?, lastname = ?,"
+        + " permission = ?, version = ?, status = ? WHERE id = ?";
+
+    updateModel(model, "User", sql, true);
+
+    return getById(model.getId());
   }
 
 }

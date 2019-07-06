@@ -57,7 +57,7 @@ public class WorkflowTypeService implements IWorkflowTypeService {
         moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModul.WORKFLOWTYPE_READ_LIST_BY_COMPANY).toString(), EModule.CORE,
         typeRef, true, id);
 
-    return new WorkflowType().fromEdo(edoList);
+    return new WorkflowType().fromEdoList(edoList);
   }
 
   @Override
@@ -71,7 +71,7 @@ public class WorkflowTypeService implements IWorkflowTypeService {
         moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModul.WORKFLOWTYPE_READ_LIST).toString(), EModule.CORE, idList,
         typeRef, true);
 
-    return new WorkflowType().fromEdo(edoList);
+    return new WorkflowType().fromEdoList(edoList);
   }
 
   @Override
@@ -85,7 +85,7 @@ public class WorkflowTypeService implements IWorkflowTypeService {
         moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModul.WORKFLOWTYPESTEP_READ_LIST_BY_WORKFLOW).toString(),
         EModule.CORE, typeRef, true, id);
 
-    return new WorkflowTypeStep().fromEdo(edoList);
+    return new WorkflowTypeStep().fromEdoList(edoList);
   }
 
 }

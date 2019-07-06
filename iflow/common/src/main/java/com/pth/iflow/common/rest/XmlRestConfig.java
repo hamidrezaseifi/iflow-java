@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
@@ -47,12 +48,14 @@ public class XmlRestConfig {
     filter.setAfterMessagePrefix("REQUEST DATA: ");
     return filter;
   }
-  
+
   @Lazy
   @Bean
-  public RestTemplate jaxbRestTemplate(final MappingJackson2XmlHttpMessageConverter converter) {
+  public RestTemplate jaxbRestTemplate(final MappingJackson2XmlHttpMessageConverter converter,
+      @Value("${iflow.common.rest.api.security.client-id.internal}") final String securityHeaderValue) {
     /*
-     * BETTER: there is likely a more spring way of configuring the rest template to use the JAXB stuff...| TM @ 21.07.2018
+     * BETTER: there is likely a more spring way of configuring the rest template to
+     * use the JAXB stuff...| TM @ 21.07.2018
      */
     final RestTemplate restTemplate = new RestTemplate();
     final List<HttpMessageConverter<?>> messageConverters = restTemplate.getMessageConverters();
@@ -60,12 +63,11 @@ public class XmlRestConfig {
 
     }
 
-    restTemplate.getInterceptors()
-        .add((request, body, execution) -> {
-          request.getHeaders().set(REQUEST_HEADER_IFLOW_CLIENT_ID, "inner-module");
-          return execution.execute(request, body);
-        });
-    
+    restTemplate.getInterceptors().add((request, body, execution) -> {
+      request.getHeaders().set(REQUEST_HEADER_IFLOW_CLIENT_ID, securityHeaderValue);
+      return execution.execute(request, body);
+    });
+
     return restTemplate;
   }
 

@@ -17,6 +17,7 @@ public class User extends ModelMapperBase<UserEdo, User> {
   private String firstName;
   private String lastName;
   private Integer status;
+  private Integer version;
   private Integer permission;
   private final Set<Long> groups = new HashSet<>();
   private final Set<Long> departments = new HashSet<>();
@@ -109,6 +110,16 @@ public class User extends ModelMapperBase<UserEdo, User> {
     return this.status == EUserStatus.ACTIVE.getValue().intValue();
   }
 
+  @Override
+  public Integer getVersion() {
+    return version;
+  }
+
+  @Override
+  public void setVersion(final Integer version) {
+    this.version = version;
+  }
+
   /**
    * @return the permission
    */
@@ -199,6 +210,11 @@ public class User extends ModelMapperBase<UserEdo, User> {
 
   public void addDeputy(final Long deputyId) {
     this.deputies.add(deputyId);
+  }
+
+  @Override
+  public boolean isNew() {
+    return id == null || id <= 0;
   }
 
   @Override

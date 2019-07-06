@@ -5,6 +5,7 @@ public class UserGroupEdo {
   private Long companyId;
   private String title;
   private Integer status;
+  private Integer version;
 
   public Long getId() {
     return id;
@@ -36,6 +37,14 @@ public class UserGroupEdo {
 
   public void setStatus(final Integer status) {
     this.status = status;
+  }
+
+  public Integer getVersion() {
+    return this.version;
+  }
+
+  public void setVersion(final Integer version) {
+    this.version = version;
   }
 
 }
