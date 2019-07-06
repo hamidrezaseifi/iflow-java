@@ -68,6 +68,7 @@ public class IflowRestPaths {
     public static final int PORT = 1020;
 
     public static final String AUTHENTICATION_AUTHENTICATE = "/auth/authenticate";
+    public static final String AUTHENTICATION_READPROFILE = "/auth/readprofile";
 
   }
 }

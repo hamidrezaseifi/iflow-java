@@ -7,6 +7,9 @@ public enum EIFlowErrorType implements IValueList {
   INVALID_USERNAMEPASSWORD(10L),
   USER_NOTFOUND(20L),
   COMPANY_NOTFOUND(30L),
+  INVALID_TOKEN(40L),
+  NO_SESSION_FOUND(50L),
+
   UNKNOWN(1000L);
 
   private final Long id;

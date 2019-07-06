@@ -20,6 +20,7 @@ import com.pth.iflow.common.edo.models.UserAuthenticationRequestEdo;
 import com.pth.iflow.common.edo.models.UserAuthenticationResponseEdo;
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.exceptions.EIFlowErrorType;
+import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.ifow.profile.exceptions.ProfileCustomizedException;
 import com.pth.ifow.profile.model.UserAuthenticationRequest;
 import com.pth.ifow.profile.model.UserAuthenticationSession;
@@ -41,7 +42,7 @@ public class AuthenticationController {
   }
 
   @ResponseStatus(HttpStatus.ACCEPTED)
-  @IflowPostRequestMapping(value = "/auth/authenticate")
+  @IflowPostRequestMapping(value = IflowRestPaths.ProfileModule.AUTHENTICATION_AUTHENTICATE)
   @ResponseBody
   public ResponseEntity<UserAuthenticationResponseEdo> authenticate(@RequestBody final UserAuthenticationRequestEdo userEdo,
       final HttpServletRequest request) throws ProfileCustomizedException, URISyntaxException, MalformedURLException {
