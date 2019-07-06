@@ -1,7 +1,6 @@
 package com.pth.ifow.profile.service.impl;
 
 import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +12,6 @@ import com.pth.iflow.common.enums.EModule;
 import com.pth.ifow.profile.config.ProfileConfiguration;
 import com.pth.ifow.profile.exceptions.ProfileCustomizedException;
 import com.pth.ifow.profile.model.User;
-import com.pth.ifow.profile.model.UserAuthenticationRequest;
 import com.pth.ifow.profile.service.IProfileRestTemplateCall;
 import com.pth.ifow.profile.service.IUsersService;
 
@@ -32,13 +30,12 @@ public class UsersService implements IUsersService {
   }
 
   @Override
-  public User getUserByEmail(final UserAuthenticationRequest user)
-      throws ProfileCustomizedException, URISyntaxException, MalformedURLException {
+  public User getUserByEmail(final String email) throws ProfileCustomizedException, MalformedURLException {
 
-    logger.debug("Request user data for email {}", user.getEmail());
+    logger.debug("Request user data for email {}", email);
 
-    final UserEdo edo = restTemplate.callRestGet(coreAccessConfig.getReadUserByEmailUrl().toString(), EModule.CORE,
-        UserEdo.class, true, user.getEmail());
+    final UserEdo edo = restTemplate.callRestGet(coreAccessConfig.getReadUserByEmailUrl().toString(), EModule.CORE, UserEdo.class,
+        true, email);
 
     return User.fromEdo(edo);
   }
