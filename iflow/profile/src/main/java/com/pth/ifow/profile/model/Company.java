@@ -3,8 +3,10 @@ package com.pth.ifow.profile.model;
 import java.time.LocalDateTime;
 
 import com.pth.iflow.common.edo.models.CompanyEdo;
+import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 
-public class Company {
+public class Company extends ModelMapperBase<CompanyEdo, Company> {
+
   private Long id;
   private String identifyid;
   private String companyName;
@@ -13,15 +15,12 @@ public class Company {
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
 
-  public Company() {
-
-  }
-
   /**
    * @return the id
    */
+  @Override
   public Long getId() {
-    return id;
+    return this.id;
   }
 
   /**
@@ -35,7 +34,7 @@ public class Company {
    * @return the identifyid
    */
   public String getIdentifyid() {
-    return identifyid;
+    return this.identifyid;
   }
 
   /**
@@ -49,7 +48,7 @@ public class Company {
    * @return the companyName
    */
   public String getCompanyName() {
-    return companyName;
+    return this.companyName;
   }
 
   /**
@@ -63,7 +62,7 @@ public class Company {
    * @return the status
    */
   public Integer getStatus() {
-    return status;
+    return this.status;
   }
 
   /**
@@ -76,13 +75,15 @@ public class Company {
   /**
    * @return the version
    */
+  @Override
   public Integer getVersion() {
-    return version;
+    return this.version;
   }
 
   /**
    * @param version the version to set
    */
+  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
@@ -91,7 +92,7 @@ public class Company {
    * @return the createdAt
    */
   public LocalDateTime getCreatedAt() {
-    return createdAt;
+    return this.createdAt;
   }
 
   /**
@@ -105,7 +106,7 @@ public class Company {
    * @return the updatedAt
    */
   public LocalDateTime getUpdatedAt() {
-    return updatedAt;
+    return this.updatedAt;
   }
 
   /**
@@ -115,25 +116,28 @@ public class Company {
     this.updatedAt = updatedAt;
   }
 
+  @Override
   public CompanyEdo toEdo() {
     final CompanyEdo edo = new CompanyEdo();
-    edo.setCompanyName(companyName);
-    edo.setIdentifyid(identifyid);
-    edo.setStatus(status);
-    edo.setId(id);
+    edo.setCompanyName(this.companyName);
+    edo.setIdentifyid(this.identifyid);
+    edo.setStatus(this.status);
+    edo.setId(this.id);
+    edo.setVersion(version);
 
     return edo;
   }
 
-  public static Company fromEdo(final CompanyEdo edo) {
-    final Company company = new Company();
+  @Override
+  public Company fromEdo(final CompanyEdo edo) {
+    final Company model = new Company();
+    model.setCompanyName(edo.getCompanyName());
+    model.setIdentifyid(edo.getIdentifyid());
+    model.setStatus(edo.getStatus());
+    model.setId(edo.getId());
+    model.setVersion(edo.getVersion());
 
-    company.setCompanyName(edo.getCompanyName());
-    company.setIdentifyid(edo.getIdentifyid());
-    company.setStatus(edo.getStatus());
-    company.setId(edo.getId());
-
-    return company;
+    return model;
   }
 
 }

@@ -31,15 +31,14 @@ public class CompanyService implements ICompanyService {
   }
 
   @Override
-  public Company getById(final Long comapnyId)
-      throws ProfileCustomizedException, URISyntaxException, MalformedURLException {
+  public Company getById(final Long comapnyId) throws ProfileCustomizedException, URISyntaxException, MalformedURLException {
 
     logger.debug("Request company data for id {}", comapnyId);
 
     final CompanyEdo edo = restTemplate.callRestGet(coreAccessConfig.getReadCompanyByIdUrl().toString(), EModule.CORE,
         CompanyEdo.class, true, comapnyId);
 
-    return Company.fromEdo(edo);
+    return new Company().fromEdo(edo);
   }
 
 }
