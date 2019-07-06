@@ -10,17 +10,20 @@ import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 
 public class WorkflowType extends ModelMapperBase<WorkflowTypeEdo, WorkflowType> {
 
-  private Long            id;
-  private Long            companyId;
-  private Long            baseTypeId;
-  private String          title;
-  private String          comments;
-  private Integer         status;
-  private Integer         version;
-  private LocalDateTime   createdAt;
-  private LocalDateTime   updatedAt;
+  private Long id;
+  private Long companyId;
+  private Long baseTypeId;
+  private String title;
+  private String comments;
+  private Integer status;
+  private Boolean sendToController;
+  private Boolean manualAssign;
+  private Integer version;
+  private LocalDateTime createdAt;
+  private LocalDateTime updatedAt;
   private final Set<Long> steps = new HashSet<>();
 
+  @Override
   public Long getId() {
     return this.id;
   }
@@ -75,10 +78,28 @@ public class WorkflowType extends ModelMapperBase<WorkflowTypeEdo, WorkflowType>
     this.status = status;
   }
 
+  public Boolean getSendToController() {
+    return sendToController;
+  }
+
+  public void setSendToController(final Boolean sendToController) {
+    this.sendToController = sendToController;
+  }
+
+  public Boolean getManualAssign() {
+    return manualAssign;
+  }
+
+  public void setManualAssign(final Boolean manualAssign) {
+    this.manualAssign = manualAssign;
+  }
+
+  @Override
   public Integer getVersion() {
     return this.version;
   }
 
+  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
@@ -130,7 +151,10 @@ public class WorkflowType extends ModelMapperBase<WorkflowTypeEdo, WorkflowType>
     edo.setId(this.id);
     edo.setCompanyId(this.companyId);
     edo.setBaseTypeId(this.baseTypeId);
+    edo.setSendToController(sendToController);
+    edo.setManualAssign(manualAssign);
     edo.setSteps(this.steps);
+    edo.setVersion(version);
 
     return edo;
   }
@@ -145,6 +169,9 @@ public class WorkflowType extends ModelMapperBase<WorkflowTypeEdo, WorkflowType>
     model.setId(edo.getId());
     model.setCompanyId(edo.getCompanyId());
     model.setBaseTypeId(edo.getBaseTypeId());
+    model.setSendToController(edo.getSendToController());
+    model.setManualAssign(edo.getManualAssign());
+    model.setVersion(edo.getVersion());
     model.setSteps(edo.getSteps());
 
     return model;

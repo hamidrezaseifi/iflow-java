@@ -5,6 +5,7 @@ public class CompanyEdo {
   private String identifyid;
   private String companyName;
   private Integer status;
+  private Integer version;
 
   public CompanyEdo() {
 
@@ -66,6 +67,12 @@ public class CompanyEdo {
     this.status = status;
   }
 
+  public Integer getVersion() {
+    return this.version;
+  }
 
+  public void setVersion(final Integer version) {
+    this.version = version;
+  }
 
 }

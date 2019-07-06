@@ -6,9 +6,11 @@ import com.pth.iflow.core.model.WorkflowTypeStep;
 
 public interface IWorkflowTypeStepService {
 
-  public WorkflowTypeStep getById(Long id);
+  WorkflowTypeStep save(WorkflowTypeStep model);
 
-  public List<WorkflowTypeStep> getListByWorkflowTypeId(final Long workflowId);
+  WorkflowTypeStep getById(Long id);
 
-  public List<WorkflowTypeStep> getListByIdList(final List<Long> idList);
+  List<WorkflowTypeStep> getListByWorkflowTypeId(final Long workflowId);
+
+  List<WorkflowTypeStep> getListByIdList(final List<Long> idList);
 }

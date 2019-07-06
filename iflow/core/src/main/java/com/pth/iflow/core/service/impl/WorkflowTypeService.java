@@ -11,11 +11,12 @@ import com.pth.iflow.core.model.WorkflowTypeStep;
 import com.pth.iflow.core.service.IWorkflowTypeService;
 import com.pth.iflow.core.storage.dao.IWorkflowTypeDao;
 import com.pth.iflow.core.storage.dao.IWorkflowTypeStepDao;
+import com.pth.iflow.core.storage.dao.exception.IFlowOptimisticLockException;
 
 @Service
 public class WorkflowTypeService implements IWorkflowTypeService {
 
-  private final IWorkflowTypeDao     workflowTypeDao;
+  private final IWorkflowTypeDao workflowTypeDao;
   private final IWorkflowTypeStepDao workflowTypeStepDao;
 
   public WorkflowTypeService(@Autowired final IWorkflowTypeDao workflowDao, @Autowired final IWorkflowTypeStepDao workflowStepDao) {
@@ -42,6 +43,23 @@ public class WorkflowTypeService implements IWorkflowTypeService {
   @Override
   public List<WorkflowType> getListByIdList(final List<Long> idList) {
     return this.workflowTypeDao.getListByIdList(idList);
+  }
+
+  @Override
+  public WorkflowType save(final WorkflowType model) {
+    if (model.isNew()) {
+      model.increaseVersion();
+      return workflowTypeDao.create(model);
+    }
+
+    final WorkflowType exists = workflowTypeDao.getById(model.getId());
+    if (exists.getVersion() > model.getVersion()) {
+      throw new IFlowOptimisticLockException("WorkflowType with id " + model.getId() + " is old!");
+    }
+
+    model.setVersion(model.getVersion() + 1);
+
+    return workflowTypeDao.update(model);
   }
 
 }

@@ -17,6 +17,7 @@ import com.pth.iflow.core.storage.dao.IUserDao;
 import com.pth.iflow.core.storage.dao.IUserGroupDao;
 import com.pth.iflow.core.storage.dao.IWorkflowTypeDao;
 import com.pth.iflow.core.storage.dao.IWorkflowTypeStepDao;
+import com.pth.iflow.core.storage.dao.exception.IFlowOptimisticLockException;
 
 @Service
 public class UsersService implements IUsersService {
@@ -78,6 +79,23 @@ public class UsersService implements IUsersService {
     final User user = getUserById(id);
     final List<User> list = userDao.getListByIdList(user.getDeputies().stream().collect(Collectors.toList()));
     return list;
+  }
+
+  @Override
+  public User save(final User model) {
+    if (model.isNew()) {
+      model.increaseVersion();
+      return userDao.create(model);
+    }
+
+    final User exists = userDao.getById(model.getId());
+    if (exists.getVersion() > model.getVersion()) {
+      throw new IFlowOptimisticLockException("User with id " + model.getId() + " is old!");
+    }
+
+    model.setVersion(model.getVersion() + 1);
+
+    return userDao.update(model);
   }
 
 }

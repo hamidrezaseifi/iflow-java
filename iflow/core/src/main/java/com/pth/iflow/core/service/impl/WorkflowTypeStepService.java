@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.pth.iflow.core.model.WorkflowTypeStep;
 import com.pth.iflow.core.service.IWorkflowTypeStepService;
 import com.pth.iflow.core.storage.dao.IWorkflowTypeStepDao;
+import com.pth.iflow.core.storage.dao.exception.IFlowOptimisticLockException;
 
 @Service
 public class WorkflowTypeStepService implements IWorkflowTypeStepService {
@@ -17,7 +18,7 @@ public class WorkflowTypeStepService implements IWorkflowTypeStepService {
   public WorkflowTypeStepService(@Autowired final IWorkflowTypeStepDao workflowStepDao) {
     this.workflowStepDao = workflowStepDao;
   }
-  
+
   @Override
   public WorkflowTypeStep getById(final Long id) {
 
@@ -32,8 +33,25 @@ public class WorkflowTypeStepService implements IWorkflowTypeStepService {
 
   @Override
   public List<WorkflowTypeStep> getListByIdList(final List<Long> idList) {
-    
+
     return this.workflowStepDao.getListByIdList(idList);
+  }
+
+  @Override
+  public WorkflowTypeStep save(final WorkflowTypeStep model) {
+    if (model.isNew()) {
+      model.increaseVersion();
+      return workflowStepDao.create(model);
+    }
+
+    final WorkflowTypeStep exists = workflowStepDao.getById(model.getId());
+    if (exists.getVersion() > model.getVersion()) {
+      throw new IFlowOptimisticLockException("WorkflowTypeStep with id " + model.getId() + " is old!");
+    }
+
+    model.setVersion(model.getVersion() + 1);
+
+    return workflowStepDao.update(model);
   }
 
 }

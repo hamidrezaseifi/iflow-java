@@ -4,7 +4,9 @@ import com.pth.iflow.core.model.Company;
 
 public interface ICompanyService {
 
-  public Company getById(Long id);
+  Company save(Company model);
 
-  public Company getByIdentifyId(final String identifyId);
+  Company getById(Long id);
+
+  Company getByIdentifyId(final String identifyId);
 }
