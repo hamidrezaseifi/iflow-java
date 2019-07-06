@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pth.iflow.core.model.User;
@@ -135,8 +136,75 @@ public class UserDao extends DaoBasicClass<User> implements IUserDao {
   public User create(final User model) throws IFlowStorageException {
     final String sql = "INSERT INTO users (company_id, email, firstname, lastname, permission, version, status)"
         + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+    final TransactionStatus transactionStatus = startTransaction(true);
+    try {
+      final Long createdId = createModel(model, "User", sql, false);
 
-    return getById(createModel(model, "User", sql, true));
+      createUserGroups(model, createdId);
+
+      createUserDepartments(model, createdId);
+
+      createUserDeputies(model, createdId);
+
+      commitTransaction(true, transactionStatus);
+      return getById(createdId);
+
+    } catch (final Exception e) {
+      rollbackTransaction(true, transactionStatus);
+      logger.error("Unable to create user:{} {}", model.getEmail(), e.toString(), e);
+      throw new IFlowStorageException(e.toString(), e);
+    }
+  }
+
+  private void createUserGroups(final User model, final Long userId) {
+
+    deleteUserGroups(userId);
+
+    final String insSql = "INSERT INTO user_usergroup (user_id, user_group) VALUES (?, ?)";
+
+    for (final Long groupId : model.getGroups()) {
+      this.jdbcTemplate.update(con -> {
+        final PreparedStatement ps = con.prepareStatement(insSql);
+        ps.setLong(1, userId);
+        ps.setLong(2, groupId);
+        return ps;
+      });
+
+    }
+  }
+
+  private void createUserDepartments(final User model, final Long userId) {
+
+    deleteUserDepartments(userId);
+
+    final String insSql = "INSERT INTO user_departments (user_id, department_id) VALUES (?, ?)";
+
+    for (final Long groupId : model.getGroups()) {
+      this.jdbcTemplate.update(con -> {
+        final PreparedStatement ps = con.prepareStatement(insSql);
+        ps.setLong(1, userId);
+        ps.setLong(2, groupId);
+        return ps;
+      });
+
+    }
+  }
+
+  private void createUserDeputies(final User model, final Long userId) {
+
+    deleteUserDeputies(userId);
+
+    final String insSql = "INSERT INTO user_deputy (user_id, deputy_id) VALUES (?, ?)";
+
+    for (final Long groupId : model.getGroups()) {
+      this.jdbcTemplate.update(con -> {
+        final PreparedStatement ps = con.prepareStatement(insSql);
+        ps.setLong(1, userId);
+        ps.setLong(2, groupId);
+        return ps;
+      });
+
+    }
   }
 
   @Override
@@ -147,6 +215,48 @@ public class UserDao extends DaoBasicClass<User> implements IUserDao {
     updateModel(model, "User", sql, true);
 
     return getById(model.getId());
+  }
+
+  @Override
+  public void deleteById(final Long id) throws IFlowStorageException {
+    final TransactionStatus transactionStatus = startTransaction(true);
+    try {
+
+      deleteUserGroups(id);
+
+      deleteUserDepartments(id);
+
+      deleteUserDeputies(id);
+
+      deleteModel(id, "User", "Delete from users where id=?", false, true);
+
+      commitTransaction(true, transactionStatus);
+
+    } catch (final Exception e) {
+      rollbackTransaction(true, transactionStatus);
+      logger.error("Unable to delete user:{} {}", id, e.toString(), e);
+      throw new IFlowStorageException(e.toString(), e);
+    }
+
+  }
+
+  private void deleteUserDeputies(final Long id) {
+    deleteModel(id, "User Deputies", "Delete FROM user_deputy where user_id=?", false, false);
+  }
+
+  private void deleteUserDepartments(final Long id) {
+    deleteModel(id, "User Departments", "Delete FROM user_departments where user_id=?", false, false);
+  }
+
+  private void deleteUserGroups(final Long id) {
+    deleteModel(id, "User Groups", "Delete FROM user_usergroup where user_id=?", false, false);
+  }
+
+  @Override
+  public List<User> getListByCompanyId(final Long id) throws IFlowStorageException {
+    final List<Long> idList = getIdListById(id, "SELECT * FROM users where company_id=?", "id", "User");
+
+    return getListByIdList(idList);
   }
 
 }

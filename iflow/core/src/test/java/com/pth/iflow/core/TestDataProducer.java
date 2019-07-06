@@ -46,6 +46,24 @@ public class TestDataProducer {
     return model;
   }
 
+  protected User getTestNewUser() {
+    final User model = new User();
+    model.setCompanyId(1L);
+    model.setId(null);
+    model.setEmail("utest email");
+    model.setFirstName("utest firstName");
+    model.setLastName("utest lastName");
+    model.setStatus(1);
+    model.setVersion(1);
+    model.setPermission(1);
+    model.setDepartmentGroups(getTestDepartmentGroupIdList());
+    model.setDepartments(getTestDepartmentIdList());
+    model.setDeputies(getTestDeputiyIdList());
+    model.setGroups(getTestUserGroupIdList());
+
+    return model;
+  }
+
   protected User getTestUser(final Long id, final String fname, final String lname, final String email) {
     final User model = new User();
     model.setCompanyId(1L);
