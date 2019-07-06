@@ -37,7 +37,7 @@ public class UsersService implements IUsersService {
     final UserEdo edo = restTemplate.callRestGet(coreAccessConfig.getReadUserByEmailUrl().toString(), EModule.CORE, UserEdo.class,
         true, email);
 
-    return User.fromEdo(edo);
+    return new User().fromEdo(edo);
   }
 
 }
