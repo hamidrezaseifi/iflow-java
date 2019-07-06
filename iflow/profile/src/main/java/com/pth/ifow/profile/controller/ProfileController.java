@@ -21,7 +21,6 @@ import com.pth.iflow.common.edo.models.UserAuthenticationRequestEdo;
 import com.pth.iflow.common.edo.models.UserAuthenticationResponseEdo;
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.exceptions.EIFlowErrorType;
-import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.ifow.profile.exceptions.ProfileCustomizedException;
 import com.pth.ifow.profile.model.UserAuthenticationRequest;
 import com.pth.ifow.profile.model.UserAuthenticationSession;
@@ -30,12 +29,12 @@ import com.pth.ifow.profile.service.ISessionManager;
 
 @RestController
 @RequestMapping
-public class AuthenticationController {
+public class ProfileController {
 
   private final IAuthenticationService authService;
   private final ISessionManager sessionManager;
 
-  public AuthenticationController(@Autowired final IAuthenticationService authService,
+  public ProfileController(@Autowired final IAuthenticationService authService,
       @Autowired final ISessionManager sessionManager) {
 
     this.authService = authService;
@@ -43,7 +42,7 @@ public class AuthenticationController {
   }
 
   @ResponseStatus(HttpStatus.ACCEPTED)
-  @PostMapping(value = IflowRestPaths.ProfileModule.AUTHENTICATION_AUTHENTICATE, consumes = { MediaType.APPLICATION_XML_VALUE,
+  @PostMapping(value = "/auth/authenticate", consumes = { MediaType.APPLICATION_XML_VALUE,
       MediaType.APPLICATION_JSON_UTF8_VALUE }, produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE })
   @ResponseBody
   public ResponseEntity<UserAuthenticationResponseEdo> authenticate(@RequestBody final UserAuthenticationRequestEdo userEdo,
