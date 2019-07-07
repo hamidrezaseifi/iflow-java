@@ -16,6 +16,7 @@ public class WorkflowTypeStep extends ModelMapperBase<WorkflowTypeStepEdo, Workf
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
 
+  @Override
   public Long getId() {
     return this.id;
   }
@@ -56,10 +57,12 @@ public class WorkflowTypeStep extends ModelMapperBase<WorkflowTypeStepEdo, Workf
     this.status = status;
   }
 
+  @Override
   public Integer getVersion() {
     return this.version;
   }
 
+  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
@@ -103,11 +106,6 @@ public class WorkflowTypeStep extends ModelMapperBase<WorkflowTypeStepEdo, Workf
     model.setWorkflowTypeId(edo.getWorkflowTypeId());
 
     return model;
-  }
-
-  @Override
-  public boolean isNew() {
-    return id == null || id <= 0;
   }
 
 }
