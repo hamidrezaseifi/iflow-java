@@ -10,18 +10,15 @@ import com.pth.iflow.core.model.WorkflowType;
 import com.pth.iflow.core.model.WorkflowTypeStep;
 import com.pth.iflow.core.service.IWorkflowTypeService;
 import com.pth.iflow.core.storage.dao.IWorkflowTypeDao;
-import com.pth.iflow.core.storage.dao.IWorkflowTypeStepDao;
 import com.pth.iflow.core.storage.dao.exception.IFlowOptimisticLockException;
 
 @Service
 public class WorkflowTypeService implements IWorkflowTypeService {
 
   private final IWorkflowTypeDao workflowTypeDao;
-  private final IWorkflowTypeStepDao workflowTypeStepDao;
 
-  public WorkflowTypeService(@Autowired final IWorkflowTypeDao workflowDao, @Autowired final IWorkflowTypeStepDao workflowStepDao) {
+  public WorkflowTypeService(@Autowired final IWorkflowTypeDao workflowDao) {
     this.workflowTypeDao = workflowDao;
-    this.workflowTypeStepDao = workflowStepDao;
   }
 
   @Override
@@ -32,7 +29,7 @@ public class WorkflowTypeService implements IWorkflowTypeService {
   @Override
   public List<WorkflowTypeStep> getStepsById(final Long id) {
     final WorkflowType workflow = getById(id);
-    return this.workflowTypeStepDao.getListByIdList(workflow.getSteps().stream().collect(Collectors.toList()));
+    return workflow.getSteps().stream().collect(Collectors.toList());
   }
 
   @Override

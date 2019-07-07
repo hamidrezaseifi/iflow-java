@@ -85,11 +85,11 @@ public class WorkflowTypeStepDao extends DaoBasicClass<WorkflowTypeStep> impleme
   }
 
   @Override
-  public WorkflowTypeStep create(final WorkflowTypeStep model) throws IFlowStorageException {
+  public WorkflowTypeStep create(final WorkflowTypeStep model, final boolean withTransaction) throws IFlowStorageException {
     final String sql = "INSERT INTO workflow_type_step (workflow_type_id, title, comments, version, status)"
         + "VALUES (?, ?, ?, ?, ?)";
 
-    return getById(createModel(model, "WorkflowTypeStep", sql, true));
+    return getById(createModel(model, "WorkflowTypeStep", sql, withTransaction));
   }
 
   @Override
@@ -100,5 +100,15 @@ public class WorkflowTypeStepDao extends DaoBasicClass<WorkflowTypeStep> impleme
     updateModel(model, "WorkflowTypeStep", sql, true);
 
     return getById(model.getId());
+  }
+
+  @Override
+  public void deleteByWorkflowTypeId(final Long id, final boolean withTransaction) throws IFlowStorageException {
+    deleteModel(id, "WorkflowAction", "Delete from workflow_type_step where workflow_type_id=?", withTransaction, false);
+  }
+
+  @Override
+  public void deleteById(final Long id, final boolean withTransaction) throws IFlowStorageException {
+    deleteModel(id, "WorkflowTypeStep", "Delete from workflow_type_step where id=?", withTransaction, true);
   }
 }

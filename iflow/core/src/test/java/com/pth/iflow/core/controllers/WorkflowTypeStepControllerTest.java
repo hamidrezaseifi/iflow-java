@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.After;
@@ -49,7 +50,7 @@ public class WorkflowTypeStepControllerTest extends TestDataProducer {
 
   @MockBean
   private IWorkflowTypeStepService workflowStepService;
-  
+
   @Value("${iflow.common.rest.api.security.client-id.internal}")
   private String innerModulesRequestHeaderValue;
 
@@ -71,8 +72,9 @@ public class WorkflowTypeStepControllerTest extends TestDataProducer {
 
     final String modelAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelEdo);
 
-    this.mockMvc.perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModul.WORKFLOWTYPESTEP_READ_BY_ID, model.getId())
-        .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
+    this.mockMvc
+        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModul.WORKFLOWTYPESTEP_READ_BY_ID, model.getId())
+            .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
         .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(modelAsXmlString));
 
@@ -90,7 +92,7 @@ public class WorkflowTypeStepControllerTest extends TestDataProducer {
   @Test
   public void testReadWorkflowTypeStepList() throws Exception {
 
-    final List<Long> idList = getTestWorkflowTypeStepIdList();
+    final List<Long> idList = Arrays.asList(1L, 2L, 3L);
     final List<WorkflowTypeStep> list = getTestWorkflowTypeStepList();
     when(this.workflowStepService.getListByIdList(any(List.class))).thenReturn(list);
 
@@ -101,7 +103,8 @@ public class WorkflowTypeStepControllerTest extends TestDataProducer {
 
     this.mockMvc
         .perform(MockMvcRequestBuilders.post(IflowRestPaths.CoreModul.WORKFLOWTYPESTEP_READ_LIST).content(contentAsXmlString)
-            .contentType(MediaType.APPLICATION_XML_VALUE).header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
+            .contentType(MediaType.APPLICATION_XML_VALUE)
+            .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
         .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(listAsXmlString));
 
@@ -129,8 +132,9 @@ public class WorkflowTypeStepControllerTest extends TestDataProducer {
 
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList).replace("ArrayList", "List");
 
-    this.mockMvc.perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModul.WORKFLOWTYPESTEP_READ_LIST_BY_WORKFLOW, 1L)
-        .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
+    this.mockMvc
+        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModul.WORKFLOWTYPESTEP_READ_LIST_BY_WORKFLOW, 1L)
+            .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
         .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(listAsXmlString));
 

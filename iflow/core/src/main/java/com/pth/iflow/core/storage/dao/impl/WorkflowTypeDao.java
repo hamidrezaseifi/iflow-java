@@ -3,14 +3,19 @@ package com.pth.iflow.core.storage.dao.impl;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pth.iflow.core.model.WorkflowType;
+import com.pth.iflow.core.model.WorkflowTypeStep;
 import com.pth.iflow.core.storage.dao.IWorkflowTypeDao;
+import com.pth.iflow.core.storage.dao.IWorkflowTypeStepDao;
 import com.pth.iflow.core.storage.dao.basic.DaoBasicClass;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 import com.pth.iflow.core.storage.dao.utils.SqlUtils;
@@ -18,6 +23,9 @@ import com.pth.iflow.core.storage.dao.utils.SqlUtils;
 @Transactional
 @Repository
 public class WorkflowTypeDao extends DaoBasicClass<WorkflowType> implements IWorkflowTypeDao {
+
+  @Autowired
+  private IWorkflowTypeStepDao workflowTypeStepDao;
 
   public WorkflowTypeDao() {
 
@@ -53,13 +61,9 @@ public class WorkflowTypeDao extends DaoBasicClass<WorkflowType> implements IWor
     model.setVersion(rs.getInt("version"));
     model.setSendToController(rs.getInt("send_to_controller") == 1);
     model.setManualAssign(rs.getInt("manual_assign") == 1);
-    model.setSteps(getworkflowStepIdListById(model.getId()));
+    model.setSteps(workflowTypeStepDao.getListByWorkflowTypeId(model.getId()));
 
     return model;
-  }
-
-  private List<Long> getworkflowStepIdListById(final Long id) throws IFlowStorageException {
-    return getIdListById(id, "SELECT * FROM workflow_type_step where workflow_type_id=?", "id", "Workflow Step IDs");
   }
 
   @Override
@@ -103,7 +107,36 @@ public class WorkflowTypeDao extends DaoBasicClass<WorkflowType> implements IWor
     final String sql = "INSERT INTO workflow_type (company_id, workflow_base_type, title, manual_assign, send_to_controller, comments, version, status)"
         + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-    return getById(createModel(model, "WorkflowType", sql, true));
+    final TransactionStatus transactionStatus = startTransaction(true);
+    try {
+      final Long workflowTypeId = createModel(model, "WorkflowType", sql, true);
+
+      createWorkflowActions(model, workflowTypeId);
+
+      commitTransaction(true, transactionStatus);
+
+      return getById(workflowTypeId);
+
+    } catch (final Exception e) {
+      rollbackTransaction(true, transactionStatus);
+      logger.error("Unable to create WorkflowType:{} {}", model.getTitle(), e.toString(), e);
+      throw new IFlowStorageException(e.toString(), e);
+    }
+  }
+
+  private void createWorkflowActions(final WorkflowType workflowType, final Long workflowTypeId) {
+
+    workflowTypeStepDao.deleteByWorkflowTypeId(workflowTypeId, false);
+
+    final List<WorkflowTypeStep> resultList = new ArrayList<>();
+
+    for (final WorkflowTypeStep model : workflowType.getSteps()) {
+      model.setWorkflowTypeId(workflowTypeId);
+      resultList.add(workflowTypeStepDao.create(model, false));
+
+    }
+
+    workflowType.setSteps(resultList);
   }
 
   @Override

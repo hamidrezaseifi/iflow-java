@@ -41,7 +41,7 @@ public class WorkflowTypeStepService implements IWorkflowTypeStepService {
   public WorkflowTypeStep save(final WorkflowTypeStep model) {
     if (model.isNew()) {
       model.increaseVersion();
-      return workflowStepDao.create(model);
+      return workflowStepDao.create(model, true);
     }
 
     final WorkflowTypeStep exists = workflowStepDao.getById(model.getId());

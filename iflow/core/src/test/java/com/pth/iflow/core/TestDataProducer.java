@@ -322,7 +322,8 @@ public class TestDataProducer {
     model.setTitle("utest title");
     model.setStatus(1);
     model.setVersion(1);
-    model.setSteps(getTestWorkflowTypeStepIdList());
+    model.setSteps(Arrays.asList(getTestWorkflowTypeStep(1L, "step 1"), getTestWorkflowTypeStep(2L, "step 2"),
+        getTestWorkflowTypeStep(3L, "step 3")));
     model.setComments("comments");
 
     return model;
@@ -335,7 +336,8 @@ public class TestDataProducer {
     model.setTitle(title);
     model.setStatus(1);
     model.setVersion(1);
-    model.setSteps(getTestWorkflowTypeStepIdList());
+    model.setSteps(Arrays.asList(getTestWorkflowTypeStep(1L, "step 1"), getTestWorkflowTypeStep(2L, "step 2"),
+        getTestWorkflowTypeStep(3L, "step 3")));
     model.setComments("comments");
 
     return model;
@@ -392,10 +394,6 @@ public class TestDataProducer {
   }
 
   protected List<Long> getTestWorkflowTypeIdList() {
-    return Arrays.asList(1L, 2L, 3L);
-  }
-
-  protected List<Long> getTestWorkflowTypeStepIdList() {
     return Arrays.asList(1L, 2L, 3L);
   }
 

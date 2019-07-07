@@ -15,7 +15,7 @@ public class WorkflowTypeEdo {
   private Boolean sendToController;
   private Boolean manualAssign;
 
-  private final Set<Long> steps = new HashSet<>();
+  private final Set<WorkflowTypeStepEdo> steps = new HashSet<>();
 
   public Long getId() {
     return this.id;
@@ -95,18 +95,18 @@ public class WorkflowTypeEdo {
     this.manualAssign = manualAssign;
   }
 
-  public Set<Long> getSteps() {
+  public Set<WorkflowTypeStepEdo> getSteps() {
     return this.steps;
   }
 
-  public void setSteps(final Set<Long> steps) {
+  public void setSteps(final Set<WorkflowTypeStepEdo> steps) {
     this.steps.clear();
     if (steps != null) {
       this.steps.addAll(steps);
     }
   }
 
-  public void addStep(final Long stepId) {
+  public void addStep(final WorkflowTypeStepEdo stepId) {
     this.steps.add(stepId);
   }
 }
