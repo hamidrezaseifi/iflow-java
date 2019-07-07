@@ -42,7 +42,7 @@ public class WorkflowService implements IWorkflowService {
   }
 
   @Override
-  public List<Workflow> getListByIdTypeId(final Long id) {
+  public List<Workflow> getListByTypeId(final Long id) {
 
     return workflowDao.getListByWorkflowTypeId(id);
   }
@@ -51,6 +51,12 @@ public class WorkflowService implements IWorkflowService {
   public List<Workflow> getListByIdList(final List<Long> idList) {
 
     return workflowDao.getListByIdList(idList);
+  }
+
+  @Override
+  public List<Workflow> getListForUser(final Long id, final int status) {
+
+    return workflowDao.getListForUser(id, status);
   }
 
 }

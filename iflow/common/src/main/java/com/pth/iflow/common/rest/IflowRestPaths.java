@@ -40,6 +40,7 @@ public class IflowRestPaths {
     public static final String WORKFLOW_READ_BY_ID = "/workflow/readbyid/{id}";
     public static final String WORKFLOW_READ_LIST = "/workflow/list";
     public static final String WORKFLOW_READ_LIST_BY_TYPE = "/workflow/type/list/{id}";
+    public static final String WORKFLOW_READ_LIST_BY_USER = "/workflow/user/list/{id}/{status}";
     public static final String WORKFLOW_ACTION_SAVE = "/workflow/action/save";
     public static final String WORKFLOW_ACTION_READ_BY_ID = "/workflow/action/readbyid/{id}";
     public static final String WORKFLOW_ACTION_READ_LIST_BY_WORKFLOW = "/workflow/action/workflow/list/{id}";
@@ -60,6 +61,12 @@ public class IflowRestPaths {
     public static final String WORKFLOWTYPESTEP_READ_BY_ID = "/workflowtypestep/readbyid/{id}";
     public static final String WORKFLOWTYPESTEP_READ_LIST_BY_WORKFLOW = "/workflowtypestep/workflowtype/list/{id}";
     public static final String WORKFLOWTYPESTEP_READ_LIST = "/workflowtypestep/list";
+
+    public static final String WORKFLOW_SAVE = "/workflow/save";
+    public static final String WORKFLOW_READ_BY_ID = "/workflow/readbyid/{id}";
+    public static final String WORKFLOW_READ_LIST = "/workflow/list";
+    public static final String WORKFLOW_READ_LIST_BY_TYPE = "/workflow/type/list/{id}";
+    public static final String WORKFLOW_READ_LIST_BY_USER = "/workflow/user/list/{id}/{status}";
 
   }
 

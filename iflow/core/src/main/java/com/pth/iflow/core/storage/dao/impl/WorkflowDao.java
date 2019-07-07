@@ -223,4 +223,37 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
     return ps;
   }
 
+  @Override
+  public List<Workflow> getListForUser(final Long id, final int status) throws IFlowStorageException {
+
+    logger.info("Dao read Workflow for user id: {}", id);
+
+    List<Long> idList = new ArrayList<>();
+    final String sql = "SELECT * FROM workflow where assign_to=?" + (status > -1 ? " and status=?" : "");
+
+    try {
+      idList = jdbcTemplate.query(con -> {
+        final PreparedStatement ps = con.prepareStatement(sql);
+        ps.setLong(1, id);
+        if (status > -1) {
+          ps.setInt(2, status);
+        }
+
+        return ps;
+
+      }, (rs, rowNum) -> {
+
+        return rs.getLong("id");
+
+      });
+
+    } catch (final Exception e) {
+      throw new IFlowStorageException("Unable to read Workflow for user id: " + id + " : " + e.toString());
+    }
+
+    final List<Workflow> workflowList = readWorkflowListFromIdList(idList);
+
+    return workflowList;
+  }
+
 }
