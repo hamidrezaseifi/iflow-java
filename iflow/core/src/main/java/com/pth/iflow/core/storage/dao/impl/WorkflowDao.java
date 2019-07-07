@@ -68,6 +68,7 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
     model.setController(rs.getLong("controller"));
     model.setCurrentStep(rs.getLong("current_step"));
     model.setCreatedBy(rs.getLong("created_by"));
+    model.setAssignTo(rs.getLong("assign_to"));
     model.setWorkflowTypeId(rs.getLong("workflow_type_id"));
 
     return model;
@@ -93,8 +94,8 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
 
   @Override
   public Workflow create(final Workflow workflow) throws IFlowStorageException {
-    final String sql = "INSERT INTO workflow (workflow_type_id, title, current_step, comments, controller, created_by, version, status)"
-        + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    final String sql = "INSERT INTO workflow (workflow_type_id, title, current_step, assign_to, comments, controller, created_by, version, status)"
+        + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     final TransactionStatus transactionStatus = startTransaction(true);
     try {
@@ -149,7 +150,7 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
 
   @Override
   public Workflow update(final Workflow workflow) throws IFlowStorageException {
-    final String sql = "UPDATE workflow SET workflow_type_id = ?, title = ?, current_step = ?, comments = ?,"
+    final String sql = "UPDATE workflow SET workflow_type_id = ?, title = ?, current_step = ?, assign_to=?, comments = ?,"
         + " controller = ?, created_by = ?, version = ?, status = ? WHERE id = ?";
 
     final TransactionStatus transactionStatus = startTransaction(true);
@@ -196,11 +197,12 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
     ps.setLong(1, model.getWorkflowTypeId());
     ps.setString(2, model.getTitle());
     ps.setLong(3, model.getCurrentStep());
-    ps.setString(4, model.getComments());
-    ps.setLong(5, model.getController());
-    ps.setLong(6, model.getCreatedBy());
-    ps.setInt(7, model.getVersion());
-    ps.setInt(8, model.getStatus());
+    ps.setLong(4, model.getAssignTo());
+    ps.setString(5, model.getComments());
+    ps.setLong(6, model.getController());
+    ps.setLong(7, model.getCreatedBy());
+    ps.setInt(8, model.getVersion());
+    ps.setInt(9, model.getStatus());
 
     return ps;
   }
@@ -210,12 +212,13 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
     ps.setLong(1, model.getWorkflowTypeId());
     ps.setString(2, model.getTitle());
     ps.setLong(3, model.getCurrentStep());
-    ps.setString(4, model.getComments());
-    ps.setLong(5, model.getController());
-    ps.setLong(6, model.getCreatedBy());
-    ps.setInt(7, model.getVersion());
-    ps.setInt(8, model.getStatus());
-    ps.setLong(9, model.getId());
+    ps.setLong(4, model.getAssignTo());
+    ps.setString(5, model.getComments());
+    ps.setLong(6, model.getController());
+    ps.setLong(7, model.getCreatedBy());
+    ps.setInt(8, model.getVersion());
+    ps.setInt(9, model.getStatus());
+    ps.setLong(10, model.getId());
 
     return ps;
   }

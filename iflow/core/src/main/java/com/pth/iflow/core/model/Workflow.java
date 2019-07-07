@@ -16,6 +16,7 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
   private Long currentStep;
   private Long controller;
   private Long createdBy;
+  private Long assignTo;
   private String title;
   private String comments;
   private Integer status;
@@ -65,6 +66,14 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
 
   public void setCreatedBy(final Long createdBy) {
     this.createdBy = createdBy;
+  }
+
+  public Long getAssignTo() {
+    return assignTo;
+  }
+
+  public void setAssignTo(final Long assignTo) {
+    this.assignTo = assignTo;
   }
 
   public String getTitle() {
@@ -159,6 +168,7 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
     edo.setCreatedBy(createdBy);
     edo.setWorkflowTypeId(workflowTypeId);
     edo.setVersion(version);
+    edo.setAssignTo(assignTo);
 
     edo.setFiles(ModelMapperBase.toEdoList(files));
     edo.setActions(ModelMapperBase.toEdoList(actions));
@@ -179,6 +189,7 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
     model.setCreatedBy(edo.getCreatedBy());
     model.setWorkflowTypeId(edo.getWorkflowTypeId());
     model.setVersion(edo.getVersion());
+    model.setAssignTo(edo.getAssignTo());
 
     model.setFiles(new WorkflowFile().fromEdoList(edo.getFiles()));
     model.setActions(new WorkflowAction().fromEdoList(edo.getActions()));

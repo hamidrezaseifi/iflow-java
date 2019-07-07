@@ -12,6 +12,7 @@ public class WorkflowEdo {
   private Long currentStep;
   private Long controller;
   private Long createdBy;
+  private Long assignTo;
   private String title;
   private String comments;
   private Integer status;
@@ -58,6 +59,14 @@ public class WorkflowEdo {
 
   public void setCreatedBy(final Long createdBy) {
     this.createdBy = createdBy;
+  }
+
+  public Long getAssignTo() {
+    return assignTo;
+  }
+
+  public void setAssignTo(final Long assignTo) {
+    this.assignTo = assignTo;
   }
 
   public String getTitle() {
