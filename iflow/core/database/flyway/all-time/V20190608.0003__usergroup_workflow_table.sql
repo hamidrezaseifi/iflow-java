@@ -195,6 +195,7 @@ CREATE TABLE `workflow` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `workflow_type_id` int(11) NOT NULL,
   `title` varchar(2000) NOT NULL,
+  `assign_to` int(11) NOT NULL DEFAULT 0,
   `current_step` int(11) NOT NULL,
   `status` int(11) NOT NULL,
   `comments` text,
