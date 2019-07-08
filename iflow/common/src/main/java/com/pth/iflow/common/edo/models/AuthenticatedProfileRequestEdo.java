@@ -1,6 +1,6 @@
 package com.pth.iflow.common.edo.models;
 
-public class ProfileRequestEdo {
+public class AuthenticatedProfileRequestEdo {
   private String email;
   private String token;
 
