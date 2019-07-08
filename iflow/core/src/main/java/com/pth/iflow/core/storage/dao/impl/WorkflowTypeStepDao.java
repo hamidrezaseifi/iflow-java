@@ -47,6 +47,7 @@ public class WorkflowTypeStepDao extends DaoBasicClass<WorkflowTypeStep> impleme
     model.setWorkflowTypeId(rs.getLong("workflow_type_id"));
     model.setTitle(rs.getString("title"));
     model.setStatus(rs.getInt("status"));
+    model.setStepIndex(rs.getInt("step_index"));
     model.setCreatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("created_at")));
     model.setUpdatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("updated_at")));
     model.setVersion(rs.getInt("version"));
@@ -64,9 +65,10 @@ public class WorkflowTypeStepDao extends DaoBasicClass<WorkflowTypeStep> impleme
       throws SQLException {
     ps.setLong(1, model.getWorkflowTypeId());
     ps.setString(2, model.getTitle());
-    ps.setString(3, model.getComments());
-    ps.setInt(4, model.getVersion());
-    ps.setInt(5, model.getStatus());
+    ps.setInt(3, model.getStepIndex());
+    ps.setString(4, model.getComments());
+    ps.setInt(5, model.getVersion());
+    ps.setInt(6, model.getStatus());
 
     return ps;
   }
@@ -76,17 +78,18 @@ public class WorkflowTypeStepDao extends DaoBasicClass<WorkflowTypeStep> impleme
       throws SQLException {
     ps.setLong(1, model.getWorkflowTypeId());
     ps.setString(2, model.getTitle());
-    ps.setString(3, model.getComments());
-    ps.setInt(4, model.getVersion());
-    ps.setInt(5, model.getStatus());
-    ps.setLong(6, model.getId());
+    ps.setInt(3, model.getStepIndex());
+    ps.setString(4, model.getComments());
+    ps.setInt(5, model.getVersion());
+    ps.setInt(6, model.getStatus());
+    ps.setLong(7, model.getId());
 
     return ps;
   }
 
   @Override
   public WorkflowTypeStep create(final WorkflowTypeStep model, final boolean withTransaction) throws IFlowStorageException {
-    final String sql = "INSERT INTO workflow_type_step (workflow_type_id, title, comments, version, status)"
+    final String sql = "INSERT INTO workflow_type_step (workflow_type_id, title, step_index, comments, version, status)"
         + "VALUES (?, ?, ?, ?, ?)";
 
     return getById(createModel(model, "WorkflowTypeStep", sql, withTransaction));
@@ -94,7 +97,7 @@ public class WorkflowTypeStepDao extends DaoBasicClass<WorkflowTypeStep> impleme
 
   @Override
   public WorkflowTypeStep update(final WorkflowTypeStep model) throws IFlowStorageException {
-    final String sql = "UPDATE workflow_type_step SET workflow_type_id = ?, title = ?, comments = ?,"
+    final String sql = "UPDATE workflow_type_step SET workflow_type_id = ?, title = ?, step_index = ?, comments = ?,"
         + " version = ?, status = ? WHERE id = ?";
 
     updateModel(model, "WorkflowTypeStep", sql, true);

@@ -180,6 +180,7 @@ CREATE TABLE `workflow_type_step` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `workflow_type_id` int(11) NOT NULL,
   `title` varchar(200) NOT NULL,
+  `step_index` smallint(6) NOT NULL DEFAULT 0,
   `commecnts` text,
   `status` smallint(6) NOT NULL DEFAULT '1',
   `version` int(11) NOT NULL DEFAULT '1',

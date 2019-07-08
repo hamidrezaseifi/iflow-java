@@ -7,12 +7,13 @@ import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 
 public class WorkflowTypeStep extends ModelMapperBase<WorkflowTypeStepEdo, WorkflowTypeStep> {
 
-  private Long id;
-  private Long workflowTypeId;
-  private String title;
-  private String comments;
-  private Integer status;
-  private Integer version;
+  private Long          id;
+  private Long          workflowTypeId;
+  private String        title;
+  private Integer       stepIndex;
+  private String        comments;
+  private Integer       status;
+  private Integer       version;
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
 
@@ -39,6 +40,20 @@ public class WorkflowTypeStep extends ModelMapperBase<WorkflowTypeStepEdo, Workf
 
   public void setTitle(final String title) {
     this.title = title;
+  }
+
+  /**
+   * @return the stepIndex
+   */
+  public Integer getStepIndex() {
+    return this.stepIndex;
+  }
+
+  /**
+   * @param stepIndex the stepIndex to set
+   */
+  public void setStepIndex(final Integer stepIndex) {
+    this.stepIndex = stepIndex;
   }
 
   public String getComments() {
@@ -86,6 +101,7 @@ public class WorkflowTypeStep extends ModelMapperBase<WorkflowTypeStepEdo, Workf
   @Override
   public WorkflowTypeStepEdo toEdo() {
     final WorkflowTypeStepEdo edo = new WorkflowTypeStepEdo();
+    edo.setStepIndex(this.stepIndex);
     edo.setTitle(this.title);
     edo.setComments(this.comments);
     edo.setStatus(this.status);
@@ -99,6 +115,7 @@ public class WorkflowTypeStep extends ModelMapperBase<WorkflowTypeStepEdo, Workf
   public WorkflowTypeStep fromEdo(final WorkflowTypeStepEdo edo) {
     final WorkflowTypeStep model = new WorkflowTypeStep();
 
+    model.setStepIndex(edo.getStepIndex());
     model.setTitle(edo.getTitle());
     model.setComments(edo.getComments());
     model.setStatus(edo.getStatus());
