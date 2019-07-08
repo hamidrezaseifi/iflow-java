@@ -9,6 +9,7 @@ public enum EIFlowErrorType implements IValueList {
   COMPANY_NOTFOUND(30L),
   INVALID_TOKEN(40L),
   NO_SESSION_FOUND(50L),
+  UNKNOWN_WORKFLOW_STATUS(60L),
 
   UNKNOWN(1000L);
 

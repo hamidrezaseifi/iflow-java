@@ -61,6 +61,7 @@ public class WorkflowTypeDao extends DaoBasicClass<WorkflowType> implements IWor
     model.setVersion(rs.getInt("version"));
     model.setSendToController(rs.getInt("send_to_controller") == 1);
     model.setManualAssign(rs.getInt("manual_assign") == 1);
+    model.setIncreaseStepAutomatic(rs.getInt("increase_step_automatic") == 1);
     model.setSteps(workflowTypeStepDao.getListByWorkflowTypeId(model.getId()));
 
     return model;
@@ -79,9 +80,10 @@ public class WorkflowTypeDao extends DaoBasicClass<WorkflowType> implements IWor
     ps.setString(3, model.getTitle());
     ps.setInt(4, model.getManualAssign() ? 1 : 0);
     ps.setInt(5, model.getSendToController() ? 1 : 0);
-    ps.setString(6, model.getComments());
-    ps.setInt(7, model.getVersion());
-    ps.setInt(8, model.getStatus());
+    ps.setInt(6, model.getIncreaseStepAutomatic() ? 1 : 0);
+    ps.setString(7, model.getComments());
+    ps.setInt(8, model.getVersion());
+    ps.setInt(9, model.getStatus());
 
     return ps;
   }
@@ -94,17 +96,18 @@ public class WorkflowTypeDao extends DaoBasicClass<WorkflowType> implements IWor
     ps.setString(3, model.getTitle());
     ps.setInt(4, model.getManualAssign() ? 1 : 0);
     ps.setInt(5, model.getSendToController() ? 1 : 0);
-    ps.setString(6, model.getComments());
-    ps.setInt(7, model.getVersion());
-    ps.setInt(8, model.getStatus());
-    ps.setLong(9, model.getId());
+    ps.setInt(6, model.getIncreaseStepAutomatic() ? 1 : 0);
+    ps.setString(7, model.getComments());
+    ps.setInt(8, model.getVersion());
+    ps.setInt(9, model.getStatus());
+    ps.setLong(10, model.getId());
 
     return ps;
   }
 
   @Override
   public WorkflowType create(final WorkflowType model) throws IFlowStorageException {
-    final String sql = "INSERT INTO workflow_type (company_id, workflow_base_type, title, manual_assign, send_to_controller, comments, version, status)"
+    final String sql = "INSERT INTO workflow_type (company_id, workflow_base_type, title, manual_assign, send_to_controller, increase_step_automatic, comments, version, status)"
         + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
     final TransactionStatus transactionStatus = startTransaction(true);
@@ -141,7 +144,7 @@ public class WorkflowTypeDao extends DaoBasicClass<WorkflowType> implements IWor
 
   @Override
   public WorkflowType update(final WorkflowType model) throws IFlowStorageException {
-    final String sql = "UPDATE workflow_type SET company_id = ?, workflow_base_type = ?, title = ?, manual_assign = ?, send_to_controller = ?, comments = ?,"
+    final String sql = "UPDATE workflow_type SET company_id = ?, workflow_base_type = ?, title = ?, manual_assign = ?, send_to_controller = ?, increase_step_automatic = ?, comments = ?,"
         + " version = ?, status = ? WHERE id = ?";
 
     updateModel(model, "WorkflowType", sql, true);

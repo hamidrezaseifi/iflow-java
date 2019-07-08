@@ -14,6 +14,7 @@ public class WorkflowTypeEdo {
   private Integer version;
   private Boolean sendToController;
   private Boolean manualAssign;
+  private Boolean increaseStepAutomatic;
 
   private final Set<WorkflowTypeStepEdo> steps = new HashSet<>();
 
@@ -93,6 +94,14 @@ public class WorkflowTypeEdo {
 
   public void setManualAssign(final Boolean manualAssign) {
     this.manualAssign = manualAssign;
+  }
+
+  public Boolean getIncreaseStepAutomatic() {
+    return increaseStepAutomatic;
+  }
+
+  public void setIncreaseStepAutomatic(final Boolean increaseStepAutomatic) {
+    this.increaseStepAutomatic = increaseStepAutomatic;
   }
 
   public Set<WorkflowTypeStepEdo> getSteps() {

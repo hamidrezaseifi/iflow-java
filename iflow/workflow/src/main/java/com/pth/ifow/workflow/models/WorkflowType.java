@@ -18,6 +18,7 @@ public class WorkflowType extends ModelMapperBase<WorkflowTypeEdo, WorkflowType>
   private Integer status;
   private Boolean sendToController;
   private Boolean manualAssign;
+  private Boolean increaseStepAutomatic;
   private Integer version;
   private final Set<WorkflowTypeStep> steps = new HashSet<>();
 
@@ -92,6 +93,14 @@ public class WorkflowType extends ModelMapperBase<WorkflowTypeEdo, WorkflowType>
     this.manualAssign = manualAssign;
   }
 
+  public Boolean getIncreaseStepAutomatic() {
+    return increaseStepAutomatic;
+  }
+
+  public void setIncreaseStepAutomatic(final Boolean increaseStepAutomatic) {
+    this.increaseStepAutomatic = increaseStepAutomatic;
+  }
+
   @Override
   public Integer getVersion() {
     return this.version;
@@ -137,6 +146,7 @@ public class WorkflowType extends ModelMapperBase<WorkflowTypeEdo, WorkflowType>
     edo.setBaseTypeId(this.baseTypeId);
     edo.setSendToController(sendToController);
     edo.setManualAssign(manualAssign);
+    edo.setIncreaseStepAutomatic(increaseStepAutomatic);
     edo.setSteps(ModelMapperBase.toEdoList(this.steps).stream().collect(Collectors.toSet()));
     edo.setVersion(version);
 
@@ -155,6 +165,7 @@ public class WorkflowType extends ModelMapperBase<WorkflowTypeEdo, WorkflowType>
     model.setBaseTypeId(edo.getBaseTypeId());
     model.setSendToController(edo.getSendToController());
     model.setManualAssign(edo.getManualAssign());
+    model.setIncreaseStepAutomatic(edo.getIncreaseStepAutomatic());
     model.setVersion(edo.getVersion());
     model.setSteps(new WorkflowTypeStep().fromEdoList(edo.getSteps()));
 

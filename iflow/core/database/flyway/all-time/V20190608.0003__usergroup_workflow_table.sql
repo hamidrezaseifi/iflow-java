@@ -151,6 +151,7 @@ CREATE TABLE `workflow_type` (
   `title` varchar(200) NOT NULL,
   `manual_assign` smallint(2) NOT NULL DEFAULT '0',
   `send_to_controller` smallint(2) NOT NULL DEFAULT '1',
+  `increase_step_automatic` smallint(2) DEFAULT '0',
   `commecnts` text,
   `status` smallint(6) NOT NULL DEFAULT '1',
   `version` int(11) NOT NULL DEFAULT '1',
