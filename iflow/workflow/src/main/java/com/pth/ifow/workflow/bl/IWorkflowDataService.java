@@ -6,7 +6,7 @@ import java.util.List;
 import com.pth.ifow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.ifow.workflow.models.Workflow;
 
-public interface IWorkflowService {
+public interface IWorkflowDataService {
 
   public Workflow save(Workflow model) throws WorkflowCustomizedException, MalformedURLException;
 
