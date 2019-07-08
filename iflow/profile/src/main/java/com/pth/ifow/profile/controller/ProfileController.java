@@ -36,93 +36,93 @@ import com.pth.ifow.profile.service.IUsersService;
 @RestController
 @RequestMapping
 public class ProfileController {
-  
+
   private final ISessionManager sessionManager;
-  
+
   private final IUsersService usersService;
-  
+
   private final ICompanyService companyService;
-  
+
   public ProfileController(@Autowired final ISessionManager sessionManager, @Autowired final IUsersService usersService,
       @Autowired final ICompanyService companyServic) {
-    
+
     this.sessionManager = sessionManager;
     this.usersService = usersService;
     this.companyService = companyServic;
   }
-  
+
   @ResponseStatus(HttpStatus.OK)
-  @IflowPostRequestMapping(value = IflowRestPaths.ProfileModule.AUTHENTICATION_READPROFILE)
+  @IflowPostRequestMapping(value = IflowRestPaths.ProfileModule.AUTHENTICATION_READ_AUTHENTOCATEDINFO)
   @ResponseBody
   public ResponseEntity<ProfileResponseEdo> readAuthenticatedInfo(@RequestBody final AuthenticatedProfileRequestEdo requestEdo,
       final HttpServletRequest request,
       @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId)
       throws ProfileCustomizedException, URISyntaxException, MalformedURLException {
-    
+
     if (StringUtils.isEmpty(requestEdo.getToken()) || StringUtils.isEmpty(headerTokenId)
         || (requestEdo.getToken().equals(headerTokenId) == false)) {
       throw new ProfileCustomizedException("Invalid Token!", "", EModule.PROFILE.getModuleName(), EIFlowErrorType.INVALID_TOKEN);
     }
-    
+
     final UserAuthenticationSession session = this.sessionManager.findByToken(requestEdo.getToken());
-    
+
     if ((session == null) || (session.getEmail().equals(requestEdo.getEmail()) == false)) {
       throw new ProfileCustomizedException("Invalid session!", "", EModule.PROFILE.getModuleName(), EIFlowErrorType.NO_SESSION_FOUND);
     }
-    
+
     final User user = this.usersService.getUserByEmail(session.getEmail());
-    
+
     if (user == null) {
       throw new ProfileCustomizedException("User not found!", "", EModule.PROFILE.getModuleName(), EIFlowErrorType.USER_NOTFOUND);
     }
-    
+
     final Company company = this.companyService.getById(user.getCompanyId());
-    
+
     if (company == null) {
       throw new ProfileCustomizedException("Company not found!", "", EModule.PROFILE.getModuleName(),
           EIFlowErrorType.COMPANY_NOTFOUND);
     }
-    
+
     final ProfileResponseEdo edo = new ProfileResponseEdo(user.toEdo(), company.toEdo(), session.getSessionid());
-    
+
     return ControllerHelper.createResponseEntity(request, edo, HttpStatus.OK);
   }
-
+  
   @ResponseStatus(HttpStatus.OK)
-  @IflowPostRequestMapping(value = IflowRestPaths.ProfileModule.AUTHENTICATION_READPROFILE)
+  @IflowPostRequestMapping(value = IflowRestPaths.ProfileModule.AUTHENTICATION_READ_TOKENINFO)
   @ResponseBody
   public ResponseEntity<ProfileResponseEdo> readTokenInfo(@RequestBody final TokenProfileRequestEdo requestEdo,
       final HttpServletRequest request,
       @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId)
       throws ProfileCustomizedException, URISyntaxException, MalformedURLException {
-    
+
     if (StringUtils.isEmpty(requestEdo.getToken()) || StringUtils.isEmpty(headerTokenId)
         || (requestEdo.getToken().equals(headerTokenId) == false)) {
       throw new ProfileCustomizedException("Invalid Token!", "", EModule.PROFILE.getModuleName(), EIFlowErrorType.INVALID_TOKEN);
     }
-    
+
     final UserAuthenticationSession session = this.sessionManager.findByToken(requestEdo.getToken());
-    
+
     if ((session == null)) {
       throw new ProfileCustomizedException("Invalid session!", "", EModule.PROFILE.getModuleName(), EIFlowErrorType.NO_SESSION_FOUND);
     }
-    
+
     final User user = this.usersService.getUserByEmail(session.getEmail());
-    
+
     if (user == null) {
       throw new ProfileCustomizedException("User not found!", "", EModule.PROFILE.getModuleName(), EIFlowErrorType.USER_NOTFOUND);
     }
-    
+
     final Company company = this.companyService.getById(user.getCompanyId());
-    
+
     if (company == null) {
       throw new ProfileCustomizedException("Company not found!", "", EModule.PROFILE.getModuleName(),
           EIFlowErrorType.COMPANY_NOTFOUND);
     }
-    
+
     final ProfileResponseEdo edo = new ProfileResponseEdo(user.toEdo(), company.toEdo(), session.getSessionid());
-    
+
     return ControllerHelper.createResponseEntity(request, edo, HttpStatus.OK);
   }
-  
+
 }
