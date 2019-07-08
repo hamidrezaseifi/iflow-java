@@ -6,7 +6,7 @@ import java.util.List;
 import com.pth.ifow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.ifow.workflow.models.WorkflowTypeStep;
 
-public interface IWorkflowTypeStepService {
+public interface IWorkflowTypeStepDataService {
 
   public WorkflowTypeStep getById(Long id) throws WorkflowCustomizedException, MalformedURLException;
 

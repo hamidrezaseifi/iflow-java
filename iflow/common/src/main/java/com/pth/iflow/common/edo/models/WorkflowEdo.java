@@ -9,7 +9,7 @@ public class WorkflowEdo {
 
   private Long id;
   private Long workflowTypeId;
-  private Long currentStep;
+  private WorkflowTypeStepEdo currentStep;
   private Long controller;
   private Long createdBy;
   private Long assignTo;
@@ -37,11 +37,11 @@ public class WorkflowEdo {
     this.workflowTypeId = workflowTypeId;
   }
 
-  public Long getCurrentStep() {
+  public WorkflowTypeStepEdo getCurrentStep() {
     return currentStep;
   }
 
-  public void setCurrentStep(final Long currentStep) {
+  public void setCurrentStep(final WorkflowTypeStepEdo currentStep) {
     this.currentStep = currentStep;
   }
 

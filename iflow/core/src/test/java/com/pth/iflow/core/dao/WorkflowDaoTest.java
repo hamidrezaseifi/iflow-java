@@ -93,8 +93,7 @@ public class WorkflowDaoTest extends TestDataProducer {
 
     Assert.assertNotNull("Result list is not null!", resList);
 
-    assertThat("Result list has " + createdModels.size() + " items.", resList.size(),
-        greaterThanOrEqualTo(createdModels.size()));
+    assertThat("Result list has " + createdModels.size() + " items.", resList.size(), greaterThanOrEqualTo(createdModels.size()));
 
   }
 
@@ -134,7 +133,7 @@ public class WorkflowDaoTest extends TestDataProducer {
     Assert.assertNotNull("Result workflow is not null!", updatedWorkflow);
     Assert.assertEquals("Result workflow has the same id as created!", createdWorkflow.getId(), updatedWorkflow.getId());
     Assert.assertEquals("Result workflow has title 'new updated title test'!", createdWorkflow.getTitle(), "new updated title test");
-    Assert.assertEquals("Result workflow has status 10!", updatedWorkflow.getStatus().intValue(), 10);
+    Assert.assertEquals("Result workflow has status 10!", updatedWorkflow.getStatusInt().intValue(), 10);
     Assert.assertEquals("Result workflow has version 22!", updatedWorkflow.getVersion().intValue(), 22);
 
   }

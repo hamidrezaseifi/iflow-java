@@ -8,18 +8,19 @@ import java.util.stream.Collectors;
 
 import com.pth.iflow.common.edo.models.WorkflowEdo;
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
+import com.pth.iflow.common.enums.EWorkflowStatus;
 
 public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
 
   private Long id;
   private Long workflowTypeId;
-  private Long currentStep;
+  private WorkflowTypeStep currentStep;
   private Long controller;
   private Long createdBy;
   private Long assignTo;
   private String title;
   private String comments;
-  private Integer status;
+  private EWorkflowStatus status;
   private Integer version;
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
@@ -44,11 +45,11 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
     this.workflowTypeId = workflowTypeId;
   }
 
-  public Long getCurrentStep() {
+  public WorkflowTypeStep getCurrentStep() {
     return currentStep;
   }
 
-  public void setCurrentStep(final Long currentStep) {
+  public void setCurrentStep(final WorkflowTypeStep currentStep) {
     this.currentStep = currentStep;
   }
 
@@ -92,12 +93,16 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
     this.comments = comments;
   }
 
-  public Integer getStatus() {
+  public EWorkflowStatus getStatus() {
     return this.status;
   }
 
+  public Integer getStatusInt() {
+    return this.status.getValue().intValue();
+  }
+
   public void setStatus(final Integer status) {
-    this.status = status;
+    this.status = EWorkflowStatus.ofValue(status);
   }
 
   @Override
@@ -161,10 +166,10 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
     final WorkflowEdo edo = new WorkflowEdo();
     edo.setTitle(this.title);
     edo.setComments(this.comments);
-    edo.setStatus(this.status);
+    edo.setStatus(this.getStatusInt());
     edo.setId(this.id);
     edo.setController(controller);
-    edo.setCurrentStep(currentStep);
+    edo.setCurrentStep(currentStep.toEdo());
     edo.setCreatedBy(createdBy);
     edo.setWorkflowTypeId(workflowTypeId);
     edo.setVersion(version);
@@ -185,7 +190,7 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
     model.setStatus(edo.getStatus());
     model.setId(edo.getId());
     model.setController(edo.getController());
-    model.setCurrentStep(edo.getCurrentStep());
+    model.setCurrentStep(new WorkflowTypeStep().fromEdo(edo.getCurrentStep()));
     model.setCreatedBy(edo.getCreatedBy());
     model.setWorkflowTypeId(edo.getWorkflowTypeId());
     model.setVersion(edo.getVersion());

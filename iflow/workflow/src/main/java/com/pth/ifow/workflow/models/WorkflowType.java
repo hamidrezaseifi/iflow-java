@@ -1,6 +1,5 @@
 package com.pth.ifow.workflow.models;
 
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -20,8 +19,6 @@ public class WorkflowType extends ModelMapperBase<WorkflowTypeEdo, WorkflowType>
   private Boolean sendToController;
   private Boolean manualAssign;
   private Integer version;
-  private LocalDateTime createdAt;
-  private LocalDateTime updatedAt;
   private final Set<WorkflowTypeStep> steps = new HashSet<>();
 
   @Override
@@ -103,22 +100,6 @@ public class WorkflowType extends ModelMapperBase<WorkflowTypeEdo, WorkflowType>
   @Override
   public void setVersion(final Integer version) {
     this.version = version;
-  }
-
-  public LocalDateTime getCreatedAt() {
-    return this.createdAt;
-  }
-
-  public void setCreatedAt(final LocalDateTime createdAt) {
-    this.createdAt = createdAt;
-  }
-
-  public LocalDateTime getUpdatedAt() {
-    return this.updatedAt;
-  }
-
-  public void setUpdatedAt(final LocalDateTime updatedAt) {
-    this.updatedAt = updatedAt;
   }
 
   public Set<WorkflowTypeStep> getSteps() {

@@ -186,7 +186,7 @@ public class TestDataProducer {
     model.setVersion(1);
     model.setComments("comments");
     model.setController(1L);
-    model.setCurrentStep(1L);
+    model.setCurrentStep(getTestWorkflowTypeStep());
     model.setCreatedBy(1L);
     model.setAssignTo(1L);
     model.setActions(Arrays.asList(getTestWorkflowAction(1L, 1L), getTestWorkflowAction(2L, 2L), getTestWorkflowAction(3L, 3L)));
@@ -204,7 +204,7 @@ public class TestDataProducer {
     model.setVersion(1);
     model.setComments("comments");
     model.setController(1L);
-    model.setCurrentStep(1L);
+    model.setCurrentStep(getTestWorkflowTypeStep());
     model.setCreatedBy(1L);
     model.setAssignTo(1L);
     model.setActions(Arrays.asList(getTestNewWorkflowAction(), getTestNewWorkflowAction(), getTestNewWorkflowAction()));

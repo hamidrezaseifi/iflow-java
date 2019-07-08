@@ -12,21 +12,21 @@ import org.springframework.stereotype.Service;
 import com.pth.iflow.common.edo.models.WorkflowTypeStepEdo;
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.rest.IflowRestPaths;
-import com.pth.ifow.workflow.bl.IWorkflowTypeStepService;
+import com.pth.ifow.workflow.bl.IWorkflowTypeStepDataService;
 import com.pth.ifow.workflow.config.WorkflowConfiguration;
 import com.pth.ifow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.ifow.workflow.models.WorkflowTypeStep;
 import com.pth.ifow.workflow.services.IRestTemplateCall;
 
 @Service
-public class WorkflowTypeStepService implements IWorkflowTypeStepService {
+public class WorkflowTypeStepDataService implements IWorkflowTypeStepDataService {
 
-  private static final Logger logger = LoggerFactory.getLogger(WorkflowTypeStepService.class);
+  private static final Logger logger = LoggerFactory.getLogger(WorkflowTypeStepDataService.class);
 
   private final IRestTemplateCall restTemplate;
   private final WorkflowConfiguration.ModuleAccessConfig moduleAccessConfig;
 
-  public WorkflowTypeStepService(@Autowired final IRestTemplateCall restTemplate,
+  public WorkflowTypeStepDataService(@Autowired final IRestTemplateCall restTemplate,
       @Autowired final WorkflowConfiguration.ModuleAccessConfig moduleAccessConfig) {
     this.restTemplate = restTemplate;
     this.moduleAccessConfig = moduleAccessConfig;

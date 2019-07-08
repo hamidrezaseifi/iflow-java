@@ -19,16 +19,16 @@ import com.pth.iflow.common.controllers.helper.ControllerHelper;
 import com.pth.iflow.common.edo.models.WorkflowTypeStepEdo;
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 import com.pth.iflow.common.rest.IflowRestPaths;
-import com.pth.ifow.workflow.bl.IWorkflowTypeStepService;
+import com.pth.ifow.workflow.bl.IWorkflowTypeStepDataService;
 import com.pth.ifow.workflow.models.WorkflowTypeStep;
 
 @RestController
 @RequestMapping
 public class WorkflowTypeStepController {
 
-  final IWorkflowTypeStepService workflowStepService;
+  final IWorkflowTypeStepDataService workflowStepService;
 
-  public WorkflowTypeStepController(@Autowired final IWorkflowTypeStepService workflowStepService) {
+  public WorkflowTypeStepController(@Autowired final IWorkflowTypeStepDataService workflowStepService) {
     this.workflowStepService = workflowStepService;
   }
 

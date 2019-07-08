@@ -21,8 +21,8 @@ import com.pth.iflow.common.edo.models.WorkflowTypeStepEdo;
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 import com.pth.iflow.common.enums.EModule;
 import com.pth.ifow.workflow.TestDataProducer;
-import com.pth.ifow.workflow.bl.IWorkflowTypeStepService;
-import com.pth.ifow.workflow.bl.impl.WorkflowTypeStepService;
+import com.pth.ifow.workflow.bl.IWorkflowTypeStepDataService;
+import com.pth.ifow.workflow.bl.impl.WorkflowTypeStepDataService;
 import com.pth.ifow.workflow.config.WorkflowConfiguration;
 import com.pth.ifow.workflow.models.WorkflowTypeStep;
 
@@ -31,7 +31,7 @@ import com.pth.ifow.workflow.models.WorkflowTypeStep;
 @AutoConfigureMockMvc
 public class WorkflowTypeStepServiceTest extends TestDataProducer {
 
-  private IWorkflowTypeStepService workflowTypeStepService;
+  private IWorkflowTypeStepDataService workflowTypeStepService;
 
   @MockBean
   private IRestTemplateCall restTemplate;
@@ -41,7 +41,7 @@ public class WorkflowTypeStepServiceTest extends TestDataProducer {
 
   @Before
   public void setUp() throws Exception {
-    this.workflowTypeStepService = new WorkflowTypeStepService(this.restTemplate, moduleAccessConfig);
+    this.workflowTypeStepService = new WorkflowTypeStepDataService(this.restTemplate, moduleAccessConfig);
 
     when(moduleAccessConfig.generateCoreUrl(any(String.class))).thenReturn(new URL("http://any-string"));
 

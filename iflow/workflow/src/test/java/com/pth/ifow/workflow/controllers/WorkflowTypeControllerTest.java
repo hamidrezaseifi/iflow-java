@@ -32,7 +32,7 @@ import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
 import com.pth.ifow.workflow.TestDataProducer;
-import com.pth.ifow.workflow.bl.IWorkflowTypeService;
+import com.pth.ifow.workflow.bl.IWorkflowTypeDataService;
 import com.pth.ifow.workflow.models.WorkflowType;
 
 @RunWith(SpringRunner.class)
@@ -50,7 +50,7 @@ public class WorkflowTypeControllerTest extends TestDataProducer {
   private ObjectMapper mapper;
 
   @MockBean
-  private IWorkflowTypeService workflowService;
+  private IWorkflowTypeDataService workflowService;
 
   @Value("${iflow.common.rest.api.security.client-id.internal}")
   private String innerModulesRequestHeaderValue;

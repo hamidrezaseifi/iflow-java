@@ -17,6 +17,7 @@ import com.pth.iflow.core.model.WorkflowFile;
 import com.pth.iflow.core.storage.dao.IWorkflowActionDao;
 import com.pth.iflow.core.storage.dao.IWorkflowDao;
 import com.pth.iflow.core.storage.dao.IWorkflowFileDao;
+import com.pth.iflow.core.storage.dao.IWorkflowTypeStepDao;
 import com.pth.iflow.core.storage.dao.basic.DaoBasicClass;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 import com.pth.iflow.core.storage.dao.utils.SqlUtils;
@@ -30,6 +31,9 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
 
   @Autowired
   private IWorkflowFileDao workflowFileDao;
+
+  @Autowired
+  private IWorkflowTypeStepDao workflowTypeStepDao;
 
   public WorkflowDao() {
 
@@ -66,7 +70,7 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
     model.setVersion(rs.getInt("version"));
     model.setComments(rs.getString("comments"));
     model.setController(rs.getLong("controller"));
-    model.setCurrentStep(rs.getLong("current_step"));
+    model.setCurrentStep(workflowTypeStepDao.getById(rs.getLong("current_step")));
     model.setCreatedBy(rs.getLong("created_by"));
     model.setAssignTo(rs.getLong("assign_to"));
     model.setWorkflowTypeId(rs.getLong("workflow_type_id"));
@@ -196,13 +200,13 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
   protected PreparedStatement prepareInsertPreparedStatement(final Workflow model, final PreparedStatement ps) throws SQLException {
     ps.setLong(1, model.getWorkflowTypeId());
     ps.setString(2, model.getTitle());
-    ps.setLong(3, model.getCurrentStep());
+    ps.setLong(3, model.getCurrentStep().getId());
     ps.setLong(4, model.getAssignTo());
     ps.setString(5, model.getComments());
     ps.setLong(6, model.getController());
     ps.setLong(7, model.getCreatedBy());
     ps.setInt(8, model.getVersion());
-    ps.setInt(9, model.getStatus());
+    ps.setInt(9, model.getStatusInt());
 
     return ps;
   }
@@ -211,13 +215,13 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
   protected PreparedStatement prepareUpdatePreparedStatement(final Workflow model, final PreparedStatement ps) throws SQLException {
     ps.setLong(1, model.getWorkflowTypeId());
     ps.setString(2, model.getTitle());
-    ps.setLong(3, model.getCurrentStep());
+    ps.setLong(3, model.getCurrentStep().getId());
     ps.setLong(4, model.getAssignTo());
     ps.setString(5, model.getComments());
     ps.setLong(6, model.getController());
     ps.setLong(7, model.getCreatedBy());
     ps.setInt(8, model.getVersion());
-    ps.setInt(9, model.getStatus());
+    ps.setInt(9, model.getStatusInt());
     ps.setLong(10, model.getId());
 
     return ps;

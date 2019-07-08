@@ -13,7 +13,7 @@ import com.pth.iflow.common.edo.models.WorkflowTypeEdo;
 import com.pth.iflow.common.edo.models.WorkflowTypeStepEdo;
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.rest.IflowRestPaths;
-import com.pth.ifow.workflow.bl.IWorkflowTypeService;
+import com.pth.ifow.workflow.bl.IWorkflowTypeDataService;
 import com.pth.ifow.workflow.config.WorkflowConfiguration;
 import com.pth.ifow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.ifow.workflow.models.WorkflowType;
@@ -21,14 +21,14 @@ import com.pth.ifow.workflow.models.WorkflowTypeStep;
 import com.pth.ifow.workflow.services.IRestTemplateCall;
 
 @Service
-public class WorkflowTypeService implements IWorkflowTypeService {
+public class WorkflowTypeDataService implements IWorkflowTypeDataService {
 
-  private static final Logger logger = LoggerFactory.getLogger(WorkflowTypeService.class);
+  private static final Logger logger = LoggerFactory.getLogger(WorkflowTypeDataService.class);
 
   private final IRestTemplateCall restTemplate;
   private final WorkflowConfiguration.ModuleAccessConfig moduleAccessConfig;
 
-  public WorkflowTypeService(@Autowired final IRestTemplateCall restTemplate,
+  public WorkflowTypeDataService(@Autowired final IRestTemplateCall restTemplate,
       @Autowired final WorkflowConfiguration.ModuleAccessConfig moduleAccessConfig) {
     this.restTemplate = restTemplate;
     this.moduleAccessConfig = moduleAccessConfig;

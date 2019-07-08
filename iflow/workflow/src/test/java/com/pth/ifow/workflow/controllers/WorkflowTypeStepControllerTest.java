@@ -29,7 +29,7 @@ import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
 import com.pth.ifow.workflow.TestDataProducer;
-import com.pth.ifow.workflow.bl.IWorkflowTypeStepService;
+import com.pth.ifow.workflow.bl.IWorkflowTypeStepDataService;
 import com.pth.ifow.workflow.models.WorkflowTypeStep;
 
 @RunWith(SpringRunner.class)
@@ -47,7 +47,7 @@ public class WorkflowTypeStepControllerTest extends TestDataProducer {
   private ObjectMapper mapper;
 
   @MockBean
-  private IWorkflowTypeStepService workflowStepService;
+  private IWorkflowTypeStepDataService workflowStepService;
 
   @Before
   public void setUp() throws Exception {
