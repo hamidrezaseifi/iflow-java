@@ -1,4 +1,4 @@
-package com.pth.iflow.common.edo.models;
+package com.pth.iflow.common.edo.models.xml;
 
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -6,16 +6,16 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name = "UserGroupEdo")
+@XmlRootElement(name = "DepartmentGroupEdo")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class UserGroupEdo {
+public class DepartmentGroupEdo {
 
   @XmlElement(name = "ID")
   private Long    id;
 
   @NotNull
-  @XmlElement(name = "CompanyId")
-  private Long    companyId;
+  @XmlElement(name = "DepartmentId")
+  private Long    departmentId;
 
   @NotNull
   @XmlElement(name = "Title")
@@ -37,12 +37,12 @@ public class UserGroupEdo {
     this.id = id;
   }
 
-  public Long getCompanyId() {
-    return companyId;
+  public Long getDepartmentId() {
+    return departmentId;
   }
 
-  public void setCompanyId(final Long companyId) {
-    this.companyId = companyId;
+  public void setDepartmentId(final Long departmentId) {
+    this.departmentId = departmentId;
   }
 
   public String getTitle() {

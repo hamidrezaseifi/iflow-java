@@ -22,7 +22,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pth.iflow.common.edo.models.UserAuthenticationRequestEdo;
+import com.pth.iflow.common.edo.models.xml.UserAuthenticationRequestEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.ifow.profile.TestDataProducer;
 import com.pth.ifow.profile.model.UserAuthenticationRequest;

@@ -1,4 +1,4 @@
-package com.pth.iflow.common.edo.models;
+package com.pth.iflow.common.edo.models.xml;
 
 import java.util.HashSet;
 import java.util.List;

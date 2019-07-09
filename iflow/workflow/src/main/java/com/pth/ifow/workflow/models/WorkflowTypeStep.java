@@ -2,18 +2,19 @@ package com.pth.ifow.workflow.models;
 
 import java.time.LocalDateTime;
 
-import com.pth.iflow.common.edo.models.WorkflowTypeStepEdo;
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
+import com.pth.iflow.common.edo.models.json.WorkflowTypeStepJsonEdo;
+import com.pth.iflow.common.edo.models.xml.WorkflowTypeStepEdo;
 
-public class WorkflowTypeStep extends ModelMapperBase<WorkflowTypeStepEdo, WorkflowTypeStep> {
+public class WorkflowTypeStep extends ModelMapperBase<WorkflowTypeStepEdo, WorkflowTypeStepJsonEdo, WorkflowTypeStep> {
 
-  private Long id;
-  private Long workflowTypeId;
-  private String title;
-  private Integer stepIndex;
-  private String comments;
-  private Integer status;
-  private Integer version;
+  private Long          id;
+  private Long          workflowTypeId;
+  private String        title;
+  private Integer       stepIndex;
+  private String        comments;
+  private Integer       status;
+  private Integer       version;
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
 
@@ -135,6 +136,33 @@ public class WorkflowTypeStep extends ModelMapperBase<WorkflowTypeStepEdo, Workf
     model.setWorkflowTypeId(edo.getWorkflowTypeId());
 
     return model;
+  }
+
+  @Override
+  public WorkflowTypeStep fromJsonEdo(final WorkflowTypeStepJsonEdo edo) {
+    final WorkflowTypeStep model = new WorkflowTypeStep();
+
+    model.setStepIndex(edo.getStepIndex());
+    model.setTitle(edo.getTitle());
+    model.setComments(edo.getComments());
+    model.setStatus(edo.getStatus());
+    model.setId(edo.getId());
+    model.setWorkflowTypeId(edo.getWorkflowTypeId());
+
+    return model;
+  }
+
+  @Override
+  public WorkflowTypeStepJsonEdo toJsonEdo() {
+    final WorkflowTypeStepJsonEdo edo = new WorkflowTypeStepJsonEdo();
+    edo.setStepIndex(this.stepIndex);
+    edo.setTitle(this.title);
+    edo.setComments(this.comments);
+    edo.setStatus(this.status);
+    edo.setId(this.id);
+    edo.setWorkflowTypeId(this.workflowTypeId);
+
+    return edo;
   }
 
 }

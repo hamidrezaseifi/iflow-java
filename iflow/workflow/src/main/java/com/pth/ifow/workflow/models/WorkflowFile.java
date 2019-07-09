@@ -6,22 +6,23 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.pth.iflow.common.edo.models.WorkflowFileEdo;
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
+import com.pth.iflow.common.edo.models.json.WorkflowFileJsonEdo;
+import com.pth.iflow.common.edo.models.xml.WorkflowFileEdo;
 
-public class WorkflowFile extends ModelMapperBase<WorkflowFileEdo, WorkflowFile> {
+public class WorkflowFile extends ModelMapperBase<WorkflowFileEdo, WorkflowFileJsonEdo, WorkflowFile> {
 
-  private Long id;
-  private Long workflowId;
-  private Long createdBy;
-  private String title;
-  private String activeFilePath;
-  private String comments;
-  private Integer activeFileVersion;
-  private Integer status;
-  private Integer version;
-  private LocalDateTime createdAt;
-  private LocalDateTime updatedAt;
+  private Long                     id;
+  private Long                     workflowId;
+  private Long                     createdBy;
+  private String                   title;
+  private String                   activeFilePath;
+  private String                   comments;
+  private Integer                  activeFileVersion;
+  private Integer                  status;
+  private Integer                  version;
+  private LocalDateTime            createdAt;
+  private LocalDateTime            updatedAt;
   private Set<WorkflowFileVersion> fileVersions = new HashSet<>();
 
   @Override
@@ -165,6 +166,29 @@ public class WorkflowFile extends ModelMapperBase<WorkflowFileEdo, WorkflowFile>
     model.setFileVersions(new WorkflowFileVersion().fromEdoList(edo.getFileVersions()));
 
     return model;
+  }
+
+  @Override
+  public WorkflowFileJsonEdo toJsonEdo() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public WorkflowFile fromJsonEdo(final WorkflowFileJsonEdo edo) {
+    final WorkflowFile model = new WorkflowFile();
+
+    model.setTitle(edo.getTitle());
+    model.setComments(edo.getComments());
+    model.setStatus(edo.getStatus());
+    model.setId(edo.getId());
+    model.setCreatedBy(edo.getCreatedBy());
+    model.setActiveFilePath(edo.getActiveFilePath());
+    model.setActiveFileVersion(edo.getActiveFileVersion());
+    model.setWorkflowId(edo.getWorkflowId());
+    model.setVersion(edo.getVersion());
+
+    model.setFileVersions(new WorkflowFileVersion().fromJsonEdoList(edo.getFileVersions()));
   }
 
 }

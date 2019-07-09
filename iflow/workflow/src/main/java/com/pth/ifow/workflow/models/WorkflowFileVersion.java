@@ -2,19 +2,20 @@ package com.pth.ifow.workflow.models;
 
 import java.time.LocalDateTime;
 
-import com.pth.iflow.common.edo.models.WorkflowFileVersionEdo;
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
+import com.pth.iflow.common.edo.models.json.WorkflowFileVersionJsonEdo;
+import com.pth.iflow.common.edo.models.xml.WorkflowFileVersionEdo;
 
-public class WorkflowFileVersion extends ModelMapperBase<WorkflowFileVersionEdo, WorkflowFileVersion> {
+public class WorkflowFileVersion extends ModelMapperBase<WorkflowFileVersionEdo, WorkflowFileVersionJsonEdo, WorkflowFileVersion> {
 
-  private Long id;
-  private Long workflowFileId;
-  private Long createdBy;
-  private String filePath;
-  private String comments;
-  private Integer fileVersion;
-  private Integer status;
-  private Integer version;
+  private Long          id;
+  private Long          workflowFileId;
+  private Long          createdBy;
+  private String        filePath;
+  private String        comments;
+  private Integer       fileVersion;
+  private Integer       status;
+  private Integer       version;
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
 
@@ -118,6 +119,37 @@ public class WorkflowFileVersion extends ModelMapperBase<WorkflowFileVersionEdo,
 
   @Override
   public WorkflowFileVersion fromEdo(final WorkflowFileVersionEdo edo) {
+    final WorkflowFileVersion model = new WorkflowFileVersion();
+
+    model.setComments(edo.getComments());
+    model.setStatus(edo.getStatus());
+    model.setId(edo.getId());
+    model.setCreatedBy(edo.getCreatedBy());
+    model.setFilePath(edo.getFilePath());
+    model.setFileVersion(edo.getFileVersion());
+    model.setWorkflowFileId(edo.getWorkflowFileId());
+    model.setVersion(edo.getVersion());
+
+    return model;
+  }
+
+  @Override
+  public WorkflowFileVersionJsonEdo toJsonEdo() {
+    final WorkflowFileVersionJsonEdo edo = new WorkflowFileVersionJsonEdo();
+    edo.setComments(this.comments);
+    edo.setStatus(this.status);
+    edo.setId(this.id);
+    edo.setCreatedBy(createdBy);
+    edo.setFilePath(filePath);
+    edo.setFileVersion(fileVersion);
+    edo.setWorkflowFileId(workflowFileId);
+    edo.setVersion(version);
+
+    return edo;
+  }
+
+  @Override
+  public WorkflowFileVersion fromJsonEdo(final WorkflowFileVersionJsonEdo edo) {
     final WorkflowFileVersion model = new WorkflowFileVersion();
 
     model.setComments(edo.getComments());

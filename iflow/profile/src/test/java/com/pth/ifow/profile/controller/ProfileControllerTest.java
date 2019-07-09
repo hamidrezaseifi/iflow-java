@@ -22,9 +22,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pth.iflow.common.edo.models.AuthenticatedProfileRequestEdo;
-import com.pth.iflow.common.edo.models.ProfileResponseEdo;
-import com.pth.iflow.common.edo.models.TokenProfileRequestEdo;
+import com.pth.iflow.common.edo.models.xml.AuthenticatedProfileRequestEdo;
+import com.pth.iflow.common.edo.models.xml.ProfileResponseEdo;
+import com.pth.iflow.common.edo.models.xml.TokenProfileRequestEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
 import com.pth.ifow.profile.TestDataProducer;

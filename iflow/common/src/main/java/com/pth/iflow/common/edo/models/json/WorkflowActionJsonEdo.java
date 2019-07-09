@@ -1,44 +1,29 @@
-package com.pth.iflow.common.edo.models;
+package com.pth.iflow.common.edo.models.json;
 
 import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name = "WorkflowActionEdo")
-@XmlAccessorType(XmlAccessType.FIELD)
-public class WorkflowActionEdo {
+public class WorkflowActionJsonEdo {
 
-  @XmlElement(name = "ID")
   private Long    id;
 
   @NotNull
-  @XmlElement(name = "WorkflowId")
   private Long    workflowId;
 
-  @XmlElement(name = "CreatedBy")
   private Long    createdBy;
 
   @NotNull
-  @XmlElement(name = "Action")
   private String  action;
 
-  @XmlElement(name = "OldStep")
   private Long    oldStep;
 
-  @XmlElement(name = "NewStep")
   private Long    newStep;
 
-  @XmlElement(name = "Comments")
   private String  comments;
 
   @NotNull
-  @XmlElement(name = "Status")
   private Integer status;
 
   @NotNull
-  @XmlElement(name = "Version")
   private Integer version;
 
   public Long getId() {

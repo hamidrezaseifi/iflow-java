@@ -1,4 +1,4 @@
-package com.pth.iflow.common.edo.models;
+package com.pth.iflow.common.edo.models.xml;
 
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -6,37 +6,39 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name = "WorkflowFileVersionEdo")
+@XmlRootElement(name = "WorkflowActionEdo")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class WorkflowFileVersionEdo {
+public class WorkflowActionEdo {
 
   @XmlElement(name = "ID")
   private Long    id;
 
   @NotNull
-  @XmlElement(name = "ID")
-  private Long    workflowFileId;
+  @XmlElement(name = "WorkflowId")
+  private Long    workflowId;
 
-  @XmlElement(name = "ID")
+  @XmlElement(name = "CreatedBy")
   private Long    createdBy;
 
   @NotNull
-  @XmlElement(name = "ID")
-  private String  filePath;
+  @XmlElement(name = "Action")
+  private String  action;
 
-  @XmlElement(name = "ID")
+  @XmlElement(name = "OldStep")
+  private Long    oldStep;
+
+  @XmlElement(name = "NewStep")
+  private Long    newStep;
+
+  @XmlElement(name = "Comments")
   private String  comments;
 
   @NotNull
-  @XmlElement(name = "ID")
-  private Integer fileVersion;
-
-  @NotNull
-  @XmlElement(name = "ID")
+  @XmlElement(name = "Status")
   private Integer status;
 
   @NotNull
-  @XmlElement(name = "ID")
+  @XmlElement(name = "Version")
   private Integer version;
 
   public Long getId() {
@@ -47,20 +49,36 @@ public class WorkflowFileVersionEdo {
     this.id = id;
   }
 
-  public Long getWorkflowFileId() {
-    return workflowFileId;
+  public Long getWorkflowId() {
+    return workflowId;
   }
 
-  public void setWorkflowFileId(final Long workflowFileId) {
-    this.workflowFileId = workflowFileId;
+  public void setWorkflowId(final Long workflowId) {
+    this.workflowId = workflowId;
   }
 
-  public String getFilePath() {
-    return filePath;
+  public String getAction() {
+    return action;
   }
 
-  public void setFilePath(final String filePath) {
-    this.filePath = filePath;
+  public void setAction(final String action) {
+    this.action = action;
+  }
+
+  public Long getOldStep() {
+    return oldStep;
+  }
+
+  public void setOldStep(final Long oldStep) {
+    this.oldStep = oldStep;
+  }
+
+  public Long getNewStep() {
+    return newStep;
+  }
+
+  public void setNewStep(final Long newStep) {
+    this.newStep = newStep;
   }
 
   public Long getCreatedBy() {
@@ -77,14 +95,6 @@ public class WorkflowFileVersionEdo {
 
   public void setComments(final String comments) {
     this.comments = comments;
-  }
-
-  public Integer getFileVersion() {
-    return fileVersion;
-  }
-
-  public void setFileVersion(final Integer fileVersion) {
-    this.fileVersion = fileVersion;
   }
 
   public Integer getStatus() {

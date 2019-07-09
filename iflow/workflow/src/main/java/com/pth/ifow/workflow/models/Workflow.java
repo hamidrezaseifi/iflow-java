@@ -5,11 +5,12 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.pth.iflow.common.edo.models.WorkflowEdo;
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
+import com.pth.iflow.common.edo.models.json.WorkflowJsonEdo;
+import com.pth.iflow.common.edo.models.xml.WorkflowEdo;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 
-public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
+public class Workflow extends ModelMapperBase<WorkflowEdo, WorkflowJsonEdo, Workflow> {
 
   private Long                id;
   private Long                workflowTypeId;
@@ -224,6 +225,49 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
     model.setActions(new WorkflowAction().fromEdoList(edo.getActions()));
 
     return model;
+  }
+
+  @Override
+  public Workflow fromJsonEdo(final WorkflowJsonEdo edo) {
+    final Workflow model = new Workflow();
+
+    model.setTitle(edo.getTitle());
+    model.setComments(edo.getComments());
+    model.setStatus(edo.getStatus());
+    model.setId(edo.getId());
+    model.setController(edo.getController());
+    model.setCurrentStep(new WorkflowTypeStep().fromJsonEdo(edo.getCurrentStep()));
+    model.setCurrentStepId(edo.getCurrentStepId());
+    model.setCreatedBy(edo.getCreatedBy());
+    model.setWorkflowTypeId(edo.getWorkflowTypeId());
+    model.setVersion(edo.getVersion());
+    model.setAssignTo(edo.getAssignTo());
+
+    model.setFiles(new WorkflowFile().fromEdoList(edo.getFiles()));
+    model.setActions(new WorkflowAction().fromEdoList(edo.getActions()));
+
+    return model;
+  }
+
+  @Override
+  public WorkflowJsonEdo toJsonEdo() {
+    final WorkflowJsonEdo edo = new WorkflowJsonEdo();
+    edo.setTitle(this.title);
+    edo.setComments(this.comments);
+    edo.setStatus(this.getStatusInt());
+    edo.setId(this.id);
+    edo.setController(controller);
+    edo.setCurrentStep(currentStep.toJsonEdo());
+    edo.setCurrentStepId(currentStepId);
+    edo.setCreatedBy(createdBy);
+    edo.setWorkflowTypeId(workflowTypeId);
+    edo.setVersion(version);
+    edo.setAssignTo(assignTo);
+
+    edo.setFilesList(WorkflowFile.toJsonEdoList(files));
+    edo.setActionsList(WorkflowAction.toJsonEdoList(actions));
+
+    return edo;
   }
 
 }

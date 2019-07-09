@@ -2,8 +2,8 @@ package com.pth.ifow.profile.model;
 
 import java.time.LocalDateTime;
 
-import com.pth.iflow.common.edo.models.CompanyEdo;
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
+import com.pth.iflow.common.edo.models.xml.CompanyEdo;
 
 public class Company extends ModelMapperBase<CompanyEdo, Company> {
 
