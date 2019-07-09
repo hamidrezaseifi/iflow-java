@@ -12,20 +12,20 @@ import com.pth.iflow.common.enums.EWorkflowStatus;
 
 public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
 
-  private Long id;
-  private Long workflowTypeId;
-  private WorkflowTypeStep currentStep;
-  private Long controller;
-  private Long createdBy;
-  private Long assignTo;
-  private String title;
-  private String comments;
-  private EWorkflowStatus status;
-  private Integer version;
-  private LocalDateTime createdAt;
-  private LocalDateTime updatedAt;
+  private Long                id;
+  private Long                workflowTypeId;
+  private WorkflowTypeStep    currentStep;
+  private Long                controller;
+  private Long                createdBy;
+  private Long                assignTo;
+  private String              title;
+  private String              comments;
+  private EWorkflowStatus     status;
+  private Integer             version;
+  private LocalDateTime       createdAt;
+  private LocalDateTime       updatedAt;
 
-  private Set<WorkflowFile> files = new HashSet<>();
+  private Set<WorkflowFile>   files   = new HashSet<>();
   private Set<WorkflowAction> actions = new HashSet<>();
 
   @Override

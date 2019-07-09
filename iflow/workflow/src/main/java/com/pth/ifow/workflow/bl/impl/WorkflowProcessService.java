@@ -18,6 +18,7 @@ import com.pth.iflow.common.exceptions.IFlowCustomeException;
 import com.pth.ifow.workflow.bl.IWorkflowDataService;
 import com.pth.ifow.workflow.bl.IWorkflowProcessService;
 import com.pth.ifow.workflow.bl.IWorkflowTypeDataService;
+import com.pth.ifow.workflow.bl.IWorkflowTypeStepDataService;
 import com.pth.ifow.workflow.config.WorkflowConfiguration;
 import com.pth.ifow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.ifow.workflow.models.Workflow;
@@ -27,18 +28,22 @@ import com.pth.ifow.workflow.models.WorkflowTypeStep;
 @Service
 public class WorkflowProcessService implements IWorkflowProcessService {
 
-  private static final Logger logger = LoggerFactory.getLogger(WorkflowProcessService.class);
+  private static final Logger                logger = LoggerFactory.getLogger(WorkflowProcessService.class);
 
-  private final IWorkflowDataService workflowDataService;
+  private final IWorkflowDataService         workflowDataService;
 
-  private final IWorkflowTypeDataService workflowTypeService;
+  private final IWorkflowTypeDataService     workflowTypeDataService;
+
+  private final IWorkflowTypeStepDataService workflowTypeStepDataService;
 
   public WorkflowProcessService(@Autowired final IWorkflowDataService workflowDataService,
-      @Autowired final IWorkflowTypeDataService workflowTypeService,
+      @Autowired final IWorkflowTypeDataService workflowTypeDataService,
+      @Autowired final IWorkflowTypeStepDataService workflowTypeStepDataService,
       @Autowired final WorkflowConfiguration.ModuleAccessConfig moduleAccessConfig) {
 
     this.workflowDataService = workflowDataService;
-    this.workflowTypeService = workflowTypeService;
+    this.workflowTypeDataService = workflowTypeDataService;
+    this.workflowTypeStepDataService = workflowTypeStepDataService;
   }
 
   @Override
@@ -46,7 +51,14 @@ public class WorkflowProcessService implements IWorkflowProcessService {
     logger.debug("Saving workflow {} with token {}", newWorkflow.getTitle(), token);
     tokenCanSaveWorkflow(newWorkflow, token);
 
+    final WorkflowType workflowType = workflowTypeDataService.getById(newWorkflow.getWorkflowTypeId());
+
+    validateWorkflowCurrectStep(newWorkflow, workflowType);
+
+    validateWorkflowAssignedUser(newWorkflow, workflowType);
+
     if (newWorkflow.isNew()) {
+
       return processNewWorkflow(newWorkflow);
     }
 
@@ -54,20 +66,12 @@ public class WorkflowProcessService implements IWorkflowProcessService {
       return processNewWorkflow(newWorkflow);
     }
 
-    final WorkflowType workflowType = workflowTypeService.getById(newWorkflow.getWorkflowTypeId());
-
-    final Workflow existsWorkflow = getById(newWorkflow.getId(), token);
+    // final Workflow existsWorkflow = getById(newWorkflow.getId(), token);
 
     if (newWorkflow.getStatus() == EWorkflowStatus.DONE) {
 
       if (workflowType.getIncreaseStepAutomatic().booleanValue() == true) {
         selectWorkflowNextStep(newWorkflow, workflowType);
-
-      }
-
-      if (workflowType.getManualAssign().booleanValue() == false) {
-
-        selectWorkflowAssignedUser(newWorkflow, workflowType);
 
       }
 
@@ -143,14 +147,20 @@ public class WorkflowProcessService implements IWorkflowProcessService {
   }
 
   private void selectWorkflowNextStep(final Workflow newWorkflow, final WorkflowType workflowType) {
-    final LinkedHashMap<Integer, WorkflowTypeStep> steps = getSortedSteps(workflowType);
 
-    final WorkflowTypeStep nextStep = findNextStep(steps, newWorkflow.getCurrentStep());
+    final WorkflowTypeStep nextStep = findNextStep(workflowType, newWorkflow.getCurrentStep());
     newWorkflow.setCurrentStep(nextStep);
   }
 
-  private void selectWorkflowAssignedUser(final Workflow newWorkflow, final WorkflowType workflowType) {
-    if (workflowType.getSendToController().booleanValue() == true) {
+  private void selectWorkflowNextAssignedUser(final Workflow newWorkflow, final WorkflowType workflowType) {
+
+    if (newWorkflow.isInitializing()) {
+      if (newWorkflow.isAssigned()) {
+        return;
+      }
+    }
+
+    if (newWorkflow.getStatus() == EWorkflowStatus.DONE && workflowType.getSendToController().booleanValue() == true) {
       newWorkflow.setAssignTo(newWorkflow.getController());
     } else {
 
@@ -167,11 +177,13 @@ public class WorkflowProcessService implements IWorkflowProcessService {
     return steps;
   }
 
-  private WorkflowTypeStep findNextStep(final LinkedHashMap<Integer, WorkflowTypeStep> map, final WorkflowTypeStep currentStep) {
+  private WorkflowTypeStep findNextStep(final WorkflowType workflowType, final WorkflowTypeStep currentStep) {
+
+    final LinkedHashMap<Integer, WorkflowTypeStep> steps = getSortedSteps(workflowType);
 
     Integer foundId = -1;
     Integer lastId = -1;
-    for (final Iterator<Integer> i = map.keySet().iterator(); i.hasNext();) {
+    for (final Iterator<Integer> i = steps.keySet().iterator(); i.hasNext();) {
       lastId = i.next();
       if (lastId == currentStep.getStepIndex() && i.hasNext()) {
         foundId = i.next();
@@ -179,7 +191,80 @@ public class WorkflowProcessService implements IWorkflowProcessService {
       }
     }
 
-    return foundId > -1 ? map.get(foundId) : map.get(lastId);
+    return foundId > -1 ? steps.get(foundId) : steps.get(lastId);
   }
 
+  private WorkflowTypeStep findFirstStep(final WorkflowType workflowType) {
+    final LinkedHashMap<Integer, WorkflowTypeStep> steps = getSortedSteps(workflowType);
+
+    Integer foundId = -1;
+    if (steps.keySet().iterator().hasNext()) {
+      foundId = steps.keySet().iterator().next();
+
+    }
+
+    return foundId > -1 ? steps.get(foundId) : null;
+  }
+
+  private List<Long> getWorkflowTypeIdList(final WorkflowType workflowType) {
+    return workflowType.getSteps().stream().map(step -> step.getId()).collect(Collectors.toList());
+  }
+
+  private void validateWorkflowAssignedUser(final Workflow newWorkflow, final WorkflowType workflowType) {
+
+    if (workflowType.getManualAssign().booleanValue() == false) {
+      selectWorkflowNextAssignedUser(newWorkflow, workflowType);
+    }
+
+    if (newWorkflow.isAssigned() == false) {
+      throw new IFlowCustomeException("Unknown workflow assigned user id:" + newWorkflow.getId(),
+          EIFlowErrorType.UNKNOWN_WORKFLOW_ASSIGN);
+    }
+  }
+
+  private void validateWorkflowCurrectStep(final Workflow newWorkflow, final WorkflowType workflowType) throws MalformedURLException {
+
+    if (newWorkflow.getCurrentStep() == null) {
+
+      setNewWorkflowCurrectStep(newWorkflow, workflowType);
+
+      setWorkflowCurrectStepFromCurrectStepId(newWorkflow);
+
+    }
+
+    if (newWorkflow.getCurrentStep() == null) {
+
+      throw new IFlowCustomeException("Unknown workflow step id:" + newWorkflow.getId(), EIFlowErrorType.UNKNOWN_WORKFLOW_STEP);
+    }
+
+    validateCurrentStepExistsInWorkflowType(newWorkflow, workflowType);
+
+  }
+
+  private void validateCurrentStepExistsInWorkflowType(final Workflow newWorkflow, final WorkflowType workflowType) {
+    final List<Long> stepIdList = getWorkflowTypeIdList(workflowType);
+
+    if (stepIdList.contains(newWorkflow.getCurrentStep().getId()) == false) {
+      throw new IFlowCustomeException("Invalid workflow step id:" + newWorkflow.getId(), EIFlowErrorType.INVALID_WORKFLOW_STEP);
+    }
+  }
+
+  private void setWorkflowCurrectStepFromCurrectStepId(final Workflow newWorkflow) throws MalformedURLException {
+    if (newWorkflow.getCurrentStepId() != null && newWorkflow.getCurrentStepId() > 0) {
+      newWorkflow.setCurrentStep(workflowTypeStepDataService.getById(newWorkflow.getCurrentStepId()));
+    }
+  }
+
+  private void setNewWorkflowCurrectStep(final Workflow newWorkflow, final WorkflowType workflowType) {
+    if (newWorkflow.getCurrentStepId() == null || newWorkflow.getCurrentStepId() <= 0) {
+      if (newWorkflow.isInitializing()) {
+        final WorkflowTypeStep firstStep = findFirstStep(workflowType);
+        if (firstStep != null) {
+          newWorkflow.setCurrentStep(firstStep);
+          newWorkflow.setCurrentStepId(firstStep.getId());
+        }
+
+      }
+    }
+  }
 }

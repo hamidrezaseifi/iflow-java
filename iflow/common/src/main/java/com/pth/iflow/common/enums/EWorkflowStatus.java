@@ -4,10 +4,11 @@ import com.pth.iflow.common.enums.base.IValueList;
 import com.pth.iflow.common.exceptions.IFlowInvalidEnumValueException;
 
 public enum EWorkflowStatus implements IValueList {
-  NOT_ASSIGNED(0),
-  ASSIGNED(1),
-  DONE(5),
-  ERROR(10);
+  INITIALIZE(1),
+  NOT_ASSIGNED(5),
+  ASSIGNED(10),
+  DONE(15),
+  ERROR(20);
 
   private final int id;
 

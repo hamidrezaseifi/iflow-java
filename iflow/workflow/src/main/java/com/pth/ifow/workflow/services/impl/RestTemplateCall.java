@@ -2,12 +2,13 @@ package com.pth.ifow.workflow.services.impl;
 
 import java.net.URI;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -21,8 +22,10 @@ public class RestTemplateCall implements IRestTemplateCall {
   @Autowired
   private RestTemplate restTemplate;
 
-  @Autowired
-  private MappingJackson2XmlHttpMessageConverter converter;
+  @PostConstruct
+  public void init() {
+
+  }
 
   @Override
   public <I, O> O callRestPost(final URI uri, final EModule service, final I edo, final Class<O> responseClass,

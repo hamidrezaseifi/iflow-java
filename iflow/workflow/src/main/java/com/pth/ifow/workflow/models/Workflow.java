@@ -1,6 +1,5 @@
 package com.pth.ifow.workflow.models;
 
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -12,20 +11,19 @@ import com.pth.iflow.common.enums.EWorkflowStatus;
 
 public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
 
-  private Long id;
-  private Long workflowTypeId;
-  private WorkflowTypeStep currentStep;
-  private Long controller;
-  private Long createdBy;
-  private Long assignTo;
-  private String title;
-  private String comments;
-  private EWorkflowStatus status;
-  private Integer version;
-  private LocalDateTime createdAt;
-  private LocalDateTime updatedAt;
+  private Long                id;
+  private Long                workflowTypeId;
+  private WorkflowTypeStep    currentStep;
+  private Long                currentStepId;
+  private Long                controller;
+  private Long                createdBy;
+  private Long                assignTo;
+  private String              title;
+  private String              comments;
+  private EWorkflowStatus     status;
+  private Integer             version;
 
-  private Set<WorkflowFile> files = new HashSet<>();
+  private Set<WorkflowFile>   files   = new HashSet<>();
   private Set<WorkflowAction> actions = new HashSet<>();
 
   @Override
@@ -53,6 +51,14 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
     this.currentStep = currentStep;
   }
 
+  public Long getCurrentStepId() {
+    return currentStepId;
+  }
+
+  public void setCurrentStepId(final Long currentStepId) {
+    this.currentStepId = currentStepId;
+  }
+
   public Long getController() {
     return controller;
   }
@@ -71,6 +77,10 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
 
   public Long getAssignTo() {
     return assignTo;
+  }
+
+  public boolean isAssigned() {
+    return assignTo != null && assignTo > 0;
   }
 
   public void setAssignTo(final Long assignTo) {
@@ -113,22 +123,6 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
   @Override
   public void setVersion(final Integer version) {
     this.version = version;
-  }
-
-  public LocalDateTime getCreatedAt() {
-    return this.createdAt;
-  }
-
-  public void setCreatedAt(final LocalDateTime createdAt) {
-    this.createdAt = createdAt;
-  }
-
-  public LocalDateTime getUpdatedAt() {
-    return this.updatedAt;
-  }
-
-  public void setUpdatedAt(final LocalDateTime updatedAt) {
-    this.updatedAt = updatedAt;
   }
 
   public Set<WorkflowFile> getFiles() {
@@ -185,6 +179,10 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
     return currentStep.isTheSameStep(step);
   }
 
+  public boolean isInitializing() {
+    return isNew() && getStatus() == EWorkflowStatus.INITIALIZE;
+  }
+
   @Override
   public WorkflowEdo toEdo() {
     final WorkflowEdo edo = new WorkflowEdo();
@@ -194,6 +192,7 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
     edo.setId(this.id);
     edo.setController(controller);
     edo.setCurrentStep(currentStep.toEdo());
+    edo.setCurrentStepId(currentStepId);
     edo.setCreatedBy(createdBy);
     edo.setWorkflowTypeId(workflowTypeId);
     edo.setVersion(version);
@@ -215,6 +214,7 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
     model.setId(edo.getId());
     model.setController(edo.getController());
     model.setCurrentStep(new WorkflowTypeStep().fromEdo(edo.getCurrentStep()));
+    model.setCurrentStepId(edo.getCurrentStepId());
     model.setCreatedBy(edo.getCreatedBy());
     model.setWorkflowTypeId(edo.getWorkflowTypeId());
     model.setVersion(edo.getVersion());
