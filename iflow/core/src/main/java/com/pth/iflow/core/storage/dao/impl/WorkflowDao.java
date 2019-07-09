@@ -27,10 +27,10 @@ import com.pth.iflow.core.storage.dao.utils.SqlUtils;
 public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao {
 
   @Autowired
-  private IWorkflowActionDao workflowActionDao;
+  private IWorkflowActionDao   workflowActionDao;
 
   @Autowired
-  private IWorkflowFileDao workflowFileDao;
+  private IWorkflowFileDao     workflowFileDao;
 
   @Autowired
   private IWorkflowTypeStepDao workflowTypeStepDao;

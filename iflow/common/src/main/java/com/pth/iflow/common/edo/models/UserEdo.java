@@ -3,20 +3,60 @@ package com.pth.iflow.common.edo.models;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "UserEdo")
 public class UserEdo {
 
-  private Long id;
-  private Long companyId;
-  private String email;
-  private String firstName;
-  private String lastName;
-  private Integer status;
-  private Integer version;
-  private Integer permission;
-  private final Set<Long> groups = new HashSet<>();
-  private final Set<Long> departments = new HashSet<>();
+  @XmlElement(name = "ID")
+  private Long            id;
+
+  @NotNull
+  @XmlElement(name = "CompanyId")
+  private Long            companyId;
+
+  @NotNull
+  @XmlElement(name = "Email")
+  private String          email;
+
+  @NotNull
+  @XmlElement(name = "FirstName")
+  private String          firstName;
+
+  @NotNull
+  @XmlElement(name = "LastName")
+  private String          lastName;
+
+  @NotNull
+  @XmlElement(name = "Status")
+  private Integer         status;
+
+  @NotNull
+  @XmlElement(name = "Version")
+  private Integer         version;
+
+  @NotNull
+  @XmlElement(name = "Permission")
+  private Integer         permission;
+
+  @XmlElementWrapper(name = "GroupList")
+  @XmlElement(name = "Group")
+  private final Set<Long> groups           = new HashSet<>();
+
+  @XmlElementWrapper(name = "DepartmentList")
+  @XmlElement(name = "Department")
+  private final Set<Long> departments      = new HashSet<>();
+
+  @XmlElementWrapper(name = "DepartmentGroupList")
+  @XmlElement(name = "DepartmentGroup")
   private final Set<Long> departmentGroups = new HashSet<>();
-  private final Set<Long> deputies = new HashSet<>();
+
+  @XmlElementWrapper(name = "DeputyList")
+  @XmlElement(name = "Deputy")
+  private final Set<Long> deputies         = new HashSet<>();
 
   /**
    * @return the id

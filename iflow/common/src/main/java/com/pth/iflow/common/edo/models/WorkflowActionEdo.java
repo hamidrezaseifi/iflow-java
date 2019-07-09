@@ -1,15 +1,41 @@
 package com.pth.iflow.common.edo.models;
 
+import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "WorkflowActionEdo")
 public class WorkflowActionEdo {
 
-  private Long id;
-  private Long workflowId;
-  private Long createdBy;
-  private String action;
-  private Long oldStep;
-  private Long newStep;
-  private String comments;
+  @XmlElement(name = "ID")
+  private Long    id;
+
+  @NotNull
+  @XmlElement(name = "WorkflowId")
+  private Long    workflowId;
+
+  @XmlElement(name = "CreatedBy")
+  private Long    createdBy;
+
+  @NotNull
+  @XmlElement(name = "Action")
+  private String  action;
+
+  @XmlElement(name = "OldStep")
+  private Long    oldStep;
+
+  @XmlElement(name = "NewStep")
+  private Long    newStep;
+
+  @XmlElement(name = "Comments")
+  private String  comments;
+
+  @NotNull
+  @XmlElement(name = "Status")
   private Integer status;
+
+  @NotNull
+  @XmlElement(name = "Version")
   private Integer version;
 
   public Long getId() {

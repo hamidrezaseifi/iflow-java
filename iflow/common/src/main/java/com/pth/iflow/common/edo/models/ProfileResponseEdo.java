@@ -1,9 +1,23 @@
 package com.pth.iflow.common.edo.models;
 
+import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "ProfileResponseEdo")
 public class ProfileResponseEdo {
-  private UserEdo user;
+
+  @NotNull
+  @XmlElement(name = "User")
+  private UserEdo    user;
+
+  @NotNull
+  @XmlElement(name = "Company")
   private CompanyEdo company;
-  private String sessionid;
+
+  @NotNull
+  @XmlElement(name = "Sessionid")
+  private String     sessionid;
 
   public ProfileResponseEdo() {
     this.user = null;

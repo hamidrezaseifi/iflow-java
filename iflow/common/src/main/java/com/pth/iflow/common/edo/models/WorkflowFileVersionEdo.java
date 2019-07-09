@@ -1,14 +1,39 @@
 package com.pth.iflow.common.edo.models;
 
+import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "WorkflowFileVersionEdo")
 public class WorkflowFileVersionEdo {
 
-  private Long id;
-  private Long workflowFileId;
-  private Long createdBy;
-  private String filePath;
-  private String comments;
+  @XmlElement(name = "ID")
+  private Long    id;
+
+  @NotNull
+  @XmlElement(name = "ID")
+  private Long    workflowFileId;
+
+  @XmlElement(name = "ID")
+  private Long    createdBy;
+
+  @NotNull
+  @XmlElement(name = "ID")
+  private String  filePath;
+
+  @XmlElement(name = "ID")
+  private String  comments;
+
+  @NotNull
+  @XmlElement(name = "ID")
   private Integer fileVersion;
+
+  @NotNull
+  @XmlElement(name = "ID")
   private Integer status;
+
+  @NotNull
+  @XmlElement(name = "ID")
   private Integer version;
 
   public Long getId() {

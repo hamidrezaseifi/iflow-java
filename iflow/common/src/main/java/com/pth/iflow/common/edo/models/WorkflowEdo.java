@@ -5,20 +5,60 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import com.fasterxml.jackson.annotation.JsonSetter;
+
+@XmlRootElement(name = "WorkflowEdo")
 public class WorkflowEdo {
 
-  private Long id;
-  private Long workflowTypeId;
-  private WorkflowTypeStepEdo currentStep;
-  private Long controller;
-  private Long createdBy;
-  private Long assignTo;
-  private String title;
-  private String comments;
-  private Integer status;
-  private Integer version;
+  @XmlElement(name = "ID")
+  private Long                   id;
 
-  private Set<WorkflowFileEdo> files = new HashSet<>();
+  @NotNull
+  @XmlElement(name = "WorkflowTypeId")
+  private Long                   workflowTypeId;
+
+  @NotNull
+  @XmlElement(name = "CurrentStep")
+  private WorkflowTypeStepEdo    currentStep;
+
+  @XmlElement(name = "CurrentStepId")
+  private Long                   currentStepId;
+
+  @XmlElement(name = "Controller")
+  private Long                   controller;
+
+  @XmlElement(name = "CreatedBy")
+  private Long                   createdBy;
+
+  @XmlElement(name = "AssignTo")
+  private Long                   assignTo;
+
+  @NotNull
+  @XmlElement(name = "Title")
+  private String                 title;
+
+  @XmlElement(name = "Comments")
+  private String                 comments;
+
+  @NotNull
+  @XmlElement(name = "Status")
+  private Integer                status;
+
+  @NotNull
+  @XmlElement(name = "Version")
+  private Integer                version;
+
+  @XmlElementWrapper(name = "FileList")
+  @XmlElement(name = "File")
+  private Set<WorkflowFileEdo>   files   = new HashSet<>();
+
+  @XmlElementWrapper(name = "ActionList")
+  @XmlElement(name = "Action")
   private Set<WorkflowActionEdo> actions = new HashSet<>();
 
   public Long getId() {
@@ -43,6 +83,14 @@ public class WorkflowEdo {
 
   public void setCurrentStep(final WorkflowTypeStepEdo currentStep) {
     this.currentStep = currentStep;
+  }
+
+  public Long getCurrentStepId() {
+    return currentStepId;
+  }
+
+  public void setCurrentStepId(final Long currentStepId) {
+    this.currentStepId = currentStepId;
   }
 
   public Long getController() {
@@ -105,8 +153,10 @@ public class WorkflowEdo {
     return files;
   }
 
+  @JsonSetter
   public void setFiles(final List<WorkflowFileEdo> files) {
-    setFiles(files.stream().collect(Collectors.toSet()));
+    final Set<WorkflowFileEdo> fileSet = files != null ? files.stream().collect(Collectors.toSet()) : new HashSet<>();
+    setFiles(fileSet);
   }
 
   public void setFiles(final Set<WorkflowFileEdo> files) {
@@ -120,8 +170,10 @@ public class WorkflowEdo {
     return actions;
   }
 
+  @JsonSetter
   public void setActions(final List<WorkflowActionEdo> actions) {
-    setActions(actions.stream().collect(Collectors.toSet()));
+    final Set<WorkflowActionEdo> actionSet = actions != null ? actions.stream().collect(Collectors.toSet()) : new HashSet<>();
+    setActions(actionSet);
   }
 
   public void setActions(final Set<WorkflowActionEdo> actions) {

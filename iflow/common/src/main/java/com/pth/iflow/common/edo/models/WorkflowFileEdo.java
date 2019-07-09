@@ -5,17 +5,49 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import com.fasterxml.jackson.annotation.JsonSetter;
+
+@XmlRootElement(name = "WorkflowFileEdo")
 public class WorkflowFileEdo {
 
-  private Long id;
-  private Long workflowId;
-  private Long createdBy;
-  private String title;
-  private String activeFilePath;
-  private String comments;
-  private Integer activeFileVersion;
-  private Integer status;
-  private Integer version;
+  @XmlElement(name = "ID")
+  private Long                        id;
+
+  @NotNull
+  @XmlElement(name = "WorkflowId")
+  private Long                        workflowId;
+
+  @XmlElement(name = "CreatedBy")
+  private Long                        createdBy;
+
+  @NotNull
+  @XmlElement(name = "Title")
+  private String                      title;
+
+  @XmlElement(name = "ActiveFilePath")
+  private String                      activeFilePath;
+
+  @XmlElement(name = "ActiveFileVersion")
+  private Integer                     activeFileVersion;
+
+  @XmlElement(name = "Comments")
+  private String                      comments;
+
+  @NotNull
+  @XmlElement(name = "Status")
+  private Integer                     status;
+
+  @NotNull
+  @XmlElement(name = "Version")
+  private Integer                     version;
+
+  @XmlElementWrapper(name = "FileVersionList")
+  @XmlElement(name = "FileVersion")
   private Set<WorkflowFileVersionEdo> fileVersions = new HashSet<>();
 
   public Long getId() {
@@ -94,8 +126,11 @@ public class WorkflowFileEdo {
     return fileVersions;
   }
 
+  @JsonSetter
   public void setFileVersions(final List<WorkflowFileVersionEdo> fileVersions) {
-    setFileVersions(fileVersions.stream().collect(Collectors.toSet()));
+    final Set<WorkflowFileVersionEdo> fileVersionSet = fileVersions != null ? fileVersions.stream().collect(Collectors.toSet())
+        : new HashSet<>();
+    setFileVersions(fileVersionSet);
   }
 
   public void setFileVersions(final Set<WorkflowFileVersionEdo> fileVersions) {

@@ -3,12 +3,35 @@ package com.pth.iflow.common.edo.models;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "DepartmentEdo")
 public class DepartmentEdo {
-  private Long id;
-  private Long companyId;
-  private String title;
-  private Integer status;
-  private Integer version;
+
+  @XmlElement(name = "ID")
+  private Long            id;
+
+  @NotNull
+  @XmlElement(name = "CompanyId")
+  private Long            companyId;
+
+  @NotNull
+  @XmlElement(name = "Title")
+  private String          title;
+
+  @NotNull
+  @XmlElement(name = "Status")
+  private Integer         status;
+
+  @NotNull
+  @XmlElement(name = "Version")
+  private Integer         version;
+
+  @XmlElementWrapper(name = "GroupList")
+  @XmlElement(name = "Group")
   private final Set<Long> groups = new HashSet<>();
 
   public Long getId() {

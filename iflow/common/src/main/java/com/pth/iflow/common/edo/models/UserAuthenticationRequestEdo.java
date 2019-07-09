@@ -1,32 +1,46 @@
 package com.pth.iflow.common.edo.models;
 
+import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "UserAuthenticationRequestEdo")
 public class UserAuthenticationRequestEdo {
-    private String email;
-    private String password;
-    private String companyIdentity;
 
-    public String getEmail() {
-	return email;
-    }
+  @NotNull
+  @XmlElement(name = "Email")
+  private String email;
 
-    public void setEmail(final String email) {
-	this.email = email;
-    }
+  @NotNull
+  @XmlElement(name = "Password")
+  private String password;
 
-    public String getPassword() {
-	return password;
-    }
+  @NotNull
+  @XmlElement(name = "CompanyIdentity")
+  private String companyIdentity;
 
-    public void setPassword(final String password) {
-	this.password = password;
-    }
+  public String getEmail() {
+    return email;
+  }
 
-    public String getCompanyIdentity() {
-	return companyIdentity;
-    }
+  public void setEmail(final String email) {
+    this.email = email;
+  }
 
-    public void setCompanyIdentity(final String companyIdentity) {
-	this.companyIdentity = companyIdentity;
-    }
+  public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(final String password) {
+    this.password = password;
+  }
+
+  public String getCompanyIdentity() {
+    return companyIdentity;
+  }
+
+  public void setCompanyIdentity(final String companyIdentity) {
+    this.companyIdentity = companyIdentity;
+  }
 
 }

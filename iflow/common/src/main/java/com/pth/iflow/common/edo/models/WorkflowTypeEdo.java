@@ -3,19 +3,56 @@ package com.pth.iflow.common.edo.models;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import com.fasterxml.jackson.annotation.JsonSetter;
+
+@XmlRootElement(name = "WorkflowTypeEdo")
 public class WorkflowTypeEdo {
 
-  private Long id;
-  private Long companyId;
-  private Long baseTypeId;
-  private String title;
-  private String comments;
-  private Integer status;
-  private Integer version;
-  private Boolean sendToController;
-  private Boolean manualAssign;
-  private Boolean increaseStepAutomatic;
+  @XmlElement(name = "ID")
+  private Long                           id;
 
+  @NotNull
+  @XmlElement(name = "CompanyId")
+  private Long                           companyId;
+
+  @NotNull
+  @XmlElement(name = "BaseTypeId")
+  private Long                           baseTypeId;
+
+  @NotNull
+  @XmlElement(name = "Title")
+  private String                         title;
+
+  @XmlElement(name = "Comments")
+  private String                         comments;
+
+  @NotNull
+  @XmlElement(name = "Status")
+  private Integer                        status;
+
+  @NotNull
+  @XmlElement(name = "Version")
+  private Integer                        version;
+
+  @NotNull
+  @XmlElement(name = "SendToController")
+  private Boolean                        sendToController;
+
+  @NotNull
+  @XmlElement(name = "ManualAssign")
+  private Boolean                        manualAssign;
+
+  @NotNull
+  @XmlElement(name = "IncreaseStepAutomatic")
+  private Boolean                        increaseStepAutomatic;
+
+  @XmlElementWrapper(name = "StepList")
+  @XmlElement(name = "Steps")
   private final Set<WorkflowTypeStepEdo> steps = new HashSet<>();
 
   public Long getId() {
@@ -108,6 +145,7 @@ public class WorkflowTypeEdo {
     return this.steps;
   }
 
+  @JsonSetter
   public void setSteps(final Set<WorkflowTypeStepEdo> steps) {
     this.steps.clear();
     if (steps != null) {
