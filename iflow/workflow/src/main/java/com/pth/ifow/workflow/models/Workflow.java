@@ -198,8 +198,8 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
     edo.setVersion(version);
     edo.setAssignTo(assignTo);
 
-    edo.setFiles(ModelMapperBase.toEdoList(files));
-    edo.setActions(ModelMapperBase.toEdoList(actions));
+    edo.setFilesList(ModelMapperBase.toEdoList(files));
+    edo.setActionsList(ModelMapperBase.toEdoList(actions));
 
     return edo;
   }

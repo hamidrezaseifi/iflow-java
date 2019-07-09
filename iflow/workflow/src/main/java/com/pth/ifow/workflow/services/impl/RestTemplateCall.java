@@ -60,6 +60,9 @@ public class RestTemplateCall implements IRestTemplateCall {
       restTemplate.getForObject(url, responseClass, args);
       return null;
     } else {
+      // final ResponseEntity<O> resp = restTemplate.getForEntity(url, responseClass,
+      // args);
+      // return resp.getBody();
       return restTemplate.getForObject(url, responseClass, args);
     }
 

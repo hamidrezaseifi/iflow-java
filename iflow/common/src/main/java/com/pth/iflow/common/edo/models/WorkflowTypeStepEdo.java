@@ -1,20 +1,20 @@
 package com.pth.iflow.common.edo.models;
 
-import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "WorkflowTypeStepEdo")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class WorkflowTypeStepEdo {
 
   @XmlElement(name = "ID")
   private Long    id;
 
-  @NotNull
   @XmlElement(name = "WorkflowTypeId")
   private Long    workflowTypeId;
 
-  @NotNull
   @XmlElement(name = "Title")
   private String  title;
 
@@ -24,11 +24,9 @@ public class WorkflowTypeStepEdo {
   @XmlElement(name = "Comments")
   private String  comments;
 
-  @NotNull
   @XmlElement(name = "Status")
   private Integer status;
 
-  @NotNull
   @XmlElement(name = "Version")
   private Integer version;
 

@@ -6,13 +6,14 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.fasterxml.jackson.annotation.JsonSetter;
-
 @XmlRootElement(name = "WorkflowFileEdo")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class WorkflowFileEdo {
 
   @XmlElement(name = "ID")
@@ -126,8 +127,7 @@ public class WorkflowFileEdo {
     return fileVersions;
   }
 
-  @JsonSetter
-  public void setFileVersions(final List<WorkflowFileVersionEdo> fileVersions) {
+  public void setFileVersionsList(final List<WorkflowFileVersionEdo> fileVersions) {
     final Set<WorkflowFileVersionEdo> fileVersionSet = fileVersions != null ? fileVersions.stream().collect(Collectors.toSet())
         : new HashSet<>();
     setFileVersions(fileVersionSet);

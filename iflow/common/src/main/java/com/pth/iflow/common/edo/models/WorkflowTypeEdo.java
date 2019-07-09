@@ -4,13 +4,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.fasterxml.jackson.annotation.JsonSetter;
-
 @XmlRootElement(name = "WorkflowTypeEdo")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class WorkflowTypeEdo {
 
   @XmlElement(name = "ID")
@@ -145,7 +146,6 @@ public class WorkflowTypeEdo {
     return this.steps;
   }
 
-  @JsonSetter
   public void setSteps(final Set<WorkflowTypeStepEdo> steps) {
     this.steps.clear();
     if (steps != null) {
