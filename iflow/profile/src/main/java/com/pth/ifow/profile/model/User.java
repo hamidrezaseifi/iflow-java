@@ -1,31 +1,29 @@
 package com.pth.ifow.profile.model;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 import com.pth.iflow.common.edo.models.xml.UserEdo;
 import com.pth.iflow.common.enums.EUserStatus;
 
 public class User extends ModelMapperBase<UserEdo, User> {
-
-  private Long id;
-  private Long companyId;
-  private String email;
-  private String firstName;
-  private String lastName;
-  private Integer status;
-  private Integer permission;
-  private Integer version;
-  private LocalDateTime createdAt;
-  private LocalDateTime updatedAt;
-  private final Set<Long> groups = new HashSet<>();
-  private final Set<Long> departments = new HashSet<>();
-  private final Set<Long> departmentGroups = new HashSet<>();
-  private final Set<Long> deputies = new HashSet<>();
+  
+  private Long             id;
+  private Long             companyId;
+  private String           email;
+  private String           firstName;
+  private String           lastName;
+  private Integer          status;
+  private Integer          permission;
+  private Integer          version;
+  private LocalDateTime    createdAt;
+  private LocalDateTime    updatedAt;
+  private final List<Long> groups           = new ArrayList<>();
+  private final List<Long> departments      = new ArrayList<>();
+  private final List<Long> departmentGroups = new ArrayList<>();
+  private final List<Long> deputies         = new ArrayList<>();
 
   /**
    * @return the id
@@ -172,78 +170,60 @@ public class User extends ModelMapperBase<UserEdo, User> {
     this.permission = permission;
   }
 
-  public Set<Long> getGroups() {
+  public List<Long> getGroups() {
     return this.groups;
   }
 
-  public void setGroups(final Set<Long> groups) {
+  public void setGroups(final List<Long> groups) {
     this.groups.clear();
     if (groups != null) {
       this.groups.addAll(groups);
     }
   }
-
-  public void setGroups(final List<Long> groups) {
-    setGroups(groups.stream().collect(Collectors.toSet()));
-  }
-
+  
   public void addGroup(final Long groupId) {
     this.groups.add(groupId);
   }
 
-  public Set<Long> getDepartments() {
+  public List<Long> getDepartments() {
     return this.departments;
   }
 
-  public void setDepartments(final Set<Long> departments) {
+  public void setDepartments(final List<Long> departments) {
     this.departments.clear();
     if (departments != null) {
       this.departments.addAll(departments);
     }
   }
-
-  public void setDepartments(final List<Long> departments) {
-    setDepartments(departments.stream().collect(Collectors.toSet()));
-
-  }
-
+  
   public void addDepartment(final Long departmentId) {
     this.departments.add(departmentId);
   }
 
-  public Set<Long> getDepartmentGroups() {
+  public List<Long> getDepartmentGroups() {
     return this.departmentGroups;
   }
 
-  public void setDepartmentGroups(final Set<Long> departmentGroups) {
+  public void setDepartmentGroups(final List<Long> departmentGroups) {
     this.departmentGroups.clear();
     if (departmentGroups != null) {
       this.departmentGroups.addAll(departmentGroups);
     }
   }
-
-  public void setDepartmentGroups(final List<Long> departmentGroups) {
-    setDepartmentGroups(departmentGroups.stream().collect(Collectors.toSet()));
-  }
-
+  
   public void addDepartmentGroup(final Long departmentGroupId) {
     this.departmentGroups.add(departmentGroupId);
   }
 
-  public Set<Long> getDeputies() {
+  public List<Long> getDeputies() {
     return this.deputies;
   }
 
-  public void setDeputies(final Set<Long> deputies) {
+  public void setDeputies(final List<Long> deputies) {
     this.deputies.clear();
     if (deputies != null) {
       this.deputies.addAll(deputies);
     }
-  }
-
-  public void setDeputies(final List<Long> deputies) {
-    setDeputies(deputies.stream().collect(Collectors.toSet()));
-
   }
 
   public void addDeputy(final Long deputyId) {
@@ -257,6 +237,7 @@ public class User extends ModelMapperBase<UserEdo, User> {
     edo.setLastName(this.lastName);
     edo.setPermission(this.permission);
     edo.setStatus(this.status);
+    edo.setVersion(this.version);
     edo.setEmail(this.email);
     edo.setId(this.id);
     edo.setCompanyId(this.companyId);
@@ -264,7 +245,6 @@ public class User extends ModelMapperBase<UserEdo, User> {
     edo.setDepartments(this.departments);
     edo.setDepartmentGroups(this.departmentGroups);
     edo.setDeputies(this.deputies);
-    edo.setVersion(version);
 
     return edo;
   }
@@ -277,6 +257,7 @@ public class User extends ModelMapperBase<UserEdo, User> {
     model.setLastName(edo.getLastName());
     model.setPermission(edo.getPermission());
     model.setStatus(edo.getStatus());
+    model.setVersion(edo.getVersion());
     model.setEmail(edo.getEmail());
     model.setId(edo.getId());
     model.setCompanyId(edo.getCompanyId());
@@ -284,7 +265,6 @@ public class User extends ModelMapperBase<UserEdo, User> {
     model.setDepartments(edo.getDepartments());
     model.setDepartmentGroups(edo.getDepartmentGroups());
     model.setDeputies(edo.getDeputies());
-    model.setVersion(edo.getVersion());
 
     return model;
   }

@@ -41,11 +41,11 @@ public class WorkflowTypeStepServiceTest extends TestDataProducer {
 
   @Before
   public void setUp() throws Exception {
-    this.workflowTypeStepService = new WorkflowTypeStepDataService(this.restTemplate, moduleAccessConfig);
+    this.workflowTypeStepService = new WorkflowTypeStepDataService(this.restTemplate, this.moduleAccessConfig);
 
-    when(moduleAccessConfig.generateCoreUrl(any(String.class))).thenReturn(new URL("http://any-string"));
+    when(this.moduleAccessConfig.generateCoreUrl(any(String.class))).thenReturn(new URL("http://any-string"));
 
-    when(moduleAccessConfig.generateProfileUrl(any(String.class))).thenReturn(new URL("http://any-string"));
+    when(this.moduleAccessConfig.generateProfileUrl(any(String.class))).thenReturn(new URL("http://any-string"));
   }
 
   @After

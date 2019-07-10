@@ -1,9 +1,7 @@
 package com.pth.iflow.common.edo.models.xml;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -17,50 +15,50 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class WorkflowEdo {
 
   @XmlElement(name = "ID")
-  private Long                   id;
+  private Long id;
 
   @NotNull
   @XmlElement(name = "WorkflowTypeId")
-  private Long                   workflowTypeId;
+  private Long workflowTypeId;
 
   @NotNull
   @XmlElement(name = "CurrentStep")
-  private WorkflowTypeStepEdo    currentStep;
+  private WorkflowTypeStepEdo currentStep;
 
   @XmlElement(name = "CurrentStepId")
-  private Long                   currentStepId;
+  private Long currentStepId;
 
   @XmlElement(name = "Controller")
-  private Long                   controller;
+  private Long controller;
 
   @XmlElement(name = "CreatedBy")
-  private Long                   createdBy;
+  private Long createdBy;
 
   @XmlElement(name = "AssignTo")
-  private Long                   assignTo;
+  private Long assignTo;
 
   @NotNull
   @XmlElement(name = "Title")
-  private String                 title;
+  private String title;
 
   @XmlElement(name = "Comments")
-  private String                 comments;
+  private String comments;
 
   @NotNull
   @XmlElement(name = "Status")
-  private Integer                status;
+  private Integer status;
 
   @NotNull
   @XmlElement(name = "Version")
-  private Integer                version;
+  private Integer version;
 
   @XmlElementWrapper(name = "FileList")
   @XmlElement(name = "File")
-  private Set<WorkflowFileEdo>   files   = new HashSet<>();
+  private List<WorkflowFileEdo> files = new ArrayList<>();
 
   @XmlElementWrapper(name = "ActionList")
   @XmlElement(name = "Action")
-  private Set<WorkflowActionEdo> actions = new HashSet<>();
+  private List<WorkflowActionEdo> actions = new ArrayList<>();
 
   public Long getId() {
     return this.id;
@@ -71,7 +69,7 @@ public class WorkflowEdo {
   }
 
   public Long getWorkflowTypeId() {
-    return workflowTypeId;
+    return this.workflowTypeId;
   }
 
   public void setWorkflowTypeId(final Long workflowTypeId) {
@@ -79,7 +77,7 @@ public class WorkflowEdo {
   }
 
   public WorkflowTypeStepEdo getCurrentStep() {
-    return currentStep;
+    return this.currentStep;
   }
 
   public void setCurrentStep(final WorkflowTypeStepEdo currentStep) {
@@ -87,7 +85,7 @@ public class WorkflowEdo {
   }
 
   public Long getCurrentStepId() {
-    return currentStepId;
+    return this.currentStepId;
   }
 
   public void setCurrentStepId(final Long currentStepId) {
@@ -95,7 +93,7 @@ public class WorkflowEdo {
   }
 
   public Long getController() {
-    return controller;
+    return this.controller;
   }
 
   public void setController(final Long controller) {
@@ -103,7 +101,7 @@ public class WorkflowEdo {
   }
 
   public Long getCreatedBy() {
-    return createdBy;
+    return this.createdBy;
   }
 
   public void setCreatedBy(final Long createdBy) {
@@ -111,7 +109,7 @@ public class WorkflowEdo {
   }
 
   public Long getAssignTo() {
-    return assignTo;
+    return this.assignTo;
   }
 
   public void setAssignTo(final Long assignTo) {
@@ -150,33 +148,23 @@ public class WorkflowEdo {
     this.version = version;
   }
 
-  public Set<WorkflowFileEdo> getFiles() {
-    return files;
+  public List<WorkflowFileEdo> getFiles() {
+    return this.files;
   }
 
-  public void setFilesList(final List<WorkflowFileEdo> files) {
-    final Set<WorkflowFileEdo> fileSet = files != null ? files.stream().collect(Collectors.toSet()) : new HashSet<>();
-    setFiles(fileSet);
-  }
-
-  public void setFiles(final Set<WorkflowFileEdo> files) {
-    this.files = new HashSet<>();
+  public void setFiles(final List<WorkflowFileEdo> files) {
+    this.files = new ArrayList<>();
     if (files != null) {
       this.files.addAll(files);
     }
   }
 
-  public Set<WorkflowActionEdo> getActions() {
-    return actions;
+  public List<WorkflowActionEdo> getActions() {
+    return this.actions;
   }
-
-  public void setActionsList(final List<WorkflowActionEdo> actions) {
-    final Set<WorkflowActionEdo> actionSet = actions != null ? actions.stream().collect(Collectors.toSet()) : new HashSet<>();
-    setActions(actionSet);
-  }
-
-  public void setActions(final Set<WorkflowActionEdo> actions) {
-    this.actions = new HashSet<>();
+  
+  public void setActions(final List<WorkflowActionEdo> actions) {
+    this.actions = new ArrayList<>();
     if (actions != null) {
       this.actions.addAll(actions);
     }

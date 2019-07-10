@@ -18,7 +18,6 @@ import com.pth.iflow.common.annotations.IflowGetRequestMapping;
 import com.pth.iflow.common.annotations.IflowPostRequestMapping;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
-import com.pth.iflow.common.edo.models.json.WorkflowJsonEdo;
 import com.pth.iflow.common.edo.models.xml.WorkflowEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
@@ -48,10 +47,10 @@ public class WorkflowController {
 
   @ResponseStatus(HttpStatus.ACCEPTED)
   @IflowPostRequestMapping(path = IflowRestPaths.WorkflowModule.WORKFLOW_SAVE)
-  public ResponseEntity<WorkflowEdo> saveWorkflow(@RequestBody final WorkflowJsonEdo workflowEdo, final HttpServletRequest request,
+  public ResponseEntity<WorkflowEdo> saveWorkflow(@RequestBody final WorkflowEdo workflowEdo, final HttpServletRequest request,
       @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws Exception {
 
-    final Workflow model = this.workflowService.save(new Workflow().fromJsonEdo(workflowEdo), headerTokenId);
+    final Workflow model = this.workflowService.save(new Workflow().fromEdo(workflowEdo), headerTokenId);
 
     return ControllerHelper.createResponseEntity(request, model.toEdo(), HttpStatus.ACCEPTED);
   }

@@ -1,29 +1,27 @@
 package com.pth.iflow.core.model;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 import com.pth.iflow.common.edo.models.xml.WorkflowTypeEdo;
 
 public class WorkflowType extends ModelMapperBase<WorkflowTypeEdo, WorkflowType> {
 
-  private Long id;
-  private Long companyId;
-  private Long baseTypeId;
-  private String title;
-  private String comments;
-  private Integer status;
-  private Boolean sendToController;
-  private Boolean manualAssign;
-  private Boolean increaseStepAutomatic;
-  private Integer version;
-  private LocalDateTime createdAt;
-  private LocalDateTime updatedAt;
-  private final Set<WorkflowTypeStep> steps = new HashSet<>();
+  private Long                         id;
+  private Long                         companyId;
+  private Long                         baseTypeId;
+  private String                       title;
+  private String                       comments;
+  private Integer                      status;
+  private Boolean                      sendToController;
+  private Boolean                      manualAssign;
+  private Boolean                      increaseStepAutomatic;
+  private Integer                      version;
+  private LocalDateTime                createdAt;
+  private LocalDateTime                updatedAt;
+  private final List<WorkflowTypeStep> steps = new ArrayList<>();
 
   @Override
   public Long getId() {
@@ -81,7 +79,7 @@ public class WorkflowType extends ModelMapperBase<WorkflowTypeEdo, WorkflowType>
   }
 
   public Boolean getSendToController() {
-    return sendToController;
+    return this.sendToController;
   }
 
   public void setSendToController(final Boolean sendToController) {
@@ -89,7 +87,7 @@ public class WorkflowType extends ModelMapperBase<WorkflowTypeEdo, WorkflowType>
   }
 
   public Boolean getManualAssign() {
-    return manualAssign;
+    return this.manualAssign;
   }
 
   public void setManualAssign(final Boolean manualAssign) {
@@ -97,7 +95,7 @@ public class WorkflowType extends ModelMapperBase<WorkflowTypeEdo, WorkflowType>
   }
 
   public Boolean getIncreaseStepAutomatic() {
-    return increaseStepAutomatic;
+    return this.increaseStepAutomatic;
   }
 
   public void setIncreaseStepAutomatic(final Boolean increaseStepAutomatic) {
@@ -130,19 +128,15 @@ public class WorkflowType extends ModelMapperBase<WorkflowTypeEdo, WorkflowType>
     this.updatedAt = updatedAt;
   }
 
-  public Set<WorkflowTypeStep> getSteps() {
+  public List<WorkflowTypeStep> getSteps() {
     return this.steps;
   }
 
-  public void setSteps(final Set<WorkflowTypeStep> steps) {
+  public void setSteps(final List<WorkflowTypeStep> steps) {
     this.steps.clear();
     if (steps != null) {
       this.steps.addAll(steps);
     }
-  }
-
-  public void setSteps(final List<WorkflowTypeStep> steps) {
-    setSteps(steps.stream().collect(Collectors.toSet()));
   }
 
   public void addStep(final WorkflowTypeStep stepId) {
@@ -158,11 +152,11 @@ public class WorkflowType extends ModelMapperBase<WorkflowTypeEdo, WorkflowType>
     edo.setId(this.id);
     edo.setCompanyId(this.companyId);
     edo.setBaseTypeId(this.baseTypeId);
-    edo.setSendToController(sendToController);
-    edo.setManualAssign(manualAssign);
-    edo.setIncreaseStepAutomatic(increaseStepAutomatic);
-    edo.setSteps(ModelMapperBase.toEdoList(this.steps).stream().collect(Collectors.toSet()));
-    edo.setVersion(version);
+    edo.setSendToController(this.sendToController);
+    edo.setManualAssign(this.manualAssign);
+    edo.setIncreaseStepAutomatic(this.increaseStepAutomatic);
+    edo.setSteps(ModelMapperBase.toEdoList(this.steps));
+    edo.setVersion(this.version);
 
     return edo;
   }

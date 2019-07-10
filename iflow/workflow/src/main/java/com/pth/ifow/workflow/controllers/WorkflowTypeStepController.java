@@ -25,41 +25,42 @@ import com.pth.ifow.workflow.models.WorkflowTypeStep;
 @RestController
 @RequestMapping
 public class WorkflowTypeStepController {
-
+  
   final IWorkflowTypeStepDataService workflowStepService;
-
+  
   public WorkflowTypeStepController(@Autowired final IWorkflowTypeStepDataService workflowStepService) {
     this.workflowStepService = workflowStepService;
   }
-
+  
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(path = IflowRestPaths.WorkflowModule.WORKFLOWTYPESTEP_READ_BY_ID)
   public ResponseEntity<WorkflowTypeStepEdo> readDepartmentGroup(@PathVariable final Long id, final HttpServletRequest request)
       throws Exception {
-
+    
     final WorkflowTypeStep model = this.workflowStepService.getById(id);
-
+    
     return ControllerHelper.createResponseEntity(request, model.toEdo(), HttpStatus.OK);
   }
-
+  
   @ResponseStatus(HttpStatus.OK)
   @IflowPostRequestMapping(path = IflowRestPaths.WorkflowModule.WORKFLOWTYPESTEP_READ_LIST)
   public ResponseEntity<List<WorkflowTypeStepEdo>> readDepartmentList(@RequestBody final List<Long> idList,
       final HttpServletRequest request) throws Exception {
-
+    
     final List<WorkflowTypeStep> modelList = this.workflowStepService.getListByIdList(idList);
-
-    return ControllerHelper.createResponseEntity(request, ModelMapperBase.toEdoList(modelList), HttpStatus.OK);
+    final List<WorkflowTypeStepEdo> modelListEdo = WorkflowTypeStep.toEdoList(modelList);
+    
+    return ControllerHelper.createResponseEntity(request, modelListEdo, HttpStatus.OK);
   }
-
+  
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(path = IflowRestPaths.WorkflowModule.WORKFLOWTYPESTEP_READ_LIST_BY_WORKFLOW)
   public ResponseEntity<List<WorkflowTypeStepEdo>> readDepartmentListByCompany(@PathVariable final Long id,
       final HttpServletRequest request) throws Exception {
-
+    
     final List<WorkflowTypeStep> modelList = this.workflowStepService.getListByWorkflowId(id);
-
+    
     return ControllerHelper.createResponseEntity(request, ModelMapperBase.toEdoList(modelList), HttpStatus.OK);
   }
-
+  
 }

@@ -13,8 +13,9 @@ import com.pth.iflow.common.response.IFlowErrorRestResponse;
 
 public class ControllerHelper {
   
-  private static final String PRODUCES_PARAM_KEY        = "produces";
-  private static final String PRODUCES_PARAM_VALUE_JSON = "json";
+  private static final String  PRODUCES_PARAM_KEY        = "produces";
+  private static final String  PRODUCES_PARAM_VALUE_JSON = "json";
+  private static final boolean ALLOW_GENERATE_JSON_MODEL       = false;
   
   public static <T> ResponseEntity<T> createResponseEntity(final HttpServletRequest request, @Nullable final T model,
       final HttpStatus status) {
@@ -38,6 +39,11 @@ public class ControllerHelper {
   public static MediaType getMediaTypeFromRequest(final HttpServletRequest request) {
     
     MediaType m = MediaType.APPLICATION_XML;
+
+    /*
+     * currently we generate just xml and no json because of conflict between xml & json model
+     */
+
     if (isJsonRequest(request)) {
       m = MediaType.APPLICATION_JSON_UTF8;
     }
@@ -57,7 +63,7 @@ public class ControllerHelper {
   
   public static boolean isJsonRequest(final HttpServletRequest request) {
     return request.getParameterMap().keySet().contains(PRODUCES_PARAM_KEY)
-        && request.getParameter(PRODUCES_PARAM_KEY).toLowerCase().equals(PRODUCES_PARAM_VALUE_JSON);
+        && request.getParameter(PRODUCES_PARAM_KEY).toLowerCase().equals(PRODUCES_PARAM_VALUE_JSON) && ALLOW_GENERATE_JSON_MODEL;
   }
   
   public static boolean isJsonRequest(final WebRequest request) {

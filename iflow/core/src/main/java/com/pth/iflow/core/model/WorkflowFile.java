@@ -1,28 +1,26 @@
 package com.pth.iflow.core.model;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 import com.pth.iflow.common.edo.models.xml.WorkflowFileEdo;
 
 public class WorkflowFile extends ModelMapperBase<WorkflowFileEdo, WorkflowFile> {
 
-  private Long id;
-  private Long workflowId;
-  private Long createdBy;
-  private String title;
-  private String activeFilePath;
-  private String comments;
-  private Integer activeFileVersion;
-  private Integer status;
-  private Integer version;
-  private LocalDateTime createdAt;
-  private LocalDateTime updatedAt;
-  private Set<WorkflowFileVersion> fileVersions = new HashSet<>();
+  private Long                            id;
+  private Long                            workflowId;
+  private Long                            createdBy;
+  private String                          title;
+  private String                          activeFilePath;
+  private String                          comments;
+  private Integer                         activeFileVersion;
+  private Integer                         status;
+  private Integer                         version;
+  private LocalDateTime                   createdAt;
+  private LocalDateTime                   updatedAt;
+  private final List<WorkflowFileVersion> fileVersions = new ArrayList<>();
 
   @Override
   public Long getId() {
@@ -34,7 +32,7 @@ public class WorkflowFile extends ModelMapperBase<WorkflowFileEdo, WorkflowFile>
   }
 
   public Long getWorkflowId() {
-    return workflowId;
+    return this.workflowId;
   }
 
   public void setWorkflowId(final Long workflowId) {
@@ -42,7 +40,7 @@ public class WorkflowFile extends ModelMapperBase<WorkflowFileEdo, WorkflowFile>
   }
 
   public String getActiveFilePath() {
-    return activeFilePath;
+    return this.activeFilePath;
   }
 
   public void setActiveFilePath(final String filePath) {
@@ -50,7 +48,7 @@ public class WorkflowFile extends ModelMapperBase<WorkflowFileEdo, WorkflowFile>
   }
 
   public Long getCreatedBy() {
-    return createdBy;
+    return this.createdBy;
   }
 
   public void setCreatedBy(final Long createdBy) {
@@ -74,7 +72,7 @@ public class WorkflowFile extends ModelMapperBase<WorkflowFileEdo, WorkflowFile>
   }
 
   public Integer getActiveFileVersion() {
-    return activeFileVersion;
+    return this.activeFileVersion;
   }
 
   public void setActiveFileVersion(final Integer fileVersion) {
@@ -115,16 +113,12 @@ public class WorkflowFile extends ModelMapperBase<WorkflowFileEdo, WorkflowFile>
     this.updatedAt = updatedAt;
   }
 
-  public Set<WorkflowFileVersion> getFileVersions() {
-    return fileVersions;
+  public List<WorkflowFileVersion> getFileVersions() {
+    return this.fileVersions;
   }
-
+  
   public void setFileVersions(final List<WorkflowFileVersion> fileVersions) {
-    setFileVersions(fileVersions.stream().collect(Collectors.toSet()));
-  }
-
-  public void setFileVersions(final Set<WorkflowFileVersion> fileVersions) {
-    this.fileVersions = new HashSet<>();
+    this.fileVersions.clear();
     if (fileVersions != null) {
       this.fileVersions.addAll(fileVersions);
     }
@@ -137,13 +131,13 @@ public class WorkflowFile extends ModelMapperBase<WorkflowFileEdo, WorkflowFile>
     edo.setComments(this.comments);
     edo.setStatus(this.status);
     edo.setId(this.id);
-    edo.setCreatedBy(createdBy);
-    edo.setActiveFilePath(activeFilePath);
-    edo.setActiveFileVersion(activeFileVersion);
-    edo.setWorkflowId(workflowId);
-    edo.setVersion(version);
+    edo.setCreatedBy(this.createdBy);
+    edo.setActiveFilePath(this.activeFilePath);
+    edo.setActiveFileVersion(this.activeFileVersion);
+    edo.setWorkflowId(this.workflowId);
+    edo.setVersion(this.version);
 
-    edo.setFileVersionsList(ModelMapperBase.toEdoList(fileVersions));
+    edo.setFileVersions(ModelMapperBase.toEdoList(this.fileVersions));
 
     return edo;
   }

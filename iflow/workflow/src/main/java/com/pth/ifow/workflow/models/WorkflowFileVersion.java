@@ -3,10 +3,9 @@ package com.pth.ifow.workflow.models;
 import java.time.LocalDateTime;
 
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
-import com.pth.iflow.common.edo.models.json.WorkflowFileVersionJsonEdo;
 import com.pth.iflow.common.edo.models.xml.WorkflowFileVersionEdo;
 
-public class WorkflowFileVersion extends ModelMapperBase<WorkflowFileVersionEdo, WorkflowFileVersionJsonEdo, WorkflowFileVersion> {
+public class WorkflowFileVersion extends ModelMapperBase<WorkflowFileVersionEdo, WorkflowFileVersion> {
 
   private Long          id;
   private Long          workflowFileId;
@@ -29,7 +28,7 @@ public class WorkflowFileVersion extends ModelMapperBase<WorkflowFileVersionEdo,
   }
 
   public Long getWorkflowFileId() {
-    return workflowFileId;
+    return this.workflowFileId;
   }
 
   public void setWorkflowFileId(final Long workflowFileId) {
@@ -37,7 +36,7 @@ public class WorkflowFileVersion extends ModelMapperBase<WorkflowFileVersionEdo,
   }
 
   public String getFilePath() {
-    return filePath;
+    return this.filePath;
   }
 
   public void setFilePath(final String filePath) {
@@ -45,7 +44,7 @@ public class WorkflowFileVersion extends ModelMapperBase<WorkflowFileVersionEdo,
   }
 
   public Long getCreatedBy() {
-    return createdBy;
+    return this.createdBy;
   }
 
   public void setCreatedBy(final Long createdBy) {
@@ -61,7 +60,7 @@ public class WorkflowFileVersion extends ModelMapperBase<WorkflowFileVersionEdo,
   }
 
   public Integer getFileVersion() {
-    return fileVersion;
+    return this.fileVersion;
   }
 
   public void setFileVersion(final Integer fileVersion) {
@@ -108,11 +107,11 @@ public class WorkflowFileVersion extends ModelMapperBase<WorkflowFileVersionEdo,
     edo.setComments(this.comments);
     edo.setStatus(this.status);
     edo.setId(this.id);
-    edo.setCreatedBy(createdBy);
-    edo.setFilePath(filePath);
-    edo.setFileVersion(fileVersion);
-    edo.setWorkflowFileId(workflowFileId);
-    edo.setVersion(version);
+    edo.setCreatedBy(this.createdBy);
+    edo.setFilePath(this.filePath);
+    edo.setFileVersion(this.fileVersion);
+    edo.setWorkflowFileId(this.workflowFileId);
+    edo.setVersion(this.version);
 
     return edo;
   }
@@ -132,36 +131,5 @@ public class WorkflowFileVersion extends ModelMapperBase<WorkflowFileVersionEdo,
 
     return model;
   }
-
-  @Override
-  public WorkflowFileVersionJsonEdo toJsonEdo() {
-    final WorkflowFileVersionJsonEdo edo = new WorkflowFileVersionJsonEdo();
-    edo.setComments(this.comments);
-    edo.setStatus(this.status);
-    edo.setId(this.id);
-    edo.setCreatedBy(createdBy);
-    edo.setFilePath(filePath);
-    edo.setFileVersion(fileVersion);
-    edo.setWorkflowFileId(workflowFileId);
-    edo.setVersion(version);
-
-    return edo;
-  }
-
-  @Override
-  public WorkflowFileVersion fromJsonEdo(final WorkflowFileVersionJsonEdo edo) {
-    final WorkflowFileVersion model = new WorkflowFileVersion();
-
-    model.setComments(edo.getComments());
-    model.setStatus(edo.getStatus());
-    model.setId(edo.getId());
-    model.setCreatedBy(edo.getCreatedBy());
-    model.setFilePath(edo.getFilePath());
-    model.setFileVersion(edo.getFileVersion());
-    model.setWorkflowFileId(edo.getWorkflowFileId());
-    model.setVersion(edo.getVersion());
-
-    return model;
-  }
-
+  
 }
