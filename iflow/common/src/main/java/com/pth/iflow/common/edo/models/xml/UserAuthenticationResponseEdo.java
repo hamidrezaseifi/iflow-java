@@ -21,7 +21,7 @@ public class UserAuthenticationResponseEdo {
   private String        token;
 
   @NotNull
-  @XmlElement(name = "Sessionid")
+  @XmlElement(name = "SessionId")
   private String        sessionid;
 
   @NotNull
