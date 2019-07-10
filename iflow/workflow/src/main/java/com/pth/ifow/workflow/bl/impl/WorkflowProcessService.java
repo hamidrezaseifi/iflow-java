@@ -59,11 +59,11 @@ public class WorkflowProcessService implements IWorkflowProcessService {
     
     if (newWorkflow.isNew()) {
       
-      return processNewWorkflow(newWorkflow);
+      return saveNewWorkflow(newWorkflow);
     }
     
     if (newWorkflow.getStatus() == EWorkflowStatus.ASSIGNED) {
-      return processNewWorkflow(newWorkflow);
+      return saveNewWorkflow(newWorkflow);
     }
     
     // final Workflow existsWorkflow = getById(newWorkflow.getId(), token);
@@ -74,8 +74,16 @@ public class WorkflowProcessService implements IWorkflowProcessService {
         selectWorkflowNextStep(newWorkflow, workflowType);
         
       }
+
+      final Long assignedTo = newWorkflow.getAssignTo();
+
+      selectWorkflowNextAssigned(newWorkflow, workflowType);
+
+      if (assignedTo != newWorkflow.getAssignTo()) {
+        newWorkflow.setStatus(EWorkflowStatus.ASSIGNED);
+      }
       
-      return processNewWorkflow(newWorkflow);
+      return saveExistsWorkflow(newWorkflow);
     }
     
     throw new IFlowCustomeException("Unknown workflow status id:" + newWorkflow.getId(), EIFlowErrorType.UNKNOWN_WORKFLOW_STATUS);
@@ -138,7 +146,15 @@ public class WorkflowProcessService implements IWorkflowProcessService {
     return true;
   }
   
-  private Workflow processNewWorkflow(final Workflow model) throws WorkflowCustomizedException, MalformedURLException {
+  private Workflow saveNewWorkflow(final Workflow model) throws WorkflowCustomizedException, MalformedURLException {
+    // TODO process New Workflow must be implemented
+    
+    final Workflow savedWorkflow = this.workflowDataService.save(model);
+    
+    return savedWorkflow;
+  }
+  
+  private Workflow saveExistsWorkflow(final Workflow model) throws WorkflowCustomizedException, MalformedURLException {
     // TODO process New Workflow must be implemented
     
     final Workflow savedWorkflow = this.workflowDataService.save(model);
@@ -152,6 +168,30 @@ public class WorkflowProcessService implements IWorkflowProcessService {
     newWorkflow.setCurrentStep(nextStep);
   }
   
+  private void selectWorkflowNextAssigned(final Workflow newWorkflow, final WorkflowType workflowType) {
+    
+    /*
+     * TODO: implements select next assigned for workflow based on new step
+     */
+    
+    if (workflowType.getSendToController().booleanValue() == true) {
+      newWorkflow.setAssignTo(newWorkflow.getController());
+    }
+    else {
+
+      setAssignToControllerAfterLastStep(newWorkflow, workflowType);
+
+    }
+
+  }
+  
+  private void setAssignToControllerAfterLastStep(final Workflow newWorkflow, final WorkflowType workflowType) {
+    final WorkflowTypeStep nextStep = findNextStep(workflowType, newWorkflow.getCurrentStep());
+    if (nextStep.getStepIndex() == newWorkflow.getCurrentStep().getStepIndex()) {
+      newWorkflow.setAssignTo(newWorkflow.getController());
+    }
+  }
+  
   private void selectWorkflowNextAssignedUser(final Workflow newWorkflow, final WorkflowType workflowType) {
     
     if (newWorkflow.isInitializing()) {
@@ -159,13 +199,7 @@ public class WorkflowProcessService implements IWorkflowProcessService {
         return;
       }
     }
-    
-    if ((newWorkflow.getStatus() == EWorkflowStatus.DONE) && (workflowType.getSendToController().booleanValue() == true)) {
-      newWorkflow.setAssignTo(newWorkflow.getController());
-    }
-    else {
-      
-    }
+
   }
   
   private LinkedHashMap<Integer, WorkflowTypeStep> getSortedSteps(final WorkflowType workflowType) {
@@ -251,8 +285,10 @@ public class WorkflowProcessService implements IWorkflowProcessService {
   }
   
   private void setWorkflowCurrectStepFromCurrectStepId(final Workflow newWorkflow) throws MalformedURLException {
-    if ((newWorkflow.getCurrentStepId() != null) && (newWorkflow.getCurrentStepId() > 0)) {
-      newWorkflow.setCurrentStep(this.workflowTypeStepDataService.getById(newWorkflow.getCurrentStepId()));
+    if (newWorkflow.getCurrentStep() == null) {
+      if ((newWorkflow.getCurrentStepId() != null) && (newWorkflow.getCurrentStepId() > 0)) {
+        newWorkflow.setCurrentStep(this.workflowTypeStepDataService.getById(newWorkflow.getCurrentStepId()));
+      }
     }
   }
   

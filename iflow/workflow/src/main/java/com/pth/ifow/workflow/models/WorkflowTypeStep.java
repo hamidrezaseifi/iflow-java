@@ -1,21 +1,17 @@
 package com.pth.ifow.workflow.models;
 
-import java.time.LocalDateTime;
-
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 import com.pth.iflow.common.edo.models.xml.WorkflowTypeStepEdo;
 
 public class WorkflowTypeStep extends ModelMapperBase<WorkflowTypeStepEdo, WorkflowTypeStep> {
   
-  private Long          id;
-  private Long          workflowTypeId;
-  private String        title;
-  private Integer       stepIndex;
-  private String        comments;
-  private Integer       status;
-  private Integer       version;
-  private LocalDateTime createdAt;
-  private LocalDateTime updatedAt;
+  private Long    id;
+  private Long    workflowTypeId;
+  private String  title;
+  private Integer stepIndex;
+  private String  comments;
+  private Integer status;
+  private Integer version;
   
   @Override
   public Long getId() {
@@ -82,22 +78,6 @@ public class WorkflowTypeStep extends ModelMapperBase<WorkflowTypeStepEdo, Workf
     this.version = version;
   }
   
-  public LocalDateTime getCreatedAt() {
-    return this.createdAt;
-  }
-  
-  public void setCreatedAt(final LocalDateTime createdAt) {
-    this.createdAt = createdAt;
-  }
-  
-  public LocalDateTime getUpdatedAt() {
-    return this.updatedAt;
-  }
-  
-  public void setUpdatedAt(final LocalDateTime updatedAt) {
-    this.updatedAt = updatedAt;
-  }
-  
   public boolean isAfterStep(final WorkflowTypeStep other) {
     return this.stepIndex > other.getStepIndex();
   }
@@ -126,6 +106,9 @@ public class WorkflowTypeStep extends ModelMapperBase<WorkflowTypeStepEdo, Workf
   
   @Override
   public WorkflowTypeStep fromEdo(final WorkflowTypeStepEdo edo) {
+    if (edo == null) {
+      return null;
+    }
     final WorkflowTypeStep model = new WorkflowTypeStep();
     
     model.setStepIndex(edo.getStepIndex());

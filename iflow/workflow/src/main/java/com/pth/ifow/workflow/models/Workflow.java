@@ -105,7 +105,11 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
     return this.status;
   }
 
-  public void setStatus(final Integer status) {
+  public void setStatus(final EWorkflowStatus status) {
+    this.status = status;
+  }
+
+  public void setStatusInt(final Integer status) {
     this.status = EWorkflowStatus.ofValue(status);
   }
 
@@ -196,11 +200,14 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
 
   @Override
   public Workflow fromEdo(final WorkflowEdo edo) {
+    if (edo == null) {
+      return null;
+    }
     final Workflow model = new Workflow();
 
     model.setTitle(edo.getTitle());
     model.setComments(edo.getComments());
-    model.setStatus(edo.getStatus());
+    model.setStatusInt(edo.getStatus());
     model.setId(edo.getId());
     model.setController(edo.getController());
     model.setCurrentStep(new WorkflowTypeStep().fromEdo(edo.getCurrentStep()));

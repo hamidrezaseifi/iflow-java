@@ -1,6 +1,5 @@
 package com.pth.ifow.workflow.models;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +7,7 @@ import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 import com.pth.iflow.common.edo.models.xml.WorkflowFileEdo;
 
 public class WorkflowFile extends ModelMapperBase<WorkflowFileEdo, WorkflowFile> {
-  
+
   private Long                            id;
   private Long                            workflowId;
   private Long                            createdBy;
@@ -18,112 +17,94 @@ public class WorkflowFile extends ModelMapperBase<WorkflowFileEdo, WorkflowFile>
   private Integer                         activeFileVersion;
   private Integer                         status;
   private Integer                         version;
-  private LocalDateTime                   createdAt;
-  private LocalDateTime                   updatedAt;
   private final List<WorkflowFileVersion> fileVersions = new ArrayList<>();
-  
+
   @Override
   public Long getId() {
     return this.id;
   }
-  
+
   public void setId(final Long id) {
     this.id = id;
   }
-  
+
   public Long getWorkflowId() {
     return this.workflowId;
   }
-  
+
   public void setWorkflowId(final Long workflowId) {
     this.workflowId = workflowId;
   }
-  
+
   public String getActiveFilePath() {
     return this.activeFilePath;
   }
-  
+
   public void setActiveFilePath(final String filePath) {
     this.activeFilePath = filePath;
   }
-  
+
   public Long getCreatedBy() {
     return this.createdBy;
   }
-  
+
   public void setCreatedBy(final Long createdBy) {
     this.createdBy = createdBy;
   }
-  
+
   public String getTitle() {
     return this.title;
   }
-  
+
   public void setTitle(final String title) {
     this.title = title;
   }
-  
+
   public String getComments() {
     return this.comments;
   }
-  
+
   public void setComments(final String comments) {
     this.comments = comments;
   }
-  
+
   public Integer getActiveFileVersion() {
     return this.activeFileVersion;
   }
-  
+
   public void setActiveFileVersion(final Integer fileVersion) {
     this.activeFileVersion = fileVersion;
   }
-  
+
   public Integer getStatus() {
     return this.status;
   }
-  
+
   public void setStatus(final Integer status) {
     this.status = status;
   }
-  
+
   @Override
   public Integer getVersion() {
     return this.version;
   }
-  
+
   @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
-  
-  public LocalDateTime getCreatedAt() {
-    return this.createdAt;
-  }
-  
-  public void setCreatedAt(final LocalDateTime createdAt) {
-    this.createdAt = createdAt;
-  }
-  
-  public LocalDateTime getUpdatedAt() {
-    return this.updatedAt;
-  }
-  
-  public void setUpdatedAt(final LocalDateTime updatedAt) {
-    this.updatedAt = updatedAt;
-  }
-  
+
   public List<WorkflowFileVersion> getFileVersions() {
     return this.fileVersions;
   }
-  
+
   public void setFileVersions(final List<WorkflowFileVersion> fileVersions) {
     this.fileVersions.clear();
     if (fileVersions != null) {
       this.fileVersions.addAll(fileVersions);
     }
   }
-  
+
   @Override
   public WorkflowFileEdo toEdo() {
     final WorkflowFileEdo edo = new WorkflowFileEdo();
@@ -136,16 +117,20 @@ public class WorkflowFile extends ModelMapperBase<WorkflowFileEdo, WorkflowFile>
     edo.setActiveFileVersion(this.activeFileVersion);
     edo.setWorkflowId(this.workflowId);
     edo.setVersion(this.version);
-    
+
     edo.setFileVersions(WorkflowFileVersion.toEdoList(this.fileVersions));
-    
+
     return edo;
   }
-  
+
   @Override
   public WorkflowFile fromEdo(final WorkflowFileEdo edo) {
-    final WorkflowFile model = new WorkflowFile();
+    if (edo == null) {
+      return null;
+    }
     
+    final WorkflowFile model = new WorkflowFile();
+
     model.setTitle(edo.getTitle());
     model.setComments(edo.getComments());
     model.setStatus(edo.getStatus());
@@ -155,10 +140,10 @@ public class WorkflowFile extends ModelMapperBase<WorkflowFileEdo, WorkflowFile>
     model.setActiveFileVersion(edo.getActiveFileVersion());
     model.setWorkflowId(edo.getWorkflowId());
     model.setVersion(edo.getVersion());
-    
+
     model.setFileVersions(new WorkflowFileVersion().fromEdoList(edo.getFileVersions()));
-    
+
     return model;
   }
-  
+
 }
