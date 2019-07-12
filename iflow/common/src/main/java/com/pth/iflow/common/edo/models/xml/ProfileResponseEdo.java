@@ -1,9 +1,26 @@
-package com.pth.iflow.common.edo.models;
+package com.pth.iflow.common.edo.models.xml;
 
+import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "ProfileResponseEdo")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class ProfileResponseEdo {
-  private UserEdo user;
+
+  @NotNull
+  @XmlElement(name = "User")
+  private UserEdo    user;
+
+  @NotNull
+  @XmlElement(name = "Company")
   private CompanyEdo company;
-  private String sessionid;
+
+  @NotNull
+  @XmlElement(name = "Sessionid")
+  private String     sessionid;
 
   public ProfileResponseEdo() {
     this.user = null;

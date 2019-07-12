@@ -17,6 +17,7 @@ import com.pth.iflow.core.model.WorkflowFile;
 import com.pth.iflow.core.storage.dao.IWorkflowActionDao;
 import com.pth.iflow.core.storage.dao.IWorkflowDao;
 import com.pth.iflow.core.storage.dao.IWorkflowFileDao;
+import com.pth.iflow.core.storage.dao.IWorkflowTypeStepDao;
 import com.pth.iflow.core.storage.dao.basic.DaoBasicClass;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 import com.pth.iflow.core.storage.dao.utils.SqlUtils;
@@ -26,10 +27,13 @@ import com.pth.iflow.core.storage.dao.utils.SqlUtils;
 public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao {
 
   @Autowired
-  private IWorkflowActionDao workflowActionDao;
+  private IWorkflowActionDao   workflowActionDao;
 
   @Autowired
-  private IWorkflowFileDao workflowFileDao;
+  private IWorkflowFileDao     workflowFileDao;
+
+  @Autowired
+  private IWorkflowTypeStepDao workflowTypeStepDao;
 
   public WorkflowDao() {
 
@@ -66,8 +70,9 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
     model.setVersion(rs.getInt("version"));
     model.setComments(rs.getString("comments"));
     model.setController(rs.getLong("controller"));
-    model.setCurrentStep(rs.getLong("current_step"));
+    model.setCurrentStep(workflowTypeStepDao.getById(rs.getLong("current_step")));
     model.setCreatedBy(rs.getLong("created_by"));
+    model.setAssignTo(rs.getLong("assign_to"));
     model.setWorkflowTypeId(rs.getLong("workflow_type_id"));
 
     return model;
@@ -93,8 +98,8 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
 
   @Override
   public Workflow create(final Workflow workflow) throws IFlowStorageException {
-    final String sql = "INSERT INTO workflow (workflow_type_id, title, current_step, comments, controller, created_by, version, status)"
-        + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    final String sql = "INSERT INTO workflow (workflow_type_id, title, current_step, assign_to, comments, controller, created_by, version, status)"
+        + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     final TransactionStatus transactionStatus = startTransaction(true);
     try {
@@ -149,7 +154,7 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
 
   @Override
   public Workflow update(final Workflow workflow) throws IFlowStorageException {
-    final String sql = "UPDATE workflow SET workflow_type_id = ?, title = ?, current_step = ?, comments = ?,"
+    final String sql = "UPDATE workflow SET workflow_type_id = ?, title = ?, current_step = ?, assign_to=?, comments = ?,"
         + " controller = ?, created_by = ?, version = ?, status = ? WHERE id = ?";
 
     final TransactionStatus transactionStatus = startTransaction(true);
@@ -195,12 +200,13 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
   protected PreparedStatement prepareInsertPreparedStatement(final Workflow model, final PreparedStatement ps) throws SQLException {
     ps.setLong(1, model.getWorkflowTypeId());
     ps.setString(2, model.getTitle());
-    ps.setLong(3, model.getCurrentStep());
-    ps.setString(4, model.getComments());
-    ps.setLong(5, model.getController());
-    ps.setLong(6, model.getCreatedBy());
-    ps.setInt(7, model.getVersion());
-    ps.setInt(8, model.getStatus());
+    ps.setLong(3, model.getCurrentStep().getId());
+    ps.setLong(4, model.getAssignTo());
+    ps.setString(5, model.getComments());
+    ps.setLong(6, model.getController());
+    ps.setLong(7, model.getCreatedBy());
+    ps.setInt(8, model.getVersion());
+    ps.setInt(9, model.getStatusInt());
 
     return ps;
   }
@@ -209,15 +215,49 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
   protected PreparedStatement prepareUpdatePreparedStatement(final Workflow model, final PreparedStatement ps) throws SQLException {
     ps.setLong(1, model.getWorkflowTypeId());
     ps.setString(2, model.getTitle());
-    ps.setLong(3, model.getCurrentStep());
-    ps.setString(4, model.getComments());
-    ps.setLong(5, model.getController());
-    ps.setLong(6, model.getCreatedBy());
-    ps.setInt(7, model.getVersion());
-    ps.setInt(8, model.getStatus());
-    ps.setLong(9, model.getId());
+    ps.setLong(3, model.getCurrentStep().getId());
+    ps.setLong(4, model.getAssignTo());
+    ps.setString(5, model.getComments());
+    ps.setLong(6, model.getController());
+    ps.setLong(7, model.getCreatedBy());
+    ps.setInt(8, model.getVersion());
+    ps.setInt(9, model.getStatusInt());
+    ps.setLong(10, model.getId());
 
     return ps;
+  }
+
+  @Override
+  public List<Workflow> getListForUser(final Long id, final int status) throws IFlowStorageException {
+
+    logger.info("Dao read Workflow for user id: {}", id);
+
+    List<Long> idList = new ArrayList<>();
+    final String sql = "SELECT * FROM workflow where assign_to=?" + (status > -1 ? " and status=?" : "");
+
+    try {
+      idList = jdbcTemplate.query(con -> {
+        final PreparedStatement ps = con.prepareStatement(sql);
+        ps.setLong(1, id);
+        if (status > -1) {
+          ps.setInt(2, status);
+        }
+
+        return ps;
+
+      }, (rs, rowNum) -> {
+
+        return rs.getLong("id");
+
+      });
+
+    } catch (final Exception e) {
+      throw new IFlowStorageException("Unable to read Workflow for user id: " + id + " : " + e.toString());
+    }
+
+    final List<Workflow> workflowList = readWorkflowListFromIdList(idList);
+
+    return workflowList;
   }
 
 }

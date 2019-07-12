@@ -1,27 +1,27 @@
 package com.pth.iflow.core.model;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
-import com.pth.iflow.common.edo.models.WorkflowTypeEdo;
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
+import com.pth.iflow.common.edo.models.xml.WorkflowTypeEdo;
 
 public class WorkflowType extends ModelMapperBase<WorkflowTypeEdo, WorkflowType> {
 
-  private Long id;
-  private Long companyId;
-  private Long baseTypeId;
-  private String title;
-  private String comments;
-  private Integer status;
-  private Boolean sendToController;
-  private Boolean manualAssign;
-  private Integer version;
-  private LocalDateTime createdAt;
-  private LocalDateTime updatedAt;
-  private final Set<Long> steps = new HashSet<>();
+  private Long                         id;
+  private Long                         companyId;
+  private Long                         baseTypeId;
+  private String                       title;
+  private String                       comments;
+  private Integer                      status;
+  private Boolean                      sendToController;
+  private Boolean                      manualAssign;
+  private Boolean                      increaseStepAutomatic;
+  private Integer                      version;
+  private LocalDateTime                createdAt;
+  private LocalDateTime                updatedAt;
+  private final List<WorkflowTypeStep> steps = new ArrayList<>();
 
   @Override
   public Long getId() {
@@ -79,7 +79,7 @@ public class WorkflowType extends ModelMapperBase<WorkflowTypeEdo, WorkflowType>
   }
 
   public Boolean getSendToController() {
-    return sendToController;
+    return this.sendToController;
   }
 
   public void setSendToController(final Boolean sendToController) {
@@ -87,11 +87,19 @@ public class WorkflowType extends ModelMapperBase<WorkflowTypeEdo, WorkflowType>
   }
 
   public Boolean getManualAssign() {
-    return manualAssign;
+    return this.manualAssign;
   }
 
   public void setManualAssign(final Boolean manualAssign) {
     this.manualAssign = manualAssign;
+  }
+
+  public Boolean getIncreaseStepAutomatic() {
+    return this.increaseStepAutomatic;
+  }
+
+  public void setIncreaseStepAutomatic(final Boolean increaseStepAutomatic) {
+    this.increaseStepAutomatic = increaseStepAutomatic;
   }
 
   @Override
@@ -120,25 +128,18 @@ public class WorkflowType extends ModelMapperBase<WorkflowTypeEdo, WorkflowType>
     this.updatedAt = updatedAt;
   }
 
-  public Set<Long> getSteps() {
+  public List<WorkflowTypeStep> getSteps() {
     return this.steps;
   }
 
-  public void setSteps(final Set<Long> steps) {
+  public void setSteps(final List<WorkflowTypeStep> steps) {
     this.steps.clear();
     if (steps != null) {
       this.steps.addAll(steps);
     }
   }
 
-  public void setSteps(final List<Long> steps) {
-    this.steps.clear();
-    if (steps != null) {
-      this.steps.addAll(steps);
-    }
-  }
-
-  public void addStep(final Long stepId) {
+  public void addStep(final WorkflowTypeStep stepId) {
     this.steps.add(stepId);
   }
 
@@ -151,10 +152,11 @@ public class WorkflowType extends ModelMapperBase<WorkflowTypeEdo, WorkflowType>
     edo.setId(this.id);
     edo.setCompanyId(this.companyId);
     edo.setBaseTypeId(this.baseTypeId);
-    edo.setSendToController(sendToController);
-    edo.setManualAssign(manualAssign);
-    edo.setSteps(this.steps);
-    edo.setVersion(version);
+    edo.setSendToController(this.sendToController);
+    edo.setManualAssign(this.manualAssign);
+    edo.setIncreaseStepAutomatic(this.increaseStepAutomatic);
+    edo.setSteps(ModelMapperBase.toEdoList(this.steps));
+    edo.setVersion(this.version);
 
     return edo;
   }
@@ -171,8 +173,9 @@ public class WorkflowType extends ModelMapperBase<WorkflowTypeEdo, WorkflowType>
     model.setBaseTypeId(edo.getBaseTypeId());
     model.setSendToController(edo.getSendToController());
     model.setManualAssign(edo.getManualAssign());
+    model.setIncreaseStepAutomatic(edo.getIncreaseStepAutomatic());
     model.setVersion(edo.getVersion());
-    model.setSteps(edo.getSteps());
+    model.setSteps(new WorkflowTypeStep().fromEdoList(edo.getSteps()));
 
     return model;
   }

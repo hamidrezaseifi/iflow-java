@@ -23,13 +23,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pth.iflow.common.edo.models.WorkflowTypeStepEdo;
+import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
+import com.pth.iflow.common.edo.models.xml.WorkflowTypeStepEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
 import com.pth.ifow.workflow.TestDataProducer;
-import com.pth.ifow.workflow.bl.IWorkflowTypeStepService;
+import com.pth.ifow.workflow.bl.IWorkflowTypeStepDataService;
 import com.pth.ifow.workflow.models.WorkflowTypeStep;
 
 @RunWith(SpringRunner.class)
@@ -43,14 +43,15 @@ public class WorkflowTypeStepControllerTest extends TestDataProducer {
   @Autowired
   private MappingJackson2XmlHttpMessageConverter xmlConverter;
 
-  @Autowired
-  private ObjectMapper mapper;
-
   @MockBean
-  private IWorkflowTypeStepService workflowStepService;
+  private IWorkflowTypeStepDataService workflowStepService;
 
   @Before
   public void setUp() throws Exception {
+    
+    final JaxbAnnotationModule jaxbAnnotationModule = new JaxbAnnotationModule();
+    this.xmlConverter.getObjectMapper().registerModule(jaxbAnnotationModule);
+    
   }
 
   @After
@@ -67,6 +68,8 @@ public class WorkflowTypeStepControllerTest extends TestDataProducer {
 
     final String modelAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelEdo);
 
+    System.out.println("modelAsXmlString : " + modelAsXmlString);
+
     this.mockMvc
         .perform(MockMvcRequestBuilders.get(IflowRestPaths.WorkflowModule.WORKFLOWTYPESTEP_READ_BY_ID, model.getId())
             .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, "test-roken"))
@@ -74,14 +77,6 @@ public class WorkflowTypeStepControllerTest extends TestDataProducer {
         .andExpect(content().xml(modelAsXmlString));
 
     verify(this.workflowStepService, times(1)).getById(any(Long.class));
-
-    final String modelAsJsonString = this.mapper.writeValueAsString(modelEdo);
-    this.mockMvc
-        .perform(
-            MockMvcRequestBuilders.get(IflowRestPaths.WorkflowModule.WORKFLOWTYPESTEP_READ_BY_ID + "?produces=json", model.getId())
-                .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, "test-roken"))
-        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-        .andExpect(content().json(modelAsJsonString));
 
   }
 
@@ -105,16 +100,6 @@ public class WorkflowTypeStepControllerTest extends TestDataProducer {
 
     verify(this.workflowStepService, times(1)).getListByIdList(any(List.class));
 
-    final String contentAsJsonString = this.mapper.writeValueAsString(idList);
-    final String listAsJsonString = this.mapper.writeValueAsString(edoList);
-
-    this.mockMvc
-        .perform(MockMvcRequestBuilders.post(IflowRestPaths.WorkflowModule.WORKFLOWTYPESTEP_READ_LIST + "?produces=json")
-            .content(contentAsJsonString).contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-            .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, "test-roken"))
-        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-        .andExpect(content().json(listAsJsonString));
-
   }
 
   @Test
@@ -134,14 +119,6 @@ public class WorkflowTypeStepControllerTest extends TestDataProducer {
         .andExpect(content().xml(listAsXmlString));
 
     verify(this.workflowStepService, times(1)).getListByWorkflowId(any(Long.class));
-
-    final String listAsJsonString = this.mapper.writeValueAsString(edoList);
-    this.mockMvc
-        .perform(
-            MockMvcRequestBuilders.get(IflowRestPaths.WorkflowModule.WORKFLOWTYPESTEP_READ_LIST_BY_WORKFLOW + "?produces=json", 1L)
-                .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, "test-roken"))
-        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-        .andExpect(content().json(listAsJsonString));
 
   }
 

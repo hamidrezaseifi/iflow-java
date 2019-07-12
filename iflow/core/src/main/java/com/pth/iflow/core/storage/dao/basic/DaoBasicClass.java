@@ -200,7 +200,7 @@ public abstract class DaoBasicClass<M> {
     return list;
   }
 
-  public Long createModel(final M model, final String modelName, final String insertSql, final boolean withTransaction)
+  protected Long createModel(final M model, final String modelName, final String insertSql, final boolean withTransaction)
       throws IFlowStorageException {
     logger.debug("insert " + modelName + " ...");
     final TransactionStatus transactionStatus = startTransaction(withTransaction);
@@ -224,7 +224,7 @@ public abstract class DaoBasicClass<M> {
 
   }
 
-  public Long createModelWithStatementNoTransaction(final String modelName, final PreparedStatementCreator statement)
+  protected Long createModelWithStatementNoTransaction(final String modelName, final PreparedStatementCreator statement)
       throws IFlowStorageException {
     logger.debug("insert " + modelName + " ...");
     final KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -235,7 +235,7 @@ public abstract class DaoBasicClass<M> {
 
   }
 
-  public void updateModel(final M model, final String modelName, final String updateSql, final boolean withTransaction)
+  protected void updateModel(final M model, final String modelName, final String updateSql, final boolean withTransaction)
       throws IFlowStorageException {
     logger.debug("Updating {}...", modelName);
     final TransactionStatus transactionStatus = startTransaction(withTransaction);
@@ -260,7 +260,7 @@ public abstract class DaoBasicClass<M> {
 
   }
 
-  public void updateModelWithStatementNoTransaction(final String modelName, final PreparedStatementCreator statement)
+  protected void updateModelWithStatementNoTransaction(final String modelName, final PreparedStatementCreator statement)
       throws IFlowStorageException {
     logger.debug("Updating {}...", modelName);
 
@@ -272,7 +272,7 @@ public abstract class DaoBasicClass<M> {
 
   }
 
-  public void deleteModel(final Long id, final String modelName, final String deleteSql, final boolean withTransaction,
+  protected void deleteModel(final Long id, final String modelName, final String deleteSql, final boolean withTransaction,
       final boolean checkDeleted) throws IFlowStorageException {
     logger.debug("Deleting {} by id:{} ...", modelName, id);
 

@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.pth.iflow.common.edo.models.UserEdo;
+import com.pth.iflow.common.edo.models.xml.UserEdo;
 import com.pth.iflow.common.enums.EModule;
 import com.pth.ifow.profile.config.ProfileConfiguration;
 import com.pth.ifow.profile.exceptions.ProfileCustomizedException;

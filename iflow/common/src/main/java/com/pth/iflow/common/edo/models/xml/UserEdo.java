@@ -1,22 +1,65 @@
-package com.pth.iflow.common.edo.models;
+package com.pth.iflow.common.edo.models.xml;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "UserEdo")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class UserEdo {
 
+  @XmlElement(name = "ID")
   private Long id;
+
+  @NotNull
+  @XmlElement(name = "CompanyId")
   private Long companyId;
+
+  @NotNull
+  @XmlElement(name = "Email")
   private String email;
+
+  @NotNull
+  @XmlElement(name = "FirstName")
   private String firstName;
+
+  @NotNull
+  @XmlElement(name = "LastName")
   private String lastName;
+
+  @NotNull
+  @XmlElement(name = "Status")
   private Integer status;
+
+  @NotNull
+  @XmlElement(name = "Version")
   private Integer version;
+
+  @NotNull
+  @XmlElement(name = "Permission")
   private Integer permission;
-  private final Set<Long> groups = new HashSet<>();
-  private final Set<Long> departments = new HashSet<>();
-  private final Set<Long> departmentGroups = new HashSet<>();
-  private final Set<Long> deputies = new HashSet<>();
+
+  @XmlElementWrapper(name = "GroupList")
+  @XmlElement(name = "Group")
+  private final List<Long> groups = new ArrayList<>();
+
+  @XmlElementWrapper(name = "DepartmentList")
+  @XmlElement(name = "Department")
+  private final List<Long> departments = new ArrayList<>();
+
+  @XmlElementWrapper(name = "DepartmentGroupList")
+  @XmlElement(name = "DepartmentGroup")
+  private final List<Long> departmentGroups = new ArrayList<>();
+
+  @XmlElementWrapper(name = "DeputyList")
+  @XmlElement(name = "Deputy")
+  private final List<Long> deputies = new ArrayList<>();
 
   /**
    * @return the id
@@ -124,11 +167,11 @@ public class UserEdo {
     this.permission = permission;
   }
 
-  public Set<Long> getGroups() {
+  public List<Long> getGroups() {
     return this.groups;
   }
 
-  public void setGroups(final Set<Long> groups) {
+  public void setGroups(final List<Long> groups) {
     this.groups.clear();
     if (groups != null) {
       this.groups.addAll(groups);
@@ -139,11 +182,11 @@ public class UserEdo {
     this.groups.add(groupId);
   }
 
-  public Set<Long> getDepartments() {
+  public List<Long> getDepartments() {
     return this.departments;
   }
 
-  public void setDepartments(final Set<Long> departments) {
+  public void setDepartments(final List<Long> departments) {
     this.departments.clear();
     if (departments != null) {
       this.departments.addAll(departments);
@@ -154,11 +197,11 @@ public class UserEdo {
     this.departments.add(departmentId);
   }
 
-  public Set<Long> getDepartmentGroups() {
+  public List<Long> getDepartmentGroups() {
     return this.departmentGroups;
   }
 
-  public void setDepartmentGroups(final Set<Long> departmentGroups) {
+  public void setDepartmentGroups(final List<Long> departmentGroups) {
     this.departmentGroups.clear();
     if (departmentGroups != null) {
       this.departmentGroups.addAll(departmentGroups);
@@ -169,11 +212,11 @@ public class UserEdo {
     this.departmentGroups.add(departmentGroupId);
   }
 
-  public Set<Long> getDeputies() {
+  public List<Long> getDeputies() {
     return this.deputies;
   }
 
-  public void setDeputies(final Set<Long> deputies) {
+  public void setDeputies(final List<Long> deputies) {
     this.deputies.clear();
     if (deputies != null) {
       this.deputies.addAll(deputies);

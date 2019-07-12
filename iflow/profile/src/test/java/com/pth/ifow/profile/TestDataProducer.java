@@ -4,11 +4,11 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
-import com.pth.iflow.common.edo.models.AuthenticatedProfileRequestEdo;
-import com.pth.iflow.common.edo.models.CompanyEdo;
-import com.pth.iflow.common.edo.models.ProfileResponseEdo;
-import com.pth.iflow.common.edo.models.TokenProfileRequestEdo;
-import com.pth.iflow.common.edo.models.UserEdo;
+import com.pth.iflow.common.edo.models.xml.AuthenticatedProfileRequestEdo;
+import com.pth.iflow.common.edo.models.xml.CompanyEdo;
+import com.pth.iflow.common.edo.models.xml.ProfileResponseEdo;
+import com.pth.iflow.common.edo.models.xml.TokenProfileRequestEdo;
+import com.pth.iflow.common.edo.models.xml.UserEdo;
 import com.pth.ifow.profile.model.Company;
 import com.pth.ifow.profile.model.User;
 import com.pth.ifow.profile.model.UserAuthenticationRequest;

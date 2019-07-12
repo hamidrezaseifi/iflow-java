@@ -2,7 +2,7 @@ package com.pth.ifow.profile.model;
 
 import java.time.LocalDateTime;
 
-import com.pth.iflow.common.edo.models.UserAuthenticationResponseEdo;
+import com.pth.iflow.common.edo.models.xml.UserAuthenticationResponseEdo;
 
 public class UserAuthenticationSession {
   private String email;

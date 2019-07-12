@@ -75,7 +75,7 @@ public class WorkflowServiceTest extends TestDataProducer {
     final List<Workflow> list = getTestWorkflowList();
     when(this.workflowDao.getListByWorkflowTypeId(any(Long.class))).thenReturn(list);
 
-    final List<Workflow> resList = this.workflowService.getListByIdTypeId(1L);
+    final List<Workflow> resList = this.workflowService.getListByTypeId(1L);
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());

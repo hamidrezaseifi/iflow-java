@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pth.iflow.common.annotations.IflowGetRequestMapping;
 import com.pth.iflow.common.annotations.IflowPostRequestMapping;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
-import com.pth.iflow.common.edo.models.WorkflowActionEdo;
-import com.pth.iflow.common.edo.models.WorkflowEdo;
-import com.pth.iflow.common.edo.models.WorkflowFileEdo;
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
+import com.pth.iflow.common.edo.models.xml.WorkflowActionEdo;
+import com.pth.iflow.common.edo.models.xml.WorkflowEdo;
+import com.pth.iflow.common.edo.models.xml.WorkflowFileEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.core.model.Workflow;
 import com.pth.iflow.core.model.WorkflowAction;
@@ -74,10 +74,20 @@ public class WorkflowController {
 
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(path = IflowRestPaths.CoreModul.WORKFLOW_READ_LIST_BY_TYPE)
-  public ResponseEntity<List<WorkflowEdo>> readWorkflowListByCompany(@PathVariable final Long id, final HttpServletRequest request)
+  public ResponseEntity<List<WorkflowEdo>> readWorkflowListByType(@PathVariable final Long id, final HttpServletRequest request)
       throws Exception {
 
-    final List<Workflow> modelList = this.workflowService.getListByIdTypeId(id);
+    final List<Workflow> modelList = this.workflowService.getListByTypeId(id);
+
+    return ControllerHelper.createResponseEntity(request, ModelMapperBase.toEdoList(modelList), HttpStatus.OK);
+  }
+
+  @ResponseStatus(HttpStatus.OK)
+  @IflowGetRequestMapping(path = IflowRestPaths.CoreModul.WORKFLOW_READ_LIST_BY_USER)
+  public ResponseEntity<List<WorkflowEdo>> readWorkflowListForUser(@PathVariable final Long id,
+      @PathVariable(required = false) final int status, final HttpServletRequest request) throws Exception {
+
+    final List<Workflow> modelList = this.workflowService.getListForUser(id, status);
 
     return ControllerHelper.createResponseEntity(request, ModelMapperBase.toEdoList(modelList), HttpStatus.OK);
   }

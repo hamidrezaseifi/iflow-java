@@ -13,8 +13,12 @@ public interface IUserDao {
 
   public User getById(Long id) throws IFlowStorageException;
 
+  public void deleteById(Long id) throws IFlowStorageException;
+
   public User getByEmail(final String email) throws IFlowStorageException;
 
   public List<User> getListByIdList(List<Long> idList) throws IFlowStorageException;
+
+  public List<User> getListByCompanyId(Long id) throws IFlowStorageException;
 
 }

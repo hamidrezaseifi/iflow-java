@@ -1,15 +1,33 @@
-package com.pth.iflow.common.edo.models;
+package com.pth.iflow.common.edo.models.xml;
 
-import java.util.HashSet;
-import java.util.Set;
+import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
-public class DepartmentEdo {
-  private Long id;
-  private Long companyId;
-  private String title;
+@XmlRootElement(name = "UserGroupEdo")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class UserGroupEdo {
+
+  @XmlElement(name = "ID")
+  private Long    id;
+
+  @NotNull
+  @XmlElement(name = "CompanyId")
+  private Long    companyId;
+
+  @NotNull
+  @XmlElement(name = "Title")
+  private String  title;
+
+  @NotNull
+  @XmlElement(name = "Status")
   private Integer status;
+
+  @NotNull
+  @XmlElement(name = "Version")
   private Integer version;
-  private final Set<Long> groups = new HashSet<>();
 
   public Long getId() {
     return id;
@@ -51,18 +69,4 @@ public class DepartmentEdo {
     this.version = version;
   }
 
-  public Set<Long> getGroups() {
-    return groups;
-  }
-
-  public void setGroups(final Set<Long> groups) {
-    this.groups.clear();
-    if (groups != null) {
-      this.groups.addAll(groups);
-    }
-  }
-
-  public void addGroup(final Long groupId) {
-    this.groups.add(groupId);
-  }
 }

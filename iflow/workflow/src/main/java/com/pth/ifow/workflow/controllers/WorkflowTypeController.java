@@ -17,20 +17,20 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pth.iflow.common.annotations.IflowGetRequestMapping;
 import com.pth.iflow.common.annotations.IflowPostRequestMapping;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
-import com.pth.iflow.common.edo.models.WorkflowTypeEdo;
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
+import com.pth.iflow.common.edo.models.xml.WorkflowTypeEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
-import com.pth.ifow.workflow.bl.IWorkflowTypeService;
+import com.pth.ifow.workflow.bl.IWorkflowTypeDataService;
 import com.pth.ifow.workflow.models.WorkflowType;
 
 @RestController
 @RequestMapping
 public class WorkflowTypeController {
 
-  final IWorkflowTypeService workflowTypeService;
+  final IWorkflowTypeDataService workflowTypeService;
 
-  public WorkflowTypeController(@Autowired final IWorkflowTypeService workflowService) {
+  public WorkflowTypeController(@Autowired final IWorkflowTypeDataService workflowService) {
     this.workflowTypeService = workflowService;
   }
 

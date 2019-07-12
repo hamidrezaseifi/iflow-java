@@ -1,22 +1,53 @@
-package com.pth.iflow.common.edo.models;
+package com.pth.iflow.common.edo.models.xml;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
+import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "WorkflowFileEdo")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class WorkflowFileEdo {
 
+  @XmlElement(name = "ID")
   private Long id;
+
+  @NotNull
+  @XmlElement(name = "WorkflowId")
   private Long workflowId;
+
+  @XmlElement(name = "CreatedBy")
   private Long createdBy;
+
+  @NotNull
+  @XmlElement(name = "Title")
   private String title;
+
+  @XmlElement(name = "ActiveFilePath")
   private String activeFilePath;
-  private String comments;
+
+  @XmlElement(name = "ActiveFileVersion")
   private Integer activeFileVersion;
+
+  @XmlElement(name = "Comments")
+  private String comments;
+
+  @NotNull
+  @XmlElement(name = "Status")
   private Integer status;
+
+  @NotNull
+  @XmlElement(name = "Version")
   private Integer version;
-  private Set<WorkflowFileVersionEdo> fileVersions = new HashSet<>();
+
+  @XmlElementWrapper(name = "FileVersionList")
+  @XmlElement(name = "FileVersion")
+  private List<WorkflowFileVersionEdo> fileVersions = new ArrayList<>();
 
   public Long getId() {
     return this.id;
@@ -27,7 +58,7 @@ public class WorkflowFileEdo {
   }
 
   public Long getWorkflowId() {
-    return workflowId;
+    return this.workflowId;
   }
 
   public void setWorkflowId(final Long workflowId) {
@@ -35,7 +66,7 @@ public class WorkflowFileEdo {
   }
 
   public String getActiveFilePath() {
-    return activeFilePath;
+    return this.activeFilePath;
   }
 
   public void setActiveFilePath(final String filePath) {
@@ -43,7 +74,7 @@ public class WorkflowFileEdo {
   }
 
   public Long getCreatedBy() {
-    return createdBy;
+    return this.createdBy;
   }
 
   public void setCreatedBy(final Long createdBy) {
@@ -67,7 +98,7 @@ public class WorkflowFileEdo {
   }
 
   public Integer getActiveFileVersion() {
-    return activeFileVersion;
+    return this.activeFileVersion;
   }
 
   public void setActiveFileVersion(final Integer fileVersion) {
@@ -90,16 +121,12 @@ public class WorkflowFileEdo {
     this.version = version;
   }
 
-  public Set<WorkflowFileVersionEdo> getFileVersions() {
-    return fileVersions;
+  public List<WorkflowFileVersionEdo> getFileVersions() {
+    return this.fileVersions;
   }
 
   public void setFileVersions(final List<WorkflowFileVersionEdo> fileVersions) {
-    setFileVersions(fileVersions.stream().collect(Collectors.toSet()));
-  }
-
-  public void setFileVersions(final Set<WorkflowFileVersionEdo> fileVersions) {
-    this.fileVersions = new HashSet<>();
+    this.fileVersions = new ArrayList<>();
     if (fileVersions != null) {
       this.fileVersions.addAll(fileVersions);
     }

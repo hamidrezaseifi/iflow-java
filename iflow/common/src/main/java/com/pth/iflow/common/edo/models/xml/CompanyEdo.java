@@ -1,10 +1,31 @@
-package com.pth.iflow.common.edo.models;
+package com.pth.iflow.common.edo.models.xml;
 
+import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "CompanyEdo")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class CompanyEdo {
-  private Long id;
-  private String identifyid;
-  private String companyName;
+
+  @XmlElement(name = "ID")
+  private Long    id;
+
+  @XmlElement(name = "IdentifyId")
+  private String  identifyid;
+
+  @NotNull
+  @XmlElement(name = "CompanyName")
+  private String  companyName;
+
+  @NotNull
+  @XmlElement(name = "Status")
   private Integer status;
+
+  @NotNull
+  @XmlElement(name = "Version")
   private Integer version;
 
   public CompanyEdo() {

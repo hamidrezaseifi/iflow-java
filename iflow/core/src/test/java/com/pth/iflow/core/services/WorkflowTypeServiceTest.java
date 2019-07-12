@@ -38,7 +38,7 @@ public class WorkflowTypeServiceTest extends TestDataProducer {
 
   @Before
   public void setUp() throws Exception {
-    this.workflowTypeService = new WorkflowTypeService(this.workflowTypeDao, this.workflowTypeStepDao);
+    this.workflowTypeService = new WorkflowTypeService(this.workflowTypeDao);
   }
 
   @After
@@ -55,7 +55,8 @@ public class WorkflowTypeServiceTest extends TestDataProducer {
 
     Assert.assertNotNull("Result workflow-type is not null!", resWorkflowType);
     Assert.assertEquals("Result workflow-type has id 1!", resWorkflowType.getId(), workflowType.getId());
-    Assert.assertEquals("Result workflow-type has title '" + workflowType.getTitle() + "'!", resWorkflowType.getTitle(), workflowType.getTitle());
+    Assert.assertEquals("Result workflow-type has title '" + workflowType.getTitle() + "'!", resWorkflowType.getTitle(),
+        workflowType.getTitle());
     Assert.assertEquals("Result workflow-type has status 1!", resWorkflowType.getStatus(), workflowType.getStatus());
 
   }
@@ -73,7 +74,7 @@ public class WorkflowTypeServiceTest extends TestDataProducer {
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());
 
   }
-  
+
   @Test
   public void testGetListByIdCompanyId() throws Exception {
 
@@ -86,22 +87,22 @@ public class WorkflowTypeServiceTest extends TestDataProducer {
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());
 
   }
-  
+
   @Test
   public void testGetStepsById() throws Exception {
 
     final WorkflowType workflowType = getTestWorkflowType();
     final List<WorkflowTypeStep> list = getTestWorkflowTypeStepList();
     final List<Long> idList = getTestWorkflowTypeIdList();
-    
+
     when(this.workflowTypeDao.getById(any(Long.class))).thenReturn(workflowType);
     when(this.workflowTypeStepDao.getListByIdList(any(List.class))).thenReturn(list);
-    
+
     final List<WorkflowTypeStep> resList = this.workflowTypeService.getStepsById(1L);
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());
 
   }
-  
+
 }
