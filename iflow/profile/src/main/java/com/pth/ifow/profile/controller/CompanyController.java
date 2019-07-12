@@ -20,6 +20,7 @@ import com.pth.iflow.common.annotations.IflowGetRequestMapping;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 import com.pth.iflow.common.edo.models.xml.CompanyEdo;
+import com.pth.iflow.common.edo.models.xml.DepartmentListEdo;
 import com.pth.iflow.common.edo.models.xml.UserGroupListEdo;
 import com.pth.iflow.common.edo.models.xml.UserListEdo;
 import com.pth.iflow.common.enums.EModule;
@@ -27,6 +28,7 @@ import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
 import com.pth.ifow.profile.exceptions.ProfileCustomizedException;
+import com.pth.ifow.profile.model.Department;
 import com.pth.ifow.profile.model.ProfileResponse;
 import com.pth.ifow.profile.model.User;
 import com.pth.ifow.profile.model.UserGroup;
@@ -60,7 +62,7 @@ public class CompanyController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(value = IflowRestPaths.ProfileModule.COMPANY_READ_BY_ID)
+  @IflowGetRequestMapping(value = IflowRestPaths.ProfileModule.COMPANY_READ_USER_LIST)
   @ResponseBody
   public ResponseEntity<UserListEdo> readUserList(@PathVariable(name = "companyid") final Long companyid,
       final HttpServletRequest request,
@@ -85,6 +87,21 @@ public class CompanyController {
     final List<UserGroup> list = tokenUserDataManager.getUserGroupListByToken(headerTokenId, companyid);
 
     final UserGroupListEdo edo = new UserGroupListEdo(ModelMapperBase.toEdoList(list));
+
+    return ControllerHelper.createResponseEntity(request, edo, HttpStatus.OK);
+  }
+
+  @ResponseStatus(HttpStatus.OK)
+  @IflowGetRequestMapping(value = IflowRestPaths.ProfileModule.COMPANY_READ_DEPARTMENT_LIST)
+  @ResponseBody
+  public ResponseEntity<DepartmentListEdo> readDepartmentList(@PathVariable(name = "companyid") final Long companyid,
+      final HttpServletRequest request,
+      @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId)
+      throws ProfileCustomizedException, URISyntaxException, MalformedURLException {
+
+    final List<Department> list = tokenUserDataManager.getDepartmentListByToken(headerTokenId, companyid);
+
+    final DepartmentListEdo edo = new DepartmentListEdo(ModelMapperBase.toEdoList(list));
 
     return ControllerHelper.createResponseEntity(request, edo, HttpStatus.OK);
   }

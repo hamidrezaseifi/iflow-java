@@ -5,6 +5,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 import com.pth.ifow.profile.exceptions.ProfileCustomizedException;
+import com.pth.ifow.profile.model.Department;
 import com.pth.ifow.profile.model.ProfileResponse;
 import com.pth.ifow.profile.model.User;
 import com.pth.ifow.profile.model.UserGroup;
@@ -20,6 +21,9 @@ public interface ITokenUserDataManager {
       throws ProfileCustomizedException, MalformedURLException, URISyntaxException;
 
   List<UserGroup> getUserGroupListByToken(String token, Long companyId)
+      throws ProfileCustomizedException, MalformedURLException, URISyntaxException;
+
+  List<Department> getDepartmentListByToken(String token, Long companyId)
       throws ProfileCustomizedException, MalformedURLException, URISyntaxException;
 
 }

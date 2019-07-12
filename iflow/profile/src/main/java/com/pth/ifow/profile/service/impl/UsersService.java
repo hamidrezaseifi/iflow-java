@@ -26,7 +26,7 @@ public class UsersService implements IUsersService {
   final IProfileRestTemplateCall              restTemplate;
   final ProfileConfiguration.CoreAccessConfig coreAccessConfig;
 
-  UsersService(@Autowired final IProfileRestTemplateCall restTemplate,
+  public UsersService(@Autowired final IProfileRestTemplateCall restTemplate,
       @Autowired final ProfileConfiguration.CoreAccessConfig coreAccessConfig) {
     this.restTemplate = restTemplate;
     this.coreAccessConfig = coreAccessConfig;

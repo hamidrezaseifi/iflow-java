@@ -79,10 +79,10 @@ public class IflowRestPaths {
     public static final String PROFILE_READ_AUTHENTOCATEDINFO      = "/profile/read/authinfo";
     public static final String PROFILE_READ_TOKENINFO              = "/profile/read/tokeninfo";
 
-    public static final String COMPANY_READ_BY_ID                  = "/company/readbyid/{id}";
-    public static final String COMPANY_READ_USER_LIST              = "/company/read/user/{id}";
-    public static final String COMPANY_READ_USERGROUP_LIST         = "/company/read/usergrpup/{id}";
-    public static final String COMPANY_READ_DEPARTMENT_LIST        = "/company/read/department/{id}";
+    public static final String COMPANY_READ_BY_ID                  = "/company/readbyid/{companyid}";
+    public static final String COMPANY_READ_USER_LIST              = "/company/read/user/{companyid}";
+    public static final String COMPANY_READ_USERGROUP_LIST         = "/company/read/usergrpup/{companyid}";
+    public static final String COMPANY_READ_DEPARTMENT_LIST        = "/company/read/department/{companyid}";
 
     public static final String DEPARTMEN_READ_BY_ID                = "/department/readbyid/{id}";
     public static final String DEPARTMEN_READ_DEPARTMENTGROUP_LIST = "/department/read/departmentgroup/{id}";

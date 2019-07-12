@@ -12,30 +12,40 @@ import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.ifow.profile.exceptions.ProfileCustomizedException;
 import com.pth.ifow.profile.model.Company;
+import com.pth.ifow.profile.model.Department;
 import com.pth.ifow.profile.model.ProfileResponse;
 import com.pth.ifow.profile.model.User;
 import com.pth.ifow.profile.model.UserAuthenticationSession;
 import com.pth.ifow.profile.model.UserGroup;
 import com.pth.ifow.profile.service.ICompanyService;
+import com.pth.ifow.profile.service.IDepartmentService;
 import com.pth.ifow.profile.service.ISessionManager;
 import com.pth.ifow.profile.service.ITokenUserDataManager;
+import com.pth.ifow.profile.service.IUserGroupService;
 import com.pth.ifow.profile.service.IUsersService;
 
 @Service
 public class TokenUserDataManager implements ITokenUserDataManager {
 
-  private final ISessionManager sessionManager;
+  private final ISessionManager    sessionManager;
 
-  private final IUsersService   usersService;
+  private final IUsersService      usersService;
 
-  private final ICompanyService companyService;
+  private final ICompanyService    companyService;
+
+  private final IUserGroupService  userGroupService;
+
+  private final IDepartmentService departmentService;
 
   public TokenUserDataManager(@Autowired final ISessionManager sessionManager, @Autowired final IUsersService usersService,
-      @Autowired final ICompanyService companyServic) {
+      @Autowired final ICompanyService companyService, @Autowired final IUserGroupService userGroupService,
+      @Autowired final IDepartmentService departmentService) {
 
     this.sessionManager = sessionManager;
     this.usersService = usersService;
-    this.companyService = companyServic;
+    this.companyService = companyService;
+    this.userGroupService = userGroupService;
+    this.departmentService = departmentService;
   }
 
   @Override
@@ -121,7 +131,23 @@ public class TokenUserDataManager implements ITokenUserDataManager {
       throw new ProfileCustomizedException("Invalid Company!", "", EModule.PROFILE.getModuleName(), EIFlowErrorType.INVALID_COMPANY);
     }
 
-    return usersService.getUserListByComaonyId(companyId);
+    return userGroupService.getListByComaonyId(companyId);
+  }
+
+  @Override
+  public List<Department> getDepartmentListByToken(final String token, final Long companyId)
+      throws ProfileCustomizedException, MalformedURLException, URISyntaxException {
+    if (StringUtils.isEmpty(token)) {
+      throw new ProfileCustomizedException("Invalid Token!", "", EModule.PROFILE.getModuleName(), EIFlowErrorType.INVALID_TOKEN);
+    }
+
+    final ProfileResponse profile = getProfileByToken(token);
+
+    if (profile.getCompany().getId() != companyId) {
+      throw new ProfileCustomizedException("Invalid Company!", "", EModule.PROFILE.getModuleName(), EIFlowErrorType.INVALID_COMPANY);
+    }
+
+    return departmentService.getListByComaonyId(companyId);
   }
 
 }
