@@ -17,10 +17,10 @@ import com.pth.ifow.profile.service.ISessionManager;
 @Service
 public class ProfileSessionManager implements ISessionManager {
 
-  private static final Logger logger = LoggerFactory.getLogger(ProfileSessionManager.class);
+  private static final Logger            logger            = LoggerFactory.getLogger(ProfileSessionManager.class);
 
-  private static final int SESSION_AGE_LIMIT = 7200;
-  Map<String, UserAuthenticationSession> sessions = new HashMap<>();
+  private static final int               SESSION_AGE_LIMIT = 7200;
+  Map<String, UserAuthenticationSession> sessions          = new HashMap<>();
 
   @Override
   public UserAuthenticationSession findByEmail(final String email) {
@@ -70,11 +70,17 @@ public class ProfileSessionManager implements ISessionManager {
 
   @Override
   public UserAuthenticationSession addSession(final String email) {
+    UserAuthenticationSession session = findByEmail(email);
+
+    if (session != null) {
+      return session;
+    }
+
     final String ts = String.valueOf(System.currentTimeMillis());
     final String rand = UUID.randomUUID().toString() + ts;
     final String sessionid = DigestUtils.md5Hex(rand);
 
-    final UserAuthenticationSession session = new UserAuthenticationSession(SESSION_AGE_LIMIT);
+    session = new UserAuthenticationSession(SESSION_AGE_LIMIT);
     session.setSessionid(sessionid);
     session.setToken(generateToken(email));
     session.setEmail(email);
