@@ -18,8 +18,6 @@ import com.pth.iflow.common.exceptions.IFlowCustomeException;
 import com.pth.ifow.workflow.bl.IWorkflowDataService;
 import com.pth.ifow.workflow.bl.IWorkflowProcessService;
 import com.pth.ifow.workflow.bl.IWorkflowTypeDataService;
-import com.pth.ifow.workflow.bl.IWorkflowTypeStepDataService;
-import com.pth.ifow.workflow.config.WorkflowConfiguration;
 import com.pth.ifow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.ifow.workflow.models.Workflow;
 import com.pth.ifow.workflow.models.WorkflowType;
@@ -27,52 +25,47 @@ import com.pth.ifow.workflow.models.WorkflowTypeStep;
 
 @Service
 public class WorkflowProcessService implements IWorkflowProcessService {
-  
-  private static final Logger logger = LoggerFactory.getLogger(WorkflowProcessService.class);
-  
-  private final IWorkflowDataService workflowDataService;
-  
+
+  private static final Logger            logger = LoggerFactory.getLogger(WorkflowProcessService.class);
+
+  private final IWorkflowDataService     workflowDataService;
+
   private final IWorkflowTypeDataService workflowTypeDataService;
-  
-  private final IWorkflowTypeStepDataService workflowTypeStepDataService;
-  
+
   public WorkflowProcessService(@Autowired final IWorkflowDataService workflowDataService,
-      @Autowired final IWorkflowTypeDataService workflowTypeDataService,
-      @Autowired final IWorkflowTypeStepDataService workflowTypeStepDataService,
-      @Autowired final WorkflowConfiguration.ModuleAccessConfig moduleAccessConfig) {
-    
+      @Autowired final IWorkflowTypeDataService workflowTypeDataService) {
+
     this.workflowDataService = workflowDataService;
     this.workflowTypeDataService = workflowTypeDataService;
-    this.workflowTypeStepDataService = workflowTypeStepDataService;
   }
-  
+
   @Override
   public Workflow save(final Workflow newWorkflow, final String token) throws WorkflowCustomizedException, MalformedURLException {
     logger.debug("Saving workflow {} with token {}", newWorkflow.getTitle(), token);
     tokenCanSaveWorkflow(newWorkflow, token);
-    
+
     final WorkflowType workflowType = this.workflowTypeDataService.getById(newWorkflow.getWorkflowTypeId());
-    
+
     validateWorkflowCurrectStep(newWorkflow, workflowType);
-    
+
     validateWorkflowAssignedUser(newWorkflow, workflowType);
-    
+
     if (newWorkflow.isNew()) {
-      
+
       return saveNewWorkflow(newWorkflow);
     }
-    
+
     if (newWorkflow.getStatus() == EWorkflowStatus.ASSIGNED) {
       return saveNewWorkflow(newWorkflow);
     }
-    
+
     // final Workflow existsWorkflow = getById(newWorkflow.getId(), token);
-    
+
     if (newWorkflow.getStatus() == EWorkflowStatus.DONE) {
-      
+
       if (workflowType.getIncreaseStepAutomatic().booleanValue() == true) {
         selectWorkflowNextStep(newWorkflow, workflowType);
-        
+
       }
 
       final Long assignedTo = newWorkflow.getAssignTo();
@@ -82,118 +75,117 @@ public class WorkflowProcessService implements IWorkflowProcessService {
       if (assignedTo != newWorkflow.getAssignTo()) {
         newWorkflow.setStatus(EWorkflowStatus.ASSIGNED);
       }
-      
+
       return saveExistsWorkflow(newWorkflow);
     }
-    
+
     throw new IFlowCustomeException("Unknown workflow status id:" + newWorkflow.getId(), EIFlowErrorType.UNKNOWN_WORKFLOW_STATUS);
   }
-  
+
   @Override
   public Workflow getById(final Long id, final String token) throws WorkflowCustomizedException, MalformedURLException {
     logger.debug("get workflow by id {} with token {}", id, token);
-    
+
     tokenCanReadWorkflow(id, token);
     return this.workflowDataService.getById(id);
   }
-  
+
   @Override
   public List<Workflow> getListByTypeId(final Long id, final String token) throws WorkflowCustomizedException, MalformedURLException {
     logger.debug("get workflow by  type id {} with token {}", id, token);
-    
+
     final List<Workflow> list = this.workflowDataService.getListByTypeId(id);
     tokenCanReadWorkflowList(list.stream().map(w -> w.getId()).collect(Collectors.toList()), token);
-    
+
     return list;
   }
-  
+
   @Override
   public List<Workflow> getListForUser(final Long id, final int status, final String token)
       throws WorkflowCustomizedException, MalformedURLException {
-    
+
     logger.debug("get workflow assigned to user id {} and has status {} with token {}", id, status, token);
-    
+
     final List<Workflow> list = this.workflowDataService.getListForUser(id, status);
     tokenCanReadWorkflowList(list.stream().map(w -> w.getId()).collect(Collectors.toList()), token);
-    
+
     return list;
   }
-  
+
   @Override
   public List<Workflow> getListByIdList(final List<Long> idList, final String token)
       throws WorkflowCustomizedException, MalformedURLException {
     logger.debug("get workflow list by id list {} with token {}", idList, token);
-    
+
     tokenCanReadWorkflowList(idList, token);
-    
+
     final List<Workflow> list = this.workflowDataService.getListByIdList(idList);
-    
+
     return list;
   }
-  
+
   private boolean tokenCanReadWorkflow(final Long workflowId, final String token) {
     // TODO token read access must be implemented
     return true;
   }
-  
+
   private boolean tokenCanSaveWorkflow(final Workflow model, final String token) {
     // TODO token save access must be implemented
     return true;
   }
-  
+
   private boolean tokenCanReadWorkflowList(final List<Long> list, final String token) {
     // TODO token read access must be implemented
     return true;
   }
-  
+
   private Workflow saveNewWorkflow(final Workflow model) throws WorkflowCustomizedException, MalformedURLException {
     // TODO process New Workflow must be implemented
-    
+
     final Workflow savedWorkflow = this.workflowDataService.save(model);
-    
+
     return savedWorkflow;
   }
-  
+
   private Workflow saveExistsWorkflow(final Workflow model) throws WorkflowCustomizedException, MalformedURLException {
     // TODO process New Workflow must be implemented
-    
+
     final Workflow savedWorkflow = this.workflowDataService.save(model);
-    
+
     return savedWorkflow;
   }
-  
+
   private void selectWorkflowNextStep(final Workflow newWorkflow, final WorkflowType workflowType) {
-    
+
     final WorkflowTypeStep nextStep = findNextStep(workflowType, newWorkflow.getCurrentStep());
     newWorkflow.setCurrentStep(nextStep);
   }
-  
+
   private void selectWorkflowNextAssigned(final Workflow newWorkflow, final WorkflowType workflowType) {
-    
+
     /*
      * TODO: implements select next assigned for workflow based on new step
      */
-    
+
     if (workflowType.getSendToController().booleanValue() == true) {
       newWorkflow.setAssignTo(newWorkflow.getController());
-    }
-    else {
+    } else {
 
       setAssignToControllerAfterLastStep(newWorkflow, workflowType);
 
     }
 
   }
-  
+
   private void setAssignToControllerAfterLastStep(final Workflow newWorkflow, final WorkflowType workflowType) {
     final WorkflowTypeStep nextStep = findNextStep(workflowType, newWorkflow.getCurrentStep());
     if (nextStep.getStepIndex() == newWorkflow.getCurrentStep().getStepIndex()) {
       newWorkflow.setAssignTo(newWorkflow.getController());
     }
   }
-  
+
   private void selectWorkflowNextAssignedUser(final Workflow newWorkflow, final WorkflowType workflowType) {
-    
+
     if (newWorkflow.isInitializing()) {
       if (newWorkflow.isAssigned()) {
         return;
@@ -201,21 +193,21 @@ public class WorkflowProcessService implements IWorkflowProcessService {
     }
 
   }
-  
+
   private LinkedHashMap<Integer, WorkflowTypeStep> getSortedSteps(final WorkflowType workflowType) {
     final Map<Integer, WorkflowTypeStep> map = workflowType.getSteps().stream()
         .collect(Collectors.toMap(step -> step.getStepIndex(), step -> step));
-    
+
     final LinkedHashMap<Integer, WorkflowTypeStep> steps = map.entrySet().stream().sorted(Map.Entry.comparingByKey())
         .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (oldValue, newValue) -> oldValue, LinkedHashMap::new));
-    
+
     return steps;
   }
-  
+
   private WorkflowTypeStep findNextStep(final WorkflowType workflowType, final WorkflowTypeStep currentStep) {
-    
+
     final LinkedHashMap<Integer, WorkflowTypeStep> steps = getSortedSteps(workflowType);
-    
+
     Integer foundId = -1;
     Integer lastId = -1;
     for (final Iterator<Integer> i = steps.keySet().iterator(); i.hasNext();) {
@@ -225,73 +217,89 @@ public class WorkflowProcessService implements IWorkflowProcessService {
         break;
       }
     }
-    
+
     return foundId > -1 ? steps.get(foundId) : steps.get(lastId);
   }
-  
+
   private WorkflowTypeStep findFirstStep(final WorkflowType workflowType) {
     final LinkedHashMap<Integer, WorkflowTypeStep> steps = getSortedSteps(workflowType);
-    
+
     Integer foundId = -1;
     if (steps.keySet().iterator().hasNext()) {
       foundId = steps.keySet().iterator().next();
-      
+
     }
-    
+
     return foundId > -1 ? steps.get(foundId) : null;
   }
-  
+
   private List<Long> getWorkflowTypeIdList(final WorkflowType workflowType) {
     return workflowType.getSteps().stream().map(step -> step.getId()).collect(Collectors.toList());
   }
-  
+
   private void validateWorkflowAssignedUser(final Workflow newWorkflow, final WorkflowType workflowType) {
-    
+
     if (workflowType.getManualAssign().booleanValue() == false) {
       selectWorkflowNextAssignedUser(newWorkflow, workflowType);
     }
-    
+
     if (newWorkflow.isAssigned() == false) {
       throw new IFlowCustomeException("Unknown workflow assigned user id:" + newWorkflow.getId(),
           EIFlowErrorType.UNKNOWN_WORKFLOW_ASSIGN);
     }
   }
-  
+
   private void validateWorkflowCurrectStep(final Workflow newWorkflow, final WorkflowType workflowType) throws MalformedURLException {
-    
+
     if (newWorkflow.getCurrentStep() == null) {
-      
+
       setNewWorkflowCurrectStep(newWorkflow, workflowType);
-      
-      setWorkflowCurrectStepFromCurrectStepId(newWorkflow);
-      
+
+      setWorkflowCurrectStepFromCurrectStepId(newWorkflow, workflowType);
+
     }
-    
+
     if (newWorkflow.getCurrentStep() == null) {
-      
+
       throw new IFlowCustomeException("Unknown workflow step id:" + newWorkflow.getId(), EIFlowErrorType.UNKNOWN_WORKFLOW_STEP);
     }
-    
+
     validateCurrentStepExistsInWorkflowType(newWorkflow, workflowType);
-    
+
   }
-  
+
   private void validateCurrentStepExistsInWorkflowType(final Workflow newWorkflow, final WorkflowType workflowType) {
     final List<Long> stepIdList = getWorkflowTypeIdList(workflowType);
-    
+
     if (stepIdList.contains(newWorkflow.getCurrentStep().getId()) == false) {
       throw new IFlowCustomeException("Invalid workflow step id:" + newWorkflow.getId(), EIFlowErrorType.INVALID_WORKFLOW_STEP);
     }
   }
-  
-  private void setWorkflowCurrectStepFromCurrectStepId(final Workflow newWorkflow) throws MalformedURLException {
+
+  private void setWorkflowCurrectStepFromCurrectStepId(final Workflow newWorkflow, final WorkflowType workflowType)
+      throws MalformedURLException {
     if (newWorkflow.getCurrentStep() == null) {
       if ((newWorkflow.getCurrentStepId() != null) && (newWorkflow.getCurrentStepId() > 0)) {
-        newWorkflow.setCurrentStep(this.workflowTypeStepDataService.getById(newWorkflow.getCurrentStepId()));
+
+        final Long stepId = newWorkflow.getCurrentStepId();
+        WorkflowTypeStep foundStep = findWorkflowStepinWorkflowTypeById(workflowType, stepId);
+
+        newWorkflow.setCurrentStep(foundStep);
       }
     }
   }
-  
+
+  private WorkflowTypeStep findWorkflowStepinWorkflowTypeById(final WorkflowType workflowType, final Long stepId) {
+    WorkflowTypeStep foundStep = null;
+    for (final WorkflowTypeStep step : workflowType.getSteps()) {
+      if (step.getId() == stepId) {
+        foundStep = step;
+        break;
+      }
+    }
+    return foundStep;
+  }
+
   private void setNewWorkflowCurrectStep(final Workflow newWorkflow, final WorkflowType workflowType) {
     if ((newWorkflow.getCurrentStepId() == null) || (newWorkflow.getCurrentStepId() <= 0)) {
       if (newWorkflow.isInitializing()) {
@@ -300,7 +308,7 @@ public class WorkflowProcessService implements IWorkflowProcessService {
           newWorkflow.setCurrentStep(firstStep);
           newWorkflow.setCurrentStepId(firstStep.getId());
         }
-        
+
       }
     }
   }

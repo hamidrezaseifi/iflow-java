@@ -15,49 +15,49 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class WorkflowEdo {
 
   @XmlElement(name = "ID")
-  private Long id;
+  private Long                    id;
 
   @NotNull
   @XmlElement(name = "WorkflowTypeId")
-  private Long workflowTypeId;
+  private Long                    workflowTypeId;
 
   @NotNull
   @XmlElement(name = "CurrentStep")
-  private WorkflowTypeStepEdo currentStep;
+  private WorkflowTypeStepEdo     currentStep;
 
   @XmlElement(name = "CurrentStepId")
-  private Long currentStepId;
+  private Long                    currentStepId;
 
   @XmlElement(name = "Controller")
-  private Long controller;
+  private Long                    controller;
 
   @XmlElement(name = "CreatedBy")
-  private Long createdBy;
+  private Long                    createdBy;
 
   @XmlElement(name = "AssignTo")
-  private Long assignTo;
+  private Long                    assignTo;
 
   @NotNull
   @XmlElement(name = "Title")
-  private String title;
+  private String                  title;
 
   @XmlElement(name = "Comments")
-  private String comments;
+  private String                  comments;
 
   @NotNull
   @XmlElement(name = "Status")
-  private Integer status;
+  private Integer                 status;
 
   @NotNull
   @XmlElement(name = "Version")
-  private Integer version;
+  private Integer                 version;
 
-  @XmlElementWrapper(name = "FileList")
-  @XmlElement(name = "File")
-  private List<WorkflowFileEdo> files = new ArrayList<>();
+  @XmlElementWrapper(name = "WorkflowFileList")
+  @XmlElement(name = "WorkflowFile")
+  private List<WorkflowFileEdo>   files   = new ArrayList<>();
 
-  @XmlElementWrapper(name = "ActionList")
-  @XmlElement(name = "Action")
+  @XmlElementWrapper(name = "WorkflowActionList")
+  @XmlElement(name = "WorkflowAction")
   private List<WorkflowActionEdo> actions = new ArrayList<>();
 
   public Long getId() {
@@ -162,7 +162,7 @@ public class WorkflowEdo {
   public List<WorkflowActionEdo> getActions() {
     return this.actions;
   }
-  
+
   public void setActions(final List<WorkflowActionEdo> actions) {
     this.actions = new ArrayList<>();
     if (actions != null) {

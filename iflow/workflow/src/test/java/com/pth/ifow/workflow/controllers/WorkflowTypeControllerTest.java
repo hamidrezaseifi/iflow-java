@@ -46,7 +46,7 @@ public class WorkflowTypeControllerTest extends TestDataProducer {
   private MappingJackson2XmlHttpMessageConverter xmlConverter;
   
   @MockBean
-  private IWorkflowTypeDataService workflowService;
+  private IWorkflowTypeDataService workflowTypeService;
   
   @Value("${iflow.common.rest.api.security.client-id.internal}")
   private String innerModulesRequestHeaderValue;
@@ -63,7 +63,7 @@ public class WorkflowTypeControllerTest extends TestDataProducer {
   public void testReadWorkflowTypeById() throws Exception {
     
     final WorkflowType model = getTestWorkflowType();
-    when(this.workflowService.getById(any(Long.class))).thenReturn(model);
+    when(this.workflowTypeService.getById(any(Long.class))).thenReturn(model);
     
     final WorkflowTypeEdo modelEdo = model.toEdo();
     
@@ -81,7 +81,7 @@ public class WorkflowTypeControllerTest extends TestDataProducer {
     Assert.assertEquals("Result workflow-type has status 1!", modelEdo.getStatus(), resEdo.getStatus());
     Assert.assertEquals("Result workflow-type has the same steps count!", modelEdo.getSteps().size(), resEdo.getSteps().size());
     
-    verify(this.workflowService, times(1)).getById(any(Long.class));
+    verify(this.workflowTypeService, times(1)).getById(any(Long.class));
 
   }
   
@@ -90,7 +90,7 @@ public class WorkflowTypeControllerTest extends TestDataProducer {
     
     final List<Long> idList = getTestWorkflowTypeIdList();
     final List<WorkflowType> list = getTestWorkflowTypeList();
-    when(this.workflowService.getListByIdList(any(List.class))).thenReturn(list);
+    when(this.workflowTypeService.getListByIdList(any(List.class))).thenReturn(list);
     
     final String contentAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(idList).replace("ArrayList", "List");
     
@@ -113,7 +113,7 @@ public class WorkflowTypeControllerTest extends TestDataProducer {
         resEdoList.get(0).getTitle(),
         list.get(0).getTitle());
     
-    verify(this.workflowService, times(1)).getListByIdList(any(List.class));
+    verify(this.workflowTypeService, times(1)).getListByIdList(any(List.class));
 
   }
   
@@ -121,7 +121,7 @@ public class WorkflowTypeControllerTest extends TestDataProducer {
   public void testReadWorkflowTypeListByCompany() throws Exception {
     
     final List<WorkflowType> list = getTestWorkflowTypeList();
-    when(this.workflowService.getListByIdCompanyId(any(Long.class))).thenReturn(list);
+    when(this.workflowTypeService.getListByIdCompanyId(any(Long.class))).thenReturn(list);
     
     final MvcResult result = this.mockMvc
         .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModul.WORKFLOWTYPE_READ_LIST_BY_COMPANY, 1L)
@@ -141,7 +141,7 @@ public class WorkflowTypeControllerTest extends TestDataProducer {
         resEdoList.get(0).getTitle(),
         list.get(0).getTitle());
     
-    verify(this.workflowService, times(1)).getListByIdCompanyId(any(Long.class));
+    verify(this.workflowTypeService, times(1)).getListByIdCompanyId(any(Long.class));
 
   }
 }

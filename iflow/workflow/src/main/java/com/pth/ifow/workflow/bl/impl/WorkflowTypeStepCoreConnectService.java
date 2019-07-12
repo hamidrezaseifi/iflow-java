@@ -19,14 +19,14 @@ import com.pth.ifow.workflow.models.WorkflowTypeStep;
 import com.pth.ifow.workflow.services.IRestTemplateCall;
 
 @Service
-public class WorkflowTypeStepDataService implements IWorkflowTypeStepDataService {
+public class WorkflowTypeStepCoreConnectService implements IWorkflowTypeStepDataService {
   
-  private static final Logger logger = LoggerFactory.getLogger(WorkflowTypeStepDataService.class);
+  private static final Logger logger = LoggerFactory.getLogger(WorkflowTypeStepCoreConnectService.class);
   
   private final IRestTemplateCall                        restTemplate;
   private final WorkflowConfiguration.ModuleAccessConfig moduleAccessConfig;
   
-  public WorkflowTypeStepDataService(@Autowired final IRestTemplateCall restTemplate,
+  public WorkflowTypeStepCoreConnectService(@Autowired final IRestTemplateCall restTemplate,
       @Autowired final WorkflowConfiguration.ModuleAccessConfig moduleAccessConfig) {
     this.restTemplate = restTemplate;
     this.moduleAccessConfig = moduleAccessConfig;

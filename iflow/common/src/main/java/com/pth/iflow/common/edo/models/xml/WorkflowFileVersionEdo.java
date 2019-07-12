@@ -14,29 +14,29 @@ public class WorkflowFileVersionEdo {
   private Long    id;
 
   @NotNull
-  @XmlElement(name = "ID")
+  @XmlElement(name = "WorkflowFileId")
   private Long    workflowFileId;
 
-  @XmlElement(name = "ID")
+  @XmlElement(name = "CreatedBy")
   private Long    createdBy;
 
   @NotNull
-  @XmlElement(name = "ID")
+  @XmlElement(name = "FilePath")
   private String  filePath;
 
-  @XmlElement(name = "ID")
+  @XmlElement(name = "Comments")
   private String  comments;
 
   @NotNull
-  @XmlElement(name = "ID")
+  @XmlElement(name = "FileVersion")
   private Integer fileVersion;
 
   @NotNull
-  @XmlElement(name = "ID")
+  @XmlElement(name = "Status")
   private Integer status;
 
   @NotNull
-  @XmlElement(name = "ID")
+  @XmlElement(name = "Version")
   private Integer version;
 
   public Long getId() {

@@ -22,14 +22,14 @@ import com.pth.iflow.common.edo.models.xml.WorkflowTypeStepEdo;
 import com.pth.iflow.common.enums.EModule;
 import com.pth.ifow.workflow.TestDataProducer;
 import com.pth.ifow.workflow.bl.IWorkflowTypeStepDataService;
-import com.pth.ifow.workflow.bl.impl.WorkflowTypeStepDataService;
+import com.pth.ifow.workflow.bl.impl.WorkflowTypeStepCoreConnectService;
 import com.pth.ifow.workflow.config.WorkflowConfiguration;
 import com.pth.ifow.workflow.models.WorkflowTypeStep;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class WorkflowTypeStepServiceTest extends TestDataProducer {
+public class WorkflowTypeStepDataServiceTest extends TestDataProducer {
 
   private IWorkflowTypeStepDataService workflowTypeStepService;
 
@@ -41,7 +41,7 @@ public class WorkflowTypeStepServiceTest extends TestDataProducer {
 
   @Before
   public void setUp() throws Exception {
-    this.workflowTypeStepService = new WorkflowTypeStepDataService(this.restTemplate, this.moduleAccessConfig);
+    this.workflowTypeStepService = new WorkflowTypeStepCoreConnectService(this.restTemplate, this.moduleAccessConfig);
 
     when(this.moduleAccessConfig.generateCoreUrl(any(String.class))).thenReturn(new URL("http://any-string"));
 
