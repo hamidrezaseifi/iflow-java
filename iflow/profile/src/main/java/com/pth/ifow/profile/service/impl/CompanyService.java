@@ -25,7 +25,7 @@ public class CompanyService implements ICompanyService {
   final IProfileRestTemplateCall              restTemplate;
   final ProfileConfiguration.CoreAccessConfig coreAccessConfig;
 
-  CompanyService(@Autowired final IProfileRestTemplateCall restTemplate,
+  public CompanyService(@Autowired final IProfileRestTemplateCall restTemplate,
       @Autowired final ProfileConfiguration.CoreAccessConfig coreAccessConfig) {
     this.restTemplate = restTemplate;
     this.coreAccessConfig = coreAccessConfig;

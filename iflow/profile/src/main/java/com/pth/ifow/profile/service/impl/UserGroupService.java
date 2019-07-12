@@ -26,7 +26,7 @@ public class UserGroupService implements IUserGroupService {
   final IProfileRestTemplateCall              restTemplate;
   final ProfileConfiguration.CoreAccessConfig coreAccessConfig;
 
-  UserGroupService(@Autowired final IProfileRestTemplateCall restTemplate,
+  public UserGroupService(@Autowired final IProfileRestTemplateCall restTemplate,
       @Autowired final ProfileConfiguration.CoreAccessConfig coreAccessConfig) {
     this.restTemplate = restTemplate;
     this.coreAccessConfig = coreAccessConfig;

@@ -26,7 +26,7 @@ public class DepartmentService implements IDepartmentService {
   final IProfileRestTemplateCall              restTemplate;
   final ProfileConfiguration.CoreAccessConfig coreAccessConfig;
 
-  DepartmentService(@Autowired final IProfileRestTemplateCall restTemplate,
+  public DepartmentService(@Autowired final IProfileRestTemplateCall restTemplate,
       @Autowired final ProfileConfiguration.CoreAccessConfig coreAccessConfig) {
     this.restTemplate = restTemplate;
     this.coreAccessConfig = coreAccessConfig;
