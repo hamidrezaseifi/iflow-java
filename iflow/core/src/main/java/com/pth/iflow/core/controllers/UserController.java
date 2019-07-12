@@ -20,6 +20,7 @@ import com.pth.iflow.common.edo.models.xml.DepartmentEdo;
 import com.pth.iflow.common.edo.models.xml.DepartmentGroupEdo;
 import com.pth.iflow.common.edo.models.xml.UserEdo;
 import com.pth.iflow.common.edo.models.xml.UserGroupEdo;
+import com.pth.iflow.common.edo.models.xml.UserListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.core.model.Department;
 import com.pth.iflow.core.model.DepartmentGroup;
@@ -96,11 +97,23 @@ public class UserController {
 
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(path = IflowRestPaths.CoreModul.USER_DEPUTIES_LIST)
-  public ResponseEntity<List<UserEdo>> readUserDeputies(@PathVariable final Long userid, final HttpServletRequest request)
+  public ResponseEntity<UserListEdo> readUserDeputies(@PathVariable final Long userid, final HttpServletRequest request)
       throws Exception {
 
     final List<User> list = this.usersService.getUserDeputies(userid);
+    final UserListEdo edo = new UserListEdo();
+    edo.setUsers(ModelMapperBase.toEdoList(list));
+    return ControllerHelper.createResponseEntity(request, edo, HttpStatus.OK);
+  }
 
-    return ControllerHelper.createResponseEntity(request, ModelMapperBase.toEdoList(list), HttpStatus.OK);
+  @ResponseStatus(HttpStatus.OK)
+  @IflowGetRequestMapping(path = IflowRestPaths.CoreModul.USER_USER_LIST_BY_COMPANY)
+  public ResponseEntity<UserListEdo> readCompanyUsers(@PathVariable final Long companyid, final HttpServletRequest request)
+      throws Exception {
+
+    final List<User> list = this.usersService.getCompanyUsers(companyid);
+    final UserListEdo edo = new UserListEdo();
+    edo.setUsers(ModelMapperBase.toEdoList(list));
+    return ControllerHelper.createResponseEntity(request, edo, HttpStatus.OK);
   }
 }

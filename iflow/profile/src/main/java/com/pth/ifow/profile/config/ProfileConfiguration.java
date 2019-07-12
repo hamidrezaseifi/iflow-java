@@ -1,7 +1,6 @@
 package com.pth.ifow.profile.config;
 
 import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.net.URL;
 
 import javax.annotation.PostConstruct;
@@ -10,8 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
-import com.pth.iflow.common.rest.IflowRestPaths;
 
 /**
  * a class to collect gui configuration from property file
@@ -31,7 +28,7 @@ public class ProfileConfiguration {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Value("${iflow.profile.urls.core.base}")
-    private String coreBaseUrl;
+    private String       coreBaseUrl;
 
     @PostConstruct
     private void init() {
@@ -39,26 +36,8 @@ public class ProfileConfiguration {
 
     }
 
-    /**
-     * @return the allProjectReadAllPath
-     * @throws MalformedURLException
-     * @throws URISyntaxException
-     */
-    public URL getReadUserByEmailUrl() throws MalformedURLException {
-      String path = coreBaseUrl + "/" + IflowRestPaths.CoreModul.USER_READ_BY_EMAIL;
-      path = path.replace("//", "/");
-      path = path.replace("http:/", "http://");
-
-      return new URL(path);
-    }
-
-    /**
-     * @return the allProjectReadAllPath
-     * @throws MalformedURLException
-     * @throws URISyntaxException
-     */
-    public URL getReadCompanyByIdUrl() throws MalformedURLException {
-      String path = coreBaseUrl + "/" + IflowRestPaths.CoreModul.COMPANY_READ_BY_ID;
+    public URL prepareCoreUrl(final String url) throws MalformedURLException {
+      String path = coreBaseUrl + "/" + url;
       path = path.replace("//", "/");
       path = path.replace("http:/", "http://");
 

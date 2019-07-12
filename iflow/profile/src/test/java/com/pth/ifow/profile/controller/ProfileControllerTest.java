@@ -90,7 +90,7 @@ public class ProfileControllerTest extends TestDataProducer {
     final String responseAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(responseEdo);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.post(IflowRestPaths.ProfileModule.AUTHENTICATION_READ_AUTHENTOCATEDINFO).content(modelAsXmlString)
+        .perform(MockMvcRequestBuilders.post(IflowRestPaths.ProfileModule.PROFILE_READ_AUTHENTOCATEDINFO).content(modelAsXmlString)
             .contentType(MediaType.APPLICATION_XML_VALUE)
             .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, this.authenticatedSession.getToken()))
         .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
@@ -113,7 +113,7 @@ public class ProfileControllerTest extends TestDataProducer {
     final String responseAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(responseEdo);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.post(IflowRestPaths.ProfileModule.AUTHENTICATION_READ_TOKENINFO).content(modelAsXmlString)
+        .perform(MockMvcRequestBuilders.post(IflowRestPaths.ProfileModule.PROFILE_READ_TOKENINFO).content(modelAsXmlString)
             .contentType(MediaType.APPLICATION_XML_VALUE)
             .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, this.authenticatedSession.getToken()))
         .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))

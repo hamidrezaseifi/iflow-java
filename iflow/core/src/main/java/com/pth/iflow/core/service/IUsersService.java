@@ -23,4 +23,6 @@ public interface IUsersService {
 
   List<User> getUserDeputies(final Long id);
 
+  List<User> getCompanyUsers(final Long companyId);
+
 }
