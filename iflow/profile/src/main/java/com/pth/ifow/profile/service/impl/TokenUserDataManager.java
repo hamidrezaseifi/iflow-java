@@ -57,6 +57,11 @@ public class TokenUserDataManager implements ITokenUserDataManager {
 
     final UserAuthenticationSession session = this.sessionManager.findByToken(token);
 
+    if (session == null) {
+      throw new ProfileCustomizedException("Token is not authenticated!", "", EModule.PROFILE.getModuleName(),
+          EIFlowErrorType.NO_SESSION_FOUND);
+    }
+
     final User user = this.usersService.getUserByEmail(session.getEmail());
 
     if (user == null) {
