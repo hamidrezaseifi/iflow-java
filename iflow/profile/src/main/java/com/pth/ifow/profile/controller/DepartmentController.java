@@ -42,7 +42,7 @@ public class DepartmentController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(value = IflowRestPaths.ProfileModule.DEPARTMEN_READ_BY_ID)
+  @IflowGetRequestMapping(value = IflowRestPaths.ProfileModule.DEPARTMENT_READ_BY_ID)
   @ResponseBody
   public ResponseEntity<DepartmentEdo> readById(@PathVariable(name = "id") final Long id, final HttpServletRequest request,
       @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId)
@@ -54,7 +54,7 @@ public class DepartmentController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(value = IflowRestPaths.ProfileModule.DEPARTMEN_READ_DEPARTMENTGROUP_LIST)
+  @IflowGetRequestMapping(value = IflowRestPaths.ProfileModule.DEPARTMENT_READ_DEPARTMENTGROUP_LIST)
   @ResponseBody
   public ResponseEntity<DepartmentGroupListEdo> readDepartmentGroupList(@PathVariable(name = "id") final Long id,
       final HttpServletRequest request,
@@ -69,7 +69,7 @@ public class DepartmentController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(value = IflowRestPaths.ProfileModule.DEPARTMEN_READ_ALLUSERS_LIST)
+  @IflowGetRequestMapping(value = IflowRestPaths.ProfileModule.DEPARTMENT_READ_ALLUSERS_LIST)
   @ResponseBody
   public ResponseEntity<UserListEdo> readUserList(@PathVariable(name = "id") final Long id, final HttpServletRequest request,
       @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId)
