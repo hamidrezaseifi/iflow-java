@@ -29,10 +29,10 @@ public class DepartmentListEdo {
     return departments;
   }
 
-  public void setDepartments(final List<DepartmentEdo> users) {
+  public void setDepartments(final List<DepartmentEdo> departments) {
     this.departments.clear();
-    if (users != null) {
-      this.departments.addAll(users);
+    if (departments != null) {
+      this.departments.addAll(departments);
     }
   }
 

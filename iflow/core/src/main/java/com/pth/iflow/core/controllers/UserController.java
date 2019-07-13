@@ -16,10 +16,10 @@ import com.pth.iflow.common.annotations.IflowGetRequestMapping;
 import com.pth.iflow.common.annotations.IflowPostRequestMapping;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
-import com.pth.iflow.common.edo.models.xml.DepartmentEdo;
-import com.pth.iflow.common.edo.models.xml.DepartmentGroupEdo;
+import com.pth.iflow.common.edo.models.xml.DepartmentGroupListEdo;
+import com.pth.iflow.common.edo.models.xml.DepartmentListEdo;
 import com.pth.iflow.common.edo.models.xml.UserEdo;
-import com.pth.iflow.common.edo.models.xml.UserGroupEdo;
+import com.pth.iflow.common.edo.models.xml.UserGroupListEdo;
 import com.pth.iflow.common.edo.models.xml.UserListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.core.model.Department;
@@ -67,32 +67,32 @@ public class UserController {
 
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(path = IflowRestPaths.CoreModul.USER_USERGROUPS_LIST)
-  public ResponseEntity<List<UserGroupEdo>> readUserGroups(@PathVariable final Long userid, final HttpServletRequest request)
+  public ResponseEntity<UserGroupListEdo> readUserGroups(@PathVariable final Long userid, final HttpServletRequest request)
       throws Exception {
 
     final List<UserGroup> groups = this.usersService.getUserGroups(userid);
 
-    return ControllerHelper.createResponseEntity(request, ModelMapperBase.toEdoList(groups), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, new UserGroupListEdo(ModelMapperBase.toEdoList(groups)), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(path = IflowRestPaths.CoreModul.USER_DEPARTMENTS_LIST)
-  public ResponseEntity<List<DepartmentEdo>> readUserDepartments(@PathVariable final Long userid, final HttpServletRequest request)
+  public ResponseEntity<DepartmentListEdo> readUserDepartments(@PathVariable final Long userid, final HttpServletRequest request)
       throws Exception {
 
     final List<Department> list = this.usersService.getUserDepartments(userid);
 
-    return ControllerHelper.createResponseEntity(request, ModelMapperBase.toEdoList(list), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, new DepartmentListEdo(ModelMapperBase.toEdoList(list)), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(path = IflowRestPaths.CoreModul.USER_DEPARTMENTGROUPS_LIST)
-  public ResponseEntity<List<DepartmentGroupEdo>> readUserDepartmentGroups(@PathVariable final Long userid,
+  public ResponseEntity<DepartmentGroupListEdo> readUserDepartmentGroups(@PathVariable final Long userid,
       final HttpServletRequest request) throws Exception {
 
     final List<DepartmentGroup> list = this.usersService.getUserDepartmentGroups(userid);
 
-    return ControllerHelper.createResponseEntity(request, ModelMapperBase.toEdoList(list), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, new DepartmentGroupListEdo(ModelMapperBase.toEdoList(list)), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)

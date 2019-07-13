@@ -8,20 +8,25 @@ import org.springframework.stereotype.Service;
 
 import com.pth.iflow.core.model.Department;
 import com.pth.iflow.core.model.DepartmentGroup;
+import com.pth.iflow.core.model.User;
 import com.pth.iflow.core.service.IDepartmentService;
 import com.pth.iflow.core.storage.dao.IDepartmentDao;
 import com.pth.iflow.core.storage.dao.IDepartmentGroupDao;
+import com.pth.iflow.core.storage.dao.IUserDao;
 import com.pth.iflow.core.storage.dao.exception.IFlowOptimisticLockException;
 
 @Service
 public class DepartmentService implements IDepartmentService {
 
-  private final IDepartmentDao departmentDao;
+  private final IDepartmentDao      departmentDao;
   private final IDepartmentGroupDao departmentGroupDao;
+  private final IUserDao            userDao;
 
-  public DepartmentService(@Autowired final IDepartmentDao departmentDao, @Autowired final IDepartmentGroupDao departmentGroupDao) {
+  public DepartmentService(@Autowired final IDepartmentDao departmentDao, @Autowired final IDepartmentGroupDao departmentGroupDao,
+      @Autowired final IUserDao userDao) {
     this.departmentDao = departmentDao;
     this.departmentGroupDao = departmentGroupDao;
+    this.userDao = userDao;
   }
 
   @Override
@@ -62,6 +67,14 @@ public class DepartmentService implements IDepartmentService {
     model.setVersion(model.getVersion() + 1);
 
     return departmentDao.update(model);
+  }
+
+  @Override
+  public List<User> getAllUserListByDepartmentId(final Long id) {
+
+    final List<Long> idList = departmentDao.getAllUserIdListByDepartmentId(id);
+
+    return userDao.getListByIdList(idList);
   }
 
 }

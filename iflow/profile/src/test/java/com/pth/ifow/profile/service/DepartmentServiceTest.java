@@ -55,7 +55,7 @@ public class DepartmentServiceTest extends TestDataProducer {
   @Test
   public void testGetById() throws Exception {
 
-    final Department department = getTestDepartment();
+    final Department department = this.getTestDepartment();
     final DepartmentEdo departmentEdo = department.toEdo();
 
     when(this.restTemplate.callRestGet(any(String.class), any(EModule.class), any(Class.class), any(boolean.class), any()))
@@ -74,13 +74,13 @@ public class DepartmentServiceTest extends TestDataProducer {
   @Test
   public void testGetListByComaonyId() throws Exception {
 
-    final List<Department> list = getTestDepartmentList();
+    final List<Department> list = this.getTestDepartmentList();
     final DepartmentListEdo listEdo = new DepartmentListEdo(ModelMapperBase.toEdoList(list));
 
     when(this.restTemplate.callRestGet(any(String.class), any(EModule.class), eq(DepartmentListEdo.class), any(boolean.class), any()))
         .thenReturn(listEdo);
 
-    final List<Department> resList = this.departmentService.getListByComaonyId(1L);
+    final List<Department> resList = this.departmentService.getListByCompanyId(1L);
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());

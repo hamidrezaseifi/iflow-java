@@ -101,4 +101,11 @@ public class DepartmentDao extends DaoBasicClass<Department> implements IDepartm
     return getById(model.getId());
   }
 
+  @Override
+  public List<Long> getAllUserIdListByDepartmentId(final Long id) throws IFlowStorageException {
+    final List<Long> idList = getModelIdListById(id, "SELECT user_id FROM user_departments where department_id=?", "User", "id");
+
+    return idList;
+  }
+
 }

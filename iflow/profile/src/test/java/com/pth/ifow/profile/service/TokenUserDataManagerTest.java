@@ -48,6 +48,9 @@ public class TokenUserDataManagerTest extends TestDataProducer {
   @Mock
   private IDepartmentService        departmentService;
 
+  @Mock
+  private IDepartmentGroupService   departmentGroupService;
+
   private String                    validToken;
 
   private final String              validEmail   = "valid-email";
@@ -66,13 +69,13 @@ public class TokenUserDataManagerTest extends TestDataProducer {
   public void setUp() throws Exception {
 
     this.tokenUserDataManager = new TokenUserDataManager(this.sessionManager, this.usersService, this.companyService,
-        this.userGroupService, this.departmentService);
+        this.userGroupService, this.departmentService, this.departmentGroupService);
 
-    this.validSession = this.sessionManager.addSession(validEmail);
+    this.validSession = this.sessionManager.addSession(this.validEmail);
     this.validToken = this.validSession.getToken();
 
-    this.validCompany = getTestCompany();
-    this.validUser = getTestUser(1L, "userfn", "userln", validEmail);
+    this.validCompany = this.getTestCompany();
+    this.validUser = this.getTestUser(1L, "userfn", "userln", this.validEmail);
   }
 
   @After
@@ -82,24 +85,24 @@ public class TokenUserDataManagerTest extends TestDataProducer {
   @Test(expected = ProfileCustomizedException.class)
   public void testGetProfileByTokenEmptyToken() throws Exception {
 
-    tokenUserDataManager.getProfileByToken("");
+    this.tokenUserDataManager.getProfileByToken("");
 
   }
 
   @Test(expected = ProfileCustomizedException.class)
   public void testGetProfileByTokenInvalidToken() throws Exception {
 
-    tokenUserDataManager.getProfileByToken(inValidToken);
+    this.tokenUserDataManager.getProfileByToken(this.inValidToken);
 
   }
 
   @Test
   public void testGetProfileByTokenEmail() throws Exception {
 
-    when(this.usersService.getUserByEmail(any(String.class))).thenReturn(validUser);
-    when(this.companyService.getById(any(Long.class))).thenReturn(validCompany);
+    when(this.usersService.getUserByEmail(any(String.class))).thenReturn(this.validUser);
+    when(this.companyService.getById(any(Long.class))).thenReturn(this.validCompany);
 
-    final ProfileResponse response = tokenUserDataManager.getProfileByToken(validToken);
+    final ProfileResponse response = this.tokenUserDataManager.getProfileByToken(this.validToken);
 
     verify(this.usersService, times(1)).getUserByEmail(any(String.class));
     verify(this.companyService, times(1)).getById(any(Long.class));
@@ -107,27 +110,28 @@ public class TokenUserDataManagerTest extends TestDataProducer {
     Assert.assertNotNull("Result response is not null!", response);
     Assert.assertNotNull("Result user is not null!", response.getUser());
     Assert.assertNotNull("Result company is not null!", response.getCompany());
-    Assert.assertEquals("Result user has the same id as valid-user!", response.getUser().getId(), validUser.getId());
-    Assert.assertEquals("Result company has the same id as valid-company!", response.getCompany().getId(), validCompany.getId());
+    Assert.assertEquals("Result user has the same id as valid-user!", response.getUser().getId(), this.validUser.getId());
+    Assert.assertEquals("Result company has the same id as valid-company!", response.getCompany().getId(), this.validCompany.getId());
 
     Assert.assertEquals("Result user has the same name as valid-user!",
-        response.getUser().getFirstName() + response.getUser().getLastName(), validUser.getFirstName() + validUser.getLastName());
+        response.getUser().getFirstName() + response.getUser().getLastName(),
+        this.validUser.getFirstName() + this.validUser.getLastName());
     Assert.assertEquals("Result company has the same name as valid-company!", response.getCompany().getCompanyName(),
-        validCompany.getCompanyName());
+        this.validCompany.getCompanyName());
 
   }
 
   @Test
   public void testGetUserListByToken() throws Exception {
 
-    final List<User> users = getTestUserList();
+    final List<User> users = this.getTestUserList();
 
     when(this.usersService.getUserListByComaonyId(any(Long.class))).thenReturn(users);
-    when(this.usersService.getUserByEmail(any(String.class))).thenReturn(validUser);
+    when(this.usersService.getUserByEmail(any(String.class))).thenReturn(this.validUser);
 
-    when(this.companyService.getById(any(Long.class))).thenReturn(validCompany);
+    when(this.companyService.getById(any(Long.class))).thenReturn(this.validCompany);
 
-    final List<User> resultUsers = tokenUserDataManager.getUserListByToken(validToken, 1L);
+    final List<User> resultUsers = this.tokenUserDataManager.getUserListByToken(this.validToken, 1L);
 
     verify(this.usersService, times(1)).getUserByEmail(any(String.class));
     verify(this.usersService, times(1)).getUserListByComaonyId(any(Long.class));
@@ -141,13 +145,13 @@ public class TokenUserDataManagerTest extends TestDataProducer {
   @Test
   public void testGetUserGroupListByToken() throws Exception {
 
-    final List<UserGroup> userGroups = getTestUserGroupList();
+    final List<UserGroup> userGroups = this.getTestUserGroupList();
 
     when(this.userGroupService.getListByComaonyId(any(Long.class))).thenReturn(userGroups);
-    when(this.usersService.getUserByEmail(any(String.class))).thenReturn(validUser);
-    when(this.companyService.getById(any(Long.class))).thenReturn(validCompany);
+    when(this.usersService.getUserByEmail(any(String.class))).thenReturn(this.validUser);
+    when(this.companyService.getById(any(Long.class))).thenReturn(this.validCompany);
 
-    final List<UserGroup> resultUserGroups = tokenUserDataManager.getUserGroupListByToken(validToken, 1L);
+    final List<UserGroup> resultUserGroups = this.tokenUserDataManager.getUserGroupListByToken(this.validToken, 1L);
 
     verify(this.usersService, times(1)).getUserByEmail(any(String.class));
     verify(this.userGroupService, times(1)).getListByComaonyId(any(Long.class));
@@ -160,16 +164,16 @@ public class TokenUserDataManagerTest extends TestDataProducer {
 
   @Test
   public void testGetDepartmentListByToken() throws Exception {
-    final List<Department> departments = getTestDepartmentList();
+    final List<Department> departments = this.getTestDepartmentList();
 
-    when(this.departmentService.getListByComaonyId(any(Long.class))).thenReturn(departments);
-    when(this.usersService.getUserByEmail(any(String.class))).thenReturn(validUser);
-    when(this.companyService.getById(any(Long.class))).thenReturn(validCompany);
+    when(this.departmentService.getListByCompanyId(any(Long.class))).thenReturn(departments);
+    when(this.usersService.getUserByEmail(any(String.class))).thenReturn(this.validUser);
+    when(this.companyService.getById(any(Long.class))).thenReturn(this.validCompany);
 
-    final List<Department> resultDepartments = tokenUserDataManager.getDepartmentListByToken(validToken, 1L);
+    final List<Department> resultDepartments = this.tokenUserDataManager.getDepartmentListByToken(this.validToken, 1L);
 
     verify(this.usersService, times(1)).getUserByEmail(any(String.class));
-    verify(this.departmentService, times(1)).getListByComaonyId(any(Long.class));
+    verify(this.departmentService, times(1)).getListByCompanyId(any(Long.class));
     verify(this.companyService, times(1)).getById(any(Long.class));
 
     Assert.assertNotNull("Result response list is not null!", resultDepartments);
