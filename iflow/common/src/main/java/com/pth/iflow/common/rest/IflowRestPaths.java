@@ -75,23 +75,23 @@ public class IflowRestPaths {
 
   public static class ProfileModule {
 
-    public static final int    PORT                                = 1020;
+    public static final int    PORT                                 = 1020;
 
-    public static final String AUTHENTICATION_AUTHENTICATE         = "/auth/authenticate";
-    public static final String PROFILE_READ_AUTHENTOCATEDINFO      = "/profile/read/authinfo";
-    public static final String PROFILE_READ_TOKENINFO              = "/profile/read/tokeninfo";
+    public static final String AUTHENTICATION_AUTHENTICATE          = "/auth/authenticate";
+    public static final String PROFILE_READ_AUTHENTOCATEDINFO       = "/profile/read/authinfo";
+    public static final String PROFILE_READ_TOKENINFO               = "/profile/read/tokeninfo";
 
-    public static final String COMPANY_READ_BY_ID                  = "/company/readbyid/{companyid}";
-    public static final String COMPANY_READ_USER_LIST              = "/company/read/user/{companyid}";
-    public static final String COMPANY_READ_USERGROUP_LIST         = "/company/read/usergrpup/{companyid}";
-    public static final String COMPANY_READ_DEPARTMENT_LIST        = "/company/read/department/{companyid}";
+    public static final String COMPANY_READ_BY_ID                   = "/company/readbyid/{companyid}";
+    public static final String COMPANY_READ_USER_LIST               = "/company/read/user/{companyid}";
+    public static final String COMPANY_READ_USERGROUP_LIST          = "/company/read/usergroup/{companyid}";
+    public static final String COMPANY_READ_DEPARTMENT_LIST         = "/company/read/department/{companyid}";
 
     public static final String DEPARTMENT_READ_BY_ID                = "/department/readbyid/{id}";
     public static final String DEPARTMENT_READ_DEPARTMENTGROUP_LIST = "/department/read/departmentgroup/{id}";
     public static final String DEPARTMENT_READ_ALLUSERS_LIST        = "/department/read/allusers/{id}";
 
-    public static final String DEPARTMENTGROUP_READ_BY_ID          = "/departmentgroup/readbyid/{id}";
-    public static final String DEPARTMENTGROUP_READ_USER_LIST      = "/departmentgroup/read/user/{id}";
+    public static final String DEPARTMENTGROUP_READ_BY_ID           = "/departmentgroup/readbyid/{id}";
+    public static final String DEPARTMENTGROUP_READ_USER_LIST       = "/departmentgroup/read/user/{id}";
 
   }
 }

@@ -33,14 +33,14 @@ public class DepartmentDao extends DaoBasicClass<Department> implements IDepartm
     model.setCreatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("created_at")));
     model.setUpdatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("updated_at")));
     model.setVersion(rs.getInt("version"));
-    model.setGroups(getGroupIdListById(model.getId()));
+    model.setGroups(this.getGroupIdListById(model.getId()));
 
     return model;
   }
 
   @Override
   public Department getById(final Long id) throws IFlowStorageException {
-    return getModelById(id, "SELECT * FROM departments where id=?", "Department");
+    return this.getModelById(id, "SELECT * FROM departments where id=?", "Department");
   }
 
   @Override
@@ -52,16 +52,16 @@ public class DepartmentDao extends DaoBasicClass<Department> implements IDepartm
     sqlSelect = sqlSelect.endsWith(",") ? sqlSelect.substring(0, sqlSelect.length() - 1) : sqlSelect;
     sqlSelect += ")";
 
-    return getModelListByIdList(idList, sqlSelect, "User");
+    return this.getModelListByIdList(idList, sqlSelect, "User");
   }
 
   private List<Long> getGroupIdListById(final Long id) throws IFlowStorageException {
-    return getIdListById(id, "SELECT * FROM departments_group where department_id=?", "id", "Department Groups");
+    return this.getIdListById(id, "SELECT * FROM departments_group where department_id=?", "id", "Department Groups");
   }
 
   @Override
   public List<Department> getListByCompanyId(final Long id) throws IFlowStorageException {
-    return getModelListById(id, "SELECT * FROM departments where company_id=?", "Department");
+    return this.getModelListById(id, "SELECT * FROM departments where company_id=?", "Department");
   }
 
   @Override
@@ -89,21 +89,22 @@ public class DepartmentDao extends DaoBasicClass<Department> implements IDepartm
   public Department create(final Department model) throws IFlowStorageException {
     final String sql = "INSERT INTO departments (company_id, title, version, status)" + "VALUES (?, ?, ?, ?)";
 
-    return getById(createModel(model, "Department", sql, true));
+    return this.getById(this.createModel(model, "Department", sql, true));
   }
 
   @Override
   public Department update(final Department model) throws IFlowStorageException {
     final String sql = "UPDATE departments SET company_id = ?, title = ?, version = ?, status =  WHERE id = ?";
 
-    updateModel(model, "Department", sql, true);
+    this.updateModel(model, "Department", sql, true);
 
-    return getById(model.getId());
+    return this.getById(model.getId());
   }
 
   @Override
   public List<Long> getAllUserIdListByDepartmentId(final Long id) throws IFlowStorageException {
-    final List<Long> idList = getModelIdListById(id, "SELECT user_id FROM user_departments where department_id=?", "User", "id");
+    final List<Long> idList = this.getModelIdListById(id, "SELECT user_id FROM user_departments where department_id=?", "User",
+        "user_id");
 
     return idList;
   }

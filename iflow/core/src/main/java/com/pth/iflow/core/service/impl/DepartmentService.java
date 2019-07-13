@@ -1,6 +1,7 @@
 package com.pth.iflow.core.service.impl;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,7 @@ public class DepartmentService implements IDepartmentService {
 
   @Override
   public List<DepartmentGroup> getDepartmentGroups(final Long id) {
-    final Department department = getById(id);
+    final Department department = this.getById(id);
 
     return this.departmentGroupDao.getListByIdList(department.getGroups().stream().collect(Collectors.toList()));
   }
@@ -56,25 +57,32 @@ public class DepartmentService implements IDepartmentService {
   public Department save(final Department model) {
     if (model.isNew()) {
       model.increaseVersion();
-      return departmentDao.create(model);
+      return this.departmentDao.create(model);
     }
 
-    final Department exists = departmentDao.getById(model.getId());
+    final Department exists = this.departmentDao.getById(model.getId());
     if (exists.getVersion() > model.getVersion()) {
       throw new IFlowOptimisticLockException("Department with id " + model.getId() + " is old!");
     }
 
     model.setVersion(model.getVersion() + 1);
 
-    return departmentDao.update(model);
+    return this.departmentDao.update(model);
   }
 
   @Override
   public List<User> getAllUserListByDepartmentId(final Long id) {
 
-    final List<Long> idList = departmentDao.getAllUserIdListByDepartmentId(id);
+    final List<Long> idList = this.departmentDao.getAllUserIdListByDepartmentId(id);
 
-    return userDao.getListByIdList(idList);
+    final Set<Long> idSet = idList.stream().collect(Collectors.toSet());
+
+    final List<DepartmentGroup> groups = this.getDepartmentGroups(id);
+    for (final DepartmentGroup group : groups) {
+      idSet.addAll(this.departmentGroupDao.getAllUserIdListByDepartmentGroupId(group.getId()));
+    }
+
+    return this.userDao.getListByIdList(idSet.stream().collect(Collectors.toList()));
   }
 
 }
