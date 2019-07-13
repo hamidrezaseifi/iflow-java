@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@RequestMapping(method = RequestMethod.GET, produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE })
+@RequestMapping(method = RequestMethod.GET, produces = { MediaType.APPLICATION_XML_VALUE })
 public @interface IflowGetRequestMapping {
 
   @AliasFor(annotation = RequestMapping.class)
@@ -37,7 +37,7 @@ public @interface IflowGetRequestMapping {
 
   /**
    * Alias for {@link RequestMapping#consumes}.
-   * 
+   *
    * @since 4.3.5
    */
   @AliasFor(annotation = RequestMapping.class)

@@ -18,6 +18,7 @@ import com.pth.iflow.common.annotations.IflowPostRequestMapping;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 import com.pth.iflow.common.edo.models.xml.UserGroupEdo;
+import com.pth.iflow.common.edo.models.xml.UserGroupListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.core.model.UserGroup;
 import com.pth.iflow.core.service.IUserGroupService;
@@ -44,22 +45,22 @@ public class UserGroupController {
 
   @ResponseStatus(HttpStatus.OK)
   @IflowPostRequestMapping(path = IflowRestPaths.CoreModul.USERGROUP_READ_LIST)
-  public ResponseEntity<List<UserGroupEdo>> readUserGroupList(@RequestBody final List<Long> idList, final HttpServletRequest request)
+  public ResponseEntity<UserGroupListEdo> readUserGroupList(@RequestBody final List<Long> idList, final HttpServletRequest request)
       throws Exception {
 
     final List<UserGroup> modelList = this.userGroupService.getListByIdList(idList);
 
-    return ControllerHelper.createResponseEntity(request, ModelMapperBase.toEdoList(modelList), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, new UserGroupListEdo(ModelMapperBase.toEdoList(modelList)), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(path = IflowRestPaths.CoreModul.USERGROUP_READ_LIST_BY_COMPANY)
-  public ResponseEntity<List<UserGroupEdo>> readUserGroupListByCompany(@PathVariable(name = "id") final Long id,
+  public ResponseEntity<UserGroupListEdo> readUserGroupListByCompany(@PathVariable(name = "id") final Long id,
       final HttpServletRequest request) throws Exception {
 
     final List<UserGroup> modelList = this.userGroupService.getListByIdCompanyId(id);
 
-    return ControllerHelper.createResponseEntity(request, ModelMapperBase.toEdoList(modelList), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, new UserGroupListEdo(ModelMapperBase.toEdoList(modelList)), HttpStatus.OK);
   }
 
 }

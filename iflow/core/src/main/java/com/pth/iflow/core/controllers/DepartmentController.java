@@ -18,8 +18,11 @@ import com.pth.iflow.common.annotations.IflowPostRequestMapping;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 import com.pth.iflow.common.edo.models.xml.DepartmentEdo;
+import com.pth.iflow.common.edo.models.xml.DepartmentListEdo;
+import com.pth.iflow.common.edo.models.xml.UserListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.core.model.Department;
+import com.pth.iflow.core.model.User;
 import com.pth.iflow.core.service.IDepartmentService;
 
 @RestController
@@ -43,22 +46,31 @@ public class DepartmentController {
 
   @ResponseStatus(HttpStatus.OK)
   @IflowPostRequestMapping(path = IflowRestPaths.CoreModul.DEPARTMENT_READ_LIST)
-  public ResponseEntity<List<DepartmentEdo>> readDepartmentList(@RequestBody final List<Long> idList, final HttpServletRequest request)
+  public ResponseEntity<DepartmentListEdo> readDepartmentList(@RequestBody final List<Long> idList, final HttpServletRequest request)
       throws Exception {
 
     final List<Department> modelList = this.departmentService.getListByIdList(idList);
 
-    return ControllerHelper.createResponseEntity(request, ModelMapperBase.toEdoList(modelList), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, new DepartmentListEdo(ModelMapperBase.toEdoList(modelList)), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(path = IflowRestPaths.CoreModul.DEPARTMENT_READ_LIST_BY_COMPANY)
-  public ResponseEntity<List<DepartmentEdo>> readDepartmentListByCompany(@PathVariable final Long id, final HttpServletRequest request)
+  public ResponseEntity<DepartmentListEdo> readDepartmentListByCompany(@PathVariable final Long id, final HttpServletRequest request)
       throws Exception {
 
     final List<Department> modelList = this.departmentService.getListByIdCompanyId(id);
 
-    return ControllerHelper.createResponseEntity(request, ModelMapperBase.toEdoList(modelList), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, new DepartmentListEdo(ModelMapperBase.toEdoList(modelList)), HttpStatus.OK);
   }
 
+  @ResponseStatus(HttpStatus.OK)
+  @IflowGetRequestMapping(path = IflowRestPaths.CoreModul.DEPARTMENT_READ_ALLUSERLIST_BY_DEPARTMENT)
+  public ResponseEntity<UserListEdo> readAllUserListByDepartmentGroup(@PathVariable final Long id, final HttpServletRequest request)
+      throws Exception {
+
+    final List<User> modelList = this.departmentService.getAllUserListByDepartmentId(id);
+
+    return ControllerHelper.createResponseEntity(request, new UserListEdo(ModelMapperBase.toEdoList(modelList)), HttpStatus.OK);
+  }
 }

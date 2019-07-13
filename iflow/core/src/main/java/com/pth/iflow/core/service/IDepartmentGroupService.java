@@ -3,6 +3,7 @@ package com.pth.iflow.core.service;
 import java.util.List;
 
 import com.pth.iflow.core.model.DepartmentGroup;
+import com.pth.iflow.core.model.User;
 
 public interface IDepartmentGroupService {
 
@@ -13,5 +14,7 @@ public interface IDepartmentGroupService {
   List<DepartmentGroup> getListByDepartmentId(final Long departmentId);
 
   List<DepartmentGroup> getListByIdList(final List<Long> idList);
+
+  List<User> getAllUserListByDepartmentGroupId(final Long id);
 
 }
