@@ -73,7 +73,6 @@ public class UserControllerTest extends TestDataProducer {
     final UserEdo userEdo = user.toEdo();
 
     final String userAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(userEdo);
-    System.out.println("userAsXmlString: " + userAsXmlString);
 
     this.mockMvc
         .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModul.USER_READ_BY_ID, user.getId())

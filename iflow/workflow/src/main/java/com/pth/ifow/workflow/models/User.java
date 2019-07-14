@@ -1,6 +1,7 @@
 package com.pth.ifow.workflow.models;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
@@ -12,6 +13,7 @@ public class User extends ModelMapperBase<UserEdo, User> {
   private Long             id;
   private Long             companyId;
   private String           email;
+  private Date             birthDate;
   private String           firstName;
   private String           lastName;
   private Integer          status;
@@ -61,6 +63,14 @@ public class User extends ModelMapperBase<UserEdo, User> {
 
   public void setEmail(final String email) {
     this.email = email;
+  }
+
+  public Date getBirthDate() {
+    return this.birthDate;
+  }
+
+  public void setBirthDate(final Date birthDate) {
+    this.birthDate = birthDate;
   }
 
   /**
@@ -158,7 +168,7 @@ public class User extends ModelMapperBase<UserEdo, User> {
       this.departments.addAll(departments);
     }
   }
-  
+
   public void addDepartment(final Long departmentId) {
     this.departments.add(departmentId);
   }
@@ -188,7 +198,7 @@ public class User extends ModelMapperBase<UserEdo, User> {
       this.deputies.addAll(deputies);
     }
   }
-  
+
   public void addDeputy(final Long deputyId) {
     this.deputies.add(deputyId);
   }
@@ -207,6 +217,7 @@ public class User extends ModelMapperBase<UserEdo, User> {
     edo.setStatus(this.status);
     edo.setVersion(this.version);
     edo.setEmail(this.email);
+    edo.setBirthDate(this.birthDate);
     edo.setId(this.id);
     edo.setCompanyId(this.companyId);
     edo.setGroups(this.groups);
@@ -227,6 +238,7 @@ public class User extends ModelMapperBase<UserEdo, User> {
     model.setStatus(edo.getStatus());
     model.setVersion(edo.getVersion());
     model.setEmail(edo.getEmail());
+    model.setBirthDate(edo.getBirthDate());
     model.setId(edo.getId());
     model.setCompanyId(edo.getCompanyId());
     model.setGroups(edo.getGroups());

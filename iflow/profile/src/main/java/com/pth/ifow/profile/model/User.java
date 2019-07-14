@@ -2,6 +2,7 @@ package com.pth.ifow.profile.model;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
@@ -9,10 +10,11 @@ import com.pth.iflow.common.edo.models.xml.UserEdo;
 import com.pth.iflow.common.enums.EUserStatus;
 
 public class User extends ModelMapperBase<UserEdo, User> {
-  
+
   private Long             id;
   private Long             companyId;
   private String           email;
+  private Date             birthDate;
   private String           firstName;
   private String           lastName;
   private Integer          status;
@@ -64,6 +66,14 @@ public class User extends ModelMapperBase<UserEdo, User> {
 
   public void setEmail(final String email) {
     this.email = email;
+  }
+
+  public Date getBirthDate() {
+    return this.birthDate;
+  }
+
+  public void setBirthDate(final Date birthDate) {
+    this.birthDate = birthDate;
   }
 
   /**
@@ -180,7 +190,7 @@ public class User extends ModelMapperBase<UserEdo, User> {
       this.groups.addAll(groups);
     }
   }
-  
+
   public void addGroup(final Long groupId) {
     this.groups.add(groupId);
   }
@@ -195,7 +205,7 @@ public class User extends ModelMapperBase<UserEdo, User> {
       this.departments.addAll(departments);
     }
   }
-  
+
   public void addDepartment(final Long departmentId) {
     this.departments.add(departmentId);
   }
@@ -210,7 +220,7 @@ public class User extends ModelMapperBase<UserEdo, User> {
       this.departmentGroups.addAll(departmentGroups);
     }
   }
-  
+
   public void addDepartmentGroup(final Long departmentGroupId) {
     this.departmentGroups.add(departmentGroupId);
   }
@@ -239,6 +249,7 @@ public class User extends ModelMapperBase<UserEdo, User> {
     edo.setStatus(this.status);
     edo.setVersion(this.version);
     edo.setEmail(this.email);
+    edo.setBirthDate(this.birthDate);
     edo.setId(this.id);
     edo.setCompanyId(this.companyId);
     edo.setGroups(this.groups);
@@ -259,6 +270,7 @@ public class User extends ModelMapperBase<UserEdo, User> {
     model.setStatus(edo.getStatus());
     model.setVersion(edo.getVersion());
     model.setEmail(edo.getEmail());
+    model.setBirthDate(edo.getBirthDate());
     model.setId(edo.getId());
     model.setCompanyId(edo.getCompanyId());
     model.setGroups(edo.getGroups());
