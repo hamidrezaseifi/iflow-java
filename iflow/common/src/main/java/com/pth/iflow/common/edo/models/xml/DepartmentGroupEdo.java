@@ -5,32 +5,36 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
-@XmlRootElement(name = "DepartmentGroupEdo")
+import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
+
+@XmlRootElement(name = "DepartmentGroup", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
 @XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "DepartmentGroup" + IFlowJaxbDefinition.TYPE_PREFIX)
 public class DepartmentGroupEdo {
 
-  @XmlElement(name = "ID")
+  @XmlElement(name = "ID", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Long    id;
 
   @NotNull
-  @XmlElement(name = "DepartmentId")
+  @XmlElement(name = "DepartmentId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Long    departmentId;
 
   @NotNull
-  @XmlElement(name = "Title")
+  @XmlElement(name = "Title", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String  title;
 
   @NotNull
-  @XmlElement(name = "Status")
+  @XmlElement(name = "Status", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer status;
 
   @NotNull
-  @XmlElement(name = "Version")
+  @XmlElement(name = "Version", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer version;
 
   public Long getId() {
-    return id;
+    return this.id;
   }
 
   public void setId(final Long id) {
@@ -38,7 +42,7 @@ public class DepartmentGroupEdo {
   }
 
   public Long getDepartmentId() {
-    return departmentId;
+    return this.departmentId;
   }
 
   public void setDepartmentId(final Long departmentId) {
@@ -46,7 +50,7 @@ public class DepartmentGroupEdo {
   }
 
   public String getTitle() {
-    return title;
+    return this.title;
   }
 
   public void setTitle(final String title) {
@@ -54,7 +58,7 @@ public class DepartmentGroupEdo {
   }
 
   public Integer getStatus() {
-    return status;
+    return this.status;
   }
 
   public void setStatus(final Integer status) {

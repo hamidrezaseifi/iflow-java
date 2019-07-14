@@ -33,10 +33,10 @@ public class TestDataProducer {
     model.setFirstName("firstName");
     model.setLastName("lastName");
     model.setStatus(1);
-    model.setDepartmentGroups(getTestDepartmentGroupIdList());
-    model.setDepartments(getTestDepartmentIdList());
-    model.setDeputies(getTestDeputiyIdList());
-    model.setGroups(getTestUserGroupIdList());
+    model.setDepartmentGroups(this.getTestDepartmentGroupIdList());
+    model.setDepartments(this.getTestDepartmentIdList());
+    model.setDeputies(this.getTestDeputiyIdList());
+    model.setGroups(this.getTestUserGroupIdList());
 
     return model;
   }
@@ -49,17 +49,17 @@ public class TestDataProducer {
     model.setFirstName(fname);
     model.setLastName(lname);
     model.setStatus(1);
-    model.setDepartmentGroups(getTestDepartmentGroupIdList());
-    model.setDepartments(getTestDepartmentIdList());
-    model.setDeputies(getTestDeputiyIdList());
-    model.setGroups(getTestUserGroupIdList());
+    model.setDepartmentGroups(this.getTestDepartmentGroupIdList());
+    model.setDepartments(this.getTestDepartmentIdList());
+    model.setDeputies(this.getTestDeputiyIdList());
+    model.setGroups(this.getTestUserGroupIdList());
 
     return model;
   }
 
   protected List<User> getTestUserList() {
-    final List<User> list = Arrays.asList(getTestUser(1L, "fname 1", "lname 1", "email 1"),
-        getTestUser(2L, "fname 2", "lname 2", "email 2"), getTestUser(3L, "fname 3", "lname 3", "email 3"));
+    final List<User> list = Arrays.asList(this.getTestUser(1L, "fname 1", "lname 1", "email 1"),
+        this.getTestUser(2L, "fname 2", "lname 2", "email 2"), this.getTestUser(3L, "fname 3", "lname 3", "email 3"));
 
     return list;
   }
@@ -73,11 +73,14 @@ public class TestDataProducer {
     model.setVersion(1);
     model.setComments("comments");
     model.setController(1L);
-    model.setCurrentStep(getTestWorkflowTypeStep());
+    model.setCurrentStep(this.getTestWorkflowTypeStep());
+    model.setCurrentStepId(model.getCurrentStep().getId());
     model.setCreatedBy(1L);
     model.setAssignTo(1L);
-    model.setActions(Arrays.asList(getTestWorkflowAction(1L, 1L), getTestWorkflowAction(2L, 2L), getTestWorkflowAction(3L, 3L)));
-    model.setFiles(Arrays.asList(getTestWorkflowFile(1L, 1L), getTestWorkflowFile(2L, 2L), getTestWorkflowFile(3L, 3L)));
+    model.setActions(
+        Arrays.asList(this.getTestWorkflowAction(1L, 1L), this.getTestWorkflowAction(2L, 2L), this.getTestWorkflowAction(3L, 3L)));
+    model
+        .setFiles(Arrays.asList(this.getTestWorkflowFile(1L, 1L), this.getTestWorkflowFile(2L, 2L), this.getTestWorkflowFile(3L, 3L)));
 
     return model;
   }
@@ -93,8 +96,8 @@ public class TestDataProducer {
     model.setActiveFilePath("filePath");
     model.setActiveFileVersion(1);
     model.setTitle("title " + Id);
-    model.setFileVersions(Arrays.asList(getTestWorkflowFileVersion(1L, 1, 1L), getTestWorkflowFileVersion(2L, 2, 1L),
-        getTestWorkflowFileVersion(3L, 3, 1L)));
+    model.setFileVersions(Arrays.asList(this.getTestWorkflowFileVersion(1L, 1, 1L), this.getTestWorkflowFileVersion(2L, 2, 1L),
+        this.getTestWorkflowFileVersion(3L, 3, 1L)));
 
     return model;
   }
@@ -132,14 +135,15 @@ public class TestDataProducer {
     final WorkflowType model = new WorkflowType();
     model.setCompanyId(1L);
     model.setId(1L);
+    model.setBaseTypeId(1L);
     model.setTitle("utest title");
     model.setStatus(1);
     model.setVersion(1);
     model.setManualAssign(true);
     model.setSendToController(true);
     model.setIncreaseStepAutomatic(true);
-    model.setSteps(Arrays.asList(getTestWorkflowTypeStep(1L, "step 1", 1), getTestWorkflowTypeStep(2L, "step 2", 2),
-        getTestWorkflowTypeStep(3L, "step 3", 3)));
+    model.setSteps(Arrays.asList(this.getTestWorkflowTypeStep(1L, "step 1", 1), this.getTestWorkflowTypeStep(2L, "step 2", 2),
+        this.getTestWorkflowTypeStep(3L, "step 3", 3)));
     model.setComments("comments");
 
     return model;
@@ -155,16 +159,16 @@ public class TestDataProducer {
     model.setManualAssign(true);
     model.setSendToController(true);
     model.setIncreaseStepAutomatic(true);
-    model.setSteps(Arrays.asList(getTestWorkflowTypeStep(1L, "step 1", 1), getTestWorkflowTypeStep(2L, "step 2", 2),
-        getTestWorkflowTypeStep(3L, "step 3", 3)));
+    model.setSteps(Arrays.asList(this.getTestWorkflowTypeStep(1L, "step 1", 1), this.getTestWorkflowTypeStep(2L, "step 2", 2),
+        this.getTestWorkflowTypeStep(3L, "step 3", 3)));
     model.setComments("comments");
 
     return model;
   }
 
   protected List<WorkflowType> getTestWorkflowTypeList() {
-    final List<WorkflowType> list = Arrays.asList(getTestWorkflowType(1L, "WorkflowType 1"), getTestWorkflowType(2L, "WorkflowType 2"),
-        getTestWorkflowType(3L, "WorkflowType 3"));
+    final List<WorkflowType> list = Arrays.asList(this.getTestWorkflowType(1L, "WorkflowType 1"),
+        this.getTestWorkflowType(2L, "WorkflowType 2"), this.getTestWorkflowType(3L, "WorkflowType 3"));
 
     return list;
   }
@@ -198,12 +202,12 @@ public class TestDataProducer {
 
   protected List<Workflow> getTestWorkflowList() {
 
-    return Arrays.asList(getTestWorkflow(1L), getTestWorkflow(2L), getTestWorkflow(3L));
+    return Arrays.asList(this.getTestWorkflow(1L), this.getTestWorkflow(2L), this.getTestWorkflow(3L));
   }
 
   protected List<WorkflowTypeStep> getTestWorkflowTypeStepList() {
-    final List<WorkflowTypeStep> list = Arrays.asList(getTestWorkflowTypeStep(1L, "WorkflowTypeStep 1", 1),
-        getTestWorkflowTypeStep(2L, "WorkflowTypeStep 2", 2), getTestWorkflowTypeStep(3L, "WorkflowTypeStep 3", 3));
+    final List<WorkflowTypeStep> list = Arrays.asList(this.getTestWorkflowTypeStep(1L, "WorkflowTypeStep 1", 1),
+        this.getTestWorkflowTypeStep(2L, "WorkflowTypeStep 2", 2), this.getTestWorkflowTypeStep(3L, "WorkflowTypeStep 3", 3));
 
     return list;
   }

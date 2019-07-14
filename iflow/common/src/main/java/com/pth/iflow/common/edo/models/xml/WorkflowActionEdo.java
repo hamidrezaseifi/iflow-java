@@ -5,40 +5,44 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
-@XmlRootElement(name = "WorkflowActionEdo")
+import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
+
+@XmlRootElement(name = "WorkflowAction", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
 @XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "WorkflowAction" + IFlowJaxbDefinition.TYPE_PREFIX)
 public class WorkflowActionEdo {
 
-  @XmlElement(name = "ID")
+  @XmlElement(name = "ID", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Long    id;
 
   @NotNull
-  @XmlElement(name = "WorkflowId")
+  @XmlElement(name = "WorkflowId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Long    workflowId;
 
-  @XmlElement(name = "CreatedBy")
+  @XmlElement(name = "CreatedBy", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Long    createdBy;
 
   @NotNull
-  @XmlElement(name = "Action")
+  @XmlElement(name = "Action", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String  action;
 
-  @XmlElement(name = "OldStep")
+  @XmlElement(name = "OldStep", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Long    oldStep;
 
-  @XmlElement(name = "NewStep")
+  @XmlElement(name = "NewStep", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Long    newStep;
 
-  @XmlElement(name = "Comments")
+  @XmlElement(name = "Comments", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String  comments;
 
   @NotNull
-  @XmlElement(name = "Status")
+  @XmlElement(name = "Status", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer status;
 
   @NotNull
-  @XmlElement(name = "Version")
+  @XmlElement(name = "Version", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer version;
 
   public Long getId() {
@@ -50,7 +54,7 @@ public class WorkflowActionEdo {
   }
 
   public Long getWorkflowId() {
-    return workflowId;
+    return this.workflowId;
   }
 
   public void setWorkflowId(final Long workflowId) {
@@ -58,7 +62,7 @@ public class WorkflowActionEdo {
   }
 
   public String getAction() {
-    return action;
+    return this.action;
   }
 
   public void setAction(final String action) {
@@ -66,7 +70,7 @@ public class WorkflowActionEdo {
   }
 
   public Long getOldStep() {
-    return oldStep;
+    return this.oldStep;
   }
 
   public void setOldStep(final Long oldStep) {
@@ -74,7 +78,7 @@ public class WorkflowActionEdo {
   }
 
   public Long getNewStep() {
-    return newStep;
+    return this.newStep;
   }
 
   public void setNewStep(final Long newStep) {
@@ -82,7 +86,7 @@ public class WorkflowActionEdo {
   }
 
   public Long getCreatedBy() {
-    return createdBy;
+    return this.createdBy;
   }
 
   public void setCreatedBy(final Long createdBy) {

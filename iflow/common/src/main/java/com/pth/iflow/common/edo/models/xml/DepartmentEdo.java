@@ -9,85 +9,89 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
-@XmlRootElement(name = "DepartmentEdo")
+import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
+
+@XmlRootElement(name = "Department", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
 @XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "Department" + IFlowJaxbDefinition.TYPE_PREFIX)
 public class DepartmentEdo {
-  
-  @XmlElement(name = "ID")
-  private Long id;
-  
+
+  @XmlElement(name = "ID", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private Long             id;
+
   @NotNull
-  @XmlElement(name = "CompanyId")
-  private Long companyId;
-  
+  @XmlElement(name = "CompanyId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private Long             companyId;
+
   @NotNull
-  @XmlElement(name = "Title")
-  private String title;
-  
+  @XmlElement(name = "Title", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String           title;
+
   @NotNull
-  @XmlElement(name = "Status")
-  private Integer status;
-  
+  @XmlElement(name = "Status", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private Integer          status;
+
   @NotNull
-  @XmlElement(name = "Version")
-  private Integer version;
-  
-  @XmlElementWrapper(name = "GroupList")
-  @XmlElement(name = "Group")
+  @XmlElement(name = "Version", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private Integer          version;
+
+  @XmlElementWrapper(name = "DepartmentGroupList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  @XmlElement(name = "DepartmentGroup", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private final List<Long> groups = new ArrayList<>();
-  
+
   public Long getId() {
     return this.id;
   }
-  
+
   public void setId(final Long id) {
     this.id = id;
   }
-  
+
   public Long getCompanyId() {
     return this.companyId;
   }
-  
+
   public void setCompanyId(final Long companyId) {
     this.companyId = companyId;
   }
-  
+
   public String getTitle() {
     return this.title;
   }
-  
+
   public void setTitle(final String title) {
     this.title = title;
   }
-  
+
   public Integer getStatus() {
     return this.status;
   }
-  
+
   public void setStatus(final Integer status) {
     this.status = status;
   }
-  
+
   public Integer getVersion() {
     return this.version;
   }
-  
+
   public void setVersion(final Integer version) {
     this.version = version;
   }
-  
+
   public List<Long> getGroups() {
     return this.groups;
   }
-  
+
   public void setGroups(final List<Long> groups) {
     this.groups.clear();
     if (groups != null) {
       this.groups.addAll(groups);
     }
   }
-  
+
   public void addGroup(final Long groupId) {
     this.groups.add(groupId);
   }

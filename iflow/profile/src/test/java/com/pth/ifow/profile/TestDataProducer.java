@@ -1,6 +1,5 @@
 package com.pth.ifow.profile;
 
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -53,8 +52,8 @@ public class TestDataProducer {
   }
 
   protected List<UserGroup> getTestUserGroupList() {
-    final List<UserGroup> list = Arrays.asList(getTestUserGroup(1L, "UserGroup 1"), getTestUserGroup(2L, "UserGroup 2"),
-        getTestUserGroup(3L, "UserGroup 3"));
+    final List<UserGroup> list = Arrays.asList(this.getTestUserGroup(1L, "UserGroup 1"), this.getTestUserGroup(2L, "UserGroup 2"),
+        this.getTestUserGroup(3L, "UserGroup 3"));
 
     return list;
   }
@@ -90,7 +89,7 @@ public class TestDataProducer {
     model.setTitle("utest title");
     model.setStatus(1);
     model.setVersion(1);
-    model.setGroups(getTestDepartmentGroupIdList());
+    model.setGroups(this.getTestDepartmentGroupIdList());
 
     return model;
   }
@@ -102,14 +101,14 @@ public class TestDataProducer {
     model.setTitle(title);
     model.setStatus(1);
     model.setVersion(1);
-    model.setGroups(getTestDepartmentGroupIdList());
+    model.setGroups(this.getTestDepartmentGroupIdList());
 
     return model;
   }
 
   protected List<Department> getTestDepartmentList() {
-    final List<Department> list = Arrays.asList(getTestDepartment(1L, "Department 1"), getTestDepartment(2L, "Department 2"),
-        getTestDepartment(3L, "Department 3"));
+    final List<Department> list = Arrays.asList(this.getTestDepartment(1L, "Department 1"), this.getTestDepartment(2L, "Department 2"),
+        this.getTestDepartment(3L, "Department 3"));
 
     return list;
   }
@@ -137,16 +136,15 @@ public class TestDataProducer {
   }
 
   protected List<DepartmentGroup> getTestDepartmentGroupList() {
-    final List<DepartmentGroup> list = Arrays.asList(getTestDepartmentGroup(1L, "DepartmentGroup 1"),
-        getTestDepartmentGroup(2L, "DepartmentGroup 2"), getTestDepartmentGroup(3L, "DepartmentGroup 3"));
+    final List<DepartmentGroup> list = Arrays.asList(this.getTestDepartmentGroup(1L, "DepartmentGroup 1"),
+        this.getTestDepartmentGroup(2L, "DepartmentGroup 2"), this.getTestDepartmentGroup(3L, "DepartmentGroup 3"));
 
     return list;
   }
 
   protected UserAuthenticationSession getTestUserAuthenticationSession() {
-    final UserAuthenticationSession model = new UserAuthenticationSession(getSessionMaxAgeInSeconds());
-    model.setCreated(LocalDateTime.now());
-    model.setLastAccess(LocalDateTime.now());
+    final UserAuthenticationSession model = new UserAuthenticationSession(this.getSessionMaxAgeInSeconds());
+
     model.setEmail("email");
     model.setSessionid("sessionid");
     model.setToken("token");
@@ -200,8 +198,8 @@ public class TestDataProducer {
   }
 
   protected List<User> getTestUserList() {
-    final List<User> list = Arrays.asList(getTestUser(1L, "fname 1", "lname 1", "email 1"),
-        getTestUser(2L, "fname 2", "lname 2", "email 2"), getTestUser(3L, "fname 3", "lname 3", "email 3"));
+    final List<User> list = Arrays.asList(this.getTestUser(1L, "fname 1", "lname 1", "email 1"),
+        this.getTestUser(2L, "fname 2", "lname 2", "email 2"), this.getTestUser(3L, "fname 3", "lname 3", "email 3"));
 
     return list;
   }

@@ -8,12 +8,16 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
-@XmlRootElement(name = "DepartmentGroupListEdo")
+import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
+
+@XmlRootElement(name = "DepartmentGroupList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
 @XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "DepartmentGroupList" + IFlowJaxbDefinition.TYPE_PREFIX)
 public class DepartmentGroupListEdo {
 
-  @XmlElementWrapper(name = "DepartmentGroupList")
+  @XmlElementWrapper(name = "DepartmentGroupList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "DepartmentGroupEdo")
   private final List<DepartmentGroupEdo> departmentGroups = new ArrayList<>();
 
@@ -22,11 +26,11 @@ public class DepartmentGroupListEdo {
   }
 
   public DepartmentGroupListEdo(final List<DepartmentGroupEdo> departments) {
-    setDepartmentGroups(departments);
+    this.setDepartmentGroups(departments);
   }
 
   public List<DepartmentGroupEdo> getDepartmentGroups() {
-    return departmentGroups;
+    return this.departmentGroups;
   }
 
   public void setDepartmentGroups(final List<DepartmentGroupEdo> departmentGroups) {
