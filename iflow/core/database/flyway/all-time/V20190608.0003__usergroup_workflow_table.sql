@@ -80,6 +80,7 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `company_id` int(11) NOT NULL DEFAULT '1',
   `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `birthdate` date DEFAULT NULL,
   `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '-',
   `firstname` varchar(45) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `lastname` varchar(45) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -92,7 +93,7 @@ CREATE TABLE `users` (
   UNIQUE KEY `email` (`email`),
   KEY `FK_USERS_COMPANIES_idx` (`company_id`),
   CONSTRAINT `FK_USERS_COMPANIES` FOREIGN KEY (`company_id`) REFERENCES `companies` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB;
 
  
 CREATE TABLE `user_departments` (
