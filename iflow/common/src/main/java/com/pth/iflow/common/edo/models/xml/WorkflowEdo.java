@@ -9,55 +9,59 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
-@XmlRootElement(name = "WorkflowEdo")
+import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
+
+@XmlRootElement(name = "Workflow", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
 @XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "Workflow" + IFlowJaxbDefinition.TYPE_PREFIX)
 public class WorkflowEdo {
 
-  @XmlElement(name = "ID")
+  @XmlElement(name = "ID", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Long                    id;
 
   @NotNull
-  @XmlElement(name = "WorkflowTypeId")
+  @XmlElement(name = "WorkflowTypeId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Long                    workflowTypeId;
 
   @NotNull
-  @XmlElement(name = "CurrentStep")
+  @XmlElement(name = "CurrentStep", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private WorkflowTypeStepEdo     currentStep;
 
-  @XmlElement(name = "CurrentStepId")
+  @XmlElement(name = "CurrentStepId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Long                    currentStepId;
 
-  @XmlElement(name = "Controller")
+  @XmlElement(name = "Controller", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Long                    controller;
 
-  @XmlElement(name = "CreatedBy")
+  @XmlElement(name = "CreatedBy", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Long                    createdBy;
 
-  @XmlElement(name = "AssignTo")
+  @XmlElement(name = "AssignTo", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Long                    assignTo;
 
   @NotNull
-  @XmlElement(name = "Title")
+  @XmlElement(name = "Title", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String                  title;
 
-  @XmlElement(name = "Comments")
+  @XmlElement(name = "Comments", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String                  comments;
 
   @NotNull
-  @XmlElement(name = "Status")
+  @XmlElement(name = "Status", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer                 status;
 
   @NotNull
-  @XmlElement(name = "Version")
+  @XmlElement(name = "Version", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer                 version;
 
-  @XmlElementWrapper(name = "WorkflowFileList")
-  @XmlElement(name = "WorkflowFile")
+  @XmlElementWrapper(name = "WorkflowFileList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  @XmlElement(name = "WorkflowFile", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private List<WorkflowFileEdo>   files   = new ArrayList<>();
 
-  @XmlElementWrapper(name = "WorkflowActionList")
-  @XmlElement(name = "WorkflowAction")
+  @XmlElementWrapper(name = "WorkflowActionList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  @XmlElement(name = "WorkflowAction", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private List<WorkflowActionEdo> actions = new ArrayList<>();
 
   public Long getId() {

@@ -72,5 +72,95 @@
           <skip>true</skip>
         </configuration>
       </plugin>
+          
     </plugins>
-  </build></project>
+    
+    
+  </build>
+  
+  <profiles>
+	<profile>
+      <id>generate-XSD</id>
+      <build>
+        <defaultGoal>process-resources</defaultGoal>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>jaxb2-maven-plugin</artifactId>
+            <version>2.4</version>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>schemagen</goal>
+                </goals>
+              </execution>
+            </executions>
+
+            <configuration>
+              <clearOutputDir>true</clearOutputDir>
+              <verbose>true</verbose>
+              <sources>
+				<source>src/main/java/com/pth/iflow/common/edo/models/xml/AuthenticatedProfileRequestEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/xml/CompanyEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/xml/DepartmentEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/xml/DepartmentGroupEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/xml/DepartmentGroupListEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/xml/DepartmentListEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/xml/ProfileResponseEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/xml/TokenProfileRequestEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/xml/UserAuthenticationRequestEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/xml/UserAuthenticationResponseEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/xml/UserEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/xml/UserGroupEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/xml/UserGroupListEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/xml/UserListEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/xml/WorkflowActionEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/xml/WorkflowActionListEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/xml/WorkflowEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/xml/WorkflowFileEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/xml/WorkflowFileListEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/xml/WorkflowFileVersionEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/xml/WorkflowListEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/xml/WorkflowTypeEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/xml/WorkflowTypeListEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/xml/WorkflowTypeStepEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/xml/WorkflowTypeStepListEdo.java</source>
+
+              </sources>
+              <outputDirectory>${project.build.directory}/generated-resources/schemagen</outputDirectory>
+              <transformSchemas>
+                <transformSchema>
+                  <uri>http://namespace.ifow.com/edo/v1</uri>
+                  <toFile>IFlowModel.xsd</toFile>
+                </transformSchema>
+              </transformSchemas>
+            </configuration>
+          </plugin>
+          <plugin>
+            <artifactId>maven-resources-plugin</artifactId>
+            <executions>
+              <execution>
+                <!-- copy only the XSD and not the other files -->
+                <id>copy-generateed-XSDs</id>
+                <phase>process-resources</phase>
+                <goals>
+                  <goal>copy-resources</goal>
+                </goals>
+                <configuration>
+                  <outputDirectory>src/main/resources/xml-schemas</outputDirectory>
+                  <resources>
+                    <resource>
+                      <directory>${project.build.directory}/generated-resources/schemagen</directory>
+                      <include>**/*.xsd</include>
+                    </resource>
+                  </resources>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>  
+  </profiles>
+  
+  </project>

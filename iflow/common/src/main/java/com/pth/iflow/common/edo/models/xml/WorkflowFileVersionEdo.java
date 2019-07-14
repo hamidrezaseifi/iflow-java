@@ -5,38 +5,42 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
-@XmlRootElement(name = "WorkflowFileVersionEdo")
+import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
+
+@XmlRootElement(name = "WorkflowFileVersion", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
 @XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "WorkflowFileVersion" + IFlowJaxbDefinition.TYPE_PREFIX)
 public class WorkflowFileVersionEdo {
 
-  @XmlElement(name = "ID")
+  @XmlElement(name = "ID", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Long    id;
 
   @NotNull
-  @XmlElement(name = "WorkflowFileId")
+  @XmlElement(name = "WorkflowFileId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Long    workflowFileId;
 
-  @XmlElement(name = "CreatedBy")
+  @XmlElement(name = "CreatedBy", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Long    createdBy;
 
   @NotNull
-  @XmlElement(name = "FilePath")
+  @XmlElement(name = "FilePath", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String  filePath;
 
-  @XmlElement(name = "Comments")
+  @XmlElement(name = "Comments", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String  comments;
 
   @NotNull
-  @XmlElement(name = "FileVersion")
+  @XmlElement(name = "FileVersion", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer fileVersion;
 
   @NotNull
-  @XmlElement(name = "Status")
+  @XmlElement(name = "Status", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer status;
 
   @NotNull
-  @XmlElement(name = "Version")
+  @XmlElement(name = "Version", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer version;
 
   public Long getId() {
@@ -48,7 +52,7 @@ public class WorkflowFileVersionEdo {
   }
 
   public Long getWorkflowFileId() {
-    return workflowFileId;
+    return this.workflowFileId;
   }
 
   public void setWorkflowFileId(final Long workflowFileId) {
@@ -56,7 +60,7 @@ public class WorkflowFileVersionEdo {
   }
 
   public String getFilePath() {
-    return filePath;
+    return this.filePath;
   }
 
   public void setFilePath(final String filePath) {
@@ -64,7 +68,7 @@ public class WorkflowFileVersionEdo {
   }
 
   public Long getCreatedBy() {
-    return createdBy;
+    return this.createdBy;
   }
 
   public void setCreatedBy(final Long createdBy) {
@@ -80,7 +84,7 @@ public class WorkflowFileVersionEdo {
   }
 
   public Integer getFileVersion() {
-    return fileVersion;
+    return this.fileVersion;
   }
 
   public void setFileVersion(final Integer fileVersion) {

@@ -8,13 +8,17 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
-@XmlRootElement(name = "UserGroupListEdo")
+import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
+
+@XmlRootElement(name = "UserGroupList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
 @XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "UserGroupList" + IFlowJaxbDefinition.TYPE_PREFIX)
 public class UserGroupListEdo {
 
-  @XmlElementWrapper(name = "UserGroupList")
-  @XmlElement(name = "UserGroupEdo")
+  @XmlElementWrapper(name = "UserGroupList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  @XmlElement(name = "UserGroupEdo", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private final List<UserGroupEdo> userGroups = new ArrayList<>();
 
   public UserGroupListEdo() {
@@ -22,11 +26,11 @@ public class UserGroupListEdo {
   }
 
   public UserGroupListEdo(final List<UserGroupEdo> userGroups) {
-    setUserGroups(userGroups);
+    this.setUserGroups(userGroups);
   }
 
   public List<UserGroupEdo> getUserGroups() {
-    return userGroups;
+    return this.userGroups;
   }
 
   public void setUserGroups(final List<UserGroupEdo> users) {

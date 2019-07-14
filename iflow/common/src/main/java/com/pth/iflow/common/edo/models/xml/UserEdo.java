@@ -9,57 +9,61 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
-@XmlRootElement(name = "UserEdo")
+import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
+
+@XmlRootElement(name = "User", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
 @XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "User" + IFlowJaxbDefinition.TYPE_PREFIX)
 public class UserEdo {
 
-  @XmlElement(name = "ID")
-  private Long id;
+  @XmlElement(name = "ID", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private Long             id;
 
   @NotNull
-  @XmlElement(name = "CompanyId")
-  private Long companyId;
+  @XmlElement(name = "CompanyId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private Long             companyId;
 
   @NotNull
-  @XmlElement(name = "Email")
-  private String email;
+  @XmlElement(name = "Email", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String           email;
 
   @NotNull
-  @XmlElement(name = "FirstName")
-  private String firstName;
+  @XmlElement(name = "FirstName", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String           firstName;
 
   @NotNull
-  @XmlElement(name = "LastName")
-  private String lastName;
+  @XmlElement(name = "LastName", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String           lastName;
 
   @NotNull
-  @XmlElement(name = "Status")
-  private Integer status;
+  @XmlElement(name = "Status", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private Integer          status;
 
   @NotNull
-  @XmlElement(name = "Version")
-  private Integer version;
+  @XmlElement(name = "Version", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private Integer          version;
 
   @NotNull
-  @XmlElement(name = "Permission")
-  private Integer permission;
+  @XmlElement(name = "Permission", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private Integer          permission;
 
-  @XmlElementWrapper(name = "GroupList")
+  @XmlElementWrapper(name = "GroupList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "Group")
-  private final List<Long> groups = new ArrayList<>();
+  private final List<Long> groups           = new ArrayList<>();
 
-  @XmlElementWrapper(name = "DepartmentList")
-  @XmlElement(name = "Department")
-  private final List<Long> departments = new ArrayList<>();
+  @XmlElementWrapper(name = "DepartmentList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  @XmlElement(name = "Department", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private final List<Long> departments      = new ArrayList<>();
 
-  @XmlElementWrapper(name = "DepartmentGroupList")
-  @XmlElement(name = "DepartmentGroup")
+  @XmlElementWrapper(name = "DepartmentGroupList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  @XmlElement(name = "DepartmentGroup", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private final List<Long> departmentGroups = new ArrayList<>();
 
-  @XmlElementWrapper(name = "DeputyList")
-  @XmlElement(name = "Deputy")
-  private final List<Long> deputies = new ArrayList<>();
+  @XmlElementWrapper(name = "DeputyList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  @XmlElement(name = "Deputy", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private final List<Long> deputies         = new ArrayList<>();
 
   /**
    * @return the id

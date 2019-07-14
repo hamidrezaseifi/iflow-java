@@ -8,13 +8,17 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
-@XmlRootElement(name = "WorkflowTypeListEdo")
+import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
+
+@XmlRootElement(name = "WorkflowTypeList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
 @XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "WorkflowTypeList" + IFlowJaxbDefinition.TYPE_PREFIX)
 public class WorkflowTypeListEdo {
 
-  @XmlElementWrapper(name = "WorkflowTypeList")
-  @XmlElement(name = "WorkflowTypeEdo")
+  @XmlElementWrapper(name = "WorkflowTypeList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  @XmlElement(name = "WorkflowTypeEdo", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private final List<WorkflowTypeEdo> workflowTypes = new ArrayList<>();
 
   public WorkflowTypeListEdo() {
@@ -22,11 +26,11 @@ public class WorkflowTypeListEdo {
   }
 
   public WorkflowTypeListEdo(final List<WorkflowTypeEdo> workflowTypes) {
-    setWorkflowTypes(workflowTypes);
+    this.setWorkflowTypes(workflowTypes);
   }
 
   public List<WorkflowTypeEdo> getWorkflowTypes() {
-    return workflowTypes;
+    return this.workflowTypes;
   }
 
   public void setWorkflowTypes(final List<WorkflowTypeEdo> workflowTypes) {

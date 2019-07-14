@@ -8,13 +8,17 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
-@XmlRootElement(name = "WorkflowFileListEdo")
+import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
+
+@XmlRootElement(name = "WorkflowFileList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
 @XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "WorkflowFileList" + IFlowJaxbDefinition.TYPE_PREFIX)
 public class WorkflowFileListEdo {
 
-  @XmlElementWrapper(name = "WorkflowFileList")
-  @XmlElement(name = "WorkflowFileEdo")
+  @XmlElementWrapper(name = "WorkflowFileList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  @XmlElement(name = "WorkflowFileEdo", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private final List<WorkflowFileEdo> workflowFiles = new ArrayList<>();
 
   public WorkflowFileListEdo() {
@@ -22,11 +26,11 @@ public class WorkflowFileListEdo {
   }
 
   public WorkflowFileListEdo(final List<WorkflowFileEdo> workflowFiles) {
-    setWorkflowFiles(workflowFiles);
+    this.setWorkflowFiles(workflowFiles);
   }
 
   public List<WorkflowFileEdo> getWorkflowFiles() {
-    return workflowFiles;
+    return this.workflowFiles;
   }
 
   public void setWorkflowFiles(final List<WorkflowFileEdo> workflowFiles) {

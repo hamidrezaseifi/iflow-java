@@ -1,25 +1,28 @@
 package com.pth.ifow.profile.model;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 import com.pth.iflow.common.edo.models.xml.UserAuthenticationResponseEdo;
 
 public class UserAuthenticationSession {
-  private String email;
-  private String token;
-  private String sessionid;
-  private LocalDateTime created;
-  private LocalDateTime lastAccess;
+  private String    email;
+  private String    token;
+  private String    sessionid;
+  private Long      created;
+  private Long      lastAccess;
   private final int ageLimit;
 
   public UserAuthenticationSession(final int ageLimit) {
-    created = LocalDateTime.now();
-    lastAccess = LocalDateTime.now();
+    System.currentTimeMillis();
+
+    this.created = System.currentTimeMillis();
+
+    this.lastAccess = System.currentTimeMillis();
     this.ageLimit = ageLimit;
   }
 
   public String getEmail() {
-    return email;
+    return this.email;
   }
 
   public UserAuthenticationSession setEmail(final String email) {
@@ -31,7 +34,7 @@ public class UserAuthenticationSession {
    * @return the token
    */
   public String getToken() {
-    return token;
+    return this.token;
   }
 
   /**
@@ -46,7 +49,7 @@ public class UserAuthenticationSession {
    * @return the sessionid
    */
   public String getSessionid() {
-    return sessionid;
+    return this.sessionid;
   }
 
   /**
@@ -60,22 +63,22 @@ public class UserAuthenticationSession {
   /**
    * @return the created
    */
-  public LocalDateTime getCreated() {
-    return created;
+  public Date getCreated() {
+    return new Date(this.created);
   }
 
   /**
    * @param created the created to set
    */
-  public void setCreated(final LocalDateTime created) {
-    this.created = created;
+  public void setCreated(final Date created) {
+    this.created = created.getTime();
   }
 
   /**
    * @return the lastAccess
    */
-  public LocalDateTime getLastAccess() {
-    return lastAccess;
+  public Date getLastAccess() {
+    return new Date(this.lastAccess);
   }
 
   /**
@@ -83,9 +86,9 @@ public class UserAuthenticationSession {
    *
    * @return the lastAccess
    */
-  public LocalDateTime update() {
-    lastAccess = LocalDateTime.now();
-    return lastAccess;
+  public Date update() {
+    this.lastAccess = System.currentTimeMillis();
+    return new Date(this.lastAccess);
   }
 
   /**
@@ -94,23 +97,23 @@ public class UserAuthenticationSession {
    * @return boolean
    */
   public boolean isValid() {
-    return lastAccess.plusSeconds(ageLimit).isAfter(LocalDateTime.now());
+    return (this.lastAccess + this.ageLimit * 1000) > System.currentTimeMillis();
   }
 
   /**
    * @param lastAccess the lastAccess to set
    */
-  public void setLastAccess(final LocalDateTime lastAccess) {
-    this.lastAccess = lastAccess;
+  public void setLastAccess(final Date lastAccess) {
+    this.lastAccess = lastAccess.getTime();
   }
 
   public UserAuthenticationResponseEdo toEdo() {
     final UserAuthenticationResponseEdo edo = new UserAuthenticationResponseEdo();
-    edo.setSessionid(sessionid);
-    edo.setToken(token);
-    edo.setEmail(email);
-    edo.setCreated(created);
-    edo.setLastAccess(lastAccess);
+    edo.setSessionid(this.sessionid);
+    edo.setToken(this.token);
+    edo.setEmail(this.email);
+    edo.setCreated(this.created);
+    edo.setLastAccess(this.lastAccess);
 
     return edo;
   }

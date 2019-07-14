@@ -5,21 +5,25 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
-@XmlRootElement(name = "ProfileResponseEdo")
+import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
+
+@XmlRootElement(name = "ProfileResponse", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
 @XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "ProfileResponse" + IFlowJaxbDefinition.TYPE_PREFIX)
 public class ProfileResponseEdo {
 
   @NotNull
-  @XmlElement(name = "User")
+  @XmlElement(name = "User", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private UserEdo    user;
 
   @NotNull
-  @XmlElement(name = "Company")
+  @XmlElement(name = "Company", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private CompanyEdo company;
 
   @NotNull
-  @XmlElement(name = "Sessionid")
+  @XmlElement(name = "Sessionid", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String     sessionid;
 
   public ProfileResponseEdo() {
@@ -35,7 +39,7 @@ public class ProfileResponseEdo {
   }
 
   public UserEdo getUser() {
-    return user;
+    return this.user;
   }
 
   public void setUser(final UserEdo user) {
@@ -43,7 +47,7 @@ public class ProfileResponseEdo {
   }
 
   public CompanyEdo getCompany() {
-    return company;
+    return this.company;
   }
 
   public void setCompany(final CompanyEdo company) {
@@ -51,7 +55,7 @@ public class ProfileResponseEdo {
   }
 
   public String getSessionid() {
-    return sessionid;
+    return this.sessionid;
   }
 
   public void setSessionid(final String sessionid) {
