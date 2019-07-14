@@ -24,3 +24,7 @@ hs_err_pid*
 /.metadata/
 /.recommenders/
 /.recommenders/*
+iflow/common/target/*
+iflow/core/target/*
+iflow/profile/target/*
+iflow/workflow/target/*
