@@ -1,6 +1,7 @@
 package com.pth.ifow.workflow;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import com.pth.iflow.common.enums.EWorkflowStatus;
@@ -30,6 +31,7 @@ public class TestDataProducer {
     model.setCompanyId(1L);
     model.setId(1L);
     model.setEmail("email");
+    model.setBirthDate(new Date());
     model.setFirstName("firstName");
     model.setLastName("lastName");
     model.setStatus(1);
@@ -46,6 +48,7 @@ public class TestDataProducer {
     model.setCompanyId(1L);
     model.setId(id);
     model.setEmail(email);
+    model.setBirthDate(new Date());
     model.setFirstName(fname);
     model.setLastName(lname);
     model.setStatus(1);

@@ -1,6 +1,7 @@
 package com.pth.ifow.profile;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import com.pth.iflow.common.edo.models.xml.AuthenticatedProfileRequestEdo;
@@ -63,9 +64,14 @@ public class TestDataProducer {
     model.setCompanyId(1L);
     model.setId(1L);
     model.setEmail("email");
+    model.setBirthDate(new Date());
     model.setFirstName("firstName");
     model.setLastName("lastName");
     model.setStatus(1);
+    model.setDepartmentGroups(this.getTestDepartmentGroupIdList());
+    model.setDepartments(this.getTestDepartmentIdList());
+    model.setDeputies(this.getTestDeputiyIdList());
+    model.setGroups(this.getTestUserGroupIdList());
 
     return model;
   }
@@ -75,9 +81,14 @@ public class TestDataProducer {
     model.setCompanyId(1L);
     model.setId(id);
     model.setEmail(email);
+    model.setBirthDate(new Date());
     model.setFirstName(fname);
     model.setLastName(lname);
     model.setStatus(1);
+    model.setDepartmentGroups(this.getTestDepartmentGroupIdList());
+    model.setDepartments(this.getTestDepartmentIdList());
+    model.setDeputies(this.getTestDeputiyIdList());
+    model.setGroups(this.getTestUserGroupIdList());
 
     return model;
   }
@@ -211,4 +222,17 @@ public class TestDataProducer {
   protected List<Long> getTestDepartmentGroupIdList() {
     return Arrays.asList(1L, 2L, 3L);
   }
+
+  protected List<Long> getTestDepartmentIdList() {
+    return Arrays.asList(1L, 2L, 3L);
+  }
+
+  protected List<Long> getTestDeputiyIdList() {
+    return Arrays.asList(1L, 2L, 3L);
+  }
+
+  protected List<Long> getTestUserGroupIdList() {
+    return Arrays.asList(1L, 2L, 3L);
+  }
+
 }

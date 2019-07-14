@@ -1,6 +1,7 @@
 package com.pth.iflow.common.edo.models.xml;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.constraints.NotNull;
@@ -10,8 +11,10 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
+import com.pth.iflow.common.edo.models.helper.DateEdoAdapter;
 
 @XmlRootElement(name = "User", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -28,6 +31,11 @@ public class UserEdo {
   @NotNull
   @XmlElement(name = "Email", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String           email;
+
+  @NotNull
+  @XmlJavaTypeAdapter(DateEdoAdapter.class)
+  @XmlElement(name = "BirthDate", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private Date             birthDate;
 
   @NotNull
   @XmlElement(name = "FirstName", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
@@ -105,6 +113,14 @@ public class UserEdo {
    */
   public void setEmail(final String email) {
     this.email = email;
+  }
+
+  public Date getBirthDate() {
+    return this.birthDate;
+  }
+
+  public void setBirthDate(final Date birthDate) {
+    this.birthDate = birthDate;
   }
 
   /**
