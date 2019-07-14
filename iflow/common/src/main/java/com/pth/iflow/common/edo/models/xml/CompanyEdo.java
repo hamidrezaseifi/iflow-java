@@ -5,27 +5,31 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
-@XmlRootElement(name = "CompanyEdo")
+import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
+
+@XmlRootElement(name = "Company", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
 @XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "Company" + IFlowJaxbDefinition.TYPE_PREFIX)
 public class CompanyEdo {
 
-  @XmlElement(name = "ID")
+  @XmlElement(name = "ID", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Long    id;
 
-  @XmlElement(name = "IdentifyId")
+  @XmlElement(name = "IdentifyId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String  identifyid;
 
   @NotNull
-  @XmlElement(name = "CompanyName")
+  @XmlElement(name = "CompanyName", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String  companyName;
 
   @NotNull
-  @XmlElement(name = "Status")
+  @XmlElement(name = "Status", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer status;
 
   @NotNull
-  @XmlElement(name = "Version")
+  @XmlElement(name = "Version", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer version;
 
   public CompanyEdo() {
@@ -36,7 +40,7 @@ public class CompanyEdo {
    * @return the id
    */
   public Long getId() {
-    return id;
+    return this.id;
   }
 
   /**
@@ -50,7 +54,7 @@ public class CompanyEdo {
    * @return the identifyid
    */
   public String getIdentifyid() {
-    return identifyid;
+    return this.identifyid;
   }
 
   /**
@@ -64,7 +68,7 @@ public class CompanyEdo {
    * @return the companyName
    */
   public String getCompanyName() {
-    return companyName;
+    return this.companyName;
   }
 
   /**
@@ -78,7 +82,7 @@ public class CompanyEdo {
    * @return the status
    */
   public Integer getStatus() {
-    return status;
+    return this.status;
   }
 
   /**

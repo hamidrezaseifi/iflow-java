@@ -114,8 +114,13 @@ public class DepartmentServiceTest extends TestDataProducer {
 
     final List<Long> list = this.getTestUserIdList();
     final List<User> userList = this.getTestUserList();
+    final List<DepartmentGroup> departmentGroupList = this.getTestDepartmentGroupList();
+    final Department department = this.getTestDepartment();
 
+    when(this.departmentDao.getById(any(Long.class))).thenReturn(department);
+    when(this.departmentDao.getAllUserIdListByDepartmentId(any(Long.class))).thenReturn(list);
     when(this.departmentGroupDao.getAllUserIdListByDepartmentGroupId(any(Long.class))).thenReturn(list);
+    when(this.departmentGroupDao.getListByIdList(any(List.class))).thenReturn(departmentGroupList);
     when(this.userDao.getListByIdList(any(List.class))).thenReturn(userList);
 
     final List<User> resList = this.departmentService.getAllUserListByDepartmentId(1L);

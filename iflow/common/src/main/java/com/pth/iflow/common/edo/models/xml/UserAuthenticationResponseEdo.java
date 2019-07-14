@@ -1,39 +1,41 @@
 package com.pth.iflow.common.edo.models.xml;
 
-import java.time.LocalDateTime;
-
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
-@XmlRootElement(name = "UserAuthenticationResponseEdo")
+import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
+
+@XmlRootElement(name = "UserAuthenticationResponse", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
 @XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "UserAuthenticationResponse" + IFlowJaxbDefinition.TYPE_PREFIX)
 public class UserAuthenticationResponseEdo {
 
   @NotNull
-  @XmlElement(name = "Email")
-  private String        email;
+  @XmlElement(name = "Email", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String email;
 
   @NotNull
-  @XmlElement(name = "Token")
-  private String        token;
+  @XmlElement(name = "Token", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String token;
 
   @NotNull
-  @XmlElement(name = "SessionId")
-  private String        sessionid;
+  @XmlElement(name = "SessionId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String sessionid;
 
   @NotNull
-  @XmlElement(name = "Created")
-  private LocalDateTime created;
+  @XmlElement(name = "Created", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private Long   created;
 
   @NotNull
-  @XmlElement(name = "LastAccess")
-  private LocalDateTime lastAccess;
+  @XmlElement(name = "LastAccess", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private Long   lastAccess;
 
   public String getEmail() {
-    return email;
+    return this.email;
   }
 
   public void setEmail(final String email) {
@@ -44,7 +46,7 @@ public class UserAuthenticationResponseEdo {
    * @return the token
    */
   public String getToken() {
-    return token;
+    return this.token;
   }
 
   /**
@@ -58,7 +60,7 @@ public class UserAuthenticationResponseEdo {
    * @return the sessionid
    */
   public String getSessionid() {
-    return sessionid;
+    return this.sessionid;
   }
 
   /**
@@ -71,28 +73,28 @@ public class UserAuthenticationResponseEdo {
   /**
    * @return the created
    */
-  public LocalDateTime getCreated() {
-    return created;
+  public Long getCreated() {
+    return this.created;
   }
 
   /**
    * @param created the created to set
    */
-  public void setCreated(final LocalDateTime created) {
+  public void setCreated(final Long created) {
     this.created = created;
   }
 
   /**
    * @return the lastAccess
    */
-  public LocalDateTime getLastAccess() {
-    return lastAccess;
+  public Long getLastAccess() {
+    return this.lastAccess;
   }
 
   /**
    * @param lastAccess the lastAccess to set
    */
-  public void setLastAccess(final LocalDateTime lastAccess) {
+  public void setLastAccess(final Long lastAccess) {
     this.lastAccess = lastAccess;
   }
 
