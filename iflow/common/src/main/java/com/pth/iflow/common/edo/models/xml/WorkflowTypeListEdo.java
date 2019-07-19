@@ -18,7 +18,7 @@ import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 public class WorkflowTypeListEdo {
 
   @XmlElementWrapper(name = "WorkflowTypeList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  @XmlElement(name = "WorkflowTypeEdo", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  @XmlElement(name = "WorkflowType", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private final List<WorkflowTypeEdo> workflowTypes = new ArrayList<>();
 
   public WorkflowTypeListEdo() {

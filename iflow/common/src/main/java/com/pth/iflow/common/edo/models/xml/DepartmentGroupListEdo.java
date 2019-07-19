@@ -18,7 +18,7 @@ import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 public class DepartmentGroupListEdo {
 
   @XmlElementWrapper(name = "DepartmentGroupList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  @XmlElement(name = "DepartmentGroupEdo")
+  @XmlElement(name = "DepartmentGroup")
   private final List<DepartmentGroupEdo> departmentGroups = new ArrayList<>();
 
   public DepartmentGroupListEdo() {

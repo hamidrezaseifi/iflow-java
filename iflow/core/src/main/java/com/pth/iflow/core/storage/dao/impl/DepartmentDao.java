@@ -6,11 +6,13 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pth.iflow.core.model.Department;
 import com.pth.iflow.core.storage.dao.IDepartmentDao;
+import com.pth.iflow.core.storage.dao.IDepartmentGroupDao;
 import com.pth.iflow.core.storage.dao.basic.DaoBasicClass;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 import com.pth.iflow.core.storage.dao.utils.SqlUtils;
@@ -18,6 +20,9 @@ import com.pth.iflow.core.storage.dao.utils.SqlUtils;
 @Transactional
 @Repository
 public class DepartmentDao extends DaoBasicClass<Department> implements IDepartmentDao {
+
+  @Autowired
+  private IDepartmentGroupDao departmentGroupDao;
 
   public DepartmentDao() {
 
@@ -33,7 +38,7 @@ public class DepartmentDao extends DaoBasicClass<Department> implements IDepartm
     model.setCreatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("created_at")));
     model.setUpdatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("updated_at")));
     model.setVersion(rs.getInt("version"));
-    model.setGroups(this.getGroupIdListById(model.getId()));
+    model.setDepartmentGroups(this.departmentGroupDao.getListByDepartmentId(model.getId()));
 
     return model;
   }
@@ -53,10 +58,6 @@ public class DepartmentDao extends DaoBasicClass<Department> implements IDepartm
     sqlSelect += ")";
 
     return this.getModelListByIdList(idList, sqlSelect, "User");
-  }
-
-  private List<Long> getGroupIdListById(final Long id) throws IFlowStorageException {
-    return this.getIdListById(id, "SELECT * FROM departments_group where department_id=?", "id", "Department Groups");
   }
 
   @Override
