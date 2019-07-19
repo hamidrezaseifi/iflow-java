@@ -100,7 +100,7 @@ public class TestDataProducer {
     model.setTitle("utest title");
     model.setStatus(1);
     model.setVersion(1);
-    model.setGroups(this.getTestDepartmentGroupIdList());
+    model.setDepartmentGroups(this.getTestDepartmentGroupList());
 
     return model;
   }
@@ -112,7 +112,7 @@ public class TestDataProducer {
     model.setTitle(title);
     model.setStatus(1);
     model.setVersion(1);
-    model.setGroups(this.getTestDepartmentGroupIdList());
+    model.setDepartmentGroups(this.getTestDepartmentGroupList());
 
     return model;
   }

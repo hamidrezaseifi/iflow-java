@@ -18,7 +18,7 @@ import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 public class WorkflowFileListEdo {
 
   @XmlElementWrapper(name = "WorkflowFileList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  @XmlElement(name = "WorkflowFileEdo", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  @XmlElement(name = "WorkflowFile", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private final List<WorkflowFileEdo> workflowFiles = new ArrayList<>();
 
   public WorkflowFileListEdo() {

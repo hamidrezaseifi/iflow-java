@@ -39,7 +39,7 @@ public class DepartmentService implements IDepartmentService {
   public List<DepartmentGroup> getDepartmentGroups(final Long id) {
     final Department department = this.getById(id);
 
-    return this.departmentGroupDao.getListByIdList(department.getGroups().stream().collect(Collectors.toList()));
+    return department.getDepartmentGroups().stream().collect(Collectors.toList());
   }
 
   @Override

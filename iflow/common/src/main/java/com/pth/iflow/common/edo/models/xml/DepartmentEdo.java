@@ -19,27 +19,27 @@ import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 public class DepartmentEdo {
 
   @XmlElement(name = "ID", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long             id;
+  private Long                           id;
 
   @NotNull
   @XmlElement(name = "CompanyId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long             companyId;
+  private Long                           companyId;
 
   @NotNull
   @XmlElement(name = "Title", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String           title;
+  private String                         title;
 
   @NotNull
   @XmlElement(name = "Status", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Integer          status;
+  private Integer                        status;
 
   @NotNull
   @XmlElement(name = "Version", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Integer          version;
+  private Integer                        version;
 
   @XmlElementWrapper(name = "DepartmentGroupList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "DepartmentGroup", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private final List<Long> groups = new ArrayList<>();
+  private final List<DepartmentGroupEdo> departmentGroups = new ArrayList<>();
 
   public Long getId() {
     return this.id;
@@ -81,18 +81,15 @@ public class DepartmentEdo {
     this.version = version;
   }
 
-  public List<Long> getGroups() {
-    return this.groups;
+  public List<DepartmentGroupEdo> getDepartmentGroups() {
+    return this.departmentGroups;
   }
 
-  public void setGroups(final List<Long> groups) {
-    this.groups.clear();
+  public void setDepartmentGroups(final List<DepartmentGroupEdo> groups) {
+    this.departmentGroups.clear();
     if (groups != null) {
-      this.groups.addAll(groups);
+      this.departmentGroups.addAll(groups);
     }
   }
 
-  public void addGroup(final Long groupId) {
-    this.groups.add(groupId);
-  }
 }

@@ -18,7 +18,7 @@ import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 public class UserListEdo {
 
   @XmlElementWrapper(name = "UserList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  @XmlElement(name = "UserEdo", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  @XmlElement(name = "User", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private final List<UserEdo> users = new ArrayList<>();
 
   public UserListEdo() {
