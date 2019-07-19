@@ -56,8 +56,8 @@ public class WorkflowTypeEdo {
   @XmlElement(name = "IncreaseStepAutomatic", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Boolean                         increaseStepAutomatic;
 
-  @XmlElementWrapper(name = "StepList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  @XmlElement(name = "Steps", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  @XmlElementWrapper(name = "WorkflowTypeStepList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  @XmlElement(name = "WorkflowTypeStep", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private final List<WorkflowTypeStepEdo> steps = new ArrayList<>();
 
   public Long getId() {
