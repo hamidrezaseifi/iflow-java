@@ -32,10 +32,10 @@ public class RestTemplateCall implements IRestTemplateCall {
       final boolean throwError) throws WorkflowCustomizedException {
 
     if (responseClass.equals(Void.class)) {
-      restTemplate.postForObject(uri, edo, responseClass);
+      this.restTemplate.postForObject(uri, edo, responseClass);
       return null;
     } else {
-      return restTemplate.postForObject(uri, edo, responseClass);
+      return this.restTemplate.postForObject(uri, edo, responseClass);
     }
 
   }
@@ -45,10 +45,10 @@ public class RestTemplateCall implements IRestTemplateCall {
       throws WorkflowCustomizedException {
 
     if (response.equals(Void.class)) {
-      callRestPost(URI.create(url), service, edo, response, throwError);
+      this.callRestPost(URI.create(url), service, edo, response, throwError);
       return null;
     } else {
-      return callRestPost(URI.create(url), service, edo, response, throwError);
+      return this.callRestPost(URI.create(url), service, edo, response, throwError);
     }
   }
 
@@ -57,13 +57,13 @@ public class RestTemplateCall implements IRestTemplateCall {
       final Object... args) throws WorkflowCustomizedException {
 
     if (responseClass.equals(Void.class)) {
-      restTemplate.getForObject(url, responseClass, args);
+      this.restTemplate.getForObject(url, responseClass, args);
       return null;
     } else {
       // final ResponseEntity<O> resp = restTemplate.getForEntity(url, responseClass,
       // args);
       // return resp.getBody();
-      return restTemplate.getForObject(url, responseClass, args);
+      return this.restTemplate.getForObject(url, responseClass, args);
     }
 
   }
@@ -73,10 +73,10 @@ public class RestTemplateCall implements IRestTemplateCall {
       final Object... args) throws WorkflowCustomizedException {
 
     if (responseClass.equals(Void.class)) {
-      callRestGet(uri.toString(), service, responseClass, throwError, args);
+      this.callRestGet(uri.toString(), service, responseClass, throwError, args);
       return null;
     } else {
-      return callRestGet(uri.toString(), service, responseClass, throwError, args);
+      return this.callRestGet(uri.toString(), service, responseClass, throwError, args);
     }
 
   }
@@ -85,7 +85,7 @@ public class RestTemplateCall implements IRestTemplateCall {
   public <O> O callRestGet(final String url, final EModule service, final ParameterizedTypeReference<O> responseType,
       final boolean throwError, final Object... args) throws WorkflowCustomizedException {
 
-    final ResponseEntity<O> response = restTemplate.exchange(url, HttpMethod.GET, null, responseType, args);
+    final ResponseEntity<O> response = this.restTemplate.exchange(url, HttpMethod.GET, null, responseType, args);
     return response.getBody();
 
   }
@@ -95,7 +95,7 @@ public class RestTemplateCall implements IRestTemplateCall {
       final boolean throwError) throws WorkflowCustomizedException {
 
     final HttpEntity<I> request = new HttpEntity<>(edo);
-    final ResponseEntity<O> response = restTemplate.exchange(url, HttpMethod.POST, request, responseType);
+    final ResponseEntity<O> response = this.restTemplate.exchange(url, HttpMethod.POST, request, responseType);
     return response.getBody();
 
   }
@@ -103,7 +103,21 @@ public class RestTemplateCall implements IRestTemplateCall {
   @Override
   public <I, O> O callRestPost(final URI url, final EModule service, final I edo, final ParameterizedTypeReference<O> responseType,
       final boolean throwError) throws WorkflowCustomizedException {
-    return callRestPost(url, service, edo, responseType, throwError);
+    return this.callRestPost(url, service, edo, responseType, throwError);
+  }
+
+  @Override
+  public <I, O> O callRestPostWithToken(final String url, final EModule service, final I edo, final Class<O> response,
+      final boolean throwError) throws WorkflowCustomizedException {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public <O> O callRestGetWithToken(final String url, final EModule service, final Class<O> responseClass, final boolean throwError,
+      final Object... args) throws WorkflowCustomizedException {
+    // TODO Auto-generated method stub
+    return null;
   }
 
 }

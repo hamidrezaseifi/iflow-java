@@ -30,7 +30,7 @@ import com.pth.iflow.common.edo.models.xml.WorkflowTypeStepListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
 import com.pth.ifow.workflow.TestDataProducer;
-import com.pth.ifow.workflow.bl.IWorkflowTypeStepDataService;
+import com.pth.ifow.workflow.bl.IWorkflowTypeStepProcessService;
 import com.pth.ifow.workflow.models.WorkflowTypeStep;
 
 @RunWith(SpringRunner.class)
@@ -45,7 +45,7 @@ public class WorkflowTypeStepControllerTest extends TestDataProducer {
   private MappingJackson2XmlHttpMessageConverter xmlConverter;
 
   @MockBean
-  private IWorkflowTypeStepDataService           workflowStepService;
+  private IWorkflowTypeStepProcessService        workflowStepProcessService;
 
   @Before
   public void setUp() throws Exception {
@@ -63,7 +63,7 @@ public class WorkflowTypeStepControllerTest extends TestDataProducer {
   public void testReadWorkflowTypeStepById() throws Exception {
 
     final WorkflowTypeStep model = this.getTestWorkflowTypeStep();
-    when(this.workflowStepService.getById(any(Long.class))).thenReturn(model);
+    when(this.workflowStepProcessService.getById(any(Long.class), any(String.class))).thenReturn(model);
 
     final WorkflowTypeStepEdo modelEdo = model.toEdo();
 
@@ -77,7 +77,7 @@ public class WorkflowTypeStepControllerTest extends TestDataProducer {
         .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(modelAsXmlString));
 
-    verify(this.workflowStepService, times(1)).getById(any(Long.class));
+    verify(this.workflowStepProcessService, times(1)).getById(any(Long.class), any(String.class));
 
   }
 
@@ -86,7 +86,7 @@ public class WorkflowTypeStepControllerTest extends TestDataProducer {
 
     final List<Long> idList = this.getTestWorkflowTypeStepIdList();
     final List<WorkflowTypeStep> list = this.getTestWorkflowTypeStepList();
-    when(this.workflowStepService.getListByIdList(any(List.class))).thenReturn(list);
+    when(this.workflowStepProcessService.getListByIdList(any(List.class), any(String.class))).thenReturn(list);
 
     final WorkflowTypeStepListEdo edoList = new WorkflowTypeStepListEdo(ModelMapperBase.toEdoList(list));
 
@@ -100,7 +100,7 @@ public class WorkflowTypeStepControllerTest extends TestDataProducer {
         .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(listAsXmlString));
 
-    verify(this.workflowStepService, times(1)).getListByIdList(any(List.class));
+    verify(this.workflowStepProcessService, times(1)).getListByIdList(any(List.class), any(String.class));
 
   }
 
@@ -108,7 +108,7 @@ public class WorkflowTypeStepControllerTest extends TestDataProducer {
   public void testReadWorkflowTypeStepListByWorkflow() throws Exception {
 
     final List<WorkflowTypeStep> list = this.getTestWorkflowTypeStepList();
-    when(this.workflowStepService.getListByWorkflowId(any(Long.class))).thenReturn(list);
+    when(this.workflowStepProcessService.getListByWorkflowId(any(Long.class), any(String.class))).thenReturn(list);
 
     final WorkflowTypeStepListEdo edoList = new WorkflowTypeStepListEdo(ModelMapperBase.toEdoList(list));
 
@@ -120,7 +120,7 @@ public class WorkflowTypeStepControllerTest extends TestDataProducer {
         .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(listAsXmlString));
 
-    verify(this.workflowStepService, times(1)).getListByWorkflowId(any(Long.class));
+    verify(this.workflowStepProcessService, times(1)).getListByWorkflowId(any(Long.class), any(String.class));
 
   }
 
