@@ -29,38 +29,39 @@ import com.pth.ifow.workflow.models.ProfileResponse;
 @SpringBootTest
 @AutoConfigureMockMvc
 public class TokenValidatorTest extends TestDataProducer {
-
-  private ITokenValidator                          tokenValidator;
-
+  
+  private ITokenValidator tokenValidator;
+  
   @Mock
-  private IRestTemplateCall                        restTemplate;
-
+  private IRestTemplateCall restTemplate;
+  
   @MockBean
   private WorkflowConfiguration.ModuleAccessConfig moduleAccessConfig;
-
+  
   @Before
   public void setUp() throws Exception {
     this.tokenValidator = new TokenValidator(this.restTemplate, this.moduleAccessConfig);
-
+    
     when(this.moduleAccessConfig.generateProfileUrl(any(String.class))).thenReturn(new URL("http://any-string"));
   }
-
+  
   @After
   public void tearDown() throws Exception {
   }
-
+  
   @Test
   public void testIsTokenValid() throws Exception {
-
+    
     final ProfileResponseEdo profileResponseEdo = new ProfileResponseEdo(this.getTestUser().toEdo(), this.getTestCompany().toEdo(),
         "sessionid");
-
+    
     when(
-        this.restTemplate.callRestPost(any(String.class), any(EModule.class), any(), eq(ProfileResponseEdo.class), any(boolean.class)))
-            .thenReturn(profileResponseEdo);
-
+        this.restTemplate.callRestPost(any(URL.class), any(String.class), any(EModule.class), any(), eq(ProfileResponseEdo.class),
+            any(boolean.class)))
+                .thenReturn(profileResponseEdo);
+    
     final ProfileResponse resProfileResponse = this.tokenValidator.isTokenValid("token");
-
+    
     Assert.assertNotNull("Result profile-response is not null!", resProfileResponse);
     Assert.assertNotNull("Result user from profile-response is not null!", resProfileResponse.getUser());
     Assert.assertNotNull("Result company from profile-response is not null!", resProfileResponse.getCompany());
@@ -70,7 +71,7 @@ public class TokenValidatorTest extends TestDataProducer {
         profileResponseEdo.getCompany().getCompanyName());
     Assert.assertEquals("Result the email from user from profile-response is as expected !", resProfileResponse.getUser().getEmail(),
         profileResponseEdo.getUser().getEmail());
-
+    
   }
-
+  
 }

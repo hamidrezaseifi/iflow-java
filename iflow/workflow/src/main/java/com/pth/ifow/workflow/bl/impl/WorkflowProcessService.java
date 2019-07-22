@@ -27,13 +27,13 @@ import com.pth.ifow.workflow.models.WorkflowTypeStep;
 @Service
 public class WorkflowProcessService implements IWorkflowProcessService {
 
-  private static final Logger            logger = LoggerFactory.getLogger(WorkflowProcessService.class);
+  private static final Logger logger = LoggerFactory.getLogger(WorkflowProcessService.class);
 
-  private final IWorkflowDataService     workflowDataService;
+  private final IWorkflowDataService workflowDataService;
 
   private final IWorkflowTypeDataService workflowTypeDataService;
 
-  private final ITokenValidator          tokenValidator;
+  private final ITokenValidator tokenValidator;
 
   public WorkflowProcessService(@Autowired final IWorkflowDataService workflowDataService,
       @Autowired final IWorkflowTypeDataService workflowTypeDataService, @Autowired final ITokenValidator tokenValidator) {
@@ -48,7 +48,7 @@ public class WorkflowProcessService implements IWorkflowProcessService {
     logger.debug("Saving workflow {} with token {}", newWorkflow.getTitle(), token);
     this.tokenCanSaveWorkflow(newWorkflow, token);
 
-    final WorkflowType workflowType = this.workflowTypeDataService.getById(newWorkflow.getWorkflowTypeId());
+    final WorkflowType workflowType = this.workflowTypeDataService.getById(newWorkflow.getWorkflowTypeId(), token);
 
     this.validateWorkflowCurrectStep(newWorkflow, workflowType);
 
@@ -56,11 +56,11 @@ public class WorkflowProcessService implements IWorkflowProcessService {
 
     if (newWorkflow.isNew()) {
 
-      return this.saveNewWorkflow(newWorkflow);
+      return this.saveNewWorkflow(newWorkflow, token);
     }
 
     if (newWorkflow.getStatus() == EWorkflowStatus.ASSIGNED) {
-      return this.saveNewWorkflow(newWorkflow);
+      return this.saveNewWorkflow(newWorkflow, token);
     }
 
     // final Workflow existsWorkflow = getById(newWorkflow.getId(), token);
@@ -80,7 +80,7 @@ public class WorkflowProcessService implements IWorkflowProcessService {
         newWorkflow.setStatus(EWorkflowStatus.ASSIGNED);
       }
 
-      return this.saveExistsWorkflow(newWorkflow);
+      return this.saveExistsWorkflow(newWorkflow, token);
     }
 
     throw new IFlowCustomeException("Unknown workflow status id:" + newWorkflow.getId(), EIFlowErrorType.UNKNOWN_WORKFLOW_STATUS);
@@ -91,14 +91,14 @@ public class WorkflowProcessService implements IWorkflowProcessService {
     logger.debug("get workflow by id {} with token {}", id, token);
 
     this.tokenCanReadWorkflow(id, token);
-    return this.workflowDataService.getById(id);
+    return this.workflowDataService.getById(id, token);
   }
 
   @Override
   public List<Workflow> getListByTypeId(final Long id, final String token) throws WorkflowCustomizedException, MalformedURLException {
     logger.debug("get workflow by  type id {} with token {}", id, token);
 
-    final List<Workflow> list = this.workflowDataService.getListByTypeId(id);
+    final List<Workflow> list = this.workflowDataService.getListByTypeId(id, token);
     this.tokenCanReadWorkflowList(list.stream().map(w -> w.getId()).collect(Collectors.toList()), token);
 
     return list;
@@ -110,7 +110,7 @@ public class WorkflowProcessService implements IWorkflowProcessService {
 
     logger.debug("get workflow assigned to user id {} and has status {} with token {}", id, status, token);
 
-    final List<Workflow> list = this.workflowDataService.getListForUser(id, status);
+    final List<Workflow> list = this.workflowDataService.getListForUser(id, status, token);
     this.tokenCanReadWorkflowList(list.stream().map(w -> w.getId()).collect(Collectors.toList()), token);
 
     return list;
@@ -123,7 +123,7 @@ public class WorkflowProcessService implements IWorkflowProcessService {
 
     this.tokenCanReadWorkflowList(idList, token);
 
-    final List<Workflow> list = this.workflowDataService.getListByIdList(idList);
+    final List<Workflow> list = this.workflowDataService.getListByIdList(idList, token);
 
     return list;
   }
@@ -151,18 +151,18 @@ public class WorkflowProcessService implements IWorkflowProcessService {
     return true;
   }
 
-  private Workflow saveNewWorkflow(final Workflow model) throws WorkflowCustomizedException, MalformedURLException {
+  private Workflow saveNewWorkflow(final Workflow model, final String token) throws WorkflowCustomizedException, MalformedURLException {
     // TODO process New Workflow must be implemented
 
-    final Workflow savedWorkflow = this.workflowDataService.save(model);
+    final Workflow savedWorkflow = this.workflowDataService.save(model, token);
 
     return savedWorkflow;
   }
 
-  private Workflow saveExistsWorkflow(final Workflow model) throws WorkflowCustomizedException, MalformedURLException {
+  private Workflow saveExistsWorkflow(final Workflow model, final String token) throws WorkflowCustomizedException, MalformedURLException {
     // TODO process New Workflow must be implemented
 
-    final Workflow savedWorkflow = this.workflowDataService.save(model);
+    final Workflow savedWorkflow = this.workflowDataService.save(model, token);
 
     return savedWorkflow;
   }
@@ -181,7 +181,8 @@ public class WorkflowProcessService implements IWorkflowProcessService {
 
     if (workflowType.getSendToController().booleanValue() == true) {
       newWorkflow.setAssignTo(newWorkflow.getController());
-    } else {
+    }
+    else {
 
       this.setAssignToControllerAfterLastStep(newWorkflow, workflowType);
 

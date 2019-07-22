@@ -32,16 +32,16 @@ public class WorkflowTypeStepProcessServiceTest extends TestDataProducer {
   private IWorkflowTypeStepProcessService workflowTypeStepProcessService;
 
   @MockBean
-  private IWorkflowTypeStepDataService    workflowTypeStepDataService;
+  private IWorkflowTypeStepDataService workflowTypeStepDataService;
 
   @Mock
-  private ITokenValidator                 tokenValidator;
+  private ITokenValidator tokenValidator;
 
-  private String                          validTocken;
+  private String validTocken;
 
-  private String                          validSession;
+  private String validSession;
 
-  private ProfileResponse                 profileResponse;
+  private ProfileResponse profileResponse;
 
   @Before
   public void setUp() throws Exception {
@@ -65,7 +65,7 @@ public class WorkflowTypeStepProcessServiceTest extends TestDataProducer {
 
     final WorkflowTypeStep workflowStepType = this.getTestWorkflowTypeStep();
 
-    when(this.workflowTypeStepDataService.getById(any(Long.class))).thenReturn(workflowStepType);
+    when(this.workflowTypeStepDataService.getById(any(Long.class), any(String.class))).thenReturn(workflowStepType);
 
     final WorkflowTypeStep resWorkflowType = this.workflowTypeStepProcessService.getById(workflowStepType.getId(), this.validTocken);
 
@@ -83,7 +83,7 @@ public class WorkflowTypeStepProcessServiceTest extends TestDataProducer {
     final List<Long> idList = this.getTestWorkflowTypeIdList();
     final List<WorkflowTypeStep> list = this.getTestWorkflowTypeStepList();
 
-    when(this.workflowTypeStepDataService.getListByIdList(any(List.class))).thenReturn(list);
+    when(this.workflowTypeStepDataService.getListByIdList(any(List.class), any(String.class))).thenReturn(list);
 
     final List<WorkflowTypeStep> resList = this.workflowTypeStepProcessService.getListByIdList(idList, this.validTocken);
 
@@ -97,7 +97,7 @@ public class WorkflowTypeStepProcessServiceTest extends TestDataProducer {
 
     final List<WorkflowTypeStep> list = this.getTestWorkflowTypeStepList();
 
-    when(this.workflowTypeStepDataService.getListByWorkflowId(any(Long.class))).thenReturn(list);
+    when(this.workflowTypeStepDataService.getListByWorkflowId(any(Long.class), any(String.class))).thenReturn(list);
 
     final List<WorkflowTypeStep> resList = this.workflowTypeStepProcessService.getListByWorkflowId(1L, this.validTocken);
 

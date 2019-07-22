@@ -32,95 +32,99 @@ import com.pth.ifow.workflow.models.Workflow;
 @SpringBootTest
 @AutoConfigureMockMvc
 public class WorkflowDataServiceTest extends TestDataProducer {
-
-  private IWorkflowDataService                     workflowDataService;
-
+  
+  private IWorkflowDataService workflowDataService;
+  
   @Mock
-  private IRestTemplateCall                        restTemplate;
-
+  private IRestTemplateCall restTemplate;
+  
   @MockBean
   private WorkflowConfiguration.ModuleAccessConfig moduleAccessConfig;
 
+  private String validTocken;
+  
   @Before
   public void setUp() throws Exception {
     this.workflowDataService = new WorkflowCoreConnectService(this.restTemplate, this.moduleAccessConfig);
-
+    
     when(this.moduleAccessConfig.generateCoreUrl(any(String.class))).thenReturn(new URL("http://any-string"));
-
+    
     when(this.moduleAccessConfig.generateProfileUrl(any(String.class))).thenReturn(new URL("http://any-string"));
-  }
 
+    this.validTocken = "validTocken";
+  }
+  
   @After
   public void tearDown() throws Exception {
   }
-
+  
   @Test
   public void testGetById() throws Exception {
-
+    
     final Workflow workflow = this.getTestWorkflow(1L);
     final WorkflowEdo workflowEdo = workflow.toEdo();
-
-    when(this.restTemplate.callRestGet(any(String.class), any(EModule.class), any(Class.class), any(boolean.class), any()))
+    
+    when(this.restTemplate.callRestGet(any(URL.class), any(String.class), any(EModule.class), any(Class.class), any(boolean.class), any()))
         .thenReturn(workflowEdo);
-
-    final Workflow resWorkflow = this.workflowDataService.getById(workflow.getId());
-
+    
+    final Workflow resWorkflow = this.workflowDataService.getById(workflow.getId(), this.validTocken);
+    
     Assert.assertNotNull("Result workflow-type is not null!", resWorkflow);
     Assert.assertEquals("Result workflow-type has id 1!", resWorkflow.getId(), workflow.getId());
     Assert.assertEquals("Result workflow-type has title '" + workflow.getTitle() + "'!", resWorkflow.getTitle(), workflow.getTitle());
     Assert.assertEquals("Result workflow-type has status 1!", resWorkflow.getStatus(), workflow.getStatus());
-
+    
   }
-
+  
   @Test
   public void testSaveWorkflow() throws Exception {
-
+    
     final Workflow workflow = this.getTestWorkflow(1L);
     final WorkflowEdo workflowEdo = workflow.toEdo();
-
-    when(this.restTemplate.callRestPost(any(String.class), any(EModule.class), any(WorkflowEdo.class), any(Class.class),
+    
+    when(this.restTemplate.callRestPost(any(URL.class), any(String.class), any(EModule.class), any(WorkflowEdo.class), any(Class.class),
         any(boolean.class))).thenReturn(workflowEdo);
-
-    final Workflow resWorkflow = this.workflowDataService.save(workflow);
-
+    
+    final Workflow resWorkflow = this.workflowDataService.save(workflow, this.validTocken);
+    
     Assert.assertNotNull("Result workflow-type is not null!", resWorkflow);
     Assert.assertEquals("Result workflow-type has id 1!", resWorkflow.getId(), workflow.getId());
     Assert.assertEquals("Result workflow-type has title '" + workflow.getTitle() + "'!", resWorkflow.getTitle(), workflow.getTitle());
     Assert.assertEquals("Result workflow-type has status 1!", resWorkflow.getStatus(), workflow.getStatus());
-
+    
   }
-
+  
   @Test
   public void testGetListByIdList() throws Exception {
-
+    
     final List<Long> idList = this.getTestWorkflowIdList();
     final List<Workflow> list = this.getTestWorkflowList();
     final WorkflowListEdo edoList = new WorkflowListEdo(ModelMapperBase.toEdoList(list));
-
-    when(this.restTemplate.callRestPost(any(String.class), any(EModule.class), any(List.class), eq(WorkflowListEdo.class),
+    
+    when(this.restTemplate.callRestPost(any(URL.class), any(String.class), any(EModule.class), any(List.class), eq(WorkflowListEdo.class),
         any(boolean.class))).thenReturn(edoList);
-
-    final List<Workflow> resList = this.workflowDataService.getListByIdList(idList);
-
+    
+    final List<Workflow> resList = this.workflowDataService.getListByIdList(idList, this.validTocken);
+    
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());
-
+    
   }
-
+  
   @Test
   public void testGetListByTypeId() throws Exception {
-
+    
     final List<Workflow> list = this.getTestWorkflowList();
     final WorkflowListEdo edoList = new WorkflowListEdo(ModelMapperBase.toEdoList(list));
-
-    when(this.restTemplate.callRestGet(any(String.class), any(EModule.class), eq(WorkflowListEdo.class), any(boolean.class), any()))
+    
+    when(this.restTemplate.callRestGet(any(URL.class), any(String.class), any(EModule.class), eq(WorkflowListEdo.class), any(boolean.class), any()))
         .thenReturn(edoList);
-
-    final List<Workflow> resList = this.workflowDataService.getListByTypeId(1L);
-
+    
+    final List<Workflow> resList = this.workflowDataService.getListByTypeId(1L, this.validTocken);
+    
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());
-
+    
   }
-
+  
 }

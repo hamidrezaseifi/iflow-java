@@ -17,58 +17,58 @@ import com.pth.ifow.workflow.models.WorkflowTypeStep;
 
 @Service
 public class WorkflowTypeProcessService implements IWorkflowTypeProcessService {
-
-  private static final Logger            logger = LoggerFactory.getLogger(WorkflowTypeProcessService.class);
-
+  
+  private static final Logger logger = LoggerFactory.getLogger(WorkflowTypeProcessService.class);
+  
   private final IWorkflowTypeDataService workflowTypeDataService;
-
-  private final ITokenValidator          tokenValidator;
-
+  
+  private final ITokenValidator tokenValidator;
+  
   public WorkflowTypeProcessService(@Autowired final IWorkflowTypeDataService workflowTypeDataService,
       @Autowired final ITokenValidator tokenValidator) {
     this.workflowTypeDataService = workflowTypeDataService;
     this.tokenValidator = tokenValidator;
   }
-
+  
   @Override
   public WorkflowType getById(final Long id, final String token) throws WorkflowCustomizedException, MalformedURLException {
-
+    
     logger.debug("Request workflow data for id {}", id);
-
+    
     this.tokenValidator.isTokenValid(token);
-
-    return this.workflowTypeDataService.getById(id);
-
+    
+    return this.workflowTypeDataService.getById(id, token);
+    
   }
-
+  
   @Override
   public List<WorkflowType> getListByIdCompanyId(final Long id, final String token)
       throws WorkflowCustomizedException, MalformedURLException {
     logger.debug("Request workflow list for company id {}", id);
-
+    
     this.tokenValidator.isTokenValid(token);
-
-    return this.workflowTypeDataService.getListByIdCompanyId(id);
+    
+    return this.workflowTypeDataService.getListByIdCompanyId(id, token);
   }
-
+  
   @Override
   public List<WorkflowType> getListByIdList(final List<Long> idList, final String token)
       throws WorkflowCustomizedException, MalformedURLException {
     logger.debug("Request workflow list for id list {}", idList);
-
+    
     this.tokenValidator.isTokenValid(token);
-
-    return this.workflowTypeDataService.getListByIdList(idList);
+    
+    return this.workflowTypeDataService.getListByIdList(idList, token);
   }
-
+  
   @Override
   public List<WorkflowTypeStep> getStepsById(final Long id, final String token)
       throws WorkflowCustomizedException, MalformedURLException {
     logger.debug("Request workflow-step list for workflow id {}", id);
-
+    
     this.tokenValidator.isTokenValid(token);
-
-    return this.workflowTypeDataService.getStepsById(id);
+    
+    return this.workflowTypeDataService.getStepsById(id, token);
   }
-
+  
 }

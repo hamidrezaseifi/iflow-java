@@ -19,31 +19,31 @@ import com.pth.ifow.workflow.services.IRestTemplateCall;
 
 @Service
 public class TokenValidator implements ITokenValidator {
-
-  private static final Logger                            logger = LoggerFactory.getLogger(TokenValidator.class);
-
+  
+  private static final Logger logger = LoggerFactory.getLogger(TokenValidator.class);
+  
   private final IRestTemplateCall                        restTemplate;
   private final WorkflowConfiguration.ModuleAccessConfig moduleAccessConfig;
-
+  
   public TokenValidator(@Autowired final IRestTemplateCall restTemplate,
       @Autowired final WorkflowConfiguration.ModuleAccessConfig moduleAccessConfig) {
     this.restTemplate = restTemplate;
     this.moduleAccessConfig = moduleAccessConfig;
   }
-
+  
   @Override
   public ProfileResponse isTokenValid(final String token) throws WorkflowCustomizedException, MalformedURLException {
-
+    
     logger.debug("Validate token {} from profile service", token);
-
+    
     final TokenProfileRequestEdo profileRequest = new TokenProfileRequestEdo();
     profileRequest.setToken(token);
-
+    
     final ProfileResponseEdo responseEdo = this.restTemplate.callRestPost(
-        this.moduleAccessConfig.generateProfileUrl(IflowRestPaths.ProfileModule.PROFILE_READ_TOKENINFO).toString(), EModule.PROFILE,
+        this.moduleAccessConfig.generateProfileUrl(IflowRestPaths.ProfileModule.PROFILE_READ_TOKENINFO), token, EModule.PROFILE,
         profileRequest, ProfileResponseEdo.class, true);
-
+    
     return new ProfileResponse().fromEdo(responseEdo);
   }
-
+  
 }
