@@ -16,10 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pth.iflow.common.annotations.IflowGetRequestMapping;
 import com.pth.iflow.common.annotations.IflowPostRequestMapping;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
-import com.pth.iflow.common.edo.models.DepartmentGroupEdo;
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
+import com.pth.iflow.common.edo.models.xml.DepartmentGroupEdo;
+import com.pth.iflow.common.edo.models.xml.DepartmentGroupListEdo;
+import com.pth.iflow.common.edo.models.xml.UserListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.core.model.DepartmentGroup;
+import com.pth.iflow.core.model.User;
 import com.pth.iflow.core.service.IDepartmentGroupService;
 
 @RestController
@@ -54,12 +57,23 @@ public class DepartmentGroupController {
 
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(path = IflowRestPaths.CoreModul.DEPARTMENTGRPUP_READ_LIST_BY_DEPARTMENT)
-  public ResponseEntity<List<DepartmentGroupEdo>> readDepartmentListByCompany(@PathVariable final Long id,
+  public ResponseEntity<DepartmentGroupListEdo> readDepartmentListByDepartment(@PathVariable final Long id,
       final HttpServletRequest request) throws Exception {
 
     final List<DepartmentGroup> modelList = this.departmentGroupService.getListByDepartmentId(id);
 
-    return ControllerHelper.createResponseEntity(request, ModelMapperBase.toEdoList(modelList), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, new DepartmentGroupListEdo(ModelMapperBase.toEdoList(modelList)),
+        HttpStatus.OK);
+  }
+
+  @ResponseStatus(HttpStatus.OK)
+  @IflowGetRequestMapping(path = IflowRestPaths.CoreModul.DEPARTMENTGRPUP_READ_ALLUSERLIST_BY_DEPARTMENTGROUP)
+  public ResponseEntity<UserListEdo> readAllUserListByDepartmentGroup(@PathVariable final Long id, final HttpServletRequest request)
+      throws Exception {
+
+    final List<User> modelList = this.departmentGroupService.getAllUserListByDepartmentGroupId(id);
+
+    return ControllerHelper.createResponseEntity(request, new UserListEdo(ModelMapperBase.toEdoList(modelList)), HttpStatus.OK);
   }
 
 }

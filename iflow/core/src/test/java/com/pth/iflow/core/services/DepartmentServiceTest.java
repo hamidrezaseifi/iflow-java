@@ -18,89 +18,115 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.Department;
 import com.pth.iflow.core.model.DepartmentGroup;
+import com.pth.iflow.core.model.User;
 import com.pth.iflow.core.service.IDepartmentService;
 import com.pth.iflow.core.service.impl.DepartmentService;
 import com.pth.iflow.core.storage.dao.IDepartmentDao;
 import com.pth.iflow.core.storage.dao.IDepartmentGroupDao;
+import com.pth.iflow.core.storage.dao.IUserDao;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 public class DepartmentServiceTest extends TestDataProducer {
-  
-  private IDepartmentService departmentService;
-  
+
+  private IDepartmentService  departmentService;
+
   @MockBean
-  private IDepartmentDao departmentDao;
-  
+  private IDepartmentDao      departmentDao;
+
   @MockBean
   private IDepartmentGroupDao departmentGroupDao;
-  
+
+  @MockBean
+  private IUserDao            userDao;
+
   @Before
   public void setUp() throws Exception {
-    this.departmentService = new DepartmentService(this.departmentDao, this.departmentGroupDao);
+    this.departmentService = new DepartmentService(this.departmentDao, this.departmentGroupDao, this.userDao);
   }
-  
+
   @After
   public void tearDown() throws Exception {
   }
-  
+
   @Test
   public void testGetById() throws Exception {
-    
-    final Department department = getTestDepartment();
+
+    final Department department = this.getTestDepartment();
     when(this.departmentDao.getById(any(Long.class))).thenReturn(department);
-    
+
     final Department resDepartment = this.departmentService.getById(department.getId());
-    
+
     Assert.assertNotNull("Result department is not null!", resDepartment);
     Assert.assertEquals("Result department has id 1!", resDepartment.getId(), department.getId());
-    Assert.assertEquals("Result department has title '" + department.getTitle() + "'!", resDepartment.getTitle(), department.getTitle());
+    Assert.assertEquals("Result department has title '" + department.getTitle() + "'!", resDepartment.getTitle(),
+        department.getTitle());
     Assert.assertEquals("Result department has status 1!", resDepartment.getStatus(), department.getStatus());
-    
+
   }
-  
+
   @Test
   public void testGetListByIdList() throws Exception {
-    
-    final List<Long> idList = getTestDepartmentIdList();
-    final List<Department> list = getTestDepartmentList();
+
+    final List<Long> idList = this.getTestDepartmentIdList();
+    final List<Department> list = this.getTestDepartmentList();
     when(this.departmentDao.getListByIdList(any(List.class))).thenReturn(list);
-    
+
     final List<Department> resList = this.departmentService.getListByIdList(idList);
-    
+
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());
-    
+
   }
 
   @Test
   public void testGetListByIdCompanyId() throws Exception {
-    
-    final List<Department> list = getTestDepartmentList();
+
+    final List<Department> list = this.getTestDepartmentList();
     when(this.departmentDao.getListByCompanyId(any(Long.class))).thenReturn(list);
-    
+
     final List<Department> resList = this.departmentService.getListByIdCompanyId(1L);
-    
+
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());
-    
+
   }
 
   @Test
   public void testGetDepartmentGroups() throws Exception {
-    
-    final Department department = getTestDepartment();
 
-    final List<DepartmentGroup> list = getTestDepartmentGroupList();
+    final Department department = this.getTestDepartment();
+
+    final List<DepartmentGroup> list = this.getTestDepartmentGroupList();
     when(this.departmentDao.getById(any(Long.class))).thenReturn(department);
     when(this.departmentGroupDao.getListByIdList(any(List.class))).thenReturn(list);
 
     final List<DepartmentGroup> resList = this.departmentService.getDepartmentGroups(1L);
-    
+
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());
-    
+
   }
 
+  @Test
+  public void testGetAllUserListByDepartmentId() throws Exception {
+
+    final List<Long> list = this.getTestUserIdList();
+    final List<User> userList = this.getTestUserList();
+    final List<DepartmentGroup> departmentGroupList = this.getTestDepartmentGroupList();
+    final Department department = this.getTestDepartment();
+
+    when(this.departmentDao.getById(any(Long.class))).thenReturn(department);
+    when(this.departmentDao.getAllUserIdListByDepartmentId(any(Long.class))).thenReturn(list);
+    when(this.departmentGroupDao.getAllUserIdListByDepartmentGroupId(any(Long.class))).thenReturn(list);
+    when(this.departmentGroupDao.getListByIdList(any(List.class))).thenReturn(departmentGroupList);
+    when(this.userDao.getListByIdList(any(List.class))).thenReturn(userList);
+
+    final List<User> resList = this.departmentService.getAllUserListByDepartmentId(1L);
+
+    Assert.assertNotNull("Result list is not null!", resList);
+    Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());
+
+  }
 }

@@ -16,10 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pth.iflow.common.annotations.IflowGetRequestMapping;
 import com.pth.iflow.common.annotations.IflowPostRequestMapping;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
-import com.pth.iflow.common.edo.models.WorkflowActionEdo;
-import com.pth.iflow.common.edo.models.WorkflowEdo;
-import com.pth.iflow.common.edo.models.WorkflowFileEdo;
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
+import com.pth.iflow.common.edo.models.xml.WorkflowActionEdo;
+import com.pth.iflow.common.edo.models.xml.WorkflowActionListEdo;
+import com.pth.iflow.common.edo.models.xml.WorkflowEdo;
+import com.pth.iflow.common.edo.models.xml.WorkflowFileEdo;
+import com.pth.iflow.common.edo.models.xml.WorkflowFileListEdo;
+import com.pth.iflow.common.edo.models.xml.WorkflowListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.core.model.Workflow;
 import com.pth.iflow.core.model.WorkflowAction;
@@ -32,9 +35,9 @@ import com.pth.iflow.core.service.IWorkflowService;
 @RequestMapping
 public class WorkflowController {
 
-  final IWorkflowService workflowService;
+  final IWorkflowService       workflowService;
   final IWorkflowActionService workflowActionService;
-  final IWorkflowFileService workflowFileService;
+  final IWorkflowFileService   workflowFileService;
 
   public WorkflowController(@Autowired final IWorkflowService workflowService,
       @Autowired final IWorkflowActionService workflowActionService, @Autowired final IWorkflowFileService workflowFileService) {
@@ -64,22 +67,32 @@ public class WorkflowController {
 
   @ResponseStatus(HttpStatus.OK)
   @IflowPostRequestMapping(path = IflowRestPaths.CoreModul.WORKFLOW_READ_LIST)
-  public ResponseEntity<List<WorkflowEdo>> readWorkflowList(@RequestBody final List<Long> idList, final HttpServletRequest request)
+  public ResponseEntity<WorkflowListEdo> readWorkflowList(@RequestBody final List<Long> idList, final HttpServletRequest request)
       throws Exception {
 
     final List<Workflow> modelList = this.workflowService.getListByIdList(idList);
 
-    return ControllerHelper.createResponseEntity(request, ModelMapperBase.toEdoList(modelList), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, new WorkflowListEdo(ModelMapperBase.toEdoList(modelList)), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(path = IflowRestPaths.CoreModul.WORKFLOW_READ_LIST_BY_TYPE)
-  public ResponseEntity<List<WorkflowEdo>> readWorkflowListByCompany(@PathVariable final Long id, final HttpServletRequest request)
+  public ResponseEntity<WorkflowListEdo> readWorkflowListByType(@PathVariable final Long id, final HttpServletRequest request)
       throws Exception {
 
-    final List<Workflow> modelList = this.workflowService.getListByIdTypeId(id);
+    final List<Workflow> modelList = this.workflowService.getListByTypeId(id);
 
-    return ControllerHelper.createResponseEntity(request, ModelMapperBase.toEdoList(modelList), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, new WorkflowListEdo(ModelMapperBase.toEdoList(modelList)), HttpStatus.OK);
+  }
+
+  @ResponseStatus(HttpStatus.OK)
+  @IflowGetRequestMapping(path = IflowRestPaths.CoreModul.WORKFLOW_READ_LIST_BY_USER)
+  public ResponseEntity<WorkflowListEdo> readWorkflowListForUser(@PathVariable final Long id,
+      @PathVariable(required = false) final int status, final HttpServletRequest request) throws Exception {
+
+    final List<Workflow> modelList = this.workflowService.getListForUser(id, status);
+
+    return ControllerHelper.createResponseEntity(request, new WorkflowListEdo(ModelMapperBase.toEdoList(modelList)), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -104,12 +117,13 @@ public class WorkflowController {
 
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(path = IflowRestPaths.CoreModul.WORKFLOW_ACTION_READ_LIST_BY_WORKFLOW)
-  public ResponseEntity<List<WorkflowActionEdo>> readWorkflowActionListByWorkflow(@PathVariable final Long id,
+  public ResponseEntity<WorkflowActionListEdo> readWorkflowActionListByWorkflow(@PathVariable final Long id,
       final HttpServletRequest request) throws Exception {
 
     final List<WorkflowAction> modelList = this.workflowActionService.getListByIdWorkflowId(id);
 
-    return ControllerHelper.createResponseEntity(request, ModelMapperBase.toEdoList(modelList), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, new WorkflowActionListEdo(ModelMapperBase.toEdoList(modelList)),
+        HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -134,12 +148,13 @@ public class WorkflowController {
 
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(path = IflowRestPaths.CoreModul.WORKFLOW_FILE_READ_LIST_BY_WORKFLOW)
-  public ResponseEntity<List<WorkflowFileEdo>> readWorkflowFileListByWorkflow(@PathVariable final Long id,
+  public ResponseEntity<WorkflowFileListEdo> readWorkflowFileListByWorkflow(@PathVariable final Long id,
       final HttpServletRequest request) throws Exception {
 
     final List<WorkflowFile> modelList = this.workflowFileService.getListByIdWorkflowId(id);
 
-    return ControllerHelper.createResponseEntity(request, ModelMapperBase.toEdoList(modelList), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, new WorkflowFileListEdo(ModelMapperBase.toEdoList(modelList)),
+        HttpStatus.OK);
   }
 
 }

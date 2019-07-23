@@ -1,6 +1,6 @@
 package com.pth.ifow.profile.model;
 
-import com.pth.iflow.common.edo.models.UserAuthenticationRequestEdo;
+import com.pth.iflow.common.edo.models.xml.UserAuthenticationRequestEdo;
 
 public class UserAuthenticationRequest {
   private String email;

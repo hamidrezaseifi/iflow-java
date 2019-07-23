@@ -6,17 +6,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pth.iflow.core.model.DepartmentGroup;
+import com.pth.iflow.core.model.User;
 import com.pth.iflow.core.service.IDepartmentGroupService;
 import com.pth.iflow.core.storage.dao.IDepartmentGroupDao;
+import com.pth.iflow.core.storage.dao.IUserDao;
 import com.pth.iflow.core.storage.dao.exception.IFlowOptimisticLockException;
 
 @Service
 public class DepartmentGroupService implements IDepartmentGroupService {
 
   private final IDepartmentGroupDao departmentGroupDao;
+  private final IUserDao            userDao;
 
-  public DepartmentGroupService(@Autowired final IDepartmentGroupDao departmentGroupDao) {
+  public DepartmentGroupService(@Autowired final IDepartmentGroupDao departmentGroupDao, @Autowired final IUserDao userDao) {
     this.departmentGroupDao = departmentGroupDao;
+    this.userDao = userDao;
   }
 
   @Override
@@ -50,6 +54,14 @@ public class DepartmentGroupService implements IDepartmentGroupService {
     model.setVersion(model.getVersion() + 1);
 
     return departmentGroupDao.update(model);
+  }
+
+  @Override
+  public List<User> getAllUserListByDepartmentGroupId(final Long id) {
+    final List<Long> idList = departmentGroupDao.getAllUserIdListByDepartmentGroupId(id);
+
+    return userDao.getListByIdList(idList);
+
   }
 
 }

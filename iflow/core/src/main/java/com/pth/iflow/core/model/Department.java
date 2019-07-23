@@ -1,23 +1,22 @@
 package com.pth.iflow.core.model;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
-import com.pth.iflow.common.edo.models.DepartmentEdo;
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
+import com.pth.iflow.common.edo.models.xml.DepartmentEdo;
 
 public class Department extends ModelMapperBase<DepartmentEdo, Department> {
 
-  private Long id;
-  private Long companyId;
-  private String title;
-  private Integer status;
-  private Integer version;
-  private LocalDateTime createdAt;
-  private LocalDateTime updatedAt;
-  private final Set<Long> groups = new HashSet<>();
+  private Long                        id;
+  private Long                        companyId;
+  private String                      title;
+  private Integer                     status;
+  private Integer                     version;
+  private LocalDateTime               createdAt;
+  private LocalDateTime               updatedAt;
+  private final List<DepartmentGroup> departmentGroups = new ArrayList<>();
 
   @Override
   public Long getId() {
@@ -78,26 +77,19 @@ public class Department extends ModelMapperBase<DepartmentEdo, Department> {
     this.updatedAt = updatedAt;
   }
 
-  public Set<Long> getGroups() {
-    return this.groups;
+  public List<DepartmentGroup> getDepartmentGroups() {
+    return this.departmentGroups;
   }
 
-  public void setGroups(final Set<Long> groups) {
-    this.groups.clear();
+  public void setDepartmentGroups(final List<DepartmentGroup> groups) {
+    this.departmentGroups.clear();
     if (groups != null) {
-      this.groups.addAll(groups);
+      this.departmentGroups.addAll(groups);
     }
   }
 
-  public void setGroups(final List<Long> groups) {
-    this.groups.clear();
-    if (groups != null) {
-      this.groups.addAll(groups);
-    }
-  }
-
-  public void addGroup(final Long groupId) {
-    this.groups.add(groupId);
+  public void addDepartmentGroup(final DepartmentGroup group) {
+    this.departmentGroups.add(group);
   }
 
   @Override
@@ -107,8 +99,8 @@ public class Department extends ModelMapperBase<DepartmentEdo, Department> {
     edo.setStatus(this.status);
     edo.setId(this.id);
     edo.setCompanyId(this.companyId);
-    edo.setGroups(this.groups);
-    edo.setVersion(version);
+    edo.setDepartmentGroups(ModelMapperBase.toEdoList(this.departmentGroups));
+    edo.setVersion(this.version);
 
     return edo;
   }
@@ -121,7 +113,7 @@ public class Department extends ModelMapperBase<DepartmentEdo, Department> {
     model.setStatus(edo.getStatus());
     model.setId(edo.getId());
     model.setCompanyId(edo.getCompanyId());
-    model.setGroups(edo.getGroups());
+    model.setDepartmentGroups(new DepartmentGroup().fromEdoList(edo.getDepartmentGroups()));
     model.setVersion(edo.getVersion());
 
     return model;

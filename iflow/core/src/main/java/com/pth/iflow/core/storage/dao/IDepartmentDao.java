@@ -17,4 +17,6 @@ public interface IDepartmentDao {
 
   public List<Department> getListByIdList(List<Long> idList) throws IFlowStorageException;
 
+  public List<Long> getAllUserIdListByDepartmentId(final Long id) throws IFlowStorageException;
+
 }

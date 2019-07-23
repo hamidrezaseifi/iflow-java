@@ -80,7 +80,8 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `company_id` int(11) NOT NULL DEFAULT '1',
   `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `birthdate` date DEFAULT NULL,
+  `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '-',
   `firstname` varchar(45) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `lastname` varchar(45) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `permission` smallint(6) NOT NULL DEFAULT '1',
@@ -92,7 +93,7 @@ CREATE TABLE `users` (
   UNIQUE KEY `email` (`email`),
   KEY `FK_USERS_COMPANIES_idx` (`company_id`),
   CONSTRAINT `FK_USERS_COMPANIES` FOREIGN KEY (`company_id`) REFERENCES `companies` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB;
 
  
 CREATE TABLE `user_departments` (
@@ -151,6 +152,7 @@ CREATE TABLE `workflow_type` (
   `title` varchar(200) NOT NULL,
   `manual_assign` smallint(2) NOT NULL DEFAULT '0',
   `send_to_controller` smallint(2) NOT NULL DEFAULT '1',
+  `increase_step_automatic` smallint(2) DEFAULT '0',
   `commecnts` text,
   `status` smallint(6) NOT NULL DEFAULT '1',
   `version` int(11) NOT NULL DEFAULT '1',
@@ -180,6 +182,7 @@ CREATE TABLE `workflow_type_step` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `workflow_type_id` int(11) NOT NULL,
   `title` varchar(200) NOT NULL,
+  `step_index` smallint(6) NOT NULL DEFAULT 0,
   `commecnts` text,
   `status` smallint(6) NOT NULL DEFAULT '1',
   `version` int(11) NOT NULL DEFAULT '1',
@@ -195,6 +198,7 @@ CREATE TABLE `workflow` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `workflow_type_id` int(11) NOT NULL,
   `title` varchar(2000) NOT NULL,
+  `assign_to` int(11) NOT NULL DEFAULT 0,
   `current_step` int(11) NOT NULL,
   `status` int(11) NOT NULL,
   `comments` text,

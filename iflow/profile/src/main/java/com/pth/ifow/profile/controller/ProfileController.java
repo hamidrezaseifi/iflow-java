@@ -18,41 +18,30 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pth.iflow.common.annotations.IflowPostRequestMapping;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
-import com.pth.iflow.common.edo.models.AuthenticatedProfileRequestEdo;
-import com.pth.iflow.common.edo.models.ProfileResponseEdo;
-import com.pth.iflow.common.edo.models.TokenProfileRequestEdo;
+import com.pth.iflow.common.edo.models.xml.AuthenticatedProfileRequestEdo;
+import com.pth.iflow.common.edo.models.xml.ProfileResponseEdo;
+import com.pth.iflow.common.edo.models.xml.TokenProfileRequestEdo;
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
 import com.pth.ifow.profile.exceptions.ProfileCustomizedException;
-import com.pth.ifow.profile.model.Company;
-import com.pth.ifow.profile.model.User;
-import com.pth.ifow.profile.model.UserAuthenticationSession;
-import com.pth.ifow.profile.service.ICompanyService;
-import com.pth.ifow.profile.service.ISessionManager;
-import com.pth.ifow.profile.service.IUsersService;
+import com.pth.ifow.profile.model.ProfileResponse;
+import com.pth.ifow.profile.service.ITokenUserDataManager;
 
 @RestController
 @RequestMapping
 public class ProfileController {
 
-  private final ISessionManager sessionManager;
+  private final ITokenUserDataManager tokenUserDataManager;
 
-  private final IUsersService usersService;
+  public ProfileController(@Autowired final ITokenUserDataManager tokenUserDataManager) {
 
-  private final ICompanyService companyService;
-
-  public ProfileController(@Autowired final ISessionManager sessionManager, @Autowired final IUsersService usersService,
-      @Autowired final ICompanyService companyServic) {
-
-    this.sessionManager = sessionManager;
-    this.usersService = usersService;
-    this.companyService = companyServic;
+    this.tokenUserDataManager = tokenUserDataManager;
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowPostRequestMapping(value = IflowRestPaths.ProfileModule.AUTHENTICATION_READ_AUTHENTOCATEDINFO)
+  @IflowPostRequestMapping(value = IflowRestPaths.ProfileModule.PROFILE_READ_AUTHENTOCATEDINFO)
   @ResponseBody
   public ResponseEntity<ProfileResponseEdo> readAuthenticatedInfo(@RequestBody final AuthenticatedProfileRequestEdo requestEdo,
       final HttpServletRequest request,
@@ -64,32 +53,13 @@ public class ProfileController {
       throw new ProfileCustomizedException("Invalid Token!", "", EModule.PROFILE.getModuleName(), EIFlowErrorType.INVALID_TOKEN);
     }
 
-    final UserAuthenticationSession session = this.sessionManager.findByToken(requestEdo.getToken());
+    final ProfileResponse profile = tokenUserDataManager.getProfileByTokenEmail(requestEdo.getEmail(), requestEdo.getToken());
 
-    if ((session == null) || (session.getEmail().equals(requestEdo.getEmail()) == false)) {
-      throw new ProfileCustomizedException("Invalid session!", "", EModule.PROFILE.getModuleName(), EIFlowErrorType.NO_SESSION_FOUND);
-    }
-
-    final User user = this.usersService.getUserByEmail(session.getEmail());
-
-    if (user == null) {
-      throw new ProfileCustomizedException("User not found!", "", EModule.PROFILE.getModuleName(), EIFlowErrorType.USER_NOTFOUND);
-    }
-
-    final Company company = this.companyService.getById(user.getCompanyId());
-
-    if (company == null) {
-      throw new ProfileCustomizedException("Company not found!", "", EModule.PROFILE.getModuleName(),
-          EIFlowErrorType.COMPANY_NOTFOUND);
-    }
-
-    final ProfileResponseEdo edo = new ProfileResponseEdo(user.toEdo(), company.toEdo(), session.getSessionid());
-
-    return ControllerHelper.createResponseEntity(request, edo, HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, profile.toEdo(), HttpStatus.OK);
   }
-  
+
   @ResponseStatus(HttpStatus.OK)
-  @IflowPostRequestMapping(value = IflowRestPaths.ProfileModule.AUTHENTICATION_READ_TOKENINFO)
+  @IflowPostRequestMapping(value = IflowRestPaths.ProfileModule.PROFILE_READ_TOKENINFO)
   @ResponseBody
   public ResponseEntity<ProfileResponseEdo> readTokenInfo(@RequestBody final TokenProfileRequestEdo requestEdo,
       final HttpServletRequest request,
@@ -101,28 +71,9 @@ public class ProfileController {
       throw new ProfileCustomizedException("Invalid Token!", "", EModule.PROFILE.getModuleName(), EIFlowErrorType.INVALID_TOKEN);
     }
 
-    final UserAuthenticationSession session = this.sessionManager.findByToken(requestEdo.getToken());
+    final ProfileResponse profile = tokenUserDataManager.getProfileByToken(requestEdo.getToken());
 
-    if ((session == null)) {
-      throw new ProfileCustomizedException("Invalid session!", "", EModule.PROFILE.getModuleName(), EIFlowErrorType.NO_SESSION_FOUND);
-    }
-
-    final User user = this.usersService.getUserByEmail(session.getEmail());
-
-    if (user == null) {
-      throw new ProfileCustomizedException("User not found!", "", EModule.PROFILE.getModuleName(), EIFlowErrorType.USER_NOTFOUND);
-    }
-
-    final Company company = this.companyService.getById(user.getCompanyId());
-
-    if (company == null) {
-      throw new ProfileCustomizedException("Company not found!", "", EModule.PROFILE.getModuleName(),
-          EIFlowErrorType.COMPANY_NOTFOUND);
-    }
-
-    final ProfileResponseEdo edo = new ProfileResponseEdo(user.toEdo(), company.toEdo(), session.getSessionid());
-
-    return ControllerHelper.createResponseEntity(request, edo, HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, profile.toEdo(), HttpStatus.OK);
   }
 
 }

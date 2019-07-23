@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @RequestMapping(method = RequestMethod.POST, consumes = { MediaType.APPLICATION_XML_VALUE,
-    MediaType.APPLICATION_JSON_UTF8_VALUE }, produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE })
+    MediaType.APPLICATION_JSON_UTF8_VALUE }, produces = { MediaType.APPLICATION_XML_VALUE })
 public @interface IflowPostRequestMapping {
 
   @AliasFor(annotation = RequestMapping.class)

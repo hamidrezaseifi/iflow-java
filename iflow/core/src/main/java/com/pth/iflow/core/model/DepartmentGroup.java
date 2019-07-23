@@ -2,8 +2,8 @@ package com.pth.iflow.core.model;
 
 import java.time.LocalDateTime;
 
-import com.pth.iflow.common.edo.models.DepartmentGroupEdo;
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
+import com.pth.iflow.common.edo.models.xml.DepartmentGroupEdo;
 
 public class DepartmentGroup extends ModelMapperBase<DepartmentGroupEdo, DepartmentGroup> {
 

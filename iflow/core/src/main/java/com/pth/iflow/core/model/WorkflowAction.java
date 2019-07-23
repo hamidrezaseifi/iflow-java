@@ -2,8 +2,8 @@ package com.pth.iflow.core.model;
 
 import java.time.LocalDateTime;
 
-import com.pth.iflow.common.edo.models.WorkflowActionEdo;
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
+import com.pth.iflow.common.edo.models.xml.WorkflowActionEdo;
 
 public class WorkflowAction extends ModelMapperBase<WorkflowActionEdo, WorkflowAction> {
 

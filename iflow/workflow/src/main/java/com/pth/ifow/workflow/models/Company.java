@@ -1,19 +1,20 @@
 package com.pth.ifow.workflow.models;
 
-import com.pth.iflow.common.edo.models.CompanyEdo;
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
+import com.pth.iflow.common.edo.models.xml.CompanyEdo;
 
 public class Company extends ModelMapperBase<CompanyEdo, Company> {
 
-  private Long id;
-  private String identifyid;
-  private String companyName;
+  private Long    id;
+  private String  identifyid;
+  private String  companyName;
   private Integer status;
   private Integer version;
 
   /**
    * @return the id
    */
+  @Override
   public Long getId() {
     return this.id;
   }
@@ -69,7 +70,7 @@ public class Company extends ModelMapperBase<CompanyEdo, Company> {
 
   @Override
   public Integer getVersion() {
-    return version;
+    return this.version;
   }
 
   @Override
@@ -79,7 +80,7 @@ public class Company extends ModelMapperBase<CompanyEdo, Company> {
 
   @Override
   public boolean isNew() {
-    return id == null || id <= 0;
+    return (this.id == null) || (this.id <= 0);
   }
 
   @Override
@@ -88,6 +89,7 @@ public class Company extends ModelMapperBase<CompanyEdo, Company> {
     edo.setCompanyName(this.companyName);
     edo.setIdentifyid(this.identifyid);
     edo.setStatus(this.status);
+    edo.setVersion(this.version);
     edo.setId(this.id);
 
     return edo;
@@ -95,13 +97,14 @@ public class Company extends ModelMapperBase<CompanyEdo, Company> {
 
   @Override
   public Company fromEdo(final CompanyEdo edo) {
-    final Company company = new Company();
-    company.setCompanyName(edo.getCompanyName());
-    company.setIdentifyid(edo.getIdentifyid());
-    company.setStatus(edo.getStatus());
-    company.setId(edo.getId());
+    final Company model = new Company();
+    model.setCompanyName(edo.getCompanyName());
+    model.setIdentifyid(edo.getIdentifyid());
+    model.setStatus(edo.getStatus());
+    model.setVersion(edo.getVersion());
+    model.setId(edo.getId());
 
-    return company;
+    return model;
   }
 
 }

@@ -22,11 +22,11 @@ import com.pth.iflow.core.storage.dao.exception.IFlowOptimisticLockException;
 @Service
 public class UsersService implements IUsersService {
 
-  private final IUserDao userDao;
-  private final IUserGroupDao userGroupDao;
-  private final IDepartmentDao departmentDao;
-  private final IDepartmentGroupDao departmentGroupDao;
-  private final IWorkflowTypeDao workflowDao;
+  private final IUserDao             userDao;
+  private final IUserGroupDao        userGroupDao;
+  private final IDepartmentDao       departmentDao;
+  private final IDepartmentGroupDao  departmentGroupDao;
+  private final IWorkflowTypeDao     workflowDao;
   private final IWorkflowTypeStepDao workflowStepDao;
 
   public UsersService(@Autowired final IUserDao userDao, @Autowired final IUserGroupDao userGroupDao,
@@ -96,6 +96,12 @@ public class UsersService implements IUsersService {
     model.setVersion(model.getVersion() + 1);
 
     return userDao.update(model);
+  }
+
+  @Override
+  public List<User> getCompanyUsers(final Long companyId) {
+
+    return userDao.getListByCompanyId(companyId);
   }
 
 }

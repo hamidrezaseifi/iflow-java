@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pth.iflow.core.model.User;
@@ -29,6 +30,7 @@ public class UserDao extends DaoBasicClass<User> implements IUserDao {
     user.setId(rs.getLong("id"));
     user.setCompanyId(rs.getLong("company_id"));
     user.setEmail(rs.getString("email"));
+    user.setBirthDate(rs.getDate("birthdate"));
     user.setFirstName(rs.getString("firstname"));
     user.setLastName(rs.getString("lastname"));
     user.setStatus(rs.getInt("status"));
@@ -36,16 +38,16 @@ public class UserDao extends DaoBasicClass<User> implements IUserDao {
     user.setUpdatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("updated_at")));
     user.setVersion(rs.getInt("version"));
     user.setPermission(rs.getInt("permission"));
-    user.setGroups(getGroupIdListById(user.getId()));
-    user.setDepartments(getDepartmentIdListIdById(user.getId()));
-    user.setDeputies(getDeputyIdListById(user.getId()));
+    user.setGroups(this.getGroupIdListById(user.getId()));
+    user.setDepartments(this.getDepartmentIdListIdById(user.getId()));
+    user.setDeputies(this.getDeputyIdListById(user.getId()));
 
     return user;
   }
 
   @Override
   public User getById(final Long id) throws IFlowStorageException {
-    return getModelById(id, "SELECT * FROM users where id=?", "User");
+    return this.getModelById(id, "SELECT * FROM users where id=?", "User");
   }
 
   @Override
@@ -57,22 +59,22 @@ public class UserDao extends DaoBasicClass<User> implements IUserDao {
     sqlSelect = sqlSelect.endsWith(",") ? sqlSelect.substring(0, sqlSelect.length() - 1) : sqlSelect;
     sqlSelect += ")";
 
-    return getModelListByIdList(idList, sqlSelect, "User");
+    return this.getModelListByIdList(idList, sqlSelect, "User");
   }
 
   private List<Long> getDeputyIdListById(final Long id) throws IFlowStorageException {
 
-    return getIdListById(id, "SELECT * FROM user_deputy where user_id=?", "deputy_id", "User Deputies");
+    return this.getIdListById(id, "SELECT * FROM user_deputy where user_id=?", "deputy_id", "User Deputies");
   }
 
   private List<Long> getGroupIdListById(final Long id) throws IFlowStorageException {
 
-    return getIdListById(id, "SELECT * FROM user_usergroup where user_id=?", "user_group", "User Groups");
+    return this.getIdListById(id, "SELECT * FROM user_usergroup where user_id=?", "user_group", "User Groups");
   }
 
   private List<Long> getDepartmentIdListIdById(final Long id) throws IFlowStorageException {
 
-    return getIdListById(id, "SELECT * FROM user_departments where user_id=?", "department_id", "User Departments");
+    return this.getIdListById(id, "SELECT * FROM user_departments where user_id=?", "department_id", "User Departments");
   }
 
   @Override
@@ -91,7 +93,7 @@ public class UserDao extends DaoBasicClass<User> implements IUserDao {
 
       }, (rs) -> {
         if (rs.next()) {
-          return modelFromResultSet(rs);
+          return this.modelFromResultSet(rs);
         } else {
           return null;
         }
@@ -106,13 +108,15 @@ public class UserDao extends DaoBasicClass<User> implements IUserDao {
 
   @Override
   protected PreparedStatement prepareInsertPreparedStatement(final User model, final PreparedStatement ps) throws SQLException {
+
     ps.setLong(1, model.getCompanyId());
     ps.setString(2, model.getEmail());
-    ps.setString(3, model.getFirstName());
-    ps.setString(4, model.getLastName());
-    ps.setInt(5, model.getPermission());
-    ps.setInt(6, model.getVersion());
-    ps.setInt(7, model.getStatus());
+    ps.setDate(3, model.getBirthDate() != null ? new java.sql.Date(model.getBirthDate().getTime()) : null);
+    ps.setString(4, model.getFirstName());
+    ps.setString(5, model.getLastName());
+    ps.setInt(6, model.getPermission());
+    ps.setInt(7, model.getVersion());
+    ps.setInt(8, model.getStatus());
 
     return ps;
   }
@@ -121,32 +125,142 @@ public class UserDao extends DaoBasicClass<User> implements IUserDao {
   protected PreparedStatement prepareUpdatePreparedStatement(final User model, final PreparedStatement ps) throws SQLException {
     ps.setLong(1, model.getCompanyId());
     ps.setString(2, model.getEmail());
-    ps.setString(3, model.getFirstName());
-    ps.setString(4, model.getLastName());
-    ps.setInt(5, model.getPermission());
-    ps.setInt(6, model.getVersion());
-    ps.setInt(7, model.getStatus());
-    ps.setLong(8, model.getId());
+    ps.setDate(3, model.getBirthDate() != null ? new java.sql.Date(model.getBirthDate().getTime()) : null);
+    ps.setString(4, model.getFirstName());
+    ps.setString(5, model.getLastName());
+    ps.setInt(6, model.getPermission());
+    ps.setInt(7, model.getVersion());
+    ps.setInt(8, model.getStatus());
+    ps.setLong(9, model.getId());
 
     return ps;
   }
 
   @Override
   public User create(final User model) throws IFlowStorageException {
-    final String sql = "INSERT INTO users (company_id, email, firstname, lastname, permission, version, status)"
-        + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+    final String sql = "INSERT INTO users (company_id, email, birthdate, firstname, lastname, permission, version, status)"
+        + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    final TransactionStatus transactionStatus = this.startTransaction(true);
+    try {
+      final Long createdId = this.createModel(model, "User", sql, false);
 
-    return getById(createModel(model, "User", sql, true));
+      this.createUserGroups(model, createdId);
+
+      this.createUserDepartments(model, createdId);
+
+      this.createUserDeputies(model, createdId);
+
+      this.commitTransaction(true, transactionStatus);
+      return this.getById(createdId);
+
+    } catch (final Exception e) {
+      this.rollbackTransaction(true, transactionStatus);
+      logger.error("Unable to create user:{} {}", model.getEmail(), e.toString(), e);
+      throw new IFlowStorageException(e.toString(), e);
+    }
+  }
+
+  private void createUserGroups(final User model, final Long userId) {
+
+    this.deleteUserGroups(userId);
+
+    final String insSql = "INSERT INTO user_usergroup (user_id, user_group) VALUES (?, ?)";
+
+    for (final Long groupId : model.getGroups()) {
+      this.jdbcTemplate.update(con -> {
+        final PreparedStatement ps = con.prepareStatement(insSql);
+        ps.setLong(1, userId);
+        ps.setLong(2, groupId);
+        return ps;
+      });
+
+    }
+  }
+
+  private void createUserDepartments(final User model, final Long userId) {
+
+    this.deleteUserDepartments(userId);
+
+    final String insSql = "INSERT INTO user_departments (user_id, department_id) VALUES (?, ?)";
+
+    for (final Long groupId : model.getGroups()) {
+      this.jdbcTemplate.update(con -> {
+        final PreparedStatement ps = con.prepareStatement(insSql);
+        ps.setLong(1, userId);
+        ps.setLong(2, groupId);
+        return ps;
+      });
+
+    }
+  }
+
+  private void createUserDeputies(final User model, final Long userId) {
+
+    this.deleteUserDeputies(userId);
+
+    final String insSql = "INSERT INTO user_deputy (user_id, deputy_id) VALUES (?, ?)";
+
+    for (final Long groupId : model.getGroups()) {
+      this.jdbcTemplate.update(con -> {
+        final PreparedStatement ps = con.prepareStatement(insSql);
+        ps.setLong(1, userId);
+        ps.setLong(2, groupId);
+        return ps;
+      });
+
+    }
   }
 
   @Override
   public User update(final User model) throws IFlowStorageException {
-    final String sql = "UPDATE users SET company_id = ?, email = ?, firstname = ?, lastname = ?,"
+    final String sql = "UPDATE users SET company_id = ?, email = ?, birthdate = ? , firstname = ?, lastname = ?,"
         + " permission = ?, version = ?, status = ? WHERE id = ?";
 
-    updateModel(model, "User", sql, true);
+    this.updateModel(model, "User", sql, true);
 
-    return getById(model.getId());
+    return this.getById(model.getId());
+  }
+
+  @Override
+  public void deleteById(final Long id) throws IFlowStorageException {
+    final TransactionStatus transactionStatus = this.startTransaction(true);
+    try {
+
+      this.deleteUserGroups(id);
+
+      this.deleteUserDepartments(id);
+
+      this.deleteUserDeputies(id);
+
+      this.deleteModel(id, "User", "Delete from users where id=?", false, true);
+
+      this.commitTransaction(true, transactionStatus);
+
+    } catch (final Exception e) {
+      this.rollbackTransaction(true, transactionStatus);
+      logger.error("Unable to delete user:{} {}", id, e.toString(), e);
+      throw new IFlowStorageException(e.toString(), e);
+    }
+
+  }
+
+  private void deleteUserDeputies(final Long id) {
+    this.deleteModel(id, "User Deputies", "Delete FROM user_deputy where user_id=?", false, false);
+  }
+
+  private void deleteUserDepartments(final Long id) {
+    this.deleteModel(id, "User Departments", "Delete FROM user_departments where user_id=?", false, false);
+  }
+
+  private void deleteUserGroups(final Long id) {
+    this.deleteModel(id, "User Groups", "Delete FROM user_usergroup where user_id=?", false, false);
+  }
+
+  @Override
+  public List<User> getListByCompanyId(final Long id) throws IFlowStorageException {
+    final List<Long> idList = this.getIdListById(id, "SELECT * FROM users where company_id=?", "id", "User");
+
+    return this.getListByIdList(idList);
   }
 
 }
