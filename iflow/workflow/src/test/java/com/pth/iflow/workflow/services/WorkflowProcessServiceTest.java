@@ -18,10 +18,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 import com.pth.iflow.common.exceptions.IFlowCustomeException;
 import com.pth.iflow.workflow.TestDataProducer;
+import com.pth.iflow.workflow.bl.ITokenValidator;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.IWorkflowProcessService;
 import com.pth.iflow.workflow.bl.IWorkflowTypeDataService;
 import com.pth.iflow.workflow.bl.impl.WorkflowProcessService;
+import com.pth.iflow.workflow.models.ProfileResponse;
 import com.pth.iflow.workflow.models.Workflow;
 import com.pth.iflow.workflow.models.WorkflowType;
 
@@ -30,27 +32,41 @@ import com.pth.iflow.workflow.models.WorkflowType;
 @AutoConfigureMockMvc
 public class WorkflowProcessServiceTest extends TestDataProducer {
 
-  private IWorkflowProcessService  workflowProcessService;
+  private IWorkflowProcessService workflowProcessService;
 
   @Mock
-  private IWorkflowDataService     workflowDataService;
+  private IWorkflowDataService workflowDataService;
 
   @Mock
   private IWorkflowTypeDataService workflowTypeDataService;
 
-  private WorkflowType             workflowType;
+  @Mock
+  private ITokenValidator tokenValidator;
 
-  private String                   validTocken;
+  private WorkflowType workflowType;
+
+  private String validTocken;
+
+  private String validSession;
+
+  private ProfileResponse profileResponse;
 
   @Before
   public void setUp() throws Exception {
-    this.workflowProcessService = new WorkflowProcessService(this.workflowDataService, this.workflowTypeDataService);
+    this.workflowProcessService = new WorkflowProcessService(this.workflowDataService, this.workflowTypeDataService,
+        this.tokenValidator);
 
     this.validTocken = "validTocken";
 
-    this.workflowType = getTestWorkflowType(1L, "Type 1");
+    this.validSession = "validSession";
 
-    when(this.workflowTypeDataService.getById(any(Long.class))).thenReturn(this.workflowType);
+    this.workflowType = this.getTestWorkflowType(1L, "Type 1");
+
+    when(this.workflowTypeDataService.getById(any(Long.class), any(String.class))).thenReturn(this.workflowType);
+
+    this.profileResponse = new ProfileResponse(this.getTestUser(), this.getTestCompany(), this.validSession);
+
+    when(this.tokenValidator.isTokenValid(this.validTocken)).thenReturn(this.profileResponse);
 
   }
 
@@ -61,9 +77,9 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
   @Test
   public void testGetById() throws Exception {
 
-    final Workflow workflow = getTestWorkflow(1L);
+    final Workflow workflow = this.getTestWorkflow(1L);
 
-    when(this.workflowDataService.getById(any(Long.class))).thenReturn(workflow);
+    when(this.workflowDataService.getById(any(Long.class), any(String.class))).thenReturn(workflow);
 
     final Workflow resWorkflow = this.workflowProcessService.getById(workflow.getId(), this.validTocken);
 
@@ -77,9 +93,9 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
   @Test(expected = IFlowCustomeException.class)
   public void testSaveWorkflowUnknownWorkflowStatus() throws Exception {
 
-    final Workflow workflow = getTestWorkflow(1L);
+    final Workflow workflow = this.getTestWorkflow(1L);
 
-    when(this.workflowDataService.save(any(Workflow.class))).thenReturn(workflow);
+    when(this.workflowDataService.save(any(Workflow.class), any(String.class))).thenReturn(workflow);
 
     final Workflow resWorkflow = this.workflowProcessService.save(workflow, this.validTocken);
 
@@ -93,14 +109,14 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
   @Test
   public void testSaveWorkflowNewInitialize() throws Exception {
 
-    final Workflow workflowSaveResult = getTestWorkflow(1L);
+    final Workflow workflowSaveResult = this.getTestWorkflow(1L);
     workflowSaveResult.setStatus(EWorkflowStatus.ASSIGNED);
 
-    final Workflow workflow = getTestWorkflow(1L);
+    final Workflow workflow = this.getTestWorkflow(1L);
     workflow.setStatus(EWorkflowStatus.INITIALIZE);
     workflow.setId(null);
 
-    when(this.workflowDataService.save(any(Workflow.class))).thenReturn(workflowSaveResult);
+    when(this.workflowDataService.save(any(Workflow.class), any(String.class))).thenReturn(workflowSaveResult);
 
     final Workflow resWorkflow = this.workflowProcessService.save(workflow, this.validTocken);
 
@@ -116,13 +132,13 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
   @Test
   public void testSaveWorkflowAssigned() throws Exception {
 
-    final Workflow workflowSaveResult = getTestWorkflow(1L);
+    final Workflow workflowSaveResult = this.getTestWorkflow(1L);
     workflowSaveResult.setStatus(EWorkflowStatus.ASSIGNED);
 
-    final Workflow workflow = getTestWorkflow(1L);
+    final Workflow workflow = this.getTestWorkflow(1L);
     workflow.setStatus(EWorkflowStatus.ASSIGNED);
 
-    when(this.workflowDataService.save(any(Workflow.class))).thenReturn(workflowSaveResult);
+    when(this.workflowDataService.save(any(Workflow.class), any(String.class))).thenReturn(workflowSaveResult);
 
     final Workflow resWorkflow = this.workflowProcessService.save(workflow, this.validTocken);
 
@@ -138,13 +154,13 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
   @Test
   public void testSaveWorkflowNotnewNotAssignedDone() throws Exception {
 
-    final Workflow workflowSaveResult = getTestWorkflow(1L);
+    final Workflow workflowSaveResult = this.getTestWorkflow(1L);
     workflowSaveResult.setStatus(EWorkflowStatus.ASSIGNED);
 
-    final Workflow workflow = getTestWorkflow(1L);
+    final Workflow workflow = this.getTestWorkflow(1L);
     workflow.setStatus(EWorkflowStatus.DONE);
 
-    when(this.workflowDataService.save(any(Workflow.class))).thenReturn(workflowSaveResult);
+    when(this.workflowDataService.save(any(Workflow.class), any(String.class))).thenReturn(workflowSaveResult);
 
     final Workflow resWorkflow = this.workflowProcessService.save(workflow, this.validTocken);
 
@@ -160,10 +176,10 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
   @Test
   public void testGetListByIdList() throws Exception {
 
-    final List<Long> idList = getTestWorkflowIdList();
-    final List<Workflow> list = getTestWorkflowList();
+    final List<Long> idList = this.getTestWorkflowIdList();
+    final List<Workflow> list = this.getTestWorkflowList();
 
-    when(this.workflowDataService.getListByIdList(any(List.class))).thenReturn(list);
+    when(this.workflowDataService.getListByIdList(any(List.class), any(String.class))).thenReturn(list);
 
     final List<Workflow> resList = this.workflowProcessService.getListByIdList(idList, this.validTocken);
 
@@ -175,9 +191,9 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
   @Test
   public void testGetListByTypeId() throws Exception {
 
-    final List<Workflow> list = getTestWorkflowList();
+    final List<Workflow> list = this.getTestWorkflowList();
 
-    when(this.workflowDataService.getListByTypeId(any(Long.class))).thenReturn(list);
+    when(this.workflowDataService.getListByTypeId(any(Long.class), any(String.class))).thenReturn(list);
 
     final List<Workflow> resList = this.workflowProcessService.getListByTypeId(1L, this.validTocken);
 

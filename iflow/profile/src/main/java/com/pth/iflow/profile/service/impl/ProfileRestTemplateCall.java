@@ -3,6 +3,8 @@ package com.pth.iflow.profile.service.impl;
 import java.io.IOException;
 import java.net.URI;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -21,6 +23,8 @@ import com.pth.iflow.profile.service.IProfileRestTemplateCall;
 
 @Component
 public class ProfileRestTemplateCall implements IProfileRestTemplateCall {
+  
+  protected final Logger log = LoggerFactory.getLogger(ProfileRestTemplateCall.class);
 
   @Autowired
   private RestTemplate restTemplate;
@@ -35,34 +39,45 @@ public class ProfileRestTemplateCall implements IProfileRestTemplateCall {
     try {
 
       if (responseClass.equals(Void.class)) {
-        restTemplate.postForObject(uri, edo, responseClass);
+        this.restTemplate.postForObject(uri, edo, responseClass);
         return null;
-      } else {
-        return restTemplate.postForObject(uri, edo, responseClass);
+      }
+      else {
+        return this.restTemplate.postForObject(uri, edo, responseClass);
       }
 
-    } catch (final RestClientResponseException e) {
+    }
+    catch (final RestClientResponseException e) {
+      final String resp = e.getResponseBodyAsString();
+      this.log.error("ERROR in connection with \"{}\" through url \"{}\" and response is {} ", service.getModuleName(), uri, resp, e);
+
       if (!throwError) {
         return null;
       }
-      final String resp = e.getResponseBodyAsString();
 
       IFlowErrorRestResponse response = null;
       try {
-        response = converter.getObjectMapper().readValue(resp, IFlowErrorRestResponse.class);
-      } catch (final IOException e1) {
-
+        response = this.converter.getObjectMapper().readValue(resp, IFlowErrorRestResponse.class);
+      }
+      catch (final IOException e1) {
+        final ProfileCustomizedException uiCustomizedException = new ProfileCustomizedException("failed to POST: " + uri,
+            e1.getMessage(),
+            service.name());
+        uiCustomizedException.initCause(e1);
+        throw uiCustomizedException;
       }
 
-      throw new ProfileCustomizedException(response.getErrorType(), response.getMessage(), service.getModuleName());
-    } catch (final RestClientException e) {
+      throw new ProfileCustomizedException(response.getMessage(), response.getErrorType(), service.getModuleName());
+    }
+    catch (final RestClientException e) {
+      this.log.error("ERROR in connection with \"{}\" through url \"{}\": ", service.getModuleName(), uri, e);
+
       if (!throwError) {
         return null;
       }
-      throw new ProfileCustomizedException(
-          String.format("Invalid Service Status : %s  or URL: %s ", service.getModuleName(), uri),
-          IFlowErrorRestResponse.stackListToString(e.getStackTrace()), EModule.GUI.getModuleName());
+      throw new ProfileCustomizedException("Service " + service.getModuleName() + " is not availeable.", "", EModule.GUI.getModuleName());
     }
+    
   }
 
   @Override
@@ -72,7 +87,8 @@ public class ProfileRestTemplateCall implements IProfileRestTemplateCall {
     if (response.equals(Void.class)) {
       callRestPost(URI.create(url), service, edo, response, throwError);
       return null;
-    } else {
+    }
+    else {
       return callRestPost(URI.create(url), service, edo, response, throwError);
     }
   }
@@ -83,38 +99,45 @@ public class ProfileRestTemplateCall implements IProfileRestTemplateCall {
     try {
 
       if (responseClass.equals(Void.class)) {
-        restTemplate.getForObject(url, responseClass, args);
+        this.restTemplate.getForObject(url, responseClass, args);
         return null;
-      } else {
-        return restTemplate.getForObject(url, responseClass, args);
+      }
+      else {
+        return this.restTemplate.getForObject(url, responseClass, args);
       }
 
-    } catch (final RestClientResponseException e) {
+    }
+    catch (final RestClientResponseException e) {
+      final String resp = e.getResponseBodyAsString();
+      this.log.error("ERROR in connection with \"{}\" through url \"{}\" and response is {} ", service.getModuleName(), url, resp, e);
+      
       if (!throwError) {
         return null;
       }
-      final String resp = e.getResponseBodyAsString();
-
+      
       IFlowErrorRestResponse response = null;
       try {
-        response = converter.getObjectMapper().readValue(resp, IFlowErrorRestResponse.class);
-      } catch (final IOException e1) {
-
+        response = this.converter.getObjectMapper().readValue(resp, IFlowErrorRestResponse.class);
       }
-
-      throw new ProfileCustomizedException(response.getErrorType(), response.getMessage(), service.getModuleName());
-    } catch (final RestClientException e) {
+      catch (final IOException e1) {
+        final ProfileCustomizedException uiCustomizedException = new ProfileCustomizedException("failed to POST: " + url,
+            e1.getMessage(),
+            service.name());
+        uiCustomizedException.initCause(e1);
+        throw uiCustomizedException;
+      }
+      
+      throw new ProfileCustomizedException(response.getMessage(), response.getErrorType(), service.getModuleName());
+    }
+    catch (final RestClientException e) {
+      this.log.error("ERROR in connection with \"{}\" through url \"{}\": ", service.getModuleName(), url, e);
+      
       if (!throwError) {
         return null;
       }
-      String propUrl = url;
-      if (exceptionHasUrl(e)) {
-        propUrl = retreiveUrlFromError(e, url);
-      }
-
-      throw new ProfileCustomizedException(generateServiceErrorMessage(url, service),
-          IFlowErrorRestResponse.stackListToString(e.getStackTrace()), EModule.GUI.getModuleName());
-    } catch (final Exception e) {
+      throw new ProfileCustomizedException("Service " + service.getModuleName() + " is not availeable.", "", EModule.GUI.getModuleName());
+    }
+    catch (final Exception e) {
       if (!throwError) {
         return null;
       }
@@ -131,7 +154,8 @@ public class ProfileRestTemplateCall implements IProfileRestTemplateCall {
     if (responseClass.equals(Void.class)) {
       callRestGet(uri.toString(), service, responseClass, throwError, args);
       return null;
-    } else {
+    }
+    else {
       return callRestGet(uri.toString(), service, responseClass, throwError, args);
     }
 
@@ -146,7 +170,8 @@ public class ProfileRestTemplateCall implements IProfileRestTemplateCall {
     try {
       final int idx = e.getMessage().indexOf("\"http:");
       propUrl = e.getMessage().substring(idx, e.getMessage().indexOf("\"", idx + 5) + 1);
-    } catch (final Exception ex) {
+    }
+    catch (final Exception ex) {
 
     }
     return propUrl;
@@ -157,35 +182,41 @@ public class ProfileRestTemplateCall implements IProfileRestTemplateCall {
       final boolean throwError, final Object... args) throws ProfileCustomizedException {
     try {
 
-      final ResponseEntity<O> response = restTemplate.exchange(url, HttpMethod.GET, null, responseType, args);
+      final ResponseEntity<O> response = this.restTemplate.exchange(url, HttpMethod.GET, null, responseType, args);
       return response.getBody();
 
-    } catch (final RestClientResponseException e) {
+    }
+    catch (final RestClientResponseException e) {
+      final String resp = e.getResponseBodyAsString();
+      this.log.error("ERROR in connection with \"{}\" through url \"{}\" and response is {} ", service.getModuleName(), url, resp, e);
+      
       if (!throwError) {
         return null;
       }
-      final String resp = e.getResponseBodyAsString();
-
+      
       IFlowErrorRestResponse response = null;
       try {
-        response = converter.getObjectMapper().readValue(resp, IFlowErrorRestResponse.class);
-      } catch (final IOException e1) {
-
+        response = this.converter.getObjectMapper().readValue(resp, IFlowErrorRestResponse.class);
       }
-
-      throw new ProfileCustomizedException(response.getErrorType(), response.getMessage(), service.getModuleName());
-    } catch (final RestClientException e) {
+      catch (final IOException e1) {
+        final ProfileCustomizedException uiCustomizedException = new ProfileCustomizedException("failed to POST: " + url,
+            e1.getMessage(),
+            service.name());
+        uiCustomizedException.initCause(e1);
+        throw uiCustomizedException;
+      }
+      
+      throw new ProfileCustomizedException(response.getMessage(), response.getErrorType(), service.getModuleName());
+    }
+    catch (final RestClientException e) {
+      this.log.error("ERROR in connection with \"{}\" through url \"{}\": ", service.getModuleName(), url, e);
+      
       if (!throwError) {
         return null;
       }
-      String propUrl = url;
-      if (exceptionHasUrl(e)) {
-        propUrl = retreiveUrlFromError(e, url);
-      }
-
-      throw new ProfileCustomizedException(generateServiceErrorMessage(url, service),
-          IFlowErrorRestResponse.stackListToString(e.getStackTrace()), EModule.GUI.getModuleName());
+      throw new ProfileCustomizedException("Service " + service.getModuleName() + " is not availeable.", "", EModule.GUI.getModuleName());
     }
+
   }
 
   @Override
@@ -194,10 +225,11 @@ public class ProfileRestTemplateCall implements IProfileRestTemplateCall {
     try {
 
       final HttpEntity<I> request = new HttpEntity<>(edo);
-      final ResponseEntity<O> response = restTemplate.exchange(url, HttpMethod.POST, request, responseType);
+      final ResponseEntity<O> response = this.restTemplate.exchange(url, HttpMethod.POST, request, responseType);
       return response.getBody();
 
-    } catch (final RestClientResponseException e) {
+    }
+    catch (final RestClientResponseException e) {
       if (!throwError) {
         return null;
       }
@@ -205,13 +237,15 @@ public class ProfileRestTemplateCall implements IProfileRestTemplateCall {
 
       IFlowErrorRestResponse response = null;
       try {
-        response = converter.getObjectMapper().readValue(resp, IFlowErrorRestResponse.class);
-      } catch (final IOException e1) {
+        response = this.converter.getObjectMapper().readValue(resp, IFlowErrorRestResponse.class);
+      }
+      catch (final IOException e1) {
 
       }
 
       throw new ProfileCustomizedException(response.getErrorType(), response.getMessage(), service.getModuleName());
-    } catch (final RestClientException e) {
+    }
+    catch (final RestClientException e) {
       if (!throwError) {
         return null;
       }
