@@ -5,12 +5,14 @@ import java.util.Date;
 import com.pth.iflow.common.edo.models.xml.UserAuthenticationResponseEdo;
 
 public class UserAuthenticationSession {
+
   private String    email;
   private String    token;
   private String    sessionid;
   private Long      created;
   private Long      lastAccess;
   private final int ageLimit;
+  private boolean   isFixedSession;
 
   public UserAuthenticationSession(final int ageLimit) {
     System.currentTimeMillis();
@@ -82,6 +84,20 @@ public class UserAuthenticationSession {
   }
 
   /**
+   * @return the isFixedSession
+   */
+  public boolean isFixedSession() {
+    return this.isFixedSession;
+  }
+
+  /**
+   * @param isFixedSession the isFixedSession to set
+   */
+  public void setFixedSession(final boolean isFixedSession) {
+    this.isFixedSession = isFixedSession;
+  }
+
+  /**
    * update lastAccess
    *
    * @return the lastAccess
@@ -97,7 +113,11 @@ public class UserAuthenticationSession {
    * @return boolean
    */
   public boolean isValid() {
-    return (this.lastAccess + this.ageLimit * 1000) > System.currentTimeMillis();
+    return this.isFixedSession || isExpired();
+  }
+
+  private boolean isExpired() {
+    return (this.lastAccess + (this.ageLimit * 1000)) > System.currentTimeMillis();
   }
 
   /**
