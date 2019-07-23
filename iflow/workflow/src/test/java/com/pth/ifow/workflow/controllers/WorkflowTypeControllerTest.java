@@ -30,7 +30,7 @@ import com.pth.iflow.common.edo.models.xml.WorkflowTypeListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
 import com.pth.ifow.workflow.TestDataProducer;
-import com.pth.ifow.workflow.bl.IWorkflowTypeDataService;
+import com.pth.ifow.workflow.bl.IWorkflowTypeProcessService;
 import com.pth.ifow.workflow.models.WorkflowType;
 
 @RunWith(SpringRunner.class)
@@ -45,7 +45,7 @@ public class WorkflowTypeControllerTest extends TestDataProducer {
   private MappingJackson2XmlHttpMessageConverter xmlConverter;
 
   @MockBean
-  private IWorkflowTypeDataService               workflowTypeService;
+  private IWorkflowTypeProcessService            workflowTypeProcessService;
 
   @Value("${iflow.common.rest.api.security.client-id.internal}")
   private String                                 innerModulesRequestHeaderValue;
@@ -63,7 +63,7 @@ public class WorkflowTypeControllerTest extends TestDataProducer {
 
     final WorkflowType model = this.getTestWorkflowType();
     final String resultAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(model.toEdo());
-    when(this.workflowTypeService.getById(any(Long.class))).thenReturn(model);
+    when(this.workflowTypeProcessService.getById(any(Long.class), any(String.class))).thenReturn(model);
 
     final WorkflowTypeEdo modelEdo = model.toEdo();
 
@@ -73,7 +73,7 @@ public class WorkflowTypeControllerTest extends TestDataProducer {
         .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(resultAsXmlString));
 
-    verify(this.workflowTypeService, times(1)).getById(any(Long.class));
+    verify(this.workflowTypeProcessService, times(1)).getById(any(Long.class), any(String.class));
 
   }
 
@@ -86,7 +86,7 @@ public class WorkflowTypeControllerTest extends TestDataProducer {
 
     final String resultAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(listEdo);
 
-    when(this.workflowTypeService.getListByIdList(any(List.class))).thenReturn(list);
+    when(this.workflowTypeProcessService.getListByIdList(any(List.class), any(String.class))).thenReturn(list);
 
     final String contentAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(idList).replace("ArrayList", "List");
 
@@ -97,7 +97,7 @@ public class WorkflowTypeControllerTest extends TestDataProducer {
         .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(resultAsXmlString));
 
-    verify(this.workflowTypeService, times(1)).getListByIdList(any(List.class));
+    verify(this.workflowTypeProcessService, times(1)).getListByIdList(any(List.class), any(String.class));
 
   }
 
@@ -109,7 +109,7 @@ public class WorkflowTypeControllerTest extends TestDataProducer {
 
     final String resultAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(listEdo);
 
-    when(this.workflowTypeService.getListByIdCompanyId(any(Long.class))).thenReturn(list);
+    when(this.workflowTypeProcessService.getListByIdCompanyId(any(Long.class), any(String.class))).thenReturn(list);
 
     this.mockMvc
         .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModul.WORKFLOWTYPE_READ_LIST_BY_COMPANY, 1L)
@@ -117,7 +117,7 @@ public class WorkflowTypeControllerTest extends TestDataProducer {
         .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(resultAsXmlString));
 
-    verify(this.workflowTypeService, times(1)).getListByIdCompanyId(any(Long.class));
+    verify(this.workflowTypeProcessService, times(1)).getListByIdCompanyId(any(Long.class), any(String.class));
 
   }
 }
