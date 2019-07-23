@@ -6,9 +6,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.pth.ifow.profile.model.UserAuthenticationSession;
@@ -17,11 +20,21 @@ import com.pth.ifow.profile.service.ISessionManager;
 @Service
 public class ProfileSessionManager implements ISessionManager {
 
+  @Value("${iflow.backend.valid-email}")
+  private String backendValidEMail;
+  
+  private UserAuthenticationSession backendValidSession = null;
+  
   private static final Logger logger = LoggerFactory.getLogger(ProfileSessionManager.class);
 
-  private static final int SESSION_AGE_LIMIT = 7200;
-  Map<String, UserAuthenticationSession> sessions = new HashMap<>();
+  private static final int               SESSION_AGE_LIMIT = 7200;
+  Map<String, UserAuthenticationSession> sessions          = new HashMap<>();
 
+  @PostConstruct
+  public void init() {
+    this.backendValidSession = addSession(this.backendValidEMail);
+  }
+  
   @Override
   public UserAuthenticationSession findByEmail(final String email) {
 
@@ -112,12 +125,29 @@ public class ProfileSessionManager implements ISessionManager {
     if (session != null) {
       if (session.isValid()) {
         return session;
-      } else {
+      }
+      else {
         this.sessions.remove(session.getSessionid());
       }
     }
 
     return null;
+  }
+  
+  /**
+   * @return the backendValidEMail
+   */
+  @Override
+  public String getBackendValidEMail() {
+    return this.backendValidEMail;
+  }
+
+  /**
+   * @return the backendValidSession
+   */
+  @Override
+  public UserAuthenticationSession getBackendValidSession() {
+    return this.backendValidSession;
   }
 
 }
