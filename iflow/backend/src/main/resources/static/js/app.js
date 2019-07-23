@@ -1,8 +1,8 @@
 
-var mdmApp = angular.module('mdmApp', ['ngMaterial', 'ngTable', 'ngMaterialAccordion', 'ngSanitize']);
+var iflowApp = angular.module('iflowApp', ['ngMaterial', 'ngTable', 'ngMaterialAccordion', 'ngSanitize']);
 
 
-mdmApp.config(function($mdDateLocaleProvider) {
+iflowApp.config(function($mdDateLocaleProvider) {
 
     // Example of a French localization.
     $mdDateLocaleProvider.months = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni','Juli', 'August', 'September', 'October', 'November', 'Dezember',];
@@ -36,11 +36,11 @@ mdmApp.config(function($mdDateLocaleProvider) {
 
 });
 
-mdmApp.config(['$httpProvider', function($httpProvider) {
+iflowApp.config(['$httpProvider', function($httpProvider) {
     $httpProvider.defaults.timeout = 10000;
 }]);
 
-mdmApp.controller('BodyController', function ($scope, $http, $sce, $element, $compile, $mdSidenav, $mdComponentRegistry) {
+iflowApp.controller('BodyController', function ($scope, $http, $sce, $element, $compile, $mdSidenav, $mdComponentRegistry) {
 
 	$scope.showloading = false;
 	$scope.isShowError = true;
