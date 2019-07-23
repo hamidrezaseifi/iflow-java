@@ -1,15 +1,21 @@
 package com.pth.iflow.backend.services.impl;
 
 import java.io.IOException;
-import java.net.URI;
+import java.net.URL;
 
+import javax.annotation.PostConstruct;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter;
 import org.springframework.stereotype.Component;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
@@ -18,239 +24,131 @@ import com.pth.iflow.backend.exceptions.BackendCustomizedException;
 import com.pth.iflow.backend.services.IBackendRestTemplateCall;
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.response.IFlowErrorRestResponse;
+import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
 
 @Component
 public class BackendRestTemplateCall implements IBackendRestTemplateCall {
-
+  
+  protected final Logger log = LoggerFactory.getLogger(BackendRestTemplateCall.class);
+  
   @Autowired
   private RestTemplate restTemplate;
 
   @Autowired
   private MappingJackson2XmlHttpMessageConverter converter;
 
+  @PostConstruct
+  public void init() {
+
+  }
+
   @Override
-  public <I, O> O callRestPost(final URI uri, final EModule service, final I edo, final Class<O> responseClass,
+  public <I, O> O callRestPost(final URL url, final String token, final EModule service, final I edo, final Class<O> responseClass,
       final boolean throwError) throws BackendCustomizedException {
 
-    try {
+    final HttpEntity<I> request = new HttpEntity<I>(edo, generateTokenHeader(token));
 
+    try {
       if (responseClass.equals(Void.class)) {
-        this.restTemplate.postForObject(uri, edo, responseClass);
+        
+        this.restTemplate.postForEntity(url.toURI(), request, responseClass);
+        
         return null;
       }
       else {
-        return this.restTemplate.postForObject(uri, edo, responseClass);
+        final ResponseEntity<O> responseEntity = this.restTemplate.postForEntity(url.toURI(), request, responseClass);
+        
+        return responseEntity.getBody();
       }
-
     }
     catch (final RestClientResponseException e) {
+      final String resp = e.getResponseBodyAsString();
+      this.log.error("ERROR in connection with \"{}\" through url \"{}\" and response is {} ", service.getModuleName(), url, resp, e);
+
       if (!throwError) {
         return null;
       }
-      final String resp = e.getResponseBodyAsString();
 
       IFlowErrorRestResponse response = null;
       try {
         response = this.converter.getObjectMapper().readValue(resp, IFlowErrorRestResponse.class);
       }
       catch (final IOException e1) {
-
+        final BackendCustomizedException uiCustomizedException = new BackendCustomizedException("failed to POST: " + url,
+            e1.getMessage(),
+            service.name());
+        uiCustomizedException.initCause(e1);
+        throw uiCustomizedException;
       }
 
-      throw new BackendCustomizedException(response.getErrorType(), response.getMessage(), service.getModuleName());
+      throw new BackendCustomizedException(response.getMessage(), response.getErrorType(), service.getModuleName());
     }
     catch (final RestClientException e) {
+      this.log.error("ERROR in connection with \"{}\" through url \"{}\": ", service.getModuleName(), url, e);
+
       if (!throwError) {
         return null;
       }
-      throw new BackendCustomizedException(
-          String.format("Invalid Service Status : %s  or URL: %s ", service.getModuleName(), uri),
-          IFlowErrorRestResponse.stackListToString(e.getStackTrace()), EModule.GUI.getModuleName());
-    }
-  }
-
-  @Override
-  public <I, O> O callRestPost(final String url, final EModule service, final I edo, final Class<O> response,
-      final boolean throwError) throws BackendCustomizedException {
-
-    if (response.equals(Void.class)) {
-      callRestPost(URI.create(url), service, edo, response, throwError);
-      return null;
-    }
-    else {
-      return callRestPost(URI.create(url), service, edo, response, throwError);
-    }
-  }
-
-  @Override
-  public <O> O callRestGet(final String url, final EModule service, final Class<O> responseClass,
-      final boolean throwError, final Object... args) throws BackendCustomizedException {
-    try {
-
-      if (responseClass.equals(Void.class)) {
-        this.restTemplate.getForObject(url, responseClass, args);
-        return null;
-      }
-      else {
-        return this.restTemplate.getForObject(url, responseClass, args);
-      }
-
-    }
-    catch (final RestClientResponseException e) {
-      if (!throwError) {
-        return null;
-      }
-      final String resp = e.getResponseBodyAsString();
-
-      IFlowErrorRestResponse response = null;
-      try {
-        response = this.converter.getObjectMapper().readValue(resp, IFlowErrorRestResponse.class);
-      }
-      catch (final IOException e1) {
-
-      }
-
-      throw new BackendCustomizedException(response.getErrorType(), response.getMessage(), service.getModuleName());
-    }
-    catch (final RestClientException e) {
-      if (!throwError) {
-        return null;
-      }
-      String propUrl = url;
-      if (exceptionHasUrl(e)) {
-        propUrl = retreiveUrlFromError(e, url);
-      }
-
-      throw new BackendCustomizedException(generateServiceErrorMessage(url, service),
-          IFlowErrorRestResponse.stackListToString(e.getStackTrace()), EModule.GUI.getModuleName());
+      throw new BackendCustomizedException("Service " + service.getModuleName() + " is not availeable.", "", EModule.GUI.getModuleName());
     }
     catch (final Exception e) {
-      if (!throwError) {
-        return null;
-      }
 
-      throw new BackendCustomizedException(generateServiceErrorMessage(url, service),
-          IFlowErrorRestResponse.stackListToString(e.getStackTrace()), EModule.GUI.getModuleName());
+      throw new BackendCustomizedException(e.getMessage(), "", service.getModuleName());
     }
   }
 
+  private MultiValueMap<String, String> generateTokenHeader(final String token) {
+    final MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
+    headers.add(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, token);
+    headers.add("Content-Type", MediaType.APPLICATION_XML_VALUE);
+    return headers;
+  }
+
   @Override
-  public <O> O callRestGet(final URI uri, final EModule service, final Class<O> responseClass, final boolean throwError,
+  public <O> O callRestGet(final URL url, final String token, final EModule service, final Class<O> responseClass, final boolean throwError,
       final Object... args) throws BackendCustomizedException {
 
-    if (responseClass.equals(Void.class)) {
-      callRestGet(uri.toString(), service, responseClass, throwError, args);
-      return null;
-    }
-    else {
-      return callRestGet(uri.toString(), service, responseClass, throwError, args);
-    }
-
-  }
-
-  private boolean exceptionHasUrl(final RestClientException e) {
-    return e.getMessage().trim().startsWith("I/O error") && e.getMessage().contains("\"http:");
-  }
-
-  private String retreiveUrlFromError(final RestClientException e, final String defaultUrl) {
-    String propUrl = defaultUrl;
     try {
-      final int idx = e.getMessage().indexOf("\"http:");
-      propUrl = e.getMessage().substring(idx, e.getMessage().indexOf("\"", idx + 5) + 1);
-    }
-    catch (final Exception ex) {
-
-    }
-    return propUrl;
-  }
-
-  @Override
-  public <O> O callRestGet(final String url, final EModule service, final ParameterizedTypeReference<O> responseType,
-      final boolean throwError, final Object... args) throws BackendCustomizedException {
-    try {
-
-      final ResponseEntity<O> response = this.restTemplate.exchange(url, HttpMethod.GET, null, responseType, args);
-      return response.getBody();
+      final HttpEntity<Object> requestEntity = new HttpEntity<Object>(generateTokenHeader(token));
+      final ResponseEntity<O> resp = this.restTemplate.exchange(url.toString(), HttpMethod.GET, requestEntity, responseClass, args);
+      return resp.getBody();
 
     }
     catch (final RestClientResponseException e) {
+      final String resp = e.getResponseBodyAsString();
+      this.log.error("ERROR in connection with \"{}\" through url \"{}\" and response is {} ", service.getModuleName(), url, resp, e);
+
       if (!throwError) {
         return null;
       }
-      final String resp = e.getResponseBodyAsString();
 
       IFlowErrorRestResponse response = null;
       try {
         response = this.converter.getObjectMapper().readValue(resp, IFlowErrorRestResponse.class);
       }
       catch (final IOException e1) {
-
+        final BackendCustomizedException uiCustomizedException = new BackendCustomizedException("failed to POST: " + url,
+            e1.getMessage(),
+            service.name());
+        uiCustomizedException.initCause(e1);
+        throw uiCustomizedException;
       }
 
-      throw new BackendCustomizedException(response.getErrorType(), response.getMessage(), service.getModuleName());
+      throw new BackendCustomizedException(response.getMessage(), response.getErrorType(), service.getModuleName());
     }
     catch (final RestClientException e) {
+      this.log.error("ERROR in connection with \"{}\" through url \"{}\": ", service.getModuleName(), url, e);
+
       if (!throwError) {
         return null;
       }
-      String propUrl = url;
-      if (exceptionHasUrl(e)) {
-        propUrl = retreiveUrlFromError(e, url);
-      }
-
-      throw new BackendCustomizedException(generateServiceErrorMessage(url, service),
-          IFlowErrorRestResponse.stackListToString(e.getStackTrace()), EModule.GUI.getModuleName());
+      throw new BackendCustomizedException("Service " + service.getModuleName() + " is not availeable.", "", EModule.GUI.getModuleName());
     }
-  }
+    catch (final Exception e) {
 
-  @Override
-  public <I, O> O callRestPost(final String url, final EModule service, final I edo,
-      final ParameterizedTypeReference<O> responseType, final boolean throwError) throws BackendCustomizedException {
-    try {
-
-      final HttpEntity<I> request = new HttpEntity<>(edo);
-      final ResponseEntity<O> response = this.restTemplate.exchange(url, HttpMethod.POST, request, responseType);
-      return response.getBody();
-
+      throw new BackendCustomizedException(e.getMessage(), "", service.getModuleName());
     }
-    catch (final RestClientResponseException e) {
-      if (!throwError) {
-        return null;
-      }
-      final String resp = e.getResponseBodyAsString();
 
-      IFlowErrorRestResponse response = null;
-      try {
-        response = this.converter.getObjectMapper().readValue(resp, IFlowErrorRestResponse.class);
-      }
-      catch (final IOException e1) {
-
-      }
-
-      throw new BackendCustomizedException(response.getErrorType(), response.getMessage(), service.getModuleName());
-    }
-    catch (final RestClientException e) {
-      if (!throwError) {
-        return null;
-      }
-      String propUrl = url;
-      if (exceptionHasUrl(e)) {
-        propUrl = retreiveUrlFromError(e, url);
-      }
-
-      throw new BackendCustomizedException(generateServiceErrorMessage(url, service),
-          IFlowErrorRestResponse.stackListToString(e.getStackTrace()), EModule.GUI.getModuleName());
-    }
   }
-
-  @Override
-  public <I, O> O callRestPost(final URI url, final EModule service, final I edo,
-      final ParameterizedTypeReference<O> responseType, final boolean throwError) throws BackendCustomizedException {
-    return callRestPost(url, service, edo, responseType, throwError);
-  }
-
-  private String generateServiceErrorMessage(final String url, final EModule service) {
-    return String.format("Invalid Service Status : %s  or URL: %s ", service.getModuleName(), url);
-  }
-
+  
 }
