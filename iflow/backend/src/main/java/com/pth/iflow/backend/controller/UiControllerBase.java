@@ -22,54 +22,54 @@ import com.pth.iflow.backend.services.UiMenuService;
 
 @Controller
 public class UiControllerBase {
-  
+
   @Autowired
   private IBreadCrumbLoader breadCrumbLoader;
-  
+
   @Autowired
   private UiMenuService menuService;
-
+  
   private UiSessionUserInfo sessionUserInfo = null;
-
+  
   protected List<UiMenuItem> getMenus() {
     return this.menuService.getAllMenus();
-    
+
   }
-  
+
   protected String getCurrentRelativeUrl() {
     ServletUriComponentsBuilder builder = ServletUriComponentsBuilder.fromCurrentContextPath();
     final String root = builder.build().toUriString();
     builder = ServletUriComponentsBuilder.fromCurrentRequestUri();
     String path = builder.build().toUriString();
     path = path.replace(root, "");
-    
+
     return path;
   }
-  
+
   @ModelAttribute
   public void addAttributes(final Model model,
       final HttpSession session,
       final HttpServletResponse response,
       final HttpServletRequest request) throws Exception {
-    
+
     final String currentRelatedUrl = getCurrentRelativeUrl();
-    
+
     model.addAttribute("pageMenuList", getMenus());
     model.addAttribute("breadCrumb", this.breadCrumbLoader.getBreadCrumbList(currentRelatedUrl));
     model.addAttribute("isLogged", true);
     model.addAttribute("loggedUser", getSessionUserInfo());
-    
+
     model.addAttribute("url", currentRelatedUrl);
-    
+
   }
-  
+
   protected UiSessionUserInfo getSessionUserInfo() {
     if (this.sessionUserInfo == null) {
       final UiUser user = new UiUser("test", "fname", "lname", Arrays.asList(EUiUserRole.ADMIN, EUiUserRole.VIEWER));
       this.sessionUserInfo = new UiSessionUserInfo(user);
     }
-
+    
     return this.sessionUserInfo;
   }
-
+  
 }

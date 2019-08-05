@@ -8,13 +8,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.pth.iflow.backend.configurations.IBackendConfiguration;
 import com.pth.iflow.backend.helper.BuildInfoProperties;
 
-@Controller(value = "/")
+@Controller
+@RequestMapping(value = "/")
 public class MainController extends UiControllerBase {
 
   @Autowired
