@@ -11,8 +11,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.pth.iflow.backend.models.ui.enums.EUiUserRole;
 
-@JsonIgnoreProperties(value = {
-    "authorities", "enabled", })
+@JsonIgnoreProperties(value = { "authorities", "enabled", })
 public class UiUser {
 
   private String                  username;
@@ -29,11 +28,8 @@ public class UiUser {
     this.lastName = "";
 
   }
-  
-  public UiUser(final String username,
-      final String firstName,
-      final String lastName,
-      final EUiUserRole[] roles) {
+
+  public UiUser(final String username, final String firstName, final String lastName, final EUiUserRole[] roles) {
     this.username = username;
     this.firstName = firstName;
     this.lastName = lastName;
@@ -41,10 +37,7 @@ public class UiUser {
 
   }
 
-  public UiUser(final String username,
-      final String firstName,
-      final String lastName,
-      final List<EUiUserRole> roles) {
+  public UiUser(final String username, final String firstName, final String lastName, final List<EUiUserRole> roles) {
     this.username = username;
     this.firstName = firstName;
     this.lastName = lastName;
@@ -103,15 +96,11 @@ public class UiUser {
   }
 
   public boolean allowEdit() {
-    return this.roles.contains(EUiUserRole.ADMIN) || this.roles.contains(EUiUserRole.DATA_STEWARD);
+    return this.roles.contains(EUiUserRole.ADMIN);
   }
 
   public boolean isAdmin() {
     return this.roles.contains(EUiUserRole.ADMIN);
-  }
-
-  public boolean isDatasteward() {
-    return this.roles.contains(EUiUserRole.DATA_STEWARD);
   }
 
   public String getRoleNames() {
@@ -147,13 +136,13 @@ public class UiUser {
   public void setEnabled(final boolean isEnabled) {
     this.isEnabled = isEnabled;
   }
-  
+
   public String getUserTitle() {
     return this.lastName + ", " + this.firstName;
   }
 
   public List<GrantedAuthority> getAuthorities() {
-    final List<GrantedAuthority> list = AuthorityUtils.commaSeparatedStringToAuthorityList(getRolesAuthoritiesNames());
+    final List<GrantedAuthority> list = AuthorityUtils.commaSeparatedStringToAuthorityList(this.getRolesAuthoritiesNames());
     return list;
   }
 }
