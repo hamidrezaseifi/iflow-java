@@ -1,6 +1,5 @@
 package com.pth.iflow.backend.models;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,10 +17,8 @@ public class User extends ModelMapperBase<UserEdo, User> {
   private String           firstName;
   private String           lastName;
   private Integer          status;
-  private Integer          permission;
   private Integer          version;
-  private LocalDateTime    createdAt;
-  private LocalDateTime    updatedAt;
+  private Integer          permission;
   private final List<Long> groups           = new ArrayList<>();
   private final List<Long> departments      = new ArrayList<>();
   private final List<Long> departmentGroups = new ArrayList<>();
@@ -122,55 +119,21 @@ public class User extends ModelMapperBase<UserEdo, User> {
     return this.status == EUserStatus.ACTIVE.getValue().intValue();
   }
 
-  /**
-   * @return the permission
-   */
-  public Integer getPermission() {
-    return this.permission;
-  }
-
-  /**
-   * @return the version
-   */
   @Override
   public Integer getVersion() {
     return this.version;
   }
 
-  /**
-   * @param version the version to set
-   */
   @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
 
   /**
-   * @return the createdAt
+   * @return the permission
    */
-  public LocalDateTime getCreatedAt() {
-    return this.createdAt;
-  }
-
-  /**
-   * @param createdAt the createdAt to set
-   */
-  public void setCreatedAt(final LocalDateTime createdAt) {
-    this.createdAt = createdAt;
-  }
-
-  /**
-   * @return the updatedAt
-   */
-  public LocalDateTime getUpdatedAt() {
-    return this.updatedAt;
-  }
-
-  /**
-   * @param updatedAt the updatedAt to set
-   */
-  public void setUpdatedAt(final LocalDateTime updatedAt) {
-    this.updatedAt = updatedAt;
+  public Integer getPermission() {
+    return this.permission;
   }
 
   /**
@@ -238,6 +201,11 @@ public class User extends ModelMapperBase<UserEdo, User> {
 
   public void addDeputy(final Long deputyId) {
     this.deputies.add(deputyId);
+  }
+
+  @Override
+  public boolean isNew() {
+    return (this.id == null) || (this.id <= 0);
   }
 
   @Override
