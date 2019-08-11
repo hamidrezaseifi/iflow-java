@@ -3,12 +3,13 @@ package com.pth.iflow.backend.authentication;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.pth.iflow.backend.models.ui.UiSessionUserInfo;
-import com.pth.iflow.backend.models.ui.user.UiUser;
+import com.pth.iflow.backend.models.ui.UiUser;
 
 /**
  * A class to manage session-in user in session and Spring SecurityContext
@@ -20,6 +21,7 @@ import com.pth.iflow.backend.models.ui.user.UiUser;
 public class BackendSessionUserService {
 
   @Autowired
+  @Nullable
   private UiSessionUserInfo sessionUserInfo;
 
   /**
@@ -53,6 +55,10 @@ public class BackendSessionUserService {
   }
 
   public void reloadSessionData(final UiUser user) {
+
+    if (this.sessionUserInfo == null) {
+      this.sessionUserInfo = new UiSessionUserInfo(user);
+    }
 
     this.sessionUserInfo.setUser(user);
 

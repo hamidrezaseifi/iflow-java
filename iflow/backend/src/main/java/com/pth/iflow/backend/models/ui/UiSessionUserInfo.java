@@ -4,8 +4,6 @@ import java.util.Date;
 
 import org.springframework.context.annotation.Scope;
 
-import com.pth.iflow.backend.models.ui.user.UiUser;
-
 @Scope("session")
 public class UiSessionUserInfo {
   

@@ -1,11 +1,12 @@
 package com.pth.iflow.backend.models;
 
+import com.pth.iflow.backend.models.ui.UiUser;
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 import com.pth.iflow.common.edo.models.xml.ProfileResponseEdo;
 
 public class ProfileResponse extends ModelMapperBase<ProfileResponseEdo, ProfileResponse> {
 
-  private User    user;
+  private UiUser  user;
 
   private Company company;
 
@@ -17,17 +18,17 @@ public class ProfileResponse extends ModelMapperBase<ProfileResponseEdo, Profile
     this.sessionid = "";
   }
 
-  public ProfileResponse(final User user, final Company company, final String sessionid) {
+  public ProfileResponse(final UiUser user, final Company company, final String sessionid) {
     this.user = user;
     this.company = company;
     this.sessionid = sessionid;
   }
 
-  public User getUser() {
+  public UiUser getUser() {
     return this.user;
   }
 
-  public void setUser(final User user) {
+  public void setUser(final UiUser user) {
     this.user = user;
   }
 
@@ -73,7 +74,7 @@ public class ProfileResponse extends ModelMapperBase<ProfileResponseEdo, Profile
 
   @Override
   public ProfileResponse fromEdo(final ProfileResponseEdo edo) {
-    final ProfileResponse model = new ProfileResponse(new User().fromEdo(edo.getUser()), new Company().fromEdo(edo.getCompany()),
+    final ProfileResponse model = new ProfileResponse(new UiUser().fromEdo(edo.getUser()), new Company().fromEdo(edo.getCompany()),
         edo.getSessionid());
     return model;
   }

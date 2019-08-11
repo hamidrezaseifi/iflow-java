@@ -15,8 +15,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.pth.iflow.backend.models.ui.UiMenuItem;
 import com.pth.iflow.backend.models.ui.UiSessionUserInfo;
+import com.pth.iflow.backend.models.ui.UiUser;
 import com.pth.iflow.backend.models.ui.enums.EUiUserRole;
-import com.pth.iflow.backend.models.ui.user.UiUser;
 import com.pth.iflow.backend.services.IBreadCrumbLoader;
 import com.pth.iflow.backend.services.UiMenuService;
 
@@ -27,10 +27,10 @@ public class UiControllerBase {
   private IBreadCrumbLoader breadCrumbLoader;
 
   @Autowired
-  private UiMenuService menuService;
-  
+  private UiMenuService     menuService;
+
   private UiSessionUserInfo sessionUserInfo = null;
-  
+
   protected List<UiMenuItem> getMenus() {
     return this.menuService.getAllMenus();
 
@@ -47,17 +47,15 @@ public class UiControllerBase {
   }
 
   @ModelAttribute
-  public void addAttributes(final Model model,
-      final HttpSession session,
-      final HttpServletResponse response,
+  public void addAttributes(final Model model, final HttpSession session, final HttpServletResponse response,
       final HttpServletRequest request) throws Exception {
 
-    final String currentRelatedUrl = getCurrentRelativeUrl();
+    final String currentRelatedUrl = this.getCurrentRelativeUrl();
 
-    model.addAttribute("pageMenuList", getMenus());
+    model.addAttribute("pageMenuList", this.getMenus());
     model.addAttribute("breadCrumb", this.breadCrumbLoader.getBreadCrumbList(currentRelatedUrl));
     model.addAttribute("isLogged", true);
-    model.addAttribute("loggedUser", getSessionUserInfo());
+    model.addAttribute("loggedUser", this.getSessionUserInfo());
 
     model.addAttribute("url", currentRelatedUrl);
 
@@ -65,11 +63,11 @@ public class UiControllerBase {
 
   protected UiSessionUserInfo getSessionUserInfo() {
     if (this.sessionUserInfo == null) {
-      final UiUser user = new UiUser("test", "fname", "lname", Arrays.asList(EUiUserRole.ADMIN, EUiUserRole.VIEWER));
+      final UiUser user = UiUser.generateTestUser("test", "fname", "lname", Arrays.asList(EUiUserRole.ADMIN, EUiUserRole.VIEWER));
       this.sessionUserInfo = new UiSessionUserInfo(user);
     }
-    
+
     return this.sessionUserInfo;
   }
-  
+
 }

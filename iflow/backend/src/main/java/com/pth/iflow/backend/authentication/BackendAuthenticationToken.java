@@ -5,7 +5,7 @@ import java.util.Collection;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 
-import com.pth.iflow.backend.models.ui.user.UiUser;
+import com.pth.iflow.backend.models.ui.UiUser;
 
 public class BackendAuthenticationToken extends UsernamePasswordAuthenticationToken {
 
@@ -16,7 +16,7 @@ public class BackendAuthenticationToken extends UsernamePasswordAuthenticationTo
   private final UiUser      user;
 
   public BackendAuthenticationToken(final UiUser user) {
-    super(user.getUsername(), "fakepass", user.getAuthorities());
+    super(user.getEmail(), "fakepass", user.getAuthorities());
 
     this.user = user;
   }
@@ -32,7 +32,7 @@ public class BackendAuthenticationToken extends UsernamePasswordAuthenticationTo
 
   @Override
   public Object getPrincipal() {
-    return this.user.getUsername();
+    return this.user.getEmail();
   }
 
   @Override
