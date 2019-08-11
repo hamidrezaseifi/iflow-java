@@ -388,7 +388,7 @@ i.material-icons.inlist-icon
 
 .login-container
 {
-  height: 250px;
+  height: 290px;
   width: 400px;
   background: rgba(200, 200, 200, 0.5);
   padding: 20px;
@@ -406,7 +406,7 @@ i.material-icons.inlist-icon
 .login-container label
 {
   margin-bottom: 10px;
-  width: 95px;
+  width: 119px;
   font-size: 14px;
   font-weight: normal;
 }

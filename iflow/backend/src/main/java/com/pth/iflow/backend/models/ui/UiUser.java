@@ -344,6 +344,7 @@ public class UiUser extends ModelMapperBase<UserEdo, UiUser> {
     model.setBirthDate(new Date());
     model.setId(1L);
     model.setCompanyId(1L);
+    model.setEnabled(true);
 
     model.setRoles(roles);
 
