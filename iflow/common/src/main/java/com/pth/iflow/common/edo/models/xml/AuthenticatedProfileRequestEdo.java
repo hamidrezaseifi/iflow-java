@@ -34,8 +34,8 @@ public class AuthenticatedProfileRequestEdo {
     return this.token;
   }
 
-  public void setToken(final String tocken) {
-    this.token = tocken;
+  public void setToken(final String token) {
+    this.token = token;
   }
 
 }

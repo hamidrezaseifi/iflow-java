@@ -1,14 +1,12 @@
 package com.pth.iflow.backend.models;
 
-import com.pth.iflow.backend.models.ui.UiUser;
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 import com.pth.iflow.common.edo.models.xml.ProfileResponseEdo;
 
-public class ProfileResponse extends ModelMapperBase<ProfileResponseEdo, ProfileResponse> {
+public class ProfileResponse {
 
-  private UiUser  user;
+  private BackendUser  user;
 
-  private Company company;
+  private BackendCompany company;
 
   private String  sessionid;
 
@@ -18,25 +16,25 @@ public class ProfileResponse extends ModelMapperBase<ProfileResponseEdo, Profile
     this.sessionid = "";
   }
 
-  public ProfileResponse(final UiUser user, final Company company, final String sessionid) {
+  public ProfileResponse(final BackendUser user, final BackendCompany company, final String sessionid) {
     this.user = user;
     this.company = company;
     this.sessionid = sessionid;
   }
 
-  public UiUser getUser() {
+  public BackendUser getUser() {
     return this.user;
   }
 
-  public void setUser(final UiUser user) {
+  public void setUser(final BackendUser user) {
     this.user = user;
   }
 
-  public Company getCompany() {
+  public BackendCompany getCompany() {
     return this.company;
   }
 
-  public void setCompany(final Company company) {
+  public void setCompany(final BackendCompany company) {
     this.company = company;
   }
 
@@ -48,23 +46,6 @@ public class ProfileResponse extends ModelMapperBase<ProfileResponseEdo, Profile
     this.sessionid = sessionid;
   }
 
-  @Override
-  public Integer getVersion() {
-
-    return 0;
-  }
-
-  @Override
-  public Long getId() {
-    return null;
-  }
-
-  @Override
-  public void setVersion(final Integer version) {
-
-  }
-
-  @Override
   public ProfileResponseEdo toEdo() {
 
     final ProfileResponseEdo edo = new ProfileResponseEdo(this.user.toEdo(), this.company.toEdo(), this.sessionid);
@@ -72,9 +53,8 @@ public class ProfileResponse extends ModelMapperBase<ProfileResponseEdo, Profile
     return edo;
   }
 
-  @Override
-  public ProfileResponse fromEdo(final ProfileResponseEdo edo) {
-    final ProfileResponse model = new ProfileResponse(new UiUser().fromEdo(edo.getUser()), new Company().fromEdo(edo.getCompany()),
+  public static ProfileResponse fromEdo(final ProfileResponseEdo edo) {
+    final ProfileResponse model = new ProfileResponse(new BackendUser().fromEdo(edo.getUser()), new BackendCompany().fromEdo(edo.getCompany()),
         edo.getSessionid());
     return model;
   }

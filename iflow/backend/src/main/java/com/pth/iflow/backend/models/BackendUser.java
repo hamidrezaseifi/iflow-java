@@ -1,4 +1,4 @@
-package com.pth.iflow.backend.models.ui;
+package com.pth.iflow.backend.models;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,7 +16,7 @@ import com.pth.iflow.common.edo.models.xml.UserEdo;
 import com.pth.iflow.common.enums.EUserStatus;
 
 @JsonIgnoreProperties(value = { "authorities", "enabled", })
-public class UiUser extends ModelMapperBase<UserEdo, UiUser> {
+public class BackendUser extends ModelMapperBase<UserEdo, BackendUser> {
 
   private Long                    id;
   private Long                    companyId;
@@ -35,7 +35,7 @@ public class UiUser extends ModelMapperBase<UserEdo, UiUser> {
   private final List<EUiUserRole> roles;
   private boolean                 isEnabled;
 
-  public UiUser() {
+  public BackendUser() {
     this.roles = new ArrayList<>();
 
   }
@@ -309,8 +309,8 @@ public class UiUser extends ModelMapperBase<UserEdo, UiUser> {
   }
 
   @Override
-  public UiUser fromEdo(final UserEdo edo) {
-    final UiUser model = new UiUser();
+  public BackendUser fromEdo(final UserEdo edo) {
+    final BackendUser model = new BackendUser();
 
     model.setFirstName(edo.getFirstName());
     model.setLastName(edo.getLastName());
@@ -331,9 +331,9 @@ public class UiUser extends ModelMapperBase<UserEdo, UiUser> {
     return model;
   }
 
-  public static UiUser generateTestUser(final String email, final String firstName, final String lastName,
+  public static BackendUser generateTestUser(final String email, final String firstName, final String lastName,
       final List<EUiUserRole> roles) {
-    final UiUser model = new UiUser();
+    final BackendUser model = new BackendUser();
 
     model.setFirstName(firstName);
     model.setLastName(lastName);

@@ -3,13 +3,13 @@ package com.pth.iflow.backend.authentication;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.Nullable;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.pth.iflow.backend.models.ui.UiSessionUserInfo;
-import com.pth.iflow.backend.models.ui.UiUser;
+import com.pth.iflow.backend.models.BackendCompany;
+import com.pth.iflow.backend.models.BackendUser;
+import com.pth.iflow.backend.models.ui.BackendSessionUserInfo;
 
 /**
  * A class to manage session-in user in session and Spring SecurityContext
@@ -21,8 +21,7 @@ import com.pth.iflow.backend.models.ui.UiUser;
 public class BackendSessionUserService {
 
   @Autowired
-  @Nullable
-  private UiSessionUserInfo sessionUserInfo;
+  private BackendSessionUserInfo sessionUserInfo;
 
   /**
    * this function check the from remote server authenticated user if it has
@@ -34,7 +33,8 @@ public class BackendSessionUserService {
    * @param setContext
    * @return the new UiSessionUserInfo or null
    */
-  public UiSessionUserInfo authorizeUser(final BackendAuthenticationToken token, final HttpSession session, final boolean setContext) {
+  public BackendSessionUserInfo authorizeUser(final BackendAuthenticationToken token, final HttpSession session,
+      final boolean setContext) {
 
     if (setContext) {
       SecurityContext ctx = SecurityContextHolder.getContext();
@@ -43,23 +43,20 @@ public class BackendSessionUserService {
       }
       ctx.setAuthentication(token);
     }
-    return this.setLoggedInUserInfo(token.getUser(), session);
+    return this.setLoggedInUserInfo(token.getUser(), token.getCompany(), session);
 
   }
 
-  public UiSessionUserInfo setLoggedInUserInfo(final UiUser user, final HttpSession session) {
+  public BackendSessionUserInfo setLoggedInUserInfo(final BackendUser user, final BackendCompany company, final HttpSession session) {
 
-    this.reloadSessionData(user);
+    this.reloadSessionData(user, company);
 
     return this.sessionUserInfo;
   }
 
-  public void reloadSessionData(final UiUser user) {
+  public void reloadSessionData(final BackendUser user, final BackendCompany company) {
 
-    if (this.sessionUserInfo == null) {
-      this.sessionUserInfo = new UiSessionUserInfo(user);
-    }
-
+    this.sessionUserInfo.setCompany(company);
     this.sessionUserInfo.setUser(user);
 
   }

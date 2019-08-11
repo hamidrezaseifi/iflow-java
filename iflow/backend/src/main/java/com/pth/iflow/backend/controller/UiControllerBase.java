@@ -1,6 +1,5 @@
 package com.pth.iflow.backend.controller;
 
-import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,10 +12,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.pth.iflow.backend.configurations.BackendSecurityConfigurations;
+import com.pth.iflow.backend.models.ui.BackendSessionUserInfo;
 import com.pth.iflow.backend.models.ui.UiMenuItem;
-import com.pth.iflow.backend.models.ui.UiSessionUserInfo;
-import com.pth.iflow.backend.models.ui.UiUser;
-import com.pth.iflow.backend.models.ui.enums.EUiUserRole;
 import com.pth.iflow.backend.services.IBreadCrumbLoader;
 import com.pth.iflow.backend.services.UiMenuService;
 
@@ -24,12 +22,13 @@ import com.pth.iflow.backend.services.UiMenuService;
 public class UiControllerBase {
 
   @Autowired
-  private IBreadCrumbLoader breadCrumbLoader;
+  private IBreadCrumbLoader      breadCrumbLoader;
 
   @Autowired
-  private UiMenuService     menuService;
+  private UiMenuService          menuService;
 
-  private UiSessionUserInfo sessionUserInfo = null;
+  @Autowired
+  private BackendSessionUserInfo sessionUserInfo;
 
   protected List<UiMenuItem> getMenus() {
     return this.menuService.getAllMenus();
@@ -50,6 +49,11 @@ public class UiControllerBase {
   public void addAttributes(final Model model, final HttpSession session, final HttpServletResponse response,
       final HttpServletRequest request) throws Exception {
 
+    if (this.sessionUserInfo == null || !this.sessionUserInfo.isValid()) {
+      response.sendRedirect(BackendSecurityConfigurations.LOGIN_URL);
+
+    }
+
     final String currentRelatedUrl = this.getCurrentRelativeUrl();
 
     model.addAttribute("pageMenuList", this.getMenus());
@@ -61,11 +65,7 @@ public class UiControllerBase {
 
   }
 
-  protected UiSessionUserInfo getSessionUserInfo() {
-    if (this.sessionUserInfo == null) {
-      final UiUser user = UiUser.generateTestUser("test", "fname", "lname", Arrays.asList(EUiUserRole.ADMIN, EUiUserRole.VIEWER));
-      this.sessionUserInfo = new UiSessionUserInfo(user);
-    }
+  protected BackendSessionUserInfo getSessionUserInfo() {
 
     return this.sessionUserInfo;
   }

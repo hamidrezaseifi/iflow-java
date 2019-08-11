@@ -1,7 +1,6 @@
 package com.pth.iflow.backend.authentication.provider;
 
 import java.net.MalformedURLException;
-import java.util.Arrays;
 
 import javax.annotation.PostConstruct;
 
@@ -15,9 +14,8 @@ import org.springframework.stereotype.Component;
 import com.pth.iflow.backend.authentication.BackendAuthenticationDetails;
 import com.pth.iflow.backend.authentication.BackendAuthenticationToken;
 import com.pth.iflow.backend.exceptions.BackendCustomizedException;
+import com.pth.iflow.backend.models.ProfileResponse;
 import com.pth.iflow.backend.models.UserAuthenticationResponse;
-import com.pth.iflow.backend.models.ui.UiUser;
-import com.pth.iflow.backend.models.ui.enums.EUiUserRole;
 import com.pth.iflow.backend.services.IProfileValidator;
 
 @Component
@@ -52,8 +50,15 @@ public class BackendCustomAuthenticationProvider implements AuthenticationProvid
 
       if (authResponse != null) {
 
-        return new BackendAuthenticationToken(
-            UiUser.generateTestUser("test", "fname", "lname", Arrays.asList(EUiUserRole.ADMIN, EUiUserRole.VIEWER)));
+        ProfileResponse profileResponse = null;
+        try {
+          profileResponse = this.profileValidator.readProfile(username, authResponse.getToken());
+        } catch (BackendCustomizedException | MalformedURLException e) {
+
+        }
+        if (profileResponse != null) {
+          return new BackendAuthenticationToken(profileResponse.getUser(), profileResponse.getCompany());
+        }
       }
     }
 

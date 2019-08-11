@@ -5,24 +5,31 @@ import java.util.Collection;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 
-import com.pth.iflow.backend.models.ui.UiUser;
+import com.pth.iflow.backend.models.BackendCompany;
+import com.pth.iflow.backend.models.BackendUser;
 
 public class BackendAuthenticationToken extends UsernamePasswordAuthenticationToken {
 
   /**
    *
    */
-  private static final long serialVersionUID = -7341854439748304108L;
-  private final UiUser      user;
+  private static final long    serialVersionUID = -7341854439748304108L;
+  private final BackendUser    user;
+  private final BackendCompany company;
 
-  public BackendAuthenticationToken(final UiUser user) {
+  public BackendAuthenticationToken(final BackendUser user, final BackendCompany company) {
     super(user.getEmail(), "fakepass", user.getAuthorities());
 
     this.user = user;
+    this.company = company;
   }
 
-  public UiUser getUser() {
+  public BackendUser getUser() {
     return this.user;
+  }
+
+  public BackendCompany getCompany() {
+    return this.company;
   }
 
   @Override

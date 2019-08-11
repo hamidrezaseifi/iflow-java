@@ -11,5 +11,7 @@ public interface IProfileValidator {
   UserAuthenticationResponse authenticate(String username, String password, String companyIdentity)
       throws BackendCustomizedException, MalformedURLException;
 
+  ProfileResponse readProfile(String username, String token) throws BackendCustomizedException, MalformedURLException;
+
   ProfileResponse isTokenValid(String token) throws BackendCustomizedException, MalformedURLException;
 }

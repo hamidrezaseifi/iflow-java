@@ -13,6 +13,7 @@ import com.pth.iflow.backend.models.ProfileResponse;
 import com.pth.iflow.backend.models.UserAuthenticationResponse;
 import com.pth.iflow.backend.services.IProfileValidator;
 import com.pth.iflow.backend.services.IRestTemplateCall;
+import com.pth.iflow.common.edo.models.xml.AuthenticatedProfileRequestEdo;
 import com.pth.iflow.common.edo.models.xml.ProfileResponseEdo;
 import com.pth.iflow.common.edo.models.xml.TokenProfileRequestEdo;
 import com.pth.iflow.common.edo.models.xml.UserAuthenticationRequestEdo;
@@ -64,6 +65,22 @@ public class ProfileValidator implements IProfileValidator {
         request, UserAuthenticationResponseEdo.class, true);
 
     return UserAuthenticationResponse.fromEdo(responseEdo);
+  }
+
+  @Override
+  public ProfileResponse readProfile(final String username, final String token)
+      throws BackendCustomizedException, MalformedURLException {
+    logger.debug("Read profile for user {} from profile service", username);
+
+    final AuthenticatedProfileRequestEdo request = new AuthenticatedProfileRequestEdo();
+    request.setToken(token);
+    request.setEmail(username);
+
+    final ProfileResponseEdo responseEdo = this.restTemplate.callRestPost(
+        this.moduleAccessConfig.generateProfileUrl(IflowRestPaths.ProfileModule.PROFILE_READ_AUTHENTOCATEDINFO), token,
+        EModule.PROFILE, request, ProfileResponseEdo.class, true);
+
+    return ProfileResponse.fromEdo(responseEdo);
   }
 
 }
