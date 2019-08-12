@@ -17,7 +17,7 @@ import com.pth.iflow.backend.helper.BuildInfoProperties;
 
 @Controller
 @RequestMapping(value = "/")
-public class MainController extends UiControllerBase {
+public class MainController extends BackendControllerBase {
 
   @Autowired
   private IBackendConfiguration backendConfigurations;

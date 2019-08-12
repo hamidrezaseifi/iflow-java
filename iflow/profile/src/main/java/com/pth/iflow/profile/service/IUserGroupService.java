@@ -10,5 +10,5 @@ public interface IUserGroupService {
 
   UserGroup getById(final Long id) throws ProfileCustomizedException, MalformedURLException;
 
-  List<UserGroup> getListByComaonyId(final Long companyId) throws ProfileCustomizedException, MalformedURLException;
+  List<UserGroup> getListByCompanyId(final Long companyId) throws ProfileCustomizedException, MalformedURLException;
 }

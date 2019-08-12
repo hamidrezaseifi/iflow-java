@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Controller
 @RequestMapping(value = "/companies")
-public class CompanyController extends UiControllerBase {
+public class CompanyController extends BackendControllerBase {
 
   @ResponseStatus(HttpStatus.OK)
   @GetMapping(path = { "/", "/list" })

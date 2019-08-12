@@ -10,7 +10,6 @@ import org.springframework.security.core.authority.AuthorityUtils;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.pth.iflow.backend.models.ui.enums.EUiUserRole;
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 import com.pth.iflow.common.edo.models.xml.UserEdo;
 import com.pth.iflow.common.enums.EUserStatus;
@@ -18,25 +17,23 @@ import com.pth.iflow.common.enums.EUserStatus;
 @JsonIgnoreProperties(value = { "authorities", "enabled", })
 public class BackendUser extends ModelMapperBase<UserEdo, BackendUser> {
 
-  private Long                    id;
-  private Long                    companyId;
-  private String                  email;
-  private Date                    birthDate;
-  private String                  firstName;
-  private String                  lastName;
-  private Integer                 status;
-  private Integer                 version;
-  private Integer                 permission;
-  private final List<Long>        groups           = new ArrayList<>();
-  private final List<Long>        departments      = new ArrayList<>();
-  private final List<Long>        departmentGroups = new ArrayList<>();
-  private final List<Long>        deputies         = new ArrayList<>();
+  private Long             id;
+  private Long             companyId;
+  private String           email;
+  private Date             birthDate;
+  private String           firstName;
+  private String           lastName;
+  private Integer          status;
+  private Integer          version;
+  private Integer          permission;
+  private final List<Long> groupIds         = new ArrayList<>();
+  private final List<Long> departments      = new ArrayList<>();
+  private final List<Long> departmentGroups = new ArrayList<>();
+  private final List<Long> deputies         = new ArrayList<>();
 
-  private final List<EUiUserRole> roles;
-  private boolean                 isEnabled;
+  private boolean isEnabled;
 
   public BackendUser() {
-    this.roles = new ArrayList<>();
 
   }
 
@@ -44,45 +41,22 @@ public class BackendUser extends ModelMapperBase<UserEdo, BackendUser> {
     return this.lastName + ", " + this.firstName;
   }
 
-  public List<EUiUserRole> getRoles() {
-    return this.roles;
-  }
-
-  public boolean hasRole(final EUiUserRole role) {
-    return this.roles.contains(role);
-  }
-
   public boolean allowEdit() {
-    return this.roles.contains(EUiUserRole.ADMIN);
+    return true;
   }
 
   public boolean isAdmin() {
-    return this.roles.contains(EUiUserRole.ADMIN);
+    return true;
   }
 
-  public String getRoleNames() {
+  private String getRolesAuthoritiesNames(final List<BackendUserGroup> allUserGroups) {
+    final List<BackendUserGroup> userGroups = new ArrayList<>();
+    userGroups.addAll(allUserGroups.stream().filter(g -> this.groupIds.contains(g.getId())).collect(Collectors.toList()));
     String name = "";
-    for (final EUiUserRole role : this.roles) {
-      name += (name.isEmpty() ? "" : ", ") + role.toString().toUpperCase();
+    for (final BackendUserGroup group : userGroups) {
+      name += (name.isEmpty() ? "" : ", ") + group.getTitle().toUpperCase();
     }
     return name;
-  }
-
-  private String getRolesAuthoritiesNames() {
-    String name = "";
-    for (final EUiUserRole role : this.roles) {
-      name += (name.isEmpty() ? "" : ", ") + role.getAuthority().toUpperCase();
-    }
-    return name;
-  }
-
-  public void setRoles(final List<EUiUserRole> roles) {
-    this.roles.clear();
-    this.roles.addAll(roles);
-  }
-
-  public void addRole(final EUiUserRole role) {
-    this.roles.add(role);
   }
 
   public boolean isEnabled() {
@@ -98,8 +72,8 @@ public class BackendUser extends ModelMapperBase<UserEdo, BackendUser> {
     return this.lastName + ", " + this.firstName;
   }
 
-  public List<GrantedAuthority> getAuthorities() {
-    final List<GrantedAuthority> list = AuthorityUtils.commaSeparatedStringToAuthorityList(this.getRolesAuthoritiesNames());
+  public List<GrantedAuthority> getAuthorities(final List<BackendUserGroup> allUserGroups) {
+    final List<GrantedAuthority> list = AuthorityUtils.commaSeparatedStringToAuthorityList(this.getRolesAuthoritiesNames(allUserGroups));
     return list;
   }
 
@@ -223,18 +197,18 @@ public class BackendUser extends ModelMapperBase<UserEdo, BackendUser> {
   }
 
   public List<Long> getGroups() {
-    return this.groups;
+    return this.groupIds;
   }
 
   public void setGroups(final List<Long> groups) {
-    this.groups.clear();
+    this.groupIds.clear();
     if (groups != null) {
-      this.groups.addAll(groups);
+      this.groupIds.addAll(groups);
     }
   }
 
   public void addGroup(final Long groupId) {
-    this.groups.add(groupId);
+    this.groupIds.add(groupId);
   }
 
   public List<Long> getDepartments() {
@@ -299,11 +273,10 @@ public class BackendUser extends ModelMapperBase<UserEdo, BackendUser> {
     edo.setBirthDate(this.birthDate);
     edo.setId(this.id);
     edo.setCompanyId(this.companyId);
-    edo.setGroups(this.groups);
+    edo.setGroups(this.groupIds);
     edo.setDepartments(this.departments);
     edo.setDepartmentGroups(this.departmentGroups);
     edo.setDeputies(this.deputies);
-    edo.setRoles(this.roles.stream().map(r -> r.getName()).collect(Collectors.toList()));
 
     return edo;
   }
@@ -325,28 +298,6 @@ public class BackendUser extends ModelMapperBase<UserEdo, BackendUser> {
     model.setDepartments(edo.getDepartments());
     model.setDepartmentGroups(edo.getDepartmentGroups());
     model.setDeputies(edo.getDeputies());
-
-    model.setRoles(edo.getRoles().stream().map(r -> EUiUserRole.valueOf(r)).collect(Collectors.toList()));
-
-    return model;
-  }
-
-  public static BackendUser generateTestUser(final String email, final String firstName, final String lastName,
-      final List<EUiUserRole> roles) {
-    final BackendUser model = new BackendUser();
-
-    model.setFirstName(firstName);
-    model.setLastName(lastName);
-    model.setPermission(1);
-    model.setStatus(1);
-    model.setVersion(1);
-    model.setEmail(email);
-    model.setBirthDate(new Date());
-    model.setId(1L);
-    model.setCompanyId(1L);
-    model.setEnabled(true);
-
-    model.setRoles(roles);
 
     return model;
   }

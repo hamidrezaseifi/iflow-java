@@ -81,7 +81,7 @@ public class UserGroupServiceTest extends TestDataProducer {
     when(this.restTemplate.callRestGet(any(String.class), any(EModule.class), eq(UserGroupListEdo.class), any(boolean.class), any()))
         .thenReturn(listEdo);
 
-    final List<UserGroup> resList = this.userGroupService.getListByComaonyId(1L);
+    final List<UserGroup> resList = this.userGroupService.getListByCompanyId(1L);
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());

@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 import com.pth.iflow.backend.authentication.BackendAuthenticationDetails;
 import com.pth.iflow.backend.authentication.BackendAuthenticationToken;
 import com.pth.iflow.backend.exceptions.BackendCustomizedException;
-import com.pth.iflow.backend.models.ProfileResponse;
 import com.pth.iflow.backend.models.UserAuthenticationResponse;
 import com.pth.iflow.backend.services.IProfileValidator;
 
@@ -32,8 +31,8 @@ public class BackendCustomAuthenticationProvider implements AuthenticationProvid
   @Override
   public Authentication authenticate(final Authentication authentication) throws AuthenticationException {
 
-    if (authentication instanceof UsernamePasswordAuthenticationToken
-        && authentication.getDetails() instanceof BackendAuthenticationDetails) {
+    if ((authentication instanceof UsernamePasswordAuthenticationToken)
+        && (authentication.getDetails() instanceof BackendAuthenticationDetails)) {
 
       final String username = authentication.getName();
       final String password = authentication.getCredentials().toString();
@@ -42,23 +41,18 @@ public class BackendCustomAuthenticationProvider implements AuthenticationProvid
       UserAuthenticationResponse authResponse = null;
       try {
         authResponse = this.profileValidator.authenticate(username, password, companyid);
-      } catch (final BackendCustomizedException e) {
+      }
+      catch (final BackendCustomizedException e) {
 
-      } catch (final MalformedURLException e) {
+      }
+      catch (final MalformedURLException e) {
 
       }
 
       if (authResponse != null) {
 
-        ProfileResponse profileResponse = null;
-        try {
-          profileResponse = this.profileValidator.readProfile(username, authResponse.getToken());
-        } catch (BackendCustomizedException | MalformedURLException e) {
+        return new BackendAuthenticationToken(username, companyid, authResponse.getToken(), authResponse.getSessionid());
 
-        }
-        if (profileResponse != null) {
-          return new BackendAuthenticationToken(profileResponse.getUser(), profileResponse.getCompany());
-        }
       }
     }
 

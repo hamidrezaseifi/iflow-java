@@ -12,5 +12,5 @@ public interface IUsersService {
 
   User getUserById(final Long id) throws ProfileCustomizedException, MalformedURLException;
 
-  List<User> getUserListByComaonyId(final Long companyId) throws ProfileCustomizedException, MalformedURLException;
+  List<User> getUserListByCompanyId(final Long companyId) throws ProfileCustomizedException, MalformedURLException;
 }

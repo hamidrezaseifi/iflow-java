@@ -1,49 +1,63 @@
 package com.pth.iflow.backend.authentication;
 
-import java.util.Collection;
-
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
-
-import com.pth.iflow.backend.models.BackendCompany;
-import com.pth.iflow.backend.models.BackendUser;
 
 public class BackendAuthenticationToken extends UsernamePasswordAuthenticationToken {
 
   /**
    *
    */
-  private static final long    serialVersionUID = -7341854439748304108L;
-  private final BackendUser    user;
-  private final BackendCompany company;
+  private static final long serialVersionUID = -7341854439748304108L;
 
-  public BackendAuthenticationToken(final BackendUser user, final BackendCompany company) {
-    super(user.getEmail(), "fakepass", user.getAuthorities());
+  private final String username;
+  private final String companyId;
+  private final String token;
+  private final String sessionId;
 
-    this.user = user;
-    this.company = company;
-  }
+  public BackendAuthenticationToken(final String username, final String companyid, final String token, final String sessionid) {
+    super(username, "fakepass");
 
-  public BackendUser getUser() {
-    return this.user;
-  }
-
-  public BackendCompany getCompany() {
-    return this.company;
-  }
-
-  @Override
-  public Collection<GrantedAuthority> getAuthorities() {
-    return this.user.getAuthorities();
+    this.username = username;
+    this.companyId = companyid;
+    this.token = token;
+    this.sessionId = sessionid;
   }
 
   @Override
   public Object getPrincipal() {
-    return this.user.getEmail();
+    return this.username;
   }
 
   @Override
   public Object getCredentials() {
     return null;
+  }
+
+  /**
+   * @return the username
+   */
+  public String getUsername() {
+    return this.username;
+  }
+
+  /**
+   * @return the companyId
+   */
+  public String getCompanyId() {
+    return this.companyId;
+  }
+
+  /**
+   * @return the token
+   */
+  public String getToken() {
+    return this.token;
+  }
+
+  /**
+   * @return the sessionId
+   */
+  public String getSessionId() {
+    return this.sessionId;
   }
 }

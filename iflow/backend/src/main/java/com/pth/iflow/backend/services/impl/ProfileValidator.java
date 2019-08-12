@@ -24,13 +24,13 @@ import com.pth.iflow.common.rest.IflowRestPaths;
 @Service
 public class ProfileValidator implements IProfileValidator {
 
-  private static final Logger                           logger = LoggerFactory.getLogger(ProfileValidator.class);
+  private static final Logger logger = LoggerFactory.getLogger(ProfileValidator.class);
 
   private final IRestTemplateCall                       restTemplate;
   private final BackendConfiguration.ModuleAccessConfig moduleAccessConfig;
 
   public ProfileValidator(@Autowired final IRestTemplateCall restTemplate,
-      @Autowired final BackendConfiguration.ModuleAccessConfig moduleAccessConfig) {
+                          @Autowired final BackendConfiguration.ModuleAccessConfig moduleAccessConfig) {
     this.restTemplate = restTemplate;
     this.moduleAccessConfig = moduleAccessConfig;
   }
@@ -44,15 +44,20 @@ public class ProfileValidator implements IProfileValidator {
     profileRequest.setToken(token);
 
     final ProfileResponseEdo responseEdo = this.restTemplate.callRestPost(
-        this.moduleAccessConfig.generateProfileUrl(IflowRestPaths.ProfileModule.PROFILE_READ_TOKENINFO), token, EModule.PROFILE,
-        profileRequest, ProfileResponseEdo.class, true);
+                                                                          this.moduleAccessConfig.generateProfileUrl(IflowRestPaths.ProfileModule.PROFILE_READ_TOKENINFO),
+                                                                          token,
+                                                                          EModule.PROFILE,
+                                                                          profileRequest,
+                                                                          ProfileResponseEdo.class,
+                                                                          true);
 
-    return new ProfileResponse().fromEdo(responseEdo);
+    return ProfileResponse.fromEdo(responseEdo);
   }
 
   @Override
   public UserAuthenticationResponse authenticate(final String username, final String password, final String companyIdentity)
-      throws BackendCustomizedException, MalformedURLException {
+                                                                                                                             throws BackendCustomizedException,
+                                                                                                                             MalformedURLException {
     logger.debug("Authenticate user {} from profile service", username);
 
     final UserAuthenticationRequestEdo request = new UserAuthenticationRequestEdo();
@@ -61,15 +66,20 @@ public class ProfileValidator implements IProfileValidator {
     request.setPassword(password);
 
     final UserAuthenticationResponseEdo responseEdo = this.restTemplate.callRestPost(
-        this.moduleAccessConfig.generateProfileUrl(IflowRestPaths.ProfileModule.AUTHENTICATION_AUTHENTICATE), "", EModule.PROFILE,
-        request, UserAuthenticationResponseEdo.class, true);
+                                                                                     this.moduleAccessConfig.generateProfileUrl(IflowRestPaths.ProfileModule.AUTHENTICATION_AUTHENTICATE),
+                                                                                     "",
+                                                                                     EModule.PROFILE,
+                                                                                     request,
+                                                                                     UserAuthenticationResponseEdo.class,
+                                                                                     true);
 
     return UserAuthenticationResponse.fromEdo(responseEdo);
   }
 
   @Override
   public ProfileResponse readProfile(final String username, final String token)
-      throws BackendCustomizedException, MalformedURLException {
+                                                                                throws BackendCustomizedException,
+                                                                                MalformedURLException {
     logger.debug("Read profile for user {} from profile service", username);
 
     final AuthenticatedProfileRequestEdo request = new AuthenticatedProfileRequestEdo();
@@ -77,8 +87,12 @@ public class ProfileValidator implements IProfileValidator {
     request.setEmail(username);
 
     final ProfileResponseEdo responseEdo = this.restTemplate.callRestPost(
-        this.moduleAccessConfig.generateProfileUrl(IflowRestPaths.ProfileModule.PROFILE_READ_AUTHENTOCATEDINFO), token,
-        EModule.PROFILE, request, ProfileResponseEdo.class, true);
+                                                                          this.moduleAccessConfig.generateProfileUrl(IflowRestPaths.ProfileModule.PROFILE_READ_AUTHENTOCATEDINFO),
+                                                                          token,
+                                                                          EModule.PROFILE,
+                                                                          request,
+                                                                          ProfileResponseEdo.class,
+                                                                          true);
 
     return ProfileResponse.fromEdo(responseEdo);
   }

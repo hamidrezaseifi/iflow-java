@@ -44,7 +44,7 @@ public class UserGroupService implements IUserGroupService {
   }
 
   @Override
-  public List<UserGroup> getListByComaonyId(final Long companyId) throws ProfileCustomizedException, MalformedURLException {
+  public List<UserGroup> getListByCompanyId(final Long companyId) throws ProfileCustomizedException, MalformedURLException {
     logger.debug("Request UserGroup list data for companyid {}", companyId);
 
     final UserGroupListEdo edo = restTemplate.callRestGet(

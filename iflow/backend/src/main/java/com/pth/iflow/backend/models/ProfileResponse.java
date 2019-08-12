@@ -1,24 +1,36 @@
 package com.pth.iflow.backend.models;
 
+import java.util.List;
+
 import com.pth.iflow.common.edo.models.xml.ProfileResponseEdo;
 
 public class ProfileResponse {
 
-  private BackendUser  user;
+  private BackendUser user;
 
-  private BackendCompany company;
+  private BackendCompanyProfile companyProfile;
 
-  private String  sessionid;
+  private String sessionid;
 
   public ProfileResponse() {
     this.user = null;
-    this.company = null;
+    this.companyProfile = null;
     this.sessionid = "";
   }
 
-  public ProfileResponse(final BackendUser user, final BackendCompany company, final String sessionid) {
+  public ProfileResponse(final BackendUser user, final BackendCompanyProfile companyProfile, final String sessionid) {
     this.user = user;
-    this.company = company;
+    this.companyProfile = companyProfile;
+    this.sessionid = sessionid;
+  }
+
+  public ProfileResponse(final BackendUser user,
+                         final BackendCompany company,
+                         final List<BackendDepartment> departments,
+                         final List<BackendUserGroup> userGroups,
+                         final String sessionid) {
+    this.user = user;
+    this.companyProfile = new BackendCompanyProfile(company, departments, userGroups);
     this.sessionid = sessionid;
   }
 
@@ -30,12 +42,12 @@ public class ProfileResponse {
     this.user = user;
   }
 
-  public BackendCompany getCompany() {
-    return this.company;
+  public BackendCompanyProfile getCompanyProfile() {
+    return this.companyProfile;
   }
 
-  public void setCompany(final BackendCompany company) {
-    this.company = company;
+  public void setCompanyProfile(final BackendCompanyProfile companyProfile) {
+    this.companyProfile = companyProfile;
   }
 
   public String getSessionid() {
@@ -48,15 +60,14 @@ public class ProfileResponse {
 
   public ProfileResponseEdo toEdo() {
 
-    final ProfileResponseEdo edo = new ProfileResponseEdo(this.user.toEdo(), this.company.toEdo(), this.sessionid);
-
-    return edo;
+    return new ProfileResponseEdo(this.user.toEdo(), this.companyProfile.toEdo(), this.sessionid);
   }
 
   public static ProfileResponse fromEdo(final ProfileResponseEdo edo) {
-    final ProfileResponse model = new ProfileResponse(new BackendUser().fromEdo(edo.getUser()), new BackendCompany().fromEdo(edo.getCompany()),
-        edo.getSessionid());
-    return model;
+
+    return new ProfileResponse(new BackendUser().fromEdo(edo.getUser()),
+                               new BackendCompanyProfile().fromEdo(edo.getCompanyProfile()),
+                               edo.getSessionid());
   }
 
 }

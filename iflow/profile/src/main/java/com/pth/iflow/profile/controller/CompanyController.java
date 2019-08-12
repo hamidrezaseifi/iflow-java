@@ -20,6 +20,7 @@ import com.pth.iflow.common.annotations.IflowGetRequestMapping;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 import com.pth.iflow.common.edo.models.xml.CompanyEdo;
+import com.pth.iflow.common.edo.models.xml.CompanyProfileEdo;
 import com.pth.iflow.common.edo.models.xml.DepartmentListEdo;
 import com.pth.iflow.common.edo.models.xml.UserGroupListEdo;
 import com.pth.iflow.common.edo.models.xml.UserListEdo;
@@ -48,28 +49,33 @@ public class CompanyController {
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(value = IflowRestPaths.ProfileModule.COMPANY_READ_BY_ID)
   @ResponseBody
-  public ResponseEntity<CompanyEdo> readById(@PathVariable(name = "companyid") final Long companyid, final HttpServletRequest request,
-      @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId)
-      throws ProfileCustomizedException, URISyntaxException, MalformedURLException {
+  public ResponseEntity<CompanyEdo> readById(@PathVariable(name = "companyid") final Long companyid,
+                                             final HttpServletRequest request,
+                                             @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId)
+                                                                                                                                                     throws ProfileCustomizedException,
+                                                                                                                                                     URISyntaxException,
+                                                                                                                                                     MalformedURLException {
 
-    final ProfileResponse profile = tokenUserDataManager.getProfileByToken(headerTokenId);
+    final ProfileResponse profile = this.tokenUserDataManager.getProfileByToken(headerTokenId);
 
-    if (profile.getCompany().getId() != companyid) {
+    if (profile.getCompanyProfile().getCompany().getId() != companyid) {
       throw new ProfileCustomizedException("Invalid Company!", "", EModule.PROFILE.getModuleName(), EIFlowErrorType.INVALID_COMPANY);
     }
 
-    return ControllerHelper.createResponseEntity(request, profile.getCompany().toEdo(), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, profile.getCompanyProfile().getCompany().toEdo(), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(value = IflowRestPaths.ProfileModule.COMPANY_READ_USER_LIST)
   @ResponseBody
   public ResponseEntity<UserListEdo> readUserList(@PathVariable(name = "companyid") final Long companyid,
-      final HttpServletRequest request,
-      @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId)
-      throws ProfileCustomizedException, URISyntaxException, MalformedURLException {
+                                                  final HttpServletRequest request,
+                                                  @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId)
+                                                                                                                                                          throws ProfileCustomizedException,
+                                                                                                                                                          URISyntaxException,
+                                                                                                                                                          MalformedURLException {
 
-    final List<User> list = tokenUserDataManager.getUserListByToken(headerTokenId, companyid);
+    final List<User> list = this.tokenUserDataManager.getUserListByToken(headerTokenId, companyid);
 
     final UserListEdo edo = new UserListEdo(ModelMapperBase.toEdoList(list));
 
@@ -80,11 +86,13 @@ public class CompanyController {
   @IflowGetRequestMapping(value = IflowRestPaths.ProfileModule.COMPANY_READ_USERGROUP_LIST)
   @ResponseBody
   public ResponseEntity<UserGroupListEdo> readUserGroupList(@PathVariable(name = "companyid") final Long companyid,
-      final HttpServletRequest request,
-      @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId)
-      throws ProfileCustomizedException, URISyntaxException, MalformedURLException {
+                                                            final HttpServletRequest request,
+                                                            @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId)
+                                                                                                                                                                    throws ProfileCustomizedException,
+                                                                                                                                                                    URISyntaxException,
+                                                                                                                                                                    MalformedURLException {
 
-    final List<UserGroup> list = tokenUserDataManager.getUserGroupListByToken(headerTokenId, companyid);
+    final List<UserGroup> list = this.tokenUserDataManager.getUserGroupListByToken(headerTokenId, companyid);
 
     final UserGroupListEdo edo = new UserGroupListEdo(ModelMapperBase.toEdoList(list));
 
@@ -95,15 +103,32 @@ public class CompanyController {
   @IflowGetRequestMapping(value = IflowRestPaths.ProfileModule.COMPANY_READ_DEPARTMENT_LIST)
   @ResponseBody
   public ResponseEntity<DepartmentListEdo> readDepartmentList(@PathVariable(name = "companyid") final Long companyid,
-      final HttpServletRequest request,
-      @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId)
-      throws ProfileCustomizedException, URISyntaxException, MalformedURLException {
+                                                              final HttpServletRequest request,
+                                                              @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId)
+                                                                                                                                                                      throws ProfileCustomizedException,
+                                                                                                                                                                      URISyntaxException,
+                                                                                                                                                                      MalformedURLException {
 
-    final List<Department> list = tokenUserDataManager.getDepartmentListByToken(headerTokenId, companyid);
+    final List<Department> list = this.tokenUserDataManager.getDepartmentListByToken(headerTokenId, companyid);
 
     final DepartmentListEdo edo = new DepartmentListEdo(ModelMapperBase.toEdoList(list));
 
     return ControllerHelper.createResponseEntity(request, edo, HttpStatus.OK);
+  }
+
+  @ResponseStatus(HttpStatus.OK)
+  @IflowGetRequestMapping(value = IflowRestPaths.ProfileModule.COMPANY_READ_PROFILE)
+  @ResponseBody
+  public ResponseEntity<CompanyProfileEdo> readProfile(@PathVariable(name = "companyid") final Long companyid,
+                                                       final HttpServletRequest request,
+                                                       @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId)
+                                                                                                                                                               throws ProfileCustomizedException,
+                                                                                                                                                               URISyntaxException,
+                                                                                                                                                               MalformedURLException {
+
+    final ProfileResponse profile = this.tokenUserDataManager.getProfileByToken(headerTokenId);
+
+    return ControllerHelper.createResponseEntity(request, profile.getCompanyProfile().toEdo(), HttpStatus.OK);
   }
 
 }

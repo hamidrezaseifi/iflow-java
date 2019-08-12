@@ -133,7 +133,7 @@ public class TokenUserDataManagerTest extends TestDataProducer {
 
     final List<User> users = this.getTestUserList();
 
-    when(this.usersService.getUserListByComaonyId(any(Long.class))).thenReturn(users);
+    when(this.usersService.getUserListByCompanyId(any(Long.class))).thenReturn(users);
     when(this.usersService.getUserByEmail(any(String.class))).thenReturn(this.validUser);
 
     when(this.companyService.getById(any(Long.class))).thenReturn(this.validCompany);
@@ -141,7 +141,7 @@ public class TokenUserDataManagerTest extends TestDataProducer {
     final List<User> resultUsers = this.tokenUserDataManager.getUserListByToken(this.validToken, 1L);
 
     verify(this.usersService, times(1)).getUserByEmail(any(String.class));
-    verify(this.usersService, times(1)).getUserListByComaonyId(any(Long.class));
+    verify(this.usersService, times(1)).getUserListByCompanyId(any(Long.class));
     verify(this.companyService, times(1)).getById(any(Long.class));
 
     Assert.assertNotNull("Result response list is not null!", resultUsers);
@@ -154,14 +154,14 @@ public class TokenUserDataManagerTest extends TestDataProducer {
 
     final List<UserGroup> userGroups = this.getTestUserGroupList();
 
-    when(this.userGroupService.getListByComaonyId(any(Long.class))).thenReturn(userGroups);
+    when(this.userGroupService.getListByCompanyId(any(Long.class))).thenReturn(userGroups);
     when(this.usersService.getUserByEmail(any(String.class))).thenReturn(this.validUser);
     when(this.companyService.getById(any(Long.class))).thenReturn(this.validCompany);
 
     final List<UserGroup> resultUserGroups = this.tokenUserDataManager.getUserGroupListByToken(this.validToken, 1L);
 
     verify(this.usersService, times(1)).getUserByEmail(any(String.class));
-    verify(this.userGroupService, times(1)).getListByComaonyId(any(Long.class));
+    verify(this.userGroupService, times(1)).getListByCompanyId(any(Long.class));
     verify(this.companyService, times(1)).getById(any(Long.class));
 
     Assert.assertNotNull("Result response list is not null!", resultUserGroups);

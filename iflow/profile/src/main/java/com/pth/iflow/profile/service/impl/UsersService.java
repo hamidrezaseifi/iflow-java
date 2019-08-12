@@ -55,7 +55,7 @@ public class UsersService implements IUsersService {
   }
 
   @Override
-  public List<User> getUserListByComaonyId(final Long companyId) throws ProfileCustomizedException, MalformedURLException {
+  public List<User> getUserListByCompanyId(final Long companyId) throws ProfileCustomizedException, MalformedURLException {
     logger.debug("Request user data list for company id {}", companyId);
 
     final UserListEdo edo = restTemplate.callRestGet(

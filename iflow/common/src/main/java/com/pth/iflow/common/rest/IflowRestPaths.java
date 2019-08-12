@@ -80,12 +80,13 @@ public class IflowRestPaths {
     public static final String AUTHENTICATION_AUTHENTICATE    = "/auth/authenticate";
     public static final String PROFILE_READ_AUTHENTOCATEDINFO = "/profile/read/authinfo";
     public static final String PROFILE_READ_TOKENINFO         = "/profile/read/tokeninfo";
-    public static final String PROFILE_VALIDATE_TOKEN        = "/profile/validate/token";
+    public static final String PROFILE_VALIDATE_TOKEN         = "/profile/validate/token";
 
     public static final String COMPANY_READ_BY_ID           = "/company/readbyid/{companyid}";
     public static final String COMPANY_READ_USER_LIST       = "/company/read/user/{companyid}";
     public static final String COMPANY_READ_USERGROUP_LIST  = "/company/read/usergroup/{companyid}";
     public static final String COMPANY_READ_DEPARTMENT_LIST = "/company/read/department/{companyid}";
+    public static final String COMPANY_READ_PROFILE         = "/company/read/profile/{companyid}";
 
     public static final String DEPARTMENT_READ_BY_ID                = "/department/readbyid/{id}";
     public static final String DEPARTMENT_READ_DEPARTMENTGROUP_LIST = "/department/read/departmentgroup/{id}";

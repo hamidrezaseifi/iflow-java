@@ -19,7 +19,7 @@ import com.pth.iflow.backend.services.IBreadCrumbLoader;
 import com.pth.iflow.backend.services.UiMenuService;
 
 @Controller
-public class UiControllerBase {
+public class BackendControllerBase {
 
   @Autowired
   private IBreadCrumbLoader      breadCrumbLoader;
