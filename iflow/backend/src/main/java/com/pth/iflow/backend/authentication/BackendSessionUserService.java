@@ -23,11 +23,8 @@ public class BackendSessionUserService {
   @Autowired
   private BackendSessionUserInfo sessionUserInfo;
 
-  public BackendSessionUserInfo authorizeUser(final BackendAuthenticationToken token,
-                                              final BackendUser user,
-                                              final BackendCompanyProfile companyProfile,
-                                              final HttpSession session,
-                                              final boolean setContext) {
+  public BackendSessionUserInfo authorizeUser(final BackendAuthenticationToken token, final BackendUser user,
+      final BackendCompanyProfile companyProfile, final HttpSession session, final boolean setContext) {
 
     if (setContext) {
       SecurityContext ctx = SecurityContextHolder.getContext();
@@ -40,8 +37,8 @@ public class BackendSessionUserService {
 
   }
 
-  public BackendSessionUserInfo
-         setLoggedInUserInfo(final BackendUser user, final BackendCompanyProfile companyProfile, final HttpSession session) {
+  public BackendSessionUserInfo setLoggedInUserInfo(final BackendUser user, final BackendCompanyProfile companyProfile,
+      final HttpSession session) {
 
     this.reloadSessionData(user, companyProfile);
 
@@ -52,6 +49,7 @@ public class BackendSessionUserService {
 
     this.sessionUserInfo.setCompanyProfil(companyProfile);
     this.sessionUserInfo.setUser(user);
+    this.sessionUserInfo.update();
 
   }
 

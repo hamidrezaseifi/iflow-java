@@ -1,5 +1,6 @@
 package com.pth.iflow.workflow.models;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,19 +11,22 @@ import com.pth.iflow.common.enums.EUserStatus;
 
 public class User extends ModelMapperBase<UserEdo, User> {
 
-  private Long             id;
-  private Long             companyId;
-  private String           email;
-  private Date             birthDate;
-  private String           firstName;
-  private String           lastName;
-  private Integer          status;
-  private Integer          version;
-  private Integer          permission;
-  private final List<Long> groups           = new ArrayList<>();
-  private final List<Long> departments      = new ArrayList<>();
-  private final List<Long> departmentGroups = new ArrayList<>();
-  private final List<Long> deputies         = new ArrayList<>();
+  private Long                id;
+  private Long                companyId;
+  private String              email;
+  private Date                birthDate;
+  private String              firstName;
+  private String              lastName;
+  private Integer             status;
+  private Integer             permission;
+  private Integer             version;
+  private LocalDateTime       createdAt;
+  private LocalDateTime       updatedAt;
+  private final List<Long>    groups           = new ArrayList<>();
+  private final List<Long>    departments      = new ArrayList<>();
+  private final List<Long>    departmentGroups = new ArrayList<>();
+  private final List<Long>    deputies         = new ArrayList<>();
+  private final List<Integer> roles            = new ArrayList<>();
 
   /**
    * @return the id
@@ -119,21 +123,55 @@ public class User extends ModelMapperBase<UserEdo, User> {
     return this.status == EUserStatus.ACTIVE.getValue().intValue();
   }
 
+  /**
+   * @return the permission
+   */
+  public Integer getPermission() {
+    return this.permission;
+  }
+
+  /**
+   * @return the version
+   */
   @Override
   public Integer getVersion() {
     return this.version;
   }
 
+  /**
+   * @param version the version to set
+   */
   @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
 
   /**
-   * @return the permission
+   * @return the createdAt
    */
-  public Integer getPermission() {
-    return this.permission;
+  public LocalDateTime getCreatedAt() {
+    return this.createdAt;
+  }
+
+  /**
+   * @param createdAt the createdAt to set
+   */
+  public void setCreatedAt(final LocalDateTime createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  /**
+   * @return the updatedAt
+   */
+  public LocalDateTime getUpdatedAt() {
+    return this.updatedAt;
+  }
+
+  /**
+   * @param updatedAt the updatedAt to set
+   */
+  public void setUpdatedAt(final LocalDateTime updatedAt) {
+    this.updatedAt = updatedAt;
   }
 
   /**
@@ -203,9 +241,19 @@ public class User extends ModelMapperBase<UserEdo, User> {
     this.deputies.add(deputyId);
   }
 
-  @Override
-  public boolean isNew() {
-    return (this.id == null) || (this.id <= 0);
+  public List<Integer> getRoles() {
+    return this.roles;
+  }
+
+  public void setRoles(final List<Integer> roles) {
+    this.roles.clear();
+    if (roles != null) {
+      this.roles.addAll(roles);
+    }
+  }
+
+  public void addRole(final Integer role) {
+    this.roles.add(role);
   }
 
   @Override
@@ -224,6 +272,7 @@ public class User extends ModelMapperBase<UserEdo, User> {
     edo.setDepartments(this.departments);
     edo.setDepartmentGroups(this.departmentGroups);
     edo.setDeputies(this.deputies);
+    edo.setRoles(this.roles);
 
     return edo;
   }
@@ -245,6 +294,7 @@ public class User extends ModelMapperBase<UserEdo, User> {
     model.setDepartments(edo.getDepartments());
     model.setDepartmentGroups(edo.getDepartmentGroups());
     model.setDeputies(edo.getDeputies());
+    model.setRoles(edo.getRoles());
 
     return model;
   }

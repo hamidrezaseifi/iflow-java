@@ -14,14 +14,14 @@ import com.pth.iflow.backend.models.BackendUser;
 @Component
 public class BackendSessionUserInfo {
 
-  public static String SESSION_LOGGEDUSERINFO_KEY = "mdm-session-user";
+  public static String          SESSION_LOGGEDUSERINFO_KEY = "mdm-session-user";
 
   private Date                  loginTime;
   private BackendUser           user;
   private BackendCompanyProfile companyProfile;
 
   @Value("${server.session.timeout}")
-  private int sessionTimeOut;
+  private int                   sessionTimeOut;
 
   public boolean isLoggedIn() {
     return (this.user != null) && (this.companyProfile != null);
@@ -34,15 +34,15 @@ public class BackendSessionUserInfo {
 
   public boolean isNotOld() {
 
-    final Date currect = new Date();
-    long diff = currect.getTime() - this.loginTime.getTime();
+    final Date current = new Date();
+    long diff = current.getTime() - this.loginTime.getTime();
     diff /= 1000;
 
     return diff <= this.sessionTimeOut;
   }
 
   public BackendSessionUserInfo() {
-
+    this.loginTime = new Date();
   }
 
   public BackendSessionUserInfo(final BackendUser user, final BackendCompanyProfile companyProfile) {

@@ -27,12 +27,11 @@ public class BackendAuthenticationSuccessHandler extends SimpleUrlAuthentication
   private BackendSessionUserService sessionUserService;
 
   @Autowired
-  private IProfileValidator profileValidator;
+  private IProfileValidator         profileValidator;
 
   @Override
   public void onAuthenticationSuccess(final HttpServletRequest request, final HttpServletResponse response, final Authentication auth)
-                                                                                                                                       throws IOException,
-                                                                                                                                       ServletException {
+      throws IOException, ServletException {
 
     if ((auth instanceof BackendAuthenticationToken) == true) {
 
@@ -43,37 +42,31 @@ public class BackendAuthenticationSuccessHandler extends SimpleUrlAuthentication
       ProfileResponse profileResponse = null;
       try {
         profileResponse = this.profileValidator.readProfile(tbToken.getUsername(), tbToken.getToken());
-      }
-      catch (BackendCustomizedException | MalformedURLException e) {
+      } catch (BackendCustomizedException | MalformedURLException e) {
       }
 
       if (profileResponse == null) {
-      }
-      else {
+      } else {
 
         final BackendUser user = profileResponse.getUser();
         final BackendCompanyProfile companyProfile = profileResponse.getCompanyProfile();
 
-        final BackendAuthenticationToken newToken = new BackendAuthenticationToken(tbToken.getUsername(),
-                                                                                   tbToken.getCompanyId(),
-                                                                                   tbToken.getToken(),
-                                                                                   tbToken.getSessionId(),
-                                                                                   user.getAuthorities(companyProfile.getUserGroups()));
+        final BackendAuthenticationToken newToken = new BackendAuthenticationToken(tbToken.getUsername(), tbToken.getCompanyId(),
+            tbToken.getToken(), tbToken.getSessionId(), user.getAuthorities());
 
         if (user.isEnabled() == false) {
           url = BackendAuthenticationErrorUrlCreator.getErrorUrl("access",
-                                                                 request.getParameter(BackendSecurityConfigurations.USERNAME_FIELD_NAME),
-                                                                 request.getParameter(BackendSecurityConfigurations.PASSWORD_FIELD_NAME),
-                                                                 request.getParameter(BackendSecurityConfigurations.COMPANYID_FIELD_NAME));
-        }
-        else {
+              request.getParameter(BackendSecurityConfigurations.USERNAME_FIELD_NAME),
+              request.getParameter(BackendSecurityConfigurations.PASSWORD_FIELD_NAME),
+              request.getParameter(BackendSecurityConfigurations.COMPANYID_FIELD_NAME));
+        } else {
 
           if (this.sessionUserService.authorizeUser(newToken, user, companyProfile, request.getSession(), true) == null) {
 
             url = BackendAuthenticationErrorUrlCreator.getErrorUrl("access",
-                                                                   request.getParameter(BackendSecurityConfigurations.USERNAME_FIELD_NAME),
-                                                                   request.getParameter(BackendSecurityConfigurations.PASSWORD_FIELD_NAME),
-                                                                   request.getParameter(BackendSecurityConfigurations.COMPANYID_FIELD_NAME));
+                request.getParameter(BackendSecurityConfigurations.USERNAME_FIELD_NAME),
+                request.getParameter(BackendSecurityConfigurations.PASSWORD_FIELD_NAME),
+                request.getParameter(BackendSecurityConfigurations.COMPANYID_FIELD_NAME));
           }
 
           if (tbToken.getDetails() instanceof BackendAuthenticationDetails) {

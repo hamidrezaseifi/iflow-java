@@ -11,21 +11,22 @@ import com.pth.iflow.common.enums.EUserStatus;
 
 public class User extends ModelMapperBase<UserEdo, User> {
 
-  private Long             id;
-  private Long             companyId;
-  private String           email;
-  private Date             birthDate;
-  private String           firstName;
-  private String           lastName;
-  private Integer          status;
-  private Integer          permission;
-  private Integer          version;
-  private LocalDateTime    createdAt;
-  private LocalDateTime    updatedAt;
-  private final List<Long> groups           = new ArrayList<>();
-  private final List<Long> departments      = new ArrayList<>();
-  private final List<Long> departmentGroups = new ArrayList<>();
-  private final List<Long> deputies         = new ArrayList<>();
+  private Long                id;
+  private Long                companyId;
+  private String              email;
+  private Date                birthDate;
+  private String              firstName;
+  private String              lastName;
+  private Integer             status;
+  private Integer             permission;
+  private Integer             version;
+  private LocalDateTime       createdAt;
+  private LocalDateTime       updatedAt;
+  private final List<Long>    groups           = new ArrayList<>();
+  private final List<Long>    departments      = new ArrayList<>();
+  private final List<Long>    departmentGroups = new ArrayList<>();
+  private final List<Long>    deputies         = new ArrayList<>();
+  private final List<Integer> roles            = new ArrayList<>();
 
   /**
    * @return the id
@@ -240,6 +241,21 @@ public class User extends ModelMapperBase<UserEdo, User> {
     this.deputies.add(deputyId);
   }
 
+  public List<Integer> getRoles() {
+    return this.roles;
+  }
+
+  public void setRoles(final List<Integer> roles) {
+    this.roles.clear();
+    if (roles != null) {
+      this.roles.addAll(roles);
+    }
+  }
+
+  public void addRole(final Integer role) {
+    this.roles.add(role);
+  }
+
   @Override
   public UserEdo toEdo() {
     final UserEdo edo = new UserEdo();
@@ -256,6 +272,7 @@ public class User extends ModelMapperBase<UserEdo, User> {
     edo.setDepartments(this.departments);
     edo.setDepartmentGroups(this.departmentGroups);
     edo.setDeputies(this.deputies);
+    edo.setRoles(this.roles);
 
     return edo;
   }
@@ -277,6 +294,7 @@ public class User extends ModelMapperBase<UserEdo, User> {
     model.setDepartments(edo.getDepartments());
     model.setDepartmentGroups(edo.getDepartmentGroups());
     model.setDeputies(edo.getDeputies());
+    model.setRoles(edo.getRoles());
 
     return model;
   }

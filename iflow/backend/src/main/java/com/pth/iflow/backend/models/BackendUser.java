@@ -1,5 +1,6 @@
 package com.pth.iflow.backend.models;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,6 +11,7 @@ import org.springframework.security.core.authority.AuthorityUtils;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.pth.iflow.backend.models.ui.enums.EUiUserRole;
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 import com.pth.iflow.common.edo.models.xml.UserEdo;
 import com.pth.iflow.common.enums.EUserStatus;
@@ -17,65 +19,24 @@ import com.pth.iflow.common.enums.EUserStatus;
 @JsonIgnoreProperties(value = { "authorities", "enabled", })
 public class BackendUser extends ModelMapperBase<UserEdo, BackendUser> {
 
-  private Long             id;
-  private Long             companyId;
-  private String           email;
-  private Date             birthDate;
-  private String           firstName;
-  private String           lastName;
-  private Integer          status;
-  private Integer          version;
-  private Integer          permission;
-  private final List<Long> groupIds         = new ArrayList<>();
-  private final List<Long> departments      = new ArrayList<>();
-  private final List<Long> departmentGroups = new ArrayList<>();
-  private final List<Long> deputies         = new ArrayList<>();
+  private Long                    id;
+  private Long                    companyId;
+  private String                  email;
+  private Date                    birthDate;
+  private String                  firstName;
+  private String                  lastName;
+  private Integer                 status;
+  private Integer                 permission;
+  private Integer                 version;
+  private LocalDateTime           createdAt;
+  private LocalDateTime           updatedAt;
+  private final List<Long>        groups           = new ArrayList<>();
+  private final List<Long>        departments      = new ArrayList<>();
+  private final List<Long>        departmentGroups = new ArrayList<>();
+  private final List<Long>        deputies         = new ArrayList<>();
+  private final List<EUiUserRole> roles            = new ArrayList<>();
 
-  private boolean isEnabled;
-
-  public BackendUser() {
-    this.isEnabled = true;
-  }
-
-  public String getFullName() {
-    return this.lastName + ", " + this.firstName;
-  }
-
-  public boolean allowEdit() {
-    return true;
-  }
-
-  public boolean isAdmin() {
-    return true;
-  }
-
-  private String getRolesAuthoritiesNames(final List<BackendUserGroup> allUserGroups) {
-    final List<BackendUserGroup> userGroups = new ArrayList<>();
-    userGroups.addAll(allUserGroups.stream().filter(g -> this.groupIds.contains(g.getId())).collect(Collectors.toList()));
-    String name = "";
-    for (final BackendUserGroup group : userGroups) {
-      name += (name.isEmpty() ? "" : ", ") + group.getTitle().toUpperCase();
-    }
-    return name;
-  }
-
-  public boolean isEnabled() {
-    return this.isEnabled;
-  }
-
-  @JsonSetter("isEnabled")
-  public void setEnabled(final boolean isEnabled) {
-    this.isEnabled = isEnabled;
-  }
-
-  public String getUserTitle() {
-    return this.lastName + ", " + this.firstName;
-  }
-
-  public List<GrantedAuthority> getAuthorities(final List<BackendUserGroup> allUserGroups) {
-    final List<GrantedAuthority> list = AuthorityUtils.commaSeparatedStringToAuthorityList(this.getRolesAuthoritiesNames(allUserGroups));
-    return list;
-  }
+  private boolean                 isEnabled;
 
   /**
    * @return the id
@@ -172,21 +133,55 @@ public class BackendUser extends ModelMapperBase<UserEdo, BackendUser> {
     return this.status == EUserStatus.ACTIVE.getValue().intValue();
   }
 
+  /**
+   * @return the permission
+   */
+  public Integer getPermission() {
+    return this.permission;
+  }
+
+  /**
+   * @return the version
+   */
   @Override
   public Integer getVersion() {
     return this.version;
   }
 
+  /**
+   * @param version the version to set
+   */
   @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
 
   /**
-   * @return the permission
+   * @return the createdAt
    */
-  public Integer getPermission() {
-    return this.permission;
+  public LocalDateTime getCreatedAt() {
+    return this.createdAt;
+  }
+
+  /**
+   * @param createdAt the createdAt to set
+   */
+  public void setCreatedAt(final LocalDateTime createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  /**
+   * @return the updatedAt
+   */
+  public LocalDateTime getUpdatedAt() {
+    return this.updatedAt;
+  }
+
+  /**
+   * @param updatedAt the updatedAt to set
+   */
+  public void setUpdatedAt(final LocalDateTime updatedAt) {
+    this.updatedAt = updatedAt;
   }
 
   /**
@@ -197,18 +192,18 @@ public class BackendUser extends ModelMapperBase<UserEdo, BackendUser> {
   }
 
   public List<Long> getGroups() {
-    return this.groupIds;
+    return this.groups;
   }
 
   public void setGroups(final List<Long> groups) {
-    this.groupIds.clear();
+    this.groups.clear();
     if (groups != null) {
-      this.groupIds.addAll(groups);
+      this.groups.addAll(groups);
     }
   }
 
   public void addGroup(final Long groupId) {
-    this.groupIds.add(groupId);
+    this.groups.add(groupId);
   }
 
   public List<Long> getDepartments() {
@@ -256,9 +251,61 @@ public class BackendUser extends ModelMapperBase<UserEdo, BackendUser> {
     this.deputies.add(deputyId);
   }
 
-  @Override
-  public boolean isNew() {
-    return (this.id == null) || (this.id <= 0);
+  public List<EUiUserRole> getRoles() {
+    return this.roles;
+  }
+
+  public void setRoles(final List<Integer> roles) {
+    this.roles.clear();
+    if (roles != null) {
+      this.roles.addAll(roles.stream().map(r -> EUiUserRole.ofId(r)).collect(Collectors.toList()));
+    }
+  }
+
+  public void addRole(final Integer role) {
+    this.roles.add(EUiUserRole.ofId(role));
+  }
+
+  public BackendUser() {
+    this.isEnabled = true;
+  }
+
+  public String getFullName() {
+    return this.lastName + ", " + this.firstName;
+  }
+
+  public boolean allowEdit() {
+    return true;
+  }
+
+  public boolean isAdmin() {
+    return true;
+  }
+
+  private String getRolesAuthoritiesNames() {
+
+    String name = "";
+    for (final EUiUserRole role : this.roles) {
+      name += (name.isEmpty() ? "" : ", ") + role.getAuthority().toUpperCase();
+    }
+    return name;
+  }
+
+  public boolean isEnabled() {
+    return this.isEnabled;
+  }
+
+  @JsonSetter("isEnabled")
+  public void setEnabled(final boolean isEnabled) {
+    this.isEnabled = isEnabled;
+  }
+
+  public String getUserTitle() {
+    return this.lastName + ", " + this.firstName;
+  }
+
+  public List<GrantedAuthority> getAuthorities() {
+    return AuthorityUtils.commaSeparatedStringToAuthorityList(this.getRolesAuthoritiesNames());
   }
 
   @Override
@@ -273,10 +320,11 @@ public class BackendUser extends ModelMapperBase<UserEdo, BackendUser> {
     edo.setBirthDate(this.birthDate);
     edo.setId(this.id);
     edo.setCompanyId(this.companyId);
-    edo.setGroups(this.groupIds);
+    edo.setGroups(this.groups);
     edo.setDepartments(this.departments);
     edo.setDepartmentGroups(this.departmentGroups);
     edo.setDeputies(this.deputies);
+    edo.setRoles(this.roles.stream().map(r -> r.getId()).collect(Collectors.toList()));
 
     return edo;
   }
@@ -298,6 +346,7 @@ public class BackendUser extends ModelMapperBase<UserEdo, BackendUser> {
     model.setDepartments(edo.getDepartments());
     model.setDepartmentGroups(edo.getDepartmentGroups());
     model.setDeputies(edo.getDeputies());
+    model.setRoles(edo.getRoles());
 
     return model;
   }
