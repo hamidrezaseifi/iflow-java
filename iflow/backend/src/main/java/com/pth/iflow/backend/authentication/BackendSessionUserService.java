@@ -7,7 +7,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.pth.iflow.backend.models.BackendCompany;
+import com.pth.iflow.backend.models.BackendCompanyProfile;
 import com.pth.iflow.backend.models.BackendUser;
 import com.pth.iflow.backend.models.ui.BackendSessionUserInfo;
 
@@ -23,18 +23,11 @@ public class BackendSessionUserService {
   @Autowired
   private BackendSessionUserInfo sessionUserInfo;
 
-  /**
-   * this function check the from remote server authenticated user if it has
-   * access to mdm or not and if has, it will set in session and if setContext is
-   * set it create the security context too
-   *
-   * @param username
-   * @param session
-   * @param setContext
-   * @return the new UiSessionUserInfo or null
-   */
-  public BackendSessionUserInfo authorizeUser(final BackendAuthenticationToken token, final HttpSession session,
-      final boolean setContext) {
+  public BackendSessionUserInfo authorizeUser(final BackendAuthenticationToken token,
+                                              final BackendUser user,
+                                              final BackendCompanyProfile companyProfile,
+                                              final HttpSession session,
+                                              final boolean setContext) {
 
     if (setContext) {
       SecurityContext ctx = SecurityContextHolder.getContext();
@@ -43,20 +36,21 @@ public class BackendSessionUserService {
       }
       ctx.setAuthentication(token);
     }
-    return this.setLoggedInUserInfo(token.getUser(), token.getCompany(), session);
+    return this.setLoggedInUserInfo(user, companyProfile, session);
 
   }
 
-  public BackendSessionUserInfo setLoggedInUserInfo(final BackendUser user, final BackendCompany company, final HttpSession session) {
+  public BackendSessionUserInfo
+         setLoggedInUserInfo(final BackendUser user, final BackendCompanyProfile companyProfile, final HttpSession session) {
 
-    this.reloadSessionData(user, company);
+    this.reloadSessionData(user, companyProfile);
 
     return this.sessionUserInfo;
   }
 
-  public void reloadSessionData(final BackendUser user, final BackendCompany company) {
+  public void reloadSessionData(final BackendUser user, final BackendCompanyProfile companyProfile) {
 
-    this.sessionUserInfo.setCompany(company);
+    this.sessionUserInfo.setCompanyProfil(companyProfile);
     this.sessionUserInfo.setUser(user);
 
   }

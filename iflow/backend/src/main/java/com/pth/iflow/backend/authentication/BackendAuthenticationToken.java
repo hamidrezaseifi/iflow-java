@@ -1,6 +1,11 @@
 package com.pth.iflow.backend.authentication;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
 
 public class BackendAuthenticationToken extends UsernamePasswordAuthenticationToken {
 
@@ -9,13 +14,27 @@ public class BackendAuthenticationToken extends UsernamePasswordAuthenticationTo
    */
   private static final long serialVersionUID = -7341854439748304108L;
 
-  private final String username;
-  private final String companyId;
-  private final String token;
-  private final String sessionId;
+  private final String                 username;
+  private final String                 companyId;
+  private final String                 token;
+  private final String                 sessionId;
+  private final List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
 
   public BackendAuthenticationToken(final String username, final String companyid, final String token, final String sessionid) {
     super(username, "fakepass");
+
+    this.username = username;
+    this.companyId = companyid;
+    this.token = token;
+    this.sessionId = sessionid;
+  }
+
+  public BackendAuthenticationToken(final String username,
+                                    final String companyid,
+                                    final String token,
+                                    final String sessionid,
+                                    final List<GrantedAuthority> grantedAuthorities) {
+    super(username, "fakepass", grantedAuthorities);
 
     this.username = username;
     this.companyId = companyid;
@@ -31,6 +50,11 @@ public class BackendAuthenticationToken extends UsernamePasswordAuthenticationTo
   @Override
   public Object getCredentials() {
     return null;
+  }
+
+  @Override
+  public Collection<GrantedAuthority> getAuthorities() {
+    return this.grantedAuthorities;
   }
 
   /**
@@ -60,4 +84,13 @@ public class BackendAuthenticationToken extends UsernamePasswordAuthenticationTo
   public String getSessionId() {
     return this.sessionId;
   }
+
+  /**
+   * @param grantedAuthorities the grantedAuthorities to set
+   */
+  public void setGrantedAuthorities(final List<GrantedAuthority> grantedAuthorities) {
+    this.grantedAuthorities.clear();
+    this.grantedAuthorities.addAll(grantedAuthorities);
+  }
+
 }

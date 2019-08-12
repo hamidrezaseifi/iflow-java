@@ -25,58 +25,53 @@ import com.pth.iflow.profile.model.ProfileResponse;
 import com.pth.iflow.profile.model.User;
 import com.pth.iflow.profile.model.UserAuthenticationSession;
 import com.pth.iflow.profile.model.UserGroup;
-import com.pth.iflow.profile.service.ICompanyService;
-import com.pth.iflow.profile.service.IDepartmentGroupService;
-import com.pth.iflow.profile.service.IDepartmentService;
-import com.pth.iflow.profile.service.ISessionManager;
-import com.pth.iflow.profile.service.ITokenUserDataManager;
-import com.pth.iflow.profile.service.IUserGroupService;
-import com.pth.iflow.profile.service.IUsersService;
 import com.pth.iflow.profile.service.impl.TokenUserDataManager;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class TokenUserDataManagerTest extends TestDataProducer {
 
-  private ITokenUserDataManager     tokenUserDataManager;
+  private ITokenUserDataManager tokenUserDataManager;
 
   @Autowired
-  private ISessionManager           sessionManager;
+  private ISessionManager sessionManager;
 
   @Mock
-  private IUsersService             usersService;
+  private IUsersService usersService;
 
   @Mock
-  private ICompanyService           companyService;
+  private ICompanyService companyService;
 
   @Mock
-  private IUserGroupService         userGroupService;
+  private IUserGroupService userGroupService;
 
   @Mock
-  private IDepartmentService        departmentService;
+  private IDepartmentService departmentService;
 
   @Mock
-  private IDepartmentGroupService   departmentGroupService;
+  private IDepartmentGroupService departmentGroupService;
 
-  private String                    validToken;
+  private String validToken;
 
-  private final String              validEmail   = "valid-email";
+  private final String validEmail = "valid-email";
 
   private UserAuthenticationSession validSession;
 
-  private Company                   validCompany;
+  private Company validCompany;
 
-  private User                      validUser;
+  private User validUser;
 
-  private final String              inValidToken = "invalid-token";
-
-  private final String              inValidEmail = "invalid-email";
+  private final String inValidToken = "invalid-token";
 
   @Before
   public void setUp() throws Exception {
 
-    this.tokenUserDataManager = new TokenUserDataManager(this.sessionManager, this.usersService, this.companyService,
-        this.userGroupService, this.departmentService, this.departmentGroupService);
+    this.tokenUserDataManager = new TokenUserDataManager(this.sessionManager,
+                                                         this.usersService,
+                                                         this.companyService,
+                                                         this.userGroupService,
+                                                         this.departmentService,
+                                                         this.departmentGroupService);
 
     this.validSession = this.sessionManager.addSession(this.validEmail);
     this.validToken = this.validSession.getToken();
@@ -116,15 +111,18 @@ public class TokenUserDataManagerTest extends TestDataProducer {
 
     Assert.assertNotNull("Result response is not null!", response);
     Assert.assertNotNull("Result user is not null!", response.getUser());
-    Assert.assertNotNull("Result company is not null!", response.getCompany());
+    Assert.assertNotNull("Result company is not null!", response.getCompanyProfile());
     Assert.assertEquals("Result user has the same id as valid-user!", response.getUser().getId(), this.validUser.getId());
-    Assert.assertEquals("Result company has the same id as valid-company!", response.getCompany().getId(), this.validCompany.getId());
+    Assert.assertEquals("Result company has the same id as valid-company!",
+                        response.getCompanyProfile().getCompany().getId(),
+                        this.validCompany.getId());
 
     Assert.assertEquals("Result user has the same name as valid-user!",
-        response.getUser().getFirstName() + response.getUser().getLastName(),
-        this.validUser.getFirstName() + this.validUser.getLastName());
-    Assert.assertEquals("Result company has the same name as valid-company!", response.getCompany().getCompanyName(),
-        this.validCompany.getCompanyName());
+                        response.getUser().getFirstName() + response.getUser().getLastName(),
+                        this.validUser.getFirstName() + this.validUser.getLastName());
+    Assert.assertEquals("Result company has the same name as valid-company!",
+                        response.getCompanyProfile().getCompany().getCompanyName(),
+                        this.validCompany.getCompanyName());
 
   }
 
@@ -161,7 +159,7 @@ public class TokenUserDataManagerTest extends TestDataProducer {
     final List<UserGroup> resultUserGroups = this.tokenUserDataManager.getUserGroupListByToken(this.validToken, 1L);
 
     verify(this.usersService, times(1)).getUserByEmail(any(String.class));
-    verify(this.userGroupService, times(1)).getListByCompanyId(any(Long.class));
+    verify(this.userGroupService, times(2)).getListByCompanyId(any(Long.class));
     verify(this.companyService, times(1)).getById(any(Long.class));
 
     Assert.assertNotNull("Result response list is not null!", resultUserGroups);
@@ -180,12 +178,13 @@ public class TokenUserDataManagerTest extends TestDataProducer {
     final List<Department> resultDepartments = this.tokenUserDataManager.getDepartmentListByToken(this.validToken, 1L);
 
     verify(this.usersService, times(1)).getUserByEmail(any(String.class));
-    verify(this.departmentService, times(1)).getListByCompanyId(any(Long.class));
+    verify(this.departmentService, times(2)).getListByCompanyId(any(Long.class));
     verify(this.companyService, times(1)).getById(any(Long.class));
 
     Assert.assertNotNull("Result response list is not null!", resultDepartments);
-    Assert.assertEquals("Result response list has the " + departments.size() + " items!", resultDepartments.size(),
-        departments.size());
+    Assert.assertEquals("Result response list has the " + departments.size() + " items!",
+                        resultDepartments.size(),
+                        departments.size());
   }
 
 }

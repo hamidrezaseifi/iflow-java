@@ -53,8 +53,9 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
 
   @Before
   public void setUp() throws Exception {
-    this.workflowProcessService = new WorkflowProcessService(this.workflowDataService, this.workflowTypeDataService,
-        this.tokenValidator);
+    this.workflowProcessService = new WorkflowProcessService(this.workflowDataService,
+                                                             this.workflowTypeDataService,
+                                                             this.tokenValidator);
 
     this.validTocken = "validTocken";
 
@@ -64,7 +65,7 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
 
     when(this.workflowTypeDataService.getById(any(Long.class), any(String.class))).thenReturn(this.workflowType);
 
-    this.profileResponse = new ProfileResponse(this.getTestUser(), this.getTestCompany(), this.validSession);
+    this.profileResponse = new ProfileResponse(this.getTestUser(), this.getTestCompanyProfile(), this.validSession);
 
     when(this.tokenValidator.isTokenValid(this.validTocken)).thenReturn(this.profileResponse);
 
@@ -122,10 +123,12 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
 
     Assert.assertNotNull("Result workflow-type is not null!", resWorkflow);
     Assert.assertEquals("Result workflow-type has id 1!", resWorkflow.getId(), workflowSaveResult.getId());
-    Assert.assertEquals("Result workflow-type has title '" + workflowSaveResult.getTitle() + "'!", resWorkflow.getTitle(),
-        workflowSaveResult.getTitle());
-    Assert.assertEquals("Result workflow-type has status '" + workflowSaveResult.getStatus() + "'!", resWorkflow.getStatus(),
-        workflowSaveResult.getStatus());
+    Assert.assertEquals("Result workflow-type has title '" + workflowSaveResult.getTitle() + "'!",
+                        resWorkflow.getTitle(),
+                        workflowSaveResult.getTitle());
+    Assert.assertEquals("Result workflow-type has status '" + workflowSaveResult.getStatus() + "'!",
+                        resWorkflow.getStatus(),
+                        workflowSaveResult.getStatus());
 
   }
 
@@ -144,10 +147,12 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
 
     Assert.assertNotNull("Result workflow-type is not null!", resWorkflow);
     Assert.assertEquals("Result workflow-type has id 1!", resWorkflow.getId(), workflowSaveResult.getId());
-    Assert.assertEquals("Result workflow-type has title '" + workflowSaveResult.getTitle() + "'!", resWorkflow.getTitle(),
-        workflowSaveResult.getTitle());
-    Assert.assertEquals("Result workflow-type has status '" + workflowSaveResult.getStatus() + "'!", resWorkflow.getStatus(),
-        workflowSaveResult.getStatus());
+    Assert.assertEquals("Result workflow-type has title '" + workflowSaveResult.getTitle() + "'!",
+                        resWorkflow.getTitle(),
+                        workflowSaveResult.getTitle());
+    Assert.assertEquals("Result workflow-type has status '" + workflowSaveResult.getStatus() + "'!",
+                        resWorkflow.getStatus(),
+                        workflowSaveResult.getStatus());
 
   }
 
@@ -166,10 +171,12 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
 
     Assert.assertNotNull("Result workflow-type is not null!", resWorkflow);
     Assert.assertEquals("Result workflow-type has id 1!", resWorkflow.getId(), workflowSaveResult.getId());
-    Assert.assertEquals("Result workflow-type has title '" + workflowSaveResult.getTitle() + "'!", resWorkflow.getTitle(),
-        workflowSaveResult.getTitle());
-    Assert.assertEquals("Result workflow-type has status '" + workflowSaveResult.getStatus() + "'!", resWorkflow.getStatus(),
-        workflowSaveResult.getStatus());
+    Assert.assertEquals("Result workflow-type has title '" + workflowSaveResult.getTitle() + "'!",
+                        resWorkflow.getTitle(),
+                        workflowSaveResult.getTitle());
+    Assert.assertEquals("Result workflow-type has status '" + workflowSaveResult.getStatus() + "'!",
+                        resWorkflow.getStatus(),
+                        workflowSaveResult.getStatus());
 
   }
 

@@ -34,7 +34,7 @@ public class BackendUser extends ModelMapperBase<UserEdo, BackendUser> {
   private boolean isEnabled;
 
   public BackendUser() {
-
+    this.isEnabled = true;
   }
 
   public String getFullName() {

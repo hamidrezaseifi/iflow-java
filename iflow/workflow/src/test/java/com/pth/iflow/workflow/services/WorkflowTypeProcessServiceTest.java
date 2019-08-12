@@ -51,7 +51,7 @@ public class WorkflowTypeProcessServiceTest extends TestDataProducer {
 
     this.validSession = "validSession";
 
-    this.profileResponse = new ProfileResponse(this.getTestUser(), this.getTestCompany(), this.validSession);
+    this.profileResponse = new ProfileResponse(this.getTestUser(), this.getTestCompanyProfile(), this.validSession);
 
     when(this.tokenValidator.isTokenValid(this.validTocken)).thenReturn(this.profileResponse);
   }
@@ -71,8 +71,9 @@ public class WorkflowTypeProcessServiceTest extends TestDataProducer {
 
     Assert.assertNotNull("Result workflow-type is not null!", resWorkflowType);
     Assert.assertEquals("Result workflow-type has id 1!", resWorkflowType.getId(), workflowType.getId());
-    Assert.assertEquals("Result workflow-type has title '" + workflowType.getTitle() + "'!", resWorkflowType.getTitle(),
-        workflowType.getTitle());
+    Assert.assertEquals("Result workflow-type has title '" + workflowType.getTitle() + "'!",
+                        resWorkflowType.getTitle(),
+                        workflowType.getTitle());
     Assert.assertEquals("Result workflow-type has status 1!", resWorkflowType.getStatus(), workflowType.getStatus());
 
   }

@@ -26,7 +26,7 @@ public class TokenValidator implements ITokenValidator {
   private final WorkflowConfiguration.ModuleAccessConfig moduleAccessConfig;
 
   public TokenValidator(@Autowired final IRestTemplateCall restTemplate,
-      @Autowired final WorkflowConfiguration.ModuleAccessConfig moduleAccessConfig) {
+                        @Autowired final WorkflowConfiguration.ModuleAccessConfig moduleAccessConfig) {
     this.restTemplate = restTemplate;
     this.moduleAccessConfig = moduleAccessConfig;
   }
@@ -40,10 +40,14 @@ public class TokenValidator implements ITokenValidator {
     profileRequest.setToken(token);
 
     final ProfileResponseEdo responseEdo = this.restTemplate.callRestPost(
-        this.moduleAccessConfig.generateProfileUrl(IflowRestPaths.ProfileModule.PROFILE_READ_TOKENINFO), token, EModule.PROFILE,
-        profileRequest, ProfileResponseEdo.class, true);
+                                                                          this.moduleAccessConfig.generateProfileUrl(IflowRestPaths.ProfileModule.PROFILE_READ_TOKENINFO),
+                                                                          token,
+                                                                          EModule.PROFILE,
+                                                                          profileRequest,
+                                                                          ProfileResponseEdo.class,
+                                                                          true);
 
-    return new ProfileResponse().fromEdo(responseEdo);
+    return ProfileResponse.fromEdo(responseEdo);
   }
 
 }

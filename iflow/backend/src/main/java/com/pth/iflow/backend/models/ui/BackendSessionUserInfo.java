@@ -7,24 +7,24 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
-import com.pth.iflow.backend.models.BackendCompany;
+import com.pth.iflow.backend.models.BackendCompanyProfile;
 import com.pth.iflow.backend.models.BackendUser;
 
 @SessionScope(proxyMode = ScopedProxyMode.TARGET_CLASS)
 @Component
 public class BackendSessionUserInfo {
 
-  public static String   SESSION_LOGGEDUSERINFO_KEY = "mdm-session-user";
+  public static String SESSION_LOGGEDUSERINFO_KEY = "mdm-session-user";
 
-  private Date           loginTime;
-  private BackendUser    user;
-  private BackendCompany company;
+  private Date                  loginTime;
+  private BackendUser           user;
+  private BackendCompanyProfile companyProfile;
 
   @Value("${server.session.timeout}")
-  private int            sessionTimeOut;
+  private int sessionTimeOut;
 
   public boolean isLoggedIn() {
-    return this.user != null && this.company != null;
+    return (this.user != null) && (this.companyProfile != null);
   }
 
   public boolean isValid() {
@@ -45,9 +45,9 @@ public class BackendSessionUserInfo {
 
   }
 
-  public BackendSessionUserInfo(final BackendUser user, final BackendCompany company) {
+  public BackendSessionUserInfo(final BackendUser user, final BackendCompanyProfile companyProfile) {
     this.user = user;
-    this.company = company;
+    this.companyProfile = companyProfile;
     this.loginTime = new Date();
 
   }
@@ -72,12 +72,12 @@ public class BackendSessionUserInfo {
     this.user = user;
   }
 
-  public BackendCompany getCompany() {
-    return this.company;
+  public BackendCompanyProfile getCompanyProfil() {
+    return this.companyProfile;
   }
 
-  public void setCompany(final BackendCompany company) {
-    this.company = company;
+  public void setCompanyProfil(final BackendCompanyProfile companyProfile) {
+    this.companyProfile = companyProfile;
   }
 
   public String getUserTitle() {

@@ -1,25 +1,36 @@
 package com.pth.iflow.workflow.models;
 
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
+import java.util.List;
+
 import com.pth.iflow.common.edo.models.xml.ProfileResponseEdo;
 
-public class ProfileResponse extends ModelMapperBase<ProfileResponseEdo, ProfileResponse> {
+public class ProfileResponse {
 
-  private User    user;
+  private User user;
 
-  private Company company;
+  private CompanyProfile companyProfile;
 
-  private String  sessionid;
+  private String sessionid;
 
   public ProfileResponse() {
     this.user = null;
-    this.company = null;
+    this.companyProfile = null;
     this.sessionid = "";
   }
 
-  public ProfileResponse(final User user, final Company company, final String sessionid) {
+  public ProfileResponse(final User user, final CompanyProfile companyProfile, final String sessionid) {
     this.user = user;
-    this.company = company;
+    this.companyProfile = companyProfile;
+    this.sessionid = sessionid;
+  }
+
+  public ProfileResponse(final User user,
+                         final Company company,
+                         final List<Department> departments,
+                         final List<UserGroup> userGroups,
+                         final String sessionid) {
+    this.user = user;
+    this.companyProfile = new CompanyProfile(company, departments, userGroups);
     this.sessionid = sessionid;
   }
 
@@ -31,12 +42,12 @@ public class ProfileResponse extends ModelMapperBase<ProfileResponseEdo, Profile
     this.user = user;
   }
 
-  public Company getCompany() {
-    return this.company;
+  public CompanyProfile getCompanyProfile() {
+    return this.companyProfile;
   }
 
-  public void setCompany(final Company company) {
-    this.company = company;
+  public void setCompanyProfile(final CompanyProfile companyProfile) {
+    this.companyProfile = companyProfile;
   }
 
   public String getSessionid() {
@@ -47,35 +58,16 @@ public class ProfileResponse extends ModelMapperBase<ProfileResponseEdo, Profile
     this.sessionid = sessionid;
   }
 
-  @Override
-  public Integer getVersion() {
-
-    return 0;
-  }
-
-  @Override
-  public Long getId() {
-    return null;
-  }
-
-  @Override
-  public void setVersion(final Integer version) {
-
-  }
-
-  @Override
   public ProfileResponseEdo toEdo() {
 
-    final ProfileResponseEdo edo = new ProfileResponseEdo(this.user.toEdo(), this.company.toEdo(), this.sessionid);
-
-    return edo;
+    return new ProfileResponseEdo(this.user.toEdo(), this.companyProfile.toEdo(), this.sessionid);
   }
 
-  @Override
-  public ProfileResponse fromEdo(final ProfileResponseEdo edo) {
-    final ProfileResponse model = new ProfileResponse(new User().fromEdo(edo.getUser()), new Company().fromEdo(edo.getCompany()),
-        edo.getSessionid());
-    return model;
+  public static ProfileResponse fromEdo(final ProfileResponseEdo edo) {
+
+    return new ProfileResponse(new User().fromEdo(edo.getUser()),
+                               new CompanyProfile().fromEdo(edo.getCompanyProfile()),
+                               edo.getSessionid());
   }
 
 }

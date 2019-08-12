@@ -52,25 +52,33 @@ public class TokenValidatorTest extends TestDataProducer {
   @Test
   public void testIsTokenValid() throws Exception {
 
-    final ProfileResponseEdo profileResponseEdo = new ProfileResponseEdo(this.getTestUser().toEdo(), this.getTestCompany().toEdo(),
-        "sessionid");
+    final ProfileResponseEdo profileResponseEdo = new ProfileResponseEdo(this.getTestUser().toEdo(),
+                                                                         this.getTestCompanyProfile().toEdo(),
+                                                                         "sessionid");
 
     when(
-        this.restTemplate.callRestPost(any(URL.class), any(String.class), any(EModule.class), any(), eq(ProfileResponseEdo.class),
-            any(boolean.class)))
-                .thenReturn(profileResponseEdo);
+         this.restTemplate.callRestPost(any(URL.class),
+                                        any(String.class),
+                                        any(EModule.class),
+                                        any(),
+                                        eq(ProfileResponseEdo.class),
+                                        any(boolean.class)))
+                                                            .thenReturn(profileResponseEdo);
 
     final ProfileResponse resProfileResponse = this.tokenValidator.isTokenValid("token");
 
     Assert.assertNotNull("Result profile-response is not null!", resProfileResponse);
     Assert.assertNotNull("Result user from profile-response is not null!", resProfileResponse.getUser());
-    Assert.assertNotNull("Result company from profile-response is not null!", resProfileResponse.getCompany());
-    Assert.assertEquals("Result session-id from profile-response is as expected!", resProfileResponse.getSessionid(),
-        profileResponseEdo.getSessionid());
-    Assert.assertEquals("Result companyname from profile-response is as expected !", resProfileResponse.getCompany().getCompanyName(),
-        profileResponseEdo.getCompany().getCompanyName());
-    Assert.assertEquals("Result the email from user from profile-response is as expected !", resProfileResponse.getUser().getEmail(),
-        profileResponseEdo.getUser().getEmail());
+    Assert.assertNotNull("Result company from profile-response is not null!", resProfileResponse.getCompanyProfile());
+    Assert.assertEquals("Result session-id from profile-response is as expected!",
+                        resProfileResponse.getSessionid(),
+                        profileResponseEdo.getSessionid());
+    Assert.assertEquals("Result companyname from profile-response is as expected !",
+                        resProfileResponse.getCompanyProfile().getCompany().getCompanyName(),
+                        profileResponseEdo.getCompanyProfile().getCompany().getCompanyName());
+    Assert.assertEquals("Result the email from user from profile-response is as expected !",
+                        resProfileResponse.getUser().getEmail(),
+                        profileResponseEdo.getUser().getEmail());
 
   }
 

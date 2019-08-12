@@ -54,7 +54,13 @@ public class BackendAuthenticationSuccessHandler extends SimpleUrlAuthentication
         final BackendUser user = profileResponse.getUser();
         final BackendCompanyProfile companyProfile = profileResponse.getCompanyProfile();
 
-        if (tbToken.getUser().isEnabled() == false) {
+        final BackendAuthenticationToken newToken = new BackendAuthenticationToken(tbToken.getUsername(),
+                                                                                   tbToken.getCompanyId(),
+                                                                                   tbToken.getToken(),
+                                                                                   tbToken.getSessionId(),
+                                                                                   user.getAuthorities(companyProfile.getUserGroups()));
+
+        if (user.isEnabled() == false) {
           url = BackendAuthenticationErrorUrlCreator.getErrorUrl("access",
                                                                  request.getParameter(BackendSecurityConfigurations.USERNAME_FIELD_NAME),
                                                                  request.getParameter(BackendSecurityConfigurations.PASSWORD_FIELD_NAME),
@@ -62,7 +68,7 @@ public class BackendAuthenticationSuccessHandler extends SimpleUrlAuthentication
         }
         else {
 
-          if (this.sessionUserService.authorizeUser(tbToken, request.getSession(), true) == null) {
+          if (this.sessionUserService.authorizeUser(newToken, user, companyProfile, request.getSession(), true) == null) {
 
             url = BackendAuthenticationErrorUrlCreator.getErrorUrl("access",
                                                                    request.getParameter(BackendSecurityConfigurations.USERNAME_FIELD_NAME),
