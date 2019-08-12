@@ -18,7 +18,7 @@ import com.pth.iflow.backend.exceptions.BackendCustomizedException;
 import com.pth.iflow.backend.models.BackendCompanyProfile;
 import com.pth.iflow.backend.models.BackendUser;
 import com.pth.iflow.backend.models.ProfileResponse;
-import com.pth.iflow.backend.services.IProfileValidator;
+import com.pth.iflow.backend.services.IProfileAccess;
 
 @Component
 public class BackendAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
@@ -27,7 +27,7 @@ public class BackendAuthenticationSuccessHandler extends SimpleUrlAuthentication
   private BackendSessionUserService sessionUserService;
 
   @Autowired
-  private IProfileValidator         profileValidator;
+  private IProfileAccess         profileValidator;
 
   @Override
   public void onAuthenticationSuccess(final HttpServletRequest request, final HttpServletResponse response, final Authentication auth)

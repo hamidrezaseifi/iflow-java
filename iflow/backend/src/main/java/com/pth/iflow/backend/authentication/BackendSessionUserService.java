@@ -33,22 +33,25 @@ public class BackendSessionUserService {
       }
       ctx.setAuthentication(token);
     }
-    return this.setLoggedInUserInfo(user, companyProfile, session);
+    return this.setLoggedInUserInfo(token, user, companyProfile, session);
 
   }
 
-  public BackendSessionUserInfo setLoggedInUserInfo(final BackendUser user, final BackendCompanyProfile companyProfile,
-      final HttpSession session) {
+  public BackendSessionUserInfo setLoggedInUserInfo(final BackendAuthenticationToken token, final BackendUser user,
+      final BackendCompanyProfile companyProfile, final HttpSession session) {
 
-    this.reloadSessionData(user, companyProfile);
+    this.reloadSessionData(token, user, companyProfile);
 
     return this.sessionUserInfo;
   }
 
-  public void reloadSessionData(final BackendUser user, final BackendCompanyProfile companyProfile) {
+  public void reloadSessionData(final BackendAuthenticationToken token, final BackendUser user,
+      final BackendCompanyProfile companyProfile) {
 
-    this.sessionUserInfo.setCompanyProfil(companyProfile);
+    this.sessionUserInfo.setCompanyProfile(companyProfile);
     this.sessionUserInfo.setUser(user);
+    this.sessionUserInfo.setToken(token.getToken());
+    this.sessionUserInfo.setSessionId(token.getSessionId());
     this.sessionUserInfo.update();
 
   }

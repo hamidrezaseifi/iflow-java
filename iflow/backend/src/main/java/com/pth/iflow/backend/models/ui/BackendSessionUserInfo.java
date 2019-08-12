@@ -19,6 +19,8 @@ public class BackendSessionUserInfo {
   private Date                  loginTime;
   private BackendUser           user;
   private BackendCompanyProfile companyProfile;
+  private String                token;
+  private String                sessionId;
 
   @Value("${server.session.timeout}")
   private int                   sessionTimeOut;
@@ -72,16 +74,32 @@ public class BackendSessionUserInfo {
     this.user = user;
   }
 
-  public BackendCompanyProfile getCompanyProfil() {
+  public String getUserTitle() {
+    return this.user.getUserTitle();
+  }
+
+  public BackendCompanyProfile getCompanyProfile() {
     return this.companyProfile;
   }
 
-  public void setCompanyProfil(final BackendCompanyProfile companyProfile) {
+  public String getToken() {
+    return this.token;
+  }
+
+  public String getSessionId() {
+    return this.sessionId;
+  }
+
+  public void setCompanyProfile(final BackendCompanyProfile companyProfile) {
     this.companyProfile = companyProfile;
   }
 
-  public String getUserTitle() {
-    return this.user.getUserTitle();
+  public void setToken(final String token) {
+    this.token = token;
+  }
+
+  public void setSessionId(final String sessionId) {
+    this.sessionId = sessionId;
   }
 
 }

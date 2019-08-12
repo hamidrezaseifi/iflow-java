@@ -11,7 +11,7 @@ import com.pth.iflow.backend.configurations.BackendConfiguration;
 import com.pth.iflow.backend.exceptions.BackendCustomizedException;
 import com.pth.iflow.backend.models.ProfileResponse;
 import com.pth.iflow.backend.models.UserAuthenticationResponse;
-import com.pth.iflow.backend.services.IProfileValidator;
+import com.pth.iflow.backend.services.IProfileAccess;
 import com.pth.iflow.backend.services.IRestTemplateCall;
 import com.pth.iflow.common.edo.models.xml.AuthenticatedProfileRequestEdo;
 import com.pth.iflow.common.edo.models.xml.ProfileResponseEdo;
@@ -22,14 +22,14 @@ import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.rest.IflowRestPaths;
 
 @Service
-public class ProfileValidator implements IProfileValidator {
+public class ProfileAccess implements IProfileAccess {
 
-  private static final Logger logger = LoggerFactory.getLogger(ProfileValidator.class);
+  private static final Logger logger = LoggerFactory.getLogger(ProfileAccess.class);
 
   private final IRestTemplateCall                       restTemplate;
   private final BackendConfiguration.ModuleAccessConfig moduleAccessConfig;
 
-  public ProfileValidator(@Autowired final IRestTemplateCall restTemplate,
+  public ProfileAccess(@Autowired final IRestTemplateCall restTemplate,
                           @Autowired final BackendConfiguration.ModuleAccessConfig moduleAccessConfig) {
     this.restTemplate = restTemplate;
     this.moduleAccessConfig = moduleAccessConfig;

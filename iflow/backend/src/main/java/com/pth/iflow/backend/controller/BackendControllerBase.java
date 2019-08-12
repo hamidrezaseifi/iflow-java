@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.pth.iflow.backend.configurations.BackendSecurityConfigurations;
+import com.pth.iflow.backend.models.BackendCompany;
+import com.pth.iflow.backend.models.BackendUser;
 import com.pth.iflow.backend.models.ui.BackendSessionUserInfo;
 import com.pth.iflow.backend.models.ui.UiMenuItem;
 import com.pth.iflow.backend.services.IBreadCrumbLoader;
@@ -68,6 +70,26 @@ public class BackendControllerBase {
   protected BackendSessionUserInfo getSessionUserInfo() {
 
     return this.sessionUserInfo;
+  }
+
+  protected BackendUser getLoggedUser() {
+
+    return this.sessionUserInfo.getUser();
+  }
+
+  protected BackendCompany getLoggedCompany() {
+
+    return this.sessionUserInfo.getCompanyProfile().getCompany();
+  }
+
+  protected String getLoggedToken() {
+
+    return this.sessionUserInfo.getToken();
+  }
+
+  protected String getLoggedSessionId() {
+
+    return this.sessionUserInfo.getSessionId();
   }
 
 }

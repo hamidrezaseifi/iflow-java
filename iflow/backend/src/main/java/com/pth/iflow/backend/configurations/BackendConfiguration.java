@@ -21,8 +21,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class BackendConfiguration {
 
-  public static final String NO_ACCESS_URL = "/noaccess";
-  public static final String INVALID_TOKEN_URL = "/invalidtoken";
+  public static final String       NO_ACCESS_URL            = "/noaccess";
+  public static final String       INVALID_TOKEN_URL        = "/invalidtoken";
 
   public static final List<String> NOAUTHENTICATED_URL_LIST = Arrays.asList(NO_ACCESS_URL, INVALID_TOKEN_URL);
 
@@ -32,23 +32,23 @@ public class BackendConfiguration {
   @Component
   public static class ModuleAccessConfig {
 
-    private final Logger log = LoggerFactory.getLogger(getClass());
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-    @Value("${iflow.profile.urls.core.base}")
-    private String coreBaseUrl;
+    @Value("${iflow.profile.urls.workflow.base}")
+    private String       workflowBaseUrl;
 
     @Value("${iflow.profile.urls.profile.base}")
-    private String profileBaseUrl;
+    private String       profileBaseUrl;
 
     @PostConstruct
     private void init() {
-      log.info("CORE Base URL: {}", coreBaseUrl);
-      log.info("PROFILE Base URL: {}", profileBaseUrl);
+      this.log.info("WORKFLOW Base URL: {}", this.workflowBaseUrl);
+      this.log.info("PROFILE Base URL: {}", this.profileBaseUrl);
 
     }
 
-    public URL generateCoreUrl(final String subUrl) throws MalformedURLException {
-      String path = coreBaseUrl + "/" + subUrl;
+    public URL generateWorkflowUrl(final String subUrl) throws MalformedURLException {
+      String path = this.workflowBaseUrl + "/" + subUrl;
       path = path.replace("//", "/");
       path = path.replace("http:/", "http://");
 
@@ -56,7 +56,7 @@ public class BackendConfiguration {
     }
 
     public URL generateProfileUrl(final String subUrl) throws MalformedURLException {
-      String path = profileBaseUrl + "/" + subUrl;
+      String path = this.profileBaseUrl + "/" + subUrl;
       path = path.replace("//", "/");
       path = path.replace("http:/", "http://");
 

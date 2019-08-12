@@ -15,13 +15,13 @@ import com.pth.iflow.backend.authentication.BackendAuthenticationDetails;
 import com.pth.iflow.backend.authentication.BackendAuthenticationToken;
 import com.pth.iflow.backend.exceptions.BackendCustomizedException;
 import com.pth.iflow.backend.models.UserAuthenticationResponse;
-import com.pth.iflow.backend.services.IProfileValidator;
+import com.pth.iflow.backend.services.IProfileAccess;
 
 @Component
 public class BackendCustomAuthenticationProvider implements AuthenticationProvider {
 
   @Autowired
-  private IProfileValidator profileValidator;
+  private IProfileAccess profileValidator;
 
   @PostConstruct
   private void init() {
