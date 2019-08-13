@@ -6,6 +6,12 @@
 			{"id":"menu-workflowtype-list", "label":"menu-workflowtype-list","url":"/companies/workflowtype","image":"glyphicon glyphicon-tasks", "status": 1,"children":[]}
 		]
 	},
+	{"id":"menu-workflow", "label":"menu-workflow","url":"#","image":"glyphicon glyphicon-tasks", "status": 1,"children":
+		[
+			{"id":"menu-workflow-list", "label":"menu-workflow-list","url":"/workflow/list","image":"glyphicon glyphicon-tasks", "status": 1,"children":[]},
+			{"id":"menu-workflow-create", "label":"menu-workflowtype-list","url":"/workflow/create","image":"glyphicon glyphicon-tasks", "status": 1,"children":[]}
+		]
+	},
 	{"id":"menu-user", "label":"menu-user","url":"#","image":"glyphicon glyphicon-user", "status": 1,"children":
 		[
 			{"id":"menu-changepassword", "label":"menu-changepassword","url":"/user/changepassword","image":"glyphicon glyphicon-lock", "status": 1,"children":[]}

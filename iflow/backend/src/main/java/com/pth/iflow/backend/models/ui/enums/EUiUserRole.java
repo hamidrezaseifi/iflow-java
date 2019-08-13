@@ -7,7 +7,7 @@ public enum EUiUserRole {
   NOROLE(1, "No Role", ""),
   USER(5, "Benutzer", "ROLE_USER"),
   VIEW(10, "Zuschauer", "ROLE_VIEW"),
-  GUEST(15, "Gast", ""),
+  Editor(15, "Bearbeiter", ""),
   ADMIN(25, "Administrator", "ROLE_ADMIN");
 
   private final int    id;
