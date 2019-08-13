@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 
 import com.pth.iflow.backend.configurations.BackendConfiguration;
 import com.pth.iflow.backend.exceptions.BackendCustomizedException;
-import com.pth.iflow.backend.models.Workflow;
-import com.pth.iflow.backend.models.WorkflowType;
+import com.pth.iflow.backend.models.BackendWorkflow;
+import com.pth.iflow.backend.models.BackendWorkflowType;
 import com.pth.iflow.backend.services.IRestTemplateCall;
 import com.pth.iflow.backend.services.IWorkflowAccess;
 import com.pth.iflow.common.edo.models.xml.TokenProfileRequestEdo;
@@ -23,57 +23,65 @@ import com.pth.iflow.common.rest.IflowRestPaths;
 @Service
 public class WorkflowAccess implements IWorkflowAccess {
 
-  private static final Logger                           logger = LoggerFactory.getLogger(WorkflowAccess.class);
+  private static final Logger logger = LoggerFactory.getLogger(WorkflowAccess.class);
 
   private final IRestTemplateCall                       restTemplate;
   private final BackendConfiguration.ModuleAccessConfig moduleAccessConfig;
 
   public WorkflowAccess(@Autowired final IRestTemplateCall restTemplate,
-      @Autowired final BackendConfiguration.ModuleAccessConfig moduleAccessConfig) {
+                        @Autowired final BackendConfiguration.ModuleAccessConfig moduleAccessConfig) {
     this.restTemplate = restTemplate;
     this.moduleAccessConfig = moduleAccessConfig;
   }
 
   @Override
-  public Workflow readWorkflow(final Long workflowId, final String token) throws BackendCustomizedException, MalformedURLException {
+  public BackendWorkflow readWorkflow(final Long workflowId, final String token) throws BackendCustomizedException, MalformedURLException {
     logger.debug("Read workflow for id {}", workflowId);
 
     final TokenProfileRequestEdo profileRequest = new TokenProfileRequestEdo();
     profileRequest.setToken(token);
 
     final WorkflowEdo responseEdo = this.restTemplate.callRestGet(
-        this.moduleAccessConfig.generateWorkflowUrl(IflowRestPaths.WorkflowModule.WORKFLOW_READ_BY_ID), token, EModule.PROFILE,
-        WorkflowEdo.class, true, workflowId);
+                                                                  this.moduleAccessConfig.generateWorkflowUrl(IflowRestPaths.WorkflowModule.WORKFLOW_READ_BY_ID),
+                                                                  token,
+                                                                  EModule.PROFILE,
+                                                                  WorkflowEdo.class,
+                                                                  true,
+                                                                  workflowId);
 
-    return new Workflow().fromEdo(responseEdo);
+    return new BackendWorkflow().fromEdo(responseEdo);
   }
 
   @Override
-  public Workflow saveWorkflow(final Workflow workflow, final String token) throws BackendCustomizedException, MalformedURLException {
+  public BackendWorkflow saveWorkflow(final BackendWorkflow workflow, final String token) throws BackendCustomizedException,
+                                                                                          MalformedURLException {
     // TODO Auto-generated method stub
     return null;
   }
 
   @Override
-  public List<Workflow> readWorkflowList(final Long companyId, final String token)
-      throws BackendCustomizedException, MalformedURLException {
+  public List<BackendWorkflow> readWorkflowList(final Long companyId, final String token)
+                                                                                          throws BackendCustomizedException,
+                                                                                          MalformedURLException {
     // TODO Auto-generated method stub
     return null;
   }
 
   @Override
-  public List<WorkflowType> readWorkflowTypeList(final Long companyId, final String token)
-      throws BackendCustomizedException, MalformedURLException {
+  public List<BackendWorkflowType> readWorkflowTypeList(final Long companyId, final String token)
+                                                                                                  throws BackendCustomizedException,
+                                                                                                  MalformedURLException {
     logger.debug("Read workflow-type for company-id {}", companyId);
 
-    final TokenProfileRequestEdo profileRequest = new TokenProfileRequestEdo();
-    profileRequest.setToken(token);
-
     final WorkflowTypeListEdo responseEdo = this.restTemplate.callRestGet(
-        this.moduleAccessConfig.generateWorkflowUrl(IflowRestPaths.WorkflowModule.WORKFLOWTYPE_READ_LIST_BY_COMPANY), token,
-        EModule.PROFILE, WorkflowTypeListEdo.class, true, companyId);
+                                                                          this.moduleAccessConfig.generateWorkflowUrl(IflowRestPaths.WorkflowModule.WORKFLOWTYPE_READ_LIST_BY_COMPANY),
+                                                                          token,
+                                                                          EModule.PROFILE,
+                                                                          WorkflowTypeListEdo.class,
+                                                                          true,
+                                                                          companyId);
 
-    return new WorkflowType().fromEdoList(responseEdo.getWorkflowTypes());
+    return new BackendWorkflowType().fromEdoList(responseEdo.getWorkflowTypes());
   }
 
 }

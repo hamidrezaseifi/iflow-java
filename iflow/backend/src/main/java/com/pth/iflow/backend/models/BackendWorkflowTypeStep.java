@@ -3,7 +3,7 @@ package com.pth.iflow.backend.models;
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 import com.pth.iflow.common.edo.models.xml.WorkflowTypeStepEdo;
 
-public class WorkflowTypeStep extends ModelMapperBase<WorkflowTypeStepEdo, WorkflowTypeStep> {
+public class BackendWorkflowTypeStep extends ModelMapperBase<WorkflowTypeStepEdo, BackendWorkflowTypeStep> {
   
   private Long    id;
   private Long    workflowTypeId;
@@ -78,15 +78,15 @@ public class WorkflowTypeStep extends ModelMapperBase<WorkflowTypeStepEdo, Workf
     this.version = version;
   }
   
-  public boolean isAfterStep(final WorkflowTypeStep other) {
+  public boolean isAfterStep(final BackendWorkflowTypeStep other) {
     return this.stepIndex > other.getStepIndex();
   }
   
-  public boolean isBeforeStep(final WorkflowTypeStep other) {
+  public boolean isBeforeStep(final BackendWorkflowTypeStep other) {
     return this.stepIndex < other.getStepIndex();
   }
   
-  public boolean isTheSameStep(final WorkflowTypeStep other) {
+  public boolean isTheSameStep(final BackendWorkflowTypeStep other) {
     return this.stepIndex == other.getStepIndex();
   }
   
@@ -105,11 +105,11 @@ public class WorkflowTypeStep extends ModelMapperBase<WorkflowTypeStepEdo, Workf
   }
   
   @Override
-  public WorkflowTypeStep fromEdo(final WorkflowTypeStepEdo edo) {
+  public BackendWorkflowTypeStep fromEdo(final WorkflowTypeStepEdo edo) {
     if (edo == null) {
       return null;
     }
-    final WorkflowTypeStep model = new WorkflowTypeStep();
+    final BackendWorkflowTypeStep model = new BackendWorkflowTypeStep();
     
     model.setStepIndex(edo.getStepIndex());
     model.setTitle(edo.getTitle());

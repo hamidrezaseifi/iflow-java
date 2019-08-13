@@ -548,3 +548,42 @@ div.notic-div, div.notic-div label, div.notic-div div
 	margin-left: 50px;
 	font-weight: normal;
 }
+
+.content-container {
+    padding: 10px 50px;
+}
+
+.page-toolbar{
+    padding: 5px;
+	margin: 5px 0;
+	background-color: #dadccf;
+}
+
+.page-title{
+	font-weight: bold;
+	font-size: 24px;
+	display: inline-block;
+    padding: 5px;
+    padding-right: 20px;
+}
+
+.toolbar-button{
+	border: none;
+    background-color: gray;
+    color: #f7fbc4;
+    padding: 5px;
+    border-radius: 13px;
+}
+
+.toolbar-link{
+	border: none;
+    background-color: gray;
+    color: #f7fbc4;
+    padding: 5px;
+    border-radius: 13px;
+    display: inline-block;
+}
+
+.toolbar-button i.material-icons, .toolbar-link i.material-icons{
+	font-size: 16px;
+}

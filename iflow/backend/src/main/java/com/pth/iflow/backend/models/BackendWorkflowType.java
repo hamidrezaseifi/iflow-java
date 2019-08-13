@@ -6,7 +6,7 @@ import java.util.List;
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 import com.pth.iflow.common.edo.models.xml.WorkflowTypeEdo;
 
-public class WorkflowType extends ModelMapperBase<WorkflowTypeEdo, WorkflowType> {
+public class BackendWorkflowType extends ModelMapperBase<WorkflowTypeEdo, BackendWorkflowType> {
   
   private Long                         id;
   private Long                         companyId;
@@ -18,7 +18,7 @@ public class WorkflowType extends ModelMapperBase<WorkflowTypeEdo, WorkflowType>
   private Boolean                      manualAssign;
   private Boolean                      increaseStepAutomatic;
   private Integer                      version;
-  private final List<WorkflowTypeStep> steps = new ArrayList<>();
+  private final List<BackendWorkflowTypeStep> steps = new ArrayList<>();
   
   @Override
   public Long getId() {
@@ -109,18 +109,18 @@ public class WorkflowType extends ModelMapperBase<WorkflowTypeEdo, WorkflowType>
     this.version = version;
   }
   
-  public List<WorkflowTypeStep> getSteps() {
+  public List<BackendWorkflowTypeStep> getSteps() {
     return this.steps;
   }
   
-  public void setSteps(final List<WorkflowTypeStep> steps) {
+  public void setSteps(final List<BackendWorkflowTypeStep> steps) {
     this.steps.clear();
     if (steps != null) {
       this.steps.addAll(steps);
     }
   }
 
-  public void addStep(final WorkflowTypeStep stepId) {
+  public void addStep(final BackendWorkflowTypeStep stepId) {
     this.steps.add(stepId);
   }
   
@@ -148,8 +148,8 @@ public class WorkflowType extends ModelMapperBase<WorkflowTypeEdo, WorkflowType>
   }
   
   @Override
-  public WorkflowType fromEdo(final WorkflowTypeEdo edo) {
-    final WorkflowType model = new WorkflowType();
+  public BackendWorkflowType fromEdo(final WorkflowTypeEdo edo) {
+    final BackendWorkflowType model = new BackendWorkflowType();
     
     model.setTitle(edo.getTitle());
     model.setComments(edo.getComments());
@@ -161,7 +161,7 @@ public class WorkflowType extends ModelMapperBase<WorkflowTypeEdo, WorkflowType>
     model.setManualAssign(edo.getManualAssign());
     model.setIncreaseStepAutomatic(edo.getIncreaseStepAutomatic());
     model.setVersion(edo.getVersion());
-    model.setSteps(new WorkflowTypeStep().fromEdoList(edo.getSteps()));
+    model.setSteps(new BackendWorkflowTypeStep().fromEdoList(edo.getSteps()));
     
     return model;
   }

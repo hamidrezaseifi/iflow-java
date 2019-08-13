@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 import com.pth.iflow.common.edo.models.xml.WorkflowActionEdo;
 
-public class WorkflowAction extends ModelMapperBase<WorkflowActionEdo, WorkflowAction> {
+public class BackendWorkflowAction extends ModelMapperBase<WorkflowActionEdo, BackendWorkflowAction> {
   
   private Long          id;
   private Long          workflowId;
@@ -127,12 +127,12 @@ public class WorkflowAction extends ModelMapperBase<WorkflowActionEdo, WorkflowA
   }
   
   @Override
-  public WorkflowAction fromEdo(final WorkflowActionEdo edo) {
+  public BackendWorkflowAction fromEdo(final WorkflowActionEdo edo) {
     if (edo == null) {
       return null;
     }
     
-    final WorkflowAction model = new WorkflowAction();
+    final BackendWorkflowAction model = new BackendWorkflowAction();
     
     model.setAction(edo.getAction());
     model.setComments(edo.getComments());

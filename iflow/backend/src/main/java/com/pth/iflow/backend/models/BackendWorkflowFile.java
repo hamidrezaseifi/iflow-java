@@ -6,7 +6,7 @@ import java.util.List;
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 import com.pth.iflow.common.edo.models.xml.WorkflowFileEdo;
 
-public class WorkflowFile extends ModelMapperBase<WorkflowFileEdo, WorkflowFile> {
+public class BackendWorkflowFile extends ModelMapperBase<WorkflowFileEdo, BackendWorkflowFile> {
 
   private Long                            id;
   private Long                            workflowId;
@@ -17,7 +17,7 @@ public class WorkflowFile extends ModelMapperBase<WorkflowFileEdo, WorkflowFile>
   private Integer                         activeFileVersion;
   private Integer                         status;
   private Integer                         version;
-  private final List<WorkflowFileVersion> fileVersions = new ArrayList<>();
+  private final List<BackendWorkflowFileVersion> fileVersions = new ArrayList<>();
 
   @Override
   public Long getId() {
@@ -94,11 +94,11 @@ public class WorkflowFile extends ModelMapperBase<WorkflowFileEdo, WorkflowFile>
     this.version = version;
   }
 
-  public List<WorkflowFileVersion> getFileVersions() {
+  public List<BackendWorkflowFileVersion> getFileVersions() {
     return this.fileVersions;
   }
 
-  public void setFileVersions(final List<WorkflowFileVersion> fileVersions) {
+  public void setFileVersions(final List<BackendWorkflowFileVersion> fileVersions) {
     this.fileVersions.clear();
     if (fileVersions != null) {
       this.fileVersions.addAll(fileVersions);
@@ -118,18 +118,18 @@ public class WorkflowFile extends ModelMapperBase<WorkflowFileEdo, WorkflowFile>
     edo.setWorkflowId(this.workflowId);
     edo.setVersion(this.version);
 
-    edo.setFileVersions(WorkflowFileVersion.toEdoList(this.fileVersions));
+    edo.setFileVersions(BackendWorkflowFileVersion.toEdoList(this.fileVersions));
 
     return edo;
   }
 
   @Override
-  public WorkflowFile fromEdo(final WorkflowFileEdo edo) {
+  public BackendWorkflowFile fromEdo(final WorkflowFileEdo edo) {
     if (edo == null) {
       return null;
     }
     
-    final WorkflowFile model = new WorkflowFile();
+    final BackendWorkflowFile model = new BackendWorkflowFile();
 
     model.setTitle(edo.getTitle());
     model.setComments(edo.getComments());
@@ -141,7 +141,7 @@ public class WorkflowFile extends ModelMapperBase<WorkflowFileEdo, WorkflowFile>
     model.setWorkflowId(edo.getWorkflowId());
     model.setVersion(edo.getVersion());
 
-    model.setFileVersions(new WorkflowFileVersion().fromEdoList(edo.getFileVersions()));
+    model.setFileVersions(new BackendWorkflowFileVersion().fromEdoList(edo.getFileVersions()));
 
     return model;
   }

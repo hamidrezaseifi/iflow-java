@@ -1,25 +1,58 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org" ng-app="iflowApp" >
     <head>
-    
     	<th:block th:include="layout/mainLayout :: pageheader" />
-		<script th:src="@{/js/index.js}"></script>
+		<script th:src="@{/js/workflow-create.js}"></script>
+		<link th:href="@{/css/table.css}" rel="stylesheet" />
     </head>
     <body ng-controller="BodyController">
         <header th:replace="layout/mainLayout :: header" ></header>
         <div th:replace="layout/mainLayout :: breadcrumb" ></div>
 		
-		<div>
-			<h2 th:text="#{menu-workflow-create}"></h2>
-			<hr>
-		
-			<div class="nav navbar-nav">
-				<div th:each="workflowType: ${workflowTypeList}">
-			    	<span class="" th:text="${workflowType.getId()}"></span> , 
-			    	<span class="" th:text="${workflowType.getTitle()}"></span> , 
-			    	<span class="" th:text="${workflowType.getStatus()}"></span> , 
-				</div>
+		<div class="content-container" ng-controller="WorkflowCreateController">
+			<div class="page-toolbar">
+				<div class="page-title" th:text="#{menu-workflow-create}"></div>
+				<button class="toolbar-button" ng-click="reload();"><i class="material-icons">save</i></button>
+				<a class="toolbar-link" href="/workflow/list"><i class="material-icons">list</i></a>
 			</div>
-			    
+		
+		    <table class="iflow-table">
+		    	<thead>
+		    		<tr>
+		    			<th>ID</th>
+		    			<th>Company</th>
+		    			<th>BaseType</th>
+		    			<th>Title</th>
+		    			<th>Status</th>
+		    			<th>SendToController</th>
+		    			<th>ManualAssign</th>
+		    			<th>IncreaseStepAutomatic</th>
+		    			<th>Steps</th>
+		    		</tr>
+		    	</thead>
+		    	<tbody>
+		     		<tr ng-repeat="item in workflowTypes">
+		    			<th>{{item.id}}</th>
+		    			<td>{{item.companyId}}</td>
+		    			<td>{{item.baseTypeId}}</td>
+		    			<td>{{item.title}}</td>
+		    			<td>{{item.status}}</td>
+		    			<td>{{item.sendToController}}</td>
+		    			<td>{{item.manualAssign}}</td>
+		    			<td>{{item.increaseStepAutomatic}}</td>
+		    			<td>
+		    				<span ng-repeat="step in item.StepList">{{step.Title}} ,</span>
+		    			</td>
+		    		</tr>
+		     		
+		    	
+		    	</tbody>
+		    </table>
+		    
+		    <script type="text/javascript">
+				var loadUrl = "/workflow/data/workflowcreate/init";
+		    </script>
+		
+		
 		</div>
 		
         <footer th:replace="layout/footer :: footer" ></footer>

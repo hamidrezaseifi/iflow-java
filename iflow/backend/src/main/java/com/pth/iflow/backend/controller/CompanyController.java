@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.pth.iflow.backend.exceptions.BackendCustomizedException;
-import com.pth.iflow.backend.models.WorkflowType;
+import com.pth.iflow.backend.models.BackendWorkflowType;
 import com.pth.iflow.backend.services.IWorkflowAccess;
 
 @Controller
@@ -33,7 +33,7 @@ public class CompanyController extends BackendControllerBase {
   @GetMapping(path = { "/workflowtype" })
   public String showWorkflowTypeList(final Model model) throws BackendCustomizedException, MalformedURLException {
 
-    final List<WorkflowType> workflowTypeList = this.workflowAccess.readWorkflowTypeList(this.getLoggedCompany().getId(),
+    final List<BackendWorkflowType> workflowTypeList = this.workflowAccess.readWorkflowTypeList(this.getLoggedCompany().getId(),
         this.getLoggedToken());
 
     model.addAttribute("workflowTypeList", workflowTypeList);
