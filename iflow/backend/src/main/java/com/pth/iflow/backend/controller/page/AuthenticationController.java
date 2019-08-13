@@ -1,4 +1,4 @@
-package com.pth.iflow.backend.controller;
+package com.pth.iflow.backend.controller.page;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Map;

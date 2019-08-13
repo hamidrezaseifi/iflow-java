@@ -7,9 +7,10 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 	  //$scope.phones = [];
 	
 	$scope.loadUrl = loadUrl;
+	
 	$scope.workflowTypes = [];
 	$scope.users = [];
-	
+	$scope.workflow = {};
 	
 	
 	$scope.reload = function (){
@@ -29,11 +30,12 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 	    	
 	    	$scope.workflowTypes = response.data.workflowTypes;
 	    	$scope.users = response.data.users;
+	    	$scope.workflow = initWorkFlow(response.data.newWorkflow);
 	    	
 
 	    }, function errorCallback(response) {
 	        
-	    	alert(response);
+	    	//alert(response);
 	        $scope.textDebug = "error search: " + response;
 	        alert($scope.textDebug);
 	        //$scope.test = response.data;
@@ -42,7 +44,19 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 	};
 	
 	
-	
+	$scope.getWorkFlowTest = function(){
+		return JSON.stringify($scope.workflow);
+	};
+		
+	function initWorkFlow(workflow){
+		workflow.workflowTypeId = workflow.workflowTypeId + "";
+		workflow.controller = workflow.controller + "";
+		workflow.assignTo = workflow.assignTo + "";
+		workflow.workflowTypeId = workflow.workflowTypeId + "";
+		workflow.workflowTypeId = workflow.workflowTypeId + "";
+			
+		return workflow;
+	};
 	
 	$scope.reload();
 });

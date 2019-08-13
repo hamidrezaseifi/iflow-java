@@ -1,4 +1,4 @@
-package com.pth.iflow.backend.controller;
+package com.pth.iflow.backend.controller.page;
 
 import java.net.MalformedURLException;
 import java.util.List;
@@ -17,7 +17,7 @@ import com.pth.iflow.backend.services.IWorkflowAccess;
 
 @Controller
 @RequestMapping(value = "/companies")
-public class CompanyController extends BackendControllerBase {
+public class CompanyController extends BackendPageControllerBase {
 
   @Autowired
   private IWorkflowAccess workflowAccess;

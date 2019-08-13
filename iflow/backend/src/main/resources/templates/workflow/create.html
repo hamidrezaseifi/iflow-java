@@ -3,6 +3,7 @@
     	<th:block th:include="layout/mainLayout :: pageheader" />
 		<script th:src="@{/js/workflow-create.js}"></script>
 		<link th:href="@{/css/table.css}" rel="stylesheet" />
+		<link th:href="@{/css/workflow-create.css}" rel="stylesheet" />
     </head>
     <body ng-controller="BodyController">
         <header th:replace="layout/mainLayout :: header" ></header>
@@ -11,45 +12,62 @@
 		<div class="content-container" ng-controller="WorkflowCreateController">
 			<div class="page-toolbar">
 				<div class="page-title" th:text="#{menu-workflow-create}"></div>
-				<button class="toolbar-button" ng-click="reload();"><i class="material-icons">save</i></button>
+				<button class="toolbar-button" ng-click="save();"><i class="material-icons">save</i></button>
 				<a class="toolbar-link" href="/workflow/list"><i class="material-icons">list</i></a>
+				<button class="toolbar-button" ng-click="reload();"><i class="material-icons">refresh</i></button>
 			</div>
 		
-		    <table class="iflow-table">
-		    	<thead>
-		    		<tr>
-		    			<th>ID</th>
-		    			<th>Company</th>
-		    			<th>BaseType</th>
-		    			<th>Title</th>
-		    			<th>Status</th>
-		    			<th>SendToController</th>
-		    			<th>ManualAssign</th>
-		    			<th>IncreaseStepAutomatic</th>
-		    			<th>Steps</th>
-		    		</tr>
-		    	</thead>
-		    	<tbody>
-		     		<tr ng-repeat="item in workflowTypes">
-		    			<th>{{item.id}}</th>
-		    			<td>{{item.companyId}}</td>
-		    			<td>{{item.baseTypeId}}</td>
-		    			<td>{{item.title}}</td>
-		    			<td>{{item.status}}</td>
-		    			<td>{{item.sendToController}}</td>
-		    			<td>{{item.manualAssign}}</td>
-		    			<td>{{item.increaseStepAutomatic}}</td>
-		    			<td>
-		    				<span ng-repeat="step in item.StepList">{{step.Title}} ,</span>
-		    			</td>
-		    		</tr>
-		     		
-		    	
-		    	</tbody>
-		    </table>
+			<div class="workflow-content">
+				<div class="item-row">
+					<div class="item-label" th:text="#{workflow-title}"></div>
+					<div class="item-content"><input type="text" ng-model="workflow.title" /></div>
+					<div class="clear"></div>
+				</div>
+				<div class="item-row">
+					<div class="item-label" th:text="#{workflow-type}"></div>
+					<div class="item-content">
+						<select type="text" ng-model="workflow.workflowTypeId">
+							<option th:text="#{workflow-select-type}" value="0"></option>
+							<option ng-repeat="item in workflowTypes" ng-value="item.id">{{item.title}}</option>
+						</select>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="item-row">
+					<div class="item-label" th:text="#{workflow-controller}"></div>
+					<div class="item-content">
+						<select type="text" ng-model="workflow.controller">
+							<option th:text="#{workflow-select-controller}" value="0"></option>
+							<option ng-repeat="item in users" ng-value="item.id">{{item.fullName}}</option>
+						</select>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="item-row">
+					<div class="item-label" th:text="#{workflow-assignto}"></div>
+					<div class="item-content">
+						<select type="text" ng-model="workflow.assignTo">
+							<option th:text="#{workflow-select-assign}" value="0"></option>
+							<option ng-repeat="item in users" ng-value="item.id">{{item.fullName}}</option>
+						</select>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="item-row">
+					<div class="item-label" th:text="#{workflow-comments}"></div>
+					<div class="item-content">
+						<textarea ng-model="workflow.comments"></textarea>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="item-row">
+					{{getWorkFlowTest()}}
+				</div>
+			</div>
 		    
 		    <script type="text/javascript">
 				var loadUrl = "/workflow/data/workflowcreate/init";
+				
 		    </script>
 		
 		

@@ -1,6 +1,4 @@
-package com.pth.iflow.backend.controller;
-
-import java.util.List;
+package com.pth.iflow.backend.controller.data;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,26 +14,12 @@ import com.pth.iflow.backend.configurations.BackendSecurityConfigurations;
 import com.pth.iflow.backend.models.BackendCompany;
 import com.pth.iflow.backend.models.BackendUser;
 import com.pth.iflow.backend.models.ui.BackendSessionUserInfo;
-import com.pth.iflow.backend.models.ui.UiMenuItem;
-import com.pth.iflow.backend.services.IBreadCrumbLoader;
-import com.pth.iflow.backend.services.UiMenuService;
 
 @Controller
-public class BackendControllerBase {
-
-  @Autowired
-  private IBreadCrumbLoader      breadCrumbLoader;
-
-  @Autowired
-  private UiMenuService          menuService;
+public class BackendDataControllerBase {
 
   @Autowired
   private BackendSessionUserInfo sessionUserInfo;
-
-  protected List<UiMenuItem> getMenus() {
-    return this.menuService.getAllMenus();
-
-  }
 
   protected String getCurrentRelativeUrl() {
     ServletUriComponentsBuilder builder = ServletUriComponentsBuilder.fromCurrentContextPath();
@@ -55,15 +39,6 @@ public class BackendControllerBase {
       response.sendRedirect(BackendSecurityConfigurations.LOGIN_URL);
 
     }
-
-    final String currentRelatedUrl = this.getCurrentRelativeUrl();
-
-    model.addAttribute("pageMenuList", this.getMenus());
-    model.addAttribute("breadCrumb", this.breadCrumbLoader.getBreadCrumbList(currentRelatedUrl));
-    model.addAttribute("isLogged", true);
-    model.addAttribute("loggedUser", this.getSessionUserInfo());
-
-    model.addAttribute("url", currentRelatedUrl);
 
   }
 

@@ -1,4 +1,4 @@
-package com.pth.iflow.backend.controller;
+package com.pth.iflow.backend.controller.page;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,7 +17,7 @@ import com.pth.iflow.backend.helper.BuildInfoProperties;
 
 @Controller
 @RequestMapping(value = "/")
-public class MainController extends BackendControllerBase {
+public class MainController extends BackendPageControllerBase {
 
   @Autowired
   private IBackendConfiguration backendConfigurations;
