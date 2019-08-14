@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import com.pth.iflow.backend.exceptions.BackendCustomizedException;
 import com.pth.iflow.backend.models.BackendUser;
 import com.pth.iflow.backend.models.BackendWorkflow;
+import com.pth.iflow.backend.models.BackendWorkflowCreateRequest;
 import com.pth.iflow.backend.models.BackendWorkflowType;
 import com.pth.iflow.backend.services.IUserAccess;
 import com.pth.iflow.backend.services.IWorkflowAccess;
@@ -29,7 +30,7 @@ public class WorkflowDataController extends BackendDataControllerBase {
   private IWorkflowAccess workflowAccess;
 
   @Autowired
-  private IUserAccess     userAccess;
+  private IUserAccess userAccess;
 
   @ResponseStatus(HttpStatus.OK)
   @PostMapping(path = { "/workflowtypes" })
@@ -37,7 +38,7 @@ public class WorkflowDataController extends BackendDataControllerBase {
   public List<BackendWorkflowType> listWorkflowtypes() throws BackendCustomizedException, MalformedURLException {
 
     final List<BackendWorkflowType> workflowTypeList = this.workflowAccess.readWorkflowTypeList(this.getLoggedCompany().getId(),
-        this.getLoggedToken());
+                                                                                                this.getLoggedToken());
 
     return workflowTypeList;
   }
@@ -61,7 +62,7 @@ public class WorkflowDataController extends BackendDataControllerBase {
 
     final List<BackendUser> userList = this.userAccess.readCompanyUserList(this.getLoggedCompany().getId(), this.getLoggedToken());
     final List<BackendWorkflowType> workflowTypeList = this.workflowAccess.readWorkflowTypeList(this.getLoggedCompany().getId(),
-        this.getLoggedToken());
+                                                                                                this.getLoggedToken());
 
     final BackendWorkflow newWorkflow = new BackendWorkflow();
     newWorkflow.setStatus(EWorkflowStatus.INITIALIZE);
@@ -75,9 +76,11 @@ public class WorkflowDataController extends BackendDataControllerBase {
     newWorkflow.setWorkflowTypeId(0L);
     newWorkflow.setComments("");
 
+    final BackendWorkflowCreateRequest workflowReq = new BackendWorkflowCreateRequest(newWorkflow);
+
     map.put("users", userList);
     map.put("workflowTypes", workflowTypeList);
-    map.put("newWorkflow", newWorkflow);
+    map.put("workflowCreateRequest", workflowReq);
 
     return map;
   }

@@ -587,3 +587,75 @@ div.notic-div, div.notic-div label, div.notic-div div
 .toolbar-button i.material-icons, .toolbar-link i.material-icons{
 	font-size: 16px;
 }
+
+.iflow-dialog-container{
+	position: absolute;
+	left:0;
+	top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #ffffff9f;
+    display: flex;
+}
+
+.iflow-dialog{
+	border: 1px solid lightgray;
+    margin: 10px 0px;
+    border-radius: 10px;
+    padding: 0;
+    background-color: #f1f1f1;
+    margin: auto;
+}
+
+.iflow-dialog .dialog-toolbar{
+	background: #012e73;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	color: #f7fbc4;
+	padding: 0 10px;
+	height: 28px;
+}
+
+.iflow-dialog .dialog-toolbar .dialog-title{
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 28px;
+	margin-left: 20px;
+}
+
+.iflow-dialog .dialog-toolbar .dialog-toolbar-button{
+	border: none;
+    color: #f7fbc4;
+    background: transparent;
+	float: right;
+	height: 28px;
+    
+}
+
+.iflow-dialog .dialog-toolbar .dialog-toolbar-button i.material-icons{
+	font-size: 18px;
+}
+
+.iflow-dialog .dialog-content{
+	padding: 10px 15px;
+}
+
+.iflow-dialog .dialog-bottonnbar{
+	padding: 4px 15px;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+	background-color: white;
+}
+
+.iflow-dialog .dialog-bottonnbar button{
+	float: right;
+	margin-left: 10px;
+}
+
+.iflow-dialog .dialog-bottonnbar button i.material-icons{
+	font-size: 18px;
+}
+
+.w250{
+	width: 250px;
+}

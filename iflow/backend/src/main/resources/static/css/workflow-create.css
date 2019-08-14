@@ -41,3 +41,14 @@ div.workflow-content div.item-row div.item-content textarea
     height: 200px;
 }
 
+.assign-list{
+	border: 1px solid lightgray;
+    padding: 10px;
+    border-radius: 4px;
+	width: 400px;
+    min-height: 100px;
+    max-height: 200px;
+    overflow-y: auto;
+	
+}
+

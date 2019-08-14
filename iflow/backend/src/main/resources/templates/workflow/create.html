@@ -20,13 +20,13 @@
 			<div class="workflow-content">
 				<div class="item-row">
 					<div class="item-label" th:text="#{workflow-title}"></div>
-					<div class="item-content"><input type="text" ng-model="workflow.title" /></div>
+					<div class="item-content"><input type="text" ng-model="workflowCreateRequest.workflow.title" /></div>
 					<div class="clear"></div>
 				</div>
 				<div class="item-row">
 					<div class="item-label" th:text="#{workflow-type}"></div>
 					<div class="item-content">
-						<select type="text" ng-model="workflow.workflowTypeId">
+						<select type="text" ng-model="workflowCreateRequest.workflow.workflowTypeId">
 							<option th:text="#{workflow-select-type}" value="0"></option>
 							<option ng-repeat="item in workflowTypes" ng-value="item.id">{{item.title}}</option>
 						</select>
@@ -36,7 +36,7 @@
 				<div class="item-row">
 					<div class="item-label" th:text="#{workflow-controller}"></div>
 					<div class="item-content">
-						<select type="text" ng-model="workflow.controller">
+						<select type="text" ng-model="workflowCreateRequest.workflow.controller">
 							<option th:text="#{workflow-select-controller}" value="0"></option>
 							<option ng-repeat="item in users" ng-value="item.id">{{item.fullName}}</option>
 						</select>
@@ -46,24 +46,45 @@
 				<div class="item-row">
 					<div class="item-label" th:text="#{workflow-assignto}"></div>
 					<div class="item-content">
-						<select type="text" ng-model="workflow.assignTo">
-							<option th:text="#{workflow-select-assign}" value="0"></option>
-							<option ng-repeat="item in users" ng-value="item.id">{{item.fullName}}</option>
-						</select>
+						<div class="assign-list" >
+							<span ng-if="hasNoAssigns()" th:text="#{workflow-select-assign}"></span>
+							
+						</div>
 					</div>
 					<div class="clear"></div>
 				</div>
 				<div class="item-row">
 					<div class="item-label" th:text="#{workflow-comments}"></div>
 					<div class="item-content">
-						<textarea ng-model="workflow.comments"></textarea>
+						<textarea ng-model="workflowCreateRequest.workflow.comments"></textarea>
 					</div>
 					<div class="clear"></div>
 				</div>
 				<div class="item-row">
 					{{getWorkFlowTest()}}
 				</div>
+				<div class="item-row">
+					{{getAssignedTest()}}
+				</div>
 			</div>
+		    
+		    <div class="iflow-dialog-container" ng-if="showSelectAssign">
+			    <div class="iflow-dialog w250">
+			    	<div class="dialog-toolbar">
+			    		<span class="dialog-title" th:text="#{workflow-select-assign}"></span>
+			    		<button class="dialog-toolbar-button" ng-click="closeUserSelectDialog();"><i class="material-icons">close</i></button>
+			    		<div class="clear"></div>
+			    	</div>
+			    	<div class="dialog-content">
+			    		<div ng-repeat="item in users" class="user-list-item"><input type="checkbox" ng-model="userAssigned[item.id]" ng-value="item.id"/> &nbsp; &nbsp; {{item.fullName}}</div>
+			    	</div>
+			    	<div class="dialog-bottonnbar">
+			    		<button class="dialog-bottonn" ng-click="closeUserSelectDialog();"><i class="material-icons">close</i></button>
+			    		<button class="dialog-bottonn" ng-click="applyUserSelect();"><i class="material-icons">check</i></button>
+			    		<div class="clear"></div>
+			    	</div>
+			    </div>
+		    </div>
 		    
 		    <script type="text/javascript">
 				var loadUrl = "/workflow/data/workflowcreate/init";

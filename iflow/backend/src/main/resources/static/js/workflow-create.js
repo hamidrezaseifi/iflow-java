@@ -10,7 +10,10 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 	
 	$scope.workflowTypes = [];
 	$scope.users = [];
-	$scope.workflow = {};
+	$scope.userAssigned = {};
+	$scope.workflowCreateRequest = {};
+	
+	$scope.showSelectAssign = true;
 	
 	
 	$scope.reload = function (){
@@ -19,6 +22,8 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 	
 		$scope.workflowTypes = [];
 		$scope.users = [];
+		$scope.workflowCreateRequest = {};
+		$scope.userAssigned = {};
 			
 		$http({
 	        method : "POST",
@@ -30,8 +35,9 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 	    	
 	    	$scope.workflowTypes = response.data.workflowTypes;
 	    	$scope.users = response.data.users;
-	    	$scope.workflow = initWorkFlow(response.data.newWorkflow);
+	    	$scope.workflowCreateRequest = initWorkFlow(response.data.workflowCreateRequest);
 	    	
+	    	resetAssignedList();
 
 	    }, function errorCallback(response) {
 	        
@@ -43,19 +49,59 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 			
 	};
 	
+	$scope.closeUserSelectDialog = function(){
+		$scope.showSelectAssign = false;
+	};
+
+	$scope.applyUserSelect = function(){
+		$scope.showSelectAssign = false;
+	};
+
+	$scope.getAssignedUsers = function(){
+		var assigned = new Array();
+		for(id in $scope.userAssigned){
+    		if($scope.userAssigned[id]){
+    			
+    		}
+    		
+    	}
+		
+		return assigned;
+	};
+
+	function findUser(id){
+		
+	}
 	
+	function resetAssignedList(){
+		$scope.userAssigned = {};
+    	for(o in $scope.users){
+    		var user =$scope.users[o];
+    		$scope.userAssigned[user.id] = false;
+    	}
+	}
+	
+	$scope.hasNoAssigns = function(){
+		return $scope.workflowCreateRequest.assigns.length == 0;
+	};
+
 	$scope.getWorkFlowTest = function(){
-		return JSON.stringify($scope.workflow);
+		return JSON.stringify($scope.workflowCreateRequest);
+	};
+
+	$scope.getAssignedTest = function(){
+		return JSON.stringify($scope.userAssigned);
 	};
 		
-	function initWorkFlow(workflow){
-		workflow.workflowTypeId = workflow.workflowTypeId + "";
-		workflow.controller = workflow.controller + "";
-		workflow.assignTo = workflow.assignTo + "";
-		workflow.workflowTypeId = workflow.workflowTypeId + "";
-		workflow.workflowTypeId = workflow.workflowTypeId + "";
-			
-		return workflow;
+	function initWorkFlow(workflowReq){
+		workflowReq.workflow.workflowTypeId = workflowReq.workflow.workflowTypeId + "";
+		workflowReq.workflow.controller = workflowReq.workflow.controller + "";
+		workflowReq.workflow.assignTo = workflowReq.workflow.assignTo + "";
+		workflowReq.workflow.workflowTypeId = workflowReq.workflow.workflowTypeId + "";
+		workflowReq.workflow.workflowTypeId = workflowReq.workflow.workflowTypeId + "";
+		workflowReq.assigns = [];
+		
+		return workflowReq;
 	};
 	
 	$scope.reload();
