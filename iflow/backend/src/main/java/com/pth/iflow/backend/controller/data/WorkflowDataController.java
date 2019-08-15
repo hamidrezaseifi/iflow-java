@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -57,6 +58,39 @@ public class WorkflowDataController extends BackendDataControllerBase {
   @PostMapping(path = { "/workflowcreate/init" })
   @ResponseBody
   public Map<String, Object> loadWorkflowCreateData() throws BackendCustomizedException, MalformedURLException {
+
+    final Map<String, Object> map = new HashMap<>();
+
+    final List<BackendUser> userList = this.userAccess.readCompanyUserList(this.getLoggedCompany().getId(), this.getLoggedToken());
+    final List<BackendWorkflowType> workflowTypeList = this.workflowAccess.readWorkflowTypeList(this.getLoggedCompany().getId(),
+                                                                                                this.getLoggedToken());
+
+    final BackendWorkflow newWorkflow = new BackendWorkflow();
+    newWorkflow.setStatus(EWorkflowStatus.INITIALIZE);
+    newWorkflow.setAssignTo(0L);
+    newWorkflow.setCreatedBy(this.getLoggedUser().getId());
+    newWorkflow.setController(0L);
+    newWorkflow.setCurrentStepId(0L);
+    newWorkflow.setId(0L);
+    newWorkflow.setTitle("");
+    newWorkflow.setVersion(0);
+    newWorkflow.setWorkflowTypeId(0L);
+    newWorkflow.setComments("");
+
+    final BackendWorkflowCreateRequest workflowReq = new BackendWorkflowCreateRequest(newWorkflow);
+
+    map.put("users", userList);
+    map.put("workflowTypes", workflowTypeList);
+    map.put("workflowCreateRequest", workflowReq);
+
+    return map;
+  }
+
+  @ResponseStatus(HttpStatus.OK)
+  @PostMapping(path = { "/workflowcreate/create" })
+  @ResponseBody
+  public void createWorkflow(@RequestBody final BackendWorkflowCreateRequest createRequest) throws BackendCustomizedException,
+                                                                                            MalformedURLException {
 
     final Map<String, Object> map = new HashMap<>();
 

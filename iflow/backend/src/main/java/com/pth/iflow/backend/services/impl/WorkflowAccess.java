@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.pth.iflow.backend.configurations.BackendConfiguration;
 import com.pth.iflow.backend.exceptions.BackendCustomizedException;
 import com.pth.iflow.backend.models.BackendWorkflow;
+import com.pth.iflow.backend.models.BackendWorkflowCreateRequest;
 import com.pth.iflow.backend.models.BackendWorkflowType;
 import com.pth.iflow.backend.services.IRestTemplateCall;
 import com.pth.iflow.backend.services.IWorkflowAccess;
@@ -50,6 +51,14 @@ public class WorkflowAccess implements IWorkflowAccess {
                                                                   workflowId);
 
     return new BackendWorkflow().fromEdo(responseEdo);
+  }
+
+  @Override
+  public BackendWorkflow createWorkflow(final BackendWorkflowCreateRequest createRequest,
+                                        final String token) throws BackendCustomizedException,
+                                                            MalformedURLException {
+    // TODO Auto-generated method stub
+    return null;
   }
 
   @Override
