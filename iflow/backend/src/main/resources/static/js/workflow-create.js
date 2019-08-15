@@ -13,7 +13,7 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 	$scope.userAssigned = {};
 	$scope.workflowCreateRequest = {};
 	
-	$scope.showSelectAssign = true;
+	$scope.showSelectAssign = false;
 	
 	
 	$scope.reload = function (){
@@ -49,21 +49,41 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 			
 	};
 	
-	$scope.closeUserSelectDialog = function(){
+	$scope.showAssignSelectDialog = function(){
+		$scope.showSelectAssign = true;
+	};
+	
+	$scope.closeAssignSelectDialog = function(){
 		$scope.showSelectAssign = false;
 	};
 
 	$scope.applyUserSelect = function(){
+		$scope.workflowCreateRequest.assigns = [];
+    	for(id in $scope.userAssigned){
+    		if($scope.userAssigned[id]){
+    			$scope.workflowCreateRequest.assigns.push(id);
+    		}
+    	}
+    	
 		$scope.showSelectAssign = false;
+	};
+
+	$scope.removeAssign = function(id){
+		$scope.userAssigned[id] = false;
+		
+		$scope.workflowCreateRequest.assigns = $scope.workflowCreateRequest.assigns.filter(function(value, index, arr){
+
+		    return value != id;
+
+		});
+    	
 	};
 
 	$scope.getAssignedUsers = function(){
 		var assigned = new Array();
 		for(id in $scope.userAssigned){
     		if($scope.userAssigned[id]){
-    			
     		}
-    		
     	}
 		
 		return assigned;
@@ -82,9 +102,27 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 	}
 	
 	$scope.hasNoAssigns = function(){
-		return $scope.workflowCreateRequest.assigns.length == 0;
+		if($scope.workflowCreateRequest && $scope.workflowCreateRequest.assigns){
+			return $scope.workflowCreateRequest.assigns.length == 0;
+		}
+		return false;
+		
 	};
 
+	$scope.getUserById = function(id){
+		for(o in $scope.users){
+    		var user =$scope.users[o];
+    		if(user.id == id){
+    			return user;
+    		}
+    	}
+		return null;
+	};
+
+	
+	
+	
+	
 	$scope.getWorkFlowTest = function(){
 		return JSON.stringify($scope.workflowCreateRequest);
 	};

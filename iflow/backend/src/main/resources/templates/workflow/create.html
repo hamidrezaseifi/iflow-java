@@ -47,8 +47,13 @@
 					<div class="item-label" th:text="#{workflow-assignto}"></div>
 					<div class="item-content">
 						<div class="assign-list" >
+							<button class="show-select-dialog" ng-click="showAssignSelectDialog(id)"><i class="material-icons">playlist_add</i></button>
 							<span ng-if="hasNoAssigns()" th:text="#{workflow-select-assign}"></span>
-							
+							<div class="user-item-box" ng-repeat="id in workflowCreateRequest.assigns">
+								<span>{{getUserById(id).fullName}} </span>
+								<button ng-click="removeAssign(id)"><i class="material-icons">close</i></button>
+							</div>
+							<div class="clear"></div>
 						</div>
 					</div>
 					<div class="clear"></div>
@@ -72,14 +77,14 @@
 			    <div class="iflow-dialog w250">
 			    	<div class="dialog-toolbar">
 			    		<span class="dialog-title" th:text="#{workflow-select-assign}"></span>
-			    		<button class="dialog-toolbar-button" ng-click="closeUserSelectDialog();"><i class="material-icons">close</i></button>
+			    		<button class="dialog-toolbar-button" ng-click="closeAssignSelectDialog();"><i class="material-icons">close</i></button>
 			    		<div class="clear"></div>
 			    	</div>
 			    	<div class="dialog-content">
 			    		<div ng-repeat="item in users" class="user-list-item"><input type="checkbox" ng-model="userAssigned[item.id]" ng-value="item.id"/> &nbsp; &nbsp; {{item.fullName}}</div>
 			    	</div>
 			    	<div class="dialog-bottonnbar">
-			    		<button class="dialog-bottonn" ng-click="closeUserSelectDialog();"><i class="material-icons">close</i></button>
+			    		<button class="dialog-bottonn" ng-click="closeAssignSelectDialog();"><i class="material-icons">close</i></button>
 			    		<button class="dialog-bottonn" ng-click="applyUserSelect();"><i class="material-icons">check</i></button>
 			    		<div class="clear"></div>
 			    	</div>
