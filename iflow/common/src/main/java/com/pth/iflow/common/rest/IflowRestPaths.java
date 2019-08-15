@@ -65,6 +65,7 @@ public class IflowRestPaths {
     public static final String WORKFLOWTYPESTEP_READ_LIST_BY_WORKFLOW = "/workflowtypestep/workflowtype/list/{id}";
     public static final String WORKFLOWTYPESTEP_READ_LIST             = "/workflowtypestep/list";
 
+    public static final String WORKFLOW_CREATE            = "/workflow/create";
     public static final String WORKFLOW_SAVE              = "/workflow/save";
     public static final String WORKFLOW_READ_BY_ID        = "/workflow/readbyid/{id}";
     public static final String WORKFLOW_READ_LIST         = "/workflow/list";

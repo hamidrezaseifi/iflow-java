@@ -5,8 +5,11 @@ import java.util.List;
 
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.Workflow;
+import com.pth.iflow.workflow.models.WorkflowCreateRequest;
 
 public interface IWorkflowProcessService {
+
+  public List<Workflow> create(WorkflowCreateRequest model, String token) throws WorkflowCustomizedException, MalformedURLException;
 
   public Workflow save(Workflow model, String token) throws WorkflowCustomizedException, MalformedURLException;
 

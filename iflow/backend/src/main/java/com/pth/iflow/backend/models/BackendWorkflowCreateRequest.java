@@ -3,6 +3,8 @@ package com.pth.iflow.backend.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.pth.iflow.common.edo.models.xml.WorkflowCreateRequestEdo;
+
 public class BackendWorkflowCreateRequest {
 
   private BackendWorkflow workflow;
@@ -53,6 +55,19 @@ public class BackendWorkflowCreateRequest {
     if (assigns != null) {
       this.assigns.addAll(assigns);
     }
+  }
+
+  public WorkflowCreateRequestEdo toEdo() {
+    final WorkflowCreateRequestEdo edo = new WorkflowCreateRequestEdo(this.workflow.toEdo(), this.assigns);
+
+    return edo;
+  }
+
+  public BackendWorkflowCreateRequest fromEdo(final WorkflowCreateRequestEdo edo) {
+    final BackendWorkflowCreateRequest model = new BackendWorkflowCreateRequest(new BackendWorkflow().fromEdo(edo.getWorkflow()),
+                                                                                edo.getAssignedUsers());
+
+    return model;
   }
 
 }
