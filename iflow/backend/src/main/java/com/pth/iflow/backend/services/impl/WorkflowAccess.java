@@ -17,6 +17,7 @@ import com.pth.iflow.backend.models.ui.BackendSessionUserInfo;
 import com.pth.iflow.backend.services.IRestTemplateCall;
 import com.pth.iflow.backend.services.IWorkflowAccess;
 import com.pth.iflow.common.edo.models.xml.WorkflowEdo;
+import com.pth.iflow.common.edo.models.xml.WorkflowListEdo;
 import com.pth.iflow.common.edo.models.xml.WorkflowTypeListEdo;
 import com.pth.iflow.common.enums.EModule;
 
@@ -43,16 +44,20 @@ public class WorkflowAccess implements IWorkflowAccess {
     logger.debug("Read workflow for id {}", workflowId);
 
     final WorkflowEdo responseEdo = this.restTemplate.callRestGet(this.moduleAccessConfig.getReadWorkflowUri(workflowId),
-        EModule.PROFILE, WorkflowEdo.class, this.sessionUserInfo.getSessionId(), true);
+        EModule.PROFILE, WorkflowEdo.class, this.sessionUserInfo.getToken(), true);
 
     return new BackendWorkflow().fromEdo(responseEdo);
   }
 
   @Override
-  public BackendWorkflow createWorkflow(final BackendWorkflowCreateRequest createRequest)
+  public List<BackendWorkflow> createWorkflow(final BackendWorkflowCreateRequest createRequest)
       throws BackendCustomizedException, MalformedURLException {
-    // TODO Auto-generated method stub
-    return null;
+    logger.debug("Create workflow");
+
+    final WorkflowListEdo responseListEdo = this.restTemplate.callRestPost(this.moduleAccessConfig.getCreateWorkflowUri(),
+        EModule.PROFILE, createRequest.toEdo(), WorkflowListEdo.class, this.sessionUserInfo.getToken(), true);
+
+    return new BackendWorkflow().fromEdoList(responseListEdo.getWorkflows());
   }
 
   @Override

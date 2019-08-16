@@ -12,7 +12,7 @@ public interface IWorkflowAccess {
 
   BackendWorkflow readWorkflow(final Long workflowId) throws BackendCustomizedException, MalformedURLException;
 
-  BackendWorkflow createWorkflow(final BackendWorkflowCreateRequest createRequest)
+  List<BackendWorkflow> createWorkflow(final BackendWorkflowCreateRequest createRequest)
       throws BackendCustomizedException, MalformedURLException;
 
   BackendWorkflow saveWorkflow(final BackendWorkflow workflow) throws BackendCustomizedException, MalformedURLException;

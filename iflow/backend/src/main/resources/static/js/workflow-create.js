@@ -8,6 +8,7 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 	
 	$scope.loadUrl = loadUrl;
 	$scope.saveUrl = saveUrl;
+	$scope.listUrl = listUrl;
 	
 	$scope.workflowTypes = [];
 	$scope.users = [];
@@ -63,7 +64,7 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 	    	
 	    	alert("saved");
 	    	
-	    	resetAssignedList();
+	    	window.location = $scope.listUrl;
 	
 	    }, function errorCallback(response) {
 	        

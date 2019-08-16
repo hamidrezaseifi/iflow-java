@@ -9,17 +9,17 @@ import com.pth.iflow.common.enums.EWorkflowStatus;
 
 public class BackendWorkflow extends ModelMapperBase<WorkflowEdo, BackendWorkflow> {
 
-  private Long                    id;
-  private Long                    workflowTypeId;
-  private BackendWorkflowTypeStep currentStep;
-  private Long                    currentStepId;
-  private Long                    controller;
-  private Long                    createdBy;
-  private Long                    assignTo;
-  private String                  title;
-  private String                  comments;
-  private EWorkflowStatus         status;
-  private Integer                 version;
+  private Long                              id;
+  private Long                              workflowTypeId;
+  private BackendWorkflowTypeStep           currentStep;
+  private Long                              currentStepId;
+  private Long                              controller;
+  private Long                              createdBy;
+  private Long                              assignTo;
+  private String                            title;
+  private String                            comments;
+  private EWorkflowStatus                   status;
+  private Integer                           version;
 
   private final List<BackendWorkflowFile>   files   = new ArrayList<>();
   private final List<BackendWorkflowAction> actions = new ArrayList<>();
@@ -174,7 +174,7 @@ public class BackendWorkflow extends ModelMapperBase<WorkflowEdo, BackendWorkflo
   }
 
   public boolean isInitializing() {
-    return isNew() && (getStatus() == EWorkflowStatus.INITIALIZE);
+    return this.isNew() && (this.getStatus() == EWorkflowStatus.INITIALIZE);
   }
 
   @Override
@@ -185,15 +185,15 @@ public class BackendWorkflow extends ModelMapperBase<WorkflowEdo, BackendWorkflo
     edo.setStatus(this.getStatusInt());
     edo.setId(this.id);
     edo.setController(this.controller);
-    edo.setCurrentStep(this.currentStep.toEdo());
+    edo.setCurrentStep(this.currentStep != null ? this.currentStep.toEdo() : null);
     edo.setCurrentStepId(this.currentStepId);
     edo.setCreatedBy(this.createdBy);
     edo.setWorkflowTypeId(this.workflowTypeId);
     edo.setVersion(this.version);
     edo.setAssignTo(this.assignTo);
 
-    edo.setFiles(BackendWorkflowFile.toEdoList(this.files));
-    edo.setActions(BackendWorkflowAction.toEdoList(this.actions));
+    edo.setFiles(ModelMapperBase.toEdoList(this.files));
+    edo.setActions(ModelMapperBase.toEdoList(this.actions));
 
     return edo;
   }
@@ -210,7 +210,7 @@ public class BackendWorkflow extends ModelMapperBase<WorkflowEdo, BackendWorkflo
     model.setStatusInt(edo.getStatus());
     model.setId(edo.getId());
     model.setController(edo.getController());
-    model.setCurrentStep(new BackendWorkflowTypeStep().fromEdo(edo.getCurrentStep()));
+    model.setCurrentStep(edo.getCurrentStep() != null ? new BackendWorkflowTypeStep().fromEdo(edo.getCurrentStep()) : null);
     model.setCurrentStepId(edo.getCurrentStepId());
     model.setCreatedBy(edo.getCreatedBy());
     model.setWorkflowTypeId(edo.getWorkflowTypeId());

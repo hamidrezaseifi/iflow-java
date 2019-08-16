@@ -81,6 +81,10 @@ public class BackendConfiguration {
       return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.READ_WORKFLOWTYPELIST_BY_COMPANYID_URIBUILDER(companyId));
     }
 
+    public URI getCreateWorkflowUri() throws MalformedURLException {
+      return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.WORKFLOW_CREATE);
+    }
+
   }
 
 }
