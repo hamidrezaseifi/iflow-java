@@ -3,6 +3,7 @@ package com.pth.iflow.core.service;
 import java.util.List;
 
 import com.pth.iflow.core.model.Workflow;
+import com.pth.iflow.core.model.WorkflowSearchFilter;
 
 public interface IWorkflowService {
 
@@ -15,4 +16,6 @@ public interface IWorkflowService {
   public List<Workflow> getListForUser(final Long id, final int status);
 
   public List<Workflow> getListByIdList(final List<Long> idList);
+
+  public List<Workflow> search(final WorkflowSearchFilter workflowSearchFilter);
 }

@@ -23,10 +23,12 @@ import com.pth.iflow.common.edo.models.xml.WorkflowEdo;
 import com.pth.iflow.common.edo.models.xml.WorkflowFileEdo;
 import com.pth.iflow.common.edo.models.xml.WorkflowFileListEdo;
 import com.pth.iflow.common.edo.models.xml.WorkflowListEdo;
+import com.pth.iflow.common.edo.models.xml.WorkflowSearchFilterEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.core.model.Workflow;
 import com.pth.iflow.core.model.WorkflowAction;
 import com.pth.iflow.core.model.WorkflowFile;
+import com.pth.iflow.core.model.WorkflowSearchFilter;
 import com.pth.iflow.core.service.IWorkflowActionService;
 import com.pth.iflow.core.service.IWorkflowFileService;
 import com.pth.iflow.core.service.IWorkflowService;
@@ -155,6 +157,17 @@ public class WorkflowController {
 
     return ControllerHelper.createResponseEntity(request, new WorkflowFileListEdo(ModelMapperBase.toEdoList(modelList)),
         HttpStatus.OK);
+  }
+
+  @ResponseStatus(HttpStatus.ACCEPTED)
+  @IflowPostRequestMapping(path = IflowRestPaths.CoreModul.WORKFLOW_FILE_SAVE)
+  public ResponseEntity<WorkflowListEdo> searchWorkflow(@RequestBody final WorkflowSearchFilterEdo workflowSearchFilterEdo,
+      final HttpServletRequest request) throws Exception {
+
+    final List<Workflow> modelList = this.workflowService.search(WorkflowSearchFilter.fromEdo(workflowSearchFilterEdo));
+
+    return ControllerHelper.createResponseEntity(request, new WorkflowListEdo(ModelMapperBase.toEdoList(modelList)),
+        HttpStatus.ACCEPTED);
   }
 
 }
