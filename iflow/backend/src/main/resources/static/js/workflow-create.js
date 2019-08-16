@@ -7,6 +7,7 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 	  //$scope.phones = [];
 	
 	$scope.loadUrl = loadUrl;
+	$scope.saveUrl = saveUrl;
 	
 	$scope.workflowTypes = [];
 	$scope.users = [];
@@ -17,9 +18,9 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 	
 	
 	$scope.reload = function (){
-			
-			//alert(JSON.stringify($scope.query)); 
-	
+		
+		//alert(JSON.stringify($scope.query)); 
+
 		$scope.workflowTypes = [];
 		$scope.users = [];
 		$scope.workflowCreateRequest = {};
@@ -38,16 +39,39 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 	    	$scope.workflowCreateRequest = initWorkFlow(response.data.workflowCreateRequest);
 	    	
 	    	resetAssignedList();
-
+	
 	    }, function errorCallback(response) {
 	        
-	    	//alert(response);
-	        $scope.textDebug = "error search: " + response;
-	        alert($scope.textDebug);
-	        //$scope.test = response.data;
+	        alert(response.data);
 	    });
-			
+		
 	};
+
+	$scope.save = function (){
+		
+		//alert(JSON.stringify($scope.workflowCreateRequest)); 
+
+			
+		$http({
+	        method : "POST",
+	        headers: {
+	        	'Content-type': 'application/json; charset=UTF-8',
+	        },
+	        url : $scope.saveUrl,
+	        data: $scope.workflowCreateRequest,
+	    }).then(function successCallback(response) {
+	    	
+	    	alert("saved");
+	    	
+	    	resetAssignedList();
+	
+	    }, function errorCallback(response) {
+	        
+	        alert(response.data);
+	    });
+		
+	};
+	
 	
 	$scope.showAssignSelectDialog = function(){
 		$scope.showSelectAssign = true;

@@ -160,7 +160,7 @@ public class WorkflowController {
   }
 
   @ResponseStatus(HttpStatus.ACCEPTED)
-  @IflowPostRequestMapping(path = IflowRestPaths.CoreModul.WORKFLOW_FILE_SAVE)
+  @IflowPostRequestMapping(path = IflowRestPaths.CoreModul.WORKFLOW_SEARCH)
   public ResponseEntity<WorkflowListEdo> searchWorkflow(@RequestBody final WorkflowSearchFilterEdo workflowSearchFilterEdo,
       final HttpServletRequest request) throws Exception {
 

@@ -31,15 +31,14 @@ public class WorkflowDataController extends BackendDataControllerBase {
   private IWorkflowAccess workflowAccess;
 
   @Autowired
-  private IUserAccess userAccess;
+  private IUserAccess     userAccess;
 
   @ResponseStatus(HttpStatus.OK)
   @PostMapping(path = { "/workflowtypes" })
   @ResponseBody
   public List<BackendWorkflowType> listWorkflowtypes() throws BackendCustomizedException, MalformedURLException {
 
-    final List<BackendWorkflowType> workflowTypeList = this.workflowAccess.readWorkflowTypeList(this.getLoggedCompany().getId(),
-                                                                                                this.getLoggedToken());
+    final List<BackendWorkflowType> workflowTypeList = this.workflowAccess.readWorkflowTypeList(this.getLoggedCompany().getId());
 
     return workflowTypeList;
   }
@@ -49,7 +48,7 @@ public class WorkflowDataController extends BackendDataControllerBase {
   @ResponseBody
   public List<BackendUser> listCompanyUsers() throws BackendCustomizedException, MalformedURLException {
 
-    final List<BackendUser> userList = this.userAccess.readCompanyUserList(this.getLoggedCompany().getId(), this.getLoggedToken());
+    final List<BackendUser> userList = this.userAccess.readCompanyUserList(this.getLoggedCompany().getId());
 
     return userList;
   }
@@ -61,9 +60,8 @@ public class WorkflowDataController extends BackendDataControllerBase {
 
     final Map<String, Object> map = new HashMap<>();
 
-    final List<BackendUser> userList = this.userAccess.readCompanyUserList(this.getLoggedCompany().getId(), this.getLoggedToken());
-    final List<BackendWorkflowType> workflowTypeList = this.workflowAccess.readWorkflowTypeList(this.getLoggedCompany().getId(),
-                                                                                                this.getLoggedToken());
+    final List<BackendUser> userList = this.userAccess.readCompanyUserList(this.getLoggedCompany().getId());
+    final List<BackendWorkflowType> workflowTypeList = this.workflowAccess.readWorkflowTypeList(this.getLoggedCompany().getId());
 
     final BackendWorkflow newWorkflow = new BackendWorkflow();
     newWorkflow.setStatus(EWorkflowStatus.INITIALIZE);
@@ -89,34 +87,11 @@ public class WorkflowDataController extends BackendDataControllerBase {
   @ResponseStatus(HttpStatus.OK)
   @PostMapping(path = { "/workflowcreate/create" })
   @ResponseBody
-  public void createWorkflow(@RequestBody final BackendWorkflowCreateRequest createRequest) throws BackendCustomizedException,
-                                                                                            MalformedURLException {
+  public void createWorkflow(@RequestBody final BackendWorkflowCreateRequest createRequest)
+      throws BackendCustomizedException, MalformedURLException {
 
-    final Map<String, Object> map = new HashMap<>();
+    this.workflowAccess.createWorkflow(createRequest);
 
-    final List<BackendUser> userList = this.userAccess.readCompanyUserList(this.getLoggedCompany().getId(), this.getLoggedToken());
-    final List<BackendWorkflowType> workflowTypeList = this.workflowAccess.readWorkflowTypeList(this.getLoggedCompany().getId(),
-                                                                                                this.getLoggedToken());
-
-    final BackendWorkflow newWorkflow = new BackendWorkflow();
-    newWorkflow.setStatus(EWorkflowStatus.INITIALIZE);
-    newWorkflow.setAssignTo(0L);
-    newWorkflow.setCreatedBy(this.getLoggedUser().getId());
-    newWorkflow.setController(0L);
-    newWorkflow.setCurrentStepId(0L);
-    newWorkflow.setId(0L);
-    newWorkflow.setTitle("");
-    newWorkflow.setVersion(0);
-    newWorkflow.setWorkflowTypeId(0L);
-    newWorkflow.setComments("");
-
-    final BackendWorkflowCreateRequest workflowReq = new BackendWorkflowCreateRequest(newWorkflow);
-
-    map.put("users", userList);
-    map.put("workflowTypes", workflowTypeList);
-    map.put("workflowCreateRequest", workflowReq);
-
-    return map;
   }
 
 }

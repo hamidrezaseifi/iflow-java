@@ -1,7 +1,8 @@
 package com.pth.iflow.backend.configurations;
 
 import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -11,6 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
+import com.pth.iflow.common.rest.IflowRestPaths;
 
 /**
  * a class to collect gui configuration from property file
@@ -40,27 +43,42 @@ public class BackendConfiguration {
     @Value("${iflow.profile.urls.profile.base}")
     private String       profileBaseUrl;
 
+    private URI          baseWorkflowBaseUri;
+
+    private URI          baseProfileBaseUri;
+
     @PostConstruct
-    private void init() {
-      this.log.info("WORKFLOW Base URL: {}", this.workflowBaseUrl);
-      this.log.info("PROFILE Base URL: {}", this.profileBaseUrl);
+    private void init() throws URISyntaxException {
+      this.baseWorkflowBaseUri = new URI(this.workflowBaseUrl);
+      this.baseProfileBaseUri = new URI(this.profileBaseUrl);
+
+      this.log.info("WORKFLOW Base URI: {}", this.baseWorkflowBaseUri);
+      this.log.info("PROFILE Base URI: {}", this.baseProfileBaseUri);
 
     }
 
-    public URL generateWorkflowUrl(final String subUrl) throws MalformedURLException {
-      String path = this.workflowBaseUrl + "/" + subUrl;
-      path = path.replace("//", "/");
-      path = path.replace("http:/", "http://");
-
-      return new URL(path);
+    public URI getReadTokenInfoUri() throws MalformedURLException {
+      return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.PROFILE_READ_TOKENINFO);
     }
 
-    public URL generateProfileUrl(final String subUrl) throws MalformedURLException {
-      String path = this.profileBaseUrl + "/" + subUrl;
-      path = path.replace("//", "/");
-      path = path.replace("http:/", "http://");
+    public URI getAuthenticationUri() throws MalformedURLException {
+      return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.AUTHENTICATION_AUTHENTICATE);
+    }
 
-      return new URL(path);
+    public URI getReadAuthenticationInfoUri() throws MalformedURLException {
+      return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.PROFILE_READ_AUTHENTOCATEDINFO);
+    }
+
+    public URI getReadCompanyUserListUri(final Long companyId) throws MalformedURLException {
+      return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.READ_USERLIST_BY_COMPANYID_URIBUILDER(companyId));
+    }
+
+    public URI getReadWorkflowUri(final Long id) throws MalformedURLException {
+      return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.READ_WORKFLOW_BY_ID_URIBUILDER(id));
+    }
+
+    public URI getReadWorkflowTypeListUri(final Long companyId) throws MalformedURLException {
+      return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.READ_WORKFLOWTYPELIST_BY_COMPANYID_URIBUILDER(companyId));
     }
 
   }

@@ -33,8 +33,7 @@ public class CompanyController extends BackendPageControllerBase {
   @GetMapping(path = { "/workflowtype" })
   public String showWorkflowTypeList(final Model model) throws BackendCustomizedException, MalformedURLException {
 
-    final List<BackendWorkflowType> workflowTypeList = this.workflowAccess.readWorkflowTypeList(this.getLoggedCompany().getId(),
-        this.getLoggedToken());
+    final List<BackendWorkflowType> workflowTypeList = this.workflowAccess.readWorkflowTypeList(this.getLoggedCompany().getId());
 
     model.addAttribute("workflowTypeList", workflowTypeList);
 

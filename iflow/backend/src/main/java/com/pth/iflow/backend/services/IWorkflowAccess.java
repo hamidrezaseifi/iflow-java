@@ -10,17 +10,15 @@ import com.pth.iflow.backend.models.BackendWorkflowType;
 
 public interface IWorkflowAccess {
 
-  BackendWorkflow readWorkflow(final Long workflowId, final String token) throws BackendCustomizedException, MalformedURLException;
+  BackendWorkflow readWorkflow(final Long workflowId) throws BackendCustomizedException, MalformedURLException;
 
-  BackendWorkflow createWorkflow(final BackendWorkflowCreateRequest createRequest, final String token) throws BackendCustomizedException,
-                                                                                                       MalformedURLException;
+  BackendWorkflow createWorkflow(final BackendWorkflowCreateRequest createRequest)
+      throws BackendCustomizedException, MalformedURLException;
 
-  BackendWorkflow saveWorkflow(final BackendWorkflow workflow, final String token) throws BackendCustomizedException, MalformedURLException;
+  BackendWorkflow saveWorkflow(final BackendWorkflow workflow) throws BackendCustomizedException, MalformedURLException;
 
-  List<BackendWorkflow> readWorkflowList(final Long companyId, final String token) throws BackendCustomizedException, MalformedURLException;
+  List<BackendWorkflow> readWorkflowList(final Long companyId) throws BackendCustomizedException, MalformedURLException;
 
-  List<BackendWorkflowType> readWorkflowTypeList(final Long companyId, final String token)
-                                                                                           throws BackendCustomizedException,
-                                                                                           MalformedURLException;
+  List<BackendWorkflowType> readWorkflowTypeList(final Long companyId) throws BackendCustomizedException, MalformedURLException;
 
 }

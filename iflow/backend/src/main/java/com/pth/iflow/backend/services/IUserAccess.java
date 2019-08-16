@@ -8,10 +8,10 @@ import com.pth.iflow.backend.models.BackendUser;
 
 public interface IUserAccess {
 
-  BackendUser readUser(final Long userId, final String token) throws BackendCustomizedException, MalformedURLException;
+  BackendUser readUser(final Long userId) throws BackendCustomizedException, MalformedURLException;
 
-  BackendUser saveUser(final BackendUser user, final String token) throws BackendCustomizedException, MalformedURLException;
+  BackendUser saveUser(final BackendUser user) throws BackendCustomizedException, MalformedURLException;
 
-  List<BackendUser> readCompanyUserList(final Long companyId, final String token) throws BackendCustomizedException, MalformedURLException;
+  List<BackendUser> readCompanyUserList(final Long companyId) throws BackendCustomizedException, MalformedURLException;
 
 }

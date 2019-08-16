@@ -60,7 +60,7 @@ public class BackendPageControllerBase {
 
     model.addAttribute("pageMenuList", this.getMenus());
     model.addAttribute("breadCrumb", this.breadCrumbLoader.getBreadCrumbList(currentRelatedUrl));
-    model.addAttribute("isLogged", true);
+    model.addAttribute("isLogged", this.getSessionUserInfo().isLoggedIn());
     model.addAttribute("loggedUser", this.getSessionUserInfo());
 
     model.addAttribute("url", currentRelatedUrl);

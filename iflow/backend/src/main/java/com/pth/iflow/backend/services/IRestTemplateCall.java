@@ -1,6 +1,6 @@
 package com.pth.iflow.backend.services;
 
-import java.net.URL;
+import java.net.URI;
 
 import com.pth.iflow.backend.exceptions.BackendCustomizedException;
 import com.pth.iflow.common.enums.EModule;
@@ -11,10 +11,10 @@ import com.pth.iflow.common.enums.EModule;
  */
 public interface IRestTemplateCall {
 
-  <I, O> O callRestPost(final URL url, String token, final EModule service, final I edo, final Class<O> response, boolean throwError)
-      throws BackendCustomizedException;
+  <I, O> O callRestPost(final URI uri, final EModule service, final I edo, final Class<O> response, final String token,
+      boolean throwError) throws BackendCustomizedException;
 
-  <O> O callRestGet(final URL url, String token, final EModule service, final Class<O> responseClass, boolean throwError,
-      final Object... args) throws BackendCustomizedException;
+  <O> O callRestGet(final URI uri, final EModule service, final Class<O> responseClass, final String token, boolean throwError)
+      throws BackendCustomizedException;
 
 }
