@@ -50,7 +50,7 @@ public class WorkflowController {
     return ControllerHelper.createResponseEntity(request, model.toEdo(), HttpStatus.OK);
   }
 
-  @ResponseStatus(HttpStatus.ACCEPTED)
+  @ResponseStatus(HttpStatus.CREATED)
   @IflowPostRequestMapping(path = IflowRestPaths.WorkflowModule.WORKFLOW_CREATE)
   public ResponseEntity<WorkflowListEdo> createWorkflow(@RequestBody final WorkflowCreateRequestEdo workflowCreateRequestEdo,
       final HttpServletRequest request,
@@ -60,7 +60,7 @@ public class WorkflowController {
         headerTokenId);
 
     return ControllerHelper.createResponseEntity(request, new WorkflowListEdo(ModelMapperBase.toEdoList(modelList)),
-        HttpStatus.ACCEPTED);
+        HttpStatus.CREATED);
   }
 
   @ResponseStatus(HttpStatus.ACCEPTED)

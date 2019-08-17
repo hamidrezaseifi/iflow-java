@@ -13,6 +13,7 @@ import com.pth.iflow.workflow.models.User;
 import com.pth.iflow.workflow.models.UserGroup;
 import com.pth.iflow.workflow.models.Workflow;
 import com.pth.iflow.workflow.models.WorkflowAction;
+import com.pth.iflow.workflow.models.WorkflowCreateRequest;
 import com.pth.iflow.workflow.models.WorkflowFile;
 import com.pth.iflow.workflow.models.WorkflowFileVersion;
 import com.pth.iflow.workflow.models.WorkflowSearchFilter;
@@ -315,7 +316,7 @@ public class TestDataProducer {
     return model;
   }
 
-  protected WorkflowSearchFilter getWorkflowSearchFilter() {
+  protected WorkflowSearchFilter getTestWorkflowSearchFilter() {
     final WorkflowSearchFilter filter = new WorkflowSearchFilter();
     filter.setAssignedUserIdList(this.getTestUserIdList());
     filter.setStatusList(Arrays.asList(1, 2, 3));
@@ -324,6 +325,14 @@ public class TestDataProducer {
     filter.setWorkflowTypeIdList(this.getTestWorkflowTypeIdList());
 
     return filter;
+  }
+
+  protected WorkflowCreateRequest getTestWorkflowCreateRequest() {
+    final WorkflowCreateRequest request = new WorkflowCreateRequest();
+    request.setAssignedUsers(this.getTestUserIdList());
+    request.setWorkflow(this.getTestWorkflow(null));
+
+    return request;
   }
 
 }

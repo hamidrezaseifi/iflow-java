@@ -25,6 +25,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
+import com.pth.iflow.common.edo.models.xml.WorkflowCreateRequestEdo;
 import com.pth.iflow.common.edo.models.xml.WorkflowEdo;
 import com.pth.iflow.common.edo.models.xml.WorkflowListEdo;
 import com.pth.iflow.common.edo.models.xml.WorkflowSearchFilterEdo;
@@ -33,6 +34,7 @@ import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
 import com.pth.iflow.workflow.TestDataProducer;
 import com.pth.iflow.workflow.bl.IWorkflowProcessService;
 import com.pth.iflow.workflow.models.Workflow;
+import com.pth.iflow.workflow.models.WorkflowCreateRequest;
 import com.pth.iflow.workflow.models.WorkflowSearchFilter;
 
 @RunWith(SpringRunner.class)
@@ -76,7 +78,7 @@ public class WorkflowControllerTest extends TestDataProducer {
     final WorkflowEdo modelEdo = model.toEdo();
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.WORKFLOW_READ_BY_ID, model.getId())
+        .perform(MockMvcRequestBuilders.get(IflowRestPaths.WorkflowModule.WORKFLOW_READ_BY_ID, model.getId())
             .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, "test-roken"))
         .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(resultAsXmlString));
@@ -88,24 +90,24 @@ public class WorkflowControllerTest extends TestDataProducer {
   @Test
   public void testCreateWorkflow() throws Exception {
 
-    final WorkflowSearchFilter filter = this.getWorkflowSearchFilter();
-    final WorkflowSearchFilterEdo filterEdo = filter.toEdo();
+    final WorkflowCreateRequest request = this.getTestWorkflowCreateRequest();
+    final WorkflowCreateRequestEdo requestEdo = request.toEdo();
     final List<Workflow> list = this.getTestWorkflowList();
     final WorkflowListEdo listEdo = new WorkflowListEdo(ModelMapperBase.toEdoList(list));
 
-    when(this.workflowService.search(any(WorkflowSearchFilter.class), any(String.class))).thenReturn(list);
+    when(this.workflowService.create(any(WorkflowCreateRequest.class), any(String.class))).thenReturn(list);
 
-    final String contentAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(filterEdo);
+    final String contentAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(requestEdo);
     final String resultAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(listEdo);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.post(IflowRestPaths.CoreModule.WORKFLOW_CREATE).content(contentAsXmlString)
+        .perform(MockMvcRequestBuilders.post(IflowRestPaths.WorkflowModule.WORKFLOW_CREATE).content(contentAsXmlString)
             .contentType(MediaType.APPLICATION_XML_VALUE)
             .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, "test-roken"))
-        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(status().isCreated()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(resultAsXmlString));
 
-    verify(this.workflowService, times(1)).search(any(WorkflowSearchFilter.class), any(String.class));
+    verify(this.workflowService, times(1)).create(any(WorkflowCreateRequest.class), any(String.class));
 
   }
 
@@ -145,7 +147,7 @@ public class WorkflowControllerTest extends TestDataProducer {
     final String resultAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(listEdo);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.post(IflowRestPaths.CoreModule.WORKFLOW_READ_LIST).content(contentAsXmlString)
+        .perform(MockMvcRequestBuilders.post(IflowRestPaths.WorkflowModule.WORKFLOW_READ_LIST).content(contentAsXmlString)
             .contentType(MediaType.APPLICATION_XML_VALUE)
             .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, "test-roken"))
         .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
@@ -158,7 +160,7 @@ public class WorkflowControllerTest extends TestDataProducer {
   @Test
   public void testSearchWorkflow() throws Exception {
 
-    final WorkflowSearchFilter filter = this.getWorkflowSearchFilter();
+    final WorkflowSearchFilter filter = this.getTestWorkflowSearchFilter();
     final WorkflowSearchFilterEdo filterEdo = filter.toEdo();
     final List<Workflow> list = this.getTestWorkflowList();
     final WorkflowListEdo listEdo = new WorkflowListEdo(ModelMapperBase.toEdoList(list));
@@ -169,7 +171,7 @@ public class WorkflowControllerTest extends TestDataProducer {
     final String resultAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(listEdo);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.post(IflowRestPaths.CoreModule.WORKFLOW_SEARCH).content(contentAsXmlString)
+        .perform(MockMvcRequestBuilders.post(IflowRestPaths.WorkflowModule.WORKFLOW_SEARCH).content(contentAsXmlString)
             .contentType(MediaType.APPLICATION_XML_VALUE)
             .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, "test-roken"))
         .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
@@ -189,7 +191,7 @@ public class WorkflowControllerTest extends TestDataProducer {
     when(this.workflowService.getListByTypeId(any(Long.class), any(String.class))).thenReturn(list);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.WORKFLOW_READ_LIST_BY_TYPE, 1L)
+        .perform(MockMvcRequestBuilders.get(IflowRestPaths.WorkflowModule.WORKFLOW_READ_LIST_BY_TYPE, 1L)
             .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, "test-roken"))
         .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(resultAsXmlString));
