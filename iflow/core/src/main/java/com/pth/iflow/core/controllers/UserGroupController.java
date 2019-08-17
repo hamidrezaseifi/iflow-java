@@ -34,7 +34,7 @@ public class UserGroupController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(path = IflowRestPaths.CoreModul.USERGROUP_READ_BY_ID)
+  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.USERGROUP_READ_BY_ID)
   public ResponseEntity<UserGroupEdo> readUserGroup(@PathVariable(name = "id") final Long groupid, final HttpServletRequest request)
       throws Exception {
 
@@ -44,7 +44,7 @@ public class UserGroupController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowPostRequestMapping(path = IflowRestPaths.CoreModul.USERGROUP_READ_LIST)
+  @IflowPostRequestMapping(path = IflowRestPaths.CoreModule.USERGROUP_READ_LIST)
   public ResponseEntity<UserGroupListEdo> readUserGroupList(@RequestBody final List<Long> idList, final HttpServletRequest request)
       throws Exception {
 
@@ -54,7 +54,7 @@ public class UserGroupController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(path = IflowRestPaths.CoreModul.USERGROUP_READ_LIST_BY_COMPANY)
+  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.USERGROUP_READ_LIST_BY_COMPANY)
   public ResponseEntity<UserGroupListEdo> readUserGroupListByCompany(@PathVariable(name = "id") final Long id,
       final HttpServletRequest request) throws Exception {
 

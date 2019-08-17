@@ -37,7 +37,7 @@ public class UserGroupService implements IUserGroupService {
     logger.debug("Request UserGroup data for companyid {}", id);
 
     final UserGroupEdo edo = restTemplate.callRestGet(
-        coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModul.USERGROUP_READ_BY_ID).toString(), EModule.CORE, UserGroupEdo.class,
+        coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.USERGROUP_READ_BY_ID).toString(), EModule.CORE, UserGroupEdo.class,
         true, id);
 
     return new UserGroup().fromEdo(edo);
@@ -48,7 +48,7 @@ public class UserGroupService implements IUserGroupService {
     logger.debug("Request UserGroup list data for companyid {}", companyId);
 
     final UserGroupListEdo edo = restTemplate.callRestGet(
-        coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModul.USERGROUP_READ_LIST_BY_COMPANY).toString(), EModule.CORE,
+        coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.USERGROUP_READ_LIST_BY_COMPANY).toString(), EModule.CORE,
         UserGroupListEdo.class, true, companyId);
 
     return new UserGroup().fromEdoList(edo.getUserGroups());

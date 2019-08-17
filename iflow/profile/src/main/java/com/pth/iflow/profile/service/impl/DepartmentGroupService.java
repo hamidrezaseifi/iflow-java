@@ -38,7 +38,7 @@ public class DepartmentGroupService implements IDepartmentGroupService {
     logger.debug("Request Department data for companyid {}", id);
 
     final DepartmentGroupEdo edo = this.restTemplate.callRestGet(
-        this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModul.DEPARTMENTGRPUP_READ_BY_ID).toString(), EModule.CORE,
+        this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.DEPARTMENTGRPUP_READ_BY_ID).toString(), EModule.CORE,
         DepartmentGroupEdo.class, true, id);
 
     return new DepartmentGroup().fromEdo(edo);
@@ -49,7 +49,7 @@ public class DepartmentGroupService implements IDepartmentGroupService {
     logger.debug("Request Department list data for companyid {}", id);
 
     final UserListEdo edo = this.restTemplate.callRestGet(
-        this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModul.DEPARTMENTGRPUP_READ_ALLUSERLIST_BY_DEPARTMENTGROUP).toString(),
+        this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.DEPARTMENTGRPUP_READ_ALLUSERLIST_BY_DEPARTMENTGROUP).toString(),
         EModule.CORE, UserListEdo.class, true, id);
 
     return new User().fromEdoList(edo.getUsers());

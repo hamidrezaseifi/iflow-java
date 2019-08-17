@@ -37,7 +37,7 @@ public class CompanyService implements ICompanyService {
     logger.debug("Request company data for id {}", comapnyId);
 
     final CompanyEdo edo = restTemplate.callRestGet(
-        coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModul.COMPANY_READ_BY_ID).toString(), EModule.CORE, CompanyEdo.class, true,
+        coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.COMPANY_READ_BY_ID).toString(), EModule.CORE, CompanyEdo.class, true,
         comapnyId);
 
     return new Company().fromEdo(edo);

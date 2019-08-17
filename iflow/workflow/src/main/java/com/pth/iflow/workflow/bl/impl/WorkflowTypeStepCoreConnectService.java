@@ -38,7 +38,7 @@ public class WorkflowTypeStepCoreConnectService implements IWorkflowTypeStepData
     logger.debug("Request workflow-step data for id {}", id);
     
     final WorkflowTypeStepEdo edo = this.restTemplate.callRestGet(
-        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModul.WORKFLOWTYPESTEP_READ_BY_ID), token, EModule.CORE,
+        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.WORKFLOWTYPESTEP_READ_BY_ID), token, EModule.CORE,
         WorkflowTypeStepEdo.class, true, id);
     
     return new WorkflowTypeStep().fromEdo(edo);
@@ -50,7 +50,7 @@ public class WorkflowTypeStepCoreConnectService implements IWorkflowTypeStepData
     logger.debug("Request workflow-step list for workflow id {}", workflowId);
     
     final WorkflowTypeStepListEdo edoList = this.restTemplate.callRestGet(
-        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModul.WORKFLOWTYPESTEP_READ_LIST_BY_WORKFLOW), token,
+        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.WORKFLOWTYPESTEP_READ_LIST_BY_WORKFLOW), token,
         EModule.CORE, WorkflowTypeStepListEdo.class, true, workflowId);
     
     return new WorkflowTypeStep().fromEdoList(edoList.getWorkflowTypeSteps());
@@ -62,7 +62,7 @@ public class WorkflowTypeStepCoreConnectService implements IWorkflowTypeStepData
     logger.debug("Request workflow-step list for id list {}", idList);
     
     final WorkflowTypeStepListEdo edoList = this.restTemplate.callRestPost(
-        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModul.WORKFLOWTYPESTEP_READ_LIST), token, EModule.CORE, idList,
+        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.WORKFLOWTYPESTEP_READ_LIST), token, EModule.CORE, idList,
         WorkflowTypeStepListEdo.class, true);
     
     return new WorkflowTypeStep().fromEdoList(edoList.getWorkflowTypeSteps());

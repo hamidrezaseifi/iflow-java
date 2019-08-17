@@ -20,7 +20,7 @@ public class IflowRestPaths {
 
   }
 
-  public static class CoreModul {
+  public static class CoreModule {
 
     public static final int    PORT                                                = 1010;
 

@@ -36,7 +36,7 @@ public class DepartmentController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(path = IflowRestPaths.CoreModul.DEPARTMENT_READ_BY_ID)
+  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.DEPARTMENT_READ_BY_ID)
   public ResponseEntity<DepartmentEdo> readDepartment(@PathVariable final Long id, final HttpServletRequest request) throws Exception {
 
     final Department model = this.departmentService.getById(id);
@@ -45,7 +45,7 @@ public class DepartmentController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowPostRequestMapping(path = IflowRestPaths.CoreModul.DEPARTMENT_READ_LIST)
+  @IflowPostRequestMapping(path = IflowRestPaths.CoreModule.DEPARTMENT_READ_LIST)
   public ResponseEntity<DepartmentListEdo> readDepartmentList(@RequestBody final List<Long> idList, final HttpServletRequest request)
       throws Exception {
 
@@ -55,7 +55,7 @@ public class DepartmentController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(path = IflowRestPaths.CoreModul.DEPARTMENT_READ_LIST_BY_COMPANY)
+  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.DEPARTMENT_READ_LIST_BY_COMPANY)
   public ResponseEntity<DepartmentListEdo> readDepartmentListByCompany(@PathVariable final Long id, final HttpServletRequest request)
       throws Exception {
 
@@ -65,7 +65,7 @@ public class DepartmentController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(path = IflowRestPaths.CoreModul.DEPARTMENT_READ_ALLUSERLIST_BY_DEPARTMENT)
+  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.DEPARTMENT_READ_ALLUSERLIST_BY_DEPARTMENT)
   public ResponseEntity<UserListEdo> readAllUserListByDepartmentGroup(@PathVariable final Long id, final HttpServletRequest request)
       throws Exception {
 

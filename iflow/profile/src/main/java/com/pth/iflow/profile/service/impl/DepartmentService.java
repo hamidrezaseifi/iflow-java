@@ -41,7 +41,7 @@ public class DepartmentService implements IDepartmentService {
     logger.debug("Request Department data for companyid {}", id);
 
     final DepartmentEdo edo = this.restTemplate.callRestGet(
-        this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModul.DEPARTMENT_READ_BY_ID).toString(), EModule.CORE,
+        this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.DEPARTMENT_READ_BY_ID).toString(), EModule.CORE,
         DepartmentEdo.class, true, id);
 
     return new Department().fromEdo(edo);
@@ -52,7 +52,7 @@ public class DepartmentService implements IDepartmentService {
     logger.debug("Request Department list data for companyid {}", id);
 
     final DepartmentListEdo edo = this.restTemplate.callRestGet(
-        this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModul.DEPARTMENT_READ_LIST_BY_COMPANY).toString(), EModule.CORE,
+        this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.DEPARTMENT_READ_LIST_BY_COMPANY).toString(), EModule.CORE,
         DepartmentListEdo.class, true, id);
 
     return new Department().fromEdoList(edo.getDepartments());
@@ -64,7 +64,7 @@ public class DepartmentService implements IDepartmentService {
     logger.debug("Request Department list data for companyid {}", id);
 
     final DepartmentGroupListEdo edo = this.restTemplate.callRestGet(
-        this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModul.DEPARTMENTGRPUP_READ_LIST_BY_DEPARTMENT).toString(),
+        this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.DEPARTMENTGRPUP_READ_LIST_BY_DEPARTMENT).toString(),
         EModule.CORE, DepartmentGroupListEdo.class, true, id);
 
     return new DepartmentGroup().fromEdoList(edo.getDepartmentGroups());
@@ -75,7 +75,7 @@ public class DepartmentService implements IDepartmentService {
     logger.debug("Request Department list data for companyid {}", id);
 
     final UserListEdo edo = this.restTemplate.callRestGet(
-        this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModul.DEPARTMENT_READ_ALLUSERLIST_BY_DEPARTMENT).toString(),
+        this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.DEPARTMENT_READ_ALLUSERLIST_BY_DEPARTMENT).toString(),
         EModule.CORE, UserListEdo.class, true, id);
 
     return new User().fromEdoList(edo.getUsers());

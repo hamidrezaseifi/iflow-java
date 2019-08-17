@@ -28,7 +28,7 @@ public class CompanyController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(path = IflowRestPaths.CoreModul.COMPANY_READ_BY_ID)
+  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.COMPANY_READ_BY_ID)
   public ResponseEntity<CompanyEdo> readCompany(@PathVariable(name = "companyid") final Long companyid,
       final HttpServletRequest request) throws Exception {
 

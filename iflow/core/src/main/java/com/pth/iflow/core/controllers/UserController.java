@@ -39,7 +39,7 @@ public class UserController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(path = IflowRestPaths.CoreModul.USER_READ_BY_ID)
+  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.USER_READ_BY_ID)
   public ResponseEntity<UserEdo> readUser(@PathVariable final Long userid, final HttpServletRequest request) throws Exception {
 
     final User user = this.usersService.getUserById(userid);
@@ -48,7 +48,7 @@ public class UserController {
   }
 
   @ResponseStatus(HttpStatus.ACCEPTED)
-  @IflowPostRequestMapping(path = IflowRestPaths.CoreModul.USER_SAVE)
+  @IflowPostRequestMapping(path = IflowRestPaths.CoreModule.USER_SAVE)
   public ResponseEntity<UserEdo> saveUser(@PathVariable final UserEdo userEdo, final HttpServletRequest request) throws Exception {
 
     final User user = this.usersService.save(new User().fromEdo(userEdo));
@@ -57,7 +57,7 @@ public class UserController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(path = IflowRestPaths.CoreModul.USER_READ_BY_EMAIL)
+  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.USER_READ_BY_EMAIL)
   public ResponseEntity<UserEdo> readUserByEmail(@PathVariable final String email, final HttpServletRequest request) throws Exception {
 
     final User user = this.usersService.getUserByEmail(email);
@@ -66,7 +66,7 @@ public class UserController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(path = IflowRestPaths.CoreModul.USER_USERGROUPS_LIST)
+  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.USER_USERGROUPS_LIST)
   public ResponseEntity<UserGroupListEdo> readUserGroups(@PathVariable final Long userid, final HttpServletRequest request)
       throws Exception {
 
@@ -76,7 +76,7 @@ public class UserController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(path = IflowRestPaths.CoreModul.USER_DEPARTMENTS_LIST)
+  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.USER_DEPARTMENTS_LIST)
   public ResponseEntity<DepartmentListEdo> readUserDepartments(@PathVariable final Long userid, final HttpServletRequest request)
       throws Exception {
 
@@ -86,7 +86,7 @@ public class UserController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(path = IflowRestPaths.CoreModul.USER_DEPARTMENTGROUPS_LIST)
+  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.USER_DEPARTMENTGROUPS_LIST)
   public ResponseEntity<DepartmentGroupListEdo> readUserDepartmentGroups(@PathVariable final Long userid,
       final HttpServletRequest request) throws Exception {
 
@@ -96,7 +96,7 @@ public class UserController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(path = IflowRestPaths.CoreModul.USER_DEPUTIES_LIST)
+  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.USER_DEPUTIES_LIST)
   public ResponseEntity<UserListEdo> readUserDeputies(@PathVariable final Long userid, final HttpServletRequest request)
       throws Exception {
 
@@ -107,7 +107,7 @@ public class UserController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(path = IflowRestPaths.CoreModul.USER_USER_LIST_BY_COMPANY)
+  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.USER_USER_LIST_BY_COMPANY)
   public ResponseEntity<UserListEdo> readCompanyUsers(@PathVariable final Long companyid, final HttpServletRequest request)
       throws Exception {
 

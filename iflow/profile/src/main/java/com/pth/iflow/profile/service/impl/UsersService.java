@@ -38,7 +38,7 @@ public class UsersService implements IUsersService {
     logger.debug("Request user data for email {}", email);
 
     final UserEdo edo = restTemplate.callRestGet(
-        coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModul.USER_READ_BY_EMAIL).toString(), EModule.CORE, UserEdo.class, true,
+        coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.USER_READ_BY_EMAIL).toString(), EModule.CORE, UserEdo.class, true,
         email);
 
     return new User().fromEdo(edo);
@@ -48,7 +48,7 @@ public class UsersService implements IUsersService {
   public User getUserById(final Long id) throws ProfileCustomizedException, MalformedURLException {
     logger.debug("Request user data for id {}", id);
 
-    final UserEdo edo = restTemplate.callRestGet(coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModul.USER_READ_BY_ID).toString(),
+    final UserEdo edo = restTemplate.callRestGet(coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.USER_READ_BY_ID).toString(),
         EModule.CORE, UserEdo.class, true, id);
 
     return new User().fromEdo(edo);
@@ -59,7 +59,7 @@ public class UsersService implements IUsersService {
     logger.debug("Request user data list for company id {}", companyId);
 
     final UserListEdo edo = restTemplate.callRestGet(
-        coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModul.USER_USER_LIST_BY_COMPANY).toString(), EModule.CORE,
+        coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.USER_USER_LIST_BY_COMPANY).toString(), EModule.CORE,
         UserListEdo.class, true, companyId);
 
     return new User().fromEdoList(edo.getUsers());

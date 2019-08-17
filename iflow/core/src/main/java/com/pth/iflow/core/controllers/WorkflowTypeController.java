@@ -34,7 +34,7 @@ public class WorkflowTypeController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(path = IflowRestPaths.CoreModul.WORKFLOWTYPE_READ_BY_ID)
+  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.WORKFLOWTYPE_READ_BY_ID)
   public ResponseEntity<WorkflowTypeEdo> readWorkflow(@PathVariable final Long id, final HttpServletRequest request) throws Exception {
 
     final WorkflowType model = this.workflowTypeService.getById(id);
@@ -43,7 +43,7 @@ public class WorkflowTypeController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowPostRequestMapping(path = IflowRestPaths.CoreModul.WORKFLOWTYPE_READ_LIST)
+  @IflowPostRequestMapping(path = IflowRestPaths.CoreModule.WORKFLOWTYPE_READ_LIST)
   public ResponseEntity<WorkflowTypeListEdo> readWorkflowList(@RequestBody final List<Long> idList, final HttpServletRequest request)
       throws Exception {
 
@@ -54,7 +54,7 @@ public class WorkflowTypeController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(path = IflowRestPaths.CoreModul.WORKFLOWTYPE_READ_LIST_BY_COMPANY)
+  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.WORKFLOWTYPE_READ_LIST_BY_COMPANY)
   public ResponseEntity<WorkflowTypeListEdo> readWorkflowListByCompany(@PathVariable final Long id, final HttpServletRequest request)
       throws Exception {
 
