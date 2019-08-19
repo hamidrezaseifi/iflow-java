@@ -2,7 +2,7 @@ package com.pth.iflow.backend.models;
 
 import com.pth.iflow.common.edo.models.xml.UserAuthenticationResponseEdo;
 
-public class UserAuthenticationResponse {
+public class GuiUserAuthenticationResponse {
 
   private String email;
 
@@ -88,8 +88,8 @@ public class UserAuthenticationResponse {
     return edo;
   }
 
-  public static UserAuthenticationResponse fromEdo(final UserAuthenticationResponseEdo edo) {
-    final UserAuthenticationResponse model = new UserAuthenticationResponse();
+  public static GuiUserAuthenticationResponse fromEdo(final UserAuthenticationResponseEdo edo) {
+    final GuiUserAuthenticationResponse model = new GuiUserAuthenticationResponse();
     model.setCreated(edo.getCreated());
     model.setEmail(edo.getEmail());
     model.setLastAccess(edo.getLastAccess());

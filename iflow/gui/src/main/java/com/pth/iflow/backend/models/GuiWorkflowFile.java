@@ -6,7 +6,7 @@ import java.util.List;
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 import com.pth.iflow.common.edo.models.xml.WorkflowFileEdo;
 
-public class BackendWorkflowFile extends ModelMapperBase<WorkflowFileEdo, BackendWorkflowFile> {
+public class GuiWorkflowFile extends ModelMapperBase<WorkflowFileEdo, GuiWorkflowFile> {
 
   private Long                            id;
   private Long                            workflowId;
@@ -17,7 +17,7 @@ public class BackendWorkflowFile extends ModelMapperBase<WorkflowFileEdo, Backen
   private Integer                         activeFileVersion;
   private Integer                         status;
   private Integer                         version;
-  private final List<BackendWorkflowFileVersion> fileVersions = new ArrayList<>();
+  private final List<GuiWorkflowFileVersion> fileVersions = new ArrayList<>();
 
   @Override
   public Long getId() {
@@ -94,11 +94,11 @@ public class BackendWorkflowFile extends ModelMapperBase<WorkflowFileEdo, Backen
     this.version = version;
   }
 
-  public List<BackendWorkflowFileVersion> getFileVersions() {
+  public List<GuiWorkflowFileVersion> getFileVersions() {
     return this.fileVersions;
   }
 
-  public void setFileVersions(final List<BackendWorkflowFileVersion> fileVersions) {
+  public void setFileVersions(final List<GuiWorkflowFileVersion> fileVersions) {
     this.fileVersions.clear();
     if (fileVersions != null) {
       this.fileVersions.addAll(fileVersions);
@@ -118,18 +118,18 @@ public class BackendWorkflowFile extends ModelMapperBase<WorkflowFileEdo, Backen
     edo.setWorkflowId(this.workflowId);
     edo.setVersion(this.version);
 
-    edo.setFileVersions(BackendWorkflowFileVersion.toEdoList(this.fileVersions));
+    edo.setFileVersions(GuiWorkflowFileVersion.toEdoList(this.fileVersions));
 
     return edo;
   }
 
   @Override
-  public BackendWorkflowFile fromEdo(final WorkflowFileEdo edo) {
+  public GuiWorkflowFile fromEdo(final WorkflowFileEdo edo) {
     if (edo == null) {
       return null;
     }
     
-    final BackendWorkflowFile model = new BackendWorkflowFile();
+    final GuiWorkflowFile model = new GuiWorkflowFile();
 
     model.setTitle(edo.getTitle());
     model.setComments(edo.getComments());
@@ -141,7 +141,7 @@ public class BackendWorkflowFile extends ModelMapperBase<WorkflowFileEdo, Backen
     model.setWorkflowId(edo.getWorkflowId());
     model.setVersion(edo.getVersion());
 
-    model.setFileVersions(new BackendWorkflowFileVersion().fromEdoList(edo.getFileVersions()));
+    model.setFileVersions(new GuiWorkflowFileVersion().fromEdoList(edo.getFileVersions()));
 
     return model;
   }

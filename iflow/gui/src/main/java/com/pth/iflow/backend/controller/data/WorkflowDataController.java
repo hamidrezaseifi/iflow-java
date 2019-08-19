@@ -14,18 +14,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import com.pth.iflow.backend.exceptions.BackendCustomizedException;
-import com.pth.iflow.backend.models.BackendUser;
-import com.pth.iflow.backend.models.BackendWorkflow;
-import com.pth.iflow.backend.models.BackendWorkflowCreateRequest;
-import com.pth.iflow.backend.models.BackendWorkflowType;
+import com.pth.iflow.backend.exceptions.GuiCustomizedException;
+import com.pth.iflow.backend.models.GuidUser;
+import com.pth.iflow.backend.models.GuiWorkflow;
+import com.pth.iflow.backend.models.GuiWorkflowCreateRequest;
+import com.pth.iflow.backend.models.GuiWorkflowType;
 import com.pth.iflow.backend.services.IUserAccess;
 import com.pth.iflow.backend.services.IWorkflowAccess;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 
 @Controller
 @RequestMapping(value = "/workflow/data")
-public class WorkflowDataController extends BackendDataControllerBase {
+public class WorkflowDataController extends GuiDataControllerBase {
 
   @Autowired
   private IWorkflowAccess workflowAccess;
@@ -36,9 +36,9 @@ public class WorkflowDataController extends BackendDataControllerBase {
   @ResponseStatus(HttpStatus.OK)
   @PostMapping(path = { "/workflowtypes" })
   @ResponseBody
-  public List<BackendWorkflowType> listWorkflowtypes() throws BackendCustomizedException, MalformedURLException {
+  public List<GuiWorkflowType> listWorkflowtypes() throws GuiCustomizedException, MalformedURLException {
 
-    final List<BackendWorkflowType> workflowTypeList = this.workflowAccess.readWorkflowTypeList(this.getLoggedCompany().getId());
+    final List<GuiWorkflowType> workflowTypeList = this.workflowAccess.readWorkflowTypeList(this.getLoggedCompany().getId());
 
     return workflowTypeList;
   }
@@ -46,9 +46,9 @@ public class WorkflowDataController extends BackendDataControllerBase {
   @ResponseStatus(HttpStatus.OK)
   @PostMapping(path = { "/companyusers" })
   @ResponseBody
-  public List<BackendUser> listCompanyUsers() throws BackendCustomizedException, MalformedURLException {
+  public List<GuidUser> listCompanyUsers() throws GuiCustomizedException, MalformedURLException {
 
-    final List<BackendUser> userList = this.userAccess.readCompanyUserList(this.getLoggedCompany().getId());
+    final List<GuidUser> userList = this.userAccess.readCompanyUserList(this.getLoggedCompany().getId());
 
     return userList;
   }
@@ -56,14 +56,14 @@ public class WorkflowDataController extends BackendDataControllerBase {
   @ResponseStatus(HttpStatus.OK)
   @PostMapping(path = { "/workflowcreate/init" })
   @ResponseBody
-  public Map<String, Object> loadWorkflowCreateData() throws BackendCustomizedException, MalformedURLException {
+  public Map<String, Object> loadWorkflowCreateData() throws GuiCustomizedException, MalformedURLException {
 
     final Map<String, Object> map = new HashMap<>();
 
-    final List<BackendUser> userList = this.userAccess.readCompanyUserList(this.getLoggedCompany().getId());
-    final List<BackendWorkflowType> workflowTypeList = this.workflowAccess.readWorkflowTypeList(this.getLoggedCompany().getId());
+    final List<GuidUser> userList = this.userAccess.readCompanyUserList(this.getLoggedCompany().getId());
+    final List<GuiWorkflowType> workflowTypeList = this.workflowAccess.readWorkflowTypeList(this.getLoggedCompany().getId());
 
-    final BackendWorkflow newWorkflow = new BackendWorkflow();
+    final GuiWorkflow newWorkflow = new GuiWorkflow();
     newWorkflow.setStatus(EWorkflowStatus.INITIALIZE);
     newWorkflow.setAssignTo(0L);
     newWorkflow.setCreatedBy(this.getLoggedUser().getId());
@@ -75,7 +75,7 @@ public class WorkflowDataController extends BackendDataControllerBase {
     newWorkflow.setWorkflowTypeId(0L);
     newWorkflow.setComments("");
 
-    final BackendWorkflowCreateRequest workflowReq = new BackendWorkflowCreateRequest(newWorkflow);
+    final GuiWorkflowCreateRequest workflowReq = new GuiWorkflowCreateRequest(newWorkflow);
 
     map.put("users", userList);
     map.put("workflowTypes", workflowTypeList);
@@ -87,8 +87,8 @@ public class WorkflowDataController extends BackendDataControllerBase {
   @ResponseStatus(HttpStatus.OK)
   @PostMapping(path = { "/workflowcreate/create" })
   @ResponseBody
-  public void createWorkflow(@RequestBody final BackendWorkflowCreateRequest createRequest)
-      throws BackendCustomizedException, MalformedURLException {
+  public void createWorkflow(@RequestBody final GuiWorkflowCreateRequest createRequest)
+      throws GuiCustomizedException, MalformedURLException {
 
     this.workflowAccess.createWorkflow(createRequest);
 

@@ -22,7 +22,7 @@ import com.pth.iflow.common.rest.IflowRestPaths;
  *
  */
 @Component
-public class BackendConfiguration {
+public class GuiConfiguration {
 
   public static final String       NO_ACCESS_URL            = "/noaccess";
   public static final String       INVALID_TOKEN_URL        = "/invalidtoken";

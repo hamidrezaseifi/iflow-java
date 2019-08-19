@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.pth.iflow.backend.authentication.BackendAuthenticationErrorUrlCreator;
-import com.pth.iflow.backend.configurations.BackendSecurityConfigurations;
+import com.pth.iflow.backend.authentication.GuiAuthenticationErrorUrlCreator;
+import com.pth.iflow.backend.configurations.GuiSecurityConfigurations;
 import com.pth.iflow.backend.services.impl.MessagesHelper;
 
 /**
@@ -33,7 +33,7 @@ public class AuthenticationController {
 
   @GetMapping("/login")
   public String showLogin(
-      @CookieValue(value = BackendSecurityConfigurations.COMPANYINDICATOR_COOKIE_KEY, defaultValue = "") final String companyIndicator,
+      @CookieValue(value = GuiSecurityConfigurations.COMPANYINDICATOR_COOKIE_KEY, defaultValue = "") final String companyIndicator,
       final Model model, final HttpServletRequest request) throws ServletException, UnsupportedEncodingException {
 
     String message = "";
@@ -43,7 +43,7 @@ public class AuthenticationController {
 
     if (request.getParameter("error") != null) {
 
-      final Map<String, String> params = BackendAuthenticationErrorUrlCreator.decodeErrorUrl(request.getParameter("error"));
+      final Map<String, String> params = GuiAuthenticationErrorUrlCreator.decodeErrorUrl(request.getParameter("error"));
 
       if (params.get("err").equals("auth")) {
         message = this.messages.get("common.invalidlogin");
@@ -63,7 +63,7 @@ public class AuthenticationController {
     model.addAttribute("companyid", company);
 
     model.addAttribute("logginMessage", message);
-    model.addAttribute("rooturl", BackendSecurityConfigurations.ROOT_URL);
+    model.addAttribute("rooturl", GuiSecurityConfigurations.ROOT_URL);
 
     return "auth/login";
   }

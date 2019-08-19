@@ -6,14 +6,14 @@ import java.util.List;
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 import com.pth.iflow.common.edo.models.xml.DepartmentEdo;
 
-public class BackendDepartment extends ModelMapperBase<DepartmentEdo, BackendDepartment> {
+public class GuiDepartment extends ModelMapperBase<DepartmentEdo, GuiDepartment> {
 
   private Long                        id;
   private Long                        companyId;
   private String                      title;
   private Integer                     status;
   private Integer                     version;
-  private final List<BackendDepartmentGroup> departmentGroups = new ArrayList<>();
+  private final List<GuiDepartmentGroup> departmentGroups = new ArrayList<>();
 
   @Override
   public Long getId() {
@@ -58,18 +58,18 @@ public class BackendDepartment extends ModelMapperBase<DepartmentEdo, BackendDep
     this.version = version;
   }
 
-  public List<BackendDepartmentGroup> getDepartmentGroups() {
+  public List<GuiDepartmentGroup> getDepartmentGroups() {
     return this.departmentGroups;
   }
 
-  public void setDepartmentGroups(final List<BackendDepartmentGroup> groups) {
+  public void setDepartmentGroups(final List<GuiDepartmentGroup> groups) {
     this.departmentGroups.clear();
     if (groups != null) {
       this.departmentGroups.addAll(groups);
     }
   }
 
-  public void addDepartmentGroup(final BackendDepartmentGroup group) {
+  public void addDepartmentGroup(final GuiDepartmentGroup group) {
     this.departmentGroups.add(group);
   }
 
@@ -87,14 +87,14 @@ public class BackendDepartment extends ModelMapperBase<DepartmentEdo, BackendDep
   }
 
   @Override
-  public BackendDepartment fromEdo(final DepartmentEdo edo) {
-    final BackendDepartment model = new BackendDepartment();
+  public GuiDepartment fromEdo(final DepartmentEdo edo) {
+    final GuiDepartment model = new GuiDepartment();
 
     model.setTitle(edo.getTitle());
     model.setStatus(edo.getStatus());
     model.setId(edo.getId());
     model.setCompanyId(edo.getCompanyId());
-    model.setDepartmentGroups(new BackendDepartmentGroup().fromEdoList(edo.getDepartmentGroups()));
+    model.setDepartmentGroups(new GuiDepartmentGroup().fromEdoList(edo.getDepartmentGroups()));
     model.setVersion(edo.getVersion());
 
     return model;

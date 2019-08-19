@@ -1,18 +1,14 @@
 package com.pth.iflow.backend.models;
 
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
-import com.pth.iflow.common.edo.models.xml.UserGroupEdo;
+import com.pth.iflow.common.edo.models.xml.DepartmentGroupEdo;
 
-public class BackendUserGroup extends ModelMapperBase<UserGroupEdo, BackendUserGroup> {
+public class GuiDepartmentGroup extends ModelMapperBase<DepartmentGroupEdo, GuiDepartmentGroup> {
 
   private Long    id;
-
-  private Long    companyId;
-
+  private Long    departmentId;
   private String  title;
-
   private Integer status;
-
   private Integer version;
 
   @Override
@@ -24,12 +20,12 @@ public class BackendUserGroup extends ModelMapperBase<UserGroupEdo, BackendUserG
     this.id = id;
   }
 
-  public Long getCompanyId() {
-    return this.companyId;
+  public Long getDepartmentId() {
+    return this.departmentId;
   }
 
-  public void setCompanyId(final Long companyId) {
-    this.companyId = companyId;
+  public void setDepartmentId(final Long departmentId) {
+    this.departmentId = departmentId;
   }
 
   public String getTitle() {
@@ -59,24 +55,25 @@ public class BackendUserGroup extends ModelMapperBase<UserGroupEdo, BackendUserG
   }
 
   @Override
-  public UserGroupEdo toEdo() {
-    final UserGroupEdo edo = new UserGroupEdo();
-    edo.setCompanyId(this.companyId);
-    edo.setId(this.id);
-    edo.setStatus(this.status);
+  public DepartmentGroupEdo toEdo() {
+    final DepartmentGroupEdo edo = new DepartmentGroupEdo();
     edo.setTitle(this.title);
-    edo.setVersion(this.version);
+    edo.setStatus(this.status);
+    edo.setId(this.id);
+    edo.setDepartmentId(this.departmentId);
+    edo.setVersion(version);
 
     return edo;
   }
 
   @Override
-  public BackendUserGroup fromEdo(final UserGroupEdo edo) {
-    final BackendUserGroup model = new BackendUserGroup();
-    model.setCompanyId(edo.getCompanyId());
-    model.setId(edo.getId());
-    model.setStatus(edo.getStatus());
+  public GuiDepartmentGroup fromEdo(final DepartmentGroupEdo edo) {
+    final GuiDepartmentGroup model = new GuiDepartmentGroup();
+
     model.setTitle(edo.getTitle());
+    model.setStatus(edo.getStatus());
+    model.setId(edo.getId());
+    model.setDepartmentId(edo.getDepartmentId());
     model.setVersion(edo.getVersion());
 
     return model;

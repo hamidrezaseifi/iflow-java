@@ -17,15 +17,15 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 
-import com.pth.iflow.backend.authentication.BackendAuthenticationDetails;
-import com.pth.iflow.backend.authentication.BackendAuthenticationFailureHandler;
-import com.pth.iflow.backend.authentication.BackendAuthenticationSuccessHandler;
-import com.pth.iflow.backend.authentication.provider.BackendCustomAuthenticationProvider;
+import com.pth.iflow.backend.authentication.GuiAuthenticationDetails;
+import com.pth.iflow.backend.authentication.GuiAuthenticationFailureHandler;
+import com.pth.iflow.backend.authentication.GuiAuthenticationSuccessHandler;
+import com.pth.iflow.backend.authentication.provider.GuiCustomAuthenticationProvider;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
-public class BackendSecurityConfigurations extends WebSecurityConfigurerAdapter implements IBackendConfiguration {
+public class GuiSecurityConfigurations extends WebSecurityConfigurerAdapter implements IGuiConfiguration {
 
   public static final String                  USERNAME_FIELD_NAME         = "username";
   public static final String                  PASSWORD_FIELD_NAME         = "password";
@@ -40,13 +40,13 @@ public class BackendSecurityConfigurations extends WebSecurityConfigurerAdapter 
   String                                      backendValidEMail;
 
   @Autowired
-  private BackendAuthenticationSuccessHandler uiAuthenticationSuccessHandler;
+  private GuiAuthenticationSuccessHandler uiAuthenticationSuccessHandler;
 
   @Autowired
-  private BackendAuthenticationFailureHandler authenticationFailureHandler;
+  private GuiAuthenticationFailureHandler authenticationFailureHandler;
 
   @Autowired
-  private BackendCustomAuthenticationProvider customAuthenticationProvider;
+  private GuiCustomAuthenticationProvider customAuthenticationProvider;
 
   @Override
   protected void configure(final HttpSecurity http) throws Exception {
@@ -80,7 +80,7 @@ public class BackendSecurityConfigurations extends WebSecurityConfigurerAdapter 
 
       @Override
       public WebAuthenticationDetails buildDetails(final HttpServletRequest request) {
-        return new BackendAuthenticationDetails(request);
+        return new GuiAuthenticationDetails(request);
       }
 
     };

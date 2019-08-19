@@ -12,9 +12,9 @@ import org.springframework.context.annotation.Import;
 import com.pth.iflow.common.rest.XmlRestConfig;
 
 @SpringBootApplication
-public class BackendApp implements ApplicationListener<ApplicationReadyEvent> {
+public class GuiApp implements ApplicationListener<ApplicationReadyEvent> {
   
-  private static final Logger logger = LoggerFactory.getLogger(BackendApp.class);
+  private static final Logger logger = LoggerFactory.getLogger(GuiApp.class);
   
   @Configuration
   @Import(XmlRestConfig.class)
@@ -24,8 +24,8 @@ public class BackendApp implements ApplicationListener<ApplicationReadyEvent> {
   
   public static void main(final String[] args) {
     
-    BackendApp.logger.info("Starting iFlow Backend application...");
-    final SpringApplication springApplication = new SpringApplication(BackendApp.class);
+    GuiApp.logger.info("Starting iFlow Backend application...");
+    final SpringApplication springApplication = new SpringApplication(GuiApp.class);
     springApplication.run(args);
     
   }

@@ -4,9 +4,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 
-import com.pth.iflow.backend.configurations.BackendSecurityConfigurations;
+import com.pth.iflow.backend.configurations.GuiSecurityConfigurations;
 
-public class BackendAuthenticationDetails extends WebAuthenticationDetails {
+public class GuiAuthenticationDetails extends WebAuthenticationDetails {
 
   /**
    *
@@ -15,9 +15,9 @@ public class BackendAuthenticationDetails extends WebAuthenticationDetails {
 
   private final String      companyid;
 
-  public BackendAuthenticationDetails(final HttpServletRequest request) {
+  public GuiAuthenticationDetails(final HttpServletRequest request) {
     super(request);
-    this.companyid = request.getParameter(BackendSecurityConfigurations.COMPANYID_FIELD_NAME);
+    this.companyid = request.getParameter(GuiSecurityConfigurations.COMPANYID_FIELD_NAME);
   }
 
   /**

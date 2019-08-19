@@ -6,7 +6,7 @@ import java.util.List;
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 import com.pth.iflow.common.edo.models.xml.WorkflowTypeEdo;
 
-public class BackendWorkflowType extends ModelMapperBase<WorkflowTypeEdo, BackendWorkflowType> {
+public class GuiWorkflowType extends ModelMapperBase<WorkflowTypeEdo, GuiWorkflowType> {
   
   private Long                         id;
   private Long                         companyId;
@@ -18,7 +18,7 @@ public class BackendWorkflowType extends ModelMapperBase<WorkflowTypeEdo, Backen
   private Boolean                      manualAssign;
   private Boolean                      increaseStepAutomatic;
   private Integer                      version;
-  private final List<BackendWorkflowTypeStep> steps = new ArrayList<>();
+  private final List<GuiWorkflowTypeStep> steps = new ArrayList<>();
   
   @Override
   public Long getId() {
@@ -109,18 +109,18 @@ public class BackendWorkflowType extends ModelMapperBase<WorkflowTypeEdo, Backen
     this.version = version;
   }
   
-  public List<BackendWorkflowTypeStep> getSteps() {
+  public List<GuiWorkflowTypeStep> getSteps() {
     return this.steps;
   }
   
-  public void setSteps(final List<BackendWorkflowTypeStep> steps) {
+  public void setSteps(final List<GuiWorkflowTypeStep> steps) {
     this.steps.clear();
     if (steps != null) {
       this.steps.addAll(steps);
     }
   }
 
-  public void addStep(final BackendWorkflowTypeStep stepId) {
+  public void addStep(final GuiWorkflowTypeStep stepId) {
     this.steps.add(stepId);
   }
   
@@ -148,8 +148,8 @@ public class BackendWorkflowType extends ModelMapperBase<WorkflowTypeEdo, Backen
   }
   
   @Override
-  public BackendWorkflowType fromEdo(final WorkflowTypeEdo edo) {
-    final BackendWorkflowType model = new BackendWorkflowType();
+  public GuiWorkflowType fromEdo(final WorkflowTypeEdo edo) {
+    final GuiWorkflowType model = new GuiWorkflowType();
     
     model.setTitle(edo.getTitle());
     model.setComments(edo.getComments());
@@ -161,7 +161,7 @@ public class BackendWorkflowType extends ModelMapperBase<WorkflowTypeEdo, Backen
     model.setManualAssign(edo.getManualAssign());
     model.setIncreaseStepAutomatic(edo.getIncreaseStepAutomatic());
     model.setVersion(edo.getVersion());
-    model.setSteps(new BackendWorkflowTypeStep().fromEdoList(edo.getSteps()));
+    model.setSteps(new GuiWorkflowTypeStep().fromEdoList(edo.getSteps()));
     
     return model;
   }

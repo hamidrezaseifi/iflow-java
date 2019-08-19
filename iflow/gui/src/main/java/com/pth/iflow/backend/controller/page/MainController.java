@@ -12,15 +12,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import com.pth.iflow.backend.configurations.IBackendConfiguration;
+import com.pth.iflow.backend.configurations.IGuiConfiguration;
 import com.pth.iflow.backend.helper.BuildInfoProperties;
 
 @Controller
 @RequestMapping(value = "/")
-public class MainController extends BackendPageControllerBase {
+public class MainController extends GuiPageControllerBase {
 
   @Autowired
-  private IBackendConfiguration backendConfigurations;
+  private IGuiConfiguration backendConfigurations;
   
   @Autowired
   BuildInfoProperties buildInfoProperties;

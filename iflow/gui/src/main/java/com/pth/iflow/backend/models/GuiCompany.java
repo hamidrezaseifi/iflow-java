@@ -3,7 +3,7 @@ package com.pth.iflow.backend.models;
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 import com.pth.iflow.common.edo.models.xml.CompanyEdo;
 
-public class BackendCompany extends ModelMapperBase<CompanyEdo, BackendCompany> {
+public class GuiCompany extends ModelMapperBase<CompanyEdo, GuiCompany> {
 
   private Long    id;
   private String  identifyid;
@@ -96,8 +96,8 @@ public class BackendCompany extends ModelMapperBase<CompanyEdo, BackendCompany> 
   }
 
   @Override
-  public BackendCompany fromEdo(final CompanyEdo edo) {
-    final BackendCompany model = new BackendCompany();
+  public GuiCompany fromEdo(final CompanyEdo edo) {
+    final GuiCompany model = new GuiCompany();
     model.setCompanyName(edo.getCompanyName());
     model.setIdentifyid(edo.getIdentifyid());
     model.setStatus(edo.getStatus());

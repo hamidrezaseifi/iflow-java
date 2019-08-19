@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import com.pth.iflow.backend.exceptions.BackendCustomizedException;
-import com.pth.iflow.backend.models.BackendWorkflowType;
+import com.pth.iflow.backend.exceptions.GuiCustomizedException;
+import com.pth.iflow.backend.models.GuiWorkflowType;
 import com.pth.iflow.backend.services.IWorkflowAccess;
 
 @Controller
 @RequestMapping(value = "/companies")
-public class CompanyController extends BackendPageControllerBase {
+public class CompanyController extends GuiPageControllerBase {
 
   @Autowired
   private IWorkflowAccess workflowAccess;
@@ -31,9 +31,9 @@ public class CompanyController extends BackendPageControllerBase {
 
   @ResponseStatus(HttpStatus.OK)
   @GetMapping(path = { "/workflowtype" })
-  public String showWorkflowTypeList(final Model model) throws BackendCustomizedException, MalformedURLException {
+  public String showWorkflowTypeList(final Model model) throws GuiCustomizedException, MalformedURLException {
 
-    final List<BackendWorkflowType> workflowTypeList = this.workflowAccess.readWorkflowTypeList(this.getLoggedCompany().getId());
+    final List<GuiWorkflowType> workflowTypeList = this.workflowAccess.readWorkflowTypeList(this.getLoggedCompany().getId());
 
     model.addAttribute("workflowTypeList", workflowTypeList);
 

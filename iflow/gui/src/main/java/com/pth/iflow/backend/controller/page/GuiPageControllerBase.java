@@ -12,16 +12,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.pth.iflow.backend.configurations.BackendSecurityConfigurations;
-import com.pth.iflow.backend.models.BackendCompany;
-import com.pth.iflow.backend.models.BackendUser;
-import com.pth.iflow.backend.models.ui.BackendSessionUserInfo;
+import com.pth.iflow.backend.configurations.GuiSecurityConfigurations;
+import com.pth.iflow.backend.models.GuiCompany;
+import com.pth.iflow.backend.models.GuidUser;
+import com.pth.iflow.backend.models.ui.GuiSessionUserInfo;
 import com.pth.iflow.backend.models.ui.UiMenuItem;
 import com.pth.iflow.backend.services.IBreadCrumbLoader;
 import com.pth.iflow.backend.services.UiMenuService;
 
 @Controller
-public class BackendPageControllerBase {
+public class GuiPageControllerBase {
 
   @Autowired
   private IBreadCrumbLoader      breadCrumbLoader;
@@ -30,7 +30,7 @@ public class BackendPageControllerBase {
   private UiMenuService          menuService;
 
   @Autowired
-  private BackendSessionUserInfo sessionUserInfo;
+  private GuiSessionUserInfo sessionUserInfo;
 
   protected List<UiMenuItem> getMenus() {
     return this.menuService.getAllMenus();
@@ -52,7 +52,7 @@ public class BackendPageControllerBase {
       final HttpServletRequest request) throws Exception {
 
     if (this.sessionUserInfo == null || !this.sessionUserInfo.isValid()) {
-      response.sendRedirect(BackendSecurityConfigurations.LOGIN_URL);
+      response.sendRedirect(GuiSecurityConfigurations.LOGIN_URL);
 
     }
 
@@ -67,17 +67,17 @@ public class BackendPageControllerBase {
 
   }
 
-  protected BackendSessionUserInfo getSessionUserInfo() {
+  protected GuiSessionUserInfo getSessionUserInfo() {
 
     return this.sessionUserInfo;
   }
 
-  protected BackendUser getLoggedUser() {
+  protected GuidUser getLoggedUser() {
 
     return this.sessionUserInfo.getUser();
   }
 
-  protected BackendCompany getLoggedCompany() {
+  protected GuiCompany getLoggedCompany() {
 
     return this.sessionUserInfo.getCompanyProfile().getCompany();
   }

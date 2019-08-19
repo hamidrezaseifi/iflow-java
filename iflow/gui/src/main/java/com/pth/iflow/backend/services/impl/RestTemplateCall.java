@@ -21,7 +21,7 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 
-import com.pth.iflow.backend.exceptions.BackendCustomizedException;
+import com.pth.iflow.backend.exceptions.GuiCustomizedException;
 import com.pth.iflow.backend.services.IRestTemplateCall;
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.response.IFlowErrorRestResponse;
@@ -45,7 +45,7 @@ public class RestTemplateCall implements IRestTemplateCall {
 
   @Override
   public <I, O> O callRestPost(final URI uri, final EModule service, final I edo, final Class<O> responseClass, final String token,
-      final boolean throwError) throws BackendCustomizedException {
+      final boolean throwError) throws GuiCustomizedException {
 
     final HttpEntity<I> request = this.prepareRequest(edo, token);
 
@@ -72,30 +72,30 @@ public class RestTemplateCall implements IRestTemplateCall {
       try {
         response = this.converter.getObjectMapper().readValue(resp, IFlowErrorRestResponse.class);
       } catch (final IOException e1) {
-        final BackendCustomizedException uiCustomizedException = new BackendCustomizedException("failed to POST: " + uri,
+        final GuiCustomizedException uiCustomizedException = new GuiCustomizedException("failed to POST: " + uri,
             e1.getMessage(), service.name());
         uiCustomizedException.initCause(e1);
         throw uiCustomizedException;
       }
 
-      throw new BackendCustomizedException(response.getMessage(), response.getErrorType(), service.getModuleName());
+      throw new GuiCustomizedException(response.getMessage(), response.getErrorType(), service.getModuleName());
     } catch (final RestClientException e) {
       this.log.error("ERROR in connection with \"{}\" through url \"{}\": ", service.getModuleName(), uri, e);
 
       if (!throwError) {
         return null;
       }
-      throw new BackendCustomizedException("Service " + service.getModuleName() + " is not availeable.", "",
+      throw new GuiCustomizedException("Service " + service.getModuleName() + " is not availeable.", "",
           EModule.GUI.getModuleName());
     } catch (final Exception e) {
 
-      throw new BackendCustomizedException(e.getMessage(), "", service.getModuleName());
+      throw new GuiCustomizedException(e.getMessage(), "", service.getModuleName());
     }
   }
 
   @Override
   public <O> O callRestGet(final URI uri, final EModule service, final Class<O> responseClass, final String token,
-      final boolean throwError) throws BackendCustomizedException {
+      final boolean throwError) throws GuiCustomizedException {
 
     try {
       final HttpEntity<Object> requestEntity = this.prepareEntity(token);
@@ -114,24 +114,24 @@ public class RestTemplateCall implements IRestTemplateCall {
       try {
         response = this.converter.getObjectMapper().readValue(resp, IFlowErrorRestResponse.class);
       } catch (final IOException e1) {
-        final BackendCustomizedException uiCustomizedException = new BackendCustomizedException("failed to POST: " + uri,
+        final GuiCustomizedException uiCustomizedException = new GuiCustomizedException("failed to POST: " + uri,
             e1.getMessage(), service.name());
         uiCustomizedException.initCause(e1);
         throw uiCustomizedException;
       }
 
-      throw new BackendCustomizedException(response.getMessage(), response.getErrorType(), service.getModuleName());
+      throw new GuiCustomizedException(response.getMessage(), response.getErrorType(), service.getModuleName());
     } catch (final RestClientException e) {
       this.log.error("ERROR in connection with \"{}\" through url \"{}\": ", service.getModuleName(), uri, e);
 
       if (!throwError) {
         return null;
       }
-      throw new BackendCustomizedException("Service " + service.getModuleName() + " is not availeable.", "",
+      throw new GuiCustomizedException("Service " + service.getModuleName() + " is not availeable.", "",
           EModule.GUI.getModuleName());
     } catch (final Exception e) {
 
-      throw new BackendCustomizedException(e.getMessage(), "", service.getModuleName());
+      throw new GuiCustomizedException(e.getMessage(), "", service.getModuleName());
     }
 
   }

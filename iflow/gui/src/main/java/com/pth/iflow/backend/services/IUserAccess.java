@@ -3,15 +3,15 @@ package com.pth.iflow.backend.services;
 import java.net.MalformedURLException;
 import java.util.List;
 
-import com.pth.iflow.backend.exceptions.BackendCustomizedException;
-import com.pth.iflow.backend.models.BackendUser;
+import com.pth.iflow.backend.exceptions.GuiCustomizedException;
+import com.pth.iflow.backend.models.GuidUser;
 
 public interface IUserAccess {
 
-  BackendUser readUser(final Long userId) throws BackendCustomizedException, MalformedURLException;
+  GuidUser readUser(final Long userId) throws GuiCustomizedException, MalformedURLException;
 
-  BackendUser saveUser(final BackendUser user) throws BackendCustomizedException, MalformedURLException;
+  GuidUser saveUser(final GuidUser user) throws GuiCustomizedException, MalformedURLException;
 
-  List<BackendUser> readCompanyUserList(final Long companyId) throws BackendCustomizedException, MalformedURLException;
+  List<GuidUser> readCompanyUserList(final Long companyId) throws GuiCustomizedException, MalformedURLException;
 
 }

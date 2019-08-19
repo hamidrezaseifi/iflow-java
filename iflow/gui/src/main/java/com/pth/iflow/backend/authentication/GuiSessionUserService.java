@@ -7,9 +7,9 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.pth.iflow.backend.models.BackendCompanyProfile;
-import com.pth.iflow.backend.models.BackendUser;
-import com.pth.iflow.backend.models.ui.BackendSessionUserInfo;
+import com.pth.iflow.backend.models.GuiCompanyProfile;
+import com.pth.iflow.backend.models.GuidUser;
+import com.pth.iflow.backend.models.ui.GuiSessionUserInfo;
 
 /**
  * A class to manage session-in user in session and Spring SecurityContext
@@ -18,13 +18,13 @@ import com.pth.iflow.backend.models.ui.BackendSessionUserInfo;
  *
  */
 @Service
-public class BackendSessionUserService {
+public class GuiSessionUserService {
 
   @Autowired
-  private BackendSessionUserInfo sessionUserInfo;
+  private GuiSessionUserInfo sessionUserInfo;
 
-  public BackendSessionUserInfo authorizeUser(final BackendAuthenticationToken token, final BackendUser user,
-      final BackendCompanyProfile companyProfile, final HttpSession session, final boolean setContext) {
+  public GuiSessionUserInfo authorizeUser(final GuiAuthenticationToken token, final GuidUser user,
+      final GuiCompanyProfile companyProfile, final HttpSession session, final boolean setContext) {
 
     if (setContext) {
       SecurityContext ctx = SecurityContextHolder.getContext();
@@ -37,16 +37,16 @@ public class BackendSessionUserService {
 
   }
 
-  public BackendSessionUserInfo setLoggedInUserInfo(final BackendAuthenticationToken token, final BackendUser user,
-      final BackendCompanyProfile companyProfile, final HttpSession session) {
+  public GuiSessionUserInfo setLoggedInUserInfo(final GuiAuthenticationToken token, final GuidUser user,
+      final GuiCompanyProfile companyProfile, final HttpSession session) {
 
     this.reloadSessionData(token, user, companyProfile);
 
     return this.sessionUserInfo;
   }
 
-  public void reloadSessionData(final BackendAuthenticationToken token, final BackendUser user,
-      final BackendCompanyProfile companyProfile) {
+  public void reloadSessionData(final GuiAuthenticationToken token, final GuidUser user,
+      final GuiCompanyProfile companyProfile) {
 
     this.sessionUserInfo.setCompanyProfile(companyProfile);
     this.sessionUserInfo.setUser(user);

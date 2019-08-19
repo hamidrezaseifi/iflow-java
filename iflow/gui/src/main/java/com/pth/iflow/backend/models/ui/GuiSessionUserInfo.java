@@ -7,18 +7,18 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
-import com.pth.iflow.backend.models.BackendCompanyProfile;
-import com.pth.iflow.backend.models.BackendUser;
+import com.pth.iflow.backend.models.GuiCompanyProfile;
+import com.pth.iflow.backend.models.GuidUser;
 
 @SessionScope(proxyMode = ScopedProxyMode.TARGET_CLASS)
 @Component
-public class BackendSessionUserInfo {
+public class GuiSessionUserInfo {
 
   public static String          SESSION_LOGGEDUSERINFO_KEY = "mdm-session-user";
 
   private Date                  loginTime;
-  private BackendUser           user;
-  private BackendCompanyProfile companyProfile;
+  private GuidUser           user;
+  private GuiCompanyProfile companyProfile;
   private String                token;
   private String                sessionId;
 
@@ -43,11 +43,11 @@ public class BackendSessionUserInfo {
     return diff <= this.sessionTimeOut;
   }
 
-  public BackendSessionUserInfo() {
+  public GuiSessionUserInfo() {
     this.loginTime = new Date();
   }
 
-  public BackendSessionUserInfo(final BackendUser user, final BackendCompanyProfile companyProfile) {
+  public GuiSessionUserInfo(final GuidUser user, final GuiCompanyProfile companyProfile) {
     this.user = user;
     this.companyProfile = companyProfile;
     this.loginTime = new Date();
@@ -66,11 +66,11 @@ public class BackendSessionUserInfo {
     this.loginTime = new Date();
   }
 
-  public BackendUser getUser() {
+  public GuidUser getUser() {
     return this.user;
   }
 
-  public void setUser(final BackendUser user) {
+  public void setUser(final GuidUser user) {
     this.user = user;
   }
 
@@ -78,7 +78,7 @@ public class BackendSessionUserInfo {
     return this.user.getUserTitle();
   }
 
-  public BackendCompanyProfile getCompanyProfile() {
+  public GuiCompanyProfile getCompanyProfile() {
     return this.companyProfile;
   }
 
@@ -90,7 +90,7 @@ public class BackendSessionUserInfo {
     return this.sessionId;
   }
 
-  public void setCompanyProfile(final BackendCompanyProfile companyProfile) {
+  public void setCompanyProfile(final GuiCompanyProfile companyProfile) {
     this.companyProfile = companyProfile;
   }
 

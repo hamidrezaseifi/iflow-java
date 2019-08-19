@@ -6,21 +6,21 @@ import java.util.List;
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 import com.pth.iflow.common.edo.models.xml.CompanyProfileEdo;
 
-public class BackendCompanyProfile extends ModelMapperBase<CompanyProfileEdo, BackendCompanyProfile> {
+public class GuiCompanyProfile extends ModelMapperBase<CompanyProfileEdo, GuiCompanyProfile> {
 
-  private BackendCompany company;
+  private GuiCompany company;
 
-  private final List<BackendDepartment> departments = new ArrayList<>();
+  private final List<GuiDepartment> departments = new ArrayList<>();
 
-  private final List<BackendUserGroup> userGroups = new ArrayList<>();
+  private final List<GuiUserGroup> userGroups = new ArrayList<>();
 
-  public BackendCompanyProfile() {
+  public GuiCompanyProfile() {
 
   }
 
-  public BackendCompanyProfile(final BackendCompany company,
-                               final List<BackendDepartment> departments,
-                               final List<BackendUserGroup> userGroups) {
+  public GuiCompanyProfile(final GuiCompany company,
+                               final List<GuiDepartment> departments,
+                               final List<GuiUserGroup> userGroups) {
     this.setDepartments(departments);
     this.setUserGroups(userGroups);
     this.setCompany(company);
@@ -30,33 +30,33 @@ public class BackendCompanyProfile extends ModelMapperBase<CompanyProfileEdo, Ba
   /**
    * @return the company
    */
-  public BackendCompany getCompany() {
+  public GuiCompany getCompany() {
     return this.company;
   }
 
   /**
    * @param company the company to set
    */
-  public void setCompany(final BackendCompany company) {
+  public void setCompany(final GuiCompany company) {
     this.company = company;
   }
 
-  public List<BackendDepartment> getDepartments() {
+  public List<GuiDepartment> getDepartments() {
     return this.departments;
   }
 
-  public void setDepartments(final List<BackendDepartment> departments) {
+  public void setDepartments(final List<GuiDepartment> departments) {
     this.departments.clear();
     if (departments != null) {
       this.departments.addAll(departments);
     }
   }
 
-  public List<BackendUserGroup> getUserGroups() {
+  public List<GuiUserGroup> getUserGroups() {
     return this.userGroups;
   }
 
-  public void setUserGroups(final List<BackendUserGroup> users) {
+  public void setUserGroups(final List<GuiUserGroup> users) {
     this.userGroups.clear();
     if (users != null) {
       this.userGroups.addAll(users);
@@ -87,10 +87,10 @@ public class BackendCompanyProfile extends ModelMapperBase<CompanyProfileEdo, Ba
   }
 
   @Override
-  public BackendCompanyProfile fromEdo(final CompanyProfileEdo edo) {
-    final BackendCompanyProfile model = new BackendCompanyProfile(new BackendCompany().fromEdo(edo.getCompany()),
-                                                                  new BackendDepartment().fromEdoList(edo.getDepartments()),
-                                                                  new BackendUserGroup().fromEdoList(edo.getUserGroups()));
+  public GuiCompanyProfile fromEdo(final CompanyProfileEdo edo) {
+    final GuiCompanyProfile model = new GuiCompanyProfile(new GuiCompany().fromEdo(edo.getCompany()),
+                                                                  new GuiDepartment().fromEdoList(edo.getDepartments()),
+                                                                  new GuiUserGroup().fromEdoList(edo.getUserGroups()));
 
     return model;
   }

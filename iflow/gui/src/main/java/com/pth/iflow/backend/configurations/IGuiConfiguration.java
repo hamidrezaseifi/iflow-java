@@ -1,6 +1,6 @@
 package com.pth.iflow.backend.configurations;
 
-public interface IBackendConfiguration {
+public interface IGuiConfiguration {
   
   String getBackendValidEMail();
 }

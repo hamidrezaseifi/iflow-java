@@ -8,10 +8,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.pth.iflow.backend.configurations.BackendConfiguration;
-import com.pth.iflow.backend.exceptions.BackendCustomizedException;
-import com.pth.iflow.backend.models.BackendUser;
-import com.pth.iflow.backend.models.ui.BackendSessionUserInfo;
+import com.pth.iflow.backend.configurations.GuiConfiguration;
+import com.pth.iflow.backend.exceptions.GuiCustomizedException;
+import com.pth.iflow.backend.models.GuidUser;
+import com.pth.iflow.backend.models.ui.GuiSessionUserInfo;
 import com.pth.iflow.backend.services.IRestTemplateCall;
 import com.pth.iflow.backend.services.IUserAccess;
 import com.pth.iflow.common.edo.models.xml.UserListEdo;
@@ -23,38 +23,38 @@ public class UserAccess implements IUserAccess {
   private static final Logger                           logger = LoggerFactory.getLogger(UserAccess.class);
 
   private final IRestTemplateCall                       restTemplate;
-  private final BackendConfiguration.ModuleAccessConfig moduleAccessConfig;
+  private final GuiConfiguration.ModuleAccessConfig moduleAccessConfig;
 
-  private final BackendSessionUserInfo                  sessionUserInfo;
+  private final GuiSessionUserInfo                  sessionUserInfo;
 
   public UserAccess(@Autowired final IRestTemplateCall restTemplate,
-      @Autowired final BackendConfiguration.ModuleAccessConfig moduleAccessConfig,
-      @Autowired final BackendSessionUserInfo sessionUserInfo) {
+      @Autowired final GuiConfiguration.ModuleAccessConfig moduleAccessConfig,
+      @Autowired final GuiSessionUserInfo sessionUserInfo) {
     this.restTemplate = restTemplate;
     this.moduleAccessConfig = moduleAccessConfig;
     this.sessionUserInfo = sessionUserInfo;
   }
 
   @Override
-  public BackendUser readUser(final Long userId) throws BackendCustomizedException, MalformedURLException {
+  public GuidUser readUser(final Long userId) throws GuiCustomizedException, MalformedURLException {
     // TODO Auto-generated method stub
     return null;
   }
 
   @Override
-  public BackendUser saveUser(final BackendUser user) throws BackendCustomizedException, MalformedURLException {
+  public GuidUser saveUser(final GuidUser user) throws GuiCustomizedException, MalformedURLException {
     // TODO Auto-generated method stub
     return null;
   }
 
   @Override
-  public List<BackendUser> readCompanyUserList(final Long companyId) throws BackendCustomizedException, MalformedURLException {
+  public List<GuidUser> readCompanyUserList(final Long companyId) throws GuiCustomizedException, MalformedURLException {
     logger.debug("Read user list for company id {}", companyId);
 
     final UserListEdo responseEdo = this.restTemplate.callRestGet(this.moduleAccessConfig.getReadCompanyUserListUri(companyId),
         EModule.PROFILE, UserListEdo.class, this.sessionUserInfo.isLoggedIn() ? this.sessionUserInfo.getToken() : "", true);
 
-    return new BackendUser().fromEdoList(responseEdo.getUsers());
+    return new GuidUser().fromEdoList(responseEdo.getUsers());
   }
 
 }

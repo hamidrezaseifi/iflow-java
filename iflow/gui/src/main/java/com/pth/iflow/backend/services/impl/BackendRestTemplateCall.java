@@ -20,7 +20,7 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 
-import com.pth.iflow.backend.exceptions.BackendCustomizedException;
+import com.pth.iflow.backend.exceptions.GuiCustomizedException;
 import com.pth.iflow.backend.services.IBackendRestTemplateCall;
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.response.IFlowErrorRestResponse;
@@ -44,7 +44,7 @@ public class BackendRestTemplateCall implements IBackendRestTemplateCall {
 
   @Override
   public <I, O> O callRestPost(final URL url, final String token, final EModule service, final I edo, final Class<O> responseClass,
-      final boolean throwError) throws BackendCustomizedException {
+      final boolean throwError) throws GuiCustomizedException {
 
     final HttpEntity<I> request = new HttpEntity<I>(edo, generateTokenHeader(token));
 
@@ -74,14 +74,14 @@ public class BackendRestTemplateCall implements IBackendRestTemplateCall {
         response = this.converter.getObjectMapper().readValue(resp, IFlowErrorRestResponse.class);
       }
       catch (final IOException e1) {
-        final BackendCustomizedException uiCustomizedException = new BackendCustomizedException("failed to POST: " + url,
+        final GuiCustomizedException uiCustomizedException = new GuiCustomizedException("failed to POST: " + url,
             e1.getMessage(),
             service.name());
         uiCustomizedException.initCause(e1);
         throw uiCustomizedException;
       }
 
-      throw new BackendCustomizedException(response.getMessage(), response.getErrorType(), service.getModuleName());
+      throw new GuiCustomizedException(response.getMessage(), response.getErrorType(), service.getModuleName());
     }
     catch (final RestClientException e) {
       this.log.error("ERROR in connection with \"{}\" through url \"{}\": ", service.getModuleName(), url, e);
@@ -89,11 +89,11 @@ public class BackendRestTemplateCall implements IBackendRestTemplateCall {
       if (!throwError) {
         return null;
       }
-      throw new BackendCustomizedException("Service " + service.getModuleName() + " is not availeable.", "", EModule.GUI.getModuleName());
+      throw new GuiCustomizedException("Service " + service.getModuleName() + " is not availeable.", "", EModule.GUI.getModuleName());
     }
     catch (final Exception e) {
 
-      throw new BackendCustomizedException(e.getMessage(), "", service.getModuleName());
+      throw new GuiCustomizedException(e.getMessage(), "", service.getModuleName());
     }
   }
 
@@ -106,7 +106,7 @@ public class BackendRestTemplateCall implements IBackendRestTemplateCall {
 
   @Override
   public <O> O callRestGet(final URL url, final String token, final EModule service, final Class<O> responseClass, final boolean throwError,
-      final Object... args) throws BackendCustomizedException {
+      final Object... args) throws GuiCustomizedException {
 
     try {
       final HttpEntity<Object> requestEntity = new HttpEntity<Object>(generateTokenHeader(token));
@@ -127,14 +127,14 @@ public class BackendRestTemplateCall implements IBackendRestTemplateCall {
         response = this.converter.getObjectMapper().readValue(resp, IFlowErrorRestResponse.class);
       }
       catch (final IOException e1) {
-        final BackendCustomizedException uiCustomizedException = new BackendCustomizedException("failed to POST: " + url,
+        final GuiCustomizedException uiCustomizedException = new GuiCustomizedException("failed to POST: " + url,
             e1.getMessage(),
             service.name());
         uiCustomizedException.initCause(e1);
         throw uiCustomizedException;
       }
 
-      throw new BackendCustomizedException(response.getMessage(), response.getErrorType(), service.getModuleName());
+      throw new GuiCustomizedException(response.getMessage(), response.getErrorType(), service.getModuleName());
     }
     catch (final RestClientException e) {
       this.log.error("ERROR in connection with \"{}\" through url \"{}\": ", service.getModuleName(), url, e);
@@ -142,11 +142,11 @@ public class BackendRestTemplateCall implements IBackendRestTemplateCall {
       if (!throwError) {
         return null;
       }
-      throw new BackendCustomizedException("Service " + service.getModuleName() + " is not availeable.", "", EModule.GUI.getModuleName());
+      throw new GuiCustomizedException("Service " + service.getModuleName() + " is not availeable.", "", EModule.GUI.getModuleName());
     }
     catch (final Exception e) {
 
-      throw new BackendCustomizedException(e.getMessage(), "", service.getModuleName());
+      throw new GuiCustomizedException(e.getMessage(), "", service.getModuleName());
     }
 
   }

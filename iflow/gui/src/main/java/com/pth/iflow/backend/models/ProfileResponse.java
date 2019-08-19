@@ -6,9 +6,9 @@ import com.pth.iflow.common.edo.models.xml.ProfileResponseEdo;
 
 public class ProfileResponse {
 
-  private BackendUser user;
+  private GuidUser user;
 
-  private BackendCompanyProfile companyProfile;
+  private GuiCompanyProfile companyProfile;
 
   private String sessionid;
 
@@ -18,35 +18,35 @@ public class ProfileResponse {
     this.sessionid = "";
   }
 
-  public ProfileResponse(final BackendUser user, final BackendCompanyProfile companyProfile, final String sessionid) {
+  public ProfileResponse(final GuidUser user, final GuiCompanyProfile companyProfile, final String sessionid) {
     this.user = user;
     this.companyProfile = companyProfile;
     this.sessionid = sessionid;
   }
 
-  public ProfileResponse(final BackendUser user,
-                         final BackendCompany company,
-                         final List<BackendDepartment> departments,
-                         final List<BackendUserGroup> userGroups,
+  public ProfileResponse(final GuidUser user,
+                         final GuiCompany company,
+                         final List<GuiDepartment> departments,
+                         final List<GuiUserGroup> userGroups,
                          final String sessionid) {
     this.user = user;
-    this.companyProfile = new BackendCompanyProfile(company, departments, userGroups);
+    this.companyProfile = new GuiCompanyProfile(company, departments, userGroups);
     this.sessionid = sessionid;
   }
 
-  public BackendUser getUser() {
+  public GuidUser getUser() {
     return this.user;
   }
 
-  public void setUser(final BackendUser user) {
+  public void setUser(final GuidUser user) {
     this.user = user;
   }
 
-  public BackendCompanyProfile getCompanyProfile() {
+  public GuiCompanyProfile getCompanyProfile() {
     return this.companyProfile;
   }
 
-  public void setCompanyProfile(final BackendCompanyProfile companyProfile) {
+  public void setCompanyProfile(final GuiCompanyProfile companyProfile) {
     this.companyProfile = companyProfile;
   }
 
@@ -65,8 +65,8 @@ public class ProfileResponse {
 
   public static ProfileResponse fromEdo(final ProfileResponseEdo edo) {
 
-    return new ProfileResponse(new BackendUser().fromEdo(edo.getUser()),
-                               new BackendCompanyProfile().fromEdo(edo.getCompanyProfile()),
+    return new ProfileResponse(new GuidUser().fromEdo(edo.getUser()),
+                               new GuiCompanyProfile().fromEdo(edo.getCompanyProfile()),
                                edo.getSessionid());
   }
 

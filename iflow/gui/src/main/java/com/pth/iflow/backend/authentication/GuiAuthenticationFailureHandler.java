@@ -10,18 +10,18 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
 
-import com.pth.iflow.backend.configurations.BackendSecurityConfigurations;
+import com.pth.iflow.backend.configurations.GuiSecurityConfigurations;
 
 @Component
-public class BackendAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
+public class GuiAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 
   @Override
   public void onAuthenticationFailure(final HttpServletRequest request, final HttpServletResponse response,
       final AuthenticationException ex) throws IOException, ServletException {
-    final String url = BackendAuthenticationErrorUrlCreator.getErrorUrl("auth",
-        request.getParameter(BackendSecurityConfigurations.USERNAME_FIELD_NAME),
-        request.getParameter(BackendSecurityConfigurations.PASSWORD_FIELD_NAME),
-        request.getParameter(BackendSecurityConfigurations.COMPANYID_FIELD_NAME));
+    final String url = GuiAuthenticationErrorUrlCreator.getErrorUrl("auth",
+        request.getParameter(GuiSecurityConfigurations.USERNAME_FIELD_NAME),
+        request.getParameter(GuiSecurityConfigurations.PASSWORD_FIELD_NAME),
+        request.getParameter(GuiSecurityConfigurations.COMPANYID_FIELD_NAME));
 
     this.getRedirectStrategy().sendRedirect(request, response, url);
   }

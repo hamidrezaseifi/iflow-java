@@ -5,22 +5,22 @@ import java.util.List;
 
 import com.pth.iflow.common.edo.models.xml.WorkflowCreateRequestEdo;
 
-public class BackendWorkflowCreateRequest {
+public class GuiWorkflowCreateRequest {
 
-  private BackendWorkflow workflow;
+  private GuiWorkflow workflow;
 
   private final List<Long> assigns = new ArrayList<>();
 
-  public BackendWorkflowCreateRequest() {
+  public GuiWorkflowCreateRequest() {
 
   }
 
-  public BackendWorkflowCreateRequest(final BackendWorkflow workflow) {
+  public GuiWorkflowCreateRequest(final GuiWorkflow workflow) {
     super();
     this.setWorkflow(workflow);
   }
 
-  public BackendWorkflowCreateRequest(final BackendWorkflow workflow, final List<Long> assigns) {
+  public GuiWorkflowCreateRequest(final GuiWorkflow workflow, final List<Long> assigns) {
     super();
     this.setWorkflow(workflow);
     this.setAssigns(assigns);
@@ -29,14 +29,14 @@ public class BackendWorkflowCreateRequest {
   /**
    * @return the workflow
    */
-  public BackendWorkflow getWorkflow() {
+  public GuiWorkflow getWorkflow() {
     return this.workflow;
   }
 
   /**
    * @param workflow the workflow to set
    */
-  public void setWorkflow(final BackendWorkflow workflow) {
+  public void setWorkflow(final GuiWorkflow workflow) {
     this.workflow = workflow;
   }
 
@@ -63,8 +63,8 @@ public class BackendWorkflowCreateRequest {
     return edo;
   }
 
-  public BackendWorkflowCreateRequest fromEdo(final WorkflowCreateRequestEdo edo) {
-    final BackendWorkflowCreateRequest model = new BackendWorkflowCreateRequest(new BackendWorkflow().fromEdo(edo.getWorkflow()),
+  public GuiWorkflowCreateRequest fromEdo(final WorkflowCreateRequestEdo edo) {
+    final GuiWorkflowCreateRequest model = new GuiWorkflowCreateRequest(new GuiWorkflow().fromEdo(edo.getWorkflow()),
                                                                                 edo.getAssignedUsers());
 
     return model;

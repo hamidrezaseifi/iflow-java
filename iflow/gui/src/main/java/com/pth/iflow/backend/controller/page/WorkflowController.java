@@ -9,22 +9,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import com.pth.iflow.backend.exceptions.BackendCustomizedException;
+import com.pth.iflow.backend.exceptions.GuiCustomizedException;
 
 @Controller
 @RequestMapping(value = "/workflow")
-public class WorkflowController extends BackendPageControllerBase {
+public class WorkflowController extends GuiPageControllerBase {
 
   @ResponseStatus(HttpStatus.OK)
   @GetMapping(path = { "/", "/list" })
-  public String list(final Model model) throws BackendCustomizedException, MalformedURLException {
+  public String list(final Model model) throws GuiCustomizedException, MalformedURLException {
 
     return "workflow/index";
   }
 
   @ResponseStatus(HttpStatus.OK)
   @GetMapping(path = { "/create" })
-  public String showWorkflowCreate(final Model model) throws BackendCustomizedException, MalformedURLException {
+  public String showWorkflowCreate(final Model model) throws GuiCustomizedException, MalformedURLException {
 
     return "workflow/create";
   }

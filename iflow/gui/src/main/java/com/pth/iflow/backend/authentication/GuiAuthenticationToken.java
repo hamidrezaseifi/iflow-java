@@ -7,7 +7,7 @@ import java.util.List;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 
-public class BackendAuthenticationToken extends UsernamePasswordAuthenticationToken {
+public class GuiAuthenticationToken extends UsernamePasswordAuthenticationToken {
 
   /**
    *
@@ -20,7 +20,7 @@ public class BackendAuthenticationToken extends UsernamePasswordAuthenticationTo
   private final String                 sessionId;
   private final List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
 
-  public BackendAuthenticationToken(final String username, final String companyid, final String token, final String sessionid) {
+  public GuiAuthenticationToken(final String username, final String companyid, final String token, final String sessionid) {
     super(username, "fakepass");
 
     this.username = username;
@@ -29,7 +29,7 @@ public class BackendAuthenticationToken extends UsernamePasswordAuthenticationTo
     this.sessionId = sessionid;
   }
 
-  public BackendAuthenticationToken(final String username,
+  public GuiAuthenticationToken(final String username,
                                     final String companyid,
                                     final String token,
                                     final String sessionid,

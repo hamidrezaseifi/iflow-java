@@ -7,11 +7,11 @@ import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 import com.pth.iflow.common.edo.models.xml.WorkflowEdo;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 
-public class BackendWorkflow extends ModelMapperBase<WorkflowEdo, BackendWorkflow> {
+public class GuiWorkflow extends ModelMapperBase<WorkflowEdo, GuiWorkflow> {
 
   private Long                              id;
   private Long                              workflowTypeId;
-  private BackendWorkflowTypeStep           currentStep;
+  private GuiWorkflowTypeStep           currentStep;
   private Long                              currentStepId;
   private Long                              controller;
   private Long                              createdBy;
@@ -21,8 +21,8 @@ public class BackendWorkflow extends ModelMapperBase<WorkflowEdo, BackendWorkflo
   private EWorkflowStatus                   status;
   private Integer                           version;
 
-  private final List<BackendWorkflowFile>   files   = new ArrayList<>();
-  private final List<BackendWorkflowAction> actions = new ArrayList<>();
+  private final List<GuiWorkflowFile>   files   = new ArrayList<>();
+  private final List<GuiWorkflowAction> actions = new ArrayList<>();
 
   @Override
   public Long getId() {
@@ -41,11 +41,11 @@ public class BackendWorkflow extends ModelMapperBase<WorkflowEdo, BackendWorkflo
     this.workflowTypeId = workflowTypeId;
   }
 
-  public BackendWorkflowTypeStep getCurrentStep() {
+  public GuiWorkflowTypeStep getCurrentStep() {
     return this.currentStep;
   }
 
-  public void setCurrentStep(final BackendWorkflowTypeStep currentStep) {
+  public void setCurrentStep(final GuiWorkflowTypeStep currentStep) {
     this.currentStep = currentStep;
   }
 
@@ -127,49 +127,49 @@ public class BackendWorkflow extends ModelMapperBase<WorkflowEdo, BackendWorkflo
     this.version = version;
   }
 
-  public List<BackendWorkflowFile> getFiles() {
+  public List<GuiWorkflowFile> getFiles() {
     return this.files;
   }
 
-  public void setFiles(final List<BackendWorkflowFile> files) {
+  public void setFiles(final List<GuiWorkflowFile> files) {
     this.files.clear();
     if (files != null) {
       this.files.addAll(files);
     }
   }
 
-  public List<BackendWorkflowAction> getActions() {
+  public List<GuiWorkflowAction> getActions() {
     return this.actions;
   }
 
-  public void setActions(final List<BackendWorkflowAction> actions) {
+  public void setActions(final List<GuiWorkflowAction> actions) {
     this.actions.clear();
     if (actions != null) {
       this.actions.addAll(actions);
     }
   }
 
-  public boolean isAfterStep(final BackendWorkflow other) {
+  public boolean isAfterStep(final GuiWorkflow other) {
     return this.currentStep.isAfterStep(other.getCurrentStep());
   }
 
-  public boolean isBeforeStep(final BackendWorkflow other) {
+  public boolean isBeforeStep(final GuiWorkflow other) {
     return this.currentStep.isBeforeStep(other.getCurrentStep());
   }
 
-  public boolean isTheSameStep(final BackendWorkflow other) {
+  public boolean isTheSameStep(final GuiWorkflow other) {
     return this.currentStep.isTheSameStep(other.getCurrentStep());
   }
 
-  public boolean isAfter(final BackendWorkflowTypeStep step) {
+  public boolean isAfter(final GuiWorkflowTypeStep step) {
     return this.currentStep.isAfterStep(step);
   }
 
-  public boolean isBefore(final BackendWorkflowTypeStep step) {
+  public boolean isBefore(final GuiWorkflowTypeStep step) {
     return this.currentStep.isBeforeStep(step);
   }
 
-  public boolean isTheSame(final BackendWorkflowTypeStep step) {
+  public boolean isTheSame(final GuiWorkflowTypeStep step) {
     return this.currentStep.isTheSameStep(step);
   }
 
@@ -199,26 +199,26 @@ public class BackendWorkflow extends ModelMapperBase<WorkflowEdo, BackendWorkflo
   }
 
   @Override
-  public BackendWorkflow fromEdo(final WorkflowEdo edo) {
+  public GuiWorkflow fromEdo(final WorkflowEdo edo) {
     if (edo == null) {
       return null;
     }
-    final BackendWorkflow model = new BackendWorkflow();
+    final GuiWorkflow model = new GuiWorkflow();
 
     model.setTitle(edo.getTitle());
     model.setComments(edo.getComments());
     model.setStatusInt(edo.getStatus());
     model.setId(edo.getId());
     model.setController(edo.getController());
-    model.setCurrentStep(edo.getCurrentStep() != null ? new BackendWorkflowTypeStep().fromEdo(edo.getCurrentStep()) : null);
+    model.setCurrentStep(edo.getCurrentStep() != null ? new GuiWorkflowTypeStep().fromEdo(edo.getCurrentStep()) : null);
     model.setCurrentStepId(edo.getCurrentStepId());
     model.setCreatedBy(edo.getCreatedBy());
     model.setWorkflowTypeId(edo.getWorkflowTypeId());
     model.setVersion(edo.getVersion());
     model.setAssignTo(edo.getAssignTo());
 
-    model.setFiles(new BackendWorkflowFile().fromEdoList(edo.getFiles()));
-    model.setActions(new BackendWorkflowAction().fromEdoList(edo.getActions()));
+    model.setFiles(new GuiWorkflowFile().fromEdoList(edo.getFiles()));
+    model.setActions(new GuiWorkflowAction().fromEdoList(edo.getActions()));
 
     return model;
   }

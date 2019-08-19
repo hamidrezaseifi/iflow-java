@@ -6,15 +6,15 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.pth.iflow.backend.configurations.BackendSecurityConfigurations;
+import com.pth.iflow.backend.configurations.GuiSecurityConfigurations;
 
-public class BackendAuthenticationErrorUrlCreator {
+public class GuiAuthenticationErrorUrlCreator {
 
   public static String getErrorUrl(final String error, final String username, final String password, final String companyid) {
 
     final String url = "err=" + error + "&u=" + username + "&c=" + companyid; // no password in error url + "&p=" + password;
 
-    final String encodedString = BackendSecurityConfigurations.LOGIN_URL + "?error="
+    final String encodedString = GuiSecurityConfigurations.LOGIN_URL + "?error="
         + Base64.getEncoder().encodeToString(url.getBytes());
 
     return encodedString;

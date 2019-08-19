@@ -17,7 +17,7 @@ import com.pth.iflow.common.edo.models.xml.UserEdo;
 import com.pth.iflow.common.enums.EUserStatus;
 
 @JsonIgnoreProperties(value = { "authorities", "enabled", })
-public class BackendUser extends ModelMapperBase<UserEdo, BackendUser> {
+public class GuidUser extends ModelMapperBase<UserEdo, GuidUser> {
 
   private Long                    id;
   private Long                    companyId;
@@ -266,7 +266,7 @@ public class BackendUser extends ModelMapperBase<UserEdo, BackendUser> {
     this.roles.add(EUiUserRole.ofId(role));
   }
 
-  public BackendUser() {
+  public GuidUser() {
     this.isEnabled = true;
   }
 
@@ -330,8 +330,8 @@ public class BackendUser extends ModelMapperBase<UserEdo, BackendUser> {
   }
 
   @Override
-  public BackendUser fromEdo(final UserEdo edo) {
-    final BackendUser model = new BackendUser();
+  public GuidUser fromEdo(final UserEdo edo) {
+    final GuidUser model = new GuidUser();
 
     model.setFirstName(edo.getFirstName());
     model.setLastName(edo.getLastName());

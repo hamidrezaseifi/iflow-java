@@ -3,22 +3,22 @@ package com.pth.iflow.backend.services;
 import java.net.MalformedURLException;
 import java.util.List;
 
-import com.pth.iflow.backend.exceptions.BackendCustomizedException;
-import com.pth.iflow.backend.models.BackendWorkflow;
-import com.pth.iflow.backend.models.BackendWorkflowCreateRequest;
-import com.pth.iflow.backend.models.BackendWorkflowType;
+import com.pth.iflow.backend.exceptions.GuiCustomizedException;
+import com.pth.iflow.backend.models.GuiWorkflow;
+import com.pth.iflow.backend.models.GuiWorkflowCreateRequest;
+import com.pth.iflow.backend.models.GuiWorkflowType;
 
 public interface IWorkflowAccess {
 
-  BackendWorkflow readWorkflow(final Long workflowId) throws BackendCustomizedException, MalformedURLException;
+  GuiWorkflow readWorkflow(final Long workflowId) throws GuiCustomizedException, MalformedURLException;
 
-  List<BackendWorkflow> createWorkflow(final BackendWorkflowCreateRequest createRequest)
-      throws BackendCustomizedException, MalformedURLException;
+  List<GuiWorkflow> createWorkflow(final GuiWorkflowCreateRequest createRequest)
+      throws GuiCustomizedException, MalformedURLException;
 
-  BackendWorkflow saveWorkflow(final BackendWorkflow workflow) throws BackendCustomizedException, MalformedURLException;
+  GuiWorkflow saveWorkflow(final GuiWorkflow workflow) throws GuiCustomizedException, MalformedURLException;
 
-  List<BackendWorkflow> readWorkflowList(final Long companyId) throws BackendCustomizedException, MalformedURLException;
+  List<GuiWorkflow> readWorkflowList(final Long companyId) throws GuiCustomizedException, MalformedURLException;
 
-  List<BackendWorkflowType> readWorkflowTypeList(final Long companyId) throws BackendCustomizedException, MalformedURLException;
+  List<GuiWorkflowType> readWorkflowTypeList(final Long companyId) throws GuiCustomizedException, MalformedURLException;
 
 }

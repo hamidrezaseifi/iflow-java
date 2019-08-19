@@ -3,7 +3,7 @@ package com.pth.iflow.backend.models;
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 import com.pth.iflow.common.edo.models.xml.WorkflowFileVersionEdo;
 
-public class BackendWorkflowFileVersion extends ModelMapperBase<WorkflowFileVersionEdo, BackendWorkflowFileVersion> {
+public class GuiWorkflowFileVersion extends ModelMapperBase<WorkflowFileVersionEdo, GuiWorkflowFileVersion> {
   
   private Long    id;
   private Long    workflowFileId;
@@ -97,12 +97,12 @@ public class BackendWorkflowFileVersion extends ModelMapperBase<WorkflowFileVers
   }
   
   @Override
-  public BackendWorkflowFileVersion fromEdo(final WorkflowFileVersionEdo edo) {
+  public GuiWorkflowFileVersion fromEdo(final WorkflowFileVersionEdo edo) {
     if (edo == null) {
       return null;
     }
     
-    final BackendWorkflowFileVersion model = new BackendWorkflowFileVersion();
+    final GuiWorkflowFileVersion model = new GuiWorkflowFileVersion();
     
     model.setComments(edo.getComments());
     model.setStatus(edo.getStatus());

@@ -7,10 +7,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.pth.iflow.backend.configurations.BackendConfiguration;
-import com.pth.iflow.backend.exceptions.BackendCustomizedException;
+import com.pth.iflow.backend.configurations.GuiConfiguration;
+import com.pth.iflow.backend.exceptions.GuiCustomizedException;
 import com.pth.iflow.backend.models.ProfileResponse;
-import com.pth.iflow.backend.models.UserAuthenticationResponse;
+import com.pth.iflow.backend.models.GuiUserAuthenticationResponse;
 import com.pth.iflow.backend.services.IProfileAccess;
 import com.pth.iflow.backend.services.IRestTemplateCall;
 import com.pth.iflow.common.edo.models.xml.AuthenticatedProfileRequestEdo;
@@ -26,16 +26,16 @@ public class ProfileAccess implements IProfileAccess {
   private static final Logger                           logger = LoggerFactory.getLogger(ProfileAccess.class);
 
   private final IRestTemplateCall                       restTemplate;
-  private final BackendConfiguration.ModuleAccessConfig moduleAccessConfig;
+  private final GuiConfiguration.ModuleAccessConfig moduleAccessConfig;
 
   public ProfileAccess(@Autowired final IRestTemplateCall restTemplate,
-      @Autowired final BackendConfiguration.ModuleAccessConfig moduleAccessConfig) {
+      @Autowired final GuiConfiguration.ModuleAccessConfig moduleAccessConfig) {
     this.restTemplate = restTemplate;
     this.moduleAccessConfig = moduleAccessConfig;
   }
 
   @Override
-  public ProfileResponse isTokenValid(final String token) throws BackendCustomizedException, MalformedURLException {
+  public ProfileResponse isTokenValid(final String token) throws GuiCustomizedException, MalformedURLException {
 
     logger.debug("Validate token {} from profile service", token);
 
@@ -49,8 +49,8 @@ public class ProfileAccess implements IProfileAccess {
   }
 
   @Override
-  public UserAuthenticationResponse authenticate(final String username, final String password, final String companyIdentity)
-      throws BackendCustomizedException, MalformedURLException {
+  public GuiUserAuthenticationResponse authenticate(final String username, final String password, final String companyIdentity)
+      throws GuiCustomizedException, MalformedURLException {
     logger.debug("Authenticate user {} from profile service", username);
 
     final UserAuthenticationRequestEdo request = new UserAuthenticationRequestEdo();
@@ -61,12 +61,12 @@ public class ProfileAccess implements IProfileAccess {
     final UserAuthenticationResponseEdo responseEdo = this.restTemplate.callRestPost(this.moduleAccessConfig.getAuthenticationUri(),
         EModule.PROFILE, request, UserAuthenticationResponseEdo.class, "", true);
 
-    return UserAuthenticationResponse.fromEdo(responseEdo);
+    return GuiUserAuthenticationResponse.fromEdo(responseEdo);
   }
 
   @Override
   public ProfileResponse readProfile(final String username, final String token)
-      throws BackendCustomizedException, MalformedURLException {
+      throws GuiCustomizedException, MalformedURLException {
     logger.debug("Read profile for user {} from profile service", username);
 
     final AuthenticatedProfileRequestEdo request = new AuthenticatedProfileRequestEdo();
