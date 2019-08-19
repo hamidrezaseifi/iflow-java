@@ -2,29 +2,34 @@ package com.pth.iflow.backend.models;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 import com.pth.iflow.common.edo.models.xml.WorkflowEdo;
+import com.pth.iflow.common.edo.models.xml.WorkflowListEdo;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 
-public class GuiWorkflow extends ModelMapperBase<WorkflowEdo, GuiWorkflow> {
+public class GuiWorkflow {
 
-  private Long                              id;
-  private Long                              workflowTypeId;
-  private GuiWorkflowTypeStep           currentStep;
-  private Long                              currentStepId;
-  private Long                              controller;
-  private Long                              createdBy;
-  private Long                              assignTo;
-  private String                            title;
-  private String                            comments;
-  private EWorkflowStatus                   status;
-  private Integer                           version;
+  private Long                id;
+  private Long                workflowTypeId;
+  private GuiWorkflowType     workflowType;
+  private GuiWorkflowTypeStep currentStep;
+  private Long                currentStepId;
+  private Long                controller;
+  private GuiUser             controllerUser;
+  private Long                createdBy;
+  private GuiUser             createdByUser;
+  private Long                assignTo;
+  private GuiUser             assignToUser;
+  private String              title;
+  private String              comments;
+  private EWorkflowStatus     status;
+  private Integer             version;
 
   private final List<GuiWorkflowFile>   files   = new ArrayList<>();
   private final List<GuiWorkflowAction> actions = new ArrayList<>();
 
-  @Override
   public Long getId() {
     return this.id;
   }
@@ -39,6 +44,20 @@ public class GuiWorkflow extends ModelMapperBase<WorkflowEdo, GuiWorkflow> {
 
   public void setWorkflowTypeId(final Long workflowTypeId) {
     this.workflowTypeId = workflowTypeId;
+  }
+
+  /**
+   * @return the workflowType
+   */
+  public GuiWorkflowType getWorkflowType() {
+    return this.workflowType;
+  }
+
+  /**
+   * @param workflowType the workflowType to set
+   */
+  public void setWorkflowType(final GuiWorkflowType workflowType) {
+    this.workflowType = workflowType;
   }
 
   public GuiWorkflowTypeStep getCurrentStep() {
@@ -65,12 +84,40 @@ public class GuiWorkflow extends ModelMapperBase<WorkflowEdo, GuiWorkflow> {
     this.controller = controller;
   }
 
+  /**
+   * @return the controllerUser
+   */
+  public GuiUser getControllerUser() {
+    return this.controllerUser;
+  }
+
+  /**
+   * @param controllerUser the controllerUser to set
+   */
+  public void setControllerUser(final GuiUser controllerUser) {
+    this.controllerUser = controllerUser;
+  }
+
   public Long getCreatedBy() {
     return this.createdBy;
   }
 
   public void setCreatedBy(final Long createdBy) {
     this.createdBy = createdBy;
+  }
+
+  /**
+   * @return the createdByUser
+   */
+  public GuiUser getCreatedByUser() {
+    return this.createdByUser;
+  }
+
+  /**
+   * @param createdByUser the createdByUser to set
+   */
+  public void setCreatedByUser(final GuiUser createdByUser) {
+    this.createdByUser = createdByUser;
   }
 
   public Long getAssignTo() {
@@ -83,6 +130,20 @@ public class GuiWorkflow extends ModelMapperBase<WorkflowEdo, GuiWorkflow> {
 
   public void setAssignTo(final Long assignTo) {
     this.assignTo = assignTo;
+  }
+
+  /**
+   * @return the assignToUser
+   */
+  public GuiUser getAssignToUser() {
+    return this.assignToUser;
+  }
+
+  /**
+   * @param assignToUser the assignToUser to set
+   */
+  public void setAssignToUser(final GuiUser assignToUser) {
+    this.assignToUser = assignToUser;
   }
 
   public String getTitle() {
@@ -117,12 +178,10 @@ public class GuiWorkflow extends ModelMapperBase<WorkflowEdo, GuiWorkflow> {
     return this.status.getValue().intValue();
   }
 
-  @Override
   public Integer getVersion() {
     return this.version;
   }
 
-  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
@@ -173,11 +232,14 @@ public class GuiWorkflow extends ModelMapperBase<WorkflowEdo, GuiWorkflow> {
     return this.currentStep.isTheSameStep(step);
   }
 
-  public boolean isInitializing() {
-    return this.isNew() && (this.getStatus() == EWorkflowStatus.INITIALIZE);
+  public boolean getIsNew() {
+    return (getId() == null) || (getId() <= 0);
   }
 
-  @Override
+  public boolean isInitializing() {
+    return this.getIsNew() && (this.getStatus() == EWorkflowStatus.INITIALIZE);
+  }
+
   public WorkflowEdo toEdo() {
     final WorkflowEdo edo = new WorkflowEdo();
     edo.setTitle(this.title);
@@ -198,8 +260,7 @@ public class GuiWorkflow extends ModelMapperBase<WorkflowEdo, GuiWorkflow> {
     return edo;
   }
 
-  @Override
-  public GuiWorkflow fromEdo(final WorkflowEdo edo) {
+  public static GuiWorkflow fromEdo(final WorkflowEdo edo) {
     if (edo == null) {
       return null;
     }
@@ -217,10 +278,29 @@ public class GuiWorkflow extends ModelMapperBase<WorkflowEdo, GuiWorkflow> {
     model.setVersion(edo.getVersion());
     model.setAssignTo(edo.getAssignTo());
 
+    // model.setWorkflowType(typeList.get(edo.getWorkflowTypeId()));
+    // model.setAssignToUser(userList.get(edo.getAssignTo()));
+    // model.setCreatedByUser(userList.get(edo.getCreatedBy()));
+    // model.setControllerUser(userList.get(edo.getController()));
+
     model.setFiles(new GuiWorkflowFile().fromEdoList(edo.getFiles()));
     model.setActions(new GuiWorkflowAction().fromEdoList(edo.getActions()));
 
     return model;
+  }
+
+  public static List<GuiWorkflow> fromEdoList(final List<WorkflowEdo> edoList) {
+    if (edoList == null) {
+      return null;
+    }
+    return edoList.stream().map(m -> GuiWorkflow.fromEdo(m)).collect(Collectors.toList());
+  }
+
+  public static List<GuiWorkflow> fromEdoList(final WorkflowListEdo edoList) {
+    if (edoList == null) {
+      return null;
+    }
+    return edoList.getWorkflows().stream().map(m -> GuiWorkflow.fromEdo(m)).collect(Collectors.toList());
   }
 
 }

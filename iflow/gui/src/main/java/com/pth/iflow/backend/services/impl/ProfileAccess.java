@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.pth.iflow.backend.configurations.GuiConfiguration;
 import com.pth.iflow.backend.exceptions.GuiCustomizedException;
-import com.pth.iflow.backend.models.ProfileResponse;
+import com.pth.iflow.backend.models.GuiProfileResponse;
 import com.pth.iflow.backend.models.GuiUserAuthenticationResponse;
 import com.pth.iflow.backend.services.IProfileAccess;
 import com.pth.iflow.backend.services.IRestTemplateCall;
@@ -35,7 +35,7 @@ public class ProfileAccess implements IProfileAccess {
   }
 
   @Override
-  public ProfileResponse isTokenValid(final String token) throws GuiCustomizedException, MalformedURLException {
+  public GuiProfileResponse isTokenValid(final String token) throws GuiCustomizedException, MalformedURLException {
 
     logger.debug("Validate token {} from profile service", token);
 
@@ -45,7 +45,7 @@ public class ProfileAccess implements IProfileAccess {
     final ProfileResponseEdo responseEdo = this.restTemplate.callRestPost(this.moduleAccessConfig.getReadTokenInfoUri(),
         EModule.PROFILE, profileRequest, ProfileResponseEdo.class, token, true);
 
-    return ProfileResponse.fromEdo(responseEdo);
+    return GuiProfileResponse.fromEdo(responseEdo);
   }
 
   @Override
@@ -65,7 +65,7 @@ public class ProfileAccess implements IProfileAccess {
   }
 
   @Override
-  public ProfileResponse readProfile(final String username, final String token)
+  public GuiProfileResponse readProfile(final String username, final String token)
       throws GuiCustomizedException, MalformedURLException {
     logger.debug("Read profile for user {} from profile service", username);
 
@@ -76,7 +76,7 @@ public class ProfileAccess implements IProfileAccess {
     final ProfileResponseEdo responseEdo = this.restTemplate.callRestPost(this.moduleAccessConfig.getReadAuthenticationInfoUri(),
         EModule.PROFILE, request, ProfileResponseEdo.class, token, true);
 
-    return ProfileResponse.fromEdo(responseEdo);
+    return GuiProfileResponse.fromEdo(responseEdo);
   }
 
 }

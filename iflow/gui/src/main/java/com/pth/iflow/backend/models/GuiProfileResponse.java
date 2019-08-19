@@ -4,27 +4,27 @@ import java.util.List;
 
 import com.pth.iflow.common.edo.models.xml.ProfileResponseEdo;
 
-public class ProfileResponse {
+public class GuiProfileResponse {
 
-  private GuidUser user;
+  private GuiUser user;
 
   private GuiCompanyProfile companyProfile;
 
   private String sessionid;
 
-  public ProfileResponse() {
+  public GuiProfileResponse() {
     this.user = null;
     this.companyProfile = null;
     this.sessionid = "";
   }
 
-  public ProfileResponse(final GuidUser user, final GuiCompanyProfile companyProfile, final String sessionid) {
+  public GuiProfileResponse(final GuiUser user, final GuiCompanyProfile companyProfile, final String sessionid) {
     this.user = user;
     this.companyProfile = companyProfile;
     this.sessionid = sessionid;
   }
 
-  public ProfileResponse(final GuidUser user,
+  public GuiProfileResponse(final GuiUser user,
                          final GuiCompany company,
                          final List<GuiDepartment> departments,
                          final List<GuiUserGroup> userGroups,
@@ -34,11 +34,11 @@ public class ProfileResponse {
     this.sessionid = sessionid;
   }
 
-  public GuidUser getUser() {
+  public GuiUser getUser() {
     return this.user;
   }
 
-  public void setUser(final GuidUser user) {
+  public void setUser(final GuiUser user) {
     this.user = user;
   }
 
@@ -63,9 +63,9 @@ public class ProfileResponse {
     return new ProfileResponseEdo(this.user.toEdo(), this.companyProfile.toEdo(), this.sessionid);
   }
 
-  public static ProfileResponse fromEdo(final ProfileResponseEdo edo) {
+  public static GuiProfileResponse fromEdo(final ProfileResponseEdo edo) {
 
-    return new ProfileResponse(new GuidUser().fromEdo(edo.getUser()),
+    return new GuiProfileResponse(new GuiUser().fromEdo(edo.getUser()),
                                new GuiCompanyProfile().fromEdo(edo.getCompanyProfile()),
                                edo.getSessionid());
   }

@@ -14,7 +14,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.pth.iflow.backend.configurations.GuiSecurityConfigurations;
 import com.pth.iflow.backend.models.GuiCompany;
-import com.pth.iflow.backend.models.GuidUser;
+import com.pth.iflow.backend.models.GuiUser;
 import com.pth.iflow.backend.models.ui.GuiSessionUserInfo;
 import com.pth.iflow.backend.models.ui.UiMenuItem;
 import com.pth.iflow.backend.services.IBreadCrumbLoader;
@@ -72,7 +72,7 @@ public class GuiPageControllerBase {
     return this.sessionUserInfo;
   }
 
-  protected GuidUser getLoggedUser() {
+  protected GuiUser getLoggedUser() {
 
     return this.sessionUserInfo.getUser();
   }

@@ -63,11 +63,4 @@ public class GuiWorkflowCreateRequest {
     return edo;
   }
 
-  public GuiWorkflowCreateRequest fromEdo(final WorkflowCreateRequestEdo edo) {
-    final GuiWorkflowCreateRequest model = new GuiWorkflowCreateRequest(new GuiWorkflow().fromEdo(edo.getWorkflow()),
-                                                                                edo.getAssignedUsers());
-
-    return model;
-  }
-
 }

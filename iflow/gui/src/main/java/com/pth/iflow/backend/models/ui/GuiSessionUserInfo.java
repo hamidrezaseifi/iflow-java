@@ -1,29 +1,53 @@
 package com.pth.iflow.backend.models.ui;
 
+import java.net.MalformedURLException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
+import com.pth.iflow.backend.exceptions.GuiCustomizedException;
 import com.pth.iflow.backend.models.GuiCompanyProfile;
-import com.pth.iflow.backend.models.GuidUser;
+import com.pth.iflow.backend.models.GuiUser;
+import com.pth.iflow.backend.models.GuiWorkflowType;
+import com.pth.iflow.backend.services.IUserAccess;
+import com.pth.iflow.backend.services.IWorkflowAccess;
 
 @SessionScope(proxyMode = ScopedProxyMode.TARGET_CLASS)
 @Component
 public class GuiSessionUserInfo {
 
-  public static String          SESSION_LOGGEDUSERINFO_KEY = "mdm-session-user";
+  private static final Logger logger = LoggerFactory.getLogger(GuiSessionUserInfo.class);
 
-  private Date                  loginTime;
-  private GuidUser           user;
+  public static String SESSION_LOGGEDUSERINFO_KEY = "mdm-session-user";
+
+  private Date              loginTime;
+  private GuiUser           user;
   private GuiCompanyProfile companyProfile;
-  private String                token;
-  private String                sessionId;
+  private String            token;
+  private String            sessionId;
+
+  private final Map<Long, GuiUser> userMap = new HashMap<>();
+
+  private final Map<Long, GuiWorkflowType> workflowTypeMap = new HashMap<>();
 
   @Value("${server.session.timeout}")
-  private int                   sessionTimeOut;
+  private int sessionTimeOut;
+
+  @Autowired
+  IUserAccess userAccess;
+
+  @Autowired
+  IWorkflowAccess workflowAccess;
 
   public boolean isLoggedIn() {
     return (this.user != null) && (this.companyProfile != null);
@@ -47,7 +71,7 @@ public class GuiSessionUserInfo {
     this.loginTime = new Date();
   }
 
-  public GuiSessionUserInfo(final GuidUser user, final GuiCompanyProfile companyProfile) {
+  public GuiSessionUserInfo(final GuiUser user, final GuiCompanyProfile companyProfile) {
     this.user = user;
     this.companyProfile = companyProfile;
     this.loginTime = new Date();
@@ -66,11 +90,11 @@ public class GuiSessionUserInfo {
     this.loginTime = new Date();
   }
 
-  public GuidUser getUser() {
+  public GuiUser getUser() {
     return this.user;
   }
 
-  public void setUser(final GuidUser user) {
+  public void setUser(final GuiUser user) {
     this.user = user;
   }
 
@@ -100,6 +124,40 @@ public class GuiSessionUserInfo {
 
   public void setSessionId(final String sessionId) {
     this.sessionId = sessionId;
+  }
+
+  /**
+   * @return the userMap
+   */
+  public Map<Long, GuiUser> getUserMap() {
+    if (this.userMap.size() == 0) {
+      try {
+        final List<GuiUser> userList = this.userAccess.getCompanyUserList(this.companyProfile.getCompany().getId());
+        this.userMap.putAll(userList.stream().collect(Collectors.toMap(u -> u.getId(), u -> u)));
+      }
+      catch (GuiCustomizedException | MalformedURLException e) {
+        logger.error("error in reading user list: {} \n {}", e.getMessage(), e);
+      }
+    }
+
+    return this.userMap;
+  }
+
+  /**
+   * @return the workflowTypeMap
+   */
+  public Map<Long, GuiWorkflowType> getWorkflowTypeMap() {
+    if (this.workflowTypeMap.size() == 0) {
+      try {
+        final List<GuiWorkflowType> typeList = this.workflowAccess.readWorkflowTypeList(this.companyProfile.getCompany().getId());
+        this.workflowTypeMap.putAll(typeList.stream().collect(Collectors.toMap(t -> t.getId(), t -> t)));
+      }
+      catch (GuiCustomizedException | MalformedURLException e) {
+        logger.error("error in reading user list: {} \n {}", e.getMessage(), e);
+      }
+    }
+
+    return this.workflowTypeMap;
   }
 
 }

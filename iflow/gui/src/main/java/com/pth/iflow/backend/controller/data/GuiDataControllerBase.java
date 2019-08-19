@@ -12,7 +12,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.pth.iflow.backend.configurations.GuiSecurityConfigurations;
 import com.pth.iflow.backend.models.GuiCompany;
-import com.pth.iflow.backend.models.GuidUser;
+import com.pth.iflow.backend.models.GuiUser;
 import com.pth.iflow.backend.models.ui.GuiSessionUserInfo;
 
 @Controller
@@ -47,7 +47,7 @@ public class GuiDataControllerBase {
     return this.sessionUserInfo;
   }
 
-  protected GuidUser getLoggedUser() {
+  protected GuiUser getLoggedUser() {
 
     return this.sessionUserInfo.getUser();
   }

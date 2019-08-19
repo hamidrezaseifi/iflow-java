@@ -4,14 +4,14 @@ import java.net.MalformedURLException;
 import java.util.List;
 
 import com.pth.iflow.backend.exceptions.GuiCustomizedException;
-import com.pth.iflow.backend.models.GuidUser;
+import com.pth.iflow.backend.models.GuiUser;
 
 public interface IUserAccess {
 
-  GuidUser readUser(final Long userId) throws GuiCustomizedException, MalformedURLException;
+  public GuiUser readUser(final Long userId) throws GuiCustomizedException, MalformedURLException;
 
-  GuidUser saveUser(final GuidUser user) throws GuiCustomizedException, MalformedURLException;
+  public GuiUser saveUser(final GuiUser user) throws GuiCustomizedException, MalformedURLException;
 
-  List<GuidUser> readCompanyUserList(final Long companyId) throws GuiCustomizedException, MalformedURLException;
+  public List<GuiUser> getCompanyUserList(final Long companyId) throws GuiCustomizedException, MalformedURLException;
 
 }

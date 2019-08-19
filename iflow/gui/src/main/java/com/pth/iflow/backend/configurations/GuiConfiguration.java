@@ -24,8 +24,8 @@ import com.pth.iflow.common.rest.IflowRestPaths;
 @Component
 public class GuiConfiguration {
 
-  public static final String       NO_ACCESS_URL            = "/noaccess";
-  public static final String       INVALID_TOKEN_URL        = "/invalidtoken";
+  public static final String NO_ACCESS_URL     = "/noaccess";
+  public static final String INVALID_TOKEN_URL = "/invalidtoken";
 
   public static final List<String> NOAUTHENTICATED_URL_LIST = Arrays.asList(NO_ACCESS_URL, INVALID_TOKEN_URL);
 
@@ -38,14 +38,14 @@ public class GuiConfiguration {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Value("${iflow.profile.urls.workflow.base}")
-    private String       workflowBaseUrl;
+    private String workflowBaseUrl;
 
     @Value("${iflow.profile.urls.profile.base}")
-    private String       profileBaseUrl;
+    private String profileBaseUrl;
 
-    private URI          baseWorkflowBaseUri;
+    private URI baseWorkflowBaseUri;
 
-    private URI          baseProfileBaseUri;
+    private URI baseProfileBaseUri;
 
     @PostConstruct
     private void init() throws URISyntaxException {
@@ -83,6 +83,10 @@ public class GuiConfiguration {
 
     public URI getCreateWorkflowUri() throws MalformedURLException {
       return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.WORKFLOW_CREATE);
+    }
+
+    public URI getSearchWorkflowUri() throws MalformedURLException {
+      return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.WORKFLOW_SEARCH);
     }
 
   }

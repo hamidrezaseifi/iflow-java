@@ -16,8 +16,8 @@ import org.springframework.stereotype.Component;
 import com.pth.iflow.backend.configurations.GuiSecurityConfigurations;
 import com.pth.iflow.backend.exceptions.GuiCustomizedException;
 import com.pth.iflow.backend.models.GuiCompanyProfile;
-import com.pth.iflow.backend.models.GuidUser;
-import com.pth.iflow.backend.models.ProfileResponse;
+import com.pth.iflow.backend.models.GuiUser;
+import com.pth.iflow.backend.models.GuiProfileResponse;
 import com.pth.iflow.backend.services.IProfileAccess;
 
 @Component
@@ -39,7 +39,7 @@ public class GuiAuthenticationSuccessHandler extends SimpleUrlAuthenticationSucc
 
       String url = GuiSecurityConfigurations.ROOT_URL;
 
-      ProfileResponse profileResponse = null;
+      GuiProfileResponse profileResponse = null;
       try {
         profileResponse = this.profileValidator.readProfile(tbToken.getUsername(), tbToken.getToken());
       } catch (GuiCustomizedException | MalformedURLException e) {
@@ -48,7 +48,7 @@ public class GuiAuthenticationSuccessHandler extends SimpleUrlAuthenticationSucc
       if (profileResponse == null) {
       } else {
 
-        final GuidUser user = profileResponse.getUser();
+        final GuiUser user = profileResponse.getUser();
         final GuiCompanyProfile companyProfile = profileResponse.getCompanyProfile();
 
         final GuiAuthenticationToken newToken = new GuiAuthenticationToken(tbToken.getUsername(), tbToken.getCompanyId(),

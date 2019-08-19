@@ -8,7 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.pth.iflow.backend.models.GuiCompanyProfile;
-import com.pth.iflow.backend.models.GuidUser;
+import com.pth.iflow.backend.models.GuiUser;
 import com.pth.iflow.backend.models.ui.GuiSessionUserInfo;
 
 /**
@@ -23,7 +23,7 @@ public class GuiSessionUserService {
   @Autowired
   private GuiSessionUserInfo sessionUserInfo;
 
-  public GuiSessionUserInfo authorizeUser(final GuiAuthenticationToken token, final GuidUser user,
+  public GuiSessionUserInfo authorizeUser(final GuiAuthenticationToken token, final GuiUser user,
       final GuiCompanyProfile companyProfile, final HttpSession session, final boolean setContext) {
 
     if (setContext) {
@@ -37,7 +37,7 @@ public class GuiSessionUserService {
 
   }
 
-  public GuiSessionUserInfo setLoggedInUserInfo(final GuiAuthenticationToken token, final GuidUser user,
+  public GuiSessionUserInfo setLoggedInUserInfo(final GuiAuthenticationToken token, final GuiUser user,
       final GuiCompanyProfile companyProfile, final HttpSession session) {
 
     this.reloadSessionData(token, user, companyProfile);
@@ -45,7 +45,7 @@ public class GuiSessionUserService {
     return this.sessionUserInfo;
   }
 
-  public void reloadSessionData(final GuiAuthenticationToken token, final GuidUser user,
+  public void reloadSessionData(final GuiAuthenticationToken token, final GuiUser user,
       final GuiCompanyProfile companyProfile) {
 
     this.sessionUserInfo.setCompanyProfile(companyProfile);
