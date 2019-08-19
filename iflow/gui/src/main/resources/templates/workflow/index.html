@@ -1,0 +1,60 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org" ng-app="iflowApp" >
+    <head>
+    	<th:block th:include="layout/mainLayout :: pageheader" />
+		<script th:src="@{/js/workflowtypes.js}"></script>
+		<link th:href="@{/css/table.css}" rel="stylesheet" />
+    </head>
+    <body ng-controller="BodyController">
+        <header th:replace="layout/mainLayout :: header" ></header>
+        <div th:replace="layout/mainLayout :: breadcrumb" ></div>
+		
+		<div class="content-container" ng-controller="WorkflowTypesController">
+			<div class="page-toolbar">
+				<div class="page-title" th:text="#{menu-workflow-list}"></div>
+				<button class="toolbar-button" ng-click="reload();"><i class="material-icons">refresh</i></button>
+				<a class="toolbar-link" href="/workflow/create"><i class="material-icons">playlist_add</i></a>
+			</div>
+		
+		    <table class="iflow-table">
+		    	<thead>
+		    		<tr>
+		    			<th>ID</th>
+		    			<th>Company</th>
+		    			<th>BaseType</th>
+		    			<th>Title</th>
+		    			<th>Status</th>
+		    			<th>SendToController</th>
+		    			<th>ManualAssign</th>
+		    			<th>IncreaseStepAutomatic</th>
+		    			<th>Steps</th>
+		    		</tr>
+		    	</thead>
+		    	<tbody>
+		     		<tr ng-repeat="item in items">
+		    			<th>{{item.id}}</th>
+		    			<td>{{item.companyId}}</td>
+		    			<td>{{item.baseTypeId}}</td>
+		    			<td>{{item.title}}</td>
+		    			<td>{{item.status}}</td>
+		    			<td>{{item.sendToController}}</td>
+		    			<td>{{item.manualAssign}}</td>
+		    			<td>{{item.increaseStepAutomatic}}</td>
+		    			<td>
+		    				<span ng-repeat="step in item.StepList">{{step.Title}} ,</span>
+		    			</td>
+		    		</tr>
+		     		
+		    	
+		    	</tbody>
+		    </table>
+		    
+		    <script type="text/javascript">
+				var loadUrl = "/workflow/data/workflowtypes";
+		    </script>
+		
+		
+		</div>
+		
+        <footer th:replace="layout/footer :: footer" ></footer>
+    </body>
+</html>
