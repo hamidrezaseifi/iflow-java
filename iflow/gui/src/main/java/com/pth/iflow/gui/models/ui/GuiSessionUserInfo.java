@@ -149,7 +149,8 @@ public class GuiSessionUserInfo {
   public Map<Long, GuiWorkflowType> getWorkflowTypeMap() {
     if (this.workflowTypeMap.size() == 0) {
       try {
-        final List<GuiWorkflowType> typeList = this.workflowAccess.readWorkflowTypeList(this.companyProfile.getCompany().getId());
+        final List<GuiWorkflowType> typeList =
+                                             this.workflowAccess.readWorkflowTypeList(this.companyProfile.getCompany().getId(), getToken());
         this.workflowTypeMap.putAll(typeList.stream().collect(Collectors.toMap(t -> t.getId(), t -> t)));
       }
       catch (GuiCustomizedException | MalformedURLException e) {

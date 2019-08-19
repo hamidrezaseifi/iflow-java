@@ -13,14 +13,14 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.GuiWorkflowType;
-import com.pth.iflow.gui.services.IWorkflowAccess;
+import com.pth.iflow.gui.services.IWorkflowHandler;
 
 @Controller
 @RequestMapping(value = "/companies")
 public class CompanyController extends GuiPageControllerBase {
 
   @Autowired
-  private IWorkflowAccess workflowAccess;
+  private IWorkflowHandler workflowHandler;
 
   @ResponseStatus(HttpStatus.OK)
   @GetMapping(path = { "/", "/list" })
@@ -33,7 +33,7 @@ public class CompanyController extends GuiPageControllerBase {
   @GetMapping(path = { "/workflowtype" })
   public String showWorkflowTypeList(final Model model) throws GuiCustomizedException, MalformedURLException {
 
-    final List<GuiWorkflowType> workflowTypeList = this.workflowAccess.readWorkflowTypeList(this.getLoggedCompany().getId());
+    final List<GuiWorkflowType> workflowTypeList = this.workflowHandler.readWorkflowTypeList(this.getLoggedCompany().getId());
 
     model.addAttribute("workflowTypeList", workflowTypeList);
 

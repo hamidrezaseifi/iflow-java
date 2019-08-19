@@ -11,17 +11,17 @@ import com.pth.iflow.gui.models.GuiWorkflowType;
 
 public interface IWorkflowAccess {
 
-  GuiWorkflow readWorkflow(final Long workflowId) throws GuiCustomizedException, MalformedURLException;
+  GuiWorkflow readWorkflow(final Long workflowId, final String token) throws GuiCustomizedException, MalformedURLException;
 
-  List<GuiWorkflow> createWorkflow(final GuiWorkflowCreateRequest createRequest)
-                                                                                 throws GuiCustomizedException,
-                                                                                 MalformedURLException;
+  List<GuiWorkflow> createWorkflow(final GuiWorkflowCreateRequest createRequest, final String token)
+                                                                                                     throws GuiCustomizedException,
+                                                                                                     MalformedURLException;
 
-  GuiWorkflow saveWorkflow(final GuiWorkflow workflow) throws GuiCustomizedException, MalformedURLException;
+  GuiWorkflow saveWorkflow(final GuiWorkflow workflow, final String token) throws GuiCustomizedException, MalformedURLException;
 
-  List<GuiWorkflowType> readWorkflowTypeList(final Long companyId) throws GuiCustomizedException, MalformedURLException;
+  List<GuiWorkflowType> readWorkflowTypeList(final Long companyId, final String token) throws GuiCustomizedException, MalformedURLException;
 
-  List<GuiWorkflow> searchWorkflow(final GuiWorkflowSearchFilter workflowSearchFilter) throws GuiCustomizedException,
-                                                                                       MalformedURLException;
+  List<GuiWorkflow> searchWorkflow(final GuiWorkflowSearchFilter workflowSearchFilter, final String token) throws GuiCustomizedException,
+                                                                                                           MalformedURLException;
 
 }

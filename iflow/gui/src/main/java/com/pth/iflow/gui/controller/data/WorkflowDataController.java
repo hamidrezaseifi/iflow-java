@@ -14,22 +14,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.pth.iflow.common.enums.EWorkflowStatus;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
+import com.pth.iflow.gui.models.GuiUser;
 import com.pth.iflow.gui.models.GuiWorkflow;
 import com.pth.iflow.gui.models.GuiWorkflowCreateRequest;
 import com.pth.iflow.gui.models.GuiWorkflowSearchFilter;
 import com.pth.iflow.gui.models.GuiWorkflowType;
-import com.pth.iflow.gui.models.GuiUser;
 import com.pth.iflow.gui.services.IUserAccess;
-import com.pth.iflow.gui.services.IWorkflowAccess;
-import com.pth.iflow.common.enums.EWorkflowStatus;
+import com.pth.iflow.gui.services.IWorkflowHandler;
 
 @Controller
 @RequestMapping(value = "/workflow/data")
 public class WorkflowDataController extends GuiDataControllerBase {
 
   @Autowired
-  private IWorkflowAccess workflowAccess;
+  private IWorkflowHandler workflowHandler;
 
   @Autowired
   private IUserAccess userAccess;
@@ -41,7 +41,7 @@ public class WorkflowDataController extends GuiDataControllerBase {
 
     final Map<String, Object> map = new HashMap<>();
 
-    final List<GuiWorkflowType> workflowTypeList = this.workflowAccess.readWorkflowTypeList(this.getLoggedCompany().getId());
+    final List<GuiWorkflowType> workflowTypeList = this.workflowHandler.readWorkflowTypeList(this.getLoggedCompany().getId());
     final GuiWorkflowSearchFilter workflowSearchFilter = new GuiWorkflowSearchFilter();
 
     map.put("workflowTypes", workflowTypeList);
@@ -56,7 +56,7 @@ public class WorkflowDataController extends GuiDataControllerBase {
   public List<GuiWorkflow> searchWorkflows(@RequestBody final GuiWorkflowSearchFilter workflowSearchFilter) throws GuiCustomizedException,
                                                                                                             MalformedURLException {
 
-    final List<GuiWorkflow> workflowList = this.workflowAccess.searchWorkflow(workflowSearchFilter);
+    final List<GuiWorkflow> workflowList = this.workflowHandler.searchWorkflow(workflowSearchFilter);
 
     return workflowList;
   }
@@ -79,7 +79,7 @@ public class WorkflowDataController extends GuiDataControllerBase {
     final Map<String, Object> map = new HashMap<>();
 
     final List<GuiUser> userList = this.userAccess.getCompanyUserList(this.getLoggedCompany().getId());
-    final List<GuiWorkflowType> workflowTypeList = this.workflowAccess.readWorkflowTypeList(this.getLoggedCompany().getId());
+    final List<GuiWorkflowType> workflowTypeList = this.workflowHandler.readWorkflowTypeList(this.getLoggedCompany().getId());
 
     final GuiWorkflow newWorkflow = new GuiWorkflow();
     newWorkflow.setStatus(EWorkflowStatus.INITIALIZE);
@@ -109,7 +109,7 @@ public class WorkflowDataController extends GuiDataControllerBase {
                                                                                         throws GuiCustomizedException,
                                                                                         MalformedURLException {
 
-    this.workflowAccess.createWorkflow(createRequest);
+    this.workflowHandler.createWorkflow(createRequest);
 
   }
 

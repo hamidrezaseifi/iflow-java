@@ -278,11 +278,6 @@ public class GuiWorkflow {
     model.setVersion(edo.getVersion());
     model.setAssignTo(edo.getAssignTo());
 
-    // model.setWorkflowType(typeList.get(edo.getWorkflowTypeId()));
-    // model.setAssignToUser(userList.get(edo.getAssignTo()));
-    // model.setCreatedByUser(userList.get(edo.getCreatedBy()));
-    // model.setControllerUser(userList.get(edo.getController()));
-
     model.setFiles(new GuiWorkflowFile().fromEdoList(edo.getFiles()));
     model.setActions(new GuiWorkflowAction().fromEdoList(edo.getActions()));
 
