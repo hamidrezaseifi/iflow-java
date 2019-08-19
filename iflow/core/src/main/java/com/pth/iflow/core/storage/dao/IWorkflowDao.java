@@ -3,6 +3,7 @@ package com.pth.iflow.core.storage.dao;
 import java.util.List;
 
 import com.pth.iflow.core.model.Workflow;
+import com.pth.iflow.core.model.WorkflowSearchFilter;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 
 public interface IWorkflowDao {
@@ -21,4 +22,5 @@ public interface IWorkflowDao {
 
   List<Workflow> getListForUser(Long id, int status) throws IFlowStorageException;
 
+  public List<Workflow> search(final WorkflowSearchFilter workflowSearchFilter);
 }

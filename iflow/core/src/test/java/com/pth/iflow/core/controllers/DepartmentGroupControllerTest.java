@@ -71,7 +71,7 @@ public class DepartmentGroupControllerTest extends TestDataProducer {
     final String modelAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelEdo);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModul.DEPARTMENTGRPUP_READ_BY_ID, model.getId())
+        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.DEPARTMENTGRPUP_READ_BY_ID, model.getId())
             .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
         .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(modelAsXmlString));
@@ -93,7 +93,7 @@ public class DepartmentGroupControllerTest extends TestDataProducer {
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList).replace("ArrayList", "List");
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.post(IflowRestPaths.CoreModul.DEPARTMENTGRPUP_READ_LIST).content(contentAsXmlString)
+        .perform(MockMvcRequestBuilders.post(IflowRestPaths.CoreModule.DEPARTMENTGRPUP_READ_LIST).content(contentAsXmlString)
             .contentType(MediaType.APPLICATION_XML_VALUE)
             .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
         .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
@@ -114,7 +114,7 @@ public class DepartmentGroupControllerTest extends TestDataProducer {
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList).replace("ArrayList", "List");
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModul.DEPARTMENTGRPUP_READ_LIST_BY_DEPARTMENT, 1L)
+        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.DEPARTMENTGRPUP_READ_LIST_BY_DEPARTMENT, 1L)
             .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
         .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(listAsXmlString));
@@ -134,7 +134,7 @@ public class DepartmentGroupControllerTest extends TestDataProducer {
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModul.DEPARTMENTGRPUP_READ_ALLUSERLIST_BY_DEPARTMENTGROUP, 1L)
+        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.DEPARTMENTGRPUP_READ_ALLUSERLIST_BY_DEPARTMENTGROUP, 1L)
             .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
         .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(listAsXmlString));

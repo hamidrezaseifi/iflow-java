@@ -16,25 +16,25 @@ public class ProfileResponseEdo {
 
   @NotNull
   @XmlElement(name = "User", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private UserEdo    user;
+  private UserEdo user;
 
   @NotNull
-  @XmlElement(name = "Company", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private CompanyEdo company;
+  @XmlElement(name = "CompanyProfile", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private CompanyProfileEdo companyProfile;
 
   @NotNull
   @XmlElement(name = "Sessionid", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String     sessionid;
+  private String sessionid;
 
   public ProfileResponseEdo() {
     this.user = null;
-    this.company = null;
+    this.companyProfile = null;
     this.sessionid = "";
   }
 
-  public ProfileResponseEdo(final UserEdo user, final CompanyEdo company, final String sessionid) {
+  public ProfileResponseEdo(final UserEdo user, final CompanyProfileEdo company, final String sessionid) {
     this.user = user;
-    this.company = company;
+    this.companyProfile = company;
     this.sessionid = sessionid;
   }
 
@@ -46,12 +46,12 @@ public class ProfileResponseEdo {
     this.user = user;
   }
 
-  public CompanyEdo getCompany() {
-    return this.company;
+  public CompanyProfileEdo getCompanyProfile() {
+    return this.companyProfile;
   }
 
-  public void setCompany(final CompanyEdo company) {
-    this.company = company;
+  public void setCompanyProfile(final CompanyProfileEdo company) {
+    this.companyProfile = company;
   }
 
   public String getSessionid() {

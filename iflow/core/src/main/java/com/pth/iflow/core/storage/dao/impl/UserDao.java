@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
@@ -41,6 +42,7 @@ public class UserDao extends DaoBasicClass<User> implements IUserDao {
     user.setGroups(this.getGroupIdListById(user.getId()));
     user.setDepartments(this.getDepartmentIdListIdById(user.getId()));
     user.setDeputies(this.getDeputyIdListById(user.getId()));
+    user.setRoles(this.getRoleListById(user.getId()));
 
     return user;
   }
@@ -75,6 +77,12 @@ public class UserDao extends DaoBasicClass<User> implements IUserDao {
   private List<Long> getDepartmentIdListIdById(final Long id) throws IFlowStorageException {
 
     return this.getIdListById(id, "SELECT * FROM user_departments where user_id=?", "department_id", "User Departments");
+  }
+
+  private List<Integer> getRoleListById(final Long id) throws IFlowStorageException {
+
+    return this.getIdListById(id, "SELECT * FROM user_roles where user_id=?", "role", "User Roles").stream().map(r -> r.intValue())
+        .collect(Collectors.toList());
   }
 
   @Override
@@ -150,6 +158,8 @@ public class UserDao extends DaoBasicClass<User> implements IUserDao {
 
       this.createUserDeputies(model, createdId);
 
+      this.createUserRoles(model, createdId);
+
       this.commitTransaction(true, transactionStatus);
       return this.getById(createdId);
 
@@ -211,12 +221,37 @@ public class UserDao extends DaoBasicClass<User> implements IUserDao {
     }
   }
 
+  private void createUserRoles(final User model, final Long userId) {
+
+    this.deleteUserRoles(userId);
+
+    final String insSql = "INSERT INTO user_roles (user_id, role) VALUES (?, ?)";
+
+    for (final Integer role : model.getRoles()) {
+      this.jdbcTemplate.update(con -> {
+        final PreparedStatement ps = con.prepareStatement(insSql);
+        ps.setLong(1, userId);
+        ps.setInt(2, role);
+        return ps;
+      });
+
+    }
+  }
+
   @Override
   public User update(final User model) throws IFlowStorageException {
     final String sql = "UPDATE users SET company_id = ?, email = ?, birthdate = ? , firstname = ?, lastname = ?,"
         + " permission = ?, version = ?, status = ? WHERE id = ?";
 
     this.updateModel(model, "User", sql, true);
+
+    this.createUserGroups(model, model.getId());
+
+    this.createUserDepartments(model, model.getId());
+
+    this.createUserDeputies(model, model.getId());
+
+    this.createUserRoles(model, model.getId());
 
     return this.getById(model.getId());
   }
@@ -246,6 +281,10 @@ public class UserDao extends DaoBasicClass<User> implements IUserDao {
 
   private void deleteUserDeputies(final Long id) {
     this.deleteModel(id, "User Deputies", "Delete FROM user_deputy where user_id=?", false, false);
+  }
+
+  private void deleteUserRoles(final Long id) {
+    this.deleteModel(id, "User Roles", "Delete FROM user_roles where user_id=?", false, false);
   }
 
   private void deleteUserDepartments(final Long id) {

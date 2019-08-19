@@ -65,7 +65,7 @@ public class CompanyControllerTest extends TestDataProducer {
     final String companyAsString = this.xmlConverter.getObjectMapper().writeValueAsString(companyEdo);
     
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModul.COMPANY_READ_BY_ID, company.getId())
+        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.COMPANY_READ_BY_ID, company.getId())
             .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
         .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))

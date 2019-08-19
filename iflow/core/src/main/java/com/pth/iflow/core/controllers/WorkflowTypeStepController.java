@@ -34,7 +34,7 @@ public class WorkflowTypeStepController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(path = IflowRestPaths.CoreModul.WORKFLOWTYPESTEP_READ_BY_ID)
+  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.WORKFLOWTYPESTEP_READ_BY_ID)
   public ResponseEntity<WorkflowTypeStepEdo> readDepartmentGroup(@PathVariable final Long id, final HttpServletRequest request)
       throws Exception {
 
@@ -44,7 +44,7 @@ public class WorkflowTypeStepController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowPostRequestMapping(path = IflowRestPaths.CoreModul.WORKFLOWTYPESTEP_READ_LIST)
+  @IflowPostRequestMapping(path = IflowRestPaths.CoreModule.WORKFLOWTYPESTEP_READ_LIST)
   public ResponseEntity<WorkflowTypeStepListEdo> readDepartmentList(@RequestBody final List<Long> idList,
       final HttpServletRequest request) throws Exception {
 
@@ -55,7 +55,7 @@ public class WorkflowTypeStepController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(path = IflowRestPaths.CoreModul.WORKFLOWTYPESTEP_READ_LIST_BY_WORKFLOW)
+  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.WORKFLOWTYPESTEP_READ_LIST_BY_WORKFLOW)
   public ResponseEntity<WorkflowTypeStepListEdo> readDepartmentListByCompany(@PathVariable final Long id,
       final HttpServletRequest request) throws Exception {
 

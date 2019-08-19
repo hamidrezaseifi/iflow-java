@@ -68,7 +68,7 @@ public class WorkflowTypeControllerTest extends TestDataProducer {
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelEdo);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModul.WORKFLOWTYPE_READ_BY_ID, model.getId())
+        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.WORKFLOWTYPE_READ_BY_ID, model.getId())
             .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
         .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(listAsXmlString));
@@ -90,7 +90,7 @@ public class WorkflowTypeControllerTest extends TestDataProducer {
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.post(IflowRestPaths.CoreModul.WORKFLOWTYPE_READ_LIST).content(contentAsXmlString)
+        .perform(MockMvcRequestBuilders.post(IflowRestPaths.CoreModule.WORKFLOWTYPE_READ_LIST).content(contentAsXmlString)
             .contentType(MediaType.APPLICATION_XML_VALUE)
             .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
         .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
@@ -111,7 +111,7 @@ public class WorkflowTypeControllerTest extends TestDataProducer {
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModul.WORKFLOWTYPE_READ_LIST_BY_COMPANY, 1L)
+        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.WORKFLOWTYPE_READ_LIST_BY_COMPANY, 1L)
             .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
         .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(listAsXmlString));

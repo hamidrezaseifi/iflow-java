@@ -22,56 +22,60 @@ import com.pth.iflow.common.edo.models.helper.DateEdoAdapter;
 public class UserEdo {
 
   @XmlElement(name = "ID", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long             id;
+  private Long                id;
 
   @NotNull
   @XmlElement(name = "CompanyId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long             companyId;
+  private Long                companyId;
 
   @NotNull
   @XmlElement(name = "Email", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String           email;
+  private String              email;
 
   @NotNull
   @XmlJavaTypeAdapter(DateEdoAdapter.class)
   @XmlElement(name = "BirthDate", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Date             birthDate;
+  private Date                birthDate;
 
   @NotNull
   @XmlElement(name = "FirstName", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String           firstName;
+  private String              firstName;
 
   @NotNull
   @XmlElement(name = "LastName", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String           lastName;
+  private String              lastName;
 
   @NotNull
   @XmlElement(name = "Status", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Integer          status;
+  private Integer             status;
 
   @NotNull
   @XmlElement(name = "Version", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Integer          version;
+  private Integer             version;
 
   @NotNull
   @XmlElement(name = "Permission", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Integer          permission;
+  private Integer             permission;
 
   @XmlElementWrapper(name = "GroupList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "Group")
-  private final List<Long> groups           = new ArrayList<>();
+  private final List<Long>    groups           = new ArrayList<>();
 
   @XmlElementWrapper(name = "DepartmentList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "Department", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private final List<Long> departments      = new ArrayList<>();
+  private final List<Long>    departments      = new ArrayList<>();
 
   @XmlElementWrapper(name = "DepartmentGroupList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "DepartmentGroup", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private final List<Long> departmentGroups = new ArrayList<>();
+  private final List<Long>    departmentGroups = new ArrayList<>();
 
   @XmlElementWrapper(name = "DeputyList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "Deputy", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private final List<Long> deputies         = new ArrayList<>();
+  private final List<Long>    deputies         = new ArrayList<>();
+
+  @XmlElementWrapper(name = "RoleList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  @XmlElement(name = "Role", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private final List<Integer> roles            = new ArrayList<>();
 
   /**
    * @return the id
@@ -245,6 +249,21 @@ public class UserEdo {
 
   public void addDeputy(final Long deputyId) {
     this.deputies.add(deputyId);
+  }
+
+  public List<Integer> getRoles() {
+    return this.roles;
+  }
+
+  public void setRoles(final List<Integer> roles) {
+    this.roles.clear();
+    if (roles != null) {
+      this.roles.addAll(roles);
+    }
+  }
+
+  public void addRole(final Integer role) {
+    this.roles.add(role);
   }
 
 }
