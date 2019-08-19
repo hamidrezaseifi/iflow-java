@@ -82,12 +82,6 @@ public class WorkflowAccess implements IWorkflowAccess {
   }
 
   @Override
-  public List<GuiWorkflow> readWorkflowList(final Long companyId) throws GuiCustomizedException, MalformedURLException {
-    // TODO Auto-generated method stub
-    return null;
-  }
-
-  @Override
   public List<GuiWorkflowType> readWorkflowTypeList(final Long companyId)
                                                                           throws GuiCustomizedException,
                                                                           MalformedURLException {

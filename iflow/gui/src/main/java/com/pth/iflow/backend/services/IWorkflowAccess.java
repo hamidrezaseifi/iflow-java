@@ -19,8 +19,6 @@ public interface IWorkflowAccess {
 
   GuiWorkflow saveWorkflow(final GuiWorkflow workflow) throws GuiCustomizedException, MalformedURLException;
 
-  List<GuiWorkflow> readWorkflowList(final Long companyId) throws GuiCustomizedException, MalformedURLException;
-
   List<GuiWorkflowType> readWorkflowTypeList(final Long companyId) throws GuiCustomizedException, MalformedURLException;
 
   List<GuiWorkflow> searchWorkflow(final GuiWorkflowSearchFilter workflowSearchFilter) throws GuiCustomizedException,
