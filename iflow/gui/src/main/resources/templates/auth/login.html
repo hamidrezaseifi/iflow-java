@@ -1,0 +1,32 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org" ng-app="iflowApp" >
+    <head>
+    
+    	<th:block th:include="layout/mainLayout :: pageheader" />
+		<script th:src="@{/js/index.js}"></script>
+    </head>
+    <body ng-controller="BodyController">
+        <header th:replace="layout/mainLayout :: header" ></header>
+	 
+	    <div class="login-container-parent" layout="row" layout-align="center center">
+	      <div class="login-container">
+	        <div class="login-title" th:text="#{common.logintitle}"></div>
+	        
+	        <form action="" method="POST">
+	          <label th:text="#{common.companyidentificator}"></label> <input type="text" name="companyid" autofocus th:value="${companyid}"/><br/><br/>
+	          <label th:text="#{common.username}"></label> <input type="text" name="username" autofocus th:value="${username}"/><br/><br/>
+	          <label th:text="#{common.password}"></label> <input type="password" name="password" th:value="${password}"/> <br/><br/>  
+	          <div layout="row">
+	            <span class="message" th:text="${logginMessage}" flex></span>
+	            <input type="submit" class="submit" th:value="#{common.login}"/>
+	          </div> 
+	          
+	        </form>
+	
+	        
+	
+	      </div>
+	    </div>
+		
+        <footer th:replace="layout/footer :: footer" ></footer>
+    </body>
+</html>
