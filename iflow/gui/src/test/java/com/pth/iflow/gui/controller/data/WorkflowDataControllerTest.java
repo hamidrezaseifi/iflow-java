@@ -180,4 +180,34 @@ public class WorkflowDataControllerTest extends TestDataProducer {
 
   }
 
+  @Test
+  public void testLoadWorkflowEditData() throws Exception {
+
+    final Map<String, Object> map = new HashMap<>();
+
+    final List<GuiUser> userList = this.getTestUserList();
+    final GuiWorkflow workflow = this.getTestGuiWorkflow(1L);
+    workflow.setWorkflowTypeId(1L);
+    final GuiWorkflowType workflowType = getTestGuiWorkflowType();
+    workflowType.setId(1L);
+
+    map.put("users", userList);
+    map.put("workflow", workflow);
+    map.put("workflowType", workflowType);
+
+    final String resultAsXmlString = this.jsonConverter.getObjectMapper().writeValueAsString(map);
+
+    Mockito.when(this.userAccess.getCompanyUserList(ArgumentMatchers.any(Long.class))).thenReturn(userList);
+    Mockito.when(this.workflowHandler.readWorkflow(ArgumentMatchers.any(Long.class))).thenReturn(workflow);
+    Mockito.when(this.sessionUserInfo.getWorkflowTypeById(ArgumentMatchers.any(Long.class))).thenReturn(workflowType);
+
+    final MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.post("/workflow/data/workflow/edit/1");
+
+    this.mockMvc.perform(builder)
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .andExpect(content().json(resultAsXmlString));
+
+  }
+
 }

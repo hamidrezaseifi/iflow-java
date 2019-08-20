@@ -162,7 +162,7 @@ public class GuiSessionUserInfo {
   }
 
   /**
-   * @return the workflowTypeMap
+   * @return the GuiWorkflowType
    */
   public GuiWorkflowType getWorkflowTypeById(final Long workflowTypId) {
     if (this.workflowTypeMap.size() == 0) {
@@ -177,6 +177,23 @@ public class GuiSessionUserInfo {
     }
 
     return this.workflowTypeMap.containsKey(workflowTypId) ? this.workflowTypeMap.get(workflowTypId) : null;
+  }
+
+  /**
+   * @return the GuiUser
+   */
+  public GuiUser getUserById(final Long userId) {
+    if (this.userMap.size() == 0) {
+      try {
+        final List<GuiUser> userList = this.userAccess.getCompanyUserList(this.companyProfile.getCompany().getId());
+        this.userMap.putAll(userList.stream().collect(Collectors.toMap(u -> u.getId(), u -> u)));
+      }
+      catch (GuiCustomizedException | MalformedURLException e) {
+        logger.error("error in reading user list: {} \n {}", e.getMessage(), e);
+      }
+    }
+
+    return this.userMap.containsKey(userId) ? this.userMap.get(userId) : null;
   }
 
 }

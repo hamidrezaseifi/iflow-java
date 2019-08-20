@@ -15,7 +15,6 @@ import com.pth.iflow.gui.models.GuiWorkflowCreateRequest;
 import com.pth.iflow.gui.models.GuiWorkflowSearchFilter;
 import com.pth.iflow.gui.models.GuiWorkflowType;
 import com.pth.iflow.gui.models.ui.GuiSessionUserInfo;
-import com.pth.iflow.gui.services.IUserAccess;
 import com.pth.iflow.gui.services.IWorkflowAccess;
 import com.pth.iflow.gui.services.IWorkflowHandler;
 
@@ -29,21 +28,23 @@ public class WorkflowHandler implements IWorkflowHandler {
   private final GuiSessionUserInfo sessionUserInfo;
 
   public WorkflowHandler(@Autowired final IWorkflowAccess workflowAccess,
-                         @Autowired final GuiSessionUserInfo sessionUserInfo,
-                         @Autowired final IUserAccess userAccess) {
+                         @Autowired final GuiSessionUserInfo sessionUserInfo) {
     this.workflowAccess = workflowAccess;
     this.sessionUserInfo = sessionUserInfo;
   }
 
   @Override
   public GuiWorkflow readWorkflow(final Long workflowId) throws GuiCustomizedException, MalformedURLException {
-    return this.workflowAccess.readWorkflow(workflowId, this.sessionUserInfo.getToken());
+    final GuiWorkflow wirkflow = this.workflowAccess.readWorkflow(workflowId, this.sessionUserInfo.getToken());
+    return prepareWorkflow(wirkflow);
   }
 
   @Override
   public List<GuiWorkflow> createWorkflow(final GuiWorkflowCreateRequest createRequest) throws GuiCustomizedException,
                                                                                         MalformedURLException {
-    return this.workflowAccess.createWorkflow(createRequest, this.sessionUserInfo.getToken());
+    final List<GuiWorkflow> list = this.workflowAccess.createWorkflow(createRequest, this.sessionUserInfo.getToken());
+
+    return prepareWorkflowList(list);
   }
 
   @Override
@@ -77,10 +78,10 @@ public class WorkflowHandler implements IWorkflowHandler {
 
   private GuiWorkflow prepareWorkflow(final GuiWorkflow workflow) {
 
-    workflow.setWorkflowType(this.sessionUserInfo.getWorkflowTypeMap().get(workflow.getWorkflowTypeId()));
-    workflow.setAssignToUser(this.sessionUserInfo.getUserMap().get(workflow.getAssignTo()));
-    workflow.setCreatedByUser(this.sessionUserInfo.getUserMap().get(workflow.getCreatedBy()));
-    workflow.setControllerUser(this.sessionUserInfo.getUserMap().get(workflow.getController()));
+    workflow.setWorkflowType(this.sessionUserInfo.getWorkflowTypeById(workflow.getWorkflowTypeId()));
+    workflow.setAssignToUser(this.sessionUserInfo.getUserById(workflow.getAssignTo()));
+    workflow.setCreatedByUser(this.sessionUserInfo.getUserById(workflow.getCreatedBy()));
+    workflow.setControllerUser(this.sessionUserInfo.getUserById(workflow.getController()));
 
     return workflow;
   }
