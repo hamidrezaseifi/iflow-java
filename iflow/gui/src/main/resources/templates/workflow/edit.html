@@ -20,13 +20,15 @@
 			<div class="workflow-content">
 				<div class="item-row">
 					<div class="item-label" th:text="#{workflow-title}"></div>
-					<div class="item-content"><input type="text" ng-model="workflow.title" readonly="readonly" /></div>
+					<div class="item-content"><div class="line-data">{{workflow.title}}</div></div>
 					<div class="clear"></div>
 				</div>
 				<div class="item-row">
 					<div class="item-label" th:text="#{workflow-comments}"></div>
 					<div class="item-content">
-						<textarea ng-model="workflow.comments" readonly="readonly"></textarea>
+						<div class="item-content">
+							<div class="line-data">{{workflow.title}}</div>
+						</div>
 					</div>
 					<div class="clear"></div>
 				</div>
