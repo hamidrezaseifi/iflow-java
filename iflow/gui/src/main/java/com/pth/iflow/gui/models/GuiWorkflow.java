@@ -291,6 +291,13 @@ public class GuiWorkflow {
     return edoList.stream().map(m -> GuiWorkflow.fromEdo(m)).collect(Collectors.toList());
   }
 
+  public static List<WorkflowEdo> toEdoList(final List<GuiWorkflow> list) {
+    if (list == null) {
+      return null;
+    }
+    return list.stream().map(m -> m.toEdo()).collect(Collectors.toList());
+  }
+
   public static List<GuiWorkflow> fromEdoList(final WorkflowListEdo edoList) {
     if (edoList == null) {
       return null;
