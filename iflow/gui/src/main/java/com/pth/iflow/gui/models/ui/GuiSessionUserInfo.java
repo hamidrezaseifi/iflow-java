@@ -161,4 +161,22 @@ public class GuiSessionUserInfo {
     return this.workflowTypeMap;
   }
 
+  /**
+   * @return the workflowTypeMap
+   */
+  public GuiWorkflowType getWorkflowTypeById(final Long workflowTypId) {
+    if (this.workflowTypeMap.size() == 0) {
+      try {
+        final List<GuiWorkflowType> typeList =
+                                             this.workflowAccess.readWorkflowTypeList(this.companyProfile.getCompany().getId(), getToken());
+        this.workflowTypeMap.putAll(typeList.stream().collect(Collectors.toMap(t -> t.getId(), t -> t)));
+      }
+      catch (GuiCustomizedException | MalformedURLException e) {
+        logger.error("error in reading user list: {} \n {}", e.getMessage(), e);
+      }
+    }
+
+    return this.workflowTypeMap.containsKey(workflowTypId) ? this.workflowTypeMap.get(workflowTypId) : null;
+  }
+
 }

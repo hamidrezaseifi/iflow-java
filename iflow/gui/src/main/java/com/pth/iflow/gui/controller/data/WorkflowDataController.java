@@ -9,6 +9,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -92,6 +93,27 @@ public class WorkflowDataController extends GuiDataControllerBase {
     map.put("users", userList);
     map.put("workflowTypes", workflowTypeList);
     map.put("workflowCreateRequest", workflowReq);
+
+    return map;
+  }
+
+  @ResponseStatus(HttpStatus.OK)
+  @PostMapping(path = { "/workflow/edit/{workflowId}" })
+  @ResponseBody
+  public Map<String, Object> loadWorkflowEditData(@PathVariable final Long workflowId) throws GuiCustomizedException,
+                                                                                       MalformedURLException {
+
+    final Map<String, Object> map = new HashMap<>();
+
+    final List<GuiUser> userList = this.userAccess.getCompanyUserList(this.getLoggedCompany().getId());
+
+    final GuiWorkflow workflow = this.workflowHandler.readWorkflow(workflowId);
+
+    final GuiWorkflowType workflowType = getSessionUserInfo().getWorkflowTypeById(workflow.getWorkflowTypeId());
+
+    map.put("users", userList);
+    map.put("workflow", workflow);
+    map.put("workflowType", workflowType);
 
     return map;
   }
