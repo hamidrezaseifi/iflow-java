@@ -27,17 +27,17 @@ import com.pth.iflow.gui.authentication.provider.GuiCustomAuthenticationProvider
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class GuiSecurityConfigurations extends WebSecurityConfigurerAdapter implements IGuiConfiguration {
 
-  public static final String                  USERNAME_FIELD_NAME         = "username";
-  public static final String                  PASSWORD_FIELD_NAME         = "password";
-  public static final String                  COMPANYID_FIELD_NAME        = "companyid";
-  public static final String                  LOGIN_URL                   = "/auth/login";
-  public static final String                  INITUSER_URL                = "/activation/user";
-  public static final String                  INITCOMPANY_URL             = "/activation/company";
-  public static final String                  ROOT_URL                    = "/";
-  public static final String                  COMPANYINDICATOR_COOKIE_KEY = "comp_ind";
+  public static final String USERNAME_FIELD_NAME         = "username";
+  public static final String PASSWORD_FIELD_NAME         = "password";
+  public static final String COMPANYID_FIELD_NAME        = "companyid";
+  public static final String LOGIN_URL                   = "/auth/login";
+  public static final String INITUSER_URL                = "/activation/user";
+  public static final String INITCOMPANY_URL             = "/activation/company";
+  public static final String ROOT_URL                    = "/";
+  public static final String COMPANYINDICATOR_COOKIE_KEY = "comp_ind";
 
   @Value("${iflow.backend.valid-email}")
-  String                                      backendValidEMail;
+  String backendValidEMail;
 
   @Autowired
   private GuiAuthenticationSuccessHandler uiAuthenticationSuccessHandler;
@@ -51,19 +51,41 @@ public class GuiSecurityConfigurations extends WebSecurityConfigurerAdapter impl
   @Override
   protected void configure(final HttpSecurity http) throws Exception {
 
-    http.authorizeRequests().antMatchers("/images/*").permitAll().antMatchers("/js/*").permitAll().antMatchers("/css/*").permitAll()
-        .antMatchers("/angular/*").permitAll().antMatchers("/fonts/*").permitAll().antMatchers(LOGIN_URL).permitAll()
-        .antMatchers("/admin/**").hasAnyRole("ADMIN", "COMPANY_ADMIN")
-        .antMatchers("/admin/user/**", "/admin/data/**", "/admin/data/user/**").hasAnyRole("ADMIN", "COMPANY_ADMIN").antMatchers("/**")
-        .authenticated().and();
+    http.authorizeRequests()
+        .antMatchers("/images/*")
+        .permitAll()
+        .antMatchers("/js/*")
+        .permitAll()
+        .antMatchers("/css/*")
+        .permitAll()
+        .antMatchers("/angular/*")
+        .permitAll()
+        .antMatchers("/fonts/*")
+        .permitAll()
+        .antMatchers(LOGIN_URL)
+        .permitAll()
+        .antMatchers("/admin/**")
+        .hasAnyRole("ADMIN", "COMPANY_ADMIN")
+        .antMatchers("/admin/user/**", "/admin/data/**", "/admin/data/user/**")
+        .hasAnyRole("ADMIN", "COMPANY_ADMIN")
+        .antMatchers("/**")
+        .authenticated()
+        .and();
 
     http.exceptionHandling().accessDeniedPage("/noaccess");
 
     http.csrf().disable();
 
-    http.formLogin().authenticationDetailsSource(this.authenticationDetailsSource()).loginPage(LOGIN_URL).permitAll()
-        .defaultSuccessUrl("/").usernameParameter(USERNAME_FIELD_NAME).passwordParameter(PASSWORD_FIELD_NAME)
-        .successHandler(this.uiAuthenticationSuccessHandler).failureHandler(this.authenticationFailureHandler).permitAll();
+    http.formLogin()
+        .authenticationDetailsSource(this.authenticationDetailsSource())
+        .loginPage(LOGIN_URL)
+        .permitAll()
+        .defaultSuccessUrl("/")
+        .usernameParameter(USERNAME_FIELD_NAME)
+        .passwordParameter(PASSWORD_FIELD_NAME)
+        .successHandler(this.uiAuthenticationSuccessHandler)
+        .failureHandler(this.authenticationFailureHandler)
+        .permitAll();
 
     http.logout().logoutUrl("/logout").logoutSuccessUrl("/");
 
