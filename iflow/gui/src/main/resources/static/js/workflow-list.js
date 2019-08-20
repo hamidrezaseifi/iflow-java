@@ -76,6 +76,11 @@ iflowApp.controller('WorkflowTypesController', function WorkflowTypesController(
 	    });
 		
 	};
+	
+	$scope.toggleMeAssigned = function(){
+		alert($scope.searchFilter.meAssigned);
+		$scope.searchFilter.meAssigned = !$scope.searchFilter.meAssigned;
+	};
 
 	
 	function initialSearchFilter(){

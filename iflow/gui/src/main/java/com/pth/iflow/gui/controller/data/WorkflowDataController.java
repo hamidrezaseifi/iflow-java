@@ -1,6 +1,7 @@
 package com.pth.iflow.gui.controller.data;
 
 import java.net.MalformedURLException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,7 +42,7 @@ public class WorkflowDataController extends GuiDataControllerBase {
     final Map<String, Object> map = new HashMap<>();
 
     final List<GuiWorkflowType> workflowTypeList = this.workflowHandler.readWorkflowTypeList(this.getLoggedCompany().getId());
-    final GuiWorkflowSearchFilter workflowSearchFilter = new GuiWorkflowSearchFilter();
+    final GuiWorkflowSearchFilter workflowSearchFilter = GuiWorkflowSearchFilter.generateNew();
 
     map.put("workflowTypes", workflowTypeList);
     map.put("newSearchFilter", workflowSearchFilter);
@@ -54,6 +55,10 @@ public class WorkflowDataController extends GuiDataControllerBase {
   @ResponseBody
   public List<GuiWorkflow> searchWorkflows(@RequestBody final GuiWorkflowSearchFilter workflowSearchFilter) throws GuiCustomizedException,
                                                                                                             MalformedURLException {
+
+    if (workflowSearchFilter.isMeAssigned()) {
+      workflowSearchFilter.setAssignedUserIdList(Arrays.asList(getLoggedUser().getId()));
+    }
 
     final List<GuiWorkflow> workflowList = this.workflowHandler.searchWorkflow(workflowSearchFilter);
 

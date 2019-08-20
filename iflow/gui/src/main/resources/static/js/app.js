@@ -33,6 +33,7 @@ iflowApp.config(function($mdDateLocaleProvider) {
       var m = moment(date);
       return m.isValid() ? m.format('DD.MM.YYYY') : '';
     };
+    
 
 });
 

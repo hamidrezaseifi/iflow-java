@@ -13,29 +13,35 @@
 				<div class="page-title" th:text="#{menu-workflow-list}"></div>
 				<button class="toolbar-button" ng-click="reload();"><i class="material-icons">refresh</i></button>
 				<a class="toolbar-link" href="/workflow/create"><i class="material-icons">playlist_add</i></a>
+				
+				<span class="toolbar-separator w100"></span>
+				
+				<span class="form-check abc-checkbox abc-checkbox">
+					<input type="checkbox" class="toggle-checkbox form-check-input" ng-model="searchFilter.meAssigned" ng-checked="searchFilter.meAssigned" id="me-assigned-check">
+					<label class="form-check-label" for="me-assigned-check" th:text="#{workflow-assigned-me}"></label>
+				</span>
+				
 			</div>
 		
 		    <table class="iflow-table">
 		    	<thead>
 		    		<tr>
-		    			<th>ID</th>
-		    			<th>Type</th>
-		    			<th>Step</th>
-		    			<th>Title</th>
-		    			<th>Status</th>
-		    			<th>Created By</th>
-		    			<th>Assign</th>
+		    			<th th:text="#{workflow-title}"></th>
+		    			<th th:text="#{workflow-type}"></th>
+		    			<th th:text="#{workflow-current-step}"></th>
+		    			<th th:text="#{workflow-status}"></th>
+		    			<th th:text="#{workflow-assignto}"></th>
+		    			<th></th>
 		    		</tr>
 		    	</thead>
 		    	<tbody>
 		     		<tr ng-repeat="item in items">
-		    			<th>{{item.id}}</th>
+		    			<td>{{item.title}}</td>
 		    			<td>{{item.workflowType.title}}</td>
 		    			<td>{{item.currentStep.title}}</td>
-		    			<td>{{item.title}}</td>
 		    			<td>{{item.status}}</td>
-		    			<td>{{item.createdByUser.fullName}}</td>
 		    			<td>{{item.assignToUser.fullName}}</td>
+		    			<td><a class="tool-link" ng-href="/workflow/edit/{{item.id}}"><i class="material-icons">edit</i></a></td>
 		    		</tr>
 		     		
 		    	

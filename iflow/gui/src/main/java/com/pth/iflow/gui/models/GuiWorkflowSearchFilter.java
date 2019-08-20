@@ -7,6 +7,8 @@ import com.pth.iflow.common.edo.models.xml.WorkflowSearchFilterEdo;
 
 public class GuiWorkflowSearchFilter {
 
+  private boolean meAssigned;
+
   private List<Long> assignedUserIdList = new ArrayList<>();
 
   private List<Integer> statusList = new ArrayList<>();
@@ -16,6 +18,20 @@ public class GuiWorkflowSearchFilter {
   private List<Long> workflowStepeIdList = new ArrayList<>();
 
   private String title;
+
+  /**
+   * @return the meAssigned
+   */
+  public boolean isMeAssigned() {
+    return this.meAssigned;
+  }
+
+  /**
+   * @param meAssigned the meAssigned to set
+   */
+  public void setMeAssigned(final boolean meAssigned) {
+    this.meAssigned = meAssigned;
+  }
 
   public List<Long> getAssignedUserIdList() {
     return this.assignedUserIdList;
@@ -77,5 +93,12 @@ public class GuiWorkflowSearchFilter {
     edo.setWorkflowStepeIdList(this.workflowStepeIdList);
     edo.setWorkflowTypeIdList(this.workflowTypeIdList);
     return edo;
+  }
+
+  public static GuiWorkflowSearchFilter generateNew() {
+    final GuiWorkflowSearchFilter workflowSearchFilter = new GuiWorkflowSearchFilter();
+
+    workflowSearchFilter.setMeAssigned(true);
+    return workflowSearchFilter;
   }
 }
