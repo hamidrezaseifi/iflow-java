@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import com.pth.iflow.common.enums.EWorkflowStatus;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.GuiUser;
 import com.pth.iflow.gui.models.GuiWorkflow;
@@ -81,17 +80,7 @@ public class WorkflowDataController extends GuiDataControllerBase {
     final List<GuiUser> userList = this.userAccess.getCompanyUserList(this.getLoggedCompany().getId());
     final List<GuiWorkflowType> workflowTypeList = this.workflowHandler.readWorkflowTypeList(this.getLoggedCompany().getId());
 
-    final GuiWorkflow newWorkflow = new GuiWorkflow();
-    newWorkflow.setStatus(EWorkflowStatus.INITIALIZE);
-    newWorkflow.setAssignTo(0L);
-    newWorkflow.setCreatedBy(this.getLoggedUser().getId());
-    newWorkflow.setController(0L);
-    newWorkflow.setCurrentStepId(0L);
-    newWorkflow.setId(0L);
-    newWorkflow.setTitle("");
-    newWorkflow.setVersion(0);
-    newWorkflow.setWorkflowTypeId(0L);
-    newWorkflow.setComments("");
+    final GuiWorkflow newWorkflow = GuiWorkflow.generateInitial(this.getLoggedUser().getId());
 
     final GuiWorkflowCreateRequest workflowReq = new GuiWorkflowCreateRequest(newWorkflow);
 
@@ -102,7 +91,7 @@ public class WorkflowDataController extends GuiDataControllerBase {
     return map;
   }
 
-  @ResponseStatus(HttpStatus.OK)
+  @ResponseStatus(HttpStatus.CREATED)
   @PostMapping(path = { "/workflowcreate/create" })
   @ResponseBody
   public void createWorkflow(@RequestBody final GuiWorkflowCreateRequest createRequest)

@@ -298,4 +298,19 @@ public class GuiWorkflow {
     return edoList.getWorkflows().stream().map(m -> GuiWorkflow.fromEdo(m)).collect(Collectors.toList());
   }
 
+  public static GuiWorkflow generateInitial(final Long creatorId) {
+    final GuiWorkflow newWorkflow = new GuiWorkflow();
+    newWorkflow.setStatus(EWorkflowStatus.INITIALIZE);
+    newWorkflow.setAssignTo(0L);
+    newWorkflow.setCreatedBy(creatorId);
+    newWorkflow.setController(0L);
+    newWorkflow.setCurrentStepId(0L);
+    newWorkflow.setId(0L);
+    newWorkflow.setTitle("");
+    newWorkflow.setVersion(0);
+    newWorkflow.setWorkflowTypeId(0L);
+    newWorkflow.setComments("");
+
+    return newWorkflow;
+  }
 }

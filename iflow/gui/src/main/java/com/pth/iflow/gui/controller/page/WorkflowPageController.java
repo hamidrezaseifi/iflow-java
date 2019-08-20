@@ -13,11 +13,11 @@ import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 
 @Controller
 @RequestMapping(value = "/workflow")
-public class WorkflowController extends GuiPageControllerBase {
+public class WorkflowPageController extends GuiPageControllerBase {
 
   @ResponseStatus(HttpStatus.OK)
   @GetMapping(path = { "/", "/list" })
-  public String list(final Model model) throws GuiCustomizedException, MalformedURLException {
+  public String showWorkflowList(final Model model) throws GuiCustomizedException, MalformedURLException {
 
     return "workflow/index";
   }

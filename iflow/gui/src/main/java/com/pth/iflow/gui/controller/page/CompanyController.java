@@ -23,8 +23,8 @@ public class CompanyController extends GuiPageControllerBase {
   private IWorkflowHandler workflowHandler;
 
   @ResponseStatus(HttpStatus.OK)
-  @GetMapping(path = { "/", "/list" })
-  public String list() {
+  @GetMapping(path = { "/", "/list", "index" })
+  public String showCompanyIndex() {
 
     return "company/index";
   }
