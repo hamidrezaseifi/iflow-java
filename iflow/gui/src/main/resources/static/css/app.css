@@ -588,6 +588,12 @@ div.notic-div, div.notic-div label, div.notic-div div
 	font-size: 16px;
 }
 
+.toolbar-separator{
+	width: 20px;
+    display: inline-block;
+    height: 30px;
+}
+
 .iflow-dialog-container{
 	position: absolute;
 	left:0;
@@ -659,3 +665,36 @@ div.notic-div, div.notic-div label, div.notic-div div
 .w250{
 	width: 250px;
 }
+
+
+.w100{
+	width: 100px;
+}
+
+.abc-checkbox{
+	display: inline-block;
+}
+
+.abc-checkbox label{
+	padding-left: 10px !important;
+	padding-top: 2px;
+}
+
+.error-content{
+    background-color: #f9caca;
+    color: red;
+}
+
+.invalid-request-container{
+	width: 60vw;
+    min-height: 100px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10vh;
+    padding: 10px;
+	
+}
+
+    
+

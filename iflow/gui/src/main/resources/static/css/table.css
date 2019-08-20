@@ -53,3 +53,29 @@
     border-top: 1px solid #ddd;
 }
 
+
+.iflow-table .tool-button{
+	border: none;
+    color: #f7fbc4;
+    background: transparent;
+	float: right;
+	height: 28px;
+    
+}
+
+
+.iflow-table .tool-link{
+	border: none;
+    background-color: gray;
+    color: #f7fbc4;
+    padding: 5px;
+    border-radius: 13px;
+    display: inline-block;
+}
+
+
+.iflow-table .tool-button i.material-icons, .iflow-table .tool-link i.material-icons{
+	font-size: 18px;
+}
+
+

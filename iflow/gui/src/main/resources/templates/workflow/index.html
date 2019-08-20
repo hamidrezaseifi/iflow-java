@@ -1,7 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org" ng-app="iflowApp" >
     <head>
     	<th:block th:include="layout/mainLayout :: pageheader" />
-		<script th:src="@{/js/workflowtypes.js}"></script>
+		<script th:src="@{/js/workflow-list.js}"></script>
 		<link th:href="@{/css/table.css}" rel="stylesheet" />
     </head>
     <body ng-controller="BodyController">
@@ -13,35 +13,35 @@
 				<div class="page-title" th:text="#{menu-workflow-list}"></div>
 				<button class="toolbar-button" ng-click="reload();"><i class="material-icons">refresh</i></button>
 				<a class="toolbar-link" href="/workflow/create"><i class="material-icons">playlist_add</i></a>
+				
+				<span class="toolbar-separator w100"></span>
+				
+				<span class="form-check abc-checkbox abc-checkbox">
+					<input type="checkbox" class="toggle-checkbox form-check-input" ng-model="searchFilter.meAssigned" ng-checked="searchFilter.meAssigned" id="me-assigned-check">
+					<label class="form-check-label" for="me-assigned-check" th:text="#{workflow-assigned-me}"></label>
+				</span>
+				
 			</div>
 		
 		    <table class="iflow-table">
 		    	<thead>
 		    		<tr>
-		    			<th>ID</th>
-		    			<th>Company</th>
-		    			<th>BaseType</th>
-		    			<th>Title</th>
-		    			<th>Status</th>
-		    			<th>SendToController</th>
-		    			<th>ManualAssign</th>
-		    			<th>IncreaseStepAutomatic</th>
-		    			<th>Steps</th>
+		    			<th th:text="#{workflow-title}"></th>
+		    			<th th:text="#{workflow-type}"></th>
+		    			<th th:text="#{workflow-current-step}"></th>
+		    			<th th:text="#{workflow-status}"></th>
+		    			<th th:text="#{workflow-assignto}"></th>
+		    			<th></th>
 		    		</tr>
 		    	</thead>
 		    	<tbody>
 		     		<tr ng-repeat="item in items">
-		    			<th>{{item.id}}</th>
-		    			<td>{{item.companyId}}</td>
-		    			<td>{{item.baseTypeId}}</td>
 		    			<td>{{item.title}}</td>
+		    			<td>{{item.workflowType.title}}</td>
+		    			<td>{{item.currentStep.title}}</td>
 		    			<td>{{item.status}}</td>
-		    			<td>{{item.sendToController}}</td>
-		    			<td>{{item.manualAssign}}</td>
-		    			<td>{{item.increaseStepAutomatic}}</td>
-		    			<td>
-		    				<span ng-repeat="step in item.StepList">{{step.Title}} ,</span>
-		    			</td>
+		    			<td>{{item.assignToUser.fullName}}</td>
+		    			<td><a class="tool-link" ng-href="/workflow/edit/{{item.id}}"><i class="material-icons">edit</i></a></td>
 		    		</tr>
 		     		
 		    	
@@ -49,7 +49,8 @@
 		    </table>
 		    
 		    <script type="text/javascript">
-				var loadUrl = "/workflow/data/workflowtypes";
+				var loadInitialUrl = "/workflow/data/workflowlist/init";
+				var loadUrl = "/workflow/data/workflowlist/search";
 		    </script>
 		
 		
