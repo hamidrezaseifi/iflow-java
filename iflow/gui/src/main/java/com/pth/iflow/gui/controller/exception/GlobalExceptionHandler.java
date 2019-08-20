@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.pth.iflow.gui.models.ui.GuiSessionUserInfo;
@@ -54,19 +55,12 @@ public class GlobalExceptionHandler implements ErrorController {
     return path;
   }
 
-  @ExceptionHandler(Exception.class)
+  @ExceptionHandler(NoHandlerFoundException.class)
   @ResponseStatus(HttpStatus.OK)
-  public ModelAndView handleNoHandlerFoundException(final Model model, final Exception ex) {
+  public ModelAndView handleNoHandlerFoundException(final Model model, final NoHandlerFoundException ex) {
     logger.error("ErrorLog: ", ex);
 
-    final String currentRelatedUrl = this.getCurrentRelativeUrl();
-
-    model.addAttribute("pageMenuList", this.getMenus());
-    model.addAttribute("breadCrumb", this.breadCrumbLoader.getBreadCrumbList(currentRelatedUrl));
-    model.addAttribute("isLogged", this.sessionUserInfo.isLoggedIn());
-    model.addAttribute("loggedUser", this.sessionUserInfo);
-
-    model.addAttribute("url", currentRelatedUrl);
+    prepareViewModel(model);
 
     return new ModelAndView("/site/invalid-request", "exceptionMsg", "NoHandlerFoundException msg: " + ex.toString());
   }
@@ -82,6 +76,17 @@ public class GlobalExceptionHandler implements ErrorController {
       }
     }
 
+    prepareViewModel(model);
+
+    return viewName;
+  }
+
+  @Override
+  public String getErrorPath() {
+    return "/error";
+  }
+
+  private void prepareViewModel(final Model model) {
     final String currentRelatedUrl = this.getCurrentRelativeUrl();
 
     model.addAttribute("pageMenuList", this.getMenus());
@@ -90,13 +95,6 @@ public class GlobalExceptionHandler implements ErrorController {
     model.addAttribute("loggedUser", this.sessionUserInfo);
 
     model.addAttribute("url", currentRelatedUrl);
-
-    return viewName;
-  }
-
-  @Override
-  public String getErrorPath() {
-    return "/error";
   }
 
 }
