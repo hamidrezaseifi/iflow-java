@@ -12,7 +12,9 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 	
 	$scope.workflowType = {};
 	$scope.users = [];
+	$scope.workflowTypeSteps = [];
 	$scope.workflow = {};
+	$scope.activeAction = getNewAction();
 	
 	$scope.showSelectAssign = false;
 	
@@ -24,6 +26,7 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 		$scope.workflowType = {};
 		$scope.users = [];
 		$scope.workflow = {};
+		$scope.activeAction = getNewAction();
 			
 		$http({
 	        method : "POST",
@@ -36,6 +39,9 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 	    	$scope.workflowType = response.data.workflowType;
 	    	$scope.users = response.data.users;
 	    	$scope.workflow = initWorkFlow(response.data.workflow);
+	    	$scope.workflowTypeSteps = $scope.workflowType.steps;
+	    	
+	    	prepareActiveAction();
 	    	
 	
 	    }, function errorCallback(response) {
@@ -80,7 +86,6 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
     	}
 		return null;
 	};
-
 	
 	
 	
@@ -96,6 +101,19 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 		
 		return workflow;
 	};
+	
+	function prepareActiveAction(){
+    	for(index in $scope.workflow.actions){
+    		if($scope.workflow.actions[index].isActive){
+    			$scope.activeAction = $scope.workflow.actions[index];
+    			break;
+    		}	    		
+    	}		
+	}
+	
+	function getNewAction(){
+		return {action: "", oldStep: 0, newStep: 0, comments: "", };
+	}
 	
 	$scope.reload();
 });

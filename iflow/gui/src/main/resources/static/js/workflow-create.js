@@ -126,6 +126,11 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 		
 		return [];
 	};
+	
+	$scope.isWorkflowTypeSelected = function(){
+		
+		return $scope.workflowCreateRequest.workflow && $scope.workflowCreateRequest.workflow.workflowTypeId != 0;
+	};
 
 	function findUser(id){
 		

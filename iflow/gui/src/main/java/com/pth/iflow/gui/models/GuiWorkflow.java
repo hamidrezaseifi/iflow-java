@@ -208,6 +208,11 @@ public class GuiWorkflow {
     }
   }
 
+  public void addAction(final GuiWorkflowAction action) {
+    action.setWorkflowId(getId());
+    this.actions.add(action);
+  }
+
   public boolean isAfterStep(final GuiWorkflow other) {
     return this.currentStep.isAfterStep(other.getCurrentStep());
   }
@@ -238,6 +243,15 @@ public class GuiWorkflow {
 
   public boolean isInitializing() {
     return this.getIsNew() && (this.getStatus() == EWorkflowStatus.INITIALIZE);
+  }
+
+  public boolean hasActiveAction() {
+    for (final GuiWorkflowAction action : getActions()) {
+      if (action.getIsActive()) {
+        return true;
+      }
+    }
+    return false;
   }
 
   public WorkflowEdo toEdo() {

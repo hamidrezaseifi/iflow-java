@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.pth.iflow.common.enums.EWorkflowActionStatus;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 import com.pth.iflow.gui.models.GuiCompany;
 import com.pth.iflow.gui.models.GuiCompanyProfile;
@@ -148,7 +149,7 @@ public class TestDataProducer {
     model.setWorkflowId(workflowId);
     model.setId(Id);
     model.setAction("action " + Id);
-    model.setStatus(1);
+    model.setStatus(EWorkflowActionStatus.INITIALIZE);
     model.setVersion(1);
     model.setCreatedBy(1L);
     model.setNewStep(2L);

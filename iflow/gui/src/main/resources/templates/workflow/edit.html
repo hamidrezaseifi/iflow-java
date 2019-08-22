@@ -32,8 +32,35 @@
 					</div>
 					<div class="clear"></div>
 				</div>
+				<div class="item-row" ng-show="true">
+					<div class="item-label" th:text="#{workflow-current-step}"></div>
+					<div class="item-content">
+						<select type="text" ng-model="workflow.currentStepId">
+							<option th:text="#{workflow-select-current-step}" value="0"></option>
+							<option ng-repeat="item in workflowTypeSteps" ng-value="item.id">{{item.title}}</option>
+						</select>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="item-row">
+					<div class="item-label" th:text="#{workflow-action-title}"></div>
+					<div class="item-content">
+						<textarea ng-model="activeAction.action"></textarea>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="item-row">
+					<div class="item-label" th:text="#{workflow-comments}"></div>
+					<div class="item-content">
+						<textarea ng-model="activeAction.comments"></textarea>
+					</div>
+					<div class="clear"></div>
+				</div>
 				<div class="item-row">
 					{{getWorkFlowTest()}}
+				</div>
+				<div class="item-row">
+					{{activeAction}}
 				</div>
 			</div>
 		    		    
