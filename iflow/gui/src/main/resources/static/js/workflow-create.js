@@ -113,6 +113,19 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 		
 		return assigned;
 	};
+	
+	$scope.getWorkflowTypeSteps = function(){
+				
+		if($scope.workflowCreateRequest.workflow && $scope.workflowCreateRequest.workflow.workflowTypeId != 0){
+			for(index in $scope.workflowTypes){
+				if($scope.workflowTypes[index].id == $scope.workflowCreateRequest.workflow.workflowTypeId){
+					return $scope.workflowTypes[index].steps;
+				}
+			}
+		}
+		
+		return [];
+	};
 
 	function findUser(id){
 		
@@ -161,7 +174,7 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 		workflowReq.workflow.controller = workflowReq.workflow.controller + "";
 		workflowReq.workflow.assignTo = workflowReq.workflow.assignTo + "";
 		workflowReq.workflow.workflowTypeId = workflowReq.workflow.workflowTypeId + "";
-		workflowReq.workflow.workflowTypeId = workflowReq.workflow.workflowTypeId + "";
+		workflowReq.workflow.currentStepId = workflowReq.workflow.currentStepId + "";
 		workflowReq.assigns = [];
 		
 		return workflowReq;
