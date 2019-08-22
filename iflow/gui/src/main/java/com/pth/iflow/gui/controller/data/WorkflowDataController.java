@@ -129,4 +129,15 @@ public class WorkflowDataController extends GuiDataControllerBase {
 
   }
 
+  @ResponseStatus(HttpStatus.CREATED)
+  @PostMapping(path = { "/workflow/save" })
+  @ResponseBody
+  public void saveWorkflow(@RequestBody final GuiWorkflow workflow)
+                                                                    throws GuiCustomizedException,
+                                                                    MalformedURLException {
+
+    this.workflowHandler.saveWorkflow(workflow);
+
+  }
+
 }

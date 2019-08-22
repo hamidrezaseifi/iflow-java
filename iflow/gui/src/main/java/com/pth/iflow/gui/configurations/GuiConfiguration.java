@@ -85,6 +85,10 @@ public class GuiConfiguration {
       return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.WORKFLOW_CREATE);
     }
 
+    public URI getSaveWorkflowUri() throws MalformedURLException {
+      return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.WORKFLOW_SAVE);
+    }
+
     public URI getSearchWorkflowUri() throws MalformedURLException {
       return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.WORKFLOW_SEARCH);
     }
