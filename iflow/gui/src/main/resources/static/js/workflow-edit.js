@@ -106,9 +106,23 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
     	for(index in $scope.workflow.actions){
     		if($scope.workflow.actions[index].isActive){
     			$scope.activeAction = $scope.workflow.actions[index];
+    			$scope.activeAction.oldStep = "" + $scope.activeAction.oldStep;
+    			$scope.activeAction.newStep = "" + $scope.activeAction.newStep;
+
     			break;
     		}	    		
     	}		
+	}
+	
+	$scope.listAvaileableSteps = function(){
+    	
+		var list = []; 
+		for(index in $scope.workflowTypeSteps){
+			if($scope.workflowTypeSteps[index].stepIndex > $scope.workflow.currentStep.stepIndex){
+				list.push($scope.workflowTypeSteps[index]);
+			}
+		}
+		return list;
 	}
 	
 	function getNewAction(){

@@ -17,49 +17,63 @@
 				<button class="toolbar-button" ng-click="reload();"><i class="material-icons">refresh</i></button>
 			</div>
 		
-			<div class="workflow-content">
-				<div class="item-row">
-					<div class="item-label" th:text="#{workflow-title}"></div>
-					<div class="item-content"><div class="line-data">{{workflow.title}}</div></div>
-					<div class="clear"></div>
-				</div>
-				<div class="item-row">
-					<div class="item-label" th:text="#{workflow-comments}"></div>
-					<div class="item-content">
+			<div class="workflow-content-container">
+				<div class="workflow-content">
+					<div class="item-row">
+						<div class="item-label" th:text="#{workflow-title}"></div>
+						<div class="item-content"><div class="line-data">{{workflow.title}}</div></div>
+						<div class="clear"></div>
+					</div>
+					<div class="item-row">
+						<div class="item-label" th:text="#{workflow-comments}"></div>
 						<div class="item-content">
-							<div class="line-data">{{workflow.title}}</div>
+							<div class="item-content">
+								<div class="line-data">{{workflow.title}}</div>
+							</div>
 						</div>
+						<div class="clear"></div>
 					</div>
-					<div class="clear"></div>
-				</div>
-				<div class="item-row" ng-show="true">
-					<div class="item-label" th:text="#{workflow-current-step}"></div>
-					<div class="item-content">
-						<select type="text" ng-model="workflow.currentStepId">
-							<option th:text="#{workflow-select-current-step}" value="0"></option>
-							<option ng-repeat="item in workflowTypeSteps" ng-value="item.id">{{item.title}}</option>
-						</select>
+					<div class="item-row" ng-show="true">
+						<div class="item-label" th:text="#{workflow-current-step}"></div>
+						<div class="item-content">
+							{{workflow.currentStep.title}}
+						</div>
+						<div class="clear"></div>
 					</div>
-					<div class="clear"></div>
-				</div>
-				<div class="item-row">
-					<div class="item-label" th:text="#{workflow-action-title}"></div>
-					<div class="item-content">
-						<textarea ng-model="activeAction.action"></textarea>
+					<div class="item-row">
+						<div class="item-label" th:text="#{workflow-action-title}"></div>
+						<div class="item-content">
+							<textarea ng-model="activeAction.action"></textarea>
+						</div>
+						<div class="clear"></div>
 					</div>
-					<div class="clear"></div>
-				</div>
-				<div class="item-row">
-					<div class="item-label" th:text="#{workflow-comments}"></div>
-					<div class="item-content">
-						<textarea ng-model="activeAction.comments"></textarea>
+					<div class="item-row">
+						<div class="item-label" th:text="#{workflow-comments}"></div>
+						<div class="item-content">
+							<textarea ng-model="activeAction.comments"></textarea>
+						</div>
+						<div class="clear"></div>
 					</div>
-					<div class="clear"></div>
+					<div class="item-row">
+						
+						<div class="item-content workflow-step-button-bar">
+							<button class="step-button" ng-repeat="item in listAvaileableSteps()">{{item.title}}</button>
+							<div class="clear"></div>
+						</div>
+						
+						
+					</div>
+				
 				</div>
-				<div class="item-row">
+				<div class="workflow-record">
+				
+				</div>
+				<div class="clear"></div>
+
+				<div >
 					{{getWorkFlowTest()}}
 				</div>
-				<div class="item-row">
+				<div >
 					{{activeAction}}
 				</div>
 			</div>
