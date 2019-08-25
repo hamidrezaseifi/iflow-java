@@ -126,6 +126,7 @@ public class GuiWorkflowAction extends ModelMapperBase<WorkflowActionEdo, GuiWor
     edo.setNewStep(this.newStep);
     edo.setWorkflowId(this.workflowId);
     edo.setVersion(this.version);
+    edo.setActive(this.isActive);
 
     return edo;
   }
@@ -147,6 +148,7 @@ public class GuiWorkflowAction extends ModelMapperBase<WorkflowActionEdo, GuiWor
     model.setNewStep(edo.getNewStep());
     model.setWorkflowId(edo.getWorkflowId());
     model.setVersion(edo.getVersion());
+    model.setActive(edo.getIsActive());
 
     return model;
   }

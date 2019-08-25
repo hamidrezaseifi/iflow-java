@@ -45,6 +45,10 @@ public class WorkflowActionEdo {
   @XmlElement(name = "Version", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer version;
 
+  @NotNull
+  @XmlElement(name = "IsActive", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private boolean isActive = false;
+
   public Long getId() {
     return this.id;
   }
@@ -117,4 +121,11 @@ public class WorkflowActionEdo {
     this.version = version;
   }
 
+  public boolean getIsActive() {
+    return this.isActive;
+  }
+
+  public void setActive(final boolean isActive) {
+    this.isActive = isActive;
+  }
 }

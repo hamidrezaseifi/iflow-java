@@ -8,6 +8,7 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 	
 	$scope.loadUrl = loadUrl;
 	$scope.saveUrl = saveUrl;
+	$scope.doneUrl = doneUrl;
 	$scope.listUrl = listUrl;
 	
 	$scope.workflowType = {};
@@ -77,6 +78,53 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 	};
 	
 
+	$scope.saveWorkflow = function(){
+		
+		var saveData = angular.copy($scope.workflow);
+		
+		$http({
+	        method : "POST",
+	        headers: {
+	        	'Content-type': 'application/json; charset=UTF-8',
+	        },
+	        url : $scope.saveUrl,
+	        data: saveData,
+	    }).then(function successCallback(response) {
+	    	
+	    	alert("saved");
+	    	
+	    	//window.location = $scope.listUrl;
+	
+	    }, function errorCallback(response) {
+	        
+	        alert(response.data);
+	    });
+	};
+
+	$scope.makeWorkflowDone = function(id){
+		
+		var saveData = angular.copy($scope.workflow);
+		saveData.currentStepId = id;
+		
+		$http({
+	        method : "POST",
+	        headers: {
+	        	'Content-type': 'application/json; charset=UTF-8',
+	        },
+	        url : $scope.doneUrl,
+	        data: saveData,
+	    }).then(function successCallback(response) {
+	    	
+	    	alert("saved");
+	    	
+	    	//window.location = $scope.listUrl;
+	
+	    }, function errorCallback(response) {
+	        
+	        alert(response.data);
+	    });
+	};
+	
 	$scope.getUserById = function(id){
 		for(o in $scope.users){
     		var user =$scope.users[o];
