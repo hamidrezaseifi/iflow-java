@@ -57,7 +57,11 @@
 					<div class="item-row">
 						
 						<div class="item-content workflow-step-button-bar">
-							<button class="step-button" ng-repeat="item in listAvaileableSteps()">{{item.title}}</button>
+							<button ng-click="makeWorkflowDone(item.id)" class="step-button" ng-repeat="item in listAvaileableSteps()">{{item.title}}</button>
+							<button ng-click="saveWorkflow()" class="step-button button-save">
+								<span th:text="#{common.save}"></span>
+								<i class="material-icons">save</i>
+							</button>
 							<div class="clear"></div>
 						</div>
 						
@@ -69,10 +73,11 @@
 				
 				</div>
 				<div class="clear"></div>
-
+<hr>
 				<div >
 					{{getWorkFlowTest()}}
 				</div>
+<hr>
 				<div >
 					{{activeAction}}
 				</div>
