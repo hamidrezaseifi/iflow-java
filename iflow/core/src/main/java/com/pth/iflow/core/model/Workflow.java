@@ -4,24 +4,24 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
+import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.edo.models.xml.WorkflowEdo;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 
-public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
+public class Workflow extends DataModelBase<WorkflowEdo, Workflow> {
 
-  private Long                       id;
-  private Long                       workflowTypeId;
-  private WorkflowTypeStep           currentStep;
-  private Long                       controller;
-  private Long                       createdBy;
-  private Long                       assignTo;
-  private String                     title;
-  private String                     comments;
-  private EWorkflowStatus            status;
-  private Integer                    version;
-  private LocalDateTime              createdAt;
-  private LocalDateTime              updatedAt;
+  private Long             id;
+  private Long             workflowTypeId;
+  private WorkflowTypeStep currentStep;
+  private Long             controller;
+  private Long             createdBy;
+  private Long             assignTo;
+  private String           title;
+  private String           comments;
+  private EWorkflowStatus  status;
+  private Integer          version;
+  private LocalDateTime    createdAt;
+  private LocalDateTime    updatedAt;
 
   private final List<WorkflowFile>   files   = new ArrayList<>();
   private final List<WorkflowAction> actions = new ArrayList<>();
@@ -166,8 +166,8 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
     edo.setVersion(this.version);
     edo.setAssignTo(this.assignTo);
 
-    edo.setFiles(ModelMapperBase.toEdoList(this.files));
-    edo.setActions(ModelMapperBase.toEdoList(this.actions));
+    edo.setFiles(DataModelBase.toEdoList(this.files));
+    edo.setActions(DataModelBase.toEdoList(this.actions));
 
     return edo;
   }

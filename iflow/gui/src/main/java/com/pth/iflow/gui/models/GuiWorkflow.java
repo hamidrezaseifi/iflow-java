@@ -269,7 +269,7 @@ public class GuiWorkflow {
     edo.setAssignTo(this.assignTo);
 
     edo.setFiles(ModelMapperBase.toEdoList(this.files));
-    edo.setActions(ModelMapperBase.toEdoList(this.actions));
+    edo.setActions(GuiWorkflowAction.toEdoList(this.actions));
 
     return edo;
   }

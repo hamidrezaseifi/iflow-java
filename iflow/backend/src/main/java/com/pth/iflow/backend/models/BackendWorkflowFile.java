@@ -8,18 +8,17 @@ import com.pth.iflow.common.edo.models.xml.WorkflowFileEdo;
 
 public class BackendWorkflowFile extends ModelMapperBase<WorkflowFileEdo, BackendWorkflowFile> {
 
-  private Long                            id;
-  private Long                            workflowId;
-  private Long                            createdBy;
-  private String                          title;
-  private String                          activeFilePath;
-  private String                          comments;
-  private Integer                         activeFileVersion;
-  private Integer                         status;
-  private Integer                         version;
+  private Long                                   id;
+  private Long                                   workflowId;
+  private Long                                   createdBy;
+  private String                                 title;
+  private String                                 activeFilePath;
+  private String                                 comments;
+  private Integer                                activeFileVersion;
+  private Integer                                status;
+  private Integer                                version;
   private final List<BackendWorkflowFileVersion> fileVersions = new ArrayList<>();
 
-  @Override
   public Long getId() {
     return this.id;
   }
@@ -84,12 +83,10 @@ public class BackendWorkflowFile extends ModelMapperBase<WorkflowFileEdo, Backen
     this.status = status;
   }
 
-  @Override
   public Integer getVersion() {
     return this.version;
   }
 
-  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
@@ -128,7 +125,7 @@ public class BackendWorkflowFile extends ModelMapperBase<WorkflowFileEdo, Backen
     if (edo == null) {
       return null;
     }
-    
+
     final BackendWorkflowFile model = new BackendWorkflowFile();
 
     model.setTitle(edo.getTitle());

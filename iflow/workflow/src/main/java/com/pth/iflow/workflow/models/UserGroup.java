@@ -5,19 +5,18 @@ import com.pth.iflow.common.edo.models.xml.UserGroupEdo;
 
 public class UserGroup extends ModelMapperBase<UserGroupEdo, UserGroup> {
 
-  private Long    id;
+  private Long id;
 
-  private Long    companyId;
+  private Long companyId;
 
-  private String  title;
+  private String title;
 
   private Integer status;
 
   private Integer version;
 
-  @Override
   public Long getId() {
-    return id;
+    return this.id;
   }
 
   public void setId(final Long id) {
@@ -25,7 +24,7 @@ public class UserGroup extends ModelMapperBase<UserGroupEdo, UserGroup> {
   }
 
   public Long getCompanyId() {
-    return companyId;
+    return this.companyId;
   }
 
   public void setCompanyId(final Long companyId) {
@@ -33,7 +32,7 @@ public class UserGroup extends ModelMapperBase<UserGroupEdo, UserGroup> {
   }
 
   public String getTitle() {
-    return title;
+    return this.title;
   }
 
   public void setTitle(final String title) {
@@ -41,19 +40,17 @@ public class UserGroup extends ModelMapperBase<UserGroupEdo, UserGroup> {
   }
 
   public Integer getStatus() {
-    return status;
+    return this.status;
   }
 
   public void setStatus(final Integer status) {
     this.status = status;
   }
 
-  @Override
   public Integer getVersion() {
     return this.version;
   }
 
-  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
@@ -65,7 +62,7 @@ public class UserGroup extends ModelMapperBase<UserGroupEdo, UserGroup> {
     edo.setStatus(this.status);
     edo.setId(this.id);
     edo.setCompanyId(this.companyId);
-    edo.setVersion(version);
+    edo.setVersion(this.version);
 
     return edo;
   }

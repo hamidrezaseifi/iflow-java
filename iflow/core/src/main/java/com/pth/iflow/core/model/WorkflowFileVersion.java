@@ -2,19 +2,19 @@ package com.pth.iflow.core.model;
 
 import java.time.LocalDateTime;
 
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
+import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.edo.models.xml.WorkflowFileVersionEdo;
 
-public class WorkflowFileVersion extends ModelMapperBase<WorkflowFileVersionEdo, WorkflowFileVersion> {
+public class WorkflowFileVersion extends DataModelBase<WorkflowFileVersionEdo, WorkflowFileVersion> {
 
-  private Long id;
-  private Long workflowFileId;
-  private Long createdBy;
-  private String filePath;
-  private String comments;
-  private Integer fileVersion;
-  private Integer status;
-  private Integer version;
+  private Long          id;
+  private Long          workflowFileId;
+  private Long          createdBy;
+  private String        filePath;
+  private String        comments;
+  private Integer       fileVersion;
+  private Integer       status;
+  private Integer       version;
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
 
@@ -28,7 +28,7 @@ public class WorkflowFileVersion extends ModelMapperBase<WorkflowFileVersionEdo,
   }
 
   public Long getWorkflowFileId() {
-    return workflowFileId;
+    return this.workflowFileId;
   }
 
   public void setWorkflowFileId(final Long workflowFileId) {
@@ -36,7 +36,7 @@ public class WorkflowFileVersion extends ModelMapperBase<WorkflowFileVersionEdo,
   }
 
   public String getFilePath() {
-    return filePath;
+    return this.filePath;
   }
 
   public void setFilePath(final String filePath) {
@@ -44,7 +44,7 @@ public class WorkflowFileVersion extends ModelMapperBase<WorkflowFileVersionEdo,
   }
 
   public Long getCreatedBy() {
-    return createdBy;
+    return this.createdBy;
   }
 
   public void setCreatedBy(final Long createdBy) {
@@ -60,7 +60,7 @@ public class WorkflowFileVersion extends ModelMapperBase<WorkflowFileVersionEdo,
   }
 
   public Integer getFileVersion() {
-    return fileVersion;
+    return this.fileVersion;
   }
 
   public void setFileVersion(final Integer fileVersion) {
@@ -107,11 +107,11 @@ public class WorkflowFileVersion extends ModelMapperBase<WorkflowFileVersionEdo,
     edo.setComments(this.comments);
     edo.setStatus(this.status);
     edo.setId(this.id);
-    edo.setCreatedBy(createdBy);
-    edo.setFilePath(filePath);
-    edo.setFileVersion(fileVersion);
-    edo.setWorkflowFileId(workflowFileId);
-    edo.setVersion(version);
+    edo.setCreatedBy(this.createdBy);
+    edo.setFilePath(this.filePath);
+    edo.setFileVersion(this.fileVersion);
+    edo.setWorkflowFileId(this.workflowFileId);
+    edo.setVersion(this.version);
 
     return edo;
   }

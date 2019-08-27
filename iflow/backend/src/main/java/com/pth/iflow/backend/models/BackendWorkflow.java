@@ -9,22 +9,21 @@ import com.pth.iflow.common.enums.EWorkflowStatus;
 
 public class BackendWorkflow extends ModelMapperBase<WorkflowEdo, BackendWorkflow> {
 
-  private Long                              id;
-  private Long                              workflowTypeId;
-  private BackendWorkflowTypeStep           currentStep;
-  private Long                              currentStepId;
-  private Long                              controller;
-  private Long                              createdBy;
-  private Long                              assignTo;
-  private String                            title;
-  private String                            comments;
-  private EWorkflowStatus                   status;
-  private Integer                           version;
+  private Long                    id;
+  private Long                    workflowTypeId;
+  private BackendWorkflowTypeStep currentStep;
+  private Long                    currentStepId;
+  private Long                    controller;
+  private Long                    createdBy;
+  private Long                    assignTo;
+  private String                  title;
+  private String                  comments;
+  private EWorkflowStatus         status;
+  private Integer                 version;
 
   private final List<BackendWorkflowFile>   files   = new ArrayList<>();
   private final List<BackendWorkflowAction> actions = new ArrayList<>();
 
-  @Override
   public Long getId() {
     return this.id;
   }
@@ -117,12 +116,10 @@ public class BackendWorkflow extends ModelMapperBase<WorkflowEdo, BackendWorkflo
     return this.status.getValue().intValue();
   }
 
-  @Override
   public Integer getVersion() {
     return this.version;
   }
 
-  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
@@ -175,6 +172,10 @@ public class BackendWorkflow extends ModelMapperBase<WorkflowEdo, BackendWorkflo
 
   public boolean isInitializing() {
     return this.isNew() && (this.getStatus() == EWorkflowStatus.INITIALIZE);
+  }
+
+  public boolean isNew() {
+    return (this.id == null) || (this.id <= 0);
   }
 
   @Override

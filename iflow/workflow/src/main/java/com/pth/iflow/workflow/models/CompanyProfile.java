@@ -61,17 +61,14 @@ public class CompanyProfile extends ModelMapperBase<CompanyProfileEdo, CompanyPr
     }
   }
 
-  @Override
   public Integer getVersion() {
     return null;
   }
 
-  @Override
   public Long getId() {
     return null;
   }
 
-  @Override
   public void setVersion(final Integer version) {
 
   }

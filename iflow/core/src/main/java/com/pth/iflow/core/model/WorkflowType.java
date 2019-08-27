@@ -4,10 +4,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
+import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.edo.models.xml.WorkflowTypeEdo;
 
-public class WorkflowType extends ModelMapperBase<WorkflowTypeEdo, WorkflowType> {
+public class WorkflowType extends DataModelBase<WorkflowTypeEdo, WorkflowType> {
 
   private Long                         id;
   private Long                         companyId;
@@ -155,7 +155,7 @@ public class WorkflowType extends ModelMapperBase<WorkflowTypeEdo, WorkflowType>
     edo.setSendToController(this.sendToController);
     edo.setManualAssign(this.manualAssign);
     edo.setIncreaseStepAutomatic(this.increaseStepAutomatic);
-    edo.setSteps(ModelMapperBase.toEdoList(this.steps));
+    edo.setSteps(DataModelBase.toEdoList(this.steps));
     edo.setVersion(this.version);
 
     return edo;

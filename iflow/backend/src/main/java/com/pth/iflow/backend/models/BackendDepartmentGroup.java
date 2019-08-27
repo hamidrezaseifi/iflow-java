@@ -11,7 +11,6 @@ public class BackendDepartmentGroup extends ModelMapperBase<DepartmentGroupEdo, 
   private Integer status;
   private Integer version;
 
-  @Override
   public Long getId() {
     return this.id;
   }
@@ -44,12 +43,10 @@ public class BackendDepartmentGroup extends ModelMapperBase<DepartmentGroupEdo, 
     this.status = status;
   }
 
-  @Override
   public Integer getVersion() {
     return this.version;
   }
 
-  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
@@ -61,7 +58,7 @@ public class BackendDepartmentGroup extends ModelMapperBase<DepartmentGroupEdo, 
     edo.setStatus(this.status);
     edo.setId(this.id);
     edo.setDepartmentId(this.departmentId);
-    edo.setVersion(version);
+    edo.setVersion(this.version);
 
     return edo;
   }

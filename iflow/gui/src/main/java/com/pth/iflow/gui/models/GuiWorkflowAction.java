@@ -1,9 +1,11 @@
 package com.pth.iflow.gui.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 import com.pth.iflow.common.edo.models.xml.WorkflowActionEdo;
 import com.pth.iflow.common.enums.EWorkflowActionStatus;
 
+@JsonIgnoreProperties(value = { "isRunning" })
 public class GuiWorkflowAction extends ModelMapperBase<WorkflowActionEdo, GuiWorkflowAction> {
 
   private Long                  id;
@@ -17,7 +19,6 @@ public class GuiWorkflowAction extends ModelMapperBase<WorkflowActionEdo, GuiWor
   private Integer               version;
   private boolean               isActive = false;
 
-  @Override
   public Long getId() {
     return this.id;
   }
@@ -90,12 +91,14 @@ public class GuiWorkflowAction extends ModelMapperBase<WorkflowActionEdo, GuiWor
     this.status = EWorkflowActionStatus.ofValue(status);
   }
 
-  @Override
+  public boolean isRunning() {
+    return (this.status != EWorkflowActionStatus.DONE) && (this.status != EWorkflowActionStatus.ERROR);
+  }
+
   public Integer getVersion() {
     return this.version;
   }
 
-  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }

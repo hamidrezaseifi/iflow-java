@@ -62,21 +62,6 @@ public class CompanyProfile extends ModelMapperBase<CompanyProfileEdo, CompanyPr
   }
 
   @Override
-  public Integer getVersion() {
-    return null;
-  }
-
-  @Override
-  public Long getId() {
-    return null;
-  }
-
-  @Override
-  public void setVersion(final Integer version) {
-
-  }
-
-  @Override
   public CompanyProfileEdo toEdo() {
     final CompanyProfileEdo edo = new CompanyProfileEdo(this.company.toEdo(),
                                                         ModelMapperBase.toEdoList(this.departments),

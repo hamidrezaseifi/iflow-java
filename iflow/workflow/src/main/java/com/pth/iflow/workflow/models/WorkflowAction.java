@@ -16,7 +16,6 @@ public class WorkflowAction extends ModelMapperBase<WorkflowActionEdo, WorkflowA
   private Integer version;
   private boolean isActive = false;
 
-  @Override
   public Long getId() {
     return this.id;
   }
@@ -81,12 +80,10 @@ public class WorkflowAction extends ModelMapperBase<WorkflowActionEdo, WorkflowA
     this.status = status;
   }
 
-  @Override
   public Integer getVersion() {
     return this.version;
   }
 
-  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }

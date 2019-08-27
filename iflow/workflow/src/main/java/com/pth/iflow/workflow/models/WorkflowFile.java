@@ -19,7 +19,6 @@ public class WorkflowFile extends ModelMapperBase<WorkflowFileEdo, WorkflowFile>
   private Integer                         version;
   private final List<WorkflowFileVersion> fileVersions = new ArrayList<>();
 
-  @Override
   public Long getId() {
     return this.id;
   }
@@ -84,12 +83,10 @@ public class WorkflowFile extends ModelMapperBase<WorkflowFileEdo, WorkflowFile>
     this.status = status;
   }
 
-  @Override
   public Integer getVersion() {
     return this.version;
   }
 
-  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
@@ -128,7 +125,7 @@ public class WorkflowFile extends ModelMapperBase<WorkflowFileEdo, WorkflowFile>
     if (edo == null) {
       return null;
     }
-    
+
     final WorkflowFile model = new WorkflowFile();
 
     model.setTitle(edo.getTitle());

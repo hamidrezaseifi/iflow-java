@@ -2,21 +2,21 @@ package com.pth.iflow.core.model;
 
 import java.time.LocalDateTime;
 
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
+import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.edo.models.xml.WorkflowActionEdo;
 
-public class WorkflowAction extends ModelMapperBase<WorkflowActionEdo, WorkflowAction> {
+public class WorkflowAction extends DataModelBase<WorkflowActionEdo, WorkflowAction> {
 
-  private Long          id;
-  private Long          workflowId;
-  private Long          createdBy;
-  private String        action;
-  private Long          oldStep;
-  private Long          newStep;
-  private String        comments;
-  private Integer       status;
-  private Integer       version;
-  private boolean       isActive = false;
+  private Long    id;
+  private Long    workflowId;
+  private Long    createdBy;
+  private String  action;
+  private Long    oldStep;
+  private Long    newStep;
+  private String  comments;
+  private Integer status;
+  private Integer version;
+  private boolean isActive = false;
 
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;

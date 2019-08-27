@@ -9,20 +9,6 @@ public abstract class ModelMapperBase<E, M> {
 
   }
 
-  public boolean isNew() {
-    return (getId() == null) || (getId() <= 0);
-  }
-
-  public abstract Integer getVersion();
-
-  public abstract Long getId();
-
-  public abstract void setVersion(final Integer version);
-
-  public void increaseVersion() {
-    this.setVersion(this.getVersion() == null ? 1 : this.getVersion() + 1);
-  }
-
   public abstract E toEdo();
 
   public abstract M fromEdo(E edo);
@@ -35,12 +21,12 @@ public abstract class ModelMapperBase<E, M> {
 
     return edoList;
   }
-  
+
   public List<M> fromEdoList(final List<E> list) {
     if (list == null) {
       return null;
     }
     return list.stream().map(m -> this.fromEdo(m)).collect(Collectors.toList());
   }
-  
+
 }

@@ -8,18 +8,17 @@ import com.pth.iflow.common.edo.models.xml.WorkflowFileEdo;
 
 public class GuiWorkflowFile extends ModelMapperBase<WorkflowFileEdo, GuiWorkflowFile> {
 
-  private Long                            id;
-  private Long                            workflowId;
-  private Long                            createdBy;
-  private String                          title;
-  private String                          activeFilePath;
-  private String                          comments;
-  private Integer                         activeFileVersion;
-  private Integer                         status;
-  private Integer                         version;
+  private Long                               id;
+  private Long                               workflowId;
+  private Long                               createdBy;
+  private String                             title;
+  private String                             activeFilePath;
+  private String                             comments;
+  private Integer                            activeFileVersion;
+  private Integer                            status;
+  private Integer                            version;
   private final List<GuiWorkflowFileVersion> fileVersions = new ArrayList<>();
 
-  @Override
   public Long getId() {
     return this.id;
   }
@@ -84,12 +83,10 @@ public class GuiWorkflowFile extends ModelMapperBase<WorkflowFileEdo, GuiWorkflo
     this.status = status;
   }
 
-  @Override
   public Integer getVersion() {
     return this.version;
   }
 
-  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
@@ -128,7 +125,7 @@ public class GuiWorkflowFile extends ModelMapperBase<WorkflowFileEdo, GuiWorkflo
     if (edo == null) {
       return null;
     }
-    
+
     final GuiWorkflowFile model = new GuiWorkflowFile();
 
     model.setTitle(edo.getTitle());

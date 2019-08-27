@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.pth.iflow.common.enums.EWorkflowActionStatus;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.GuiWorkflow;
 import com.pth.iflow.gui.models.GuiWorkflowAction;
@@ -92,7 +91,7 @@ public class WorkflowHandler implements IWorkflowHandler {
 
   private GuiWorkflow prepareWorkflowActions(final GuiWorkflow workflow) {
     for (final GuiWorkflowAction action : workflow.getActions()) {
-      if ((action.getStatus() == EWorkflowActionStatus.INITIALIZE) && (action.getCreatedBy() == this.sessionUserInfo.getUser().getId())) {
+      if ((action.isRunning()) && (action.getCreatedBy() == this.sessionUserInfo.getUser().getId())) {
         action.setActive(true);
         break;
       }

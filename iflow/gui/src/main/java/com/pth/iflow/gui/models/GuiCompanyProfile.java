@@ -19,8 +19,8 @@ public class GuiCompanyProfile extends ModelMapperBase<CompanyProfileEdo, GuiCom
   }
 
   public GuiCompanyProfile(final GuiCompany company,
-                               final List<GuiDepartment> departments,
-                               final List<GuiUserGroup> userGroups) {
+                           final List<GuiDepartment> departments,
+                           final List<GuiUserGroup> userGroups) {
     this.setDepartments(departments);
     this.setUserGroups(userGroups);
     this.setCompany(company);
@@ -64,21 +64,6 @@ public class GuiCompanyProfile extends ModelMapperBase<CompanyProfileEdo, GuiCom
   }
 
   @Override
-  public Integer getVersion() {
-    return null;
-  }
-
-  @Override
-  public Long getId() {
-    return null;
-  }
-
-  @Override
-  public void setVersion(final Integer version) {
-
-  }
-
-  @Override
   public CompanyProfileEdo toEdo() {
     final CompanyProfileEdo edo = new CompanyProfileEdo(this.company.toEdo(),
                                                         ModelMapperBase.toEdoList(this.departments),
@@ -89,8 +74,8 @@ public class GuiCompanyProfile extends ModelMapperBase<CompanyProfileEdo, GuiCom
   @Override
   public GuiCompanyProfile fromEdo(final CompanyProfileEdo edo) {
     final GuiCompanyProfile model = new GuiCompanyProfile(new GuiCompany().fromEdo(edo.getCompany()),
-                                                                  new GuiDepartment().fromEdoList(edo.getDepartments()),
-                                                                  new GuiUserGroup().fromEdoList(edo.getUserGroups()));
+                                                          new GuiDepartment().fromEdoList(edo.getDepartments()),
+                                                          new GuiUserGroup().fromEdoList(edo.getUserGroups()));
 
     return model;
   }

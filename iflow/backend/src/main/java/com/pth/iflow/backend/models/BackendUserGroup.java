@@ -5,17 +5,16 @@ import com.pth.iflow.common.edo.models.xml.UserGroupEdo;
 
 public class BackendUserGroup extends ModelMapperBase<UserGroupEdo, BackendUserGroup> {
 
-  private Long    id;
+  private Long id;
 
-  private Long    companyId;
+  private Long companyId;
 
-  private String  title;
+  private String title;
 
   private Integer status;
 
   private Integer version;
 
-  @Override
   public Long getId() {
     return this.id;
   }
@@ -48,12 +47,10 @@ public class BackendUserGroup extends ModelMapperBase<UserGroupEdo, BackendUserG
     this.status = status;
   }
 
-  @Override
   public Integer getVersion() {
     return this.version;
   }
 
-  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }

@@ -14,7 +14,7 @@ public class BackendCompany extends ModelMapperBase<CompanyEdo, BackendCompany> 
   /**
    * @return the id
    */
-  @Override
+
   public Long getId() {
     return this.id;
   }
@@ -68,17 +68,14 @@ public class BackendCompany extends ModelMapperBase<CompanyEdo, BackendCompany> 
     this.status = status;
   }
 
-  @Override
   public Integer getVersion() {
     return this.version;
   }
 
-  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
 
-  @Override
   public boolean isNew() {
     return (this.id == null) || (this.id <= 0);
   }

@@ -24,7 +24,6 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
   private final List<WorkflowFile>   files   = new ArrayList<>();
   private final List<WorkflowAction> actions = new ArrayList<>();
 
-  @Override
   public Long getId() {
     return this.id;
   }
@@ -117,12 +116,10 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
     return this.status.getValue().intValue();
   }
 
-  @Override
   public Integer getVersion() {
     return this.version;
   }
 
-  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
@@ -130,7 +127,7 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
   public List<WorkflowFile> getFiles() {
     return this.files;
   }
-  
+
   public void setFiles(final List<WorkflowFile> files) {
     this.files.clear();
     if (files != null) {
@@ -141,7 +138,7 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
   public List<WorkflowAction> getActions() {
     return this.actions;
   }
-  
+
   public void setActions(final List<WorkflowAction> actions) {
     this.actions.clear();
     if (actions != null) {
@@ -175,6 +172,10 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
 
   public boolean isInitializing() {
     return isNew() && (getStatus() == EWorkflowStatus.INITIALIZE);
+  }
+
+  public boolean isNew() {
+    return (getId() == null) || (getId() <= 0);
   }
 
   @Override
@@ -222,5 +223,5 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
 
     return model;
   }
-  
+
 }
