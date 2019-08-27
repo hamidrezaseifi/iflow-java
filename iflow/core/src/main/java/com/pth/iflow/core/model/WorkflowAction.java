@@ -16,7 +16,6 @@ public class WorkflowAction extends DataModelBase<WorkflowActionEdo, WorkflowAct
   private String  comments;
   private Integer status;
   private Integer version;
-  private boolean isActive = false;
 
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
@@ -112,14 +111,6 @@ public class WorkflowAction extends DataModelBase<WorkflowActionEdo, WorkflowAct
     this.updatedAt = updatedAt;
   }
 
-  public boolean getIsActive() {
-    return this.isActive;
-  }
-
-  public void setActive(final boolean isActive) {
-    this.isActive = isActive;
-  }
-
   @Override
   public WorkflowActionEdo toEdo() {
     final WorkflowActionEdo edo = new WorkflowActionEdo();
@@ -132,7 +123,6 @@ public class WorkflowAction extends DataModelBase<WorkflowActionEdo, WorkflowAct
     edo.setNewStep(this.newStep);
     edo.setWorkflowId(this.workflowId);
     edo.setVersion(this.version);
-    edo.setActive(this.isActive);
 
     return edo;
   }
@@ -150,7 +140,6 @@ public class WorkflowAction extends DataModelBase<WorkflowActionEdo, WorkflowAct
     model.setNewStep(edo.getNewStep());
     model.setWorkflowId(edo.getWorkflowId());
     model.setVersion(edo.getVersion());
-    model.setActive(edo.getIsActive());
 
     return model;
   }

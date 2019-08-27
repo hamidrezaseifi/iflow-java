@@ -16,7 +16,7 @@ import com.pth.iflow.common.edo.models.xml.UserEdo;
 import com.pth.iflow.common.enums.EUserStatus;
 import com.pth.iflow.gui.models.ui.enums.EUiUserRole;
 
-@JsonIgnoreProperties(value = { "authorities", "enabled", })
+@JsonIgnoreProperties(value = { "authorities", "enabled", "roles", })
 public class GuiUser extends ModelMapperBase<UserEdo, GuiUser> {
 
   private Long                    id;

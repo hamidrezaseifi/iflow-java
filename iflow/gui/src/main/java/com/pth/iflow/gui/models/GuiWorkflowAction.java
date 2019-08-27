@@ -1,12 +1,12 @@
 package com.pth.iflow.gui.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
+import com.pth.iflow.common.edo.models.base.WorkflowActionModelBase;
 import com.pth.iflow.common.edo.models.xml.WorkflowActionEdo;
 import com.pth.iflow.common.enums.EWorkflowActionStatus;
 
-@JsonIgnoreProperties(value = { "isRunning" })
-public class GuiWorkflowAction extends ModelMapperBase<WorkflowActionEdo, GuiWorkflowAction> {
+@JsonIgnoreProperties(value = { "running" })
+public class GuiWorkflowAction extends WorkflowActionModelBase<WorkflowActionEdo, GuiWorkflowAction> {
 
   private Long                  id;
   private Long                  workflowId;
@@ -17,7 +17,6 @@ public class GuiWorkflowAction extends ModelMapperBase<WorkflowActionEdo, GuiWor
   private String                comments;
   private EWorkflowActionStatus status;
   private Integer               version;
-  private boolean               isActive = false;
 
   public Long getId() {
     return this.id;
@@ -79,6 +78,7 @@ public class GuiWorkflowAction extends ModelMapperBase<WorkflowActionEdo, GuiWor
     return this.status;
   }
 
+  @Override
   public Integer getStatusInt() {
     return this.status.getValue().intValue();
   }
@@ -91,30 +91,12 @@ public class GuiWorkflowAction extends ModelMapperBase<WorkflowActionEdo, GuiWor
     this.status = EWorkflowActionStatus.ofValue(status);
   }
 
-  public boolean isRunning() {
-    return (this.status != EWorkflowActionStatus.DONE) && (this.status != EWorkflowActionStatus.ERROR);
-  }
-
   public Integer getVersion() {
     return this.version;
   }
 
   public void setVersion(final Integer version) {
     this.version = version;
-  }
-
-  /**
-   * @return the isActive
-   */
-  public boolean getIsActive() {
-    return this.isActive;
-  }
-
-  /**
-   * @param isActive the isActive to set
-   */
-  public void setActive(final boolean isActive) {
-    this.isActive = isActive;
   }
 
   @Override
@@ -129,7 +111,6 @@ public class GuiWorkflowAction extends ModelMapperBase<WorkflowActionEdo, GuiWor
     edo.setNewStep(this.newStep);
     edo.setWorkflowId(this.workflowId);
     edo.setVersion(this.version);
-    edo.setActive(this.isActive);
 
     return edo;
   }
@@ -151,18 +132,16 @@ public class GuiWorkflowAction extends ModelMapperBase<WorkflowActionEdo, GuiWor
     model.setNewStep(edo.getNewStep());
     model.setWorkflowId(edo.getWorkflowId());
     model.setVersion(edo.getVersion());
-    model.setActive(edo.getIsActive());
 
     return model;
   }
 
-  public static GuiWorkflowAction createNewAction(final GuiWorkflow workflow, final Long createdBy, final boolean isActive) {
+  public static GuiWorkflowAction createNewAction(final GuiWorkflow workflow, final Long createdBy, final EWorkflowActionStatus status) {
     final GuiWorkflowAction action = new GuiWorkflowAction();
-    action.setActive(isActive);
     action.setCreatedBy(createdBy);
     action.setNewStep(null);
     action.setOldStep(workflow.getCurrentStepId());
-    action.setStatus(EWorkflowActionStatus.INITIALIZE);
+    action.setStatus(status);
     action.setWorkflowId(workflow.getId());
     action.setComments("comments");
     action.setAction("action");

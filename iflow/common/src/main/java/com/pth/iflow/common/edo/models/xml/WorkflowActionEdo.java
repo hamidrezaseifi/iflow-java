@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
+import com.pth.iflow.common.enums.EWorkflowActionStatus;
 
 @XmlRootElement(name = "WorkflowAction", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -15,27 +16,27 @@ import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 public class WorkflowActionEdo {
 
   @XmlElement(name = "ID", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long    id;
+  private Long id;
 
   @NotNull
   @XmlElement(name = "WorkflowId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long    workflowId;
+  private Long workflowId;
 
   @XmlElement(name = "CreatedBy", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long    createdBy;
+  private Long createdBy;
 
   @NotNull
   @XmlElement(name = "Action", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String  action;
+  private String action;
 
   @XmlElement(name = "OldStep", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long    oldStep;
+  private Long oldStep;
 
   @XmlElement(name = "NewStep", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long    newStep;
+  private Long newStep;
 
   @XmlElement(name = "Comments", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String  comments;
+  private String comments;
 
   @NotNull
   @XmlElement(name = "Status", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
@@ -44,10 +45,6 @@ public class WorkflowActionEdo {
   @NotNull
   @XmlElement(name = "Version", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer version;
-
-  @NotNull
-  @XmlElement(name = "IsActive", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private boolean isActive = false;
 
   public Long getId() {
     return this.id;
@@ -122,10 +119,7 @@ public class WorkflowActionEdo {
   }
 
   public boolean getIsActive() {
-    return this.isActive;
+    return EWorkflowActionStatus.getIsActive(this.status);
   }
 
-  public void setActive(final boolean isActive) {
-    this.isActive = isActive;
-  }
 }

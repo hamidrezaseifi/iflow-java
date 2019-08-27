@@ -5,9 +5,11 @@ import com.pth.iflow.common.exceptions.IFlowInvalidEnumValueException;
 
 public enum EWorkflowActionStatus implements IValueList {
   INITIALIZE(0),
-  SAVED(5),
-  DONE(10),
-  ERROR(15);
+  OPEN(5),
+  SAVING_REQUEST(10),
+  DONE_REQUEST(15),
+  DONE(20),
+  ERROR(30);
 
   private final int id;
 
@@ -28,6 +30,14 @@ public enum EWorkflowActionStatus implements IValueList {
   @Override
   public Long getValue() {
     return Long.valueOf(this.id);
+  }
+
+  public boolean isActive() {
+    return (this.id < DONE.getValue());
+  }
+
+  public static boolean getIsActive(final Integer status) {
+    return (status < DONE.getValue());
   }
 
 }

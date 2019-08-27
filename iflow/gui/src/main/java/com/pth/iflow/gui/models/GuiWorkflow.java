@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 import com.pth.iflow.common.edo.models.xml.WorkflowEdo;
 import com.pth.iflow.common.edo.models.xml.WorkflowListEdo;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 
+@JsonIgnoreProperties(value = { "isAssignTo" })
 public class GuiWorkflow {
 
   private Long                id;
@@ -122,6 +124,10 @@ public class GuiWorkflow {
 
   public Long getAssignTo() {
     return this.assignTo;
+  }
+
+  public boolean isAssignTo(final Long userId) {
+    return this.assignTo == userId;
   }
 
   public boolean isAssigned() {
@@ -246,12 +252,17 @@ public class GuiWorkflow {
   }
 
   public boolean hasActiveAction() {
+
+    return getActiveAction() != null;
+  }
+
+  public GuiWorkflowAction getActiveAction() {
     for (final GuiWorkflowAction action : getActions()) {
-      if (action.getIsActive()) {
-        return true;
+      if (action.getIsActive() == true) {
+        return action;
       }
     }
-    return false;
+    return null;
   }
 
   public WorkflowEdo toEdo() {

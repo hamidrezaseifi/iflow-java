@@ -2,6 +2,7 @@ package com.pth.iflow.backend.models;
 
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 import com.pth.iflow.common.edo.models.xml.WorkflowActionEdo;
+import com.pth.iflow.common.enums.EWorkflowActionStatus;
 
 public class BackendWorkflowAction extends ModelMapperBase<WorkflowActionEdo, BackendWorkflowAction> {
 
@@ -14,7 +15,6 @@ public class BackendWorkflowAction extends ModelMapperBase<WorkflowActionEdo, Ba
   private String  comments;
   private Integer status;
   private Integer version;
-  private boolean isActive = false;
 
   public Long getId() {
     return this.id;
@@ -89,11 +89,7 @@ public class BackendWorkflowAction extends ModelMapperBase<WorkflowActionEdo, Ba
   }
 
   public boolean getIsActive() {
-    return this.isActive;
-  }
-
-  public void setActive(final boolean isActive) {
-    this.isActive = isActive;
+    return EWorkflowActionStatus.getIsActive(this.status);
   }
 
   @Override
@@ -108,7 +104,6 @@ public class BackendWorkflowAction extends ModelMapperBase<WorkflowActionEdo, Ba
     edo.setNewStep(this.newStep);
     edo.setWorkflowId(this.workflowId);
     edo.setVersion(this.version);
-    edo.setActive(this.isActive);
 
     return edo;
   }
@@ -130,7 +125,6 @@ public class BackendWorkflowAction extends ModelMapperBase<WorkflowActionEdo, Ba
     model.setNewStep(edo.getNewStep());
     model.setWorkflowId(edo.getWorkflowId());
     model.setVersion(edo.getVersion());
-    model.setActive(edo.getIsActive());
 
     return model;
   }

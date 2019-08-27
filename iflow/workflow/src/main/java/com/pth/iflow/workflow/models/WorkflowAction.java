@@ -1,9 +1,9 @@
 package com.pth.iflow.workflow.models;
 
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
+import com.pth.iflow.common.edo.models.base.WorkflowActionModelBase;
 import com.pth.iflow.common.edo.models.xml.WorkflowActionEdo;
 
-public class WorkflowAction extends ModelMapperBase<WorkflowActionEdo, WorkflowAction> {
+public class WorkflowAction extends WorkflowActionModelBase<WorkflowActionEdo, WorkflowAction> {
 
   private Long    id;
   private Long    workflowId;
@@ -14,7 +14,6 @@ public class WorkflowAction extends ModelMapperBase<WorkflowActionEdo, WorkflowA
   private String  comments;
   private Integer status;
   private Integer version;
-  private boolean isActive = false;
 
   public Long getId() {
     return this.id;
@@ -72,7 +71,8 @@ public class WorkflowAction extends ModelMapperBase<WorkflowActionEdo, WorkflowA
     this.comments = comments;
   }
 
-  public Integer getStatus() {
+  @Override
+  public Integer getStatusInt() {
     return this.status;
   }
 
@@ -88,14 +88,6 @@ public class WorkflowAction extends ModelMapperBase<WorkflowActionEdo, WorkflowA
     this.version = version;
   }
 
-  public boolean getIsActive() {
-    return this.isActive;
-  }
-
-  public void setActive(final boolean isActive) {
-    this.isActive = isActive;
-  }
-
   @Override
   public WorkflowActionEdo toEdo() {
     final WorkflowActionEdo edo = new WorkflowActionEdo();
@@ -108,7 +100,6 @@ public class WorkflowAction extends ModelMapperBase<WorkflowActionEdo, WorkflowA
     edo.setNewStep(this.newStep);
     edo.setWorkflowId(this.workflowId);
     edo.setVersion(this.version);
-    edo.setActive(this.isActive);
 
     return edo;
   }
@@ -130,7 +121,6 @@ public class WorkflowAction extends ModelMapperBase<WorkflowActionEdo, WorkflowA
     model.setNewStep(edo.getNewStep());
     model.setWorkflowId(edo.getWorkflowId());
     model.setVersion(edo.getVersion());
-    model.setActive(edo.getIsActive());
 
     return model;
   }
