@@ -2,7 +2,7 @@ package com.pth.iflow.workflow.bl.impl;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -93,9 +93,11 @@ public class WorkflowProcessService implements IWorkflowProcessService {
 
       activeAction.setStatus(EWorkflowActionStatus.DONE);
       if (workflowType.getIncreaseStepAutomatic()) {
-        this.selectWorkflowNextStep(newWorkflow, workflowType);
-        this.selectWorkflowNextAssigned(newWorkflow, workflowType);
+        this.selectWorkflowNextStep(newWorkflow, workflowType, activeAction);
+        this.selectWorkflowNextAssigned(newWorkflow, workflowType, activeAction);
       }
+
+      return this.saveExistsWorkflow(newWorkflow, token);
     }
 
     // final Workflow existsWorkflow = getById(newWorkflow.getId(), token);
@@ -205,14 +207,19 @@ public class WorkflowProcessService implements IWorkflowProcessService {
     return savedWorkflow;
   }
 
-  private void selectWorkflowNextStep(final Workflow newWorkflow, final WorkflowType workflowType) {
+  private void selectWorkflowNextStep(final Workflow newWorkflow, final WorkflowType workflowType, final WorkflowAction activeAction) {
 
-    final WorkflowTypeStep nextStep = this.findNextStep(workflowType, newWorkflow.getCurrentStep());
+    final WorkflowTypeStep nextStep = this.findNextStep(workflowType, newWorkflow, activeAction);
+    if (nextStep == null) {
+      throw new IFlowCustomeException("Invalid workflow step id:" + newWorkflow.getId(), EIFlowErrorType.INVALID_WORKFLOW_STEP);
+    }
+
     newWorkflow.setCurrentStep(nextStep);
-    newWorkflow.setCurrentStepId(nextStep != null ? nextStep.getId() : 0);
+    newWorkflow.setCurrentStepId(nextStep.getId());
   }
 
-  private void selectWorkflowNextAssigned(final Workflow newWorkflow, final WorkflowType workflowType) {
+  private void selectWorkflowNextAssigned(final Workflow newWorkflow, final WorkflowType workflowType,
+      final WorkflowAction activeAction) {
 
     /*
      * TODO: implements select next assigned for workflow based on new step
@@ -222,15 +229,16 @@ public class WorkflowProcessService implements IWorkflowProcessService {
       newWorkflow.setAssignTo(newWorkflow.getController());
     } else {
 
-      this.setAssignToControllerAfterLastStep(newWorkflow, workflowType);
+      this.setAssignToControllerAfterLastStep(newWorkflow, workflowType, activeAction);
 
     }
 
   }
 
-  private void setAssignToControllerAfterLastStep(final Workflow newWorkflow, final WorkflowType workflowType) {
-    final WorkflowTypeStep nextStep = this.findNextStep(workflowType, newWorkflow.getCurrentStep());
-    if (nextStep.getStepIndex() == newWorkflow.getCurrentStep().getStepIndex()) {
+  private void setAssignToControllerAfterLastStep(final Workflow newWorkflow, final WorkflowType workflowType,
+      final WorkflowAction activeAction) {
+    final WorkflowTypeStep lastStep = this.findLastStep(workflowType);
+    if (lastStep.getStepIndex() == newWorkflow.getCurrentStep().getStepIndex()) {
       newWorkflow.setAssignTo(newWorkflow.getController());
     }
   }
@@ -255,33 +263,58 @@ public class WorkflowProcessService implements IWorkflowProcessService {
     return steps;
   }
 
-  private WorkflowTypeStep findNextStep(final WorkflowType workflowType, final WorkflowTypeStep currentStep) {
+  private List<WorkflowTypeStep> getSortedStepsList(final WorkflowType workflowType) {
 
-    final LinkedHashMap<Integer, WorkflowTypeStep> steps = this.getSortedSteps(workflowType);
+    final List<WorkflowTypeStep> list = workflowType.getSteps().stream().sorted(new Comparator<WorkflowTypeStep>() {
 
-    Integer foundId = -1;
-    Integer lastId = -1;
-    for (final Iterator<Integer> i = steps.keySet().iterator(); i.hasNext();) {
-      lastId = i.next();
-      if ((lastId == currentStep.getStepIndex()) && i.hasNext()) {
-        foundId = i.next();
-        break;
+      @Override
+      public int compare(final WorkflowTypeStep o1, final WorkflowTypeStep o2) {
+
+        return o1.getStepIndex() > o2.getStepIndex() ? 1 : o1.getStepIndex() == o2.getStepIndex() ? 0 : -1;
       }
+    }).collect(Collectors.toList());
+
+    return list;
+  }
+
+  private Map<Long, WorkflowTypeStep> getIdKeySteps(final WorkflowType workflowType) {
+    final Map<Long, WorkflowTypeStep> map = workflowType.getSteps().stream()
+        .collect(Collectors.toMap(step -> step.getId(), step -> step));
+
+    return map;
+  }
+
+  private WorkflowTypeStep findNextStep(final WorkflowType workflowType, final Workflow newWorkflow,
+      final WorkflowAction activeAction) {
+
+    final Long newStepIdFromActiveAction = activeAction.getNewStep();
+
+    final Map<Long, WorkflowTypeStep> steps = this.getIdKeySteps(workflowType);
+
+    if (steps.keySet().contains(newStepIdFromActiveAction)) {
+      return steps.get(newStepIdFromActiveAction);
     }
 
-    return foundId > -1 ? steps.get(foundId) : steps.get(lastId);
+    /*
+     * Integer foundId = -1; Integer lastId = -1; for (final Iterator<Integer> i =
+     * steps.keySet().iterator(); i.hasNext();) { lastId = i.next(); if ((lastId ==
+     * currentStep.getStepIndex()) && i.hasNext()) { foundId = i.next(); break; } }
+     *
+     * return foundId > -1 ? steps.get(foundId) : steps.get(lastId);
+     */
+    return null;
   }
 
   private WorkflowTypeStep findFirstStep(final WorkflowType workflowType) {
-    final LinkedHashMap<Integer, WorkflowTypeStep> steps = this.getSortedSteps(workflowType);
+    final List<WorkflowTypeStep> steps = this.getSortedStepsList(workflowType);
 
-    Integer foundId = -1;
-    if (steps.keySet().iterator().hasNext()) {
-      foundId = steps.keySet().iterator().next();
+    return steps.size() > 0 ? steps.get(0) : null;
+  }
 
-    }
+  private WorkflowTypeStep findLastStep(final WorkflowType workflowType) {
+    final List<WorkflowTypeStep> steps = this.getSortedStepsList(workflowType);
 
-    return foundId > -1 ? steps.get(foundId) : null;
+    return steps.size() > 0 ? steps.get(steps.size() - 1) : null;
   }
 
   private List<Long> getWorkflowTypeIdList(final WorkflowType workflowType) {
