@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pth.iflow.common.enums.EWorkflowActionStatus;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.iflow.common.exceptions.IFlowCustomeException;
@@ -22,6 +23,7 @@ import com.pth.iflow.workflow.bl.IWorkflowProcessService;
 import com.pth.iflow.workflow.bl.IWorkflowTypeDataService;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.Workflow;
+import com.pth.iflow.workflow.models.WorkflowAction;
 import com.pth.iflow.workflow.models.WorkflowCreateRequest;
 import com.pth.iflow.workflow.models.WorkflowSearchFilter;
 import com.pth.iflow.workflow.models.WorkflowType;
@@ -51,6 +53,7 @@ public class WorkflowProcessService implements IWorkflowProcessService {
       throws WorkflowCustomizedException, MalformedURLException {
 
     final Workflow workflow = model.getWorkflow();
+    workflow.setStatus(EWorkflowStatus.ASSIGNED);
 
     final List<Workflow> result = new ArrayList<>();
 
@@ -78,29 +81,24 @@ public class WorkflowProcessService implements IWorkflowProcessService {
       return this.saveNewWorkflow(newWorkflow, token);
     }
 
-    if (newWorkflow.getStatus() == EWorkflowStatus.ASSIGNED) {
-      return this.saveNewWorkflow(newWorkflow, token);
+    final WorkflowAction activeAction = newWorkflow.hasActiveAction() ? newWorkflow.getActiveAction() : null;
+
+    if (newWorkflow.isAssigned() && newWorkflow.hasActiveAction() && (activeAction.isStatusSavingRequest())) {
+
+      activeAction.setStatus(EWorkflowActionStatus.OPEN);
+      return this.saveExistsWorkflow(newWorkflow, token);
+    }
+
+    if (newWorkflow.isAssigned() && newWorkflow.hasActiveAction() && (activeAction.isStatusDoneRequest())) {
+
+      activeAction.setStatus(EWorkflowActionStatus.DONE);
+      if (workflowType.getIncreaseStepAutomatic()) {
+        this.selectWorkflowNextStep(newWorkflow, workflowType);
+        this.selectWorkflowNextAssigned(newWorkflow, workflowType);
+      }
     }
 
     // final Workflow existsWorkflow = getById(newWorkflow.getId(), token);
-
-    if (newWorkflow.getStatus() == EWorkflowStatus.DONE) {
-
-      if (workflowType.getIncreaseStepAutomatic().booleanValue() == true) {
-        this.selectWorkflowNextStep(newWorkflow, workflowType);
-
-      }
-
-      final Long assignedTo = newWorkflow.getAssignTo();
-
-      this.selectWorkflowNextAssigned(newWorkflow, workflowType);
-
-      if (assignedTo != newWorkflow.getAssignTo()) {
-        newWorkflow.setStatus(EWorkflowStatus.ASSIGNED);
-      }
-
-      return this.saveExistsWorkflow(newWorkflow, token);
-    }
 
     throw new IFlowCustomeException("Unknown workflow status id:" + newWorkflow.getId(), EIFlowErrorType.UNKNOWN_WORKFLOW_STATUS);
   }
@@ -211,6 +209,7 @@ public class WorkflowProcessService implements IWorkflowProcessService {
 
     final WorkflowTypeStep nextStep = this.findNextStep(workflowType, newWorkflow.getCurrentStep());
     newWorkflow.setCurrentStep(nextStep);
+    newWorkflow.setCurrentStepId(nextStep != null ? nextStep.getId() : 0);
   }
 
   private void selectWorkflowNextAssigned(final Workflow newWorkflow, final WorkflowType workflowType) {

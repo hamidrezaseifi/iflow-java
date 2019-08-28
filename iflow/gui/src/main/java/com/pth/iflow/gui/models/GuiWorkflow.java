@@ -13,21 +13,21 @@ import com.pth.iflow.common.enums.EWorkflowStatus;
 @JsonIgnoreProperties(value = { "isAssignTo" })
 public class GuiWorkflow {
 
-  private Long                id;
-  private Long                workflowTypeId;
-  private GuiWorkflowType     workflowType;
-  private GuiWorkflowTypeStep currentStep;
-  private Long                currentStepId;
-  private Long                controller;
-  private GuiUser             controllerUser;
-  private Long                createdBy;
-  private GuiUser             createdByUser;
-  private Long                assignTo;
-  private GuiUser             assignToUser;
-  private String              title;
-  private String              comments;
-  private EWorkflowStatus     status;
-  private Integer             version;
+  private Long                          id;
+  private Long                          workflowTypeId;
+  private GuiWorkflowType               workflowType;
+  private GuiWorkflowTypeStep           currentStep;
+  private Long                          currentStepId;
+  private Long                          controller;
+  private GuiUser                       controllerUser;
+  private Long                          createdBy;
+  private GuiUser                       createdByUser;
+  private Long                          assignTo;
+  private GuiUser                       assignToUser;
+  private String                        title;
+  private String                        comments;
+  private EWorkflowStatus               status;
+  private Integer                       version;
 
   private final List<GuiWorkflowFile>   files   = new ArrayList<>();
   private final List<GuiWorkflowAction> actions = new ArrayList<>();
@@ -215,7 +215,7 @@ public class GuiWorkflow {
   }
 
   public void addAction(final GuiWorkflowAction action) {
-    action.setWorkflowId(getId());
+    action.setWorkflowId(this.getId());
     this.actions.add(action);
   }
 
@@ -244,7 +244,7 @@ public class GuiWorkflow {
   }
 
   public boolean getIsNew() {
-    return (getId() == null) || (getId() <= 0);
+    return (this.getId() == null) || (this.getId() <= 0);
   }
 
   public boolean isInitializing() {
@@ -253,11 +253,11 @@ public class GuiWorkflow {
 
   public boolean hasActiveAction() {
 
-    return getActiveAction() != null;
+    return this.getActiveAction() != null;
   }
 
   public GuiWorkflowAction getActiveAction() {
-    for (final GuiWorkflowAction action : getActions()) {
+    for (final GuiWorkflowAction action : this.getActions()) {
       if (action.getIsActive() == true) {
         return action;
       }
@@ -280,7 +280,7 @@ public class GuiWorkflow {
     edo.setAssignTo(this.assignTo);
 
     edo.setFiles(ModelMapperBase.toEdoList(this.files));
-    edo.setActions(GuiWorkflowAction.toEdoList(this.actions));
+    edo.setActions(ModelMapperBase.toEdoList(this.actions));
 
     return edo;
   }
@@ -332,7 +332,7 @@ public class GuiWorkflow {
 
   public static GuiWorkflow generateInitial(final Long creatorId) {
     final GuiWorkflow newWorkflow = new GuiWorkflow();
-    newWorkflow.setStatus(EWorkflowStatus.INITIALIZE);
+    newWorkflow.setStatus(EWorkflowStatus.INITIALIZE_REQUEST);
     newWorkflow.setAssignTo(0L);
     newWorkflow.setCreatedBy(creatorId);
     newWorkflow.setController(0L);

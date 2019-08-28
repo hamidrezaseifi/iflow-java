@@ -2,6 +2,7 @@ package com.pth.iflow.workflow.models;
 
 import com.pth.iflow.common.edo.models.base.WorkflowActionModelBase;
 import com.pth.iflow.common.edo.models.xml.WorkflowActionEdo;
+import com.pth.iflow.common.enums.EWorkflowActionStatus;
 
 public class WorkflowAction extends WorkflowActionModelBase<WorkflowActionEdo, WorkflowAction> {
 
@@ -74,6 +75,26 @@ public class WorkflowAction extends WorkflowActionModelBase<WorkflowActionEdo, W
   @Override
   public Integer getStatusInt() {
     return this.status;
+  }
+
+  public EWorkflowActionStatus getStatus() {
+    return EWorkflowActionStatus.ofValue(this.status);
+  }
+
+  public boolean isStatusSavingRequest() {
+    return this.getStatus() == EWorkflowActionStatus.SAVING_REQUEST;
+  }
+
+  public boolean isStatusDoneRequest() {
+    return this.getStatus() == EWorkflowActionStatus.DONE_REQUEST;
+  }
+
+  public boolean isStatusRequest() {
+    return this.isStatusSavingRequest() || this.isStatusDoneRequest();
+  }
+
+  public void setStatus(final EWorkflowActionStatus status) {
+    this.status = status.getValue().intValue();
   }
 
   public void setStatus(final Integer status) {

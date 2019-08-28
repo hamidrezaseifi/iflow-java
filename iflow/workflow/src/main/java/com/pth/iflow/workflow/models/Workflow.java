@@ -9,17 +9,17 @@ import com.pth.iflow.common.enums.EWorkflowStatus;
 
 public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
 
-  private Long             id;
-  private Long             workflowTypeId;
-  private WorkflowTypeStep currentStep;
-  private Long             currentStepId;
-  private Long             controller;
-  private Long             createdBy;
-  private Long             assignTo;
-  private String           title;
-  private String           comments;
-  private EWorkflowStatus  status;
-  private Integer          version;
+  private Long                       id;
+  private Long                       workflowTypeId;
+  private WorkflowTypeStep           currentStep;
+  private Long                       currentStepId;
+  private Long                       controller;
+  private Long                       createdBy;
+  private Long                       assignTo;
+  private String                     title;
+  private String                     comments;
+  private EWorkflowStatus            status;
+  private Integer                    version;
 
   private final List<WorkflowFile>   files   = new ArrayList<>();
   private final List<WorkflowAction> actions = new ArrayList<>();
@@ -171,11 +171,25 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
   }
 
   public boolean isInitializing() {
-    return isNew() && (getStatus() == EWorkflowStatus.INITIALIZE);
+    return this.isNew() && (this.getStatus() == EWorkflowStatus.INITIALIZE);
   }
 
   public boolean isNew() {
-    return (getId() == null) || (getId() <= 0);
+    return (this.getId() == null) || (this.getId() <= 0);
+  }
+
+  public boolean hasActiveAction() {
+
+    return this.getActiveAction() != null;
+  }
+
+  public WorkflowAction getActiveAction() {
+    for (final WorkflowAction action : this.getActions()) {
+      if (action.getIsActive() == true) {
+        return action;
+      }
+    }
+    return null;
   }
 
   @Override
@@ -193,8 +207,8 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
     edo.setVersion(this.version);
     edo.setAssignTo(this.assignTo);
 
-    edo.setFiles(WorkflowFile.toEdoList(this.files));
-    edo.setActions(WorkflowAction.toEdoList(this.actions));
+    edo.setFiles(ModelMapperBase.toEdoList(this.files));
+    edo.setActions(ModelMapperBase.toEdoList(this.actions));
 
     return edo;
   }
