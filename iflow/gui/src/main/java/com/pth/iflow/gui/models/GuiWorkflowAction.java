@@ -14,6 +14,7 @@ public class GuiWorkflowAction extends WorkflowActionModelBase<WorkflowActionEdo
   private String                action;
   private Long                  oldStep;
   private Long                  newStep;
+  private Long                  nextAssign;
   private String                comments;
   private EWorkflowActionStatus status;
   private Integer               version;
@@ -56,6 +57,14 @@ public class GuiWorkflowAction extends WorkflowActionModelBase<WorkflowActionEdo
 
   public void setNewStep(final Long newStep) {
     this.newStep = newStep;
+  }
+
+  public Long getNextAssign() {
+    return this.nextAssign;
+  }
+
+  public void setNextAssign(final Long nextAssign) {
+    this.nextAssign = nextAssign;
   }
 
   public Long getCreatedBy() {
@@ -136,7 +145,8 @@ public class GuiWorkflowAction extends WorkflowActionModelBase<WorkflowActionEdo
     return model;
   }
 
-  public static GuiWorkflowAction createNewAction(final GuiWorkflow workflow, final Long createdBy, final EWorkflowActionStatus status) {
+  public static GuiWorkflowAction createNewAction(final GuiWorkflow workflow, final Long createdBy,
+      final EWorkflowActionStatus status) {
     final GuiWorkflowAction action = new GuiWorkflowAction();
     action.setCreatedBy(createdBy);
     action.setNewStep(null);

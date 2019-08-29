@@ -17,6 +17,7 @@ public class GuiWorkflowType extends ModelMapperBase<WorkflowTypeEdo, GuiWorkflo
   private Boolean                         sendToController;
   private Boolean                         manualAssign;
   private Boolean                         increaseStepAutomatic;
+  private Boolean                         allowAssign;
   private Integer                         version;
   private final List<GuiWorkflowTypeStep> steps = new ArrayList<>();
 
@@ -98,6 +99,14 @@ public class GuiWorkflowType extends ModelMapperBase<WorkflowTypeEdo, GuiWorkflo
     this.increaseStepAutomatic = increaseStepAutomatic;
   }
 
+  public Boolean getAllowAssign() {
+    return this.allowAssign;
+  }
+
+  public void setAllowAssign(final Boolean allowAssign) {
+    this.allowAssign = allowAssign;
+  }
+
   public Integer getVersion() {
     return this.version;
   }
@@ -137,6 +146,7 @@ public class GuiWorkflowType extends ModelMapperBase<WorkflowTypeEdo, GuiWorkflo
     edo.setSendToController(this.sendToController);
     edo.setManualAssign(this.manualAssign);
     edo.setIncreaseStepAutomatic(this.increaseStepAutomatic);
+    edo.setAllowAssign(this.allowAssign);
     edo.setSteps(ModelMapperBase.toEdoList(this.steps));
     edo.setVersion(this.version);
 
@@ -156,6 +166,7 @@ public class GuiWorkflowType extends ModelMapperBase<WorkflowTypeEdo, GuiWorkflo
     model.setSendToController(edo.getSendToController());
     model.setManualAssign(edo.getManualAssign());
     model.setIncreaseStepAutomatic(edo.getIncreaseStepAutomatic());
+    model.setAllowAssign(edo.getAllowAssign());
     model.setVersion(edo.getVersion());
     model.setSteps(new GuiWorkflowTypeStep().fromEdoList(edo.getSteps()));
 

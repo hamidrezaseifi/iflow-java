@@ -47,10 +47,13 @@
 						</div>
 						<div class="clear"></div>
 					</div>
-					<div class="item-row">
-						<div class="item-label" th:text="#{workflow-comments}"></div>
+					<div class="item-row" ng-if="workflowType.allowAssign">
+						<div class="item-label" th:text="#{workflow-assignto}"></div>
 						<div class="item-content">
-							<textarea ng-model="activeAction.comments"></textarea>
+						<select type="text" ng-model="">
+							<option th:text="#{workflow-select-next-assign}" value="0"></option>
+							<option ng-repeat="item in users" ng-value="item.id">{{item.fullName}}</option>
+						</select>
 						</div>
 						<div class="clear"></div>
 					</div>

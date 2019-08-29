@@ -7,15 +7,16 @@ import com.pth.iflow.common.edo.models.xml.WorkflowActionEdo;
 
 public class WorkflowAction extends DataModelBase<WorkflowActionEdo, WorkflowAction> {
 
-  private Long    id;
-  private Long    workflowId;
-  private Long    createdBy;
-  private String  action;
-  private Long    oldStep;
-  private Long    newStep;
-  private String  comments;
-  private Integer status;
-  private Integer version;
+  private Long          id;
+  private Long          workflowId;
+  private Long          createdBy;
+  private String        action;
+  private Long          oldStep;
+  private Long          newStep;
+  private Long          nextAssign;
+  private String        comments;
+  private Integer       status;
+  private Integer       version;
 
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
@@ -59,6 +60,14 @@ public class WorkflowAction extends DataModelBase<WorkflowActionEdo, WorkflowAct
 
   public void setNewStep(final Long newStep) {
     this.newStep = newStep;
+  }
+
+  public Long getNextAssign() {
+    return this.nextAssign;
+  }
+
+  public void setNextAssign(final Long nextAssign) {
+    this.nextAssign = nextAssign;
   }
 
   public Long getCreatedBy() {

@@ -16,27 +16,30 @@ import com.pth.iflow.common.enums.EWorkflowActionStatus;
 public class WorkflowActionEdo {
 
   @XmlElement(name = "ID", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long id;
+  private Long    id;
 
   @NotNull
   @XmlElement(name = "WorkflowId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long workflowId;
+  private Long    workflowId;
 
   @XmlElement(name = "CreatedBy", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long createdBy;
+  private Long    createdBy;
 
   @NotNull
   @XmlElement(name = "Action", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String action;
+  private String  action;
 
   @XmlElement(name = "OldStep", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long oldStep;
+  private Long    oldStep;
 
   @XmlElement(name = "NewStep", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long newStep;
+  private Long    newStep;
+
+  @XmlElement(name = "NextAssign", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private Long    nextAssign;
 
   @XmlElement(name = "Comments", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String comments;
+  private String  comments;
 
   @NotNull
   @XmlElement(name = "Status", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
@@ -84,6 +87,14 @@ public class WorkflowActionEdo {
 
   public void setNewStep(final Long newStep) {
     this.newStep = newStep;
+  }
+
+  public Long getNextAssign() {
+    return this.nextAssign;
+  }
+
+  public void setNextAssign(final Long nextAssign) {
+    this.nextAssign = nextAssign;
   }
 
   public Long getCreatedBy() {

@@ -12,6 +12,7 @@ public class BackendWorkflowAction extends ModelMapperBase<WorkflowActionEdo, Ba
   private String  action;
   private Long    oldStep;
   private Long    newStep;
+  private Long    nextAssign;
   private String  comments;
   private Integer status;
   private Integer version;
@@ -54,6 +55,14 @@ public class BackendWorkflowAction extends ModelMapperBase<WorkflowActionEdo, Ba
 
   public void setNewStep(final Long newStep) {
     this.newStep = newStep;
+  }
+
+  public Long getNextAssign() {
+    return this.nextAssign;
+  }
+
+  public void setNextAssign(final Long nextAssign) {
+    this.nextAssign = nextAssign;
   }
 
   public Long getCreatedBy() {

@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import com.pth.iflow.common.enums.EWorkflowActionStatus;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 import com.pth.iflow.workflow.models.Company;
 import com.pth.iflow.workflow.models.CompanyProfile;
@@ -102,6 +103,27 @@ public class TestDataProducer {
     return model;
   }
 
+  protected Workflow getTestWorkflow(final Long Id, final EWorkflowActionStatus actionStatus) {
+    final Workflow model = new Workflow();
+    model.setWorkflowTypeId(1L);
+    model.setId(Id);
+    model.setTitle("title " + Id);
+    model.setStatus(EWorkflowStatus.INITIALIZE);
+    model.setVersion(1);
+    model.setComments("comments");
+    model.setController(1L);
+    model.setCurrentStep(this.getTestWorkflowTypeStep());
+    model.setCurrentStepId(model.getCurrentStep().getId());
+    model.setCreatedBy(1L);
+    model.setAssignTo(1L);
+    model.setActions(Arrays.asList(this.getTestWorkflowAction(1L, 1L, actionStatus), this.getTestWorkflowAction(2L, 2L, actionStatus),
+        this.getTestWorkflowAction(3L, 3L, actionStatus)));
+    model
+        .setFiles(Arrays.asList(this.getTestWorkflowFile(1L, 1L), this.getTestWorkflowFile(2L, 2L), this.getTestWorkflowFile(3L, 3L)));
+
+    return model;
+  }
+
   protected WorkflowFile getTestWorkflowFile(final Long Id, final Long workflowId) {
     final WorkflowFile model = new WorkflowFile();
     model.setWorkflowId(workflowId);
@@ -138,7 +160,22 @@ public class TestDataProducer {
     model.setWorkflowId(workflowId);
     model.setId(Id);
     model.setAction("action " + Id);
-    model.setStatus(1);
+    model.setStatus(EWorkflowActionStatus.DONE_REQUEST);
+    model.setVersion(1);
+    model.setCreatedBy(1L);
+    model.setNewStep(2L);
+    model.setOldStep(1L);
+    model.setComments("comments");
+
+    return model;
+  }
+
+  protected WorkflowAction getTestWorkflowAction(final Long Id, final Long workflowId, final EWorkflowActionStatus actionStatus) {
+    final WorkflowAction model = new WorkflowAction();
+    model.setWorkflowId(workflowId);
+    model.setId(Id);
+    model.setAction("action " + Id);
+    model.setStatus(actionStatus);
     model.setVersion(1);
     model.setCreatedBy(1L);
     model.setNewStep(2L);
@@ -159,6 +196,7 @@ public class TestDataProducer {
     model.setManualAssign(true);
     model.setSendToController(true);
     model.setIncreaseStepAutomatic(true);
+    model.setAllowAssign(true);
     model.setSteps(Arrays.asList(this.getTestWorkflowTypeStep(1L, "step 1", 1), this.getTestWorkflowTypeStep(2L, "step 2", 2),
         this.getTestWorkflowTypeStep(3L, "step 3", 3)));
     model.setComments("comments");
