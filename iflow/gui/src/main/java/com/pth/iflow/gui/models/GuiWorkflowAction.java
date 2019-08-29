@@ -118,6 +118,7 @@ public class GuiWorkflowAction extends WorkflowActionModelBase<WorkflowActionEdo
     edo.setCreatedBy(this.createdBy);
     edo.setOldStep(this.oldStep);
     edo.setNewStep(this.newStep);
+    edo.setNextAssign(this.nextAssign);
     edo.setWorkflowId(this.workflowId);
     edo.setVersion(this.version);
 
@@ -139,6 +140,7 @@ public class GuiWorkflowAction extends WorkflowActionModelBase<WorkflowActionEdo
     model.setCreatedBy(edo.getCreatedBy());
     model.setOldStep(edo.getOldStep());
     model.setNewStep(edo.getNewStep());
+    model.setNextAssign(edo.getNextAssign());
     model.setWorkflowId(edo.getWorkflowId());
     model.setVersion(edo.getVersion());
 

@@ -50,7 +50,7 @@
 					<div class="item-row" ng-if="workflowType.allowAssign">
 						<div class="item-label" th:text="#{workflow-assignto}"></div>
 						<div class="item-content">
-						<select type="text" ng-model="">
+						<select type="text" ng-model="activeAction.nextAssign">
 							<option th:text="#{workflow-select-next-assign}" value="0"></option>
 							<option ng-repeat="item in users" ng-value="item.id">{{item.fullName}}</option>
 						</select>

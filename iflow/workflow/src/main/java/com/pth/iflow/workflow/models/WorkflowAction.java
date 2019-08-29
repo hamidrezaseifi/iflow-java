@@ -65,6 +65,10 @@ public class WorkflowAction extends WorkflowActionModelBase<WorkflowActionEdo, W
     this.nextAssign = nextAssign;
   }
 
+  public boolean hasNextAssign() {
+    return this.nextAssign != null && this.nextAssign > 0;
+  }
+
   public Long getCreatedBy() {
     return this.createdBy;
   }
@@ -128,6 +132,7 @@ public class WorkflowAction extends WorkflowActionModelBase<WorkflowActionEdo, W
     edo.setCreatedBy(this.createdBy);
     edo.setOldStep(this.oldStep);
     edo.setNewStep(this.newStep);
+    edo.setNextAssign(this.nextAssign);
     edo.setWorkflowId(this.workflowId);
     edo.setVersion(this.version);
 
@@ -149,6 +154,7 @@ public class WorkflowAction extends WorkflowActionModelBase<WorkflowActionEdo, W
     model.setCreatedBy(edo.getCreatedBy());
     model.setOldStep(edo.getOldStep());
     model.setNewStep(edo.getNewStep());
+    model.setNextAssign(edo.getNextAssign());
     model.setWorkflowId(edo.getWorkflowId());
     model.setVersion(edo.getVersion());
 

@@ -225,27 +225,35 @@ public class WorkflowProcessService implements IWorkflowProcessService {
      * TODO: implements select next assigned for workflow based on new step
      */
 
-    newWorkflow.setAssignTo(0L);
-    newWorkflow.setStatus(EWorkflowStatus.NOT_ASSIGNED);
+    this.assignWorkflowToUser(newWorkflow, 0L);
 
     if (workflowType.getSendToController().booleanValue() == true) {
-      newWorkflow.setAssignTo(newWorkflow.getController());
-      newWorkflow.setStatus(EWorkflowStatus.ASSIGNED);
+      this.assignWorkflowToUser(newWorkflow, newWorkflow.getController());
     } else {
 
-      this.setAssignToControllerAfterLastStep(newWorkflow, workflowType, activeAction);
+      if (this.setAssignToControllerAfterLastStep(newWorkflow, workflowType, activeAction) == false) {
+        if (workflowType.getAllowAssign() && activeAction.hasNextAssign()) {
+          this.assignWorkflowToUser(newWorkflow, activeAction.getNextAssign());
+        }
+      }
 
     }
 
   }
 
-  private void setAssignToControllerAfterLastStep(final Workflow newWorkflow, final WorkflowType workflowType,
+  private void assignWorkflowToUser(final Workflow newWorkflow, final Long userId) {
+    newWorkflow.setAssignTo(userId);
+    newWorkflow.setStatus(userId == null || userId == 0 ? EWorkflowStatus.NOT_ASSIGNED : EWorkflowStatus.ASSIGNED);
+  }
+
+  private boolean setAssignToControllerAfterLastStep(final Workflow newWorkflow, final WorkflowType workflowType,
       final WorkflowAction activeAction) {
     final WorkflowTypeStep lastStep = this.findLastStep(workflowType);
     if (lastStep.getStepIndex() == newWorkflow.getCurrentStep().getStepIndex()) {
-      newWorkflow.setAssignTo(newWorkflow.getController());
-      newWorkflow.setStatus(EWorkflowStatus.ASSIGNED);
+      this.assignWorkflowToUser(newWorkflow, newWorkflow.getController());
+      return true;
     }
+    return false;
   }
 
   private void selectWorkflowNextAssignedUser(final Workflow newWorkflow, final WorkflowType workflowType) {
