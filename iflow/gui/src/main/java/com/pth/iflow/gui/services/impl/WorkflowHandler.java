@@ -73,8 +73,10 @@ public class WorkflowHandler implements IWorkflowHandler {
 
     final List<GuiWorkflow> workflowList = new ArrayList<>();
 
-    for (final GuiWorkflow workflow : pureWorkflowList) {
-      workflowList.add(this.prepareWorkflow(workflow));
+    if (pureWorkflowList != null) {
+      for (final GuiWorkflow workflow : pureWorkflowList) {
+        workflowList.add(this.prepareWorkflow(workflow));
+      }
     }
 
     return workflowList;

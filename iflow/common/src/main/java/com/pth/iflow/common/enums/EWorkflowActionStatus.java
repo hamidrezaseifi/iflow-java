@@ -24,7 +24,7 @@ public enum EWorkflowActionStatus implements IValueList {
       }
     }
 
-    throw new IFlowInvalidEnumValueException("Invalid value '" + value + "' for enum EWorkflowStatus");
+    throw new IFlowInvalidEnumValueException("Invalid value '" + value + "' for enum EWorkflowActionStatus");
   }
 
   @Override

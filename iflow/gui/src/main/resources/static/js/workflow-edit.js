@@ -50,33 +50,7 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 	        alert(response.data);
 	    });
 		
-	};
-
-	$scope.save = function (){
-		
-		//alert(JSON.stringify($scope.workflowCreateRequest)); 
-
-			
-		$http({
-	        method : "POST",
-	        headers: {
-	        	'Content-type': 'application/json; charset=UTF-8',
-	        },
-	        url : $scope.saveUrl,
-	        data: $scope.workflowCreateRequest,
-	    }).then(function successCallback(response) {
-	    	
-	    	alert("saved");
-	    	
-	    	window.location = $scope.listUrl;
-	
-	    }, function errorCallback(response) {
-	        
-	        alert(response.data);
-	    });
-		
-	};
-	
+	};	
 
 	$scope.saveWorkflow = function(){
 		
@@ -93,7 +67,7 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 	    	
 	    	alert("saved");
 	    	
-	    	//window.location = $scope.listUrl;
+	    	window.location = $scope.listUrl;
 	
 	    }, function errorCallback(response) {
 	        
@@ -117,7 +91,7 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 	    	
 	    	alert("saved");
 	    	
-	    	//window.location = $scope.listUrl;
+	    	window.location = $scope.listUrl;
 	
 	    }, function errorCallback(response) {
 	        
