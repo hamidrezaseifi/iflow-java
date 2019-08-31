@@ -4,28 +4,31 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 import com.pth.iflow.common.edo.models.xml.WorkflowEdo;
 import com.pth.iflow.common.edo.models.xml.WorkflowListEdo;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 
+@JsonIgnoreProperties(value = { "isAssignTo" })
 public class GuiWorkflow {
 
-  private Long                id;
-  private Long                workflowTypeId;
-  private GuiWorkflowType     workflowType;
-  private GuiWorkflowTypeStep currentStep;
-  private Long                currentStepId;
-  private Long                controller;
-  private GuiUser             controllerUser;
-  private Long                createdBy;
-  private GuiUser             createdByUser;
-  private Long                assignTo;
-  private GuiUser             assignToUser;
-  private String              title;
-  private String              comments;
-  private EWorkflowStatus     status;
-  private Integer             version;
+  private Long                          id;
+  private Long                          workflowTypeId;
+  private GuiWorkflowType               workflowType;
+  private GuiWorkflowTypeStep           currentStep;
+  private Long                          currentStepId;
+  private Long                          controller;
+  private GuiUser                       controllerUser;
+  private Long                          createdBy;
+  private GuiUser                       createdByUser;
+  private Long                          assignTo;
+  private GuiUser                       assignToUser;
+  private String                        title;
+  private String                        comments;
+  private EWorkflowStatus               status;
+  private Integer                       version;
+  private Boolean                       nextAssign;
 
   private final List<GuiWorkflowFile>   files   = new ArrayList<>();
   private final List<GuiWorkflowAction> actions = new ArrayList<>();
@@ -124,8 +127,8 @@ public class GuiWorkflow {
     return this.assignTo;
   }
 
-  public boolean isAssigned() {
-    return (this.assignTo != null) && (this.assignTo > 0);
+  public boolean isAssignTo(final Long userId) {
+    return this.assignTo == userId;
   }
 
   public void setAssignTo(final Long assignTo) {
@@ -186,6 +189,14 @@ public class GuiWorkflow {
     this.version = version;
   }
 
+  public Boolean getNextAssign() {
+    return this.nextAssign;
+  }
+
+  public void setNextAssign(final Boolean nextAssign) {
+    this.nextAssign = nextAssign;
+  }
+
   public List<GuiWorkflowFile> getFiles() {
     return this.files;
   }
@@ -206,6 +217,11 @@ public class GuiWorkflow {
     if (actions != null) {
       this.actions.addAll(actions);
     }
+  }
+
+  public void addAction(final GuiWorkflowAction action) {
+    action.setWorkflowId(this.getId());
+    this.actions.add(action);
   }
 
   public boolean isAfterStep(final GuiWorkflow other) {
@@ -233,11 +249,41 @@ public class GuiWorkflow {
   }
 
   public boolean getIsNew() {
-    return (getId() == null) || (getId() <= 0);
+    return (this.getId() == null) || (this.getId() <= 0);
   }
 
   public boolean isInitializing() {
     return this.getIsNew() && (this.getStatus() == EWorkflowStatus.INITIALIZE);
+  }
+
+  public boolean getHasActiveAction() {
+
+    return this.getActiveAction() != null;
+  }
+
+  public GuiWorkflowAction getActiveAction() {
+    for (final GuiWorkflowAction action : this.getActions()) {
+      if (action.getIsActive() == true) {
+        return action;
+      }
+    }
+    return null;
+  }
+
+  public boolean getIsDone() {
+    return this.status == EWorkflowStatus.DONE;
+  }
+
+  public boolean getIsArchived() {
+    return this.status == EWorkflowStatus.ARCHIVED;
+  }
+
+  public boolean getIsError() {
+    return this.status == EWorkflowStatus.ERROR;
+  }
+
+  public boolean getIsOpen() {
+    return (this.assignTo != null) && (this.assignTo > 0) && this.status == EWorkflowStatus.ASSIGNED;
   }
 
   public WorkflowEdo toEdo() {
@@ -252,6 +298,7 @@ public class GuiWorkflow {
     edo.setCreatedBy(this.createdBy);
     edo.setWorkflowTypeId(this.workflowTypeId);
     edo.setVersion(this.version);
+    edo.setNextAssign(this.nextAssign);
     edo.setAssignTo(this.assignTo);
 
     edo.setFiles(ModelMapperBase.toEdoList(this.files));
@@ -276,6 +323,7 @@ public class GuiWorkflow {
     model.setCreatedBy(edo.getCreatedBy());
     model.setWorkflowTypeId(edo.getWorkflowTypeId());
     model.setVersion(edo.getVersion());
+    model.setNextAssign(edo.getNextAssign());
     model.setAssignTo(edo.getAssignTo());
 
     model.setFiles(new GuiWorkflowFile().fromEdoList(edo.getFiles()));
@@ -307,7 +355,7 @@ public class GuiWorkflow {
 
   public static GuiWorkflow generateInitial(final Long creatorId) {
     final GuiWorkflow newWorkflow = new GuiWorkflow();
-    newWorkflow.setStatus(EWorkflowStatus.INITIALIZE);
+    newWorkflow.setStatus(EWorkflowStatus.INITIALIZE_REQUEST);
     newWorkflow.setAssignTo(0L);
     newWorkflow.setCreatedBy(creatorId);
     newWorkflow.setController(0L);

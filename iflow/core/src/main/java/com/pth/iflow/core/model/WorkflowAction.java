@@ -2,20 +2,22 @@ package com.pth.iflow.core.model;
 
 import java.time.LocalDateTime;
 
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
+import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.edo.models.xml.WorkflowActionEdo;
 
-public class WorkflowAction extends ModelMapperBase<WorkflowActionEdo, WorkflowAction> {
+public class WorkflowAction extends DataModelBase<WorkflowActionEdo, WorkflowAction> {
 
-  private Long id;
-  private Long workflowId;
-  private Long createdBy;
-  private String action;
-  private Long oldStep;
-  private Long newStep;
-  private String comments;
-  private Integer status;
-  private Integer version;
+  private Long          id;
+  private Long          workflowId;
+  private Long          createdBy;
+  private String        action;
+  private Long          oldStep;
+  private Long          newStep;
+  private Long          nextAssign;
+  private String        comments;
+  private Integer       status;
+  private Integer       version;
+
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
 
@@ -29,7 +31,7 @@ public class WorkflowAction extends ModelMapperBase<WorkflowActionEdo, WorkflowA
   }
 
   public Long getWorkflowId() {
-    return workflowId;
+    return this.workflowId;
   }
 
   public void setWorkflowId(final Long workflowId) {
@@ -37,7 +39,7 @@ public class WorkflowAction extends ModelMapperBase<WorkflowActionEdo, WorkflowA
   }
 
   public String getAction() {
-    return action;
+    return this.action;
   }
 
   public void setAction(final String action) {
@@ -45,7 +47,7 @@ public class WorkflowAction extends ModelMapperBase<WorkflowActionEdo, WorkflowA
   }
 
   public Long getOldStep() {
-    return oldStep;
+    return this.oldStep;
   }
 
   public void setOldStep(final Long oldStep) {
@@ -53,15 +55,23 @@ public class WorkflowAction extends ModelMapperBase<WorkflowActionEdo, WorkflowA
   }
 
   public Long getNewStep() {
-    return newStep;
+    return this.newStep;
   }
 
   public void setNewStep(final Long newStep) {
     this.newStep = newStep;
   }
 
+  public Long getNextAssign() {
+    return this.nextAssign;
+  }
+
+  public void setNextAssign(final Long nextAssign) {
+    this.nextAssign = nextAssign;
+  }
+
   public Long getCreatedBy() {
-    return createdBy;
+    return this.createdBy;
   }
 
   public void setCreatedBy(final Long createdBy) {
@@ -117,11 +127,11 @@ public class WorkflowAction extends ModelMapperBase<WorkflowActionEdo, WorkflowA
     edo.setComments(this.comments);
     edo.setStatus(this.status);
     edo.setId(this.id);
-    edo.setCreatedBy(createdBy);
-    edo.setOldStep(oldStep);
-    edo.setNewStep(newStep);
-    edo.setWorkflowId(workflowId);
-    edo.setVersion(version);
+    edo.setCreatedBy(this.createdBy);
+    edo.setOldStep(this.oldStep);
+    edo.setNewStep(this.newStep);
+    edo.setWorkflowId(this.workflowId);
+    edo.setVersion(this.version);
 
     return edo;
   }

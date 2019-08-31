@@ -15,7 +15,6 @@ public class Department extends ModelMapperBase<DepartmentEdo, Department> {
   private Integer                     version;
   private final List<DepartmentGroup> departmentGroups = new ArrayList<>();
 
-  @Override
   public Long getId() {
     return this.id;
   }
@@ -48,12 +47,10 @@ public class Department extends ModelMapperBase<DepartmentEdo, Department> {
     this.status = status;
   }
 
-  @Override
   public Integer getVersion() {
     return this.version;
   }
 
-  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }

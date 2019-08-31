@@ -17,27 +17,84 @@
 				<button class="toolbar-button" ng-click="reload();"><i class="material-icons">refresh</i></button>
 			</div>
 		
-			<div class="workflow-content">
-				<div class="item-row">
-					<div class="item-label" th:text="#{workflow-title}"></div>
-					<div class="item-content"><input type="text" ng-model="workflow.title" readonly="readonly" /></div>
-					<div class="clear"></div>
-				</div>
-				<div class="item-row">
-					<div class="item-label" th:text="#{workflow-comments}"></div>
-					<div class="item-content">
-						<textarea ng-model="workflow.comments" readonly="readonly"></textarea>
+			<div class="workflow-content-container">
+				<div class="workflow-content">
+					<div class="item-row">
+						<div class="item-label" th:text="#{workflow-title}"></div>
+						<div class="item-content"><div class="line-data">{{workflow.title}}</div></div>
+						<div class="clear"></div>
 					</div>
-					<div class="clear"></div>
+					<div class="item-row">
+						<div class="item-label" th:text="#{workflow-comments}"></div>
+						<div class="item-content">
+							<div class="item-content">
+								<div class="line-data">{{workflow.comments}}</div>
+							</div>
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="item-row" ng-show="true">
+						<div class="item-label" th:text="#{workflow-current-step}"></div>
+						<div class="item-content">
+							{{workflow.currentStep.title}}
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="item-row" ng-if="workflow.hasActiveAction">
+						<div class="item-label" th:text="#{workflow-action-title}"></div>
+						<div class="item-content">
+							<textarea ng-model="activeAction.action"></textarea>
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="item-row" ng-if="workflowType.allowAssign && workflow.nextAssign && workflow.hasActiveAction">
+						<div class="item-label" th:text="#{workflow-assignto}"></div>
+						<div class="item-content">
+						<select type="text" ng-model="activeAction.nextAssign">
+							<option th:text="#{workflow-select-next-assign}" value="0"></option>
+							<option ng-repeat="item in users" ng-value="item.id">{{item.fullName}}</option>
+						</select>
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="item-row">
+						
+						<div class="item-content workflow-step-button-bar">
+							<button ng-click="makeWorkflowDone(item.id)" class="button-bar-button step-button" ng-repeat="item in listAvaileableSteps()">{{item.title}}</button>
+							<button ng-click="saveWorkflow()" class="button-bar-button step-button button-save">
+								<span th:text="#{common.save}"></span>
+								<i class="material-icons">save</i>
+							</button>
+							<button ng-click="arhiveWorkflow()" class="button-bar-button step-button button-archive">
+								<span th:text="#{workflow-archive}"></span>
+								<i class="material-icons">archive</i>
+							</button>
+							<div class="clear"></div>
+						</div>
+						
+						
+					</div>
+				
 				</div>
-				<div class="item-row">
+				<div class="workflow-record">
+				
+				</div>
+				<div class="clear"></div>
+<hr>
+				<div >
 					{{getWorkFlowTest()}}
+				</div>
+<hr>
+				<div >
+					{{activeAction}}
 				</div>
 			</div>
 		    		    
 		    <script type="text/javascript">
 			var loadUrl = "/workflow/data/workflow/edit/[[${workflowId}]]";
-			var saveUrl = "/workflow/data/workflow/edit";
+			var saveUrl = "/workflow/data/workflow/save";
+			var archiveUrl = "/workflow/data/workflow/archive";
+			var doneUrl = "/workflow/data/workflow/done";
 			var listUrl = "/workflow/list";
 				
 		    </script>

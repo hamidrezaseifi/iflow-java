@@ -4,10 +4,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
+import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.edo.models.xml.DepartmentEdo;
 
-public class Department extends ModelMapperBase<DepartmentEdo, Department> {
+public class Department extends DataModelBase<DepartmentEdo, Department> {
 
   private Long                        id;
   private Long                        companyId;
@@ -99,7 +99,7 @@ public class Department extends ModelMapperBase<DepartmentEdo, Department> {
     edo.setStatus(this.status);
     edo.setId(this.id);
     edo.setCompanyId(this.companyId);
-    edo.setDepartmentGroups(ModelMapperBase.toEdoList(this.departmentGroups));
+    edo.setDepartmentGroups(DataModelBase.toEdoList(this.departmentGroups));
     edo.setVersion(this.version);
 
     return edo;

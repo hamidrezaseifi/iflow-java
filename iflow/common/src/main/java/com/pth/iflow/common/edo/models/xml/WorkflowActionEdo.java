@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
+import com.pth.iflow.common.enums.EWorkflowActionStatus;
 
 @XmlRootElement(name = "WorkflowAction", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -33,6 +34,9 @@ public class WorkflowActionEdo {
 
   @XmlElement(name = "NewStep", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Long    newStep;
+
+  @XmlElement(name = "NextAssign", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private Long    nextAssign;
 
   @XmlElement(name = "Comments", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String  comments;
@@ -85,6 +89,14 @@ public class WorkflowActionEdo {
     this.newStep = newStep;
   }
 
+  public Long getNextAssign() {
+    return this.nextAssign;
+  }
+
+  public void setNextAssign(final Long nextAssign) {
+    this.nextAssign = nextAssign;
+  }
+
   public Long getCreatedBy() {
     return this.createdBy;
   }
@@ -115,6 +127,10 @@ public class WorkflowActionEdo {
 
   public void setVersion(final Integer version) {
     this.version = version;
+  }
+
+  public boolean getIsActive() {
+    return EWorkflowActionStatus.getIsActive(this.status);
   }
 
 }

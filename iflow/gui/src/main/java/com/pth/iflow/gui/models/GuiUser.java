@@ -11,12 +11,12 @@ import org.springframework.security.core.authority.AuthorityUtils;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.pth.iflow.gui.models.ui.enums.EUiUserRole;
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 import com.pth.iflow.common.edo.models.xml.UserEdo;
 import com.pth.iflow.common.enums.EUserStatus;
+import com.pth.iflow.gui.models.ui.enums.EUiUserRole;
 
-@JsonIgnoreProperties(value = { "authorities", "enabled", })
+@JsonIgnoreProperties(value = { "authorities", "enabled", "roles", })
 public class GuiUser extends ModelMapperBase<UserEdo, GuiUser> {
 
   private Long                    id;
@@ -36,12 +36,12 @@ public class GuiUser extends ModelMapperBase<UserEdo, GuiUser> {
   private final List<Long>        deputies         = new ArrayList<>();
   private final List<EUiUserRole> roles            = new ArrayList<>();
 
-  private boolean                 isEnabled;
+  private boolean isEnabled;
 
   /**
    * @return the id
    */
-  @Override
+
   public Long getId() {
     return this.id;
   }
@@ -143,7 +143,7 @@ public class GuiUser extends ModelMapperBase<UserEdo, GuiUser> {
   /**
    * @return the version
    */
-  @Override
+
   public Integer getVersion() {
     return this.version;
   }
@@ -151,7 +151,7 @@ public class GuiUser extends ModelMapperBase<UserEdo, GuiUser> {
   /**
    * @param version the version to set
    */
-  @Override
+
   public void setVersion(final Integer version) {
     this.version = version;
   }

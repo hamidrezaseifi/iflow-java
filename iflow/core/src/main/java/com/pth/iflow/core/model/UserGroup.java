@@ -2,16 +2,16 @@ package com.pth.iflow.core.model;
 
 import java.time.LocalDateTime;
 
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
+import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.edo.models.xml.UserGroupEdo;
 
-public class UserGroup extends ModelMapperBase<UserGroupEdo, UserGroup> {
+public class UserGroup extends DataModelBase<UserGroupEdo, UserGroup> {
 
-  private Long id;
-  private Long companyId;
-  private String title;
-  private Integer status;
-  private Integer version;
+  private Long          id;
+  private Long          companyId;
+  private String        title;
+  private Integer       status;
+  private Integer       version;
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
 
@@ -81,7 +81,7 @@ public class UserGroup extends ModelMapperBase<UserGroupEdo, UserGroup> {
     edo.setStatus(this.status);
     edo.setId(this.id);
     edo.setCompanyId(this.companyId);
-    edo.setVersion(version);
+    edo.setVersion(this.version);
 
     return edo;
   }

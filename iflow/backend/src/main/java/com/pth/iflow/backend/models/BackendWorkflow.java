@@ -20,11 +20,11 @@ public class BackendWorkflow extends ModelMapperBase<WorkflowEdo, BackendWorkflo
   private String                            comments;
   private EWorkflowStatus                   status;
   private Integer                           version;
+  private Boolean                           nextAssign;
 
   private final List<BackendWorkflowFile>   files   = new ArrayList<>();
   private final List<BackendWorkflowAction> actions = new ArrayList<>();
 
-  @Override
   public Long getId() {
     return this.id;
   }
@@ -117,14 +117,20 @@ public class BackendWorkflow extends ModelMapperBase<WorkflowEdo, BackendWorkflo
     return this.status.getValue().intValue();
   }
 
-  @Override
   public Integer getVersion() {
     return this.version;
   }
 
-  @Override
   public void setVersion(final Integer version) {
     this.version = version;
+  }
+
+  public Boolean getNextAssign() {
+    return this.nextAssign;
+  }
+
+  public void setNextAssign(final Boolean nextAssign) {
+    this.nextAssign = nextAssign;
   }
 
   public List<BackendWorkflowFile> getFiles() {
@@ -177,6 +183,10 @@ public class BackendWorkflow extends ModelMapperBase<WorkflowEdo, BackendWorkflo
     return this.isNew() && (this.getStatus() == EWorkflowStatus.INITIALIZE);
   }
 
+  public boolean isNew() {
+    return (this.id == null) || (this.id <= 0);
+  }
+
   @Override
   public WorkflowEdo toEdo() {
     final WorkflowEdo edo = new WorkflowEdo();
@@ -190,6 +200,7 @@ public class BackendWorkflow extends ModelMapperBase<WorkflowEdo, BackendWorkflo
     edo.setCreatedBy(this.createdBy);
     edo.setWorkflowTypeId(this.workflowTypeId);
     edo.setVersion(this.version);
+    edo.setNextAssign(this.nextAssign);
     edo.setAssignTo(this.assignTo);
 
     edo.setFiles(ModelMapperBase.toEdoList(this.files));
@@ -215,6 +226,7 @@ public class BackendWorkflow extends ModelMapperBase<WorkflowEdo, BackendWorkflo
     model.setCreatedBy(edo.getCreatedBy());
     model.setWorkflowTypeId(edo.getWorkflowTypeId());
     model.setVersion(edo.getVersion());
+    model.setNextAssign(edo.getNextAssign());
     model.setAssignTo(edo.getAssignTo());
 
     model.setFiles(new BackendWorkflowFile().fromEdoList(edo.getFiles()));

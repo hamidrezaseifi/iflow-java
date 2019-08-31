@@ -8,14 +8,13 @@ import com.pth.iflow.common.edo.models.xml.DepartmentEdo;
 
 public class BackendDepartment extends ModelMapperBase<DepartmentEdo, BackendDepartment> {
 
-  private Long                        id;
-  private Long                        companyId;
-  private String                      title;
-  private Integer                     status;
-  private Integer                     version;
+  private Long                               id;
+  private Long                               companyId;
+  private String                             title;
+  private Integer                            status;
+  private Integer                            version;
   private final List<BackendDepartmentGroup> departmentGroups = new ArrayList<>();
 
-  @Override
   public Long getId() {
     return this.id;
   }
@@ -48,12 +47,10 @@ public class BackendDepartment extends ModelMapperBase<DepartmentEdo, BackendDep
     this.status = status;
   }
 
-  @Override
   public Integer getVersion() {
     return this.version;
   }
 
-  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }

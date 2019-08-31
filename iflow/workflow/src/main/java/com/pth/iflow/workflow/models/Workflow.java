@@ -9,22 +9,22 @@ import com.pth.iflow.common.enums.EWorkflowStatus;
 
 public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
 
-  private Long             id;
-  private Long             workflowTypeId;
-  private WorkflowTypeStep currentStep;
-  private Long             currentStepId;
-  private Long             controller;
-  private Long             createdBy;
-  private Long             assignTo;
-  private String           title;
-  private String           comments;
-  private EWorkflowStatus  status;
-  private Integer          version;
+  private Long                       id;
+  private Long                       workflowTypeId;
+  private WorkflowTypeStep           currentStep;
+  private Long                       currentStepId;
+  private Long                       controller;
+  private Long                       createdBy;
+  private Long                       assignTo;
+  private String                     title;
+  private String                     comments;
+  private EWorkflowStatus            status;
+  private Integer                    version;
+  private Boolean                    nextAssign;
 
   private final List<WorkflowFile>   files   = new ArrayList<>();
   private final List<WorkflowAction> actions = new ArrayList<>();
 
-  @Override
   public Long getId() {
     return this.id;
   }
@@ -117,20 +117,30 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
     return this.status.getValue().intValue();
   }
 
-  @Override
+  public boolean isStatusArchive() {
+    return this.status == EWorkflowStatus.ARCHIVED;
+  }
+
   public Integer getVersion() {
     return this.version;
   }
 
-  @Override
   public void setVersion(final Integer version) {
     this.version = version;
+  }
+
+  public Boolean getNextAssign() {
+    return this.nextAssign;
+  }
+
+  public void setNextAssign(final Boolean nextAssign) {
+    this.nextAssign = nextAssign;
   }
 
   public List<WorkflowFile> getFiles() {
     return this.files;
   }
-  
+
   public void setFiles(final List<WorkflowFile> files) {
     this.files.clear();
     if (files != null) {
@@ -141,7 +151,7 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
   public List<WorkflowAction> getActions() {
     return this.actions;
   }
-  
+
   public void setActions(final List<WorkflowAction> actions) {
     this.actions.clear();
     if (actions != null) {
@@ -174,7 +184,25 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
   }
 
   public boolean isInitializing() {
-    return isNew() && (getStatus() == EWorkflowStatus.INITIALIZE);
+    return this.isNew() && (this.getStatus() == EWorkflowStatus.INITIALIZE);
+  }
+
+  public boolean isNew() {
+    return (this.getId() == null) || (this.getId() <= 0);
+  }
+
+  public boolean hasActiveAction() {
+
+    return this.getActiveAction() != null;
+  }
+
+  public WorkflowAction getActiveAction() {
+    for (final WorkflowAction action : this.getActions()) {
+      if (action.getIsActive() == true) {
+        return action;
+      }
+    }
+    return null;
   }
 
   @Override
@@ -190,10 +218,11 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
     edo.setCreatedBy(this.createdBy);
     edo.setWorkflowTypeId(this.workflowTypeId);
     edo.setVersion(this.version);
+    edo.setNextAssign(this.nextAssign);
     edo.setAssignTo(this.assignTo);
 
-    edo.setFiles(WorkflowFile.toEdoList(this.files));
-    edo.setActions(WorkflowAction.toEdoList(this.actions));
+    edo.setFiles(ModelMapperBase.toEdoList(this.files));
+    edo.setActions(ModelMapperBase.toEdoList(this.actions));
 
     return edo;
   }
@@ -215,6 +244,7 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
     model.setCreatedBy(edo.getCreatedBy());
     model.setWorkflowTypeId(edo.getWorkflowTypeId());
     model.setVersion(edo.getVersion());
+    model.setNextAssign(edo.getNextAssign());
     model.setAssignTo(edo.getAssignTo());
 
     model.setFiles(new WorkflowFile().fromEdoList(edo.getFiles()));
@@ -222,5 +252,5 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
 
     return model;
   }
-  
+
 }

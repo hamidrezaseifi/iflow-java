@@ -1,23 +1,26 @@
 package com.pth.iflow.gui.models;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.pth.iflow.common.edo.models.xml.WorkflowSearchFilterEdo;
+import com.pth.iflow.common.enums.EWorkflowStatus;
 
 public class GuiWorkflowSearchFilter {
 
-  private boolean meAssigned;
+  private boolean       meAssigned;
 
-  private List<Long> assignedUserIdList = new ArrayList<>();
+  private List<Long>    assignedUserIdList  = new ArrayList<>();
 
-  private List<Integer> statusList = new ArrayList<>();
+  private List<Integer> statusList          = new ArrayList<>();
 
-  private List<Long> workflowTypeIdList = new ArrayList<>();
+  private List<Long>    workflowTypeIdList  = new ArrayList<>();
 
-  private List<Long> workflowStepeIdList = new ArrayList<>();
+  private List<Long>    workflowStepeIdList = new ArrayList<>();
 
-  private String title;
+  private String        title;
 
   /**
    * @return the meAssigned
@@ -99,6 +102,9 @@ public class GuiWorkflowSearchFilter {
     final GuiWorkflowSearchFilter workflowSearchFilter = new GuiWorkflowSearchFilter();
 
     workflowSearchFilter.setMeAssigned(true);
+    workflowSearchFilter.setStatusList(Arrays.asList(EWorkflowStatus.values()).stream().filter(e -> e != EWorkflowStatus.ARCHIVED)
+        .map(e -> e.getValue().intValue()).collect(Collectors.toList()));
+
     return workflowSearchFilter;
   }
 }

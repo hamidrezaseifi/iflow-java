@@ -8,11 +8,15 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 	
 	$scope.loadUrl = loadUrl;
 	$scope.saveUrl = saveUrl;
+	$scope.archiveUrl = archiveUrl;
+	$scope.doneUrl = doneUrl;
 	$scope.listUrl = listUrl;
 	
 	$scope.workflowType = {};
 	$scope.users = [];
+	$scope.workflowTypeSteps = [];
 	$scope.workflow = {};
+	$scope.activeAction = getNewAction();
 	
 	$scope.showSelectAssign = false;
 	
@@ -24,6 +28,7 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 		$scope.workflowType = {};
 		$scope.users = [];
 		$scope.workflow = {};
+		$scope.activeAction = getNewAction();
 			
 		$http({
 	        method : "POST",
@@ -36,6 +41,9 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 	    	$scope.workflowType = response.data.workflowType;
 	    	$scope.users = response.data.users;
 	    	$scope.workflow = initWorkFlow(response.data.workflow);
+	    	$scope.workflowTypeSteps = $scope.workflowType.steps;
+	    	
+	    	prepareActiveAction();
 	    	
 	
 	    }, function errorCallback(response) {
@@ -43,20 +51,19 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 	        alert(response.data);
 	    });
 		
-	};
+	};	
 
-	$scope.save = function (){
+	$scope.saveWorkflow = function(){
 		
-		//alert(JSON.stringify($scope.workflowCreateRequest)); 
-
-			
+		var saveData = angular.copy($scope.workflow);
+		
 		$http({
 	        method : "POST",
 	        headers: {
 	        	'Content-type': 'application/json; charset=UTF-8',
 	        },
 	        url : $scope.saveUrl,
-	        data: $scope.workflowCreateRequest,
+	        data: saveData,
 	    }).then(function successCallback(response) {
 	    	
 	    	alert("saved");
@@ -67,10 +74,55 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 	        
 	        alert(response.data);
 	    });
+	};
+
+	$scope.arhiveWorkflow = function(){
 		
+		var saveData = angular.copy($scope.workflow);
+		
+		$http({
+	        method : "POST",
+	        headers: {
+	        	'Content-type': 'application/json; charset=UTF-8',
+	        },
+	        url : $scope.archiveUrl,
+	        data: saveData,
+	    }).then(function successCallback(response) {
+	    	
+	    	alert("saved");
+	    	
+	    	window.location = $scope.listUrl;
+	
+	    }, function errorCallback(response) {
+	        
+	        alert(response.data);
+	    });
+	};
+
+	$scope.makeWorkflowDone = function(id){
+		
+		var saveData = angular.copy($scope.workflow);
+		saveData.currentStepId = id;
+		
+		$http({
+	        method : "POST",
+	        headers: {
+	        	'Content-type': 'application/json; charset=UTF-8',
+	        },
+	        url : $scope.doneUrl,
+	        data: saveData,
+	    }).then(function successCallback(response) {
+	    	
+	    	alert("saved");
+	    	
+	    	window.location = $scope.listUrl;
+	
+	    }, function errorCallback(response) {
+	        
+	        alert(response.data);
+	    });
 	};
 	
-
 	$scope.getUserById = function(id){
 		for(o in $scope.users){
     		var user =$scope.users[o];
@@ -80,7 +132,6 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
     	}
 		return null;
 	};
-
 	
 	
 	
@@ -96,6 +147,33 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 		
 		return workflow;
 	};
+	
+	function prepareActiveAction(){
+    	for(index in $scope.workflow.actions){
+    		if($scope.workflow.actions[index].isActive){
+    			$scope.activeAction = $scope.workflow.actions[index];
+    			$scope.activeAction.oldStep = "" + $scope.activeAction.oldStep;
+    			$scope.activeAction.newStep = "" + $scope.activeAction.newStep;
+
+    			break;
+    		}	    		
+    	}		
+	}
+	
+	$scope.listAvaileableSteps = function(){
+    	
+		var list = []; 
+		for(index in $scope.workflowTypeSteps){
+			if($scope.workflowTypeSteps[index].stepIndex > $scope.workflow.currentStep.stepIndex){
+				list.push($scope.workflowTypeSteps[index]);
+			}
+		}
+		return list;
+	}
+	
+	function getNewAction(){
+		return {action: "", oldStep: 0, newStep: 0, comments: "", };
+	}
 	
 	$scope.reload();
 });

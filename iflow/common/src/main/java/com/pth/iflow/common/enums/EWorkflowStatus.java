@@ -4,11 +4,13 @@ import com.pth.iflow.common.enums.base.IValueList;
 import com.pth.iflow.common.exceptions.IFlowInvalidEnumValueException;
 
 public enum EWorkflowStatus implements IValueList {
-  INITIALIZE(1),
-  NOT_ASSIGNED(5),
-  ASSIGNED(10),
-  DONE(15),
-  ERROR(20);
+  INITIALIZE_REQUEST(1),
+  INITIALIZE(5),
+  NOT_ASSIGNED(10),
+  ASSIGNED(15),
+  DONE(20),
+  ARCHIVED(25),
+  ERROR(30);
 
   private final int id;
 
@@ -28,7 +30,7 @@ public enum EWorkflowStatus implements IValueList {
 
   @Override
   public Long getValue() {
-    return Long.valueOf(id);
+    return Long.valueOf(this.id);
   }
 
 }

@@ -4,10 +4,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
+import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.edo.models.xml.WorkflowFileEdo;
 
-public class WorkflowFile extends ModelMapperBase<WorkflowFileEdo, WorkflowFile> {
+public class WorkflowFile extends DataModelBase<WorkflowFileEdo, WorkflowFile> {
 
   private Long                            id;
   private Long                            workflowId;
@@ -116,7 +116,7 @@ public class WorkflowFile extends ModelMapperBase<WorkflowFileEdo, WorkflowFile>
   public List<WorkflowFileVersion> getFileVersions() {
     return this.fileVersions;
   }
-  
+
   public void setFileVersions(final List<WorkflowFileVersion> fileVersions) {
     this.fileVersions.clear();
     if (fileVersions != null) {
@@ -137,7 +137,7 @@ public class WorkflowFile extends ModelMapperBase<WorkflowFileEdo, WorkflowFile>
     edo.setWorkflowId(this.workflowId);
     edo.setVersion(this.version);
 
-    edo.setFileVersions(ModelMapperBase.toEdoList(this.fileVersions));
+    edo.setFileVersions(DataModelBase.toEdoList(this.fileVersions));
 
     return edo;
   }

@@ -66,8 +66,16 @@ public class WorkflowAccess implements IWorkflowAccess {
 
   @Override
   public GuiWorkflow saveWorkflow(final GuiWorkflow workflow, final String token) throws GuiCustomizedException, MalformedURLException {
-    // TODO Auto-generated method stub
-    return null;
+    logger.debug("save workflow {}", workflow.getId());
+
+    final WorkflowEdo responseEdo = this.restTemplate.callRestPost(this.moduleAccessConfig.getSaveWorkflowUri(),
+                                                                   EModule.WORKFLOW,
+                                                                   workflow.toEdo(),
+                                                                   WorkflowEdo.class,
+                                                                   token,
+                                                                   true);
+
+    return GuiWorkflow.fromEdo(responseEdo);
   }
 
   @Override

@@ -4,11 +4,12 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 import com.pth.iflow.common.edo.models.xml.WorkflowEdo;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 
-public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
+public class Workflow extends DataModelBase<WorkflowEdo, Workflow> {
 
   private Long                       id;
   private Long                       workflowTypeId;
@@ -22,6 +23,7 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
   private Integer                    version;
   private LocalDateTime              createdAt;
   private LocalDateTime              updatedAt;
+  private Boolean                    nextAssign;
 
   private final List<WorkflowFile>   files   = new ArrayList<>();
   private final List<WorkflowAction> actions = new ArrayList<>();
@@ -113,6 +115,14 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
     this.version = version;
   }
 
+  public Boolean getNextAssign() {
+    return this.nextAssign;
+  }
+
+  public void setNextAssign(final Boolean nextAssign) {
+    this.nextAssign = nextAssign;
+  }
+
   public LocalDateTime getCreatedAt() {
     return this.createdAt;
   }
@@ -164,6 +174,7 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
     edo.setCreatedBy(this.createdBy);
     edo.setWorkflowTypeId(this.workflowTypeId);
     edo.setVersion(this.version);
+    edo.setNextAssign(this.nextAssign);
     edo.setAssignTo(this.assignTo);
 
     edo.setFiles(ModelMapperBase.toEdoList(this.files));
@@ -185,6 +196,7 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
     model.setCreatedBy(edo.getCreatedBy());
     model.setWorkflowTypeId(edo.getWorkflowTypeId());
     model.setVersion(edo.getVersion());
+    model.setNextAssign(edo.getNextAssign());
     model.setAssignTo(edo.getAssignTo());
 
     model.setFiles(new WorkflowFile().fromEdoList(edo.getFiles()));

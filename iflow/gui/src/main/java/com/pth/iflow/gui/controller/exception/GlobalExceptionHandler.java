@@ -68,6 +68,8 @@ public class GlobalExceptionHandler implements ErrorController {
   @RequestMapping("/error")
   public String handleError(final Model model, final HttpServletRequest request) {
     final Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
+    final Object fwuri = request.getAttribute(RequestDispatcher.FORWARD_REQUEST_URI);
+
     String viewName = "site/invalid-request";
     if (status != null) {
       final Integer statusCode = Integer.valueOf(status.toString());

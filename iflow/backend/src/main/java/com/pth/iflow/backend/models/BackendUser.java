@@ -36,12 +36,12 @@ public class BackendUser extends ModelMapperBase<UserEdo, BackendUser> {
   private final List<Long>        deputies         = new ArrayList<>();
   private final List<EUiUserRole> roles            = new ArrayList<>();
 
-  private boolean                 isEnabled;
+  private boolean isEnabled;
 
   /**
    * @return the id
    */
-  @Override
+
   public Long getId() {
     return this.id;
   }
@@ -143,7 +143,7 @@ public class BackendUser extends ModelMapperBase<UserEdo, BackendUser> {
   /**
    * @return the version
    */
-  @Override
+
   public Integer getVersion() {
     return this.version;
   }
@@ -151,7 +151,7 @@ public class BackendUser extends ModelMapperBase<UserEdo, BackendUser> {
   /**
    * @param version the version to set
    */
-  @Override
+
   public void setVersion(final Integer version) {
     this.version = version;
   }

@@ -33,6 +33,16 @@
 					</div>
 					<div class="clear"></div>
 				</div>
+				<div class="item-row" ng-show="isWorkflowTypeSelected()">
+					<div class="item-label" th:text="#{workflow-current-step}"></div>
+					<div class="item-content">
+						<select type="text" ng-model="workflowCreateRequest.workflow.currentStepId">
+							<option th:text="#{workflow-select-current-step}" value="0"></option>
+							<option ng-repeat="item in getWorkflowTypeSteps()" ng-value="item.id">{{item.title}}</option>
+						</select>
+					</div>
+					<div class="clear"></div>
+				</div>
 				<div class="item-row">
 					<div class="item-label" th:text="#{workflow-controller}"></div>
 					<div class="item-content">

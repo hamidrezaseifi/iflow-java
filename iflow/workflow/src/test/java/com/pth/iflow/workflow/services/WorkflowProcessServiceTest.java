@@ -15,6 +15,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.pth.iflow.common.enums.EWorkflowActionStatus;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 import com.pth.iflow.common.exceptions.IFlowCustomeException;
 import com.pth.iflow.workflow.TestDataProducer;
@@ -95,7 +96,7 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
   @Test(expected = IFlowCustomeException.class)
   public void testSaveWorkflowUnknownWorkflowStatus() throws Exception {
 
-    final Workflow workflow = this.getTestWorkflow(1L);
+    final Workflow workflow = this.getTestWorkflow(1L, EWorkflowActionStatus.ERROR);
 
     when(this.workflowDataService.save(any(Workflow.class), any(String.class))).thenReturn(workflow);
 

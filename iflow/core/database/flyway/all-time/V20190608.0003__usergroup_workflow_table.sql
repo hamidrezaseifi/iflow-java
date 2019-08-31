@@ -144,7 +144,7 @@ CREATE TABLE `user_usergroup` (
 ) ENGINE=InnoDB ;
 
 
- 
+
 CREATE TABLE `workflow_type` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `company_id` int(11) NOT NULL,
@@ -153,6 +153,7 @@ CREATE TABLE `workflow_type` (
   `manual_assign` smallint(2) NOT NULL DEFAULT '0',
   `send_to_controller` smallint(2) NOT NULL DEFAULT '1',
   `increase_step_automatic` smallint(2) DEFAULT '0',
+  `allow_assign` smallint(2) DEFAULT '0',
   `commecnts` text,
   `status` smallint(6) NOT NULL DEFAULT '1',
   `version` int(11) NOT NULL DEFAULT '1',

@@ -77,9 +77,32 @@ iflowApp.controller('WorkflowTypesController', function WorkflowTypesController(
 		
 	};
 	
-	$scope.toggleMeAssigned = function(){
-		alert($scope.searchFilter.meAssigned);
-		$scope.searchFilter.meAssigned = !$scope.searchFilter.meAssigned;
+	
+	
+	$scope.hasNoArhiveStatus = function(){		
+		if($scope.searchFilter.statusList){
+			//alert($scope.searchFilter.statusList.indexOf(25));
+			return $scope.searchFilter.statusList.indexOf(25) == -1;
+		}	
+		return false;	
+	};
+	
+	$scope.toggleIsArchive = function(){	
+		
+		var index = $scope.searchFilter.statusList.indexOf(25);
+		if(index == -1){
+			//alert($scope.searchFilter.statusList.indexOf(25));
+			$scope.searchFilter.statusList.push(25);
+		}
+		else{
+			$scope.searchFilter.statusList.splice(index, 1);
+		}
+	};
+	
+	$scope.getDebugStatusList = function(){
+		
+		return JSON.stringify($scope.searchFilter.statusList);
+		
 	};
 
 	
