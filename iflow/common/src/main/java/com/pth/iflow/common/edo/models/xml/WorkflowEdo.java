@@ -56,6 +56,10 @@ public class WorkflowEdo {
   @XmlElement(name = "Version", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer                 version;
 
+  @NotNull
+  @XmlElement(name = "NextAssign", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private Boolean                 nextAssign;
+
   @XmlElementWrapper(name = "WorkflowFileList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "WorkflowFile", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private List<WorkflowFileEdo>   files   = new ArrayList<>();
@@ -150,6 +154,14 @@ public class WorkflowEdo {
 
   public void setVersion(final Integer version) {
     this.version = version;
+  }
+
+  public Boolean getNextAssign() {
+    return this.nextAssign;
+  }
+
+  public void setNextAssign(final Boolean nextAssign) {
+    this.nextAssign = nextAssign;
   }
 
   public List<WorkflowFileEdo> getFiles() {

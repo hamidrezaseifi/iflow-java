@@ -96,20 +96,21 @@ public class WorkflowHandler implements IWorkflowHandler {
 
   private GuiWorkflow prepareWorkflowActions(final GuiWorkflow workflow) {
 
-    for (final GuiWorkflowAction action : workflow.getActions()) {
-      if ((action.getIsActive()) && (workflow.isAssignTo(this.sessionUserInfo.getUser().getId()))) {
+    if (workflow.getIsOpen()) {
+      for (final GuiWorkflowAction action : workflow.getActions()) {
+        if ((action.getIsActive()) && (workflow.isAssignTo(this.sessionUserInfo.getUser().getId()))) {
 
-        break;
+          break;
+        }
+      }
+
+      if (!workflow.getHasActiveAction()) {
+        final GuiWorkflowAction action = GuiWorkflowAction.createNewAction(workflow, this.sessionUserInfo.getUser().getId(),
+            EWorkflowActionStatus.OPEN);
+        action.setStatus(EWorkflowActionStatus.OPEN);
+        workflow.addAction(action);
       }
     }
-
-    if (!workflow.hasActiveAction()) {
-      final GuiWorkflowAction action = GuiWorkflowAction.createNewAction(workflow, this.sessionUserInfo.getUser().getId(),
-          EWorkflowActionStatus.OPEN);
-      action.setStatus(EWorkflowActionStatus.OPEN);
-      workflow.addAction(action);
-    }
-
     return workflow;
   }
 

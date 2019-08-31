@@ -9,17 +9,18 @@ import com.pth.iflow.common.enums.EWorkflowStatus;
 
 public class BackendWorkflow extends ModelMapperBase<WorkflowEdo, BackendWorkflow> {
 
-  private Long                    id;
-  private Long                    workflowTypeId;
-  private BackendWorkflowTypeStep currentStep;
-  private Long                    currentStepId;
-  private Long                    controller;
-  private Long                    createdBy;
-  private Long                    assignTo;
-  private String                  title;
-  private String                  comments;
-  private EWorkflowStatus         status;
-  private Integer                 version;
+  private Long                              id;
+  private Long                              workflowTypeId;
+  private BackendWorkflowTypeStep           currentStep;
+  private Long                              currentStepId;
+  private Long                              controller;
+  private Long                              createdBy;
+  private Long                              assignTo;
+  private String                            title;
+  private String                            comments;
+  private EWorkflowStatus                   status;
+  private Integer                           version;
+  private Boolean                           nextAssign;
 
   private final List<BackendWorkflowFile>   files   = new ArrayList<>();
   private final List<BackendWorkflowAction> actions = new ArrayList<>();
@@ -124,6 +125,14 @@ public class BackendWorkflow extends ModelMapperBase<WorkflowEdo, BackendWorkflo
     this.version = version;
   }
 
+  public Boolean getNextAssign() {
+    return this.nextAssign;
+  }
+
+  public void setNextAssign(final Boolean nextAssign) {
+    this.nextAssign = nextAssign;
+  }
+
   public List<BackendWorkflowFile> getFiles() {
     return this.files;
   }
@@ -191,6 +200,7 @@ public class BackendWorkflow extends ModelMapperBase<WorkflowEdo, BackendWorkflo
     edo.setCreatedBy(this.createdBy);
     edo.setWorkflowTypeId(this.workflowTypeId);
     edo.setVersion(this.version);
+    edo.setNextAssign(this.nextAssign);
     edo.setAssignTo(this.assignTo);
 
     edo.setFiles(ModelMapperBase.toEdoList(this.files));
@@ -216,6 +226,7 @@ public class BackendWorkflow extends ModelMapperBase<WorkflowEdo, BackendWorkflo
     model.setCreatedBy(edo.getCreatedBy());
     model.setWorkflowTypeId(edo.getWorkflowTypeId());
     model.setVersion(edo.getVersion());
+    model.setNextAssign(edo.getNextAssign());
     model.setAssignTo(edo.getAssignTo());
 
     model.setFiles(new BackendWorkflowFile().fromEdoList(edo.getFiles()));

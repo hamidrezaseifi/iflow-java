@@ -20,6 +20,7 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
   private String                     comments;
   private EWorkflowStatus            status;
   private Integer                    version;
+  private Boolean                    nextAssign;
 
   private final List<WorkflowFile>   files   = new ArrayList<>();
   private final List<WorkflowAction> actions = new ArrayList<>();
@@ -128,6 +129,14 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
     this.version = version;
   }
 
+  public Boolean getNextAssign() {
+    return this.nextAssign;
+  }
+
+  public void setNextAssign(final Boolean nextAssign) {
+    this.nextAssign = nextAssign;
+  }
+
   public List<WorkflowFile> getFiles() {
     return this.files;
   }
@@ -209,6 +218,7 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
     edo.setCreatedBy(this.createdBy);
     edo.setWorkflowTypeId(this.workflowTypeId);
     edo.setVersion(this.version);
+    edo.setNextAssign(this.nextAssign);
     edo.setAssignTo(this.assignTo);
 
     edo.setFiles(ModelMapperBase.toEdoList(this.files));
@@ -234,6 +244,7 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
     model.setCreatedBy(edo.getCreatedBy());
     model.setWorkflowTypeId(edo.getWorkflowTypeId());
     model.setVersion(edo.getVersion());
+    model.setNextAssign(edo.getNextAssign());
     model.setAssignTo(edo.getAssignTo());
 
     model.setFiles(new WorkflowFile().fromEdoList(edo.getFiles()));

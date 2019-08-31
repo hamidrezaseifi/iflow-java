@@ -145,9 +145,6 @@ public class WorkflowDataController extends GuiDataControllerBase {
   @PostMapping(path = { "/workflow/archive" })
   @ResponseBody
   public void archiveWorkflow(@RequestBody final GuiWorkflow workflow) throws GuiCustomizedException, MalformedURLException {
-    workflow.getActiveAction().setStatus(EWorkflowActionStatus.DONE_REQUEST);
-    workflow.getActiveAction().setNewStep(workflow.getCurrentStepId());
-    workflow.getActions().remove(workflow.getActiveAction());
     workflow.setStatus(EWorkflowStatus.ARCHIVED);
 
     this.workflowHandler.saveWorkflow(workflow);

@@ -62,7 +62,7 @@ public class WorkflowProcessService implements IWorkflowProcessService {
       result.add(this.save(workflow, token));
     }
 
-    return result;
+    return this.prepareWorkflowList(token, result);
   }
 
   @Override
@@ -102,6 +102,7 @@ public class WorkflowProcessService implements IWorkflowProcessService {
       this.selectWorkflowNextAssigned(newWorkflow, workflowType, activeAction);
       // }
 
+      newWorkflow.setStatus(EWorkflowStatus.DONE);
       return this.saveExistsWorkflow(newWorkflow, token);
     }
 
@@ -115,7 +116,9 @@ public class WorkflowProcessService implements IWorkflowProcessService {
     logger.debug("get workflow by id {} with token {}", id, token);
 
     this.tokenCanReadWorkflow(id, token);
-    return this.workflowDataService.getById(id, token);
+    final Workflow workflow = this.workflowDataService.getById(id, token);
+
+    return this.prepareWorkflow(token, workflow);
   }
 
   @Override
@@ -125,7 +128,7 @@ public class WorkflowProcessService implements IWorkflowProcessService {
     final List<Workflow> list = this.workflowDataService.getListByTypeId(id, token);
     this.tokenCanReadWorkflowList(list.stream().map(w -> w.getId()).collect(Collectors.toList()), token);
 
-    return list;
+    return this.prepareWorkflowList(token, list);
   }
 
   @Override
@@ -137,7 +140,7 @@ public class WorkflowProcessService implements IWorkflowProcessService {
     final List<Workflow> list = this.workflowDataService.getListForUser(id, status, token);
     this.tokenCanReadWorkflowList(list.stream().map(w -> w.getId()).collect(Collectors.toList()), token);
 
-    return list;
+    return this.prepareWorkflowList(token, list);
   }
 
   @Override
@@ -149,7 +152,7 @@ public class WorkflowProcessService implements IWorkflowProcessService {
 
     final List<Workflow> list = this.workflowDataService.getListByIdList(idList, token);
 
-    return list;
+    return this.prepareWorkflowList(token, list);
   }
 
   @Override
@@ -161,7 +164,7 @@ public class WorkflowProcessService implements IWorkflowProcessService {
 
     final List<Workflow> list = this.workflowDataService.search(workflowSearchFilter, token);
 
-    return list;
+    return this.prepareWorkflowList(token, list);
   }
 
   private boolean tokenCanReadWorkflow(final Long workflowId, final String token)
@@ -255,7 +258,7 @@ public class WorkflowProcessService implements IWorkflowProcessService {
       final WorkflowAction activeAction) {
     final WorkflowTypeStep lastStep = this.findLastStep(workflowType);
     if (lastStep.getStepIndex() == newWorkflow.getCurrentStep().getStepIndex()) {
-      this.assignWorkflowToUser(newWorkflow, newWorkflow.getController());
+      newWorkflow.setAssignTo(newWorkflow.getController());
       return true;
     }
     return false;
@@ -293,6 +296,13 @@ public class WorkflowProcessService implements IWorkflowProcessService {
     }).collect(Collectors.toList());
 
     return list;
+  }
+
+  private List<Integer> getSortedStepsIndexList(final WorkflowType workflowType) {
+
+    final List<WorkflowTypeStep> list = this.getSortedStepsList(workflowType);
+
+    return list.stream().map(s -> s.getStepIndex()).sorted().collect(Collectors.toList());
   }
 
   private Map<Long, WorkflowTypeStep> getIdKeySteps(final WorkflowType workflowType) {
@@ -414,4 +424,27 @@ public class WorkflowProcessService implements IWorkflowProcessService {
       }
     }
   }
+
+  private Workflow prepareWorkflow(final String token, final Workflow workflow) throws MalformedURLException {
+    final WorkflowType workflowType = this.workflowTypeDataService.getById(workflow.getWorkflowTypeId(), token);
+    final List<Integer> stepIndexList = this.getSortedStepsIndexList(workflowType);
+    final int index = stepIndexList.indexOf(workflow.getCurrentStep().getStepIndex());
+
+    workflow.setNextAssign(index < stepIndexList.size() - 2);
+
+    return workflow;
+  }
+
+  private List<Workflow> prepareWorkflowList(final String token, final List<Workflow> workflowList) throws MalformedURLException {
+    final List<Workflow> list = new ArrayList<>();
+    if (workflowList != null) {
+      for (final Workflow workflow : workflowList) {
+        list.add(this.prepareWorkflow(token, workflow));
+      }
+
+    }
+
+    return list;
+  }
+
 }
