@@ -116,6 +116,10 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
     return this.status.getValue().intValue();
   }
 
+  public boolean isStatusArchive() {
+    return this.status == EWorkflowStatus.ARCHIVED;
+  }
+
   public Integer getVersion() {
     return this.version;
   }

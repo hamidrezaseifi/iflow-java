@@ -9,7 +9,8 @@ public enum EWorkflowStatus implements IValueList {
   NOT_ASSIGNED(10),
   ASSIGNED(15),
   DONE(20),
-  ERROR(25);
+  ARCHIVED(25),
+  ERROR(30);
 
   private final int id;
 

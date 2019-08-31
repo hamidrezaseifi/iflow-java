@@ -8,6 +8,7 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 	
 	$scope.loadUrl = loadUrl;
 	$scope.saveUrl = saveUrl;
+	$scope.archiveUrl = archiveUrl;
 	$scope.doneUrl = doneUrl;
 	$scope.listUrl = listUrl;
 	
@@ -62,6 +63,29 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 	        	'Content-type': 'application/json; charset=UTF-8',
 	        },
 	        url : $scope.saveUrl,
+	        data: saveData,
+	    }).then(function successCallback(response) {
+	    	
+	    	alert("saved");
+	    	
+	    	window.location = $scope.listUrl;
+	
+	    }, function errorCallback(response) {
+	        
+	        alert(response.data);
+	    });
+	};
+
+	$scope.arhiveWorkflow = function(){
+		
+		var saveData = angular.copy($scope.workflow);
+		
+		$http({
+	        method : "POST",
+	        headers: {
+	        	'Content-type': 'application/json; charset=UTF-8',
+	        },
+	        url : $scope.archiveUrl,
 	        data: saveData,
 	    }).then(function successCallback(response) {
 	    	

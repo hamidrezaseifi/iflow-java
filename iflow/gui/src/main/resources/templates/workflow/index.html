@@ -21,6 +21,11 @@
 					<label class="form-check-label" for="me-assigned-check" th:text="#{workflow-assigned-me}"></label>
 				</span>
 				
+				<span class="form-check abc-checkbox abc-checkbox">
+					<input type="checkbox" class="toggle-checkbox form-check-input" ng-checked="hasNoArhiveStatus()" id="no-archive-check" ng-click="toggleIsArchive()">
+					<label class="form-check-label" for="no-archive-check" th:text="#{workflow-not-archive}"></label>
+				</span>
+				
 			</div>
 		
 		    <table class="iflow-table">
@@ -47,6 +52,10 @@
 		    	
 		    	</tbody>
 		    </table>
+		    
+		    <div style="min-height: 20px; border: 1px solid gray; ">
+		    {{getDebugStatusList()}}
+		    </div>
 		    
 		    <script type="text/javascript">
 				var loadInitialUrl = "/workflow/data/workflowlist/init";

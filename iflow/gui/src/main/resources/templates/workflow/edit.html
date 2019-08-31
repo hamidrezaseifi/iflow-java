@@ -60,10 +60,14 @@
 					<div class="item-row">
 						
 						<div class="item-content workflow-step-button-bar">
-							<button ng-click="makeWorkflowDone(item.id)" class="step-button" ng-repeat="item in listAvaileableSteps()">{{item.title}}</button>
-							<button ng-click="saveWorkflow()" class="step-button button-save">
+							<button ng-click="makeWorkflowDone(item.id)" class="button-bar-button step-button" ng-repeat="item in listAvaileableSteps()">{{item.title}}</button>
+							<button ng-click="saveWorkflow()" class="button-bar-button step-button button-save">
 								<span th:text="#{common.save}"></span>
 								<i class="material-icons">save</i>
+							</button>
+							<button ng-click="arhiveWorkflow()" class="button-bar-button step-button button-archive">
+								<span th:text="#{common.save}"></span>
+								<i class="material-icons">archive</i>
 							</button>
 							<div class="clear"></div>
 						</div>
@@ -89,6 +93,7 @@
 		    <script type="text/javascript">
 			var loadUrl = "/workflow/data/workflow/edit/[[${workflowId}]]";
 			var saveUrl = "/workflow/data/workflow/save";
+			var archiveUrl = "/workflow/data/workflow/archive";
 			var doneUrl = "/workflow/data/workflow/done";
 			var listUrl = "/workflow/list";
 				

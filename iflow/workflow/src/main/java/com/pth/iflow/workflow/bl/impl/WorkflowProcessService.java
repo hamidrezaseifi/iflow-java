@@ -81,6 +81,11 @@ public class WorkflowProcessService implements IWorkflowProcessService {
       return this.saveNewWorkflow(newWorkflow, token);
     }
 
+    if (newWorkflow.isStatusArchive()) {
+
+      return this.saveExistsWorkflow(newWorkflow, token);
+    }
+
     final WorkflowAction activeAction = newWorkflow.hasActiveAction() ? newWorkflow.getActiveAction() : null;
 
     if (newWorkflow.isAssigned() && newWorkflow.hasActiveAction() && (activeAction.isStatusSavingRequest())) {
