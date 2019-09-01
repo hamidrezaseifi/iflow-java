@@ -13,7 +13,7 @@ div.workflow-content{
     background-color: #dad9d9;
     padding: 15px;
     border-radius: 5px;
-    width: calc(100% - 520px);
+    width: calc(75% - 15px);
 }
 
 div.workflow-record{
@@ -21,7 +21,8 @@ div.workflow-record{
     background-color: #dad9d9;
     padding: 8px;
     border-radius: 5px;
-    width: 300px;
+    width: 25%;
+    min-height: 500px;
 }
 
 div.workflow-content div.item-row{

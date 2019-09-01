@@ -19,20 +19,6 @@
 		
 			<div class="workflow-content-container">
 				<div class="workflow-content">
-					<div class="item-row">
-						<div class="item-label" th:text="#{workflow-title}"></div>
-						<div class="item-content"><div class="line-data">{{workflow.title}}</div></div>
-						<div class="clear"></div>
-					</div>
-					<div class="item-row">
-						<div class="item-label" th:text="#{workflow-comments}"></div>
-						<div class="item-content">
-							<div class="item-content">
-								<div class="line-data">{{workflow.comments}}</div>
-							</div>
-						</div>
-						<div class="clear"></div>
-					</div>
 					<div class="item-row" ng-show="true">
 						<div class="item-label" th:text="#{workflow-current-step}"></div>
 						<div class="item-content">
@@ -77,6 +63,40 @@
 				
 				</div>
 				<div class="workflow-record">
+					<div class="workflow-content">
+						<div class="item-row">
+							<div class="item-label" th:text="#{workflow-title}"></div>
+							<div class="item-content">{{workflow.title}}</div>
+							<div class="clear"></div>
+						</div>
+						<div class="item-row">
+							<div class="item-label" th:text="#{workflow-comments}"></div>
+							<div class="item-content">{{workflow.comments}}</div>	
+							<div class="clear"></div>
+						</div>
+						<div class="item-row" ng-show="true">
+							<div class="item-label" th:text="#{workflow-current-step}"></div>
+							<div class="item-content">
+								{{workflow.currentStep.title}}
+							</div>
+							<div class="clear"></div>
+						</div>
+						<div class="item-row" ng-show="true">
+							<div class="item-label" th:text="#{workflow-current-step}"></div>
+							<div class="item-content">
+								{{workflow.status}}
+							</div>
+							<div class="clear"></div>
+						</div>
+						<div style="padding-top: 10px; border-top: 1px solid gray; margin-top: 10px; text-align: center; font-weight: bold;">Actions</div>
+						<div class="item-row" ng-repeat="action in workflow.actions | filter: { isActive: false }" style="border-bottom: 1px #9a9a9a dashed">
+							<div class="item-row">
+								<div class="item-label" th:text="#{workflow-action-title}"></div>
+								<div class="item-content">{{action.action}}</div>	
+								<div class="clear"></div>
+							</div>
+						</div>
+					</div>
 				
 				</div>
 				<div class="clear"></div>

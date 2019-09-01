@@ -97,12 +97,10 @@ public class WorkflowProcessService implements IWorkflowProcessService {
     if (newWorkflow.isAssigned() && newWorkflow.hasActiveAction() && (activeAction.isStatusDoneRequest())) {
 
       activeAction.setStatus(EWorkflowActionStatus.DONE);
-      // if (workflowType.getIncreaseStepAutomatic()) {
-      this.selectWorkflowNextStep(newWorkflow, workflowType, activeAction);
-      this.selectWorkflowNextAssigned(newWorkflow, workflowType, activeAction);
-      // }
 
-      newWorkflow.setStatus(EWorkflowStatus.DONE);
+      this.selectWorkflowNextAssigned(newWorkflow, workflowType, activeAction);
+      this.selectWorkflowNextStep(newWorkflow, workflowType, activeAction);
+
       return this.saveExistsWorkflow(newWorkflow, token);
     }
 
@@ -224,6 +222,11 @@ public class WorkflowProcessService implements IWorkflowProcessService {
 
     newWorkflow.setCurrentStep(nextStep);
     newWorkflow.setCurrentStepId(nextStep.getId());
+
+    if (this.isLastStep(workflowType, nextStep)) {
+      newWorkflow.setStatus(EWorkflowStatus.DONE);
+    }
+
   }
 
   private void selectWorkflowNextAssigned(final Workflow newWorkflow, final WorkflowType workflowType,
@@ -343,6 +346,12 @@ public class WorkflowProcessService implements IWorkflowProcessService {
     final List<WorkflowTypeStep> steps = this.getSortedStepsList(workflowType);
 
     return steps.size() > 0 ? steps.get(steps.size() - 1) : null;
+  }
+
+  private boolean isLastStep(final WorkflowType workflowType, final WorkflowTypeStep step) {
+    final WorkflowTypeStep lastStep = this.findLastStep(workflowType);
+
+    return step.getStepIndex() == lastStep.getStepIndex();
   }
 
   private List<Long> getWorkflowTypeIdList(final WorkflowType workflowType) {
