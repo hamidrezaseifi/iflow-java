@@ -11,9 +11,12 @@ public class GuiWorkflowAction extends WorkflowActionModelBase<WorkflowActionEdo
   private Long                  id;
   private Long                  workflowId;
   private Long                  createdBy;
+  private GuiUser               createdByUser;
   private String                action;
   private Long                  oldStep;
+  private GuiWorkflowTypeStep   oldStepObject;
   private Long                  newStep;
+  private GuiWorkflowTypeStep   newStepObject;
   private Long                  nextAssign;
   private String                comments;
   private EWorkflowActionStatus status;
@@ -51,12 +54,40 @@ public class GuiWorkflowAction extends WorkflowActionModelBase<WorkflowActionEdo
     this.oldStep = oldStep;
   }
 
+  /**
+   * @return the oldStepStep
+   */
+  public GuiWorkflowTypeStep getOldStepObject() {
+    return this.oldStepObject;
+  }
+
+  /**
+   * @param oldStepStep the oldStepStep to set
+   */
+  public void setOldStepObject(final GuiWorkflowTypeStep oldStepObject) {
+    this.oldStepObject = oldStepObject;
+  }
+
   public Long getNewStep() {
     return this.newStep;
   }
 
   public void setNewStep(final Long newStep) {
     this.newStep = newStep;
+  }
+
+  /**
+   * @return the newStepObject
+   */
+  public GuiWorkflowTypeStep getNewStepObject() {
+    return this.newStepObject;
+  }
+
+  /**
+   * @param newStepObject the newStepObject to set
+   */
+  public void setNewStepObject(final GuiWorkflowTypeStep newStepObject) {
+    this.newStepObject = newStepObject;
   }
 
   public Long getNextAssign() {
@@ -73,6 +104,20 @@ public class GuiWorkflowAction extends WorkflowActionModelBase<WorkflowActionEdo
 
   public void setCreatedBy(final Long createdBy) {
     this.createdBy = createdBy;
+  }
+
+  /**
+   * @return the createdByUser
+   */
+  public GuiUser getCreatedByUser() {
+    return this.createdByUser;
+  }
+
+  /**
+   * @param createdByUser the createdByUser to set
+   */
+  public void setCreatedByUser(final GuiUser createdByUser) {
+    this.createdByUser = createdByUser;
   }
 
   public String getComments() {
@@ -147,8 +192,9 @@ public class GuiWorkflowAction extends WorkflowActionModelBase<WorkflowActionEdo
     return model;
   }
 
-  public static GuiWorkflowAction createNewAction(final GuiWorkflow workflow, final Long createdBy,
-      final EWorkflowActionStatus status) {
+  public static GuiWorkflowAction createNewAction(final GuiWorkflow workflow,
+                                                  final Long createdBy,
+                                                  final EWorkflowActionStatus status) {
     final GuiWorkflowAction action = new GuiWorkflowAction();
     action.setCreatedBy(createdBy);
     action.setNewStep(null);

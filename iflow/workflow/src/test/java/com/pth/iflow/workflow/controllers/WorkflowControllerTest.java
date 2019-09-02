@@ -43,23 +43,19 @@ import com.pth.iflow.workflow.models.WorkflowSearchFilter;
 public class WorkflowControllerTest extends TestDataProducer {
 
   @Autowired
-  private MockMvc                                mockMvc;
+  private MockMvc mockMvc;
 
   @Autowired
   private MappingJackson2XmlHttpMessageConverter xmlConverter;
 
   @MockBean
-  private IWorkflowProcessService                workflowService;
+  private IWorkflowProcessService workflowService;
 
   @Value("${iflow.common.rest.api.security.client-id.internal}")
-  private String                                 innerModulesRequestHeaderValue;
-
-  private String                                 validTocken;
+  private String innerModulesRequestHeaderValue;
 
   @Before
   public void setUp() throws Exception {
-
-    this.validTocken = "validTocken";
   }
 
   @After
@@ -78,10 +74,11 @@ public class WorkflowControllerTest extends TestDataProducer {
     final WorkflowEdo modelEdo = model.toEdo();
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.WorkflowModule.WORKFLOW_READ_BY_ID, model.getId())
-            .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, "test-roken"))
-        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
-        .andExpect(content().xml(resultAsXmlString));
+                .perform(MockMvcRequestBuilders.get(IflowRestPaths.WorkflowModule.WORKFLOW_READ_BY_ID, model.getId())
+                                               .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, "test-roken"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+                .andExpect(content().xml(resultAsXmlString));
 
     verify(this.workflowService, times(1)).getById(any(Long.class), any(String.class));
 
@@ -101,11 +98,13 @@ public class WorkflowControllerTest extends TestDataProducer {
     final String resultAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(listEdo);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.post(IflowRestPaths.WorkflowModule.WORKFLOW_CREATE).content(contentAsXmlString)
-            .contentType(MediaType.APPLICATION_XML_VALUE)
-            .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, "test-roken"))
-        .andExpect(status().isCreated()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
-        .andExpect(content().xml(resultAsXmlString));
+                .perform(MockMvcRequestBuilders.post(IflowRestPaths.WorkflowModule.WORKFLOW_CREATE)
+                                               .content(contentAsXmlString)
+                                               .contentType(MediaType.APPLICATION_XML_VALUE)
+                                               .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, "test-roken"))
+                .andExpect(status().isCreated())
+                .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+                .andExpect(content().xml(resultAsXmlString));
 
     verify(this.workflowService, times(1)).create(any(WorkflowCreateRequest.class), any(String.class));
 
@@ -124,11 +123,13 @@ public class WorkflowControllerTest extends TestDataProducer {
     final String contentAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelEdo);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.post(IflowRestPaths.WorkflowModule.WORKFLOW_SAVE).content(contentAsXmlString)
-            .contentType(MediaType.APPLICATION_XML_VALUE)
-            .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, "test-roken"))
-        .andExpect(status().isAccepted()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
-        .andExpect(content().xml(resultAsXmlString));
+                .perform(MockMvcRequestBuilders.post(IflowRestPaths.WorkflowModule.WORKFLOW_SAVE)
+                                               .content(contentAsXmlString)
+                                               .contentType(MediaType.APPLICATION_XML_VALUE)
+                                               .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, "test-roken"))
+                .andExpect(status().isAccepted())
+                .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+                .andExpect(content().xml(resultAsXmlString));
 
     verify(this.workflowService, times(1)).save(any(Workflow.class), any(String.class));
 
@@ -147,11 +148,13 @@ public class WorkflowControllerTest extends TestDataProducer {
     final String resultAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(listEdo);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.post(IflowRestPaths.WorkflowModule.WORKFLOW_READ_LIST).content(contentAsXmlString)
-            .contentType(MediaType.APPLICATION_XML_VALUE)
-            .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, "test-roken"))
-        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
-        .andExpect(content().xml(resultAsXmlString));
+                .perform(MockMvcRequestBuilders.post(IflowRestPaths.WorkflowModule.WORKFLOW_READ_LIST)
+                                               .content(contentAsXmlString)
+                                               .contentType(MediaType.APPLICATION_XML_VALUE)
+                                               .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, "test-roken"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+                .andExpect(content().xml(resultAsXmlString));
 
     verify(this.workflowService, times(1)).getListByIdList(any(List.class), any(String.class));
 
@@ -171,11 +174,13 @@ public class WorkflowControllerTest extends TestDataProducer {
     final String resultAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(listEdo);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.post(IflowRestPaths.WorkflowModule.WORKFLOW_SEARCH).content(contentAsXmlString)
-            .contentType(MediaType.APPLICATION_XML_VALUE)
-            .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, "test-roken"))
-        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
-        .andExpect(content().xml(resultAsXmlString));
+                .perform(MockMvcRequestBuilders.post(IflowRestPaths.WorkflowModule.WORKFLOW_SEARCH)
+                                               .content(contentAsXmlString)
+                                               .contentType(MediaType.APPLICATION_XML_VALUE)
+                                               .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, "test-roken"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+                .andExpect(content().xml(resultAsXmlString));
 
     verify(this.workflowService, times(1)).search(any(WorkflowSearchFilter.class), any(String.class));
 
@@ -191,10 +196,11 @@ public class WorkflowControllerTest extends TestDataProducer {
     when(this.workflowService.getListByTypeId(any(Long.class), any(String.class))).thenReturn(list);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.WorkflowModule.WORKFLOW_READ_LIST_BY_TYPE, 1L)
-            .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, "test-roken"))
-        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
-        .andExpect(content().xml(resultAsXmlString));
+                .perform(MockMvcRequestBuilders.get(IflowRestPaths.WorkflowModule.WORKFLOW_READ_LIST_BY_TYPE, 1L)
+                                               .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, "test-roken"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+                .andExpect(content().xml(resultAsXmlString));
 
     verify(this.workflowService, times(1)).getListByTypeId(any(Long.class), any(String.class));
 
