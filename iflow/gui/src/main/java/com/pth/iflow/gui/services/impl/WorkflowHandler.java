@@ -17,6 +17,7 @@ import com.pth.iflow.gui.models.GuiWorkflowAction;
 import com.pth.iflow.gui.models.GuiWorkflowCreateRequest;
 import com.pth.iflow.gui.models.GuiWorkflowSearchFilter;
 import com.pth.iflow.gui.models.GuiWorkflowType;
+import com.pth.iflow.gui.models.GuiWorkflowTypeStep;
 import com.pth.iflow.gui.models.ui.GuiSessionUserInfo;
 import com.pth.iflow.gui.services.IWorkflowAccess;
 import com.pth.iflow.gui.services.IWorkflowHandler;
@@ -24,9 +25,9 @@ import com.pth.iflow.gui.services.IWorkflowHandler;
 @Service
 public class WorkflowHandler implements IWorkflowHandler {
 
-  private static final Logger      logger = LoggerFactory.getLogger(WorkflowHandler.class);
+  private static final Logger logger = LoggerFactory.getLogger(WorkflowHandler.class);
 
-  private final IWorkflowAccess    workflowAccess;
+  private final IWorkflowAccess workflowAccess;
 
   private final GuiSessionUserInfo sessionUserInfo;
 
@@ -43,7 +44,8 @@ public class WorkflowHandler implements IWorkflowHandler {
 
   @Override
   public List<GuiWorkflow> createWorkflow(final GuiWorkflowCreateRequest createRequest)
-      throws GuiCustomizedException, MalformedURLException {
+                                                                                        throws GuiCustomizedException,
+                                                                                        MalformedURLException {
     createRequest.getWorkflow().setStatus(EWorkflowStatus.INITIALIZE_REQUEST);
 
     final List<GuiWorkflow> list = this.workflowAccess.createWorkflow(createRequest, this.sessionUserInfo.getToken());
@@ -63,7 +65,8 @@ public class WorkflowHandler implements IWorkflowHandler {
 
   @Override
   public List<GuiWorkflow> searchWorkflow(final GuiWorkflowSearchFilter workflowSearchFilter)
-      throws GuiCustomizedException, MalformedURLException {
+                                                                                              throws GuiCustomizedException,
+                                                                                              MalformedURLException {
     final List<GuiWorkflow> list = this.workflowAccess.searchWorkflow(workflowSearchFilter, this.sessionUserInfo.getToken());
 
     return this.prepareWorkflowList(list);
@@ -97,21 +100,39 @@ public class WorkflowHandler implements IWorkflowHandler {
   private GuiWorkflow prepareWorkflowActions(final GuiWorkflow workflow) {
 
     if (workflow.getIsOpen()) {
-      for (final GuiWorkflowAction action : workflow.getActions()) {
-        if ((action.getIsActive()) && (workflow.isAssignTo(this.sessionUserInfo.getUser().getId()))) {
-
-          break;
-        }
-      }
 
       if (!workflow.getHasActiveAction()) {
-        final GuiWorkflowAction action = GuiWorkflowAction.createNewAction(workflow, this.sessionUserInfo.getUser().getId(),
-            EWorkflowActionStatus.OPEN);
+        final GuiWorkflowAction action = GuiWorkflowAction.createNewAction(workflow,
+                                                                           this.sessionUserInfo.getUser().getId(),
+                                                                           EWorkflowActionStatus.OPEN);
         action.setStatus(EWorkflowActionStatus.OPEN);
         workflow.addAction(action);
       }
     }
+
+    for (final GuiWorkflowAction action : workflow.getActions()) {
+      action.setCreatedByUser(this.sessionUserInfo.getUserById(action.getCreatedBy()));
+
+      action.setOldStepObject(findStep(workflow, action.getOldStep()));
+      action.setNewStepObject(findStep(workflow, action.getNewStep()));
+
+    }
+
     return workflow;
+  }
+
+  private GuiWorkflowTypeStep findStep(final GuiWorkflow workflow, final Long stepId) {
+    if (stepId == null) {
+      return null;
+    }
+    GuiWorkflowTypeStep foundStep = null;
+    for (final GuiWorkflowTypeStep step : workflow.getWorkflowType().getSteps()) {
+      if (step.getId() == stepId) {
+        foundStep = step;
+        break;
+      }
+    }
+    return foundStep;
   }
 
 }

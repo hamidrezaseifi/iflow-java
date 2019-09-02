@@ -35,12 +35,12 @@ public class WorkflowDataController extends GuiDataControllerBase {
   private IWorkflowHandler workflowHandler;
 
   @Autowired
-  private IUserAccess      userAccess;
+  private IUserAccess userAccess;
 
   @ResponseStatus(HttpStatus.OK)
   @PostMapping(path = { "/workflowlist/init" })
   @ResponseBody
-  public Map<String, Object> loadWorkflowInitialData() throws GuiCustomizedException, MalformedURLException {
+  public Map<String, Object> loadWorkflowListInitialData() throws GuiCustomizedException, MalformedURLException {
 
     final Map<String, Object> map = new HashMap<>();
 
@@ -57,7 +57,8 @@ public class WorkflowDataController extends GuiDataControllerBase {
   @PostMapping(path = { "/workflowlist/search" })
   @ResponseBody
   public List<GuiWorkflow> searchWorkflows(@RequestBody final GuiWorkflowSearchFilter workflowSearchFilter)
-      throws GuiCustomizedException, MalformedURLException {
+                                                                                                            throws GuiCustomizedException,
+                                                                                                            MalformedURLException {
 
     if (workflowSearchFilter.isMeAssigned()) {
       workflowSearchFilter.setAssignedUserIdList(Arrays.asList(this.getLoggedUser().getId()));
@@ -103,7 +104,8 @@ public class WorkflowDataController extends GuiDataControllerBase {
   @PostMapping(path = { "/workflow/edit/{workflowId}" })
   @ResponseBody
   public Map<String, Object> loadWorkflowEditData(@PathVariable final Long workflowId)
-      throws GuiCustomizedException, MalformedURLException {
+                                                                                       throws GuiCustomizedException,
+                                                                                       MalformedURLException {
 
     final Map<String, Object> map = new HashMap<>();
 
@@ -124,7 +126,8 @@ public class WorkflowDataController extends GuiDataControllerBase {
   @PostMapping(path = { "/workflowcreate/create" })
   @ResponseBody
   public void createWorkflow(@RequestBody final GuiWorkflowCreateRequest createRequest)
-      throws GuiCustomizedException, MalformedURLException {
+                                                                                        throws GuiCustomizedException,
+                                                                                        MalformedURLException {
 
     this.workflowHandler.createWorkflow(createRequest);
 
