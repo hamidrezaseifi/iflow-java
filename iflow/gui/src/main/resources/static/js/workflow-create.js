@@ -2,12 +2,29 @@
  * 
  */
 
+iflowApp.directive('fileModel', [ '$parse', function($parse) {
+    return {
+        restrict : 'A',
+        link : function(scope, element, attrs) {
+            var model = $parse(attrs.fileModel);
+            var modelSetter = model.assign;
+
+            element.bind('change', function() {
+                scope.$apply(function() {
+                   	
+                    modelSetter(scope, element[0].files[0]);
+                });
+            });
+        }
+    };
+} ]);
 
 iflowApp.controller('WorkflowCreateController', function WorkflowTypesController($scope, $http, $sce, $element, $mdSidenav) {
 	  //$scope.phones = [];
 	
 	$scope.loadUrl = loadUrl;
 	$scope.saveUrl = saveUrl;
+	$scope.saveFileUrl = saveFileUrl;
 	$scope.listUrl = listUrl;
 	
 	$scope.workflowTypes = [];
@@ -163,6 +180,48 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 	};
 
 	
+	$scope.testUpload = function (){
+		
+		//var file = $("#myFile")[0];
+		var file = $scope.myfile;
+		
+		var formData = new FormData();
+		formData.append('file', file);
+        formData.append('data', JSON.stringify($scope.workflowCreateRequest));
+     
+		//alert(JSON.stringify(formData));
+		
+		$http.post($scope.saveFileUrl, formData,{
+            transformRequest : angular.identity,
+            headers : {
+                'Content-Type' : undefined
+            }})
+            .then(
+                function (response) {
+                	alert( response.data);
+                },
+                function (errResponse) {
+                	alert( errResponse.data);
+                }
+            );
+		
+        /*$http({
+            url: $scope.saveFileUrl,
+            method: "POST",
+            data: formData,
+            headers: {'Content-Type': 'multipart/form-data'}
+        }).then(function successCallback(response) {
+	    	
+	    	alert( response);
+	    	
+	
+	    }, function errorCallback(response) {
+	        
+	        alert(response);
+	    });*/
+ 		
+		
+	};
 	
 	
 	

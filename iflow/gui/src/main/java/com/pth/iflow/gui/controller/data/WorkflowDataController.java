@@ -1,11 +1,14 @@
 package com.pth.iflow.gui.controller.data;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -13,9 +16,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pth.iflow.common.enums.EWorkflowActionStatus;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
@@ -35,7 +43,10 @@ public class WorkflowDataController extends GuiDataControllerBase {
   private IWorkflowHandler workflowHandler;
 
   @Autowired
-  private IUserAccess userAccess;
+  private IUserAccess      userAccess;
+
+  @Autowired
+  private ObjectMapper     objectMaper;
 
   @ResponseStatus(HttpStatus.OK)
   @PostMapping(path = { "/workflowlist/init" })
@@ -57,8 +68,7 @@ public class WorkflowDataController extends GuiDataControllerBase {
   @PostMapping(path = { "/workflowlist/search" })
   @ResponseBody
   public List<GuiWorkflow> searchWorkflows(@RequestBody final GuiWorkflowSearchFilter workflowSearchFilter)
-                                                                                                            throws GuiCustomizedException,
-                                                                                                            MalformedURLException {
+      throws GuiCustomizedException, MalformedURLException {
 
     if (workflowSearchFilter.isMeAssigned()) {
       workflowSearchFilter.setAssignedUserIdList(Arrays.asList(this.getLoggedUser().getId()));
@@ -104,8 +114,7 @@ public class WorkflowDataController extends GuiDataControllerBase {
   @PostMapping(path = { "/workflow/edit/{workflowId}" })
   @ResponseBody
   public Map<String, Object> loadWorkflowEditData(@PathVariable final Long workflowId)
-                                                                                       throws GuiCustomizedException,
-                                                                                       MalformedURLException {
+      throws GuiCustomizedException, MalformedURLException {
 
     final Map<String, Object> map = new HashMap<>();
 
@@ -126,10 +135,25 @@ public class WorkflowDataController extends GuiDataControllerBase {
   @PostMapping(path = { "/workflowcreate/create" })
   @ResponseBody
   public void createWorkflow(@RequestBody final GuiWorkflowCreateRequest createRequest)
-                                                                                        throws GuiCustomizedException,
-                                                                                        MalformedURLException {
+      throws GuiCustomizedException, MalformedURLException {
 
     this.workflowHandler.createWorkflow(createRequest);
+
+  }
+
+  @ResponseStatus(HttpStatus.CREATED)
+  @PostMapping(path = { "/workflowcreate/file" })
+  @ResponseBody
+  public String createWorkflowFile(final HttpServletRequest request, @RequestParam(value = "file") final MultipartFile file,
+      @RequestParam("data") final String createRequestString)
+      throws GuiCustomizedException, JsonParseException, JsonMappingException, IOException {
+
+    final GuiWorkflowCreateRequest createReq = this.objectMaper.readValue(createRequestString, GuiWorkflowCreateRequest.class);
+
+    final String path = "e:/" + file.getOriginalFilename();
+    file.transferTo(new File(path));
+
+    return file.getName() + " : " + createReq.getWorkflow().getTitle();
 
   }
 

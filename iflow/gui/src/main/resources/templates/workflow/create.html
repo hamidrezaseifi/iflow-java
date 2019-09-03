@@ -15,6 +15,7 @@
 				<button class="toolbar-button" ng-click="save();"><i class="material-icons">save</i></button>
 				<a class="toolbar-link" href="/workflow/list"><i class="material-icons">list</i></a>
 				<button class="toolbar-button" ng-click="reload();"><i class="material-icons">refresh</i></button>
+				<button class="toolbar-button" ng-click="testUpload();"><i class="material-icons">cloud_upload</i></button>
 			</div>
 		
 			<div class="workflow-content">
@@ -68,6 +69,7 @@
 					</div>
 					<div class="clear"></div>
 				</div>
+				<input type="file" file-model="myfile"/>
 				<div class="item-row">
 					<div class="item-label" th:text="#{workflow-comments}"></div>
 					<div class="item-content">
@@ -104,6 +106,7 @@
 		    <script type="text/javascript">
 			var loadUrl = "/workflow/data/workflowcreate/init";
 			var saveUrl = "/workflow/data/workflowcreate/create";
+			var saveFileUrl = "/workflow/data/workflowcreate/file";
 			var listUrl = "/workflow/list";
 				
 		    </script>
