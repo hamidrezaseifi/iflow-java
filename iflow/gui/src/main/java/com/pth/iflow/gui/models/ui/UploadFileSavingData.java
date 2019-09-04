@@ -16,10 +16,10 @@ public class UploadFileSavingData {
   }
 
   public UploadFileSavingData(final MultipartFile file,
-                         final String title,
-                         final String fileEtention,
-                         final Long workflowId,
-                         final Long actionId) {
+                              final String title,
+                              final String fileEtention,
+                              final Long workflowId,
+                              final Long actionId) {
     this.file = file;
     this.title = title;
     this.fileEtention = fileEtention;
@@ -115,15 +115,15 @@ public class UploadFileSavingData {
    * @return the saving file path preffix
    */
   public String generateSavingFilePathPreffix() {
-    return String.format("%d/%d/%d/%s", this.companyId, this.workflowId, this.actionId, this.title);
+    return String.format("%d/%d/%d/%s.%s", this.companyId, this.workflowId, this.actionId, this.title, this.fileEtention);
   }
 
   /**
-   * @return the saving file path preffix
+   * @return the saving file temp path preffix
    */
   public String generateSavingTempFilePathPreffix() {
 
-    return String.format("temp_%d", System.currentTimeMillis());
+    return String.format("temp_%d.%s", System.currentTimeMillis(), this.fileEtention);
   }
 
   /**
@@ -131,19 +131,30 @@ public class UploadFileSavingData {
    */
   public String generateSavingFileFullPath(final String basePath) {
     String path = basePath + "/" + generateSavingFilePathPreffix();
-    path = path.replace("//", "/");
+    path = clearFilePath(path);
 
     return path;
   }
 
   /**
-   * @return the saving file path preffix
+   * @return the saving file temp path preffix
    */
   public String generateSavingTempFileFullPath(final String basePath) {
     String path = basePath + "/" + generateSavingTempFilePathPreffix();
-    path = path.replace("//", "/");
+    path = clearFilePath(path);
 
     return path;
+  }
+
+  private String clearFilePath(final String path) {
+    return path.replace("//", "/").replace("..", ".");
+  }
+
+  public static String getExtention(final MultipartFile file) {
+    final String fileName = file.getOriginalFilename();
+    final int pointIndex = fileName.lastIndexOf(".");
+    final String ext = pointIndex > 2 ? fileName.substring(pointIndex + 1) : "";
+    return ext;
   }
 
 }

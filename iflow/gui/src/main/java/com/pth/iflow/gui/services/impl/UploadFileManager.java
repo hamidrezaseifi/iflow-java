@@ -1,7 +1,9 @@
 package com.pth.iflow.gui.services.impl;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -25,13 +27,17 @@ public class UploadFileManager implements IUploadFileManager {
   private String arhiveBaseDir;
 
   @Override
-  public boolean saveInTemp(final List<UploadFileSavingData> files) throws IOException {
+  public List<String> saveInTemp(final List<UploadFileSavingData> files) throws IOException {
+
+    final List<String> tempFilePathList = new ArrayList<>();
 
     for (final UploadFileSavingData file : files) {
       final String path = file.generateSavingTempFileFullPath(getBaseDir());
-
+      final File oFile = createFileAndFolders(path);
+      file.getFile().transferTo(oFile);
+      tempFilePathList.add(path);
     }
-    return false;
+    return tempFilePathList;
   }
 
   @Override
@@ -50,4 +56,13 @@ public class UploadFileManager implements IUploadFileManager {
     final URL url = this.getClass().getClassLoader().getResource("/");
     return url.getPath();
   }
+
+  private File createFileAndFolders(final String path) {
+    final File oFile = new File(path);
+    if (!oFile.getParentFile().exists()) {
+      oFile.getParentFile().mkdirs();
+    }
+    return oFile;
+  }
+
 }

@@ -2,6 +2,7 @@ package com.pth.iflow.gui.controller.data;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -30,6 +31,8 @@ import com.pth.iflow.gui.models.GuiWorkflow;
 import com.pth.iflow.gui.models.GuiWorkflowCreateRequest;
 import com.pth.iflow.gui.models.GuiWorkflowSearchFilter;
 import com.pth.iflow.gui.models.GuiWorkflowType;
+import com.pth.iflow.gui.models.ui.UploadFileSavingData;
+import com.pth.iflow.gui.services.IUploadFileManager;
 import com.pth.iflow.gui.services.IUserAccess;
 import com.pth.iflow.gui.services.IWorkflowHandler;
 
@@ -42,6 +45,9 @@ public class WorkflowDataController extends GuiDataControllerBase {
 
   @Autowired
   private IUserAccess userAccess;
+
+  @Autowired
+  private IUploadFileManager uploadFileManager;
 
   @ResponseStatus(HttpStatus.OK)
   @PostMapping(path = { "/workflowlist/init" })
@@ -155,6 +161,18 @@ public class WorkflowDataController extends GuiDataControllerBase {
 
     // final String path = "e:/" + file.getOriginalFilename();
     // file.transferTo(new File(path));
+
+    final List<UploadFileSavingData> saveFiles = new ArrayList<>();
+    for (int i = 0; i < files.length; i++) {
+
+      saveFiles.add(new UploadFileSavingData(files[i],
+                                             titles[i],
+                                             UploadFileSavingData.getExtention(files[i]),
+                                             0L,
+                                             this.getLoggedCompany().getId()));
+    }
+
+    final List<String> tempFiles = this.uploadFileManager.saveInTemp(saveFiles);
 
     return files.length + " : " + titles.length;
 
