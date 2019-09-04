@@ -93,7 +93,7 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 	
 	$scope.addFile = function (){
 		
-		$scope.fileTitles.push({title:'File-Title', file:false});
+		$scope.fileTitles.push({title:'', file:false});
 		
 	};
 	

@@ -81,7 +81,7 @@
 					<div class="item-content file-container">
 						<div ng-repeat="file in fileTitles" class="file-row">
 							{{$index + 1}}.
-							<input type="text" class="file-item file-title" ng-model="file.title"/>
+							<input type="text" class="file-item file-title" placeholder="Datei Titel" ng-model="file.title"/>
 							<input type="file" class="file-item file-file" file-model="file.file"/>
 							<button class="file-action" ng-click="removeFile($index)"><i class="material-icons">delete</i></button>
 							<div class="clear"></div>

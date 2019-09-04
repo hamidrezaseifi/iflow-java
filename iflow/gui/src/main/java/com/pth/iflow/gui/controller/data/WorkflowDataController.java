@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.catalina.servlet4preview.http.HttpServletRequest;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -145,27 +145,24 @@ public class WorkflowDataController extends GuiDataControllerBase {
   @ResponseStatus(HttpStatus.CREATED)
   @PostMapping(path = { "/workflowcreate/file" })
   @ResponseBody
-  public String createWorkflowFile(final HttpServletRequest request, @RequestParam(value = "files") final MultipartFile[] files,
-      @RequestParam("titles") final String[] titles, @RequestParam("wids") final Long[] workflowIds)
+  public List<String> createWorkflowFile(@RequestParam(value = "files") final MultipartFile[] files,
+      @RequestParam("titles") final String[] titles)
       throws GuiCustomizedException, JsonParseException, JsonMappingException, IOException {
-
-    // final GuiWorkflowCreateRequest createReq =
-    // this.objectMaper.readValue(createRequestString,
-    // GuiWorkflowCreateRequest.class);
-
-    // final String path = "e:/" + file.getOriginalFilename();
-    // file.transferTo(new File(path));
 
     final List<UploadFileSavingData> saveFiles = new ArrayList<>();
     for (int i = 0; i < files.length; i++) {
+      final String ext = UploadFileSavingData.getExtention(files[i]);
+      String title = titles[i];
+      if (StringUtils.isEmpty(title)) {
+        title = files[i].getOriginalFilename();
+      }
 
-      saveFiles.add(new UploadFileSavingData(files[i], titles[i], UploadFileSavingData.getExtention(files[i]), 0L,
-          this.getLoggedCompany().getId()));
+      saveFiles.add(new UploadFileSavingData(files[i], title, ext, 0L, this.getLoggedCompany().getId()));
     }
 
     final List<String> tempFiles = this.uploadFileManager.saveInTemp(saveFiles);
 
-    return files.length + " : " + titles.length;
+    return tempFiles;
 
   }
 
