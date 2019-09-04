@@ -1,6 +1,5 @@
 package com.pth.iflow.gui.controller.data;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Arrays;
@@ -23,7 +22,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pth.iflow.common.enums.EWorkflowActionStatus;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
@@ -43,10 +41,7 @@ public class WorkflowDataController extends GuiDataControllerBase {
   private IWorkflowHandler workflowHandler;
 
   @Autowired
-  private IUserAccess      userAccess;
-
-  @Autowired
-  private ObjectMapper     objectMaper;
+  private IUserAccess userAccess;
 
   @ResponseStatus(HttpStatus.OK)
   @PostMapping(path = { "/workflowlist/init" })
@@ -68,7 +63,8 @@ public class WorkflowDataController extends GuiDataControllerBase {
   @PostMapping(path = { "/workflowlist/search" })
   @ResponseBody
   public List<GuiWorkflow> searchWorkflows(@RequestBody final GuiWorkflowSearchFilter workflowSearchFilter)
-      throws GuiCustomizedException, MalformedURLException {
+                                                                                                            throws GuiCustomizedException,
+                                                                                                            MalformedURLException {
 
     if (workflowSearchFilter.isMeAssigned()) {
       workflowSearchFilter.setAssignedUserIdList(Arrays.asList(this.getLoggedUser().getId()));
@@ -114,7 +110,8 @@ public class WorkflowDataController extends GuiDataControllerBase {
   @PostMapping(path = { "/workflow/edit/{workflowId}" })
   @ResponseBody
   public Map<String, Object> loadWorkflowEditData(@PathVariable final Long workflowId)
-      throws GuiCustomizedException, MalformedURLException {
+                                                                                       throws GuiCustomizedException,
+                                                                                       MalformedURLException {
 
     final Map<String, Object> map = new HashMap<>();
 
@@ -134,26 +131,32 @@ public class WorkflowDataController extends GuiDataControllerBase {
   @ResponseStatus(HttpStatus.CREATED)
   @PostMapping(path = { "/workflowcreate/create" })
   @ResponseBody
-  public void createWorkflow(@RequestBody final GuiWorkflowCreateRequest createRequest)
-      throws GuiCustomizedException, MalformedURLException {
+  public List<GuiWorkflow> createWorkflow(@RequestBody final GuiWorkflowCreateRequest createRequest)
+                                                                                                     throws GuiCustomizedException,
+                                                                                                     MalformedURLException {
 
-    this.workflowHandler.createWorkflow(createRequest);
+    return this.workflowHandler.createWorkflow(createRequest);
 
   }
 
   @ResponseStatus(HttpStatus.CREATED)
   @PostMapping(path = { "/workflowcreate/file" })
   @ResponseBody
-  public String createWorkflowFile(final HttpServletRequest request, @RequestParam(value = "file") final MultipartFile file,
-      @RequestParam("data") final String createRequestString)
-      throws GuiCustomizedException, JsonParseException, JsonMappingException, IOException {
+  public String createWorkflowFile(final HttpServletRequest request,
+                                   @RequestParam(value = "files") final MultipartFile[] files,
+                                   @RequestParam("titles") final String[] titles,
+                                   @RequestParam("wids") final Long[] workflowIds)
+                                                                                   throws GuiCustomizedException,
+                                                                                   JsonParseException,
+                                                                                   JsonMappingException,
+                                                                                   IOException {
 
-    final GuiWorkflowCreateRequest createReq = this.objectMaper.readValue(createRequestString, GuiWorkflowCreateRequest.class);
+    // final GuiWorkflowCreateRequest createReq = this.objectMaper.readValue(createRequestString, GuiWorkflowCreateRequest.class);
 
-    final String path = "e:/" + file.getOriginalFilename();
-    file.transferTo(new File(path));
+    // final String path = "e:/" + file.getOriginalFilename();
+    // file.transferTo(new File(path));
 
-    return file.getName() + " : " + createReq.getWorkflow().getTitle();
+    return files.length + " : " + titles.length;
 
   }
 

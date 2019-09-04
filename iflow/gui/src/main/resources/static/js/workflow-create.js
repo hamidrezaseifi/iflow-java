@@ -31,7 +31,8 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 	$scope.users = [];
 	$scope.userAssigned = {};
 	$scope.workflowCreateRequest = {};
-	
+	$scope.fileTitles = [];
+
 	$scope.showSelectAssign = false;
 	
 	
@@ -90,6 +91,18 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 		
 	};
 	
+	$scope.addFile = function (){
+		
+		$scope.fileTitles.push({title:'File-Title', file:false});
+		
+	};
+	
+	$scope.removeFile = function (index){
+		
+		$scope.fileTitles.splice(index, 1);
+		
+	};
+
 	
 	$scope.showAssignSelectDialog = function(){
 		$scope.showSelectAssign = true;
@@ -183,13 +196,20 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 	$scope.testUpload = function (){
 		
 		//var file = $("#myFile")[0];
-		var file = $scope.myfile;
+		//var file = $scope.myfile;
 		
 		var formData = new FormData();
-		formData.append('file', file);
-        formData.append('data', JSON.stringify($scope.workflowCreateRequest));
+		
+		for (var i = 0; i < $scope.fileTitles.length; i++) {
+		    formData.append('files', $scope.fileTitles[i].file);
+		    formData.append('titles', $scope.fileTitles[i].title);
+		    formData.append('wids', i);
+		}
+		
+		//formData.append('file', file);
+        //formData.append('data', JSON.stringify($scope.workflowCreateRequest));
      
-		//alert(JSON.stringify(formData));
+		alert(JSON.stringify(formData));
 		
 		$http.post($scope.saveFileUrl, formData,{
             transformRequest : angular.identity,
@@ -244,5 +264,6 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 		return workflowReq;
 	};
 	
+	$scope.addFile();
 	$scope.reload();
 });

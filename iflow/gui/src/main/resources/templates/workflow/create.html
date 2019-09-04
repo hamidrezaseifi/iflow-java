@@ -69,7 +69,6 @@
 					</div>
 					<div class="clear"></div>
 				</div>
-				<input type="file" file-model="myfile"/>
 				<div class="item-row">
 					<div class="item-label" th:text="#{workflow-comments}"></div>
 					<div class="item-content">
@@ -77,6 +76,25 @@
 					</div>
 					<div class="clear"></div>
 				</div>
+				<div class="item-row">
+					<div class="item-label" th:text="#{workflow-files}"></div>
+					<div class="item-content file-container">
+						<div ng-repeat="file in fileTitles" class="file-row">
+							{{$index + 1}}.
+							<input type="text" class="file-item file-title" ng-model="file.title"/>
+							<input type="file" class="file-item file-file" file-model="file.file"/>
+							<button class="file-action" ng-click="removeFile($index)"><i class="material-icons">delete</i></button>
+							<div class="clear"></div>
+						</div>
+						<div style="margin-top: 20px;">
+							<button class="file-action" ng-click="addFile()"><i class="material-icons">add</i></button>
+							<div class="clear"></div>
+						</div>
+						
+					</div>
+					<div class="clear"></div>
+				</div>
+				
 				<div class="item-row">
 					{{getWorkFlowTest()}}
 				</div>
