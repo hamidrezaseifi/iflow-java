@@ -2,12 +2,14 @@ package com.pth.iflow.gui.services.impl;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.ServletContext;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -21,10 +23,13 @@ public class UploadFileManager implements IUploadFileManager {
   protected final Logger log = LoggerFactory.getLogger(UploadFileManager.class);
 
   @Value("${iflow.gui.uploadfile.temp.basedir}")
-  private String tempBaseDir;
+  private String         tempBaseDir;
 
   @Value("${iflow.gui.uploadfile.archive.basedir}")
-  private String arhiveBaseDir;
+  private String         arhiveBaseDir;
+
+  @Autowired
+  private ServletContext context;
 
   @Override
   public List<String> saveInTemp(final List<UploadFileSavingData> files) throws IOException {
@@ -32,8 +37,8 @@ public class UploadFileManager implements IUploadFileManager {
     final List<String> tempFilePathList = new ArrayList<>();
 
     for (final UploadFileSavingData file : files) {
-      final String path = file.generateSavingTempFileFullPath(getBaseDir());
-      final File oFile = createFileAndFolders(path);
+      final String path = file.generateSavingTempFileFullPath(this.tempBaseDir);
+      final File oFile = this.createFileAndFolders(path);
       file.getFile().transferTo(oFile);
       tempFilePathList.add(path);
     }
@@ -50,11 +55,6 @@ public class UploadFileManager implements IUploadFileManager {
   public List<String> getFilePath(final List<UploadFileLoadingData> files) throws IOException {
     // TODO Auto-generated method stub
     return null;
-  }
-
-  private String getBaseDir() throws IOException {
-    final URL url = this.getClass().getClassLoader().getResource("/");
-    return url.getPath();
   }
 
   private File createFileAndFolders(final String path) {

@@ -41,10 +41,10 @@ import com.pth.iflow.gui.services.IWorkflowHandler;
 public class WorkflowDataController extends GuiDataControllerBase {
 
   @Autowired
-  private IWorkflowHandler workflowHandler;
+  private IWorkflowHandler   workflowHandler;
 
   @Autowired
-  private IUserAccess userAccess;
+  private IUserAccess        userAccess;
 
   @Autowired
   private IUploadFileManager uploadFileManager;
@@ -69,8 +69,7 @@ public class WorkflowDataController extends GuiDataControllerBase {
   @PostMapping(path = { "/workflowlist/search" })
   @ResponseBody
   public List<GuiWorkflow> searchWorkflows(@RequestBody final GuiWorkflowSearchFilter workflowSearchFilter)
-                                                                                                            throws GuiCustomizedException,
-                                                                                                            MalformedURLException {
+      throws GuiCustomizedException, MalformedURLException {
 
     if (workflowSearchFilter.isMeAssigned()) {
       workflowSearchFilter.setAssignedUserIdList(Arrays.asList(this.getLoggedUser().getId()));
@@ -116,8 +115,7 @@ public class WorkflowDataController extends GuiDataControllerBase {
   @PostMapping(path = { "/workflow/edit/{workflowId}" })
   @ResponseBody
   public Map<String, Object> loadWorkflowEditData(@PathVariable final Long workflowId)
-                                                                                       throws GuiCustomizedException,
-                                                                                       MalformedURLException {
+      throws GuiCustomizedException, MalformedURLException {
 
     final Map<String, Object> map = new HashMap<>();
 
@@ -138,8 +136,7 @@ public class WorkflowDataController extends GuiDataControllerBase {
   @PostMapping(path = { "/workflowcreate/create" })
   @ResponseBody
   public List<GuiWorkflow> createWorkflow(@RequestBody final GuiWorkflowCreateRequest createRequest)
-                                                                                                     throws GuiCustomizedException,
-                                                                                                     MalformedURLException {
+      throws GuiCustomizedException, MalformedURLException {
 
     return this.workflowHandler.createWorkflow(createRequest);
 
@@ -148,16 +145,13 @@ public class WorkflowDataController extends GuiDataControllerBase {
   @ResponseStatus(HttpStatus.CREATED)
   @PostMapping(path = { "/workflowcreate/file" })
   @ResponseBody
-  public String createWorkflowFile(final HttpServletRequest request,
-                                   @RequestParam(value = "files") final MultipartFile[] files,
-                                   @RequestParam("titles") final String[] titles,
-                                   @RequestParam("wids") final Long[] workflowIds)
-                                                                                   throws GuiCustomizedException,
-                                                                                   JsonParseException,
-                                                                                   JsonMappingException,
-                                                                                   IOException {
+  public String createWorkflowFile(final HttpServletRequest request, @RequestParam(value = "files") final MultipartFile[] files,
+      @RequestParam("titles") final String[] titles, @RequestParam("wids") final Long[] workflowIds)
+      throws GuiCustomizedException, JsonParseException, JsonMappingException, IOException {
 
-    // final GuiWorkflowCreateRequest createReq = this.objectMaper.readValue(createRequestString, GuiWorkflowCreateRequest.class);
+    // final GuiWorkflowCreateRequest createReq =
+    // this.objectMaper.readValue(createRequestString,
+    // GuiWorkflowCreateRequest.class);
 
     // final String path = "e:/" + file.getOriginalFilename();
     // file.transferTo(new File(path));
@@ -165,11 +159,8 @@ public class WorkflowDataController extends GuiDataControllerBase {
     final List<UploadFileSavingData> saveFiles = new ArrayList<>();
     for (int i = 0; i < files.length; i++) {
 
-      saveFiles.add(new UploadFileSavingData(files[i],
-                                             titles[i],
-                                             UploadFileSavingData.getExtention(files[i]),
-                                             0L,
-                                             this.getLoggedCompany().getId()));
+      saveFiles.add(new UploadFileSavingData(files[i], titles[i], UploadFileSavingData.getExtention(files[i]), 0L,
+          this.getLoggedCompany().getId()));
     }
 
     final List<String> tempFiles = this.uploadFileManager.saveInTemp(saveFiles);

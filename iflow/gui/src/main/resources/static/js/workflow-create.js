@@ -209,7 +209,7 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 		//formData.append('file', file);
         //formData.append('data', JSON.stringify($scope.workflowCreateRequest));
      
-		alert(JSON.stringify(formData));
+		//alert(JSON.stringify(formData));
 		
 		$http.post($scope.saveFileUrl, formData,{
             transformRequest : angular.identity,
