@@ -70,24 +70,58 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 		
 		//alert(JSON.stringify($scope.workflowCreateRequest)); 
 
+		var formData = new FormData();
+		
+		for (var i = 0; i < $scope.fileTitles.length; i++) {
+		    formData.append('files', $scope.fileTitles[i].file);
+		    formData.append('titles', $scope.fileTitles[i].title);
+		    formData.append('wids', i);
+		}
+		
+		//formData.append('file', file);
+        //formData.append('data', JSON.stringify($scope.workflowCreateRequest));
+     
+		//alert(JSON.stringify(formData));
+		
+		$http.post($scope.saveFileUrl, formData,{
+            transformRequest : angular.identity,
+            headers : {
+                'Content-Type' : undefined
+            }})
+            .then(
+                function (response) {
+                	alert( response.data.sessionKey);
+                	alert( response.data.titles);
+                	
+                	$scope.workflowCreateRequest.sessionKey = response.data.sessionKey;
+                	
+                	$http({
+            	        method : "POST",
+            	        headers: {
+            	        	'Content-type': 'application/json; charset=UTF-8',
+            	        },
+            	        url : $scope.saveUrl,
+            	        data: $scope.workflowCreateRequest,
+            	    }).then(function successCallback(response) {
+            	    	
+            	    	alert("saved");
+            	    	
+            	    	window.location = $scope.listUrl;
+            	
+            	    }, function errorCallback(response) {
+            	        
+            	        alert(response.data);
+            	    });
+                	
+                },
+                function (errResponse) {
+                	alert( errResponse.data);
+                }
+            );
+
+		
 			
-		$http({
-	        method : "POST",
-	        headers: {
-	        	'Content-type': 'application/json; charset=UTF-8',
-	        },
-	        url : $scope.saveUrl,
-	        data: $scope.workflowCreateRequest,
-	    }).then(function successCallback(response) {
-	    	
-	    	alert("saved");
-	    	
-	    	window.location = $scope.listUrl;
-	
-	    }, function errorCallback(response) {
-	        
-	        alert(response.data);
-	    });
+		
 		
 	};
 	
@@ -218,7 +252,8 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
             }})
             .then(
                 function (response) {
-                	alert( response.data);
+                	alert( response.data.sessionKey);
+                	alert( response.data.titles);
                 },
                 function (errResponse) {
                 	alert( errResponse.data);

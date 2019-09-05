@@ -13,22 +13,22 @@ import com.pth.iflow.common.enums.EWorkflowStatus;
 @JsonIgnoreProperties(value = { "isAssignTo" })
 public class GuiWorkflow {
 
-  private Long                          id;
-  private Long                          workflowTypeId;
-  private GuiWorkflowType               workflowType;
-  private GuiWorkflowTypeStep           currentStep;
-  private Long                          currentStepId;
-  private Long                          controller;
-  private GuiUser                       controllerUser;
-  private Long                          createdBy;
-  private GuiUser                       createdByUser;
-  private Long                          assignTo;
-  private GuiUser                       assignToUser;
-  private String                        title;
-  private String                        comments;
-  private EWorkflowStatus               status;
-  private Integer                       version;
-  private Boolean                       nextAssign;
+  private Long                id;
+  private Long                workflowTypeId;
+  private GuiWorkflowType     workflowType;
+  private GuiWorkflowTypeStep currentStep;
+  private Long                currentStepId;
+  private Long                controller;
+  private GuiUser             controllerUser;
+  private Long                createdBy;
+  private GuiUser             createdByUser;
+  private Long                assignTo;
+  private GuiUser             assignToUser;
+  private String              title;
+  private String              comments;
+  private EWorkflowStatus     status;
+  private Integer             version;
+  private Boolean             nextAssign;
 
   private final List<GuiWorkflowFile>   files   = new ArrayList<>();
   private final List<GuiWorkflowAction> actions = new ArrayList<>();
@@ -208,6 +208,11 @@ public class GuiWorkflow {
     }
   }
 
+  public void addFile(final GuiWorkflowFile file) {
+    file.setWorkflowId(this.getId());
+    this.files.add(file);
+  }
+
   public List<GuiWorkflowAction> getActions() {
     return this.actions;
   }
@@ -283,7 +288,7 @@ public class GuiWorkflow {
   }
 
   public boolean getIsOpen() {
-    return (this.assignTo != null) && (this.assignTo > 0) && this.status == EWorkflowStatus.ASSIGNED;
+    return (this.assignTo != null) && (this.assignTo > 0) && (this.status == EWorkflowStatus.ASSIGNED);
   }
 
   public WorkflowEdo toEdo() {

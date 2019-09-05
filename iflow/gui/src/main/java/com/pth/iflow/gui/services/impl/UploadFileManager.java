@@ -20,21 +20,22 @@ public class UploadFileManager implements IUploadFileManager {
   protected final Logger log = LoggerFactory.getLogger(UploadFileManager.class);
 
   @Value("${iflow.gui.uploadfile.temp.basedir}")
-  private String         tempBaseDir;
+  private String tempBaseDir;
 
   @Value("${iflow.gui.uploadfile.archive.basedir}")
-  private String         arhiveBaseDir;
+  private String arhiveBaseDir;
 
   @Override
-  public List<String> saveInTemp(final List<UploadFileSavingData> files) throws IOException {
+  public List<UploadFileSavingData> saveInTemp(final List<UploadFileSavingData> files) throws IOException {
 
-    final List<String> tempFilePathList = new ArrayList<>();
+    final List<UploadFileSavingData> tempFilePathList = new ArrayList<>();
 
     for (final UploadFileSavingData file : files) {
       final String path = file.generateSavingTempFileFullPath(this.tempBaseDir);
       final File oFile = this.createFileAndFolders(path);
       file.getFile().transferTo(oFile);
-      tempFilePathList.add(path);
+      file.setTempPath(path);
+      tempFilePathList.add(file);
     }
     return tempFilePathList;
   }

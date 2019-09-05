@@ -10,6 +10,7 @@ public class UploadFileSavingData {
   private Long          workflowId;
   private Long          actionId;
   private Long          companyId;
+  private String        tempPath;
 
   public UploadFileSavingData(final String fileEtention) {
     this.fileEtention = fileEtention;
@@ -109,6 +110,20 @@ public class UploadFileSavingData {
    */
   public void setCompanyId(final Long companyId) {
     this.companyId = companyId == null ? 0 : companyId;
+  }
+
+  /**
+   * @return the tempPath
+   */
+  public String getTempPath() {
+    return this.tempPath;
+  }
+
+  /**
+   * @param tempPath the tempPath to set
+   */
+  public void setTempPath(final String tempPath) {
+    this.tempPath = tempPath;
   }
 
   /**

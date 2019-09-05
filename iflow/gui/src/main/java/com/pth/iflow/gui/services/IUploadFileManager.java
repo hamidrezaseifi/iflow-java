@@ -8,7 +8,9 @@ import com.pth.iflow.gui.models.ui.UploadFileSavingData;
 
 public interface IUploadFileManager {
 
-  public List<String> saveInTemp(List<UploadFileSavingData> files) throws IOException;
+  public List<UploadFileSavingData> saveInTemp(List<UploadFileSavingData> files) throws IOException;
+
+  public List<UploadFileSavingData> moveFromTempToArchive(List<UploadFileSavingData> files) throws IOException;
 
   public boolean save(List<UploadFileSavingData> files) throws IOException;
 
