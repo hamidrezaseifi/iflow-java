@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.pth.iflow.gui.models.ui.UploadFileLoadingData;
+import com.pth.iflow.gui.models.ui.FileSavingData;
 import com.pth.iflow.gui.models.ui.UploadFileSavingData;
 import com.pth.iflow.gui.services.IUploadFileManager;
 
@@ -31,10 +31,26 @@ public class UploadFileManager implements IUploadFileManager {
     final List<UploadFileSavingData> tempFilePathList = new ArrayList<>();
 
     for (final UploadFileSavingData file : files) {
-      final String path = file.generateSavingTempFileFullPath(this.tempBaseDir);
-      final File oFile = this.createFileAndFolders(path);
-      file.getFile().transferTo(oFile);
-      file.setTempPath(path);
+      final String tempPath = file.generateSavingTempFileFullPath(this.tempBaseDir);
+      final File oFile = this.createFileAndFolders(tempPath);
+      file.getMultipartFile().transferTo(oFile);
+      file.setFilePath(tempPath);
+      tempFilePathList.add(file);
+    }
+    return tempFilePathList;
+  }
+
+  @Override
+  public List<FileSavingData> moveFromTempToArchive(final List<FileSavingData> files) throws IOException {
+    final List<FileSavingData> tempFilePathList = new ArrayList<>();
+
+    for (final FileSavingData file : files) {
+      final String archiveath = file.generateSavingFileFullPath(this.arhiveBaseDir);
+      final File archiveFile = this.createFileAndFolders(archiveath);
+      final File tempFile = file.getFile();
+      tempFile.renameTo(archiveFile);
+      file.setFilePath(archiveath);
+
       tempFilePathList.add(file);
     }
     return tempFilePathList;
@@ -47,7 +63,7 @@ public class UploadFileManager implements IUploadFileManager {
   }
 
   @Override
-  public List<String> getFilePath(final List<UploadFileLoadingData> files) throws IOException {
+  public List<String> getFilePath(final List<FileSavingData> files) throws IOException {
     // TODO Auto-generated method stub
     return null;
   }

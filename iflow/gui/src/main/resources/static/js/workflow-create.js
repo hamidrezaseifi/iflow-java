@@ -90,8 +90,8 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
             }})
             .then(
                 function (response) {
-                	alert( response.data.sessionKey);
-                	alert( response.data.titles);
+                	//alert( response.data.sessionKey);
+                	//alert( response.data.titles);
                 	
                 	$scope.workflowCreateRequest.sessionKey = response.data.sessionKey;
                 	

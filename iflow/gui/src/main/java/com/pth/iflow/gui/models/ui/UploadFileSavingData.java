@@ -1,37 +1,33 @@
 package com.pth.iflow.gui.models.ui;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.web.multipart.MultipartFile;
 
-public class UploadFileSavingData {
+public class UploadFileSavingData extends FileSavingData {
 
   private MultipartFile file;
-  private String        title;
-  private String        fileEtention;
-  private Long          workflowId;
-  private Long          actionId;
-  private Long          companyId;
-  private String        tempPath;
 
-  public UploadFileSavingData(final String fileEtention) {
-    this.fileEtention = fileEtention;
+  public UploadFileSavingData(final String fileExtention) {
+    super(fileExtention);
   }
 
   public UploadFileSavingData(final MultipartFile file,
                               final String title,
-                              final String fileEtention,
+                              final String fileExtention,
                               final Long workflowId,
-                              final Long actionId) {
+                              final Long actionId,
+                              final Long companyId) {
+    super(title, fileExtention, workflowId, actionId, companyId);
     this.file = file;
-    this.title = title;
-    this.fileEtention = fileEtention;
-    this.workflowId = workflowId;
-    this.actionId = actionId;
+
   }
 
   /**
    * @return the file
    */
-  public MultipartFile getFile() {
+  public MultipartFile getMultipartFile() {
     return this.file;
   }
 
@@ -42,134 +38,17 @@ public class UploadFileSavingData {
     this.file = file;
   }
 
-  /**
-   * @return the title
-   */
-  public String getTitle() {
-    return this.title;
+  public FileSavingData toFileSavingData() {
+    final FileSavingData file = new FileSavingData(getTitle(), getFileExtention(), getWorkflowId(), getActionId(), getCompanyId());
+    file.setFilePath(getFilePath());
+    return file;
   }
 
-  /**
-   * @param title the title to set
-   */
-  public void setTitle(final String title) {
-    this.title = title;
-  }
+  public static List<FileSavingData> toFileSavingDataList(final List<UploadFileSavingData> uploadFileList) {
 
-  /**
-   * @return the fileEtention
-   */
-  public String getFileEtention() {
-    return this.fileEtention;
-  }
+    final List<FileSavingData> filList = uploadFileList.stream().map(up -> up.toFileSavingData()).collect(Collectors.toList());
 
-  /**
-   * @param fileEtention the fileEtention to set
-   */
-  public void setFileEtention(final String fileEtention) {
-    this.fileEtention = fileEtention;
-  }
-
-  /**
-   * @return the workflowId
-   */
-  public Long getWorkflowId() {
-    return this.workflowId;
-  }
-
-  /**
-   * @param workflowId the workflowId to set
-   */
-  public void setWorkflowId(final Long workflowId) {
-    this.workflowId = workflowId == null ? 0 : workflowId;
-  }
-
-  /**
-   * @return the actionId
-   */
-  public Long getActionId() {
-    return this.actionId;
-  }
-
-  /**
-   * @param actionId the actionId to set
-   */
-  public void setActionId(final Long actionId) {
-    this.actionId = actionId == null ? 0 : actionId;
-  }
-
-  /**
-   * @return the companyId
-   */
-  public Long getCompanyId() {
-    return this.companyId;
-  }
-
-  /**
-   * @param companyId the companyId to set
-   */
-  public void setCompanyId(final Long companyId) {
-    this.companyId = companyId == null ? 0 : companyId;
-  }
-
-  /**
-   * @return the tempPath
-   */
-  public String getTempPath() {
-    return this.tempPath;
-  }
-
-  /**
-   * @param tempPath the tempPath to set
-   */
-  public void setTempPath(final String tempPath) {
-    this.tempPath = tempPath;
-  }
-
-  /**
-   * @return the saving file path preffix
-   */
-  public String generateSavingFilePathPreffix() {
-    return String.format("%d/%d/%d/%s.%s", this.companyId, this.workflowId, this.actionId, this.title, this.fileEtention);
-  }
-
-  /**
-   * @return the saving file temp path preffix
-   */
-  public String generateSavingTempFilePathPreffix() {
-
-    return String.format("temp_%d.%s", System.currentTimeMillis(), this.fileEtention);
-  }
-
-  /**
-   * @return the saving file path preffix
-   */
-  public String generateSavingFileFullPath(final String basePath) {
-    String path = basePath + "/" + generateSavingFilePathPreffix();
-    path = clearFilePath(path);
-
-    return path;
-  }
-
-  /**
-   * @return the saving file temp path preffix
-   */
-  public String generateSavingTempFileFullPath(final String basePath) {
-    String path = basePath + "/" + generateSavingTempFilePathPreffix();
-    path = clearFilePath(path);
-
-    return path;
-  }
-
-  private String clearFilePath(final String path) {
-    return path.replace("//", "/").replace("..", ".");
-  }
-
-  public static String getExtention(final MultipartFile file) {
-    final String fileName = file.getOriginalFilename();
-    final int pointIndex = fileName.lastIndexOf(".");
-    final String ext = pointIndex > 2 ? fileName.substring(pointIndex + 1) : "";
-    return ext;
+    return filList;
   }
 
 }

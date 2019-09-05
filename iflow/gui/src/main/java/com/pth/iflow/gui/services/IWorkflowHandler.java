@@ -1,5 +1,6 @@
 package com.pth.iflow.gui.services;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.List;
 
@@ -17,13 +18,20 @@ public interface IWorkflowHandler {
 
   List<GuiWorkflow> createWorkflow(final GuiWorkflowCreateRequest createRequest, final HttpSession session)
                                                                                                             throws GuiCustomizedException,
-                                                                                                            MalformedURLException;
+                                                                                                            MalformedURLException,
+                                                                                                            IOException;
 
-  GuiWorkflow saveWorkflow(final GuiWorkflow workflow, final HttpSession session) throws GuiCustomizedException, MalformedURLException;
+  GuiWorkflow saveWorkflow(final GuiWorkflow workflow, final HttpSession session) throws GuiCustomizedException,
+                                                                                  MalformedURLException,
+                                                                                  IOException;
 
-  GuiWorkflow doneWorkflow(final GuiWorkflow workflow, final HttpSession session) throws GuiCustomizedException, MalformedURLException;
+  GuiWorkflow doneWorkflow(final GuiWorkflow workflow, final HttpSession session) throws GuiCustomizedException,
+                                                                                  MalformedURLException,
+                                                                                  IOException;
 
-  GuiWorkflow archiveWorkflow(final GuiWorkflow workflow, final HttpSession session) throws GuiCustomizedException, MalformedURLException;
+  GuiWorkflow archiveWorkflow(final GuiWorkflow workflow, final HttpSession session) throws GuiCustomizedException,
+                                                                                     MalformedURLException,
+                                                                                     IOException;
 
   List<GuiWorkflowType> readWorkflowTypeList(final Long companyId) throws GuiCustomizedException, MalformedURLException;
 

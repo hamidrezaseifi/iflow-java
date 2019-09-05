@@ -213,6 +213,23 @@ public class GuiWorkflow {
     this.files.add(file);
   }
 
+  public GuiWorkflowFile addNewFile(final String path, final Long userId, final String title, final String comments) {
+    final GuiWorkflowFile wfile = new GuiWorkflowFile();
+    wfile.setActiveFilePath(path);
+    wfile.setActiveFileVersion(1);
+    wfile.setComments(comments);
+    wfile.setCreatedBy(userId);
+
+    wfile.setStatus(1);
+    wfile.setTitle(title);
+
+    wfile.addNewFileVersion(path, 1, userId, comments);
+
+    addFile(wfile);
+
+    return wfile;
+  }
+
   public List<GuiWorkflowAction> getActions() {
     return this.actions;
   }

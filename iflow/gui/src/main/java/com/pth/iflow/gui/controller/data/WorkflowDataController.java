@@ -140,7 +140,7 @@ public class WorkflowDataController extends GuiDataControllerBase {
   @ResponseBody
   public List<GuiWorkflow> createWorkflow(@RequestBody final GuiWorkflowCreateRequest createRequest, final HttpSession session)
                                                                                                                                 throws GuiCustomizedException,
-                                                                                                                                MalformedURLException {
+                                                                                                                                IOException {
 
     return this.workflowHandler.createWorkflow(createRequest, session);
 
@@ -165,7 +165,7 @@ public class WorkflowDataController extends GuiDataControllerBase {
         title = files[i].getOriginalFilename();
       }
 
-      saveFiles.add(new UploadFileSavingData(files[i], title, ext, 0L, this.getLoggedCompany().getId()));
+      saveFiles.add(new UploadFileSavingData(files[i], title, ext, 0L, 0l, this.getLoggedCompany().getId()));
     }
 
     final List<UploadFileSavingData> tempFiles = this.uploadFileManager.saveInTemp(saveFiles);
@@ -186,7 +186,8 @@ public class WorkflowDataController extends GuiDataControllerBase {
   @PostMapping(path = { "/workflow/save" })
   @ResponseBody
   public void saveWorkflow(@RequestBody final GuiWorkflow workflow, final HttpSession session) throws GuiCustomizedException,
-                                                                                               MalformedURLException {
+                                                                                               MalformedURLException,
+                                                                                               IOException {
 
     this.workflowHandler.saveWorkflow(workflow, session);
 
@@ -196,7 +197,8 @@ public class WorkflowDataController extends GuiDataControllerBase {
   @PostMapping(path = { "/workflow/archive" })
   @ResponseBody
   public void archiveWorkflow(@RequestBody final GuiWorkflow workflow, final HttpSession session) throws GuiCustomizedException,
-                                                                                                  MalformedURLException {
+                                                                                                  MalformedURLException,
+                                                                                                  IOException {
 
     this.workflowHandler.archiveWorkflow(workflow, session);
 
@@ -206,7 +208,8 @@ public class WorkflowDataController extends GuiDataControllerBase {
   @PostMapping(path = { "/workflow/done" })
   @ResponseBody
   public void makeDoneWorkflow(@RequestBody final GuiWorkflow workflow, final HttpSession session) throws GuiCustomizedException,
-                                                                                                   MalformedURLException {
+                                                                                                   MalformedURLException,
+                                                                                                   IOException {
 
     this.workflowHandler.doneWorkflow(workflow, session);
 

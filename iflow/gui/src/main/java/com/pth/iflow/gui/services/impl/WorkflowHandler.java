@@ -1,5 +1,6 @@
 package com.pth.iflow.gui.services.impl;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,6 @@ import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.GuiWorkflow;
 import com.pth.iflow.gui.models.GuiWorkflowAction;
 import com.pth.iflow.gui.models.GuiWorkflowCreateRequest;
-import com.pth.iflow.gui.models.GuiWorkflowFile;
 import com.pth.iflow.gui.models.GuiWorkflowSearchFilter;
 import com.pth.iflow.gui.models.GuiWorkflowType;
 import com.pth.iflow.gui.models.GuiWorkflowTypeStep;
@@ -59,7 +59,7 @@ public class WorkflowHandler implements IWorkflowHandler {
   @Override
   public List<GuiWorkflow> createWorkflow(final GuiWorkflowCreateRequest createRequest, final HttpSession session)
                                                                                                                    throws GuiCustomizedException,
-                                                                                                                   MalformedURLException {
+                                                                                                                   IOException {
     logger.debug("Create workflow {}", createRequest.getWorkflow().getTitle());
 
     final Object oFileList = session.getAttribute(createRequest.getSessionKey());
@@ -73,19 +73,12 @@ public class WorkflowHandler implements IWorkflowHandler {
 
     final List<UploadFileSavingData> tempFiles = (List<UploadFileSavingData>) oFileList;
     for (final UploadFileSavingData tempFile : tempFiles) {
-      final GuiWorkflowFile wfile = new GuiWorkflowFile();
-      wfile.setActiveFilePath(filePath);
-      wfile.setActiveFileVersion(1);
-      wfile.setComments("");
-      wfile.setCreatedBy(createdBy);
-      wfile.setFileVersions(fileVersions);
-      wfile.setStatus(1);
-      wfile.setTitle(tempFile.getTitle());
 
-      createRequest.getWorkflow().addFile(wfile);
+      createRequest.getWorkflow()
+                   .addNewFile(tempFile.generateSavingFilePathPreffix(), this.sessionUserInfo.getUser().getId(), tempFile.getTitle(), "");
     }
 
-    this.uploadFileManager.moveFromTempToArchive(tempFiles);
+    this.uploadFileManager.moveFromTempToArchive(UploadFileSavingData.toFileSavingDataList(tempFiles));
 
     createRequest.getWorkflow().setStatus(EWorkflowStatus.INITIALIZE_REQUEST);
 
@@ -96,7 +89,8 @@ public class WorkflowHandler implements IWorkflowHandler {
 
   @Override
   public GuiWorkflow saveWorkflow(final GuiWorkflow workflow, final HttpSession session) throws GuiCustomizedException,
-                                                                                         MalformedURLException {
+                                                                                         MalformedURLException,
+                                                                                         IOException {
     logger.debug("Save workflow {}", workflow.getTitle());
 
     workflow.getActiveAction().setStatus(EWorkflowActionStatus.SAVING_REQUEST);
@@ -107,7 +101,8 @@ public class WorkflowHandler implements IWorkflowHandler {
 
   @Override
   public GuiWorkflow doneWorkflow(final GuiWorkflow workflow, final HttpSession session) throws GuiCustomizedException,
-                                                                                         MalformedURLException {
+                                                                                         MalformedURLException,
+                                                                                         IOException {
     logger.debug("Make workflow {} done", workflow.getTitle());
 
     workflow.getActiveAction().setStatus(EWorkflowActionStatus.DONE_REQUEST);
@@ -117,7 +112,8 @@ public class WorkflowHandler implements IWorkflowHandler {
 
   @Override
   public GuiWorkflow archiveWorkflow(final GuiWorkflow workflow, final HttpSession session) throws GuiCustomizedException,
-                                                                                            MalformedURLException {
+                                                                                            MalformedURLException,
+                                                                                            IOException {
     logger.debug("Make workflow {} archive", workflow.getTitle());
 
     workflow.setStatus(EWorkflowStatus.ARCHIVED);
