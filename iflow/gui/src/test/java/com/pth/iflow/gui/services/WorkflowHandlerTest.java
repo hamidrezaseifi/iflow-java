@@ -5,6 +5,8 @@ import static org.mockito.Mockito.when;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -36,6 +38,12 @@ public class WorkflowHandlerTest extends TestDataProducer {
   @MockBean
   private GuiSessionUserInfo sessionUserInfo;
 
+  @MockBean
+  private IUploadFileManager uploadFileManager;
+
+  @MockBean
+  private HttpSession mockedSession;
+
   private String validTocken;
 
   @Before
@@ -47,7 +55,7 @@ public class WorkflowHandlerTest extends TestDataProducer {
     when(this.sessionUserInfo.getUserById(any(Long.class))).thenReturn(getTestUser());
     when(this.sessionUserInfo.getWorkflowTypeById(any(Long.class))).thenReturn(getTestGuiWorkflowType());
 
-    this.workflowHandler = new WorkflowHandler(this.workflowAccess, this.sessionUserInfo);
+    this.workflowHandler = new WorkflowHandler(this.workflowAccess, this.sessionUserInfo, this.uploadFileManager);
 
   }
 
@@ -80,7 +88,7 @@ public class WorkflowHandlerTest extends TestDataProducer {
 
     when(this.workflowAccess.createWorkflow(any(GuiWorkflowCreateRequest.class), any(String.class))).thenReturn(workflowList);
 
-    final List<GuiWorkflow> resWorkflowList = this.workflowHandler.createWorkflow(createRequest);
+    final List<GuiWorkflow> resWorkflowList = this.workflowHandler.createWorkflow(createRequest, this.mockedSession);
 
     Assert.assertNotNull("Result result-list is not null!", resWorkflowList);
     Assert.assertEquals("Result result-list has the same size as expected!", resWorkflowList.size(), workflowList.size());
@@ -93,7 +101,7 @@ public class WorkflowHandlerTest extends TestDataProducer {
 
     when(this.workflowAccess.saveWorkflow(any(GuiWorkflow.class), any(String.class))).thenReturn(workflow);
 
-    final GuiWorkflow resWorkflow = this.workflowHandler.saveWorkflow(workflow);
+    final GuiWorkflow resWorkflow = this.workflowHandler.saveWorkflow(workflow, this.mockedSession);
 
     Assert.assertNotNull("Result workflow is not null!", resWorkflow);
     Assert.assertEquals("Result workflow has id 1!", resWorkflow.getId(), workflow.getId());

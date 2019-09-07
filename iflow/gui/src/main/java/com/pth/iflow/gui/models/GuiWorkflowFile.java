@@ -12,6 +12,7 @@ public class GuiWorkflowFile extends ModelMapperBase<WorkflowFileEdo, GuiWorkflo
   private Long                               workflowId;
   private Long                               createdBy;
   private String                             title;
+  private String                             extention;
   private String                             activeFilePath;
   private String                             comments;
   private Integer                            activeFileVersion;
@@ -59,6 +60,14 @@ public class GuiWorkflowFile extends ModelMapperBase<WorkflowFileEdo, GuiWorkflo
     this.title = title;
   }
 
+  public String getExtention() {
+    return this.extention;
+  }
+
+  public void setExtention(final String extention) {
+    this.extention = extention;
+  }
+
   public String getComments() {
     return this.comments;
   }
@@ -102,10 +111,30 @@ public class GuiWorkflowFile extends ModelMapperBase<WorkflowFileEdo, GuiWorkflo
     }
   }
 
+  public void addFileVersion(final GuiWorkflowFileVersion fileVersion) {
+    this.fileVersions.add(fileVersion);
+
+  }
+
+  public GuiWorkflowFileVersion addNewFileVersion(final String filePath, final int version, final Long userId, final String comments) {
+    final GuiWorkflowFileVersion fileVersion = new GuiWorkflowFileVersion();
+    fileVersion.setComments(comments);
+    fileVersion.setCreatedBy(userId);
+    fileVersion.setFilePath(filePath);
+    fileVersion.setFileVersion(version);
+    fileVersion.setStatus(1);
+    fileVersion.setWorkflowFileId(this.id);
+
+    this.fileVersions.add(fileVersion);
+
+    return fileVersion;
+  }
+
   @Override
   public WorkflowFileEdo toEdo() {
     final WorkflowFileEdo edo = new WorkflowFileEdo();
     edo.setTitle(this.title);
+    edo.setExtention(this.extention);
     edo.setComments(this.comments);
     edo.setStatus(this.status);
     edo.setId(this.id);
@@ -115,7 +144,7 @@ public class GuiWorkflowFile extends ModelMapperBase<WorkflowFileEdo, GuiWorkflo
     edo.setWorkflowId(this.workflowId);
     edo.setVersion(this.version);
 
-    edo.setFileVersions(GuiWorkflowFileVersion.toEdoList(this.fileVersions));
+    edo.setFileVersions(ModelMapperBase.toEdoList(this.fileVersions));
 
     return edo;
   }
@@ -129,6 +158,7 @@ public class GuiWorkflowFile extends ModelMapperBase<WorkflowFileEdo, GuiWorkflo
     final GuiWorkflowFile model = new GuiWorkflowFile();
 
     model.setTitle(edo.getTitle());
+    model.setExtention(edo.getExtention());
     model.setComments(edo.getComments());
     model.setStatus(edo.getStatus());
     model.setId(edo.getId());

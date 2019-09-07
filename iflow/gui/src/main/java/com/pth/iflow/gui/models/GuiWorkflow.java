@@ -201,11 +201,45 @@ public class GuiWorkflow {
     return this.files;
   }
 
+  public GuiWorkflowFile getFileById(final Long fileId) {
+
+    for (final GuiWorkflowFile file : this.files) {
+      if (file.getId().equals(fileId)) {
+        return file;
+      }
+    }
+    return null;
+  }
+
   public void setFiles(final List<GuiWorkflowFile> files) {
     this.files.clear();
     if (files != null) {
       this.files.addAll(files);
     }
+  }
+
+  public void addFile(final GuiWorkflowFile file) {
+    file.setWorkflowId(this.getId());
+    this.files.add(file);
+  }
+
+  public GuiWorkflowFile addNewFile(final String path, final Long userId, final String title, final String extention,
+      final String comments) {
+    final GuiWorkflowFile wfile = new GuiWorkflowFile();
+    wfile.setActiveFilePath(path);
+    wfile.setActiveFileVersion(1);
+    wfile.setComments(comments);
+    wfile.setCreatedBy(userId);
+    wfile.setExtention(extention);
+
+    wfile.setStatus(1);
+    wfile.setTitle(title);
+
+    wfile.addNewFileVersion(path, 1, userId, comments);
+
+    this.addFile(wfile);
+
+    return wfile;
   }
 
   public List<GuiWorkflowAction> getActions() {
@@ -283,7 +317,7 @@ public class GuiWorkflow {
   }
 
   public boolean getIsOpen() {
-    return (this.assignTo != null) && (this.assignTo > 0) && this.status == EWorkflowStatus.ASSIGNED;
+    return (this.assignTo != null) && (this.assignTo > 0) && (this.status == EWorkflowStatus.ASSIGNED);
   }
 
   public WorkflowEdo toEdo() {

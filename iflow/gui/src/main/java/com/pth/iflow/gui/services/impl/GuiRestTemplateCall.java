@@ -27,9 +27,9 @@ import com.pth.iflow.common.response.IFlowErrorRestResponse;
 import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
 
 @Component
-public class BackendRestTemplateCall implements IBackendRestTemplateCall {
+public class GuiRestTemplateCall implements IBackendRestTemplateCall {
   
-  protected final Logger log = LoggerFactory.getLogger(BackendRestTemplateCall.class);
+  protected final Logger log = LoggerFactory.getLogger(GuiRestTemplateCall.class);
   
   @Autowired
   private RestTemplate restTemplate;

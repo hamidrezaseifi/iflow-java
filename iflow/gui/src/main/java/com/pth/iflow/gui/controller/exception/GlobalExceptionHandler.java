@@ -32,13 +32,13 @@ public class GlobalExceptionHandler implements ErrorController {
   private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
   @Autowired
-  private IBreadCrumbLoader breadCrumbLoader;
+  private IBreadCrumbLoader   breadCrumbLoader;
 
   @Autowired
-  private UiMenuService menuService;
+  private UiMenuService       menuService;
 
   @Autowired
-  private GuiSessionUserInfo sessionUserInfo;
+  private GuiSessionUserInfo  sessionUserInfo;
 
   protected List<UiMenuItem> getMenus() {
     return this.menuService.getAllMenus();
@@ -60,7 +60,7 @@ public class GlobalExceptionHandler implements ErrorController {
   public ModelAndView handleNoHandlerFoundException(final Model model, final NoHandlerFoundException ex) {
     logger.error("ErrorLog: ", ex);
 
-    prepareViewModel(model);
+    this.prepareViewModel(model);
 
     return new ModelAndView("/site/invalid-request", "exceptionMsg", "NoHandlerFoundException msg: " + ex.toString());
   }
@@ -78,7 +78,7 @@ public class GlobalExceptionHandler implements ErrorController {
       }
     }
 
-    prepareViewModel(model);
+    this.prepareViewModel(model);
 
     return viewName;
   }

@@ -57,13 +57,26 @@ div.workflow-content div.item-row div.item-content, div.workflow-content-record 
     width: calc(100% - 135px);
 }
 
-div.workflow-content div.item-row div.item-content input, 
+div.workflow-content div.item-row div.item-content input:not(.file-item), 
 div.workflow-content div.item-row div.item-content select,
 div.workflow-content-record div.item-row div.item-content input, 
 div.workflow-content-record div.item-row div.item-content select
 {
     width: 100%;
     height: 26px;
+}
+
+div.workflow-content div.item-row div.item-content input.file-title
+{
+    width: calc(50% - 170px);
+    height: 26px;
+}
+
+div.workflow-content div.item-row div.item-content input.file-file
+{
+    width: 50%;
+    height: 26px;
+    display: inline-block;;
 }
 
 div.workflow-content div.item-row div.item-content textarea,
@@ -113,13 +126,23 @@ div.assign-list div.user-item-box span {
     float: left;
 }
 
-div.assign-list button.show-select-dialog {
+button.show-select-dialog {
     float: right;
     margin-right: -22px;
     width: 22px;
     border: none;
     padding: 0;
     padding-left: 2px;
+}
+
+button.file-action {
+    float: right;
+    width: 22px;
+    border: none;
+    padding: 0;
+    padding-left: 2px;
+    margin-top: 4px;
+    background: transparent;
 }
 
 .step-button, .step-button:active{
@@ -138,4 +161,35 @@ div.assign-list button.show-select-dialog {
     
 }
 
+.file-container{
+	border:gray 1px solid; 
+	padding: 6px;
+}
+
+.file-container .file-row{
+	border:gray 1px solid; 
+	padding: 2px 2px;
+	margin: 4px 6px;
+	margin-right: 0;
+}
+
+.file-container .file-row:nth-child(even){
+	background: #dbf1fb;
+}
+
+.file-container .file-row:nth-child(odd){
+	background: #f3f3e1;
+}
+
+.workflow-file-view-link, .workflow-file-view-link:active, .workflow-file-view-link:visited{
+	color: #333;
+}
+
+.workflow-file-view-link:hover{
+	color: #551113;
+}
+
+.workflow-file-view-link i.material-icons{
+	width: 24px;
+}
 

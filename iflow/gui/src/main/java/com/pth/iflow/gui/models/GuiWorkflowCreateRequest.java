@@ -11,6 +11,8 @@ public class GuiWorkflowCreateRequest {
 
   private final List<Long> assigns = new ArrayList<>();
 
+  private String sessionKey;
+
   public GuiWorkflowCreateRequest() {
 
   }
@@ -61,6 +63,20 @@ public class GuiWorkflowCreateRequest {
     final WorkflowCreateRequestEdo edo = new WorkflowCreateRequestEdo(this.workflow.toEdo(), this.assigns);
 
     return edo;
+  }
+
+  /**
+   * @return the sessionKey
+   */
+  public String getSessionKey() {
+    return this.sessionKey;
+  }
+
+  /**
+   * @param sessionKey the sessionKey to set
+   */
+  public void setSessionKey(final String sessionKey) {
+    this.sessionKey = sessionKey;
   }
 
 }

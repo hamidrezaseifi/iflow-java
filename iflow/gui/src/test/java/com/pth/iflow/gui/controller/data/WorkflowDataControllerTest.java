@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -169,7 +171,9 @@ public class WorkflowDataControllerTest extends TestDataProducer {
 
     final String contentAsXmlString = this.jsonConverter.getObjectMapper().writeValueAsString(createRequest);
 
-    Mockito.when(this.workflowHandler.createWorkflow(ArgumentMatchers.any(GuiWorkflowCreateRequest.class))).thenReturn(null);
+    Mockito.when(this.workflowHandler.createWorkflow(ArgumentMatchers.any(GuiWorkflowCreateRequest.class),
+                                                     ArgumentMatchers.any(HttpSession.class)))
+           .thenReturn(null);
 
     final MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.post("/workflow/data/workflowcreate/create")
                                                                         .content(contentAsXmlString)

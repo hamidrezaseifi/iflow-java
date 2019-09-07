@@ -12,6 +12,7 @@ public class BackendWorkflowFile extends ModelMapperBase<WorkflowFileEdo, Backen
   private Long                                   workflowId;
   private Long                                   createdBy;
   private String                                 title;
+  private String                                 extention;
   private String                                 activeFilePath;
   private String                                 comments;
   private Integer                                activeFileVersion;
@@ -57,6 +58,14 @@ public class BackendWorkflowFile extends ModelMapperBase<WorkflowFileEdo, Backen
 
   public void setTitle(final String title) {
     this.title = title;
+  }
+
+  public String getExtention() {
+    return this.extention;
+  }
+
+  public void setExtention(final String extention) {
+    this.extention = extention;
   }
 
   public String getComments() {
@@ -106,6 +115,7 @@ public class BackendWorkflowFile extends ModelMapperBase<WorkflowFileEdo, Backen
   public WorkflowFileEdo toEdo() {
     final WorkflowFileEdo edo = new WorkflowFileEdo();
     edo.setTitle(this.title);
+    edo.setExtention(this.extention);
     edo.setComments(this.comments);
     edo.setStatus(this.status);
     edo.setId(this.id);
@@ -115,7 +125,7 @@ public class BackendWorkflowFile extends ModelMapperBase<WorkflowFileEdo, Backen
     edo.setWorkflowId(this.workflowId);
     edo.setVersion(this.version);
 
-    edo.setFileVersions(BackendWorkflowFileVersion.toEdoList(this.fileVersions));
+    edo.setFileVersions(ModelMapperBase.toEdoList(this.fileVersions));
 
     return edo;
   }
@@ -129,6 +139,7 @@ public class BackendWorkflowFile extends ModelMapperBase<WorkflowFileEdo, Backen
     final BackendWorkflowFile model = new BackendWorkflowFile();
 
     model.setTitle(edo.getTitle());
+    model.setExtention(edo.getExtention());
     model.setComments(edo.getComments());
     model.setStatus(edo.getStatus());
     model.setId(edo.getId());

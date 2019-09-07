@@ -2,19 +2,37 @@
  * 
  */
 
+iflowApp.directive('fileModel', [ '$parse', function($parse) {
+    return {
+        restrict : 'A',
+        link : function(scope, element, attrs) {
+            var model = $parse(attrs.fileModel);
+            var modelSetter = model.assign;
+
+            element.bind('change', function() {
+                scope.$apply(function() {
+                   	
+                    modelSetter(scope, element[0].files[0]);
+                });
+            });
+        }
+    };
+} ]);
 
 iflowApp.controller('WorkflowCreateController', function WorkflowTypesController($scope, $http, $sce, $element, $mdSidenav) {
 	  //$scope.phones = [];
 	
 	$scope.loadUrl = loadUrl;
 	$scope.saveUrl = saveUrl;
+	$scope.saveFileUrl = saveFileUrl;
 	$scope.listUrl = listUrl;
 	
 	$scope.workflowTypes = [];
 	$scope.users = [];
 	$scope.userAssigned = {};
 	$scope.workflowCreateRequest = {};
-	
+	$scope.fileTitles = [];
+
 	$scope.showSelectAssign = false;
 	
 	
@@ -52,27 +70,73 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 		
 		//alert(JSON.stringify($scope.workflowCreateRequest)); 
 
+		var formData = new FormData();
+		
+		for (var i = 0; i < $scope.fileTitles.length; i++) {
+		    formData.append('files', $scope.fileTitles[i].file);
+		    formData.append('titles', $scope.fileTitles[i].title);
+		    formData.append('wids', i);
+		}
+		
+		//formData.append('file', file);
+        //formData.append('data', JSON.stringify($scope.workflowCreateRequest));
+     
+		//alert(JSON.stringify(formData));
+		
+		$http.post($scope.saveFileUrl, formData,{
+            transformRequest : angular.identity,
+            headers : {
+                'Content-Type' : undefined
+            }})
+            .then(
+                function (response) {
+                	//alert( response.data.sessionKey);
+                	//alert( response.data.titles);
+                	
+                	$scope.workflowCreateRequest.sessionKey = response.data.sessionKey;
+                	
+                	$http({
+            	        method : "POST",
+            	        headers: {
+            	        	'Content-type': 'application/json; charset=UTF-8',
+            	        },
+            	        url : $scope.saveUrl,
+            	        data: $scope.workflowCreateRequest,
+            	    }).then(function successCallback(response) {
+            	    	
+            	    	alert("saved");
+            	    	
+            	    	window.location = $scope.listUrl;
+            	
+            	    }, function errorCallback(response) {
+            	        
+            	        alert(response.data);
+            	    });
+                	
+                },
+                function (errResponse) {
+                	alert( errResponse.data);
+                }
+            );
+
+		
 			
-		$http({
-	        method : "POST",
-	        headers: {
-	        	'Content-type': 'application/json; charset=UTF-8',
-	        },
-	        url : $scope.saveUrl,
-	        data: $scope.workflowCreateRequest,
-	    }).then(function successCallback(response) {
-	    	
-	    	alert("saved");
-	    	
-	    	window.location = $scope.listUrl;
-	
-	    }, function errorCallback(response) {
-	        
-	        alert(response.data);
-	    });
+		
 		
 	};
 	
+	$scope.addFile = function (){
+		
+		$scope.fileTitles.push({title:'', file:false});
+		
+	};
+	
+	$scope.removeFile = function (index){
+		
+		$scope.fileTitles.splice(index, 1);
+		
+	};
+
 	
 	$scope.showAssignSelectDialog = function(){
 		$scope.showSelectAssign = true;
@@ -163,6 +227,56 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 	};
 
 	
+	$scope.testUpload = function (){
+		
+		//var file = $("#myFile")[0];
+		//var file = $scope.myfile;
+		
+		var formData = new FormData();
+		
+		for (var i = 0; i < $scope.fileTitles.length; i++) {
+		    formData.append('files', $scope.fileTitles[i].file);
+		    formData.append('titles', $scope.fileTitles[i].title);
+		    formData.append('wids', i);
+		}
+		
+		//formData.append('file', file);
+        //formData.append('data', JSON.stringify($scope.workflowCreateRequest));
+     
+		//alert(JSON.stringify(formData));
+		
+		$http.post($scope.saveFileUrl, formData,{
+            transformRequest : angular.identity,
+            headers : {
+                'Content-Type' : undefined
+            }})
+            .then(
+                function (response) {
+                	alert( response.data.sessionKey);
+                	alert( response.data.titles);
+                },
+                function (errResponse) {
+                	alert( errResponse.data);
+                }
+            );
+		
+        /*$http({
+            url: $scope.saveFileUrl,
+            method: "POST",
+            data: formData,
+            headers: {'Content-Type': 'multipart/form-data'}
+        }).then(function successCallback(response) {
+	    	
+	    	alert( response);
+	    	
+	
+	    }, function errorCallback(response) {
+	        
+	        alert(response);
+	    });*/
+ 		
+		
+	};
 	
 	
 	
@@ -185,5 +299,6 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 		return workflowReq;
 	};
 	
+	$scope.addFile();
 	$scope.reload();
 });
