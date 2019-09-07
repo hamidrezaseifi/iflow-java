@@ -13,22 +13,22 @@ import com.pth.iflow.common.enums.EWorkflowStatus;
 @JsonIgnoreProperties(value = { "isAssignTo" })
 public class GuiWorkflow {
 
-  private Long                id;
-  private Long                workflowTypeId;
-  private GuiWorkflowType     workflowType;
-  private GuiWorkflowTypeStep currentStep;
-  private Long                currentStepId;
-  private Long                controller;
-  private GuiUser             controllerUser;
-  private Long                createdBy;
-  private GuiUser             createdByUser;
-  private Long                assignTo;
-  private GuiUser             assignToUser;
-  private String              title;
-  private String              comments;
-  private EWorkflowStatus     status;
-  private Integer             version;
-  private Boolean             nextAssign;
+  private Long                          id;
+  private Long                          workflowTypeId;
+  private GuiWorkflowType               workflowType;
+  private GuiWorkflowTypeStep           currentStep;
+  private Long                          currentStepId;
+  private Long                          controller;
+  private GuiUser                       controllerUser;
+  private Long                          createdBy;
+  private GuiUser                       createdByUser;
+  private Long                          assignTo;
+  private GuiUser                       assignToUser;
+  private String                        title;
+  private String                        comments;
+  private EWorkflowStatus               status;
+  private Integer                       version;
+  private Boolean                       nextAssign;
 
   private final List<GuiWorkflowFile>   files   = new ArrayList<>();
   private final List<GuiWorkflowAction> actions = new ArrayList<>();
@@ -201,6 +201,16 @@ public class GuiWorkflow {
     return this.files;
   }
 
+  public GuiWorkflowFile getFileById(final Long fileId) {
+
+    for (final GuiWorkflowFile file : this.files) {
+      if (file.getId().equals(fileId)) {
+        return file;
+      }
+    }
+    return null;
+  }
+
   public void setFiles(final List<GuiWorkflowFile> files) {
     this.files.clear();
     if (files != null) {
@@ -213,19 +223,21 @@ public class GuiWorkflow {
     this.files.add(file);
   }
 
-  public GuiWorkflowFile addNewFile(final String path, final Long userId, final String title, final String comments) {
+  public GuiWorkflowFile addNewFile(final String path, final Long userId, final String title, final String extention,
+      final String comments) {
     final GuiWorkflowFile wfile = new GuiWorkflowFile();
     wfile.setActiveFilePath(path);
     wfile.setActiveFileVersion(1);
     wfile.setComments(comments);
     wfile.setCreatedBy(userId);
+    wfile.setExtention(extention);
 
     wfile.setStatus(1);
     wfile.setTitle(title);
 
     wfile.addNewFileVersion(path, 1, userId, comments);
 
-    addFile(wfile);
+    this.addFile(wfile);
 
     return wfile;
   }

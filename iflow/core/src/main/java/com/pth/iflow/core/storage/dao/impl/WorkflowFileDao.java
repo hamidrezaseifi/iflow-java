@@ -33,8 +33,8 @@ public class WorkflowFileDao extends DaoBasicClass<WorkflowFile> implements IWor
   @Override
   public WorkflowFile getById(final Long id) throws IFlowStorageException {
 
-    final WorkflowFile workflowFile = getModelById(id, "SELECT * FROM workflow_files where id=?", "WorkflowFile");
-    workflowFile.setFileVersions(workflowFileVersionDao.getListByWorkflowFileId(id));
+    final WorkflowFile workflowFile = this.getModelById(id, "SELECT * FROM workflow_files where id=?", "WorkflowFile");
+    workflowFile.setFileVersions(this.workflowFileVersionDao.getListByWorkflowFileId(id));
     return workflowFile;
   }
 
@@ -43,7 +43,7 @@ public class WorkflowFileDao extends DaoBasicClass<WorkflowFile> implements IWor
     final List<WorkflowFile> list = new ArrayList<>();
 
     for (final Long wId : idList) {
-      list.add(getById(wId));
+      list.add(this.getById(wId));
     }
     return list;
   }
@@ -54,6 +54,7 @@ public class WorkflowFileDao extends DaoBasicClass<WorkflowFile> implements IWor
 
     model.setId(rs.getLong("id"));
     model.setTitle(rs.getString("title"));
+    model.setExtention(rs.getString("extention"));
     model.setActiveFilePath(rs.getString("active_filepath"));
     model.setStatus(rs.getInt("status"));
     model.setCreatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("created_at")));
@@ -70,8 +71,8 @@ public class WorkflowFileDao extends DaoBasicClass<WorkflowFile> implements IWor
   @Override
   public List<WorkflowFile> getListByWorkflowId(final Long id) throws IFlowStorageException {
 
-    final List<Long> idList = getModelIdListById(id, "SELECT * FROM workflow_files where workflow_id=?", "WorkflowFile", "id");
-    final List<WorkflowFile> list = getListByIdList(idList);
+    final List<Long> idList = this.getModelIdListById(id, "SELECT * FROM workflow_files where workflow_id=?", "WorkflowFile", "id");
+    final List<WorkflowFile> list = this.getListByIdList(idList);
 
     return list;
 
@@ -79,19 +80,19 @@ public class WorkflowFileDao extends DaoBasicClass<WorkflowFile> implements IWor
 
   @Override
   public WorkflowFile create(final WorkflowFile workflow, final boolean withTransaction) throws IFlowStorageException {
-    final String sql = "INSERT INTO workflow_files (workflow_id, title, active_filepath, active_version, comments, created_by, version, status)"
-        + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    final String sql = "INSERT INTO workflow_files (workflow_id, title, extention, active_filepath, active_version, comments, created_by, version, status)"
+        + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    final TransactionStatus transactionStatus = startTransaction(withTransaction);
+    final TransactionStatus transactionStatus = this.startTransaction(withTransaction);
     try {
-      final Long workflowFileId = createModel(workflow, "WorkflowFile", sql, withTransaction);
+      final Long workflowFileId = this.createModel(workflow, "WorkflowFile", sql, withTransaction);
       workflow.setId(workflowFileId);
-      createWorkflowFileVersions(workflow, workflowFileId);
+      this.createWorkflowFileVersions(workflow, workflowFileId);
 
-      commitTransaction(withTransaction, transactionStatus);
-      return getById(workflowFileId);
+      this.commitTransaction(withTransaction, transactionStatus);
+      return this.getById(workflowFileId);
     } catch (final Exception e) {
-      rollbackTransaction(true, transactionStatus);
+      this.rollbackTransaction(true, transactionStatus);
       logger.error("Unable to create WorkflowFile: {}", e.toString(), e);
       throw new IFlowStorageException(e.toString(), e);
     }
@@ -99,20 +100,20 @@ public class WorkflowFileDao extends DaoBasicClass<WorkflowFile> implements IWor
 
   @Override
   public WorkflowFile update(final WorkflowFile workflowFile, final boolean withTransaction) throws IFlowStorageException {
-    final String sql = "UPDATE workflow_files SET workflow_id = ?, title = ?, active_filepath = ?, active_version = ?, comments = ?,"
+    final String sql = "UPDATE workflow_files SET workflow_id = ?, title = ?, extention = ?, active_filepath = ?, active_version = ?, comments = ?,"
         + " created_by = ?, version = ?, status = ? WHERE id = ?";
 
-    final TransactionStatus transactionStatus = startTransaction(withTransaction);
+    final TransactionStatus transactionStatus = this.startTransaction(withTransaction);
     try {
 
-      updateModel(workflowFile, "WorkflowFile", sql, withTransaction);
+      this.updateModel(workflowFile, "WorkflowFile", sql, withTransaction);
 
-      createWorkflowFileVersions(workflowFile, workflowFile.getId());
+      this.createWorkflowFileVersions(workflowFile, workflowFile.getId());
 
-      commitTransaction(withTransaction, transactionStatus);
-      return getById(workflowFile.getId());
+      this.commitTransaction(withTransaction, transactionStatus);
+      return this.getById(workflowFile.getId());
     } catch (final Exception e) {
-      rollbackTransaction(true, transactionStatus);
+      this.rollbackTransaction(true, transactionStatus);
       logger.error("Unable to update WorkflowFile: {}", e.toString(), e);
       throw new IFlowStorageException(e.toString(), e);
     }
@@ -120,14 +121,14 @@ public class WorkflowFileDao extends DaoBasicClass<WorkflowFile> implements IWor
 
   private void createWorkflowFileVersions(final WorkflowFile workflowFile, final Long workflowFileId) {
 
-    workflowFileVersionDao.deleteByWorkflowFileId(workflowFileId, false, false);
+    this.workflowFileVersionDao.deleteByWorkflowFileId(workflowFileId, false, false);
 
     final List<WorkflowFileVersion> resultList = new ArrayList<>();
 
     for (final WorkflowFileVersion model : workflowFile.getFileVersions()) {
 
       model.setWorkflowFileId(workflowFileId);
-      resultList.add(workflowFileVersionDao.create(model, false));
+      resultList.add(this.workflowFileVersionDao.create(model, false));
 
     }
 
@@ -140,12 +141,13 @@ public class WorkflowFileDao extends DaoBasicClass<WorkflowFile> implements IWor
       throws SQLException {
     ps.setLong(1, model.getWorkflowId());
     ps.setString(2, model.getTitle());
-    ps.setString(3, model.getActiveFilePath());
-    ps.setInt(4, model.getActiveFileVersion());
-    ps.setString(5, model.getComments());
-    ps.setLong(6, model.getCreatedBy());
-    ps.setInt(7, model.getVersion());
-    ps.setInt(8, model.getStatus());
+    ps.setString(3, model.getExtention());
+    ps.setString(4, model.getActiveFilePath());
+    ps.setInt(5, model.getActiveFileVersion());
+    ps.setString(6, model.getComments());
+    ps.setLong(7, model.getCreatedBy());
+    ps.setInt(8, model.getVersion());
+    ps.setInt(9, model.getStatus());
 
     return ps;
   }
@@ -155,13 +157,14 @@ public class WorkflowFileDao extends DaoBasicClass<WorkflowFile> implements IWor
       throws SQLException {
     ps.setLong(1, model.getWorkflowId());
     ps.setString(2, model.getTitle());
-    ps.setString(3, model.getActiveFilePath());
-    ps.setInt(4, model.getActiveFileVersion());
-    ps.setString(5, model.getComments());
-    ps.setLong(6, model.getCreatedBy());
-    ps.setInt(7, model.getVersion());
-    ps.setInt(8, model.getStatus());
-    ps.setLong(9, model.getId());
+    ps.setString(3, model.getExtention());
+    ps.setString(4, model.getActiveFilePath());
+    ps.setInt(5, model.getActiveFileVersion());
+    ps.setString(6, model.getComments());
+    ps.setLong(7, model.getCreatedBy());
+    ps.setInt(8, model.getVersion());
+    ps.setInt(9, model.getStatus());
+    ps.setLong(10, model.getId());
 
     return ps;
   }
@@ -169,19 +172,19 @@ public class WorkflowFileDao extends DaoBasicClass<WorkflowFile> implements IWor
   @Override
   public void deleteById(final Long id, final boolean withTransaction) throws IFlowStorageException {
 
-    workflowFileVersionDao.deleteByWorkflowFileId(id, withTransaction, false);
+    this.workflowFileVersionDao.deleteByWorkflowFileId(id, withTransaction, false);
 
-    deleteModel(id, "WorkflowFile", "Delete from workflow_files where id=?", withTransaction, true);
+    this.deleteModel(id, "WorkflowFile", "Delete from workflow_files where id=?", withTransaction, true);
   }
 
   @Override
   public void deleteByWorkflowId(final Long id, final boolean withTransaction) throws IFlowStorageException {
 
-    final List<WorkflowFile> workflowFiles = getListByWorkflowId(id);
+    final List<WorkflowFile> workflowFiles = this.getListByWorkflowId(id);
 
     for (final WorkflowFile workflowFile : workflowFiles) {
-      workflowFileVersionDao.deleteByWorkflowFileId(workflowFile.getId(), withTransaction, false);
-      deleteModel(workflowFile.getId(), "WorkflowFile", "Delete from workflow_files where id=?", withTransaction, false);
+      this.workflowFileVersionDao.deleteByWorkflowFileId(workflowFile.getId(), withTransaction, false);
+      this.deleteModel(workflowFile.getId(), "WorkflowFile", "Delete from workflow_files where id=?", withTransaction, false);
     }
 
   }

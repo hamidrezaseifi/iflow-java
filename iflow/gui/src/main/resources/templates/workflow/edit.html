@@ -89,6 +89,19 @@
 							<div class="clear"></div>
 						</div>
 						<div style="padding-top: 10px; padding-left: 30px; border-top: 1px solid gray; margin-top: 10px;">
+							<div style="text-align: center; font-weight: bold;">Files</div>
+							<div class="item-row" ng-repeat="file in workflow.files" style="border-bottom: 1px #9a9a9a dashed">
+								<div>
+									<a href="/workflow/file/view/{{workflow.id}}/{{file.id}}" class="workflow-file-view-link" target="_blank">
+										<strong>{{file.title}}</strong> (Ver: {{file.activeFileVersion}})
+									</a>
+									<a href="/workflow/file/download/{{workflow.id}}/{{file.id}}" class="workflow-file-view-link" target="_blank">
+										<i class="material-icons">save_alt</i>
+									</a>
+								</div> 
+							</div>
+						</div>
+						<div style="padding-top: 10px; padding-left: 30px; border-top: 1px solid gray; margin-top: 10px;">
 							<div style="text-align: center; font-weight: bold;">Actions</div>
 							<div class="item-row" ng-repeat="action in workflow.actions | filter: { isActive: false }" style="border-bottom: 1px #9a9a9a dashed">
 								<div class="item-row">

@@ -242,6 +242,7 @@ CREATE TABLE `workflow_files` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `workflow_id` int(11) NOT NULL,
   `title` varchar(200) NOT NULL,
+  `extention` varchar(10) NOT NULL,
   `active_filepath` varchar(500) NOT NULL,
   `comments` text,
   `active_version` int(11) NOT NULL DEFAULT '1',

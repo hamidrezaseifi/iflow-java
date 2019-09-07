@@ -10,10 +10,16 @@ public interface IUploadFileManager {
 
   public List<UploadFileSavingData> saveInTemp(List<UploadFileSavingData> files) throws IOException;
 
+  public List<FileSavingData> copyFromTempToArchive(List<FileSavingData> files) throws IOException;
+
   public List<FileSavingData> moveFromTempToArchive(List<FileSavingData> files) throws IOException;
+
+  public void deleteFromTemp(List<FileSavingData> files) throws IOException;
 
   public boolean save(List<UploadFileSavingData> files) throws IOException;
 
-  public List<String> getFilePath(List<FileSavingData> files) throws IOException;
+  public List<String> getFilesPath(List<FileSavingData> files) throws IOException;
+
+  public String getFilePath(FileSavingData file) throws IOException;
 
 }

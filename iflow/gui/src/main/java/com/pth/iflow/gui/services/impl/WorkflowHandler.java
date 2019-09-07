@@ -19,9 +19,11 @@ import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.GuiWorkflow;
 import com.pth.iflow.gui.models.GuiWorkflowAction;
 import com.pth.iflow.gui.models.GuiWorkflowCreateRequest;
+import com.pth.iflow.gui.models.GuiWorkflowFile;
 import com.pth.iflow.gui.models.GuiWorkflowSearchFilter;
 import com.pth.iflow.gui.models.GuiWorkflowType;
 import com.pth.iflow.gui.models.GuiWorkflowTypeStep;
+import com.pth.iflow.gui.models.ui.FileSavingData;
 import com.pth.iflow.gui.models.ui.GuiSessionUserInfo;
 import com.pth.iflow.gui.models.ui.UploadFileSavingData;
 import com.pth.iflow.gui.services.IUploadFileManager;
@@ -31,17 +33,16 @@ import com.pth.iflow.gui.services.IWorkflowHandler;
 @Service
 public class WorkflowHandler implements IWorkflowHandler {
 
-  private static final Logger logger = LoggerFactory.getLogger(WorkflowHandler.class);
+  private static final Logger      logger = LoggerFactory.getLogger(WorkflowHandler.class);
 
-  private final IWorkflowAccess workflowAccess;
+  private final IWorkflowAccess    workflowAccess;
 
   private final GuiSessionUserInfo sessionUserInfo;
 
   private final IUploadFileManager uploadFileManager;
 
-  public WorkflowHandler(@Autowired final IWorkflowAccess workflowAccess,
-                         @Autowired final GuiSessionUserInfo sessionUserInfo,
-                         @Autowired final IUploadFileManager uploadFileManager) {
+  public WorkflowHandler(@Autowired final IWorkflowAccess workflowAccess, @Autowired final GuiSessionUserInfo sessionUserInfo,
+      @Autowired final IUploadFileManager uploadFileManager) {
     this.workflowAccess = workflowAccess;
     this.sessionUserInfo = sessionUserInfo;
     this.uploadFileManager = uploadFileManager;
@@ -58,66 +59,87 @@ public class WorkflowHandler implements IWorkflowHandler {
 
   @Override
   public List<GuiWorkflow> createWorkflow(final GuiWorkflowCreateRequest createRequest, final HttpSession session)
-                                                                                                                   throws GuiCustomizedException,
-                                                                                                                   IOException {
+      throws GuiCustomizedException, IOException {
     logger.debug("Create workflow {}", createRequest.getWorkflow().getTitle());
+
+    createRequest.getWorkflow().setStatus(EWorkflowStatus.INITIALIZE_REQUEST);
+
+    final List<GuiWorkflow> list = this.workflowAccess.createWorkflow(createRequest, this.sessionUserInfo.getToken());
+    final List<GuiWorkflow> preparedList = this.prepareWorkflowList(list);
 
     final Object oFileList = session.getAttribute(createRequest.getSessionKey());
     if ((oFileList == null) || ((oFileList instanceof List) == false)) {
-      final GuiCustomizedException uiCustomizedException = new GuiCustomizedException("Uploaded files not found!",
-                                                                                      "",
-                                                                                      EModule.GUI.getModuleName());
+      final GuiCustomizedException uiCustomizedException = new GuiCustomizedException("Uploaded files not found!", "",
+          EModule.GUI.getModuleName());
 
       throw uiCustomizedException;
     }
 
     final List<UploadFileSavingData> tempFiles = (List<UploadFileSavingData>) oFileList;
-    for (final UploadFileSavingData tempFile : tempFiles) {
 
-      createRequest.getWorkflow()
-                   .addNewFile(tempFile.generateSavingFilePathPreffix(), this.sessionUserInfo.getUser().getId(), tempFile.getTitle(), "");
+    final List<GuiWorkflow> finalList = new ArrayList<>();
+    if (preparedList != null) {
+      for (final GuiWorkflow workflow : preparedList) {
+        final List<FileSavingData> archiveSavingFileInfoList = new ArrayList<>();
+        for (final UploadFileSavingData tempFile : tempFiles) {
+
+          final FileSavingData archiveSavingFileInfo = tempFile.toFileSavingData();
+          archiveSavingFileInfo.setWorkflowId(workflow.getId());
+          archiveSavingFileInfo.setActionId(0L);
+          archiveSavingFileInfo.setFilePath(archiveSavingFileInfo.generateSavingFilePathPreffix());
+          archiveSavingFileInfo.setTempFilePath(tempFile.getFilePath());
+
+          archiveSavingFileInfoList.add(archiveSavingFileInfo);
+        }
+        final List<FileSavingData> savedArchiveFiles = this.uploadFileManager.copyFromTempToArchive(archiveSavingFileInfoList);
+        for (final FileSavingData savedArchiveFile : savedArchiveFiles) {
+
+          workflow.addNewFile(savedArchiveFile.generateSavingFilePathPreffix(), this.sessionUserInfo.getUser().getId(),
+              savedArchiveFile.getTitle(), savedArchiveFile.getFileExtention(), "");
+        }
+
+        final GuiWorkflow finalWorkflow = this.saveWorkflow(workflow, session);
+
+        finalList.add(finalWorkflow);
+      }
     }
 
-    this.uploadFileManager.moveFromTempToArchive(UploadFileSavingData.toFileSavingDataList(tempFiles));
+    this.uploadFileManager.deleteFromTemp(UploadFileSavingData.toFileSavingDataList(tempFiles));
 
-    createRequest.getWorkflow().setStatus(EWorkflowStatus.INITIALIZE_REQUEST);
-
-    final List<GuiWorkflow> list = this.workflowAccess.createWorkflow(createRequest, this.sessionUserInfo.getToken());
-
-    return this.prepareWorkflowList(list);
+    return finalList;
   }
 
   @Override
-  public GuiWorkflow saveWorkflow(final GuiWorkflow workflow, final HttpSession session) throws GuiCustomizedException,
-                                                                                         MalformedURLException,
-                                                                                         IOException {
+  public GuiWorkflow saveWorkflow(final GuiWorkflow workflow, final HttpSession session)
+      throws GuiCustomizedException, MalformedURLException, IOException {
     logger.debug("Save workflow {}", workflow.getTitle());
 
     workflow.getActiveAction().setStatus(EWorkflowActionStatus.SAVING_REQUEST);
     workflow.getActiveAction().setNewStep(workflow.getCurrentStepId());
 
-    return this.workflowAccess.saveWorkflow(workflow, this.sessionUserInfo.getToken());
+    final GuiWorkflow result = this.workflowAccess.saveWorkflow(workflow, this.sessionUserInfo.getToken());
+    return this.prepareWorkflow(result);
   }
 
   @Override
-  public GuiWorkflow doneWorkflow(final GuiWorkflow workflow, final HttpSession session) throws GuiCustomizedException,
-                                                                                         MalformedURLException,
-                                                                                         IOException {
+  public GuiWorkflow doneWorkflow(final GuiWorkflow workflow, final HttpSession session)
+      throws GuiCustomizedException, MalformedURLException, IOException {
     logger.debug("Make workflow {} done", workflow.getTitle());
 
     workflow.getActiveAction().setStatus(EWorkflowActionStatus.DONE_REQUEST);
     workflow.getActiveAction().setNewStep(workflow.getCurrentStepId());
-    return this.workflowAccess.saveWorkflow(workflow, this.sessionUserInfo.getToken());
+    final GuiWorkflow result = this.workflowAccess.saveWorkflow(workflow, this.sessionUserInfo.getToken());
+    return this.prepareWorkflow(result);
   }
 
   @Override
-  public GuiWorkflow archiveWorkflow(final GuiWorkflow workflow, final HttpSession session) throws GuiCustomizedException,
-                                                                                            MalformedURLException,
-                                                                                            IOException {
+  public GuiWorkflow archiveWorkflow(final GuiWorkflow workflow, final HttpSession session)
+      throws GuiCustomizedException, MalformedURLException, IOException {
     logger.debug("Make workflow {} archive", workflow.getTitle());
 
     workflow.setStatus(EWorkflowStatus.ARCHIVED);
-    return this.workflowAccess.saveWorkflow(workflow, this.sessionUserInfo.getToken());
+    final GuiWorkflow result = this.workflowAccess.saveWorkflow(workflow, this.sessionUserInfo.getToken());
+    return this.prepareWorkflow(result);
   }
 
   @Override
@@ -129,13 +151,28 @@ public class WorkflowHandler implements IWorkflowHandler {
 
   @Override
   public List<GuiWorkflow> searchWorkflow(final GuiWorkflowSearchFilter workflowSearchFilter)
-                                                                                              throws GuiCustomizedException,
-                                                                                              MalformedURLException {
+      throws GuiCustomizedException, MalformedURLException {
 
     logger.debug("Search workflow from company");
     final List<GuiWorkflow> list = this.workflowAccess.searchWorkflow(workflowSearchFilter, this.sessionUserInfo.getToken());
 
     return this.prepareWorkflowList(list);
+  }
+
+  @Override
+  public GuiWorkflowFile readWorkflowFile(final Long workflowId, final Long fileId)
+      throws GuiCustomizedException, MalformedURLException {
+
+    GuiWorkflow workflow = null;
+    if (this.sessionUserInfo.hasCachedWorkflowId(workflowId)) {
+      workflow = this.sessionUserInfo.getCachedWorkflow(workflowId);
+    } else {
+      workflow = this.readWorkflow(workflowId);
+    }
+
+    final GuiWorkflowFile workflowFile = workflow.getFileById(fileId);
+
+    return workflowFile;
   }
 
   private List<GuiWorkflow> prepareWorkflowList(final List<GuiWorkflow> pureWorkflowList) {
@@ -160,6 +197,8 @@ public class WorkflowHandler implements IWorkflowHandler {
 
     this.prepareWorkflowActions(workflow);
 
+    this.sessionUserInfo.addCachedWorkflow(workflow);
+
     return workflow;
   }
 
@@ -168,9 +207,8 @@ public class WorkflowHandler implements IWorkflowHandler {
     if (workflow.getIsOpen()) {
 
       if (!workflow.getHasActiveAction()) {
-        final GuiWorkflowAction action = GuiWorkflowAction.createNewAction(workflow,
-                                                                           this.sessionUserInfo.getUser().getId(),
-                                                                           EWorkflowActionStatus.OPEN);
+        final GuiWorkflowAction action = GuiWorkflowAction.createNewAction(workflow, this.sessionUserInfo.getUser().getId(),
+            EWorkflowActionStatus.OPEN);
         action.setStatus(EWorkflowActionStatus.OPEN);
         workflow.addAction(action);
       }
@@ -179,8 +217,8 @@ public class WorkflowHandler implements IWorkflowHandler {
     for (final GuiWorkflowAction action : workflow.getActions()) {
       action.setCreatedByUser(this.sessionUserInfo.getUserById(action.getCreatedBy()));
 
-      action.setOldStepObject(findStep(workflow, action.getOldStep()));
-      action.setNewStepObject(findStep(workflow, action.getNewStep()));
+      action.setOldStepObject(this.findStep(workflow, action.getOldStep()));
+      action.setNewStepObject(this.findStep(workflow, action.getNewStep()));
 
     }
 

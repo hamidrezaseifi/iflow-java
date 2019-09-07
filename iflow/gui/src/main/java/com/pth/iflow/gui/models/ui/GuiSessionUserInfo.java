@@ -18,6 +18,7 @@ import org.springframework.web.context.annotation.SessionScope;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.GuiCompanyProfile;
 import com.pth.iflow.gui.models.GuiUser;
+import com.pth.iflow.gui.models.GuiWorkflow;
 import com.pth.iflow.gui.models.GuiWorkflowType;
 import com.pth.iflow.gui.services.IUserAccess;
 import com.pth.iflow.gui.services.IWorkflowAccess;
@@ -26,28 +27,29 @@ import com.pth.iflow.gui.services.IWorkflowAccess;
 @Component
 public class GuiSessionUserInfo {
 
-  private static final Logger logger = LoggerFactory.getLogger(GuiSessionUserInfo.class);
+  private static final Logger              logger                     = LoggerFactory.getLogger(GuiSessionUserInfo.class);
 
-  public static String SESSION_LOGGEDUSERINFO_KEY = "mdm-session-user";
+  public static String                     SESSION_LOGGEDUSERINFO_KEY = "mdm-session-user";
 
-  private Date              loginTime;
-  private GuiUser           user;
-  private GuiCompanyProfile companyProfile;
-  private String            token;
-  private String            sessionId;
+  private Date                             loginTime;
+  private GuiUser                          user;
+  private GuiCompanyProfile                companyProfile;
+  private String                           token;
+  private String                           sessionId;
+  private final Map<Long, GuiWorkflow>     cachedWorkflow             = new HashMap<>();
 
-  private final Map<Long, GuiUser> userMap = new HashMap<>();
+  private final Map<Long, GuiUser>         userMap                    = new HashMap<>();
 
-  private final Map<Long, GuiWorkflowType> workflowTypeMap = new HashMap<>();
+  private final Map<Long, GuiWorkflowType> workflowTypeMap            = new HashMap<>();
 
   @Value("${server.session.timeout}")
-  private int sessionTimeOut;
+  private int                              sessionTimeOut;
 
   @Autowired
-  IUserAccess userAccess;
+  IUserAccess                              userAccess;
 
   @Autowired
-  IWorkflowAccess workflowAccess;
+  IWorkflowAccess                          workflowAccess;
 
   public boolean isLoggedIn() {
     return (this.user != null) && (this.companyProfile != null);
@@ -134,8 +136,7 @@ public class GuiSessionUserInfo {
       try {
         final List<GuiUser> userList = this.userAccess.getCompanyUserList(this.companyProfile.getCompany().getId());
         this.userMap.putAll(userList.stream().collect(Collectors.toMap(u -> u.getId(), u -> u)));
-      }
-      catch (GuiCustomizedException | MalformedURLException e) {
+      } catch (GuiCustomizedException | MalformedURLException e) {
         logger.error("error in reading user list: {} \n {}", e.getMessage(), e);
       }
     }
@@ -149,11 +150,10 @@ public class GuiSessionUserInfo {
   public Map<Long, GuiWorkflowType> getWorkflowTypeMap() {
     if (this.workflowTypeMap.size() == 0) {
       try {
-        final List<GuiWorkflowType> typeList =
-                                             this.workflowAccess.readWorkflowTypeList(this.companyProfile.getCompany().getId(), getToken());
+        final List<GuiWorkflowType> typeList = this.workflowAccess.readWorkflowTypeList(this.companyProfile.getCompany().getId(),
+            this.getToken());
         this.workflowTypeMap.putAll(typeList.stream().collect(Collectors.toMap(t -> t.getId(), t -> t)));
-      }
-      catch (GuiCustomizedException | MalformedURLException e) {
+      } catch (GuiCustomizedException | MalformedURLException e) {
         logger.error("error in reading user list: {} \n {}", e.getMessage(), e);
       }
     }
@@ -167,11 +167,10 @@ public class GuiSessionUserInfo {
   public GuiWorkflowType getWorkflowTypeById(final Long workflowTypId) {
     if (this.workflowTypeMap.size() == 0) {
       try {
-        final List<GuiWorkflowType> typeList =
-                                             this.workflowAccess.readWorkflowTypeList(this.companyProfile.getCompany().getId(), getToken());
+        final List<GuiWorkflowType> typeList = this.workflowAccess.readWorkflowTypeList(this.companyProfile.getCompany().getId(),
+            this.getToken());
         this.workflowTypeMap.putAll(typeList.stream().collect(Collectors.toMap(t -> t.getId(), t -> t)));
-      }
-      catch (GuiCustomizedException | MalformedURLException e) {
+      } catch (GuiCustomizedException | MalformedURLException e) {
         logger.error("error in reading user list: {} \n {}", e.getMessage(), e);
       }
     }
@@ -187,8 +186,7 @@ public class GuiSessionUserInfo {
       try {
         final List<GuiUser> userList = this.userAccess.getCompanyUserList(this.companyProfile.getCompany().getId());
         this.userMap.putAll(userList.stream().collect(Collectors.toMap(u -> u.getId(), u -> u)));
-      }
-      catch (GuiCustomizedException | MalformedURLException e) {
+      } catch (GuiCustomizedException | MalformedURLException e) {
         logger.error("error in reading user list: {} \n {}", e.getMessage(), e);
       }
     }
@@ -196,4 +194,17 @@ public class GuiSessionUserInfo {
     return this.userMap.containsKey(userId) ? this.userMap.get(userId) : null;
   }
 
+  // Map<Long, GuiWorkflow> cachedWorkflow
+
+  public void addCachedWorkflow(final GuiWorkflow workflow) {
+    this.cachedWorkflow.put(workflow.getId(), workflow);
+  }
+
+  public boolean hasCachedWorkflowId(final Long workflowId) {
+    return this.cachedWorkflow.containsKey(workflowId);
+  }
+
+  public GuiWorkflow getCachedWorkflow(final Long workflowId) {
+    return this.cachedWorkflow.get(workflowId);
+  }
 }

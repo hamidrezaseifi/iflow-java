@@ -32,6 +32,10 @@ public class WorkflowFileEdo {
   @XmlElement(name = "Title", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String                       title;
 
+  @NotNull
+  @XmlElement(name = "Extention", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String                       extention;
+
   @XmlElement(name = "ActiveFilePath", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String                       activeFilePath;
 
@@ -91,6 +95,14 @@ public class WorkflowFileEdo {
 
   public void setTitle(final String title) {
     this.title = title;
+  }
+
+  public String getExtention() {
+    return this.extention;
+  }
+
+  public void setExtention(final String extention) {
+    this.extention = extention;
   }
 
   public String getComments() {
