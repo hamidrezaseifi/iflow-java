@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,6 +67,10 @@ public class WorkflowHandler implements IWorkflowHandler {
 
     final List<GuiWorkflow> list = this.workflowAccess.createWorkflow(createRequest, this.sessionUserInfo.getToken());
     final List<GuiWorkflow> preparedList = this.prepareWorkflowList(list);
+
+    if (StringUtils.isEmpty(createRequest.getSessionKey())) {
+      return preparedList;
+    }
 
     final Object oFileList = session.getAttribute(createRequest.getSessionKey());
     if ((oFileList == null) || ((oFileList instanceof List) == false)) {
