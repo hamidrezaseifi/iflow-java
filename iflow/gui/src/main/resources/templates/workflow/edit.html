@@ -88,7 +88,7 @@
 							</div>
 							<div class="clear"></div>
 						</div>
-						<div style="padding-top: 10px; padding-left: 30px; border-top: 1px solid gray; margin-top: 10px;">
+						<div style="padding-top: 10px; padding-left: 10px; border-top: 1px solid gray; margin-top: 10px;">
 							<div style="text-align: center; font-weight: bold;">Files</div>
 							<div class="item-row" ng-repeat="file in workflow.files" style="border-bottom: 1px #9a9a9a dashed">
 								<div>
@@ -101,14 +101,14 @@
 								</div> 
 							</div>
 						</div>
-						<div style="padding-top: 10px; padding-left: 30px; border-top: 1px solid gray; margin-top: 10px;">
+						<div style="padding-top: 10px; padding-left: 10px; border-top: 1px solid gray; margin-top: 10px;">
 							<div style="text-align: center; font-weight: bold;">Actions</div>
 							<div class="item-row" ng-repeat="action in workflow.actions | filter: { isActive: false }" style="border-bottom: 1px #9a9a9a dashed">
 								<div class="item-row">
-									<div class="item-content">
+									<div class="action-content">
 										<div><strong>{{action.oldStepObject.title}} --> {{action.newStepObject.title}}</strong>:</div> 
 										<div>({{action.createdByUser.fullName}}) ({{action.status}})</div> 
-										<div style="padding-left: 20px;">{{action.action}}</div>
+										<div style="">{{action.action}}</div>
 									</div>	
 									<div class="clear"></div>
 								</div>
