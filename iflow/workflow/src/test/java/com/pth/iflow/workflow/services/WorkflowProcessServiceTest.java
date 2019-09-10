@@ -17,6 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.pth.iflow.common.enums.EWorkflowActionStatus;
 import com.pth.iflow.common.enums.EWorkflowStatus;
+import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.iflow.common.exceptions.IFlowCustomeException;
 import com.pth.iflow.workflow.TestDataProducer;
 import com.pth.iflow.workflow.bl.ITokenValidator;
@@ -24,6 +25,8 @@ import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.IWorkflowProcessService;
 import com.pth.iflow.workflow.bl.IWorkflowTypeDataService;
 import com.pth.iflow.workflow.bl.impl.WorkflowProcessService;
+import com.pth.iflow.workflow.bl.strategies.IWorkStrategyFactory;
+import com.pth.iflow.workflow.bl.strategies.IWorkflowStrategy;
 import com.pth.iflow.workflow.models.ProfileResponse;
 import com.pth.iflow.workflow.models.Workflow;
 import com.pth.iflow.workflow.models.WorkflowCreateRequest;
@@ -46,6 +49,12 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
   @Mock
   private ITokenValidator          tokenValidator;
 
+  @Mock
+  IWorkStrategyFactory             workStrategyFactory;
+
+  @Mock
+  private IWorkflowStrategy        strategy;
+
   private WorkflowType             workflowType;
 
   private String                   validTocken;
@@ -57,7 +66,7 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
   @Before
   public void setUp() throws Exception {
     this.workflowProcessService = new WorkflowProcessService(this.workflowDataService, this.workflowTypeDataService,
-        this.tokenValidator);
+        this.tokenValidator, this.workStrategyFactory);
 
     this.validTocken = "validTocken";
 
@@ -70,6 +79,8 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
     this.profileResponse = new ProfileResponse(this.getTestUser(), this.getTestCompanyProfile(), this.validSession);
 
     when(this.tokenValidator.isTokenValid(this.validTocken)).thenReturn(this.profileResponse);
+
+    when(this.workStrategyFactory.selectWorkStrategy(any(Workflow.class), any(String.class))).thenReturn(this.strategy);
 
   }
 
@@ -98,7 +109,7 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
 
     final Workflow workflow = this.getTestWorkflow(1L, EWorkflowActionStatus.ERROR);
 
-    when(this.workflowDataService.save(any(Workflow.class), any(String.class))).thenReturn(workflow);
+    when(this.strategy.process()).thenThrow(new IFlowCustomeException(EIFlowErrorType.UNKNOWN_WORKFLOW_STRATEGY));
 
     final Workflow resWorkflow = this.workflowProcessService.save(workflow, this.validTocken);
 
@@ -119,7 +130,7 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
     workflow.setStatus(EWorkflowStatus.INITIALIZE);
     workflow.setId(null);
 
-    when(this.workflowDataService.save(any(Workflow.class), any(String.class))).thenReturn(workflowSaveResult);
+    when(this.strategy.process()).thenReturn(workflowSaveResult);
 
     final Workflow resWorkflow = this.workflowProcessService.save(workflow, this.validTocken);
 
@@ -141,7 +152,7 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
     final Workflow workflow = this.getTestWorkflow(1L);
     workflow.setStatus(EWorkflowStatus.ASSIGNED);
 
-    when(this.workflowDataService.save(any(Workflow.class), any(String.class))).thenReturn(workflowSaveResult);
+    when(this.strategy.process()).thenReturn(workflowSaveResult);
 
     final Workflow resWorkflow = this.workflowProcessService.save(workflow, this.validTocken);
 
@@ -163,7 +174,7 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
     final Workflow workflow = this.getTestWorkflow(1L);
     workflow.setStatus(EWorkflowStatus.DONE);
 
-    when(this.workflowDataService.save(any(Workflow.class), any(String.class))).thenReturn(workflowSaveResult);
+    when(this.strategy.process()).thenReturn(workflowSaveResult);
 
     final Workflow resWorkflow = this.workflowProcessService.save(workflow, this.validTocken);
 
@@ -215,7 +226,7 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
     final WorkflowCreateRequest request = this.getTestWorkflowCreateRequest();
     request.getWorkflow().setStatus(EWorkflowStatus.INITIALIZE);
 
-    when(this.workflowDataService.save(any(Workflow.class), any(String.class))).thenReturn(workflowSaveResult);
+    when(this.strategy.process()).thenReturn(workflowSaveResult);
 
     final List<Workflow> resWorkflowList = this.workflowProcessService.create(request, this.validTocken);
 

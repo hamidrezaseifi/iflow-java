@@ -79,55 +79,6 @@ public class WorkflowProcessService implements IWorkflowProcessService {
     final Workflow result = strategy.process();
 
     return result;
-
-    // final WorkflowType workflowType =
-    // this.workflowTypeDataService.getById(newWorkflow.getWorkflowTypeId(), token);
-
-    // this.validateWorkflowCurrectStep(newWorkflow, workflowType);
-
-    // this.validateWorkflowAssignedUser(newWorkflow, workflowType);
-
-    /*
-     * if (newWorkflow.isNew()) {
-     *
-     * return this.saveNewWorkflow(newWorkflow, token); }
-     */
-
-    /*
-     * if (newWorkflow.isStatusArchive()) {
-     *
-     * return this.saveExistsWorkflow(newWorkflow, token); }
-     */
-
-    // final WorkflowAction activeAction = newWorkflow.hasActiveAction() ?
-    // newWorkflow.getActiveAction() : null;
-
-    /*
-     * if (newWorkflow.isAssigned() && newWorkflow.hasActiveAction() &&
-     * (activeAction.isStatusSavingRequest())) {
-     *
-     * activeAction.setStatus(EWorkflowActionStatus.OPEN); return
-     * this.saveExistsWorkflow(newWorkflow, token); }
-     */
-
-    /*
-     * if (newWorkflow.isAssigned() && newWorkflow.hasActiveAction() &&
-     * (activeAction.isStatusDoneRequest())) {
-     *
-     * activeAction.setStatus(EWorkflowActionStatus.DONE);
-     *
-     * this.selectWorkflowNextAssigned(newWorkflow, workflowType, activeAction);
-     * this.selectWorkflowNextStep(newWorkflow, workflowType, activeAction);
-     * this.setAssignToControllerAfterLastStep(newWorkflow, workflowType,
-     * activeAction);
-     *
-     * return this.saveExistsWorkflow(newWorkflow, token); }
-     */
-
-    // final Workflow existsWorkflow = getById(newWorkflow.getId(), token);
-
-    // throw new IFlowCustomeException("Unknown workflow status id:" +
-    // newWorkflow.getId(), EIFlowErrorType.UNKNOWN_WORKFLOW_STATUS);
   }
 
   @Override

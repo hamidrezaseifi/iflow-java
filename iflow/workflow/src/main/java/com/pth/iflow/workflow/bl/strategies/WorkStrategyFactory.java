@@ -47,25 +47,27 @@ public class WorkStrategyFactory implements IWorkStrategyFactory {
   public IWorkflowStrategy selectWorkStrategy(final Workflow processingWorkflow, final String token)
       throws WorkflowCustomizedException, MalformedURLException {
 
+    logger.debug("selecting save strategy for workflow");
     final WorkflowType workflowType = this.workflowTypeDataService.getById(processingWorkflow.getWorkflowTypeId(), token);
     final WorkflowAction activeAction = processingWorkflow.hasActiveAction() ? processingWorkflow.getActiveAction() : null;
 
-    final IWorkflowStrategy strategy = null;
-
     if (processingWorkflow.isNew()) {
+      logger.debug("The SaveNewWorkflowStrategy is selected for workflow");
       return new SaveNewWorkflowStrategy(processingWorkflow, workflowType, token, activeAction, this.workflowDataService);
     }
 
     if (processingWorkflow.isStatusArchive()) {
+      logger.debug("The ArchivingWorkflowStrategy is selected for workflow");
       return new ArchivingWorkflowStrategy(processingWorkflow, workflowType, token, activeAction, this.workflowDataService);
     }
 
     if (processingWorkflow.isAssigned() && processingWorkflow.hasActiveAction() && (activeAction.isStatusSavingRequest())) {
+      logger.debug("The SaveExistingWorkflowStrategy is selected for workflow");
       return new SaveExistingWorkflowStrategy(processingWorkflow, workflowType, token, activeAction, this.workflowDataService);
     }
 
     if (processingWorkflow.isAssigned() && processingWorkflow.hasActiveAction() && (activeAction.isStatusDoneRequest())) {
-
+      logger.debug("The DoneExistingWorkflowStrategy is selected for workflow");
       return new DoneExistingWorkflowStrategy(processingWorkflow, workflowType, token, activeAction, this.workflowDataService);
     }
 
