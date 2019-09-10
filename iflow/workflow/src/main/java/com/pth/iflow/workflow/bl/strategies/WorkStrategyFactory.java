@@ -11,13 +11,15 @@ import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.iflow.common.exceptions.IFlowCustomeException;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.IWorkflowTypeDataService;
-import com.pth.iflow.workflow.bl.strategies.impl.ArchivingWorkflowStrategy;
-import com.pth.iflow.workflow.bl.strategies.impl.DoneExistingWorkflowStrategy;
-import com.pth.iflow.workflow.bl.strategies.impl.SaveExistingWorkflowStrategy;
-import com.pth.iflow.workflow.bl.strategies.impl.SaveNewWorkflowStrategy;
+import com.pth.iflow.workflow.bl.strategies.create.CreateManualAssignWorkflowStrategy;
+import com.pth.iflow.workflow.bl.strategies.save.ArchivingWorkflowStrategy;
+import com.pth.iflow.workflow.bl.strategies.save.DoneExistingWorkflowStrategy;
+import com.pth.iflow.workflow.bl.strategies.save.SaveExistingWorkflowStrategy;
+import com.pth.iflow.workflow.bl.strategies.save.SaveNewWorkflowStrategy;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.Workflow;
 import com.pth.iflow.workflow.models.WorkflowAction;
+import com.pth.iflow.workflow.models.WorkflowCreateRequest;
 import com.pth.iflow.workflow.models.WorkflowType;
 
 @Service
@@ -44,7 +46,7 @@ public class WorkStrategyFactory implements IWorkStrategyFactory {
    * com.pth.iflow.workflow.models.Workflow)
    */
   @Override
-  public IWorkflowStrategy selectWorkStrategy(final Workflow processingWorkflow, final String token)
+  public ISaveWorkflowStrategy selectSaveWorkStrategy(final Workflow processingWorkflow, final String token)
       throws WorkflowCustomizedException, MalformedURLException {
 
     logger.debug("selecting save strategy for workflow");
@@ -71,8 +73,23 @@ public class WorkStrategyFactory implements IWorkStrategyFactory {
       return new DoneExistingWorkflowStrategy(processingWorkflow, workflowType, token, activeAction, this.workflowDataService);
     }
 
-    throw new IFlowCustomeException("Unknown workflow strategy id:" + processingWorkflow.getId(),
-        EIFlowErrorType.UNKNOWN_WORKFLOW_STRATEGY);
+    throw new IFlowCustomeException("Unknown workflow save strategy id:" + processingWorkflow.getId(),
+        EIFlowErrorType.UNKNOWN_WORKFLOW_SAVE_STRATEGY);
 
+  }
+
+  @Override
+  public ICreateWorkflowStrategy selectCreateWorkStrategy(final WorkflowCreateRequest workflowCreateRequest, final String token)
+      throws WorkflowCustomizedException, MalformedURLException {
+    logger.debug("selecting create strategy for workflow create request");
+
+    final WorkflowType workflowType = this.workflowTypeDataService.getById(workflowCreateRequest.getWorkflow().getWorkflowTypeId(),
+        token);
+
+    if (workflowType.getManualAssign() == Boolean.TRUE) {
+      return new CreateManualAssignWorkflowStrategy(workflowCreateRequest, token, this);
+    }
+
+    throw new IFlowCustomeException("Unknown workflow create strategy ", EIFlowErrorType.UNKNOWN_WORKFLOW_CREATE_STRATEGY);
   }
 }

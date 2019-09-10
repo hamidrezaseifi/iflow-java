@@ -26,7 +26,7 @@ import com.pth.iflow.workflow.bl.IWorkflowProcessService;
 import com.pth.iflow.workflow.bl.IWorkflowTypeDataService;
 import com.pth.iflow.workflow.bl.impl.WorkflowProcessService;
 import com.pth.iflow.workflow.bl.strategies.IWorkStrategyFactory;
-import com.pth.iflow.workflow.bl.strategies.IWorkflowStrategy;
+import com.pth.iflow.workflow.bl.strategies.ISaveWorkflowStrategy;
 import com.pth.iflow.workflow.models.ProfileResponse;
 import com.pth.iflow.workflow.models.Workflow;
 import com.pth.iflow.workflow.models.WorkflowCreateRequest;
@@ -53,7 +53,7 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
   IWorkStrategyFactory             workStrategyFactory;
 
   @Mock
-  private IWorkflowStrategy        strategy;
+  private ISaveWorkflowStrategy        strategy;
 
   private WorkflowType             workflowType;
 
@@ -80,7 +80,7 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
 
     when(this.tokenValidator.isTokenValid(this.validTocken)).thenReturn(this.profileResponse);
 
-    when(this.workStrategyFactory.selectWorkStrategy(any(Workflow.class), any(String.class))).thenReturn(this.strategy);
+    when(this.workStrategyFactory.selectSaveWorkStrategy(any(Workflow.class), any(String.class))).thenReturn(this.strategy);
 
   }
 
@@ -109,7 +109,7 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
 
     final Workflow workflow = this.getTestWorkflow(1L, EWorkflowActionStatus.ERROR);
 
-    when(this.strategy.process()).thenThrow(new IFlowCustomeException(EIFlowErrorType.UNKNOWN_WORKFLOW_STRATEGY));
+    when(this.strategy.process()).thenThrow(new IFlowCustomeException(EIFlowErrorType.UNKNOWN_WORKFLOW_SAVE_STRATEGY));
 
     final Workflow resWorkflow = this.workflowProcessService.save(workflow, this.validTocken);
 

@@ -1,4 +1,4 @@
-package com.pth.iflow.workflow.bl.strategies.impl;
+package com.pth.iflow.workflow.bl.strategies.save;
 
 import java.net.MalformedURLException;
 import java.util.Comparator;
@@ -10,14 +10,14 @@ import com.pth.iflow.common.enums.EWorkflowStatus;
 import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.iflow.common.exceptions.IFlowCustomeException;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
-import com.pth.iflow.workflow.bl.strategies.IWorkflowStrategy;
+import com.pth.iflow.workflow.bl.strategies.ISaveWorkflowStrategy;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.Workflow;
 import com.pth.iflow.workflow.models.WorkflowAction;
 import com.pth.iflow.workflow.models.WorkflowType;
 import com.pth.iflow.workflow.models.WorkflowTypeStep;
 
-public abstract class AbstractWorkflowStrategy implements IWorkflowStrategy {
+public abstract class AbstractSaveWorkflowStrategy implements ISaveWorkflowStrategy {
 
   protected final Workflow           processingWorkflow;
   protected final String             token;
@@ -25,7 +25,7 @@ public abstract class AbstractWorkflowStrategy implements IWorkflowStrategy {
   protected final WorkflowAction     activeAction;
   private final IWorkflowDataService workflowDataService;
 
-  public AbstractWorkflowStrategy(final Workflow processingWorkflow, final WorkflowType workflowType, final String token,
+  public AbstractSaveWorkflowStrategy(final Workflow processingWorkflow, final WorkflowType workflowType, final String token,
       final WorkflowAction activeAction, final IWorkflowDataService workflowDataService) {
     super();
     this.processingWorkflow = processingWorkflow;

@@ -1,4 +1,4 @@
-package com.pth.iflow.workflow.bl.strategies.impl;
+package com.pth.iflow.workflow.bl.strategies.save;
 
 import java.net.MalformedURLException;
 
@@ -8,9 +8,9 @@ import com.pth.iflow.workflow.models.Workflow;
 import com.pth.iflow.workflow.models.WorkflowAction;
 import com.pth.iflow.workflow.models.WorkflowType;
 
-public class ArchivingWorkflowStrategy extends AbstractWorkflowStrategy {
+public class SaveNewWorkflowStrategy extends AbstractSaveWorkflowStrategy {
 
-  public ArchivingWorkflowStrategy(final Workflow processingWorkflow, final WorkflowType workflowType, final String token,
+  public SaveNewWorkflowStrategy(final Workflow processingWorkflow, final WorkflowType workflowType, final String token,
       final WorkflowAction activeAction, final IWorkflowDataService workflowDataService) {
     super(processingWorkflow, workflowType, token, activeAction, workflowDataService);
 
