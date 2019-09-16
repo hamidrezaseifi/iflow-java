@@ -25,7 +25,7 @@ public class WorkflowTypeStepDao extends DaoBasicClass<WorkflowTypeStep> impleme
 
   @Override
   public WorkflowTypeStep getById(final Long id) throws IFlowStorageException {
-    return getModelById(id, "SELECT * FROM workflow_type_step where id=?", "WorkflowStep");
+    return this.getModelById(id, "SELECT * FROM workflow_type_step where id=?", "WorkflowStep");
   }
 
   @Override
@@ -37,7 +37,7 @@ public class WorkflowTypeStepDao extends DaoBasicClass<WorkflowTypeStep> impleme
     sqlSelect = sqlSelect.endsWith(",") ? sqlSelect.substring(0, sqlSelect.length() - 1) : sqlSelect;
     sqlSelect += ")";
 
-    return getModelListByIdList(idList, sqlSelect, "WorkflowStep");
+    return this.getModelListByIdList(idList, sqlSelect, "WorkflowStep");
   }
 
   @Override
@@ -46,6 +46,7 @@ public class WorkflowTypeStepDao extends DaoBasicClass<WorkflowTypeStep> impleme
     model.setId(rs.getLong("id"));
     model.setWorkflowTypeId(rs.getLong("workflow_type_id"));
     model.setTitle(rs.getString("title"));
+    model.setViewName(rs.getString("view_name"));
     model.setStatus(rs.getInt("status"));
     model.setStepIndex(rs.getInt("step_index"));
     model.setCreatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("created_at")));
@@ -57,7 +58,7 @@ public class WorkflowTypeStepDao extends DaoBasicClass<WorkflowTypeStep> impleme
 
   @Override
   public List<WorkflowTypeStep> getListByWorkflowTypeId(final Long workflowId) throws IFlowStorageException {
-    return getModelListById(workflowId, "SELECT * FROM workflow_type_step where workflow_type_id=?", "WorkflowStep");
+    return this.getModelListById(workflowId, "SELECT * FROM workflow_type_step where workflow_type_id=?", "WorkflowStep");
   }
 
   @Override
@@ -65,10 +66,11 @@ public class WorkflowTypeStepDao extends DaoBasicClass<WorkflowTypeStep> impleme
       throws SQLException {
     ps.setLong(1, model.getWorkflowTypeId());
     ps.setString(2, model.getTitle());
-    ps.setInt(3, model.getStepIndex());
-    ps.setString(4, model.getComments());
-    ps.setInt(5, model.getVersion());
-    ps.setInt(6, model.getStatus());
+    ps.setString(3, model.getViewName());
+    ps.setInt(4, model.getStepIndex());
+    ps.setString(5, model.getComments());
+    ps.setInt(6, model.getVersion());
+    ps.setInt(7, model.getStatus());
 
     return ps;
   }
@@ -78,40 +80,41 @@ public class WorkflowTypeStepDao extends DaoBasicClass<WorkflowTypeStep> impleme
       throws SQLException {
     ps.setLong(1, model.getWorkflowTypeId());
     ps.setString(2, model.getTitle());
-    ps.setInt(3, model.getStepIndex());
-    ps.setString(4, model.getComments());
-    ps.setInt(5, model.getVersion());
-    ps.setInt(6, model.getStatus());
-    ps.setLong(7, model.getId());
+    ps.setString(3, model.getViewName());
+    ps.setInt(4, model.getStepIndex());
+    ps.setString(5, model.getComments());
+    ps.setInt(6, model.getVersion());
+    ps.setInt(7, model.getStatus());
+    ps.setLong(8, model.getId());
 
     return ps;
   }
 
   @Override
   public WorkflowTypeStep create(final WorkflowTypeStep model, final boolean withTransaction) throws IFlowStorageException {
-    final String sql = "INSERT INTO workflow_type_step (workflow_type_id, title, step_index, comments, version, status)"
+    final String sql = "INSERT INTO workflow_type_step (workflow_type_id, title, view_name, step_index, comments, version, status)"
         + "VALUES (?, ?, ?, ?, ?)";
 
-    return getById(createModel(model, "WorkflowTypeStep", sql, withTransaction));
+    return this.getById(this.createModel(model, "WorkflowTypeStep", sql, withTransaction));
   }
 
   @Override
   public WorkflowTypeStep update(final WorkflowTypeStep model) throws IFlowStorageException {
-    final String sql = "UPDATE workflow_type_step SET workflow_type_id = ?, title = ?, step_index = ?, comments = ?,"
+    final String sql = "UPDATE workflow_type_step SET workflow_type_id = ?, title = ?, view_name=?, step_index = ?, comments = ?,"
         + " version = ?, status = ? WHERE id = ?";
 
-    updateModel(model, "WorkflowTypeStep", sql, true);
+    this.updateModel(model, "WorkflowTypeStep", sql, true);
 
-    return getById(model.getId());
+    return this.getById(model.getId());
   }
 
   @Override
   public void deleteByWorkflowTypeId(final Long id, final boolean withTransaction) throws IFlowStorageException {
-    deleteModel(id, "WorkflowAction", "Delete from workflow_type_step where workflow_type_id=?", withTransaction, false);
+    this.deleteModel(id, "WorkflowAction", "Delete from workflow_type_step where workflow_type_id=?", withTransaction, false);
   }
 
   @Override
   public void deleteById(final Long id, final boolean withTransaction) throws IFlowStorageException {
-    deleteModel(id, "WorkflowTypeStep", "Delete from workflow_type_step where id=?", withTransaction, true);
+    this.deleteModel(id, "WorkflowTypeStep", "Delete from workflow_type_step where id=?", withTransaction, true);
   }
 }

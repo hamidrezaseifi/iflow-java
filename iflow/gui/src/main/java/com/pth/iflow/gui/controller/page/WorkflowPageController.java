@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
+import com.pth.iflow.gui.models.GuiWorkflow;
 import com.pth.iflow.gui.models.GuiWorkflowFile;
 import com.pth.iflow.gui.models.ui.FileSavingData;
 import com.pth.iflow.gui.services.IUploadFileManager;
@@ -57,8 +58,10 @@ public class WorkflowPageController extends GuiPageControllerBase {
       response.sendRedirect("/site/invalid-request");
     }
 
+    final GuiWorkflow workflow = this.workflowHandler.readWorkflow(iWorkflowId);
+
     model.addAttribute("workflowId", iWorkflowId);
-    return "workflow/edit";
+    return workflow.getCurrentStep().getViewName(); // "workflow/edit";
   }
 
   @ResponseStatus(HttpStatus.OK)

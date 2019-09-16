@@ -11,6 +11,7 @@ public class WorkflowTypeStep extends DataModelBase<WorkflowTypeStepEdo, Workflo
   private Long          workflowTypeId;
   private String        title;
   private Integer       stepIndex;
+  private String        viewName;
   private String        comments;
   private Integer       status;
   private Integer       version;
@@ -54,6 +55,14 @@ public class WorkflowTypeStep extends DataModelBase<WorkflowTypeStepEdo, Workflo
    */
   public void setStepIndex(final Integer stepIndex) {
     this.stepIndex = stepIndex;
+  }
+
+  public String getViewName() {
+    return this.viewName;
+  }
+
+  public void setViewName(final String viewName) {
+    this.viewName = viewName;
   }
 
   public String getComments() {
@@ -102,6 +111,7 @@ public class WorkflowTypeStep extends DataModelBase<WorkflowTypeStepEdo, Workflo
   public WorkflowTypeStepEdo toEdo() {
     final WorkflowTypeStepEdo edo = new WorkflowTypeStepEdo();
     edo.setStepIndex(this.stepIndex);
+    edo.setViewName(this.viewName);
     edo.setTitle(this.title);
     edo.setComments(this.comments);
     edo.setStatus(this.status);
@@ -117,6 +127,7 @@ public class WorkflowTypeStep extends DataModelBase<WorkflowTypeStepEdo, Workflo
     final WorkflowTypeStep model = new WorkflowTypeStep();
 
     model.setStepIndex(edo.getStepIndex());
+    model.setViewName(edo.getViewName());
     model.setTitle(edo.getTitle());
     model.setComments(edo.getComments());
     model.setStatus(edo.getStatus());
