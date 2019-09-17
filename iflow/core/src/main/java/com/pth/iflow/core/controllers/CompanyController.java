@@ -1,7 +1,6 @@
 package com.pth.iflow.core.controllers;
 
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,12 +8,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.pth.iflow.common.annotations.IflowGetRequestMapping;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
 import com.pth.iflow.common.edo.models.xml.CompanyEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.core.model.Company;
+import com.pth.iflow.core.model.mapper.ModelEdoMapper;
 import com.pth.iflow.core.service.ICompanyService;
 
 @RestController
@@ -29,12 +28,11 @@ public class CompanyController {
 
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.COMPANY_READ_BY_ID)
-  public ResponseEntity<CompanyEdo> readCompany(@PathVariable(name = "companyid") final Long companyid,
-      final HttpServletRequest request) throws Exception {
+  public ResponseEntity<CompanyEdo> readCompany(@PathVariable(name = "companyid") final Long companyid, final HttpServletRequest request) throws Exception {
 
     final Company company = this.companyService.getById(companyid);
 
-    return ControllerHelper.createResponseEntity(request, company.toEdo(), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, ModelEdoMapper.toEdo(company), HttpStatus.OK);
   }
 
 }

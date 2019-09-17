@@ -3,9 +3,7 @@ package com.pth.iflow.core.model;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
 import com.pth.iflow.common.edo.models.base.DataModelBase;
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 import com.pth.iflow.common.edo.models.xml.WorkflowTypeEdo;
 
 public class WorkflowType extends DataModelBase<WorkflowTypeEdo, WorkflowType> {
@@ -151,45 +149,6 @@ public class WorkflowType extends DataModelBase<WorkflowTypeEdo, WorkflowType> {
 
   public void addStep(final WorkflowTypeStep stepId) {
     this.steps.add(stepId);
-  }
-
-  @Override
-  public WorkflowTypeEdo toEdo() {
-    final WorkflowTypeEdo edo = new WorkflowTypeEdo();
-    edo.setTitle(this.title);
-    edo.setComments(this.comments);
-    edo.setStatus(this.status);
-    edo.setId(this.id);
-    edo.setCompanyId(this.companyId);
-    edo.setBaseTypeId(this.baseTypeId);
-    edo.setSendToController(this.sendToController);
-    edo.setManualAssign(this.manualAssign);
-    edo.setIncreaseStepAutomatic(this.increaseStepAutomatic);
-    edo.setAllowAssign(this.allowAssign);
-    edo.setSteps(ModelMapperBase.toEdoList(this.steps));
-    edo.setVersion(this.version);
-
-    return edo;
-  }
-
-  @Override
-  public WorkflowType fromEdo(final WorkflowTypeEdo edo) {
-    final WorkflowType model = new WorkflowType();
-
-    model.setTitle(edo.getTitle());
-    model.setComments(edo.getComments());
-    model.setStatus(edo.getStatus());
-    model.setId(edo.getId());
-    model.setCompanyId(edo.getCompanyId());
-    model.setBaseTypeId(edo.getBaseTypeId());
-    model.setSendToController(edo.getSendToController());
-    model.setManualAssign(edo.getManualAssign());
-    model.setAllowAssign(edo.getAllowAssign());
-    model.setIncreaseStepAutomatic(edo.getIncreaseStepAutomatic());
-    model.setVersion(edo.getVersion());
-    model.setSteps(new WorkflowTypeStep().fromEdoList(edo.getSteps()));
-
-    return model;
   }
 
 }

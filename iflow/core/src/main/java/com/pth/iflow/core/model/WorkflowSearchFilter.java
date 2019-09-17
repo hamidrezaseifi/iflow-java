@@ -3,19 +3,17 @@ package com.pth.iflow.core.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.pth.iflow.common.edo.models.xml.WorkflowSearchFilterEdo;
-
 public class WorkflowSearchFilter {
 
-  private List<Long>    assignedUserIdList  = new ArrayList<>();
+  private List<Long> assignedUserIdList = new ArrayList<>();
 
-  private List<Integer> statusList          = new ArrayList<>();
+  private List<Integer> statusList = new ArrayList<>();
 
-  private List<Long>    workflowTypeIdList  = new ArrayList<>();
+  private List<Long> workflowTypeIdList = new ArrayList<>();
 
-  private List<Long>    workflowStepeIdList = new ArrayList<>();
+  private List<Long> workflowStepeIdList = new ArrayList<>();
 
-  private String        title;
+  private String title;
 
   public List<Long> getAssignedUserIdList() {
     return this.assignedUserIdList;
@@ -67,29 +65,6 @@ public class WorkflowSearchFilter {
 
   public void setTitle(final String title) {
     this.title = title;
-  }
-
-  public WorkflowSearchFilterEdo toEdo() {
-    final WorkflowSearchFilterEdo edo = new WorkflowSearchFilterEdo();
-    edo.setAssignedUserIdList(this.assignedUserIdList);
-    edo.setStatusList(this.statusList);
-    edo.setTitle(this.title);
-    edo.setWorkflowStepeIdList(this.workflowStepeIdList);
-    edo.setWorkflowTypeIdList(this.workflowTypeIdList);
-
-    return edo;
-  }
-
-  public static WorkflowSearchFilter fromEdo(final WorkflowSearchFilterEdo edo) {
-    final WorkflowSearchFilter model = new WorkflowSearchFilter();
-    model.setAssignedUserIdList(edo.getAssignedUserIdList());
-    model.setStatusList(edo.getStatusList());
-    model.setTitle(edo.getTitle());
-    model.setWorkflowStepeIdList(edo.getWorkflowStepeIdList());
-    model.setWorkflowTypeIdList(edo.getWorkflowTypeIdList());
-
-    return model;
-
   }
 
 }

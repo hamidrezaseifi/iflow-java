@@ -1,7 +1,6 @@
 package com.pth.iflow.core.model;
 
 import java.time.LocalDateTime;
-
 import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.edo.models.xml.UserGroupEdo;
 
@@ -72,31 +71,6 @@ public class UserGroup extends DataModelBase<UserGroupEdo, UserGroup> {
 
   public void setUpdatedAt(final LocalDateTime updatedAt) {
     this.updatedAt = updatedAt;
-  }
-
-  @Override
-  public UserGroupEdo toEdo() {
-    final UserGroupEdo edo = new UserGroupEdo();
-    edo.setTitle(this.title);
-    edo.setStatus(this.status);
-    edo.setId(this.id);
-    edo.setCompanyId(this.companyId);
-    edo.setVersion(this.version);
-
-    return edo;
-  }
-
-  @Override
-  public UserGroup fromEdo(final UserGroupEdo edo) {
-    final UserGroup model = new UserGroup();
-
-    model.setTitle(edo.getTitle());
-    model.setStatus(edo.getStatus());
-    model.setId(edo.getId());
-    model.setCompanyId(edo.getCompanyId());
-    model.setVersion(edo.getVersion());
-
-    return model;
   }
 
 }

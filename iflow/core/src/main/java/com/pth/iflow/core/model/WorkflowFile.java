@@ -3,9 +3,7 @@ package com.pth.iflow.core.model;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
 import com.pth.iflow.common.edo.models.base.DataModelBase;
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 import com.pth.iflow.common.edo.models.xml.WorkflowFileEdo;
 
 public class WorkflowFile extends DataModelBase<WorkflowFileEdo, WorkflowFile> {
@@ -132,45 +130,6 @@ public class WorkflowFile extends DataModelBase<WorkflowFileEdo, WorkflowFile> {
     if (fileVersions != null) {
       this.fileVersions.addAll(fileVersions);
     }
-  }
-
-  @Override
-  public WorkflowFileEdo toEdo() {
-    final WorkflowFileEdo edo = new WorkflowFileEdo();
-    edo.setTitle(this.title);
-    edo.setExtention(this.extention);
-    edo.setComments(this.comments);
-    edo.setStatus(this.status);
-    edo.setId(this.id);
-    edo.setCreatedBy(this.createdBy);
-    edo.setActiveFilePath(this.activeFilePath);
-    edo.setActiveFileVersion(this.activeFileVersion);
-    edo.setWorkflowId(this.workflowId);
-    edo.setVersion(this.version);
-
-    edo.setFileVersions(ModelMapperBase.toEdoList(this.fileVersions));
-
-    return edo;
-  }
-
-  @Override
-  public WorkflowFile fromEdo(final WorkflowFileEdo edo) {
-    final WorkflowFile model = new WorkflowFile();
-
-    model.setTitle(edo.getTitle());
-    model.setExtention(edo.getExtention());
-    model.setComments(edo.getComments());
-    model.setStatus(edo.getStatus());
-    model.setId(edo.getId());
-    model.setCreatedBy(edo.getCreatedBy());
-    model.setActiveFilePath(edo.getActiveFilePath());
-    model.setActiveFileVersion(edo.getActiveFileVersion());
-    model.setWorkflowId(edo.getWorkflowId());
-    model.setVersion(edo.getVersion());
-
-    model.setFileVersions(new WorkflowFileVersion().fromEdoList(edo.getFileVersions()));
-
-    return model;
   }
 
 }

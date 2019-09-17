@@ -3,7 +3,6 @@ package com.pth.iflow.gui.models;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 import com.pth.iflow.common.edo.models.xml.WorkflowEdo;
@@ -13,22 +12,23 @@ import com.pth.iflow.common.enums.EWorkflowStatus;
 @JsonIgnoreProperties(value = { "isAssignTo" })
 public class GuiWorkflow {
 
-  private Long                          id;
-  private Long                          workflowTypeId;
-  private GuiWorkflowType               workflowType;
-  private GuiWorkflowTypeStep           currentStep;
-  private Long                          currentStepId;
-  private Long                          controller;
-  private GuiUser                       controllerUser;
-  private Long                          createdBy;
-  private GuiUser                       createdByUser;
-  private Long                          assignTo;
-  private GuiUser                       assignToUser;
-  private String                        title;
-  private String                        comments;
-  private EWorkflowStatus               status;
-  private Integer                       version;
-  private Boolean                       nextAssign;
+  private Long                id;
+  private Long                workflowTypeId;
+  private GuiWorkflowType     workflowType;
+  private GuiWorkflowTypeStep currentStep;
+  private Long                currentStepId;
+  private Long                controller;
+  private GuiUser             controllerUser;
+  private Long                createdBy;
+  private GuiUser             createdByUser;
+  private Long                assignTo;
+  private GuiUser             assignToUser;
+  private String              title;
+  private String              comments;
+  private EWorkflowStatus     status;
+  private Integer             version;
+  private Boolean             nextAssign;
+  private String              command;
 
   private final List<GuiWorkflowFile>   files   = new ArrayList<>();
   private final List<GuiWorkflowAction> actions = new ArrayList<>();
@@ -197,6 +197,14 @@ public class GuiWorkflow {
     this.nextAssign = nextAssign;
   }
 
+  public String getCommand() {
+    return command;
+  }
+
+  public void setCommand(final String command) {
+    this.command = command;
+  }
+
   public List<GuiWorkflowFile> getFiles() {
     return this.files;
   }
@@ -223,8 +231,7 @@ public class GuiWorkflow {
     this.files.add(file);
   }
 
-  public GuiWorkflowFile addNewFile(final String path, final Long userId, final String title, final String extention,
-      final String comments) {
+  public GuiWorkflowFile addNewFile(final String path, final Long userId, final String title, final String extention, final String comments) {
     final GuiWorkflowFile wfile = new GuiWorkflowFile();
     wfile.setActiveFilePath(path);
     wfile.setActiveFileVersion(1);

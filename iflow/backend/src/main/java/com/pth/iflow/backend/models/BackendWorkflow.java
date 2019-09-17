@@ -21,6 +21,7 @@ public class BackendWorkflow extends ModelMapperBase<WorkflowEdo, BackendWorkflo
   private EWorkflowStatus                   status;
   private Integer                           version;
   private Boolean                           nextAssign;
+  private String                  command;  
 
   private final List<BackendWorkflowFile>   files   = new ArrayList<>();
   private final List<BackendWorkflowAction> actions = new ArrayList<>();
@@ -187,7 +188,16 @@ public class BackendWorkflow extends ModelMapperBase<WorkflowEdo, BackendWorkflo
     return (this.id == null) || (this.id <= 0);
   }
 
-  @Override
+  
+  public String getCommand() {
+	return command;
+}
+
+public void setCommand(String command) {
+	this.command = command;
+}
+
+@Override
   public WorkflowEdo toEdo() {
     final WorkflowEdo edo = new WorkflowEdo();
     edo.setTitle(this.title);

@@ -1,7 +1,6 @@
 package com.pth.iflow.core.model;
 
 import java.time.LocalDateTime;
-
 import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.edo.models.xml.DepartmentGroupEdo;
 
@@ -72,31 +71,6 @@ public class DepartmentGroup extends DataModelBase<DepartmentGroupEdo, Departmen
 
   public void setUpdatedAt(final LocalDateTime updatedAt) {
     this.updatedAt = updatedAt;
-  }
-
-  @Override
-  public DepartmentGroupEdo toEdo() {
-    final DepartmentGroupEdo edo = new DepartmentGroupEdo();
-    edo.setTitle(this.title);
-    edo.setStatus(this.status);
-    edo.setId(this.id);
-    edo.setDepartmentId(this.departmentId);
-    edo.setVersion(this.version);
-
-    return edo;
-  }
-
-  @Override
-  public DepartmentGroup fromEdo(final DepartmentGroupEdo edo) {
-    final DepartmentGroup model = new DepartmentGroup();
-
-    model.setTitle(edo.getTitle());
-    model.setStatus(edo.getStatus());
-    model.setId(edo.getId());
-    model.setDepartmentId(edo.getDepartmentId());
-    model.setVersion(edo.getVersion());
-
-    return model;
   }
 
 }

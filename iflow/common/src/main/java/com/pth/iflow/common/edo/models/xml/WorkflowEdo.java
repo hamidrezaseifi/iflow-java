@@ -12,6 +12,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
+import com.pth.iflow.common.edo.models.validation.AEnumValidator;
+import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 
 @XmlRootElement(name = "Workflow", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -59,6 +61,11 @@ public class WorkflowEdo {
   @NotNull
   @XmlElement(name = "NextAssign", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Boolean                 nextAssign;
+
+  @NotNull
+  @AEnumValidator(enumClazz = EWorkflowProcessCommand.class)
+  @XmlElement(name = "Command", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String                  command;  
 
   @XmlElementWrapper(name = "WorkflowFileList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "WorkflowFile", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
@@ -164,7 +171,16 @@ public class WorkflowEdo {
     this.nextAssign = nextAssign;
   }
 
-  public List<WorkflowFileEdo> getFiles() {
+  
+  public String getCommand() {
+	return command;
+}
+
+public void setCommand(String command) {
+	this.command = command;
+}
+
+public List<WorkflowFileEdo> getFiles() {
     return this.files;
   }
 

@@ -2,25 +2,25 @@ package com.pth.iflow.workflow.models;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 import com.pth.iflow.common.edo.models.xml.WorkflowEdo;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 
 public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
 
-  private Long                       id;
-  private Long                       workflowTypeId;
-  private WorkflowTypeStep           currentStep;
-  private Long                       currentStepId;
-  private Long                       controller;
-  private Long                       createdBy;
-  private Long                       assignTo;
-  private String                     title;
-  private String                     comments;
-  private EWorkflowStatus            status;
-  private Integer                    version;
-  private Boolean                    nextAssign;
+  private Long             id;
+  private Long             workflowTypeId;
+  private WorkflowTypeStep currentStep;
+  private Long             currentStepId;
+  private Long             controller;
+  private Long             createdBy;
+  private Long             assignTo;
+  private String           title;
+  private String           comments;
+  private EWorkflowStatus  status;
+  private Integer          version;
+  private Boolean          nextAssign;
+  private String           command;
 
   private final List<WorkflowFile>   files   = new ArrayList<>();
   private final List<WorkflowAction> actions = new ArrayList<>();
@@ -135,6 +135,14 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
 
   public void setNextAssign(final Boolean nextAssign) {
     this.nextAssign = nextAssign;
+  }
+
+  public String getCommand() {
+    return command;
+  }
+
+  public void setCommand(final String command) {
+    this.command = command;
   }
 
   public List<WorkflowFile> getFiles() {
