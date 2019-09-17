@@ -1,10 +1,10 @@
 package com.pth.iflow.backend.models;
 
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
+import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.edo.models.xml.WorkflowActionEdo;
 import com.pth.iflow.common.enums.EWorkflowActionStatus;
 
-public class BackendWorkflowAction extends ModelMapperBase<WorkflowActionEdo, BackendWorkflowAction> {
+public class BackendWorkflowAction extends DataModelBase<WorkflowActionEdo, BackendWorkflowAction> {
 
   private Long    id;
   private Long    workflowId;
@@ -17,6 +17,7 @@ public class BackendWorkflowAction extends ModelMapperBase<WorkflowActionEdo, Ba
   private Integer status;
   private Integer version;
 
+  @Override
   public Long getId() {
     return this.id;
   }
@@ -89,53 +90,18 @@ public class BackendWorkflowAction extends ModelMapperBase<WorkflowActionEdo, Ba
     this.status = status;
   }
 
+  @Override
   public Integer getVersion() {
     return this.version;
   }
 
+  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
 
   public boolean getIsActive() {
     return EWorkflowActionStatus.getIsActive(this.status);
-  }
-
-  @Override
-  public WorkflowActionEdo toEdo() {
-    final WorkflowActionEdo edo = new WorkflowActionEdo();
-    edo.setAction(this.action);
-    edo.setComments(this.comments);
-    edo.setStatus(this.status);
-    edo.setId(this.id);
-    edo.setCreatedBy(this.createdBy);
-    edo.setOldStep(this.oldStep);
-    edo.setNewStep(this.newStep);
-    edo.setWorkflowId(this.workflowId);
-    edo.setVersion(this.version);
-
-    return edo;
-  }
-
-  @Override
-  public BackendWorkflowAction fromEdo(final WorkflowActionEdo edo) {
-    if (edo == null) {
-      return null;
-    }
-
-    final BackendWorkflowAction model = new BackendWorkflowAction();
-
-    model.setAction(edo.getAction());
-    model.setComments(edo.getComments());
-    model.setStatus(edo.getStatus());
-    model.setId(edo.getId());
-    model.setCreatedBy(edo.getCreatedBy());
-    model.setOldStep(edo.getOldStep());
-    model.setNewStep(edo.getNewStep());
-    model.setWorkflowId(edo.getWorkflowId());
-    model.setVersion(edo.getVersion());
-
-    return model;
   }
 
 }

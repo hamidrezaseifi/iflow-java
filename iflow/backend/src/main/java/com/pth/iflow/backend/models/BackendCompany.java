@@ -1,9 +1,9 @@
 package com.pth.iflow.backend.models;
 
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
+import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.edo.models.xml.CompanyEdo;
 
-public class BackendCompany extends ModelMapperBase<CompanyEdo, BackendCompany> {
+public class BackendCompany extends DataModelBase<CompanyEdo, BackendCompany> {
 
   private Long    id;
   private String  identifyid;
@@ -78,30 +78,6 @@ public class BackendCompany extends ModelMapperBase<CompanyEdo, BackendCompany> 
 
   public boolean isNew() {
     return (this.id == null) || (this.id <= 0);
-  }
-
-  @Override
-  public CompanyEdo toEdo() {
-    final CompanyEdo edo = new CompanyEdo();
-    edo.setCompanyName(this.companyName);
-    edo.setIdentifyid(this.identifyid);
-    edo.setStatus(this.status);
-    edo.setVersion(this.version);
-    edo.setId(this.id);
-
-    return edo;
-  }
-
-  @Override
-  public BackendCompany fromEdo(final CompanyEdo edo) {
-    final BackendCompany model = new BackendCompany();
-    model.setCompanyName(edo.getCompanyName());
-    model.setIdentifyid(edo.getIdentifyid());
-    model.setStatus(edo.getStatus());
-    model.setVersion(edo.getVersion());
-    model.setId(edo.getId());
-
-    return model;
   }
 
 }

@@ -1,42 +1,49 @@
-package com.pth.iflow.core.model.mapper;
+package com.pth.iflow.backend.models.mapper;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
+import com.pth.iflow.backend.exceptions.BackendCustomizedException;
+import com.pth.iflow.backend.models.BackendCompany;
+import com.pth.iflow.backend.models.BackendCompanyProfile;
+import com.pth.iflow.backend.models.BackendDepartment;
+import com.pth.iflow.backend.models.BackendDepartmentGroup;
+import com.pth.iflow.backend.models.BackendUser;
+import com.pth.iflow.backend.models.BackendUserGroup;
+import com.pth.iflow.backend.models.BackendWorkflow;
+import com.pth.iflow.backend.models.BackendWorkflowAction;
+import com.pth.iflow.backend.models.BackendWorkflowCreateRequest;
+import com.pth.iflow.backend.models.BackendWorkflowFile;
+import com.pth.iflow.backend.models.BackendWorkflowFileVersion;
+import com.pth.iflow.backend.models.BackendWorkflowType;
+import com.pth.iflow.backend.models.BackendWorkflowTypeStep;
+import com.pth.iflow.backend.models.ProfileResponse;
 import com.pth.iflow.common.edo.models.xml.CompanyEdo;
+import com.pth.iflow.common.edo.models.xml.CompanyProfileEdo;
 import com.pth.iflow.common.edo.models.xml.DepartmentEdo;
 import com.pth.iflow.common.edo.models.xml.DepartmentGroupEdo;
+import com.pth.iflow.common.edo.models.xml.ProfileResponseEdo;
 import com.pth.iflow.common.edo.models.xml.UserEdo;
 import com.pth.iflow.common.edo.models.xml.UserGroupEdo;
 import com.pth.iflow.common.edo.models.xml.WorkflowActionEdo;
+import com.pth.iflow.common.edo.models.xml.WorkflowCreateRequestEdo;
 import com.pth.iflow.common.edo.models.xml.WorkflowEdo;
 import com.pth.iflow.common.edo.models.xml.WorkflowFileEdo;
 import com.pth.iflow.common.edo.models.xml.WorkflowFileVersionEdo;
-import com.pth.iflow.common.edo.models.xml.WorkflowSearchFilterEdo;
 import com.pth.iflow.common.edo.models.xml.WorkflowTypeEdo;
 import com.pth.iflow.common.edo.models.xml.WorkflowTypeStepEdo;
-import com.pth.iflow.core.model.Company;
-import com.pth.iflow.core.model.Department;
-import com.pth.iflow.core.model.DepartmentGroup;
-import com.pth.iflow.core.model.User;
-import com.pth.iflow.core.model.UserGroup;
-import com.pth.iflow.core.model.Workflow;
-import com.pth.iflow.core.model.WorkflowAction;
-import com.pth.iflow.core.model.WorkflowFile;
-import com.pth.iflow.core.model.WorkflowFileVersion;
-import com.pth.iflow.core.model.WorkflowSearchFilter;
-import com.pth.iflow.core.model.WorkflowType;
-import com.pth.iflow.core.model.WorkflowTypeStep;
-import com.pth.iflow.core.model.exceptions.MessageConversionFailureException;
+import com.pth.iflow.common.enums.EModule;
+import com.pth.iflow.common.enums.EWorkflowStatus;
 
 public class ModelEdoMapper {
 
   private static final Validator VALIDATOR = Validation.buildDefaultValidatorFactory().getValidator();
 
-  public static CompanyEdo toEdo(final Company model) {
+  public static CompanyEdo toEdo(final BackendCompany model) {
     final CompanyEdo edo = new CompanyEdo();
     edo.setCompanyName(model.getCompanyName());
     edo.setIdentifyid(model.getIdentifyid());
@@ -47,10 +54,10 @@ public class ModelEdoMapper {
     return edo;
   }
 
-  public static Company fromEdo(final CompanyEdo edo) throws MessageConversionFailureException {
+  public static BackendCompany fromEdo(final CompanyEdo edo) throws BackendCustomizedException {
     validateCustomer(edo);
 
-    final Company model = new Company();
+    final BackendCompany model = new BackendCompany();
     model.setCompanyName(edo.getCompanyName());
     model.setIdentifyid(edo.getIdentifyid());
     model.setStatus(edo.getStatus());
@@ -60,7 +67,7 @@ public class ModelEdoMapper {
     return model;
   }
 
-  public static DepartmentEdo toEdo(final Department model) {
+  public static DepartmentEdo toEdo(final BackendDepartment model) {
     final DepartmentEdo edo = new DepartmentEdo();
     edo.setTitle(model.getTitle());
     edo.setStatus(model.getStatus());
@@ -72,10 +79,10 @@ public class ModelEdoMapper {
     return edo;
   }
 
-  public static Department fromEdo(final DepartmentEdo edo) throws MessageConversionFailureException {
+  public static BackendDepartment fromEdo(final DepartmentEdo edo) throws BackendCustomizedException {
     validateCustomer(edo);
 
-    final Department model = new Department();
+    final BackendDepartment model = new BackendDepartment();
 
     model.setTitle(edo.getTitle());
     model.setStatus(edo.getStatus());
@@ -87,7 +94,7 @@ public class ModelEdoMapper {
     return model;
   }
 
-  public static DepartmentGroupEdo toEdo(final DepartmentGroup model) {
+  public static DepartmentGroupEdo toEdo(final BackendDepartmentGroup model) {
     final DepartmentGroupEdo edo = new DepartmentGroupEdo();
     edo.setTitle(model.getTitle());
     edo.setStatus(model.getStatus());
@@ -98,10 +105,10 @@ public class ModelEdoMapper {
     return edo;
   }
 
-  public static DepartmentGroup fromEdo(final DepartmentGroupEdo edo) throws MessageConversionFailureException {
+  public static BackendDepartmentGroup fromEdo(final DepartmentGroupEdo edo) throws BackendCustomizedException {
     validateCustomer(edo);
 
-    final DepartmentGroup model = new DepartmentGroup();
+    final BackendDepartmentGroup model = new BackendDepartmentGroup();
 
     model.setTitle(edo.getTitle());
     model.setStatus(edo.getStatus());
@@ -112,7 +119,7 @@ public class ModelEdoMapper {
     return model;
   }
 
-  public static UserEdo toEdo(final User model) {
+  public static UserEdo toEdo(final BackendUser model) {
     final UserEdo edo = new UserEdo();
     edo.setFirstName(model.getFirstName());
     edo.setLastName(model.getLastName());
@@ -127,15 +134,22 @@ public class ModelEdoMapper {
     edo.setDepartments(model.getDepartments());
     edo.setDepartmentGroups(model.getDepartmentGroups());
     edo.setDeputies(model.getDeputies());
-    edo.setRoles(model.getRoles());
+    edo.setRoles(model.getRoles().stream().map(r -> r.getId()).collect(Collectors.toList()));
 
     return edo;
   }
 
-  public static User fromEdo(final UserEdo edo) throws MessageConversionFailureException {
+  public static WorkflowCreateRequestEdo toEdo(final BackendWorkflowCreateRequest model) {
+    final WorkflowCreateRequestEdo edo = new WorkflowCreateRequestEdo();
+    edo.setAssignedUsers(model.getAssigns());
+    edo.setWorkflow(toEdo(model.getWorkflow()));
+    return edo;
+  }
+
+  public static BackendUser fromEdo(final UserEdo edo) throws BackendCustomizedException {
     validateCustomer(edo);
 
-    final User model = new User();
+    final BackendUser model = new BackendUser();
 
     model.setFirstName(edo.getFirstName());
     model.setLastName(edo.getLastName());
@@ -155,7 +169,31 @@ public class ModelEdoMapper {
     return model;
   }
 
-  public static UserGroupEdo toEdo(final UserGroup model) {
+  public static ProfileResponse fromEdo(final ProfileResponseEdo edo) {
+    validateCustomer(edo);
+
+    final ProfileResponse model = new ProfileResponse();
+
+    model.setCompanyProfile(fromEdo(edo.getCompanyProfile()));
+    model.setSessionid(edo.getSessionid());
+    model.setUser(fromEdo(edo.getUser()));
+
+    return model;
+  }
+
+  private static BackendCompanyProfile fromEdo(final CompanyProfileEdo edo) {
+    validateCustomer(edo);
+
+    final BackendCompanyProfile model = new BackendCompanyProfile();
+
+    model.setCompany(fromEdo(edo.getCompany()));
+    model.setDepartments(fromDepartmentEdoList(edo.getDepartments()));
+    model.setUserGroups(fromUserGroupEdoList(edo.getUserGroups()));
+
+    return model;
+  }
+
+  public static UserGroupEdo toEdo(final BackendUserGroup model) {
     final UserGroupEdo edo = new UserGroupEdo();
     edo.setTitle(model.getTitle());
     edo.setStatus(model.getStatus());
@@ -166,10 +204,10 @@ public class ModelEdoMapper {
     return edo;
   }
 
-  public static UserGroup fromEdo(final UserGroupEdo edo) throws MessageConversionFailureException {
+  public static BackendUserGroup fromEdo(final UserGroupEdo edo) throws BackendCustomizedException {
     validateCustomer(edo);
 
-    final UserGroup model = new UserGroup();
+    final BackendUserGroup model = new BackendUserGroup();
 
     model.setTitle(edo.getTitle());
     model.setStatus(edo.getStatus());
@@ -180,7 +218,7 @@ public class ModelEdoMapper {
     return model;
   }
 
-  public static WorkflowEdo toEdo(final Workflow model) {
+  public static WorkflowEdo toEdo(final BackendWorkflow model) {
     final WorkflowEdo edo = new WorkflowEdo();
     edo.setTitle(model.getTitle());
     edo.setComments(model.getComments());
@@ -202,14 +240,14 @@ public class ModelEdoMapper {
     return edo;
   }
 
-  public static Workflow fromEdo(final WorkflowEdo edo) throws MessageConversionFailureException {
+  public static BackendWorkflow fromEdo(final WorkflowEdo edo) throws BackendCustomizedException {
     validateCustomer(edo);
 
-    final Workflow model = new Workflow();
+    final BackendWorkflow model = new BackendWorkflow();
 
     model.setTitle(edo.getTitle());
     model.setComments(edo.getComments());
-    model.setStatus(edo.getStatus());
+    model.setStatus(EWorkflowStatus.ofValue(edo.getStatus()));
     model.setId(edo.getId());
     model.setController(edo.getController());
     model.setCurrentStep(fromEdo(edo.getCurrentStep()));
@@ -226,7 +264,7 @@ public class ModelEdoMapper {
     return model;
   }
 
-  public static WorkflowActionEdo toEdo(final WorkflowAction model) {
+  public static WorkflowActionEdo toEdo(final BackendWorkflowAction model) {
     final WorkflowActionEdo edo = new WorkflowActionEdo();
     edo.setAction(model.getAction());
     edo.setComments(model.getComments());
@@ -242,10 +280,10 @@ public class ModelEdoMapper {
     return edo;
   }
 
-  public static WorkflowAction fromEdo(final WorkflowActionEdo edo) throws MessageConversionFailureException {
+  public static BackendWorkflowAction fromEdo(final WorkflowActionEdo edo) throws BackendCustomizedException {
     validateCustomer(edo);
 
-    final WorkflowAction model = new WorkflowAction();
+    final BackendWorkflowAction model = new BackendWorkflowAction();
 
     model.setAction(edo.getAction());
     model.setComments(edo.getComments());
@@ -261,7 +299,7 @@ public class ModelEdoMapper {
     return model;
   }
 
-  public static WorkflowTypeStepEdo toEdo(final WorkflowTypeStep model) {
+  public static WorkflowTypeStepEdo toEdo(final BackendWorkflowTypeStep model) {
     final WorkflowTypeStepEdo edo = new WorkflowTypeStepEdo();
     edo.setStepIndex(model.getStepIndex());
     edo.setViewName(model.getViewName());
@@ -275,10 +313,10 @@ public class ModelEdoMapper {
     return edo;
   }
 
-  public static WorkflowTypeStep fromEdo(final WorkflowTypeStepEdo edo) throws MessageConversionFailureException {
+  public static BackendWorkflowTypeStep fromEdo(final WorkflowTypeStepEdo edo) throws BackendCustomizedException {
     validateCustomer(edo);
 
-    final WorkflowTypeStep model = new WorkflowTypeStep();
+    final BackendWorkflowTypeStep model = new BackendWorkflowTypeStep();
 
     model.setStepIndex(edo.getStepIndex());
     model.setViewName(edo.getViewName());
@@ -292,7 +330,7 @@ public class ModelEdoMapper {
     return model;
   }
 
-  public static WorkflowFileEdo toEdo(final WorkflowFile model) {
+  public static WorkflowFileEdo toEdo(final BackendWorkflowFile model) {
     final WorkflowFileEdo edo = new WorkflowFileEdo();
     edo.setTitle(model.getTitle());
     edo.setExtention(model.getExtention());
@@ -310,9 +348,9 @@ public class ModelEdoMapper {
     return edo;
   }
 
-  public static WorkflowFile fromEdo(final WorkflowFileEdo edo) throws MessageConversionFailureException {
+  public static BackendWorkflowFile fromEdo(final WorkflowFileEdo edo) throws BackendCustomizedException {
     validateCustomer(edo);
-    final WorkflowFile model = new WorkflowFile();
+    final BackendWorkflowFile model = new BackendWorkflowFile();
 
     model.setTitle(edo.getTitle());
     model.setExtention(edo.getExtention());
@@ -330,7 +368,7 @@ public class ModelEdoMapper {
     return model;
   }
 
-  public static WorkflowFileVersionEdo toEdo(final WorkflowFileVersion model) {
+  public static WorkflowFileVersionEdo toEdo(final BackendWorkflowFileVersion model) {
     final WorkflowFileVersionEdo edo = new WorkflowFileVersionEdo();
     edo.setComments(model.getComments());
     edo.setStatus(model.getStatus());
@@ -344,9 +382,9 @@ public class ModelEdoMapper {
     return edo;
   }
 
-  public static WorkflowFileVersion fromEdo(final WorkflowFileVersionEdo edo) throws MessageConversionFailureException {
+  public static BackendWorkflowFileVersion fromEdo(final WorkflowFileVersionEdo edo) throws BackendCustomizedException {
     validateCustomer(edo);
-    final WorkflowFileVersion model = new WorkflowFileVersion();
+    final BackendWorkflowFileVersion model = new BackendWorkflowFileVersion();
 
     model.setComments(edo.getComments());
     model.setStatus(edo.getStatus());
@@ -360,7 +398,7 @@ public class ModelEdoMapper {
     return model;
   }
 
-  public static WorkflowTypeEdo toEdo(final WorkflowType model) {
+  public static WorkflowTypeEdo toEdo(final BackendWorkflowType model) {
     final WorkflowTypeEdo edo = new WorkflowTypeEdo();
     edo.setTitle(model.getTitle());
     edo.setComments(model.getComments());
@@ -378,9 +416,9 @@ public class ModelEdoMapper {
     return edo;
   }
 
-  public static WorkflowType fromEdo(final WorkflowTypeEdo edo) throws MessageConversionFailureException {
+  public static BackendWorkflowType fromEdo(final WorkflowTypeEdo edo) throws BackendCustomizedException {
     validateCustomer(edo);
-    final WorkflowType model = new WorkflowType();
+    final BackendWorkflowType model = new BackendWorkflowType();
 
     model.setTitle(edo.getTitle());
     model.setComments(edo.getComments());
@@ -398,40 +436,17 @@ public class ModelEdoMapper {
     return model;
   }
 
-  public static WorkflowSearchFilterEdo toEdo(final WorkflowSearchFilter model) {
-    final WorkflowSearchFilterEdo edo = new WorkflowSearchFilterEdo();
-    edo.setAssignedUserIdList(model.getAssignedUserIdList());
-    edo.setStatusList(model.getStatusList());
-    edo.setTitle(model.getTitle());
-    edo.setWorkflowStepeIdList(model.getWorkflowStepeIdList());
-    edo.setWorkflowTypeIdList(model.getWorkflowTypeIdList());
-
-    return edo;
-  }
-
-  public static WorkflowSearchFilter fromEdo(final WorkflowSearchFilterEdo edo) {
-    final WorkflowSearchFilter model = new WorkflowSearchFilter();
-    model.setAssignedUserIdList(edo.getAssignedUserIdList());
-    model.setStatusList(edo.getStatusList());
-    model.setTitle(edo.getTitle());
-    model.setWorkflowStepeIdList(edo.getWorkflowStepeIdList());
-    model.setWorkflowTypeIdList(edo.getWorkflowTypeIdList());
-
-    return model;
-
-  }
-
-  public static List<WorkflowFileVersionEdo> toWorkflowFileVersionEdoList(final List<WorkflowFileVersion> modelList) {
+  public static List<WorkflowFileVersionEdo> toWorkflowFileVersionEdoList(final List<BackendWorkflowFileVersion> modelList) {
     final List<WorkflowFileVersionEdo> edoList = new ArrayList<>();
-    for (final WorkflowFileVersion model : modelList) {
+    for (final BackendWorkflowFileVersion model : modelList) {
       edoList.add(toEdo(model));
     }
 
     return edoList;
   }
 
-  public static List<WorkflowFileVersion> fromWorkflowFileVersionEdoList(final List<WorkflowFileVersionEdo> edoList) throws MessageConversionFailureException {
-    final List<WorkflowFileVersion> modelList = new ArrayList<>();
+  public static List<BackendWorkflowFileVersion> fromWorkflowFileVersionEdoList(final List<WorkflowFileVersionEdo> edoList) throws BackendCustomizedException {
+    final List<BackendWorkflowFileVersion> modelList = new ArrayList<>();
     for (final WorkflowFileVersionEdo edo : edoList) {
       modelList.add(fromEdo(edo));
     }
@@ -439,17 +454,17 @@ public class ModelEdoMapper {
     return modelList;
   }
 
-  public static List<WorkflowFileEdo> toWorkflowFileEdoList(final List<WorkflowFile> modelList) {
+  public static List<WorkflowFileEdo> toWorkflowFileEdoList(final List<BackendWorkflowFile> modelList) {
     final List<WorkflowFileEdo> edoList = new ArrayList<>();
-    for (final WorkflowFile model : modelList) {
+    for (final BackendWorkflowFile model : modelList) {
       edoList.add(toEdo(model));
     }
 
     return edoList;
   }
 
-  public static List<WorkflowFile> fromWorkflowFileEdoList(final List<WorkflowFileEdo> edoList) throws MessageConversionFailureException {
-    final List<WorkflowFile> modelList = new ArrayList<>();
+  public static List<BackendWorkflowFile> fromWorkflowFileEdoList(final List<WorkflowFileEdo> edoList) throws BackendCustomizedException {
+    final List<BackendWorkflowFile> modelList = new ArrayList<>();
     for (final WorkflowFileEdo edo : edoList) {
       modelList.add(fromEdo(edo));
     }
@@ -457,17 +472,17 @@ public class ModelEdoMapper {
     return modelList;
   }
 
-  public static List<WorkflowActionEdo> toWorkflowActionEdoList(final List<WorkflowAction> modelList) {
+  public static List<WorkflowActionEdo> toWorkflowActionEdoList(final List<BackendWorkflowAction> modelList) {
     final List<WorkflowActionEdo> edoList = new ArrayList<>();
-    for (final WorkflowAction model : modelList) {
+    for (final BackendWorkflowAction model : modelList) {
       edoList.add(toEdo(model));
     }
 
     return edoList;
   }
 
-  public static List<WorkflowAction> fromWorkflowActionEdoList(final List<WorkflowActionEdo> edoList) throws MessageConversionFailureException {
-    final List<WorkflowAction> modelList = new ArrayList<>();
+  public static List<BackendWorkflowAction> fromWorkflowActionEdoList(final List<WorkflowActionEdo> edoList) throws BackendCustomizedException {
+    final List<BackendWorkflowAction> modelList = new ArrayList<>();
     for (final WorkflowActionEdo edo : edoList) {
       modelList.add(fromEdo(edo));
     }
@@ -475,17 +490,17 @@ public class ModelEdoMapper {
     return modelList;
   }
 
-  public static List<WorkflowTypeStepEdo> toWorkflowTypeStepEdoList(final List<WorkflowTypeStep> modelList) {
+  public static List<WorkflowTypeStepEdo> toWorkflowTypeStepEdoList(final List<BackendWorkflowTypeStep> modelList) {
     final List<WorkflowTypeStepEdo> edoList = new ArrayList<>();
-    for (final WorkflowTypeStep model : modelList) {
+    for (final BackendWorkflowTypeStep model : modelList) {
       edoList.add(toEdo(model));
     }
 
     return edoList;
   }
 
-  public static List<WorkflowTypeStep> fromWorkflowTypeStepEdoList(final List<WorkflowTypeStepEdo> edoList) throws MessageConversionFailureException {
-    final List<WorkflowTypeStep> modelList = new ArrayList<>();
+  public static List<BackendWorkflowTypeStep> fromWorkflowTypeStepEdoList(final List<WorkflowTypeStepEdo> edoList) throws BackendCustomizedException {
+    final List<BackendWorkflowTypeStep> modelList = new ArrayList<>();
     for (final WorkflowTypeStepEdo edo : edoList) {
       modelList.add(fromEdo(edo));
     }
@@ -493,17 +508,35 @@ public class ModelEdoMapper {
     return modelList;
   }
 
-  public static List<DepartmentGroupEdo> toDepartmentGroupEdoList(final List<DepartmentGroup> modelList) {
+  public static List<BackendWorkflow> fromWorkflowEdoList(final List<WorkflowEdo> edoList) {
+    final List<BackendWorkflow> modelList = new ArrayList<>();
+    for (final WorkflowEdo edo : edoList) {
+      modelList.add(fromEdo(edo));
+    }
+
+    return modelList;
+  }
+
+  public static List<BackendWorkflowType> fromWorkflowTypeEdoList(final List<WorkflowTypeEdo> edoList) {
+    final List<BackendWorkflowType> modelList = new ArrayList<>();
+    for (final WorkflowTypeEdo edo : edoList) {
+      modelList.add(fromEdo(edo));
+    }
+
+    return modelList;
+  }
+
+  public static List<DepartmentGroupEdo> toDepartmentGroupEdoList(final List<BackendDepartmentGroup> modelList) {
     final List<DepartmentGroupEdo> edoList = new ArrayList<>();
-    for (final DepartmentGroup model : modelList) {
+    for (final BackendDepartmentGroup model : modelList) {
       edoList.add(toEdo(model));
     }
 
     return edoList;
   }
 
-  public static List<DepartmentGroup> fromDepartmentGroupEdoList(final List<DepartmentGroupEdo> edoList) throws MessageConversionFailureException {
-    final List<DepartmentGroup> modelList = new ArrayList<>();
+  public static List<BackendDepartmentGroup> fromDepartmentGroupEdoList(final List<DepartmentGroupEdo> edoList) throws BackendCustomizedException {
+    final List<BackendDepartmentGroup> modelList = new ArrayList<>();
     for (final DepartmentGroupEdo edo : edoList) {
       modelList.add(fromEdo(edo));
     }
@@ -511,56 +544,83 @@ public class ModelEdoMapper {
     return modelList;
   }
 
-  public static List<WorkflowEdo> toWorkflowEdoList(final List<Workflow> modelList) {
+  public static List<WorkflowEdo> toWorkflowEdoList(final List<BackendWorkflow> modelList) {
     final List<WorkflowEdo> edoList = new ArrayList<>();
-    for (final Workflow model : modelList) {
+    for (final BackendWorkflow model : modelList) {
       edoList.add(toEdo(model));
     }
 
     return edoList;
   }
 
-  public static List<WorkflowTypeEdo> toWorkflowTypeEdoList(final List<WorkflowType> modelList) {
+  public static List<WorkflowTypeEdo> toWorkflowTypeEdoList(final List<BackendWorkflowType> modelList) {
     final List<WorkflowTypeEdo> edoList = new ArrayList<>();
-    for (final WorkflowType model : modelList) {
+    for (final BackendWorkflowType model : modelList) {
       edoList.add(toEdo(model));
     }
 
     return edoList;
   }
 
-  public static List<UserGroupEdo> toUserGroupEdoList(final List<UserGroup> modelList) {
+  public static List<UserGroupEdo> toUserGroupEdoList(final List<BackendUserGroup> modelList) {
     final List<UserGroupEdo> edoList = new ArrayList<>();
-    for (final UserGroup model : modelList) {
+    for (final BackendUserGroup model : modelList) {
       edoList.add(toEdo(model));
     }
 
     return edoList;
   }
 
-  public static List<DepartmentEdo> toDepartmentEdoList(final List<Department> modelList) {
+  public static List<DepartmentEdo> toDepartmentEdoList(final List<BackendDepartment> modelList) {
     final List<DepartmentEdo> edoList = new ArrayList<>();
-    for (final Department model : modelList) {
+    for (final BackendDepartment model : modelList) {
       edoList.add(toEdo(model));
     }
 
     return edoList;
   }
 
-  public static List<UserEdo> toUserEdoList(final List<User> modelList) {
+  public static List<UserEdo> toUserEdoList(final List<BackendUser> modelList) {
     final List<UserEdo> edoList = new ArrayList<>();
-    for (final User model : modelList) {
+    for (final BackendUser model : modelList) {
       edoList.add(toEdo(model));
     }
 
     return edoList;
   }
 
-  private static <E> void validateCustomer(final E model) throws MessageConversionFailureException {
+  public static List<BackendUser> fromUserEdoList(final List<UserEdo> edoList) throws BackendCustomizedException {
+    final List<BackendUser> modelList = new ArrayList<>();
+    for (final UserEdo edo : edoList) {
+      modelList.add(fromEdo(edo));
+    }
+
+    return modelList;
+  }
+
+  private static List<BackendUserGroup> fromUserGroupEdoList(final List<UserGroupEdo> edoList) {
+    final List<BackendUserGroup> modelList = new ArrayList<>();
+    for (final UserGroupEdo edo : edoList) {
+      modelList.add(fromEdo(edo));
+    }
+
+    return modelList;
+  }
+
+  private static List<BackendDepartment> fromDepartmentEdoList(final List<DepartmentEdo> edoList) {
+    final List<BackendDepartment> modelList = new ArrayList<>();
+    for (final DepartmentEdo edo : edoList) {
+      modelList.add(fromEdo(edo));
+    }
+
+    return modelList;
+  }
+
+  private static <E> void validateCustomer(final E model) throws BackendCustomizedException {
     final Set<ConstraintViolation<E>> violations = VALIDATOR.validate(model);
     if (violations != null && violations.size() > 0) {
       final String validationErrorMessage = createValidationErrorMessage(violations);
-      throw new MessageConversionFailureException(validationErrorMessage);
+      throw new BackendCustomizedException("Validation Error", validationErrorMessage, EModule.BACKED.getModuleName());
     }
   }
 

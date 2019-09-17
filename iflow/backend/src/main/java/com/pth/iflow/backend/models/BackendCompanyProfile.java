@@ -3,10 +3,7 @@ package com.pth.iflow.backend.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
-import com.pth.iflow.common.edo.models.xml.CompanyProfileEdo;
-
-public class BackendCompanyProfile extends ModelMapperBase<CompanyProfileEdo, BackendCompanyProfile> {
+public class BackendCompanyProfile {
 
   private BackendCompany company;
 
@@ -61,35 +58,6 @@ public class BackendCompanyProfile extends ModelMapperBase<CompanyProfileEdo, Ba
     if (users != null) {
       this.userGroups.addAll(users);
     }
-  }
-
-  public Integer getVersion() {
-    return null;
-  }
-
-  public Long getId() {
-    return null;
-  }
-
-  public void setVersion(final Integer version) {
-
-  }
-
-  @Override
-  public CompanyProfileEdo toEdo() {
-    final CompanyProfileEdo edo = new CompanyProfileEdo(this.company.toEdo(),
-                                                        ModelMapperBase.toEdoList(this.departments),
-                                                        ModelMapperBase.toEdoList(this.userGroups));
-    return edo;
-  }
-
-  @Override
-  public BackendCompanyProfile fromEdo(final CompanyProfileEdo edo) {
-    final BackendCompanyProfile model = new BackendCompanyProfile(new BackendCompany().fromEdo(edo.getCompany()),
-                                                                  new BackendDepartment().fromEdoList(edo.getDepartments()),
-                                                                  new BackendUserGroup().fromEdoList(edo.getUserGroups()));
-
-    return model;
   }
 
 }

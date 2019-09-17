@@ -2,11 +2,10 @@ package com.pth.iflow.backend.models;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
+import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.edo.models.xml.DepartmentEdo;
 
-public class BackendDepartment extends ModelMapperBase<DepartmentEdo, BackendDepartment> {
+public class BackendDepartment extends DataModelBase<DepartmentEdo, BackendDepartment> {
 
   private Long                               id;
   private Long                               companyId;
@@ -68,33 +67,6 @@ public class BackendDepartment extends ModelMapperBase<DepartmentEdo, BackendDep
 
   public void addDepartmentGroup(final BackendDepartmentGroup group) {
     this.departmentGroups.add(group);
-  }
-
-  @Override
-  public DepartmentEdo toEdo() {
-    final DepartmentEdo edo = new DepartmentEdo();
-    edo.setTitle(this.title);
-    edo.setStatus(this.status);
-    edo.setId(this.id);
-    edo.setCompanyId(this.companyId);
-    edo.setDepartmentGroups(ModelMapperBase.toEdoList(this.departmentGroups));
-    edo.setVersion(this.version);
-
-    return edo;
-  }
-
-  @Override
-  public BackendDepartment fromEdo(final DepartmentEdo edo) {
-    final BackendDepartment model = new BackendDepartment();
-
-    model.setTitle(edo.getTitle());
-    model.setStatus(edo.getStatus());
-    model.setId(edo.getId());
-    model.setCompanyId(edo.getCompanyId());
-    model.setDepartmentGroups(new BackendDepartmentGroup().fromEdoList(edo.getDepartmentGroups()));
-    model.setVersion(edo.getVersion());
-
-    return model;
   }
 
 }

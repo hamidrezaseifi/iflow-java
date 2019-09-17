@@ -1,16 +1,15 @@
 package com.pth.iflow.backend.services.impl;
 
 import java.net.MalformedURLException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.pth.iflow.backend.configurations.BackendConfiguration;
 import com.pth.iflow.backend.exceptions.BackendCustomizedException;
 import com.pth.iflow.backend.models.ProfileResponse;
 import com.pth.iflow.backend.models.UserAuthenticationResponse;
+import com.pth.iflow.backend.models.mapper.ModelEdoMapper;
 import com.pth.iflow.backend.services.IProfileAccess;
 import com.pth.iflow.backend.services.IRestTemplateCall;
 import com.pth.iflow.common.edo.models.xml.AuthenticatedProfileRequestEdo;
@@ -23,13 +22,13 @@ import com.pth.iflow.common.enums.EModule;
 @Service
 public class ProfileAccess implements IProfileAccess {
 
-  private static final Logger                           logger = LoggerFactory.getLogger(ProfileAccess.class);
+  private static final Logger logger = LoggerFactory.getLogger(ProfileAccess.class);
 
   private final IRestTemplateCall                       restTemplate;
   private final BackendConfiguration.ModuleAccessConfig moduleAccessConfig;
 
   public ProfileAccess(@Autowired final IRestTemplateCall restTemplate,
-      @Autowired final BackendConfiguration.ModuleAccessConfig moduleAccessConfig) {
+                       @Autowired final BackendConfiguration.ModuleAccessConfig moduleAccessConfig) {
     this.restTemplate = restTemplate;
     this.moduleAccessConfig = moduleAccessConfig;
   }
@@ -43,14 +42,17 @@ public class ProfileAccess implements IProfileAccess {
     profileRequest.setToken(token);
 
     final ProfileResponseEdo responseEdo = this.restTemplate.callRestPost(this.moduleAccessConfig.getReadTokenInfoUri(),
-        EModule.PROFILE, profileRequest, ProfileResponseEdo.class, token, true);
+                                                                          EModule.PROFILE,
+                                                                          profileRequest,
+                                                                          ProfileResponseEdo.class,
+                                                                          token,
+                                                                          true);
 
-    return ProfileResponse.fromEdo(responseEdo);
+    return ModelEdoMapper.fromEdo(responseEdo);
   }
 
   @Override
-  public UserAuthenticationResponse authenticate(final String username, final String password, final String companyIdentity)
-      throws BackendCustomizedException, MalformedURLException {
+  public UserAuthenticationResponse authenticate(final String username, final String password, final String companyIdentity) throws BackendCustomizedException, MalformedURLException {
     logger.debug("Authenticate user {} from profile service", username);
 
     final UserAuthenticationRequestEdo request = new UserAuthenticationRequestEdo();
@@ -59,14 +61,17 @@ public class ProfileAccess implements IProfileAccess {
     request.setPassword(password);
 
     final UserAuthenticationResponseEdo responseEdo = this.restTemplate.callRestPost(this.moduleAccessConfig.getAuthenticationUri(),
-        EModule.PROFILE, request, UserAuthenticationResponseEdo.class, "", true);
+                                                                                     EModule.PROFILE,
+                                                                                     request,
+                                                                                     UserAuthenticationResponseEdo.class,
+                                                                                     "",
+                                                                                     true);
 
     return UserAuthenticationResponse.fromEdo(responseEdo);
   }
 
   @Override
-  public ProfileResponse readProfile(final String username, final String token)
-      throws BackendCustomizedException, MalformedURLException {
+  public ProfileResponse readProfile(final String username, final String token) throws BackendCustomizedException, MalformedURLException {
     logger.debug("Read profile for user {} from profile service", username);
 
     final AuthenticatedProfileRequestEdo request = new AuthenticatedProfileRequestEdo();
@@ -74,9 +79,13 @@ public class ProfileAccess implements IProfileAccess {
     request.setEmail(username);
 
     final ProfileResponseEdo responseEdo = this.restTemplate.callRestPost(this.moduleAccessConfig.getReadAuthenticationInfoUri(),
-        EModule.PROFILE, request, ProfileResponseEdo.class, token, true);
+                                                                          EModule.PROFILE,
+                                                                          request,
+                                                                          ProfileResponseEdo.class,
+                                                                          token,
+                                                                          true);
 
-    return ProfileResponse.fromEdo(responseEdo);
+    return ModelEdoMapper.fromEdo(responseEdo);
   }
 
 }

@@ -2,11 +2,10 @@ package com.pth.iflow.backend.models;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
+import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.edo.models.xml.WorkflowTypeEdo;
 
-public class BackendWorkflowType extends ModelMapperBase<WorkflowTypeEdo, BackendWorkflowType> {
+public class BackendWorkflowType extends DataModelBase<WorkflowTypeEdo, BackendWorkflowType> {
 
   private Long                                id;
   private Long                                companyId;
@@ -21,6 +20,7 @@ public class BackendWorkflowType extends ModelMapperBase<WorkflowTypeEdo, Backen
   private Integer                             version;
   private final List<BackendWorkflowTypeStep> steps = new ArrayList<>();
 
+  @Override
   public Long getId() {
     return this.id;
   }
@@ -107,10 +107,12 @@ public class BackendWorkflowType extends ModelMapperBase<WorkflowTypeEdo, Backen
     this.allowAssign = allowAssign;
   }
 
+  @Override
   public Integer getVersion() {
     return this.version;
   }
 
+  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
@@ -130,47 +132,9 @@ public class BackendWorkflowType extends ModelMapperBase<WorkflowTypeEdo, Backen
     this.steps.add(stepId);
   }
 
+  @Override
   public boolean isNew() {
     return (this.id == null) || (this.id <= 0);
-  }
-
-  @Override
-  public WorkflowTypeEdo toEdo() {
-    final WorkflowTypeEdo edo = new WorkflowTypeEdo();
-    edo.setTitle(this.title);
-    edo.setComments(this.comments);
-    edo.setStatus(this.status);
-    edo.setId(this.id);
-    edo.setCompanyId(this.companyId);
-    edo.setBaseTypeId(this.baseTypeId);
-    edo.setSendToController(this.sendToController);
-    edo.setManualAssign(this.manualAssign);
-    edo.setIncreaseStepAutomatic(this.increaseStepAutomatic);
-    edo.setAllowAssign(this.allowAssign);
-    edo.setSteps(ModelMapperBase.toEdoList(this.steps));
-    edo.setVersion(this.version);
-
-    return edo;
-  }
-
-  @Override
-  public BackendWorkflowType fromEdo(final WorkflowTypeEdo edo) {
-    final BackendWorkflowType model = new BackendWorkflowType();
-
-    model.setTitle(edo.getTitle());
-    model.setComments(edo.getComments());
-    model.setStatus(edo.getStatus());
-    model.setId(edo.getId());
-    model.setCompanyId(edo.getCompanyId());
-    model.setBaseTypeId(edo.getBaseTypeId());
-    model.setSendToController(edo.getSendToController());
-    model.setManualAssign(edo.getManualAssign());
-    model.setIncreaseStepAutomatic(edo.getIncreaseStepAutomatic());
-    model.setAllowAssign(edo.getAllowAssign());
-    model.setVersion(edo.getVersion());
-    model.setSteps(new BackendWorkflowTypeStep().fromEdoList(edo.getSteps()));
-
-    return model;
   }
 
 }

@@ -1,9 +1,9 @@
 package com.pth.iflow.backend.models;
 
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
+import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.edo.models.xml.WorkflowFileVersionEdo;
 
-public class BackendWorkflowFileVersion extends ModelMapperBase<WorkflowFileVersionEdo, BackendWorkflowFileVersion> {
+public class BackendWorkflowFileVersion extends DataModelBase<WorkflowFileVersionEdo, BackendWorkflowFileVersion> {
 
   private Long    id;
   private Long    workflowFileId;
@@ -14,6 +14,7 @@ public class BackendWorkflowFileVersion extends ModelMapperBase<WorkflowFileVers
   private Integer status;
   private Integer version;
 
+  @Override
   public Long getId() {
     return this.id;
   }
@@ -70,47 +71,14 @@ public class BackendWorkflowFileVersion extends ModelMapperBase<WorkflowFileVers
     this.status = status;
   }
 
+  @Override
   public Integer getVersion() {
     return this.version;
   }
 
+  @Override
   public void setVersion(final Integer version) {
     this.version = version;
-  }
-
-  @Override
-  public WorkflowFileVersionEdo toEdo() {
-    final WorkflowFileVersionEdo edo = new WorkflowFileVersionEdo();
-    edo.setComments(this.comments);
-    edo.setStatus(this.status);
-    edo.setId(this.id);
-    edo.setCreatedBy(this.createdBy);
-    edo.setFilePath(this.filePath);
-    edo.setFileVersion(this.fileVersion);
-    edo.setWorkflowFileId(this.workflowFileId);
-    edo.setVersion(this.version);
-
-    return edo;
-  }
-
-  @Override
-  public BackendWorkflowFileVersion fromEdo(final WorkflowFileVersionEdo edo) {
-    if (edo == null) {
-      return null;
-    }
-
-    final BackendWorkflowFileVersion model = new BackendWorkflowFileVersion();
-
-    model.setComments(edo.getComments());
-    model.setStatus(edo.getStatus());
-    model.setId(edo.getId());
-    model.setCreatedBy(edo.getCreatedBy());
-    model.setFilePath(edo.getFilePath());
-    model.setFileVersion(edo.getFileVersion());
-    model.setWorkflowFileId(edo.getWorkflowFileId());
-    model.setVersion(edo.getVersion());
-
-    return model;
   }
 
 }

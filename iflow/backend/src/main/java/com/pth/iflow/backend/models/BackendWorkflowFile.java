@@ -2,11 +2,10 @@ package com.pth.iflow.backend.models;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
+import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.edo.models.xml.WorkflowFileEdo;
 
-public class BackendWorkflowFile extends ModelMapperBase<WorkflowFileEdo, BackendWorkflowFile> {
+public class BackendWorkflowFile extends DataModelBase<WorkflowFileEdo, BackendWorkflowFile> {
 
   private Long                                   id;
   private Long                                   workflowId;
@@ -109,49 +108,6 @@ public class BackendWorkflowFile extends ModelMapperBase<WorkflowFileEdo, Backen
     if (fileVersions != null) {
       this.fileVersions.addAll(fileVersions);
     }
-  }
-
-  @Override
-  public WorkflowFileEdo toEdo() {
-    final WorkflowFileEdo edo = new WorkflowFileEdo();
-    edo.setTitle(this.title);
-    edo.setExtention(this.extention);
-    edo.setComments(this.comments);
-    edo.setStatus(this.status);
-    edo.setId(this.id);
-    edo.setCreatedBy(this.createdBy);
-    edo.setActiveFilePath(this.activeFilePath);
-    edo.setActiveFileVersion(this.activeFileVersion);
-    edo.setWorkflowId(this.workflowId);
-    edo.setVersion(this.version);
-
-    edo.setFileVersions(ModelMapperBase.toEdoList(this.fileVersions));
-
-    return edo;
-  }
-
-  @Override
-  public BackendWorkflowFile fromEdo(final WorkflowFileEdo edo) {
-    if (edo == null) {
-      return null;
-    }
-
-    final BackendWorkflowFile model = new BackendWorkflowFile();
-
-    model.setTitle(edo.getTitle());
-    model.setExtention(edo.getExtention());
-    model.setComments(edo.getComments());
-    model.setStatus(edo.getStatus());
-    model.setId(edo.getId());
-    model.setCreatedBy(edo.getCreatedBy());
-    model.setActiveFilePath(edo.getActiveFilePath());
-    model.setActiveFileVersion(edo.getActiveFileVersion());
-    model.setWorkflowId(edo.getWorkflowId());
-    model.setVersion(edo.getVersion());
-
-    model.setFileVersions(new BackendWorkflowFileVersion().fromEdoList(edo.getFileVersions()));
-
-    return model;
   }
 
 }
