@@ -184,6 +184,7 @@ CREATE TABLE `workflow_type_step` (
   `workflow_type_id` int(11) NOT NULL,
   `title` varchar(200) NOT NULL,
   `step_index` smallint(6) NOT NULL DEFAULT 0,
+  `view_name` varchar(150) NOT NULL DEFAULT '-',
   `commecnts` text,
   `status` smallint(6) NOT NULL DEFAULT '1',
   `version` int(11) NOT NULL DEFAULT '1',
