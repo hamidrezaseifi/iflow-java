@@ -1,5 +1,6 @@
 package com.pth.iflow.common.edo.models.xml;
 
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -24,6 +25,10 @@ public class WorkflowTypeStepEdo {
 
   @XmlElement(name = "StepIndex", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer stepIndex;
+
+  @NotNull
+  @XmlElement(name = "ViewName", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String  viewName;
 
   @XmlElement(name = "Comments", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String  comments;
@@ -70,6 +75,14 @@ public class WorkflowTypeStepEdo {
    */
   public void setStepIndex(final Integer stepIndex) {
     this.stepIndex = stepIndex;
+  }
+
+  public String getViewName() {
+    return this.viewName;
+  }
+
+  public void setViewName(final String viewName) {
+    this.viewName = viewName;
   }
 
   public String getComments() {

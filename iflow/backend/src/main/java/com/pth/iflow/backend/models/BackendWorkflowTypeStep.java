@@ -9,6 +9,7 @@ public class BackendWorkflowTypeStep extends ModelMapperBase<WorkflowTypeStepEdo
   private Long    workflowTypeId;
   private String  title;
   private Integer stepIndex;
+  private String  viewName;
   private String  comments;
   private Integer status;
   private Integer version;
@@ -51,6 +52,14 @@ public class BackendWorkflowTypeStep extends ModelMapperBase<WorkflowTypeStepEdo
     this.stepIndex = stepIndex;
   }
 
+  public String getViewName() {
+    return this.viewName;
+  }
+
+  public void setViewName(final String viewName) {
+    this.viewName = viewName;
+  }
+
   public String getComments() {
     return this.comments;
   }
@@ -91,6 +100,7 @@ public class BackendWorkflowTypeStep extends ModelMapperBase<WorkflowTypeStepEdo
   public WorkflowTypeStepEdo toEdo() {
     final WorkflowTypeStepEdo edo = new WorkflowTypeStepEdo();
     edo.setStepIndex(this.stepIndex);
+    edo.setViewName(this.viewName);
     edo.setTitle(this.title);
     edo.setComments(this.comments);
     edo.setStatus(this.status);
@@ -109,6 +119,7 @@ public class BackendWorkflowTypeStep extends ModelMapperBase<WorkflowTypeStepEdo
     final BackendWorkflowTypeStep model = new BackendWorkflowTypeStep();
 
     model.setStepIndex(edo.getStepIndex());
+    model.setViewName(edo.getViewName());
     model.setTitle(edo.getTitle());
     model.setComments(edo.getComments());
     model.setStatus(edo.getStatus());

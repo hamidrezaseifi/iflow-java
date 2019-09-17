@@ -14,6 +14,8 @@ public enum EIFlowErrorType implements IValueList {
   UNKNOWN_WORKFLOW_STEP(61L),
   INVALID_WORKFLOW_STEP(62L),
   UNKNOWN_WORKFLOW_ASSIGN(63L),
+  UNKNOWN_WORKFLOW_SAVE_STRATEGY(90L),
+  UNKNOWN_WORKFLOW_CREATE_STRATEGY(91L),
 
   UNKNOWN(1000L);
 
@@ -25,7 +27,7 @@ public enum EIFlowErrorType implements IValueList {
 
   @Override
   public Long getValue() {
-    return id;
+    return this.id;
   }
 
 }
