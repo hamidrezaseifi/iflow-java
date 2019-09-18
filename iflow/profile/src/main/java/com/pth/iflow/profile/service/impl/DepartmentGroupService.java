@@ -15,7 +15,7 @@ import com.pth.iflow.profile.config.ProfileConfiguration;
 import com.pth.iflow.profile.exceptions.ProfileCustomizedException;
 import com.pth.iflow.profile.model.DepartmentGroup;
 import com.pth.iflow.profile.model.User;
-import com.pth.iflow.profile.model.mapper.ModelEdoMapper;
+import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
 import com.pth.iflow.profile.service.IDepartmentGroupService;
 import com.pth.iflow.profile.service.IProfileRestTemplateCall;
 
@@ -45,7 +45,7 @@ public class DepartmentGroupService implements IDepartmentGroupService {
                                                                  true,
                                                                  id);
 
-    return ModelEdoMapper.fromEdo(edo);
+    return ProfileModelEdoMapper.fromEdo(edo);
   }
 
   @Override
@@ -60,7 +60,7 @@ public class DepartmentGroupService implements IDepartmentGroupService {
                                                           true,
                                                           id);
 
-    return ModelEdoMapper.fromUserEdoList(edo.getUsers());
+    return ProfileModelEdoMapper.fromUserEdoList(edo.getUsers());
   }
 
 }

@@ -11,7 +11,7 @@ import com.pth.iflow.backend.exceptions.BackendCustomizedException;
 import com.pth.iflow.backend.models.BackendWorkflow;
 import com.pth.iflow.backend.models.BackendWorkflowCreateRequest;
 import com.pth.iflow.backend.models.BackendWorkflowType;
-import com.pth.iflow.backend.models.mapper.ModelEdoMapper;
+import com.pth.iflow.backend.models.mapper.BackendModelEdoMapper;
 import com.pth.iflow.backend.models.ui.BackendSessionUserInfo;
 import com.pth.iflow.backend.services.IRestTemplateCall;
 import com.pth.iflow.backend.services.IWorkflowAccess;
@@ -49,7 +49,7 @@ public class WorkflowAccess implements IWorkflowAccess {
                                                                   this.sessionUserInfo.getToken(),
                                                                   true);
 
-    return ModelEdoMapper.fromEdo(responseEdo);
+    return BackendModelEdoMapper.fromEdo(responseEdo);
   }
 
   @Override
@@ -58,12 +58,12 @@ public class WorkflowAccess implements IWorkflowAccess {
 
     final WorkflowListEdo responseListEdo = this.restTemplate.callRestPost(this.moduleAccessConfig.getCreateWorkflowUri(),
                                                                            EModule.PROFILE,
-                                                                           ModelEdoMapper.toEdo(createRequest),
+                                                                           BackendModelEdoMapper.toEdo(createRequest),
                                                                            WorkflowListEdo.class,
                                                                            this.sessionUserInfo.getToken(),
                                                                            true);
 
-    return ModelEdoMapper.fromWorkflowEdoList(responseListEdo.getWorkflows());
+    return BackendModelEdoMapper.fromWorkflowEdoList(responseListEdo.getWorkflows());
   }
 
   @Override
@@ -89,7 +89,7 @@ public class WorkflowAccess implements IWorkflowAccess {
                                                                           this.sessionUserInfo.getToken(),
                                                                           true);
 
-    return ModelEdoMapper.fromWorkflowTypeEdoList(responseEdo.getWorkflowTypes());
+    return BackendModelEdoMapper.fromWorkflowTypeEdoList(responseEdo.getWorkflowTypes());
   }
 
 }

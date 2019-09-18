@@ -33,7 +33,7 @@ import com.pth.iflow.profile.model.Department;
 import com.pth.iflow.profile.model.ProfileResponse;
 import com.pth.iflow.profile.model.User;
 import com.pth.iflow.profile.model.UserGroup;
-import com.pth.iflow.profile.model.mapper.ModelEdoMapper;
+import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
 import com.pth.iflow.profile.service.ITokenUserDataManager;
 
 @RunWith(SpringRunner.class)
@@ -73,7 +73,7 @@ public class CompanyControllerTest extends TestDataProducer {
   @Test
   public void testReadById() throws Exception {
 
-    final CompanyEdo companyEdo = ModelEdoMapper.toEdo(this.company);
+    final CompanyEdo companyEdo = ProfileModelEdoMapper.toEdo(this.company);
 
     final ProfileResponse profile = new ProfileResponse(this.user, this.companyProfile, "sessionid");
     when(this.tokenUserDataManager.getProfileByToken(any(String.class))).thenReturn(profile);
@@ -94,8 +94,8 @@ public class CompanyControllerTest extends TestDataProducer {
   public void testReadUserList() throws Exception {
 
     final List<User> userList = getTestUserList();
-    // final List<UserEdo> userEdoList = ModelMapperBase.toEdoList(userList);
-    final UserListEdo userEdoList = new UserListEdo(ModelEdoMapper.toUserEdoList(userList));
+    // final List<UserEdo> userEdoList = DataModelBase.toEdoList(userList);
+    final UserListEdo userEdoList = new UserListEdo(ProfileModelEdoMapper.toUserEdoList(userList));
 
     when(this.tokenUserDataManager.getUserListByToken(any(String.class), any(Long.class))).thenReturn(userList);
 
@@ -115,7 +115,7 @@ public class CompanyControllerTest extends TestDataProducer {
   public void testReadUserGroupList() throws Exception {
 
     final List<UserGroup> list = getTestUserGroupList();
-    final UserGroupListEdo edoList = new UserGroupListEdo(ModelEdoMapper.toUserGroupEdoList(list));
+    final UserGroupListEdo edoList = new UserGroupListEdo(ProfileModelEdoMapper.toUserGroupEdoList(list));
 
     when(this.tokenUserDataManager.getUserGroupListByToken(any(String.class), any(Long.class))).thenReturn(list);
 
@@ -135,7 +135,7 @@ public class CompanyControllerTest extends TestDataProducer {
   public void testReadDepartmentList() throws Exception {
 
     final List<Department> list = getTestDepartmentList();
-    final DepartmentListEdo edoList = new DepartmentListEdo(ModelEdoMapper.toDepartmentEdoList(list));
+    final DepartmentListEdo edoList = new DepartmentListEdo(ProfileModelEdoMapper.toDepartmentEdoList(list));
 
     when(this.tokenUserDataManager.getDepartmentListByToken(any(String.class), any(Long.class))).thenReturn(list);
 

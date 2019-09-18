@@ -25,7 +25,7 @@ import com.pth.iflow.profile.exceptions.ProfileCustomizedException;
 import com.pth.iflow.profile.model.Department;
 import com.pth.iflow.profile.model.DepartmentGroup;
 import com.pth.iflow.profile.model.User;
-import com.pth.iflow.profile.model.mapper.ModelEdoMapper;
+import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
 import com.pth.iflow.profile.service.ITokenUserDataManager;
 
 @RestController
@@ -46,7 +46,7 @@ public class DepartmentController {
 
     final Department model = this.tokenUserDataManager.getDepartmentById(headerTokenId, id);
 
-    return ControllerHelper.createResponseEntity(request, ModelEdoMapper.toEdo(model), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, ProfileModelEdoMapper.toEdo(model), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -56,7 +56,7 @@ public class DepartmentController {
 
     final List<DepartmentGroup> list = this.tokenUserDataManager.getDepartmentGroupListByDepartmentId(headerTokenId, id);
 
-    final DepartmentGroupListEdo edo = new DepartmentGroupListEdo(ModelEdoMapper.toDepartmentGroupEdoList(list));
+    final DepartmentGroupListEdo edo = new DepartmentGroupListEdo(ProfileModelEdoMapper.toDepartmentGroupEdoList(list));
 
     return ControllerHelper.createResponseEntity(request, edo, HttpStatus.OK);
   }
@@ -68,7 +68,7 @@ public class DepartmentController {
 
     final List<User> list = this.tokenUserDataManager.getAllUserListByDepartmentId(headerTokenId, id);
 
-    final UserListEdo edo = new UserListEdo(ModelEdoMapper.toUserEdoList(list));
+    final UserListEdo edo = new UserListEdo(ProfileModelEdoMapper.toUserEdoList(list));
 
     return ControllerHelper.createResponseEntity(request, edo, HttpStatus.OK);
   }

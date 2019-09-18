@@ -3,10 +3,10 @@ package com.pth.iflow.gui.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
+import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.edo.models.xml.CompanyProfileEdo;
 
-public class GuiCompanyProfile extends ModelMapperBase<CompanyProfileEdo, GuiCompanyProfile> {
+public class GuiCompanyProfile extends DataModelBase<CompanyProfileEdo, GuiCompanyProfile> {
 
   private GuiCompany company;
 
@@ -66,8 +66,8 @@ public class GuiCompanyProfile extends ModelMapperBase<CompanyProfileEdo, GuiCom
   @Override
   public CompanyProfileEdo toEdo() {
     final CompanyProfileEdo edo = new CompanyProfileEdo(this.company.toEdo(),
-                                                        ModelMapperBase.toEdoList(this.departments),
-                                                        ModelMapperBase.toEdoList(this.userGroups));
+                                                        DataModelBase.toEdoList(this.departments),
+                                                        DataModelBase.toEdoList(this.userGroups));
     return edo;
   }
 

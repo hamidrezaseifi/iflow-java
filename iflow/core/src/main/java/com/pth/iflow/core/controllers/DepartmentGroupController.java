@@ -19,7 +19,7 @@ import com.pth.iflow.common.edo.models.xml.UserListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.core.model.DepartmentGroup;
 import com.pth.iflow.core.model.User;
-import com.pth.iflow.core.model.mapper.ModelEdoMapper;
+import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
 import com.pth.iflow.core.service.IDepartmentGroupService;
 
 @RestController
@@ -38,7 +38,7 @@ public class DepartmentGroupController {
 
     final DepartmentGroup model = this.departmentGroupService.getById(id);
 
-    return ControllerHelper.createResponseEntity(request, ModelEdoMapper.toEdo(model), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, CoreModelEdoMapper.toEdo(model), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -47,7 +47,7 @@ public class DepartmentGroupController {
 
     final List<DepartmentGroup> modelList = this.departmentGroupService.getListByIdList(idList);
 
-    return ControllerHelper.createResponseEntity(request, ModelEdoMapper.toDepartmentGroupEdoList(modelList), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, CoreModelEdoMapper.toDepartmentGroupEdoList(modelList), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -57,7 +57,7 @@ public class DepartmentGroupController {
     final List<DepartmentGroup> modelList = this.departmentGroupService.getListByDepartmentId(id);
 
     return ControllerHelper.createResponseEntity(request,
-                                                 new DepartmentGroupListEdo(ModelEdoMapper.toDepartmentGroupEdoList(modelList)),
+                                                 new DepartmentGroupListEdo(CoreModelEdoMapper.toDepartmentGroupEdoList(modelList)),
                                                  HttpStatus.OK);
   }
 
@@ -68,7 +68,7 @@ public class DepartmentGroupController {
     final List<User> modelList = this.departmentGroupService.getAllUserListByDepartmentGroupId(id);
 
     return ControllerHelper.createResponseEntity(request,
-                                                 new UserListEdo(ModelEdoMapper.toUserEdoList(modelList)),
+                                                 new UserListEdo(CoreModelEdoMapper.toUserEdoList(modelList)),
                                                  HttpStatus.OK);
   }
 

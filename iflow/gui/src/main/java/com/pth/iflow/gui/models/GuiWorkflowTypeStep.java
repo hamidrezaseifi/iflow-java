@@ -1,9 +1,9 @@
 package com.pth.iflow.gui.models;
 
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
+import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.edo.models.xml.WorkflowTypeStepEdo;
 
-public class GuiWorkflowTypeStep extends ModelMapperBase<WorkflowTypeStepEdo, GuiWorkflowTypeStep> {
+public class GuiWorkflowTypeStep extends DataModelBase<WorkflowTypeStepEdo, GuiWorkflowTypeStep> {
 
   private Long    id;
   private Long    workflowTypeId;

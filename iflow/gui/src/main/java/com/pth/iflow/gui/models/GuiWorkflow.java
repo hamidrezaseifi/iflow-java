@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
+import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.edo.models.xml.WorkflowEdo;
 import com.pth.iflow.common.edo.models.xml.WorkflowListEdo;
 import com.pth.iflow.common.enums.EWorkflowStatus;
@@ -342,8 +342,8 @@ public class GuiWorkflow {
     edo.setNextAssign(this.nextAssign);
     edo.setAssignTo(this.assignTo);
 
-    edo.setFiles(ModelMapperBase.toEdoList(this.files));
-    edo.setActions(ModelMapperBase.toEdoList(this.actions));
+    edo.setFiles(DataModelBase.toEdoList(this.files));
+    edo.setActions(DataModelBase.toEdoList(this.actions));
 
     return edo;
   }

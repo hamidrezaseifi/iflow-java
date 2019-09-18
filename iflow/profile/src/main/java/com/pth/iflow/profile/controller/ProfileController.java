@@ -27,7 +27,7 @@ import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
 import com.pth.iflow.profile.exceptions.ProfileCustomizedException;
 import com.pth.iflow.profile.model.ProfileResponse;
-import com.pth.iflow.profile.model.mapper.ModelEdoMapper;
+import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
 import com.pth.iflow.profile.service.ITokenUserDataManager;
 
 @RestController
@@ -53,7 +53,7 @@ public class ProfileController {
 
     final ProfileResponse profile = this.tokenUserDataManager.getProfileByTokenEmail(requestEdo.getEmail(), requestEdo.getToken());
 
-    return ControllerHelper.createResponseEntity(request, ModelEdoMapper.toEdo(profile), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, ProfileModelEdoMapper.toEdo(profile), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -68,7 +68,7 @@ public class ProfileController {
 
     final ProfileResponse profile = this.tokenUserDataManager.getProfileByToken(requestEdo.getToken());
 
-    return ControllerHelper.createResponseEntity(request, ModelEdoMapper.toEdo(profile), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, ProfileModelEdoMapper.toEdo(profile), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -83,7 +83,7 @@ public class ProfileController {
 
     final ProfileResponse profile = this.tokenUserDataManager.getProfileByToken(requestToken);
 
-    return ControllerHelper.createResponseEntity(request, ModelEdoMapper.toEdo(profile), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, ProfileModelEdoMapper.toEdo(profile), HttpStatus.OK);
   }
 
 }

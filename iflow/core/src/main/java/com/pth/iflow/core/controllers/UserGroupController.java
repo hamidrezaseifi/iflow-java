@@ -17,7 +17,7 @@ import com.pth.iflow.common.edo.models.xml.UserGroupEdo;
 import com.pth.iflow.common.edo.models.xml.UserGroupListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.core.model.UserGroup;
-import com.pth.iflow.core.model.mapper.ModelEdoMapper;
+import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
 import com.pth.iflow.core.service.IUserGroupService;
 
 @RestController
@@ -36,7 +36,7 @@ public class UserGroupController {
 
     final UserGroup model = this.userGroupService.getById(groupid);
 
-    return ControllerHelper.createResponseEntity(request, ModelEdoMapper.toEdo(model), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, CoreModelEdoMapper.toEdo(model), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -46,7 +46,7 @@ public class UserGroupController {
     final List<UserGroup> modelList = this.userGroupService.getListByIdList(idList);
 
     return ControllerHelper.createResponseEntity(request,
-                                                 new UserGroupListEdo(ModelEdoMapper.toUserGroupEdoList(modelList)),
+                                                 new UserGroupListEdo(CoreModelEdoMapper.toUserGroupEdoList(modelList)),
                                                  HttpStatus.OK);
   }
 
@@ -57,7 +57,7 @@ public class UserGroupController {
     final List<UserGroup> modelList = this.userGroupService.getListByIdCompanyId(id);
 
     return ControllerHelper.createResponseEntity(request,
-                                                 new UserGroupListEdo(ModelEdoMapper.toUserGroupEdoList(modelList)),
+                                                 new UserGroupListEdo(CoreModelEdoMapper.toUserGroupEdoList(modelList)),
                                                  HttpStatus.OK);
   }
 

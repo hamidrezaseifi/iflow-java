@@ -2,29 +2,31 @@ package com.pth.iflow.workflow.models;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
+
+import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.edo.models.xml.WorkflowEdo;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 
-public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
+public class Workflow extends DataModelBase<WorkflowEdo, Workflow> {
 
-  private Long             id;
-  private Long             workflowTypeId;
-  private WorkflowTypeStep currentStep;
-  private Long             currentStepId;
-  private Long             controller;
-  private Long             createdBy;
-  private Long             assignTo;
-  private String           title;
-  private String           comments;
-  private EWorkflowStatus  status;
-  private Integer          version;
-  private Boolean          nextAssign;
-  private String           command;
+  private Long                       id;
+  private Long                       workflowTypeId;
+  private WorkflowTypeStep           currentStep;
+  private Long                       currentStepId;
+  private Long                       controller;
+  private Long                       createdBy;
+  private Long                       assignTo;
+  private String                     title;
+  private String                     comments;
+  private EWorkflowStatus            status;
+  private Integer                    version;
+  private Boolean                    nextAssign;
+  private String                     command;
 
   private final List<WorkflowFile>   files   = new ArrayList<>();
   private final List<WorkflowAction> actions = new ArrayList<>();
 
+  @Override
   public Long getId() {
     return this.id;
   }
@@ -121,10 +123,12 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
     return this.status == EWorkflowStatus.ARCHIVED;
   }
 
+  @Override
   public Integer getVersion() {
     return this.version;
   }
 
+  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
@@ -138,7 +142,7 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
   }
 
   public String getCommand() {
-    return command;
+    return this.command;
   }
 
   public void setCommand(final String command) {
@@ -195,6 +199,7 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
     return this.isNew() && (this.getStatus() == EWorkflowStatus.INITIALIZE);
   }
 
+  @Override
   public boolean isNew() {
     return (this.getId() == null) || (this.getId() <= 0);
   }
@@ -211,54 +216,6 @@ public class Workflow extends ModelMapperBase<WorkflowEdo, Workflow> {
       }
     }
     return null;
-  }
-
-  @Override
-  public WorkflowEdo toEdo() {
-    final WorkflowEdo edo = new WorkflowEdo();
-    edo.setTitle(this.title);
-    edo.setComments(this.comments);
-    edo.setStatus(this.getStatusInt());
-    edo.setId(this.id);
-    edo.setController(this.controller);
-    edo.setCurrentStep(this.currentStep.toEdo());
-    edo.setCurrentStepId(this.currentStepId);
-    edo.setCreatedBy(this.createdBy);
-    edo.setWorkflowTypeId(this.workflowTypeId);
-    edo.setVersion(this.version);
-    edo.setNextAssign(this.nextAssign);
-    edo.setAssignTo(this.assignTo);
-
-    edo.setFiles(ModelMapperBase.toEdoList(this.files));
-    edo.setActions(ModelMapperBase.toEdoList(this.actions));
-
-    return edo;
-  }
-
-  @Override
-  public Workflow fromEdo(final WorkflowEdo edo) {
-    if (edo == null) {
-      return null;
-    }
-    final Workflow model = new Workflow();
-
-    model.setTitle(edo.getTitle());
-    model.setComments(edo.getComments());
-    model.setStatusInt(edo.getStatus());
-    model.setId(edo.getId());
-    model.setController(edo.getController());
-    model.setCurrentStep(new WorkflowTypeStep().fromEdo(edo.getCurrentStep()));
-    model.setCurrentStepId(edo.getCurrentStepId());
-    model.setCreatedBy(edo.getCreatedBy());
-    model.setWorkflowTypeId(edo.getWorkflowTypeId());
-    model.setVersion(edo.getVersion());
-    model.setNextAssign(edo.getNextAssign());
-    model.setAssignTo(edo.getAssignTo());
-
-    model.setFiles(new WorkflowFile().fromEdoList(edo.getFiles()));
-    model.setActions(new WorkflowAction().fromEdoList(edo.getActions()));
-
-    return model;
   }
 
 }

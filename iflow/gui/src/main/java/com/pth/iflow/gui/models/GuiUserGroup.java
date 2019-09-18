@@ -1,9 +1,9 @@
 package com.pth.iflow.gui.models;
 
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
+import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.edo.models.xml.UserGroupEdo;
 
-public class GuiUserGroup extends ModelMapperBase<UserGroupEdo, GuiUserGroup> {
+public class GuiUserGroup extends DataModelBase<UserGroupEdo, GuiUserGroup> {
 
   private Long id;
 

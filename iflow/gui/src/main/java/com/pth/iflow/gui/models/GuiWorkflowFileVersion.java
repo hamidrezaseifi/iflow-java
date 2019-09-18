@@ -1,9 +1,9 @@
 package com.pth.iflow.gui.models;
 
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
+import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.edo.models.xml.WorkflowFileVersionEdo;
 
-public class GuiWorkflowFileVersion extends ModelMapperBase<WorkflowFileVersionEdo, GuiWorkflowFileVersion> {
+public class GuiWorkflowFileVersion extends DataModelBase<WorkflowFileVersionEdo, GuiWorkflowFileVersion> {
 
   private Long    id;
   private Long    workflowFileId;

@@ -23,7 +23,7 @@ import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
 import com.pth.iflow.profile.exceptions.ProfileCustomizedException;
 import com.pth.iflow.profile.model.DepartmentGroup;
 import com.pth.iflow.profile.model.User;
-import com.pth.iflow.profile.model.mapper.ModelEdoMapper;
+import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
 import com.pth.iflow.profile.service.ITokenUserDataManager;
 
 @RestController
@@ -44,7 +44,7 @@ public class DepartmentGroupController {
 
     final DepartmentGroup model = this.tokenUserDataManager.getDepartmentGroupById(headerTokenId, id);
 
-    return ControllerHelper.createResponseEntity(request, ModelEdoMapper.toEdo(model), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, ProfileModelEdoMapper.toEdo(model), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -54,7 +54,7 @@ public class DepartmentGroupController {
 
     final List<User> list = this.tokenUserDataManager.getAllUserListByDepartmentGroupId(headerTokenId, id);
 
-    final UserListEdo edo = new UserListEdo(ModelEdoMapper.toUserEdoList(list));
+    final UserListEdo edo = new UserListEdo(ProfileModelEdoMapper.toUserEdoList(list));
 
     return ControllerHelper.createResponseEntity(request, edo, HttpStatus.OK);
   }

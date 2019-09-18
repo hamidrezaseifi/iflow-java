@@ -35,7 +35,7 @@ import com.pth.iflow.core.model.Workflow;
 import com.pth.iflow.core.model.WorkflowAction;
 import com.pth.iflow.core.model.WorkflowFile;
 import com.pth.iflow.core.model.WorkflowSearchFilter;
-import com.pth.iflow.core.model.mapper.ModelEdoMapper;
+import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
 import com.pth.iflow.core.service.IWorkflowActionService;
 import com.pth.iflow.core.service.IWorkflowFileService;
 import com.pth.iflow.core.service.IWorkflowService;
@@ -77,7 +77,7 @@ public class WorkflowControllerTest extends TestDataProducer {
 
     when(this.workflowService.getById(any(Long.class))).thenReturn(model);
 
-    final WorkflowEdo modelEdo = ModelEdoMapper.toEdo(model);
+    final WorkflowEdo modelEdo = CoreModelEdoMapper.toEdo(model);
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelEdo);
 
     // System.out.println("listAsXmlString: \n" + listAsXmlString);
@@ -94,7 +94,7 @@ public class WorkflowControllerTest extends TestDataProducer {
   @Test
   public void testReadWorkflowAction() throws Exception {
     final WorkflowAction model = this.getTestWorkflowAction(1L, 1L);
-    final WorkflowActionEdo modelEdo = ModelEdoMapper.toEdo(model);
+    final WorkflowActionEdo modelEdo = CoreModelEdoMapper.toEdo(model);
 
     when(this.workflowActionService.getById(any(Long.class))).thenReturn(model);
 
@@ -114,7 +114,7 @@ public class WorkflowControllerTest extends TestDataProducer {
   @Test
   public void testReadWorkflowActionListByWorkflow() throws Exception {
     final List<WorkflowAction> modelList = this.getTestWorkflowActionList(1L);
-    final WorkflowActionListEdo modelListEdo = new WorkflowActionListEdo(ModelEdoMapper.toWorkflowActionEdoList(modelList));
+    final WorkflowActionListEdo modelListEdo = new WorkflowActionListEdo(CoreModelEdoMapper.toWorkflowActionEdoList(modelList));
 
     when(this.workflowActionService.getListByIdWorkflowId(any(Long.class))).thenReturn(modelList);
 
@@ -134,7 +134,7 @@ public class WorkflowControllerTest extends TestDataProducer {
   @Test
   public void testReadWorkflowFile() throws Exception {
     final WorkflowFile model = this.getTestWorkflowFile(1L, 1L);
-    final WorkflowFileEdo modelEdo = ModelEdoMapper.toEdo(model);
+    final WorkflowFileEdo modelEdo = CoreModelEdoMapper.toEdo(model);
 
     when(this.workflowFileService.getById(any(Long.class))).thenReturn(model);
 
@@ -154,7 +154,7 @@ public class WorkflowControllerTest extends TestDataProducer {
   @Test
   public void testReadWorkflowFileListbyWorkflow() throws Exception {
     final List<WorkflowFile> modelList = this.getTestWorkflowFileList(1L);
-    final WorkflowFileListEdo modelListEdo = new WorkflowFileListEdo(ModelEdoMapper.toWorkflowFileEdoList(modelList));
+    final WorkflowFileListEdo modelListEdo = new WorkflowFileListEdo(CoreModelEdoMapper.toWorkflowFileEdoList(modelList));
 
     when(this.workflowFileService.getListByIdWorkflowId(any(Long.class))).thenReturn(modelList);
 
@@ -176,7 +176,7 @@ public class WorkflowControllerTest extends TestDataProducer {
     final List<Long> list = this.getTestWorkflowIdList();
 
     final List<Workflow> modelList = getTestWorkflowList();
-    final WorkflowListEdo modelListEdo = new WorkflowListEdo(ModelEdoMapper.toWorkflowEdoList(modelList));
+    final WorkflowListEdo modelListEdo = new WorkflowListEdo(CoreModelEdoMapper.toWorkflowEdoList(modelList));
 
     when(this.workflowService.getListByIdList(any(List.class))).thenReturn(modelList);
 
@@ -200,7 +200,7 @@ public class WorkflowControllerTest extends TestDataProducer {
   public void testReadWorkflowListByType() throws Exception {
 
     final List<Workflow> modelList = getTestWorkflowList();
-    final WorkflowListEdo modelListEdo = new WorkflowListEdo(ModelEdoMapper.toWorkflowEdoList(modelList));
+    final WorkflowListEdo modelListEdo = new WorkflowListEdo(CoreModelEdoMapper.toWorkflowEdoList(modelList));
 
     when(this.workflowService.getListByTypeId(any(Long.class))).thenReturn(modelList);
 
@@ -225,7 +225,7 @@ public class WorkflowControllerTest extends TestDataProducer {
   @Test
   public void testSaveWorkflow() throws Exception {
     final Workflow model = this.getTestWorkflow(1L);
-    final WorkflowEdo modelEdo = ModelEdoMapper.toEdo(model);
+    final WorkflowEdo modelEdo = CoreModelEdoMapper.toEdo(model);
 
     when(this.workflowService.save(any(Workflow.class))).thenReturn(model);
 
@@ -246,7 +246,7 @@ public class WorkflowControllerTest extends TestDataProducer {
   @Test
   public void testSaveWorkflowAction() throws Exception {
     final WorkflowAction model = this.getTestWorkflowAction(1L, 1L);
-    final WorkflowActionEdo modelEdo = ModelEdoMapper.toEdo(model);
+    final WorkflowActionEdo modelEdo = CoreModelEdoMapper.toEdo(model);
 
     when(this.workflowActionService.save(any(WorkflowAction.class))).thenReturn(model);
 
@@ -268,7 +268,7 @@ public class WorkflowControllerTest extends TestDataProducer {
   @Test
   public void testSaveWorkflowFile() throws Exception {
     final WorkflowFile model = this.getTestWorkflowFile(1L, 1L);
-    final WorkflowFileEdo modelEdo = ModelEdoMapper.toEdo(model);
+    final WorkflowFileEdo modelEdo = CoreModelEdoMapper.toEdo(model);
 
     when(this.workflowFileService.save(any(WorkflowFile.class))).thenReturn(model);
 
@@ -290,10 +290,10 @@ public class WorkflowControllerTest extends TestDataProducer {
   @Test
   public void testSearchWorkflow() throws Exception {
     final WorkflowSearchFilter model = this.getTestWorkflowSearchFilter();
-    final WorkflowSearchFilterEdo modelEdo = ModelEdoMapper.toEdo(model);
+    final WorkflowSearchFilterEdo modelEdo = CoreModelEdoMapper.toEdo(model);
 
     final List<Workflow> modelList = getTestWorkflowList();
-    final WorkflowListEdo modelListEdo = new WorkflowListEdo(ModelEdoMapper.toWorkflowEdoList(modelList));
+    final WorkflowListEdo modelListEdo = new WorkflowListEdo(CoreModelEdoMapper.toWorkflowEdoList(modelList));
 
     when(this.workflowService.search(any(WorkflowSearchFilter.class))).thenReturn(modelList);
 

@@ -31,7 +31,7 @@ import com.pth.iflow.profile.model.Department;
 import com.pth.iflow.profile.model.User;
 import com.pth.iflow.profile.model.UserAuthenticationSession;
 import com.pth.iflow.profile.model.UserGroup;
-import com.pth.iflow.profile.model.mapper.ModelEdoMapper;
+import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
 import com.pth.iflow.profile.service.ICompanyService;
 import com.pth.iflow.profile.service.IDepartmentService;
 import com.pth.iflow.profile.service.ISessionManager;
@@ -101,8 +101,8 @@ public class ProfileControllerTest extends TestDataProducer {
                                                                                          this.authenticatedSession.getToken());
 
     final ProfileResponseEdo responseEdo = getTestProfileResponseEdo(this.authenticatedSession.getSessionid(),
-                                                                     ModelEdoMapper.toEdo(this.user),
-                                                                     ModelEdoMapper.toEdo(this.company));
+                                                                     ProfileModelEdoMapper.toEdo(this.user),
+                                                                     ProfileModelEdoMapper.toEdo(this.company));
 
     final String modelAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(profReq);
     final String responseAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(responseEdo);
@@ -128,8 +128,8 @@ public class ProfileControllerTest extends TestDataProducer {
     final TokenProfileRequestEdo tokenInoRequest = getTokenProfileRequestEdo(this.authenticatedSession.getToken());
 
     final ProfileResponseEdo responseEdo = getTestProfileResponseEdo(this.authenticatedSession.getSessionid(),
-                                                                     ModelEdoMapper.toEdo(this.user),
-                                                                     ModelEdoMapper.toEdo(this.company));
+                                                                     ProfileModelEdoMapper.toEdo(this.user),
+                                                                     ProfileModelEdoMapper.toEdo(this.company));
 
     final String modelAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(tokenInoRequest);
     final String responseAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(responseEdo);

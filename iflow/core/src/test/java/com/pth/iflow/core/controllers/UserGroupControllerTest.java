@@ -27,7 +27,7 @@ import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.XmlRestConfig;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.UserGroup;
-import com.pth.iflow.core.model.mapper.ModelEdoMapper;
+import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
 import com.pth.iflow.core.service.IUserGroupService;
 
 @RunWith(SpringRunner.class)
@@ -61,7 +61,7 @@ public class UserGroupControllerTest extends TestDataProducer {
     final UserGroup model = this.getTestUserGroup();
     when(this.userGroupService.getById(any(Long.class))).thenReturn(model);
 
-    final UserGroupEdo modelEdo = ModelEdoMapper.toEdo(model);
+    final UserGroupEdo modelEdo = CoreModelEdoMapper.toEdo(model);
 
     final String modelAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelEdo);
 
@@ -83,7 +83,7 @@ public class UserGroupControllerTest extends TestDataProducer {
     final List<UserGroup> list = this.getTestUserGroupList();
     when(this.userGroupService.getListByIdList(any(List.class))).thenReturn(list);
 
-    final UserGroupListEdo edoList = new UserGroupListEdo(ModelEdoMapper.toUserGroupEdoList(list));
+    final UserGroupListEdo edoList = new UserGroupListEdo(CoreModelEdoMapper.toUserGroupEdoList(list));
 
     final String contentAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(idList);
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
@@ -107,7 +107,7 @@ public class UserGroupControllerTest extends TestDataProducer {
     final List<UserGroup> list = this.getTestUserGroupList();
     when(this.userGroupService.getListByIdCompanyId(any(Long.class))).thenReturn(list);
 
-    final UserGroupListEdo edoList = new UserGroupListEdo(ModelEdoMapper.toUserGroupEdoList(list));
+    final UserGroupListEdo edoList = new UserGroupListEdo(CoreModelEdoMapper.toUserGroupEdoList(list));
 
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
 

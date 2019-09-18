@@ -29,7 +29,7 @@ import com.pth.iflow.common.rest.XmlRestConfig;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.Department;
 import com.pth.iflow.core.model.User;
-import com.pth.iflow.core.model.mapper.ModelEdoMapper;
+import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
 import com.pth.iflow.core.service.IDepartmentService;
 
 @RunWith(SpringRunner.class)
@@ -63,7 +63,7 @@ public class DepartmentControllerTest extends TestDataProducer {
     final Department model = this.getTestDepartment();
     when(this.departmentService.getById(any(Long.class))).thenReturn(model);
 
-    final DepartmentEdo modelEdo = ModelEdoMapper.toEdo(model);
+    final DepartmentEdo modelEdo = CoreModelEdoMapper.toEdo(model);
 
     final String modelAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelEdo);
 
@@ -85,7 +85,7 @@ public class DepartmentControllerTest extends TestDataProducer {
     final List<Department> list = this.getTestDepartmentList();
     when(this.departmentService.getListByIdList(any(List.class))).thenReturn(list);
 
-    final DepartmentListEdo edoList = new DepartmentListEdo(ModelEdoMapper.toDepartmentEdoList(list));
+    final DepartmentListEdo edoList = new DepartmentListEdo(CoreModelEdoMapper.toDepartmentEdoList(list));
 
     final String contentAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(idList);
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
@@ -109,7 +109,7 @@ public class DepartmentControllerTest extends TestDataProducer {
     final List<Department> list = this.getTestDepartmentList();
     when(this.departmentService.getListByIdCompanyId(any(Long.class))).thenReturn(list);
 
-    final DepartmentListEdo edoList = new DepartmentListEdo(ModelEdoMapper.toDepartmentEdoList(list));
+    final DepartmentListEdo edoList = new DepartmentListEdo(CoreModelEdoMapper.toDepartmentEdoList(list));
 
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
 
@@ -130,7 +130,7 @@ public class DepartmentControllerTest extends TestDataProducer {
     final List<User> list = this.getTestUserList();
     when(this.departmentService.getAllUserListByDepartmentId(any(Long.class))).thenReturn(list);
 
-    final UserListEdo edoList = new UserListEdo(ModelEdoMapper.toUserEdoList(list));
+    final UserListEdo edoList = new UserListEdo(CoreModelEdoMapper.toUserEdoList(list));
 
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
 

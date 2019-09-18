@@ -29,7 +29,7 @@ import com.pth.iflow.profile.TestDataProducer;
 import com.pth.iflow.profile.model.Department;
 import com.pth.iflow.profile.model.DepartmentGroup;
 import com.pth.iflow.profile.model.User;
-import com.pth.iflow.profile.model.mapper.ModelEdoMapper;
+import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
 import com.pth.iflow.profile.service.ITokenUserDataManager;
 
 @RunWith(SpringRunner.class)
@@ -61,7 +61,7 @@ public class DepartmentControllerTest extends TestDataProducer {
   public void testReadById() throws Exception {
 
     final Department department = this.getTestDepartment();
-    final DepartmentEdo departmentEdo = ModelEdoMapper.toEdo(department);
+    final DepartmentEdo departmentEdo = ProfileModelEdoMapper.toEdo(department);
 
     when(this.tokenUserDataManager.getDepartmentById(any(String.class), any(Long.class))).thenReturn(department);
 
@@ -82,7 +82,7 @@ public class DepartmentControllerTest extends TestDataProducer {
 
     final List<DepartmentGroup> departmentGroupList = this.getTestDepartmentGroupList();
     final DepartmentGroupListEdo departmentGroupListEdo =
-                                                        new DepartmentGroupListEdo(ModelEdoMapper.toDepartmentGroupEdoList(departmentGroupList));
+                                                        new DepartmentGroupListEdo(ProfileModelEdoMapper.toDepartmentGroupEdoList(departmentGroupList));
 
     when(this.tokenUserDataManager.getDepartmentGroupListByDepartmentId(any(String.class), any(Long.class)))
                                                                                                             .thenReturn(departmentGroupList);
@@ -103,7 +103,7 @@ public class DepartmentControllerTest extends TestDataProducer {
   public void testReadUserList() throws Exception {
 
     final List<User> userList = this.getTestUserList();
-    final UserListEdo userEdoList = new UserListEdo(ModelEdoMapper.toUserEdoList(userList));
+    final UserListEdo userEdoList = new UserListEdo(ProfileModelEdoMapper.toUserEdoList(userList));
 
     when(this.tokenUserDataManager.getAllUserListByDepartmentId(any(String.class), any(Long.class))).thenReturn(userList);
 

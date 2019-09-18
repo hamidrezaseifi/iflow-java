@@ -1,9 +1,9 @@
 package com.pth.iflow.gui.models;
 
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
+import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.edo.models.xml.CompanyEdo;
 
-public class GuiCompany extends ModelMapperBase<CompanyEdo, GuiCompany> {
+public class GuiCompany extends DataModelBase<CompanyEdo, GuiCompany> {
 
   private Long    id;
   private String  identifyid;

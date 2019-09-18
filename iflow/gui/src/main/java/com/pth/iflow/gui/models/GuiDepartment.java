@@ -3,10 +3,10 @@ package com.pth.iflow.gui.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
+import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.edo.models.xml.DepartmentEdo;
 
-public class GuiDepartment extends ModelMapperBase<DepartmentEdo, GuiDepartment> {
+public class GuiDepartment extends DataModelBase<DepartmentEdo, GuiDepartment> {
 
   private Long                           id;
   private Long                           companyId;
@@ -77,7 +77,7 @@ public class GuiDepartment extends ModelMapperBase<DepartmentEdo, GuiDepartment>
     edo.setStatus(this.status);
     edo.setId(this.id);
     edo.setCompanyId(this.companyId);
-    edo.setDepartmentGroups(ModelMapperBase.toEdoList(this.departmentGroups));
+    edo.setDepartmentGroups(DataModelBase.toEdoList(this.departmentGroups));
     edo.setVersion(this.version);
 
     return edo;

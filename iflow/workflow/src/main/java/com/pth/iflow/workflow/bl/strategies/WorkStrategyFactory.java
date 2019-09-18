@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.iflow.common.exceptions.IFlowCustomeException;
+import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.IWorkflowTypeDataService;
 import com.pth.iflow.workflow.bl.strategies.create.CreateManualAssignWorkflowStrategy;
@@ -47,7 +48,7 @@ public class WorkStrategyFactory implements IWorkStrategyFactory {
    */
   @Override
   public ISaveWorkflowStrategy selectSaveWorkStrategy(final Workflow processingWorkflow, final String token)
-      throws WorkflowCustomizedException, MalformedURLException {
+      throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     logger.debug("selecting save strategy for workflow");
     final WorkflowType workflowType = this.workflowTypeDataService.getById(processingWorkflow.getWorkflowTypeId(), token);
@@ -80,7 +81,7 @@ public class WorkStrategyFactory implements IWorkStrategyFactory {
 
   @Override
   public ICreateWorkflowStrategy selectCreateWorkStrategy(final WorkflowCreateRequest workflowCreateRequest, final String token)
-      throws WorkflowCustomizedException, MalformedURLException {
+      throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     logger.debug("selecting create strategy for workflow create request");
 
     final WorkflowType workflowType = this.workflowTypeDataService.getById(workflowCreateRequest.getWorkflow().getWorkflowTypeId(),

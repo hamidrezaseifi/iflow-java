@@ -30,7 +30,7 @@ import com.pth.iflow.profile.model.Department;
 import com.pth.iflow.profile.model.ProfileResponse;
 import com.pth.iflow.profile.model.User;
 import com.pth.iflow.profile.model.UserGroup;
-import com.pth.iflow.profile.model.mapper.ModelEdoMapper;
+import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
 import com.pth.iflow.profile.service.ITokenUserDataManager;
 
 @RestController
@@ -55,7 +55,7 @@ public class CompanyController {
       throw new ProfileCustomizedException("Invalid Company!", "", EModule.PROFILE.getModuleName(), EIFlowErrorType.INVALID_COMPANY);
     }
 
-    return ControllerHelper.createResponseEntity(request, ModelEdoMapper.toEdo(profile.getCompanyProfile().getCompany()), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, ProfileModelEdoMapper.toEdo(profile.getCompanyProfile().getCompany()), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -65,7 +65,7 @@ public class CompanyController {
 
     final List<User> list = this.tokenUserDataManager.getUserListByToken(headerTokenId, companyid);
 
-    final UserListEdo edo = new UserListEdo(ModelEdoMapper.toUserEdoList(list));
+    final UserListEdo edo = new UserListEdo(ProfileModelEdoMapper.toUserEdoList(list));
 
     return ControllerHelper.createResponseEntity(request, edo, HttpStatus.OK);
   }
@@ -77,7 +77,7 @@ public class CompanyController {
 
     final List<UserGroup> list = this.tokenUserDataManager.getUserGroupListByToken(headerTokenId, companyid);
 
-    final UserGroupListEdo edo = new UserGroupListEdo(ModelEdoMapper.toUserGroupEdoList(list));
+    final UserGroupListEdo edo = new UserGroupListEdo(ProfileModelEdoMapper.toUserGroupEdoList(list));
 
     return ControllerHelper.createResponseEntity(request, edo, HttpStatus.OK);
   }
@@ -89,7 +89,7 @@ public class CompanyController {
 
     final List<Department> list = this.tokenUserDataManager.getDepartmentListByToken(headerTokenId, companyid);
 
-    final DepartmentListEdo edo = new DepartmentListEdo(ModelEdoMapper.toDepartmentEdoList(list));
+    final DepartmentListEdo edo = new DepartmentListEdo(ProfileModelEdoMapper.toDepartmentEdoList(list));
 
     return ControllerHelper.createResponseEntity(request, edo, HttpStatus.OK);
   }
@@ -101,7 +101,7 @@ public class CompanyController {
 
     final ProfileResponse profile = this.tokenUserDataManager.getProfileByToken(headerTokenId);
 
-    return ControllerHelper.createResponseEntity(request, ModelEdoMapper.toEdo(profile.getCompanyProfile()), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, ProfileModelEdoMapper.toEdo(profile.getCompanyProfile()), HttpStatus.OK);
   }
 
 }

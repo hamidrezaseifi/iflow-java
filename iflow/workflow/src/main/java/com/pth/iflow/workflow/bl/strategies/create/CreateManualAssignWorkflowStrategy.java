@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.pth.iflow.common.enums.EWorkflowStatus;
+import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.strategies.IWorkStrategyFactory;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.Workflow;
@@ -19,7 +20,7 @@ public class CreateManualAssignWorkflowStrategy extends AbstractCreateWorkflowSt
   }
 
   @Override
-  public List<Workflow> process() throws WorkflowCustomizedException, MalformedURLException {
+  public List<Workflow> process() throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     final Workflow workflow = this.workflowCreateRequest.getWorkflow();
     workflow.setStatus(EWorkflowStatus.ASSIGNED);
 

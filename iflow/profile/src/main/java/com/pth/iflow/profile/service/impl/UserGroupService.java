@@ -14,7 +14,7 @@ import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.profile.config.ProfileConfiguration;
 import com.pth.iflow.profile.exceptions.ProfileCustomizedException;
 import com.pth.iflow.profile.model.UserGroup;
-import com.pth.iflow.profile.model.mapper.ModelEdoMapper;
+import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
 import com.pth.iflow.profile.service.IProfileRestTemplateCall;
 import com.pth.iflow.profile.service.IUserGroupService;
 
@@ -44,7 +44,7 @@ public class UserGroupService implements IUserGroupService {
                                                       true,
                                                       id);
 
-    return ModelEdoMapper.fromEdo(edo);
+    return ProfileModelEdoMapper.fromEdo(edo);
   }
 
   @Override
@@ -59,7 +59,7 @@ public class UserGroupService implements IUserGroupService {
                                                           true,
                                                           companyId);
 
-    return ModelEdoMapper.fromUserGroupEdoList(edo.getUserGroups());
+    return ProfileModelEdoMapper.fromUserGroupEdoList(edo.getUserGroups());
   }
 
 }

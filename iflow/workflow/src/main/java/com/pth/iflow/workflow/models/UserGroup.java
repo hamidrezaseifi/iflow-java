@@ -1,20 +1,21 @@
 package com.pth.iflow.workflow.models;
 
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
+import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.edo.models.xml.UserGroupEdo;
 
-public class UserGroup extends ModelMapperBase<UserGroupEdo, UserGroup> {
+public class UserGroup extends DataModelBase<UserGroupEdo, UserGroup> {
 
-  private Long id;
+  private Long    id;
 
-  private Long companyId;
+  private Long    companyId;
 
-  private String title;
+  private String  title;
 
   private Integer status;
 
   private Integer version;
 
+  @Override
   public Long getId() {
     return this.id;
   }
@@ -47,37 +48,14 @@ public class UserGroup extends ModelMapperBase<UserGroupEdo, UserGroup> {
     this.status = status;
   }
 
+  @Override
   public Integer getVersion() {
     return this.version;
   }
 
+  @Override
   public void setVersion(final Integer version) {
     this.version = version;
-  }
-
-  @Override
-  public UserGroupEdo toEdo() {
-    final UserGroupEdo edo = new UserGroupEdo();
-    edo.setTitle(this.title);
-    edo.setStatus(this.status);
-    edo.setId(this.id);
-    edo.setCompanyId(this.companyId);
-    edo.setVersion(this.version);
-
-    return edo;
-  }
-
-  @Override
-  public UserGroup fromEdo(final UserGroupEdo edo) {
-    final UserGroup model = new UserGroup();
-
-    model.setTitle(edo.getTitle());
-    model.setStatus(edo.getStatus());
-    model.setId(edo.getId());
-    model.setCompanyId(edo.getCompanyId());
-    model.setVersion(edo.getVersion());
-
-    return model;
   }
 
 }

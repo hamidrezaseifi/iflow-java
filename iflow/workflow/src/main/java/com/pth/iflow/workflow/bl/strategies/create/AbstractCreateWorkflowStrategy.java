@@ -2,6 +2,7 @@ package com.pth.iflow.workflow.bl.strategies.create;
 
 import java.net.MalformedURLException;
 
+import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.strategies.ICreateWorkflowStrategy;
 import com.pth.iflow.workflow.bl.strategies.ISaveWorkflowStrategy;
 import com.pth.iflow.workflow.bl.strategies.IWorkStrategyFactory;
@@ -23,7 +24,8 @@ public abstract class AbstractCreateWorkflowStrategy implements ICreateWorkflowS
     this.workStrategyFactory = workStrategyFactory;
   }
 
-  protected Workflow saveWorkflow(final Workflow workflow) throws WorkflowCustomizedException, MalformedURLException {
+  protected Workflow saveWorkflow(final Workflow workflow)
+      throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     final ISaveWorkflowStrategy saveWorkflowStrategy = this.workStrategyFactory.selectSaveWorkStrategy(workflow, this.token);
 
     final Workflow savedWorkflow = saveWorkflowStrategy.process();

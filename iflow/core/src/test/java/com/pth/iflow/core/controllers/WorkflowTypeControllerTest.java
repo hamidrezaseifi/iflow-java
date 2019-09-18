@@ -27,7 +27,7 @@ import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.XmlRestConfig;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.WorkflowType;
-import com.pth.iflow.core.model.mapper.ModelEdoMapper;
+import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
 import com.pth.iflow.core.service.IWorkflowTypeService;
 
 @RunWith(SpringRunner.class)
@@ -61,7 +61,7 @@ public class WorkflowTypeControllerTest extends TestDataProducer {
     final WorkflowType model = this.getTestWorkflowType();
     when(this.workflowService.getById(any(Long.class))).thenReturn(model);
 
-    final WorkflowTypeEdo modelEdo = ModelEdoMapper.toEdo(model);
+    final WorkflowTypeEdo modelEdo = CoreModelEdoMapper.toEdo(model);
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelEdo);
 
     this.mockMvc
@@ -82,7 +82,7 @@ public class WorkflowTypeControllerTest extends TestDataProducer {
     final List<WorkflowType> list = this.getTestWorkflowTypeList();
     when(this.workflowService.getListByIdList(any(List.class))).thenReturn(list);
 
-    final WorkflowTypeListEdo edoList = new WorkflowTypeListEdo(ModelEdoMapper.toWorkflowTypeEdoList(list));
+    final WorkflowTypeListEdo edoList = new WorkflowTypeListEdo(CoreModelEdoMapper.toWorkflowTypeEdoList(list));
 
     final String contentAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(idList);
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
@@ -106,7 +106,7 @@ public class WorkflowTypeControllerTest extends TestDataProducer {
     final List<WorkflowType> list = this.getTestWorkflowTypeList();
     when(this.workflowService.getListByIdCompanyId(any(Long.class))).thenReturn(list);
 
-    final WorkflowTypeListEdo edoList = new WorkflowTypeListEdo(ModelEdoMapper.toWorkflowTypeEdoList(list));
+    final WorkflowTypeListEdo edoList = new WorkflowTypeListEdo(CoreModelEdoMapper.toWorkflowTypeEdoList(list));
 
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
 

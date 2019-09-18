@@ -1,9 +1,9 @@
 package com.pth.iflow.gui.models;
 
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
+import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.edo.models.xml.DepartmentGroupEdo;
 
-public class GuiDepartmentGroup extends ModelMapperBase<DepartmentGroupEdo, GuiDepartmentGroup> {
+public class GuiDepartmentGroup extends DataModelBase<DepartmentGroupEdo, GuiDepartmentGroup> {
 
   private Long    id;
   private Long    departmentId;

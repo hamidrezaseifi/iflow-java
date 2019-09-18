@@ -33,7 +33,7 @@ import com.pth.iflow.core.model.Department;
 import com.pth.iflow.core.model.DepartmentGroup;
 import com.pth.iflow.core.model.User;
 import com.pth.iflow.core.model.UserGroup;
-import com.pth.iflow.core.model.mapper.ModelEdoMapper;
+import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
 import com.pth.iflow.core.service.IUsersService;
 
 @RunWith(SpringRunner.class)
@@ -67,7 +67,7 @@ public class UserControllerTest extends TestDataProducer {
     final User user = this.getTestUser();
     when(this.usersService.getUserById(any(Long.class))).thenReturn(user);
 
-    final UserEdo userEdo = ModelEdoMapper.toEdo(user);
+    final UserEdo userEdo = CoreModelEdoMapper.toEdo(user);
 
     final String userAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(userEdo);
 
@@ -88,7 +88,7 @@ public class UserControllerTest extends TestDataProducer {
     final User user = this.getTestUser();
     when(this.usersService.getUserByEmail(any(String.class))).thenReturn(user);
 
-    final UserEdo userEdo = ModelEdoMapper.toEdo(user);
+    final UserEdo userEdo = CoreModelEdoMapper.toEdo(user);
 
     final String userAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(userEdo);
 
@@ -107,7 +107,7 @@ public class UserControllerTest extends TestDataProducer {
     final List<Department> list = this.getTestDepartmentList();
     when(this.usersService.getUserDepartments(any(Long.class))).thenReturn(list);
 
-    final DepartmentListEdo edoList = new DepartmentListEdo(ModelEdoMapper.toDepartmentEdoList(list));
+    final DepartmentListEdo edoList = new DepartmentListEdo(CoreModelEdoMapper.toDepartmentEdoList(list));
 
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
 
@@ -128,7 +128,7 @@ public class UserControllerTest extends TestDataProducer {
     final List<DepartmentGroup> list = this.getTestDepartmentGroupList();
     when(this.usersService.getUserDepartmentGroups(any(Long.class))).thenReturn(list);
 
-    final DepartmentGroupListEdo edoList = new DepartmentGroupListEdo(ModelEdoMapper.toDepartmentGroupEdoList(list));
+    final DepartmentGroupListEdo edoList = new DepartmentGroupListEdo(CoreModelEdoMapper.toDepartmentGroupEdoList(list));
 
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
 
@@ -149,7 +149,7 @@ public class UserControllerTest extends TestDataProducer {
     final List<UserGroup> list = this.getTestUserGroupList();
     when(this.usersService.getUserGroups(any(Long.class))).thenReturn(list);
 
-    final UserGroupListEdo edoList = new UserGroupListEdo(ModelEdoMapper.toUserGroupEdoList(list));
+    final UserGroupListEdo edoList = new UserGroupListEdo(CoreModelEdoMapper.toUserGroupEdoList(list));
 
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
 
@@ -171,7 +171,7 @@ public class UserControllerTest extends TestDataProducer {
     when(this.usersService.getUserDeputies(any(Long.class))).thenReturn(list);
 
     final UserListEdo listEdo = new UserListEdo();
-    listEdo.setUsers(ModelEdoMapper.toUserEdoList(list));
+    listEdo.setUsers(CoreModelEdoMapper.toUserEdoList(list));
 
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(listEdo);
 
@@ -193,7 +193,7 @@ public class UserControllerTest extends TestDataProducer {
     when(this.usersService.getCompanyUsers(any(Long.class))).thenReturn(list);
 
     final UserListEdo listEdo = new UserListEdo();
-    listEdo.setUsers(ModelEdoMapper.toUserEdoList(list));
+    listEdo.setUsers(CoreModelEdoMapper.toUserEdoList(list));
 
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(listEdo);
 

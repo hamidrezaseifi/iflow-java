@@ -3,10 +3,10 @@ package com.pth.iflow.gui.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
+import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.edo.models.xml.WorkflowTypeEdo;
 
-public class GuiWorkflowType extends ModelMapperBase<WorkflowTypeEdo, GuiWorkflowType> {
+public class GuiWorkflowType extends DataModelBase<WorkflowTypeEdo, GuiWorkflowType> {
 
   private Long                            id;
   private Long                            companyId;
@@ -147,7 +147,7 @@ public class GuiWorkflowType extends ModelMapperBase<WorkflowTypeEdo, GuiWorkflo
     edo.setManualAssign(this.manualAssign);
     edo.setIncreaseStepAutomatic(this.increaseStepAutomatic);
     edo.setAllowAssign(this.allowAssign);
-    edo.setSteps(ModelMapperBase.toEdoList(this.steps));
+    edo.setSteps(DataModelBase.toEdoList(this.steps));
     edo.setVersion(this.version);
 
     return edo;

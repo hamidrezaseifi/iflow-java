@@ -21,7 +21,7 @@ import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.profile.TestDataProducer;
 import com.pth.iflow.profile.config.ProfileConfiguration;
 import com.pth.iflow.profile.model.User;
-import com.pth.iflow.profile.model.mapper.ModelEdoMapper;
+import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
 import com.pth.iflow.profile.service.impl.UsersService;
 
 @RunWith(SpringRunner.class)
@@ -53,7 +53,7 @@ public class UsersServiceTest extends TestDataProducer {
   public void testGetUserById() throws Exception {
 
     final User user = getTestUser();
-    final UserEdo userEdo = ModelEdoMapper.toEdo(user);
+    final UserEdo userEdo = ProfileModelEdoMapper.toEdo(user);
 
     when(this.restTemplate.callRestGet(any(String.class), any(EModule.class), any(Class.class), any(boolean.class), any()))
                                                                                                                            .thenReturn(userEdo);
@@ -71,7 +71,7 @@ public class UsersServiceTest extends TestDataProducer {
   public void testGetUserByEmail() throws Exception {
 
     final User user = getTestUser();
-    final UserEdo userEdo = ModelEdoMapper.toEdo(user);
+    final UserEdo userEdo = ProfileModelEdoMapper.toEdo(user);
 
     when(this.restTemplate.callRestGet(any(String.class), any(EModule.class), any(Class.class), any(boolean.class), any()))
                                                                                                                            .thenReturn(userEdo);
@@ -89,7 +89,7 @@ public class UsersServiceTest extends TestDataProducer {
   public void testGetUserListByComaonyId() throws Exception {
 
     final List<User> list = getTestUserList();
-    final UserListEdo listEdo = new UserListEdo(ModelEdoMapper.toUserEdoList(list));
+    final UserListEdo listEdo = new UserListEdo(ProfileModelEdoMapper.toUserEdoList(list));
 
     when(this.restTemplate.callRestGet(any(String.class), any(EModule.class), eq(UserListEdo.class), any(boolean.class), any()))
                                                                                                                                 .thenReturn(listEdo);

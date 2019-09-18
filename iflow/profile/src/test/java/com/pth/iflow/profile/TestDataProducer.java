@@ -16,7 +16,7 @@ import com.pth.iflow.profile.model.User;
 import com.pth.iflow.profile.model.UserAuthenticationRequest;
 import com.pth.iflow.profile.model.UserAuthenticationSession;
 import com.pth.iflow.profile.model.UserGroup;
-import com.pth.iflow.profile.model.mapper.ModelEdoMapper;
+import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
 
 public class TestDataProducer {
 
@@ -195,7 +195,7 @@ public class TestDataProducer {
 
   protected ProfileResponseEdo getTestProfileResponseEdo(final String sessionid, final UserEdo user, final CompanyEdo company) {
     final ProfileResponseEdo model = new ProfileResponseEdo();
-    model.setCompanyProfile(ModelEdoMapper.toEdo(getTestCompanyProfile()));
+    model.setCompanyProfile(ProfileModelEdoMapper.toEdo(getTestCompanyProfile()));
     model.setSessionid(sessionid);
     model.setUser(user);
 

@@ -27,7 +27,7 @@ import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
 import com.pth.iflow.profile.TestDataProducer;
 import com.pth.iflow.profile.model.DepartmentGroup;
 import com.pth.iflow.profile.model.User;
-import com.pth.iflow.profile.model.mapper.ModelEdoMapper;
+import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
 import com.pth.iflow.profile.service.ITokenUserDataManager;
 
 @RunWith(SpringRunner.class)
@@ -59,7 +59,7 @@ public class DepartmentGroupControllerTest extends TestDataProducer {
   public void testReadById() throws Exception {
 
     final DepartmentGroup departmentGroup = this.getTestDepartmentGroup();
-    final DepartmentGroupEdo departmentGroupEdo = ModelEdoMapper.toEdo(departmentGroup);
+    final DepartmentGroupEdo departmentGroupEdo = ProfileModelEdoMapper.toEdo(departmentGroup);
 
     when(this.tokenUserDataManager.getDepartmentGroupById(any(String.class), any(Long.class))).thenReturn(departmentGroup);
 
@@ -79,7 +79,7 @@ public class DepartmentGroupControllerTest extends TestDataProducer {
   public void testReadUserList() throws Exception {
 
     final List<User> userList = this.getTestUserList();
-    final UserListEdo userEdoList = new UserListEdo(ModelEdoMapper.toUserEdoList(userList));
+    final UserListEdo userEdoList = new UserListEdo(ProfileModelEdoMapper.toUserEdoList(userList));
 
     when(this.tokenUserDataManager.getAllUserListByDepartmentGroupId(any(String.class), any(Long.class))).thenReturn(userList);
 

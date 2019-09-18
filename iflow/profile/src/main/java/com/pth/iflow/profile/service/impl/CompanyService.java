@@ -13,7 +13,7 @@ import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.profile.config.ProfileConfiguration;
 import com.pth.iflow.profile.exceptions.ProfileCustomizedException;
 import com.pth.iflow.profile.model.Company;
-import com.pth.iflow.profile.model.mapper.ModelEdoMapper;
+import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
 import com.pth.iflow.profile.service.ICompanyService;
 import com.pth.iflow.profile.service.IProfileRestTemplateCall;
 
@@ -44,7 +44,7 @@ public class CompanyService implements ICompanyService {
                                                     true,
                                                     comapnyId);
 
-    return ModelEdoMapper.fromEdo(edo);
+    return ProfileModelEdoMapper.fromEdo(edo);
   }
 
 }

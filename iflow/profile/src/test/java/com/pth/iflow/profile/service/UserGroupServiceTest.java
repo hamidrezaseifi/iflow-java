@@ -21,7 +21,7 @@ import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.profile.TestDataProducer;
 import com.pth.iflow.profile.config.ProfileConfiguration;
 import com.pth.iflow.profile.model.UserGroup;
-import com.pth.iflow.profile.model.mapper.ModelEdoMapper;
+import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
 import com.pth.iflow.profile.service.impl.UserGroupService;
 
 @RunWith(SpringRunner.class)
@@ -53,7 +53,7 @@ public class UserGroupServiceTest extends TestDataProducer {
   public void testGetById() throws Exception {
 
     final UserGroup userGroup = getTestUserGroup();
-    final UserGroupEdo userGroupEdo = ModelEdoMapper.toEdo(userGroup);
+    final UserGroupEdo userGroupEdo = ProfileModelEdoMapper.toEdo(userGroup);
 
     when(this.restTemplate.callRestGet(any(String.class), any(EModule.class), any(Class.class), any(boolean.class), any()))
                                                                                                                            .thenReturn(userGroupEdo);
@@ -71,7 +71,7 @@ public class UserGroupServiceTest extends TestDataProducer {
   public void testGetListByComaonyId() throws Exception {
 
     final List<UserGroup> list = getTestUserGroupList();
-    final UserGroupListEdo listEdo = new UserGroupListEdo(ModelEdoMapper.toUserGroupEdoList(list));
+    final UserGroupListEdo listEdo = new UserGroupListEdo(ProfileModelEdoMapper.toUserGroupEdoList(list));
 
     when(this.restTemplate.callRestGet(any(String.class), any(EModule.class), eq(UserGroupListEdo.class), any(boolean.class), any()))
                                                                                                                                      .thenReturn(listEdo);

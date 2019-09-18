@@ -22,7 +22,7 @@ import com.pth.iflow.profile.TestDataProducer;
 import com.pth.iflow.profile.config.ProfileConfiguration;
 import com.pth.iflow.profile.model.DepartmentGroup;
 import com.pth.iflow.profile.model.User;
-import com.pth.iflow.profile.model.mapper.ModelEdoMapper;
+import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
 import com.pth.iflow.profile.service.impl.DepartmentGroupService;
 
 @RunWith(SpringRunner.class)
@@ -54,7 +54,7 @@ public class DepartmentGroupServiceTest extends TestDataProducer {
   public void testGetById() throws Exception {
 
     final DepartmentGroup departmentGroup = this.getTestDepartmentGroup();
-    final DepartmentGroupEdo departmentGroupEdo = ModelEdoMapper.toEdo(departmentGroup);
+    final DepartmentGroupEdo departmentGroupEdo = ProfileModelEdoMapper.toEdo(departmentGroup);
 
     when(this.restTemplate.callRestGet(any(String.class), any(EModule.class), any(Class.class), any(boolean.class), any()))
                                                                                                                            .thenReturn(departmentGroupEdo);
@@ -74,7 +74,7 @@ public class DepartmentGroupServiceTest extends TestDataProducer {
   public void testGetAllUserListByDepartmentGroupId() throws Exception {
 
     final List<User> list = this.getTestUserList();
-    final UserListEdo listEdo = new UserListEdo(ModelEdoMapper.toUserEdoList(list));
+    final UserListEdo listEdo = new UserListEdo(ProfileModelEdoMapper.toUserEdoList(list));
 
     when(this.restTemplate.callRestGet(any(String.class), any(EModule.class), eq(UserListEdo.class), any(boolean.class), any()))
                                                                                                                                 .thenReturn(listEdo);

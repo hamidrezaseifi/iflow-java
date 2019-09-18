@@ -17,6 +17,7 @@ public class WorkflowAction extends WorkflowActionModelBase<WorkflowActionEdo, W
   private Integer status;
   private Integer version;
 
+  @Override
   public Long getId() {
     return this.id;
   }
@@ -114,51 +115,14 @@ public class WorkflowAction extends WorkflowActionModelBase<WorkflowActionEdo, W
     this.status = status;
   }
 
+  @Override
   public Integer getVersion() {
     return this.version;
   }
 
+  @Override
   public void setVersion(final Integer version) {
     this.version = version;
-  }
-
-  @Override
-  public WorkflowActionEdo toEdo() {
-    final WorkflowActionEdo edo = new WorkflowActionEdo();
-    edo.setAction(this.action);
-    edo.setComments(this.comments);
-    edo.setStatus(this.status);
-    edo.setId(this.id);
-    edo.setCreatedBy(this.createdBy);
-    edo.setOldStep(this.oldStep);
-    edo.setNewStep(this.newStep);
-    edo.setNextAssign(this.nextAssign);
-    edo.setWorkflowId(this.workflowId);
-    edo.setVersion(this.version);
-
-    return edo;
-  }
-
-  @Override
-  public WorkflowAction fromEdo(final WorkflowActionEdo edo) {
-    if (edo == null) {
-      return null;
-    }
-
-    final WorkflowAction model = new WorkflowAction();
-
-    model.setAction(edo.getAction());
-    model.setComments(edo.getComments());
-    model.setStatus(edo.getStatus());
-    model.setId(edo.getId());
-    model.setCreatedBy(edo.getCreatedBy());
-    model.setOldStep(edo.getOldStep());
-    model.setNewStep(edo.getNewStep());
-    model.setNextAssign(edo.getNextAssign());
-    model.setWorkflowId(edo.getWorkflowId());
-    model.setVersion(edo.getVersion());
-
-    return model;
   }
 
 }

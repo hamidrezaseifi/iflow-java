@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.pth.iflow.backend.configurations.BackendConfiguration;
 import com.pth.iflow.backend.exceptions.BackendCustomizedException;
 import com.pth.iflow.backend.models.BackendUser;
-import com.pth.iflow.backend.models.mapper.ModelEdoMapper;
+import com.pth.iflow.backend.models.mapper.BackendModelEdoMapper;
 import com.pth.iflow.backend.models.ui.BackendSessionUserInfo;
 import com.pth.iflow.backend.services.IRestTemplateCall;
 import com.pth.iflow.backend.services.IUserAccess;
@@ -57,7 +57,7 @@ public class UserAccess implements IUserAccess {
                                                                   this.sessionUserInfo.isLoggedIn() ? this.sessionUserInfo.getToken() : "",
                                                                   true);
 
-    return ModelEdoMapper.fromUserEdoList(responseEdo.getUsers());
+    return BackendModelEdoMapper.fromUserEdoList(responseEdo.getUsers());
   }
 
 }

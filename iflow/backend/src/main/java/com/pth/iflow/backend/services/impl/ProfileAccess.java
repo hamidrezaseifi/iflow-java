@@ -9,7 +9,7 @@ import com.pth.iflow.backend.configurations.BackendConfiguration;
 import com.pth.iflow.backend.exceptions.BackendCustomizedException;
 import com.pth.iflow.backend.models.ProfileResponse;
 import com.pth.iflow.backend.models.UserAuthenticationResponse;
-import com.pth.iflow.backend.models.mapper.ModelEdoMapper;
+import com.pth.iflow.backend.models.mapper.BackendModelEdoMapper;
 import com.pth.iflow.backend.services.IProfileAccess;
 import com.pth.iflow.backend.services.IRestTemplateCall;
 import com.pth.iflow.common.edo.models.xml.AuthenticatedProfileRequestEdo;
@@ -49,7 +49,7 @@ public class ProfileAccess implements IProfileAccess {
                                                                           token,
                                                                           true);
 
-    return ModelEdoMapper.fromEdo(responseEdo);
+    return BackendModelEdoMapper.fromEdo(responseEdo);
   }
 
   @Override
@@ -86,7 +86,7 @@ public class ProfileAccess implements IProfileAccess {
                                                                           token,
                                                                           true);
 
-    return ModelEdoMapper.fromEdo(responseEdo);
+    return BackendModelEdoMapper.fromEdo(responseEdo);
   }
 
 }

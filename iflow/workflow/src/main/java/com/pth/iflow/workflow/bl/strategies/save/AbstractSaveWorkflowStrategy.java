@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.iflow.common.exceptions.IFlowCustomeException;
+import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.strategies.ISaveWorkflowStrategy;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
@@ -35,7 +36,8 @@ public abstract class AbstractSaveWorkflowStrategy implements ISaveWorkflowStrat
     this.workflowDataService = workflowDataService;
   }
 
-  protected Workflow saveWorkflow(final Workflow workflow) throws WorkflowCustomizedException, MalformedURLException {
+  protected Workflow saveWorkflow(final Workflow workflow)
+      throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     final Workflow savedWorkflow = this.workflowDataService.save(workflow, this.token);
 
     return savedWorkflow;

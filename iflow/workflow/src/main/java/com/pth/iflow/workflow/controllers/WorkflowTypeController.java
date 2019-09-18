@@ -17,13 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pth.iflow.common.annotations.IflowGetRequestMapping;
 import com.pth.iflow.common.annotations.IflowPostRequestMapping;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 import com.pth.iflow.common.edo.models.xml.WorkflowTypeEdo;
 import com.pth.iflow.common.edo.models.xml.WorkflowTypeListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
 import com.pth.iflow.workflow.bl.IWorkflowTypeProcessService;
 import com.pth.iflow.workflow.models.WorkflowType;
+import com.pth.iflow.workflow.models.mapper.WorkflowModelEdoMapper;
 
 @RestController
 @RequestMapping
@@ -43,7 +43,7 @@ public class WorkflowTypeController {
 
     final WorkflowType model = this.workflowTypeProcessService.getById(id, tokenId);
 
-    return ControllerHelper.createResponseEntity(request, model.toEdo(), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, WorkflowModelEdoMapper.toEdo(model), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -53,8 +53,8 @@ public class WorkflowTypeController {
 
     final List<WorkflowType> modelList = this.workflowTypeProcessService.getListByIdList(idList, tokenId);
 
-    return ControllerHelper.createResponseEntity(request, new WorkflowTypeListEdo(ModelMapperBase.toEdoList(modelList)),
-        HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request,
+        new WorkflowTypeListEdo(WorkflowModelEdoMapper.toWorkflowTypeEdoList(modelList)), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -64,8 +64,8 @@ public class WorkflowTypeController {
 
     final List<WorkflowType> modelList = this.workflowTypeProcessService.getListByIdCompanyId(id, tokenId);
 
-    return ControllerHelper.createResponseEntity(request, new WorkflowTypeListEdo(ModelMapperBase.toEdoList(modelList)),
-        HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request,
+        new WorkflowTypeListEdo(WorkflowModelEdoMapper.toWorkflowTypeEdoList(modelList)), HttpStatus.OK);
   }
 
 }

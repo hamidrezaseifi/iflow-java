@@ -14,7 +14,7 @@ import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.profile.config.ProfileConfiguration;
 import com.pth.iflow.profile.exceptions.ProfileCustomizedException;
 import com.pth.iflow.profile.model.User;
-import com.pth.iflow.profile.model.mapper.ModelEdoMapper;
+import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
 import com.pth.iflow.profile.service.IProfileRestTemplateCall;
 import com.pth.iflow.profile.service.IUsersService;
 
@@ -44,7 +44,7 @@ public class UsersService implements IUsersService {
                                                  true,
                                                  email);
 
-    return ModelEdoMapper.fromEdo(edo);
+    return ProfileModelEdoMapper.fromEdo(edo);
   }
 
   @Override
@@ -57,7 +57,7 @@ public class UsersService implements IUsersService {
                                                  true,
                                                  id);
 
-    return ModelEdoMapper.fromEdo(edo);
+    return ProfileModelEdoMapper.fromEdo(edo);
   }
 
   @Override
@@ -72,7 +72,7 @@ public class UsersService implements IUsersService {
                                                      true,
                                                      companyId);
 
-    return ModelEdoMapper.fromUserEdoList(edo.getUsers());
+    return ProfileModelEdoMapper.fromUserEdoList(edo.getUsers());
   }
 
 }

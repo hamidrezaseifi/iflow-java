@@ -18,7 +18,7 @@ import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.profile.TestDataProducer;
 import com.pth.iflow.profile.config.ProfileConfiguration;
 import com.pth.iflow.profile.model.Company;
-import com.pth.iflow.profile.model.mapper.ModelEdoMapper;
+import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
 import com.pth.iflow.profile.service.impl.CompanyService;
 
 @RunWith(SpringRunner.class)
@@ -50,7 +50,7 @@ public class CompanyServiceTest extends TestDataProducer {
   public void testGetUserById() throws Exception {
 
     final Company company = getTestCompany();
-    final CompanyEdo companyEdo = ModelEdoMapper.toEdo(company);
+    final CompanyEdo companyEdo = ProfileModelEdoMapper.toEdo(company);
 
     when(this.restTemplate.callRestGet(any(String.class), any(EModule.class), any(Class.class), any(boolean.class), any()))
                                                                                                                            .thenReturn(companyEdo);

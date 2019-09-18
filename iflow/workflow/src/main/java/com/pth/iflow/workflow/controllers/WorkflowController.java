@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pth.iflow.common.annotations.IflowGetRequestMapping;
 import com.pth.iflow.common.annotations.IflowPostRequestMapping;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 import com.pth.iflow.common.edo.models.xml.WorkflowCreateRequestEdo;
 import com.pth.iflow.common.edo.models.xml.WorkflowEdo;
 import com.pth.iflow.common.edo.models.xml.WorkflowListEdo;
@@ -26,8 +25,7 @@ import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
 import com.pth.iflow.workflow.bl.IWorkflowProcessService;
 import com.pth.iflow.workflow.models.Workflow;
-import com.pth.iflow.workflow.models.WorkflowCreateRequest;
-import com.pth.iflow.workflow.models.WorkflowSearchFilter;
+import com.pth.iflow.workflow.models.mapper.WorkflowModelEdoMapper;
 
 @RestController
 @RequestMapping
@@ -47,7 +45,7 @@ public class WorkflowController {
 
     final Workflow model = this.workflowService.getById(id, headerTokenId);
 
-    return ControllerHelper.createResponseEntity(request, model.toEdo(), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, WorkflowModelEdoMapper.toEdo(model), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.CREATED)
@@ -56,10 +54,10 @@ public class WorkflowController {
       final HttpServletRequest request,
       @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws Exception {
 
-    final List<Workflow> modelList = this.workflowService.create(new WorkflowCreateRequest().fromEdo(workflowCreateRequestEdo),
+    final List<Workflow> modelList = this.workflowService.create(WorkflowModelEdoMapper.fromEdo(workflowCreateRequestEdo),
         headerTokenId);
 
-    return ControllerHelper.createResponseEntity(request, new WorkflowListEdo(ModelMapperBase.toEdoList(modelList)),
+    return ControllerHelper.createResponseEntity(request, new WorkflowListEdo(WorkflowModelEdoMapper.toWorkflowEdoList(modelList)),
         HttpStatus.CREATED);
   }
 
@@ -68,9 +66,9 @@ public class WorkflowController {
   public ResponseEntity<WorkflowEdo> saveWorkflow(@RequestBody final WorkflowEdo workflowEdo, final HttpServletRequest request,
       @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws Exception {
 
-    final Workflow model = this.workflowService.save(new Workflow().fromEdo(workflowEdo), headerTokenId);
+    final Workflow model = this.workflowService.save(WorkflowModelEdoMapper.fromEdo(workflowEdo), headerTokenId);
 
-    return ControllerHelper.createResponseEntity(request, model.toEdo(), HttpStatus.ACCEPTED);
+    return ControllerHelper.createResponseEntity(request, WorkflowModelEdoMapper.toEdo(model), HttpStatus.ACCEPTED);
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -80,7 +78,8 @@ public class WorkflowController {
 
     final List<Workflow> modelList = this.workflowService.getListByIdList(idList, headerTokenId);
 
-    return ControllerHelper.createResponseEntity(request, new WorkflowListEdo(ModelMapperBase.toEdoList(modelList)), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, new WorkflowListEdo(WorkflowModelEdoMapper.toWorkflowEdoList(modelList)),
+        HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -90,7 +89,8 @@ public class WorkflowController {
 
     final List<Workflow> modelList = this.workflowService.getListByTypeId(id, headerTokenId);
 
-    return ControllerHelper.createResponseEntity(request, new WorkflowListEdo(ModelMapperBase.toEdoList(modelList)), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, new WorkflowListEdo(WorkflowModelEdoMapper.toWorkflowEdoList(modelList)),
+        HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -101,7 +101,8 @@ public class WorkflowController {
 
     final List<Workflow> modelList = this.workflowService.getListForUser(id, status, headerTokenId);
 
-    return ControllerHelper.createResponseEntity(request, new WorkflowListEdo(ModelMapperBase.toEdoList(modelList)), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, new WorkflowListEdo(WorkflowModelEdoMapper.toWorkflowEdoList(modelList)),
+        HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -110,9 +111,11 @@ public class WorkflowController {
       final HttpServletRequest request,
       @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws Exception {
 
-    final List<Workflow> modelList = this.workflowService.search(WorkflowSearchFilter.fromEdo(workflowSearchFilterEdo), headerTokenId);
+    final List<Workflow> modelList = this.workflowService.search(WorkflowModelEdoMapper.fromEdo(workflowSearchFilterEdo),
+        headerTokenId);
 
-    return ControllerHelper.createResponseEntity(request, new WorkflowListEdo(ModelMapperBase.toEdoList(modelList)), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, new WorkflowListEdo(WorkflowModelEdoMapper.toWorkflowEdoList(modelList)),
+        HttpStatus.OK);
   }
 
 }
