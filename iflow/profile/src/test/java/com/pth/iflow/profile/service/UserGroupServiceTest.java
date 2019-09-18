@@ -3,10 +3,8 @@ package com.pth.iflow.profile.service;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
-
 import java.net.URL;
 import java.util.List;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -17,16 +15,13 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 import com.pth.iflow.common.edo.models.xml.UserGroupEdo;
 import com.pth.iflow.common.edo.models.xml.UserGroupListEdo;
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.profile.TestDataProducer;
 import com.pth.iflow.profile.config.ProfileConfiguration;
 import com.pth.iflow.profile.model.UserGroup;
-import com.pth.iflow.profile.service.IProfileRestTemplateCall;
-import com.pth.iflow.profile.service.IUserGroupService;
+import com.pth.iflow.profile.model.mapper.ModelEdoMapper;
 import com.pth.iflow.profile.service.impl.UserGroupService;
 
 @RunWith(SpringRunner.class)
@@ -34,10 +29,10 @@ import com.pth.iflow.profile.service.impl.UserGroupService;
 @AutoConfigureMockMvc
 public class UserGroupServiceTest extends TestDataProducer {
 
-  private IUserGroupService                     userGroupService;
+  private IUserGroupService userGroupService;
 
   @Mock
-  private IProfileRestTemplateCall              restTemplate;
+  private IProfileRestTemplateCall restTemplate;
 
   @MockBean
   private ProfileConfiguration.CoreAccessConfig coreAccessConfig;
@@ -58,10 +53,10 @@ public class UserGroupServiceTest extends TestDataProducer {
   public void testGetById() throws Exception {
 
     final UserGroup userGroup = getTestUserGroup();
-    final UserGroupEdo userGroupEdo = userGroup.toEdo();
+    final UserGroupEdo userGroupEdo = ModelEdoMapper.toEdo(userGroup);
 
     when(this.restTemplate.callRestGet(any(String.class), any(EModule.class), any(Class.class), any(boolean.class), any()))
-        .thenReturn(userGroupEdo);
+                                                                                                                           .thenReturn(userGroupEdo);
 
     final UserGroup resUserGroup = this.userGroupService.getById(userGroup.getId());
 
@@ -76,10 +71,10 @@ public class UserGroupServiceTest extends TestDataProducer {
   public void testGetListByComaonyId() throws Exception {
 
     final List<UserGroup> list = getTestUserGroupList();
-    final UserGroupListEdo listEdo = new UserGroupListEdo(ModelMapperBase.toEdoList(list));
+    final UserGroupListEdo listEdo = new UserGroupListEdo(ModelEdoMapper.toUserGroupEdoList(list));
 
     when(this.restTemplate.callRestGet(any(String.class), any(EModule.class), eq(UserGroupListEdo.class), any(boolean.class), any()))
-        .thenReturn(listEdo);
+                                                                                                                                     .thenReturn(listEdo);
 
     final List<UserGroup> resList = this.userGroupService.getListByCompanyId(1L);
 

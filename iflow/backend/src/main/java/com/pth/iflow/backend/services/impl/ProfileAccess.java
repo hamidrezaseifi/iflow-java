@@ -18,6 +18,7 @@ import com.pth.iflow.common.edo.models.xml.TokenProfileRequestEdo;
 import com.pth.iflow.common.edo.models.xml.UserAuthenticationRequestEdo;
 import com.pth.iflow.common.edo.models.xml.UserAuthenticationResponseEdo;
 import com.pth.iflow.common.enums.EModule;
+import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 
 @Service
 public class ProfileAccess implements IProfileAccess {
@@ -34,7 +35,7 @@ public class ProfileAccess implements IProfileAccess {
   }
 
   @Override
-  public ProfileResponse isTokenValid(final String token) throws BackendCustomizedException, MalformedURLException {
+  public ProfileResponse isTokenValid(final String token) throws BackendCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     logger.debug("Validate token {} from profile service", token);
 
@@ -71,7 +72,7 @@ public class ProfileAccess implements IProfileAccess {
   }
 
   @Override
-  public ProfileResponse readProfile(final String username, final String token) throws BackendCustomizedException, MalformedURLException {
+  public ProfileResponse readProfile(final String username, final String token) throws BackendCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     logger.debug("Read profile for user {} from profile service", username);
 
     final AuthenticatedProfileRequestEdo request = new AuthenticatedProfileRequestEdo();

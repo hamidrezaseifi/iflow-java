@@ -3,7 +3,6 @@ package com.pth.iflow.profile;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-
 import com.pth.iflow.common.edo.models.xml.AuthenticatedProfileRequestEdo;
 import com.pth.iflow.common.edo.models.xml.CompanyEdo;
 import com.pth.iflow.common.edo.models.xml.ProfileResponseEdo;
@@ -17,6 +16,7 @@ import com.pth.iflow.profile.model.User;
 import com.pth.iflow.profile.model.UserAuthenticationRequest;
 import com.pth.iflow.profile.model.UserAuthenticationSession;
 import com.pth.iflow.profile.model.UserGroup;
+import com.pth.iflow.profile.model.mapper.ModelEdoMapper;
 
 public class TestDataProducer {
 
@@ -77,6 +77,8 @@ public class TestDataProducer {
     model.setFirstName("firstName");
     model.setLastName("lastName");
     model.setStatus(1);
+    model.setVersion(1);
+    model.setPermission(1);
     model.setDepartmentGroups(this.getTestDepartmentGroupIdList());
     model.setDepartments(this.getTestDepartmentIdList());
     model.setDeputies(this.getTestDeputiyIdList());
@@ -94,6 +96,8 @@ public class TestDataProducer {
     model.setFirstName(fname);
     model.setLastName(lname);
     model.setStatus(1);
+    model.setVersion(1);
+    model.setPermission(1);
     model.setDepartmentGroups(this.getTestDepartmentGroupIdList());
     model.setDepartments(this.getTestDepartmentIdList());
     model.setDeputies(this.getTestDeputiyIdList());
@@ -191,7 +195,7 @@ public class TestDataProducer {
 
   protected ProfileResponseEdo getTestProfileResponseEdo(final String sessionid, final UserEdo user, final CompanyEdo company) {
     final ProfileResponseEdo model = new ProfileResponseEdo();
-    model.setCompanyProfile(getTestCompanyProfile().toEdo());
+    model.setCompanyProfile(ModelEdoMapper.toEdo(getTestCompanyProfile()));
     model.setSessionid(sessionid);
     model.setUser(user);
 

@@ -3,9 +3,7 @@ package com.pth.iflow.profile.controller;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,19 +13,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.pth.iflow.common.annotations.IflowGetRequestMapping;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 import com.pth.iflow.common.edo.models.xml.DepartmentEdo;
 import com.pth.iflow.common.edo.models.xml.DepartmentGroupListEdo;
 import com.pth.iflow.common.edo.models.xml.UserListEdo;
+import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
 import com.pth.iflow.profile.exceptions.ProfileCustomizedException;
 import com.pth.iflow.profile.model.Department;
 import com.pth.iflow.profile.model.DepartmentGroup;
 import com.pth.iflow.profile.model.User;
+import com.pth.iflow.profile.model.mapper.ModelEdoMapper;
 import com.pth.iflow.profile.service.ITokenUserDataManager;
 
 @RestController
@@ -44,26 +42,21 @@ public class DepartmentController {
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(value = IflowRestPaths.ProfileModule.DEPARTMENT_READ_BY_ID)
   @ResponseBody
-  public ResponseEntity<DepartmentEdo> readById(@PathVariable(name = "id") final Long id, final HttpServletRequest request,
-      @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId)
-      throws ProfileCustomizedException, URISyntaxException, MalformedURLException {
+  public ResponseEntity<DepartmentEdo> readById(@PathVariable(name = "id") final Long id, final HttpServletRequest request, @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws ProfileCustomizedException, URISyntaxException, MalformedURLException, IFlowMessageConversionFailureException {
 
     final Department model = this.tokenUserDataManager.getDepartmentById(headerTokenId, id);
 
-    return ControllerHelper.createResponseEntity(request, model.toEdo(), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, ModelEdoMapper.toEdo(model), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(value = IflowRestPaths.ProfileModule.DEPARTMENT_READ_DEPARTMENTGROUP_LIST)
   @ResponseBody
-  public ResponseEntity<DepartmentGroupListEdo> readDepartmentGroupList(@PathVariable(name = "id") final Long id,
-      final HttpServletRequest request,
-      @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId)
-      throws ProfileCustomizedException, URISyntaxException, MalformedURLException {
+  public ResponseEntity<DepartmentGroupListEdo> readDepartmentGroupList(@PathVariable(name = "id") final Long id, final HttpServletRequest request, @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws ProfileCustomizedException, URISyntaxException, MalformedURLException, IFlowMessageConversionFailureException {
 
     final List<DepartmentGroup> list = this.tokenUserDataManager.getDepartmentGroupListByDepartmentId(headerTokenId, id);
 
-    final DepartmentGroupListEdo edo = new DepartmentGroupListEdo(ModelMapperBase.toEdoList(list));
+    final DepartmentGroupListEdo edo = new DepartmentGroupListEdo(ModelEdoMapper.toDepartmentGroupEdoList(list));
 
     return ControllerHelper.createResponseEntity(request, edo, HttpStatus.OK);
   }
@@ -71,13 +64,11 @@ public class DepartmentController {
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(value = IflowRestPaths.ProfileModule.DEPARTMENT_READ_ALLUSERS_LIST)
   @ResponseBody
-  public ResponseEntity<UserListEdo> readUserList(@PathVariable(name = "id") final Long id, final HttpServletRequest request,
-      @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId)
-      throws ProfileCustomizedException, URISyntaxException, MalformedURLException {
+  public ResponseEntity<UserListEdo> readUserList(@PathVariable(name = "id") final Long id, final HttpServletRequest request, @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws ProfileCustomizedException, URISyntaxException, MalformedURLException, IFlowMessageConversionFailureException {
 
     final List<User> list = this.tokenUserDataManager.getAllUserListByDepartmentId(headerTokenId, id);
 
-    final UserListEdo edo = new UserListEdo(ModelMapperBase.toEdoList(list));
+    final UserListEdo edo = new UserListEdo(ModelEdoMapper.toUserEdoList(list));
 
     return ControllerHelper.createResponseEntity(request, edo, HttpStatus.OK);
   }

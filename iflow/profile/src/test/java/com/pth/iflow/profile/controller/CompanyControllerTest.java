@@ -6,9 +6,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import java.util.List;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,8 +20,6 @@ import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConve
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 import com.pth.iflow.common.edo.models.xml.CompanyEdo;
 import com.pth.iflow.common.edo.models.xml.DepartmentListEdo;
 import com.pth.iflow.common.edo.models.xml.UserGroupListEdo;
@@ -37,6 +33,7 @@ import com.pth.iflow.profile.model.Department;
 import com.pth.iflow.profile.model.ProfileResponse;
 import com.pth.iflow.profile.model.User;
 import com.pth.iflow.profile.model.UserGroup;
+import com.pth.iflow.profile.model.mapper.ModelEdoMapper;
 import com.pth.iflow.profile.service.ITokenUserDataManager;
 
 @RunWith(SpringRunner.class)
@@ -76,7 +73,7 @@ public class CompanyControllerTest extends TestDataProducer {
   @Test
   public void testReadById() throws Exception {
 
-    final CompanyEdo companyEdo = this.company.toEdo();
+    final CompanyEdo companyEdo = ModelEdoMapper.toEdo(this.company);
 
     final ProfileResponse profile = new ProfileResponse(this.user, this.companyProfile, "sessionid");
     when(this.tokenUserDataManager.getProfileByToken(any(String.class))).thenReturn(profile);
@@ -98,7 +95,7 @@ public class CompanyControllerTest extends TestDataProducer {
 
     final List<User> userList = getTestUserList();
     // final List<UserEdo> userEdoList = ModelMapperBase.toEdoList(userList);
-    final UserListEdo userEdoList = new UserListEdo(ModelMapperBase.toEdoList(userList));
+    final UserListEdo userEdoList = new UserListEdo(ModelEdoMapper.toUserEdoList(userList));
 
     when(this.tokenUserDataManager.getUserListByToken(any(String.class), any(Long.class))).thenReturn(userList);
 
@@ -118,7 +115,7 @@ public class CompanyControllerTest extends TestDataProducer {
   public void testReadUserGroupList() throws Exception {
 
     final List<UserGroup> list = getTestUserGroupList();
-    final UserGroupListEdo edoList = new UserGroupListEdo(ModelMapperBase.toEdoList(list));
+    final UserGroupListEdo edoList = new UserGroupListEdo(ModelEdoMapper.toUserGroupEdoList(list));
 
     when(this.tokenUserDataManager.getUserGroupListByToken(any(String.class), any(Long.class))).thenReturn(list);
 
@@ -138,7 +135,7 @@ public class CompanyControllerTest extends TestDataProducer {
   public void testReadDepartmentList() throws Exception {
 
     final List<Department> list = getTestDepartmentList();
-    final DepartmentListEdo edoList = new DepartmentListEdo(ModelMapperBase.toEdoList(list));
+    final DepartmentListEdo edoList = new DepartmentListEdo(ModelEdoMapper.toDepartmentEdoList(list));
 
     when(this.tokenUserDataManager.getDepartmentListByToken(any(String.class), any(Long.class))).thenReturn(list);
 

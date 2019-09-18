@@ -80,6 +80,7 @@ public class WorkflowControllerTest extends TestDataProducer {
     final WorkflowEdo modelEdo = ModelEdoMapper.toEdo(model);
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelEdo);
 
+    // System.out.println("listAsXmlString: \n" + listAsXmlString);
     this.mockMvc
                 .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.WORKFLOW_READ_BY_ID, model.getId())
                                                .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))

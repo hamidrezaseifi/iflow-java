@@ -3,10 +3,8 @@ package com.pth.iflow.profile.service;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
-
 import java.net.URL;
 import java.util.List;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -17,8 +15,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 import com.pth.iflow.common.edo.models.xml.DepartmentGroupEdo;
 import com.pth.iflow.common.edo.models.xml.UserListEdo;
 import com.pth.iflow.common.enums.EModule;
@@ -26,8 +22,7 @@ import com.pth.iflow.profile.TestDataProducer;
 import com.pth.iflow.profile.config.ProfileConfiguration;
 import com.pth.iflow.profile.model.DepartmentGroup;
 import com.pth.iflow.profile.model.User;
-import com.pth.iflow.profile.service.IDepartmentGroupService;
-import com.pth.iflow.profile.service.IProfileRestTemplateCall;
+import com.pth.iflow.profile.model.mapper.ModelEdoMapper;
 import com.pth.iflow.profile.service.impl.DepartmentGroupService;
 
 @RunWith(SpringRunner.class)
@@ -35,10 +30,10 @@ import com.pth.iflow.profile.service.impl.DepartmentGroupService;
 @AutoConfigureMockMvc
 public class DepartmentGroupServiceTest extends TestDataProducer {
 
-  private IDepartmentGroupService               departmentGroupService;
+  private IDepartmentGroupService departmentGroupService;
 
   @Mock
-  private IProfileRestTemplateCall              restTemplate;
+  private IProfileRestTemplateCall restTemplate;
 
   @MockBean
   private ProfileConfiguration.CoreAccessConfig coreAccessConfig;
@@ -59,17 +54,18 @@ public class DepartmentGroupServiceTest extends TestDataProducer {
   public void testGetById() throws Exception {
 
     final DepartmentGroup departmentGroup = this.getTestDepartmentGroup();
-    final DepartmentGroupEdo departmentGroupEdo = departmentGroup.toEdo();
+    final DepartmentGroupEdo departmentGroupEdo = ModelEdoMapper.toEdo(departmentGroup);
 
     when(this.restTemplate.callRestGet(any(String.class), any(EModule.class), any(Class.class), any(boolean.class), any()))
-        .thenReturn(departmentGroupEdo);
+                                                                                                                           .thenReturn(departmentGroupEdo);
 
     final DepartmentGroup resDepartment = this.departmentGroupService.getById(departmentGroup.getId());
 
     Assert.assertNotNull("Result department-group is not null!", resDepartment);
     Assert.assertEquals("Result department-group has id 1!", resDepartment.getId(), departmentGroup.getId());
-    Assert.assertEquals("Result department-group has title '" + departmentGroup.getTitle() + "'!", resDepartment.getTitle(),
-        departmentGroup.getTitle());
+    Assert.assertEquals("Result department-group has title '" + departmentGroup.getTitle() + "'!",
+                        resDepartment.getTitle(),
+                        departmentGroup.getTitle());
     Assert.assertEquals("Result department-group has status 1!", resDepartment.getStatus(), departmentGroup.getStatus());
 
   }
@@ -78,10 +74,10 @@ public class DepartmentGroupServiceTest extends TestDataProducer {
   public void testGetAllUserListByDepartmentGroupId() throws Exception {
 
     final List<User> list = this.getTestUserList();
-    final UserListEdo listEdo = new UserListEdo(ModelMapperBase.toEdoList(list));
+    final UserListEdo listEdo = new UserListEdo(ModelEdoMapper.toUserEdoList(list));
 
     when(this.restTemplate.callRestGet(any(String.class), any(EModule.class), eq(UserListEdo.class), any(boolean.class), any()))
-        .thenReturn(listEdo);
+                                                                                                                                .thenReturn(listEdo);
 
     final List<User> resList = this.departmentGroupService.getAllUserListByDepartmentGroupId(1L);
 

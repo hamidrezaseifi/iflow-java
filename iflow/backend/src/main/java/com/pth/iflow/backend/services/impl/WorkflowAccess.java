@@ -19,6 +19,7 @@ import com.pth.iflow.common.edo.models.xml.WorkflowEdo;
 import com.pth.iflow.common.edo.models.xml.WorkflowListEdo;
 import com.pth.iflow.common.edo.models.xml.WorkflowTypeListEdo;
 import com.pth.iflow.common.enums.EModule;
+import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 
 @Service
 public class WorkflowAccess implements IWorkflowAccess {
@@ -39,7 +40,7 @@ public class WorkflowAccess implements IWorkflowAccess {
   }
 
   @Override
-  public BackendWorkflow readWorkflow(final Long workflowId) throws BackendCustomizedException, MalformedURLException {
+  public BackendWorkflow readWorkflow(final Long workflowId) throws IFlowMessageConversionFailureException, MalformedURLException {
     logger.debug("Read workflow for id {}", workflowId);
 
     final WorkflowEdo responseEdo = this.restTemplate.callRestGet(this.moduleAccessConfig.getReadWorkflowUri(workflowId),
@@ -52,7 +53,7 @@ public class WorkflowAccess implements IWorkflowAccess {
   }
 
   @Override
-  public List<BackendWorkflow> createWorkflow(final BackendWorkflowCreateRequest createRequest) throws BackendCustomizedException, MalformedURLException {
+  public List<BackendWorkflow> createWorkflow(final BackendWorkflowCreateRequest createRequest) throws IFlowMessageConversionFailureException, MalformedURLException {
     logger.debug("Create workflow");
 
     final WorkflowListEdo responseListEdo = this.restTemplate.callRestPost(this.moduleAccessConfig.getCreateWorkflowUri(),
@@ -78,7 +79,7 @@ public class WorkflowAccess implements IWorkflowAccess {
   }
 
   @Override
-  public List<BackendWorkflowType> readWorkflowTypeList(final Long companyId) throws BackendCustomizedException, MalformedURLException {
+  public List<BackendWorkflowType> readWorkflowTypeList(final Long companyId) throws IFlowMessageConversionFailureException, MalformedURLException {
     logger.debug("Read workflow-type for company-id {}", companyId);
 
     final WorkflowTypeListEdo responseEdo = this.restTemplate.callRestGet(

@@ -1,11 +1,10 @@
 package com.pth.iflow.profile.model;
 
 import java.time.LocalDateTime;
-
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
+import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.edo.models.xml.CompanyEdo;
 
-public class Company extends ModelMapperBase<CompanyEdo, Company> {
+public class Company extends DataModelBase<CompanyEdo, Company> {
 
   private Long          id;
   private String        identifyid;
@@ -18,6 +17,7 @@ public class Company extends ModelMapperBase<CompanyEdo, Company> {
   /**
    * @return the id
    */
+  @Override
   public Long getId() {
     return this.id;
   }
@@ -74,6 +74,7 @@ public class Company extends ModelMapperBase<CompanyEdo, Company> {
   /**
    * @return the version
    */
+  @Override
   public Integer getVersion() {
     return this.version;
   }
@@ -81,6 +82,7 @@ public class Company extends ModelMapperBase<CompanyEdo, Company> {
   /**
    * @param version the version to set
    */
+  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
@@ -111,30 +113,6 @@ public class Company extends ModelMapperBase<CompanyEdo, Company> {
    */
   public void setUpdatedAt(final LocalDateTime updatedAt) {
     this.updatedAt = updatedAt;
-  }
-
-  @Override
-  public CompanyEdo toEdo() {
-    final CompanyEdo edo = new CompanyEdo();
-    edo.setCompanyName(this.companyName);
-    edo.setIdentifyid(this.identifyid);
-    edo.setStatus(this.status);
-    edo.setVersion(this.version);
-    edo.setId(this.id);
-
-    return edo;
-  }
-
-  @Override
-  public Company fromEdo(final CompanyEdo edo) {
-    final Company model = new Company();
-    model.setCompanyName(edo.getCompanyName());
-    model.setIdentifyid(edo.getIdentifyid());
-    model.setStatus(edo.getStatus());
-    model.setVersion(edo.getVersion());
-    model.setId(edo.getId());
-
-    return model;
   }
 
 }

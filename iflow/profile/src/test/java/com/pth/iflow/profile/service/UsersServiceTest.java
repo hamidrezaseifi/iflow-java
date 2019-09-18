@@ -3,10 +3,8 @@ package com.pth.iflow.profile.service;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
-
 import java.net.URL;
 import java.util.List;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -17,16 +15,13 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
 import com.pth.iflow.common.edo.models.xml.UserEdo;
 import com.pth.iflow.common.edo.models.xml.UserListEdo;
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.profile.TestDataProducer;
 import com.pth.iflow.profile.config.ProfileConfiguration;
 import com.pth.iflow.profile.model.User;
-import com.pth.iflow.profile.service.IProfileRestTemplateCall;
-import com.pth.iflow.profile.service.IUsersService;
+import com.pth.iflow.profile.model.mapper.ModelEdoMapper;
 import com.pth.iflow.profile.service.impl.UsersService;
 
 @RunWith(SpringRunner.class)
@@ -34,10 +29,10 @@ import com.pth.iflow.profile.service.impl.UsersService;
 @AutoConfigureMockMvc
 public class UsersServiceTest extends TestDataProducer {
 
-  private IUsersService                         usersService;
+  private IUsersService usersService;
 
   @Mock
-  private IProfileRestTemplateCall              restTemplate;
+  private IProfileRestTemplateCall restTemplate;
 
   @MockBean
   private ProfileConfiguration.CoreAccessConfig coreAccessConfig;
@@ -58,10 +53,10 @@ public class UsersServiceTest extends TestDataProducer {
   public void testGetUserById() throws Exception {
 
     final User user = getTestUser();
-    final UserEdo userEdo = user.toEdo();
+    final UserEdo userEdo = ModelEdoMapper.toEdo(user);
 
     when(this.restTemplate.callRestGet(any(String.class), any(EModule.class), any(Class.class), any(boolean.class), any()))
-        .thenReturn(userEdo);
+                                                                                                                           .thenReturn(userEdo);
 
     final User resUser = this.usersService.getUserById(user.getId());
 
@@ -76,10 +71,10 @@ public class UsersServiceTest extends TestDataProducer {
   public void testGetUserByEmail() throws Exception {
 
     final User user = getTestUser();
-    final UserEdo userEdo = user.toEdo();
+    final UserEdo userEdo = ModelEdoMapper.toEdo(user);
 
     when(this.restTemplate.callRestGet(any(String.class), any(EModule.class), any(Class.class), any(boolean.class), any()))
-        .thenReturn(userEdo);
+                                                                                                                           .thenReturn(userEdo);
 
     final User resUser = this.usersService.getUserByEmail(user.getEmail());
 
@@ -94,10 +89,10 @@ public class UsersServiceTest extends TestDataProducer {
   public void testGetUserListByComaonyId() throws Exception {
 
     final List<User> list = getTestUserList();
-    final UserListEdo listEdo = new UserListEdo(ModelMapperBase.toEdoList(list));
+    final UserListEdo listEdo = new UserListEdo(ModelEdoMapper.toUserEdoList(list));
 
     when(this.restTemplate.callRestGet(any(String.class), any(EModule.class), eq(UserListEdo.class), any(boolean.class), any()))
-        .thenReturn(listEdo);
+                                                                                                                                .thenReturn(listEdo);
 
     final List<User> resList = this.usersService.getUserListByCompanyId(1L);
 

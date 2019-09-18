@@ -15,6 +15,7 @@ import com.pth.iflow.backend.services.IRestTemplateCall;
 import com.pth.iflow.backend.services.IUserAccess;
 import com.pth.iflow.common.edo.models.xml.UserListEdo;
 import com.pth.iflow.common.enums.EModule;
+import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 
 @Service
 public class UserAccess implements IUserAccess {
@@ -47,7 +48,7 @@ public class UserAccess implements IUserAccess {
   }
 
   @Override
-  public List<BackendUser> readCompanyUserList(final Long companyId) throws BackendCustomizedException, MalformedURLException {
+  public List<BackendUser> readCompanyUserList(final Long companyId) throws MalformedURLException, IFlowMessageConversionFailureException {
     logger.debug("Read user list for company id {}", companyId);
 
     final UserListEdo responseEdo = this.restTemplate.callRestGet(this.moduleAccessConfig.getReadCompanyUserListUri(companyId),

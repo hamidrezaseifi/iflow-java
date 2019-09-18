@@ -3,10 +3,7 @@ package com.pth.iflow.profile.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
-import com.pth.iflow.common.edo.models.xml.CompanyProfileEdo;
-
-public class CompanyProfile extends ModelMapperBase<CompanyProfileEdo, CompanyProfile> {
+public class CompanyProfile {
 
   private Company company;
 
@@ -59,23 +56,6 @@ public class CompanyProfile extends ModelMapperBase<CompanyProfileEdo, CompanyPr
     if (users != null) {
       this.userGroups.addAll(users);
     }
-  }
-
-  @Override
-  public CompanyProfileEdo toEdo() {
-    final CompanyProfileEdo edo = new CompanyProfileEdo(this.company.toEdo(),
-                                                        ModelMapperBase.toEdoList(this.departments),
-                                                        ModelMapperBase.toEdoList(this.userGroups));
-    return edo;
-  }
-
-  @Override
-  public CompanyProfile fromEdo(final CompanyProfileEdo edo) {
-    final CompanyProfile model = new CompanyProfile(new Company().fromEdo(edo.getCompany()),
-                                                    new Department().fromEdoList(edo.getDepartments()),
-                                                    new UserGroup().fromEdoList(edo.getUserGroups()));
-
-    return model;
   }
 
 }

@@ -18,6 +18,7 @@ import com.pth.iflow.common.edo.models.xml.WorkflowFileVersionEdo;
 import com.pth.iflow.common.edo.models.xml.WorkflowSearchFilterEdo;
 import com.pth.iflow.common.edo.models.xml.WorkflowTypeEdo;
 import com.pth.iflow.common.edo.models.xml.WorkflowTypeStepEdo;
+import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.core.model.Company;
 import com.pth.iflow.core.model.Department;
 import com.pth.iflow.core.model.DepartmentGroup;
@@ -30,7 +31,6 @@ import com.pth.iflow.core.model.WorkflowFileVersion;
 import com.pth.iflow.core.model.WorkflowSearchFilter;
 import com.pth.iflow.core.model.WorkflowType;
 import com.pth.iflow.core.model.WorkflowTypeStep;
-import com.pth.iflow.core.model.exceptions.MessageConversionFailureException;
 
 public class ModelEdoMapper {
 
@@ -47,7 +47,7 @@ public class ModelEdoMapper {
     return edo;
   }
 
-  public static Company fromEdo(final CompanyEdo edo) throws MessageConversionFailureException {
+  public static Company fromEdo(final CompanyEdo edo) throws IFlowMessageConversionFailureException {
     validateCustomer(edo);
 
     final Company model = new Company();
@@ -72,7 +72,7 @@ public class ModelEdoMapper {
     return edo;
   }
 
-  public static Department fromEdo(final DepartmentEdo edo) throws MessageConversionFailureException {
+  public static Department fromEdo(final DepartmentEdo edo) throws IFlowMessageConversionFailureException {
     validateCustomer(edo);
 
     final Department model = new Department();
@@ -98,7 +98,7 @@ public class ModelEdoMapper {
     return edo;
   }
 
-  public static DepartmentGroup fromEdo(final DepartmentGroupEdo edo) throws MessageConversionFailureException {
+  public static DepartmentGroup fromEdo(final DepartmentGroupEdo edo) throws IFlowMessageConversionFailureException {
     validateCustomer(edo);
 
     final DepartmentGroup model = new DepartmentGroup();
@@ -132,7 +132,7 @@ public class ModelEdoMapper {
     return edo;
   }
 
-  public static User fromEdo(final UserEdo edo) throws MessageConversionFailureException {
+  public static User fromEdo(final UserEdo edo) throws IFlowMessageConversionFailureException {
     validateCustomer(edo);
 
     final User model = new User();
@@ -166,7 +166,7 @@ public class ModelEdoMapper {
     return edo;
   }
 
-  public static UserGroup fromEdo(final UserGroupEdo edo) throws MessageConversionFailureException {
+  public static UserGroup fromEdo(final UserGroupEdo edo) throws IFlowMessageConversionFailureException {
     validateCustomer(edo);
 
     final UserGroup model = new UserGroup();
@@ -202,7 +202,7 @@ public class ModelEdoMapper {
     return edo;
   }
 
-  public static Workflow fromEdo(final WorkflowEdo edo) throws MessageConversionFailureException {
+  public static Workflow fromEdo(final WorkflowEdo edo) throws IFlowMessageConversionFailureException {
     validateCustomer(edo);
 
     final Workflow model = new Workflow();
@@ -242,7 +242,7 @@ public class ModelEdoMapper {
     return edo;
   }
 
-  public static WorkflowAction fromEdo(final WorkflowActionEdo edo) throws MessageConversionFailureException {
+  public static WorkflowAction fromEdo(final WorkflowActionEdo edo) throws IFlowMessageConversionFailureException {
     validateCustomer(edo);
 
     final WorkflowAction model = new WorkflowAction();
@@ -275,7 +275,7 @@ public class ModelEdoMapper {
     return edo;
   }
 
-  public static WorkflowTypeStep fromEdo(final WorkflowTypeStepEdo edo) throws MessageConversionFailureException {
+  public static WorkflowTypeStep fromEdo(final WorkflowTypeStepEdo edo) throws IFlowMessageConversionFailureException {
     validateCustomer(edo);
 
     final WorkflowTypeStep model = new WorkflowTypeStep();
@@ -310,7 +310,7 @@ public class ModelEdoMapper {
     return edo;
   }
 
-  public static WorkflowFile fromEdo(final WorkflowFileEdo edo) throws MessageConversionFailureException {
+  public static WorkflowFile fromEdo(final WorkflowFileEdo edo) throws IFlowMessageConversionFailureException {
     validateCustomer(edo);
     final WorkflowFile model = new WorkflowFile();
 
@@ -344,7 +344,7 @@ public class ModelEdoMapper {
     return edo;
   }
 
-  public static WorkflowFileVersion fromEdo(final WorkflowFileVersionEdo edo) throws MessageConversionFailureException {
+  public static WorkflowFileVersion fromEdo(final WorkflowFileVersionEdo edo) throws IFlowMessageConversionFailureException {
     validateCustomer(edo);
     final WorkflowFileVersion model = new WorkflowFileVersion();
 
@@ -378,7 +378,7 @@ public class ModelEdoMapper {
     return edo;
   }
 
-  public static WorkflowType fromEdo(final WorkflowTypeEdo edo) throws MessageConversionFailureException {
+  public static WorkflowType fromEdo(final WorkflowTypeEdo edo) throws IFlowMessageConversionFailureException {
     validateCustomer(edo);
     final WorkflowType model = new WorkflowType();
 
@@ -430,7 +430,7 @@ public class ModelEdoMapper {
     return edoList;
   }
 
-  public static List<WorkflowFileVersion> fromWorkflowFileVersionEdoList(final List<WorkflowFileVersionEdo> edoList) throws MessageConversionFailureException {
+  public static List<WorkflowFileVersion> fromWorkflowFileVersionEdoList(final List<WorkflowFileVersionEdo> edoList) throws IFlowMessageConversionFailureException {
     final List<WorkflowFileVersion> modelList = new ArrayList<>();
     for (final WorkflowFileVersionEdo edo : edoList) {
       modelList.add(fromEdo(edo));
@@ -448,7 +448,7 @@ public class ModelEdoMapper {
     return edoList;
   }
 
-  public static List<WorkflowFile> fromWorkflowFileEdoList(final List<WorkflowFileEdo> edoList) throws MessageConversionFailureException {
+  public static List<WorkflowFile> fromWorkflowFileEdoList(final List<WorkflowFileEdo> edoList) throws IFlowMessageConversionFailureException {
     final List<WorkflowFile> modelList = new ArrayList<>();
     for (final WorkflowFileEdo edo : edoList) {
       modelList.add(fromEdo(edo));
@@ -466,7 +466,7 @@ public class ModelEdoMapper {
     return edoList;
   }
 
-  public static List<WorkflowAction> fromWorkflowActionEdoList(final List<WorkflowActionEdo> edoList) throws MessageConversionFailureException {
+  public static List<WorkflowAction> fromWorkflowActionEdoList(final List<WorkflowActionEdo> edoList) throws IFlowMessageConversionFailureException {
     final List<WorkflowAction> modelList = new ArrayList<>();
     for (final WorkflowActionEdo edo : edoList) {
       modelList.add(fromEdo(edo));
@@ -484,7 +484,7 @@ public class ModelEdoMapper {
     return edoList;
   }
 
-  public static List<WorkflowTypeStep> fromWorkflowTypeStepEdoList(final List<WorkflowTypeStepEdo> edoList) throws MessageConversionFailureException {
+  public static List<WorkflowTypeStep> fromWorkflowTypeStepEdoList(final List<WorkflowTypeStepEdo> edoList) throws IFlowMessageConversionFailureException {
     final List<WorkflowTypeStep> modelList = new ArrayList<>();
     for (final WorkflowTypeStepEdo edo : edoList) {
       modelList.add(fromEdo(edo));
@@ -502,7 +502,7 @@ public class ModelEdoMapper {
     return edoList;
   }
 
-  public static List<DepartmentGroup> fromDepartmentGroupEdoList(final List<DepartmentGroupEdo> edoList) throws MessageConversionFailureException {
+  public static List<DepartmentGroup> fromDepartmentGroupEdoList(final List<DepartmentGroupEdo> edoList) throws IFlowMessageConversionFailureException {
     final List<DepartmentGroup> modelList = new ArrayList<>();
     for (final DepartmentGroupEdo edo : edoList) {
       modelList.add(fromEdo(edo));
@@ -556,11 +556,11 @@ public class ModelEdoMapper {
     return edoList;
   }
 
-  private static <E> void validateCustomer(final E model) throws MessageConversionFailureException {
+  private static <E> void validateCustomer(final E model) throws IFlowMessageConversionFailureException {
     final Set<ConstraintViolation<E>> violations = VALIDATOR.validate(model);
     if (violations != null && violations.size() > 0) {
       final String validationErrorMessage = createValidationErrorMessage(violations);
-      throw new MessageConversionFailureException(validationErrorMessage);
+      throw new IFlowMessageConversionFailureException(validationErrorMessage);
     }
   }
 
