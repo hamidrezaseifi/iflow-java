@@ -20,6 +20,7 @@ public class GuiWorkflowFile extends DataModelBase<WorkflowFileEdo, GuiWorkflowF
   private Integer                            version;
   private final List<GuiWorkflowFileVersion> fileVersions = new ArrayList<>();
 
+  @Override
   public Long getId() {
     return this.id;
   }
@@ -92,10 +93,12 @@ public class GuiWorkflowFile extends DataModelBase<WorkflowFileEdo, GuiWorkflowF
     this.status = status;
   }
 
+  @Override
   public Integer getVersion() {
     return this.version;
   }
 
+  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
@@ -128,49 +131,6 @@ public class GuiWorkflowFile extends DataModelBase<WorkflowFileEdo, GuiWorkflowF
     this.fileVersions.add(fileVersion);
 
     return fileVersion;
-  }
-
-  @Override
-  public WorkflowFileEdo toEdo() {
-    final WorkflowFileEdo edo = new WorkflowFileEdo();
-    edo.setTitle(this.title);
-    edo.setExtention(this.extention);
-    edo.setComments(this.comments);
-    edo.setStatus(this.status);
-    edo.setId(this.id);
-    edo.setCreatedBy(this.createdBy);
-    edo.setActiveFilePath(this.activeFilePath);
-    edo.setActiveFileVersion(this.activeFileVersion);
-    edo.setWorkflowId(this.workflowId);
-    edo.setVersion(this.version);
-
-    edo.setFileVersions(DataModelBase.toEdoList(this.fileVersions));
-
-    return edo;
-  }
-
-  @Override
-  public GuiWorkflowFile fromEdo(final WorkflowFileEdo edo) {
-    if (edo == null) {
-      return null;
-    }
-
-    final GuiWorkflowFile model = new GuiWorkflowFile();
-
-    model.setTitle(edo.getTitle());
-    model.setExtention(edo.getExtention());
-    model.setComments(edo.getComments());
-    model.setStatus(edo.getStatus());
-    model.setId(edo.getId());
-    model.setCreatedBy(edo.getCreatedBy());
-    model.setActiveFilePath(edo.getActiveFilePath());
-    model.setActiveFileVersion(edo.getActiveFileVersion());
-    model.setWorkflowId(edo.getWorkflowId());
-    model.setVersion(edo.getVersion());
-
-    model.setFileVersions(new GuiWorkflowFileVersion().fromEdoList(edo.getFileVersions()));
-
-    return model;
   }
 
 }

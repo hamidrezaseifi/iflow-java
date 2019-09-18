@@ -14,6 +14,7 @@ public class GuiWorkflowTypeStep extends DataModelBase<WorkflowTypeStepEdo, GuiW
   private Integer status;
   private Integer version;
 
+  @Override
   public Long getId() {
     return this.id;
   }
@@ -76,10 +77,12 @@ public class GuiWorkflowTypeStep extends DataModelBase<WorkflowTypeStepEdo, GuiW
     this.status = status;
   }
 
+  @Override
   public Integer getVersion() {
     return this.version;
   }
 
+  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
@@ -94,40 +97,6 @@ public class GuiWorkflowTypeStep extends DataModelBase<WorkflowTypeStepEdo, GuiW
 
   public boolean isTheSameStep(final GuiWorkflowTypeStep other) {
     return this.stepIndex == other.getStepIndex();
-  }
-
-  @Override
-  public WorkflowTypeStepEdo toEdo() {
-    final WorkflowTypeStepEdo edo = new WorkflowTypeStepEdo();
-    edo.setStepIndex(this.stepIndex);
-    edo.setViewName(this.viewName);
-    edo.setTitle(this.title);
-    edo.setComments(this.comments);
-    edo.setStatus(this.status);
-    edo.setId(this.id);
-    edo.setWorkflowTypeId(this.workflowTypeId);
-    edo.setVersion(this.version);
-
-    return edo;
-  }
-
-  @Override
-  public GuiWorkflowTypeStep fromEdo(final WorkflowTypeStepEdo edo) {
-    if (edo == null) {
-      return null;
-    }
-    final GuiWorkflowTypeStep model = new GuiWorkflowTypeStep();
-
-    model.setStepIndex(edo.getStepIndex());
-    model.setViewName(edo.getViewName());
-    model.setTitle(edo.getTitle());
-    model.setComments(edo.getComments());
-    model.setStatus(edo.getStatus());
-    model.setVersion(edo.getVersion());
-    model.setId(edo.getId());
-    model.setWorkflowTypeId(edo.getWorkflowTypeId());
-
-    return model;
   }
 
 }

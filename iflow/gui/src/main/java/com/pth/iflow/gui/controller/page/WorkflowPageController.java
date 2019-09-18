@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.GuiWorkflow;
 import com.pth.iflow.gui.models.GuiWorkflowFile;
@@ -51,7 +52,7 @@ public class WorkflowPageController extends GuiPageControllerBase {
   @ResponseStatus(HttpStatus.OK)
   @GetMapping(path = { "/edit/{workflowId}" })
   public String showWorkflowEdit(final Model model, @PathVariable(required = false) final Long workflowId,
-      final HttpServletResponse response) throws GuiCustomizedException, IOException {
+      final HttpServletResponse response) throws GuiCustomizedException, IOException, IFlowMessageConversionFailureException {
 
     final Long iWorkflowId = (workflowId != null) && (workflowId > 0) ? workflowId : 0;
     if (iWorkflowId == 0) {
@@ -68,7 +69,7 @@ public class WorkflowPageController extends GuiPageControllerBase {
   @GetMapping(path = { "/file/view/{workflowId}/{fileId}" })
   public void viewWorkflowFile(final Model model, @PathVariable(required = true) final Long fileId,
       @PathVariable(required = true) final Long workflowId, final HttpServletResponse response)
-      throws GuiCustomizedException, IOException {
+      throws GuiCustomizedException, IOException, IFlowMessageConversionFailureException {
 
     final GuiWorkflowFile wfile = this.workflowHandler.readWorkflowFile(workflowId, fileId);
 
@@ -88,7 +89,7 @@ public class WorkflowPageController extends GuiPageControllerBase {
   @ResponseBody
   public ResponseEntity<InputStreamResource> downloadWorkflowFile(final Model model, @PathVariable(required = true) final Long fileId,
       @PathVariable(required = true) final Long workflowId, final HttpServletResponse response)
-      throws GuiCustomizedException, IOException {
+      throws GuiCustomizedException, IOException, IFlowMessageConversionFailureException {
 
     final GuiWorkflowFile wfile = this.workflowHandler.readWorkflowFile(workflowId, fileId);
 

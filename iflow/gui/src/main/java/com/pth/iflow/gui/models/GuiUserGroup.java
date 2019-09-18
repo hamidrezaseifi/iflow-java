@@ -5,16 +5,17 @@ import com.pth.iflow.common.edo.models.xml.UserGroupEdo;
 
 public class GuiUserGroup extends DataModelBase<UserGroupEdo, GuiUserGroup> {
 
-  private Long id;
+  private Long    id;
 
-  private Long companyId;
+  private Long    companyId;
 
-  private String title;
+  private String  title;
 
   private Integer status;
 
   private Integer version;
 
+  @Override
   public Long getId() {
     return this.id;
   }
@@ -47,36 +48,14 @@ public class GuiUserGroup extends DataModelBase<UserGroupEdo, GuiUserGroup> {
     this.status = status;
   }
 
+  @Override
   public Integer getVersion() {
     return this.version;
   }
 
+  @Override
   public void setVersion(final Integer version) {
     this.version = version;
-  }
-
-  @Override
-  public UserGroupEdo toEdo() {
-    final UserGroupEdo edo = new UserGroupEdo();
-    edo.setCompanyId(this.companyId);
-    edo.setId(this.id);
-    edo.setStatus(this.status);
-    edo.setTitle(this.title);
-    edo.setVersion(this.version);
-
-    return edo;
-  }
-
-  @Override
-  public GuiUserGroup fromEdo(final UserGroupEdo edo) {
-    final GuiUserGroup model = new GuiUserGroup();
-    model.setCompanyId(edo.getCompanyId());
-    model.setId(edo.getId());
-    model.setStatus(edo.getStatus());
-    model.setTitle(edo.getTitle());
-    model.setVersion(edo.getVersion());
-
-    return model;
   }
 
 }

@@ -30,6 +30,7 @@ import com.pth.iflow.gui.models.GuiWorkflow;
 import com.pth.iflow.gui.models.GuiWorkflowCreateRequest;
 import com.pth.iflow.gui.models.GuiWorkflowSearchFilter;
 import com.pth.iflow.gui.models.GuiWorkflowType;
+import com.pth.iflow.gui.models.mapper.GuiModelEdoMapper;
 import com.pth.iflow.gui.services.impl.WorkflowAccess;
 
 @RunWith(SpringRunner.class)
@@ -37,17 +38,17 @@ import com.pth.iflow.gui.services.impl.WorkflowAccess;
 @AutoConfigureMockMvc
 public class WorkflowAccessTest extends TestDataProducer {
 
-  private IWorkflowAccess workflowAccess;
+  private IWorkflowAccess                     workflowAccess;
 
   @MockBean
-  private IRestTemplateCall restTemplate;
+  private IRestTemplateCall                   restTemplate;
 
   @MockBean
   private GuiConfiguration.ModuleAccessConfig moduleAccessConfig;
 
-  private URI testUri;
+  private URI                                 testUri;
 
-  private final String testToken = "test-token";
+  private final String                        testToken = "test-token";
 
   @Before
   public void setUp() throws Exception {
@@ -76,11 +77,8 @@ public class WorkflowAccessTest extends TestDataProducer {
 
     final GuiWorkflow workflow = this.getTestGuiWorkflow(1L);
 
-    when(this.restTemplate.callRestGet(any(URI.class),
-                                       any(EModule.class),
-                                       eq(WorkflowEdo.class),
-                                       any(String.class),
-                                       any(boolean.class))).thenReturn(workflow.toEdo());
+    when(this.restTemplate.callRestGet(any(URI.class), any(EModule.class), eq(WorkflowEdo.class), any(String.class),
+        any(boolean.class))).thenReturn(GuiModelEdoMapper.toEdo(workflow));
 
     final GuiWorkflow resWorkflow = this.workflowAccess.readWorkflow(workflow.getId(), this.testToken);
 
@@ -94,16 +92,13 @@ public class WorkflowAccessTest extends TestDataProducer {
   @Test
   public void testCreateWorkflow() throws Exception {
 
-    final GuiWorkflowCreateRequest createRequest = getTestGuiWorkflowCreateRequest();
+    final GuiWorkflowCreateRequest createRequest = this.getTestGuiWorkflowCreateRequest();
 
     final List<GuiWorkflow> workflowList = this.getTestGuiWorkflowList();
 
-    when(this.restTemplate.callRestPost(any(URI.class),
-                                        any(EModule.class),
-                                        any(WorkflowCreateRequestEdo.class),
-                                        eq(WorkflowListEdo.class),
-                                        any(String.class),
-                                        any(boolean.class))).thenReturn(new WorkflowListEdo(GuiWorkflow.toEdoList(workflowList)));
+    when(this.restTemplate.callRestPost(any(URI.class), any(EModule.class), any(WorkflowCreateRequestEdo.class),
+        eq(WorkflowListEdo.class), any(String.class), any(boolean.class)))
+            .thenReturn(new WorkflowListEdo(GuiModelEdoMapper.toWorkflowEdoList(workflowList)));
 
     final List<GuiWorkflow> resWorkflowList = this.workflowAccess.createWorkflow(createRequest, this.testToken);
 
@@ -117,12 +112,8 @@ public class WorkflowAccessTest extends TestDataProducer {
   public void testSaveWorkflow() throws Exception {
     final GuiWorkflow workflow = this.getTestGuiWorkflow(1L);
 
-    when(this.restTemplate.callRestPost(any(URI.class),
-                                        any(EModule.class),
-                                        any(WorkflowEdo.class),
-                                        eq(WorkflowEdo.class),
-                                        any(String.class),
-                                        any(boolean.class))).thenReturn(workflow.toEdo());
+    when(this.restTemplate.callRestPost(any(URI.class), any(EModule.class), any(WorkflowEdo.class), eq(WorkflowEdo.class),
+        any(String.class), any(boolean.class))).thenReturn(GuiModelEdoMapper.toEdo(workflow));
 
     final GuiWorkflow resWorkflow = this.workflowAccess.saveWorkflow(workflow, this.testToken);
 
@@ -138,13 +129,10 @@ public class WorkflowAccessTest extends TestDataProducer {
 
     final List<GuiWorkflowType> workflowTypeList = this.getTestGuiWorkflowTypeList();
 
-    final WorkflowTypeListEdo typeListEdo = new WorkflowTypeListEdo(GuiWorkflowType.toEdoList(workflowTypeList));
+    final WorkflowTypeListEdo typeListEdo = new WorkflowTypeListEdo(GuiModelEdoMapper.toWorkflowTypeEdoList(workflowTypeList));
 
-    when(this.restTemplate.callRestGet(any(URI.class),
-                                       any(EModule.class),
-                                       eq(WorkflowTypeListEdo.class),
-                                       any(String.class),
-                                       any(boolean.class))).thenReturn(typeListEdo);
+    when(this.restTemplate.callRestGet(any(URI.class), any(EModule.class), eq(WorkflowTypeListEdo.class), any(String.class),
+        any(boolean.class))).thenReturn(typeListEdo);
 
     final List<GuiWorkflowType> resWorkflowList = this.workflowAccess.readWorkflowTypeList(1L, this.testToken);
 
@@ -155,16 +143,13 @@ public class WorkflowAccessTest extends TestDataProducer {
 
   @Test
   public void testSearchWorkflow() throws Exception {
-    final GuiWorkflowSearchFilter searchFilter = getTestGuiWorkflowSearchFilter();
+    final GuiWorkflowSearchFilter searchFilter = this.getTestGuiWorkflowSearchFilter();
 
     final List<GuiWorkflow> workflowList = this.getTestGuiWorkflowList();
 
-    when(this.restTemplate.callRestPost(any(URI.class),
-                                        any(EModule.class),
-                                        any(WorkflowSearchFilterEdo.class),
-                                        eq(WorkflowListEdo.class),
-                                        any(String.class),
-                                        any(boolean.class))).thenReturn(new WorkflowListEdo(GuiWorkflow.toEdoList(workflowList)));
+    when(this.restTemplate.callRestPost(any(URI.class), any(EModule.class), any(WorkflowSearchFilterEdo.class),
+        eq(WorkflowListEdo.class), any(String.class), any(boolean.class)))
+            .thenReturn(new WorkflowListEdo(GuiModelEdoMapper.toWorkflowEdoList(workflowList)));
 
     final List<GuiWorkflow> resWorkflowList = this.workflowAccess.searchWorkflow(searchFilter, this.testToken);
 

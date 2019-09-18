@@ -15,6 +15,7 @@ public class GuiDepartment extends DataModelBase<DepartmentEdo, GuiDepartment> {
   private Integer                        version;
   private final List<GuiDepartmentGroup> departmentGroups = new ArrayList<>();
 
+  @Override
   public Long getId() {
     return this.id;
   }
@@ -47,10 +48,12 @@ public class GuiDepartment extends DataModelBase<DepartmentEdo, GuiDepartment> {
     this.status = status;
   }
 
+  @Override
   public Integer getVersion() {
     return this.version;
   }
 
+  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
@@ -68,33 +71,6 @@ public class GuiDepartment extends DataModelBase<DepartmentEdo, GuiDepartment> {
 
   public void addDepartmentGroup(final GuiDepartmentGroup group) {
     this.departmentGroups.add(group);
-  }
-
-  @Override
-  public DepartmentEdo toEdo() {
-    final DepartmentEdo edo = new DepartmentEdo();
-    edo.setTitle(this.title);
-    edo.setStatus(this.status);
-    edo.setId(this.id);
-    edo.setCompanyId(this.companyId);
-    edo.setDepartmentGroups(DataModelBase.toEdoList(this.departmentGroups));
-    edo.setVersion(this.version);
-
-    return edo;
-  }
-
-  @Override
-  public GuiDepartment fromEdo(final DepartmentEdo edo) {
-    final GuiDepartment model = new GuiDepartment();
-
-    model.setTitle(edo.getTitle());
-    model.setStatus(edo.getStatus());
-    model.setId(edo.getId());
-    model.setCompanyId(edo.getCompanyId());
-    model.setDepartmentGroups(new GuiDepartmentGroup().fromEdoList(edo.getDepartmentGroups()));
-    model.setVersion(edo.getVersion());
-
-    return model;
   }
 
 }

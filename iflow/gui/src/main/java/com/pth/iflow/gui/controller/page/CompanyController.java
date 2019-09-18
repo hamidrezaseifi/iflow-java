@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.GuiWorkflowType;
 import com.pth.iflow.gui.services.IWorkflowHandler;
@@ -31,7 +32,8 @@ public class CompanyController extends GuiPageControllerBase {
 
   @ResponseStatus(HttpStatus.OK)
   @GetMapping(path = { "/workflowtype" })
-  public String showWorkflowTypeList(final Model model) throws GuiCustomizedException, MalformedURLException {
+  public String showWorkflowTypeList(final Model model)
+      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     final List<GuiWorkflowType> workflowTypeList = this.workflowHandler.readWorkflowTypeList(this.getLoggedCompany().getId());
 

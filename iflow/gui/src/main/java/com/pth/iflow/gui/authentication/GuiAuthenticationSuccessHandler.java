@@ -13,11 +13,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
+import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.configurations.GuiSecurityConfigurations;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.GuiCompanyProfile;
-import com.pth.iflow.gui.models.GuiUser;
 import com.pth.iflow.gui.models.GuiProfileResponse;
+import com.pth.iflow.gui.models.GuiUser;
 import com.pth.iflow.gui.services.IProfileAccess;
 
 @Component
@@ -27,7 +28,7 @@ public class GuiAuthenticationSuccessHandler extends SimpleUrlAuthenticationSucc
   private GuiSessionUserService sessionUserService;
 
   @Autowired
-  private IProfileAccess         profileValidator;
+  private IProfileAccess        profileValidator;
 
   @Override
   public void onAuthenticationSuccess(final HttpServletRequest request, final HttpServletResponse response, final Authentication auth)
@@ -43,6 +44,10 @@ public class GuiAuthenticationSuccessHandler extends SimpleUrlAuthenticationSucc
       try {
         profileResponse = this.profileValidator.readProfile(tbToken.getUsername(), tbToken.getToken());
       } catch (GuiCustomizedException | MalformedURLException e) {
+
+      } catch (final IFlowMessageConversionFailureException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
       }
 
       if (profileResponse == null) {

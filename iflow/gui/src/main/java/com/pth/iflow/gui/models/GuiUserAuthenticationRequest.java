@@ -34,7 +34,7 @@ public class GuiUserAuthenticationRequest {
     this.companyIdentity = companyIdentity;
   }
 
-  public UserAuthenticationRequestEdo toEdo() {
+  public UserAuthenticationRequestEdo toEdo1() {
     final UserAuthenticationRequestEdo edo = new UserAuthenticationRequestEdo();
     edo.setCompanyIdentity(this.companyIdentity);
     edo.setEmail(this.email);
@@ -43,7 +43,7 @@ public class GuiUserAuthenticationRequest {
     return edo;
   }
 
-  public static GuiUserAuthenticationRequest fromEdo(final UserAuthenticationRequestEdo edo) {
+  public static GuiUserAuthenticationRequest fromEdo1(final UserAuthenticationRequestEdo edo) {
     final GuiUserAuthenticationRequest model = new GuiUserAuthenticationRequest();
     model.setCompanyIdentity(edo.getCompanyIdentity());
     model.setEmail(edo.getEmail());

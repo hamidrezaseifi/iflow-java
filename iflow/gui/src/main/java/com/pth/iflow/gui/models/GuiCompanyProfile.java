@@ -3,24 +3,19 @@ package com.pth.iflow.gui.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.pth.iflow.common.edo.models.base.DataModelBase;
-import com.pth.iflow.common.edo.models.xml.CompanyProfileEdo;
+public class GuiCompanyProfile {
 
-public class GuiCompanyProfile extends DataModelBase<CompanyProfileEdo, GuiCompanyProfile> {
-
-  private GuiCompany company;
+  private GuiCompany                company;
 
   private final List<GuiDepartment> departments = new ArrayList<>();
 
-  private final List<GuiUserGroup> userGroups = new ArrayList<>();
+  private final List<GuiUserGroup>  userGroups  = new ArrayList<>();
 
   public GuiCompanyProfile() {
 
   }
 
-  public GuiCompanyProfile(final GuiCompany company,
-                           final List<GuiDepartment> departments,
-                           final List<GuiUserGroup> userGroups) {
+  public GuiCompanyProfile(final GuiCompany company, final List<GuiDepartment> departments, final List<GuiUserGroup> userGroups) {
     this.setDepartments(departments);
     this.setUserGroups(userGroups);
     this.setCompany(company);
@@ -61,23 +56,6 @@ public class GuiCompanyProfile extends DataModelBase<CompanyProfileEdo, GuiCompa
     if (users != null) {
       this.userGroups.addAll(users);
     }
-  }
-
-  @Override
-  public CompanyProfileEdo toEdo() {
-    final CompanyProfileEdo edo = new CompanyProfileEdo(this.company.toEdo(),
-                                                        DataModelBase.toEdoList(this.departments),
-                                                        DataModelBase.toEdoList(this.userGroups));
-    return edo;
-  }
-
-  @Override
-  public GuiCompanyProfile fromEdo(final CompanyProfileEdo edo) {
-    final GuiCompanyProfile model = new GuiCompanyProfile(new GuiCompany().fromEdo(edo.getCompany()),
-                                                          new GuiDepartment().fromEdoList(edo.getDepartments()),
-                                                          new GuiUserGroup().fromEdoList(edo.getUserGroups()));
-
-    return model;
   }
 
 }

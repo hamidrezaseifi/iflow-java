@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.enums.EWorkflowActionStatus;
 import com.pth.iflow.common.enums.EWorkflowStatus;
+import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.GuiWorkflow;
 import com.pth.iflow.gui.models.GuiWorkflowAction;
@@ -50,7 +51,8 @@ public class WorkflowHandler implements IWorkflowHandler {
   }
 
   @Override
-  public GuiWorkflow readWorkflow(final Long workflowId) throws GuiCustomizedException, MalformedURLException {
+  public GuiWorkflow readWorkflow(final Long workflowId)
+      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     logger.debug("Read workflow {}", workflowId);
 
@@ -60,7 +62,7 @@ public class WorkflowHandler implements IWorkflowHandler {
 
   @Override
   public List<GuiWorkflow> createWorkflow(final GuiWorkflowCreateRequest createRequest, final HttpSession session)
-      throws GuiCustomizedException, IOException {
+      throws GuiCustomizedException, IOException, IFlowMessageConversionFailureException {
     logger.debug("Create workflow {}", createRequest.getWorkflow().getTitle());
 
     createRequest.getWorkflow().setStatus(EWorkflowStatus.INITIALIZE_REQUEST);
@@ -116,7 +118,7 @@ public class WorkflowHandler implements IWorkflowHandler {
 
   @Override
   public GuiWorkflow saveWorkflow(final GuiWorkflow workflow, final HttpSession session)
-      throws GuiCustomizedException, MalformedURLException, IOException {
+      throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
     logger.debug("Save workflow {}", workflow.getTitle());
 
     workflow.getActiveAction().setStatus(EWorkflowActionStatus.SAVING_REQUEST);
@@ -128,7 +130,7 @@ public class WorkflowHandler implements IWorkflowHandler {
 
   @Override
   public GuiWorkflow doneWorkflow(final GuiWorkflow workflow, final HttpSession session)
-      throws GuiCustomizedException, MalformedURLException, IOException {
+      throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
     logger.debug("Make workflow {} done", workflow.getTitle());
 
     workflow.getActiveAction().setStatus(EWorkflowActionStatus.DONE_REQUEST);
@@ -139,7 +141,7 @@ public class WorkflowHandler implements IWorkflowHandler {
 
   @Override
   public GuiWorkflow archiveWorkflow(final GuiWorkflow workflow, final HttpSession session)
-      throws GuiCustomizedException, MalformedURLException, IOException {
+      throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
     logger.debug("Make workflow {} archive", workflow.getTitle());
 
     workflow.setStatus(EWorkflowStatus.ARCHIVED);
@@ -148,7 +150,8 @@ public class WorkflowHandler implements IWorkflowHandler {
   }
 
   @Override
-  public List<GuiWorkflowType> readWorkflowTypeList(final Long companyId) throws GuiCustomizedException, MalformedURLException {
+  public List<GuiWorkflowType> readWorkflowTypeList(final Long companyId)
+      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     logger.debug("Read all workflow from company");
 
     return this.workflowAccess.readWorkflowTypeList(companyId, this.sessionUserInfo.getToken());
@@ -156,7 +159,7 @@ public class WorkflowHandler implements IWorkflowHandler {
 
   @Override
   public List<GuiWorkflow> searchWorkflow(final GuiWorkflowSearchFilter workflowSearchFilter)
-      throws GuiCustomizedException, MalformedURLException {
+      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     logger.debug("Search workflow from company");
     final List<GuiWorkflow> list = this.workflowAccess.searchWorkflow(workflowSearchFilter, this.sessionUserInfo.getToken());
@@ -166,7 +169,7 @@ public class WorkflowHandler implements IWorkflowHandler {
 
   @Override
   public GuiWorkflowFile readWorkflowFile(final Long workflowId, final Long fileId)
-      throws GuiCustomizedException, MalformedURLException {
+      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     GuiWorkflow workflow = null;
     if (this.sessionUserInfo.hasCachedWorkflowId(workflowId)) {
@@ -180,7 +183,8 @@ public class WorkflowHandler implements IWorkflowHandler {
     return workflowFile;
   }
 
-  private List<GuiWorkflow> prepareWorkflowList(final List<GuiWorkflow> pureWorkflowList) {
+  private List<GuiWorkflow> prepareWorkflowList(final List<GuiWorkflow> pureWorkflowList)
+      throws IFlowMessageConversionFailureException {
 
     final List<GuiWorkflow> workflowList = new ArrayList<>();
 
@@ -193,7 +197,7 @@ public class WorkflowHandler implements IWorkflowHandler {
     return workflowList;
   }
 
-  private GuiWorkflow prepareWorkflow(final GuiWorkflow workflow) {
+  private GuiWorkflow prepareWorkflow(final GuiWorkflow workflow) throws IFlowMessageConversionFailureException {
 
     workflow.setWorkflowType(this.sessionUserInfo.getWorkflowTypeById(workflow.getWorkflowTypeId()));
     workflow.setAssignToUser(this.sessionUserInfo.getUserById(workflow.getAssignTo()));
@@ -207,7 +211,7 @@ public class WorkflowHandler implements IWorkflowHandler {
     return workflow;
   }
 
-  private GuiWorkflow prepareWorkflowActions(final GuiWorkflow workflow) {
+  private GuiWorkflow prepareWorkflowActions(final GuiWorkflow workflow) throws IFlowMessageConversionFailureException {
 
     if (workflow.getIsOpen()) {
 

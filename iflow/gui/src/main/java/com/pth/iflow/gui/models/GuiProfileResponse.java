@@ -2,15 +2,13 @@ package com.pth.iflow.gui.models;
 
 import java.util.List;
 
-import com.pth.iflow.common.edo.models.xml.ProfileResponseEdo;
-
 public class GuiProfileResponse {
 
-  private GuiUser user;
+  private GuiUser           user;
 
   private GuiCompanyProfile companyProfile;
 
-  private String sessionid;
+  private String            sessionid;
 
   public GuiProfileResponse() {
     this.user = null;
@@ -24,11 +22,8 @@ public class GuiProfileResponse {
     this.sessionid = sessionid;
   }
 
-  public GuiProfileResponse(final GuiUser user,
-                         final GuiCompany company,
-                         final List<GuiDepartment> departments,
-                         final List<GuiUserGroup> userGroups,
-                         final String sessionid) {
+  public GuiProfileResponse(final GuiUser user, final GuiCompany company, final List<GuiDepartment> departments,
+      final List<GuiUserGroup> userGroups, final String sessionid) {
     this.user = user;
     this.companyProfile = new GuiCompanyProfile(company, departments, userGroups);
     this.sessionid = sessionid;
@@ -56,18 +51,6 @@ public class GuiProfileResponse {
 
   public void setSessionid(final String sessionid) {
     this.sessionid = sessionid;
-  }
-
-  public ProfileResponseEdo toEdo() {
-
-    return new ProfileResponseEdo(this.user.toEdo(), this.companyProfile.toEdo(), this.sessionid);
-  }
-
-  public static GuiProfileResponse fromEdo(final ProfileResponseEdo edo) {
-
-    return new GuiProfileResponse(new GuiUser().fromEdo(edo.getUser()),
-                               new GuiCompanyProfile().fromEdo(edo.getCompanyProfile()),
-                               edo.getSessionid());
   }
 
 }

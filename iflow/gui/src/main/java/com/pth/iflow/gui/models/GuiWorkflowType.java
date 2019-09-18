@@ -21,6 +21,7 @@ public class GuiWorkflowType extends DataModelBase<WorkflowTypeEdo, GuiWorkflowT
   private Integer                         version;
   private final List<GuiWorkflowTypeStep> steps = new ArrayList<>();
 
+  @Override
   public Long getId() {
     return this.id;
   }
@@ -107,10 +108,12 @@ public class GuiWorkflowType extends DataModelBase<WorkflowTypeEdo, GuiWorkflowT
     this.allowAssign = allowAssign;
   }
 
+  @Override
   public Integer getVersion() {
     return this.version;
   }
 
+  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
@@ -130,47 +133,9 @@ public class GuiWorkflowType extends DataModelBase<WorkflowTypeEdo, GuiWorkflowT
     this.steps.add(stepId);
   }
 
+  @Override
   public boolean isNew() {
     return (this.id == null) || (this.id <= 0);
-  }
-
-  @Override
-  public WorkflowTypeEdo toEdo() {
-    final WorkflowTypeEdo edo = new WorkflowTypeEdo();
-    edo.setTitle(this.title);
-    edo.setComments(this.comments);
-    edo.setStatus(this.status);
-    edo.setId(this.id);
-    edo.setCompanyId(this.companyId);
-    edo.setBaseTypeId(this.baseTypeId);
-    edo.setSendToController(this.sendToController);
-    edo.setManualAssign(this.manualAssign);
-    edo.setIncreaseStepAutomatic(this.increaseStepAutomatic);
-    edo.setAllowAssign(this.allowAssign);
-    edo.setSteps(DataModelBase.toEdoList(this.steps));
-    edo.setVersion(this.version);
-
-    return edo;
-  }
-
-  @Override
-  public GuiWorkflowType fromEdo(final WorkflowTypeEdo edo) {
-    final GuiWorkflowType model = new GuiWorkflowType();
-
-    model.setTitle(edo.getTitle());
-    model.setComments(edo.getComments());
-    model.setStatus(edo.getStatus());
-    model.setId(edo.getId());
-    model.setCompanyId(edo.getCompanyId());
-    model.setBaseTypeId(edo.getBaseTypeId());
-    model.setSendToController(edo.getSendToController());
-    model.setManualAssign(edo.getManualAssign());
-    model.setIncreaseStepAutomatic(edo.getIncreaseStepAutomatic());
-    model.setAllowAssign(edo.getAllowAssign());
-    model.setVersion(edo.getVersion());
-    model.setSteps(new GuiWorkflowTypeStep().fromEdoList(edo.getSteps()));
-
-    return model;
   }
 
 }

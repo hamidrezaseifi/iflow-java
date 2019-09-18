@@ -11,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 
+import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.authentication.GuiAuthenticationDetails;
 import com.pth.iflow.gui.authentication.GuiAuthenticationToken;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
@@ -41,11 +42,11 @@ public class GuiCustomAuthenticationProvider implements AuthenticationProvider {
       GuiUserAuthenticationResponse authResponse = null;
       try {
         authResponse = this.profileValidator.authenticate(username, password, companyid);
-      }
-      catch (final GuiCustomizedException e) {
+      } catch (final GuiCustomizedException e) {
 
-      }
-      catch (final MalformedURLException e) {
+      } catch (final MalformedURLException e) {
+
+      } catch (final IFlowMessageConversionFailureException e) {
 
       }
 

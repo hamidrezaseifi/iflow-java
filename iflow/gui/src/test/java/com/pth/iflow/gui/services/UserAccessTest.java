@@ -24,6 +24,7 @@ import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.gui.TestDataProducer;
 import com.pth.iflow.gui.configurations.GuiConfiguration;
 import com.pth.iflow.gui.models.GuiUser;
+import com.pth.iflow.gui.models.mapper.GuiModelEdoMapper;
 import com.pth.iflow.gui.models.ui.GuiSessionUserInfo;
 import com.pth.iflow.gui.services.impl.UserAccess;
 
@@ -32,20 +33,20 @@ import com.pth.iflow.gui.services.impl.UserAccess;
 @AutoConfigureMockMvc
 public class UserAccessTest extends TestDataProducer {
 
-  private IUserAccess userAccess;
+  private IUserAccess                         userAccess;
 
   @MockBean
-  private IRestTemplateCall restTemplate;
+  private IRestTemplateCall                   restTemplate;
 
   @MockBean
   private GuiConfiguration.ModuleAccessConfig moduleAccessConfig;
 
   @MockBean
-  private GuiSessionUserInfo sessionUserInfo;
+  private GuiSessionUserInfo                  sessionUserInfo;
 
-  private URI testUri;
+  private URI                                 testUri;
 
-  private String validTocken;
+  private String                              validTocken;
 
   @Before
   public void setUp() throws Exception {
@@ -64,8 +65,8 @@ public class UserAccessTest extends TestDataProducer {
     when(this.moduleAccessConfig.getSearchWorkflowUri()).thenReturn(this.testUri);
 
     when(this.sessionUserInfo.getToken()).thenReturn(this.validTocken);
-    when(this.sessionUserInfo.getUserById(any(Long.class))).thenReturn(getTestUser());
-    when(this.sessionUserInfo.getWorkflowTypeById(any(Long.class))).thenReturn(getTestGuiWorkflowType());
+    when(this.sessionUserInfo.getUserById(any(Long.class))).thenReturn(this.getTestUser());
+    when(this.sessionUserInfo.getWorkflowTypeById(any(Long.class))).thenReturn(this.getTestGuiWorkflowType());
 
     this.userAccess = new UserAccess(this.restTemplate, this.moduleAccessConfig, this.sessionUserInfo);
 
@@ -81,11 +82,8 @@ public class UserAccessTest extends TestDataProducer {
 
     final GuiUser user = this.getTestUser();
 
-    when(this.restTemplate.callRestGet(any(URI.class),
-                                       any(EModule.class),
-                                       eq(UserEdo.class),
-                                       any(String.class),
-                                       any(boolean.class))).thenReturn(user.toEdo());
+    when(this.restTemplate.callRestGet(any(URI.class), any(EModule.class), eq(UserEdo.class), any(String.class), any(boolean.class)))
+        .thenReturn(GuiModelEdoMapper.toEdo(user));
 
     final GuiUser resUser = this.userAccess.readUser(1L);
 
@@ -102,12 +100,8 @@ public class UserAccessTest extends TestDataProducer {
 
     final GuiUser user = this.getTestUser();
 
-    when(this.restTemplate.callRestPost(any(URI.class),
-                                        any(EModule.class),
-                                        any(UserEdo.class),
-                                        eq(UserEdo.class),
-                                        any(String.class),
-                                        any(boolean.class))).thenReturn(user.toEdo());
+    when(this.restTemplate.callRestPost(any(URI.class), any(EModule.class), any(UserEdo.class), eq(UserEdo.class), any(String.class),
+        any(boolean.class))).thenReturn(GuiModelEdoMapper.toEdo(user));
 
     final GuiUser resUser = this.userAccess.saveUser(user);
 
@@ -121,13 +115,10 @@ public class UserAccessTest extends TestDataProducer {
   @Test
   public void testGetCompanyUserList() throws Exception {
     final List<GuiUser> userList = this.getTestUserList();
-    final UserListEdo listEdo = new UserListEdo(GuiUser.toEdoList(userList));
+    final UserListEdo listEdo = new UserListEdo(GuiModelEdoMapper.toUserEdoList(userList));
 
-    when(this.restTemplate.callRestGet(any(URI.class),
-                                       any(EModule.class),
-                                       eq(UserListEdo.class),
-                                       any(String.class),
-                                       any(boolean.class))).thenReturn(listEdo);
+    when(this.restTemplate.callRestGet(any(URI.class), any(EModule.class), eq(UserListEdo.class), any(String.class),
+        any(boolean.class))).thenReturn(listEdo);
 
     final List<GuiUser> resUserList = this.userAccess.getCompanyUserList(1L);
 

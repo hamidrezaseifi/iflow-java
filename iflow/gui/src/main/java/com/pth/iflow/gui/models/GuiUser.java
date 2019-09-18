@@ -36,12 +36,13 @@ public class GuiUser extends DataModelBase<UserEdo, GuiUser> {
   private final List<Long>        deputies         = new ArrayList<>();
   private final List<EUiUserRole> roles            = new ArrayList<>();
 
-  private boolean isEnabled;
+  private boolean                 isEnabled;
 
   /**
    * @return the id
    */
 
+  @Override
   public Long getId() {
     return this.id;
   }
@@ -144,6 +145,7 @@ public class GuiUser extends DataModelBase<UserEdo, GuiUser> {
    * @return the version
    */
 
+  @Override
   public Integer getVersion() {
     return this.version;
   }
@@ -152,6 +154,7 @@ public class GuiUser extends DataModelBase<UserEdo, GuiUser> {
    * @param version the version to set
    */
 
+  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
@@ -255,6 +258,10 @@ public class GuiUser extends DataModelBase<UserEdo, GuiUser> {
     return this.roles;
   }
 
+  public List<Integer> getRolesInt() {
+    return this.roles.stream().map(r -> r.getId()).collect(Collectors.toList());
+  }
+
   public void setRoles(final List<Integer> roles) {
     this.roles.clear();
     if (roles != null) {
@@ -306,49 +313,6 @@ public class GuiUser extends DataModelBase<UserEdo, GuiUser> {
 
   public List<GrantedAuthority> getAuthorities() {
     return AuthorityUtils.commaSeparatedStringToAuthorityList(this.getRolesAuthoritiesNames());
-  }
-
-  @Override
-  public UserEdo toEdo() {
-    final UserEdo edo = new UserEdo();
-    edo.setFirstName(this.firstName);
-    edo.setLastName(this.lastName);
-    edo.setPermission(this.permission);
-    edo.setStatus(this.status);
-    edo.setVersion(this.version);
-    edo.setEmail(this.email);
-    edo.setBirthDate(this.birthDate);
-    edo.setId(this.id);
-    edo.setCompanyId(this.companyId);
-    edo.setGroups(this.groups);
-    edo.setDepartments(this.departments);
-    edo.setDepartmentGroups(this.departmentGroups);
-    edo.setDeputies(this.deputies);
-    edo.setRoles(this.roles.stream().map(r -> r.getId()).collect(Collectors.toList()));
-
-    return edo;
-  }
-
-  @Override
-  public GuiUser fromEdo(final UserEdo edo) {
-    final GuiUser model = new GuiUser();
-
-    model.setFirstName(edo.getFirstName());
-    model.setLastName(edo.getLastName());
-    model.setPermission(edo.getPermission());
-    model.setStatus(edo.getStatus());
-    model.setVersion(edo.getVersion());
-    model.setEmail(edo.getEmail());
-    model.setBirthDate(edo.getBirthDate());
-    model.setId(edo.getId());
-    model.setCompanyId(edo.getCompanyId());
-    model.setGroups(edo.getGroups());
-    model.setDepartments(edo.getDepartments());
-    model.setDepartmentGroups(edo.getDepartmentGroups());
-    model.setDeputies(edo.getDeputies());
-    model.setRoles(edo.getRoles());
-
-    return model;
   }
 
 }

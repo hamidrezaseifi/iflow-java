@@ -88,7 +88,7 @@ public class GuiWorkflowSearchFilter {
     this.title = title;
   }
 
-  public WorkflowSearchFilterEdo toEdo() {
+  public WorkflowSearchFilterEdo toEdo1() {
     final WorkflowSearchFilterEdo edo = new WorkflowSearchFilterEdo();
     edo.setAssignedUserIdList(this.assignedUserIdList);
     edo.setStatusList(this.statusList);
