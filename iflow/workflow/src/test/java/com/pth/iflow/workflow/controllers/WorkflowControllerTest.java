@@ -24,10 +24,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.pth.iflow.common.edo.models.xml.WorkflowCreateRequestEdo;
-import com.pth.iflow.common.edo.models.xml.WorkflowEdo;
-import com.pth.iflow.common.edo.models.xml.WorkflowListEdo;
-import com.pth.iflow.common.edo.models.xml.WorkflowSearchFilterEdo;
+import com.pth.iflow.common.edo.models.WorkflowCreateRequestEdo;
+import com.pth.iflow.common.edo.models.WorkflowEdo;
+import com.pth.iflow.common.edo.models.WorkflowListEdo;
+import com.pth.iflow.common.edo.models.WorkflowSearchFilterEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
 import com.pth.iflow.workflow.TestDataProducer;

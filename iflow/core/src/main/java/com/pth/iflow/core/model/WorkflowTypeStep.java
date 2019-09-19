@@ -1,8 +1,9 @@
 package com.pth.iflow.core.model;
 
 import java.time.LocalDateTime;
+
+import com.pth.iflow.common.edo.models.WorkflowTypeStepEdo;
 import com.pth.iflow.common.edo.models.base.DataModelBase;
-import com.pth.iflow.common.edo.models.xml.WorkflowTypeStepEdo;
 
 public class WorkflowTypeStep extends DataModelBase<WorkflowTypeStepEdo, WorkflowTypeStep> {
 

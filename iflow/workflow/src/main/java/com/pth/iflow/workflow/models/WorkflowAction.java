@@ -1,7 +1,7 @@
 package com.pth.iflow.workflow.models;
 
+import com.pth.iflow.common.edo.models.WorkflowActionEdo;
 import com.pth.iflow.common.edo.models.base.WorkflowActionModelBase;
-import com.pth.iflow.common.edo.models.xml.WorkflowActionEdo;
 import com.pth.iflow.common.enums.EWorkflowActionStatus;
 
 public class WorkflowAction extends WorkflowActionModelBase<WorkflowActionEdo, WorkflowAction> {

@@ -2,8 +2,9 @@ package com.pth.iflow.backend.models;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.pth.iflow.common.edo.models.WorkflowFileEdo;
 import com.pth.iflow.common.edo.models.base.DataModelBase;
-import com.pth.iflow.common.edo.models.xml.WorkflowFileEdo;
 
 public class BackendWorkflowFile extends DataModelBase<WorkflowFileEdo, BackendWorkflowFile> {
 

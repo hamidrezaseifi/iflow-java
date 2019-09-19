@@ -1,8 +1,9 @@
 package com.pth.iflow.core.model;
 
 import java.time.LocalDateTime;
+
+import com.pth.iflow.common.edo.models.UserGroupEdo;
 import com.pth.iflow.common.edo.models.base.DataModelBase;
-import com.pth.iflow.common.edo.models.xml.UserGroupEdo;
 
 public class UserGroup extends DataModelBase<UserGroupEdo, UserGroup> {
 

@@ -1,7 +1,7 @@
 package com.pth.iflow.workflow.models;
 
+import com.pth.iflow.common.edo.models.CompanyEdo;
 import com.pth.iflow.common.edo.models.base.DataModelBase;
-import com.pth.iflow.common.edo.models.xml.CompanyEdo;
 
 public class Company extends DataModelBase<CompanyEdo, Company> {
 

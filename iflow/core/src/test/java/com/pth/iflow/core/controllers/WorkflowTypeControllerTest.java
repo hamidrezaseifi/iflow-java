@@ -21,8 +21,9 @@ import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConve
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import com.pth.iflow.common.edo.models.xml.WorkflowTypeEdo;
-import com.pth.iflow.common.edo.models.xml.WorkflowTypeListEdo;
+
+import com.pth.iflow.common.edo.models.WorkflowTypeEdo;
+import com.pth.iflow.common.edo.models.WorkflowTypeListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.XmlRestConfig;
 import com.pth.iflow.core.TestDataProducer;

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.pth.iflow.common.edo.models.xml.WorkflowFileEdo;
+import com.pth.iflow.common.edo.models.WorkflowFileEdo;
 import com.pth.iflow.core.helper.BuildInfoProperties;
 
 @RestController(value = "/")

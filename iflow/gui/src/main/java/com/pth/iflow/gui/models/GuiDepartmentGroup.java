@@ -1,7 +1,7 @@
 package com.pth.iflow.gui.models;
 
+import com.pth.iflow.common.edo.models.DepartmentGroupEdo;
 import com.pth.iflow.common.edo.models.base.DataModelBase;
-import com.pth.iflow.common.edo.models.xml.DepartmentGroupEdo;
 
 public class GuiDepartmentGroup extends DataModelBase<DepartmentGroupEdo, GuiDepartmentGroup> {
 

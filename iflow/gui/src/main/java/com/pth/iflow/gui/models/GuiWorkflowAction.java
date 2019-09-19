@@ -1,8 +1,8 @@
 package com.pth.iflow.gui.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.pth.iflow.common.edo.models.WorkflowActionEdo;
 import com.pth.iflow.common.edo.models.base.WorkflowActionModelBase;
-import com.pth.iflow.common.edo.models.xml.WorkflowActionEdo;
 import com.pth.iflow.common.enums.EWorkflowActionStatus;
 
 @JsonIgnoreProperties(value = { "running" })

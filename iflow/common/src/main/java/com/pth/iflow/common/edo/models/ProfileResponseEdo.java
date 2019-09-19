@@ -1,4 +1,4 @@
-package com.pth.iflow.common.edo.models.xml;
+package com.pth.iflow.common.edo.models;
 
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;

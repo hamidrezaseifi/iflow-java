@@ -1,6 +1,6 @@
 package com.pth.iflow.gui.models;
 
-import com.pth.iflow.common.edo.models.xml.UserAuthenticationResponseEdo;
+import com.pth.iflow.common.edo.models.UserAuthenticationResponseEdo;
 
 public class GuiUserAuthenticationResponse {
 

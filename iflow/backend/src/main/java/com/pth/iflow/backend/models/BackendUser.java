@@ -10,8 +10,8 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.pth.iflow.backend.models.ui.enums.EUiUserRole;
+import com.pth.iflow.common.edo.models.UserEdo;
 import com.pth.iflow.common.edo.models.base.DataModelBase;
-import com.pth.iflow.common.edo.models.xml.UserEdo;
 import com.pth.iflow.common.enums.EUserStatus;
 
 @JsonIgnoreProperties(value = { "authorities", "enabled", })

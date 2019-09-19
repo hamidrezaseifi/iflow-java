@@ -1,7 +1,7 @@
 package com.pth.iflow.backend.models;
 
+import com.pth.iflow.common.edo.models.DepartmentGroupEdo;
 import com.pth.iflow.common.edo.models.base.DataModelBase;
-import com.pth.iflow.common.edo.models.xml.DepartmentGroupEdo;
 
 public class BackendDepartmentGroup extends DataModelBase<DepartmentGroupEdo, BackendDepartmentGroup> {
 

@@ -1,7 +1,7 @@
 package com.pth.iflow.workflow.models;
 
+import com.pth.iflow.common.edo.models.WorkflowTypeStepEdo;
 import com.pth.iflow.common.edo.models.base.DataModelBase;
-import com.pth.iflow.common.edo.models.xml.WorkflowTypeStepEdo;
 
 public class WorkflowTypeStep extends DataModelBase<WorkflowTypeStepEdo, WorkflowTypeStep> {
 

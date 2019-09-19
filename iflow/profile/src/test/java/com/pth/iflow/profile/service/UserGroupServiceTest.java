@@ -15,8 +15,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
-import com.pth.iflow.common.edo.models.xml.UserGroupEdo;
-import com.pth.iflow.common.edo.models.xml.UserGroupListEdo;
+
+import com.pth.iflow.common.edo.models.UserGroupEdo;
+import com.pth.iflow.common.edo.models.UserGroupListEdo;
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.profile.TestDataProducer;
 import com.pth.iflow.profile.config.ProfileConfiguration;

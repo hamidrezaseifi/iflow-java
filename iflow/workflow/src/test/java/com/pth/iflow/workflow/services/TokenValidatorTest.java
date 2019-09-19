@@ -17,7 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.pth.iflow.common.edo.models.xml.ProfileResponseEdo;
+import com.pth.iflow.common.edo.models.ProfileResponseEdo;
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.workflow.TestDataProducer;
 import com.pth.iflow.workflow.bl.ITokenValidator;

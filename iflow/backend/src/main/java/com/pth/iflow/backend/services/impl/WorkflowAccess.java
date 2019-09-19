@@ -15,9 +15,9 @@ import com.pth.iflow.backend.models.mapper.BackendModelEdoMapper;
 import com.pth.iflow.backend.models.ui.BackendSessionUserInfo;
 import com.pth.iflow.backend.services.IRestTemplateCall;
 import com.pth.iflow.backend.services.IWorkflowAccess;
-import com.pth.iflow.common.edo.models.xml.WorkflowEdo;
-import com.pth.iflow.common.edo.models.xml.WorkflowListEdo;
-import com.pth.iflow.common.edo.models.xml.WorkflowTypeListEdo;
+import com.pth.iflow.common.edo.models.WorkflowEdo;
+import com.pth.iflow.common.edo.models.WorkflowListEdo;
+import com.pth.iflow.common.edo.models.WorkflowTypeListEdo;
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 

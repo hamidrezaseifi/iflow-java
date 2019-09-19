@@ -1,7 +1,7 @@
 package com.pth.iflow.backend.models;
 
+import com.pth.iflow.common.edo.models.UserGroupEdo;
 import com.pth.iflow.common.edo.models.base.DataModelBase;
-import com.pth.iflow.common.edo.models.xml.UserGroupEdo;
 
 public class BackendUserGroup extends DataModelBase<UserGroupEdo, BackendUserGroup> {
 

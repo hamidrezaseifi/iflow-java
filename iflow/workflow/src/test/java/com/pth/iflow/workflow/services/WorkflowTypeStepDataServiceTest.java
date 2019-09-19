@@ -17,8 +17,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.pth.iflow.common.edo.models.xml.WorkflowTypeStepEdo;
-import com.pth.iflow.common.edo.models.xml.WorkflowTypeStepListEdo;
+import com.pth.iflow.common.edo.models.WorkflowTypeStepEdo;
+import com.pth.iflow.common.edo.models.WorkflowTypeStepListEdo;
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.workflow.TestDataProducer;
 import com.pth.iflow.workflow.bl.IWorkflowTypeStepDataService;

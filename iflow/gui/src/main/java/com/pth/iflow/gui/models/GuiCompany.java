@@ -1,7 +1,7 @@
 package com.pth.iflow.gui.models;
 
+import com.pth.iflow.common.edo.models.CompanyEdo;
 import com.pth.iflow.common.edo.models.base.DataModelBase;
-import com.pth.iflow.common.edo.models.xml.CompanyEdo;
 
 public class GuiCompany extends DataModelBase<CompanyEdo, GuiCompany> {
 

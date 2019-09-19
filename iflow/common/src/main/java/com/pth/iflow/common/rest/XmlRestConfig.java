@@ -17,17 +17,17 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
-import com.pth.iflow.common.edo.models.xml.CompanyEdo;
-import com.pth.iflow.common.edo.models.xml.DepartmentEdo;
-import com.pth.iflow.common.edo.models.xml.DepartmentGroupEdo;
-import com.pth.iflow.common.edo.models.xml.UserEdo;
-import com.pth.iflow.common.edo.models.xml.UserGroupEdo;
-import com.pth.iflow.common.edo.models.xml.WorkflowActionEdo;
-import com.pth.iflow.common.edo.models.xml.WorkflowEdo;
-import com.pth.iflow.common.edo.models.xml.WorkflowFileEdo;
-import com.pth.iflow.common.edo.models.xml.WorkflowFileVersionEdo;
-import com.pth.iflow.common.edo.models.xml.WorkflowTypeEdo;
-import com.pth.iflow.common.edo.models.xml.WorkflowTypeStepEdo;
+import com.pth.iflow.common.edo.models.CompanyEdo;
+import com.pth.iflow.common.edo.models.DepartmentEdo;
+import com.pth.iflow.common.edo.models.DepartmentGroupEdo;
+import com.pth.iflow.common.edo.models.UserEdo;
+import com.pth.iflow.common.edo.models.UserGroupEdo;
+import com.pth.iflow.common.edo.models.WorkflowActionEdo;
+import com.pth.iflow.common.edo.models.WorkflowEdo;
+import com.pth.iflow.common.edo.models.WorkflowFileEdo;
+import com.pth.iflow.common.edo.models.WorkflowFileVersionEdo;
+import com.pth.iflow.common.edo.models.WorkflowTypeEdo;
+import com.pth.iflow.common.edo.models.WorkflowTypeStepEdo;
 
 /**
  * contains configs for XML Rest-Controller

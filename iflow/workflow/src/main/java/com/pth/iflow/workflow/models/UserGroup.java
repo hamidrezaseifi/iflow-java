@@ -1,7 +1,7 @@
 package com.pth.iflow.workflow.models;
 
+import com.pth.iflow.common.edo.models.UserGroupEdo;
 import com.pth.iflow.common.edo.models.base.DataModelBase;
-import com.pth.iflow.common.edo.models.xml.UserGroupEdo;
 
 public class UserGroup extends DataModelBase<UserGroupEdo, UserGroup> {
 

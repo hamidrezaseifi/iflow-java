@@ -3,8 +3,8 @@ package com.pth.iflow.workflow.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.pth.iflow.common.edo.models.DepartmentEdo;
 import com.pth.iflow.common.edo.models.base.DataModelBase;
-import com.pth.iflow.common.edo.models.xml.DepartmentEdo;
 
 public class Department extends DataModelBase<DepartmentEdo, Department> {
 

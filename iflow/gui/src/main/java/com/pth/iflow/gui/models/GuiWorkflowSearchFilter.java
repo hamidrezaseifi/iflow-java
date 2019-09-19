@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.pth.iflow.common.edo.models.xml.WorkflowSearchFilterEdo;
+import com.pth.iflow.common.edo.models.WorkflowSearchFilterEdo;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 
 public class GuiWorkflowSearchFilter {

@@ -1,4 +1,4 @@
-package com.pth.iflow.common.edo.models.xml;
+package com.pth.iflow.common.edo.models;
 
 import java.util.ArrayList;
 import java.util.Date;

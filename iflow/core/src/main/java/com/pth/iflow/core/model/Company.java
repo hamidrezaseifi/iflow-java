@@ -1,8 +1,9 @@
 package com.pth.iflow.core.model;
 
 import java.time.LocalDateTime;
+
+import com.pth.iflow.common.edo.models.CompanyEdo;
 import com.pth.iflow.common.edo.models.base.DataModelBase;
-import com.pth.iflow.common.edo.models.xml.CompanyEdo;
 
 public class Company extends DataModelBase<CompanyEdo, Company> {
 
