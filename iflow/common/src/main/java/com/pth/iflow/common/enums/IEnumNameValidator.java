@@ -1,5 +1,5 @@
 package com.pth.iflow.common.enums;
 
-public interface IValidatorEnum {
+public interface IEnumNameValidator {
 	public String getName();
 }

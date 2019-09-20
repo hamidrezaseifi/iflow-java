@@ -1,9 +1,8 @@
 package com.pth.iflow.gui.models;
 
-import com.pth.iflow.common.edo.models.CompanyEdo;
 import com.pth.iflow.common.edo.models.base.DataModelBase;
 
-public class GuiCompany extends DataModelBase<CompanyEdo, GuiCompany> {
+public class GuiCompany extends DataModelBase {
 
   private Long    id;
   private String  identifyid;

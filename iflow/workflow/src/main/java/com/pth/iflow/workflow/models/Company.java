@@ -1,9 +1,8 @@
 package com.pth.iflow.workflow.models;
 
-import com.pth.iflow.common.edo.models.CompanyEdo;
 import com.pth.iflow.common.edo.models.base.DataModelBase;
 
-public class Company extends DataModelBase<CompanyEdo, Company> {
+public class Company extends DataModelBase {
 
   private Long    id;
   private String  identifyid;

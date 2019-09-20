@@ -3,10 +3,9 @@ package com.pth.iflow.gui.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.pth.iflow.common.edo.models.DepartmentEdo;
 import com.pth.iflow.common.edo.models.base.DataModelBase;
 
-public class GuiDepartment extends DataModelBase<DepartmentEdo, GuiDepartment> {
+public class GuiDepartment extends DataModelBase {
 
   private Long                           id;
   private Long                           companyId;

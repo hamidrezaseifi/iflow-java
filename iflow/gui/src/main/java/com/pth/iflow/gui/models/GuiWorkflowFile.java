@@ -3,10 +3,9 @@ package com.pth.iflow.gui.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.pth.iflow.common.edo.models.WorkflowFileEdo;
 import com.pth.iflow.common.edo.models.base.DataModelBase;
 
-public class GuiWorkflowFile extends DataModelBase<WorkflowFileEdo, GuiWorkflowFile> {
+public class GuiWorkflowFile extends DataModelBase {
 
   private Long                               id;
   private Long                               workflowId;

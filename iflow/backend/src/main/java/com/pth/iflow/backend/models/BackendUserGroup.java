@@ -1,15 +1,14 @@
 package com.pth.iflow.backend.models;
 
-import com.pth.iflow.common.edo.models.UserGroupEdo;
 import com.pth.iflow.common.edo.models.base.DataModelBase;
 
-public class BackendUserGroup extends DataModelBase<UserGroupEdo, BackendUserGroup> {
+public class BackendUserGroup extends DataModelBase {
 
-  private Long id;
+  private Long    id;
 
-  private Long companyId;
+  private Long    companyId;
 
-  private String title;
+  private String  title;
 
   private Integer status;
 

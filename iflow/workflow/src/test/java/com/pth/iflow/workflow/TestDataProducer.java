@@ -100,7 +100,7 @@ public class TestDataProducer {
     model.setCreatedBy(1L);
     model.setAssignTo(1L);
     model.setNextAssign(false);
-    model.setCommand(EWorkflowProcessCommand.CREATE.getName());
+    model.setCommand(EWorkflowProcessCommand.CREATE);
     model.setActions(
         Arrays.asList(this.getTestWorkflowAction(1L, 1L), this.getTestWorkflowAction(2L, 2L), this.getTestWorkflowAction(3L, 3L)));
     model
@@ -122,7 +122,7 @@ public class TestDataProducer {
     model.setCurrentStepId(model.getCurrentStep().getId());
     model.setCreatedBy(1L);
     model.setAssignTo(1L);
-    model.setCommand(EWorkflowProcessCommand.CREATE.getName());
+    model.setCommand(EWorkflowProcessCommand.CREATE);
     model.setActions(Arrays.asList(this.getTestWorkflowAction(1L, 1L, actionStatus), this.getTestWorkflowAction(2L, 2L, actionStatus),
         this.getTestWorkflowAction(3L, 3L, actionStatus)));
     model

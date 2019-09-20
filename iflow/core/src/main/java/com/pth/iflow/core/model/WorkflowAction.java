@@ -2,21 +2,20 @@ package com.pth.iflow.core.model;
 
 import java.time.LocalDateTime;
 
-import com.pth.iflow.common.edo.models.WorkflowActionEdo;
 import com.pth.iflow.common.edo.models.base.DataModelBase;
 
-public class WorkflowAction extends DataModelBase<WorkflowActionEdo, WorkflowAction> {
+public class WorkflowAction extends DataModelBase {
 
-  private Long    id;
-  private Long    workflowId;
-  private Long    createdBy;
-  private String  action;
-  private Long    oldStep;
-  private Long    newStep;
-  private Long    nextAssign;
-  private String  comments;
-  private Integer status;
-  private Integer version;
+  private Long          id;
+  private Long          workflowId;
+  private Long          createdBy;
+  private String        action;
+  private Long          oldStep;
+  private Long          newStep;
+  private Long          nextAssign;
+  private String        comments;
+  private Integer       status;
+  private Integer       version;
 
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;

@@ -3,10 +3,9 @@ package com.pth.iflow.backend.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.pth.iflow.common.edo.models.WorkflowTypeEdo;
 import com.pth.iflow.common.edo.models.base.DataModelBase;
 
-public class BackendWorkflowType extends DataModelBase<WorkflowTypeEdo, BackendWorkflowType> {
+public class BackendWorkflowType extends DataModelBase {
 
   private Long                                id;
   private Long                                companyId;

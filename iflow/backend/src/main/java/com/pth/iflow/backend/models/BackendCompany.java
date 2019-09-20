@@ -1,9 +1,8 @@
 package com.pth.iflow.backend.models;
 
-import com.pth.iflow.common.edo.models.CompanyEdo;
 import com.pth.iflow.common.edo.models.base.DataModelBase;
 
-public class BackendCompany extends DataModelBase<CompanyEdo, BackendCompany> {
+public class BackendCompany extends DataModelBase {
 
   private Long    id;
   private String  identifyid;
@@ -15,6 +14,7 @@ public class BackendCompany extends DataModelBase<CompanyEdo, BackendCompany> {
    * @return the id
    */
 
+  @Override
   public Long getId() {
     return this.id;
   }
@@ -68,14 +68,17 @@ public class BackendCompany extends DataModelBase<CompanyEdo, BackendCompany> {
     this.status = status;
   }
 
+  @Override
   public Integer getVersion() {
     return this.version;
   }
 
+  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
 
+  @Override
   public boolean isNew() {
     return (this.id == null) || (this.id <= 0);
   }

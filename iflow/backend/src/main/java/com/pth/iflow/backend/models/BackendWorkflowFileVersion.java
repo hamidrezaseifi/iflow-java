@@ -1,9 +1,8 @@
 package com.pth.iflow.backend.models;
 
-import com.pth.iflow.common.edo.models.WorkflowFileVersionEdo;
 import com.pth.iflow.common.edo.models.base.DataModelBase;
 
-public class BackendWorkflowFileVersion extends DataModelBase<WorkflowFileVersionEdo, BackendWorkflowFileVersion> {
+public class BackendWorkflowFileVersion extends DataModelBase {
 
   private Long    id;
   private Long    workflowFileId;

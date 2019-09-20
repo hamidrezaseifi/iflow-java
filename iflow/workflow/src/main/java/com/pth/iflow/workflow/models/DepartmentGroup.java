@@ -1,9 +1,8 @@
 package com.pth.iflow.workflow.models;
 
-import com.pth.iflow.common.edo.models.DepartmentGroupEdo;
 import com.pth.iflow.common.edo.models.base.DataModelBase;
 
-public class DepartmentGroup extends DataModelBase<DepartmentGroupEdo, DepartmentGroup> {
+public class DepartmentGroup extends DataModelBase {
 
   private Long    id;
   private Long    departmentId;

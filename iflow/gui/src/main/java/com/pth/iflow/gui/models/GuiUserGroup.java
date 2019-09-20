@@ -1,9 +1,8 @@
 package com.pth.iflow.gui.models;
 
-import com.pth.iflow.common.edo.models.UserGroupEdo;
 import com.pth.iflow.common.edo.models.base.DataModelBase;
 
-public class GuiUserGroup extends DataModelBase<UserGroupEdo, GuiUserGroup> {
+public class GuiUserGroup extends DataModelBase {
 
   private Long    id;
 

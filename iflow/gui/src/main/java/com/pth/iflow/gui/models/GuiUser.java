@@ -11,13 +11,12 @@ import org.springframework.security.core.authority.AuthorityUtils;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.pth.iflow.common.edo.models.UserEdo;
 import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.enums.EUserStatus;
 import com.pth.iflow.gui.models.ui.enums.EUiUserRole;
 
 @JsonIgnoreProperties(value = { "authorities", "enabled", "roles", })
-public class GuiUser extends DataModelBase<UserEdo, GuiUser> {
+public class GuiUser extends DataModelBase {
 
   private Long                    id;
   private Long                    companyId;

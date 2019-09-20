@@ -7,7 +7,7 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import javax.validation.constraints.NotNull;
 
-import com.pth.iflow.common.enums.IValidatorEnum;
+import com.pth.iflow.common.enums.IEnumNameValidator;
 
 public class EnumValidator implements ConstraintValidator<AEnumValidator, String> {
 	
@@ -16,11 +16,11 @@ public class EnumValidator implements ConstraintValidator<AEnumValidator, String
 	  @Override
 	  public void initialize(final AEnumValidator constraintAnnotation) {
 
-	    final Class<? extends IValidatorEnum> enumClass = constraintAnnotation.enumClazz();
+	    final Class<? extends IEnumNameValidator> enumClass = constraintAnnotation.enumClazz();
 
-	    final IValidatorEnum[] enumValArr = enumClass.getEnumConstants();
+	    final IEnumNameValidator[] enumValArr = enumClass.getEnumConstants();
 
-	    for (final IValidatorEnum enumVal : enumValArr) {
+	    for (final IEnumNameValidator enumVal : enumValArr) {
 	      validValues.add(enumVal.getName());
 	    }
 

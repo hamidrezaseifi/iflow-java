@@ -1,10 +1,9 @@
 package com.pth.iflow.backend.models;
 
-import com.pth.iflow.common.edo.models.WorkflowActionEdo;
 import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.enums.EWorkflowActionStatus;
 
-public class BackendWorkflowAction extends DataModelBase<WorkflowActionEdo, BackendWorkflowAction> {
+public class BackendWorkflowAction extends DataModelBase {
 
   private Long    id;
   private Long    workflowId;

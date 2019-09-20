@@ -5,11 +5,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.pth.iflow.common.edo.models.UserEdo;
 import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.enums.EUserStatus;
 
-public class User extends DataModelBase<UserEdo, User> {
+public class User extends DataModelBase {
 
   private Long                id;
   private Long                companyId;

@@ -3,10 +3,9 @@ package com.pth.iflow.workflow.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.pth.iflow.common.edo.models.WorkflowTypeEdo;
 import com.pth.iflow.common.edo.models.base.DataModelBase;
 
-public class WorkflowType extends DataModelBase<WorkflowTypeEdo, WorkflowType> {
+public class WorkflowType extends DataModelBase {
 
   private Long                         id;
   private Long                         companyId;

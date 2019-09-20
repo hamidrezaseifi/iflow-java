@@ -2,10 +2,9 @@ package com.pth.iflow.core.model;
 
 import java.time.LocalDateTime;
 
-import com.pth.iflow.common.edo.models.WorkflowFileVersionEdo;
 import com.pth.iflow.common.edo.models.base.DataModelBase;
 
-public class WorkflowFileVersion extends DataModelBase<WorkflowFileVersionEdo, WorkflowFileVersion> {
+public class WorkflowFileVersion extends DataModelBase {
 
   private Long          id;
   private Long          workflowFileId;

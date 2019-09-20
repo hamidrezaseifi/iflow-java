@@ -1,15 +1,14 @@
 package com.pth.iflow.profile.model;
 
-import com.pth.iflow.common.edo.models.UserGroupEdo;
 import com.pth.iflow.common.edo.models.base.DataModelBase;
 
-public class UserGroup extends DataModelBase<UserGroupEdo, UserGroup> {
+public class UserGroup extends DataModelBase {
 
-  private Long id;
+  private Long    id;
 
-  private Long companyId;
+  private Long    companyId;
 
-  private String title;
+  private String  title;
 
   private Integer status;
 

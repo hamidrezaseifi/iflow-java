@@ -3,25 +3,24 @@ package com.pth.iflow.backend.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.pth.iflow.common.edo.models.WorkflowEdo;
 import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 
-public class BackendWorkflow extends DataModelBase<WorkflowEdo, BackendWorkflow> {
+public class BackendWorkflow extends DataModelBase {
 
-  private Long                    id;
-  private Long                    workflowTypeId;
-  private BackendWorkflowTypeStep currentStep;
-  private Long                    currentStepId;
-  private Long                    controller;
-  private Long                    createdBy;
-  private Long                    assignTo;
-  private String                  title;
-  private String                  comments;
-  private EWorkflowStatus         status;
-  private Integer                 version;
-  private Boolean                 nextAssign;
-  private String                  command;
+  private Long                              id;
+  private Long                              workflowTypeId;
+  private BackendWorkflowTypeStep           currentStep;
+  private Long                              currentStepId;
+  private Long                              controller;
+  private Long                              createdBy;
+  private Long                              assignTo;
+  private String                            title;
+  private String                            comments;
+  private EWorkflowStatus                   status;
+  private Integer                           version;
+  private Boolean                           nextAssign;
+  private String                            command;
 
   private final List<BackendWorkflowFile>   files   = new ArrayList<>();
   private final List<BackendWorkflowAction> actions = new ArrayList<>();
@@ -193,7 +192,7 @@ public class BackendWorkflow extends DataModelBase<WorkflowEdo, BackendWorkflow>
   }
 
   public String getCommand() {
-    return command;
+    return this.command;
   }
 
   public void setCommand(final String command) {

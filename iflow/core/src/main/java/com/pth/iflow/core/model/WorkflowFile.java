@@ -4,10 +4,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.pth.iflow.common.edo.models.WorkflowFileEdo;
 import com.pth.iflow.common.edo.models.base.DataModelBase;
 
-public class WorkflowFile extends DataModelBase<WorkflowFileEdo, WorkflowFile> {
+public class WorkflowFile extends DataModelBase {
 
   private Long                            id;
   private Long                            workflowId;

@@ -1,9 +1,8 @@
 package com.pth.iflow.backend.models;
 
-import com.pth.iflow.common.edo.models.DepartmentGroupEdo;
 import com.pth.iflow.common.edo.models.base.DataModelBase;
 
-public class BackendDepartmentGroup extends DataModelBase<DepartmentGroupEdo, BackendDepartmentGroup> {
+public class BackendDepartmentGroup extends DataModelBase {
 
   private Long    id;
   private Long    departmentId;
@@ -11,6 +10,7 @@ public class BackendDepartmentGroup extends DataModelBase<DepartmentGroupEdo, Ba
   private Integer status;
   private Integer version;
 
+  @Override
   public Long getId() {
     return this.id;
   }
@@ -43,10 +43,12 @@ public class BackendDepartmentGroup extends DataModelBase<DepartmentGroupEdo, Ba
     this.status = status;
   }
 
+  @Override
   public Integer getVersion() {
     return this.version;
   }
 
+  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }

@@ -1,9 +1,8 @@
 package com.pth.iflow.gui.models;
 
-import com.pth.iflow.common.edo.models.DepartmentGroupEdo;
 import com.pth.iflow.common.edo.models.base.DataModelBase;
 
-public class GuiDepartmentGroup extends DataModelBase<DepartmentGroupEdo, GuiDepartmentGroup> {
+public class GuiDepartmentGroup extends DataModelBase {
 
   private Long    id;
   private Long    departmentId;

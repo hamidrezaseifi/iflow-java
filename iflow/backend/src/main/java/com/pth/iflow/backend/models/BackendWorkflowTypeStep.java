@@ -1,9 +1,8 @@
 package com.pth.iflow.backend.models;
 
-import com.pth.iflow.common.edo.models.WorkflowTypeStepEdo;
 import com.pth.iflow.common.edo.models.base.DataModelBase;
 
-public class BackendWorkflowTypeStep extends DataModelBase<WorkflowTypeStepEdo, BackendWorkflowTypeStep> {
+public class BackendWorkflowTypeStep extends DataModelBase {
 
   private Long    id;
   private Long    workflowTypeId;

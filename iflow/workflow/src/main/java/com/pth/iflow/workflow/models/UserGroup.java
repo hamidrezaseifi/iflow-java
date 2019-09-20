@@ -1,9 +1,8 @@
 package com.pth.iflow.workflow.models;
 
-import com.pth.iflow.common.edo.models.UserGroupEdo;
 import com.pth.iflow.common.edo.models.base.DataModelBase;
 
-public class UserGroup extends DataModelBase<UserGroupEdo, UserGroup> {
+public class UserGroup extends DataModelBase {
 
   private Long    id;
 

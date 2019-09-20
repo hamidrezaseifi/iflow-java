@@ -3,10 +3,9 @@ package com.pth.iflow.backend.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.pth.iflow.common.edo.models.DepartmentEdo;
 import com.pth.iflow.common.edo.models.base.DataModelBase;
 
-public class BackendDepartment extends DataModelBase<DepartmentEdo, BackendDepartment> {
+public class BackendDepartment extends DataModelBase {
 
   private Long                               id;
   private Long                               companyId;
@@ -15,6 +14,7 @@ public class BackendDepartment extends DataModelBase<DepartmentEdo, BackendDepar
   private Integer                            version;
   private final List<BackendDepartmentGroup> departmentGroups = new ArrayList<>();
 
+  @Override
   public Long getId() {
     return this.id;
   }
@@ -47,10 +47,12 @@ public class BackendDepartment extends DataModelBase<DepartmentEdo, BackendDepar
     this.status = status;
   }
 
+  @Override
   public Integer getVersion() {
     return this.version;
   }
 
+  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }

@@ -4,26 +4,25 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.pth.iflow.common.edo.models.WorkflowEdo;
 import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 
-public class Workflow extends DataModelBase<WorkflowEdo, Workflow> {
+public class Workflow extends DataModelBase {
 
-  private Long             id;
-  private Long             workflowTypeId;
-  private WorkflowTypeStep currentStep;
-  private Long             controller;
-  private Long             createdBy;
-  private Long             assignTo;
-  private String           title;
-  private String           comments;
-  private EWorkflowStatus  status;
-  private Integer          version;
-  private LocalDateTime    createdAt;
-  private LocalDateTime    updatedAt;
-  private Boolean          nextAssign;
-  private String           command;
+  private Long                       id;
+  private Long                       workflowTypeId;
+  private WorkflowTypeStep           currentStep;
+  private Long                       controller;
+  private Long                       createdBy;
+  private Long                       assignTo;
+  private String                     title;
+  private String                     comments;
+  private EWorkflowStatus            status;
+  private Integer                    version;
+  private LocalDateTime              createdAt;
+  private LocalDateTime              updatedAt;
+  private Boolean                    nextAssign;
+  private String                     command;
 
   private final List<WorkflowFile>   files   = new ArrayList<>();
   private final List<WorkflowAction> actions = new ArrayList<>();

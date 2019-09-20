@@ -3,11 +3,11 @@ package com.pth.iflow.workflow.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.pth.iflow.common.edo.models.WorkflowEdo;
 import com.pth.iflow.common.edo.models.base.DataModelBase;
+import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 
-public class Workflow extends DataModelBase<WorkflowEdo, Workflow> {
+public class Workflow extends DataModelBase {
 
   private Long                       id;
   private Long                       workflowTypeId;
@@ -21,7 +21,7 @@ public class Workflow extends DataModelBase<WorkflowEdo, Workflow> {
   private EWorkflowStatus            status;
   private Integer                    version;
   private Boolean                    nextAssign;
-  private String                     command;
+  private EWorkflowProcessCommand    command;
 
   private final List<WorkflowFile>   files   = new ArrayList<>();
   private final List<WorkflowAction> actions = new ArrayList<>();
@@ -141,11 +141,11 @@ public class Workflow extends DataModelBase<WorkflowEdo, Workflow> {
     this.nextAssign = nextAssign;
   }
 
-  public String getCommand() {
+  public EWorkflowProcessCommand getCommand() {
     return this.command;
   }
 
-  public void setCommand(final String command) {
+  public void setCommand(final EWorkflowProcessCommand command) {
     this.command = command;
   }
 

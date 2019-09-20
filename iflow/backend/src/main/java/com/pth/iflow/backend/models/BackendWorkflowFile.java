@@ -3,10 +3,9 @@ package com.pth.iflow.backend.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.pth.iflow.common.edo.models.WorkflowFileEdo;
 import com.pth.iflow.common.edo.models.base.DataModelBase;
 
-public class BackendWorkflowFile extends DataModelBase<WorkflowFileEdo, BackendWorkflowFile> {
+public class BackendWorkflowFile extends DataModelBase {
 
   private Long                                   id;
   private Long                                   workflowId;
@@ -20,6 +19,7 @@ public class BackendWorkflowFile extends DataModelBase<WorkflowFileEdo, BackendW
   private Integer                                version;
   private final List<BackendWorkflowFileVersion> fileVersions = new ArrayList<>();
 
+  @Override
   public Long getId() {
     return this.id;
   }
@@ -92,10 +92,12 @@ public class BackendWorkflowFile extends DataModelBase<WorkflowFileEdo, BackendW
     this.status = status;
   }
 
+  @Override
   public Integer getVersion() {
     return this.version;
   }
 
+  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }

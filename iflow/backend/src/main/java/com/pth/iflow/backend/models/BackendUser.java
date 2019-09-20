@@ -5,17 +5,18 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.pth.iflow.backend.models.ui.enums.EUiUserRole;
-import com.pth.iflow.common.edo.models.UserEdo;
 import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.enums.EUserStatus;
 
 @JsonIgnoreProperties(value = { "authorities", "enabled", })
-public class BackendUser extends DataModelBase<UserEdo, BackendUser> {
+public class BackendUser extends DataModelBase {
 
   private Long                    id;
   private Long                    companyId;
@@ -34,12 +35,13 @@ public class BackendUser extends DataModelBase<UserEdo, BackendUser> {
   private final List<Long>        deputies         = new ArrayList<>();
   private final List<EUiUserRole> roles            = new ArrayList<>();
 
-  private boolean isEnabled;
+  private boolean                 isEnabled;
 
   /**
    * @return the id
    */
 
+  @Override
   public Long getId() {
     return this.id;
   }
@@ -142,6 +144,7 @@ public class BackendUser extends DataModelBase<UserEdo, BackendUser> {
    * @return the version
    */
 
+  @Override
   public Integer getVersion() {
     return this.version;
   }
@@ -150,6 +153,7 @@ public class BackendUser extends DataModelBase<UserEdo, BackendUser> {
    * @param version the version to set
    */
 
+  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }

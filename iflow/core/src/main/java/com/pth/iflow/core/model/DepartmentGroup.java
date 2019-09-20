@@ -2,10 +2,9 @@ package com.pth.iflow.core.model;
 
 import java.time.LocalDateTime;
 
-import com.pth.iflow.common.edo.models.DepartmentGroupEdo;
 import com.pth.iflow.common.edo.models.base.DataModelBase;
 
-public class DepartmentGroup extends DataModelBase<DepartmentGroupEdo, DepartmentGroup> {
+public class DepartmentGroup extends DataModelBase {
 
   private Long          id;
   private Long          departmentId;
