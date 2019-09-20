@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 
 @JsonIgnoreProperties(value = { "isAssignTo" })
@@ -25,7 +26,7 @@ public class GuiWorkflow {
   private EWorkflowStatus               status;
   private Integer                       version;
   private Boolean                       nextAssign;
-  private String                        command;
+  private EWorkflowProcessCommand       command;
 
   private final List<GuiWorkflowFile>   files   = new ArrayList<>();
   private final List<GuiWorkflowAction> actions = new ArrayList<>();
@@ -194,11 +195,11 @@ public class GuiWorkflow {
     this.nextAssign = nextAssign;
   }
 
-  public String getCommand() {
+  public EWorkflowProcessCommand getCommand() {
     return this.command;
   }
 
-  public void setCommand(final String command) {
+  public void setCommand(final EWorkflowProcessCommand command) {
     this.command = command;
   }
 
@@ -327,7 +328,7 @@ public class GuiWorkflow {
 
   public static GuiWorkflow generateInitial(final Long creatorId) {
     final GuiWorkflow newWorkflow = new GuiWorkflow();
-    newWorkflow.setStatus(EWorkflowStatus.INITIALIZE_REQUEST);
+    newWorkflow.setStatus(EWorkflowStatus.INITIALIZE);
     newWorkflow.setAssignTo(0L);
     newWorkflow.setCreatedBy(creatorId);
     newWorkflow.setController(0L);
@@ -337,6 +338,7 @@ public class GuiWorkflow {
     newWorkflow.setVersion(0);
     newWorkflow.setWorkflowTypeId(0L);
     newWorkflow.setComments("");
+    newWorkflow.setCommand(EWorkflowProcessCommand.CREATE);
 
     return newWorkflow;
   }

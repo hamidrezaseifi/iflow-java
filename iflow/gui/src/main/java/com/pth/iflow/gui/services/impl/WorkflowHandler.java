@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.enums.EWorkflowActionStatus;
+import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
@@ -65,7 +66,7 @@ public class WorkflowHandler implements IWorkflowHandler {
       throws GuiCustomizedException, IOException, IFlowMessageConversionFailureException {
     logger.debug("Create workflow {}", createRequest.getWorkflow().getTitle());
 
-    createRequest.getWorkflow().setStatus(EWorkflowStatus.INITIALIZE_REQUEST);
+    createRequest.getWorkflow().setCommand(EWorkflowProcessCommand.CREATE);
 
     final List<GuiWorkflow> list = this.workflowAccess.createWorkflow(createRequest, this.sessionUserInfo.getToken());
     final List<GuiWorkflow> preparedList = this.prepareWorkflowList(list);
@@ -121,7 +122,8 @@ public class WorkflowHandler implements IWorkflowHandler {
       throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
     logger.debug("Save workflow {}", workflow.getTitle());
 
-    workflow.getActiveAction().setStatus(EWorkflowActionStatus.SAVING_REQUEST);
+    workflow.setCommand(EWorkflowProcessCommand.SAVE);
+
     workflow.getActiveAction().setNewStep(workflow.getCurrentStepId());
 
     final GuiWorkflow result = this.workflowAccess.saveWorkflow(workflow, this.sessionUserInfo.getToken());
@@ -133,7 +135,8 @@ public class WorkflowHandler implements IWorkflowHandler {
       throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
     logger.debug("Make workflow {} done", workflow.getTitle());
 
-    workflow.getActiveAction().setStatus(EWorkflowActionStatus.DONE_REQUEST);
+    workflow.setCommand(EWorkflowProcessCommand.DONE);
+
     workflow.getActiveAction().setNewStep(workflow.getCurrentStepId());
     final GuiWorkflow result = this.workflowAccess.saveWorkflow(workflow, this.sessionUserInfo.getToken());
     return this.prepareWorkflow(result);

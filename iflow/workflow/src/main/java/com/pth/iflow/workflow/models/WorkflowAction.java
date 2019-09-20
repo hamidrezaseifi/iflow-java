@@ -94,18 +94,6 @@ public class WorkflowAction extends WorkflowActionModelBase {
     return EWorkflowActionStatus.ofValue(this.status);
   }
 
-  public boolean isStatusSavingRequest() {
-    return this.getStatus() == EWorkflowActionStatus.SAVING_REQUEST;
-  }
-
-  public boolean isStatusDoneRequest() {
-    return this.getStatus() == EWorkflowActionStatus.DONE_REQUEST;
-  }
-
-  public boolean isStatusRequest() {
-    return this.isStatusSavingRequest() || this.isStatusDoneRequest();
-  }
-
   public void setStatus(final EWorkflowActionStatus status) {
     this.status = status.getValue().intValue();
   }

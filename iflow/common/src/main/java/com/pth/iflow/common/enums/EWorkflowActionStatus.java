@@ -6,8 +6,6 @@ import com.pth.iflow.common.exceptions.IFlowInvalidEnumValueException;
 public enum EWorkflowActionStatus implements IValueList {
   INITIALIZE(0),
   OPEN(5),
-  SAVING_REQUEST(10),
-  DONE_REQUEST(15),
   DONE(20),
   ERROR(30);
 

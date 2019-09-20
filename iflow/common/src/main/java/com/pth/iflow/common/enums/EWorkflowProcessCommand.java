@@ -8,6 +8,7 @@ import com.pth.iflow.common.exceptions.IFlowInvalidEnumValueException;
  * @author bjoern frohberg
  */
 public enum EWorkflowProcessCommand implements IEnumNameValidator {
+  NONE("None"),
   CREATE("Create"),
   SAVE("Save"),
   DONE("Done"),
