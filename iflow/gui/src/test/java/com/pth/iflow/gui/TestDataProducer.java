@@ -101,7 +101,7 @@ public class TestDataProducer {
     model.setCurrentStepId(model.getCurrentStep().getId());
     model.setCreatedBy(1L);
     model.setAssignTo(1L);
-    model.setCommand(EWorkflowProcessCommand.CREATE.getName());
+    model.setCommand(EWorkflowProcessCommand.CREATE);
     model.setNextAssign(true);
     model.setActions(Arrays.asList(this.getTestGuiWorkflowAction(1L, 1L), this.getTestGuiWorkflowAction(2L, 2L),
         this.getTestGuiWorkflowAction(3L, 3L)));

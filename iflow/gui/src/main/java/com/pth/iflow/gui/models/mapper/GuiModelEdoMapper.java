@@ -24,6 +24,7 @@ import com.pth.iflow.common.edo.models.WorkflowFileVersionEdo;
 import com.pth.iflow.common.edo.models.WorkflowSearchFilterEdo;
 import com.pth.iflow.common.edo.models.WorkflowTypeEdo;
 import com.pth.iflow.common.edo.models.WorkflowTypeStepEdo;
+import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.models.GuiCompany;
 import com.pth.iflow.gui.models.GuiCompanyProfile;
@@ -204,7 +205,7 @@ public class GuiModelEdoMapper {
     edo.setVersion(model.getVersion());
     edo.setNextAssign(model.getNextAssign());
     edo.setAssignTo(model.getAssignTo());
-    edo.setCommand(model.getCommand());
+    edo.setCommand(model.getCommand().getName());
 
     edo.setFiles(toWorkflowFileEdoList(model.getFiles()));
     edo.setActions(toWorkflowActionEdoList(model.getActions()));
@@ -228,7 +229,7 @@ public class GuiModelEdoMapper {
     model.setVersion(edo.getVersion());
     model.setNextAssign(edo.getNextAssign());
     model.setAssignTo(edo.getAssignTo());
-    model.setCommand(edo.getCommand());
+    model.setCommand(EWorkflowProcessCommand.valueFromName(edo.getCommand()));
 
     model.setFiles(fromWorkflowFileEdoList(edo.getFiles()));
     model.setActions(fromWorkflowActionEdoList(edo.getActions()));
