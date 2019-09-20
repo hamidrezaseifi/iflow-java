@@ -71,6 +71,8 @@ public class TestDataProducer {
     model.setFirstName(fname);
     model.setLastName(lname);
     model.setStatus(1);
+    model.setVersion(1);
+    model.setPermission(1);
     model.setDepartmentGroups(this.getTestDepartmentGroupIdList());
     model.setDepartments(this.getTestDepartmentIdList());
     model.setDeputies(this.getTestDeputiyIdList());
