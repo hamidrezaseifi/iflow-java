@@ -100,31 +100,34 @@
               <clearOutputDir>true</clearOutputDir>
               <verbose>true</verbose>
               <sources>
-				<source>src/main/java/com/pth/iflow/common/edo/models/xml/AuthenticatedProfileRequestEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/xml/CompanyEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/xml/DepartmentEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/xml/DepartmentGroupEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/xml/DepartmentGroupListEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/xml/DepartmentListEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/xml/ProfileResponseEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/xml/TokenProfileRequestEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/xml/UserAuthenticationRequestEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/xml/UserAuthenticationResponseEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/xml/UserEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/xml/UserGroupEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/xml/UserGroupListEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/xml/UserListEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/xml/WorkflowActionEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/xml/WorkflowActionListEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/xml/WorkflowEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/xml/WorkflowFileEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/xml/WorkflowFileListEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/xml/WorkflowFileVersionEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/xml/WorkflowListEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/xml/WorkflowTypeEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/xml/WorkflowTypeListEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/xml/WorkflowTypeStepEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/xml/WorkflowTypeStepListEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/AuthenticatedProfileRequestEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/CompanyEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/CompanyProfileEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/DepartmentEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/DepartmentGroupEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/DepartmentGroupListEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/DepartmentListEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/ProfileResponseEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/TokenProfileRequestEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/UserAuthenticationRequestEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/UserAuthenticationResponseEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/UserEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/UserGroupEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/UserGroupListEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/UserListEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowActionEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowActionListEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowCreateRequestEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowFileEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowFileListEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowFileVersionEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowListEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowSearchFilterEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowTypeEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowTypeListEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowTypeStepEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowTypeStepListEdo.java</source>
 
               </sources>
               <outputDirectory>${project.build.directory}/generated-resources/schemagen</outputDirectory>

@@ -1,9 +1,8 @@
 package com.pth.iflow.gui.models;
 
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
-import com.pth.iflow.common.edo.models.xml.CompanyEdo;
+import com.pth.iflow.common.edo.models.base.DataModelBase;
 
-public class GuiCompany extends ModelMapperBase<CompanyEdo, GuiCompany> {
+public class GuiCompany extends DataModelBase {
 
   private Long    id;
   private String  identifyid;
@@ -15,6 +14,7 @@ public class GuiCompany extends ModelMapperBase<CompanyEdo, GuiCompany> {
    * @return the id
    */
 
+  @Override
   public Long getId() {
     return this.id;
   }
@@ -68,40 +68,19 @@ public class GuiCompany extends ModelMapperBase<CompanyEdo, GuiCompany> {
     this.status = status;
   }
 
+  @Override
   public Integer getVersion() {
     return this.version;
   }
 
+  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
 
+  @Override
   public boolean isNew() {
     return (this.id == null) || (this.id <= 0);
-  }
-
-  @Override
-  public CompanyEdo toEdo() {
-    final CompanyEdo edo = new CompanyEdo();
-    edo.setCompanyName(this.companyName);
-    edo.setIdentifyid(this.identifyid);
-    edo.setStatus(this.status);
-    edo.setVersion(this.version);
-    edo.setId(this.id);
-
-    return edo;
-  }
-
-  @Override
-  public GuiCompany fromEdo(final CompanyEdo edo) {
-    final GuiCompany model = new GuiCompany();
-    model.setCompanyName(edo.getCompanyName());
-    model.setIdentifyid(edo.getIdentifyid());
-    model.setStatus(edo.getStatus());
-    model.setVersion(edo.getVersion());
-    model.setId(edo.getId());
-
-    return model;
   }
 
 }

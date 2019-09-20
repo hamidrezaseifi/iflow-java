@@ -2,8 +2,6 @@ package com.pth.iflow.profile.model;
 
 import java.util.List;
 
-import com.pth.iflow.common.edo.models.xml.ProfileResponseEdo;
-
 public class ProfileResponse {
 
   private User user;
@@ -56,11 +54,6 @@ public class ProfileResponse {
 
   public void setSessionid(final String sessionid) {
     this.sessionid = sessionid;
-  }
-
-  public ProfileResponseEdo toEdo() {
-
-    return new ProfileResponseEdo(this.user.toEdo(), this.companyProfile.toEdo(), this.sessionid);
   }
 
 }

@@ -6,10 +6,9 @@ import java.util.Date;
 import java.util.List;
 
 import com.pth.iflow.common.edo.models.base.DataModelBase;
-import com.pth.iflow.common.edo.models.xml.UserEdo;
 import com.pth.iflow.common.enums.EUserStatus;
 
-public class User extends DataModelBase<UserEdo, User> {
+public class User extends DataModelBase {
 
   private Long                id;
   private Long                companyId;
@@ -254,49 +253,6 @@ public class User extends DataModelBase<UserEdo, User> {
 
   public void addRole(final Integer role) {
     this.roles.add(role);
-  }
-
-  @Override
-  public UserEdo toEdo() {
-    final UserEdo edo = new UserEdo();
-    edo.setFirstName(this.firstName);
-    edo.setLastName(this.lastName);
-    edo.setPermission(this.permission);
-    edo.setStatus(this.status);
-    edo.setVersion(this.version);
-    edo.setEmail(this.email);
-    edo.setBirthDate(this.birthDate);
-    edo.setId(this.id);
-    edo.setCompanyId(this.companyId);
-    edo.setGroups(this.groups);
-    edo.setDepartments(this.departments);
-    edo.setDepartmentGroups(this.departmentGroups);
-    edo.setDeputies(this.deputies);
-    edo.setRoles(this.roles);
-
-    return edo;
-  }
-
-  @Override
-  public User fromEdo(final UserEdo edo) {
-    final User model = new User();
-
-    model.setFirstName(edo.getFirstName());
-    model.setLastName(edo.getLastName());
-    model.setPermission(edo.getPermission());
-    model.setStatus(edo.getStatus());
-    model.setVersion(edo.getVersion());
-    model.setEmail(edo.getEmail());
-    model.setBirthDate(edo.getBirthDate());
-    model.setId(edo.getId());
-    model.setCompanyId(edo.getCompanyId());
-    model.setGroups(edo.getGroups());
-    model.setDepartments(edo.getDepartments());
-    model.setDepartmentGroups(edo.getDepartmentGroups());
-    model.setDeputies(edo.getDeputies());
-    model.setRoles(edo.getRoles());
-
-    return model;
   }
 
 }

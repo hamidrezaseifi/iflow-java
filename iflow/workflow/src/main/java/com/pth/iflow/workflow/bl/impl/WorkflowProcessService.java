@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.ITokenValidator;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.IWorkflowProcessService;
@@ -50,7 +51,7 @@ public class WorkflowProcessService implements IWorkflowProcessService {
 
   @Override
   public List<Workflow> create(final WorkflowCreateRequest model, final String token)
-      throws WorkflowCustomizedException, MalformedURLException {
+      throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     final ICreateWorkflowStrategy createWorkflowStrategy = this.workStrategyFactory.selectCreateWorkStrategy(model, token);
 
@@ -60,7 +61,8 @@ public class WorkflowProcessService implements IWorkflowProcessService {
   }
 
   @Override
-  public Workflow save(final Workflow newWorkflow, final String token) throws WorkflowCustomizedException, MalformedURLException {
+  public Workflow save(final Workflow newWorkflow, final String token)
+      throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     logger.debug("Saving workflow {} with token {}", newWorkflow.getTitle(), token);
     this.tokenCanSaveWorkflow(newWorkflow, token);
 
@@ -72,7 +74,8 @@ public class WorkflowProcessService implements IWorkflowProcessService {
   }
 
   @Override
-  public Workflow getById(final Long id, final String token) throws WorkflowCustomizedException, MalformedURLException {
+  public Workflow getById(final Long id, final String token)
+      throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     logger.debug("get workflow by id {} with token {}", id, token);
 
     this.tokenCanReadWorkflow(id, token);
@@ -82,7 +85,8 @@ public class WorkflowProcessService implements IWorkflowProcessService {
   }
 
   @Override
-  public List<Workflow> getListByTypeId(final Long id, final String token) throws WorkflowCustomizedException, MalformedURLException {
+  public List<Workflow> getListByTypeId(final Long id, final String token)
+      throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     logger.debug("get workflow by  type id {} with token {}", id, token);
 
     final List<Workflow> list = this.workflowDataService.getListByTypeId(id, token);
@@ -93,7 +97,7 @@ public class WorkflowProcessService implements IWorkflowProcessService {
 
   @Override
   public List<Workflow> getListForUser(final Long id, final int status, final String token)
-      throws WorkflowCustomizedException, MalformedURLException {
+      throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     logger.debug("get workflow assigned to user id {} and has status {} with token {}", id, status, token);
 
@@ -105,7 +109,7 @@ public class WorkflowProcessService implements IWorkflowProcessService {
 
   @Override
   public List<Workflow> getListByIdList(final List<Long> idList, final String token)
-      throws WorkflowCustomizedException, MalformedURLException {
+      throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     logger.debug("get workflow list by id list {} with token {}", idList, token);
 
     this.tokenCanReadWorkflowList(idList, token);
@@ -117,7 +121,7 @@ public class WorkflowProcessService implements IWorkflowProcessService {
 
   @Override
   public List<Workflow> search(final WorkflowSearchFilter workflowSearchFilter, final String token)
-      throws WorkflowCustomizedException, MalformedURLException {
+      throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     logger.debug("search workflow with token {}", token);
 
     this.tokenCanSearchWorkflowList(workflowSearchFilter, token);
@@ -128,7 +132,7 @@ public class WorkflowProcessService implements IWorkflowProcessService {
   }
 
   private boolean tokenCanReadWorkflow(final Long workflowId, final String token)
-      throws WorkflowCustomizedException, MalformedURLException {
+      throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     // TODO token read access must be implemented
 
     this.tokenValidator.isTokenValid(token);
@@ -137,21 +141,21 @@ public class WorkflowProcessService implements IWorkflowProcessService {
   }
 
   private boolean tokenCanSaveWorkflow(final Workflow model, final String token)
-      throws WorkflowCustomizedException, MalformedURLException {
+      throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     // TODO token save access must be implemented
     this.tokenValidator.isTokenValid(token);
     return true;
   }
 
   private boolean tokenCanReadWorkflowList(final List<Long> list, final String token)
-      throws WorkflowCustomizedException, MalformedURLException {
+      throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     // TODO token read access must be implemented
     this.tokenValidator.isTokenValid(token);
     return true;
   }
 
   private boolean tokenCanSearchWorkflowList(final WorkflowSearchFilter workflowSearchFilter, final String token)
-      throws WorkflowCustomizedException, MalformedURLException {
+      throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     // TODO token read access must be implemented
     this.tokenValidator.isTokenValid(token);
     return true;
@@ -178,7 +182,8 @@ public class WorkflowProcessService implements IWorkflowProcessService {
     return list.stream().map(s -> s.getStepIndex()).sorted().collect(Collectors.toList());
   }
 
-  private Workflow prepareWorkflow(final String token, final Workflow workflow) throws MalformedURLException {
+  private Workflow prepareWorkflow(final String token, final Workflow workflow)
+      throws MalformedURLException, IFlowMessageConversionFailureException {
     final WorkflowType workflowType = this.workflowTypeDataService.getById(workflow.getWorkflowTypeId(), token);
     final List<Integer> stepIndexList = this.getSortedStepsIndexList(workflowType);
     final int index = stepIndexList.indexOf(workflow.getCurrentStep().getStepIndex());
@@ -188,7 +193,8 @@ public class WorkflowProcessService implements IWorkflowProcessService {
     return workflow;
   }
 
-  private List<Workflow> prepareWorkflowList(final String token, final List<Workflow> workflowList) throws MalformedURLException {
+  private List<Workflow> prepareWorkflowList(final String token, final List<Workflow> workflowList)
+      throws MalformedURLException, IFlowMessageConversionFailureException {
     final List<Workflow> list = new ArrayList<>();
     if (workflowList != null) {
       for (final Workflow workflow : workflowList) {

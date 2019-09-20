@@ -1,20 +1,20 @@
 package com.pth.iflow.backend.models;
 
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
-import com.pth.iflow.common.edo.models.xml.UserGroupEdo;
+import com.pth.iflow.common.edo.models.base.DataModelBase;
 
-public class BackendUserGroup extends ModelMapperBase<UserGroupEdo, BackendUserGroup> {
+public class BackendUserGroup extends DataModelBase {
 
-  private Long id;
+  private Long    id;
 
-  private Long companyId;
+  private Long    companyId;
 
-  private String title;
+  private String  title;
 
   private Integer status;
 
   private Integer version;
 
+  @Override
   public Long getId() {
     return this.id;
   }
@@ -47,36 +47,14 @@ public class BackendUserGroup extends ModelMapperBase<UserGroupEdo, BackendUserG
     this.status = status;
   }
 
+  @Override
   public Integer getVersion() {
     return this.version;
   }
 
+  @Override
   public void setVersion(final Integer version) {
     this.version = version;
-  }
-
-  @Override
-  public UserGroupEdo toEdo() {
-    final UserGroupEdo edo = new UserGroupEdo();
-    edo.setCompanyId(this.companyId);
-    edo.setId(this.id);
-    edo.setStatus(this.status);
-    edo.setTitle(this.title);
-    edo.setVersion(this.version);
-
-    return edo;
-  }
-
-  @Override
-  public BackendUserGroup fromEdo(final UserGroupEdo edo) {
-    final BackendUserGroup model = new BackendUserGroup();
-    model.setCompanyId(edo.getCompanyId());
-    model.setId(edo.getId());
-    model.setStatus(edo.getStatus());
-    model.setTitle(edo.getTitle());
-    model.setVersion(edo.getVersion());
-
-    return model;
   }
 
 }

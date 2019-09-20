@@ -2,7 +2,7 @@ package com.pth.iflow.profile.model;
 
 import java.util.Date;
 
-import com.pth.iflow.common.edo.models.xml.UserAuthenticationResponseEdo;
+import com.pth.iflow.common.edo.models.UserAuthenticationResponseEdo;
 
 public class UserAuthenticationSession {
 

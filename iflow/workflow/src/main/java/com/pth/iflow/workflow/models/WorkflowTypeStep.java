@@ -1,9 +1,8 @@
 package com.pth.iflow.workflow.models;
 
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
-import com.pth.iflow.common.edo.models.xml.WorkflowTypeStepEdo;
+import com.pth.iflow.common.edo.models.base.DataModelBase;
 
-public class WorkflowTypeStep extends ModelMapperBase<WorkflowTypeStepEdo, WorkflowTypeStep> {
+public class WorkflowTypeStep extends DataModelBase {
 
   private Long    id;
   private Long    workflowTypeId;
@@ -14,6 +13,7 @@ public class WorkflowTypeStep extends ModelMapperBase<WorkflowTypeStepEdo, Workf
   private Integer status;
   private Integer version;
 
+  @Override
   public Long getId() {
     return this.id;
   }
@@ -76,10 +76,12 @@ public class WorkflowTypeStep extends ModelMapperBase<WorkflowTypeStepEdo, Workf
     this.status = status;
   }
 
+  @Override
   public Integer getVersion() {
     return this.version;
   }
 
+  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
@@ -94,40 +96,6 @@ public class WorkflowTypeStep extends ModelMapperBase<WorkflowTypeStepEdo, Workf
 
   public boolean isTheSameStep(final WorkflowTypeStep other) {
     return this.stepIndex == other.getStepIndex();
-  }
-
-  @Override
-  public WorkflowTypeStepEdo toEdo() {
-    final WorkflowTypeStepEdo edo = new WorkflowTypeStepEdo();
-    edo.setStepIndex(this.stepIndex);
-    edo.setViewName(this.viewName);
-    edo.setTitle(this.title);
-    edo.setComments(this.comments);
-    edo.setStatus(this.status);
-    edo.setId(this.id);
-    edo.setWorkflowTypeId(this.workflowTypeId);
-    edo.setVersion(this.version);
-
-    return edo;
-  }
-
-  @Override
-  public WorkflowTypeStep fromEdo(final WorkflowTypeStepEdo edo) {
-    if (edo == null) {
-      return null;
-    }
-    final WorkflowTypeStep model = new WorkflowTypeStep();
-
-    model.setStepIndex(edo.getStepIndex());
-    model.setViewName(edo.getViewName());
-    model.setTitle(edo.getTitle());
-    model.setComments(edo.getComments());
-    model.setStatus(edo.getStatus());
-    model.setVersion(edo.getVersion());
-    model.setId(edo.getId());
-    model.setWorkflowTypeId(edo.getWorkflowTypeId());
-
-    return model;
   }
 
 }

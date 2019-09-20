@@ -6,9 +6,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import java.util.List;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,15 +22,15 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
-import com.pth.iflow.common.edo.models.xml.DepartmentEdo;
-import com.pth.iflow.common.edo.models.xml.DepartmentListEdo;
-import com.pth.iflow.common.edo.models.xml.UserListEdo;
+import com.pth.iflow.common.edo.models.DepartmentEdo;
+import com.pth.iflow.common.edo.models.DepartmentListEdo;
+import com.pth.iflow.common.edo.models.UserListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.XmlRestConfig;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.Department;
 import com.pth.iflow.core.model.User;
+import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
 import com.pth.iflow.core.service.IDepartmentService;
 
 @RunWith(SpringRunner.class)
@@ -41,16 +39,16 @@ import com.pth.iflow.core.service.IDepartmentService;
 public class DepartmentControllerTest extends TestDataProducer {
 
   @Autowired
-  private MockMvc                                mockMvc;
+  private MockMvc mockMvc;
 
   @Autowired
   private MappingJackson2XmlHttpMessageConverter xmlConverter;
 
   @MockBean
-  private IDepartmentService                     departmentService;
+  private IDepartmentService departmentService;
 
   @Value("${iflow.common.rest.api.security.client-id.internal}")
-  private String                                 innerModulesRequestHeaderValue;
+  private String innerModulesRequestHeaderValue;
 
   @Before
   public void setUp() throws Exception {
@@ -66,15 +64,16 @@ public class DepartmentControllerTest extends TestDataProducer {
     final Department model = this.getTestDepartment();
     when(this.departmentService.getById(any(Long.class))).thenReturn(model);
 
-    final DepartmentEdo modelEdo = model.toEdo();
+    final DepartmentEdo modelEdo = CoreModelEdoMapper.toEdo(model);
 
     final String modelAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelEdo);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.DEPARTMENT_READ_BY_ID, model.getId())
-            .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
-        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
-        .andExpect(content().xml(modelAsXmlString));
+                .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.DEPARTMENT_READ_BY_ID, model.getId())
+                                               .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+                .andExpect(content().xml(modelAsXmlString));
 
     verify(this.departmentService, times(1)).getById(any(Long.class));
 
@@ -87,17 +86,19 @@ public class DepartmentControllerTest extends TestDataProducer {
     final List<Department> list = this.getTestDepartmentList();
     when(this.departmentService.getListByIdList(any(List.class))).thenReturn(list);
 
-    final DepartmentListEdo edoList = new DepartmentListEdo(ModelMapperBase.toEdoList(list));
+    final DepartmentListEdo edoList = new DepartmentListEdo(CoreModelEdoMapper.toDepartmentEdoList(list));
 
     final String contentAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(idList);
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.post(IflowRestPaths.CoreModule.DEPARTMENT_READ_LIST).content(contentAsXmlString)
-            .contentType(MediaType.APPLICATION_XML_VALUE)
-            .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
-        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
-        .andExpect(content().xml(listAsXmlString));
+                .perform(MockMvcRequestBuilders.post(IflowRestPaths.CoreModule.DEPARTMENT_READ_LIST)
+                                               .content(contentAsXmlString)
+                                               .contentType(MediaType.APPLICATION_XML_VALUE)
+                                               .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+                .andExpect(content().xml(listAsXmlString));
 
     verify(this.departmentService, times(1)).getListByIdList(any(List.class));
 
@@ -109,15 +110,16 @@ public class DepartmentControllerTest extends TestDataProducer {
     final List<Department> list = this.getTestDepartmentList();
     when(this.departmentService.getListByIdCompanyId(any(Long.class))).thenReturn(list);
 
-    final DepartmentListEdo edoList = new DepartmentListEdo(ModelMapperBase.toEdoList(list));
+    final DepartmentListEdo edoList = new DepartmentListEdo(CoreModelEdoMapper.toDepartmentEdoList(list));
 
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.DEPARTMENT_READ_LIST_BY_COMPANY, 1L)
-            .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
-        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
-        .andExpect(content().xml(listAsXmlString));
+                .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.DEPARTMENT_READ_LIST_BY_COMPANY, 1L)
+                                               .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+                .andExpect(content().xml(listAsXmlString));
 
     verify(this.departmentService, times(1)).getListByIdCompanyId(any(Long.class));
 
@@ -129,15 +131,16 @@ public class DepartmentControllerTest extends TestDataProducer {
     final List<User> list = this.getTestUserList();
     when(this.departmentService.getAllUserListByDepartmentId(any(Long.class))).thenReturn(list);
 
-    final UserListEdo edoList = new UserListEdo(ModelMapperBase.toEdoList(list));
+    final UserListEdo edoList = new UserListEdo(CoreModelEdoMapper.toUserEdoList(list));
 
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.DEPARTMENT_READ_ALLUSERLIST_BY_DEPARTMENT, 1L)
-            .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
-        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
-        .andExpect(content().xml(listAsXmlString));
+                .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.DEPARTMENT_READ_ALLUSERLIST_BY_DEPARTMENT, 1L)
+                                               .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+                .andExpect(content().xml(listAsXmlString));
 
     verify(this.departmentService, times(1)).getAllUserListByDepartmentId(any(Long.class));
 

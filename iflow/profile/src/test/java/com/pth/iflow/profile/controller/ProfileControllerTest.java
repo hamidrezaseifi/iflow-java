@@ -6,9 +6,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import java.util.List;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,9 +21,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.pth.iflow.common.edo.models.xml.AuthenticatedProfileRequestEdo;
-import com.pth.iflow.common.edo.models.xml.ProfileResponseEdo;
-import com.pth.iflow.common.edo.models.xml.TokenProfileRequestEdo;
+import com.pth.iflow.common.edo.models.AuthenticatedProfileRequestEdo;
+import com.pth.iflow.common.edo.models.ProfileResponseEdo;
+import com.pth.iflow.common.edo.models.TokenProfileRequestEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
 import com.pth.iflow.profile.TestDataProducer;
@@ -34,6 +32,7 @@ import com.pth.iflow.profile.model.Department;
 import com.pth.iflow.profile.model.User;
 import com.pth.iflow.profile.model.UserAuthenticationSession;
 import com.pth.iflow.profile.model.UserGroup;
+import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
 import com.pth.iflow.profile.service.ICompanyService;
 import com.pth.iflow.profile.service.IDepartmentService;
 import com.pth.iflow.profile.service.ISessionManager;
@@ -103,8 +102,8 @@ public class ProfileControllerTest extends TestDataProducer {
                                                                                          this.authenticatedSession.getToken());
 
     final ProfileResponseEdo responseEdo = getTestProfileResponseEdo(this.authenticatedSession.getSessionid(),
-                                                                     this.user.toEdo(),
-                                                                     this.company.toEdo());
+                                                                     ProfileModelEdoMapper.toEdo(this.user),
+                                                                     ProfileModelEdoMapper.toEdo(this.company));
 
     final String modelAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(profReq);
     final String responseAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(responseEdo);
@@ -130,8 +129,8 @@ public class ProfileControllerTest extends TestDataProducer {
     final TokenProfileRequestEdo tokenInoRequest = getTokenProfileRequestEdo(this.authenticatedSession.getToken());
 
     final ProfileResponseEdo responseEdo = getTestProfileResponseEdo(this.authenticatedSession.getSessionid(),
-                                                                     this.user.toEdo(),
-                                                                     this.company.toEdo());
+                                                                     ProfileModelEdoMapper.toEdo(this.user),
+                                                                     ProfileModelEdoMapper.toEdo(this.company));
 
     final String modelAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(tokenInoRequest);
     final String responseAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(responseEdo);

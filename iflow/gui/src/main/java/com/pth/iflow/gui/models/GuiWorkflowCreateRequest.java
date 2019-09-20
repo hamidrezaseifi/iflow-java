@@ -3,15 +3,13 @@ package com.pth.iflow.gui.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.pth.iflow.common.edo.models.xml.WorkflowCreateRequestEdo;
-
 public class GuiWorkflowCreateRequest {
 
-  private GuiWorkflow workflow;
+  private GuiWorkflow      workflow;
 
   private final List<Long> assigns = new ArrayList<>();
 
-  private String sessionKey;
+  private String           sessionKey;
 
   public GuiWorkflowCreateRequest() {
 
@@ -57,12 +55,6 @@ public class GuiWorkflowCreateRequest {
     if (assigns != null) {
       this.assigns.addAll(assigns);
     }
-  }
-
-  public WorkflowCreateRequestEdo toEdo() {
-    final WorkflowCreateRequestEdo edo = new WorkflowCreateRequestEdo(this.workflow.toEdo(), this.assigns);
-
-    return edo;
   }
 
   /**

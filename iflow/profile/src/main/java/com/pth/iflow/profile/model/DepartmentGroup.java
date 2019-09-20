@@ -1,9 +1,8 @@
 package com.pth.iflow.profile.model;
 
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
-import com.pth.iflow.common.edo.models.xml.DepartmentGroupEdo;
+import com.pth.iflow.common.edo.models.base.DataModelBase;
 
-public class DepartmentGroup extends ModelMapperBase<DepartmentGroupEdo, DepartmentGroup> {
+public class DepartmentGroup extends DataModelBase {
 
   private Long    id;
   private Long    departmentId;
@@ -11,6 +10,7 @@ public class DepartmentGroup extends ModelMapperBase<DepartmentGroupEdo, Departm
   private Integer status;
   private Integer version;
 
+  @Override
   public Long getId() {
     return this.id;
   }
@@ -43,37 +43,14 @@ public class DepartmentGroup extends ModelMapperBase<DepartmentGroupEdo, Departm
     this.status = status;
   }
 
+  @Override
   public Integer getVersion() {
     return this.version;
   }
 
+  @Override
   public void setVersion(final Integer version) {
     this.version = version;
-  }
-
-  @Override
-  public DepartmentGroupEdo toEdo() {
-    final DepartmentGroupEdo edo = new DepartmentGroupEdo();
-    edo.setTitle(this.title);
-    edo.setStatus(this.status);
-    edo.setId(this.id);
-    edo.setDepartmentId(this.departmentId);
-    edo.setVersion(this.version);
-
-    return edo;
-  }
-
-  @Override
-  public DepartmentGroup fromEdo(final DepartmentGroupEdo edo) {
-    final DepartmentGroup model = new DepartmentGroup();
-
-    model.setTitle(edo.getTitle());
-    model.setStatus(edo.getStatus());
-    model.setId(edo.getId());
-    model.setDepartmentId(edo.getDepartmentId());
-    model.setVersion(edo.getVersion());
-
-    return model;
   }
 
 }

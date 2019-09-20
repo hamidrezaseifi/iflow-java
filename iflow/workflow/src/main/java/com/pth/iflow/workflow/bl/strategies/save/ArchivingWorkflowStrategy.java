@@ -2,6 +2,8 @@ package com.pth.iflow.workflow.bl.strategies.save;
 
 import java.net.MalformedURLException;
 
+import com.pth.iflow.common.enums.EWorkflowStatus;
+import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.Workflow;
@@ -17,7 +19,8 @@ public class ArchivingWorkflowStrategy extends AbstractSaveWorkflowStrategy {
   }
 
   @Override
-  public Workflow process() throws WorkflowCustomizedException, MalformedURLException {
+  public Workflow process() throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+    this.processingWorkflow.setStatus(EWorkflowStatus.ARCHIVED);
     this.validateWorkflowCurrectStep(this.processingWorkflow, this.workflowType);
     this.validateWorkflowAssignedUser(this.processingWorkflow, this.workflowType);
 

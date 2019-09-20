@@ -1,6 +1,6 @@
 package com.pth.iflow.gui.models;
 
-import com.pth.iflow.common.edo.models.xml.UserAuthenticationResponseEdo;
+import com.pth.iflow.common.edo.models.UserAuthenticationResponseEdo;
 
 public class GuiUserAuthenticationResponse {
 
@@ -78,7 +78,7 @@ public class GuiUserAuthenticationResponse {
     this.lastAccess = lastAccess;
   }
 
-  public UserAuthenticationResponseEdo toEdo() {
+  public UserAuthenticationResponseEdo toEdo1() {
     final UserAuthenticationResponseEdo edo = new UserAuthenticationResponseEdo();
     edo.setCreated(this.created);
     edo.setEmail(this.email);
@@ -86,16 +86,6 @@ public class GuiUserAuthenticationResponse {
     edo.setSessionid(this.sessionid);
     edo.setToken(this.token);
     return edo;
-  }
-
-  public static GuiUserAuthenticationResponse fromEdo(final UserAuthenticationResponseEdo edo) {
-    final GuiUserAuthenticationResponse model = new GuiUserAuthenticationResponse();
-    model.setCreated(edo.getCreated());
-    model.setEmail(edo.getEmail());
-    model.setLastAccess(edo.getLastAccess());
-    model.setSessionid(edo.getSessionid());
-    model.setToken(edo.getToken());
-    return model;
   }
 
 }

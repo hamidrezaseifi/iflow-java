@@ -2,8 +2,6 @@ package com.pth.iflow.backend.models;
 
 import java.util.List;
 
-import com.pth.iflow.common.edo.models.xml.ProfileResponseEdo;
-
 public class ProfileResponse {
 
   private BackendUser user;
@@ -56,18 +54,6 @@ public class ProfileResponse {
 
   public void setSessionid(final String sessionid) {
     this.sessionid = sessionid;
-  }
-
-  public ProfileResponseEdo toEdo() {
-
-    return new ProfileResponseEdo(this.user.toEdo(), this.companyProfile.toEdo(), this.sessionid);
-  }
-
-  public static ProfileResponse fromEdo(final ProfileResponseEdo edo) {
-
-    return new ProfileResponse(new BackendUser().fromEdo(edo.getUser()),
-                               new BackendCompanyProfile().fromEdo(edo.getCompanyProfile()),
-                               edo.getSessionid());
   }
 
 }

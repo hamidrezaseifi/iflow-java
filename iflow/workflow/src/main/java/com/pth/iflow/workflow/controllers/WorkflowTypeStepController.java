@@ -17,54 +17,54 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pth.iflow.common.annotations.IflowGetRequestMapping;
 import com.pth.iflow.common.annotations.IflowPostRequestMapping;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
-import com.pth.iflow.common.edo.models.xml.WorkflowTypeStepEdo;
-import com.pth.iflow.common.edo.models.xml.WorkflowTypeStepListEdo;
+import com.pth.iflow.common.edo.models.WorkflowTypeStepEdo;
+import com.pth.iflow.common.edo.models.WorkflowTypeStepListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
 import com.pth.iflow.workflow.bl.IWorkflowTypeStepProcessService;
 import com.pth.iflow.workflow.models.WorkflowTypeStep;
+import com.pth.iflow.workflow.models.mapper.WorkflowModelEdoMapper;
 
 @RestController
 @RequestMapping
 public class WorkflowTypeStepController {
-  
+
   final IWorkflowTypeStepProcessService workflowStepProcessService;
-  
+
   public WorkflowTypeStepController(@Autowired final IWorkflowTypeStepProcessService workflowStepProcessService) {
     this.workflowStepProcessService = workflowStepProcessService;
   }
-  
+
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(path = IflowRestPaths.WorkflowModule.WORKFLOWTYPESTEP_READ_BY_ID)
   public ResponseEntity<WorkflowTypeStepEdo> readDepartmentGroup(@PathVariable final Long id, final HttpServletRequest request,
       @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String tokenId) throws Exception {
-    
+
     final WorkflowTypeStep model = this.workflowStepProcessService.getById(id, tokenId);
-    
-    return ControllerHelper.createResponseEntity(request, model.toEdo(), HttpStatus.OK);
+
+    return ControllerHelper.createResponseEntity(request, WorkflowModelEdoMapper.toEdo(model), HttpStatus.OK);
   }
-  
+
   @ResponseStatus(HttpStatus.OK)
   @IflowPostRequestMapping(path = IflowRestPaths.WorkflowModule.WORKFLOWTYPESTEP_READ_LIST)
   public ResponseEntity<WorkflowTypeStepListEdo> readByList(@RequestBody final List<Long> idList, final HttpServletRequest request,
       @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String tokenId) throws Exception {
-    
+
     final List<WorkflowTypeStep> modelList = this.workflowStepProcessService.getListByIdList(idList, tokenId);
-    
-    return ControllerHelper.createResponseEntity(request, new WorkflowTypeStepListEdo(ModelMapperBase.toEdoList(modelList)),
-        HttpStatus.OK);
+
+    return ControllerHelper.createResponseEntity(request,
+        new WorkflowTypeStepListEdo(WorkflowModelEdoMapper.toWorkflowTypeStepEdoList(modelList)), HttpStatus.OK);
   }
-  
+
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(path = IflowRestPaths.WorkflowModule.WORKFLOWTYPESTEP_READ_LIST_BY_WORKFLOW)
   public ResponseEntity<WorkflowTypeStepListEdo> readListByWorkflowId(@PathVariable final Long id, final HttpServletRequest request,
       @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String tokenId) throws Exception {
-    
+
     final List<WorkflowTypeStep> modelList = this.workflowStepProcessService.getListByWorkflowId(id, tokenId);
-    
-    return ControllerHelper.createResponseEntity(request, new WorkflowTypeStepListEdo(ModelMapperBase.toEdoList(modelList)),
-        HttpStatus.OK);
+
+    return ControllerHelper.createResponseEntity(request,
+        new WorkflowTypeStepListEdo(WorkflowModelEdoMapper.toWorkflowTypeStepEdoList(modelList)), HttpStatus.OK);
   }
-  
+
 }

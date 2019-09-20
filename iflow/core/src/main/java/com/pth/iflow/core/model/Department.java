@@ -5,9 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.pth.iflow.common.edo.models.base.DataModelBase;
-import com.pth.iflow.common.edo.models.xml.DepartmentEdo;
 
-public class Department extends DataModelBase<DepartmentEdo, Department> {
+public class Department extends DataModelBase {
 
   private Long                        id;
   private Long                        companyId;
@@ -90,33 +89,6 @@ public class Department extends DataModelBase<DepartmentEdo, Department> {
 
   public void addDepartmentGroup(final DepartmentGroup group) {
     this.departmentGroups.add(group);
-  }
-
-  @Override
-  public DepartmentEdo toEdo() {
-    final DepartmentEdo edo = new DepartmentEdo();
-    edo.setTitle(this.title);
-    edo.setStatus(this.status);
-    edo.setId(this.id);
-    edo.setCompanyId(this.companyId);
-    edo.setDepartmentGroups(DataModelBase.toEdoList(this.departmentGroups));
-    edo.setVersion(this.version);
-
-    return edo;
-  }
-
-  @Override
-  public Department fromEdo(final DepartmentEdo edo) {
-    final Department model = new Department();
-
-    model.setTitle(edo.getTitle());
-    model.setStatus(edo.getStatus());
-    model.setId(edo.getId());
-    model.setCompanyId(edo.getCompanyId());
-    model.setDepartmentGroups(new DepartmentGroup().fromEdoList(edo.getDepartmentGroups()));
-    model.setVersion(edo.getVersion());
-
-    return model;
   }
 
 }

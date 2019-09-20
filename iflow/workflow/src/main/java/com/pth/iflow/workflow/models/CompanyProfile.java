@@ -3,16 +3,15 @@ package com.pth.iflow.workflow.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
-import com.pth.iflow.common.edo.models.xml.CompanyProfileEdo;
+import com.pth.iflow.common.edo.models.base.DataModelBase;
 
-public class CompanyProfile extends ModelMapperBase<CompanyProfileEdo, CompanyProfile> {
+public class CompanyProfile extends DataModelBase {
 
-  private Company company;
+  private Company                company;
 
   private final List<Department> departments = new ArrayList<>();
 
-  private final List<UserGroup> userGroups = new ArrayList<>();
+  private final List<UserGroup>  userGroups  = new ArrayList<>();
 
   public CompanyProfile() {
 
@@ -61,33 +60,19 @@ public class CompanyProfile extends ModelMapperBase<CompanyProfileEdo, CompanyPr
     }
   }
 
+  @Override
   public Integer getVersion() {
     return null;
   }
 
+  @Override
   public Long getId() {
     return null;
   }
 
+  @Override
   public void setVersion(final Integer version) {
 
-  }
-
-  @Override
-  public CompanyProfileEdo toEdo() {
-    final CompanyProfileEdo edo = new CompanyProfileEdo(this.company.toEdo(),
-                                                        ModelMapperBase.toEdoList(this.departments),
-                                                        ModelMapperBase.toEdoList(this.userGroups));
-    return edo;
-  }
-
-  @Override
-  public CompanyProfile fromEdo(final CompanyProfileEdo edo) {
-    final CompanyProfile model = new CompanyProfile(new Company().fromEdo(edo.getCompany()),
-                                                    new Department().fromEdoList(edo.getDepartments()),
-                                                    new UserGroup().fromEdoList(edo.getUserGroups()));
-
-    return model;
   }
 
 }

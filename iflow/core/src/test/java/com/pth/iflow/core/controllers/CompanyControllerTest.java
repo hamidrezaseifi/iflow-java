@@ -6,7 +6,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,18 +21,19 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.pth.iflow.common.edo.models.xml.CompanyEdo;
+import com.pth.iflow.common.edo.models.CompanyEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.XmlRestConfig;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.Company;
+import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
 import com.pth.iflow.core.service.ICompanyService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 public class CompanyControllerTest extends TestDataProducer {
-  
+
   @Autowired
   private MockMvc mockMvc;
 
@@ -49,30 +49,30 @@ public class CompanyControllerTest extends TestDataProducer {
 
   @Value("${iflow.common.rest.api.security.client-id.internal}")
   private String innerModulesRequestHeaderValue;
-  
+
   @After
   public void tearDown() throws Exception {
   }
 
   @Test
   public void testReadCompany() throws Exception {
-    
+
     final Company company = getTestCompany();
     when(this.companyService.getById(any(Long.class))).thenReturn(company);
 
-    final CompanyEdo companyEdo = company.toEdo();
+    final CompanyEdo companyEdo = CoreModelEdoMapper.toEdo(company);
 
     final String companyAsString = this.xmlConverter.getObjectMapper().writeValueAsString(companyEdo);
-    
+
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.COMPANY_READ_BY_ID, company.getId())
-            .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
-        .andExpect(status().isOk())
-        .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
-        .andExpect(content().xml(companyAsString));
+                .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.COMPANY_READ_BY_ID, company.getId())
+                                               .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+                .andExpect(content().xml(companyAsString));
 
     verify(this.companyService, times(1)).getById(any(Long.class));
-    
+
   }
 
 }

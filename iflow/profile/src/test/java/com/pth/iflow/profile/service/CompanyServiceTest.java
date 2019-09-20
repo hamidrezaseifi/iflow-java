@@ -2,9 +2,7 @@ package com.pth.iflow.profile.service;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-
 import java.net.URL;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -16,13 +14,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.pth.iflow.common.edo.models.xml.CompanyEdo;
+import com.pth.iflow.common.edo.models.CompanyEdo;
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.profile.TestDataProducer;
 import com.pth.iflow.profile.config.ProfileConfiguration;
 import com.pth.iflow.profile.model.Company;
-import com.pth.iflow.profile.service.ICompanyService;
-import com.pth.iflow.profile.service.IProfileRestTemplateCall;
+import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
 import com.pth.iflow.profile.service.impl.CompanyService;
 
 @RunWith(SpringRunner.class)
@@ -30,10 +27,10 @@ import com.pth.iflow.profile.service.impl.CompanyService;
 @AutoConfigureMockMvc
 public class CompanyServiceTest extends TestDataProducer {
 
-  private ICompanyService                       companyService;
+  private ICompanyService companyService;
 
   @Mock
-  private IProfileRestTemplateCall              restTemplate;
+  private IProfileRestTemplateCall restTemplate;
 
   @MockBean
   private ProfileConfiguration.CoreAccessConfig coreAccessConfig;
@@ -54,17 +51,18 @@ public class CompanyServiceTest extends TestDataProducer {
   public void testGetUserById() throws Exception {
 
     final Company company = getTestCompany();
-    final CompanyEdo companyEdo = company.toEdo();
+    final CompanyEdo companyEdo = ProfileModelEdoMapper.toEdo(company);
 
     when(this.restTemplate.callRestGet(any(String.class), any(EModule.class), any(Class.class), any(boolean.class), any()))
-        .thenReturn(companyEdo);
+                                                                                                                           .thenReturn(companyEdo);
 
     final Company resCompany = this.companyService.getById(company.getId());
 
     Assert.assertNotNull("Result company is not null!", resCompany);
     Assert.assertEquals("Result company has id 1!", resCompany.getId(), company.getId());
-    Assert.assertEquals("Result company has name '" + company.getCompanyName() + "'!", resCompany.getCompanyName(),
-        company.getCompanyName());
+    Assert.assertEquals("Result company has name '" + company.getCompanyName() + "'!",
+                        resCompany.getCompanyName(),
+                        company.getCompanyName());
     Assert.assertEquals("Result company has status 1!", resCompany.getStatus(), company.getStatus());
 
   }

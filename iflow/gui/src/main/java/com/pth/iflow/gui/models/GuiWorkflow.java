@@ -2,12 +2,9 @@ package com.pth.iflow.gui.models;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
-import com.pth.iflow.common.edo.models.xml.WorkflowEdo;
-import com.pth.iflow.common.edo.models.xml.WorkflowListEdo;
+import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 
 @JsonIgnoreProperties(value = { "isAssignTo" })
@@ -29,6 +26,7 @@ public class GuiWorkflow {
   private EWorkflowStatus               status;
   private Integer                       version;
   private Boolean                       nextAssign;
+  private EWorkflowProcessCommand       command;
 
   private final List<GuiWorkflowFile>   files   = new ArrayList<>();
   private final List<GuiWorkflowAction> actions = new ArrayList<>();
@@ -197,6 +195,14 @@ public class GuiWorkflow {
     this.nextAssign = nextAssign;
   }
 
+  public EWorkflowProcessCommand getCommand() {
+    return this.command;
+  }
+
+  public void setCommand(final EWorkflowProcessCommand command) {
+    this.command = command;
+  }
+
   public List<GuiWorkflowFile> getFiles() {
     return this.files;
   }
@@ -320,76 +326,9 @@ public class GuiWorkflow {
     return (this.assignTo != null) && (this.assignTo > 0) && (this.status == EWorkflowStatus.ASSIGNED);
   }
 
-  public WorkflowEdo toEdo() {
-    final WorkflowEdo edo = new WorkflowEdo();
-    edo.setTitle(this.title);
-    edo.setComments(this.comments);
-    edo.setStatus(this.getStatusInt());
-    edo.setId(this.id);
-    edo.setController(this.controller);
-    edo.setCurrentStep(this.currentStep != null ? this.currentStep.toEdo() : null);
-    edo.setCurrentStepId(this.currentStepId);
-    edo.setCreatedBy(this.createdBy);
-    edo.setWorkflowTypeId(this.workflowTypeId);
-    edo.setVersion(this.version);
-    edo.setNextAssign(this.nextAssign);
-    edo.setAssignTo(this.assignTo);
-
-    edo.setFiles(ModelMapperBase.toEdoList(this.files));
-    edo.setActions(ModelMapperBase.toEdoList(this.actions));
-
-    return edo;
-  }
-
-  public static GuiWorkflow fromEdo(final WorkflowEdo edo) {
-    if (edo == null) {
-      return null;
-    }
-    final GuiWorkflow model = new GuiWorkflow();
-
-    model.setTitle(edo.getTitle());
-    model.setComments(edo.getComments());
-    model.setStatusInt(edo.getStatus());
-    model.setId(edo.getId());
-    model.setController(edo.getController());
-    model.setCurrentStep(edo.getCurrentStep() != null ? new GuiWorkflowTypeStep().fromEdo(edo.getCurrentStep()) : null);
-    model.setCurrentStepId(edo.getCurrentStepId());
-    model.setCreatedBy(edo.getCreatedBy());
-    model.setWorkflowTypeId(edo.getWorkflowTypeId());
-    model.setVersion(edo.getVersion());
-    model.setNextAssign(edo.getNextAssign());
-    model.setAssignTo(edo.getAssignTo());
-
-    model.setFiles(new GuiWorkflowFile().fromEdoList(edo.getFiles()));
-    model.setActions(new GuiWorkflowAction().fromEdoList(edo.getActions()));
-
-    return model;
-  }
-
-  public static List<GuiWorkflow> fromEdoList(final List<WorkflowEdo> edoList) {
-    if (edoList == null) {
-      return null;
-    }
-    return edoList.stream().map(m -> GuiWorkflow.fromEdo(m)).collect(Collectors.toList());
-  }
-
-  public static List<WorkflowEdo> toEdoList(final List<GuiWorkflow> list) {
-    if (list == null) {
-      return null;
-    }
-    return list.stream().map(m -> m.toEdo()).collect(Collectors.toList());
-  }
-
-  public static List<GuiWorkflow> fromEdoList(final WorkflowListEdo edoList) {
-    if (edoList == null) {
-      return null;
-    }
-    return edoList.getWorkflows().stream().map(m -> GuiWorkflow.fromEdo(m)).collect(Collectors.toList());
-  }
-
   public static GuiWorkflow generateInitial(final Long creatorId) {
     final GuiWorkflow newWorkflow = new GuiWorkflow();
-    newWorkflow.setStatus(EWorkflowStatus.INITIALIZE_REQUEST);
+    newWorkflow.setStatus(EWorkflowStatus.INITIALIZE);
     newWorkflow.setAssignTo(0L);
     newWorkflow.setCreatedBy(creatorId);
     newWorkflow.setController(0L);
@@ -399,6 +338,7 @@ public class GuiWorkflow {
     newWorkflow.setVersion(0);
     newWorkflow.setWorkflowTypeId(0L);
     newWorkflow.setComments("");
+    newWorkflow.setCommand(EWorkflowProcessCommand.CREATE);
 
     return newWorkflow;
   }

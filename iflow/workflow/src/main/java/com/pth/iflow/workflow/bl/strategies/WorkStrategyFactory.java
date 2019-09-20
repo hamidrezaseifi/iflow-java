@@ -7,8 +7,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.iflow.common.exceptions.IFlowCustomeException;
+import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.IWorkflowTypeDataService;
 import com.pth.iflow.workflow.bl.strategies.create.CreateManualAssignWorkflowStrategy;
@@ -47,28 +49,28 @@ public class WorkStrategyFactory implements IWorkStrategyFactory {
    */
   @Override
   public ISaveWorkflowStrategy selectSaveWorkStrategy(final Workflow processingWorkflow, final String token)
-      throws WorkflowCustomizedException, MalformedURLException {
+      throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     logger.debug("selecting save strategy for workflow");
     final WorkflowType workflowType = this.workflowTypeDataService.getById(processingWorkflow.getWorkflowTypeId(), token);
     final WorkflowAction activeAction = processingWorkflow.hasActiveAction() ? processingWorkflow.getActiveAction() : null;
 
-    if (processingWorkflow.isNew()) {
+    if (processingWorkflow.getCommand() == EWorkflowProcessCommand.CREATE) {
       logger.debug("The SaveNewWorkflowStrategy is selected for workflow");
       return new SaveNewWorkflowStrategy(processingWorkflow, workflowType, token, activeAction, this.workflowDataService);
     }
 
-    if (processingWorkflow.isStatusArchive()) {
+    if (processingWorkflow.getCommand() == EWorkflowProcessCommand.ARCHIVE) {
       logger.debug("The ArchivingWorkflowStrategy is selected for workflow");
       return new ArchivingWorkflowStrategy(processingWorkflow, workflowType, token, activeAction, this.workflowDataService);
     }
 
-    if (processingWorkflow.isAssigned() && processingWorkflow.hasActiveAction() && (activeAction.isStatusSavingRequest())) {
+    if (processingWorkflow.getCommand() == EWorkflowProcessCommand.SAVE) {
       logger.debug("The SaveExistingWorkflowStrategy is selected for workflow");
       return new SaveExistingWorkflowStrategy(processingWorkflow, workflowType, token, activeAction, this.workflowDataService);
     }
 
-    if (processingWorkflow.isAssigned() && processingWorkflow.hasActiveAction() && (activeAction.isStatusDoneRequest())) {
+    if (processingWorkflow.getCommand() == EWorkflowProcessCommand.DONE) {
       logger.debug("The DoneExistingWorkflowStrategy is selected for workflow");
       return new DoneExistingWorkflowStrategy(processingWorkflow, workflowType, token, activeAction, this.workflowDataService);
     }
@@ -80,7 +82,7 @@ public class WorkStrategyFactory implements IWorkStrategyFactory {
 
   @Override
   public ICreateWorkflowStrategy selectCreateWorkStrategy(final WorkflowCreateRequest workflowCreateRequest, final String token)
-      throws WorkflowCustomizedException, MalformedURLException {
+      throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     logger.debug("selecting create strategy for workflow create request");
 
     final WorkflowType workflowType = this.workflowTypeDataService.getById(workflowCreateRequest.getWorkflow().getWorkflowTypeId(),

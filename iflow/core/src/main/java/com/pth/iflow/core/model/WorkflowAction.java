@@ -3,20 +3,19 @@ package com.pth.iflow.core.model;
 import java.time.LocalDateTime;
 
 import com.pth.iflow.common.edo.models.base.DataModelBase;
-import com.pth.iflow.common.edo.models.xml.WorkflowActionEdo;
 
-public class WorkflowAction extends DataModelBase<WorkflowActionEdo, WorkflowAction> {
+public class WorkflowAction extends DataModelBase {
 
-  private Long    id;
-  private Long    workflowId;
-  private Long    createdBy;
-  private String  action;
-  private Long    oldStep;
-  private Long    newStep;
-  private Long    nextAssign;
-  private String  comments;
-  private Integer status;
-  private Integer version;
+  private Long          id;
+  private Long          workflowId;
+  private Long          createdBy;
+  private String        action;
+  private Long          oldStep;
+  private Long          newStep;
+  private Long          nextAssign;
+  private String        comments;
+  private Integer       status;
+  private Integer       version;
 
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
@@ -118,41 +117,6 @@ public class WorkflowAction extends DataModelBase<WorkflowActionEdo, WorkflowAct
 
   public void setUpdatedAt(final LocalDateTime updatedAt) {
     this.updatedAt = updatedAt;
-  }
-
-  @Override
-  public WorkflowActionEdo toEdo() {
-    final WorkflowActionEdo edo = new WorkflowActionEdo();
-    edo.setAction(this.action);
-    edo.setComments(this.comments);
-    edo.setStatus(this.status);
-    edo.setId(this.id);
-    edo.setCreatedBy(this.createdBy);
-    edo.setOldStep(this.oldStep);
-    edo.setNewStep(this.newStep);
-    edo.setNextAssign(this.nextAssign);
-    edo.setWorkflowId(this.workflowId);
-    edo.setVersion(this.version);
-
-    return edo;
-  }
-
-  @Override
-  public WorkflowAction fromEdo(final WorkflowActionEdo edo) {
-    final WorkflowAction model = new WorkflowAction();
-
-    model.setAction(edo.getAction());
-    model.setComments(edo.getComments());
-    model.setStatus(edo.getStatus());
-    model.setId(edo.getId());
-    model.setCreatedBy(edo.getCreatedBy());
-    model.setOldStep(edo.getOldStep());
-    model.setNewStep(edo.getNewStep());
-    model.setNextAssign(edo.getNextAssign());
-    model.setWorkflowId(edo.getWorkflowId());
-    model.setVersion(edo.getVersion());
-
-    return model;
   }
 
 }

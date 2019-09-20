@@ -4,7 +4,6 @@ import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -13,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-
-import com.pth.iflow.backend.exceptions.BackendCustomizedException;
 import com.pth.iflow.backend.models.BackendUser;
 import com.pth.iflow.backend.models.BackendWorkflow;
 import com.pth.iflow.backend.models.BackendWorkflowCreateRequest;
@@ -22,6 +19,7 @@ import com.pth.iflow.backend.models.BackendWorkflowType;
 import com.pth.iflow.backend.services.IUserAccess;
 import com.pth.iflow.backend.services.IWorkflowAccess;
 import com.pth.iflow.common.enums.EWorkflowStatus;
+import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 
 @Controller
 @RequestMapping(value = "/workflow/data")
@@ -31,12 +29,12 @@ public class WorkflowDataController extends BackendDataControllerBase {
   private IWorkflowAccess workflowAccess;
 
   @Autowired
-  private IUserAccess     userAccess;
+  private IUserAccess userAccess;
 
   @ResponseStatus(HttpStatus.OK)
   @PostMapping(path = { "/workflowtypes" })
   @ResponseBody
-  public List<BackendWorkflowType> listWorkflowtypes() throws BackendCustomizedException, MalformedURLException {
+  public List<BackendWorkflowType> listWorkflowtypes() throws IFlowMessageConversionFailureException, MalformedURLException {
 
     final List<BackendWorkflowType> workflowTypeList = this.workflowAccess.readWorkflowTypeList(this.getLoggedCompany().getId());
 
@@ -46,7 +44,7 @@ public class WorkflowDataController extends BackendDataControllerBase {
   @ResponseStatus(HttpStatus.OK)
   @PostMapping(path = { "/companyusers" })
   @ResponseBody
-  public List<BackendUser> listCompanyUsers() throws BackendCustomizedException, MalformedURLException {
+  public List<BackendUser> listCompanyUsers() throws IFlowMessageConversionFailureException, MalformedURLException {
 
     final List<BackendUser> userList = this.userAccess.readCompanyUserList(this.getLoggedCompany().getId());
 
@@ -56,7 +54,7 @@ public class WorkflowDataController extends BackendDataControllerBase {
   @ResponseStatus(HttpStatus.OK)
   @PostMapping(path = { "/workflowcreate/init" })
   @ResponseBody
-  public Map<String, Object> loadWorkflowCreateData() throws BackendCustomizedException, MalformedURLException {
+  public Map<String, Object> loadWorkflowCreateData() throws IFlowMessageConversionFailureException, MalformedURLException {
 
     final Map<String, Object> map = new HashMap<>();
 
@@ -87,8 +85,7 @@ public class WorkflowDataController extends BackendDataControllerBase {
   @ResponseStatus(HttpStatus.OK)
   @PostMapping(path = { "/workflowcreate/create" })
   @ResponseBody
-  public void createWorkflow(@RequestBody final BackendWorkflowCreateRequest createRequest)
-      throws BackendCustomizedException, MalformedURLException {
+  public void createWorkflow(@RequestBody final BackendWorkflowCreateRequest createRequest) throws IFlowMessageConversionFailureException, MalformedURLException {
 
     this.workflowAccess.createWorkflow(createRequest);
 

@@ -15,8 +15,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.pth.iflow.common.enums.EWorkflowActionStatus;
-import com.pth.iflow.common.enums.EWorkflowStatus;
+import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 import com.pth.iflow.common.exceptions.IFlowCustomeException;
 import com.pth.iflow.workflow.TestDataProducer;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
@@ -65,6 +64,7 @@ public class WorkflowSaveStrategyFactoryTest extends TestDataProducer {
 
     final Workflow workflow = this.getTestWorkflow(1L);
     workflow.setId(null);
+    workflow.setCommand(EWorkflowProcessCommand.CREATE);
 
     final WorkflowType workflowType = this.getTestWorkflowType(1L, "");
     when(this.workflowTypeDataService.getById(any(Long.class), any(String.class))).thenReturn(workflowType);
@@ -81,7 +81,7 @@ public class WorkflowSaveStrategyFactoryTest extends TestDataProducer {
   public void testSelectArchivingWorkflowStrategy() throws Exception {
 
     final Workflow workflow = this.getTestWorkflow(1L);
-    workflow.setStatus(EWorkflowStatus.ARCHIVED);
+    workflow.setCommand(EWorkflowProcessCommand.ARCHIVE);
 
     final WorkflowType workflowType = this.getTestWorkflowType(1L, "");
     when(this.workflowTypeDataService.getById(any(Long.class), any(String.class))).thenReturn(workflowType);
@@ -99,10 +99,8 @@ public class WorkflowSaveStrategyFactoryTest extends TestDataProducer {
 
     final Workflow workflow = this.getTestWorkflow(1L);
     workflow.setAssignTo(1L);
-    while (workflow.getActions().size() > 1) {
-      workflow.getActions().remove(0);
-    }
-    workflow.getActions().get(0).setStatus(EWorkflowActionStatus.DONE_REQUEST);
+
+    workflow.setCommand(EWorkflowProcessCommand.DONE);
 
     final WorkflowType workflowType = this.getTestWorkflowType(1L, "");
     when(this.workflowTypeDataService.getById(any(Long.class), any(String.class))).thenReturn(workflowType);
@@ -120,10 +118,8 @@ public class WorkflowSaveStrategyFactoryTest extends TestDataProducer {
 
     final Workflow workflow = this.getTestWorkflow(1L);
     workflow.setAssignTo(1L);
-    while (workflow.getActions().size() > 1) {
-      workflow.getActions().remove(0);
-    }
-    workflow.getActions().get(0).setStatus(EWorkflowActionStatus.SAVING_REQUEST);
+
+    workflow.setCommand(EWorkflowProcessCommand.SAVE);
 
     final WorkflowType workflowType = this.getTestWorkflowType(1L, "");
     when(this.workflowTypeDataService.getById(any(Long.class), any(String.class))).thenReturn(workflowType);

@@ -15,6 +15,7 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
+import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.GuiCompanyProfile;
 import com.pth.iflow.gui.models.GuiUser;
@@ -130,8 +131,9 @@ public class GuiSessionUserInfo {
 
   /**
    * @return the userMap
+   * @throws IFlowMessageConversionFailureException
    */
-  public Map<Long, GuiUser> getUserMap() {
+  public Map<Long, GuiUser> getUserMap() throws IFlowMessageConversionFailureException {
     if (this.userMap.size() == 0) {
       try {
         final List<GuiUser> userList = this.userAccess.getCompanyUserList(this.companyProfile.getCompany().getId());
@@ -146,8 +148,9 @@ public class GuiSessionUserInfo {
 
   /**
    * @return the workflowTypeMap
+   * @throws IFlowMessageConversionFailureException
    */
-  public Map<Long, GuiWorkflowType> getWorkflowTypeMap() {
+  public Map<Long, GuiWorkflowType> getWorkflowTypeMap() throws IFlowMessageConversionFailureException {
     if (this.workflowTypeMap.size() == 0) {
       try {
         final List<GuiWorkflowType> typeList = this.workflowAccess.readWorkflowTypeList(this.companyProfile.getCompany().getId(),
@@ -163,8 +166,9 @@ public class GuiSessionUserInfo {
 
   /**
    * @return the GuiWorkflowType
+   * @throws IFlowMessageConversionFailureException
    */
-  public GuiWorkflowType getWorkflowTypeById(final Long workflowTypId) {
+  public GuiWorkflowType getWorkflowTypeById(final Long workflowTypId) throws IFlowMessageConversionFailureException {
     if (this.workflowTypeMap.size() == 0) {
       try {
         final List<GuiWorkflowType> typeList = this.workflowAccess.readWorkflowTypeList(this.companyProfile.getCompany().getId(),
@@ -180,8 +184,9 @@ public class GuiSessionUserInfo {
 
   /**
    * @return the GuiUser
+   * @throws IFlowMessageConversionFailureException
    */
-  public GuiUser getUserById(final Long userId) {
+  public GuiUser getUserById(final Long userId) throws IFlowMessageConversionFailureException {
     if (this.userMap.size() == 0) {
       try {
         final List<GuiUser> userList = this.userAccess.getCompanyUserList(this.companyProfile.getCompany().getId());

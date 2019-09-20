@@ -5,11 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.pth.iflow.common.edo.models.base.DataModelBase;
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
-import com.pth.iflow.common.edo.models.xml.WorkflowEdo;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 
-public class Workflow extends DataModelBase<WorkflowEdo, Workflow> {
+public class Workflow extends DataModelBase {
 
   private Long                       id;
   private Long                       workflowTypeId;
@@ -24,6 +22,7 @@ public class Workflow extends DataModelBase<WorkflowEdo, Workflow> {
   private LocalDateTime              createdAt;
   private LocalDateTime              updatedAt;
   private Boolean                    nextAssign;
+  private String                     command;
 
   private final List<WorkflowFile>   files   = new ArrayList<>();
   private final List<WorkflowAction> actions = new ArrayList<>();
@@ -123,6 +122,14 @@ public class Workflow extends DataModelBase<WorkflowEdo, Workflow> {
     this.nextAssign = nextAssign;
   }
 
+  public String getCommand() {
+    return command;
+  }
+
+  public void setCommand(final String command) {
+    this.command = command;
+  }
+
   public LocalDateTime getCreatedAt() {
     return this.createdAt;
   }
@@ -159,50 +166,6 @@ public class Workflow extends DataModelBase<WorkflowEdo, Workflow> {
     if (actions != null) {
       this.actions.addAll(actions);
     }
-  }
-
-  @Override
-  public WorkflowEdo toEdo() {
-    final WorkflowEdo edo = new WorkflowEdo();
-    edo.setTitle(this.title);
-    edo.setComments(this.comments);
-    edo.setStatus(this.getStatusInt());
-    edo.setId(this.id);
-    edo.setController(this.controller);
-    edo.setCurrentStep(this.currentStep.toEdo());
-    edo.setCurrentStepId(this.currentStep != null ? this.currentStep.getId() : null);
-    edo.setCreatedBy(this.createdBy);
-    edo.setWorkflowTypeId(this.workflowTypeId);
-    edo.setVersion(this.version);
-    edo.setNextAssign(this.nextAssign);
-    edo.setAssignTo(this.assignTo);
-
-    edo.setFiles(ModelMapperBase.toEdoList(this.files));
-    edo.setActions(ModelMapperBase.toEdoList(this.actions));
-
-    return edo;
-  }
-
-  @Override
-  public Workflow fromEdo(final WorkflowEdo edo) {
-    final Workflow model = new Workflow();
-
-    model.setTitle(edo.getTitle());
-    model.setComments(edo.getComments());
-    model.setStatus(edo.getStatus());
-    model.setId(edo.getId());
-    model.setController(edo.getController());
-    model.setCurrentStep(new WorkflowTypeStep().fromEdo(edo.getCurrentStep()));
-    model.setCreatedBy(edo.getCreatedBy());
-    model.setWorkflowTypeId(edo.getWorkflowTypeId());
-    model.setVersion(edo.getVersion());
-    model.setNextAssign(edo.getNextAssign());
-    model.setAssignTo(edo.getAssignTo());
-
-    model.setFiles(new WorkflowFile().fromEdoList(edo.getFiles()));
-    model.setActions(new WorkflowAction().fromEdoList(edo.getActions()));
-
-    return model;
   }
 
 }

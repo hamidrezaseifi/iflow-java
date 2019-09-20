@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.pth.iflow.common.enums.EWorkflowActionStatus;
+import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 import com.pth.iflow.workflow.models.Company;
 import com.pth.iflow.workflow.models.CompanyProfile;
@@ -29,6 +30,7 @@ public class TestDataProducer {
     company.setId(1L);
     company.setIdentifyid("identifyid");
     company.setStatus(1);
+    company.setVersion(1);
 
     return company;
   }
@@ -50,6 +52,8 @@ public class TestDataProducer {
     model.setFirstName("firstName");
     model.setLastName("lastName");
     model.setStatus(1);
+    model.setVersion(1);
+    model.setPermission(1);
     model.setDepartmentGroups(this.getTestDepartmentGroupIdList());
     model.setDepartments(this.getTestDepartmentIdList());
     model.setDeputies(this.getTestDeputiyIdList());
@@ -96,6 +100,7 @@ public class TestDataProducer {
     model.setCreatedBy(1L);
     model.setAssignTo(1L);
     model.setNextAssign(false);
+    model.setCommand(EWorkflowProcessCommand.NONE);
     model.setActions(
         Arrays.asList(this.getTestWorkflowAction(1L, 1L), this.getTestWorkflowAction(2L, 2L), this.getTestWorkflowAction(3L, 3L)));
     model
@@ -117,6 +122,7 @@ public class TestDataProducer {
     model.setCurrentStepId(model.getCurrentStep().getId());
     model.setCreatedBy(1L);
     model.setAssignTo(1L);
+    model.setCommand(EWorkflowProcessCommand.CREATE);
     model.setActions(Arrays.asList(this.getTestWorkflowAction(1L, 1L, actionStatus), this.getTestWorkflowAction(2L, 2L, actionStatus),
         this.getTestWorkflowAction(3L, 3L, actionStatus)));
     model
@@ -162,7 +168,7 @@ public class TestDataProducer {
     model.setWorkflowId(workflowId);
     model.setId(Id);
     model.setAction("action " + Id);
-    model.setStatus(EWorkflowActionStatus.DONE_REQUEST);
+    model.setStatus(EWorkflowActionStatus.OPEN);
     model.setVersion(1);
     model.setCreatedBy(1L);
     model.setNewStep(2L);
@@ -218,6 +224,8 @@ public class TestDataProducer {
     model.setManualAssign(true);
     model.setSendToController(true);
     model.setIncreaseStepAutomatic(true);
+    model.setAllowAssign(true);
+    model.setBaseTypeId(1L);
     model.setSteps(Arrays.asList(this.getTestWorkflowTypeStep(1L, "step 1", 1), this.getTestWorkflowTypeStep(2L, "step 2", 2),
         this.getTestWorkflowTypeStep(3L, "step 3", 3)));
     model.setComments("comments");
@@ -241,6 +249,7 @@ public class TestDataProducer {
     model.setVersion(1);
     model.setStepIndex(1);
     model.setComments("comments");
+    model.setViewName("viewName");
 
     return model;
   }
@@ -255,6 +264,7 @@ public class TestDataProducer {
     model.setStepIndex(1);
     model.setStepIndex(index);
     model.setComments("comments");
+    model.setViewName("viewName");
 
     return model;
   }
@@ -372,7 +382,7 @@ public class TestDataProducer {
   protected WorkflowCreateRequest getTestWorkflowCreateRequest() {
     final WorkflowCreateRequest request = new WorkflowCreateRequest();
     request.setAssignedUsers(this.getTestUserIdList());
-    request.setWorkflow(this.getTestWorkflow(null));
+    request.setWorkflow(this.getTestWorkflow(1L));
 
     return request;
   }

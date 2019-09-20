@@ -9,6 +9,7 @@ public enum EModule {
   CORE("Core service"),
   WORKFLOW("Workflow service"),
   PROFILE("Profile service"),
+  BACKED("Backed ui service"),
   GUI("GUI ui service");
 
   private final String moduleName;

@@ -3,13 +3,12 @@ package com.pth.iflow.profile.service.impl;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.util.List;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.exceptions.EIFlowErrorType;
+import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.profile.exceptions.ProfileCustomizedException;
 import com.pth.iflow.profile.model.Company;
 import com.pth.iflow.profile.model.Department;
@@ -57,10 +56,7 @@ public class TokenUserDataManager implements ITokenUserDataManager {
   }
 
   @Override
-  public ProfileResponse getProfileByToken(final String token)
-                                                               throws ProfileCustomizedException,
-                                                               MalformedURLException,
-                                                               URISyntaxException {
+  public ProfileResponse getProfileByToken(final String token) throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException {
     final UserAuthenticationSession session = validateToken(token);
 
     final User user = this.usersService.getUserByEmail(session.getEmail());
@@ -85,10 +81,7 @@ public class TokenUserDataManager implements ITokenUserDataManager {
   }
 
   @Override
-  public ProfileResponse getProfileByTokenAndCheckCompany(final String token, final Long companyId)
-                                                                                                    throws ProfileCustomizedException,
-                                                                                                    MalformedURLException,
-                                                                                                    URISyntaxException {
+  public ProfileResponse getProfileByTokenAndCheckCompany(final String token, final Long companyId) throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException {
     final ProfileResponse profile = this.getProfileByToken(token);
 
     if (profile.getCompanyProfile().getCompany().getId() != companyId) {
@@ -99,10 +92,7 @@ public class TokenUserDataManager implements ITokenUserDataManager {
   }
 
   @Override
-  public ProfileResponse getProfileByTokenEmail(final String email, final String token)
-                                                                                        throws ProfileCustomizedException,
-                                                                                        MalformedURLException,
-                                                                                        URISyntaxException {
+  public ProfileResponse getProfileByTokenEmail(final String email, final String token) throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException {
     if (StringUtils.isEmpty(token)) {
       throw new ProfileCustomizedException("Invalid Token!", "", EModule.PROFILE.getModuleName(), EIFlowErrorType.INVALID_TOKEN);
     }
@@ -135,10 +125,7 @@ public class TokenUserDataManager implements ITokenUserDataManager {
   }
 
   @Override
-  public List<User> getUserListByToken(final String token, final Long companyId)
-                                                                                 throws ProfileCustomizedException,
-                                                                                 MalformedURLException,
-                                                                                 URISyntaxException {
+  public List<User> getUserListByToken(final String token, final Long companyId) throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException {
 
     this.getProfileByTokenAndCheckCompany(token, companyId);
 
@@ -146,10 +133,7 @@ public class TokenUserDataManager implements ITokenUserDataManager {
   }
 
   @Override
-  public List<UserGroup> getUserGroupListByToken(final String token, final Long companyId)
-                                                                                           throws ProfileCustomizedException,
-                                                                                           MalformedURLException,
-                                                                                           URISyntaxException {
+  public List<UserGroup> getUserGroupListByToken(final String token, final Long companyId) throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException {
 
     this.getProfileByTokenAndCheckCompany(token, companyId);
 
@@ -157,10 +141,7 @@ public class TokenUserDataManager implements ITokenUserDataManager {
   }
 
   @Override
-  public List<Department> getDepartmentListByToken(final String token, final Long companyId)
-                                                                                             throws ProfileCustomizedException,
-                                                                                             MalformedURLException,
-                                                                                             URISyntaxException {
+  public List<Department> getDepartmentListByToken(final String token, final Long companyId) throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException {
 
     this.getProfileByTokenAndCheckCompany(token, companyId);
 
@@ -168,10 +149,7 @@ public class TokenUserDataManager implements ITokenUserDataManager {
   }
 
   @Override
-  public Department getDepartmentById(final String token, final Long id)
-                                                                         throws ProfileCustomizedException,
-                                                                         MalformedURLException,
-                                                                         URISyntaxException {
+  public Department getDepartmentById(final String token, final Long id) throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException {
 
     this.validateToken(token);
 
@@ -179,10 +157,7 @@ public class TokenUserDataManager implements ITokenUserDataManager {
   }
 
   @Override
-  public List<DepartmentGroup> getDepartmentGroupListByDepartmentId(final String token, final Long id)
-                                                                                                       throws ProfileCustomizedException,
-                                                                                                       MalformedURLException,
-                                                                                                       URISyntaxException {
+  public List<DepartmentGroup> getDepartmentGroupListByDepartmentId(final String token, final Long id) throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException {
 
     this.validateToken(token);
 
@@ -190,10 +165,7 @@ public class TokenUserDataManager implements ITokenUserDataManager {
   }
 
   @Override
-  public List<User> getAllUserListByDepartmentId(final String token, final Long id)
-                                                                                    throws ProfileCustomizedException,
-                                                                                    MalformedURLException,
-                                                                                    URISyntaxException {
+  public List<User> getAllUserListByDepartmentId(final String token, final Long id) throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException {
 
     this.validateToken(token);
 
@@ -201,10 +173,7 @@ public class TokenUserDataManager implements ITokenUserDataManager {
   }
 
   @Override
-  public DepartmentGroup getDepartmentGroupById(final String token, final Long id)
-                                                                                   throws ProfileCustomizedException,
-                                                                                   MalformedURLException,
-                                                                                   URISyntaxException {
+  public DepartmentGroup getDepartmentGroupById(final String token, final Long id) throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException {
 
     this.validateToken(token);
 
@@ -212,10 +181,7 @@ public class TokenUserDataManager implements ITokenUserDataManager {
   }
 
   @Override
-  public List<User> getAllUserListByDepartmentGroupId(final String token, final Long id)
-                                                                                         throws ProfileCustomizedException,
-                                                                                         MalformedURLException,
-                                                                                         URISyntaxException {
+  public List<User> getAllUserListByDepartmentGroupId(final String token, final Long id) throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException {
 
     this.validateToken(token);
 

@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.ITokenValidator;
 import com.pth.iflow.workflow.bl.IWorkflowTypeStepDataService;
 import com.pth.iflow.workflow.bl.IWorkflowTypeStepProcessService;
@@ -17,11 +18,11 @@ import com.pth.iflow.workflow.models.WorkflowTypeStep;
 @Service
 public class WorkflowTypeStepProcessService implements IWorkflowTypeStepProcessService {
 
-  private static final Logger logger = LoggerFactory.getLogger(WorkflowTypeStepProcessService.class);
+  private static final Logger                logger = LoggerFactory.getLogger(WorkflowTypeStepProcessService.class);
 
   private final IWorkflowTypeStepDataService workflowTypeStepDataService;
 
-  private final ITokenValidator tokenValidator;
+  private final ITokenValidator              tokenValidator;
 
   public WorkflowTypeStepProcessService(@Autowired final IWorkflowTypeStepDataService workflowTypeStepDataService,
       @Autowired final ITokenValidator tokenValidator) {
@@ -30,7 +31,8 @@ public class WorkflowTypeStepProcessService implements IWorkflowTypeStepProcessS
   }
 
   @Override
-  public WorkflowTypeStep getById(final Long id, final String token) throws WorkflowCustomizedException, MalformedURLException {
+  public WorkflowTypeStep getById(final Long id, final String token)
+      throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     logger.debug("Request workflow-step data for id {}", id);
 
@@ -41,7 +43,7 @@ public class WorkflowTypeStepProcessService implements IWorkflowTypeStepProcessS
 
   @Override
   public List<WorkflowTypeStep> getListByWorkflowId(final Long workflowId, final String token)
-      throws WorkflowCustomizedException, MalformedURLException {
+      throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     logger.debug("Request workflow-step list for workflow id {}", workflowId);
 
     this.tokenValidator.isTokenValid(token);
@@ -51,7 +53,7 @@ public class WorkflowTypeStepProcessService implements IWorkflowTypeStepProcessS
 
   @Override
   public List<WorkflowTypeStep> getListByIdList(final List<Long> idList, final String token)
-      throws WorkflowCustomizedException, MalformedURLException {
+      throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     logger.debug("Request workflow-step list for id list {}", idList);
 
     this.tokenValidator.isTokenValid(token);

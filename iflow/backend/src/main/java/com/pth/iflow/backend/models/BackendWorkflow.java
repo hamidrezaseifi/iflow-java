@@ -3,11 +3,10 @@ package com.pth.iflow.backend.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.pth.iflow.common.edo.models.base.ModelMapperBase;
-import com.pth.iflow.common.edo.models.xml.WorkflowEdo;
+import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 
-public class BackendWorkflow extends ModelMapperBase<WorkflowEdo, BackendWorkflow> {
+public class BackendWorkflow extends DataModelBase {
 
   private Long                              id;
   private Long                              workflowTypeId;
@@ -21,10 +20,12 @@ public class BackendWorkflow extends ModelMapperBase<WorkflowEdo, BackendWorkflo
   private EWorkflowStatus                   status;
   private Integer                           version;
   private Boolean                           nextAssign;
+  private String                            command;
 
   private final List<BackendWorkflowFile>   files   = new ArrayList<>();
   private final List<BackendWorkflowAction> actions = new ArrayList<>();
 
+  @Override
   public Long getId() {
     return this.id;
   }
@@ -117,10 +118,12 @@ public class BackendWorkflow extends ModelMapperBase<WorkflowEdo, BackendWorkflo
     return this.status.getValue().intValue();
   }
 
+  @Override
   public Integer getVersion() {
     return this.version;
   }
 
+  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
@@ -183,56 +186,17 @@ public class BackendWorkflow extends ModelMapperBase<WorkflowEdo, BackendWorkflo
     return this.isNew() && (this.getStatus() == EWorkflowStatus.INITIALIZE);
   }
 
+  @Override
   public boolean isNew() {
     return (this.id == null) || (this.id <= 0);
   }
 
-  @Override
-  public WorkflowEdo toEdo() {
-    final WorkflowEdo edo = new WorkflowEdo();
-    edo.setTitle(this.title);
-    edo.setComments(this.comments);
-    edo.setStatus(this.getStatusInt());
-    edo.setId(this.id);
-    edo.setController(this.controller);
-    edo.setCurrentStep(this.currentStep != null ? this.currentStep.toEdo() : null);
-    edo.setCurrentStepId(this.currentStepId);
-    edo.setCreatedBy(this.createdBy);
-    edo.setWorkflowTypeId(this.workflowTypeId);
-    edo.setVersion(this.version);
-    edo.setNextAssign(this.nextAssign);
-    edo.setAssignTo(this.assignTo);
-
-    edo.setFiles(ModelMapperBase.toEdoList(this.files));
-    edo.setActions(ModelMapperBase.toEdoList(this.actions));
-
-    return edo;
+  public String getCommand() {
+    return this.command;
   }
 
-  @Override
-  public BackendWorkflow fromEdo(final WorkflowEdo edo) {
-    if (edo == null) {
-      return null;
-    }
-    final BackendWorkflow model = new BackendWorkflow();
-
-    model.setTitle(edo.getTitle());
-    model.setComments(edo.getComments());
-    model.setStatusInt(edo.getStatus());
-    model.setId(edo.getId());
-    model.setController(edo.getController());
-    model.setCurrentStep(edo.getCurrentStep() != null ? new BackendWorkflowTypeStep().fromEdo(edo.getCurrentStep()) : null);
-    model.setCurrentStepId(edo.getCurrentStepId());
-    model.setCreatedBy(edo.getCreatedBy());
-    model.setWorkflowTypeId(edo.getWorkflowTypeId());
-    model.setVersion(edo.getVersion());
-    model.setNextAssign(edo.getNextAssign());
-    model.setAssignTo(edo.getAssignTo());
-
-    model.setFiles(new BackendWorkflowFile().fromEdoList(edo.getFiles()));
-    model.setActions(new BackendWorkflowAction().fromEdoList(edo.getActions()));
-
-    return model;
+  public void setCommand(final String command) {
+    this.command = command;
   }
 
 }

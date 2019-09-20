@@ -3,9 +3,8 @@ package com.pth.iflow.core.model;
 import java.time.LocalDateTime;
 
 import com.pth.iflow.common.edo.models.base.DataModelBase;
-import com.pth.iflow.common.edo.models.xml.CompanyEdo;
 
-public class Company extends DataModelBase<CompanyEdo, Company> {
+public class Company extends DataModelBase {
 
   private Long          id;
   private String        identifyid;
@@ -114,30 +113,6 @@ public class Company extends DataModelBase<CompanyEdo, Company> {
    */
   public void setUpdatedAt(final LocalDateTime updatedAt) {
     this.updatedAt = updatedAt;
-  }
-
-  @Override
-  public CompanyEdo toEdo() {
-    final CompanyEdo edo = new CompanyEdo();
-    edo.setCompanyName(this.companyName);
-    edo.setIdentifyid(this.identifyid);
-    edo.setStatus(this.status);
-    edo.setVersion(this.version);
-    edo.setId(this.id);
-
-    return edo;
-  }
-
-  @Override
-  public Company fromEdo(final CompanyEdo edo) {
-    final Company model = new Company();
-    model.setCompanyName(edo.getCompanyName());
-    model.setIdentifyid(edo.getIdentifyid());
-    model.setStatus(edo.getStatus());
-    model.setVersion(edo.getVersion());
-    model.setId(edo.getId());
-
-    return model;
   }
 
 }

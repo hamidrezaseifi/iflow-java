@@ -7,25 +7,27 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pth.iflow.common.edo.models.AuthenticatedProfileRequestEdo;
+import com.pth.iflow.common.edo.models.ProfileResponseEdo;
+import com.pth.iflow.common.edo.models.TokenProfileRequestEdo;
+import com.pth.iflow.common.edo.models.UserAuthenticationRequestEdo;
+import com.pth.iflow.common.edo.models.UserAuthenticationResponseEdo;
+import com.pth.iflow.common.enums.EModule;
+import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.configurations.GuiConfiguration;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.GuiProfileResponse;
 import com.pth.iflow.gui.models.GuiUserAuthenticationResponse;
+import com.pth.iflow.gui.models.mapper.GuiModelEdoMapper;
 import com.pth.iflow.gui.services.IProfileAccess;
 import com.pth.iflow.gui.services.IRestTemplateCall;
-import com.pth.iflow.common.edo.models.xml.AuthenticatedProfileRequestEdo;
-import com.pth.iflow.common.edo.models.xml.ProfileResponseEdo;
-import com.pth.iflow.common.edo.models.xml.TokenProfileRequestEdo;
-import com.pth.iflow.common.edo.models.xml.UserAuthenticationRequestEdo;
-import com.pth.iflow.common.edo.models.xml.UserAuthenticationResponseEdo;
-import com.pth.iflow.common.enums.EModule;
 
 @Service
 public class ProfileAccess implements IProfileAccess {
 
-  private static final Logger                           logger = LoggerFactory.getLogger(ProfileAccess.class);
+  private static final Logger                       logger = LoggerFactory.getLogger(ProfileAccess.class);
 
-  private final IRestTemplateCall                       restTemplate;
+  private final IRestTemplateCall                   restTemplate;
   private final GuiConfiguration.ModuleAccessConfig moduleAccessConfig;
 
   public ProfileAccess(@Autowired final IRestTemplateCall restTemplate,
@@ -35,7 +37,8 @@ public class ProfileAccess implements IProfileAccess {
   }
 
   @Override
-  public GuiProfileResponse isTokenValid(final String token) throws GuiCustomizedException, MalformedURLException {
+  public GuiProfileResponse isTokenValid(final String token)
+      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     logger.debug("Validate token {} from profile service", token);
 
@@ -45,12 +48,12 @@ public class ProfileAccess implements IProfileAccess {
     final ProfileResponseEdo responseEdo = this.restTemplate.callRestPost(this.moduleAccessConfig.getReadTokenInfoUri(),
         EModule.PROFILE, profileRequest, ProfileResponseEdo.class, token, true);
 
-    return GuiProfileResponse.fromEdo(responseEdo);
+    return GuiModelEdoMapper.fromEdo(responseEdo);
   }
 
   @Override
   public GuiUserAuthenticationResponse authenticate(final String username, final String password, final String companyIdentity)
-      throws GuiCustomizedException, MalformedURLException {
+      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     logger.debug("Authenticate user {} from profile service", username);
 
     final UserAuthenticationRequestEdo request = new UserAuthenticationRequestEdo();
@@ -61,12 +64,12 @@ public class ProfileAccess implements IProfileAccess {
     final UserAuthenticationResponseEdo responseEdo = this.restTemplate.callRestPost(this.moduleAccessConfig.getAuthenticationUri(),
         EModule.PROFILE, request, UserAuthenticationResponseEdo.class, "", true);
 
-    return GuiUserAuthenticationResponse.fromEdo(responseEdo);
+    return GuiModelEdoMapper.fromEdo(responseEdo);
   }
 
   @Override
   public GuiProfileResponse readProfile(final String username, final String token)
-      throws GuiCustomizedException, MalformedURLException {
+      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     logger.debug("Read profile for user {} from profile service", username);
 
     final AuthenticatedProfileRequestEdo request = new AuthenticatedProfileRequestEdo();
@@ -76,7 +79,7 @@ public class ProfileAccess implements IProfileAccess {
     final ProfileResponseEdo responseEdo = this.restTemplate.callRestPost(this.moduleAccessConfig.getReadAuthenticationInfoUri(),
         EModule.PROFILE, request, ProfileResponseEdo.class, token, true);
 
-    return GuiProfileResponse.fromEdo(responseEdo);
+    return GuiModelEdoMapper.fromEdo(responseEdo);
   }
 
 }
