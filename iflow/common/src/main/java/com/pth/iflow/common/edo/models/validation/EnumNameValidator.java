@@ -9,12 +9,12 @@ import javax.validation.constraints.NotNull;
 
 import com.pth.iflow.common.enums.IEnumNameValidator;
 
-public class EnumValidator implements ConstraintValidator<AEnumValidator, String> {
+public class EnumNameValidator implements ConstraintValidator<AEnumNameValidator, String> {
 	
 	  private final Set<@NotNull String> validValues = new HashSet<>();
 
 	  @Override
-	  public void initialize(final AEnumValidator constraintAnnotation) {
+	  public void initialize(final AEnumNameValidator constraintAnnotation) {
 
 	    final Class<? extends IEnumNameValidator> enumClass = constraintAnnotation.enumClazz();
 

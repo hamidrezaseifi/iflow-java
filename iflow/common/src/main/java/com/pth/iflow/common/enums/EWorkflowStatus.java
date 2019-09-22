@@ -28,8 +28,8 @@ public enum EWorkflowStatus implements IValueList {
   }
 
   @Override
-  public Long getValue() {
-    return Long.valueOf(this.id);
+  public Integer getValue() {
+    return this.id;
   }
 
 }

@@ -26,8 +26,8 @@ public enum EWorkflowActionStatus implements IValueList {
   }
 
   @Override
-  public Long getValue() {
-    return Long.valueOf(this.id);
+  public Integer getValue() {
+    return this.id;
   }
 
   public boolean isActive() {

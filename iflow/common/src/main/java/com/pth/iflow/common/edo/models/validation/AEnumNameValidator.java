@@ -13,11 +13,11 @@ import javax.validation.ReportAsSingleViolation;
 import com.pth.iflow.common.enums.IEnumNameValidator;
 
 @Documented
-@Constraint(validatedBy = EnumValidator.class)
+@Constraint(validatedBy = EnumNameValidator.class)
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 @ReportAsSingleViolation
-public @interface AEnumValidator {
+public @interface AEnumNameValidator {
 
 	  Class<? extends IEnumNameValidator> enumClazz();
 
