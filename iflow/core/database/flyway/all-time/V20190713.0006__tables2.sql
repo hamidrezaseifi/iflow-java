@@ -49,3 +49,7 @@ CHANGE COLUMN `manual_assign` `assign_type` SMALLINT(2) NOT NULL DEFAULT 1 ;
 UPDATE `iflow`.`workflow_type` SET `assign_type` = '1' WHERE (`id` = '1');
 UPDATE `iflow`.`workflow_type` SET `assign_type` = '1' WHERE (`id` = '2');
 
+INSERT INTO `workflow_type` VALUES (3,1,0,'Rechung Wrokflow',2,0,1,1,NULL,1,1,'2019-09-22 16:57:54.654451','2019-09-22 16:57:54.654451');
+
+INSERT INTO `workflow_type_step` VALUES (7,3,'Rechungsverteilung',1,'workflow/invoice_assign',NULL,1,1,'2019-09-22 17:04:52.329953','2019-09-22 17:04:52.329953'),(8,3,'Rechungsprüfung ',2,'workflow/invoice_testing',NULL,1,1,'2019-09-22 17:04:52.331101','2019-09-22 17:04:52.331101'),(9,3,'Rechungsfreigabe ',3,'workflow/invoice_release',NULL,1,1,'2019-09-22 17:04:52.331350','2019-09-22 17:04:52.331350');
+
