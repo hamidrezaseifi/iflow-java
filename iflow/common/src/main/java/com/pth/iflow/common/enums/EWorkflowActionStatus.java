@@ -1,9 +1,8 @@
 package com.pth.iflow.common.enums;
 
-import com.pth.iflow.common.enums.base.IValueList;
 import com.pth.iflow.common.exceptions.IFlowInvalidEnumValueException;
 
-public enum EWorkflowActionStatus implements IValueList {
+public enum EWorkflowActionStatus implements IEnumValueValidator {
   INITIALIZE(0),
   OPEN(5),
   DONE(20),
@@ -26,8 +25,8 @@ public enum EWorkflowActionStatus implements IValueList {
   }
 
   @Override
-  public Long getValue() {
-    return Long.valueOf(this.id);
+  public Integer getValue() {
+    return this.id;
   }
 
   public boolean isActive() {

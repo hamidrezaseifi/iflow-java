@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.pth.iflow.common.edo.models.base.DataModelBase;
+import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
 
 public class WorkflowType extends DataModelBase {
 
@@ -15,7 +16,7 @@ public class WorkflowType extends DataModelBase {
   private String                       comments;
   private Integer                      status;
   private Boolean                      sendToController;
-  private Boolean                      manualAssign;
+  private EWorkflowTypeAssignType      assignType;
   private Boolean                      increaseStepAutomatic;
   private Boolean                      allowAssign;
   private Integer                      version;
@@ -86,12 +87,12 @@ public class WorkflowType extends DataModelBase {
     this.sendToController = sendToController;
   }
 
-  public Boolean getManualAssign() {
-    return this.manualAssign;
+  public EWorkflowTypeAssignType geAssignType() {
+    return this.assignType;
   }
 
-  public void setManualAssign(final Boolean manualAssign) {
-    this.manualAssign = manualAssign;
+  public void setAssignType(final EWorkflowTypeAssignType assignType) {
+    this.assignType = assignType;
   }
 
   public Boolean getIncreaseStepAutomatic() {

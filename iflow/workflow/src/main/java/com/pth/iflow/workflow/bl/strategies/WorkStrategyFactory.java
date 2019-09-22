@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pth.iflow.common.enums.EWorkflowProcessCommand;
+import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
 import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.iflow.common.exceptions.IFlowCustomeException;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
@@ -88,7 +89,7 @@ public class WorkStrategyFactory implements IWorkStrategyFactory {
     final WorkflowType workflowType = this.workflowTypeDataService.getById(workflowCreateRequest.getWorkflow().getWorkflowTypeId(),
         token);
 
-    if (workflowType.getManualAssign() == Boolean.TRUE) {
+    if (workflowType.geAssignType() == EWorkflowTypeAssignType.MANUAL) {
       return new CreateManualAssignWorkflowStrategy(workflowCreateRequest, token, this);
     }
 

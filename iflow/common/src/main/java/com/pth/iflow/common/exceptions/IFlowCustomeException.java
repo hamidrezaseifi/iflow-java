@@ -5,7 +5,7 @@ import javax.validation.ValidationException;
 public class IFlowCustomeException extends ValidationException {
 
   private static final long serialVersionUID = 1L;
-  private Long errorType;
+  private Integer           errorType;
 
   public IFlowCustomeException(final EIFlowErrorType errorType) {
     super();
@@ -22,11 +22,11 @@ public class IFlowCustomeException extends ValidationException {
     this.errorType = errorType.getValue();
   }
 
-  public Long getErrorType() {
-    return errorType;
+  public Integer getErrorType() {
+    return this.errorType;
   }
 
-  public void setErrorType(final Long errorType) {
+  public void setErrorType(final Integer errorType) {
     this.errorType = errorType;
   }
 
