@@ -57,6 +57,7 @@ CREATE TABLE `workflow_offer` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `workflow_id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
+  `version` smallint(6) DEFAULT NULL,
   `status` smallint(6) DEFAULT NULL,
   `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   `updated_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),

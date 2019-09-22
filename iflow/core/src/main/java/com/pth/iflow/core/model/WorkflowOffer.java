@@ -1,5 +1,7 @@
 package com.pth.iflow.core.model;
 
+import java.time.LocalDateTime;
+
 import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.enums.EWorkflowOfferStatus;
 
@@ -14,6 +16,9 @@ public class WorkflowOffer extends DataModelBase {
   private EWorkflowOfferStatus status;
 
   private Integer              version;
+
+  private LocalDateTime        createdAt;
+  private LocalDateTime        updatedAt;
 
   @Override
   public Long getId() {
@@ -56,6 +61,22 @@ public class WorkflowOffer extends DataModelBase {
   @Override
   public void setVersion(final Integer version) {
     this.version = version;
+  }
+
+  public LocalDateTime getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(final LocalDateTime createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  public LocalDateTime getUpdatedAt() {
+    return updatedAt;
+  }
+
+  public void setUpdatedAt(final LocalDateTime updatedAt) {
+    this.updatedAt = updatedAt;
   }
 
 }
