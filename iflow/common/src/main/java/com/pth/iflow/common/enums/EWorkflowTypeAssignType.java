@@ -5,7 +5,7 @@ import com.pth.iflow.common.exceptions.IFlowInvalidEnumValueException;
 public enum EWorkflowTypeAssignType implements IEnumValueValidator {
   NO_TYPE(0),
   MANUAL(1),
-  MESSAGE(2);
+  OFFER(2);
 
   private final int id;
 
