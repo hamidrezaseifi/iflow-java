@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
 import com.pth.iflow.core.model.WorkflowType;
 import com.pth.iflow.core.model.WorkflowTypeStep;
 import com.pth.iflow.core.storage.dao.IWorkflowTypeDao;
@@ -60,7 +61,7 @@ public class WorkflowTypeDao extends DaoBasicClass<WorkflowType> implements IWor
     model.setUpdatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("updated_at")));
     model.setVersion(rs.getInt("version"));
     model.setSendToController(rs.getInt("send_to_controller") == 1);
-    model.setManualAssign(rs.getInt("manual_assign") == 1);
+    model.setAssignType(EWorkflowTypeAssignType.ofValue(rs.getInt("assign_type")));
     model.setIncreaseStepAutomatic(rs.getInt("increase_step_automatic") == 1);
     model.setAllowAssign(rs.getInt("allow_assign") == 1);
     model.setSteps(this.workflowTypeStepDao.getListByWorkflowTypeId(model.getId()));
@@ -79,7 +80,7 @@ public class WorkflowTypeDao extends DaoBasicClass<WorkflowType> implements IWor
     ps.setLong(1, model.getCompanyId());
     ps.setLong(2, model.getBaseTypeId());
     ps.setString(3, model.getTitle());
-    ps.setInt(4, model.getManualAssign() ? 1 : 0);
+    ps.setInt(4, model.geAssignType().getValue());
     ps.setInt(5, model.getSendToController() ? 1 : 0);
     ps.setInt(6, model.getIncreaseStepAutomatic() ? 1 : 0);
     ps.setInt(7, model.getAllowAssign() ? 1 : 0);
@@ -96,7 +97,7 @@ public class WorkflowTypeDao extends DaoBasicClass<WorkflowType> implements IWor
     ps.setLong(1, model.getCompanyId());
     ps.setLong(2, model.getBaseTypeId());
     ps.setString(3, model.getTitle());
-    ps.setInt(4, model.getManualAssign() ? 1 : 0);
+    ps.setInt(4, model.geAssignType().getValue());
     ps.setInt(5, model.getSendToController() ? 1 : 0);
     ps.setInt(6, model.getIncreaseStepAutomatic() ? 1 : 0);
     ps.setInt(7, model.getAllowAssign() ? 1 : 0);
@@ -110,7 +111,7 @@ public class WorkflowTypeDao extends DaoBasicClass<WorkflowType> implements IWor
 
   @Override
   public WorkflowType create(final WorkflowType model) throws IFlowStorageException {
-    final String sql = "INSERT INTO workflow_type (company_id, workflow_base_type, title, manual_assign, send_to_controller, increase_step_automatic, allow_assign, comments, version, status)"
+    final String sql = "INSERT INTO workflow_type (company_id, workflow_base_type, title, assign_type, send_to_controller, increase_step_automatic, allow_assign, comments, version, status)"
         + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
     final TransactionStatus transactionStatus = this.startTransaction(true);
@@ -147,7 +148,7 @@ public class WorkflowTypeDao extends DaoBasicClass<WorkflowType> implements IWor
 
   @Override
   public WorkflowType update(final WorkflowType model) throws IFlowStorageException {
-    final String sql = "UPDATE workflow_type SET company_id = ?, workflow_base_type = ?, title = ?, manual_assign = ?, send_to_controller = ?, increase_step_automatic = ?, allow_assign = ?, comments = ?,"
+    final String sql = "UPDATE workflow_type SET company_id = ?, workflow_base_type = ?, title = ?, assign_type = ?, send_to_controller = ?, increase_step_automatic = ?, allow_assign = ?, comments = ?,"
         + " version = ?, status = ? WHERE id = ?";
 
     this.updateModel(model, "WorkflowType", sql, true);
