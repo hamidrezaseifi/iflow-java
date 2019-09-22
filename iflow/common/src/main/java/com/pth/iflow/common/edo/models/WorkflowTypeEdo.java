@@ -12,6 +12,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
+import com.pth.iflow.common.edo.models.validation.AEnumValueValidator;
+import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
 
 @XmlRootElement(name = "WorkflowType", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -49,8 +51,9 @@ public class WorkflowTypeEdo {
   private Boolean                         sendToController;
 
   @NotNull
-  @XmlElement(name = "ManualAssign", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Boolean                         manualAssign;
+  @AEnumValueValidator(enumClazz = EWorkflowTypeAssignType.class)
+  @XmlElement(name = "AssignType", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private Integer                         assignType;
 
   @NotNull
   @XmlElement(name = "IncreaseStepAutomatic", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
@@ -134,12 +137,12 @@ public class WorkflowTypeEdo {
     this.sendToController = sendToController;
   }
 
-  public Boolean getManualAssign() {
-    return this.manualAssign;
+  public Integer getAssignType() {
+    return this.assignType;
   }
 
-  public void setManualAssign(final Boolean manualAssign) {
-    this.manualAssign = manualAssign;
+  public void setAssignType(final Integer assignType) {
+    this.assignType = assignType;
   }
 
   public Boolean getIncreaseStepAutomatic() {

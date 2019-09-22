@@ -7,27 +7,27 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import javax.validation.constraints.NotNull;
 
-import com.pth.iflow.common.enums.base.IValueList;
+import com.pth.iflow.common.enums.IEnumValueValidator;
 
-public class EnumValueValidator implements ConstraintValidator<AEnumValueValidator, String> {
+public class EnumValueValidator implements ConstraintValidator<AEnumValueValidator, Integer> {
 
-  private final Set<@NotNull String> validValues = new HashSet<>();
+  private final Set<@NotNull Integer> validValues = new HashSet<>();
 
   @Override
   public void initialize(final AEnumValueValidator constraintAnnotation) {
 
-    final Class<? extends IValueList> enumClass = constraintAnnotation.enumClazz();
+    final Class<? extends IEnumValueValidator> enumClass = constraintAnnotation.enumClazz();
 
-    final IValueList[] enumValArr = enumClass.getEnumConstants();
+    final IEnumValueValidator[] enumValArr = enumClass.getEnumConstants();
 
-    for (final IValueList enumVal : enumValArr) {
-      this.validValues.add(enumVal.getValue().toString());
+    for (final IEnumValueValidator enumVal : enumValArr) {
+      this.validValues.add(enumVal.getValue());
     }
 
   }
 
   @Override
-  public boolean isValid(final String value, final ConstraintValidatorContext context) {
+  public boolean isValid(final Integer value, final ConstraintValidatorContext context) {
     return this.validValues.contains(value);
   }
 

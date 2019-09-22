@@ -5,30 +5,29 @@ import org.springframework.http.HttpStatus;
 public class IFlowErrorRestResponse {
 
   private final HttpStatus status;
-  private final String errorType;
-  private final String message;
-  private final Long errorId;
+  private final String     errorType;
+  private final String     message;
+  private final Integer    errorId;
 
-  public static String NoError = "NoError";
+  public static String     NoError = "NoError";
 
   public IFlowErrorRestResponse() {
     this.status = HttpStatus.OK;
     this.errorType = NoError;
     this.message = "";
-    this.errorId = 0L;
+    this.errorId = 0;
 
   }
 
   public IFlowErrorRestResponse(final HttpStatus status, final String errorType, final String message) {
     this.status = status;
     this.errorType = errorType;
-    this.errorId = 0L;
+    this.errorId = 0;
     this.message = message;
 
   }
 
-  public IFlowErrorRestResponse(final HttpStatus status, final String errorType, final String message,
-      final Long errorId) {
+  public IFlowErrorRestResponse(final HttpStatus status, final String errorType, final String message, final Integer errorId) {
     this.status = status;
     this.errorType = errorType;
     this.message = message;
@@ -40,31 +39,31 @@ public class IFlowErrorRestResponse {
     this.status = status;
     this.errorType = ex.getMessage();
     this.message = ex.getMessage(); // stackListToString(ex.getStackTrace());
-    this.errorId = 0L;
+    this.errorId = 0;
 
   }
 
   public HttpStatus getStatus() {
-    return status;
+    return this.status;
   }
 
   public String getErrorType() {
-    return errorType;
+    return this.errorType;
   }
 
   public boolean hasError() {
-    return !errorType.equals(NoError);
+    return !this.errorType.equals(NoError);
   }
 
   public String getMessage() {
-    return message;
+    return this.message;
   }
 
   /**
    * @return the errorId
    */
-  public Long getErrorId() {
-    return errorId;
+  public Integer getErrorId() {
+    return this.errorId;
   }
 
   public static String stackListToString(final StackTraceElement[] list) {
@@ -78,6 +77,6 @@ public class IFlowErrorRestResponse {
 
   @Override
   public String toString() {
-    return "ApiErrorResponse{" + "status=" + status + ", code=" + errorType + ", message=" + message + '}';
+    return "ApiErrorResponse{" + "status=" + this.status + ", code=" + this.errorType + ", message=" + this.message + '}';
   }
 }

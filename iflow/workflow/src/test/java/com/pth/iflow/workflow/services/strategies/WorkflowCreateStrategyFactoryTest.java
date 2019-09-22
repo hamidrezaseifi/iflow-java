@@ -13,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
 import com.pth.iflow.workflow.TestDataProducer;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.IWorkflowTypeDataService;
@@ -58,7 +59,7 @@ public class WorkflowCreateStrategyFactoryTest extends TestDataProducer {
     final WorkflowCreateRequest workflowCreateReq = this.getTestWorkflowCreateRequest();
 
     final WorkflowType workflowType = this.getTestWorkflowType(1L, "");
-    workflowType.setManualAssign(true);
+    workflowType.setAssignType(EWorkflowTypeAssignType.MANUAL);
     when(this.workflowTypeDataService.getById(any(Long.class), any(String.class))).thenReturn(workflowType);
 
     final ICreateWorkflowStrategy createWorkflowStrategy = this.workStrategyFactory.selectCreateWorkStrategy(workflowCreateReq,

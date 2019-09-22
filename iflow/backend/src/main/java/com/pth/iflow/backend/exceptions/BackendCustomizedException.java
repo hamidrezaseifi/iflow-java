@@ -7,9 +7,9 @@ import com.pth.iflow.common.exceptions.EIFlowErrorType;
 public class BackendCustomizedException extends ValidationException {
 
   private static final long serialVersionUID = 1L;
-  private final String detailes;
-  private final String moduleName;
-  private final Long errorType;
+  private final String      detailes;
+  private final String      moduleName;
+  private final Integer     errorType;
 
   public BackendCustomizedException(final String message, final String detailes, final String moduleName) {
     super(message);
@@ -27,18 +27,18 @@ public class BackendCustomizedException extends ValidationException {
   }
 
   public String getDetailes() {
-    return detailes;
+    return this.detailes;
   }
 
   public String getModuleName() {
-    return moduleName;
+    return this.moduleName;
   }
 
   /**
    * @return the errorType
    */
-  public Long getErrorType() {
-    return errorType;
+  public Integer getErrorType() {
+    return this.errorType;
   }
 
 }

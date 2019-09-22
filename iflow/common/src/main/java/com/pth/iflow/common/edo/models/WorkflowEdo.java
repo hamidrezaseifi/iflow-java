@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
-import com.pth.iflow.common.edo.models.validation.AEnumValidator;
+import com.pth.iflow.common.edo.models.validation.AEnumNameValidator;
 import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 
 @XmlRootElement(name = "Workflow", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
@@ -63,7 +63,7 @@ public class WorkflowEdo {
   private Boolean                 nextAssign;
 
   @NotNull
-  @AEnumValidator(enumClazz = EWorkflowProcessCommand.class)
+  @AEnumNameValidator(enumClazz = EWorkflowProcessCommand.class)
   @XmlElement(name = "Command", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String                  command;  
 

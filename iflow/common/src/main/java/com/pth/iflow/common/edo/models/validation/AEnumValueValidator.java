@@ -10,7 +10,7 @@ import javax.validation.Constraint;
 import javax.validation.Payload;
 import javax.validation.ReportAsSingleViolation;
 
-import com.pth.iflow.common.enums.base.IValueList;
+import com.pth.iflow.common.enums.IEnumValueValidator;
 
 @Documented
 @Constraint(validatedBy = EnumValueValidator.class)
@@ -19,7 +19,7 @@ import com.pth.iflow.common.enums.base.IValueList;
 @ReportAsSingleViolation
 public @interface AEnumValueValidator {
 
-  Class<? extends IValueList> enumClazz();
+  Class<? extends IEnumValueValidator> enumClazz();
 
   String message() default "Enum value is not valid";
 

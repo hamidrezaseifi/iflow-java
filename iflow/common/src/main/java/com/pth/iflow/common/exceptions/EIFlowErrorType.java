@@ -1,8 +1,8 @@
 package com.pth.iflow.common.exceptions;
 
-import com.pth.iflow.common.enums.base.IValueList;
+import com.pth.iflow.common.enums.IEnumValueValidator;
 
-public enum EIFlowErrorType implements IValueList {
+public enum EIFlowErrorType implements IEnumValueValidator {
   NONE(0),
   INVALID_USERNAMEPASSWORD(10),
   USER_NOTFOUND(20),

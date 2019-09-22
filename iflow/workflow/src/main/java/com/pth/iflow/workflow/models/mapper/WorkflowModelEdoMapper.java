@@ -24,6 +24,7 @@ import com.pth.iflow.common.edo.models.WorkflowSearchFilterEdo;
 import com.pth.iflow.common.edo.models.WorkflowTypeEdo;
 import com.pth.iflow.common.edo.models.WorkflowTypeStepEdo;
 import com.pth.iflow.common.enums.EWorkflowProcessCommand;
+import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.models.Company;
 import com.pth.iflow.workflow.models.CompanyProfile;
@@ -378,7 +379,7 @@ public class WorkflowModelEdoMapper {
     edo.setCompanyId(model.getCompanyId());
     edo.setBaseTypeId(model.getBaseTypeId());
     edo.setSendToController(model.getSendToController());
-    edo.setManualAssign(model.getManualAssign());
+    edo.setAssignType(model.geAssignType().getValue());
     edo.setIncreaseStepAutomatic(model.getIncreaseStepAutomatic());
     edo.setAllowAssign(model.getAllowAssign());
     edo.setSteps(toWorkflowTypeStepEdoList(model.getSteps()));
@@ -398,7 +399,7 @@ public class WorkflowModelEdoMapper {
     model.setCompanyId(edo.getCompanyId());
     model.setBaseTypeId(edo.getBaseTypeId());
     model.setSendToController(edo.getSendToController());
-    model.setManualAssign(edo.getManualAssign());
+    model.setAssignType(EWorkflowTypeAssignType.ofValue(edo.getAssignType()));
     model.setAllowAssign(edo.getAllowAssign());
     model.setIncreaseStepAutomatic(edo.getIncreaseStepAutomatic());
     model.setVersion(edo.getVersion());

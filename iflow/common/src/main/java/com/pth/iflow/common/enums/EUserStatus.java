@@ -1,8 +1,6 @@
 package com.pth.iflow.common.enums;
 
-import com.pth.iflow.common.enums.base.IValueList;
-
-public enum EUserStatus implements IValueList {
+public enum EUserStatus implements IEnumValueValidator {
   ACTIVE(1),
   DISABLED(10),
   DELETED(20);

@@ -1,9 +1,8 @@
 package com.pth.iflow.common.enums;
 
-import com.pth.iflow.common.enums.base.IValueList;
 import com.pth.iflow.common.exceptions.IFlowInvalidEnumValueException;
 
-public enum EWorkflowStatus implements IValueList {
+public enum EWorkflowStatus implements IEnumValueValidator {
   INITIALIZE(5),
   NOT_ASSIGNED(10),
   ASSIGNED(15),

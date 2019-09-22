@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
+
 import com.pth.iflow.backend.models.BackendCompany;
 import com.pth.iflow.backend.models.BackendCompanyProfile;
 import com.pth.iflow.backend.models.BackendDepartment;
@@ -36,6 +38,7 @@ import com.pth.iflow.common.edo.models.WorkflowFileVersionEdo;
 import com.pth.iflow.common.edo.models.WorkflowTypeEdo;
 import com.pth.iflow.common.edo.models.WorkflowTypeStepEdo;
 import com.pth.iflow.common.enums.EWorkflowStatus;
+import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 
 public class BackendModelEdoMapper {
@@ -406,7 +409,7 @@ public class BackendModelEdoMapper {
     edo.setCompanyId(model.getCompanyId());
     edo.setBaseTypeId(model.getBaseTypeId());
     edo.setSendToController(model.getSendToController());
-    edo.setManualAssign(model.getManualAssign());
+    edo.setAssignType(model.geAssignType().getValue());
     edo.setIncreaseStepAutomatic(model.getIncreaseStepAutomatic());
     edo.setAllowAssign(model.getAllowAssign());
     edo.setSteps(toWorkflowTypeStepEdoList(model.getSteps()));
@@ -426,7 +429,7 @@ public class BackendModelEdoMapper {
     model.setCompanyId(edo.getCompanyId());
     model.setBaseTypeId(edo.getBaseTypeId());
     model.setSendToController(edo.getSendToController());
-    model.setManualAssign(edo.getManualAssign());
+    model.setAssignType(EWorkflowTypeAssignType.ofValue(edo.getAssignType()));
     model.setAllowAssign(edo.getAllowAssign());
     model.setIncreaseStepAutomatic(edo.getIncreaseStepAutomatic());
     model.setVersion(edo.getVersion());
@@ -444,7 +447,8 @@ public class BackendModelEdoMapper {
     return edoList;
   }
 
-  public static List<BackendWorkflowFileVersion> fromWorkflowFileVersionEdoList(final List<WorkflowFileVersionEdo> edoList) throws IFlowMessageConversionFailureException {
+  public static List<BackendWorkflowFileVersion> fromWorkflowFileVersionEdoList(final List<WorkflowFileVersionEdo> edoList)
+      throws IFlowMessageConversionFailureException {
     final List<BackendWorkflowFileVersion> modelList = new ArrayList<>();
     for (final WorkflowFileVersionEdo edo : edoList) {
       modelList.add(fromEdo(edo));
@@ -462,7 +466,8 @@ public class BackendModelEdoMapper {
     return edoList;
   }
 
-  public static List<BackendWorkflowFile> fromWorkflowFileEdoList(final List<WorkflowFileEdo> edoList) throws IFlowMessageConversionFailureException {
+  public static List<BackendWorkflowFile> fromWorkflowFileEdoList(final List<WorkflowFileEdo> edoList)
+      throws IFlowMessageConversionFailureException {
     final List<BackendWorkflowFile> modelList = new ArrayList<>();
     for (final WorkflowFileEdo edo : edoList) {
       modelList.add(fromEdo(edo));
@@ -480,7 +485,8 @@ public class BackendModelEdoMapper {
     return edoList;
   }
 
-  public static List<BackendWorkflowAction> fromWorkflowActionEdoList(final List<WorkflowActionEdo> edoList) throws IFlowMessageConversionFailureException {
+  public static List<BackendWorkflowAction> fromWorkflowActionEdoList(final List<WorkflowActionEdo> edoList)
+      throws IFlowMessageConversionFailureException {
     final List<BackendWorkflowAction> modelList = new ArrayList<>();
     for (final WorkflowActionEdo edo : edoList) {
       modelList.add(fromEdo(edo));
@@ -498,7 +504,8 @@ public class BackendModelEdoMapper {
     return edoList;
   }
 
-  public static List<BackendWorkflowTypeStep> fromWorkflowTypeStepEdoList(final List<WorkflowTypeStepEdo> edoList) throws IFlowMessageConversionFailureException {
+  public static List<BackendWorkflowTypeStep> fromWorkflowTypeStepEdoList(final List<WorkflowTypeStepEdo> edoList)
+      throws IFlowMessageConversionFailureException {
     final List<BackendWorkflowTypeStep> modelList = new ArrayList<>();
     for (final WorkflowTypeStepEdo edo : edoList) {
       modelList.add(fromEdo(edo));
@@ -507,7 +514,8 @@ public class BackendModelEdoMapper {
     return modelList;
   }
 
-  public static List<BackendWorkflow> fromWorkflowEdoList(final List<WorkflowEdo> edoList) throws IFlowMessageConversionFailureException {
+  public static List<BackendWorkflow> fromWorkflowEdoList(final List<WorkflowEdo> edoList)
+      throws IFlowMessageConversionFailureException {
     final List<BackendWorkflow> modelList = new ArrayList<>();
     for (final WorkflowEdo edo : edoList) {
       modelList.add(fromEdo(edo));
@@ -516,7 +524,8 @@ public class BackendModelEdoMapper {
     return modelList;
   }
 
-  public static List<BackendWorkflowType> fromWorkflowTypeEdoList(final List<WorkflowTypeEdo> edoList) throws IFlowMessageConversionFailureException {
+  public static List<BackendWorkflowType> fromWorkflowTypeEdoList(final List<WorkflowTypeEdo> edoList)
+      throws IFlowMessageConversionFailureException {
     final List<BackendWorkflowType> modelList = new ArrayList<>();
     for (final WorkflowTypeEdo edo : edoList) {
       modelList.add(fromEdo(edo));
@@ -534,7 +543,8 @@ public class BackendModelEdoMapper {
     return edoList;
   }
 
-  public static List<BackendDepartmentGroup> fromDepartmentGroupEdoList(final List<DepartmentGroupEdo> edoList) throws IFlowMessageConversionFailureException {
+  public static List<BackendDepartmentGroup> fromDepartmentGroupEdoList(final List<DepartmentGroupEdo> edoList)
+      throws IFlowMessageConversionFailureException {
     final List<BackendDepartmentGroup> modelList = new ArrayList<>();
     for (final DepartmentGroupEdo edo : edoList) {
       modelList.add(fromEdo(edo));
@@ -597,7 +607,8 @@ public class BackendModelEdoMapper {
     return modelList;
   }
 
-  private static List<BackendUserGroup> fromUserGroupEdoList(final List<UserGroupEdo> edoList) throws IFlowMessageConversionFailureException {
+  private static List<BackendUserGroup> fromUserGroupEdoList(final List<UserGroupEdo> edoList)
+      throws IFlowMessageConversionFailureException {
     final List<BackendUserGroup> modelList = new ArrayList<>();
     for (final UserGroupEdo edo : edoList) {
       modelList.add(fromEdo(edo));
@@ -606,7 +617,8 @@ public class BackendModelEdoMapper {
     return modelList;
   }
 
-  private static List<BackendDepartment> fromDepartmentEdoList(final List<DepartmentEdo> edoList) throws IFlowMessageConversionFailureException {
+  private static List<BackendDepartment> fromDepartmentEdoList(final List<DepartmentEdo> edoList)
+      throws IFlowMessageConversionFailureException {
     final List<BackendDepartment> modelList = new ArrayList<>();
     for (final DepartmentEdo edo : edoList) {
       modelList.add(fromEdo(edo));
