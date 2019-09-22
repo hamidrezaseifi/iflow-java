@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import com.pth.iflow.common.enums.EWorkflowActionStatus;
 import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 import com.pth.iflow.common.enums.EWorkflowStatus;
+import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
 import com.pth.iflow.gui.models.GuiCompany;
 import com.pth.iflow.gui.models.GuiCompanyProfile;
 import com.pth.iflow.gui.models.GuiDepartment;
@@ -166,7 +167,7 @@ public class TestDataProducer {
     model.setTitle("utest title");
     model.setStatus(1);
     model.setVersion(1);
-    model.setManualAssign(true);
+    model.setAssignType(EWorkflowTypeAssignType.MANUAL);
     model.setSendToController(true);
     model.setIncreaseStepAutomatic(true);
     model.setAllowAssign(true);
@@ -185,7 +186,7 @@ public class TestDataProducer {
     model.setTitle(title);
     model.setStatus(1);
     model.setVersion(1);
-    model.setManualAssign(true);
+    model.setAssignType(EWorkflowTypeAssignType.MANUAL);
     model.setSendToController(true);
     model.setIncreaseStepAutomatic(true);
     model.setAllowAssign(true);
