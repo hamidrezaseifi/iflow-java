@@ -21,9 +21,11 @@ import com.pth.iflow.common.edo.models.WorkflowCreateRequestEdo;
 import com.pth.iflow.common.edo.models.WorkflowEdo;
 import com.pth.iflow.common.edo.models.WorkflowFileEdo;
 import com.pth.iflow.common.edo.models.WorkflowFileVersionEdo;
+import com.pth.iflow.common.edo.models.WorkflowOfferEdo;
 import com.pth.iflow.common.edo.models.WorkflowSearchFilterEdo;
 import com.pth.iflow.common.edo.models.WorkflowTypeEdo;
 import com.pth.iflow.common.edo.models.WorkflowTypeStepEdo;
+import com.pth.iflow.common.enums.EWorkflowOfferStatus;
 import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
@@ -40,6 +42,7 @@ import com.pth.iflow.gui.models.GuiWorkflowAction;
 import com.pth.iflow.gui.models.GuiWorkflowCreateRequest;
 import com.pth.iflow.gui.models.GuiWorkflowFile;
 import com.pth.iflow.gui.models.GuiWorkflowFileVersion;
+import com.pth.iflow.gui.models.GuiWorkflowOffer;
 import com.pth.iflow.gui.models.GuiWorkflowSearchFilter;
 import com.pth.iflow.gui.models.GuiWorkflowType;
 import com.pth.iflow.gui.models.GuiWorkflowTypeStep;
@@ -80,6 +83,30 @@ public class GuiModelEdoMapper {
     edo.setCompanyId(model.getCompanyId());
     edo.setDepartmentGroups(GuiModelEdoMapper.toDepartmentGroupEdoList(model.getDepartmentGroups()));
     edo.setVersion(model.getVersion());
+
+    return edo;
+  }
+
+  public static GuiWorkflowOffer fromEdo(final WorkflowOfferEdo edo) throws IFlowMessageConversionFailureException {
+    validateCustomer(edo);
+
+    final GuiWorkflowOffer model = new GuiWorkflowOffer();
+    model.setId(edo.getId());
+    model.setStatus(EWorkflowOfferStatus.ofValue(edo.getStatus()));
+    model.setUserId(edo.getUserId());
+    model.setVersion(edo.getVersion());
+    model.setWorkflowId(edo.getWorkflowId());
+
+    return model;
+  }
+
+  public static WorkflowOfferEdo toEdo(final GuiWorkflowOffer model) {
+    final WorkflowOfferEdo edo = new WorkflowOfferEdo();
+    edo.setId(model.getId());
+    edo.setStatus(model.getStatus().getValue());
+    edo.setUserId(model.getUserId());
+    edo.setVersion(model.getVersion());
+    edo.setWorkflowId(model.getWorkflowId());
 
     return edo;
   }
