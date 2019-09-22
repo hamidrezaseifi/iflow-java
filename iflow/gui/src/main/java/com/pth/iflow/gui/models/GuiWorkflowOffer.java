@@ -11,6 +11,8 @@ public class GuiWorkflowOffer extends DataModelBase {
 
   private Long                 userId;
 
+  private Long                 createdBy;
+
   private EWorkflowOfferStatus status;
 
   private Integer              version;
@@ -38,6 +40,14 @@ public class GuiWorkflowOffer extends DataModelBase {
 
   public void setUserId(final Long userId) {
     this.userId = userId;
+  }
+
+  public Long getCreatedBy() {
+    return this.createdBy;
+  }
+
+  public void setCreatedBy(final Long createdBy) {
+    this.createdBy = createdBy;
   }
 
   public EWorkflowOfferStatus getStatus() {

@@ -73,6 +73,7 @@ public class CoreModelEdoMapper {
     model.setId(edo.getId());
     model.setStatus(EWorkflowOfferStatus.ofValue(edo.getStatus()));
     model.setUserId(edo.getUserId());
+    model.setCreatedBy(edo.getCreatedBy());
     model.setVersion(edo.getVersion());
     model.setWorkflowId(edo.getWorkflowId());
 
@@ -84,6 +85,7 @@ public class CoreModelEdoMapper {
     edo.setId(model.getId());
     edo.setStatus(model.getStatus().getValue());
     edo.setUserId(model.getUserId());
+    edo.setCreatedBy(model.getCreatedBy());
     edo.setVersion(model.getVersion());
     edo.setWorkflowId(model.getWorkflowId());
 

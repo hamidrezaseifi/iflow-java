@@ -27,7 +27,7 @@ public class WorkflowOfferDao extends DaoBasicClass<WorkflowOffer> implements IW
 
   @Override
   public WorkflowOffer create(final WorkflowOffer model) throws IFlowStorageException {
-    final String sql = "INSERT INTO workflow_offer (workflow_id, user_id, version, status)" + "VALUES (?, ?, ?, ?)";
+    final String sql = "INSERT INTO workflow_offer (workflow_id, user_id, created_by, version, status)" + "VALUES (?, ?, ?, ?, ?)";
 
     final TransactionStatus transactionStatus = this.startTransaction(true);
     try {
@@ -48,7 +48,7 @@ public class WorkflowOfferDao extends DaoBasicClass<WorkflowOffer> implements IW
 
   @Override
   public WorkflowOffer update(final WorkflowOffer model) throws IFlowStorageException {
-    final String sql = "UPDATE workflow_offer SET workflow_id = ?, user_id = ?, version = ?, status = ? WHERE id = ?";
+    final String sql = "UPDATE workflow_offer SET workflow_id = ?, user_id = ?, created_by = ?, version = ?, status = ? WHERE id = ?";
 
     final TransactionStatus transactionStatus = this.startTransaction(true);
     try {
@@ -158,6 +158,7 @@ public class WorkflowOfferDao extends DaoBasicClass<WorkflowOffer> implements IW
     model.setId(rs.getLong("id"));
     model.setWorkflowId(rs.getLong("workflow_id"));
     model.setUserId(rs.getLong("user_id"));
+    model.setCreatedBy(rs.getLong("created_by"));
     model.setVersion(rs.getInt("version"));
     model.setStatus(EWorkflowOfferStatus.ofValue(rs.getInt("status")));
     model.setCreatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("created_at")));
@@ -171,8 +172,9 @@ public class WorkflowOfferDao extends DaoBasicClass<WorkflowOffer> implements IW
       throws SQLException {
     ps.setLong(1, model.getWorkflowId());
     ps.setLong(2, model.getUserId());
-    ps.setInt(3, model.getVersion());
-    ps.setInt(4, model.getStatus().getValue());
+    ps.setLong(3, model.getCreatedBy());
+    ps.setInt(4, model.getVersion());
+    ps.setInt(5, model.getStatus().getValue());
 
     return ps;
   }
@@ -182,9 +184,10 @@ public class WorkflowOfferDao extends DaoBasicClass<WorkflowOffer> implements IW
       throws SQLException {
     ps.setLong(1, model.getWorkflowId());
     ps.setLong(2, model.getUserId());
-    ps.setInt(3, model.getVersion());
-    ps.setInt(4, model.getStatus().getValue());
-    ps.setLong(5, model.getId());
+    ps.setLong(3, model.getCreatedBy());
+    ps.setInt(4, model.getVersion());
+    ps.setInt(5, model.getStatus().getValue());
+    ps.setLong(6, model.getId());
 
     return ps;
   }

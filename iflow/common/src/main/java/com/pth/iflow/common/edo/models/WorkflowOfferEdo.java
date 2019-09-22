@@ -28,6 +28,10 @@ public class WorkflowOfferEdo {
   private Long    userId;
 
   @NotNull
+  @XmlElement(name = "CreatedBy", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private Long    createdBy;
+
+  @NotNull
   @AEnumValueValidator(enumClazz = EWorkflowOfferStatus.class)
   @XmlElement(name = "Status", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer status;
@@ -58,6 +62,14 @@ public class WorkflowOfferEdo {
 
   public void setUserId(final Long userId) {
     this.userId = userId;
+  }
+
+  public Long getCreatedBy() {
+    return this.createdBy;
+  }
+
+  public void setCreatedBy(final Long createdBy) {
+    this.createdBy = createdBy;
   }
 
   public Integer getStatus() {

@@ -13,11 +13,14 @@ public class WorkflowOffer extends DataModelBase {
 
   private Long                 userId;
 
+  private Long                 createdBy;
+
   private EWorkflowOfferStatus status;
 
   private Integer              version;
 
   private LocalDateTime        createdAt;
+
   private LocalDateTime        updatedAt;
 
   @Override
@@ -43,6 +46,14 @@ public class WorkflowOffer extends DataModelBase {
 
   public void setUserId(final Long userId) {
     this.userId = userId;
+  }
+
+  public Long getCreatedBy() {
+    return createdBy;
+  }
+
+  public void setCreatedBy(final Long createdBy) {
+    this.createdBy = createdBy;
   }
 
   public EWorkflowOfferStatus getStatus() {

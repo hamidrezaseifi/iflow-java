@@ -56,8 +56,9 @@ INSERT INTO `workflow_type_step` VALUES (7,3,'Rechungsverteilung',1,'workflow/in
 CREATE TABLE `workflow_offer` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `workflow_id` int(11) NOT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `version` smallint(6) DEFAULT NULL,
+  `user_id` int(11) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `version` int(11) NOT NULL DEFAULT '1',
   `status` smallint(6) DEFAULT NULL,
   `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   `updated_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
@@ -67,4 +68,6 @@ CREATE TABLE `workflow_offer` (
   CONSTRAINT `FK_WORKFLOWOFFER_USER` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `FK_WORKFLOWOFFER_WORKFLOW` FOREIGN KEY (`workflow_id`) REFERENCES `workflow` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
 ) ENGINE=InnoDB;
+
+
 
