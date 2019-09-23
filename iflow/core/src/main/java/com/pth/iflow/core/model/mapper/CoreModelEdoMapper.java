@@ -3,11 +3,9 @@ package com.pth.iflow.core.model.mapper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
-
 import com.pth.iflow.common.edo.models.CompanyEdo;
 import com.pth.iflow.common.edo.models.DepartmentEdo;
 import com.pth.iflow.common.edo.models.DepartmentGroupEdo;
@@ -464,8 +462,7 @@ public class CoreModelEdoMapper {
     return edoList;
   }
 
-  public static List<WorkflowFileVersion> fromWorkflowFileVersionEdoList(final List<WorkflowFileVersionEdo> edoList)
-      throws IFlowMessageConversionFailureException {
+  public static List<WorkflowFileVersion> fromWorkflowFileVersionEdoList(final List<WorkflowFileVersionEdo> edoList) throws IFlowMessageConversionFailureException {
     final List<WorkflowFileVersion> modelList = new ArrayList<>();
     for (final WorkflowFileVersionEdo edo : edoList) {
       modelList.add(fromEdo(edo));
@@ -483,8 +480,7 @@ public class CoreModelEdoMapper {
     return edoList;
   }
 
-  public static List<WorkflowFile> fromWorkflowFileEdoList(final List<WorkflowFileEdo> edoList)
-      throws IFlowMessageConversionFailureException {
+  public static List<WorkflowFile> fromWorkflowFileEdoList(final List<WorkflowFileEdo> edoList) throws IFlowMessageConversionFailureException {
     final List<WorkflowFile> modelList = new ArrayList<>();
     for (final WorkflowFileEdo edo : edoList) {
       modelList.add(fromEdo(edo));
@@ -502,8 +498,16 @@ public class CoreModelEdoMapper {
     return edoList;
   }
 
-  public static List<WorkflowAction> fromWorkflowActionEdoList(final List<WorkflowActionEdo> edoList)
-      throws IFlowMessageConversionFailureException {
+  public static List<WorkflowOfferEdo> toWorkflowOfferEdoList(final List<WorkflowOffer> modelList) {
+    final List<WorkflowOfferEdo> edoList = new ArrayList<>();
+    for (final WorkflowOffer model : modelList) {
+      edoList.add(toEdo(model));
+    }
+
+    return edoList;
+  }
+
+  public static List<WorkflowAction> fromWorkflowActionEdoList(final List<WorkflowActionEdo> edoList) throws IFlowMessageConversionFailureException {
     final List<WorkflowAction> modelList = new ArrayList<>();
     for (final WorkflowActionEdo edo : edoList) {
       modelList.add(fromEdo(edo));
@@ -521,8 +525,7 @@ public class CoreModelEdoMapper {
     return edoList;
   }
 
-  public static List<WorkflowTypeStep> fromWorkflowTypeStepEdoList(final List<WorkflowTypeStepEdo> edoList)
-      throws IFlowMessageConversionFailureException {
+  public static List<WorkflowTypeStep> fromWorkflowTypeStepEdoList(final List<WorkflowTypeStepEdo> edoList) throws IFlowMessageConversionFailureException {
     final List<WorkflowTypeStep> modelList = new ArrayList<>();
     for (final WorkflowTypeStepEdo edo : edoList) {
       modelList.add(fromEdo(edo));
@@ -540,8 +543,7 @@ public class CoreModelEdoMapper {
     return edoList;
   }
 
-  public static List<DepartmentGroup> fromDepartmentGroupEdoList(final List<DepartmentGroupEdo> edoList)
-      throws IFlowMessageConversionFailureException {
+  public static List<DepartmentGroup> fromDepartmentGroupEdoList(final List<DepartmentGroupEdo> edoList) throws IFlowMessageConversionFailureException {
     final List<DepartmentGroup> modelList = new ArrayList<>();
     for (final DepartmentGroupEdo edo : edoList) {
       modelList.add(fromEdo(edo));

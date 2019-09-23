@@ -3,11 +3,9 @@ package com.pth.iflow.workflow.models.mapper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
-
 import com.pth.iflow.common.edo.models.CompanyEdo;
 import com.pth.iflow.common.edo.models.CompanyProfileEdo;
 import com.pth.iflow.common.edo.models.DepartmentEdo;
@@ -471,8 +469,7 @@ public class WorkflowModelEdoMapper {
     return edoList;
   }
 
-  public static List<WorkflowFileVersion> fromWorkflowFileVersionEdoList(final List<WorkflowFileVersionEdo> edoList)
-      throws IFlowMessageConversionFailureException {
+  public static List<WorkflowFileVersion> fromWorkflowFileVersionEdoList(final List<WorkflowFileVersionEdo> edoList) throws IFlowMessageConversionFailureException {
     final List<WorkflowFileVersion> modelList = new ArrayList<>();
     for (final WorkflowFileVersionEdo edo : edoList) {
       modelList.add(fromEdo(edo));
@@ -490,8 +487,7 @@ public class WorkflowModelEdoMapper {
     return edoList;
   }
 
-  public static List<WorkflowFile> fromWorkflowFileEdoList(final List<WorkflowFileEdo> edoList)
-      throws IFlowMessageConversionFailureException {
+  public static List<WorkflowFile> fromWorkflowFileEdoList(final List<WorkflowFileEdo> edoList) throws IFlowMessageConversionFailureException {
     final List<WorkflowFile> modelList = new ArrayList<>();
     for (final WorkflowFileEdo edo : edoList) {
       modelList.add(fromEdo(edo));
@@ -509,8 +505,7 @@ public class WorkflowModelEdoMapper {
     return edoList;
   }
 
-  public static List<WorkflowAction> fromWorkflowActionEdoList(final List<WorkflowActionEdo> edoList)
-      throws IFlowMessageConversionFailureException {
+  public static List<WorkflowAction> fromWorkflowActionEdoList(final List<WorkflowActionEdo> edoList) throws IFlowMessageConversionFailureException {
     final List<WorkflowAction> modelList = new ArrayList<>();
     for (final WorkflowActionEdo edo : edoList) {
       modelList.add(fromEdo(edo));
@@ -528,8 +523,25 @@ public class WorkflowModelEdoMapper {
     return edoList;
   }
 
-  public static List<WorkflowTypeStep> fromWorkflowTypeStepEdoList(final List<WorkflowTypeStepEdo> edoList)
-      throws IFlowMessageConversionFailureException {
+  public static List<WorkflowOfferEdo> toWorkflowOfferEdoList(final List<WorkflowOffer> modelList) {
+    final List<WorkflowOfferEdo> edoList = new ArrayList<>();
+    for (final WorkflowOffer model : modelList) {
+      edoList.add(toEdo(model));
+    }
+
+    return edoList;
+  }
+
+  public static List<WorkflowOffer> fromWorkflowOfferEdoList(final List<WorkflowOfferEdo> edoList) throws IFlowMessageConversionFailureException {
+    final List<WorkflowOffer> modelList = new ArrayList<>();
+    for (final WorkflowOfferEdo edo : edoList) {
+      modelList.add(fromEdo(edo));
+    }
+
+    return modelList;
+  }
+
+  public static List<WorkflowTypeStep> fromWorkflowTypeStepEdoList(final List<WorkflowTypeStepEdo> edoList) throws IFlowMessageConversionFailureException {
     final List<WorkflowTypeStep> modelList = new ArrayList<>();
     for (final WorkflowTypeStepEdo edo : edoList) {
       modelList.add(fromEdo(edo));
@@ -547,8 +559,7 @@ public class WorkflowModelEdoMapper {
     return edoList;
   }
 
-  public static List<DepartmentGroup> fromDepartmentGroupEdoList(final List<DepartmentGroupEdo> edoList)
-      throws IFlowMessageConversionFailureException {
+  public static List<DepartmentGroup> fromDepartmentGroupEdoList(final List<DepartmentGroupEdo> edoList) throws IFlowMessageConversionFailureException {
     final List<DepartmentGroup> modelList = new ArrayList<>();
     for (final DepartmentGroupEdo edo : edoList) {
       modelList.add(fromEdo(edo));
@@ -627,15 +638,17 @@ public class WorkflowModelEdoMapper {
   public static CompanyProfile fromEdo(final CompanyProfileEdo edo) throws IFlowMessageConversionFailureException {
     validateCustomer(edo);
 
-    final CompanyProfile model = new CompanyProfile(fromEdo(edo.getCompany()), fromDepartmentEdoList(edo.getDepartments()),
-        fromUserGroupEdoList(edo.getUserGroups()));
+    final CompanyProfile model = new CompanyProfile(fromEdo(edo.getCompany()),
+                                                    fromDepartmentEdoList(edo.getDepartments()),
+                                                    fromUserGroupEdoList(edo.getUserGroups()));
 
     return model;
   }
 
   public static CompanyProfileEdo toEdo(final CompanyProfile model) {
-    final CompanyProfileEdo edo = new CompanyProfileEdo(toEdo(model.getCompany()), toDepartmentEdoList(model.getDepartments()),
-        toUserGroupEdoList(model.getUserGroups()));
+    final CompanyProfileEdo edo = new CompanyProfileEdo(toEdo(model.getCompany()),
+                                                        toDepartmentEdoList(model.getDepartments()),
+                                                        toUserGroupEdoList(model.getUserGroups()));
 
     return edo;
   }
@@ -644,8 +657,7 @@ public class WorkflowModelEdoMapper {
     return new ProfileResponseEdo(toEdo(model.getUser()), toEdo(model.getCompanyProfile()), model.getSessionid());
   }
 
-  public static List<Department> fromDepartmentEdoList(final List<DepartmentEdo> edoList)
-      throws IFlowMessageConversionFailureException {
+  public static List<Department> fromDepartmentEdoList(final List<DepartmentEdo> edoList) throws IFlowMessageConversionFailureException {
     final List<Department> modelList = new ArrayList<>();
     for (final DepartmentEdo edo : edoList) {
       modelList.add(fromEdo(edo));
@@ -676,8 +688,7 @@ public class WorkflowModelEdoMapper {
     return model;
   }
 
-  public static List<WorkflowType> fromWorkflowTypeEdoList(final List<WorkflowTypeEdo> edoList)
-      throws IFlowMessageConversionFailureException {
+  public static List<WorkflowType> fromWorkflowTypeEdoList(final List<WorkflowTypeEdo> edoList) throws IFlowMessageConversionFailureException {
     final List<WorkflowType> modelList = new ArrayList<>();
     for (final WorkflowTypeEdo edo : edoList) {
       modelList.add(fromEdo(edo));
