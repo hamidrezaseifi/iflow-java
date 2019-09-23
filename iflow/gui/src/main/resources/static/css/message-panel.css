@@ -1,0 +1,11 @@
+@charset "ISO-8859-1";
+
+.message-panel-container {
+    height: 170px;
+    margin-top: 10px;
+    border: 1px solid gray;
+    background-color: #ffffaa;
+    position: fixed !important;
+    width: 100vw;
+    bottom: 0;
+}

@@ -1,5 +1,5 @@
 
-var iflowApp = angular.module('iflowApp', ['ngMaterial', 'ngTable', 'ngMaterialAccordion', 'ngSanitize']);
+var iflowApp = angular.module('iflowApp', ['ngMaterial', 'ngTable', 'ngMaterialAccordion', 'ngSanitize', 'angularResizable']);
 
 
 iflowApp.config(function($mdDateLocaleProvider) {
