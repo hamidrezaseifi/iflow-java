@@ -11,6 +11,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import com.fasterxml.jackson.annotation.JsonSetter;
 import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 
 @XmlRootElement(name = "WorkflowFile", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
@@ -53,6 +54,7 @@ public class WorkflowFileEdo {
   @XmlElement(name = "Version", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer                      version;
 
+  @NotNull
   @XmlElementWrapper(name = "FileVersionList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "FileVersion", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private List<WorkflowFileVersionEdo> fileVersions = new ArrayList<>();
@@ -141,6 +143,7 @@ public class WorkflowFileEdo {
     return this.fileVersions;
   }
 
+  @JsonSetter
   public void setFileVersions(final List<WorkflowFileVersionEdo> fileVersions) {
     this.fileVersions = new ArrayList<>();
     if (fileVersions != null) {

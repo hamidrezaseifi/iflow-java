@@ -17,15 +17,19 @@ public class WorkflowTypeStepEdo {
   @XmlElement(name = "ID", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Long    id;
 
+  @NotNull
   @XmlElement(name = "WorkflowTypeId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Long    workflowTypeId;
 
+  @NotNull
   @XmlElement(name = "Title", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String  title;
 
+  @NotNull
   @XmlElement(name = "StepIndex", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer stepIndex;
 
+  @NotNull
   @NotNull
   @XmlElement(name = "ViewName", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String  viewName;
@@ -33,9 +37,11 @@ public class WorkflowTypeStepEdo {
   @XmlElement(name = "Comments", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String  comments;
 
+  @NotNull
   @XmlElement(name = "Status", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer status;
 
+  @NotNull
   @XmlElement(name = "Version", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer version;
 

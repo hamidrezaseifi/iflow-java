@@ -3,6 +3,7 @@ package com.pth.iflow.common.edo.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -10,6 +11,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import com.fasterxml.jackson.annotation.JsonSetter;
 import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 
 @XmlRootElement(name = "WorkflowSearchFilter", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
@@ -17,18 +19,22 @@ import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 @XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "WorkflowSearchFilter" + IFlowJaxbDefinition.TYPE_PREFIX)
 public class WorkflowSearchFilterEdo {
 
+  @NotNull
   @XmlElementWrapper(name = "AssignedUserIdList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "AssignedUserId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private List<Long>    assignedUserIdList  = new ArrayList<>();
 
+  @NotNull
   @XmlElementWrapper(name = "StatusList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "Status", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private List<Integer> statusList          = new ArrayList<>();
 
+  @NotNull
   @XmlElementWrapper(name = "WorkflowTypeIdList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "WorkflowTypeId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private List<Long>    workflowTypeIdList  = new ArrayList<>();
 
+  @NotNull
   @XmlElementWrapper(name = "WorkflowStepIdList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "WorkflowStepId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private List<Long>    workflowStepeIdList = new ArrayList<>();
@@ -40,6 +46,7 @@ public class WorkflowSearchFilterEdo {
     return this.assignedUserIdList;
   }
 
+  @JsonSetter
   public void setAssignedUserIdList(final List<Long> assignedUserIdList) {
     this.assignedUserIdList = new ArrayList<>();
     if (assignedUserIdList != null) {
@@ -51,6 +58,7 @@ public class WorkflowSearchFilterEdo {
     return this.statusList;
   }
 
+  @JsonSetter
   public void setStatusList(final List<Integer> statusList) {
     this.statusList = new ArrayList<>();
     if (statusList != null) {
@@ -62,6 +70,7 @@ public class WorkflowSearchFilterEdo {
     return this.workflowTypeIdList;
   }
 
+  @JsonSetter
   public void setWorkflowTypeIdList(final List<Long> workflowTypeIdList) {
     this.workflowTypeIdList = new ArrayList<>();
     if (workflowTypeIdList != null) {
@@ -73,6 +82,7 @@ public class WorkflowSearchFilterEdo {
     return this.workflowStepeIdList;
   }
 
+  @JsonSetter
   public void setWorkflowStepeIdList(final List<Long> workflowStepeIdList) {
     this.workflowStepeIdList = new ArrayList<>();
     if (workflowStepeIdList != null) {

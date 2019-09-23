@@ -13,6 +13,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import com.fasterxml.jackson.annotation.JsonSetter;
 import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 import com.pth.iflow.common.edo.models.helper.DateEdoAdapter;
 
@@ -57,22 +58,27 @@ public class UserEdo {
   @XmlElement(name = "Permission", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer             permission;
 
+  @NotNull()
   @XmlElementWrapper(name = "GroupList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "Group")
   private final List<Long>    groups           = new ArrayList<>();
 
+  @NotNull
   @XmlElementWrapper(name = "DepartmentList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "Department", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private final List<Long>    departments      = new ArrayList<>();
 
+  @NotNull
   @XmlElementWrapper(name = "DepartmentGroupList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "DepartmentGroup", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private final List<Long>    departmentGroups = new ArrayList<>();
 
+  @NotNull
   @XmlElementWrapper(name = "DeputyList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "Deputy", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private final List<Long>    deputies         = new ArrayList<>();
 
+  @NotNull
   @XmlElementWrapper(name = "RoleList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "Role", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private final List<Integer> roles            = new ArrayList<>();
@@ -195,6 +201,7 @@ public class UserEdo {
     return this.groups;
   }
 
+  @JsonSetter
   public void setGroups(final List<Long> groups) {
     this.groups.clear();
     if (groups != null) {
@@ -210,6 +217,7 @@ public class UserEdo {
     return this.departments;
   }
 
+  @JsonSetter
   public void setDepartments(final List<Long> departments) {
     this.departments.clear();
     if (departments != null) {
@@ -225,6 +233,7 @@ public class UserEdo {
     return this.departmentGroups;
   }
 
+  @JsonSetter
   public void setDepartmentGroups(final List<Long> departmentGroups) {
     this.departmentGroups.clear();
     if (departmentGroups != null) {
@@ -240,6 +249,7 @@ public class UserEdo {
     return this.deputies;
   }
 
+  @JsonSetter
   public void setDeputies(final List<Long> deputies) {
     this.deputies.clear();
     if (deputies != null) {
@@ -255,6 +265,7 @@ public class UserEdo {
     return this.roles;
   }
 
+  @JsonSetter
   public void setRoles(final List<Integer> roles) {
     this.roles.clear();
     if (roles != null) {

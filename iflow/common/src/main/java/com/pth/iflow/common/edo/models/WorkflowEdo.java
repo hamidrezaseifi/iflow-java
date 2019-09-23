@@ -11,6 +11,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import com.fasterxml.jackson.annotation.JsonSetter;
 import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 import com.pth.iflow.common.edo.models.validation.AEnumNameValidator;
 import com.pth.iflow.common.enums.EWorkflowProcessCommand;
@@ -65,12 +66,14 @@ public class WorkflowEdo {
   @NotNull
   @AEnumNameValidator(enumClazz = EWorkflowProcessCommand.class)
   @XmlElement(name = "Command", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String                  command;  
+  private String                  command;
 
+  @NotNull
   @XmlElementWrapper(name = "WorkflowFileList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "WorkflowFile", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private List<WorkflowFileEdo>   files   = new ArrayList<>();
 
+  @NotNull
   @XmlElementWrapper(name = "WorkflowActionList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "WorkflowAction", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private List<WorkflowActionEdo> actions = new ArrayList<>();
@@ -171,19 +174,19 @@ public class WorkflowEdo {
     this.nextAssign = nextAssign;
   }
 
-  
   public String getCommand() {
-	return command;
-}
+    return this.command;
+  }
 
-public void setCommand(String command) {
-	this.command = command;
-}
+  public void setCommand(final String command) {
+    this.command = command;
+  }
 
-public List<WorkflowFileEdo> getFiles() {
+  public List<WorkflowFileEdo> getFiles() {
     return this.files;
   }
 
+  @JsonSetter
   public void setFiles(final List<WorkflowFileEdo> files) {
     this.files = new ArrayList<>();
     if (files != null) {
@@ -195,6 +198,7 @@ public List<WorkflowFileEdo> getFiles() {
     return this.actions;
   }
 
+  @JsonSetter
   public void setActions(final List<WorkflowActionEdo> actions) {
     this.actions = new ArrayList<>();
     if (actions != null) {
