@@ -128,6 +128,8 @@
 				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowTypeListEdo.java</source>
 				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowTypeStepEdo.java</source>
 				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowTypeStepListEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowOfferEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowOfferListEdo.java</source>
 
               </sources>
               <outputDirectory>${project.build.directory}/generated-resources/schemagen</outputDirectory>

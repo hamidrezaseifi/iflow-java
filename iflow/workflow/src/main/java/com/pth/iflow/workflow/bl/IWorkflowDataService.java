@@ -5,7 +5,6 @@ import java.util.List;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.Workflow;
-import com.pth.iflow.workflow.models.WorkflowOffer;
 import com.pth.iflow.workflow.models.WorkflowSearchFilter;
 
 public interface IWorkflowDataService {
@@ -22,5 +21,4 @@ public interface IWorkflowDataService {
 
   public List<Workflow> search(final WorkflowSearchFilter workflowSearchFilter, String token) throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  public List<WorkflowOffer> getOfferListForUser(Long userId, int status, String token) throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 }

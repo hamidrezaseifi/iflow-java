@@ -14,8 +14,8 @@ public interface IWorkflowOfferDao {
 
   public WorkflowOffer getById(Long id) throws IFlowStorageException;
 
-  public List<WorkflowOffer> getListByUserId(Long userId, Integer status) throws IFlowStorageException;
+  public List<WorkflowOffer> getListByUserId(final Long userId, final Long lastid, Integer status) throws IFlowStorageException;
 
-  public List<WorkflowOffer> getListByWorkflowId(Long workflowId, Integer status) throws IFlowStorageException;
+  public List<WorkflowOffer> getListByWorkflowId(final Long workflowId, final Long lastid, Integer status) throws IFlowStorageException;
 
 }

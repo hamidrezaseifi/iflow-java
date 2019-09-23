@@ -70,7 +70,7 @@ public class IflowRestPaths {
     public static final String WORKFLOW_FILE_READ_LIST_BY_WORKFLOW   = "/workflow/file/workflow/list/{id}";
     public static final String WORKFLOW_SEARCH                       = "/workflow/search";
 
-    public static final String WORKFLOWOFFER_READ_BY_USER = "/workflowoffer/user/{userid}";
+    public static final String WORKFLOWOFFER_READ_BY_USER = "/workflowoffer/user/{userid}/{lastid}/{status}";
 
   }
 
@@ -94,7 +94,7 @@ public class IflowRestPaths {
     public static final String WORKFLOW_READ_LIST_BY_USER = "/workflow/user/list/{id}/{status}";
     public static final String WORKFLOW_SEARCH            = "/workflow/search";
 
-    public static final String WORKFLOWOFFER_READ_BY_USER = "/workflowoffer/user/{userid}";
+    public static final String WORKFLOWOFFER_READ_BY_USER = "/workflowoffer/user/{userid}/{lastid}/{status}";
 
     public static URI WORKFLOWTYPE_BY_ID_URIBUILDER(final Long id) {
       final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOWTYPE_READ_BY_ID);

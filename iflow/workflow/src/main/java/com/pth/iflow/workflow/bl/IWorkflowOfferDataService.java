@@ -8,6 +8,6 @@ import com.pth.iflow.workflow.models.WorkflowOffer;
 
 public interface IWorkflowOfferDataService {
 
-  public List<WorkflowOffer> getListForUser(final Long userId, int status, String token) throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
+  public List<WorkflowOffer> getListForUser(final Long userId, final Long lastId, int status, String token) throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
 }

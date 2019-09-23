@@ -70,4 +70,7 @@ CREATE TABLE `workflow_offer` (
 ) ENGINE=InnoDB;
 
 
+INSERT INTO `iflow`.`workflow_offer` (`workflow_id`, `user_id`, `created_by`, `status`) VALUES ('2', '1', '1', '1');
+INSERT INTO `iflow`.`workflow_offer` (`workflow_id`, `user_id`, `created_by`, `status`) VALUES ('3', '1', '1', '1');
+
 

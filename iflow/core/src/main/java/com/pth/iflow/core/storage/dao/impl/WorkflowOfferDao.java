@@ -100,18 +100,19 @@ public class WorkflowOfferDao extends DaoBasicClass<WorkflowOffer> implements IW
   }
 
   @Override
-  public List<WorkflowOffer> getListByUserId(final Long userId, final Integer status) throws IFlowStorageException {
+  public List<WorkflowOffer> getListByUserId(final Long userId, final Long lastid, final Integer status) throws IFlowStorageException {
     logger.info("Dao read WorkflowOffer for user id: {}", userId);
 
     List<WorkflowOffer> list = new ArrayList<>();
-    final String sql = "SELECT * FROM workflow_offer where user_id=?" + (status > 0 ? " and status=?" : "");
+    final String sql = "SELECT * FROM workflow_offer where user_id=? and id>?" + (status > 0 ? " and status=?" : "");
 
     try {
       list = this.jdbcTemplate.query(con -> {
         final PreparedStatement ps = con.prepareStatement(sql);
         ps.setLong(1, userId);
+        ps.setLong(2, lastid);
         if (status > 0) {
-          ps.setInt(2, status);
+          ps.setInt(3, status);
         }
 
         return ps;
@@ -131,18 +132,19 @@ public class WorkflowOfferDao extends DaoBasicClass<WorkflowOffer> implements IW
   }
 
   @Override
-  public List<WorkflowOffer> getListByWorkflowId(final Long workflowId, final Integer status) throws IFlowStorageException {
+  public List<WorkflowOffer> getListByWorkflowId(final Long workflowId, final Long lastid, final Integer status) throws IFlowStorageException {
     logger.info("Dao read WorkflowOffer for workflow id: {}", workflowId);
 
     List<WorkflowOffer> list = new ArrayList<>();
-    final String sql = "SELECT * FROM workflow_offer where workflow_id=?" + (status > 0 ? " and status=?" : "");
+    final String sql = "SELECT * FROM workflow_offer where workflow_id=? and id>?" + (status > 0 ? " and status=?" : "");
 
     try {
       list = this.jdbcTemplate.query(con -> {
         final PreparedStatement ps = con.prepareStatement(sql);
         ps.setLong(1, workflowId);
+        ps.setLong(2, lastid);
         if (status > 0) {
-          ps.setInt(2, status);
+          ps.setInt(3, status);
         }
 
         return ps;

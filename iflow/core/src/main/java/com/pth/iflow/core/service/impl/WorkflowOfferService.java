@@ -46,15 +46,15 @@ public class WorkflowOfferService implements IWorkflowOfferService {
   }
 
   @Override
-  public List<WorkflowOffer> getListByUserId(final Long userId, final Integer status) throws IFlowStorageException {
+  public List<WorkflowOffer> getListByUserId(final Long userId, final Long lastid, final Integer status) throws IFlowStorageException {
 
-    return this.workflowOfferDao.getListByUserId(userId, status);
+    return this.workflowOfferDao.getListByUserId(userId, lastid, status);
   }
 
   @Override
-  public List<WorkflowOffer> getListByWorkflowId(final Long workflowId, final Integer status) throws IFlowStorageException {
+  public List<WorkflowOffer> getListByWorkflowId(final Long workflowId, final Long lastid, final Integer status) throws IFlowStorageException {
 
-    return this.workflowOfferDao.getListByWorkflowId(workflowId, status);
+    return this.workflowOfferDao.getListByWorkflowId(workflowId, lastid, status);
   }
 
 }

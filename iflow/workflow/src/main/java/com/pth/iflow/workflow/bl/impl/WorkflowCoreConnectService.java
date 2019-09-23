@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.pth.iflow.common.edo.models.WorkflowEdo;
 import com.pth.iflow.common.edo.models.WorkflowListEdo;
-import com.pth.iflow.common.edo.models.WorkflowOfferListEdo;
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.common.rest.IflowRestPaths;
@@ -16,7 +15,6 @@ import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.config.WorkflowConfiguration;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.Workflow;
-import com.pth.iflow.workflow.models.WorkflowOffer;
 import com.pth.iflow.workflow.models.WorkflowSearchFilter;
 import com.pth.iflow.workflow.models.mapper.WorkflowModelEdoMapper;
 import com.pth.iflow.workflow.services.IRestTemplateCall;
@@ -125,22 +123,6 @@ public class WorkflowCoreConnectService implements IWorkflowDataService {
                                                                    true);
 
     return WorkflowModelEdoMapper.fromWorkflowEdoList(edoList.getWorkflows());
-  }
-
-  @Override
-  public List<WorkflowOffer> getOfferListForUser(final Long userId, final int status, final String token) throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
-    logger.debug("Request workflow offer list for company id {}", userId);
-
-    final WorkflowOfferListEdo edoList = this.restTemplate.callRestGet(
-                                                                       this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.WORKFLOWOFFER_READ_BY_USER),
-                                                                       token,
-                                                                       EModule.CORE,
-                                                                       WorkflowOfferListEdo.class,
-                                                                       true,
-                                                                       userId,
-                                                                       status);
-
-    return WorkflowModelEdoMapper.fromWorkflowOfferEdoList(edoList.getWorkflowOffers());
   }
 
 }

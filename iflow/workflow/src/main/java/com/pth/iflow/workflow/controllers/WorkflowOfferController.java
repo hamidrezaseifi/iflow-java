@@ -32,11 +32,11 @@ public class WorkflowOfferController {
 
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(path = IflowRestPaths.WorkflowModule.WORKFLOWOFFER_READ_BY_USER)
-  public ResponseEntity<WorkflowOfferListEdo> readWorkflow(@PathVariable(required = true) final Long userid, @PathVariable(required = false) Integer status, final HttpServletRequest request, @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws Exception {
+  public ResponseEntity<WorkflowOfferListEdo> readWorkflow(@PathVariable(required = true) final Long userid, @PathVariable(required = true) final Long lastid, @PathVariable(required = false) Integer status, final HttpServletRequest request, @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws Exception {
 
     status = status == null ? 0 : status;
 
-    final List<WorkflowOffer> offerList = this.workflowOfferService.getListForUser(userid, status, headerTokenId);
+    final List<WorkflowOffer> offerList = this.workflowOfferService.getListForUser(userid, lastid, status, headerTokenId);
 
     return ControllerHelper.createResponseEntity(request,
                                                  new WorkflowOfferListEdo(WorkflowModelEdoMapper.toWorkflowOfferEdoList(offerList)),
