@@ -6,7 +6,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-
 import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 import com.pth.iflow.common.edo.models.validation.AEnumValueValidator;
 import com.pth.iflow.common.enums.EWorkflowOfferStatus;
@@ -17,19 +16,19 @@ import com.pth.iflow.common.enums.EWorkflowOfferStatus;
 public class WorkflowOfferEdo {
 
   @XmlElement(name = "ID", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long    id;
+  private Long id;
 
   @NotNull
   @XmlElement(name = "WorkflowId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long    workflowId;
+  private Long workflowId;
 
   @NotNull
   @XmlElement(name = "UserId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long    userId;
+  private Long userId;
 
   @NotNull
   @XmlElement(name = "CreatedBy", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long    createdBy;
+  private Long createdBy;
 
   @NotNull
   @AEnumValueValidator(enumClazz = EWorkflowOfferStatus.class)
