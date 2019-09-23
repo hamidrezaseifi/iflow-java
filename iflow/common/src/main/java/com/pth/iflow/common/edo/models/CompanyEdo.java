@@ -14,9 +14,11 @@ import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 @XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "Company" + IFlowJaxbDefinition.TYPE_PREFIX)
 public class CompanyEdo {
 
+  @NotNull
   @XmlElement(name = "ID", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Long    id;
 
+  @NotNull
   @XmlElement(name = "IdentifyId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String  identifyid;
 
