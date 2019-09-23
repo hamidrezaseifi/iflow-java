@@ -3,16 +3,16 @@ package com.pth.iflow.profile.model.mapper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
-
 import com.pth.iflow.common.edo.models.CompanyEdo;
 import com.pth.iflow.common.edo.models.CompanyProfileEdo;
 import com.pth.iflow.common.edo.models.DepartmentEdo;
 import com.pth.iflow.common.edo.models.DepartmentGroupEdo;
 import com.pth.iflow.common.edo.models.ProfileResponseEdo;
+import com.pth.iflow.common.edo.models.UserAuthenticationRequestEdo;
+import com.pth.iflow.common.edo.models.UserAuthenticationResponseEdo;
 import com.pth.iflow.common.edo.models.UserEdo;
 import com.pth.iflow.common.edo.models.UserGroupEdo;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
@@ -22,6 +22,8 @@ import com.pth.iflow.profile.model.Department;
 import com.pth.iflow.profile.model.DepartmentGroup;
 import com.pth.iflow.profile.model.ProfileResponse;
 import com.pth.iflow.profile.model.User;
+import com.pth.iflow.profile.model.UserAuthenticationRequest;
+import com.pth.iflow.profile.model.UserAuthenticationSession;
 import com.pth.iflow.profile.model.UserGroup;
 
 public class ProfileModelEdoMapper {
@@ -62,6 +64,36 @@ public class ProfileModelEdoMapper {
     edo.setVersion(model.getVersion());
 
     return edo;
+  }
+
+  public static UserAuthenticationResponseEdo toEdo(final UserAuthenticationSession model) {
+    final UserAuthenticationResponseEdo edo = new UserAuthenticationResponseEdo();
+    edo.setSessionid(model.getSessionid());
+    edo.setToken(model.getToken());
+    edo.setEmail(model.getEmail());
+    edo.setCreated(model.getCreatedLong());
+    edo.setLastAccess(model.getLastAccessLong());
+
+    return edo;
+  }
+
+  public static UserAuthenticationRequestEdo toEdo(final UserAuthenticationRequest model) {
+    final UserAuthenticationRequestEdo edo = new UserAuthenticationRequestEdo();
+    edo.setCompanyIdentity(model.getCompanyIdentity());
+    edo.setEmail(model.getEmail());
+    edo.setPassword(model.getPassword());
+
+    return edo;
+  }
+
+  public static UserAuthenticationRequest fromEdo(final UserAuthenticationRequestEdo edo) {
+    final UserAuthenticationRequest user = new UserAuthenticationRequest();
+
+    user.setCompanyIdentity(edo.getCompanyIdentity());
+    user.setEmail(edo.getEmail());
+    user.setPassword(edo.getPassword());
+
+    return user;
   }
 
   public static Department fromEdo(final DepartmentEdo edo) throws IFlowMessageConversionFailureException {
@@ -181,8 +213,7 @@ public class ProfileModelEdoMapper {
     return edoList;
   }
 
-  public static List<DepartmentGroup> fromDepartmentGroupEdoList(final List<DepartmentGroupEdo> edoList)
-      throws IFlowMessageConversionFailureException {
+  public static List<DepartmentGroup> fromDepartmentGroupEdoList(final List<DepartmentGroupEdo> edoList) throws IFlowMessageConversionFailureException {
     final List<DepartmentGroup> modelList = new ArrayList<>();
     for (final DepartmentGroupEdo edo : edoList) {
       modelList.add(fromEdo(edo));
@@ -241,8 +272,9 @@ public class ProfileModelEdoMapper {
   }
 
   public static CompanyProfileEdo toEdo(final CompanyProfile model) {
-    final CompanyProfileEdo edo = new CompanyProfileEdo(toEdo(model.getCompany()), toDepartmentEdoList(model.getDepartments()),
-        toUserGroupEdoList(model.getUserGroups()));
+    final CompanyProfileEdo edo = new CompanyProfileEdo(toEdo(model.getCompany()),
+                                                        toDepartmentEdoList(model.getDepartments()),
+                                                        toUserGroupEdoList(model.getUserGroups()));
 
     return edo;
   }
@@ -260,8 +292,7 @@ public class ProfileModelEdoMapper {
     return modelList;
   }
 
-  public static List<Department> fromDepartmentEdoList(final List<DepartmentEdo> edoList)
-      throws IFlowMessageConversionFailureException {
+  public static List<Department> fromDepartmentEdoList(final List<DepartmentEdo> edoList) throws IFlowMessageConversionFailureException {
     final List<Department> modelList = new ArrayList<>();
     for (final DepartmentEdo edo : edoList) {
       modelList.add(fromEdo(edo));
