@@ -1,6 +1,17 @@
 
-        <div resizable r-directions="['top']" class="message-panel-container" th:fragment="message_panel">
-        	message_panel
+        <div resizable r-directions="['top']" class="message-panel-container" id="message-panel-container" th:fragment="message_panel">
+        	<div class="message-panel-toolbar">
+        		<span class="title">Nachrichten</span>
+				<button class="message-panel-toolbar-button" ng-if="messagePanelShowed" ng-click="closeMessages();"><i class="material-icons">keyboard_arrow_down</i></button>
+				<button class="message-panel-toolbar-button" ng-if="messagePanelShowed == false" ng-click="showMessages();"><i class="material-icons">keyboard_arrow_up</i></button>
+				<button class="message-panel-toolbar-button" ng-if="messagePanelShowed" ng-click="reloadMessages();"><i class="material-icons">refresh</i></button>
+        	
+        	</div>
+        	<div class="message-panel-items-container">
+        		<div class="message-panel-item"  ng-repeat="message in messages">
+        			<a ng-href="message.link">{{message.title}}</a>
+        		</div>
+        	</div>
         </div>
 
         

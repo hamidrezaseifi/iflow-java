@@ -50,9 +50,44 @@ iflowApp.controller('BodyController', function ($scope, $http, $sce, $element, $
 	$scope.errorMessage = "";
 	$scope.menulist = [];
 
-  $scope.messageTitle = "";
-  $scope.messageContent = "";
+	$scope.messageTitle = "";
+	$scope.messageContent = "";
+	
+	$scope.messagePanelHeight = 170;
+	
+	$scope.messages = [
+		{title: 'Message 10 ...', likn: '#'},
+		{title: 'Message 7 ....', likn: '#'},
+		{title: 'Message 8 ....', likn: '#'},
+		{title: 'Message 7 ....', likn: '#'},
+		{title: 'Message 6 ....', likn: '#'},
+		{title: 'Message 5 ....', likn: '#'},
+		{title: 'Message 4 ....', likn: '#'},
+		{title: 'Message 3 ....', likn: '#'},
+		{title: 'Message 2 ....', likn: '#'},
+		{title: 'Message 1 ....', likn: '#'},
+	];
+	
+	$scope.messagePanelShowed = true;
 
+	$scope.closeMessages = function(){
+		$('#message-panel-container').height(25);
+		$scope.messagePanelShowed = false;
+    };
+
+	$scope.showMessages = function(){
+		$('#message-panel-container').height($scope.messagePanelHeight);
+		$scope.messagePanelShowed = true;
+    };
+
+    $scope.$on("angular-resizable.resizeEnd", function(event, args) {        
+    	
+        if (args.height && args.id == 'message-panel-container'){
+        	$scope.messagePanelHeight = args.height;
+        }
+        	
+    });
+    
 	$scope.toggleRight = function(){
 		$mdSidenav('rightSidenav').toggle();
     };
