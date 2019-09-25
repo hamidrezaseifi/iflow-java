@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlType;
 import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 import com.pth.iflow.common.edo.models.validation.AEnumValueValidator;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
+import com.pth.iflow.common.enums.EWorkflowMessageType;
 
 @XmlRootElement(name = "WorkflowMessage", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -29,6 +30,11 @@ public class WorkflowMessageEdo {
   @NotNull
   @XmlElement(name = "CreatedBy", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Long createdBy;
+
+  @NotNull
+  @AEnumValueValidator(enumClazz = EWorkflowMessageType.class)
+  @XmlElement(name = "MessageType", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private Integer messageType;
 
   @NotNull
   @AEnumValueValidator(enumClazz = EWorkflowMessageStatus.class)
@@ -69,6 +75,14 @@ public class WorkflowMessageEdo {
 
   public void setCreatedBy(final Long createdBy) {
     this.createdBy = createdBy;
+  }
+
+  public Integer getMessageType() {
+    return messageType;
+  }
+
+  public void setMessageType(final Integer messageType) {
+    this.messageType = messageType;
   }
 
   public Integer getStatus() {

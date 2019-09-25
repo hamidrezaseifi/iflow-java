@@ -2,20 +2,23 @@ package com.pth.iflow.workflow.models;
 
 import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
+import com.pth.iflow.common.enums.EWorkflowMessageType;
 
 public class WorkflowMessage extends DataModelBase {
 
-  private Long                 id;
+  private Long id;
 
-  private Long                 workflowId;
+  private Long workflowId;
 
-  private Long                 userId;
+  private Long userId;
 
-  private Long                 createdBy;
+  private Long createdBy;
+
+  private EWorkflowMessageType messageType;
 
   private EWorkflowMessageStatus status;
 
-  private Integer              version;
+  private Integer version;
 
   @Override
   public Long getId() {
@@ -48,6 +51,14 @@ public class WorkflowMessage extends DataModelBase {
 
   public void setCreatedBy(final Long createdBy) {
     this.createdBy = createdBy;
+  }
+
+  public EWorkflowMessageType getMessageType() {
+    return messageType;
+  }
+
+  public void setMessageType(final EWorkflowMessageType messageType) {
+    this.messageType = messageType;
   }
 
   public EWorkflowMessageStatus getStatus() {

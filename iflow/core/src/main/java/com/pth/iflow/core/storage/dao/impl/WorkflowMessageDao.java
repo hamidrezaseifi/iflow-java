@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
+import com.pth.iflow.common.enums.EWorkflowMessageType;
 import com.pth.iflow.core.model.WorkflowMessage;
 import com.pth.iflow.core.storage.dao.IWorkflowMessageDao;
 import com.pth.iflow.core.storage.dao.basic.DaoBasicClass;
@@ -25,7 +26,8 @@ public class WorkflowMessageDao extends DaoBasicClass<WorkflowMessage> implement
 
   @Override
   public WorkflowMessage create(final WorkflowMessage model) throws IFlowStorageException {
-    final String sql = "INSERT INTO workflow_message (workflow_id, user_id, created_by, version, status)" + "VALUES (?, ?, ?, ?, ?)";
+    final String sql = "INSERT INTO workflow_message (workflow_id, user_id, created_by, message_type, version, status)"
+                       + "VALUES (?, ?, ?, ?, ?, ?)";
 
     final TransactionStatus transactionStatus = this.startTransaction(true);
     try {
@@ -47,7 +49,8 @@ public class WorkflowMessageDao extends DaoBasicClass<WorkflowMessage> implement
 
   @Override
   public WorkflowMessage update(final WorkflowMessage model) throws IFlowStorageException {
-    final String sql = "UPDATE workflow_message SET workflow_id = ?, user_id = ?, created_by = ?, version = ?, status = ? WHERE id = ?";
+    final String sql =
+                     "UPDATE workflow_message SET workflow_id = ?, user_id = ?, created_by = ?, message_type = ?, version = ?, status = ? WHERE id = ?";
 
     final TransactionStatus transactionStatus = this.startTransaction(true);
     try {
@@ -171,6 +174,7 @@ public class WorkflowMessageDao extends DaoBasicClass<WorkflowMessage> implement
     model.setUserId(rs.getLong("user_id"));
     model.setCreatedBy(rs.getLong("created_by"));
     model.setVersion(rs.getInt("version"));
+    model.setMessageType(EWorkflowMessageType.ofValue(rs.getInt("message_type")));
     model.setStatus(EWorkflowMessageStatus.ofValue(rs.getInt("status")));
     model.setCreatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("created_at")));
     model.setUpdatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("updated_at")));
@@ -183,8 +187,9 @@ public class WorkflowMessageDao extends DaoBasicClass<WorkflowMessage> implement
     ps.setLong(1, model.getWorkflowId());
     ps.setLong(2, model.getUserId());
     ps.setLong(3, model.getCreatedBy());
-    ps.setInt(4, model.getVersion());
-    ps.setInt(5, model.getStatus().getValue());
+    ps.setInt(4, model.getMessageType().getValue());
+    ps.setInt(5, model.getVersion());
+    ps.setInt(6, model.getStatus().getValue());
 
     return ps;
   }
@@ -194,9 +199,10 @@ public class WorkflowMessageDao extends DaoBasicClass<WorkflowMessage> implement
     ps.setLong(1, model.getWorkflowId());
     ps.setLong(2, model.getUserId());
     ps.setLong(3, model.getCreatedBy());
-    ps.setInt(4, model.getVersion());
-    ps.setInt(5, model.getStatus().getValue());
-    ps.setLong(6, model.getId());
+    ps.setInt(4, model.getMessageType().getValue());
+    ps.setInt(5, model.getVersion());
+    ps.setInt(6, model.getStatus().getValue());
+    ps.setLong(7, model.getId());
 
     return ps;
   }

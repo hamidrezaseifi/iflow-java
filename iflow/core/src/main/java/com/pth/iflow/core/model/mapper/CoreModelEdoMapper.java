@@ -20,6 +20,7 @@ import com.pth.iflow.common.edo.models.WorkflowSearchFilterEdo;
 import com.pth.iflow.common.edo.models.WorkflowTypeEdo;
 import com.pth.iflow.common.edo.models.WorkflowTypeStepEdo;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
+import com.pth.iflow.common.enums.EWorkflowMessageType;
 import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.core.model.Company;
@@ -74,6 +75,7 @@ public class CoreModelEdoMapper {
     model.setCreatedBy(edo.getCreatedBy());
     model.setVersion(edo.getVersion());
     model.setWorkflowId(edo.getWorkflowId());
+    model.setMessageType(EWorkflowMessageType.ofValue(edo.getMessageType()));
 
     return model;
   }
@@ -86,6 +88,7 @@ public class CoreModelEdoMapper {
     edo.setCreatedBy(model.getCreatedBy());
     edo.setVersion(model.getVersion());
     edo.setWorkflowId(model.getWorkflowId());
+    edo.setMessageType(model.getMessageType().getValue());
 
     return edo;
   }
