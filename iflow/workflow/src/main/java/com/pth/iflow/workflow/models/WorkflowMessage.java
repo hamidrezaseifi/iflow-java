@@ -1,11 +1,9 @@
-package com.pth.iflow.core.model;
-
-import java.time.LocalDateTime;
+package com.pth.iflow.workflow.models;
 
 import com.pth.iflow.common.edo.models.base.DataModelBase;
-import com.pth.iflow.common.enums.EWorkflowOfferStatus;
+import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 
-public class WorkflowOffer extends DataModelBase {
+public class WorkflowMessage extends DataModelBase {
 
   private Long                 id;
 
@@ -15,13 +13,9 @@ public class WorkflowOffer extends DataModelBase {
 
   private Long                 createdBy;
 
-  private EWorkflowOfferStatus status;
+  private EWorkflowMessageStatus status;
 
   private Integer              version;
-
-  private LocalDateTime        createdAt;
-
-  private LocalDateTime        updatedAt;
 
   @Override
   public Long getId() {
@@ -49,18 +43,18 @@ public class WorkflowOffer extends DataModelBase {
   }
 
   public Long getCreatedBy() {
-    return createdBy;
+    return this.createdBy;
   }
 
   public void setCreatedBy(final Long createdBy) {
     this.createdBy = createdBy;
   }
 
-  public EWorkflowOfferStatus getStatus() {
+  public EWorkflowMessageStatus getStatus() {
     return this.status;
   }
 
-  public void setStatus(final EWorkflowOfferStatus status) {
+  public void setStatus(final EWorkflowMessageStatus status) {
     this.status = status;
   }
 
@@ -72,22 +66,6 @@ public class WorkflowOffer extends DataModelBase {
   @Override
   public void setVersion(final Integer version) {
     this.version = version;
-  }
-
-  public LocalDateTime getCreatedAt() {
-    return createdAt;
-  }
-
-  public void setCreatedAt(final LocalDateTime createdAt) {
-    this.createdAt = createdAt;
-  }
-
-  public LocalDateTime getUpdatedAt() {
-    return updatedAt;
-  }
-
-  public void setUpdatedAt(final LocalDateTime updatedAt) {
-    this.updatedAt = updatedAt;
   }
 
 }

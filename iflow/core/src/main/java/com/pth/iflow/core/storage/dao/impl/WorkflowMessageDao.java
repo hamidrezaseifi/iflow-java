@@ -8,29 +8,29 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
-import com.pth.iflow.common.enums.EWorkflowOfferStatus;
-import com.pth.iflow.core.model.WorkflowOffer;
-import com.pth.iflow.core.storage.dao.IWorkflowOfferDao;
+import com.pth.iflow.common.enums.EWorkflowMessageStatus;
+import com.pth.iflow.core.model.WorkflowMessage;
+import com.pth.iflow.core.storage.dao.IWorkflowMessageDao;
 import com.pth.iflow.core.storage.dao.basic.DaoBasicClass;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 import com.pth.iflow.core.storage.dao.utils.SqlUtils;
 
 @Transactional
 @Repository
-public class WorkflowOfferDao extends DaoBasicClass<WorkflowOffer> implements IWorkflowOfferDao {
+public class WorkflowMessageDao extends DaoBasicClass<WorkflowMessage> implements IWorkflowMessageDao {
 
-  public WorkflowOfferDao() {
+  public WorkflowMessageDao() {
 
   }
 
   @Override
-  public WorkflowOffer create(final WorkflowOffer model) throws IFlowStorageException {
-    final String sql = "INSERT INTO workflow_offer (workflow_id, user_id, created_by, version, status)" + "VALUES (?, ?, ?, ?, ?)";
+  public WorkflowMessage create(final WorkflowMessage model) throws IFlowStorageException {
+    final String sql = "INSERT INTO workflow_message (workflow_id, user_id, created_by, version, status)" + "VALUES (?, ?, ?, ?, ?)";
 
     final TransactionStatus transactionStatus = this.startTransaction(true);
     try {
 
-      final Long workflowId = this.createModel(model, "WorkflowOffer", sql, false);
+      final Long workflowId = this.createModel(model, "WorkflowMessage", sql, false);
 
       this.commitTransaction(true, transactionStatus);
 
@@ -39,15 +39,15 @@ public class WorkflowOfferDao extends DaoBasicClass<WorkflowOffer> implements IW
     }
     catch (final Exception e) {
       this.rollbackTransaction(true, transactionStatus);
-      logger.error("Unable to create WorkflowOffer: {}", e.toString(), e);
+      logger.error("Unable to create WorkflowMessage: {}", e.toString(), e);
       throw new IFlowStorageException(e.toString(), e);
     }
 
   }
 
   @Override
-  public WorkflowOffer update(final WorkflowOffer model) throws IFlowStorageException {
-    final String sql = "UPDATE workflow_offer SET workflow_id = ?, user_id = ?, created_by = ?, version = ?, status = ? WHERE id = ?";
+  public WorkflowMessage update(final WorkflowMessage model) throws IFlowStorageException {
+    final String sql = "UPDATE workflow_message SET workflow_id = ?, user_id = ?, created_by = ?, version = ?, status = ? WHERE id = ?";
 
     final TransactionStatus transactionStatus = this.startTransaction(true);
     try {
@@ -60,16 +60,16 @@ public class WorkflowOfferDao extends DaoBasicClass<WorkflowOffer> implements IW
     }
     catch (final Exception e) {
       this.rollbackTransaction(true, transactionStatus);
-      logger.error("Unable to update WorkflowOffer: {}", e.toString(), e);
+      logger.error("Unable to update WorkflowMessage: {}", e.toString(), e);
       throw new IFlowStorageException(e.toString(), e);
     }
   }
 
   @Override
   public void updateStatusByWorkflow(final Long workflowId, final Integer status) throws IFlowStorageException {
-    final String sql = "UPDATE workflow_offer SET status = ? WHERE workflow_id = ?";
+    final String sql = "UPDATE workflow_message SET status = ? WHERE workflow_id = ?";
 
-    logger.debug("Updating WorkflowOffer ...");
+    logger.debug("Updating WorkflowMessage ...");
     final TransactionStatus transactionStatus = startTransaction(true);
     try {
 
@@ -86,25 +86,25 @@ public class WorkflowOfferDao extends DaoBasicClass<WorkflowOffer> implements IW
     }
     catch (final Exception e) {
       rollbackTransaction(true, transactionStatus);
-      logger.error("Unable to update WorkflowOffer: {}", e.toString(), e);
+      logger.error("Unable to update WorkflowMessage: {}", e.toString(), e);
       throw new IFlowStorageException(e.toString(), e);
     }
 
   }
 
   @Override
-  public WorkflowOffer getById(final Long id) throws IFlowStorageException {
-    final WorkflowOffer model = this.getModelById(id, "SELECT * FROM workflow_offer where id=?", "WorkflowOffer");
+  public WorkflowMessage getById(final Long id) throws IFlowStorageException {
+    final WorkflowMessage model = this.getModelById(id, "SELECT * FROM workflow_message where id=?", "WorkflowMessage");
 
     return model;
   }
 
   @Override
-  public List<WorkflowOffer> getListByUserId(final Long userId, final Long lastid, final Integer status) throws IFlowStorageException {
-    logger.info("Dao read WorkflowOffer for user id: {}", userId);
+  public List<WorkflowMessage> getListByUserId(final Long userId, final Long lastid, final Integer status) throws IFlowStorageException {
+    logger.info("Dao read WorkflowMessage for user id: {}", userId);
 
-    List<WorkflowOffer> list = new ArrayList<>();
-    final String sql = "SELECT * FROM workflow_offer where user_id=? and id>?" + (status > 0 ? " and status=?" : "");
+    List<WorkflowMessage> list = new ArrayList<>();
+    final String sql = "SELECT * FROM workflow_message where user_id=? and id>?" + (status > 0 ? " and status=?" : "");
 
     try {
       list = this.jdbcTemplate.query(con -> {
@@ -125,18 +125,18 @@ public class WorkflowOfferDao extends DaoBasicClass<WorkflowOffer> implements IW
 
     }
     catch (final Exception e) {
-      throw new IFlowStorageException("Unable to read WorkflowOffer for user id: " + userId + " : " + e.toString());
+      throw new IFlowStorageException("Unable to read WorkflowMessage for user id: " + userId + " : " + e.toString());
     }
 
     return list;
   }
 
   @Override
-  public List<WorkflowOffer> getListByWorkflowId(final Long workflowId, final Long lastid, final Integer status) throws IFlowStorageException {
-    logger.info("Dao read WorkflowOffer for workflow id: {}", workflowId);
+  public List<WorkflowMessage> getListByWorkflowId(final Long workflowId, final Long lastid, final Integer status) throws IFlowStorageException {
+    logger.info("Dao read WorkflowMessage for workflow id: {}", workflowId);
 
-    List<WorkflowOffer> list = new ArrayList<>();
-    final String sql = "SELECT * FROM workflow_offer where workflow_id=? and id>?" + (status > 0 ? " and status=?" : "");
+    List<WorkflowMessage> list = new ArrayList<>();
+    final String sql = "SELECT * FROM workflow_message where workflow_id=? and id>?" + (status > 0 ? " and status=?" : "");
 
     try {
       list = this.jdbcTemplate.query(con -> {
@@ -157,21 +157,21 @@ public class WorkflowOfferDao extends DaoBasicClass<WorkflowOffer> implements IW
 
     }
     catch (final Exception e) {
-      throw new IFlowStorageException("Unable to read WorkflowOffer for workflow id: " + workflowId + " : " + e.toString());
+      throw new IFlowStorageException("Unable to read WorkflowMessage for workflow id: " + workflowId + " : " + e.toString());
     }
 
     return list;
   }
 
   @Override
-  protected WorkflowOffer modelFromResultSet(final ResultSet rs) throws SQLException {
-    final WorkflowOffer model = new WorkflowOffer();
+  protected WorkflowMessage modelFromResultSet(final ResultSet rs) throws SQLException {
+    final WorkflowMessage model = new WorkflowMessage();
     model.setId(rs.getLong("id"));
     model.setWorkflowId(rs.getLong("workflow_id"));
     model.setUserId(rs.getLong("user_id"));
     model.setCreatedBy(rs.getLong("created_by"));
     model.setVersion(rs.getInt("version"));
-    model.setStatus(EWorkflowOfferStatus.ofValue(rs.getInt("status")));
+    model.setStatus(EWorkflowMessageStatus.ofValue(rs.getInt("status")));
     model.setCreatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("created_at")));
     model.setUpdatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("updated_at")));
 
@@ -179,7 +179,7 @@ public class WorkflowOfferDao extends DaoBasicClass<WorkflowOffer> implements IW
   }
 
   @Override
-  protected PreparedStatement prepareInsertPreparedStatement(final WorkflowOffer model, final PreparedStatement ps) throws SQLException {
+  protected PreparedStatement prepareInsertPreparedStatement(final WorkflowMessage model, final PreparedStatement ps) throws SQLException {
     ps.setLong(1, model.getWorkflowId());
     ps.setLong(2, model.getUserId());
     ps.setLong(3, model.getCreatedBy());
@@ -190,7 +190,7 @@ public class WorkflowOfferDao extends DaoBasicClass<WorkflowOffer> implements IW
   }
 
   @Override
-  protected PreparedStatement prepareUpdatePreparedStatement(final WorkflowOffer model, final PreparedStatement ps) throws SQLException {
+  protected PreparedStatement prepareUpdatePreparedStatement(final WorkflowMessage model, final PreparedStatement ps) throws SQLException {
     ps.setLong(1, model.getWorkflowId());
     ps.setLong(2, model.getUserId());
     ps.setLong(3, model.getCreatedBy());

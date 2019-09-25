@@ -2,20 +2,21 @@ package com.pth.iflow.common.enums;
 
 import com.pth.iflow.common.exceptions.IFlowInvalidEnumValueException;
 
-public enum EWorkflowOfferStatus implements IEnumValueValidator {
+public enum EWorkflowMessageStatus implements IEnumValueValidator {
   NO_STATUS(0),
   OFFERING(1),
   ASSIGNED(2),
-  CLOSED(3);
+  CLOSED(6),
+  DELETED(10);
 
   private final int id;
 
-  private EWorkflowOfferStatus(final int id) {
+  private EWorkflowMessageStatus(final int id) {
     this.id = id;
   }
 
-  public static EWorkflowOfferStatus ofValue(final int value) {
-    for (final EWorkflowOfferStatus status : values()) {
+  public static EWorkflowMessageStatus ofValue(final int value) {
+    for (final EWorkflowMessageStatus status : values()) {
       if (status.getValue().intValue() == value) {
         return status;
       }

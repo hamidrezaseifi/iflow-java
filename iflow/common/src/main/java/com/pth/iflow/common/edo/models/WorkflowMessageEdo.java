@@ -8,12 +8,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 import com.pth.iflow.common.edo.models.validation.AEnumValueValidator;
-import com.pth.iflow.common.enums.EWorkflowOfferStatus;
+import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 
-@XmlRootElement(name = "WorkflowOffer", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+@XmlRootElement(name = "WorkflowMessage", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "WorkflowOffer" + IFlowJaxbDefinition.TYPE_PREFIX)
-public class WorkflowOfferEdo {
+@XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "WorkflowMessage" + IFlowJaxbDefinition.TYPE_PREFIX)
+public class WorkflowMessageEdo {
 
   @XmlElement(name = "ID", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Long id;
@@ -31,7 +31,7 @@ public class WorkflowOfferEdo {
   private Long createdBy;
 
   @NotNull
-  @AEnumValueValidator(enumClazz = EWorkflowOfferStatus.class)
+  @AEnumValueValidator(enumClazz = EWorkflowMessageStatus.class)
   @XmlElement(name = "Status", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer status;
 

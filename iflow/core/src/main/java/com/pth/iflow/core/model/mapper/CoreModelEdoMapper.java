@@ -15,11 +15,11 @@ import com.pth.iflow.common.edo.models.WorkflowActionEdo;
 import com.pth.iflow.common.edo.models.WorkflowEdo;
 import com.pth.iflow.common.edo.models.WorkflowFileEdo;
 import com.pth.iflow.common.edo.models.WorkflowFileVersionEdo;
-import com.pth.iflow.common.edo.models.WorkflowOfferEdo;
+import com.pth.iflow.common.edo.models.WorkflowMessageEdo;
 import com.pth.iflow.common.edo.models.WorkflowSearchFilterEdo;
 import com.pth.iflow.common.edo.models.WorkflowTypeEdo;
 import com.pth.iflow.common.edo.models.WorkflowTypeStepEdo;
-import com.pth.iflow.common.enums.EWorkflowOfferStatus;
+import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.core.model.Company;
@@ -31,7 +31,7 @@ import com.pth.iflow.core.model.Workflow;
 import com.pth.iflow.core.model.WorkflowAction;
 import com.pth.iflow.core.model.WorkflowFile;
 import com.pth.iflow.core.model.WorkflowFileVersion;
-import com.pth.iflow.core.model.WorkflowOffer;
+import com.pth.iflow.core.model.WorkflowMessage;
 import com.pth.iflow.core.model.WorkflowSearchFilter;
 import com.pth.iflow.core.model.WorkflowType;
 import com.pth.iflow.core.model.WorkflowTypeStep;
@@ -64,12 +64,12 @@ public class CoreModelEdoMapper {
     return model;
   }
 
-  public static WorkflowOffer fromEdo(final WorkflowOfferEdo edo) throws IFlowMessageConversionFailureException {
+  public static WorkflowMessage fromEdo(final WorkflowMessageEdo edo) throws IFlowMessageConversionFailureException {
     validateCustomer(edo);
 
-    final WorkflowOffer model = new WorkflowOffer();
+    final WorkflowMessage model = new WorkflowMessage();
     model.setId(edo.getId());
-    model.setStatus(EWorkflowOfferStatus.ofValue(edo.getStatus()));
+    model.setStatus(EWorkflowMessageStatus.ofValue(edo.getStatus()));
     model.setUserId(edo.getUserId());
     model.setCreatedBy(edo.getCreatedBy());
     model.setVersion(edo.getVersion());
@@ -78,8 +78,8 @@ public class CoreModelEdoMapper {
     return model;
   }
 
-  public static WorkflowOfferEdo toEdo(final WorkflowOffer model) {
-    final WorkflowOfferEdo edo = new WorkflowOfferEdo();
+  public static WorkflowMessageEdo toEdo(final WorkflowMessage model) {
+    final WorkflowMessageEdo edo = new WorkflowMessageEdo();
     edo.setId(model.getId());
     edo.setStatus(model.getStatus().getValue());
     edo.setUserId(model.getUserId());
@@ -498,9 +498,9 @@ public class CoreModelEdoMapper {
     return edoList;
   }
 
-  public static List<WorkflowOfferEdo> toWorkflowOfferEdoList(final List<WorkflowOffer> modelList) {
-    final List<WorkflowOfferEdo> edoList = new ArrayList<>();
-    for (final WorkflowOffer model : modelList) {
+  public static List<WorkflowMessageEdo> toWorkflowMessageEdoList(final List<WorkflowMessage> modelList) {
+    final List<WorkflowMessageEdo> edoList = new ArrayList<>();
+    for (final WorkflowMessage model : modelList) {
       edoList.add(toEdo(model));
     }
 

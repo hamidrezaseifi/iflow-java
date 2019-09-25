@@ -1,9 +1,9 @@
-package com.pth.iflow.workflow.models;
+package com.pth.iflow.gui.models;
 
 import com.pth.iflow.common.edo.models.base.DataModelBase;
-import com.pth.iflow.common.enums.EWorkflowOfferStatus;
+import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 
-public class WorkflowOffer extends DataModelBase {
+public class GuiWorkflowMessage extends DataModelBase {
 
   private Long                 id;
 
@@ -13,7 +13,7 @@ public class WorkflowOffer extends DataModelBase {
 
   private Long                 createdBy;
 
-  private EWorkflowOfferStatus status;
+  private EWorkflowMessageStatus status;
 
   private Integer              version;
 
@@ -50,11 +50,11 @@ public class WorkflowOffer extends DataModelBase {
     this.createdBy = createdBy;
   }
 
-  public EWorkflowOfferStatus getStatus() {
+  public EWorkflowMessageStatus getStatus() {
     return this.status;
   }
 
-  public void setStatus(final EWorkflowOfferStatus status) {
+  public void setStatus(final EWorkflowMessageStatus status) {
     this.status = status;
   }
 
