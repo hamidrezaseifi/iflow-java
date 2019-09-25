@@ -73,4 +73,6 @@ CREATE TABLE `workflow_offer` (
 INSERT INTO `iflow`.`workflow_offer` (`workflow_id`, `user_id`, `created_by`, `status`) VALUES ('2', '1', '1', '1');
 INSERT INTO `iflow`.`workflow_offer` (`workflow_id`, `user_id`, `created_by`, `status`) VALUES ('3', '1', '1', '1');
 
+ALTER TABLE `iflow`.`workflow_offer` RENAME TO  `iflow`.`workflow_message` ;
+
 
