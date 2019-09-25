@@ -53,13 +53,15 @@ INSERT INTO `workflow_type` VALUES (3,1,0,'Rechung Wrokflow',2,0,1,1,NULL,1,1,'2
 
 INSERT INTO `workflow_type_step` VALUES (7,3,'Rechungsverteilung',1,'workflow/invoice_assign',NULL,1,1,'2019-09-22 17:04:52.329953','2019-09-22 17:04:52.329953'),(8,3,'Rechungsprüfung ',2,'workflow/invoice_testing',NULL,1,1,'2019-09-22 17:04:52.331101','2019-09-22 17:04:52.331101'),(9,3,'Rechungsfreigabe ',3,'workflow/invoice_release',NULL,1,1,'2019-09-22 17:04:52.331350','2019-09-22 17:04:52.331350');
 
-CREATE TABLE `workflow_offer` (
+CREATE TABLE `workflow_message` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `workflow_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `created_by` int(11) NOT NULL,
+  `message_type` smallint(6) NOT NULL DEFAULT '1',
   `version` int(11) NOT NULL DEFAULT '1',
   `status` smallint(6) DEFAULT NULL,
+  `expire` timestamp(6) NOT NULL,
   `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   `updated_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   PRIMARY KEY (`id`),
@@ -69,10 +71,5 @@ CREATE TABLE `workflow_offer` (
   CONSTRAINT `FK_WORKFLOWOFFER_WORKFLOW` FOREIGN KEY (`workflow_id`) REFERENCES `workflow` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
 ) ENGINE=InnoDB;
 
-
-INSERT INTO `iflow`.`workflow_offer` (`workflow_id`, `user_id`, `created_by`, `status`) VALUES ('2', '1', '1', '1');
-INSERT INTO `iflow`.`workflow_offer` (`workflow_id`, `user_id`, `created_by`, `status`) VALUES ('3', '1', '1', '1');
-
-ALTER TABLE `iflow`.`workflow_offer` RENAME TO  `iflow`.`workflow_message` ;
-
+INSERT INTO `iflow`.`workflow_message` (`workflow_id`, `user_id`, `created_by`, `status`) VALUES ('2', '1', '1', '1'), ('3', '1', '1', '1');
 
