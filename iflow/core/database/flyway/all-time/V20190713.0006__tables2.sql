@@ -71,5 +71,5 @@ CREATE TABLE `workflow_message` (
   CONSTRAINT `FK_WORKFLOWOFFER_WORKFLOW` FOREIGN KEY (`workflow_id`) REFERENCES `workflow` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
 ) ENGINE=InnoDB;
 
-INSERT INTO `iflow`.`workflow_message` (`workflow_id`, `user_id`, `created_by`, `status`) VALUES ('2', '1', '1', '1'), ('3', '1', '1', '1');
+INSERT INTO `iflow`.`workflow_message` (`workflow_id`, `user_id`, `created_by`, `status`, `expire`) VALUES ('2', '1', '1', '1', '2019-09-25 16:57:54.654451'), ('3', '1', '1', '1', '2019-09-25 16:57:54.654451');
 
