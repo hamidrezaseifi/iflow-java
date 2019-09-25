@@ -97,6 +97,7 @@ public class GuiModelEdoMapper {
     model.setVersion(edo.getVersion());
     model.setWorkflowId(edo.getWorkflowId());
     model.setMessageType(EWorkflowMessageType.ofValue(edo.getMessageType()));
+    model.setExpired(edo.getExpired());
 
     return model;
   }
@@ -110,6 +111,7 @@ public class GuiModelEdoMapper {
     edo.setVersion(model.getVersion());
     edo.setWorkflowId(model.getWorkflowId());
     edo.setMessageType(model.getMessageType().getValue());
+    edo.setExpired(model.getExpired());
 
     return edo;
   }

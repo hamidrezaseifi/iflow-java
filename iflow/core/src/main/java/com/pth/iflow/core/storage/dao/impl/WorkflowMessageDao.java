@@ -26,8 +26,8 @@ public class WorkflowMessageDao extends DaoBasicClass<WorkflowMessage> implement
 
   @Override
   public WorkflowMessage create(final WorkflowMessage model) throws IFlowStorageException {
-    final String sql = "INSERT INTO workflow_message (workflow_id, user_id, created_by, message_type, version, status)"
-                       + "VALUES (?, ?, ?, ?, ?, ?)";
+    final String sql = "INSERT INTO workflow_message (workflow_id, user_id, created_by, message_type, version, status, expire)"
+                       + "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
     final TransactionStatus transactionStatus = this.startTransaction(true);
     try {
@@ -50,7 +50,7 @@ public class WorkflowMessageDao extends DaoBasicClass<WorkflowMessage> implement
   @Override
   public WorkflowMessage update(final WorkflowMessage model) throws IFlowStorageException {
     final String sql =
-                     "UPDATE workflow_message SET workflow_id = ?, user_id = ?, created_by = ?, message_type = ?, version = ?, status = ? WHERE id = ?";
+                     "UPDATE workflow_message SET workflow_id = ?, user_id = ?, created_by = ?, message_type = ?, version = ?, status = ?, expire = ? WHERE id = ?";
 
     final TransactionStatus transactionStatus = this.startTransaction(true);
     try {
@@ -178,6 +178,7 @@ public class WorkflowMessageDao extends DaoBasicClass<WorkflowMessage> implement
     model.setStatus(EWorkflowMessageStatus.ofValue(rs.getInt("status")));
     model.setCreatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("created_at")));
     model.setUpdatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("updated_at")));
+    model.setExpired(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("expire")));
 
     return model;
   }
@@ -190,6 +191,7 @@ public class WorkflowMessageDao extends DaoBasicClass<WorkflowMessage> implement
     ps.setInt(4, model.getMessageType().getValue());
     ps.setInt(5, model.getVersion());
     ps.setInt(6, model.getStatus().getValue());
+    ps.setTimestamp(7, SqlUtils.getTimestampFromDatetime(model.getExpired()));
 
     return ps;
   }
@@ -202,7 +204,8 @@ public class WorkflowMessageDao extends DaoBasicClass<WorkflowMessage> implement
     ps.setInt(4, model.getMessageType().getValue());
     ps.setInt(5, model.getVersion());
     ps.setInt(6, model.getStatus().getValue());
-    ps.setLong(7, model.getId());
+    ps.setTimestamp(7, SqlUtils.getTimestampFromDatetime(model.getExpired()));
+    ps.setLong(8, model.getId());
 
     return ps;
   }

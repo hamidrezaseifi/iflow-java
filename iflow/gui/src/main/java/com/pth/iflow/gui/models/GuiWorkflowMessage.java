@@ -1,5 +1,6 @@
 package com.pth.iflow.gui.models;
 
+import java.time.LocalDateTime;
 import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.enums.EWorkflowMessageType;
@@ -19,6 +20,8 @@ public class GuiWorkflowMessage extends DataModelBase {
   private EWorkflowMessageStatus status;
 
   private Integer version;
+
+  private LocalDateTime expired;
 
   @Override
   public Long getId() {
@@ -77,6 +80,14 @@ public class GuiWorkflowMessage extends DataModelBase {
   @Override
   public void setVersion(final Integer version) {
     this.version = version;
+  }
+
+  public LocalDateTime getExpired() {
+    return expired;
+  }
+
+  public void setExpired(final LocalDateTime expired) {
+    this.expired = expired;
   }
 
 }

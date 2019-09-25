@@ -21,6 +21,8 @@ public class WorkflowMessage extends DataModelBase {
 
   private Integer version;
 
+  private LocalDateTime expired;
+
   private LocalDateTime createdAt;
 
   private LocalDateTime updatedAt;
@@ -82,6 +84,14 @@ public class WorkflowMessage extends DataModelBase {
   @Override
   public void setVersion(final Integer version) {
     this.version = version;
+  }
+
+  public LocalDateTime getExpired() {
+    return expired;
+  }
+
+  public void setExpired(final LocalDateTime expired) {
+    this.expired = expired;
   }
 
   public LocalDateTime getCreatedAt() {
