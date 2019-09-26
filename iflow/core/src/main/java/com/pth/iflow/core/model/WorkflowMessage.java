@@ -13,6 +13,8 @@ public class WorkflowMessage extends DataModelBase {
 
   private Long userId;
 
+  private String message;
+
   private Long createdBy;
 
   private EWorkflowMessageType messageType;
@@ -50,6 +52,14 @@ public class WorkflowMessage extends DataModelBase {
 
   public void setUserId(final Long userId) {
     this.userId = userId;
+  }
+
+  public String getMessage() {
+    return message;
+  }
+
+  public void setMessage(final String message) {
+    this.message = message;
   }
 
   public Long getCreatedBy() {

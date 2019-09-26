@@ -18,4 +18,6 @@ public interface IWorkflowMessageDao {
 
   public List<WorkflowMessage> getListByWorkflowId(final Long workflowId, final Long lastid, Integer status) throws IFlowStorageException;
 
+  void deleteWorkflowMessage(final Long messageId) throws IFlowStorageException;
+
 }

@@ -26,7 +26,7 @@ public class WorkflowMessageDao extends DaoBasicClass<WorkflowMessage> implement
 
   @Override
   public WorkflowMessage create(final WorkflowMessage model) throws IFlowStorageException {
-    final String sql = "INSERT INTO workflow_message (workflow_id, user_id, created_by, message_type, version, status, expire)"
+    final String sql = "INSERT INTO workflow_message (workflow_id, user_id, message, created_by, message_type, version, status, expire)"
                        + "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
     final TransactionStatus transactionStatus = this.startTransaction(true);
@@ -50,7 +50,7 @@ public class WorkflowMessageDao extends DaoBasicClass<WorkflowMessage> implement
   @Override
   public WorkflowMessage update(final WorkflowMessage model) throws IFlowStorageException {
     final String sql =
-                     "UPDATE workflow_message SET workflow_id = ?, user_id = ?, created_by = ?, message_type = ?, version = ?, status = ?, expire = ? WHERE id = ?";
+                     "UPDATE workflow_message SET workflow_id = ?, user_id = ?, message=?, created_by = ?, message_type = ?, version = ?, status = ?, expire = ? WHERE id = ?";
 
     final TransactionStatus transactionStatus = this.startTransaction(true);
     try {
@@ -172,6 +172,7 @@ public class WorkflowMessageDao extends DaoBasicClass<WorkflowMessage> implement
     model.setId(rs.getLong("id"));
     model.setWorkflowId(rs.getLong("workflow_id"));
     model.setUserId(rs.getLong("user_id"));
+    model.setMessage(rs.getString("message"));
     model.setCreatedBy(rs.getLong("created_by"));
     model.setVersion(rs.getInt("version"));
     model.setMessageType(EWorkflowMessageType.ofValue(rs.getInt("message_type")));
@@ -187,11 +188,12 @@ public class WorkflowMessageDao extends DaoBasicClass<WorkflowMessage> implement
   protected PreparedStatement prepareInsertPreparedStatement(final WorkflowMessage model, final PreparedStatement ps) throws SQLException {
     ps.setLong(1, model.getWorkflowId());
     ps.setLong(2, model.getUserId());
-    ps.setLong(3, model.getCreatedBy());
-    ps.setInt(4, model.getMessageType().getValue());
-    ps.setInt(5, model.getVersion());
-    ps.setInt(6, model.getStatus().getValue());
-    ps.setTimestamp(7, SqlUtils.getTimestampFromDatetime(model.getExpired()));
+    ps.setString(3, model.getMessage());
+    ps.setLong(4, model.getCreatedBy());
+    ps.setInt(5, model.getMessageType().getValue());
+    ps.setInt(6, model.getVersion());
+    ps.setInt(7, model.getStatus().getValue());
+    ps.setTimestamp(8, SqlUtils.getTimestampFromDatetime(model.getExpired()));
 
     return ps;
   }
@@ -200,14 +202,33 @@ public class WorkflowMessageDao extends DaoBasicClass<WorkflowMessage> implement
   protected PreparedStatement prepareUpdatePreparedStatement(final WorkflowMessage model, final PreparedStatement ps) throws SQLException {
     ps.setLong(1, model.getWorkflowId());
     ps.setLong(2, model.getUserId());
-    ps.setLong(3, model.getCreatedBy());
-    ps.setInt(4, model.getMessageType().getValue());
-    ps.setInt(5, model.getVersion());
-    ps.setInt(6, model.getStatus().getValue());
-    ps.setTimestamp(7, SqlUtils.getTimestampFromDatetime(model.getExpired()));
-    ps.setLong(8, model.getId());
+    ps.setString(3, model.getMessage());
+    ps.setLong(4, model.getCreatedBy());
+    ps.setInt(5, model.getMessageType().getValue());
+    ps.setInt(6, model.getVersion());
+    ps.setInt(7, model.getStatus().getValue());
+    ps.setTimestamp(8, SqlUtils.getTimestampFromDatetime(model.getExpired()));
+    ps.setLong(9, model.getId());
 
     return ps;
+  }
+
+  @Override
+  public void deleteWorkflowMessage(final Long messageId) throws IFlowStorageException {
+    final TransactionStatus transactionStatus = this.startTransaction(true);
+    try {
+
+      this.deleteModel(messageId, "Workflow", "Delete from workflow_message where id=?", false, true);
+
+      this.commitTransaction(true, transactionStatus);
+
+    }
+    catch (final Exception e) {
+      this.rollbackTransaction(true, transactionStatus);
+      logger.error("Unable to delete WorkflowMessage:{} {}", messageId, e.toString(), e);
+      throw new IFlowStorageException(e.toString(), e);
+    }
+
   }
 
 }

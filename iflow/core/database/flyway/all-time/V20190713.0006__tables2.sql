@@ -57,6 +57,7 @@ CREATE TABLE `workflow_message` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `workflow_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
+  `message` varchar(500) NOT NULL DEFAULT 'no message',
   `created_by` int(11) NOT NULL,
   `message_type` smallint(6) NOT NULL DEFAULT '1',
   `version` int(11) NOT NULL DEFAULT '1',

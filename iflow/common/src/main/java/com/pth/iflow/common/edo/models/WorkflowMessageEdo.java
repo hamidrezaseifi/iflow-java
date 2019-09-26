@@ -33,6 +33,9 @@ public class WorkflowMessageEdo {
   @XmlElement(name = "UserId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Long userId;
 
+  @XmlElement(name = "Message", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String message;
+
   @NotNull(message = "CreatedBy must not be null")
   @XmlElement(name = "CreatedBy", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Long createdBy;
@@ -81,6 +84,14 @@ public class WorkflowMessageEdo {
 
   public void setUserId(final Long userId) {
     this.userId = userId;
+  }
+
+  public String getMessage() {
+    return message;
+  }
+
+  public void setMessage(final String message) {
+    this.message = message;
   }
 
   public Long getCreatedBy() {
