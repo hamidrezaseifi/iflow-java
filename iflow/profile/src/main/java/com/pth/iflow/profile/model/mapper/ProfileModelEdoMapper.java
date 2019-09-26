@@ -17,6 +17,9 @@ import com.pth.iflow.common.edo.models.UserAuthenticationRequestEdo;
 import com.pth.iflow.common.edo.models.UserAuthenticationResponseEdo;
 import com.pth.iflow.common.edo.models.UserEdo;
 import com.pth.iflow.common.edo.models.UserGroupEdo;
+import com.pth.iflow.common.edo.models.WorkflowMessageEdo;
+import com.pth.iflow.common.enums.EWorkflowMessageStatus;
+import com.pth.iflow.common.enums.EWorkflowMessageType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.profile.model.Company;
 import com.pth.iflow.profile.model.CompanyProfile;
@@ -27,6 +30,7 @@ import com.pth.iflow.profile.model.User;
 import com.pth.iflow.profile.model.UserAuthenticationRequest;
 import com.pth.iflow.profile.model.UserAuthenticationSession;
 import com.pth.iflow.profile.model.UserGroup;
+import com.pth.iflow.profile.model.WorkflowMessage;
 
 public class ProfileModelEdoMapper {
 
@@ -54,6 +58,38 @@ public class ProfileModelEdoMapper {
     model.setId(edo.getId());
 
     return model;
+  }
+
+  public static WorkflowMessage fromEdo(final WorkflowMessageEdo edo) throws IFlowMessageConversionFailureException {
+    validateCustomer(edo);
+
+    final WorkflowMessage model = new WorkflowMessage();
+    model.setId(edo.getId());
+    model.setStatus(EWorkflowMessageStatus.ofValue(edo.getStatus()));
+    model.setUserId(edo.getUserId());
+    model.setCreatedBy(edo.getCreatedBy());
+    model.setVersion(edo.getVersion());
+    model.setWorkflowId(edo.getWorkflowId());
+    model.setMessageType(EWorkflowMessageType.ofValue(edo.getMessageType()));
+    model.setExpired(edo.getExpired());
+    model.setMessage(edo.getMessage());
+
+    return model;
+  }
+
+  public static WorkflowMessageEdo toEdo(final WorkflowMessage model) {
+    final WorkflowMessageEdo edo = new WorkflowMessageEdo();
+    edo.setId(model.getId());
+    edo.setStatus(model.getStatus().getValue());
+    edo.setUserId(model.getUserId());
+    edo.setCreatedBy(model.getCreatedBy());
+    edo.setVersion(model.getVersion());
+    edo.setWorkflowId(model.getWorkflowId());
+    edo.setMessageType(model.getMessageType().getValue());
+    edo.setExpired(model.getExpired());
+    edo.setMessage(model.getMessage());
+
+    return edo;
   }
 
   public static DepartmentEdo toEdo(final Department model) {
@@ -250,6 +286,29 @@ public class ProfileModelEdoMapper {
     }
 
     return edoList;
+  }
+
+  public static List<WorkflowMessageEdo> toWorkflowMessageEdoList(final List<WorkflowMessage> modelList) {
+    final List<WorkflowMessageEdo> edoList = new ArrayList<>();
+    if (modelList != null) {
+      for (final WorkflowMessage model : modelList) {
+        edoList.add(toEdo(model));
+      }
+    }
+
+    return edoList;
+  }
+
+  public static List<WorkflowMessage> fromWorkflowMessageEdoList(final List<WorkflowMessageEdo> edoList)
+      throws IFlowMessageConversionFailureException {
+    final List<WorkflowMessage> modelList = new ArrayList<>();
+    if (modelList != null) {
+      for (final WorkflowMessageEdo edo : edoList) {
+        modelList.add(fromEdo(edo));
+      }
+    }
+
+    return modelList;
   }
 
   public static List<UserEdo> toUserEdoList(final List<User> modelList) {
