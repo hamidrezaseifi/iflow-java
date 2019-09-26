@@ -57,13 +57,13 @@ public class WorkflowMessageDaoTest extends TestDataProducer {
 
     createWorlflowList();
 
-    final Workflow workflow = createdModels.get(0);
+    final WorkflowMessage workflow = createdModels.get(0);
 
-    final Workflow resWorkflow = this.workflowDao.getById(createdModels.get(0).getId());
+    final WorkflowMessage resWorkflow = this.workflowMessageDao.getById(createdModels.get(0).getId());
 
     Assert.assertNotNull("Result workflow is not null!", resWorkflow);
     Assert.assertEquals("Result workflow has id 1!", resWorkflow.getId(), workflow.getId());
-    Assert.assertEquals("Result workflow has title '" + workflow.getTitle() + "'!", resWorkflow.getTitle(), workflow.getTitle());
+    Assert.assertEquals("Result workflow has message '" + workflow.getMessage() + "'!", resWorkflow.getMessage(), workflow.getMessage());
     Assert.assertEquals("Result workflow has status 1!", resWorkflow.getStatus(), workflow.getStatus());
 
   }
