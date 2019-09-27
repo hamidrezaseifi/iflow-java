@@ -241,7 +241,7 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
     final List<Workflow> resWorkflowList = this.workflowProcessService.create(request, this.validTocken);
 
     Assert.assertNotNull("Result workflow-type is not null!", resWorkflowList);
-    Assert.assertEquals("Result workflow-type has id 1!", resWorkflowList.size(), request.getAssignedUsers().size());
+    Assert.assertEquals("Result workflow-type has id 1!", resWorkflowList.size(), request.getAssigns().size());
 
   }
 

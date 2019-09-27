@@ -5,17 +5,17 @@ import java.util.List;
 
 public class WorkflowCreateRequest {
 
-  private Workflow   workflow;
+  private Workflow         workflow;
 
-  private List<Long> assignedUsers = new ArrayList<>();
+  private List<AssignItem> assigns = new ArrayList<>();
 
   public WorkflowCreateRequest() {
 
   }
 
-  public WorkflowCreateRequest(final Workflow workflow, final List<Long> assignedUsers) {
+  public WorkflowCreateRequest(final Workflow workflow, final List<AssignItem> assigns) {
     this.setWorkflow(workflow);
-    this.setAssignedUsers(assignedUsers);
+    this.setAssigns(assigns);
   }
 
   /**
@@ -35,17 +35,17 @@ public class WorkflowCreateRequest {
   /**
    * @return the assignedUsers
    */
-  public List<Long> getAssignedUsers() {
-    return this.assignedUsers;
+  public List<AssignItem> getAssigns() {
+    return this.assigns;
   }
 
   /**
    * @param assignedUsers the assignedUsers to set
    */
-  public void setAssignedUsers(final List<Long> assignedUsers) {
-    this.assignedUsers = new ArrayList<>();
-    if (assignedUsers != null) {
-      this.assignedUsers.addAll(assignedUsers);
+  public void setAssigns(final List<AssignItem> assigns) {
+    this.assigns = new ArrayList<>();
+    if (assigns != null) {
+      this.assigns.addAll(assigns);
     }
   }
 

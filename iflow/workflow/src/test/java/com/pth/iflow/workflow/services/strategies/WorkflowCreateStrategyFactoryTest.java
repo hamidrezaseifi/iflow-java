@@ -15,6 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
 import com.pth.iflow.workflow.TestDataProducer;
+import com.pth.iflow.workflow.bl.IDepartmentDataService;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.IWorkflowTypeDataService;
 import com.pth.iflow.workflow.bl.strategies.ICreateWorkflowStrategy;
@@ -37,11 +38,15 @@ public class WorkflowCreateStrategyFactoryTest extends TestDataProducer {
   @Mock
   private IWorkflowTypeDataService workflowTypeDataService;
 
+  @Mock
+  private IDepartmentDataService   departmentDataService;
+
   private String                   validTocken;
 
   @Before
   public void setUp() throws Exception {
-    this.workStrategyFactory = new WorkStrategyFactory(this.workflowDataService, this.workflowTypeDataService);
+    this.workStrategyFactory = new WorkStrategyFactory(this.workflowDataService, this.workflowTypeDataService,
+        this.departmentDataService);
 
     // when(this.workflowDataService.generateCoreUrl(any(String.class))).thenReturn(new
     // URL("http://any-string"));

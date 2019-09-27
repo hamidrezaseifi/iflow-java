@@ -8,6 +8,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 
+import com.pth.iflow.common.edo.models.AssignItemEdo;
 import com.pth.iflow.common.edo.models.CompanyEdo;
 import com.pth.iflow.common.edo.models.CompanyProfileEdo;
 import com.pth.iflow.common.edo.models.DepartmentEdo;
@@ -25,11 +26,13 @@ import com.pth.iflow.common.edo.models.WorkflowMessageEdo;
 import com.pth.iflow.common.edo.models.WorkflowSearchFilterEdo;
 import com.pth.iflow.common.edo.models.WorkflowTypeEdo;
 import com.pth.iflow.common.edo.models.WorkflowTypeStepEdo;
+import com.pth.iflow.common.enums.EAssignType;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.enums.EWorkflowMessageType;
 import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
+import com.pth.iflow.gui.models.GuiAssignItem;
 import com.pth.iflow.gui.models.GuiCompany;
 import com.pth.iflow.gui.models.GuiCompanyProfile;
 import com.pth.iflow.gui.models.GuiDepartment;
@@ -653,17 +656,47 @@ public class GuiModelEdoMapper {
     return modelList;
   }
 
-  public static WorkflowCreateRequestEdo toEdo(final GuiWorkflowCreateRequest model) {
-    final WorkflowCreateRequestEdo edo = new WorkflowCreateRequestEdo(toEdo(model.getWorkflow()), model.getAssigns());
+  public static WorkflowCreateRequestEdo toEdo(final GuiWorkflowCreateRequest model) throws IFlowMessageConversionFailureException {
+    final WorkflowCreateRequestEdo edo = new WorkflowCreateRequestEdo(toEdo(model.getWorkflow()),
+        toAssignItemEdoList(model.getAssigns()));
 
     return edo;
   }
 
   public static GuiWorkflowCreateRequest fromEdo(final WorkflowCreateRequestEdo edo) throws IFlowMessageConversionFailureException {
     validateCustomer(edo);
-    final GuiWorkflowCreateRequest model = new GuiWorkflowCreateRequest(fromEdo(edo.getWorkflow()), edo.getAssignedUsers());
+    final GuiWorkflowCreateRequest model = new GuiWorkflowCreateRequest(fromEdo(edo.getWorkflow()),
+        fromAssignItemEdoList(edo.getAssigns()));
 
     return model;
+  }
+
+  public static List<GuiAssignItem> fromAssignItemEdoList(final List<AssignItemEdo> edoList)
+      throws IFlowMessageConversionFailureException {
+    final List<GuiAssignItem> modelList = new ArrayList<>();
+    for (final AssignItemEdo edo : edoList) {
+      modelList.add(fromEdo(edo));
+    }
+
+    return modelList;
+  }
+
+  private static GuiAssignItem fromEdo(final AssignItemEdo edo) {
+    return new GuiAssignItem(edo.getItemId(), EAssignType.valueFromName(edo.getItemType()));
+  }
+
+  public static List<AssignItemEdo> toAssignItemEdoList(final List<GuiAssignItem> modelList)
+      throws IFlowMessageConversionFailureException {
+    final List<AssignItemEdo> edoList = new ArrayList<>();
+    for (final GuiAssignItem model : modelList) {
+      edoList.add(toEdo(model));
+    }
+
+    return edoList;
+  }
+
+  private static AssignItemEdo toEdo(final GuiAssignItem model) {
+    return new AssignItemEdo(model.getItemId(), model.getItemType().getName());
   }
 
   public static List<GuiWorkflowType> fromWorkflowTypeEdoList(final List<WorkflowTypeEdo> edoList)

@@ -21,20 +21,20 @@ public class WorkflowCreateRequestEdo {
 
   @NotNull
   @XmlElement(name = "Workflow", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private WorkflowEdo workflow;
+  private WorkflowEdo         workflow;
 
   @NotNull
   @XmlElementWrapper(name = "AssignedUserIdList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "AssignedUserId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private List<Long>  assignedUsers = new ArrayList<>();
+  private List<AssignItemEdo> assigns = new ArrayList<>();
 
   public WorkflowCreateRequestEdo() {
 
   }
 
-  public WorkflowCreateRequestEdo(final WorkflowEdo workflow, final List<Long> assignedUsers) {
+  public WorkflowCreateRequestEdo(final WorkflowEdo workflow, final List<AssignItemEdo> assigns) {
     this.setWorkflow(workflow);
-    this.setAssignedUsers(assignedUsers);
+    this.setAssigns(assigns);
   }
 
   /**
@@ -51,21 +51,18 @@ public class WorkflowCreateRequestEdo {
     this.workflow = workflow;
   }
 
-  /**
-   * @return the assignedUsers
-   */
-  public List<Long> getAssignedUsers() {
-    return this.assignedUsers;
+  public List<AssignItemEdo> getAssigns() {
+    return this.assigns;
   }
 
   /**
    * @param assignedUsers the assignedUsers to set
    */
   @JsonSetter
-  public void setAssignedUsers(final List<Long> assignedUsers) {
-    this.assignedUsers = new ArrayList<>();
-    if (assignedUsers != null) {
-      this.assignedUsers.addAll(assignedUsers);
+  public void setAssigns(final List<AssignItemEdo> assigns) {
+    this.assigns = new ArrayList<>();
+    if (assigns != null) {
+      this.assigns.addAll(assigns);
     }
   }
 

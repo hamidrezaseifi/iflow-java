@@ -12,6 +12,7 @@ import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
 import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.iflow.common.exceptions.IFlowCustomeException;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
+import com.pth.iflow.workflow.bl.IDepartmentDataService;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.IWorkflowTypeDataService;
 import com.pth.iflow.workflow.bl.strategies.create.CreateManualAssignWorkflowStrategy;
@@ -34,10 +35,14 @@ public class WorkStrategyFactory implements IWorkStrategyFactory {
 
   private final IWorkflowTypeDataService workflowTypeDataService;
 
+  private final IDepartmentDataService   departmentDataService;
+
   public WorkStrategyFactory(@Autowired final IWorkflowDataService workflowDataService,
-      @Autowired final IWorkflowTypeDataService workflowTypeDataService) {
+      @Autowired final IWorkflowTypeDataService workflowTypeDataService,
+      @Autowired final IDepartmentDataService departmentDataService) {
     this.workflowDataService = workflowDataService;
     this.workflowTypeDataService = workflowTypeDataService;
+    this.departmentDataService = departmentDataService;
 
   }
 
@@ -90,7 +95,7 @@ public class WorkStrategyFactory implements IWorkStrategyFactory {
         token);
 
     if (workflowType.geAssignType() == EWorkflowTypeAssignType.MANUAL) {
-      return new CreateManualAssignWorkflowStrategy(workflowCreateRequest, token, this);
+      return new CreateManualAssignWorkflowStrategy(workflowCreateRequest, token, this, departmentDataService);
     }
 
     throw new IFlowCustomeException("Unknown workflow create strategy ", EIFlowErrorType.UNKNOWN_WORKFLOW_CREATE_STRATEGY);

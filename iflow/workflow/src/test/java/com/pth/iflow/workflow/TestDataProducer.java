@@ -4,10 +4,12 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import com.pth.iflow.common.enums.EAssignType;
 import com.pth.iflow.common.enums.EWorkflowActionStatus;
 import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
+import com.pth.iflow.workflow.models.AssignItem;
 import com.pth.iflow.workflow.models.Company;
 import com.pth.iflow.workflow.models.CompanyProfile;
 import com.pth.iflow.workflow.models.Department;
@@ -382,10 +384,15 @@ public class TestDataProducer {
 
   protected WorkflowCreateRequest getTestWorkflowCreateRequest() {
     final WorkflowCreateRequest request = new WorkflowCreateRequest();
-    request.setAssignedUsers(this.getTestUserIdList());
+    request.setAssigns(this.getTestAssignedList());
     request.setWorkflow(this.getTestWorkflow(1L));
 
     return request;
+  }
+
+  protected List<AssignItem> getTestAssignedList() {
+    return Arrays.asList(new AssignItem(1L, EAssignType.USER), new AssignItem(2L, EAssignType.USER),
+        new AssignItem(3L, EAssignType.USER));
   }
 
 }

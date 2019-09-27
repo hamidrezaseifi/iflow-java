@@ -5,10 +5,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.pth.iflow.common.enums.EAssignType;
 import com.pth.iflow.common.enums.EWorkflowActionStatus;
 import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
+import com.pth.iflow.gui.models.GuiAssignItem;
 import com.pth.iflow.gui.models.GuiCompany;
 import com.pth.iflow.gui.models.GuiCompanyProfile;
 import com.pth.iflow.gui.models.GuiDepartment;
@@ -279,6 +281,11 @@ public class TestDataProducer {
     return Arrays.asList(1L, 2L, 3L);
   }
 
+  protected List<GuiAssignItem> getTestAssignedList() {
+    return Arrays.asList(new GuiAssignItem(1L, EAssignType.USER), new GuiAssignItem(2L, EAssignType.USER),
+        new GuiAssignItem(3L, EAssignType.USER));
+  }
+
   protected List<GuiDepartment> getTestDepartmentList() {
     final List<GuiDepartment> list = Arrays.asList(this.getTestDepartment(1L, "GuiDepartment 1"),
         this.getTestDepartment(2L, "GuiDepartment 2"), this.getTestDepartment(3L, "GuiDepartment 3"));
@@ -347,7 +354,7 @@ public class TestDataProducer {
 
   protected GuiWorkflowCreateRequest getTestGuiWorkflowCreateRequest() {
     final GuiWorkflowCreateRequest request = new GuiWorkflowCreateRequest();
-    request.setAssigns(this.getTestUserIdList());
+    request.setAssigns(this.getTestAssignedList());
     request.setWorkflow(this.getTestGuiWorkflow(null));
 
     return request;

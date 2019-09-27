@@ -17,7 +17,6 @@ import com.pth.iflow.backend.models.BackendUser;
 import com.pth.iflow.backend.models.BackendUserGroup;
 import com.pth.iflow.backend.models.BackendWorkflow;
 import com.pth.iflow.backend.models.BackendWorkflowAction;
-import com.pth.iflow.backend.models.BackendWorkflowCreateRequest;
 import com.pth.iflow.backend.models.BackendWorkflowFile;
 import com.pth.iflow.backend.models.BackendWorkflowFileVersion;
 import com.pth.iflow.backend.models.BackendWorkflowType;
@@ -31,7 +30,6 @@ import com.pth.iflow.common.edo.models.ProfileResponseEdo;
 import com.pth.iflow.common.edo.models.UserEdo;
 import com.pth.iflow.common.edo.models.UserGroupEdo;
 import com.pth.iflow.common.edo.models.WorkflowActionEdo;
-import com.pth.iflow.common.edo.models.WorkflowCreateRequestEdo;
 import com.pth.iflow.common.edo.models.WorkflowEdo;
 import com.pth.iflow.common.edo.models.WorkflowFileEdo;
 import com.pth.iflow.common.edo.models.WorkflowFileVersionEdo;
@@ -138,13 +136,6 @@ public class BackendModelEdoMapper {
     edo.setDeputies(model.getDeputies());
     edo.setRoles(model.getRoles().stream().map(r -> r.getId()).collect(Collectors.toList()));
 
-    return edo;
-  }
-
-  public static WorkflowCreateRequestEdo toEdo(final BackendWorkflowCreateRequest model) {
-    final WorkflowCreateRequestEdo edo = new WorkflowCreateRequestEdo();
-    edo.setAssignedUsers(model.getAssigns());
-    edo.setWorkflow(toEdo(model.getWorkflow()));
     return edo;
   }
 

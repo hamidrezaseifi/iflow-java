@@ -5,11 +5,11 @@ import java.util.List;
 
 public class GuiWorkflowCreateRequest {
 
-  private GuiWorkflow      workflow;
+  private GuiWorkflow               workflow;
 
-  private final List<Long> assigns = new ArrayList<>();
+  private final List<GuiAssignItem> assigns = new ArrayList<>();
 
-  private String           sessionKey;
+  private String                    sessionKey;
 
   public GuiWorkflowCreateRequest() {
 
@@ -20,7 +20,7 @@ public class GuiWorkflowCreateRequest {
     this.setWorkflow(workflow);
   }
 
-  public GuiWorkflowCreateRequest(final GuiWorkflow workflow, final List<Long> assigns) {
+  public GuiWorkflowCreateRequest(final GuiWorkflow workflow, final List<GuiAssignItem> assigns) {
     super();
     this.setWorkflow(workflow);
     this.setAssigns(assigns);
@@ -43,14 +43,14 @@ public class GuiWorkflowCreateRequest {
   /**
    * @return the assigns
    */
-  public List<Long> getAssigns() {
+  public List<GuiAssignItem> getAssigns() {
     return this.assigns;
   }
 
   /**
    * @param assigns the assigns to set
    */
-  public void setAssigns(final List<Long> assigns) {
+  public void setAssigns(final List<GuiAssignItem> assigns) {
     this.assigns.clear();
     if (assigns != null) {
       this.assigns.addAll(assigns);

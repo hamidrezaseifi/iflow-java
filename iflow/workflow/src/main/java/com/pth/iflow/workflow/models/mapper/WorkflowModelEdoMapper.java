@@ -8,6 +8,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 
+import com.pth.iflow.common.edo.models.AssignItemEdo;
 import com.pth.iflow.common.edo.models.CompanyEdo;
 import com.pth.iflow.common.edo.models.CompanyProfileEdo;
 import com.pth.iflow.common.edo.models.DepartmentEdo;
@@ -24,11 +25,13 @@ import com.pth.iflow.common.edo.models.WorkflowMessageEdo;
 import com.pth.iflow.common.edo.models.WorkflowSearchFilterEdo;
 import com.pth.iflow.common.edo.models.WorkflowTypeEdo;
 import com.pth.iflow.common.edo.models.WorkflowTypeStepEdo;
+import com.pth.iflow.common.enums.EAssignType;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.enums.EWorkflowMessageType;
 import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
+import com.pth.iflow.workflow.models.AssignItem;
 import com.pth.iflow.workflow.models.Company;
 import com.pth.iflow.workflow.models.CompanyProfile;
 import com.pth.iflow.workflow.models.Department;
@@ -691,17 +694,46 @@ public class WorkflowModelEdoMapper {
     return modelList;
   }
 
-  public static WorkflowCreateRequestEdo toEdo(final WorkflowCreateRequest model) {
-    final WorkflowCreateRequestEdo edo = new WorkflowCreateRequestEdo(toEdo(model.getWorkflow()), model.getAssignedUsers());
+  public static WorkflowCreateRequestEdo toEdo(final WorkflowCreateRequest model) throws IFlowMessageConversionFailureException {
+    final WorkflowCreateRequestEdo edo = new WorkflowCreateRequestEdo(toEdo(model.getWorkflow()),
+        toAssignItemEdoList(model.getAssigns()));
 
     return edo;
   }
 
   public static WorkflowCreateRequest fromEdo(final WorkflowCreateRequestEdo edo) throws IFlowMessageConversionFailureException {
     validateCustomer(edo);
-    final WorkflowCreateRequest model = new WorkflowCreateRequest(fromEdo(edo.getWorkflow()), edo.getAssignedUsers());
+    final WorkflowCreateRequest model = new WorkflowCreateRequest(fromEdo(edo.getWorkflow()), fromAssignItemEdoList(edo.getAssigns()));
 
     return model;
+  }
+
+  public static List<AssignItem> fromAssignItemEdoList(final List<AssignItemEdo> edoList)
+      throws IFlowMessageConversionFailureException {
+    final List<AssignItem> modelList = new ArrayList<>();
+    for (final AssignItemEdo edo : edoList) {
+      modelList.add(fromEdo(edo));
+    }
+
+    return modelList;
+  }
+
+  private static AssignItem fromEdo(final AssignItemEdo edo) {
+    return new AssignItem(edo.getItemId(), EAssignType.valueFromName(edo.getItemType()));
+  }
+
+  public static List<AssignItemEdo> toAssignItemEdoList(final List<AssignItem> modelList)
+      throws IFlowMessageConversionFailureException {
+    final List<AssignItemEdo> edoList = new ArrayList<>();
+    for (final AssignItem model : modelList) {
+      edoList.add(toEdo(model));
+    }
+
+    return edoList;
+  }
+
+  private static AssignItemEdo toEdo(final AssignItem model) {
+    return new AssignItemEdo(model.getItemId(), model.getItemType().getName());
   }
 
   public static List<WorkflowType> fromWorkflowTypeEdoList(final List<WorkflowTypeEdo> edoList)
@@ -727,6 +759,15 @@ public class WorkflowModelEdoMapper {
     validateCustomer(edo);
     return new ProfileResponse(fromEdo(edo.getUser()), fromEdo(edo.getCompanyProfile()), edo.getSessionid());
 
+  }
+
+  public static List<User> fromUserEdoList(final List<UserEdo> edoList) throws IFlowMessageConversionFailureException {
+    final List<User> modelList = new ArrayList<>();
+    for (final UserEdo edo : edoList) {
+      modelList.add(fromEdo(edo));
+    }
+
+    return modelList;
   }
 
 }

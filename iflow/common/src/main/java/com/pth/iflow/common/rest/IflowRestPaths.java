@@ -78,6 +78,11 @@ public class IflowRestPaths {
       return builder.build(userid, status);
     }
 
+    public static URI READ_DEPARTMENTGRPUP_ALLUSERLIST_BY_DEPARTMENTGROUP(final Long id) {
+      final IflowUriBuilder builder = new IflowUriBuilder(DEPARTMENTGRPUP_READ_ALLUSERLIST_BY_DEPARTMENTGROUP);
+      return builder.build(id);
+    }
+
   }
 
   public static class WorkflowModule {
