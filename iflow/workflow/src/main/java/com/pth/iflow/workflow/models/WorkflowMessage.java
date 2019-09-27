@@ -1,29 +1,32 @@
 package com.pth.iflow.workflow.models;
 
 import java.time.LocalDateTime;
+
 import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.enums.EWorkflowMessageType;
 
 public class WorkflowMessage extends DataModelBase {
 
-  private Long id;
+  private Long                   id;
 
-  private Long workflowId;
+  private Long                   workflowId;
 
-  private Long userId;
+  private Long                   userId;
 
-  private String message;
+  private String                 message;
 
-  private Long createdBy;
+  private Long                   createdBy;
 
-  private EWorkflowMessageType messageType;
+  private EWorkflowMessageType   messageType;
 
   private EWorkflowMessageStatus status;
 
-  private Integer version;
+  private Integer                version;
 
-  private LocalDateTime expired;
+  private Integer                expireDays;
+
+  private LocalDateTime          createdAt;
 
   @Override
   public Long getId() {
@@ -92,12 +95,28 @@ public class WorkflowMessage extends DataModelBase {
     this.version = version;
   }
 
-  public LocalDateTime getExpired() {
-    return expired;
+  public boolean isExpired() {
+    return this.createdAt.plusDays(this.expireDays).isAfter(LocalDateTime.now());
   }
 
-  public void setExpired(final LocalDateTime expired) {
-    this.expired = expired;
+  public boolean isNotExpired() {
+    return this.isExpired() == false;
+  }
+
+  public Integer getExpireDays() {
+    return this.expireDays;
+  }
+
+  public void setExpireDays(final Integer expireDays) {
+    this.expireDays = expireDays;
+  }
+
+  public LocalDateTime getCreatedAt() {
+    return this.createdAt;
+  }
+
+  public void setCreatedAt(final LocalDateTime createdAt) {
+    this.createdAt = createdAt;
   }
 
 }

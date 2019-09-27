@@ -62,7 +62,7 @@ CREATE TABLE `workflow_message` (
   `message_type` smallint(6) NOT NULL DEFAULT '1',
   `version` int(11) NOT NULL DEFAULT '1',
   `status` smallint(6) DEFAULT NULL,
-  `expire` timestamp(6) NOT NULL,
+  `expire_days` smallint(6) NOT NULL,
   `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   `updated_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   PRIMARY KEY (`id`),

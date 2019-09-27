@@ -78,4 +78,18 @@ public class CachDataController {
 
   }
 
+  @ResponseStatus(HttpStatus.OK)
+  @IflowGetRequestMapping(value = IflowRestPaths.ProfileModule.CACHDATA_CAL_USER_DATARESET)
+  @ResponseBody
+  public void resetUserData(@PathVariable(name = "companyid") final Long companyid, @PathVariable(name = "userid") final Long userid,
+      final HttpServletRequest request,
+      @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId)
+      throws ProfileCustomizedException, URISyntaxException, MalformedURLException, IFlowMessageConversionFailureException {
+
+    this.tokenUserDataManager.validateToken(headerTokenId);
+
+    this.companyCachDataManager.resetUserData(companyid, userid);
+
+  }
+
 }

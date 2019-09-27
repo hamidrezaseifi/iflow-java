@@ -24,7 +24,9 @@ public class WorkflowMessage extends DataModelBase {
 
   private Integer                version;
 
-  private LocalDateTime          expired;
+  private Integer                expireDays;
+
+  private LocalDateTime          createdAt;
 
   @Override
   public Long getId() {
@@ -93,20 +95,28 @@ public class WorkflowMessage extends DataModelBase {
     this.version = version;
   }
 
-  public LocalDateTime getExpired() {
-    return this.expired;
-  }
-
   public boolean isExpired() {
-    return this.expired.isAfter(LocalDateTime.now());
+    return this.createdAt.plusDays(this.expireDays).isAfter(LocalDateTime.now());
   }
 
   public boolean isNotExpired() {
     return this.isExpired() == false;
   }
 
-  public void setExpired(final LocalDateTime expired) {
-    this.expired = expired;
+  public Integer getExpireDays() {
+    return this.expireDays;
+  }
+
+  public void setExpireDays(final Integer expireDays) {
+    this.expireDays = expireDays;
+  }
+
+  public LocalDateTime getCreatedAt() {
+    return this.createdAt;
+  }
+
+  public void setCreatedAt(final LocalDateTime createdAt) {
+    this.createdAt = createdAt;
   }
 
 }

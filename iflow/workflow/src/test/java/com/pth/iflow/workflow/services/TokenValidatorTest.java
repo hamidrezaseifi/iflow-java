@@ -4,7 +4,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
-import java.net.URL;
+import java.net.URI;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -43,7 +43,7 @@ public class TokenValidatorTest extends TestDataProducer {
   public void setUp() throws Exception {
     this.tokenValidator = new TokenValidator(this.restTemplate, this.moduleAccessConfig);
 
-    when(this.moduleAccessConfig.generateProfileUrl(any(String.class))).thenReturn(new URL("http://any-string"));
+    when(this.moduleAccessConfig.generateProfileUrl(any(String.class))).thenReturn(new URI("http://any-string"));
   }
 
   @After
@@ -56,7 +56,7 @@ public class TokenValidatorTest extends TestDataProducer {
     final ProfileResponseEdo profileResponseEdo = new ProfileResponseEdo(WorkflowModelEdoMapper.toEdo(this.getTestUser()),
         WorkflowModelEdoMapper.toEdo(this.getTestCompanyProfile()), "sessionid");
 
-    when(this.restTemplate.callRestPost(any(URL.class), any(String.class), any(EModule.class), any(), eq(ProfileResponseEdo.class),
+    when(this.restTemplate.callRestPost(any(URI.class), any(String.class), any(EModule.class), any(), eq(ProfileResponseEdo.class),
         any(boolean.class))).thenReturn(profileResponseEdo);
 
     final ProfileResponse resProfileResponse = this.tokenValidator.isTokenValid("token");

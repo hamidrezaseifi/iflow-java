@@ -3,8 +3,10 @@ package com.pth.iflow.profile.service;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
-import java.net.URL;
+
+import java.net.URI;
 import java.util.List;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -30,10 +32,10 @@ import com.pth.iflow.profile.service.impl.UserGroupService;
 @AutoConfigureMockMvc
 public class UserGroupServiceTest extends TestDataProducer {
 
-  private IUserGroupService userGroupService;
+  private IUserGroupService                     userGroupService;
 
   @Mock
-  private IProfileRestTemplateCall restTemplate;
+  private IProfileRestTemplateCall              restTemplate;
 
   @MockBean
   private ProfileConfiguration.CoreAccessConfig coreAccessConfig;
@@ -42,7 +44,7 @@ public class UserGroupServiceTest extends TestDataProducer {
   public void setUp() throws Exception {
     this.userGroupService = new UserGroupService(this.restTemplate, this.coreAccessConfig);
 
-    when(this.coreAccessConfig.prepareCoreUrl(any(String.class))).thenReturn(new URL("http://any-string"));
+    when(this.coreAccessConfig.prepareCoreUrl(any(String.class))).thenReturn(new URI("http://any-string"));
 
   }
 
@@ -53,11 +55,11 @@ public class UserGroupServiceTest extends TestDataProducer {
   @Test
   public void testGetById() throws Exception {
 
-    final UserGroup userGroup = getTestUserGroup();
+    final UserGroup userGroup = this.getTestUserGroup();
     final UserGroupEdo userGroupEdo = ProfileModelEdoMapper.toEdo(userGroup);
 
     when(this.restTemplate.callRestGet(any(String.class), any(EModule.class), any(Class.class), any(boolean.class), any()))
-                                                                                                                           .thenReturn(userGroupEdo);
+        .thenReturn(userGroupEdo);
 
     final UserGroup resUserGroup = this.userGroupService.getById(userGroup.getId());
 
@@ -71,11 +73,11 @@ public class UserGroupServiceTest extends TestDataProducer {
   @Test
   public void testGetListByComaonyId() throws Exception {
 
-    final List<UserGroup> list = getTestUserGroupList();
+    final List<UserGroup> list = this.getTestUserGroupList();
     final UserGroupListEdo listEdo = new UserGroupListEdo(ProfileModelEdoMapper.toUserGroupEdoList(list));
 
     when(this.restTemplate.callRestGet(any(String.class), any(EModule.class), eq(UserGroupListEdo.class), any(boolean.class), any()))
-                                                                                                                                     .thenReturn(listEdo);
+        .thenReturn(listEdo);
 
     final List<UserGroup> resList = this.userGroupService.getListByCompanyId(1L);
 

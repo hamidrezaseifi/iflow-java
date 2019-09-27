@@ -87,7 +87,7 @@ public class WorkflowMessageDaoTest extends TestDataProducer {
 
     createWorlflowList();
 
-    final List<WorkflowMessage> resList = this.workflowMessageDao.getListByUserId(createdModels.get(0).getUserId(), 0L, 0);
+    final List<WorkflowMessage> resList = this.workflowMessageDao.getNotExpiredListByUserId(createdModels.get(0).getUserId(), 0L, 0);
 
     Assert.assertNotNull("Result list is not null!", resList);
 
@@ -181,7 +181,8 @@ public class WorkflowMessageDaoTest extends TestDataProducer {
     Assert.assertEquals("Result workflow has status 1!", resWorkflow.getStatus(), workflow.getStatus());
     Assert.assertEquals("Result workflow has message-type " + workflow.getMessageType() + "!", resWorkflow.getMessageType(),
         workflow.getMessageType());
-    Assert.assertEquals("Result workflow has expired " + workflow.getExpired() + "!", resWorkflow.getExpired(), workflow.getExpired());
+    Assert.assertEquals("Result workflow has expiredays " + workflow.getExpireDays() + "!", resWorkflow.getExpireDays(),
+        workflow.getExpireDays());
   }
 
   private void createReferenceWorkflow() {

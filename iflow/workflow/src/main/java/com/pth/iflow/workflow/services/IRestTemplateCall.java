@@ -1,6 +1,6 @@
 package com.pth.iflow.workflow.services;
 
-import java.net.URL;
+import java.net.URI;
 
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
@@ -10,11 +10,11 @@ import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
  *
  */
 public interface IRestTemplateCall {
-  
-  <I, O> O callRestPost(final URL url, String token, final EModule service, final I edo, final Class<O> response, boolean throwError)
+
+  <I, O> O callRestPost(final URI url, String token, final EModule service, final I edo, final Class<O> response, boolean throwError)
       throws WorkflowCustomizedException;
-  
-  <O> O callRestGet(final URL url, String token, final EModule service, final Class<O> responseClass, boolean throwError,
+
+  <O> O callRestGet(final URI url, String token, final EModule service, final Class<O> responseClass, boolean throwError,
       final Object... args) throws WorkflowCustomizedException;
-  
+
 }

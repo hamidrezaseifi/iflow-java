@@ -28,7 +28,7 @@ public class WorkflowMessageDao extends DaoBasicClass<WorkflowMessage> implement
 
   @Override
   public WorkflowMessage create(final WorkflowMessage model) throws IFlowStorageException {
-    final String sql = "INSERT INTO workflow_message (workflow_id, user_id, message, created_by, message_type, version, status, expire)"
+    final String sql = "INSERT INTO workflow_message (workflow_id, user_id, message, created_by, message_type, version, status, expire_days)"
         + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
     final TransactionStatus transactionStatus = this.startTransaction(true);
@@ -50,7 +50,7 @@ public class WorkflowMessageDao extends DaoBasicClass<WorkflowMessage> implement
 
   @Override
   public WorkflowMessage update(final WorkflowMessage model) throws IFlowStorageException {
-    final String sql = "UPDATE workflow_message SET workflow_id = ?, user_id = ?, message=?, created_by = ?, message_type = ?, version = ?, status = ?, expire = ? WHERE id = ?";
+    final String sql = "UPDATE workflow_message SET workflow_id = ?, user_id = ?, message=?, created_by = ?, message_type = ?, version = ?, status = ?, expire_days = ? WHERE id = ?";
 
     final TransactionStatus transactionStatus = this.startTransaction(true);
     try {
@@ -101,12 +101,13 @@ public class WorkflowMessageDao extends DaoBasicClass<WorkflowMessage> implement
   }
 
   @Override
-  public List<WorkflowMessage> getListByUserId(final Long userId, final Long lastid, final Integer status)
+  public List<WorkflowMessage> getNotExpiredListByUserId(final Long userId, final Long lastid, final Integer status)
       throws IFlowStorageException {
     logger.info("Dao read WorkflowMessage for user id: {}", userId);
 
     List<WorkflowMessage> list = new ArrayList<>();
-    final String sql = "SELECT * FROM workflow_message where user_id=? and id>?" + (status > 0 ? " and status=?" : "");
+    final String sql = "SELECT * FROM workflow_message where user_id=? and id>? and TIMESTAMPDIFF(DAY, created_at, now()) < expire_days "
+        + (status > 0 ? " and status=?" : "");
 
     try {
       list = this.jdbcTemplate.query(con -> {
@@ -177,7 +178,7 @@ public class WorkflowMessageDao extends DaoBasicClass<WorkflowMessage> implement
     model.setStatus(EWorkflowMessageStatus.ofValue(rs.getInt("status")));
     model.setCreatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("created_at")));
     model.setUpdatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("updated_at")));
-    model.setExpired(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("expire")));
+    model.setExpireDays(rs.getInt("expire_days"));
 
     return model;
   }
@@ -192,7 +193,7 @@ public class WorkflowMessageDao extends DaoBasicClass<WorkflowMessage> implement
     ps.setInt(5, model.getMessageType().getValue());
     ps.setInt(6, model.getVersion());
     ps.setInt(7, model.getStatus().getValue());
-    ps.setTimestamp(8, SqlUtils.getTimestampFromDatetime(model.getExpired()));
+    ps.setInt(8, model.getExpireDays());
 
     return ps;
   }
@@ -207,7 +208,7 @@ public class WorkflowMessageDao extends DaoBasicClass<WorkflowMessage> implement
     ps.setInt(5, model.getMessageType().getValue());
     ps.setInt(6, model.getVersion());
     ps.setInt(7, model.getStatus().getValue());
-    ps.setTimestamp(8, SqlUtils.getTimestampFromDatetime(model.getExpired()));
+    ps.setInt(8, model.getExpireDays());
     ps.setLong(9, model.getId());
 
     return ps;

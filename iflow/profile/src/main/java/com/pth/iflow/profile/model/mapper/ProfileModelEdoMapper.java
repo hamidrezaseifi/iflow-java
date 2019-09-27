@@ -71,8 +71,9 @@ public class ProfileModelEdoMapper {
     model.setVersion(edo.getVersion());
     model.setWorkflowId(edo.getWorkflowId());
     model.setMessageType(EWorkflowMessageType.ofValue(edo.getMessageType()));
-    model.setExpired(edo.getExpired());
+    model.setExpireDays(edo.getExpireDays());
     model.setMessage(edo.getMessage());
+    model.setCreatedAt(edo.getCreatedAt());
 
     return model;
   }
@@ -86,8 +87,9 @@ public class ProfileModelEdoMapper {
     edo.setVersion(model.getVersion());
     edo.setWorkflowId(model.getWorkflowId());
     edo.setMessageType(model.getMessageType().getValue());
-    edo.setExpired(model.getExpired());
+    edo.setExpireDays(model.getExpireDays());
     edo.setMessage(model.getMessage());
+    edo.setCreatedAt(model.getCreatedAt());
 
     return edo;
   }

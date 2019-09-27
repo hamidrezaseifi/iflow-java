@@ -71,7 +71,12 @@ public class IflowRestPaths {
     public static final String WORKFLOW_FILE_READ_LIST_BY_WORKFLOW                 = "/workflow/file/workflow/list/{id}";
     public static final String WORKFLOW_SEARCH                                     = "/workflow/search";
 
-    public static final String WORKFLOWMESSAGE_READ_BY_USER                        = "/workflowoffer/user/{userid}/{lastid}/{status}";
+    public static final String WORKFLOWMESSAGE_READ_BY_USER                        = "/workflowoffer/user/{userid}/{status}";
+
+    public static URI READ_WORKFLOWMESSAGE_READ_BY_USER(final Long userid, final int status) {
+      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOWMESSAGE_READ_BY_USER);
+      return builder.build(userid, status);
+    }
 
   }
 
@@ -95,7 +100,7 @@ public class IflowRestPaths {
     public static final String WORKFLOW_READ_LIST_BY_USER             = "/workflow/user/list/{id}/{status}";
     public static final String WORKFLOW_SEARCH                        = "/workflow/search";
 
-    public static final String WORKFLOWMESSAGE_READ_BY_USER           = "/workflowoffer/user/{userid}/{lastid}/{status}";
+    public static final String WORKFLOWMESSAGE_READ_BY_USER           = "/workflowoffer/user/{userid}/{status}";
 
     public static URI WORKFLOWTYPE_BY_ID_URIBUILDER(final Long id) {
       final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOWTYPE_READ_BY_ID);
@@ -163,6 +168,7 @@ public class IflowRestPaths {
 
     public static final String CACHDATA_READ_USER_WORKFLOWMESSAGELIST = "/cachdata/user/readworkflowmessagelist/{companyid}/{userid}";
     public static final String CACHDATA_ADD_USER_WORKFLOWMESSAGELIST  = "/cachdata/user/addworkflowmessagelist/{companyid}/{userid}";
+    public static final String CACHDATA_CAL_USER_DATARESET            = "/cachdata/user/datareset/{companyid}/{userid}";
 
     public static URI READ_COMPANY_BY_ID_URIBUILDER(final Long id) {
       final IflowUriBuilder builder = new IflowUriBuilder(COMPANY_READ_BY_ID);
@@ -221,6 +227,11 @@ public class IflowRestPaths {
 
     public static URI ADD_CACHDATA_USER_WORKFLOWMESSAGELIST(final Long id) {
       final IflowUriBuilder builder = new IflowUriBuilder(CACHDATA_ADD_USER_WORKFLOWMESSAGELIST);
+      return builder.build(id);
+    }
+
+    public static URI CAL_CACHDATA_USER_DATARESET(final Long id) {
+      final IflowUriBuilder builder = new IflowUriBuilder(CACHDATA_CAL_USER_DATARESET);
       return builder.build(id);
     }
 

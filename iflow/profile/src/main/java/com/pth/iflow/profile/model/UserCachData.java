@@ -30,6 +30,7 @@ public class UserCachData {
       this.workflowMessages
           .putAll(workflowMessages.stream().filter(wm -> wm.isNotExpired()).collect(Collectors.toMap(wm -> wm.getId(), wm -> wm)));
     }
+    this.removeAllExpired();
   }
 
   public void addWorkflowMessage(final WorkflowMessage workflowMessage) {

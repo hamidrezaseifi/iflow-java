@@ -3,8 +3,10 @@ package com.pth.iflow.profile.service;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
-import java.net.URL;
+
+import java.net.URI;
 import java.util.List;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -31,10 +33,10 @@ import com.pth.iflow.profile.service.impl.DepartmentGroupService;
 @AutoConfigureMockMvc
 public class DepartmentGroupServiceTest extends TestDataProducer {
 
-  private IDepartmentGroupService departmentGroupService;
+  private IDepartmentGroupService               departmentGroupService;
 
   @Mock
-  private IProfileRestTemplateCall restTemplate;
+  private IProfileRestTemplateCall              restTemplate;
 
   @MockBean
   private ProfileConfiguration.CoreAccessConfig coreAccessConfig;
@@ -43,7 +45,7 @@ public class DepartmentGroupServiceTest extends TestDataProducer {
   public void setUp() throws Exception {
     this.departmentGroupService = new DepartmentGroupService(this.restTemplate, this.coreAccessConfig);
 
-    when(this.coreAccessConfig.prepareCoreUrl(any(String.class))).thenReturn(new URL("http://any-string"));
+    when(this.coreAccessConfig.prepareCoreUrl(any(String.class))).thenReturn(new URI("http://any-string"));
 
   }
 
@@ -58,15 +60,14 @@ public class DepartmentGroupServiceTest extends TestDataProducer {
     final DepartmentGroupEdo departmentGroupEdo = ProfileModelEdoMapper.toEdo(departmentGroup);
 
     when(this.restTemplate.callRestGet(any(String.class), any(EModule.class), any(Class.class), any(boolean.class), any()))
-                                                                                                                           .thenReturn(departmentGroupEdo);
+        .thenReturn(departmentGroupEdo);
 
     final DepartmentGroup resDepartment = this.departmentGroupService.getById(departmentGroup.getId());
 
     Assert.assertNotNull("Result department-group is not null!", resDepartment);
     Assert.assertEquals("Result department-group has id 1!", resDepartment.getId(), departmentGroup.getId());
-    Assert.assertEquals("Result department-group has title '" + departmentGroup.getTitle() + "'!",
-                        resDepartment.getTitle(),
-                        departmentGroup.getTitle());
+    Assert.assertEquals("Result department-group has title '" + departmentGroup.getTitle() + "'!", resDepartment.getTitle(),
+        departmentGroup.getTitle());
     Assert.assertEquals("Result department-group has status 1!", resDepartment.getStatus(), departmentGroup.getStatus());
 
   }
@@ -78,7 +79,7 @@ public class DepartmentGroupServiceTest extends TestDataProducer {
     final UserListEdo listEdo = new UserListEdo(ProfileModelEdoMapper.toUserEdoList(list));
 
     when(this.restTemplate.callRestGet(any(String.class), any(EModule.class), eq(UserListEdo.class), any(boolean.class), any()))
-                                                                                                                                .thenReturn(listEdo);
+        .thenReturn(listEdo);
 
     final List<User> resList = this.departmentGroupService.getAllUserListByDepartmentGroupId(1L);
 

@@ -1,6 +1,7 @@
 package com.pth.iflow.common.edo.models;
 
 import java.time.LocalDateTime;
+
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -9,6 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 import com.pth.iflow.common.edo.models.helper.IsoFormats;
@@ -23,44 +25,46 @@ import com.pth.iflow.common.enums.EWorkflowMessageType;
 public class WorkflowMessageEdo {
 
   @XmlElement(name = "ID", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long id;
+  private Long          id;
 
   @NotNull(message = "workflowId must not be null")
   @XmlElement(name = "WorkflowId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long workflowId;
+  private Long          workflowId;
 
   @NotNull(message = "UserId must not be null")
   @XmlElement(name = "UserId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long userId;
+  private Long          userId;
 
   @XmlElement(name = "Message", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String message;
+  private String        message;
 
   @NotNull(message = "CreatedBy must not be null")
   @XmlElement(name = "CreatedBy", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long createdBy;
+  private Long          createdBy;
 
   @NotNull(message = "MessageType must not be null")
   @AEnumValueValidator(enumClazz = EWorkflowMessageType.class)
   @XmlElement(name = "MessageType", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Integer messageType;
+  private Integer       messageType;
 
   @NotNull(message = "status must not be null")
   @AEnumValueValidator(enumClazz = EWorkflowMessageStatus.class)
   @XmlElement(name = "Status", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Integer status;
+  private Integer       status;
 
   @NotNull(message = "version must not be null")
   @XmlElement(name = "Version", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Integer version;
+  private Integer       version;
+
+  @XmlElement(name = "ExpireDays", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  @NotNull(message = "expired must not be null")
+  private Integer       expireDays;
 
   @XmlJavaTypeAdapter(LocalDateTimeEdoAdapter.class)
   @JsonFormat(pattern = IsoFormats.DATETIME_FORMAT_ISO)
   @XmlSchemaType(name = "dateTime")
-  @NotNull
-  @XmlElement(name = "Version", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  @NotNull(message = "expired must not be null")
-  private LocalDateTime expired;
+  @XmlElement(name = "CreatedAt", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private LocalDateTime createdAt;
 
   public Long getId() {
     return this.id;
@@ -87,7 +91,7 @@ public class WorkflowMessageEdo {
   }
 
   public String getMessage() {
-    return message;
+    return this.message;
   }
 
   public void setMessage(final String message) {
@@ -103,7 +107,7 @@ public class WorkflowMessageEdo {
   }
 
   public Integer getMessageType() {
-    return messageType;
+    return this.messageType;
   }
 
   public void setMessageType(final Integer messageType) {
@@ -126,12 +130,20 @@ public class WorkflowMessageEdo {
     this.version = version;
   }
 
-  public LocalDateTime getExpired() {
-    return expired;
+  public Integer getExpireDays() {
+    return this.expireDays;
   }
 
-  public void setExpired(final LocalDateTime expired) {
-    this.expired = expired;
+  public void setExpireDays(final Integer expireDays) {
+    this.expireDays = expireDays;
+  }
+
+  public LocalDateTime getCreatedAt() {
+    return this.createdAt;
+  }
+
+  public void setCreatedAt(final LocalDateTime createdAt) {
+    this.createdAt = createdAt;
   }
 
 }

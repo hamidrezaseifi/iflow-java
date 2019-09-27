@@ -3,8 +3,10 @@ package com.pth.iflow.profile.service;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
-import java.net.URL;
+
+import java.net.URI;
 import java.util.List;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -30,10 +32,10 @@ import com.pth.iflow.profile.service.impl.UsersService;
 @AutoConfigureMockMvc
 public class UsersServiceTest extends TestDataProducer {
 
-  private IUsersService usersService;
+  private IUsersService                         usersService;
 
   @Mock
-  private IProfileRestTemplateCall restTemplate;
+  private IProfileRestTemplateCall              restTemplate;
 
   @MockBean
   private ProfileConfiguration.CoreAccessConfig coreAccessConfig;
@@ -42,7 +44,7 @@ public class UsersServiceTest extends TestDataProducer {
   public void setUp() throws Exception {
     this.usersService = new UsersService(this.restTemplate, this.coreAccessConfig);
 
-    when(this.coreAccessConfig.prepareCoreUrl(any(String.class))).thenReturn(new URL("http://any-string"));
+    when(this.coreAccessConfig.prepareCoreUrl(any(String.class))).thenReturn(new URI("http://any-string"));
 
   }
 
@@ -53,11 +55,11 @@ public class UsersServiceTest extends TestDataProducer {
   @Test
   public void testGetUserById() throws Exception {
 
-    final User user = getTestUser();
+    final User user = this.getTestUser();
     final UserEdo userEdo = ProfileModelEdoMapper.toEdo(user);
 
     when(this.restTemplate.callRestGet(any(String.class), any(EModule.class), any(Class.class), any(boolean.class), any()))
-                                                                                                                           .thenReturn(userEdo);
+        .thenReturn(userEdo);
 
     final User resUser = this.usersService.getUserById(user.getId());
 
@@ -71,11 +73,11 @@ public class UsersServiceTest extends TestDataProducer {
   @Test
   public void testGetUserByEmail() throws Exception {
 
-    final User user = getTestUser();
+    final User user = this.getTestUser();
     final UserEdo userEdo = ProfileModelEdoMapper.toEdo(user);
 
     when(this.restTemplate.callRestGet(any(String.class), any(EModule.class), any(Class.class), any(boolean.class), any()))
-                                                                                                                           .thenReturn(userEdo);
+        .thenReturn(userEdo);
 
     final User resUser = this.usersService.getUserByEmail(user.getEmail());
 
@@ -89,11 +91,11 @@ public class UsersServiceTest extends TestDataProducer {
   @Test
   public void testGetUserListByComaonyId() throws Exception {
 
-    final List<User> list = getTestUserList();
+    final List<User> list = this.getTestUserList();
     final UserListEdo listEdo = new UserListEdo(ProfileModelEdoMapper.toUserEdoList(list));
 
     when(this.restTemplate.callRestGet(any(String.class), any(EModule.class), eq(UserListEdo.class), any(boolean.class), any()))
-                                                                                                                                .thenReturn(listEdo);
+        .thenReturn(listEdo);
 
     final List<User> resList = this.usersService.getUserListByCompanyId(1L);
 
