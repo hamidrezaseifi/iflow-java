@@ -137,7 +137,7 @@ public class GuiSessionUserInfo {
    * @return the companyUsers
    * @throws IFlowMessageConversionFailureException
    */
-  public Map<Long, GuiUser> getCompanyUsers() throws IFlowMessageConversionFailureException {
+  public Map<Long, GuiUser> getCompanyUsersMap() throws IFlowMessageConversionFailureException {
     if (this.companyUsers.size() == 0) {
       try {
         final List<GuiUser> userList = this.userAccess.getCompanyUserList(this.companyProfile.getCompany().getId());
@@ -148,6 +148,12 @@ public class GuiSessionUserInfo {
     }
 
     return this.companyUsers;
+  }
+
+  public List<GuiUser> getCompanyUserList() throws IFlowMessageConversionFailureException {
+    final Map<Long, GuiUser> map = this.getCompanyUsersMap();
+
+    return map.values().stream().collect(Collectors.toList());
   }
 
   /**

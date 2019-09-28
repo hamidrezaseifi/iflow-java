@@ -28,6 +28,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
+import com.pth.iflow.gui.models.GuiDepartment;
 import com.pth.iflow.gui.models.GuiUser;
 import com.pth.iflow.gui.models.GuiWorkflow;
 import com.pth.iflow.gui.models.GuiWorkflowCreateRequest;
@@ -118,6 +119,23 @@ public class WorkflowDataController extends GuiDataControllerBase {
   }
 
   @ResponseStatus(HttpStatus.OK)
+  @PostMapping(path = { "/workflowcreate/typedata/{typeId}" })
+  @ResponseBody
+  public Map<String, Object> loadWorkflowTypeInitData(@PathVariable final Long typeId)
+      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+
+    final Map<String, Object> map = new HashMap<>();
+
+    final List<GuiUser> userList = this.getSessionUserInfo().getCompanyUserList();
+    final List<GuiDepartment> departmentList = this.getSessionUserInfo().getCompanyDepartments();
+
+    map.put("users", userList);
+    map.put("departments", departmentList);
+
+    return map;
+  }
+
+  @ResponseStatus(HttpStatus.OK)
   @PostMapping(path = { "/workflow/edit/{workflowId}" })
   @ResponseBody
   public Map<String, Object> loadWorkflowEditData(@PathVariable final Long workflowId)
@@ -155,19 +173,22 @@ public class WorkflowDataController extends GuiDataControllerBase {
       @RequestParam("titles") final String[] titles, final HttpSession session)
       throws GuiCustomizedException, JsonParseException, JsonMappingException, IOException {
 
-    final List<UploadFileSavingData> saveFiles = new ArrayList<>();
-    for (int i = 0; i < files.length; i++) {
-      final String ext = FileSavingData.getExtention(files[i]);
-      String title = titles.length > i ? titles[i] : "";
-      if (StringUtils.isEmpty(title)) {
-        title = files[i].getOriginalFilename();
-        title = ext.isEmpty() == false ? title.substring(0, title.length() - ext.length() - 1) : title;
+    List<UploadFileSavingData> tempFiles = new ArrayList<>();
+    if (files.length > 0) {
+      final List<UploadFileSavingData> saveFiles = new ArrayList<>();
+      for (int i = 0; i < files.length; i++) {
+        final String ext = FileSavingData.getExtention(files[i]);
+        String title = titles.length > i ? titles[i] : "";
+        if (StringUtils.isEmpty(title)) {
+          title = files[i].getOriginalFilename();
+          title = ext.isEmpty() == false ? title.substring(0, title.length() - ext.length() - 1) : title;
+        }
+
+        saveFiles.add(new UploadFileSavingData(files[i], title, ext, 0L, 0l, this.getLoggedCompany().getId()));
       }
 
-      saveFiles.add(new UploadFileSavingData(files[i], title, ext, 0L, 0l, this.getLoggedCompany().getId()));
+      tempFiles = this.uploadFileManager.saveInTemp(saveFiles);
     }
-
-    final List<UploadFileSavingData> tempFiles = this.uploadFileManager.saveInTemp(saveFiles);
 
     final String sessionKey = "temp_uploaded_" + System.currentTimeMillis();
 

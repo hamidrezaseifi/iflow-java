@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.pth.iflow.common.enums.EAssignType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.GuiWorkflow;
@@ -45,6 +46,10 @@ public class WorkflowPageController extends GuiPageControllerBase {
   @ResponseStatus(HttpStatus.OK)
   @GetMapping(path = { "/create" })
   public String showWorkflowCreate(final Model model) throws GuiCustomizedException, MalformedURLException {
+
+    model.addAttribute("UserAssign", EAssignType.USER.getName());
+    model.addAttribute("DepartmentAssign", EAssignType.DEPARTMENT.getName());
+    model.addAttribute("DepartmentGroupAssign", EAssignType.DEPARTMENTGROUP.getName());
 
     return "workflow/create";
   }

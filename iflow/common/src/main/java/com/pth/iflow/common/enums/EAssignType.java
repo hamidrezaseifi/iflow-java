@@ -1,5 +1,7 @@
 package com.pth.iflow.common.enums;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.pth.iflow.common.exceptions.IFlowInvalidEnumValueException;
 
 /**
@@ -10,7 +12,8 @@ import com.pth.iflow.common.exceptions.IFlowInvalidEnumValueException;
 public enum EAssignType implements IEnumNameValidator {
   NONE("None"),
   USER("User"),
-  DEPARTMENT("Department");
+  DEPARTMENT("Department"),
+  DEPARTMENTGROUP("DepartmentGroup");
 
   private String enumName;
 
@@ -19,10 +22,12 @@ public enum EAssignType implements IEnumNameValidator {
   }
 
   @Override
+  @JsonValue
   public String getName() {
     return this.enumName;
   }
 
+  @JsonCreator
   public static EAssignType valueFromName(final String nameString) {
     for (final EAssignType item : values()) {
       if (item.enumName.equals(nameString)) {

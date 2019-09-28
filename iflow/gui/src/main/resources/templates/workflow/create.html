@@ -27,7 +27,7 @@
 				<div class="item-row">
 					<div class="item-label" th:text="#{workflow-type}"></div>
 					<div class="item-content">
-						<select type="text" ng-model="workflowCreateRequest.workflow.workflowTypeId">
+						<select type="text" ng-model="workflowCreateRequest.workflow.workflowTypeId" ng-change="reloadWorkflowTypeData()">
 							<option th:text="#{workflow-select-type}" value="0"></option>
 							<option ng-repeat="item in workflowTypes" ng-value="item.id">{{item.title}}</option>
 						</select>
@@ -60,9 +60,9 @@
 						<div class="assign-list" >
 							<button class="show-select-dialog" data-toggle="modal" data-target="#assignlistdialog"><i class="material-icons">playlist_add</i></button>
 							<span ng-if="hasNoAssigns()" th:text="#{workflow-select-assign}"></span>
-							<div class="user-item-box" ng-repeat="id in workflowCreateRequest.assigns">
-								<span>{{getUserById(id).fullName}} </span>
-								<button ng-click="removeAssign(id)"><i class="material-icons">close</i></button>
+							<div class="user-item-box" ng-repeat="item in workflowCreateRequest.assigns">
+								<span>{{item.title}} </span>
+								<button ng-click="removeAssign(item.itemId, item.itemType)"><i class="material-icons">close</i></button>
 							</div>
 							<div class="clear"></div>
 						</div>
@@ -96,7 +96,7 @@
 				</div>
 				
 				<div class="item-row">
-					{{getWorkFlowTest()}}
+					{{departments}}
 				</div>
 				<div class="item-row">
 					{{getAssignedTest()}}
@@ -113,7 +113,40 @@
 				        </button>
 				      </div>
 				      <div class="modal-body">
-		    			<div ng-repeat="item in users" class="user-list-item"><input type="checkbox" ng-model="userAssigned[item.id]" ng-value="item.id"/> &nbsp; &nbsp; {{item.fullName}}</div>
+							<ul class="nav nav-tabs">
+							  <li class="active"><a data-toggle="tab" class="nav-link active" href="#tabusers" th:text="#{common.users}"></a></li>
+							  <li><a data-toggle="tab" class="nav-link" href="#tabdepartments" th:text="#{common.departments}"></a></li>
+							</ul>
+							<div class="tab-content tab-body">
+								<div id="tabusers" class="tab-pane fade in active">
+									<ul class="list-item-container">
+										<li ng-repeat="item in users" class="list-item">
+											<input data-assigntitle="{{item.fullName}}" type="checkbox" class="assign-checkbox" th:data-assigntype="${UserAssign}" ng-value="item.id"/> 
+											&nbsp; &nbsp; 
+											{{item.fullName}}										
+										</li>
+									</ul>
+								</div>
+								<div id="tabdepartments" class="tab-pane fade">
+									<ul class="list-item-container">
+										<li ng-repeat="dep in departments" class="list-item">
+											<input type="checkbox" data-assigntitle="{{dep.title}}" class="assign-checkbox" th:data-assigntype="${DepartmentAssign}" ng-value="dep.id"/> 
+											&nbsp; &nbsp; 
+											{{dep.title}}	
+											<ul class="list-item-container">
+												<li ng-repeat="depgrp in dep.departmentGroups" class="list-item">
+													<input type="checkbox" class="assign-checkbox" data-assigntitle="{{depgrp.title}}" th:data-assigntype="${DepartmentGroupAssign}" ng-value="depgrp.id"/> 
+													&nbsp; &nbsp; 
+													{{depgrp.title}}										
+												</li>
+											</ul>									
+										</li>
+									</ul>
+								
+								</div>
+							</div>
+				      
+		    				
 				      </div>
 				      <div class="modal-footer">
 				        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="material-icons">close</i></button>
@@ -124,28 +157,14 @@
 		    	
 		    </div>
 		    
-		    <div ng-if="false">
-		    	<div class="dialog-toolbar">
-		    		<span class="dialog-title" th:text="#{workflow-select-assign}"></span>
-		    		<button class="dialog-toolbar-button" ng-click="closeAssignSelectDialog();"><i class="material-icons">close</i></button>
-		    		<div class="clear"></div>
-		    	</div>
-		    	<div class="dialog-content">
-		    		<div ng-repeat="item in users" class="user-list-item"><input type="checkbox" ng-model="userAssigned[item.id]" ng-value="item.id"/> &nbsp; &nbsp; {{item.fullName}}</div>
-		    	</div>
-		    	<div class="dialog-bottonnbar">
-		    		<button class="dialog-bottonn"  data-dismiss="modal"><i class="material-icons">close</i></button>
-		    		<button class="dialog-bottonn" ng-click="applyUserSelect();"><i class="material-icons">check</i></button>
-		    		<div class="clear"></div>
-		    	</div>
 		    
-		    </div>
 		    <script type="text/javascript">
 			var loadUrl = "/workflow/data/workflowcreate/init";
+			var loadWorkflowTypeDataUrl = "/workflow/data/workflowcreate/typedata/";
 			var saveUrl = "/workflow/data/workflowcreate/create";
 			var saveFileUrl = "/workflow/data/workflowcreate/file";
 			var listUrl = "/workflow/list";
-				
+			
 		    </script>
 		
 		
