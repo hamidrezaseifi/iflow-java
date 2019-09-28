@@ -1,8 +1,10 @@
 package com.pth.iflow.core.service.impl;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.pth.iflow.core.model.WorkflowMessage;
 import com.pth.iflow.core.service.IWorkflowMessageService;
 import com.pth.iflow.core.storage.dao.IWorkflowMessageDao;
@@ -46,13 +48,14 @@ public class WorkflowMessageService implements IWorkflowMessageService {
   }
 
   @Override
-  public List<WorkflowMessage> getListByUserId(final Long userId, final Long lastid, final Integer status) throws IFlowStorageException {
+  public List<WorkflowMessage> getListByUserId(final Long userId, final Integer status) throws IFlowStorageException {
 
-    return this.workflowMessageDao.getNotExpiredListByUserId(userId, lastid, status);
+    return this.workflowMessageDao.getNotExpiredListByUserId(userId, status);
   }
 
   @Override
-  public List<WorkflowMessage> getListByWorkflowId(final Long workflowId, final Long lastid, final Integer status) throws IFlowStorageException {
+  public List<WorkflowMessage> getListByWorkflowId(final Long workflowId, final Long lastid, final Integer status)
+      throws IFlowStorageException {
 
     return this.workflowMessageDao.getListByWorkflowId(workflowId, lastid, status);
   }

@@ -14,6 +14,7 @@ import com.pth.iflow.common.exceptions.IFlowCustomeException;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.IDepartmentDataService;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
+import com.pth.iflow.workflow.bl.IWorkflowMessageDataService;
 import com.pth.iflow.workflow.bl.IWorkflowTypeDataService;
 import com.pth.iflow.workflow.bl.strategies.create.CreateManualAssignWorkflowStrategy;
 import com.pth.iflow.workflow.bl.strategies.create.CreateOfferlAssignWorkflowStrategy;
@@ -30,20 +31,23 @@ import com.pth.iflow.workflow.models.WorkflowType;
 @Service
 public class WorkStrategyFactory implements IWorkStrategyFactory {
 
-  private static final Logger            logger = LoggerFactory.getLogger(WorkStrategyFactory.class);
+  private static final Logger               logger = LoggerFactory.getLogger(WorkStrategyFactory.class);
 
-  private final IWorkflowDataService     workflowDataService;
+  private final IWorkflowDataService        workflowDataService;
 
-  private final IWorkflowTypeDataService workflowTypeDataService;
+  private final IWorkflowTypeDataService    workflowTypeDataService;
 
-  private final IDepartmentDataService   departmentDataService;
+  private final IDepartmentDataService      departmentDataService;
+
+  private final IWorkflowMessageDataService workflowMessageDataService;
 
   public WorkStrategyFactory(@Autowired final IWorkflowDataService workflowDataService,
-      @Autowired final IWorkflowTypeDataService workflowTypeDataService,
-      @Autowired final IDepartmentDataService departmentDataService) {
+      @Autowired final IWorkflowTypeDataService workflowTypeDataService, @Autowired final IDepartmentDataService departmentDataService,
+      @Autowired final IWorkflowMessageDataService workflowMessageDataService) {
     this.workflowDataService = workflowDataService;
     this.workflowTypeDataService = workflowTypeDataService;
     this.departmentDataService = departmentDataService;
+    this.workflowMessageDataService = workflowMessageDataService;
 
   }
 
@@ -96,11 +100,13 @@ public class WorkStrategyFactory implements IWorkStrategyFactory {
         token);
 
     if (workflowType.geAssignType() == EWorkflowTypeAssignType.MANUAL) {
-      return new CreateManualAssignWorkflowStrategy(workflowCreateRequest, token, this, departmentDataService);
+      return new CreateManualAssignWorkflowStrategy(workflowCreateRequest, token, this, departmentDataService,
+          workflowMessageDataService);
     }
 
     if (workflowType.geAssignType() == EWorkflowTypeAssignType.OFFER) {
-      return new CreateOfferlAssignWorkflowStrategy(workflowCreateRequest, token, this, departmentDataService);
+      return new CreateOfferlAssignWorkflowStrategy(workflowCreateRequest, token, this, departmentDataService,
+          workflowMessageDataService);
     }
 
     throw new IFlowCustomeException("Unknown workflow create strategy ", EIFlowErrorType.UNKNOWN_WORKFLOW_CREATE_STRATEGY);

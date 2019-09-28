@@ -7,6 +7,8 @@ public class GuiWorkflowCreateRequest {
 
   private GuiWorkflow               workflow;
 
+  private Integer                   expireDays;
+
   private final List<GuiAssignItem> assigns = new ArrayList<>();
 
   private String                    sessionKey;
@@ -18,12 +20,6 @@ public class GuiWorkflowCreateRequest {
   public GuiWorkflowCreateRequest(final GuiWorkflow workflow) {
     super();
     this.setWorkflow(workflow);
-  }
-
-  public GuiWorkflowCreateRequest(final GuiWorkflow workflow, final List<GuiAssignItem> assigns) {
-    super();
-    this.setWorkflow(workflow);
-    this.setAssigns(assigns);
   }
 
   /**
@@ -38,6 +34,14 @@ public class GuiWorkflowCreateRequest {
    */
   public void setWorkflow(final GuiWorkflow workflow) {
     this.workflow = workflow;
+  }
+
+  public Integer getExpireDays() {
+    return this.expireDays;
+  }
+
+  public void setExpireDays(final Integer expireDays) {
+    this.expireDays = expireDays;
   }
 
   /**

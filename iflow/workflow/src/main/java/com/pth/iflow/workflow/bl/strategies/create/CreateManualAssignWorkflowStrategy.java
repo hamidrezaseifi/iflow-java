@@ -11,6 +11,7 @@ import com.pth.iflow.common.enums.EAssignType;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.IDepartmentDataService;
+import com.pth.iflow.workflow.bl.IWorkflowMessageDataService;
 import com.pth.iflow.workflow.bl.strategies.IWorkStrategyFactory;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.AssignItem;
@@ -21,8 +22,9 @@ import com.pth.iflow.workflow.models.WorkflowCreateRequest;
 public class CreateManualAssignWorkflowStrategy extends AbstractCreateWorkflowStrategy {
 
   public CreateManualAssignWorkflowStrategy(final WorkflowCreateRequest workflowCreateRequest, final String token,
-      final IWorkStrategyFactory workStrategyFactory, final IDepartmentDataService departmentDataService) {
-    super(workflowCreateRequest, token, workStrategyFactory, departmentDataService);
+      final IWorkStrategyFactory workStrategyFactory, final IDepartmentDataService departmentDataService,
+      final IWorkflowMessageDataService workflowMessageDataService) {
+    super(workflowCreateRequest, token, workStrategyFactory, departmentDataService, workflowMessageDataService);
 
   }
 
@@ -45,6 +47,12 @@ public class CreateManualAssignWorkflowStrategy extends AbstractCreateWorkflowSt
 
       if (assign.getItemType() == EAssignType.DEPARTMENT) {
         final List<User> departmentUserIds = this.getDepartmentDataService().getUserListByDepartmentId(assign.getItemId(),
+            this.getToken());
+        assignedUsers.addAll(departmentUserIds.stream().map(u -> u.getId()).collect(Collectors.toSet()));
+      }
+
+      if (assign.getItemType() == EAssignType.DEPARTMENTGROUP) {
+        final List<User> departmentUserIds = this.getDepartmentDataService().getUserListByDepartmentGroupId(assign.getItemId(),
             this.getToken());
         assignedUsers.addAll(departmentUserIds.stream().map(u -> u.getId()).collect(Collectors.toSet()));
       }

@@ -71,11 +71,17 @@ public class IflowRestPaths {
     public static final String WORKFLOW_FILE_READ_LIST_BY_WORKFLOW                 = "/workflow/file/workflow/list/{id}";
     public static final String WORKFLOW_SEARCH                                     = "/workflow/search";
 
-    public static final String WORKFLOWMESSAGE_READ_BY_USER                        = "/workflowoffer/user/{userid}/{status}";
+    public static final String WORKFLOWMESSAGE_READ_BY_USER                        = "/workflowmessage/user/{userid}/{status}";
+    public static final String WORKFLOWMESSAGE_SAVE                                = "/workflowmessage/save";
 
     public static URI READ_WORKFLOWMESSAGE_READ_BY_USER(final Long userid, final int status) {
       final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOWMESSAGE_READ_BY_USER);
       return builder.build(userid, status);
+    }
+
+    public static URI SAVE_WORKFLOWMESSAGE() {
+      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOWMESSAGE_SAVE);
+      return builder.build();
     }
 
     public static URI READ_DEPARTMENTGRPUP_ALLUSERLIST_BY_DEPARTMENTGROUP(final Long id) {

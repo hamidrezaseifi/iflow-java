@@ -19,22 +19,21 @@ import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 @XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "WorkflowCreateRequest" + IFlowJaxbDefinition.TYPE_PREFIX)
 public class WorkflowCreateRequestEdo {
 
-  @NotNull
+  @NotNull(message = "Workflow must not be null")
   @XmlElement(name = "Workflow", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private WorkflowEdo         workflow;
 
-  @NotNull
-  @XmlElementWrapper(name = "AssignedUserIdList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  @XmlElement(name = "AssignedUserId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  @NotNull(message = "ExpireDays must not be null")
+  @XmlElement(name = "ExpireDays", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private Integer             expireDays;
+
+  @NotNull(message = "AssignedList must not be null")
+  @XmlElementWrapper(name = "AssignedList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  @XmlElement(name = "AssignedList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private List<AssignItemEdo> assigns = new ArrayList<>();
 
   public WorkflowCreateRequestEdo() {
 
-  }
-
-  public WorkflowCreateRequestEdo(final WorkflowEdo workflow, final List<AssignItemEdo> assigns) {
-    this.setWorkflow(workflow);
-    this.setAssigns(assigns);
   }
 
   /**
@@ -49,6 +48,14 @@ public class WorkflowCreateRequestEdo {
    */
   public void setWorkflow(final WorkflowEdo workflow) {
     this.workflow = workflow;
+  }
+
+  public Integer getExpireDays() {
+    return this.expireDays;
+  }
+
+  public void setExpireDays(final Integer expireDays) {
+    this.expireDays = expireDays;
   }
 
   public List<AssignItemEdo> getAssigns() {

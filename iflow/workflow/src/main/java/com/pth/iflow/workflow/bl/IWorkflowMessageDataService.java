@@ -12,4 +12,7 @@ public interface IWorkflowMessageDataService {
   public List<WorkflowMessage> getListForUser(final Long userId, int status, String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
+  public WorkflowMessage save(final WorkflowMessage message, String token)
+      throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
+
 }

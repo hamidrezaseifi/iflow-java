@@ -101,21 +101,19 @@ public class WorkflowMessageDao extends DaoBasicClass<WorkflowMessage> implement
   }
 
   @Override
-  public List<WorkflowMessage> getNotExpiredListByUserId(final Long userId, final Long lastid, final Integer status)
-      throws IFlowStorageException {
+  public List<WorkflowMessage> getNotExpiredListByUserId(final Long userId, final Integer status) throws IFlowStorageException {
     logger.info("Dao read WorkflowMessage for user id: {}", userId);
 
     List<WorkflowMessage> list = new ArrayList<>();
-    final String sql = "SELECT * FROM workflow_message where user_id=? and id>? and TIMESTAMPDIFF(DAY, created_at, now()) < expire_days "
+    final String sql = "SELECT * FROM workflow_message where user_id=? and TIMESTAMPDIFF(DAY, created_at, now()) < expire_days "
         + (status > 0 ? " and status=?" : "");
 
     try {
       list = this.jdbcTemplate.query(con -> {
         final PreparedStatement ps = con.prepareStatement(sql);
         ps.setLong(1, userId);
-        ps.setLong(2, lastid);
         if (status > 0) {
-          ps.setInt(3, status);
+          ps.setInt(2, status);
         }
 
         return ps;

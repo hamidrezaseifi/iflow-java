@@ -212,11 +212,11 @@ public class TestDataProducer {
     return model;
   }
 
-  protected WorkflowMessage getTestWorkflowMessage() {
+  protected WorkflowMessage getTestWorkflowMessage(final Long id, final String message) {
     final WorkflowMessage model = new WorkflowMessage();
-    model.setWorkflowId(1L);
+    model.setWorkflowId(id);
     model.setId(null);
-    model.setMessage("utest message new");
+    model.setMessage(message);
     model.setStatus(EWorkflowMessageStatus.OFFERING);
     model.setVersion(1);
     model.setExpireDays(10);
@@ -225,6 +225,11 @@ public class TestDataProducer {
     model.setCreatedBy(1L);
 
     return model;
+  }
+
+  protected List<WorkflowMessage> getTestWorkflowMessageList() {
+    return Arrays.asList(this.getTestWorkflowMessage(1L, "Message-1"), this.getTestWorkflowMessage(2L, "Message-2"),
+        this.getTestWorkflowMessage(3L, "Message-3"));
   }
 
   protected Workflow getTestNewWorkflow() {

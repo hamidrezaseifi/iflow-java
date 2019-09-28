@@ -6,6 +6,7 @@ import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.iflow.common.exceptions.IFlowCustomeException;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.IDepartmentDataService;
+import com.pth.iflow.workflow.bl.IWorkflowMessageDataService;
 import com.pth.iflow.workflow.bl.strategies.ICreateWorkflowStrategy;
 import com.pth.iflow.workflow.bl.strategies.ISaveWorkflowStrategy;
 import com.pth.iflow.workflow.bl.strategies.IWorkStrategyFactory;
@@ -15,18 +16,21 @@ import com.pth.iflow.workflow.models.WorkflowCreateRequest;
 
 public abstract class AbstractCreateWorkflowStrategy implements ICreateWorkflowStrategy {
 
-  private final WorkflowCreateRequest  workflowCreateRequest;
-  private final String                 token;
-  private final IWorkStrategyFactory   workStrategyFactory;
-  private final IDepartmentDataService departmentDataService;
+  private final WorkflowCreateRequest       workflowCreateRequest;
+  private final String                      token;
+  private final IWorkStrategyFactory        workStrategyFactory;
+  private final IDepartmentDataService      departmentDataService;
+  private final IWorkflowMessageDataService workflowMessageDataService;
 
   public AbstractCreateWorkflowStrategy(final WorkflowCreateRequest workflowCreateRequest, final String token,
-      final IWorkStrategyFactory workStrategyFactory, final IDepartmentDataService departmentDataService) {
+      final IWorkStrategyFactory workStrategyFactory, final IDepartmentDataService departmentDataService,
+      final IWorkflowMessageDataService workflowMessageDataService) {
     super();
     this.workflowCreateRequest = workflowCreateRequest;
     this.token = token;
     this.workStrategyFactory = workStrategyFactory;
     this.departmentDataService = departmentDataService;
+    this.workflowMessageDataService = workflowMessageDataService;
   }
 
   protected Workflow saveWorkflow(final Workflow workflow)
@@ -52,6 +56,10 @@ public abstract class AbstractCreateWorkflowStrategy implements ICreateWorkflowS
 
   public IDepartmentDataService getDepartmentDataService() {
     return departmentDataService;
+  }
+
+  public IWorkflowMessageDataService getWorkflowMessageDataService() {
+    return workflowMessageDataService;
   }
 
   protected void verifyAssigns() {

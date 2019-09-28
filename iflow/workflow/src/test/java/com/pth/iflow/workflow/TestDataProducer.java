@@ -386,6 +386,7 @@ public class TestDataProducer {
     final WorkflowCreateRequest request = new WorkflowCreateRequest();
     request.setAssigns(this.getTestAssignedList());
     request.setWorkflow(this.getTestWorkflow(1L));
+    request.setExpireDays(10);
 
     return request;
   }

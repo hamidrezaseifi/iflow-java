@@ -20,6 +20,7 @@ import com.pth.iflow.common.exceptions.IFlowCustomeException;
 import com.pth.iflow.workflow.TestDataProducer;
 import com.pth.iflow.workflow.bl.IDepartmentDataService;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
+import com.pth.iflow.workflow.bl.IWorkflowMessageDataService;
 import com.pth.iflow.workflow.bl.IWorkflowTypeDataService;
 import com.pth.iflow.workflow.bl.strategies.ISaveWorkflowStrategy;
 import com.pth.iflow.workflow.bl.strategies.IWorkStrategyFactory;
@@ -36,23 +37,26 @@ import com.pth.iflow.workflow.models.WorkflowType;
 @AutoConfigureMockMvc
 public class WorkflowSaveStrategyFactoryTest extends TestDataProducer {
 
-  private IWorkStrategyFactory     workStrategyFactory;
+  private IWorkStrategyFactory        workStrategyFactory;
 
   @Mock
-  private IWorkflowDataService     workflowDataService;
+  private IWorkflowDataService        workflowDataService;
 
   @Mock
-  private IWorkflowTypeDataService workflowTypeDataService;
+  private IWorkflowTypeDataService    workflowTypeDataService;
 
   @Mock
-  private IDepartmentDataService   departmentDataService;
+  private IDepartmentDataService      departmentDataService;
 
-  private String                   validTocken;
+  @Mock
+  private IWorkflowMessageDataService workflowMessageDataService;
+
+  private String                      validTocken;
 
   @Before
   public void setUp() throws Exception {
     this.workStrategyFactory = new WorkStrategyFactory(this.workflowDataService, this.workflowTypeDataService,
-        this.departmentDataService);
+        this.departmentDataService, this.workflowMessageDataService);
 
     // when(this.workflowDataService.generateCoreUrl(any(String.class))).thenReturn(new
     // URL("http://any-string"));

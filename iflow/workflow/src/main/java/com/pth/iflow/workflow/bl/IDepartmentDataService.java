@@ -12,4 +12,7 @@ public interface IDepartmentDataService {
   public List<User> getUserListByDepartmentId(final Long departmentId, final String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
+  public List<User> getUserListByDepartmentGroupId(final Long departmentGroupId, final String token)
+      throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
+
 }

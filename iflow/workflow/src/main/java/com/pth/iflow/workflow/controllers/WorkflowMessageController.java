@@ -18,7 +18,7 @@ import com.pth.iflow.common.controllers.helper.ControllerHelper;
 import com.pth.iflow.common.edo.models.WorkflowMessageListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
-import com.pth.iflow.workflow.bl.IWorkflowMessageProcessService;
+import com.pth.iflow.workflow.bl.IWorkflowMessageDataService;
 import com.pth.iflow.workflow.models.WorkflowMessage;
 import com.pth.iflow.workflow.models.mapper.WorkflowModelEdoMapper;
 
@@ -26,10 +26,10 @@ import com.pth.iflow.workflow.models.mapper.WorkflowModelEdoMapper;
 @RequestMapping
 public class WorkflowMessageController {
 
-  final IWorkflowMessageProcessService workflowMessageService;
+  final IWorkflowMessageDataService workflowMessageDataService;
 
-  public WorkflowMessageController(@Autowired final IWorkflowMessageProcessService workflowMessageService) {
-    this.workflowMessageService = workflowMessageService;
+  public WorkflowMessageController(@Autowired final IWorkflowMessageDataService workflowMessageDataService) {
+    this.workflowMessageDataService = workflowMessageDataService;
 
   }
 
@@ -41,7 +41,7 @@ public class WorkflowMessageController {
 
     status = status == null ? 0 : status;
 
-    final List<WorkflowMessage> messageList = this.workflowMessageService.getListForUser(userid, status, headerTokenId);
+    final List<WorkflowMessage> messageList = this.workflowMessageDataService.getListForUser(userid, status, headerTokenId);
 
     return ControllerHelper.createResponseEntity(request,
         new WorkflowMessageListEdo(WorkflowModelEdoMapper.toWorkflowMessageEdoList(messageList)), HttpStatus.OK);

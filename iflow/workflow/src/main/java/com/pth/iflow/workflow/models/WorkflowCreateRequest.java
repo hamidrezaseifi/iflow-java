@@ -7,15 +7,12 @@ public class WorkflowCreateRequest {
 
   private Workflow         workflow;
 
+  private Integer          expireDays;
+
   private List<AssignItem> assigns = new ArrayList<>();
 
   public WorkflowCreateRequest() {
 
-  }
-
-  public WorkflowCreateRequest(final Workflow workflow, final List<AssignItem> assigns) {
-    this.setWorkflow(workflow);
-    this.setAssigns(assigns);
   }
 
   /**
@@ -30,6 +27,14 @@ public class WorkflowCreateRequest {
    */
   public void setWorkflow(final Workflow workflow) {
     this.workflow = workflow;
+  }
+
+  public Integer getExpireDays() {
+    return this.expireDays;
+  }
+
+  public void setExpireDays(final Integer expireDays) {
+    this.expireDays = expireDays;
   }
 
   /**

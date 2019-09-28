@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pth.iflow.common.edo.models.WorkflowMessageEdo;
 import com.pth.iflow.common.edo.models.WorkflowMessageListEdo;
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
@@ -43,6 +44,18 @@ public class WorkflowMessageDataService implements IWorkflowMessageDataService {
         EModule.CORE, WorkflowMessageListEdo.class, true, userId, status);
 
     return WorkflowModelEdoMapper.fromWorkflowMessageEdoList(edoList.getWorkflowMessages());
+  }
+
+  @Override
+  public WorkflowMessage save(final WorkflowMessage message, final String token)
+      throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+    logger.debug("Save workflow message ");
+
+    final WorkflowMessageEdo edo = this.restTemplate.callRestPost(
+        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.SAVE_WORKFLOWMESSAGE()), token, EModule.CORE,
+        WorkflowModelEdoMapper.toEdo(message), WorkflowMessageEdo.class, true);
+
+    return WorkflowModelEdoMapper.fromEdo(edo);
   }
 
 }

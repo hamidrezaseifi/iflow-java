@@ -87,7 +87,7 @@ public class WorkflowMessageDaoTest extends TestDataProducer {
 
     createWorlflowList();
 
-    final List<WorkflowMessage> resList = this.workflowMessageDao.getNotExpiredListByUserId(createdModels.get(0).getUserId(), 0L, 0);
+    final List<WorkflowMessage> resList = this.workflowMessageDao.getNotExpiredListByUserId(createdModels.get(0).getUserId(), 0);
 
     Assert.assertNotNull("Result list is not null!", resList);
 
@@ -113,7 +113,7 @@ public class WorkflowMessageDaoTest extends TestDataProducer {
 
     createReferenceWorkflow();
 
-    final WorkflowMessage workflowMessage = getTestWorkflowMessage();
+    final WorkflowMessage workflowMessage = getTestWorkflowMessage(1L, "Test_Message");
     workflowMessage.setMessage("title test");
     workflowMessage.setVersion(10);
     workflowMessage.setWorkflowId(createdWorkflow.getId());
@@ -130,7 +130,7 @@ public class WorkflowMessageDaoTest extends TestDataProducer {
 
     createReferenceWorkflow();
 
-    final WorkflowMessage workflowMessage = getTestWorkflowMessage();
+    final WorkflowMessage workflowMessage = getTestWorkflowMessage(1L, "Test_Message");
     workflowMessage.setMessage("title test");
     workflowMessage.setVersion(10);
     workflowMessage.setWorkflowId(createdWorkflow.getId());
@@ -156,7 +156,7 @@ public class WorkflowMessageDaoTest extends TestDataProducer {
 
     createReferenceWorkflow();
 
-    final WorkflowMessage workflowMessage = getTestWorkflowMessage();
+    final WorkflowMessage workflowMessage = getTestWorkflowMessage(1L, "Test_Message");
     workflowMessage.setMessage("title test");
     workflowMessage.setVersion(10);
     workflowMessage.setWorkflowId(createdWorkflow.getId());
@@ -196,7 +196,7 @@ public class WorkflowMessageDaoTest extends TestDataProducer {
     createReferenceWorkflow();
 
     for (int i = 1; i <= 3; i++) {
-      final WorkflowMessage workflowMessage = getTestWorkflowMessage();
+      final WorkflowMessage workflowMessage = getTestWorkflowMessage(1L, "Test_Message");
       workflowMessage.setId(null);
       workflowMessage.setMessage("message " + i);
       workflowMessage.setWorkflowId(createdWorkflow.getId());

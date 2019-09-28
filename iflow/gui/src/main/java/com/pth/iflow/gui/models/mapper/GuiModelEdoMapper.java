@@ -657,16 +657,22 @@ public class GuiModelEdoMapper {
   }
 
   public static WorkflowCreateRequestEdo toEdo(final GuiWorkflowCreateRequest model) throws IFlowMessageConversionFailureException {
-    final WorkflowCreateRequestEdo edo = new WorkflowCreateRequestEdo(toEdo(model.getWorkflow()),
-        toAssignItemEdoList(model.getAssigns()));
+    final WorkflowCreateRequestEdo edo = new WorkflowCreateRequestEdo();
+
+    edo.setWorkflow(toEdo(model.getWorkflow()));
+    edo.setExpireDays(model.getExpireDays());
+    edo.setAssigns(toAssignItemEdoList(model.getAssigns()));
 
     return edo;
   }
 
   public static GuiWorkflowCreateRequest fromEdo(final WorkflowCreateRequestEdo edo) throws IFlowMessageConversionFailureException {
     validateCustomer(edo);
-    final GuiWorkflowCreateRequest model = new GuiWorkflowCreateRequest(fromEdo(edo.getWorkflow()),
-        fromAssignItemEdoList(edo.getAssigns()));
+    final GuiWorkflowCreateRequest model = new GuiWorkflowCreateRequest();
+
+    model.setWorkflow(fromEdo(edo.getWorkflow()));
+    model.setExpireDays(edo.getExpireDays());
+    model.setAssigns(fromAssignItemEdoList(edo.getAssigns()));
 
     return model;
   }

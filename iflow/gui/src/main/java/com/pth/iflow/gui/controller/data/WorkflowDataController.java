@@ -110,6 +110,8 @@ public class WorkflowDataController extends GuiDataControllerBase {
     final GuiWorkflow newWorkflow = GuiWorkflow.generateInitial(this.getLoggedUser().getId());
 
     final GuiWorkflowCreateRequest workflowReq = new GuiWorkflowCreateRequest(newWorkflow);
+    int workflowmessageExpireDays = 15;
+    workflowReq.setExpireDays(workflowmessageExpireDays);
 
     map.put("users", userList);
     map.put("workflowTypes", workflowTypeList);
