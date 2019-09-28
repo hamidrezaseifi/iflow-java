@@ -2,6 +2,8 @@ package com.pth.iflow.workflow.bl.strategies.create;
 
 import java.net.MalformedURLException;
 
+import com.pth.iflow.common.exceptions.EIFlowErrorType;
+import com.pth.iflow.common.exceptions.IFlowCustomeException;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.IDepartmentDataService;
 import com.pth.iflow.workflow.bl.strategies.ICreateWorkflowStrategy;
@@ -50,6 +52,12 @@ public abstract class AbstractCreateWorkflowStrategy implements ICreateWorkflowS
 
   public IDepartmentDataService getDepartmentDataService() {
     return departmentDataService;
+  }
+
+  protected void verifyAssigns() {
+    if (this.getWorkflowCreateRequest().getAssigns().isEmpty()) {
+      throw new IFlowCustomeException("No assign by workflow create", EIFlowErrorType.NO_WORKFLOW_ASSIGN_CREATE_STRATEGY);
+    }
   }
 
 }

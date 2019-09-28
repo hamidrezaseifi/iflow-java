@@ -22,6 +22,7 @@ import com.pth.iflow.workflow.bl.strategies.ICreateWorkflowStrategy;
 import com.pth.iflow.workflow.bl.strategies.IWorkStrategyFactory;
 import com.pth.iflow.workflow.bl.strategies.WorkStrategyFactory;
 import com.pth.iflow.workflow.bl.strategies.create.CreateManualAssignWorkflowStrategy;
+import com.pth.iflow.workflow.bl.strategies.create.CreateOfferlAssignWorkflowStrategy;
 import com.pth.iflow.workflow.models.WorkflowCreateRequest;
 import com.pth.iflow.workflow.models.WorkflowType;
 
@@ -59,7 +60,7 @@ public class WorkflowCreateStrategyFactoryTest extends TestDataProducer {
   }
 
   @Test
-  public void testSelectSaveNewWorkflowStrategy() throws Exception {
+  public void testSelectCreateManualAssignWorkflowStrategy() throws Exception {
 
     final WorkflowCreateRequest workflowCreateReq = this.getTestWorkflowCreateRequest();
 
@@ -71,8 +72,26 @@ public class WorkflowCreateStrategyFactoryTest extends TestDataProducer {
         this.validTocken);
 
     Assert.assertNotNull("Result strategy is not null!", createWorkflowStrategy);
-    Assert.assertEquals("Selected strategy is SaveNewWorkflowStrategy!", createWorkflowStrategy.getClass(),
+    Assert.assertEquals("Selected strategy is CreateManualAssignWorkflowStrategy!", createWorkflowStrategy.getClass(),
         CreateManualAssignWorkflowStrategy.class);
+
+  }
+
+  @Test
+  public void testSelectCreateOfferlAssignWorkflowStrategy() throws Exception {
+
+    final WorkflowCreateRequest workflowCreateReq = this.getTestWorkflowCreateRequest();
+
+    final WorkflowType workflowType = this.getTestWorkflowType(1L, "");
+    workflowType.setAssignType(EWorkflowTypeAssignType.OFFER);
+    when(this.workflowTypeDataService.getById(any(Long.class), any(String.class))).thenReturn(workflowType);
+
+    final ICreateWorkflowStrategy createWorkflowStrategy = this.workStrategyFactory.selectCreateWorkStrategy(workflowCreateReq,
+        this.validTocken);
+
+    Assert.assertNotNull("Result strategy is not null!", createWorkflowStrategy);
+    Assert.assertEquals("Selected strategy is CreateOfferlAssignWorkflowStrategy!", createWorkflowStrategy.getClass(),
+        CreateOfferlAssignWorkflowStrategy.class);
 
   }
 

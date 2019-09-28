@@ -18,9 +18,9 @@ import com.pth.iflow.workflow.models.User;
 import com.pth.iflow.workflow.models.Workflow;
 import com.pth.iflow.workflow.models.WorkflowCreateRequest;
 
-public class CreateManualAssignWorkflowStrategy extends AbstractCreateWorkflowStrategy {
+public class CreateOfferlAssignWorkflowStrategy extends AbstractCreateWorkflowStrategy {
 
-  public CreateManualAssignWorkflowStrategy(final WorkflowCreateRequest workflowCreateRequest, final String token,
+  public CreateOfferlAssignWorkflowStrategy(final WorkflowCreateRequest workflowCreateRequest, final String token,
       final IWorkStrategyFactory workStrategyFactory, final IDepartmentDataService departmentDataService) {
     super(workflowCreateRequest, token, workStrategyFactory, departmentDataService);
 

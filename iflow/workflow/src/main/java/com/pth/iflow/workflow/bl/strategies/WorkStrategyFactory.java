@@ -16,6 +16,7 @@ import com.pth.iflow.workflow.bl.IDepartmentDataService;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.IWorkflowTypeDataService;
 import com.pth.iflow.workflow.bl.strategies.create.CreateManualAssignWorkflowStrategy;
+import com.pth.iflow.workflow.bl.strategies.create.CreateOfferlAssignWorkflowStrategy;
 import com.pth.iflow.workflow.bl.strategies.save.ArchivingWorkflowStrategy;
 import com.pth.iflow.workflow.bl.strategies.save.DoneExistingWorkflowStrategy;
 import com.pth.iflow.workflow.bl.strategies.save.SaveExistingWorkflowStrategy;
@@ -96,6 +97,10 @@ public class WorkStrategyFactory implements IWorkStrategyFactory {
 
     if (workflowType.geAssignType() == EWorkflowTypeAssignType.MANUAL) {
       return new CreateManualAssignWorkflowStrategy(workflowCreateRequest, token, this, departmentDataService);
+    }
+
+    if (workflowType.geAssignType() == EWorkflowTypeAssignType.OFFER) {
+      return new CreateOfferlAssignWorkflowStrategy(workflowCreateRequest, token, this, departmentDataService);
     }
 
     throw new IFlowCustomeException("Unknown workflow create strategy ", EIFlowErrorType.UNKNOWN_WORKFLOW_CREATE_STRATEGY);
