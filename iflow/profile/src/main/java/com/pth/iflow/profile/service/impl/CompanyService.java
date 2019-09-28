@@ -2,6 +2,7 @@ package com.pth.iflow.profile.service.impl;
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,29 +22,26 @@ import com.pth.iflow.profile.service.IProfileRestTemplateCall;
 @Service
 public class CompanyService implements ICompanyService {
 
-  private static final Logger logger = LoggerFactory.getLogger(CompanyService.class);
+  private static final Logger                 logger = LoggerFactory.getLogger(CompanyService.class);
 
   final IProfileRestTemplateCall              restTemplate;
   final ProfileConfiguration.CoreAccessConfig coreAccessConfig;
 
   public CompanyService(@Autowired final IProfileRestTemplateCall restTemplate,
-                        @Autowired final ProfileConfiguration.CoreAccessConfig coreAccessConfig) {
+      @Autowired final ProfileConfiguration.CoreAccessConfig coreAccessConfig) {
     this.restTemplate = restTemplate;
     this.coreAccessConfig = coreAccessConfig;
   }
 
   @Override
-  public Company getById(final Long comapnyId) throws ProfileCustomizedException, URISyntaxException, MalformedURLException, IFlowMessageConversionFailureException {
+  public Company getById(final Long comapnyId)
+      throws ProfileCustomizedException, URISyntaxException, MalformedURLException, IFlowMessageConversionFailureException {
 
     logger.debug("Request company data for id {}", comapnyId);
 
-    final CompanyEdo edo = restTemplate.callRestGet(
-                                                    coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.COMPANY_READ_BY_ID)
-                                                                    .toString(),
-                                                    EModule.CORE,
-                                                    CompanyEdo.class,
-                                                    true,
-                                                    comapnyId);
+    final CompanyEdo edo = this.restTemplate.callRestGet(
+        this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.READ_COMPANY_BY_ID(comapnyId)).toString(), EModule.CORE,
+        CompanyEdo.class, true, comapnyId);
 
     return ProfileModelEdoMapper.fromEdo(edo);
   }

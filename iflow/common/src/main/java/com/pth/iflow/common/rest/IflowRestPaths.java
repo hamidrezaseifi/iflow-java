@@ -83,6 +83,121 @@ public class IflowRestPaths {
       return builder.build(id);
     }
 
+    public static URI READ_USER_BY_EMAIL(final String email) {
+      final IflowUriBuilder builder = new IflowUriBuilder(USER_READ_BY_EMAIL);
+      return builder.build(email);
+    }
+
+    public static URI READ_USER_BY_ID(final Long id) {
+      final IflowUriBuilder builder = new IflowUriBuilder(USER_READ_BY_ID);
+      return builder.build(id);
+    }
+
+    public static URI READ_USER_USER_LIST_BY_COMPANY(final Long companyid) {
+      final IflowUriBuilder builder = new IflowUriBuilder(USER_USER_LIST_BY_COMPANY);
+      return builder.build(companyid);
+    }
+
+    public static URI READ_USERGROUP_BY_ID(final Long id) {
+      final IflowUriBuilder builder = new IflowUriBuilder(USERGROUP_READ_BY_ID);
+      return builder.build(id);
+    }
+
+    public static URI READ_USERGROUP_LIST_BY_COMPANY(final Long id) {
+      final IflowUriBuilder builder = new IflowUriBuilder(USERGROUP_READ_LIST_BY_COMPANY);
+      return builder.build(id);
+    }
+
+    public static URI READ_COMPANY_BY_ID(final Long id) {
+      final IflowUriBuilder builder = new IflowUriBuilder(COMPANY_READ_BY_ID);
+      return builder.build(id);
+    }
+
+    public static URI READ_DEPARTMENTGRPUP_BY_ID(final Long id) {
+      final IflowUriBuilder builder = new IflowUriBuilder(DEPARTMENTGRPUP_READ_BY_ID);
+      return builder.build(id);
+    }
+
+    public static URI READ_DEPARTMENT_BY_ID(final Long id) {
+      final IflowUriBuilder builder = new IflowUriBuilder(DEPARTMENT_READ_BY_ID);
+      return builder.build(id);
+    }
+
+    public static URI READ_DEPARTMENT_LIST_BY_COMPANY(final Long id) {
+      final IflowUriBuilder builder = new IflowUriBuilder(DEPARTMENT_READ_LIST_BY_COMPANY);
+      return builder.build(id);
+    }
+
+    public static URI READ_DEPARTMENTGRPUP_LIST_BY_DEPARTMENT(final Long id) {
+      final IflowUriBuilder builder = new IflowUriBuilder(DEPARTMENTGRPUP_READ_LIST_BY_DEPARTMENT);
+      return builder.build(id);
+    }
+
+    public static URI READ_DEPARTMENT_ALLUSERLIST_BY_DEPARTMENT(final Long id) {
+      final IflowUriBuilder builder = new IflowUriBuilder(DEPARTMENT_READ_ALLUSERLIST_BY_DEPARTMENT);
+      return builder.build(id);
+    }
+
+    public static URI READ_WORKFLOWTYPESTEP_BY_ID(final Long id) {
+      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOWTYPESTEP_READ_BY_ID);
+      return builder.build(id);
+    }
+
+    public static URI READ_WORKFLOWTYPESTEP_LIST_BY_WORKFLOW(final Long id) {
+      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOWTYPESTEP_READ_LIST_BY_WORKFLOW);
+      return builder.build(id);
+    }
+
+    public static URI READ_WORKFLOWTYPESTEP_LIST() {
+      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOWTYPESTEP_READ_LIST);
+      return builder.build();
+    }
+
+    public static URI READ_WORKFLOWTYPE_BY_ID(final Long id) {
+      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOWTYPE_READ_BY_ID);
+      return builder.build(id);
+    }
+
+    public static URI READ_WORKFLOWTYPE_LIST_BY_COMPANY(final Long id) {
+      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOWTYPE_READ_LIST_BY_COMPANY);
+      return builder.build(id);
+    }
+
+    public static URI READ_WORKFLOWTYPE_LIST() {
+      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOWTYPE_READ_LIST);
+      return builder.build();
+    }
+
+    public static URI READ_WORKFLOW_BY_ID(final Long id) {
+      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOW_READ_BY_ID);
+      return builder.build(id);
+    }
+
+    public static URI SAVE_WORKFLOW() {
+      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOW_SAVE);
+      return builder.build();
+    }
+
+    public static URI READ_WORKFLOW_LIST() {
+      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOW_READ_LIST);
+      return builder.build();
+    }
+
+    public static URI SEARCH_WORKFLOW() {
+      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOW_SEARCH);
+      return builder.build();
+    }
+
+    public static URI READ_WORKFLOW_LIST_BY_TYPE(final Long id) {
+      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOW_READ_LIST_BY_TYPE);
+      return builder.build(id);
+    }
+
+    public static URI READ_WORKFLOW_LIST_BY_USER(final Long id) {
+      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOW_READ_LIST_BY_USER);
+      return builder.build(id);
+    }
+
   }
 
   public static class WorkflowModule {
@@ -145,6 +260,21 @@ public class IflowRestPaths {
     public static URI READ_WORKFLOWMESSAGE_READ_BY_USER(final Long id, final int status) {
       final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOWMESSAGE_READ_BY_USER);
       return builder.build(id, status);
+    }
+
+    public static URI CREATE_WORKFLOW() {
+      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOW_CREATE);
+      return builder.build();
+    }
+
+    public static URI SAVE_WORKFLOW() {
+      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOW_SAVE);
+      return builder.build();
+    }
+
+    public static URI SEARCH_WORKFLOW() {
+      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOW_SEARCH);
+      return builder.build();
     }
 
   }
@@ -238,6 +368,21 @@ public class IflowRestPaths {
     public static URI CAL_CACHDATA_USER_DATARESET(final Long id) {
       final IflowUriBuilder builder = new IflowUriBuilder(CACHDATA_CAL_USER_DATARESET);
       return builder.build(id);
+    }
+
+    public static URI READ_PROFILE_TOKENINFO() {
+      final IflowUriBuilder builder = new IflowUriBuilder(PROFILE_READ_TOKENINFO);
+      return builder.build();
+    }
+
+    public static URI AUTHENTICATE_AUTHENTICATION() {
+      final IflowUriBuilder builder = new IflowUriBuilder(AUTHENTICATION_AUTHENTICATE);
+      return builder.build();
+    }
+
+    public static URI READ_PROFILE_AUTHENTOCATEDINFO() {
+      final IflowUriBuilder builder = new IflowUriBuilder(PROFILE_READ_AUTHENTOCATEDINFO);
+      return builder.build();
     }
 
   }

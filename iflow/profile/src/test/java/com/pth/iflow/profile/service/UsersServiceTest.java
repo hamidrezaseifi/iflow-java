@@ -44,7 +44,7 @@ public class UsersServiceTest extends TestDataProducer {
   public void setUp() throws Exception {
     this.usersService = new UsersService(this.restTemplate, this.coreAccessConfig);
 
-    when(this.coreAccessConfig.prepareCoreUrl(any(String.class))).thenReturn(new URI("http://any-string"));
+    when(this.coreAccessConfig.prepareCoreUrl(any(URI.class))).thenReturn(new URI("http://any-string"));
 
   }
 

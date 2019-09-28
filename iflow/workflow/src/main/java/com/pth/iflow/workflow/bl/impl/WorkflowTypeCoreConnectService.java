@@ -43,7 +43,7 @@ public class WorkflowTypeCoreConnectService implements IWorkflowTypeDataService 
     logger.debug("Request workflow data for id {}", id);
 
     final WorkflowTypeEdo edo = this.restTemplate.callRestGet(
-        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.WORKFLOWTYPE_READ_BY_ID), token, EModule.CORE,
+        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.READ_WORKFLOWTYPE_BY_ID(id)), token, EModule.CORE,
         WorkflowTypeEdo.class, true, id);
 
     return WorkflowModelEdoMapper.fromEdo(edo);
@@ -55,7 +55,7 @@ public class WorkflowTypeCoreConnectService implements IWorkflowTypeDataService 
     logger.debug("Request workflow list for company id {}", id);
 
     final WorkflowTypeListEdo edoList = this.restTemplate.callRestGet(
-        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.WORKFLOWTYPE_READ_LIST_BY_COMPANY), token, EModule.CORE,
+        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.READ_WORKFLOWTYPE_LIST_BY_COMPANY(id)), token, EModule.CORE,
         WorkflowTypeListEdo.class, true, id);
 
     return WorkflowModelEdoMapper.fromWorkflowTypeEdoList(edoList.getWorkflowTypes());
@@ -67,7 +67,7 @@ public class WorkflowTypeCoreConnectService implements IWorkflowTypeDataService 
     logger.debug("Request workflow list for id list {}", idList);
 
     final WorkflowTypeListEdo edoList = this.restTemplate.callRestPost(
-        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.WORKFLOWTYPE_READ_LIST), token, EModule.CORE, idList,
+        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.READ_WORKFLOWTYPE_LIST()), token, EModule.CORE, idList,
         WorkflowTypeListEdo.class, true);
 
     return WorkflowModelEdoMapper.fromWorkflowTypeEdoList(edoList.getWorkflowTypes());
@@ -79,8 +79,8 @@ public class WorkflowTypeCoreConnectService implements IWorkflowTypeDataService 
     logger.debug("Request workflow-step list for workflow id {}", id);
 
     final WorkflowTypeStepListEdo edoList = this.restTemplate.callRestGet(
-        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.WORKFLOWTYPESTEP_READ_LIST_BY_WORKFLOW), token, EModule.CORE,
-        WorkflowTypeStepListEdo.class, true, id);
+        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.READ_WORKFLOWTYPESTEP_LIST_BY_WORKFLOW(id)), token,
+        EModule.CORE, WorkflowTypeStepListEdo.class, true, id);
 
     return WorkflowModelEdoMapper.fromWorkflowTypeStepEdoList(edoList.getWorkflowTypeSteps());
   }

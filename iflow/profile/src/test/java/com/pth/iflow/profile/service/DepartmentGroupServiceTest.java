@@ -45,7 +45,7 @@ public class DepartmentGroupServiceTest extends TestDataProducer {
   public void setUp() throws Exception {
     this.departmentGroupService = new DepartmentGroupService(this.restTemplate, this.coreAccessConfig);
 
-    when(this.coreAccessConfig.prepareCoreUrl(any(String.class))).thenReturn(new URI("http://any-string"));
+    when(this.coreAccessConfig.prepareCoreUrl(any(URI.class))).thenReturn(new URI("http://any-string"));
 
   }
 

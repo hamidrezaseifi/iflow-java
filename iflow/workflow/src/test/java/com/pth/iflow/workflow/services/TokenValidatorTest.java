@@ -43,7 +43,9 @@ public class TokenValidatorTest extends TestDataProducer {
   public void setUp() throws Exception {
     this.tokenValidator = new TokenValidator(this.restTemplate, this.moduleAccessConfig);
 
-    when(this.moduleAccessConfig.generateProfileUrl(any(String.class))).thenReturn(new URI("http://any-string"));
+    when(this.moduleAccessConfig.generateCoreUrl(any(URI.class))).thenReturn(new URI("http://any-string"));
+
+    when(this.moduleAccessConfig.generateProfileUrl(any(URI.class))).thenReturn(new URI("http://any-string"));
   }
 
   @After

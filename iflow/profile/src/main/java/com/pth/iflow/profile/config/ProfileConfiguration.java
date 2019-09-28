@@ -44,10 +44,6 @@ public class ProfileConfiguration {
       return this.baseCoreBaseUri.resolve(subUrl);
     }
 
-    public URI prepareCoreUrl(final String subUrl) throws MalformedURLException {
-      return this.baseCoreBaseUri.resolve(subUrl);
-    }
-
   }
 
 }

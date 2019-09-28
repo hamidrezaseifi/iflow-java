@@ -44,7 +44,7 @@ public class UserGroupServiceTest extends TestDataProducer {
   public void setUp() throws Exception {
     this.userGroupService = new UserGroupService(this.restTemplate, this.coreAccessConfig);
 
-    when(this.coreAccessConfig.prepareCoreUrl(any(String.class))).thenReturn(new URI("http://any-string"));
+    when(this.coreAccessConfig.prepareCoreUrl(any(URI.class))).thenReturn(new URI("http://any-string"));
 
   }
 

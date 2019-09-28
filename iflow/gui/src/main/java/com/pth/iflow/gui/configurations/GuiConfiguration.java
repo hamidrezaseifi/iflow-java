@@ -24,8 +24,8 @@ import com.pth.iflow.common.rest.IflowRestPaths;
 @Component
 public class GuiConfiguration {
 
-  public static final String NO_ACCESS_URL     = "/noaccess";
-  public static final String INVALID_TOKEN_URL = "/invalidtoken";
+  public static final String       NO_ACCESS_URL            = "/noaccess";
+  public static final String       INVALID_TOKEN_URL        = "/invalidtoken";
 
   public static final List<String> NOAUTHENTICATED_URL_LIST = Arrays.asList(NO_ACCESS_URL, INVALID_TOKEN_URL);
 
@@ -38,14 +38,14 @@ public class GuiConfiguration {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Value("${iflow.profile.urls.workflow.base}")
-    private String workflowBaseUrl;
+    private String       workflowBaseUrl;
 
     @Value("${iflow.profile.urls.profile.base}")
-    private String profileBaseUrl;
+    private String       profileBaseUrl;
 
-    private URI baseWorkflowBaseUri;
+    private URI          baseWorkflowBaseUri;
 
-    private URI baseProfileBaseUri;
+    private URI          baseProfileBaseUri;
 
     @PostConstruct
     private void init() throws URISyntaxException {
@@ -58,15 +58,15 @@ public class GuiConfiguration {
     }
 
     public URI getReadTokenInfoUri() throws MalformedURLException {
-      return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.PROFILE_READ_TOKENINFO);
+      return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.READ_PROFILE_TOKENINFO());
     }
 
     public URI getAuthenticationUri() throws MalformedURLException {
-      return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.AUTHENTICATION_AUTHENTICATE);
+      return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.AUTHENTICATE_AUTHENTICATION());
     }
 
     public URI getReadAuthenticationInfoUri() throws MalformedURLException {
-      return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.PROFILE_READ_AUTHENTOCATEDINFO);
+      return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.READ_PROFILE_AUTHENTOCATEDINFO());
     }
 
     public URI getReadCompanyUserListUri(final Long companyId) throws MalformedURLException {
@@ -82,15 +82,15 @@ public class GuiConfiguration {
     }
 
     public URI getCreateWorkflowUri() throws MalformedURLException {
-      return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.WORKFLOW_CREATE);
+      return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.CREATE_WORKFLOW());
     }
 
     public URI getSaveWorkflowUri() throws MalformedURLException {
-      return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.WORKFLOW_SAVE);
+      return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.SAVE_WORKFLOW());
     }
 
     public URI getSearchWorkflowUri() throws MalformedURLException {
-      return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.WORKFLOW_SEARCH);
+      return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.SEARCH_WORKFLOW());
     }
 
   }

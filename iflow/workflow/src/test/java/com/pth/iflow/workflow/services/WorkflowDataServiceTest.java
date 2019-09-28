@@ -49,9 +49,9 @@ public class WorkflowDataServiceTest extends TestDataProducer {
   public void setUp() throws Exception {
     this.workflowDataService = new WorkflowCoreConnectService(this.restTemplate, this.moduleAccessConfig);
 
-    when(this.moduleAccessConfig.generateCoreUrl(any(String.class))).thenReturn(new URI("http://any-string"));
+    when(this.moduleAccessConfig.generateCoreUrl(any(URI.class))).thenReturn(new URI("http://any-string"));
 
-    when(this.moduleAccessConfig.generateProfileUrl(any(String.class))).thenReturn(new URI("http://any-string"));
+    when(this.moduleAccessConfig.generateProfileUrl(any(URI.class))).thenReturn(new URI("http://any-string"));
 
     this.validTocken = "validTocken";
   }

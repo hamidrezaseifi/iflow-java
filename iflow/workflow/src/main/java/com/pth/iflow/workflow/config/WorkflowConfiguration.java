@@ -56,14 +56,6 @@ public class WorkflowConfiguration {
 
     }
 
-    public URI generateCoreUrl(final String subUrl) throws MalformedURLException {
-      return this.baseCoreBaseUri.resolve(subUrl);
-    }
-
-    public URI generateProfileUrl(final String subUrl) throws MalformedURLException {
-      return this.baseProfileBaseUri.resolve(subUrl);
-    }
-
     public URI generateCoreUrl(final URI subUrl) throws MalformedURLException {
       return this.baseCoreBaseUri.resolve(subUrl);
     }
