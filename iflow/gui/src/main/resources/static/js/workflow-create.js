@@ -153,7 +153,7 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
     			$scope.workflowCreateRequest.assigns.push(id);
     		}
     	}
-    	
+    	$('#assignlistdialog').modal('hide');
 		$scope.showSelectAssign = false;
 	};
 

@@ -717,5 +717,27 @@ div.notic-div, div.notic-div label, div.notic-div div
     padding: 2px 5px;
 }
 
+.modal-title{
+	float: left;
+}
+
+.modal-header {
+    padding: 8px 15px !important;
+    background-color: #275a94;
+    color: #f5f5c9;
+}
+
+.modal-header .close {
+    opacity: .7 !important;
+    color: #f7f7c2 !important;
+}
+
+.modal-header .close:hover {
+    opacity: 1 !important;
+    color: #f7f7c2 !important;
+}
+
+
+
     
 
