@@ -5,21 +5,25 @@ import java.util.List;
 
 public class GuiWorkflowCreateRequest {
 
-  private GuiWorkflow               workflow;
+  private GuiWorkflow workflow;
 
-  private Integer                   expireDays;
+  private Integer expireDays;
 
   private final List<GuiAssignItem> assigns = new ArrayList<>();
 
-  private String                    sessionKey;
+  private String sessionKey;
 
   public GuiWorkflowCreateRequest() {
 
   }
 
-  public GuiWorkflowCreateRequest(final GuiWorkflow workflow) {
-    super();
-    this.setWorkflow(workflow);
+  public static GuiWorkflowCreateRequest generateNew(final GuiWorkflow workflow) {
+    final GuiWorkflowCreateRequest request = new GuiWorkflowCreateRequest();
+
+    request.setWorkflow(workflow);
+    request.setExpireDays(15);
+
+    return request;
   }
 
   /**

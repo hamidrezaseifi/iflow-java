@@ -6,12 +6,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import com.pth.iflow.common.enums.EAssignType;
-import com.pth.iflow.common.enums.EWorkflowMessageStatus;
-import com.pth.iflow.common.enums.EWorkflowMessageType;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
+import com.pth.iflow.workflow.bl.ICachDataDataService;
 import com.pth.iflow.workflow.bl.IDepartmentDataService;
 import com.pth.iflow.workflow.bl.IWorkflowMessageDataService;
 import com.pth.iflow.workflow.bl.strategies.IWorkStrategyFactory;
@@ -20,14 +18,24 @@ import com.pth.iflow.workflow.models.AssignItem;
 import com.pth.iflow.workflow.models.User;
 import com.pth.iflow.workflow.models.Workflow;
 import com.pth.iflow.workflow.models.WorkflowCreateRequest;
-import com.pth.iflow.workflow.models.WorkflowMessage;
+import com.pth.iflow.workflow.models.WorkflowType;
 
 public class CreateOfferlAssignWorkflowStrategy extends AbstractCreateWorkflowStrategy {
 
-  public CreateOfferlAssignWorkflowStrategy(final WorkflowCreateRequest workflowCreateRequest, final String token,
-      final IWorkStrategyFactory workStrategyFactory, final IDepartmentDataService departmentDataService,
-      final IWorkflowMessageDataService workflowMessageDataService) {
-    super(workflowCreateRequest, token, workStrategyFactory, departmentDataService, workflowMessageDataService);
+  public CreateOfferlAssignWorkflowStrategy(final WorkflowCreateRequest workflowCreateRequest,
+                                            final String token,
+                                            final IWorkStrategyFactory workStrategyFactory,
+                                            final IDepartmentDataService departmentDataService,
+                                            final IWorkflowMessageDataService workflowMessageDataService,
+                                            final ICachDataDataService cachDataDataService,
+                                            final WorkflowType workflowType) {
+    super(workflowCreateRequest,
+          token,
+          workStrategyFactory,
+          departmentDataService,
+          workflowMessageDataService,
+          cachDataDataService,
+          workflowType);
 
   }
 
@@ -50,34 +58,27 @@ public class CreateOfferlAssignWorkflowStrategy extends AbstractCreateWorkflowSt
       }
 
       if (assign.getItemType() == EAssignType.DEPARTMENT) {
-        final List<User> departmentUserIds = this.getDepartmentDataService().getUserListByDepartmentId(assign.getItemId(),
-            this.getToken());
+        final List<User> departmentUserIds = this.getDepartmentDataService()
+                                                 .getUserListByDepartmentId(assign.getItemId(),
+                                                                            this.getToken());
         assignedUsers.addAll(departmentUserIds.stream().map(u -> u.getId()).collect(Collectors.toSet()));
       }
 
       if (assign.getItemType() == EAssignType.DEPARTMENTGROUP) {
-        final List<User> departmentUserIds = this.getDepartmentDataService().getUserListByDepartmentGroupId(assign.getItemId(),
-            this.getToken());
+        final List<User> departmentUserIds = this.getDepartmentDataService()
+                                                 .getUserListByDepartmentGroupId(assign.getItemId(),
+                                                                                 this.getToken());
         assignedUsers.addAll(departmentUserIds.stream().map(u -> u.getId()).collect(Collectors.toSet()));
       }
     }
 
     for (final Long userId : assignedUsers) {
 
-      final WorkflowMessage message = new WorkflowMessage();
-      message.setCreatedBy(savedWorkflow.getCreatedBy());
-      message.setExpireDays(this.getWorkflowCreateRequest().getExpireDays());
-      message.setMessage("Offering Workflow Message");
-      message.setMessageType(EWorkflowMessageType.OFFERING_WORKFLOW);
-      message.setStatus(EWorkflowMessageStatus.OFFERING);
-      message.setUserId(userId);
-      message.setWorkflowId(savedWorkflow.getId());
-      getWorkflowMessageDataService().save(message, this.getToken());
+      createWorkflowMessage(savedWorkflow.getId(), savedWorkflow.getCreatedBy(), userId);
 
     }
 
-    getWorkflowMessageDataService();
-
+    resetUserListCachData(getWorkflowType().getCompanyId(), assignedUsers);
     return Arrays.asList(savedWorkflow);
   }
 

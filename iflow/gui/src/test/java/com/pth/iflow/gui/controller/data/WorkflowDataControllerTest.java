@@ -2,13 +2,10 @@ package com.pth.iflow.gui.controller.data;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.HttpSession;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,7 +24,6 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-
 import com.pth.iflow.gui.TestDataProducer;
 import com.pth.iflow.gui.models.GuiUser;
 import com.pth.iflow.gui.models.GuiWorkflow;
@@ -144,7 +140,7 @@ public class WorkflowDataControllerTest extends TestDataProducer {
 
     final GuiWorkflow newWorkflow = GuiWorkflow.generateInitial(1L);
 
-    final GuiWorkflowCreateRequest workflowReq = new GuiWorkflowCreateRequest(newWorkflow);
+    final GuiWorkflowCreateRequest workflowReq = GuiWorkflowCreateRequest.generateNew(newWorkflow);
 
     map.put("users", userList);
     map.put("workflowTypes", workflowTypeList);
