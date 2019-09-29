@@ -21,7 +21,6 @@ public class Workflow extends DataModelBase {
   private Integer                    version;
   private LocalDateTime              createdAt;
   private LocalDateTime              updatedAt;
-  private Boolean                    nextAssign;
   private String                     command;
 
   private final List<WorkflowFile>   files   = new ArrayList<>();
@@ -112,14 +111,6 @@ public class Workflow extends DataModelBase {
   @Override
   public void setVersion(final Integer version) {
     this.version = version;
-  }
-
-  public Boolean getNextAssign() {
-    return this.nextAssign;
-  }
-
-  public void setNextAssign(final Boolean nextAssign) {
-    this.nextAssign = nextAssign;
   }
 
   public String getCommand() {

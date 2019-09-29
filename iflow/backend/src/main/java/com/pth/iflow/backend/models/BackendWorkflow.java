@@ -19,7 +19,6 @@ public class BackendWorkflow extends DataModelBase {
   private String                            comments;
   private EWorkflowStatus                   status;
   private Integer                           version;
-  private Boolean                           nextAssign;
   private String                            command;
 
   private final List<BackendWorkflowFile>   files   = new ArrayList<>();
@@ -126,14 +125,6 @@ public class BackendWorkflow extends DataModelBase {
   @Override
   public void setVersion(final Integer version) {
     this.version = version;
-  }
-
-  public Boolean getNextAssign() {
-    return this.nextAssign;
-  }
-
-  public void setNextAssign(final Boolean nextAssign) {
-    this.nextAssign = nextAssign;
   }
 
   public List<BackendWorkflowFile> getFiles() {

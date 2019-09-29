@@ -223,7 +223,6 @@ public class BackendModelEdoMapper {
     edo.setCreatedBy(model.getCreatedBy());
     edo.setWorkflowTypeId(model.getWorkflowTypeId());
     edo.setVersion(model.getVersion());
-    edo.setNextAssign(model.getNextAssign());
     edo.setAssignTo(model.getAssignTo());
     edo.setCommand(model.getCommand());
 
@@ -247,7 +246,6 @@ public class BackendModelEdoMapper {
     model.setCreatedBy(edo.getCreatedBy());
     model.setWorkflowTypeId(edo.getWorkflowTypeId());
     model.setVersion(edo.getVersion());
-    model.setNextAssign(edo.getNextAssign());
     model.setAssignTo(edo.getAssignTo());
     model.setCommand(edo.getCommand());
 

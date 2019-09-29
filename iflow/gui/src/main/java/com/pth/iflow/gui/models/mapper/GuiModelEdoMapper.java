@@ -240,12 +240,11 @@ public class GuiModelEdoMapper {
     edo.setStatus(model.getStatusInt());
     edo.setId(model.getId());
     edo.setController(model.getController());
-    edo.setCurrentStep(toEdo(model.getCurrentStep()));
+    edo.setCurrentStep(model.getCurrentStep() != null ? toEdo(model.getCurrentStep()) : null);
     edo.setCurrentStepId(model.getCurrentStep() != null ? model.getCurrentStep().getId() : null);
     edo.setCreatedBy(model.getCreatedBy());
     edo.setWorkflowTypeId(model.getWorkflowTypeId());
     edo.setVersion(model.getVersion());
-    edo.setNextAssign(model.getNextAssign());
     edo.setAssignTo(model.getAssignTo());
     edo.setCommand(model.getCommand().getName());
 
@@ -269,7 +268,6 @@ public class GuiModelEdoMapper {
     model.setCreatedBy(edo.getCreatedBy());
     model.setWorkflowTypeId(edo.getWorkflowTypeId());
     model.setVersion(edo.getVersion());
-    model.setNextAssign(edo.getNextAssign());
     model.setAssignTo(edo.getAssignTo());
     model.setCommand(EWorkflowProcessCommand.valueFromName(edo.getCommand()));
 

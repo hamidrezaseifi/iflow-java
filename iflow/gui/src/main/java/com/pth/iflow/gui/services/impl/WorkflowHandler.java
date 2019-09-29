@@ -67,6 +67,9 @@ public class WorkflowHandler implements IWorkflowHandler {
     logger.debug("Create workflow {}", createRequest.getWorkflow().getTitle());
 
     createRequest.getWorkflow().setCommand(EWorkflowProcessCommand.CREATE);
+    if (createRequest.getWorkflow().getCurrentStepId() == null || createRequest.getWorkflow().getCurrentStepId() <= 0) {
+
+    }
 
     final List<GuiWorkflow> list = this.workflowAccess.createWorkflow(createRequest, this.sessionUserInfo.getToken());
     final List<GuiWorkflow> preparedList = this.prepareWorkflowList(list);

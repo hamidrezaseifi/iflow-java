@@ -25,7 +25,6 @@ public class GuiWorkflow {
   private String                        comments;
   private EWorkflowStatus               status;
   private Integer                       version;
-  private Boolean                       nextAssign;
   private EWorkflowProcessCommand       command;
 
   private final List<GuiWorkflowFile>   files   = new ArrayList<>();
@@ -185,14 +184,6 @@ public class GuiWorkflow {
 
   public void setVersion(final Integer version) {
     this.version = version;
-  }
-
-  public Boolean getNextAssign() {
-    return this.nextAssign;
-  }
-
-  public void setNextAssign(final Boolean nextAssign) {
-    this.nextAssign = nextAssign;
   }
 
   public EWorkflowProcessCommand getCommand() {

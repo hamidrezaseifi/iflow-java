@@ -24,11 +24,10 @@ public class WorkflowEdo {
   @XmlElement(name = "ID", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Long                    id;
 
-  @NotNull
+  @NotNull(message = "WorkflowTypeId is not allowed to be null!")
   @XmlElement(name = "WorkflowTypeId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Long                    workflowTypeId;
 
-  @NotNull
   @XmlElement(name = "CurrentStep", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private WorkflowTypeStepEdo     currentStep;
 
@@ -44,36 +43,31 @@ public class WorkflowEdo {
   @XmlElement(name = "AssignTo", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Long                    assignTo;
 
-  @NotNull
+  @NotNull(message = "Title is not allowed to be null!")
   @XmlElement(name = "Title", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String                  title;
 
   @XmlElement(name = "Comments", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String                  comments;
 
-  @NotNull
+  @NotNull(message = "Status is not allowed to be null!")
   @XmlElement(name = "Status", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer                 status;
 
-  @NotNull
+  @NotNull(message = "Version is not allowed to be null!")
   @XmlElement(name = "Version", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer                 version;
 
-  @NotNull
-  @XmlElement(name = "NextAssign", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Boolean                 nextAssign;
-
-  @NotNull
   @AEnumNameValidator(enumClazz = EWorkflowProcessCommand.class)
   @XmlElement(name = "Command", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String                  command;
 
-  @NotNull
+  @NotNull(message = "WorkflowFileEdo is not allowed to be null!")
   @XmlElementWrapper(name = "WorkflowFileList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "WorkflowFile", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private List<WorkflowFileEdo>   files   = new ArrayList<>();
 
-  @NotNull
+  @NotNull(message = "WorkflowActionList is not allowed to be null!")
   @XmlElementWrapper(name = "WorkflowActionList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "WorkflowAction", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private List<WorkflowActionEdo> actions = new ArrayList<>();
@@ -164,14 +158,6 @@ public class WorkflowEdo {
 
   public void setVersion(final Integer version) {
     this.version = version;
-  }
-
-  public Boolean getNextAssign() {
-    return this.nextAssign;
-  }
-
-  public void setNextAssign(final Boolean nextAssign) {
-    this.nextAssign = nextAssign;
   }
 
   public String getCommand() {
