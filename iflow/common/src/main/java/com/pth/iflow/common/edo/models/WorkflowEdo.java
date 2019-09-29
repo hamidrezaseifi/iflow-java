@@ -58,6 +58,7 @@ public class WorkflowEdo {
   @XmlElement(name = "Version", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer                 version;
 
+  @NotNull(message = "Command is not allowed to be null!")
   @AEnumNameValidator(enumClazz = EWorkflowProcessCommand.class)
   @XmlElement(name = "Command", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String                  command;

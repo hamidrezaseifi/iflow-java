@@ -255,7 +255,7 @@ public class CoreModelEdoMapper {
     model.setCreatedBy(edo.getCreatedBy());
     model.setWorkflowTypeId(edo.getWorkflowTypeId());
     model.setVersion(edo.getVersion());
-    model.setAssignTo(edo.getAssignTo());
+    model.setAssignTo(edo.getAssignTo() != null ? edo.getAssignTo() : 0);
     model.setCommand(edo.getCommand());
 
     model.setFiles(fromWorkflowFileEdoList(edo.getFiles()));

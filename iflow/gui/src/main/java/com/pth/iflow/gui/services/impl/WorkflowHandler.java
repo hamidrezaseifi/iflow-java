@@ -89,7 +89,7 @@ public class WorkflowHandler implements IWorkflowHandler {
     final List<UploadFileSavingData> tempFiles = (List<UploadFileSavingData>) oFileList;
 
     final List<GuiWorkflow> finalList = new ArrayList<>();
-    if (preparedList != null) {
+    if (preparedList != null && tempFiles.isEmpty() == false) {
       for (final GuiWorkflow workflow : preparedList) {
         final List<FileSavingData> archiveSavingFileInfoList = new ArrayList<>();
         for (final UploadFileSavingData tempFile : tempFiles) {
@@ -127,7 +127,9 @@ public class WorkflowHandler implements IWorkflowHandler {
 
     workflow.setCommand(EWorkflowProcessCommand.SAVE);
 
-    workflow.getActiveAction().setNewStep(workflow.getCurrentStepId());
+    if (workflow.getHasActiveAction()) {
+      workflow.getActiveAction().setNewStep(workflow.getCurrentStepId());
+    }
 
     final GuiWorkflow result = this.workflowAccess.saveWorkflow(workflow, this.sessionUserInfo.getToken());
     return this.prepareWorkflow(result);

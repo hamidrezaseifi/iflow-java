@@ -74,7 +74,7 @@ public abstract class AbstractSaveWorkflowStrategy implements ISaveWorkflowStrat
 
   private void setworkflowCurrectStep(final Workflow workflow, final WorkflowType workflowType) {
     if ((workflow.getCurrentStepId() == null) || (workflow.getCurrentStepId() <= 0)) {
-      if (workflow.isInitializing()) {
+      if (workflow.isInitializing() || workflow.isOffering()) {
         final WorkflowTypeStep firstStep = this.findFirstStep(workflowType);
         if (firstStep != null) {
           workflow.setCurrentStep(firstStep);

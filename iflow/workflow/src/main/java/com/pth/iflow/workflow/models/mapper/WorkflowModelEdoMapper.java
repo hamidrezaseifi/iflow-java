@@ -262,7 +262,7 @@ public class WorkflowModelEdoMapper {
     model.setStatusInt(edo.getStatus());
     model.setId(edo.getId());
     model.setController(edo.getController());
-    model.setCurrentStep(fromEdo(edo.getCurrentStep()));
+    model.setCurrentStep(edo.getCurrentStep() != null ? fromEdo(edo.getCurrentStep()) : null);
     model.setCreatedBy(edo.getCreatedBy());
     model.setWorkflowTypeId(edo.getWorkflowTypeId());
     model.setVersion(edo.getVersion());
@@ -723,7 +723,7 @@ public class WorkflowModelEdoMapper {
     return modelList;
   }
 
-  private static AssignItem fromEdo(final AssignItemEdo edo) {
+  public static AssignItem fromEdo(final AssignItemEdo edo) {
     return new AssignItem(edo.getItemId(), EAssignType.valueFromName(edo.getItemType()));
   }
 

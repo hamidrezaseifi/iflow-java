@@ -96,7 +96,7 @@ public class WorkflowMessage extends DataModelBase {
   }
 
   public boolean isExpired() {
-    return this.createdAt.plusDays(this.expireDays).isAfter(LocalDateTime.now());
+    return this.createdAt.plusDays(this.expireDays).isBefore(LocalDateTime.now());
   }
 
   public boolean isNotExpired() {

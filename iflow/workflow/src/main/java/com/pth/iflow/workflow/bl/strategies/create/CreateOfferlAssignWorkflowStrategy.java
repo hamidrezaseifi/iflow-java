@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
 import com.pth.iflow.common.enums.EAssignType;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
@@ -22,27 +23,19 @@ import com.pth.iflow.workflow.models.WorkflowType;
 
 public class CreateOfferlAssignWorkflowStrategy extends AbstractCreateWorkflowStrategy {
 
-  public CreateOfferlAssignWorkflowStrategy(final WorkflowCreateRequest workflowCreateRequest,
-                                            final String token,
-                                            final IWorkStrategyFactory workStrategyFactory,
-                                            final IDepartmentDataService departmentDataService,
-                                            final IWorkflowMessageDataService workflowMessageDataService,
-                                            final ICachDataDataService cachDataDataService,
-                                            final WorkflowType workflowType) {
-    super(workflowCreateRequest,
-          token,
-          workStrategyFactory,
-          departmentDataService,
-          workflowMessageDataService,
-          cachDataDataService,
-          workflowType);
+  public CreateOfferlAssignWorkflowStrategy(final WorkflowCreateRequest workflowCreateRequest, final String token,
+      final IWorkStrategyFactory workStrategyFactory, final IDepartmentDataService departmentDataService,
+      final IWorkflowMessageDataService workflowMessageDataService, final ICachDataDataService cachDataDataService,
+      final WorkflowType workflowType) {
+    super(workflowCreateRequest, token, workStrategyFactory, departmentDataService, workflowMessageDataService, cachDataDataService,
+        workflowType);
 
   }
 
   @Override
   public List<Workflow> process() throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     final Workflow workflow = this.getWorkflowCreateRequest().getWorkflow();
-    workflow.setStatus(EWorkflowStatus.ASSIGNED);
+    workflow.setStatus(EWorkflowStatus.OFFERING);
 
     verifyAssigns();
 
@@ -58,16 +51,14 @@ public class CreateOfferlAssignWorkflowStrategy extends AbstractCreateWorkflowSt
       }
 
       if (assign.getItemType() == EAssignType.DEPARTMENT) {
-        final List<User> departmentUserIds = this.getDepartmentDataService()
-                                                 .getUserListByDepartmentId(assign.getItemId(),
-                                                                            this.getToken());
+        final List<User> departmentUserIds = this.getDepartmentDataService().getUserListByDepartmentId(assign.getItemId(),
+            this.getToken());
         assignedUsers.addAll(departmentUserIds.stream().map(u -> u.getId()).collect(Collectors.toSet()));
       }
 
       if (assign.getItemType() == EAssignType.DEPARTMENTGROUP) {
-        final List<User> departmentUserIds = this.getDepartmentDataService()
-                                                 .getUserListByDepartmentGroupId(assign.getItemId(),
-                                                                                 this.getToken());
+        final List<User> departmentUserIds = this.getDepartmentDataService().getUserListByDepartmentGroupId(assign.getItemId(),
+            this.getToken());
         assignedUsers.addAll(departmentUserIds.stream().map(u -> u.getId()).collect(Collectors.toSet()));
       }
     }

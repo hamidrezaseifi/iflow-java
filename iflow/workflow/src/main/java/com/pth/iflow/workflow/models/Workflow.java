@@ -199,6 +199,10 @@ public class Workflow extends DataModelBase {
     return this.isNew() && (this.getStatus() == EWorkflowStatus.INITIALIZE);
   }
 
+  public boolean isOffering() {
+    return this.getStatus() == EWorkflowStatus.OFFERING;
+  }
+
   @Override
   public boolean isNew() {
     return (this.getId() == null) || (this.getId() <= 0);
