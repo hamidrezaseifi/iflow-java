@@ -2,7 +2,9 @@ package com.pth.iflow.gui.services.impl;
 
 import java.net.MalformedURLException;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,8 @@ public class WorkflowMessageHanlder implements IWorkflowMessageHanlder {
   private final IWorkflowMessageAccess workflowMessageAccess;
 
   private final GuiSessionUserInfo sessionUserInfo;
+
+  private final Map<Long, GuiWorkflowMessage> cachedMessages = new HashMap<>();
 
   public WorkflowMessageHanlder(@Autowired final IWorkflowMessageAccess workflowMessageAccess,
                                 @Autowired final GuiSessionUserInfo sessionUserInfo) {
@@ -53,7 +57,16 @@ public class WorkflowMessageHanlder implements IWorkflowMessageHanlder {
       }
     });
 
+    cachedMessages.clear();
+
+    readList.forEach(m -> cachedMessages.put(m.getId(), m));
     return readList;
+  }
+
+  @Override
+  public GuiWorkflowMessage getCachedMessage(final Long id) {
+
+    return cachedMessages.get(id);
   }
 
 }

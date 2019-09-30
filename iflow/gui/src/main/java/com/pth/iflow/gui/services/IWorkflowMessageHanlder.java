@@ -11,4 +11,6 @@ public interface IWorkflowMessageHanlder {
   public void callUserMessageReset() throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
   public List<GuiWorkflowMessage> readUserMessages() throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
+
+  public GuiWorkflowMessage getCachedMessage(final Long id);
 }

@@ -56,18 +56,7 @@ iflowApp.controller('BodyController', function ($scope, $http, $sce, $element, $
 	
 	$scope.messagePanelHeight = 170;
 	
-	$scope.messages = [
-		{title: 'Message 10 ...', url: '#'},
-		{title: 'Message 7 ....', url: '#'},
-		{title: 'Message 8 ....', url: '#'},
-		{title: 'Message 7 ....', url: '#'},
-		{title: 'Message 6 ....', url: '#'},
-		{title: 'Message 5 ....', url: '#'},
-		{title: 'Message 4 ....', url: '#'},
-		{title: 'Message 3 ....', url: '#'},
-		{title: 'Message 2 ....', url: '#'},
-		{title: 'Message 1 ....', url: '#'},
-	];
+	$scope.messages = [];
 	
 	$scope.messagePanelShowed = true;
 
@@ -186,8 +175,8 @@ iflowApp.controller('BodyController', function ($scope, $http, $sce, $element, $
 	    	buildMessageList(response.data);
 	    	
 	    	setTimeout(function(){ 
-	    		//$scope.reloadMessages();
-	    	}, 10000);
+	    		$scope.reloadMessages();
+	    	}, 15000);
 	
 	    }, function errorCallback(response) {
 	        
@@ -199,7 +188,7 @@ iflowApp.controller('BodyController', function ($scope, $http, $sce, $element, $
 	function buildMessageList(messages){
 		for(o in messages){
 			var message = messages[o];
-			$scope.messages.push({title: message.message, url: '#w=?' + message.workflowId});
+			$scope.messages.push({title: message.message, id: message.id});
 		}
 	}
 	

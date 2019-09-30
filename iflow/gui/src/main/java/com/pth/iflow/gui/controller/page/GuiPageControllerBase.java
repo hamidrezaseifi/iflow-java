@@ -1,42 +1,35 @@
 package com.pth.iflow.gui.controller.page;
 
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 import com.pth.iflow.gui.configurations.GuiSecurityConfigurations;
-import com.pth.iflow.gui.models.GuiCompany;
-import com.pth.iflow.gui.models.GuiUser;
-import com.pth.iflow.gui.models.ui.GuiSessionUserInfo;
+import com.pth.iflow.gui.controller.GuiLogedControllerBase;
 import com.pth.iflow.gui.models.ui.UiMenuItem;
 import com.pth.iflow.gui.services.IBreadCrumbLoader;
 import com.pth.iflow.gui.services.UiMenuService;
 
 @Controller
-public class GuiPageControllerBase {
+public class GuiPageControllerBase extends GuiLogedControllerBase {
 
   @Autowired
-  private IBreadCrumbLoader      breadCrumbLoader;
+  private IBreadCrumbLoader breadCrumbLoader;
 
   @Autowired
-  private UiMenuService          menuService;
-
-  @Autowired
-  private GuiSessionUserInfo sessionUserInfo;
+  private UiMenuService menuService;
 
   protected List<UiMenuItem> getMenus() {
     return this.menuService.getAllMenus();
 
   }
 
+  @Override
   protected String getCurrentRelativeUrl() {
     ServletUriComponentsBuilder builder = ServletUriComponentsBuilder.fromCurrentContextPath();
     final String root = builder.build().toUriString();
@@ -47,11 +40,11 @@ public class GuiPageControllerBase {
     return path;
   }
 
+  @Override
   @ModelAttribute
-  public void addAttributes(final Model model, final HttpSession session, final HttpServletResponse response,
-      final HttpServletRequest request) throws Exception {
+  public void addAttributes(final Model model, final HttpSession session, final HttpServletResponse response, final HttpServletRequest request) throws Exception {
 
-    if (this.sessionUserInfo == null || !this.sessionUserInfo.isValid()) {
+    if (this.getSessionUserInfo() == null || !this.getSessionUserInfo().isValid()) {
       response.sendRedirect(GuiSecurityConfigurations.LOGIN_URL);
 
     }
@@ -65,31 +58,6 @@ public class GuiPageControllerBase {
 
     model.addAttribute("url", currentRelatedUrl);
 
-  }
-
-  protected GuiSessionUserInfo getSessionUserInfo() {
-
-    return this.sessionUserInfo;
-  }
-
-  protected GuiUser getLoggedUser() {
-
-    return this.sessionUserInfo.getUser();
-  }
-
-  protected GuiCompany getLoggedCompany() {
-
-    return this.sessionUserInfo.getCompanyProfile().getCompany();
-  }
-
-  protected String getLoggedToken() {
-
-    return this.sessionUserInfo.getToken();
-  }
-
-  protected String getLoggedSessionId() {
-
-    return this.sessionUserInfo.getSessionId();
   }
 
 }

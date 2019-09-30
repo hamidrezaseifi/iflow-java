@@ -1,32 +1,31 @@
 package com.pth.iflow.gui.models;
 
 import java.time.LocalDateTime;
-
 import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.enums.EWorkflowMessageType;
 
 public class GuiWorkflowMessage extends DataModelBase {
 
-  private Long                   id;
+  private Long id;
 
-  private Long                   workflowId;
+  private Long workflowId;
 
-  private Long                   userId;
+  private Long userId;
 
-  private String                 message;
+  private String message;
 
-  private Long                   createdBy;
+  private Long createdBy;
 
-  private EWorkflowMessageType   messageType;
+  private EWorkflowMessageType messageType;
 
   private EWorkflowMessageStatus status;
 
-  private Integer                version;
+  private Integer version;
 
-  private Integer                expireDays;
+  private Integer expireDays;
 
-  private LocalDateTime          createdAt;
+  private LocalDateTime createdAt;
 
   @Override
   public Long getId() {
@@ -79,6 +78,10 @@ public class GuiWorkflowMessage extends DataModelBase {
 
   public EWorkflowMessageStatus getStatus() {
     return this.status;
+  }
+
+  public boolean isOffering() {
+    return this.status == EWorkflowMessageStatus.OFFERING;
   }
 
   public void setStatus(final EWorkflowMessageStatus status) {
