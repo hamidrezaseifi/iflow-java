@@ -29,10 +29,10 @@ public class WorkflowAccess implements IWorkflowAccess {
   private static final Logger                       logger = LoggerFactory.getLogger(WorkflowAccess.class);
 
   private final IRestTemplateCall                   restTemplate;
-  private final GuiConfiguration.ModuleAccessConfig moduleAccessConfig;
+  private final GuiConfiguration.WorkflowModuleAccessConfig moduleAccessConfig;
 
   public WorkflowAccess(@Autowired final IRestTemplateCall restTemplate,
-      @Autowired final GuiConfiguration.ModuleAccessConfig moduleAccessConfig) {
+      @Autowired final GuiConfiguration.WorkflowModuleAccessConfig moduleAccessConfig) {
     this.restTemplate = restTemplate;
     this.moduleAccessConfig = moduleAccessConfig;
   }

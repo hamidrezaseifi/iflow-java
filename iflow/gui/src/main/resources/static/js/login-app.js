@@ -41,33 +41,18 @@ iflowApp.config(['$httpProvider', function($httpProvider) {
     $httpProvider.defaults.timeout = 10000;
 }]);
 
-iflowApp.controller('BodyController', function ($scope, $http, $sce, $element, $compile, $mdSidenav, $mdComponentRegistry) {
+iflowApp.controller('LoginController', function ($scope, $http, $sce, $element, $compile, $mdSidenav, $mdComponentRegistry) {
 
 	$scope.showloading = false;
 	$scope.isShowError = true;
 	$scope.isShowMessage = false;
-	$scope.loadMessageUrl = typeof loadMessageUrl == undefined ? false : loadMessageUrl;
 
 	$scope.errorMessage = "";
-	$scope.menulist = [];
 
 	$scope.messageTitle = "";
 	$scope.messageContent = "";
 	
 	$scope.messagePanelHeight = 170;
-	
-	$scope.messages = [
-		{title: 'Message 10 ...', url: '#'},
-		{title: 'Message 7 ....', url: '#'},
-		{title: 'Message 8 ....', url: '#'},
-		{title: 'Message 7 ....', url: '#'},
-		{title: 'Message 6 ....', url: '#'},
-		{title: 'Message 5 ....', url: '#'},
-		{title: 'Message 4 ....', url: '#'},
-		{title: 'Message 3 ....', url: '#'},
-		{title: 'Message 2 ....', url: '#'},
-		{title: 'Message 1 ....', url: '#'},
-	];
 	
 	$scope.messagePanelShowed = true;
 
@@ -160,49 +145,5 @@ iflowApp.controller('BodyController', function ($scope, $http, $sce, $element, $
 	}
 	
 	
-	function toggleAll(element){
-		var button = $(element).parents("button");
-		var content = button.next();
-		
-		$(".md-accordion-group button.md-accordion-toggle.md-button.md-active").removeClass("md-active");
-		$(".md-accordion-group div.md-accordion-wrapper.md-active").removeClass("md-active");
-	}
-    
-	$scope.reloadMessages = function (){
-		
-		//alert($scope.loadMessageUrl); 
-
-		$scope.messages = [];
-		
-			
-		$http({
-	        method : "POST",
-	        headers: {
-	        	'Content-type': 'application/json; charset=UTF-8',
-	        },
-	        url : $scope.loadMessageUrl,
-	    }).then(function successCallback(response) {
-	    	
-	    	buildMessageList(response.data);
-	    	
-	    	setTimeout(function(){ 
-	    		//$scope.reloadMessages();
-	    	}, 10000);
-	
-	    }, function errorCallback(response) {
-	        
-	        alert(response.data);
-	    });
-		
-	}; 
-	
-	function buildMessageList(messages){
-		for(o in messages){
-			var message = messages[o];
-			$scope.messages.push({title: message.message, url: '#w=?' + message.workflowId});
-		}
-	}
-	
-	$scope.reloadMessages();
 
 });

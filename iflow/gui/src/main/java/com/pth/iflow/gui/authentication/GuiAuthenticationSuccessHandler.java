@@ -2,17 +2,16 @@ package com.pth.iflow.gui.authentication;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
-
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.configurations.GuiSecurityConfigurations;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
@@ -20,19 +19,24 @@ import com.pth.iflow.gui.models.GuiCompanyProfile;
 import com.pth.iflow.gui.models.GuiProfileResponse;
 import com.pth.iflow.gui.models.GuiUser;
 import com.pth.iflow.gui.services.IProfileAccess;
+import com.pth.iflow.gui.services.IWorkflowMessageHanlder;
 
 @Component
 public class GuiAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
+
+  private static final Logger logger = LoggerFactory.getLogger(GuiAuthenticationSuccessHandler.class);
 
   @Autowired
   private GuiSessionUserService sessionUserService;
 
   @Autowired
-  private IProfileAccess        profileValidator;
+  private IProfileAccess profileValidator;
+
+  @Autowired
+  private IWorkflowMessageHanlder workflowMessageHanlder;
 
   @Override
-  public void onAuthenticationSuccess(final HttpServletRequest request, final HttpServletResponse response, final Authentication auth)
-      throws IOException, ServletException {
+  public void onAuthenticationSuccess(final HttpServletRequest request, final HttpServletResponse response, final Authentication auth) throws IOException, ServletException {
 
     if ((auth instanceof GuiAuthenticationToken) == true) {
 
@@ -43,35 +47,39 @@ public class GuiAuthenticationSuccessHandler extends SimpleUrlAuthenticationSucc
       GuiProfileResponse profileResponse = null;
       try {
         profileResponse = this.profileValidator.readProfile(tbToken.getUsername(), tbToken.getToken());
-      } catch (GuiCustomizedException | MalformedURLException e) {
+      }
+      catch (GuiCustomizedException | MalformedURLException | IFlowMessageConversionFailureException e) {
+        logger.error("Error in reading user profile.", e);
 
-      } catch (final IFlowMessageConversionFailureException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
       }
 
       if (profileResponse == null) {
-      } else {
+      }
+      else {
 
         final GuiUser user = profileResponse.getUser();
         final GuiCompanyProfile companyProfile = profileResponse.getCompanyProfile();
 
-        final GuiAuthenticationToken newToken = new GuiAuthenticationToken(tbToken.getUsername(), tbToken.getCompanyId(),
-            tbToken.getToken(), tbToken.getSessionId(), user.getAuthorities());
+        final GuiAuthenticationToken newToken = new GuiAuthenticationToken(tbToken.getUsername(),
+                                                                           tbToken.getCompanyId(),
+                                                                           tbToken.getToken(),
+                                                                           tbToken.getSessionId(),
+                                                                           user.getAuthorities());
 
         if (user.isEnabled() == false) {
           url = GuiAuthenticationErrorUrlCreator.getErrorUrl("access",
-              request.getParameter(GuiSecurityConfigurations.USERNAME_FIELD_NAME),
-              request.getParameter(GuiSecurityConfigurations.PASSWORD_FIELD_NAME),
-              request.getParameter(GuiSecurityConfigurations.COMPANYID_FIELD_NAME));
-        } else {
+                                                             request.getParameter(GuiSecurityConfigurations.USERNAME_FIELD_NAME),
+                                                             request.getParameter(GuiSecurityConfigurations.PASSWORD_FIELD_NAME),
+                                                             request.getParameter(GuiSecurityConfigurations.COMPANYID_FIELD_NAME));
+        }
+        else {
 
           if (this.sessionUserService.authorizeUser(newToken, user, companyProfile, request.getSession(), true) == null) {
 
             url = GuiAuthenticationErrorUrlCreator.getErrorUrl("access",
-                request.getParameter(GuiSecurityConfigurations.USERNAME_FIELD_NAME),
-                request.getParameter(GuiSecurityConfigurations.PASSWORD_FIELD_NAME),
-                request.getParameter(GuiSecurityConfigurations.COMPANYID_FIELD_NAME));
+                                                               request.getParameter(GuiSecurityConfigurations.USERNAME_FIELD_NAME),
+                                                               request.getParameter(GuiSecurityConfigurations.PASSWORD_FIELD_NAME),
+                                                               request.getParameter(GuiSecurityConfigurations.COMPANYID_FIELD_NAME));
           }
 
           if (tbToken.getDetails() instanceof GuiAuthenticationDetails) {
@@ -82,6 +90,13 @@ public class GuiAuthenticationSuccessHandler extends SimpleUrlAuthenticationSucc
           }
 
         }
+      }
+
+      try {
+        workflowMessageHanlder.callUserMessageReset();
+      }
+      catch (GuiCustomizedException | IFlowMessageConversionFailureException e) {
+        logger.error("Error in calling user message reset in profile.", e);
       }
 
       this.getRedirectStrategy().sendRedirect(request, response, url);

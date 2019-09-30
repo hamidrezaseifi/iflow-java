@@ -29,6 +29,7 @@ import com.pth.iflow.gui.models.GuiDepartment;
 import com.pth.iflow.gui.models.GuiUser;
 import com.pth.iflow.gui.models.GuiWorkflow;
 import com.pth.iflow.gui.models.GuiWorkflowCreateRequest;
+import com.pth.iflow.gui.models.GuiWorkflowMessage;
 import com.pth.iflow.gui.models.GuiWorkflowSearchFilter;
 import com.pth.iflow.gui.models.GuiWorkflowType;
 import com.pth.iflow.gui.models.ui.FileSavingData;
@@ -222,6 +223,16 @@ public class WorkflowDataController extends GuiDataControllerBase {
 
     this.workflowHandler.doneWorkflow(workflow, session);
 
+  }
+
+  @ResponseStatus(HttpStatus.OK)
+  @PostMapping(path = { "/workflowmessages" })
+  @ResponseBody
+  public List<GuiWorkflowMessage> listWorkflowMessages() throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+
+    final List<GuiWorkflowMessage> messageList = this.getWorkflowMessageHanlder().readUserMessages();
+
+    return messageList;
   }
 
 }

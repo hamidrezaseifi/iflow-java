@@ -361,9 +361,9 @@ public class IflowRestPaths {
       return builder.build(id);
     }
 
-    public static URI READ_CACHDATA_USER_WORKFLOWMESSAGELIST(final Long id) {
+    public static URI READ_CACHDATA_USER_WORKFLOWMESSAGELIST(final Long companyid, final Long userid) {
       final IflowUriBuilder builder = new IflowUriBuilder(CACHDATA_READ_USER_WORKFLOWMESSAGELIST);
-      return builder.build(id);
+      return builder.build(companyid, userid);
     }
 
     public static URI ADD_CACHDATA_USER_WORKFLOWMESSAGELIST(final Long id) {
