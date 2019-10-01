@@ -267,6 +267,7 @@ public class TestDataProducer {
     model.setOldStep(1L);
     model.setComments("comments");
     model.setNextAssign(1L);
+    model.setAssignTo(1L);
 
     return model;
   }
@@ -287,6 +288,7 @@ public class TestDataProducer {
     model.setNewStep(2L);
     model.setOldStep(1L);
     model.setComments("comments");
+    model.setAssignTo(1L);
 
     return model;
   }
