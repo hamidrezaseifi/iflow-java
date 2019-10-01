@@ -19,16 +19,13 @@ import com.pth.iflow.workflow.models.AssignItem;
 import com.pth.iflow.workflow.models.User;
 import com.pth.iflow.workflow.models.Workflow;
 import com.pth.iflow.workflow.models.WorkflowSaveRequest;
-import com.pth.iflow.workflow.models.WorkflowType;
 
 public class CreateManualAssignWorkflowStrategy extends AbstractCreateWorkflowStrategy {
 
   public CreateManualAssignWorkflowStrategy(final WorkflowSaveRequest workflowCreateRequest, final String token,
       final IWorkStrategyFactory workStrategyFactory, final IDepartmentDataService departmentDataService,
-      final IWorkflowMessageDataService workflowMessageDataService, final ICachDataDataService cachDataDataService,
-      final WorkflowType workflowType) {
-    super(workflowCreateRequest, token, workStrategyFactory, departmentDataService, workflowMessageDataService, cachDataDataService,
-        workflowType);
+      final IWorkflowMessageDataService workflowMessageDataService, final ICachDataDataService cachDataDataService) {
+    super(workflowCreateRequest, token, workStrategyFactory, departmentDataService, workflowMessageDataService, cachDataDataService);
 
   }
 
@@ -63,7 +60,7 @@ public class CreateManualAssignWorkflowStrategy extends AbstractCreateWorkflowSt
     }
 
     for (final Long userId : assignedUsers) {
-      workflow.setActionAssignTo(userId);
+      workflow.setActiveActionAssignTo(userId);
 
       final WorkflowSaveRequest saveRequest = creaeOneAssignedWorkflowSaveRequest(workflow, userId);
       result.add(this.saveWorkflow(saveRequest));

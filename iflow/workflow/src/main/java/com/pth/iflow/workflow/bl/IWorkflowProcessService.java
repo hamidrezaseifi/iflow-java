@@ -31,4 +31,7 @@ public interface IWorkflowProcessService {
 
   public List<Workflow> search(final WorkflowSearchFilter workflowSearchFilter, String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
+
+  public Workflow prepareWorkflow(final String token, final Workflow workflow)
+      throws MalformedURLException, IFlowMessageConversionFailureException;
 }

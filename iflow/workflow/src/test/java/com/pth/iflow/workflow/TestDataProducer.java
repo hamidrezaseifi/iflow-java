@@ -101,7 +101,6 @@ public class TestDataProducer {
     model.setCurrentStep(this.getTestWorkflowTypeStep());
     model.setCurrentStepId(model.getCurrentStep().getId());
     model.setCreatedBy(1L);
-    model.setNextAssign(false);
 
     model.setActions(
         Arrays.asList(this.getTestWorkflowAction(1L, 1L), this.getTestWorkflowAction(2L, 2L), this.getTestWorkflowAction(3L, 3L)));
@@ -171,10 +170,8 @@ public class TestDataProducer {
     model.setStatus(EWorkflowActionStatus.OPEN);
     model.setVersion(1);
     model.setCreatedBy(1L);
-    model.setNewStep(2L);
-    model.setOldStep(1L);
+    model.setCurrentStepId(1L);
     model.setComments("comments");
-    model.setNextAssign(1L);
     model.setAssignTo(1L);
 
     return model;
@@ -188,10 +185,8 @@ public class TestDataProducer {
     model.setStatus(actionStatus);
     model.setVersion(1);
     model.setCreatedBy(1L);
-    model.setNewStep(2L);
-    model.setOldStep(1L);
+    model.setCurrentStepId(2L);
     model.setComments("comments");
-    model.setNextAssign(1L);
     model.setAssignTo(1L);
 
     return model;

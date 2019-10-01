@@ -238,7 +238,6 @@ public class WorkflowModelEdoMapper {
     edo.setStatus(model.getStatusInt());
     edo.setId(model.getId());
     edo.setController(model.getController());
-    edo.setCurrentStep(toEdo(model.getCurrentStep()));
     edo.setCurrentStepId(model.getCurrentStep() != null ? model.getCurrentStep().getId() : null);
     edo.setCreatedBy(model.getCreatedBy());
     edo.setWorkflowTypeId(model.getWorkflowTypeId());
@@ -260,7 +259,6 @@ public class WorkflowModelEdoMapper {
     model.setStatusInt(edo.getStatus());
     model.setId(edo.getId());
     model.setController(edo.getController());
-    model.setCurrentStep(edo.getCurrentStep() != null ? fromEdo(edo.getCurrentStep()) : null);
     model.setCreatedBy(edo.getCreatedBy());
     model.setWorkflowTypeId(edo.getWorkflowTypeId());
     model.setVersion(edo.getVersion());
@@ -278,9 +276,7 @@ public class WorkflowModelEdoMapper {
     edo.setStatus(model.getStatus().getValue().intValue());
     edo.setId(model.getId());
     edo.setCreatedBy(model.getCreatedBy());
-    edo.setOldStep(model.getOldStep());
-    edo.setNewStep(model.getNewStep());
-    edo.setNextAssign(model.getNextAssign());
+    edo.setCurrentStepId(model.getCurrentStepId());
     edo.setWorkflowId(model.getWorkflowId());
     edo.setVersion(model.getVersion());
     edo.setAssignTo(model.getAssignTo());
@@ -298,9 +294,7 @@ public class WorkflowModelEdoMapper {
     model.setStatus(edo.getStatus());
     model.setId(edo.getId());
     model.setCreatedBy(edo.getCreatedBy());
-    model.setOldStep(edo.getOldStep());
-    model.setNewStep(edo.getNewStep());
-    model.setNextAssign(edo.getNextAssign());
+    model.setCurrentStepId(edo.getCurrentStepId());
     model.setWorkflowId(edo.getWorkflowId());
     model.setVersion(edo.getVersion());
     model.setAssignTo(edo.getAssignTo());

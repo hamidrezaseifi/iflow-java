@@ -8,14 +8,13 @@ import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.Workflow;
-import com.pth.iflow.workflow.models.WorkflowAction;
-import com.pth.iflow.workflow.models.WorkflowType;
+import com.pth.iflow.workflow.models.WorkflowSaveRequest;
 
 public class SaveExistingWorkflowStrategy extends AbstractSaveWorkflowStrategy {
 
-  public SaveExistingWorkflowStrategy(final Workflow processingWorkflow, final WorkflowType workflowType, final String token,
-      final WorkflowAction activeAction, final IWorkflowDataService workflowDataService) {
-    super(processingWorkflow, workflowType, token, activeAction, workflowDataService);
+  public SaveExistingWorkflowStrategy(final WorkflowSaveRequest processingWorkflowSaveRequest, final String token,
+      final IWorkflowDataService workflowDataService) {
+    super(processingWorkflowSaveRequest, token, workflowDataService);
 
   }
 

@@ -22,7 +22,7 @@ import com.pth.iflow.workflow.bl.ICachDataDataService;
 import com.pth.iflow.workflow.bl.IDepartmentDataService;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.IWorkflowMessageDataService;
-import com.pth.iflow.workflow.bl.IWorkflowTypeDataService;
+import com.pth.iflow.workflow.bl.IWorkflowProcessService;
 import com.pth.iflow.workflow.bl.strategies.ISaveWorkflowStrategy;
 import com.pth.iflow.workflow.bl.strategies.IWorkStrategyFactory;
 import com.pth.iflow.workflow.bl.strategies.WorkStrategyFactory;
@@ -30,8 +30,8 @@ import com.pth.iflow.workflow.bl.strategies.save.ArchivingWorkflowStrategy;
 import com.pth.iflow.workflow.bl.strategies.save.DoneExistingWorkflowStrategy;
 import com.pth.iflow.workflow.bl.strategies.save.SaveExistingWorkflowStrategy;
 import com.pth.iflow.workflow.bl.strategies.save.SaveNewWorkflowStrategy;
+import com.pth.iflow.workflow.models.Workflow;
 import com.pth.iflow.workflow.models.WorkflowSaveRequest;
-import com.pth.iflow.workflow.models.WorkflowType;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -44,7 +44,7 @@ public class WorkflowSaveStrategyFactoryTest extends TestDataProducer {
   private IWorkflowDataService        workflowDataService;
 
   @Mock
-  private IWorkflowTypeDataService    workflowTypeDataService;
+  private IWorkflowProcessService     workflowProcessService;
 
   @Mock
   private IDepartmentDataService      departmentDataService;
@@ -59,8 +59,8 @@ public class WorkflowSaveStrategyFactoryTest extends TestDataProducer {
 
   @Before
   public void setUp() throws Exception {
-    this.workStrategyFactory = new WorkStrategyFactory(this.workflowDataService, this.workflowTypeDataService,
-        this.departmentDataService, this.workflowMessageDataService, cachDataDataService);
+    this.workStrategyFactory = new WorkStrategyFactory(this.workflowDataService, this.departmentDataService,
+        this.workflowMessageDataService, this.cachDataDataService, this.workflowProcessService);
 
     // when(this.workflowDataService.generateCoreUrl(any(String.class))).thenReturn(new
     // URL("http://any-string"));
@@ -79,8 +79,7 @@ public class WorkflowSaveStrategyFactoryTest extends TestDataProducer {
     request.getWorkflow().setId(null);
     request.setCommand(EWorkflowProcessCommand.CREATE);
 
-    final WorkflowType workflowType = this.getTestWorkflowType(1L, "");
-    when(this.workflowTypeDataService.getById(any(Long.class), any(String.class))).thenReturn(workflowType);
+    when(this.workflowProcessService.prepareWorkflow(any(String.class), any(Workflow.class))).thenReturn(request.getWorkflow());
 
     final ISaveWorkflowStrategy saveWorkflowStrategy = this.workStrategyFactory.selectSaveWorkStrategy(request, this.validTocken);
 
@@ -96,8 +95,7 @@ public class WorkflowSaveStrategyFactoryTest extends TestDataProducer {
     final WorkflowSaveRequest request = this.getTestWorkflowCreateRequest();
     request.setCommand(EWorkflowProcessCommand.ARCHIVE);
 
-    final WorkflowType workflowType = this.getTestWorkflowType(1L, "");
-    when(this.workflowTypeDataService.getById(any(Long.class), any(String.class))).thenReturn(workflowType);
+    when(this.workflowProcessService.prepareWorkflow(any(String.class), any(Workflow.class))).thenReturn(request.getWorkflow());
 
     final ISaveWorkflowStrategy saveWorkflowStrategy = this.workStrategyFactory.selectSaveWorkStrategy(request, this.validTocken);
 
@@ -114,8 +112,7 @@ public class WorkflowSaveStrategyFactoryTest extends TestDataProducer {
 
     request.setCommand(EWorkflowProcessCommand.DONE);
 
-    final WorkflowType workflowType = this.getTestWorkflowType(1L, "");
-    when(this.workflowTypeDataService.getById(any(Long.class), any(String.class))).thenReturn(workflowType);
+    when(this.workflowProcessService.prepareWorkflow(any(String.class), any(Workflow.class))).thenReturn(request.getWorkflow());
 
     final ISaveWorkflowStrategy saveWorkflowStrategy = this.workStrategyFactory.selectSaveWorkStrategy(request, this.validTocken);
 
@@ -132,8 +129,7 @@ public class WorkflowSaveStrategyFactoryTest extends TestDataProducer {
 
     request.setCommand(EWorkflowProcessCommand.SAVE);
 
-    final WorkflowType workflowType = this.getTestWorkflowType(1L, "");
-    when(this.workflowTypeDataService.getById(any(Long.class), any(String.class))).thenReturn(workflowType);
+    when(this.workflowProcessService.prepareWorkflow(any(String.class), any(Workflow.class))).thenReturn(request.getWorkflow());
 
     final ISaveWorkflowStrategy saveWorkflowStrategy = this.workStrategyFactory.selectSaveWorkStrategy(request, this.validTocken);
 
@@ -149,8 +145,7 @@ public class WorkflowSaveStrategyFactoryTest extends TestDataProducer {
     final WorkflowSaveRequest request = this.getTestWorkflowCreateRequest();
     request.getWorkflow().setActions(new ArrayList<>());
 
-    final WorkflowType workflowType = this.getTestWorkflowType(1L, "");
-    when(this.workflowTypeDataService.getById(any(Long.class), any(String.class))).thenReturn(workflowType);
+    when(this.workflowProcessService.prepareWorkflow(any(String.class), any(Workflow.class))).thenReturn(request.getWorkflow());
 
     this.workStrategyFactory.selectSaveWorkStrategy(request, this.validTocken);
 

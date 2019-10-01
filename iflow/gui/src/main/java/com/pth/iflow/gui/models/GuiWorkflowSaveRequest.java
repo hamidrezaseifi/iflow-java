@@ -3,6 +3,7 @@ package com.pth.iflow.gui.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.pth.iflow.common.enums.EAssignType;
 import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 
 public class GuiWorkflowSaveRequest {
@@ -68,6 +69,14 @@ public class GuiWorkflowSaveRequest {
     if (assigns != null) {
       this.assigns.addAll(assigns);
     }
+  }
+
+  /**
+   * @param assigns the assigns to set
+   */
+  public void setAssignUser(final Long userId) {
+    this.assigns.clear();
+    this.assigns.add(new GuiAssignItem(userId, EAssignType.USER));
   }
 
   /**

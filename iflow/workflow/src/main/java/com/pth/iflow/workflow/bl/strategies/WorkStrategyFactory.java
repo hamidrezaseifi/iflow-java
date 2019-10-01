@@ -16,18 +16,17 @@ import com.pth.iflow.workflow.bl.ICachDataDataService;
 import com.pth.iflow.workflow.bl.IDepartmentDataService;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.IWorkflowMessageDataService;
-import com.pth.iflow.workflow.bl.IWorkflowTypeDataService;
+import com.pth.iflow.workflow.bl.IWorkflowProcessService;
 import com.pth.iflow.workflow.bl.strategies.create.CreateManualAssignWorkflowStrategy;
 import com.pth.iflow.workflow.bl.strategies.create.CreateOfferlAssignWorkflowStrategy;
 import com.pth.iflow.workflow.bl.strategies.save.ArchivingWorkflowStrategy;
+import com.pth.iflow.workflow.bl.strategies.save.AssignWorkflowStrategy;
 import com.pth.iflow.workflow.bl.strategies.save.DoneExistingWorkflowStrategy;
 import com.pth.iflow.workflow.bl.strategies.save.SaveExistingWorkflowStrategy;
 import com.pth.iflow.workflow.bl.strategies.save.SaveNewWorkflowStrategy;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.Workflow;
-import com.pth.iflow.workflow.models.WorkflowAction;
 import com.pth.iflow.workflow.models.WorkflowSaveRequest;
-import com.pth.iflow.workflow.models.WorkflowType;
 
 @Service
 public class WorkStrategyFactory implements IWorkStrategyFactory {
@@ -36,23 +35,23 @@ public class WorkStrategyFactory implements IWorkStrategyFactory {
 
   private final IWorkflowDataService        workflowDataService;
 
-  private final IWorkflowTypeDataService    workflowTypeDataService;
-
   private final IDepartmentDataService      departmentDataService;
 
   private final IWorkflowMessageDataService workflowMessageDataService;
 
+  private final IWorkflowProcessService     workflowProcessService;
+
   private final ICachDataDataService        cachDataDataService;
 
   public WorkStrategyFactory(@Autowired final IWorkflowDataService workflowDataService,
-      @Autowired final IWorkflowTypeDataService workflowTypeDataService, @Autowired final IDepartmentDataService departmentDataService,
+      @Autowired final IDepartmentDataService departmentDataService,
       @Autowired final IWorkflowMessageDataService workflowMessageDataService,
-      @Autowired final ICachDataDataService cachDataDataService) {
+      @Autowired final ICachDataDataService cachDataDataService, @Autowired final IWorkflowProcessService workflowProcessService) {
     this.workflowDataService = workflowDataService;
-    this.workflowTypeDataService = workflowTypeDataService;
     this.departmentDataService = departmentDataService;
     this.workflowMessageDataService = workflowMessageDataService;
     this.cachDataDataService = cachDataDataService;
+    this.workflowProcessService = workflowProcessService;
 
   }
 
@@ -71,27 +70,29 @@ public class WorkStrategyFactory implements IWorkStrategyFactory {
 
     final Workflow processingWorkflow = workflowSaveRequest.getWorkflow();
 
-    final WorkflowType workflowType = this.workflowTypeDataService.getById(processingWorkflow.getWorkflowTypeId(), token);
-    final WorkflowAction activeAction = processingWorkflow.hasActiveAction() ? processingWorkflow.getActiveAction() : null;
-
     if (workflowSaveRequest.getCommand() == EWorkflowProcessCommand.CREATE) {
       logger.debug("The SaveNewWorkflowStrategy is selected for workflow");
-      return new SaveNewWorkflowStrategy(processingWorkflow, workflowType, token, activeAction, this.workflowDataService);
+      return new SaveNewWorkflowStrategy(workflowSaveRequest, token, this.workflowDataService);
     }
 
     if (workflowSaveRequest.getCommand() == EWorkflowProcessCommand.ARCHIVE) {
       logger.debug("The ArchivingWorkflowStrategy is selected for workflow");
-      return new ArchivingWorkflowStrategy(processingWorkflow, workflowType, token, activeAction, this.workflowDataService);
+      return new ArchivingWorkflowStrategy(workflowSaveRequest, token, this.workflowDataService);
     }
 
     if (workflowSaveRequest.getCommand() == EWorkflowProcessCommand.SAVE) {
       logger.debug("The SaveExistingWorkflowStrategy is selected for workflow");
-      return new SaveExistingWorkflowStrategy(processingWorkflow, workflowType, token, activeAction, this.workflowDataService);
+      return new SaveExistingWorkflowStrategy(workflowSaveRequest, token, this.workflowDataService);
+    }
+
+    if (workflowSaveRequest.getCommand() == EWorkflowProcessCommand.ASSIGN) {
+      logger.debug("The AssignWorkflowStrategy is selected for workflow");
+      return new AssignWorkflowStrategy(workflowSaveRequest, token, this.workflowDataService);
     }
 
     if (workflowSaveRequest.getCommand() == EWorkflowProcessCommand.DONE) {
       logger.debug("The DoneExistingWorkflowStrategy is selected for workflow");
-      return new DoneExistingWorkflowStrategy(processingWorkflow, workflowType, token, activeAction, this.workflowDataService);
+      return new DoneExistingWorkflowStrategy(workflowSaveRequest, token, this.workflowDataService);
     }
 
     throw new IFlowCustomeException("Unknown workflow save strategy id:" + processingWorkflow.getId(),
@@ -104,17 +105,16 @@ public class WorkStrategyFactory implements IWorkStrategyFactory {
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     logger.debug("selecting create strategy for workflow create request");
 
-    final WorkflowType workflowType = this.workflowTypeDataService.getById(workflowSaveRequest.getWorkflow().getWorkflowTypeId(),
-        token);
+    workflowProcessService.prepareWorkflow(token, workflowSaveRequest.getWorkflow());
 
-    if (workflowType.geAssignType() == EWorkflowTypeAssignType.MANUAL) {
+    if (workflowSaveRequest.getWorkflow().getWorkflowType().geAssignType() == EWorkflowTypeAssignType.MANUAL) {
       return new CreateManualAssignWorkflowStrategy(workflowSaveRequest, token, this, departmentDataService,
-          workflowMessageDataService, cachDataDataService, workflowType);
+          workflowMessageDataService, cachDataDataService);
     }
 
-    if (workflowType.geAssignType() == EWorkflowTypeAssignType.OFFER) {
+    if (workflowSaveRequest.getWorkflow().getWorkflowType().geAssignType() == EWorkflowTypeAssignType.OFFER) {
       return new CreateOfferlAssignWorkflowStrategy(workflowSaveRequest, token, this, departmentDataService,
-          workflowMessageDataService, cachDataDataService, workflowType);
+          workflowMessageDataService, cachDataDataService);
     }
 
     throw new IFlowCustomeException("Unknown workflow create strategy ", EIFlowErrorType.UNKNOWN_WORKFLOW_CREATE_STRATEGY);

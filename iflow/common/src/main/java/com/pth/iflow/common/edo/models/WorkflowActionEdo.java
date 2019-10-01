@@ -32,14 +32,8 @@ public class WorkflowActionEdo {
   @XmlElement(name = "AssignTo", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Long    assignTo;
 
-  @XmlElement(name = "OldStep", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long    oldStep;
-
-  @XmlElement(name = "NewStep", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long    newStep;
-
-  @XmlElement(name = "NextAssign", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long    nextAssign;
+  @XmlElement(name = "CurrectStepId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private Long    currectStepId;
 
   @XmlElement(name = "Comments", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String  comments;
@@ -76,28 +70,12 @@ public class WorkflowActionEdo {
     this.action = action;
   }
 
-  public Long getOldStep() {
-    return this.oldStep;
+  public Long getCurrentStepId() {
+    return this.currectStepId;
   }
 
-  public void setOldStep(final Long oldStep) {
-    this.oldStep = oldStep;
-  }
-
-  public Long getNewStep() {
-    return this.newStep;
-  }
-
-  public void setNewStep(final Long newStep) {
-    this.newStep = newStep;
-  }
-
-  public Long getNextAssign() {
-    return this.nextAssign;
-  }
-
-  public void setNextAssign(final Long nextAssign) {
-    this.nextAssign = nextAssign;
+  public void setCurrentStepId(final Long currectStepId) {
+    this.currectStepId = currectStepId;
   }
 
   public Long getCreatedBy() {

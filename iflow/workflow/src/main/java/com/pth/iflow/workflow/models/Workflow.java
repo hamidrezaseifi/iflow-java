@@ -1,6 +1,7 @@
 package com.pth.iflow.workflow.models;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import com.pth.iflow.common.edo.models.base.DataModelBase;
@@ -10,6 +11,7 @@ public class Workflow extends DataModelBase {
 
   private Long                       id;
   private Long                       workflowTypeId;
+  private WorkflowType               workflowType;
   private WorkflowTypeStep           currentStep;
   private Long                       currentStepId;
   private Long                       controller;
@@ -38,6 +40,14 @@ public class Workflow extends DataModelBase {
 
   public void setWorkflowTypeId(final Long workflowTypeId) {
     this.workflowTypeId = workflowTypeId;
+  }
+
+  public WorkflowType getWorkflowType() {
+    return workflowType;
+  }
+
+  public void setWorkflowType(final WorkflowType workflowType) {
+    this.workflowType = workflowType;
   }
 
   public WorkflowTypeStep getCurrentStep() {
@@ -118,14 +128,6 @@ public class Workflow extends DataModelBase {
     this.version = version;
   }
 
-  public Boolean getNextAssign() {
-    return this.nextAssign;
-  }
-
-  public void setNextAssign(final Boolean nextAssign) {
-    this.nextAssign = nextAssign;
-  }
-
   public List<WorkflowFile> getFiles() {
     return this.files;
   }
@@ -141,11 +143,20 @@ public class Workflow extends DataModelBase {
     return this.actions;
   }
 
+  public boolean hasAction() {
+    return this.actions.isEmpty() == false;
+  }
+
   public void setActions(final List<WorkflowAction> actions) {
     this.actions.clear();
     if (actions != null) {
       this.actions.addAll(actions);
     }
+  }
+
+  public void addAction(final WorkflowAction action) {
+    this.actions.add(action);
+
   }
 
   public boolean isAfterStep(final Workflow other) {
@@ -199,11 +210,31 @@ public class Workflow extends DataModelBase {
     return null;
   }
 
+  public WorkflowAction getLastAction() {
+
+    if (hasAction() == false) {
+      return null;
+    }
+
+    final List<WorkflowAction> astinList = this.getActions();
+    astinList.sort(new Comparator<WorkflowAction>() {
+
+      @Override
+      public int compare(final WorkflowAction action1, final WorkflowAction action2) {
+
+        return action1.getCurrentStep().getStepIndex() > action2.getCurrentStep().getStepIndex() ? 1
+            : action1.getCurrentStep().getStepIndex() < action2.getCurrentStep().getStepIndex() ? -1 : 0;
+      }
+    });
+
+    return astinList.get(astinList.size() - 1);
+  }
+
   public boolean isAssigned() {
     return this.hasActiveAction() && this.getActiveAction().isAssigned();
   }
 
-  public void setActionAssignTo(final Long userId) {
+  public void setActiveActionAssignTo(final Long userId) {
     this.getActiveAction().setAssignTo(userId);
 
   }

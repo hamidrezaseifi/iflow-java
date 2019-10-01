@@ -136,6 +136,22 @@ public class WorkflowHandler implements IWorkflowHandler {
   }
 
   @Override
+  public GuiWorkflow assignWorkflow(final Long workflowId)
+      throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
+    logger.debug("Assign workflow");
+
+    final GuiWorkflow workflow = this.readWorkflow(workflowId);
+
+    final GuiWorkflowSaveRequest request = GuiWorkflowSaveRequest.generateNew(workflow);
+    request.setCommand(EWorkflowProcessCommand.ASSIGN);
+    request.setAssignUser(this.sessionUserInfo.getUser().getId());
+
+    final GuiWorkflow result = this.workflowAccess.saveWorkflow(request, this.sessionUserInfo.getToken());
+    return this.prepareWorkflow(result);
+
+  }
+
+  @Override
   public GuiWorkflow doneWorkflow(final GuiWorkflow workflow, final HttpSession session)
       throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
     logger.debug("Make workflow {} done", workflow.getTitle());

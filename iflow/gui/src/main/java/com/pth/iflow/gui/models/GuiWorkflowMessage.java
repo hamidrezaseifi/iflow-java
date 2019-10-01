@@ -1,31 +1,37 @@
 package com.pth.iflow.gui.models;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+
 import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.enums.EWorkflowMessageType;
 
 public class GuiWorkflowMessage extends DataModelBase {
 
-  private Long id;
+  private Long                   id;
 
-  private Long workflowId;
+  private Long                   workflowId;
 
-  private Long userId;
+  private GuiWorkflow            workflow;
 
-  private String message;
+  private Long                   userId;
 
-  private Long createdBy;
+  private String                 message;
 
-  private EWorkflowMessageType messageType;
+  private Long                   createdBy;
+
+  private EWorkflowMessageType   messageType;
 
   private EWorkflowMessageStatus status;
 
-  private Integer version;
+  private Integer                version;
 
-  private Integer expireDays;
+  private Integer                expireDays;
 
-  private LocalDateTime createdAt;
+  private LocalDateTime          createdAt;
 
   @Override
   public Long getId() {
@@ -42,6 +48,14 @@ public class GuiWorkflowMessage extends DataModelBase {
 
   public void setWorkflowId(final Long workflowId) {
     this.workflowId = workflowId;
+  }
+
+  public GuiWorkflow getWorkflow() {
+    return this.workflow;
+  }
+
+  public void setWorkflow(final GuiWorkflow workflow) {
+    this.workflow = workflow;
   }
 
   public Long getUserId() {
@@ -118,8 +132,20 @@ public class GuiWorkflowMessage extends DataModelBase {
     return this.createdAt;
   }
 
+  public String getCreatedAtString() {
+    final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm");
+    return this.createdAt.format(formatter);
+  }
+
   public void setCreatedAt(final LocalDateTime createdAt) {
     this.createdAt = createdAt;
+  }
+
+  public int getRemainingDays() {
+    final LocalDate deadline = this.createdAt.plusDays(this.expireDays).toLocalDate();
+    final Period p = LocalDate.now().until(deadline);
+
+    return p.getDays();
   }
 
 }

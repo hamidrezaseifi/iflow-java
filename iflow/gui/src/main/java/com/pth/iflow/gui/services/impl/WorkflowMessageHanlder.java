@@ -1,6 +1,7 @@
 package com.pth.iflow.gui.services.impl;
 
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.GuiWorkflowMessage;
 import com.pth.iflow.gui.models.ui.GuiSessionUserInfo;
+import com.pth.iflow.gui.services.IWorkflowHandler;
 import com.pth.iflow.gui.services.IWorkflowMessageAccess;
 import com.pth.iflow.gui.services.IWorkflowMessageHanlder;
 
@@ -25,9 +27,12 @@ public class WorkflowMessageHanlder implements IWorkflowMessageHanlder {
 
   private final GuiSessionUserInfo     sessionUserInfo;
 
+  private final IWorkflowHandler       workflowHandler;
+
   public WorkflowMessageHanlder(@Autowired final IWorkflowMessageAccess workflowMessageAccess,
-      @Autowired final GuiSessionUserInfo sessionUserInfo) {
+      @Autowired final GuiSessionUserInfo sessionUserInfo, final IWorkflowHandler workflowHandler) {
     this.workflowMessageAccess = workflowMessageAccess;
+    this.workflowHandler = workflowHandler;
     this.sessionUserInfo = sessionUserInfo;
   }
 
@@ -55,7 +60,7 @@ public class WorkflowMessageHanlder implements IWorkflowMessageHanlder {
     });
 
     this.sessionUserInfo.clearCachedMessage();
-    this.sessionUserInfo.addCachedMessagesAll(readList);
+    this.sessionUserInfo.addCachedMessagesAll(this.prepareWorkflowMessageList(readList));
 
     return readList;
   }
@@ -64,6 +69,23 @@ public class WorkflowMessageHanlder implements IWorkflowMessageHanlder {
   public GuiWorkflowMessage getCachedMessage(final Long id) {
 
     return this.sessionUserInfo.getCachedMessage(id);
+  }
+
+  private List<GuiWorkflowMessage> prepareWorkflowMessageList(final List<GuiWorkflowMessage> messageList)
+      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+    final List<GuiWorkflowMessage> resultList = new ArrayList<>();
+    for (final GuiWorkflowMessage message : messageList) {
+      resultList.add(this.prepareWorkflowMessage(message));
+    }
+    return resultList;
+  }
+
+  private GuiWorkflowMessage prepareWorkflowMessage(final GuiWorkflowMessage message)
+      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+
+    message.setWorkflow(this.workflowHandler.readWorkflow(message.getWorkflowId()));
+
+    return message;
   }
 
 }

@@ -26,9 +26,6 @@ public class WorkflowEdo {
   @XmlElement(name = "WorkflowTypeId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Long                    workflowTypeId;
 
-  @XmlElement(name = "CurrentStep", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private WorkflowTypeStepEdo     currentStep;
-
   @XmlElement(name = "CurrentStepId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Long                    currentStepId;
 
@@ -77,14 +74,6 @@ public class WorkflowEdo {
 
   public void setWorkflowTypeId(final Long workflowTypeId) {
     this.workflowTypeId = workflowTypeId;
-  }
-
-  public WorkflowTypeStepEdo getCurrentStep() {
-    return this.currentStep;
-  }
-
-  public void setCurrentStep(final WorkflowTypeStepEdo currentStep) {
-    this.currentStep = currentStep;
   }
 
   public Long getCurrentStepId() {

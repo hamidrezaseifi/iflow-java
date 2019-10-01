@@ -4,6 +4,7 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -21,6 +22,7 @@ import com.pth.iflow.workflow.bl.strategies.ISaveWorkflowStrategy;
 import com.pth.iflow.workflow.bl.strategies.IWorkStrategyFactory;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.Workflow;
+import com.pth.iflow.workflow.models.WorkflowAction;
 import com.pth.iflow.workflow.models.WorkflowSaveRequest;
 import com.pth.iflow.workflow.models.WorkflowSearchFilter;
 import com.pth.iflow.workflow.models.WorkflowType;
@@ -175,6 +177,21 @@ public class WorkflowProcessService implements IWorkflowProcessService {
     return list;
   }
 
+  private Map<Long, WorkflowTypeStep> getIdMapedSteps(final WorkflowType workflowType) {
+
+    final Map<Long, WorkflowTypeStep> list = workflowType.getSteps().stream().collect(Collectors.toMap(s -> s.getId(), s -> s));
+
+    return list;
+  }
+
+  private Map<Integer, WorkflowTypeStep> getIndexMapedSteps(final WorkflowType workflowType) {
+
+    final Map<Integer, WorkflowTypeStep> list = workflowType.getSteps().stream()
+        .collect(Collectors.toMap(s -> s.getStepIndex(), s -> s));
+
+    return list;
+  }
+
   private List<Integer> getSortedStepsIndexList(final WorkflowType workflowType) {
 
     final List<WorkflowTypeStep> list = this.getSortedStepsList(workflowType);
@@ -182,13 +199,19 @@ public class WorkflowProcessService implements IWorkflowProcessService {
     return list.stream().map(s -> s.getStepIndex()).sorted().collect(Collectors.toList());
   }
 
-  private Workflow prepareWorkflow(final String token, final Workflow workflow)
+  @Override
+  public Workflow prepareWorkflow(final String token, final Workflow workflow)
       throws MalformedURLException, IFlowMessageConversionFailureException {
     final WorkflowType workflowType = this.workflowTypeDataService.getById(workflow.getWorkflowTypeId(), token);
-    final List<Integer> stepIndexList = this.getSortedStepsIndexList(workflowType);
-    final int index = stepIndexList.indexOf(workflow.getCurrentStep().getStepIndex());
 
-    workflow.setNextAssign(index < (stepIndexList.size() - 2));
+    workflow.setWorkflowType(workflowType);
+
+    final Map<Long, WorkflowTypeStep> map = getIdMapedSteps(workflowType);
+
+    workflow.setCurrentStep(map.containsKey(workflow.getCurrentStepId()) ? map.get(workflow.getCurrentStepId()) : null);
+    for (final WorkflowAction action : workflow.getActions()) {
+      action.setCurrentStep(map.containsKey(action.getCurrentStepId()) ? map.get(action.getCurrentStepId()) : null);
+    }
 
     return workflow;
   }

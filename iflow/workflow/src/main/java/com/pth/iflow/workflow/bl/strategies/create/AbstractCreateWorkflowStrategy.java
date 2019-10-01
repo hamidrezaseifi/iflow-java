@@ -35,8 +35,7 @@ public abstract class AbstractCreateWorkflowStrategy implements ICreateWorkflowS
 
   public AbstractCreateWorkflowStrategy(final WorkflowSaveRequest workflowCreateRequest, final String token,
       final IWorkStrategyFactory workStrategyFactory, final IDepartmentDataService departmentDataService,
-      final IWorkflowMessageDataService workflowMessageDataService, final ICachDataDataService cachDataDataService,
-      final WorkflowType workflowType) {
+      final IWorkflowMessageDataService workflowMessageDataService, final ICachDataDataService cachDataDataService) {
     super();
     this.workflowCreateRequest = workflowCreateRequest;
     this.token = token;
@@ -44,7 +43,7 @@ public abstract class AbstractCreateWorkflowStrategy implements ICreateWorkflowS
     this.departmentDataService = departmentDataService;
     this.workflowMessageDataService = workflowMessageDataService;
     this.cachDataDataService = cachDataDataService;
-    this.workflowType = workflowType;
+    this.workflowType = workflowCreateRequest.getWorkflow().getWorkflowType();
   }
 
   protected Workflow saveWorkflow(final WorkflowSaveRequest saveRequest)
