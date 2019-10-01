@@ -23,7 +23,7 @@ import com.pth.iflow.workflow.bl.strategies.IWorkStrategyFactory;
 import com.pth.iflow.workflow.bl.strategies.WorkStrategyFactory;
 import com.pth.iflow.workflow.bl.strategies.create.CreateManualAssignWorkflowStrategy;
 import com.pth.iflow.workflow.bl.strategies.create.CreateOfferlAssignWorkflowStrategy;
-import com.pth.iflow.workflow.models.WorkflowCreateRequest;
+import com.pth.iflow.workflow.models.WorkflowSaveRequest;
 import com.pth.iflow.workflow.models.WorkflowType;
 
 @RunWith(SpringRunner.class)
@@ -71,7 +71,7 @@ public class WorkflowCreateStrategyFactoryTest extends TestDataProducer {
   @Test
   public void testSelectCreateManualAssignWorkflowStrategy() throws Exception {
 
-    final WorkflowCreateRequest workflowCreateReq = this.getTestWorkflowCreateRequest();
+    final WorkflowSaveRequest workflowCreateReq = this.getTestWorkflowCreateRequest();
 
     final WorkflowType workflowType = this.getTestWorkflowType(1L, "");
     workflowType.setAssignType(EWorkflowTypeAssignType.MANUAL);
@@ -90,7 +90,7 @@ public class WorkflowCreateStrategyFactoryTest extends TestDataProducer {
   @Test
   public void testSelectCreateOfferlAssignWorkflowStrategy() throws Exception {
 
-    final WorkflowCreateRequest workflowCreateReq = this.getTestWorkflowCreateRequest();
+    final WorkflowSaveRequest workflowCreateReq = this.getTestWorkflowCreateRequest();
 
     final WorkflowType workflowType = this.getTestWorkflowType(1L, "");
     workflowType.setAssignType(EWorkflowTypeAssignType.OFFER);

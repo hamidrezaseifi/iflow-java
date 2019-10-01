@@ -16,13 +16,12 @@ import org.springframework.stereotype.Service;
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.enums.EWorkflowActionStatus;
 import com.pth.iflow.common.enums.EWorkflowProcessCommand;
-import com.pth.iflow.common.enums.EWorkflowStatus;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.GuiWorkflow;
 import com.pth.iflow.gui.models.GuiWorkflowAction;
-import com.pth.iflow.gui.models.GuiWorkflowCreateRequest;
 import com.pth.iflow.gui.models.GuiWorkflowFile;
+import com.pth.iflow.gui.models.GuiWorkflowSaveRequest;
 import com.pth.iflow.gui.models.GuiWorkflowSearchFilter;
 import com.pth.iflow.gui.models.GuiWorkflowType;
 import com.pth.iflow.gui.models.GuiWorkflowTypeStep;
@@ -62,11 +61,11 @@ public class WorkflowHandler implements IWorkflowHandler {
   }
 
   @Override
-  public List<GuiWorkflow> createWorkflow(final GuiWorkflowCreateRequest createRequest, final HttpSession session)
+  public List<GuiWorkflow> createWorkflow(final GuiWorkflowSaveRequest createRequest, final HttpSession session)
       throws GuiCustomizedException, IOException, IFlowMessageConversionFailureException {
     logger.debug("Create workflow {}", createRequest.getWorkflow().getTitle());
 
-    createRequest.getWorkflow().setCommand(EWorkflowProcessCommand.CREATE);
+    createRequest.setCommand(EWorkflowProcessCommand.CREATE);
     if (createRequest.getWorkflow().getCurrentStepId() == null || createRequest.getWorkflow().getCurrentStepId() <= 0) {
 
     }
@@ -125,13 +124,14 @@ public class WorkflowHandler implements IWorkflowHandler {
       throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
     logger.debug("Save workflow {}", workflow.getTitle());
 
-    workflow.setCommand(EWorkflowProcessCommand.SAVE);
-
     if (workflow.getHasActiveAction()) {
       workflow.getActiveAction().setNewStep(workflow.getCurrentStepId());
     }
 
-    final GuiWorkflow result = this.workflowAccess.saveWorkflow(workflow, this.sessionUserInfo.getToken());
+    final GuiWorkflowSaveRequest request = GuiWorkflowSaveRequest.generateNew(workflow);
+    request.setCommand(EWorkflowProcessCommand.SAVE);
+
+    final GuiWorkflow result = this.workflowAccess.saveWorkflow(request, this.sessionUserInfo.getToken());
     return this.prepareWorkflow(result);
   }
 
@@ -140,10 +140,12 @@ public class WorkflowHandler implements IWorkflowHandler {
       throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
     logger.debug("Make workflow {} done", workflow.getTitle());
 
-    workflow.setCommand(EWorkflowProcessCommand.DONE);
-
     workflow.getActiveAction().setNewStep(workflow.getCurrentStepId());
-    final GuiWorkflow result = this.workflowAccess.saveWorkflow(workflow, this.sessionUserInfo.getToken());
+
+    final GuiWorkflowSaveRequest request = GuiWorkflowSaveRequest.generateNew(workflow);
+    request.setCommand(EWorkflowProcessCommand.DONE);
+
+    final GuiWorkflow result = this.workflowAccess.saveWorkflow(request, this.sessionUserInfo.getToken());
     return this.prepareWorkflow(result);
   }
 
@@ -152,8 +154,10 @@ public class WorkflowHandler implements IWorkflowHandler {
       throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
     logger.debug("Make workflow {} archive", workflow.getTitle());
 
-    workflow.setStatus(EWorkflowStatus.ARCHIVED);
-    final GuiWorkflow result = this.workflowAccess.saveWorkflow(workflow, this.sessionUserInfo.getToken());
+    final GuiWorkflowSaveRequest request = GuiWorkflowSaveRequest.generateNew(workflow);
+    request.setCommand(EWorkflowProcessCommand.ARCHIVE);
+
+    final GuiWorkflow result = this.workflowAccess.saveWorkflow(request, this.sessionUserInfo.getToken());
     return this.prepareWorkflow(result);
   }
 

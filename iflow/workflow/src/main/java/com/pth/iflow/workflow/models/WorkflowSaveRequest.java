@@ -3,15 +3,19 @@ package com.pth.iflow.workflow.models;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WorkflowCreateRequest {
+import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 
-  private Workflow         workflow;
+public class WorkflowSaveRequest {
 
-  private Integer          expireDays;
+  private Workflow                workflow;
 
-  private List<AssignItem> assigns = new ArrayList<>();
+  private Integer                 expireDays;
 
-  public WorkflowCreateRequest() {
+  private List<AssignItem>        assigns = new ArrayList<>();
+
+  private EWorkflowProcessCommand command;
+
+  public WorkflowSaveRequest() {
 
   }
 
@@ -52,6 +56,14 @@ public class WorkflowCreateRequest {
     if (assigns != null) {
       this.assigns.addAll(assigns);
     }
+  }
+
+  public EWorkflowProcessCommand getCommand() {
+    return this.command;
+  }
+
+  public void setCommand(final EWorkflowProcessCommand command) {
+    this.command = command;
   }
 
 }

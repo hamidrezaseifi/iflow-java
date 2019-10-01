@@ -31,7 +31,7 @@ import com.pth.iflow.workflow.bl.strategies.ISaveWorkflowStrategy;
 import com.pth.iflow.workflow.bl.strategies.IWorkStrategyFactory;
 import com.pth.iflow.workflow.models.ProfileResponse;
 import com.pth.iflow.workflow.models.Workflow;
-import com.pth.iflow.workflow.models.WorkflowCreateRequest;
+import com.pth.iflow.workflow.models.WorkflowSaveRequest;
 import com.pth.iflow.workflow.models.WorkflowSearchFilter;
 import com.pth.iflow.workflow.models.WorkflowType;
 
@@ -85,9 +85,10 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
 
     when(this.tokenValidator.isTokenValid(this.validTocken)).thenReturn(this.profileResponse);
 
-    when(this.workStrategyFactory.selectSaveWorkStrategy(any(Workflow.class), any(String.class))).thenReturn(this.saveStrategy);
+    when(this.workStrategyFactory.selectSaveWorkStrategy(any(WorkflowSaveRequest.class), any(String.class)))
+        .thenReturn(this.saveStrategy);
 
-    when(this.workStrategyFactory.selectCreateWorkStrategy(any(WorkflowCreateRequest.class), any(String.class)))
+    when(this.workStrategyFactory.selectCreateWorkStrategy(any(WorkflowSaveRequest.class), any(String.class)))
         .thenReturn(this.createStrategy);
 
   }
@@ -115,16 +116,18 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
   @Test(expected = IFlowCustomeException.class)
   public void testSaveWorkflowUnknownWorkflowStatus() throws Exception {
 
-    final Workflow workflow = this.getTestWorkflow(1L, EWorkflowActionStatus.ERROR);
+    final WorkflowSaveRequest request = this.getTestWorkflowCreateRequest();
+    request.setWorkflow(this.getTestWorkflow(1L, EWorkflowActionStatus.ERROR));
 
     when(this.saveStrategy.process()).thenThrow(new IFlowCustomeException(EIFlowErrorType.UNKNOWN_WORKFLOW_SAVE_STRATEGY));
 
-    final Workflow resWorkflow = this.workflowProcessService.save(workflow, this.validTocken);
+    final Workflow resWorkflow = this.workflowProcessService.save(request, this.validTocken);
 
     Assert.assertNotNull("Result workflow-type is not null!", resWorkflow);
-    Assert.assertEquals("Result workflow-type has id 1!", resWorkflow.getId(), workflow.getId());
-    Assert.assertEquals("Result workflow-type has title '" + workflow.getTitle() + "'!", resWorkflow.getTitle(), workflow.getTitle());
-    Assert.assertEquals("Result workflow-type has status 1!", resWorkflow.getStatus(), workflow.getStatus());
+    Assert.assertEquals("Result workflow-type has id 1!", resWorkflow.getId(), request.getWorkflow().getId());
+    Assert.assertEquals("Result workflow-type has title '" + request.getWorkflow().getTitle() + "'!", resWorkflow.getTitle(),
+        request.getWorkflow().getTitle());
+    Assert.assertEquals("Result workflow-type has status 1!", resWorkflow.getStatus(), request.getWorkflow().getStatus());
 
   }
 
@@ -138,9 +141,12 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
     workflow.setStatus(EWorkflowStatus.INITIALIZE);
     workflow.setId(null);
 
+    final WorkflowSaveRequest request = this.getTestWorkflowCreateRequest();
+    request.setWorkflow(workflow);
+
     when(this.saveStrategy.process()).thenReturn(workflowSaveResult);
 
-    final Workflow resWorkflow = this.workflowProcessService.save(workflow, this.validTocken);
+    final Workflow resWorkflow = this.workflowProcessService.save(request, this.validTocken);
 
     Assert.assertNotNull("Result workflow-type is not null!", resWorkflow);
     Assert.assertEquals("Result workflow-type has id 1!", resWorkflow.getId(), workflowSaveResult.getId());
@@ -162,7 +168,10 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
 
     when(this.saveStrategy.process()).thenReturn(workflowSaveResult);
 
-    final Workflow resWorkflow = this.workflowProcessService.save(workflow, this.validTocken);
+    final WorkflowSaveRequest request = this.getTestWorkflowCreateRequest();
+    request.setWorkflow(workflow);
+
+    final Workflow resWorkflow = this.workflowProcessService.save(request, this.validTocken);
 
     Assert.assertNotNull("Result workflow-type is not null!", resWorkflow);
     Assert.assertEquals("Result workflow-type has id 1!", resWorkflow.getId(), workflowSaveResult.getId());
@@ -184,7 +193,10 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
 
     when(this.saveStrategy.process()).thenReturn(workflowSaveResult);
 
-    final Workflow resWorkflow = this.workflowProcessService.save(workflow, this.validTocken);
+    final WorkflowSaveRequest request = this.getTestWorkflowCreateRequest();
+    request.setWorkflow(workflow);
+
+    final Workflow resWorkflow = this.workflowProcessService.save(request, this.validTocken);
 
     Assert.assertNotNull("Result workflow-type is not null!", resWorkflow);
     Assert.assertEquals("Result workflow-type has id 1!", resWorkflow.getId(), workflowSaveResult.getId());
@@ -232,7 +244,7 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
     workflowSaveResult.setId(null);
     final List<Workflow> reultList = Arrays.asList(workflowSaveResult, workflowSaveResult, workflowSaveResult);
 
-    final WorkflowCreateRequest request = this.getTestWorkflowCreateRequest();
+    final WorkflowSaveRequest request = this.getTestWorkflowCreateRequest();
     request.getWorkflow().setStatus(EWorkflowStatus.INITIALIZE);
 
     when(this.createStrategy.process()).thenReturn(reultList);

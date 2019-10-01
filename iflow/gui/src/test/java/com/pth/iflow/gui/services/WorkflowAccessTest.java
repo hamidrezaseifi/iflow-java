@@ -3,8 +3,10 @@ package com.pth.iflow.gui.services;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
+
 import java.net.URI;
 import java.util.List;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -15,16 +17,17 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
-import com.pth.iflow.common.edo.models.WorkflowCreateRequestEdo;
+
 import com.pth.iflow.common.edo.models.WorkflowEdo;
 import com.pth.iflow.common.edo.models.WorkflowListEdo;
+import com.pth.iflow.common.edo.models.WorkflowSaveRequestEdo;
 import com.pth.iflow.common.edo.models.WorkflowSearchFilterEdo;
 import com.pth.iflow.common.edo.models.WorkflowTypeListEdo;
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.gui.TestDataProducer;
 import com.pth.iflow.gui.configurations.GuiConfiguration;
 import com.pth.iflow.gui.models.GuiWorkflow;
-import com.pth.iflow.gui.models.GuiWorkflowCreateRequest;
+import com.pth.iflow.gui.models.GuiWorkflowSaveRequest;
 import com.pth.iflow.gui.models.GuiWorkflowSearchFilter;
 import com.pth.iflow.gui.models.GuiWorkflowType;
 import com.pth.iflow.gui.models.mapper.GuiModelEdoMapper;
@@ -35,20 +38,20 @@ import com.pth.iflow.gui.services.impl.WorkflowAccess;
 @AutoConfigureMockMvc
 public class WorkflowAccessTest extends TestDataProducer {
 
-  private IWorkflowAccess workflowAccess;
+  private IWorkflowAccess                             workflowAccess;
 
   @MockBean
-  private IRestTemplateCall restTemplate;
+  private IRestTemplateCall                           restTemplate;
 
   @MockBean
   private GuiConfiguration.WorkflowModuleAccessConfig workflowModuleAccessConfig;
 
   @MockBean
-  private GuiConfiguration.ProfileModuleAccessConfig profileModuleAccessConfig;
+  private GuiConfiguration.ProfileModuleAccessConfig  profileModuleAccessConfig;
 
-  private URI testUri;
+  private URI                                         testUri;
 
-  private final String testToken = "test-token";
+  private final String                                testToken = "test-token";
 
   @Before
   public void setUp() throws Exception {
@@ -77,11 +80,8 @@ public class WorkflowAccessTest extends TestDataProducer {
 
     final GuiWorkflow workflow = this.getTestGuiWorkflow(1L);
 
-    when(this.restTemplate.callRestGet(any(URI.class),
-                                       any(EModule.class),
-                                       eq(WorkflowEdo.class),
-                                       any(String.class),
-                                       any(boolean.class))).thenReturn(GuiModelEdoMapper.toEdo(workflow));
+    when(this.restTemplate.callRestGet(any(URI.class), any(EModule.class), eq(WorkflowEdo.class), any(String.class),
+        any(boolean.class))).thenReturn(GuiModelEdoMapper.toEdo(workflow));
 
     final GuiWorkflow resWorkflow = this.workflowAccess.readWorkflow(workflow.getId(), this.testToken);
 
@@ -95,17 +95,13 @@ public class WorkflowAccessTest extends TestDataProducer {
   @Test
   public void testCreateWorkflow() throws Exception {
 
-    final GuiWorkflowCreateRequest createRequest = this.getTestGuiWorkflowCreateRequest();
+    final GuiWorkflowSaveRequest createRequest = this.getTestGuiWorkflowSaveRequest();
 
     final List<GuiWorkflow> workflowList = this.getTestGuiWorkflowList();
 
-    when(this.restTemplate.callRestPost(any(URI.class),
-                                        any(EModule.class),
-                                        any(WorkflowCreateRequestEdo.class),
-                                        eq(WorkflowListEdo.class),
-                                        any(String.class),
-                                        any(boolean.class)))
-                                                            .thenReturn(new WorkflowListEdo(GuiModelEdoMapper.toWorkflowEdoList(workflowList)));
+    when(this.restTemplate.callRestPost(any(URI.class), any(EModule.class), any(WorkflowSaveRequestEdo.class),
+        eq(WorkflowListEdo.class), any(String.class), any(boolean.class)))
+            .thenReturn(new WorkflowListEdo(GuiModelEdoMapper.toWorkflowEdoList(workflowList)));
 
     final List<GuiWorkflow> resWorkflowList = this.workflowAccess.createWorkflow(createRequest, this.testToken);
 
@@ -119,14 +115,12 @@ public class WorkflowAccessTest extends TestDataProducer {
   public void testSaveWorkflow() throws Exception {
     final GuiWorkflow workflow = this.getTestGuiWorkflow(1L);
 
-    when(this.restTemplate.callRestPost(any(URI.class),
-                                        any(EModule.class),
-                                        any(WorkflowEdo.class),
-                                        eq(WorkflowEdo.class),
-                                        any(String.class),
-                                        any(boolean.class))).thenReturn(GuiModelEdoMapper.toEdo(workflow));
+    final GuiWorkflowSaveRequest request = this.getTestGuiWorkflowSaveRequest(workflow);
 
-    final GuiWorkflow resWorkflow = this.workflowAccess.saveWorkflow(workflow, this.testToken);
+    when(this.restTemplate.callRestPost(any(URI.class), any(EModule.class), any(WorkflowEdo.class), eq(WorkflowEdo.class),
+        any(String.class), any(boolean.class))).thenReturn(GuiModelEdoMapper.toEdo(workflow));
+
+    final GuiWorkflow resWorkflow = this.workflowAccess.saveWorkflow(request, this.testToken);
 
     Assert.assertNotNull("Result workflow is not null!", resWorkflow);
     Assert.assertEquals("Result workflow has id 1!", resWorkflow.getId(), workflow.getId());
@@ -142,11 +136,8 @@ public class WorkflowAccessTest extends TestDataProducer {
 
     final WorkflowTypeListEdo typeListEdo = new WorkflowTypeListEdo(GuiModelEdoMapper.toWorkflowTypeEdoList(workflowTypeList));
 
-    when(this.restTemplate.callRestGet(any(URI.class),
-                                       any(EModule.class),
-                                       eq(WorkflowTypeListEdo.class),
-                                       any(String.class),
-                                       any(boolean.class))).thenReturn(typeListEdo);
+    when(this.restTemplate.callRestGet(any(URI.class), any(EModule.class), eq(WorkflowTypeListEdo.class), any(String.class),
+        any(boolean.class))).thenReturn(typeListEdo);
 
     final List<GuiWorkflowType> resWorkflowList = this.workflowAccess.readWorkflowTypeList(1L, this.testToken);
 
@@ -161,13 +152,9 @@ public class WorkflowAccessTest extends TestDataProducer {
 
     final List<GuiWorkflow> workflowList = this.getTestGuiWorkflowList();
 
-    when(this.restTemplate.callRestPost(any(URI.class),
-                                        any(EModule.class),
-                                        any(WorkflowSearchFilterEdo.class),
-                                        eq(WorkflowListEdo.class),
-                                        any(String.class),
-                                        any(boolean.class)))
-                                                            .thenReturn(new WorkflowListEdo(GuiModelEdoMapper.toWorkflowEdoList(workflowList)));
+    when(this.restTemplate.callRestPost(any(URI.class), any(EModule.class), any(WorkflowSearchFilterEdo.class),
+        eq(WorkflowListEdo.class), any(String.class), any(boolean.class)))
+            .thenReturn(new WorkflowListEdo(GuiModelEdoMapper.toWorkflowEdoList(workflowList)));
 
     final List<GuiWorkflow> resWorkflowList = this.workflowAccess.searchWorkflow(searchFilter, this.testToken);
 

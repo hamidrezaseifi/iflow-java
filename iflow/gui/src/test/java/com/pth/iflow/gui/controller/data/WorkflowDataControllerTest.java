@@ -27,7 +27,7 @@ import org.springframework.web.context.WebApplicationContext;
 import com.pth.iflow.gui.TestDataProducer;
 import com.pth.iflow.gui.models.GuiUser;
 import com.pth.iflow.gui.models.GuiWorkflow;
-import com.pth.iflow.gui.models.GuiWorkflowCreateRequest;
+import com.pth.iflow.gui.models.GuiWorkflowSaveRequest;
 import com.pth.iflow.gui.models.GuiWorkflowSearchFilter;
 import com.pth.iflow.gui.models.GuiWorkflowType;
 import com.pth.iflow.gui.models.ui.GuiSessionUserInfo;
@@ -140,7 +140,7 @@ public class WorkflowDataControllerTest extends TestDataProducer {
 
     final GuiWorkflow newWorkflow = GuiWorkflow.generateInitial(1L);
 
-    final GuiWorkflowCreateRequest workflowReq = GuiWorkflowCreateRequest.generateNew(newWorkflow);
+    final GuiWorkflowSaveRequest workflowReq = GuiWorkflowSaveRequest.generateNew(newWorkflow);
 
     map.put("users", userList);
     map.put("workflowTypes", workflowTypeList);
@@ -163,11 +163,11 @@ public class WorkflowDataControllerTest extends TestDataProducer {
   @Test
   public void testCreateWorkflow() throws Exception {
 
-    final GuiWorkflowCreateRequest createRequest = getTestGuiWorkflowCreateRequest();
+    final GuiWorkflowSaveRequest createRequest = getTestGuiWorkflowSaveRequest();
 
     final String contentAsXmlString = this.jsonConverter.getObjectMapper().writeValueAsString(createRequest);
 
-    Mockito.when(this.workflowHandler.createWorkflow(ArgumentMatchers.any(GuiWorkflowCreateRequest.class),
+    Mockito.when(this.workflowHandler.createWorkflow(ArgumentMatchers.any(GuiWorkflowSaveRequest.class),
                                                      ArgumentMatchers.any(HttpSession.class)))
            .thenReturn(null);
 

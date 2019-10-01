@@ -21,7 +21,6 @@ public class Workflow extends DataModelBase {
   private Integer                    version;
   private LocalDateTime              createdAt;
   private LocalDateTime              updatedAt;
-  private String                     command;
 
   private final List<WorkflowFile>   files   = new ArrayList<>();
   private final List<WorkflowAction> actions = new ArrayList<>();
@@ -111,14 +110,6 @@ public class Workflow extends DataModelBase {
   @Override
   public void setVersion(final Integer version) {
     this.version = version;
-  }
-
-  public String getCommand() {
-    return command;
-  }
-
-  public void setCommand(final String command) {
-    this.command = command;
   }
 
   public LocalDateTime getCreatedAt() {

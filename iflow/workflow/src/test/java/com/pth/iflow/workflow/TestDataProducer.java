@@ -18,9 +18,9 @@ import com.pth.iflow.workflow.models.User;
 import com.pth.iflow.workflow.models.UserGroup;
 import com.pth.iflow.workflow.models.Workflow;
 import com.pth.iflow.workflow.models.WorkflowAction;
-import com.pth.iflow.workflow.models.WorkflowCreateRequest;
 import com.pth.iflow.workflow.models.WorkflowFile;
 import com.pth.iflow.workflow.models.WorkflowFileVersion;
+import com.pth.iflow.workflow.models.WorkflowSaveRequest;
 import com.pth.iflow.workflow.models.WorkflowSearchFilter;
 import com.pth.iflow.workflow.models.WorkflowType;
 import com.pth.iflow.workflow.models.WorkflowTypeStep;
@@ -103,7 +103,7 @@ public class TestDataProducer {
     model.setCreatedBy(1L);
     model.setAssignTo(1L);
     model.setNextAssign(false);
-    model.setCommand(EWorkflowProcessCommand.NONE);
+
     model.setActions(
         Arrays.asList(this.getTestWorkflowAction(1L, 1L), this.getTestWorkflowAction(2L, 2L), this.getTestWorkflowAction(3L, 3L)));
     model
@@ -125,7 +125,6 @@ public class TestDataProducer {
     model.setCurrentStepId(model.getCurrentStep().getId());
     model.setCreatedBy(1L);
     model.setAssignTo(1L);
-    model.setCommand(EWorkflowProcessCommand.CREATE);
     model.setActions(Arrays.asList(this.getTestWorkflowAction(1L, 1L, actionStatus), this.getTestWorkflowAction(2L, 2L, actionStatus),
         this.getTestWorkflowAction(3L, 3L, actionStatus)));
     model
@@ -382,11 +381,12 @@ public class TestDataProducer {
     return filter;
   }
 
-  protected WorkflowCreateRequest getTestWorkflowCreateRequest() {
-    final WorkflowCreateRequest request = new WorkflowCreateRequest();
+  protected WorkflowSaveRequest getTestWorkflowCreateRequest() {
+    final WorkflowSaveRequest request = new WorkflowSaveRequest();
     request.setAssigns(this.getTestAssignedList());
     request.setWorkflow(this.getTestWorkflow(1L));
     request.setExpireDays(10);
+    request.setCommand(EWorkflowProcessCommand.NONE);
 
     return request;
   }

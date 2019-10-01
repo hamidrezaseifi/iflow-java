@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 
 @JsonIgnoreProperties(value = { "isAssignTo" })
@@ -25,7 +24,6 @@ public class GuiWorkflow {
   private String                        comments;
   private EWorkflowStatus               status;
   private Integer                       version;
-  private EWorkflowProcessCommand       command;
 
   private final List<GuiWorkflowFile>   files   = new ArrayList<>();
   private final List<GuiWorkflowAction> actions = new ArrayList<>();
@@ -186,14 +184,6 @@ public class GuiWorkflow {
     this.version = version;
   }
 
-  public EWorkflowProcessCommand getCommand() {
-    return this.command;
-  }
-
-  public void setCommand(final EWorkflowProcessCommand command) {
-    this.command = command;
-  }
-
   public List<GuiWorkflowFile> getFiles() {
     return this.files;
   }
@@ -329,7 +319,6 @@ public class GuiWorkflow {
     newWorkflow.setVersion(0);
     newWorkflow.setWorkflowTypeId(0L);
     newWorkflow.setComments("");
-    newWorkflow.setCommand(EWorkflowProcessCommand.CREATE);
 
     return newWorkflow;
   }

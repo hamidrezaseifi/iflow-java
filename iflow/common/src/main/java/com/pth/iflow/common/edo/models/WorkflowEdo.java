@@ -13,8 +13,6 @@ import javax.xml.bind.annotation.XmlType;
 
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
-import com.pth.iflow.common.edo.models.validation.AEnumNameValidator;
-import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 
 @XmlRootElement(name = "Workflow", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -57,11 +55,6 @@ public class WorkflowEdo {
   @NotNull(message = "Version is not allowed to be null!")
   @XmlElement(name = "Version", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer                 version;
-
-  @NotNull(message = "Command is not allowed to be null!")
-  @AEnumNameValidator(enumClazz = EWorkflowProcessCommand.class)
-  @XmlElement(name = "Command", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String                  command;
 
   @NotNull(message = "WorkflowFileEdo is not allowed to be null!")
   @XmlElementWrapper(name = "WorkflowFileList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
@@ -159,14 +152,6 @@ public class WorkflowEdo {
 
   public void setVersion(final Integer version) {
     this.version = version;
-  }
-
-  public String getCommand() {
-    return this.command;
-  }
-
-  public void setCommand(final String command) {
-    this.command = command;
   }
 
   public List<WorkflowFileEdo> getFiles() {

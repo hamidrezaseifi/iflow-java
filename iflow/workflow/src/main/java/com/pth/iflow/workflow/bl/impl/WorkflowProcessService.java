@@ -21,7 +21,7 @@ import com.pth.iflow.workflow.bl.strategies.ISaveWorkflowStrategy;
 import com.pth.iflow.workflow.bl.strategies.IWorkStrategyFactory;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.Workflow;
-import com.pth.iflow.workflow.models.WorkflowCreateRequest;
+import com.pth.iflow.workflow.models.WorkflowSaveRequest;
 import com.pth.iflow.workflow.models.WorkflowSearchFilter;
 import com.pth.iflow.workflow.models.WorkflowType;
 import com.pth.iflow.workflow.models.WorkflowTypeStep;
@@ -50,7 +50,7 @@ public class WorkflowProcessService implements IWorkflowProcessService {
   }
 
   @Override
-  public List<Workflow> create(final WorkflowCreateRequest model, final String token)
+  public List<Workflow> create(final WorkflowSaveRequest model, final String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     final ICreateWorkflowStrategy createWorkflowStrategy = this.workStrategyFactory.selectCreateWorkStrategy(model, token);
@@ -61,12 +61,12 @@ public class WorkflowProcessService implements IWorkflowProcessService {
   }
 
   @Override
-  public Workflow save(final Workflow newWorkflow, final String token)
+  public Workflow save(final WorkflowSaveRequest request, final String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
-    logger.debug("Saving workflow {} with token {}", newWorkflow.getTitle(), token);
-    this.tokenCanSaveWorkflow(newWorkflow, token);
+    logger.debug("Saving workflow with token {}", token);
+    this.tokenCanSaveWorkflow(request.getWorkflow(), token);
 
-    final ISaveWorkflowStrategy strategy = this.workStrategyFactory.selectSaveWorkStrategy(newWorkflow, token);
+    final ISaveWorkflowStrategy strategy = this.workStrategyFactory.selectSaveWorkStrategy(request, token);
 
     final Workflow result = strategy.process();
 

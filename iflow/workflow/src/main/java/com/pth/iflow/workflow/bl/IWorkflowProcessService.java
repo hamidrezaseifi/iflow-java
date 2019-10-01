@@ -6,15 +6,15 @@ import java.util.List;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.Workflow;
-import com.pth.iflow.workflow.models.WorkflowCreateRequest;
+import com.pth.iflow.workflow.models.WorkflowSaveRequest;
 import com.pth.iflow.workflow.models.WorkflowSearchFilter;
 
 public interface IWorkflowProcessService {
 
-  public List<Workflow> create(WorkflowCreateRequest model, String token)
+  public List<Workflow> create(WorkflowSaveRequest model, String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  public Workflow save(Workflow model, String token)
+  public Workflow save(WorkflowSaveRequest request, String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
   public Workflow getById(Long id, String token)

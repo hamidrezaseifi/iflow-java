@@ -9,7 +9,7 @@ import javax.servlet.http.HttpSession;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.GuiWorkflow;
-import com.pth.iflow.gui.models.GuiWorkflowCreateRequest;
+import com.pth.iflow.gui.models.GuiWorkflowSaveRequest;
 import com.pth.iflow.gui.models.GuiWorkflowFile;
 import com.pth.iflow.gui.models.GuiWorkflowSearchFilter;
 import com.pth.iflow.gui.models.GuiWorkflowType;
@@ -22,7 +22,7 @@ public interface IWorkflowHandler {
   GuiWorkflowFile readWorkflowFile(final Long workflowId, final Long fileId)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  List<GuiWorkflow> createWorkflow(final GuiWorkflowCreateRequest createRequest, final HttpSession session)
+  List<GuiWorkflow> createWorkflow(final GuiWorkflowSaveRequest createRequest, final HttpSession session)
       throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException;
 
   GuiWorkflow saveWorkflow(final GuiWorkflow workflow, final HttpSession session)

@@ -62,7 +62,6 @@ public class WorkflowController {
       throws Exception {
 
     final Workflow model = this.workflowService.save(CoreModelEdoMapper.fromEdo(workflowEdo));
-    model.setCommand(workflowEdo.getCommand());
     return ControllerHelper.createResponseEntity(request, CoreModelEdoMapper.toEdo(model), HttpStatus.ACCEPTED);
   }
 

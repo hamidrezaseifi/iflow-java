@@ -13,11 +13,18 @@ import javax.xml.bind.annotation.XmlType;
 
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
+import com.pth.iflow.common.edo.models.validation.AEnumNameValidator;
+import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 
 @XmlRootElement(name = "WorkflowCreateRequest", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "WorkflowCreateRequest" + IFlowJaxbDefinition.TYPE_PREFIX)
-public class WorkflowCreateRequestEdo {
+public class WorkflowSaveRequestEdo {
+
+  @NotNull(message = "Command is not allowed to be null!")
+  @AEnumNameValidator(enumClazz = EWorkflowProcessCommand.class)
+  @XmlElement(name = "Command", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String              command;
 
   @NotNull(message = "Workflow must not be null")
   @XmlElement(name = "Workflow", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
@@ -32,8 +39,16 @@ public class WorkflowCreateRequestEdo {
   @XmlElement(name = "AssignedList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private List<AssignItemEdo> assigns = new ArrayList<>();
 
-  public WorkflowCreateRequestEdo() {
+  public WorkflowSaveRequestEdo() {
 
+  }
+
+  public String getCommand() {
+    return this.command;
+  }
+
+  public void setCommand(final String command) {
+    this.command = command;
   }
 
   /**

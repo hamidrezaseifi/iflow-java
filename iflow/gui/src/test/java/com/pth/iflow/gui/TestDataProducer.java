@@ -19,9 +19,9 @@ import com.pth.iflow.gui.models.GuiUser;
 import com.pth.iflow.gui.models.GuiUserGroup;
 import com.pth.iflow.gui.models.GuiWorkflow;
 import com.pth.iflow.gui.models.GuiWorkflowAction;
-import com.pth.iflow.gui.models.GuiWorkflowCreateRequest;
 import com.pth.iflow.gui.models.GuiWorkflowFile;
 import com.pth.iflow.gui.models.GuiWorkflowFileVersion;
+import com.pth.iflow.gui.models.GuiWorkflowSaveRequest;
 import com.pth.iflow.gui.models.GuiWorkflowSearchFilter;
 import com.pth.iflow.gui.models.GuiWorkflowType;
 import com.pth.iflow.gui.models.GuiWorkflowTypeStep;
@@ -104,7 +104,6 @@ public class TestDataProducer {
     model.setCurrentStepId(model.getCurrentStep().getId());
     model.setCreatedBy(1L);
     model.setAssignTo(1L);
-    model.setCommand(EWorkflowProcessCommand.CREATE);
     model.setActions(Arrays.asList(this.getTestGuiWorkflowAction(1L, 1L), this.getTestGuiWorkflowAction(2L, 2L),
         this.getTestGuiWorkflowAction(3L, 3L)));
     model.setFiles(
@@ -351,10 +350,20 @@ public class TestDataProducer {
     return filter;
   }
 
-  protected GuiWorkflowCreateRequest getTestGuiWorkflowCreateRequest() {
-    final GuiWorkflowCreateRequest request = new GuiWorkflowCreateRequest();
+  protected GuiWorkflowSaveRequest getTestGuiWorkflowSaveRequest() {
+    final GuiWorkflowSaveRequest request = new GuiWorkflowSaveRequest();
     request.setAssigns(this.getTestAssignedList());
     request.setWorkflow(this.getTestGuiWorkflow(null));
+    request.setCommand(EWorkflowProcessCommand.CREATE);
+
+    return request;
+  }
+
+  protected GuiWorkflowSaveRequest getTestGuiWorkflowSaveRequest(final GuiWorkflow workflow) {
+    final GuiWorkflowSaveRequest request = new GuiWorkflowSaveRequest();
+    request.setAssigns(this.getTestAssignedList());
+    request.setWorkflow(workflow);
+    request.setCommand(EWorkflowProcessCommand.CREATE);
 
     return request;
   }

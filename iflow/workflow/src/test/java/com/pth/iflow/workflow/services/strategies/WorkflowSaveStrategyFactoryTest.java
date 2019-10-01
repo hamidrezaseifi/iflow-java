@@ -2,7 +2,9 @@ package com.pth.iflow.workflow.services.strategies;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+
 import java.util.ArrayList;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -12,6 +14,7 @@ import org.mockito.Mock;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
 import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 import com.pth.iflow.common.exceptions.IFlowCustomeException;
 import com.pth.iflow.workflow.TestDataProducer;
@@ -27,7 +30,7 @@ import com.pth.iflow.workflow.bl.strategies.save.ArchivingWorkflowStrategy;
 import com.pth.iflow.workflow.bl.strategies.save.DoneExistingWorkflowStrategy;
 import com.pth.iflow.workflow.bl.strategies.save.SaveExistingWorkflowStrategy;
 import com.pth.iflow.workflow.bl.strategies.save.SaveNewWorkflowStrategy;
-import com.pth.iflow.workflow.models.Workflow;
+import com.pth.iflow.workflow.models.WorkflowSaveRequest;
 import com.pth.iflow.workflow.models.WorkflowType;
 
 @RunWith(SpringRunner.class)
@@ -35,32 +38,29 @@ import com.pth.iflow.workflow.models.WorkflowType;
 @AutoConfigureMockMvc
 public class WorkflowSaveStrategyFactoryTest extends TestDataProducer {
 
-  private IWorkStrategyFactory workStrategyFactory;
+  private IWorkStrategyFactory        workStrategyFactory;
 
   @Mock
-  private IWorkflowDataService workflowDataService;
+  private IWorkflowDataService        workflowDataService;
 
   @Mock
-  private IWorkflowTypeDataService workflowTypeDataService;
+  private IWorkflowTypeDataService    workflowTypeDataService;
 
   @Mock
-  private IDepartmentDataService departmentDataService;
+  private IDepartmentDataService      departmentDataService;
 
   @Mock
   private IWorkflowMessageDataService workflowMessageDataService;
 
   @Mock
-  private ICachDataDataService cachDataDataService;
+  private ICachDataDataService        cachDataDataService;
 
-  private String validTocken;
+  private String                      validTocken;
 
   @Before
   public void setUp() throws Exception {
-    this.workStrategyFactory = new WorkStrategyFactory(this.workflowDataService,
-                                                       this.workflowTypeDataService,
-                                                       this.departmentDataService,
-                                                       this.workflowMessageDataService,
-                                                       cachDataDataService);
+    this.workStrategyFactory = new WorkStrategyFactory(this.workflowDataService, this.workflowTypeDataService,
+        this.departmentDataService, this.workflowMessageDataService, cachDataDataService);
 
     // when(this.workflowDataService.generateCoreUrl(any(String.class))).thenReturn(new
     // URL("http://any-string"));
@@ -75,91 +75,87 @@ public class WorkflowSaveStrategyFactoryTest extends TestDataProducer {
   @Test
   public void testSelectSaveNewWorkflowStrategy() throws Exception {
 
-    final Workflow workflow = this.getTestWorkflow(1L);
-    workflow.setId(null);
-    workflow.setCommand(EWorkflowProcessCommand.CREATE);
+    final WorkflowSaveRequest request = this.getTestWorkflowCreateRequest();
+    request.getWorkflow().setId(null);
+    request.setCommand(EWorkflowProcessCommand.CREATE);
 
     final WorkflowType workflowType = this.getTestWorkflowType(1L, "");
     when(this.workflowTypeDataService.getById(any(Long.class), any(String.class))).thenReturn(workflowType);
 
-    final ISaveWorkflowStrategy saveWorkflowStrategy = this.workStrategyFactory.selectSaveWorkStrategy(workflow, this.validTocken);
+    final ISaveWorkflowStrategy saveWorkflowStrategy = this.workStrategyFactory.selectSaveWorkStrategy(request, this.validTocken);
 
     Assert.assertNotNull("Result strategy is not null!", saveWorkflowStrategy);
-    Assert.assertEquals("Selected strategy is SaveNewWorkflowStrategy!",
-                        saveWorkflowStrategy.getClass(),
-                        SaveNewWorkflowStrategy.class);
+    Assert.assertEquals("Selected strategy is SaveNewWorkflowStrategy!", saveWorkflowStrategy.getClass(),
+        SaveNewWorkflowStrategy.class);
 
   }
 
   @Test
   public void testSelectArchivingWorkflowStrategy() throws Exception {
 
-    final Workflow workflow = this.getTestWorkflow(1L);
-    workflow.setCommand(EWorkflowProcessCommand.ARCHIVE);
+    final WorkflowSaveRequest request = this.getTestWorkflowCreateRequest();
+    request.setCommand(EWorkflowProcessCommand.ARCHIVE);
 
     final WorkflowType workflowType = this.getTestWorkflowType(1L, "");
     when(this.workflowTypeDataService.getById(any(Long.class), any(String.class))).thenReturn(workflowType);
 
-    final ISaveWorkflowStrategy saveWorkflowStrategy = this.workStrategyFactory.selectSaveWorkStrategy(workflow, this.validTocken);
+    final ISaveWorkflowStrategy saveWorkflowStrategy = this.workStrategyFactory.selectSaveWorkStrategy(request, this.validTocken);
 
     Assert.assertNotNull("Result strategy is not null!", saveWorkflowStrategy);
-    Assert.assertEquals("Selected strategy is ArchivingWorkflowStrategy!",
-                        saveWorkflowStrategy.getClass(),
-                        ArchivingWorkflowStrategy.class);
+    Assert.assertEquals("Selected strategy is ArchivingWorkflowStrategy!", saveWorkflowStrategy.getClass(),
+        ArchivingWorkflowStrategy.class);
 
   }
 
   @Test
   public void testSelectDoneExistingWorkflowStrategy() throws Exception {
 
-    final Workflow workflow = this.getTestWorkflow(1L);
-    workflow.setAssignTo(1L);
+    final WorkflowSaveRequest request = this.getTestWorkflowCreateRequest();
+    request.getWorkflow().setAssignTo(1L);
 
-    workflow.setCommand(EWorkflowProcessCommand.DONE);
+    request.setCommand(EWorkflowProcessCommand.DONE);
 
     final WorkflowType workflowType = this.getTestWorkflowType(1L, "");
     when(this.workflowTypeDataService.getById(any(Long.class), any(String.class))).thenReturn(workflowType);
 
-    final ISaveWorkflowStrategy saveWorkflowStrategy = this.workStrategyFactory.selectSaveWorkStrategy(workflow, this.validTocken);
+    final ISaveWorkflowStrategy saveWorkflowStrategy = this.workStrategyFactory.selectSaveWorkStrategy(request, this.validTocken);
 
     Assert.assertNotNull("Result strategy is not null!", saveWorkflowStrategy);
-    Assert.assertEquals("Selected strategy is DoneExistingWorkflowStrategy!",
-                        saveWorkflowStrategy.getClass(),
-                        DoneExistingWorkflowStrategy.class);
+    Assert.assertEquals("Selected strategy is DoneExistingWorkflowStrategy!", saveWorkflowStrategy.getClass(),
+        DoneExistingWorkflowStrategy.class);
 
   }
 
   @Test
   public void testSelectSaveExistingWorkflowStrategy() throws Exception {
 
-    final Workflow workflow = this.getTestWorkflow(1L);
-    workflow.setAssignTo(1L);
+    final WorkflowSaveRequest request = this.getTestWorkflowCreateRequest();
+    request.getWorkflow().setAssignTo(1L);
 
-    workflow.setCommand(EWorkflowProcessCommand.SAVE);
+    request.setCommand(EWorkflowProcessCommand.SAVE);
 
     final WorkflowType workflowType = this.getTestWorkflowType(1L, "");
     when(this.workflowTypeDataService.getById(any(Long.class), any(String.class))).thenReturn(workflowType);
 
-    final ISaveWorkflowStrategy saveWorkflowStrategy = this.workStrategyFactory.selectSaveWorkStrategy(workflow, this.validTocken);
+    final ISaveWorkflowStrategy saveWorkflowStrategy = this.workStrategyFactory.selectSaveWorkStrategy(request, this.validTocken);
 
     Assert.assertNotNull("Result strategy is not null!", saveWorkflowStrategy);
-    Assert.assertEquals("Selected strategy is SaveExistingWorkflowStrategy!",
-                        saveWorkflowStrategy.getClass(),
-                        SaveExistingWorkflowStrategy.class);
+    Assert.assertEquals("Selected strategy is SaveExistingWorkflowStrategy!", saveWorkflowStrategy.getClass(),
+        SaveExistingWorkflowStrategy.class);
 
   }
 
   @Test(expected = IFlowCustomeException.class)
   public void testSelectNoneStrategy() throws Exception {
 
-    final Workflow workflow = this.getTestWorkflow(1L);
-    workflow.setAssignTo(1L);
-    workflow.setActions(new ArrayList<>());
+    final WorkflowSaveRequest request = this.getTestWorkflowCreateRequest();
+    request.getWorkflow().setAssignTo(1L);
+    request.getWorkflow().setActions(new ArrayList<>());
 
     final WorkflowType workflowType = this.getTestWorkflowType(1L, "");
     when(this.workflowTypeDataService.getById(any(Long.class), any(String.class))).thenReturn(workflowType);
 
-    this.workStrategyFactory.selectSaveWorkStrategy(workflow, this.validTocken);
+    this.workStrategyFactory.selectSaveWorkStrategy(request, this.validTocken);
 
   }
 

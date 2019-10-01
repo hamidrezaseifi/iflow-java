@@ -16,7 +16,7 @@ import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.configurations.GuiConfiguration;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.GuiWorkflow;
-import com.pth.iflow.gui.models.GuiWorkflowCreateRequest;
+import com.pth.iflow.gui.models.GuiWorkflowSaveRequest;
 import com.pth.iflow.gui.models.GuiWorkflowSearchFilter;
 import com.pth.iflow.gui.models.GuiWorkflowType;
 import com.pth.iflow.gui.models.mapper.GuiModelEdoMapper;
@@ -26,9 +26,9 @@ import com.pth.iflow.gui.services.IWorkflowAccess;
 @Service
 public class WorkflowAccess implements IWorkflowAccess {
 
-  private static final Logger                       logger = LoggerFactory.getLogger(WorkflowAccess.class);
+  private static final Logger                               logger = LoggerFactory.getLogger(WorkflowAccess.class);
 
-  private final IRestTemplateCall                   restTemplate;
+  private final IRestTemplateCall                           restTemplate;
   private final GuiConfiguration.WorkflowModuleAccessConfig moduleAccessConfig;
 
   public WorkflowAccess(@Autowired final IRestTemplateCall restTemplate,
@@ -49,7 +49,7 @@ public class WorkflowAccess implements IWorkflowAccess {
   }
 
   @Override
-  public List<GuiWorkflow> createWorkflow(final GuiWorkflowCreateRequest createRequest, final String token)
+  public List<GuiWorkflow> createWorkflow(final GuiWorkflowSaveRequest createRequest, final String token)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     logger.debug("Create workflow");
 
@@ -60,12 +60,12 @@ public class WorkflowAccess implements IWorkflowAccess {
   }
 
   @Override
-  public GuiWorkflow saveWorkflow(final GuiWorkflow workflow, final String token)
+  public GuiWorkflow saveWorkflow(final GuiWorkflowSaveRequest request, final String token)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
-    logger.debug("save workflow {}", workflow.getId());
+    logger.debug("save workflow");
 
     final WorkflowEdo responseEdo = this.restTemplate.callRestPost(this.moduleAccessConfig.getSaveWorkflowUri(), EModule.WORKFLOW,
-        GuiModelEdoMapper.toEdo(workflow), WorkflowEdo.class, token, true);
+        GuiModelEdoMapper.toEdo(request), WorkflowEdo.class, token, true);
 
     return GuiModelEdoMapper.fromEdo(responseEdo);
   }

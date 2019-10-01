@@ -28,7 +28,7 @@ import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.GuiDepartment;
 import com.pth.iflow.gui.models.GuiUser;
 import com.pth.iflow.gui.models.GuiWorkflow;
-import com.pth.iflow.gui.models.GuiWorkflowCreateRequest;
+import com.pth.iflow.gui.models.GuiWorkflowSaveRequest;
 import com.pth.iflow.gui.models.GuiWorkflowMessage;
 import com.pth.iflow.gui.models.GuiWorkflowSearchFilter;
 import com.pth.iflow.gui.models.GuiWorkflowType;
@@ -105,7 +105,7 @@ public class WorkflowDataController extends GuiDataControllerBase {
 
     final GuiWorkflow newWorkflow = GuiWorkflow.generateInitial(this.getLoggedUser().getId());
 
-    final GuiWorkflowCreateRequest workflowReq = GuiWorkflowCreateRequest.generateNew(newWorkflow);
+    final GuiWorkflowSaveRequest workflowReq = GuiWorkflowSaveRequest.generateNew(newWorkflow);
     final int workflowmessageExpireDays = 15;
     workflowReq.setExpireDays(workflowmessageExpireDays);
 
@@ -157,7 +157,7 @@ public class WorkflowDataController extends GuiDataControllerBase {
   @ResponseStatus(HttpStatus.CREATED)
   @PostMapping(path = { "/workflowcreate/create" })
   @ResponseBody
-  public List<GuiWorkflow> createWorkflow(@RequestBody final GuiWorkflowCreateRequest createRequest, final HttpSession session) throws GuiCustomizedException, IOException, IFlowMessageConversionFailureException {
+  public List<GuiWorkflow> createWorkflow(@RequestBody final GuiWorkflowSaveRequest createRequest, final HttpSession session) throws GuiCustomizedException, IOException, IFlowMessageConversionFailureException {
 
     return this.workflowHandler.createWorkflow(createRequest, session);
 

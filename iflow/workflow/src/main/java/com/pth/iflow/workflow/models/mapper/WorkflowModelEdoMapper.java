@@ -17,11 +17,11 @@ import com.pth.iflow.common.edo.models.ProfileResponseEdo;
 import com.pth.iflow.common.edo.models.UserEdo;
 import com.pth.iflow.common.edo.models.UserGroupEdo;
 import com.pth.iflow.common.edo.models.WorkflowActionEdo;
-import com.pth.iflow.common.edo.models.WorkflowCreateRequestEdo;
 import com.pth.iflow.common.edo.models.WorkflowEdo;
 import com.pth.iflow.common.edo.models.WorkflowFileEdo;
 import com.pth.iflow.common.edo.models.WorkflowFileVersionEdo;
 import com.pth.iflow.common.edo.models.WorkflowMessageEdo;
+import com.pth.iflow.common.edo.models.WorkflowSaveRequestEdo;
 import com.pth.iflow.common.edo.models.WorkflowSearchFilterEdo;
 import com.pth.iflow.common.edo.models.WorkflowTypeEdo;
 import com.pth.iflow.common.edo.models.WorkflowTypeStepEdo;
@@ -41,10 +41,10 @@ import com.pth.iflow.workflow.models.User;
 import com.pth.iflow.workflow.models.UserGroup;
 import com.pth.iflow.workflow.models.Workflow;
 import com.pth.iflow.workflow.models.WorkflowAction;
-import com.pth.iflow.workflow.models.WorkflowCreateRequest;
 import com.pth.iflow.workflow.models.WorkflowFile;
 import com.pth.iflow.workflow.models.WorkflowFileVersion;
 import com.pth.iflow.workflow.models.WorkflowMessage;
+import com.pth.iflow.workflow.models.WorkflowSaveRequest;
 import com.pth.iflow.workflow.models.WorkflowSearchFilter;
 import com.pth.iflow.workflow.models.WorkflowType;
 import com.pth.iflow.workflow.models.WorkflowTypeStep;
@@ -244,7 +244,6 @@ public class WorkflowModelEdoMapper {
     edo.setWorkflowTypeId(model.getWorkflowTypeId());
     edo.setVersion(model.getVersion());
     edo.setAssignTo(model.getAssignTo());
-    edo.setCommand(model.getCommand().getName());
 
     edo.setFiles(toWorkflowFileEdoList(model.getFiles()));
     edo.setActions(toWorkflowActionEdoList(model.getActions()));
@@ -267,7 +266,6 @@ public class WorkflowModelEdoMapper {
     model.setWorkflowTypeId(edo.getWorkflowTypeId());
     model.setVersion(edo.getVersion());
     model.setAssignTo(edo.getAssignTo());
-    model.setCommand(EWorkflowProcessCommand.valueFromName(edo.getCommand()));
 
     model.setFiles(fromWorkflowFileEdoList(edo.getFiles()));
     model.setActions(fromWorkflowActionEdoList(edo.getActions()));
@@ -692,23 +690,25 @@ public class WorkflowModelEdoMapper {
     return modelList;
   }
 
-  public static WorkflowCreateRequestEdo toEdo(final WorkflowCreateRequest model) throws IFlowMessageConversionFailureException {
-    final WorkflowCreateRequestEdo edo = new WorkflowCreateRequestEdo();
+  public static WorkflowSaveRequestEdo toEdo(final WorkflowSaveRequest model) throws IFlowMessageConversionFailureException {
+    final WorkflowSaveRequestEdo edo = new WorkflowSaveRequestEdo();
 
     edo.setWorkflow(toEdo(model.getWorkflow()));
     edo.setExpireDays(model.getExpireDays());
     edo.setAssigns(toAssignItemEdoList(model.getAssigns()));
+    edo.setCommand(model.getCommand().getName());
 
     return edo;
   }
 
-  public static WorkflowCreateRequest fromEdo(final WorkflowCreateRequestEdo edo) throws IFlowMessageConversionFailureException {
+  public static WorkflowSaveRequest fromEdo(final WorkflowSaveRequestEdo edo) throws IFlowMessageConversionFailureException {
     validateCustomer(edo);
-    final WorkflowCreateRequest model = new WorkflowCreateRequest();
+    final WorkflowSaveRequest model = new WorkflowSaveRequest();
 
     model.setWorkflow(fromEdo(edo.getWorkflow()));
     model.setExpireDays(edo.getExpireDays());
     model.setAssigns(fromAssignItemEdoList(edo.getAssigns()));
+    model.setCommand(EWorkflowProcessCommand.valueFromName(edo.getCommand()));
 
     return model;
   }

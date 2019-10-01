@@ -1,8 +1,10 @@
 package com.pth.iflow.workflow.bl.strategies.create;
 
 import java.net.MalformedURLException;
+import java.util.Arrays;
 import java.util.Set;
 
+import com.pth.iflow.common.enums.EAssignType;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.enums.EWorkflowMessageType;
 import com.pth.iflow.common.exceptions.EIFlowErrorType;
@@ -15,14 +17,15 @@ import com.pth.iflow.workflow.bl.strategies.ICreateWorkflowStrategy;
 import com.pth.iflow.workflow.bl.strategies.ISaveWorkflowStrategy;
 import com.pth.iflow.workflow.bl.strategies.IWorkStrategyFactory;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
+import com.pth.iflow.workflow.models.AssignItem;
 import com.pth.iflow.workflow.models.Workflow;
-import com.pth.iflow.workflow.models.WorkflowCreateRequest;
 import com.pth.iflow.workflow.models.WorkflowMessage;
+import com.pth.iflow.workflow.models.WorkflowSaveRequest;
 import com.pth.iflow.workflow.models.WorkflowType;
 
 public abstract class AbstractCreateWorkflowStrategy implements ICreateWorkflowStrategy {
 
-  private final WorkflowCreateRequest       workflowCreateRequest;
+  private final WorkflowSaveRequest         workflowCreateRequest;
   private final WorkflowType                workflowType;
   private final String                      token;
   private final IWorkStrategyFactory        workStrategyFactory;
@@ -30,7 +33,7 @@ public abstract class AbstractCreateWorkflowStrategy implements ICreateWorkflowS
   private final IWorkflowMessageDataService workflowMessageDataService;
   private final ICachDataDataService        cachDataDataService;
 
-  public AbstractCreateWorkflowStrategy(final WorkflowCreateRequest workflowCreateRequest, final String token,
+  public AbstractCreateWorkflowStrategy(final WorkflowSaveRequest workflowCreateRequest, final String token,
       final IWorkStrategyFactory workStrategyFactory, final IDepartmentDataService departmentDataService,
       final IWorkflowMessageDataService workflowMessageDataService, final ICachDataDataService cachDataDataService,
       final WorkflowType workflowType) {
@@ -44,16 +47,16 @@ public abstract class AbstractCreateWorkflowStrategy implements ICreateWorkflowS
     this.workflowType = workflowType;
   }
 
-  protected Workflow saveWorkflow(final Workflow workflow)
+  protected Workflow saveWorkflow(final WorkflowSaveRequest saveRequest)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
-    final ISaveWorkflowStrategy saveWorkflowStrategy = this.workStrategyFactory.selectSaveWorkStrategy(workflow, this.token);
+    final ISaveWorkflowStrategy saveWorkflowStrategy = this.workStrategyFactory.selectSaveWorkStrategy(saveRequest, this.token);
 
     final Workflow savedWorkflow = saveWorkflowStrategy.process();
 
     return savedWorkflow;
   }
 
-  public WorkflowCreateRequest getWorkflowCreateRequest() {
+  public WorkflowSaveRequest getWorkflowCreateRequest() {
     return workflowCreateRequest;
   }
 
@@ -107,6 +110,23 @@ public abstract class AbstractCreateWorkflowStrategy implements ICreateWorkflowS
       throws MalformedURLException, IFlowMessageConversionFailureException {
 
     cachDataDataService.resetCachDataForUserList(companyId, userIdList, token);
+  }
+
+  protected WorkflowSaveRequest creaeOneAssignedWorkflowSaveRequest(final Workflow workflow, final Long userId) {
+    final WorkflowSaveRequest saveRequest = new WorkflowSaveRequest();
+    saveRequest.setWorkflow(workflow);
+    final AssignItem assignItem = new AssignItem(userId, EAssignType.USER);
+    saveRequest.setAssigns(Arrays.asList(assignItem));
+    saveRequest.setExpireDays(1);
+    return saveRequest;
+  }
+
+  protected WorkflowSaveRequest creaeNotAssignedWorkflowSaveRequest(final Workflow workflow) {
+    final WorkflowSaveRequest saveRequest = new WorkflowSaveRequest();
+    saveRequest.setWorkflow(workflow);
+    saveRequest.setAssigns(Arrays.asList());
+    saveRequest.setExpireDays(1);
+    return saveRequest;
   }
 
 }

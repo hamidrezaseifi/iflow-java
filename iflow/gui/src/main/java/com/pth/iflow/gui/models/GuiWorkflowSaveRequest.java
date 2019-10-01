@@ -3,25 +3,30 @@ package com.pth.iflow.gui.models;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GuiWorkflowCreateRequest {
+import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 
-  private GuiWorkflow workflow;
+public class GuiWorkflowSaveRequest {
 
-  private Integer expireDays;
+  private GuiWorkflow               workflow;
+
+  private Integer                   expireDays;
 
   private final List<GuiAssignItem> assigns = new ArrayList<>();
 
-  private String sessionKey;
+  private String                    sessionKey;
 
-  public GuiWorkflowCreateRequest() {
+  private EWorkflowProcessCommand   command;
+
+  public GuiWorkflowSaveRequest() {
 
   }
 
-  public static GuiWorkflowCreateRequest generateNew(final GuiWorkflow workflow) {
-    final GuiWorkflowCreateRequest request = new GuiWorkflowCreateRequest();
+  public static GuiWorkflowSaveRequest generateNew(final GuiWorkflow workflow) {
+    final GuiWorkflowSaveRequest request = new GuiWorkflowSaveRequest();
 
     request.setWorkflow(workflow);
     request.setExpireDays(15);
+    request.setCommand(EWorkflowProcessCommand.CREATE);
 
     return request;
   }
@@ -77,6 +82,14 @@ public class GuiWorkflowCreateRequest {
    */
   public void setSessionKey(final String sessionKey) {
     this.sessionKey = sessionKey;
+  }
+
+  public EWorkflowProcessCommand getCommand() {
+    return this.command;
+  }
+
+  public void setCommand(final EWorkflowProcessCommand command) {
+    this.command = command;
   }
 
 }

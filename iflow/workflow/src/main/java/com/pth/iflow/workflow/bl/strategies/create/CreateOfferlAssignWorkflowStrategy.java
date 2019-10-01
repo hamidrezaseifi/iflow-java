@@ -18,12 +18,12 @@ import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.AssignItem;
 import com.pth.iflow.workflow.models.User;
 import com.pth.iflow.workflow.models.Workflow;
-import com.pth.iflow.workflow.models.WorkflowCreateRequest;
+import com.pth.iflow.workflow.models.WorkflowSaveRequest;
 import com.pth.iflow.workflow.models.WorkflowType;
 
 public class CreateOfferlAssignWorkflowStrategy extends AbstractCreateWorkflowStrategy {
 
-  public CreateOfferlAssignWorkflowStrategy(final WorkflowCreateRequest workflowCreateRequest, final String token,
+  public CreateOfferlAssignWorkflowStrategy(final WorkflowSaveRequest workflowCreateRequest, final String token,
       final IWorkStrategyFactory workStrategyFactory, final IDepartmentDataService departmentDataService,
       final IWorkflowMessageDataService workflowMessageDataService, final ICachDataDataService cachDataDataService,
       final WorkflowType workflowType) {
@@ -40,7 +40,9 @@ public class CreateOfferlAssignWorkflowStrategy extends AbstractCreateWorkflowSt
     verifyAssigns();
 
     workflow.setAssignTo(null);
-    final Workflow savedWorkflow = this.saveWorkflow(workflow);
+    final WorkflowSaveRequest saveRequest = creaeNotAssignedWorkflowSaveRequest(workflow);
+
+    final Workflow savedWorkflow = this.saveWorkflow(saveRequest);
 
     final Set<Long> assignedUsers = new HashSet<>();
 

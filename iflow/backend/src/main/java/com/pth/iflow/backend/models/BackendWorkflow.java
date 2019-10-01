@@ -19,7 +19,6 @@ public class BackendWorkflow extends DataModelBase {
   private String                            comments;
   private EWorkflowStatus                   status;
   private Integer                           version;
-  private String                            command;
 
   private final List<BackendWorkflowFile>   files   = new ArrayList<>();
   private final List<BackendWorkflowAction> actions = new ArrayList<>();
@@ -180,14 +179,6 @@ public class BackendWorkflow extends DataModelBase {
   @Override
   public boolean isNew() {
     return (this.id == null) || (this.id <= 0);
-  }
-
-  public String getCommand() {
-    return this.command;
-  }
-
-  public void setCommand(final String command) {
-    this.command = command;
   }
 
 }

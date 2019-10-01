@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.enums.EWorkflowMessageType;
-import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
 import com.pth.iflow.core.model.Company;
@@ -201,7 +200,6 @@ public class TestDataProducer {
     model.setCurrentStep(this.getTestWorkflowTypeStep());
     model.setCreatedBy(1L);
     model.setAssignTo(1L);
-    model.setCommand(EWorkflowProcessCommand.CREATE.getName());
 
     model.setActions(
         Arrays.asList(this.getTestWorkflowAction(1L, 1L), this.getTestWorkflowAction(2L, 2L), this.getTestWorkflowAction(3L, 3L)));
@@ -243,7 +241,6 @@ public class TestDataProducer {
     model.setCurrentStep(this.getTestWorkflowTypeStep());
     model.setCreatedBy(1L);
     model.setAssignTo(1L);
-    model.setCommand(EWorkflowProcessCommand.CREATE.getName());
     model.setActions(Arrays.asList(this.getTestNewWorkflowAction(), this.getTestNewWorkflowAction(), this.getTestNewWorkflowAction()));
     model.setFiles(Arrays.asList(this.getTestNewWorkflowFile(), this.getTestNewWorkflowFile(), this.getTestNewWorkflowFile()));
 
