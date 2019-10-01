@@ -10,6 +10,7 @@ public class WorkflowAction extends DataModelBase {
   private Long          workflowId;
   private Long          createdBy;
   private String        action;
+  private Long          assignTo;
   private Long          oldStep;
   private Long          newStep;
   private Long          nextAssign;
@@ -75,6 +76,14 @@ public class WorkflowAction extends DataModelBase {
 
   public void setCreatedBy(final Long createdBy) {
     this.createdBy = createdBy;
+  }
+
+  public Long getAssignTo() {
+    return this.assignTo;
+  }
+
+  public void setAssignTo(final Long assignTo) {
+    this.assignTo = assignTo;
   }
 
   public String getComments() {

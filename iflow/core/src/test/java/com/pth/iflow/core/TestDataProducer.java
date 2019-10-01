@@ -199,7 +199,6 @@ public class TestDataProducer {
     model.setController(1L);
     model.setCurrentStep(this.getTestWorkflowTypeStep());
     model.setCreatedBy(1L);
-    model.setAssignTo(1L);
 
     model.setActions(
         Arrays.asList(this.getTestWorkflowAction(1L, 1L), this.getTestWorkflowAction(2L, 2L), this.getTestWorkflowAction(3L, 3L)));
@@ -240,7 +239,6 @@ public class TestDataProducer {
     model.setController(1L);
     model.setCurrentStep(this.getTestWorkflowTypeStep());
     model.setCreatedBy(1L);
-    model.setAssignTo(1L);
     model.setActions(Arrays.asList(this.getTestNewWorkflowAction(), this.getTestNewWorkflowAction(), this.getTestNewWorkflowAction()));
     model.setFiles(Arrays.asList(this.getTestNewWorkflowFile(), this.getTestNewWorkflowFile(), this.getTestNewWorkflowFile()));
 

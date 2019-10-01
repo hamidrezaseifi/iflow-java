@@ -103,7 +103,6 @@ public class TestDataProducer {
     model.setCurrentStep(this.getTestGuiWorkflowTypeStep());
     model.setCurrentStepId(model.getCurrentStep().getId());
     model.setCreatedBy(1L);
-    model.setAssignTo(1L);
     model.setActions(Arrays.asList(this.getTestGuiWorkflowAction(1L, 1L), this.getTestGuiWorkflowAction(2L, 2L),
         this.getTestGuiWorkflowAction(3L, 3L)));
     model.setFiles(
@@ -155,6 +154,7 @@ public class TestDataProducer {
     model.setNewStep(2L);
     model.setOldStep(1L);
     model.setComments("comments");
+    model.setAssignTo(1L);
 
     return model;
   }

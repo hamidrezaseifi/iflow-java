@@ -232,7 +232,6 @@ public class CoreModelEdoMapper {
     edo.setCreatedBy(model.getCreatedBy());
     edo.setWorkflowTypeId(model.getWorkflowTypeId());
     edo.setVersion(model.getVersion());
-    edo.setAssignTo(model.getAssignTo());
 
     edo.setFiles(toWorkflowFileEdoList(model.getFiles()));
     edo.setActions(toWorkflowActionEdoList(model.getActions()));
@@ -254,7 +253,6 @@ public class CoreModelEdoMapper {
     model.setCreatedBy(edo.getCreatedBy());
     model.setWorkflowTypeId(edo.getWorkflowTypeId());
     model.setVersion(edo.getVersion());
-    model.setAssignTo(edo.getAssignTo() != null ? edo.getAssignTo() : 0);
 
     model.setFiles(fromWorkflowFileEdoList(edo.getFiles()));
     model.setActions(fromWorkflowActionEdoList(edo.getActions()));
@@ -269,6 +267,7 @@ public class CoreModelEdoMapper {
     edo.setStatus(model.getStatus());
     edo.setId(model.getId());
     edo.setCreatedBy(model.getCreatedBy());
+    edo.setAssignTo(model.getAssignTo());
     edo.setOldStep(model.getOldStep());
     edo.setNewStep(model.getNewStep());
     edo.setNextAssign(model.getNextAssign());
@@ -293,6 +292,7 @@ public class CoreModelEdoMapper {
     model.setNextAssign(edo.getNextAssign());
     model.setWorkflowId(edo.getWorkflowId());
     model.setVersion(edo.getVersion());
+    model.setAssignTo(edo.getAssignTo());
 
     return model;
   }

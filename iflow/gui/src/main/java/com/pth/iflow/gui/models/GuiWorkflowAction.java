@@ -12,6 +12,8 @@ public class GuiWorkflowAction extends WorkflowActionModelBase {
   private Long                  createdBy;
   private GuiUser               createdByUser;
   private String                action;
+  private Long                  assignTo;
+  private GuiUser               assignToUser;
   private Long                  oldStep;
   private GuiWorkflowTypeStep   oldStepObject;
   private Long                  newStep;
@@ -44,6 +46,32 @@ public class GuiWorkflowAction extends WorkflowActionModelBase {
 
   public void setAction(final String action) {
     this.action = action;
+  }
+
+  public Long getAssignTo() {
+    return this.assignTo;
+  }
+
+  public boolean isAssignTo(final Long userId) {
+    return this.assignTo == userId;
+  }
+
+  public void setAssignTo(final Long assignTo) {
+    this.assignTo = assignTo;
+  }
+
+  /**
+   * @return the assignToUser
+   */
+  public GuiUser getAssignToUser() {
+    return this.assignToUser;
+  }
+
+  /**
+   * @param assignToUser the assignToUser to set
+   */
+  public void setAssignToUser(final GuiUser assignToUser) {
+    this.assignToUser = assignToUser;
   }
 
   public Long getOldStep() {

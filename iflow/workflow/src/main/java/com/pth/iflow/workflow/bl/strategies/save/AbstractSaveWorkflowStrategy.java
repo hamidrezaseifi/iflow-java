@@ -180,42 +180,6 @@ public abstract class AbstractSaveWorkflowStrategy implements ISaveWorkflowStrat
     return workflowType.getSteps().stream().map(step -> step.getId()).collect(Collectors.toList());
   }
 
-  protected void selectWorkflowNextAssigned(final Workflow newWorkflow, final WorkflowType workflowType,
-      final WorkflowAction activeAction) {
-
-    /*
-     * TODO: implements select next assigned for workflow based on new step
-     */
-
-    this.assignWorkflowToUser(newWorkflow, 0L);
-
-    if (workflowType.getSendToController().booleanValue() == true) {
-      this.assignWorkflowToUser(newWorkflow, newWorkflow.getController());
-    } else {
-
-      if (workflowType.getAllowAssign() && activeAction.hasNextAssign()) {
-        this.assignWorkflowToUser(newWorkflow, activeAction.getNextAssign());
-      }
-
-    }
-
-  }
-
-  private void assignWorkflowToUser(final Workflow newWorkflow, final Long userId) {
-    newWorkflow.setAssignTo(userId);
-    newWorkflow.setStatus((userId == null) || (userId == 0) ? EWorkflowStatus.NOT_ASSIGNED : EWorkflowStatus.ASSIGNED);
-  }
-
-  protected boolean setAssignToControllerAfterLastStep(final Workflow newWorkflow, final WorkflowType workflowType,
-      final WorkflowAction activeAction) {
-    final WorkflowTypeStep lastStep = this.findLastStep(workflowType);
-    if (lastStep.getStepIndex() == newWorkflow.getCurrentStep().getStepIndex()) {
-      newWorkflow.setAssignTo(newWorkflow.getController());
-      return true;
-    }
-    return false;
-  }
-
   protected void selectWorkflowNextStep(final Workflow newWorkflow, final WorkflowType workflowType,
       final WorkflowAction activeAction) {
 

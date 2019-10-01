@@ -14,7 +14,6 @@ public class Workflow extends DataModelBase {
   private WorkflowTypeStep           currentStep;
   private Long                       controller;
   private Long                       createdBy;
-  private Long                       assignTo;
   private String                     title;
   private String                     comments;
   private EWorkflowStatus            status;
@@ -64,14 +63,6 @@ public class Workflow extends DataModelBase {
 
   public void setCreatedBy(final Long createdBy) {
     this.createdBy = createdBy;
-  }
-
-  public Long getAssignTo() {
-    return this.assignTo;
-  }
-
-  public void setAssignTo(final Long assignTo) {
-    this.assignTo = assignTo;
   }
 
   public String getTitle() {

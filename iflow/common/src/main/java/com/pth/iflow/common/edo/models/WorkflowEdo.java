@@ -38,9 +38,6 @@ public class WorkflowEdo {
   @XmlElement(name = "CreatedBy", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Long                    createdBy;
 
-  @XmlElement(name = "AssignTo", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long                    assignTo;
-
   @NotNull(message = "Title is not allowed to be null!")
   @XmlElement(name = "Title", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String                  title;
@@ -112,14 +109,6 @@ public class WorkflowEdo {
 
   public void setCreatedBy(final Long createdBy) {
     this.createdBy = createdBy;
-  }
-
-  public Long getAssignTo() {
-    return this.assignTo;
-  }
-
-  public void setAssignTo(final Long assignTo) {
-    this.assignTo = assignTo;
   }
 
   public String getTitle() {

@@ -212,9 +212,12 @@ public class WorkflowHandler implements IWorkflowHandler {
   private GuiWorkflow prepareWorkflow(final GuiWorkflow workflow) throws IFlowMessageConversionFailureException {
 
     workflow.setWorkflowType(this.sessionUserInfo.getWorkflowTypeById(workflow.getWorkflowTypeId()));
-    workflow.setAssignToUser(this.sessionUserInfo.getUserById(workflow.getAssignTo()));
     workflow.setCreatedByUser(this.sessionUserInfo.getUserById(workflow.getCreatedBy()));
     workflow.setControllerUser(this.sessionUserInfo.getUserById(workflow.getController()));
+
+    for (final GuiWorkflowAction action : workflow.getActions()) {
+      action.setAssignToUser(this.sessionUserInfo.getUserById(action.getAssignTo()));
+    }
 
     this.prepareWorkflowActions(workflow);
 

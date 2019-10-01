@@ -18,8 +18,6 @@ public class GuiWorkflow {
   private GuiUser                       controllerUser;
   private Long                          createdBy;
   private GuiUser                       createdByUser;
-  private Long                          assignTo;
-  private GuiUser                       assignToUser;
   private String                        title;
   private String                        comments;
   private EWorkflowStatus               status;
@@ -116,32 +114,6 @@ public class GuiWorkflow {
    */
   public void setCreatedByUser(final GuiUser createdByUser) {
     this.createdByUser = createdByUser;
-  }
-
-  public Long getAssignTo() {
-    return this.assignTo;
-  }
-
-  public boolean isAssignTo(final Long userId) {
-    return this.assignTo == userId;
-  }
-
-  public void setAssignTo(final Long assignTo) {
-    this.assignTo = assignTo;
-  }
-
-  /**
-   * @return the assignToUser
-   */
-  public GuiUser getAssignToUser() {
-    return this.assignToUser;
-  }
-
-  /**
-   * @param assignToUser the assignToUser to set
-   */
-  public void setAssignToUser(final GuiUser assignToUser) {
-    this.assignToUser = assignToUser;
   }
 
   public String getTitle() {
@@ -304,13 +276,12 @@ public class GuiWorkflow {
   }
 
   public boolean getIsOpen() {
-    return (this.assignTo != null) && (this.assignTo > 0) && (this.status == EWorkflowStatus.ASSIGNED);
+    return (this.status == EWorkflowStatus.ASSIGNED);
   }
 
   public static GuiWorkflow generateInitial(final Long creatorId) {
     final GuiWorkflow newWorkflow = new GuiWorkflow();
     newWorkflow.setStatus(EWorkflowStatus.INITIALIZE);
-    newWorkflow.setAssignTo(0L);
     newWorkflow.setCreatedBy(creatorId);
     newWorkflow.setController(0L);
     newWorkflow.setCurrentStepId(0L);

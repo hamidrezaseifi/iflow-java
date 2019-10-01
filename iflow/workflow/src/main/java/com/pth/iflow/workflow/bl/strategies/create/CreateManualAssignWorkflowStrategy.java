@@ -63,7 +63,7 @@ public class CreateManualAssignWorkflowStrategy extends AbstractCreateWorkflowSt
     }
 
     for (final Long userId : assignedUsers) {
-      workflow.setAssignTo(userId);
+      workflow.setActionAssignTo(userId);
 
       final WorkflowSaveRequest saveRequest = creaeOneAssignedWorkflowSaveRequest(workflow, userId);
       result.add(this.saveWorkflow(saveRequest));

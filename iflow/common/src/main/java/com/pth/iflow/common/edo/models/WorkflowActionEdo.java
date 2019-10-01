@@ -29,6 +29,9 @@ public class WorkflowActionEdo {
   @XmlElement(name = "Action", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String  action;
 
+  @XmlElement(name = "AssignTo", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private Long    assignTo;
+
   @XmlElement(name = "OldStep", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Long    oldStep;
 
@@ -103,6 +106,14 @@ public class WorkflowActionEdo {
 
   public void setCreatedBy(final Long createdBy) {
     this.createdBy = createdBy;
+  }
+
+  public Long getAssignTo() {
+    return this.assignTo;
+  }
+
+  public void setAssignTo(final Long assignTo) {
+    this.assignTo = assignTo;
   }
 
   public String getComments() {

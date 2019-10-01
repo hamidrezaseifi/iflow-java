@@ -9,6 +9,7 @@ public class WorkflowAction extends WorkflowActionModelBase {
   private Long    workflowId;
   private Long    createdBy;
   private String  action;
+  private Long    assignTo;
   private Long    oldStep;
   private Long    newStep;
   private Long    nextAssign;
@@ -39,6 +40,18 @@ public class WorkflowAction extends WorkflowActionModelBase {
 
   public void setAction(final String action) {
     this.action = action;
+  }
+
+  public Long getAssignTo() {
+    return this.assignTo;
+  }
+
+  public boolean isAssigned() {
+    return (this.assignTo != null) && (this.assignTo > 0);
+  }
+
+  public void setAssignTo(final Long assignTo) {
+    this.assignTo = assignTo;
   }
 
   public Long getOldStep() {

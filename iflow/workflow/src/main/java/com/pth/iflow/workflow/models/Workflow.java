@@ -14,7 +14,6 @@ public class Workflow extends DataModelBase {
   private Long                       currentStepId;
   private Long                       controller;
   private Long                       createdBy;
-  private Long                       assignTo;
   private String                     title;
   private String                     comments;
   private EWorkflowStatus            status;
@@ -71,18 +70,6 @@ public class Workflow extends DataModelBase {
 
   public void setCreatedBy(final Long createdBy) {
     this.createdBy = createdBy;
-  }
-
-  public Long getAssignTo() {
-    return this.assignTo;
-  }
-
-  public boolean isAssigned() {
-    return (this.assignTo != null) && (this.assignTo > 0);
-  }
-
-  public void setAssignTo(final Long assignTo) {
-    this.assignTo = assignTo;
   }
 
   public String getTitle() {
@@ -210,6 +197,15 @@ public class Workflow extends DataModelBase {
       }
     }
     return null;
+  }
+
+  public boolean isAssigned() {
+    return this.hasActiveAction() && this.getActiveAction().isAssigned();
+  }
+
+  public void setActionAssignTo(final Long userId) {
+    this.getActiveAction().setAssignTo(userId);
+
   }
 
 }

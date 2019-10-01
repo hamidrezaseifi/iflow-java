@@ -39,7 +39,6 @@ public class CreateOfferlAssignWorkflowStrategy extends AbstractCreateWorkflowSt
 
     verifyAssigns();
 
-    workflow.setAssignTo(null);
     final WorkflowSaveRequest saveRequest = creaeNotAssignedWorkflowSaveRequest(workflow);
 
     final Workflow savedWorkflow = this.saveWorkflow(saveRequest);

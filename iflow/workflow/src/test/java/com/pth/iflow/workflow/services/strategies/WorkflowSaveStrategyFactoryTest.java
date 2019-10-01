@@ -111,7 +111,6 @@ public class WorkflowSaveStrategyFactoryTest extends TestDataProducer {
   public void testSelectDoneExistingWorkflowStrategy() throws Exception {
 
     final WorkflowSaveRequest request = this.getTestWorkflowCreateRequest();
-    request.getWorkflow().setAssignTo(1L);
 
     request.setCommand(EWorkflowProcessCommand.DONE);
 
@@ -130,7 +129,6 @@ public class WorkflowSaveStrategyFactoryTest extends TestDataProducer {
   public void testSelectSaveExistingWorkflowStrategy() throws Exception {
 
     final WorkflowSaveRequest request = this.getTestWorkflowCreateRequest();
-    request.getWorkflow().setAssignTo(1L);
 
     request.setCommand(EWorkflowProcessCommand.SAVE);
 
@@ -149,7 +147,6 @@ public class WorkflowSaveStrategyFactoryTest extends TestDataProducer {
   public void testSelectNoneStrategy() throws Exception {
 
     final WorkflowSaveRequest request = this.getTestWorkflowCreateRequest();
-    request.getWorkflow().setAssignTo(1L);
     request.getWorkflow().setActions(new ArrayList<>());
 
     final WorkflowType workflowType = this.getTestWorkflowType(1L, "");
