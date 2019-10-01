@@ -57,7 +57,9 @@ iflowApp.controller('BodyController', function ($scope, $http, $sce, $element, $
 	$scope.messagePanelHeight = 170;
 	
 	$scope.messages = [];
-	
+
+	$scope.viewWorkflow = {};
+
 	$scope.messagePanelShowed = true;
 
 	$scope.closeMessages = function(){
@@ -184,11 +186,40 @@ iflowApp.controller('BodyController', function ($scope, $http, $sce, $element, $
 	    });
 		
 	}; 
+    
+	$scope.showWorkflowView = function (messageId, workflowId){
+		
+		alert("showWorkflowView: " + messageId + " : " + workflowId); 
+		//return;
+		
+		$scope.viewWorkflow = {};
+		
+			
+		$http({
+	        method : "POST",
+	        headers: {
+	        	'Content-type': 'application/json; charset=UTF-8',
+	        },
+	        url : "/workflow/data/workflow/edit/" + workflowId,
+	    }).then(function successCallback(response) {
+	    	
+	    	$scope.viewWorkflowType = response.data.workflowType;
+	    	//$scope.users = response.data.users;
+	    	$scope.viewWorkflow = response.data.workflow;
+	    	$scope.viewWorkflowTypeSteps = $scope.workflowType.steps;
+
+	
+	    }, function errorCallback(response) {
+	        
+	        alert(response.data);
+	    });
+		
+	}; 
 	
 	function buildMessageList(messages){
 		for(o in messages){
 			var message = messages[o];
-			$scope.messages.push({title: message.message, id: message.id});
+			$scope.messages.push({title: message.message, id: message.id, workflowId: message.workflowId});
 		}
 	}
 	

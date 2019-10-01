@@ -9,7 +9,9 @@
         	</div>
         	<div class="message-panel-items-container">
         		<div class="message-panel-item"  ng-repeat="message in messages">
-        			<a href="/workflow/message/process/{{message.id}}">{{message.title}}</a>
+        			<a href="javascript:void()" ng-click="showWorkflowView(message.id, message.workflowId)">
+        				<div>{{message.title}}</div>
+        			</a>
         		</div>
         	</div>
 		    <script type="text/javascript">
@@ -17,6 +19,7 @@
 			
 		    </script>
         	
+        	<div th:replace="workflow/view_dialog :: viewWorkflow" ></div>
         </div>
 
         

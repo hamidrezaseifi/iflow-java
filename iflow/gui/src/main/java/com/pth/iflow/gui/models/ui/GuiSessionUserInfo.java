@@ -23,6 +23,7 @@ import com.pth.iflow.gui.models.GuiDepartment;
 import com.pth.iflow.gui.models.GuiUser;
 import com.pth.iflow.gui.models.GuiUserGroup;
 import com.pth.iflow.gui.models.GuiWorkflow;
+import com.pth.iflow.gui.models.GuiWorkflowMessage;
 import com.pth.iflow.gui.models.GuiWorkflowType;
 import com.pth.iflow.gui.services.IUserAccess;
 import com.pth.iflow.gui.services.IWorkflowAccess;
@@ -31,30 +32,32 @@ import com.pth.iflow.gui.services.IWorkflowAccess;
 @Component
 public class GuiSessionUserInfo {
 
-  private static final Logger              logger                     = LoggerFactory.getLogger(GuiSessionUserInfo.class);
+  private static final Logger                 logger                     = LoggerFactory.getLogger(GuiSessionUserInfo.class);
 
-  public static String                     SESSION_LOGGEDUSERINFO_KEY = "mdm-session-user";
+  public static String                        SESSION_LOGGEDUSERINFO_KEY = "mdm-session-user";
 
-  private Date                             loginTime;
-  private GuiUser                          user;
-  private GuiCompanyProfile                companyProfile;
-  private String                           token;
-  private String                           sessionId;
+  private Date                                loginTime;
+  private GuiUser                             user;
+  private GuiCompanyProfile                   companyProfile;
+  private String                              token;
+  private String                              sessionId;
 
-  private final Map<Long, GuiWorkflow>     cachedWorkflow             = new HashMap<>();
+  private final Map<Long, GuiWorkflow>        cachedWorkflow             = new HashMap<>();
 
-  private final Map<Long, GuiUser>         companyUsers               = new HashMap<>();
+  private final Map<Long, GuiUser>            companyUsers               = new HashMap<>();
 
-  private final Map<Long, GuiWorkflowType> comapnyWorkflowTypes       = new HashMap<>();
+  private final Map<Long, GuiWorkflowType>    comapnyWorkflowTypes       = new HashMap<>();
+
+  private final Map<Long, GuiWorkflowMessage> cachedMessages             = new HashMap<>();
 
   @Value("${server.session.timeout}")
-  private int                              sessionTimeOut;
+  private int                                 sessionTimeOut;
 
   @Autowired
-  IUserAccess                              userAccess;
+  IUserAccess                                 userAccess;
 
   @Autowired
-  IWorkflowAccess                          workflowAccess;
+  IWorkflowAccess                             workflowAccess;
 
   public boolean isLoggedIn() {
     return (this.user != null) && (this.companyProfile != null);
@@ -233,5 +236,24 @@ public class GuiSessionUserInfo {
 
   public List<GuiUserGroup> getCompanyUserGroups() {
     return this.companyProfile.getUserGroups();
+  }
+
+  public void clearCachedMessage() {
+
+  }
+
+  public void addCachedMessage(final GuiWorkflowMessage message) {
+    this.cachedMessages.put(message.getId(), message);
+  }
+
+  public void addCachedMessagesAll(final List<GuiWorkflowMessage> messageList) {
+    for (final GuiWorkflowMessage message : messageList) {
+      this.addCachedMessage(message);
+    }
+  }
+
+  public GuiWorkflowMessage getCachedMessage(final Long id) {
+
+    return this.cachedMessages.get(id);
   }
 }
