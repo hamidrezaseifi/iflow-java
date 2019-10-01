@@ -189,7 +189,7 @@ iflowApp.controller('BodyController', function ($scope, $http, $sce, $element, $
     
 	$scope.showWorkflowView = function (messageId, workflowId){
 		
-		alert("showWorkflowView: " + messageId + " : " + workflowId); 
+		//alert("showWorkflowView: " + messageId + " : " + workflowId); 
 		//return;
 		
 		$scope.viewWorkflow = {};
@@ -206,8 +206,9 @@ iflowApp.controller('BodyController', function ($scope, $http, $sce, $element, $
 	    	$scope.viewWorkflowType = response.data.workflowType;
 	    	//$scope.users = response.data.users;
 	    	$scope.viewWorkflow = response.data.workflow;
-	    	$scope.viewWorkflowTypeSteps = $scope.workflowType.steps;
+	    	$scope.viewWorkflowTypeSteps = $scope.viewWorkflowType.steps;
 
+	    	$('#viewworkflowdialog').modal({backdrop: true, })
 	
 	    }, function errorCallback(response) {
 	        

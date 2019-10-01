@@ -202,11 +202,11 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
     ps.setLong(1, model.getWorkflowTypeId());
     ps.setString(2, model.getTitle());
     ps.setLong(3, model.getCurrentStep().getId());
-    ps.setString(5, model.getComments());
-    ps.setLong(6, model.getController());
-    ps.setLong(7, model.getCreatedBy());
-    ps.setInt(8, model.getVersion());
-    ps.setInt(9, model.getStatusInt());
+    ps.setString(4, model.getComments());
+    ps.setLong(5, model.getController());
+    ps.setLong(6, model.getCreatedBy());
+    ps.setInt(7, model.getVersion());
+    ps.setInt(8, model.getStatusInt());
 
     return ps;
   }
@@ -216,12 +216,12 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
     ps.setLong(1, model.getWorkflowTypeId());
     ps.setString(2, model.getTitle());
     ps.setLong(3, model.getCurrentStep().getId());
-    ps.setString(5, model.getComments());
-    ps.setLong(6, model.getController());
-    ps.setLong(7, model.getCreatedBy());
-    ps.setInt(8, model.getVersion());
-    ps.setInt(9, model.getStatusInt());
-    ps.setLong(10, model.getId());
+    ps.setString(4, model.getComments());
+    ps.setLong(5, model.getController());
+    ps.setLong(6, model.getCreatedBy());
+    ps.setInt(7, model.getVersion());
+    ps.setInt(8, model.getStatusInt());
+    ps.setLong(9, model.getId());
 
     return ps;
   }
