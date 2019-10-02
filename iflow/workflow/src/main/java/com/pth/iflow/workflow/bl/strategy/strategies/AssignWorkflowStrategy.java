@@ -1,18 +1,23 @@
 package com.pth.iflow.workflow.bl.strategy.strategies;
 
 import java.net.MalformedURLException;
-import com.pth.iflow.common.enums.EAssignType;
-import com.pth.iflow.common.exceptions.EIFlowErrorType;
-import com.pth.iflow.common.exceptions.IFlowCustomeException;
+import java.util.List;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.ICachDataDataService;
 import com.pth.iflow.workflow.bl.IDepartmentDataService;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.IWorkflowMessageDataService;
 import com.pth.iflow.workflow.bl.strategy.IWorkStrategyFactory;
+import com.pth.iflow.workflow.bl.strategy.steps.AssignWorkflowActiveActionStrategyStep;
+import com.pth.iflow.workflow.bl.strategy.steps.InitializeWorkflowActiveActionStrategyStep;
+import com.pth.iflow.workflow.bl.strategy.steps.InitializeWorkflowInitialActionStrategyStep;
+import com.pth.iflow.workflow.bl.strategy.steps.SaveWorkflowInCoreStep;
+import com.pth.iflow.workflow.bl.strategy.steps.ValidateCurrentStepExistsInWorkflowTypeStrategyStep;
+import com.pth.iflow.workflow.bl.strategy.steps.ValidateSingleUserAssignInSaveRequestStrategyStep;
+import com.pth.iflow.workflow.bl.strategy.steps.ValidateWorkflowActiveActionStrategyStep;
+import com.pth.iflow.workflow.bl.strategy.steps.ValidateWorkflowTypeStepStrategyStep;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.Workflow;
-import com.pth.iflow.workflow.models.WorkflowAction;
 import com.pth.iflow.workflow.models.WorkflowSaveRequest;
 
 public class AssignWorkflowStrategy extends AbstractWorkflowSaveStrategy {
@@ -35,43 +40,32 @@ public class AssignWorkflowStrategy extends AbstractWorkflowSaveStrategy {
   }
 
   @Override
-  public Workflow process() throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+  public void setup() {
+    steps.add(new ValidateWorkflowTypeStepStrategyStep(this));
+    steps.add(new ValidateCurrentStepExistsInWorkflowTypeStrategyStep(this));
 
-    if (this.processingWorkflow.hasAction() == false) {
-      final WorkflowAction action = initialFirstStep();
+    steps.add(new InitializeWorkflowInitialActionStrategyStep(this));
+    steps.add(new InitializeWorkflowActiveActionStrategyStep(this));
+    steps.add(new ValidateWorkflowActiveActionStrategyStep(this));
+    steps.add(new ValidateSingleUserAssignInSaveRequestStrategyStep(this));
+    steps.add(new AssignWorkflowActiveActionStrategyStep(this));
+    steps.add(new SaveWorkflowInCoreStep(this));
 
-      processingWorkflow.addAction(action);
-    }
+  }
 
-    if (this.processingWorkflow.hasActiveAction() == false) {
-      final WorkflowAction action = initialNextStep();
-      if (action != null) {
-        processingWorkflow.addAction(action);
-      }
-    }
+  @Override
+  public void process() throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+    this.getFirstStep().process();
+  }
 
-    if (this.processingWorkflow.hasActiveAction() == false) {
-      throw new IFlowCustomeException("The workflow has no active action id:" + this.processingWorkflow.getId(),
-                                      EIFlowErrorType.INVALID_WORKFLOW_STATUS);
+  @Override
+  public Workflow getSingleProceedWorkflow() {
+    return getSavedSingleWorkflow();
+  }
 
-    }
-
-    if (processingWorkflowSaveRequest.getAssigns().isEmpty()
-        || processingWorkflowSaveRequest.getAssigns().get(0).getItemType() != EAssignType.USER) {
-      throw new IFlowCustomeException("Invalid assign list or item", EIFlowErrorType.INVALID_WORKFLOW_ASSIGN_LIST);
-
-    }
-
-    this.processingWorkflow.setActiveActionAssignTo(processingWorkflowSaveRequest.getAssigns().get(0).getItemId());
-
-    // this.validateWorkflowCurrectStep(this.processingWorkflow, this.workflowType);
-    // this.validateWorkflowAssignedUser(this.processingWorkflow,
-    // this.workflowType);
-
-    // this.activeAction.setStatus(EWorkflowActionStatus.OPEN);
-
-    return this.saveWorkflow(this.processingWorkflow);
-
+  @Override
+  public List<Workflow> getProceedWorkflowList() {
+    return savedWorkflowList;
   }
 
 }

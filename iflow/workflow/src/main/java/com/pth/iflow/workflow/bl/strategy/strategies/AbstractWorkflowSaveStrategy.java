@@ -221,7 +221,7 @@ public abstract class AbstractWorkflowSaveStrategy implements IWorkflowSaveStrat
     return list;
   }
 
-  private WorkflowTypeStep findNextStep(final WorkflowType workflowType, final Workflow workflow) {
+  public WorkflowTypeStep findNextStep(final WorkflowType workflowType, final Workflow workflow) {
 
     final WorkflowTypeStep currectStep = workflow.getLastAction().getCurrentStep();
 
@@ -234,7 +234,7 @@ public abstract class AbstractWorkflowSaveStrategy implements IWorkflowSaveStrat
 
   }
 
-  private boolean isLastStep(final WorkflowType workflowType, final WorkflowTypeStep step) {
+  public boolean isLastStep(final WorkflowType workflowType, final WorkflowTypeStep step) {
     final WorkflowTypeStep lastStep = this.findLastStep(workflowType);
 
     return step.getStepIndex() == lastStep.getStepIndex();
@@ -311,37 +311,37 @@ public abstract class AbstractWorkflowSaveStrategy implements IWorkflowSaveStrat
 
   }
 
-  protected WorkflowAction initialFirstStep() {
-    final WorkflowTypeStep firstStep = this.findFirstStep(this.processingWorkflowSaveRequest.getWorkflow().getWorkflowType());
+  public WorkflowAction initialFirstStep(final Workflow workflow) {
+    final WorkflowTypeStep firstStep = this.findFirstStep(workflow.getWorkflowType());
 
     final WorkflowAction action = new WorkflowAction();
     action.setAction("action");
     action.setAssignTo(0L);
     action.setComments("");
-    action.setCreatedBy(this.processingWorkflowSaveRequest.getWorkflow().getCreatedBy());
+    action.setCreatedBy(workflow.getCreatedBy());
     action.setCurrentStep(firstStep);
     action.setCurrentStepId(firstStep.getId());
     action.setStatus(EWorkflowActionStatus.INITIALIZE);
     action.setVersion(1);
-    action.setWorkflowId(this.processingWorkflowSaveRequest.getWorkflow().getId());
+    action.setWorkflowId(workflow.getId());
     return action;
   }
 
-  protected WorkflowAction initialNextStep() {
+  public WorkflowAction initialNextStep(final Workflow workflow) {
 
-    final WorkflowTypeStep nextStep = this.findNextStep(processingWorkflowType, getProcessingWorkflow());
+    final WorkflowTypeStep nextStep = this.findNextStep(workflow.getWorkflowType(), getProcessingWorkflow());
 
     if (nextStep != null) {
       final WorkflowAction action = new WorkflowAction();
       action.setAction("action");
       action.setAssignTo(0L);
       action.setComments("");
-      action.setCreatedBy(this.processingWorkflowSaveRequest.getWorkflow().getCreatedBy());
+      action.setCreatedBy(workflow.getCreatedBy());
       action.setCurrentStep(nextStep);
       action.setCurrentStepId(nextStep.getId());
       action.setStatus(EWorkflowActionStatus.INITIALIZE);
       action.setVersion(1);
-      action.setWorkflowId(this.processingWorkflowSaveRequest.getWorkflow().getId());
+      action.setWorkflowId(workflow.getId());
       return action;
     }
     return null;
