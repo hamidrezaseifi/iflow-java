@@ -15,9 +15,9 @@ import com.pth.iflow.workflow.bl.ITokenValidator;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.IWorkflowProcessService;
 import com.pth.iflow.workflow.bl.IWorkflowTypeDataService;
-import com.pth.iflow.workflow.bl.strategies.ICreateWorkflowStrategy;
-import com.pth.iflow.workflow.bl.strategies.ISaveWorkflowStrategy;
-import com.pth.iflow.workflow.bl.strategies.IWorkStrategyFactory;
+import com.pth.iflow.workflow.bl.strategy.ISaveWorkflowStrategy;
+import com.pth.iflow.workflow.bl.strategy.IWorkStrategyFactory;
+import com.pth.iflow.workflow.bl.strategy.IWorkflowSaveStrategy;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.Workflow;
 import com.pth.iflow.workflow.models.WorkflowAction;
@@ -55,7 +55,7 @@ public class WorkflowProcessService implements IWorkflowProcessService {
 
     prepareWorkflow(token, model.getWorkflow());
 
-    final ICreateWorkflowStrategy createWorkflowStrategy = this.workStrategyFactory.selectCreateWorkStrategy(model, token);
+    final IWorkflowSaveStrategy createWorkflowStrategy = this.workStrategyFactory.selectCreateWorkStrategy(model, token);
 
     final List<Workflow> result = createWorkflowStrategy.process();
 
@@ -67,7 +67,7 @@ public class WorkflowProcessService implements IWorkflowProcessService {
     logger.debug("Saving workflow with token {}", token);
     this.tokenCanSaveWorkflow(request.getWorkflow(), token);
 
-    final ISaveWorkflowStrategy strategy = this.workStrategyFactory.selectSaveWorkStrategy(request, token);
+    final ISaveWorkflowStrategy strategy = this.workStrategyFactory.selectWorkStrategy(request, token);
 
     final Workflow result = strategy.process();
 

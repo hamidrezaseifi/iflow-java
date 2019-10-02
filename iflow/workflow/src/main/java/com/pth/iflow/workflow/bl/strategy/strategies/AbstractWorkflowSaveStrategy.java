@@ -1,47 +1,144 @@
-package com.pth.iflow.workflow.bl.strategies.save;
+package com.pth.iflow.workflow.bl.strategy.strategies;
 
 import java.net.MalformedURLException;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
-
+import com.pth.iflow.common.enums.EAssignType;
 import com.pth.iflow.common.enums.EWorkflowActionStatus;
+import com.pth.iflow.common.enums.EWorkflowMessageStatus;
+import com.pth.iflow.common.enums.EWorkflowMessageType;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.iflow.common.exceptions.IFlowCustomeException;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
+import com.pth.iflow.workflow.bl.ICachDataDataService;
+import com.pth.iflow.workflow.bl.IDepartmentDataService;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
-import com.pth.iflow.workflow.bl.strategies.ISaveWorkflowStrategy;
+import com.pth.iflow.workflow.bl.IWorkflowMessageDataService;
+import com.pth.iflow.workflow.bl.strategy.IWorkStrategyFactory;
+import com.pth.iflow.workflow.bl.strategy.IWorkflowSaveStrategy;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
+import com.pth.iflow.workflow.models.AssignItem;
 import com.pth.iflow.workflow.models.Workflow;
 import com.pth.iflow.workflow.models.WorkflowAction;
+import com.pth.iflow.workflow.models.WorkflowMessage;
 import com.pth.iflow.workflow.models.WorkflowSaveRequest;
 import com.pth.iflow.workflow.models.WorkflowType;
 import com.pth.iflow.workflow.models.WorkflowTypeStep;
 
-public abstract class AbstractSaveWorkflowStrategy implements ISaveWorkflowStrategy {
+public abstract class AbstractWorkflowSaveStrategy implements IWorkflowSaveStrategy {
+
+  private final IWorkStrategyFactory        workStrategyFactory;
+  private final IDepartmentDataService      departmentDataService;
+  private final IWorkflowMessageDataService workflowMessageDataService;
+  private final ICachDataDataService        cachDataDataService;
+  private final IWorkflowDataService        workflowDataService;
 
   protected final WorkflowSaveRequest processingWorkflowSaveRequest;
   protected final Workflow            processingWorkflow;
   protected final WorkflowType        workflowType;
   protected final String              token;
   protected final WorkflowAction      activeAction;
-  private final IWorkflowDataService  workflowDataService;
 
-  public AbstractSaveWorkflowStrategy(final WorkflowSaveRequest processingWorkflowSaveRequest, final String token,
-      final IWorkflowDataService workflowDataService) {
+  public AbstractWorkflowSaveStrategy(final WorkflowSaveRequest workflowCreateRequest,
+                                      final String token,
+                                      final IWorkStrategyFactory workStrategyFactory,
+                                      final IDepartmentDataService departmentDataService,
+                                      final IWorkflowMessageDataService workflowMessageDataService,
+                                      final ICachDataDataService cachDataDataService,
+                                      final IWorkflowDataService workflowDataService) {
     super();
-    this.processingWorkflowSaveRequest = processingWorkflowSaveRequest;
-    this.processingWorkflow = processingWorkflowSaveRequest.getWorkflow();
-    this.workflowType = processingWorkflowSaveRequest.getWorkflow().getWorkflowType();
+    this.processingWorkflowSaveRequest = workflowCreateRequest;
     this.token = token;
-    this.activeAction = processingWorkflow.hasActiveAction() ? processingWorkflow.getActiveAction() : null;
+    this.workStrategyFactory = workStrategyFactory;
+    this.departmentDataService = departmentDataService;
+    this.workflowMessageDataService = workflowMessageDataService;
     this.workflowDataService = workflowDataService;
+    this.cachDataDataService = cachDataDataService;
+    this.processingWorkflow = workflowCreateRequest.getWorkflow();
+    this.workflowType = workflowCreateRequest.getWorkflow().getWorkflowType();
+    this.activeAction = workflowCreateRequest.getWorkflow().getActiveAction();
   }
 
-  protected Workflow saveWorkflow(final Workflow workflow)
-      throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+  protected Workflow saveWorkflow(final WorkflowSaveRequest saveRequest) throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+    final IWorkflowSaveStrategy saveWorkflowStrategy = this.workStrategyFactory.selectWorkStrategy(saveRequest, this.token);
+
+    final Workflow savedWorkflow = saveWorkflowStrategy.process();
+
+    return savedWorkflow;
+  }
+
+  public WorkflowType getWorkflowType() {
+    return workflowType;
+  }
+
+  public String getToken() {
+    return token;
+  }
+
+  public IWorkStrategyFactory getWorkStrategyFactory() {
+    return workStrategyFactory;
+  }
+
+  public IDepartmentDataService getDepartmentDataService() {
+    return departmentDataService;
+  }
+
+  public IWorkflowMessageDataService getWorkflowMessageDataService() {
+    return workflowMessageDataService;
+  }
+
+  protected void verifyAssigns() {
+    if (this.processingWorkflowSaveRequest.getAssigns().isEmpty()) {
+      throw new IFlowCustomeException("No assign by workflow create", EIFlowErrorType.NO_WORKFLOW_ASSIGN_CREATE_STRATEGY);
+    }
+  }
+
+  protected void createWorkflowMessage(final Long workflowId, final Long createdById, final Long userId) throws MalformedURLException, IFlowMessageConversionFailureException {
+    final WorkflowMessage message = new WorkflowMessage();
+    message.setCreatedBy(createdById);
+    message.setExpireDays(this.processingWorkflowSaveRequest.getExpireDays());
+    message.setMessage("Offering Workflow Message");
+    message.setMessageType(EWorkflowMessageType.OFFERING_WORKFLOW);
+    message.setStatus(EWorkflowMessageStatus.OFFERING);
+    message.setUserId(userId);
+    message.setWorkflowId(workflowId);
+    message.setVersion(1);
+    getWorkflowMessageDataService().save(message, this.getToken());
+  }
+
+  protected void resetUserCachData(final Long companyId, final Long userId) throws MalformedURLException, IFlowMessageConversionFailureException {
+
+    cachDataDataService.resetCachDataForUser(companyId, userId, token);
+  }
+
+  protected void resetUserListCachData(final Long companyId, final Set<Long> userIdList) throws MalformedURLException, IFlowMessageConversionFailureException {
+
+    cachDataDataService.resetCachDataForUserList(companyId, userIdList, token);
+  }
+
+  protected WorkflowSaveRequest creaeOneAssignedWorkflowSaveRequest(final Workflow workflow, final Long userId) {
+    final WorkflowSaveRequest saveRequest = new WorkflowSaveRequest();
+    saveRequest.setWorkflow(workflow);
+    final AssignItem assignItem = new AssignItem(userId, EAssignType.USER);
+    saveRequest.setAssigns(Arrays.asList(assignItem));
+    saveRequest.setExpireDays(1);
+    return saveRequest;
+  }
+
+  protected WorkflowSaveRequest creaeNotAssignedWorkflowSaveRequest(final Workflow workflow) {
+    final WorkflowSaveRequest saveRequest = new WorkflowSaveRequest();
+    saveRequest.setWorkflow(workflow);
+    saveRequest.setAssigns(Arrays.asList());
+    saveRequest.setExpireDays(1);
+    return saveRequest;
+  }
+
+  protected Workflow saveWorkflow(final Workflow workflow) throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     final Workflow savedWorkflow = this.workflowDataService.save(workflow, this.token);
 
     return savedWorkflow;
@@ -53,7 +150,8 @@ public abstract class AbstractSaveWorkflowStrategy implements ISaveWorkflowStrat
 
       if ((workflow.getCurrentStepId() != null) && (workflow.getCurrentStepId() > 0)) {
         this.setWorkflowCurrectStepFromCurrectStepId(workflow, workflowType);
-      } else {
+      }
+      else {
         this.setworkflowCurrectStep(workflow, workflowType);
       }
     }
@@ -96,15 +194,17 @@ public abstract class AbstractSaveWorkflowStrategy implements ISaveWorkflowStrat
   }
 
   private Map<Long, WorkflowTypeStep> getIdKeySteps(final WorkflowType workflowType) {
-    final Map<Long, WorkflowTypeStep> map = workflowType.getSteps().stream()
-        .collect(Collectors.toMap(step -> step.getId(), step -> step));
+    final Map<Long, WorkflowTypeStep> map = workflowType.getSteps()
+                                                        .stream()
+                                                        .collect(Collectors.toMap(step -> step.getId(), step -> step));
 
     return map;
   }
 
   private Map<Integer, WorkflowTypeStep> getIndexKeySteps(final WorkflowType workflowType) {
-    final Map<Integer, WorkflowTypeStep> map = workflowType.getSteps().stream()
-        .collect(Collectors.toMap(step -> step.getStepIndex(), step -> step));
+    final Map<Integer, WorkflowTypeStep> map = workflowType.getSteps()
+                                                           .stream()
+                                                           .collect(Collectors.toMap(step -> step.getStepIndex(), step -> step));
 
     return map;
   }
@@ -154,8 +254,7 @@ public abstract class AbstractSaveWorkflowStrategy implements ISaveWorkflowStrat
     return list;
   }
 
-  private void setWorkflowCurrectStepFromCurrectStepId(final Workflow workflow, final WorkflowType workflowType)
-      throws MalformedURLException {
+  private void setWorkflowCurrectStepFromCurrectStepId(final Workflow workflow, final WorkflowType workflowType) throws MalformedURLException {
     if (workflow.getCurrentStep() == null) {
       if ((workflow.getCurrentStepId() != null) && (workflow.getCurrentStepId() > 0)) {
 
@@ -190,8 +289,7 @@ public abstract class AbstractSaveWorkflowStrategy implements ISaveWorkflowStrat
     return workflowType.getSteps().stream().map(step -> step.getId()).collect(Collectors.toList());
   }
 
-  protected void selectWorkflowNextStep(final Workflow newWorkflow, final WorkflowType workflowType,
-      final WorkflowAction activeAction) {
+  protected void selectWorkflowNextStep(final Workflow newWorkflow, final WorkflowType workflowType, final WorkflowAction activeAction) {
 
     final WorkflowTypeStep nextStep = this.findNextStep(workflowType, newWorkflow);
     if (nextStep == null) {

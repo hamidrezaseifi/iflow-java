@@ -17,13 +17,13 @@ import com.pth.iflow.workflow.bl.ICachDataDataService;
 import com.pth.iflow.workflow.bl.IDepartmentDataService;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.IWorkflowMessageDataService;
-import com.pth.iflow.workflow.bl.strategies.ISaveWorkflowStrategy;
-import com.pth.iflow.workflow.bl.strategies.IWorkStrategyFactory;
-import com.pth.iflow.workflow.bl.strategies.WorkStrategyFactory;
-import com.pth.iflow.workflow.bl.strategies.save.ArchivingWorkflowStrategy;
-import com.pth.iflow.workflow.bl.strategies.save.DoneExistingWorkflowStrategy;
-import com.pth.iflow.workflow.bl.strategies.save.SaveExistingWorkflowStrategy;
-import com.pth.iflow.workflow.bl.strategies.save.SaveNewWorkflowStrategy;
+import com.pth.iflow.workflow.bl.strategy.ISaveWorkflowStrategy;
+import com.pth.iflow.workflow.bl.strategy.IWorkStrategyFactory;
+import com.pth.iflow.workflow.bl.strategy.WorkStrategyFactory;
+import com.pth.iflow.workflow.bl.strategy.strategies.ArchivingWorkflowStrategy;
+import com.pth.iflow.workflow.bl.strategy.strategies.DoneExistingWorkflowStrategy;
+import com.pth.iflow.workflow.bl.strategy.strategies.SaveExistingWorkflowStrategy;
+import com.pth.iflow.workflow.bl.strategy.strategies.SaveNewWorkflowStrategy;
 import com.pth.iflow.workflow.models.WorkflowSaveRequest;
 
 @RunWith(SpringRunner.class)
@@ -71,7 +71,7 @@ public class WorkflowSaveStrategyFactoryTest extends TestDataProducer {
     request.getWorkflow().setId(null);
     request.setCommand(EWorkflowProcessCommand.CREATE);
 
-    final ISaveWorkflowStrategy saveWorkflowStrategy = this.workStrategyFactory.selectSaveWorkStrategy(request, this.validTocken);
+    final ISaveWorkflowStrategy saveWorkflowStrategy = this.workStrategyFactory.selectWorkStrategy(request, this.validTocken);
 
     Assert.assertNotNull("Result strategy is not null!", saveWorkflowStrategy);
     Assert.assertEquals("Selected strategy is SaveNewWorkflowStrategy!",
@@ -86,7 +86,7 @@ public class WorkflowSaveStrategyFactoryTest extends TestDataProducer {
     final WorkflowSaveRequest request = this.getTestWorkflowCreateRequest();
     request.setCommand(EWorkflowProcessCommand.ARCHIVE);
 
-    final ISaveWorkflowStrategy saveWorkflowStrategy = this.workStrategyFactory.selectSaveWorkStrategy(request, this.validTocken);
+    final ISaveWorkflowStrategy saveWorkflowStrategy = this.workStrategyFactory.selectWorkStrategy(request, this.validTocken);
 
     Assert.assertNotNull("Result strategy is not null!", saveWorkflowStrategy);
     Assert.assertEquals("Selected strategy is ArchivingWorkflowStrategy!",
@@ -102,7 +102,7 @@ public class WorkflowSaveStrategyFactoryTest extends TestDataProducer {
 
     request.setCommand(EWorkflowProcessCommand.DONE);
 
-    final ISaveWorkflowStrategy saveWorkflowStrategy = this.workStrategyFactory.selectSaveWorkStrategy(request, this.validTocken);
+    final ISaveWorkflowStrategy saveWorkflowStrategy = this.workStrategyFactory.selectWorkStrategy(request, this.validTocken);
 
     Assert.assertNotNull("Result strategy is not null!", saveWorkflowStrategy);
     Assert.assertEquals("Selected strategy is DoneExistingWorkflowStrategy!",
@@ -118,7 +118,7 @@ public class WorkflowSaveStrategyFactoryTest extends TestDataProducer {
 
     request.setCommand(EWorkflowProcessCommand.SAVE);
 
-    final ISaveWorkflowStrategy saveWorkflowStrategy = this.workStrategyFactory.selectSaveWorkStrategy(request, this.validTocken);
+    final ISaveWorkflowStrategy saveWorkflowStrategy = this.workStrategyFactory.selectWorkStrategy(request, this.validTocken);
 
     Assert.assertNotNull("Result strategy is not null!", saveWorkflowStrategy);
     Assert.assertEquals("Selected strategy is SaveExistingWorkflowStrategy!",
@@ -133,7 +133,7 @@ public class WorkflowSaveStrategyFactoryTest extends TestDataProducer {
     final WorkflowSaveRequest request = this.getTestWorkflowCreateRequest();
     request.getWorkflow().setActions(new ArrayList<>());
 
-    this.workStrategyFactory.selectSaveWorkStrategy(request, this.validTocken);
+    this.workStrategyFactory.selectWorkStrategy(request, this.validTocken);
 
   }
 

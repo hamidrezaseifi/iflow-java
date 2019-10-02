@@ -1,4 +1,4 @@
-package com.pth.iflow.workflow.bl.strategies.create;
+package com.pth.iflow.workflow.bl.strategy.strategies;
 
 import java.net.MalformedURLException;
 import java.util.Arrays;
@@ -6,57 +6,69 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import com.pth.iflow.common.enums.EAssignType;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.ICachDataDataService;
 import com.pth.iflow.workflow.bl.IDepartmentDataService;
+import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.IWorkflowMessageDataService;
-import com.pth.iflow.workflow.bl.strategies.IWorkStrategyFactory;
+import com.pth.iflow.workflow.bl.strategy.IWorkStrategyFactory;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.AssignItem;
 import com.pth.iflow.workflow.models.User;
 import com.pth.iflow.workflow.models.Workflow;
 import com.pth.iflow.workflow.models.WorkflowSaveRequest;
 
-public class CreateOfferlAssignWorkflowStrategy extends AbstractCreateWorkflowStrategy {
+public class CreateOfferlAssignWorkflowStrategy extends AbstractWorkflowSaveStrategy {
 
-  public CreateOfferlAssignWorkflowStrategy(final WorkflowSaveRequest workflowCreateRequest, final String token,
-      final IWorkStrategyFactory workStrategyFactory, final IDepartmentDataService departmentDataService,
-      final IWorkflowMessageDataService workflowMessageDataService, final ICachDataDataService cachDataDataService) {
-    super(workflowCreateRequest, token, workStrategyFactory, departmentDataService, workflowMessageDataService, cachDataDataService);
+  public CreateOfferlAssignWorkflowStrategy(final WorkflowSaveRequest workflowCreateRequest,
+                                            final String token,
+                                            final IWorkStrategyFactory workStrategyFactory,
+                                            final IDepartmentDataService departmentDataService,
+                                            final IWorkflowMessageDataService workflowMessageDataService,
+                                            final ICachDataDataService cachDataDataService,
+                                            final IWorkflowDataService workflowDataService) {
+    super(workflowCreateRequest,
+          token,
+          workStrategyFactory,
+          departmentDataService,
+          workflowMessageDataService,
+          cachDataDataService,
+          workflowDataService);
 
   }
 
   @Override
   public List<Workflow> process() throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
-    final Workflow workflow = this.getWorkflowCreateRequest().getWorkflow();
+    final Workflow workflow = this.processingWorkflowSaveRequest.getWorkflow();
     workflow.setStatus(EWorkflowStatus.OFFERING);
 
     verifyAssigns();
 
     final WorkflowSaveRequest saveRequest = creaeNotAssignedWorkflowSaveRequest(workflow);
 
-    final Workflow savedWorkflow = this.saveWorkflow(saveRequest);
+    final Workflow savedWorkflow = this.saveWorkflow(saveRequest).get(0);
 
     final Set<Long> assignedUsers = new HashSet<>();
 
-    for (final AssignItem assign : this.getWorkflowCreateRequest().getAssigns()) {
+    for (final AssignItem assign : this.processingWorkflowSaveRequest.getAssigns()) {
 
       if (assign.getItemType() == EAssignType.USER) {
         assignedUsers.add(assign.getItemId());
       }
 
       if (assign.getItemType() == EAssignType.DEPARTMENT) {
-        final List<User> departmentUserIds = this.getDepartmentDataService().getUserListByDepartmentId(assign.getItemId(),
-            this.getToken());
+        final List<User> departmentUserIds = this.getDepartmentDataService()
+                                                 .getUserListByDepartmentId(assign.getItemId(),
+                                                                            this.getToken());
         assignedUsers.addAll(departmentUserIds.stream().map(u -> u.getId()).collect(Collectors.toSet()));
       }
 
       if (assign.getItemType() == EAssignType.DEPARTMENTGROUP) {
-        final List<User> departmentUserIds = this.getDepartmentDataService().getUserListByDepartmentGroupId(assign.getItemId(),
-            this.getToken());
+        final List<User> departmentUserIds = this.getDepartmentDataService()
+                                                 .getUserListByDepartmentGroupId(assign.getItemId(),
+                                                                                 this.getToken());
         assignedUsers.addAll(departmentUserIds.stream().map(u -> u.getId()).collect(Collectors.toSet()));
       }
     }

@@ -15,11 +15,11 @@ import com.pth.iflow.workflow.bl.ICachDataDataService;
 import com.pth.iflow.workflow.bl.IDepartmentDataService;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.IWorkflowMessageDataService;
-import com.pth.iflow.workflow.bl.strategies.ICreateWorkflowStrategy;
-import com.pth.iflow.workflow.bl.strategies.IWorkStrategyFactory;
-import com.pth.iflow.workflow.bl.strategies.WorkStrategyFactory;
-import com.pth.iflow.workflow.bl.strategies.create.CreateManualAssignWorkflowStrategy;
-import com.pth.iflow.workflow.bl.strategies.create.CreateOfferlAssignWorkflowStrategy;
+import com.pth.iflow.workflow.bl.strategy.IWorkStrategyFactory;
+import com.pth.iflow.workflow.bl.strategy.IWorkflowSaveStrategy;
+import com.pth.iflow.workflow.bl.strategy.WorkStrategyFactory;
+import com.pth.iflow.workflow.bl.strategy.strategies.CreateManualAssignWorkflowStrategy;
+import com.pth.iflow.workflow.bl.strategy.strategies.CreateOfferlAssignWorkflowStrategy;
 import com.pth.iflow.workflow.models.WorkflowSaveRequest;
 import com.pth.iflow.workflow.models.WorkflowType;
 
@@ -70,7 +70,7 @@ public class WorkflowCreateStrategyFactoryTest extends TestDataProducer {
     workflowType.setAssignType(EWorkflowTypeAssignType.MANUAL);
     workflowCreateReq.getWorkflow().setWorkflowType(workflowType);
 
-    final ICreateWorkflowStrategy createWorkflowStrategy = this.workStrategyFactory.selectCreateWorkStrategy(workflowCreateReq,
+    final IWorkflowSaveStrategy createWorkflowStrategy = this.workStrategyFactory.selectCreateWorkStrategy(workflowCreateReq,
                                                                                                              this.validTocken);
 
     Assert.assertNotNull("Result strategy is not null!", createWorkflowStrategy);
@@ -89,7 +89,7 @@ public class WorkflowCreateStrategyFactoryTest extends TestDataProducer {
     workflowType.setAssignType(EWorkflowTypeAssignType.OFFER);
     workflowCreateReq.getWorkflow().setWorkflowType(workflowType);
 
-    final ICreateWorkflowStrategy createWorkflowStrategy = this.workStrategyFactory.selectCreateWorkStrategy(workflowCreateReq,
+    final IWorkflowSaveStrategy createWorkflowStrategy = this.workStrategyFactory.selectCreateWorkStrategy(workflowCreateReq,
                                                                                                              this.validTocken);
 
     Assert.assertNotNull("Result strategy is not null!", createWorkflowStrategy);

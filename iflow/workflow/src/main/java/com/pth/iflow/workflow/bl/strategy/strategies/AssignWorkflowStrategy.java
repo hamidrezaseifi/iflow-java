@@ -1,22 +1,36 @@
-package com.pth.iflow.workflow.bl.strategies.save;
+package com.pth.iflow.workflow.bl.strategy.strategies;
 
 import java.net.MalformedURLException;
-
 import com.pth.iflow.common.enums.EAssignType;
 import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.iflow.common.exceptions.IFlowCustomeException;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
+import com.pth.iflow.workflow.bl.ICachDataDataService;
+import com.pth.iflow.workflow.bl.IDepartmentDataService;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
+import com.pth.iflow.workflow.bl.IWorkflowMessageDataService;
+import com.pth.iflow.workflow.bl.strategy.IWorkStrategyFactory;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.Workflow;
 import com.pth.iflow.workflow.models.WorkflowAction;
 import com.pth.iflow.workflow.models.WorkflowSaveRequest;
 
-public class AssignWorkflowStrategy extends AbstractSaveWorkflowStrategy {
+public class AssignWorkflowStrategy extends AbstractWorkflowSaveStrategy {
 
-  public AssignWorkflowStrategy(final WorkflowSaveRequest processingWorkflowSaveRequest, final String token,
-      final IWorkflowDataService workflowDataService) {
-    super(processingWorkflowSaveRequest, token, workflowDataService);
+  public AssignWorkflowStrategy(final WorkflowSaveRequest workflowCreateRequest,
+                                final String token,
+                                final IWorkStrategyFactory workStrategyFactory,
+                                final IDepartmentDataService departmentDataService,
+                                final IWorkflowMessageDataService workflowMessageDataService,
+                                final ICachDataDataService cachDataDataService,
+                                final IWorkflowDataService workflowDataService) {
+    super(workflowCreateRequest,
+          token,
+          workStrategyFactory,
+          departmentDataService,
+          workflowMessageDataService,
+          cachDataDataService,
+          workflowDataService);
 
   }
 
@@ -38,7 +52,7 @@ public class AssignWorkflowStrategy extends AbstractSaveWorkflowStrategy {
 
     if (this.processingWorkflow.hasActiveAction() == false) {
       throw new IFlowCustomeException("The workflow has no active action id:" + this.processingWorkflow.getId(),
-          EIFlowErrorType.INVALID_WORKFLOW_STATUS);
+                                      EIFlowErrorType.INVALID_WORKFLOW_STATUS);
 
     }
 

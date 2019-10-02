@@ -26,9 +26,9 @@ import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.IWorkflowProcessService;
 import com.pth.iflow.workflow.bl.IWorkflowTypeDataService;
 import com.pth.iflow.workflow.bl.impl.WorkflowProcessService;
-import com.pth.iflow.workflow.bl.strategies.ICreateWorkflowStrategy;
-import com.pth.iflow.workflow.bl.strategies.ISaveWorkflowStrategy;
-import com.pth.iflow.workflow.bl.strategies.IWorkStrategyFactory;
+import com.pth.iflow.workflow.bl.strategy.ISaveWorkflowStrategy;
+import com.pth.iflow.workflow.bl.strategy.IWorkStrategyFactory;
+import com.pth.iflow.workflow.bl.strategy.IWorkflowSaveStrategy;
 import com.pth.iflow.workflow.models.ProfileResponse;
 import com.pth.iflow.workflow.models.Workflow;
 import com.pth.iflow.workflow.models.WorkflowSaveRequest;
@@ -58,7 +58,7 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
   private ISaveWorkflowStrategy    saveStrategy;
 
   @Mock
-  private ICreateWorkflowStrategy  createStrategy;
+  private IWorkflowSaveStrategy  createStrategy;
 
   private WorkflowType             workflowType;
 
@@ -85,7 +85,7 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
 
     when(this.tokenValidator.isTokenValid(this.validTocken)).thenReturn(this.profileResponse);
 
-    when(this.workStrategyFactory.selectSaveWorkStrategy(any(WorkflowSaveRequest.class), any(String.class)))
+    when(this.workStrategyFactory.selectWorkStrategy(any(WorkflowSaveRequest.class), any(String.class)))
         .thenReturn(this.saveStrategy);
 
     when(this.workStrategyFactory.selectCreateWorkStrategy(any(WorkflowSaveRequest.class), any(String.class)))
