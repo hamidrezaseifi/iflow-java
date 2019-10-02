@@ -10,20 +10,20 @@ import com.pth.iflow.common.edo.models.IdLongListEdo;
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.common.rest.IflowRestPaths;
-import com.pth.iflow.workflow.bl.ICachDataDataService;
+import com.pth.iflow.workflow.bl.IProfileCachDataDataService;
 import com.pth.iflow.workflow.config.WorkflowConfiguration;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.services.IRestTemplateCall;
 
 @Service
-public class CachDataDataService implements ICachDataDataService {
+public class ProfileCachDataDataService implements IProfileCachDataDataService {
 
-  private static final Logger logger = LoggerFactory.getLogger(CachDataDataService.class);
+  private static final Logger logger = LoggerFactory.getLogger(ProfileCachDataDataService.class);
 
   private final IRestTemplateCall                        restTemplate;
   private final WorkflowConfiguration.ModuleAccessConfig moduleAccessConfig;
 
-  public CachDataDataService(@Autowired final IRestTemplateCall restTemplate,
+  public ProfileCachDataDataService(@Autowired final IRestTemplateCall restTemplate,
                              @Autowired final WorkflowConfiguration.ModuleAccessConfig moduleAccessConfig) {
     this.restTemplate = restTemplate;
     this.moduleAccessConfig = moduleAccessConfig;

@@ -1,86 +1,44 @@
 package com.pth.iflow.workflow.bl.strategy.strategies;
 
-import java.net.MalformedURLException;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-import com.pth.iflow.common.enums.EAssignType;
-import com.pth.iflow.common.enums.EWorkflowStatus;
-import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
-import com.pth.iflow.workflow.bl.ICachDataDataService;
 import com.pth.iflow.workflow.bl.IDepartmentDataService;
+import com.pth.iflow.workflow.bl.IProfileCachDataDataService;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.IWorkflowMessageDataService;
-import com.pth.iflow.workflow.bl.strategy.IWorkStrategyFactory;
-import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
-import com.pth.iflow.workflow.models.AssignItem;
-import com.pth.iflow.workflow.models.User;
-import com.pth.iflow.workflow.models.Workflow;
+import com.pth.iflow.workflow.bl.strategy.steps.CollectAssignedUserIdListStep;
+import com.pth.iflow.workflow.bl.strategy.steps.InitializeWorkflowActiveActionStrategyStep;
+import com.pth.iflow.workflow.bl.strategy.steps.InitializeWorkflowInitialActionStrategyStep;
+import com.pth.iflow.workflow.bl.strategy.steps.SaveWorkflowInCoreStep;
+import com.pth.iflow.workflow.bl.strategy.steps.SaveWorkflowOfferForAssignedUseresInCoreStep;
+import com.pth.iflow.workflow.bl.strategy.steps.SendWorkflowOffersToProfileStep;
+import com.pth.iflow.workflow.bl.strategy.steps.ValidateAssignInSaveRequestStrategyStep;
+import com.pth.iflow.workflow.bl.strategy.steps.ValidateCurrentStepExistsInWorkflowTypeStrategyStep;
+import com.pth.iflow.workflow.bl.strategy.steps.ValidateWorkflowActiveActionStrategyStep;
+import com.pth.iflow.workflow.bl.strategy.steps.ValidateWorkflowTypeStepStrategyStep;
 import com.pth.iflow.workflow.models.WorkflowSaveRequest;
 
 public class CreateOfferlAssignWorkflowStrategy extends AbstractWorkflowSaveStrategy {
 
-  public CreateOfferlAssignWorkflowStrategy(final WorkflowSaveRequest workflowCreateRequest,
-                                            final String token,
-                                            final IWorkStrategyFactory workStrategyFactory,
-                                            final IDepartmentDataService departmentDataService,
-                                            final IWorkflowMessageDataService workflowMessageDataService,
-                                            final ICachDataDataService cachDataDataService,
-                                            final IWorkflowDataService workflowDataService) {
-    super(workflowCreateRequest,
-          token,
-          workStrategyFactory,
-          departmentDataService,
-          workflowMessageDataService,
-          cachDataDataService,
-          workflowDataService);
+  public CreateOfferlAssignWorkflowStrategy(final WorkflowSaveRequest workflowCreateRequest, final String token,
+      final IDepartmentDataService departmentDataService, final IWorkflowMessageDataService workflowMessageDataService,
+      final IProfileCachDataDataService cachDataDataService, final IWorkflowDataService workflowDataService) {
+    super(workflowCreateRequest, token, departmentDataService, workflowMessageDataService, cachDataDataService, workflowDataService);
 
   }
 
   @Override
-  public List<Workflow> process() throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
-    final Workflow workflow = this.processingWorkflowSaveRequest.getWorkflow();
-    workflow.setStatus(EWorkflowStatus.OFFERING);
+  public void setup() {
+    steps.add(new ValidateAssignInSaveRequestStrategyStep(this));
+    steps.add(new InitializeWorkflowInitialActionStrategyStep(this));
+    steps.add(new InitializeWorkflowActiveActionStrategyStep(this));
+    steps.add(new ValidateWorkflowActiveActionStrategyStep(this));
+    steps.add(new ValidateWorkflowTypeStepStrategyStep(this));
+    steps.add(new ValidateCurrentStepExistsInWorkflowTypeStrategyStep(this));
+    steps.add(new SaveWorkflowInCoreStep(this));
+    steps.add(new CollectAssignedUserIdListStep(this));
 
-    verifyAssigns();
+    steps.add(new SaveWorkflowOfferForAssignedUseresInCoreStep(this));
+    steps.add(new SendWorkflowOffersToProfileStep(this));
 
-    final WorkflowSaveRequest saveRequest = creaeNotAssignedWorkflowSaveRequest(workflow);
-
-    final Workflow savedWorkflow = this.saveWorkflow(saveRequest).get(0);
-
-    final Set<Long> assignedUsers = new HashSet<>();
-
-    for (final AssignItem assign : this.processingWorkflowSaveRequest.getAssigns()) {
-
-      if (assign.getItemType() == EAssignType.USER) {
-        assignedUsers.add(assign.getItemId());
-      }
-
-      if (assign.getItemType() == EAssignType.DEPARTMENT) {
-        final List<User> departmentUserIds = this.getDepartmentDataService()
-                                                 .getUserListByDepartmentId(assign.getItemId(),
-                                                                            this.getToken());
-        assignedUsers.addAll(departmentUserIds.stream().map(u -> u.getId()).collect(Collectors.toSet()));
-      }
-
-      if (assign.getItemType() == EAssignType.DEPARTMENTGROUP) {
-        final List<User> departmentUserIds = this.getDepartmentDataService()
-                                                 .getUserListByDepartmentGroupId(assign.getItemId(),
-                                                                                 this.getToken());
-        assignedUsers.addAll(departmentUserIds.stream().map(u -> u.getId()).collect(Collectors.toSet()));
-      }
-    }
-
-    for (final Long userId : assignedUsers) {
-
-      createWorkflowMessage(savedWorkflow.getId(), savedWorkflow.getCreatedBy(), userId);
-
-    }
-
-    resetUserListCachData(getWorkflowType().getCompanyId(), assignedUsers);
-    return Arrays.asList(savedWorkflow);
   }
 
 }
