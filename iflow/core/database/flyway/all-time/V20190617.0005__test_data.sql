@@ -22,7 +22,5 @@ INSERT INTO `workflow_type_step` VALUES (1,1,'Initiale',1,'workflow/edit',NULL,1
 
 INSERT INTO `workflow` VALUES (2,1,'New Workflow from type 1 ',2,5,'kommentar 1',1,1,1,'2019-07-03 13:09:31.338104','2019-07-03 13:09:31.338104'),(3,1,'New Workflow from type 1 ',2,5,'kommentar 1',1,1,2,'2019-07-03 13:09:40.147187','2019-07-03 13:09:40.147187');
 
-INSERT INTO `workflow_actions` VALUES (1,3,'New action for Workflow 1 ',1,1,2,'kommentar 1',1,1,2,'2019-07-03 16:30:11.138136','2019-07-03 16:30:11.138136');
-
 INSERT INTO `workflow_files` VALUES (1,3,'New file for Workflow 1 ','','path/to/new/file1','kommentar 1',1,1,2,1,'2019-07-03 17:36:39.057350','2019-07-03 17:36:39.057350'),(2,3,'New file for Workflow 2 ','','path/to/new/file2','kommentar 2',1,1,0,1,'2019-07-03 17:42:29.076346','2019-07-03 17:42:29.076346'),(3,3,'New file for Workflow 3 ','','path/to/new/file3','kommentar 3',1,1,2,1,'2019-07-03 17:43:15.183390','2019-07-03 17:43:15.183390');
 
