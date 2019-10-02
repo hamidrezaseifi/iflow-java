@@ -41,8 +41,8 @@ public class SaveNewWorkflowStrategy extends AbstractWorkflowSaveStrategy {
 
     }
 
-    this.validateWorkflowCurrectStep(this.processingWorkflow, this.workflowType);
-    this.validateWorkflowAssignedUser(this.processingWorkflow, this.workflowType);
+    this.validateWorkflowCurrectStep(this.processingWorkflow, this.processingWorkflowType);
+    this.validateWorkflowAssignedUser(this.processingWorkflow, this.processingWorkflowType);
 
     return this.saveWorkflow(this.processingWorkflow);
   }

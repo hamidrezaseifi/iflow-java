@@ -67,6 +67,8 @@ public class WorkflowProcessService implements IWorkflowProcessService {
     logger.debug("Saving workflow with token {}", token);
     this.tokenCanSaveWorkflow(request.getWorkflow(), token);
 
+    prepareWorkflow(token, request.getWorkflow());
+
     final ISaveWorkflowStrategy strategy = this.workStrategyFactory.selectWorkStrategy(request, token);
 
     final Workflow result = strategy.process();
@@ -200,6 +202,12 @@ public class WorkflowProcessService implements IWorkflowProcessService {
     workflow.setCurrentStep(map.containsKey(workflow.getCurrentStepId()) ? map.get(workflow.getCurrentStepId()) : null);
     for (final WorkflowAction action : workflow.getActions()) {
       action.setCurrentStep(map.containsKey(action.getCurrentStepId()) ? map.get(action.getCurrentStepId()) : null);
+    }
+
+    for (final WorkflowTypeStep typeStep : workflowType.getSteps()) {
+      if (typeStep.getId() == workflow.getCurrentStepId()) {
+        workflow.setCurrentStep(typeStep);
+      }
     }
 
     return workflow;

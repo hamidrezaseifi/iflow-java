@@ -1,14 +1,18 @@
 package com.pth.iflow.workflow.bl.strategy.strategies;
 
 import java.net.MalformedURLException;
-import com.pth.iflow.common.exceptions.EIFlowErrorType;
-import com.pth.iflow.common.exceptions.IFlowCustomeException;
+import java.util.List;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.ICachDataDataService;
 import com.pth.iflow.workflow.bl.IDepartmentDataService;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.IWorkflowMessageDataService;
 import com.pth.iflow.workflow.bl.strategy.IWorkStrategyFactory;
+import com.pth.iflow.workflow.bl.strategy.steps.SaveWorkflowInCoreStep;
+import com.pth.iflow.workflow.bl.strategy.steps.ValidateCurrentStepExistsInWorkflowTypeStrategyStep;
+import com.pth.iflow.workflow.bl.strategy.steps.ValidateWorkflowActiveActionStrategyStep;
+import com.pth.iflow.workflow.bl.strategy.steps.ValidateWorkflowAssignedUserStrategyStep;
+import com.pth.iflow.workflow.bl.strategy.steps.ValidateWorkflowTypeStepStrategyStep;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.Workflow;
 import com.pth.iflow.workflow.models.WorkflowSaveRequest;
@@ -33,27 +37,28 @@ public class SaveExistingWorkflowStrategy extends AbstractWorkflowSaveStrategy {
   }
 
   @Override
-  public Workflow process() throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+  public void setup() {
+    steps.add(new ValidateWorkflowActiveActionStrategyStep(this));
+    steps.add(new ValidateWorkflowTypeStepStrategyStep(this));
+    steps.add(new ValidateCurrentStepExistsInWorkflowTypeStrategyStep(this));
+    steps.add(new ValidateWorkflowAssignedUserStrategyStep(this));
+    steps.add(new SaveWorkflowInCoreStep(this));
 
-    if (this.processingWorkflow.isAssigned() == false) {
-      throw new IFlowCustomeException("The workflow is not assigned id:" + this.processingWorkflow.getId(),
-                                      EIFlowErrorType.INVALID_WORKFLOW_STATUS);
+  }
 
-    }
+  @Override
+  public void process() throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+    this.getFirstStep().process();
+  }
 
-    if (this.processingWorkflow.hasActiveAction() == false) {
-      throw new IFlowCustomeException("The workflow has no active action id:" + this.processingWorkflow.getId(),
-                                      EIFlowErrorType.INVALID_WORKFLOW_STATUS);
+  @Override
+  public Workflow getSingleProceedWorkflow() {
+    return getSavedSingleWorkflow();
+  }
 
-    }
-
-    this.validateWorkflowCurrectStep(this.processingWorkflow, this.workflowType);
-    this.validateWorkflowAssignedUser(this.processingWorkflow, this.workflowType);
-
-    // this.activeAction.setStatus(EWorkflowActionStatus.OPEN);
-
-    return this.saveWorkflow(this.processingWorkflow);
-
+  @Override
+  public List<Workflow> getProceedWorkflowList() {
+    return savedWorkflowList;
   }
 
 }

@@ -48,14 +48,14 @@ public class DoneExistingWorkflowStrategy extends AbstractWorkflowSaveStrategy {
 
     }
 
-    this.validateWorkflowCurrectStep(this.processingWorkflow, this.workflowType);
-    this.validateWorkflowAssignedUser(this.processingWorkflow, this.workflowType);
+    this.validateWorkflowCurrectStep(this.processingWorkflow, this.processingWorkflowType);
+    this.validateWorkflowAssignedUser(this.processingWorkflow, this.processingWorkflowType);
 
     this.activeAction.setStatus(EWorkflowActionStatus.DONE);
 
     // this.selectWorkflowNextAssigned(this.processingWorkflow, this.workflowType,
     // this.activeAction);
-    this.selectWorkflowNextStep(this.processingWorkflow, this.workflowType, this.activeAction);
+    this.selectWorkflowNextStep(this.processingWorkflow, this.processingWorkflowType, this.activeAction);
     // this.setAssignToControllerAfterLastStep(this.processingWorkflow,
     // this.workflowType, this.activeAction);
 
