@@ -125,7 +125,7 @@ public class WorkflowHandler implements IWorkflowHandler {
     logger.debug("Save workflow {}", workflow.getTitle());
 
     if (workflow.getHasActiveAction()) {
-      workflow.getActiveAction().setNewStep(workflow.getCurrentStepId());
+      workflow.getActiveAction().setCurrentStepId(workflow.getCurrentStepId());
     }
 
     final GuiWorkflowSaveRequest request = GuiWorkflowSaveRequest.generateNew(workflow);
@@ -156,7 +156,7 @@ public class WorkflowHandler implements IWorkflowHandler {
       throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
     logger.debug("Make workflow {} done", workflow.getTitle());
 
-    workflow.getActiveAction().setNewStep(workflow.getCurrentStepId());
+    workflow.getActiveAction().setCurrentStepId(workflow.getCurrentStepId());
 
     final GuiWorkflowSaveRequest request = GuiWorkflowSaveRequest.generateNew(workflow);
     request.setCommand(EWorkflowProcessCommand.DONE);
@@ -257,8 +257,7 @@ public class WorkflowHandler implements IWorkflowHandler {
     for (final GuiWorkflowAction action : workflow.getActions()) {
       action.setCreatedByUser(this.sessionUserInfo.getUserById(action.getCreatedBy()));
 
-      action.setOldStepObject(this.findStep(workflow, action.getOldStep()));
-      action.setNewStepObject(this.findStep(workflow, action.getNewStep()));
+      action.setCurrentStep(this.findStep(workflow, action.getCurrentStepId()));
 
     }
 

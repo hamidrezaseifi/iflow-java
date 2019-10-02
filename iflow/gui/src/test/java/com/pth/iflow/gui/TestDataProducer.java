@@ -151,8 +151,7 @@ public class TestDataProducer {
     model.setStatus(EWorkflowActionStatus.INITIALIZE);
     model.setVersion(1);
     model.setCreatedBy(1L);
-    model.setNewStep(2L);
-    model.setOldStep(1L);
+    model.setCurrentStepId(1L);
     model.setComments("comments");
     model.setAssignTo(1L);
 

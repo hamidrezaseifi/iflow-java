@@ -10,18 +10,16 @@ public class GuiWorkflowAction extends WorkflowActionModelBase {
   private Long                  id;
   private Long                  workflowId;
   private Long                  createdBy;
-  private GuiUser               createdByUser;
   private String                action;
   private Long                  assignTo;
-  private GuiUser               assignToUser;
-  private Long                  oldStep;
-  private GuiWorkflowTypeStep   oldStepObject;
-  private Long                  newStep;
-  private GuiWorkflowTypeStep   newStepObject;
-  private Long                  nextAssign;
+  private Long                  currentStepId;
+  private GuiWorkflowTypeStep   currentStep;
   private String                comments;
   private EWorkflowActionStatus status;
   private Integer               version;
+
+  private GuiUser               createdByUser;
+  private GuiUser               assignToUser;
 
   @Override
   public Long getId() {
@@ -74,57 +72,9 @@ public class GuiWorkflowAction extends WorkflowActionModelBase {
     this.assignToUser = assignToUser;
   }
 
-  public Long getOldStep() {
-    return this.oldStep;
-  }
-
-  public void setOldStep(final Long oldStep) {
-    this.oldStep = oldStep;
-  }
-
-  /**
-   * @return the oldStepStep
-   */
-  public GuiWorkflowTypeStep getOldStepObject() {
-    return this.oldStepObject;
-  }
-
-  /**
-   * @param oldStepStep the oldStepStep to set
-   */
-  public void setOldStepObject(final GuiWorkflowTypeStep oldStepObject) {
-    this.oldStepObject = oldStepObject;
-  }
-
-  public Long getNewStep() {
-    return this.newStep;
-  }
-
-  public void setNewStep(final Long newStep) {
-    this.newStep = newStep;
-  }
-
   /**
    * @return the newStepObject
    */
-  public GuiWorkflowTypeStep getNewStepObject() {
-    return this.newStepObject;
-  }
-
-  /**
-   * @param newStepObject the newStepObject to set
-   */
-  public void setNewStepObject(final GuiWorkflowTypeStep newStepObject) {
-    this.newStepObject = newStepObject;
-  }
-
-  public Long getNextAssign() {
-    return this.nextAssign;
-  }
-
-  public void setNextAssign(final Long nextAssign) {
-    this.nextAssign = nextAssign;
-  }
 
   public Long getCreatedBy() {
     return this.createdBy;
@@ -156,6 +106,32 @@ public class GuiWorkflowAction extends WorkflowActionModelBase {
     this.comments = comments;
   }
 
+  public Long getCurrentStepId() {
+    return this.currentStepId;
+  }
+
+  public void setCurrentStepId(final Long currentStepId) {
+    this.currentStepId = currentStepId;
+  }
+
+  public GuiWorkflowTypeStep getCurrentStep() {
+    return this.currentStep;
+  }
+
+  public void setCurrentStep(final GuiWorkflowTypeStep currentStep) {
+    this.currentStep = currentStep;
+  }
+
+  @Override
+  public Integer getVersion() {
+    return this.version;
+  }
+
+  @Override
+  public void setVersion(final Integer version) {
+    this.version = version;
+  }
+
   public EWorkflowActionStatus getStatus() {
     return this.status;
   }
@@ -173,23 +149,12 @@ public class GuiWorkflowAction extends WorkflowActionModelBase {
     this.status = EWorkflowActionStatus.ofValue(status);
   }
 
-  @Override
-  public Integer getVersion() {
-    return this.version;
-  }
-
-  @Override
-  public void setVersion(final Integer version) {
-    this.version = version;
-  }
-
   public static GuiWorkflowAction createNewAction(final GuiWorkflow workflow, final Long createdBy,
       final EWorkflowActionStatus status) {
     final GuiWorkflowAction action = new GuiWorkflowAction();
     action.setCreatedBy(createdBy);
-    action.setNewStep(null);
-    action.setOldStep(workflow.getCurrentStepId());
-    action.setStatus(status);
+    action.setCurrentStep(null);
+    action.setCurrentStepId(null);
     action.setWorkflowId(workflow.getId());
     action.setComments("comments");
     action.setAction("action");
