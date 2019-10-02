@@ -20,9 +20,7 @@ import com.pth.iflow.workflow.bl.strategy.strategies.CreateManualAssignWorkflowS
 import com.pth.iflow.workflow.bl.strategy.strategies.CreateOfferlAssignWorkflowStrategy;
 import com.pth.iflow.workflow.bl.strategy.strategies.DoneExistingWorkflowStrategy;
 import com.pth.iflow.workflow.bl.strategy.strategies.SaveExistingWorkflowStrategy;
-import com.pth.iflow.workflow.bl.strategy.strategies.SaveNewWorkflowStrategy;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
-import com.pth.iflow.workflow.models.Workflow;
 import com.pth.iflow.workflow.models.WorkflowSaveRequest;
 
 @Service
@@ -59,17 +57,26 @@ public class WorkStrategyFactory implements IWorkStrategyFactory {
 
     logger.debug("selecting save strategy for workflow");
 
-    final Workflow processingWorkflow = workflowSaveRequest.getWorkflow();
-
     if (workflowSaveRequest.getCommand() == EWorkflowProcessCommand.CREATE) {
-      logger.debug("The SaveNewWorkflowStrategy is selected for workflow");
-      return new SaveNewWorkflowStrategy(workflowSaveRequest,
-                                         token,
-                                         this,
-                                         departmentDataService,
-                                         workflowMessageDataService,
-                                         cachDataDataService,
-                                         workflowDataService);
+      if (workflowSaveRequest.getWorkflow().getWorkflowType().geAssignType() == EWorkflowTypeAssignType.MANUAL) {
+        return new CreateManualAssignWorkflowStrategy(workflowSaveRequest,
+                                                      token,
+                                                      this,
+                                                      departmentDataService,
+                                                      workflowMessageDataService,
+                                                      cachDataDataService,
+                                                      workflowDataService);
+      }
+
+      if (workflowSaveRequest.getWorkflow().getWorkflowType().geAssignType() == EWorkflowTypeAssignType.OFFER) {
+        return new CreateOfferlAssignWorkflowStrategy(workflowSaveRequest,
+                                                      token,
+                                                      this,
+                                                      departmentDataService,
+                                                      workflowMessageDataService,
+                                                      cachDataDataService,
+                                                      workflowDataService);
+      }
     }
 
     if (workflowSaveRequest.getCommand() == EWorkflowProcessCommand.ARCHIVE) {
@@ -114,28 +121,6 @@ public class WorkStrategyFactory implements IWorkStrategyFactory {
                                               workflowMessageDataService,
                                               cachDataDataService,
                                               workflowDataService);
-    }
-
-    if (workflowSaveRequest.getCommand() == EWorkflowProcessCommand.CREATE) {
-      if (workflowSaveRequest.getWorkflow().getWorkflowType().geAssignType() == EWorkflowTypeAssignType.MANUAL) {
-        return new CreateManualAssignWorkflowStrategy(workflowSaveRequest,
-                                                      token,
-                                                      this,
-                                                      departmentDataService,
-                                                      workflowMessageDataService,
-                                                      cachDataDataService,
-                                                      workflowDataService);
-      }
-
-      if (workflowSaveRequest.getWorkflow().getWorkflowType().geAssignType() == EWorkflowTypeAssignType.OFFER) {
-        return new CreateOfferlAssignWorkflowStrategy(workflowSaveRequest,
-                                                      token,
-                                                      this,
-                                                      departmentDataService,
-                                                      workflowMessageDataService,
-                                                      cachDataDataService,
-                                                      workflowDataService);
-      }
     }
 
     throw new IFlowCustomeException("Unknown workflow strategy ", EIFlowErrorType.UNKNOWN_WORKFLOW_STRATEGY);

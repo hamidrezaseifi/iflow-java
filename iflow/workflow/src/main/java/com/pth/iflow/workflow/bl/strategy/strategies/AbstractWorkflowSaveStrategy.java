@@ -3,7 +3,9 @@ package com.pth.iflow.workflow.bl.strategy.strategies;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -25,6 +27,7 @@ import com.pth.iflow.workflow.bl.strategy.IWorkflowSaveStrategy;
 import com.pth.iflow.workflow.bl.strategy.IWorkflowSaveStrategyStep;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.AssignItem;
+import com.pth.iflow.workflow.models.User;
 import com.pth.iflow.workflow.models.Workflow;
 import com.pth.iflow.workflow.models.WorkflowAction;
 import com.pth.iflow.workflow.models.WorkflowMessage;
@@ -50,6 +53,8 @@ public abstract class AbstractWorkflowSaveStrategy implements IWorkflowSaveStrat
   protected final List<Workflow> savedWorkflowList = new ArrayList<>();
 
   protected Workflow savedSingleWorkflow = null;
+
+  private final Set<Long> assignedUsers = new HashSet<>();
 
   public AbstractWorkflowSaveStrategy(final WorkflowSaveRequest workflowCreateRequest,
                                       final String token,
@@ -391,6 +396,36 @@ public abstract class AbstractWorkflowSaveStrategy implements IWorkflowSaveStrat
 
   public void setSavedSingleWorkflow(final Workflow savedSingleWorkflow) {
     this.savedSingleWorkflow = savedSingleWorkflow;
+  }
+
+  public List<Workflow> getSavedWorkflowList() {
+    return savedWorkflowList;
+  }
+
+  public void setSavedWorkflowList(final Collection<Workflow> savedWorkflowList) {
+    this.savedWorkflowList.clear();
+    if (savedWorkflowList != null) {
+      this.savedWorkflowList.addAll(savedWorkflowList);
+    }
+  }
+
+  public List<User> getDepartmentUserList(final Long departmentId) throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+    return departmentDataService.getUserListByDepartmentId(departmentId, this.getToken());
+  }
+
+  public List<User> getDepartmentGroupUserList(final Long departmentGroupId) throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+    return departmentDataService.getUserListByDepartmentGroupId(departmentGroupId, this.getToken());
+  }
+
+  public Set<Long> getAssignedUsers() {
+    return assignedUsers;
+  }
+
+  public void setAssignedUsers(final Collection<Long> assignedUsers) {
+    this.assignedUsers.clear();
+    if (assignedUsers != null) {
+      this.assignedUsers.addAll(assignedUsers);
+    }
   }
 
 }

@@ -1,14 +1,16 @@
 package com.pth.iflow.workflow.bl.strategy.steps;
 
 import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.List;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.strategy.strategies.AbstractWorkflowSaveStrategy;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.Workflow;
 
-public class SaveWorkflowInCoreStep extends AbstractWorkflowSaveStrategyStep {
+public class SaveWorkflowForAssignedUseresInCoreStep extends AbstractWorkflowSaveStrategyStep {
 
-  public SaveWorkflowInCoreStep(final AbstractWorkflowSaveStrategy workflowSaveStrategy) {
+  public SaveWorkflowForAssignedUseresInCoreStep(final AbstractWorkflowSaveStrategy workflowSaveStrategy) {
     super(workflowSaveStrategy);
 
   }
@@ -18,11 +20,16 @@ public class SaveWorkflowInCoreStep extends AbstractWorkflowSaveStrategyStep {
 
     final Workflow processingWorkflow = this.getWorkflowSaveStrategy().getProcessingWorkflow();
 
-    final Workflow savedWorkflow = this.getWorkflowSaveStrategy().saveWorkflow(processingWorkflow);
+    final List<Workflow> result = new ArrayList<>();
 
-    // this.getWorkflowSaveStrategy().setProcessingWorkflow(savedWorkflow);
+    for (final Long userId : this.getWorkflowSaveStrategy().getAssignedUsers()) {
+      processingWorkflow.setActiveActionAssignTo(userId);
 
-    this.getWorkflowSaveStrategy().setSavedSingleWorkflow(savedWorkflow);
+      final Workflow savedWorkflow = this.getWorkflowSaveStrategy().saveWorkflow(processingWorkflow);
+      result.add(savedWorkflow);
+    }
+
+    this.getWorkflowSaveStrategy().setSavedWorkflowList(result);
 
     processNextStepIfExists();
   }
