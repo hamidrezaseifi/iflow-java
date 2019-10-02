@@ -3,6 +3,8 @@ package com.pth.iflow.workflow;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.pth.iflow.common.enums.EAssignType;
 import com.pth.iflow.common.enums.EWorkflowActionStatus;
@@ -258,7 +260,6 @@ public class TestDataProducer {
     model.setTitle(title);
     model.setStatus(1);
     model.setVersion(1);
-    model.setStepIndex(1);
     model.setStepIndex(index);
     model.setComments("comments");
     model.setViewName("viewName");
@@ -382,6 +383,29 @@ public class TestDataProducer {
     request.setWorkflow(this.getTestWorkflow(1L));
     request.setExpireDays(10);
     request.setCommand(EWorkflowProcessCommand.NONE);
+
+    return request;
+  }
+
+  protected WorkflowSaveRequest getTestWorkflowCreateRequestForStrategy() {
+    final WorkflowSaveRequest request = new WorkflowSaveRequest();
+    request.setAssigns(this.getTestAssignedList());
+    request.setWorkflow(this.getTestWorkflow(1L));
+    request.setExpireDays(10);
+    request.setCommand(EWorkflowProcessCommand.NONE);
+
+    final WorkflowType workflowType = this.getTestWorkflowType(1L, "");
+    workflowType.setAssignType(EWorkflowTypeAssignType.MANUAL);
+    request.getWorkflow().setWorkflowType(workflowType);
+    request.getWorkflow().setId(1L);
+
+    final Map<Long, WorkflowTypeStep> stepsMap = workflowType.getSteps().stream().collect(Collectors.toMap(s -> s.getId(), s -> s));
+
+    Long stepId = 0L;
+    for (final WorkflowAction action : request.getWorkflow().getActions()) {
+      action.setCurrentStepId(stepId++);
+      action.setCurrentStep(stepsMap.get(stepId));
+    }
 
     return request;
   }

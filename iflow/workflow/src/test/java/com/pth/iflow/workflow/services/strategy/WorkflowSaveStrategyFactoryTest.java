@@ -1,4 +1,4 @@
-package com.pth.iflow.workflow.services.strategies;
+package com.pth.iflow.workflow.services.strategy;
 
 import java.util.ArrayList;
 

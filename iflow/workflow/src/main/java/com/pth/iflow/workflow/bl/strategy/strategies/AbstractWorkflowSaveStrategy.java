@@ -63,6 +63,7 @@ public abstract class AbstractWorkflowSaveStrategy implements IWorkflowSaveStrat
     this.profileCachDataDataService = profileCachDataDataService;
     this.processingWorkflowType = workflowCreateRequest.getWorkflow().getWorkflowType();
     this.activeAction = workflowCreateRequest.getWorkflow().getActiveAction();
+    this.setup();
   }
 
   public WorkflowType getWorkflowType() {
