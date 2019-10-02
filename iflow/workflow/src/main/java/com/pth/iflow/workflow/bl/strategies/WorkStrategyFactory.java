@@ -1,12 +1,10 @@
 package com.pth.iflow.workflow.bl.strategies;
 
 import java.net.MalformedURLException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
 import com.pth.iflow.common.exceptions.EIFlowErrorType;
@@ -16,7 +14,6 @@ import com.pth.iflow.workflow.bl.ICachDataDataService;
 import com.pth.iflow.workflow.bl.IDepartmentDataService;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.IWorkflowMessageDataService;
-import com.pth.iflow.workflow.bl.IWorkflowProcessService;
 import com.pth.iflow.workflow.bl.strategies.create.CreateManualAssignWorkflowStrategy;
 import com.pth.iflow.workflow.bl.strategies.create.CreateOfferlAssignWorkflowStrategy;
 import com.pth.iflow.workflow.bl.strategies.save.ArchivingWorkflowStrategy;
@@ -31,40 +28,34 @@ import com.pth.iflow.workflow.models.WorkflowSaveRequest;
 @Service
 public class WorkStrategyFactory implements IWorkStrategyFactory {
 
-  private static final Logger               logger = LoggerFactory.getLogger(WorkStrategyFactory.class);
+  private static final Logger logger = LoggerFactory.getLogger(WorkStrategyFactory.class);
 
-  private final IWorkflowDataService        workflowDataService;
+  private final IWorkflowDataService workflowDataService;
 
-  private final IDepartmentDataService      departmentDataService;
+  private final IDepartmentDataService departmentDataService;
 
   private final IWorkflowMessageDataService workflowMessageDataService;
 
-  private final IWorkflowProcessService     workflowProcessService;
-
-  private final ICachDataDataService        cachDataDataService;
+  private final ICachDataDataService cachDataDataService;
 
   public WorkStrategyFactory(@Autowired final IWorkflowDataService workflowDataService,
-      @Autowired final IDepartmentDataService departmentDataService,
-      @Autowired final IWorkflowMessageDataService workflowMessageDataService,
-      @Autowired final ICachDataDataService cachDataDataService, @Autowired final IWorkflowProcessService workflowProcessService) {
+                             @Autowired final IDepartmentDataService departmentDataService,
+                             @Autowired final IWorkflowMessageDataService workflowMessageDataService,
+                             @Autowired final ICachDataDataService cachDataDataService) {
     this.workflowDataService = workflowDataService;
     this.departmentDataService = departmentDataService;
     this.workflowMessageDataService = workflowMessageDataService;
     this.cachDataDataService = cachDataDataService;
-    this.workflowProcessService = workflowProcessService;
 
   }
 
   /*
    * (non-Javadoc)
    *
-   * @see
-   * com.pth.iflow.workflow.bl.strategies.IWorkStrategyFactory#selectWorkStrategy(
-   * com.pth.iflow.workflow.models.Workflow)
+   * @see com.pth.iflow.workflow.bl.strategies.IWorkStrategyFactory#selectWorkStrategy( com.pth.iflow.workflow.models.Workflow)
    */
   @Override
-  public ISaveWorkflowStrategy selectSaveWorkStrategy(final WorkflowSaveRequest workflowSaveRequest, final String token)
-      throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+  public ISaveWorkflowStrategy selectSaveWorkStrategy(final WorkflowSaveRequest workflowSaveRequest, final String token) throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     logger.debug("selecting save strategy for workflow");
 
@@ -96,25 +87,30 @@ public class WorkStrategyFactory implements IWorkStrategyFactory {
     }
 
     throw new IFlowCustomeException("Unknown workflow save strategy id:" + processingWorkflow.getId(),
-        EIFlowErrorType.UNKNOWN_WORKFLOW_SAVE_STRATEGY);
+                                    EIFlowErrorType.UNKNOWN_WORKFLOW_SAVE_STRATEGY);
 
   }
 
   @Override
-  public ICreateWorkflowStrategy selectCreateWorkStrategy(final WorkflowSaveRequest workflowSaveRequest, final String token)
-      throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+  public ICreateWorkflowStrategy selectCreateWorkStrategy(final WorkflowSaveRequest workflowSaveRequest, final String token) throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     logger.debug("selecting create strategy for workflow create request");
 
-    workflowProcessService.prepareWorkflow(token, workflowSaveRequest.getWorkflow());
-
     if (workflowSaveRequest.getWorkflow().getWorkflowType().geAssignType() == EWorkflowTypeAssignType.MANUAL) {
-      return new CreateManualAssignWorkflowStrategy(workflowSaveRequest, token, this, departmentDataService,
-          workflowMessageDataService, cachDataDataService);
+      return new CreateManualAssignWorkflowStrategy(workflowSaveRequest,
+                                                    token,
+                                                    this,
+                                                    departmentDataService,
+                                                    workflowMessageDataService,
+                                                    cachDataDataService);
     }
 
     if (workflowSaveRequest.getWorkflow().getWorkflowType().geAssignType() == EWorkflowTypeAssignType.OFFER) {
-      return new CreateOfferlAssignWorkflowStrategy(workflowSaveRequest, token, this, departmentDataService,
-          workflowMessageDataService, cachDataDataService);
+      return new CreateOfferlAssignWorkflowStrategy(workflowSaveRequest,
+                                                    token,
+                                                    this,
+                                                    departmentDataService,
+                                                    workflowMessageDataService,
+                                                    cachDataDataService);
     }
 
     throw new IFlowCustomeException("Unknown workflow create strategy ", EIFlowErrorType.UNKNOWN_WORKFLOW_CREATE_STRATEGY);

@@ -9,14 +9,12 @@ import org.mockito.Mock;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
 import com.pth.iflow.workflow.TestDataProducer;
 import com.pth.iflow.workflow.bl.ICachDataDataService;
 import com.pth.iflow.workflow.bl.IDepartmentDataService;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.IWorkflowMessageDataService;
-import com.pth.iflow.workflow.bl.IWorkflowProcessService;
 import com.pth.iflow.workflow.bl.strategies.ICreateWorkflowStrategy;
 import com.pth.iflow.workflow.bl.strategies.IWorkStrategyFactory;
 import com.pth.iflow.workflow.bl.strategies.WorkStrategyFactory;
@@ -30,29 +28,28 @@ import com.pth.iflow.workflow.models.WorkflowType;
 @AutoConfigureMockMvc
 public class WorkflowCreateStrategyFactoryTest extends TestDataProducer {
 
-  private IWorkStrategyFactory        workStrategyFactory;
+  private IWorkStrategyFactory workStrategyFactory;
 
   @Mock
-  private IWorkflowDataService        workflowDataService;
+  private IWorkflowDataService workflowDataService;
 
   @Mock
-  private IWorkflowProcessService     workflowProcessService;
-
-  @Mock
-  private IDepartmentDataService      departmentDataService;
+  private IDepartmentDataService departmentDataService;
 
   @Mock
   private IWorkflowMessageDataService workflowMessageDataService;
 
   @Mock
-  private ICachDataDataService        cachDataDataService;
+  private ICachDataDataService cachDataDataService;
 
-  private String                      validTocken;
+  private String validTocken;
 
   @Before
   public void setUp() throws Exception {
-    this.workStrategyFactory = new WorkStrategyFactory(this.workflowDataService, this.departmentDataService,
-        this.workflowMessageDataService, this.cachDataDataService, this.workflowProcessService);
+    this.workStrategyFactory = new WorkStrategyFactory(this.workflowDataService,
+                                                       this.departmentDataService,
+                                                       this.workflowMessageDataService,
+                                                       this.cachDataDataService);
 
     // when(this.workflowDataService.generateCoreUrl(any(String.class))).thenReturn(new
     // URL("http://any-string"));
@@ -74,11 +71,12 @@ public class WorkflowCreateStrategyFactoryTest extends TestDataProducer {
     workflowCreateReq.getWorkflow().setWorkflowType(workflowType);
 
     final ICreateWorkflowStrategy createWorkflowStrategy = this.workStrategyFactory.selectCreateWorkStrategy(workflowCreateReq,
-        this.validTocken);
+                                                                                                             this.validTocken);
 
     Assert.assertNotNull("Result strategy is not null!", createWorkflowStrategy);
-    Assert.assertEquals("Selected strategy is CreateManualAssignWorkflowStrategy!", createWorkflowStrategy.getClass(),
-        CreateManualAssignWorkflowStrategy.class);
+    Assert.assertEquals("Selected strategy is CreateManualAssignWorkflowStrategy!",
+                        createWorkflowStrategy.getClass(),
+                        CreateManualAssignWorkflowStrategy.class);
 
   }
 
@@ -92,11 +90,12 @@ public class WorkflowCreateStrategyFactoryTest extends TestDataProducer {
     workflowCreateReq.getWorkflow().setWorkflowType(workflowType);
 
     final ICreateWorkflowStrategy createWorkflowStrategy = this.workStrategyFactory.selectCreateWorkStrategy(workflowCreateReq,
-        this.validTocken);
+                                                                                                             this.validTocken);
 
     Assert.assertNotNull("Result strategy is not null!", createWorkflowStrategy);
-    Assert.assertEquals("Selected strategy is CreateOfferlAssignWorkflowStrategy!", createWorkflowStrategy.getClass(),
-        CreateOfferlAssignWorkflowStrategy.class);
+    Assert.assertEquals("Selected strategy is CreateOfferlAssignWorkflowStrategy!",
+                        createWorkflowStrategy.getClass(),
+                        CreateOfferlAssignWorkflowStrategy.class);
 
   }
 
