@@ -21,6 +21,7 @@ public class GuiWorkflow {
   private String                        comments;
   private EWorkflowStatus               status;
   private Integer                       version;
+  private Long                          currentUserId;
 
   private final List<GuiWorkflowFile>   files   = new ArrayList<>();
   private final List<GuiWorkflowAction> actions = new ArrayList<>();
@@ -208,6 +209,10 @@ public class GuiWorkflow {
     this.actions.add(action);
   }
 
+  public void setCurrentUserId(final Long currentUserId) {
+    this.currentUserId = currentUserId;
+  }
+
   public boolean isAfterStep(final GuiWorkflow other) {
     return this.currentStep.isAfterStep(other.getCurrentStep());
   }
@@ -238,6 +243,18 @@ public class GuiWorkflow {
 
   public boolean isInitializing() {
     return this.getIsNew() && (this.getStatus() == EWorkflowStatus.INITIALIZE);
+  }
+
+  public boolean isAssigned() {
+    return this.getIsNew() == false && (this.getStatus() == EWorkflowStatus.ASSIGNED);
+  }
+
+  public boolean isMeAssigned() {
+    return this.isAssigned() && (this.getActiveAction().isAssignTo(this.currentUserId));
+  }
+
+  public boolean isNotAssigned() {
+    return this.isAssigned() == false;
   }
 
   public boolean getHasActiveAction() {

@@ -73,7 +73,8 @@
 				      </div>
 				      <div class="modal-footer">
 				        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="material-icons">close</i></button>
-				        <button type="button" class="btn btn-primary" ng-click="assignWorkflowMe(viewWorkflow.id);"><i class="material-icons">assignment_ind</i></button>
+				        <button type="button" class="btn btn-primary" ng-if="viewWorkflow.notAssigned" ng-click="assignWorkflowMe(viewWorkflow.id);"><i class="material-icons">assignment_ind</i></button>
+				        <a type="button" class="btn btn-primary" ng-if="viewWorkflow.meAssigned" href="/workflow/edit/{{viewWorkflow.id}}"><i class="material-icons">pageview</i></a>
 				      </div>
 				    </div>
 				  </div>		    

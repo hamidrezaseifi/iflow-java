@@ -249,7 +249,7 @@ public class WorkflowHandler implements IWorkflowHandler {
     workflow.setWorkflowType(this.sessionUserInfo.getWorkflowTypeById(workflow.getWorkflowTypeId()));
     workflow.setCreatedByUser(this.sessionUserInfo.getUserById(workflow.getCreatedBy()));
     workflow.setControllerUser(this.sessionUserInfo.getUserById(workflow.getController()));
-
+    workflow.setCurrentUserId(this.sessionUserInfo.getUser().getId());
     workflow.setCurrentStep(this.findStepByIdInWOrkflowType(workflow.getCurrentStepId(), workflow.getWorkflowType()));
 
     for (final GuiWorkflowAction action : workflow.getActions()) {
