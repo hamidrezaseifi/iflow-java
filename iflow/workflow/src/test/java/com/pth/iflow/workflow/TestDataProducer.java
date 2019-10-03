@@ -95,7 +95,6 @@ public class TestDataProducer {
     final Workflow model = new Workflow();
     model.setWorkflowTypeId(1L);
     model.setId(Id);
-    model.setTitle("title " + Id);
     model.setStatus(EWorkflowStatus.INITIALIZE);
     model.setVersion(1);
     model.setComments("comments");
@@ -116,7 +115,6 @@ public class TestDataProducer {
     final Workflow model = new Workflow();
     model.setWorkflowTypeId(1L);
     model.setId(Id);
-    model.setTitle("title " + Id);
     model.setStatus(EWorkflowStatus.INITIALIZE);
     model.setVersion(1);
     model.setComments("comments");
@@ -366,7 +364,6 @@ public class TestDataProducer {
     final WorkflowSearchFilter filter = new WorkflowSearchFilter();
     filter.setAssignedUserIdList(this.getTestUserIdList());
     filter.setStatusList(Arrays.asList(1, 2, 3));
-    filter.setTitle("title");
     filter.setWorkflowStepeIdList(this.getTestWorkflowTypeStepIdList());
     filter.setWorkflowTypeIdList(this.getTestWorkflowTypeIdList());
 

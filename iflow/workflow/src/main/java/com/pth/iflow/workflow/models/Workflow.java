@@ -16,7 +16,6 @@ public class Workflow extends DataModelBase {
   private Long                       currentStepId;
   private Long                       controller;
   private Long                       createdBy;
-  private String                     title;
   private String                     comments;
   private EWorkflowStatus            status;
   private Integer                    version;
@@ -80,14 +79,6 @@ public class Workflow extends DataModelBase {
 
   public void setCreatedBy(final Long createdBy) {
     this.createdBy = createdBy;
-  }
-
-  public String getTitle() {
-    return this.title;
-  }
-
-  public void setTitle(final String title) {
-    this.title = title;
   }
 
   public String getComments() {

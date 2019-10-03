@@ -19,28 +19,25 @@ import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 @XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "WorkflowSearchFilter" + IFlowJaxbDefinition.TYPE_PREFIX)
 public class WorkflowSearchFilterEdo {
 
-  @NotNull
+  @NotNull(message = "AssignedUserId must not be null")
   @XmlElementWrapper(name = "AssignedUserIdList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "AssignedUserId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private List<Long>    assignedUserIdList  = new ArrayList<>();
 
-  @NotNull
+  @NotNull(message = "StatusList must not be null")
   @XmlElementWrapper(name = "StatusList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "Status", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private List<Integer> statusList          = new ArrayList<>();
 
-  @NotNull
+  @NotNull(message = "WorkflowTypeIdList must not be null")
   @XmlElementWrapper(name = "WorkflowTypeIdList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "WorkflowTypeId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private List<Long>    workflowTypeIdList  = new ArrayList<>();
 
-  @NotNull
+  @NotNull(message = "WorkflowStepIdList must not be null")
   @XmlElementWrapper(name = "WorkflowStepIdList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "WorkflowStepId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private List<Long>    workflowStepeIdList = new ArrayList<>();
-
-  @XmlElement(name = "Title", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String        title;
 
   public List<Long> getAssignedUserIdList() {
     return this.assignedUserIdList;
@@ -88,14 +85,6 @@ public class WorkflowSearchFilterEdo {
     if (workflowStepeIdList != null) {
       this.workflowStepeIdList.addAll(workflowStepeIdList);
     }
-  }
-
-  public String getTitle() {
-    return this.title;
-  }
-
-  public void setTitle(final String title) {
-    this.title = title;
   }
 
 }

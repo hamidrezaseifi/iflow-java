@@ -188,7 +188,6 @@ public class WorkflowMessageDaoTest extends TestDataProducer {
   private void createReferenceWorkflow() {
     final Workflow workflow = getTestNewWorkflow();
     workflow.setId(null);
-    workflow.setTitle("test title");
     createdWorkflow = workflowDao.create(workflow);
   }
 

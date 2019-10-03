@@ -65,7 +65,6 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
     final Workflow model = new Workflow();
     model.setId(rs.getLong("id"));
 
-    model.setTitle(rs.getString("title"));
     model.setStatus(rs.getInt("status"));
     model.setCreatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("created_at")));
     model.setUpdatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("updated_at")));
@@ -99,8 +98,8 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
 
   @Override
   public Workflow create(final Workflow workflow) throws IFlowStorageException {
-    final String sql = "INSERT INTO workflow (workflow_type_id, title, current_step, comments, controller, created_by, version, status)"
-        + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    final String sql = "INSERT INTO workflow (workflow_type_id, current_step, comments, controller, created_by, version, status)"
+        + "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
     final TransactionStatus transactionStatus = this.startTransaction(true);
     try {
@@ -155,7 +154,7 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
 
   @Override
   public Workflow update(final Workflow workflow) throws IFlowStorageException {
-    final String sql = "UPDATE workflow SET workflow_type_id = ?, title = ?, current_step = ?, comments = ?,"
+    final String sql = "UPDATE workflow SET workflow_type_id = ?, current_step = ?, comments = ?,"
         + " controller = ?, created_by = ?, version = ?, status = ? WHERE id = ?";
 
     final TransactionStatus transactionStatus = this.startTransaction(true);
@@ -200,13 +199,12 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
   @Override
   protected PreparedStatement prepareInsertPreparedStatement(final Workflow model, final PreparedStatement ps) throws SQLException {
     ps.setLong(1, model.getWorkflowTypeId());
-    ps.setString(2, model.getTitle());
-    ps.setLong(3, model.getCurrentStep().getId());
-    ps.setString(4, model.getComments());
-    ps.setLong(5, model.getController());
-    ps.setLong(6, model.getCreatedBy());
-    ps.setInt(7, model.getVersion());
-    ps.setInt(8, model.getStatusInt());
+    ps.setLong(2, model.getCurrentStep().getId());
+    ps.setString(3, model.getComments());
+    ps.setLong(4, model.getController());
+    ps.setLong(5, model.getCreatedBy());
+    ps.setInt(6, model.getVersion());
+    ps.setInt(7, model.getStatusInt());
 
     return ps;
   }
@@ -214,14 +212,13 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
   @Override
   protected PreparedStatement prepareUpdatePreparedStatement(final Workflow model, final PreparedStatement ps) throws SQLException {
     ps.setLong(1, model.getWorkflowTypeId());
-    ps.setString(2, model.getTitle());
-    ps.setLong(3, model.getCurrentStep().getId());
-    ps.setString(4, model.getComments());
-    ps.setLong(5, model.getController());
-    ps.setLong(6, model.getCreatedBy());
-    ps.setInt(7, model.getVersion());
-    ps.setInt(8, model.getStatusInt());
-    ps.setLong(9, model.getId());
+    ps.setLong(2, model.getCurrentStep().getId());
+    ps.setString(3, model.getComments());
+    ps.setLong(4, model.getController());
+    ps.setLong(5, model.getCreatedBy());
+    ps.setInt(6, model.getVersion());
+    ps.setInt(7, model.getStatusInt());
+    ps.setLong(8, model.getId());
 
     return ps;
   }
@@ -302,10 +299,6 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
             index++;
           }
         }
-        if (StringUtils.isNotEmpty(workflowSearchFilter.getTitle())) {
-          ps.setString(index, workflowSearchFilter.getTitle());
-          index++;
-        }
 
         return ps;
 
@@ -342,10 +335,7 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
       whereClause += whereClause.isEmpty() ? "" : "and";
       whereClause += " workflow_type_id in (" + StringUtils.repeat("?,", workflowSearchFilter.getWorkflowTypeIdList().size()) + ") ";
     }
-    if (StringUtils.isNotEmpty(workflowSearchFilter.getTitle())) {
-      whereClause += whereClause.isEmpty() ? "" : "and";
-      whereClause += " title like '%" + workflowSearchFilter.getTitle() + "%' ";
-    }
+
     whereClause = whereClause.replace(",)", ")");
     return whereClause;
   }

@@ -102,7 +102,6 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
 
     Assert.assertNotNull("Result workflow-type is not null!", resWorkflow);
     Assert.assertEquals("Result workflow-type has id 1!", resWorkflow.getId(), workflow.getId());
-    Assert.assertEquals("Result workflow-type has title '" + workflow.getTitle() + "'!", resWorkflow.getTitle(), workflow.getTitle());
     Assert.assertEquals("Result workflow-type has status 1!", resWorkflow.getStatus(), workflow.getStatus());
 
   }
@@ -122,8 +121,6 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
 
     Assert.assertNotNull("Result workflow-type is not null!", resWorkflow);
     Assert.assertEquals("Result workflow-type has id 1!", resWorkflow.getId(), request.getWorkflow().getId());
-    Assert.assertEquals("Result workflow-type has title '" + request.getWorkflow().getTitle() + "'!", resWorkflow.getTitle(),
-        request.getWorkflow().getTitle());
     Assert.assertEquals("Result workflow-type has status 1!", resWorkflow.getStatus(), request.getWorkflow().getStatus());
 
   }
@@ -148,8 +145,6 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
 
     Assert.assertNotNull("Result workflow-type is not null!", resWorkflow);
     Assert.assertEquals("Result workflow-type has id 1!", resWorkflow.getId(), workflowSaveResult.getId());
-    Assert.assertEquals("Result workflow-type has title '" + workflowSaveResult.getTitle() + "'!", resWorkflow.getTitle(),
-        workflowSaveResult.getTitle());
     Assert.assertEquals("Result workflow-type has status '" + workflowSaveResult.getStatus() + "'!", resWorkflow.getStatus(),
         workflowSaveResult.getStatus());
 
@@ -174,8 +169,6 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
 
     Assert.assertNotNull("Result workflow-type is not null!", resWorkflow);
     Assert.assertEquals("Result workflow-type has id 1!", resWorkflow.getId(), workflowSaveResult.getId());
-    Assert.assertEquals("Result workflow-type has title '" + workflowSaveResult.getTitle() + "'!", resWorkflow.getTitle(),
-        workflowSaveResult.getTitle());
     Assert.assertEquals("Result workflow-type has status '" + workflowSaveResult.getStatus() + "'!", resWorkflow.getStatus(),
         workflowSaveResult.getStatus());
 
@@ -200,8 +193,6 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
 
     Assert.assertNotNull("Result workflow-type is not null!", resWorkflow);
     Assert.assertEquals("Result workflow-type has id 1!", resWorkflow.getId(), workflowSaveResult.getId());
-    Assert.assertEquals("Result workflow-type has title '" + workflowSaveResult.getTitle() + "'!", resWorkflow.getTitle(),
-        workflowSaveResult.getTitle());
     Assert.assertEquals("Result workflow-type has status '" + workflowSaveResult.getStatus() + "'!", resWorkflow.getStatus(),
         workflowSaveResult.getStatus());
 

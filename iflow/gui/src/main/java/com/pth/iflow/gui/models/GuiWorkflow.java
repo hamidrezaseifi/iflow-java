@@ -18,7 +18,6 @@ public class GuiWorkflow {
   private GuiUser                       controllerUser;
   private Long                          createdBy;
   private GuiUser                       createdByUser;
-  private String                        title;
   private String                        comments;
   private EWorkflowStatus               status;
   private Integer                       version;
@@ -114,14 +113,6 @@ public class GuiWorkflow {
    */
   public void setCreatedByUser(final GuiUser createdByUser) {
     this.createdByUser = createdByUser;
-  }
-
-  public String getTitle() {
-    return this.title;
-  }
-
-  public void setTitle(final String title) {
-    this.title = title;
   }
 
   public String getComments() {
@@ -286,7 +277,6 @@ public class GuiWorkflow {
     newWorkflow.setController(0L);
     newWorkflow.setCurrentStepId(0L);
     newWorkflow.setId(0L);
-    newWorkflow.setTitle("");
     newWorkflow.setVersion(0);
     newWorkflow.setWorkflowTypeId(0L);
     newWorkflow.setComments("");

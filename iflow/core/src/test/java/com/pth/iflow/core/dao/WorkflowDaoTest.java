@@ -27,7 +27,7 @@ import com.pth.iflow.core.storage.dao.IWorkflowDao;
 public class WorkflowDaoTest extends TestDataProducer {
 
   @Autowired
-  private IWorkflowDao workflowDao;
+  private IWorkflowDao         workflowDao;
 
   private final List<Workflow> createdModels = new ArrayList<>();
 
@@ -40,7 +40,6 @@ public class WorkflowDaoTest extends TestDataProducer {
     for (int i = 1; i <= 3; i++) {
       final Workflow workflow = getTestNewWorkflow();
       workflow.setId(null);
-      workflow.setTitle("title " + i);
       final Workflow res = workflowDao.create(workflow);
       createdModels.add(res);
     }
@@ -65,7 +64,6 @@ public class WorkflowDaoTest extends TestDataProducer {
 
     Assert.assertNotNull("Result workflow is not null!", resWorkflow);
     Assert.assertEquals("Result workflow has id 1!", resWorkflow.getId(), workflow.getId());
-    Assert.assertEquals("Result workflow has title '" + workflow.getTitle() + "'!", resWorkflow.getTitle(), workflow.getTitle());
     Assert.assertEquals("Result workflow has status 1!", resWorkflow.getStatus(), workflow.getStatus());
 
   }
@@ -101,13 +99,11 @@ public class WorkflowDaoTest extends TestDataProducer {
   public void testCreate() throws Exception {
 
     final Workflow workflow = getTestNewWorkflow();
-    workflow.setTitle("title test");
     workflow.setVersion(10);
     final Workflow resWorkflow = workflowDao.create(workflow);
     createdModels.add(resWorkflow);
 
     Assert.assertNotNull("Result workflow is not null!", resWorkflow);
-    Assert.assertEquals("Result workflow has title '" + workflow.getTitle() + "'!", resWorkflow.getTitle(), workflow.getTitle());
     Assert.assertEquals("Result workflow has status 1!", resWorkflow.getStatus(), workflow.getStatus());
     Assert.assertEquals("Result workflow has version " + workflow.getVersion() + "!", resWorkflow.getVersion(), workflow.getVersion());
 
@@ -117,14 +113,12 @@ public class WorkflowDaoTest extends TestDataProducer {
   public void testUpdate() throws Exception {
 
     final Workflow workflow = getTestNewWorkflow();
-    workflow.setTitle("title test");
     workflow.setVersion(10);
     final Workflow createdWorkflow = workflowDao.create(workflow);
     createdModels.add(createdWorkflow);
 
     Assert.assertNotNull("Result created workflow is not null!", createdWorkflow);
 
-    createdWorkflow.setTitle("new updated title test");
     createdWorkflow.setVersion(22);
     createdWorkflow.setStatus(10);
 
@@ -132,7 +126,6 @@ public class WorkflowDaoTest extends TestDataProducer {
 
     Assert.assertNotNull("Result workflow is not null!", updatedWorkflow);
     Assert.assertEquals("Result workflow has the same id as created!", createdWorkflow.getId(), updatedWorkflow.getId());
-    Assert.assertEquals("Result workflow has title 'new updated title test'!", createdWorkflow.getTitle(), "new updated title test");
     Assert.assertEquals("Result workflow has status 10!", updatedWorkflow.getStatusInt().intValue(), 10);
     Assert.assertEquals("Result workflow has version 22!", updatedWorkflow.getVersion().intValue(), 22);
 
@@ -142,7 +135,6 @@ public class WorkflowDaoTest extends TestDataProducer {
   public void testDelete() throws Exception {
 
     final Workflow workflow = getTestNewWorkflow();
-    workflow.setTitle("title test");
     workflow.setVersion(10);
     final Workflow resWorkflow = workflowDao.create(workflow);
 

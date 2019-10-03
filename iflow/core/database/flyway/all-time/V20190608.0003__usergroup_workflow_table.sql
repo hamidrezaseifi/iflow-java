@@ -199,7 +199,6 @@ CREATE TABLE `workflow_type_step` (
 CREATE TABLE `workflow` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `workflow_type_id` int(11) NOT NULL,
-  `title` varchar(2000) NOT NULL,
   `current_step` int(11) NOT NULL,
   `status` int(11) NOT NULL,
   `comments` text,

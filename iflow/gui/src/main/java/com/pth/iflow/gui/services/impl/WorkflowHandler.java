@@ -63,7 +63,7 @@ public class WorkflowHandler implements IWorkflowHandler {
   @Override
   public List<GuiWorkflow> createWorkflow(final GuiWorkflowSaveRequest createRequest, final HttpSession session)
       throws GuiCustomizedException, IOException, IFlowMessageConversionFailureException {
-    logger.debug("Create workflow {}", createRequest.getWorkflow().getTitle());
+    logger.debug("Create workflow");
 
     createRequest.setCommand(EWorkflowProcessCommand.CREATE);
     if (createRequest.getWorkflow().getCurrentStepId() == null || createRequest.getWorkflow().getCurrentStepId() <= 0) {
@@ -122,7 +122,7 @@ public class WorkflowHandler implements IWorkflowHandler {
   @Override
   public GuiWorkflow saveWorkflow(final GuiWorkflow workflow, final HttpSession session)
       throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
-    logger.debug("Save workflow {}", workflow.getTitle());
+    logger.debug("Save workflow");
 
     if (workflow.getHasActiveAction()) {
       workflow.getActiveAction().setCurrentStepId(workflow.getCurrentStepId());
@@ -154,7 +154,7 @@ public class WorkflowHandler implements IWorkflowHandler {
   @Override
   public GuiWorkflow doneWorkflow(final GuiWorkflow workflow, final HttpSession session)
       throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
-    logger.debug("Make workflow {} done", workflow.getTitle());
+    logger.debug("Make workflow done");
 
     workflow.getActiveAction().setCurrentStepId(workflow.getCurrentStepId());
 
@@ -168,7 +168,7 @@ public class WorkflowHandler implements IWorkflowHandler {
   @Override
   public GuiWorkflow archiveWorkflow(final GuiWorkflow workflow, final HttpSession session)
       throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
-    logger.debug("Make workflow {} archive", workflow.getTitle());
+    logger.debug("Make workflow archive");
 
     final GuiWorkflowSaveRequest request = GuiWorkflowSaveRequest.generateNew(workflow);
     request.setCommand(EWorkflowProcessCommand.ARCHIVE);

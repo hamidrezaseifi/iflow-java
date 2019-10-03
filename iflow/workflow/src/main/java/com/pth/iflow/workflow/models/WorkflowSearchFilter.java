@@ -13,8 +13,6 @@ public class WorkflowSearchFilter {
 
   private List<Long>    workflowStepeIdList = new ArrayList<>();
 
-  private String        title;
-
   public List<Long> getAssignedUserIdList() {
     return this.assignedUserIdList;
   }
@@ -57,14 +55,6 @@ public class WorkflowSearchFilter {
     if (workflowStepeIdList != null) {
       this.workflowStepeIdList.addAll(workflowStepeIdList);
     }
-  }
-
-  public String getTitle() {
-    return this.title;
-  }
-
-  public void setTitle(final String title) {
-    this.title = title;
   }
 
 }

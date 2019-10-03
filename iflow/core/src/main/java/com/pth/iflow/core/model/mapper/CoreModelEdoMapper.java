@@ -222,7 +222,6 @@ public class CoreModelEdoMapper {
 
   public static WorkflowEdo toEdo(final Workflow model) {
     final WorkflowEdo edo = new WorkflowEdo();
-    edo.setTitle(model.getTitle());
     edo.setComments(model.getComments());
     edo.setStatus(model.getStatusInt());
     edo.setId(model.getId());
@@ -243,7 +242,6 @@ public class CoreModelEdoMapper {
 
     final Workflow model = new Workflow();
 
-    model.setTitle(edo.getTitle());
     model.setComments(edo.getComments());
     model.setStatus(edo.getStatus());
     model.setId(edo.getId());
@@ -428,7 +426,6 @@ public class CoreModelEdoMapper {
     final WorkflowSearchFilterEdo edo = new WorkflowSearchFilterEdo();
     edo.setAssignedUserIdList(model.getAssignedUserIdList());
     edo.setStatusList(model.getStatusList());
-    edo.setTitle(model.getTitle());
     edo.setWorkflowStepeIdList(model.getWorkflowStepeIdList());
     edo.setWorkflowTypeIdList(model.getWorkflowTypeIdList());
 
@@ -441,7 +438,6 @@ public class CoreModelEdoMapper {
     final WorkflowSearchFilter model = new WorkflowSearchFilter();
     model.setAssignedUserIdList(edo.getAssignedUserIdList());
     model.setStatusList(edo.getStatusList());
-    model.setTitle(edo.getTitle());
     model.setWorkflowStepeIdList(edo.getWorkflowStepeIdList());
     model.setWorkflowTypeIdList(edo.getWorkflowTypeIdList());
 

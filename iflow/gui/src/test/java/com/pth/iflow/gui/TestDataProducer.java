@@ -95,7 +95,6 @@ public class TestDataProducer {
     final GuiWorkflow model = new GuiWorkflow();
     model.setWorkflowTypeId(1L);
     model.setId(Id);
-    model.setTitle("title " + Id);
     model.setStatus(EWorkflowStatus.INITIALIZE);
     model.setVersion(1);
     model.setComments("comments");
@@ -340,7 +339,6 @@ public class TestDataProducer {
     final GuiWorkflowSearchFilter filter = new GuiWorkflowSearchFilter();
     filter.setAssignedUserIdList(this.getTestUserIdList());
     filter.setStatusList(Arrays.asList(1, 2, 3));
-    filter.setTitle("title");
     filter.setWorkflowStepeIdList(this.getTestGuiWorkflowTypeStepIdList());
     filter.setWorkflowTypeIdList(this.getTestGuiWorkflowTypeIdList());
 
