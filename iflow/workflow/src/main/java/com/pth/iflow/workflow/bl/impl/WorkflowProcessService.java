@@ -2,7 +2,6 @@ package com.pth.iflow.workflow.bl.impl;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -170,40 +169,11 @@ public class WorkflowProcessService implements IWorkflowProcessService {
     return true;
   }
 
-  private List<WorkflowTypeStep> getSortedStepsList(final WorkflowType workflowType) {
-
-    final List<WorkflowTypeStep> list = workflowType.getSteps().stream().sorted(new Comparator<WorkflowTypeStep>() {
-
-      @Override
-      public int compare(final WorkflowTypeStep o1, final WorkflowTypeStep o2) {
-
-        return o1.getStepIndex() > o2.getStepIndex() ? 1 : o1.getStepIndex() == o2.getStepIndex() ? 0 : -1;
-      }
-    }).collect(Collectors.toList());
-
-    return list;
-  }
-
   private Map<Long, WorkflowTypeStep> getIdMapedSteps(final WorkflowType workflowType) {
 
     final Map<Long, WorkflowTypeStep> list = workflowType.getSteps().stream().collect(Collectors.toMap(s -> s.getId(), s -> s));
 
     return list;
-  }
-
-  private Map<Integer, WorkflowTypeStep> getIndexMapedSteps(final WorkflowType workflowType) {
-
-    final Map<Integer, WorkflowTypeStep> list = workflowType.getSteps().stream()
-        .collect(Collectors.toMap(s -> s.getStepIndex(), s -> s));
-
-    return list;
-  }
-
-  private List<Integer> getSortedStepsIndexList(final WorkflowType workflowType) {
-
-    final List<WorkflowTypeStep> list = this.getSortedStepsList(workflowType);
-
-    return list.stream().map(s -> s.getStepIndex()).sorted().collect(Collectors.toList());
   }
 
   private Workflow prepareWorkflow(final String token, final Workflow workflow)

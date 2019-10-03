@@ -2,16 +2,15 @@ package com.pth.iflow.workflow.bl.strategy.steps;
 
 import java.net.MalformedURLException;
 
-import com.pth.iflow.common.enums.EWorkflowActionStatus;
+import com.pth.iflow.common.enums.EWorkflowStatus;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.strategy.strategies.AbstractWorkflowSaveStrategy;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.Workflow;
-import com.pth.iflow.workflow.models.WorkflowSaveRequest;
 
-public class AssignWorkflowActiveActionStrategyStep extends AbstractWorkflowSaveStrategyStep {
+public class PrepareAssigningWorkflowStep extends AbstractWorkflowSaveStrategyStep {
 
-  public AssignWorkflowActiveActionStrategyStep(final AbstractWorkflowSaveStrategy workflowSaveStrategy) {
+  public PrepareAssigningWorkflowStep(final AbstractWorkflowSaveStrategy workflowSaveStrategy) {
     super(workflowSaveStrategy);
 
   }
@@ -20,10 +19,8 @@ public class AssignWorkflowActiveActionStrategyStep extends AbstractWorkflowSave
   public void process() throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     final Workflow processingWorkflow = this.getWorkflowSaveStrategy().getProcessingWorkflow();
-    final WorkflowSaveRequest processingWorkflowSaveRequest = this.getWorkflowSaveStrategy().getProcessingWorkflowSaveRequest();
 
-    processingWorkflow.setActiveActionAssignTo(processingWorkflowSaveRequest.getAssigns().get(0).getItemId());
-    processingWorkflow.setActiveActionStatus(EWorkflowActionStatus.OPEN);
+    processingWorkflow.setStatus(EWorkflowStatus.ASSIGNED);
 
     processNextStepIfExists();
   }

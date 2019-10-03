@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.pth.iflow.common.edo.models.WorkflowMessageEdo;
 import com.pth.iflow.common.edo.models.WorkflowMessageListEdo;
 import com.pth.iflow.common.enums.EModule;
+import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.workflow.bl.IWorkflowMessageDataService;
@@ -56,6 +57,18 @@ public class WorkflowMessageDataService implements IWorkflowMessageDataService {
         WorkflowModelEdoMapper.toEdo(message), WorkflowMessageEdo.class, true);
 
     return WorkflowModelEdoMapper.fromEdo(edo);
+  }
+
+  @Override
+  public void changeWorkflowMessageStatus(final Long workflowId, final EWorkflowMessageStatus status, final String token)
+      throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+    logger.debug("Save workflow message ");
+
+    this.restTemplate.callRestGet(
+        this.moduleAccessConfig
+            .generateCoreUrl(IflowRestPaths.CoreModule.CHANGE_WORKFLOWMESSAGE_WORKFLOWMESSAGE_STAUS(workflowId, status.getValue())),
+        token, EModule.CORE, Void.class, true);
+
   }
 
 }

@@ -5,9 +5,12 @@ import com.pth.iflow.workflow.bl.IProfileCachDataDataService;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.IWorkflowMessageDataService;
 import com.pth.iflow.workflow.bl.strategy.steps.AssignWorkflowActiveActionStrategyStep;
+import com.pth.iflow.workflow.bl.strategy.steps.ChangeWorkflowOfferStatusToAssignForWorkflowInCoreStep;
 import com.pth.iflow.workflow.bl.strategy.steps.InitializeWorkflowActiveActionStrategyStep;
 import com.pth.iflow.workflow.bl.strategy.steps.InitializeWorkflowInitialActionStrategyStep;
+import com.pth.iflow.workflow.bl.strategy.steps.PrepareAssigningWorkflowStep;
 import com.pth.iflow.workflow.bl.strategy.steps.SaveWorkflowInCoreStep;
+import com.pth.iflow.workflow.bl.strategy.steps.SendWorkflowOffersToProfileStep;
 import com.pth.iflow.workflow.bl.strategy.steps.ValidateCurrentStepExistsInWorkflowTypeStrategyStep;
 import com.pth.iflow.workflow.bl.strategy.steps.ValidateSingleUserAssignInSaveRequestStrategyStep;
 import com.pth.iflow.workflow.bl.strategy.steps.ValidateWorkflowActiveActionStrategyStep;
@@ -33,7 +36,10 @@ public class AssignWorkflowStrategy extends AbstractWorkflowSaveStrategy {
     steps.add(new ValidateWorkflowActiveActionStrategyStep(this));
     steps.add(new ValidateSingleUserAssignInSaveRequestStrategyStep(this));
     steps.add(new AssignWorkflowActiveActionStrategyStep(this));
+    steps.add(new PrepareAssigningWorkflowStep(this));
     steps.add(new SaveWorkflowInCoreStep(this));
+    steps.add(new ChangeWorkflowOfferStatusToAssignForWorkflowInCoreStep(this));
+    steps.add(new SendWorkflowOffersToProfileStep(this));
 
   }
 

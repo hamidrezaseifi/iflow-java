@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.core.model.WorkflowMessage;
 import com.pth.iflow.core.service.IWorkflowMessageService;
 import com.pth.iflow.core.storage.dao.IWorkflowMessageDao;
@@ -58,6 +59,11 @@ public class WorkflowMessageService implements IWorkflowMessageService {
       throws IFlowStorageException {
 
     return this.workflowMessageDao.getListByWorkflowId(workflowId, lastid, status);
+  }
+
+  @Override
+  public void changeWorkflowMessageStatus(final Long workflowId, final EWorkflowMessageStatus status) throws IFlowStorageException {
+    this.workflowMessageDao.updateStatusByWorkflow(workflowId, status.getValue());
   }
 
 }

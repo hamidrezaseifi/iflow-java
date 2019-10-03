@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import com.pth.iflow.common.edo.models.base.DataModelBase;
+import com.pth.iflow.common.enums.EWorkflowActionStatus;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 
 public class Workflow extends DataModelBase {
@@ -19,7 +20,6 @@ public class Workflow extends DataModelBase {
   private String                     comments;
   private EWorkflowStatus            status;
   private Integer                    version;
-  private Boolean                    nextAssign;
 
   private final List<WorkflowFile>   files   = new ArrayList<>();
   private final List<WorkflowAction> actions = new ArrayList<>();
@@ -227,7 +227,10 @@ public class Workflow extends DataModelBase {
 
   public void setActiveActionAssignTo(final Long userId) {
     this.getActiveAction().setAssignTo(userId);
+  }
 
+  public void setActiveActionStatus(final EWorkflowActionStatus status) {
+    this.getActiveAction().setStatus(status);
   }
 
 }

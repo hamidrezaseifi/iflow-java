@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
 
@@ -14,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pth.iflow.common.enums.EModule;
-import com.pth.iflow.common.enums.EWorkflowActionStatus;
 import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
@@ -28,6 +29,7 @@ import com.pth.iflow.gui.models.GuiWorkflowTypeStep;
 import com.pth.iflow.gui.models.ui.FileSavingData;
 import com.pth.iflow.gui.models.ui.GuiSessionUserInfo;
 import com.pth.iflow.gui.models.ui.UploadFileSavingData;
+import com.pth.iflow.gui.services.IMessagesHelper;
 import com.pth.iflow.gui.services.IUploadFileManager;
 import com.pth.iflow.gui.services.IWorkflowAccess;
 import com.pth.iflow.gui.services.IWorkflowHandler;
@@ -43,11 +45,14 @@ public class WorkflowHandler implements IWorkflowHandler {
 
   private final IUploadFileManager uploadFileManager;
 
+  private final IMessagesHelper    messagesHelper;
+
   public WorkflowHandler(@Autowired final IWorkflowAccess workflowAccess, @Autowired final GuiSessionUserInfo sessionUserInfo,
-      @Autowired final IUploadFileManager uploadFileManager) {
+      @Autowired final IUploadFileManager uploadFileManager, @Autowired final IMessagesHelper messagesHelper) {
     this.workflowAccess = workflowAccess;
     this.sessionUserInfo = sessionUserInfo;
     this.uploadFileManager = uploadFileManager;
+    this.messagesHelper = messagesHelper;
   }
 
   @Override
@@ -225,14 +230,31 @@ public class WorkflowHandler implements IWorkflowHandler {
     return workflowList;
   }
 
+  private Map<Long, GuiWorkflowTypeStep> getIdMapedSteps(final GuiWorkflowType workflowType) {
+
+    final Map<Long, GuiWorkflowTypeStep> list = workflowType.getSteps().stream().collect(Collectors.toMap(s -> s.getId(), s -> s));
+
+    return list;
+  }
+
+  private GuiWorkflowTypeStep findStepByIdInWOrkflowType(final Long stepId, final GuiWorkflowType workflowType) {
+
+    final Map<Long, GuiWorkflowTypeStep> steps = this.getIdMapedSteps(workflowType);
+
+    return steps.containsKey(stepId) ? steps.get(stepId) : null;
+  }
+
   private GuiWorkflow prepareWorkflow(final GuiWorkflow workflow) throws IFlowMessageConversionFailureException {
 
     workflow.setWorkflowType(this.sessionUserInfo.getWorkflowTypeById(workflow.getWorkflowTypeId()));
     workflow.setCreatedByUser(this.sessionUserInfo.getUserById(workflow.getCreatedBy()));
     workflow.setControllerUser(this.sessionUserInfo.getUserById(workflow.getController()));
 
+    workflow.setCurrentStep(this.findStepByIdInWOrkflowType(workflow.getCurrentStepId(), workflow.getWorkflowType()));
+
     for (final GuiWorkflowAction action : workflow.getActions()) {
       action.setAssignToUser(this.sessionUserInfo.getUserById(action.getAssignTo()));
+      action.setCurrentStep(this.findStepByIdInWOrkflowType(action.getCurrentStepId(), workflow.getWorkflowType()));
     }
 
     this.prepareWorkflowActions(workflow);
@@ -244,19 +266,13 @@ public class WorkflowHandler implements IWorkflowHandler {
 
   private GuiWorkflow prepareWorkflowActions(final GuiWorkflow workflow) throws IFlowMessageConversionFailureException {
 
-    if (workflow.getIsOpen()) {
-
-      if (!workflow.getHasActiveAction()) {
-        final GuiWorkflowAction action = GuiWorkflowAction.createNewAction(workflow, EWorkflowActionStatus.OPEN);
-        action.setStatus(EWorkflowActionStatus.OPEN);
-        workflow.addAction(action);
-      }
-    }
-
     for (final GuiWorkflowAction action : workflow.getActions()) {
       action.setAssignToUser(this.sessionUserInfo.getUserById(action.getAssignTo()));
 
       action.setCurrentStep(this.findStep(workflow, action.getCurrentStepId()));
+
+      action.setAssignToUserName(
+          action.getAssignToUser() == null ? this.messagesHelper.get("common.not-assigned") : action.getAssignToUser().getFullName());
 
     }
 

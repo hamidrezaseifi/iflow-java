@@ -2,6 +2,7 @@ package com.pth.iflow.core.service;
 
 import java.util.List;
 
+import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.core.model.WorkflowMessage;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 
@@ -17,4 +18,6 @@ public interface IWorkflowMessageService {
 
   public List<WorkflowMessage> getListByWorkflowId(final Long workflowId, final Long lastid, final Integer status)
       throws IFlowStorageException;
+
+  public void changeWorkflowMessageStatus(final Long workflowId, final EWorkflowMessageStatus status) throws IFlowStorageException;
 }

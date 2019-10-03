@@ -18,6 +18,7 @@ import com.pth.iflow.common.annotations.IflowPostRequestMapping;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
 import com.pth.iflow.common.edo.models.WorkflowMessageEdo;
 import com.pth.iflow.common.edo.models.WorkflowMessageListEdo;
+import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.core.model.WorkflowMessage;
 import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
@@ -55,6 +56,15 @@ public class WorkflowMessageController {
     final WorkflowMessage result = this.workflowMessageService.save(CoreModelEdoMapper.fromEdo(message));
 
     return ControllerHelper.createResponseEntity(request, CoreModelEdoMapper.toEdo(result), HttpStatus.CREATED);
+  }
+
+  @ResponseStatus(HttpStatus.CREATED)
+  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.WORKFLOWMESSAGE_CHANGE_WORKFLOWMESSAGE_STAUS)
+  public void saveWorkflowMessage(@PathVariable(required = true) final Long workflowid,
+      @PathVariable(required = true) final Integer status, final HttpServletRequest request) throws Exception {
+
+    this.workflowMessageService.changeWorkflowMessageStatus(workflowid, EWorkflowMessageStatus.ofValue(status));
+
   }
 
 }

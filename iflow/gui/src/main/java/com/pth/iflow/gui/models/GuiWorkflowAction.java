@@ -10,13 +10,13 @@ public class GuiWorkflowAction extends WorkflowActionModelBase {
   private Long                  id;
   private Long                  workflowId;
   private Long                  assignTo;
+  private GuiUser               assignToUser;
+  private String                assignToUserName;
   private Long                  currentStepId;
   private GuiWorkflowTypeStep   currentStep;
   private String                comments;
   private EWorkflowActionStatus status;
   private Integer               version;
-
-  private GuiUser               assignToUser;
 
   @Override
   public Long getId() {
@@ -112,13 +112,12 @@ public class GuiWorkflowAction extends WorkflowActionModelBase {
     this.status = EWorkflowActionStatus.ofValue(status);
   }
 
-  public static GuiWorkflowAction createNewAction(final GuiWorkflow workflow, final EWorkflowActionStatus status) {
-    final GuiWorkflowAction action = new GuiWorkflowAction();
-    action.setCurrentStep(null);
-    action.setCurrentStepId(null);
-    action.setWorkflowId(workflow.getId());
-    action.setComments("");
-    return action;
+  public String getAssignToUserName() {
+    return this.assignToUserName;
+  }
+
+  public void setAssignToUserName(final String assignToUserName) {
+    this.assignToUserName = assignToUserName;
   }
 
 }

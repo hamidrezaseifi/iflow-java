@@ -56,8 +56,8 @@
 										<div class="item-row" ng-repeat="action in viewWorkflow.actions" style="border-bottom: 1px #9a9a9a dashed">
 											<div class="item-row">
 												<div class="action-content">
-													<div><strong>{{action.oldStepObject.title}} --> {{action.newStepObject.title}}</strong>:</div> 
-													<div>({{action.createdByUser.fullName}}) ({{action.status}})</div> 
+													<div><strong>{{action.currentStep.title}}</strong>:</div> 
+													<div>({{action.status}}) ({{action.assignToUserName}})</div> 
 													<div style="">{{action.action}}</div>
 												</div>	
 												<div class="clear"></div>
@@ -66,7 +66,7 @@
 									</div>
 								</div>
 							</div>
-						
+							
 						
 						</div>
 		    				
