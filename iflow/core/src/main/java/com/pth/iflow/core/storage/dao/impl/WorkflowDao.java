@@ -321,7 +321,8 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
   private String prepareSearchWhereClause(final WorkflowSearchFilter workflowSearchFilter) {
     String whereClause = "";
     if (workflowSearchFilter.getAssignedUserIdList().isEmpty() == false) {
-      whereClause += "assign_to in (" + StringUtils.repeat("?,", workflowSearchFilter.getAssignedUserIdList().size()) + ") ";
+      whereClause += "id in (select workflow_id from workflow_actions where assign_to in ("
+          + StringUtils.repeat("?,", workflowSearchFilter.getAssignedUserIdList().size()) + ")) ";
     }
     if (workflowSearchFilter.getStatusList().isEmpty() == false) {
       whereClause += whereClause.isEmpty() ? "" : "and";

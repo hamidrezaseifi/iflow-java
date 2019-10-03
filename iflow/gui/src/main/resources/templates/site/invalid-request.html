@@ -11,6 +11,8 @@
 			<div class="invalid-request-container error-content">
 				<h2 th:text="#{error.invalid-request}"></h2>
 			</div>
+		
+        <div th:replace="layout/message_panel :: message_panel" ></div>
         <footer th:replace="layout/footer :: footer" ></footer>
     </body>
 </html>
