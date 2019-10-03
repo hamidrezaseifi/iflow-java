@@ -7,8 +7,6 @@ public class WorkflowAction extends WorkflowActionModelBase {
 
   private Long             id;
   private Long             workflowId;
-  private Long             createdBy;
-  private String           action;
   private Long             assignTo;
   private Long             currentStepId;
   private WorkflowTypeStep currentStep;
@@ -31,14 +29,6 @@ public class WorkflowAction extends WorkflowActionModelBase {
 
   public void setWorkflowId(final Long workflowId) {
     this.workflowId = workflowId;
-  }
-
-  public String getAction() {
-    return this.action;
-  }
-
-  public void setAction(final String action) {
-    this.action = action;
   }
 
   public Long getAssignTo() {
@@ -67,14 +57,6 @@ public class WorkflowAction extends WorkflowActionModelBase {
 
   public void setCurrentStep(final WorkflowTypeStep currentStep) {
     this.currentStep = currentStep;
-  }
-
-  public Long getCreatedBy() {
-    return this.createdBy;
-  }
-
-  public void setCreatedBy(final Long createdBy) {
-    this.createdBy = createdBy;
   }
 
   public String getComments() {

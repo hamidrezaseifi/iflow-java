@@ -45,14 +45,12 @@ public class WorkflowActionDao extends DaoBasicClass<WorkflowAction> implements 
     final WorkflowAction model = new WorkflowAction();
 
     model.setId(rs.getLong("id"));
-    model.setAction(rs.getString("action"));
     model.setStatus(rs.getInt("status"));
     model.setCreatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("created_at")));
     model.setUpdatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("updated_at")));
     model.setVersion(rs.getInt("version"));
     model.setComments(rs.getString("comments"));
     model.setCurrentStepId(rs.getLong("current_step_id"));
-    model.setCreatedBy(rs.getLong("created_by"));
     model.setWorkflowId(rs.getLong("workflow_id"));
     model.setAssignTo(rs.getLong("assign_to"));
 
@@ -66,16 +64,16 @@ public class WorkflowActionDao extends DaoBasicClass<WorkflowAction> implements 
 
   @Override
   public WorkflowAction create(final WorkflowAction workflow, final boolean withTransaction) throws IFlowStorageException {
-    final String sql = "INSERT INTO workflow_actions (workflow_id, action, current_step_id, comments, created_by, assign_to, version, status)"
-        + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    final String sql = "INSERT INTO workflow_actions (workflow_id, current_step_id, comments, assign_to, version, status)"
+        + "VALUES (?, ?, ?, ?, ?, ?)";
 
     return getById(createModel(workflow, "WorkflowAction", sql, withTransaction));
   }
 
   @Override
   public WorkflowAction update(final WorkflowAction workflow, final boolean withTransaction) throws IFlowStorageException {
-    final String sql = "UPDATE workflow_actions SET workflow_id = ?, action = ?, new_step = ?, comments = ?,"
-        + " created_by = ?, assign_to=?, version = ?, status = ? WHERE id = ?";
+    final String sql = "UPDATE workflow_actions SET workflow_id = ?, new_step = ?, comments = ?,"
+        + " assign_to=?, version = ?, status = ? WHERE id = ?";
 
     updateModel(workflow, "WorkflowAction", sql, withTransaction);
 
@@ -86,13 +84,11 @@ public class WorkflowActionDao extends DaoBasicClass<WorkflowAction> implements 
   protected PreparedStatement prepareInsertPreparedStatement(final WorkflowAction model, final PreparedStatement ps)
       throws SQLException {
     ps.setLong(1, model.getWorkflowId());
-    ps.setString(2, model.getAction());
-    ps.setLong(3, model.getCurrentStepId());
-    ps.setString(4, model.getComments());
-    ps.setLong(5, model.getCreatedBy());
-    ps.setLong(6, model.getAssignTo());
-    ps.setInt(7, model.getVersion());
-    ps.setInt(8, model.getStatus());
+    ps.setLong(2, model.getCurrentStepId());
+    ps.setString(3, model.getComments());
+    ps.setLong(4, model.getAssignTo());
+    ps.setInt(5, model.getVersion());
+    ps.setInt(6, model.getStatus());
 
     return ps;
   }
@@ -101,14 +97,12 @@ public class WorkflowActionDao extends DaoBasicClass<WorkflowAction> implements 
   protected PreparedStatement prepareUpdatePreparedStatement(final WorkflowAction model, final PreparedStatement ps)
       throws SQLException {
     ps.setLong(1, model.getWorkflowId());
-    ps.setString(2, model.getAction());
-    ps.setLong(3, model.getCurrentStepId());
-    ps.setString(4, model.getComments());
-    ps.setLong(5, model.getCreatedBy());
-    ps.setLong(6, model.getAssignTo());
-    ps.setInt(7, model.getVersion());
-    ps.setInt(8, model.getStatus());
-    ps.setLong(9, model.getId());
+    ps.setLong(2, model.getCurrentStepId());
+    ps.setString(3, model.getComments());
+    ps.setLong(4, model.getAssignTo());
+    ps.setInt(5, model.getVersion());
+    ps.setInt(6, model.getStatus());
+    ps.setLong(7, model.getId());
 
     return ps;
   }

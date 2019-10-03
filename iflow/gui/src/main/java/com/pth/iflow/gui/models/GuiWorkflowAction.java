@@ -9,8 +9,6 @@ public class GuiWorkflowAction extends WorkflowActionModelBase {
 
   private Long                  id;
   private Long                  workflowId;
-  private Long                  createdBy;
-  private String                action;
   private Long                  assignTo;
   private Long                  currentStepId;
   private GuiWorkflowTypeStep   currentStep;
@@ -18,7 +16,6 @@ public class GuiWorkflowAction extends WorkflowActionModelBase {
   private EWorkflowActionStatus status;
   private Integer               version;
 
-  private GuiUser               createdByUser;
   private GuiUser               assignToUser;
 
   @Override
@@ -36,14 +33,6 @@ public class GuiWorkflowAction extends WorkflowActionModelBase {
 
   public void setWorkflowId(final Long workflowId) {
     this.workflowId = workflowId;
-  }
-
-  public String getAction() {
-    return this.action;
-  }
-
-  public void setAction(final String action) {
-    this.action = action;
   }
 
   public Long getAssignTo() {
@@ -70,32 +59,6 @@ public class GuiWorkflowAction extends WorkflowActionModelBase {
    */
   public void setAssignToUser(final GuiUser assignToUser) {
     this.assignToUser = assignToUser;
-  }
-
-  /**
-   * @return the newStepObject
-   */
-
-  public Long getCreatedBy() {
-    return this.createdBy;
-  }
-
-  public void setCreatedBy(final Long createdBy) {
-    this.createdBy = createdBy;
-  }
-
-  /**
-   * @return the createdByUser
-   */
-  public GuiUser getCreatedByUser() {
-    return this.createdByUser;
-  }
-
-  /**
-   * @param createdByUser the createdByUser to set
-   */
-  public void setCreatedByUser(final GuiUser createdByUser) {
-    this.createdByUser = createdByUser;
   }
 
   public String getComments() {
@@ -149,15 +112,12 @@ public class GuiWorkflowAction extends WorkflowActionModelBase {
     this.status = EWorkflowActionStatus.ofValue(status);
   }
 
-  public static GuiWorkflowAction createNewAction(final GuiWorkflow workflow, final Long createdBy,
-      final EWorkflowActionStatus status) {
+  public static GuiWorkflowAction createNewAction(final GuiWorkflow workflow, final EWorkflowActionStatus status) {
     final GuiWorkflowAction action = new GuiWorkflowAction();
-    action.setCreatedBy(createdBy);
     action.setCurrentStep(null);
     action.setCurrentStepId(null);
     action.setWorkflowId(workflow.getId());
-    action.setComments("comments");
-    action.setAction("action");
+    action.setComments("");
     return action;
   }
 

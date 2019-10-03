@@ -247,15 +247,14 @@ public class WorkflowHandler implements IWorkflowHandler {
     if (workflow.getIsOpen()) {
 
       if (!workflow.getHasActiveAction()) {
-        final GuiWorkflowAction action = GuiWorkflowAction.createNewAction(workflow, this.sessionUserInfo.getUser().getId(),
-            EWorkflowActionStatus.OPEN);
+        final GuiWorkflowAction action = GuiWorkflowAction.createNewAction(workflow, EWorkflowActionStatus.OPEN);
         action.setStatus(EWorkflowActionStatus.OPEN);
         workflow.addAction(action);
       }
     }
 
     for (final GuiWorkflowAction action : workflow.getActions()) {
-      action.setCreatedByUser(this.sessionUserInfo.getUserById(action.getCreatedBy()));
+      action.setAssignToUser(this.sessionUserInfo.getUserById(action.getAssignTo()));
 
       action.setCurrentStep(this.findStep(workflow, action.getCurrentStepId()));
 

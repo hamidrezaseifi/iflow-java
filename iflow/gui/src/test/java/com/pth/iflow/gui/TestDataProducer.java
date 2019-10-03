@@ -147,10 +147,8 @@ public class TestDataProducer {
     final GuiWorkflowAction model = new GuiWorkflowAction();
     model.setWorkflowId(workflowId);
     model.setId(Id);
-    model.setAction("action " + Id);
     model.setStatus(EWorkflowActionStatus.INITIALIZE);
     model.setVersion(1);
-    model.setCreatedBy(1L);
     model.setCurrentStepId(1L);
     model.setComments("comments");
     model.setAssignTo(1L);

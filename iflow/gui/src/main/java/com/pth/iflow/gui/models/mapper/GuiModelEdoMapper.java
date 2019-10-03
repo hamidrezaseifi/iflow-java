@@ -273,11 +273,9 @@ public class GuiModelEdoMapper {
 
   public static WorkflowActionEdo toEdo(final GuiWorkflowAction model) {
     final WorkflowActionEdo edo = new WorkflowActionEdo();
-    edo.setAction(model.getAction());
     edo.setComments(model.getComments());
     edo.setStatus(model.getStatus().getValue().intValue());
     edo.setId(model.getId());
-    edo.setCreatedBy(model.getCreatedBy());
     edo.setCurrentStepId(model.getCurrentStepId());
     edo.setWorkflowId(model.getWorkflowId());
     edo.setVersion(model.getVersion());
@@ -291,11 +289,9 @@ public class GuiModelEdoMapper {
 
     final GuiWorkflowAction model = new GuiWorkflowAction();
 
-    model.setAction(edo.getAction());
     model.setComments(edo.getComments());
     model.setStatusInt(edo.getStatus());
     model.setId(edo.getId());
-    model.setCreatedBy(edo.getCreatedBy());
     model.setCurrentStepId(edo.getCurrentStepId());
     model.setWorkflowId(edo.getWorkflowId());
     model.setVersion(edo.getVersion());

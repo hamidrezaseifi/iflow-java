@@ -168,10 +168,8 @@ public class TestDataProducer {
     final WorkflowAction model = new WorkflowAction();
     model.setWorkflowId(workflowId);
     model.setId(Id);
-    model.setAction("action " + Id);
     model.setStatus(EWorkflowActionStatus.OPEN);
     model.setVersion(1);
-    model.setCreatedBy(1L);
     model.setCurrentStepId(1L);
     model.setComments("comments");
     model.setAssignTo(1L);
@@ -183,10 +181,8 @@ public class TestDataProducer {
     final WorkflowAction model = new WorkflowAction();
     model.setWorkflowId(workflowId);
     model.setId(Id);
-    model.setAction("action " + Id);
     model.setStatus(actionStatus);
     model.setVersion(1);
-    model.setCreatedBy(1L);
     model.setCurrentStepId(2L);
     model.setComments("comments");
     model.setAssignTo(1L);

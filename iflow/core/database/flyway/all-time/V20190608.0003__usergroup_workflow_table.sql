@@ -221,19 +221,15 @@ CREATE TABLE `workflow` (
 CREATE TABLE `workflow_actions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `workflow_id` int(11) NOT NULL,
-  `action` varchar(2000) DEFAULT NULL,
   `assign_to` int(11) NOT NULL DEFAULT '0',
   `current_step_id` int(11) NOT NULL DEFAULT '0',
   `comments` varchar(45) DEFAULT NULL,
-  `created_by` int(11) DEFAULT NULL,
   `status` int(11) DEFAULT '1',
   `version` int(11) NOT NULL DEFAULT '1',
   `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   `updated_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   PRIMARY KEY (`id`),
   KEY `FK_WORKFLOWACTION_WORKFLOW_idx` (`workflow_id`),
-  KEY `FK_WORKFLOWACTION_USERS_idx` (`created_by`),
-  CONSTRAINT `FK_WORKFLOWACTION_USERS` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `FK_WORKFLOWACTION_WORKFLOW` FOREIGN KEY (`workflow_id`) REFERENCES `workflow` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 ;
 

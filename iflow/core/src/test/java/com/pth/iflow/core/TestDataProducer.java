@@ -259,10 +259,8 @@ public class TestDataProducer {
     final WorkflowAction model = new WorkflowAction();
     model.setWorkflowId(workflowId);
     model.setId(Id);
-    model.setAction("action " + Id);
     model.setStatus(1);
     model.setVersion(1);
-    model.setCreatedBy(1L);
     model.setCurrentStepId(1L);
     model.setComments("comments");
     model.setAssignTo(1L);
@@ -279,10 +277,8 @@ public class TestDataProducer {
     final WorkflowAction model = new WorkflowAction();
     model.setWorkflowId(null);
     model.setId(null);
-    model.setAction("action new");
     model.setStatus(1);
     model.setVersion(1);
-    model.setCreatedBy(1L);
     model.setCurrentStepId(1L);
     model.setComments("comments");
     model.setAssignTo(1L);

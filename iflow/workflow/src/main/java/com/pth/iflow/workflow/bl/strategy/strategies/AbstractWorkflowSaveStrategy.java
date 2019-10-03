@@ -194,10 +194,8 @@ public abstract class AbstractWorkflowSaveStrategy implements IWorkflowSaveStrat
     final WorkflowTypeStep firstStep = this.findFirstStep(workflow.getWorkflowType());
 
     final WorkflowAction action = new WorkflowAction();
-    action.setAction("action");
     action.setAssignTo(0L);
     action.setComments("");
-    action.setCreatedBy(workflow.getCreatedBy());
     action.setCurrentStep(firstStep);
     action.setCurrentStepId(firstStep.getId());
     action.setStatus(EWorkflowActionStatus.INITIALIZE);
@@ -212,10 +210,8 @@ public abstract class AbstractWorkflowSaveStrategy implements IWorkflowSaveStrat
 
     if (nextStep != null) {
       final WorkflowAction action = new WorkflowAction();
-      action.setAction("action");
       action.setAssignTo(0L);
       action.setComments("");
-      action.setCreatedBy(workflow.getCreatedBy());
       action.setCurrentStep(nextStep);
       action.setCurrentStepId(nextStep.getId());
       action.setStatus(EWorkflowActionStatus.INITIALIZE);
