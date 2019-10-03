@@ -1,6 +1,7 @@
 package com.pth.iflow.workflow.bl.strategy.steps;
 
 import java.net.MalformedURLException;
+
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.strategy.strategies.AbstractWorkflowSaveStrategy;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
@@ -23,6 +24,8 @@ public class InitializeWorkflowInitialActionStrategyStep extends AbstractWorkflo
       final WorkflowAction action = this.getWorkflowSaveStrategy().initialFirstStep(processingWorkflow);
 
       processingWorkflow.addAction(action);
+      processingWorkflow.setCurrentStepId(action.getCurrentStepId());
+      processingWorkflow.setCurrentStep(action.getCurrentStep());
     }
 
     processNextStepIfExists();

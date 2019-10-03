@@ -196,7 +196,7 @@ public class TestDataProducer {
     model.setVersion(1);
     model.setComments("comments");
     model.setController(1L);
-    model.setCurrentStep(this.getTestWorkflowTypeStep());
+    model.setCurrentStepId(1L);
     model.setCreatedBy(1L);
 
     model.setActions(
@@ -235,7 +235,7 @@ public class TestDataProducer {
     model.setVersion(1);
     model.setComments("comments");
     model.setController(1L);
-    model.setCurrentStep(this.getTestWorkflowTypeStep());
+    model.setCurrentStepId(1L);
     model.setCreatedBy(1L);
     model.setActions(Arrays.asList(this.getTestNewWorkflowAction(), this.getTestNewWorkflowAction(), this.getTestNewWorkflowAction()));
     model.setFiles(Arrays.asList(this.getTestNewWorkflowFile(), this.getTestNewWorkflowFile(), this.getTestNewWorkflowFile()));

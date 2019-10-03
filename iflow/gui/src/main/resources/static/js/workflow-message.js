@@ -33,7 +33,7 @@ iflowApp.controller('WorkflowMessageController', function ($scope, $http, $sce, 
     });
     
     
-	$scope.reloadMessages = function (){
+	$scope.reloadMessages = function (resetCach){
 		
 		//alert($scope.loadMessageUrl); 
 
@@ -45,7 +45,7 @@ iflowApp.controller('WorkflowMessageController', function ($scope, $http, $sce, 
 	        headers: {
 	        	'Content-type': 'application/json; charset=UTF-8',
 	        },
-	        url : $scope.loadMessageUrl,
+	        url : $scope.loadMessageUrl + "?reset=" + (resetCach ? "1" : "0"),
 	    }).then(function successCallback(response) {
 	    	
 	    	buildMessageList(response.data);

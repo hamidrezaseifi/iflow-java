@@ -14,14 +14,9 @@
 						
 							<div class="workflowview-dialog-content-container">
 								<div class="item-row" ng-show="true">
-									<div class="item-label" th:text="#{workflow-current-step}"></div>
-									<div class="item-content">
-										{{viewWorkflow.currentStep.title}}
-									</div>
-									<div class="clear"></div>
 									<div class="item-row">
 										<div class="item-label" th:text="#{workflow-title}"></div>
-										<div class="item-content">{{viewWorkflow.title}}</div>
+										<div class="item-content">{{viewWorkflow.workflowType.title}}</div>
 										<div class="clear"></div>
 									</div>
 									<div class="item-row">

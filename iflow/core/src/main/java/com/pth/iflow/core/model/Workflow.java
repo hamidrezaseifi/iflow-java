@@ -11,7 +11,7 @@ public class Workflow extends DataModelBase {
 
   private Long                       id;
   private Long                       workflowTypeId;
-  private WorkflowTypeStep           currentStep;
+  private Long                       currentStepId;
   private Long                       controller;
   private Long                       createdBy;
   private String                     comments;
@@ -40,12 +40,12 @@ public class Workflow extends DataModelBase {
     this.workflowTypeId = workflowTypeId;
   }
 
-  public WorkflowTypeStep getCurrentStep() {
-    return this.currentStep;
+  public Long getCurrentStepId() {
+    return currentStepId;
   }
 
-  public void setCurrentStep(final WorkflowTypeStep currentStep) {
-    this.currentStep = currentStep;
+  public void setCurrentStepId(final Long currentStepId) {
+    this.currentStepId = currentStepId;
   }
 
   public Long getController() {

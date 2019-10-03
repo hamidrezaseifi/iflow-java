@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
@@ -238,10 +239,15 @@ public class WorkflowDataController extends GuiDataControllerBase {
   @ResponseStatus(HttpStatus.OK)
   @PostMapping(path = { "/workflowmessages" })
   @ResponseBody
-  public List<GuiWorkflowMessage> listWorkflowMessages()
+  public List<GuiWorkflowMessage> listWorkflowMessages(final HttpServletRequest request)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    final List<GuiWorkflowMessage> messageList = this.getWorkflowMessageHanlder().readUserMessages();
+    final String resetCach = request.getParameter("reset");
+    if ("1".equals(resetCach)) {
+      this.callUserMessageReset();
+    }
+
+    final List<GuiWorkflowMessage> messageList = this.readUserMessages();
 
     return messageList;
   }

@@ -226,7 +226,7 @@ public class CoreModelEdoMapper {
     edo.setStatus(model.getStatusInt());
     edo.setId(model.getId());
     edo.setController(model.getController());
-    edo.setCurrentStepId(model.getCurrentStep() != null ? model.getCurrentStep().getId() : null);
+    edo.setCurrentStepId(model.getCurrentStepId());
     edo.setCreatedBy(model.getCreatedBy());
     edo.setWorkflowTypeId(model.getWorkflowTypeId());
     edo.setVersion(model.getVersion());
@@ -249,6 +249,7 @@ public class CoreModelEdoMapper {
     model.setCreatedBy(edo.getCreatedBy());
     model.setWorkflowTypeId(edo.getWorkflowTypeId());
     model.setVersion(edo.getVersion());
+    model.setCurrentStepId(edo.getCurrentStepId());
 
     model.setFiles(fromWorkflowFileEdoList(edo.getFiles()));
     model.setActions(fromWorkflowActionEdoList(edo.getActions()));

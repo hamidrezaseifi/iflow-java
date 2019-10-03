@@ -26,13 +26,6 @@
 						</div>
 						<div class="clear"></div>
 					</div>
-					<div class="item-row" ng-if="workflow.hasActiveAction">
-						<div class="item-label" th:text="#{workflow-action-title}"></div>
-						<div class="item-content">
-							<textarea ng-model="activeAction.action"></textarea>
-						</div>
-						<div class="clear"></div>
-					</div>
 					<div class="item-row" ng-if="workflowType.allowAssign && workflow.nextAssign && workflow.hasActiveAction">
 						<div class="item-label" th:text="#{workflow-assignto}"></div>
 						<div class="item-content">

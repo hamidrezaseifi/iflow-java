@@ -20,11 +20,6 @@
 		
 			<div class="workflow-content">
 				<div class="item-row">
-					<div class="item-label" th:text="#{workflow-title}"></div>
-					<div class="item-content"><input type="text" ng-model="workflowCreateRequest.workflow.title" /></div>
-					<div class="clear"></div>
-				</div>
-				<div class="item-row">
 					<div class="item-label" th:text="#{workflow-type}"></div>
 					<div class="item-content">
 						<select type="text" ng-model="workflowCreateRequest.workflow.workflowTypeId" ng-change="reloadWorkflowTypeData()">

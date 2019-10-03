@@ -71,7 +71,7 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
     model.setVersion(rs.getInt("version"));
     model.setComments(rs.getString("comments"));
     model.setController(rs.getLong("controller"));
-    model.setCurrentStep(this.workflowTypeStepDao.getById(rs.getLong("current_step")));
+    model.setCurrentStepId(rs.getLong("current_step"));
     model.setCreatedBy(rs.getLong("created_by"));
     model.setWorkflowTypeId(rs.getLong("workflow_type_id"));
 
@@ -199,7 +199,7 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
   @Override
   protected PreparedStatement prepareInsertPreparedStatement(final Workflow model, final PreparedStatement ps) throws SQLException {
     ps.setLong(1, model.getWorkflowTypeId());
-    ps.setLong(2, model.getCurrentStep().getId());
+    ps.setLong(2, model.getCurrentStepId());
     ps.setString(3, model.getComments());
     ps.setLong(4, model.getController());
     ps.setLong(5, model.getCreatedBy());
@@ -212,7 +212,7 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
   @Override
   protected PreparedStatement prepareUpdatePreparedStatement(final Workflow model, final PreparedStatement ps) throws SQLException {
     ps.setLong(1, model.getWorkflowTypeId());
-    ps.setLong(2, model.getCurrentStep().getId());
+    ps.setLong(2, model.getCurrentStepId());
     ps.setString(3, model.getComments());
     ps.setLong(4, model.getController());
     ps.setLong(5, model.getCreatedBy());
