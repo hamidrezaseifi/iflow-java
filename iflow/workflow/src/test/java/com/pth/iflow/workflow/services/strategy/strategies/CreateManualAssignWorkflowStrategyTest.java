@@ -68,7 +68,7 @@ public class CreateManualAssignWorkflowStrategyTest extends TestDataProducer {
   public void testProccessStrategy() throws Exception {
 
     final WorkflowSaveRequest request = this.getTestWorkflowCreateRequestForStrategy();
-    request.setCommand(EWorkflowProcessCommand.DONE);
+    request.setCommand(EWorkflowProcessCommand.CREATE);
     request.setAssigns(Arrays.asList(new AssignItem(1L, EAssignType.USER), new AssignItem(1L, EAssignType.DEPARTMENT)));
 
     final List<User> userList = getTestUserList();
@@ -87,7 +87,7 @@ public class CreateManualAssignWorkflowStrategyTest extends TestDataProducer {
 
     Assert.assertNull("SingleProceedWorkflow is null!", resultWorkflow);
     Assert.assertNotNull("SingleProceedWorkflow is null!", resultWorkflowList);
-    Assert.assertEquals("The result workflow list size must be 3!", resultWorkflowList.size(), userList.size());
+    Assert.assertEquals("The result workflow list size must be 3!", userList.size(), resultWorkflowList.size());
 
   }
 
@@ -95,7 +95,7 @@ public class CreateManualAssignWorkflowStrategyTest extends TestDataProducer {
   public void testProccessStrategyError() throws Exception {
 
     final WorkflowSaveRequest request = this.getTestWorkflowCreateRequestForStrategy();
-    request.setCommand(EWorkflowProcessCommand.DONE);
+    request.setCommand(EWorkflowProcessCommand.CREATE);
     request.setAssigns(Arrays.asList());
 
     when(this.workflowDataService.save(any(Workflow.class), any(String.class))).thenReturn(request.getWorkflow());
