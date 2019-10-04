@@ -62,6 +62,26 @@ public class WorkflowSaveRequest {
     return this.command;
   }
 
+  public boolean isAssignCommand() {
+    return this.command == EWorkflowProcessCommand.ASSIGN;
+  }
+
+  public boolean isArchiveCommand() {
+    return this.command == EWorkflowProcessCommand.ARCHIVE;
+  }
+
+  public boolean isCreateCommand() {
+    return this.command == EWorkflowProcessCommand.CREATE;
+  }
+
+  public boolean isDoneCommand() {
+    return this.command == EWorkflowProcessCommand.DONE;
+  }
+
+  public boolean isSaveCommand() {
+    return this.command == EWorkflowProcessCommand.SAVE;
+  }
+
   public void setCommand(final EWorkflowProcessCommand command) {
     this.command = command;
   }

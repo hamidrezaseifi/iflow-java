@@ -20,7 +20,6 @@ import com.pth.iflow.workflow.bl.strategy.steps.ValidateWorkflowAssignedUserStra
 import com.pth.iflow.workflow.bl.strategy.steps.ValidateWorkflowTypeStepStrategyStep;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.WorkflowSaveRequest;
-import com.pth.iflow.workflow.models.WorkflowType;
 
 public class DoneExistingWorkflowStrategy extends AbstractWorkflowSaveStrategy {
 
@@ -35,28 +34,18 @@ public class DoneExistingWorkflowStrategy extends AbstractWorkflowSaveStrategy {
   @Override
   public void setup() {
 
-    final WorkflowType processingWorkflowType = this.getProcessingWorkflowType();
-
     steps.add(new ValidateWorkflowActiveActionStrategyStep(this));
     steps.add(new ValidateWorkflowAssignedUserStrategyStep(this));
     steps.add(new ValidateWorkflowTypeStepStrategyStep(this));
     steps.add(new ValidateCurrentStepExistsInWorkflowTypeStrategyStep(this));
     steps.add(new PrepareDoneActiveActionStep(this));
     steps.add(new SelectWorkflowNextStepStrategyStep(this));
-
-    if (processingWorkflowType.isAssignTypeOffering()) {
-      steps.add(new CollectAssignedUserIdListStep(this));
-    }
-    if (processingWorkflowType.isAssignTypeManual()) {
-      steps.add(new AssignWorkflowActiveActionStrategyStep(this));
-    }
-
+    steps.add(new CollectAssignedUserIdListStep(this));
+    steps.add(new AssignWorkflowActiveActionStrategyStep(this));
     steps.add(new SaveWorkflowInCoreStep(this));
+    steps.add(new SaveWorkflowOfferForAssignedUseresInCoreStep(this));
+    steps.add(new SendWorkflowOffersToProfileStep(this));
 
-    if (processingWorkflowType.isAssignTypeOffering()) {
-      steps.add(new SaveWorkflowOfferForAssignedUseresInCoreStep(this));
-      steps.add(new SendWorkflowOffersToProfileStep(this));
-    }
   }
 
 }

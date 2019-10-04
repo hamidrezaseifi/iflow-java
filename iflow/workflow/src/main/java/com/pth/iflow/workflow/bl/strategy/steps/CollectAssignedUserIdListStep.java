@@ -13,6 +13,7 @@ import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.AssignItem;
 import com.pth.iflow.workflow.models.User;
 import com.pth.iflow.workflow.models.WorkflowSaveRequest;
+import com.pth.iflow.workflow.models.WorkflowType;
 
 public class CollectAssignedUserIdListStep extends AbstractWorkflowSaveStrategyStep {
 
@@ -51,7 +52,9 @@ public class CollectAssignedUserIdListStep extends AbstractWorkflowSaveStrategyS
 
   @Override
   public boolean shouldProcess() {
-    return this.getWorkflowSaveStrategy().IsWorkflowCurrectStepChanged();
+    final WorkflowType processingWorkflowType = this.getWorkflowSaveStrategy().getProcessingWorkflowType();
+
+    return this.getWorkflowSaveStrategy().IsWorkflowCurrectStepChanged() && processingWorkflowType.isAssignTypeOffering();
   }
 
 }

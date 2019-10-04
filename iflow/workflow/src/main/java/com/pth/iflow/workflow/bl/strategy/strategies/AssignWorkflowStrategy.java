@@ -36,7 +36,6 @@ public class AssignWorkflowStrategy extends AbstractWorkflowSaveStrategy {
   public void setup() {
     steps.add(new ValidateWorkflowTypeStepStrategyStep(this));
     steps.add(new ValidateCurrentStepExistsInWorkflowTypeStrategyStep(this));
-
     steps.add(new InitializeWorkflowInitialActionStrategyStep(this));
     steps.add(new InitializeWorkflowActiveActionStrategyStep(this));
     steps.add(new ValidateWorkflowActiveActionStrategyStep(this));

@@ -8,6 +8,7 @@ import com.pth.iflow.workflow.bl.strategy.strategies.AbstractWorkflowSaveStrateg
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.Workflow;
 import com.pth.iflow.workflow.models.WorkflowSaveRequest;
+import com.pth.iflow.workflow.models.WorkflowType;
 
 public class AssignWorkflowActiveActionStrategyStep extends AbstractWorkflowSaveStrategyStep {
 
@@ -31,7 +32,11 @@ public class AssignWorkflowActiveActionStrategyStep extends AbstractWorkflowSave
 
   @Override
   public boolean shouldProcess() {
-    return true;
+
+    final WorkflowType processingWorkflowType = this.getWorkflowSaveStrategy().getProcessingWorkflowType();
+    final WorkflowSaveRequest processingWorkflowSaveRequest = this.getWorkflowSaveStrategy().getProcessingWorkflowSaveRequest();
+
+    return processingWorkflowType.isAssignTypeManual() || processingWorkflowSaveRequest.isAssignCommand();
   }
 
 }

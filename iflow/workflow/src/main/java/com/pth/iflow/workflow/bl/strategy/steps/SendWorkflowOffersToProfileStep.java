@@ -6,6 +6,7 @@ import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.strategy.strategies.AbstractWorkflowSaveStrategy;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.Workflow;
+import com.pth.iflow.workflow.models.WorkflowType;
 
 public class SendWorkflowOffersToProfileStep extends AbstractWorkflowSaveStrategyStep {
 
@@ -26,7 +27,9 @@ public class SendWorkflowOffersToProfileStep extends AbstractWorkflowSaveStrateg
 
   @Override
   public boolean shouldProcess() {
-    return true;
+    final WorkflowType processingWorkflowType = this.getWorkflowSaveStrategy().getProcessingWorkflowType();
+
+    return processingWorkflowType.isAssignTypeOffering();
   }
 
 }

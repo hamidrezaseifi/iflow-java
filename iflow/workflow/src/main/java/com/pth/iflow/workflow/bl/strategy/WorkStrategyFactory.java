@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.iflow.common.exceptions.IFlowCustomeException;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
@@ -61,7 +60,7 @@ public class WorkStrategyFactory implements IWorkStrategyFactory {
 
     logger.debug("selecting save strategy for workflow");
 
-    if (workflowSaveRequest.getCommand() == EWorkflowProcessCommand.CREATE) {
+    if (workflowSaveRequest.isCreateCommand()) {
       if (workflowSaveRequest.getWorkflow().getWorkflowType().isAssignTypeManual()) {
         return new CreateManualAssignWorkflowStrategy(workflowSaveRequest, token,
 
@@ -75,28 +74,28 @@ public class WorkStrategyFactory implements IWorkStrategyFactory {
       }
     }
 
-    if (workflowSaveRequest.getCommand() == EWorkflowProcessCommand.ARCHIVE) {
+    if (workflowSaveRequest.isArchiveCommand()) {
       logger.debug("The ArchivingWorkflowStrategy is selected for workflow");
       return new ArchivingWorkflowStrategy(workflowSaveRequest, token,
 
           departmentDataService, workflowMessageDataService, cachDataDataService, workflowDataService);
     }
 
-    if (workflowSaveRequest.getCommand() == EWorkflowProcessCommand.SAVE) {
+    if (workflowSaveRequest.isSaveCommand()) {
       logger.debug("The SaveExistingWorkflowStrategy is selected for workflow");
       return new SaveExistingWorkflowStrategy(workflowSaveRequest, token,
 
           departmentDataService, workflowMessageDataService, cachDataDataService, workflowDataService);
     }
 
-    if (workflowSaveRequest.getCommand() == EWorkflowProcessCommand.ASSIGN) {
+    if (workflowSaveRequest.isAssignCommand()) {
       logger.debug("The AssignWorkflowStrategy is selected for workflow");
       return new AssignWorkflowStrategy(workflowSaveRequest, token,
 
           departmentDataService, workflowMessageDataService, cachDataDataService, workflowDataService);
     }
 
-    if (workflowSaveRequest.getCommand() == EWorkflowProcessCommand.DONE) {
+    if (workflowSaveRequest.isDoneCommand()) {
       logger.debug("The DoneExistingWorkflowStrategy is selected for workflow");
       return new DoneExistingWorkflowStrategy(workflowSaveRequest, token,
 
