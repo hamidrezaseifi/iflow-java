@@ -31,7 +31,6 @@ iflowApp.controller('WorkflowCreateController', function WorkflowCreateControlle
 	$scope.workflowTypes = [];
 	$scope.users = [];
 	$scope.departments = [];
-	$scope.assigned = {};
 	$scope.workflowCreateRequest = {};
 	$scope.fileTitles = [];
 	
@@ -44,7 +43,6 @@ iflowApp.controller('WorkflowCreateController', function WorkflowCreateControlle
 		$scope.users = [];
 		$scope.departments = [];
 		$scope.workflowCreateRequest = {};
-		$scope.assigned = {};
 			
 		$http({
 	        method : "POST",
@@ -56,8 +54,6 @@ iflowApp.controller('WorkflowCreateController', function WorkflowCreateControlle
 	    	
 	    	$scope.workflowTypes = response.data.workflowTypes;
 	    	$scope.workflowCreateRequest = initWorkFlow(response.data.workflowCreateRequest);
-	    	
-	    	resetAssignedList();
 	
 	    }, function errorCallback(response) {
 	        
@@ -72,7 +68,6 @@ iflowApp.controller('WorkflowCreateController', function WorkflowCreateControlle
 
 		$scope.users = [];
 		$scope.departments = [];
-		$scope.assigned = {};
 			
 		$http({
 	        method : "POST",
@@ -84,8 +79,6 @@ iflowApp.controller('WorkflowCreateController', function WorkflowCreateControlle
 	    	
 	    	$scope.users = response.data.users;
 	    	$scope.departments = response.data.departments;
-
-	    	resetAssignedList();
 	
 	    }, function errorCallback(response) {
 	        
@@ -165,25 +158,23 @@ iflowApp.controller('WorkflowCreateController', function WorkflowCreateControlle
 		
 	};
 
+
+
 	$scope.applyUserSelect = function(){
 		$scope.workflowCreateRequest.assigns = [];
 		
-		//alert($(".assign-checkbox:checked").length);
+		
 		$(".assign-checkbox:checked").each(function(index, item){
 			var jitem = $(item);
-			//alert(jitem.val() + " : " + jitem.data("assigntype"));
-			$scope.workflowCreateRequest.assigns.push({itemId: jitem.val(),  itemType: jitem.data("assigntype"), title: jitem.data("assigntitle")});
+			
+			var type = jitem.data("assigntype") == 'user' ? userAssignType : jitem.data("assigntype") == 'department' ? departmentAssignType : departmentGroupAssignType;
+			
+			$scope.workflowCreateRequest.assigns.push({itemId: jitem.val(),  itemType: type, title: jitem.data("assigntitle")});
 		});
-    	/*for(id in $scope.assigned){
-    		if($scope.assigned[id]){
-    			$scope.workflowCreateRequest.assigns.push(id);
-    		}
-    	}*/
     	$('#assignlistdialog').modal('hide');
 	};
 
 	$scope.removeAssign = function(id, type){
-		$scope.assigned[id] = false;
 		
 		$scope.workflowCreateRequest.assigns = $scope.workflowCreateRequest.assigns.filter(function(value, index, arr){
 
@@ -193,14 +184,20 @@ iflowApp.controller('WorkflowCreateController', function WorkflowCreateControlle
     	
 	};
 
-	$scope.getAssignedUsers = function(){
-		var assigned = new Array();
-		for(id in $scope.assigned){
-    		if($scope.assigned[id]){
-    		}
-    	}
+	$scope.isItemAssigned = function(id, itype){
+
+		var type = itype == 'user' ? userAssignType : itype == 'department' ? departmentAssignType : departmentGroupAssignType;
+
+		for(o in $scope.workflowCreateRequest.assigns){
+			var assign = $scope.workflowCreateRequest.assigns[o];
+			
+		    if(assign.itemId == id && assign.itemType == type){
+		    	return true;
+		    }
+		}
 		
-		return assigned;
+		return false;
+    	
 	};
 	
 	$scope.getWorkflowTypeSteps = function(){
@@ -220,18 +217,6 @@ iflowApp.controller('WorkflowCreateController', function WorkflowCreateControlle
 		
 		return $scope.workflowCreateRequest.workflow && $scope.workflowCreateRequest.workflow.workflowTypeId != 0;
 	};
-
-	function findUser(id){
-		
-	}
-	
-	function resetAssignedList(){
-		$scope.assigned = {};
-    	for(o in $scope.users){
-    		var user =$scope.users[o];
-    		$scope.assigned[user.id] = false;
-    	}
-	}
 	
 	$scope.hasNoAssigns = function(){
 		if($scope.workflowCreateRequest && $scope.workflowCreateRequest.assigns){
@@ -304,14 +289,6 @@ iflowApp.controller('WorkflowCreateController', function WorkflowCreateControlle
 	};
 	
 	
-	
-	$scope.getWorkFlowTest = function(){
-		return JSON.stringify($scope.workflowCreateRequest);
-	};
-
-	$scope.getAssignedTest = function(){
-		return JSON.stringify($scope.assigned);
-	};
 		
 	function initWorkFlow(workflowReq){
 		workflowReq.workflow.workflowTypeId = workflowReq.workflow.workflowTypeId + "";

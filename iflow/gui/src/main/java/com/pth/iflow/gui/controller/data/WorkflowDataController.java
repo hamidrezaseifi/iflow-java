@@ -153,9 +153,12 @@ public class WorkflowDataController extends GuiDataControllerBase {
 
     final GuiWorkflowType workflowType = this.getSessionUserInfo().getWorkflowTypeById(workflow.getWorkflowTypeId());
 
+    final List<GuiDepartment> departmentList = this.getSessionUserInfo().getCompanyDepartments();
+
     map.put("users", userList);
     map.put("workflow", workflow);
     map.put("workflowType", workflowType);
+    map.put("departments", departmentList);
 
     return map;
   }

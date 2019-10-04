@@ -17,9 +17,11 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 	$scope.workflowTypeSteps = [];
 	$scope.workflow = {};
 	$scope.activeAction = getNewAction();
+	$scope.departments = [];
 	
 	$scope.showSelectAssign = false;
 	
+	$scope.workflowCreateRequest = { assigns: []};
 	
 	$scope.reload = function (){
 		
@@ -29,6 +31,7 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 		$scope.users = [];
 		$scope.workflow = {};
 		$scope.activeAction = getNewAction();
+		$scope.departments = [];
 			
 		$http({
 	        method : "POST",
@@ -42,6 +45,7 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 	    	$scope.users = response.data.users;
 	    	$scope.workflow = initWorkFlow(response.data.workflow);
 	    	$scope.workflowTypeSteps = $scope.workflowType.steps;
+	    	$scope.departments = response.data.departments;
 	    	
 	    	prepareActiveAction();
 	    	
@@ -53,6 +57,47 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 		
 	};	
 
+	$scope.applyUserSelect = function(){
+		$scope.workflowCreateRequest.assigns = [];
+		
+		
+		$(".assign-checkbox:checked").each(function(index, item){
+			var jitem = $(item);
+			
+			var type = jitem.data("assigntype") == 'user' ? userAssignType : jitem.data("assigntype") == 'department' ? departmentAssignType : departmentGroupAssignType;
+			
+			$scope.workflowCreateRequest.assigns.push({itemId: jitem.val(),  itemType: type, title: jitem.data("assigntitle")});
+		});
+    	$('#assignlistdialog').modal('hide');
+	};
+
+	$scope.removeAssign = function(id, type){
+		
+		$scope.workflowCreateRequest.assigns = $scope.workflowCreateRequest.assigns.filter(function(value, index, arr){
+
+		    return value.itemId != id || value.itemType != type;
+
+		});
+    	
+	};
+
+	$scope.isItemAssigned = function(id, itype){
+
+		var type = itype == 'user' ? userAssignType : itype == 'department' ? departmentAssignType : departmentGroupAssignType;
+
+		for(o in $scope.workflowCreateRequest.assigns){
+			var assign = $scope.workflowCreateRequest.assigns[o];
+			
+		    if(assign.itemId == id && assign.itemType == type){
+		    	return true;
+		    }
+		}
+		
+		return false;
+    	
+	};
+
+	
 	$scope.saveWorkflow = function(){
 		
 		var saveData = angular.copy($scope.workflow);

@@ -1,4 +1,5 @@
-<html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org" ng-app="iflowApp" >
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" ng-app="iflowApp" >
     <head>
     	<th:block th:include="layout/mainLayout :: pageheader" />
 		<script th:src="@{/js/workflow-create.js}"></script>
@@ -95,11 +96,8 @@
 					<div class="clear"></div>
 				</div>
 				
-				<div class="item-row">
-					{{workflowCreateRequest}}
-				</div>
-				<div class="item-row">
-					{{getAssignedTest()}}
+				<div style="height: 20px; background: lightgray;">
+					{{workflowCreateRequest.assigns}}
 				</div>
 			</div>
 		    
@@ -121,7 +119,7 @@
 								<div id="tabusers" class="tab-pane fade in active">
 									<ul class="list-item-container">
 										<li ng-repeat="item in users" class="list-item">
-											<input data-assigntitle="{{item.fullName}}" type="checkbox" class="assign-checkbox" th:data-assigntype="${UserAssign}" ng-value="item.id"/> 
+											<input data-assigntitle="{{item.fullName}}" type="checkbox" class="assign-checkbox" ng-checked="isItemAssigned(item.id, 'user')" data-assigntype="user" ng-value="item.id"/> 
 											&nbsp; &nbsp; 
 											{{item.fullName}}										
 										</li>
@@ -130,12 +128,12 @@
 								<div id="tabdepartments" class="tab-pane fade">
 									<ul class="list-item-container">
 										<li ng-repeat="dep in departments" class="list-item">
-											<input type="checkbox" data-assigntitle="{{dep.title}}" class="assign-checkbox" th:data-assigntype="${DepartmentAssign}" ng-value="dep.id"/> 
+											<input type="checkbox" data-assigntitle="{{dep.title}}" class="assign-checkbox" ng-checked="isItemAssigned(dep.id, 'department')" data-assigntype="department" ng-value="dep.id"/> 
 											&nbsp; &nbsp; 
 											{{dep.title}}	
 											<ul class="list-item-container">
 												<li ng-repeat="depgrp in dep.departmentGroups" class="list-item">
-													<input type="checkbox" class="assign-checkbox" data-assigntitle="{{depgrp.title}}" th:data-assigntype="${DepartmentGroupAssign}" ng-value="depgrp.id"/> 
+													<input type="checkbox" class="assign-checkbox" data-assigntitle="{{depgrp.title}}" ng-checked="isItemAssigned(depgrp.id, 'departmentgroup')" data-assigntype="departmentgroup" ng-value="depgrp.id"/> 
 													&nbsp; &nbsp; 
 													{{depgrp.title}}										
 												</li>
@@ -158,12 +156,16 @@
 		    </div>
 		    
 		    
-		    <script type="text/javascript">
+		    <script th:inline="javascript">
 			var loadUrl = "/workflow/data/workflowcreate/init";
 			var loadWorkflowTypeDataUrl = "/workflow/data/workflowcreate/typedata/";
 			var saveUrl = "/workflow/data/workflowcreate/create";
 			var saveFileUrl = "/workflow/data/workflowcreate/file";
 			var listUrl = "/workflow/list";
+			
+			var userAssignType = /*[[${UserAssign}]]*/ '';
+			var departmentAssignType = /*[[${DepartmentAssign}]]*/ '';
+			var departmentGroupAssignType = /*[[${DepartmentGroupAssign}]]*/ '';
 			
 		    </script>
 		

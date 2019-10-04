@@ -2,7 +2,9 @@ package com.pth.iflow.gui.controller.page;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+
 import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+
 import com.pth.iflow.common.enums.EAssignType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
@@ -29,7 +32,7 @@ import com.pth.iflow.gui.services.IWorkflowHandler;
 public class WorkflowPageController extends GuiPageControllerBase {
 
   @Autowired
-  private IWorkflowHandler workflowHandler;
+  private IWorkflowHandler   workflowHandler;
 
   @Autowired
   private IUploadFileManager uploadFileManager;
@@ -54,7 +57,8 @@ public class WorkflowPageController extends GuiPageControllerBase {
 
   @ResponseStatus(HttpStatus.OK)
   @GetMapping(path = { "/edit/{workflowId}" })
-  public String showWorkflowEdit(final Model model, @PathVariable(required = false) final Long workflowId, final HttpServletResponse response) throws GuiCustomizedException, IOException, IFlowMessageConversionFailureException {
+  public String showWorkflowEdit(final Model model, @PathVariable(required = false) final Long workflowId,
+      final HttpServletResponse response) throws GuiCustomizedException, IOException, IFlowMessageConversionFailureException {
 
     final Long iWorkflowId = (workflowId != null) && (workflowId > 0) ? workflowId : 0;
     if (iWorkflowId == 0) {
@@ -63,21 +67,24 @@ public class WorkflowPageController extends GuiPageControllerBase {
 
     final GuiWorkflow workflow = this.workflowHandler.readWorkflow(iWorkflowId);
 
+    model.addAttribute("UserAssign", EAssignType.USER.getName());
+    model.addAttribute("DepartmentAssign", EAssignType.DEPARTMENT.getName());
+    model.addAttribute("DepartmentGroupAssign", EAssignType.DEPARTMENTGROUP.getName());
     model.addAttribute("workflowId", iWorkflowId);
+
     return workflow.getCurrentStep().getViewName(); // "workflow/edit";
   }
 
   @ResponseStatus(HttpStatus.OK)
   @GetMapping(path = { "/file/view/{workflowId}/{fileId}" })
-  public void viewWorkflowFile(final Model model, @PathVariable(required = true) final Long fileId, @PathVariable(required = true) final Long workflowId, final HttpServletResponse response) throws GuiCustomizedException, IOException, IFlowMessageConversionFailureException {
+  public void viewWorkflowFile(final Model model, @PathVariable(required = true) final Long fileId,
+      @PathVariable(required = true) final Long workflowId, final HttpServletResponse response)
+      throws GuiCustomizedException, IOException, IFlowMessageConversionFailureException {
 
     final GuiWorkflowFile wfile = this.workflowHandler.readWorkflowFile(workflowId, fileId);
 
-    final FileSavingData fData = new FileSavingData(wfile.getTitle(),
-                                                    wfile.getExtention(),
-                                                    wfile.getWorkflowId(),
-                                                    0L,
-                                                    this.getLoggedCompany().getId());
+    final FileSavingData fData = new FileSavingData(wfile.getTitle(), wfile.getExtention(), wfile.getWorkflowId(), 0L,
+        this.getLoggedCompany().getId());
     final String readFilePath = this.uploadFileManager.getFilePath(fData);
 
     // final ResponseEntity<InputStreamResource> respEntity =
@@ -90,15 +97,14 @@ public class WorkflowPageController extends GuiPageControllerBase {
   @ResponseStatus(HttpStatus.OK)
   @GetMapping(path = { "/file/download/{workflowId}/{fileId}" })
   @ResponseBody
-  public ResponseEntity<InputStreamResource> downloadWorkflowFile(final Model model, @PathVariable(required = true) final Long fileId, @PathVariable(required = true) final Long workflowId, final HttpServletResponse response) throws GuiCustomizedException, IOException, IFlowMessageConversionFailureException {
+  public ResponseEntity<InputStreamResource> downloadWorkflowFile(final Model model, @PathVariable(required = true) final Long fileId,
+      @PathVariable(required = true) final Long workflowId, final HttpServletResponse response)
+      throws GuiCustomizedException, IOException, IFlowMessageConversionFailureException {
 
     final GuiWorkflowFile wfile = this.workflowHandler.readWorkflowFile(workflowId, fileId);
 
-    final FileSavingData fData = new FileSavingData(wfile.getTitle(),
-                                                    wfile.getExtention(),
-                                                    wfile.getWorkflowId(),
-                                                    0L,
-                                                    this.getLoggedCompany().getId());
+    final FileSavingData fData = new FileSavingData(wfile.getTitle(), wfile.getExtention(), wfile.getWorkflowId(), 0L,
+        this.getLoggedCompany().getId());
     final String readFilePath = this.uploadFileManager.getFilePath(fData);
 
     final ResponseEntity<InputStreamResource> respEntity = fData.generateFileReposneEntity(readFilePath);
@@ -108,7 +114,8 @@ public class WorkflowPageController extends GuiPageControllerBase {
 
   @ResponseStatus(HttpStatus.OK)
   @GetMapping(path = { "/message/process/{id}" })
-  public void processMessage(final Model model, @PathVariable(required = true) final Long id, final HttpServletResponse response) throws GuiCustomizedException, IOException, IFlowMessageConversionFailureException {
+  public void processMessage(final Model model, @PathVariable(required = true) final Long id, final HttpServletResponse response)
+      throws GuiCustomizedException, IOException, IFlowMessageConversionFailureException {
 
     String redirectUrl = "/workflow/invalid-message";
     this.getWorkflowMessageHanlder().callUserMessageReset();

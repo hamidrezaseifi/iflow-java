@@ -3,6 +3,7 @@ package com.pth.iflow.gui.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
 
@@ -90,6 +91,16 @@ public class GuiWorkflowType extends DataModelBase {
 
   public void setAssignType(final EWorkflowTypeAssignType assignType) {
     this.assignType = assignType;
+  }
+
+  @JsonProperty(value = "isAssignTypeManual")
+  public boolean geIsAssignTypeManual() {
+    return this.assignType == EWorkflowTypeAssignType.MANUAL;
+  }
+
+  @JsonProperty(value = "isAssignTypeOffering")
+  public boolean geIsAssignTypeOffering() {
+    return this.assignType == EWorkflowTypeAssignType.OFFER;
   }
 
   public Boolean getIncreaseStepAutomatic() {
