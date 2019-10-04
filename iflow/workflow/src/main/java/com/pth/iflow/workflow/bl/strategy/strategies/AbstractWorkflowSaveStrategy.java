@@ -40,7 +40,7 @@ public abstract class AbstractWorkflowSaveStrategy implements IWorkflowSaveStrat
 
   protected final WorkflowSaveRequest             processingWorkflowSaveRequest;
   protected final String                          token;
-  protected final WorkflowAction                  activeAction;
+  protected final WorkflowAction                  prevActiveAction;
   protected final Workflow                        existsingWorkflow;
 
   protected final List<IWorkflowSaveStrategyStep> steps               = new ArrayList<>();
@@ -62,7 +62,7 @@ public abstract class AbstractWorkflowSaveStrategy implements IWorkflowSaveStrat
     this.workflowMessageDataService = workflowMessageDataService;
     this.workflowDataService = workflowDataService;
     this.profileCachDataDataService = profileCachDataDataService;
-    this.activeAction = workflowCreateRequest.getWorkflow().getActiveAction();
+    this.prevActiveAction = workflowCreateRequest.getWorkflow().getActiveAction();
 
     this.existsingWorkflow = getProcessingWorkflow().isNew() ? null
         : workflowDataService.getById(getProcessingWorkflow().getId(), token);
@@ -153,9 +153,12 @@ public abstract class AbstractWorkflowSaveStrategy implements IWorkflowSaveStrat
     final Map<Integer, WorkflowTypeStep> steps = this.getIndexKeySteps(workflowType);
     final List<Integer> sortedIndexes = getSortedStepIndexs(workflowType);
 
-    final Integer stepIndex = sortedIndexes.indexOf(currectStep.getStepIndex());
-    final Integer nextStepIndex = stepIndex + 1;
-    return nextStepIndex < sortedIndexes.size() ? steps.get(nextStepIndex) : currectStep;
+    final int stepIndexInList = sortedIndexes.indexOf(currectStep.getStepIndex());
+    int nextStepIndexList = stepIndexInList + 1;
+    nextStepIndexList = stepIndexInList < sortedIndexes.size() - 1 ? stepIndexInList + 1 : stepIndexInList;
+    final Integer nextStepIndex = sortedIndexes.get(nextStepIndexList);
+
+    return steps.get(nextStepIndex);
 
   }
 
@@ -267,7 +270,11 @@ public abstract class AbstractWorkflowSaveStrategy implements IWorkflowSaveStrat
   }
 
   public WorkflowAction getActiveAction() {
-    return activeAction;
+    return processingWorkflowSaveRequest.getWorkflow().getActiveAction();
+  }
+
+  public WorkflowAction getPrevActiveAction() {
+    return prevActiveAction;
   }
 
   public WorkflowType getProcessingWorkflowType() {

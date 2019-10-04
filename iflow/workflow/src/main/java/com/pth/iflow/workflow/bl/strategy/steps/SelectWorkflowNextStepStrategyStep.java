@@ -2,7 +2,6 @@ package com.pth.iflow.workflow.bl.strategy.steps;
 
 import java.net.MalformedURLException;
 
-import com.pth.iflow.common.enums.EWorkflowStatus;
 import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.iflow.common.exceptions.IFlowCustomeException;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
@@ -32,10 +31,6 @@ public class SelectWorkflowNextStepStrategyStep extends AbstractWorkflowSaveStra
 
     processingWorkflow.setCurrentStep(nextStep);
     processingWorkflow.setCurrentStepId(nextStep.getId());
-
-    if (this.getWorkflowSaveStrategy().isLastStep(processingWorkflowType, nextStep)) {
-      processingWorkflow.setStatus(EWorkflowStatus.DONE);
-    }
 
   }
 

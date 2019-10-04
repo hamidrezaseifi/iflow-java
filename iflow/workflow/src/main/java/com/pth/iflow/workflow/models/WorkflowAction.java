@@ -5,14 +5,14 @@ import com.pth.iflow.common.enums.EWorkflowActionStatus;
 
 public class WorkflowAction extends WorkflowActionModelBase {
 
-  private Long             id;
-  private Long             workflowId;
-  private Long             assignTo;
-  private Long             currentStepId;
-  private WorkflowTypeStep currentStep;
-  private String           comments;
-  private Integer          status;
-  private Integer          version;
+  private Long                  id;
+  private Long                  workflowId;
+  private Long                  assignTo;
+  private Long                  currentStepId;
+  private WorkflowTypeStep      currentStep;
+  private String                comments;
+  private EWorkflowActionStatus status;
+  private Integer               version;
 
   @Override
   public Long getId() {
@@ -69,19 +69,19 @@ public class WorkflowAction extends WorkflowActionModelBase {
 
   @Override
   public Integer getStatusInt() {
-    return this.status;
+    return this.status.getValue();
   }
 
   public EWorkflowActionStatus getStatus() {
-    return EWorkflowActionStatus.ofValue(this.status);
+    return this.status;
   }
 
   public void setStatus(final EWorkflowActionStatus status) {
-    this.status = status.getValue().intValue();
+    this.status = status;
   }
 
   public void setStatus(final Integer status) {
-    this.status = status;
+    this.status = EWorkflowActionStatus.ofValue(status);
   }
 
   @Override

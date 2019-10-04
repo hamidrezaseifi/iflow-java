@@ -267,8 +267,6 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
 
     final String searchSql = "SELECT * FROM workflow where " + whereClause;
 
-    logger.info("Dao search Workflow sql: \n{}", searchSql);
-
     try {
       idList = this.jdbcTemplate.query(con -> {
         final PreparedStatement ps = con.prepareStatement(searchSql);

@@ -31,7 +31,7 @@ public class UserDao extends DaoBasicClass<User> implements IUserDao {
     user.setId(rs.getLong("id"));
     user.setCompanyId(rs.getLong("company_id"));
     user.setEmail(rs.getString("email"));
-    user.setBirthDate(rs.getDate("birthdate"));
+    user.setBirthDate(rs.getDate("birthdate").toLocalDate());
     user.setFirstName(rs.getString("firstname"));
     user.setLastName(rs.getString("lastname"));
     user.setStatus(rs.getInt("status"));
@@ -119,7 +119,7 @@ public class UserDao extends DaoBasicClass<User> implements IUserDao {
 
     ps.setLong(1, model.getCompanyId());
     ps.setString(2, model.getEmail());
-    ps.setDate(3, model.getBirthDate() != null ? new java.sql.Date(model.getBirthDate().getTime()) : null);
+    ps.setDate(3, model.getBirthDate() != null ? java.sql.Date.valueOf(model.getBirthDate()) : null);
     ps.setString(4, model.getFirstName());
     ps.setString(5, model.getLastName());
     ps.setInt(6, model.getPermission());
@@ -133,7 +133,7 @@ public class UserDao extends DaoBasicClass<User> implements IUserDao {
   protected PreparedStatement prepareUpdatePreparedStatement(final User model, final PreparedStatement ps) throws SQLException {
     ps.setLong(1, model.getCompanyId());
     ps.setString(2, model.getEmail());
-    ps.setDate(3, model.getBirthDate() != null ? new java.sql.Date(model.getBirthDate().getTime()) : null);
+    ps.setDate(3, model.getBirthDate() != null ? java.sql.Date.valueOf(model.getBirthDate()) : null);
     ps.setString(4, model.getFirstName());
     ps.setString(5, model.getLastName());
     ps.setInt(6, model.getPermission());

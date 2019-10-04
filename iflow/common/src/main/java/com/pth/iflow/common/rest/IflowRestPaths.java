@@ -323,7 +323,7 @@ public class IflowRestPaths {
     public static final String CACHDATA_ADD_USER_WORKFLOWMESSAGELIST  = "/cachdata/user/addworkflowmessagelist/{companyid}/{userid}";
     public static final String CACHDATA_CAL_USER_DATARESET            = "/cachdata/user/datareset/{companyid}/{userid}";
     public static final String CACHDATA_CAL_USERLIST_DATARESET        = "/cachdata/userlist/datareset/{companyid}";
-    public static final String CACHDATA_CAL_WORKFLOW_DATARESET        = "/cachdata/user/datareset/{companyid}/{workflowid}";
+    public static final String CACHDATA_CAL_WORKFLOW_DATARESET        = "/cachdata/workflow/datareset/{companyid}/{workflowid}";
 
     public static URI READ_COMPANY_BY_ID_URIBUILDER(final Long id) {
       final IflowUriBuilder builder = new IflowUriBuilder(COMPANY_READ_BY_ID);

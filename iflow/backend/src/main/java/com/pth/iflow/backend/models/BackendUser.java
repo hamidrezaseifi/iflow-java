@@ -1,8 +1,8 @@
 package com.pth.iflow.backend.models;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,7 +21,7 @@ public class BackendUser extends DataModelBase {
   private Long                    id;
   private Long                    companyId;
   private String                  email;
-  private Date                    birthDate;
+  private LocalDate               birthDate;
   private String                  firstName;
   private String                  lastName;
   private Integer                 status;
@@ -79,11 +79,11 @@ public class BackendUser extends DataModelBase {
     this.email = email;
   }
 
-  public Date getBirthDate() {
+  public LocalDate getBirthDate() {
     return this.birthDate;
   }
 
-  public void setBirthDate(final Date birthDate) {
+  public void setBirthDate(final LocalDate birthDate) {
     this.birthDate = birthDate;
   }
 

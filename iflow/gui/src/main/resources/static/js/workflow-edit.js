@@ -141,7 +141,7 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 	    });
 	};
 
-	$scope.makeWorkflowDone = function(id){
+	$scope.makeActionDone = function(id){
 		
 		var saveData = angular.copy($scope.workflowCreateRequest);
 		saveData.currentStepId = id;

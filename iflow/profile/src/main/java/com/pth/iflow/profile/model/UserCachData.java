@@ -40,8 +40,8 @@ public class UserCachData {
     if (this.workflowDataList.containsKey(workflowId) == false && initialUserCachData) {
       this.initialWorkflowCachData(workflowId);
     }
-    if (this.workflowDataList.containsKey(this.userId)) {
-      return this.workflowDataList.get(this.userId);
+    if (this.workflowDataList.containsKey(workflowId)) {
+      return this.workflowDataList.get(workflowId);
     }
     return null;
   }

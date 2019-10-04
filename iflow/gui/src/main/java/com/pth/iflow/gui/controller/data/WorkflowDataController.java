@@ -152,8 +152,8 @@ public class WorkflowDataController extends GuiDataControllerBase {
 
     final List<GuiDepartment> departmentList = this.getSessionUserInfo().getCompanyDepartments();
 
-    final GuiWorkflowSaveRequest saveRequest = GuiWorkflowSaveRequest.generateNewWihExpireDays(workflow,
-        workflow.getActiveAction().getCurrentStep().getExpireDays());
+    final Integer expireDays = workflow.getHasActiveAction() ? workflow.getActiveAction().getCurrentStep().getExpireDays() : 0;
+    final GuiWorkflowSaveRequest saveRequest = GuiWorkflowSaveRequest.generateNewWihExpireDays(workflow, expireDays);
 
     map.put("users", userList);
     map.put("workflow", workflow);

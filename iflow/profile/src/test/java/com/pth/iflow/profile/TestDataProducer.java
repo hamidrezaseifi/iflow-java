@@ -1,7 +1,7 @@
 package com.pth.iflow.profile;
 
+import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import com.pth.iflow.common.edo.models.AuthenticatedProfileRequestEdo;
@@ -34,7 +34,8 @@ public class TestDataProducer {
 
   protected CompanyProfile getTestCompanyProfile() {
 
-    final CompanyProfile companyProfile = new CompanyProfile(getTestCompany(), getTestDepartmentList(), getTestUserGroupList());
+    final CompanyProfile companyProfile = new CompanyProfile(this.getTestCompany(), this.getTestDepartmentList(),
+        this.getTestUserGroupList());
 
     return companyProfile;
   }
@@ -62,9 +63,8 @@ public class TestDataProducer {
   }
 
   protected List<UserGroup> getTestUserGroupList() {
-    final List<UserGroup> list = Arrays.asList(this.getTestUserGroup(1L, "UserGroup 1"),
-                                               this.getTestUserGroup(2L, "UserGroup 2"),
-                                               this.getTestUserGroup(3L, "UserGroup 3"));
+    final List<UserGroup> list = Arrays.asList(this.getTestUserGroup(1L, "UserGroup 1"), this.getTestUserGroup(2L, "UserGroup 2"),
+        this.getTestUserGroup(3L, "UserGroup 3"));
 
     return list;
   }
@@ -74,7 +74,7 @@ public class TestDataProducer {
     model.setCompanyId(1L);
     model.setId(1L);
     model.setEmail("email");
-    model.setBirthDate(new Date());
+    model.setBirthDate(LocalDate.now());
     model.setFirstName("firstName");
     model.setLastName("lastName");
     model.setStatus(1);
@@ -93,7 +93,7 @@ public class TestDataProducer {
     model.setCompanyId(1L);
     model.setId(id);
     model.setEmail(email);
-    model.setBirthDate(new Date());
+    model.setBirthDate(LocalDate.now());
     model.setFirstName(fname);
     model.setLastName(lname);
     model.setStatus(1);
@@ -132,9 +132,8 @@ public class TestDataProducer {
   }
 
   protected List<Department> getTestDepartmentList() {
-    final List<Department> list = Arrays.asList(this.getTestDepartment(1L, "Department 1"),
-                                                this.getTestDepartment(2L, "Department 2"),
-                                                this.getTestDepartment(3L, "Department 3"));
+    final List<Department> list = Arrays.asList(this.getTestDepartment(1L, "Department 1"), this.getTestDepartment(2L, "Department 2"),
+        this.getTestDepartment(3L, "Department 3"));
 
     return list;
   }
@@ -163,8 +162,7 @@ public class TestDataProducer {
 
   protected List<DepartmentGroup> getTestDepartmentGroupList() {
     final List<DepartmentGroup> list = Arrays.asList(this.getTestDepartmentGroup(1L, "DepartmentGroup 1"),
-                                                     this.getTestDepartmentGroup(2L, "DepartmentGroup 2"),
-                                                     this.getTestDepartmentGroup(3L, "DepartmentGroup 3"));
+        this.getTestDepartmentGroup(2L, "DepartmentGroup 2"), this.getTestDepartmentGroup(3L, "DepartmentGroup 3"));
 
     return list;
   }
@@ -196,7 +194,7 @@ public class TestDataProducer {
 
   protected ProfileResponseEdo getTestProfileResponseEdo(final String sessionid, final UserEdo user, final CompanyEdo company) {
     final ProfileResponseEdo model = new ProfileResponseEdo();
-    model.setCompanyProfile(ProfileModelEdoMapper.toEdo(getTestCompanyProfile()));
+    model.setCompanyProfile(ProfileModelEdoMapper.toEdo(this.getTestCompanyProfile()));
     model.setSessionid(sessionid);
     model.setUser(user);
 
@@ -226,8 +224,7 @@ public class TestDataProducer {
 
   protected List<User> getTestUserList() {
     final List<User> list = Arrays.asList(this.getTestUser(1L, "fname 1", "lname 1", "email 1"),
-                                          this.getTestUser(2L, "fname 2", "lname 2", "email 2"),
-                                          this.getTestUser(3L, "fname 3", "lname 3", "email 3"));
+        this.getTestUser(2L, "fname 2", "lname 2", "email 2"), this.getTestUser(3L, "fname 3", "lname 3", "email 3"));
 
     return list;
   }

@@ -7,6 +7,7 @@ import com.pth.iflow.workflow.bl.strategy.strategies.AbstractWorkflowSaveStrateg
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.Workflow;
 import com.pth.iflow.workflow.models.WorkflowAction;
+import com.pth.iflow.workflow.models.WorkflowType;
 
 public class InitializeWorkflowActiveActionStrategyStep extends AbstractWorkflowSaveStrategyStep {
 
@@ -20,18 +21,23 @@ public class InitializeWorkflowActiveActionStrategyStep extends AbstractWorkflow
 
     final Workflow processingWorkflow = this.getWorkflowSaveStrategy().getProcessingWorkflow();
 
-    if (processingWorkflow.hasActiveAction() == false) {
-      final WorkflowAction action = this.getWorkflowSaveStrategy().initialNextStep(processingWorkflow);
-      if (action != null) {
-        processingWorkflow.addAction(action);
-      }
+    final WorkflowAction action = this.getWorkflowSaveStrategy().initialNextStep(processingWorkflow);
+    if (action != null) {
+      processingWorkflow.addAction(action);
     }
 
   }
 
   @Override
   public boolean shouldProcess() {
-    return true;
+    final Workflow processingWorkflow = this.getWorkflowSaveStrategy().getProcessingWorkflow();
+    final WorkflowType processingWorkflowType = this.getWorkflowSaveStrategy().getProcessingWorkflowType();
+    final WorkflowAction prevAction = this.getWorkflowSaveStrategy().getPrevActiveAction();
+
+    if (prevAction != null && this.getWorkflowSaveStrategy().isLastStep(processingWorkflowType, prevAction.getCurrentStep())) {
+      return false;
+    }
+    return processingWorkflow.hasActiveAction() == false;
   }
 
 }

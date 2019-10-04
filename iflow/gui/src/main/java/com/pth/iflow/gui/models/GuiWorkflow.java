@@ -250,7 +250,7 @@ public class GuiWorkflow {
   }
 
   public boolean isMeAssigned() {
-    return this.isAssigned() && (this.getActiveAction().isAssignTo(this.currentUserId));
+    return this.isAssigned() && (this.getHasActiveAction() && this.getActiveAction().isAssignTo(this.currentUserId));
   }
 
   public boolean isNotAssigned() {

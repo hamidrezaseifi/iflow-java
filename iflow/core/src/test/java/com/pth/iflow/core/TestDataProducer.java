@@ -1,7 +1,7 @@
 package com.pth.iflow.core;
 
+import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,7 +41,7 @@ public class TestDataProducer {
     model.setCompanyId(1L);
     model.setId(1L);
     model.setEmail("email");
-    model.setBirthDate(new Date());
+    model.setBirthDate(LocalDate.now());
     model.setFirstName("firstName");
     model.setLastName("lastName");
     model.setStatus(1);
@@ -60,7 +60,7 @@ public class TestDataProducer {
     model.setCompanyId(1L);
     model.setId(null);
     model.setEmail("utest email");
-    model.setBirthDate(new Date());
+    model.setBirthDate(LocalDate.now());
     model.setFirstName("utest firstName");
     model.setLastName("utest lastName");
     model.setStatus(1);
