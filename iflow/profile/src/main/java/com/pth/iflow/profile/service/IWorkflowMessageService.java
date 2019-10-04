@@ -11,4 +11,7 @@ public interface IWorkflowMessageService {
 
   public List<WorkflowMessage> getWorkflowMessageListByUser(final Long userId)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
+
+  public List<WorkflowMessage> getWorkflowMessageListByWorkflow(final Long workflowId)
+      throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 }

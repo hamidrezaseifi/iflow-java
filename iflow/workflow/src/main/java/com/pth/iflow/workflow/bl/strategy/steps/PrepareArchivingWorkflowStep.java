@@ -1,6 +1,7 @@
 package com.pth.iflow.workflow.bl.strategy.steps;
 
 import java.net.MalformedURLException;
+
 import com.pth.iflow.common.enums.EWorkflowStatus;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.strategy.strategies.AbstractWorkflowSaveStrategy;
@@ -21,7 +22,11 @@ public class PrepareArchivingWorkflowStep extends AbstractWorkflowSaveStrategySt
 
     processingWorkflow.setStatus(EWorkflowStatus.ARCHIVED);
 
-    processNextStepIfExists();
+  }
+
+  @Override
+  public boolean shouldProcess() {
+    return true;
   }
 
 }

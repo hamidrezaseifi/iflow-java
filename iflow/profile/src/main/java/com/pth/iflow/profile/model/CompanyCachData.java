@@ -62,17 +62,6 @@ public class CompanyCachData {
     return this.userCachList.containsKey(userId);
   }
 
-  public void addWorkflowMessage(final Long userId, final WorkflowMessage workflowMessage) {
-
-    this.getUserCachData(workflowMessage.getUserId(), true).addWorkflowMessage(workflowMessage);
-
-  }
-
-  public void addWorkflowMessageList(final Long userId, final List<WorkflowMessage> workflowMessageList) {
-    this.getUserCachData(userId, true).addWorkflowMessageList(workflowMessageList);
-
-  }
-
   public List<WorkflowMessage> getUserWorkflowMessages(final Long userId) {
     return this.getUserCachData(userId, true).getWorkflowMessagesList();
   }
@@ -82,6 +71,18 @@ public class CompanyCachData {
       final UserCachData userCachData = new UserCachData(userId);
       this.addUserCachData(userCachData);
     }
+  }
+
+  public void setWorkflowWorkflowMessages(final Long workflowId, final List<WorkflowMessage> workflowMessageList) {
+
+    for (final UserCachData userCachData : this.userCachList.values()) {
+      if (userCachData.hasWorkflowCachData(workflowId)) {
+
+        final WorkflowCachData workflowCachData = userCachData.getWorkflowCachData(workflowId, false);
+        workflowCachData.setWorkflowMessages(workflowMessageList);
+      }
+    }
+
   }
 
 }

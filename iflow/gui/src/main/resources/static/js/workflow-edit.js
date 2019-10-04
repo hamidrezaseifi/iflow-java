@@ -12,11 +12,9 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 	$scope.doneUrl = doneUrl;
 	$scope.listUrl = listUrl;
 	
-	$scope.workflowType = {};
 	$scope.users = [];
 	$scope.workflowTypeSteps = [];
 	$scope.workflow = {};
-	$scope.activeAction = getNewAction();
 	$scope.departments = [];
 	
 	$scope.showSelectAssign = false;
@@ -27,11 +25,10 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 		
 		//alert(JSON.stringify($scope.query)); 
 
-		$scope.workflowType = {};
 		$scope.users = [];
 		$scope.workflow = {};
-		$scope.activeAction = getNewAction();
 		$scope.departments = [];
+		$scope.workflowCreateRequest = { assigns: []};
 			
 		$http({
 	        method : "POST",
@@ -41,11 +38,11 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 	        url : $scope.loadUrl,
 	    }).then(function successCallback(response) {
 	    	
-	    	$scope.workflowType = response.data.workflowType;
 	    	$scope.users = response.data.users;
 	    	$scope.workflow = initWorkFlow(response.data.workflow);
-	    	$scope.workflowTypeSteps = $scope.workflowType.steps;
+	    	$scope.workflowTypeSteps = $scope.workflow.workflowType.steps;
 	    	$scope.departments = response.data.departments;
+	    	$scope.workflowCreateRequest = response.data.saveRequest;
 	    	
 	    	prepareActiveAction();
 	    	
@@ -146,7 +143,7 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 
 	$scope.makeWorkflowDone = function(id){
 		
-		var saveData = angular.copy($scope.workflow);
+		var saveData = angular.copy($scope.workflowCreateRequest);
 		saveData.currentStepId = id;
 		
 		$http({
@@ -193,18 +190,6 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 		return workflow;
 	};
 	
-	function prepareActiveAction(){
-    	for(index in $scope.workflow.actions){
-    		if($scope.workflow.actions[index].isActive){
-    			$scope.activeAction = $scope.workflow.actions[index];
-    			$scope.activeAction.oldStep = "" + $scope.activeAction.oldStep;
-    			$scope.activeAction.newStep = "" + $scope.activeAction.newStep;
-
-    			break;
-    		}	    		
-    	}		
-	}
-	
 	$scope.listAvaileableSteps = function(){
     	
 		var list = []; 
@@ -214,10 +199,6 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 			}
 		}
 		return list;
-	}
-	
-	function getNewAction(){
-		return {action: "", oldStep: 0, newStep: 0, comments: "", };
 	}
 	
 	$scope.reload();

@@ -87,7 +87,7 @@ public class WorkflowSaveStrategyFactoryTest extends TestDataProducer {
     final WorkflowSaveRequest request = this.getTestWorkflowCreateRequest();
 
     request.setCommand(EWorkflowProcessCommand.DONE);
-
+    request.getWorkflow().setWorkflowType(getTestWorkflowType());
     final IWorkflowSaveStrategy saveWorkflowStrategy = this.workStrategyFactory.selectWorkStrategy(request, this.validTocken);
 
     Assert.assertNotNull("Result strategy is not null!", saveWorkflowStrategy);

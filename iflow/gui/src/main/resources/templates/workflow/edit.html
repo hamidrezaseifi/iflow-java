@@ -29,7 +29,7 @@
 						</div>
 						<div class="clear"></div>
 					</div>
-					<div class="item-row" ng-if="workflowType.isAssignTypeOffering">
+					<div class="item-row" ng-if="workflow.workflowType.isAssignTypeOffering">
 						<div class="item-label" th:text="#{workflow-assignto}"></div>
 						<div class="item-content">
 							<div class="assign-list" >
@@ -44,7 +44,7 @@
 						</div>
 						<div class="clear"></div>
 					</div>
-					<div class="item-row" ng-if="workflowType.isAssignTypeManual">
+					<div class="item-row" ng-if="workflow.workflowType.isAssignTypeManual">
 						<div class="item-label" th:text="#{workflow-select-assign}"></div>
 						<div class="item-content">
 							<select type="text" ng-model="workflowCreateRequest.workflow.controller">
@@ -55,10 +55,21 @@
 						<div class="clear"></div>
 					</div>
 					<div class="item-row">
+						<div class="item-label" th:text="#{workflow-comments}"></div>
+						<div class="item-content">
+							<textarea ng-model="workflow.activeAction.comments"></textarea>
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="item-row">
 						
 						<div class="item-content workflow-step-button-bar">
 							<button ng-click="makeWorkflowDone(item.id)" class="button-bar-button step-button" ng-repeat="item in listAvaileableSteps()">{{item.title}}</button>
 							<button ng-click="saveWorkflow()" class="button-bar-button step-button button-save">
+								<span th:text="#{common.save}"></span>
+								<i class="material-icons">save</i>
+							</button>
+							<button ng-click="doneWorkflow()" class="button-bar-button step-button button-save">
 								<span th:text="#{common.save}"></span>
 								<i class="material-icons">save</i>
 							</button>

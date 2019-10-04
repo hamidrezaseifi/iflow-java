@@ -45,6 +45,10 @@ public class WorkflowTypeStepEdo {
   @XmlElement(name = "Version", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer version;
 
+  @NotNull
+  @XmlElement(name = "ExpireDays", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private Integer expireDays;
+
   public Long getId() {
     return this.id;
   }
@@ -113,6 +117,14 @@ public class WorkflowTypeStepEdo {
 
   public void setVersion(final Integer version) {
     this.version = version;
+  }
+
+  public Integer getExpireDays() {
+    return this.expireDays;
+  }
+
+  public void setExpireDays(final Integer expireDays) {
+    this.expireDays = expireDays;
   }
 
 }

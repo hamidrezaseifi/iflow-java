@@ -96,11 +96,9 @@ iflowApp.controller('WorkflowMessageController', function ($scope, $http, $sce, 
 	        url : $scope.assignWorkflowUrl + workflowId,
 	    }).then(function successCallback(response) {
 	    	
-	    	buildMessageList(response.data);
 	    	
-	    	setTimeout(function(){ 
-	    		$scope.reloadMessages();
-	    	}, 15000);
+	    	$('#viewworkflowdialog').modal('hide');
+	    	
 	
 	    }, function errorCallback(response) {
 	        

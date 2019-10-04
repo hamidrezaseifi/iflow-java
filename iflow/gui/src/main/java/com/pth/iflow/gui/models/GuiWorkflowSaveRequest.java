@@ -22,11 +22,21 @@ public class GuiWorkflowSaveRequest {
 
   }
 
-  public static GuiWorkflowSaveRequest generateNew(final GuiWorkflow workflow) {
+  public static GuiWorkflowSaveRequest generateNewWihExpireDays(final GuiWorkflow workflow, final int expireDays) {
     final GuiWorkflowSaveRequest request = new GuiWorkflowSaveRequest();
 
     request.setWorkflow(workflow);
-    request.setExpireDays(15);
+    request.setExpireDays(expireDays);
+    request.setCommand(EWorkflowProcessCommand.CREATE);
+
+    return request;
+  }
+
+  public static GuiWorkflowSaveRequest generateNewNoExpireDays(final GuiWorkflow workflow) {
+    final GuiWorkflowSaveRequest request = new GuiWorkflowSaveRequest();
+
+    request.setWorkflow(workflow);
+    request.setExpireDays(0);
     request.setCommand(EWorkflowProcessCommand.CREATE);
 
     return request;

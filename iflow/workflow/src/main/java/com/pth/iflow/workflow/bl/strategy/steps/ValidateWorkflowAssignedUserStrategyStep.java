@@ -1,6 +1,7 @@
 package com.pth.iflow.workflow.bl.strategy.steps;
 
 import java.net.MalformedURLException;
+
 import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.iflow.common.exceptions.IFlowCustomeException;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
@@ -22,11 +23,15 @@ public class ValidateWorkflowAssignedUserStrategyStep extends AbstractWorkflowSa
 
     if (processingWorkflow.getActiveAction().getAssignTo() == null || processingWorkflow.getActiveAction().getAssignTo() < 1) {
       throw new IFlowCustomeException("The workflow has not been assigned id:" + processingWorkflow.getId(),
-                                      EIFlowErrorType.UNKNOWN_WORKFLOW_ASSIGN);
+          EIFlowErrorType.UNKNOWN_WORKFLOW_ASSIGN);
 
     }
 
-    processNextStepIfExists();
+  }
+
+  @Override
+  public boolean shouldProcess() {
+    return true;
   }
 
 }

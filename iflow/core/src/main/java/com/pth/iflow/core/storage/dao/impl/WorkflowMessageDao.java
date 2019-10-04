@@ -132,21 +132,16 @@ public class WorkflowMessageDao extends DaoBasicClass<WorkflowMessage> implement
   }
 
   @Override
-  public List<WorkflowMessage> getListByWorkflowId(final Long workflowId, final Long lastid, final Integer status)
-      throws IFlowStorageException {
+  public List<WorkflowMessage> getListByWorkflowId(final Long workflowId) throws IFlowStorageException {
     logger.info("Dao read WorkflowMessage for workflow id: {}", workflowId);
 
     List<WorkflowMessage> list = new ArrayList<>();
-    final String sql = "SELECT * FROM workflow_message where workflow_id=? and id>?" + (status > 0 ? " and status=?" : "");
+    final String sql = "SELECT * FROM workflow_message where workflow_id=? ";
 
     try {
       list = this.jdbcTemplate.query(con -> {
         final PreparedStatement ps = con.prepareStatement(sql);
         ps.setLong(1, workflowId);
-        ps.setLong(2, lastid);
-        if (status > 0) {
-          ps.setInt(3, status);
-        }
 
         return ps;
 

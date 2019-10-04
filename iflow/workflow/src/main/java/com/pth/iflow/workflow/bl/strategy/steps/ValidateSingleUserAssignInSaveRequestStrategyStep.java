@@ -1,6 +1,7 @@
 package com.pth.iflow.workflow.bl.strategy.steps;
 
 import java.net.MalformedURLException;
+
 import com.pth.iflow.common.enums.EAssignType;
 import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.iflow.common.exceptions.IFlowCustomeException;
@@ -27,7 +28,11 @@ public class ValidateSingleUserAssignInSaveRequestStrategyStep extends AbstractW
 
     }
 
-    processNextStepIfExists();
+  }
+
+  @Override
+  public boolean shouldProcess() {
+    return true;
   }
 
 }

@@ -1,6 +1,7 @@
 package com.pth.iflow.workflow.bl.strategy.steps;
 
 import java.net.MalformedURLException;
+
 import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.iflow.common.exceptions.IFlowCustomeException;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
@@ -24,7 +25,11 @@ public class ValidateAssignInSaveRequestStrategyStep extends AbstractWorkflowSav
       throw new IFlowCustomeException("No assign by workflow create", EIFlowErrorType.NO_WORKFLOW_ASSIGN_CREATE_STRATEGY);
     }
 
-    processNextStepIfExists();
+  }
+
+  @Override
+  public boolean shouldProcess() {
+    return true;
   }
 
 }

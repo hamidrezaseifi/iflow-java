@@ -1,6 +1,7 @@
 package com.pth.iflow.workflow.bl.strategy.steps;
 
 import java.net.MalformedURLException;
+
 import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.iflow.common.exceptions.IFlowCustomeException;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
@@ -30,7 +31,6 @@ public class ValidateCurrentStepExistsInWorkflowTypeStrategyStep extends Abstrac
 
     }
 
-    processNextStepIfExists();
   }
 
   private boolean validateCurrentStepExistsInWorkflowType(final WorkflowTypeStep step, final WorkflowType workflowType) {
@@ -42,6 +42,11 @@ public class ValidateCurrentStepExistsInWorkflowTypeStrategyStep extends Abstrac
     }
 
     return false;
+  }
+
+  @Override
+  public boolean shouldProcess() {
+    return true;
   }
 
 }

@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pth.iflow.common.enums.EWorkflowProcessCommand;
-import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
 import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.iflow.common.exceptions.IFlowCustomeException;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
@@ -63,13 +62,13 @@ public class WorkStrategyFactory implements IWorkStrategyFactory {
     logger.debug("selecting save strategy for workflow");
 
     if (workflowSaveRequest.getCommand() == EWorkflowProcessCommand.CREATE) {
-      if (workflowSaveRequest.getWorkflow().getWorkflowType().geAssignType() == EWorkflowTypeAssignType.MANUAL) {
+      if (workflowSaveRequest.getWorkflow().getWorkflowType().isAssignTypeManual()) {
         return new CreateManualAssignWorkflowStrategy(workflowSaveRequest, token,
 
             departmentDataService, workflowMessageDataService, cachDataDataService, workflowDataService);
       }
 
-      if (workflowSaveRequest.getWorkflow().getWorkflowType().geAssignType() == EWorkflowTypeAssignType.OFFER) {
+      if (workflowSaveRequest.getWorkflow().getWorkflowType().isAssignTypeOffering()) {
         return new CreateOfferlAssignWorkflowStrategy(workflowSaveRequest, token,
 
             departmentDataService, workflowMessageDataService, cachDataDataService, workflowDataService);

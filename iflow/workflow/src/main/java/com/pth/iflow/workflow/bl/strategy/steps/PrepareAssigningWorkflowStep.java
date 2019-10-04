@@ -22,7 +22,11 @@ public class PrepareAssigningWorkflowStep extends AbstractWorkflowSaveStrategySt
 
     processingWorkflow.setStatus(EWorkflowStatus.ASSIGNED);
 
-    processNextStepIfExists();
+  }
+
+  @Override
+  public boolean shouldProcess() {
+    return true;
   }
 
 }

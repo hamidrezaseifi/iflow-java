@@ -1,11 +1,15 @@
 package com.pth.iflow.workflow.bl.strategy.strategies;
 
+import java.net.MalformedURLException;
+
+import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.IDepartmentDataService;
 import com.pth.iflow.workflow.bl.IProfileCachDataDataService;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.IWorkflowMessageDataService;
 import com.pth.iflow.workflow.bl.strategy.steps.AssignWorkflowActiveActionStrategyStep;
-import com.pth.iflow.workflow.bl.strategy.steps.ChangeWorkflowOfferStatusToAssignForWorkflowInCoreStep;
+import com.pth.iflow.workflow.bl.strategy.steps.ChangeWorkflowOfferStatusToAssignForUserInCoreStep;
+import com.pth.iflow.workflow.bl.strategy.steps.ChangeWorkflowOfferStatusToCloseForWorkflowInCoreStep;
 import com.pth.iflow.workflow.bl.strategy.steps.InitializeWorkflowActiveActionStrategyStep;
 import com.pth.iflow.workflow.bl.strategy.steps.InitializeWorkflowInitialActionStrategyStep;
 import com.pth.iflow.workflow.bl.strategy.steps.PrepareAssigningWorkflowStep;
@@ -15,13 +19,15 @@ import com.pth.iflow.workflow.bl.strategy.steps.ValidateCurrentStepExistsInWorkf
 import com.pth.iflow.workflow.bl.strategy.steps.ValidateSingleUserAssignInSaveRequestStrategyStep;
 import com.pth.iflow.workflow.bl.strategy.steps.ValidateWorkflowActiveActionStrategyStep;
 import com.pth.iflow.workflow.bl.strategy.steps.ValidateWorkflowTypeStepStrategyStep;
+import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.WorkflowSaveRequest;
 
 public class AssignWorkflowStrategy extends AbstractWorkflowSaveStrategy {
 
   public AssignWorkflowStrategy(final WorkflowSaveRequest workflowCreateRequest, final String token,
       final IDepartmentDataService departmentDataService, final IWorkflowMessageDataService workflowMessageDataService,
-      final IProfileCachDataDataService cachDataDataService, final IWorkflowDataService workflowDataService) {
+      final IProfileCachDataDataService cachDataDataService, final IWorkflowDataService workflowDataService)
+      throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     super(workflowCreateRequest, token, departmentDataService, workflowMessageDataService, cachDataDataService, workflowDataService);
 
   }
@@ -38,7 +44,8 @@ public class AssignWorkflowStrategy extends AbstractWorkflowSaveStrategy {
     steps.add(new AssignWorkflowActiveActionStrategyStep(this));
     steps.add(new PrepareAssigningWorkflowStep(this));
     steps.add(new SaveWorkflowInCoreStep(this));
-    steps.add(new ChangeWorkflowOfferStatusToAssignForWorkflowInCoreStep(this));
+    steps.add(new ChangeWorkflowOfferStatusToCloseForWorkflowInCoreStep(this));
+    steps.add(new ChangeWorkflowOfferStatusToAssignForUserInCoreStep(this));
     steps.add(new SendWorkflowOffersToProfileStep(this));
 
   }

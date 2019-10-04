@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
 import com.pth.iflow.common.enums.EAssignType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.strategy.strategies.AbstractWorkflowSaveStrategy;
@@ -46,7 +47,11 @@ public class CollectAssignedUserIdListStep extends AbstractWorkflowSaveStrategyS
 
     this.getWorkflowSaveStrategy().setAssignedUsers(assignedUsers);
 
-    processNextStepIfExists();
+  }
+
+  @Override
+  public boolean shouldProcess() {
+    return this.getWorkflowSaveStrategy().IsWorkflowCurrectStepChanged();
   }
 
 }

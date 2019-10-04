@@ -290,6 +290,7 @@ public class CoreModelEdoMapper {
     final WorkflowTypeStepEdo edo = new WorkflowTypeStepEdo();
     edo.setStepIndex(model.getStepIndex());
     edo.setViewName(model.getViewName());
+    edo.setExpireDays(model.getExpireDays());
     edo.setTitle(model.getTitle());
     edo.setComments(model.getComments());
     edo.setStatus(model.getStatus());
@@ -307,6 +308,7 @@ public class CoreModelEdoMapper {
 
     model.setStepIndex(edo.getStepIndex());
     model.setViewName(edo.getViewName());
+    model.setExpireDays(edo.getExpireDays());
     model.setTitle(edo.getTitle());
     model.setComments(edo.getComments());
     model.setStatus(edo.getStatus());

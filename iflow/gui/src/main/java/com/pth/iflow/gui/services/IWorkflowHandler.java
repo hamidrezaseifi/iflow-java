@@ -28,7 +28,7 @@ public interface IWorkflowHandler {
   GuiWorkflow saveWorkflow(final GuiWorkflow workflow, final HttpSession session)
       throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException;
 
-  GuiWorkflow doneWorkflow(final GuiWorkflow workflow, final HttpSession session)
+  GuiWorkflow doneWorkflow(final GuiWorkflowSaveRequest saveRequest, final HttpSession session)
       throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException;
 
   GuiWorkflow archiveWorkflow(final GuiWorkflow workflow, final HttpSession session)

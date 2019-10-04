@@ -28,7 +28,11 @@ public class InitializeWorkflowInitialActionStrategyStep extends AbstractWorkflo
       processingWorkflow.setCurrentStep(action.getCurrentStep());
     }
 
-    processNextStepIfExists();
+  }
+
+  @Override
+  public boolean shouldProcess() {
+    return true;
   }
 
 }

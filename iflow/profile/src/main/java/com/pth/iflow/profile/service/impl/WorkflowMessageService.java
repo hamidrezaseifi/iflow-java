@@ -46,4 +46,16 @@ public class WorkflowMessageService implements IWorkflowMessageService {
     return ProfileModelEdoMapper.fromWorkflowMessageEdoList(edo.getWorkflowMessages());
   }
 
+  @Override
+  public List<WorkflowMessage> getWorkflowMessageListByWorkflow(final Long workflowId)
+      throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+    logger.debug("Request workflow messages");
+
+    final WorkflowMessageListEdo edo = this.restTemplate.callRestGet(
+        this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.READ_WORKFLOWMESSAGE_READ_BY_WORKFLOW(workflowId)).toString(),
+        EModule.CORE, WorkflowMessageListEdo.class, true);
+
+    return ProfileModelEdoMapper.fromWorkflowMessageEdoList(edo.getWorkflowMessages());
+  }
+
 }

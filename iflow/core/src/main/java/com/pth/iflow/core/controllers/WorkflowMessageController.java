@@ -48,6 +48,17 @@ public class WorkflowMessageController {
         new WorkflowMessageListEdo(CoreModelEdoMapper.toWorkflowMessageEdoList(messageList)), HttpStatus.OK);
   }
 
+  @ResponseStatus(HttpStatus.OK)
+  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.WORKFLOWMESSAGE_READ_BY_WORKFLOW)
+  public ResponseEntity<WorkflowMessageListEdo> readWorkflowMessageByWorkflow(@PathVariable(required = true) final Long workflowid,
+      final HttpServletRequest request) throws Exception {
+
+    final List<WorkflowMessage> messageList = this.workflowMessageService.getListByWorkflowId(workflowid);
+
+    return ControllerHelper.createResponseEntity(request,
+        new WorkflowMessageListEdo(CoreModelEdoMapper.toWorkflowMessageEdoList(messageList)), HttpStatus.OK);
+  }
+
   @ResponseStatus(HttpStatus.CREATED)
   @IflowPostRequestMapping(path = IflowRestPaths.CoreModule.WORKFLOWMESSAGE_SAVE)
   public ResponseEntity<WorkflowMessageEdo> saveWorkflowMessage(@RequestBody(required = true) final WorkflowMessageEdo message,

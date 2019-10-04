@@ -22,10 +22,16 @@ public class AssignWorkflowActiveActionStrategyStep extends AbstractWorkflowSave
     final Workflow processingWorkflow = this.getWorkflowSaveStrategy().getProcessingWorkflow();
     final WorkflowSaveRequest processingWorkflowSaveRequest = this.getWorkflowSaveStrategy().getProcessingWorkflowSaveRequest();
 
-    processingWorkflow.setActiveActionAssignTo(processingWorkflowSaveRequest.getAssigns().get(0).getItemId());
+    final Long userId = processingWorkflowSaveRequest.getAssigns().get(0).getItemId();
+
+    processingWorkflow.setActiveActionAssignTo(userId);
     processingWorkflow.setActiveActionStatus(EWorkflowActionStatus.OPEN);
 
-    processNextStepIfExists();
+  }
+
+  @Override
+  public boolean shouldProcess() {
+    return true;
   }
 
 }

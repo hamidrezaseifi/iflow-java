@@ -1,6 +1,7 @@
 package com.pth.iflow.workflow.bl.strategy.steps;
 
 import java.net.MalformedURLException;
+
 import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.iflow.common.exceptions.IFlowCustomeException;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
@@ -31,12 +32,11 @@ public class ValidateWorkflowTypeStepStrategyStep extends AbstractWorkflowSaveSt
     if (processingWorkflow.getCurrentStep() == null) {
 
       throw new IFlowCustomeException("Unknown processingWorkflow step id:" + processingWorkflow.getId(),
-                                      EIFlowErrorType.UNKNOWN_WORKFLOW_TYPE_STEP);
+          EIFlowErrorType.UNKNOWN_WORKFLOW_TYPE_STEP);
     }
 
     this.getWorkflowSaveStrategy().validateCurrentStepExistsInWorkflowType(processingWorkflow, processingWorkflowType);
 
-    processNextStepIfExists();
   }
 
   private void setWorkflowCurrectStep(final Workflow workflow, final WorkflowType workflowType) {
@@ -49,6 +49,11 @@ public class ValidateWorkflowTypeStepStrategyStep extends AbstractWorkflowSaveSt
       }
     }
 
+  }
+
+  @Override
+  public boolean shouldProcess() {
+    return true;
   }
 
 }

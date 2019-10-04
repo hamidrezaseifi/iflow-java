@@ -8,9 +8,9 @@ import com.pth.iflow.workflow.bl.strategy.strategies.AbstractWorkflowSaveStrateg
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.Workflow;
 
-public class ChangeWorkflowOfferStatusToAssignForWorkflowInCoreStep extends AbstractWorkflowSaveStrategyStep {
+public class ChangeWorkflowOfferStatusToCloseForWorkflowInCoreStep extends AbstractWorkflowSaveStrategyStep {
 
-  public ChangeWorkflowOfferStatusToAssignForWorkflowInCoreStep(final AbstractWorkflowSaveStrategy workflowSaveStrategy) {
+  public ChangeWorkflowOfferStatusToCloseForWorkflowInCoreStep(final AbstractWorkflowSaveStrategy workflowSaveStrategy) {
     super(workflowSaveStrategy);
 
   }
@@ -22,7 +22,11 @@ public class ChangeWorkflowOfferStatusToAssignForWorkflowInCoreStep extends Abst
 
     this.getWorkflowSaveStrategy().changeWorkflowMessageStatus(processingWorkflow.getId(), EWorkflowMessageStatus.CLOSED);
 
-    processNextStepIfExists();
+  }
+
+  @Override
+  public boolean shouldProcess() {
+    return true;
   }
 
 }

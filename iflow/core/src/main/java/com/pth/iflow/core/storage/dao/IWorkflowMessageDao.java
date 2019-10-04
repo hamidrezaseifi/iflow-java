@@ -17,8 +17,7 @@ public interface IWorkflowMessageDao {
 
   public List<WorkflowMessage> getNotExpiredListByUserId(final Long userId, Integer status) throws IFlowStorageException;
 
-  public List<WorkflowMessage> getListByWorkflowId(final Long workflowId, final Long lastid, Integer status)
-      throws IFlowStorageException;
+  public List<WorkflowMessage> getListByWorkflowId(final Long workflowId) throws IFlowStorageException;
 
   void deleteWorkflowMessage(final Long messageId) throws IFlowStorageException;
 

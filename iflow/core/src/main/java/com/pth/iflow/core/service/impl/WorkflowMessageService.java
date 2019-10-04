@@ -55,10 +55,9 @@ public class WorkflowMessageService implements IWorkflowMessageService {
   }
 
   @Override
-  public List<WorkflowMessage> getListByWorkflowId(final Long workflowId, final Long lastid, final Integer status)
-      throws IFlowStorageException {
+  public List<WorkflowMessage> getListByWorkflowId(final Long workflowId) throws IFlowStorageException {
 
-    return this.workflowMessageDao.getListByWorkflowId(workflowId, lastid, status);
+    return this.workflowMessageDao.getListByWorkflowId(workflowId);
   }
 
   @Override

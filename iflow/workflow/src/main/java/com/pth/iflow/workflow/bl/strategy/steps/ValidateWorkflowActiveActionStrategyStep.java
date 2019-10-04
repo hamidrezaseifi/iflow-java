@@ -1,6 +1,7 @@
 package com.pth.iflow.workflow.bl.strategy.steps;
 
 import java.net.MalformedURLException;
+
 import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.iflow.common.exceptions.IFlowCustomeException;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
@@ -22,11 +23,15 @@ public class ValidateWorkflowActiveActionStrategyStep extends AbstractWorkflowSa
 
     if (processingWorkflow.hasActiveAction() == false) {
       throw new IFlowCustomeException("The workflow has no active action id:" + processingWorkflow.getId(),
-                                      EIFlowErrorType.INVALID_WORKFLOW_STATUS);
+          EIFlowErrorType.INVALID_WORKFLOW_STATUS);
 
     }
 
-    processNextStepIfExists();
+  }
+
+  @Override
+  public boolean shouldProcess() {
+    return true;
   }
 
 }

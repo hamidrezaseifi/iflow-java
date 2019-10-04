@@ -2,14 +2,16 @@ package com.pth.iflow.workflow.bl.strategy.steps;
 
 import java.net.MalformedURLException;
 
+import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.strategy.strategies.AbstractWorkflowSaveStrategy;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.Workflow;
+import com.pth.iflow.workflow.models.WorkflowSaveRequest;
 
-public class SendWorkflowOffersToProfileStep extends AbstractWorkflowSaveStrategyStep {
+public class ChangeWorkflowOfferStatusToAssignForUserInCoreStep extends AbstractWorkflowSaveStrategyStep {
 
-  public SendWorkflowOffersToProfileStep(final AbstractWorkflowSaveStrategy workflowSaveStrategy) {
+  public ChangeWorkflowOfferStatusToAssignForUserInCoreStep(final AbstractWorkflowSaveStrategy workflowSaveStrategy) {
     super(workflowSaveStrategy);
 
   }
@@ -17,10 +19,12 @@ public class SendWorkflowOffersToProfileStep extends AbstractWorkflowSaveStrateg
   @Override
   public void process() throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    final Long companyId = this.getWorkflowSaveStrategy().getProcessingWorkflowType().getCompanyId();
     final Workflow processingWorkflow = this.getWorkflowSaveStrategy().getSavedSingleWorkflow();
+    final WorkflowSaveRequest processingWorkflowSaveRequest = this.getWorkflowSaveStrategy().getProcessingWorkflowSaveRequest();
 
-    this.getWorkflowSaveStrategy().resetWorkflowtCachData(companyId, processingWorkflow.getId());
+    final Long userId = processingWorkflowSaveRequest.getAssigns().get(0).getItemId();
+
+    this.getWorkflowSaveStrategy().changeUserWorkflowMessageStatus(processingWorkflow.getId(), userId, EWorkflowMessageStatus.CLOSED);
 
   }
 

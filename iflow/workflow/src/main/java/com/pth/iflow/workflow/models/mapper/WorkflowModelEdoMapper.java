@@ -303,6 +303,7 @@ public class WorkflowModelEdoMapper {
     edo.setViewName(model.getViewName());
     edo.setTitle(model.getTitle());
     edo.setComments(model.getComments());
+    edo.setExpireDays(model.getExpireDays());
     edo.setStatus(model.getStatus());
     edo.setId(model.getId());
     edo.setWorkflowTypeId(model.getWorkflowTypeId());
@@ -320,6 +321,7 @@ public class WorkflowModelEdoMapper {
     model.setViewName(edo.getViewName());
     model.setTitle(edo.getTitle());
     model.setComments(edo.getComments());
+    model.setExpireDays(edo.getExpireDays());
     model.setStatus(edo.getStatus());
     model.setVersion(edo.getVersion());
     model.setId(edo.getId());

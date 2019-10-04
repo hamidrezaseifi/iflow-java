@@ -72,12 +72,18 @@ public class IflowRestPaths {
     public static final String WORKFLOW_SEARCH                                     = "/workflow/search";
 
     public static final String WORKFLOWMESSAGE_READ_BY_USER                        = "/workflowmessage/user/{userid}/{status}";
+    public static final String WORKFLOWMESSAGE_READ_BY_WORKFLOW                    = "/workflowmessage/workflow/{workflowid}";
     public static final String WORKFLOWMESSAGE_SAVE                                = "/workflowmessage/save";
     public static final String WORKFLOWMESSAGE_CHANGE_WORKFLOWMESSAGE_STAUS        = "/workflowmessage/changestatus/{workflowid}/{status}";
 
     public static URI READ_WORKFLOWMESSAGE_READ_BY_USER(final Long userid, final int status) {
       final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOWMESSAGE_READ_BY_USER);
       return builder.build(userid, status);
+    }
+
+    public static URI READ_WORKFLOWMESSAGE_READ_BY_WORKFLOW(final Long workflowid) {
+      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOWMESSAGE_READ_BY_WORKFLOW);
+      return builder.build(workflowid);
     }
 
     public static URI SAVE_WORKFLOWMESSAGE() {
@@ -317,6 +323,7 @@ public class IflowRestPaths {
     public static final String CACHDATA_ADD_USER_WORKFLOWMESSAGELIST  = "/cachdata/user/addworkflowmessagelist/{companyid}/{userid}";
     public static final String CACHDATA_CAL_USER_DATARESET            = "/cachdata/user/datareset/{companyid}/{userid}";
     public static final String CACHDATA_CAL_USERLIST_DATARESET        = "/cachdata/userlist/datareset/{companyid}";
+    public static final String CACHDATA_CAL_WORKFLOW_DATARESET        = "/cachdata/user/datareset/{companyid}/{workflowid}";
 
     public static URI READ_COMPANY_BY_ID_URIBUILDER(final Long id) {
       final IflowUriBuilder builder = new IflowUriBuilder(COMPANY_READ_BY_ID);
@@ -386,6 +393,11 @@ public class IflowRestPaths {
     public static URI CAL_CACHDATA_USERLIST_DATARESET(final Long companyid) {
       final IflowUriBuilder builder = new IflowUriBuilder(CACHDATA_CAL_USERLIST_DATARESET);
       return builder.build(companyid);
+    }
+
+    public static URI CAL_CACHDATA_WORKFLOW_DATARESET(final Long companyid, final Long workflowid) {
+      final IflowUriBuilder builder = new IflowUriBuilder(CACHDATA_CAL_WORKFLOW_DATARESET);
+      return builder.build(companyid, workflowid);
     }
 
     public static URI READ_PROFILE_TOKENINFO() {

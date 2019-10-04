@@ -243,6 +243,7 @@ public class TestDataProducer {
     model.setStepIndex(1);
     model.setComments("comments");
     model.setViewName("viewName");
+    model.setExpireDays(15);
 
     return model;
   }
@@ -257,6 +258,7 @@ public class TestDataProducer {
     model.setStepIndex(index);
     model.setComments("comments");
     model.setViewName("viewName");
+    model.setExpireDays(15);
 
     return model;
   }

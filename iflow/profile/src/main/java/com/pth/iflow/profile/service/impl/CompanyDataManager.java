@@ -6,8 +6,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.profile.exceptions.ProfileCustomizedException;
 import com.pth.iflow.profile.model.CompanyCachData;
@@ -19,7 +21,7 @@ import com.pth.iflow.profile.service.IWorkflowMessageService;
 @Service
 public class CompanyDataManager implements ICompanyCachDataManager {
 
-  private final IWorkflowMessageService workflowMessageService;
+  private final IWorkflowMessageService    workflowMessageService;
 
   private final Map<Long, CompanyCachData> companiesCachData = new HashMap<>();
 
@@ -40,20 +42,15 @@ public class CompanyDataManager implements ICompanyCachDataManager {
   }
 
   @Override
-  public void addWorkflowMessage(final Long companyId, final Long userId, final WorkflowMessage workflowMessage) {
-    this.getUserCachData(companyId, userId).addWorkflowMessage(workflowMessage);
+  public void setUserWorkflowMessages(final Long companyId, final Long userId, final List<WorkflowMessage> workflowMessageList) {
+    this.getUserCachData(companyId, userId).setWorkflowMessageList(workflowMessageList);
 
   }
 
-  @Override
-  public void setWorkflowMessages(final Long companyId, final Long userId, final List<WorkflowMessage> workflowMessageList) {
-    this.getUserCachData(companyId, userId).setWorkflowMessages(workflowMessageList);
+  public void setWorkflowWorkflowMessages(final Long companyId, final Long workflowId,
+      final List<WorkflowMessage> workflowMessageList) {
+    this.getCompanyCachData(companyId, true).setWorkflowWorkflowMessages(workflowId, workflowMessageList);
 
-  }
-
-  @Override
-  public void addWorkflowMessageList(final Long companyId, final Long userId, final List<WorkflowMessage> workflowMessageList) {
-    this.getUserCachData(companyId, userId).addWorkflowMessageList(workflowMessageList);
   }
 
   @Override
@@ -63,19 +60,30 @@ public class CompanyDataManager implements ICompanyCachDataManager {
   }
 
   @Override
-  public void resetUserData(final Long compnayId, final Long userId) throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+  public void resetUserData(final Long compnayId, final Long userId)
+      throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     final List<WorkflowMessage> messageList = this.workflowMessageService.getWorkflowMessageListByUser(userId);
 
-    this.setWorkflowMessages(compnayId, userId, messageList);
+    this.setUserWorkflowMessages(compnayId, userId, messageList);
   }
 
   @Override
-  public void resetUserListData(final Long compnayId, final Set<Long> userIdList) throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+  public void resetWorkflowData(final Long compnayId, final Long workflowId)
+      throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+    final List<WorkflowMessage> messageList = this.workflowMessageService.getWorkflowMessageListByWorkflow(workflowId);
+
+    this.setWorkflowWorkflowMessages(compnayId, workflowId, messageList);
+
+  }
+
+  @Override
+  public void resetUserListData(final Long compnayId, final Set<Long> userIdList)
+      throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     for (final Long userId : userIdList) {
       final List<WorkflowMessage> messageList = this.workflowMessageService.getWorkflowMessageListByUser(userId);
 
-      this.setWorkflowMessages(compnayId, userId, messageList);
+      this.setUserWorkflowMessages(compnayId, userId, messageList);
     }
   }
 

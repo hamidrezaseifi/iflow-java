@@ -9,6 +9,7 @@ public class GuiWorkflowTypeStep extends DataModelBase {
   private String  title;
   private Integer stepIndex;
   private String  viewName;
+  private Integer expireDays;
   private String  comments;
   private Integer status;
   private Integer version;
@@ -96,6 +97,14 @@ public class GuiWorkflowTypeStep extends DataModelBase {
 
   public boolean isTheSameStep(final GuiWorkflowTypeStep other) {
     return this.stepIndex == other.getStepIndex();
+  }
+
+  public Integer getExpireDays() {
+    return this.expireDays;
+  }
+
+  public void setExpireDays(final Integer expireDays) {
+    this.expireDays = expireDays;
   }
 
 }

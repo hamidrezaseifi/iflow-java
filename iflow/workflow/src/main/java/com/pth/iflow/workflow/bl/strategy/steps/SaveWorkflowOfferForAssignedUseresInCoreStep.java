@@ -23,7 +23,11 @@ public class SaveWorkflowOfferForAssignedUseresInCoreStep extends AbstractWorkfl
       this.getWorkflowSaveStrategy().createWorkflowMessage(processingWorkflow.getId(), processingWorkflow.getCreatedBy(), userId);
     }
 
-    processNextStepIfExists();
+  }
+
+  @Override
+  public boolean shouldProcess() {
+    return true;
   }
 
 }

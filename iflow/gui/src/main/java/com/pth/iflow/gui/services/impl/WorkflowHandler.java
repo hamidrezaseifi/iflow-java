@@ -133,7 +133,7 @@ public class WorkflowHandler implements IWorkflowHandler {
       workflow.getActiveAction().setCurrentStepId(workflow.getCurrentStepId());
     }
 
-    final GuiWorkflowSaveRequest request = GuiWorkflowSaveRequest.generateNew(workflow);
+    final GuiWorkflowSaveRequest request = GuiWorkflowSaveRequest.generateNewNoExpireDays(workflow);
     request.setCommand(EWorkflowProcessCommand.SAVE);
 
     final GuiWorkflow result = this.workflowAccess.saveWorkflow(request, this.sessionUserInfo.getToken());
@@ -147,7 +147,7 @@ public class WorkflowHandler implements IWorkflowHandler {
 
     final GuiWorkflow workflow = this.readWorkflow(workflowId);
 
-    final GuiWorkflowSaveRequest request = GuiWorkflowSaveRequest.generateNew(workflow);
+    final GuiWorkflowSaveRequest request = GuiWorkflowSaveRequest.generateNewNoExpireDays(workflow);
     request.setCommand(EWorkflowProcessCommand.ASSIGN);
     request.setAssignUser(this.sessionUserInfo.getUser().getId());
 
@@ -157,16 +157,13 @@ public class WorkflowHandler implements IWorkflowHandler {
   }
 
   @Override
-  public GuiWorkflow doneWorkflow(final GuiWorkflow workflow, final HttpSession session)
+  public GuiWorkflow doneWorkflow(final GuiWorkflowSaveRequest saveRequest, final HttpSession session)
       throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
     logger.debug("Make workflow done");
 
-    workflow.getActiveAction().setCurrentStepId(workflow.getCurrentStepId());
+    saveRequest.setCommand(EWorkflowProcessCommand.DONE);
 
-    final GuiWorkflowSaveRequest request = GuiWorkflowSaveRequest.generateNew(workflow);
-    request.setCommand(EWorkflowProcessCommand.DONE);
-
-    final GuiWorkflow result = this.workflowAccess.saveWorkflow(request, this.sessionUserInfo.getToken());
+    final GuiWorkflow result = this.workflowAccess.saveWorkflow(saveRequest, this.sessionUserInfo.getToken());
     return this.prepareWorkflow(result);
   }
 
@@ -175,7 +172,7 @@ public class WorkflowHandler implements IWorkflowHandler {
       throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
     logger.debug("Make workflow archive");
 
-    final GuiWorkflowSaveRequest request = GuiWorkflowSaveRequest.generateNew(workflow);
+    final GuiWorkflowSaveRequest request = GuiWorkflowSaveRequest.generateNewNoExpireDays(workflow);
     request.setCommand(EWorkflowProcessCommand.ARCHIVE);
 
     final GuiWorkflow result = this.workflowAccess.saveWorkflow(request, this.sessionUserInfo.getToken());

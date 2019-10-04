@@ -100,7 +100,7 @@ public class WorkflowMessageDaoTest extends TestDataProducer {
 
     createWorlflowList();
 
-    final List<WorkflowMessage> resList = this.workflowMessageDao.getListByWorkflowId(createdModels.get(0).getWorkflowId(), 0L, 0);
+    final List<WorkflowMessage> resList = this.workflowMessageDao.getListByWorkflowId(createdModels.get(0).getWorkflowId());
 
     Assert.assertNotNull("Result list is not null!", resList);
 

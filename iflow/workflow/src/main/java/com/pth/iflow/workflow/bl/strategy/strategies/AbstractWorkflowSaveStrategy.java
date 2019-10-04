@@ -39,9 +39,9 @@ public abstract class AbstractWorkflowSaveStrategy implements IWorkflowSaveStrat
   private final IWorkflowDataService              workflowDataService;
 
   protected final WorkflowSaveRequest             processingWorkflowSaveRequest;
-  protected final WorkflowType                    processingWorkflowType;
   protected final String                          token;
   protected final WorkflowAction                  activeAction;
+  protected final Workflow                        existsingWorkflow;
 
   protected final List<IWorkflowSaveStrategyStep> steps               = new ArrayList<>();
 
@@ -53,7 +53,8 @@ public abstract class AbstractWorkflowSaveStrategy implements IWorkflowSaveStrat
 
   public AbstractWorkflowSaveStrategy(final WorkflowSaveRequest workflowCreateRequest, final String token,
       final IDepartmentDataService departmentDataService, final IWorkflowMessageDataService workflowMessageDataService,
-      final IProfileCachDataDataService profileCachDataDataService, final IWorkflowDataService workflowDataService) {
+      final IProfileCachDataDataService profileCachDataDataService, final IWorkflowDataService workflowDataService)
+      throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     super();
     this.processingWorkflowSaveRequest = workflowCreateRequest;
     this.token = token;
@@ -61,13 +62,12 @@ public abstract class AbstractWorkflowSaveStrategy implements IWorkflowSaveStrat
     this.workflowMessageDataService = workflowMessageDataService;
     this.workflowDataService = workflowDataService;
     this.profileCachDataDataService = profileCachDataDataService;
-    this.processingWorkflowType = workflowCreateRequest.getWorkflow().getWorkflowType();
     this.activeAction = workflowCreateRequest.getWorkflow().getActiveAction();
-    this.setup();
-  }
 
-  public WorkflowType getWorkflowType() {
-    return processingWorkflowType;
+    this.existsingWorkflow = getProcessingWorkflow().isNew() ? null
+        : workflowDataService.getById(getProcessingWorkflow().getId(), token);
+
+    this.setup();
   }
 
   public String getToken() {
@@ -102,10 +102,22 @@ public abstract class AbstractWorkflowSaveStrategy implements IWorkflowSaveStrat
     getWorkflowMessageDataService().changeWorkflowMessageStatus(workflowId, status, this.getToken());
   }
 
+  public void changeUserWorkflowMessageStatus(final Long workflowId, final Long userId, final EWorkflowMessageStatus status)
+      throws MalformedURLException, IFlowMessageConversionFailureException {
+
+    getWorkflowMessageDataService().changeWorkflowMessageStatus(workflowId, status, this.getToken());
+  }
+
   public void resetUserListCachData(final Long companyId, final Set<Long> userIdList)
       throws MalformedURLException, IFlowMessageConversionFailureException {
 
     profileCachDataDataService.resetCachDataForUserList(companyId, userIdList, token);
+  }
+
+  public void resetWorkflowtCachData(final Long companyId, final Long workflowId)
+      throws MalformedURLException, IFlowMessageConversionFailureException {
+
+    profileCachDataDataService.resetCachDataForWorkflow(companyId, workflowId, token);
   }
 
   public Workflow saveWorkflow(final Workflow workflow)
@@ -259,7 +271,7 @@ public abstract class AbstractWorkflowSaveStrategy implements IWorkflowSaveStrat
   }
 
   public WorkflowType getProcessingWorkflowType() {
-    return processingWorkflowType;
+    return processingWorkflowSaveRequest.getWorkflow().getWorkflowType();
   }
 
   public IWorkflowDataService getWorkflowDataService() {
@@ -308,7 +320,15 @@ public abstract class AbstractWorkflowSaveStrategy implements IWorkflowSaveStrat
 
   @Override
   public void process() throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
-    this.getFirstStep().process();
+
+    for (int stepProcessIndex = 0; stepProcessIndex < steps.size(); stepProcessIndex++) {
+      final IWorkflowSaveStrategyStep processStep = steps.get(stepProcessIndex);
+
+      if (processStep.shouldProcess()) {
+        processStep.process();
+      }
+    }
+
   }
 
   @Override
@@ -319,5 +339,11 @@ public abstract class AbstractWorkflowSaveStrategy implements IWorkflowSaveStrat
   @Override
   public List<Workflow> getProceedWorkflowList() {
     return getSavedWorkflowList();
+  }
+
+  public boolean IsWorkflowCurrectStepChanged() {
+    final Workflow processingWorkflow = getProcessingWorkflow();
+
+    return existsingWorkflow == null || processingWorkflow.getCurrentStepId() != existsingWorkflow.getCurrentStepId();
   }
 }

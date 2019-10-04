@@ -111,9 +111,8 @@ public class WorkflowDataController extends GuiDataControllerBase {
 
     final GuiWorkflow newWorkflow = GuiWorkflow.generateInitial(this.getLoggedUser().getId());
 
-    final GuiWorkflowSaveRequest workflowReq = GuiWorkflowSaveRequest.generateNew(newWorkflow);
-    final int workflowmessageExpireDays = 15;
-    workflowReq.setExpireDays(workflowmessageExpireDays);
+    final GuiWorkflowSaveRequest workflowReq = GuiWorkflowSaveRequest.generateNewWihExpireDays(newWorkflow,
+        newWorkflow.getHasActiveAction() ? newWorkflow.getActiveAction().getCurrentStep().getExpireDays() : 15);
 
     map.put("users", userList);
     map.put("workflowTypes", workflowTypeList);
@@ -151,13 +150,14 @@ public class WorkflowDataController extends GuiDataControllerBase {
 
     final GuiWorkflow workflow = this.workflowHandler.readWorkflow(workflowId);
 
-    final GuiWorkflowType workflowType = this.getSessionUserInfo().getWorkflowTypeById(workflow.getWorkflowTypeId());
-
     final List<GuiDepartment> departmentList = this.getSessionUserInfo().getCompanyDepartments();
+
+    final GuiWorkflowSaveRequest saveRequest = GuiWorkflowSaveRequest.generateNewWihExpireDays(workflow,
+        workflow.getActiveAction().getCurrentStep().getExpireDays());
 
     map.put("users", userList);
     map.put("workflow", workflow);
-    map.put("workflowType", workflowType);
+    map.put("saveRequest", saveRequest);
     map.put("departments", departmentList);
 
     return map;
@@ -232,10 +232,10 @@ public class WorkflowDataController extends GuiDataControllerBase {
   @ResponseStatus(HttpStatus.CREATED)
   @PostMapping(path = { "/workflow/done" })
   @ResponseBody
-  public void makeDoneWorkflow(@RequestBody final GuiWorkflow workflow, final HttpSession session)
+  public void makeDoneWorkflow(@RequestBody final GuiWorkflowSaveRequest saveRequest, final HttpSession session)
       throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
 
-    this.workflowHandler.doneWorkflow(workflow, session);
+    this.workflowHandler.doneWorkflow(saveRequest, session);
 
   }
 
