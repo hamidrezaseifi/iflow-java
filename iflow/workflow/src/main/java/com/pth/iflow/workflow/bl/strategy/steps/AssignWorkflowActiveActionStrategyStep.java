@@ -35,6 +35,11 @@ public class AssignWorkflowActiveActionStrategyStep extends AbstractWorkflowSave
 
     final WorkflowType processingWorkflowType = this.getWorkflowSaveStrategy().getProcessingWorkflowType();
     final WorkflowSaveRequest processingWorkflowSaveRequest = this.getWorkflowSaveStrategy().getProcessingWorkflowSaveRequest();
+    final Workflow processingWorkflow = this.getWorkflowSaveStrategy().getProcessingWorkflow();
+
+    if (processingWorkflowSaveRequest.isDoneCommand()) {
+      return this.getWorkflowSaveStrategy().IsWorkflowCurrectStepChanged() && processingWorkflow.hasActiveAction();
+    }
 
     return processingWorkflowType.isAssignTypeManual() || processingWorkflowSaveRequest.isAssignCommand();
   }

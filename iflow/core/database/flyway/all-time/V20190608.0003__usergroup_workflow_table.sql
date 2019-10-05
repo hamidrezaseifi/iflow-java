@@ -150,7 +150,7 @@ CREATE TABLE `workflow_type` (
   `company_id` int(11) NOT NULL,
   `workflow_base_type` int(11) NOT NULL DEFAULT '0',
   `title` varchar(200) NOT NULL,
-  `manual_assign` smallint(2) NOT NULL DEFAULT '0',
+  `assign_type` SMALLINT(2) NOT NULL DEFAULT 1,
   `send_to_controller` smallint(2) NOT NULL DEFAULT '1',
   `increase_step_automatic` smallint(2) DEFAULT '0',
   `allow_assign` smallint(2) DEFAULT '0',

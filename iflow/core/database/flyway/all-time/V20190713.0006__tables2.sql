@@ -42,16 +42,20 @@ CREATE TABLE `invoice_workflow` (
   PRIMARY KEY (`workflow_id`)
 ) ENGINE=InnoDB;
 
-ALTER TABLE `iflow`.`workflow_type` 
-CHANGE COLUMN `manual_assign` `assign_type` SMALLINT(2) NOT NULL DEFAULT 1 ;
 
+INSERT INTO `workflow_type`(id, company_id, workflow_base_type, title, assign_type, send_to_controller, increase_step_automatic, allow_assign, commecnts, status, version) VALUES (1,1,0,'Einzel Aufgabe',1,1,1,0,NULL,1,1);
+INSERT INTO `workflow_type`(id, company_id, workflow_base_type, title, assign_type, send_to_controller, increase_step_automatic, allow_assign, commecnts, status, version) VALUES (2,1,0,'Drei Schritt Aufgabe',2,0,1,1,NULL,1,1);
+INSERT INTO `workflow_type`(id, company_id, workflow_base_type, title, assign_type, send_to_controller, increase_step_automatic, allow_assign, commecnts, status, version) VALUES (3,1,0,'Rechnung Wrokflow',2,0,1,1,NULL,1,1);
 
-UPDATE `iflow`.`workflow_type` SET `assign_type` = '1' WHERE (`id` = '1');
-UPDATE `iflow`.`workflow_type` SET `assign_type` = '1' WHERE (`id` = '2');
+INSERT INTO `workflow_type_step`(id, workflow_type_id, title, step_index, view_name, expire_days, commecnts, status, version) VALUES (1,1,'Augabe',1,'workflow/edit',15,NULL,1,1);
 
-INSERT INTO `workflow_type` VALUES (3,1,0,'Rechnung Wrokflow',2,0,1,1,NULL,1,1,'2019-09-22 16:57:54.654451','2019-09-22 16:57:54.654451');
+INSERT INTO `workflow_type_step`(id, workflow_type_id, title, step_index, view_name, expire_days, commecnts, status, version) VALUES (2,2,'Schritt 1',1,'workflow/edit',15,NULL,1,1);
+INSERT INTO `workflow_type_step`(id, workflow_type_id, title, step_index, view_name, expire_days, commecnts, status, version) VALUES (3,2,'Schritt 2',2,'workflow/edit',15,NULL,1,1);
+INSERT INTO `workflow_type_step`(id, workflow_type_id, title, step_index, view_name, expire_days, commecnts, status, version) VALUES (4,2,'Schritt 3',3,'workflow/edit',15,NULL,1,1);
 
-INSERT INTO `workflow_type_step` VALUES (7,3,'Rechungsverteilung',1,'workflow/invoce/invoice_assign',NULL,1,1,'2019-09-22 17:04:52.329953','2019-09-22 17:04:52.329953'),(8,3,'Rechungsprüfung ',2,'workflow/invoce/invoice_testing',NULL,1,1,'2019-09-22 17:04:52.331101','2019-09-22 17:04:52.331101'),(9,3,'Rechungsfreigabe ',3,'workflow/invoce/invoice_release',NULL,1,1,'2019-09-22 17:04:52.331350','2019-09-22 17:04:52.331350');
+INSERT INTO `workflow_type_step`(id, workflow_type_id, title, step_index, view_name, expire_days, commecnts, status, version) VALUES (5,3,'Rechungsverteilung',1,'workflow/invoce/invoice_assign',15,NULL,1,1);
+INSERT INTO `workflow_type_step`(id, workflow_type_id, title, step_index, view_name, expire_days, commecnts, status, version) VALUES (6,3,'Rechungsprüfung',2,'workflow/invoce/invoice_testing',15,NULL,1,1);
+INSERT INTO `workflow_type_step`(id, workflow_type_id, title, step_index, view_name, expire_days, commecnts, status, version) VALUES (7,3,'Rechungsfreigabe',3,'workflow/invoce/invoice_release',15,NULL,1,1);
 
 CREATE TABLE `workflow_message` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -72,5 +76,5 @@ CREATE TABLE `workflow_message` (
   CONSTRAINT `FK_WORKFLOWOFFER_WORKFLOW` FOREIGN KEY (`workflow_id`) REFERENCES `workflow` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
 ) ENGINE=InnoDB;
 
-INSERT INTO `iflow`.`workflow_message` (`workflow_id`, `user_id`, `created_by`, `status`, `expire_days`) VALUES ('2', '1', '1', '1', '10'), ('3', '1', '1', '1', '20');
+
 
