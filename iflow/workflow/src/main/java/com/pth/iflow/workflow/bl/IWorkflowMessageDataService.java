@@ -19,4 +19,7 @@ public interface IWorkflowMessageDataService {
   public void changeWorkflowMessageStatus(final Long workflowId, final EWorkflowMessageStatus status, String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
+  public void changeUserAndWorkflowMessageStatus(final Long workflowId, final Long userId, final EWorkflowMessageStatus status,
+      String token) throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
+
 }

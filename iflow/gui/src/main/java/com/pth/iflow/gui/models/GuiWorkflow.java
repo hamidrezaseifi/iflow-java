@@ -287,6 +287,13 @@ public class GuiWorkflow {
     return (this.status == EWorkflowStatus.ASSIGNED);
   }
 
+  public String getAssignToUserFullName() {
+    if (this.getHasActiveAction()) {
+      return this.getActiveAction().getAssignToUserName();
+    }
+    return "";
+  }
+
   public static GuiWorkflow generateInitial(final Long creatorId) {
     final GuiWorkflow newWorkflow = new GuiWorkflow();
     newWorkflow.setStatus(EWorkflowStatus.INITIALIZE);

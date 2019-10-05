@@ -74,7 +74,7 @@ public class WorkflowMessageDaoTest extends TestDataProducer {
     createWorlflowList();
 
     WorkflowMessage workflowMessage = createdModels.get(0);
-    this.workflowMessageDao.updateStatusByWorkflow(workflowMessage.getWorkflowId(), EWorkflowMessageStatus.CLOSED.getValue());
+    this.workflowMessageDao.updateStatusByWorkflow(workflowMessage.getWorkflowId(), EWorkflowMessageStatus.CLOSED);
     workflowMessage = workflowMessageDao.getById(workflowMessage.getId());
 
     Assert.assertNotNull("Result is not null!", workflowMessage);

@@ -102,10 +102,10 @@ public abstract class AbstractWorkflowSaveStrategy implements IWorkflowSaveStrat
     getWorkflowMessageDataService().changeWorkflowMessageStatus(workflowId, status, this.getToken());
   }
 
-  public void changeUserWorkflowMessageStatus(final Long workflowId, final Long userId, final EWorkflowMessageStatus status)
+  public void changeUserAndWorkflowMessageStatus(final Long workflowId, final Long userId, final EWorkflowMessageStatus status)
       throws MalformedURLException, IFlowMessageConversionFailureException {
 
-    getWorkflowMessageDataService().changeWorkflowMessageStatus(workflowId, status, this.getToken());
+    getWorkflowMessageDataService().changeUserAndWorkflowMessageStatus(workflowId, userId, status, this.getToken());
   }
 
   public void resetUserListCachData(final Long companyId, final Set<Long> userIdList)

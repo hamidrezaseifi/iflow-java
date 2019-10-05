@@ -29,6 +29,11 @@ public class SaveWorkflowOfferForAssignedUseresInCoreStep extends AbstractWorkfl
   @Override
   public boolean shouldProcess() {
     final WorkflowType processingWorkflowType = this.getWorkflowSaveStrategy().getProcessingWorkflowType();
+    final Workflow processingWorkflow = this.getWorkflowSaveStrategy().getProcessingWorkflow();
+
+    if (processingWorkflow.isDone() || processingWorkflow.isArchived()) {
+      return false;
+    }
 
     return processingWorkflowType.isAssignTypeOffering();
   }

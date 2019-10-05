@@ -65,8 +65,20 @@ public class WorkflowMessageDataService implements IWorkflowMessageDataService {
     logger.debug("Save workflow message ");
 
     this.restTemplate.callRestGet(
-        this.moduleAccessConfig
-            .generateCoreUrl(IflowRestPaths.CoreModule.CHANGE_WORKFLOWMESSAGE_WORKFLOWMESSAGE_STAUS(workflowId, status.getValue())),
+        this.moduleAccessConfig.generateCoreUrl(
+            IflowRestPaths.CoreModule.CHANGE_WORKFLOWMESSAGE_WORKFLOWMESSAGE_STAUS(workflowId, 0L, status.getValue())),
+        token, EModule.CORE, Void.class, true);
+
+  }
+
+  @Override
+  public void changeUserAndWorkflowMessageStatus(final Long workflowId, final Long userId, final EWorkflowMessageStatus status,
+      final String token) throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+    logger.debug("Save workflow message ");
+
+    this.restTemplate.callRestGet(
+        this.moduleAccessConfig.generateCoreUrl(
+            IflowRestPaths.CoreModule.CHANGE_WORKFLOWMESSAGE_WORKFLOWMESSAGE_STAUS(workflowId, userId, status.getValue())),
         token, EModule.CORE, Void.class, true);
 
   }

@@ -182,6 +182,14 @@ public class Workflow extends DataModelBase {
     return this.getStatus() == EWorkflowStatus.OFFERING;
   }
 
+  public boolean isDone() {
+    return this.getStatus() == EWorkflowStatus.DONE;
+  }
+
+  public boolean isArchived() {
+    return this.getStatus() == EWorkflowStatus.ARCHIVED;
+  }
+
   @Override
   public boolean isNew() {
     return (this.getId() == null) || (this.getId() <= 0);

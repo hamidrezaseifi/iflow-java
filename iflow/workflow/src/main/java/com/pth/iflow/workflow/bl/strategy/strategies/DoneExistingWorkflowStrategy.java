@@ -8,6 +8,7 @@ import com.pth.iflow.workflow.bl.IProfileCachDataDataService;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.IWorkflowMessageDataService;
 import com.pth.iflow.workflow.bl.strategy.steps.AssignWorkflowActiveActionStrategyStep;
+import com.pth.iflow.workflow.bl.strategy.steps.ChangeWorkflowOfferStatusToCloseForWorkflowInCoreStep;
 import com.pth.iflow.workflow.bl.strategy.steps.CollectAssignedUserIdListStep;
 import com.pth.iflow.workflow.bl.strategy.steps.InitializeWorkflowActiveActionStrategyStep;
 import com.pth.iflow.workflow.bl.strategy.steps.PrepareDoneActiveActionStep;
@@ -16,6 +17,7 @@ import com.pth.iflow.workflow.bl.strategy.steps.SaveWorkflowOfferForAssignedUser
 import com.pth.iflow.workflow.bl.strategy.steps.SelectWorkflowNextStepStrategyStep;
 import com.pth.iflow.workflow.bl.strategy.steps.SelectWorkflowStatusStrategyStep;
 import com.pth.iflow.workflow.bl.strategy.steps.SendWorkflowOffersToProfileStep;
+import com.pth.iflow.workflow.bl.strategy.steps.ValidateAssignInSaveRequestStrategyStep;
 import com.pth.iflow.workflow.bl.strategy.steps.ValidateCurrentStepExistsInWorkflowTypeStrategyStep;
 import com.pth.iflow.workflow.bl.strategy.steps.ValidateWorkflowActiveActionStrategyStep;
 import com.pth.iflow.workflow.bl.strategy.steps.ValidateWorkflowAssignedUserStrategyStep;
@@ -38,6 +40,7 @@ public class DoneExistingWorkflowStrategy extends AbstractWorkflowSaveStrategy {
 
     steps.add(new ValidateWorkflowActiveActionStrategyStep(this));
     steps.add(new ValidateWorkflowAssignedUserStrategyStep(this));
+    steps.add(new ValidateAssignInSaveRequestStrategyStep(this));
     steps.add(new ValidateWorkflowTypeStepStrategyStep(this));
     steps.add(new ValidateCurrentStepExistsInWorkflowTypeStrategyStep(this));
     steps.add(new PrepareDoneActiveActionStep(this));
@@ -47,6 +50,7 @@ public class DoneExistingWorkflowStrategy extends AbstractWorkflowSaveStrategy {
     steps.add(new CollectAssignedUserIdListStep(this));
     steps.add(new AssignWorkflowActiveActionStrategyStep(this));
     steps.add(new SaveWorkflowInCoreStep(this));
+    steps.add(new ChangeWorkflowOfferStatusToCloseForWorkflowInCoreStep(this));
     steps.add(new SaveWorkflowOfferForAssignedUseresInCoreStep(this));
     steps.add(new SendWorkflowOffersToProfileStep(this));
 

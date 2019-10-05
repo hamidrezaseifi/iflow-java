@@ -53,7 +53,7 @@ public class CollectAssignedUserIdListStep extends AbstractWorkflowSaveStrategyS
   public boolean shouldProcess() {
 
     return this.getWorkflowSaveStrategy().IsWorkflowCurrectStepChanged()
-        && this.getWorkflowSaveStrategy().getProcessingWorkflowSaveRequest().isCreateCommand();
+        || this.getWorkflowSaveStrategy().getProcessingWorkflowSaveRequest().isCreateCommand();
   }
 
 }

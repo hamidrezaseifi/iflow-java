@@ -7,7 +7,9 @@ import com.pth.iflow.common.exceptions.IFlowCustomeException;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.strategy.strategies.AbstractWorkflowSaveStrategy;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
+import com.pth.iflow.workflow.models.Workflow;
 import com.pth.iflow.workflow.models.WorkflowSaveRequest;
+import com.pth.iflow.workflow.models.WorkflowType;
 
 public class ValidateAssignInSaveRequestStrategyStep extends AbstractWorkflowSaveStrategyStep {
 
@@ -29,6 +31,15 @@ public class ValidateAssignInSaveRequestStrategyStep extends AbstractWorkflowSav
 
   @Override
   public boolean shouldProcess() {
+    final Workflow processingWorkflow = this.getWorkflowSaveStrategy().getProcessingWorkflow();
+    final WorkflowType processingWorkflowType = this.getWorkflowSaveStrategy().getProcessingWorkflowType();
+    final WorkflowSaveRequest processingWorkflowSaveRequest = this.getWorkflowSaveStrategy().getProcessingWorkflowSaveRequest();
+
+    if (processingWorkflowSaveRequest.isDoneCommand()) {
+      if (this.getWorkflowSaveStrategy().isLastStep(processingWorkflowType, processingWorkflow.getCurrentStep())) {
+        return false;
+      }
+    }
     return true;
   }
 

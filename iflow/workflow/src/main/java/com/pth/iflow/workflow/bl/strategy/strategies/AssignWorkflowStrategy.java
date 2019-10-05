@@ -8,7 +8,7 @@ import com.pth.iflow.workflow.bl.IProfileCachDataDataService;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.IWorkflowMessageDataService;
 import com.pth.iflow.workflow.bl.strategy.steps.AssignWorkflowActiveActionStrategyStep;
-import com.pth.iflow.workflow.bl.strategy.steps.ChangeWorkflowOfferStatusToAssignForUserInCoreStep;
+import com.pth.iflow.workflow.bl.strategy.steps.ChangeWorkflowOfferStatusToAssignForUserAndWorkflowInCoreStep;
 import com.pth.iflow.workflow.bl.strategy.steps.ChangeWorkflowOfferStatusToCloseForWorkflowInCoreStep;
 import com.pth.iflow.workflow.bl.strategy.steps.InitializeWorkflowActiveActionStrategyStep;
 import com.pth.iflow.workflow.bl.strategy.steps.InitializeWorkflowInitialActionStrategyStep;
@@ -44,7 +44,7 @@ public class AssignWorkflowStrategy extends AbstractWorkflowSaveStrategy {
     steps.add(new PrepareAssigningWorkflowStep(this));
     steps.add(new SaveWorkflowInCoreStep(this));
     steps.add(new ChangeWorkflowOfferStatusToCloseForWorkflowInCoreStep(this));
-    steps.add(new ChangeWorkflowOfferStatusToAssignForUserInCoreStep(this));
+    steps.add(new ChangeWorkflowOfferStatusToAssignForUserAndWorkflowInCoreStep(this));
     steps.add(new SendWorkflowOffersToProfileStep(this));
 
   }

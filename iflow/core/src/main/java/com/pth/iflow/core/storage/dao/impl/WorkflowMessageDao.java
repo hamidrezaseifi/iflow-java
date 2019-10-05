@@ -68,7 +68,7 @@ public class WorkflowMessageDao extends DaoBasicClass<WorkflowMessage> implement
   }
 
   @Override
-  public void updateStatusByWorkflow(final Long workflowId, final Integer status) throws IFlowStorageException {
+  public void updateStatusByWorkflow(final Long workflowId, final EWorkflowMessageStatus status) throws IFlowStorageException {
     final String sql = "UPDATE workflow_message SET status = ? WHERE workflow_id = ?";
 
     logger.debug("Updating WorkflowMessage ...");
@@ -77,8 +77,36 @@ public class WorkflowMessageDao extends DaoBasicClass<WorkflowMessage> implement
 
       jdbcTemplate.update(con -> {
         final PreparedStatement ps = con.prepareStatement(sql);
-        ps.setInt(1, status);
+        ps.setInt(1, status.getValue());
         ps.setLong(2, workflowId);
+
+        return ps;
+      });
+
+      commitTransaction(true, transactionStatus);
+
+    } catch (final Exception e) {
+      rollbackTransaction(true, transactionStatus);
+      logger.error("Unable to update WorkflowMessage: {}", e.toString(), e);
+      throw new IFlowStorageException(e.toString(), e);
+    }
+
+  }
+
+  @Override
+  public void updateStatusByWorkflowAndUser(final Long workflowId, final Long userid, final EWorkflowMessageStatus status)
+      throws IFlowStorageException {
+    final String sql = "UPDATE workflow_message SET status = ? WHERE workflow_id = ? and user_id = ?";
+
+    logger.debug("Updating WorkflowMessage ...");
+    final TransactionStatus transactionStatus = startTransaction(true);
+    try {
+
+      jdbcTemplate.update(con -> {
+        final PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, status.getValue());
+        ps.setLong(2, workflowId);
+        ps.setLong(3, userid);
 
         return ps;
       });
