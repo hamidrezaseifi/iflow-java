@@ -14,9 +14,9 @@ public interface IWorkflowMessageService {
 
   public WorkflowMessage getById(Long id) throws IFlowStorageException;
 
-  public List<WorkflowMessage> getListByUserId(final Long userId, Integer status) throws IFlowStorageException;
+  public List<WorkflowMessage> getNotClosedNotExpiredListByUserId(final Long userId) throws IFlowStorageException;
 
-  public List<WorkflowMessage> getListByWorkflowId(final Long workflowId) throws IFlowStorageException;
+  public List<WorkflowMessage> getNotClosedNotExpiredListByWorkflowId(final Long workflowId) throws IFlowStorageException;
 
   public void changeWorkflowMessageStatus(final Long workflowId, final EWorkflowMessageStatus status) throws IFlowStorageException;
 }

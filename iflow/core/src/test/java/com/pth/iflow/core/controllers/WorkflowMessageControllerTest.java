@@ -64,7 +64,7 @@ public class WorkflowMessageControllerTest extends TestDataProducer {
     final List<WorkflowMessage> modelList = getTestWorkflowMessageList();
     final WorkflowMessageListEdo modelListEdo = new WorkflowMessageListEdo(CoreModelEdoMapper.toWorkflowMessageEdoList(modelList));
 
-    when(this.workflowMessageService.getListByUserId(any(Long.class), any(Integer.class))).thenReturn(modelList);
+    when(this.workflowMessageService.getNotClosedNotExpiredListByUserId(any(Long.class))).thenReturn(modelList);
 
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelListEdo);
 
@@ -74,7 +74,7 @@ public class WorkflowMessageControllerTest extends TestDataProducer {
         .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(listAsXmlString));
 
-    verify(this.workflowMessageService, times(1)).getListByUserId(any(Long.class), any(Integer.class));
+    verify(this.workflowMessageService, times(1)).getNotClosedNotExpiredListByUserId(any(Long.class));
 
   }
 

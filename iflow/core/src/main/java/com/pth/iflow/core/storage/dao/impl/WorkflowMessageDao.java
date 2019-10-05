@@ -101,20 +101,17 @@ public class WorkflowMessageDao extends DaoBasicClass<WorkflowMessage> implement
   }
 
   @Override
-  public List<WorkflowMessage> getNotExpiredListByUserId(final Long userId, final Integer status) throws IFlowStorageException {
+  public List<WorkflowMessage> getNotClosedNotExpiredListByUserId(final Long userId) throws IFlowStorageException {
     logger.info("Dao read WorkflowMessage for user id: {}", userId);
 
     List<WorkflowMessage> list = new ArrayList<>();
-    final String sql = "SELECT * FROM workflow_message where user_id=? and TIMESTAMPDIFF(DAY, created_at, now()) < expire_days "
-        + (status > 0 ? " and status=?" : "");
+    final String sql = "SELECT * FROM workflow_message where user_id=? and TIMESTAMPDIFF(DAY, created_at, now()) < expire_days and status!=?";
 
     try {
       list = this.jdbcTemplate.query(con -> {
         final PreparedStatement ps = con.prepareStatement(sql);
         ps.setLong(1, userId);
-        if (status > 0) {
-          ps.setInt(2, status);
-        }
+        ps.setInt(2, EWorkflowMessageStatus.CLOSED.getValue());
 
         return ps;
 
@@ -132,16 +129,17 @@ public class WorkflowMessageDao extends DaoBasicClass<WorkflowMessage> implement
   }
 
   @Override
-  public List<WorkflowMessage> getListByWorkflowId(final Long workflowId) throws IFlowStorageException {
+  public List<WorkflowMessage> getNotClosedNotExpiredListByWorkflowId(final Long workflowId) throws IFlowStorageException {
     logger.info("Dao read WorkflowMessage for workflow id: {}", workflowId);
 
     List<WorkflowMessage> list = new ArrayList<>();
-    final String sql = "SELECT * FROM workflow_message where workflow_id=? ";
+    final String sql = "SELECT * FROM workflow_message where workflow_id=? and TIMESTAMPDIFF(DAY, created_at, now()) < expire_days and status!=?";
 
     try {
       list = this.jdbcTemplate.query(con -> {
         final PreparedStatement ps = con.prepareStatement(sql);
         ps.setLong(1, workflowId);
+        ps.setInt(2, EWorkflowMessageStatus.CLOSED.getValue());
 
         return ps;
 

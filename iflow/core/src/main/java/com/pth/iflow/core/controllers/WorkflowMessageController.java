@@ -38,11 +38,9 @@ public class WorkflowMessageController {
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.WORKFLOWMESSAGE_READ_BY_USER)
   public ResponseEntity<WorkflowMessageListEdo> readWorkflowMessage(@PathVariable(required = true) final Long userid,
-      @PathVariable(required = false) Integer status, final HttpServletRequest request) throws Exception {
+      @PathVariable(required = false) final Integer status, final HttpServletRequest request) throws Exception {
 
-    status = status == null ? 0 : status;
-
-    final List<WorkflowMessage> messageList = this.workflowMessageService.getListByUserId(userid, status);
+    final List<WorkflowMessage> messageList = this.workflowMessageService.getNotClosedNotExpiredListByUserId(userid);
 
     return ControllerHelper.createResponseEntity(request,
         new WorkflowMessageListEdo(CoreModelEdoMapper.toWorkflowMessageEdoList(messageList)), HttpStatus.OK);
@@ -53,7 +51,7 @@ public class WorkflowMessageController {
   public ResponseEntity<WorkflowMessageListEdo> readWorkflowMessageByWorkflow(@PathVariable(required = true) final Long workflowid,
       final HttpServletRequest request) throws Exception {
 
-    final List<WorkflowMessage> messageList = this.workflowMessageService.getListByWorkflowId(workflowid);
+    final List<WorkflowMessage> messageList = this.workflowMessageService.getNotClosedNotExpiredListByWorkflowId(workflowid);
 
     return ControllerHelper.createResponseEntity(request,
         new WorkflowMessageListEdo(CoreModelEdoMapper.toWorkflowMessageEdoList(messageList)), HttpStatus.OK);

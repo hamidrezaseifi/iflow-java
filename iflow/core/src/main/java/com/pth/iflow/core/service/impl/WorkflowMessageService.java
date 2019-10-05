@@ -49,15 +49,15 @@ public class WorkflowMessageService implements IWorkflowMessageService {
   }
 
   @Override
-  public List<WorkflowMessage> getListByUserId(final Long userId, final Integer status) throws IFlowStorageException {
+  public List<WorkflowMessage> getNotClosedNotExpiredListByUserId(final Long userId) throws IFlowStorageException {
 
-    return this.workflowMessageDao.getNotExpiredListByUserId(userId, status);
+    return this.workflowMessageDao.getNotClosedNotExpiredListByUserId(userId);
   }
 
   @Override
-  public List<WorkflowMessage> getListByWorkflowId(final Long workflowId) throws IFlowStorageException {
+  public List<WorkflowMessage> getNotClosedNotExpiredListByWorkflowId(final Long workflowId) throws IFlowStorageException {
 
-    return this.workflowMessageDao.getListByWorkflowId(workflowId);
+    return this.workflowMessageDao.getNotClosedNotExpiredListByWorkflowId(workflowId);
   }
 
   @Override
