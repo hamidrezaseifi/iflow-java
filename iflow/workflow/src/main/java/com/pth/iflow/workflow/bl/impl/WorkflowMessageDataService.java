@@ -60,25 +60,26 @@ public class WorkflowMessageDataService implements IWorkflowMessageDataService {
   }
 
   @Override
-  public void changeWorkflowMessageStatus(final Long workflowId, final EWorkflowMessageStatus status, final String token)
-      throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
-    logger.debug("Save workflow message ");
-
-    this.restTemplate.callRestGet(
-        this.moduleAccessConfig.generateCoreUrl(
-            IflowRestPaths.CoreModule.CHANGE_WORKFLOWMESSAGE_WORKFLOWMESSAGE_STAUS(workflowId, 0L, status.getValue())),
-        token, EModule.CORE, Void.class, true);
-
-  }
-
-  @Override
-  public void changeUserAndWorkflowMessageStatus(final Long workflowId, final Long userId, final EWorkflowMessageStatus status,
+  public void updateWorkflowMessageStatus(final Long workflowId, final Long stepId, final EWorkflowMessageStatus status,
       final String token) throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     logger.debug("Save workflow message ");
 
     this.restTemplate.callRestGet(
         this.moduleAccessConfig.generateCoreUrl(
-            IflowRestPaths.CoreModule.CHANGE_WORKFLOWMESSAGE_WORKFLOWMESSAGE_STAUS(workflowId, userId, status.getValue())),
+            IflowRestPaths.CoreModule.CHANGE_WORKFLOWMESSAGE_WORKFLOWMESSAGE_STAUS(workflowId, stepId, 0L, status.getValue())),
+        token, EModule.CORE, Void.class, true);
+
+  }
+
+  @Override
+  public void updateUserAndWorkflowMessageStatus(final Long workflowId, final Long stepId, final Long userId,
+      final EWorkflowMessageStatus status, final String token)
+      throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+    logger.debug("Save workflow message ");
+
+    this.restTemplate.callRestGet(
+        this.moduleAccessConfig.generateCoreUrl(
+            IflowRestPaths.CoreModule.CHANGE_WORKFLOWMESSAGE_WORKFLOWMESSAGE_STAUS(workflowId, stepId, userId, status.getValue())),
         token, EModule.CORE, Void.class, true);
 
   }

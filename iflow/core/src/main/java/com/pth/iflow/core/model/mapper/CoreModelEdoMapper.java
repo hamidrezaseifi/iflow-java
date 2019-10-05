@@ -80,6 +80,7 @@ public class CoreModelEdoMapper {
     model.setMessageType(EWorkflowMessageType.ofValue(edo.getMessageType()));
     model.setExpireDays(edo.getExpireDays());
     model.setMessage(edo.getMessage());
+    model.setStepId(edo.getStepId());
 
     return model;
   }
@@ -96,6 +97,7 @@ public class CoreModelEdoMapper {
     edo.setExpireDays(model.getExpireDays());
     edo.setMessage(model.getMessage());
     edo.setCreatedAt(model.getCreatedAt());
+    edo.setStepId(model.getStepId());
 
     return edo;
   }

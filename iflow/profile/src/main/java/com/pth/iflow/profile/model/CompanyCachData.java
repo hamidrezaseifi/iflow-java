@@ -58,6 +58,12 @@ public class CompanyCachData {
     return null;
   }
 
+  public void removeUserCachData(final Long userId) {
+    if (this.userCachList.containsKey(userId)) {
+      this.userCachList.remove(userId);
+    }
+  }
+
   public boolean hasUserCachData(final Long userId) {
     return this.userCachList.containsKey(userId);
   }

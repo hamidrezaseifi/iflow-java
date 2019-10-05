@@ -87,7 +87,7 @@ public class CachDataController {
 
     this.tokenUserDataManager.validateToken(headerTokenId);
 
-    this.companyCachDataManager.resetWorkflowData(companyid, workflowid);
+    this.companyCachDataManager.resetWorkflowStepData(companyid, workflowid);
 
   }
 

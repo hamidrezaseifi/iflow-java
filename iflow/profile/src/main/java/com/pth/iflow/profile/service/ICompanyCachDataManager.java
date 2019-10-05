@@ -17,7 +17,7 @@ public interface ICompanyCachDataManager {
   public void resetUserData(Long compnayId, Long userId)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  public void resetWorkflowData(Long compnayId, Long workflowId)
+  public void resetWorkflowStepData(Long compnayId, Long workflowId)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
   public void resetUserListData(Long compnayId, Set<Long> userIdList)

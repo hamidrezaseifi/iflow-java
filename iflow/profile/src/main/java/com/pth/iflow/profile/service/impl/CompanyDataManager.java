@@ -60,15 +60,23 @@ public class CompanyDataManager implements ICompanyCachDataManager {
   }
 
   @Override
-  public void resetUserData(final Long compnayId, final Long userId)
+  public void resetUserData(final Long companyId, final Long userId)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     final List<WorkflowMessage> messageList = this.workflowMessageService.getWorkflowMessageListByUser(userId);
 
-    this.setUserWorkflowMessages(compnayId, userId, messageList);
+    this.removeUserWorkflowMessages(companyId, userId);
+    this.setUserWorkflowMessages(companyId, userId, messageList);
+  }
+
+  private void removeUserWorkflowMessages(final Long companyId, final Long userId) {
+    final CompanyCachData companyCachData = this.getCompanyCachData(companyId, true);
+
+    companyCachData.removeUserCachData(userId);
+
   }
 
   @Override
-  public void resetWorkflowData(final Long compnayId, final Long workflowId)
+  public void resetWorkflowStepData(final Long compnayId, final Long workflowId)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     final List<WorkflowMessage> messageList = this.workflowMessageService.getWorkflowMessageListByWorkflow(workflowId);
 

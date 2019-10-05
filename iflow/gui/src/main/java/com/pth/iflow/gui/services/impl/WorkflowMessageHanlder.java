@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.GuiWorkflowMessage;
+import com.pth.iflow.gui.models.GuiWorkflowType;
+import com.pth.iflow.gui.models.GuiWorkflowTypeStep;
 import com.pth.iflow.gui.models.ui.GuiSessionUserInfo;
 import com.pth.iflow.gui.services.IWorkflowHandler;
 import com.pth.iflow.gui.services.IWorkflowMessageAccess;
@@ -84,6 +86,14 @@ public class WorkflowMessageHanlder implements IWorkflowMessageHanlder {
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     message.setWorkflow(this.workflowHandler.readWorkflow(message.getWorkflowId()));
+
+    final GuiWorkflowType type = message.getWorkflow().getWorkflowType();
+
+    for (final GuiWorkflowTypeStep step : type.getSteps()) {
+      if (message.getStepId() == step.getId()) {
+        message.setStep(step);
+      }
+    }
 
     return message;
   }

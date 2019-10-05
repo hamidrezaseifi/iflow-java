@@ -39,8 +39,9 @@ public class WorkflowMessageService implements IWorkflowMessageService {
   }
 
   @Override
-  public void updateStatusByWorkflow(final Long workflowId, final EWorkflowMessageStatus status) throws IFlowStorageException {
-    this.workflowMessageDao.updateStatusByWorkflow(workflowId, status);
+  public void updateStatusByWorkflow(final Long workflowId, final Long stepId, final EWorkflowMessageStatus status)
+      throws IFlowStorageException {
+    this.workflowMessageDao.updateStatusByWorkflow(workflowId, stepId, status);
   }
 
   @Override
@@ -61,13 +62,13 @@ public class WorkflowMessageService implements IWorkflowMessageService {
   }
 
   @Override
-  public void updateWorkflowMessageStatus(final Long workflowId, final Long userid, final EWorkflowMessageStatus status)
-      throws IFlowStorageException {
+  public void updateWorkflowMessageStatus(final Long workflowId, final Long stepId, final Long userid,
+      final EWorkflowMessageStatus status) throws IFlowStorageException {
 
     if (userid <= 0L) {
-      this.workflowMessageDao.updateStatusByWorkflow(workflowId, status);
+      this.workflowMessageDao.updateStatusByWorkflow(workflowId, stepId, status);
     } else {
-      this.workflowMessageDao.updateStatusByWorkflowAndUser(workflowId, userid, status);
+      this.workflowMessageDao.updateStatusByWorkflowAndUser(workflowId, stepId, userid, status);
     }
   }
 

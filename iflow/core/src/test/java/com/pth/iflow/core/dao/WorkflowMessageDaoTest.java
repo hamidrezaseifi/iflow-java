@@ -74,7 +74,8 @@ public class WorkflowMessageDaoTest extends TestDataProducer {
     createWorlflowList();
 
     WorkflowMessage workflowMessage = createdModels.get(0);
-    this.workflowMessageDao.updateStatusByWorkflow(workflowMessage.getWorkflowId(), EWorkflowMessageStatus.CLOSED);
+    this.workflowMessageDao.updateStatusByWorkflow(workflowMessage.getWorkflowId(), workflowMessage.getStepId(),
+        EWorkflowMessageStatus.CLOSED);
     workflowMessage = workflowMessageDao.getById(workflowMessage.getId());
 
     Assert.assertNotNull("Result is not null!", workflowMessage);
@@ -118,6 +119,7 @@ public class WorkflowMessageDaoTest extends TestDataProducer {
     workflowMessage.setMessage("title test");
     workflowMessage.setVersion(10);
     workflowMessage.setWorkflowId(createdWorkflow.getId());
+    workflowMessage.setStepId(createdWorkflow.getCurrentStepId());
 
     final WorkflowMessage resWorkflow = workflowMessageDao.create(workflowMessage);
     createdModels.add(resWorkflow);
@@ -135,6 +137,8 @@ public class WorkflowMessageDaoTest extends TestDataProducer {
     workflowMessage.setMessage("title test");
     workflowMessage.setVersion(10);
     workflowMessage.setWorkflowId(createdWorkflow.getId());
+    workflowMessage.setStepId(createdWorkflow.getCurrentStepId());
+
     final WorkflowMessage createdWorkflow = workflowMessageDao.create(workflowMessage);
     createdModels.add(createdWorkflow);
 
@@ -161,6 +165,7 @@ public class WorkflowMessageDaoTest extends TestDataProducer {
     workflowMessage.setMessage("title test");
     workflowMessage.setVersion(10);
     workflowMessage.setWorkflowId(createdWorkflow.getId());
+    workflowMessage.setStepId(createdWorkflow.getCurrentStepId());
 
     final WorkflowMessage resWorkflow = workflowMessageDao.create(workflowMessage);
 
@@ -200,6 +205,8 @@ public class WorkflowMessageDaoTest extends TestDataProducer {
       workflowMessage.setId(null);
       workflowMessage.setMessage("message " + i);
       workflowMessage.setWorkflowId(createdWorkflow.getId());
+      workflowMessage.setStepId(createdWorkflow.getCurrentStepId());
+
       final WorkflowMessage res = workflowMessageDao.create(workflowMessage);
       createdModels.add(res);
     }

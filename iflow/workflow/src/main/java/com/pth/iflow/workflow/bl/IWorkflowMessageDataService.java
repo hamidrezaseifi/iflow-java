@@ -16,10 +16,11 @@ public interface IWorkflowMessageDataService {
   public WorkflowMessage save(final WorkflowMessage message, String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  public void changeWorkflowMessageStatus(final Long workflowId, final EWorkflowMessageStatus status, String token)
+  public void updateWorkflowMessageStatus(final Long workflowId, final Long stepId, final EWorkflowMessageStatus status, String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  public void changeUserAndWorkflowMessageStatus(final Long workflowId, final Long userId, final EWorkflowMessageStatus status,
-      String token) throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
+  public void updateUserAndWorkflowMessageStatus(final Long workflowId, final Long stepId, final Long userId,
+      final EWorkflowMessageStatus status, String token)
+      throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
 }

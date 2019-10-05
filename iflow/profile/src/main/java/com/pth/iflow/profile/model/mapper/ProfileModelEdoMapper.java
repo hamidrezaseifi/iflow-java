@@ -74,6 +74,7 @@ public class ProfileModelEdoMapper {
     model.setExpireDays(edo.getExpireDays());
     model.setMessage(edo.getMessage());
     model.setCreatedAt(edo.getCreatedAt());
+    model.setStepId(edo.getStepId());
 
     return model;
   }
@@ -90,6 +91,7 @@ public class ProfileModelEdoMapper {
     edo.setExpireDays(model.getExpireDays());
     edo.setMessage(model.getMessage());
     edo.setCreatedAt(model.getCreatedAt());
+    edo.setStepId(model.getStepId());
 
     return edo;
   }

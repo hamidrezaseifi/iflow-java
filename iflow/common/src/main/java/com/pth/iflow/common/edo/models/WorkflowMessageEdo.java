@@ -31,6 +31,10 @@ public class WorkflowMessageEdo {
   @XmlElement(name = "WorkflowId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Long          workflowId;
 
+  @NotNull(message = "StepId must not be null")
+  @XmlElement(name = "StepId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private Long          stepId;
+
   @NotNull(message = "UserId must not be null")
   @XmlElement(name = "UserId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Long          userId;
@@ -80,6 +84,14 @@ public class WorkflowMessageEdo {
 
   public void setWorkflowId(final Long workflowId) {
     this.workflowId = workflowId;
+  }
+
+  public Long getStepId() {
+    return this.stepId;
+  }
+
+  public void setStepId(final Long stepId) {
+    this.stepId = stepId;
   }
 
   public Long getUserId() {

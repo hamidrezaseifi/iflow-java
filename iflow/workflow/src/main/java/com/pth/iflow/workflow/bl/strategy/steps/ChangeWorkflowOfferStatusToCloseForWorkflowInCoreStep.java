@@ -7,6 +7,7 @@ import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.strategy.strategies.AbstractWorkflowSaveStrategy;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.Workflow;
+import com.pth.iflow.workflow.models.WorkflowAction;
 
 public class ChangeWorkflowOfferStatusToCloseForWorkflowInCoreStep extends AbstractWorkflowSaveStrategyStep {
 
@@ -19,8 +20,10 @@ public class ChangeWorkflowOfferStatusToCloseForWorkflowInCoreStep extends Abstr
   public void process() throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     final Workflow processingWorkflow = this.getWorkflowSaveStrategy().getSavedSingleWorkflow();
+    final WorkflowAction prevAction = this.getWorkflowSaveStrategy().getPrevActiveAction();
 
-    this.getWorkflowSaveStrategy().changeWorkflowMessageStatus(processingWorkflow.getId(), EWorkflowMessageStatus.CLOSED);
+    this.getWorkflowSaveStrategy().updateWorkflowMessageStatus(processingWorkflow.getId(), prevAction.getId(),
+        EWorkflowMessageStatus.CLOSED);
 
   }
 

@@ -10,7 +10,7 @@ public interface IWorkflowMessageService {
 
   public WorkflowMessage save(WorkflowMessage model) throws IFlowStorageException;
 
-  public void updateStatusByWorkflow(Long workflowId, EWorkflowMessageStatus status) throws IFlowStorageException;
+  public void updateStatusByWorkflow(Long workflowId, Long stepId, EWorkflowMessageStatus status) throws IFlowStorageException;
 
   public WorkflowMessage getById(Long id) throws IFlowStorageException;
 
@@ -18,6 +18,6 @@ public interface IWorkflowMessageService {
 
   public List<WorkflowMessage> getNotClosedNotExpiredListByWorkflowId(final Long workflowId) throws IFlowStorageException;
 
-  public void updateWorkflowMessageStatus(final Long workflowId, final Long userid, final EWorkflowMessageStatus status)
-      throws IFlowStorageException;
+  public void updateWorkflowMessageStatus(final Long workflowId, final Long stepId, final Long userid,
+      final EWorkflowMessageStatus status) throws IFlowStorageException;
 }

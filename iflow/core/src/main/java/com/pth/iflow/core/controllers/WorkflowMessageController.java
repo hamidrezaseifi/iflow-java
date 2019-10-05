@@ -69,11 +69,11 @@ public class WorkflowMessageController {
 
   @ResponseStatus(HttpStatus.CREATED)
   @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.WORKFLOWMESSAGE_CHANGE_WORKFLOWMESSAGE_STAUS)
-  public void saveWorkflowMessage(@PathVariable(required = true) final Long workflowid,
-      @PathVariable(required = true) final Long userid, @PathVariable(required = true) final Integer status,
-      final HttpServletRequest request) throws Exception {
+  public void updateWorkflowMessage(@PathVariable(required = true) final Long workflowid,
+      @PathVariable(required = true) final Long stepid, @PathVariable(required = true) final Long userid,
+      @PathVariable(required = true) final Integer status, final HttpServletRequest request) throws Exception {
 
-    this.workflowMessageService.updateWorkflowMessageStatus(workflowid, userid, EWorkflowMessageStatus.ofValue(status));
+    this.workflowMessageService.updateWorkflowMessageStatus(workflowid, stepid, userid, EWorkflowMessageStatus.ofValue(status));
 
   }
 

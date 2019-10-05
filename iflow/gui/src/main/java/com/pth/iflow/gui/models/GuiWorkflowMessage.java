@@ -17,6 +17,10 @@ public class GuiWorkflowMessage extends DataModelBase {
 
   private GuiWorkflow            workflow;
 
+  private Long                   stepId;
+
+  private GuiWorkflowTypeStep    step;
+
   private Long                   userId;
 
   private String                 message;
@@ -48,6 +52,22 @@ public class GuiWorkflowMessage extends DataModelBase {
 
   public void setWorkflowId(final Long workflowId) {
     this.workflowId = workflowId;
+  }
+
+  public Long getStepId() {
+    return this.stepId;
+  }
+
+  public void setStepId(final Long stepId) {
+    this.stepId = stepId;
+  }
+
+  public GuiWorkflowTypeStep getStep() {
+    return this.step;
+  }
+
+  public void setStep(final GuiWorkflowTypeStep step) {
+    this.step = step;
   }
 
   public GuiWorkflow getWorkflow() {

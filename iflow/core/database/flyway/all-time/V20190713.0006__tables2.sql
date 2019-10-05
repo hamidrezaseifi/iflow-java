@@ -60,6 +60,7 @@ INSERT INTO `workflow_type_step`(id, workflow_type_id, title, step_index, view_n
 CREATE TABLE `workflow_message` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `workflow_id` int(11) NOT NULL,
+  `step_id` int(11) NOT NULL DEFAULT '0',
   `user_id` int(11) NOT NULL,
   `message` varchar(500) NOT NULL DEFAULT 'no message',
   `created_by` int(11) NOT NULL,

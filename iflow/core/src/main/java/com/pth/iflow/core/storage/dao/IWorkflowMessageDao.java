@@ -12,9 +12,9 @@ public interface IWorkflowMessageDao {
 
   public WorkflowMessage update(WorkflowMessage model) throws IFlowStorageException;
 
-  public void updateStatusByWorkflow(Long workflowId, EWorkflowMessageStatus status) throws IFlowStorageException;
+  public void updateStatusByWorkflow(Long workflowId, final Long stepId, EWorkflowMessageStatus status) throws IFlowStorageException;
 
-  public void updateStatusByWorkflowAndUser(Long workflowId, final Long userid, EWorkflowMessageStatus status)
+  public void updateStatusByWorkflowAndUser(Long workflowId, final Long stepId, final Long userid, EWorkflowMessageStatus status)
       throws IFlowStorageException;
 
   public WorkflowMessage getById(Long id) throws IFlowStorageException;

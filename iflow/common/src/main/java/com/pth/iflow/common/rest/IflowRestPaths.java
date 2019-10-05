@@ -74,7 +74,7 @@ public class IflowRestPaths {
     public static final String WORKFLOWMESSAGE_READ_BY_USER                        = "/workflowmessage/user/{userid}/{status}";
     public static final String WORKFLOWMESSAGE_READ_BY_WORKFLOW                    = "/workflowmessage/workflow/{workflowid}";
     public static final String WORKFLOWMESSAGE_SAVE                                = "/workflowmessage/save";
-    public static final String WORKFLOWMESSAGE_CHANGE_WORKFLOWMESSAGE_STAUS        = "/workflowmessage/changestatus/{workflowid}/{userid}/{status}";
+    public static final String WORKFLOWMESSAGE_CHANGE_WORKFLOWMESSAGE_STAUS        = "/workflowmessage/changestatus/{workflowid}/{stepid}/{userid}/{status}";
 
     public static URI READ_WORKFLOWMESSAGE_READ_BY_USER(final Long userid, final int status) {
       final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOWMESSAGE_READ_BY_USER);
@@ -91,9 +91,10 @@ public class IflowRestPaths {
       return builder.build();
     }
 
-    public static URI CHANGE_WORKFLOWMESSAGE_WORKFLOWMESSAGE_STAUS(final Long workflowid, final Long userid, final int status) {
+    public static URI CHANGE_WORKFLOWMESSAGE_WORKFLOWMESSAGE_STAUS(final Long workflowid, final Long stepid, final Long userid,
+        final int status) {
       final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOWMESSAGE_CHANGE_WORKFLOWMESSAGE_STAUS);
-      return builder.build(workflowid, userid, status);
+      return builder.build(workflowid, stepid, userid, status);
     }
 
     public static URI READ_DEPARTMENTGRPUP_ALLUSERLIST_BY_DEPARTMENTGROUP(final Long id) {

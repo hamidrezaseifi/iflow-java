@@ -12,6 +12,8 @@ public class WorkflowMessage extends DataModelBase {
 
   private Long                   workflowId;
 
+  private Long                   stepId;
+
   private Long                   userId;
 
   private String                 message;
@@ -45,6 +47,14 @@ public class WorkflowMessage extends DataModelBase {
 
   public void setWorkflowId(final Long workflowId) {
     this.workflowId = workflowId;
+  }
+
+  public Long getStepId() {
+    return this.stepId;
+  }
+
+  public void setStepId(final Long stepId) {
+    this.stepId = stepId;
   }
 
   public Long getUserId() {

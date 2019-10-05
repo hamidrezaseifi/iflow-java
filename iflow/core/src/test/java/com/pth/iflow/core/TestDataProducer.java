@@ -218,6 +218,7 @@ public class TestDataProducer {
     model.setMessageType(EWorkflowMessageType.OFFERING_WORKFLOW);
     model.setUserId(1L);
     model.setCreatedBy(1L);
+    model.setStepId(1L);
 
     return model;
   }
