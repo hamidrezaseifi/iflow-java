@@ -92,4 +92,14 @@ public class WorkflowAccess implements IWorkflowAccess {
     return GuiModelEdoMapper.fromWorkflowEdoList(responseListEdo.getWorkflows());
   }
 
+  @Override
+  public void validateWorkflow(final GuiWorkflowSaveRequest request, final String token)
+      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+    logger.debug("save workflow");
+
+    this.restTemplate.callRestPost(this.moduleAccessConfig.getValidateWorkflowUri(), EModule.WORKFLOW,
+        GuiModelEdoMapper.toEdo(request), Void.class, token, true);
+
+  }
+
 }

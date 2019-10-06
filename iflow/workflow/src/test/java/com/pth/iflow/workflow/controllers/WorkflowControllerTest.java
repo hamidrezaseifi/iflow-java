@@ -197,4 +197,21 @@ public class WorkflowControllerTest extends TestDataProducer {
     verify(this.workflowService, times(1)).getListByTypeId(any(Long.class), any(String.class));
 
   }
+
+  @Test
+  public void testValidateWorkflow() throws Exception {
+
+    final WorkflowSaveRequest request = this.getTestWorkflowCreateRequest();
+    final WorkflowSaveRequestEdo requestEdo = WorkflowModelEdoMapper.toEdo(request);
+
+    final String contentAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(requestEdo);
+
+    this.mockMvc.perform(MockMvcRequestBuilders.post(IflowRestPaths.WorkflowModule.WORKFLOW_VALIDATE).content(contentAsXmlString)
+        .contentType(MediaType.APPLICATION_XML_VALUE)
+        .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, "test-roken")).andExpect(status().isAccepted());
+
+    verify(this.workflowService, times(1)).validate(any(WorkflowSaveRequest.class), any(String.class));
+
+  }
+
 }

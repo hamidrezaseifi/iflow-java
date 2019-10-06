@@ -19,7 +19,7 @@ iflowApp.directive('fileModel', [ '$parse', function($parse) {
     };
 } ]);
 
-iflowApp.controller('WorkflowCreateController', function WorkflowCreateController($scope, $http, $sce, $element, $mdSidenav) {
+iflowApp.controller('WorkflowCreateController', function WorkflowCreateController($scope, $http, $sce, $element, $mdSidenav, ShowErrorService) {
 	  //$scope.phones = [];
 	
 	$scope.loadUrl = loadUrl;
@@ -57,7 +57,10 @@ iflowApp.controller('WorkflowCreateController', function WorkflowCreateControlle
 	
 	    }, function errorCallback(response) {
 	        
-	        alert(response.data);
+	    	$scope.errorMessage = response.data.message;
+	    	$scope.errorDetails = response.data.detailes + "\r\n" + response.data.stackTraceElement;
+
+	    	$("#errormessagedialog").modal();
 	    });
 		
 	};
@@ -82,15 +85,16 @@ iflowApp.controller('WorkflowCreateController', function WorkflowCreateControlle
 	
 	    }, function errorCallback(response) {
 	        
-	        alert(response.data);
+	    	$scope.errorMessage = response.data.message;
+	    	$scope.errorDetails = response.data.detailes + "\r\n" + response.data.stackTraceElement;
+
+	    	$("#errormessagedialog").modal();
 	    });
 		
 	};
 
 	$scope.save = function (){
 		
-		//alert(JSON.stringify($scope.workflowCreateRequest)); 
-
 		var formData = new FormData();
 		
 		for (var i = 0; i < $scope.fileTitles.length; i++) {
@@ -98,12 +102,7 @@ iflowApp.controller('WorkflowCreateController', function WorkflowCreateControlle
 		    formData.append('titles', $scope.fileTitles[i].title);
 		    formData.append('wids', i);
 		}
-		
-		//formData.append('file', file);
-        //formData.append('data', JSON.stringify($scope.workflowCreateRequest));
-     
-		//alert(JSON.stringify(formData));
-		
+				
 		$http.post($scope.saveFileUrl, formData,{
             transformRequest : angular.identity,
             headers : {
@@ -130,13 +129,20 @@ iflowApp.controller('WorkflowCreateController', function WorkflowCreateControlle
             	    	window.location = $scope.listUrl;
             	
             	    }, function errorCallback(response) {
-            	        
-            	        alert(response.data);
+            	    	//$scope.errorMessage = response.data.message;
+            	    	//$scope.errorDetails = response.data.detailes + "\r\n" + response.data.stackTraceElement;
+
+            	    	//$("#errormessagedialog").modal();
+            	    	
+            	    	ShowErrorService.showError(response, $scope);
             	    });
                 	
                 },
                 function (errResponse) {
-                	alert( errResponse.data);
+        	    	$scope.errorMessage = response.data.message;
+        	    	$scope.errorDetails = response.data.detailes + "\r\n" + response.data.stackTraceElement;
+
+        	    	$("#errormessagedialog").modal();
                 }
             );
 

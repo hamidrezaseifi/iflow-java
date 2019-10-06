@@ -50,12 +50,12 @@ public class WorkflowProcessService implements IWorkflowProcessService {
   }
 
   @Override
-  public List<Workflow> create(final WorkflowSaveRequest model, final String token)
+  public List<Workflow> create(final WorkflowSaveRequest request, final String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    prepareWorkflow(token, model.getWorkflow());
+    validate(request, token);
 
-    final IWorkflowSaveStrategy workflowStrategy = this.workStrategyFactory.selectWorkStrategy(model, token);
+    final IWorkflowSaveStrategy workflowStrategy = this.workStrategyFactory.selectSaveWorkStrategy(request, token);
 
     workflowStrategy.process();
 
@@ -70,15 +70,26 @@ public class WorkflowProcessService implements IWorkflowProcessService {
     logger.debug("Saving workflow with token {}", token);
     this.tokenCanSaveWorkflow(request.getWorkflow(), token);
 
-    prepareWorkflow(token, request.getWorkflow());
+    validate(request, token);
 
-    final IWorkflowSaveStrategy workflowStrategy = this.workStrategyFactory.selectWorkStrategy(request, token);
+    final IWorkflowSaveStrategy workflowStrategy = this.workStrategyFactory.selectSaveWorkStrategy(request, token);
 
     workflowStrategy.process();
 
     final Workflow result = workflowStrategy.getSingleProceedWorkflow();
 
     return result;
+  }
+
+  @Override
+  public void validate(final WorkflowSaveRequest request, final String token)
+      throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+
+    prepareWorkflow(token, request.getWorkflow());
+
+    final IWorkflowSaveStrategy workflowStrategy = this.workStrategyFactory.selectValidationWorkStrategy(request, token);
+
+    workflowStrategy.process();
   }
 
   @Override

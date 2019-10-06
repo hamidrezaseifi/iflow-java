@@ -41,6 +41,42 @@ iflowApp.config(['$httpProvider', function($httpProvider) {
     $httpProvider.defaults.timeout = 10000;
 }]);
 
+iflowApp.factory('ShowErrorService', function() {
+    return {
+    	showError: function(response, scope) {
+    		if(!response){
+    	    	scope.errorMessage = "No Message!";
+    	    	scope.errorDetails = "No Details!";
+
+    	    	$("#errormessagedialog").modal();
+    			return;
+    		}
+    		
+    		if(!response.data){
+    	    	scope.errorMessage = "No Message Data!";
+    	    	scope.errorDetails = "No Details Data!";
+
+    	    	$("#errormessagedialog").modal();
+    			return;
+    		}
+    		
+    		if(!response.data.message){
+    	    	scope.errorMessage = "No Message In Data!";
+    	    	scope.errorDetails = "No Details Data!";
+
+    	    	$("#errormessagedialog").modal();
+    			return;
+    		}
+    		
+	    	scope.errorMessage = response.data.message;
+	    	scope.errorDetails = (response.data.detailes ? response.data.detailes + "\r\n" : "") + (response.data.stackTraceElement ? response.data.stackTraceElement : "");
+
+	    	$("#errormessagedialog").modal();
+
+    	}
+    };
+});
+
 iflowApp.controller('BodyController', function ($scope, $http, $sce, $element, $compile, $mdSidenav, $mdComponentRegistry) {
 
 	$scope.showloading = false;
