@@ -1,22 +1,23 @@
 package com.pth.iflow.common.edo.models.helper;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
-public class DateEdoAdapter extends XmlAdapter<String, Date> {
+public class DateEdoAdapter extends XmlAdapter<String, LocalDate> {
 
-  private final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+  private final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern(IsoFormats.DATE_FORMAT_ISO);
 
   @Override
-  public Date unmarshal(final String v) throws Exception {
-    return this.dateFormat.parse(v);
+  public LocalDate unmarshal(final String v) {
+
+    return LocalDate.parse(v, this.dateFormat);
+
   }
 
   @Override
-  public String marshal(final Date v) throws Exception {
+  public String marshal(final LocalDate v) {
     return this.dateFormat.format(v);
   }
 

@@ -150,7 +150,7 @@ CREATE TABLE `workflow_type` (
   `company_id` int(11) NOT NULL,
   `workflow_base_type` int(11) NOT NULL DEFAULT '0',
   `title` varchar(200) NOT NULL,
-  `manual_assign` smallint(2) NOT NULL DEFAULT '0',
+  `assign_type` SMALLINT(2) NOT NULL DEFAULT 1,
   `send_to_controller` smallint(2) NOT NULL DEFAULT '1',
   `increase_step_automatic` smallint(2) DEFAULT '0',
   `allow_assign` smallint(2) DEFAULT '0',
@@ -185,6 +185,7 @@ CREATE TABLE `workflow_type_step` (
   `title` varchar(200) NOT NULL,
   `step_index` smallint(6) NOT NULL DEFAULT 0,
   `view_name` varchar(150) NOT NULL DEFAULT '-',
+  `expire_days` smallint(6) NOT NULL,
   `commecnts` text,
   `status` smallint(6) NOT NULL DEFAULT '1',
   `version` int(11) NOT NULL DEFAULT '1',
@@ -199,8 +200,6 @@ CREATE TABLE `workflow_type_step` (
 CREATE TABLE `workflow` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `workflow_type_id` int(11) NOT NULL,
-  `title` varchar(2000) NOT NULL,
-  `assign_to` int(11) NOT NULL DEFAULT 0,
   `current_step` int(11) NOT NULL,
   `status` int(11) NOT NULL,
   `comments` text,
@@ -222,19 +221,15 @@ CREATE TABLE `workflow` (
 CREATE TABLE `workflow_actions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `workflow_id` int(11) NOT NULL,
-  `action` varchar(2000) DEFAULT NULL,
-  `old_step` int(11) NOT NULL DEFAULT '0',
-  `new_step` int(11) NOT NULL DEFAULT '0',
+  `assign_to` int(11) NOT NULL DEFAULT '0',
+  `current_step_id` int(11) NOT NULL DEFAULT '0',
   `comments` varchar(45) DEFAULT NULL,
-  `created_by` int(11) DEFAULT NULL,
   `status` int(11) DEFAULT '1',
   `version` int(11) NOT NULL DEFAULT '1',
   `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   `updated_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   PRIMARY KEY (`id`),
   KEY `FK_WORKFLOWACTION_WORKFLOW_idx` (`workflow_id`),
-  KEY `FK_WORKFLOWACTION_USERS_idx` (`created_by`),
-  CONSTRAINT `FK_WORKFLOWACTION_USERS` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `FK_WORKFLOWACTION_WORKFLOW` FOREIGN KEY (`workflow_id`) REFERENCES `workflow` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 ;
 

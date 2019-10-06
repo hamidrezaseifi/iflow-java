@@ -1,27 +1,25 @@
 package com.pth.iflow.workflow.models;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import com.pth.iflow.common.edo.models.base.DataModelBase;
-import com.pth.iflow.common.enums.EWorkflowProcessCommand;
+import com.pth.iflow.common.enums.EWorkflowActionStatus;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 
 public class Workflow extends DataModelBase {
 
   private Long                       id;
   private Long                       workflowTypeId;
+  private WorkflowType               workflowType;
   private WorkflowTypeStep           currentStep;
   private Long                       currentStepId;
   private Long                       controller;
   private Long                       createdBy;
-  private Long                       assignTo;
-  private String                     title;
   private String                     comments;
   private EWorkflowStatus            status;
   private Integer                    version;
-  private Boolean                    nextAssign;
-  private EWorkflowProcessCommand    command;
 
   private final List<WorkflowFile>   files   = new ArrayList<>();
   private final List<WorkflowAction> actions = new ArrayList<>();
@@ -41,6 +39,14 @@ public class Workflow extends DataModelBase {
 
   public void setWorkflowTypeId(final Long workflowTypeId) {
     this.workflowTypeId = workflowTypeId;
+  }
+
+  public WorkflowType getWorkflowType() {
+    return workflowType;
+  }
+
+  public void setWorkflowType(final WorkflowType workflowType) {
+    this.workflowType = workflowType;
   }
 
   public WorkflowTypeStep getCurrentStep() {
@@ -73,26 +79,6 @@ public class Workflow extends DataModelBase {
 
   public void setCreatedBy(final Long createdBy) {
     this.createdBy = createdBy;
-  }
-
-  public Long getAssignTo() {
-    return this.assignTo;
-  }
-
-  public boolean isAssigned() {
-    return (this.assignTo != null) && (this.assignTo > 0);
-  }
-
-  public void setAssignTo(final Long assignTo) {
-    this.assignTo = assignTo;
-  }
-
-  public String getTitle() {
-    return this.title;
-  }
-
-  public void setTitle(final String title) {
-    this.title = title;
   }
 
   public String getComments() {
@@ -133,22 +119,6 @@ public class Workflow extends DataModelBase {
     this.version = version;
   }
 
-  public Boolean getNextAssign() {
-    return this.nextAssign;
-  }
-
-  public void setNextAssign(final Boolean nextAssign) {
-    this.nextAssign = nextAssign;
-  }
-
-  public EWorkflowProcessCommand getCommand() {
-    return this.command;
-  }
-
-  public void setCommand(final EWorkflowProcessCommand command) {
-    this.command = command;
-  }
-
   public List<WorkflowFile> getFiles() {
     return this.files;
   }
@@ -164,11 +134,20 @@ public class Workflow extends DataModelBase {
     return this.actions;
   }
 
+  public boolean hasAction() {
+    return this.actions.isEmpty() == false;
+  }
+
   public void setActions(final List<WorkflowAction> actions) {
     this.actions.clear();
     if (actions != null) {
       this.actions.addAll(actions);
     }
+  }
+
+  public void addAction(final WorkflowAction action) {
+    this.actions.add(action);
+
   }
 
   public boolean isAfterStep(final Workflow other) {
@@ -199,6 +178,18 @@ public class Workflow extends DataModelBase {
     return this.isNew() && (this.getStatus() == EWorkflowStatus.INITIALIZE);
   }
 
+  public boolean isOffering() {
+    return this.getStatus() == EWorkflowStatus.OFFERING;
+  }
+
+  public boolean isDone() {
+    return this.getStatus() == EWorkflowStatus.DONE;
+  }
+
+  public boolean isArchived() {
+    return this.getStatus() == EWorkflowStatus.ARCHIVED;
+  }
+
   @Override
   public boolean isNew() {
     return (this.getId() == null) || (this.getId() <= 0);
@@ -216,6 +207,38 @@ public class Workflow extends DataModelBase {
       }
     }
     return null;
+  }
+
+  public WorkflowAction getLastAction() {
+
+    if (hasAction() == false) {
+      return null;
+    }
+
+    final List<WorkflowAction> astinList = this.getActions();
+    astinList.sort(new Comparator<WorkflowAction>() {
+
+      @Override
+      public int compare(final WorkflowAction action1, final WorkflowAction action2) {
+
+        return action1.getCurrentStep().getStepIndex() > action2.getCurrentStep().getStepIndex() ? 1
+            : action1.getCurrentStep().getStepIndex() < action2.getCurrentStep().getStepIndex() ? -1 : 0;
+      }
+    });
+
+    return astinList.get(astinList.size() - 1);
+  }
+
+  public boolean isAssigned() {
+    return this.hasActiveAction() && this.getActiveAction().isAssigned();
+  }
+
+  public void setActiveActionAssignTo(final Long userId) {
+    this.getActiveAction().setAssignTo(userId);
+  }
+
+  public void setActiveActionStatus(final EWorkflowActionStatus status) {
+    this.getActiveAction().setStatus(status);
   }
 
 }

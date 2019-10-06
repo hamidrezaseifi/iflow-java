@@ -18,34 +18,25 @@ public class WorkflowActionEdo {
   @XmlElement(name = "ID", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Long    id;
 
-  @NotNull
+  @NotNull(message = "WorkflowId must not be null")
   @XmlElement(name = "WorkflowId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Long    workflowId;
 
-  @XmlElement(name = "CreatedBy", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long    createdBy;
+  @XmlElement(name = "AssignTo", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private Long    assignTo;
 
-  @NotNull
-  @XmlElement(name = "Action", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String  action;
-
-  @XmlElement(name = "OldStep", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long    oldStep;
-
-  @XmlElement(name = "NewStep", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long    newStep;
-
-  @XmlElement(name = "NextAssign", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long    nextAssign;
+  @NotNull(message = "CurrectStepId must not be null")
+  @XmlElement(name = "CurrectStepId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private Long    currectStepId;
 
   @XmlElement(name = "Comments", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String  comments;
 
-  @NotNull
+  @NotNull(message = "Status must not be null")
   @XmlElement(name = "Status", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer status;
 
-  @NotNull
+  @NotNull(message = "Version must not be null")
   @XmlElement(name = "Version", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer version;
 
@@ -65,44 +56,20 @@ public class WorkflowActionEdo {
     this.workflowId = workflowId;
   }
 
-  public String getAction() {
-    return this.action;
+  public Long getCurrentStepId() {
+    return this.currectStepId;
   }
 
-  public void setAction(final String action) {
-    this.action = action;
+  public void setCurrentStepId(final Long currectStepId) {
+    this.currectStepId = currectStepId;
   }
 
-  public Long getOldStep() {
-    return this.oldStep;
+  public Long getAssignTo() {
+    return this.assignTo;
   }
 
-  public void setOldStep(final Long oldStep) {
-    this.oldStep = oldStep;
-  }
-
-  public Long getNewStep() {
-    return this.newStep;
-  }
-
-  public void setNewStep(final Long newStep) {
-    this.newStep = newStep;
-  }
-
-  public Long getNextAssign() {
-    return this.nextAssign;
-  }
-
-  public void setNextAssign(final Long nextAssign) {
-    this.nextAssign = nextAssign;
-  }
-
-  public Long getCreatedBy() {
-    return this.createdBy;
-  }
-
-  public void setCreatedBy(final Long createdBy) {
-    this.createdBy = createdBy;
+  public void setAssignTo(final Long assignTo) {
+    this.assignTo = assignTo;
   }
 
   public String getComments() {

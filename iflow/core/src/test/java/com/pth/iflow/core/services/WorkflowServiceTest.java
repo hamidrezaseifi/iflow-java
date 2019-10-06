@@ -29,7 +29,7 @@ public class WorkflowServiceTest extends TestDataProducer {
   private IWorkflowService workflowService;
 
   @MockBean
-  private IWorkflowDao workflowDao;
+  private IWorkflowDao     workflowDao;
 
   @Before
   public void setUp() throws Exception {
@@ -50,7 +50,6 @@ public class WorkflowServiceTest extends TestDataProducer {
 
     Assert.assertNotNull("Result workflow-type is not null!", resWorkflow);
     Assert.assertEquals("Result workflow-type has id 1!", resWorkflow.getId(), workflow.getId());
-    Assert.assertEquals("Result workflow-type has title '" + workflow.getTitle() + "'!", resWorkflow.getTitle(), workflow.getTitle());
     Assert.assertEquals("Result workflow-type has status 1!", resWorkflow.getStatus(), workflow.getStatus());
 
   }
@@ -97,7 +96,6 @@ public class WorkflowServiceTest extends TestDataProducer {
 
     Assert.assertNotNull("Result workflow-type is not null!", resWorkflow);
     Assert.assertEquals("Result workflow-type has id 1!", resWorkflow.getId(), workflow.getId());
-    Assert.assertEquals("Result workflow-type has title '" + workflow.getTitle() + "'!", resWorkflow.getTitle(), workflow.getTitle());
     Assert.assertEquals("Result workflow-type has status 1!", resWorkflow.getStatus(), workflow.getStatus());
     Assert.assertEquals("Result workflow-type has version 22!", resWorkflow.getVersion().intValue(), 22);
 
@@ -111,7 +109,6 @@ public class WorkflowServiceTest extends TestDataProducer {
 
     Assert.assertNotNull("Result workflow-type is not null!", resWorkflow);
     Assert.assertEquals("Result workflow-type has id 1!", resWorkflow.getId(), workflow.getId());
-    Assert.assertEquals("Result workflow-type has title '" + workflow.getTitle() + "'!", resWorkflow.getTitle(), workflow.getTitle());
     Assert.assertEquals("Result workflow-type has status 1!", resWorkflow.getStatus(), workflow.getStatus());
     Assert.assertEquals("Result workflow-type has version 1!", resWorkflow.getVersion(), workflow.getVersion());
 

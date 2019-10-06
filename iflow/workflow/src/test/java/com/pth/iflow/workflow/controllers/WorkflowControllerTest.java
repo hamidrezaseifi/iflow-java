@@ -24,16 +24,16 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.pth.iflow.common.edo.models.WorkflowCreateRequestEdo;
 import com.pth.iflow.common.edo.models.WorkflowEdo;
 import com.pth.iflow.common.edo.models.WorkflowListEdo;
+import com.pth.iflow.common.edo.models.WorkflowSaveRequestEdo;
 import com.pth.iflow.common.edo.models.WorkflowSearchFilterEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
 import com.pth.iflow.workflow.TestDataProducer;
 import com.pth.iflow.workflow.bl.IWorkflowProcessService;
 import com.pth.iflow.workflow.models.Workflow;
-import com.pth.iflow.workflow.models.WorkflowCreateRequest;
+import com.pth.iflow.workflow.models.WorkflowSaveRequest;
 import com.pth.iflow.workflow.models.WorkflowSearchFilter;
 import com.pth.iflow.workflow.models.mapper.WorkflowModelEdoMapper;
 
@@ -86,12 +86,12 @@ public class WorkflowControllerTest extends TestDataProducer {
   @Test
   public void testCreateWorkflow() throws Exception {
 
-    final WorkflowCreateRequest request = this.getTestWorkflowCreateRequest();
-    final WorkflowCreateRequestEdo requestEdo = WorkflowModelEdoMapper.toEdo(request);
+    final WorkflowSaveRequest request = this.getTestWorkflowCreateRequest();
+    final WorkflowSaveRequestEdo requestEdo = WorkflowModelEdoMapper.toEdo(request);
     final List<Workflow> list = this.getTestWorkflowList();
     final WorkflowListEdo listEdo = new WorkflowListEdo(WorkflowModelEdoMapper.toWorkflowEdoList(list));
 
-    when(this.workflowService.create(any(WorkflowCreateRequest.class), any(String.class))).thenReturn(list);
+    when(this.workflowService.create(any(WorkflowSaveRequest.class), any(String.class))).thenReturn(list);
 
     final String contentAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(requestEdo);
     final String resultAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(listEdo);
@@ -103,21 +103,23 @@ public class WorkflowControllerTest extends TestDataProducer {
         .andExpect(status().isCreated()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(resultAsXmlString));
 
-    verify(this.workflowService, times(1)).create(any(WorkflowCreateRequest.class), any(String.class));
+    verify(this.workflowService, times(1)).create(any(WorkflowSaveRequest.class), any(String.class));
 
   }
 
   @Test
   public void testSaveWorkflow() throws Exception {
 
-    final Workflow model = this.getTestWorkflow(1L);
-    final String resultAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(WorkflowModelEdoMapper.toEdo(model));
+    final WorkflowSaveRequest requestModel = this.getTestWorkflowCreateRequest();
+    final Workflow result = this.getTestWorkflow(1L);
+    requestModel.setWorkflow(result);
+    final String resultAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(WorkflowModelEdoMapper.toEdo(result));
 
-    when(this.workflowService.save(any(Workflow.class), any(String.class))).thenReturn(model);
+    when(this.workflowService.save(any(WorkflowSaveRequest.class), any(String.class))).thenReturn(result);
 
-    final WorkflowEdo modelEdo = WorkflowModelEdoMapper.toEdo(model);
+    final WorkflowSaveRequestEdo requestModelEdo = WorkflowModelEdoMapper.toEdo(requestModel);
 
-    final String contentAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelEdo);
+    final String contentAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(requestModelEdo);
 
     this.mockMvc
         .perform(MockMvcRequestBuilders.post(IflowRestPaths.WorkflowModule.WORKFLOW_SAVE).content(contentAsXmlString)
@@ -126,7 +128,7 @@ public class WorkflowControllerTest extends TestDataProducer {
         .andExpect(status().isAccepted()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(resultAsXmlString));
 
-    verify(this.workflowService, times(1)).save(any(Workflow.class), any(String.class));
+    verify(this.workflowService, times(1)).save(any(WorkflowSaveRequest.class), any(String.class));
 
   }
 

@@ -3,6 +3,7 @@ package com.pth.iflow.common.edo.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -10,6 +11,9 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import org.springframework.beans.factory.annotation.Value;
+
+import com.fasterxml.jackson.annotation.JsonSetter;
 import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 
 @XmlRootElement(name = "WorkflowTypeStepList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
@@ -17,6 +21,8 @@ import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 @XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "WorkflowTypeStepList" + IFlowJaxbDefinition.TYPE_PREFIX)
 public class WorkflowTypeStepListEdo {
 
+  @NotNull
+  @Value("#{T(java.util.Collections).emptyList()}")
   @XmlElementWrapper(name = "WorkflowTypeStepList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "WorkflowTypeStep", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private final List<WorkflowTypeStepEdo> workflowTypeSteps = new ArrayList<>();
@@ -33,6 +39,7 @@ public class WorkflowTypeStepListEdo {
     return this.workflowTypeSteps;
   }
 
+  @JsonSetter
   public void setWorkflowTypeSteps(final List<WorkflowTypeStepEdo> workflowTypeSteps) {
     this.workflowTypeSteps.clear();
     if (workflowTypeSteps != null) {

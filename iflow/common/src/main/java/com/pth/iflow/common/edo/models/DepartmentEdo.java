@@ -11,6 +11,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import com.fasterxml.jackson.annotation.JsonSetter;
 import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 
 @XmlRootElement(name = "Department", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
@@ -37,6 +38,7 @@ public class DepartmentEdo {
   @XmlElement(name = "Version", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer                        version;
 
+  @NotNull
   @XmlElementWrapper(name = "DepartmentGroupList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "DepartmentGroup", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private final List<DepartmentGroupEdo> departmentGroups = new ArrayList<>();
@@ -85,6 +87,7 @@ public class DepartmentEdo {
     return this.departmentGroups;
   }
 
+  @JsonSetter
   public void setDepartmentGroups(final List<DepartmentGroupEdo> groups) {
     this.departmentGroups.clear();
     if (groups != null) {

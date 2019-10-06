@@ -2,8 +2,8 @@ package com.pth.iflow.workflow.bl.impl;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -16,12 +16,12 @@ import com.pth.iflow.workflow.bl.ITokenValidator;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.IWorkflowProcessService;
 import com.pth.iflow.workflow.bl.IWorkflowTypeDataService;
-import com.pth.iflow.workflow.bl.strategies.ICreateWorkflowStrategy;
-import com.pth.iflow.workflow.bl.strategies.ISaveWorkflowStrategy;
-import com.pth.iflow.workflow.bl.strategies.IWorkStrategyFactory;
+import com.pth.iflow.workflow.bl.strategy.IWorkStrategyFactory;
+import com.pth.iflow.workflow.bl.strategy.IWorkflowSaveStrategy;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.Workflow;
-import com.pth.iflow.workflow.models.WorkflowCreateRequest;
+import com.pth.iflow.workflow.models.WorkflowAction;
+import com.pth.iflow.workflow.models.WorkflowSaveRequest;
 import com.pth.iflow.workflow.models.WorkflowSearchFilter;
 import com.pth.iflow.workflow.models.WorkflowType;
 import com.pth.iflow.workflow.models.WorkflowTypeStep;
@@ -50,25 +50,33 @@ public class WorkflowProcessService implements IWorkflowProcessService {
   }
 
   @Override
-  public List<Workflow> create(final WorkflowCreateRequest model, final String token)
+  public List<Workflow> create(final WorkflowSaveRequest model, final String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    final ICreateWorkflowStrategy createWorkflowStrategy = this.workStrategyFactory.selectCreateWorkStrategy(model, token);
+    prepareWorkflow(token, model.getWorkflow());
 
-    final List<Workflow> result = createWorkflowStrategy.process();
+    final IWorkflowSaveStrategy workflowStrategy = this.workStrategyFactory.selectWorkStrategy(model, token);
+
+    workflowStrategy.process();
+
+    final List<Workflow> result = workflowStrategy.getProceedWorkflowList();
 
     return this.prepareWorkflowList(token, result);
   }
 
   @Override
-  public Workflow save(final Workflow newWorkflow, final String token)
+  public Workflow save(final WorkflowSaveRequest request, final String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
-    logger.debug("Saving workflow {} with token {}", newWorkflow.getTitle(), token);
-    this.tokenCanSaveWorkflow(newWorkflow, token);
+    logger.debug("Saving workflow with token {}", token);
+    this.tokenCanSaveWorkflow(request.getWorkflow(), token);
 
-    final ISaveWorkflowStrategy strategy = this.workStrategyFactory.selectSaveWorkStrategy(newWorkflow, token);
+    prepareWorkflow(token, request.getWorkflow());
 
-    final Workflow result = strategy.process();
+    final IWorkflowSaveStrategy workflowStrategy = this.workStrategyFactory.selectWorkStrategy(request, token);
+
+    workflowStrategy.process();
+
+    final Workflow result = workflowStrategy.getSingleProceedWorkflow();
 
     return result;
   }
@@ -161,34 +169,31 @@ public class WorkflowProcessService implements IWorkflowProcessService {
     return true;
   }
 
-  private List<WorkflowTypeStep> getSortedStepsList(final WorkflowType workflowType) {
+  private Map<Long, WorkflowTypeStep> getIdMapedSteps(final WorkflowType workflowType) {
 
-    final List<WorkflowTypeStep> list = workflowType.getSteps().stream().sorted(new Comparator<WorkflowTypeStep>() {
-
-      @Override
-      public int compare(final WorkflowTypeStep o1, final WorkflowTypeStep o2) {
-
-        return o1.getStepIndex() > o2.getStepIndex() ? 1 : o1.getStepIndex() == o2.getStepIndex() ? 0 : -1;
-      }
-    }).collect(Collectors.toList());
+    final Map<Long, WorkflowTypeStep> list = workflowType.getSteps().stream().collect(Collectors.toMap(s -> s.getId(), s -> s));
 
     return list;
-  }
-
-  private List<Integer> getSortedStepsIndexList(final WorkflowType workflowType) {
-
-    final List<WorkflowTypeStep> list = this.getSortedStepsList(workflowType);
-
-    return list.stream().map(s -> s.getStepIndex()).sorted().collect(Collectors.toList());
   }
 
   private Workflow prepareWorkflow(final String token, final Workflow workflow)
       throws MalformedURLException, IFlowMessageConversionFailureException {
     final WorkflowType workflowType = this.workflowTypeDataService.getById(workflow.getWorkflowTypeId(), token);
-    final List<Integer> stepIndexList = this.getSortedStepsIndexList(workflowType);
-    final int index = stepIndexList.indexOf(workflow.getCurrentStep().getStepIndex());
 
-    workflow.setNextAssign(index < (stepIndexList.size() - 2));
+    workflow.setWorkflowType(workflowType);
+
+    final Map<Long, WorkflowTypeStep> map = getIdMapedSteps(workflowType);
+
+    workflow.setCurrentStep(map.containsKey(workflow.getCurrentStepId()) ? map.get(workflow.getCurrentStepId()) : null);
+    for (final WorkflowAction action : workflow.getActions()) {
+      action.setCurrentStep(map.containsKey(action.getCurrentStepId()) ? map.get(action.getCurrentStepId()) : null);
+    }
+
+    for (final WorkflowTypeStep typeStep : workflowType.getSteps()) {
+      if (typeStep.getId() == workflow.getCurrentStepId()) {
+        workflow.setCurrentStep(typeStep);
+      }
+    }
 
     return workflow;
   }

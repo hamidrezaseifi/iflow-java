@@ -18,16 +18,16 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.pth.iflow.common.edo.models.WorkflowCreateRequestEdo;
 import com.pth.iflow.common.edo.models.WorkflowEdo;
 import com.pth.iflow.common.edo.models.WorkflowListEdo;
+import com.pth.iflow.common.edo.models.WorkflowSaveRequestEdo;
 import com.pth.iflow.common.edo.models.WorkflowSearchFilterEdo;
 import com.pth.iflow.common.edo.models.WorkflowTypeListEdo;
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.gui.TestDataProducer;
 import com.pth.iflow.gui.configurations.GuiConfiguration;
 import com.pth.iflow.gui.models.GuiWorkflow;
-import com.pth.iflow.gui.models.GuiWorkflowCreateRequest;
+import com.pth.iflow.gui.models.GuiWorkflowSaveRequest;
 import com.pth.iflow.gui.models.GuiWorkflowSearchFilter;
 import com.pth.iflow.gui.models.GuiWorkflowType;
 import com.pth.iflow.gui.models.mapper.GuiModelEdoMapper;
@@ -38,33 +38,36 @@ import com.pth.iflow.gui.services.impl.WorkflowAccess;
 @AutoConfigureMockMvc
 public class WorkflowAccessTest extends TestDataProducer {
 
-  private IWorkflowAccess                     workflowAccess;
+  private IWorkflowAccess                             workflowAccess;
 
   @MockBean
-  private IRestTemplateCall                   restTemplate;
+  private IRestTemplateCall                           restTemplate;
 
   @MockBean
-  private GuiConfiguration.ModuleAccessConfig moduleAccessConfig;
+  private GuiConfiguration.WorkflowModuleAccessConfig workflowModuleAccessConfig;
 
-  private URI                                 testUri;
+  @MockBean
+  private GuiConfiguration.ProfileModuleAccessConfig  profileModuleAccessConfig;
 
-  private final String                        testToken = "test-token";
+  private URI                                         testUri;
+
+  private final String                                testToken = "test-token";
 
   @Before
   public void setUp() throws Exception {
 
     this.testUri = new URI("test-uri");
 
-    when(this.moduleAccessConfig.getAuthenticationUri()).thenReturn(this.testUri);
-    when(this.moduleAccessConfig.getCreateWorkflowUri()).thenReturn(this.testUri);
-    when(this.moduleAccessConfig.getReadAuthenticationInfoUri()).thenReturn(this.testUri);
-    when(this.moduleAccessConfig.getReadCompanyUserListUri(any(Long.class))).thenReturn(this.testUri);
-    when(this.moduleAccessConfig.getReadTokenInfoUri()).thenReturn(this.testUri);
-    when(this.moduleAccessConfig.getReadWorkflowTypeListUri(any(Long.class))).thenReturn(this.testUri);
-    when(this.moduleAccessConfig.getReadWorkflowUri(any(Long.class))).thenReturn(this.testUri);
-    when(this.moduleAccessConfig.getSearchWorkflowUri()).thenReturn(this.testUri);
+    when(this.profileModuleAccessConfig.getAuthenticationUri()).thenReturn(this.testUri);
+    when(this.workflowModuleAccessConfig.getCreateWorkflowUri()).thenReturn(this.testUri);
+    when(this.profileModuleAccessConfig.getReadAuthenticationInfoUri()).thenReturn(this.testUri);
+    when(this.profileModuleAccessConfig.getReadCompanyUserListUri(any(Long.class))).thenReturn(this.testUri);
+    when(this.profileModuleAccessConfig.getReadTokenInfoUri()).thenReturn(this.testUri);
+    when(this.workflowModuleAccessConfig.getReadWorkflowTypeListUri(any(Long.class))).thenReturn(this.testUri);
+    when(this.workflowModuleAccessConfig.getReadWorkflowUri(any(Long.class))).thenReturn(this.testUri);
+    when(this.workflowModuleAccessConfig.getSearchWorkflowUri()).thenReturn(this.testUri);
 
-    this.workflowAccess = new WorkflowAccess(this.restTemplate, this.moduleAccessConfig);
+    this.workflowAccess = new WorkflowAccess(this.restTemplate, this.workflowModuleAccessConfig);
 
   }
 
@@ -84,7 +87,6 @@ public class WorkflowAccessTest extends TestDataProducer {
 
     Assert.assertNotNull("Result workflow is not null!", resWorkflow);
     Assert.assertEquals("Result workflow has id 1!", resWorkflow.getId(), workflow.getId());
-    Assert.assertEquals("Result workflow has title '" + workflow.getTitle() + "'!", resWorkflow.getTitle(), workflow.getTitle());
     Assert.assertEquals("Result workflow has status 1!", resWorkflow.getStatus(), workflow.getStatus());
 
   }
@@ -92,11 +94,11 @@ public class WorkflowAccessTest extends TestDataProducer {
   @Test
   public void testCreateWorkflow() throws Exception {
 
-    final GuiWorkflowCreateRequest createRequest = this.getTestGuiWorkflowCreateRequest();
+    final GuiWorkflowSaveRequest createRequest = this.getTestGuiWorkflowSaveRequest();
 
     final List<GuiWorkflow> workflowList = this.getTestGuiWorkflowList();
 
-    when(this.restTemplate.callRestPost(any(URI.class), any(EModule.class), any(WorkflowCreateRequestEdo.class),
+    when(this.restTemplate.callRestPost(any(URI.class), any(EModule.class), any(WorkflowSaveRequestEdo.class),
         eq(WorkflowListEdo.class), any(String.class), any(boolean.class)))
             .thenReturn(new WorkflowListEdo(GuiModelEdoMapper.toWorkflowEdoList(workflowList)));
 
@@ -112,14 +114,15 @@ public class WorkflowAccessTest extends TestDataProducer {
   public void testSaveWorkflow() throws Exception {
     final GuiWorkflow workflow = this.getTestGuiWorkflow(1L);
 
+    final GuiWorkflowSaveRequest request = this.getTestGuiWorkflowSaveRequest(workflow);
+
     when(this.restTemplate.callRestPost(any(URI.class), any(EModule.class), any(WorkflowEdo.class), eq(WorkflowEdo.class),
         any(String.class), any(boolean.class))).thenReturn(GuiModelEdoMapper.toEdo(workflow));
 
-    final GuiWorkflow resWorkflow = this.workflowAccess.saveWorkflow(workflow, this.testToken);
+    final GuiWorkflow resWorkflow = this.workflowAccess.saveWorkflow(request, this.testToken);
 
     Assert.assertNotNull("Result workflow is not null!", resWorkflow);
     Assert.assertEquals("Result workflow has id 1!", resWorkflow.getId(), workflow.getId());
-    Assert.assertEquals("Result workflow has title '" + workflow.getTitle() + "'!", resWorkflow.getTitle(), workflow.getTitle());
     Assert.assertEquals("Result workflow has status 1!", resWorkflow.getStatus(), workflow.getStatus());
 
   }

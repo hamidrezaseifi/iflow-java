@@ -42,10 +42,40 @@ CREATE TABLE `invoice_workflow` (
   PRIMARY KEY (`workflow_id`)
 ) ENGINE=InnoDB;
 
-ALTER TABLE `iflow`.`workflow_type` 
-CHANGE COLUMN `manual_assign` `assign_type` SMALLINT(2) NOT NULL DEFAULT 1 ;
+
+INSERT INTO `workflow_type`(id, company_id, workflow_base_type, title, assign_type, send_to_controller, increase_step_automatic, allow_assign, commecnts, status, version) VALUES (1,1,0,'Einzel Aufgabe',1,1,1,0,NULL,1,1);
+INSERT INTO `workflow_type`(id, company_id, workflow_base_type, title, assign_type, send_to_controller, increase_step_automatic, allow_assign, commecnts, status, version) VALUES (2,1,0,'Drei Schritt Aufgabe',2,0,1,1,NULL,1,1);
+INSERT INTO `workflow_type`(id, company_id, workflow_base_type, title, assign_type, send_to_controller, increase_step_automatic, allow_assign, commecnts, status, version) VALUES (3,1,0,'Rechnung Wrokflow',2,0,1,1,NULL,1,1);
+
+INSERT INTO `workflow_type_step`(id, workflow_type_id, title, step_index, view_name, expire_days, commecnts, status, version) VALUES (1,1,'Augabe',1,'workflow/edit',15,NULL,1,1);
+
+INSERT INTO `workflow_type_step`(id, workflow_type_id, title, step_index, view_name, expire_days, commecnts, status, version) VALUES (2,2,'Schritt 1',1,'workflow/edit',15,NULL,1,1);
+INSERT INTO `workflow_type_step`(id, workflow_type_id, title, step_index, view_name, expire_days, commecnts, status, version) VALUES (3,2,'Schritt 2',2,'workflow/edit',15,NULL,1,1);
+INSERT INTO `workflow_type_step`(id, workflow_type_id, title, step_index, view_name, expire_days, commecnts, status, version) VALUES (4,2,'Schritt 3',3,'workflow/edit',15,NULL,1,1);
+
+INSERT INTO `workflow_type_step`(id, workflow_type_id, title, step_index, view_name, expire_days, commecnts, status, version) VALUES (5,3,'Rechungsverteilung',1,'workflow/invoce/invoice_assign',15,NULL,1,1);
+INSERT INTO `workflow_type_step`(id, workflow_type_id, title, step_index, view_name, expire_days, commecnts, status, version) VALUES (6,3,'Rechungsprüfung',2,'workflow/invoce/invoice_testing',15,NULL,1,1);
+INSERT INTO `workflow_type_step`(id, workflow_type_id, title, step_index, view_name, expire_days, commecnts, status, version) VALUES (7,3,'Rechungsfreigabe',3,'workflow/invoce/invoice_release',15,NULL,1,1);
+
+CREATE TABLE `workflow_message` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `workflow_id` int(11) NOT NULL,
+  `step_id` int(11) NOT NULL DEFAULT '0',
+  `user_id` int(11) NOT NULL,
+  `message` varchar(500) NOT NULL DEFAULT 'no message',
+  `created_by` int(11) NOT NULL,
+  `message_type` smallint(6) NOT NULL DEFAULT '1',
+  `version` int(11) NOT NULL DEFAULT '1',
+  `status` smallint(6) DEFAULT NULL,
+  `expire_days` smallint(6) NOT NULL,
+  `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  `updated_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  PRIMARY KEY (`id`),
+  KEY `FK_WORKFLOWOFFER_WORKFLOW_idx` (`workflow_id`),
+  KEY `FK_WORKFLOWOFFER_USER_idx` (`user_id`),
+  CONSTRAINT `FK_WORKFLOWOFFER_USER` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
+  CONSTRAINT `FK_WORKFLOWOFFER_WORKFLOW` FOREIGN KEY (`workflow_id`) REFERENCES `workflow` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
+) ENGINE=InnoDB;
 
 
-UPDATE `iflow`.`workflow_type` SET `assign_type` = '1' WHERE (`id` = '1');
-UPDATE `iflow`.`workflow_type` SET `assign_type` = '1' WHERE (`id` = '2');
 

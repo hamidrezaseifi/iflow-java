@@ -16,6 +16,8 @@ import org.springframework.http.converter.xml.MarshallingHttpMessageConverter;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.fasterxml.jackson.dataformat.xml.deser.FromXmlParser;
 import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
 import com.pth.iflow.common.edo.models.CompanyEdo;
 import com.pth.iflow.common.edo.models.DepartmentEdo;
@@ -35,7 +37,7 @@ import com.pth.iflow.common.edo.models.WorkflowTypeStepEdo;
 @Configuration
 public class XmlRestConfig {
 
-  private final Logger       log                            = LoggerFactory.getLogger(getClass());
+  private final Logger       log                            = LoggerFactory.getLogger(this.getClass());
 
   public static final String REQUEST_HEADER_IFLOW_CLIENT_ID = "IFLOW-CLIENT-ID";
 
@@ -53,7 +55,7 @@ public class XmlRestConfig {
 
   @Bean
   public MarshallingHttpMessageConverter marshallingMessageConverter() {
-    return new MarshallingHttpMessageConverter(jaxb2Marshaller(), jaxb2Marshaller());
+    return new MarshallingHttpMessageConverter(this.jaxb2Marshaller(), this.jaxb2Marshaller());
   }
 
   @Bean
@@ -79,8 +81,8 @@ public class XmlRestConfig {
      * use the JAXB stuff...| TM @ 21.07.2018
      */
     final RestTemplate restTemplate = new RestTemplate();
-    converter.getObjectMapper().registerModule(enableJaxbForJackson());
-    withXmlConverter(restTemplate, converter);
+    converter.getObjectMapper().registerModule(this.enableJaxbForJackson());
+    this.withXmlConverter(restTemplate, converter);
 
     restTemplate.getInterceptors().add((request, body, execution) -> {
       request.getHeaders().set(REQUEST_HEADER_IFLOW_CLIENT_ID, securityHeaderValue);
@@ -100,12 +102,17 @@ public class XmlRestConfig {
     final JaxbAnnotationModule jaxbAnnotationModule = new JaxbAnnotationModule();
 
     final List<HttpMessageConverter<?>> messageConverters = restTemplate.getMessageConverters();
-    messageConverters.add(marshallingMessageConverter());
+    messageConverters.add(this.marshallingMessageConverter());
 
     for (int i = 0; i < messageConverters.size(); i++) {
 
       if (messageConverters.get(i) instanceof MappingJackson2XmlHttpMessageConverter) {
-        ((MappingJackson2XmlHttpMessageConverter) messageConverters.get(i)).getObjectMapper().registerModule(jaxbAnnotationModule);
+        final MappingJackson2XmlHttpMessageConverter xmlConverter = (MappingJackson2XmlHttpMessageConverter) messageConverters.get(i);
+        final XmlMapper xmlMapper = (XmlMapper) xmlConverter.getObjectMapper();
+
+        xmlMapper.registerModule(jaxbAnnotationModule);
+        xmlMapper.disable(FromXmlParser.Feature.EMPTY_ELEMENT_AS_NULL);
+
       }
 
       if (messageConverters.get(i).canRead(WorkflowEdo.class, MediaType.APPLICATION_XML)) {

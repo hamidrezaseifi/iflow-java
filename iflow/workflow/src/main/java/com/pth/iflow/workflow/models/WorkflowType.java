@@ -92,6 +92,14 @@ public class WorkflowType extends DataModelBase {
     this.assignType = assignType;
   }
 
+  public boolean isAssignTypeManual() {
+    return this.assignType == EWorkflowTypeAssignType.MANUAL;
+  }
+
+  public boolean isAssignTypeOffering() {
+    return this.assignType == EWorkflowTypeAssignType.OFFER;
+  }
+
   public Boolean getIncreaseStepAutomatic() {
     return this.increaseStepAutomatic;
   }

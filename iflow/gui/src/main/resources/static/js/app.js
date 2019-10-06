@@ -1,5 +1,5 @@
 
-var iflowApp = angular.module('iflowApp', ['ngMaterial', 'ngTable', 'ngMaterialAccordion', 'ngSanitize']);
+var iflowApp = angular.module('iflowApp', ['ngMaterial', 'ngTable', 'ngMaterialAccordion', 'ngSanitize', 'angularResizable']);
 
 
 iflowApp.config(function($mdDateLocaleProvider) {
@@ -50,9 +50,17 @@ iflowApp.controller('BodyController', function ($scope, $http, $sce, $element, $
 	$scope.errorMessage = "";
 	$scope.menulist = [];
 
-  $scope.messageTitle = "";
-  $scope.messageContent = "";
-
+	$scope.messageTitle = "";
+	$scope.messageContent = "";
+	
+    $scope.$on("angular-resizable.resizeEnd", function(event, args) {        
+    	
+        if (args.height && args.id == 'message-panel-container'){
+        	$scope.messagePanelHeight = args.height;
+        }
+        	
+    });
+    
 	$scope.toggleRight = function(){
 		$mdSidenav('rightSidenav').toggle();
     };
@@ -91,45 +99,39 @@ iflowApp.controller('BodyController', function ($scope, $http, $sce, $element, $
 		$scope.isShowError = false;
 	};
   
-  $scope.ShowMessageBox = function(message, title){
-    if(title == undefined){
-      title = "";
-    }
-    $scope.messageTitle = title;
-    $scope.messageContent = message;
-    $scope.isShowMessage = true;
-  };
+	$scope.ShowMessageBox = function(message, title){
+		if(title == undefined){
+		  title = "";
+		}
+		$scope.messageTitle = title;
+		$scope.messageContent = message;
+		$scope.isShowMessage = true;
+	};
   
-  $scope.closeMessageBox = function(){
+	$scope.closeMessageBox = function(){
 
-    $scope.isShowMessage = false;
-  };
+		$scope.isShowMessage = false;
+	};
         
     
-    if(angular.element("md-sidenav[md-component-id='rightSidenav']").length == 1){
-    	$scope.$watch(function(){
-  	      return $mdComponentRegistry.get('rightSidenav') ? $mdSidenav('rightSidenav').isOpen() : true;
-  	    }, 
-  	    function(newVal){
-  	    	if($mdSidenav('rightSidenav').isOpen()){ 
-  	    		if(!angular.element("body").hasClass("overdialog")){
-  	    			angular.element("body").addClass("overdialog");
-  	    		}
-  	    		
-  	    	} 
-  	    	else{
-  	    		angular.element("body").removeClass("overdialog");
-  	    	}
-  	});
-    }
-    
-    setTimeout(function(){ 
-    	$('button.md-accordion-toggle.md-button').click(function(ev){
-    		toggleAll(ev.target);
-        });
-    }, 1000);
-    
-    
+	if(angular.element("md-sidenav[md-component-id='rightSidenav']").length == 1){
+		$scope.$watch(function(){
+	      return $mdComponentRegistry.get('rightSidenav') ? $mdSidenav('rightSidenav').isOpen() : true;
+	    }, 
+	    function(newVal){
+	    	if($mdSidenav('rightSidenav').isOpen()){ 
+	    		if(!angular.element("body").hasClass("overdialog")){
+	    			angular.element("body").addClass("overdialog");
+	    		}
+	    		
+	    	} 
+	    	else{
+	    		angular.element("body").removeClass("overdialog");
+	    	}
+	});
+	}
+	
+	
 	function toggleAll(element){
 		var button = $(element).parents("button");
 		var content = button.next();
@@ -137,8 +139,5 @@ iflowApp.controller('BodyController', function ($scope, $http, $sce, $element, $
 		$(".md-accordion-group button.md-accordion-toggle.md-button.md-active").removeClass("md-active");
 		$(".md-accordion-group div.md-accordion-wrapper.md-active").removeClass("md-active");
 	}
-    
-
-    
 
 });

@@ -17,9 +17,12 @@ import com.pth.iflow.common.edo.models.WorkflowActionEdo;
 import com.pth.iflow.common.edo.models.WorkflowEdo;
 import com.pth.iflow.common.edo.models.WorkflowFileEdo;
 import com.pth.iflow.common.edo.models.WorkflowFileVersionEdo;
+import com.pth.iflow.common.edo.models.WorkflowMessageEdo;
 import com.pth.iflow.common.edo.models.WorkflowSearchFilterEdo;
 import com.pth.iflow.common.edo.models.WorkflowTypeEdo;
 import com.pth.iflow.common.edo.models.WorkflowTypeStepEdo;
+import com.pth.iflow.common.enums.EWorkflowMessageStatus;
+import com.pth.iflow.common.enums.EWorkflowMessageType;
 import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.core.model.Company;
@@ -31,6 +34,7 @@ import com.pth.iflow.core.model.Workflow;
 import com.pth.iflow.core.model.WorkflowAction;
 import com.pth.iflow.core.model.WorkflowFile;
 import com.pth.iflow.core.model.WorkflowFileVersion;
+import com.pth.iflow.core.model.WorkflowMessage;
 import com.pth.iflow.core.model.WorkflowSearchFilter;
 import com.pth.iflow.core.model.WorkflowType;
 import com.pth.iflow.core.model.WorkflowTypeStep;
@@ -61,6 +65,41 @@ public class CoreModelEdoMapper {
     model.setId(edo.getId());
 
     return model;
+  }
+
+  public static WorkflowMessage fromEdo(final WorkflowMessageEdo edo) throws IFlowMessageConversionFailureException {
+    validateCustomer(edo);
+
+    final WorkflowMessage model = new WorkflowMessage();
+    model.setId(edo.getId());
+    model.setStatus(EWorkflowMessageStatus.ofValue(edo.getStatus()));
+    model.setUserId(edo.getUserId());
+    model.setCreatedBy(edo.getCreatedBy());
+    model.setVersion(edo.getVersion());
+    model.setWorkflowId(edo.getWorkflowId());
+    model.setMessageType(EWorkflowMessageType.ofValue(edo.getMessageType()));
+    model.setExpireDays(edo.getExpireDays());
+    model.setMessage(edo.getMessage());
+    model.setStepId(edo.getStepId());
+
+    return model;
+  }
+
+  public static WorkflowMessageEdo toEdo(final WorkflowMessage model) {
+    final WorkflowMessageEdo edo = new WorkflowMessageEdo();
+    edo.setId(model.getId());
+    edo.setStatus(model.getStatus().getValue());
+    edo.setUserId(model.getUserId());
+    edo.setCreatedBy(model.getCreatedBy());
+    edo.setVersion(model.getVersion());
+    edo.setWorkflowId(model.getWorkflowId());
+    edo.setMessageType(model.getMessageType().getValue());
+    edo.setExpireDays(model.getExpireDays());
+    edo.setMessage(model.getMessage());
+    edo.setCreatedAt(model.getCreatedAt());
+    edo.setStepId(model.getStepId());
+
+    return edo;
   }
 
   public static DepartmentEdo toEdo(final Department model) {
@@ -185,19 +224,14 @@ public class CoreModelEdoMapper {
 
   public static WorkflowEdo toEdo(final Workflow model) {
     final WorkflowEdo edo = new WorkflowEdo();
-    edo.setTitle(model.getTitle());
     edo.setComments(model.getComments());
     edo.setStatus(model.getStatusInt());
     edo.setId(model.getId());
     edo.setController(model.getController());
-    edo.setCurrentStep(toEdo(model.getCurrentStep()));
-    edo.setCurrentStepId(model.getCurrentStep() != null ? model.getCurrentStep().getId() : null);
+    edo.setCurrentStepId(model.getCurrentStepId());
     edo.setCreatedBy(model.getCreatedBy());
     edo.setWorkflowTypeId(model.getWorkflowTypeId());
     edo.setVersion(model.getVersion());
-    edo.setNextAssign(model.getNextAssign());
-    edo.setAssignTo(model.getAssignTo());
-    edo.setCommand(model.getCommand());
 
     edo.setFiles(toWorkflowFileEdoList(model.getFiles()));
     edo.setActions(toWorkflowActionEdoList(model.getActions()));
@@ -210,18 +244,14 @@ public class CoreModelEdoMapper {
 
     final Workflow model = new Workflow();
 
-    model.setTitle(edo.getTitle());
     model.setComments(edo.getComments());
     model.setStatus(edo.getStatus());
     model.setId(edo.getId());
     model.setController(edo.getController());
-    model.setCurrentStep(fromEdo(edo.getCurrentStep()));
     model.setCreatedBy(edo.getCreatedBy());
     model.setWorkflowTypeId(edo.getWorkflowTypeId());
     model.setVersion(edo.getVersion());
-    model.setNextAssign(edo.getNextAssign());
-    model.setAssignTo(edo.getAssignTo());
-    model.setCommand(edo.getCommand());
+    model.setCurrentStepId(edo.getCurrentStepId());
 
     model.setFiles(fromWorkflowFileEdoList(edo.getFiles()));
     model.setActions(fromWorkflowActionEdoList(edo.getActions()));
@@ -231,14 +261,11 @@ public class CoreModelEdoMapper {
 
   public static WorkflowActionEdo toEdo(final WorkflowAction model) {
     final WorkflowActionEdo edo = new WorkflowActionEdo();
-    edo.setAction(model.getAction());
     edo.setComments(model.getComments());
     edo.setStatus(model.getStatus());
     edo.setId(model.getId());
-    edo.setCreatedBy(model.getCreatedBy());
-    edo.setOldStep(model.getOldStep());
-    edo.setNewStep(model.getNewStep());
-    edo.setNextAssign(model.getNextAssign());
+    edo.setAssignTo(model.getAssignTo());
+    edo.setCurrentStepId(model.getCurrentStepId());
     edo.setWorkflowId(model.getWorkflowId());
     edo.setVersion(model.getVersion());
 
@@ -250,16 +277,13 @@ public class CoreModelEdoMapper {
 
     final WorkflowAction model = new WorkflowAction();
 
-    model.setAction(edo.getAction());
     model.setComments(edo.getComments());
     model.setStatus(edo.getStatus());
     model.setId(edo.getId());
-    model.setCreatedBy(edo.getCreatedBy());
-    model.setOldStep(edo.getOldStep());
-    model.setNewStep(edo.getNewStep());
-    model.setNextAssign(edo.getNextAssign());
+    model.setCurrentStepId(edo.getCurrentStepId());
     model.setWorkflowId(edo.getWorkflowId());
     model.setVersion(edo.getVersion());
+    model.setAssignTo(edo.getAssignTo());
 
     return model;
   }
@@ -268,6 +292,7 @@ public class CoreModelEdoMapper {
     final WorkflowTypeStepEdo edo = new WorkflowTypeStepEdo();
     edo.setStepIndex(model.getStepIndex());
     edo.setViewName(model.getViewName());
+    edo.setExpireDays(model.getExpireDays());
     edo.setTitle(model.getTitle());
     edo.setComments(model.getComments());
     edo.setStatus(model.getStatus());
@@ -285,6 +310,7 @@ public class CoreModelEdoMapper {
 
     model.setStepIndex(edo.getStepIndex());
     model.setViewName(edo.getViewName());
+    model.setExpireDays(edo.getExpireDays());
     model.setTitle(edo.getTitle());
     model.setComments(edo.getComments());
     model.setStatus(edo.getStatus());
@@ -405,7 +431,6 @@ public class CoreModelEdoMapper {
     final WorkflowSearchFilterEdo edo = new WorkflowSearchFilterEdo();
     edo.setAssignedUserIdList(model.getAssignedUserIdList());
     edo.setStatusList(model.getStatusList());
-    edo.setTitle(model.getTitle());
     edo.setWorkflowStepeIdList(model.getWorkflowStepeIdList());
     edo.setWorkflowTypeIdList(model.getWorkflowTypeIdList());
 
@@ -418,7 +443,6 @@ public class CoreModelEdoMapper {
     final WorkflowSearchFilter model = new WorkflowSearchFilter();
     model.setAssignedUserIdList(edo.getAssignedUserIdList());
     model.setStatusList(edo.getStatusList());
-    model.setTitle(edo.getTitle());
     model.setWorkflowStepeIdList(edo.getWorkflowStepeIdList());
     model.setWorkflowTypeIdList(edo.getWorkflowTypeIdList());
 
@@ -467,6 +491,15 @@ public class CoreModelEdoMapper {
   public static List<WorkflowActionEdo> toWorkflowActionEdoList(final List<WorkflowAction> modelList) {
     final List<WorkflowActionEdo> edoList = new ArrayList<>();
     for (final WorkflowAction model : modelList) {
+      edoList.add(toEdo(model));
+    }
+
+    return edoList;
+  }
+
+  public static List<WorkflowMessageEdo> toWorkflowMessageEdoList(final List<WorkflowMessage> modelList) {
+    final List<WorkflowMessageEdo> edoList = new ArrayList<>();
+    for (final WorkflowMessage model : modelList) {
       edoList.add(toEdo(model));
     }
 

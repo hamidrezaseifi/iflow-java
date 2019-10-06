@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 
 @JsonIgnoreProperties(value = { "isAssignTo" })
@@ -19,14 +18,10 @@ public class GuiWorkflow {
   private GuiUser                       controllerUser;
   private Long                          createdBy;
   private GuiUser                       createdByUser;
-  private Long                          assignTo;
-  private GuiUser                       assignToUser;
-  private String                        title;
   private String                        comments;
   private EWorkflowStatus               status;
   private Integer                       version;
-  private Boolean                       nextAssign;
-  private EWorkflowProcessCommand       command;
+  private Long                          currentUserId;
 
   private final List<GuiWorkflowFile>   files   = new ArrayList<>();
   private final List<GuiWorkflowAction> actions = new ArrayList<>();
@@ -121,40 +116,6 @@ public class GuiWorkflow {
     this.createdByUser = createdByUser;
   }
 
-  public Long getAssignTo() {
-    return this.assignTo;
-  }
-
-  public boolean isAssignTo(final Long userId) {
-    return this.assignTo == userId;
-  }
-
-  public void setAssignTo(final Long assignTo) {
-    this.assignTo = assignTo;
-  }
-
-  /**
-   * @return the assignToUser
-   */
-  public GuiUser getAssignToUser() {
-    return this.assignToUser;
-  }
-
-  /**
-   * @param assignToUser the assignToUser to set
-   */
-  public void setAssignToUser(final GuiUser assignToUser) {
-    this.assignToUser = assignToUser;
-  }
-
-  public String getTitle() {
-    return this.title;
-  }
-
-  public void setTitle(final String title) {
-    this.title = title;
-  }
-
   public String getComments() {
     return this.comments;
   }
@@ -185,22 +146,6 @@ public class GuiWorkflow {
 
   public void setVersion(final Integer version) {
     this.version = version;
-  }
-
-  public Boolean getNextAssign() {
-    return this.nextAssign;
-  }
-
-  public void setNextAssign(final Boolean nextAssign) {
-    this.nextAssign = nextAssign;
-  }
-
-  public EWorkflowProcessCommand getCommand() {
-    return this.command;
-  }
-
-  public void setCommand(final EWorkflowProcessCommand command) {
-    this.command = command;
   }
 
   public List<GuiWorkflowFile> getFiles() {
@@ -264,6 +209,10 @@ public class GuiWorkflow {
     this.actions.add(action);
   }
 
+  public void setCurrentUserId(final Long currentUserId) {
+    this.currentUserId = currentUserId;
+  }
+
   public boolean isAfterStep(final GuiWorkflow other) {
     return this.currentStep.isAfterStep(other.getCurrentStep());
   }
@@ -296,6 +245,18 @@ public class GuiWorkflow {
     return this.getIsNew() && (this.getStatus() == EWorkflowStatus.INITIALIZE);
   }
 
+  public boolean isAssigned() {
+    return this.getIsNew() == false && (this.getStatus() == EWorkflowStatus.ASSIGNED);
+  }
+
+  public boolean isMeAssigned() {
+    return this.isAssigned() && (this.getHasActiveAction() && this.getActiveAction().isAssignTo(this.currentUserId));
+  }
+
+  public boolean isNotAssigned() {
+    return this.isAssigned() == false;
+  }
+
   public boolean getHasActiveAction() {
 
     return this.getActiveAction() != null;
@@ -323,22 +284,26 @@ public class GuiWorkflow {
   }
 
   public boolean getIsOpen() {
-    return (this.assignTo != null) && (this.assignTo > 0) && (this.status == EWorkflowStatus.ASSIGNED);
+    return (this.status == EWorkflowStatus.ASSIGNED);
+  }
+
+  public String getAssignToUserFullName() {
+    if (this.getHasActiveAction()) {
+      return this.getActiveAction().getAssignToUserName();
+    }
+    return "";
   }
 
   public static GuiWorkflow generateInitial(final Long creatorId) {
     final GuiWorkflow newWorkflow = new GuiWorkflow();
     newWorkflow.setStatus(EWorkflowStatus.INITIALIZE);
-    newWorkflow.setAssignTo(0L);
     newWorkflow.setCreatedBy(creatorId);
     newWorkflow.setController(0L);
     newWorkflow.setCurrentStepId(0L);
     newWorkflow.setId(0L);
-    newWorkflow.setTitle("");
     newWorkflow.setVersion(0);
     newWorkflow.setWorkflowTypeId(0L);
     newWorkflow.setComments("");
-    newWorkflow.setCommand(EWorkflowProcessCommand.CREATE);
 
     return newWorkflow;
   }

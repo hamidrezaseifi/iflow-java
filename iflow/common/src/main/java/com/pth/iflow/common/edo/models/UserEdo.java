@@ -1,7 +1,7 @@
 package com.pth.iflow.common.edo.models;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.validation.constraints.NotNull;
@@ -13,6 +13,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import com.fasterxml.jackson.annotation.JsonSetter;
 import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 import com.pth.iflow.common.edo.models.helper.DateEdoAdapter;
 
@@ -24,55 +25,59 @@ public class UserEdo {
   @XmlElement(name = "ID", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Long                id;
 
-  @NotNull
+  @NotNull(message = "CompanyId must not be null")
   @XmlElement(name = "CompanyId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Long                companyId;
 
-  @NotNull
+  @NotNull(message = "Email must not be null")
   @XmlElement(name = "Email", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String              email;
 
-  @NotNull
   @XmlJavaTypeAdapter(DateEdoAdapter.class)
   @XmlElement(name = "BirthDate", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Date                birthDate;
+  private LocalDate           birthDate;
 
-  @NotNull
+  @NotNull(message = "FirstName must not be null")
   @XmlElement(name = "FirstName", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String              firstName;
 
-  @NotNull
+  @NotNull(message = "LastName must not be null")
   @XmlElement(name = "LastName", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String              lastName;
 
-  @NotNull
+  @NotNull(message = "Status must not be null")
   @XmlElement(name = "Status", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer             status;
 
-  @NotNull
+  @NotNull(message = "Version must not be null")
   @XmlElement(name = "Version", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer             version;
 
-  @NotNull
+  @NotNull(message = "Permission must not be null")
   @XmlElement(name = "Permission", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer             permission;
 
+  @NotNull(message = "GroupList must not be null")
   @XmlElementWrapper(name = "GroupList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "Group")
   private final List<Long>    groups           = new ArrayList<>();
 
+  @NotNull(message = "DepartmentList must not be null")
   @XmlElementWrapper(name = "DepartmentList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "Department", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private final List<Long>    departments      = new ArrayList<>();
 
+  @NotNull(message = "DepartmentGroupList must not be null")
   @XmlElementWrapper(name = "DepartmentGroupList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "DepartmentGroup", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private final List<Long>    departmentGroups = new ArrayList<>();
 
+  @NotNull(message = "DeputyList must not be null")
   @XmlElementWrapper(name = "DeputyList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "Deputy", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private final List<Long>    deputies         = new ArrayList<>();
 
+  @NotNull(message = "RoleList must not be null")
   @XmlElementWrapper(name = "RoleList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "Role", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private final List<Integer> roles            = new ArrayList<>();
@@ -119,11 +124,11 @@ public class UserEdo {
     this.email = email;
   }
 
-  public Date getBirthDate() {
+  public LocalDate getBirthDate() {
     return this.birthDate;
   }
 
-  public void setBirthDate(final Date birthDate) {
+  public void setBirthDate(final LocalDate birthDate) {
     this.birthDate = birthDate;
   }
 
@@ -195,6 +200,7 @@ public class UserEdo {
     return this.groups;
   }
 
+  @JsonSetter
   public void setGroups(final List<Long> groups) {
     this.groups.clear();
     if (groups != null) {
@@ -210,6 +216,7 @@ public class UserEdo {
     return this.departments;
   }
 
+  @JsonSetter
   public void setDepartments(final List<Long> departments) {
     this.departments.clear();
     if (departments != null) {
@@ -225,6 +232,7 @@ public class UserEdo {
     return this.departmentGroups;
   }
 
+  @JsonSetter
   public void setDepartmentGroups(final List<Long> departmentGroups) {
     this.departmentGroups.clear();
     if (departmentGroups != null) {
@@ -240,6 +248,7 @@ public class UserEdo {
     return this.deputies;
   }
 
+  @JsonSetter
   public void setDeputies(final List<Long> deputies) {
     this.deputies.clear();
     if (deputies != null) {
@@ -255,6 +264,7 @@ public class UserEdo {
     return this.roles;
   }
 
+  @JsonSetter
   public void setRoles(final List<Integer> roles) {
     this.roles.clear();
     if (roles != null) {

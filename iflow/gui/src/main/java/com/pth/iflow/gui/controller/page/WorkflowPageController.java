@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.pth.iflow.common.enums.EAssignType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.GuiWorkflow;
 import com.pth.iflow.gui.models.GuiWorkflowFile;
+import com.pth.iflow.gui.models.GuiWorkflowMessage;
 import com.pth.iflow.gui.models.ui.FileSavingData;
 import com.pth.iflow.gui.services.IUploadFileManager;
 import com.pth.iflow.gui.services.IWorkflowHandler;
@@ -46,6 +48,10 @@ public class WorkflowPageController extends GuiPageControllerBase {
   @GetMapping(path = { "/create" })
   public String showWorkflowCreate(final Model model) throws GuiCustomizedException, MalformedURLException {
 
+    model.addAttribute("UserAssign", EAssignType.USER.getName());
+    model.addAttribute("DepartmentAssign", EAssignType.DEPARTMENT.getName());
+    model.addAttribute("DepartmentGroupAssign", EAssignType.DEPARTMENTGROUP.getName());
+
     return "workflow/create";
   }
 
@@ -61,7 +67,11 @@ public class WorkflowPageController extends GuiPageControllerBase {
 
     final GuiWorkflow workflow = this.workflowHandler.readWorkflow(iWorkflowId);
 
+    model.addAttribute("UserAssign", EAssignType.USER.getName());
+    model.addAttribute("DepartmentAssign", EAssignType.DEPARTMENT.getName());
+    model.addAttribute("DepartmentGroupAssign", EAssignType.DEPARTMENTGROUP.getName());
     model.addAttribute("workflowId", iWorkflowId);
+
     return workflow.getCurrentStep().getViewName(); // "workflow/edit";
   }
 
@@ -100,6 +110,32 @@ public class WorkflowPageController extends GuiPageControllerBase {
     final ResponseEntity<InputStreamResource> respEntity = fData.generateFileReposneEntity(readFilePath);
 
     return respEntity;
+  }
+
+  @ResponseStatus(HttpStatus.OK)
+  @GetMapping(path = { "/message/process/{id}" })
+  public void processMessage(final Model model, @PathVariable(required = true) final Long id, final HttpServletResponse response)
+      throws GuiCustomizedException, IOException, IFlowMessageConversionFailureException {
+
+    String redirectUrl = "/workflow/invalid-message";
+    this.getWorkflowMessageHanlder().callUserMessageReset();
+
+    this.callUserMessageReset();
+    this.readUserMessages();
+    final GuiWorkflowMessage cachedMessage = this.getCachedWorkflowMessage(id);
+    if (cachedMessage != null && cachedMessage.isOffering()) {
+      redirectUrl = "/workflow/edit/" + cachedMessage.getWorkflowId();
+
+    }
+
+    response.sendRedirect(redirectUrl);
+  }
+
+  @ResponseStatus(HttpStatus.OK)
+  @GetMapping(path = { "/invalid-message" })
+  public String showInvalidMessage(final Model model) throws GuiCustomizedException, MalformedURLException {
+
+    return "workflow/invalid-message";
   }
 
 }

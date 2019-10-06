@@ -4,7 +4,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
-import java.net.URL;
+import java.net.URI;
 import java.util.List;
 
 import org.junit.After;
@@ -49,9 +49,9 @@ public class WorkflowTypeDataServiceTest extends TestDataProducer {
   public void setUp() throws Exception {
     this.workflowTypeService = new WorkflowTypeCoreConnectService(this.restTemplate, this.moduleAccessConfig);
 
-    when(this.moduleAccessConfig.generateCoreUrl(any(String.class))).thenReturn(new URL("http://any-string"));
+    when(this.moduleAccessConfig.generateCoreUrl(any(URI.class))).thenReturn(new URI("http://any-string"));
 
-    when(this.moduleAccessConfig.generateProfileUrl(any(String.class))).thenReturn(new URL("http://any-string"));
+    when(this.moduleAccessConfig.generateProfileUrl(any(URI.class))).thenReturn(new URI("http://any-string"));
 
     this.validTocken = "validTocken";
   }
@@ -66,7 +66,7 @@ public class WorkflowTypeDataServiceTest extends TestDataProducer {
     final WorkflowType workflowType = this.getTestWorkflowType();
     final WorkflowTypeEdo workflowTypeEdo = WorkflowModelEdoMapper.toEdo(workflowType);
 
-    when(this.restTemplate.callRestGet(any(URL.class), any(String.class), any(EModule.class), any(Class.class), any(boolean.class),
+    when(this.restTemplate.callRestGet(any(URI.class), any(String.class), any(EModule.class), any(Class.class), any(boolean.class),
         any())).thenReturn(workflowTypeEdo);
 
     final WorkflowType resWorkflowType = this.workflowTypeService.getById(workflowType.getId(), this.validTocken);
@@ -86,7 +86,7 @@ public class WorkflowTypeDataServiceTest extends TestDataProducer {
     final List<WorkflowType> list = this.getTestWorkflowTypeList();
     final WorkflowTypeListEdo edoList = new WorkflowTypeListEdo(WorkflowModelEdoMapper.toWorkflowTypeEdoList(list));
 
-    when(this.restTemplate.callRestPost(any(URL.class), any(String.class), any(EModule.class), any(List.class),
+    when(this.restTemplate.callRestPost(any(URI.class), any(String.class), any(EModule.class), any(List.class),
         eq(WorkflowTypeListEdo.class), any(boolean.class))).thenReturn(edoList);
 
     final List<WorkflowType> resList = this.workflowTypeService.getListByIdList(idList, this.validTocken);
@@ -102,7 +102,7 @@ public class WorkflowTypeDataServiceTest extends TestDataProducer {
     final List<WorkflowType> list = this.getTestWorkflowTypeList();
     final WorkflowTypeListEdo edoList = new WorkflowTypeListEdo(WorkflowModelEdoMapper.toWorkflowTypeEdoList(list));
 
-    when(this.restTemplate.callRestGet(any(URL.class), any(String.class), any(EModule.class), eq(WorkflowTypeListEdo.class),
+    when(this.restTemplate.callRestGet(any(URI.class), any(String.class), any(EModule.class), eq(WorkflowTypeListEdo.class),
         any(boolean.class), any())).thenReturn(edoList);
 
     final List<WorkflowType> resList = this.workflowTypeService.getListByIdCompanyId(1L, this.validTocken);
@@ -118,7 +118,7 @@ public class WorkflowTypeDataServiceTest extends TestDataProducer {
     final List<WorkflowTypeStep> list = this.getTestWorkflowTypeStepList();
     final WorkflowTypeStepListEdo edoList = new WorkflowTypeStepListEdo(WorkflowModelEdoMapper.toWorkflowTypeStepEdoList(list));
 
-    when(this.restTemplate.callRestGet(any(URL.class), any(String.class), any(EModule.class), eq(WorkflowTypeStepListEdo.class),
+    when(this.restTemplate.callRestGet(any(URI.class), any(String.class), any(EModule.class), eq(WorkflowTypeStepListEdo.class),
         any(boolean.class), any())).thenReturn(edoList);
 
     final List<WorkflowTypeStep> resList = this.workflowTypeService.getStepsById(1L, this.validTocken);

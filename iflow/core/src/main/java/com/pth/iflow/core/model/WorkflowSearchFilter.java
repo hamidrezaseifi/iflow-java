@@ -5,15 +5,13 @@ import java.util.List;
 
 public class WorkflowSearchFilter {
 
-  private List<Long> assignedUserIdList = new ArrayList<>();
+  private List<Long>    assignedUserIdList  = new ArrayList<>();
 
-  private List<Integer> statusList = new ArrayList<>();
+  private List<Integer> statusList          = new ArrayList<>();
 
-  private List<Long> workflowTypeIdList = new ArrayList<>();
+  private List<Long>    workflowTypeIdList  = new ArrayList<>();
 
-  private List<Long> workflowStepeIdList = new ArrayList<>();
-
-  private String title;
+  private List<Long>    workflowStepeIdList = new ArrayList<>();
 
   public List<Long> getAssignedUserIdList() {
     return this.assignedUserIdList;
@@ -57,14 +55,6 @@ public class WorkflowSearchFilter {
     if (workflowStepeIdList != null) {
       this.workflowStepeIdList.addAll(workflowStepeIdList);
     }
-  }
-
-  public String getTitle() {
-    return this.title;
-  }
-
-  public void setTitle(final String title) {
-    this.title = title;
   }
 
 }

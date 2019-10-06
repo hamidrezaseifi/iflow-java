@@ -8,11 +8,8 @@ public class WorkflowAction extends DataModelBase {
 
   private Long          id;
   private Long          workflowId;
-  private Long          createdBy;
-  private String        action;
-  private Long          oldStep;
-  private Long          newStep;
-  private Long          nextAssign;
+  private Long          assignTo;
+  private Long          currentStepId;
   private String        comments;
   private Integer       status;
   private Integer       version;
@@ -37,44 +34,20 @@ public class WorkflowAction extends DataModelBase {
     this.workflowId = workflowId;
   }
 
-  public String getAction() {
-    return this.action;
+  public Long getCurrentStepId() {
+    return currentStepId;
   }
 
-  public void setAction(final String action) {
-    this.action = action;
+  public void setCurrentStepId(final Long currentStepId) {
+    this.currentStepId = currentStepId;
   }
 
-  public Long getOldStep() {
-    return this.oldStep;
+  public Long getAssignTo() {
+    return this.assignTo;
   }
 
-  public void setOldStep(final Long oldStep) {
-    this.oldStep = oldStep;
-  }
-
-  public Long getNewStep() {
-    return this.newStep;
-  }
-
-  public void setNewStep(final Long newStep) {
-    this.newStep = newStep;
-  }
-
-  public Long getNextAssign() {
-    return this.nextAssign;
-  }
-
-  public void setNextAssign(final Long nextAssign) {
-    this.nextAssign = nextAssign;
-  }
-
-  public Long getCreatedBy() {
-    return this.createdBy;
-  }
-
-  public void setCreatedBy(final Long createdBy) {
-    this.createdBy = createdBy;
+  public void setAssignTo(final Long assignTo) {
+    this.assignTo = assignTo;
   }
 
   public String getComments() {

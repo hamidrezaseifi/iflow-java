@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
@@ -28,9 +29,11 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
+import com.pth.iflow.gui.models.GuiDepartment;
 import com.pth.iflow.gui.models.GuiUser;
 import com.pth.iflow.gui.models.GuiWorkflow;
-import com.pth.iflow.gui.models.GuiWorkflowCreateRequest;
+import com.pth.iflow.gui.models.GuiWorkflowMessage;
+import com.pth.iflow.gui.models.GuiWorkflowSaveRequest;
 import com.pth.iflow.gui.models.GuiWorkflowSearchFilter;
 import com.pth.iflow.gui.models.GuiWorkflowType;
 import com.pth.iflow.gui.models.ui.FileSavingData;
@@ -108,11 +111,29 @@ public class WorkflowDataController extends GuiDataControllerBase {
 
     final GuiWorkflow newWorkflow = GuiWorkflow.generateInitial(this.getLoggedUser().getId());
 
-    final GuiWorkflowCreateRequest workflowReq = new GuiWorkflowCreateRequest(newWorkflow);
+    final GuiWorkflowSaveRequest workflowReq = GuiWorkflowSaveRequest.generateNewWihExpireDays(newWorkflow,
+        newWorkflow.getHasActiveAction() ? newWorkflow.getActiveAction().getCurrentStep().getExpireDays() : 15);
 
     map.put("users", userList);
     map.put("workflowTypes", workflowTypeList);
     map.put("workflowCreateRequest", workflowReq);
+
+    return map;
+  }
+
+  @ResponseStatus(HttpStatus.OK)
+  @PostMapping(path = { "/workflowcreate/typedata/{typeId}" })
+  @ResponseBody
+  public Map<String, Object> loadWorkflowTypeInitData(@PathVariable final Long typeId)
+      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+
+    final Map<String, Object> map = new HashMap<>();
+
+    final List<GuiUser> userList = this.getSessionUserInfo().getCompanyUserList();
+    final List<GuiDepartment> departmentList = this.getSessionUserInfo().getCompanyDepartments();
+
+    map.put("users", userList);
+    map.put("departments", departmentList);
 
     return map;
   }
@@ -129,11 +150,15 @@ public class WorkflowDataController extends GuiDataControllerBase {
 
     final GuiWorkflow workflow = this.workflowHandler.readWorkflow(workflowId);
 
-    final GuiWorkflowType workflowType = this.getSessionUserInfo().getWorkflowTypeById(workflow.getWorkflowTypeId());
+    final List<GuiDepartment> departmentList = this.getSessionUserInfo().getCompanyDepartments();
+
+    final Integer expireDays = workflow.getHasActiveAction() ? workflow.getActiveAction().getCurrentStep().getExpireDays() : 0;
+    final GuiWorkflowSaveRequest saveRequest = GuiWorkflowSaveRequest.generateNewWihExpireDays(workflow, expireDays);
 
     map.put("users", userList);
     map.put("workflow", workflow);
-    map.put("workflowType", workflowType);
+    map.put("saveRequest", saveRequest);
+    map.put("departments", departmentList);
 
     return map;
   }
@@ -141,7 +166,7 @@ public class WorkflowDataController extends GuiDataControllerBase {
   @ResponseStatus(HttpStatus.CREATED)
   @PostMapping(path = { "/workflowcreate/create" })
   @ResponseBody
-  public List<GuiWorkflow> createWorkflow(@RequestBody final GuiWorkflowCreateRequest createRequest, final HttpSession session)
+  public List<GuiWorkflow> createWorkflow(@RequestBody final GuiWorkflowSaveRequest createRequest, final HttpSession session)
       throws GuiCustomizedException, IOException, IFlowMessageConversionFailureException {
 
     return this.workflowHandler.createWorkflow(createRequest, session);
@@ -155,19 +180,22 @@ public class WorkflowDataController extends GuiDataControllerBase {
       @RequestParam("titles") final String[] titles, final HttpSession session)
       throws GuiCustomizedException, JsonParseException, JsonMappingException, IOException {
 
-    final List<UploadFileSavingData> saveFiles = new ArrayList<>();
-    for (int i = 0; i < files.length; i++) {
-      final String ext = FileSavingData.getExtention(files[i]);
-      String title = titles.length > i ? titles[i] : "";
-      if (StringUtils.isEmpty(title)) {
-        title = files[i].getOriginalFilename();
-        title = ext.isEmpty() == false ? title.substring(0, title.length() - ext.length() - 1) : title;
+    List<UploadFileSavingData> tempFiles = new ArrayList<>();
+    if (files.length > 0) {
+      final List<UploadFileSavingData> saveFiles = new ArrayList<>();
+      for (int i = 0; i < files.length; i++) {
+        final String ext = FileSavingData.getExtention(files[i]);
+        String title = titles.length > i ? titles[i] : "";
+        if (StringUtils.isEmpty(title)) {
+          title = files[i].getOriginalFilename();
+          title = ext.isEmpty() == false ? title.substring(0, title.length() - ext.length() - 1) : title;
+        }
+
+        saveFiles.add(new UploadFileSavingData(files[i], title, ext, 0L, 0l, this.getLoggedCompany().getId()));
       }
 
-      saveFiles.add(new UploadFileSavingData(files[i], title, ext, 0L, 0l, this.getLoggedCompany().getId()));
+      tempFiles = this.uploadFileManager.saveInTemp(saveFiles);
     }
-
-    final List<UploadFileSavingData> tempFiles = this.uploadFileManager.saveInTemp(saveFiles);
 
     final String sessionKey = "temp_uploaded_" + System.currentTimeMillis();
 
@@ -204,11 +232,38 @@ public class WorkflowDataController extends GuiDataControllerBase {
   @ResponseStatus(HttpStatus.CREATED)
   @PostMapping(path = { "/workflow/done" })
   @ResponseBody
-  public void makeDoneWorkflow(@RequestBody final GuiWorkflow workflow, final HttpSession session)
+  public void makeDoneWorkflow(@RequestBody final GuiWorkflowSaveRequest saveRequest, final HttpSession session)
       throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
 
-    this.workflowHandler.doneWorkflow(workflow, session);
+    this.workflowHandler.doneWorkflow(saveRequest, session);
 
+  }
+
+  @ResponseStatus(HttpStatus.OK)
+  @PostMapping(path = { "/workflowmessages" })
+  @ResponseBody
+  public List<GuiWorkflowMessage> listWorkflowMessages(final HttpServletRequest request)
+      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+
+    final String resetCach = request.getParameter("reset");
+    if ("1".equals(resetCach)) {
+      this.callUserMessageReset();
+    }
+
+    final List<GuiWorkflowMessage> messageList = this.readUserMessages();
+
+    return messageList;
+  }
+
+  @ResponseStatus(HttpStatus.OK)
+  @PostMapping(path = { "/assignworkflow/{workflowId}" })
+  @ResponseBody
+  public GuiWorkflow assignWorkflow(@PathVariable final Long workflowId)
+      throws GuiCustomizedException, IFlowMessageConversionFailureException, IOException {
+
+    final GuiWorkflow workflow = this.workflowHandler.assignWorkflow(workflowId);
+
+    return workflow;
   }
 
 }

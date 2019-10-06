@@ -7,6 +7,7 @@ import org.springframework.web.util.DefaultUriBuilderFactory;
 public class IflowRestPaths {
 
   public static class IflowUriBuilder {
+
     private final DefaultUriBuilderFactory uriFactory = new DefaultUriBuilderFactory();
     private final String                   template;
 
@@ -70,6 +71,152 @@ public class IflowRestPaths {
     public static final String WORKFLOW_FILE_READ_LIST_BY_WORKFLOW                 = "/workflow/file/workflow/list/{id}";
     public static final String WORKFLOW_SEARCH                                     = "/workflow/search";
 
+    public static final String WORKFLOWMESSAGE_READ_BY_USER                        = "/workflowmessage/user/{userid}/{status}";
+    public static final String WORKFLOWMESSAGE_READ_BY_WORKFLOW                    = "/workflowmessage/workflow/{workflowid}";
+    public static final String WORKFLOWMESSAGE_SAVE                                = "/workflowmessage/save";
+    public static final String WORKFLOWMESSAGE_CHANGE_WORKFLOWMESSAGE_STAUS        = "/workflowmessage/changestatus/{workflowid}/{stepid}/{userid}/{status}";
+
+    public static URI READ_WORKFLOWMESSAGE_READ_BY_USER(final Long userid, final int status) {
+      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOWMESSAGE_READ_BY_USER);
+      return builder.build(userid, status);
+    }
+
+    public static URI READ_WORKFLOWMESSAGE_READ_BY_WORKFLOW(final Long workflowid) {
+      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOWMESSAGE_READ_BY_WORKFLOW);
+      return builder.build(workflowid);
+    }
+
+    public static URI SAVE_WORKFLOWMESSAGE() {
+      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOWMESSAGE_SAVE);
+      return builder.build();
+    }
+
+    public static URI CHANGE_WORKFLOWMESSAGE_WORKFLOWMESSAGE_STAUS(final Long workflowid, final Long stepid, final Long userid,
+        final int status) {
+      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOWMESSAGE_CHANGE_WORKFLOWMESSAGE_STAUS);
+      return builder.build(workflowid, stepid, userid, status);
+    }
+
+    public static URI READ_DEPARTMENTGRPUP_ALLUSERLIST_BY_DEPARTMENTGROUP(final Long id) {
+      final IflowUriBuilder builder = new IflowUriBuilder(DEPARTMENTGRPUP_READ_ALLUSERLIST_BY_DEPARTMENTGROUP);
+      return builder.build(id);
+    }
+
+    public static URI READ_USER_BY_EMAIL(final String email) {
+      final IflowUriBuilder builder = new IflowUriBuilder(USER_READ_BY_EMAIL);
+      return builder.build(email);
+    }
+
+    public static URI READ_USER_BY_ID(final Long id) {
+      final IflowUriBuilder builder = new IflowUriBuilder(USER_READ_BY_ID);
+      return builder.build(id);
+    }
+
+    public static URI READ_USER_USER_LIST_BY_COMPANY(final Long companyid) {
+      final IflowUriBuilder builder = new IflowUriBuilder(USER_USER_LIST_BY_COMPANY);
+      return builder.build(companyid);
+    }
+
+    public static URI READ_USERGROUP_BY_ID(final Long id) {
+      final IflowUriBuilder builder = new IflowUriBuilder(USERGROUP_READ_BY_ID);
+      return builder.build(id);
+    }
+
+    public static URI READ_USERGROUP_LIST_BY_COMPANY(final Long id) {
+      final IflowUriBuilder builder = new IflowUriBuilder(USERGROUP_READ_LIST_BY_COMPANY);
+      return builder.build(id);
+    }
+
+    public static URI READ_COMPANY_BY_ID(final Long id) {
+      final IflowUriBuilder builder = new IflowUriBuilder(COMPANY_READ_BY_ID);
+      return builder.build(id);
+    }
+
+    public static URI READ_DEPARTMENTGRPUP_BY_ID(final Long id) {
+      final IflowUriBuilder builder = new IflowUriBuilder(DEPARTMENTGRPUP_READ_BY_ID);
+      return builder.build(id);
+    }
+
+    public static URI READ_DEPARTMENT_BY_ID(final Long id) {
+      final IflowUriBuilder builder = new IflowUriBuilder(DEPARTMENT_READ_BY_ID);
+      return builder.build(id);
+    }
+
+    public static URI READ_DEPARTMENT_LIST_BY_COMPANY(final Long id) {
+      final IflowUriBuilder builder = new IflowUriBuilder(DEPARTMENT_READ_LIST_BY_COMPANY);
+      return builder.build(id);
+    }
+
+    public static URI READ_DEPARTMENTGRPUP_LIST_BY_DEPARTMENT(final Long id) {
+      final IflowUriBuilder builder = new IflowUriBuilder(DEPARTMENTGRPUP_READ_LIST_BY_DEPARTMENT);
+      return builder.build(id);
+    }
+
+    public static URI READ_DEPARTMENT_ALLUSERLIST_BY_DEPARTMENT(final Long id) {
+      final IflowUriBuilder builder = new IflowUriBuilder(DEPARTMENT_READ_ALLUSERLIST_BY_DEPARTMENT);
+      return builder.build(id);
+    }
+
+    public static URI READ_WORKFLOWTYPESTEP_BY_ID(final Long id) {
+      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOWTYPESTEP_READ_BY_ID);
+      return builder.build(id);
+    }
+
+    public static URI READ_WORKFLOWTYPESTEP_LIST_BY_WORKFLOW(final Long id) {
+      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOWTYPESTEP_READ_LIST_BY_WORKFLOW);
+      return builder.build(id);
+    }
+
+    public static URI READ_WORKFLOWTYPESTEP_LIST() {
+      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOWTYPESTEP_READ_LIST);
+      return builder.build();
+    }
+
+    public static URI READ_WORKFLOWTYPE_BY_ID(final Long id) {
+      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOWTYPE_READ_BY_ID);
+      return builder.build(id);
+    }
+
+    public static URI READ_WORKFLOWTYPE_LIST_BY_COMPANY(final Long id) {
+      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOWTYPE_READ_LIST_BY_COMPANY);
+      return builder.build(id);
+    }
+
+    public static URI READ_WORKFLOWTYPE_LIST() {
+      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOWTYPE_READ_LIST);
+      return builder.build();
+    }
+
+    public static URI READ_WORKFLOW_BY_ID(final Long id) {
+      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOW_READ_BY_ID);
+      return builder.build(id);
+    }
+
+    public static URI SAVE_WORKFLOW() {
+      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOW_SAVE);
+      return builder.build();
+    }
+
+    public static URI READ_WORKFLOW_LIST() {
+      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOW_READ_LIST);
+      return builder.build();
+    }
+
+    public static URI SEARCH_WORKFLOW() {
+      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOW_SEARCH);
+      return builder.build();
+    }
+
+    public static URI READ_WORKFLOW_LIST_BY_TYPE(final Long id) {
+      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOW_READ_LIST_BY_TYPE);
+      return builder.build(id);
+    }
+
+    public static URI READ_WORKFLOW_LIST_BY_USER(final Long id) {
+      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOW_READ_LIST_BY_USER);
+      return builder.build(id);
+    }
+
   }
 
   public static class WorkflowModule {
@@ -91,6 +238,8 @@ public class IflowRestPaths {
     public static final String WORKFLOW_READ_LIST_BY_TYPE             = "/workflow/type/list/{id}";
     public static final String WORKFLOW_READ_LIST_BY_USER             = "/workflow/user/list/{id}/{status}";
     public static final String WORKFLOW_SEARCH                        = "/workflow/search";
+
+    public static final String WORKFLOWMESSAGE_READ_BY_USER           = "/workflowoffer/user/{userid}/{status}";
 
     public static URI WORKFLOWTYPE_BY_ID_URIBUILDER(final Long id) {
       final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOWTYPE_READ_BY_ID);
@@ -127,29 +276,55 @@ public class IflowRestPaths {
       return builder.build(id, status);
     }
 
+    public static URI READ_WORKFLOWMESSAGE_READ_BY_USER(final Long id, final int status) {
+      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOWMESSAGE_READ_BY_USER);
+      return builder.build(id, status);
+    }
+
+    public static URI CREATE_WORKFLOW() {
+      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOW_CREATE);
+      return builder.build();
+    }
+
+    public static URI SAVE_WORKFLOW() {
+      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOW_SAVE);
+      return builder.build();
+    }
+
+    public static URI SEARCH_WORKFLOW() {
+      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOW_SEARCH);
+      return builder.build();
+    }
+
   }
 
   public static class ProfileModule {
 
-    public static final int    PORT                                 = 1020;
+    public static final int    PORT                                   = 1020;
 
-    public static final String AUTHENTICATION_AUTHENTICATE          = "/auth/authenticate";
-    public static final String PROFILE_READ_AUTHENTOCATEDINFO       = "/profile/read/authinfo";
-    public static final String PROFILE_READ_TOKENINFO               = "/profile/read/tokeninfo";
-    public static final String PROFILE_VALIDATE_TOKEN               = "/profile/validate/token";
+    public static final String AUTHENTICATION_AUTHENTICATE            = "/auth/authenticate";
+    public static final String PROFILE_READ_AUTHENTOCATEDINFO         = "/profile/read/authinfo";
+    public static final String PROFILE_READ_TOKENINFO                 = "/profile/read/tokeninfo";
+    public static final String PROFILE_VALIDATE_TOKEN                 = "/profile/validate/token";
 
-    public static final String COMPANY_READ_BY_ID                   = "/company/readbyid/{companyid}";
-    public static final String COMPANY_READ_USER_LIST               = "/company/read/user/{companyid}";
-    public static final String COMPANY_READ_USERGROUP_LIST          = "/company/read/usergroup/{companyid}";
-    public static final String COMPANY_READ_DEPARTMENT_LIST         = "/company/read/department/{companyid}";
-    public static final String COMPANY_READ_PROFILE                 = "/company/read/profile/{companyid}";
+    public static final String COMPANY_READ_BY_ID                     = "/company/readbyid/{companyid}";
+    public static final String COMPANY_READ_USER_LIST                 = "/company/read/user/{companyid}";
+    public static final String COMPANY_READ_USERGROUP_LIST            = "/company/read/usergroup/{companyid}";
+    public static final String COMPANY_READ_DEPARTMENT_LIST           = "/company/read/department/{companyid}";
+    public static final String COMPANY_READ_PROFILE                   = "/company/read/profile/{companyid}";
 
-    public static final String DEPARTMENT_READ_BY_ID                = "/department/readbyid/{id}";
-    public static final String DEPARTMENT_READ_DEPARTMENTGROUP_LIST = "/department/read/departmentgroup/{id}";
-    public static final String DEPARTMENT_READ_ALLUSERS_LIST        = "/department/read/allusers/{id}";
+    public static final String DEPARTMENT_READ_BY_ID                  = "/department/readbyid/{id}";
+    public static final String DEPARTMENT_READ_DEPARTMENTGROUP_LIST   = "/department/read/departmentgroup/{id}";
+    public static final String DEPARTMENT_READ_ALLUSERS_LIST          = "/department/read/allusers/{id}";
 
-    public static final String DEPARTMENTGROUP_READ_BY_ID           = "/departmentgroup/readbyid/{id}";
-    public static final String DEPARTMENTGROUP_READ_USER_LIST       = "/departmentgroup/read/user/{id}";
+    public static final String DEPARTMENTGROUP_READ_BY_ID             = "/departmentgroup/readbyid/{id}";
+    public static final String DEPARTMENTGROUP_READ_USER_LIST         = "/departmentgroup/read/user/{id}";
+
+    public static final String CACHDATA_READ_USER_WORKFLOWMESSAGELIST = "/cachdata/user/readworkflowmessagelist/{companyid}/{userid}";
+    public static final String CACHDATA_ADD_USER_WORKFLOWMESSAGELIST  = "/cachdata/user/addworkflowmessagelist/{companyid}/{userid}";
+    public static final String CACHDATA_CAL_USER_DATARESET            = "/cachdata/user/datareset/{companyid}/{userid}";
+    public static final String CACHDATA_CAL_USERLIST_DATARESET        = "/cachdata/userlist/datareset/{companyid}";
+    public static final String CACHDATA_CAL_WORKFLOW_DATARESET        = "/cachdata/workflow/datareset/{companyid}/{workflowid}";
 
     public static URI READ_COMPANY_BY_ID_URIBUILDER(final Long id) {
       final IflowUriBuilder builder = new IflowUriBuilder(COMPANY_READ_BY_ID);
@@ -199,6 +374,46 @@ public class IflowRestPaths {
     public static URI READ_ALLUSERS_BY_DEPARTMENTGROUPID_URIBUILDER(final Long id) {
       final IflowUriBuilder builder = new IflowUriBuilder(DEPARTMENTGROUP_READ_USER_LIST);
       return builder.build(id);
+    }
+
+    public static URI READ_CACHDATA_USER_WORKFLOWMESSAGELIST(final Long companyid, final Long userid) {
+      final IflowUriBuilder builder = new IflowUriBuilder(CACHDATA_READ_USER_WORKFLOWMESSAGELIST);
+      return builder.build(companyid, userid);
+    }
+
+    public static URI ADD_CACHDATA_USER_WORKFLOWMESSAGELIST(final Long id) {
+      final IflowUriBuilder builder = new IflowUriBuilder(CACHDATA_ADD_USER_WORKFLOWMESSAGELIST);
+      return builder.build(id);
+    }
+
+    public static URI CAL_CACHDATA_USER_DATARESET(final Long companyid, final Long userid) {
+      final IflowUriBuilder builder = new IflowUriBuilder(CACHDATA_CAL_USER_DATARESET);
+      return builder.build(companyid, userid);
+    }
+
+    public static URI CAL_CACHDATA_USERLIST_DATARESET(final Long companyid) {
+      final IflowUriBuilder builder = new IflowUriBuilder(CACHDATA_CAL_USERLIST_DATARESET);
+      return builder.build(companyid);
+    }
+
+    public static URI CAL_CACHDATA_WORKFLOW_DATARESET(final Long companyid, final Long workflowid) {
+      final IflowUriBuilder builder = new IflowUriBuilder(CACHDATA_CAL_WORKFLOW_DATARESET);
+      return builder.build(companyid, workflowid);
+    }
+
+    public static URI READ_PROFILE_TOKENINFO() {
+      final IflowUriBuilder builder = new IflowUriBuilder(PROFILE_READ_TOKENINFO);
+      return builder.build();
+    }
+
+    public static URI AUTHENTICATE_AUTHENTICATION() {
+      final IflowUriBuilder builder = new IflowUriBuilder(AUTHENTICATION_AUTHENTICATE);
+      return builder.build();
+    }
+
+    public static URI READ_PROFILE_AUTHENTOCATEDINFO() {
+      final IflowUriBuilder builder = new IflowUriBuilder(PROFILE_READ_AUTHENTOCATEDINFO);
+      return builder.build();
     }
 
   }

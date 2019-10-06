@@ -11,9 +11,8 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import com.fasterxml.jackson.annotation.JsonSetter;
 import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
-import com.pth.iflow.common.edo.models.validation.AEnumNameValidator;
-import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 
 @XmlRootElement(name = "Workflow", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -23,13 +22,9 @@ public class WorkflowEdo {
   @XmlElement(name = "ID", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Long                    id;
 
-  @NotNull
+  @NotNull(message = "WorkflowTypeId is not allowed to be null!")
   @XmlElement(name = "WorkflowTypeId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Long                    workflowTypeId;
-
-  @NotNull
-  @XmlElement(name = "CurrentStep", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private WorkflowTypeStepEdo     currentStep;
 
   @XmlElement(name = "CurrentStepId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Long                    currentStepId;
@@ -40,37 +35,23 @@ public class WorkflowEdo {
   @XmlElement(name = "CreatedBy", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Long                    createdBy;
 
-  @XmlElement(name = "AssignTo", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long                    assignTo;
-
-  @NotNull
-  @XmlElement(name = "Title", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String                  title;
-
   @XmlElement(name = "Comments", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String                  comments;
 
-  @NotNull
+  @NotNull(message = "Status is not allowed to be null!")
   @XmlElement(name = "Status", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer                 status;
 
-  @NotNull
+  @NotNull(message = "Version is not allowed to be null!")
   @XmlElement(name = "Version", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer                 version;
 
-  @NotNull
-  @XmlElement(name = "NextAssign", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Boolean                 nextAssign;
-
-  @NotNull
-  @AEnumNameValidator(enumClazz = EWorkflowProcessCommand.class)
-  @XmlElement(name = "Command", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String                  command;  
-
+  @NotNull(message = "WorkflowFileEdo is not allowed to be null!")
   @XmlElementWrapper(name = "WorkflowFileList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "WorkflowFile", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private List<WorkflowFileEdo>   files   = new ArrayList<>();
 
+  @NotNull(message = "WorkflowActionList is not allowed to be null!")
   @XmlElementWrapper(name = "WorkflowActionList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "WorkflowAction", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private List<WorkflowActionEdo> actions = new ArrayList<>();
@@ -89,14 +70,6 @@ public class WorkflowEdo {
 
   public void setWorkflowTypeId(final Long workflowTypeId) {
     this.workflowTypeId = workflowTypeId;
-  }
-
-  public WorkflowTypeStepEdo getCurrentStep() {
-    return this.currentStep;
-  }
-
-  public void setCurrentStep(final WorkflowTypeStepEdo currentStep) {
-    this.currentStep = currentStep;
   }
 
   public Long getCurrentStepId() {
@@ -123,22 +96,6 @@ public class WorkflowEdo {
     this.createdBy = createdBy;
   }
 
-  public Long getAssignTo() {
-    return this.assignTo;
-  }
-
-  public void setAssignTo(final Long assignTo) {
-    this.assignTo = assignTo;
-  }
-
-  public String getTitle() {
-    return this.title;
-  }
-
-  public void setTitle(final String title) {
-    this.title = title;
-  }
-
   public String getComments() {
     return this.comments;
   }
@@ -163,27 +120,11 @@ public class WorkflowEdo {
     this.version = version;
   }
 
-  public Boolean getNextAssign() {
-    return this.nextAssign;
-  }
-
-  public void setNextAssign(final Boolean nextAssign) {
-    this.nextAssign = nextAssign;
-  }
-
-  
-  public String getCommand() {
-	return command;
-}
-
-public void setCommand(String command) {
-	this.command = command;
-}
-
-public List<WorkflowFileEdo> getFiles() {
+  public List<WorkflowFileEdo> getFiles() {
     return this.files;
   }
 
+  @JsonSetter
   public void setFiles(final List<WorkflowFileEdo> files) {
     this.files = new ArrayList<>();
     if (files != null) {
@@ -195,6 +136,7 @@ public List<WorkflowFileEdo> getFiles() {
     return this.actions;
   }
 
+  @JsonSetter
   public void setActions(final List<WorkflowActionEdo> actions) {
     this.actions = new ArrayList<>();
     if (actions != null) {

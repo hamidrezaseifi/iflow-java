@@ -11,18 +11,14 @@ public class Workflow extends DataModelBase {
 
   private Long                       id;
   private Long                       workflowTypeId;
-  private WorkflowTypeStep           currentStep;
+  private Long                       currentStepId;
   private Long                       controller;
   private Long                       createdBy;
-  private Long                       assignTo;
-  private String                     title;
   private String                     comments;
   private EWorkflowStatus            status;
   private Integer                    version;
   private LocalDateTime              createdAt;
   private LocalDateTime              updatedAt;
-  private Boolean                    nextAssign;
-  private String                     command;
 
   private final List<WorkflowFile>   files   = new ArrayList<>();
   private final List<WorkflowAction> actions = new ArrayList<>();
@@ -44,12 +40,12 @@ public class Workflow extends DataModelBase {
     this.workflowTypeId = workflowTypeId;
   }
 
-  public WorkflowTypeStep getCurrentStep() {
-    return this.currentStep;
+  public Long getCurrentStepId() {
+    return currentStepId;
   }
 
-  public void setCurrentStep(final WorkflowTypeStep currentStep) {
-    this.currentStep = currentStep;
+  public void setCurrentStepId(final Long currentStepId) {
+    this.currentStepId = currentStepId;
   }
 
   public Long getController() {
@@ -66,22 +62,6 @@ public class Workflow extends DataModelBase {
 
   public void setCreatedBy(final Long createdBy) {
     this.createdBy = createdBy;
-  }
-
-  public Long getAssignTo() {
-    return this.assignTo;
-  }
-
-  public void setAssignTo(final Long assignTo) {
-    this.assignTo = assignTo;
-  }
-
-  public String getTitle() {
-    return this.title;
-  }
-
-  public void setTitle(final String title) {
-    this.title = title;
   }
 
   public String getComments() {
@@ -112,22 +92,6 @@ public class Workflow extends DataModelBase {
   @Override
   public void setVersion(final Integer version) {
     this.version = version;
-  }
-
-  public Boolean getNextAssign() {
-    return this.nextAssign;
-  }
-
-  public void setNextAssign(final Boolean nextAssign) {
-    this.nextAssign = nextAssign;
-  }
-
-  public String getCommand() {
-    return command;
-  }
-
-  public void setCommand(final String command) {
-    this.command = command;
   }
 
   public LocalDateTime getCreatedAt() {

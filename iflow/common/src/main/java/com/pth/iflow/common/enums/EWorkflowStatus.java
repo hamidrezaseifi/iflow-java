@@ -5,6 +5,7 @@ import com.pth.iflow.common.exceptions.IFlowInvalidEnumValueException;
 public enum EWorkflowStatus implements IEnumValueValidator {
   INITIALIZE(5),
   NOT_ASSIGNED(10),
+  OFFERING(12),
   ASSIGNED(15),
   DONE(20),
   ARCHIVED(25),

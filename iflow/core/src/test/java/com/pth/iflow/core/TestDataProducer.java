@@ -1,11 +1,12 @@
 package com.pth.iflow.core;
 
+import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.pth.iflow.common.enums.EWorkflowProcessCommand;
+import com.pth.iflow.common.enums.EWorkflowMessageStatus;
+import com.pth.iflow.common.enums.EWorkflowMessageType;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
 import com.pth.iflow.core.model.Company;
@@ -17,6 +18,7 @@ import com.pth.iflow.core.model.Workflow;
 import com.pth.iflow.core.model.WorkflowAction;
 import com.pth.iflow.core.model.WorkflowFile;
 import com.pth.iflow.core.model.WorkflowFileVersion;
+import com.pth.iflow.core.model.WorkflowMessage;
 import com.pth.iflow.core.model.WorkflowSearchFilter;
 import com.pth.iflow.core.model.WorkflowType;
 import com.pth.iflow.core.model.WorkflowTypeStep;
@@ -39,7 +41,7 @@ public class TestDataProducer {
     model.setCompanyId(1L);
     model.setId(1L);
     model.setEmail("email");
-    model.setBirthDate(new Date());
+    model.setBirthDate(LocalDate.now());
     model.setFirstName("firstName");
     model.setLastName("lastName");
     model.setStatus(1);
@@ -58,7 +60,7 @@ public class TestDataProducer {
     model.setCompanyId(1L);
     model.setId(null);
     model.setEmail("utest email");
-    model.setBirthDate(new Date());
+    model.setBirthDate(LocalDate.now());
     model.setFirstName("utest firstName");
     model.setLastName("utest lastName");
     model.setStatus(1);
@@ -190,16 +192,12 @@ public class TestDataProducer {
     final Workflow model = new Workflow();
     model.setWorkflowTypeId(1L);
     model.setId(Id);
-    model.setTitle("title " + Id);
     model.setStatus(EWorkflowStatus.INITIALIZE.getValue().intValue());
     model.setVersion(1);
     model.setComments("comments");
     model.setController(1L);
-    model.setCurrentStep(this.getTestWorkflowTypeStep());
+    model.setCurrentStepId(1L);
     model.setCreatedBy(1L);
-    model.setAssignTo(1L);
-    model.setNextAssign(false);
-    model.setCommand(EWorkflowProcessCommand.CREATE.getName());
 
     model.setActions(
         Arrays.asList(this.getTestWorkflowAction(1L, 1L), this.getTestWorkflowAction(2L, 2L), this.getTestWorkflowAction(3L, 3L)));
@@ -209,20 +207,37 @@ public class TestDataProducer {
     return model;
   }
 
+  protected WorkflowMessage getTestWorkflowMessage(final Long id, final String message) {
+    final WorkflowMessage model = new WorkflowMessage();
+    model.setWorkflowId(id);
+    model.setId(null);
+    model.setMessage(message);
+    model.setStatus(EWorkflowMessageStatus.OFFERING);
+    model.setVersion(1);
+    model.setExpireDays(10);
+    model.setMessageType(EWorkflowMessageType.OFFERING_WORKFLOW);
+    model.setUserId(1L);
+    model.setCreatedBy(1L);
+    model.setStepId(1L);
+
+    return model;
+  }
+
+  protected List<WorkflowMessage> getTestWorkflowMessageList() {
+    return Arrays.asList(this.getTestWorkflowMessage(1L, "Message-1"), this.getTestWorkflowMessage(2L, "Message-2"),
+        this.getTestWorkflowMessage(3L, "Message-3"));
+  }
+
   protected Workflow getTestNewWorkflow() {
     final Workflow model = new Workflow();
     model.setWorkflowTypeId(1L);
     model.setId(null);
-    model.setTitle("utest title new");
     model.setStatus(EWorkflowStatus.INITIALIZE.getValue().intValue());
     model.setVersion(1);
     model.setComments("comments");
     model.setController(1L);
-    model.setCurrentStep(this.getTestWorkflowTypeStep());
+    model.setCurrentStepId(1L);
     model.setCreatedBy(1L);
-    model.setAssignTo(1L);
-    model.setNextAssign(false);
-    model.setCommand(EWorkflowProcessCommand.CREATE.getName());
     model.setActions(Arrays.asList(this.getTestNewWorkflowAction(), this.getTestNewWorkflowAction(), this.getTestNewWorkflowAction()));
     model.setFiles(Arrays.asList(this.getTestNewWorkflowFile(), this.getTestNewWorkflowFile(), this.getTestNewWorkflowFile()));
 
@@ -243,14 +258,11 @@ public class TestDataProducer {
     final WorkflowAction model = new WorkflowAction();
     model.setWorkflowId(workflowId);
     model.setId(Id);
-    model.setAction("action " + Id);
     model.setStatus(1);
     model.setVersion(1);
-    model.setCreatedBy(1L);
-    model.setNewStep(2L);
-    model.setOldStep(1L);
+    model.setCurrentStepId(1L);
     model.setComments("comments");
-    model.setNextAssign(1L);
+    model.setAssignTo(1L);
 
     return model;
   }
@@ -264,13 +276,11 @@ public class TestDataProducer {
     final WorkflowAction model = new WorkflowAction();
     model.setWorkflowId(null);
     model.setId(null);
-    model.setAction("action new");
     model.setStatus(1);
     model.setVersion(1);
-    model.setCreatedBy(1L);
-    model.setNewStep(2L);
-    model.setOldStep(1L);
+    model.setCurrentStepId(1L);
     model.setComments("comments");
+    model.setAssignTo(1L);
 
     return model;
   }
@@ -397,6 +407,7 @@ public class TestDataProducer {
     model.setStepIndex(1);
     model.setComments("comments");
     model.setViewName("viewName");
+    model.setExpireDays(15);
 
     return model;
   }
@@ -411,6 +422,7 @@ public class TestDataProducer {
     model.setStepIndex(1);
     model.setComments("comments");
     model.setViewName("viewName");
+    model.setExpireDays(15);
 
     return model;
   }
@@ -454,7 +466,6 @@ public class TestDataProducer {
     final WorkflowSearchFilter filter = new WorkflowSearchFilter();
     filter.setAssignedUserIdList(this.getTestUserIdList());
     filter.setStatusList(Arrays.asList(1, 2, 3));
-    filter.setTitle("title");
     filter.setWorkflowStepeIdList(this.getTestWorkflowTypeStepIdList());
     filter.setWorkflowTypeIdList(this.getTestWorkflowTypeIdList());
 

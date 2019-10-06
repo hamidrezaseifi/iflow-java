@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.pth.iflow.gui.authentication.GuiAuthenticationErrorUrlCreator;
 import com.pth.iflow.gui.configurations.GuiSecurityConfigurations;
-import com.pth.iflow.gui.services.impl.MessagesHelper;
+import com.pth.iflow.gui.services.IMessagesHelper;
 
 /**
  * controller class to manage rest api for static page lihe home ans about and
@@ -29,7 +29,7 @@ import com.pth.iflow.gui.services.impl.MessagesHelper;
 public class AuthenticationController {
 
   @Autowired
-  private MessagesHelper messages;
+  private IMessagesHelper messages;
 
   @GetMapping("/login")
   public String showLogin(
@@ -61,6 +61,7 @@ public class AuthenticationController {
     model.addAttribute("username", username);
     model.addAttribute("password", password);
     model.addAttribute("companyid", company);
+    model.addAttribute("isLogged", false);
 
     model.addAttribute("logginMessage", message);
     model.addAttribute("rooturl", GuiSecurityConfigurations.ROOT_URL);

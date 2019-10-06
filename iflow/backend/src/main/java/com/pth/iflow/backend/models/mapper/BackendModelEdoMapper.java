@@ -15,11 +15,6 @@ import com.pth.iflow.backend.models.BackendDepartment;
 import com.pth.iflow.backend.models.BackendDepartmentGroup;
 import com.pth.iflow.backend.models.BackendUser;
 import com.pth.iflow.backend.models.BackendUserGroup;
-import com.pth.iflow.backend.models.BackendWorkflow;
-import com.pth.iflow.backend.models.BackendWorkflowAction;
-import com.pth.iflow.backend.models.BackendWorkflowCreateRequest;
-import com.pth.iflow.backend.models.BackendWorkflowFile;
-import com.pth.iflow.backend.models.BackendWorkflowFileVersion;
 import com.pth.iflow.backend.models.BackendWorkflowType;
 import com.pth.iflow.backend.models.BackendWorkflowTypeStep;
 import com.pth.iflow.backend.models.ProfileResponse;
@@ -30,14 +25,8 @@ import com.pth.iflow.common.edo.models.DepartmentGroupEdo;
 import com.pth.iflow.common.edo.models.ProfileResponseEdo;
 import com.pth.iflow.common.edo.models.UserEdo;
 import com.pth.iflow.common.edo.models.UserGroupEdo;
-import com.pth.iflow.common.edo.models.WorkflowActionEdo;
-import com.pth.iflow.common.edo.models.WorkflowCreateRequestEdo;
-import com.pth.iflow.common.edo.models.WorkflowEdo;
-import com.pth.iflow.common.edo.models.WorkflowFileEdo;
-import com.pth.iflow.common.edo.models.WorkflowFileVersionEdo;
 import com.pth.iflow.common.edo.models.WorkflowTypeEdo;
 import com.pth.iflow.common.edo.models.WorkflowTypeStepEdo;
-import com.pth.iflow.common.enums.EWorkflowStatus;
 import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 
@@ -141,13 +130,6 @@ public class BackendModelEdoMapper {
     return edo;
   }
 
-  public static WorkflowCreateRequestEdo toEdo(final BackendWorkflowCreateRequest model) {
-    final WorkflowCreateRequestEdo edo = new WorkflowCreateRequestEdo();
-    edo.setAssignedUsers(model.getAssigns());
-    edo.setWorkflow(toEdo(model.getWorkflow()));
-    return edo;
-  }
-
   public static BackendUser fromEdo(final UserEdo edo) throws IFlowMessageConversionFailureException {
     validateCustomer(edo);
 
@@ -220,87 +202,6 @@ public class BackendModelEdoMapper {
     return model;
   }
 
-  public static WorkflowEdo toEdo(final BackendWorkflow model) {
-    final WorkflowEdo edo = new WorkflowEdo();
-    edo.setTitle(model.getTitle());
-    edo.setComments(model.getComments());
-    edo.setStatus(model.getStatusInt());
-    edo.setId(model.getId());
-    edo.setController(model.getController());
-    edo.setCurrentStep(toEdo(model.getCurrentStep()));
-    edo.setCurrentStepId(model.getCurrentStep() != null ? model.getCurrentStep().getId() : null);
-    edo.setCreatedBy(model.getCreatedBy());
-    edo.setWorkflowTypeId(model.getWorkflowTypeId());
-    edo.setVersion(model.getVersion());
-    edo.setNextAssign(model.getNextAssign());
-    edo.setAssignTo(model.getAssignTo());
-    edo.setCommand(model.getCommand());
-
-    edo.setFiles(toWorkflowFileEdoList(model.getFiles()));
-    edo.setActions(toWorkflowActionEdoList(model.getActions()));
-
-    return edo;
-  }
-
-  public static BackendWorkflow fromEdo(final WorkflowEdo edo) throws IFlowMessageConversionFailureException {
-    validateCustomer(edo);
-
-    final BackendWorkflow model = new BackendWorkflow();
-
-    model.setTitle(edo.getTitle());
-    model.setComments(edo.getComments());
-    model.setStatus(EWorkflowStatus.ofValue(edo.getStatus()));
-    model.setId(edo.getId());
-    model.setController(edo.getController());
-    model.setCurrentStep(fromEdo(edo.getCurrentStep()));
-    model.setCreatedBy(edo.getCreatedBy());
-    model.setWorkflowTypeId(edo.getWorkflowTypeId());
-    model.setVersion(edo.getVersion());
-    model.setNextAssign(edo.getNextAssign());
-    model.setAssignTo(edo.getAssignTo());
-    model.setCommand(edo.getCommand());
-
-    model.setFiles(fromWorkflowFileEdoList(edo.getFiles()));
-    model.setActions(fromWorkflowActionEdoList(edo.getActions()));
-
-    return model;
-  }
-
-  public static WorkflowActionEdo toEdo(final BackendWorkflowAction model) {
-    final WorkflowActionEdo edo = new WorkflowActionEdo();
-    edo.setAction(model.getAction());
-    edo.setComments(model.getComments());
-    edo.setStatus(model.getStatus());
-    edo.setId(model.getId());
-    edo.setCreatedBy(model.getCreatedBy());
-    edo.setOldStep(model.getOldStep());
-    edo.setNewStep(model.getNewStep());
-    edo.setNextAssign(model.getNextAssign());
-    edo.setWorkflowId(model.getWorkflowId());
-    edo.setVersion(model.getVersion());
-
-    return edo;
-  }
-
-  public static BackendWorkflowAction fromEdo(final WorkflowActionEdo edo) throws IFlowMessageConversionFailureException {
-    validateCustomer(edo);
-
-    final BackendWorkflowAction model = new BackendWorkflowAction();
-
-    model.setAction(edo.getAction());
-    model.setComments(edo.getComments());
-    model.setStatus(edo.getStatus());
-    model.setId(edo.getId());
-    model.setCreatedBy(edo.getCreatedBy());
-    model.setOldStep(edo.getOldStep());
-    model.setNewStep(edo.getNewStep());
-    model.setNextAssign(edo.getNextAssign());
-    model.setWorkflowId(edo.getWorkflowId());
-    model.setVersion(edo.getVersion());
-
-    return model;
-  }
-
   public static WorkflowTypeStepEdo toEdo(final BackendWorkflowTypeStep model) {
     final WorkflowTypeStepEdo edo = new WorkflowTypeStepEdo();
     edo.setStepIndex(model.getStepIndex());
@@ -328,74 +229,6 @@ public class BackendModelEdoMapper {
     model.setVersion(edo.getVersion());
     model.setId(edo.getId());
     model.setWorkflowTypeId(edo.getWorkflowTypeId());
-
-    return model;
-  }
-
-  public static WorkflowFileEdo toEdo(final BackendWorkflowFile model) {
-    final WorkflowFileEdo edo = new WorkflowFileEdo();
-    edo.setTitle(model.getTitle());
-    edo.setExtention(model.getExtention());
-    edo.setComments(model.getComments());
-    edo.setStatus(model.getStatus());
-    edo.setId(model.getId());
-    edo.setCreatedBy(model.getCreatedBy());
-    edo.setActiveFilePath(model.getActiveFilePath());
-    edo.setActiveFileVersion(model.getActiveFileVersion());
-    edo.setWorkflowId(model.getWorkflowId());
-    edo.setVersion(model.getVersion());
-
-    edo.setFileVersions(toWorkflowFileVersionEdoList(model.getFileVersions()));
-
-    return edo;
-  }
-
-  public static BackendWorkflowFile fromEdo(final WorkflowFileEdo edo) throws IFlowMessageConversionFailureException {
-    validateCustomer(edo);
-    final BackendWorkflowFile model = new BackendWorkflowFile();
-
-    model.setTitle(edo.getTitle());
-    model.setExtention(edo.getExtention());
-    model.setComments(edo.getComments());
-    model.setStatus(edo.getStatus());
-    model.setId(edo.getId());
-    model.setCreatedBy(edo.getCreatedBy());
-    model.setActiveFilePath(edo.getActiveFilePath());
-    model.setActiveFileVersion(edo.getActiveFileVersion());
-    model.setWorkflowId(edo.getWorkflowId());
-    model.setVersion(edo.getVersion());
-
-    model.setFileVersions(fromWorkflowFileVersionEdoList(edo.getFileVersions()));
-
-    return model;
-  }
-
-  public static WorkflowFileVersionEdo toEdo(final BackendWorkflowFileVersion model) {
-    final WorkflowFileVersionEdo edo = new WorkflowFileVersionEdo();
-    edo.setComments(model.getComments());
-    edo.setStatus(model.getStatus());
-    edo.setId(model.getId());
-    edo.setCreatedBy(model.getCreatedBy());
-    edo.setFilePath(model.getFilePath());
-    edo.setFileVersion(model.getFileVersion());
-    edo.setWorkflowFileId(model.getWorkflowFileId());
-    edo.setVersion(model.getVersion());
-
-    return edo;
-  }
-
-  public static BackendWorkflowFileVersion fromEdo(final WorkflowFileVersionEdo edo) throws IFlowMessageConversionFailureException {
-    validateCustomer(edo);
-    final BackendWorkflowFileVersion model = new BackendWorkflowFileVersion();
-
-    model.setComments(edo.getComments());
-    model.setStatus(edo.getStatus());
-    model.setId(edo.getId());
-    model.setCreatedBy(edo.getCreatedBy());
-    model.setFilePath(edo.getFilePath());
-    model.setFileVersion(edo.getFileVersion());
-    model.setWorkflowFileId(edo.getWorkflowFileId());
-    model.setVersion(edo.getVersion());
 
     return model;
   }
@@ -438,63 +271,6 @@ public class BackendModelEdoMapper {
     return model;
   }
 
-  public static List<WorkflowFileVersionEdo> toWorkflowFileVersionEdoList(final List<BackendWorkflowFileVersion> modelList) {
-    final List<WorkflowFileVersionEdo> edoList = new ArrayList<>();
-    for (final BackendWorkflowFileVersion model : modelList) {
-      edoList.add(toEdo(model));
-    }
-
-    return edoList;
-  }
-
-  public static List<BackendWorkflowFileVersion> fromWorkflowFileVersionEdoList(final List<WorkflowFileVersionEdo> edoList)
-      throws IFlowMessageConversionFailureException {
-    final List<BackendWorkflowFileVersion> modelList = new ArrayList<>();
-    for (final WorkflowFileVersionEdo edo : edoList) {
-      modelList.add(fromEdo(edo));
-    }
-
-    return modelList;
-  }
-
-  public static List<WorkflowFileEdo> toWorkflowFileEdoList(final List<BackendWorkflowFile> modelList) {
-    final List<WorkflowFileEdo> edoList = new ArrayList<>();
-    for (final BackendWorkflowFile model : modelList) {
-      edoList.add(toEdo(model));
-    }
-
-    return edoList;
-  }
-
-  public static List<BackendWorkflowFile> fromWorkflowFileEdoList(final List<WorkflowFileEdo> edoList)
-      throws IFlowMessageConversionFailureException {
-    final List<BackendWorkflowFile> modelList = new ArrayList<>();
-    for (final WorkflowFileEdo edo : edoList) {
-      modelList.add(fromEdo(edo));
-    }
-
-    return modelList;
-  }
-
-  public static List<WorkflowActionEdo> toWorkflowActionEdoList(final List<BackendWorkflowAction> modelList) {
-    final List<WorkflowActionEdo> edoList = new ArrayList<>();
-    for (final BackendWorkflowAction model : modelList) {
-      edoList.add(toEdo(model));
-    }
-
-    return edoList;
-  }
-
-  public static List<BackendWorkflowAction> fromWorkflowActionEdoList(final List<WorkflowActionEdo> edoList)
-      throws IFlowMessageConversionFailureException {
-    final List<BackendWorkflowAction> modelList = new ArrayList<>();
-    for (final WorkflowActionEdo edo : edoList) {
-      modelList.add(fromEdo(edo));
-    }
-
-    return modelList;
-  }
-
   public static List<WorkflowTypeStepEdo> toWorkflowTypeStepEdoList(final List<BackendWorkflowTypeStep> modelList) {
     final List<WorkflowTypeStepEdo> edoList = new ArrayList<>();
     for (final BackendWorkflowTypeStep model : modelList) {
@@ -508,16 +284,6 @@ public class BackendModelEdoMapper {
       throws IFlowMessageConversionFailureException {
     final List<BackendWorkflowTypeStep> modelList = new ArrayList<>();
     for (final WorkflowTypeStepEdo edo : edoList) {
-      modelList.add(fromEdo(edo));
-    }
-
-    return modelList;
-  }
-
-  public static List<BackendWorkflow> fromWorkflowEdoList(final List<WorkflowEdo> edoList)
-      throws IFlowMessageConversionFailureException {
-    final List<BackendWorkflow> modelList = new ArrayList<>();
-    for (final WorkflowEdo edo : edoList) {
       modelList.add(fromEdo(edo));
     }
 
@@ -551,15 +317,6 @@ public class BackendModelEdoMapper {
     }
 
     return modelList;
-  }
-
-  public static List<WorkflowEdo> toWorkflowEdoList(final List<BackendWorkflow> modelList) {
-    final List<WorkflowEdo> edoList = new ArrayList<>();
-    for (final BackendWorkflow model : modelList) {
-      edoList.add(toEdo(model));
-    }
-
-    return edoList;
   }
 
   public static List<WorkflowTypeEdo> toWorkflowTypeEdoList(final List<BackendWorkflowType> modelList) {

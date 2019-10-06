@@ -5,16 +5,14 @@ import com.pth.iflow.common.enums.EWorkflowActionStatus;
 
 public class WorkflowAction extends WorkflowActionModelBase {
 
-  private Long    id;
-  private Long    workflowId;
-  private Long    createdBy;
-  private String  action;
-  private Long    oldStep;
-  private Long    newStep;
-  private Long    nextAssign;
-  private String  comments;
-  private Integer status;
-  private Integer version;
+  private Long                  id;
+  private Long                  workflowId;
+  private Long                  assignTo;
+  private Long                  currentStepId;
+  private WorkflowTypeStep      currentStep;
+  private String                comments;
+  private EWorkflowActionStatus status;
+  private Integer               version;
 
   @Override
   public Long getId() {
@@ -33,48 +31,32 @@ public class WorkflowAction extends WorkflowActionModelBase {
     this.workflowId = workflowId;
   }
 
-  public String getAction() {
-    return this.action;
+  public Long getAssignTo() {
+    return this.assignTo;
   }
 
-  public void setAction(final String action) {
-    this.action = action;
+  public boolean isAssigned() {
+    return (this.assignTo != null) && (this.assignTo > 0);
   }
 
-  public Long getOldStep() {
-    return this.oldStep;
+  public void setAssignTo(final Long assignTo) {
+    this.assignTo = assignTo;
   }
 
-  public void setOldStep(final Long oldStep) {
-    this.oldStep = oldStep;
+  public Long getCurrentStepId() {
+    return currentStepId;
   }
 
-  public Long getNewStep() {
-    return this.newStep;
+  public void setCurrentStepId(final Long currectStepId) {
+    this.currentStepId = currectStepId;
   }
 
-  public void setNewStep(final Long newStep) {
-    this.newStep = newStep;
+  public WorkflowTypeStep getCurrentStep() {
+    return currentStep;
   }
 
-  public Long getNextAssign() {
-    return this.nextAssign;
-  }
-
-  public void setNextAssign(final Long nextAssign) {
-    this.nextAssign = nextAssign;
-  }
-
-  public boolean hasNextAssign() {
-    return this.nextAssign != null && this.nextAssign > 0;
-  }
-
-  public Long getCreatedBy() {
-    return this.createdBy;
-  }
-
-  public void setCreatedBy(final Long createdBy) {
-    this.createdBy = createdBy;
+  public void setCurrentStep(final WorkflowTypeStep currentStep) {
+    this.currentStep = currentStep;
   }
 
   public String getComments() {
@@ -87,19 +69,19 @@ public class WorkflowAction extends WorkflowActionModelBase {
 
   @Override
   public Integer getStatusInt() {
-    return this.status;
+    return this.status.getValue();
   }
 
   public EWorkflowActionStatus getStatus() {
-    return EWorkflowActionStatus.ofValue(this.status);
+    return this.status;
   }
 
   public void setStatus(final EWorkflowActionStatus status) {
-    this.status = status.getValue().intValue();
+    this.status = status;
   }
 
   public void setStatus(final Integer status) {
-    this.status = status;
+    this.status = EWorkflowActionStatus.ofValue(status);
   }
 
   @Override

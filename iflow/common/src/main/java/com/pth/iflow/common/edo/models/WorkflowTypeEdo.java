@@ -11,6 +11,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import com.fasterxml.jackson.annotation.JsonSetter;
 import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 import com.pth.iflow.common.edo.models.validation.AEnumValueValidator;
 import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
@@ -63,6 +64,7 @@ public class WorkflowTypeEdo {
   @XmlElement(name = "AllowAssign", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Boolean                         allowAssign;
 
+  @NotNull
   @XmlElementWrapper(name = "WorkflowTypeStepList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "WorkflowTypeStep", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private final List<WorkflowTypeStepEdo> steps = new ArrayList<>();
@@ -165,6 +167,7 @@ public class WorkflowTypeEdo {
     return this.steps;
   }
 
+  @JsonSetter
   public void setSteps(final List<WorkflowTypeStepEdo> steps) {
     this.steps.clear();
     if (steps != null) {

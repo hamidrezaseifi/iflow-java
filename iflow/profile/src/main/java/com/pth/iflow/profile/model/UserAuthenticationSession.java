@@ -2,8 +2,6 @@ package com.pth.iflow.profile.model;
 
 import java.util.Date;
 
-import com.pth.iflow.common.edo.models.UserAuthenticationResponseEdo;
-
 public class UserAuthenticationSession {
 
   private String    email;
@@ -70,6 +68,13 @@ public class UserAuthenticationSession {
   }
 
   /**
+   * @return the created
+   */
+  public Long getCreatedLong() {
+    return this.created;
+  }
+
+  /**
    * @param created the created to set
    */
   public void setCreated(final Date created) {
@@ -81,6 +86,13 @@ public class UserAuthenticationSession {
    */
   public Date getLastAccess() {
     return new Date(this.lastAccess);
+  }
+
+  /**
+   * @return the lastAccess
+   */
+  public Long getLastAccessLong() {
+    return this.lastAccess;
   }
 
   /**
@@ -125,17 +137,6 @@ public class UserAuthenticationSession {
    */
   public void setLastAccess(final Date lastAccess) {
     this.lastAccess = lastAccess.getTime();
-  }
-
-  public UserAuthenticationResponseEdo toEdo() {
-    final UserAuthenticationResponseEdo edo = new UserAuthenticationResponseEdo();
-    edo.setSessionid(this.sessionid);
-    edo.setToken(this.token);
-    edo.setEmail(this.email);
-    edo.setCreated(this.created);
-    edo.setLastAccess(this.lastAccess);
-
-    return edo;
   }
 
 }

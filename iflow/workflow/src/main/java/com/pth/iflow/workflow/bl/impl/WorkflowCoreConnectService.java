@@ -42,8 +42,8 @@ public class WorkflowCoreConnectService implements IWorkflowDataService {
     logger.debug("Request workflow data for id {}", id);
 
     final WorkflowEdo edo = this.restTemplate.callRestGet(
-        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.WORKFLOW_READ_BY_ID), token, EModule.CORE, WorkflowEdo.class,
-        true, id);
+        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.READ_WORKFLOW_BY_ID(id)), token, EModule.CORE,
+        WorkflowEdo.class, true, id);
 
     return WorkflowModelEdoMapper.fromEdo(edo);
   }
@@ -54,7 +54,7 @@ public class WorkflowCoreConnectService implements IWorkflowDataService {
     logger.debug("Request workflow list for id list {}", idList);
 
     final WorkflowListEdo edoList = this.restTemplate.callRestPost(
-        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.WORKFLOW_READ_LIST), token, EModule.CORE, idList,
+        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.READ_WORKFLOW_LIST()), token, EModule.CORE, idList,
         WorkflowListEdo.class, true);
 
     return WorkflowModelEdoMapper.fromWorkflowEdoList(edoList.getWorkflows());
@@ -63,10 +63,10 @@ public class WorkflowCoreConnectService implements IWorkflowDataService {
   @Override
   public Workflow save(final Workflow model, final String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
-    logger.debug("Request save workflow {}", model.getTitle());
+    logger.debug("Request save workflow");
 
     final WorkflowEdo edo = this.restTemplate.callRestPost(
-        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.WORKFLOW_SAVE), token, EModule.CORE,
+        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.SAVE_WORKFLOW()), token, EModule.CORE,
         WorkflowModelEdoMapper.toEdo(model), WorkflowEdo.class, true);
 
     return WorkflowModelEdoMapper.fromEdo(edo);
@@ -78,7 +78,7 @@ public class WorkflowCoreConnectService implements IWorkflowDataService {
     logger.debug("Request workflow list for company id {}", id);
 
     final WorkflowListEdo edoList = this.restTemplate.callRestGet(
-        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.WORKFLOW_READ_LIST_BY_TYPE), token, EModule.CORE,
+        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.READ_WORKFLOW_LIST_BY_TYPE(id)), token, EModule.CORE,
         WorkflowListEdo.class, true, id);
 
     return WorkflowModelEdoMapper.fromWorkflowEdoList(edoList.getWorkflows());
@@ -90,7 +90,7 @@ public class WorkflowCoreConnectService implements IWorkflowDataService {
     logger.debug("Request workflow list for company id {}", id);
 
     final WorkflowListEdo edoList = this.restTemplate.callRestGet(
-        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.WORKFLOW_READ_LIST_BY_USER), token, EModule.CORE,
+        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.READ_WORKFLOW_LIST_BY_USER(id)), token, EModule.CORE,
         WorkflowListEdo.class, true, id, status);
 
     return WorkflowModelEdoMapper.fromWorkflowEdoList(edoList.getWorkflows());
@@ -102,7 +102,7 @@ public class WorkflowCoreConnectService implements IWorkflowDataService {
     logger.debug("Search workflow");
 
     final WorkflowListEdo edoList = this.restTemplate.callRestPost(
-        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.WORKFLOW_SEARCH), token, EModule.CORE,
+        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.SEARCH_WORKFLOW()), token, EModule.CORE,
         WorkflowModelEdoMapper.toEdo(workflowSearchFilter), WorkflowListEdo.class, true);
 
     return WorkflowModelEdoMapper.fromWorkflowEdoList(edoList.getWorkflows());

@@ -9,14 +9,11 @@ public class GuiWorkflowAction extends WorkflowActionModelBase {
 
   private Long                  id;
   private Long                  workflowId;
-  private Long                  createdBy;
-  private GuiUser               createdByUser;
-  private String                action;
-  private Long                  oldStep;
-  private GuiWorkflowTypeStep   oldStepObject;
-  private Long                  newStep;
-  private GuiWorkflowTypeStep   newStepObject;
-  private Long                  nextAssign;
+  private Long                  assignTo;
+  private GuiUser               assignToUser;
+  private String                assignToUserName;
+  private Long                  currentStepId;
+  private GuiWorkflowTypeStep   currentStep;
   private String                comments;
   private EWorkflowActionStatus status;
   private Integer               version;
@@ -38,86 +35,30 @@ public class GuiWorkflowAction extends WorkflowActionModelBase {
     this.workflowId = workflowId;
   }
 
-  public String getAction() {
-    return this.action;
+  public Long getAssignTo() {
+    return this.assignTo;
   }
 
-  public void setAction(final String action) {
-    this.action = action;
+  public boolean isAssignTo(final Long userId) {
+    return this.assignTo == userId;
   }
 
-  public Long getOldStep() {
-    return this.oldStep;
-  }
-
-  public void setOldStep(final Long oldStep) {
-    this.oldStep = oldStep;
+  public void setAssignTo(final Long assignTo) {
+    this.assignTo = assignTo;
   }
 
   /**
-   * @return the oldStepStep
+   * @return the assignToUser
    */
-  public GuiWorkflowTypeStep getOldStepObject() {
-    return this.oldStepObject;
+  public GuiUser getAssignToUser() {
+    return this.assignToUser;
   }
 
   /**
-   * @param oldStepStep the oldStepStep to set
+   * @param assignToUser the assignToUser to set
    */
-  public void setOldStepObject(final GuiWorkflowTypeStep oldStepObject) {
-    this.oldStepObject = oldStepObject;
-  }
-
-  public Long getNewStep() {
-    return this.newStep;
-  }
-
-  public void setNewStep(final Long newStep) {
-    this.newStep = newStep;
-  }
-
-  /**
-   * @return the newStepObject
-   */
-  public GuiWorkflowTypeStep getNewStepObject() {
-    return this.newStepObject;
-  }
-
-  /**
-   * @param newStepObject the newStepObject to set
-   */
-  public void setNewStepObject(final GuiWorkflowTypeStep newStepObject) {
-    this.newStepObject = newStepObject;
-  }
-
-  public Long getNextAssign() {
-    return this.nextAssign;
-  }
-
-  public void setNextAssign(final Long nextAssign) {
-    this.nextAssign = nextAssign;
-  }
-
-  public Long getCreatedBy() {
-    return this.createdBy;
-  }
-
-  public void setCreatedBy(final Long createdBy) {
-    this.createdBy = createdBy;
-  }
-
-  /**
-   * @return the createdByUser
-   */
-  public GuiUser getCreatedByUser() {
-    return this.createdByUser;
-  }
-
-  /**
-   * @param createdByUser the createdByUser to set
-   */
-  public void setCreatedByUser(final GuiUser createdByUser) {
-    this.createdByUser = createdByUser;
+  public void setAssignToUser(final GuiUser assignToUser) {
+    this.assignToUser = assignToUser;
   }
 
   public String getComments() {
@@ -126,6 +67,32 @@ public class GuiWorkflowAction extends WorkflowActionModelBase {
 
   public void setComments(final String comments) {
     this.comments = comments;
+  }
+
+  public Long getCurrentStepId() {
+    return this.currentStepId;
+  }
+
+  public void setCurrentStepId(final Long currentStepId) {
+    this.currentStepId = currentStepId;
+  }
+
+  public GuiWorkflowTypeStep getCurrentStep() {
+    return this.currentStep;
+  }
+
+  public void setCurrentStep(final GuiWorkflowTypeStep currentStep) {
+    this.currentStep = currentStep;
+  }
+
+  @Override
+  public Integer getVersion() {
+    return this.version;
+  }
+
+  @Override
+  public void setVersion(final Integer version) {
+    this.version = version;
   }
 
   public EWorkflowActionStatus getStatus() {
@@ -145,27 +112,12 @@ public class GuiWorkflowAction extends WorkflowActionModelBase {
     this.status = EWorkflowActionStatus.ofValue(status);
   }
 
-  @Override
-  public Integer getVersion() {
-    return this.version;
+  public String getAssignToUserName() {
+    return this.assignToUserName;
   }
 
-  @Override
-  public void setVersion(final Integer version) {
-    this.version = version;
-  }
-
-  public static GuiWorkflowAction createNewAction(final GuiWorkflow workflow, final Long createdBy,
-      final EWorkflowActionStatus status) {
-    final GuiWorkflowAction action = new GuiWorkflowAction();
-    action.setCreatedBy(createdBy);
-    action.setNewStep(null);
-    action.setOldStep(workflow.getCurrentStepId());
-    action.setStatus(status);
-    action.setWorkflowId(workflow.getId());
-    action.setComments("comments");
-    action.setAction("action");
-    return action;
+  public void setAssignToUserName(final String assignToUserName) {
+    this.assignToUserName = assignToUserName;
   }
 
 }

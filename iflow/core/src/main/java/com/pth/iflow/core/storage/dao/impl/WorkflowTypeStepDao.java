@@ -48,6 +48,7 @@ public class WorkflowTypeStepDao extends DaoBasicClass<WorkflowTypeStep> impleme
     model.setTitle(rs.getString("title"));
     model.setViewName(rs.getString("view_name"));
     model.setStatus(rs.getInt("status"));
+    model.setExpireDays(rs.getInt("expire_days"));
     model.setStepIndex(rs.getInt("step_index"));
     model.setCreatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("created_at")));
     model.setUpdatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("updated_at")));
@@ -67,10 +68,11 @@ public class WorkflowTypeStepDao extends DaoBasicClass<WorkflowTypeStep> impleme
     ps.setLong(1, model.getWorkflowTypeId());
     ps.setString(2, model.getTitle());
     ps.setString(3, model.getViewName());
-    ps.setInt(4, model.getStepIndex());
-    ps.setString(5, model.getComments());
-    ps.setInt(6, model.getVersion());
-    ps.setInt(7, model.getStatus());
+    ps.setInt(4, model.getExpireDays());
+    ps.setInt(5, model.getStepIndex());
+    ps.setString(6, model.getComments());
+    ps.setInt(7, model.getVersion());
+    ps.setInt(8, model.getStatus());
 
     return ps;
   }
@@ -81,26 +83,27 @@ public class WorkflowTypeStepDao extends DaoBasicClass<WorkflowTypeStep> impleme
     ps.setLong(1, model.getWorkflowTypeId());
     ps.setString(2, model.getTitle());
     ps.setString(3, model.getViewName());
-    ps.setInt(4, model.getStepIndex());
-    ps.setString(5, model.getComments());
-    ps.setInt(6, model.getVersion());
-    ps.setInt(7, model.getStatus());
-    ps.setLong(8, model.getId());
+    ps.setInt(4, model.getExpireDays());
+    ps.setInt(5, model.getStepIndex());
+    ps.setString(6, model.getComments());
+    ps.setInt(7, model.getVersion());
+    ps.setInt(8, model.getStatus());
+    ps.setLong(9, model.getId());
 
     return ps;
   }
 
   @Override
   public WorkflowTypeStep create(final WorkflowTypeStep model, final boolean withTransaction) throws IFlowStorageException {
-    final String sql = "INSERT INTO workflow_type_step (workflow_type_id, title, view_name, step_index, comments, version, status)"
-        + "VALUES (?, ?, ?, ?, ?)";
+    final String sql = "INSERT INTO workflow_type_step (workflow_type_id, title, view_name, expire_days, step_index, comments, version, status)"
+        + "VALUES (?, ?, ?, ?, ?, ?)";
 
     return this.getById(this.createModel(model, "WorkflowTypeStep", sql, withTransaction));
   }
 
   @Override
   public WorkflowTypeStep update(final WorkflowTypeStep model) throws IFlowStorageException {
-    final String sql = "UPDATE workflow_type_step SET workflow_type_id = ?, title = ?, view_name=?, step_index = ?, comments = ?,"
+    final String sql = "UPDATE workflow_type_step SET workflow_type_id = ?, title = ?, view_name=?, expire_days=?, step_index = ?, comments = ?,"
         + " version = ?, status = ? WHERE id = ?";
 
     this.updateModel(model, "WorkflowTypeStep", sql, true);

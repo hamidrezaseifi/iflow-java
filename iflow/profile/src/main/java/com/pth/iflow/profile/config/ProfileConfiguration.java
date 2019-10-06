@@ -1,7 +1,8 @@
 package com.pth.iflow.profile.config;
 
 import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import javax.annotation.PostConstruct;
 
@@ -25,23 +26,22 @@ public class ProfileConfiguration {
   @Component
   public static class CoreAccessConfig {
 
-    private final Logger log = LoggerFactory.getLogger(getClass());
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Value("${iflow.profile.urls.core.base}")
     private String       coreBaseUrl;
 
+    private URI          baseCoreBaseUri;
+
     @PostConstruct
-    private void init() {
-      log.info("CORE Base URL: {}", coreBaseUrl);
+    private void init() throws URISyntaxException {
+      this.log.info("CORE Base URL: {}", this.coreBaseUrl);
+      this.baseCoreBaseUri = new URI(this.coreBaseUrl);
 
     }
 
-    public URL prepareCoreUrl(final String url) throws MalformedURLException {
-      String path = coreBaseUrl + "/" + url;
-      path = path.replace("//", "/");
-      path = path.replace("http:/", "http://");
-
-      return new URL(path);
+    public URI prepareCoreUrl(final URI subUrl) throws MalformedURLException {
+      return this.baseCoreBaseUri.resolve(subUrl);
     }
 
   }

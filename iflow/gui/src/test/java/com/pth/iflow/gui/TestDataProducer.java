@@ -1,14 +1,16 @@
 package com.pth.iflow.gui;
 
+import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.pth.iflow.common.enums.EAssignType;
 import com.pth.iflow.common.enums.EWorkflowActionStatus;
 import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
+import com.pth.iflow.gui.models.GuiAssignItem;
 import com.pth.iflow.gui.models.GuiCompany;
 import com.pth.iflow.gui.models.GuiCompanyProfile;
 import com.pth.iflow.gui.models.GuiDepartment;
@@ -17,9 +19,9 @@ import com.pth.iflow.gui.models.GuiUser;
 import com.pth.iflow.gui.models.GuiUserGroup;
 import com.pth.iflow.gui.models.GuiWorkflow;
 import com.pth.iflow.gui.models.GuiWorkflowAction;
-import com.pth.iflow.gui.models.GuiWorkflowCreateRequest;
 import com.pth.iflow.gui.models.GuiWorkflowFile;
 import com.pth.iflow.gui.models.GuiWorkflowFileVersion;
+import com.pth.iflow.gui.models.GuiWorkflowSaveRequest;
 import com.pth.iflow.gui.models.GuiWorkflowSearchFilter;
 import com.pth.iflow.gui.models.GuiWorkflowType;
 import com.pth.iflow.gui.models.GuiWorkflowTypeStep;
@@ -51,7 +53,7 @@ public class TestDataProducer {
     model.setCompanyId(1L);
     model.setId(1L);
     model.setEmail("email");
-    model.setBirthDate(new Date());
+    model.setBirthDate(LocalDate.now());
     model.setFirstName("firstName");
     model.setLastName("lastName");
     model.setStatus(1);
@@ -68,7 +70,7 @@ public class TestDataProducer {
     model.setCompanyId(1L);
     model.setId(id);
     model.setEmail(email);
-    model.setBirthDate(new Date());
+    model.setBirthDate(LocalDate.now());
     model.setFirstName(fname);
     model.setLastName(lname);
     model.setStatus(1);
@@ -93,7 +95,6 @@ public class TestDataProducer {
     final GuiWorkflow model = new GuiWorkflow();
     model.setWorkflowTypeId(1L);
     model.setId(Id);
-    model.setTitle("title " + Id);
     model.setStatus(EWorkflowStatus.INITIALIZE);
     model.setVersion(1);
     model.setComments("comments");
@@ -101,9 +102,6 @@ public class TestDataProducer {
     model.setCurrentStep(this.getTestGuiWorkflowTypeStep());
     model.setCurrentStepId(model.getCurrentStep().getId());
     model.setCreatedBy(1L);
-    model.setAssignTo(1L);
-    model.setCommand(EWorkflowProcessCommand.CREATE);
-    model.setNextAssign(true);
     model.setActions(Arrays.asList(this.getTestGuiWorkflowAction(1L, 1L), this.getTestGuiWorkflowAction(2L, 2L),
         this.getTestGuiWorkflowAction(3L, 3L)));
     model.setFiles(
@@ -148,13 +146,11 @@ public class TestDataProducer {
     final GuiWorkflowAction model = new GuiWorkflowAction();
     model.setWorkflowId(workflowId);
     model.setId(Id);
-    model.setAction("action " + Id);
     model.setStatus(EWorkflowActionStatus.INITIALIZE);
     model.setVersion(1);
-    model.setCreatedBy(1L);
-    model.setNewStep(2L);
-    model.setOldStep(1L);
+    model.setCurrentStepId(1L);
     model.setComments("comments");
+    model.setAssignTo(1L);
 
     return model;
   }
@@ -230,6 +226,7 @@ public class TestDataProducer {
     model.setStepIndex(index);
     model.setComments("comments");
     model.setViewName("viewName");
+    model.setExpireDays(15);
 
     return model;
   }
@@ -277,6 +274,11 @@ public class TestDataProducer {
 
   protected List<Long> getTestUserIdList() {
     return Arrays.asList(1L, 2L, 3L);
+  }
+
+  protected List<GuiAssignItem> getTestAssignedList() {
+    return Arrays.asList(new GuiAssignItem(1L, EAssignType.USER), new GuiAssignItem(2L, EAssignType.USER),
+        new GuiAssignItem(3L, EAssignType.USER));
   }
 
   protected List<GuiDepartment> getTestDepartmentList() {
@@ -338,17 +340,26 @@ public class TestDataProducer {
     final GuiWorkflowSearchFilter filter = new GuiWorkflowSearchFilter();
     filter.setAssignedUserIdList(this.getTestUserIdList());
     filter.setStatusList(Arrays.asList(1, 2, 3));
-    filter.setTitle("title");
     filter.setWorkflowStepeIdList(this.getTestGuiWorkflowTypeStepIdList());
     filter.setWorkflowTypeIdList(this.getTestGuiWorkflowTypeIdList());
 
     return filter;
   }
 
-  protected GuiWorkflowCreateRequest getTestGuiWorkflowCreateRequest() {
-    final GuiWorkflowCreateRequest request = new GuiWorkflowCreateRequest();
-    request.setAssigns(this.getTestUserIdList());
+  protected GuiWorkflowSaveRequest getTestGuiWorkflowSaveRequest() {
+    final GuiWorkflowSaveRequest request = new GuiWorkflowSaveRequest();
+    request.setAssigns(this.getTestAssignedList());
     request.setWorkflow(this.getTestGuiWorkflow(null));
+    request.setCommand(EWorkflowProcessCommand.CREATE);
+
+    return request;
+  }
+
+  protected GuiWorkflowSaveRequest getTestGuiWorkflowSaveRequest(final GuiWorkflow workflow) {
+    final GuiWorkflowSaveRequest request = new GuiWorkflowSaveRequest();
+    request.setAssigns(this.getTestAssignedList());
+    request.setWorkflow(workflow);
+    request.setCommand(EWorkflowProcessCommand.CREATE);
 
     return request;
   }

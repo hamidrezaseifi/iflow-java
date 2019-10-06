@@ -3,10 +3,8 @@ package com.pth.iflow.gui.services;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
-
 import java.net.URI;
 import java.util.List;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -17,7 +15,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import com.pth.iflow.common.edo.models.UserEdo;
 import com.pth.iflow.common.edo.models.UserListEdo;
 import com.pth.iflow.common.enums.EModule;
@@ -33,20 +30,23 @@ import com.pth.iflow.gui.services.impl.UserAccess;
 @AutoConfigureMockMvc
 public class UserAccessTest extends TestDataProducer {
 
-  private IUserAccess                         userAccess;
+  private IUserAccess userAccess;
 
   @MockBean
-  private IRestTemplateCall                   restTemplate;
+  private IRestTemplateCall restTemplate;
 
   @MockBean
-  private GuiConfiguration.ModuleAccessConfig moduleAccessConfig;
+  private GuiConfiguration.WorkflowModuleAccessConfig workflowModuleAccessConfig;
 
   @MockBean
-  private GuiSessionUserInfo                  sessionUserInfo;
+  private GuiConfiguration.ProfileModuleAccessConfig profileModuleAccessConfig;
 
-  private URI                                 testUri;
+  @MockBean
+  private GuiSessionUserInfo sessionUserInfo;
 
-  private String                              validTocken;
+  private URI testUri;
+
+  private String validTocken;
 
   @Before
   public void setUp() throws Exception {
@@ -55,20 +55,20 @@ public class UserAccessTest extends TestDataProducer {
 
     this.validTocken = "validTocken";
 
-    when(this.moduleAccessConfig.getAuthenticationUri()).thenReturn(this.testUri);
-    when(this.moduleAccessConfig.getCreateWorkflowUri()).thenReturn(this.testUri);
-    when(this.moduleAccessConfig.getReadAuthenticationInfoUri()).thenReturn(this.testUri);
-    when(this.moduleAccessConfig.getReadCompanyUserListUri(any(Long.class))).thenReturn(this.testUri);
-    when(this.moduleAccessConfig.getReadTokenInfoUri()).thenReturn(this.testUri);
-    when(this.moduleAccessConfig.getReadWorkflowTypeListUri(any(Long.class))).thenReturn(this.testUri);
-    when(this.moduleAccessConfig.getReadWorkflowUri(any(Long.class))).thenReturn(this.testUri);
-    when(this.moduleAccessConfig.getSearchWorkflowUri()).thenReturn(this.testUri);
+    when(this.profileModuleAccessConfig.getAuthenticationUri()).thenReturn(this.testUri);
+    when(this.workflowModuleAccessConfig.getCreateWorkflowUri()).thenReturn(this.testUri);
+    when(this.profileModuleAccessConfig.getReadAuthenticationInfoUri()).thenReturn(this.testUri);
+    when(this.profileModuleAccessConfig.getReadCompanyUserListUri(any(Long.class))).thenReturn(this.testUri);
+    when(this.profileModuleAccessConfig.getReadTokenInfoUri()).thenReturn(this.testUri);
+    when(this.workflowModuleAccessConfig.getReadWorkflowTypeListUri(any(Long.class))).thenReturn(this.testUri);
+    when(this.workflowModuleAccessConfig.getReadWorkflowUri(any(Long.class))).thenReturn(this.testUri);
+    when(this.workflowModuleAccessConfig.getSearchWorkflowUri()).thenReturn(this.testUri);
 
     when(this.sessionUserInfo.getToken()).thenReturn(this.validTocken);
     when(this.sessionUserInfo.getUserById(any(Long.class))).thenReturn(this.getTestUser());
     when(this.sessionUserInfo.getWorkflowTypeById(any(Long.class))).thenReturn(this.getTestGuiWorkflowType());
 
-    this.userAccess = new UserAccess(this.restTemplate, this.moduleAccessConfig, this.sessionUserInfo);
+    this.userAccess = new UserAccess(this.restTemplate, this.profileModuleAccessConfig, this.sessionUserInfo);
 
   }
 
@@ -83,7 +83,7 @@ public class UserAccessTest extends TestDataProducer {
     final GuiUser user = this.getTestUser();
 
     when(this.restTemplate.callRestGet(any(URI.class), any(EModule.class), eq(UserEdo.class), any(String.class), any(boolean.class)))
-        .thenReturn(GuiModelEdoMapper.toEdo(user));
+                                                                                                                                     .thenReturn(GuiModelEdoMapper.toEdo(user));
 
     final GuiUser resUser = this.userAccess.readUser(1L);
 
@@ -100,8 +100,12 @@ public class UserAccessTest extends TestDataProducer {
 
     final GuiUser user = this.getTestUser();
 
-    when(this.restTemplate.callRestPost(any(URI.class), any(EModule.class), any(UserEdo.class), eq(UserEdo.class), any(String.class),
-        any(boolean.class))).thenReturn(GuiModelEdoMapper.toEdo(user));
+    when(this.restTemplate.callRestPost(any(URI.class),
+                                        any(EModule.class),
+                                        any(UserEdo.class),
+                                        eq(UserEdo.class),
+                                        any(String.class),
+                                        any(boolean.class))).thenReturn(GuiModelEdoMapper.toEdo(user));
 
     final GuiUser resUser = this.userAccess.saveUser(user);
 
@@ -117,8 +121,11 @@ public class UserAccessTest extends TestDataProducer {
     final List<GuiUser> userList = this.getTestUserList();
     final UserListEdo listEdo = new UserListEdo(GuiModelEdoMapper.toUserEdoList(userList));
 
-    when(this.restTemplate.callRestGet(any(URI.class), any(EModule.class), eq(UserListEdo.class), any(String.class),
-        any(boolean.class))).thenReturn(listEdo);
+    when(this.restTemplate.callRestGet(any(URI.class),
+                                       any(EModule.class),
+                                       eq(UserListEdo.class),
+                                       any(String.class),
+                                       any(boolean.class))).thenReturn(listEdo);
 
     final List<GuiUser> resUserList = this.userAccess.getCompanyUserList(1L);
 

@@ -1,8 +1,7 @@
 package com.pth.iflow.profile.model;
 
-import com.pth.iflow.common.edo.models.UserAuthenticationRequestEdo;
-
 public class UserAuthenticationRequest {
+
   private String email;
   private String password;
   private String companyIdentity;
@@ -31,22 +30,4 @@ public class UserAuthenticationRequest {
     this.companyIdentity = companyIdentity;
   }
 
-  public UserAuthenticationRequestEdo toEdo() {
-    final UserAuthenticationRequestEdo edo = new UserAuthenticationRequestEdo();
-    edo.setCompanyIdentity(companyIdentity);
-    edo.setEmail(email);
-    edo.setPassword(password);
-
-    return edo;
-  }
-
-  public static UserAuthenticationRequest fromEdo(final UserAuthenticationRequestEdo edo) {
-    final UserAuthenticationRequest user = new UserAuthenticationRequest();
-
-    user.setCompanyIdentity(edo.getCompanyIdentity());
-    user.setEmail(edo.getEmail());
-    user.setPassword(edo.getPassword());
-
-    return user;
-  }
 }

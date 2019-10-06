@@ -1,7 +1,8 @@
 package com.pth.iflow.workflow.config;
 
 import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -21,8 +22,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class WorkflowConfiguration {
 
-  public static final String NO_ACCESS_URL = "/noaccess";
-  public static final String INVALID_TOKEN_URL = "/invalidtoken";
+  public static final String       NO_ACCESS_URL            = "/noaccess";
+  public static final String       INVALID_TOKEN_URL        = "/invalidtoken";
 
   public static final List<String> NOAUTHENTICATED_URL_LIST = Arrays.asList(NO_ACCESS_URL, INVALID_TOKEN_URL);
 
@@ -35,32 +36,32 @@ public class WorkflowConfiguration {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Value("${iflow.profile.urls.core.base}")
-    private String coreBaseUrl;
+    private String       coreBaseUrl;
 
     @Value("${iflow.profile.urls.profile.base}")
-    private String profileBaseUrl;
+    private String       profileBaseUrl;
+
+    private URI          baseCoreBaseUri;
+
+    private URI          baseProfileBaseUri;
 
     @PostConstruct
-    private void init() {
+    private void init() throws URISyntaxException {
+
+      this.baseCoreBaseUri = new URI(this.coreBaseUrl);
+      this.baseProfileBaseUri = new URI(this.profileBaseUrl);
+
       log.info("CORE Base URL: {}", coreBaseUrl);
       log.info("PROFILE Base URL: {}", profileBaseUrl);
 
     }
 
-    public URL generateCoreUrl(final String subUrl) throws MalformedURLException {
-      String path = coreBaseUrl + "/" + subUrl;
-      path = path.replace("//", "/");
-      path = path.replace("http:/", "http://");
-
-      return new URL(path);
+    public URI generateCoreUrl(final URI subUrl) throws MalformedURLException {
+      return this.baseCoreBaseUri.resolve(subUrl);
     }
 
-    public URL generateProfileUrl(final String subUrl) throws MalformedURLException {
-      String path = profileBaseUrl + "/" + subUrl;
-      path = path.replace("//", "/");
-      path = path.replace("http:/", "http://");
-
-      return new URL(path);
+    public URI generateProfileUrl(final URI subUrl) throws MalformedURLException {
+      return this.baseProfileBaseUri.resolve(subUrl);
     }
 
   }
