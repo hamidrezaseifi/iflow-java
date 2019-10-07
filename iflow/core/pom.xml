@@ -10,8 +10,8 @@
 	<properties>
     <ifw.module.db.database>iflow</ifw.module.db.database>
     <ifw.module.db.root.database>iflow</ifw.module.db.root.database>
-    <ifw.module.db.root>iflow</ifw.module.db.root>
-    <ifw.module.db.root.pwd>iflow</ifw.module.db.root.pwd>
+    <ifw.module.db.root>root</ifw.module.db.root>
+    <ifw.module.db.root.pwd>7342</ifw.module.db.root.pwd>
     <ifw.module.db.url>jdbc:mysql://localhost:3306/</ifw.module.db.url>
     <ifw.module.db.driver>com.mysql.jdbc.Driver</ifw.module.db.driver>
     
@@ -122,5 +122,182 @@
 	
 	  </plugins>
 	</build>
+	
+	<profiles>
+	
+    <profile>
+      <!-- runs all migratrion scripts and by default creates the needed schema/db if still missing -->
+      <id>migrate-db</id>
+      <activation>
+        <property>
+          <name>!env.mdm_skip_migrate_db</name>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <!-- semi-automatic migration of DB -->
+          <plugin>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <!-- default is pre-integration-test but some of our unit test go to the DB -->
+                <phase>process-test-resources</phase>
+              </execution>
+            </executions>
+            <configuration>
+              <!-- set this to default, for otherwise its executed in all modules and parent pom - and needs the password etc causing a failure 
+                activate it only for the modules that have their own DB, e.g. core and tasks -->
+              <skip>true</skip>
+              <!-- otherwise we get the warning: Unable to restore connection to having no default schema: -->
+              <url>${ifw.module.db.url}${ifw.module.db.database}</url>
+              <user>${ifw.module.db.owner}</user>
+              <password>${ifw.module.db.owner.password}</password>
+              <locations>
+                <location>filesystem:${basedir}/database/flyway/one-time</location>
+                <location>filesystem:${basedir}/database/flyway/all-time</location>
+              </locations>
+
+              <sqlMigrationPrefix>V</sqlMigrationPrefix>
+              <repeatableSqlMigrationPrefix>R</repeatableSqlMigrationPrefix>
+              <sqlMigrationSeparator>_</sqlMigrationSeparator>
+              <sqlMigrationSuffixes>
+                <sqlMigrationSuffix>.sql</sqlMigrationSuffix>
+              </sqlMigrationSuffixes>
+              <encoding>UTF-8</encoding>
+              <outOfOrder>false</outOfOrder>
+              <validateOnMigrate>true</validateOnMigrate>
+              <cleanOnValidationError>false</cleanOnValidationError>
+              <mixed>false</mixed>
+              <group>false</group>
+              <ignoreMissingMigrations>false</ignoreMissingMigrations>
+              <ignoreFutureMigrations>false</ignoreFutureMigrations>
+              <cleanDisabled>true</cleanDisabled>
+              <baselineOnMigrate>false</baselineOnMigrate>
+              <baselineVersion>1</baselineVersion>
+              <baselineDescription>Initial version</baselineDescription>
+              <installedBy>system</installedBy>
+
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <profile>
+      <!-- drops all objects from the DB -->
+      <!-- must be executed "alone", ie:  mvn  -P db-clean -->
+      <id>db-clean</id>
+      <build>
+        <defaultGoal>process-resources</defaultGoal>
+        <plugins>
+
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>sql-maven-plugin</artifactId>
+            <version>1.5</version>
+
+            <dependencies>              
+				<dependency>
+				    <groupId>mysql</groupId>
+				    <artifactId>mysql-connector-java</artifactId>
+				    <version>8.0.17</version>
+				</dependency>
+              
+            </dependencies>
+
+            <executions>
+              <execution>
+                <id>db-clean</id>
+                <!-- although we only need this before the test phase, i bind it to the process-resouces phase so we dont have to compile 1st 
+                  when we just want to drop the DB -->
+                <phase>process-resources</phase>
+                <goals>
+                  <goal>execute</goal>
+                </goals>
+                <configuration>
+                  <skip>${ifw.module.db.skip}</skip>
+                  <driver>${ifw.module.db.driver}</driver>
+                  <url>${ifw.module.db.url}${ifw.module.db.root.database}</url>
+                  <username>${ifw.module.db.root}</username>
+                  <password>${ifw.module.db.root.pwd}</password>
+    
+                  <!-- avoid transaction because DROP DATABASE can not run within a transaction -->
+                  <autocommit>true</autocommit>
+                  <sqlCommand><!-- prevent autoformat from formatting this text node: -->
+                  <![CDATA[ 
+                    DROP DATABASE IF EXISTS ${ifw.module.db.database};
+                    DROP USER IF EXISTS ${ifw.module.db.user};
+                  ]]>
+                  </sqlCommand>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+	
+    <profile>
+      <id>db-create</id>
+      <!-- TODO: rename this to db-recreate -->
+      <build>
+        <defaultGoal>process-resources</defaultGoal>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>sql-maven-plugin</artifactId>
+            <version>1.5</version>
+
+            <dependencies>              
+				<dependency>
+				    <groupId>mysql</groupId>
+				    <artifactId>mysql-connector-java</artifactId>
+				    <version>8.0.17</version>
+				</dependency>
+              
+            </dependencies>
+    
+            <!-- common configuration shared by all executions -->
+            <configuration>
+              <skip>${ifw.module.db.skip}</skip>
+              <driver>${ifw.module.db.driver}</driver>
+              <url>${ifw.module.db.url}${ifw.module.db.root.database}</url>
+              <username>${ifw.module.db.root}</username>
+              <password>${ifw.module.db.root.pwd}</password>
+            </configuration>
+
+            <executions>
+              <execution>
+                <id>db-create-copy-sql-scripts1</id>
+                <phase>generate-resources</phase>
+                <goals>
+                  <goal>execute</goal>
+                </goals>
+                <!-- specific configuration for this execution -->
+                <configuration>
+                
+                  <!-- avoid transaction because DROP DATABASE can not run within a transaction -->
+                  <autocommit>true</autocommit>
+                  <sqlCommand><!-- prevent autoformat from formatting this text node: -->
+                  <![CDATA[ 
+                    DROP DATABASE IF EXISTS ${ifw.module.db.database};
+                    DROP USER IF EXISTS ${ifw.module.db.user};
+                    CREATE USER ${ifw.module.db.user} IDENTIFIED BY '${ifw.module.db.user.password}';
+                    CREATE DATABASE ${ifw.module.db.database} character set UTF8 collate utf8_bin;
+                    GRANT ALL PRIVILEGES ON ${ifw.module.db.database}.* TO '${ifw.module.db.user}';
+                  ]]>
+                  </sqlCommand>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+
+        </plugins>
+      </build>
+    </profile>
+	
+	
+	</profiles>
 
 </project>
