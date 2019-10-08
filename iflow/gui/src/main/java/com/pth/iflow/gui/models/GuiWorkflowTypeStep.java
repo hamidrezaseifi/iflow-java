@@ -1,8 +1,6 @@
 package com.pth.iflow.gui.models;
 
-import com.pth.iflow.common.edo.models.base.DataModelBase;
-
-public class GuiWorkflowTypeStep extends DataModelBase {
+public class GuiWorkflowTypeStep {
 
   private Long    id;
   private String  title;
@@ -13,7 +11,6 @@ public class GuiWorkflowTypeStep extends DataModelBase {
   private Integer status;
   private Integer version;
 
-  @Override
   public Long getId() {
     return this.id;
   }
@@ -68,12 +65,10 @@ public class GuiWorkflowTypeStep extends DataModelBase {
     this.status = status;
   }
 
-  @Override
   public Integer getVersion() {
     return this.version;
   }
 
-  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }

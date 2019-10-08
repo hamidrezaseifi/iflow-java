@@ -1,8 +1,6 @@
 package com.pth.iflow.gui.models;
 
-import com.pth.iflow.common.edo.models.base.DataModelBase;
-
-public class GuiUserGroup extends DataModelBase {
+public class GuiUserGroup {
 
   private Long    id;
 
@@ -14,7 +12,6 @@ public class GuiUserGroup extends DataModelBase {
 
   private Integer version;
 
-  @Override
   public Long getId() {
     return this.id;
   }
@@ -47,12 +44,10 @@ public class GuiUserGroup extends DataModelBase {
     this.status = status;
   }
 
-  @Override
   public Integer getVersion() {
     return this.version;
   }
 
-  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }

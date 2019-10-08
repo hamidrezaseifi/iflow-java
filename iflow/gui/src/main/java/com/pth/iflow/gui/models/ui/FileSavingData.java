@@ -6,7 +6,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.io.FileUtils;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
@@ -14,34 +16,32 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
+
 import com.pth.iflow.common.enums.EWorkflowIdentity;
 
 public class FileSavingData {
 
   public static String[] AVAILEABLE_EXTENTIONS = { "pdf", "jpg", "gif", "png", "doc", "docx" };
 
-  private String title;
-  private String fileExtention;
-  private String workflowIdentity;
-  private Long   actionId;
-  private Long   companyId;
-  private String filePath;
-  private String tempFilePath;
+  private String         title;
+  private String         fileExtention;
+  private String         workflowIdentity;
+  private Long           actionId;
+  private String         companyIdentity;
+  private String         filePath;
+  private String         tempFilePath;
 
   public FileSavingData(final String fileExtention) {
     this.fileExtention = fileExtention;
   }
 
-  public FileSavingData(final String title,
-                        final String fileExtention,
-                        final String workflowIdentity,
-                        final Long actionId,
-                        final Long companyId) {
+  public FileSavingData(final String title, final String fileExtention, final String workflowIdentity, final Long actionId,
+      final String companyIdentity) {
     this.title = title;
     this.fileExtention = fileExtention;
     this.workflowIdentity = workflowIdentity;
     this.actionId = actionId;
-    this.companyId = companyId;
+    this.companyIdentity = companyIdentity;
   }
 
   /**
@@ -100,18 +100,12 @@ public class FileSavingData {
     this.actionId = actionId == null ? 0 : actionId;
   }
 
-  /**
-   * @return the companyId
-   */
-  public Long getCompanyId() {
-    return this.companyId;
+  public String getCompanyIdentity() {
+    return this.companyIdentity;
   }
 
-  /**
-   * @param companyId the companyId to set
-   */
-  public void setCompanyId(final Long companyId) {
-    this.companyId = companyId == null ? 0 : companyId;
+  public void setCompanyIdentity(final String companyIdentity) {
+    this.companyIdentity = companyIdentity;
   }
 
   /**
@@ -148,7 +142,7 @@ public class FileSavingData {
    * @return the saving file path preffix
    */
   public String generateSavingFilePathPreffix() {
-    return String.format("%d/%d/%d/%s.%s", this.companyId, this.workflowIdentity, this.actionId, this.title, this.fileExtention);
+    return String.format("%s/%s/%d/%s.%s", this.companyIdentity, this.workflowIdentity, this.actionId, this.title, this.fileExtention);
   }
 
   /**

@@ -15,12 +15,8 @@ import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 public class CompanyEdo {
 
   @NotNull
-  @XmlElement(name = "ID", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long    id;
-
-  @NotNull
-  @XmlElement(name = "IdentifyId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String  identifyid;
+  @XmlElement(name = "Identity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String  identity;
 
   @NotNull
   @XmlElement(name = "CompanyName", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
@@ -38,32 +34,12 @@ public class CompanyEdo {
 
   }
 
-  /**
-   * @return the id
-   */
-  public Long getId() {
-    return this.id;
+  public String getIdentity() {
+    return this.identity;
   }
 
-  /**
-   * @param id the id to set
-   */
-  public void setId(final Long id) {
-    this.id = id;
-  }
-
-  /**
-   * @return the identifyid
-   */
-  public String getIdentifyid() {
-    return this.identifyid;
-  }
-
-  /**
-   * @param identifyid the identifyid to set
-   */
-  public void setIdentifyid(final String identifyid) {
-    this.identifyid = identifyid;
+  public void setIdentity(final String identity) {
+    this.identity = identity;
   }
 
   /**

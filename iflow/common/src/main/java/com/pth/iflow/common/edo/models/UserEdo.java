@@ -22,12 +22,9 @@ import com.pth.iflow.common.edo.models.helper.DateEdoAdapter;
 @XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "User" + IFlowJaxbDefinition.TYPE_PREFIX)
 public class UserEdo {
 
-  @XmlElement(name = "ID", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long                id;
-
-  @NotNull(message = "CompanyId must not be null")
-  @XmlElement(name = "CompanyId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long                companyId;
+  @NotNull(message = "CompanyIdentity must not be null")
+  @XmlElement(name = "CompanyIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String              companyIdentity;
 
   @NotNull(message = "Email must not be null")
   @XmlElement(name = "Email", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
@@ -60,54 +57,34 @@ public class UserEdo {
   @NotNull(message = "GroupList must not be null")
   @XmlElementWrapper(name = "GroupList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "Group")
-  private final List<Long>    groups           = new ArrayList<>();
+  private final List<String>  groups           = new ArrayList<>();
 
   @NotNull(message = "DepartmentList must not be null")
   @XmlElementWrapper(name = "DepartmentList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "Department", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private final List<Long>    departments      = new ArrayList<>();
+  private final List<String>  departments      = new ArrayList<>();
 
   @NotNull(message = "DepartmentGroupList must not be null")
   @XmlElementWrapper(name = "DepartmentGroupList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "DepartmentGroup", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private final List<Long>    departmentGroups = new ArrayList<>();
+  private final List<String>  departmentGroups = new ArrayList<>();
 
   @NotNull(message = "DeputyList must not be null")
   @XmlElementWrapper(name = "DeputyList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "Deputy", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private final List<Long>    deputies         = new ArrayList<>();
+  private final List<String>  deputies         = new ArrayList<>();
 
   @NotNull(message = "RoleList must not be null")
   @XmlElementWrapper(name = "RoleList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "Role", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private final List<Integer> roles            = new ArrayList<>();
 
-  /**
-   * @return the id
-   */
-  public Long getId() {
-    return this.id;
+  public String getCompanyIdentity() {
+    return this.companyIdentity;
   }
 
-  /**
-   * @param id the id to set
-   */
-  public void setId(final Long id) {
-    this.id = id;
-  }
-
-  /**
-   * @return the companyIid
-   */
-  public Long getCompanyId() {
-    return this.companyId;
-  }
-
-  /**
-   * @param companyIid the companyIid to set
-   */
-  public void setCompanyId(final Long companyIid) {
-    this.companyId = companyIid;
+  public void setCompanyIdentity(final String companyIdentity) {
+    this.companyIdentity = companyIdentity;
   }
 
   /**
@@ -196,67 +173,67 @@ public class UserEdo {
     this.permission = permission;
   }
 
-  public List<Long> getGroups() {
+  public List<String> getGroups() {
     return this.groups;
   }
 
   @JsonSetter
-  public void setGroups(final List<Long> groups) {
+  public void setGroups(final List<String> groups) {
     this.groups.clear();
     if (groups != null) {
       this.groups.addAll(groups);
     }
   }
 
-  public void addGroup(final Long groupId) {
+  public void addGroup(final String groupId) {
     this.groups.add(groupId);
   }
 
-  public List<Long> getDepartments() {
+  public List<String> getDepartments() {
     return this.departments;
   }
 
   @JsonSetter
-  public void setDepartments(final List<Long> departments) {
+  public void setDepartments(final List<String> departments) {
     this.departments.clear();
     if (departments != null) {
       this.departments.addAll(departments);
     }
   }
 
-  public void addDepartment(final Long departmentId) {
+  public void addDepartment(final String departmentId) {
     this.departments.add(departmentId);
   }
 
-  public List<Long> getDepartmentGroups() {
+  public List<String> getDepartmentGroups() {
     return this.departmentGroups;
   }
 
   @JsonSetter
-  public void setDepartmentGroups(final List<Long> departmentGroups) {
+  public void setDepartmentGroups(final List<String> departmentGroups) {
     this.departmentGroups.clear();
     if (departmentGroups != null) {
       this.departmentGroups.addAll(departmentGroups);
     }
   }
 
-  public void addDepartmentGroup(final Long departmentGroupId) {
+  public void addDepartmentGroup(final String departmentGroupId) {
     this.departmentGroups.add(departmentGroupId);
   }
 
-  public List<Long> getDeputies() {
+  public List<String> getDeputies() {
     return this.deputies;
   }
 
   @JsonSetter
-  public void setDeputies(final List<Long> deputies) {
+  public void setDeputies(final List<String> deputies) {
     this.deputies.clear();
     if (deputies != null) {
       this.deputies.addAll(deputies);
     }
   }
 
-  public void addDeputy(final Long deputyId) {
+  public void addDeputy(final String deputyId) {
     this.deputies.add(deputyId);
   }
 

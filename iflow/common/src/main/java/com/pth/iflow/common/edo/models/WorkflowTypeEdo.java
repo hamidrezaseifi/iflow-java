@@ -21,12 +21,12 @@ import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
 @XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "WorkflowType" + IFlowJaxbDefinition.TYPE_PREFIX)
 public class WorkflowTypeEdo {
 
-  @XmlElement(name = "ID", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long                            id;
+  @XmlElement(name = "Identity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String                          identity;
 
   @NotNull
-  @XmlElement(name = "CompanyId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long                            companyId;
+  @XmlElement(name = "CompanyIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String                          companyIdentity;
 
   @NotNull
   @XmlElement(name = "BaseTypeId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
@@ -69,20 +69,20 @@ public class WorkflowTypeEdo {
   @XmlElement(name = "WorkflowTypeStep", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private final List<WorkflowTypeStepEdo> steps = new ArrayList<>();
 
-  public Long getId() {
-    return this.id;
+  public String getIdentity() {
+    return this.identity;
   }
 
-  public void setId(final Long id) {
-    this.id = id;
+  public void setIdentity(final String identity) {
+    this.identity = identity;
   }
 
-  public Long getCompanyId() {
-    return this.companyId;
+  public String getCompanyIdentity() {
+    return this.companyIdentity;
   }
 
-  public void setCompanyId(final Long companyId) {
-    this.companyId = companyId;
+  public void setCompanyIdentity(final String companyIdentity) {
+    this.companyIdentity = companyIdentity;
   }
 
   /**

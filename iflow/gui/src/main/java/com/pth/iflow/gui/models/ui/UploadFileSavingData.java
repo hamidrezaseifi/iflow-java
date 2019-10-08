@@ -2,6 +2,7 @@ package com.pth.iflow.gui.models.ui;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
 import org.springframework.web.multipart.MultipartFile;
 
 public class UploadFileSavingData extends FileSavingData {
@@ -12,13 +13,9 @@ public class UploadFileSavingData extends FileSavingData {
     super(fileExtention);
   }
 
-  public UploadFileSavingData(final MultipartFile file,
-                              final String title,
-                              final String fileExtention,
-                              final String workflowIdentity,
-                              final Long actionId,
-                              final Long companyId) {
-    super(title, fileExtention, workflowIdentity, actionId, companyId);
+  public UploadFileSavingData(final MultipartFile file, final String title, final String fileExtention, final String workflowIdentity,
+      final Long actionId, final String companyIdentity) {
+    super(title, fileExtention, workflowIdentity, actionId, companyIdentity);
     this.file = file;
 
   }
@@ -38,8 +35,9 @@ public class UploadFileSavingData extends FileSavingData {
   }
 
   public FileSavingData toFileSavingData() {
-    final FileSavingData file = new FileSavingData(getTitle(), getFileExtention(), getWorkflowIdentity(), getActionId(), getCompanyId());
-    file.setFilePath(getFilePath());
+    final FileSavingData file = new FileSavingData(this.getTitle(), this.getFileExtention(), this.getWorkflowIdentity(),
+        this.getActionId(), this.getCompanyIdentity());
+    file.setFilePath(this.getFilePath());
     return file;
   }
 

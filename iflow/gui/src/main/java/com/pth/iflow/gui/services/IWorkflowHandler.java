@@ -3,7 +3,9 @@ package com.pth.iflow.gui.services;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.List;
+
 import javax.servlet.http.HttpSession;
+
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.GuiWorkflow;
@@ -14,22 +16,31 @@ import com.pth.iflow.gui.models.GuiWorkflowType;
 
 public interface IWorkflowHandler {
 
-  GuiWorkflow readWorkflow(final String workflowIdentity) throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
+  GuiWorkflow readWorkflow(final String workflowIdentity)
+      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  GuiWorkflowFile readWorkflowFile(final String workflowIdentity, final String fileIdentity) throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
+  GuiWorkflowFile readWorkflowFile(final String workflowIdentity, final String fileIdentity)
+      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  List<GuiWorkflow> createWorkflow(final GuiWorkflowSaveRequest createRequest, final HttpSession session) throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException;
+  List<GuiWorkflow> createWorkflow(final GuiWorkflowSaveRequest createRequest, final HttpSession session)
+      throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException;
 
-  GuiWorkflow saveWorkflow(final GuiWorkflow workflow, final HttpSession session) throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException;
+  GuiWorkflow saveWorkflow(final GuiWorkflow workflow, final HttpSession session)
+      throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException;
 
-  GuiWorkflow doneWorkflow(final GuiWorkflowSaveRequest saveRequest, final HttpSession session) throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException;
+  GuiWorkflow doneWorkflow(final GuiWorkflowSaveRequest saveRequest, final HttpSession session)
+      throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException;
 
-  GuiWorkflow archiveWorkflow(final GuiWorkflow workflow, final HttpSession session) throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException;
+  GuiWorkflow archiveWorkflow(final GuiWorkflow workflow, final HttpSession session)
+      throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException;
 
-  List<GuiWorkflowType> readWorkflowTypeList(final Long companyId) throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
+  List<GuiWorkflowType> readWorkflowTypeList(final String companyIdentity)
+      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  List<GuiWorkflow> searchWorkflow(final GuiWorkflowSearchFilter workflowSearchFilter) throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
+  List<GuiWorkflow> searchWorkflow(final GuiWorkflowSearchFilter workflowSearchFilter)
+      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  GuiWorkflow assignWorkflow(final String workflowIdentity) throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException;
+  GuiWorkflow assignWorkflow(final String workflowIdentity)
+      throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException;
 
 }

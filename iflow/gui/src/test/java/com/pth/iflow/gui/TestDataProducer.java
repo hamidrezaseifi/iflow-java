@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import com.pth.iflow.common.enums.EAssignType;
 import com.pth.iflow.common.enums.EWorkflowActionStatus;
 import com.pth.iflow.common.enums.EWorkflowIdentity;
@@ -33,8 +34,7 @@ public class TestDataProducer {
   protected GuiCompany getTestCompany() {
     final GuiCompany company = new GuiCompany();
     company.setCompanyName("companyName");
-    company.setId(1L);
-    company.setIdentifyid("identifyid");
+    company.setIdentity("identifyid");
     company.setStatus(1);
 
     return company;
@@ -42,9 +42,8 @@ public class TestDataProducer {
 
   protected GuiCompanyProfile getTestCompanyProfile() {
 
-    final GuiCompanyProfile companyProfile = new GuiCompanyProfile(this.getTestCompany(),
-                                                                   this.getTestDepartmentList(),
-                                                                   this.getTestUserGroupList());
+    final GuiCompanyProfile companyProfile = new GuiCompanyProfile(this.getTestCompany(), this.getTestDepartmentList(),
+        this.getTestUserGroupList());
 
     return companyProfile;
   }
@@ -87,8 +86,7 @@ public class TestDataProducer {
 
   protected List<GuiUser> getTestUserList() {
     final List<GuiUser> list = Arrays.asList(this.getTestUser(1L, "fname 1", "lname 1", "email 1"),
-                                             this.getTestUser(2L, "fname 2", "lname 2", "email 2"),
-                                             this.getTestUser(3L, "fname 3", "lname 3", "email 3"));
+        this.getTestUser(2L, "fname 2", "lname 2", "email 2"), this.getTestUser(3L, "fname 3", "lname 3", "email 3"));
 
     return list;
   }
@@ -104,13 +102,10 @@ public class TestDataProducer {
     model.setCurrentStep(this.getTestGuiWorkflowTypeStep());
     model.setCurrentStepId(model.getCurrentStep().getId());
     model.setCreatedBy(1L);
-    model.setActions(Arrays.asList(this.getTestGuiWorkflowAction(1L, 1L),
-                                   this.getTestGuiWorkflowAction(2L, 2L),
-                                   this.getTestGuiWorkflowAction(3L, 3L)));
+    model.setActions(Arrays.asList(this.getTestGuiWorkflowAction(1L, 1L), this.getTestGuiWorkflowAction(2L, 2L),
+        this.getTestGuiWorkflowAction(3L, 3L)));
     model.setFiles(
-                   Arrays.asList(this.getTestGuiWorkflowFile(1L, 1L),
-                                 this.getTestGuiWorkflowFile(2L, 2L),
-                                 this.getTestGuiWorkflowFile(3L, 3L)));
+        Arrays.asList(this.getTestGuiWorkflowFile(1L, 1L), this.getTestGuiWorkflowFile(2L, 2L), this.getTestGuiWorkflowFile(3L, 3L)));
 
     return model;
   }
@@ -126,9 +121,8 @@ public class TestDataProducer {
     model.setActiveFileVersion(1);
     model.setTitle("title " + Id);
     model.setExtention("extention");
-    model.setFileVersions(Arrays.asList(this.getTestGuiWorkflowFileVersion(1L, 1, 1L),
-                                        this.getTestGuiWorkflowFileVersion(2L, 2, 1L),
-                                        this.getTestGuiWorkflowFileVersion(3L, 3, 1L)));
+    model.setFileVersions(Arrays.asList(this.getTestGuiWorkflowFileVersion(1L, 1, 1L), this.getTestGuiWorkflowFileVersion(2L, 2, 1L),
+        this.getTestGuiWorkflowFileVersion(3L, 3, 1L)));
 
     return model;
   }
@@ -169,9 +163,8 @@ public class TestDataProducer {
     model.setIncreaseStepAutomatic(true);
     model.setAllowAssign(true);
     model.setBaseTypeId(1L);
-    model.setSteps(Arrays.asList(this.getTestGuiWorkflowTypeStep(1L, "step 1", 1),
-                                 this.getTestGuiWorkflowTypeStep(2L, "step 2", 2),
-                                 this.getTestGuiWorkflowTypeStep(3L, "step 3", 3)));
+    model.setSteps(Arrays.asList(this.getTestGuiWorkflowTypeStep(1L, "step 1", 1), this.getTestGuiWorkflowTypeStep(2L, "step 2", 2),
+        this.getTestGuiWorkflowTypeStep(3L, "step 3", 3)));
     model.setComments("comments");
 
     return model;
@@ -189,9 +182,8 @@ public class TestDataProducer {
     model.setIncreaseStepAutomatic(true);
     model.setAllowAssign(true);
     model.setBaseTypeId(1L);
-    model.setSteps(Arrays.asList(this.getTestGuiWorkflowTypeStep(1L, "step 1", 1),
-                                 this.getTestGuiWorkflowTypeStep(2L, "step 2", 2),
-                                 this.getTestGuiWorkflowTypeStep(3L, "step 3", 3)));
+    model.setSteps(Arrays.asList(this.getTestGuiWorkflowTypeStep(1L, "step 1", 1), this.getTestGuiWorkflowTypeStep(2L, "step 2", 2),
+        this.getTestGuiWorkflowTypeStep(3L, "step 3", 3)));
     model.setComments("comments");
 
     return model;
@@ -199,8 +191,7 @@ public class TestDataProducer {
 
   protected List<GuiWorkflowType> getTestGuiWorkflowTypeList() {
     final List<GuiWorkflowType> list = Arrays.asList(this.getTestGuiWorkflowType(1L, "GuiWorkflowType 1"),
-                                                     this.getTestGuiWorkflowType(2L, "GuiWorkflowType 2"),
-                                                     this.getTestGuiWorkflowType(3L, "GuiWorkflowType 3"));
+        this.getTestGuiWorkflowType(2L, "GuiWorkflowType 2"), this.getTestGuiWorkflowType(3L, "GuiWorkflowType 3"));
 
     return list;
   }
@@ -240,8 +231,8 @@ public class TestDataProducer {
 
   protected List<GuiWorkflowTypeStep> getTestGuiWorkflowTypeStepList() {
     final List<GuiWorkflowTypeStep> list = Arrays.asList(this.getTestGuiWorkflowTypeStep(1L, "GuiWorkflowTypeStep 1", 1),
-                                                         this.getTestGuiWorkflowTypeStep(2L, "GuiWorkflowTypeStep 2", 2),
-                                                         this.getTestGuiWorkflowTypeStep(3L, "GuiWorkflowTypeStep 3", 3));
+        this.getTestGuiWorkflowTypeStep(2L, "GuiWorkflowTypeStep 2", 2),
+        this.getTestGuiWorkflowTypeStep(3L, "GuiWorkflowTypeStep 3", 3));
 
     return list;
   }
@@ -279,23 +270,20 @@ public class TestDataProducer {
   }
 
   protected List<GuiAssignItem> getTestAssignedList() {
-    return Arrays.asList(new GuiAssignItem(1L, EAssignType.USER),
-                         new GuiAssignItem(2L, EAssignType.USER),
-                         new GuiAssignItem(3L, EAssignType.USER));
+    return Arrays.asList(new GuiAssignItem(1L, EAssignType.USER), new GuiAssignItem(2L, EAssignType.USER),
+        new GuiAssignItem(3L, EAssignType.USER));
   }
 
   protected List<GuiDepartment> getTestDepartmentList() {
     final List<GuiDepartment> list = Arrays.asList(this.getTestDepartment(1L, "GuiDepartment 1"),
-                                                   this.getTestDepartment(2L, "GuiDepartment 2"),
-                                                   this.getTestDepartment(3L, "GuiDepartment 3"));
+        this.getTestDepartment(2L, "GuiDepartment 2"), this.getTestDepartment(3L, "GuiDepartment 3"));
 
     return list;
   }
 
   protected List<GuiUserGroup> getTestUserGroupList() {
     final List<GuiUserGroup> list = Arrays.asList(this.getTestUserGroup(1L, "GuiUserGroup 1"),
-                                                  this.getTestUserGroup(2L, "GuiUserGroup 2"),
-                                                  this.getTestUserGroup(3L, "GuiUserGroup 3"));
+        this.getTestUserGroup(2L, "GuiUserGroup 2"), this.getTestUserGroup(3L, "GuiUserGroup 3"));
 
     return list;
   }
@@ -325,8 +313,7 @@ public class TestDataProducer {
 
   protected List<GuiDepartmentGroup> getTestDepartmentGroupList() {
     final List<GuiDepartmentGroup> list = Arrays.asList(this.getTestDepartmentGroup(1L, "GuiDepartmentGroup 1"),
-                                                        this.getTestDepartmentGroup(2L, "GuiDepartmentGroup 2"),
-                                                        this.getTestDepartmentGroup(3L, "GuiDepartmentGroup 3"));
+        this.getTestDepartmentGroup(2L, "GuiDepartmentGroup 2"), this.getTestDepartmentGroup(3L, "GuiDepartmentGroup 3"));
 
     return list;
   }
@@ -389,7 +376,7 @@ public class TestDataProducer {
   protected GuiSessionUserInfo createGuiSessionUserInfo() {
 
     final GuiSessionUserInfo info = new GuiSessionUserInfo(this.createUiUser("admin", "", "", Arrays.asList(EUiUserRole.ADMIN)),
-                                                           this.getTestCompanyProfile());
+        this.getTestCompanyProfile());
     info.setToken("test-token");
     info.setSessionId("test-sessionId");
     info.update();

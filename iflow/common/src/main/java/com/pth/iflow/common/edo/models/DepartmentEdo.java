@@ -19,8 +19,8 @@ import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 @XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "Department" + IFlowJaxbDefinition.TYPE_PREFIX)
 public class DepartmentEdo {
 
-  @XmlElement(name = "ID", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long                           id;
+  @XmlElement(name = "Identity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String                         identity;
 
   @NotNull
   @XmlElement(name = "CompanyId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
@@ -43,12 +43,12 @@ public class DepartmentEdo {
   @XmlElement(name = "DepartmentGroup", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private final List<DepartmentGroupEdo> departmentGroups = new ArrayList<>();
 
-  public Long getId() {
-    return this.id;
+  public String getIdentity() {
+    return this.identity;
   }
 
-  public void setId(final Long id) {
-    this.id = id;
+  public void setIdentity(final String identity) {
+    this.identity = identity;
   }
 
   public Long getCompanyId() {

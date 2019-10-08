@@ -6,6 +6,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+
 import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 import com.pth.iflow.common.enums.EWorkflowActionStatus;
 
@@ -14,15 +15,15 @@ import com.pth.iflow.common.enums.EWorkflowActionStatus;
 @XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "WorkflowAction" + IFlowJaxbDefinition.TYPE_PREFIX)
 public class WorkflowActionEdo {
 
-  @XmlElement(name = "AssignTo", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long assignTo;
+  @XmlElement(name = "AssignToIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String  assignToIdentity;
 
-  @NotNull(message = "CurrectStepId must not be null")
-  @XmlElement(name = "CurrectStepId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long currectStepId;
+  @NotNull(message = "CurrentStepIdentity must not be null")
+  @XmlElement(name = "CurrentStepIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String  currectStepIdentity;
 
   @XmlElement(name = "Comments", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String comments;
+  private String  comments;
 
   @NotNull(message = "Status must not be null")
   @XmlElement(name = "Status", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
@@ -32,20 +33,20 @@ public class WorkflowActionEdo {
   @XmlElement(name = "Version", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer version;
 
-  public Long getCurrentStepId() {
-    return this.currectStepId;
+  public String getAssignToIdentity() {
+    return this.assignToIdentity;
   }
 
-  public void setCurrentStepId(final Long currectStepId) {
-    this.currectStepId = currectStepId;
+  public void setAssignToIdentity(final String assignToIdentity) {
+    this.assignToIdentity = assignToIdentity;
   }
 
-  public Long getAssignTo() {
-    return this.assignTo;
+  public String getCurrectStepIdentity() {
+    return this.currectStepIdentity;
   }
 
-  public void setAssignTo(final Long assignTo) {
-    this.assignTo = assignTo;
+  public void setCurrectStepIdentity(final String currectStepIdentity) {
+    this.currectStepIdentity = currectStepIdentity;
   }
 
   public String getComments() {

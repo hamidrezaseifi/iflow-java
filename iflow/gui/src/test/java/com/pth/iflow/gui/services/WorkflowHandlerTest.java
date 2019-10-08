@@ -2,8 +2,11 @@ package com.pth.iflow.gui.services;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+
 import java.util.List;
+
 import javax.servlet.http.HttpSession;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -13,6 +16,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
+
 import com.pth.iflow.gui.TestDataProducer;
 import com.pth.iflow.gui.models.GuiWorkflow;
 import com.pth.iflow.gui.models.GuiWorkflowSaveRequest;
@@ -26,10 +30,10 @@ import com.pth.iflow.gui.services.impl.WorkflowHandler;
 @AutoConfigureMockMvc
 public class WorkflowHandlerTest extends TestDataProducer {
 
-  private IWorkflowHandler workflowHandler;
+  private IWorkflowHandler   workflowHandler;
 
   @MockBean
-  private IWorkflowAccess workflowAccess;
+  private IWorkflowAccess    workflowAccess;
 
   @MockBean
   private GuiSessionUserInfo sessionUserInfo;
@@ -38,12 +42,12 @@ public class WorkflowHandlerTest extends TestDataProducer {
   private IUploadFileManager uploadFileManager;
 
   @MockBean
-  private HttpSession mockedSession;
+  private HttpSession        mockedSession;
 
   @MockBean
-  private IMessagesHelper messagesHelper;
+  private IMessagesHelper    messagesHelper;
 
-  private String validTocken;
+  private String             validTocken;
 
   @Before
   public void setUp() throws Exception {
@@ -114,9 +118,9 @@ public class WorkflowHandlerTest extends TestDataProducer {
 
     final List<GuiWorkflowType> workflowTypeList = this.getTestGuiWorkflowTypeList();
 
-    when(this.workflowAccess.readWorkflowTypeList(any(Long.class), any(String.class))).thenReturn(workflowTypeList);
+    when(this.workflowAccess.readWorkflowTypeList(any(String.class), any(String.class))).thenReturn(workflowTypeList);
 
-    final List<GuiWorkflowType> resWorkflowList = this.workflowHandler.readWorkflowTypeList(1L);
+    final List<GuiWorkflowType> resWorkflowList = this.workflowHandler.readWorkflowTypeList("test-company");
 
     Assert.assertNotNull("Result result-list is not null!", resWorkflowList);
     Assert.assertEquals("Result result-list has the same size as expected!", resWorkflowList.size(), workflowTypeList.size());

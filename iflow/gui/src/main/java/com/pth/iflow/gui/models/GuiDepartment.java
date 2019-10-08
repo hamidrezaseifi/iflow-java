@@ -3,9 +3,7 @@ package com.pth.iflow.gui.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.pth.iflow.common.edo.models.base.DataModelBase;
-
-public class GuiDepartment extends DataModelBase {
+public class GuiDepartment {
 
   private Long                           id;
   private Long                           companyId;
@@ -14,7 +12,6 @@ public class GuiDepartment extends DataModelBase {
   private Integer                        version;
   private final List<GuiDepartmentGroup> departmentGroups = new ArrayList<>();
 
-  @Override
   public Long getId() {
     return this.id;
   }
@@ -47,12 +44,10 @@ public class GuiDepartment extends DataModelBase {
     this.status = status;
   }
 
-  @Override
   public Integer getVersion() {
     return this.version;
   }
 
-  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }

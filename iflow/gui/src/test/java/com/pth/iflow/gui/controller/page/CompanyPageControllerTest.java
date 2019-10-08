@@ -34,27 +34,27 @@ import com.pth.iflow.gui.services.IWorkflowHandler;
 @AutoConfigureMockMvc
 public class CompanyPageControllerTest extends TestDataProducer {
 
-  private MockMvc mockMvc;
+  private MockMvc               mockMvc;
 
-  private GuiSessionUserInfo userAdmin;
+  private GuiSessionUserInfo    userAdmin;
 
   @Autowired
   private WebApplicationContext context;
 
   @MockBean
-  private GuiSessionUserInfo sessionUserInfo;
+  private GuiSessionUserInfo    sessionUserInfo;
 
   @MockBean
-  private IWorkflowHandler workflowHandler;
+  private IWorkflowHandler      workflowHandler;
 
   @Before
   public void setUp() throws Exception {
     this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context).build();
 
-    this.userAdmin = createGuiSessionUserInfo();
+    this.userAdmin = this.createGuiSessionUserInfo();
 
     Mockito.when(this.sessionUserInfo.isValid()).thenReturn(true);
-    Mockito.when(this.sessionUserInfo.getCompanyProfile()).thenReturn(getTestCompanyProfile());
+    Mockito.when(this.sessionUserInfo.getCompanyProfile()).thenReturn(this.getTestCompanyProfile());
 
   }
 
@@ -67,12 +67,10 @@ public class CompanyPageControllerTest extends TestDataProducer {
   public void testShowCompanyIndex() throws Exception {
 
     final MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get("/companies/index")
-                                                                        .sessionAttr(GuiSessionUserInfo.SESSION_LOGGEDUSERINFO_KEY,
-                                                                                     this.userAdmin);
+        .sessionAttr(GuiSessionUserInfo.SESSION_LOGGEDUSERINFO_KEY, this.userAdmin);
 
-    this.mockMvc.perform(builder)
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.TEXT_HTML_VALUE + ";charset=UTF-8"));
+    this.mockMvc.perform(builder).andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.TEXT_HTML_VALUE + ";charset=UTF-8"));
 
   }
 
@@ -82,15 +80,13 @@ public class CompanyPageControllerTest extends TestDataProducer {
 
     final List<GuiWorkflowType> workflowTypeList = this.getTestGuiWorkflowTypeList();
 
-    Mockito.when(this.workflowHandler.readWorkflowTypeList(ArgumentMatchers.any(Long.class))).thenReturn(workflowTypeList);
+    Mockito.when(this.workflowHandler.readWorkflowTypeList(ArgumentMatchers.any(String.class))).thenReturn(workflowTypeList);
 
     final MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get("/companies/workflowtype")
-                                                                        .sessionAttr(GuiSessionUserInfo.SESSION_LOGGEDUSERINFO_KEY,
-                                                                                     this.userAdmin);
+        .sessionAttr(GuiSessionUserInfo.SESSION_LOGGEDUSERINFO_KEY, this.userAdmin);
 
-    this.mockMvc.perform(builder)
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.TEXT_HTML_VALUE + ";charset=UTF-8"));
+    this.mockMvc.perform(builder).andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.TEXT_HTML_VALUE + ";charset=UTF-8"));
 
   }
 

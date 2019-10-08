@@ -16,9 +16,9 @@ import com.pth.iflow.common.enums.EAssignType;
 @XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "AssignItem" + IFlowJaxbDefinition.TYPE_PREFIX)
 public class AssignItemEdo {
 
-  @NotNull(message = "ItemID must not be null")
-  @XmlElement(name = "ItemID", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long   itemId;
+  @NotNull(message = "ItemIdentity must not be null")
+  @XmlElement(name = "ItemIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String itemIdentity;
 
   @NotNull(message = "ItemType must not be null")
   @AEnumNameValidator(enumClazz = EAssignType.class)
@@ -29,17 +29,17 @@ public class AssignItemEdo {
 
   }
 
-  public AssignItemEdo(final Long itemId, final String itemType) {
-    this.setItemId(itemId);
+  public AssignItemEdo(final String itemIdentity, final String itemType) {
+    this.setItemIdentity(itemIdentity);
     this.setItemType(itemType);
   }
 
-  public Long getItemId() {
-    return this.itemId;
+  public String getItemIdentity() {
+    return this.itemIdentity;
   }
 
-  public void setItemId(final Long itemId) {
-    this.itemId = itemId;
+  public void setItemIdentity(final String itemIdentity) {
+    this.itemIdentity = itemIdentity;
   }
 
   public String getItemType() {

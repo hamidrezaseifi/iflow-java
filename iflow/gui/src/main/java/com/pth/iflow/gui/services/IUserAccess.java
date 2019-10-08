@@ -13,7 +13,7 @@ public interface IUserAccess {
 
   public GuiUser saveUser(final GuiUser user) throws GuiCustomizedException, MalformedURLException;
 
-  public List<GuiUser> getCompanyUserList(final Long companyId)
+  public List<GuiUser> getCompanyUserList(final String companyIdentity)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
 }

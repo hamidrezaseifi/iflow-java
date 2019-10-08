@@ -35,7 +35,7 @@ public class CompanyController extends GuiPageControllerBase {
   public String showWorkflowTypeList(final Model model)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    final List<GuiWorkflowType> workflowTypeList = this.workflowHandler.readWorkflowTypeList(this.getLoggedCompany().getId());
+    final List<GuiWorkflowType> workflowTypeList = this.workflowHandler.readWorkflowTypeList(this.getLoggedCompany().getIdentity());
 
     model.addAttribute("workflowTypeList", workflowTypeList);
 

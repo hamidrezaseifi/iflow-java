@@ -11,15 +11,13 @@ import org.springframework.security.core.authority.AuthorityUtils;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.enums.EUserStatus;
 import com.pth.iflow.gui.models.ui.enums.EUiUserRole;
 
 @JsonIgnoreProperties(value = { "authorities", "enabled", "roles", })
-public class GuiUser extends DataModelBase {
+public class GuiUser {
 
-  private Long                    id;
-  private Long                    companyId;
+  private String                  companyIdentity;
   private String                  email;
   private LocalDate               birthDate;
   private String                  firstName;
@@ -37,38 +35,12 @@ public class GuiUser extends DataModelBase {
 
   private boolean                 isEnabled;
 
-  /**
-   * @return the id
-   */
-
-  @Override
-  public Long getId() {
-    return this.id;
+  public String getCompanyIdentity() {
+    return this.companyIdentity;
   }
 
-  public boolean hasId(final Long id) {
-    return this.id == id;
-  }
-
-  /**
-   * @param id the id to set
-   */
-  public void setId(final Long id) {
-    this.id = id;
-  }
-
-  /**
-   * @return the companyIid
-   */
-  public Long getCompanyId() {
-    return this.companyId;
-  }
-
-  /**
-   * @param companyIid the companyIid to set
-   */
-  public void setCompanyId(final Long companyId) {
-    this.companyId = companyId;
+  public void setCompanyIdentity(final String companyIdentity) {
+    this.companyIdentity = companyIdentity;
   }
 
   public String getEmail() {
@@ -144,7 +116,6 @@ public class GuiUser extends DataModelBase {
    * @return the version
    */
 
-  @Override
   public Integer getVersion() {
     return this.version;
   }
@@ -153,7 +124,6 @@ public class GuiUser extends DataModelBase {
    * @param version the version to set
    */
 
-  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
