@@ -116,40 +116,42 @@
 			 </ul>			
 		</div>
  
-		<div class="md-dialog-container ng-scope dialogbox-container" tabindex="-1" th:fragment="errorBox" ng-show="isShowError">
+		<div th:fragment="errorMessageDialog" class="modal fade" tabindex="-1" id="errormessagedialog" role="dialog" aria-labelledby="errorMessagedialogCenterTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document" style="width:70vw;">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title dialog-title" id="errorMessagedialogTitle" th:text="#{common.errormessagetitle}"></h5>
+			        <button class="dialog-toolbar-button close"  data-dismiss="modal" aria-label="Close">
+			        	<i class="material-icons">close</i>
+			        </button>
+			     </div>
+			      <div class="modal-body">
+			      
+					<div class="content-container alert bg-danger alert-danger" style="margin-bottom:0;">
 					
-			<div class="md-dialog-focus-trap" tabindex="0"></div>
-			<md-dialog aria-label="Fehler Meldung ..." class="dialog-error _md md-transition-in" role="dialog" tabindex="-1" style="">
-				<md-toolbar class="_md _md-toolbar-transitions error-title">
-					<div class="md-toolbar-tools">
-						<h2 th:text="#{common.errormessagetitle}"></h2>
-						<span flex="" class="flex"></span>
-							<button class="md-icon-button md-button ng-scope md-ink-ripple" type="button" ng-if="!isLoading" ng-click="closeErrorBox()" style="">
-							<i class="material-icons ng-scope">close</i>
-						</button>
+						<div class="errorcontent-message" ng-bind-html="errorMessage"></div>
+						<div>
+							<input style="float:right" type="checkbox" id="showerrordetailcheck" ng-model="showErrorDetail" >
+							<label style="float:right; margin-right: 10px;" class="form-check-label" for="showerrordetailcheck" th:text="#{common.details}"></label>
+						</div>
+						<div class="clear"></div>
+						<div id="errorcontent-detail" style="padding: 10px; background-color:#d9e3ea; " ng-show="showErrorDetail">
+							<div style="height: 300px; width: 100%; overflow: auto;">
+								<pre ng-bind-html="errorDetails"></pre> 
+							</div>
+						</div>
+						
+					
 					</div>
-				</md-toolbar>
-			
-				<md-dialog-content>
-					<div class="md-dialog-content" ng-bind-html="errorMessage"></div>
-					<div style="padding: 10px; background-color:#d9e3ea; " ng-if="errorHasDetails && showErrorDetails">
-						<div style="height: 300px; width: 100%; overflow: auto;"><pre ng-bind-html="errorDetails"></pre> </div>
-					</div>
-				</md-dialog-content>
-			
-				<md-dialog-actions layout="row" class="layout-row">
-					<md-checkbox style="margin-top:10px; margin-right: 25px;" aria-label="showdetails" th:text="#{common.details}" ng-click="toggleShowErrorDetails()" ng-checked="showErrorDetails"  ng-if="errorHasDetails"></md-checkbox>
-					<button class="md-button md-ink-ripple" type="button" ng-click="closeErrorBox()">
-						<div class="title" th:text="#{common.close}"></div>
-						<i class="material-icons ng-scope">cancel</i>
-					</button>
-				</md-dialog-actions>
-			
-			</md-dialog>
-		
-			<div class="md-dialog-focus-trap" tabindex="0"></div>
-
-		</div>
+	    				
+			      </div>
+			      <div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="material-icons">close</i></button>
+			      </div>
+			    </div>
+			</div>
+					
+	</div>
  
 	    <div class="md-dialog-container ng-scope dialogbox-container" tabindex="-1" th:fragment="messageBox" ng-show="isShowMessage">
 	          

@@ -58,6 +58,9 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
   @Mock
   private IWorkflowSaveStrategy    saveStrategy;
 
+  @Mock
+  private IWorkflowSaveStrategy    validateStrategy;
+
   private WorkflowType             workflowType;
 
   private String                   validTocken;
@@ -83,7 +86,11 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
 
     when(this.tokenValidator.isTokenValid(this.validTocken)).thenReturn(this.profileResponse);
 
-    when(this.workStrategyFactory.selectWorkStrategy(any(WorkflowSaveRequest.class), any(String.class))).thenReturn(this.saveStrategy);
+    when(this.workStrategyFactory.selectSaveWorkStrategy(any(WorkflowSaveRequest.class), any(String.class)))
+        .thenReturn(this.saveStrategy);
+
+    when(this.workStrategyFactory.selectValidationWorkStrategy(any(WorkflowSaveRequest.class), any(String.class)))
+        .thenReturn(this.validateStrategy);
 
   }
 
@@ -262,6 +269,22 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
 
     Assert.assertNotNull("Result workflow-type is not null!", resWorkflowList);
     Assert.assertEquals("Result workflow-type has id 1!", resWorkflowList.size(), workflowListResult.size());
+
+  }
+
+  @Test
+  public void testValidateWorkflow() throws Exception {
+
+    final Workflow workflowSaveResult = this.getTestWorkflow(1L);
+    workflowSaveResult.setStatus(EWorkflowStatus.ASSIGNED);
+    workflowSaveResult.setId(null);
+
+    final WorkflowSaveRequest request = this.getTestWorkflowCreateRequest();
+    request.getWorkflow().setStatus(EWorkflowStatus.INITIALIZE);
+
+    doNothing().when(this.validateStrategy).process();
+
+    this.workflowProcessService.validate(request, this.validTocken);
 
   }
 

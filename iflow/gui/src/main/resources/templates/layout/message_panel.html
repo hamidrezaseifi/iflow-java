@@ -3,9 +3,9 @@
 	        <div resizable r-directions="['top']" class="message-panel-container" id="message-panel-container">
 	        	<div class="message-panel-toolbar">
 	        		<span class="title" th:text="#{common.messages}"></span>
-					<button class="message-panel-toolbar-button" ng-if="messagePanelShowed" ng-click="closeMessages();"><i class="material-icons">keyboard_arrow_down</i></button>
-					<button class="message-panel-toolbar-button" ng-if="messagePanelShowed == false" ng-click="showMessages();"><i class="material-icons">keyboard_arrow_up</i></button>
-					<button class="message-panel-toolbar-button" ng-if="messagePanelShowed" ng-click="reloadMessages(true);"><i class="material-icons">refresh</i></button>
+					<button class="toolbar-button" ng-if="messagePanelShowed" ng-click="closeMessages();"><i class="material-icons">keyboard_arrow_down</i></button>
+					<button class="toolbar-button" ng-if="messagePanelShowed == false" ng-click="showMessages();"><i class="material-icons">keyboard_arrow_up</i></button>
+					<button class="toolbar-button" ng-if="messagePanelShowed" ng-click="reloadMessages(true);"><i class="material-icons">refresh</i></button>
 	        	
 	        	</div>
 	        	<div class="message-panel-items-container">
@@ -24,5 +24,7 @@
 	        </div>
 	        
 			<div th:replace="workflow/dialogs/view_dialog :: viewWorkflow" ></div>
+				
+	        <div th:replace="layout/mainLayout :: errorMessageDialog" ></div>
 		</div>
         

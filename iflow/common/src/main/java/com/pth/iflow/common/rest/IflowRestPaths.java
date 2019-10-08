@@ -238,6 +238,7 @@ public class IflowRestPaths {
     public static final String WORKFLOW_READ_LIST_BY_TYPE             = "/workflow/type/list/{id}";
     public static final String WORKFLOW_READ_LIST_BY_USER             = "/workflow/user/list/{id}/{status}";
     public static final String WORKFLOW_SEARCH                        = "/workflow/search";
+    public static final String WORKFLOW_VALIDATE                      = "/workflow/validate";
 
     public static final String WORKFLOWMESSAGE_READ_BY_USER           = "/workflowoffer/user/{userid}/{status}";
 
@@ -293,6 +294,11 @@ public class IflowRestPaths {
 
     public static URI SEARCH_WORKFLOW() {
       final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOW_SEARCH);
+      return builder.build();
+    }
+
+    public static URI VALIDATE_WORKFLOW() {
+      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOW_VALIDATE);
       return builder.build();
     }
 

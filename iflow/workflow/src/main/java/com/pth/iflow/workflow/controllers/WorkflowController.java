@@ -119,4 +119,13 @@ public class WorkflowController {
         HttpStatus.OK);
   }
 
+  @ResponseStatus(HttpStatus.ACCEPTED)
+  @IflowPostRequestMapping(path = IflowRestPaths.WorkflowModule.WORKFLOW_VALIDATE)
+  public void validateWorkflow(@RequestBody final WorkflowSaveRequestEdo workflowCreateRequestEdo, final HttpServletRequest request,
+      @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws Exception {
+
+    this.workflowService.validate(WorkflowModelEdoMapper.fromEdo(workflowCreateRequestEdo), headerTokenId);
+
+  }
+
 }

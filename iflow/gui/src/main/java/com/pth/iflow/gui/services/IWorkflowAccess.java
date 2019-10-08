@@ -27,4 +27,7 @@ public interface IWorkflowAccess {
   List<GuiWorkflow> searchWorkflow(final GuiWorkflowSearchFilter workflowSearchFilter, final String token)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
+  void validateWorkflow(GuiWorkflowSaveRequest request, String token)
+      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
+
 }

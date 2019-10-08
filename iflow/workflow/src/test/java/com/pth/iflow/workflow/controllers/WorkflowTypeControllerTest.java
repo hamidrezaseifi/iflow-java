@@ -6,9 +6,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import java.util.List;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,7 +21,6 @@ import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConve
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
 import com.pth.iflow.common.edo.models.WorkflowTypeEdo;
 import com.pth.iflow.common.edo.models.WorkflowTypeListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
@@ -39,16 +36,16 @@ import com.pth.iflow.workflow.models.mapper.WorkflowModelEdoMapper;
 public class WorkflowTypeControllerTest extends TestDataProducer {
 
   @Autowired
-  private MockMvc                                mockMvc;
+  private MockMvc mockMvc;
 
   @Autowired
   private MappingJackson2XmlHttpMessageConverter xmlConverter;
 
   @MockBean
-  private IWorkflowTypeProcessService            workflowTypeProcessService;
+  private IWorkflowTypeProcessService workflowTypeProcessService;
 
   @Value("${iflow.common.rest.api.security.client-id.internal}")
-  private String                                 innerModulesRequestHeaderValue;
+  private String innerModulesRequestHeaderValue;
 
   @Before
   public void setUp() throws Exception {
@@ -68,10 +65,11 @@ public class WorkflowTypeControllerTest extends TestDataProducer {
     final WorkflowTypeEdo modelEdo = WorkflowModelEdoMapper.toEdo(model);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.READ_WORKFLOWTYPE_BY_ID(model.getId()))
-            .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, "test-roken"))
-        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
-        .andExpect(content().xml(resultAsXmlString));
+                .perform(MockMvcRequestBuilders.get(IflowRestPaths.WorkflowModule.WORKFLOWTYPE_BY_ID_URIBUILDER(model.getId()))
+                                               .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, "test-roken"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+                .andExpect(content().xml(resultAsXmlString));
 
     verify(this.workflowTypeProcessService, times(1)).getById(any(Long.class), any(String.class));
 
@@ -91,11 +89,13 @@ public class WorkflowTypeControllerTest extends TestDataProducer {
     final String contentAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(idList).replace("ArrayList", "List");
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.post(IflowRestPaths.CoreModule.READ_WORKFLOWTYPE_LIST()).content(contentAsXmlString)
-            .contentType(MediaType.APPLICATION_XML_VALUE)
-            .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, "test-roken"))
-        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
-        .andExpect(content().xml(resultAsXmlString));
+                .perform(MockMvcRequestBuilders.post(IflowRestPaths.CoreModule.READ_WORKFLOWTYPE_LIST())
+                                               .content(contentAsXmlString)
+                                               .contentType(MediaType.APPLICATION_XML_VALUE)
+                                               .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, "test-roken"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+                .andExpect(content().xml(resultAsXmlString));
 
     verify(this.workflowTypeProcessService, times(1)).getListByIdList(any(List.class), any(String.class));
 
@@ -112,10 +112,11 @@ public class WorkflowTypeControllerTest extends TestDataProducer {
     when(this.workflowTypeProcessService.getListByIdCompanyId(any(Long.class), any(String.class))).thenReturn(list);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.READ_WORKFLOWTYPE_LIST_BY_COMPANY(1L))
-            .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, "test-roken"))
-        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
-        .andExpect(content().xml(resultAsXmlString));
+                .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.READ_WORKFLOWTYPE_LIST_BY_COMPANY(1L))
+                                               .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, "test-roken"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+                .andExpect(content().xml(resultAsXmlString));
 
     verify(this.workflowTypeProcessService, times(1)).getListByIdCompanyId(any(Long.class), any(String.class));
 

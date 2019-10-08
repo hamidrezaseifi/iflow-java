@@ -18,6 +18,7 @@ import com.pth.iflow.workflow.bl.strategy.steps.SendWorkflowOffersToProfileStep;
 import com.pth.iflow.workflow.bl.strategy.steps.ValidateCurrentStepExistsInWorkflowTypeStrategyStep;
 import com.pth.iflow.workflow.bl.strategy.steps.ValidateSingleUserAssignInSaveRequestStrategyStep;
 import com.pth.iflow.workflow.bl.strategy.steps.ValidateWorkflowActiveActionStrategyStep;
+import com.pth.iflow.workflow.bl.strategy.steps.ValidateWorkflowDetailStrategyStep;
 import com.pth.iflow.workflow.bl.strategy.steps.ValidateWorkflowTypeStepStrategyStep;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.WorkflowSaveRequest;
@@ -34,6 +35,7 @@ public class AssignWorkflowStrategy extends AbstractWorkflowSaveStrategy {
 
   @Override
   public void setup() {
+    steps.add(new ValidateWorkflowDetailStrategyStep(this));
     steps.add(new ValidateWorkflowTypeStepStrategyStep(this));
     steps.add(new ValidateCurrentStepExistsInWorkflowTypeStrategyStep(this));
     steps.add(new InitializeWorkflowInitialActionStrategyStep(this));

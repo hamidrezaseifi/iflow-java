@@ -8,14 +8,14 @@
   <artifactId>core</artifactId>
 
 	<properties>
-    <ifw.module.db.database>iflow</ifw.module.db.database>
-    <ifw.module.db.root.database>iflow</ifw.module.db.root.database>
-    <ifw.module.db.root>iflow</ifw.module.db.root>
-    <ifw.module.db.root.pwd>iflow</ifw.module.db.root.pwd>
-    <ifw.module.db.url>jdbc:mysql://localhost:3306/</ifw.module.db.url>
-    <ifw.module.db.driver>com.mysql.jdbc.Driver</ifw.module.db.driver>
-    
-    <ifw.module.db.skip>false</ifw.module.db.skip>
+	    <ifw.module.db.database>iflow</ifw.module.db.database>
+	    <ifw.module.db.root.database>iflow</ifw.module.db.root.database>
+	    <ifw.module.db.root>root</ifw.module.db.root>
+	    <ifw.module.db.root.pwd>7342</ifw.module.db.root.pwd>
+	    <ifw.module.db.url>jdbc:mysql://localhost:3306/</ifw.module.db.url>
+	    <ifw.module.db.driver>com.mysql.jdbc.Driver</ifw.module.db.driver>
+	    
+	    <ifw.module.db.skip>false</ifw.module.db.skip>
 	</properties>
 
 	 
@@ -85,7 +85,6 @@
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 		</dependency>
-
       			
 	</dependencies>
 
@@ -122,5 +121,7 @@
 	
 	  </plugins>
 	</build>
+	
+	
 
 </project>

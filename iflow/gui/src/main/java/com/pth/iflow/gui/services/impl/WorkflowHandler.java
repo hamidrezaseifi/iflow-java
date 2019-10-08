@@ -75,6 +75,8 @@ public class WorkflowHandler implements IWorkflowHandler {
 
     }
 
+    this.workflowAccess.validateWorkflow(createRequest, this.sessionUserInfo.getToken());
+
     final List<GuiWorkflow> list = this.workflowAccess.createWorkflow(createRequest, this.sessionUserInfo.getToken());
     final List<GuiWorkflow> preparedList = this.prepareWorkflowList(list);
 
@@ -85,7 +87,7 @@ public class WorkflowHandler implements IWorkflowHandler {
     final Object oFileList = session.getAttribute(createRequest.getSessionKey());
     if ((oFileList == null) || ((oFileList instanceof List) == false)) {
       final GuiCustomizedException uiCustomizedException = new GuiCustomizedException("Uploaded files not found!", "",
-          EModule.GUI.getModuleName());
+          EModule.GUI.getModuleName(), null);
 
       throw uiCustomizedException;
     }
@@ -136,6 +138,8 @@ public class WorkflowHandler implements IWorkflowHandler {
     final GuiWorkflowSaveRequest request = GuiWorkflowSaveRequest.generateNewNoExpireDays(workflow);
     request.setCommand(EWorkflowProcessCommand.SAVE);
 
+    this.workflowAccess.validateWorkflow(request, this.sessionUserInfo.getToken());
+
     final GuiWorkflow result = this.workflowAccess.saveWorkflow(request, this.sessionUserInfo.getToken());
     return this.prepareWorkflow(result);
   }
@@ -151,6 +155,8 @@ public class WorkflowHandler implements IWorkflowHandler {
     request.setCommand(EWorkflowProcessCommand.ASSIGN);
     request.setAssignUser(this.sessionUserInfo.getUser().getId());
 
+    this.workflowAccess.validateWorkflow(request, this.sessionUserInfo.getToken());
+
     final GuiWorkflow result = this.workflowAccess.saveWorkflow(request, this.sessionUserInfo.getToken());
     return this.prepareWorkflow(result);
 
@@ -163,6 +169,8 @@ public class WorkflowHandler implements IWorkflowHandler {
 
     saveRequest.setCommand(EWorkflowProcessCommand.DONE);
 
+    this.workflowAccess.validateWorkflow(saveRequest, this.sessionUserInfo.getToken());
+
     final GuiWorkflow result = this.workflowAccess.saveWorkflow(saveRequest, this.sessionUserInfo.getToken());
     return this.prepareWorkflow(result);
   }
@@ -174,6 +182,8 @@ public class WorkflowHandler implements IWorkflowHandler {
 
     final GuiWorkflowSaveRequest request = GuiWorkflowSaveRequest.generateNewNoExpireDays(workflow);
     request.setCommand(EWorkflowProcessCommand.ARCHIVE);
+
+    this.workflowAccess.validateWorkflow(request, this.sessionUserInfo.getToken());
 
     final GuiWorkflow result = this.workflowAccess.saveWorkflow(request, this.sessionUserInfo.getToken());
     return this.prepareWorkflow(result);

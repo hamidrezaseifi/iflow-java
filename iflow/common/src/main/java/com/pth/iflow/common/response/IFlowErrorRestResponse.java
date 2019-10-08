@@ -5,11 +5,11 @@ import org.springframework.http.HttpStatus;
 public class IFlowErrorRestResponse {
 
   private final HttpStatus status;
-  private final String     errorType;
+  final String             errorType;
   private final String     message;
   private final Integer    errorId;
 
-  public static String     NoError = "NoError";
+  public static String NoError = "NoError";
 
   public IFlowErrorRestResponse() {
     this.status = HttpStatus.OK;
