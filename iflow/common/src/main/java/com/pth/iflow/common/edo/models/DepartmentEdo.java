@@ -23,10 +23,6 @@ public class DepartmentEdo {
   private String                         identity;
 
   @NotNull
-  @XmlElement(name = "CompanyId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long                           companyId;
-
-  @NotNull
   @XmlElement(name = "Title", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String                         title;
 
@@ -49,14 +45,6 @@ public class DepartmentEdo {
 
   public void setIdentity(final String identity) {
     this.identity = identity;
-  }
-
-  public Long getCompanyId() {
-    return this.companyId;
-  }
-
-  public void setCompanyId(final Long companyId) {
-    this.companyId = companyId;
   }
 
   public String getTitle() {

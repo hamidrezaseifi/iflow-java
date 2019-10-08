@@ -34,14 +34,14 @@ public class WorkflowMessageEdo {
 
   @NotNull(message = "UserId must not be null")
   @XmlElement(name = "UserId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long          userId;
+  private String        userIdentity;
 
   @XmlElement(name = "Message", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String        message;
 
-  @NotNull(message = "CreatedBy must not be null")
-  @XmlElement(name = "CreatedBy", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long          createdBy;
+  @NotNull(message = "CreatedByIdentity must not be null")
+  @XmlElement(name = "CreatedByIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String        createdByIdentity;
 
   @NotNull(message = "MessageType must not be null")
   @AEnumValueValidator(enumClazz = EWorkflowMessageType.class)
@@ -83,12 +83,12 @@ public class WorkflowMessageEdo {
     this.stepIdentity = stepIdentity;
   }
 
-  public Long getUserId() {
-    return this.userId;
+  public String getUserIdentity() {
+    return this.userIdentity;
   }
 
-  public void setUserId(final Long userId) {
-    this.userId = userId;
+  public void setUserIdentity(final String userIdentity) {
+    this.userIdentity = userIdentity;
   }
 
   public String getMessage() {
@@ -99,12 +99,12 @@ public class WorkflowMessageEdo {
     this.message = message;
   }
 
-  public Long getCreatedBy() {
-    return this.createdBy;
+  public String getCreatedByIdentity() {
+    return this.createdByIdentity;
   }
 
-  public void setCreatedBy(final Long createdBy) {
-    this.createdBy = createdBy;
+  public void setCreatedByIdentity(final String createdByIdentity) {
+    this.createdByIdentity = createdByIdentity;
   }
 
   public Integer getMessageType() {

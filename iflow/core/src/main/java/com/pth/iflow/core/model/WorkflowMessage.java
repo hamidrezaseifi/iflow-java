@@ -1,37 +1,38 @@
 package com.pth.iflow.core.model;
 
 import java.time.LocalDateTime;
+
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.enums.EWorkflowMessageType;
 import com.pth.iflow.core.model.helper.CoreModelHelper;
 
 public class WorkflowMessage extends CoreModelHelper {
 
-  private Long id;
+  private Long                   id;
 
-  private Workflow workflow;
+  private Workflow               workflow;
 
-  private String workflowIdentity;
+  private String                 workflowIdentity;
 
-  private Long stepId;
+  private String                 stepIdentity;
 
-  private Long userId;
+  private String                 userIdentity;
 
-  private String message;
+  private String                 message;
 
-  private Long createdBy;
+  private String                 createdByIdentity;
 
-  private EWorkflowMessageType messageType;
+  private EWorkflowMessageType   messageType;
 
   private EWorkflowMessageStatus status;
 
-  private Integer version;
+  private Integer                version;
 
-  private Integer expireDays;
+  private Integer                expireDays;
 
-  private LocalDateTime createdAt;
+  private LocalDateTime          createdAt;
 
-  private LocalDateTime updatedAt;
+  private LocalDateTime          updatedAt;
 
   @Override
   public Long getId() {
@@ -59,20 +60,20 @@ public class WorkflowMessage extends CoreModelHelper {
     this.workflowIdentity = workflowIdentity;
   }
 
-  public Long getStepId() {
-    return this.stepId;
+  public String getStepIdentity() {
+    return stepIdentity;
   }
 
-  public void setStepId(final Long stepId) {
-    this.stepId = stepId;
+  public void setStepIdentity(final String stepIdentity) {
+    this.stepIdentity = stepIdentity;
   }
 
-  public Long getUserId() {
-    return this.userId;
+  public String getUserIdentity() {
+    return userIdentity;
   }
 
-  public void setUserId(final Long userId) {
-    this.userId = userId;
+  public void setUserIdentity(final String userIdentity) {
+    this.userIdentity = userIdentity;
   }
 
   public String getMessage() {
@@ -83,12 +84,12 @@ public class WorkflowMessage extends CoreModelHelper {
     this.message = message;
   }
 
-  public Long getCreatedBy() {
-    return createdBy;
+  public String getCreatedByIdentity() {
+    return createdByIdentity;
   }
 
-  public void setCreatedBy(final Long createdBy) {
-    this.createdBy = createdBy;
+  public void setCreatedByIdentity(final String createdByIdentity) {
+    this.createdByIdentity = createdByIdentity;
   }
 
   public EWorkflowMessageType getMessageType() {

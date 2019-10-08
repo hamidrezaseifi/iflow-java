@@ -35,7 +35,7 @@ DROP TABLE IF EXISTS `companies`;
  
 CREATE TABLE `companies` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `identifyid` varchar(45) DEFAULT NULL,
+  `identity` varchar(45) DEFAULT NULL,
   `company_name` varchar(45) NOT NULL,
   `status` smallint(6) NOT NULL DEFAULT '1',
   `version` int(11) NOT NULL DEFAULT '1',
@@ -48,6 +48,7 @@ CREATE TABLE `companies` (
 
 CREATE TABLE `departments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `identity` varchar(45) DEFAULT NULL,
   `company_id` int(11) NOT NULL DEFAULT '1',
   `title` varchar(200) NOT NULL,
   `status` smallint(6) NOT NULL DEFAULT '1',
