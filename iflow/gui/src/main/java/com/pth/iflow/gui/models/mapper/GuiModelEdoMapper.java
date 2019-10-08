@@ -3,11 +3,9 @@ package com.pth.iflow.gui.models.mapper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
-
 import com.pth.iflow.common.edo.models.AssignItemEdo;
 import com.pth.iflow.common.edo.models.CompanyEdo;
 import com.pth.iflow.common.edo.models.CompanyProfileEdo;
@@ -246,6 +244,7 @@ public class GuiModelEdoMapper {
     edo.setWorkflowTypeId(model.getWorkflowTypeId());
     edo.setVersion(model.getVersion());
     edo.setCurrentStepId(model.getCurrentStepId());
+    edo.setIdentity(model.getIdentity());
 
     edo.setFiles(toWorkflowFileEdoList(model.getFiles()));
     edo.setActions(toWorkflowActionEdoList(model.getActions()));
@@ -266,6 +265,7 @@ public class GuiModelEdoMapper {
     model.setWorkflowTypeId(edo.getWorkflowTypeId());
     model.setVersion(edo.getVersion());
     model.setCurrentStepId(edo.getCurrentStepId());
+    model.setIdentity(edo.getIdentity());
 
     model.setFiles(fromWorkflowFileEdoList(edo.getFiles()));
     model.setActions(fromWorkflowActionEdoList(edo.getActions()));
@@ -473,8 +473,7 @@ public class GuiModelEdoMapper {
     return edoList;
   }
 
-  public static List<GuiWorkflowFileVersion> fromWorkflowFileVersionEdoList(final List<WorkflowFileVersionEdo> edoList)
-      throws IFlowMessageConversionFailureException {
+  public static List<GuiWorkflowFileVersion> fromWorkflowFileVersionEdoList(final List<WorkflowFileVersionEdo> edoList) throws IFlowMessageConversionFailureException {
     final List<GuiWorkflowFileVersion> modelList = new ArrayList<>();
     for (final WorkflowFileVersionEdo edo : edoList) {
       modelList.add(fromEdo(edo));
@@ -492,8 +491,7 @@ public class GuiModelEdoMapper {
     return edoList;
   }
 
-  public static List<GuiWorkflowFile> fromWorkflowFileEdoList(final List<WorkflowFileEdo> edoList)
-      throws IFlowMessageConversionFailureException {
+  public static List<GuiWorkflowFile> fromWorkflowFileEdoList(final List<WorkflowFileEdo> edoList) throws IFlowMessageConversionFailureException {
     final List<GuiWorkflowFile> modelList = new ArrayList<>();
     for (final WorkflowFileEdo edo : edoList) {
       modelList.add(fromEdo(edo));
@@ -511,8 +509,7 @@ public class GuiModelEdoMapper {
     return edoList;
   }
 
-  public static List<GuiWorkflowAction> fromWorkflowActionEdoList(final List<WorkflowActionEdo> edoList)
-      throws IFlowMessageConversionFailureException {
+  public static List<GuiWorkflowAction> fromWorkflowActionEdoList(final List<WorkflowActionEdo> edoList) throws IFlowMessageConversionFailureException {
     final List<GuiWorkflowAction> modelList = new ArrayList<>();
     for (final WorkflowActionEdo edo : edoList) {
       modelList.add(fromEdo(edo));
@@ -530,8 +527,7 @@ public class GuiModelEdoMapper {
     return edoList;
   }
 
-  public static List<GuiWorkflowTypeStep> fromWorkflowTypeStepEdoList(final List<WorkflowTypeStepEdo> edoList)
-      throws IFlowMessageConversionFailureException {
+  public static List<GuiWorkflowTypeStep> fromWorkflowTypeStepEdoList(final List<WorkflowTypeStepEdo> edoList) throws IFlowMessageConversionFailureException {
     final List<GuiWorkflowTypeStep> modelList = new ArrayList<>();
     for (final WorkflowTypeStepEdo edo : edoList) {
       modelList.add(fromEdo(edo));
@@ -549,8 +545,7 @@ public class GuiModelEdoMapper {
     return edoList;
   }
 
-  public static List<GuiDepartmentGroup> fromDepartmentGroupEdoList(final List<DepartmentGroupEdo> edoList)
-      throws IFlowMessageConversionFailureException {
+  public static List<GuiDepartmentGroup> fromDepartmentGroupEdoList(final List<DepartmentGroupEdo> edoList) throws IFlowMessageConversionFailureException {
     final List<GuiDepartmentGroup> modelList = new ArrayList<>();
     for (final DepartmentGroupEdo edo : edoList) {
       modelList.add(fromEdo(edo));
@@ -607,15 +602,17 @@ public class GuiModelEdoMapper {
   public static GuiCompanyProfile fromEdo(final CompanyProfileEdo edo) throws IFlowMessageConversionFailureException {
     validateCustomer(edo);
 
-    final GuiCompanyProfile model = new GuiCompanyProfile(fromEdo(edo.getCompany()), fromDepartmentEdoList(edo.getDepartments()),
-        fromUserGroupEdoList(edo.getUserGroups()));
+    final GuiCompanyProfile model = new GuiCompanyProfile(fromEdo(edo.getCompany()),
+                                                          fromDepartmentEdoList(edo.getDepartments()),
+                                                          fromUserGroupEdoList(edo.getUserGroups()));
 
     return model;
   }
 
   public static CompanyProfileEdo toEdo(final GuiCompanyProfile model) {
-    final CompanyProfileEdo edo = new CompanyProfileEdo(toEdo(model.getCompany()), toDepartmentEdoList(model.getDepartments()),
-        toUserGroupEdoList(model.getUserGroups()));
+    final CompanyProfileEdo edo = new CompanyProfileEdo(toEdo(model.getCompany()),
+                                                        toDepartmentEdoList(model.getDepartments()),
+                                                        toUserGroupEdoList(model.getUserGroups()));
 
     return edo;
   }
@@ -624,8 +621,7 @@ public class GuiModelEdoMapper {
     return new ProfileResponseEdo(toEdo(model.getUser()), toEdo(model.getCompanyProfile()), model.getSessionid());
   }
 
-  public static List<GuiDepartment> fromDepartmentEdoList(final List<DepartmentEdo> edoList)
-      throws IFlowMessageConversionFailureException {
+  public static List<GuiDepartment> fromDepartmentEdoList(final List<DepartmentEdo> edoList) throws IFlowMessageConversionFailureException {
     final List<GuiDepartment> modelList = new ArrayList<>();
     for (final DepartmentEdo edo : edoList) {
       modelList.add(fromEdo(edo));
@@ -634,8 +630,7 @@ public class GuiModelEdoMapper {
     return modelList;
   }
 
-  public static List<GuiUserGroup> fromUserGroupEdoList(final List<UserGroupEdo> edoList)
-      throws IFlowMessageConversionFailureException {
+  public static List<GuiUserGroup> fromUserGroupEdoList(final List<UserGroupEdo> edoList) throws IFlowMessageConversionFailureException {
     final List<GuiUserGroup> modelList = new ArrayList<>();
     for (final UserGroupEdo edo : edoList) {
       modelList.add(fromEdo(edo));
@@ -667,8 +662,7 @@ public class GuiModelEdoMapper {
     return model;
   }
 
-  public static List<GuiAssignItem> fromAssignItemEdoList(final List<AssignItemEdo> edoList)
-      throws IFlowMessageConversionFailureException {
+  public static List<GuiAssignItem> fromAssignItemEdoList(final List<AssignItemEdo> edoList) throws IFlowMessageConversionFailureException {
     final List<GuiAssignItem> modelList = new ArrayList<>();
     for (final AssignItemEdo edo : edoList) {
       modelList.add(fromEdo(edo));
@@ -681,8 +675,7 @@ public class GuiModelEdoMapper {
     return new GuiAssignItem(edo.getItemId(), EAssignType.valueFromName(edo.getItemType()));
   }
 
-  public static List<AssignItemEdo> toAssignItemEdoList(final List<GuiAssignItem> modelList)
-      throws IFlowMessageConversionFailureException {
+  public static List<AssignItemEdo> toAssignItemEdoList(final List<GuiAssignItem> modelList) throws IFlowMessageConversionFailureException {
     final List<AssignItemEdo> edoList = new ArrayList<>();
     for (final GuiAssignItem model : modelList) {
       edoList.add(toEdo(model));
@@ -695,8 +688,7 @@ public class GuiModelEdoMapper {
     return new AssignItemEdo(model.getItemId(), model.getItemType().getName());
   }
 
-  public static List<GuiWorkflowType> fromWorkflowTypeEdoList(final List<WorkflowTypeEdo> edoList)
-      throws IFlowMessageConversionFailureException {
+  public static List<GuiWorkflowType> fromWorkflowTypeEdoList(final List<WorkflowTypeEdo> edoList) throws IFlowMessageConversionFailureException {
     final List<GuiWorkflowType> modelList = new ArrayList<>();
     for (final WorkflowTypeEdo edo : edoList) {
       modelList.add(fromEdo(edo));
@@ -714,8 +706,7 @@ public class GuiModelEdoMapper {
     return modelList;
   }
 
-  public static List<GuiWorkflowMessage> fromWorkflowMessageEdoList(final List<WorkflowMessageEdo> edoList)
-      throws IFlowMessageConversionFailureException {
+  public static List<GuiWorkflowMessage> fromWorkflowMessageEdoList(final List<WorkflowMessageEdo> edoList) throws IFlowMessageConversionFailureException {
     final List<GuiWorkflowMessage> modelList = new ArrayList<>();
     for (final WorkflowMessageEdo edo : edoList) {
       modelList.add(fromEdo(edo));
@@ -730,8 +721,7 @@ public class GuiModelEdoMapper {
 
   }
 
-  public static GuiUserAuthenticationResponse fromEdo(final UserAuthenticationResponseEdo edo)
-      throws IFlowMessageConversionFailureException {
+  public static GuiUserAuthenticationResponse fromEdo(final UserAuthenticationResponseEdo edo) throws IFlowMessageConversionFailureException {
     validateCustomer(edo);
 
     final GuiUserAuthenticationResponse model = new GuiUserAuthenticationResponse();

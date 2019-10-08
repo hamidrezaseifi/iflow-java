@@ -5,13 +5,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.pth.iflow.core.model.Workflow;
 import com.pth.iflow.core.model.WorkflowAction;
 import com.pth.iflow.core.model.WorkflowFile;
@@ -19,7 +17,6 @@ import com.pth.iflow.core.model.WorkflowSearchFilter;
 import com.pth.iflow.core.storage.dao.IWorkflowActionDao;
 import com.pth.iflow.core.storage.dao.IWorkflowDao;
 import com.pth.iflow.core.storage.dao.IWorkflowFileDao;
-import com.pth.iflow.core.storage.dao.IWorkflowTypeStepDao;
 import com.pth.iflow.core.storage.dao.basic.DaoBasicClass;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 import com.pth.iflow.core.storage.dao.utils.SqlUtils;
@@ -29,13 +26,10 @@ import com.pth.iflow.core.storage.dao.utils.SqlUtils;
 public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao {
 
   @Autowired
-  private IWorkflowActionDao   workflowActionDao;
+  private IWorkflowActionDao workflowActionDao;
 
   @Autowired
-  private IWorkflowFileDao     workflowFileDao;
-
-  @Autowired
-  private IWorkflowTypeStepDao workflowTypeStepDao;
+  private IWorkflowFileDao workflowFileDao;
 
   public WorkflowDao() {
 
@@ -64,7 +58,7 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
   protected Workflow modelFromResultSet(final ResultSet rs) throws SQLException {
     final Workflow model = new Workflow();
     model.setId(rs.getLong("id"));
-
+    model.setIdentity(rs.getString("identity"));
     model.setStatus(rs.getInt("status"));
     model.setCreatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("created_at")));
     model.setUpdatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("updated_at")));
@@ -98,8 +92,8 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
 
   @Override
   public Workflow create(final Workflow workflow) throws IFlowStorageException {
-    final String sql = "INSERT INTO workflow (workflow_type_id, current_step, comments, controller, created_by, version, status)"
-        + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+    final String sql = "INSERT INTO workflow (identity, workflow_type_id, current_step, comments, controller, created_by, version, status)"
+                       + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
     final TransactionStatus transactionStatus = this.startTransaction(true);
     try {
@@ -114,7 +108,8 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
 
       return this.getById(workflowId);
 
-    } catch (final Exception e) {
+    }
+    catch (final Exception e) {
       this.rollbackTransaction(true, transactionStatus);
       logger.error("Unable to create Workflow: {}", e.toString(), e);
       throw new IFlowStorageException(e.toString(), e);
@@ -155,7 +150,7 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
   @Override
   public Workflow update(final Workflow workflow) throws IFlowStorageException {
     final String sql = "UPDATE workflow SET workflow_type_id = ?, current_step = ?, comments = ?,"
-        + " controller = ?, created_by = ?, version = ?, status = ? WHERE id = ?";
+                       + " controller = ?, created_by = ?, version = ?, status = ? WHERE id = ?";
 
     final TransactionStatus transactionStatus = this.startTransaction(true);
     try {
@@ -169,7 +164,8 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
       this.commitTransaction(true, transactionStatus);
 
       return this.getById(workflow.getId());
-    } catch (final Exception e) {
+    }
+    catch (final Exception e) {
       this.rollbackTransaction(true, transactionStatus);
       logger.error("Unable to update Workflow: {}", e.toString(), e);
       throw new IFlowStorageException(e.toString(), e);
@@ -189,7 +185,8 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
 
       this.commitTransaction(true, transactionStatus);
 
-    } catch (final Exception e) {
+    }
+    catch (final Exception e) {
       this.rollbackTransaction(true, transactionStatus);
       logger.error("Unable to delete Workflow:{} {}", workflowId, e.toString(), e);
       throw new IFlowStorageException(e.toString(), e);
@@ -198,13 +195,14 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
 
   @Override
   protected PreparedStatement prepareInsertPreparedStatement(final Workflow model, final PreparedStatement ps) throws SQLException {
-    ps.setLong(1, model.getWorkflowTypeId());
-    ps.setLong(2, model.getCurrentStepId());
-    ps.setString(3, model.getComments());
-    ps.setLong(4, model.getController());
-    ps.setLong(5, model.getCreatedBy());
-    ps.setInt(6, model.getVersion());
-    ps.setInt(7, model.getStatusInt());
+    ps.setString(1, model.getIdentity());
+    ps.setLong(2, model.getWorkflowTypeId());
+    ps.setLong(3, model.getCurrentStepId());
+    ps.setString(4, model.getComments());
+    ps.setLong(5, model.getController());
+    ps.setLong(6, model.getCreatedBy());
+    ps.setInt(7, model.getVersion());
+    ps.setInt(8, model.getStatusInt());
 
     return ps;
   }
@@ -230,7 +228,7 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
 
     List<Long> idList = new ArrayList<>();
     final String sql = "SELECT * FROM workflow where id in (select workflow_id from workflow_actions where assign_to=?) "
-        + (status > -1 ? " and status=?" : "");
+                       + (status > -1 ? " and status=?" : "");
 
     try {
       idList = this.jdbcTemplate.query(con -> {
@@ -248,7 +246,8 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
 
       });
 
-    } catch (final Exception e) {
+    }
+    catch (final Exception e) {
       throw new IFlowStorageException("Unable to read Workflow for user id: " + id + " : " + e.toString());
     }
 
@@ -306,7 +305,8 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
 
       });
 
-    } catch (final Exception e) {
+    }
+    catch (final Exception e) {
       throw new IFlowStorageException("Unable to search Workflow : " + e.toString());
     }
 
@@ -320,7 +320,8 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
     String whereClause = "";
     if (workflowSearchFilter.getAssignedUserIdList().isEmpty() == false) {
       whereClause += "id in (select workflow_id from workflow_actions where assign_to in ("
-          + StringUtils.repeat("?,", workflowSearchFilter.getAssignedUserIdList().size()) + ")) ";
+                     + StringUtils.repeat("?,", workflowSearchFilter.getAssignedUserIdList().size())
+                     + ")) ";
     }
     if (workflowSearchFilter.getStatusList().isEmpty() == false) {
       whereClause += whereClause.isEmpty() ? "" : "and";

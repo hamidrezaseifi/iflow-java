@@ -2,7 +2,6 @@ package com.pth.iflow.common.edo.models;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -10,7 +9,6 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 
@@ -20,36 +18,40 @@ import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 public class WorkflowEdo {
 
   @XmlElement(name = "ID", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long                    id;
+  private Long id;
+
+  @NotNull(message = "Identity is not allowed to be null!")
+  @XmlElement(name = "Identity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String identity;
 
   @NotNull(message = "WorkflowTypeId is not allowed to be null!")
   @XmlElement(name = "WorkflowTypeId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long                    workflowTypeId;
+  private Long workflowTypeId;
 
   @XmlElement(name = "CurrentStepId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long                    currentStepId;
+  private Long currentStepId;
 
   @XmlElement(name = "Controller", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long                    controller;
+  private Long controller;
 
   @XmlElement(name = "CreatedBy", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long                    createdBy;
+  private Long createdBy;
 
   @XmlElement(name = "Comments", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String                  comments;
+  private String comments;
 
   @NotNull(message = "Status is not allowed to be null!")
   @XmlElement(name = "Status", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Integer                 status;
+  private Integer status;
 
   @NotNull(message = "Version is not allowed to be null!")
   @XmlElement(name = "Version", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Integer                 version;
+  private Integer version;
 
   @NotNull(message = "WorkflowFileEdo is not allowed to be null!")
   @XmlElementWrapper(name = "WorkflowFileList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "WorkflowFile", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private List<WorkflowFileEdo>   files   = new ArrayList<>();
+  private List<WorkflowFileEdo> files = new ArrayList<>();
 
   @NotNull(message = "WorkflowActionList is not allowed to be null!")
   @XmlElementWrapper(name = "WorkflowActionList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
@@ -62,6 +64,14 @@ public class WorkflowEdo {
 
   public void setId(final Long id) {
     this.id = id;
+  }
+
+  public String getIdentity() {
+    return identity;
+  }
+
+  public void setIdentity(final String identity) {
+    this.identity = identity;
   }
 
   public Long getWorkflowTypeId() {

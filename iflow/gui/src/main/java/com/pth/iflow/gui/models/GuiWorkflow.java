@@ -2,26 +2,26 @@ package com.pth.iflow.gui.models;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 
 @JsonIgnoreProperties(value = { "isAssignTo" })
 public class GuiWorkflow {
 
-  private Long                          id;
-  private Long                          workflowTypeId;
-  private GuiWorkflowType               workflowType;
-  private GuiWorkflowTypeStep           currentStep;
-  private Long                          currentStepId;
-  private Long                          controller;
-  private GuiUser                       controllerUser;
-  private Long                          createdBy;
-  private GuiUser                       createdByUser;
-  private String                        comments;
-  private EWorkflowStatus               status;
-  private Integer                       version;
-  private Long                          currentUserId;
+  private Long                id;
+  private String              identity;
+  private Long                workflowTypeId;
+  private GuiWorkflowType     workflowType;
+  private GuiWorkflowTypeStep currentStep;
+  private Long                currentStepId;
+  private Long                controller;
+  private GuiUser             controllerUser;
+  private Long                createdBy;
+  private GuiUser             createdByUser;
+  private String              comments;
+  private EWorkflowStatus     status;
+  private Integer             version;
+  private Long                currentUserId;
 
   private final List<GuiWorkflowFile>   files   = new ArrayList<>();
   private final List<GuiWorkflowAction> actions = new ArrayList<>();
@@ -32,6 +32,14 @@ public class GuiWorkflow {
 
   public void setId(final Long id) {
     this.id = id;
+  }
+
+  public String getIdentity() {
+    return identity;
+  }
+
+  public void setIdentity(final String identity) {
+    this.identity = identity;
   }
 
   public Long getWorkflowTypeId() {
@@ -174,8 +182,7 @@ public class GuiWorkflow {
     this.files.add(file);
   }
 
-  public GuiWorkflowFile addNewFile(final String path, final Long userId, final String title, final String extention,
-      final String comments) {
+  public GuiWorkflowFile addNewFile(final String path, final Long userId, final String title, final String extention, final String comments) {
     final GuiWorkflowFile wfile = new GuiWorkflowFile();
     wfile.setActiveFilePath(path);
     wfile.setActiveFileVersion(1);

@@ -3,22 +3,22 @@ package com.pth.iflow.core.model;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
 import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 
 public class Workflow extends DataModelBase {
 
-  private Long                       id;
-  private Long                       workflowTypeId;
-  private Long                       currentStepId;
-  private Long                       controller;
-  private Long                       createdBy;
-  private String                     comments;
-  private EWorkflowStatus            status;
-  private Integer                    version;
-  private LocalDateTime              createdAt;
-  private LocalDateTime              updatedAt;
+  private Long            id;
+  private String          identity;
+  private Long            workflowTypeId;
+  private Long            currentStepId;
+  private Long            controller;
+  private Long            createdBy;
+  private String          comments;
+  private EWorkflowStatus status;
+  private Integer         version;
+  private LocalDateTime   createdAt;
+  private LocalDateTime   updatedAt;
 
   private final List<WorkflowFile>   files   = new ArrayList<>();
   private final List<WorkflowAction> actions = new ArrayList<>();
@@ -30,6 +30,14 @@ public class Workflow extends DataModelBase {
 
   public void setId(final Long id) {
     this.id = id;
+  }
+
+  public String getIdentity() {
+    return identity;
+  }
+
+  public void setIdentity(final String identity) {
+    this.identity = identity;
   }
 
   public Long getWorkflowTypeId() {

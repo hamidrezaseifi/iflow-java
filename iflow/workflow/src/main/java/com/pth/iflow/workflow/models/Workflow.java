@@ -3,23 +3,23 @@ package com.pth.iflow.workflow.models;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-
 import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.enums.EWorkflowActionStatus;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 
 public class Workflow extends DataModelBase {
 
-  private Long                       id;
-  private Long                       workflowTypeId;
-  private WorkflowType               workflowType;
-  private WorkflowTypeStep           currentStep;
-  private Long                       currentStepId;
-  private Long                       controller;
-  private Long                       createdBy;
-  private String                     comments;
-  private EWorkflowStatus            status;
-  private Integer                    version;
+  private Long             id;
+  private String           identity;
+  private Long             workflowTypeId;
+  private WorkflowType     workflowType;
+  private WorkflowTypeStep currentStep;
+  private Long             currentStepId;
+  private Long             controller;
+  private Long             createdBy;
+  private String           comments;
+  private EWorkflowStatus  status;
+  private Integer          version;
 
   private final List<WorkflowFile>   files   = new ArrayList<>();
   private final List<WorkflowAction> actions = new ArrayList<>();
@@ -31,6 +31,14 @@ public class Workflow extends DataModelBase {
 
   public void setId(final Long id) {
     this.id = id;
+  }
+
+  public String getIdentity() {
+    return identity;
+  }
+
+  public void setIdentity(final String identity) {
+    this.identity = identity;
   }
 
   public Long getWorkflowTypeId() {
@@ -222,7 +230,10 @@ public class Workflow extends DataModelBase {
       public int compare(final WorkflowAction action1, final WorkflowAction action2) {
 
         return action1.getCurrentStep().getStepIndex() > action2.getCurrentStep().getStepIndex() ? 1
-            : action1.getCurrentStep().getStepIndex() < action2.getCurrentStep().getStepIndex() ? -1 : 0;
+                                                                                                 : action1.getCurrentStep()
+                                                                                                          .getStepIndex() < action2.getCurrentStep()
+                                                                                                                                   .getStepIndex() ? -1
+                                                                                                                                                   : 0;
       }
     });
 

@@ -2,11 +2,9 @@ package com.pth.iflow.core.dao;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -16,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
+import com.pth.iflow.common.enums.EWorkflowIdentity;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.Workflow;
 import com.pth.iflow.core.storage.dao.IWorkflowDao;
@@ -27,7 +25,7 @@ import com.pth.iflow.core.storage.dao.IWorkflowDao;
 public class WorkflowDaoTest extends TestDataProducer {
 
   @Autowired
-  private IWorkflowDao         workflowDao;
+  private IWorkflowDao workflowDao;
 
   private final List<Workflow> createdModels = new ArrayList<>();
 
@@ -40,6 +38,7 @@ public class WorkflowDaoTest extends TestDataProducer {
     for (int i = 1; i <= 3; i++) {
       final Workflow workflow = getTestNewWorkflow();
       workflow.setId(null);
+      workflow.setIdentity(EWorkflowIdentity.NOT_SET.getName());
       final Workflow res = workflowDao.create(workflow);
       createdModels.add(res);
     }

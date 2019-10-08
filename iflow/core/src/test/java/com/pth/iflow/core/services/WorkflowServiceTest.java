@@ -2,9 +2,7 @@ package com.pth.iflow.core.services;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-
 import java.util.List;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -14,7 +12,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
-
+import com.pth.iflow.common.enums.EWorkflowIdentity;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.Workflow;
 import com.pth.iflow.core.service.IWorkflowService;
@@ -29,7 +27,7 @@ public class WorkflowServiceTest extends TestDataProducer {
   private IWorkflowService workflowService;
 
   @MockBean
-  private IWorkflowDao     workflowDao;
+  private IWorkflowDao workflowDao;
 
   @Before
   public void setUp() throws Exception {
@@ -86,6 +84,7 @@ public class WorkflowServiceTest extends TestDataProducer {
 
     Workflow workflow = getTestWorkflow(1L);
     workflow.setId(null);
+    workflow.setIdentity(EWorkflowIdentity.NOT_SET.getName());
     workflow.setVersion(21);
 
     when(this.workflowDao.create(any(Workflow.class))).thenReturn(workflow);
