@@ -8,10 +8,10 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-
+import com.pth.iflow.common.controllers.helper.IflowSpringProfiles;
 import com.pth.iflow.common.rest.XmlRestConfig;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackageClasses = { IflowSpringProfiles.class, GuiApp.class })
 public class GuiApp implements ApplicationListener<ApplicationReadyEvent> {
 
   private static final Logger logger = LoggerFactory.getLogger(GuiApp.class);
@@ -26,6 +26,7 @@ public class GuiApp implements ApplicationListener<ApplicationReadyEvent> {
 
     GuiApp.logger.info("Starting iFlow Backend application...");
     final SpringApplication springApplication = new SpringApplication(GuiApp.class);
+    springApplication.setAdditionalProfiles(IflowSpringProfiles.GUI_APP);
     springApplication.run(args);
 
   }

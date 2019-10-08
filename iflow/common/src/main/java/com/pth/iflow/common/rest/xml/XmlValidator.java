@@ -36,7 +36,7 @@ public class XmlValidator {
    *
    * @param schemaLocations a spring resource path leading to an XSD.
    */
-  public XmlValidator(@Value("${mdm.common.rest.xml-validation.schema-locations}") final String... schemaLocations) {
+  public XmlValidator(@Value("${iflow.common.rest.xml-validation.schema-locations}") final String... schemaLocations) {
     initSchemas(schemaLocations);
   }
 

@@ -14,7 +14,7 @@ import com.pth.iflow.common.rest.XmlRestConfig;
 @Target({ ElementType.TYPE, ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 @Configuration
-@Import({ XmlRestConfig.class, XmlValidatingRequestFilter.class, XmlValidator.class })
+@Import({ XmlRestConfig.class, XmlValidator.class })
 public @interface XmlValidationConfig {
 
 }

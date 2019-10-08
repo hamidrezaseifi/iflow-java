@@ -21,7 +21,7 @@ export MODULE_GUI="gui"
 
 export ALL_PORTS_NO_UI="${PORT_CORE} ${PORT_WORKFLOW} ${PORT_PROFILE}"
 export ALL_PORTS="${ALL_PORTS_NO_UI} ${PORT_GUI}"
-export MODULES_NO_COMMON_DB_UI="${MODULE_WORKFLOW} ${MODULE_PROFILE}"
+export MODULES_NO_COMMON_DB_UI="${MODULE_CORE} ${MODULE_WORKFLOW} ${MODULE_PROFILE}"
 
 ##########################
 
@@ -110,13 +110,10 @@ function runModule() {
     jargs="$jargs -Dmanagement.endpoints.web.exposure.include=shutdown"
     jargs="$jargs -Dmanagement.endpoint.shutdown.enabled=true"
     jargs="$jargs -Dendpoints.shutdown.enabled=true"
-    # config API security, so that this is tested 
-    # jargs="$jargs -Diflow.common.rest.api.security.disabled=true"
-    jargs="$jargs -Diflow.common.rest.api.security.allowed-client-ids=mdm-client-id-for-dev"
-    # Note: on windows the git bash will convert the /mdm/... path to a windows path rendering this entry useless. Lucky us, this is not a problem ATM.
-    jargs="$jargs -Diflow.common.rest.api.security.excluded-endpoint-prefixes=/mdm/common/admin/health,/actuator/shutdown"
-    jargs="$jargs -Diflow.common.rest.api.security.client-id.internal=mdm-client-id-for-dev"
-    jargs="$jargs -Diflow.common.rest.api.security.client-id.internal.uri-pattern=http://localhost(:\\d*)?/mdm/*"
+    jargs="$jargs -Diflow.common.rest.api.security.allowed-client-ids=iflow-client-id-for-dev"
+    jargs="$jargs -Diflow.common.rest.api.security.excluded-endpoint-prefixes=/iflow/common/admin/health,/actuator/shutdown"
+    jargs="$jargs -Diflow.common.rest.api.security.client-id.internal=iflow-client-id-for-dev"
+    jargs="$jargs -Diflow.common.rest.api.security.client-id.internal.uri-pattern=http://localhost(:\\d*)?/iflow/*"
     nohup java $jargs -jar $jar 1>/dev/null 2>&1 </dev/null &
     sleep 1
 }
@@ -143,14 +140,14 @@ function stopModules() {
     for port in $ports; do
         echo -n "Stopping module on port $port: " 
         RESPONSE=$(curl --silent -m 1 -X POST localhost:$port/actuator/shutdown)
-        ERRC="$?"
+        ERRC="$?"        
         if [ "$ERRC" != "0" ]; then
             MSG="Error code: $ERRC  (code 7: failed to connect to host - see https://curl.haxx.se/libcurl/c/libcurl-errors.html)"
         else
             MSG=" -> done"
         fi
         echo $MSG
-        sleep 1
+        sleep 2
     done
     enableErrorExit
     sleep 3
@@ -216,7 +213,16 @@ function buildModules() {
     echo " -> done"
 
     echo -n "Building modules: $MODULES"
-    mvn install $MAVEN_QUIET -pl $MODULES -am $SKIP_TESTS
+    mvn install $MAVEN_QUIET -pl common $SKIP_TESTS
+    echo " -> done"
+    
+}
+
+function buildCoreFlyway() {
+
+# $MAVEN_QUIET
+    echo -n "Building modules: core-flyway"
+    mvn package flyway:info flyway:migrate flyway:info -pl core -am -DskipTests=true
     echo " -> done"
     
 }

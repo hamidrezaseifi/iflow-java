@@ -33,7 +33,7 @@ import com.pth.iflow.common.utils.DataLoggingUtils;
  */
 @Component
 @Profile({ IflowSpringProfiles.SERVICE_APP })
-@ConditionalOnProperty(name = "mdm.common.rest.api.security.enabled", matchIfMissing = true)
+@ConditionalOnProperty(name = "iflow.common.rest.api.security.enabled:false", matchIfMissing = true)
 public class ApiAuthenticationRequestFilter extends OncePerRequestFilter /*
                                                                           * extending from this out of pure convenience, so i dont have to
                                                                           * do so much copy paste of code
@@ -51,14 +51,14 @@ public class ApiAuthenticationRequestFilter extends OncePerRequestFilter /*
    *          available. Needed eg. for health check
    */
   @Autowired
-  public ApiAuthenticationRequestFilter(@Value("${mdm.common.rest.api.security.allowed-client-ids:}") final String[] allowedClientIds,
-                                        @Value("${mdm.common.rest.api.security.excluded-endpoint-prefixes:}") final String[] excludedEndpointPrefixes) {
+  public ApiAuthenticationRequestFilter(@Value("${iflow.common.rest.api.security.allowed-client-ids:}") final String[] allowedClientIds,
+                                        @Value("${iflow.common.rest.api.security.excluded-endpoint-prefixes:}") final String[] excludedEndpointPrefixes) {
     this.allowedClientIds = allowedClientIds;
     this.excludedEndpointPrefixes = excludedEndpointPrefixes;
 
     if (ArrayUtils.isEmpty(allowedClientIds)) {
       throw new IflowConfigurationException("No %s are configured, hence no body will be able to access any REST API.",
-                                            "${mdm.common.rest.api.security.allowed-client-ids}");
+                                            "${iflow.common.rest.api.security.allowed-client-ids}");
     }
     else {
       log.info("MDM API Access: known mdm-client-ids: {}", DataLoggingUtils.getOrMask(StringUtils.join(allowedClientIds, ",")));

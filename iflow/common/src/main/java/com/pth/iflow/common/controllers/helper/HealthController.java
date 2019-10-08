@@ -24,15 +24,9 @@ public class HealthController {
 
   private final Logger log = LoggerFactory.getLogger(getClass());
 
-  private static final String SETTING_MDM_COMMON_HEALTHCECK_URIS = "${mdm.common.health-check.uris}";
+  private static final String SETTING_MDM_COMMON_HEALTHCECK_URIS = "${iflow.common.health-check.uris}";
   private final RestTemplate  restTemplate;
 
-  /**
-   * The uris that are used to check the health of this service incl. depending services. To facilitate custom checks implement an own
-   * handler in the module and add that endpoint to the list here.
-   * <p>
-   * It is possible to have an empty array here. This just verifies that the module itself is up and running.
-   */
   private final URI[] uris;
 
   @Autowired
@@ -70,7 +64,7 @@ public class HealthController {
     return uris;
   }
 
-  @GetMapping(path = "/mdm/common/admin/health", produces = MediaType.APPLICATION_XML_VALUE)
+  @GetMapping(path = "/iflow/common/admin/health", produces = MediaType.APPLICATION_XML_VALUE)
   public void getHealth() throws IflowHealthException {
 
     for (final URI uri : uris) {

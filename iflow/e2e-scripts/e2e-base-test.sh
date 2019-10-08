@@ -29,8 +29,6 @@ parseArguments $@
 
 function startCore() {
     setDbEnvVars $MODULE_CORE
-    URL="$1"
-
     startModules "$MODULE_CORE"
     sleep $IFLOW_E2E_RUN_PAUSE_SMALL
 }
@@ -48,12 +46,14 @@ createModuleAndDatabases "$MODULE_CORE"
 sleep 2
 
 # start up all modules
-startModules "$MODULE_CORE $MODULE_WORKFLOW $MODULE_PROFILE"
+startModules "$MODULE_WORKFLOW $MODULE_PROFILE"
 
-##startCore
+startCore
+
+sleep $IFLOW_E2E_RUN_PAUSE_SAMLL
 
 echo "all modules are running ... wait ..."
-sleep $IFLOW_E2E_RUN_PAUSE_MEDIUM
+sleep $IFLOW_E2E_RUN_PAUSE_SMALL
 
 ##mvn verify $MAVEN_QUIET -P e2eGrGrMerge -pl common/
 #sleep 2
