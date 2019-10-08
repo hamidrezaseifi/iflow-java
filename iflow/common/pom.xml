@@ -15,8 +15,28 @@
     <dependencies>
 
 	    <dependency>
-	        <groupId>org.springframework.boot</groupId>
-	        <artifactId>spring-boot-starter-web</artifactId>
+	      <!-- TODO: review if we better take https://projects.spring.io/spring-data-rest/ -->
+	      <groupId>org.springframework.boot</groupId>
+	      <artifactId>spring-boot-starter-web</artifactId>
+	
+	      <exclusions>
+	        <exclusion>
+	          <groupId>org.springframework.boot</groupId>
+	          <artifactId>spring-boot-starter-tomcat</artifactId>
+	        </exclusion>
+	      </exclusions>
+	    </dependency>
+	
+	    <dependency>
+	      <!-- this we need, so we can do @WebMvcTest -->
+	      <groupId>org.springframework.boot</groupId>
+	      <artifactId>spring-boot-starter-jetty</artifactId>
+	    </dependency>
+	
+	    <dependency>
+	      <!-- this is needed for e2e testing -->
+	      <groupId>org.springframework.boot</groupId>
+	      <artifactId>spring-boot-starter-actuator</artifactId>
 	    </dependency>
 
         <dependency>
@@ -62,18 +82,32 @@
 	      <version>4.1</version>
 	    </dependency>
 
-    <dependency>
-      <groupId>org.apache.poi</groupId>
-      <artifactId>poi</artifactId>
-      <version>3.17</version>
-    </dependency>
+	    <dependency>
+	      <groupId>org.apache.poi</groupId>
+	      <artifactId>poi</artifactId>
+	      <version>3.17</version>
+	    </dependency>
+	
+	    <!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
+	    <dependency>
+	      <groupId>org.apache.poi</groupId>
+	      <artifactId>poi-ooxml</artifactId>
+	      <version>3.17</version>
+	    </dependency>
 
-    <!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
-    <dependency>
-      <groupId>org.apache.poi</groupId>
-      <artifactId>poi-ooxml</artifactId>
-      <version>3.17</version>
-    </dependency>
+	    <dependency>
+	      <groupId>xmlunit</groupId>
+	      <artifactId>xmlunit</artifactId>
+	      <version>1.5</version>
+	      <scope>test</scope>
+	    </dependency>
+
+	    <dependency>
+	      <!-- brings junit and other stuff -->
+	      <groupId>org.springframework.boot</groupId>
+	      <artifactId>spring-boot-starter-test</artifactId>
+	      <scope>test</scope>
+	    </dependency>
 
     </dependencies>
 

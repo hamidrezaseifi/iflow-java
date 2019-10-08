@@ -40,6 +40,7 @@ echo
 echo "Running tests..."
 echo
 
+#buildModules "$MODULES_NO_COMMON_DB_UI"
 buildModules "$MODULES_NO_COMMON_DB_UI"
 
 createModuleAndDatabases "$MODULE_CORE"
@@ -50,13 +51,11 @@ startModules "$MODULE_WORKFLOW $MODULE_PROFILE"
 
 startCore
 
-sleep $IFLOW_E2E_RUN_PAUSE_SAMLL
-
-echo "all modules are running ... wait ..."
 sleep $IFLOW_E2E_RUN_PAUSE_SMALL
 
-##mvn verify $MAVEN_QUIET -P e2eGrGrMerge -pl common/
-#sleep 2
+echo "all modules are running ... Starting basic tests ..."
+mvn verify $MAVEN_QUIET -P e2eBasic -pl common/
+sleep 2
 
 stopModules "$ALL_PORTS_NO_UI"
 

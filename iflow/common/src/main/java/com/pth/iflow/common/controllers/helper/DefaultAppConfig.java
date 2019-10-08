@@ -1,8 +1,6 @@
 package com.pth.iflow.common.controllers.helper;
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
-import com.pth.iflow.common.rest.ApiAuthenticationRequestFilter;
 import com.pth.iflow.common.rest.xml.XmlValidationConfig;
 
 /**
@@ -12,7 +10,6 @@ import com.pth.iflow.common.rest.xml.XmlValidationConfig;
 @Configuration
 @FullAppConfig
 @XmlValidationConfig
-@Import(ApiAuthenticationRequestFilter.class)
 public class DefaultAppConfig {
 
 }

@@ -224,6 +224,32 @@
       </build>
     </profile>
 	
+    <profile>
+      <id>e2eBasic</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <mdm.tests.skip>true</mdm.tests.skip>
+      </properties>
+      <build>
+        <defaultGoal>verify</defaultGoal>
+        <plugins>
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-failsafe-plugin</artifactId>
+            <configuration>
+              <includes>
+                <include>**/basic/BasicE2eTest.java</include>
+              </includes>
+            </configuration>
+          </plugin>
+
+        </plugins>
+      </build>
+    </profile>
+	
 	</profiles>
 	<build>	
 	
@@ -238,5 +264,81 @@
 			</plugin>
 	
 	  </plugins>
-	</build>
+	  
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself. -->
+          <groupId>org.eclipse.m2e</groupId>
+          <artifactId>lifecycle-mapping</artifactId>
+          <configuration>
+            <lifecycleMappingMetadata>
+              <pluginExecutions>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>org.flywaydb</groupId>
+                    <artifactId>flyway-maven-plugin</artifactId>
+                    <versionRange>[5.0.7,)</versionRange>
+                    <goals>
+                      <goal>info</goal>
+                      <goal>migrate</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <ignore></ignore>
+                  </action>
+                </pluginExecution>
+              </pluginExecutions>
+            </lifecycleMappingMetadata>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <configuration>
+            <skip>${mdm.tests.skip}</skip>
+            <excludes>
+              <!-- exclude howto tests by default -->
+              <exclude>**/*HowtoTest.java</exclude>
+              <!-- exclude e2e tests by default -->
+              <exclude>**/*E2eTest.java</exclude>
+              <exclude>**/e2e/*.java</exclude>
+              <exclude>**/publish/**.java</exclude>
+            </excludes>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <artifactId>maven-resources-plugin</artifactId>
+          <executions>
+            <execution>
+              <!-- use case: i want my test resources next to my classes in the navigator -->
+              <id>copy-test-resources-from-src_main-too</id>
+              <phase>process-test-resources</phase>
+              <goals>
+                <goal>copy-resources</goal>
+              </goals>
+              <configuration>
+                <outputDirectory>${project.build.testOutputDirectory}</outputDirectory>
+                <resources>
+                  <resource>
+                    <directory>src/test/java</directory>
+                  </resource>
+                </resources>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+
+        <plugin>
+          <!-- needed to get the version from POM in tag.sh -->
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-help-plugin</artifactId>
+          <version>3.2.0</version>
+        </plugin>
+
+      </plugins>
+    </pluginManagement>
+    	</build>
 </project>

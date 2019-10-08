@@ -37,11 +37,6 @@ export SKIP_TESTS="-DskipTests"
 ## Function for E2E tests
 
 function initShell() {
-    ## Found this: https://kuntalchandra.wordpress.com/2017/06/12/bash-trap-error-and-exit/
-    ## => using trap's
-    ## https://www.gnu.org/software/bash/manual/html_node/The-Set-Builtin.html
-    ## ERR trap is not inherited unless the -o errtrace 
-    ## shell option has been enabled.
     set -o errtrace
     enableErrorExit
 }
@@ -112,8 +107,8 @@ function runModule() {
     jargs="$jargs -Dendpoints.shutdown.enabled=true"
     jargs="$jargs -Diflow.common.rest.api.security.allowed-client-ids=iflow-client-id-for-dev"
     jargs="$jargs -Diflow.common.rest.api.security.excluded-endpoint-prefixes=/iflow/common/admin/health,/actuator/shutdown"
-    jargs="$jargs -Diflow.common.rest.api.security.client-id.internal=iflow-client-id-for-dev"
-    jargs="$jargs -Diflow.common.rest.api.security.client-id.internal.uri-pattern=http://localhost(:\\d*)?/iflow/*"
+    jargs="$jargs -Diflow.common.rest.api.security.client-id.internal=iflow-inner-module"
+ 
     nohup java $jargs -jar $jar 1>/dev/null 2>&1 </dev/null &
     sleep 1
 }
@@ -210,10 +205,12 @@ function buildModules() {
     # The build did not work reliable for me any more.
     echo -n "Building modules: common"
     mvn install $MAVEN_QUIET -pl common $SKIP_TESTS
+    #mvn install -pl common $SKIP_TESTS
     echo " -> done"
 
     echo -n "Building modules: $MODULES"
-    mvn install $MAVEN_QUIET -pl common $SKIP_TESTS
+    mvn install $MAVEN_QUIET -pl $MODULES -am $SKIP_TESTS
+    #mvn install  -pl $MODULES -am $SKIP_TESTS
     echo " -> done"
     
 }
