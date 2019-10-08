@@ -2,9 +2,7 @@ package com.pth.iflow.core.model;
 
 import java.time.LocalDateTime;
 
-import com.pth.iflow.common.edo.models.base.DataModelBase;
-
-public class WorkflowFileVersion extends DataModelBase {
+public class WorkflowFileVersion {
 
   private Long          id;
   private Long          workflowFileId;
@@ -17,7 +15,6 @@ public class WorkflowFileVersion extends DataModelBase {
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
 
-  @Override
   public Long getId() {
     return this.id;
   }
@@ -74,12 +71,10 @@ public class WorkflowFileVersion extends DataModelBase {
     this.status = status;
   }
 
-  @Override
   public Integer getVersion() {
     return this.version;
   }
 
-  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }

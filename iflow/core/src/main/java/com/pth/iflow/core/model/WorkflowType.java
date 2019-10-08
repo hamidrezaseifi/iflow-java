@@ -3,11 +3,10 @@ package com.pth.iflow.core.model;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
+import com.pth.iflow.core.model.helper.CoreModelHelper;
 
-public class WorkflowType extends DataModelBase {
+public class WorkflowType extends CoreModelHelper {
 
   private Long                         id;
   private Long                         companyId;
@@ -29,6 +28,7 @@ public class WorkflowType extends DataModelBase {
     return this.id;
   }
 
+  @Override
   public void setId(final Long id) {
     this.id = id;
   }
@@ -111,12 +111,10 @@ public class WorkflowType extends DataModelBase {
     this.allowAssign = allowAssign;
   }
 
-  @Override
   public Integer getVersion() {
     return this.version;
   }
 
-  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }

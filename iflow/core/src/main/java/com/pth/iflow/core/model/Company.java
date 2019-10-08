@@ -1,10 +1,9 @@
 package com.pth.iflow.core.model;
 
 import java.time.LocalDateTime;
+import com.pth.iflow.core.model.helper.CoreModelHelper;
 
-import com.pth.iflow.common.edo.models.base.DataModelBase;
-
-public class Company extends DataModelBase {
+public class Company extends CoreModelHelper {
 
   private Long          id;
   private String        identifyid;
@@ -17,6 +16,7 @@ public class Company extends DataModelBase {
   /**
    * @return the id
    */
+
   @Override
   public Long getId() {
     return this.id;
@@ -25,6 +25,7 @@ public class Company extends DataModelBase {
   /**
    * @param id the id to set
    */
+  @Override
   public void setId(final Long id) {
     this.id = id;
   }
@@ -74,7 +75,7 @@ public class Company extends DataModelBase {
   /**
    * @return the version
    */
-  @Override
+
   public Integer getVersion() {
     return this.version;
   }
@@ -82,7 +83,7 @@ public class Company extends DataModelBase {
   /**
    * @param version the version to set
    */
-  @Override
+
   public void setVersion(final Integer version) {
     this.version = version;
   }

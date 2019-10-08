@@ -1,12 +1,12 @@
 package com.pth.iflow.core.service;
 
 import java.util.List;
-
 import com.pth.iflow.core.model.WorkflowTypeStep;
+import com.pth.iflow.core.model.helper.CoreModelHelper;
 
 public interface IWorkflowTypeStepService {
 
-  WorkflowTypeStep save(WorkflowTypeStep model);
+  CoreModelHelper save(WorkflowTypeStep model);
 
   WorkflowTypeStep getById(Long id);
 

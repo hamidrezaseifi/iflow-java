@@ -3,9 +3,9 @@ package com.pth.iflow.core.model;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import com.pth.iflow.common.edo.models.base.DataModelBase;
+import com.pth.iflow.core.model.helper.CoreModelHelper;
 
-public class WorkflowFile extends DataModelBase {
+public class WorkflowFile extends CoreModelHelper {
 
   private Long                            id;
   private String                          identity;
@@ -27,7 +27,8 @@ public class WorkflowFile extends DataModelBase {
     return this.id;
   }
 
-  public void setId1(final Long id) {
+  @Override
+  public void setId(final Long id) {
     this.id = id;
   }
 
@@ -103,12 +104,10 @@ public class WorkflowFile extends DataModelBase {
     this.status = status;
   }
 
-  @Override
   public Integer getVersion() {
     return this.version;
   }
 
-  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }

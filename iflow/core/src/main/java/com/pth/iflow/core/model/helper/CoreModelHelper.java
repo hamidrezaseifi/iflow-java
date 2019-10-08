@@ -1,0 +1,17 @@
+package com.pth.iflow.core.model.helper;
+
+public abstract class CoreModelHelper {
+
+  abstract public Long getId();
+
+  abstract public void setId(final Long id);
+
+  public boolean isNew() {
+    return getId() == null || getId() <= 0;
+  }
+
+  public void increaseVersion() {
+    setId(getId() + 1);
+  }
+
+}

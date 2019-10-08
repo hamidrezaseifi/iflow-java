@@ -2,9 +2,7 @@ package com.pth.iflow.core.services;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-
 import java.util.List;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -14,7 +12,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.Department;
 import com.pth.iflow.core.model.DepartmentGroup;
@@ -26,8 +23,6 @@ import com.pth.iflow.core.storage.dao.IDepartmentDao;
 import com.pth.iflow.core.storage.dao.IDepartmentGroupDao;
 import com.pth.iflow.core.storage.dao.IUserDao;
 import com.pth.iflow.core.storage.dao.IUserGroupDao;
-import com.pth.iflow.core.storage.dao.IWorkflowTypeDao;
-import com.pth.iflow.core.storage.dao.IWorkflowTypeStepDao;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -48,16 +43,9 @@ public class UserServiceTest extends TestDataProducer {
   @MockBean
   private IDepartmentGroupDao departmentGroupDao;
 
-  @MockBean
-  private IWorkflowTypeDao workflowDao;
-
-  @MockBean
-  private IWorkflowTypeStepDao workflowStepDao;
-
   @Before
   public void setUp() throws Exception {
-    this.userService = new UsersService(this.userDao, this.userGroupDao, this.departmentDao, this.departmentGroupDao, this.workflowDao,
-        this.workflowStepDao);
+    this.userService = new UsersService(this.userDao, this.userGroupDao, this.departmentDao, this.departmentGroupDao);
   }
 
   @After
@@ -97,7 +85,7 @@ public class UserServiceTest extends TestDataProducer {
     Assert.assertEquals("Result user has status 1!", resUser.getStatus(), user.getStatus());
 
   }
-  
+
   @Test
   public void testGetUserDepartmentGroups() throws Exception {
 
@@ -113,7 +101,7 @@ public class UserServiceTest extends TestDataProducer {
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());
 
   }
-  
+
   @Test
   public void testGetUserDepartments() throws Exception {
 
@@ -129,7 +117,7 @@ public class UserServiceTest extends TestDataProducer {
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());
 
   }
-  
+
   @Test
   public void testGetUserDeputies() throws Exception {
 
@@ -145,7 +133,7 @@ public class UserServiceTest extends TestDataProducer {
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());
 
   }
-  
+
   @Test
   public void testGetUserGroups() throws Exception {
 

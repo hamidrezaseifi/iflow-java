@@ -3,11 +3,11 @@ package com.pth.iflow.core.model;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.enums.EWorkflowIdentity;
 import com.pth.iflow.common.enums.EWorkflowStatus;
+import com.pth.iflow.core.model.helper.CoreModelHelper;
 
-public class Workflow extends DataModelBase {
+public class Workflow extends CoreModelHelper {
 
   private Long            id;
   private String          identity;
@@ -29,6 +29,7 @@ public class Workflow extends DataModelBase {
     return this.id;
   }
 
+  @Override
   public void setId(final Long id) {
     this.id = id;
   }
@@ -97,12 +98,10 @@ public class Workflow extends DataModelBase {
     this.status = EWorkflowStatus.ofValue(status);
   }
 
-  @Override
   public Integer getVersion() {
     return this.version;
   }
 
-  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }

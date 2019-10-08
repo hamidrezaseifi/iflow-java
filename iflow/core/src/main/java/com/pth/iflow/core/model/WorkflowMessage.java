@@ -1,52 +1,62 @@
 package com.pth.iflow.core.model;
 
 import java.time.LocalDateTime;
-
-import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.enums.EWorkflowMessageType;
+import com.pth.iflow.core.model.helper.CoreModelHelper;
 
-public class WorkflowMessage extends DataModelBase {
+public class WorkflowMessage extends CoreModelHelper {
 
-  private Long                   id;
+  private Long id;
 
-  private Long                   workflowId;
+  private Workflow workflow;
 
-  private Long                   stepId;
+  private String workflowIdentity;
 
-  private Long                   userId;
+  private Long stepId;
 
-  private String                 message;
+  private Long userId;
 
-  private Long                   createdBy;
+  private String message;
 
-  private EWorkflowMessageType   messageType;
+  private Long createdBy;
+
+  private EWorkflowMessageType messageType;
 
   private EWorkflowMessageStatus status;
 
-  private Integer                version;
+  private Integer version;
 
-  private Integer                expireDays;
+  private Integer expireDays;
 
-  private LocalDateTime          createdAt;
+  private LocalDateTime createdAt;
 
-  private LocalDateTime          updatedAt;
+  private LocalDateTime updatedAt;
 
   @Override
   public Long getId() {
     return this.id;
   }
 
+  @Override
   public void setId(final Long id) {
     this.id = id;
   }
 
-  public Long getWorkflowId() {
-    return this.workflowId;
+  public Workflow getWorkflow() {
+    return workflow;
   }
 
-  public void setWorkflowId(final Long workflowId) {
-    this.workflowId = workflowId;
+  public void setWorkflow(final Workflow workflow) {
+    this.workflow = workflow;
+  }
+
+  public String getWorkflowIdentity() {
+    return workflowIdentity;
+  }
+
+  public void setWorkflowIdentity(final String workflowIdentity) {
+    this.workflowIdentity = workflowIdentity;
   }
 
   public Long getStepId() {
@@ -97,12 +107,10 @@ public class WorkflowMessage extends DataModelBase {
     this.status = status;
   }
 
-  @Override
   public Integer getVersion() {
     return this.version;
   }
 
-  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }

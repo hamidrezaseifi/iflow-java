@@ -1,18 +1,17 @@
 package com.pth.iflow.core.model;
 
 import java.time.LocalDateTime;
+import com.pth.iflow.core.model.helper.CoreModelHelper;
 
-import com.pth.iflow.common.edo.models.base.DataModelBase;
+public class WorkflowAction extends CoreModelHelper {
 
-public class WorkflowAction extends DataModelBase {
-
-  private Long          id;
-  private Long          workflowId;
-  private Long          assignTo;
-  private Long          currentStepId;
-  private String        comments;
-  private Integer       status;
-  private Integer       version;
+  private Long    id;
+  private Long    workflowId;
+  private Long    assignTo;
+  private Long    currentStepId;
+  private String  comments;
+  private Integer status;
+  private Integer version;
 
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
@@ -22,6 +21,7 @@ public class WorkflowAction extends DataModelBase {
     return this.id;
   }
 
+  @Override
   public void setId(final Long id) {
     this.id = id;
   }
@@ -66,12 +66,10 @@ public class WorkflowAction extends DataModelBase {
     this.status = status;
   }
 
-  @Override
   public Integer getVersion() {
     return this.version;
   }
 
-  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }

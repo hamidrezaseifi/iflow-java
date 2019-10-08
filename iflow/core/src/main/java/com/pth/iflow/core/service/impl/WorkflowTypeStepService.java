@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.pth.iflow.core.model.WorkflowTypeStep;
+import com.pth.iflow.core.model.helper.CoreModelHelper;
 import com.pth.iflow.core.service.IWorkflowTypeStepService;
 import com.pth.iflow.core.storage.dao.IWorkflowTypeStepDao;
 import com.pth.iflow.core.storage.dao.exception.IFlowOptimisticLockException;
@@ -38,7 +38,7 @@ public class WorkflowTypeStepService implements IWorkflowTypeStepService {
   }
 
   @Override
-  public WorkflowTypeStep save(final WorkflowTypeStep model) {
+  public CoreModelHelper save(final WorkflowTypeStep model) {
     if (model.isNew()) {
       model.increaseVersion();
       return workflowStepDao.create(model, true);

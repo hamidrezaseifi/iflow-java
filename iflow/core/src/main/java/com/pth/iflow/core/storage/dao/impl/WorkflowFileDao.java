@@ -81,7 +81,7 @@ public class WorkflowFileDao extends DaoBasicClass<WorkflowFile> implements IWor
   public WorkflowFile create(final WorkflowFile workflow, final boolean withTransaction) throws IFlowStorageException {
     final String sql =
                      "INSERT INTO workflow_files (identity, workflow_id, title, extention, active_filepath, active_version, comments, created_by, version, status)"
-                       + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                       + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     final TransactionStatus transactionStatus = this.startTransaction(withTransaction);
     try {

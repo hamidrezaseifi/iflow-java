@@ -4,11 +4,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.enums.EUserStatus;
+import com.pth.iflow.core.model.helper.CoreModelHelper;
 
-public class User extends DataModelBase {
+public class User extends CoreModelHelper {
 
   private Long                id;
   private Long                companyId;
@@ -42,6 +41,7 @@ public class User extends DataModelBase {
   /**
    * @param id the id to set
    */
+  @Override
   public void setId(final Long id) {
     this.id = id;
   }
@@ -132,7 +132,6 @@ public class User extends DataModelBase {
   /**
    * @return the version
    */
-  @Override
   public Integer getVersion() {
     return this.version;
   }
@@ -140,7 +139,6 @@ public class User extends DataModelBase {
   /**
    * @param version the version to set
    */
-  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }

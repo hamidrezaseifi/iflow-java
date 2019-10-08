@@ -52,6 +52,17 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
   }
 
   @Override
+  public Workflow getByIdentity(final String identity) throws IFlowStorageException {
+    final Workflow workflow = this.getModelByIdentity(identity, "SELECT * FROM workflow where identity=?", "Workflow");
+
+    if (workflow != null) {
+      workflow.setActions(this.workflowActionDao.getListByWorkflowId(workflow.getId()));
+      workflow.setFiles(this.workflowFileDao.getListByWorkflowId(workflow.getId()));
+    }
+    return workflow;
+  }
+
+  @Override
   public List<Workflow> getListByIdList(final List<Long> idList) throws IFlowStorageException {
 
     final List<Workflow> list = this.readWorkflowListFromIdList(idList);
