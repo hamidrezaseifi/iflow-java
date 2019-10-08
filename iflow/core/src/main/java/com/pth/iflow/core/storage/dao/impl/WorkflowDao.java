@@ -14,9 +14,11 @@ import com.pth.iflow.core.model.Workflow;
 import com.pth.iflow.core.model.WorkflowAction;
 import com.pth.iflow.core.model.WorkflowFile;
 import com.pth.iflow.core.model.WorkflowSearchFilter;
+import com.pth.iflow.core.model.WorkflowType;
 import com.pth.iflow.core.storage.dao.IWorkflowActionDao;
 import com.pth.iflow.core.storage.dao.IWorkflowDao;
 import com.pth.iflow.core.storage.dao.IWorkflowFileDao;
+import com.pth.iflow.core.storage.dao.IWorkflowTypeDao;
 import com.pth.iflow.core.storage.dao.basic.DaoBasicClass;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 import com.pth.iflow.core.storage.dao.utils.SqlUtils;
@@ -30,6 +32,9 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
 
   @Autowired
   private IWorkflowFileDao workflowFileDao;
+
+  @Autowired
+  private IWorkflowTypeDao workflowTypeDao;
 
   public WorkflowDao() {
 
@@ -95,6 +100,8 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
     final String sql = "INSERT INTO workflow (identity, workflow_type_id, current_step, comments, controller, created_by, version, status)"
                        + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
+    verifyWorkflowIdentity(workflow);
+
     final TransactionStatus transactionStatus = this.startTransaction(true);
     try {
 
@@ -115,6 +122,14 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
       throw new IFlowStorageException(e.toString(), e);
     }
 
+  }
+
+  private void verifyWorkflowIdentity(final Workflow workflow) {
+    if (workflow.isIdentityNotSet()) {
+      final WorkflowType type = workflowTypeDao.getById(workflow.getWorkflowTypeId());
+      final String identity = "C" + type.getCompanyId() + "T" + type.getId() + "I" + System.currentTimeMillis();
+      workflow.setIdentity(identity);
+    }
   }
 
   private void createWorkflowActions(final Workflow workflow, final Long workflowId) {

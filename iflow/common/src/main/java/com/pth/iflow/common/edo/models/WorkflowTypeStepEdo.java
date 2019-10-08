@@ -6,7 +6,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-
 import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 
 @XmlRootElement(name = "WorkflowTypeStep", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
@@ -15,15 +14,11 @@ import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 public class WorkflowTypeStepEdo {
 
   @XmlElement(name = "ID", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long    id;
-
-  @NotNull
-  @XmlElement(name = "WorkflowTypeId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long    workflowTypeId;
+  private Long id;
 
   @NotNull
   @XmlElement(name = "Title", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String  title;
+  private String title;
 
   @NotNull
   @XmlElement(name = "StepIndex", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
@@ -32,10 +27,10 @@ public class WorkflowTypeStepEdo {
   @NotNull
   @NotNull
   @XmlElement(name = "ViewName", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String  viewName;
+  private String viewName;
 
   @XmlElement(name = "Comments", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String  comments;
+  private String comments;
 
   @NotNull
   @XmlElement(name = "Status", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
@@ -55,14 +50,6 @@ public class WorkflowTypeStepEdo {
 
   public void setId(final Long id) {
     this.id = id;
-  }
-
-  public Long getWorkflowTypeId() {
-    return this.workflowTypeId;
-  }
-
-  public void setWorkflowTypeId(final Long workflowId) {
-    this.workflowTypeId = workflowId;
   }
 
   public String getTitle() {

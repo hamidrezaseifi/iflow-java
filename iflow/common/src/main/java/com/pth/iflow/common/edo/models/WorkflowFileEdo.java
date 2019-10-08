@@ -2,7 +2,6 @@ package com.pth.iflow.common.edo.models;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -10,7 +9,6 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 
@@ -19,60 +17,49 @@ import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 @XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "WorkflowFile" + IFlowJaxbDefinition.TYPE_PREFIX)
 public class WorkflowFileEdo {
 
-  @XmlElement(name = "ID", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long                         id;
-
-  @NotNull
-  @XmlElement(name = "WorkflowId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long                         workflowId;
+  @NotNull(message = "Identity is not allowed to be null!")
+  @XmlElement(name = "Identity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String identity;
 
   @XmlElement(name = "CreatedBy", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long                         createdBy;
+  private Long createdBy;
 
   @NotNull
   @XmlElement(name = "Title", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String                       title;
+  private String title;
 
   @NotNull
   @XmlElement(name = "Extention", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String                       extention;
+  private String extention;
 
   @XmlElement(name = "ActiveFilePath", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String                       activeFilePath;
+  private String activeFilePath;
 
   @XmlElement(name = "ActiveFileVersion", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Integer                      activeFileVersion;
+  private Integer activeFileVersion;
 
   @XmlElement(name = "Comments", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String                       comments;
+  private String comments;
 
   @NotNull
   @XmlElement(name = "Status", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Integer                      status;
+  private Integer status;
 
   @NotNull
   @XmlElement(name = "Version", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Integer                      version;
+  private Integer version;
 
   @NotNull
   @XmlElementWrapper(name = "FileVersionList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "FileVersion", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private List<WorkflowFileVersionEdo> fileVersions = new ArrayList<>();
 
-  public Long getId() {
-    return this.id;
+  public String getIdentity() {
+    return identity;
   }
 
-  public void setId(final Long id) {
-    this.id = id;
-  }
-
-  public Long getWorkflowId() {
-    return this.workflowId;
-  }
-
-  public void setWorkflowId(final Long workflowId) {
-    this.workflowId = workflowId;
+  public void setIdentity(final String identity) {
+    this.identity = identity;
   }
 
   public String getActiveFilePath() {

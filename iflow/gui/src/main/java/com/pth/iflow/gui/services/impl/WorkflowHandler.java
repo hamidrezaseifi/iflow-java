@@ -6,15 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 import javax.servlet.http.HttpSession;
-
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
@@ -37,18 +34,20 @@ import com.pth.iflow.gui.services.IWorkflowHandler;
 @Service
 public class WorkflowHandler implements IWorkflowHandler {
 
-  private static final Logger      logger = LoggerFactory.getLogger(WorkflowHandler.class);
+  private static final Logger logger = LoggerFactory.getLogger(WorkflowHandler.class);
 
-  private final IWorkflowAccess    workflowAccess;
+  private final IWorkflowAccess workflowAccess;
 
   private final GuiSessionUserInfo sessionUserInfo;
 
   private final IUploadFileManager uploadFileManager;
 
-  private final IMessagesHelper    messagesHelper;
+  private final IMessagesHelper messagesHelper;
 
-  public WorkflowHandler(@Autowired final IWorkflowAccess workflowAccess, @Autowired final GuiSessionUserInfo sessionUserInfo,
-      @Autowired final IUploadFileManager uploadFileManager, @Autowired final IMessagesHelper messagesHelper) {
+  public WorkflowHandler(@Autowired final IWorkflowAccess workflowAccess,
+                         @Autowired final GuiSessionUserInfo sessionUserInfo,
+                         @Autowired final IUploadFileManager uploadFileManager,
+                         @Autowired final IMessagesHelper messagesHelper) {
     this.workflowAccess = workflowAccess;
     this.sessionUserInfo = sessionUserInfo;
     this.uploadFileManager = uploadFileManager;
@@ -56,18 +55,16 @@ public class WorkflowHandler implements IWorkflowHandler {
   }
 
   @Override
-  public GuiWorkflow readWorkflow(final Long workflowId)
-      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+  public GuiWorkflow readWorkflow(final String workflowIdentity) throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    logger.debug("Read workflow {}", workflowId);
+    logger.debug("Read workflow {}", workflowIdentity);
 
-    final GuiWorkflow wirkflow = this.workflowAccess.readWorkflow(workflowId, this.sessionUserInfo.getToken());
+    final GuiWorkflow wirkflow = this.workflowAccess.readWorkflow(workflowIdentity, this.sessionUserInfo.getToken());
     return this.prepareWorkflow(wirkflow);
   }
 
   @Override
-  public List<GuiWorkflow> createWorkflow(final GuiWorkflowSaveRequest createRequest, final HttpSession session)
-      throws GuiCustomizedException, IOException, IFlowMessageConversionFailureException {
+  public List<GuiWorkflow> createWorkflow(final GuiWorkflowSaveRequest createRequest, final HttpSession session) throws GuiCustomizedException, IOException, IFlowMessageConversionFailureException {
     logger.debug("Create workflow");
 
     createRequest.setCommand(EWorkflowProcessCommand.CREATE);
@@ -86,8 +83,10 @@ public class WorkflowHandler implements IWorkflowHandler {
 
     final Object oFileList = session.getAttribute(createRequest.getSessionKey());
     if ((oFileList == null) || ((oFileList instanceof List) == false)) {
-      final GuiCustomizedException uiCustomizedException = new GuiCustomizedException("Uploaded files not found!", "",
-          EModule.GUI.getModuleName(), null);
+      final GuiCustomizedException uiCustomizedException = new GuiCustomizedException("Uploaded files not found!",
+                                                                                      "",
+                                                                                      EModule.GUI.getModuleName(),
+                                                                                      null);
 
       throw uiCustomizedException;
     }
@@ -101,7 +100,7 @@ public class WorkflowHandler implements IWorkflowHandler {
         for (final UploadFileSavingData tempFile : tempFiles) {
 
           final FileSavingData archiveSavingFileInfo = tempFile.toFileSavingData();
-          archiveSavingFileInfo.setWorkflowId(workflow.getId());
+          archiveSavingFileInfo.setWorkflowIdentity(workflow.getIdentity());
           archiveSavingFileInfo.setActionId(0L);
           archiveSavingFileInfo.setFilePath(archiveSavingFileInfo.generateSavingFilePathPreffix());
           archiveSavingFileInfo.setTempFilePath(tempFile.getFilePath());
@@ -111,8 +110,11 @@ public class WorkflowHandler implements IWorkflowHandler {
         final List<FileSavingData> savedArchiveFiles = this.uploadFileManager.copyFromTempToArchive(archiveSavingFileInfoList);
         for (final FileSavingData savedArchiveFile : savedArchiveFiles) {
 
-          workflow.addNewFile(savedArchiveFile.generateSavingFilePathPreffix(), this.sessionUserInfo.getUser().getId(),
-              savedArchiveFile.getTitle(), savedArchiveFile.getFileExtention(), "");
+          workflow.addNewFile(savedArchiveFile.generateSavingFilePathPreffix(),
+                              this.sessionUserInfo.getUser().getId(),
+                              savedArchiveFile.getTitle(),
+                              savedArchiveFile.getFileExtention(),
+                              "");
         }
 
         final GuiWorkflow finalWorkflow = this.saveWorkflow(workflow, session);
@@ -127,8 +129,7 @@ public class WorkflowHandler implements IWorkflowHandler {
   }
 
   @Override
-  public GuiWorkflow saveWorkflow(final GuiWorkflow workflow, final HttpSession session)
-      throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
+  public GuiWorkflow saveWorkflow(final GuiWorkflow workflow, final HttpSession session) throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
     logger.debug("Save workflow");
 
     if (workflow.getHasActiveAction()) {
@@ -145,11 +146,10 @@ public class WorkflowHandler implements IWorkflowHandler {
   }
 
   @Override
-  public GuiWorkflow assignWorkflow(final Long workflowId)
-      throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
+  public GuiWorkflow assignWorkflow(final String workflowIdentity) throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
     logger.debug("Assign workflow");
 
-    final GuiWorkflow workflow = this.readWorkflow(workflowId);
+    final GuiWorkflow workflow = this.readWorkflow(workflowIdentity);
 
     final GuiWorkflowSaveRequest request = GuiWorkflowSaveRequest.generateNewNoExpireDays(workflow);
     request.setCommand(EWorkflowProcessCommand.ASSIGN);
@@ -163,8 +163,7 @@ public class WorkflowHandler implements IWorkflowHandler {
   }
 
   @Override
-  public GuiWorkflow doneWorkflow(final GuiWorkflowSaveRequest saveRequest, final HttpSession session)
-      throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
+  public GuiWorkflow doneWorkflow(final GuiWorkflowSaveRequest saveRequest, final HttpSession session) throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
     logger.debug("Make workflow done");
 
     saveRequest.setCommand(EWorkflowProcessCommand.DONE);
@@ -176,8 +175,7 @@ public class WorkflowHandler implements IWorkflowHandler {
   }
 
   @Override
-  public GuiWorkflow archiveWorkflow(final GuiWorkflow workflow, final HttpSession session)
-      throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
+  public GuiWorkflow archiveWorkflow(final GuiWorkflow workflow, final HttpSession session) throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
     logger.debug("Make workflow archive");
 
     final GuiWorkflowSaveRequest request = GuiWorkflowSaveRequest.generateNewNoExpireDays(workflow);
@@ -190,16 +188,14 @@ public class WorkflowHandler implements IWorkflowHandler {
   }
 
   @Override
-  public List<GuiWorkflowType> readWorkflowTypeList(final Long companyId)
-      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+  public List<GuiWorkflowType> readWorkflowTypeList(final Long companyId) throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     logger.debug("Read all workflow from company");
 
     return this.workflowAccess.readWorkflowTypeList(companyId, this.sessionUserInfo.getToken());
   }
 
   @Override
-  public List<GuiWorkflow> searchWorkflow(final GuiWorkflowSearchFilter workflowSearchFilter)
-      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+  public List<GuiWorkflow> searchWorkflow(final GuiWorkflowSearchFilter workflowSearchFilter) throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     logger.debug("Search workflow from company");
     final List<GuiWorkflow> list = this.workflowAccess.searchWorkflow(workflowSearchFilter, this.sessionUserInfo.getToken());
@@ -208,23 +204,22 @@ public class WorkflowHandler implements IWorkflowHandler {
   }
 
   @Override
-  public GuiWorkflowFile readWorkflowFile(final Long workflowId, final Long fileId)
-      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+  public GuiWorkflowFile readWorkflowFile(final String workflowIdentity, final String fileIdentity) throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     GuiWorkflow workflow = null;
-    if (this.sessionUserInfo.hasCachedWorkflowId(workflowId)) {
-      workflow = this.sessionUserInfo.getCachedWorkflow(workflowId);
-    } else {
-      workflow = this.readWorkflow(workflowId);
+    if (this.sessionUserInfo.hasCachedWorkflowIdentity(workflowIdentity)) {
+      workflow = this.sessionUserInfo.getCachedWorkflow(workflowIdentity);
+    }
+    else {
+      workflow = this.readWorkflow(workflowIdentity);
     }
 
-    final GuiWorkflowFile workflowFile = workflow.getFileById(fileId);
+    final GuiWorkflowFile workflowFile = workflow.getFileByIdentity(fileIdentity);
 
     return workflowFile;
   }
 
-  private List<GuiWorkflow> prepareWorkflowList(final List<GuiWorkflow> pureWorkflowList)
-      throws IFlowMessageConversionFailureException {
+  private List<GuiWorkflow> prepareWorkflowList(final List<GuiWorkflow> pureWorkflowList) throws IFlowMessageConversionFailureException {
 
     final List<GuiWorkflow> workflowList = new ArrayList<>();
 
@@ -279,7 +274,8 @@ public class WorkflowHandler implements IWorkflowHandler {
       action.setCurrentStep(this.findStep(workflow, action.getCurrentStepId()));
 
       action.setAssignToUserName(
-          action.getAssignToUser() == null ? this.messagesHelper.get("common.not-assigned") : action.getAssignToUser().getFullName());
+                                 action.getAssignToUser() == null ? this.messagesHelper.get("common.not-assigned")
+                                                                  : action.getAssignToUser().getFullName());
 
     }
 

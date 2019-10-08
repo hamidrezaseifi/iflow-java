@@ -2,11 +2,8 @@ package com.pth.iflow.gui.services;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-
 import java.util.List;
-
 import javax.servlet.http.HttpSession;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -16,7 +13,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import com.pth.iflow.gui.TestDataProducer;
 import com.pth.iflow.gui.models.GuiWorkflow;
 import com.pth.iflow.gui.models.GuiWorkflowSaveRequest;
@@ -30,10 +26,10 @@ import com.pth.iflow.gui.services.impl.WorkflowHandler;
 @AutoConfigureMockMvc
 public class WorkflowHandlerTest extends TestDataProducer {
 
-  private IWorkflowHandler   workflowHandler;
+  private IWorkflowHandler workflowHandler;
 
   @MockBean
-  private IWorkflowAccess    workflowAccess;
+  private IWorkflowAccess workflowAccess;
 
   @MockBean
   private GuiSessionUserInfo sessionUserInfo;
@@ -42,12 +38,12 @@ public class WorkflowHandlerTest extends TestDataProducer {
   private IUploadFileManager uploadFileManager;
 
   @MockBean
-  private HttpSession        mockedSession;
+  private HttpSession mockedSession;
 
   @MockBean
-  private IMessagesHelper    messagesHelper;
+  private IMessagesHelper messagesHelper;
 
-  private String             validTocken;
+  private String validTocken;
 
   @Before
   public void setUp() throws Exception {
@@ -73,12 +69,12 @@ public class WorkflowHandlerTest extends TestDataProducer {
 
     final GuiWorkflow workflow = this.getTestGuiWorkflow(1L);
 
-    when(this.workflowAccess.readWorkflow(any(Long.class), any(String.class))).thenReturn(workflow);
+    when(this.workflowAccess.readWorkflow(any(String.class), any(String.class))).thenReturn(workflow);
 
-    final GuiWorkflow resWorkflow = this.workflowHandler.readWorkflow(workflow.getId());
+    final GuiWorkflow resWorkflow = this.workflowHandler.readWorkflow(workflow.getIdentity());
 
     Assert.assertNotNull("Result workflow is not null!", resWorkflow);
-    Assert.assertEquals("Result workflow has id 1!", resWorkflow.getId(), workflow.getId());
+    Assert.assertEquals("Result workflow has id 1!", resWorkflow.getIdentity(), workflow.getIdentity());
     Assert.assertEquals("Result workflow has status 1!", resWorkflow.getStatus(), workflow.getStatus());
 
   }
@@ -108,7 +104,7 @@ public class WorkflowHandlerTest extends TestDataProducer {
     final GuiWorkflow resWorkflow = this.workflowHandler.saveWorkflow(workflow, this.mockedSession);
 
     Assert.assertNotNull("Result workflow is not null!", resWorkflow);
-    Assert.assertEquals("Result workflow has id 1!", resWorkflow.getId(), workflow.getId());
+    Assert.assertEquals("Result workflow has id 1!", resWorkflow.getIdentity(), workflow.getIdentity());
     Assert.assertEquals("Result workflow has status 1!", resWorkflow.getStatus(), workflow.getStatus());
 
   }

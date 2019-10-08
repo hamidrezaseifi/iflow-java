@@ -5,12 +5,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.pth.iflow.core.model.WorkflowFile;
 import com.pth.iflow.core.model.WorkflowFileVersion;
 import com.pth.iflow.core.storage.dao.IWorkflowFileDao;
@@ -53,6 +51,7 @@ public class WorkflowFileDao extends DaoBasicClass<WorkflowFile> implements IWor
     final WorkflowFile model = new WorkflowFile();
 
     model.setId(rs.getLong("id"));
+    model.setIdentity(rs.getString("identity"));
     model.setTitle(rs.getString("title"));
     model.setExtention(rs.getString("extention"));
     model.setActiveFilePath(rs.getString("active_filepath"));
@@ -80,8 +79,9 @@ public class WorkflowFileDao extends DaoBasicClass<WorkflowFile> implements IWor
 
   @Override
   public WorkflowFile create(final WorkflowFile workflow, final boolean withTransaction) throws IFlowStorageException {
-    final String sql = "INSERT INTO workflow_files (workflow_id, title, extention, active_filepath, active_version, comments, created_by, version, status)"
-        + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    final String sql =
+                     "INSERT INTO workflow_files (identity, workflow_id, title, extention, active_filepath, active_version, comments, created_by, version, status)"
+                       + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     final TransactionStatus transactionStatus = this.startTransaction(withTransaction);
     try {
@@ -91,7 +91,8 @@ public class WorkflowFileDao extends DaoBasicClass<WorkflowFile> implements IWor
 
       this.commitTransaction(withTransaction, transactionStatus);
       return this.getById(workflowFileId);
-    } catch (final Exception e) {
+    }
+    catch (final Exception e) {
       this.rollbackTransaction(true, transactionStatus);
       logger.error("Unable to create WorkflowFile: {}", e.toString(), e);
       throw new IFlowStorageException(e.toString(), e);
@@ -100,8 +101,9 @@ public class WorkflowFileDao extends DaoBasicClass<WorkflowFile> implements IWor
 
   @Override
   public WorkflowFile update(final WorkflowFile workflowFile, final boolean withTransaction) throws IFlowStorageException {
-    final String sql = "UPDATE workflow_files SET workflow_id = ?, title = ?, extention = ?, active_filepath = ?, active_version = ?, comments = ?,"
-        + " created_by = ?, version = ?, status = ? WHERE id = ?";
+    final String sql =
+                     "UPDATE workflow_files SET workflow_id = ?, title = ?, extention = ?, active_filepath = ?, active_version = ?, comments = ?,"
+                       + " created_by = ?, version = ?, status = ? WHERE id = ?";
 
     final TransactionStatus transactionStatus = this.startTransaction(withTransaction);
     try {
@@ -112,7 +114,8 @@ public class WorkflowFileDao extends DaoBasicClass<WorkflowFile> implements IWor
 
       this.commitTransaction(withTransaction, transactionStatus);
       return this.getById(workflowFile.getId());
-    } catch (final Exception e) {
+    }
+    catch (final Exception e) {
       this.rollbackTransaction(true, transactionStatus);
       logger.error("Unable to update WorkflowFile: {}", e.toString(), e);
       throw new IFlowStorageException(e.toString(), e);
@@ -137,24 +140,23 @@ public class WorkflowFileDao extends DaoBasicClass<WorkflowFile> implements IWor
   }
 
   @Override
-  protected PreparedStatement prepareInsertPreparedStatement(final WorkflowFile model, final PreparedStatement ps)
-      throws SQLException {
-    ps.setLong(1, model.getWorkflowId());
-    ps.setString(2, model.getTitle());
-    ps.setString(3, model.getExtention());
-    ps.setString(4, model.getActiveFilePath());
-    ps.setInt(5, model.getActiveFileVersion());
-    ps.setString(6, model.getComments());
-    ps.setLong(7, model.getCreatedBy());
-    ps.setInt(8, model.getVersion());
-    ps.setInt(9, model.getStatus());
+  protected PreparedStatement prepareInsertPreparedStatement(final WorkflowFile model, final PreparedStatement ps) throws SQLException {
+    ps.setString(1, model.getIdentity());
+    ps.setLong(2, model.getWorkflowId());
+    ps.setString(3, model.getTitle());
+    ps.setString(4, model.getExtention());
+    ps.setString(5, model.getActiveFilePath());
+    ps.setInt(6, model.getActiveFileVersion());
+    ps.setString(7, model.getComments());
+    ps.setLong(8, model.getCreatedBy());
+    ps.setInt(9, model.getVersion());
+    ps.setInt(10, model.getStatus());
 
     return ps;
   }
 
   @Override
-  protected PreparedStatement prepareUpdatePreparedStatement(final WorkflowFile model, final PreparedStatement ps)
-      throws SQLException {
+  protected PreparedStatement prepareUpdatePreparedStatement(final WorkflowFile model, final PreparedStatement ps) throws SQLException {
     ps.setLong(1, model.getWorkflowId());
     ps.setString(2, model.getTitle());
     ps.setString(3, model.getExtention());

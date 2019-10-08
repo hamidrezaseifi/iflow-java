@@ -61,7 +61,7 @@ public class UserAccessTest extends TestDataProducer {
     when(this.profileModuleAccessConfig.getReadCompanyUserListUri(any(Long.class))).thenReturn(this.testUri);
     when(this.profileModuleAccessConfig.getReadTokenInfoUri()).thenReturn(this.testUri);
     when(this.workflowModuleAccessConfig.getReadWorkflowTypeListUri(any(Long.class))).thenReturn(this.testUri);
-    when(this.workflowModuleAccessConfig.getReadWorkflowUri(any(Long.class))).thenReturn(this.testUri);
+    when(this.workflowModuleAccessConfig.getReadWorkflowUri(any(String.class))).thenReturn(this.testUri);
     when(this.workflowModuleAccessConfig.getSearchWorkflowUri()).thenReturn(this.testUri);
 
     when(this.sessionUserInfo.getToken()).thenReturn(this.validTocken);

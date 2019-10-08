@@ -1,34 +1,33 @@
 package com.pth.iflow.workflow.models;
 
 import java.time.LocalDateTime;
-
 import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.enums.EWorkflowMessageType;
 
 public class WorkflowMessage extends DataModelBase {
 
-  private Long                   id;
+  private Long id;
 
-  private Long                   workflowId;
+  private String workflowIdentity;
 
-  private Long                   stepId;
+  private Long stepId;
 
-  private Long                   userId;
+  private Long userId;
 
-  private String                 message;
+  private String message;
 
-  private Long                   createdBy;
+  private Long createdBy;
 
-  private EWorkflowMessageType   messageType;
+  private EWorkflowMessageType messageType;
 
   private EWorkflowMessageStatus status;
 
-  private Integer                version;
+  private Integer version;
 
-  private Integer                expireDays;
+  private Integer expireDays;
 
-  private LocalDateTime          createdAt;
+  private LocalDateTime createdAt;
 
   @Override
   public Long getId() {
@@ -39,12 +38,12 @@ public class WorkflowMessage extends DataModelBase {
     this.id = id;
   }
 
-  public Long getWorkflowId() {
-    return this.workflowId;
+  public String getWorkflowIdentity() {
+    return workflowIdentity;
   }
 
-  public void setWorkflowId(final Long workflowId) {
-    this.workflowId = workflowId;
+  public void setWorkflowIdentity(final String workflowIdentity) {
+    this.workflowIdentity = workflowIdentity;
   }
 
   public Long getStepId() {

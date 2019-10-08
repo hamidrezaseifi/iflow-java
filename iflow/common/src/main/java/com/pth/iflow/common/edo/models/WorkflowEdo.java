@@ -17,9 +17,6 @@ import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 @XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "Workflow" + IFlowJaxbDefinition.TYPE_PREFIX)
 public class WorkflowEdo {
 
-  @XmlElement(name = "ID", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long id;
-
   @NotNull(message = "Identity is not allowed to be null!")
   @XmlElement(name = "Identity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String identity;
@@ -57,14 +54,6 @@ public class WorkflowEdo {
   @XmlElementWrapper(name = "WorkflowActionList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "WorkflowAction", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private List<WorkflowActionEdo> actions = new ArrayList<>();
-
-  public Long getId() {
-    return this.id;
-  }
-
-  public void setId(final Long id) {
-    this.id = id;
-  }
 
   public String getIdentity() {
     return identity;

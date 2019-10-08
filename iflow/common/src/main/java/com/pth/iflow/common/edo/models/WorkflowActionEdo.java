@@ -6,7 +6,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-
 import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 import com.pth.iflow.common.enums.EWorkflowActionStatus;
 
@@ -15,22 +14,15 @@ import com.pth.iflow.common.enums.EWorkflowActionStatus;
 @XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "WorkflowAction" + IFlowJaxbDefinition.TYPE_PREFIX)
 public class WorkflowActionEdo {
 
-  @XmlElement(name = "ID", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long    id;
-
-  @NotNull(message = "WorkflowId must not be null")
-  @XmlElement(name = "WorkflowId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long    workflowId;
-
   @XmlElement(name = "AssignTo", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long    assignTo;
+  private Long assignTo;
 
   @NotNull(message = "CurrectStepId must not be null")
   @XmlElement(name = "CurrectStepId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long    currectStepId;
+  private Long currectStepId;
 
   @XmlElement(name = "Comments", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String  comments;
+  private String comments;
 
   @NotNull(message = "Status must not be null")
   @XmlElement(name = "Status", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
@@ -39,22 +31,6 @@ public class WorkflowActionEdo {
   @NotNull(message = "Version must not be null")
   @XmlElement(name = "Version", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer version;
-
-  public Long getId() {
-    return this.id;
-  }
-
-  public void setId(final Long id) {
-    this.id = id;
-  }
-
-  public Long getWorkflowId() {
-    return this.workflowId;
-  }
-
-  public void setWorkflowId(final Long workflowId) {
-    this.workflowId = workflowId;
-  }
 
   public Long getCurrentStepId() {
     return this.currectStepId;

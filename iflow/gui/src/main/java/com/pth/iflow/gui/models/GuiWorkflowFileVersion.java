@@ -1,34 +1,13 @@
 package com.pth.iflow.gui.models;
 
-import com.pth.iflow.common.edo.models.base.DataModelBase;
+public class GuiWorkflowFileVersion {
 
-public class GuiWorkflowFileVersion extends DataModelBase {
-
-  private Long    id;
-  private Long    workflowFileId;
   private Long    createdBy;
   private String  filePath;
   private String  comments;
   private Integer fileVersion;
   private Integer status;
   private Integer version;
-
-  @Override
-  public Long getId() {
-    return this.id;
-  }
-
-  public void setId(final Long id) {
-    this.id = id;
-  }
-
-  public Long getWorkflowFileId() {
-    return this.workflowFileId;
-  }
-
-  public void setWorkflowFileId(final Long workflowFileId) {
-    this.workflowFileId = workflowFileId;
-  }
 
   public String getFilePath() {
     return this.filePath;
@@ -70,12 +49,10 @@ public class GuiWorkflowFileVersion extends DataModelBase {
     this.status = status;
   }
 
-  @Override
   public Integer getVersion() {
     return this.version;
   }
 
-  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }

@@ -1,30 +1,18 @@
 package com.pth.iflow.workflow.models;
 
-import com.pth.iflow.common.edo.models.base.DataModelBase;
-
-public class DepartmentGroup extends DataModelBase {
+public class DepartmentGroup {
 
   private Long    id;
-  private Long    departmentId;
   private String  title;
   private Integer status;
   private Integer version;
 
-  @Override
   public Long getId() {
     return this.id;
   }
 
   public void setId(final Long id) {
     this.id = id;
-  }
-
-  public Long getDepartmentId() {
-    return this.departmentId;
-  }
-
-  public void setDepartmentId(final Long departmentId) {
-    this.departmentId = departmentId;
   }
 
   public String getTitle() {
@@ -43,12 +31,10 @@ public class DepartmentGroup extends DataModelBase {
     this.status = status;
   }
 
-  @Override
   public Integer getVersion() {
     return this.version;
   }
 
-  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }

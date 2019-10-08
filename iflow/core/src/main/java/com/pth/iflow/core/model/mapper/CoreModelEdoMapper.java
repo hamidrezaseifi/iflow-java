@@ -333,6 +333,7 @@ public class CoreModelEdoMapper {
     edo.setActiveFileVersion(model.getActiveFileVersion());
     edo.setWorkflowId(model.getWorkflowId());
     edo.setVersion(model.getVersion());
+    edo.setIdentity(model.getIdentity());
 
     edo.setFileVersions(toWorkflowFileVersionEdoList(model.getFileVersions()));
 
@@ -353,6 +354,7 @@ public class CoreModelEdoMapper {
     model.setActiveFileVersion(edo.getActiveFileVersion());
     model.setWorkflowId(edo.getWorkflowId());
     model.setVersion(edo.getVersion());
+    model.setIdentity(edo.getIdentity());
 
     model.setFileVersions(fromWorkflowFileVersionEdoList(edo.getFileVersions()));
 

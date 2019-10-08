@@ -3,13 +3,12 @@ package com.pth.iflow.workflow.models;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.enums.EWorkflowActionStatus;
+import com.pth.iflow.common.enums.EWorkflowIdentity;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 
-public class Workflow extends DataModelBase {
+public class Workflow {
 
-  private Long             id;
   private String           identity;
   private Long             workflowTypeId;
   private WorkflowType     workflowType;
@@ -23,15 +22,6 @@ public class Workflow extends DataModelBase {
 
   private final List<WorkflowFile>   files   = new ArrayList<>();
   private final List<WorkflowAction> actions = new ArrayList<>();
-
-  @Override
-  public Long getId() {
-    return this.id;
-  }
-
-  public void setId(final Long id) {
-    this.id = id;
-  }
 
   public String getIdentity() {
     return identity;
@@ -117,12 +107,10 @@ public class Workflow extends DataModelBase {
     return this.status == EWorkflowStatus.ARCHIVED;
   }
 
-  @Override
   public Integer getVersion() {
     return this.version;
   }
 
-  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
@@ -198,9 +186,8 @@ public class Workflow extends DataModelBase {
     return this.getStatus() == EWorkflowStatus.ARCHIVED;
   }
 
-  @Override
   public boolean isNew() {
-    return (this.getId() == null) || (this.getId() <= 0);
+    return EWorkflowIdentity.NOT_SET.getName().equals(this.getIdentity());
   }
 
   public boolean hasActiveAction() {

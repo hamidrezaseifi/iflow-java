@@ -3,12 +3,8 @@ package com.pth.iflow.workflow.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.pth.iflow.common.edo.models.base.DataModelBase;
+public class WorkflowFile {
 
-public class WorkflowFile extends DataModelBase {
-
-  private Long                            id;
-  private Long                            workflowId;
   private Long                            createdBy;
   private String                          title;
   private String                          extention;
@@ -18,23 +14,6 @@ public class WorkflowFile extends DataModelBase {
   private Integer                         status;
   private Integer                         version;
   private final List<WorkflowFileVersion> fileVersions = new ArrayList<>();
-
-  @Override
-  public Long getId() {
-    return this.id;
-  }
-
-  public void setId(final Long id) {
-    this.id = id;
-  }
-
-  public Long getWorkflowId() {
-    return this.workflowId;
-  }
-
-  public void setWorkflowId(final Long workflowId) {
-    this.workflowId = workflowId;
-  }
 
   public String getActiveFilePath() {
     return this.activeFilePath;
@@ -92,12 +71,10 @@ public class WorkflowFile extends DataModelBase {
     this.status = status;
   }
 
-  @Override
   public Integer getVersion() {
     return this.version;
   }
 
-  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }

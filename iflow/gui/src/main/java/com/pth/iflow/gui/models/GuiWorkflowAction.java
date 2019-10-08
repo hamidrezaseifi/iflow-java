@@ -1,14 +1,11 @@
 package com.pth.iflow.gui.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.pth.iflow.common.edo.models.base.WorkflowActionModelBase;
 import com.pth.iflow.common.enums.EWorkflowActionStatus;
 
 @JsonIgnoreProperties(value = { "running" })
-public class GuiWorkflowAction extends WorkflowActionModelBase {
+public class GuiWorkflowAction {
 
-  private Long                  id;
-  private Long                  workflowId;
   private Long                  assignTo;
   private GuiUser               assignToUser;
   private String                assignToUserName;
@@ -17,23 +14,6 @@ public class GuiWorkflowAction extends WorkflowActionModelBase {
   private String                comments;
   private EWorkflowActionStatus status;
   private Integer               version;
-
-  @Override
-  public Long getId() {
-    return this.id;
-  }
-
-  public void setId(final Long id) {
-    this.id = id;
-  }
-
-  public Long getWorkflowId() {
-    return this.workflowId;
-  }
-
-  public void setWorkflowId(final Long workflowId) {
-    this.workflowId = workflowId;
-  }
 
   public Long getAssignTo() {
     return this.assignTo;
@@ -85,12 +65,10 @@ public class GuiWorkflowAction extends WorkflowActionModelBase {
     this.currentStep = currentStep;
   }
 
-  @Override
   public Integer getVersion() {
     return this.version;
   }
 
-  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
@@ -99,7 +77,6 @@ public class GuiWorkflowAction extends WorkflowActionModelBase {
     return this.status;
   }
 
-  @Override
   public Integer getStatusInt() {
     return this.status.getValue().intValue();
   }
@@ -120,4 +97,7 @@ public class GuiWorkflowAction extends WorkflowActionModelBase {
     this.assignToUserName = assignToUserName;
   }
 
+  public boolean getIsActive() {
+    return EWorkflowActionStatus.getIsActive(this.getStatusInt());
+  }
 }

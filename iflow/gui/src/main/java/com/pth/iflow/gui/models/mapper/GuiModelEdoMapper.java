@@ -93,12 +93,11 @@ public class GuiModelEdoMapper {
     validateCustomer(edo);
 
     final GuiWorkflowMessage model = new GuiWorkflowMessage();
-    model.setId(edo.getId());
     model.setStatus(EWorkflowMessageStatus.ofValue(edo.getStatus()));
     model.setUserId(edo.getUserId());
     model.setCreatedBy(edo.getCreatedBy());
     model.setVersion(edo.getVersion());
-    model.setWorkflowId(edo.getWorkflowId());
+    model.setWorkflowIdentity(edo.getWorkflowIdentity());
     model.setMessageType(EWorkflowMessageType.ofValue(edo.getMessageType()));
     model.setExpireDays(edo.getExpireDays());
     model.setMessage(edo.getMessage());
@@ -110,12 +109,11 @@ public class GuiModelEdoMapper {
 
   public static WorkflowMessageEdo toEdo(final GuiWorkflowMessage model) {
     final WorkflowMessageEdo edo = new WorkflowMessageEdo();
-    edo.setId(model.getId());
     edo.setStatus(model.getStatus().getValue());
     edo.setUserId(model.getUserId());
     edo.setCreatedBy(model.getCreatedBy());
     edo.setVersion(model.getVersion());
-    edo.setWorkflowId(model.getWorkflowId());
+    edo.setWorkflowIdentity(model.getWorkflowIdentity());
     edo.setMessageType(model.getMessageType().getValue());
     edo.setExpireDays(model.getExpireDays());
     edo.setMessage(model.getMessage());
@@ -145,7 +143,6 @@ public class GuiModelEdoMapper {
     edo.setTitle(model.getTitle());
     edo.setStatus(model.getStatus());
     edo.setId(model.getId());
-    edo.setDepartmentId(model.getDepartmentId());
     edo.setVersion(model.getVersion());
 
     return edo;
@@ -159,7 +156,6 @@ public class GuiModelEdoMapper {
     model.setTitle(edo.getTitle());
     model.setStatus(edo.getStatus());
     model.setId(edo.getId());
-    model.setDepartmentId(edo.getDepartmentId());
     model.setVersion(edo.getVersion());
 
     return model;
@@ -237,7 +233,6 @@ public class GuiModelEdoMapper {
     final WorkflowEdo edo = new WorkflowEdo();
     edo.setComments(model.getComments());
     edo.setStatus(model.getStatusInt());
-    edo.setId(model.getId());
     edo.setController(model.getController());
     edo.setCurrentStepId(model.getCurrentStep() != null ? model.getCurrentStep().getId() : null);
     edo.setCreatedBy(model.getCreatedBy());
@@ -259,7 +254,6 @@ public class GuiModelEdoMapper {
 
     model.setComments(edo.getComments());
     model.setStatusInt(edo.getStatus());
-    model.setId(edo.getId());
     model.setController(edo.getController());
     model.setCreatedBy(edo.getCreatedBy());
     model.setWorkflowTypeId(edo.getWorkflowTypeId());
@@ -277,9 +271,7 @@ public class GuiModelEdoMapper {
     final WorkflowActionEdo edo = new WorkflowActionEdo();
     edo.setComments(model.getComments());
     edo.setStatus(model.getStatus().getValue().intValue());
-    edo.setId(model.getId());
     edo.setCurrentStepId(model.getCurrentStepId());
-    edo.setWorkflowId(model.getWorkflowId());
     edo.setVersion(model.getVersion());
     edo.setAssignTo(model.getAssignTo());
 
@@ -293,9 +285,7 @@ public class GuiModelEdoMapper {
 
     model.setComments(edo.getComments());
     model.setStatusInt(edo.getStatus());
-    model.setId(edo.getId());
     model.setCurrentStepId(edo.getCurrentStepId());
-    model.setWorkflowId(edo.getWorkflowId());
     model.setVersion(edo.getVersion());
     model.setAssignTo(edo.getAssignTo());
 
@@ -311,7 +301,6 @@ public class GuiModelEdoMapper {
     edo.setExpireDays(model.getExpireDays());
     edo.setStatus(model.getStatus());
     edo.setId(model.getId());
-    edo.setWorkflowTypeId(model.getWorkflowTypeId());
     edo.setVersion(model.getVersion());
 
     return edo;
@@ -330,7 +319,6 @@ public class GuiModelEdoMapper {
     model.setStatus(edo.getStatus());
     model.setVersion(edo.getVersion());
     model.setId(edo.getId());
-    model.setWorkflowTypeId(edo.getWorkflowTypeId());
 
     return model;
   }
@@ -341,12 +329,11 @@ public class GuiModelEdoMapper {
     edo.setExtention(model.getExtention());
     edo.setComments(model.getComments());
     edo.setStatus(model.getStatus());
-    edo.setId(model.getId());
     edo.setCreatedBy(model.getCreatedBy());
     edo.setActiveFilePath(model.getActiveFilePath());
     edo.setActiveFileVersion(model.getActiveFileVersion());
-    edo.setWorkflowId(model.getWorkflowId());
     edo.setVersion(model.getVersion());
+    edo.setIdentity(model.getIdentity());
 
     edo.setFileVersions(toWorkflowFileVersionEdoList(model.getFileVersions()));
 
@@ -361,12 +348,11 @@ public class GuiModelEdoMapper {
     model.setExtention(edo.getExtention());
     model.setComments(edo.getComments());
     model.setStatus(edo.getStatus());
-    model.setId(edo.getId());
     model.setCreatedBy(edo.getCreatedBy());
     model.setActiveFilePath(edo.getActiveFilePath());
     model.setActiveFileVersion(edo.getActiveFileVersion());
-    model.setWorkflowId(edo.getWorkflowId());
     model.setVersion(edo.getVersion());
+    model.setIdentity(edo.getIdentity());
 
     model.setFileVersions(fromWorkflowFileVersionEdoList(edo.getFileVersions()));
 
@@ -377,11 +363,9 @@ public class GuiModelEdoMapper {
     final WorkflowFileVersionEdo edo = new WorkflowFileVersionEdo();
     edo.setComments(model.getComments());
     edo.setStatus(model.getStatus());
-    edo.setId(model.getId());
     edo.setCreatedBy(model.getCreatedBy());
     edo.setFilePath(model.getFilePath());
     edo.setFileVersion(model.getFileVersion());
-    edo.setWorkflowFileId(model.getWorkflowFileId());
     edo.setVersion(model.getVersion());
 
     return edo;
@@ -393,11 +377,9 @@ public class GuiModelEdoMapper {
 
     model.setComments(edo.getComments());
     model.setStatus(edo.getStatus());
-    model.setId(edo.getId());
     model.setCreatedBy(edo.getCreatedBy());
     model.setFilePath(edo.getFilePath());
     model.setFileVersion(edo.getFileVersion());
-    model.setWorkflowFileId(edo.getWorkflowFileId());
     model.setVersion(edo.getVersion());
 
     return model;

@@ -3,12 +3,12 @@ package com.pth.iflow.gui.models;
 import java.util.ArrayList;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.pth.iflow.common.enums.EWorkflowIdentity;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 
 @JsonIgnoreProperties(value = { "isAssignTo" })
 public class GuiWorkflow {
 
-  private Long                id;
   private String              identity;
   private Long                workflowTypeId;
   private GuiWorkflowType     workflowType;
@@ -25,14 +25,6 @@ public class GuiWorkflow {
 
   private final List<GuiWorkflowFile>   files   = new ArrayList<>();
   private final List<GuiWorkflowAction> actions = new ArrayList<>();
-
-  public Long getId() {
-    return this.id;
-  }
-
-  public void setId(final Long id) {
-    this.id = id;
-  }
 
   public String getIdentity() {
     return identity;
@@ -160,10 +152,10 @@ public class GuiWorkflow {
     return this.files;
   }
 
-  public GuiWorkflowFile getFileById(final Long fileId) {
+  public GuiWorkflowFile getFileByIdentity(final String fileIdentity) {
 
     for (final GuiWorkflowFile file : this.files) {
-      if (file.getId().equals(fileId)) {
+      if (file.getIdentity().equals(fileIdentity)) {
         return file;
       }
     }
@@ -178,7 +170,6 @@ public class GuiWorkflow {
   }
 
   public void addFile(final GuiWorkflowFile file) {
-    file.setWorkflowId(this.getId());
     this.files.add(file);
   }
 
@@ -212,7 +203,6 @@ public class GuiWorkflow {
   }
 
   public void addAction(final GuiWorkflowAction action) {
-    action.setWorkflowId(this.getId());
     this.actions.add(action);
   }
 
@@ -244,16 +234,12 @@ public class GuiWorkflow {
     return this.currentStep.isTheSameStep(step);
   }
 
-  public boolean getIsNew() {
-    return (this.getId() == null) || (this.getId() <= 0);
-  }
-
   public boolean isInitializing() {
-    return this.getIsNew() && (this.getStatus() == EWorkflowStatus.INITIALIZE);
+    return (this.getStatus() == EWorkflowStatus.INITIALIZE);
   }
 
   public boolean isAssigned() {
-    return this.getIsNew() == false && (this.getStatus() == EWorkflowStatus.ASSIGNED);
+    return (this.getStatus() == EWorkflowStatus.ASSIGNED);
   }
 
   public boolean isMeAssigned() {
@@ -307,10 +293,10 @@ public class GuiWorkflow {
     newWorkflow.setCreatedBy(creatorId);
     newWorkflow.setController(0L);
     newWorkflow.setCurrentStepId(0L);
-    newWorkflow.setId(0L);
     newWorkflow.setVersion(0);
     newWorkflow.setWorkflowTypeId(0L);
     newWorkflow.setComments("");
+    newWorkflow.setIdentity(EWorkflowIdentity.NOT_SET.getName());
 
     return newWorkflow;
   }

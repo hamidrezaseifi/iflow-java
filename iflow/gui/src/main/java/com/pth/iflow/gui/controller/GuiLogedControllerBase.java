@@ -85,7 +85,4 @@ public class GuiLogedControllerBase {
     workflowMessageHanlder.callUserMessageReset();
   }
 
-  public GuiWorkflowMessage getCachedWorkflowMessage(final Long id) {
-    return workflowMessageHanlder.getCachedMessage(id);
-  }
 }

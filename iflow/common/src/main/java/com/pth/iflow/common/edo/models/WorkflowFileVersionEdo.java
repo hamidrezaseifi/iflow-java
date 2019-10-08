@@ -6,7 +6,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-
 import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 
 @XmlRootElement(name = "WorkflowFileVersion", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
@@ -14,22 +13,15 @@ import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 @XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "WorkflowFileVersion" + IFlowJaxbDefinition.TYPE_PREFIX)
 public class WorkflowFileVersionEdo {
 
-  @XmlElement(name = "ID", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long    id;
-
-  @NotNull
-  @XmlElement(name = "WorkflowFileId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long    workflowFileId;
-
   @XmlElement(name = "CreatedBy", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long    createdBy;
+  private Long createdBy;
 
   @NotNull
   @XmlElement(name = "FilePath", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String  filePath;
+  private String filePath;
 
   @XmlElement(name = "Comments", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String  comments;
+  private String comments;
 
   @NotNull
   @XmlElement(name = "FileVersion", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
@@ -42,22 +34,6 @@ public class WorkflowFileVersionEdo {
   @NotNull
   @XmlElement(name = "Version", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer version;
-
-  public Long getId() {
-    return this.id;
-  }
-
-  public void setId(final Long id) {
-    this.id = id;
-  }
-
-  public Long getWorkflowFileId() {
-    return this.workflowFileId;
-  }
-
-  public void setWorkflowFileId(final Long workflowFileId) {
-    this.workflowFileId = workflowFileId;
-  }
 
   public String getFilePath() {
     return this.filePath;

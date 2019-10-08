@@ -3,12 +3,12 @@ package com.pth.iflow.core.model;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
 import com.pth.iflow.common.edo.models.base.DataModelBase;
 
 public class WorkflowFile extends DataModelBase {
 
   private Long                            id;
+  private String                          identity;
   private Long                            workflowId;
   private Long                            createdBy;
   private String                          title;
@@ -27,8 +27,16 @@ public class WorkflowFile extends DataModelBase {
     return this.id;
   }
 
-  public void setId(final Long id) {
+  public void setId1(final Long id) {
     this.id = id;
+  }
+
+  public String getIdentity() {
+    return identity;
+  }
+
+  public void setIdentity(final String identity) {
+    this.identity = identity;
   }
 
   public Long getWorkflowId() {

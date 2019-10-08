@@ -1,35 +1,15 @@
 package com.pth.iflow.workflow.models;
 
-import com.pth.iflow.common.edo.models.base.WorkflowActionModelBase;
 import com.pth.iflow.common.enums.EWorkflowActionStatus;
 
-public class WorkflowAction extends WorkflowActionModelBase {
+public class WorkflowAction {
 
-  private Long                  id;
-  private Long                  workflowId;
   private Long                  assignTo;
   private Long                  currentStepId;
   private WorkflowTypeStep      currentStep;
   private String                comments;
   private EWorkflowActionStatus status;
   private Integer               version;
-
-  @Override
-  public Long getId() {
-    return this.id;
-  }
-
-  public void setId(final Long id) {
-    this.id = id;
-  }
-
-  public Long getWorkflowId() {
-    return this.workflowId;
-  }
-
-  public void setWorkflowId(final Long workflowId) {
-    this.workflowId = workflowId;
-  }
 
   public Long getAssignTo() {
     return this.assignTo;
@@ -67,7 +47,6 @@ public class WorkflowAction extends WorkflowActionModelBase {
     this.comments = comments;
   }
 
-  @Override
   public Integer getStatusInt() {
     return this.status.getValue();
   }
@@ -84,14 +63,15 @@ public class WorkflowAction extends WorkflowActionModelBase {
     this.status = EWorkflowActionStatus.ofValue(status);
   }
 
-  @Override
   public Integer getVersion() {
     return this.version;
   }
 
-  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
 
+  public boolean getIsActive() {
+    return EWorkflowActionStatus.getIsActive(this.getStatusInt());
+  }
 }

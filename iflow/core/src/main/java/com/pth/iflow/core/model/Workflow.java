@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import com.pth.iflow.common.edo.models.base.DataModelBase;
+import com.pth.iflow.common.enums.EWorkflowIdentity;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 
 public class Workflow extends DataModelBase {
@@ -38,6 +39,10 @@ public class Workflow extends DataModelBase {
 
   public void setIdentity(final String identity) {
     this.identity = identity;
+  }
+
+  public boolean isIdentityNotSet() {
+    return EWorkflowIdentity.NOT_SET.getName().equals(getIdentity());
   }
 
   public Long getWorkflowTypeId() {

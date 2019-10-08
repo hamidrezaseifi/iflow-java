@@ -5,7 +5,6 @@ import com.pth.iflow.common.edo.models.base.DataModelBase;
 public class GuiDepartmentGroup extends DataModelBase {
 
   private Long    id;
-  private Long    departmentId;
   private String  title;
   private Integer status;
   private Integer version;
@@ -17,14 +16,6 @@ public class GuiDepartmentGroup extends DataModelBase {
 
   public void setId(final Long id) {
     this.id = id;
-  }
-
-  public Long getDepartmentId() {
-    return this.departmentId;
-  }
-
-  public void setDepartmentId(final Long departmentId) {
-    this.departmentId = departmentId;
   }
 
   public String getTitle() {

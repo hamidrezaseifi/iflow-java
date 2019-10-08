@@ -4,54 +4,41 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
-
-import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.enums.EWorkflowMessageType;
 
-public class GuiWorkflowMessage extends DataModelBase {
+public class GuiWorkflowMessage {
 
-  private Long                   id;
+  private String workflowIdentity;
 
-  private Long                   workflowId;
+  private GuiWorkflow workflow;
 
-  private GuiWorkflow            workflow;
+  private Long stepId;
 
-  private Long                   stepId;
+  private GuiWorkflowTypeStep step;
 
-  private GuiWorkflowTypeStep    step;
+  private Long userId;
 
-  private Long                   userId;
+  private String message;
 
-  private String                 message;
+  private Long createdBy;
 
-  private Long                   createdBy;
-
-  private EWorkflowMessageType   messageType;
+  private EWorkflowMessageType messageType;
 
   private EWorkflowMessageStatus status;
 
-  private Integer                version;
+  private Integer version;
 
-  private Integer                expireDays;
+  private Integer expireDays;
 
-  private LocalDateTime          createdAt;
+  private LocalDateTime createdAt;
 
-  @Override
-  public Long getId() {
-    return this.id;
+  public String getWorkflowIdentity() {
+    return workflowIdentity;
   }
 
-  public void setId(final Long id) {
-    this.id = id;
-  }
-
-  public Long getWorkflowId() {
-    return this.workflowId;
-  }
-
-  public void setWorkflowId(final Long workflowId) {
-    this.workflowId = workflowId;
+  public void setWorkflowIdentity(final String workflowIdentity) {
+    this.workflowIdentity = workflowIdentity;
   }
 
   public Long getStepId() {
@@ -122,12 +109,10 @@ public class GuiWorkflowMessage extends DataModelBase {
     this.status = status;
   }
 
-  @Override
   public Integer getVersion() {
     return this.version;
   }
 
-  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }

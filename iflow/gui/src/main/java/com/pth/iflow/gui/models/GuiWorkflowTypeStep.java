@@ -5,7 +5,6 @@ import com.pth.iflow.common.edo.models.base.DataModelBase;
 public class GuiWorkflowTypeStep extends DataModelBase {
 
   private Long    id;
-  private Long    workflowTypeId;
   private String  title;
   private Integer stepIndex;
   private String  viewName;
@@ -21,14 +20,6 @@ public class GuiWorkflowTypeStep extends DataModelBase {
 
   public void setId(final Long id) {
     this.id = id;
-  }
-
-  public Long getWorkflowTypeId() {
-    return this.workflowTypeId;
-  }
-
-  public void setWorkflowTypeId(final Long workflowTypeId) {
-    this.workflowTypeId = workflowTypeId;
   }
 
   public String getTitle() {

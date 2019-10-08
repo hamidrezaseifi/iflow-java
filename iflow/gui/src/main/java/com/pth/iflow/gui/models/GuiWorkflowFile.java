@@ -3,12 +3,9 @@ package com.pth.iflow.gui.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.pth.iflow.common.edo.models.base.DataModelBase;
+public class GuiWorkflowFile {
 
-public class GuiWorkflowFile extends DataModelBase {
-
-  private Long                               id;
-  private Long                               workflowId;
+  private String                             identity;
   private Long                               createdBy;
   private String                             title;
   private String                             extention;
@@ -19,21 +16,12 @@ public class GuiWorkflowFile extends DataModelBase {
   private Integer                            version;
   private final List<GuiWorkflowFileVersion> fileVersions = new ArrayList<>();
 
-  @Override
-  public Long getId() {
-    return this.id;
+  public String getIdentity() {
+    return identity;
   }
 
-  public void setId(final Long id) {
-    this.id = id;
-  }
-
-  public Long getWorkflowId() {
-    return this.workflowId;
-  }
-
-  public void setWorkflowId(final Long workflowId) {
-    this.workflowId = workflowId;
+  public void setIdentity(final String identity) {
+    this.identity = identity;
   }
 
   public String getActiveFilePath() {
@@ -92,12 +80,10 @@ public class GuiWorkflowFile extends DataModelBase {
     this.status = status;
   }
 
-  @Override
   public Integer getVersion() {
     return this.version;
   }
 
-  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
@@ -125,7 +111,6 @@ public class GuiWorkflowFile extends DataModelBase {
     fileVersion.setFilePath(filePath);
     fileVersion.setFileVersion(version);
     fileVersion.setStatus(1);
-    fileVersion.setWorkflowFileId(this.id);
 
     this.fileVersions.add(fileVersion);
 

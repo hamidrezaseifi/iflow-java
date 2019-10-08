@@ -6,7 +6,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-
 import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 
 @XmlRootElement(name = "DepartmentGroup", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
@@ -15,15 +14,11 @@ import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 public class DepartmentGroupEdo {
 
   @XmlElement(name = "ID", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long    id;
-
-  @NotNull
-  @XmlElement(name = "DepartmentId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long    departmentId;
+  private Long id;
 
   @NotNull
   @XmlElement(name = "Title", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String  title;
+  private String title;
 
   @NotNull
   @XmlElement(name = "Status", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
@@ -39,14 +34,6 @@ public class DepartmentGroupEdo {
 
   public void setId(final Long id) {
     this.id = id;
-  }
-
-  public Long getDepartmentId() {
-    return this.departmentId;
-  }
-
-  public void setDepartmentId(final Long departmentId) {
-    this.departmentId = departmentId;
   }
 
   public String getTitle() {
