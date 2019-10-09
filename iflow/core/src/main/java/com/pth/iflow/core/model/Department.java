@@ -1,22 +1,23 @@
 package com.pth.iflow.core.model;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
 
 import com.pth.iflow.core.model.helper.CoreModelHelper;
+import com.pth.iflow.core.model.helper.ICoreIdentityModel;
 
-public class Department extends CoreModelHelper {
+public class Department extends CoreModelHelper implements ICoreIdentityModel {
 
-  private Long                        id;
-  private Long                        companyId;
-  private String                      identity;
-  private String                      title;
-  private Integer                     status;
-  private Integer                     version;
-  private LocalDateTime               createdAt;
-  private LocalDateTime               updatedAt;
-  private final List<DepartmentGroup> departmentGroups = new ArrayList<>();
+  private Long                             id;
+  private Long                             companyId;
+  private String                           identity;
+  private String                           title;
+  private Integer                          status;
+  private Integer                          version;
+  private LocalDateTime                    createdAt;
+  private LocalDateTime                    updatedAt;
+  private final Set<DepartmentGroup> departmentGroups = new HashSet<>();
 
   @Override
   public Long getId() {
@@ -28,10 +29,17 @@ public class Department extends CoreModelHelper {
     this.id = id;
   }
 
+  /*
+   * (non-Javadoc)
+   *
+   * @see com.pth.iflow.core.model.ICoreIdentityModel#getIdentity()
+   */
+  @Override
   public String getIdentity() {
     return identity;
   }
 
+  @Override
   public void setIdentity(final String identity) {
     this.identity = identity;
   }
@@ -60,10 +68,12 @@ public class Department extends CoreModelHelper {
     this.status = status;
   }
 
+  @Override
   public Integer getVersion() {
     return this.version;
   }
 
+  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
@@ -84,11 +94,11 @@ public class Department extends CoreModelHelper {
     this.updatedAt = updatedAt;
   }
 
-  public List<DepartmentGroup> getDepartmentGroups() {
+  public Set<DepartmentGroup> getDepartmentGroups() {
     return this.departmentGroups;
   }
 
-  public void setDepartmentGroups(final List<DepartmentGroup> groups) {
+  public void setDepartmentGroups(final Set<DepartmentGroup> groups) {
     this.departmentGroups.clear();
     if (groups != null) {
       this.departmentGroups.addAll(groups);

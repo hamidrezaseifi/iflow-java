@@ -1,28 +1,35 @@
 package com.pth.iflow.core.model;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
+
 import com.pth.iflow.common.enums.EWorkflowIdentity;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 import com.pth.iflow.core.model.helper.CoreModelHelper;
+import com.pth.iflow.core.model.helper.ICoreIdentityModel;
 
-public class Workflow extends CoreModelHelper {
+public class Workflow extends CoreModelHelper implements ICoreIdentityModel {
 
-  private Long            id;
-  private String          identity;
-  private Long            workflowTypeId;
-  private Long            currentStepId;
-  private Long            controller;
-  private Long            createdBy;
-  private String          comments;
-  private EWorkflowStatus status;
-  private Integer         version;
-  private LocalDateTime   createdAt;
-  private LocalDateTime   updatedAt;
+  private Long                            id;
+  private String                          identity;
+  private WorkflowType                    workflowType;
+  private WorkflowTypeStep                currentStep;
+  private User                            controller;
+  private User                            createdBy;
+  private String                          comments;
+  private EWorkflowStatus                 status;
+  private Integer                         version;
+  private LocalDateTime                   createdAt;
+  private LocalDateTime                   updatedAt;
 
-  private final List<WorkflowFile>   files   = new ArrayList<>();
-  private final List<WorkflowAction> actions = new ArrayList<>();
+  private String                          workflowTypeIdentity;
+  private String                          currentStepIdentity;
+  private String                          controllerIdentity;
+  private String                          createdByIdentity;
+
+  private final Set<WorkflowFile>   files   = new HashSet<>();
+  private final Set<WorkflowAction> actions = new HashSet<>();
 
   @Override
   public Long getId() {
@@ -34,10 +41,12 @@ public class Workflow extends CoreModelHelper {
     this.id = id;
   }
 
+  @Override
   public String getIdentity() {
     return identity;
   }
 
+  @Override
   public void setIdentity(final String identity) {
     this.identity = identity;
   }
@@ -46,35 +55,35 @@ public class Workflow extends CoreModelHelper {
     return EWorkflowIdentity.NOT_SET.getName().equals(getIdentity());
   }
 
-  public Long getWorkflowTypeId() {
-    return this.workflowTypeId;
+  public WorkflowType getWorkflowType() {
+    return workflowType;
   }
 
-  public void setWorkflowTypeId(final Long workflowTypeId) {
-    this.workflowTypeId = workflowTypeId;
+  public void setWorkflowType(final WorkflowType workflowType) {
+    this.workflowType = workflowType;
   }
 
-  public Long getCurrentStepId() {
-    return currentStepId;
+  public WorkflowTypeStep getCurrentStep() {
+    return currentStep;
   }
 
-  public void setCurrentStepId(final Long currentStepId) {
-    this.currentStepId = currentStepId;
+  public void setCurrentStep(final WorkflowTypeStep currentStep) {
+    this.currentStep = currentStep;
   }
 
-  public Long getController() {
-    return this.controller;
+  public User getController() {
+    return controller;
   }
 
-  public void setController(final Long controller) {
+  public void setController(final User controller) {
     this.controller = controller;
   }
 
-  public Long getCreatedBy() {
-    return this.createdBy;
+  public User getCreatedBy() {
+    return createdBy;
   }
 
-  public void setCreatedBy(final Long createdBy) {
+  public void setCreatedBy(final User createdBy) {
     this.createdBy = createdBy;
   }
 
@@ -98,10 +107,12 @@ public class Workflow extends CoreModelHelper {
     this.status = EWorkflowStatus.ofValue(status);
   }
 
+  @Override
   public Integer getVersion() {
     return this.version;
   }
 
+  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
@@ -122,26 +133,58 @@ public class Workflow extends CoreModelHelper {
     this.updatedAt = updatedAt;
   }
 
-  public List<WorkflowFile> getFiles() {
+  public Set<WorkflowFile> getFiles() {
     return this.files;
   }
 
-  public void setFiles(final List<WorkflowFile> files) {
+  public void setFiles(final Set<WorkflowFile> files) {
     this.files.clear();
     if (files != null) {
       this.files.addAll(files);
     }
   }
 
-  public List<WorkflowAction> getActions() {
+  public Set<WorkflowAction> getActions() {
     return this.actions;
   }
 
-  public void setActions(final List<WorkflowAction> actions) {
+  public void setActions(final Set<WorkflowAction> actions) {
     this.actions.clear();
     if (actions != null) {
       this.actions.addAll(actions);
     }
+  }
+
+  public String getWorkflowTypeIdentity() {
+    return workflowTypeIdentity;
+  }
+
+  public void setWorkflowTypeIdentity(final String workflowTypeIdentity) {
+    this.workflowTypeIdentity = workflowTypeIdentity;
+  }
+
+  public String getCurrentStepIdentity() {
+    return currentStepIdentity;
+  }
+
+  public void setCurrentStepIdentity(final String currentStepIdentity) {
+    this.currentStepIdentity = currentStepIdentity;
+  }
+
+  public String getControllerIdentity() {
+    return controllerIdentity;
+  }
+
+  public void setControllerIdentity(final String controllerIdentity) {
+    this.controllerIdentity = controllerIdentity;
+  }
+
+  public String getCreatedByIdentity() {
+    return createdByIdentity;
+  }
+
+  public void setCreatedByIdentity(final String createdByIdentity) {
+    this.createdByIdentity = createdByIdentity;
   }
 
 }

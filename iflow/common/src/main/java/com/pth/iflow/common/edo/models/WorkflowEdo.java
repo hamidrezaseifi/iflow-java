@@ -1,7 +1,7 @@
 package com.pth.iflow.common.edo.models;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
 
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -21,41 +21,41 @@ public class WorkflowEdo {
 
   @NotNull(message = "Identity is not allowed to be null!")
   @XmlElement(name = "Identity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String                  identity;
+  private String                       identity;
 
   @NotNull(message = "WorkflowTypeIdentity is not allowed to be null!")
   @XmlElement(name = "WorkflowTypeIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String                  workflowTypeIdentity;
+  private String                       workflowTypeIdentity;
 
   @XmlElement(name = "CurrentStepIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String                  currentStepIdentity;
+  private String                       currentStepIdentity;
 
   @XmlElement(name = "ControllerIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String                  controllerIdentity;
+  private String                       controllerIdentity;
 
   @XmlElement(name = "CreatedByIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String                  createdByIdentity;
+  private String                       createdByIdentity;
 
   @XmlElement(name = "Comments", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String                  comments;
+  private String                       comments;
 
   @NotNull(message = "Status is not allowed to be null!")
   @XmlElement(name = "Status", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Integer                 status;
+  private Integer                      status;
 
   @NotNull(message = "Version is not allowed to be null!")
   @XmlElement(name = "Version", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Integer                 version;
+  private Integer                      version;
 
   @NotNull(message = "WorkflowFileEdo is not allowed to be null!")
-  @XmlElementWrapper(name = "WorkflowFileList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  @XmlElementWrapper(name = "WorkflowFileSet", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "WorkflowFile", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private List<WorkflowFileEdo>   files   = new ArrayList<>();
+  private Set<WorkflowFileEdo>   files   = new HashSet<>();
 
-  @NotNull(message = "WorkflowActionList is not allowed to be null!")
-  @XmlElementWrapper(name = "WorkflowActionList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  @NotNull(message = "WorkflowActionSet is not allowed to be null!")
+  @XmlElementWrapper(name = "WorkflowActionSet", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "WorkflowAction", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private List<WorkflowActionEdo> actions = new ArrayList<>();
+  private Set<WorkflowActionEdo> actions = new HashSet<>();
 
   public String getIdentity() {
     return this.identity;
@@ -121,25 +121,25 @@ public class WorkflowEdo {
     this.version = version;
   }
 
-  public List<WorkflowFileEdo> getFiles() {
+  public Set<WorkflowFileEdo> getFiles() {
     return this.files;
   }
 
   @JsonSetter
-  public void setFiles(final List<WorkflowFileEdo> files) {
-    this.files = new ArrayList<>();
+  public void setFiles(final Set<WorkflowFileEdo> files) {
+    this.files = new HashSet<>();
     if (files != null) {
       this.files.addAll(files);
     }
   }
 
-  public List<WorkflowActionEdo> getActions() {
+  public Set<WorkflowActionEdo> getActions() {
     return this.actions;
   }
 
   @JsonSetter
-  public void setActions(final List<WorkflowActionEdo> actions) {
-    this.actions = new ArrayList<>();
+  public void setActions(final Set<WorkflowActionEdo> actions) {
+    this.actions = new HashSet<>();
     if (actions != null) {
       this.actions.addAll(actions);
     }

@@ -11,7 +11,11 @@ public abstract class CoreModelHelper {
   }
 
   public void increaseVersion() {
-    setId(getId() + 1);
+    setVersion(getVersion() + 1);
   }
+
+  public abstract void setVersion(Integer version);
+
+  public abstract Integer getVersion();
 
 }

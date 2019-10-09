@@ -1,7 +1,7 @@
 package com.pth.iflow.common.edo.models;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -22,22 +22,22 @@ public class DepartmentListEdo {
   @NotNull
   @XmlElementWrapper(name = "DepartmentList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "Department", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private final List<DepartmentEdo> departments = new ArrayList<>();
+  private final Set<DepartmentEdo> departments = new HashSet<>();
 
   public DepartmentListEdo() {
 
   }
 
-  public DepartmentListEdo(final List<DepartmentEdo> departments) {
+  public DepartmentListEdo(final Set<DepartmentEdo> departments) {
     this.setDepartments(departments);
   }
 
-  public List<DepartmentEdo> getDepartments() {
+  public Set<DepartmentEdo> getDepartments() {
     return this.departments;
   }
 
   @JsonSetter
-  public void setDepartments(final List<DepartmentEdo> departments) {
+  public void setDepartments(final Set<DepartmentEdo> departments) {
     this.departments.clear();
     if (departments != null) {
       this.departments.addAll(departments);

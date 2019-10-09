@@ -27,8 +27,8 @@ public class CompanyDao extends DaoBasicClass<Company> implements ICompanyDao {
   }
 
   @Override
-  public Company getByIdentifyId(final String identifyId) {
-    return getModelByStringId(identifyId, "SELECT * FROM companies where identifyid=?", "Company");
+  public Company getByIdentity(final String identifyId) {
+    return getModelByStringId(identifyId, "SELECT * FROM companies where identity=?", "Company");
   }
 
   @Override
@@ -37,7 +37,7 @@ public class CompanyDao extends DaoBasicClass<Company> implements ICompanyDao {
     company.setId(rs.getLong("id"));
     company.setCompanyName(rs.getString("company_name"));
     company.setStatus(rs.getInt("status"));
-    company.setIdentifyid(rs.getString("identifyid"));
+    company.setIdentity(rs.getString("identity"));
     company.setVersion(rs.getInt("version"));
     company.setCreatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("created_at")));
     company.setUpdatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("updated_at")));
@@ -47,7 +47,7 @@ public class CompanyDao extends DaoBasicClass<Company> implements ICompanyDao {
 
   @Override
   protected PreparedStatement prepareInsertPreparedStatement(final Company model, final PreparedStatement ps) throws SQLException {
-    ps.setString(1, model.getIdentifyid());
+    ps.setString(1, model.getIdentity());
     ps.setString(2, model.getCompanyName());
     ps.setInt(3, model.getVersion());
     ps.setInt(4, model.getStatus());
@@ -57,7 +57,7 @@ public class CompanyDao extends DaoBasicClass<Company> implements ICompanyDao {
 
   @Override
   protected PreparedStatement prepareUpdatePreparedStatement(final Company model, final PreparedStatement ps) throws SQLException {
-    ps.setString(1, model.getIdentifyid());
+    ps.setString(1, model.getIdentity());
     ps.setString(2, model.getCompanyName());
     ps.setInt(3, model.getVersion());
     ps.setInt(4, model.getStatus());

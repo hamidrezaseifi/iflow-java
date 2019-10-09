@@ -3,8 +3,9 @@ package com.pth.iflow.core.model;
 import java.time.LocalDateTime;
 
 import com.pth.iflow.core.model.helper.CoreModelHelper;
+import com.pth.iflow.core.model.helper.ICoreIdentityModel;
 
-public class Company extends CoreModelHelper {
+public class Company extends CoreModelHelper implements ICoreIdentityModel {
 
   private Long          id;
   private String        identity;
@@ -31,10 +32,12 @@ public class Company extends CoreModelHelper {
     this.id = id;
   }
 
+  @Override
   public String getIdentity() {
     return identity;
   }
 
+  @Override
   public void setIdentity(final String identity) {
     this.identity = identity;
   }
@@ -71,6 +74,7 @@ public class Company extends CoreModelHelper {
    * @return the version
    */
 
+  @Override
   public Integer getVersion() {
     return this.version;
   }
@@ -79,6 +83,7 @@ public class Company extends CoreModelHelper {
    * @param version the version to set
    */
 
+  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }

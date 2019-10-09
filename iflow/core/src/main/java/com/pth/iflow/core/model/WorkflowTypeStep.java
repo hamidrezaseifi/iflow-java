@@ -1,11 +1,14 @@
 package com.pth.iflow.core.model;
 
 import java.time.LocalDateTime;
+
 import com.pth.iflow.core.model.helper.CoreModelHelper;
+import com.pth.iflow.core.model.helper.ICoreIdentityModel;
 
-public class WorkflowTypeStep extends CoreModelHelper {
+public class WorkflowTypeStep extends CoreModelHelper implements ICoreIdentityModel {
 
-  Long                  id;
+  private Long          id;
+  private String        identity;
   private Long          workflowTypeId;
   private String        title;
   private Integer       stepIndex;
@@ -29,6 +32,16 @@ public class WorkflowTypeStep extends CoreModelHelper {
 
   public Long getWorkflowTypeId() {
     return this.workflowTypeId;
+  }
+
+  @Override
+  public String getIdentity() {
+    return identity;
+  }
+
+  @Override
+  public void setIdentity(final String identity) {
+    this.identity = identity;
   }
 
   public void setWorkflowTypeId(final Long workflowTypeId) {
@@ -81,10 +94,12 @@ public class WorkflowTypeStep extends CoreModelHelper {
     this.status = status;
   }
 
+  @Override
   public Integer getVersion() {
     return this.version;
   }
 
+  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }

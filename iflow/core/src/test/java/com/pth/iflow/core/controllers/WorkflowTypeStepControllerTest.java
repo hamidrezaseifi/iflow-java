@@ -6,8 +6,11 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import java.util.Arrays;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,16 +41,16 @@ import com.pth.iflow.core.service.IWorkflowTypeStepService;
 public class WorkflowTypeStepControllerTest extends TestDataProducer {
 
   @Autowired
-  private MockMvc mockMvc;
+  private MockMvc                                mockMvc;
 
   @Autowired
   private MappingJackson2XmlHttpMessageConverter xmlConverter;
 
   @MockBean
-  private IWorkflowTypeStepService workflowStepService;
+  private IWorkflowTypeStepService               workflowStepService;
 
   @Value("${iflow.common.rest.api.security.client-id.internal}")
-  private String innerModulesRequestHeaderValue;
+  private String                                 innerModulesRequestHeaderValue;
 
   @Before
   public void setUp() throws Exception {
@@ -68,11 +71,10 @@ public class WorkflowTypeStepControllerTest extends TestDataProducer {
     final String modelAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelEdo);
 
     this.mockMvc
-                .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.WORKFLOWTYPESTEP_READ_BY_ID, model.getId())
-                                               .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
-                .andExpect(content().xml(modelAsXmlString));
+        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.WORKFLOWTYPESTEP_READ_BY_ID, model.getId())
+            .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
+        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(content().xml(modelAsXmlString));
 
     verify(this.workflowStepService, times(1)).getById(any(Long.class));
 
@@ -81,44 +83,42 @@ public class WorkflowTypeStepControllerTest extends TestDataProducer {
   @Test
   public void testReadWorkflowTypeStepList() throws Exception {
 
-    final List<Long> idList = Arrays.asList(1L, 2L, 3L);
-    final List<WorkflowTypeStep> list = this.getTestWorkflowTypeStepList();
-    when(this.workflowStepService.getListByIdList(any(List.class))).thenReturn(list);
+    final Set<String> idList = new HashSet<>(Arrays.asList("item-1", "item-2", "item-3"));
+    final Set<WorkflowTypeStep> list = this.getTestWorkflowTypeStepList();
+    when(this.workflowStepService.getListByIdentityList(any(Set.class))).thenReturn(list);
 
-    final WorkflowTypeStepListEdo edoList = new WorkflowTypeStepListEdo(CoreModelEdoMapper.toWorkflowTypeStepEdoList(list));
+    final WorkflowTypeStepListEdo edoList = new WorkflowTypeStepListEdo(CoreModelEdoMapper.toWorkflowTypeStepEdoSet(list));
 
     final String contentAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(idList);
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
 
+    System.out.println("listAsXmlString:\n" + listAsXmlString);
     this.mockMvc
-                .perform(MockMvcRequestBuilders.post(IflowRestPaths.CoreModule.WORKFLOWTYPESTEP_READ_LIST)
-                                               .content(contentAsXmlString)
-                                               .contentType(MediaType.APPLICATION_XML_VALUE)
-                                               .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
-                .andExpect(content().xml(listAsXmlString));
+        .perform(MockMvcRequestBuilders.post(IflowRestPaths.CoreModule.WORKFLOWTYPESTEP_READ_LIST).content(contentAsXmlString)
+            .contentType(MediaType.APPLICATION_XML_VALUE)
+            .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
+        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(content().xml(listAsXmlString));
 
-    verify(this.workflowStepService, times(1)).getListByIdList(any(List.class));
+    verify(this.workflowStepService, times(1)).getListByIdentityList(any(Set.class));
 
   }
 
   @Test
   public void testReadWorkflowTypeStepListByWorkflow() throws Exception {
 
-    final List<WorkflowTypeStep> list = this.getTestWorkflowTypeStepList();
+    final Set<WorkflowTypeStep> list = this.getTestWorkflowTypeStepList();
     when(this.workflowStepService.getListByWorkflowTypeId(any(Long.class))).thenReturn(list);
 
-    final WorkflowTypeStepListEdo edoList = new WorkflowTypeStepListEdo(CoreModelEdoMapper.toWorkflowTypeStepEdoList(list));
+    final WorkflowTypeStepListEdo edoList = new WorkflowTypeStepListEdo(CoreModelEdoMapper.toWorkflowTypeStepEdoSet(list));
 
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
 
     this.mockMvc
-                .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.WORKFLOWTYPESTEP_READ_LIST_BY_WORKFLOW, 1L)
-                                               .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
-                .andExpect(content().xml(listAsXmlString));
+        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.WORKFLOWTYPESTEP_READ_LIST_BY_WORKFLOW, 1L)
+            .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
+        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(content().xml(listAsXmlString));
 
     verify(this.workflowStepService, times(1)).getListByWorkflowTypeId(any(Long.class));
 

@@ -1,6 +1,6 @@
 package com.pth.iflow.core.controllers;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -40,10 +40,10 @@ public class WorkflowMessageController {
   public ResponseEntity<WorkflowMessageListEdo> readWorkflowMessage(@PathVariable(required = true) final Long userid,
       @PathVariable(required = false) final Integer status, final HttpServletRequest request) throws Exception {
 
-    final List<WorkflowMessage> messageList = this.workflowMessageService.getNotClosedNotExpiredListByUserId(userid);
+    final Set<WorkflowMessage> messageList = this.workflowMessageService.getNotClosedNotExpiredListByUserId(userid);
 
     return ControllerHelper.createResponseEntity(request,
-        new WorkflowMessageListEdo(CoreModelEdoMapper.toWorkflowMessageEdoList(messageList)), HttpStatus.OK);
+        new WorkflowMessageListEdo(CoreModelEdoMapper.toWorkflowMessageEdoSet(messageList)), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -51,10 +51,10 @@ public class WorkflowMessageController {
   public ResponseEntity<WorkflowMessageListEdo> readWorkflowMessageByWorkflow(@PathVariable(required = true) final Long workflowid,
       final HttpServletRequest request) throws Exception {
 
-    final List<WorkflowMessage> messageList = this.workflowMessageService.getNotClosedNotExpiredListByWorkflowId(workflowid);
+    final Set<WorkflowMessage> messageList = this.workflowMessageService.getNotClosedNotExpiredListByWorkflowId(workflowid);
 
     return ControllerHelper.createResponseEntity(request,
-        new WorkflowMessageListEdo(CoreModelEdoMapper.toWorkflowMessageEdoList(messageList)), HttpStatus.OK);
+        new WorkflowMessageListEdo(CoreModelEdoMapper.toWorkflowMessageEdoSet(messageList)), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.CREATED)

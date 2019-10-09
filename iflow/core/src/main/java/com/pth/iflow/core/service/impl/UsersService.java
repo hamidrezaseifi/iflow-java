@@ -1,9 +1,10 @@
 package com.pth.iflow.core.service.impl;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.pth.iflow.core.model.Department;
 import com.pth.iflow.core.model.DepartmentGroup;
 import com.pth.iflow.core.model.User;
@@ -23,10 +24,8 @@ public class UsersService implements IUsersService {
   private final IDepartmentDao      departmentDao;
   private final IDepartmentGroupDao departmentGroupDao;
 
-  public UsersService(@Autowired final IUserDao userDao,
-                      @Autowired final IUserGroupDao userGroupDao,
-                      @Autowired final IDepartmentDao departmentDao,
-                      @Autowired final IDepartmentGroupDao departmentGroupDao) {
+  public UsersService(@Autowired final IUserDao userDao, @Autowired final IUserGroupDao userGroupDao,
+      @Autowired final IDepartmentDao departmentDao, @Autowired final IDepartmentGroupDao departmentGroupDao) {
     this.userDao = userDao;
     this.userGroupDao = userGroupDao;
     this.departmentDao = departmentDao;
@@ -46,31 +45,30 @@ public class UsersService implements IUsersService {
   }
 
   @Override
-  public List<UserGroup> getUserGroups(final Long id) {
+  public Set<UserGroup> getUserGroups(final Long id) {
     final User user = getUserById(id);
-    final List<UserGroup> list = userGroupDao.getListByIdList(user.getGroups().stream().collect(Collectors.toList()));
+    final Set<UserGroup> list = userGroupDao.getListByIdentityList(user.getGroups());
     return list;
   }
 
   @Override
-  public List<Department> getUserDepartments(final Long id) {
+  public Set<Department> getUserDepartments(final Long id) {
     final User user = getUserById(id);
-    final List<Department> list = departmentDao.getListByIdList(user.getDepartments().stream().collect(Collectors.toList()));
+    final Set<Department> list = departmentDao.getListByIdentityList(user.getDepartments());
     return list;
   }
 
   @Override
-  public List<DepartmentGroup> getUserDepartmentGroups(final Long id) {
+  public Set<DepartmentGroup> getUserDepartmentGroups(final Long id) {
     final User user = getUserById(id);
-    final List<DepartmentGroup> list = departmentGroupDao
-                                                         .getListByIdList(user.getDepartmentGroups().stream().collect(Collectors.toList()));
+    final Set<DepartmentGroup> list = departmentGroupDao.getListByIdentityList(user.getDepartmentGroups());
     return list;
   }
 
   @Override
-  public List<User> getUserDeputies(final Long id) {
+  public Set<User> getUserDeputies(final Long id) {
     final User user = getUserById(id);
-    final List<User> list = userDao.getListByIdList(user.getDeputies().stream().collect(Collectors.toList()));
+    final Set<User> list = userDao.getListByIdentityList(user.getDeputies());
     return list;
   }
 
@@ -92,7 +90,7 @@ public class UsersService implements IUsersService {
   }
 
   @Override
-  public List<User> getCompanyUsers(final Long companyId) {
+  public Set<User> getCompanyUsers(final Long companyId) {
 
     return userDao.getListByCompanyId(companyId);
   }

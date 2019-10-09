@@ -18,9 +18,15 @@ public class WorkflowMessage extends CoreModelHelper {
 
   private String                 userIdentity;
 
+  private String                 createdByIdentity;
+
+  private Long                   stepId;
+
+  private Long                   userId;
+
   private String                 message;
 
-  private String                 createdByIdentity;
+  private Long                   createdBy;
 
   private EWorkflowMessageType   messageType;
 
@@ -76,12 +82,36 @@ public class WorkflowMessage extends CoreModelHelper {
     this.userIdentity = userIdentity;
   }
 
+  public Long getStepId() {
+    return stepId;
+  }
+
+  public void setStepId(final Long stepId) {
+    this.stepId = stepId;
+  }
+
+  public Long getUserId() {
+    return userId;
+  }
+
+  public void setUserId(final Long userId) {
+    this.userId = userId;
+  }
+
   public String getMessage() {
     return message;
   }
 
   public void setMessage(final String message) {
     this.message = message;
+  }
+
+  public Long getCreatedBy() {
+    return createdBy;
+  }
+
+  public void setCreatedBy(final Long createdBy) {
+    this.createdBy = createdBy;
   }
 
   public String getCreatedByIdentity() {
@@ -108,10 +138,12 @@ public class WorkflowMessage extends CoreModelHelper {
     this.status = status;
   }
 
+  @Override
   public Integer getVersion() {
     return this.version;
   }
 
+  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }

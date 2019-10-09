@@ -1,11 +1,14 @@
 package com.pth.iflow.core.model;
 
 import java.time.LocalDateTime;
-import com.pth.iflow.core.model.helper.CoreModelHelper;
 
-public class UserGroup extends CoreModelHelper {
+import com.pth.iflow.core.model.helper.CoreModelHelper;
+import com.pth.iflow.core.model.helper.ICoreIdentityModel;
+
+public class UserGroup extends CoreModelHelper implements ICoreIdentityModel {
 
   private Long          id;
+  private String        identity;
   private Long          companyId;
   private String        title;
   private Integer       status;
@@ -21,6 +24,16 @@ public class UserGroup extends CoreModelHelper {
   @Override
   public void setId(final Long id) {
     this.id = id;
+  }
+
+  @Override
+  public String getIdentity() {
+    return identity;
+  }
+
+  @Override
+  public void setIdentity(final String identity) {
+    this.identity = identity;
   }
 
   public Long getCompanyId() {
@@ -47,10 +60,12 @@ public class UserGroup extends CoreModelHelper {
     this.status = status;
   }
 
+  @Override
   public Integer getVersion() {
     return this.version;
   }
 
+  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }

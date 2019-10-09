@@ -1,6 +1,6 @@
 package com.pth.iflow.core.service;
 
-import java.util.List;
+import java.util.Set;
 
 import com.pth.iflow.core.model.WorkflowType;
 import com.pth.iflow.core.model.WorkflowTypeStep;
@@ -11,9 +11,11 @@ public interface IWorkflowTypeService {
 
   WorkflowType getById(Long id);
 
-  List<WorkflowType> getListByIdCompanyId(final Long id);
+  Set<WorkflowType> getListByIdCompanyId(final Long id);
 
-  List<WorkflowTypeStep> getStepsById(final Long id);
+  Set<WorkflowTypeStep> getStepsById(final Long id);
 
-  List<WorkflowType> getListByIdList(final List<Long> idList);
+  Set<WorkflowType> getListByIdList(final Set<Long> idList);
+
+  Set<WorkflowType> getListByIdentityList(final Set<String> idList);
 }

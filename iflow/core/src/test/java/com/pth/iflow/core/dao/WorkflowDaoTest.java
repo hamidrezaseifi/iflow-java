@@ -2,9 +2,12 @@ package com.pth.iflow.core.dao;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -14,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
 import com.pth.iflow.common.enums.EWorkflowIdentity;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.Workflow;
@@ -25,7 +29,7 @@ import com.pth.iflow.core.storage.dao.IWorkflowDao;
 public class WorkflowDaoTest extends TestDataProducer {
 
   @Autowired
-  private IWorkflowDao workflowDao;
+  private IWorkflowDao         workflowDao;
 
   private final List<Workflow> createdModels = new ArrayList<>();
 
@@ -72,9 +76,9 @@ public class WorkflowDaoTest extends TestDataProducer {
 
     createWorlflowList();
 
-    final List<Long> idList = createdModels.stream().map(w -> w.getId()).collect(Collectors.toList());
+    final Set<Long> idList = createdModels.stream().map(w -> w.getId()).collect(Collectors.toSet());
 
-    final List<Workflow> resList = this.workflowDao.getListByIdList(idList);
+    final Set<Workflow> resList = this.workflowDao.getListByIdList(idList);
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + createdModels.size() + " items.", resList.size(), createdModels.size());
@@ -86,7 +90,7 @@ public class WorkflowDaoTest extends TestDataProducer {
 
     createWorlflowList();
 
-    final List<Workflow> resList = this.workflowDao.getListByWorkflowTypeId(createdModels.get(0).getWorkflowTypeId());
+    final Set<Workflow> resList = this.workflowDao.getListByWorkflowTypeId(createdModels.get(0).getWorkflowType().getId());
 
     Assert.assertNotNull("Result list is not null!", resList);
 

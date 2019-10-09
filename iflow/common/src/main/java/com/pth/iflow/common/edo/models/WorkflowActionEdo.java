@@ -15,12 +15,15 @@ import com.pth.iflow.common.enums.EWorkflowActionStatus;
 @XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "WorkflowAction" + IFlowJaxbDefinition.TYPE_PREFIX)
 public class WorkflowActionEdo {
 
+  @XmlElement(name = "Identity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String  identity;
+
   @XmlElement(name = "AssignToIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String  assignToIdentity;
 
   @NotNull(message = "CurrentStepIdentity must not be null")
   @XmlElement(name = "CurrentStepIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String  currectStepIdentity;
+  private String  currentStepIdentity;
 
   @XmlElement(name = "Comments", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String  comments;
@@ -33,6 +36,14 @@ public class WorkflowActionEdo {
   @XmlElement(name = "Version", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer version;
 
+  public String getIdentity() {
+    return this.identity;
+  }
+
+  public void setIdentity(final String identity) {
+    this.identity = identity;
+  }
+
   public String getAssignToIdentity() {
     return this.assignToIdentity;
   }
@@ -41,12 +52,12 @@ public class WorkflowActionEdo {
     this.assignToIdentity = assignToIdentity;
   }
 
-  public String getCurrectStepIdentity() {
-    return this.currectStepIdentity;
+  public String getCurrentStepIdentity() {
+    return this.currentStepIdentity;
   }
 
-  public void setCurrectStepIdentity(final String currectStepIdentity) {
-    this.currectStepIdentity = currectStepIdentity;
+  public void setCurrentStepIdentity(final String currectStepIdentity) {
+    this.currentStepIdentity = currectStepIdentity;
   }
 
   public String getComments() {

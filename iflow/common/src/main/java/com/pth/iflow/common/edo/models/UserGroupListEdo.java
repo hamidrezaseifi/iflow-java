@@ -1,7 +1,7 @@
 package com.pth.iflow.common.edo.models;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -22,22 +22,22 @@ public class UserGroupListEdo {
   @NotNull
   @XmlElementWrapper(name = "UserGroupList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "UserGroup", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private final List<UserGroupEdo> userGroups = new ArrayList<>();
+  private final Set<UserGroupEdo> userGroups = new HashSet<>();
 
   public UserGroupListEdo() {
 
   }
 
-  public UserGroupListEdo(final List<UserGroupEdo> userGroups) {
+  public UserGroupListEdo(final Set<UserGroupEdo> userGroups) {
     this.setUserGroups(userGroups);
   }
 
-  public List<UserGroupEdo> getUserGroups() {
+  public Set<UserGroupEdo> getUserGroups() {
     return this.userGroups;
   }
 
   @JsonSetter
-  public void setUserGroups(final List<UserGroupEdo> users) {
+  public void setUserGroups(final Set<UserGroupEdo> users) {
     this.userGroups.clear();
     if (users != null) {
       this.userGroups.addAll(users);

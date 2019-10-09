@@ -1,7 +1,7 @@
 package com.pth.iflow.common.edo.models;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -22,22 +22,22 @@ public class WorkflowActionListEdo {
   @NotNull
   @XmlElementWrapper(name = "WorkflowActionList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "WorkflowAction", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private final List<WorkflowActionEdo> workflowActions = new ArrayList<>();
+  private final Set<WorkflowActionEdo> workflowActions = new HashSet<>();
 
   public WorkflowActionListEdo() {
 
   }
 
-  public WorkflowActionListEdo(final List<WorkflowActionEdo> workflowActions) {
+  public WorkflowActionListEdo(final Set<WorkflowActionEdo> workflowActions) {
     this.setWorkflowActions(workflowActions);
   }
 
-  public List<WorkflowActionEdo> getWorkflowActions() {
+  public Set<WorkflowActionEdo> getWorkflowActions() {
     return this.workflowActions;
   }
 
   @JsonSetter
-  public void setWorkflowActions(final List<WorkflowActionEdo> workflowActions) {
+  public void setWorkflowActions(final Set<WorkflowActionEdo> workflowActions) {
     this.workflowActions.clear();
     if (workflowActions != null) {
       this.workflowActions.addAll(workflowActions);

@@ -1,6 +1,6 @@
 package com.pth.iflow.core.controllers;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -67,12 +67,12 @@ public class WorkflowController {
 
   @ResponseStatus(HttpStatus.OK)
   @IflowPostRequestMapping(path = IflowRestPaths.CoreModule.WORKFLOW_READ_LIST)
-  public ResponseEntity<WorkflowListEdo> readWorkflowList(@RequestBody final List<Long> idList, final HttpServletRequest request)
-      throws Exception {
+  public ResponseEntity<WorkflowListEdo> readWorkflowList(@RequestBody final Set<String> idList,
+      final HttpServletRequest request) throws Exception {
 
-    final List<Workflow> modelList = this.workflowService.getListByIdList(idList);
+    final Set<Workflow> modelList = this.workflowService.getListByIdentityList(idList);
 
-    return ControllerHelper.createResponseEntity(request, new WorkflowListEdo(CoreModelEdoMapper.toWorkflowEdoList(modelList)),
+    return ControllerHelper.createResponseEntity(request, new WorkflowListEdo(CoreModelEdoMapper.toWorkflowEdoSet(modelList)),
         HttpStatus.OK);
   }
 
@@ -81,9 +81,9 @@ public class WorkflowController {
   public ResponseEntity<WorkflowListEdo> readWorkflowListByType(@PathVariable final Long id, final HttpServletRequest request)
       throws Exception {
 
-    final List<Workflow> modelList = this.workflowService.getListByTypeId(id);
+    final Set<Workflow> modelList = this.workflowService.getListByTypeId(id);
 
-    return ControllerHelper.createResponseEntity(request, new WorkflowListEdo(CoreModelEdoMapper.toWorkflowEdoList(modelList)),
+    return ControllerHelper.createResponseEntity(request, new WorkflowListEdo(CoreModelEdoMapper.toWorkflowEdoSet(modelList)),
         HttpStatus.OK);
   }
 
@@ -92,9 +92,9 @@ public class WorkflowController {
   public ResponseEntity<WorkflowListEdo> readWorkflowListForUser(@PathVariable final Long id,
       @PathVariable(required = false) final int status, final HttpServletRequest request) throws Exception {
 
-    final List<Workflow> modelList = this.workflowService.getListForUser(id, status);
+    final Set<Workflow> modelList = this.workflowService.getListForUser(id, status);
 
-    return ControllerHelper.createResponseEntity(request, new WorkflowListEdo(CoreModelEdoMapper.toWorkflowEdoList(modelList)),
+    return ControllerHelper.createResponseEntity(request, new WorkflowListEdo(CoreModelEdoMapper.toWorkflowEdoSet(modelList)),
         HttpStatus.OK);
   }
 
@@ -123,10 +123,10 @@ public class WorkflowController {
   public ResponseEntity<WorkflowActionListEdo> readWorkflowActionListByWorkflow(@PathVariable final Long id,
       final HttpServletRequest request) throws Exception {
 
-    final List<WorkflowAction> modelList = this.workflowActionService.getListByIdWorkflowId(id);
+    final Set<WorkflowAction> modelList = this.workflowActionService.getListByIdWorkflowId(id);
 
     return ControllerHelper.createResponseEntity(request,
-        new WorkflowActionListEdo(CoreModelEdoMapper.toWorkflowActionEdoList(modelList)), HttpStatus.OK);
+        new WorkflowActionListEdo(CoreModelEdoMapper.toWorkflowActionEdoSet(modelList)), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -154,9 +154,9 @@ public class WorkflowController {
   public ResponseEntity<WorkflowFileListEdo> readWorkflowFileListByWorkflow(@PathVariable final Long id,
       final HttpServletRequest request) throws Exception {
 
-    final List<WorkflowFile> modelList = this.workflowFileService.getListByIdWorkflowId(id);
+    final Set<WorkflowFile> modelList = this.workflowFileService.getListByIdWorkflowId(id);
 
-    return ControllerHelper.createResponseEntity(request, new WorkflowFileListEdo(CoreModelEdoMapper.toWorkflowFileEdoList(modelList)),
+    return ControllerHelper.createResponseEntity(request, new WorkflowFileListEdo(CoreModelEdoMapper.toWorkflowFileEdoSet(modelList)),
         HttpStatus.OK);
   }
 
@@ -165,9 +165,9 @@ public class WorkflowController {
   public ResponseEntity<WorkflowListEdo> searchWorkflow(@RequestBody final WorkflowSearchFilterEdo workflowSearchFilterEdo,
       final HttpServletRequest request) throws Exception {
 
-    final List<Workflow> modelList = this.workflowService.search(CoreModelEdoMapper.fromEdo(workflowSearchFilterEdo));
+    final Set<Workflow> modelList = this.workflowService.search(CoreModelEdoMapper.fromEdo(workflowSearchFilterEdo));
 
-    return ControllerHelper.createResponseEntity(request, new WorkflowListEdo(CoreModelEdoMapper.toWorkflowEdoList(modelList)),
+    return ControllerHelper.createResponseEntity(request, new WorkflowListEdo(CoreModelEdoMapper.toWorkflowEdoSet(modelList)),
         HttpStatus.ACCEPTED);
   }
 

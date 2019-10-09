@@ -3,7 +3,7 @@ package com.pth.iflow.core.storage.dao.impl;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
@@ -29,7 +29,12 @@ public class UserGroupDao extends DaoBasicClass<UserGroup> implements IUserGroup
   }
 
   @Override
-  public List<UserGroup> getListByIdList(final List<Long> idList) throws IFlowStorageException {
+  public UserGroup getByIdentity(final String identity) throws IFlowStorageException {
+    return getModelByIdentity(identity, "SELECT * FROM user_group where identity=?", "User Group");
+  }
+
+  @Override
+  public Set<UserGroup> getListByIdList(final Set<Long> idList) throws IFlowStorageException {
 
     String sqlSelect = "SELECT * FROM user_group where id in (";
     sqlSelect += StringUtils.repeat("?, ", idList.size());
@@ -42,11 +47,24 @@ public class UserGroupDao extends DaoBasicClass<UserGroup> implements IUserGroup
   }
 
   @Override
+  public Set<UserGroup> getListByIdentityList(final Set<String> idList) throws IFlowStorageException {
+    String sqlSelect = "SELECT * FROM user_group where identity in (";
+    sqlSelect += StringUtils.repeat("?, ", idList.size());
+
+    sqlSelect = sqlSelect.trim();
+    sqlSelect = sqlSelect.endsWith(",") ? sqlSelect.substring(0, sqlSelect.length() - 1) : sqlSelect;
+    sqlSelect += ")";
+
+    return this.getModelListByIdentityList(idList, sqlSelect, "User Group");
+  }
+
+  @Override
   protected UserGroup modelFromResultSet(final ResultSet rs) throws SQLException {
     final UserGroup model = new UserGroup();
     model.setId(rs.getLong("id"));
     model.setCompanyId(rs.getLong("company_id"));
     model.setTitle(rs.getString("title"));
+    model.setIdentity(rs.getString("identity"));
     model.setStatus(rs.getInt("status"));
     model.setCreatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("created_at")));
     model.setUpdatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("updated_at")));
@@ -56,22 +74,18 @@ public class UserGroupDao extends DaoBasicClass<UserGroup> implements IUserGroup
   }
 
   @Override
-  public List<UserGroup> getListByCompanyId(final Long companyId) throws IFlowStorageException {
+  public Set<UserGroup> getListByCompanyId(final Long companyId) throws IFlowStorageException {
 
     return getModelListById(companyId, "SELECT * FROM user_group where company_id=?", "User Group");
   }
 
   @Override
-  public List<Long> listGroupUserId(final Long groupId) throws IFlowStorageException {
-    return getIdListById(groupId, "SELECT * FROM user_usergroup where user_group=?", "user_id", "User List");
-  }
-
-  @Override
   protected PreparedStatement prepareInsertPreparedStatement(final UserGroup model, final PreparedStatement ps) throws SQLException {
-    ps.setLong(1, model.getCompanyId());
-    ps.setString(2, model.getTitle());
-    ps.setInt(3, model.getVersion());
-    ps.setInt(4, model.getStatus());
+    ps.setString(1, model.getIdentity());
+    ps.setLong(2, model.getCompanyId());
+    ps.setString(3, model.getTitle());
+    ps.setInt(4, model.getVersion());
+    ps.setInt(5, model.getStatus());
 
     return ps;
   }
@@ -89,7 +103,7 @@ public class UserGroupDao extends DaoBasicClass<UserGroup> implements IUserGroup
 
   @Override
   public UserGroup create(final UserGroup model) throws IFlowStorageException {
-    final String sql = "INSERT INTO user_group (company_id, title, version, status)" + "VALUES (?, ?, ?, ?)";
+    final String sql = "INSERT INTO user_group (identity, company_id, title, version, status)" + "VALUES (?, ?, ?, ?, ?)";
 
     return getById(createModel(model, "UserGroup", sql, true));
   }

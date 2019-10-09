@@ -1,6 +1,6 @@
 package com.pth.iflow.core.storage.dao;
 
-import java.util.List;
+import java.util.Set;
 
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.core.model.WorkflowMessage;
@@ -19,9 +19,9 @@ public interface IWorkflowMessageDao {
 
   public WorkflowMessage getById(Long id) throws IFlowStorageException;
 
-  public List<WorkflowMessage> getNotClosedNotExpiredListByUserId(final Long userId) throws IFlowStorageException;
+  public Set<WorkflowMessage> getNotClosedNotExpiredListByUserId(final Long userId) throws IFlowStorageException;
 
-  public List<WorkflowMessage> getNotClosedNotExpiredListByWorkflowId(final Long workflowId) throws IFlowStorageException;
+  public Set<WorkflowMessage> getNotClosedNotExpiredListByWorkflowId(final Long workflowId) throws IFlowStorageException;
 
   void deleteWorkflowMessage(final Long messageId) throws IFlowStorageException;
 

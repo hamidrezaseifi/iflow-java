@@ -1,23 +1,26 @@
 package com.pth.iflow.core.service;
 
-import java.util.List;
+import java.util.Set;
 
 import com.pth.iflow.core.model.Department;
 import com.pth.iflow.core.model.DepartmentGroup;
 import com.pth.iflow.core.model.User;
+import com.pth.iflow.core.model.helper.ICoreIdentityModel;
 
 public interface IDepartmentService {
 
-  Department save(Department model);
+  ICoreIdentityModel save(Department model);
 
   Department getById(final Long id);
 
-  List<Department> getListByIdList(final List<Long> idList);
+  Set<Department> getListByIdList(final Set<Long> idList);
 
-  List<Department> getListByIdCompanyId(final Long id);
+  Set<Department> getListByIdentityList(final Set<String> idList);
 
-  List<DepartmentGroup> getDepartmentGroups(final Long id);
+  Set<Department> getListByIdCompanyId(final Long id);
 
-  List<User> getAllUserListByDepartmentId(final Long id);
+  Set<DepartmentGroup> getDepartmentGroups(final Long id);
+
+  Set<User> getAllUserListByDepartmentId(final Long id);
 
 }

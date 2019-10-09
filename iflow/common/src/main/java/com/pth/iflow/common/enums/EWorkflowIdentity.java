@@ -1,5 +1,7 @@
 package com.pth.iflow.common.enums;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.pth.iflow.common.exceptions.IFlowInvalidEnumValueException;
 
 public enum EWorkflowIdentity implements IEnumNameValidator {
@@ -24,6 +26,14 @@ public enum EWorkflowIdentity implements IEnumNameValidator {
     }
 
     throw new IFlowInvalidEnumValueException("Invalid value('" + nameString + "') for EWorkflowIdentity.");
+  }
+
+  public static boolean isNotSet(final String identity) {
+    if (StringUtils.isEmpty(identity)) {
+      return true;
+    }
+
+    return NOT_SET.getName().equals(identity);
   }
 
 }

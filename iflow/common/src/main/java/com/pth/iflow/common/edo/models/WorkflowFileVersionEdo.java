@@ -6,6 +6,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+
 import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 
 @XmlRootElement(name = "WorkflowFileVersion", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
@@ -13,25 +14,26 @@ import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 @XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "WorkflowFileVersion" + IFlowJaxbDefinition.TYPE_PREFIX)
 public class WorkflowFileVersionEdo {
 
-  @XmlElement(name = "CreatedBy", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long createdBy;
+  @NotNull(message = "CreatedByIdentity must not be null!")
+  @XmlElement(name = "CreatedByIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String  createdByIdentity;
 
-  @NotNull
+  @NotNull(message = "FilePath must not be null!")
   @XmlElement(name = "FilePath", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String filePath;
+  private String  filePath;
 
   @XmlElement(name = "Comments", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String comments;
+  private String  comments;
 
-  @NotNull
+  @NotNull(message = "FileVersion must not be null!")
   @XmlElement(name = "FileVersion", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer fileVersion;
 
-  @NotNull
+  @NotNull(message = "Status must not be null!")
   @XmlElement(name = "Status", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer status;
 
-  @NotNull
+  @NotNull(message = "Version must not be null!")
   @XmlElement(name = "Version", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer version;
 
@@ -43,12 +45,12 @@ public class WorkflowFileVersionEdo {
     this.filePath = filePath;
   }
 
-  public Long getCreatedBy() {
-    return this.createdBy;
+  public String getCreatedByIdentity() {
+    return this.createdByIdentity;
   }
 
-  public void setCreatedBy(final Long createdBy) {
-    this.createdBy = createdBy;
+  public void setCreatedByIdentity(final String createdByIdentity) {
+    this.createdByIdentity = createdByIdentity;
   }
 
   public String getComments() {

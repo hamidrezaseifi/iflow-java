@@ -1,6 +1,6 @@
 package com.pth.iflow.core.service;
 
-import java.util.List;
+import java.util.Set;
 
 import com.pth.iflow.core.model.WorkflowAction;
 
@@ -10,6 +10,6 @@ public interface IWorkflowActionService {
 
   public WorkflowAction getById(Long id);
 
-  public List<WorkflowAction> getListByIdWorkflowId(final Long id);
+  public Set<WorkflowAction> getListByIdWorkflowId(final Long id);
 
 }

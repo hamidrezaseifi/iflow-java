@@ -1,27 +1,31 @@
 package com.pth.iflow.core.model;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
+
 import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
 import com.pth.iflow.core.model.helper.CoreModelHelper;
+import com.pth.iflow.core.model.helper.ICoreIdentityModel;
 
-public class WorkflowType extends CoreModelHelper {
+public class WorkflowType extends CoreModelHelper implements ICoreIdentityModel {
 
-  private Long                         id;
-  private Long                         companyId;
-  private Long                         baseTypeId;
-  private String                       title;
-  private String                       comments;
-  private Integer                      status;
-  private Boolean                      sendToController;
-  private EWorkflowTypeAssignType      assignType;
-  private Boolean                      increaseStepAutomatic;
-  private Boolean                      allowAssign;
-  private Integer                      version;
-  private LocalDateTime                createdAt;
-  private LocalDateTime                updatedAt;
-  private final List<WorkflowTypeStep> steps = new ArrayList<>();
+  private Long                              id;
+  private String                            identity;
+  private Long                              companyId;
+  private String                            companyIdentity;
+  private Long                              baseTypeId;
+  private String                            title;
+  private String                            comments;
+  private Integer                           status;
+  private Boolean                           sendToController;
+  private EWorkflowTypeAssignType           assignType;
+  private Boolean                           increaseStepAutomatic;
+  private Boolean                           allowAssign;
+  private Integer                           version;
+  private LocalDateTime                     createdAt;
+  private LocalDateTime                     updatedAt;
+  private final Set<WorkflowTypeStep> steps = new HashSet<>();
 
   @Override
   public Long getId() {
@@ -33,12 +37,30 @@ public class WorkflowType extends CoreModelHelper {
     this.id = id;
   }
 
+  @Override
+  public String getIdentity() {
+    return identity;
+  }
+
+  @Override
+  public void setIdentity(final String identity) {
+    this.identity = identity;
+  }
+
   public Long getCompanyId() {
     return this.companyId;
   }
 
   public void setCompanyId(final Long companyId) {
     this.companyId = companyId;
+  }
+
+  public String getCompanyIdentity() {
+    return companyIdentity;
+  }
+
+  public void setCompanyIdentity(final String companyIdentity) {
+    this.companyIdentity = companyIdentity;
   }
 
   /**
@@ -111,10 +133,12 @@ public class WorkflowType extends CoreModelHelper {
     this.allowAssign = allowAssign;
   }
 
+  @Override
   public Integer getVersion() {
     return this.version;
   }
 
+  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
@@ -135,11 +159,11 @@ public class WorkflowType extends CoreModelHelper {
     this.updatedAt = updatedAt;
   }
 
-  public List<WorkflowTypeStep> getSteps() {
+  public Set<WorkflowTypeStep> getSteps() {
     return this.steps;
   }
 
-  public void setSteps(final List<WorkflowTypeStep> steps) {
+  public void setSteps(final Set<WorkflowTypeStep> steps) {
     this.steps.clear();
     if (steps != null) {
       this.steps.addAll(steps);

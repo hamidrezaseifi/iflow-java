@@ -3,8 +3,8 @@ package com.pth.iflow.core.storage.dao.impl;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,11 +34,16 @@ public class WorkflowTypeDao extends DaoBasicClass<WorkflowType> implements IWor
 
   @Override
   public WorkflowType getById(final Long id) throws IFlowStorageException {
-    return this.getModelById(id, "SELECT * FROM workflow_type where id=?", "Workflow");
+    return this.getModelById(id, "SELECT * FROM workflow_type where id=?", "WorkflowType");
   }
 
   @Override
-  public List<WorkflowType> getListByIdList(final List<Long> idList) throws IFlowStorageException {
+  public WorkflowType getByIdentity(final String identity) throws IFlowStorageException {
+    return getModelByIdentity(identity, "SELECT * FROM workflow_type where identity=?", "WorkflowType");
+  }
+
+  @Override
+  public Set<WorkflowType> getListByIdList(final Set<Long> idList) throws IFlowStorageException {
     String sqlSelect = "SELECT * FROM workflow_type where id in (";
     sqlSelect += StringUtils.repeat("?, ", idList.size());
 
@@ -46,7 +51,19 @@ public class WorkflowTypeDao extends DaoBasicClass<WorkflowType> implements IWor
     sqlSelect = sqlSelect.endsWith(",") ? sqlSelect.substring(0, sqlSelect.length() - 1) : sqlSelect;
     sqlSelect += ")";
 
-    return this.getModelListByIdList(idList, sqlSelect, "Workflow");
+    return this.getModelListByIdList(idList, sqlSelect, "WorkflowType");
+  }
+
+  @Override
+  public Set<WorkflowType> getListByIdentityList(final Set<String> idList) throws IFlowStorageException {
+    String sqlSelect = "SELECT * FROM workflow_type where identity in (";
+    sqlSelect += StringUtils.repeat("?, ", idList.size());
+
+    sqlSelect = sqlSelect.trim();
+    sqlSelect = sqlSelect.endsWith(",") ? sqlSelect.substring(0, sqlSelect.length() - 1) : sqlSelect;
+    sqlSelect += ")";
+
+    return this.getModelListByIdentityList(idList, sqlSelect, "WorkflowType");
   }
 
   @Override
@@ -65,28 +82,29 @@ public class WorkflowTypeDao extends DaoBasicClass<WorkflowType> implements IWor
     model.setIncreaseStepAutomatic(rs.getInt("increase_step_automatic") == 1);
     model.setAllowAssign(rs.getInt("allow_assign") == 1);
     model.setSteps(this.workflowTypeStepDao.getListByWorkflowTypeId(model.getId()));
-
+    model.setIdentity(rs.getString("identity"));
     return model;
   }
 
   @Override
-  public List<WorkflowType> getListByCompanyId(final Long id) throws IFlowStorageException {
-    return this.getModelListById(id, "SELECT * FROM workflow_type where company_id=?", "Workflow");
+  public Set<WorkflowType> getListByCompanyId(final Long id) throws IFlowStorageException {
+    return this.getModelListById(id, "SELECT * FROM workflow_type where company_id=?", "WorkflowType");
   }
 
   @Override
   protected PreparedStatement prepareInsertPreparedStatement(final WorkflowType model, final PreparedStatement ps)
       throws SQLException {
-    ps.setLong(1, model.getCompanyId());
-    ps.setLong(2, model.getBaseTypeId());
-    ps.setString(3, model.getTitle());
-    ps.setInt(4, model.geAssignType().getValue());
-    ps.setInt(5, model.getSendToController() ? 1 : 0);
-    ps.setInt(6, model.getIncreaseStepAutomatic() ? 1 : 0);
-    ps.setInt(7, model.getAllowAssign() ? 1 : 0);
-    ps.setString(8, model.getComments());
-    ps.setInt(9, model.getVersion());
-    ps.setInt(10, model.getStatus());
+    ps.setString(1, model.getIdentity());
+    ps.setLong(2, model.getCompanyId());
+    ps.setLong(3, model.getBaseTypeId());
+    ps.setString(4, model.getTitle());
+    ps.setInt(5, model.geAssignType().getValue());
+    ps.setInt(6, model.getSendToController() ? 1 : 0);
+    ps.setInt(7, model.getIncreaseStepAutomatic() ? 1 : 0);
+    ps.setInt(8, model.getAllowAssign() ? 1 : 0);
+    ps.setString(9, model.getComments());
+    ps.setInt(10, model.getVersion());
+    ps.setInt(11, model.getStatus());
 
     return ps;
   }
@@ -111,8 +129,8 @@ public class WorkflowTypeDao extends DaoBasicClass<WorkflowType> implements IWor
 
   @Override
   public WorkflowType create(final WorkflowType model) throws IFlowStorageException {
-    final String sql = "INSERT INTO workflow_type (company_id, workflow_base_type, title, assign_type, send_to_controller, increase_step_automatic, allow_assign, comments, version, status)"
-        + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    final String sql = "INSERT INTO workflow_type (identity, company_id, workflow_base_type, title, assign_type, send_to_controller, increase_step_automatic, allow_assign, comments, version, status)"
+        + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     final TransactionStatus transactionStatus = this.startTransaction(true);
     try {
@@ -135,7 +153,7 @@ public class WorkflowTypeDao extends DaoBasicClass<WorkflowType> implements IWor
 
     this.workflowTypeStepDao.deleteByWorkflowTypeId(workflowTypeId, false);
 
-    final List<WorkflowTypeStep> resultList = new ArrayList<>();
+    final Set<WorkflowTypeStep> resultList = new HashSet<>();
 
     for (final WorkflowTypeStep model : workflowType.getSteps()) {
       model.setWorkflowTypeId(workflowTypeId);

@@ -1,7 +1,7 @@
 package com.pth.iflow.common.edo.models;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -20,24 +20,24 @@ import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 public class DepartmentEdo {
 
   @XmlElement(name = "Identity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String                         identity;
+  private String                        identity;
 
   @NotNull
   @XmlElement(name = "Title", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String                         title;
+  private String                        title;
 
   @NotNull
   @XmlElement(name = "Status", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Integer                        status;
+  private Integer                       status;
 
   @NotNull
   @XmlElement(name = "Version", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Integer                        version;
+  private Integer                       version;
 
   @NotNull
   @XmlElementWrapper(name = "DepartmentGroupList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "DepartmentGroup", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private final List<DepartmentGroupEdo> departmentGroups = new ArrayList<>();
+  private final Set<DepartmentGroupEdo> departmentGroups = new HashSet<>();
 
   public String getIdentity() {
     return this.identity;
@@ -71,12 +71,12 @@ public class DepartmentEdo {
     this.version = version;
   }
 
-  public List<DepartmentGroupEdo> getDepartmentGroups() {
+  public Set<DepartmentGroupEdo> getDepartmentGroups() {
     return this.departmentGroups;
   }
 
   @JsonSetter
-  public void setDepartmentGroups(final List<DepartmentGroupEdo> groups) {
+  public void setDepartmentGroups(final Set<DepartmentGroupEdo> groups) {
     this.departmentGroups.clear();
     if (groups != null) {
       this.departmentGroups.addAll(groups);

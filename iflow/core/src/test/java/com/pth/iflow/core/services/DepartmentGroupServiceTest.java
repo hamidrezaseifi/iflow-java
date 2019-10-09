@@ -3,7 +3,7 @@ package com.pth.iflow.core.services;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-import java.util.List;
+import java.util.Set;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -64,11 +64,11 @@ public class DepartmentGroupServiceTest extends TestDataProducer {
   @Test
   public void testGetListByIdList() throws Exception {
 
-    final List<Long> idList = this.getTestDepartmentIdList();
-    final List<DepartmentGroup> list = this.getTestDepartmentGroupList();
-    when(this.departmentGroupDao.getListByIdList(any(List.class))).thenReturn(list);
+    final Set<String> idList = this.getTestDepartmentIdSet();
+    final Set<DepartmentGroup> list = this.getTestDepartmentGroupList();
+    when(this.departmentGroupDao.getListByIdentityList(any(Set.class))).thenReturn(list);
 
-    final List<DepartmentGroup> resList = this.departmentGroupService.getListByIdList(idList);
+    final Set<DepartmentGroup> resList = this.departmentGroupService.getListByIdentityList(idList);
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());
@@ -78,10 +78,10 @@ public class DepartmentGroupServiceTest extends TestDataProducer {
   @Test
   public void testGetListByDepartmentId() throws Exception {
 
-    final List<DepartmentGroup> list = this.getTestDepartmentGroupList();
+    final Set<DepartmentGroup> list = this.getTestDepartmentGroupList();
     when(this.departmentGroupDao.getListByDepartmentId(any(Long.class))).thenReturn(list);
 
-    final List<DepartmentGroup> resList = this.departmentGroupService.getListByDepartmentId(1L);
+    final Set<DepartmentGroup> resList = this.departmentGroupService.getListByDepartmentId(1L);
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());
@@ -91,13 +91,13 @@ public class DepartmentGroupServiceTest extends TestDataProducer {
   @Test
   public void testGetAllUserIdListByDepartmentGroupId() throws Exception {
 
-    final List<Long> list = this.getTestUserIdList();
-    final List<User> userList = this.getTestUserList();
+    final Set<String> list = this.getTestUserIdSet();
+    final Set<User> userList = this.getTestUserList();
 
-    when(this.departmentGroupDao.getAllUserIdListByDepartmentGroupId(any(Long.class))).thenReturn(list);
-    when(this.userDao.getListByIdList(any(List.class))).thenReturn(userList);
+    when(this.departmentGroupDao.getAllUserIdentityListByDepartmentGroupId(any(Long.class))).thenReturn(list);
+    when(this.userDao.getListByIdentityList(any(Set.class))).thenReturn(userList);
 
-    final List<User> resList = this.departmentGroupService.getAllUserListByDepartmentGroupId(1L);
+    final Set<User> resList = this.departmentGroupService.getAllUserListByDepartmentGroupId(1L);
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());

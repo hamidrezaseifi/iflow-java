@@ -3,13 +3,15 @@ package com.pth.iflow.core.storage.dao.impl;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pth.iflow.core.model.WorkflowFileVersion;
+import com.pth.iflow.core.storage.dao.IUserDao;
 import com.pth.iflow.core.storage.dao.IWorkflowFileVersionDao;
 import com.pth.iflow.core.storage.dao.basic.DaoBasicClass;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
@@ -18,6 +20,9 @@ import com.pth.iflow.core.storage.dao.utils.SqlUtils;
 @Transactional
 @Repository
 public class WorkflowFileVersionDao extends DaoBasicClass<WorkflowFileVersion> implements IWorkflowFileVersionDao {
+
+  @Autowired
+  private IUserDao userDao;
 
   public WorkflowFileVersionDao() {
 
@@ -58,7 +63,7 @@ public class WorkflowFileVersionDao extends DaoBasicClass<WorkflowFileVersion> i
   }
 
   @Override
-  public List<WorkflowFileVersion> getListByIdList(final List<Long> idList) throws IFlowStorageException {
+  public Set<WorkflowFileVersion> getListByIdList(final Set<Long> idList) throws IFlowStorageException {
     String sqlSelect = "SELECT * FROM workflow_files_versions where id in (";
     sqlSelect += StringUtils.repeat("?, ", idList.size());
 
@@ -70,7 +75,7 @@ public class WorkflowFileVersionDao extends DaoBasicClass<WorkflowFileVersion> i
   }
 
   @Override
-  public List<WorkflowFileVersion> getListByWorkflowFileId(final Long id) throws IFlowStorageException {
+  public Set<WorkflowFileVersion> getListByWorkflowFileId(final Long id) throws IFlowStorageException {
     return getModelListById(id, "SELECT * FROM workflow_files_versions where workflow_file_id=?", "WorkflowFileVersion");
   }
 
@@ -86,7 +91,8 @@ public class WorkflowFileVersionDao extends DaoBasicClass<WorkflowFileVersion> i
     model.setVersion(rs.getInt("version"));
     model.setComments(rs.getString("comments"));
     model.setFileVersion(rs.getInt("file_version"));
-    model.setCreatedBy(rs.getLong("created_by"));
+    model.setCreatedBy(userDao.getById(rs.getLong("created_by")));
+    model.setCreatedByIdentity(model.getCreatedBy().getEmail());
     model.setWorkflowFileId(rs.getLong("workflow_file_id"));
 
     return model;
@@ -99,7 +105,7 @@ public class WorkflowFileVersionDao extends DaoBasicClass<WorkflowFileVersion> i
     ps.setString(2, model.getFilePath());
     ps.setInt(3, model.getFileVersion());
     ps.setString(4, model.getComments());
-    ps.setLong(5, model.getCreatedBy());
+    ps.setLong(5, model.getCreatedBy().getId());
     ps.setInt(6, model.getVersion());
     ps.setInt(7, model.getStatus());
     return ps;
@@ -112,7 +118,7 @@ public class WorkflowFileVersionDao extends DaoBasicClass<WorkflowFileVersion> i
     ps.setString(2, model.getFilePath());
     ps.setInt(3, model.getFileVersion());
     ps.setString(4, model.getComments());
-    ps.setLong(5, model.getCreatedBy());
+    ps.setLong(5, model.getCreatedBy().getId());
     ps.setInt(6, model.getVersion());
     ps.setInt(7, model.getStatus());
     ps.setLong(8, model.getId());

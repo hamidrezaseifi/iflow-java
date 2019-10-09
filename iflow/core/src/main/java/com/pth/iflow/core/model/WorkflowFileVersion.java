@@ -6,7 +6,8 @@ public class WorkflowFileVersion {
 
   private Long          id;
   private Long          workflowFileId;
-  private Long          createdBy;
+  private User          createdBy;
+  private String        createdByIdentity;
   private String        filePath;
   private String        comments;
   private Integer       fileVersion;
@@ -39,12 +40,20 @@ public class WorkflowFileVersion {
     this.filePath = filePath;
   }
 
-  public Long getCreatedBy() {
+  public User getCreatedBy() {
     return this.createdBy;
   }
 
-  public void setCreatedBy(final Long createdBy) {
+  public void setCreatedBy(final User createdBy) {
     this.createdBy = createdBy;
+  }
+
+  public String getCreatedByIdentity() {
+    return createdByIdentity;
+  }
+
+  public void setCreatedByIdentity(final String createdByIdentity) {
+    this.createdByIdentity = createdByIdentity;
   }
 
   public String getComments() {

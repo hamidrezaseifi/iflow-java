@@ -6,7 +6,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import java.util.List;
+
+import java.util.Set;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -43,16 +45,16 @@ import com.pth.iflow.core.service.IUsersService;
 public class UserControllerTest extends TestDataProducer {
 
   @Autowired
-  private MockMvc mockMvc;
+  private MockMvc                                mockMvc;
 
   @Autowired
   private MappingJackson2XmlHttpMessageConverter xmlConverter;
 
   @MockBean
-  private IUsersService usersService;
+  private IUsersService                          usersService;
 
   @Value("${iflow.common.rest.api.security.client-id.internal}")
-  private String innerModulesRequestHeaderValue;
+  private String                                 innerModulesRequestHeaderValue;
 
   @Before
   public void setUp() throws Exception {
@@ -73,11 +75,10 @@ public class UserControllerTest extends TestDataProducer {
     final String userAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(userEdo);
 
     this.mockMvc
-                .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.USER_READ_BY_ID, user.getId())
-                                               .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
-                .andExpect(content().xml(userAsXmlString));
+        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.USER_READ_BY_ID, user.getId())
+            .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
+        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(content().xml(userAsXmlString));
 
     verify(this.usersService, times(1)).getUserById(any(Long.class));
 
@@ -94,9 +95,9 @@ public class UserControllerTest extends TestDataProducer {
     final String userAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(userEdo);
 
     this.mockMvc
-                .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.USER_READ_BY_EMAIL, user.getEmail())
-                                               .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
-                .andExpect(content().xml(userAsXmlString));
+        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.USER_READ_BY_EMAIL, user.getEmail())
+            .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
+        .andExpect(content().xml(userAsXmlString));
 
     verify(this.usersService, times(1)).getUserByEmail(any(String.class));
 
@@ -105,19 +106,18 @@ public class UserControllerTest extends TestDataProducer {
   @Test
   public void testReadUserDepartments() throws Exception {
 
-    final List<Department> list = this.getTestDepartmentList();
+    final Set<Department> list = this.getTestDepartmentList();
     when(this.usersService.getUserDepartments(any(Long.class))).thenReturn(list);
 
-    final DepartmentListEdo edoList = new DepartmentListEdo(CoreModelEdoMapper.toDepartmentEdoList(list));
+    final DepartmentListEdo edoList = new DepartmentListEdo(CoreModelEdoMapper.toDepartmentEdoSet(list));
 
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
 
     this.mockMvc
-                .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.USER_DEPARTMENTS_LIST, 1L)
-                                               .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
-                .andExpect(content().xml(listAsXmlString));
+        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.USER_DEPARTMENTS_LIST, 1L)
+            .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
+        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(content().xml(listAsXmlString));
 
     verify(this.usersService, times(1)).getUserDepartments(any(Long.class));
 
@@ -126,19 +126,18 @@ public class UserControllerTest extends TestDataProducer {
   @Test
   public void testReadUserDepartmentGroups() throws Exception {
 
-    final List<DepartmentGroup> list = this.getTestDepartmentGroupList();
+    final Set<DepartmentGroup> list = this.getTestDepartmentGroupList();
     when(this.usersService.getUserDepartmentGroups(any(Long.class))).thenReturn(list);
 
-    final DepartmentGroupListEdo edoList = new DepartmentGroupListEdo(CoreModelEdoMapper.toDepartmentGroupEdoList(list));
+    final DepartmentGroupListEdo edoList = new DepartmentGroupListEdo(CoreModelEdoMapper.toDepartmentGroupEdoSet(list));
 
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
 
     this.mockMvc
-                .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.USER_DEPARTMENTGROUPS_LIST, 1L)
-                                               .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
-                .andExpect(content().xml(listAsXmlString));
+        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.USER_DEPARTMENTGROUPS_LIST, 1L)
+            .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
+        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(content().xml(listAsXmlString));
 
     verify(this.usersService, times(1)).getUserDepartmentGroups(any(Long.class));
 
@@ -147,19 +146,18 @@ public class UserControllerTest extends TestDataProducer {
   @Test
   public void testReadUserGroups() throws Exception {
 
-    final List<UserGroup> list = this.getTestUserGroupList();
+    final Set<UserGroup> list = this.getTestUserGroupList();
     when(this.usersService.getUserGroups(any(Long.class))).thenReturn(list);
 
-    final UserGroupListEdo edoList = new UserGroupListEdo(CoreModelEdoMapper.toUserGroupEdoList(list));
+    final UserGroupListEdo edoList = new UserGroupListEdo(CoreModelEdoMapper.toUserGroupEdoSet(list));
 
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
 
     this.mockMvc
-                .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.USER_USERGROUPS_LIST, 1L)
-                                               .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
-                .andExpect(content().xml(listAsXmlString));
+        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.USER_USERGROUPS_LIST, 1L)
+            .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
+        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(content().xml(listAsXmlString));
 
     verify(this.usersService, times(1)).getUserGroups(any(Long.class));
 
@@ -168,20 +166,19 @@ public class UserControllerTest extends TestDataProducer {
   @Test
   public void testReadUserDeputies() throws Exception {
 
-    final List<User> list = this.getTestUserList();
+    final Set<User> list = this.getTestUserList();
     when(this.usersService.getUserDeputies(any(Long.class))).thenReturn(list);
 
     final UserListEdo listEdo = new UserListEdo();
-    listEdo.setUsers(CoreModelEdoMapper.toUserEdoList(list));
+    listEdo.setUsers(CoreModelEdoMapper.toUserEdoSet(list));
 
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(listEdo);
 
     this.mockMvc
-                .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.USER_DEPUTIES_LIST, 1L)
-                                               .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
-                .andExpect(content().xml(listAsXmlString));
+        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.USER_DEPUTIES_LIST, 1L)
+            .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
+        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(content().xml(listAsXmlString));
 
     verify(this.usersService, times(1)).getUserDeputies(any(Long.class));
 
@@ -190,20 +187,19 @@ public class UserControllerTest extends TestDataProducer {
   @Test
   public void testReadCompanyUsers() throws Exception {
 
-    final List<User> list = this.getTestUserList();
+    final Set<User> list = this.getTestUserList();
     when(this.usersService.getCompanyUsers(any(Long.class))).thenReturn(list);
 
     final UserListEdo listEdo = new UserListEdo();
-    listEdo.setUsers(CoreModelEdoMapper.toUserEdoList(list));
+    listEdo.setUsers(CoreModelEdoMapper.toUserEdoSet(list));
 
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(listEdo);
 
     this.mockMvc
-                .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.USER_USER_LIST_BY_COMPANY, 1L)
-                                               .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
-                .andExpect(content().xml(listAsXmlString));
+        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.USER_USER_LIST_BY_COMPANY, 1L)
+            .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
+        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(content().xml(listAsXmlString));
 
     verify(this.usersService, times(1)).getCompanyUsers(any(Long.class));
 
