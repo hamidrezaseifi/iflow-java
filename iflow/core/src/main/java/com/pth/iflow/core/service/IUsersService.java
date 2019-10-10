@@ -1,7 +1,6 @@
 package com.pth.iflow.core.service;
 
-import java.util.Set;
-
+import java.util.List;
 import com.pth.iflow.core.model.Department;
 import com.pth.iflow.core.model.DepartmentGroup;
 import com.pth.iflow.core.model.User;
@@ -15,14 +14,14 @@ public interface IUsersService {
 
   User getUserByEmail(final String email);
 
-  Set<UserGroup> getUserGroups(final Long id);
+  List<UserGroup> getUserGroups(final Long id);
 
-  Set<Department> getUserDepartments(final Long id);
+  List<Department> getUserDepartments(final Long id);
 
-  Set<DepartmentGroup> getUserDepartmentGroups(final Long id);
+  List<DepartmentGroup> getUserDepartmentGroups(final Long id);
 
-  Set<User> getUserDeputies(final Long id);
+  List<User> getUserDeputies(final Long id);
 
-  Set<User> getCompanyUsers(final Long companyId);
+  List<User> getCompanyUsers(final Long companyId);
 
 }

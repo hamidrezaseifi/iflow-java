@@ -1,13 +1,11 @@
 package com.pth.iflow.core.model.mapper;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
-import java.util.Set;
-import java.util.HashSet;
-
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
-
 import com.pth.iflow.common.edo.models.CompanyEdo;
 import com.pth.iflow.common.edo.models.DepartmentEdo;
 import com.pth.iflow.common.edo.models.DepartmentGroupEdo;
@@ -104,7 +102,7 @@ public class CoreModelEdoMapper {
     edo.setTitle(model.getTitle());
     edo.setStatus(model.getStatus());
     edo.setIdentity(model.getIdentity());
-    edo.setDepartmentGroups(CoreModelEdoMapper.toDepartmentGroupEdoSet(model.getDepartmentGroups()));
+    edo.setDepartmentGroups(CoreModelEdoMapper.toDepartmentGroupEdoList(model.getDepartmentGroups()));
     edo.setVersion(model.getVersion());
 
     return edo;
@@ -118,7 +116,7 @@ public class CoreModelEdoMapper {
     model.setTitle(edo.getTitle());
     model.setStatus(edo.getStatus());
     model.setIdentity(edo.getIdentity());
-    model.setDepartmentGroups(CoreModelEdoMapper.fromDepartmentGroupEdoSet(edo.getDepartmentGroups()));
+    model.setDepartmentGroups(CoreModelEdoMapper.fromDepartmentGroupEdoList(edo.getDepartmentGroups()));
     model.setVersion(edo.getVersion());
 
     return model;
@@ -222,8 +220,8 @@ public class CoreModelEdoMapper {
     edo.setVersion(model.getVersion());
     edo.setIdentity(model.getIdentity());
 
-    edo.setFiles(toWorkflowFileEdoSet(model.getFiles()));
-    edo.setActions(toWorkflowActionEdoSet(model.getActions()));
+    edo.setFiles(toWorkflowFileEdoList(model.getFiles()));
+    edo.setActions(toWorkflowActionEdoList(model.getActions()));
 
     return edo;
   }
@@ -242,8 +240,8 @@ public class CoreModelEdoMapper {
     model.setWorkflowTypeIdentity(edo.getWorkflowTypeIdentity());
     model.setIdentity(edo.getIdentity());
 
-    model.setFiles(fromWorkflowFileEdoSet(edo.getFiles()));
-    model.setActions(fromWorkflowActionEdoSet(edo.getActions()));
+    model.setFiles(fromWorkflowFileEdoList(edo.getFiles()));
+    model.setActions(fromWorkflowActionEdoList(edo.getActions()));
 
     return model;
   }
@@ -318,7 +316,7 @@ public class CoreModelEdoMapper {
     edo.setActiveFileVersion(model.getActiveFileVersion());
     edo.setVersion(model.getVersion());
 
-    edo.setFileVersions(toWorkflowFileVersionEdoSet(model.getFileVersions()));
+    edo.setFileVersions(toWorkflowFileVersionEdoList(model.getFileVersions()));
 
     return edo;
   }
@@ -337,7 +335,7 @@ public class CoreModelEdoMapper {
     model.setActiveFileVersion(edo.getActiveFileVersion());
     model.setVersion(edo.getVersion());
 
-    model.setFileVersions(fromWorkflowFileVersionEdoSet(edo.getFileVersions()));
+    model.setFileVersions(fromWorkflowFileVersionEdoList(edo.getFileVersions()));
 
     return model;
   }
@@ -380,7 +378,7 @@ public class CoreModelEdoMapper {
     edo.setAssignType(model.geAssignType().getValue());
     edo.setIncreaseStepAutomatic(model.getIncreaseStepAutomatic());
     edo.setAllowAssign(model.getAllowAssign());
-    edo.setSteps(toWorkflowTypeStepEdoSet(model.getSteps()));
+    edo.setSteps(toWorkflowTypeStepEdoList(model.getSteps()));
     edo.setVersion(model.getVersion());
 
     return edo;
@@ -401,7 +399,7 @@ public class CoreModelEdoMapper {
     model.setAllowAssign(edo.getAllowAssign());
     model.setIncreaseStepAutomatic(edo.getIncreaseStepAutomatic());
     model.setVersion(edo.getVersion());
-    model.setSteps(fromWorkflowTypeStepEdoSet(edo.getSteps()));
+    model.setSteps(fromWorkflowTypeStepEdoList(edo.getSteps()));
 
     return model;
   }
@@ -429,153 +427,148 @@ public class CoreModelEdoMapper {
 
   }
 
-  public static Set<WorkflowFileVersionEdo> toWorkflowFileVersionEdoSet(final Set<WorkflowFileVersion> modelSet) {
-    final Set<WorkflowFileVersionEdo> edoSet = new HashSet<>();
-    for (final WorkflowFileVersion model : modelSet) {
-      edoSet.add(toEdo(model));
+  public static List<WorkflowFileVersionEdo> toWorkflowFileVersionEdoList(final List<WorkflowFileVersion> modelList) {
+    final List<WorkflowFileVersionEdo> edoList = new ArrayList<>();
+    for (final WorkflowFileVersion model : modelList) {
+      edoList.add(toEdo(model));
     }
 
-    return edoSet;
+    return edoList;
   }
 
-  public static Set<WorkflowFileVersion> fromWorkflowFileVersionEdoSet(final Set<WorkflowFileVersionEdo> edoSet)
-      throws IFlowMessageConversionFailureException {
-    final Set<WorkflowFileVersion> modelSet = new HashSet<>();
-    for (final WorkflowFileVersionEdo edo : edoSet) {
-      modelSet.add(fromEdo(edo));
+  public static List<WorkflowFileVersion> fromWorkflowFileVersionEdoList(final List<WorkflowFileVersionEdo> edoList) throws IFlowMessageConversionFailureException {
+    final List<WorkflowFileVersion> modelList = new ArrayList<>();
+    for (final WorkflowFileVersionEdo edo : edoList) {
+      modelList.add(fromEdo(edo));
     }
 
-    return modelSet;
+    return modelList;
   }
 
-  public static Set<WorkflowFileEdo> toWorkflowFileEdoSet(final Set<WorkflowFile> modelSet) {
-    final Set<WorkflowFileEdo> edoSet = new HashSet<>();
-    for (final WorkflowFile model : modelSet) {
-      edoSet.add(toEdo(model));
+  public static List<WorkflowFileEdo> toWorkflowFileEdoList(final List<WorkflowFile> modelList) {
+    final List<WorkflowFileEdo> edoList = new ArrayList<>();
+    for (final WorkflowFile model : modelList) {
+      edoList.add(toEdo(model));
     }
 
-    return edoSet;
+    return edoList;
   }
 
-  public static Set<WorkflowFile> fromWorkflowFileEdoSet(final Set<WorkflowFileEdo> edoSet)
-      throws IFlowMessageConversionFailureException {
-    final Set<WorkflowFile> modelSet = new HashSet<>();
-    for (final WorkflowFileEdo edo : edoSet) {
-      modelSet.add(fromEdo(edo));
+  public static List<WorkflowFile> fromWorkflowFileEdoList(final List<WorkflowFileEdo> edoList) throws IFlowMessageConversionFailureException {
+    final List<WorkflowFile> modelList = new ArrayList<>();
+    for (final WorkflowFileEdo edo : edoList) {
+      modelList.add(fromEdo(edo));
     }
 
-    return modelSet;
+    return modelList;
   }
 
-  public static Set<WorkflowActionEdo> toWorkflowActionEdoSet(final Set<WorkflowAction> modelSet) {
-    final Set<WorkflowActionEdo> edoSet = new HashSet<>();
-    for (final WorkflowAction model : modelSet) {
-      edoSet.add(toEdo(model));
+  public static List<WorkflowActionEdo> toWorkflowActionEdoList(final List<WorkflowAction> modelList) {
+    final List<WorkflowActionEdo> edoList = new ArrayList<>();
+    for (final WorkflowAction model : modelList) {
+      edoList.add(toEdo(model));
     }
 
-    return edoSet;
+    return edoList;
   }
 
-  public static Set<WorkflowMessageEdo> toWorkflowMessageEdoSet(final Set<WorkflowMessage> modelSet) {
-    final Set<WorkflowMessageEdo> edoSet = new HashSet<>();
-    for (final WorkflowMessage model : modelSet) {
-      edoSet.add(toEdo(model));
+  public static List<WorkflowMessageEdo> toWorkflowMessageEdoList(final List<WorkflowMessage> modelList) {
+    final List<WorkflowMessageEdo> edoList = new ArrayList<>();
+    for (final WorkflowMessage model : modelList) {
+      edoList.add(toEdo(model));
     }
 
-    return edoSet;
+    return edoList;
   }
 
-  public static Set<WorkflowAction> fromWorkflowActionEdoSet(final Set<WorkflowActionEdo> edoSet)
-      throws IFlowMessageConversionFailureException {
-    final Set<WorkflowAction> modelSet = new HashSet<>();
-    for (final WorkflowActionEdo edo : edoSet) {
-      modelSet.add(fromEdo(edo));
+  public static List<WorkflowAction> fromWorkflowActionEdoList(final List<WorkflowActionEdo> edoList) throws IFlowMessageConversionFailureException {
+    final List<WorkflowAction> modelList = new ArrayList<>();
+    for (final WorkflowActionEdo edo : edoList) {
+      modelList.add(fromEdo(edo));
     }
 
-    return modelSet;
+    return modelList;
   }
 
-  public static Set<WorkflowTypeStepEdo> toWorkflowTypeStepEdoSet(final Set<WorkflowTypeStep> modelSet) {
-    final Set<WorkflowTypeStepEdo> edoSet = new HashSet<>();
-    for (final WorkflowTypeStep model : modelSet) {
-      edoSet.add(toEdo(model));
+  public static List<WorkflowTypeStepEdo> toWorkflowTypeStepEdoList(final List<WorkflowTypeStep> modelList) {
+    final List<WorkflowTypeStepEdo> edoList = new ArrayList<>();
+    for (final WorkflowTypeStep model : modelList) {
+      edoList.add(toEdo(model));
     }
 
-    return edoSet;
+    return edoList;
   }
 
-  public static Set<WorkflowTypeStep> fromWorkflowTypeStepEdoSet(final Set<WorkflowTypeStepEdo> edoSet)
-      throws IFlowMessageConversionFailureException {
-    final Set<WorkflowTypeStep> modelSet = new HashSet<>();
-    for (final WorkflowTypeStepEdo edo : edoSet) {
-      modelSet.add(fromEdo(edo));
+  public static List<WorkflowTypeStep> fromWorkflowTypeStepEdoList(final List<WorkflowTypeStepEdo> edoList) throws IFlowMessageConversionFailureException {
+    final List<WorkflowTypeStep> modelList = new ArrayList<>();
+    for (final WorkflowTypeStepEdo edo : edoList) {
+      modelList.add(fromEdo(edo));
     }
 
-    return modelSet;
+    return modelList;
   }
 
-  public static Set<DepartmentGroupEdo> toDepartmentGroupEdoSet(final Set<DepartmentGroup> modelSet) {
-    final Set<DepartmentGroupEdo> edoSet = new HashSet<>();
-    for (final DepartmentGroup model : modelSet) {
-      edoSet.add(toEdo(model));
+  public static List<DepartmentGroupEdo> toDepartmentGroupEdoList(final List<DepartmentGroup> modelList) {
+    final List<DepartmentGroupEdo> edoList = new ArrayList<>();
+    for (final DepartmentGroup model : modelList) {
+      edoList.add(toEdo(model));
     }
 
-    return edoSet;
+    return edoList;
   }
 
-  public static Set<DepartmentGroup> fromDepartmentGroupEdoSet(final Set<DepartmentGroupEdo> edoSet)
-      throws IFlowMessageConversionFailureException {
-    final Set<DepartmentGroup> modelSet = new HashSet<>();
-    for (final DepartmentGroupEdo edo : edoSet) {
-      modelSet.add(fromEdo(edo));
+  public static List<DepartmentGroup> fromDepartmentGroupEdoList(final List<DepartmentGroupEdo> edoList) throws IFlowMessageConversionFailureException {
+    final List<DepartmentGroup> modelList = new ArrayList<>();
+    for (final DepartmentGroupEdo edo : edoList) {
+      modelList.add(fromEdo(edo));
     }
 
-    return modelSet;
+    return modelList;
   }
 
-  public static Set<WorkflowEdo> toWorkflowEdoSet(final Set<Workflow> modelSet) {
-    final Set<WorkflowEdo> edoSet = new HashSet<>();
-    for (final Workflow model : modelSet) {
-      edoSet.add(toEdo(model));
+  public static List<WorkflowEdo> toWorkflowEdoList(final List<Workflow> modelList) {
+    final List<WorkflowEdo> edoList = new ArrayList<>();
+    for (final Workflow model : modelList) {
+      edoList.add(toEdo(model));
     }
 
-    return edoSet;
+    return edoList;
   }
 
-  public static Set<WorkflowTypeEdo> toWorkflowTypeEdoSet(final Set<WorkflowType> modelSet) {
-    final Set<WorkflowTypeEdo> edoSet = new HashSet<>();
-    for (final WorkflowType model : modelSet) {
-      edoSet.add(toEdo(model));
+  public static List<WorkflowTypeEdo> toWorkflowTypeEdoList(final List<WorkflowType> modelList) {
+    final List<WorkflowTypeEdo> edoList = new ArrayList<>();
+    for (final WorkflowType model : modelList) {
+      edoList.add(toEdo(model));
     }
 
-    return edoSet;
+    return edoList;
   }
 
-  public static Set<UserGroupEdo> toUserGroupEdoSet(final Set<UserGroup> modelSet) {
-    final Set<UserGroupEdo> edoSet = new HashSet<>();
-    for (final UserGroup model : modelSet) {
-      edoSet.add(toEdo(model));
+  public static List<UserGroupEdo> toUserGroupEdoList(final List<UserGroup> modelList) {
+    final List<UserGroupEdo> edoList = new ArrayList<>();
+    for (final UserGroup model : modelList) {
+      edoList.add(toEdo(model));
     }
 
-    return edoSet;
+    return edoList;
   }
 
-  public static Set<DepartmentEdo> toDepartmentEdoSet(final Set<Department> modelSet) {
-    final Set<DepartmentEdo> edoSet = new HashSet<>();
-    for (final Department model : modelSet) {
-      edoSet.add(toEdo(model));
+  public static List<DepartmentEdo> toDepartmentEdoList(final List<Department> modelList) {
+    final List<DepartmentEdo> edoList = new ArrayList<>();
+    for (final Department model : modelList) {
+      edoList.add(toEdo(model));
     }
 
-    return edoSet;
+    return edoList;
   }
 
-  public static Set<UserEdo> toUserEdoSet(final Set<User> modelSet) {
-    final Set<UserEdo> edoSet = new HashSet<>();
-    for (final User model : modelSet) {
-      edoSet.add(toEdo(model));
+  public static List<UserEdo> toUserEdoList(final List<User> modelList) {
+    final List<UserEdo> edoList = new ArrayList<>();
+    for (final User model : modelList) {
+      edoList.add(toEdo(model));
     }
 
-    return edoSet;
+    return edoList;
   }
 
   private static <E> void validateCustomer(final E model) throws IFlowMessageConversionFailureException {

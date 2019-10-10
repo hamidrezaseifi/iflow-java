@@ -1,9 +1,8 @@
 package com.pth.iflow.core.model;
 
 import java.time.LocalDateTime;
-import java.util.Set;
-import java.util.HashSet;
-
+import java.util.ArrayList;
+import java.util.List;
 import com.pth.iflow.common.enums.EWorkflowIdentity;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 import com.pth.iflow.core.model.helper.CoreModelHelper;
@@ -11,25 +10,25 @@ import com.pth.iflow.core.model.helper.ICoreIdentityModel;
 
 public class Workflow extends CoreModelHelper implements ICoreIdentityModel {
 
-  private Long                            id;
-  private String                          identity;
-  private WorkflowType                    workflowType;
-  private WorkflowTypeStep                currentStep;
-  private User                            controller;
-  private User                            createdBy;
-  private String                          comments;
-  private EWorkflowStatus                 status;
-  private Integer                         version;
-  private LocalDateTime                   createdAt;
-  private LocalDateTime                   updatedAt;
+  private Long             id;
+  private String           identity;
+  private WorkflowType     workflowType;
+  private WorkflowTypeStep currentStep;
+  private User             controller;
+  private User             createdBy;
+  private String           comments;
+  private EWorkflowStatus  status;
+  private Integer          version;
+  private LocalDateTime    createdAt;
+  private LocalDateTime    updatedAt;
 
-  private String                          workflowTypeIdentity;
-  private String                          currentStepIdentity;
-  private String                          controllerIdentity;
-  private String                          createdByIdentity;
+  private String workflowTypeIdentity;
+  private String currentStepIdentity;
+  private String controllerIdentity;
+  private String createdByIdentity;
 
-  private final Set<WorkflowFile>   files   = new HashSet<>();
-  private final Set<WorkflowAction> actions = new HashSet<>();
+  private final List<WorkflowFile>   files   = new ArrayList<>();
+  private final List<WorkflowAction> actions = new ArrayList<>();
 
   @Override
   public Long getId() {
@@ -133,22 +132,22 @@ public class Workflow extends CoreModelHelper implements ICoreIdentityModel {
     this.updatedAt = updatedAt;
   }
 
-  public Set<WorkflowFile> getFiles() {
+  public List<WorkflowFile> getFiles() {
     return this.files;
   }
 
-  public void setFiles(final Set<WorkflowFile> files) {
+  public void setFiles(final List<WorkflowFile> files) {
     this.files.clear();
     if (files != null) {
       this.files.addAll(files);
     }
   }
 
-  public Set<WorkflowAction> getActions() {
+  public List<WorkflowAction> getActions() {
     return this.actions;
   }
 
-  public void setActions(final Set<WorkflowAction> actions) {
+  public void setActions(final List<WorkflowAction> actions) {
     this.actions.clear();
     if (actions != null) {
       this.actions.addAll(actions);

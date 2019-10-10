@@ -5,15 +5,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.HashSet;
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.pth.iflow.common.enums.EWorkflowIdentity;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.enums.EWorkflowMessageType;
@@ -31,13 +26,13 @@ import com.pth.iflow.core.storage.dao.utils.SqlUtils;
 public class WorkflowMessageDao extends DaoBasicClass<WorkflowMessage> implements IWorkflowMessageDao {
 
   @Autowired
-  private IWorkflowDao         workflowDao;
+  private IWorkflowDao workflowDao;
 
   @Autowired
   private IWorkflowTypeStepDao workflowTypeStepDao;
 
   @Autowired
-  private IUserDao             userDao;
+  private IUserDao userDao;
 
   public WorkflowMessageDao() {
 
@@ -45,8 +40,9 @@ public class WorkflowMessageDao extends DaoBasicClass<WorkflowMessage> implement
 
   @Override
   public WorkflowMessage create(final WorkflowMessage model) throws IFlowStorageException {
-    final String sql = "INSERT INTO workflow_message (workflow_id, step_id, user_id, message, created_by, message_type, version, status, expire_days)"
-        + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    final String sql =
+                     "INSERT INTO workflow_message (workflow_id, step_id, user_id, message, created_by, message_type, version, status, expire_days)"
+                       + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     verifyWorkflow(model);
 
@@ -59,7 +55,8 @@ public class WorkflowMessageDao extends DaoBasicClass<WorkflowMessage> implement
 
       return this.getById(workflowId);
 
-    } catch (final Exception e) {
+    }
+    catch (final Exception e) {
       this.rollbackTransaction(true, transactionStatus);
       logger.error("Unable to create WorkflowMessage: {}", e.toString(), e);
       throw new IFlowStorageException(e.toString(), e);
@@ -99,7 +96,8 @@ public class WorkflowMessageDao extends DaoBasicClass<WorkflowMessage> implement
 
   @Override
   public WorkflowMessage update(final WorkflowMessage model) throws IFlowStorageException {
-    final String sql = "UPDATE workflow_message SET workflow_id = ?, step_id = ?, user_id = ?, message=?, created_by = ?, message_type = ?, version = ?, status = ?, expire_days = ? WHERE id = ?";
+    final String sql =
+                     "UPDATE workflow_message SET workflow_id = ?, step_id = ?, user_id = ?, message=?, created_by = ?, message_type = ?, version = ?, status = ?, expire_days = ? WHERE id = ?";
 
     verifyWorkflow(model);
 
@@ -111,7 +109,8 @@ public class WorkflowMessageDao extends DaoBasicClass<WorkflowMessage> implement
       this.commitTransaction(true, transactionStatus);
 
       return this.getById(model.getId());
-    } catch (final Exception e) {
+    }
+    catch (final Exception e) {
       this.rollbackTransaction(true, transactionStatus);
       logger.error("Unable to update WorkflowMessage: {}", e.toString(), e);
       throw new IFlowStorageException(e.toString(), e);
@@ -119,8 +118,7 @@ public class WorkflowMessageDao extends DaoBasicClass<WorkflowMessage> implement
   }
 
   @Override
-  public void updateStatusByWorkflow(final Long workflowId, final Long stepId, final EWorkflowMessageStatus status)
-      throws IFlowStorageException {
+  public void updateStatusByWorkflow(final Long workflowId, final Long stepId, final EWorkflowMessageStatus status) throws IFlowStorageException {
     final String sql = "UPDATE workflow_message SET status = ? WHERE workflow_id = ? and step_id = ?";
 
     logger.debug("Updating WorkflowMessage ...");
@@ -138,7 +136,8 @@ public class WorkflowMessageDao extends DaoBasicClass<WorkflowMessage> implement
 
       commitTransaction(true, transactionStatus);
 
-    } catch (final Exception e) {
+    }
+    catch (final Exception e) {
       rollbackTransaction(true, transactionStatus);
       logger.error("Unable to update WorkflowMessage: {}", e.toString(), e);
       throw new IFlowStorageException(e.toString(), e);
@@ -147,8 +146,7 @@ public class WorkflowMessageDao extends DaoBasicClass<WorkflowMessage> implement
   }
 
   @Override
-  public void updateStatusByWorkflowAndUser(final Long workflowId, final Long stepId, final Long userid,
-      final EWorkflowMessageStatus status) throws IFlowStorageException {
+  public void updateStatusByWorkflowAndUser(final Long workflowId, final Long stepId, final Long userid, final EWorkflowMessageStatus status) throws IFlowStorageException {
     final String sql = "UPDATE workflow_message SET status = ? WHERE workflow_id = ? and step_id = ? and user_id = ?";
 
     logger.debug("Updating WorkflowMessage ...");
@@ -167,7 +165,8 @@ public class WorkflowMessageDao extends DaoBasicClass<WorkflowMessage> implement
 
       commitTransaction(true, transactionStatus);
 
-    } catch (final Exception e) {
+    }
+    catch (final Exception e) {
       rollbackTransaction(true, transactionStatus);
       logger.error("Unable to update WorkflowMessage: {}", e.toString(), e);
       throw new IFlowStorageException(e.toString(), e);
@@ -183,11 +182,12 @@ public class WorkflowMessageDao extends DaoBasicClass<WorkflowMessage> implement
   }
 
   @Override
-  public Set<WorkflowMessage> getNotClosedNotExpiredListByUserId(final Long userId) throws IFlowStorageException {
+  public List<WorkflowMessage> getNotClosedNotExpiredListByUserId(final Long userId) throws IFlowStorageException {
     logger.info("Dao read WorkflowMessage for user id: {}", userId);
 
     List<WorkflowMessage> list = new ArrayList<>();
-    final String sql = "SELECT * FROM workflow_message where user_id=? and TIMESTAMPDIFF(DAY, created_at, now()) < expire_days and status!=?";
+    final String sql =
+                     "SELECT * FROM workflow_message where user_id=? and TIMESTAMPDIFF(DAY, created_at, now()) < expire_days and status!=?";
 
     try {
       list = this.jdbcTemplate.query(con -> {
@@ -203,19 +203,21 @@ public class WorkflowMessageDao extends DaoBasicClass<WorkflowMessage> implement
 
       });
 
-    } catch (final Exception e) {
+    }
+    catch (final Exception e) {
       throw new IFlowStorageException("Unable to read WorkflowMessage for user id: " + userId + " : " + e.toString());
     }
 
-    return new HashSet<>(list.stream().collect(Collectors.toSet()));
+    return list;
   }
 
   @Override
-  public Set<WorkflowMessage> getNotClosedNotExpiredListByWorkflowId(final Long workflowId) throws IFlowStorageException {
+  public List<WorkflowMessage> getNotClosedNotExpiredListByWorkflowId(final Long workflowId) throws IFlowStorageException {
     logger.info("Dao read WorkflowMessage for workflow id: {}", workflowId);
 
     List<WorkflowMessage> list = new ArrayList<>();
-    final String sql = "SELECT * FROM workflow_message where workflow_id=? and TIMESTAMPDIFF(DAY, created_at, now()) < expire_days and status!=?";
+    final String sql =
+                     "SELECT * FROM workflow_message where workflow_id=? and TIMESTAMPDIFF(DAY, created_at, now()) < expire_days and status!=?";
 
     try {
       list = this.jdbcTemplate.query(con -> {
@@ -231,11 +233,12 @@ public class WorkflowMessageDao extends DaoBasicClass<WorkflowMessage> implement
 
       });
 
-    } catch (final Exception e) {
+    }
+    catch (final Exception e) {
       throw new IFlowStorageException("Unable to read WorkflowMessage for workflow id: " + workflowId + " : " + e.toString());
     }
 
-    return new HashSet<>(list.stream().collect(Collectors.toSet()));
+    return list;
   }
 
   @Override
@@ -263,8 +266,7 @@ public class WorkflowMessageDao extends DaoBasicClass<WorkflowMessage> implement
   }
 
   @Override
-  protected PreparedStatement prepareInsertPreparedStatement(final WorkflowMessage model, final PreparedStatement ps)
-      throws SQLException {
+  protected PreparedStatement prepareInsertPreparedStatement(final WorkflowMessage model, final PreparedStatement ps) throws SQLException {
     ps.setLong(1, model.getWorkflow().getId());
     ps.setLong(2, model.getStepId());
     ps.setLong(3, model.getUserId());
@@ -279,8 +281,7 @@ public class WorkflowMessageDao extends DaoBasicClass<WorkflowMessage> implement
   }
 
   @Override
-  protected PreparedStatement prepareUpdatePreparedStatement(final WorkflowMessage model, final PreparedStatement ps)
-      throws SQLException {
+  protected PreparedStatement prepareUpdatePreparedStatement(final WorkflowMessage model, final PreparedStatement ps) throws SQLException {
     ps.setLong(1, model.getWorkflow().getId());
     ps.setLong(2, model.getStepId());
     ps.setLong(3, model.getUserId());
@@ -304,7 +305,8 @@ public class WorkflowMessageDao extends DaoBasicClass<WorkflowMessage> implement
 
       this.commitTransaction(true, transactionStatus);
 
-    } catch (final Exception e) {
+    }
+    catch (final Exception e) {
       this.rollbackTransaction(true, transactionStatus);
       logger.error("Unable to delete WorkflowMessage:{} {}", messageId, e.toString(), e);
       throw new IFlowStorageException(e.toString(), e);

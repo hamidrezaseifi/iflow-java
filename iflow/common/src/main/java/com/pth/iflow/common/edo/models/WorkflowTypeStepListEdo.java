@@ -1,8 +1,7 @@
 package com.pth.iflow.common.edo.models;
 
-import java.util.Set;
-import java.util.HashSet;
-
+import java.util.ArrayList;
+import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -10,9 +9,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-
 import org.springframework.beans.factory.annotation.Value;
-
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 
@@ -25,22 +22,22 @@ public class WorkflowTypeStepListEdo {
   @Value("#{T(java.util.Collections).emptyList()}")
   @XmlElementWrapper(name = "WorkflowTypeStepList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "WorkflowTypeStep", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private final Set<WorkflowTypeStepEdo> workflowTypeSteps = new HashSet<>();
+  private final List<WorkflowTypeStepEdo> workflowTypeSteps = new ArrayList<>();
 
   public WorkflowTypeStepListEdo() {
 
   }
 
-  public WorkflowTypeStepListEdo(final Set<WorkflowTypeStepEdo> workflowTypes) {
+  public WorkflowTypeStepListEdo(final List<WorkflowTypeStepEdo> workflowTypes) {
     this.setWorkflowTypeSteps(workflowTypes);
   }
 
-  public Set<WorkflowTypeStepEdo> getWorkflowTypeSteps() {
+  public List<WorkflowTypeStepEdo> getWorkflowTypeSteps() {
     return this.workflowTypeSteps;
   }
 
   @JsonSetter
-  public void setWorkflowTypeSteps(final Set<WorkflowTypeStepEdo> workflowTypeSteps) {
+  public void setWorkflowTypeSteps(final List<WorkflowTypeStepEdo> workflowTypeSteps) {
     this.workflowTypeSteps.clear();
     if (workflowTypeSteps != null) {
       this.workflowTypeSteps.addAll(workflowTypeSteps);

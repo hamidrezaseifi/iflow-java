@@ -1,10 +1,8 @@
 package com.pth.iflow.core.service.impl;
 
-import java.util.Set;
-
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.core.model.WorkflowMessage;
 import com.pth.iflow.core.service.IWorkflowMessageService;
@@ -39,8 +37,7 @@ public class WorkflowMessageService implements IWorkflowMessageService {
   }
 
   @Override
-  public void updateStatusByWorkflow(final Long workflowId, final Long stepId, final EWorkflowMessageStatus status)
-      throws IFlowStorageException {
+  public void updateStatusByWorkflow(final Long workflowId, final Long stepId, final EWorkflowMessageStatus status) throws IFlowStorageException {
     this.workflowMessageDao.updateStatusByWorkflow(workflowId, stepId, status);
   }
 
@@ -50,24 +47,24 @@ public class WorkflowMessageService implements IWorkflowMessageService {
   }
 
   @Override
-  public Set<WorkflowMessage> getNotClosedNotExpiredListByUserId(final Long userId) throws IFlowStorageException {
+  public List<WorkflowMessage> getNotClosedNotExpiredListByUserId(final Long userId) throws IFlowStorageException {
 
     return this.workflowMessageDao.getNotClosedNotExpiredListByUserId(userId);
   }
 
   @Override
-  public Set<WorkflowMessage> getNotClosedNotExpiredListByWorkflowId(final Long workflowId) throws IFlowStorageException {
+  public List<WorkflowMessage> getNotClosedNotExpiredListByWorkflowId(final Long workflowId) throws IFlowStorageException {
 
     return this.workflowMessageDao.getNotClosedNotExpiredListByWorkflowId(workflowId);
   }
 
   @Override
-  public void updateWorkflowMessageStatus(final Long workflowId, final Long stepId, final Long userid,
-      final EWorkflowMessageStatus status) throws IFlowStorageException {
+  public void updateWorkflowMessageStatus(final Long workflowId, final Long stepId, final Long userid, final EWorkflowMessageStatus status) throws IFlowStorageException {
 
     if (userid <= 0L) {
       this.workflowMessageDao.updateStatusByWorkflow(workflowId, stepId, status);
-    } else {
+    }
+    else {
       this.workflowMessageDao.updateStatusByWorkflowAndUser(workflowId, stepId, userid, status);
     }
   }

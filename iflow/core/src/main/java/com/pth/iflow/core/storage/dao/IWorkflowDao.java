@@ -1,7 +1,7 @@
 package com.pth.iflow.core.storage.dao;
 
+import java.util.List;
 import java.util.Set;
-
 import com.pth.iflow.core.model.Workflow;
 import com.pth.iflow.core.model.WorkflowSearchFilter;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
@@ -18,13 +18,13 @@ public interface IWorkflowDao {
 
   Workflow getByIdentity(String identity) throws IFlowStorageException;
 
-  Set<Workflow> getListByIdList(Set<Long> idList) throws IFlowStorageException;
+  List<Workflow> getListByIdList(Set<Long> idList) throws IFlowStorageException;
 
-  Set<Workflow> getListByWorkflowTypeId(Long id) throws IFlowStorageException;
+  List<Workflow> getListByWorkflowTypeId(Long id) throws IFlowStorageException;
 
-  Set<Workflow> getListForUser(Long id, int status) throws IFlowStorageException;
+  List<Workflow> getListForUser(Long id, int status) throws IFlowStorageException;
 
-  Set<Workflow> search(final WorkflowSearchFilter workflowSearchFilter);
+  List<Workflow> search(final WorkflowSearchFilter workflowSearchFilter);
 
-  Set<Workflow> getListByIdentityList(Set<String> idList);
+  List<Workflow> getListByIdentityList(Set<String> idList);
 }

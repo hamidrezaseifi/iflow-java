@@ -1,10 +1,9 @@
 package com.pth.iflow.core.service.impl;
 
+import java.util.List;
 import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.pth.iflow.core.model.DepartmentGroup;
 import com.pth.iflow.core.model.User;
 import com.pth.iflow.core.service.IDepartmentGroupService;
@@ -29,17 +28,17 @@ public class DepartmentGroupService implements IDepartmentGroupService {
   }
 
   @Override
-  public Set<DepartmentGroup> getListByIdList(final Set<Long> idList) {
+  public List<DepartmentGroup> getListByIdList(final Set<Long> idList) {
     return this.departmentGroupDao.getListByIdList(idList);
   }
 
   @Override
-  public Set<DepartmentGroup> getListByIdentityList(final Set<String> idList) {
+  public List<DepartmentGroup> getListByIdentityList(final Set<String> idList) {
     return this.departmentGroupDao.getListByIdentityList(idList);
   }
 
   @Override
-  public Set<DepartmentGroup> getListByDepartmentId(final Long departmentId) {
+  public List<DepartmentGroup> getListByDepartmentId(final Long departmentId) {
     // TODO Auto-generated method stub
     return this.departmentGroupDao.getListByDepartmentId(departmentId);
   }
@@ -62,7 +61,7 @@ public class DepartmentGroupService implements IDepartmentGroupService {
   }
 
   @Override
-  public Set<User> getAllUserListByDepartmentGroupId(final Long id) {
+  public List<User> getAllUserListByDepartmentGroupId(final Long id) {
     final Set<String> idList = departmentGroupDao.getAllUserIdentityListByDepartmentGroupId(id);
 
     return userDao.getListByIdentityList(idList);

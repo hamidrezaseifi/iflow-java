@@ -1,7 +1,7 @@
 package com.pth.iflow.core.storage.dao;
 
+import java.util.List;
 import java.util.Set;
-
 import com.pth.iflow.core.model.WorkflowAction;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 
@@ -19,8 +19,8 @@ public interface IWorkflowActionDao {
 
   public void deleteByWorkflowId(Long id, final boolean withTransaction) throws IFlowStorageException;
 
-  public Set<WorkflowAction> getListByIdList(Set<Long> idList) throws IFlowStorageException;
+  public List<WorkflowAction> getListByIdList(Set<Long> idList) throws IFlowStorageException;
 
-  public Set<WorkflowAction> getListByWorkflowId(Long id) throws IFlowStorageException;
+  public List<WorkflowAction> getListByWorkflowId(Long id) throws IFlowStorageException;
 
 }

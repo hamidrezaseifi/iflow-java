@@ -3,13 +3,12 @@ package com.pth.iflow.core.storage.dao.impl;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Set;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.pth.iflow.core.model.Department;
 import com.pth.iflow.core.storage.dao.IDepartmentDao;
 import com.pth.iflow.core.storage.dao.IDepartmentGroupDao;
@@ -55,7 +54,7 @@ public class DepartmentDao extends DaoBasicClass<Department> implements IDepartm
   }
 
   @Override
-  public Set<Department> getListByIdList(final Set<Long> idList) throws IFlowStorageException {
+  public List<Department> getListByIdList(final Set<Long> idList) throws IFlowStorageException {
     String sqlSelect = "SELECT * FROM departments where id in (";
     sqlSelect += StringUtils.repeat("?, ", idList.size());
 
@@ -67,7 +66,7 @@ public class DepartmentDao extends DaoBasicClass<Department> implements IDepartm
   }
 
   @Override
-  public Set<Department> getListByIdentityList(final Set<String> idList) throws IFlowStorageException {
+  public List<Department> getListByIdentityList(final Set<String> idList) throws IFlowStorageException {
     String sqlSelect = "SELECT * FROM departments where identity in (";
     sqlSelect += StringUtils.repeat("?, ", idList.size());
 
@@ -79,7 +78,7 @@ public class DepartmentDao extends DaoBasicClass<Department> implements IDepartm
   }
 
   @Override
-  public Set<Department> getListByCompanyId(final Long id) throws IFlowStorageException {
+  public List<Department> getListByCompanyId(final Long id) throws IFlowStorageException {
     return this.getModelListById(id, "SELECT * FROM departments where company_id=?", "Department");
   }
 
@@ -124,8 +123,9 @@ public class DepartmentDao extends DaoBasicClass<Department> implements IDepartm
   @Override
   public Set<String> getAllUserIdentityListByDepartmentId(final Long id) throws IFlowStorageException {
     final Set<String> idList = this.getModelIdentityListById(id,
-        "SELECT email FROM user_departments inner join users on users.id=user_departments.user_id where department_id=?", "User",
-        "email");
+                                                             "SELECT email FROM user_departments inner join users on users.id=user_departments.user_id where department_id=?",
+                                                             "User",
+                                                             "email");
 
     return idList;
   }

@@ -1,23 +1,22 @@
 package com.pth.iflow.core.model;
 
 import java.time.LocalDateTime;
-import java.util.Set;
-import java.util.HashSet;
-
+import java.util.ArrayList;
+import java.util.List;
 import com.pth.iflow.core.model.helper.CoreModelHelper;
 import com.pth.iflow.core.model.helper.ICoreIdentityModel;
 
 public class Department extends CoreModelHelper implements ICoreIdentityModel {
 
-  private Long                             id;
-  private Long                             companyId;
-  private String                           identity;
-  private String                           title;
-  private Integer                          status;
-  private Integer                          version;
-  private LocalDateTime                    createdAt;
-  private LocalDateTime                    updatedAt;
-  private final Set<DepartmentGroup> departmentGroups = new HashSet<>();
+  private Long                        id;
+  private Long                        companyId;
+  private String                      identity;
+  private String                      title;
+  private Integer                     status;
+  private Integer                     version;
+  private LocalDateTime               createdAt;
+  private LocalDateTime               updatedAt;
+  private final List<DepartmentGroup> departmentGroups = new ArrayList<>();
 
   @Override
   public Long getId() {
@@ -94,11 +93,11 @@ public class Department extends CoreModelHelper implements ICoreIdentityModel {
     this.updatedAt = updatedAt;
   }
 
-  public Set<DepartmentGroup> getDepartmentGroups() {
+  public List<DepartmentGroup> getDepartmentGroups() {
     return this.departmentGroups;
   }
 
-  public void setDepartmentGroups(final Set<DepartmentGroup> groups) {
+  public void setDepartmentGroups(final List<DepartmentGroup> groups) {
     this.departmentGroups.clear();
     if (groups != null) {
       this.departmentGroups.addAll(groups);

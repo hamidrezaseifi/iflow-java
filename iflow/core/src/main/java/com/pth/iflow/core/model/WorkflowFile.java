@@ -1,28 +1,27 @@
 package com.pth.iflow.core.model;
 
 import java.time.LocalDateTime;
-import java.util.Set;
-import java.util.HashSet;
-
+import java.util.ArrayList;
+import java.util.List;
 import com.pth.iflow.core.model.helper.CoreModelHelper;
 import com.pth.iflow.core.model.helper.ICoreIdentityModel;
 
 public class WorkflowFile extends CoreModelHelper implements ICoreIdentityModel {
 
-  private Long                                 id;
-  private String                               identity;
-  private Long                                 workflowId;
-  private Long                                 createdBy;
-  private String                               title;
-  private String                               extention;
-  private String                               activeFilePath;
-  private String                               comments;
-  private Integer                              activeFileVersion;
-  private Integer                              status;
-  private Integer                              version;
-  private LocalDateTime                        createdAt;
-  private LocalDateTime                        updatedAt;
-  private final Set<WorkflowFileVersion> fileVersions = new HashSet<>();
+  private Long                            id;
+  private String                          identity;
+  private Long                            workflowId;
+  private Long                            createdBy;
+  private String                          title;
+  private String                          extention;
+  private String                          activeFilePath;
+  private String                          comments;
+  private Integer                         activeFileVersion;
+  private Integer                         status;
+  private Integer                         version;
+  private LocalDateTime                   createdAt;
+  private LocalDateTime                   updatedAt;
+  private final List<WorkflowFileVersion> fileVersions = new ArrayList<>();
 
   @Override
   public Long getId() {
@@ -134,11 +133,11 @@ public class WorkflowFile extends CoreModelHelper implements ICoreIdentityModel 
     this.updatedAt = updatedAt;
   }
 
-  public Set<WorkflowFileVersion> getFileVersions() {
+  public List<WorkflowFileVersion> getFileVersions() {
     return this.fileVersions;
   }
 
-  public void setFileVersions(final Set<WorkflowFileVersion> fileVersions) {
+  public void setFileVersions(final List<WorkflowFileVersion> fileVersions) {
     this.fileVersions.clear();
     if (fileVersions != null) {
       this.fileVersions.addAll(fileVersions);

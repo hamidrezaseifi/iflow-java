@@ -1,10 +1,9 @@
 package com.pth.iflow.core.service.impl;
 
+import java.util.List;
 import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.pth.iflow.core.model.Department;
 import com.pth.iflow.core.model.DepartmentGroup;
 import com.pth.iflow.core.model.User;
@@ -22,8 +21,9 @@ public class DepartmentService implements IDepartmentService {
   private final IDepartmentGroupDao departmentGroupDao;
   private final IUserDao            userDao;
 
-  public DepartmentService(@Autowired final IDepartmentDao departmentDao, @Autowired final IDepartmentGroupDao departmentGroupDao,
-      @Autowired final IUserDao userDao) {
+  public DepartmentService(@Autowired final IDepartmentDao departmentDao,
+                           @Autowired final IDepartmentGroupDao departmentGroupDao,
+                           @Autowired final IUserDao userDao) {
     this.departmentDao = departmentDao;
     this.departmentGroupDao = departmentGroupDao;
     this.userDao = userDao;
@@ -35,26 +35,26 @@ public class DepartmentService implements IDepartmentService {
   }
 
   @Override
-  public Set<DepartmentGroup> getDepartmentGroups(final Long id) {
+  public List<DepartmentGroup> getDepartmentGroups(final Long id) {
     final Department department = this.getById(id);
 
     return department.getDepartmentGroups();
   }
 
   @Override
-  public Set<Department> getListByIdList(final Set<Long> idList) {
+  public List<Department> getListByIdList(final Set<Long> idList) {
 
     return this.departmentDao.getListByIdList(idList);
   }
 
   @Override
-  public Set<Department> getListByIdentityList(final Set<String> idList) {
+  public List<Department> getListByIdentityList(final Set<String> idList) {
 
     return this.departmentDao.getListByIdentityList(idList);
   }
 
   @Override
-  public Set<Department> getListByIdCompanyId(final Long id) {
+  public List<Department> getListByIdCompanyId(final Long id) {
     return this.departmentDao.getListByCompanyId(id);
   }
 
@@ -76,11 +76,11 @@ public class DepartmentService implements IDepartmentService {
   }
 
   @Override
-  public Set<User> getAllUserListByDepartmentId(final Long id) {
+  public List<User> getAllUserListByDepartmentId(final Long id) {
 
     final Set<String> idList = this.departmentDao.getAllUserIdentityListByDepartmentId(id);
 
-    final Set<DepartmentGroup> groups = this.getDepartmentGroups(id);
+    final List<DepartmentGroup> groups = this.getDepartmentGroups(id);
     for (final DepartmentGroup group : groups) {
       idList.addAll(this.departmentGroupDao.getAllUserIdentityListByDepartmentGroupId(group.getId()));
     }

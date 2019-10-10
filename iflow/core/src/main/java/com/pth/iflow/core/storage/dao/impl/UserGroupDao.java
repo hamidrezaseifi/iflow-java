@@ -3,12 +3,11 @@ package com.pth.iflow.core.storage.dao.impl;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Set;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.pth.iflow.core.model.UserGroup;
 import com.pth.iflow.core.storage.dao.IUserGroupDao;
 import com.pth.iflow.core.storage.dao.basic.DaoBasicClass;
@@ -34,7 +33,7 @@ public class UserGroupDao extends DaoBasicClass<UserGroup> implements IUserGroup
   }
 
   @Override
-  public Set<UserGroup> getListByIdList(final Set<Long> idList) throws IFlowStorageException {
+  public List<UserGroup> getListByIdList(final Set<Long> idList) throws IFlowStorageException {
 
     String sqlSelect = "SELECT * FROM user_group where id in (";
     sqlSelect += StringUtils.repeat("?, ", idList.size());
@@ -47,7 +46,7 @@ public class UserGroupDao extends DaoBasicClass<UserGroup> implements IUserGroup
   }
 
   @Override
-  public Set<UserGroup> getListByIdentityList(final Set<String> idList) throws IFlowStorageException {
+  public List<UserGroup> getListByIdentityList(final Set<String> idList) throws IFlowStorageException {
     String sqlSelect = "SELECT * FROM user_group where identity in (";
     sqlSelect += StringUtils.repeat("?, ", idList.size());
 
@@ -74,7 +73,7 @@ public class UserGroupDao extends DaoBasicClass<UserGroup> implements IUserGroup
   }
 
   @Override
-  public Set<UserGroup> getListByCompanyId(final Long companyId) throws IFlowStorageException {
+  public List<UserGroup> getListByCompanyId(final Long companyId) throws IFlowStorageException {
 
     return getModelListById(companyId, "SELECT * FROM user_group where company_id=?", "User Group");
   }

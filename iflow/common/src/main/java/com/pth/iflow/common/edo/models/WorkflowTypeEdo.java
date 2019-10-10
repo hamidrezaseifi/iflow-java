@@ -1,8 +1,7 @@
 package com.pth.iflow.common.edo.models;
 
-import java.util.Set;
-import java.util.HashSet;
-
+import java.util.ArrayList;
+import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -10,7 +9,6 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 import com.pth.iflow.common.edo.models.validation.AEnumValueValidator;
@@ -22,52 +20,52 @@ import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
 public class WorkflowTypeEdo {
 
   @XmlElement(name = "Identity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String                               identity;
+  private String identity;
 
   @NotNull
   @XmlElement(name = "CompanyIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String                               companyIdentity;
+  private String companyIdentity;
 
   @NotNull
   @XmlElement(name = "BaseTypeId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long                                 baseTypeId;
+  private Long baseTypeId;
 
   @NotNull
   @XmlElement(name = "Title", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String                               title;
+  private String title;
 
   @XmlElement(name = "Comments", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String                               comments;
+  private String comments;
 
   @NotNull
   @XmlElement(name = "Status", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Integer                              status;
+  private Integer status;
 
   @NotNull
   @XmlElement(name = "Version", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Integer                              version;
+  private Integer version;
 
   @NotNull
   @XmlElement(name = "SendToController", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Boolean                              sendToController;
+  private Boolean sendToController;
 
   @NotNull
   @AEnumValueValidator(enumClazz = EWorkflowTypeAssignType.class)
   @XmlElement(name = "AssignType", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Integer                              assignType;
+  private Integer assignType;
 
   @NotNull
   @XmlElement(name = "IncreaseStepAutomatic", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Boolean                              increaseStepAutomatic;
+  private Boolean increaseStepAutomatic;
 
   @NotNull
   @XmlElement(name = "AllowAssign", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Boolean                              allowAssign;
+  private Boolean allowAssign;
 
   @NotNull
   @XmlElementWrapper(name = "WorkflowTypeStepList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "WorkflowTypeStep", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private final Set<WorkflowTypeStepEdo> steps = new HashSet<>();
+  private final List<WorkflowTypeStepEdo> steps = new ArrayList<>();
 
   public String getIdentity() {
     return this.identity;
@@ -163,12 +161,12 @@ public class WorkflowTypeEdo {
     this.allowAssign = allowAssign;
   }
 
-  public Set<WorkflowTypeStepEdo> getSteps() {
+  public List<WorkflowTypeStepEdo> getSteps() {
     return this.steps;
   }
 
   @JsonSetter
-  public void setSteps(final Set<WorkflowTypeStepEdo> steps) {
+  public void setSteps(final List<WorkflowTypeStepEdo> steps) {
     this.steps.clear();
     if (steps != null) {
       this.steps.addAll(steps);
