@@ -27,8 +27,8 @@ public class CompanyDao extends DaoBasicClass<Company> implements ICompanyDao {
   }
 
   @Override
-  public Company getByIdentity(final String identifyId) {
-    return getModelByStringId(identifyId, "SELECT * FROM companies where identity=?", "Company");
+  public Company getByIdentity(final String identity) {
+    return getModelByStringId(identity, "SELECT * FROM companies where identity=?", "Company");
   }
 
   @Override

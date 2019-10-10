@@ -1,8 +1,10 @@
 package com.pth.iflow.core.service.impl;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.pth.iflow.core.model.WorkflowFile;
 import com.pth.iflow.core.service.IWorkflowFileService;
 import com.pth.iflow.core.storage.dao.IWorkflowFileDao;
@@ -35,12 +37,12 @@ public class WorkflowFileService implements IWorkflowFileService {
   }
 
   @Override
-  public WorkflowFile getById(final Long id) {
-    return workflowFileDao.getById(id);
+  public WorkflowFile getByIdentity(final String identity) {
+    return workflowFileDao.getByIdentity(identity);
   }
 
   @Override
-  public List<WorkflowFile> getListByIdWorkflowId(final Long id) {
+  public List<WorkflowFile> getListByIdWorkflowId(final String identity) {
     return workflowFileDao.getListByWorkflowId(id);
   }
 

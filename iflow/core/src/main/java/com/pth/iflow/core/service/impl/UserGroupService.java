@@ -2,8 +2,10 @@ package com.pth.iflow.core.service.impl;
 
 import java.util.List;
 import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.pth.iflow.core.model.UserGroup;
 import com.pth.iflow.core.service.IUserGroupService;
 import com.pth.iflow.core.storage.dao.IUserDao;
@@ -22,13 +24,8 @@ public class UserGroupService implements IUserGroupService {
   }
 
   @Override
-  public UserGroup getById(final Long id) {
-    return this.userGroupDao.getById(id);
-  }
-
-  @Override
-  public List<UserGroup> getListByIdList(final Set<Long> idList) {
-    return this.userGroupDao.getListByIdList(idList);
+  public UserGroup getByIdentity(final String identity) {
+    return this.userGroupDao.getByIdentity(identity);
   }
 
   @Override
@@ -37,7 +34,7 @@ public class UserGroupService implements IUserGroupService {
   }
 
   @Override
-  public List<UserGroup> getListByIdCompanyId(final Long companyId) {
+  public List<UserGroup> getListByIdCompanyIdentity(final String companyIdentity) {
     return this.userGroupDao.getListByCompanyId(companyId);
   }
 

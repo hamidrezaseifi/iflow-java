@@ -11,6 +11,6 @@ public interface ICompanyDao {
 
   public Company getById(Long id) throws IFlowStorageException;
 
-  public Company getByIdentity(final String identifyId);
+  public Company getByIdentity(final String identity);
 
 }

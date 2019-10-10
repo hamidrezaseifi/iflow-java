@@ -6,7 +6,5 @@ public interface ICompanyService {
 
   Company save(Company model);
 
-  Company getById(Long id);
-
-  Company getByIdentifyId(final String identifyId);
+  Company getByIdentity(final String identifyId);
 }

@@ -18,15 +18,9 @@ public class CompanyService implements ICompanyService {
   }
 
   @Override
-  public Company getById(final Long id) {
+  public Company getByIdentity(final String identity) {
 
-    return this.companyDao.getById(id);
-  }
-
-  @Override
-  public Company getByIdentifyId(final String identifyId) {
-
-    return this.companyDao.getByIdentity(identifyId);
+    return this.companyDao.getByIdentity(identity);
   }
 
   @Override

@@ -1,6 +1,7 @@
 package com.pth.iflow.core.service;
 
 import java.util.List;
+
 import com.pth.iflow.core.model.Department;
 import com.pth.iflow.core.model.DepartmentGroup;
 import com.pth.iflow.core.model.User;
@@ -10,18 +11,16 @@ public interface IUsersService {
 
   User save(User model);
 
-  User getUserById(final Long id);
-
   User getUserByEmail(final String email);
 
-  List<UserGroup> getUserGroups(final Long id);
+  List<UserGroup> getUserGroups(final String identity);
 
-  List<Department> getUserDepartments(final Long id);
+  List<Department> getUserDepartments(final String identity);
 
-  List<DepartmentGroup> getUserDepartmentGroups(final Long id);
+  List<DepartmentGroup> getUserDepartmentGroups(final String identity);
 
-  List<User> getUserDeputies(final Long id);
+  List<User> getUserDeputies(final String identity);
 
-  List<User> getCompanyUsers(final Long companyId);
+  List<User> getCompanyUsers(final String companyIdentity);
 
 }
