@@ -1,41 +1,58 @@
 package com.pth.iflow.workflow.models;
 
 import java.time.LocalDateTime;
-import com.pth.iflow.common.edo.models.base.DataModelBase;
+
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.enums.EWorkflowMessageType;
 
-public class WorkflowMessage extends DataModelBase {
+public class WorkflowMessage {
 
-  private Long id;
+  private Long                   id;
 
-  private String workflowIdentity;
+  private Workflow               workflow;
 
-  private Long stepId;
+  private String                 workflowIdentity;
 
-  private Long userId;
+  private String                 stepIdentity;
 
-  private String message;
+  private String                 userIdentity;
 
-  private Long createdBy;
+  private String                 createdByIdentity;
 
-  private EWorkflowMessageType messageType;
+  private Long                   stepId;
+
+  private Long                   userId;
+
+  private String                 message;
+
+  private Long                   createdBy;
+
+  private EWorkflowMessageType   messageType;
 
   private EWorkflowMessageStatus status;
 
-  private Integer version;
+  private Integer                version;
 
-  private Integer expireDays;
+  private Integer                expireDays;
 
-  private LocalDateTime createdAt;
+  private LocalDateTime          createdAt;
 
-  @Override
+  private LocalDateTime          updatedAt;
+
   public Long getId() {
     return this.id;
   }
 
   public void setId(final Long id) {
     this.id = id;
+  }
+
+  public Workflow getWorkflow() {
+    return workflow;
+  }
+
+  public void setWorkflow(final Workflow workflow) {
+    this.workflow = workflow;
   }
 
   public String getWorkflowIdentity() {
@@ -46,8 +63,24 @@ public class WorkflowMessage extends DataModelBase {
     this.workflowIdentity = workflowIdentity;
   }
 
+  public String getStepIdentity() {
+    return stepIdentity;
+  }
+
+  public void setStepIdentity(final String stepIdentity) {
+    this.stepIdentity = stepIdentity;
+  }
+
+  public String getUserIdentity() {
+    return userIdentity;
+  }
+
+  public void setUserIdentity(final String userIdentity) {
+    this.userIdentity = userIdentity;
+  }
+
   public Long getStepId() {
-    return this.stepId;
+    return stepId;
   }
 
   public void setStepId(final Long stepId) {
@@ -55,7 +88,7 @@ public class WorkflowMessage extends DataModelBase {
   }
 
   public Long getUserId() {
-    return this.userId;
+    return userId;
   }
 
   public void setUserId(final Long userId) {
@@ -71,11 +104,19 @@ public class WorkflowMessage extends DataModelBase {
   }
 
   public Long getCreatedBy() {
-    return this.createdBy;
+    return createdBy;
   }
 
   public void setCreatedBy(final Long createdBy) {
     this.createdBy = createdBy;
+  }
+
+  public String getCreatedByIdentity() {
+    return createdByIdentity;
+  }
+
+  public void setCreatedByIdentity(final String createdByIdentity) {
+    this.createdByIdentity = createdByIdentity;
   }
 
   public EWorkflowMessageType getMessageType() {
@@ -94,12 +135,10 @@ public class WorkflowMessage extends DataModelBase {
     this.status = status;
   }
 
-  @Override
   public Integer getVersion() {
     return this.version;
   }
 
-  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
@@ -126,6 +165,14 @@ public class WorkflowMessage extends DataModelBase {
 
   public void setCreatedAt(final LocalDateTime createdAt) {
     this.createdAt = createdAt;
+  }
+
+  public LocalDateTime getUpdatedAt() {
+    return updatedAt;
+  }
+
+  public void setUpdatedAt(final LocalDateTime updatedAt) {
+    this.updatedAt = updatedAt;
   }
 
 }

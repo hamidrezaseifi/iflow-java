@@ -1,22 +1,49 @@
 package com.pth.iflow.workflow.models;
 
-import com.pth.iflow.common.enums.EWorkflowActionStatus;
+import java.time.LocalDateTime;
 
 public class WorkflowAction {
 
-  private Long                  assignTo;
-  private Long                  currentStepId;
-  private WorkflowTypeStep      currentStep;
-  private String                comments;
-  private EWorkflowActionStatus status;
-  private Integer               version;
+  private Long          id;
+  private String        identity;
+  private Long          workflowId;
+  private Long          assignTo;
+  private Long          currentStepId;
+  private String        assignToIdentity;
+  private String        currentStepIdentity;
+  private String        comments;
+  private Integer       status;
+  private Integer       version;
 
-  public Long getAssignTo() {
-    return this.assignTo;
+  private LocalDateTime createdAt;
+  private LocalDateTime updatedAt;
+
+  public Long getId() {
+    return this.id;
   }
 
-  public boolean isAssigned() {
-    return (this.assignTo != null) && (this.assignTo > 0);
+  public void setId(final Long id) {
+    this.id = id;
+  }
+
+  public String getIdentity() {
+    return identity;
+  }
+
+  public void setIdentity(final String identity) {
+    this.identity = identity;
+  }
+
+  public Long getWorkflowId() {
+    return this.workflowId;
+  }
+
+  public void setWorkflowId(final Long workflowId) {
+    this.workflowId = workflowId;
+  }
+
+  public Long getAssignTo() {
+    return assignTo;
   }
 
   public void setAssignTo(final Long assignTo) {
@@ -27,16 +54,24 @@ public class WorkflowAction {
     return currentStepId;
   }
 
-  public void setCurrentStepId(final Long currectStepId) {
-    this.currentStepId = currectStepId;
+  public void setCurrentStepId(final Long currentStepId) {
+    this.currentStepId = currentStepId;
   }
 
-  public WorkflowTypeStep getCurrentStep() {
-    return currentStep;
+  public String getAssignToIdentity() {
+    return assignToIdentity;
   }
 
-  public void setCurrentStep(final WorkflowTypeStep currentStep) {
-    this.currentStep = currentStep;
+  public void setAssignToIdentity(final String assignToIdentity) {
+    this.assignToIdentity = assignToIdentity;
+  }
+
+  public String getCurrentStepIdentity() {
+    return currentStepIdentity;
+  }
+
+  public void setCurrentStepIdentity(final String currentStepIdIdentity) {
+    this.currentStepIdentity = currentStepIdIdentity;
   }
 
   public String getComments() {
@@ -47,20 +82,12 @@ public class WorkflowAction {
     this.comments = comments;
   }
 
-  public Integer getStatusInt() {
-    return this.status.getValue();
-  }
-
-  public EWorkflowActionStatus getStatus() {
+  public Integer getStatus() {
     return this.status;
   }
 
-  public void setStatus(final EWorkflowActionStatus status) {
-    this.status = status;
-  }
-
   public void setStatus(final Integer status) {
-    this.status = EWorkflowActionStatus.ofValue(status);
+    this.status = status;
   }
 
   public Integer getVersion() {
@@ -71,7 +98,20 @@ public class WorkflowAction {
     this.version = version;
   }
 
-  public boolean getIsActive() {
-    return EWorkflowActionStatus.getIsActive(this.getStatusInt());
+  public LocalDateTime getCreatedAt() {
+    return this.createdAt;
   }
+
+  public void setCreatedAt(final LocalDateTime createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  public LocalDateTime getUpdatedAt() {
+    return this.updatedAt;
+  }
+
+  public void setUpdatedAt(final LocalDateTime updatedAt) {
+    this.updatedAt = updatedAt;
+  }
+
 }

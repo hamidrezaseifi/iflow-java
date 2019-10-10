@@ -1,20 +1,21 @@
 package com.pth.iflow.workflow.models;
 
-import com.pth.iflow.common.edo.models.base.DataModelBase;
+import java.time.LocalDateTime;
 
-public class Company extends DataModelBase {
+public class Company {
 
-  private Long    id;
-  private String  identifyid;
-  private String  companyName;
-  private Integer status;
-  private Integer version;
+  private Long          id;
+  private String        identity;
+  private String        companyName;
+  private Integer       status;
+  private Integer       version;
+  private LocalDateTime createdAt;
+  private LocalDateTime updatedAt;
 
   /**
    * @return the id
    */
 
-  @Override
   public Long getId() {
     return this.id;
   }
@@ -22,22 +23,17 @@ public class Company extends DataModelBase {
   /**
    * @param id the id to set
    */
+
   public void setId(final Long id) {
     this.id = id;
   }
 
-  /**
-   * @return the identifyid
-   */
-  public String getIdentifyid() {
-    return this.identifyid;
+  public String getIdentity() {
+    return identity;
   }
 
-  /**
-   * @param identifyid the identifyid to set
-   */
-  public void setIdentifyid(final String identifyid) {
-    this.identifyid = identifyid;
+  public void setIdentity(final String identity) {
+    this.identity = identity;
   }
 
   /**
@@ -68,19 +64,48 @@ public class Company extends DataModelBase {
     this.status = status;
   }
 
-  @Override
+  /**
+   * @return the version
+   */
+
   public Integer getVersion() {
     return this.version;
   }
 
-  @Override
+  /**
+   * @param version the version to set
+   */
+
   public void setVersion(final Integer version) {
     this.version = version;
   }
 
-  @Override
-  public boolean isNew() {
-    return (this.id == null) || (this.id <= 0);
+  /**
+   * @return the createdAt
+   */
+  public LocalDateTime getCreatedAt() {
+    return this.createdAt;
+  }
+
+  /**
+   * @param createdAt the createdAt to set
+   */
+  public void setCreatedAt(final LocalDateTime createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  /**
+   * @return the updatedAt
+   */
+  public LocalDateTime getUpdatedAt() {
+    return this.updatedAt;
+  }
+
+  /**
+   * @param updatedAt the updatedAt to set
+   */
+  public void setUpdatedAt(final LocalDateTime updatedAt) {
+    this.updatedAt = updatedAt;
   }
 
 }

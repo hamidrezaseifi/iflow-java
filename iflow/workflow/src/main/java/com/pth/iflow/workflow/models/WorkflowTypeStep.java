@@ -1,25 +1,44 @@
 package com.pth.iflow.workflow.models;
 
-import com.pth.iflow.common.edo.models.base.DataModelBase;
+import java.time.LocalDateTime;
 
-public class WorkflowTypeStep extends DataModelBase {
+public class WorkflowTypeStep {
 
-  private Long    id;
-  private String  title;
-  private Integer stepIndex;
-  private String  viewName;
-  private Integer expireDays;
-  private String  comments;
-  private Integer status;
-  private Integer version;
+  private Long          id;
+  private String        identity;
+  private Long          workflowTypeId;
+  private String        title;
+  private Integer       stepIndex;
+  private String        viewName;
+  private Integer       expireDays;
+  private String        comments;
+  private Integer       status;
+  private Integer       version;
+  private LocalDateTime createdAt;
+  private LocalDateTime updatedAt;
 
-  @Override
   public Long getId() {
     return this.id;
   }
 
   public void setId(final Long id) {
     this.id = id;
+  }
+
+  public Long getWorkflowTypeId() {
+    return this.workflowTypeId;
+  }
+
+  public String getIdentity() {
+    return identity;
+  }
+
+  public void setIdentity(final String identity) {
+    this.identity = identity;
+  }
+
+  public void setWorkflowTypeId(final Long workflowTypeId) {
+    this.workflowTypeId = workflowTypeId;
   }
 
   public String getTitle() {
@@ -68,26 +87,28 @@ public class WorkflowTypeStep extends DataModelBase {
     this.status = status;
   }
 
-  @Override
   public Integer getVersion() {
     return this.version;
   }
 
-  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
 
-  public boolean isAfterStep(final WorkflowTypeStep other) {
-    return this.stepIndex > other.getStepIndex();
+  public LocalDateTime getCreatedAt() {
+    return this.createdAt;
   }
 
-  public boolean isBeforeStep(final WorkflowTypeStep other) {
-    return this.stepIndex < other.getStepIndex();
+  public void setCreatedAt(final LocalDateTime createdAt) {
+    this.createdAt = createdAt;
   }
 
-  public boolean isTheSameStep(final WorkflowTypeStep other) {
-    return this.stepIndex == other.getStepIndex();
+  public LocalDateTime getUpdatedAt() {
+    return this.updatedAt;
+  }
+
+  public void setUpdatedAt(final LocalDateTime updatedAt) {
+    this.updatedAt = updatedAt;
   }
 
   public Integer getExpireDays() {

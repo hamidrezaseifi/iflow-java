@@ -1,10 +1,14 @@
 package com.pth.iflow.workflow.models;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class WorkflowFile {
 
+  private Long                            id;
+  private String                          identity;
+  private Long                            workflowId;
   private Long                            createdBy;
   private String                          title;
   private String                          extention;
@@ -13,7 +17,33 @@ public class WorkflowFile {
   private Integer                         activeFileVersion;
   private Integer                         status;
   private Integer                         version;
+  private LocalDateTime                   createdAt;
+  private LocalDateTime                   updatedAt;
   private final List<WorkflowFileVersion> fileVersions = new ArrayList<>();
+
+  public Long getId() {
+    return this.id;
+  }
+
+  public void setId(final Long id) {
+    this.id = id;
+  }
+
+  public String getIdentity() {
+    return identity;
+  }
+
+  public void setIdentity(final String identity) {
+    this.identity = identity;
+  }
+
+  public Long getWorkflowId() {
+    return this.workflowId;
+  }
+
+  public void setWorkflowId(final Long workflowId) {
+    this.workflowId = workflowId;
+  }
 
   public String getActiveFilePath() {
     return this.activeFilePath;
@@ -77,6 +107,22 @@ public class WorkflowFile {
 
   public void setVersion(final Integer version) {
     this.version = version;
+  }
+
+  public LocalDateTime getCreatedAt() {
+    return this.createdAt;
+  }
+
+  public void setCreatedAt(final LocalDateTime createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  public LocalDateTime getUpdatedAt() {
+    return this.updatedAt;
+  }
+
+  public void setUpdatedAt(final LocalDateTime updatedAt) {
+    this.updatedAt = updatedAt;
   }
 
   public List<WorkflowFileVersion> getFileVersions() {
