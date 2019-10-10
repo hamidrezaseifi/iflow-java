@@ -1,7 +1,6 @@
 package com.pth.iflow.core.model;
 
 import java.time.LocalDateTime;
-
 import com.pth.iflow.core.model.helper.CoreModelHelper;
 import com.pth.iflow.core.model.helper.ICoreIdentityModel;
 
@@ -10,6 +9,7 @@ public class UserGroup extends CoreModelHelper implements ICoreIdentityModel {
   private Long          id;
   private String        identity;
   private Long          companyId;
+  private String        companyIdentity;
   private String        title;
   private Integer       status;
   private Integer       version;
@@ -38,6 +38,14 @@ public class UserGroup extends CoreModelHelper implements ICoreIdentityModel {
 
   public Long getCompanyId() {
     return this.companyId;
+  }
+
+  public String getCompanyIdentity() {
+    return companyIdentity;
+  }
+
+  public void setCompanyIdentity(final String companyIdentity) {
+    this.companyIdentity = companyIdentity;
   }
 
   public void setCompanyId(final Long companyId) {

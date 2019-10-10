@@ -92,7 +92,7 @@ public class CoreModelEdoMapper {
     edo.setExpireDays(model.getExpireDays());
     edo.setMessage(model.getMessage());
     edo.setCreatedAt(model.getCreatedAt());
-    model.setStepIdentity(edo.getStepIdentity());
+    edo.setStepIdentity(model.getStepIdentity());
 
     return edo;
   }
@@ -192,6 +192,8 @@ public class CoreModelEdoMapper {
     edo.setStatus(model.getStatus());
     edo.setIdentity(model.getIdentity());
     edo.setVersion(model.getVersion());
+    edo.setIdentity(model.getIdentity());
+    edo.setCompanyIdentity(model.getCompanyIdentity());
 
     return edo;
   }
@@ -205,6 +207,8 @@ public class CoreModelEdoMapper {
     model.setStatus(edo.getStatus());
     model.setIdentity(edo.getIdentity());
     model.setVersion(edo.getVersion());
+    model.setIdentity(edo.getIdentity());
+    model.setCompanyIdentity(edo.getCompanyIdentity());
 
     return model;
   }

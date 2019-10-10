@@ -2,9 +2,8 @@ package com.pth.iflow.core.services;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-
+import java.util.List;
 import java.util.Set;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -14,7 +13,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import com.pth.iflow.common.enums.EWorkflowIdentity;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.Workflow;
@@ -30,7 +28,7 @@ public class WorkflowServiceTest extends TestDataProducer {
   private IWorkflowService workflowService;
 
   @MockBean
-  private IWorkflowDao     workflowDao;
+  private IWorkflowDao workflowDao;
 
   @Before
   public void setUp() throws Exception {
@@ -59,10 +57,10 @@ public class WorkflowServiceTest extends TestDataProducer {
   public void testGetListByIdList() throws Exception {
 
     final Set<String> idList = getTestWorkflowIdentityList();
-    final Set<Workflow> list = getTestWorkflowList();
+    final List<Workflow> list = getTestWorkflowList();
     when(this.workflowDao.getListByIdentityList(any(Set.class))).thenReturn(list);
 
-    final Set<Workflow> resList = this.workflowService.getListByIdentityList(idList);
+    final List<Workflow> resList = this.workflowService.getListByIdentityList(idList);
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());
@@ -72,10 +70,10 @@ public class WorkflowServiceTest extends TestDataProducer {
   @Test
   public void testGetListByIdTypeId() throws Exception {
 
-    final Set<Workflow> list = getTestWorkflowList();
+    final List<Workflow> list = getTestWorkflowList();
     when(this.workflowDao.getListByWorkflowTypeId(any(Long.class))).thenReturn(list);
 
-    final Set<Workflow> resList = this.workflowService.getListByTypeId(1L);
+    final List<Workflow> resList = this.workflowService.getListByTypeId(1L);
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());

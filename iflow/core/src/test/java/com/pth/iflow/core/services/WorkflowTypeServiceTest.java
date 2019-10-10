@@ -2,9 +2,8 @@ package com.pth.iflow.core.services;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-
+import java.util.List;
 import java.util.Set;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -14,7 +13,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.WorkflowType;
 import com.pth.iflow.core.model.WorkflowTypeStep;
@@ -31,7 +29,7 @@ public class WorkflowTypeServiceTest extends TestDataProducer {
   private IWorkflowTypeService workflowTypeService;
 
   @MockBean
-  private IWorkflowTypeDao     workflowTypeDao;
+  private IWorkflowTypeDao workflowTypeDao;
 
   @MockBean
   private IWorkflowTypeStepDao workflowTypeStepDao;
@@ -55,8 +53,9 @@ public class WorkflowTypeServiceTest extends TestDataProducer {
 
     Assert.assertNotNull("Result workflow-type is not null!", resWorkflowType);
     Assert.assertEquals("Result workflow-type has id 1!", resWorkflowType.getId(), workflowType.getId());
-    Assert.assertEquals("Result workflow-type has title '" + workflowType.getTitle() + "'!", resWorkflowType.getTitle(),
-        workflowType.getTitle());
+    Assert.assertEquals("Result workflow-type has title '" + workflowType.getTitle() + "'!",
+                        resWorkflowType.getTitle(),
+                        workflowType.getTitle());
     Assert.assertEquals("Result workflow-type has status 1!", resWorkflowType.getStatus(), workflowType.getStatus());
 
   }
@@ -65,10 +64,10 @@ public class WorkflowTypeServiceTest extends TestDataProducer {
   public void testGetListByIdList() throws Exception {
 
     final Set<String> idList = getTestWorkflowTypeIdSet();
-    final Set<WorkflowType> list = getTestWorkflowTypeList();
+    final List<WorkflowType> list = getTestWorkflowTypeList();
     when(this.workflowTypeDao.getListByIdentityList(any(Set.class))).thenReturn(list);
 
-    final Set<WorkflowType> resList = this.workflowTypeService.getListByIdentityList(idList);
+    final List<WorkflowType> resList = this.workflowTypeService.getListByIdentityList(idList);
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());
@@ -78,10 +77,10 @@ public class WorkflowTypeServiceTest extends TestDataProducer {
   @Test
   public void testGetListByIdCompanyId() throws Exception {
 
-    final Set<WorkflowType> list = getTestWorkflowTypeList();
+    final List<WorkflowType> list = getTestWorkflowTypeList();
     when(this.workflowTypeDao.getListByCompanyId(any(Long.class))).thenReturn(list);
 
-    final Set<WorkflowType> resList = this.workflowTypeService.getListByIdCompanyId(1L);
+    final List<WorkflowType> resList = this.workflowTypeService.getListByIdCompanyId(1L);
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());
@@ -92,12 +91,12 @@ public class WorkflowTypeServiceTest extends TestDataProducer {
   public void testGetStepsById() throws Exception {
 
     final WorkflowType workflowType = getTestWorkflowType();
-    final Set<WorkflowTypeStep> list = getTestWorkflowTypeStepList();
+    final List<WorkflowTypeStep> list = getTestWorkflowTypeStepList();
 
     when(this.workflowTypeDao.getById(any(Long.class))).thenReturn(workflowType);
     when(this.workflowTypeStepDao.getListByIdList(any(Set.class))).thenReturn(list);
 
-    final Set<WorkflowTypeStep> resList = this.workflowTypeService.getStepsById(1L);
+    final List<WorkflowTypeStep> resList = this.workflowTypeService.getStepsById(1L);
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());

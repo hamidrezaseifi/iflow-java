@@ -2,12 +2,10 @@ package com.pth.iflow.core.dao;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -17,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.User;
 import com.pth.iflow.core.storage.dao.IUserDao;
@@ -28,7 +25,7 @@ import com.pth.iflow.core.storage.dao.IUserDao;
 public class UserDaoTest extends TestDataProducer {
 
   @Autowired
-  private IUserDao         userDao;
+  private IUserDao userDao;
 
   private final List<User> createdModels = new ArrayList<>();
 
@@ -82,7 +79,7 @@ public class UserDaoTest extends TestDataProducer {
 
     final Set<Long> idList = createdModels.stream().map(w -> w.getId()).collect(Collectors.toSet());
 
-    final Set<User> resList = this.userDao.getListByIdList(idList);
+    final List<User> resList = this.userDao.getListByIdList(idList);
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + createdModels.size() + " items.", resList.size(), createdModels.size());
@@ -94,7 +91,7 @@ public class UserDaoTest extends TestDataProducer {
 
     createUserList();
 
-    final Set<User> resList = this.userDao.getListByCompanyId(createdModels.get(0).getCompanyId());
+    final List<User> resList = this.userDao.getListByCompanyId(createdModels.get(0).getCompanyId());
 
     Assert.assertNotNull("Result list is not null!", resList);
 

@@ -2,9 +2,8 @@ package com.pth.iflow.core.services;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-
+import java.util.List;
 import java.util.Set;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -14,7 +13,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.UserGroup;
 import com.pth.iflow.core.service.IUserGroupService;
@@ -30,10 +28,10 @@ public class UserGroupServiceTest extends TestDataProducer {
   private IUserGroupService userGroupService;
 
   @MockBean
-  private IUserDao          userDao;
+  private IUserDao userDao;
 
   @MockBean
-  private IUserGroupDao     userGroupDao;
+  private IUserGroupDao userGroupDao;
 
   @Before
   public void setUp() throws Exception {
@@ -63,10 +61,10 @@ public class UserGroupServiceTest extends TestDataProducer {
   public void testGetListByIdList() throws Exception {
 
     final Set<String> idList = getTestUserGroupIdSet();
-    final Set<UserGroup> list = getTestUserGroupList();
+    final List<UserGroup> list = getTestUserGroupList();
     when(this.userGroupDao.getListByIdentityList(any(Set.class))).thenReturn(list);
 
-    final Set<UserGroup> resList = this.userGroupService.getListByIdentityList(idList);
+    final List<UserGroup> resList = this.userGroupService.getListByIdentityList(idList);
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());
@@ -76,10 +74,10 @@ public class UserGroupServiceTest extends TestDataProducer {
   @Test
   public void testGetListByIdCompanyId() throws Exception {
 
-    final Set<UserGroup> list = getTestUserGroupList();
+    final List<UserGroup> list = getTestUserGroupList();
     when(this.userGroupDao.getListByCompanyId(any(Long.class))).thenReturn(list);
 
-    final Set<UserGroup> resList = this.userGroupService.getListByIdCompanyId(1L);
+    final List<UserGroup> resList = this.userGroupService.getListByIdCompanyId(1L);
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());

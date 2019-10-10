@@ -6,9 +6,11 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Set;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import com.pth.iflow.core.model.UserGroup;
+import com.pth.iflow.core.storage.dao.ICompanyDao;
 import com.pth.iflow.core.storage.dao.IUserGroupDao;
 import com.pth.iflow.core.storage.dao.basic.DaoBasicClass;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
@@ -17,6 +19,9 @@ import com.pth.iflow.core.storage.dao.utils.SqlUtils;
 @Transactional
 @Repository
 public class UserGroupDao extends DaoBasicClass<UserGroup> implements IUserGroupDao {
+
+  @Autowired
+  private ICompanyDao companyDao;
 
   public UserGroupDao() {
 
@@ -63,6 +68,7 @@ public class UserGroupDao extends DaoBasicClass<UserGroup> implements IUserGroup
     model.setId(rs.getLong("id"));
     model.setCompanyId(rs.getLong("company_id"));
     model.setTitle(rs.getString("title"));
+    model.setCompanyIdentity(companyDao.getById(model.getCompanyId()).getIdentity());
     model.setIdentity(rs.getString("identity"));
     model.setStatus(rs.getInt("status"));
     model.setCreatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("created_at")));
