@@ -106,7 +106,7 @@ public class UserGroupControllerTest extends TestDataProducer {
   public void testReadUserGroupListByCompany() throws Exception {
 
     final List<UserGroup> list = this.getTestUserGroupList();
-    when(this.userGroupService.getListByIdCompanyId(any(Long.class))).thenReturn(list);
+    when(this.userGroupService.getListByIdCompanyIdentity(any(Long.class))).thenReturn(list);
 
     final UserGroupListEdo edoList = new UserGroupListEdo(CoreModelEdoMapper.toUserGroupEdoList(list));
 
@@ -119,7 +119,7 @@ public class UserGroupControllerTest extends TestDataProducer {
                 .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
                 .andExpect(content().xml(listAsXmlString));
 
-    verify(this.userGroupService, times(1)).getListByIdCompanyId(any(Long.class));
+    verify(this.userGroupService, times(1)).getListByIdCompanyIdentity(any(Long.class));
 
   }
 

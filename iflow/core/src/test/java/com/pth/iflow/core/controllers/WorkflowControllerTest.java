@@ -117,7 +117,7 @@ public class WorkflowControllerTest extends TestDataProducer {
     final List<WorkflowAction> modelList = this.getTestWorkflowActionList(1L);
     final WorkflowActionListEdo modelListEdo = new WorkflowActionListEdo(CoreModelEdoMapper.toWorkflowActionEdoList(modelList));
 
-    when(this.workflowActionService.getListByIdWorkflowId(any(Long.class))).thenReturn(modelList);
+    when(this.workflowActionService.getListByIdWorkflowIdentity(any(Long.class))).thenReturn(modelList);
 
     final String listEdoAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelListEdo);
 
@@ -128,7 +128,7 @@ public class WorkflowControllerTest extends TestDataProducer {
                 .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
                 .andExpect(content().xml(listEdoAsXmlString));
 
-    verify(this.workflowActionService, times(1)).getListByIdWorkflowId(any(Long.class));
+    verify(this.workflowActionService, times(1)).getListByIdWorkflowIdentity(any(Long.class));
 
   }
 
@@ -157,7 +157,7 @@ public class WorkflowControllerTest extends TestDataProducer {
     final List<WorkflowFile> modelList = this.getTestWorkflowFileList(1L);
     final WorkflowFileListEdo modelListEdo = new WorkflowFileListEdo(CoreModelEdoMapper.toWorkflowFileEdoList(modelList));
 
-    when(this.workflowFileService.getListByIdWorkflowId(any(Long.class))).thenReturn(modelList);
+    when(this.workflowFileService.getListByIdWorkflowIdentity(any(Long.class))).thenReturn(modelList);
 
     final String listEdoAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelListEdo);
 
@@ -168,7 +168,7 @@ public class WorkflowControllerTest extends TestDataProducer {
                 .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
                 .andExpect(content().xml(listEdoAsXmlString));
 
-    verify(this.workflowFileService, times(1)).getListByIdWorkflowId(any(Long.class));
+    verify(this.workflowFileService, times(1)).getListByIdWorkflowIdentity(any(Long.class));
 
   }
 

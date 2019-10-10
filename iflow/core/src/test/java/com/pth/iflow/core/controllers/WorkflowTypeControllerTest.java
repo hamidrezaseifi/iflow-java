@@ -105,7 +105,7 @@ public class WorkflowTypeControllerTest extends TestDataProducer {
   public void testReadWorkflowTypeListByCompany() throws Exception {
 
     final List<WorkflowType> list = this.getTestWorkflowTypeList();
-    when(this.workflowService.getListByIdCompanyId(any(Long.class))).thenReturn(list);
+    when(this.workflowService.getListByIdCompanyIdentity(any(Long.class))).thenReturn(list);
 
     final WorkflowTypeListEdo edoList = new WorkflowTypeListEdo(CoreModelEdoMapper.toWorkflowTypeEdoList(list));
 
@@ -118,7 +118,7 @@ public class WorkflowTypeControllerTest extends TestDataProducer {
                 .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
                 .andExpect(content().xml(listAsXmlString));
 
-    verify(this.workflowService, times(1)).getListByIdCompanyId(any(Long.class));
+    verify(this.workflowService, times(1)).getListByIdCompanyIdentity(any(Long.class));
 
   }
 

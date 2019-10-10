@@ -2,7 +2,9 @@ package com.pth.iflow.core.controllers;
 
 import java.util.List;
 import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.pth.iflow.common.annotations.IflowGetRequestMapping;
 import com.pth.iflow.common.annotations.IflowPostRequestMapping;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
@@ -32,34 +35,35 @@ public class WorkflowTypeStepController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.WORKFLOWTYPESTEP_READ_BY_ID)
-  public ResponseEntity<WorkflowTypeStepEdo> readDepartmentGroup(@PathVariable final Long id, final HttpServletRequest request) throws Exception {
+  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.WORKFLOWTYPESTEP_READ_BY_IDENTITY)
+  public ResponseEntity<WorkflowTypeStepEdo> readDepartmentGroup(@PathVariable(name = "identity") final String identity,
+      final HttpServletRequest request) throws Exception {
 
-    final WorkflowTypeStep model = this.workflowStepService.getById(id);
+    final WorkflowTypeStep model = this.workflowStepService.getByIdentity(identity);
 
     return ControllerHelper.createResponseEntity(request, CoreModelEdoMapper.toEdo(model), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
   @IflowPostRequestMapping(path = IflowRestPaths.CoreModule.WORKFLOWTYPESTEP_READ_LIST)
-  public ResponseEntity<WorkflowTypeStepListEdo> readDepartmentList(@RequestBody final Set<String> idList, final HttpServletRequest request) throws Exception {
+  public ResponseEntity<WorkflowTypeStepListEdo> readDepartmentList(@RequestBody final Set<String> idList,
+      final HttpServletRequest request) throws Exception {
 
     final List<WorkflowTypeStep> modelList = this.workflowStepService.getListByIdentityList(idList);
 
     return ControllerHelper.createResponseEntity(request,
-                                                 new WorkflowTypeStepListEdo(CoreModelEdoMapper.toWorkflowTypeStepEdoList(modelList)),
-                                                 HttpStatus.OK);
+        new WorkflowTypeStepListEdo(CoreModelEdoMapper.toWorkflowTypeStepEdoList(modelList)), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.WORKFLOWTYPESTEP_READ_LIST_BY_WORKFLOW)
-  public ResponseEntity<WorkflowTypeStepListEdo> readDepartmentListByCompany(@PathVariable final Long id, final HttpServletRequest request) throws Exception {
+  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.WORKFLOWTYPESTEP_READ_LIST_BY_WORKFLOWIDENTITY)
+  public ResponseEntity<WorkflowTypeStepListEdo> readDepartmentListByCompany(@PathVariable(name = "identity") final String identity,
+      final HttpServletRequest request) throws Exception {
 
-    final List<WorkflowTypeStep> modelList = this.workflowStepService.getListByWorkflowTypeId(id);
+    final List<WorkflowTypeStep> modelList = this.workflowStepService.getListByWorkflowTypeIdentity(identity);
 
     return ControllerHelper.createResponseEntity(request,
-                                                 new WorkflowTypeStepListEdo(CoreModelEdoMapper.toWorkflowTypeStepEdoList(modelList)),
-                                                 HttpStatus.OK);
+        new WorkflowTypeStepListEdo(CoreModelEdoMapper.toWorkflowTypeStepEdoList(modelList)), HttpStatus.OK);
   }
 
 }

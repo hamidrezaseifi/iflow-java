@@ -18,12 +18,12 @@ import com.pth.iflow.core.storage.dao.exception.IFlowOptimisticLockException;
 public class WorkflowTypeStepService implements IWorkflowTypeStepService {
 
   private final IWorkflowTypeStepDao workflowStepDao;
-  private final IWorkflowTypeDao     workflowDao;
+  private final IWorkflowTypeDao     workflowTypeDao;
 
   public WorkflowTypeStepService(@Autowired final IWorkflowTypeStepDao workflowStepDao,
       @Autowired final IWorkflowTypeDao workflowDao) {
     this.workflowStepDao = workflowStepDao;
-    this.workflowDao = workflowDao;
+    this.workflowTypeDao = workflowDao;
   }
 
   @Override
@@ -35,7 +35,7 @@ public class WorkflowTypeStepService implements IWorkflowTypeStepService {
   @Override
   public List<WorkflowTypeStep> getListByWorkflowTypeIdentity(final String workflowTypeIdentity) {
 
-    final WorkflowType type = workflowDao.getByIdentity(workflowTypeIdentity);
+    final WorkflowType type = workflowTypeDao.getByIdentity(workflowTypeIdentity);
     return type.getSteps();
   }
 

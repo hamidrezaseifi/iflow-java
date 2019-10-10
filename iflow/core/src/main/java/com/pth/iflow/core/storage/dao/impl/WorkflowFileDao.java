@@ -6,10 +6,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.pth.iflow.core.model.WorkflowFile;
 import com.pth.iflow.core.model.WorkflowFileVersion;
 import com.pth.iflow.core.storage.dao.IUserDao;
@@ -24,7 +26,7 @@ import com.pth.iflow.core.storage.dao.utils.SqlUtils;
 public class WorkflowFileDao extends DaoBasicClass<WorkflowFile> implements IWorkflowFileDao {
 
   @Autowired
-  private IUserDao userDao;
+  private IUserDao                userDao;
 
   @Autowired
   private IWorkflowFileVersionDao workflowFileVersionDao;
@@ -80,20 +82,27 @@ public class WorkflowFileDao extends DaoBasicClass<WorkflowFile> implements IWor
   @Override
   public List<WorkflowFile> getListByWorkflowId(final Long id) throws IFlowStorageException {
 
-    final Set<Long> idList = this.getModelIdListById(id,
-                                                     "SELECT * FROM workflow_files where workflow_id=?",
-                                                     "WorkflowFile",
-                                                     "id");
+    final List<WorkflowFile> list = this.getModelListById(id, "SELECT * FROM workflow_files where workflow_id=?", "WorkflowFile");
 
-    return this.getListByIdList(idList);
+    return list;
+
+  }
+
+  @Override
+  public List<WorkflowFile> getListByWorkflowIdentity(final String workflowIdentity) throws IFlowStorageException {
+
+    final List<WorkflowFile> list = this.getModelListByIdentity(workflowIdentity,
+        "SELECT workflow_files.* FROM workflow_files inner join workflow on workflow.id=workflow_files.workflow_id where workflow.identity=?",
+        "WorkflowFile");
+
+    return list;
 
   }
 
   @Override
   public WorkflowFile create(final WorkflowFile workflow, final boolean withTransaction) throws IFlowStorageException {
-    final String sql =
-                     "INSERT INTO workflow_files (identity, workflow_id, title, extention, active_filepath, active_version, comments, created_by, version, status)"
-                       + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    final String sql = "INSERT INTO workflow_files (identity, workflow_id, title, extention, active_filepath, active_version, comments, created_by, version, status)"
+        + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     final TransactionStatus transactionStatus = this.startTransaction(withTransaction);
     try {
@@ -103,8 +112,7 @@ public class WorkflowFileDao extends DaoBasicClass<WorkflowFile> implements IWor
 
       this.commitTransaction(withTransaction, transactionStatus);
       return this.getById(workflowFileId);
-    }
-    catch (final Exception e) {
+    } catch (final Exception e) {
       this.rollbackTransaction(true, transactionStatus);
       logger.error("Unable to create WorkflowFile: {}", e.toString(), e);
       throw new IFlowStorageException(e.toString(), e);
@@ -113,9 +121,8 @@ public class WorkflowFileDao extends DaoBasicClass<WorkflowFile> implements IWor
 
   @Override
   public WorkflowFile update(final WorkflowFile workflowFile, final boolean withTransaction) throws IFlowStorageException {
-    final String sql =
-                     "UPDATE workflow_files SET workflow_id = ?, title = ?, extention = ?, active_filepath = ?, active_version = ?, comments = ?,"
-                       + " created_by = ?, version = ?, status = ? WHERE id = ?";
+    final String sql = "UPDATE workflow_files SET workflow_id = ?, title = ?, extention = ?, active_filepath = ?, active_version = ?, comments = ?,"
+        + " created_by = ?, version = ?, status = ? WHERE id = ?";
 
     final TransactionStatus transactionStatus = this.startTransaction(withTransaction);
     try {
@@ -126,8 +133,7 @@ public class WorkflowFileDao extends DaoBasicClass<WorkflowFile> implements IWor
 
       this.commitTransaction(withTransaction, transactionStatus);
       return this.getById(workflowFile.getId());
-    }
-    catch (final Exception e) {
+    } catch (final Exception e) {
       this.rollbackTransaction(true, transactionStatus);
       logger.error("Unable to update WorkflowFile: {}", e.toString(), e);
       throw new IFlowStorageException(e.toString(), e);
@@ -155,7 +161,8 @@ public class WorkflowFileDao extends DaoBasicClass<WorkflowFile> implements IWor
   }
 
   @Override
-  protected PreparedStatement prepareInsertPreparedStatement(final WorkflowFile model, final PreparedStatement ps) throws SQLException {
+  protected PreparedStatement prepareInsertPreparedStatement(final WorkflowFile model, final PreparedStatement ps)
+      throws SQLException {
     ps.setString(1, model.getIdentity());
     ps.setLong(2, model.getWorkflowId());
     ps.setString(3, model.getTitle());
@@ -171,7 +178,8 @@ public class WorkflowFileDao extends DaoBasicClass<WorkflowFile> implements IWor
   }
 
   @Override
-  protected PreparedStatement prepareUpdatePreparedStatement(final WorkflowFile model, final PreparedStatement ps) throws SQLException {
+  protected PreparedStatement prepareUpdatePreparedStatement(final WorkflowFile model, final PreparedStatement ps)
+      throws SQLException {
     ps.setLong(1, model.getWorkflowId());
     ps.setString(2, model.getTitle());
     ps.setString(3, model.getExtention());

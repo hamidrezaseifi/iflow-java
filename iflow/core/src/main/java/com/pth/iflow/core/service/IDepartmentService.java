@@ -16,10 +16,10 @@ public interface IDepartmentService {
 
   List<Department> getListByIdentityList(final Set<String> idList);
 
-  List<Department> getListByIdCompanyId(final String identity);
+  List<Department> getListByIdCompanyIdentity(final String identity);
 
   List<DepartmentGroup> getDepartmentGroups(final String identity);
 
-  List<User> getAllUserListByDepartmentId(final String identity);
+  List<User> getAllUserListByDepartmentIdentity(final String identity);
 
 }

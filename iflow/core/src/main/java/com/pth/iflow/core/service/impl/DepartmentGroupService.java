@@ -37,7 +37,7 @@ public class DepartmentGroupService implements IDepartmentGroupService {
   @Override
   public List<DepartmentGroup> getListByDepartmentIdentity(final String departmentIdentity) {
     // TODO Auto-generated method stub
-    return this.departmentGroupDao.getListByDepartmentId(departmentId);
+    return this.departmentGroupDao.getListByDepartmentIdentity(departmentIdentity);
   }
 
   @Override
@@ -59,7 +59,8 @@ public class DepartmentGroupService implements IDepartmentGroupService {
 
   @Override
   public List<User> getAllUserListByDepartmentGroupId(final String identity) {
-    final Set<String> idList = departmentGroupDao.getAllUserIdentityListByDepartmentGroupId(id);
+    final DepartmentGroup departmentGroup = getByIdentity(identity);
+    final Set<String> idList = departmentGroupDao.getAllUserIdentityListByDepartmentGroupId(departmentGroup.getId());
 
     return userDao.getListByIdentityList(idList);
 

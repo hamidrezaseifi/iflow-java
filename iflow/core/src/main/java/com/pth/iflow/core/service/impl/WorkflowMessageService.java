@@ -2,6 +2,7 @@ package com.pth.iflow.core.service.impl;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,29 +42,29 @@ public class WorkflowMessageService implements IWorkflowMessageService {
   @Override
   public void updateStatusByWorkflow(final String workflowIdentity, final String stepIdentity, final EWorkflowMessageStatus status)
       throws IFlowStorageException {
-    this.workflowMessageDao.updateStatusByWorkflow(workflowId, stepId, status);
+    this.workflowMessageDao.updateStatusByWorkflowIdentity(workflowIdentity, stepIdentity, status);
   }
 
   @Override
   public List<WorkflowMessage> getNotClosedNotExpiredListByUserId(final String email) throws IFlowStorageException {
 
-    return this.workflowMessageDao.getNotClosedNotExpiredListByUserId(userId);
+    return this.workflowMessageDao.getNotClosedNotExpiredListByUserEmail(email);
   }
 
   @Override
   public List<WorkflowMessage> getNotClosedNotExpiredListByWorkflowId(final String workflowIdentity) throws IFlowStorageException {
 
-    return this.workflowMessageDao.getNotClosedNotExpiredListByWorkflowId(workflowId);
+    return this.workflowMessageDao.getNotClosedNotExpiredListByWorkflowIdentity(workflowIdentity);
   }
 
   @Override
   public void updateWorkflowMessageStatus(final String workflowIdentity, final String stepIdentity, final String email,
       final EWorkflowMessageStatus status) throws IFlowStorageException {
 
-    if (userid <= 0L) {
-      this.workflowMessageDao.updateStatusByWorkflow(workflowId, stepId, status);
+    if (StringUtils.isEmpty(email)) {
+      this.workflowMessageDao.updateStatusByWorkflowIdentity(workflowIdentity, stepIdentity, status);
     } else {
-      this.workflowMessageDao.updateStatusByWorkflowAndUser(workflowId, stepId, userid, status);
+      this.workflowMessageDao.updateStatusByWorkflowAndUser(workflowIdentity, stepIdentity, email, status);
     }
   }
 

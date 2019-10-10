@@ -39,29 +39,29 @@ public class UsersService implements IUsersService {
   }
 
   @Override
-  public List<UserGroup> getUserGroups(final String identity) {
-    final User user = getUserById(id);
+  public List<UserGroup> getUserGroups(final String email) {
+    final User user = getUserByEmail(email);
     final List<UserGroup> list = userGroupDao.getListByIdentityList(user.getGroups());
     return list;
   }
 
   @Override
-  public List<Department> getUserDepartments(final String identity) {
-    final User user = getUserById(id);
+  public List<Department> getUserDepartments(final String email) {
+    final User user = getUserByEmail(email);
     final List<Department> list = departmentDao.getListByIdentityList(user.getDepartments());
     return list;
   }
 
   @Override
-  public List<DepartmentGroup> getUserDepartmentGroups(final String identity) {
-    final User user = getUserById(id);
+  public List<DepartmentGroup> getUserDepartmentGroups(final String email) {
+    final User user = getUserByEmail(email);
     final List<DepartmentGroup> list = departmentGroupDao.getListByIdentityList(user.getDepartmentGroups());
     return list;
   }
 
   @Override
-  public List<User> getUserDeputies(final String identity) {
-    final User user = getUserById(id);
+  public List<User> getUserDeputies(final String email) {
+    final User user = getUserByEmail(email);
     final List<User> list = userDao.getListByIdentityList(user.getDeputies());
     return list;
   }
@@ -86,7 +86,7 @@ public class UsersService implements IUsersService {
   @Override
   public List<User> getCompanyUsers(final String companyIdentity) {
 
-    return userDao.getListByCompanyId(companyId);
+    return userDao.getListByCompanyIdentity(companyIdentity);
   }
 
 }

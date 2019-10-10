@@ -2,6 +2,7 @@ package com.pth.iflow.core.storage.dao;
 
 import java.util.List;
 import java.util.Set;
+
 import com.pth.iflow.core.model.UserGroup;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 
@@ -20,5 +21,7 @@ public interface IUserGroupDao {
   public List<UserGroup> getListByIdentityList(Set<String> idList) throws IFlowStorageException;
 
   public List<UserGroup> getListByCompanyId(Long companyId) throws IFlowStorageException;
+
+  public List<UserGroup> getListByCompanyIdentity(String identity) throws IFlowStorageException;
 
 }

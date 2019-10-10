@@ -27,7 +27,7 @@ public class WorkflowTypeService implements IWorkflowTypeService {
   }
 
   @Override
-  public List<WorkflowTypeStep> getStepsById(final String identity) {
+  public List<WorkflowTypeStep> getStepsByIdentity(final String identity) {
     final WorkflowType workflow = getByIdentity(identity);
     return workflow.getSteps();
   }

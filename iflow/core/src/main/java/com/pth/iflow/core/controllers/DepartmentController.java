@@ -41,7 +41,7 @@ public class DepartmentController {
   public ResponseEntity<DepartmentEdo> readDepartment(@PathVariable(name = "identity") final String identity,
       final HttpServletRequest request) throws Exception {
 
-    final Department model = this.departmentService.getById(id)
+    final Department model = this.departmentService.getByIdentity(identity);
 
     return ControllerHelper.createResponseEntity(request, CoreModelEdoMapper.toEdo(model), HttpStatus.OK);
   }
@@ -62,7 +62,7 @@ public class DepartmentController {
   public ResponseEntity<DepartmentListEdo> readDepartmentListByCompany(
       @PathVariable(name = "companyidentity") final String companyidentity, final HttpServletRequest request) throws Exception {
 
-    final List<Department> modelList = this.departmentService.getListByIdCompanyId(id);
+    final List<Department> modelList = this.departmentService.getListByIdCompanyIdentity(companyidentity);
 
     return ControllerHelper.createResponseEntity(request, new DepartmentListEdo(CoreModelEdoMapper.toDepartmentEdoList(modelList)),
         HttpStatus.OK);
@@ -73,7 +73,7 @@ public class DepartmentController {
   public ResponseEntity<UserListEdo> readAllUserListByDepartmentGroup(@PathVariable(name = "identity") final String identity,
       final HttpServletRequest request) throws Exception {
 
-    final List<User> modelList = this.departmentService.getAllUserListByDepartmentId(id);
+    final List<User> modelList = this.departmentService.getAllUserListByDepartmentIdentity(identity);
 
     return ControllerHelper.createResponseEntity(request, new UserListEdo(CoreModelEdoMapper.toUserEdoList(modelList)), HttpStatus.OK);
   }

@@ -108,7 +108,7 @@ public class DepartmentControllerTest extends TestDataProducer {
   public void testReadDepartmentListByCompany() throws Exception {
 
     final List<Department> list = this.getTestDepartmentList();
-    when(this.departmentService.getListByIdCompanyId(any(Long.class))).thenReturn(list);
+    when(this.departmentService.getListByIdCompanyIdentity(any(Long.class))).thenReturn(list);
 
     final DepartmentListEdo edoList = new DepartmentListEdo(CoreModelEdoMapper.toDepartmentEdoList(list));
 
@@ -121,7 +121,7 @@ public class DepartmentControllerTest extends TestDataProducer {
                 .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
                 .andExpect(content().xml(listAsXmlString));
 
-    verify(this.departmentService, times(1)).getListByIdCompanyId(any(Long.class));
+    verify(this.departmentService, times(1)).getListByIdCompanyIdentity(any(Long.class));
 
   }
 
@@ -129,7 +129,7 @@ public class DepartmentControllerTest extends TestDataProducer {
   public void testReadAllUserListByDepartmentGroup() throws Exception {
 
     final List<User> list = this.getTestUserList();
-    when(this.departmentService.getAllUserListByDepartmentId(any(Long.class))).thenReturn(list);
+    when(this.departmentService.getAllUserListByDepartmentIdentity(any(Long.class))).thenReturn(list);
 
     final UserListEdo edoList = new UserListEdo(CoreModelEdoMapper.toUserEdoList(list));
 
@@ -142,7 +142,7 @@ public class DepartmentControllerTest extends TestDataProducer {
                 .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
                 .andExpect(content().xml(listAsXmlString));
 
-    verify(this.departmentService, times(1)).getAllUserListByDepartmentId(any(Long.class));
+    verify(this.departmentService, times(1)).getAllUserListByDepartmentIdentity(any(Long.class));
 
   }
 

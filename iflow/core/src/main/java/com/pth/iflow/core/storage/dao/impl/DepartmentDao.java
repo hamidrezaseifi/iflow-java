@@ -5,10 +5,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Set;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.pth.iflow.core.model.Department;
 import com.pth.iflow.core.storage.dao.IDepartmentDao;
 import com.pth.iflow.core.storage.dao.IDepartmentGroupDao;
@@ -83,6 +85,13 @@ public class DepartmentDao extends DaoBasicClass<Department> implements IDepartm
   }
 
   @Override
+  public List<Department> getListByCompanyIdentity(final String identity) throws IFlowStorageException {
+    return this.getModelListByIdentity(identity,
+        "SELECT departments.* FROM departments inner join companies on departments.company_id=companies.id where companies.identity=?",
+        "Department");
+  }
+
+  @Override
   protected PreparedStatement prepareInsertPreparedStatement(final Department model, final PreparedStatement ps) throws SQLException {
     ps.setString(1, model.getIdentity());
     ps.setLong(2, model.getCompanyId());
@@ -123,9 +132,8 @@ public class DepartmentDao extends DaoBasicClass<Department> implements IDepartm
   @Override
   public Set<String> getAllUserIdentityListByDepartmentId(final Long id) throws IFlowStorageException {
     final Set<String> idList = this.getModelIdentityListById(id,
-                                                             "SELECT email FROM user_departments inner join users on users.id=user_departments.user_id where department_id=?",
-                                                             "User",
-                                                             "email");
+        "SELECT email FROM user_departments inner join users on users.id=user_departments.user_id where department_id=?", "User",
+        "email");
 
     return idList;
   }

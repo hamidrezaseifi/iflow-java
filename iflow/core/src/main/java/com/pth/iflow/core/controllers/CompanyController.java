@@ -33,7 +33,7 @@ public class CompanyController {
   public ResponseEntity<CompanyEdo> readCompany(@PathVariable(name = "companyidentity") final String companyidentity,
       final HttpServletRequest request) throws Exception {
 
-    final Company company = this.companyService.getByIdentifyId(companyidentity);
+    final Company company = this.companyService.getByIdentity(companyidentity);
 
     return ControllerHelper.createResponseEntity(request, CoreModelEdoMapper.toEdo(company), HttpStatus.OK);
   }

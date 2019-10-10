@@ -10,6 +10,6 @@ public interface IWorkflowFileService {
 
   public WorkflowFile getByIdentity(String identity);
 
-  public List<WorkflowFile> getListByIdWorkflowId(final String identity);
+  public List<WorkflowFile> getListByIdWorkflowIdentity(final String identity);
 
 }

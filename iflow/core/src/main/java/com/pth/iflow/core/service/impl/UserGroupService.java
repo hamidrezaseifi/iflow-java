@@ -8,18 +8,15 @@ import org.springframework.stereotype.Service;
 
 import com.pth.iflow.core.model.UserGroup;
 import com.pth.iflow.core.service.IUserGroupService;
-import com.pth.iflow.core.storage.dao.IUserDao;
 import com.pth.iflow.core.storage.dao.IUserGroupDao;
 import com.pth.iflow.core.storage.dao.exception.IFlowOptimisticLockException;
 
 @Service
 public class UserGroupService implements IUserGroupService {
 
-  private final IUserDao      userDao;
   private final IUserGroupDao userGroupDao;
 
-  public UserGroupService(@Autowired final IUserDao userDao, @Autowired final IUserGroupDao userGroupDao) {
-    this.userDao = userDao;
+  public UserGroupService(@Autowired final IUserGroupDao userGroupDao) {
     this.userGroupDao = userGroupDao;
   }
 
@@ -35,7 +32,7 @@ public class UserGroupService implements IUserGroupService {
 
   @Override
   public List<UserGroup> getListByIdCompanyIdentity(final String companyIdentity) {
-    return this.userGroupDao.getListByCompanyId(companyId);
+    return this.userGroupDao.getListByCompanyIdentity(companyIdentity);
   }
 
   @Override

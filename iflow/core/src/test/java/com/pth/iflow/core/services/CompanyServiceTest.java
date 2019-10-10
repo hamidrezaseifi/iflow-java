@@ -44,7 +44,7 @@ public class CompanyServiceTest extends TestDataProducer {
     final Company company = getTestCompany();
     when(this.companyDao.getById(any(Long.class))).thenReturn(company);
 
-    final Company resCompany = this.companyService.getById(1L);
+    final Company resCompany = this.companyService.getByIdentity("identifyId");
 
     Assert.assertNotNull("Result company is not null!", resCompany);
     Assert.assertEquals("Result company has id 1!", resCompany.getId(), company.getId());

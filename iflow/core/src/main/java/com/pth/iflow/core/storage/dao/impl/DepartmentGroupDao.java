@@ -5,9 +5,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Set;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.pth.iflow.core.model.DepartmentGroup;
 import com.pth.iflow.core.storage.dao.IDepartmentGroupDao;
 import com.pth.iflow.core.storage.dao.basic.DaoBasicClass;
@@ -78,7 +80,15 @@ public class DepartmentGroupDao extends DaoBasicClass<DepartmentGroup> implement
   }
 
   @Override
-  protected PreparedStatement prepareInsertPreparedStatement(final DepartmentGroup model, final PreparedStatement ps) throws SQLException {
+  public List<DepartmentGroup> getListByDepartmentIdentity(final String departmentIdentity) {
+    return getModelListByIdentity(departmentIdentity,
+        "SELECT departments_group.* FROM departments_group inner join departments on departments.id=departments_group.department_id where departments.identity=?",
+        "Department Group");
+  }
+
+  @Override
+  protected PreparedStatement prepareInsertPreparedStatement(final DepartmentGroup model, final PreparedStatement ps)
+      throws SQLException {
     ps.setString(1, model.getIdentity());
     ps.setLong(2, model.getDepartmentId());
     ps.setString(3, model.getTitle());
@@ -89,7 +99,8 @@ public class DepartmentGroupDao extends DaoBasicClass<DepartmentGroup> implement
   }
 
   @Override
-  protected PreparedStatement prepareUpdatePreparedStatement(final DepartmentGroup model, final PreparedStatement ps) throws SQLException {
+  protected PreparedStatement prepareUpdatePreparedStatement(final DepartmentGroup model, final PreparedStatement ps)
+      throws SQLException {
     ps.setLong(1, model.getDepartmentId());
     ps.setString(2, model.getTitle());
     ps.setInt(3, model.getVersion());
@@ -102,7 +113,7 @@ public class DepartmentGroupDao extends DaoBasicClass<DepartmentGroup> implement
   @Override
   public DepartmentGroup create(final DepartmentGroup model) throws IFlowStorageException {
     final String sql = "INSERT INTO departments_group (identity, department_id, title, version, status)"
-                       + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     return getById(createModel(model, "DepartmentGroup", sql, true));
   }
@@ -119,9 +130,8 @@ public class DepartmentGroupDao extends DaoBasicClass<DepartmentGroup> implement
   @Override
   public Set<String> getAllUserIdentityListByDepartmentGroupId(final Long id) throws IFlowStorageException {
     final Set<String> idList = getModelIdentityListById(id,
-                                                        "SELECT email FROM user_department_groups inner join users on users.id=user_department_groups.user_id where department_group_id=?",
-                                                        "User",
-                                                        "email");
+        "SELECT email FROM user_department_groups inner join users on users.id=user_department_groups.user_id where department_group_id=?",
+        "User", "email");
 
     return idList;
   }

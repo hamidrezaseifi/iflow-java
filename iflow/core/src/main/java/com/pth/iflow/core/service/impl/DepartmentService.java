@@ -49,8 +49,8 @@ public class DepartmentService implements IDepartmentService {
   }
 
   @Override
-  public List<Department> getListByIdCompanyId(final String identity) {
-    return this.departmentDao.getListByCompanyId(id);
+  public List<Department> getListByIdCompanyIdentity(final String identity) {
+    return this.departmentDao.getListByCompanyIdentity(identity);
   }
 
   @Override
@@ -71,11 +71,12 @@ public class DepartmentService implements IDepartmentService {
   }
 
   @Override
-  public List<User> getAllUserListByDepartmentId(final String identity) {
+  public List<User> getAllUserListByDepartmentIdentity(final String identity) {
 
-    final Set<String> idList = this.departmentDao.getAllUserIdentityListByDepartmentId(id);
+    final Department department = getByIdentity(identity);
+    final Set<String> idList = this.departmentDao.getAllUserIdentityListByDepartmentId(department.getId());
 
-    final List<DepartmentGroup> groups = this.getDepartmentGroups(id);
+    final List<DepartmentGroup> groups = department.getDepartmentGroups();
     for (final DepartmentGroup group : groups) {
       idList.addAll(this.departmentGroupDao.getAllUserIdentityListByDepartmentGroupId(group.getId()));
     }

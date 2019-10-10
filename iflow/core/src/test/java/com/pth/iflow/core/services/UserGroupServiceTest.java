@@ -2,8 +2,10 @@ package com.pth.iflow.core.services;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+
 import java.util.List;
 import java.util.Set;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -13,11 +15,11 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
+
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.UserGroup;
 import com.pth.iflow.core.service.IUserGroupService;
 import com.pth.iflow.core.service.impl.UserGroupService;
-import com.pth.iflow.core.storage.dao.IUserDao;
 import com.pth.iflow.core.storage.dao.IUserGroupDao;
 
 @RunWith(SpringRunner.class)
@@ -28,14 +30,11 @@ public class UserGroupServiceTest extends TestDataProducer {
   private IUserGroupService userGroupService;
 
   @MockBean
-  private IUserDao userDao;
-
-  @MockBean
-  private IUserGroupDao userGroupDao;
+  private IUserGroupDao     userGroupDao;
 
   @Before
   public void setUp() throws Exception {
-    this.userGroupService = new UserGroupService(this.userDao, this.userGroupDao);
+    this.userGroupService = new UserGroupService(this.userGroupDao);
   }
 
   @After
@@ -48,7 +47,7 @@ public class UserGroupServiceTest extends TestDataProducer {
     final UserGroup userGroup = getTestUserGroup();
     when(this.userGroupDao.getById(any(Long.class))).thenReturn(userGroup);
 
-    final UserGroup resUserGroup = this.userGroupService.getById(userGroup.getId());
+    final UserGroup resUserGroup = this.userGroupService.getByIdentity(userGroup.getIdentity());
 
     Assert.assertNotNull("Result user group is not null!", resUserGroup);
     Assert.assertEquals("Result user group has id 1!", resUserGroup.getId(), userGroup.getId());
@@ -75,9 +74,9 @@ public class UserGroupServiceTest extends TestDataProducer {
   public void testGetListByIdCompanyId() throws Exception {
 
     final List<UserGroup> list = getTestUserGroupList();
-    when(this.userGroupDao.getListByCompanyId(any(Long.class))).thenReturn(list);
+    when(this.userGroupDao.getListByCompanyIdentity(any(String.class))).thenReturn(list);
 
-    final List<UserGroup> resList = this.userGroupService.getListByIdCompanyId(1L);
+    final List<UserGroup> resList = this.userGroupService.getListByIdCompanyIdentity("companyIdentity");
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());

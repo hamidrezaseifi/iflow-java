@@ -72,7 +72,7 @@ public class WorkflowMessageDaoTest extends TestDataProducer {
     createWorlflowList();
 
     WorkflowMessage workflowMessage = createdModels.get(0);
-    this.workflowMessageDao.updateStatusByWorkflow(workflowMessage.getWorkflow().getId(),
+    this.workflowMessageDao.updateStatusByWorkflowIdentity(workflowMessage.getWorkflow().getId(),
                                                    workflowMessage.getStepId(),
                                                    EWorkflowMessageStatus.CLOSED);
     workflowMessage = workflowMessageDao.getById(workflowMessage.getId());
@@ -87,7 +87,7 @@ public class WorkflowMessageDaoTest extends TestDataProducer {
 
     createWorlflowList();
 
-    final List<WorkflowMessage> resList = this.workflowMessageDao.getNotClosedNotExpiredListByUserId(createdModels.get(0).getUserId());
+    final List<WorkflowMessage> resList = this.workflowMessageDao.getNotClosedNotExpiredListByUserEmail(createdModels.get(0).getUserId());
 
     Assert.assertNotNull("Result list is not null!", resList);
 
@@ -101,7 +101,7 @@ public class WorkflowMessageDaoTest extends TestDataProducer {
     createWorlflowList();
 
     final List<WorkflowMessage> resList = this.workflowMessageDao
-                                                                 .getNotClosedNotExpiredListByWorkflowId(createdModels.get(0)
+                                                                 .getNotClosedNotExpiredListByWorkflowIdentity(createdModels.get(0)
                                                                                                                       .getWorkflow()
                                                                                                                       .getId());
 

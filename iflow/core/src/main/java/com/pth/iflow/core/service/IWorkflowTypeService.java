@@ -14,7 +14,7 @@ public interface IWorkflowTypeService {
 
   List<WorkflowType> getListByIdCompanyId(final String identity);
 
-  List<WorkflowTypeStep> getStepsById(final String identity);
+  List<WorkflowTypeStep> getStepsByIdentity(final String identity);
 
   List<WorkflowType> getListByIdentityList(final Set<String> idList);
 }
