@@ -167,7 +167,7 @@ CREATE TABLE `workflow_type` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `identity` varchar(45) DEFAULT NULL,
   `company_id` int(11) NOT NULL,
-  `workflow_base_type` int(11) NOT NULL DEFAULT '0',
+  `workflow_base_type` varchar(45) NOT NULL DEFAULT '0',
   `title` varchar(200) NOT NULL,
   `assign_type` SMALLINT(2) NOT NULL DEFAULT 1,
   `send_to_controller` smallint(2) NOT NULL DEFAULT '1',

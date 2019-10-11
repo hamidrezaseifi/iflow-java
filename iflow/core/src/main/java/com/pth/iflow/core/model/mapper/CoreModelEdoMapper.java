@@ -316,7 +316,7 @@ public class CoreModelEdoMapper {
     edo.setComments(model.getComments());
     edo.setStatus(model.getStatus());
     edo.setIdentity(model.getIdentity());
-    edo.setCreatedBy(model.getCreatedBy());
+    edo.setCreatedByIdentity(model.getCreatedByIdentity());
     edo.setActiveFilePath(model.getActiveFilePath());
     edo.setActiveFileVersion(model.getActiveFileVersion());
     edo.setVersion(model.getVersion());
@@ -335,7 +335,7 @@ public class CoreModelEdoMapper {
     model.setComments(edo.getComments());
     model.setStatus(edo.getStatus());
     model.setIdentity(edo.getIdentity());
-    model.setCreatedBy(edo.getCreatedBy());
+    model.setCreatedByIdentity(edo.getCreatedByIdentity());
     model.setActiveFilePath(edo.getActiveFilePath());
     model.setActiveFileVersion(edo.getActiveFileVersion());
     model.setVersion(edo.getVersion());
@@ -378,7 +378,7 @@ public class CoreModelEdoMapper {
     edo.setStatus(model.getStatus());
     edo.setIdentity(model.getIdentity());
     edo.setCompanyIdentity(model.getCompanyIdentity());
-    edo.setBaseTypeId(model.getBaseTypeId());
+    edo.setBaseTypeIdentity(model.getBaseTypeIdentity());
     edo.setSendToController(model.getSendToController());
     edo.setAssignType(model.geAssignType().getValue());
     edo.setIncreaseStepAutomatic(model.getIncreaseStepAutomatic());
@@ -398,7 +398,7 @@ public class CoreModelEdoMapper {
     model.setStatus(edo.getStatus());
     model.setIdentity(edo.getIdentity());
     model.setCompanyIdentity(edo.getCompanyIdentity());
-    model.setBaseTypeId(edo.getBaseTypeId());
+    model.setBaseTypeIdentity(edo.getBaseTypeIdentity());
     model.setSendToController(edo.getSendToController());
     model.setAssignType(EWorkflowTypeAssignType.ofValue(edo.getAssignType()));
     model.setAllowAssign(edo.getAllowAssign());

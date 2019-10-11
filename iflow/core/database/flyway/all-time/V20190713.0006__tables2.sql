@@ -43,9 +43,9 @@ CREATE TABLE `invoice_workflow` (
 ) ENGINE=InnoDB;
 
 
-INSERT INTO `workflow_type`(id, identity, company_id, workflow_base_type, title, assign_type, send_to_controller, increase_step_automatic, allow_assign, commecnts, status, version) VALUES (1, 'singletasktype1', 1,0,'Einzel Aufgabe',1,1,1,0,NULL,1,1);
-INSERT INTO `workflow_type`(id, identity, company_id, workflow_base_type, title, assign_type, send_to_controller, increase_step_automatic, allow_assign, commecnts, status, version) VALUES (2,'threetasktype1', 1,0,'Drei Schritt Aufgabe',2,0,1,1,NULL,1,1);
-INSERT INTO `workflow_type`(id, identity, company_id, workflow_base_type, title, assign_type, send_to_controller, increase_step_automatic, allow_assign, commecnts, status, version) VALUES (3,'invocetasktype1', 1,0,'Rechnung Wrokflow',2,0,1,1,NULL,1,1);
+INSERT INTO `workflow_type`(id, identity, company_id, workflow_base_type, title, assign_type, send_to_controller, increase_step_automatic, allow_assign, commecnts, status, version) VALUES (1, 'singletasktype1', 1,'','Einzel Aufgabe',1,1,1,0,NULL,1,1);
+INSERT INTO `workflow_type`(id, identity, company_id, workflow_base_type, title, assign_type, send_to_controller, increase_step_automatic, allow_assign, commecnts, status, version) VALUES (2,'threetasktype1', 1,'','Drei Schritt Aufgabe',2,0,1,1,NULL,1,1);
+INSERT INTO `workflow_type`(id, identity, company_id, workflow_base_type, title, assign_type, send_to_controller, increase_step_automatic, allow_assign, commecnts, status, version) VALUES (3,'invocetasktype1', 1,'','Rechnung Wrokflow',2,0,1,1,NULL,1,1);
 
 INSERT INTO `workflow_type_step`(id, identity, workflow_type_id, title, step_index, view_name, expire_days, commecnts, status, version) VALUES (1,'singletasktypestep1', 1,'Augabe',1,'workflow/edit',15,NULL,1,1);
 

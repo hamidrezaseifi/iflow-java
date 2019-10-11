@@ -3,6 +3,7 @@ package com.pth.iflow.core.model;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
 import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
 import com.pth.iflow.core.model.helper.CoreModelHelper;
 import com.pth.iflow.core.model.helper.ICoreIdentityModel;
@@ -13,7 +14,7 @@ public class WorkflowType extends CoreModelHelper implements ICoreIdentityModel 
   private String                       identity;
   private Long                         companyId;
   private String                       companyIdentity;
-  private Long                         baseTypeId;
+  private String                       baseTypeIdentity;
   private String                       title;
   private String                       comments;
   private Integer                      status;
@@ -62,18 +63,16 @@ public class WorkflowType extends CoreModelHelper implements ICoreIdentityModel 
     this.companyIdentity = companyIdentity;
   }
 
-  /**
-   * @return the baseTypeId
-   */
-  public Long getBaseTypeId() {
-    return this.baseTypeId;
+  public String getBaseTypeIdentity() {
+    return baseTypeIdentity;
   }
 
-  /**
-   * @param baseTypeId the baseTypeId to set
-   */
-  public void setBaseTypeId(final Long baseTypeId) {
-    this.baseTypeId = baseTypeId;
+  public void setBaseTypeIdentity(final String baseTypeIdentity) {
+    this.baseTypeIdentity = baseTypeIdentity;
+  }
+
+  public EWorkflowTypeAssignType getAssignType() {
+    return assignType;
   }
 
   public String getTitle() {

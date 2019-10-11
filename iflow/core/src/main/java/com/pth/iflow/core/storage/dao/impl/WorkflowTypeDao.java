@@ -72,7 +72,7 @@ public class WorkflowTypeDao extends DaoBasicClass<WorkflowType> implements IWor
     final WorkflowType model = new WorkflowType();
     model.setId(rs.getLong("id"));
     model.setCompanyId(rs.getLong("company_id"));
-    model.setBaseTypeId(rs.getLong("workflow_base_type"));
+    model.setBaseTypeIdentity(rs.getString("workflow_base_type"));
     model.setTitle(rs.getString("title"));
     model.setStatus(rs.getInt("status"));
     model.setCreatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("created_at")));
@@ -99,7 +99,7 @@ public class WorkflowTypeDao extends DaoBasicClass<WorkflowType> implements IWor
       throws SQLException {
     ps.setString(1, model.getIdentity());
     ps.setLong(2, model.getCompanyId());
-    ps.setLong(3, model.getBaseTypeId());
+    ps.setString(3, model.getBaseTypeIdentity());
     ps.setString(4, model.getTitle());
     ps.setInt(5, model.geAssignType().getValue());
     ps.setInt(6, model.getSendToController() ? 1 : 0);
@@ -116,7 +116,7 @@ public class WorkflowTypeDao extends DaoBasicClass<WorkflowType> implements IWor
   protected PreparedStatement prepareUpdatePreparedStatement(final WorkflowType model, final PreparedStatement ps)
       throws SQLException {
     ps.setLong(1, model.getCompanyId());
-    ps.setLong(2, model.getBaseTypeId());
+    ps.setString(2, model.getBaseTypeIdentity());
     ps.setString(3, model.getTitle());
     ps.setInt(4, model.geAssignType().getValue());
     ps.setInt(5, model.getSendToController() ? 1 : 0);

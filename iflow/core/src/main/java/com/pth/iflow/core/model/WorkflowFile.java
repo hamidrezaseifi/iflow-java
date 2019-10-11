@@ -3,6 +3,7 @@ package com.pth.iflow.core.model;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
 import com.pth.iflow.core.model.helper.CoreModelHelper;
 import com.pth.iflow.core.model.helper.ICoreIdentityModel;
 
@@ -11,7 +12,7 @@ public class WorkflowFile extends CoreModelHelper implements ICoreIdentityModel 
   private Long                            id;
   private String                          identity;
   private Long                            workflowId;
-  private Long                            createdBy;
+  private String                          createdByIdentity;
   private String                          title;
   private String                          extention;
   private String                          activeFilePath;
@@ -59,12 +60,12 @@ public class WorkflowFile extends CoreModelHelper implements ICoreIdentityModel 
     this.activeFilePath = filePath;
   }
 
-  public Long getCreatedBy() {
-    return this.createdBy;
+  public String getCreatedByIdentity() {
+    return createdByIdentity;
   }
 
-  public void setCreatedBy(final Long createdBy) {
-    this.createdBy = createdBy;
+  public void setCreatedByIdentity(final String createdByIdentity) {
+    this.createdByIdentity = createdByIdentity;
   }
 
   public String getTitle() {

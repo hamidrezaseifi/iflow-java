@@ -73,7 +73,7 @@ public class WorkflowFileDao extends DaoBasicClass<WorkflowFile> implements IWor
     model.setVersion(rs.getInt("version"));
     model.setComments(rs.getString("comments"));
     model.setActiveFileVersion(rs.getInt("active_version"));
-    model.setCreatedBy(rs.getLong("created_by"));
+    model.setCreatedByIdentity(userDao.getById(rs.getLong("created_by")).getIdentity());
     model.setWorkflowId(rs.getLong("workflow_id"));
 
     return model;
@@ -122,7 +122,7 @@ public class WorkflowFileDao extends DaoBasicClass<WorkflowFile> implements IWor
   @Override
   public WorkflowFile update(final WorkflowFile workflowFile, final boolean withTransaction) throws IFlowStorageException {
     final String sql = "UPDATE workflow_files SET workflow_id = ?, title = ?, extention = ?, active_filepath = ?, active_version = ?, comments = ?,"
-        + " created_by = ?, version = ?, status = ? WHERE id = ?";
+        + " version = ?, status = ? WHERE id = ?";
 
     final TransactionStatus transactionStatus = this.startTransaction(withTransaction);
     try {
@@ -170,7 +170,7 @@ public class WorkflowFileDao extends DaoBasicClass<WorkflowFile> implements IWor
     ps.setString(5, model.getActiveFilePath());
     ps.setInt(6, model.getActiveFileVersion());
     ps.setString(7, model.getComments());
-    ps.setLong(8, model.getCreatedBy());
+    ps.setLong(8, userDao.getByEmail(model.getCreatedByIdentity()).getId());
     ps.setInt(9, model.getVersion());
     ps.setInt(10, model.getStatus());
 
@@ -186,10 +186,9 @@ public class WorkflowFileDao extends DaoBasicClass<WorkflowFile> implements IWor
     ps.setString(4, model.getActiveFilePath());
     ps.setInt(5, model.getActiveFileVersion());
     ps.setString(6, model.getComments());
-    ps.setLong(7, model.getCreatedBy());
-    ps.setInt(8, model.getVersion());
-    ps.setInt(9, model.getStatus());
-    ps.setLong(10, model.getId());
+    ps.setInt(7, model.getVersion());
+    ps.setInt(8, model.getStatus());
+    ps.setLong(9, model.getId());
 
     return ps;
   }
