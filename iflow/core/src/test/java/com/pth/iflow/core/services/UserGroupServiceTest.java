@@ -45,7 +45,7 @@ public class UserGroupServiceTest extends TestDataProducer {
   public void testGetById() throws Exception {
 
     final UserGroup userGroup = getTestUserGroup();
-    when(this.userGroupDao.getById(any(Long.class))).thenReturn(userGroup);
+    when(this.userGroupDao.getByIdentity(any(String.class))).thenReturn(userGroup);
 
     final UserGroup resUserGroup = this.userGroupService.getByIdentity(userGroup.getIdentity());
 

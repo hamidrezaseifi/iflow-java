@@ -50,7 +50,7 @@ public class DepartmentGroupServiceTest extends TestDataProducer {
   public void testGetById() throws Exception {
 
     final DepartmentGroup departmentGroup = this.getTestDepartmentGroup();
-    when(this.departmentGroupDao.getById(any(Long.class))).thenReturn(departmentGroup);
+    when(this.departmentGroupDao.getByIdentity(any(String.class))).thenReturn(departmentGroup);
 
     final DepartmentGroup resDepartmentGroup = this.departmentGroupService.getByIdentity(departmentGroup.getIdentity());
 

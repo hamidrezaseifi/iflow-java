@@ -50,7 +50,7 @@ public class WorkflowTypeStepServiceTest extends TestDataProducer {
   public void testGetById() throws Exception {
 
     final WorkflowTypeStep workflowType = getTestWorkflowTypeStep();
-    when(this.workflowTypeStepDao.getById(any(Long.class))).thenReturn(workflowType);
+    when(this.workflowTypeStepDao.getByIdentity(any(String.class))).thenReturn(workflowType);
 
     final WorkflowTypeStep resWorkflowType = this.workflowTypeStepService.getByIdentity(workflowType.getIdentity());
 

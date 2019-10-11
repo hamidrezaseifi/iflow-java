@@ -42,7 +42,7 @@ public class CompanyServiceTest extends TestDataProducer {
   public void testReadCompany() throws Exception {
 
     final Company company = getTestCompany();
-    when(this.companyDao.getById(any(Long.class))).thenReturn(company);
+    when(this.companyDao.getByIdentity(any(String.class))).thenReturn(company);
 
     final Company resCompany = this.companyService.getByIdentity("identifyId");
 

@@ -57,7 +57,7 @@ public class DepartmentServiceTest extends TestDataProducer {
   public void testGetById() throws Exception {
 
     final Department department = this.getTestDepartment();
-    when(this.departmentDao.getById(any(Long.class))).thenReturn(department);
+    when(this.departmentDao.getByIdentity(any(String.class))).thenReturn(department);
 
     final Department resDepartment = this.departmentService.getByIdentity(department.getIdentity());
 
@@ -120,8 +120,9 @@ public class DepartmentServiceTest extends TestDataProducer {
     final Department department = this.getTestDepartment();
 
     when(this.departmentDao.getByIdentity(any(String.class))).thenReturn(department);
-    when(this.departmentDao.getAllUserIdentityListByDepartmentId(any(Long.class))).thenReturn(list);
+    when(this.userDao.getListByIdentityList(any(Set.class))).thenReturn(userList);
     when(this.departmentGroupDao.getAllUserIdentityListByDepartmentGroupId(any(Long.class))).thenReturn(list);
+    when(this.departmentDao.getAllUserIdentityListByDepartmentId(any(Long.class))).thenReturn(list);
 
     final List<User> resList = this.departmentService.getAllUserListByDepartmentIdentity("identity");
 
