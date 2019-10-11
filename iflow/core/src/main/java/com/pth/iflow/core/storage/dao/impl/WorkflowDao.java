@@ -398,6 +398,6 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
   @Override
   protected String generateIdentity(final Workflow model) {
 
-    return String.format("t%dw%d", model.getWorkflowType(), System.currentTimeMillis());
+    return String.format("t%dw%d", model.getWorkflowType().getId(), System.currentTimeMillis());
   }
 }
