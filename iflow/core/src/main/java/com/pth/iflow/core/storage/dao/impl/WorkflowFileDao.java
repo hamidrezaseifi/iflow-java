@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -216,7 +217,8 @@ public class WorkflowFileDao extends DaoBasicClass<WorkflowFile> implements IWor
   @Override
   protected String generateIdentity(final WorkflowFile model) {
 
-    return String.format("w%df%d", model.getWorkflowId(), System.currentTimeMillis());
+    final Random rand = new Random();
+    return String.format("w%df%d-%06d", model.getWorkflowId(), System.currentTimeMillis(), rand.nextInt(1000000));
   }
 
 }

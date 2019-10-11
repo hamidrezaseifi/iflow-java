@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
@@ -141,7 +142,8 @@ public class DepartmentDao extends DaoBasicClass<Department> implements IDepartm
   @Override
   protected String generateIdentity(final Department model) {
 
-    return String.format("c%dd%d", model.getCompanyId(), System.currentTimeMillis());
+    final Random rand = new Random();
+    return String.format("c%dd%d-%06d", model.getCompanyId(), System.currentTimeMillis(), rand.nextInt(1000000));
   }
 
 }

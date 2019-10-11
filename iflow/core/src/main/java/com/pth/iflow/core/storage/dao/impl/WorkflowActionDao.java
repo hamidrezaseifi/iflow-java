@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
@@ -161,7 +162,8 @@ public class WorkflowActionDao extends DaoBasicClass<WorkflowAction> implements 
   @Override
   protected String generateIdentity(final WorkflowAction model) {
 
-    return String.format("w%da%d", model.getWorkflowId(), System.currentTimeMillis());
+    final Random rand = new Random();
+    return String.format("w%da%d-%06d", model.getWorkflowId(), System.currentTimeMillis(), rand.nextInt(1000000));
   }
 
 }

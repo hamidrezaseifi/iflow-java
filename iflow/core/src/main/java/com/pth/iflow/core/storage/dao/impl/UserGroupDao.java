@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
@@ -135,7 +136,8 @@ public class UserGroupDao extends DaoBasicClass<UserGroup> implements IUserGroup
   @Override
   protected String generateIdentity(final UserGroup model) {
 
-    return String.format("c%dgrp%d", model.getCompanyId(), System.currentTimeMillis());
+    final Random rand = new Random();
+    return String.format("c%dgrp%d-%06d", model.getCompanyId(), System.currentTimeMillis(), rand.nextInt(1000000));
   }
 
 }

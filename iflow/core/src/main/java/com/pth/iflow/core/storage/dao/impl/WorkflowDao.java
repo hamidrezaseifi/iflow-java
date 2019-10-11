@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
@@ -398,6 +399,7 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
   @Override
   protected String generateIdentity(final Workflow model) {
 
-    return String.format("t%dw%d", model.getWorkflowType().getId(), System.currentTimeMillis());
+    final Random rand = new Random();
+    return String.format("t%dw%d-%06d", model.getWorkflowType().getId(), System.currentTimeMillis(), rand.nextInt(1000000));
   }
 }

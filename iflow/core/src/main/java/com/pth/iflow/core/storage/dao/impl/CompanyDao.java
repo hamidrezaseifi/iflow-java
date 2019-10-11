@@ -3,6 +3,7 @@ package com.pth.iflow.core.storage.dao.impl;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Random;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -85,7 +86,8 @@ public class CompanyDao extends DaoBasicClass<Company> implements ICompanyDao {
   @Override
   protected String generateIdentity(final Company model) {
 
-    return String.format("c%d", System.currentTimeMillis());
+    final Random rand = new Random();
+    return String.format("c%d-%06d", System.currentTimeMillis(), rand.nextInt(1000000));
   }
 
 }

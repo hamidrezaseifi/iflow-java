@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
@@ -145,6 +146,7 @@ public class WorkflowTypeStepDao extends DaoBasicClass<WorkflowTypeStep> impleme
   @Override
   protected String generateIdentity(final WorkflowTypeStep model) {
 
-    return String.format("t%ds%d", model.getWorkflowTypeId(), System.currentTimeMillis());
+    final Random rand = new Random();
+    return String.format("t%ds%d-%d", model.getWorkflowTypeId(), System.currentTimeMillis(), rand.nextInt(100000));
   }
 }

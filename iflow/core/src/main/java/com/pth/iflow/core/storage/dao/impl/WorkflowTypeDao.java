@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
@@ -179,6 +180,7 @@ public class WorkflowTypeDao extends DaoBasicClass<WorkflowType> implements IWor
 
   @Override
   protected String generateIdentity(final WorkflowType model) {
-    return String.format("c%dt%d", model.getCompanyId(), System.currentTimeMillis());
+    final Random rand = new Random();
+    return String.format("c%dt%d-%06d", model.getCompanyId(), System.currentTimeMillis(), rand.nextInt(1000000));
   }
 }
