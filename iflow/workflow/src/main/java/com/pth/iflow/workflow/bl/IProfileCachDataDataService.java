@@ -8,13 +8,13 @@ import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 
 public interface IProfileCachDataDataService {
 
-  public void resetCachDataForUser(final Long companyId, final Long userId, String token)
+  public void resetCachDataForUser(final String companyIdentity, final String userIdentity, String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  public void resetCachDataForUserList(final Long companyId, final Set<Long> userIdList, String token)
+  public void resetCachDataForUserList(final String companyIdentity, final Set<String> userIdentityList, String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  public void resetCachDataForWorkflow(final Long companyId, final Long workflowId, String token)
+  public void resetCachDataForWorkflow(final String companyIdentity, final String workflowIdentity, String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
 }

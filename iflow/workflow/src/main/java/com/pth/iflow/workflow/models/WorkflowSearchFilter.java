@@ -5,22 +5,22 @@ import java.util.HashSet;
 
 public class WorkflowSearchFilter {
 
-  private Set<String>  assignedUserIdSet  = new HashSet<>();
+  private Set<String>  assignedUserIdentitySet  = new HashSet<>();
 
   private Set<Integer> statusSet          = new HashSet<>();
 
-  private Set<String>  workflowTypeIdSet  = new HashSet<>();
+  private Set<String>  workflowTypeIdentitySet  = new HashSet<>();
 
-  private Set<String>  workflowStepeIdSet = new HashSet<>();
+  private Set<String>  workflowStepeIdentitySet = new HashSet<>();
 
   public Set<String> getAssignedUserIdSet() {
-    return this.assignedUserIdSet;
+    return this.assignedUserIdentitySet;
   }
 
   public void setAssignedUserIdSet(final Set<String> assignedUserIdSet) {
-    this.assignedUserIdSet = new HashSet<>();
+    this.assignedUserIdentitySet = new HashSet<>();
     if (assignedUserIdSet != null) {
-      this.assignedUserIdSet.addAll(assignedUserIdSet);
+      this.assignedUserIdentitySet.addAll(assignedUserIdSet);
     }
   }
 
@@ -36,24 +36,24 @@ public class WorkflowSearchFilter {
   }
 
   public Set<String> getWorkflowTypeIdSet() {
-    return this.workflowTypeIdSet;
+    return this.workflowTypeIdentitySet;
   }
 
   public void setWorkflowTypeIdSet(final Set<String> workflowTypeIdSet) {
-    this.workflowTypeIdSet = new HashSet<>();
+    this.workflowTypeIdentitySet = new HashSet<>();
     if (workflowTypeIdSet != null) {
-      this.workflowTypeIdSet.addAll(workflowTypeIdSet);
+      this.workflowTypeIdentitySet.addAll(workflowTypeIdSet);
     }
   }
 
   public Set<String> getWorkflowStepeIdSet() {
-    return this.workflowStepeIdSet;
+    return this.workflowStepeIdentitySet;
   }
 
   public void setWorkflowStepeIdSet(final Set<String> workflowStepeIdSet) {
-    this.workflowStepeIdSet = new HashSet<>();
+    this.workflowStepeIdentitySet = new HashSet<>();
     if (workflowStepeIdSet != null) {
-      this.workflowStepeIdSet.addAll(workflowStepeIdSet);
+      this.workflowStepeIdentitySet.addAll(workflowStepeIdSet);
     }
   }
 

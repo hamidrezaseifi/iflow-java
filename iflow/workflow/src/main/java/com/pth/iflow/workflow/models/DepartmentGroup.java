@@ -1,41 +1,31 @@
 package com.pth.iflow.workflow.models;
 
-import java.time.LocalDateTime;
+import com.pth.iflow.common.edo.models.helper.IdentityModel;
 
-public class DepartmentGroup {
+public class DepartmentGroup extends IdentityModel {
 
-  private Long          id;
-  private String        identity;
+  private String  identity;
+  private String  departmentIdentity;
+  private String  title;
+  private Integer status;
+  private Integer version;
 
-  private Long          departmentId;
-  private String        title;
-  private Integer       status;
-  private Integer       version;
-  private LocalDateTime createdAt;
-  private LocalDateTime updatedAt;
-
-  public Long getId() {
-    return this.id;
+  public String getDepartmentIdentity() {
+    return departmentIdentity;
   }
 
-  public void setId(final Long id) {
-    this.id = id;
+  public void setDepartmentIdentity(final String departmentIdentity) {
+    this.departmentIdentity = departmentIdentity;
   }
 
-  public Long getDepartmentId() {
-    return this.departmentId;
-  }
-
+  @Override
   public String getIdentity() {
     return identity;
   }
 
+  @Override
   public void setIdentity(final String identity) {
     this.identity = identity;
-  }
-
-  public void setDepartmentId(final Long departmentId) {
-    this.departmentId = departmentId;
   }
 
   public String getTitle() {
@@ -60,22 +50,6 @@ public class DepartmentGroup {
 
   public void setVersion(final Integer version) {
     this.version = version;
-  }
-
-  public LocalDateTime getCreatedAt() {
-    return this.createdAt;
-  }
-
-  public void setCreatedAt(final LocalDateTime createdAt) {
-    this.createdAt = createdAt;
-  }
-
-  public LocalDateTime getUpdatedAt() {
-    return this.updatedAt;
-  }
-
-  public void setUpdatedAt(final LocalDateTime updatedAt) {
-    this.updatedAt = updatedAt;
   }
 
 }

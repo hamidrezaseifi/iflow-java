@@ -6,9 +6,7 @@ import java.util.List;
 public class CompanyProfile {
 
   private Company                company;
-
   private final List<Department> departments = new ArrayList<>();
-
   private final List<UserGroup>  userGroups  = new ArrayList<>();
 
   public CompanyProfile() {

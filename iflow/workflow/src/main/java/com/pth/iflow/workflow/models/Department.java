@@ -1,10 +1,11 @@
 package com.pth.iflow.workflow.models;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Department {
+import com.pth.iflow.common.edo.models.helper.IdentityModel;
+
+public class Department extends IdentityModel {
 
   private Long                        id;
   private Long                        companyId;
@@ -12,8 +13,7 @@ public class Department {
   private String                      title;
   private Integer                     status;
   private Integer                     version;
-  private LocalDateTime               createdAt;
-  private LocalDateTime               updatedAt;
+
   private final List<DepartmentGroup> departmentGroups = new ArrayList<>();
 
   public Long getId() {
@@ -24,16 +24,12 @@ public class Department {
     this.id = id;
   }
 
-  /*
-   * (non-Javadoc)
-   *
-   * @see com.pth.iflow.core.model.ICoreIdentityModel#getIdentity()
-   */
-
+  @Override
   public String getIdentity() {
     return identity;
   }
 
+  @Override
   public void setIdentity(final String identity) {
     this.identity = identity;
   }
@@ -68,22 +64,6 @@ public class Department {
 
   public void setVersion(final Integer version) {
     this.version = version;
-  }
-
-  public LocalDateTime getCreatedAt() {
-    return this.createdAt;
-  }
-
-  public void setCreatedAt(final LocalDateTime createdAt) {
-    this.createdAt = createdAt;
-  }
-
-  public LocalDateTime getUpdatedAt() {
-    return this.updatedAt;
-  }
-
-  public void setUpdatedAt(final LocalDateTime updatedAt) {
-    this.updatedAt = updatedAt;
   }
 
   public List<DepartmentGroup> getDepartmentGroups() {

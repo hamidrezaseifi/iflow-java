@@ -1,15 +1,16 @@
 package com.pth.iflow.workflow.models;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
+import com.pth.iflow.common.edo.models.helper.IdentityModel;
+import com.pth.iflow.common.enums.EWorkflowActionStatus;
 import com.pth.iflow.common.enums.EWorkflowIdentity;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 
-public class Workflow {
+public class Workflow extends IdentityModel {
 
-  private Long                       id;
   private String                     identity;
   private WorkflowType               workflowType;
   private WorkflowTypeStep           currentStep;
@@ -18,8 +19,6 @@ public class Workflow {
   private String                     comments;
   private EWorkflowStatus            status;
   private Integer                    version;
-  private LocalDateTime              createdAt;
-  private LocalDateTime              updatedAt;
 
   private String                     workflowTypeIdentity;
   private String                     currentStepIdentity;
@@ -29,18 +28,12 @@ public class Workflow {
   private final List<WorkflowFile>   files   = new ArrayList<>();
   private final List<WorkflowAction> actions = new ArrayList<>();
 
-  public Long getId() {
-    return this.id;
-  }
-
-  public void setId(final Long id) {
-    this.id = id;
-  }
-
+  @Override
   public String getIdentity() {
     return identity;
   }
 
+  @Override
   public void setIdentity(final String identity) {
     this.identity = identity;
   }
@@ -109,22 +102,6 @@ public class Workflow {
     this.version = version;
   }
 
-  public LocalDateTime getCreatedAt() {
-    return this.createdAt;
-  }
-
-  public void setCreatedAt(final LocalDateTime createdAt) {
-    this.createdAt = createdAt;
-  }
-
-  public LocalDateTime getUpdatedAt() {
-    return this.updatedAt;
-  }
-
-  public void setUpdatedAt(final LocalDateTime updatedAt) {
-    this.updatedAt = updatedAt;
-  }
-
   public List<WorkflowFile> getFiles() {
     return this.files;
   }
@@ -138,6 +115,10 @@ public class Workflow {
 
   public List<WorkflowAction> getActions() {
     return this.actions;
+  }
+
+  public boolean hasAction() {
+    return this.actions.isEmpty() == false;
   }
 
   public void setActions(final List<WorkflowAction> actions) {
@@ -163,6 +144,10 @@ public class Workflow {
     this.currentStepIdentity = currentStepIdentity;
   }
 
+  public boolean isCurrentStepIdentity(final String stepIdentity) {
+    return currentStepIdentity.equals(stepIdentity);
+  }
+
   public String getControllerIdentity() {
     return controllerIdentity;
   }
@@ -177,6 +162,52 @@ public class Workflow {
 
   public void setCreatedByIdentity(final String createdByIdentity) {
     this.createdByIdentity = createdByIdentity;
+  }
+
+  public boolean hasActiveAction() {
+
+    return this.getActiveAction() != null;
+  }
+
+  public WorkflowAction getActiveAction() {
+    for (final WorkflowAction action : this.getActions()) {
+      if (action.getIsActive() == true) {
+        return action;
+      }
+    }
+    return null;
+  }
+
+  public WorkflowAction getLastAction() {
+
+    if (hasAction() == false) {
+      return null;
+    }
+
+    final List<WorkflowAction> astinList = this.getActions();
+    astinList.sort(new Comparator<WorkflowAction>() {
+
+      @Override
+      public int compare(final WorkflowAction action1, final WorkflowAction action2) {
+
+        return action1.getCurrentStep().getStepIndex() > action2.getCurrentStep().getStepIndex() ? 1
+            : action1.getCurrentStep().getStepIndex() < action2.getCurrentStep().getStepIndex() ? -1 : 0;
+      }
+    });
+
+    return astinList.get(astinList.size() - 1);
+  }
+
+  public boolean isAssigned() {
+    return this.hasActiveAction() && this.getActiveAction().isAssigned();
+  }
+
+  public void setActiveActionAssignTo(final String userIdentity) {
+    this.getActiveAction().setAssignToIdentity(userIdentity);
+  }
+
+  public void setActiveActionStatus(final EWorkflowActionStatus status) {
+    this.getActiveAction().setStatus(status);
   }
 
 }

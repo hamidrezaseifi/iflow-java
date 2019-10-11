@@ -10,15 +10,15 @@ import com.pth.iflow.workflow.models.WorkflowTypeStep;
 
 public interface IWorkflowTypeDataService {
 
-  public WorkflowType getById(Long id, final String token)
+  public WorkflowType getByIdentity(String identity, final String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  public List<WorkflowType> getListByIdCompanyId(final Long id, final String token)
+  public List<WorkflowType> getListByIdentityCompanyIdentity(final String identity, final String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  public List<WorkflowTypeStep> getStepsById(final Long id, final String token)
+  public List<WorkflowTypeStep> getStepsByIdentity(final String identity, final String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  public List<WorkflowType> getListByIdList(final List<Long> idList, final String token)
+  public List<WorkflowType> getListByIdentityList(final List<String> identityList, final String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 }

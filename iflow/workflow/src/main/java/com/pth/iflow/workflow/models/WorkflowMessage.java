@@ -7,45 +7,17 @@ import com.pth.iflow.common.enums.EWorkflowMessageType;
 
 public class WorkflowMessage {
 
-  private Long                   id;
-
   private Workflow               workflow;
-
   private String                 workflowIdentity;
-
   private String                 stepIdentity;
-
   private String                 userIdentity;
-
   private String                 createdByIdentity;
-
-  private Long                   stepId;
-
-  private Long                   userId;
-
   private String                 message;
-
-  private Long                   createdBy;
-
   private EWorkflowMessageType   messageType;
-
   private EWorkflowMessageStatus status;
-
   private Integer                version;
-
   private Integer                expireDays;
-
   private LocalDateTime          createdAt;
-
-  private LocalDateTime          updatedAt;
-
-  public Long getId() {
-    return this.id;
-  }
-
-  public void setId(final Long id) {
-    this.id = id;
-  }
 
   public Workflow getWorkflow() {
     return workflow;
@@ -79,36 +51,12 @@ public class WorkflowMessage {
     this.userIdentity = userIdentity;
   }
 
-  public Long getStepId() {
-    return stepId;
-  }
-
-  public void setStepId(final Long stepId) {
-    this.stepId = stepId;
-  }
-
-  public Long getUserId() {
-    return userId;
-  }
-
-  public void setUserId(final Long userId) {
-    this.userId = userId;
-  }
-
   public String getMessage() {
     return message;
   }
 
   public void setMessage(final String message) {
     this.message = message;
-  }
-
-  public Long getCreatedBy() {
-    return createdBy;
-  }
-
-  public void setCreatedBy(final Long createdBy) {
-    this.createdBy = createdBy;
   }
 
   public String getCreatedByIdentity() {
@@ -165,14 +113,6 @@ public class WorkflowMessage {
 
   public void setCreatedAt(final LocalDateTime createdAt) {
     this.createdAt = createdAt;
-  }
-
-  public LocalDateTime getUpdatedAt() {
-    return updatedAt;
-  }
-
-  public void setUpdatedAt(final LocalDateTime updatedAt) {
-    this.updatedAt = updatedAt;
   }
 
 }

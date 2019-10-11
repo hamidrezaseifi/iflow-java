@@ -1,16 +1,14 @@
 package com.pth.iflow.workflow.models;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.pth.iflow.common.edo.models.helper.IdentityModel;
 import com.pth.iflow.common.enums.EUserStatus;
 
-public class User {
+public class User extends IdentityModel {
 
-  private Long               id;
-  private Long               companyId;
   private String             companyIdentity;
   private String             email;
   private LocalDate          birthDate;
@@ -19,47 +17,11 @@ public class User {
   private Integer            status;
   private Integer            permission;
   private Integer            version;
-  private LocalDateTime      createdAt;
-  private LocalDateTime      updatedAt;
   private final Set<String>  groups           = new HashSet<>();
   private final Set<String>  departments      = new HashSet<>();
   private final Set<String>  departmentGroups = new HashSet<>();
   private final Set<String>  deputies         = new HashSet<>();
   private final Set<Integer> roles            = new HashSet<>();
-
-  /**
-   * @return the id
-   */
-
-  public Long getId() {
-    return this.id;
-  }
-
-  public boolean hasId(final Long id) {
-    return this.id == id;
-  }
-
-  /**
-   * @param id the id to set
-   */
-
-  public void setId(final Long id) {
-    this.id = id;
-  }
-
-  /**
-   * @return the companyIid
-   */
-  public Long getCompanyId() {
-    return this.companyId;
-  }
-
-  /**
-   * @param companyIid the companyIid to set
-   */
-  public void setCompanyId(final Long companyId) {
-    this.companyId = companyId;
-  }
 
   public String getCompanyIdentity() {
     return companyIdentity;
@@ -155,34 +117,6 @@ public class User {
   }
 
   /**
-   * @return the createdAt
-   */
-  public LocalDateTime getCreatedAt() {
-    return this.createdAt;
-  }
-
-  /**
-   * @param createdAt the createdAt to set
-   */
-  public void setCreatedAt(final LocalDateTime createdAt) {
-    this.createdAt = createdAt;
-  }
-
-  /**
-   * @return the updatedAt
-   */
-  public LocalDateTime getUpdatedAt() {
-    return this.updatedAt;
-  }
-
-  /**
-   * @param updatedAt the updatedAt to set
-   */
-  public void setUpdatedAt(final LocalDateTime updatedAt) {
-    this.updatedAt = updatedAt;
-  }
-
-  /**
    * @param permission the permission to set
    */
   public void setPermission(final Integer permission) {
@@ -264,10 +198,12 @@ public class User {
     this.roles.add(role);
   }
 
+  @Override
   public String getIdentity() {
     return email;
   }
 
+  @Override
   public void setIdentity(final String identity) {
     email = identity;
   }

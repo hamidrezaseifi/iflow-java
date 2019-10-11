@@ -8,11 +8,8 @@ import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 public class WorkflowSaveRequest {
 
   private Workflow                workflow;
-
   private Integer                 expireDays;
-
   private List<AssignItem>        assigns = new ArrayList<>();
-
   private EWorkflowProcessCommand command;
 
   public WorkflowSaveRequest() {

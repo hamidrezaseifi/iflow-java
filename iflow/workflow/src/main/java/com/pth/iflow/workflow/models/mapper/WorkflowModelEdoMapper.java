@@ -254,7 +254,7 @@ public class WorkflowModelEdoMapper {
   public static WorkflowActionEdo toEdo(final WorkflowAction model) {
     final WorkflowActionEdo edo = new WorkflowActionEdo();
     edo.setComments(model.getComments());
-    edo.setStatus(model.getStatus());
+    edo.setStatus(model.getStatus().getValue());
     edo.setAssignToIdentity(model.getAssignToIdentity());
     edo.setCurrentStepIdentity(model.getCurrentStepIdentity());
     edo.setVersion(model.getVersion());

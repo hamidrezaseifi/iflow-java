@@ -1,36 +1,14 @@
 package com.pth.iflow.workflow.models;
 
-import java.time.LocalDateTime;
-
 public class WorkflowFileVersion {
 
-  private Long          id;
-  private Long          workflowFileId;
-  private User          createdBy;
-  private String        createdByIdentity;
-  private String        filePath;
-  private String        comments;
-  private Integer       fileVersion;
-  private Integer       status;
-  private Integer       version;
-  private LocalDateTime createdAt;
-  private LocalDateTime updatedAt;
-
-  public Long getId() {
-    return this.id;
-  }
-
-  public void setId(final Long id) {
-    this.id = id;
-  }
-
-  public Long getWorkflowFileId() {
-    return this.workflowFileId;
-  }
-
-  public void setWorkflowFileId(final Long workflowFileId) {
-    this.workflowFileId = workflowFileId;
-  }
+  private User    createdBy;
+  private String  createdByIdentity;
+  private String  filePath;
+  private String  comments;
+  private Integer fileVersion;
+  private Integer status;
+  private Integer version;
 
   public String getFilePath() {
     return this.filePath;
@@ -86,22 +64,6 @@ public class WorkflowFileVersion {
 
   public void setVersion(final Integer version) {
     this.version = version;
-  }
-
-  public LocalDateTime getCreatedAt() {
-    return this.createdAt;
-  }
-
-  public void setCreatedAt(final LocalDateTime createdAt) {
-    this.createdAt = createdAt;
-  }
-
-  public LocalDateTime getUpdatedAt() {
-    return this.updatedAt;
-  }
-
-  public void setUpdatedAt(final LocalDateTime updatedAt) {
-    this.updatedAt = updatedAt;
   }
 
 }

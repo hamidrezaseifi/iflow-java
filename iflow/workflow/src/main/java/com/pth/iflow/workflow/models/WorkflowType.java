@@ -1,18 +1,15 @@
 package com.pth.iflow.workflow.models;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.pth.iflow.common.edo.models.helper.IdentityModel;
 import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
 
-public class WorkflowType {
+public class WorkflowType extends IdentityModel {
 
-  private Long                         id;
   private String                       identity;
-  private Long                         companyId;
   private String                       companyIdentity;
-  private Long                         baseTypeId;
   private String                       title;
   private String                       comments;
   private Integer                      status;
@@ -21,32 +18,16 @@ public class WorkflowType {
   private Boolean                      increaseStepAutomatic;
   private Boolean                      allowAssign;
   private Integer                      version;
-  private LocalDateTime                createdAt;
-  private LocalDateTime                updatedAt;
   private final List<WorkflowTypeStep> steps = new ArrayList<>();
 
-  public Long getId() {
-    return this.id;
-  }
-
-  public void setId(final Long id) {
-    this.id = id;
-  }
-
+  @Override
   public String getIdentity() {
     return identity;
   }
 
+  @Override
   public void setIdentity(final String identity) {
     this.identity = identity;
-  }
-
-  public Long getCompanyId() {
-    return this.companyId;
-  }
-
-  public void setCompanyId(final Long companyId) {
-    this.companyId = companyId;
   }
 
   public String getCompanyIdentity() {
@@ -55,20 +36,6 @@ public class WorkflowType {
 
   public void setCompanyIdentity(final String companyIdentity) {
     this.companyIdentity = companyIdentity;
-  }
-
-  /**
-   * @return the baseTypeId
-   */
-  public Long getBaseTypeId() {
-    return this.baseTypeId;
-  }
-
-  /**
-   * @param baseTypeId the baseTypeId to set
-   */
-  public void setBaseTypeId(final Long baseTypeId) {
-    this.baseTypeId = baseTypeId;
   }
 
   public String getTitle() {
@@ -135,22 +102,6 @@ public class WorkflowType {
     this.version = version;
   }
 
-  public LocalDateTime getCreatedAt() {
-    return this.createdAt;
-  }
-
-  public void setCreatedAt(final LocalDateTime createdAt) {
-    this.createdAt = createdAt;
-  }
-
-  public LocalDateTime getUpdatedAt() {
-    return this.updatedAt;
-  }
-
-  public void setUpdatedAt(final LocalDateTime updatedAt) {
-    this.updatedAt = updatedAt;
-  }
-
   public List<WorkflowTypeStep> getSteps() {
     return this.steps;
   }
@@ -164,6 +115,14 @@ public class WorkflowType {
 
   public void addStep(final WorkflowTypeStep stepId) {
     this.steps.add(stepId);
+  }
+
+  public boolean isAssignTypeManual() {
+    return this.assignType == EWorkflowTypeAssignType.MANUAL;
+  }
+
+  public boolean isAssignTypeOffering() {
+    return this.assignType == EWorkflowTypeAssignType.OFFER;
   }
 
 }

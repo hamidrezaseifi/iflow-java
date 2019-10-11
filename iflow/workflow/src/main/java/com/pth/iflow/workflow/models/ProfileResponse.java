@@ -5,9 +5,7 @@ import java.util.List;
 public class ProfileResponse {
 
   private User           user;
-
   private CompanyProfile companyProfile;
-
   private String         sessionid;
 
   public ProfileResponse() {

@@ -1,37 +1,20 @@
 package com.pth.iflow.workflow.models;
 
-import java.time.LocalDateTime;
+import com.pth.iflow.common.edo.models.helper.IdentityModel;
 
-public class Company {
+public class Company extends IdentityModel {
 
-  private Long          id;
-  private String        identity;
-  private String        companyName;
-  private Integer       status;
-  private Integer       version;
-  private LocalDateTime createdAt;
-  private LocalDateTime updatedAt;
+  private String  identity;
+  private String  companyName;
+  private Integer status;
+  private Integer version;
 
-  /**
-   * @return the id
-   */
-
-  public Long getId() {
-    return this.id;
-  }
-
-  /**
-   * @param id the id to set
-   */
-
-  public void setId(final Long id) {
-    this.id = id;
-  }
-
+  @Override
   public String getIdentity() {
     return identity;
   }
 
+  @Override
   public void setIdentity(final String identity) {
     this.identity = identity;
   }
@@ -78,34 +61,6 @@ public class Company {
 
   public void setVersion(final Integer version) {
     this.version = version;
-  }
-
-  /**
-   * @return the createdAt
-   */
-  public LocalDateTime getCreatedAt() {
-    return this.createdAt;
-  }
-
-  /**
-   * @param createdAt the createdAt to set
-   */
-  public void setCreatedAt(final LocalDateTime createdAt) {
-    this.createdAt = createdAt;
-  }
-
-  /**
-   * @return the updatedAt
-   */
-  public LocalDateTime getUpdatedAt() {
-    return this.updatedAt;
-  }
-
-  /**
-   * @param updatedAt the updatedAt to set
-   */
-  public void setUpdatedAt(final LocalDateTime updatedAt) {
-    this.updatedAt = updatedAt;
   }
 
 }

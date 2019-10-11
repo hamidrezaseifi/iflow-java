@@ -1,15 +1,15 @@
 package com.pth.iflow.workflow.models;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WorkflowFile {
+import com.pth.iflow.common.edo.models.helper.IdentityModel;
 
-  private Long                            id;
+public class WorkflowFile extends IdentityModel {
+
   private String                          identity;
-  private Long                            workflowId;
-  private Long                            createdBy;
+  private String                          workflowIdentity;
+  private String                          createdByIdentity;
   private String                          title;
   private String                          extention;
   private String                          activeFilePath;
@@ -17,32 +17,32 @@ public class WorkflowFile {
   private Integer                         activeFileVersion;
   private Integer                         status;
   private Integer                         version;
-  private LocalDateTime                   createdAt;
-  private LocalDateTime                   updatedAt;
   private final List<WorkflowFileVersion> fileVersions = new ArrayList<>();
 
-  public Long getId() {
-    return this.id;
-  }
-
-  public void setId(final Long id) {
-    this.id = id;
-  }
-
+  @Override
   public String getIdentity() {
     return identity;
   }
 
+  @Override
   public void setIdentity(final String identity) {
     this.identity = identity;
   }
 
-  public Long getWorkflowId() {
-    return this.workflowId;
+  public String getWorkflowIdentity() {
+    return workflowIdentity;
   }
 
-  public void setWorkflowId(final Long workflowId) {
-    this.workflowId = workflowId;
+  public void setWorkflowIdentity(final String workflowIdentity) {
+    this.workflowIdentity = workflowIdentity;
+  }
+
+  public String getCreatedByIdentity() {
+    return createdByIdentity;
+  }
+
+  public void setCreatedByIdentity(final String createdByIdentity) {
+    this.createdByIdentity = createdByIdentity;
   }
 
   public String getActiveFilePath() {
@@ -51,14 +51,6 @@ public class WorkflowFile {
 
   public void setActiveFilePath(final String filePath) {
     this.activeFilePath = filePath;
-  }
-
-  public Long getCreatedBy() {
-    return this.createdBy;
-  }
-
-  public void setCreatedBy(final Long createdBy) {
-    this.createdBy = createdBy;
   }
 
   public String getTitle() {
@@ -107,22 +99,6 @@ public class WorkflowFile {
 
   public void setVersion(final Integer version) {
     this.version = version;
-  }
-
-  public LocalDateTime getCreatedAt() {
-    return this.createdAt;
-  }
-
-  public void setCreatedAt(final LocalDateTime createdAt) {
-    this.createdAt = createdAt;
-  }
-
-  public LocalDateTime getUpdatedAt() {
-    return this.updatedAt;
-  }
-
-  public void setUpdatedAt(final LocalDateTime updatedAt) {
-    this.updatedAt = updatedAt;
   }
 
   public List<WorkflowFileVersion> getFileVersions() {
