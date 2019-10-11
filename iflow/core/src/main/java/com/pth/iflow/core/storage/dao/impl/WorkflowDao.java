@@ -394,4 +394,10 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
     whereClause = whereClause.replace(",)", ")");
     return whereClause;
   }
+
+  @Override
+  protected String generateIdentity(final Workflow model) {
+
+    return String.format("t%dw%d", model.getWorkflowType(), System.currentTimeMillis());
+  }
 }

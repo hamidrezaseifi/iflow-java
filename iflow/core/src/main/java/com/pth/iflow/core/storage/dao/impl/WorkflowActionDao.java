@@ -158,4 +158,10 @@ public class WorkflowActionDao extends DaoBasicClass<WorkflowAction> implements 
     deleteModel(id, "WorkflowAction", "Delete from workflow_actions where workflow_id=?", withTransaction, false);
   }
 
+  @Override
+  protected String generateIdentity(final WorkflowAction model) {
+
+    return String.format("w%da%d", model.getWorkflowId(), System.currentTimeMillis());
+  }
+
 }

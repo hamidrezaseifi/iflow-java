@@ -10,6 +10,6 @@ public interface IWorkflowActionService {
 
   public WorkflowAction getByIdentity(String identity);
 
-  public List<WorkflowAction> getListByIdWorkflowId(final String identity);
+  public List<WorkflowAction> getListByIdWorkflowIdentity(final String identity);
 
 }

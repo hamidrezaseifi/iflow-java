@@ -125,7 +125,7 @@ public class WorkflowController {
   public ResponseEntity<WorkflowActionListEdo> readWorkflowActionListByWorkflow(@PathVariable(name = "identity") final String identity,
       final HttpServletRequest request) throws Exception {
 
-    final List<WorkflowAction> modelList = this.workflowActionService.getListByIdWorkflowId(identity);
+    final List<WorkflowAction> modelList = this.workflowActionService.getListByIdWorkflowIdentity(identity);
 
     return ControllerHelper.createResponseEntity(request,
         new WorkflowActionListEdo(CoreModelEdoMapper.toWorkflowActionEdoList(modelList)), HttpStatus.OK);

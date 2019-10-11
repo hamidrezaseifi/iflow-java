@@ -388,4 +388,9 @@ public class UserDao extends DaoBasicClass<User> implements IUserDao {
     return list;
   }
 
+  @Override
+  protected String generateIdentity(final User model) {
+    return null;
+  }
+
 }

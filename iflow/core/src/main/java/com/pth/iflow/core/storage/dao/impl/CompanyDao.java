@@ -82,4 +82,10 @@ public class CompanyDao extends DaoBasicClass<Company> implements ICompanyDao {
     return getById(model.getId());
   }
 
+  @Override
+  protected String generateIdentity(final Company model) {
+
+    return String.format("c%d", System.currentTimeMillis());
+  }
+
 }

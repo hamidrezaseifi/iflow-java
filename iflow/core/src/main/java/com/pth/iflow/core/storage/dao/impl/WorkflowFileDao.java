@@ -214,4 +214,10 @@ public class WorkflowFileDao extends DaoBasicClass<WorkflowFile> implements IWor
 
   }
 
+  @Override
+  protected String generateIdentity(final WorkflowFile model) {
+
+    return String.format("w%df%d", model.getWorkflowId(), System.currentTimeMillis());
+  }
+
 }

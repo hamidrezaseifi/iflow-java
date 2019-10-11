@@ -136,4 +136,10 @@ public class DepartmentGroupDao extends DaoBasicClass<DepartmentGroup> implement
     return idList;
   }
 
+  @Override
+  protected String generateIdentity(final DepartmentGroup model) {
+
+    return String.format("d%ddgrp%d", model.getDepartmentId(), System.currentTimeMillis());
+  }
+
 }

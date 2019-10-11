@@ -13,7 +13,7 @@ public interface IWorkflowMessageService {
   public void updateStatusByWorkflow(String workflowIdentity, String stepIdentity, EWorkflowMessageStatus status)
       throws IFlowStorageException;
 
-  public List<WorkflowMessage> getNotClosedNotExpiredListByUserId(final String email) throws IFlowStorageException;
+  public List<WorkflowMessage> getNotClosedNotExpiredListByUserEmail(final String email) throws IFlowStorageException;
 
   public List<WorkflowMessage> getNotClosedNotExpiredListByWorkflowId(final String workflowIdentity) throws IFlowStorageException;
 

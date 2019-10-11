@@ -132,4 +132,10 @@ public class UserGroupDao extends DaoBasicClass<UserGroup> implements IUserGroup
     return getById(model.getId());
   }
 
+  @Override
+  protected String generateIdentity(final UserGroup model) {
+
+    return String.format("c%dgrp%d", model.getCompanyId(), System.currentTimeMillis());
+  }
+
 }

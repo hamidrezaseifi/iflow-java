@@ -310,4 +310,9 @@ public class WorkflowMessageDao extends DaoBasicClass<WorkflowMessage> implement
 
   }
 
+  @Override
+  protected String generateIdentity(final WorkflowMessage model) {
+    return null;
+  }
+
 }

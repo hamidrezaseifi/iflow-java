@@ -5,10 +5,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Set;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.pth.iflow.core.model.WorkflowFileVersion;
 import com.pth.iflow.core.storage.dao.IUserDao;
 import com.pth.iflow.core.storage.dao.IWorkflowFileVersionDao;
@@ -29,8 +31,7 @@ public class WorkflowFileVersionDao extends DaoBasicClass<WorkflowFileVersion> i
 
   @Override
   public WorkflowFileVersion create(final WorkflowFileVersion model, final boolean withTransaction) throws IFlowStorageException {
-    final String sql =
-                     "INSERT INTO workflow_files_versions (workflow_file_id, filepath, file_version, comments, created_by, version, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    final String sql = "INSERT INTO workflow_files_versions (workflow_file_id, filepath, file_version, comments, created_by, version, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
     return getById(createModel(model, "WorkflowFileVersion", sql, withTransaction));
   }
@@ -38,7 +39,7 @@ public class WorkflowFileVersionDao extends DaoBasicClass<WorkflowFileVersion> i
   @Override
   public WorkflowFileVersion update(final WorkflowFileVersion model, final boolean withTransaction) throws IFlowStorageException {
     final String sql = "UPDATE workflow_files_versions SET workflow_file_id = ?, filepath = ?, file_version = ?, comments = ?,"
-                       + " created_by = ?, version = ?, status = ? WHERE id = ?";
+        + " created_by = ?, version = ?, status = ? WHERE id = ?";
 
     updateModel(model, "WorkflowFile", sql, withTransaction);
 
@@ -56,12 +57,10 @@ public class WorkflowFileVersionDao extends DaoBasicClass<WorkflowFileVersion> i
   }
 
   @Override
-  public void deleteByWorkflowFileId(final Long id, final boolean withTransaction, final boolean checkDeleted) throws IFlowStorageException {
-    deleteModel(id,
-                "WorkflowFileVersion",
-                "Delete from workflow_files_versions where workflow_file_id=?",
-                withTransaction,
-                checkDeleted);
+  public void deleteByWorkflowFileId(final Long id, final boolean withTransaction, final boolean checkDeleted)
+      throws IFlowStorageException {
+    deleteModel(id, "WorkflowFileVersion", "Delete from workflow_files_versions where workflow_file_id=?", withTransaction,
+        checkDeleted);
   }
 
   @Override
@@ -101,7 +100,8 @@ public class WorkflowFileVersionDao extends DaoBasicClass<WorkflowFileVersion> i
   }
 
   @Override
-  protected PreparedStatement prepareInsertPreparedStatement(final WorkflowFileVersion model, final PreparedStatement ps) throws SQLException {
+  protected PreparedStatement prepareInsertPreparedStatement(final WorkflowFileVersion model, final PreparedStatement ps)
+      throws SQLException {
     ps.setLong(1, model.getWorkflowFileId());
     ps.setString(2, model.getFilePath());
     ps.setInt(3, model.getFileVersion());
@@ -113,7 +113,8 @@ public class WorkflowFileVersionDao extends DaoBasicClass<WorkflowFileVersion> i
   }
 
   @Override
-  protected PreparedStatement prepareUpdatePreparedStatement(final WorkflowFileVersion model, final PreparedStatement ps) throws SQLException {
+  protected PreparedStatement prepareUpdatePreparedStatement(final WorkflowFileVersion model, final PreparedStatement ps)
+      throws SQLException {
     ps.setLong(1, model.getWorkflowFileId());
     ps.setString(2, model.getFilePath());
     ps.setInt(3, model.getFileVersion());
@@ -123,6 +124,12 @@ public class WorkflowFileVersionDao extends DaoBasicClass<WorkflowFileVersion> i
     ps.setInt(7, model.getStatus());
     ps.setLong(8, model.getId());
     return ps;
+  }
+
+  @Override
+  protected String generateIdentity(final WorkflowFileVersion model) {
+
+    return null;
   }
 
 }

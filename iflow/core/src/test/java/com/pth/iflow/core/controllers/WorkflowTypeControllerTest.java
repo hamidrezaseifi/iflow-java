@@ -6,8 +6,10 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import java.util.List;
 import java.util.Set;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,6 +24,7 @@ import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConve
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
 import com.pth.iflow.common.edo.models.WorkflowTypeEdo;
 import com.pth.iflow.common.edo.models.WorkflowTypeListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
@@ -37,16 +40,16 @@ import com.pth.iflow.core.service.IWorkflowTypeService;
 public class WorkflowTypeControllerTest extends TestDataProducer {
 
   @Autowired
-  private MockMvc mockMvc;
+  private MockMvc                                mockMvc;
 
   @Autowired
   private MappingJackson2XmlHttpMessageConverter xmlConverter;
 
   @MockBean
-  private IWorkflowTypeService workflowService;
+  private IWorkflowTypeService                   workflowService;
 
   @Value("${iflow.common.rest.api.security.client-id.internal}")
-  private String innerModulesRequestHeaderValue;
+  private String                                 innerModulesRequestHeaderValue;
 
   @Before
   public void setUp() throws Exception {
@@ -60,19 +63,18 @@ public class WorkflowTypeControllerTest extends TestDataProducer {
   public void testReadWorkflowTypeById() throws Exception {
 
     final WorkflowType model = this.getTestWorkflowType();
-    when(this.workflowService.getById(any(Long.class))).thenReturn(model);
+    when(this.workflowService.getByIdentity(any(String.class))).thenReturn(model);
 
     final WorkflowTypeEdo modelEdo = CoreModelEdoMapper.toEdo(model);
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelEdo);
 
     this.mockMvc
-                .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.WORKFLOWTYPE_READ_BY_ID, model.getId())
-                                               .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
-                .andExpect(content().xml(listAsXmlString));
+        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.WORKFLOWTYPE_READ_BY_IDENTITY, model.getIdentity())
+            .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
+        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(content().xml(listAsXmlString));
 
-    verify(this.workflowService, times(1)).getById(any(Long.class));
+    verify(this.workflowService, times(1)).getByIdentity(any(String.class));
 
   }
 
@@ -89,13 +91,11 @@ public class WorkflowTypeControllerTest extends TestDataProducer {
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
 
     this.mockMvc
-                .perform(MockMvcRequestBuilders.post(IflowRestPaths.CoreModule.WORKFLOWTYPE_READ_LIST)
-                                               .content(contentAsXmlString)
-                                               .contentType(MediaType.APPLICATION_XML_VALUE)
-                                               .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
-                .andExpect(content().xml(listAsXmlString));
+        .perform(MockMvcRequestBuilders.post(IflowRestPaths.CoreModule.WORKFLOWTYPE_READ_LIST).content(contentAsXmlString)
+            .contentType(MediaType.APPLICATION_XML_VALUE)
+            .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
+        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(content().xml(listAsXmlString));
 
     verify(this.workflowService, times(1)).getListByIdentityList(any(Set.class));
 
@@ -105,20 +105,19 @@ public class WorkflowTypeControllerTest extends TestDataProducer {
   public void testReadWorkflowTypeListByCompany() throws Exception {
 
     final List<WorkflowType> list = this.getTestWorkflowTypeList();
-    when(this.workflowService.getListByIdCompanyIdentity(any(Long.class))).thenReturn(list);
+    when(this.workflowService.getListByIdCompanyId(any(String.class))).thenReturn(list);
 
     final WorkflowTypeListEdo edoList = new WorkflowTypeListEdo(CoreModelEdoMapper.toWorkflowTypeEdoList(list));
 
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
 
     this.mockMvc
-                .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.WORKFLOWTYPE_READ_LIST_BY_COMPANY, 1L)
-                                               .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
-                .andExpect(content().xml(listAsXmlString));
+        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.WORKFLOWTYPE_READ_LIST_BY_COMPANYIDENTITY, "companyidentity")
+            .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
+        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(content().xml(listAsXmlString));
 
-    verify(this.workflowService, times(1)).getListByIdCompanyIdentity(any(Long.class));
+    verify(this.workflowService, times(1)).getListByIdCompanyId(any(String.class));
 
   }
 

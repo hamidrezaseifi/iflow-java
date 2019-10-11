@@ -176,4 +176,9 @@ public class WorkflowTypeDao extends DaoBasicClass<WorkflowType> implements IWor
 
     return this.getById(model.getId());
   }
+
+  @Override
+  protected String generateIdentity(final WorkflowType model) {
+    return String.format("c%dt%d", model.getCompanyId(), System.currentTimeMillis());
+  }
 }

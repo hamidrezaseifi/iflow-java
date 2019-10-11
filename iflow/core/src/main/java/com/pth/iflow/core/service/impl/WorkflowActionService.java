@@ -42,7 +42,7 @@ public class WorkflowActionService implements IWorkflowActionService {
   }
 
   @Override
-  public List<WorkflowAction> getListByIdWorkflowId(final String identity) {
+  public List<WorkflowAction> getListByIdWorkflowIdentity(final String identity) {
     return workflowActionDao.getListByWorkflowIdentity(identity);
   }
 

@@ -40,7 +40,7 @@ public class WorkflowMessageController {
   public ResponseEntity<WorkflowMessageListEdo> readWorkflowMessage(@PathVariable(name = "email") final String email,
       @PathVariable(required = false) final Integer status, final HttpServletRequest request) throws Exception {
 
-    final List<WorkflowMessage> messageList = this.workflowMessageService.getNotClosedNotExpiredListByUserId(email);
+    final List<WorkflowMessage> messageList = this.workflowMessageService.getNotClosedNotExpiredListByUserEmail(email);
 
     return ControllerHelper.createResponseEntity(request,
         new WorkflowMessageListEdo(CoreModelEdoMapper.toWorkflowMessageEdoList(messageList)), HttpStatus.OK);

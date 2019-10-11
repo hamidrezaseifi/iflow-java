@@ -138,4 +138,10 @@ public class DepartmentDao extends DaoBasicClass<Department> implements IDepartm
     return idList;
   }
 
+  @Override
+  protected String generateIdentity(final Department model) {
+
+    return String.format("c%dd%d", model.getCompanyId(), System.currentTimeMillis());
+  }
+
 }

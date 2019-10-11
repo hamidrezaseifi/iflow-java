@@ -2,8 +2,8 @@ package com.pth.iflow.core.model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Set;
 import java.util.HashSet;
+import java.util.Set;
 
 import com.pth.iflow.common.enums.EUserStatus;
 import com.pth.iflow.core.model.helper.CoreModelHelper;
@@ -11,18 +11,18 @@ import com.pth.iflow.core.model.helper.ICoreIdentityModel;
 
 public class User extends CoreModelHelper implements ICoreIdentityModel {
 
-  private Long                     id;
-  private Long                     companyId;
-  private String                   companyIdentity;
-  private String                   email;
-  private LocalDate                birthDate;
-  private String                   firstName;
-  private String                   lastName;
-  private Integer                  status;
-  private Integer                  permission;
-  private Integer                  version;
-  private LocalDateTime            createdAt;
-  private LocalDateTime            updatedAt;
+  private Long               id;
+  private Long               companyId;
+  private String             companyIdentity;
+  private String             email;
+  private LocalDate          birthDate;
+  private String             firstName;
+  private String             lastName;
+  private Integer            status;
+  private Integer            permission;
+  private Integer            version;
+  private LocalDateTime      createdAt;
+  private LocalDateTime      updatedAt;
   private final Set<String>  groups           = new HashSet<>();
   private final Set<String>  departments      = new HashSet<>();
   private final Set<String>  departmentGroups = new HashSet<>();
@@ -273,7 +273,7 @@ public class User extends CoreModelHelper implements ICoreIdentityModel {
 
   @Override
   public void setIdentity(final String identity) {
-    email = identity;
+
   }
 
 }

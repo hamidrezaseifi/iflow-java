@@ -372,12 +372,14 @@ public abstract class DaoBasicClass<M> {
 
       final ICoreIdentityModel identityMode = (ICoreIdentityModel) model;
       if (EWorkflowIdentity.isNotSet(identityMode.getIdentity())) {
-        final String identity = modelName.toLowerCase() + System.currentTimeMillis();
+        final String identity = generateIdentity(model);
         identityMode.setIdentity(identity);
       }
 
     }
   }
+
+  protected abstract String generateIdentity(M model);
 
   protected Long createModelWithStatementNoTransaction(final String modelName, final PreparedStatementCreator statement)
       throws IFlowStorageException {
