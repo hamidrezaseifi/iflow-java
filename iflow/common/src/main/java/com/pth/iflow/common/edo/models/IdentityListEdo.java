@@ -14,34 +14,31 @@ import javax.xml.bind.annotation.XmlType;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 
-@XmlRootElement(name = "IdList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+@XmlRootElement(name = "IdentityList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "IdList" + IFlowJaxbDefinition.TYPE_PREFIX)
-public class IdLongListEdo {
+public class IdentityListEdo {
 
-  @NotNull(message = "IdList must not be null")
+  @NotNull(message = "IdentityList must not be null")
   @XmlElementWrapper(name = "IdList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "ID", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private final Set<Long> idList = new HashSet<>();
+  private Set<String> identityList = new HashSet<>();
 
-  public IdLongListEdo() {
+  public IdentityListEdo() {
 
   }
 
-  public IdLongListEdo(final Set<Long> idList) {
-    this.setIdList(idList);
+  public IdentityListEdo(final Set<String> idList) {
+    this.setIdentityList(idList);
   }
 
-  public Set<Long> getIdList() {
-    return this.idList;
+  public Set<String> getIdentityList() {
+    return this.identityList;
   }
 
   @JsonSetter
-  public void setIdList(final Set<Long> idList) {
-    this.idList.clear();
-    if (idList != null) {
-      this.idList.addAll(idList);
-    }
+  public void setIdentityList(final Set<String> identityList) {
+    this.identityList = identityList;
   }
 
 }

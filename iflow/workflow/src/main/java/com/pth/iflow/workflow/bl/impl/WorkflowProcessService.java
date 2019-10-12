@@ -4,6 +4,7 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -93,47 +94,47 @@ public class WorkflowProcessService implements IWorkflowProcessService {
   }
 
   @Override
-  public Workflow getById(final Long id, final String token)
+  public Workflow getByIdentity(final String identity, final String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
-    logger.debug("get workflow by id {} with token {}", id, token);
+    logger.debug("get workflow by id {} with token {}", identity, token);
 
-    this.tokenCanReadWorkflow(id, token);
-    final Workflow workflow = this.workflowDataService.getById(id, token);
+    this.tokenCanReadWorkflow(identity, token);
+    final Workflow workflow = this.workflowDataService.getByIdentity(identity, token);
 
     return this.prepareWorkflow(token, workflow);
   }
 
   @Override
-  public List<Workflow> getListByTypeId(final Long id, final String token)
+  public List<Workflow> getListByTypeIdentity(final String identity, final String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
-    logger.debug("get workflow by  type id {} with token {}", id, token);
+    logger.debug("get workflow by  type id {} with token {}", identity, token);
 
-    final List<Workflow> list = this.workflowDataService.getListByTypeId(id, token);
-    this.tokenCanReadWorkflowList(list.stream().map(w -> w.getId()).collect(Collectors.toList()), token);
+    final List<Workflow> list = this.workflowDataService.getListByTypeIdentity(identity, token);
+    this.tokenCanReadWorkflowList(list.stream().map(w -> w.getIdentity()).collect(Collectors.toSet()), token);
 
     return this.prepareWorkflowList(token, list);
   }
 
   @Override
-  public List<Workflow> getListForUser(final Long id, final int status, final String token)
+  public List<Workflow> getListForUser(final String identity, final int status, final String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    logger.debug("get workflow assigned to user id {} and has status {} with token {}", id, status, token);
+    logger.debug("get workflow assigned to user id {} and has status {} with token {}", identity, status, token);
 
-    final List<Workflow> list = this.workflowDataService.getListForUser(id, status, token);
-    this.tokenCanReadWorkflowList(list.stream().map(w -> w.getId()).collect(Collectors.toList()), token);
+    final List<Workflow> list = this.workflowDataService.getListForUser(identity, status, token);
+    this.tokenCanReadWorkflowList(list.stream().map(w -> w.getIdentity()).collect(Collectors.toSet()), token);
 
     return this.prepareWorkflowList(token, list);
   }
 
   @Override
-  public List<Workflow> getListByIdList(final List<Long> idList, final String token)
+  public List<Workflow> getListByIdentityList(final Set<String> identityList, final String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
-    logger.debug("get workflow list by id list {} with token {}", idList, token);
+    logger.debug("get workflow list by id list with token {}", token);
 
-    this.tokenCanReadWorkflowList(idList, token);
+    this.tokenCanReadWorkflowList(identityList, token);
 
-    final List<Workflow> list = this.workflowDataService.getListByIdList(idList, token);
+    final List<Workflow> list = this.workflowDataService.getListByIdentityList(identityList, token);
 
     return this.prepareWorkflowList(token, list);
   }
@@ -150,7 +151,7 @@ public class WorkflowProcessService implements IWorkflowProcessService {
     return this.prepareWorkflowList(token, list);
   }
 
-  private boolean tokenCanReadWorkflow(final Long workflowId, final String token)
+  private boolean tokenCanReadWorkflow(final String workflowId, final String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     // TODO token read access must be implemented
 
@@ -166,7 +167,7 @@ public class WorkflowProcessService implements IWorkflowProcessService {
     return true;
   }
 
-  private boolean tokenCanReadWorkflowList(final List<Long> list, final String token)
+  private boolean tokenCanReadWorkflowList(final Set<String> list, final String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     // TODO token read access must be implemented
     this.tokenValidator.isTokenValid(token);
@@ -180,28 +181,29 @@ public class WorkflowProcessService implements IWorkflowProcessService {
     return true;
   }
 
-  private Map<Long, WorkflowTypeStep> getIdMapedSteps(final WorkflowType workflowType) {
+  private Map<String, WorkflowTypeStep> getIdMapedSteps(final WorkflowType workflowType) {
 
-    final Map<Long, WorkflowTypeStep> list = workflowType.getSteps().stream().collect(Collectors.toMap(s -> s.getId(), s -> s));
+    final Map<String, WorkflowTypeStep> list = workflowType.getSteps().stream()
+        .collect(Collectors.toMap(s -> s.getIdentity(), s -> s));
 
     return list;
   }
 
   private Workflow prepareWorkflow(final String token, final Workflow workflow)
       throws MalformedURLException, IFlowMessageConversionFailureException {
-    final WorkflowType workflowType = this.workflowTypeDataService.getById(workflow.getWorkflowTypeId(), token);
+    final WorkflowType workflowType = this.workflowTypeDataService.getByIdentity(workflow.getWorkflowTypeIdentity(), token);
 
     workflow.setWorkflowType(workflowType);
 
-    final Map<Long, WorkflowTypeStep> map = getIdMapedSteps(workflowType);
+    final Map<String, WorkflowTypeStep> map = getIdMapedSteps(workflowType);
 
-    workflow.setCurrentStep(map.containsKey(workflow.getCurrentStepId()) ? map.get(workflow.getCurrentStepId()) : null);
+    workflow.setCurrentStep(map.containsKey(workflow.getCurrentStepIdentity()) ? map.get(workflow.getCurrentStepIdentity()) : null);
     for (final WorkflowAction action : workflow.getActions()) {
-      action.setCurrentStep(map.containsKey(action.getCurrentStepId()) ? map.get(action.getCurrentStepId()) : null);
+      action.setCurrentStep(map.containsKey(action.getCurrentStepIdentity()) ? map.get(action.getCurrentStepIdentity()) : null);
     }
 
     for (final WorkflowTypeStep typeStep : workflowType.getSteps()) {
-      if (typeStep.getId() == workflow.getCurrentStepId()) {
+      if (typeStep.hasSameIdentity(workflow.getCurrentStepIdentity())) {
         workflow.setCurrentStep(typeStep);
       }
     }

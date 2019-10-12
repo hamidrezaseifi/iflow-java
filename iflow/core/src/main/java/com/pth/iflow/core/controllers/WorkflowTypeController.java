@@ -1,7 +1,7 @@
 package com.pth.iflow.core.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pth.iflow.common.annotations.IflowGetRequestMapping;
 import com.pth.iflow.common.annotations.IflowPostRequestMapping;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
+import com.pth.iflow.common.edo.models.IdentityListEdo;
 import com.pth.iflow.common.edo.models.WorkflowTypeEdo;
 import com.pth.iflow.common.edo.models.WorkflowTypeListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
@@ -46,10 +47,11 @@ public class WorkflowTypeController {
 
   @ResponseStatus(HttpStatus.OK)
   @IflowPostRequestMapping(path = IflowRestPaths.CoreModule.WORKFLOWTYPE_READ_LIST)
-  public ResponseEntity<WorkflowTypeListEdo> readWorkflowList(@RequestBody final Set<String> idList, final HttpServletRequest request)
-      throws Exception {
+  public ResponseEntity<WorkflowTypeListEdo> readWorkflowList(@RequestBody final IdentityListEdo idList,
+      final HttpServletRequest request) throws Exception {
 
-    final List<WorkflowType> modelList = this.workflowTypeService.getListByIdentityList(idList);
+    final List<WorkflowType> modelList = idList.getIdentityList().isEmpty() ? new ArrayList<>()
+        : this.workflowTypeService.getListByIdentityList(idList.getIdentityList());
 
     return ControllerHelper.createResponseEntity(request, new WorkflowTypeListEdo(CoreModelEdoMapper.toWorkflowTypeEdoList(modelList)),
         HttpStatus.OK);

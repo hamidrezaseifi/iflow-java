@@ -26,7 +26,8 @@ public class ValidateWorkflowNextStepStrategyStep extends AbstractWorkflowSaveSt
 
     final WorkflowTypeStep nextStep = this.getWorkflowSaveStrategy().findNextStep(processingWorkflowType, processingWorkflow);
     if (nextStep == null) {
-      throw new IFlowCustomeException("Invalid workflow step id:" + processingWorkflow.getId(), EIFlowErrorType.INVALID_WORKFLOW_STEP);
+      throw new IFlowCustomeException("Invalid workflow step identity:" + processingWorkflow.getIdentity(),
+          EIFlowErrorType.INVALID_WORKFLOW_STEP);
     }
 
   }

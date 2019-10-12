@@ -60,8 +60,8 @@ public class IflowRestPaths {
     public static final String WORKFLOW_SAVE                                                    = "/workflow/save";
     public static final String WORKFLOW_READ_BY_IDENTITY                                        = "/workflow/readbyid/{identity}";
     public static final String WORKFLOW_READ_LIST                                               = "/workflow/list";
-    public static final String WORKFLOW_READ_LIST_BY_TYPEIDENTITY                               = "/workflow/type/list/{identity}";
-    public static final String WORKFLOW_READ_LIST_BY_USEREMAIL                                  = "/workflow/user/list/{email}/{status}";
+    public static final String WORKFLOW_READ_LIST_BY_WORKFLOWTYPEIDENTITY                       = "/workflow/type/list/{identity}";
+    public static final String WORKFLOW_READ_LIST_BY_USERIDENTITY                               = "/workflow/user/list/{email}/{status}";
     public static final String WORKFLOW_ACTION_SAVE                                             = "/workflow/action/save";
     public static final String WORKFLOW_ACTION_READ_BY_IDENTITY                                 = "/workflow/action/readbyid/{identity}";
     public static final String WORKFLOW_ACTION_READ_LIST_BY_WORKFLOWIDENTITY                    = "/workflow/action/workflow/list/{identity}";
@@ -151,7 +151,7 @@ public class IflowRestPaths {
       return builder.build(identity);
     }
 
-    public static URI READ_WORKFLOWTYPESTEP_BY_ID(final String identity) {
+    public static URI READ_WORKFLOWTYPESTEP_BY_IDENTITY(final String identity) {
       final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOWTYPESTEP_READ_BY_IDENTITY);
       return builder.build(identity);
     }
@@ -166,7 +166,7 @@ public class IflowRestPaths {
       return builder.build();
     }
 
-    public static URI READ_WORKFLOWTYPE_BY_ID(final String identity) {
+    public static URI READ_WORKFLOWTYPE_BY_IDENTITY(final String identity) {
       final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOWTYPE_READ_BY_IDENTITY);
       return builder.build(identity);
     }
@@ -181,7 +181,7 @@ public class IflowRestPaths {
       return builder.build();
     }
 
-    public static URI READ_WORKFLOW_BY_ID(final String identity) {
+    public static URI READ_WORKFLOW_BY_IDENTITY(final String identity) {
       final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOW_READ_BY_IDENTITY);
       return builder.build(identity);
     }
@@ -201,13 +201,13 @@ public class IflowRestPaths {
       return builder.build();
     }
 
-    public static URI READ_WORKFLOW_LIST_BY_TYPE(final String identity) {
-      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOW_READ_LIST_BY_TYPEIDENTITY);
+    public static URI READ_WORKFLOW_LIST_BY_WORKFLOWTYPEIDENTITY(final String identity) {
+      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOW_READ_LIST_BY_WORKFLOWTYPEIDENTITY);
       return builder.build(identity);
     }
 
-    public static URI READ_WORKFLOW_LIST_BY_USER(final String email, final int status) {
-      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOW_READ_LIST_BY_USEREMAIL);
+    public static URI READ_WORKFLOW_LIST_BY_USERIDENTITY(final String email, final int status) {
+      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOW_READ_LIST_BY_USERIDENTITY);
       return builder.build(email, status);
     }
 
@@ -396,7 +396,7 @@ public class IflowRestPaths {
       return builder.build(companyidentity);
     }
 
-    public static URI CAL_CACHDATA_WORKFLOW_DATARESET(final String companyidentity, final Long identity) {
+    public static URI CAL_CACHDATA_WORKFLOW_DATARESET(final String companyidentity, final String identity) {
       final IflowUriBuilder builder = new IflowUriBuilder(CACHDATA_CAL_WORKFLOW_DATARESET_BY_WORKFLOWIDENTITY);
       return builder.build(companyidentity, identity);
     }

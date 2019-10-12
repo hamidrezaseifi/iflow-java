@@ -23,8 +23,8 @@ public class SaveWorkflowForAssignedUseresInCoreStep extends AbstractWorkflowSav
 
     final List<Workflow> result = new ArrayList<>();
 
-    for (final Long userId : this.getWorkflowSaveStrategy().getAssignedUsers()) {
-      processingWorkflow.setActiveActionAssignTo(userId);
+    for (final String userIdentity : this.getWorkflowSaveStrategy().getAssignedUsers()) {
+      processingWorkflow.setActiveActionAssignTo(userIdentity);
 
       final Workflow savedWorkflow = this.getWorkflowSaveStrategy().saveWorkflow(processingWorkflow);
       result.add(savedWorkflow);

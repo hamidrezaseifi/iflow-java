@@ -36,13 +36,13 @@ public class WorkflowMessageDataService implements IWorkflowMessageDataService {
   }
 
   @Override
-  public List<WorkflowMessage> getListForUser(final Long userId, final int status, final String token)
+  public List<WorkflowMessage> getListForUser(final String userIdentity, final int status, final String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
-    logger.debug("Request workflow message list for user id {}", userId);
+    logger.debug("Request workflow message list for user id {}", userIdentity);
 
     final WorkflowMessageListEdo edoList = this.restTemplate.callRestGet(
-        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.READ_WORKFLOWMESSAGE_READ_BY_USER(userId, status)), token,
-        EModule.CORE, WorkflowMessageListEdo.class, true, userId, status);
+        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.READ_WORKFLOWMESSAGE_READ_BY_USER(userIdentity, status)),
+        token, EModule.CORE, WorkflowMessageListEdo.class, true);
 
     return WorkflowModelEdoMapper.fromWorkflowMessageEdoList(edoList.getWorkflowMessages());
   }
@@ -60,26 +60,27 @@ public class WorkflowMessageDataService implements IWorkflowMessageDataService {
   }
 
   @Override
-  public void updateWorkflowMessageStatus(final Long workflowId, final Long stepId, final EWorkflowMessageStatus status,
-      final String token) throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
-    logger.debug("Save workflow message ");
-
-    this.restTemplate.callRestGet(
-        this.moduleAccessConfig.generateCoreUrl(
-            IflowRestPaths.CoreModule.CHANGE_WORKFLOWMESSAGE_WORKFLOWMESSAGE_STAUS(workflowId, stepId, 0L, status.getValue())),
-        token, EModule.CORE, Void.class, true);
-
-  }
-
-  @Override
-  public void updateUserAndWorkflowMessageStatus(final Long workflowId, final Long stepId, final Long userId,
+  public void updateWorkflowMessageStatus(final String workflowIdentity, final String stepIdentity,
       final EWorkflowMessageStatus status, final String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     logger.debug("Save workflow message ");
 
     this.restTemplate.callRestGet(
-        this.moduleAccessConfig.generateCoreUrl(
-            IflowRestPaths.CoreModule.CHANGE_WORKFLOWMESSAGE_WORKFLOWMESSAGE_STAUS(workflowId, stepId, userId, status.getValue())),
+        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule
+            .CHANGE_WORKFLOWMESSAGE_WORKFLOWMESSAGE_STAUS(workflowIdentity, stepIdentity, "", status.getValue())),
+        token, EModule.CORE, Void.class, true);
+
+  }
+
+  @Override
+  public void updateUserAndWorkflowMessageStatus(final String workflowIdentity, final String stepIdentity, final String userIdentity,
+      final EWorkflowMessageStatus status, final String token)
+      throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+    logger.debug("Save workflow message ");
+
+    this.restTemplate.callRestGet(
+        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule
+            .CHANGE_WORKFLOWMESSAGE_WORKFLOWMESSAGE_STAUS(workflowIdentity, userIdentity, userIdentity, status.getValue())),
         token, EModule.CORE, Void.class, true);
 
   }

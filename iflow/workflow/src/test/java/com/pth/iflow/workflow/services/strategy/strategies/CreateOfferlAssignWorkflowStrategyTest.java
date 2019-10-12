@@ -68,11 +68,12 @@ public class CreateOfferlAssignWorkflowStrategyTest extends TestDataProducer {
 
     final WorkflowSaveRequest request = this.getTestWorkflowCreateRequestForStrategy();
     request.setCommand(EWorkflowProcessCommand.DONE);
-    request.setAssigns(Arrays.asList(new AssignItem(1L, EAssignType.USER), new AssignItem(1L, EAssignType.DEPARTMENT)));
+    request.setAssigns(Arrays.asList(new AssignItem("user1", EAssignType.USER), new AssignItem("user2", EAssignType.DEPARTMENT)));
 
     when(this.workflowDataService.save(any(Workflow.class), any(String.class))).thenReturn(request.getWorkflow());
 
-    when(this.departmentDataService.getUserListByDepartmentId(any(Long.class), any(String.class))).thenReturn(getTestUserList());
+    when(this.departmentDataService.getUserListByDepartmentIdentity(any(String.class), any(String.class)))
+        .thenReturn(getTestUserList());
 
     this.workflowStrategy = new CreateOfferlAssignWorkflowStrategy(request, this.validTocken, this.departmentDataService,
         this.workflowMessageDataService, this.cachDataDataService, workflowDataService);

@@ -25,6 +25,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import com.pth.iflow.common.edo.models.IdentityListEdo;
 import com.pth.iflow.common.edo.models.WorkflowActionEdo;
 import com.pth.iflow.common.edo.models.WorkflowActionListEdo;
 import com.pth.iflow.common.edo.models.WorkflowEdo;
@@ -173,13 +174,14 @@ public class WorkflowControllerTest extends TestDataProducer {
   @Test
   public void testReadWorkflowList() throws Exception {
     final Set<String> list = this.getTestWorkflowIdentityList();
+    final IdentityListEdo edoList = new IdentityListEdo(list);
 
     final List<Workflow> modelList = getTestWorkflowList();
     final WorkflowListEdo modelListEdo = new WorkflowListEdo(CoreModelEdoMapper.toWorkflowEdoList(modelList));
 
     when(this.workflowService.getListByIdentityList(any(Set.class))).thenReturn(modelList);
 
-    final String modelAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(list);
+    final String modelAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelListEdo);
 
     this.mockMvc
@@ -204,7 +206,7 @@ public class WorkflowControllerTest extends TestDataProducer {
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelListEdo);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.WORKFLOW_READ_LIST_BY_TYPEIDENTITY, "identity")
+        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.WORKFLOW_READ_LIST_BY_WORKFLOWTYPEIDENTITY, "identity")
             .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
         .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(listAsXmlString));

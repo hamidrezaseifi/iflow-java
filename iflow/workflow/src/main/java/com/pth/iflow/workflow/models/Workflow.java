@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.pth.iflow.common.edo.models.helper.IdentityModel;
 import com.pth.iflow.common.enums.EWorkflowActionStatus;
 import com.pth.iflow.common.enums.EWorkflowIdentity;
@@ -14,8 +16,6 @@ public class Workflow extends IdentityModel {
   private String                     identity;
   private WorkflowType               workflowType;
   private WorkflowTypeStep           currentStep;
-  private User                       controller;
-  private User                       createdBy;
   private String                     comments;
   private EWorkflowStatus            status;
   private Integer                    version;
@@ -58,22 +58,6 @@ public class Workflow extends IdentityModel {
     this.currentStep = currentStep;
   }
 
-  public User getController() {
-    return controller;
-  }
-
-  public void setController(final User controller) {
-    this.controller = controller;
-  }
-
-  public User getCreatedBy() {
-    return createdBy;
-  }
-
-  public void setCreatedBy(final User createdBy) {
-    this.createdBy = createdBy;
-  }
-
   public String getComments() {
     return this.comments;
   }
@@ -92,6 +76,10 @@ public class Workflow extends IdentityModel {
 
   public void setStatus(final Integer status) {
     this.status = EWorkflowStatus.ofValue(status);
+  }
+
+  public void setStatus(final EWorkflowStatus status) {
+    this.status = status;
   }
 
   public Integer getVersion() {
@@ -208,6 +196,43 @@ public class Workflow extends IdentityModel {
 
   public void setActiveActionStatus(final EWorkflowActionStatus status) {
     this.getActiveAction().setStatus(status);
+  }
+
+  public boolean isInitializing() {
+    return EWorkflowStatus.INITIALIZE.equals(this.status);
+  }
+
+  public boolean isOffering() {
+    return EWorkflowStatus.OFFERING.equals(this.status);
+  }
+
+  public boolean isArchived() {
+    return EWorkflowStatus.ARCHIVED.equals(this.status);
+  }
+
+  public boolean isAssignedStatus() {
+    return EWorkflowStatus.ASSIGNED.equals(this.status);
+  }
+
+  public boolean isDone() {
+    return EWorkflowStatus.DONE.equals(this.status);
+  }
+
+  public boolean hasController() {
+    return StringUtils.isNoneEmpty(this.controllerIdentity);
+  }
+
+  public boolean hasCreatedBy() {
+    return StringUtils.isNoneEmpty(this.createdByIdentity);
+  }
+
+  public boolean hasWorkflowType() {
+    return this.workflowType != null;
+  }
+
+  public void addAction(final WorkflowAction action) {
+    action.setWorkflowIdentity(this.identity);
+    this.actions.add(action);
   }
 
 }

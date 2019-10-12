@@ -20,9 +20,9 @@ public class SaveWorkflowOfferForAssignedUseresInCoreStep extends AbstractWorkfl
 
     final Workflow processingWorkflow = this.getWorkflowSaveStrategy().getSavedSingleWorkflow();
 
-    for (final Long userId : this.getWorkflowSaveStrategy().getAssignedUsers()) {
-      this.getWorkflowSaveStrategy().createWorkflowMessage(processingWorkflow.getId(), processingWorkflow.getCurrentStepId(),
-          processingWorkflow.getCreatedBy(), userId);
+    for (final String userIdentity : this.getWorkflowSaveStrategy().getAssignedUsers()) {
+      this.getWorkflowSaveStrategy().createWorkflowMessage(processingWorkflow.getIdentity(),
+          processingWorkflow.getCurrentStepIdentity(), processingWorkflow.getCreatedByIdentity(), userIdentity);
     }
 
   }

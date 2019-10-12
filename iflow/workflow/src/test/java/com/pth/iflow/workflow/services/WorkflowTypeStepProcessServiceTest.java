@@ -4,6 +4,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
+import java.util.Set;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -32,16 +33,16 @@ public class WorkflowTypeStepProcessServiceTest extends TestDataProducer {
   private IWorkflowTypeStepProcessService workflowTypeStepProcessService;
 
   @MockBean
-  private IWorkflowTypeStepDataService workflowTypeStepDataService;
+  private IWorkflowTypeStepDataService    workflowTypeStepDataService;
 
   @Mock
-  private ITokenValidator tokenValidator;
+  private ITokenValidator                 tokenValidator;
 
-  private String validTocken;
+  private String                          validTocken;
 
-  private String validSession;
+  private String                          validSession;
 
-  private ProfileResponse profileResponse;
+  private ProfileResponse                 profileResponse;
 
   @Before
   public void setUp() throws Exception {
@@ -65,15 +66,15 @@ public class WorkflowTypeStepProcessServiceTest extends TestDataProducer {
 
     final WorkflowTypeStep workflowStepType = this.getTestWorkflowTypeStep();
 
-    when(this.workflowTypeStepDataService.getById(any(Long.class), any(String.class))).thenReturn(workflowStepType);
+    when(this.workflowTypeStepDataService.getByIdentity(any(String.class), any(String.class))).thenReturn(workflowStepType);
 
-    final WorkflowTypeStep resWorkflowType = this.workflowTypeStepProcessService.getById(workflowStepType.getId(), this.validTocken);
+    final WorkflowTypeStep resWorkflowType = this.workflowTypeStepProcessService.getByIdentity(workflowStepType.getIdentity(),
+        this.validTocken);
 
     Assert.assertNotNull("Result workflow-type-step is not null!", resWorkflowType);
-    Assert.assertEquals("Result workflow-type-step has id 1!", resWorkflowType.getId(), workflowStepType.getId());
-    Assert.assertEquals("Result workflow-type-step has title '" + workflowStepType.getTitle() + "'!",
-                        resWorkflowType.getTitle(),
-                        workflowStepType.getTitle());
+    Assert.assertEquals("Result workflow-type-step has id 1!", resWorkflowType.getIdentity(), workflowStepType.getIdentity());
+    Assert.assertEquals("Result workflow-type-step has title '" + workflowStepType.getTitle() + "'!", resWorkflowType.getTitle(),
+        workflowStepType.getTitle());
     Assert.assertEquals("Result workflow-type-step has status 1!", resWorkflowType.getStatus(), workflowStepType.getStatus());
 
   }
@@ -81,12 +82,12 @@ public class WorkflowTypeStepProcessServiceTest extends TestDataProducer {
   @Test
   public void testGetListByIdList() throws Exception {
 
-    final List<Long> idList = this.getTestWorkflowTypeIdList();
+    final Set<String> idList = this.getTestWorkflowTypeIdSet();
     final List<WorkflowTypeStep> list = this.getTestWorkflowTypeStepList();
 
-    when(this.workflowTypeStepDataService.getListByIdList(any(List.class), any(String.class))).thenReturn(list);
+    when(this.workflowTypeStepDataService.getListByIdentityList(any(Set.class), any(String.class))).thenReturn(list);
 
-    final List<WorkflowTypeStep> resList = this.workflowTypeStepProcessService.getListByIdList(idList, this.validTocken);
+    final List<WorkflowTypeStep> resList = this.workflowTypeStepProcessService.getListByIdentityList(idList, this.validTocken);
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());
@@ -98,9 +99,10 @@ public class WorkflowTypeStepProcessServiceTest extends TestDataProducer {
 
     final List<WorkflowTypeStep> list = this.getTestWorkflowTypeStepList();
 
-    when(this.workflowTypeStepDataService.getListByWorkflowId(any(Long.class), any(String.class))).thenReturn(list);
+    when(this.workflowTypeStepDataService.getListByWorkflowIdentity(any(String.class), any(String.class))).thenReturn(list);
 
-    final List<WorkflowTypeStep> resList = this.workflowTypeStepProcessService.getListByWorkflowId(1L, this.validTocken);
+    final List<WorkflowTypeStep> resList = this.workflowTypeStepProcessService.getListByWorkflowIdentity("identity1",
+        this.validTocken);
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());

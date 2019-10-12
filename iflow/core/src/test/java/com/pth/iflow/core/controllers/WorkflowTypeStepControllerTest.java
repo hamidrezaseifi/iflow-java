@@ -27,6 +27,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import com.pth.iflow.common.edo.models.IdentityListEdo;
 import com.pth.iflow.common.edo.models.WorkflowTypeStepEdo;
 import com.pth.iflow.common.edo.models.WorkflowTypeStepListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
@@ -85,13 +86,14 @@ public class WorkflowTypeStepControllerTest extends TestDataProducer {
   public void testReadWorkflowTypeStepList() throws Exception {
 
     final Set<String> idList = new HashSet<>(Arrays.asList("item-1", "item-2", "item-3"));
+    final IdentityListEdo edoList = new IdentityListEdo(idList);
     final List<WorkflowTypeStep> list = this.getTestWorkflowTypeStepList();
     when(this.workflowStepService.getListByIdentityList(any(Set.class))).thenReturn(list);
 
-    final WorkflowTypeStepListEdo edoList = new WorkflowTypeStepListEdo(CoreModelEdoMapper.toWorkflowTypeStepEdoList(list));
+    final WorkflowTypeStepListEdo edoResultList = new WorkflowTypeStepListEdo(CoreModelEdoMapper.toWorkflowTypeStepEdoList(list));
 
-    final String contentAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(idList);
-    final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
+    final String contentAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
+    final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoResultList);
 
     System.out.println("listAsXmlString:\n" + listAsXmlString);
     this.mockMvc

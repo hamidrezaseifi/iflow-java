@@ -70,12 +70,12 @@ public class DoneExistingWorkflowStrategyTest extends TestDataProducer {
     final List<WorkflowAction> actions = request.getWorkflow().getActions();
 
     for (final WorkflowAction action : actions) {
-      action.setAssignTo(1L);
+      action.setAssignToIdentity("assignToIdentity");
       action.setStatus(EWorkflowActionStatus.DONE);
     }
     actions.get(actions.size() - 1).setStatus(EWorkflowActionStatus.OPEN);
 
-    when(this.workflowDataService.getById(any(Long.class), any(String.class))).thenReturn(request.getWorkflow());
+    when(this.workflowDataService.getByIdentity(any(String.class), any(String.class))).thenReturn(request.getWorkflow());
     when(this.workflowDataService.save(any(Workflow.class), any(String.class))).thenReturn(request.getWorkflow());
 
     this.workflowStrategy = new DoneExistingWorkflowStrategy(request, this.validTocken, this.departmentDataService,

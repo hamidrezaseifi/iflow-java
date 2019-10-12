@@ -25,6 +25,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import com.pth.iflow.common.edo.models.IdentityListEdo;
 import com.pth.iflow.common.edo.models.UserGroupEdo;
 import com.pth.iflow.common.edo.models.UserGroupListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
@@ -83,13 +84,14 @@ public class UserGroupControllerTest extends TestDataProducer {
   public void testReadUserGroupList() throws Exception {
 
     final Set<String> idList = this.getTestUserGroupIdSet();
+    final IdentityListEdo edoList = new IdentityListEdo(idList);
     final List<UserGroup> list = this.getTestUserGroupList();
     when(this.userGroupService.getListByIdentityList(any(Set.class))).thenReturn(list);
 
-    final UserGroupListEdo edoList = new UserGroupListEdo(CoreModelEdoMapper.toUserGroupEdoList(list));
+    final UserGroupListEdo edoResultList = new UserGroupListEdo(CoreModelEdoMapper.toUserGroupEdoList(list));
 
-    final String contentAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(idList);
-    final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
+    final String contentAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
+    final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoResultList);
 
     this.mockMvc
         .perform(MockMvcRequestBuilders.post(IflowRestPaths.CoreModule.USERGROUP_READ_LIST).content(contentAsXmlString)

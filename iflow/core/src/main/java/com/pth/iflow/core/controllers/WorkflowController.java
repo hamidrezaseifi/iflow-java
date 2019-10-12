@@ -1,7 +1,7 @@
 package com.pth.iflow.core.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pth.iflow.common.annotations.IflowGetRequestMapping;
 import com.pth.iflow.common.annotations.IflowPostRequestMapping;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
+import com.pth.iflow.common.edo.models.IdentityListEdo;
 import com.pth.iflow.common.edo.models.WorkflowActionEdo;
 import com.pth.iflow.common.edo.models.WorkflowActionListEdo;
 import com.pth.iflow.common.edo.models.WorkflowEdo;
@@ -69,17 +70,18 @@ public class WorkflowController {
 
   @ResponseStatus(HttpStatus.OK)
   @IflowPostRequestMapping(path = IflowRestPaths.CoreModule.WORKFLOW_READ_LIST)
-  public ResponseEntity<WorkflowListEdo> readWorkflowList(@RequestBody final Set<String> idList, final HttpServletRequest request)
+  public ResponseEntity<WorkflowListEdo> readWorkflowList(@RequestBody final IdentityListEdo idList, final HttpServletRequest request)
       throws Exception {
 
-    final List<Workflow> modelList = this.workflowService.getListByIdentityList(idList);
+    final List<Workflow> modelList = idList.getIdentityList().isEmpty() ? new ArrayList<>()
+        : this.workflowService.getListByIdentityList(idList.getIdentityList());
 
     return ControllerHelper.createResponseEntity(request, new WorkflowListEdo(CoreModelEdoMapper.toWorkflowEdoList(modelList)),
         HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.WORKFLOW_READ_LIST_BY_TYPEIDENTITY)
+  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.WORKFLOW_READ_LIST_BY_WORKFLOWTYPEIDENTITY)
   public ResponseEntity<WorkflowListEdo> readWorkflowListByType(@PathVariable(name = "identity") final String identity,
       final HttpServletRequest request) throws Exception {
 
@@ -90,7 +92,7 @@ public class WorkflowController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.WORKFLOW_READ_LIST_BY_USEREMAIL)
+  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.WORKFLOW_READ_LIST_BY_USERIDENTITY)
   public ResponseEntity<WorkflowListEdo> readWorkflowListForUser(@PathVariable(name = "email") final String email,
       @PathVariable(required = false) final int status, final HttpServletRequest request) throws Exception {
 

@@ -21,10 +21,10 @@ public class ChangeWorkflowOfferStatusToAssignForUserAndWorkflowInCoreStep exten
 
     final WorkflowSaveRequest processingWorkflowSaveRequest = this.getWorkflowSaveStrategy().getProcessingWorkflowSaveRequest();
     final Workflow processingWorkflow = this.getWorkflowSaveStrategy().getSavedSingleWorkflow();
-    final Long userId = processingWorkflowSaveRequest.getAssigns().get(0).getItemId();
+    final String userId = processingWorkflowSaveRequest.getAssigns().get(0).getItemIdentity();
 
-    this.getWorkflowSaveStrategy().updateUserAndWorkflowMessageStatus(processingWorkflow.getId(),
-        processingWorkflow.getCurrentStepId(), userId, EWorkflowMessageStatus.ASSIGNED);
+    this.getWorkflowSaveStrategy().updateUserAndWorkflowMessageStatus(processingWorkflow.getIdentity(),
+        processingWorkflow.getCurrentStepIdentity(), userId, EWorkflowMessageStatus.ASSIGNED);
 
   }
 

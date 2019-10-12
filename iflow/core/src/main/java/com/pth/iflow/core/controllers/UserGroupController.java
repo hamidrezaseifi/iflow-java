@@ -1,7 +1,7 @@
 package com.pth.iflow.core.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pth.iflow.common.annotations.IflowGetRequestMapping;
 import com.pth.iflow.common.annotations.IflowPostRequestMapping;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
+import com.pth.iflow.common.edo.models.IdentityListEdo;
 import com.pth.iflow.common.edo.models.UserGroupEdo;
 import com.pth.iflow.common.edo.models.UserGroupListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
@@ -46,10 +47,11 @@ public class UserGroupController {
 
   @ResponseStatus(HttpStatus.OK)
   @IflowPostRequestMapping(path = IflowRestPaths.CoreModule.USERGROUP_READ_LIST)
-  public ResponseEntity<UserGroupListEdo> readUserGroupList(@RequestBody final Set<String> idList, final HttpServletRequest request)
-      throws Exception {
+  public ResponseEntity<UserGroupListEdo> readUserGroupList(@RequestBody final IdentityListEdo idList,
+      final HttpServletRequest request) throws Exception {
 
-    final List<UserGroup> modelList = this.userGroupService.getListByIdentityList(idList);
+    final List<UserGroup> modelList = idList.getIdentityList().isEmpty() ? new ArrayList<>()
+        : this.userGroupService.getListByIdentityList(idList.getIdentityList());
 
     return ControllerHelper.createResponseEntity(request, new UserGroupListEdo(CoreModelEdoMapper.toUserGroupEdoList(modelList)),
         HttpStatus.OK);

@@ -1,7 +1,7 @@
 package com.pth.iflow.core.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,6 +19,7 @@ import com.pth.iflow.common.annotations.IflowPostRequestMapping;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
 import com.pth.iflow.common.edo.models.DepartmentGroupEdo;
 import com.pth.iflow.common.edo.models.DepartmentGroupListEdo;
+import com.pth.iflow.common.edo.models.IdentityListEdo;
 import com.pth.iflow.common.edo.models.UserListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.core.model.DepartmentGroup;
@@ -48,10 +49,11 @@ public class DepartmentGroupController {
 
   @ResponseStatus(HttpStatus.OK)
   @IflowPostRequestMapping(path = IflowRestPaths.CoreModule.DEPARTMENTGRPUP_READ_LIST)
-  public ResponseEntity<DepartmentGroupListEdo> readDepartmentList(@RequestBody final Set<String> idList,
+  public ResponseEntity<DepartmentGroupListEdo> readDepartmentList(@RequestBody final IdentityListEdo idList,
       final HttpServletRequest request) throws Exception {
 
-    final List<DepartmentGroup> modelList = this.departmentGroupService.getListByIdentityList(idList);
+    final List<DepartmentGroup> modelList = idList.getIdentityList().isEmpty() ? new ArrayList<>()
+        : this.departmentGroupService.getListByIdentityList(idList.getIdentityList());
 
     return ControllerHelper.createResponseEntity(request,
         new DepartmentGroupListEdo(CoreModelEdoMapper.toDepartmentGroupEdoList(modelList)), HttpStatus.OK);

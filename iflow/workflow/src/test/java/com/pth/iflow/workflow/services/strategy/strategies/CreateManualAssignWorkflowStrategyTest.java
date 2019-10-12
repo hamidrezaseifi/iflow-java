@@ -16,7 +16,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.pth.iflow.common.enums.EAssignType;
 import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 import com.pth.iflow.common.exceptions.IFlowCustomeException;
 import com.pth.iflow.workflow.TestDataProducer;
@@ -25,7 +24,6 @@ import com.pth.iflow.workflow.bl.IProfileCachDataDataService;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.IWorkflowMessageDataService;
 import com.pth.iflow.workflow.bl.strategy.strategies.CreateManualAssignWorkflowStrategy;
-import com.pth.iflow.workflow.models.AssignItem;
 import com.pth.iflow.workflow.models.User;
 import com.pth.iflow.workflow.models.Workflow;
 import com.pth.iflow.workflow.models.WorkflowSaveRequest;
@@ -69,13 +67,13 @@ public class CreateManualAssignWorkflowStrategyTest extends TestDataProducer {
 
     final WorkflowSaveRequest request = this.getTestWorkflowCreateRequestForStrategy();
     request.setCommand(EWorkflowProcessCommand.CREATE);
-    request.setAssigns(Arrays.asList(new AssignItem(1L, EAssignType.USER), new AssignItem(1L, EAssignType.DEPARTMENT)));
+    request.setAssigns(getTestAssignedList());
 
     final List<User> userList = getTestUserList();
 
     when(this.workflowDataService.save(any(Workflow.class), any(String.class))).thenReturn(request.getWorkflow());
 
-    when(this.departmentDataService.getUserListByDepartmentId(any(Long.class), any(String.class))).thenReturn(userList);
+    when(this.departmentDataService.getUserListByDepartmentIdentity(any(String.class), any(String.class))).thenReturn(userList);
 
     this.workflowStrategy = new CreateManualAssignWorkflowStrategy(request, this.validTocken, this.departmentDataService,
         this.workflowMessageDataService, this.cachDataDataService, workflowDataService);

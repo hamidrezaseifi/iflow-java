@@ -10,6 +10,7 @@ public class WorkflowType extends IdentityModel {
 
   private String                       identity;
   private String                       companyIdentity;
+  private String                       baseTypeIdentity;
   private String                       title;
   private String                       comments;
   private Integer                      status;
@@ -36,6 +37,14 @@ public class WorkflowType extends IdentityModel {
 
   public void setCompanyIdentity(final String companyIdentity) {
     this.companyIdentity = companyIdentity;
+  }
+
+  public String getBaseTypeIdentity() {
+    return baseTypeIdentity;
+  }
+
+  public void setBaseTypeIdentity(final String baseTypeIdentity) {
+    this.baseTypeIdentity = baseTypeIdentity;
   }
 
   public String getTitle() {

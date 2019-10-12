@@ -23,7 +23,7 @@ public class AssignWorkflowActiveActionStrategyStep extends AbstractWorkflowSave
     final Workflow processingWorkflow = this.getWorkflowSaveStrategy().getProcessingWorkflow();
     final WorkflowSaveRequest processingWorkflowSaveRequest = this.getWorkflowSaveStrategy().getProcessingWorkflowSaveRequest();
 
-    final Long userId = processingWorkflowSaveRequest.getAssigns().get(0).getItemId();
+    final String userId = processingWorkflowSaveRequest.getAssigns().get(0).getItemIdentity();
 
     processingWorkflow.setActiveActionAssignTo(userId);
     processingWorkflow.setActiveActionStatus(EWorkflowActionStatus.OPEN);

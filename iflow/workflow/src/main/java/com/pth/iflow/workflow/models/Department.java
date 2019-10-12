@@ -7,22 +7,13 @@ import com.pth.iflow.common.edo.models.helper.IdentityModel;
 
 public class Department extends IdentityModel {
 
-  private Long                        id;
-  private Long                        companyId;
+  private String                      companyIdentity;
   private String                      identity;
   private String                      title;
   private Integer                     status;
   private Integer                     version;
 
   private final List<DepartmentGroup> departmentGroups = new ArrayList<>();
-
-  public Long getId() {
-    return this.id;
-  }
-
-  public void setId(final Long id) {
-    this.id = id;
-  }
 
   @Override
   public String getIdentity() {
@@ -34,12 +25,12 @@ public class Department extends IdentityModel {
     this.identity = identity;
   }
 
-  public Long getCompanyId() {
-    return this.companyId;
+  public String getCompanyIdentity() {
+    return companyIdentity;
   }
 
-  public void setCompanyId(final Long companyId) {
-    this.companyId = companyId;
+  public void setCompanyIdentity(final String companyIdentity) {
+    this.companyIdentity = companyIdentity;
   }
 
   public String getTitle() {

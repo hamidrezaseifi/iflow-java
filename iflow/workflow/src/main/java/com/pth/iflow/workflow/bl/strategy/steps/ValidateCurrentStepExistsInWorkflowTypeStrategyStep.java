@@ -27,7 +27,8 @@ public class ValidateCurrentStepExistsInWorkflowTypeStrategyStep extends Abstrac
     final boolean isValid = this.validateCurrentStepExistsInWorkflowType(processingWorkflow.getCurrentStep(), processingWorkflowType);
     if (isValid == false) {
 
-      throw new IFlowCustomeException("Invalid workflow step id:" + processingWorkflow.getId(), EIFlowErrorType.INVALID_WORKFLOW_STEP);
+      throw new IFlowCustomeException("Invalid workflow step id:" + processingWorkflow.getIdentity(),
+          EIFlowErrorType.INVALID_WORKFLOW_STEP);
 
     }
 
@@ -36,7 +37,7 @@ public class ValidateCurrentStepExistsInWorkflowTypeStrategyStep extends Abstrac
   private boolean validateCurrentStepExistsInWorkflowType(final WorkflowTypeStep step, final WorkflowType workflowType) {
 
     for (final WorkflowTypeStep typeStep : workflowType.getSteps()) {
-      if (typeStep.getId() == step.getId()) {
+      if (typeStep.hasSameIdentity(step.getIdentity())) {
         return true;
       }
     }

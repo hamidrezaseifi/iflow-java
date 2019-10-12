@@ -18,10 +18,10 @@ public class SendWorkflowOffersToProfileStep extends AbstractWorkflowSaveStrateg
   @Override
   public void process() throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    final Long companyId = this.getWorkflowSaveStrategy().getProcessingWorkflowType().getCompanyId();
+    final String companyIdentity = this.getWorkflowSaveStrategy().getProcessingWorkflowType().getCompanyIdentity();
     final Workflow processingWorkflow = this.getWorkflowSaveStrategy().getSavedSingleWorkflow();
 
-    this.getWorkflowSaveStrategy().resetWorkflowtCachData(companyId, processingWorkflow.getId());
+    this.getWorkflowSaveStrategy().resetWorkflowtCachData(companyIdentity, processingWorkflow.getIdentity());
 
   }
 

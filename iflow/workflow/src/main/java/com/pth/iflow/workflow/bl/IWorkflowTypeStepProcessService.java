@@ -2,6 +2,7 @@ package com.pth.iflow.workflow.bl;
 
 import java.net.MalformedURLException;
 import java.util.List;
+import java.util.Set;
 
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
@@ -15,6 +16,6 @@ public interface IWorkflowTypeStepProcessService {
   public List<WorkflowTypeStep> getListByWorkflowIdentity(final String workflowIdentity, final String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  public List<WorkflowTypeStep> getListByIdentityList(final List<String> ididentityList, final String token)
+  public List<WorkflowTypeStep> getListByIdentityList(final Set<String> identityList, final String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 }

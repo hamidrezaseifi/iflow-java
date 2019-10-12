@@ -34,25 +34,26 @@ public class DepartmentDataService implements IDepartmentDataService {
   }
 
   @Override
-  public List<User> getUserListByDepartmentId(final Long departmentId, final String token)
+  public List<User> getUserListByDepartmentIdentity(final String departmentIdentity, final String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     logger.debug("Request department user list");
 
     final UserListEdo edoList = this.restTemplate.callRestGet(
-        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.READ_DEPARTMENT_ALLUSERLIST_BY_DEPARTMENT(departmentId)),
+        this.moduleAccessConfig
+            .generateCoreUrl(IflowRestPaths.CoreModule.READ_DEPARTMENT_ALLUSERLIST_BY_DEPARTMENT(departmentIdentity)),
         token, EModule.CORE, UserListEdo.class, true);
 
     return WorkflowModelEdoMapper.fromUserEdoList(edoList.getUsers());
   }
 
   @Override
-  public List<User> getUserListByDepartmentGroupId(final Long departmentGroupId, final String token)
+  public List<User> getUserListByDepartmentGroupIdentity(final String departmentGroupIdentity, final String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     logger.debug("Request departmentgroup user list");
 
     final UserListEdo edoList = this.restTemplate.callRestGet(
         this.moduleAccessConfig
-            .generateCoreUrl(IflowRestPaths.CoreModule.READ_DEPARTMENTGRPUP_ALLUSERLIST_BY_DEPARTMENTGROUP(departmentGroupId)),
+            .generateCoreUrl(IflowRestPaths.CoreModule.READ_DEPARTMENTGRPUP_ALLUSERLIST_BY_DEPARTMENTGROUP(departmentGroupIdentity)),
         token, EModule.CORE, UserListEdo.class, true);
 
     return WorkflowModelEdoMapper.fromUserEdoList(edoList.getUsers());

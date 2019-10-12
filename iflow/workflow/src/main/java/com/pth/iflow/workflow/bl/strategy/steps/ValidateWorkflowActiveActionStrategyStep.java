@@ -22,7 +22,7 @@ public class ValidateWorkflowActiveActionStrategyStep extends AbstractWorkflowSa
     final Workflow processingWorkflow = this.getWorkflowSaveStrategy().getProcessingWorkflow();
 
     if (processingWorkflow.hasActiveAction() == false) {
-      throw new IFlowCustomeException("The workflow has no active action id:" + processingWorkflow.getId(),
+      throw new IFlowCustomeException("The workflow has no active action identity:" + processingWorkflow.getIdentity(),
           EIFlowErrorType.INVALID_WORKFLOW_STATUS);
 
     }

@@ -27,6 +27,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.pth.iflow.common.edo.models.DepartmentEdo;
 import com.pth.iflow.common.edo.models.DepartmentListEdo;
+import com.pth.iflow.common.edo.models.IdentityListEdo;
 import com.pth.iflow.common.edo.models.UserListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.XmlRestConfig;
@@ -85,13 +86,15 @@ public class DepartmentControllerTest extends TestDataProducer {
   public void testReadDepartmentList() throws Exception {
 
     final Set<String> idList = this.getTestDepartmentIdSet();
+    final IdentityListEdo edoList = new IdentityListEdo(idList);
+
     final List<Department> list = this.getTestDepartmentList();
     when(this.departmentService.getListByIdentityList(any(Set.class))).thenReturn(list);
 
-    final DepartmentListEdo edoList = new DepartmentListEdo(CoreModelEdoMapper.toDepartmentEdoList(list));
+    final DepartmentListEdo edoResultList = new DepartmentListEdo(CoreModelEdoMapper.toDepartmentEdoList(list));
 
-    final String contentAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(idList);
-    final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
+    final String contentAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
+    final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoResultList);
 
     this.mockMvc
         .perform(MockMvcRequestBuilders.post(IflowRestPaths.CoreModule.DEPARTMENT_READ_LIST).content(contentAsXmlString)

@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pth.iflow.common.annotations.IflowGetRequestMapping;
 import com.pth.iflow.common.annotations.IflowPostRequestMapping;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
-import com.pth.iflow.common.edo.models.IdLongListEdo;
+import com.pth.iflow.common.edo.models.IdentityListEdo;
 import com.pth.iflow.common.edo.models.WorkflowMessageListEdo;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.common.rest.IflowRestPaths;
@@ -94,7 +94,7 @@ public class CachDataController {
   @ResponseStatus(HttpStatus.OK)
   @IflowPostRequestMapping(value = IflowRestPaths.ProfileModule.CACHDATA_CAL_USERLIST_DATARESET)
   @ResponseBody
-  public void resetUserListData(@PathVariable(name = "companyid") final Long companyid, @RequestBody final IdLongListEdo userIdListEdo,
+  public void resetUserListData(@PathVariable(name = "companyid") final Long companyid, @RequestBody final IdentityListEdo userIdListEdo,
       final HttpServletRequest request,
       @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId)
       throws ProfileCustomizedException, URISyntaxException, MalformedURLException, IFlowMessageConversionFailureException {

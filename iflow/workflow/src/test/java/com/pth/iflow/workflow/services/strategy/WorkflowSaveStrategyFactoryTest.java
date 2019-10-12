@@ -132,10 +132,10 @@ public class WorkflowSaveStrategyFactoryTest extends TestDataProducer {
     final WorkflowSaveRequest workflowCreateReq = this.getTestWorkflowCreateRequest();
     workflowCreateReq.setCommand(EWorkflowProcessCommand.CREATE);
 
-    final WorkflowType workflowType = this.getTestWorkflowType(1L, "");
+    final WorkflowType workflowType = this.getTestWorkflowType("type1", "");
     workflowType.setAssignType(EWorkflowTypeAssignType.MANUAL);
     workflowCreateReq.getWorkflow().setWorkflowType(workflowType);
-    workflowCreateReq.getWorkflow().setId(null);
+    workflowCreateReq.getWorkflow().setIdentityToNew();
 
     final IWorkflowSaveStrategy createWorkflowStrategy = this.workStrategyFactory.selectSaveWorkStrategy(workflowCreateReq,
         this.validTocken);
@@ -151,11 +151,7 @@ public class WorkflowSaveStrategyFactoryTest extends TestDataProducer {
 
     final WorkflowSaveRequest workflowCreateReq = this.getTestWorkflowCreateRequest();
     workflowCreateReq.setCommand(EWorkflowProcessCommand.CREATE);
-
-    final WorkflowType workflowType = this.getTestWorkflowType(1L, "");
-    workflowType.setAssignType(EWorkflowTypeAssignType.OFFER);
-    workflowCreateReq.getWorkflow().setWorkflowType(workflowType);
-    workflowCreateReq.getWorkflow().setId(null);
+    workflowCreateReq.getWorkflow().getWorkflowType().setAssignType(EWorkflowTypeAssignType.OFFER);
 
     final IWorkflowSaveStrategy createWorkflowStrategy = this.workStrategyFactory.selectSaveWorkStrategy(workflowCreateReq,
         this.validTocken);
@@ -230,11 +226,7 @@ public class WorkflowSaveStrategyFactoryTest extends TestDataProducer {
 
     final WorkflowSaveRequest workflowCreateReq = this.getTestWorkflowCreateRequest();
     workflowCreateReq.setCommand(EWorkflowProcessCommand.CREATE);
-
-    final WorkflowType workflowType = this.getTestWorkflowType(1L, "");
-    workflowType.setAssignType(EWorkflowTypeAssignType.MANUAL);
-    workflowCreateReq.getWorkflow().setWorkflowType(workflowType);
-    workflowCreateReq.getWorkflow().setId(null);
+    workflowCreateReq.getWorkflow().getWorkflowType().setAssignType(EWorkflowTypeAssignType.MANUAL);
 
     final IWorkflowSaveStrategy createWorkflowStrategy = this.workStrategyFactory.selectValidationWorkStrategy(workflowCreateReq,
         this.validTocken);
@@ -251,10 +243,10 @@ public class WorkflowSaveStrategyFactoryTest extends TestDataProducer {
     final WorkflowSaveRequest workflowCreateReq = this.getTestWorkflowCreateRequest();
     workflowCreateReq.setCommand(EWorkflowProcessCommand.CREATE);
 
-    final WorkflowType workflowType = this.getTestWorkflowType(1L, "");
+    final WorkflowType workflowType = this.getTestWorkflowType("type1", "");
     workflowType.setAssignType(EWorkflowTypeAssignType.OFFER);
     workflowCreateReq.getWorkflow().setWorkflowType(workflowType);
-    workflowCreateReq.getWorkflow().setId(null);
+    workflowCreateReq.getWorkflow().setIdentityToNew();
 
     final IWorkflowSaveStrategy createWorkflowStrategy = this.workStrategyFactory.selectValidationWorkStrategy(workflowCreateReq,
         this.validTocken);
