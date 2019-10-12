@@ -80,7 +80,7 @@ public class WorkflowAction extends IdentityModel {
   }
 
   public boolean isAssigned() {
-    return isIdentityNew(this.assignToIdentity);
+    return isIdentityNew(this.assignToIdentity) == false;
   }
 
   public boolean getIsActive() {

@@ -62,6 +62,8 @@ public class SaveExistingWorkflowStrategyTest extends TestDataProducer {
 
     final WorkflowSaveRequest request = this.getTestWorkflowCreateRequestForStrategy();
     request.setCommand(EWorkflowProcessCommand.DONE);
+    request.getWorkflow().getActiveAction().setAssignToUser(getTestUser("fname", "lname", "email"));
+    request.getWorkflow().getActiveAction().setAssignToIdentity("email");
 
     when(this.workflowDataService.save(any(Workflow.class), any(String.class))).thenReturn(request.getWorkflow());
 

@@ -88,7 +88,7 @@ public class WorkflowTypeDataServiceTest extends TestDataProducer {
     final List<WorkflowType> list = this.getTestWorkflowTypeList();
     final WorkflowTypeListEdo edoList = new WorkflowTypeListEdo(WorkflowModelEdoMapper.toWorkflowTypeEdoList(list));
 
-    when(this.restTemplate.callRestPost(any(URI.class), any(String.class), any(EModule.class), any(List.class),
+    when(this.restTemplate.callRestPost(any(URI.class), any(String.class), any(EModule.class), any(Set.class),
         eq(WorkflowTypeListEdo.class), any(boolean.class))).thenReturn(edoList);
 
     final List<WorkflowType> resList = this.workflowTypeService.getListByIdentityList(idList, this.validTocken);

@@ -115,6 +115,27 @@ public class TestDataProducer {
     return model;
   }
 
+  protected Workflow getTestWorkflow(final String identity, final WorkflowType workflowType) {
+    final Workflow model = new Workflow();
+    model.setWorkflowType(workflowType);
+    model.setWorkflowTypeIdentity(workflowType.getIdentity());
+    model.setIdentity(identity);
+    model.setStatus(EWorkflowStatus.INITIALIZE);
+    model.setVersion(1);
+    model.setComments("comments");
+    model.setControllerIdentity("controllerIdentity");
+    model.setCurrentStep(workflowType.getSteps().get(0));
+    model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
+    model.setCreatedByIdentity("createdByIdentity");
+
+    model.setActions(Arrays.asList(this.getTestWorkflowAction("action1", model.getIdentity()),
+        this.getTestWorkflowAction("action2", model.getIdentity()), this.getTestWorkflowAction("action3", model.getIdentity())));
+    model.setFiles(Arrays.asList(this.getTestWorkflowFile("file1", model.getIdentity()),
+        this.getTestWorkflowFile("file2", model.getIdentity()), this.getTestWorkflowFile("file3", model.getIdentity())));
+
+    return model;
+  }
+
   protected Workflow getTestWorkflow(final String identity, final EWorkflowActionStatus actionStatus) {
     final Workflow model = new Workflow();
     model.setWorkflowTypeIdentity("workflowTypeIdentity");
@@ -223,6 +244,7 @@ public class TestDataProducer {
     model.setStatus(1);
     model.setVersion(1);
     model.setAssignType(EWorkflowTypeAssignType.MANUAL);
+    model.setCompanyIdentity("companyIdentity");
     model.setSendToController(true);
     model.setIncreaseStepAutomatic(true);
     model.setAllowAssign(true);
@@ -406,13 +428,14 @@ public class TestDataProducer {
   }
 
   protected WorkflowSaveRequest getTestWorkflowCreateRequestForStrategy() {
+    final WorkflowType workflowType = this.getTestWorkflowType("workflowtype1", "Workflowtype 1");
+
     final WorkflowSaveRequest request = new WorkflowSaveRequest();
     request.setAssigns(this.getTestAssignedList());
-    request.setWorkflow(this.getTestWorkflow("workflow1"));
+    request.setWorkflow(this.getTestWorkflow("workflow1", workflowType));
     request.setExpireDays(10);
     request.setCommand(EWorkflowProcessCommand.NONE);
 
-    final WorkflowType workflowType = this.getTestWorkflowType("workflowtype1", "");
     workflowType.setAssignType(EWorkflowTypeAssignType.MANUAL);
     request.getWorkflow().setWorkflowType(workflowType);
     request.getWorkflow().setIdentity("identity");
