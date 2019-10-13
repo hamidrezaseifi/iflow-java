@@ -13,9 +13,9 @@ import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.configurations.GuiConfiguration;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
-import com.pth.iflow.gui.models.GuiUser;
+import com.pth.iflow.gui.models.User;
 import com.pth.iflow.gui.models.mapper.GuiModelEdoMapper;
-import com.pth.iflow.gui.models.ui.GuiSessionUserInfo;
+import com.pth.iflow.gui.models.ui.SessionUserInfo;
 import com.pth.iflow.gui.services.IRestTemplateCall;
 import com.pth.iflow.gui.services.IUserAccess;
 
@@ -27,30 +27,30 @@ public class UserAccess implements IUserAccess {
   private final IRestTemplateCall                          restTemplate;
   private final GuiConfiguration.ProfileModuleAccessConfig moduleAccessConfig;
 
-  private final GuiSessionUserInfo                         sessionUserInfo;
+  private final SessionUserInfo                            sessionUserInfo;
 
   public UserAccess(@Autowired final IRestTemplateCall restTemplate,
       @Autowired final GuiConfiguration.ProfileModuleAccessConfig moduleAccessConfig,
-      @Autowired final GuiSessionUserInfo sessionUserInfo) {
+      @Autowired final SessionUserInfo sessionUserInfo) {
     this.restTemplate = restTemplate;
     this.moduleAccessConfig = moduleAccessConfig;
     this.sessionUserInfo = sessionUserInfo;
   }
 
   @Override
-  public GuiUser readUser(final Long userId) throws GuiCustomizedException, MalformedURLException {
+  public User readUser(final String userId) throws GuiCustomizedException, MalformedURLException {
     // TODO Auto-generated method stub
     return null;
   }
 
   @Override
-  public GuiUser saveUser(final GuiUser user) throws GuiCustomizedException, MalformedURLException {
+  public User saveUser(final User user) throws GuiCustomizedException, MalformedURLException {
     // TODO Auto-generated method stub
     return null;
   }
 
   @Override
-  public List<GuiUser> getCompanyUserList(final String companyIdentity)
+  public List<User> getCompanyUserList(final String companyIdentity)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     logger.debug("Read user list for company id {}", companyIdentity);
 

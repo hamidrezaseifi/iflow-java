@@ -4,17 +4,17 @@ import java.net.MalformedURLException;
 
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
-import com.pth.iflow.gui.models.GuiProfileResponse;
-import com.pth.iflow.gui.models.GuiUserAuthenticationResponse;
+import com.pth.iflow.gui.models.ProfileResponse;
+import com.pth.iflow.gui.models.UserAuthenticationResponse;
 
 public interface IProfileAccess {
 
-  GuiUserAuthenticationResponse authenticate(String username, String password, String companyIdentity)
+  UserAuthenticationResponse authenticate(String username, String password, String companyIdentity)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  GuiProfileResponse readProfile(String username, String token)
+  ProfileResponse readProfile(String username, String token)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  GuiProfileResponse isTokenValid(String token)
+  ProfileResponse isTokenValid(String token)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 }

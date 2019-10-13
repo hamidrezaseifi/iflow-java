@@ -1,6 +1,8 @@
 package com.pth.iflow.gui.models;
 
-public class GuiCompany {
+import com.pth.iflow.common.edo.models.helper.IdentityModel;
+
+public class Company extends IdentityModel {
 
   private String  identity;
   private String  companyName;
@@ -14,6 +16,7 @@ public class GuiCompany {
   /**
    * @return the identifyid
    */
+  @Override
   public String getIdentity() {
     return this.identity;
   }
@@ -21,6 +24,7 @@ public class GuiCompany {
   /**
    * @param identifyid the identifyid to set
    */
+  @Override
   public void setIdentity(final String identity) {
     this.identity = identity;
   }

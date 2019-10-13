@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
-import com.pth.iflow.gui.models.GuiWorkflowMessage;
-import com.pth.iflow.gui.models.GuiWorkflowType;
-import com.pth.iflow.gui.models.GuiWorkflowTypeStep;
-import com.pth.iflow.gui.models.ui.GuiSessionUserInfo;
+import com.pth.iflow.gui.models.WorkflowMessage;
+import com.pth.iflow.gui.models.WorkflowType;
+import com.pth.iflow.gui.models.WorkflowTypeStep;
+import com.pth.iflow.gui.models.ui.SessionUserInfo;
 import com.pth.iflow.gui.services.IWorkflowHandler;
 import com.pth.iflow.gui.services.IWorkflowMessageAccess;
 import com.pth.iflow.gui.services.IWorkflowMessageHanlder;
@@ -23,12 +23,12 @@ public class WorkflowMessageHanlder implements IWorkflowMessageHanlder {
 
   private final IWorkflowMessageAccess workflowMessageAccess;
 
-  private final GuiSessionUserInfo     sessionUserInfo;
+  private final SessionUserInfo        sessionUserInfo;
 
   private final IWorkflowHandler       workflowHandler;
 
   public WorkflowMessageHanlder(@Autowired final IWorkflowMessageAccess workflowMessageAccess,
-      @Autowired final GuiSessionUserInfo sessionUserInfo, final IWorkflowHandler workflowHandler) {
+      @Autowired final SessionUserInfo sessionUserInfo, final IWorkflowHandler workflowHandler) {
     this.workflowMessageAccess = workflowMessageAccess;
     this.workflowHandler = workflowHandler;
     this.sessionUserInfo = sessionUserInfo;
@@ -37,20 +37,20 @@ public class WorkflowMessageHanlder implements IWorkflowMessageHanlder {
   @Override
   public void callUserMessageReset() throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     this.workflowMessageAccess.callUserMessageReset(this.sessionUserInfo.getCompany().getIdentity(),
-        this.sessionUserInfo.getUser().getId(), this.sessionUserInfo.getToken());
+        this.sessionUserInfo.getUser().getIdentity(), this.sessionUserInfo.getToken());
   }
 
   @Override
-  public List<GuiWorkflowMessage> readUserMessages()
+  public List<WorkflowMessage> readUserMessages()
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    final List<GuiWorkflowMessage> readList = this.workflowMessageAccess.readUserMessages(
-        this.sessionUserInfo.getCompany().getIdentity(), this.sessionUserInfo.getUser().getId(), this.sessionUserInfo.getToken());
+    final List<WorkflowMessage> readList = this.workflowMessageAccess.readUserMessages(this.sessionUserInfo.getCompany().getIdentity(),
+        this.sessionUserInfo.getUser().getIdentity(), this.sessionUserInfo.getToken());
 
-    readList.sort(new Comparator<GuiWorkflowMessage>() {
+    readList.sort(new Comparator<WorkflowMessage>() {
 
       @Override
-      public int compare(final GuiWorkflowMessage message1, final GuiWorkflowMessage message2) {
+      public int compare(final WorkflowMessage message1, final WorkflowMessage message2) {
 
         return message1.getCreatedAt().isAfter(message2.getCreatedAt()) ? -1
             : message1.getCreatedAt().isBefore(message2.getCreatedAt()) ? 1 : 0;
@@ -62,24 +62,24 @@ public class WorkflowMessageHanlder implements IWorkflowMessageHanlder {
     return readList;
   }
 
-  private List<GuiWorkflowMessage> prepareWorkflowMessageList(final List<GuiWorkflowMessage> messageList)
+  private List<WorkflowMessage> prepareWorkflowMessageList(final List<WorkflowMessage> messageList)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
-    final List<GuiWorkflowMessage> resultList = new ArrayList<>();
-    for (final GuiWorkflowMessage message : messageList) {
+    final List<WorkflowMessage> resultList = new ArrayList<>();
+    for (final WorkflowMessage message : messageList) {
       resultList.add(this.prepareWorkflowMessage(message));
     }
     return resultList;
   }
 
-  private GuiWorkflowMessage prepareWorkflowMessage(final GuiWorkflowMessage message)
+  private WorkflowMessage prepareWorkflowMessage(final WorkflowMessage message)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     message.setWorkflow(this.workflowHandler.readWorkflow(message.getWorkflowIdentity()));
 
-    final GuiWorkflowType type = message.getWorkflow().getWorkflowType();
+    final WorkflowType type = message.getWorkflow().getWorkflowType();
 
-    for (final GuiWorkflowTypeStep step : type.getSteps()) {
-      if (message.getStepId() == step.getId()) {
+    for (final WorkflowTypeStep step : type.getSteps()) {
+      if (step.hasSameIdentity(message.getStepIdentity())) {
         message.setStep(step);
       }
     }

@@ -1,8 +1,8 @@
 package com.pth.iflow.gui.models;
 
-public class GuiWorkflowFileVersion {
+public class WorkflowFileVersion {
 
-  private Long    createdBy;
+  private String  createdByIdentity;
   private String  filePath;
   private String  comments;
   private Integer fileVersion;
@@ -17,12 +17,12 @@ public class GuiWorkflowFileVersion {
     this.filePath = filePath;
   }
 
-  public Long getCreatedBy() {
-    return this.createdBy;
+  public String getCreatedByIdentity() {
+    return this.createdByIdentity;
   }
 
-  public void setCreatedBy(final Long createdBy) {
-    this.createdBy = createdBy;
+  public void setCreatedByIdentity(final String createdBy) {
+    this.createdByIdentity = createdBy;
   }
 
   public String getComments() {

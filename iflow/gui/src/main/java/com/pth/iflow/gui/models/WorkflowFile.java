@@ -3,23 +3,27 @@ package com.pth.iflow.gui.models;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GuiWorkflowFile {
+import com.pth.iflow.common.edo.models.helper.IdentityModel;
 
-  private String                             identity;
-  private Long                               createdBy;
-  private String                             title;
-  private String                             extention;
-  private String                             activeFilePath;
-  private String                             comments;
-  private Integer                            activeFileVersion;
-  private Integer                            status;
-  private Integer                            version;
-  private final List<GuiWorkflowFileVersion> fileVersions = new ArrayList<>();
+public class WorkflowFile extends IdentityModel {
 
+  private String                          identity;
+  private String                          createdByIdentity;
+  private String                          title;
+  private String                          extention;
+  private String                          activeFilePath;
+  private String                          comments;
+  private Integer                         activeFileVersion;
+  private Integer                         status;
+  private Integer                         version;
+  private final List<WorkflowFileVersion> fileVersions = new ArrayList<>();
+
+  @Override
   public String getIdentity() {
-    return identity;
+    return this.identity;
   }
 
+  @Override
   public void setIdentity(final String identity) {
     this.identity = identity;
   }
@@ -32,12 +36,12 @@ public class GuiWorkflowFile {
     this.activeFilePath = filePath;
   }
 
-  public Long getCreatedBy() {
-    return this.createdBy;
+  public String getCreatedByIdentity() {
+    return this.createdByIdentity;
   }
 
-  public void setCreatedBy(final Long createdBy) {
-    this.createdBy = createdBy;
+  public void setCreatedByIdentity(final String createdByIdentity) {
+    this.createdByIdentity = createdByIdentity;
   }
 
   public String getTitle() {
@@ -88,26 +92,26 @@ public class GuiWorkflowFile {
     this.version = version;
   }
 
-  public List<GuiWorkflowFileVersion> getFileVersions() {
+  public List<WorkflowFileVersion> getFileVersions() {
     return this.fileVersions;
   }
 
-  public void setFileVersions(final List<GuiWorkflowFileVersion> fileVersions) {
+  public void setFileVersions(final List<WorkflowFileVersion> fileVersions) {
     this.fileVersions.clear();
     if (fileVersions != null) {
       this.fileVersions.addAll(fileVersions);
     }
   }
 
-  public void addFileVersion(final GuiWorkflowFileVersion fileVersion) {
+  public void addFileVersion(final WorkflowFileVersion fileVersion) {
     this.fileVersions.add(fileVersion);
 
   }
 
-  public GuiWorkflowFileVersion addNewFileVersion(final String filePath, final int version, final Long userId, final String comments) {
-    final GuiWorkflowFileVersion fileVersion = new GuiWorkflowFileVersion();
+  public WorkflowFileVersion addNewFileVersion(final String filePath, final int version, final String userId, final String comments) {
+    final WorkflowFileVersion fileVersion = new WorkflowFileVersion();
     fileVersion.setComments(comments);
-    fileVersion.setCreatedBy(userId);
+    fileVersion.setCreatedByIdentity(userId);
     fileVersion.setFilePath(filePath);
     fileVersion.setFileVersion(version);
     fileVersion.setStatus(1);

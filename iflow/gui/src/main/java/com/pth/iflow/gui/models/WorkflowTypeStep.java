@@ -1,8 +1,10 @@
 package com.pth.iflow.gui.models;
 
-public class GuiWorkflowTypeStep {
+import com.pth.iflow.common.edo.models.helper.IdentityModel;
 
-  private Long    id;
+public class WorkflowTypeStep extends IdentityModel {
+
+  private String  identity;
   private String  title;
   private Integer stepIndex;
   private String  viewName;
@@ -11,12 +13,14 @@ public class GuiWorkflowTypeStep {
   private Integer status;
   private Integer version;
 
-  public Long getId() {
-    return this.id;
+  @Override
+  public String getIdentity() {
+    return this.identity;
   }
 
-  public void setId(final Long id) {
-    this.id = id;
+  @Override
+  public void setIdentity(final String identity) {
+    this.identity = identity;
   }
 
   public String getTitle() {
@@ -73,15 +77,15 @@ public class GuiWorkflowTypeStep {
     this.version = version;
   }
 
-  public boolean isAfterStep(final GuiWorkflowTypeStep other) {
+  public boolean isAfterStep(final WorkflowTypeStep other) {
     return this.stepIndex > other.getStepIndex();
   }
 
-  public boolean isBeforeStep(final GuiWorkflowTypeStep other) {
+  public boolean isBeforeStep(final WorkflowTypeStep other) {
     return this.stepIndex < other.getStepIndex();
   }
 
-  public boolean isTheSameStep(final GuiWorkflowTypeStep other) {
+  public boolean isTheSameStep(final WorkflowTypeStep other) {
     return this.stepIndex == other.getStepIndex();
   }
 

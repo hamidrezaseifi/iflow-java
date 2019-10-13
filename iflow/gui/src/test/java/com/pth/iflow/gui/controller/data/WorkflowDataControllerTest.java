@@ -29,13 +29,13 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.pth.iflow.gui.TestDataProducer;
-import com.pth.iflow.gui.models.GuiDepartment;
-import com.pth.iflow.gui.models.GuiUser;
-import com.pth.iflow.gui.models.GuiWorkflow;
-import com.pth.iflow.gui.models.GuiWorkflowSaveRequest;
-import com.pth.iflow.gui.models.GuiWorkflowSearchFilter;
-import com.pth.iflow.gui.models.GuiWorkflowType;
-import com.pth.iflow.gui.models.ui.GuiSessionUserInfo;
+import com.pth.iflow.gui.models.Department;
+import com.pth.iflow.gui.models.User;
+import com.pth.iflow.gui.models.Workflow;
+import com.pth.iflow.gui.models.WorkflowSaveRequest;
+import com.pth.iflow.gui.models.WorkflowSearchFilter;
+import com.pth.iflow.gui.models.WorkflowType;
+import com.pth.iflow.gui.models.ui.SessionUserInfo;
 import com.pth.iflow.gui.services.IUserAccess;
 import com.pth.iflow.gui.services.IWorkflowHandler;
 
@@ -53,7 +53,7 @@ public class WorkflowDataControllerTest extends TestDataProducer {
   private WebApplicationContext               context;
 
   @MockBean
-  private GuiSessionUserInfo                  sessionUserInfo;
+  private SessionUserInfo                  sessionUserInfo;
 
   @MockBean
   private IWorkflowHandler                    workflowHandler;
@@ -80,7 +80,7 @@ public class WorkflowDataControllerTest extends TestDataProducer {
   @Test
   public void testLoadWorkflowInitialData() throws Exception {
 
-    final List<GuiWorkflowType> workflowTypeList = this.getTestGuiWorkflowTypeList();
+    final List<WorkflowType> workflowTypeList = this.getTestGuiWorkflowTypeList();
 
     Mockito.when(this.workflowHandler.readWorkflowTypeList(ArgumentMatchers.any(String.class))).thenReturn(workflowTypeList);
 
@@ -93,15 +93,15 @@ public class WorkflowDataControllerTest extends TestDataProducer {
   @Test
   public void testSearchWorkflows() throws Exception {
 
-    final List<GuiWorkflow> resultList = this.getTestGuiWorkflowList();
+    final List<Workflow> resultList = this.getTestGuiWorkflowList();
 
-    final GuiWorkflowSearchFilter workflowSearchFilter = this.getTestGuiWorkflowSearchFilter();
+    final WorkflowSearchFilter workflowSearchFilter = this.getTestGuiWorkflowSearchFilter();
 
     final String contentAsJsonString = this.jsonConverter.getObjectMapper().writeValueAsString(workflowSearchFilter);
 
     final String resultAsJsonString = this.jsonConverter.getObjectMapper().writeValueAsString(resultList);
 
-    Mockito.when(this.workflowHandler.searchWorkflow(ArgumentMatchers.any(GuiWorkflowSearchFilter.class))).thenReturn(resultList);
+    Mockito.when(this.workflowHandler.searchWorkflow(ArgumentMatchers.any(WorkflowSearchFilter.class))).thenReturn(resultList);
 
     final MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.post("/workflow/data/workflowlist/search")
         .content(contentAsJsonString).contentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
@@ -114,7 +114,7 @@ public class WorkflowDataControllerTest extends TestDataProducer {
   @Test
   public void testListCompanyUsers() throws Exception {
 
-    final List<GuiUser> userList = this.getTestUserList();
+    final List<User> userList = this.getTestUserList();
 
     final String resultAsJsonString = this.jsonConverter.getObjectMapper().writeValueAsString(userList);
 
@@ -132,12 +132,12 @@ public class WorkflowDataControllerTest extends TestDataProducer {
 
     final Map<String, Object> map = new HashMap<>();
 
-    final List<GuiUser> userList = this.getTestUserList();
-    final List<GuiWorkflowType> workflowTypeList = this.getTestGuiWorkflowTypeList();
+    final List<User> userList = this.getTestUserList();
+    final List<WorkflowType> workflowTypeList = this.getTestGuiWorkflowTypeList();
 
-    final GuiWorkflow newWorkflow = GuiWorkflow.generateInitial(1L);
+    final Workflow newWorkflow = Workflow.generateInitial(1L);
 
-    final GuiWorkflowSaveRequest workflowReq = GuiWorkflowSaveRequest.generateNewWihExpireDays(newWorkflow, 15);
+    final WorkflowSaveRequest workflowReq = WorkflowSaveRequest.generateNewWihExpireDays(newWorkflow, 15);
 
     map.put("users", userList);
     map.put("workflowTypes", workflowTypeList);
@@ -158,11 +158,11 @@ public class WorkflowDataControllerTest extends TestDataProducer {
   @Test
   public void testCreateWorkflow() throws Exception {
 
-    final GuiWorkflowSaveRequest createRequest = this.getTestGuiWorkflowSaveRequest();
+    final WorkflowSaveRequest createRequest = this.getTestGuiWorkflowSaveRequest();
 
     final String contentAsJsonString = this.jsonConverter.getObjectMapper().writeValueAsString(createRequest);
 
-    Mockito.when(this.workflowHandler.createWorkflow(ArgumentMatchers.any(GuiWorkflowSaveRequest.class),
+    Mockito.when(this.workflowHandler.createWorkflow(ArgumentMatchers.any(WorkflowSaveRequest.class),
         ArgumentMatchers.any(HttpSession.class))).thenReturn(null);
 
     final MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.post("/workflow/data/workflowcreate/create")
@@ -177,15 +177,15 @@ public class WorkflowDataControllerTest extends TestDataProducer {
 
     final Map<String, Object> map = new HashMap<>();
 
-    final List<GuiUser> userList = this.getTestUserList();
-    final GuiWorkflow workflow = this.getTestGuiWorkflow(1L);
+    final List<User> userList = this.getTestUserList();
+    final Workflow workflow = this.getTestGuiWorkflow(1L);
     workflow.setWorkflowTypeId(1L);
     workflow.getActiveAction().setCurrentStep(this.getTestGuiWorkflowTypeStep());
     workflow.getActiveAction().getCurrentStep().setExpireDays(15);
 
-    final List<GuiDepartment> departmentList = this.getTestDepartmentList();
+    final List<Department> departmentList = this.getTestDepartmentList();
 
-    final GuiWorkflowSaveRequest saveRequest = GuiWorkflowSaveRequest.generateNewWihExpireDays(workflow, 15);
+    final WorkflowSaveRequest saveRequest = WorkflowSaveRequest.generateNewWihExpireDays(workflow, 15);
 
     map.put("users", userList);
     map.put("workflow", workflow);

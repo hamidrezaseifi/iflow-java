@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
-import com.pth.iflow.gui.models.GuiWorkflowType;
+import com.pth.iflow.gui.models.WorkflowType;
 import com.pth.iflow.gui.services.IWorkflowHandler;
 
 @Controller
@@ -35,7 +35,7 @@ public class CompanyController extends GuiPageControllerBase {
   public String showWorkflowTypeList(final Model model)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    final List<GuiWorkflowType> workflowTypeList = this.workflowHandler.readWorkflowTypeList(this.getLoggedCompany().getIdentity());
+    final List<WorkflowType> workflowTypeList = this.workflowHandler.readWorkflowTypeList(this.getLoggedCompany().getIdentity());
 
     model.addAttribute("workflowTypeList", workflowTypeList);
 

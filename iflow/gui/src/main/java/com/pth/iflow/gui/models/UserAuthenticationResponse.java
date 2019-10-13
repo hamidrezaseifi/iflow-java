@@ -2,7 +2,7 @@ package com.pth.iflow.gui.models;
 
 import com.pth.iflow.common.edo.models.UserAuthenticationResponseEdo;
 
-public class GuiUserAuthenticationResponse {
+public class UserAuthenticationResponse {
 
   private String email;
 

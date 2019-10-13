@@ -6,24 +6,24 @@ import java.util.List;
 import com.pth.iflow.common.enums.EAssignType;
 import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 
-public class GuiWorkflowSaveRequest {
+public class WorkflowSaveRequest {
 
-  private GuiWorkflow               workflow;
+  private Workflow                workflow;
 
-  private Integer                   expireDays;
+  private Integer                 expireDays;
 
-  private final List<GuiAssignItem> assigns = new ArrayList<>();
+  private final List<AssignItem>  assigns = new ArrayList<>();
 
-  private String                    sessionKey;
+  private String                  sessionKey;
 
-  private EWorkflowProcessCommand   command;
+  private EWorkflowProcessCommand command;
 
-  public GuiWorkflowSaveRequest() {
+  public WorkflowSaveRequest() {
 
   }
 
-  public static GuiWorkflowSaveRequest generateNewWihExpireDays(final GuiWorkflow workflow, final int expireDays) {
-    final GuiWorkflowSaveRequest request = new GuiWorkflowSaveRequest();
+  public static WorkflowSaveRequest generateNewWihExpireDays(final Workflow workflow, final int expireDays) {
+    final WorkflowSaveRequest request = new WorkflowSaveRequest();
 
     request.setWorkflow(workflow);
     request.setExpireDays(expireDays);
@@ -32,8 +32,8 @@ public class GuiWorkflowSaveRequest {
     return request;
   }
 
-  public static GuiWorkflowSaveRequest generateNewNoExpireDays(final GuiWorkflow workflow) {
-    final GuiWorkflowSaveRequest request = new GuiWorkflowSaveRequest();
+  public static WorkflowSaveRequest generateNewNoExpireDays(final Workflow workflow) {
+    final WorkflowSaveRequest request = new WorkflowSaveRequest();
 
     request.setWorkflow(workflow);
     request.setExpireDays(0);
@@ -45,14 +45,14 @@ public class GuiWorkflowSaveRequest {
   /**
    * @return the workflow
    */
-  public GuiWorkflow getWorkflow() {
+  public Workflow getWorkflow() {
     return this.workflow;
   }
 
   /**
    * @param workflow the workflow to set
    */
-  public void setWorkflow(final GuiWorkflow workflow) {
+  public void setWorkflow(final Workflow workflow) {
     this.workflow = workflow;
   }
 
@@ -67,14 +67,14 @@ public class GuiWorkflowSaveRequest {
   /**
    * @return the assigns
    */
-  public List<GuiAssignItem> getAssigns() {
+  public List<AssignItem> getAssigns() {
     return this.assigns;
   }
 
   /**
    * @param assigns the assigns to set
    */
-  public void setAssigns(final List<GuiAssignItem> assigns) {
+  public void setAssigns(final List<AssignItem> assigns) {
     this.assigns.clear();
     if (assigns != null) {
       this.assigns.addAll(assigns);
@@ -84,9 +84,9 @@ public class GuiWorkflowSaveRequest {
   /**
    * @param assigns the assigns to set
    */
-  public void setAssignUser(final Long userId) {
+  public void setAssignUser(final String userId) {
     this.assigns.clear();
-    this.assigns.add(new GuiAssignItem(userId, EAssignType.USER));
+    this.assigns.add(new AssignItem(userId, EAssignType.USER));
   }
 
   /**

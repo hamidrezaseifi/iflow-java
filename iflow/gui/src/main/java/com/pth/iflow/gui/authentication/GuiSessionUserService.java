@@ -7,9 +7,9 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.pth.iflow.gui.models.GuiCompanyProfile;
-import com.pth.iflow.gui.models.GuiUser;
-import com.pth.iflow.gui.models.ui.GuiSessionUserInfo;
+import com.pth.iflow.gui.models.CompanyProfile;
+import com.pth.iflow.gui.models.User;
+import com.pth.iflow.gui.models.ui.SessionUserInfo;
 
 /**
  * A class to manage session-in user in session and Spring SecurityContext
@@ -21,10 +21,10 @@ import com.pth.iflow.gui.models.ui.GuiSessionUserInfo;
 public class GuiSessionUserService {
 
   @Autowired
-  private GuiSessionUserInfo sessionUserInfo;
+  private SessionUserInfo sessionUserInfo;
 
-  public GuiSessionUserInfo authorizeUser(final GuiAuthenticationToken token, final GuiUser user,
-      final GuiCompanyProfile companyProfile, final HttpSession session, final boolean setContext) {
+  public SessionUserInfo authorizeUser(final GuiAuthenticationToken token, final User user,
+      final CompanyProfile companyProfile, final HttpSession session, final boolean setContext) {
 
     if (setContext) {
       SecurityContext ctx = SecurityContextHolder.getContext();
@@ -37,16 +37,16 @@ public class GuiSessionUserService {
 
   }
 
-  public GuiSessionUserInfo setLoggedInUserInfo(final GuiAuthenticationToken token, final GuiUser user,
-      final GuiCompanyProfile companyProfile, final HttpSession session) {
+  public SessionUserInfo setLoggedInUserInfo(final GuiAuthenticationToken token, final User user,
+      final CompanyProfile companyProfile, final HttpSession session) {
 
     this.reloadSessionData(token, user, companyProfile);
 
     return this.sessionUserInfo;
   }
 
-  public void reloadSessionData(final GuiAuthenticationToken token, final GuiUser user,
-      final GuiCompanyProfile companyProfile) {
+  public void reloadSessionData(final GuiAuthenticationToken token, final User user,
+      final CompanyProfile companyProfile) {
 
     this.sessionUserInfo.setCompanyProfile(companyProfile);
     this.sessionUserInfo.setUser(user);

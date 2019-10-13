@@ -15,10 +15,10 @@ import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.configurations.GuiConfiguration;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
-import com.pth.iflow.gui.models.GuiWorkflow;
-import com.pth.iflow.gui.models.GuiWorkflowSaveRequest;
-import com.pth.iflow.gui.models.GuiWorkflowSearchFilter;
-import com.pth.iflow.gui.models.GuiWorkflowType;
+import com.pth.iflow.gui.models.Workflow;
+import com.pth.iflow.gui.models.WorkflowSaveRequest;
+import com.pth.iflow.gui.models.WorkflowSearchFilter;
+import com.pth.iflow.gui.models.WorkflowType;
 import com.pth.iflow.gui.models.mapper.GuiModelEdoMapper;
 import com.pth.iflow.gui.services.IRestTemplateCall;
 import com.pth.iflow.gui.services.IWorkflowAccess;
@@ -38,7 +38,7 @@ public class WorkflowAccess implements IWorkflowAccess {
   }
 
   @Override
-  public GuiWorkflow readWorkflow(final String workflowIdentity, final String token)
+  public Workflow readWorkflow(final String workflowIdentity, final String token)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     final WorkflowEdo responseEdo = this.restTemplate.callRestGet(this.moduleAccessConfig.getReadWorkflowUri(workflowIdentity),
@@ -48,7 +48,7 @@ public class WorkflowAccess implements IWorkflowAccess {
   }
 
   @Override
-  public List<GuiWorkflow> createWorkflow(final GuiWorkflowSaveRequest createRequest, final String token)
+  public List<Workflow> createWorkflow(final WorkflowSaveRequest createRequest, final String token)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     logger.debug("Create workflow");
 
@@ -59,7 +59,7 @@ public class WorkflowAccess implements IWorkflowAccess {
   }
 
   @Override
-  public GuiWorkflow saveWorkflow(final GuiWorkflowSaveRequest request, final String token)
+  public Workflow saveWorkflow(final WorkflowSaveRequest request, final String token)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     logger.debug("save workflow");
 
@@ -70,7 +70,7 @@ public class WorkflowAccess implements IWorkflowAccess {
   }
 
   @Override
-  public List<GuiWorkflowType> readWorkflowTypeList(final String companyIdentity, final String token)
+  public List<WorkflowType> readWorkflowTypeList(final String companyIdentity, final String token)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     logger.debug("Read workflow-type for company-id {}", companyIdentity);
 
@@ -81,7 +81,7 @@ public class WorkflowAccess implements IWorkflowAccess {
   }
 
   @Override
-  public List<GuiWorkflow> searchWorkflow(final GuiWorkflowSearchFilter workflowSearchFilter, final String token)
+  public List<Workflow> searchWorkflow(final WorkflowSearchFilter workflowSearchFilter, final String token)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     logger.debug("Search workflow");
 
@@ -92,7 +92,7 @@ public class WorkflowAccess implements IWorkflowAccess {
   }
 
   @Override
-  public void validateWorkflow(final GuiWorkflowSaveRequest request, final String token)
+  public void validateWorkflow(final WorkflowSaveRequest request, final String token)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     logger.debug("save workflow");
 

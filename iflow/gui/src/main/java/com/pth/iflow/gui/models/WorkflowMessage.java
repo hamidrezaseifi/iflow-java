@@ -4,73 +4,74 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.enums.EWorkflowMessageType;
 
-public class GuiWorkflowMessage {
+public class WorkflowMessage {
 
-  private String workflowIdentity;
+  private String                 workflowIdentity;
 
-  private GuiWorkflow workflow;
+  private Workflow               workflow;
 
-  private Long stepId;
+  private String                 stepIdentity;
 
-  private GuiWorkflowTypeStep step;
+  private WorkflowTypeStep       step;
 
-  private Long userId;
+  private String                 userIdentity;
 
-  private String message;
+  private String                 message;
 
-  private Long createdBy;
+  private String                 createdByIdentity;
 
-  private EWorkflowMessageType messageType;
+  private EWorkflowMessageType   messageType;
 
   private EWorkflowMessageStatus status;
 
-  private Integer version;
+  private Integer                version;
 
-  private Integer expireDays;
+  private Integer                expireDays;
 
-  private LocalDateTime createdAt;
+  private LocalDateTime          createdAt;
 
   public String getWorkflowIdentity() {
-    return workflowIdentity;
+    return this.workflowIdentity;
   }
 
   public void setWorkflowIdentity(final String workflowIdentity) {
     this.workflowIdentity = workflowIdentity;
   }
 
-  public Long getStepId() {
-    return this.stepId;
+  public String getStepIdentity() {
+    return this.stepIdentity;
   }
 
-  public void setStepId(final Long stepId) {
-    this.stepId = stepId;
+  public void setStepIdentity(final String stepId) {
+    this.stepIdentity = stepId;
   }
 
-  public GuiWorkflowTypeStep getStep() {
+  public WorkflowTypeStep getStep() {
     return this.step;
   }
 
-  public void setStep(final GuiWorkflowTypeStep step) {
+  public void setStep(final WorkflowTypeStep step) {
     this.step = step;
   }
 
-  public GuiWorkflow getWorkflow() {
+  public Workflow getWorkflow() {
     return this.workflow;
   }
 
-  public void setWorkflow(final GuiWorkflow workflow) {
+  public void setWorkflow(final Workflow workflow) {
     this.workflow = workflow;
   }
 
-  public Long getUserId() {
-    return this.userId;
+  public String getUserIdentity() {
+    return this.userIdentity;
   }
 
-  public void setUserId(final Long userId) {
-    this.userId = userId;
+  public void setUserIdentity(final String userIdentity) {
+    this.userIdentity = userIdentity;
   }
 
   public String getMessage() {
@@ -81,12 +82,12 @@ public class GuiWorkflowMessage {
     this.message = message;
   }
 
-  public Long getCreatedBy() {
-    return this.createdBy;
+  public String getCreatedByIdentity() {
+    return this.createdByIdentity;
   }
 
-  public void setCreatedBy(final Long createdBy) {
-    this.createdBy = createdBy;
+  public void setCreatedByIdentity(final String createdByIdentity) {
+    this.createdByIdentity = createdByIdentity;
   }
 
   public EWorkflowMessageType getMessageType() {

@@ -5,13 +5,13 @@ import java.util.List;
 
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
-import com.pth.iflow.gui.models.GuiWorkflowMessage;
+import com.pth.iflow.gui.models.WorkflowMessage;
 
 public interface IWorkflowMessageAccess {
 
-  public void callUserMessageReset(final String companyIdentity, final Long userId, final String token)
+  public void callUserMessageReset(final String companyIdentity, final String userId, final String token)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  public List<GuiWorkflowMessage> readUserMessages(final String companyIdentity, final Long userId, final String token)
+  public List<WorkflowMessage> readUserMessages(final String companyIdentity, final String userId, final String token)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 }

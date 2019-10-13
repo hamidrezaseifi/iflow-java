@@ -1,18 +1,23 @@
 package com.pth.iflow.gui.models;
 
-public class GuiDepartmentGroup {
+import com.pth.iflow.common.edo.models.helper.IdentityModel;
 
-  private Long    id;
+public class DepartmentGroup extends IdentityModel {
+
+  private String  identity;
+
   private String  title;
   private Integer status;
   private Integer version;
 
-  public Long getId() {
-    return this.id;
+  @Override
+  public String getIdentity() {
+    return this.identity;
   }
 
-  public void setId(final Long id) {
-    this.id = id;
+  @Override
+  public void setIdentity(final String identity) {
+    this.identity = identity;
   }
 
   public String getTitle() {

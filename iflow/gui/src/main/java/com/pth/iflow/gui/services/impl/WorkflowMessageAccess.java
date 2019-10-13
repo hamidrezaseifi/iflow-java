@@ -13,7 +13,7 @@ import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.configurations.GuiConfiguration;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
-import com.pth.iflow.gui.models.GuiWorkflowMessage;
+import com.pth.iflow.gui.models.WorkflowMessage;
 import com.pth.iflow.gui.models.mapper.GuiModelEdoMapper;
 import com.pth.iflow.gui.services.IRestTemplateCall;
 import com.pth.iflow.gui.services.IWorkflowMessageAccess;
@@ -33,7 +33,7 @@ public class WorkflowMessageAccess implements IWorkflowMessageAccess {
   }
 
   @Override
-  public List<GuiWorkflowMessage> readUserMessages(final String companyIdentity, final Long userId, final String token)
+  public List<WorkflowMessage> readUserMessages(final String companyIdentity, final String userId, final String token)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     logger.debug("read messages for user");
 
@@ -45,7 +45,7 @@ public class WorkflowMessageAccess implements IWorkflowMessageAccess {
   }
 
   @Override
-  public void callUserMessageReset(final String companyIdentity, final Long userId, final String token)
+  public void callUserMessageReset(final String companyIdentity, final String userId, final String token)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     logger.debug("reset messages for user");
 

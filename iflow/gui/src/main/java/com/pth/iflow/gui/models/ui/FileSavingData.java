@@ -26,7 +26,7 @@ public class FileSavingData {
   private String         title;
   private String         fileExtention;
   private String         workflowIdentity;
-  private Long           actionId;
+  private String         actionIdentity;
   private String         companyIdentity;
   private String         filePath;
   private String         tempFilePath;
@@ -35,12 +35,12 @@ public class FileSavingData {
     this.fileExtention = fileExtention;
   }
 
-  public FileSavingData(final String title, final String fileExtention, final String workflowIdentity, final Long actionId,
+  public FileSavingData(final String title, final String fileExtention, final String workflowIdentity, final String actionIdentity,
       final String companyIdentity) {
     this.title = title;
     this.fileExtention = fileExtention;
     this.workflowIdentity = workflowIdentity;
-    this.actionId = actionId;
+    this.actionIdentity = actionIdentity;
     this.companyIdentity = companyIdentity;
   }
 
@@ -86,18 +86,12 @@ public class FileSavingData {
     this.workflowIdentity = workflowIdentity == null ? EWorkflowIdentity.NOT_SET.getName() : workflowIdentity;
   }
 
-  /**
-   * @return the actionId
-   */
-  public Long getActionId() {
-    return this.actionId;
+  public String getActionIdentity() {
+    return this.actionIdentity;
   }
 
-  /**
-   * @param actionId the actionId to set
-   */
-  public void setActionId(final Long actionId) {
-    this.actionId = actionId == null ? 0 : actionId;
+  public void setActionIdentity(final String actionIdentity) {
+    this.actionIdentity = actionIdentity;
   }
 
   public String getCompanyIdentity() {
@@ -142,7 +136,8 @@ public class FileSavingData {
    * @return the saving file path preffix
    */
   public String generateSavingFilePathPreffix() {
-    return String.format("%s/%s/%d/%s.%s", this.companyIdentity, this.workflowIdentity, this.actionId, this.title, this.fileExtention);
+    return String.format("%s/%s/%s/%s.%s", this.companyIdentity, this.workflowIdentity, this.actionIdentity, this.title,
+        this.fileExtention);
   }
 
   /**

@@ -17,44 +17,44 @@ import org.springframework.web.context.annotation.SessionScope;
 
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
-import com.pth.iflow.gui.models.GuiCompany;
-import com.pth.iflow.gui.models.GuiCompanyProfile;
-import com.pth.iflow.gui.models.GuiDepartment;
-import com.pth.iflow.gui.models.GuiUser;
-import com.pth.iflow.gui.models.GuiUserGroup;
-import com.pth.iflow.gui.models.GuiWorkflow;
-import com.pth.iflow.gui.models.GuiWorkflowType;
+import com.pth.iflow.gui.models.Company;
+import com.pth.iflow.gui.models.CompanyProfile;
+import com.pth.iflow.gui.models.Department;
+import com.pth.iflow.gui.models.User;
+import com.pth.iflow.gui.models.UserGroup;
+import com.pth.iflow.gui.models.Workflow;
+import com.pth.iflow.gui.models.WorkflowType;
 import com.pth.iflow.gui.services.IUserAccess;
 import com.pth.iflow.gui.services.IWorkflowAccess;
 
 @SessionScope(proxyMode = ScopedProxyMode.TARGET_CLASS)
 @Component
-public class GuiSessionUserInfo {
+public class SessionUserInfo {
 
-  private static final Logger              logger                     = LoggerFactory.getLogger(GuiSessionUserInfo.class);
+  private static final Logger             logger                     = LoggerFactory.getLogger(SessionUserInfo.class);
 
-  public static String                     SESSION_LOGGEDUSERINFO_KEY = "mdm-session-user";
+  public static String                    SESSION_LOGGEDUSERINFO_KEY = "mdm-session-user";
 
-  private Date                             loginTime;
-  private GuiUser                          user;
-  private GuiCompanyProfile                companyProfile;
-  private String                           token;
-  private String                           sessionId;
+  private Date                            loginTime;
+  private User                            user;
+  private CompanyProfile                  companyProfile;
+  private String                          token;
+  private String                          sessionId;
 
-  private final Map<String, GuiWorkflow>   cachedWorkflow             = new HashMap<>();
+  private final Map<String, Workflow>     cachedWorkflow             = new HashMap<>();
 
-  private final Map<String, GuiUser>       companyUsers               = new HashMap<>();
+  private final Map<String, User>         companyUsers               = new HashMap<>();
 
-  private final Map<Long, GuiWorkflowType> comapnyWorkflowTypes       = new HashMap<>();
+  private final Map<String, WorkflowType> comapnyWorkflowTypes       = new HashMap<>();
 
   @Value("${server.session.timeout}")
-  private int                              sessionTimeOut;
+  private int                             sessionTimeOut;
 
   @Autowired
-  IUserAccess                              userAccess;
+  IUserAccess                             userAccess;
 
   @Autowired
-  IWorkflowAccess                          workflowAccess;
+  IWorkflowAccess                         workflowAccess;
 
   public boolean isLoggedIn() {
     return (this.user != null) && (this.companyProfile != null);
@@ -74,11 +74,11 @@ public class GuiSessionUserInfo {
     return diff <= this.sessionTimeOut;
   }
 
-  public GuiSessionUserInfo() {
+  public SessionUserInfo() {
     this.loginTime = new Date();
   }
 
-  public GuiSessionUserInfo(final GuiUser user, final GuiCompanyProfile companyProfile) {
+  public SessionUserInfo(final User user, final CompanyProfile companyProfile) {
     this.user = user;
     this.companyProfile = companyProfile;
     this.loginTime = new Date();
@@ -97,11 +97,11 @@ public class GuiSessionUserInfo {
     this.loginTime = new Date();
   }
 
-  public GuiUser getUser() {
+  public User getUser() {
     return this.user;
   }
 
-  public void setUser(final GuiUser user) {
+  public void setUser(final User user) {
     this.user = user;
   }
 
@@ -109,7 +109,7 @@ public class GuiSessionUserInfo {
     return this.user.getUserTitle();
   }
 
-  public GuiCompanyProfile getCompanyProfile() {
+  public CompanyProfile getCompanyProfile() {
     return this.companyProfile;
   }
 
@@ -121,7 +121,7 @@ public class GuiSessionUserInfo {
     return this.sessionId;
   }
 
-  public void setCompanyProfile(final GuiCompanyProfile companyProfile) {
+  public void setCompanyProfile(final CompanyProfile companyProfile) {
     this.companyProfile = companyProfile;
   }
 
@@ -137,10 +137,10 @@ public class GuiSessionUserInfo {
    * @return the companyUsers
    * @throws IFlowMessageConversionFailureException
    */
-  public Map<Long, GuiUser> getCompanyUsersMap() throws IFlowMessageConversionFailureException {
+  public Map<String, User> getCompanyUsersMap() throws IFlowMessageConversionFailureException {
     if (this.companyUsers.size() == 0) {
       try {
-        final List<GuiUser> userList = this.userAccess.getCompanyUserList(this.companyProfile.getCompany().getIdentity());
+        final List<User> userList = this.userAccess.getCompanyUserList(this.companyProfile.getCompany().getIdentity());
         this.companyUsers.putAll(userList.stream().collect(Collectors.toMap(u -> u.getEmail(), u -> u)));
       } catch (GuiCustomizedException | MalformedURLException e) {
         logger.error("error in reading company user list: {} \n {}", e.getMessage(), e);
@@ -150,8 +150,8 @@ public class GuiSessionUserInfo {
     return this.companyUsers;
   }
 
-  public List<GuiUser> getCompanyUserList() throws IFlowMessageConversionFailureException {
-    final Map<Long, GuiUser> map = this.getCompanyUsersMap();
+  public List<User> getCompanyUserList() throws IFlowMessageConversionFailureException {
+    final Map<String, User> map = this.getCompanyUsersMap();
 
     return map.values().stream().collect(Collectors.toList());
   }
@@ -160,12 +160,12 @@ public class GuiSessionUserInfo {
    * @return the workflowTypeMap
    * @throws IFlowMessageConversionFailureException
    */
-  public Map<Long, GuiWorkflowType> getCompanyWorkflowTypes() throws IFlowMessageConversionFailureException {
+  public Map<String, WorkflowType> getCompanyWorkflowTypes() throws IFlowMessageConversionFailureException {
     if (this.comapnyWorkflowTypes.size() == 0) {
       try {
-        final List<GuiWorkflowType> typeList = this.workflowAccess.readWorkflowTypeList(this.companyProfile.getCompany().getIdentity(),
+        final List<WorkflowType> typeList = this.workflowAccess.readWorkflowTypeList(this.companyProfile.getCompany().getIdentity(),
             this.getToken());
-        this.comapnyWorkflowTypes.putAll(typeList.stream().collect(Collectors.toMap(t -> t.getId(), t -> t)));
+        this.comapnyWorkflowTypes.putAll(typeList.stream().collect(Collectors.toMap(t -> t.getIdentity(), t -> t)));
       } catch (GuiCustomizedException | MalformedURLException e) {
         logger.error("error in reading company workflowtype list: {} \n {}", e.getMessage(), e);
       }
@@ -178,12 +178,12 @@ public class GuiSessionUserInfo {
    * @return the GuiWorkflowType
    * @throws IFlowMessageConversionFailureException
    */
-  public GuiWorkflowType getWorkflowTypeById(final Long workflowTypId) throws IFlowMessageConversionFailureException {
+  public WorkflowType getWorkflowTypeById(final String workflowTypId) throws IFlowMessageConversionFailureException {
     if (this.comapnyWorkflowTypes.size() == 0) {
       try {
-        final List<GuiWorkflowType> typeList = this.workflowAccess.readWorkflowTypeList(this.companyProfile.getCompany().getIdentity(),
+        final List<WorkflowType> typeList = this.workflowAccess.readWorkflowTypeList(this.companyProfile.getCompany().getIdentity(),
             this.getToken());
-        this.comapnyWorkflowTypes.putAll(typeList.stream().collect(Collectors.toMap(t -> t.getId(), t -> t)));
+        this.comapnyWorkflowTypes.putAll(typeList.stream().collect(Collectors.toMap(t -> t.getIdentity(), t -> t)));
       } catch (GuiCustomizedException | MalformedURLException e) {
         logger.error("error in reading company workflowtype: {} \n {}", e.getMessage(), e);
       }
@@ -196,11 +196,11 @@ public class GuiSessionUserInfo {
    * @return the GuiUser
    * @throws IFlowMessageConversionFailureException
    */
-  public GuiUser getUserById(final Long userId) throws IFlowMessageConversionFailureException {
+  public User getUserByIdentity(final String userId) throws IFlowMessageConversionFailureException {
     if (this.companyUsers.size() == 0) {
       try {
-        final List<GuiUser> userList = this.userAccess.getCompanyUserList(this.companyProfile.getCompany().getIdentity());
-        this.companyUsers.putAll(userList.stream().collect(Collectors.toMap(u -> u.getId(), u -> u)));
+        final List<User> userList = this.userAccess.getCompanyUserList(this.companyProfile.getCompany().getIdentity());
+        this.companyUsers.putAll(userList.stream().collect(Collectors.toMap(u -> u.getIdentity(), u -> u)));
       } catch (GuiCustomizedException | MalformedURLException e) {
         logger.error("error in reading user list: {} \n {}", e.getMessage(), e);
       }
@@ -209,9 +209,9 @@ public class GuiSessionUserInfo {
     return this.companyUsers.containsKey(userId) ? this.companyUsers.get(userId) : null;
   }
 
-  // Map<Long, GuiWorkflow> cachedWorkflow
+  // Map<String, GuiWorkflow> cachedWorkflow
 
-  public void addCachedWorkflow(final GuiWorkflow workflow) {
+  public void addCachedWorkflow(final Workflow workflow) {
     this.cachedWorkflow.put(workflow.getIdentity(), workflow);
   }
 
@@ -219,19 +219,19 @@ public class GuiSessionUserInfo {
     return this.cachedWorkflow.containsKey(identity);
   }
 
-  public GuiWorkflow getCachedWorkflow(final String identity) {
+  public Workflow getCachedWorkflow(final String identity) {
     return this.cachedWorkflow.get(identity);
   }
 
-  public GuiCompany getCompany() {
+  public Company getCompany() {
     return this.companyProfile.getCompany();
   }
 
-  public List<GuiDepartment> getCompanyDepartments() {
+  public List<Department> getCompanyDepartments() {
     return this.companyProfile.getDepartments();
   }
 
-  public List<GuiUserGroup> getCompanyUserGroups() {
+  public List<UserGroup> getCompanyUserGroups() {
     return this.companyProfile.getUserGroups();
   }
 

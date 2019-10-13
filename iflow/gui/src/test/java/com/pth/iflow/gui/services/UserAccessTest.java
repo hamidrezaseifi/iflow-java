@@ -23,9 +23,9 @@ import com.pth.iflow.common.edo.models.UserListEdo;
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.gui.TestDataProducer;
 import com.pth.iflow.gui.configurations.GuiConfiguration;
-import com.pth.iflow.gui.models.GuiUser;
+import com.pth.iflow.gui.models.User;
 import com.pth.iflow.gui.models.mapper.GuiModelEdoMapper;
-import com.pth.iflow.gui.models.ui.GuiSessionUserInfo;
+import com.pth.iflow.gui.models.ui.SessionUserInfo;
 import com.pth.iflow.gui.services.impl.UserAccess;
 
 @RunWith(SpringRunner.class)
@@ -45,7 +45,7 @@ public class UserAccessTest extends TestDataProducer {
   private GuiConfiguration.ProfileModuleAccessConfig  profileModuleAccessConfig;
 
   @MockBean
-  private GuiSessionUserInfo                          sessionUserInfo;
+  private SessionUserInfo                          sessionUserInfo;
 
   private URI                                         testUri;
 
@@ -68,7 +68,7 @@ public class UserAccessTest extends TestDataProducer {
     when(this.workflowModuleAccessConfig.getSearchWorkflowUri()).thenReturn(this.testUri);
 
     when(this.sessionUserInfo.getToken()).thenReturn(this.validTocken);
-    when(this.sessionUserInfo.getUserById(any(Long.class))).thenReturn(this.getTestUser());
+    when(this.sessionUserInfo.getUserByIdentity(any(Long.class))).thenReturn(this.getTestUser());
     when(this.sessionUserInfo.getWorkflowTypeById(any(Long.class))).thenReturn(this.getTestGuiWorkflowType());
 
     this.userAccess = new UserAccess(this.restTemplate, this.profileModuleAccessConfig, this.sessionUserInfo);
@@ -83,12 +83,12 @@ public class UserAccessTest extends TestDataProducer {
   @Ignore
   public void testReadUser() throws Exception {
 
-    final GuiUser user = this.getTestUser();
+    final User user = this.getTestUser();
 
     when(this.restTemplate.callRestGet(any(URI.class), any(EModule.class), eq(UserEdo.class), any(String.class), any(boolean.class)))
         .thenReturn(GuiModelEdoMapper.toEdo(user));
 
-    final GuiUser resUser = this.userAccess.readUser(1L);
+    final User resUser = this.userAccess.readUser(1L);
 
     Assert.assertNotNull("Result user is not null!", resUser);
     Assert.assertEquals("Result user has id 1!", resUser.getId(), user.getId());
@@ -101,12 +101,12 @@ public class UserAccessTest extends TestDataProducer {
   @Ignore
   public void testSaveUser() throws Exception {
 
-    final GuiUser user = this.getTestUser();
+    final User user = this.getTestUser();
 
     when(this.restTemplate.callRestPost(any(URI.class), any(EModule.class), any(UserEdo.class), eq(UserEdo.class), any(String.class),
         any(boolean.class))).thenReturn(GuiModelEdoMapper.toEdo(user));
 
-    final GuiUser resUser = this.userAccess.saveUser(user);
+    final User resUser = this.userAccess.saveUser(user);
 
     Assert.assertNotNull("Result user is not null!", resUser);
     Assert.assertEquals("Result user has id 1!", resUser.getId(), user.getId());
@@ -117,13 +117,13 @@ public class UserAccessTest extends TestDataProducer {
 
   @Test
   public void testGetCompanyUserList() throws Exception {
-    final List<GuiUser> userList = this.getTestUserList();
+    final List<User> userList = this.getTestUserList();
     final UserListEdo listEdo = new UserListEdo(GuiModelEdoMapper.toUserEdoList(userList));
 
     when(this.restTemplate.callRestGet(any(URI.class), any(EModule.class), eq(UserListEdo.class), any(String.class),
         any(boolean.class))).thenReturn(listEdo);
 
-    final List<GuiUser> resUserList = this.userAccess.getCompanyUserList("test-company");
+    final List<User> resUserList = this.userAccess.getCompanyUserList("test-company");
 
     Assert.assertNotNull("Result result-list is not null!", resUserList);
     Assert.assertEquals("Result result-list has the same size as expected!", resUserList.size(), userList.size());

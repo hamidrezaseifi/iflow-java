@@ -18,11 +18,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.pth.iflow.gui.TestDataProducer;
-import com.pth.iflow.gui.models.GuiWorkflow;
-import com.pth.iflow.gui.models.GuiWorkflowSaveRequest;
-import com.pth.iflow.gui.models.GuiWorkflowSearchFilter;
-import com.pth.iflow.gui.models.GuiWorkflowType;
-import com.pth.iflow.gui.models.ui.GuiSessionUserInfo;
+import com.pth.iflow.gui.models.Workflow;
+import com.pth.iflow.gui.models.WorkflowSaveRequest;
+import com.pth.iflow.gui.models.WorkflowSearchFilter;
+import com.pth.iflow.gui.models.WorkflowType;
+import com.pth.iflow.gui.models.ui.SessionUserInfo;
 import com.pth.iflow.gui.services.impl.WorkflowHandler;
 
 @RunWith(SpringRunner.class)
@@ -36,7 +36,7 @@ public class WorkflowHandlerTest extends TestDataProducer {
   private IWorkflowAccess    workflowAccess;
 
   @MockBean
-  private GuiSessionUserInfo sessionUserInfo;
+  private SessionUserInfo sessionUserInfo;
 
   @MockBean
   private IUploadFileManager uploadFileManager;
@@ -55,7 +55,7 @@ public class WorkflowHandlerTest extends TestDataProducer {
     this.validTocken = "validTocken";
 
     when(this.sessionUserInfo.getToken()).thenReturn(this.validTocken);
-    when(this.sessionUserInfo.getUserById(any(Long.class))).thenReturn(this.getTestUser());
+    when(this.sessionUserInfo.getUserByIdentity(any(Long.class))).thenReturn(this.getTestUser());
     when(this.sessionUserInfo.getUser()).thenReturn(this.getTestUser());
     when(this.sessionUserInfo.getWorkflowTypeById(any(Long.class))).thenReturn(this.getTestGuiWorkflowType());
     when(this.messagesHelper.get(any(String.class))).thenReturn("");
@@ -71,11 +71,11 @@ public class WorkflowHandlerTest extends TestDataProducer {
   @Test
   public void testReadWorkflow() throws Exception {
 
-    final GuiWorkflow workflow = this.getTestGuiWorkflow(1L);
+    final Workflow workflow = this.getTestGuiWorkflow(1L);
 
     when(this.workflowAccess.readWorkflow(any(String.class), any(String.class))).thenReturn(workflow);
 
-    final GuiWorkflow resWorkflow = this.workflowHandler.readWorkflow(workflow.getIdentity());
+    final Workflow resWorkflow = this.workflowHandler.readWorkflow(workflow.getIdentity());
 
     Assert.assertNotNull("Result workflow is not null!", resWorkflow);
     Assert.assertEquals("Result workflow has id 1!", resWorkflow.getIdentity(), workflow.getIdentity());
@@ -86,13 +86,13 @@ public class WorkflowHandlerTest extends TestDataProducer {
   @Test
   public void testCreateWorkflow() throws Exception {
 
-    final GuiWorkflowSaveRequest createRequest = this.getTestGuiWorkflowSaveRequest();
+    final WorkflowSaveRequest createRequest = this.getTestGuiWorkflowSaveRequest();
 
-    final List<GuiWorkflow> workflowList = this.getTestGuiWorkflowList();
+    final List<Workflow> workflowList = this.getTestGuiWorkflowList();
 
-    when(this.workflowAccess.createWorkflow(any(GuiWorkflowSaveRequest.class), any(String.class))).thenReturn(workflowList);
+    when(this.workflowAccess.createWorkflow(any(WorkflowSaveRequest.class), any(String.class))).thenReturn(workflowList);
 
-    final List<GuiWorkflow> resWorkflowList = this.workflowHandler.createWorkflow(createRequest, this.mockedSession);
+    final List<Workflow> resWorkflowList = this.workflowHandler.createWorkflow(createRequest, this.mockedSession);
 
     Assert.assertNotNull("Result result-list is not null!", resWorkflowList);
     Assert.assertEquals("Result result-list has the same size as expected!", resWorkflowList.size(), workflowList.size());
@@ -101,11 +101,11 @@ public class WorkflowHandlerTest extends TestDataProducer {
 
   @Test
   public void testSaveWorkflow() throws Exception {
-    final GuiWorkflow workflow = this.getTestGuiWorkflow(1L);
+    final Workflow workflow = this.getTestGuiWorkflow(1L);
 
-    when(this.workflowAccess.saveWorkflow(any(GuiWorkflowSaveRequest.class), any(String.class))).thenReturn(workflow);
+    when(this.workflowAccess.saveWorkflow(any(WorkflowSaveRequest.class), any(String.class))).thenReturn(workflow);
 
-    final GuiWorkflow resWorkflow = this.workflowHandler.saveWorkflow(workflow, this.mockedSession);
+    final Workflow resWorkflow = this.workflowHandler.saveWorkflow(workflow, this.mockedSession);
 
     Assert.assertNotNull("Result workflow is not null!", resWorkflow);
     Assert.assertEquals("Result workflow has id 1!", resWorkflow.getIdentity(), workflow.getIdentity());
@@ -116,11 +116,11 @@ public class WorkflowHandlerTest extends TestDataProducer {
   @Test
   public void testReadWorkflowTypeList() throws Exception {
 
-    final List<GuiWorkflowType> workflowTypeList = this.getTestGuiWorkflowTypeList();
+    final List<WorkflowType> workflowTypeList = this.getTestGuiWorkflowTypeList();
 
     when(this.workflowAccess.readWorkflowTypeList(any(String.class), any(String.class))).thenReturn(workflowTypeList);
 
-    final List<GuiWorkflowType> resWorkflowList = this.workflowHandler.readWorkflowTypeList("test-company");
+    final List<WorkflowType> resWorkflowList = this.workflowHandler.readWorkflowTypeList("test-company");
 
     Assert.assertNotNull("Result result-list is not null!", resWorkflowList);
     Assert.assertEquals("Result result-list has the same size as expected!", resWorkflowList.size(), workflowTypeList.size());
@@ -129,13 +129,13 @@ public class WorkflowHandlerTest extends TestDataProducer {
 
   @Test
   public void testSearchWorkflow() throws Exception {
-    final GuiWorkflowSearchFilter searchFilter = this.getTestGuiWorkflowSearchFilter();
+    final WorkflowSearchFilter searchFilter = this.getTestGuiWorkflowSearchFilter();
 
-    final List<GuiWorkflow> workflowList = this.getTestGuiWorkflowList();
+    final List<Workflow> workflowList = this.getTestGuiWorkflowList();
 
-    when(this.workflowAccess.searchWorkflow(any(GuiWorkflowSearchFilter.class), any(String.class))).thenReturn(workflowList);
+    when(this.workflowAccess.searchWorkflow(any(WorkflowSearchFilter.class), any(String.class))).thenReturn(workflowList);
 
-    final List<GuiWorkflow> resWorkflowList = this.workflowHandler.searchWorkflow(searchFilter);
+    final List<Workflow> resWorkflowList = this.workflowHandler.searchWorkflow(searchFilter);
 
     Assert.assertNotNull("Result result-list is not null!", resWorkflowList);
     Assert.assertEquals("Result result-list has the same size as expected!", resWorkflowList.size(), workflowList.size());

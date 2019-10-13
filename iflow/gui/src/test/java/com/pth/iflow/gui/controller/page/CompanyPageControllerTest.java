@@ -25,8 +25,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.pth.iflow.gui.TestDataProducer;
-import com.pth.iflow.gui.models.GuiWorkflowType;
-import com.pth.iflow.gui.models.ui.GuiSessionUserInfo;
+import com.pth.iflow.gui.models.WorkflowType;
+import com.pth.iflow.gui.models.ui.SessionUserInfo;
 import com.pth.iflow.gui.services.IWorkflowHandler;
 
 @RunWith(SpringRunner.class)
@@ -36,13 +36,13 @@ public class CompanyPageControllerTest extends TestDataProducer {
 
   private MockMvc               mockMvc;
 
-  private GuiSessionUserInfo    userAdmin;
+  private SessionUserInfo    userAdmin;
 
   @Autowired
   private WebApplicationContext context;
 
   @MockBean
-  private GuiSessionUserInfo    sessionUserInfo;
+  private SessionUserInfo    sessionUserInfo;
 
   @MockBean
   private IWorkflowHandler      workflowHandler;
@@ -67,7 +67,7 @@ public class CompanyPageControllerTest extends TestDataProducer {
   public void testShowCompanyIndex() throws Exception {
 
     final MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get("/companies/index")
-        .sessionAttr(GuiSessionUserInfo.SESSION_LOGGEDUSERINFO_KEY, this.userAdmin);
+        .sessionAttr(SessionUserInfo.SESSION_LOGGEDUSERINFO_KEY, this.userAdmin);
 
     this.mockMvc.perform(builder).andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.TEXT_HTML_VALUE + ";charset=UTF-8"));
@@ -78,12 +78,12 @@ public class CompanyPageControllerTest extends TestDataProducer {
   @WithMockUser(value = "admin", roles = "ADMIN")
   public void testShowWorkflowTypeList() throws Exception {
 
-    final List<GuiWorkflowType> workflowTypeList = this.getTestGuiWorkflowTypeList();
+    final List<WorkflowType> workflowTypeList = this.getTestGuiWorkflowTypeList();
 
     Mockito.when(this.workflowHandler.readWorkflowTypeList(ArgumentMatchers.any(String.class))).thenReturn(workflowTypeList);
 
     final MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get("/companies/workflowtype")
-        .sessionAttr(GuiSessionUserInfo.SESSION_LOGGEDUSERINFO_KEY, this.userAdmin);
+        .sessionAttr(SessionUserInfo.SESSION_LOGGEDUSERINFO_KEY, this.userAdmin);
 
     this.mockMvc.perform(builder).andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.TEXT_HTML_VALUE + ";charset=UTF-8"));

@@ -21,7 +21,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.pth.iflow.gui.TestDataProducer;
-import com.pth.iflow.gui.models.ui.GuiSessionUserInfo;
+import com.pth.iflow.gui.models.ui.SessionUserInfo;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -30,13 +30,13 @@ public class WorkflowPageControllerTest extends TestDataProducer {
 
   private MockMvc mockMvc;
 
-  private GuiSessionUserInfo userAdmin;
+  private SessionUserInfo userAdmin;
 
   @Autowired
   private WebApplicationContext context;
 
   @MockBean
-  private GuiSessionUserInfo sessionUserInfo;
+  private SessionUserInfo sessionUserInfo;
 
   @Before
   public void setUp() throws Exception {
@@ -56,7 +56,7 @@ public class WorkflowPageControllerTest extends TestDataProducer {
   public void testShowWorkflowList() throws Exception {
 
     final MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get("/workflow/list")
-                                                                        .sessionAttr(GuiSessionUserInfo.SESSION_LOGGEDUSERINFO_KEY,
+                                                                        .sessionAttr(SessionUserInfo.SESSION_LOGGEDUSERINFO_KEY,
                                                                                      this.userAdmin);
 
     this.mockMvc.perform(builder)
@@ -69,7 +69,7 @@ public class WorkflowPageControllerTest extends TestDataProducer {
   public void testShowWorkflowCreate() throws Exception {
 
     final MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get("/workflow/create")
-                                                                        .sessionAttr(GuiSessionUserInfo.SESSION_LOGGEDUSERINFO_KEY,
+                                                                        .sessionAttr(SessionUserInfo.SESSION_LOGGEDUSERINFO_KEY,
                                                                                      this.userAdmin);
 
     this.mockMvc.perform(builder)
@@ -82,7 +82,7 @@ public class WorkflowPageControllerTest extends TestDataProducer {
   public void testShowWorkflowEdit() throws Exception {
 
     final MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get("/workflow/create")
-                                                                        .sessionAttr(GuiSessionUserInfo.SESSION_LOGGEDUSERINFO_KEY,
+                                                                        .sessionAttr(SessionUserInfo.SESSION_LOGGEDUSERINFO_KEY,
                                                                                      this.userAdmin);
 
     this.mockMvc.perform(builder)

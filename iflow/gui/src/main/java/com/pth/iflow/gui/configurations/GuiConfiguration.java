@@ -108,12 +108,12 @@ public class GuiConfiguration {
       return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.READ_USERLIST_BY_COMPANYID_URIBUILDER(companyIdentity));
     }
 
-    public URI getReadUserWorkflowMessageListUri(final String companyIdentity, final Long userId) throws MalformedURLException {
+    public URI getReadUserWorkflowMessageListUri(final String companyIdentity, final String userId) throws MalformedURLException {
       return this.baseProfileBaseUri
           .resolve(IflowRestPaths.ProfileModule.READ_CACHDATA_USER_WORKFLOWMESSAGELIST(companyIdentity, userId));
     }
 
-    public URI getCalUserWorkflowMessageResetUri(final String companyIdentity, final Long userId) throws MalformedURLException {
+    public URI getCalUserWorkflowMessageResetUri(final String companyIdentity, final String userId) throws MalformedURLException {
       return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.CAL_CACHDATA_USER_DATARESET(companyIdentity, userId));
     }
 

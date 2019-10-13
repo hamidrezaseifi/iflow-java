@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import com.pth.iflow.common.enums.EAssignType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
-import com.pth.iflow.gui.models.GuiWorkflow;
-import com.pth.iflow.gui.models.GuiWorkflowFile;
+import com.pth.iflow.gui.models.Workflow;
+import com.pth.iflow.gui.models.WorkflowFile;
 import com.pth.iflow.gui.models.ui.FileSavingData;
 import com.pth.iflow.gui.services.IUploadFileManager;
 import com.pth.iflow.gui.services.IWorkflowHandler;
@@ -59,7 +59,7 @@ public class WorkflowPageController extends GuiPageControllerBase {
   public String showWorkflowEdit(final Model model, @PathVariable(required = false) final String workflowIdentity,
       final HttpServletResponse response) throws GuiCustomizedException, IOException, IFlowMessageConversionFailureException {
 
-    final GuiWorkflow workflow = this.workflowHandler.readWorkflow(workflowIdentity);
+    final Workflow workflow = this.workflowHandler.readWorkflow(workflowIdentity);
 
     model.addAttribute("UserAssign", EAssignType.USER.getName());
     model.addAttribute("DepartmentAssign", EAssignType.DEPARTMENT.getName());
@@ -75,7 +75,7 @@ public class WorkflowPageController extends GuiPageControllerBase {
       @PathVariable(required = true) final String workflowIdentity, final HttpServletResponse response)
       throws GuiCustomizedException, IOException, IFlowMessageConversionFailureException {
 
-    final GuiWorkflowFile wfile = this.workflowHandler.readWorkflowFile(workflowIdentity, fileIdentity);
+    final WorkflowFile wfile = this.workflowHandler.readWorkflowFile(workflowIdentity, fileIdentity);
 
     final FileSavingData fData = new FileSavingData(wfile.getTitle(), wfile.getExtention(), workflowIdentity, 0L,
         this.getLoggedCompany().getIdentity());
@@ -95,7 +95,7 @@ public class WorkflowPageController extends GuiPageControllerBase {
       @PathVariable(required = true) final String fileIdentity, @PathVariable(required = true) final String workflowIdentity,
       final HttpServletResponse response) throws GuiCustomizedException, IOException, IFlowMessageConversionFailureException {
 
-    final GuiWorkflowFile wfile = this.workflowHandler.readWorkflowFile(workflowIdentity, fileIdentity);
+    final WorkflowFile wfile = this.workflowHandler.readWorkflowFile(workflowIdentity, fileIdentity);
 
     final FileSavingData fData = new FileSavingData(wfile.getTitle(), wfile.getExtention(), workflowIdentity, 0L,
         this.getLoggedCompany().getIdentity());

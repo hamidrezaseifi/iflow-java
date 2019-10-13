@@ -4,27 +4,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.pth.iflow.common.edo.models.helper.IdentityModel;
 import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
 
-public class GuiWorkflowType {
+public class WorkflowType extends IdentityModel {
 
-  private String                          identity;
-  private String                          companyIdentity;
-  private Long                            baseTypeId;
-  private String                          title;
-  private String                          comments;
-  private Integer                         status;
-  private Boolean                         sendToController;
-  private EWorkflowTypeAssignType         assignType;
-  private Boolean                         increaseStepAutomatic;
-  private Boolean                         allowAssign;
-  private Integer                         version;
-  private final List<GuiWorkflowTypeStep> steps = new ArrayList<>();
+  private String                       identity;
+  private String                       companyIdentity;
+  private String                       baseTypeIdentity;
+  private String                       title;
+  private String                       comments;
+  private Integer                      status;
+  private Boolean                      sendToController;
+  private EWorkflowTypeAssignType      assignType;
+  private Boolean                      increaseStepAutomatic;
+  private Boolean                      allowAssign;
+  private Integer                      version;
+  private final List<WorkflowTypeStep> steps = new ArrayList<>();
 
+  @Override
   public String getIdentity() {
     return this.identity;
   }
 
+  @Override
   public void setIdentity(final String identity) {
     this.identity = identity;
   }
@@ -37,18 +40,12 @@ public class GuiWorkflowType {
     this.companyIdentity = companyIdentity;
   }
 
-  /**
-   * @return the baseTypeId
-   */
-  public Long getBaseTypeId() {
-    return this.baseTypeId;
+  public String getBaseTypeIdentity() {
+    return this.baseTypeIdentity;
   }
 
-  /**
-   * @param baseTypeId the baseTypeId to set
-   */
-  public void setBaseTypeId(final Long baseTypeId) {
-    this.baseTypeId = baseTypeId;
+  public void setBaseTypeIdentity(final String baseTypeIdentity) {
+    this.baseTypeIdentity = baseTypeIdentity;
   }
 
   public String getTitle() {
@@ -125,18 +122,18 @@ public class GuiWorkflowType {
     this.version = version;
   }
 
-  public List<GuiWorkflowTypeStep> getSteps() {
+  public List<WorkflowTypeStep> getSteps() {
     return this.steps;
   }
 
-  public void setSteps(final List<GuiWorkflowTypeStep> steps) {
+  public void setSteps(final List<WorkflowTypeStep> steps) {
     this.steps.clear();
     if (steps != null) {
       this.steps.addAll(steps);
     }
   }
 
-  public void addStep(final GuiWorkflowTypeStep stepId) {
+  public void addStep(final WorkflowTypeStep stepId) {
     this.steps.add(stepId);
   }
 

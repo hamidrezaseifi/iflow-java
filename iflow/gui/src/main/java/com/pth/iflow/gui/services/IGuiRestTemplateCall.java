@@ -9,7 +9,7 @@ import com.pth.iflow.common.enums.EModule;
  * @author rezasei
  *
  */
-public interface IBackendRestTemplateCall {
+public interface IGuiRestTemplateCall {
   
   <I, O> O callRestPost(final URL url, String token, final EModule service, final I edo, final Class<O> response, boolean throwError)
       throws GuiCustomizedException;

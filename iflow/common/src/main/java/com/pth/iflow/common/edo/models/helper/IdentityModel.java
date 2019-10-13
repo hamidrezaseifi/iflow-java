@@ -11,14 +11,14 @@ public abstract class IdentityModel {
   abstract public void setIdentity(final String identity);
 
   public boolean isNew() {
-    return this instanceof IdentityModel && this.isIdentityNew(this.getIdentity());
+    return this instanceof IdentityModel && IdentityModel.isIdentityNew(this.getIdentity());
   }
 
   public void setIdentityToNew() {
     this.setIdentity("");
   }
 
-  public boolean isIdentityNew(final String identity) {
+  public static boolean isIdentityNew(final String identity) {
     return EWorkflowIdentity.isNotSet(identity);
   }
 

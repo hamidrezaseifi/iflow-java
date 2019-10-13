@@ -2,7 +2,7 @@ package com.pth.iflow.gui.models;
 
 import com.pth.iflow.common.edo.models.UserAuthenticationRequestEdo;
 
-public class GuiUserAuthenticationRequest {
+public class UserAuthenticationRequest {
 
   private String email;
 
@@ -43,8 +43,8 @@ public class GuiUserAuthenticationRequest {
     return edo;
   }
 
-  public static GuiUserAuthenticationRequest fromEdo1(final UserAuthenticationRequestEdo edo) {
-    final GuiUserAuthenticationRequest model = new GuiUserAuthenticationRequest();
+  public static UserAuthenticationRequest fromEdo1(final UserAuthenticationRequestEdo edo) {
+    final UserAuthenticationRequest model = new UserAuthenticationRequest();
     model.setCompanyIdentity(edo.getCompanyIdentity());
     model.setEmail(edo.getEmail());
     model.setPassword(edo.getPassword());

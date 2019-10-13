@@ -2,117 +2,121 @@ package com.pth.iflow.gui.models;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.pth.iflow.common.edo.models.helper.IdentityModel;
 import com.pth.iflow.common.enums.EWorkflowIdentity;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 
 @JsonIgnoreProperties(value = { "isAssignTo" })
-public class GuiWorkflow {
+public class Workflow extends IdentityModel {
 
-  private String              identity;
-  private Long                workflowTypeId;
-  private GuiWorkflowType     workflowType;
-  private GuiWorkflowTypeStep currentStep;
-  private Long                currentStepId;
-  private Long                controller;
-  private GuiUser             controllerUser;
-  private Long                createdBy;
-  private GuiUser             createdByUser;
-  private String              comments;
-  private EWorkflowStatus     status;
-  private Integer             version;
-  private Long                currentUserId;
+  private String                     identity;
+  private String                     workflowTypeIdentity;
+  private WorkflowType               workflowType;
+  private WorkflowTypeStep           currentStep;
+  private String                     currentStepIdentity;
+  private String                     controllerIdentity;
+  private User                       controllerUser;
+  private String                     createdByIdentity;
+  private User                       createdByUser;
+  private String                     comments;
+  private EWorkflowStatus            status;
+  private Integer                    version;
+  private String                     currentUserIdentity;
 
-  private final List<GuiWorkflowFile>   files   = new ArrayList<>();
-  private final List<GuiWorkflowAction> actions = new ArrayList<>();
+  private final List<WorkflowFile>   files   = new ArrayList<>();
+  private final List<WorkflowAction> actions = new ArrayList<>();
 
+  @Override
   public String getIdentity() {
-    return identity;
+    return this.identity;
   }
 
+  @Override
   public void setIdentity(final String identity) {
     this.identity = identity;
   }
 
-  public Long getWorkflowTypeId() {
-    return this.workflowTypeId;
+  public String getWorkflowTypeIdentity() {
+    return this.workflowTypeIdentity;
   }
 
-  public void setWorkflowTypeId(final Long workflowTypeId) {
-    this.workflowTypeId = workflowTypeId;
+  public void setWorkflowTypeIdentity(final String workflowTypeIdentity) {
+    this.workflowTypeIdentity = workflowTypeIdentity;
   }
 
   /**
    * @return the workflowType
    */
-  public GuiWorkflowType getWorkflowType() {
+  public WorkflowType getWorkflowType() {
     return this.workflowType;
   }
 
   /**
    * @param workflowType the workflowType to set
    */
-  public void setWorkflowType(final GuiWorkflowType workflowType) {
+  public void setWorkflowType(final WorkflowType workflowType) {
     this.workflowType = workflowType;
   }
 
-  public GuiWorkflowTypeStep getCurrentStep() {
+  public WorkflowTypeStep getCurrentStep() {
     return this.currentStep;
   }
 
-  public void setCurrentStep(final GuiWorkflowTypeStep currentStep) {
+  public void setCurrentStep(final WorkflowTypeStep currentStep) {
     this.currentStep = currentStep;
   }
 
-  public Long getCurrentStepId() {
-    return this.currentStepId;
+  public String getCurrentStepIdentity() {
+    return this.currentStepIdentity;
   }
 
-  public void setCurrentStepId(final Long currentStepId) {
-    this.currentStepId = currentStepId;
+  public void setCurrentStepIdentity(final String currentStepIdentity) {
+    this.currentStepIdentity = currentStepIdentity;
   }
 
-  public Long getController() {
-    return this.controller;
+  public String getControllerIdentity() {
+    return this.controllerIdentity;
   }
 
-  public void setController(final Long controller) {
-    this.controller = controller;
+  public void setControllerIdentity(final String controllerIdentity) {
+    this.controllerIdentity = controllerIdentity;
   }
 
   /**
    * @return the controllerUser
    */
-  public GuiUser getControllerUser() {
+  public User getControllerUser() {
     return this.controllerUser;
   }
 
   /**
    * @param controllerUser the controllerUser to set
    */
-  public void setControllerUser(final GuiUser controllerUser) {
+  public void setControllerUser(final User controllerUser) {
     this.controllerUser = controllerUser;
   }
 
-  public Long getCreatedBy() {
-    return this.createdBy;
+  public String getCreatedByIdentity() {
+    return this.createdByIdentity;
   }
 
-  public void setCreatedBy(final Long createdBy) {
-    this.createdBy = createdBy;
+  public void setCreatedByIdentity(final String createdByIdentity) {
+    this.createdByIdentity = createdByIdentity;
   }
 
   /**
    * @return the createdByUser
    */
-  public GuiUser getCreatedByUser() {
+  public User getCreatedByUser() {
     return this.createdByUser;
   }
 
   /**
    * @param createdByUser the createdByUser to set
    */
-  public void setCreatedByUser(final GuiUser createdByUser) {
+  public void setCreatedByUser(final User createdByUser) {
     this.createdByUser = createdByUser;
   }
 
@@ -148,13 +152,13 @@ public class GuiWorkflow {
     this.version = version;
   }
 
-  public List<GuiWorkflowFile> getFiles() {
+  public List<WorkflowFile> getFiles() {
     return this.files;
   }
 
-  public GuiWorkflowFile getFileByIdentity(final String fileIdentity) {
+  public WorkflowFile getFileByIdentity(final String fileIdentity) {
 
-    for (final GuiWorkflowFile file : this.files) {
+    for (final WorkflowFile file : this.files) {
       if (file.getIdentity().equals(fileIdentity)) {
         return file;
       }
@@ -162,23 +166,24 @@ public class GuiWorkflow {
     return null;
   }
 
-  public void setFiles(final List<GuiWorkflowFile> files) {
+  public void setFiles(final List<WorkflowFile> files) {
     this.files.clear();
     if (files != null) {
       this.files.addAll(files);
     }
   }
 
-  public void addFile(final GuiWorkflowFile file) {
+  public void addFile(final WorkflowFile file) {
     this.files.add(file);
   }
 
-  public GuiWorkflowFile addNewFile(final String path, final Long userId, final String title, final String extention, final String comments) {
-    final GuiWorkflowFile wfile = new GuiWorkflowFile();
+  public WorkflowFile addNewFile(final String path, final String userId, final String title, final String extention,
+      final String comments) {
+    final WorkflowFile wfile = new WorkflowFile();
     wfile.setActiveFilePath(path);
     wfile.setActiveFileVersion(1);
     wfile.setComments(comments);
-    wfile.setCreatedBy(userId);
+    wfile.setCreatedByIdentity(userId);
     wfile.setExtention(extention);
 
     wfile.setStatus(1);
@@ -191,46 +196,50 @@ public class GuiWorkflow {
     return wfile;
   }
 
-  public List<GuiWorkflowAction> getActions() {
+  public List<WorkflowAction> getActions() {
     return this.actions;
   }
 
-  public void setActions(final List<GuiWorkflowAction> actions) {
+  public void setActions(final List<WorkflowAction> actions) {
     this.actions.clear();
     if (actions != null) {
       this.actions.addAll(actions);
     }
   }
 
-  public void addAction(final GuiWorkflowAction action) {
+  public void addAction(final WorkflowAction action) {
     this.actions.add(action);
   }
 
-  public void setCurrentUserId(final Long currentUserId) {
-    this.currentUserId = currentUserId;
+  public String getCurrentUserIdentity() {
+    return this.currentUserIdentity;
   }
 
-  public boolean isAfterStep(final GuiWorkflow other) {
+  public void setCurrentUserIdentity(final String currentUserIdentity) {
+    this.currentUserIdentity = currentUserIdentity;
+  }
+
+  public boolean isAfterStep(final Workflow other) {
     return this.currentStep.isAfterStep(other.getCurrentStep());
   }
 
-  public boolean isBeforeStep(final GuiWorkflow other) {
+  public boolean isBeforeStep(final Workflow other) {
     return this.currentStep.isBeforeStep(other.getCurrentStep());
   }
 
-  public boolean isTheSameStep(final GuiWorkflow other) {
+  public boolean isTheSameStep(final Workflow other) {
     return this.currentStep.isTheSameStep(other.getCurrentStep());
   }
 
-  public boolean isAfter(final GuiWorkflowTypeStep step) {
+  public boolean isAfter(final WorkflowTypeStep step) {
     return this.currentStep.isAfterStep(step);
   }
 
-  public boolean isBefore(final GuiWorkflowTypeStep step) {
+  public boolean isBefore(final WorkflowTypeStep step) {
     return this.currentStep.isBeforeStep(step);
   }
 
-  public boolean isTheSame(final GuiWorkflowTypeStep step) {
+  public boolean isTheSame(final WorkflowTypeStep step) {
     return this.currentStep.isTheSameStep(step);
   }
 
@@ -243,7 +252,7 @@ public class GuiWorkflow {
   }
 
   public boolean isMeAssigned() {
-    return this.isAssigned() && (this.getHasActiveAction() && this.getActiveAction().isAssignTo(this.currentUserId));
+    return this.isAssigned() && (this.getHasActiveAction() && this.getActiveAction().isAssignTo(this.currentUserIdentity));
   }
 
   public boolean isNotAssigned() {
@@ -255,8 +264,8 @@ public class GuiWorkflow {
     return this.getActiveAction() != null;
   }
 
-  public GuiWorkflowAction getActiveAction() {
-    for (final GuiWorkflowAction action : this.getActions()) {
+  public WorkflowAction getActiveAction() {
+    for (final WorkflowAction action : this.getActions()) {
       if (action.getIsActive() == true) {
         return action;
       }
@@ -287,14 +296,14 @@ public class GuiWorkflow {
     return "";
   }
 
-  public static GuiWorkflow generateInitial(final Long creatorId) {
-    final GuiWorkflow newWorkflow = new GuiWorkflow();
+  public static Workflow generateInitial(final String creatorId) {
+    final Workflow newWorkflow = new Workflow();
     newWorkflow.setStatus(EWorkflowStatus.INITIALIZE);
-    newWorkflow.setCreatedBy(creatorId);
-    newWorkflow.setController(0L);
-    newWorkflow.setCurrentStepId(0L);
+    newWorkflow.setCreatedByIdentity(creatorId);
+    newWorkflow.setControllerIdentity("");
+    newWorkflow.setCurrentStepIdentity("");
     newWorkflow.setVersion(0);
-    newWorkflow.setWorkflowTypeId(0L);
+    newWorkflow.setWorkflowTypeIdentity("");
     newWorkflow.setComments("");
     newWorkflow.setIdentity(EWorkflowIdentity.NOT_SET.getName());
 

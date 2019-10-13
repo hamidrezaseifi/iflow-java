@@ -3,6 +3,7 @@ package com.pth.iflow.gui.models;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -12,11 +13,12 @@ import org.springframework.security.core.authority.AuthorityUtils;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.pth.iflow.common.edo.models.helper.IdentityModel;
 import com.pth.iflow.common.enums.EUserStatus;
 import com.pth.iflow.gui.models.ui.enums.EUiUserRole;
 
 @JsonIgnoreProperties(value = { "authorities", "enabled", "roles", })
-public class GuiUser {
+public class User extends IdentityModel {
 
   private String                  companyIdentity;
   private String                  email;
@@ -28,10 +30,10 @@ public class GuiUser {
   private Integer                 version;
   private LocalDateTime           createdAt;
   private LocalDateTime           updatedAt;
-  private final List<Long>        groups           = new ArrayList<>();
-  private final List<Long>        departments      = new ArrayList<>();
-  private final List<Long>        departmentGroups = new ArrayList<>();
-  private final List<Long>        deputies         = new ArrayList<>();
+  private final Set<String>       groups           = new HashSet<>();
+  private final Set<String>       departments      = new HashSet<>();
+  private final Set<String>       departmentGroups = new HashSet<>();
+  private final Set<String>       deputies         = new HashSet<>();
   private final List<EUiUserRole> roles            = new ArrayList<>();
 
   private boolean                 isEnabled;
@@ -164,63 +166,63 @@ public class GuiUser {
     this.permission = permission;
   }
 
-  public List<Long> getGroups() {
+  public Set<String> getGroups() {
     return this.groups;
   }
 
-  public void setGroups(final List<Long> groups) {
+  public void setGroups(final Set<String> groups) {
     this.groups.clear();
     if (groups != null) {
       this.groups.addAll(groups);
     }
   }
 
-  public void addGroup(final Long groupId) {
+  public void addGroup(final String groupId) {
     this.groups.add(groupId);
   }
 
-  public List<Long> getDepartments() {
+  public Set<String> getDepartments() {
     return this.departments;
   }
 
-  public void setDepartments(final List<Long> departments) {
+  public void setDepartments(final Set<String> departments) {
     this.departments.clear();
     if (departments != null) {
       this.departments.addAll(departments);
     }
   }
 
-  public void addDepartment(final Long departmentId) {
+  public void addDepartment(final String departmentId) {
     this.departments.add(departmentId);
   }
 
-  public List<Long> getDepartmentGroups() {
+  public Set<String> getDepartmentGroups() {
     return this.departmentGroups;
   }
 
-  public void setDepartmentGroups(final List<Long> departmentGroups) {
+  public void setDepartmentGroups(final Set<String> departmentGroups) {
     this.departmentGroups.clear();
     if (departmentGroups != null) {
       this.departmentGroups.addAll(departmentGroups);
     }
   }
 
-  public void addDepartmentGroup(final Long departmentGroupId) {
+  public void addDepartmentGroup(final String departmentGroupId) {
     this.departmentGroups.add(departmentGroupId);
   }
 
-  public List<Long> getDeputies() {
+  public Set<String> getDeputies() {
     return this.deputies;
   }
 
-  public void setDeputies(final List<Long> deputies) {
+  public void setDeputies(final Set<String> deputies) {
     this.deputies.clear();
     if (deputies != null) {
       this.deputies.addAll(deputies);
     }
   }
 
-  public void addDeputy(final Long deputyId) {
+  public void addDeputy(final String deputyId) {
     this.deputies.add(deputyId);
   }
 
@@ -232,7 +234,7 @@ public class GuiUser {
     return this.roles.stream().map(r -> r.getId()).collect(Collectors.toSet());
   }
 
-  public void setRoles(final List<Integer> roles) {
+  public void setRoles(final Set<Integer> roles) {
     this.roles.clear();
     if (roles != null) {
       this.roles.addAll(roles.stream().map(r -> EUiUserRole.ofId(r)).collect(Collectors.toList()));
@@ -243,7 +245,7 @@ public class GuiUser {
     this.roles.add(EUiUserRole.ofId(role));
   }
 
-  public GuiUser() {
+  public User() {
     this.isEnabled = true;
   }
 
@@ -283,6 +285,18 @@ public class GuiUser {
 
   public List<GrantedAuthority> getAuthorities() {
     return AuthorityUtils.commaSeparatedStringToAuthorityList(this.getRolesAuthoritiesNames());
+  }
+
+  @Override
+  public String getIdentity() {
+
+    return this.email;
+  }
+
+  @Override
+  public void setIdentity(final String identity) {
+    // TODO Auto-generated method stub
+
   }
 
 }

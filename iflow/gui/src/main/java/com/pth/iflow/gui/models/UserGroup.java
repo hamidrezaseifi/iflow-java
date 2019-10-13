@@ -1,10 +1,12 @@
 package com.pth.iflow.gui.models;
 
-public class GuiUserGroup {
+import com.pth.iflow.common.edo.models.helper.IdentityModel;
 
-  private Long    id;
+public class UserGroup extends IdentityModel {
 
-  private Long    companyId;
+  private String  identity;
+
+  private String  companyIdentity;
 
   private String  title;
 
@@ -12,20 +14,22 @@ public class GuiUserGroup {
 
   private Integer version;
 
-  public Long getId() {
-    return this.id;
+  @Override
+  public String getIdentity() {
+    return this.identity;
   }
 
-  public void setId(final Long id) {
-    this.id = id;
+  @Override
+  public void setIdentity(final String identity) {
+    this.identity = identity;
   }
 
-  public Long getCompanyId() {
-    return this.companyId;
+  public String getCompanyIdentity() {
+    return this.companyIdentity;
   }
 
-  public void setCompanyId(final Long companyId) {
-    this.companyId = companyId;
+  public void setCompanyIdentity(final String companyIdentity) {
+    this.companyIdentity = companyIdentity;
   }
 
   public String getTitle() {

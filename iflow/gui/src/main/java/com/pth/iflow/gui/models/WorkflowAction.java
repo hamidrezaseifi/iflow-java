@@ -1,43 +1,45 @@
 package com.pth.iflow.gui.models;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.pth.iflow.common.edo.models.helper.IdentityModel;
 import com.pth.iflow.common.enums.EWorkflowActionStatus;
 
 @JsonIgnoreProperties(value = { "running" })
-public class GuiWorkflowAction {
+public class WorkflowAction extends IdentityModel {
 
-  private Long                  assignTo;
-  private GuiUser               assignToUser;
+  private String                identity;
+  private String                assignToIdentity;
+  private User                  assignToUser;
   private String                assignToUserName;
-  private Long                  currentStepId;
-  private GuiWorkflowTypeStep   currentStep;
+  private String                currentStepIdentity;
+  private WorkflowTypeStep      currentStep;
   private String                comments;
   private EWorkflowActionStatus status;
   private Integer               version;
 
-  public Long getAssignTo() {
-    return this.assignTo;
+  @Override
+  public String getIdentity() {
+    return this.identity;
   }
 
-  public boolean isAssignTo(final Long userId) {
-    return this.assignTo == userId;
-  }
-
-  public void setAssignTo(final Long assignTo) {
-    this.assignTo = assignTo;
+  @Override
+  public void setIdentity(final String identity) {
+    this.identity = identity;
   }
 
   /**
    * @return the assignToUser
    */
-  public GuiUser getAssignToUser() {
+  public User getAssignToUser() {
     return this.assignToUser;
   }
 
   /**
    * @param assignToUser the assignToUser to set
    */
-  public void setAssignToUser(final GuiUser assignToUser) {
+  public void setAssignToUser(final User assignToUser) {
     this.assignToUser = assignToUser;
   }
 
@@ -49,19 +51,27 @@ public class GuiWorkflowAction {
     this.comments = comments;
   }
 
-  public Long getCurrentStepId() {
-    return this.currentStepId;
+  public String getAssignToIdentity() {
+    return this.assignToIdentity;
   }
 
-  public void setCurrentStepId(final Long currentStepId) {
-    this.currentStepId = currentStepId;
+  public void setAssignToIdentity(final String assignToIdentity) {
+    this.assignToIdentity = assignToIdentity;
   }
 
-  public GuiWorkflowTypeStep getCurrentStep() {
+  public String getCurrentStepIdentity() {
+    return this.currentStepIdentity;
+  }
+
+  public void setCurrentStepIdentity(final String currentStepIdentity) {
+    this.currentStepIdentity = currentStepIdentity;
+  }
+
+  public WorkflowTypeStep getCurrentStep() {
     return this.currentStep;
   }
 
-  public void setCurrentStep(final GuiWorkflowTypeStep currentStep) {
+  public void setCurrentStep(final WorkflowTypeStep currentStep) {
     this.currentStep = currentStep;
   }
 
@@ -99,5 +109,11 @@ public class GuiWorkflowAction {
 
   public boolean getIsActive() {
     return EWorkflowActionStatus.getIsActive(this.getStatusInt());
+  }
+
+  public boolean isAssignTo(final String userIdentity) {
+
+    return (StringUtils.isEmpty(userIdentity) && StringUtils.isEmpty(this.assignToIdentity))
+        || this.assignToIdentity.equals(userIdentity);
   }
 }
