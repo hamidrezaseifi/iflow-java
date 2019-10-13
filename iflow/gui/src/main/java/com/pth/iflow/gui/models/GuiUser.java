@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -227,8 +228,8 @@ public class GuiUser {
     return this.roles;
   }
 
-  public List<Integer> getRolesInt() {
-    return this.roles.stream().map(r -> r.getId()).collect(Collectors.toList());
+  public Set<Integer> getRolesInt() {
+    return this.roles.stream().map(r -> r.getId()).collect(Collectors.toSet());
   }
 
   public void setRoles(final List<Integer> roles) {

@@ -7,8 +7,8 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.pth.iflow.backend.models.BackendCompanyProfile;
-import com.pth.iflow.backend.models.BackendUser;
+import com.pth.iflow.backend.models.CompanyProfile;
+import com.pth.iflow.backend.models.User;
 import com.pth.iflow.backend.models.ui.BackendSessionUserInfo;
 
 /**
@@ -23,8 +23,8 @@ public class BackendSessionUserService {
   @Autowired
   private BackendSessionUserInfo sessionUserInfo;
 
-  public BackendSessionUserInfo authorizeUser(final BackendAuthenticationToken token, final BackendUser user,
-      final BackendCompanyProfile companyProfile, final HttpSession session, final boolean setContext) {
+  public BackendSessionUserInfo authorizeUser(final BackendAuthenticationToken token, final User user,
+      final CompanyProfile companyProfile, final HttpSession session, final boolean setContext) {
 
     if (setContext) {
       SecurityContext ctx = SecurityContextHolder.getContext();
@@ -37,16 +37,16 @@ public class BackendSessionUserService {
 
   }
 
-  public BackendSessionUserInfo setLoggedInUserInfo(final BackendAuthenticationToken token, final BackendUser user,
-      final BackendCompanyProfile companyProfile, final HttpSession session) {
+  public BackendSessionUserInfo setLoggedInUserInfo(final BackendAuthenticationToken token, final User user,
+      final CompanyProfile companyProfile, final HttpSession session) {
 
     this.reloadSessionData(token, user, companyProfile);
 
     return this.sessionUserInfo;
   }
 
-  public void reloadSessionData(final BackendAuthenticationToken token, final BackendUser user,
-      final BackendCompanyProfile companyProfile) {
+  public void reloadSessionData(final BackendAuthenticationToken token, final User user,
+      final CompanyProfile companyProfile) {
 
     this.sessionUserInfo.setCompanyProfile(companyProfile);
     this.sessionUserInfo.setUser(user);

@@ -7,8 +7,8 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
-import com.pth.iflow.backend.models.BackendCompanyProfile;
-import com.pth.iflow.backend.models.BackendUser;
+import com.pth.iflow.backend.models.CompanyProfile;
+import com.pth.iflow.backend.models.User;
 
 @SessionScope(proxyMode = ScopedProxyMode.TARGET_CLASS)
 @Component
@@ -17,8 +17,8 @@ public class BackendSessionUserInfo {
   public static String          SESSION_LOGGEDUSERINFO_KEY = "mdm-session-user";
 
   private Date                  loginTime;
-  private BackendUser           user;
-  private BackendCompanyProfile companyProfile;
+  private User           user;
+  private CompanyProfile companyProfile;
   private String                token;
   private String                sessionId;
 
@@ -47,7 +47,7 @@ public class BackendSessionUserInfo {
     this.loginTime = new Date();
   }
 
-  public BackendSessionUserInfo(final BackendUser user, final BackendCompanyProfile companyProfile) {
+  public BackendSessionUserInfo(final User user, final CompanyProfile companyProfile) {
     this.user = user;
     this.companyProfile = companyProfile;
     this.loginTime = new Date();
@@ -66,11 +66,11 @@ public class BackendSessionUserInfo {
     this.loginTime = new Date();
   }
 
-  public BackendUser getUser() {
+  public User getUser() {
     return this.user;
   }
 
-  public void setUser(final BackendUser user) {
+  public void setUser(final User user) {
     this.user = user;
   }
 
@@ -78,7 +78,7 @@ public class BackendSessionUserInfo {
     return this.user.getUserTitle();
   }
 
-  public BackendCompanyProfile getCompanyProfile() {
+  public CompanyProfile getCompanyProfile() {
     return this.companyProfile;
   }
 
@@ -90,7 +90,7 @@ public class BackendSessionUserInfo {
     return this.sessionId;
   }
 
-  public void setCompanyProfile(final BackendCompanyProfile companyProfile) {
+  public void setCompanyProfile(final CompanyProfile companyProfile) {
     this.companyProfile = companyProfile;
   }
 

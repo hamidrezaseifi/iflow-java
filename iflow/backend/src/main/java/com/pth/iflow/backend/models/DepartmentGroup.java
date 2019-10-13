@@ -1,34 +1,31 @@
 package com.pth.iflow.backend.models;
 
-import com.pth.iflow.common.edo.models.base.DataModelBase;
+import com.pth.iflow.common.edo.models.helper.IdentityModel;
 
-public class BackendUserGroup extends DataModelBase {
+public class DepartmentGroup extends IdentityModel {
 
-  private Long    id;
-
-  private Long    companyId;
-
+  private String  identity;
+  private String  departmentIdentity;
   private String  title;
-
   private Integer status;
-
   private Integer version;
 
+  public String getDepartmentIdentity() {
+    return this.departmentIdentity;
+  }
+
+  public void setDepartmentIdentity(final String departmentIdentity) {
+    this.departmentIdentity = departmentIdentity;
+  }
+
   @Override
-  public Long getId() {
-    return this.id;
+  public String getIdentity() {
+    return this.identity;
   }
 
-  public void setId(final Long id) {
-    this.id = id;
-  }
-
-  public Long getCompanyId() {
-    return this.companyId;
-  }
-
-  public void setCompanyId(final Long companyId) {
-    this.companyId = companyId;
+  @Override
+  public void setIdentity(final String identity) {
+    this.identity = identity;
   }
 
   public String getTitle() {
@@ -47,12 +44,10 @@ public class BackendUserGroup extends DataModelBase {
     this.status = status;
   }
 
-  @Override
   public Integer getVersion() {
     return this.version;
   }
 
-  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }

@@ -1,11 +1,11 @@
 package com.pth.iflow.backend.models;
 
-import com.pth.iflow.common.edo.models.base.DataModelBase;
+import com.pth.iflow.common.edo.models.helper.IdentityModel;
 
-public class BackendCompany extends DataModelBase {
+public class Company extends IdentityModel {
 
   private Long    id;
-  private String  identifyid;
+  private String  identity;
   private String  companyName;
   private Integer status;
   private Integer version;
@@ -15,29 +15,13 @@ public class BackendCompany extends DataModelBase {
    */
 
   @Override
-  public Long getId() {
-    return this.id;
+  public String getIdentity() {
+    return this.identity;
   }
 
-  /**
-   * @param id the id to set
-   */
-  public void setId(final Long id) {
-    this.id = id;
-  }
-
-  /**
-   * @return the identifyid
-   */
-  public String getIdentifyid() {
-    return this.identifyid;
-  }
-
-  /**
-   * @param identifyid the identifyid to set
-   */
-  public void setIdentifyid(final String identifyid) {
-    this.identifyid = identifyid;
+  @Override
+  public void setIdentity(final String identity) {
+    this.identity = identity;
   }
 
   /**
@@ -68,12 +52,10 @@ public class BackendCompany extends DataModelBase {
     this.status = status;
   }
 
-  @Override
   public Integer getVersion() {
     return this.version;
   }
 
-  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
