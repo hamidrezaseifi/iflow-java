@@ -155,7 +155,7 @@ public class TokenUserDataManager implements ITokenUserDataManager {
 
     this.validateToken(token);
 
-    return this.departmentService.getById(identity);
+    return this.departmentService.getByIdentity(identity);
   }
 
   @Override
@@ -182,7 +182,7 @@ public class TokenUserDataManager implements ITokenUserDataManager {
 
     this.validateToken(token);
 
-    return this.departmentGroupService.getById(identity);
+    return this.departmentGroupService.getByIdentity(identity);
   }
 
   @Override

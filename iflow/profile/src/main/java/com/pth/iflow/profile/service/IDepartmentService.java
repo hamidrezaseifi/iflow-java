@@ -11,7 +11,7 @@ import com.pth.iflow.profile.model.User;
 
 public interface IDepartmentService {
 
-  Department getById(final String identity)
+  Department getByIdentity(final String identity)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
   List<Department> getListByCompanyIdentity(final String identity)

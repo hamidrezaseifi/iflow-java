@@ -36,7 +36,7 @@ public class DepartmentGroupService implements IDepartmentGroupService {
   }
 
   @Override
-  public DepartmentGroup getById(final String identity)
+  public DepartmentGroup getByIdentity(final String identity)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     logger.debug("Request Department data for companyid {}", identity);
 

@@ -43,7 +43,7 @@ public class DepartmentGroupController {
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(value = IflowRestPaths.ProfileModule.DEPARTMENTGROUP_READ_BY_IDENTITY)
   @ResponseBody
-  public ResponseEntity<DepartmentGroupEdo> readById(@PathVariable(name = "id") final String identity,
+  public ResponseEntity<DepartmentGroupEdo> readById(@PathVariable(name = "identity") final String identity,
       final HttpServletRequest request,
       @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId)
       throws ProfileCustomizedException, URISyntaxException, MalformedURLException, IFlowMessageConversionFailureException {
@@ -56,7 +56,8 @@ public class DepartmentGroupController {
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(value = IflowRestPaths.ProfileModule.DEPARTMENTGROUP_READ_USER_LIST)
   @ResponseBody
-  public ResponseEntity<UserListEdo> readUserList(@PathVariable(name = "id") final String identity, final HttpServletRequest request,
+  public ResponseEntity<UserListEdo> readUserList(@PathVariable(name = "identity") final String identity,
+      final HttpServletRequest request,
       @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId)
       throws ProfileCustomizedException, URISyntaxException, MalformedURLException, IFlowMessageConversionFailureException {
 

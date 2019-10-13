@@ -49,8 +49,9 @@ public class CachDataController {
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(value = IflowRestPaths.ProfileModule.CACHDATA_READ_USER_WORKFLOWMESSAGELIST)
   @ResponseBody
-  public ResponseEntity<WorkflowMessageListEdo> readUserWorkflowMessageList(@PathVariable(name = "companyid") final String companyid,
-      @PathVariable(name = "userid") final String userid, final HttpServletRequest request,
+  public ResponseEntity<WorkflowMessageListEdo> readUserWorkflowMessageList(
+      @PathVariable(name = "companyidentity") final String companyid, @PathVariable(name = "email") final String userid,
+      final HttpServletRequest request,
       @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId)
       throws ProfileCustomizedException, URISyntaxException, MalformedURLException, IFlowMessageConversionFailureException {
 
@@ -67,7 +68,7 @@ public class CachDataController {
   @IflowGetRequestMapping(value = IflowRestPaths.ProfileModule.CACHDATA_CAL_USER_DATARESET_BY_COMPANYIDENTITY)
   @ResponseBody
   public void resetUserData(@PathVariable(name = "companyidentity") final String companyidentity,
-      @PathVariable(name = "userid") final String userid, final HttpServletRequest request,
+      @PathVariable(name = "email") final String userid, final HttpServletRequest request,
       @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId)
       throws ProfileCustomizedException, URISyntaxException, MalformedURLException, IFlowMessageConversionFailureException {
 

@@ -55,16 +55,16 @@ public class DepartmentServiceTest extends TestDataProducer {
   @Test
   public void testGetById() throws Exception {
 
-    final Department department = this.getTestDepartment();
+    final Department department = this.getTestDepartment("dep1", "department 1");
     final DepartmentEdo departmentEdo = ProfileModelEdoMapper.toEdo(department);
 
     when(this.restTemplate.callRestGet(any(String.class), any(EModule.class), any(Class.class), any(boolean.class), any()))
         .thenReturn(departmentEdo);
 
-    final Department resDepartment = this.departmentService.getByIdentity(department.getId());
+    final Department resDepartment = this.departmentService.getByIdentity(department.getIdentity());
 
     Assert.assertNotNull("Result department is not null!", resDepartment);
-    Assert.assertEquals("Result department has id 1!", resDepartment.getId(), department.getId());
+    Assert.assertEquals("Result department has id 1!", resDepartment.getIdentity(), department.getIdentity());
     Assert.assertEquals("Result department has title '" + department.getTitle() + "'!", resDepartment.getTitle(),
         department.getTitle());
     Assert.assertEquals("Result department has status 1!", resDepartment.getStatus(), department.getStatus());
@@ -80,7 +80,7 @@ public class DepartmentServiceTest extends TestDataProducer {
     when(this.restTemplate.callRestGet(any(String.class), any(EModule.class), eq(DepartmentListEdo.class), any(boolean.class), any()))
         .thenReturn(listEdo);
 
-    final List<Department> resList = this.departmentService.getListByCompanyIdentity(1L);
+    final List<Department> resList = this.departmentService.getListByCompanyIdentity("company1");
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());

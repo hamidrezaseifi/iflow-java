@@ -45,7 +45,8 @@ public class DepartmentController {
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(value = IflowRestPaths.ProfileModule.DEPARTMENT_READ_BY_IDENTITY)
   @ResponseBody
-  public ResponseEntity<DepartmentEdo> readById(@PathVariable(name = "id") final String identity, final HttpServletRequest request,
+  public ResponseEntity<DepartmentEdo> readById(@PathVariable(name = "identity") final String identity,
+      final HttpServletRequest request,
       @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId)
       throws ProfileCustomizedException, URISyntaxException, MalformedURLException, IFlowMessageConversionFailureException {
 
@@ -57,7 +58,7 @@ public class DepartmentController {
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(value = IflowRestPaths.ProfileModule.DEPARTMENT_READ_DEPARTMENTGROUP_LIST)
   @ResponseBody
-  public ResponseEntity<DepartmentGroupListEdo> readDepartmentGroupList(@PathVariable(name = "id") final String identity,
+  public ResponseEntity<DepartmentGroupListEdo> readDepartmentGroupList(@PathVariable(name = "identity") final String identity,
       final HttpServletRequest request,
       @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId)
       throws ProfileCustomizedException, URISyntaxException, MalformedURLException, IFlowMessageConversionFailureException {
@@ -72,7 +73,8 @@ public class DepartmentController {
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(value = IflowRestPaths.ProfileModule.DEPARTMENT_READ_ALLUSERS_LIST)
   @ResponseBody
-  public ResponseEntity<UserListEdo> readUserList(@PathVariable(name = "id") final String identity, final HttpServletRequest request,
+  public ResponseEntity<UserListEdo> readUserList(@PathVariable(name = "identity") final String identity,
+      final HttpServletRequest request,
       @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId)
       throws ProfileCustomizedException, URISyntaxException, MalformedURLException, IFlowMessageConversionFailureException {
 

@@ -1,6 +1,7 @@
 package com.pth.iflow.profile;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -11,6 +12,8 @@ import com.pth.iflow.common.edo.models.CompanyEdo;
 import com.pth.iflow.common.edo.models.ProfileResponseEdo;
 import com.pth.iflow.common.edo.models.TokenProfileRequestEdo;
 import com.pth.iflow.common.edo.models.UserEdo;
+import com.pth.iflow.common.enums.EWorkflowMessageStatus;
+import com.pth.iflow.common.enums.EWorkflowMessageType;
 import com.pth.iflow.profile.model.Company;
 import com.pth.iflow.profile.model.CompanyProfile;
 import com.pth.iflow.profile.model.Department;
@@ -19,6 +22,7 @@ import com.pth.iflow.profile.model.User;
 import com.pth.iflow.profile.model.UserAuthenticationRequest;
 import com.pth.iflow.profile.model.UserAuthenticationSession;
 import com.pth.iflow.profile.model.UserGroup;
+import com.pth.iflow.profile.model.WorkflowMessage;
 import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
 
 public class TestDataProducer {
@@ -69,6 +73,8 @@ public class TestDataProducer {
     model.setFirstName(fname);
     model.setLastName(lname);
     model.setStatus(1);
+    model.setPermission(1);
+    model.setVersion(1);
     model.setDepartmentGroups(this.getTestDepartmentGroupIdSet());
     model.setDepartments(this.getTestDepartmentIdSet());
     model.setDeputies(this.getTestDeputiyIdSet());
@@ -223,6 +229,29 @@ public class TestDataProducer {
 
   protected Set<String> getTestUserIdSet() {
     return new HashSet<>(Arrays.asList("identity1", "identity2", "identity3"));
+  }
+
+  protected WorkflowMessage getTestWorkflowMessage(final String userId, final String workflowIdentity) {
+    final WorkflowMessage message = new WorkflowMessage();
+    message.setCreatedAt(LocalDateTime.now());
+    message.setCreatedByIdentity("createdByIdentity");
+    message.setExpireDays(15);
+    message.setMessage("message 1");
+    message.setMessageType(EWorkflowMessageType.OFFERING_WORKFLOW);
+    message.setStatus(EWorkflowMessageStatus.OFFERING);
+    message.setStepIdentity("stepIdentity");
+    message.setUserIdentity(userId);
+    message.setVersion(1);
+    message.setWorkflowIdentity(workflowIdentity);
+
+    return message;
+  }
+
+  protected List<WorkflowMessage> getTestWorkflowMessageList() {
+    final String workflowIdentity = "workflow1";
+
+    return Arrays.asList(this.getTestWorkflowMessage("user1", workflowIdentity),
+        this.getTestWorkflowMessage("user2", workflowIdentity), this.getTestWorkflowMessage("user3", workflowIdentity));
   }
 
 }

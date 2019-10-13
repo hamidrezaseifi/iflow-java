@@ -39,7 +39,7 @@ public class DepartmentService implements IDepartmentService {
   }
 
   @Override
-  public Department getById(final String identity)
+  public Department getByIdentity(final String identity)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     logger.debug("Request Department data for companyid {}", identity);
 

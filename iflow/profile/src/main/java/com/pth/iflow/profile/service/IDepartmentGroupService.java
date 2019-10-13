@@ -10,7 +10,7 @@ import com.pth.iflow.profile.model.User;
 
 public interface IDepartmentGroupService {
 
-  DepartmentGroup getById(final String identity)
+  DepartmentGroup getByIdentity(final String identity)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
   List<User> getAllUserListByDepartmentGroupId(final String identity)
