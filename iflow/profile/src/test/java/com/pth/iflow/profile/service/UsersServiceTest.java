@@ -53,24 +53,6 @@ public class UsersServiceTest extends TestDataProducer {
   }
 
   @Test
-  public void testGetUserById() throws Exception {
-
-    final User user = this.getTestUser();
-    final UserEdo userEdo = ProfileModelEdoMapper.toEdo(user);
-
-    when(this.restTemplate.callRestGet(any(String.class), any(EModule.class), any(Class.class), any(boolean.class), any()))
-        .thenReturn(userEdo);
-
-    final User resUser = this.usersService.getUserById(user.getId());
-
-    Assert.assertNotNull("Result user is not null!", resUser);
-    Assert.assertEquals("Result user has id 1!", resUser.getId(), user.getId());
-    Assert.assertEquals("Result user has fname '" + user.getFirstName() + "'!", resUser.getFirstName(), user.getFirstName());
-    Assert.assertEquals("Result user has status 1!", resUser.getStatus(), user.getStatus());
-
-  }
-
-  @Test
   public void testGetUserByEmail() throws Exception {
 
     final User user = this.getTestUser();
@@ -82,7 +64,7 @@ public class UsersServiceTest extends TestDataProducer {
     final User resUser = this.usersService.getUserByEmail(user.getEmail());
 
     Assert.assertNotNull("Result user is not null!", resUser);
-    Assert.assertEquals("Result user has id 1!", resUser.getId(), user.getId());
+    Assert.assertEquals("Result user has id 1!", resUser.getIdentity(), user.getIdentity());
     Assert.assertEquals("Result user has fname '" + user.getFirstName() + "'!", resUser.getFirstName(), user.getFirstName());
     Assert.assertEquals("Result user has status 1!", resUser.getStatus(), user.getStatus());
 
@@ -97,7 +79,7 @@ public class UsersServiceTest extends TestDataProducer {
     when(this.restTemplate.callRestGet(any(String.class), any(EModule.class), eq(UserListEdo.class), any(boolean.class), any()))
         .thenReturn(listEdo);
 
-    final List<User> resList = this.usersService.getUserListByCompanyId(1L);
+    final List<User> resList = this.usersService.getUserListByCompanyIdentity("companyId");
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());

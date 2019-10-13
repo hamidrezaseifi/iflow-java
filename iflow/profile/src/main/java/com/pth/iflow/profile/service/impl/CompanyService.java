@@ -34,7 +34,7 @@ public class CompanyService implements ICompanyService {
   }
 
   @Override
-  public Company getById(final String comapnyIdentity)
+  public Company getByIdentity(final String comapnyIdentity)
       throws ProfileCustomizedException, URISyntaxException, MalformedURLException, IFlowMessageConversionFailureException {
 
     logger.debug("Request company data for id {}", comapnyIdentity);

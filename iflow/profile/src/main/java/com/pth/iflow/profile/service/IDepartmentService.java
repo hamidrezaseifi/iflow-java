@@ -14,7 +14,7 @@ public interface IDepartmentService {
   Department getById(final String identity)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  List<Department> getListByCompanyId(final String identity)
+  List<Department> getListByCompanyIdentity(final String identity)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
   List<DepartmentGroup> getDepartmentGroupListByDepartmentId(final String identity)

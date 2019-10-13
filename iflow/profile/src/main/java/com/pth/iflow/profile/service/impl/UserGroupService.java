@@ -47,7 +47,7 @@ public class UserGroupService implements IUserGroupService {
   }
 
   @Override
-  public List<UserGroup> getListByCompanyId(final String companyId)
+  public List<UserGroup> getListByCompanyIdentity(final String companyId)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     logger.debug("Request UserGroup list data for companyid {}", companyId);
 

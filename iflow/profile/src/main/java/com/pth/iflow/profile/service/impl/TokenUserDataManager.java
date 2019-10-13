@@ -65,15 +65,15 @@ public class TokenUserDataManager implements ITokenUserDataManager {
       throw new ProfileCustomizedException("User not found!", "", EModule.PROFILE.getModuleName(), EIFlowErrorType.USER_NOTFOUND);
     }
 
-    final Company company = this.companyService.getById(user.getCompanyIdentity());
+    final Company company = this.companyService.getByIdentity(user.getCompanyIdentity());
 
     if (company == null) {
       throw new ProfileCustomizedException("Company not found!", "", EModule.PROFILE.getModuleName(),
           EIFlowErrorType.COMPANY_NOTFOUND);
     }
 
-    final List<Department> departmentList = this.departmentService.getListByCompanyId(user.getCompanyIdentity());
-    final List<UserGroup> groupList = this.userGroupService.getListByCompanyId(user.getCompanyIdentity());
+    final List<Department> departmentList = this.departmentService.getListByCompanyIdentity(user.getCompanyIdentity());
+    final List<UserGroup> groupList = this.userGroupService.getListByCompanyIdentity(user.getCompanyIdentity());
 
     return new ProfileResponse(user, company, departmentList, groupList, session.getSessionid());
   }
@@ -109,15 +109,15 @@ public class TokenUserDataManager implements ITokenUserDataManager {
       throw new ProfileCustomizedException("User not found!", "", EModule.PROFILE.getModuleName(), EIFlowErrorType.USER_NOTFOUND);
     }
 
-    final Company company = this.companyService.getById(user.getCompanyIdentity());
+    final Company company = this.companyService.getByIdentity(user.getCompanyIdentity());
 
     if (company == null) {
       throw new ProfileCustomizedException("Company not found!", "", EModule.PROFILE.getModuleName(),
           EIFlowErrorType.COMPANY_NOTFOUND);
     }
 
-    final List<Department> departmentList = this.departmentService.getListByCompanyId(user.getCompanyIdentity());
-    final List<UserGroup> groupList = this.userGroupService.getListByCompanyId(user.getCompanyIdentity());
+    final List<Department> departmentList = this.departmentService.getListByCompanyIdentity(user.getCompanyIdentity());
+    final List<UserGroup> groupList = this.userGroupService.getListByCompanyIdentity(user.getCompanyIdentity());
 
     return new ProfileResponse(user, company, departmentList, groupList, session.getSessionid());
   }
@@ -128,7 +128,7 @@ public class TokenUserDataManager implements ITokenUserDataManager {
 
     this.getProfileByTokenAndCheckCompany(token, companyId);
 
-    return this.usersService.getUserListByCompanyId(companyId);
+    return this.usersService.getUserListByCompanyIdentity(companyId);
   }
 
   @Override
@@ -137,7 +137,7 @@ public class TokenUserDataManager implements ITokenUserDataManager {
 
     this.getProfileByTokenAndCheckCompany(token, companyId);
 
-    return this.userGroupService.getListByCompanyId(companyId);
+    return this.userGroupService.getListByCompanyIdentity(companyId);
   }
 
   @Override
@@ -146,7 +146,7 @@ public class TokenUserDataManager implements ITokenUserDataManager {
 
     this.getProfileByTokenAndCheckCompany(token, companyId);
 
-    return this.departmentService.getListByCompanyId(companyId);
+    return this.departmentService.getListByCompanyIdentity(companyId);
   }
 
   @Override

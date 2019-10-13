@@ -12,8 +12,6 @@ public interface IUsersService {
   User getUserByEmail(final String email)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  User getUserById(final String id) throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
-
-  List<User> getUserListByCompanyId(final String companyId)
+  List<User> getUserListByCompanyIdentity(final String companyId)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 }

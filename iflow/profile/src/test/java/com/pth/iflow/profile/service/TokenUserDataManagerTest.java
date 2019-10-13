@@ -31,53 +31,49 @@ import com.pth.iflow.profile.service.impl.TokenUserDataManager;
 @SpringBootTest
 public class TokenUserDataManagerTest extends TestDataProducer {
 
-  private ITokenUserDataManager tokenUserDataManager;
+  private ITokenUserDataManager     tokenUserDataManager;
 
   @Autowired
-  private ISessionManager sessionManager;
+  private ISessionManager           sessionManager;
 
   @Mock
-  private IUsersService usersService;
+  private IUsersService             usersService;
 
   @Mock
-  private ICompanyService companyService;
+  private ICompanyService           companyService;
 
   @Mock
-  private IUserGroupService userGroupService;
+  private IUserGroupService         userGroupService;
 
   @Mock
-  private IDepartmentService departmentService;
+  private IDepartmentService        departmentService;
 
   @Mock
-  private IDepartmentGroupService departmentGroupService;
+  private IDepartmentGroupService   departmentGroupService;
 
-  private String validToken;
+  private String                    validToken;
 
-  private final String validEmail = "valid-email";
+  private final String              validEmail   = "valid-email";
 
   private UserAuthenticationSession validSession;
 
-  private Company validCompany;
+  private Company                   validCompany;
 
-  private User validUser;
+  private User                      validUser;
 
-  private final String inValidToken = "invalid-token";
+  private final String              inValidToken = "invalid-token";
 
   @Before
   public void setUp() throws Exception {
 
-    this.tokenUserDataManager = new TokenUserDataManager(this.sessionManager,
-                                                         this.usersService,
-                                                         this.companyService,
-                                                         this.userGroupService,
-                                                         this.departmentService,
-                                                         this.departmentGroupService);
+    this.tokenUserDataManager = new TokenUserDataManager(this.sessionManager, this.usersService, this.companyService,
+        this.userGroupService, this.departmentService, this.departmentGroupService);
 
     this.validSession = this.sessionManager.addSession(this.validEmail);
     this.validToken = this.validSession.getToken();
 
     this.validCompany = this.getTestCompany();
-    this.validUser = this.getTestUser(1L, "userfn", "userln", this.validEmail);
+    this.validUser = this.getTestUser("userfn", "userln", this.validEmail);
   }
 
   @After
@@ -102,27 +98,25 @@ public class TokenUserDataManagerTest extends TestDataProducer {
   public void testGetProfileByTokenEmail() throws Exception {
 
     when(this.usersService.getUserByEmail(any(String.class))).thenReturn(this.validUser);
-    when(this.companyService.getById(any(Long.class))).thenReturn(this.validCompany);
+    when(this.companyService.getByIdentity(any(String.class))).thenReturn(this.validCompany);
 
     final ProfileResponse response = this.tokenUserDataManager.getProfileByToken(this.validToken);
 
     verify(this.usersService, times(1)).getUserByEmail(any(String.class));
-    verify(this.companyService, times(1)).getById(any(Long.class));
+    verify(this.companyService, times(1)).getByIdentity(any(String.class));
 
     Assert.assertNotNull("Result response is not null!", response);
     Assert.assertNotNull("Result user is not null!", response.getUser());
     Assert.assertNotNull("Result company is not null!", response.getCompanyProfile());
-    Assert.assertEquals("Result user has the same id as valid-user!", response.getUser().getId(), this.validUser.getId());
-    Assert.assertEquals("Result company has the same id as valid-company!",
-                        response.getCompanyProfile().getCompany().getId(),
-                        this.validCompany.getId());
+    Assert.assertEquals("Result user has the same id as valid-user!", response.getUser().getIdentity(), this.validUser.getIdentity());
+    Assert.assertEquals("Result company has the same id as valid-company!", response.getCompanyProfile().getCompany().getIdentity(),
+        this.validCompany.getIdentity());
 
     Assert.assertEquals("Result user has the same name as valid-user!",
-                        response.getUser().getFirstName() + response.getUser().getLastName(),
-                        this.validUser.getFirstName() + this.validUser.getLastName());
+        response.getUser().getFirstName() + response.getUser().getLastName(),
+        this.validUser.getFirstName() + this.validUser.getLastName());
     Assert.assertEquals("Result company has the same name as valid-company!",
-                        response.getCompanyProfile().getCompany().getCompanyName(),
-                        this.validCompany.getCompanyName());
+        response.getCompanyProfile().getCompany().getCompanyName(), this.validCompany.getCompanyName());
 
   }
 
@@ -131,16 +125,16 @@ public class TokenUserDataManagerTest extends TestDataProducer {
 
     final List<User> users = this.getTestUserList();
 
-    when(this.usersService.getUserListByCompanyId(any(Long.class))).thenReturn(users);
+    when(this.usersService.getUserListByCompanyIdentity(any(String.class))).thenReturn(users);
     when(this.usersService.getUserByEmail(any(String.class))).thenReturn(this.validUser);
 
-    when(this.companyService.getById(any(Long.class))).thenReturn(this.validCompany);
+    when(this.companyService.getByIdentity(any(String.class))).thenReturn(this.validCompany);
 
-    final List<User> resultUsers = this.tokenUserDataManager.getUserListByToken(this.validToken, 1L);
+    final List<User> resultUsers = this.tokenUserDataManager.getUserListByToken(this.validToken, "companyidentity");
 
     verify(this.usersService, times(1)).getUserByEmail(any(String.class));
-    verify(this.usersService, times(1)).getUserListByCompanyId(any(Long.class));
-    verify(this.companyService, times(1)).getById(any(Long.class));
+    verify(this.usersService, times(1)).getUserListByCompanyIdentity(any(String.class));
+    verify(this.companyService, times(1)).getByIdentity(any(String.class));
 
     Assert.assertNotNull("Result response list is not null!", resultUsers);
     Assert.assertEquals("Result response list has the " + users.size() + " items!", resultUsers.size(), users.size());
@@ -152,15 +146,15 @@ public class TokenUserDataManagerTest extends TestDataProducer {
 
     final List<UserGroup> userGroups = this.getTestUserGroupList();
 
-    when(this.userGroupService.getListByCompanyId(any(Long.class))).thenReturn(userGroups);
+    when(this.userGroupService.getListByCompanyIdentity(any(String.class))).thenReturn(userGroups);
     when(this.usersService.getUserByEmail(any(String.class))).thenReturn(this.validUser);
-    when(this.companyService.getById(any(Long.class))).thenReturn(this.validCompany);
+    when(this.companyService.getByIdentity(any(String.class))).thenReturn(this.validCompany);
 
-    final List<UserGroup> resultUserGroups = this.tokenUserDataManager.getUserGroupListByToken(this.validToken, 1L);
+    final List<UserGroup> resultUserGroups = this.tokenUserDataManager.getUserGroupListByToken(this.validToken, "companyidentity");
 
     verify(this.usersService, times(1)).getUserByEmail(any(String.class));
-    verify(this.userGroupService, times(2)).getListByCompanyId(any(Long.class));
-    verify(this.companyService, times(1)).getById(any(Long.class));
+    verify(this.userGroupService, times(2)).getListByCompanyIdentity(any(String.class));
+    verify(this.companyService, times(1)).getByIdentity(any(String.class));
 
     Assert.assertNotNull("Result response list is not null!", resultUserGroups);
     Assert.assertEquals("Result response list has the " + userGroups.size() + " items!", resultUserGroups.size(), userGroups.size());
@@ -171,20 +165,19 @@ public class TokenUserDataManagerTest extends TestDataProducer {
   public void testGetDepartmentListByToken() throws Exception {
     final List<Department> departments = this.getTestDepartmentList();
 
-    when(this.departmentService.getListByCompanyId(any(Long.class))).thenReturn(departments);
+    when(this.departmentService.getListByCompanyIdentity(any(String.class))).thenReturn(departments);
     when(this.usersService.getUserByEmail(any(String.class))).thenReturn(this.validUser);
-    when(this.companyService.getById(any(Long.class))).thenReturn(this.validCompany);
+    when(this.companyService.getByIdentity(any(String.class))).thenReturn(this.validCompany);
 
-    final List<Department> resultDepartments = this.tokenUserDataManager.getDepartmentListByToken(this.validToken, 1L);
+    final List<Department> resultDepartments = this.tokenUserDataManager.getDepartmentListByToken(this.validToken, "companyidentity");
 
     verify(this.usersService, times(1)).getUserByEmail(any(String.class));
-    verify(this.departmentService, times(2)).getListByCompanyId(any(Long.class));
-    verify(this.companyService, times(1)).getById(any(Long.class));
+    verify(this.departmentService, times(2)).getListByCompanyIdentity(any(String.class));
+    verify(this.companyService, times(1)).getByIdentity(any(String.class));
 
     Assert.assertNotNull("Result response list is not null!", resultDepartments);
-    Assert.assertEquals("Result response list has the " + departments.size() + " items!",
-                        resultDepartments.size(),
-                        departments.size());
+    Assert.assertEquals("Result response list has the " + departments.size() + " items!", resultDepartments.size(),
+        departments.size());
   }
 
 }

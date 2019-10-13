@@ -11,6 +11,6 @@ public interface IUserGroupService {
 
   UserGroup getById(final String id) throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  List<UserGroup> getListByCompanyId(final String companyId)
+  List<UserGroup> getListByCompanyIdentity(final String companyId)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 }

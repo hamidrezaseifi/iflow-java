@@ -58,7 +58,7 @@ public class CompanyServiceTest extends TestDataProducer {
     when(this.restTemplate.callRestGet(any(String.class), any(EModule.class), any(Class.class), any(boolean.class), any()))
         .thenReturn(companyEdo);
 
-    final Company resCompany = this.companyService.getById(company.getId());
+    final Company resCompany = this.companyService.getByIdentity(company.getId());
 
     Assert.assertNotNull("Result company is not null!", resCompany);
     Assert.assertEquals("Result company has id 1!", resCompany.getId(), company.getId());

@@ -62,7 +62,7 @@ public class DepartmentGroupServiceTest extends TestDataProducer {
     when(this.restTemplate.callRestGet(any(String.class), any(EModule.class), any(Class.class), any(boolean.class), any()))
         .thenReturn(departmentGroupEdo);
 
-    final DepartmentGroup resDepartment = this.departmentGroupService.getById(departmentGroup.getId());
+    final DepartmentGroup resDepartment = this.departmentGroupService.getByIdentity(departmentGroup.getId());
 
     Assert.assertNotNull("Result department-group is not null!", resDepartment);
     Assert.assertEquals("Result department-group has id 1!", resDepartment.getId(), departmentGroup.getId());

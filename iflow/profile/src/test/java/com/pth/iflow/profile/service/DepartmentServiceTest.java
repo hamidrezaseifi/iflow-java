@@ -61,7 +61,7 @@ public class DepartmentServiceTest extends TestDataProducer {
     when(this.restTemplate.callRestGet(any(String.class), any(EModule.class), any(Class.class), any(boolean.class), any()))
         .thenReturn(departmentEdo);
 
-    final Department resDepartment = this.departmentService.getById(department.getId());
+    final Department resDepartment = this.departmentService.getByIdentity(department.getId());
 
     Assert.assertNotNull("Result department is not null!", resDepartment);
     Assert.assertEquals("Result department has id 1!", resDepartment.getId(), department.getId());
@@ -80,7 +80,7 @@ public class DepartmentServiceTest extends TestDataProducer {
     when(this.restTemplate.callRestGet(any(String.class), any(EModule.class), eq(DepartmentListEdo.class), any(boolean.class), any()))
         .thenReturn(listEdo);
 
-    final List<Department> resList = this.departmentService.getListByCompanyId(1L);
+    final List<Department> resList = this.departmentService.getListByCompanyIdentity(1L);
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());

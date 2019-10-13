@@ -51,7 +51,7 @@ public class DepartmentService implements IDepartmentService {
   }
 
   @Override
-  public List<Department> getListByCompanyId(final String identity)
+  public List<Department> getListByCompanyIdentity(final String identity)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     logger.debug("Request Department list data for companyid {}", identity);
 

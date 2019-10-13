@@ -86,9 +86,9 @@ public class ProfileControllerTest extends TestDataProducer {
     this.groupList = getTestUserGroupList();
 
     when(this.usersService.getUserByEmail(any(String.class))).thenReturn(this.user);
-    when(this.companyService.getById(any(Long.class))).thenReturn(this.company);
-    when(this.departmentService.getListByCompanyId(any(Long.class))).thenReturn(this.departmentList);
-    when(this.userGroupService.getListByCompanyId(any(Long.class))).thenReturn(this.groupList);
+    when(this.companyService.getByIdentity(any(Long.class))).thenReturn(this.company);
+    when(this.departmentService.getListByCompanyIdentity(any(Long.class))).thenReturn(this.departmentList);
+    when(this.userGroupService.getListByCompanyIdentity(any(Long.class))).thenReturn(this.groupList);
   }
 
   @After
@@ -119,7 +119,7 @@ public class ProfileControllerTest extends TestDataProducer {
                 .andExpect(content().xml(responseAsXmlString));
 
     verify(this.usersService, times(1)).getUserByEmail(any(String.class));
-    verify(this.companyService, times(1)).getById(any(Long.class));
+    verify(this.companyService, times(1)).getByIdentity(any(Long.class));
 
   }
 
@@ -146,7 +146,7 @@ public class ProfileControllerTest extends TestDataProducer {
                 .andExpect(content().xml(responseAsXmlString));
 
     verify(this.usersService, times(1)).getUserByEmail(any(String.class));
-    verify(this.companyService, times(1)).getById(any(Long.class));
+    verify(this.companyService, times(1)).getByIdentity(any(Long.class));
 
   }
 

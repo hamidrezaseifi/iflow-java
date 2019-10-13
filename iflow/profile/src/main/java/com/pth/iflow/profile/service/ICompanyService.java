@@ -9,6 +9,6 @@ import com.pth.iflow.profile.model.Company;
 
 public interface ICompanyService {
 
-  Company getById(final String comapnyIdentity)
+  Company getByIdentity(final String comapnyIdentity)
       throws ProfileCustomizedException, URISyntaxException, MalformedURLException, IFlowMessageConversionFailureException;
 }
