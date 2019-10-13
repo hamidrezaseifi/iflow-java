@@ -3,32 +3,34 @@ package com.pth.iflow.profile.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.pth.iflow.common.edo.models.base.DataModelBase;
+import com.pth.iflow.common.edo.models.helper.IdentityModel;
 
-public class Department extends DataModelBase {
+public class Department extends IdentityModel {
 
-  private Long                        id;
-  private Long                        companyId;
+  private String                      companyIdentity;
+  private String                      identity;
   private String                      title;
   private Integer                     status;
   private Integer                     version;
+
   private final List<DepartmentGroup> departmentGroups = new ArrayList<>();
 
   @Override
-  public Long getId() {
-    return this.id;
+  public String getIdentity() {
+    return this.identity;
   }
 
-  public void setId(final Long id) {
-    this.id = id;
+  @Override
+  public void setIdentity(final String identity) {
+    this.identity = identity;
   }
 
-  public Long getCompanyId() {
-    return this.companyId;
+  public String getCompanyIdentity() {
+    return this.companyIdentity;
   }
 
-  public void setCompanyId(final Long companyId) {
-    this.companyId = companyId;
+  public void setCompanyIdentity(final String companyIdentity) {
+    this.companyIdentity = companyIdentity;
   }
 
   public String getTitle() {
@@ -47,12 +49,10 @@ public class Department extends DataModelBase {
     this.status = status;
   }
 
-  @Override
   public Integer getVersion() {
     return this.version;
   }
 
-  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }

@@ -1,20 +1,22 @@
-package com.pth.iflow.profile.model;
+package com.pth.iflow.profile.model.cach;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.pth.iflow.profile.model.WorkflowMessage;
+
 public class WorkflowCachData {
 
-  private final Map<Long, WorkflowTypeStepCachData> workflowSteps = new HashMap<>();
-  private Long                                      workflowId;
+  private final Map<String, WorkflowTypeStepCachData> workflowSteps = new HashMap<>();
+  private String                                      workflowId;
 
-  public WorkflowCachData(final Long workflowId) {
+  public WorkflowCachData(final String workflowId) {
     this.workflowId = workflowId;
   }
 
-  public Map<Long, WorkflowTypeStepCachData> getWorkflowSteps() {
+  public Map<String, WorkflowTypeStepCachData> getWorkflowSteps() {
     this.removeAllExpired();
     return this.workflowSteps;
   }
@@ -30,9 +32,9 @@ public class WorkflowCachData {
   }
 
   public void setWorkflowMessages(final List<WorkflowMessage> workflowMessages) {
-    final Map<Long, List<WorkflowMessage>> mapped = this.getStepMappedMessageList(workflowMessages);
+    final Map<String, List<WorkflowMessage>> mapped = this.getStepMappedMessageList(workflowMessages);
 
-    for (final Long stepId : mapped.keySet()) {
+    for (final String stepId : mapped.keySet()) {
       final WorkflowTypeStepCachData data = this.getWorkflowTypeStepCachData(stepId, true);
       data.setWorkflowMessages(mapped.get(stepId));
 
@@ -42,25 +44,25 @@ public class WorkflowCachData {
 
   }
 
-  private Map<Long, List<WorkflowMessage>> getStepMappedMessageList(final List<WorkflowMessage> workflowMessages) {
+  private Map<String, List<WorkflowMessage>> getStepMappedMessageList(final List<WorkflowMessage> workflowMessages) {
 
-    final Map<Long, List<WorkflowMessage>> mapped = new HashMap<>();
+    final Map<String, List<WorkflowMessage>> mapped = new HashMap<>();
 
     for (final WorkflowMessage message : workflowMessages) {
 
       if (message.isExpired()) {
         continue;
       }
-      if (mapped.keySet().contains(message.getStepId()) == false) {
-        mapped.put(message.getStepId(), new ArrayList<>());
+      if (mapped.keySet().contains(message.getStepIdentity()) == false) {
+        mapped.put(message.getStepIdentity(), new ArrayList<>());
       }
-      mapped.get(message.getStepId()).add(message);
+      mapped.get(message.getStepIdentity()).add(message);
 
     }
     return mapped;
   }
 
-  public WorkflowTypeStepCachData getWorkflowTypeStepCachData(final Long stepId, final boolean initial) {
+  public WorkflowTypeStepCachData getWorkflowTypeStepCachData(final String stepId, final boolean initial) {
     if (initial && !this.hasWorkflowTypeStepCachData(stepId)) {
       final WorkflowTypeStepCachData data = new WorkflowTypeStepCachData(stepId);
       this.workflowSteps.put(stepId, data);
@@ -68,23 +70,23 @@ public class WorkflowCachData {
     return !this.hasWorkflowTypeStepCachData(stepId) ? null : this.workflowSteps.get(stepId);
   }
 
-  public boolean hasWorkflowTypeStepCachData(final Long stepId) {
+  public boolean hasWorkflowTypeStepCachData(final String stepId) {
     return this.workflowSteps.keySet().contains(stepId);
   }
 
   public void addWorkflowMessage(final WorkflowMessage workflowMessage) {
 
     if (workflowMessage.isNotExpired()) {
-      final WorkflowTypeStepCachData cachData = this.getWorkflowTypeStepCachData(workflowMessage.getStepId(), true);
+      final WorkflowTypeStepCachData cachData = this.getWorkflowTypeStepCachData(workflowMessage.getStepIdentity(), true);
       cachData.addWorkflowMessage(workflowMessage);
     }
   }
 
   public void addWorkflowMessageList(final List<WorkflowMessage> workflowMessageList) {
 
-    final Map<Long, List<WorkflowMessage>> mapped = this.getStepMappedMessageList(workflowMessageList);
+    final Map<String, List<WorkflowMessage>> mapped = this.getStepMappedMessageList(workflowMessageList);
 
-    for (final Long stepId : mapped.keySet()) {
+    for (final String stepId : mapped.keySet()) {
       final WorkflowTypeStepCachData data = this.getWorkflowTypeStepCachData(stepId, true);
       data.addWorkflowMessageList(mapped.get(stepId));
 
@@ -93,15 +95,15 @@ public class WorkflowCachData {
     this.removeAllExpired();
   }
 
-  public Long getWorkflowId() {
+  public String getWorkflowId() {
     return this.workflowId;
   }
 
-  public void setWorkflowId(final Long workflowId) {
+  public void setWorkflowId(final String workflowId) {
     this.workflowId = workflowId;
   }
 
-  public boolean isWorkflowId(final Long workflowId) {
+  public boolean isWorkflowId(final String workflowId) {
     return this.workflowId == workflowId;
   }
 

@@ -34,14 +34,14 @@ public class CompanyService implements ICompanyService {
   }
 
   @Override
-  public Company getById(final Long comapnyId)
+  public Company getById(final String comapnyIdentity)
       throws ProfileCustomizedException, URISyntaxException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    logger.debug("Request company data for id {}", comapnyId);
+    logger.debug("Request company data for id {}", comapnyIdentity);
 
     final CompanyEdo edo = this.restTemplate.callRestGet(
-        this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.READ_COMPANY_BY_ID(comapnyId)).toString(), EModule.CORE,
-        CompanyEdo.class, true, comapnyId);
+        this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.READ_COMPANY_BY_ID(comapnyIdentity)).toString(), EModule.CORE,
+        CompanyEdo.class, true, comapnyIdentity);
 
     return ProfileModelEdoMapper.fromEdo(edo);
   }

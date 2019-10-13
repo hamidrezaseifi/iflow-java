@@ -1,32 +1,34 @@
-package com.pth.iflow.profile.model;
+package com.pth.iflow.profile.model.cach;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.pth.iflow.profile.model.WorkflowMessage;
+
 public class CompanyCachData {
 
-  private final Map<Long, UserCachData> userCachList = new HashMap<>();
-  private Long                          companyId;
+  private final Map<String, UserCachData> userCachList = new HashMap<>();
+  private String                          companyId;
 
-  public CompanyCachData(final Long companyId) {
+  public CompanyCachData(final String companyId) {
     this.companyId = companyId;
   }
 
-  public Long getCompanyId() {
+  public String getCompanyId() {
     return this.companyId;
   }
 
-  public void setCompanyId(final Long companyId) {
+  public void setCompanyId(final String companyId) {
     this.companyId = companyId;
   }
 
-  public boolean isCompanyId(final Long companyId) {
+  public boolean isCompanyId(final String companyId) {
     return this.companyId == companyId;
   }
 
-  public Map<Long, UserCachData> getUserCachList() {
+  public Map<String, UserCachData> getUserCachList() {
     return this.userCachList;
   }
 
@@ -48,7 +50,7 @@ public class CompanyCachData {
     this.userCachList.put(userCachData.getUserId(), userCachData);
   }
 
-  public UserCachData getUserCachData(final Long userId, final boolean initialUserCachData) {
+  public UserCachData getUserCachData(final String userId, final boolean initialUserCachData) {
     if (this.userCachList.containsKey(userId) == false && initialUserCachData) {
       this.initialUserCachData(userId);
     }
@@ -58,28 +60,28 @@ public class CompanyCachData {
     return null;
   }
 
-  public void removeUserCachData(final Long userId) {
+  public void removeUserCachData(final String userId) {
     if (this.userCachList.containsKey(userId)) {
       this.userCachList.remove(userId);
     }
   }
 
-  public boolean hasUserCachData(final Long userId) {
+  public boolean hasUserCachData(final String userId) {
     return this.userCachList.containsKey(userId);
   }
 
-  public List<WorkflowMessage> getUserWorkflowMessages(final Long userId) {
+  public List<WorkflowMessage> getUserWorkflowMessages(final String userId) {
     return this.getUserCachData(userId, true).getWorkflowMessagesList();
   }
 
-  private void initialUserCachData(final Long userId) {
+  private void initialUserCachData(final String userId) {
     if (this.hasUserCachData(userId) == false) {
       final UserCachData userCachData = new UserCachData(userId);
       this.addUserCachData(userCachData);
     }
   }
 
-  public void setWorkflowWorkflowMessages(final Long workflowId, final List<WorkflowMessage> workflowMessageList) {
+  public void setWorkflowWorkflowMessages(final String workflowId, final List<WorkflowMessage> workflowMessageList) {
 
     for (final UserCachData userCachData : this.userCachList.values()) {
       if (userCachData.hasWorkflowCachData(workflowId)) {

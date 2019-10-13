@@ -48,21 +48,21 @@ public class UsersService implements IUsersService {
   }
 
   @Override
-  public User getUserById(final Long id)
+  public User getUserById(final String identity)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
-    logger.debug("Request user data for id {}", id);
+    logger.debug("Request user data for identity {}", identity);
 
     final UserEdo edo = this.restTemplate.callRestGet(
-        this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.READ_USER_BY_ID(id)).toString(), EModule.CORE, UserEdo.class,
-        true, id);
+        this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.READ_USER_BY_EMAIL(identity)).toString(), EModule.CORE,
+        UserEdo.class, true, identity);
 
     return ProfileModelEdoMapper.fromEdo(edo);
   }
 
   @Override
-  public List<User> getUserListByCompanyId(final Long companyId)
+  public List<User> getUserListByCompanyId(final String companyId)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
-    logger.debug("Request user data list for company id {}", companyId);
+    logger.debug("Request user data list for company identity {}", companyId);
 
     final UserListEdo edo = this.restTemplate.callRestGet(
         this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.READ_USER_USER_LIST_BY_COMPANY(companyId)).toString(),

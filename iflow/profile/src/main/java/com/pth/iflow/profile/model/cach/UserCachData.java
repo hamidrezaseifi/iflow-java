@@ -1,4 +1,4 @@
-package com.pth.iflow.profile.model;
+package com.pth.iflow.profile.model.cach;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,16 +6,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.pth.iflow.profile.model.WorkflowMessage;
+
 public class UserCachData {
 
-  private final Map<Long, WorkflowCachData> workflowDataList = new HashMap<>();
-  private Long                              userId;
+  private final Map<String, WorkflowCachData> workflowDataList = new HashMap<>();
+  private String                              userId;
 
-  public UserCachData(final Long userId) {
+  public UserCachData(final String userId) {
     this.userId = userId;
   }
 
-  public Map<Long, WorkflowCachData> getWorkflowDatas() {
+  public Map<String, WorkflowCachData> getWorkflowDatas() {
     this.removeAllExpired();
     return this.workflowDataList;
   }
@@ -25,7 +27,7 @@ public class UserCachData {
     return this.workflowDataList.values().stream().collect(Collectors.toList());
   }
 
-  public void setWorkflowMessages(final Long workflowId, final List<WorkflowMessage> workflowMessages) {
+  public void setWorkflowMessages(final String workflowId, final List<WorkflowMessage> workflowMessages) {
     final WorkflowCachData workflowCachData = this.getWorkflowCachData(workflowId, true);
     workflowCachData.removeAllExpired();
     if (workflowMessages != null) {
@@ -36,7 +38,7 @@ public class UserCachData {
     this.removeAllExpired();
   }
 
-  public WorkflowCachData getWorkflowCachData(final Long workflowId, final boolean initialUserCachData) {
+  public WorkflowCachData getWorkflowCachData(final String workflowId, final boolean initialUserCachData) {
     if (this.workflowDataList.containsKey(workflowId) == false && initialUserCachData) {
       this.initialWorkflowCachData(workflowId);
     }
@@ -46,7 +48,7 @@ public class UserCachData {
     return null;
   }
 
-  private void initialWorkflowCachData(final Long workflowId) {
+  private void initialWorkflowCachData(final String workflowId) {
     if (this.hasWorkflowCachData(workflowId) == false) {
       final WorkflowCachData workflowCachData = new WorkflowCachData(workflowId);
       this.addWorkflowCachData(workflowCachData);
@@ -57,19 +59,19 @@ public class UserCachData {
     this.workflowDataList.put(workflowCachData.getWorkflowId(), workflowCachData);
   }
 
-  public boolean hasWorkflowCachData(final Long workflowId) {
+  public boolean hasWorkflowCachData(final String workflowId) {
     return this.workflowDataList.containsKey(workflowId);
   }
 
-  public Long getUserId() {
+  public String getUserId() {
     return this.userId;
   }
 
-  public void setUserId(final Long userId) {
+  public void setUserId(final String userId) {
     this.userId = userId;
   }
 
-  public boolean isUserId(final Long userId) {
+  public boolean isUserId(final String userId) {
     return this.userId == userId;
   }
 
@@ -82,15 +84,15 @@ public class UserCachData {
 
   public void setWorkflowMessageList(final List<WorkflowMessage> workflowMessageList) {
 
-    final Map<Long, List<WorkflowMessage>> workflowMap = new HashMap<>();
+    final Map<String, List<WorkflowMessage>> workflowMap = new HashMap<>();
     for (final WorkflowMessage message : workflowMessageList) {
-      if (workflowMap.containsKey(message.getWorkflowId()) == false) {
-        workflowMap.put(message.getWorkflowId(), new ArrayList<>());
+      if (workflowMap.containsKey(message.getWorkflowIdentity()) == false) {
+        workflowMap.put(message.getWorkflowIdentity(), new ArrayList<>());
       }
-      workflowMap.get(message.getWorkflowId()).add(message);
+      workflowMap.get(message.getWorkflowIdentity()).add(message);
     }
 
-    for (final Long workflowId : workflowMap.keySet()) {
+    for (final String workflowId : workflowMap.keySet()) {
       this.setWorkflowMessages(workflowId, workflowMap.get(workflowId));
     }
   }

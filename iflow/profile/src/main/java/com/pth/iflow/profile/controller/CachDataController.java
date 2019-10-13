@@ -49,8 +49,8 @@ public class CachDataController {
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(value = IflowRestPaths.ProfileModule.CACHDATA_READ_USER_WORKFLOWMESSAGELIST)
   @ResponseBody
-  public ResponseEntity<WorkflowMessageListEdo> readUserWorkflowMessageList(@PathVariable(name = "companyid") final Long companyid,
-      @PathVariable(name = "userid") final Long userid, final HttpServletRequest request,
+  public ResponseEntity<WorkflowMessageListEdo> readUserWorkflowMessageList(@PathVariable(name = "companyid") final String companyid,
+      @PathVariable(name = "userid") final String userid, final HttpServletRequest request,
       @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId)
       throws ProfileCustomizedException, URISyntaxException, MalformedURLException, IFlowMessageConversionFailureException {
 
@@ -64,44 +64,44 @@ public class CachDataController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(value = IflowRestPaths.ProfileModule.CACHDATA_CAL_USER_DATARESET)
+  @IflowGetRequestMapping(value = IflowRestPaths.ProfileModule.CACHDATA_CAL_USER_DATARESET_BY_COMPANYIDENTITY)
   @ResponseBody
-  public void resetUserData(@PathVariable(name = "companyid") final Long companyid, @PathVariable(name = "userid") final Long userid,
-      final HttpServletRequest request,
+  public void resetUserData(@PathVariable(name = "companyidentity") final String companyidentity,
+      @PathVariable(name = "userid") final String userid, final HttpServletRequest request,
       @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId)
       throws ProfileCustomizedException, URISyntaxException, MalformedURLException, IFlowMessageConversionFailureException {
 
     this.tokenUserDataManager.validateToken(headerTokenId);
 
-    this.companyCachDataManager.resetUserData(companyid, userid);
+    this.companyCachDataManager.resetUserData(companyidentity, userid);
 
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(value = IflowRestPaths.ProfileModule.CACHDATA_CAL_WORKFLOW_DATARESET)
+  @IflowGetRequestMapping(value = IflowRestPaths.ProfileModule.CACHDATA_CAL_WORKFLOW_DATARESET_BY_WORKFLOWIDENTITY)
   @ResponseBody
-  public void resetWorkflowrData(@PathVariable(name = "companyid") final Long companyid,
-      @PathVariable(name = "workflowid") final Long workflowid, final HttpServletRequest request,
+  public void resetWorkflowrData(@PathVariable(name = "companyidentity") final String companyidentity,
+      @PathVariable(name = "identity") final String workflowidentity, final HttpServletRequest request,
       @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId)
       throws ProfileCustomizedException, URISyntaxException, MalformedURLException, IFlowMessageConversionFailureException {
 
     this.tokenUserDataManager.validateToken(headerTokenId);
 
-    this.companyCachDataManager.resetWorkflowStepData(companyid, workflowid);
+    this.companyCachDataManager.resetWorkflowStepData(companyidentity, workflowidentity);
 
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowPostRequestMapping(value = IflowRestPaths.ProfileModule.CACHDATA_CAL_USERLIST_DATARESET)
+  @IflowPostRequestMapping(value = IflowRestPaths.ProfileModule.CACHDATA_CAL_USERLIST_DATARESET_BY_COMPANYIDENTITY)
   @ResponseBody
-  public void resetUserListData(@PathVariable(name = "companyid") final Long companyid, @RequestBody final IdentityListEdo userIdListEdo,
-      final HttpServletRequest request,
+  public void resetUserListData(@PathVariable(name = "companyidentity") final String companyidentity,
+      @RequestBody final IdentityListEdo userIdListEdo, final HttpServletRequest request,
       @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId)
       throws ProfileCustomizedException, URISyntaxException, MalformedURLException, IFlowMessageConversionFailureException {
 
     this.tokenUserDataManager.validateToken(headerTokenId);
 
-    this.companyCachDataManager.resetUserListData(companyid, userIdListEdo.getIdList());
+    this.companyCachDataManager.resetUserListData(companyidentity, userIdListEdo.getIdentityList());
 
   }
 

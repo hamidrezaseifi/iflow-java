@@ -9,9 +9,9 @@ import com.pth.iflow.profile.model.WorkflowMessage;
 
 public interface IWorkflowMessageService {
 
-  public List<WorkflowMessage> getWorkflowMessageListByUser(final Long userId)
+  public List<WorkflowMessage> getWorkflowMessageListByUser(final String userId)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  public List<WorkflowMessage> getWorkflowMessageListByWorkflow(final Long workflowId)
+  public List<WorkflowMessage> getWorkflowMessageListByWorkflow(final String workflowId)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 }

@@ -1,20 +1,22 @@
-package com.pth.iflow.profile.model;
+package com.pth.iflow.profile.model.cach;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.pth.iflow.profile.model.WorkflowMessage;
+
 public class WorkflowTypeStepCachData {
 
-  private final Map<Long, WorkflowMessage> workflowMessages = new HashMap<>();
-  private Long                             stepId;
+  private final Map<String, WorkflowMessage> workflowMessages = new HashMap<>();
+  private String                             stepId;
 
-  public WorkflowTypeStepCachData(final Long stepId) {
+  public WorkflowTypeStepCachData(final String stepId) {
     this.stepId = stepId;
   }
 
-  public Map<Long, WorkflowMessage> getWorkflowMessages() {
+  public Map<String, WorkflowMessage> getWorkflowMessages() {
     this.removeAllExpired();
     return this.workflowMessages;
   }
@@ -29,7 +31,7 @@ public class WorkflowTypeStepCachData {
     if (workflowMessages != null) {
 
       for (final WorkflowMessage workflowMessage : workflowMessages) {
-        this.workflowMessages.put(workflowMessage.getId(), workflowMessage);
+        this.workflowMessages.put(workflowMessage.getTotalIdentity(), workflowMessage);
       }
 
     }
@@ -39,7 +41,7 @@ public class WorkflowTypeStepCachData {
   public void addWorkflowMessage(final WorkflowMessage workflowMessage) {
 
     if (workflowMessage.isNotExpired()) {
-      this.workflowMessages.put(workflowMessage.getId(), workflowMessage);
+      this.workflowMessages.put(workflowMessage.getTotalIdentity(), workflowMessage);
     }
   }
 
@@ -50,24 +52,24 @@ public class WorkflowTypeStepCachData {
     }
   }
 
-  public Long getStepId() {
+  public String getStepId() {
     return this.stepId;
   }
 
-  public void setStepId(final Long stepId) {
+  public void setStepId(final String stepId) {
     this.stepId = stepId;
   }
 
-  public boolean isStepId(final Long stepId) {
+  public boolean isStepId(final String stepId) {
     return this.stepId == stepId;
   }
 
   public void removeAllExpired() {
 
-    final List<Long> expireds = this.workflowMessages.keySet().stream().filter(id -> this.workflowMessages.get(id).isExpired())
+    final List<String> expireds = this.workflowMessages.keySet().stream().filter(id -> this.workflowMessages.get(id).isExpired())
         .collect(Collectors.toList());
 
-    for (final Long id : expireds) {
+    for (final String id : expireds) {
       this.workflowMessages.remove(id);
     }
   }

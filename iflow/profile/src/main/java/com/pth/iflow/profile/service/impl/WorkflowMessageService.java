@@ -34,7 +34,7 @@ public class WorkflowMessageService implements IWorkflowMessageService {
   }
 
   @Override
-  public List<WorkflowMessage> getWorkflowMessageListByUser(final Long userId)
+  public List<WorkflowMessage> getWorkflowMessageListByUser(final String userId)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     logger.debug("Request user workflow messages");
@@ -47,7 +47,7 @@ public class WorkflowMessageService implements IWorkflowMessageService {
   }
 
   @Override
-  public List<WorkflowMessage> getWorkflowMessageListByWorkflow(final Long workflowId)
+  public List<WorkflowMessage> getWorkflowMessageListByWorkflow(final String workflowId)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     logger.debug("Request workflow messages");
 

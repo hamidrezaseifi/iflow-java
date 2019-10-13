@@ -2,65 +2,44 @@ package com.pth.iflow.profile.model;
 
 import java.time.LocalDateTime;
 
-import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.enums.EWorkflowMessageType;
 
-public class WorkflowMessage extends DataModelBase {
+public class WorkflowMessage {
 
-  private Long                   id;
-
-  private Long                   workflowId;
-
-  private Long                   stepId;
-
-  private Long                   userId;
-
+  private String                 workflowIdentity;
+  private String                 stepIdentity;
+  private String                 userIdentity;
+  private String                 createdByIdentity;
   private String                 message;
-
-  private Long                   createdBy;
-
   private EWorkflowMessageType   messageType;
-
   private EWorkflowMessageStatus status;
-
   private Integer                version;
-
   private Integer                expireDays;
-
   private LocalDateTime          createdAt;
 
-  @Override
-  public Long getId() {
-    return this.id;
+  public String getWorkflowIdentity() {
+    return this.workflowIdentity;
   }
 
-  public void setId(final Long id) {
-    this.id = id;
+  public void setWorkflowIdentity(final String workflowIdentity) {
+    this.workflowIdentity = workflowIdentity;
   }
 
-  public Long getWorkflowId() {
-    return this.workflowId;
+  public String getStepIdentity() {
+    return this.stepIdentity;
   }
 
-  public void setWorkflowId(final Long workflowId) {
-    this.workflowId = workflowId;
+  public void setStepIdentity(final String stepIdentity) {
+    this.stepIdentity = stepIdentity;
   }
 
-  public Long getStepId() {
-    return this.stepId;
+  public String getUserIdentity() {
+    return this.userIdentity;
   }
 
-  public void setStepId(final Long stepId) {
-    this.stepId = stepId;
-  }
-
-  public Long getUserId() {
-    return this.userId;
-  }
-
-  public void setUserId(final Long userId) {
-    this.userId = userId;
+  public void setUserIdentity(final String userIdentity) {
+    this.userIdentity = userIdentity;
   }
 
   public String getMessage() {
@@ -71,12 +50,12 @@ public class WorkflowMessage extends DataModelBase {
     this.message = message;
   }
 
-  public Long getCreatedBy() {
-    return this.createdBy;
+  public String getCreatedByIdentity() {
+    return this.createdByIdentity;
   }
 
-  public void setCreatedBy(final Long createdBy) {
-    this.createdBy = createdBy;
+  public void setCreatedByIdentity(final String createdByIdentity) {
+    this.createdByIdentity = createdByIdentity;
   }
 
   public EWorkflowMessageType getMessageType() {
@@ -95,18 +74,16 @@ public class WorkflowMessage extends DataModelBase {
     this.status = status;
   }
 
-  @Override
   public Integer getVersion() {
     return this.version;
   }
 
-  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
 
   public boolean isExpired() {
-    return this.createdAt.plusDays(this.expireDays).isBefore(LocalDateTime.now());
+    return this.createdAt.plusDays(this.expireDays).isAfter(LocalDateTime.now());
   }
 
   public boolean isNotExpired() {
@@ -127,6 +104,10 @@ public class WorkflowMessage extends DataModelBase {
 
   public void setCreatedAt(final LocalDateTime createdAt) {
     this.createdAt = createdAt;
+  }
+
+  public String getTotalIdentity() {
+    return this.workflowIdentity + "-" + this.stepIdentity + "-" + this.userIdentity;
   }
 
 }
