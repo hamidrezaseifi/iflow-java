@@ -28,7 +28,7 @@
 					<div class="item-content">
 						<select type="text" ng-model="workflowCreateRequest.workflow.workflowTypeId">
 							<option th:text="#{workflow-select-type}" value="0"></option>
-							<option ng-repeat="item in workflowTypes" ng-value="item.id">{{item.title}}</option>
+							<option ng-repeat="item in workflowTypes" ng-value="item.identity">{{item.title}}</option>
 						</select>
 					</div>
 					<div class="clear"></div>
@@ -38,7 +38,7 @@
 					<div class="item-content">
 						<select type="text" ng-model="workflowCreateRequest.workflow.controller">
 							<option th:text="#{workflow-select-controller}" value="0"></option>
-							<option ng-repeat="item in users" ng-value="item.id">{{item.fullName}}</option>
+							<option ng-repeat="item in users" ng-value="item.identity">{{item.fullName}}</option>
 						</select>
 					</div>
 					<div class="clear"></div>
@@ -81,7 +81,7 @@
 			    		<div class="clear"></div>
 			    	</div>
 			    	<div class="dialog-content">
-			    		<div ng-repeat="item in users" class="user-list-item"><input type="checkbox" ng-model="userAssigned[item.id]" ng-value="item.id"/> &nbsp; &nbsp; {{item.fullName}}</div>
+			    		<div ng-repeat="item in users" class="user-list-item"><input type="checkbox" ng-model="userAssigned[item.identity]" ng-value="item.identity"/> &nbsp; &nbsp; {{item.fullName}}</div>
 			    	</div>
 			    	<div class="dialog-bottonnbar">
 			    		<button class="dialog-bottonn" ng-click="closeAssignSelectDialog();"><i class="material-icons">close</i></button>

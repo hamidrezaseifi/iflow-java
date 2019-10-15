@@ -61,11 +61,8 @@ iflowApp.controller('WorkflowMessageController', function ($scope, $http, $sce, 
 		
 	}; 
     
-	$scope.showWorkflowView = function (messageId, workflowId){
-		
-		//alert("showWorkflowView: " + messageId + " : " + workflowId); 
-		//return;
-		
+	$scope.showWorkflowView = function (workflowId){
+				
 		$scope.viewWorkflow = {};
 		
 		for(o in $scope.messages){

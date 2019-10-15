@@ -14,7 +14,7 @@
 		
 			<div class="nav navbar-nav">
 				<div th:each="workflowType: ${workflowTypeList}">
-			    	<span class="" th:text="${workflowType.getId()}"></span> , 
+			    	<span class="" th:text="${workflowType.getIdentity()}"></span> , 
 			    	<span class="" th:text="${workflowType.getTitle()}"></span> , 
 			    	<span class="" th:text="${workflowType.getStatus()}"></span> , 
 				</div>
