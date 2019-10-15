@@ -2,25 +2,34 @@ package com.pth.iflow.gui.models;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.pth.iflow.common.edo.models.helper.IdentityModel;
 
 public class Department extends IdentityModel {
 
-  private String                      identity;
-  private String                      title;
-  private Integer                     status;
-  private Integer                     version;
+  private String  companyIdentity;
+  private String  identity;
+  private String  title;
+  private Integer status;
+  private Integer version;
+
   private final List<DepartmentGroup> departmentGroups = new ArrayList<>();
 
   @Override
   public String getIdentity() {
-    return this.identity;
+    return identity;
   }
 
   @Override
   public void setIdentity(final String identity) {
     this.identity = identity;
+  }
+
+  public String getCompanyIdentity() {
+    return companyIdentity;
+  }
+
+  public void setCompanyIdentity(final String companyIdentity) {
+    this.companyIdentity = companyIdentity;
   }
 
   public String getTitle() {

@@ -1,7 +1,6 @@
 package com.pth.iflow.common.edo.models.helper;
 
 import org.apache.commons.lang3.StringUtils;
-
 import com.pth.iflow.common.enums.EWorkflowIdentity;
 
 public abstract class IdentityModel {
@@ -23,7 +22,11 @@ public abstract class IdentityModel {
   }
 
   public boolean hasSameIdentity(final String identity) {
-    return (StringUtils.isEmpty(this.getIdentity()) && StringUtils.isEmpty(identity)) || this.getIdentity().equals(identity);
+    return areSameIdentity(this.getIdentity(), identity);
+  }
+
+  public static boolean areSameIdentity(final String identity1, final String identity2) {
+    return (StringUtils.isEmpty(identity2) && StringUtils.isEmpty(identity1)) || identity2.equals(identity1);
   }
 
 }

@@ -2,6 +2,7 @@ package com.pth.iflow.gui.models;
 
 public class WorkflowFileVersion {
 
+  private User    createdBy;
   private String  createdByIdentity;
   private String  filePath;
   private String  comments;
@@ -17,12 +18,20 @@ public class WorkflowFileVersion {
     this.filePath = filePath;
   }
 
-  public String getCreatedByIdentity() {
-    return this.createdByIdentity;
+  public User getCreatedBy() {
+    return this.createdBy;
   }
 
-  public void setCreatedByIdentity(final String createdBy) {
-    this.createdByIdentity = createdBy;
+  public void setCreatedBy(final User createdBy) {
+    this.createdBy = createdBy;
+  }
+
+  public String getCreatedByIdentity() {
+    return createdByIdentity;
+  }
+
+  public void setCreatedByIdentity(final String createdByIdentity) {
+    this.createdByIdentity = createdByIdentity;
   }
 
   public String getComments() {

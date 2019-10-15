@@ -1,7 +1,5 @@
 package com.pth.iflow.gui.models;
 
-import org.apache.commons.lang3.StringUtils;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.pth.iflow.common.edo.models.helper.IdentityModel;
 import com.pth.iflow.common.enums.EWorkflowActionStatus;
@@ -10,18 +8,20 @@ import com.pth.iflow.common.enums.EWorkflowActionStatus;
 public class WorkflowAction extends IdentityModel {
 
   private String                identity;
+  private String                workflowIdentity;
   private String                assignToIdentity;
-  private User                  assignToUser;
-  private String                assignToUserName;
   private String                currentStepIdentity;
-  private WorkflowTypeStep      currentStep;
   private String                comments;
   private EWorkflowActionStatus status;
   private Integer               version;
 
+  private WorkflowTypeStep currentStep;
+  private User             assignToUser;
+  private Workflow         workflow;
+
   @Override
   public String getIdentity() {
-    return this.identity;
+    return identity;
   }
 
   @Override
@@ -29,18 +29,28 @@ public class WorkflowAction extends IdentityModel {
     this.identity = identity;
   }
 
-  /**
-   * @return the assignToUser
-   */
-  public User getAssignToUser() {
-    return this.assignToUser;
+  public String getWorkflowIdentity() {
+    return workflowIdentity;
   }
 
-  /**
-   * @param assignToUser the assignToUser to set
-   */
-  public void setAssignToUser(final User assignToUser) {
-    this.assignToUser = assignToUser;
+  public void setWorkflowIdentity(final String workflowIdentity) {
+    this.workflowIdentity = workflowIdentity;
+  }
+
+  public String getAssignToIdentity() {
+    return assignToIdentity;
+  }
+
+  public void setAssignToIdentity(final String assignToIdentity) {
+    this.assignToIdentity = assignToIdentity;
+  }
+
+  public String getCurrentStepIdentity() {
+    return currentStepIdentity;
+  }
+
+  public void setCurrentStepIdentity(final String currentStepIdIdentity) {
+    this.currentStepIdentity = currentStepIdIdentity;
   }
 
   public String getComments() {
@@ -51,28 +61,16 @@ public class WorkflowAction extends IdentityModel {
     this.comments = comments;
   }
 
-  public String getAssignToIdentity() {
-    return this.assignToIdentity;
+  public EWorkflowActionStatus getStatus() {
+    return this.status;
   }
 
-  public void setAssignToIdentity(final String assignToIdentity) {
-    this.assignToIdentity = assignToIdentity;
+  public void setStatus(final int status) {
+    this.status = EWorkflowActionStatus.ofValue(status);
   }
 
-  public String getCurrentStepIdentity() {
-    return this.currentStepIdentity;
-  }
-
-  public void setCurrentStepIdentity(final String currentStepIdentity) {
-    this.currentStepIdentity = currentStepIdentity;
-  }
-
-  public WorkflowTypeStep getCurrentStep() {
-    return this.currentStep;
-  }
-
-  public void setCurrentStep(final WorkflowTypeStep currentStep) {
-    this.currentStep = currentStep;
+  public void setStatus(final EWorkflowActionStatus status) {
+    this.status = status;
   }
 
   public Integer getVersion() {
@@ -83,37 +81,45 @@ public class WorkflowAction extends IdentityModel {
     this.version = version;
   }
 
-  public EWorkflowActionStatus getStatus() {
-    return this.status;
-  }
-
-  public Integer getStatusInt() {
-    return this.status.getValue().intValue();
-  }
-
-  public void setStatus(final EWorkflowActionStatus status) {
-    this.status = status;
-  }
-
-  public void setStatusInt(final Integer status) {
-    this.status = EWorkflowActionStatus.ofValue(status);
-  }
-
-  public String getAssignToUserName() {
-    return this.assignToUserName;
-  }
-
-  public void setAssignToUserName(final String assignToUserName) {
-    this.assignToUserName = assignToUserName;
+  public boolean isAssigned() {
+    return isIdentityNew(this.assignToIdentity) == false;
   }
 
   public boolean getIsActive() {
-    return EWorkflowActionStatus.getIsActive(this.getStatusInt());
+    return EWorkflowActionStatus.getIsActive(this.getStatus().getValue());
+  }
+
+  public WorkflowTypeStep getCurrentStep() {
+    return currentStep;
+  }
+
+  public void setCurrentStep(final WorkflowTypeStep currentStep) {
+    this.currentStep = currentStep;
+  }
+
+  public User getAssignToUser() {
+    return assignToUser;
+  }
+
+  public void setAssignToUser(final User assignToUser) {
+    this.assignToUser = assignToUser;
+  }
+
+  public Workflow getWorkflow() {
+    return workflow;
+  }
+
+  public void setWorkflow(final Workflow workflow) {
+    this.workflow = workflow;
+  }
+
+  public String getAssignToUserName() {
+    return this.assignToUser != null ? this.assignToUser.getIdentity() : "";
   }
 
   public boolean isAssignTo(final String userIdentity) {
 
-    return (StringUtils.isEmpty(userIdentity) && StringUtils.isEmpty(this.assignToIdentity))
-        || this.assignToIdentity.equals(userIdentity);
+    return IdentityModel.areSameIdentity(this.assignToIdentity, userIdentity);
   }
+
 }

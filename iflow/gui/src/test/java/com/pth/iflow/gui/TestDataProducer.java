@@ -1,13 +1,15 @@
 package com.pth.iflow.gui;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collectors;
-
+import java.util.Set;
 import com.pth.iflow.common.enums.EAssignType;
 import com.pth.iflow.common.enums.EWorkflowActionStatus;
-import com.pth.iflow.common.enums.EWorkflowIdentity;
+import com.pth.iflow.common.enums.EWorkflowMessageStatus;
+import com.pth.iflow.common.enums.EWorkflowMessageType;
 import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
@@ -22,12 +24,11 @@ import com.pth.iflow.gui.models.Workflow;
 import com.pth.iflow.gui.models.WorkflowAction;
 import com.pth.iflow.gui.models.WorkflowFile;
 import com.pth.iflow.gui.models.WorkflowFileVersion;
+import com.pth.iflow.gui.models.WorkflowMessage;
 import com.pth.iflow.gui.models.WorkflowSaveRequest;
 import com.pth.iflow.gui.models.WorkflowSearchFilter;
 import com.pth.iflow.gui.models.WorkflowType;
 import com.pth.iflow.gui.models.WorkflowTypeStep;
-import com.pth.iflow.gui.models.ui.SessionUserInfo;
-import com.pth.iflow.gui.models.ui.enums.EUiUserRole;
 
 public class TestDataProducer {
 
@@ -36,102 +37,156 @@ public class TestDataProducer {
     company.setCompanyName("companyName");
     company.setIdentity("identifyid");
     company.setStatus(1);
+    company.setVersion(1);
 
     return company;
   }
 
   protected CompanyProfile getTestCompanyProfile() {
 
-    final CompanyProfile companyProfile = new CompanyProfile(this.getTestCompany(), this.getTestDepartmentList(),
-        this.getTestUserGroupList());
+    final CompanyProfile companyProfile = new CompanyProfile(this.getTestCompany(),
+                                                             this.getTestDepartmentList(),
+                                                             this.getTestUserGroupList());
 
     return companyProfile;
   }
 
   protected User getTestUser() {
     final User model = new User();
-    model.setCompanyId(1L);
-    model.setId(1L);
+    model.setCompanyIdentity("companyIdentity");
     model.setEmail("email");
     model.setBirthDate(LocalDate.now());
     model.setFirstName("firstName");
     model.setLastName("lastName");
     model.setStatus(1);
-    model.setDepartmentGroups(this.getTestDepartmentGroupIdList());
-    model.setDepartments(this.getTestDepartmentIdList());
-    model.setDeputies(this.getTestDeputiyIdList());
-    model.setGroups(this.getTestUserGroupIdList());
+    model.setVersion(1);
+    model.setPermission(1);
+    model.setDepartmentGroups(this.getTestDepartmentGroupIdSet());
+    model.setDepartments(this.getTestDepartmentIdSet());
+    model.setDeputies(this.getTestDeputiyIdSet());
+    model.setGroups(this.getTestUserGroupIdSet());
+    model.setCompanyIdentity("companyIdentity");
 
     return model;
   }
 
-  protected User getTestUser(final Long id, final String fname, final String lname, final String email) {
+  protected User getTestUser(final String fname, final String lname, final String email) {
     final User model = new User();
-    model.setCompanyId(1L);
-    model.setId(id);
+    model.setCompanyIdentity("companyIdentity");
+    model.setCompanyIdentity("companyIdentity");
     model.setEmail(email);
     model.setBirthDate(LocalDate.now());
     model.setFirstName(fname);
     model.setLastName(lname);
     model.setStatus(1);
-    model.setVersion(1);
-    model.setPermission(1);
-    model.setDepartmentGroups(this.getTestDepartmentGroupIdList());
-    model.setDepartments(this.getTestDepartmentIdList());
-    model.setDeputies(this.getTestDeputiyIdList());
-    model.setGroups(this.getTestUserGroupIdList());
+    model.setDepartmentGroups(this.getTestDepartmentGroupIdSet());
+    model.setDepartments(this.getTestDepartmentIdSet());
+    model.setDeputies(this.getTestDeputiyIdSet());
+    model.setGroups(this.getTestUserGroupIdSet());
 
     return model;
   }
 
   protected List<User> getTestUserList() {
-    final List<User> list = Arrays.asList(this.getTestUser(1L, "fname 1", "lname 1", "email 1"),
-        this.getTestUser(2L, "fname 2", "lname 2", "email 2"), this.getTestUser(3L, "fname 3", "lname 3", "email 3"));
+    final List<User> list = Arrays.asList(this.getTestUser("fname 1", "lname 1", "email 1"),
+                                          this.getTestUser("fname 2", "lname 2", "email 2"),
+                                          this.getTestUser("fname 3", "lname 3", "email 3"));
 
     return list;
   }
 
-  protected Workflow getTestGuiWorkflow(final Long Id) {
+  protected Workflow getTestWorkflow(final String identity) {
     final Workflow model = new Workflow();
-    model.setWorkflowTypeId(1L);
-    model.setIdentity(EWorkflowIdentity.NOT_SET.getName());
+    model.setWorkflowType(getTestWorkflowType("workflowTypeIdentity", "workflowtype 1"));
+    model.setWorkflowTypeIdentity(model.getWorkflowType().getIdentity());
+    model.setIdentity(identity);
     model.setStatus(EWorkflowStatus.INITIALIZE);
     model.setVersion(1);
     model.setComments("comments");
-    model.setController(1L);
-    model.setCurrentStep(this.getTestGuiWorkflowTypeStep());
-    model.setCurrentStepId(model.getCurrentStep().getId());
-    model.setCreatedByIdentity(1L);
-    model.setActions(Arrays.asList(this.getTestGuiWorkflowAction(1L, 1L), this.getTestGuiWorkflowAction(2L, 2L),
-        this.getTestGuiWorkflowAction(3L, 3L)));
-    model.setFiles(
-        Arrays.asList(this.getTestGuiWorkflowFile(1L, 1L), this.getTestGuiWorkflowFile(2L, 2L), this.getTestGuiWorkflowFile(3L, 3L)));
+    model.setControllerIdentity("controllerIdentity");
+    model.setCurrentStep(this.getTestWorkflowTypeStep());
+    model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
+    model.setCreatedByIdentity("createdByIdentity");
+
+    model.setActions(Arrays.asList(this.getTestWorkflowAction("action1", model.getIdentity()),
+                                   this.getTestWorkflowAction("action2", model.getIdentity()),
+                                   this.getTestWorkflowAction("action3", model.getIdentity())));
+    model.setFiles(Arrays.asList(this.getTestWorkflowFile("file1", model.getIdentity()),
+                                 this.getTestWorkflowFile("file2", model.getIdentity()),
+                                 this.getTestWorkflowFile("file3", model.getIdentity())));
 
     return model;
   }
 
-  protected WorkflowFile getTestGuiWorkflowFile(final Long Id, final Long workflowId) {
+  protected Workflow getTestWorkflow(final String identity, final WorkflowType workflowType) {
+    final Workflow model = new Workflow();
+    model.setWorkflowType(workflowType);
+    model.setWorkflowTypeIdentity(workflowType.getIdentity());
+    model.setIdentity(identity);
+    model.setStatus(EWorkflowStatus.INITIALIZE);
+    model.setVersion(1);
+    model.setComments("comments");
+    model.setControllerIdentity("controllerIdentity");
+    model.setCurrentStep(workflowType.getSteps().get(0));
+    model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
+    model.setCreatedByIdentity("createdByIdentity");
+
+    model.setActions(Arrays.asList(this.getTestWorkflowAction("action1", model.getIdentity()),
+                                   this.getTestWorkflowAction("action2", model.getIdentity()),
+                                   this.getTestWorkflowAction("action3", model.getIdentity())));
+    model.setFiles(Arrays.asList(this.getTestWorkflowFile("file1", model.getIdentity()),
+                                 this.getTestWorkflowFile("file2", model.getIdentity()),
+                                 this.getTestWorkflowFile("file3", model.getIdentity())));
+
+    return model;
+  }
+
+  protected Workflow getTestWorkflow(final String identity, final EWorkflowActionStatus actionStatus) {
+    final Workflow model = new Workflow();
+    model.setWorkflowTypeIdentity("workflowTypeIdentity");
+    model.setIdentity(identity);
+    model.setStatus(EWorkflowStatus.INITIALIZE);
+    model.setVersion(1);
+    model.setComments("comments");
+    model.setControllerIdentity("controllerIdentity");
+    model.setCurrentStep(this.getTestWorkflowTypeStep());
+    model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
+    model.setCreatedByIdentity("createdByIdentity");
+    model.setActions(Arrays.asList(this.getTestWorkflowAction("action1", identity, actionStatus),
+                                   this.getTestWorkflowAction("action2", identity, actionStatus),
+                                   this.getTestWorkflowAction("action3", identity, actionStatus)));
+    model.setFiles(Arrays.asList(this.getTestWorkflowFile("file1", identity),
+                                 this.getTestWorkflowFile("file2", identity),
+                                 this.getTestWorkflowFile("file3", identity)));
+
+    return model;
+  }
+
+  protected WorkflowFile getTestWorkflowFile(final String identity, final String workflowIdentity) {
     final WorkflowFile model = new WorkflowFile();
-    model.setIdentity("identity" + Id);
+    model.setWorkflowIdentity(workflowIdentity);
+    model.setIdentity(identity);
     model.setStatus(1);
     model.setVersion(1);
-    model.setCreatedByIdentity(1L);
+    model.setCreatedByIdentity("createdByIdentity");
     model.setComments("comments");
     model.setActiveFilePath("filePath");
     model.setActiveFileVersion(1);
-    model.setTitle("title " + Id);
-    model.setExtention("extention");
-    model.setFileVersions(Arrays.asList(this.getTestGuiWorkflowFileVersion(1L, 1, 1L), this.getTestGuiWorkflowFileVersion(2L, 2, 1L),
-        this.getTestGuiWorkflowFileVersion(3L, 3, 1L)));
+    model.setTitle("title " + identity);
+    model.setExtention("ext");
+    model.setFileVersions(Arrays.asList(this.getTestWorkflowFileVersion("filever1", 1, identity),
+                                        this.getTestWorkflowFileVersion("filever2", 2, identity),
+                                        this.getTestWorkflowFileVersion("filever3", 3, identity)));
 
     return model;
   }
 
-  protected WorkflowFileVersion getTestGuiWorkflowFileVersion(final Long Id, final int version, final Long workflowFileId) {
+  protected WorkflowFileVersion getTestWorkflowFileVersion(final String identity, final int version, final String workflowFileIdentity) {
     final WorkflowFileVersion model = new WorkflowFileVersion();
     model.setStatus(1);
     model.setVersion(1);
-    model.setCreatedByIdentity(1L);
+    model.setCreatedBy(getTestUser());
+    model.setCreatedByIdentity(model.getCreatedBy().getIdentity());
     model.setComments("comments");
     model.setFilePath("filePath");
     model.setFileVersion(version);
@@ -139,22 +194,41 @@ public class TestDataProducer {
     return model;
   }
 
-  protected WorkflowAction getTestGuiWorkflowAction(final Long Id, final Long workflowId) {
+  protected WorkflowAction getTestWorkflowAction(final String identity, final String workflowIdentity) {
     final WorkflowAction model = new WorkflowAction();
-    model.setStatus(EWorkflowActionStatus.INITIALIZE);
+    model.setWorkflowIdentity(workflowIdentity);
+    model.setIdentity(identity);
+    model.setStatus(EWorkflowActionStatus.OPEN);
     model.setVersion(1);
-    model.setCurrentStepId(1L);
+    model.setCurrentStep(getTestWorkflowTypeStep());
+    model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
     model.setComments("comments");
-    model.setAssignTo(1L);
+    model.setAssignToUser(getTestUser("fname", "lname", "assignedemail"));
+    model.setAssignToIdentity(model.getAssignToUser().getIdentity());
 
     return model;
   }
 
-  protected WorkflowType getTestGuiWorkflowType() {
+  protected WorkflowAction getTestWorkflowAction(final String identity, final String workflowIdentity, final EWorkflowActionStatus actionStatus) {
+    final WorkflowAction model = new WorkflowAction();
+    model.setWorkflowIdentity(workflowIdentity);
+    model.setIdentity(identity);
+    model.setStatus(actionStatus);
+    model.setVersion(1);
+    model.setCurrentStep(getTestWorkflowTypeStep());
+    model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
+    model.setComments("comments");
+    model.setAssignToUser(getTestUser("fname", "lname", "assignedemail"));
+    model.setAssignToIdentity(model.getAssignToUser().getIdentity());
+
+    return model;
+  }
+
+  protected WorkflowType getTestWorkflowType() {
     final WorkflowType model = new WorkflowType();
-    model.setCompanyId(1L);
-    model.setId(1L);
-    model.setBaseTypeId(1L);
+    model.setCompanyIdentity("companyIdentity");
+    model.setIdentity("identity");
+    model.setBaseTypeIdentity("baseTypeIdentity");
     model.setTitle("utest title");
     model.setStatus(1);
     model.setVersion(1);
@@ -162,60 +236,63 @@ public class TestDataProducer {
     model.setSendToController(true);
     model.setIncreaseStepAutomatic(true);
     model.setAllowAssign(true);
-    model.setBaseTypeId(1L);
-    model.setSteps(Arrays.asList(this.getTestGuiWorkflowTypeStep(1L, "step 1", 1), this.getTestGuiWorkflowTypeStep(2L, "step 2", 2),
-        this.getTestGuiWorkflowTypeStep(3L, "step 3", 3)));
+    model.setSteps(Arrays.asList(this.getTestWorkflowTypeStep("step1", "step 1", 1),
+                                 this.getTestWorkflowTypeStep("step2", "step 2", 2),
+                                 this.getTestWorkflowTypeStep("step3", "step 3", 3)));
     model.setComments("comments");
 
     return model;
   }
 
-  protected WorkflowType getTestGuiWorkflowType(final Long id, final String title) {
+  protected WorkflowType getTestWorkflowType(final String identity, final String title) {
     final WorkflowType model = new WorkflowType();
-    model.setCompanyId(1L);
-    model.setId(id);
+    model.setIdentity(identity);
     model.setTitle(title);
     model.setStatus(1);
     model.setVersion(1);
     model.setAssignType(EWorkflowTypeAssignType.MANUAL);
+    model.setCompanyIdentity("companyIdentity");
     model.setSendToController(true);
     model.setIncreaseStepAutomatic(true);
     model.setAllowAssign(true);
-    model.setBaseTypeId(1L);
-    model.setSteps(Arrays.asList(this.getTestGuiWorkflowTypeStep(1L, "step 1", 1), this.getTestGuiWorkflowTypeStep(2L, "step 2", 2),
-        this.getTestGuiWorkflowTypeStep(3L, "step 3", 3)));
+    model.setBaseTypeIdentity("baseTypeIdentity");
+    model.setSteps(Arrays.asList(this.getTestWorkflowTypeStep("step1", "step 1", 1),
+                                 this.getTestWorkflowTypeStep("step2", "step 2", 2),
+                                 this.getTestWorkflowTypeStep("step3", "step 3", 3)));
     model.setComments("comments");
 
     return model;
   }
 
-  protected List<WorkflowType> getTestGuiWorkflowTypeList() {
-    final List<WorkflowType> list = Arrays.asList(this.getTestGuiWorkflowType(1L, "GuiWorkflowType 1"),
-        this.getTestGuiWorkflowType(2L, "GuiWorkflowType 2"), this.getTestGuiWorkflowType(3L, "GuiWorkflowType 3"));
+  protected List<WorkflowType> getTestWorkflowTypeList() {
+    final List<WorkflowType> list = Arrays.asList(this.getTestWorkflowType("type1", "WorkflowType 1"),
+                                                  this.getTestWorkflowType("type2", "WorkflowType 2"),
+                                                  this.getTestWorkflowType("type3", "WorkflowType 3"));
 
     return list;
   }
 
-  protected WorkflowTypeStep getTestGuiWorkflowTypeStep() {
+  protected WorkflowTypeStep getTestWorkflowTypeStep() {
     final WorkflowTypeStep model = new WorkflowTypeStep();
-    model.setId(1L);
+    model.setIdentity("identity");
     model.setTitle("title");
     model.setStatus(1);
     model.setVersion(1);
     model.setStepIndex(1);
     model.setComments("comments");
     model.setViewName("viewName");
+    model.setExpireDays(15);
 
     return model;
   }
 
-  protected WorkflowTypeStep getTestGuiWorkflowTypeStep(final Long id, final String title, final Integer index) {
+  protected WorkflowTypeStep getTestWorkflowTypeStep(final String identity, final String title, final Integer index) {
     final WorkflowTypeStep model = new WorkflowTypeStep();
-    model.setId(id);
+
+    model.setIdentity(identity);
     model.setTitle(title);
     model.setStatus(1);
     model.setVersion(1);
-    model.setStepIndex(1);
     model.setStepIndex(index);
     model.setComments("comments");
     model.setViewName("viewName");
@@ -224,74 +301,71 @@ public class TestDataProducer {
     return model;
   }
 
-  protected List<Workflow> getTestGuiWorkflowList() {
+  protected List<Workflow> getTestWorkflowList() {
 
-    return Arrays.asList(this.getTestGuiWorkflow(1L), this.getTestGuiWorkflow(2L), this.getTestGuiWorkflow(3L));
+    return Arrays.asList(this.getTestWorkflow("workflow1"), this.getTestWorkflow("workflow2"), this.getTestWorkflow("workflow3"));
   }
 
-  protected List<WorkflowTypeStep> getTestGuiWorkflowTypeStepList() {
-    final List<WorkflowTypeStep> list = Arrays.asList(this.getTestGuiWorkflowTypeStep(1L, "GuiWorkflowTypeStep 1", 1),
-        this.getTestGuiWorkflowTypeStep(2L, "GuiWorkflowTypeStep 2", 2),
-        this.getTestGuiWorkflowTypeStep(3L, "GuiWorkflowTypeStep 3", 3));
+  protected List<WorkflowTypeStep> getTestWorkflowTypeStepList() {
+    final List<WorkflowTypeStep> list = Arrays.asList(this.getTestWorkflowTypeStep("step1", "WorkflowTypeStep 1", 1),
+                                                      this.getTestWorkflowTypeStep("step2", "WorkflowTypeStep 2", 2),
+                                                      this.getTestWorkflowTypeStep("step3", "WorkflowTypeStep 3", 3));
 
     return list;
   }
 
-  protected List<Long> getTestUserGroupIdList() {
-    return Arrays.asList(1L, 2L, 3L);
+  protected Set<String> getTestUserGroupIdSet() {
+    return new HashSet<>(Arrays.asList("identity1", "identity2", "identity3"));
   }
 
-  protected List<Long> getTestDepartmentIdList() {
-    return Arrays.asList(1L, 2L, 3L);
+  protected Set<String> getTestDepartmentIdSet() {
+    return new HashSet<>(Arrays.asList("identity1", "identity2", "identity3"));
   }
 
-  protected List<Long> getTestDepartmentGroupIdList() {
-    return Arrays.asList(1L, 2L, 3L);
+  protected Set<String> getTestDepartmentGroupIdSet() {
+    return new HashSet<>(Arrays.asList("identity1", "identity2", "identity3"));
   }
 
-  protected List<Long> getTestGuiWorkflowTypeIdList() {
-    return Arrays.asList(1L, 2L, 3L);
+  protected Set<String> getTestWorkflowTypeIdSet() {
+    return new HashSet<>(Arrays.asList("identity1", "identity2", "identity3"));
   }
 
-  protected List<Long> getTestGuiWorkflowIdList() {
-    return Arrays.asList(1L, 2L, 3L);
+  protected Set<String> getTestWorkflowIdSet() {
+    return new HashSet<>(Arrays.asList("identity1", "identity2", "identity3"));
   }
 
-  protected List<Long> getTestGuiWorkflowTypeStepIdList() {
-    return Arrays.asList(1L, 2L, 3L);
+  protected Set<String> getTestWorkflowTypeStepIdSet() {
+    return new HashSet<>(Arrays.asList("identity1", "identity2", "identity3"));
   }
 
-  protected List<Long> getTestDeputiyIdList() {
-    return Arrays.asList(1L, 2L, 3L);
+  protected Set<String> getTestDeputiyIdSet() {
+    return new HashSet<>(Arrays.asList("identity1", "identity2", "identity3"));
   }
 
-  protected List<Long> getTestUserIdList() {
-    return Arrays.asList(1L, 2L, 3L);
-  }
-
-  protected List<AssignItem> getTestAssignedList() {
-    return Arrays.asList(new AssignItem(1L, EAssignType.USER), new AssignItem(2L, EAssignType.USER),
-        new AssignItem(3L, EAssignType.USER));
+  protected Set<String> getTestUserIdSet() {
+    return new HashSet<>(Arrays.asList("identity1", "identity2", "identity3"));
   }
 
   protected List<Department> getTestDepartmentList() {
-    final List<Department> list = Arrays.asList(this.getTestDepartment(1L, "GuiDepartment 1"),
-        this.getTestDepartment(2L, "GuiDepartment 2"), this.getTestDepartment(3L, "GuiDepartment 3"));
+    final List<Department> list = Arrays.asList(this.getTestDepartment("dep1", "Department 1"),
+                                                this.getTestDepartment("dep2", "Department 2"),
+                                                this.getTestDepartment("dep3", "Department 3"));
 
     return list;
   }
 
   protected List<UserGroup> getTestUserGroupList() {
-    final List<UserGroup> list = Arrays.asList(this.getTestUserGroup(1L, "GuiUserGroup 1"),
-        this.getTestUserGroup(2L, "GuiUserGroup 2"), this.getTestUserGroup(3L, "GuiUserGroup 3"));
+    final List<UserGroup> list = Arrays.asList(this.getTestUserGroup("usergrp1", "UserGroup 1"),
+                                               this.getTestUserGroup("usergrp2", "UserGroup 2"),
+                                               this.getTestUserGroup("usergrp3", "UserGroup 3"));
 
     return list;
   }
 
-  protected UserGroup getTestUserGroup(final Long id, final String title) {
+  protected UserGroup getTestUserGroup(final String identity, final String title) {
     final UserGroup model = new UserGroup();
-    model.setCompanyId(1L);
-    model.setId(id);
+    model.setCompanyIdentity("companyIdentity");
+    model.setIdentity(identity);
     model.setTitle(title);
     model.setStatus(1);
     model.setVersion(1);
@@ -299,10 +373,10 @@ public class TestDataProducer {
     return model;
   }
 
-  protected Department getTestDepartment(final Long id, final String title) {
+  protected Department getTestDepartment(final String identity, final String title) {
     final Department model = new Department();
-    model.setCompanyId(1L);
-    model.setId(id);
+    model.setCompanyIdentity("companyIdentity");
+    model.setIdentity(identity);
     model.setTitle(title);
     model.setStatus(1);
     model.setVersion(1);
@@ -312,15 +386,17 @@ public class TestDataProducer {
   }
 
   protected List<DepartmentGroup> getTestDepartmentGroupList() {
-    final List<DepartmentGroup> list = Arrays.asList(this.getTestDepartmentGroup(1L, "GuiDepartmentGroup 1"),
-        this.getTestDepartmentGroup(2L, "GuiDepartmentGroup 2"), this.getTestDepartmentGroup(3L, "GuiDepartmentGroup 3"));
+    final List<DepartmentGroup> list = Arrays.asList(this.getTestDepartmentGroup("depgrp1", "DepartmentGroup 1"),
+                                                     this.getTestDepartmentGroup("depgrp2", "DepartmentGroup 2"),
+                                                     this.getTestDepartmentGroup("depgrp3", "DepartmentGroup 3"));
 
     return list;
   }
 
-  protected DepartmentGroup getTestDepartmentGroup(final Long id, final String title) {
+  protected DepartmentGroup getTestDepartmentGroup(final String identity, final String title) {
     final DepartmentGroup model = new DepartmentGroup();
-    model.setId(id);
+    model.setDepartmentIdentity("departmentIdentity");
+    model.setIdentity(identity);
     model.setTitle(title);
     model.setStatus(1);
     model.setVersion(1);
@@ -328,60 +404,92 @@ public class TestDataProducer {
     return model;
   }
 
-  protected WorkflowSearchFilter getTestGuiWorkflowSearchFilter() {
+  protected WorkflowSearchFilter getTestWorkflowSearchFilter() {
     final WorkflowSearchFilter filter = new WorkflowSearchFilter();
-    filter.setAssignedUserIdSet(this.getTestUserIdList());
-    filter.setStatusSet(Arrays.asList(1, 2, 3));
-    filter.setWorkflowStepeIdSet(this.getTestGuiWorkflowTypeStepIdList());
-    filter.setWorkflowTypeIdSet(this.getTestGuiWorkflowTypeIdList());
+    filter.setAssignedUserIdSet(this.getTestUserIdSet());
+    filter.setStatusSet(new HashSet<>(Arrays.asList(1, 2, 3)));
+    filter.setWorkflowStepeIdSet(this.getTestWorkflowTypeStepIdSet());
+    filter.setWorkflowTypeIdSet(this.getTestWorkflowTypeIdSet());
 
     return filter;
   }
 
-  protected WorkflowSaveRequest getTestGuiWorkflowSaveRequest() {
+  protected WorkflowSaveRequest getTestWorkflowCreateRequest() {
     final WorkflowSaveRequest request = new WorkflowSaveRequest();
     request.setAssigns(this.getTestAssignedList());
-    request.setWorkflow(this.getTestGuiWorkflow(null));
-    request.setCommand(EWorkflowProcessCommand.CREATE);
+    request.setWorkflow(this.getTestWorkflow("workflow1"));
+    request.setExpireDays(10);
+    request.setCommand(EWorkflowProcessCommand.NONE);
 
     return request;
   }
 
-  protected WorkflowSaveRequest getTestGuiWorkflowSaveRequest(final Workflow workflow) {
+  protected WorkflowSaveRequest getTestNewWorkflowCreateRequest() {
     final WorkflowSaveRequest request = new WorkflowSaveRequest();
     request.setAssigns(this.getTestAssignedList());
-    request.setWorkflow(workflow);
-    request.setCommand(EWorkflowProcessCommand.CREATE);
+    request.setWorkflow(this.getTestWorkflow("workflow1"));
+    request.setExpireDays(10);
+    request.setCommand(EWorkflowProcessCommand.NONE);
+
+    final WorkflowType workflowType = this.getTestWorkflowType("type1", "");
+    workflowType.setAssignType(EWorkflowTypeAssignType.MANUAL);
+    request.getWorkflow().setWorkflowType(workflowType);
+    request.getWorkflow().setIdentityToNew();
 
     return request;
   }
 
-  protected User createUiUser(final String email, final String fname, final String lname, final List<EUiUserRole> roles) {
-    final User user = new User();
-    user.setFirstName(fname);
-    user.setLastName(lname);
-    user.setEmail(email);
-    user.setEnabled(true);
-    user.setRoles(roles.stream().map(r -> r.getId()).collect(Collectors.toList()));
+  protected WorkflowSaveRequest getTestWorkflowCreateRequestForStrategy() {
+    final WorkflowType workflowType = this.getTestWorkflowType("workflowtype1", "Workflowtype 1");
 
-    return user;
+    final WorkflowSaveRequest request = new WorkflowSaveRequest();
+    request.setAssigns(this.getTestAssignedList());
+    request.setWorkflow(this.getTestWorkflow("workflow1", workflowType));
+    request.setExpireDays(10);
+    request.setCommand(EWorkflowProcessCommand.NONE);
 
+    workflowType.setAssignType(EWorkflowTypeAssignType.MANUAL);
+    request.getWorkflow().setWorkflowType(workflowType);
+    request.getWorkflow().setIdentity("identity");
+
+    int stepIdndex = 0;
+    for (final WorkflowAction action : request.getWorkflow().getActions()) {
+      action.setCurrentStep(workflowType.getSteps().get(stepIdndex++));
+      action.setCurrentStepIdentity(action.getCurrentStep().getIdentity());
+    }
+
+    return request;
   }
 
-  protected User createUiUser() {
-    final User user = this.createUiUser("username", "fname", "lname", Arrays.asList(EUiUserRole.ADMIN, EUiUserRole.VIEW));
-    return user;
+  protected List<AssignItem> getTestAssignedList() {
+    return Arrays.asList(new AssignItem("user1", EAssignType.USER),
+                         new AssignItem("user2", EAssignType.USER),
+                         new AssignItem("user3", EAssignType.USER));
   }
 
-  protected SessionUserInfo createGuiSessionUserInfo() {
+  protected WorkflowMessage getTestWorkflowMessage(final String userId, final Workflow workflow) {
+    final WorkflowMessage message = new WorkflowMessage();
+    message.setCreatedAt(LocalDateTime.now());
+    message.setCreatedByIdentity("createdByIdentity");
+    message.setExpireDays(15);
+    message.setMessage("message 1");
+    message.setMessageType(EWorkflowMessageType.OFFERING_WORKFLOW);
+    message.setStatus(EWorkflowMessageStatus.OFFERING);
+    message.setStepIdentity("stepIdentity");
+    message.setUserIdentity(userId);
+    message.setVersion(1);
+    message.setWorkflowIdentity(workflow.getIdentity());
+    message.setWorkflow(workflow);
 
-    final SessionUserInfo info = new SessionUserInfo(this.createUiUser("admin", "", "", Arrays.asList(EUiUserRole.ADMIN)),
-        this.getTestCompanyProfile());
-    info.setToken("test-token");
-    info.setSessionId("test-sessionId");
-    info.update();
+    return message;
+  }
 
-    return info;
+  protected List<WorkflowMessage> getTestWorkflowMessageList() {
+    final Workflow workflow = getTestWorkflow("workflow1");
+
+    return Arrays.asList(getTestWorkflowMessage("user1", workflow),
+                         getTestWorkflowMessage("user2", workflow),
+                         getTestWorkflowMessage("user3", workflow));
   }
 
 }

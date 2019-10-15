@@ -2,12 +2,12 @@ package com.pth.iflow.gui.models;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.pth.iflow.common.edo.models.helper.IdentityModel;
 
 public class WorkflowFile extends IdentityModel {
 
   private String                          identity;
+  private String                          workflowIdentity;
   private String                          createdByIdentity;
   private String                          title;
   private String                          extention;
@@ -20,12 +20,28 @@ public class WorkflowFile extends IdentityModel {
 
   @Override
   public String getIdentity() {
-    return this.identity;
+    return identity;
   }
 
   @Override
   public void setIdentity(final String identity) {
     this.identity = identity;
+  }
+
+  public String getWorkflowIdentity() {
+    return workflowIdentity;
+  }
+
+  public void setWorkflowIdentity(final String workflowIdentity) {
+    this.workflowIdentity = workflowIdentity;
+  }
+
+  public String getCreatedByIdentity() {
+    return createdByIdentity;
+  }
+
+  public void setCreatedByIdentity(final String createdByIdentity) {
+    this.createdByIdentity = createdByIdentity;
   }
 
   public String getActiveFilePath() {
@@ -34,14 +50,6 @@ public class WorkflowFile extends IdentityModel {
 
   public void setActiveFilePath(final String filePath) {
     this.activeFilePath = filePath;
-  }
-
-  public String getCreatedByIdentity() {
-    return this.createdByIdentity;
-  }
-
-  public void setCreatedByIdentity(final String createdByIdentity) {
-    this.createdByIdentity = createdByIdentity;
   }
 
   public String getTitle() {

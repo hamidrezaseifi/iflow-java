@@ -5,14 +5,22 @@ import com.pth.iflow.common.edo.models.helper.IdentityModel;
 public class DepartmentGroup extends IdentityModel {
 
   private String  identity;
-
+  private String  departmentIdentity;
   private String  title;
   private Integer status;
   private Integer version;
 
+  public String getDepartmentIdentity() {
+    return departmentIdentity;
+  }
+
+  public void setDepartmentIdentity(final String departmentIdentity) {
+    this.departmentIdentity = departmentIdentity;
+  }
+
   @Override
   public String getIdentity() {
-    return this.identity;
+    return identity;
   }
 
   @Override
