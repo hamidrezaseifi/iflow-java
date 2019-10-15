@@ -2,11 +2,8 @@ package com.pth.iflow.gui.services;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-
 import java.util.List;
-
 import javax.servlet.http.HttpSession;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -16,7 +13,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import com.pth.iflow.gui.TestDataProducer;
 import com.pth.iflow.gui.models.Workflow;
 import com.pth.iflow.gui.models.WorkflowSaveRequest;
@@ -30,10 +26,10 @@ import com.pth.iflow.gui.services.impl.WorkflowHandler;
 @AutoConfigureMockMvc
 public class WorkflowHandlerTest extends TestDataProducer {
 
-  private IWorkflowHandler   workflowHandler;
+  private IWorkflowHandler workflowHandler;
 
   @MockBean
-  private IWorkflowAccess    workflowAccess;
+  private IWorkflowAccess workflowAccess;
 
   @MockBean
   private SessionUserInfo sessionUserInfo;
@@ -42,12 +38,12 @@ public class WorkflowHandlerTest extends TestDataProducer {
   private IUploadFileManager uploadFileManager;
 
   @MockBean
-  private HttpSession        mockedSession;
+  private HttpSession mockedSession;
 
   @MockBean
-  private IMessagesHelper    messagesHelper;
+  private IMessagesHelper messagesHelper;
 
-  private String             validTocken;
+  private String validTocken;
 
   @Before
   public void setUp() throws Exception {
@@ -55,9 +51,9 @@ public class WorkflowHandlerTest extends TestDataProducer {
     this.validTocken = "validTocken";
 
     when(this.sessionUserInfo.getToken()).thenReturn(this.validTocken);
-    when(this.sessionUserInfo.getUserByIdentity(any(Long.class))).thenReturn(this.getTestUser());
+    when(this.sessionUserInfo.getUserByIdentity(any(String.class))).thenReturn(this.getTestUser());
     when(this.sessionUserInfo.getUser()).thenReturn(this.getTestUser());
-    when(this.sessionUserInfo.getWorkflowTypeById(any(Long.class))).thenReturn(this.getTestGuiWorkflowType());
+    when(this.sessionUserInfo.getWorkflowTypeById(any(String.class))).thenReturn(this.getTestWorkflowType());
     when(this.messagesHelper.get(any(String.class))).thenReturn("");
 
     this.workflowHandler = new WorkflowHandler(this.workflowAccess, this.sessionUserInfo, this.uploadFileManager, this.messagesHelper);
@@ -71,7 +67,7 @@ public class WorkflowHandlerTest extends TestDataProducer {
   @Test
   public void testReadWorkflow() throws Exception {
 
-    final Workflow workflow = this.getTestGuiWorkflow(1L);
+    final Workflow workflow = this.getTestWorkflow("identity1");
 
     when(this.workflowAccess.readWorkflow(any(String.class), any(String.class))).thenReturn(workflow);
 
@@ -86,9 +82,9 @@ public class WorkflowHandlerTest extends TestDataProducer {
   @Test
   public void testCreateWorkflow() throws Exception {
 
-    final WorkflowSaveRequest createRequest = this.getTestGuiWorkflowSaveRequest();
+    final WorkflowSaveRequest createRequest = this.getTestWorkflowSaveRequest();
 
-    final List<Workflow> workflowList = this.getTestGuiWorkflowList();
+    final List<Workflow> workflowList = this.getTestWorkflowList();
 
     when(this.workflowAccess.createWorkflow(any(WorkflowSaveRequest.class), any(String.class))).thenReturn(workflowList);
 
@@ -101,7 +97,7 @@ public class WorkflowHandlerTest extends TestDataProducer {
 
   @Test
   public void testSaveWorkflow() throws Exception {
-    final Workflow workflow = this.getTestGuiWorkflow(1L);
+    final Workflow workflow = this.getTestWorkflow("identity1");
 
     when(this.workflowAccess.saveWorkflow(any(WorkflowSaveRequest.class), any(String.class))).thenReturn(workflow);
 
@@ -116,7 +112,7 @@ public class WorkflowHandlerTest extends TestDataProducer {
   @Test
   public void testReadWorkflowTypeList() throws Exception {
 
-    final List<WorkflowType> workflowTypeList = this.getTestGuiWorkflowTypeList();
+    final List<WorkflowType> workflowTypeList = this.getTestWorkflowTypeList();
 
     when(this.workflowAccess.readWorkflowTypeList(any(String.class), any(String.class))).thenReturn(workflowTypeList);
 
@@ -129,9 +125,9 @@ public class WorkflowHandlerTest extends TestDataProducer {
 
   @Test
   public void testSearchWorkflow() throws Exception {
-    final WorkflowSearchFilter searchFilter = this.getTestGuiWorkflowSearchFilter();
+    final WorkflowSearchFilter searchFilter = this.getTestWorkflowSearchFilter();
 
-    final List<Workflow> workflowList = this.getTestGuiWorkflowList();
+    final List<Workflow> workflowList = this.getTestWorkflowList();
 
     when(this.workflowAccess.searchWorkflow(any(WorkflowSearchFilter.class), any(String.class))).thenReturn(workflowList);
 

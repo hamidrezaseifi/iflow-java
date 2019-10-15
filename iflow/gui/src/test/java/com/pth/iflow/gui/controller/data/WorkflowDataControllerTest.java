@@ -2,13 +2,10 @@ package com.pth.iflow.gui.controller.data;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.HttpSession;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,7 +24,6 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-
 import com.pth.iflow.gui.TestDataProducer;
 import com.pth.iflow.gui.models.Department;
 import com.pth.iflow.gui.models.User;
@@ -44,22 +40,22 @@ import com.pth.iflow.gui.services.IWorkflowHandler;
 @AutoConfigureMockMvc
 public class WorkflowDataControllerTest extends TestDataProducer {
 
-  private MockMvc                             mockMvc;
+  private MockMvc mockMvc;
 
   @Autowired
   private MappingJackson2HttpMessageConverter jsonConverter;
 
   @Autowired
-  private WebApplicationContext               context;
+  private WebApplicationContext context;
 
   @MockBean
-  private SessionUserInfo                  sessionUserInfo;
+  private SessionUserInfo sessionUserInfo;
 
   @MockBean
-  private IWorkflowHandler                    workflowHandler;
+  private IWorkflowHandler workflowHandler;
 
   @MockBean
-  private IUserAccess                         userAccess;
+  private IUserAccess userAccess;
 
   @Before
   public void setUp() throws Exception {
@@ -80,7 +76,7 @@ public class WorkflowDataControllerTest extends TestDataProducer {
   @Test
   public void testLoadWorkflowInitialData() throws Exception {
 
-    final List<WorkflowType> workflowTypeList = this.getTestGuiWorkflowTypeList();
+    final List<WorkflowType> workflowTypeList = this.getTestWorkflowTypeList();
 
     Mockito.when(this.workflowHandler.readWorkflowTypeList(ArgumentMatchers.any(String.class))).thenReturn(workflowTypeList);
 
@@ -93,9 +89,9 @@ public class WorkflowDataControllerTest extends TestDataProducer {
   @Test
   public void testSearchWorkflows() throws Exception {
 
-    final List<Workflow> resultList = this.getTestGuiWorkflowList();
+    final List<Workflow> resultList = this.getTestWorkflowList();
 
-    final WorkflowSearchFilter workflowSearchFilter = this.getTestGuiWorkflowSearchFilter();
+    final WorkflowSearchFilter workflowSearchFilter = this.getTestWorkflowSearchFilter();
 
     final String contentAsJsonString = this.jsonConverter.getObjectMapper().writeValueAsString(workflowSearchFilter);
 
@@ -104,10 +100,13 @@ public class WorkflowDataControllerTest extends TestDataProducer {
     Mockito.when(this.workflowHandler.searchWorkflow(ArgumentMatchers.any(WorkflowSearchFilter.class))).thenReturn(resultList);
 
     final MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.post("/workflow/data/workflowlist/search")
-        .content(contentAsJsonString).contentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
+                                                                        .content(contentAsJsonString)
+                                                                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
 
-    this.mockMvc.perform(builder).andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-        .andExpect(content().json(resultAsJsonString));
+    this.mockMvc.perform(builder)
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .andExpect(content().json(resultAsJsonString));
 
   }
 
@@ -122,8 +121,10 @@ public class WorkflowDataControllerTest extends TestDataProducer {
 
     final MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.post("/workflow/data/companyusers");
 
-    this.mockMvc.perform(builder).andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-        .andExpect(content().json(resultAsJsonString));
+    this.mockMvc.perform(builder)
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .andExpect(content().json(resultAsJsonString));
 
   }
 
@@ -133,9 +134,9 @@ public class WorkflowDataControllerTest extends TestDataProducer {
     final Map<String, Object> map = new HashMap<>();
 
     final List<User> userList = this.getTestUserList();
-    final List<WorkflowType> workflowTypeList = this.getTestGuiWorkflowTypeList();
+    final List<WorkflowType> workflowTypeList = this.getTestWorkflowTypeList();
 
-    final Workflow newWorkflow = Workflow.generateInitial(1L);
+    final Workflow newWorkflow = Workflow.generateInitial("user1");
 
     final WorkflowSaveRequest workflowReq = WorkflowSaveRequest.generateNewWihExpireDays(newWorkflow, 15);
 
@@ -150,23 +151,27 @@ public class WorkflowDataControllerTest extends TestDataProducer {
 
     final MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.post("/workflow/data/workflowcreate/init");
 
-    this.mockMvc.perform(builder).andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-        .andExpect(content().json(resultAsJsonString));
+    this.mockMvc.perform(builder)
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .andExpect(content().json(resultAsJsonString));
 
   }
 
   @Test
   public void testCreateWorkflow() throws Exception {
 
-    final WorkflowSaveRequest createRequest = this.getTestGuiWorkflowSaveRequest();
+    final WorkflowSaveRequest createRequest = this.getTestWorkflowSaveRequest();
 
     final String contentAsJsonString = this.jsonConverter.getObjectMapper().writeValueAsString(createRequest);
 
     Mockito.when(this.workflowHandler.createWorkflow(ArgumentMatchers.any(WorkflowSaveRequest.class),
-        ArgumentMatchers.any(HttpSession.class))).thenReturn(null);
+                                                     ArgumentMatchers.any(HttpSession.class)))
+           .thenReturn(null);
 
     final MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.post("/workflow/data/workflowcreate/create")
-        .content(contentAsJsonString).contentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
+                                                                        .content(contentAsJsonString)
+                                                                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
 
     this.mockMvc.perform(builder).andExpect(status().isCreated());
 
@@ -178,9 +183,12 @@ public class WorkflowDataControllerTest extends TestDataProducer {
     final Map<String, Object> map = new HashMap<>();
 
     final List<User> userList = this.getTestUserList();
-    final Workflow workflow = this.getTestGuiWorkflow(1L);
-    workflow.setWorkflowTypeId(1L);
-    workflow.getActiveAction().setCurrentStep(this.getTestGuiWorkflowTypeStep());
+    final Workflow workflow = this.getTestWorkflow("workflow1");
+
+    final WorkflowType workflowType = this.getTestWorkflowType();
+    workflow.setWorkflowType(workflowType);
+    workflow.setWorkflowTypeIdentity(workflowType.getIdentity());
+    workflow.getActiveAction().setCurrentStep(this.getTestWorkflowTypeStep());
     workflow.getActiveAction().getCurrentStep().setExpireDays(15);
 
     final List<Department> departmentList = this.getTestDepartmentList();
@@ -200,8 +208,10 @@ public class WorkflowDataControllerTest extends TestDataProducer {
 
     final MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.post("/workflow/data/workflow/edit/1");
 
-    this.mockMvc.perform(builder).andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-        .andExpect(content().json(resultAsJsonString));
+    this.mockMvc.perform(builder)
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .andExpect(content().json(resultAsJsonString));
 
   }
 

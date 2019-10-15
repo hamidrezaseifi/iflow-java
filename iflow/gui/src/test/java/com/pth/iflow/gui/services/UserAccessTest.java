@@ -3,10 +3,8 @@ package com.pth.iflow.gui.services;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
-
 import java.net.URI;
 import java.util.List;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -17,7 +15,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import com.pth.iflow.common.edo.models.UserEdo;
 import com.pth.iflow.common.edo.models.UserListEdo;
 import com.pth.iflow.common.enums.EModule;
@@ -33,23 +30,23 @@ import com.pth.iflow.gui.services.impl.UserAccess;
 @AutoConfigureMockMvc
 public class UserAccessTest extends TestDataProducer {
 
-  private IUserAccess                                 userAccess;
+  private IUserAccess userAccess;
 
   @MockBean
-  private IRestTemplateCall                           restTemplate;
+  private IRestTemplateCall restTemplate;
 
   @MockBean
   private GuiConfiguration.WorkflowModuleAccessConfig workflowModuleAccessConfig;
 
   @MockBean
-  private GuiConfiguration.ProfileModuleAccessConfig  profileModuleAccessConfig;
+  private GuiConfiguration.ProfileModuleAccessConfig profileModuleAccessConfig;
 
   @MockBean
-  private SessionUserInfo                          sessionUserInfo;
+  private SessionUserInfo sessionUserInfo;
 
-  private URI                                         testUri;
+  private URI testUri;
 
-  private String                                      validTocken;
+  private String validTocken;
 
   @Before
   public void setUp() throws Exception {
@@ -68,8 +65,8 @@ public class UserAccessTest extends TestDataProducer {
     when(this.workflowModuleAccessConfig.getSearchWorkflowUri()).thenReturn(this.testUri);
 
     when(this.sessionUserInfo.getToken()).thenReturn(this.validTocken);
-    when(this.sessionUserInfo.getUserByIdentity(any(Long.class))).thenReturn(this.getTestUser());
-    when(this.sessionUserInfo.getWorkflowTypeById(any(Long.class))).thenReturn(this.getTestGuiWorkflowType());
+    when(this.sessionUserInfo.getUserByIdentity(any(String.class))).thenReturn(this.getTestUser());
+    when(this.sessionUserInfo.getWorkflowTypeById(any(String.class))).thenReturn(this.getTestWorkflowType());
 
     this.userAccess = new UserAccess(this.restTemplate, this.profileModuleAccessConfig, this.sessionUserInfo);
 
@@ -86,12 +83,12 @@ public class UserAccessTest extends TestDataProducer {
     final User user = this.getTestUser();
 
     when(this.restTemplate.callRestGet(any(URI.class), any(EModule.class), eq(UserEdo.class), any(String.class), any(boolean.class)))
-        .thenReturn(GuiModelEdoMapper.toEdo(user));
+                                                                                                                                     .thenReturn(GuiModelEdoMapper.toEdo(user));
 
-    final User resUser = this.userAccess.readUser(1L);
+    final User resUser = this.userAccess.readUser("useridentity");
 
     Assert.assertNotNull("Result user is not null!", resUser);
-    Assert.assertEquals("Result user has id 1!", resUser.getId(), user.getId());
+    Assert.assertEquals("Result user has id 1!", resUser.getIdentity(), user.getIdentity());
     Assert.assertEquals("Result user has title '" + user.getFullName() + "'!", resUser.getFullName(), user.getFullName());
     Assert.assertEquals("Result user has status 1!", resUser.getStatus(), user.getStatus());
 
@@ -103,13 +100,17 @@ public class UserAccessTest extends TestDataProducer {
 
     final User user = this.getTestUser();
 
-    when(this.restTemplate.callRestPost(any(URI.class), any(EModule.class), any(UserEdo.class), eq(UserEdo.class), any(String.class),
-        any(boolean.class))).thenReturn(GuiModelEdoMapper.toEdo(user));
+    when(this.restTemplate.callRestPost(any(URI.class),
+                                        any(EModule.class),
+                                        any(UserEdo.class),
+                                        eq(UserEdo.class),
+                                        any(String.class),
+                                        any(boolean.class))).thenReturn(GuiModelEdoMapper.toEdo(user));
 
     final User resUser = this.userAccess.saveUser(user);
 
     Assert.assertNotNull("Result user is not null!", resUser);
-    Assert.assertEquals("Result user has id 1!", resUser.getId(), user.getId());
+    Assert.assertEquals("Result user has id 1!", resUser.getIdentity(), user.getIdentity());
     Assert.assertEquals("Result user has title '" + user.getFullName() + "'!", resUser.getFullName(), user.getFullName());
     Assert.assertEquals("Result user has status 1!", resUser.getStatus(), user.getStatus());
 
@@ -120,8 +121,11 @@ public class UserAccessTest extends TestDataProducer {
     final List<User> userList = this.getTestUserList();
     final UserListEdo listEdo = new UserListEdo(GuiModelEdoMapper.toUserEdoList(userList));
 
-    when(this.restTemplate.callRestGet(any(URI.class), any(EModule.class), eq(UserListEdo.class), any(String.class),
-        any(boolean.class))).thenReturn(listEdo);
+    when(this.restTemplate.callRestGet(any(URI.class),
+                                       any(EModule.class),
+                                       eq(UserListEdo.class),
+                                       any(String.class),
+                                       any(boolean.class))).thenReturn(listEdo);
 
     final List<User> resUserList = this.userAccess.getCompanyUserList("test-company");
 

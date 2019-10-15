@@ -2,9 +2,7 @@ package com.pth.iflow.gui.controller.page;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import java.util.List;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,7 +21,6 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-
 import com.pth.iflow.gui.TestDataProducer;
 import com.pth.iflow.gui.models.WorkflowType;
 import com.pth.iflow.gui.models.ui.SessionUserInfo;
@@ -34,18 +31,18 @@ import com.pth.iflow.gui.services.IWorkflowHandler;
 @AutoConfigureMockMvc
 public class CompanyPageControllerTest extends TestDataProducer {
 
-  private MockMvc               mockMvc;
+  private MockMvc mockMvc;
 
-  private SessionUserInfo    userAdmin;
+  private SessionUserInfo userAdmin;
 
   @Autowired
   private WebApplicationContext context;
 
   @MockBean
-  private SessionUserInfo    sessionUserInfo;
+  private SessionUserInfo sessionUserInfo;
 
   @MockBean
-  private IWorkflowHandler      workflowHandler;
+  private IWorkflowHandler workflowHandler;
 
   @Before
   public void setUp() throws Exception {
@@ -67,10 +64,12 @@ public class CompanyPageControllerTest extends TestDataProducer {
   public void testShowCompanyIndex() throws Exception {
 
     final MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get("/companies/index")
-        .sessionAttr(SessionUserInfo.SESSION_LOGGEDUSERINFO_KEY, this.userAdmin);
+                                                                        .sessionAttr(SessionUserInfo.SESSION_LOGGEDUSERINFO_KEY,
+                                                                                     this.userAdmin);
 
-    this.mockMvc.perform(builder).andExpect(status().isOk())
-        .andExpect(content().contentType(MediaType.TEXT_HTML_VALUE + ";charset=UTF-8"));
+    this.mockMvc.perform(builder)
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.TEXT_HTML_VALUE + ";charset=UTF-8"));
 
   }
 
@@ -78,15 +77,17 @@ public class CompanyPageControllerTest extends TestDataProducer {
   @WithMockUser(value = "admin", roles = "ADMIN")
   public void testShowWorkflowTypeList() throws Exception {
 
-    final List<WorkflowType> workflowTypeList = this.getTestGuiWorkflowTypeList();
+    final List<WorkflowType> workflowTypeList = this.getTestWorkflowTypeList();
 
     Mockito.when(this.workflowHandler.readWorkflowTypeList(ArgumentMatchers.any(String.class))).thenReturn(workflowTypeList);
 
     final MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get("/companies/workflowtype")
-        .sessionAttr(SessionUserInfo.SESSION_LOGGEDUSERINFO_KEY, this.userAdmin);
+                                                                        .sessionAttr(SessionUserInfo.SESSION_LOGGEDUSERINFO_KEY,
+                                                                                     this.userAdmin);
 
-    this.mockMvc.perform(builder).andExpect(status().isOk())
-        .andExpect(content().contentType(MediaType.TEXT_HTML_VALUE + ";charset=UTF-8"));
+    this.mockMvc.perform(builder)
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.TEXT_HTML_VALUE + ";charset=UTF-8"));
 
   }
 

@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 import com.pth.iflow.common.enums.EAssignType;
 import com.pth.iflow.common.enums.EWorkflowActionStatus;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
@@ -29,6 +30,8 @@ import com.pth.iflow.gui.models.WorkflowSaveRequest;
 import com.pth.iflow.gui.models.WorkflowSearchFilter;
 import com.pth.iflow.gui.models.WorkflowType;
 import com.pth.iflow.gui.models.WorkflowTypeStep;
+import com.pth.iflow.gui.models.ui.SessionUserInfo;
+import com.pth.iflow.gui.models.ui.enums.EUiUserRole;
 
 public class TestDataProducer {
 
@@ -414,7 +417,7 @@ public class TestDataProducer {
     return filter;
   }
 
-  protected WorkflowSaveRequest getTestWorkflowCreateRequest() {
+  protected WorkflowSaveRequest getTestWorkflowSaveRequest() {
     final WorkflowSaveRequest request = new WorkflowSaveRequest();
     request.setAssigns(this.getTestAssignedList());
     request.setWorkflow(this.getTestWorkflow("workflow1"));
@@ -424,7 +427,17 @@ public class TestDataProducer {
     return request;
   }
 
-  protected WorkflowSaveRequest getTestNewWorkflowCreateRequest() {
+  protected WorkflowSaveRequest getTestWorkflowSaveRequest(final Workflow workflow) {
+    final WorkflowSaveRequest request = new WorkflowSaveRequest();
+    request.setAssigns(this.getTestAssignedList());
+    request.setWorkflow(workflow);
+    request.setExpireDays(10);
+    request.setCommand(EWorkflowProcessCommand.NONE);
+
+    return request;
+  }
+
+  protected WorkflowSaveRequest getTestNewWorkflowSaveRequest() {
     final WorkflowSaveRequest request = new WorkflowSaveRequest();
     request.setAssigns(this.getTestAssignedList());
     request.setWorkflow(this.getTestWorkflow("workflow1"));
@@ -439,7 +452,7 @@ public class TestDataProducer {
     return request;
   }
 
-  protected WorkflowSaveRequest getTestWorkflowCreateRequestForStrategy() {
+  protected WorkflowSaveRequest getTestWorkflowSaveRequestForStrategy() {
     final WorkflowType workflowType = this.getTestWorkflowType("workflowtype1", "Workflowtype 1");
 
     final WorkflowSaveRequest request = new WorkflowSaveRequest();
@@ -492,4 +505,31 @@ public class TestDataProducer {
                          getTestWorkflowMessage("user3", workflow));
   }
 
+  protected User createUiUser(final String email, final String fname, final String lname, final List<EUiUserRole> roles) {
+    final User user = new User();
+    user.setFirstName(fname);
+    user.setLastName(lname);
+    user.setEmail(email);
+    user.setEnabled(true);
+    user.setRoles(roles.stream().map(r -> r.getId()).collect(Collectors.toSet()));
+
+    return user;
+
+  }
+
+  protected User createUiUser() {
+    final User user = this.createUiUser("username", "fname", "lname", Arrays.asList(EUiUserRole.ADMIN, EUiUserRole.VIEW));
+    return user;
+  }
+
+  protected SessionUserInfo createGuiSessionUserInfo() {
+
+    final SessionUserInfo info = new SessionUserInfo(this.createUiUser("admin", "", "", Arrays.asList(EUiUserRole.ADMIN)),
+                                                     this.getTestCompanyProfile());
+    info.setToken("test-token");
+    info.setSessionId("test-sessionId");
+    info.update();
+
+    return info;
+  }
 }
