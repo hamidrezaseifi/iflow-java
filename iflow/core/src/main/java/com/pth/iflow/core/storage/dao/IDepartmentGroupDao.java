@@ -1,8 +1,8 @@
 package com.pth.iflow.core.storage.dao;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
-
 import com.pth.iflow.core.model.DepartmentGroup;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 
@@ -22,7 +22,7 @@ public interface IDepartmentGroupDao {
 
   public List<DepartmentGroup> getListByIdList(Set<Long> idList) throws IFlowStorageException;
 
-  public List<DepartmentGroup> getListByIdentityList(Set<String> idList) throws IFlowStorageException;
+  public List<DepartmentGroup> getListByIdentityList(Collection<String> idList) throws IFlowStorageException;
 
   public Set<String> getAllUserIdentityListByDepartmentGroupId(final Long id) throws IFlowStorageException;
 

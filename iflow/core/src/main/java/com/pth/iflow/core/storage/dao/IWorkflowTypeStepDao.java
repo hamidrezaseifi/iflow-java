@@ -1,5 +1,6 @@
 package com.pth.iflow.core.storage.dao;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import com.pth.iflow.core.model.WorkflowTypeStep;
@@ -22,7 +23,7 @@ public interface IWorkflowTypeStepDao {
 
   public List<WorkflowTypeStep> getListByIdList(Set<Long> idList) throws IFlowStorageException;
 
-  public List<WorkflowTypeStep> getListByIdentityList(Set<String> idList) throws IFlowStorageException;
+  public List<WorkflowTypeStep> getListByIdentityList(Collection<String> idList) throws IFlowStorageException;
 
   public List<WorkflowTypeStep> getListByWorkflowTypeId(Long workflowId) throws IFlowStorageException;
 

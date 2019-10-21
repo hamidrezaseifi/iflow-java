@@ -1,11 +1,10 @@
 package com.pth.iflow.core.service.impl;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.pth.iflow.core.model.Department;
 import com.pth.iflow.core.model.DepartmentGroup;
 import com.pth.iflow.core.model.User;
@@ -23,8 +22,9 @@ public class DepartmentService implements IDepartmentService {
   private final IDepartmentGroupDao departmentGroupDao;
   private final IUserDao            userDao;
 
-  public DepartmentService(@Autowired final IDepartmentDao departmentDao, @Autowired final IDepartmentGroupDao departmentGroupDao,
-      @Autowired final IUserDao userDao) {
+  public DepartmentService(@Autowired final IDepartmentDao departmentDao,
+                           @Autowired final IDepartmentGroupDao departmentGroupDao,
+                           @Autowired final IUserDao userDao) {
     this.departmentDao = departmentDao;
     this.departmentGroupDao = departmentGroupDao;
     this.userDao = userDao;
@@ -43,7 +43,7 @@ public class DepartmentService implements IDepartmentService {
   }
 
   @Override
-  public List<Department> getListByIdentityList(final Set<String> idList) {
+  public List<Department> getListByIdentityList(final Collection<String> idList) {
 
     return this.departmentDao.getListByIdentityList(idList);
   }

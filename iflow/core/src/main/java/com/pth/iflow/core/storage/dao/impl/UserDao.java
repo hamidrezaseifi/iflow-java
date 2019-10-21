@@ -7,13 +7,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.pth.iflow.core.model.Department;
 import com.pth.iflow.core.model.DepartmentGroup;
 import com.pth.iflow.core.model.User;
@@ -31,13 +29,13 @@ import com.pth.iflow.core.storage.dao.utils.SqlUtils;
 public class UserDao extends DaoBasicClass<User> implements IUserDao {
 
   @Autowired
-  private IDepartmentDao      departmentDao;
+  private IDepartmentDao departmentDao;
 
   @Autowired
   private IDepartmentGroupDao departmentGroupDao;
 
   @Autowired
-  private IUserGroupDao       userGroupDao;
+  private IUserGroupDao userGroupDao;
 
   public UserDao() {
 
@@ -48,6 +46,7 @@ public class UserDao extends DaoBasicClass<User> implements IUserDao {
     final User user = new User();
     user.setId(rs.getLong("id"));
     user.setCompanyId(rs.getLong("company_id"));
+    user.setCompanyIdentity(rs.getString("company_identity"));
     user.setEmail(rs.getString("email"));
     user.setBirthDate(rs.getDate("birthdate").toLocalDate());
     user.setFirstName(rs.getString("firstname"));
@@ -68,7 +67,9 @@ public class UserDao extends DaoBasicClass<User> implements IUserDao {
 
   @Override
   public User getById(final Long id) throws IFlowStorageException {
-    return this.getModelById(id, "SELECT * FROM users where id=?", "User");
+    return this.getModelById(id,
+                             "SELECT users.*,companies.identity as company_identity FROM users inner join companies on users.company_id=companies.id where id=?",
+                             "User");
   }
 
   @Override
@@ -98,40 +99,48 @@ public class UserDao extends DaoBasicClass<User> implements IUserDao {
   private Set<String> getDeputyIdentityListById(final Long id) throws IFlowStorageException {
 
     return this.getIdentityListById(id,
-        "SELECT email FROM user_deputy inner join users on user_deputy.deputy_id=users.id  where user_id=?", "email", "User Deputies");
+                                    "SELECT email FROM user_deputy inner join users on user_deputy.deputy_id=users.id  where user_id=?",
+                                    "email",
+                                    "User Deputies");
   }
 
   private Set<String> getGroupIdentityListById(final Long id) throws IFlowStorageException {
 
     return this.getIdentityListById(id,
-        "SELECT identity FROM user_usergroup inner join user_group on user_usergroup.user_group=user_group.id   where user_id=?",
-        "identity", "User Groups");
+                                    "SELECT identity FROM user_usergroup inner join user_group on user_usergroup.user_group=user_group.id   where user_id=?",
+                                    "identity",
+                                    "User Groups");
   }
 
   private Set<String> getDepartmentIdentityListById(final Long id) throws IFlowStorageException {
 
     return this.getIdentityListById(id,
-        "SELECT identity FROM user_departments inner join departments on user_departments.department_id=departments.id  where user_departments.user_id=?",
-        "identity", "User Departments");
+                                    "SELECT identity FROM user_departments inner join departments on user_departments.department_id=departments.id  where user_departments.user_id=?",
+                                    "identity",
+                                    "User Departments");
   }
 
   private Set<String> getDepartmentGroupIdentityListById(final Long id) throws IFlowStorageException {
 
     return this.getIdentityListById(id,
-        "SELECT identity FROM user_department_groups inner join departments_group on user_department_groups.department_group_id=departments_group.id  where user_department_groups.user_id=?",
-        "identity", "User Department Groups");
+                                    "SELECT identity FROM user_department_groups inner join departments_group on user_department_groups.department_group_id=departments_group.id  where user_department_groups.user_id=?",
+                                    "identity",
+                                    "User Department Groups");
   }
 
   private Set<Integer> getRoleListById(final Long id) throws IFlowStorageException {
 
-    return new HashSet<>(this.getIdListById(id, "SELECT * FROM user_roles where user_id=?", "role", "User Roles").stream()
-        .map(r -> r.intValue()).collect(Collectors.toSet()));
+    return new HashSet<>(this.getIdListById(id, "SELECT * FROM user_roles where user_id=?", "role", "User Roles")
+                             .stream()
+                             .map(r -> r.intValue())
+                             .collect(Collectors.toSet()));
   }
 
   @Override
   public User getByEmail(final String email) throws IFlowStorageException {
     logger.info("Dao Read User by email: " + email);
-    final String sqlSelect = "SELECT *  FROM users where email=?";
+    final String sqlSelect =
+                           "SELECT users.*,companies.identity as company_identity FROM users inner join companies on users.company_id=companies.id where email=?";
 
     User user;
 
@@ -145,12 +154,14 @@ public class UserDao extends DaoBasicClass<User> implements IUserDao {
       }, (rs) -> {
         if (rs.next()) {
           return this.modelFromResultSet(rs);
-        } else {
+        }
+        else {
           return null;
         }
       });
 
-    } catch (final Exception e) {
+    }
+    catch (final Exception e) {
       throw new IFlowStorageException("Unable to retrieve User data: " + e.toString());
     }
 
@@ -190,7 +201,7 @@ public class UserDao extends DaoBasicClass<User> implements IUserDao {
   @Override
   public User create(final User model) throws IFlowStorageException {
     final String sql = "INSERT INTO users (company_id, email, birthdate, firstname, lastname, permission, version, status)"
-        + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                       + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     final TransactionStatus transactionStatus = this.startTransaction(true);
     try {
       final Long createdId = this.createModel(model, "User", sql, false);
@@ -208,7 +219,8 @@ public class UserDao extends DaoBasicClass<User> implements IUserDao {
       this.commitTransaction(true, transactionStatus);
       return this.getById(createdId);
 
-    } catch (final Exception e) {
+    }
+    catch (final Exception e) {
       this.rollbackTransaction(true, transactionStatus);
       logger.error("Unable to create user:{} {}", model.getEmail(), e.toString(), e);
       throw new IFlowStorageException(e.toString(), e);
@@ -313,7 +325,7 @@ public class UserDao extends DaoBasicClass<User> implements IUserDao {
   @Override
   public User update(final User model) throws IFlowStorageException {
     final String sql = "UPDATE users SET company_id = ?, email = ?, birthdate = ? , firstname = ?, lastname = ?,"
-        + " permission = ?, version = ?, status = ? WHERE id = ?";
+                       + " permission = ?, version = ?, status = ? WHERE id = ?";
 
     this.updateModel(model, "User", sql, true);
 
@@ -345,7 +357,8 @@ public class UserDao extends DaoBasicClass<User> implements IUserDao {
 
       this.commitTransaction(true, transactionStatus);
 
-    } catch (final Exception e) {
+    }
+    catch (final Exception e) {
       this.rollbackTransaction(true, transactionStatus);
       logger.error("Unable to delete user:{} {}", id, e.toString(), e);
       throw new IFlowStorageException(e.toString(), e);
@@ -383,7 +396,8 @@ public class UserDao extends DaoBasicClass<User> implements IUserDao {
   @Override
   public List<User> getListByCompanyIdentity(final String identity) throws IFlowStorageException {
     final List<User> list = this.getModelListByIdentity(identity,
-        "SELECT users.* FROM users inner join companies on users.company_id=companies.id where companies.identity?", "User");
+                                                        "SELECT users.* FROM users inner join companies on users.company_id=companies.id where companies.identity?",
+                                                        "User");
 
     return list;
   }

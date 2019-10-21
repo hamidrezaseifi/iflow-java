@@ -1,11 +1,9 @@
 package com.pth.iflow.core.service.impl;
 
+import java.util.Collection;
 import java.util.List;
-import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.pth.iflow.core.model.UserGroup;
 import com.pth.iflow.core.service.IUserGroupService;
 import com.pth.iflow.core.storage.dao.IUserGroupDao;
@@ -26,7 +24,7 @@ public class UserGroupService implements IUserGroupService {
   }
 
   @Override
-  public List<UserGroup> getListByIdentityList(final Set<String> idList) {
+  public List<UserGroup> getListByIdentityList(final Collection<String> idList) {
     return this.userGroupDao.getListByIdentityList(idList);
   }
 

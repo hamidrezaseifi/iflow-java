@@ -1,11 +1,9 @@
 package com.pth.iflow.core.service.impl;
 
+import java.util.Collection;
 import java.util.List;
-import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.pth.iflow.core.model.WorkflowType;
 import com.pth.iflow.core.model.WorkflowTypeStep;
 import com.pth.iflow.core.service.IWorkflowTypeService;
@@ -38,7 +36,7 @@ public class WorkflowTypeService implements IWorkflowTypeService {
   }
 
   @Override
-  public List<WorkflowType> getListByIdentityList(final Set<String> idList) {
+  public List<WorkflowType> getListByIdentityList(final Collection<String> idList) {
     return this.workflowTypeDao.getListByIdentityList(idList);
   }
 

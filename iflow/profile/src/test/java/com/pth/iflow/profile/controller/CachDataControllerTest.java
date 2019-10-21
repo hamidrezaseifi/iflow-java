@@ -7,10 +7,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import java.util.List;
 import java.util.Set;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,7 +22,6 @@ import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConve
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
 import com.pth.iflow.common.edo.models.IdentityListEdo;
 import com.pth.iflow.common.edo.models.WorkflowMessageListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
@@ -41,18 +38,18 @@ import com.pth.iflow.profile.service.ITokenUserDataManager;
 public class CachDataControllerTest extends TestDataProducer {
 
   @Autowired
-  private MockMvc                                mockMvc;
+  private MockMvc mockMvc;
 
   @Autowired
   private MappingJackson2XmlHttpMessageConverter xmlConverter;
 
   @MockBean
-  private ITokenUserDataManager                  tokenUserDataManager;
+  private ITokenUserDataManager tokenUserDataManager;
 
   @MockBean
-  private ICompanyCachDataManager                companyCachDataManager;
+  private ICompanyCachDataManager companyCachDataManager;
 
-  String                                         TestToken = "test-roken";
+  String TestToken = "test-roken";
 
   @Before
   public void setUp() throws Exception {
@@ -76,10 +73,12 @@ public class CachDataControllerTest extends TestDataProducer {
     final String responseAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edo);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.ProfileModule.READ_CACHDATA_USER_WORKFLOWMESSAGELIST("companyid", "email"))
-            .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, this.TestToken))
-        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
-        .andExpect(content().xml(responseAsXmlString));
+                .perform(MockMvcRequestBuilders.get(IflowRestPaths.ProfileModule.READ_CACHDATA_USER_WORKFLOWMESSAGELIST("companyid",
+                                                                                                                        "email"))
+                                               .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, this.TestToken))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+                .andExpect(content().xml(responseAsXmlString));
 
     verify(this.tokenUserDataManager, times(1)).validateToken(any(String.class));
     verify(this.companyCachDataManager, times(1)).getUserWorkflowMessages(any(String.class), any(String.class));
@@ -91,7 +90,8 @@ public class CachDataControllerTest extends TestDataProducer {
     doNothing().when(this.companyCachDataManager).resetUserData(any(String.class), any(String.class));
 
     this.mockMvc.perform(MockMvcRequestBuilders.get(IflowRestPaths.ProfileModule.CAL_CACHDATA_USER_DATARESET("companyid", "email"))
-        .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, this.TestToken)).andExpect(status().isOk());
+                                               .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, this.TestToken))
+                .andExpect(status().isOk());
 
     verify(this.tokenUserDataManager, times(1)).validateToken(any(String.class));
     verify(this.companyCachDataManager, times(1)).resetUserData(any(String.class), any(String.class));
@@ -107,8 +107,10 @@ public class CachDataControllerTest extends TestDataProducer {
     doNothing().when(this.companyCachDataManager).resetUserListData(any(String.class), any(Set.class));
 
     this.mockMvc.perform(MockMvcRequestBuilders.post(IflowRestPaths.ProfileModule.CAL_CACHDATA_USERLIST_DATARESET("companyid"))
-        .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, this.TestToken).content(contentAsXmlString)
-        .contentType(MediaType.APPLICATION_XML_VALUE)).andExpect(status().isOk());
+                                               .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, this.TestToken)
+                                               .content(contentAsXmlString)
+                                               .contentType(MediaType.APPLICATION_XML_VALUE))
+                .andExpect(status().isOk());
 
     verify(this.tokenUserDataManager, times(1)).validateToken(any(String.class));
     verify(this.companyCachDataManager, times(1)).resetUserListData(any(String.class), any(Set.class));
@@ -120,9 +122,9 @@ public class CachDataControllerTest extends TestDataProducer {
     doNothing().when(this.companyCachDataManager).resetWorkflowStepData(any(String.class), any(String.class));
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.ProfileModule.CAL_CACHDATA_WORKFLOW_DATARESET("companyid", "identity"))
-            .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, this.TestToken))
-        .andExpect(status().isOk());
+                .perform(MockMvcRequestBuilders.get(IflowRestPaths.ProfileModule.CAL_CACHDATA_WORKFLOW_DATARESET("companyid", "identity"))
+                                               .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, this.TestToken))
+                .andExpect(status().isOk());
 
     verify(this.tokenUserDataManager, times(1)).validateToken(any(String.class));
     verify(this.companyCachDataManager, times(1)).resetWorkflowStepData(any(String.class), any(String.class));

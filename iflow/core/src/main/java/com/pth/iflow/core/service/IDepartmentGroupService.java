@@ -1,8 +1,7 @@
 package com.pth.iflow.core.service;
 
+import java.util.Collection;
 import java.util.List;
-import java.util.Set;
-
 import com.pth.iflow.core.model.DepartmentGroup;
 import com.pth.iflow.core.model.User;
 
@@ -14,7 +13,7 @@ public interface IDepartmentGroupService {
 
   List<DepartmentGroup> getListByDepartmentIdentity(final String departmentIdentity);
 
-  List<DepartmentGroup> getListByIdentityList(final Set<String> idList);
+  List<DepartmentGroup> getListByIdentityList(final Collection<String> idList);
 
   List<User> getAllUserListByDepartmentGroupId(final String identity);
 

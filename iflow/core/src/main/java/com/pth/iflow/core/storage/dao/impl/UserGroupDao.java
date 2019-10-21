@@ -3,15 +3,14 @@ package com.pth.iflow.core.storage.dao.impl;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.pth.iflow.core.model.UserGroup;
 import com.pth.iflow.core.storage.dao.ICompanyDao;
 import com.pth.iflow.core.storage.dao.IUserGroupDao;
@@ -54,7 +53,7 @@ public class UserGroupDao extends DaoBasicClass<UserGroup> implements IUserGroup
   }
 
   @Override
-  public List<UserGroup> getListByIdentityList(final Set<String> idList) throws IFlowStorageException {
+  public List<UserGroup> getListByIdentityList(final Collection<String> idList) throws IFlowStorageException {
     String sqlSelect = "SELECT * FROM user_group where identity in (";
     sqlSelect += StringUtils.repeat("?, ", idList.size());
 
@@ -91,8 +90,8 @@ public class UserGroupDao extends DaoBasicClass<UserGroup> implements IUserGroup
   public List<UserGroup> getListByCompanyIdentity(final String identity) throws IFlowStorageException {
 
     return getModelListByIdentity(identity,
-        "SELECT user_group.* FROM user_group inner join companies on user_group.company_id=companies.id where companies.identity?",
-        "User Group");
+                                  "SELECT user_group.* FROM user_group inner join companies on user_group.company_id=companies.id where companies.identity=?",
+                                  "User Group");
   }
 
   @Override

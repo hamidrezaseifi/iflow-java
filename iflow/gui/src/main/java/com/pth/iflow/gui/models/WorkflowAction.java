@@ -1,6 +1,7 @@
 package com.pth.iflow.gui.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import com.pth.iflow.common.edo.models.helper.IdentityModel;
 import com.pth.iflow.common.enums.EWorkflowActionStatus;
 
@@ -69,6 +70,7 @@ public class WorkflowAction extends IdentityModel {
     this.status = EWorkflowActionStatus.ofValue(status);
   }
 
+  @JsonSetter
   public void setStatus(final EWorkflowActionStatus status) {
     this.status = status;
   }

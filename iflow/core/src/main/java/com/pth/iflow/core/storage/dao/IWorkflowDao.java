@@ -1,8 +1,8 @@
 package com.pth.iflow.core.storage.dao;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
-
 import com.pth.iflow.core.model.Workflow;
 import com.pth.iflow.core.model.WorkflowSearchFilter;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
@@ -27,5 +27,5 @@ public interface IWorkflowDao {
 
   List<Workflow> search(final WorkflowSearchFilter workflowSearchFilter);
 
-  List<Workflow> getListByIdentityList(Set<String> idList);
+  List<Workflow> getListByIdentityList(Collection<String> idList);
 }

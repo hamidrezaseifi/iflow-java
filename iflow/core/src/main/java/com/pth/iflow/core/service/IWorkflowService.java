@@ -1,8 +1,7 @@
 package com.pth.iflow.core.service;
 
+import java.util.Collection;
 import java.util.List;
-import java.util.Set;
-
 import com.pth.iflow.core.model.Workflow;
 import com.pth.iflow.core.model.WorkflowSearchFilter;
 
@@ -16,7 +15,7 @@ public interface IWorkflowService {
 
   public List<Workflow> getListForUser(final String email, final int status);
 
-  public List<Workflow> getListByIdentityList(final Set<String> idList);
+  public List<Workflow> getListByIdentityList(final Collection<String> idList);
 
   public List<Workflow> search(final WorkflowSearchFilter workflowSearchFilter);
 }

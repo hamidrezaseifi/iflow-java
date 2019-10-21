@@ -1,8 +1,7 @@
 package com.pth.iflow.core.service;
 
+import java.util.Collection;
 import java.util.List;
-import java.util.Set;
-
 import com.pth.iflow.core.model.UserGroup;
 
 public interface IUserGroupService {
@@ -11,7 +10,7 @@ public interface IUserGroupService {
 
   UserGroup getByIdentity(final String identity);
 
-  List<UserGroup> getListByIdentityList(final Set<String> idList);
+  List<UserGroup> getListByIdentityList(final Collection<String> idList);
 
   List<UserGroup> getListByIdCompanyIdentity(final String companyIdentity);
 }

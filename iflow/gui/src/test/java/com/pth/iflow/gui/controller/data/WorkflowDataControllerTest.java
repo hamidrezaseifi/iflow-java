@@ -136,7 +136,7 @@ public class WorkflowDataControllerTest extends TestDataProducer {
     final List<User> userList = this.getTestUserList();
     final List<WorkflowType> workflowTypeList = this.getTestWorkflowTypeList();
 
-    final Workflow newWorkflow = Workflow.generateInitial("user1");
+    final Workflow newWorkflow = Workflow.generateInitial(sessionUserInfo.getUser().getIdentity());
 
     final WorkflowSaveRequest workflowReq = WorkflowSaveRequest.generateNewWihExpireDays(newWorkflow, 15);
 
