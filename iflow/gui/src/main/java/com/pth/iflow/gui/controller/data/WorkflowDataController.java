@@ -122,10 +122,10 @@ public class WorkflowDataController extends GuiDataControllerBase {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @PostMapping(path = { "/workflowcreate/typedata/{typeId}" })
+  @PostMapping(path = { "/workflowcreate/typedata/{typeIdentity}" })
   @ResponseBody
   public Map<String,
-             Object> loadWorkflowTypeInitData(@PathVariable final Long typeId) throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+             Object> loadWorkflowTypeInitData(@PathVariable final String typeIdentity) throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     final Map<String, Object> map = new HashMap<>();
 

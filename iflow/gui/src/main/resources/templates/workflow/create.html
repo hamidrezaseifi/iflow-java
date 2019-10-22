@@ -23,7 +23,7 @@
 				<div class="item-row">
 					<div class="item-label" th:text="#{workflow-type}"></div>
 					<div class="item-content">
-						<select type="text" ng-model="workflowCreateRequest.workflow.workflowTypeId" ng-change="reloadWorkflowTypeData()">
+						<select type="text" ng-model="workflowCreateRequest.workflow.workflowTypeIdentity" ng-change="reloadWorkflowTypeData()">
 							<option th:text="#{workflow-select-type}" value="0"></option>
 							<option ng-repeat="item in workflowTypes" ng-value="item.identity">{{item.title}}</option>
 						</select>
@@ -33,7 +33,7 @@
 				<div class="item-row" ng-if="false" ng-show="isWorkflowTypeSelected()">
 					<div class="item-label" th:text="#{workflow-current-step}"></div>
 					<div class="item-content">
-						<select type="text" ng-model="workflowCreateRequest.workflow.currentStepId">
+						<select type="text" ng-model="workflowCreateRequest.workflow.currentStepIdentity">
 							<option th:text="#{workflow-select-current-step}" value="0"></option>
 							<option ng-repeat="item in getWorkflowTypeSteps()" ng-value="item.identity">{{item.title}}</option>
 						</select>
@@ -63,7 +63,7 @@
 							<span ng-if="hasNoAssigns()" th:text="#{workflow-select-assign}"></span>
 							<div class="user-item-box" ng-repeat="item in workflowCreateRequest.assigns">
 								<span>{{item.title}} </span>
-								<button ng-click="removeAssign(item.itemId, item.itemType)"><i class="material-icons">close</i></button>
+								<button ng-click="removeAssign(item.itemIdentity, item.itemType)"><i class="material-icons">close</i></button>
 							</div>
 							<div class="clear"></div>
 						</div>

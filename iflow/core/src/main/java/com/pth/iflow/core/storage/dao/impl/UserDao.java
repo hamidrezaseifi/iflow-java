@@ -396,7 +396,7 @@ public class UserDao extends DaoBasicClass<User> implements IUserDao {
   @Override
   public List<User> getListByCompanyIdentity(final String identity) throws IFlowStorageException {
     final List<User> list = this.getModelListByIdentity(identity,
-                                                        "SELECT users.* FROM users inner join companies on users.company_id=companies.id where companies.identity?",
+                                                        "SELECT users.*,companies.identity company_identity FROM users inner join companies on users.company_id=companies.id where companies.identity=?",
                                                         "User");
 
     return list;
