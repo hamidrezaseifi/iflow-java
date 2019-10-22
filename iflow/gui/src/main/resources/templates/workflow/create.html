@@ -48,7 +48,7 @@
 				<div class="item-row" ng-show="isWorkflowTypeSelected()">
 					<div class="item-label" th:text="#{workflow-controller}"></div>
 					<div class="item-content">
-						<select type="text" ng-model="workflowCreateRequest.workflow.controller">
+						<select type="text" ng-model="workflowCreateRequest.workflow.controllerIdentity">
 							<option th:text="#{workflow-select-controller}" value="0"></option>
 							<option ng-repeat="item in users" ng-value="item.identity">{{item.fullName}}</option>
 						</select>

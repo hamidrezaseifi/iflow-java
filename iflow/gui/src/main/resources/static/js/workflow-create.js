@@ -232,10 +232,10 @@ iflowApp.controller('WorkflowCreateController', function WorkflowCreateControlle
 		
 	};
 
-	$scope.getUserById = function(id){
+	$scope.getUserById = function(identity){
 		for(o in $scope.users){
     		var user =$scope.users[o];
-    		if(user.id == id){
+    		if(user.identity == identity){
     			return user;
     		}
     	}

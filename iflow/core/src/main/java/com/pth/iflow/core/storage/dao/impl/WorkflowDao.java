@@ -111,6 +111,11 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
     model.setCurrentStep(workflowTypeStepDao.getById(rs.getLong("current_step")));
     model.setController(userDao.getById(rs.getLong("controller")));
     model.setCreatedBy(userDao.getById(rs.getLong("created_by")));
+    model.setWorkflowTypeIdentity(model.getWorkflowType().getIdentity());
+
+    model.setControllerIdentity(model.getController().getIdentity());
+    model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
+    model.setCreatedByIdentity(model.getCreatedBy().getIdentity());
 
     return model;
   }

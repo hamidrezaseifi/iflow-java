@@ -35,7 +35,9 @@ public class WorkflowTypeDao extends DaoBasicClass<WorkflowType> implements IWor
 
   @Override
   public WorkflowType getById(final Long id) throws IFlowStorageException {
-    return this.getModelById(id, "SELECT * FROM workflow_type where id=?", "WorkflowType");
+    return this.getModelById(id,
+                             "SELECT workflow_type.*, companies.identity company_identity FROM workflow_type  inner join companies on workflow_type.company_id=companies.id where workflow_type.id=?",
+                             "WorkflowType");
   }
 
   @Override
@@ -93,7 +95,7 @@ public class WorkflowTypeDao extends DaoBasicClass<WorkflowType> implements IWor
   @Override
   public List<WorkflowType> getListByCompanyIdentity(final String companyIdentity) throws IFlowStorageException {
     return this.getModelListByIdentity(companyIdentity,
-                                       "SELECT * FROM workflow_type inner join companies on workflow_type.company_id=companies.id where companies.identity=?",
+                                       "SELECT workflow_type.*,companies.identity company_identity FROM workflow_type inner join companies on workflow_type.company_id=companies.id where companies.identity=?",
                                        "WorkflowType");
   }
 
