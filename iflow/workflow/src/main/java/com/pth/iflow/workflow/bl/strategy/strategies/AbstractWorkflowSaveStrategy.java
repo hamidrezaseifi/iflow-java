@@ -19,6 +19,7 @@ import com.pth.iflow.workflow.bl.IDepartmentDataService;
 import com.pth.iflow.workflow.bl.IProfileCachDataDataService;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.IWorkflowMessageDataService;
+import com.pth.iflow.workflow.bl.IWorkflowPrepare;
 import com.pth.iflow.workflow.bl.strategy.IWorkflowSaveStrategy;
 import com.pth.iflow.workflow.bl.strategy.IWorkflowSaveStrategyStep;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
@@ -36,6 +37,7 @@ public abstract class AbstractWorkflowSaveStrategy implements IWorkflowSaveStrat
   private final IWorkflowMessageDataService workflowMessageDataService;
   private final IProfileCachDataDataService profileCachDataDataService;
   private final IWorkflowDataService        workflowDataService;
+  private final IWorkflowPrepare            workflowPrepare;
 
   protected final WorkflowSaveRequest processingWorkflowSaveRequest;
   protected final String              token;
@@ -55,17 +57,19 @@ public abstract class AbstractWorkflowSaveStrategy implements IWorkflowSaveStrat
                                       final IDepartmentDataService departmentDataService,
                                       final IWorkflowMessageDataService workflowMessageDataService,
                                       final IProfileCachDataDataService profileCachDataDataService,
-                                      final IWorkflowDataService workflowDataService)
-                                                                                      throws WorkflowCustomizedException,
-                                                                                      MalformedURLException,
-                                                                                      IFlowMessageConversionFailureException {
-    super();
-    this.processingWorkflowSaveRequest = workflowCreateRequest;
-    this.token = token;
+                                      final IWorkflowDataService workflowDataService,
+                                      final IWorkflowPrepare workflowPrepare)
+                                                                              throws WorkflowCustomizedException,
+                                                                              MalformedURLException,
+                                                                              IFlowMessageConversionFailureException {
     this.departmentDataService = departmentDataService;
     this.workflowMessageDataService = workflowMessageDataService;
     this.workflowDataService = workflowDataService;
     this.profileCachDataDataService = profileCachDataDataService;
+    this.workflowPrepare = workflowPrepare;
+
+    this.processingWorkflowSaveRequest = workflowCreateRequest;
+    this.token = token;
     this.prevActiveAction = workflowCreateRequest.getWorkflow().getActiveAction();
 
     this.existsingWorkflow = getProcessingWorkflow().isNew() ? null
@@ -129,7 +133,7 @@ public abstract class AbstractWorkflowSaveStrategy implements IWorkflowSaveStrat
   public Workflow saveWorkflow(final Workflow workflow) throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     final Workflow savedWorkflow = this.workflowDataService.save(workflow, this.token);
 
-    return savedWorkflow;
+    return prepareWorkflow(savedWorkflow);
   }
 
   public WorkflowTypeStep findFirstStep(final WorkflowType workflowType) {
@@ -358,5 +362,13 @@ public abstract class AbstractWorkflowSaveStrategy implements IWorkflowSaveStrat
     final Workflow processingWorkflow = getProcessingWorkflow();
 
     return existsingWorkflow == null || processingWorkflow.isCurrentStepIdentity(existsingWorkflow.getCurrentStepIdentity()) == false;
+  }
+
+  public Workflow prepareWorkflow(final Workflow workflow) throws MalformedURLException, IFlowMessageConversionFailureException {
+    return workflowPrepare.prepareWorkflow(this.token, workflow);
+  }
+
+  public List<Workflow> prepareWorkflowList(final List<Workflow> workflowList) throws MalformedURLException, IFlowMessageConversionFailureException {
+    return workflowPrepare.prepareWorkflowList(this.token, workflowList);
   }
 }

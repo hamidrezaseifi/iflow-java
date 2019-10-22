@@ -2,10 +2,8 @@ package com.pth.iflow.workflow.services.strategy.strategies;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-
 import java.util.Arrays;
 import java.util.List;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -15,7 +13,6 @@ import org.mockito.Mock;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 import com.pth.iflow.common.exceptions.IFlowCustomeException;
 import com.pth.iflow.workflow.TestDataProducer;
@@ -23,6 +20,7 @@ import com.pth.iflow.workflow.bl.IDepartmentDataService;
 import com.pth.iflow.workflow.bl.IProfileCachDataDataService;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.IWorkflowMessageDataService;
+import com.pth.iflow.workflow.bl.IWorkflowPrepare;
 import com.pth.iflow.workflow.bl.strategy.strategies.CreateManualAssignWorkflowStrategy;
 import com.pth.iflow.workflow.models.User;
 import com.pth.iflow.workflow.models.Workflow;
@@ -36,18 +34,21 @@ public class CreateManualAssignWorkflowStrategyTest extends TestDataProducer {
   private CreateManualAssignWorkflowStrategy workflowStrategy;
 
   @Mock
-  private IWorkflowDataService               workflowDataService;
+  private IWorkflowDataService workflowDataService;
 
   @Mock
-  private IDepartmentDataService             departmentDataService;
+  private IDepartmentDataService departmentDataService;
 
   @Mock
-  private IWorkflowMessageDataService        workflowMessageDataService;
+  private IWorkflowMessageDataService workflowMessageDataService;
 
   @Mock
-  private IProfileCachDataDataService        cachDataDataService;
+  private IProfileCachDataDataService cachDataDataService;
 
-  private String                             validTocken;
+  @Mock
+  private IWorkflowPrepare workflowPrepare;
+
+  private String validTocken;
 
   @Before
   public void setUp() throws Exception {
@@ -75,8 +76,13 @@ public class CreateManualAssignWorkflowStrategyTest extends TestDataProducer {
 
     when(this.departmentDataService.getUserListByDepartmentIdentity(any(String.class), any(String.class))).thenReturn(userList);
 
-    this.workflowStrategy = new CreateManualAssignWorkflowStrategy(request, this.validTocken, this.departmentDataService,
-        this.workflowMessageDataService, this.cachDataDataService, workflowDataService);
+    this.workflowStrategy = new CreateManualAssignWorkflowStrategy(request,
+                                                                   this.validTocken,
+                                                                   this.departmentDataService,
+                                                                   this.workflowMessageDataService,
+                                                                   this.cachDataDataService,
+                                                                   this.workflowDataService,
+                                                                   this.workflowPrepare);
 
     this.workflowStrategy.process();
 
@@ -98,8 +104,13 @@ public class CreateManualAssignWorkflowStrategyTest extends TestDataProducer {
 
     when(this.workflowDataService.save(any(Workflow.class), any(String.class))).thenReturn(request.getWorkflow());
 
-    this.workflowStrategy = new CreateManualAssignWorkflowStrategy(request, this.validTocken, this.departmentDataService,
-        this.workflowMessageDataService, this.cachDataDataService, workflowDataService);
+    this.workflowStrategy = new CreateManualAssignWorkflowStrategy(request,
+                                                                   this.validTocken,
+                                                                   this.departmentDataService,
+                                                                   this.workflowMessageDataService,
+                                                                   this.cachDataDataService,
+                                                                   this.workflowDataService,
+                                                                   this.workflowPrepare);
 
     this.workflowStrategy.process();
 
