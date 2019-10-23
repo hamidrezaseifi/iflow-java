@@ -2,8 +2,10 @@ package com.pth.iflow.core.service.impl;
 
 import java.util.Collection;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.pth.iflow.core.model.Workflow;
 import com.pth.iflow.core.model.WorkflowSearchFilter;
 import com.pth.iflow.core.service.IWorkflowService;
@@ -21,12 +23,19 @@ public class WorkflowService implements IWorkflowService {
 
   @Override
   public Workflow save(final Workflow model) {
+    Workflow exists = null;
+    if (model.isIdentityNotSet() == false) {
+      exists = this.getByIdentity(model.getIdentity());
+      model.setId(exists.getId());
+    }
+
     if (model.isNew()) {
       model.increaseVersion();
       return this.workflowDao.create(model);
     }
 
-    final Workflow exists = this.workflowDao.getById(model.getId());
+    exists = exists != null ? exists : this.workflowDao.getById(model.getId());
+
     if (exists.getVersion() > model.getVersion()) {
       throw new IFlowOptimisticLockException("Workflow with id " + model.getId() + " is old!");
     }

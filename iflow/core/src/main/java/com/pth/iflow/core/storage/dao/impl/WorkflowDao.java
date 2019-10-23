@@ -235,6 +235,11 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
     final String sql = "UPDATE workflow SET workflow_type_id = ?, current_step = ?, comments = ?,"
         + " controller = ?, created_by = ?, version = ?, status = ? WHERE id = ?";
 
+    verifyWorkflowTypeByIdentity(workflow);
+    verifyCurrentStepByIdentity(workflow);
+    verifyControllerByIdentity(workflow);
+    verifyCreatedByByIdentity(workflow);
+
     final TransactionStatus transactionStatus = this.startTransaction(true);
     try {
 
