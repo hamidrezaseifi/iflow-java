@@ -218,7 +218,8 @@ public class WorkflowFileDao extends DaoBasicClass<WorkflowFile> implements IWor
   protected String generateIdentity(final WorkflowFile model) {
 
     final Random rand = new Random();
-    return String.format("w%df%d-%06d", model.getWorkflowId(), System.currentTimeMillis(), rand.nextInt(1000000));
+    return String.format("w%sf%s-%s", identityLongToHex(model.getWorkflowId()), identityLongToHex(System.currentTimeMillis()),
+        identityIntToHex(rand.nextInt(1000000), 6));
   }
 
 }

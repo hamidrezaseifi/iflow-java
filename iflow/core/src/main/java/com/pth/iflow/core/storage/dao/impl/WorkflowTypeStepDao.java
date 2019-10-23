@@ -7,9 +7,11 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.pth.iflow.core.model.WorkflowTypeStep;
 import com.pth.iflow.core.model.helper.CoreModelHelper;
 import com.pth.iflow.core.storage.dao.IWorkflowTypeStepDao;
@@ -83,7 +85,8 @@ public class WorkflowTypeStepDao extends DaoBasicClass<WorkflowTypeStep> impleme
   }
 
   @Override
-  protected PreparedStatement prepareInsertPreparedStatement(final WorkflowTypeStep model, final PreparedStatement ps) throws SQLException {
+  protected PreparedStatement prepareInsertPreparedStatement(final WorkflowTypeStep model, final PreparedStatement ps)
+      throws SQLException {
     ps.setString(1, model.getIdentity());
     ps.setLong(2, model.getWorkflowTypeId());
     ps.setString(3, model.getTitle());
@@ -98,7 +101,8 @@ public class WorkflowTypeStepDao extends DaoBasicClass<WorkflowTypeStep> impleme
   }
 
   @Override
-  protected PreparedStatement prepareUpdatePreparedStatement(final WorkflowTypeStep model, final PreparedStatement ps) throws SQLException {
+  protected PreparedStatement prepareUpdatePreparedStatement(final WorkflowTypeStep model, final PreparedStatement ps)
+      throws SQLException {
     ps.setLong(1, model.getWorkflowTypeId());
     ps.setString(2, model.getTitle());
     ps.setString(3, model.getViewName());
@@ -114,18 +118,16 @@ public class WorkflowTypeStepDao extends DaoBasicClass<WorkflowTypeStep> impleme
 
   @Override
   public WorkflowTypeStep create(final WorkflowTypeStep model, final boolean withTransaction) throws IFlowStorageException {
-    final String sql =
-                     "INSERT INTO workflow_type_step (identity, workflow_type_id, title, view_name, expire_days, step_index, comments, version, status)"
-                       + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    final String sql = "INSERT INTO workflow_type_step (identity, workflow_type_id, title, view_name, expire_days, step_index, comments, version, status)"
+        + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     return this.getById(this.createModel(model, "WorkflowTypeStep", sql, withTransaction));
   }
 
   @Override
   public CoreModelHelper update(final WorkflowTypeStep model) throws IFlowStorageException {
-    final String sql =
-                     "UPDATE workflow_type_step SET workflow_type_id = ?, title = ?, view_name=?, expire_days=?, step_index = ?, comments = ?,"
-                       + " version = ?, status = ? WHERE id = ?";
+    final String sql = "UPDATE workflow_type_step SET workflow_type_id = ?, title = ?, view_name=?, expire_days=?, step_index = ?, comments = ?,"
+        + " version = ?, status = ? WHERE id = ?";
 
     this.updateModel(model, "WorkflowTypeStep", sql, true);
 
@@ -146,6 +148,7 @@ public class WorkflowTypeStepDao extends DaoBasicClass<WorkflowTypeStep> impleme
   protected String generateIdentity(final WorkflowTypeStep model) {
 
     final Random rand = new Random();
-    return String.format("t%ds%d-%d", model.getWorkflowTypeId(), System.currentTimeMillis(), rand.nextInt(100000));
+    return String.format("t%ss%s-%s", identityLongToHex(model.getWorkflowTypeId()), identityLongToHex(System.currentTimeMillis()),
+        identityIntToHex(rand.nextInt(1000000), 6));
   }
 }

@@ -83,7 +83,7 @@ public class WorkflowMessage {
   }
 
   public boolean isExpired() {
-    return this.createdAt.plusDays(this.expireDays).isAfter(LocalDateTime.now());
+    return this.createdAt.plusDays(this.expireDays).isAfter(LocalDateTime.now()) == false;
   }
 
   public boolean isNotExpired() {

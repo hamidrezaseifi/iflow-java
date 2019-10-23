@@ -8,11 +8,13 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
 import com.pth.iflow.core.model.WorkflowType;
 import com.pth.iflow.core.model.WorkflowTypeStep;
@@ -36,15 +38,15 @@ public class WorkflowTypeDao extends DaoBasicClass<WorkflowType> implements IWor
   @Override
   public WorkflowType getById(final Long id) throws IFlowStorageException {
     return this.getModelById(id,
-                             "SELECT workflow_type.*, companies.identity company_identity FROM workflow_type  inner join companies on workflow_type.company_id=companies.id where workflow_type.id=?",
-                             "WorkflowType");
+        "SELECT workflow_type.*, companies.identity company_identity FROM workflow_type  inner join companies on workflow_type.company_id=companies.id where workflow_type.id=?",
+        "WorkflowType");
   }
 
   @Override
   public WorkflowType getByIdentity(final String identity) throws IFlowStorageException {
     return getModelByIdentity(identity,
-                              "SELECT workflow_type.*, companies.identity company_identity FROM workflow_type  inner join companies on workflow_type.company_id=companies.id where workflow_type.identity=?",
-                              "WorkflowType");
+        "SELECT workflow_type.*, companies.identity company_identity FROM workflow_type  inner join companies on workflow_type.company_id=companies.id where workflow_type.identity=?",
+        "WorkflowType");
   }
 
   @Override
@@ -95,12 +97,13 @@ public class WorkflowTypeDao extends DaoBasicClass<WorkflowType> implements IWor
   @Override
   public List<WorkflowType> getListByCompanyIdentity(final String companyIdentity) throws IFlowStorageException {
     return this.getModelListByIdentity(companyIdentity,
-                                       "SELECT workflow_type.*,companies.identity company_identity FROM workflow_type inner join companies on workflow_type.company_id=companies.id where companies.identity=?",
-                                       "WorkflowType");
+        "SELECT workflow_type.*,companies.identity company_identity FROM workflow_type inner join companies on workflow_type.company_id=companies.id where companies.identity=?",
+        "WorkflowType");
   }
 
   @Override
-  protected PreparedStatement prepareInsertPreparedStatement(final WorkflowType model, final PreparedStatement ps) throws SQLException {
+  protected PreparedStatement prepareInsertPreparedStatement(final WorkflowType model, final PreparedStatement ps)
+      throws SQLException {
     ps.setString(1, model.getIdentity());
     ps.setLong(2, model.getCompanyId());
     ps.setString(3, model.getBaseTypeIdentity());
@@ -117,7 +120,8 @@ public class WorkflowTypeDao extends DaoBasicClass<WorkflowType> implements IWor
   }
 
   @Override
-  protected PreparedStatement prepareUpdatePreparedStatement(final WorkflowType model, final PreparedStatement ps) throws SQLException {
+  protected PreparedStatement prepareUpdatePreparedStatement(final WorkflowType model, final PreparedStatement ps)
+      throws SQLException {
     ps.setLong(1, model.getCompanyId());
     ps.setString(2, model.getBaseTypeIdentity());
     ps.setString(3, model.getTitle());
@@ -135,9 +139,8 @@ public class WorkflowTypeDao extends DaoBasicClass<WorkflowType> implements IWor
 
   @Override
   public WorkflowType create(final WorkflowType model) throws IFlowStorageException {
-    final String sql =
-                     "INSERT INTO workflow_type (identity, company_id, workflow_base_type, title, assign_type, send_to_controller, increase_step_automatic, allow_assign, comments, version, status)"
-                       + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    final String sql = "INSERT INTO workflow_type (identity, company_id, workflow_base_type, title, assign_type, send_to_controller, increase_step_automatic, allow_assign, comments, version, status)"
+        + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     final TransactionStatus transactionStatus = this.startTransaction(true);
     try {
@@ -149,8 +152,7 @@ public class WorkflowTypeDao extends DaoBasicClass<WorkflowType> implements IWor
 
       return this.getById(workflowTypeId);
 
-    }
-    catch (final Exception e) {
+    } catch (final Exception e) {
       this.rollbackTransaction(true, transactionStatus);
       logger.error("Unable to create WorkflowType:{} {}", model.getTitle(), e.toString(), e);
       throw new IFlowStorageException(e.toString(), e);
@@ -174,9 +176,8 @@ public class WorkflowTypeDao extends DaoBasicClass<WorkflowType> implements IWor
 
   @Override
   public WorkflowType update(final WorkflowType model) throws IFlowStorageException {
-    final String sql =
-                     "UPDATE workflow_type SET company_id = ?, workflow_base_type = ?, title = ?, assign_type = ?, send_to_controller = ?, increase_step_automatic = ?, allow_assign = ?, comments = ?,"
-                       + " version = ?, status = ? WHERE id = ?";
+    final String sql = "UPDATE workflow_type SET company_id = ?, workflow_base_type = ?, title = ?, assign_type = ?, send_to_controller = ?, increase_step_automatic = ?, allow_assign = ?, comments = ?,"
+        + " version = ?, status = ? WHERE id = ?";
 
     this.updateModel(model, "WorkflowType", sql, true);
 
@@ -186,6 +187,7 @@ public class WorkflowTypeDao extends DaoBasicClass<WorkflowType> implements IWor
   @Override
   protected String generateIdentity(final WorkflowType model) {
     final Random rand = new Random();
-    return String.format("c%dt%d-%06d", model.getCompanyId(), System.currentTimeMillis(), rand.nextInt(1000000));
+    return String.format("c%st%s-%s", identityLongToHex(model.getCompanyId()), identityLongToHex(System.currentTimeMillis()),
+        identityIntToHex(rand.nextInt(1000000), 6));
   }
 }

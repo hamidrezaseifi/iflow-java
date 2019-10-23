@@ -34,6 +34,14 @@ public class WorkflowCachData {
   public void setWorkflowMessages(final List<WorkflowMessage> workflowMessages) {
     final Map<String, List<WorkflowMessage>> mapped = this.getStepMappedMessageList(workflowMessages);
 
+    /*
+     * for (final WorkflowMessage message : workflowMessages) { if
+     * (mapped.containsKey(message.getStepIdentity()) == false) { final
+     * WorkflowTypeStepCachData cachData = new
+     * WorkflowTypeStepCachData(message.getStepIdentity());
+     * workflowSteps.put(message.getStepIdentity(), cachData); } }
+     */
+
     for (final String stepId : mapped.keySet()) {
       final WorkflowTypeStepCachData data = this.getWorkflowTypeStepCachData(stepId, true);
       data.setWorkflowMessages(mapped.get(stepId));

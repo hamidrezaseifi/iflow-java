@@ -6,10 +6,12 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.pth.iflow.core.model.User;
 import com.pth.iflow.core.model.WorkflowAction;
 import com.pth.iflow.core.model.WorkflowTypeStep;
@@ -25,7 +27,7 @@ import com.pth.iflow.core.storage.dao.utils.SqlUtils;
 public class WorkflowActionDao extends DaoBasicClass<WorkflowAction> implements IWorkflowActionDao {
 
   @Autowired
-  private IUserDao userDao;
+  private IUserDao             userDao;
 
   @Autowired
   private IWorkflowTypeStepDao workflowTypeStepDao;
@@ -108,14 +110,14 @@ public class WorkflowActionDao extends DaoBasicClass<WorkflowAction> implements 
   @Override
   public List<WorkflowAction> getListByWorkflowIdentity(final String workflowIdentity) throws IFlowStorageException {
     return getModelListByIdentity(workflowIdentity,
-                                  "SELECT workflow_actions.* FROM workflow_actions inner join workflow on workflow.id=workflow_actions.workflow_id where workflow.identity=?",
-                                  "WorkflowAction");
+        "SELECT workflow_actions.* FROM workflow_actions inner join workflow on workflow.id=workflow_actions.workflow_id where workflow.identity=?",
+        "WorkflowAction");
   }
 
   @Override
   public WorkflowAction create(final WorkflowAction workflowAction, final boolean withTransaction) throws IFlowStorageException {
     final String sql = "INSERT INTO workflow_actions (identity, workflow_id, current_step_id, comments, assign_to, version, status)"
-                       + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+        + "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
     setActionCurrentStepId(workflowAction);
     setActionAssignToId(workflowAction);
@@ -126,7 +128,7 @@ public class WorkflowActionDao extends DaoBasicClass<WorkflowAction> implements 
   @Override
   public WorkflowAction update(final WorkflowAction workflowAction, final boolean withTransaction) throws IFlowStorageException {
     final String sql = "UPDATE workflow_actions SET workflow_id = ?, new_step = ?, comments = ?,"
-                       + " assign_to=?, version = ?, status = ? WHERE id = ?";
+        + " assign_to=?, version = ?, status = ? WHERE id = ?";
 
     setActionCurrentStepId(workflowAction);
     setActionAssignToId(workflowAction);
@@ -137,7 +139,8 @@ public class WorkflowActionDao extends DaoBasicClass<WorkflowAction> implements 
   }
 
   @Override
-  protected PreparedStatement prepareInsertPreparedStatement(final WorkflowAction model, final PreparedStatement ps) throws SQLException {
+  protected PreparedStatement prepareInsertPreparedStatement(final WorkflowAction model, final PreparedStatement ps)
+      throws SQLException {
     ps.setString(1, model.getIdentity());
     ps.setLong(2, model.getWorkflowId());
     ps.setLong(3, model.getCurrentStepId());
@@ -150,7 +153,8 @@ public class WorkflowActionDao extends DaoBasicClass<WorkflowAction> implements 
   }
 
   @Override
-  protected PreparedStatement prepareUpdatePreparedStatement(final WorkflowAction model, final PreparedStatement ps) throws SQLException {
+  protected PreparedStatement prepareUpdatePreparedStatement(final WorkflowAction model, final PreparedStatement ps)
+      throws SQLException {
     ps.setLong(1, model.getWorkflowId());
     ps.setLong(2, model.getCurrentStepId());
     ps.setString(3, model.getComments());
@@ -176,7 +180,8 @@ public class WorkflowActionDao extends DaoBasicClass<WorkflowAction> implements 
   protected String generateIdentity(final WorkflowAction model) {
 
     final Random rand = new Random();
-    return String.format("w%da%d-%06d", model.getWorkflowId(), System.currentTimeMillis(), rand.nextInt(1000000));
+    return String.format("w%sa%s-%s", identityLongToHex(model.getWorkflowId()), identityLongToHex(System.currentTimeMillis()),
+        identityIntToHex(rand.nextInt(1000000), 6));
   }
 
 }

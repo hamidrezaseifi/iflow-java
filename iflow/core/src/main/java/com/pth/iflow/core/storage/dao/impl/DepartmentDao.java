@@ -7,10 +7,12 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.pth.iflow.core.model.Department;
 import com.pth.iflow.core.storage.dao.IDepartmentDao;
 import com.pth.iflow.core.storage.dao.IDepartmentGroupDao;
@@ -87,8 +89,8 @@ public class DepartmentDao extends DaoBasicClass<Department> implements IDepartm
   @Override
   public List<Department> getListByCompanyIdentity(final String identity) throws IFlowStorageException {
     return this.getModelListByIdentity(identity,
-                                       "SELECT departments.* FROM departments inner join companies on departments.company_id=companies.id where companies.identity=?",
-                                       "Department");
+        "SELECT departments.* FROM departments inner join companies on departments.company_id=companies.id where companies.identity=?",
+        "Department");
   }
 
   @Override
@@ -132,9 +134,8 @@ public class DepartmentDao extends DaoBasicClass<Department> implements IDepartm
   @Override
   public Set<String> getAllUserIdentityListByDepartmentId(final Long id) throws IFlowStorageException {
     final Set<String> idList = this.getModelIdentityListById(id,
-                                                             "SELECT email FROM user_departments inner join users on users.id=user_departments.user_id where department_id=?",
-                                                             "User",
-                                                             "email");
+        "SELECT email FROM user_departments inner join users on users.id=user_departments.user_id where department_id=?", "User",
+        "email");
 
     return idList;
   }
@@ -143,7 +144,8 @@ public class DepartmentDao extends DaoBasicClass<Department> implements IDepartm
   protected String generateIdentity(final Department model) {
 
     final Random rand = new Random();
-    return String.format("c%dd%d-%06d", model.getCompanyId(), System.currentTimeMillis(), rand.nextInt(1000000));
+    return String.format("c%sd%s-%s", identityLongToHex(model.getCompanyId()), identityLongToHex(System.currentTimeMillis()),
+        identityIntToHex(rand.nextInt(1000000), 6));
   }
 
 }
