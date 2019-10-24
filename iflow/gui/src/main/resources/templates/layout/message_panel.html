@@ -11,7 +11,7 @@
 	        	<div class="message-panel-items-container">
 	        		<div class="message-panel-item"  ng-repeat="message in messages">
 	        			<a href="javascript:void(0);" ng-click="showWorkflowView(message.workflowId)">
-	        				<div>{{message.message}} ({{message.workflow.workflowType.title}}) ({{message.createdAtString}}) ({{message.remainingDays}})</div>
+	        				<div>{{message.message}} ({{message.workflow.workflowType.title}}) ({{message.createdAtString}}) ({{message.remainingDays}}) ({{message.status}})</div>
 	        			</a>
 	        		</div>
 	        	</div>
