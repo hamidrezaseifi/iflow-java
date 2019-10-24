@@ -7,6 +7,7 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 	  //$scope.phones = [];
 	
 	$scope.loadUrl = loadUrl;
+	$scope.workflowIdentity = widnt;
 	$scope.saveUrl = saveUrl;
 	$scope.archiveUrl = archiveUrl;
 	$scope.doneUrl = doneUrl;
@@ -35,7 +36,7 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 	        headers: {
 	        	'Content-type': 'application/json; charset=UTF-8',
 	        },
-	        url : $scope.loadUrl,
+	        url : $scope.loadUrl + $scope.workflowIdentity,
 	    }).then(function successCallback(response) {
 	    	
 	    	$scope.users = response.data.users;
@@ -43,8 +44,6 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 	    	$scope.workflowTypeSteps = $scope.workflow.workflowType.steps;
 	    	$scope.departments = response.data.departments;
 	    	$scope.workflowCreateRequest = response.data.saveRequest;
-	    	
-	    	prepareActiveAction();
 	    	
 	
 	    }, function errorCallback(response) {

@@ -14,7 +14,7 @@
 		
 		<div class="content-container" ng-controller="WorkflowCreateController">
 			<div class="page-toolbar">
-				<div class="page-title" th:text="#{menu-workflow-create}"></div>
+				<div class="page-title" th:text="#{workflow-editing}"></div>
 				<a class="toolbar-link" href="/workflow/list"><i class="material-icons">list</i></a>
 				<button class="toolbar-button" ng-click="reload();"><i class="material-icons">refresh</i></button>
 			</div>
@@ -150,11 +150,12 @@
 		
 		    		    
 		    <script th:inline="javascript">
-				var loadUrl = "/workflow/data/workflow/edit/[[${workflowId}]]";
+				var loadUrl = "/workflow/data/workflow/edit/";
 				var saveUrl = "/workflow/data/workflow/save";
 				var archiveUrl = "/workflow/data/workflow/archive";
 				var doneUrl = "/workflow/data/workflow/done";
 				var listUrl = "/workflow/list";
+				var widnt = [[${workflowIdentity}]];
 				
 				var userAssignType = /*[[${UserAssign}]]*/ '';
 				var departmentAssignType = /*[[${DepartmentAssign}]]*/ '';
