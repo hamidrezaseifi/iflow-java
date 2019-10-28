@@ -11,4 +11,5 @@ public interface ICompanyService {
 
   Company getByIdentity(final String comapnyIdentity)
       throws ProfileCustomizedException, URISyntaxException, MalformedURLException, IFlowMessageConversionFailureException;
+
 }

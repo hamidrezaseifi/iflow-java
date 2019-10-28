@@ -12,7 +12,6 @@ import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.profile.exceptions.ProfileCustomizedException;
-import com.pth.iflow.profile.model.Company;
 import com.pth.iflow.profile.model.Department;
 import com.pth.iflow.profile.model.DepartmentGroup;
 import com.pth.iflow.profile.model.ProfileResponse;
@@ -59,23 +58,14 @@ public class TokenUserDataManager implements ITokenUserDataManager {
       throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException {
     final UserAuthenticationSession session = this.validateToken(token);
 
-    final User user = this.usersService.getUserByEmail(session.getUserIdentity());
-
-    if (user == null) {
-      throw new ProfileCustomizedException("User not found!", "", EModule.PROFILE.getModuleName(), EIFlowErrorType.USER_NOTFOUND);
+    final ProfileResponse profile = this.usersService.getUserProfileByEmail(session.getUserIdentity());
+    if (profile == null) {
+      throw new ProfileCustomizedException("Profile not found!", "", EModule.PROFILE.getModuleName(),
+          EIFlowErrorType.USERPROFILE_NOTFOUND);
     }
+    profile.setSessionid(session.getSessionid());
 
-    final Company company = this.companyService.getByIdentity(user.getCompanyIdentity());
-
-    if (company == null) {
-      throw new ProfileCustomizedException("Company not found!", "", EModule.PROFILE.getModuleName(),
-          EIFlowErrorType.COMPANY_NOTFOUND);
-    }
-
-    final List<Department> departmentList = this.departmentService.getListByCompanyIdentity(user.getCompanyIdentity());
-    final List<UserGroup> groupList = this.userGroupService.getListByCompanyIdentity(user.getCompanyIdentity());
-
-    return new ProfileResponse(user, company, departmentList, groupList, session.getSessionid());
+    return profile;
   }
 
   @Override
@@ -103,23 +93,14 @@ public class TokenUserDataManager implements ITokenUserDataManager {
       throw new ProfileCustomizedException("Invalid session!", "", EModule.PROFILE.getModuleName(), EIFlowErrorType.NO_SESSION_FOUND);
     }
 
-    final User user = this.usersService.getUserByEmail(session.getUserIdentity());
-
-    if (user == null) {
-      throw new ProfileCustomizedException("User not found!", "", EModule.PROFILE.getModuleName(), EIFlowErrorType.USER_NOTFOUND);
+    final ProfileResponse profile = this.usersService.getUserProfileByEmail(session.getUserIdentity());
+    if (profile == null) {
+      throw new ProfileCustomizedException("Profile not found!", "", EModule.PROFILE.getModuleName(),
+          EIFlowErrorType.USERPROFILE_NOTFOUND);
     }
+    profile.setSessionid(session.getSessionid());
 
-    final Company company = this.companyService.getByIdentity(user.getCompanyIdentity());
-
-    if (company == null) {
-      throw new ProfileCustomizedException("Company not found!", "", EModule.PROFILE.getModuleName(),
-          EIFlowErrorType.COMPANY_NOTFOUND);
-    }
-
-    final List<Department> departmentList = this.departmentService.getListByCompanyIdentity(user.getCompanyIdentity());
-    final List<UserGroup> groupList = this.userGroupService.getListByCompanyIdentity(user.getCompanyIdentity());
-
-    return new ProfileResponse(user, company, departmentList, groupList, session.getSessionid());
+    return profile;
   }
 
   @Override

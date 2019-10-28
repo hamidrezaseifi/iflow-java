@@ -8,7 +8,7 @@ public interface ISessionManager {
 
   UserAuthenticationSession findByUserIdentity(String userIdentity);
 
-  UserAuthenticationSession findValidateByUserIdentity(String userIdentity, boolean removeInvalid);
+  UserAuthenticationSession findValidateByUserIdentity(String userIdentity, final String companyIdentity, boolean removeInvalid);
 
   UserAuthenticationSession findBySessionId(String sessionId);
 

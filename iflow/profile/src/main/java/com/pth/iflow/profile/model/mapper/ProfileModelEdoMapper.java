@@ -351,6 +351,17 @@ public class ProfileModelEdoMapper {
     return new ProfileResponseEdo(toEdo(model.getUser()), toEdo(model.getCompanyProfile()), model.getSessionid());
   }
 
+  public static ProfileResponse fromEdo(final ProfileResponseEdo edo) throws IFlowMessageConversionFailureException {
+    return new ProfileResponse(fromEdo(edo.getUser()), fromEdo(edo.getCompanyProfile()), edo.getSessionid());
+  }
+
+  private static CompanyProfile fromEdo(final CompanyProfileEdo edo) throws IFlowMessageConversionFailureException {
+    final CompanyProfile model = new CompanyProfile(fromEdo(edo.getCompany()), fromDepartmentEdoList(edo.getDepartments()),
+        fromUserGroupEdoList(edo.getUserGroups()));
+
+    return model;
+  }
+
   public static List<User> fromUserEdoList(final List<UserEdo> edoList) throws IFlowMessageConversionFailureException {
     final List<User> modelList = new ArrayList<>();
     if (edoList != null) {

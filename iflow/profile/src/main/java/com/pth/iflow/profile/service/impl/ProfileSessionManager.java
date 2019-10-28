@@ -128,10 +128,11 @@ public class ProfileSessionManager implements ISessionManager {
   }
 
   @Override
-  public UserAuthenticationSession findValidateByUserIdentity(final String userIdentity, final boolean removeInvalid) {
+  public UserAuthenticationSession findValidateByUserIdentity(final String userIdentity, final String companyIdentity,
+      final boolean removeInvalid) {
 
     final UserAuthenticationSession session = this.findByUserIdentity(userIdentity);
-    if (session != null) {
+    if (session != null && session.hasCompanyIdentity(companyIdentity)) {
       if (session.isValid()) {
         return session;
       } else {

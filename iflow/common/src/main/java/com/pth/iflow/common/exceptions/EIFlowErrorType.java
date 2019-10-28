@@ -7,6 +7,7 @@ public enum EIFlowErrorType implements IEnumValueValidator {
   MESSAGE_CONVERSION_FAILURE(11, "The message sent could not be converted"),
   INVALID_USERNAMEPASSWORD(10, ""),
   USER_NOTFOUND(20, ""),
+  USERPROFILE_NOTFOUND(25, ""),
   COMPANY_NOTFOUND(30, ""),
   INVALID_COMPANY(31, ""),
   INVALID_TOKEN(40, ""),

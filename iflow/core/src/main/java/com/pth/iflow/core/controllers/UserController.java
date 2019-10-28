@@ -17,12 +17,14 @@ import com.pth.iflow.common.annotations.IflowPostRequestMapping;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
 import com.pth.iflow.common.edo.models.DepartmentGroupListEdo;
 import com.pth.iflow.common.edo.models.DepartmentListEdo;
+import com.pth.iflow.common.edo.models.ProfileResponseEdo;
 import com.pth.iflow.common.edo.models.UserEdo;
 import com.pth.iflow.common.edo.models.UserGroupListEdo;
 import com.pth.iflow.common.edo.models.UserListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.core.model.Department;
 import com.pth.iflow.core.model.DepartmentGroup;
+import com.pth.iflow.core.model.ProfileResponse;
 import com.pth.iflow.core.model.User;
 import com.pth.iflow.core.model.UserGroup;
 import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
@@ -110,5 +112,15 @@ public class UserController {
     final UserListEdo edo = new UserListEdo();
     edo.setUsers(CoreModelEdoMapper.toUserEdoList(list));
     return ControllerHelper.createResponseEntity(request, edo, HttpStatus.OK);
+  }
+
+  @ResponseStatus(HttpStatus.OK)
+  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.USERPROFILE_READ_BY_EMAIL)
+  public ResponseEntity<ProfileResponseEdo> readUserProfileByEmail(@PathVariable(name = "email") final String email,
+      final HttpServletRequest request) throws Exception {
+
+    final ProfileResponse profile = this.usersService.getProfileResponseByEmail(email);
+
+    return ControllerHelper.createResponseEntity(request, CoreModelEdoMapper.toEdo(profile), HttpStatus.OK);
   }
 }

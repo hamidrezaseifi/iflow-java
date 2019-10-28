@@ -14,6 +14,7 @@ import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
 import com.pth.iflow.core.model.Company;
 import com.pth.iflow.core.model.Department;
 import com.pth.iflow.core.model.DepartmentGroup;
+import com.pth.iflow.core.model.ProfileResponse;
 import com.pth.iflow.core.model.User;
 import com.pth.iflow.core.model.UserGroup;
 import com.pth.iflow.core.model.Workflow;
@@ -36,6 +37,13 @@ public class TestDataProducer {
     company.setVersion(1);
 
     return company;
+  }
+
+  protected ProfileResponse getTestProfileResponse() {
+    final Company company = getTestCompany();
+    final User user = getTestUser();
+
+    return new ProfileResponse(user, company, getTestDepartmentList(), getTestUserGroupList(), "not-set");
   }
 
   protected User getTestUser() {

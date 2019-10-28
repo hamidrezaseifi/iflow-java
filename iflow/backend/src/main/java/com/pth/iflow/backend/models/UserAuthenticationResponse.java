@@ -81,7 +81,7 @@ public class UserAuthenticationResponse {
   public UserAuthenticationResponseEdo toEdo() {
     final UserAuthenticationResponseEdo edo = new UserAuthenticationResponseEdo();
     edo.setCreated(this.created);
-    edo.setEmail(this.email);
+    edo.setUserIdentity(this.email);
     edo.setLastAccess(this.lastAccess);
     edo.setSessionid(this.sessionid);
     edo.setToken(this.token);
@@ -91,7 +91,7 @@ public class UserAuthenticationResponse {
   public static UserAuthenticationResponse fromEdo(final UserAuthenticationResponseEdo edo) {
     final UserAuthenticationResponse model = new UserAuthenticationResponse();
     model.setCreated(edo.getCreated());
-    model.setEmail(edo.getEmail());
+    model.setEmail(edo.getUserIdentity());
     model.setLastAccess(edo.getLastAccess());
     model.setSessionid(edo.getSessionid());
     model.setToken(edo.getToken());

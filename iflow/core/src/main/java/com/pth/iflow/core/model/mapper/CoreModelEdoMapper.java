@@ -9,8 +9,10 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 
 import com.pth.iflow.common.edo.models.CompanyEdo;
+import com.pth.iflow.common.edo.models.CompanyProfileEdo;
 import com.pth.iflow.common.edo.models.DepartmentEdo;
 import com.pth.iflow.common.edo.models.DepartmentGroupEdo;
+import com.pth.iflow.common.edo.models.ProfileResponseEdo;
 import com.pth.iflow.common.edo.models.UserEdo;
 import com.pth.iflow.common.edo.models.UserGroupEdo;
 import com.pth.iflow.common.edo.models.WorkflowActionEdo;
@@ -26,8 +28,10 @@ import com.pth.iflow.common.enums.EWorkflowMessageType;
 import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.core.model.Company;
+import com.pth.iflow.core.model.CompanyProfile;
 import com.pth.iflow.core.model.Department;
 import com.pth.iflow.core.model.DepartmentGroup;
+import com.pth.iflow.core.model.ProfileResponse;
 import com.pth.iflow.core.model.User;
 import com.pth.iflow.core.model.UserGroup;
 import com.pth.iflow.core.model.Workflow;
@@ -63,6 +67,17 @@ public class CoreModelEdoMapper {
     model.setVersion(edo.getVersion());
 
     return model;
+  }
+
+  public static CompanyProfileEdo toEdo(final CompanyProfile model) {
+    final CompanyProfileEdo edo = new CompanyProfileEdo(toEdo(model.getCompany()), toDepartmentEdoList(model.getDepartments()),
+        toUserGroupEdoList(model.getUserGroups()));
+
+    return edo;
+  }
+
+  public static ProfileResponseEdo toEdo(final ProfileResponse model) {
+    return new ProfileResponseEdo(toEdo(model.getUser()), toEdo(model.getCompanyProfile()), model.getSessionid());
   }
 
   public static WorkflowMessage fromEdo(final WorkflowMessageEdo edo) throws IFlowMessageConversionFailureException {

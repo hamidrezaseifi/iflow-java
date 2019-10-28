@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pth.iflow.common.edo.models.ProfileResponseEdo;
 import com.pth.iflow.common.edo.models.UserEdo;
 import com.pth.iflow.common.edo.models.UserListEdo;
 import com.pth.iflow.common.enums.EModule;
@@ -15,6 +16,7 @@ import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.profile.config.ProfileConfiguration;
 import com.pth.iflow.profile.exceptions.ProfileCustomizedException;
+import com.pth.iflow.profile.model.ProfileResponse;
 import com.pth.iflow.profile.model.User;
 import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
 import com.pth.iflow.profile.service.IProfileRestTemplateCall;
@@ -42,7 +44,7 @@ public class UsersService implements IUsersService {
 
     final UserEdo edo = this.restTemplate.callRestGet(
         this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.READ_USER_BY_EMAIL(email)).toString(), EModule.CORE,
-        UserEdo.class, true, email);
+        UserEdo.class, true);
 
     return ProfileModelEdoMapper.fromEdo(edo);
   }
@@ -54,9 +56,21 @@ public class UsersService implements IUsersService {
 
     final UserListEdo edo = this.restTemplate.callRestGet(
         this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.READ_USER_USER_LIST_BY_COMPANY(companyId)).toString(),
-        EModule.CORE, UserListEdo.class, true, companyId);
+        EModule.CORE, UserListEdo.class, true);
 
     return ProfileModelEdoMapper.fromUserEdoList(edo.getUsers());
+  }
+
+  @Override
+  public ProfileResponse getUserProfileByEmail(final String email)
+      throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+    logger.debug("Request user data for email {}", email);
+
+    final ProfileResponseEdo edo = this.restTemplate.callRestGet(
+        this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.READ_USERPROFILE_BY_EMAIL(email)).toString(), EModule.CORE,
+        ProfileResponseEdo.class, true);
+
+    return ProfileModelEdoMapper.fromEdo(edo);
   }
 
 }

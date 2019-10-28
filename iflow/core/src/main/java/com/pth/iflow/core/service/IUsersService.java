@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.pth.iflow.core.model.Department;
 import com.pth.iflow.core.model.DepartmentGroup;
+import com.pth.iflow.core.model.ProfileResponse;
 import com.pth.iflow.core.model.User;
 import com.pth.iflow.core.model.UserGroup;
 
@@ -12,6 +13,8 @@ public interface IUsersService {
   User save(User model);
 
   User getUserByEmail(final String email);
+
+  ProfileResponse getProfileResponseByEmail(final String email);
 
   List<UserGroup> getUserGroups(final String identity);
 

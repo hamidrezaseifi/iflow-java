@@ -26,6 +26,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.pth.iflow.common.edo.models.DepartmentGroupListEdo;
 import com.pth.iflow.common.edo.models.DepartmentListEdo;
+import com.pth.iflow.common.edo.models.ProfileResponseEdo;
 import com.pth.iflow.common.edo.models.UserEdo;
 import com.pth.iflow.common.edo.models.UserGroupListEdo;
 import com.pth.iflow.common.edo.models.UserListEdo;
@@ -34,6 +35,7 @@ import com.pth.iflow.common.rest.XmlRestConfig;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.Department;
 import com.pth.iflow.core.model.DepartmentGroup;
+import com.pth.iflow.core.model.ProfileResponse;
 import com.pth.iflow.core.model.User;
 import com.pth.iflow.core.model.UserGroup;
 import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
@@ -202,6 +204,26 @@ public class UserControllerTest extends TestDataProducer {
         .andExpect(content().xml(listAsXmlString));
 
     verify(this.usersService, times(1)).getCompanyUsers(any(String.class));
+
+  }
+
+  @Test
+  public void testReadUserProfileByEmail() throws Exception {
+
+    final ProfileResponse profile = this.getTestProfileResponse();
+    when(this.usersService.getProfileResponseByEmail(any(String.class))).thenReturn(profile);
+
+    final ProfileResponseEdo edo = CoreModelEdoMapper.toEdo(profile);
+
+    final String resultAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edo);
+
+    this.mockMvc
+        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.USERPROFILE_READ_BY_EMAIL, "useridentity")
+            .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
+        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(content().xml(resultAsXmlString));
+
+    verify(this.usersService, times(1)).getProfileResponseByEmail(any(String.class));
 
   }
 

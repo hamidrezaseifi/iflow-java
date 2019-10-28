@@ -17,12 +17,15 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.pth.iflow.core.TestDataProducer;
+import com.pth.iflow.core.model.Company;
 import com.pth.iflow.core.model.Department;
 import com.pth.iflow.core.model.DepartmentGroup;
+import com.pth.iflow.core.model.ProfileResponse;
 import com.pth.iflow.core.model.User;
 import com.pth.iflow.core.model.UserGroup;
 import com.pth.iflow.core.service.IUsersService;
 import com.pth.iflow.core.service.impl.UsersService;
+import com.pth.iflow.core.storage.dao.ICompanyDao;
 import com.pth.iflow.core.storage.dao.IDepartmentDao;
 import com.pth.iflow.core.storage.dao.IDepartmentGroupDao;
 import com.pth.iflow.core.storage.dao.IUserDao;
@@ -34,6 +37,9 @@ import com.pth.iflow.core.storage.dao.IUserGroupDao;
 public class UserServiceTest extends TestDataProducer {
 
   private IUsersService       userService;
+
+  @MockBean
+  private ICompanyDao         companyDao;
 
   @MockBean
   private IUserDao            userDao;
@@ -49,7 +55,7 @@ public class UserServiceTest extends TestDataProducer {
 
   @Before
   public void setUp() throws Exception {
-    this.userService = new UsersService(this.userDao, this.userGroupDao, this.departmentDao, this.departmentGroupDao);
+    this.userService = new UsersService(this.companyDao, this.userDao, this.userGroupDao, this.departmentDao, this.departmentGroupDao);
   }
 
   @After
@@ -151,6 +157,33 @@ public class UserServiceTest extends TestDataProducer {
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());
+
+  }
+
+  @Test
+  public void testGetProfileResponseByEmail() throws Exception {
+
+    final User user = getTestUser();
+    final Company company = this.getTestCompany();
+    final List<UserGroup> grouplist = getTestUserGroupList();
+    final List<Department> deplist = getTestDepartmentList();
+
+    when(this.userDao.getByEmail(any(String.class))).thenReturn(user);
+    when(this.userGroupDao.getListByIdentityList(any(Set.class))).thenReturn(grouplist);
+    when(this.departmentDao.getListByIdentityList(any(Set.class))).thenReturn(deplist);
+    when(this.companyDao.getByIdentity(any(String.class))).thenReturn(company);
+
+    final ProfileResponse result = this.userService.getProfileResponseByEmail("identity");
+
+    Assert.assertNotNull("Result not null!", result);
+    Assert.assertEquals("Result company has title '" + company.getCompanyName() + "'", company.getCompanyName(),
+        result.getCompanyProfile().getCompany().getCompanyName());
+    Assert.assertEquals("Result user has fname '" + user.getFirstName() + "'", user.getFirstName(), result.getUser().getFirstName());
+    Assert.assertEquals("Result user has lname '" + user.getLastName() + "'", user.getLastName(), result.getUser().getLastName());
+    Assert.assertEquals("Result user has '" + grouplist.size() + "' usergroups", grouplist.size(),
+        result.getCompanyProfile().getUserGroups().size());
+    Assert.assertEquals("Result user has '" + deplist.size() + "' departments", deplist.size(),
+        result.getCompanyProfile().getDepartments().size());
 
   }
 

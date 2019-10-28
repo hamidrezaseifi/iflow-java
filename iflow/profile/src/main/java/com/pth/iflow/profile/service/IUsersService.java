@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.profile.exceptions.ProfileCustomizedException;
+import com.pth.iflow.profile.model.ProfileResponse;
 import com.pth.iflow.profile.model.User;
 
 public interface IUsersService {
@@ -14,4 +15,8 @@ public interface IUsersService {
 
   List<User> getUserListByCompanyIdentity(final String companyId)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
+
+  ProfileResponse getUserProfileByEmail(final String email)
+      throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
+
 }

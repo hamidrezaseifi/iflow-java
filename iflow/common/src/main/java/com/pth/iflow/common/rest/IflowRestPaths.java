@@ -32,6 +32,7 @@ public class IflowRestPaths {
     public static final String USER_DEPARTMENTGROUPS_LIST_BY_EMAIL                              = "/users/user/departmentgroups/{email}";
     public static final String USER_DEPUTIES_LIST_BY_EMAIL                                      = "/users/user/deputies/{email}";
     public static final String USER_USER_LIST_BY_COMPANYIDENTITY                                = "/users/company/users/{companyidentity}";
+    public static final String USERPROFILE_READ_BY_EMAIL                                        = "/users/readprofile/{email}";
 
     public static final String COMPANY_READ_BY_IDENTITY                                         = "/companies/readbyid/{companyidentity}";
 
@@ -109,6 +110,11 @@ public class IflowRestPaths {
     public static URI READ_USER_USER_LIST_BY_COMPANY(final String companyidentity) {
       final IflowUriBuilder builder = new IflowUriBuilder(USER_USER_LIST_BY_COMPANYIDENTITY);
       return builder.build(companyidentity);
+    }
+
+    public static URI READ_USERPROFILE_BY_EMAIL(final String email) {
+      final IflowUriBuilder builder = new IflowUriBuilder(USERPROFILE_READ_BY_EMAIL);
+      return builder.build(email);
     }
 
     public static URI READ_USERGROUP_BY_ID(final String identity) {
