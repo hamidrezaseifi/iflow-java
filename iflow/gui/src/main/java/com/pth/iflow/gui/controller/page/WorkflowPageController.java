@@ -60,7 +60,7 @@ public class WorkflowPageController extends GuiPageControllerBase {
     model.addAttribute("UserAssign", EAssignType.USER.getName());
     model.addAttribute("DepartmentAssign", EAssignType.DEPARTMENT.getName());
     model.addAttribute("DepartmentGroupAssign", EAssignType.DEPARTMENTGROUP.getName());
-    model.addAttribute("workflowId", workflowIdentity);
+    model.addAttribute("workflowIdentity", workflowIdentity);
 
     return workflow.getCurrentStep().getViewName(); // "workflow/edit";
   }

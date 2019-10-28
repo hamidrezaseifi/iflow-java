@@ -1,11 +1,9 @@
 package com.pth.iflow.core.service.impl;
 
 import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import com.pth.iflow.common.edo.models.helper.IdentityModel;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.core.model.WorkflowMessage;
 import com.pth.iflow.core.service.IWorkflowMessageService;
@@ -40,8 +38,7 @@ public class WorkflowMessageService implements IWorkflowMessageService {
   }
 
   @Override
-  public void updateStatusByWorkflow(final String workflowIdentity, final String stepIdentity, final EWorkflowMessageStatus status)
-      throws IFlowStorageException {
+  public void updateStatusByWorkflow(final String workflowIdentity, final String stepIdentity, final EWorkflowMessageStatus status) throws IFlowStorageException {
     this.workflowMessageDao.updateStatusByWorkflowIdentity(workflowIdentity, stepIdentity, status);
   }
 
@@ -58,12 +55,12 @@ public class WorkflowMessageService implements IWorkflowMessageService {
   }
 
   @Override
-  public void updateWorkflowMessageStatus(final String workflowIdentity, final String stepIdentity, final String email,
-      final EWorkflowMessageStatus status) throws IFlowStorageException {
+  public void updateWorkflowMessageStatus(final String workflowIdentity, final String stepIdentity, final String email, final EWorkflowMessageStatus status) throws IFlowStorageException {
 
-    if (StringUtils.isEmpty(email)) {
+    if (IdentityModel.isIdentityNew(email)) {
       this.workflowMessageDao.updateStatusByWorkflowIdentity(workflowIdentity, stepIdentity, status);
-    } else {
+    }
+    else {
       this.workflowMessageDao.updateStatusByWorkflowAndUser(workflowIdentity, stepIdentity, email, status);
     }
   }

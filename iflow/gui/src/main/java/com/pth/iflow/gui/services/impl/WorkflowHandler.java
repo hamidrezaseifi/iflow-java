@@ -243,11 +243,16 @@ public class WorkflowHandler implements IWorkflowHandler {
     return list;
   }
 
-  private WorkflowTypeStep findStepByIdInWOrkflowType(final String stepId, final WorkflowType workflowType) {
+  private WorkflowTypeStep findStepByIdInWorkflowType(final String stepId, final WorkflowType workflowType) {
 
     final Map<String, WorkflowTypeStep> steps = this.getIdMapedSteps(workflowType);
 
-    return steps.containsKey(stepId) ? steps.get(stepId) : null;
+    if (steps.containsKey(stepId)) {
+      return steps.get(stepId);
+    }
+    else {
+      return null;
+    }
   }
 
   private Workflow prepareWorkflow(final Workflow workflow) throws IFlowMessageConversionFailureException {
@@ -256,12 +261,7 @@ public class WorkflowHandler implements IWorkflowHandler {
     workflow.setCreatedByUser(this.sessionUserInfo.getUserByIdentity(workflow.getCreatedByIdentity()));
     workflow.setControllerUser(this.sessionUserInfo.getUserByIdentity(workflow.getControllerIdentity()));
     workflow.setCurrentUserIdentity(this.sessionUserInfo.getUser().getIdentity());
-    workflow.setCurrentStep(this.findStepByIdInWOrkflowType(workflow.getCurrentStepIdentity(), workflow.getWorkflowType()));
-
-    for (final WorkflowAction action : workflow.getActions()) {
-      action.setAssignToUser(this.sessionUserInfo.getUserByIdentity(action.getAssignToIdentity()));
-      action.setCurrentStep(this.findStepByIdInWOrkflowType(action.getCurrentStepIdentity(), workflow.getWorkflowType()));
-    }
+    workflow.setCurrentStep(this.findStepByIdInWorkflowType(workflow.getCurrentStepIdentity(), workflow.getWorkflowType()));
 
     this.prepareWorkflowActions(workflow);
 
@@ -274,28 +274,10 @@ public class WorkflowHandler implements IWorkflowHandler {
 
     for (final WorkflowAction action : workflow.getActions()) {
       action.setAssignToUser(this.sessionUserInfo.getUserByIdentity(action.getAssignToIdentity()));
-
-      action.setCurrentStep(this.findStep(workflow, action.getCurrentStepIdentity()));
-
-      // this.messagesHelper.get("common.not-assigned")
-
+      action.setCurrentStep(this.findStepByIdInWorkflowType(action.getCurrentStepIdentity(), workflow.getWorkflowType()));
     }
 
     return workflow;
-  }
-
-  private WorkflowTypeStep findStep(final Workflow workflow, final String stepId) {
-    if (stepId == null) {
-      return null;
-    }
-    WorkflowTypeStep foundStep = null;
-    for (final WorkflowTypeStep step : workflow.getWorkflowType().getSteps()) {
-      if (step.getIdentity() == stepId) {
-        foundStep = step;
-        break;
-      }
-    }
-    return foundStep;
   }
 
 }
