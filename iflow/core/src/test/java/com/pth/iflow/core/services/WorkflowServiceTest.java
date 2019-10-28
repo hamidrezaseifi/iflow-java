@@ -93,7 +93,7 @@ public class WorkflowServiceTest extends TestDataProducer {
 
     when(this.workflowDao.create(any(Workflow.class))).thenReturn(workflow);
     when(this.workflowDao.update(any(Workflow.class))).thenReturn(workflow);
-    when(this.workflowDao.getById(any(Long.class))).thenReturn(workflow);
+    when(this.workflowDao.getByIdentity(any(String.class))).thenReturn(workflow);
 
     Workflow resWorkflow = this.workflowService.save(workflow);
 
@@ -106,7 +106,7 @@ public class WorkflowServiceTest extends TestDataProducer {
 
     when(this.workflowDao.create(any(Workflow.class))).thenReturn(workflow);
     when(this.workflowDao.update(any(Workflow.class))).thenReturn(workflow);
-    when(this.workflowDao.getById(any(Long.class))).thenReturn(workflow);
+    when(this.workflowDao.getByIdentity(any(String.class))).thenReturn(workflow);
 
     resWorkflow = this.workflowService.save(workflow);
 

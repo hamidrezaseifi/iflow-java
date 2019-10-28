@@ -4,11 +4,11 @@ import com.pth.iflow.profile.model.UserAuthenticationSession;
 
 public interface ISessionManager {
 
-  UserAuthenticationSession addSession(String email);
-  
-  UserAuthenticationSession findByEmail(String email);
+  UserAuthenticationSession addSession(String userIdentity, String companyIdentity);
 
-  UserAuthenticationSession findValidateByEmail(String email, boolean removeInvalid);
+  UserAuthenticationSession findByUserIdentity(String userIdentity);
+
+  UserAuthenticationSession findValidateByUserIdentity(String userIdentity, boolean removeInvalid);
 
   UserAuthenticationSession findBySessionId(String sessionId);
 
@@ -16,20 +16,20 @@ public interface ISessionManager {
 
   UserAuthenticationSession updateByToken(String token);
 
-  UserAuthenticationSession updateUser(String email, String sessionId);
+  UserAuthenticationSession updateUser(String userIdentity, String sessionId);
 
-  String getBackendValidEMail();
+  String getBackendValidUserIdentity();
 
   UserAuthenticationSession getBackendValidSession();
-  
+
   void removeAllExpiredSessions();
-  
+
   void removeExpiredSession(UserAuthenticationSession session);
-  
+
   void removeExpiredSession(String sessionId);
 
   int getSessionMaxAge();
-  
+
   void setSessionMaxAge(final int sessionMaxAge);
 
 }

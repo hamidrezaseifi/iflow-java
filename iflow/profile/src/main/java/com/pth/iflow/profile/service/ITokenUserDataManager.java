@@ -20,10 +20,13 @@ public interface ITokenUserDataManager {
 
   UserAuthenticationSession validateToken(String token) throws ProfileCustomizedException, IFlowMessageConversionFailureException;
 
+  void validateTokenAndCompany(String token, String companyIdentity)
+      throws ProfileCustomizedException, IFlowMessageConversionFailureException;
+
   ProfileResponse getProfileByTokenAndCheckCompany(String token, String companyIdentity)
       throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException;
 
-  ProfileResponse getProfileByTokenEmail(String email, String token)
+  ProfileResponse getProfileByTokenUserIdentity(String userIdentity, String token)
       throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException;
 
   List<User> getUserListByToken(String token, String companyIdentity)

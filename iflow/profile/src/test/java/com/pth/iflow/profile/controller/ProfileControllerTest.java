@@ -80,7 +80,7 @@ public class ProfileControllerTest extends TestDataProducer {
   @Before
   public void setUp() throws Exception {
 
-    this.authenticatedSession = this.sessionManager.addSession("email@test.de");
+    this.authenticatedSession = this.sessionManager.addSession("email@test.de", "valid-company");
 
     this.user = this.getTestUser();
     this.company = this.getTestCompany();
@@ -100,8 +100,8 @@ public class ProfileControllerTest extends TestDataProducer {
   @Test
   public void testReadAuthenticatedInfo() throws Exception {
 
-    final AuthenticatedProfileRequestEdo profReq = this.getTestAuthenticatedProfileRequestEdo(this.authenticatedSession.getEmail(),
-        this.authenticatedSession.getToken());
+    final AuthenticatedProfileRequestEdo profReq = this
+        .getTestAuthenticatedProfileRequestEdo(this.authenticatedSession.getUserIdentity(), this.authenticatedSession.getToken());
 
     final ProfileResponseEdo responseEdo = this.getTestProfileResponseEdo(this.authenticatedSession.getSessionid(),
         ProfileModelEdoMapper.toEdo(this.user), ProfileModelEdoMapper.toEdo(this.company));

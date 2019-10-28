@@ -121,9 +121,10 @@ public class ProfileModelEdoMapper {
     final UserAuthenticationResponseEdo edo = new UserAuthenticationResponseEdo();
     edo.setSessionid(model.getSessionid());
     edo.setToken(model.getToken());
-    edo.setEmail(model.getEmail());
+    edo.setUserIdentity(model.getUserIdentity());
     edo.setCreated(model.getCreatedLong());
     edo.setLastAccess(model.getLastAccessLong());
+    edo.setCompanyIdentity(model.getCompanyIdentity());
 
     return edo;
   }

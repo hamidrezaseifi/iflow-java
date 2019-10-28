@@ -150,9 +150,9 @@ public class TestDataProducer {
   }
 
   protected UserAuthenticationSession getTestUserAuthenticationSession() {
-    final UserAuthenticationSession model = new UserAuthenticationSession(this.getSessionMaxAgeInSeconds());
+    final UserAuthenticationSession model = new UserAuthenticationSession("email", "companyidentity",
+        this.getSessionMaxAgeInSeconds());
 
-    model.setEmail("email");
     model.setSessionid("sessionid");
     model.setToken("token");
 

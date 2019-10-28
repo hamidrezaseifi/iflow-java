@@ -2,7 +2,9 @@ package com.pth.iflow.profile.controller;
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.pth.iflow.common.annotations.IflowPostRequestMapping;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
 import com.pth.iflow.common.edo.models.UserAuthenticationRequestEdo;
@@ -33,7 +36,7 @@ public class AuthenticationController {
   private final ISessionManager        sessionManager;
 
   public AuthenticationController(@Autowired final IAuthenticationService authService,
-                                  @Autowired final ISessionManager sessionManager) {
+      @Autowired final ISessionManager sessionManager) {
 
     this.authService = authService;
     this.sessionManager = sessionManager;
@@ -42,26 +45,26 @@ public class AuthenticationController {
   @ResponseStatus(HttpStatus.ACCEPTED)
   @IflowPostRequestMapping(value = IflowRestPaths.ProfileModule.AUTHENTICATION_AUTHENTICATE)
   @ResponseBody
-  public ResponseEntity<UserAuthenticationResponseEdo> authenticate(@RequestBody final UserAuthenticationRequestEdo userEdo, final HttpServletRequest request) throws ProfileCustomizedException, URISyntaxException, MalformedURLException {
+  public ResponseEntity<UserAuthenticationResponseEdo> authenticate(@RequestBody final UserAuthenticationRequestEdo userEdo,
+      final HttpServletRequest request) throws ProfileCustomizedException, URISyntaxException, MalformedURLException {
 
-    return ControllerHelper.createResponseEntity(request, authenticateUser(userEdo), HttpStatus.ACCEPTED);
+    return ControllerHelper.createResponseEntity(request, this.authenticateUser(userEdo), HttpStatus.ACCEPTED);
   }
 
-  private UserAuthenticationResponseEdo authenticateUser(final UserAuthenticationRequestEdo userEdo) throws URISyntaxException, MalformedURLException {
-    final UserAuthenticationRequest authUser = authService.authenticate(ProfileModelEdoMapper.fromEdo(userEdo));
+  private UserAuthenticationResponseEdo authenticateUser(final UserAuthenticationRequestEdo userEdo)
+      throws URISyntaxException, MalformedURLException {
+    final UserAuthenticationRequest authUser = this.authService.authenticate(ProfileModelEdoMapper.fromEdo(userEdo));
     if (authUser == null) {
-      throw new ProfileCustomizedException("Invalid Username or Password",
-                                           "",
-                                           EModule.PROFILE.getModuleName(),
-                                           EIFlowErrorType.INVALID_USERNAMEPASSWORD);
+      throw new ProfileCustomizedException("Invalid Username or Password", "", EModule.PROFILE.getModuleName(),
+          EIFlowErrorType.INVALID_USERNAMEPASSWORD);
     }
 
-    UserAuthenticationSession session = sessionManager.findValidateByEmail(authUser.getEmail(), true);
+    UserAuthenticationSession session = this.sessionManager.findValidateByUserIdentity(authUser.getEmail(), true);
     if (session == null) {
-      session = sessionManager.addSession(authUser.getEmail());
+      session = this.sessionManager.addSession(authUser.getEmail(), authUser.getCompanyIdentity());
     }
 
-    sessionManager.updateUser(authUser.getEmail(), session.getSessionid());
+    this.sessionManager.updateUser(authUser.getEmail(), session.getSessionid());
 
     final UserAuthenticationResponseEdo authRespEdo = ProfileModelEdoMapper.toEdo(session);
 

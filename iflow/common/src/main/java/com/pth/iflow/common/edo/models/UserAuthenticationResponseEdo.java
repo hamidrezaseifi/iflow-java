@@ -15,8 +15,12 @@ import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 public class UserAuthenticationResponseEdo {
 
   @NotNull
-  @XmlElement(name = "Email", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String email;
+  @XmlElement(name = "UserIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String userIdentity;
+
+  @NotNull
+  @XmlElement(name = "CompanyIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String companyIdentity;
 
   @NotNull
   @XmlElement(name = "Token", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
@@ -34,12 +38,20 @@ public class UserAuthenticationResponseEdo {
   @XmlElement(name = "LastAccess", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Long   lastAccess;
 
-  public String getEmail() {
-    return this.email;
+  public String getUserIdentity() {
+    return this.userIdentity;
   }
 
-  public void setEmail(final String email) {
-    this.email = email;
+  public void setUserIdentity(final String userIdentity) {
+    this.userIdentity = userIdentity;
+  }
+
+  public String getCompanyIdentity() {
+    return this.companyIdentity;
+  }
+
+  public void setCompanyIdentity(final String companyIdentity) {
+    this.companyIdentity = companyIdentity;
   }
 
   /**
