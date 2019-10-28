@@ -100,26 +100,27 @@ public class TokenUserDataManagerTest extends TestDataProducer {
   @Test
   public void testGetProfileByTokenEmail() throws Exception {
 
-    when(this.usersService.getUserByEmail(any(String.class))).thenReturn(this.validUser);
-    when(this.companyService.getByIdentity(any(String.class))).thenReturn(this.validCompany);
+    final ProfileResponse profile = this.getTestProfileResponse(this.validSession.getSessionid());
+
+    when(this.usersService.getUserProfileByEmail(any(String.class))).thenReturn(profile);
 
     final ProfileResponse response = this.tokenUserDataManager.getProfileByToken(this.validToken);
 
-    verify(this.usersService, times(1)).getUserByEmail(any(String.class));
-    verify(this.companyService, times(1)).getByIdentity(any(String.class));
+    verify(this.usersService, times(1)).getUserProfileByEmail(any(String.class));
 
     Assert.assertNotNull("Result response is not null!", response);
     Assert.assertNotNull("Result user is not null!", response.getUser());
     Assert.assertNotNull("Result company is not null!", response.getCompanyProfile());
-    Assert.assertEquals("Result user has the same id as valid-user!", response.getUser().getIdentity(), this.validUser.getIdentity());
+    Assert.assertEquals("Result user has the same id as valid-user!", response.getUser().getIdentity(),
+        profile.getUser().getIdentity());
     Assert.assertEquals("Result company has the same id as valid-company!", response.getCompanyProfile().getCompany().getIdentity(),
-        this.validCompany.getIdentity());
+        profile.getCompanyProfile().getCompany().getIdentity());
 
     Assert.assertEquals("Result user has the same name as valid-user!",
         response.getUser().getFirstName() + response.getUser().getLastName(),
-        this.validUser.getFirstName() + this.validUser.getLastName());
+        profile.getUser().getFirstName() + profile.getUser().getLastName());
     Assert.assertEquals("Result company has the same name as valid-company!",
-        response.getCompanyProfile().getCompany().getCompanyName(), this.validCompany.getCompanyName());
+        response.getCompanyProfile().getCompany().getCompanyName(), profile.getCompanyProfile().getCompany().getCompanyName());
 
   }
 

@@ -31,6 +31,7 @@ import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
 import com.pth.iflow.profile.TestDataProducer;
 import com.pth.iflow.profile.model.Company;
 import com.pth.iflow.profile.model.Department;
+import com.pth.iflow.profile.model.ProfileResponse;
 import com.pth.iflow.profile.model.User;
 import com.pth.iflow.profile.model.UserAuthenticationSession;
 import com.pth.iflow.profile.model.UserGroup;
@@ -77,6 +78,8 @@ public class ProfileControllerTest extends TestDataProducer {
 
   private List<UserGroup>                        groupList;
 
+  private ProfileResponse                        validProfileResponse;
+
   @Before
   public void setUp() throws Exception {
 
@@ -86,8 +89,10 @@ public class ProfileControllerTest extends TestDataProducer {
     this.company = this.getTestCompany();
     this.departmentList = this.getTestDepartmentList();
     this.groupList = this.getTestUserGroupList();
+    this.validProfileResponse = this.getTestProfileResponse(this.authenticatedSession.getSessionid());
 
     when(this.usersService.getUserByEmail(any(String.class))).thenReturn(this.user);
+    when(this.usersService.getUserProfileByEmail(any(String.class))).thenReturn(this.validProfileResponse);
     when(this.companyService.getByIdentity(any(String.class))).thenReturn(this.company);
     when(this.departmentService.getListByCompanyIdentity(any(String.class))).thenReturn(this.departmentList);
     when(this.userGroupService.getListByCompanyIdentity(any(String.class))).thenReturn(this.groupList);
@@ -116,8 +121,7 @@ public class ProfileControllerTest extends TestDataProducer {
         .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(responseAsXmlString));
 
-    verify(this.usersService, times(1)).getUserByEmail(any(String.class));
-    verify(this.companyService, times(1)).getByIdentity(any(String.class));
+    verify(this.usersService, times(1)).getUserProfileByEmail(any(String.class));
 
   }
 
@@ -139,8 +143,7 @@ public class ProfileControllerTest extends TestDataProducer {
         .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(responseAsXmlString));
 
-    verify(this.usersService, times(1)).getUserByEmail(any(String.class));
-    verify(this.companyService, times(1)).getByIdentity(any(String.class));
+    verify(this.usersService, times(1)).getUserProfileByEmail(any(String.class));
 
   }
 

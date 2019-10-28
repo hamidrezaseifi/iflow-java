@@ -18,6 +18,7 @@ import com.pth.iflow.profile.model.Company;
 import com.pth.iflow.profile.model.CompanyProfile;
 import com.pth.iflow.profile.model.Department;
 import com.pth.iflow.profile.model.DepartmentGroup;
+import com.pth.iflow.profile.model.ProfileResponse;
 import com.pth.iflow.profile.model.User;
 import com.pth.iflow.profile.model.UserAuthenticationRequest;
 import com.pth.iflow.profile.model.UserAuthenticationSession;
@@ -179,6 +180,12 @@ public class TestDataProducer {
     model.setCompanyProfile(ProfileModelEdoMapper.toEdo(this.getTestCompanyProfile()));
     model.setSessionid(sessionid);
     model.setUser(user);
+
+    return model;
+  }
+
+  protected ProfileResponse getTestProfileResponse(final String sessionid) {
+    final ProfileResponse model = new ProfileResponse(this.getTestUser(), this.getTestCompanyProfile(), sessionid);
 
     return model;
   }

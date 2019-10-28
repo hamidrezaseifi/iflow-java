@@ -63,7 +63,8 @@ public class AuthenticationControllerTest extends TestDataProducer {
     final UserAuthenticationRequest authRequest = this.getTestUserAuthenticationRequest();
 
     when(this.authService.authenticate(any(UserAuthenticationRequest.class))).thenReturn(authRes);
-    when(this.sessionManager.findValidateByUserIdentity(any(String.class), any(Boolean.class))).thenReturn(authenticationSession);
+    when(this.sessionManager.findValidateByUserIdentity(any(String.class), any(String.class), any(Boolean.class)))
+        .thenReturn(authenticationSession);
 
     final UserAuthenticationRequestEdo authRequestEdo = ProfileModelEdoMapper.toEdo(authRequest);
 
@@ -78,7 +79,7 @@ public class AuthenticationControllerTest extends TestDataProducer {
         .andExpect(content().xml(listAsXmlString));
 
     verify(this.authService, times(1)).authenticate(any(UserAuthenticationRequest.class));
-    verify(this.sessionManager, times(1)).findValidateByUserIdentity(any(String.class), any(Boolean.class));
+    verify(this.sessionManager, times(1)).findValidateByUserIdentity(any(String.class), any(String.class), any(Boolean.class));
 
   }
 
