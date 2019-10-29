@@ -62,7 +62,7 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 			
 			var type = jitem.data("assigntype") == 'user' ? userAssignType : jitem.data("assigntype") == 'department' ? departmentAssignType : departmentGroupAssignType;
 			
-			$scope.workflowCreateRequest.assigns.push({itemId: jitem.val(),  itemType: type, title: jitem.data("assigntitle")});
+			$scope.workflowCreateRequest.assigns.push({itemIdentity: jitem.val(),  itemType: type, title: jitem.data("assigntitle")});
 		});
     	$('#assignlistdialog').modal('hide');
 	};
@@ -71,7 +71,7 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 		
 		$scope.workflowCreateRequest.assigns = $scope.workflowCreateRequest.assigns.filter(function(value, index, arr){
 
-		    return value.itemId != id || value.itemType != type;
+		    return value.itemIdentity != id || value.itemType != type;
 
 		});
     	
@@ -84,7 +84,7 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 		for(o in $scope.workflowCreateRequest.assigns){
 			var assign = $scope.workflowCreateRequest.assigns[o];
 			
-		    if(assign.itemId == id && assign.itemType == type){
+		    if(assign.itemIdentity == id && assign.itemType == type){
 		    	return true;
 		    }
 		}

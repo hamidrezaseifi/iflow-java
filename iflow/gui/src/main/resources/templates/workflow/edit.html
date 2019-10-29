@@ -36,7 +36,7 @@
 								<span ng-if="hasNoAssigns()" th:text="#{workflow-select-assign}"></span>
 								<div class="user-item-box" ng-repeat="item in workflowCreateRequest.assigns">
 									<span>{{item.title}} </span>
-									<button ng-click="removeAssign(item.itemId, item.itemType)"><i class="material-icons">close</i></button>
+									<button ng-click="removeAssign(item.itemIdentity, item.itemType)"><i class="material-icons">close</i></button>
 								</div>
 								<div class="clear"></div>
 							</div>

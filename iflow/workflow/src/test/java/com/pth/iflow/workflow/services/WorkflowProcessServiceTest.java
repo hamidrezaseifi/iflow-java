@@ -25,7 +25,6 @@ import com.pth.iflow.workflow.bl.ITokenValidator;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.IWorkflowPrepare;
 import com.pth.iflow.workflow.bl.IWorkflowProcessService;
-import com.pth.iflow.workflow.bl.IWorkflowTypeDataService;
 import com.pth.iflow.workflow.bl.impl.WorkflowProcessService;
 import com.pth.iflow.workflow.bl.strategy.IWorkStrategyFactory;
 import com.pth.iflow.workflow.bl.strategy.IWorkflowSaveStrategy;
@@ -33,7 +32,6 @@ import com.pth.iflow.workflow.models.ProfileResponse;
 import com.pth.iflow.workflow.models.Workflow;
 import com.pth.iflow.workflow.models.WorkflowSaveRequest;
 import com.pth.iflow.workflow.models.WorkflowSearchFilter;
-import com.pth.iflow.workflow.models.WorkflowType;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -49,9 +47,6 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
   private IWorkflowPrepare workflowPrepare;
 
   @Mock
-  private IWorkflowTypeDataService workflowTypeDataService;
-
-  @Mock
   private ITokenValidator tokenValidator;
 
   @Mock
@@ -63,8 +58,6 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
   @Mock
   private IWorkflowSaveStrategy validateStrategy;
 
-  private WorkflowType workflowType;
-
   private String validTocken;
 
   private String validSession;
@@ -74,7 +67,6 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
   @Before
   public void setUp() throws Exception {
     this.workflowProcessService = new WorkflowProcessService(this.workflowDataService,
-                                                             this.workflowTypeDataService,
                                                              this.tokenValidator,
                                                              this.workStrategyFactory,
                                                              this.workflowPrepare);
@@ -82,10 +74,6 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
     this.validTocken = "validTocken";
 
     this.validSession = "validSession";
-
-    this.workflowType = this.getTestWorkflowType("type1", "Type 1");
-
-    when(this.workflowTypeDataService.getByIdentity(any(String.class), any(String.class))).thenReturn(this.workflowType);
 
     this.profileResponse = new ProfileResponse(this.getTestUser(), this.getTestCompanyProfile(), this.validSession);
 

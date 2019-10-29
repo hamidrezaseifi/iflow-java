@@ -14,7 +14,6 @@ import com.pth.iflow.workflow.bl.ITokenValidator;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.IWorkflowPrepare;
 import com.pth.iflow.workflow.bl.IWorkflowProcessService;
-import com.pth.iflow.workflow.bl.IWorkflowTypeDataService;
 import com.pth.iflow.workflow.bl.strategy.IWorkStrategyFactory;
 import com.pth.iflow.workflow.bl.strategy.IWorkflowSaveStrategy;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
@@ -31,8 +30,6 @@ public class WorkflowProcessService implements IWorkflowProcessService {
 
   private final IWorkflowDataService workflowDataService;
 
-  private final IWorkflowTypeDataService workflowTypeDataService;
-
   private final ITokenValidator tokenValidator;
 
   private final IWorkStrategyFactory workStrategyFactory;
@@ -40,13 +37,11 @@ public class WorkflowProcessService implements IWorkflowProcessService {
   private final IWorkflowPrepare workflowPrepare;
 
   public WorkflowProcessService(@Autowired final IWorkflowDataService workflowDataService,
-                                @Autowired final IWorkflowTypeDataService workflowTypeDataService,
                                 @Autowired final ITokenValidator tokenValidator,
                                 @Autowired final IWorkStrategyFactory workStrategyFactory,
                                 @Autowired final IWorkflowPrepare workflowPrepare) {
 
     this.workflowDataService = workflowDataService;
-    this.workflowTypeDataService = workflowTypeDataService;
     this.tokenValidator = tokenValidator;
     this.workStrategyFactory = workStrategyFactory;
     this.workflowPrepare = workflowPrepare;
