@@ -2,22 +2,22 @@ package com.pth.iflow.gui.models;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import com.pth.iflow.common.enums.EWorkflowStatus;
 
 public class WorkflowSearchFilter {
 
-  private boolean            meAssigned;
+  private boolean meAssigned;
 
-  private final Set<String>  assignedUserIdSet  = new HashSet<>();
+  private final Set<String> assignedUserIdSet = new HashSet<>();
 
-  private final Set<Integer> statusSet          = new HashSet<>();
+  private final Set<Integer> statusList = new HashSet<>();
 
-  private final Set<String>  workflowTypeIdSet  = new HashSet<>();
+  private final Set<String> workflowTypes = new HashSet<>();
 
-  private final Set<String>  workflowStepeIdSet = new HashSet<>();
+  private final Set<String> workflowSteps = new HashSet<>();
 
   /**
    * @return the meAssigned
@@ -44,45 +44,50 @@ public class WorkflowSearchFilter {
     }
   }
 
-  public Set<Integer> getStatusSet() {
-    return this.statusSet;
+  public Set<Integer> getStatusList() {
+    return this.statusList;
   }
 
-  public void setStatusSet(final Set<Integer> statusList) {
-    this.statusSet.clear();
+  public void setStatusList(final Set<Integer> statusList) {
+    this.statusList.clear();
     if (statusList != null) {
-      this.statusSet.addAll(statusList);
+      this.statusList.addAll(statusList);
     }
   }
 
-  public Set<String> getWorkflowTypeIdSet() {
-    return this.workflowTypeIdSet;
+  public Set<String> getWorkflowTypes() {
+    return this.workflowTypes;
   }
 
-  public void setWorkflowTypeIdSet(final Set<String> workflowTypeIdList) {
-    this.workflowTypeIdSet.clear();
-    if (workflowTypeIdList != null) {
-      this.workflowTypeIdSet.addAll(workflowTypeIdList);
+  public void setWorkflowTypes(final Set<String> workflowTypes) {
+    this.workflowTypes.clear();
+    if (workflowTypes != null) {
+      this.workflowTypes.addAll(workflowTypes);
     }
   }
 
-  public Set<String> getWorkflowStepeIdSet() {
-    return this.workflowStepeIdSet;
+  public Set<String> getWorkflowSteps() {
+    return this.workflowSteps;
   }
 
-  public void setWorkflowStepeIdSet(final Set<String> workflowStepeIdList) {
-    this.workflowStepeIdSet.clear();
-    if (workflowStepeIdList != null) {
-      this.workflowStepeIdSet.addAll(workflowStepeIdList);
+  public void setWorkflowSteps(final Set<String> workflowSteps) {
+    this.workflowSteps.clear();
+    if (workflowSteps != null) {
+      this.workflowSteps.addAll(workflowSteps);
     }
   }
 
-  public static WorkflowSearchFilter generateNew() {
+  public static WorkflowSearchFilter generateNew(final List<WorkflowType> workflowTypes) {
     final WorkflowSearchFilter workflowSearchFilter = new WorkflowSearchFilter();
 
     workflowSearchFilter.setMeAssigned(true);
-    workflowSearchFilter.setStatusSet(Arrays.asList(EWorkflowStatus.values()).stream().filter(e -> e != EWorkflowStatus.ARCHIVED)
-        .map(e -> e.getValue().intValue()).collect(Collectors.toSet()));
+    workflowSearchFilter.setStatusList(Arrays.asList(EWorkflowStatus.values())
+                                             .stream()
+                                             .filter(e -> e != EWorkflowStatus.ARCHIVED)
+                                             .map(e -> e.getValue().intValue())
+                                             .collect(Collectors.toSet()));
+
+    workflowSearchFilter.setWorkflowTypes(workflowTypes.stream().map(t -> t.getIdentity()).collect(Collectors.toSet()));
 
     return workflowSearchFilter;
   }

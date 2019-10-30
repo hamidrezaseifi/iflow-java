@@ -63,7 +63,7 @@ public class WorkflowDataController extends GuiDataControllerBase {
     final Map<String, Object> map = new HashMap<>();
 
     final List<WorkflowType> workflowTypeList = this.workflowHandler.readWorkflowTypeList(this.getLoggedCompany().getIdentity());
-    final WorkflowSearchFilter workflowSearchFilter = WorkflowSearchFilter.generateNew();
+    final WorkflowSearchFilter workflowSearchFilter = WorkflowSearchFilter.generateNew(workflowTypeList);
 
     map.put("workflowTypes", workflowTypeList);
     map.put("newSearchFilter", workflowSearchFilter);

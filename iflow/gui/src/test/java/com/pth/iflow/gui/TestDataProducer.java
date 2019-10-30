@@ -412,9 +412,9 @@ public class TestDataProducer {
   protected WorkflowSearchFilter getTestWorkflowSearchFilter() {
     final WorkflowSearchFilter filter = new WorkflowSearchFilter();
     filter.setAssignedUserIdSet(this.getTestUserIdSet());
-    filter.setStatusSet(new HashSet<>(Arrays.asList(1, 2, 3)));
-    filter.setWorkflowStepeIdSet(this.getTestWorkflowTypeStepIdSet());
-    filter.setWorkflowTypeIdSet(this.getTestWorkflowTypeIdSet());
+    filter.setStatusList(new HashSet<>(Arrays.asList(1, 2, 3)));
+    filter.setWorkflowSteps(this.getTestWorkflowTypeStepIdSet());
+    filter.setWorkflowTypes(this.getTestWorkflowTypeIdSet());
 
     return filter;
   }
