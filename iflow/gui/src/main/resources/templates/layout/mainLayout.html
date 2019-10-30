@@ -50,142 +50,108 @@
   </head>
     <body ng-controller="BodyController">
         
-        <header th:fragment="header">
+      <header th:fragment="header">
 
- 		<script th:inline="javascript">
-			
- 		</script>       	
-			<nav class="navbar navbar-default" th:fragment="navbar">
-			  <div class="container-fluid">
-			    <div class="navbar-header">
-			      <a class="navbar-brand" href="/"><img class="logo" th:src="@{/images/fbim2.png}" /></a>
-			    </div>
-			    <ul class="nav navbar-nav" th:if="${isLogged}">
-			      <li th:each="menu: ${pageMenuList}" th:if="${menu.isEnabled()}">
-			      	<a th:if="${!menu.hasChildren()}" th:href="${menu.getUrl()}" >
-						<span th:if="${menu.hasImage()}" th:class="${menu.getCssClass('menu-image')}"></span>
-						<span th:text="${menu.getLabel()}"></span>
-					</a>
-			      	<a th:if="${menu.hasChildren()}" href="#" th:class="${menu.hasChildren() ? 'dropdown-toggle' : ''}" data-toggle="dropdown">
-						<span th:if="${menu.hasImage()}" th:class="${menu.getCssClass('menu-image')}"></span>
-						<span th:text="${menu.getLabel()}"></span>
-						<span class="caret" th:if="${menu.hasChildren()}"></span>
-					</a>
-					<ul th:if="${menu.hasChildren()}" class="dropdown-menu">
-				      <li th:each="submenu: ${menu.getChildren()}" th:if="${submenu.isEnabled()}">
-				      	<a th:href="${submenu.getUrl()}" >
-							<span th:if="${submenu.hasImage()}" th:class="${submenu.getCssClass('menu-image')}"></span>
-							<span th:text="${submenu.getLabel()}"></span>
-						</a>
-					  </li>
-						
-					</ul>
-				  </li>
-			    </ul>
-       			    
-			    <div class="navbar-user-detail" th:if="${isLogged}">
-			      <div class="user-detail dropdown"> 
-					<md-button ng-click="toggleRight()" style="background-color:#cecece;">
-			      		<span th:text="${loggedUser.getUserTitle()}">User, User</span>
-			      		<span class="glyphicon glyphicon-user"></span>
-					</md-button>
-			      </div>
-			    </div>
-			    
-			  </div>
-			</nav>    			    
-			<md-sidenav md-component-id="rightSidenav" class="md-sidenav-right" th:if="${isLogged}">
-				<md-list ng-cloak>
-					<md-subheader class="md-no-sticky" th:text="#{common.useractins}"></md-subheader>
-					<md-divider></md-divider>					
-					<md-list-item class="secondary-button-padding">
-					    <a href="/logout"><span class="glyphicon glyphicon-log-out"></span> <span th:text="#{common.logout}"></span></a>
-					</md-list-item>
-				</md-list>	
-				
-	            <md-button class="md-raised md-primary close-right-menu" ng-click="closeSideRight()"> <span th:text="#{common.close}"></span></md-button>
-	        </md-sidenav>
-	        
-        </header>
-		<div th:fragment="breadcrumb" style="background-color: #eeeeee;">
-			 <ul class="breadcrumb" >
-			     <li th:each="entry : ${breadCrumb}">
-			         <a th:href="${entry.getUrl()}" th:if="${entry.isLink()}" th:text="${entry.getLabel()}"></a>
-			         <span th:if="${!entry.isLink()}" th:text="${entry.getLabel()}"></span>
-			     </li>
-			 </ul>			
-		</div>
- 
-		<div th:fragment="errorMessageDialog" class="modal fade" tabindex="-1" id="errormessagedialog" role="dialog" aria-labelledby="errorMessagedialogCenterTitle" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered" role="document" style="width:70vw;">
-			    <div class="modal-content">
-			      <div class="modal-header">
-			        <h5 class="modal-title dialog-title" id="errorMessagedialogTitle" th:text="#{common.errormessagetitle}"></h5>
-			        <button class="dialog-toolbar-button close"  data-dismiss="modal" aria-label="Close">
-			        	<i class="material-icons">close</i>
-			        </button>
-			     </div>
-			      <div class="modal-body">
-			      
-					<div class="content-container alert bg-danger alert-danger" style="margin-bottom:0;">
-					
-						<div class="errorcontent-message" ng-bind-html="errorMessage"></div>
-						<div>
-							<input style="float:right" type="checkbox" id="showerrordetailcheck" ng-model="showErrorDetail" >
-							<label style="float:right; margin-right: 10px;" class="form-check-label" for="showerrordetailcheck" th:text="#{common.details}"></label>
+				<nav class="navbar navbar-default" th:fragment="navbar">
+					<div class="container-fluid">
+						<div class="navbar-header">
+							<a class="navbar-brand" href="/"><img class="logo" th:src="@{/images/fbim2.png}" /></a>
 						</div>
-						<div class="clear"></div>
-						<div id="errorcontent-detail" style="padding: 10px; background-color:#d9e3ea; " ng-show="showErrorDetail">
-							<div style="height: 300px; width: 100%; overflow: auto;">
-								<pre ng-bind-html="errorDetails"></pre> 
+						<ul class="nav navbar-nav" th:if="${isLogged}">
+							<li th:each="menu: ${pageMenuList}" th:if="${menu.isEnabled()}">
+								<a th:if="${!menu.hasChildren()}" th:href="${menu.getUrl()}" >
+							<span th:if="${menu.hasImage()}" th:class="${menu.getCssClass('menu-image')}"></span>
+							<span th:text="${menu.getLabel()}"></span>
+						</a>
+								<a th:if="${menu.hasChildren()}" href="#" th:class="${menu.hasChildren() ? 'dropdown-toggle' : ''}" data-toggle="dropdown">
+							<span th:if="${menu.hasImage()}" th:class="${menu.getCssClass('menu-image')}"></span>
+							<span th:text="${menu.getLabel()}"></span>
+							<span class="caret" th:if="${menu.hasChildren()}"></span>
+						</a>
+						<ul th:if="${menu.hasChildren()}" class="dropdown-menu">
+								<li th:each="submenu: ${menu.getChildren()}" th:if="${submenu.isEnabled()}">
+									<a th:href="${submenu.getUrl()}" >
+								<span th:if="${submenu.hasImage()}" th:class="${submenu.getCssClass('menu-image')}"></span>
+								<span th:text="${submenu.getLabel()}"></span>
+							</a>
+							</li>
+							
+						</ul>
+						</li>
+						</ul>
+									
+						<div class="navbar-user-detail" th:if="${isLogged}">
+							<div class="user-detail dropdown"> 
+						<md-button ng-click="toggleRight()" style="background-color:#cecece;">
+									<span th:text="${loggedUser.getUserTitle()}">User, User</span>
+									<span class="glyphicon glyphicon-user"></span>
+						</md-button>
 							</div>
 						</div>
 						
-					
 					</div>
-	    				
-			      </div>
-			      <div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="material-icons">close</i></button>
-			      </div>
-			    </div>
-			</div>
+				</nav>    			    
+				<md-sidenav md-component-id="rightSidenav" class="md-sidenav-right" th:if="${isLogged}">
+					<md-list ng-cloak>
+						<md-subheader class="md-no-sticky" th:text="#{common.useractins}"></md-subheader>
+						<md-divider></md-divider>					
+						<md-list-item class="secondary-button-padding">
+								<a href="/logout"><span class="glyphicon glyphicon-log-out"></span> <span th:text="#{common.logout}"></span></a>
+						</md-list-item>
+					</md-list>	
 					
-	</div>
+					<md-button class="md-raised md-primary close-right-menu" ng-click="closeSideRight()"> <span th:text="#{common.close}"></span></md-button>
+				</md-sidenav>
+	        
+      </header>
+			<div th:fragment="breadcrumb" style="background-color: #eeeeee;">
+				<ul class="breadcrumb" >
+						<li th:each="entry : ${breadCrumb}">
+								<a th:href="${entry.getUrl()}" th:if="${entry.isLink()}" th:text="${entry.getLabel()}"></a>
+								<span th:if="${!entry.isLink()}" th:text="${entry.getLabel()}"></span>
+						</li>
+				</ul>			
+			</div>
  
-	    <div class="md-dialog-container ng-scope dialogbox-container" tabindex="-1" th:fragment="messageBox" ng-show="isShowMessage">
-	          
-	      <div class="md-dialog-focus-trap" tabindex="0"></div>
-	      <md-dialog aria-label="" class="dialog-message _md md-transition-in" role="dialog" tabindex="-1" style="">
-	        <md-toolbar class="_md _md-toolbar-transitions">
-	          <div class="md-toolbar-tools">
-	            <h2>{{messageTitle}}</h2>
-	            <span flex="" class="flex"></span>
-	              <button class="md-icon-button md-button ng-scope md-ink-ripple" type="button" ng-if="!isLoading" ng-click="closeMessageBox()" style="">
-	              <i class="material-icons ng-scope">close</i>
-	            </button>
-	          </div>
-	        </md-toolbar>
-	      
-	        <md-dialog-content>
-	          <div class="md-dialog-content" ng-bind-html="messageContent"></div>
-	        </md-dialog-content>
-	      
-	        <md-dialog-actions layout="row" class="layout-row">
-	          <button class="md-button md-ink-ripple" type="button" ng-click="closeMessageBox()">
-	            <div class="title" th:text="#{common.close}"></div>
-	            <i class="material-icons ng-scope">cancel</i>
-	          </button>
-	        </md-dialog-actions>
-	      
-	      </md-dialog>
-	    
-	      <div class="md-dialog-focus-trap" tabindex="0"></div>
-	
-	    </div>
+			<div th:fragment="errorMessageDialog" class="modal fade" tabindex="-1" id="errormessagedialog" role="dialog" aria-labelledby="errorMessagedialogCenterTitle" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered" role="document" style="width:70vw;">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title dialog-title" id="errorMessagedialogTitle" th:text="#{common.errormessagetitle}"></h5>
+								<button class="dialog-toolbar-button close"  data-dismiss="modal" aria-label="Close">
+									<i class="material-icons">close</i>
+								</button>
+						</div>
+							<div class="modal-body">
+							
+						<div class="content-container alert bg-danger alert-danger" style="margin-bottom:0;">
+						
+							<div class="errorcontent-message" ng-bind-html="errorMessage"></div>
+							<div>
+								<input style="float:right" type="checkbox" id="showerrordetailcheck" ng-model="showErrorDetail" >
+								<label style="float:right; margin-right: 10px;" class="form-check-label" for="showerrordetailcheck" th:text="#{common.details}"></label>
+							</div>
+							<div class="clear"></div>
+							<div id="errorcontent-detail" style="padding: 10px; background-color:#d9e3ea; " ng-show="showErrorDetail">
+								<div style="height: 300px; width: 100%; overflow: auto;">
+									<pre ng-bind-html="errorDetails"></pre> 
+								</div>
+							</div>
+							
+						
+						</div>
+								
+							</div>
+							<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="material-icons">close</i></button>
+							</div>
+						</div>
+				</div>
+						
+			</div>
+ 		
+      <div ng-show="showloading == true" class="loading md-dialog-container"  th:fragment="loadingFragment"></div>
 		
-        <div ng-show="showloading == true" class="loading md-dialog-container"  th:fragment="loadingFragment"></div>
-		
-        <footer th:replace="layout/footer :: footer" ></footer>
+      <footer th:replace="layout/footer :: footer" ></footer>
     </body>
 </html>

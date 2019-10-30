@@ -3,7 +3,7 @@
  */
 
 
-iflowApp.controller('WorkflowTypesController', function WorkflowTypesController($scope, $http, $sce, $element, $mdSidenav) {
+iflowApp.controller('WorkflowTypesController', function WorkflowTypesController($scope, $http, ShowErrorService) {
 	  //$scope.phones = [];
 	
 	$scope.loadUrl = loadUrl;
@@ -30,10 +30,7 @@ iflowApp.controller('WorkflowTypesController', function WorkflowTypesController(
 
 	    }, function errorCallback(response) {
 	        
-	    	alert(response);
-	        $scope.textDebug = "error search: " + response;
-	        alert($scope.textDebug);
-	        //$scope.test = response.data;
+	    	ShowErrorService.showError(response, $scope);
 	    });
 			
 	};
