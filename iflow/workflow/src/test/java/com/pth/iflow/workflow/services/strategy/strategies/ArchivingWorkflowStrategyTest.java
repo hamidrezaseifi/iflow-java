@@ -2,7 +2,6 @@ package com.pth.iflow.workflow.services.strategy.strategies;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -12,7 +11,6 @@ import org.mockito.Mock;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 import com.pth.iflow.workflow.TestDataProducer;
@@ -20,6 +18,7 @@ import com.pth.iflow.workflow.bl.IDepartmentDataService;
 import com.pth.iflow.workflow.bl.IProfileCachDataDataService;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.IWorkflowMessageDataService;
+import com.pth.iflow.workflow.bl.IWorkflowPrepare;
 import com.pth.iflow.workflow.bl.strategy.strategies.ArchivingWorkflowStrategy;
 import com.pth.iflow.workflow.models.Workflow;
 import com.pth.iflow.workflow.models.WorkflowSaveRequest;
@@ -29,13 +28,13 @@ import com.pth.iflow.workflow.models.WorkflowSaveRequest;
 @AutoConfigureMockMvc
 public class ArchivingWorkflowStrategyTest extends TestDataProducer {
 
-  private ArchivingWorkflowStrategy   workflowStrategy;
+  private ArchivingWorkflowStrategy workflowStrategy;
 
   @Mock
-  private IWorkflowDataService        workflowDataService;
+  private IWorkflowDataService workflowDataService;
 
   @Mock
-  private IDepartmentDataService      departmentDataService;
+  private IDepartmentDataService departmentDataService;
 
   @Mock
   private IWorkflowMessageDataService workflowMessageDataService;
@@ -43,7 +42,10 @@ public class ArchivingWorkflowStrategyTest extends TestDataProducer {
   @Mock
   private IProfileCachDataDataService cachDataDataService;
 
-  private String                      validTocken;
+  @Mock
+  private IWorkflowPrepare workflowPrepare;
+
+  private String validTocken;
 
   @Before
   public void setUp() throws Exception {
@@ -65,9 +67,15 @@ public class ArchivingWorkflowStrategyTest extends TestDataProducer {
     request.setCommand(EWorkflowProcessCommand.ARCHIVE);
 
     when(this.workflowDataService.save(any(Workflow.class), any(String.class))).thenReturn(request.getWorkflow());
+    when(this.workflowPrepare.prepareWorkflow(any(String.class), any(Workflow.class))).thenReturn(request.getWorkflow());
 
-    this.workflowStrategy = new ArchivingWorkflowStrategy(request, this.validTocken, this.departmentDataService,
-        this.workflowMessageDataService, this.cachDataDataService, workflowDataService);
+    this.workflowStrategy = new ArchivingWorkflowStrategy(request,
+                                                          this.validTocken,
+                                                          this.departmentDataService,
+                                                          this.workflowMessageDataService,
+                                                          this.cachDataDataService,
+                                                          this.workflowDataService,
+                                                          this.workflowPrepare);
 
     this.workflowStrategy.process();
 

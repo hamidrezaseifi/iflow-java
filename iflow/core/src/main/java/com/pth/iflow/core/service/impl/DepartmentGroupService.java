@@ -1,10 +1,10 @@
 package com.pth.iflow.core.service.impl;
 
+import java.util.Collection;
 import java.util.List;
-
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.pth.iflow.core.model.DepartmentGroup;
 import com.pth.iflow.core.model.User;
 import com.pth.iflow.core.service.IDepartmentGroupService;
@@ -24,19 +24,19 @@ public class DepartmentGroupService implements IDepartmentGroupService {
   }
 
   @Override
-  public DepartmentGroup getById(final Long id) {
-    return this.departmentGroupDao.getById(id);
+  public DepartmentGroup getByIdentity(final String identity) {
+    return this.departmentGroupDao.getByIdentity(identity);
   }
 
   @Override
-  public List<DepartmentGroup> getListByIdList(final List<Long> idList) {
-    return this.departmentGroupDao.getListByIdList(idList);
+  public List<DepartmentGroup> getListByIdentityList(final Collection<String> idList) {
+    return this.departmentGroupDao.getListByIdentityList(idList);
   }
 
   @Override
-  public List<DepartmentGroup> getListByDepartmentId(final Long departmentId) {
+  public List<DepartmentGroup> getListByDepartmentIdentity(final String departmentIdentity) {
     // TODO Auto-generated method stub
-    return this.departmentGroupDao.getListByDepartmentId(departmentId);
+    return this.departmentGroupDao.getListByDepartmentIdentity(departmentIdentity);
   }
 
   @Override
@@ -57,10 +57,11 @@ public class DepartmentGroupService implements IDepartmentGroupService {
   }
 
   @Override
-  public List<User> getAllUserListByDepartmentGroupId(final Long id) {
-    final List<Long> idList = departmentGroupDao.getAllUserIdListByDepartmentGroupId(id);
+  public List<User> getAllUserListByDepartmentGroupId(final String identity) {
+    final DepartmentGroup departmentGroup = getByIdentity(identity);
+    final Set<String> idList = departmentGroupDao.getAllUserIdentityListByDepartmentGroupId(departmentGroup.getId());
 
-    return userDao.getListByIdList(idList);
+    return userDao.getListByIdentityList(idList);
 
   }
 

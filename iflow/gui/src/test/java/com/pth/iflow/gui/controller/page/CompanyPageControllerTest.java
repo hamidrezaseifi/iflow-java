@@ -2,9 +2,7 @@ package com.pth.iflow.gui.controller.page;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import java.util.List;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,10 +21,9 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-
 import com.pth.iflow.gui.TestDataProducer;
-import com.pth.iflow.gui.models.GuiWorkflowType;
-import com.pth.iflow.gui.models.ui.GuiSessionUserInfo;
+import com.pth.iflow.gui.models.WorkflowType;
+import com.pth.iflow.gui.models.ui.SessionUserInfo;
 import com.pth.iflow.gui.services.IWorkflowHandler;
 
 @RunWith(SpringRunner.class)
@@ -36,13 +33,13 @@ public class CompanyPageControllerTest extends TestDataProducer {
 
   private MockMvc mockMvc;
 
-  private GuiSessionUserInfo userAdmin;
+  private SessionUserInfo userAdmin;
 
   @Autowired
   private WebApplicationContext context;
 
   @MockBean
-  private GuiSessionUserInfo sessionUserInfo;
+  private SessionUserInfo sessionUserInfo;
 
   @MockBean
   private IWorkflowHandler workflowHandler;
@@ -51,10 +48,10 @@ public class CompanyPageControllerTest extends TestDataProducer {
   public void setUp() throws Exception {
     this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context).build();
 
-    this.userAdmin = createGuiSessionUserInfo();
+    this.userAdmin = this.createGuiSessionUserInfo();
 
     Mockito.when(this.sessionUserInfo.isValid()).thenReturn(true);
-    Mockito.when(this.sessionUserInfo.getCompanyProfile()).thenReturn(getTestCompanyProfile());
+    Mockito.when(this.sessionUserInfo.getCompanyProfile()).thenReturn(this.getTestCompanyProfile());
 
   }
 
@@ -67,7 +64,7 @@ public class CompanyPageControllerTest extends TestDataProducer {
   public void testShowCompanyIndex() throws Exception {
 
     final MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get("/companies/index")
-                                                                        .sessionAttr(GuiSessionUserInfo.SESSION_LOGGEDUSERINFO_KEY,
+                                                                        .sessionAttr(SessionUserInfo.SESSION_LOGGEDUSERINFO_KEY,
                                                                                      this.userAdmin);
 
     this.mockMvc.perform(builder)
@@ -80,12 +77,12 @@ public class CompanyPageControllerTest extends TestDataProducer {
   @WithMockUser(value = "admin", roles = "ADMIN")
   public void testShowWorkflowTypeList() throws Exception {
 
-    final List<GuiWorkflowType> workflowTypeList = this.getTestGuiWorkflowTypeList();
+    final List<WorkflowType> workflowTypeList = this.getTestWorkflowTypeList();
 
-    Mockito.when(this.workflowHandler.readWorkflowTypeList(ArgumentMatchers.any(Long.class))).thenReturn(workflowTypeList);
+    Mockito.when(this.workflowHandler.readWorkflowTypeList(ArgumentMatchers.any(String.class))).thenReturn(workflowTypeList);
 
     final MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get("/companies/workflowtype")
-                                                                        .sessionAttr(GuiSessionUserInfo.SESSION_LOGGEDUSERINFO_KEY,
+                                                                        .sessionAttr(SessionUserInfo.SESSION_LOGGEDUSERINFO_KEY,
                                                                                      this.userAdmin);
 
     this.mockMvc.perform(builder)

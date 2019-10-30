@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.junit.After;
@@ -17,6 +18,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.pth.iflow.common.enums.EWorkflowIdentity;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.Workflow;
 import com.pth.iflow.core.storage.dao.IWorkflowDao;
@@ -40,6 +42,7 @@ public class WorkflowDaoTest extends TestDataProducer {
     for (int i = 1; i <= 3; i++) {
       final Workflow workflow = getTestNewWorkflow();
       workflow.setId(null);
+      workflow.setIdentity(EWorkflowIdentity.NOT_SET.getName());
       final Workflow res = workflowDao.create(workflow);
       createdModels.add(res);
     }
@@ -73,7 +76,7 @@ public class WorkflowDaoTest extends TestDataProducer {
 
     createWorlflowList();
 
-    final List<Long> idList = createdModels.stream().map(w -> w.getId()).collect(Collectors.toList());
+    final Set<Long> idList = createdModels.stream().map(w -> w.getId()).collect(Collectors.toSet());
 
     final List<Workflow> resList = this.workflowDao.getListByIdList(idList);
 
@@ -87,7 +90,8 @@ public class WorkflowDaoTest extends TestDataProducer {
 
     createWorlflowList();
 
-    final List<Workflow> resList = this.workflowDao.getListByWorkflowTypeId(createdModels.get(0).getWorkflowTypeId());
+    final List<Workflow> resList = this.workflowDao
+        .getListByWorkflowTypeIdentity(createdModels.get(0).getWorkflowType().getIdentity());
 
     Assert.assertNotNull("Result list is not null!", resList);
 

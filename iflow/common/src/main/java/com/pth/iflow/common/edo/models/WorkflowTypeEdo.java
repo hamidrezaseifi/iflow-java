@@ -2,7 +2,6 @@ package com.pth.iflow.common.edo.models;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -10,7 +9,6 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 import com.pth.iflow.common.edo.models.validation.AEnumValueValidator;
@@ -21,82 +19,76 @@ import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
 @XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "WorkflowType" + IFlowJaxbDefinition.TYPE_PREFIX)
 public class WorkflowTypeEdo {
 
-  @XmlElement(name = "ID", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long                            id;
+  @XmlElement(name = "Identity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String identity;
 
-  @NotNull
-  @XmlElement(name = "CompanyId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long                            companyId;
+  @NotNull(message = "CompanyIdentity must not be null")
+  @XmlElement(name = "CompanyIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String companyIdentity;
 
-  @NotNull
-  @XmlElement(name = "BaseTypeId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long                            baseTypeId;
+  @NotNull(message = "BaseTypeIdentity must not be null")
+  @XmlElement(name = "BaseTypeIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String baseTypeIdentity;
 
-  @NotNull
+  @NotNull(message = "Title must not be null")
   @XmlElement(name = "Title", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String                          title;
+  private String title;
 
   @XmlElement(name = "Comments", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String                          comments;
+  private String comments;
 
-  @NotNull
+  @NotNull(message = "Status must not be null")
   @XmlElement(name = "Status", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Integer                         status;
+  private Integer status;
 
-  @NotNull
+  @NotNull(message = "Version must not be null")
   @XmlElement(name = "Version", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Integer                         version;
+  private Integer version;
 
-  @NotNull
+  @NotNull(message = "SendToController must not be null")
   @XmlElement(name = "SendToController", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Boolean                         sendToController;
+  private Boolean sendToController;
 
-  @NotNull
+  @NotNull(message = "AssignType must not be null")
   @AEnumValueValidator(enumClazz = EWorkflowTypeAssignType.class)
   @XmlElement(name = "AssignType", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Integer                         assignType;
+  private Integer assignType;
 
-  @NotNull
+  @NotNull(message = "IncreaseStepAutomatic must not be null")
   @XmlElement(name = "IncreaseStepAutomatic", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Boolean                         increaseStepAutomatic;
+  private Boolean increaseStepAutomatic;
 
-  @NotNull
+  @NotNull(message = "AllowAssign must not be null")
   @XmlElement(name = "AllowAssign", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Boolean                         allowAssign;
+  private Boolean allowAssign;
 
-  @NotNull
+  @NotNull(message = "WorkflowTypeStepList must not be null")
   @XmlElementWrapper(name = "WorkflowTypeStepList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "WorkflowTypeStep", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private final List<WorkflowTypeStepEdo> steps = new ArrayList<>();
 
-  public Long getId() {
-    return this.id;
+  public String getIdentity() {
+    return this.identity;
   }
 
-  public void setId(final Long id) {
-    this.id = id;
+  public void setIdentity(final String identity) {
+    this.identity = identity;
   }
 
-  public Long getCompanyId() {
-    return this.companyId;
+  public String getCompanyIdentity() {
+    return this.companyIdentity;
   }
 
-  public void setCompanyId(final Long companyId) {
-    this.companyId = companyId;
+  public void setCompanyIdentity(final String companyIdentity) {
+    this.companyIdentity = companyIdentity;
   }
 
-  /**
-   * @return the baseTypeId
-   */
-  public Long getBaseTypeId() {
-    return this.baseTypeId;
+  public String getBaseTypeIdentity() {
+    return this.baseTypeIdentity;
   }
 
-  /**
-   * @param baseTypeId the baseTypeId to set
-   */
-  public void setBaseTypeId(final Long baseTypeId) {
-    this.baseTypeId = baseTypeId;
+  public void setBaseTypeIdentity(final String baseTypeIdentity) {
+    this.baseTypeIdentity = baseTypeIdentity;
   }
 
   public String getTitle() {

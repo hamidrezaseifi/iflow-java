@@ -4,9 +4,9 @@ import java.util.List;
 
 public class ProfileResponse {
 
-  private BackendUser user;
+  private User user;
 
-  private BackendCompanyProfile companyProfile;
+  private CompanyProfile companyProfile;
 
   private String sessionid;
 
@@ -16,35 +16,35 @@ public class ProfileResponse {
     this.sessionid = "";
   }
 
-  public ProfileResponse(final BackendUser user, final BackendCompanyProfile companyProfile, final String sessionid) {
+  public ProfileResponse(final User user, final CompanyProfile companyProfile, final String sessionid) {
     this.user = user;
     this.companyProfile = companyProfile;
     this.sessionid = sessionid;
   }
 
-  public ProfileResponse(final BackendUser user,
-                         final BackendCompany company,
-                         final List<BackendDepartment> departments,
-                         final List<BackendUserGroup> userGroups,
+  public ProfileResponse(final User user,
+                         final Company company,
+                         final List<Department> departments,
+                         final List<UserGroup> userGroups,
                          final String sessionid) {
     this.user = user;
-    this.companyProfile = new BackendCompanyProfile(company, departments, userGroups);
+    this.companyProfile = new CompanyProfile(company, departments, userGroups);
     this.sessionid = sessionid;
   }
 
-  public BackendUser getUser() {
+  public User getUser() {
     return this.user;
   }
 
-  public void setUser(final BackendUser user) {
+  public void setUser(final User user) {
     this.user = user;
   }
 
-  public BackendCompanyProfile getCompanyProfile() {
+  public CompanyProfile getCompanyProfile() {
     return this.companyProfile;
   }
 
-  public void setCompanyProfile(final BackendCompanyProfile companyProfile) {
+  public void setCompanyProfile(final CompanyProfile companyProfile) {
     this.companyProfile = companyProfile;
   }
 

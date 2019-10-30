@@ -4,41 +4,42 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import com.pth.iflow.common.edo.models.base.DataModelBase;
+import org.apache.commons.lang3.StringUtils;
+
+import com.pth.iflow.common.edo.models.helper.IdentityModel;
 import com.pth.iflow.common.enums.EWorkflowActionStatus;
+import com.pth.iflow.common.enums.EWorkflowIdentity;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 
-public class Workflow extends DataModelBase {
+public class Workflow extends IdentityModel {
 
-  private Long                       id;
-  private Long                       workflowTypeId;
+  private String                     identity;
   private WorkflowType               workflowType;
   private WorkflowTypeStep           currentStep;
-  private Long                       currentStepId;
-  private Long                       controller;
-  private Long                       createdBy;
   private String                     comments;
   private EWorkflowStatus            status;
   private Integer                    version;
+
+  private String                     workflowTypeIdentity;
+  private String                     currentStepIdentity;
+  private String                     controllerIdentity;
+  private String                     createdByIdentity;
 
   private final List<WorkflowFile>   files   = new ArrayList<>();
   private final List<WorkflowAction> actions = new ArrayList<>();
 
   @Override
-  public Long getId() {
-    return this.id;
+  public String getIdentity() {
+    return identity;
   }
 
-  public void setId(final Long id) {
-    this.id = id;
+  @Override
+  public void setIdentity(final String identity) {
+    this.identity = identity;
   }
 
-  public Long getWorkflowTypeId() {
-    return this.workflowTypeId;
-  }
-
-  public void setWorkflowTypeId(final Long workflowTypeId) {
-    this.workflowTypeId = workflowTypeId;
+  public boolean isIdentityNotSet() {
+    return EWorkflowIdentity.NOT_SET.getName().equals(getIdentity());
   }
 
   public WorkflowType getWorkflowType() {
@@ -50,35 +51,11 @@ public class Workflow extends DataModelBase {
   }
 
   public WorkflowTypeStep getCurrentStep() {
-    return this.currentStep;
+    return currentStep;
   }
 
   public void setCurrentStep(final WorkflowTypeStep currentStep) {
     this.currentStep = currentStep;
-  }
-
-  public Long getCurrentStepId() {
-    return this.currentStepId;
-  }
-
-  public void setCurrentStepId(final Long currentStepId) {
-    this.currentStepId = currentStepId;
-  }
-
-  public Long getController() {
-    return this.controller;
-  }
-
-  public void setController(final Long controller) {
-    this.controller = controller;
-  }
-
-  public Long getCreatedBy() {
-    return this.createdBy;
-  }
-
-  public void setCreatedBy(final Long createdBy) {
-    this.createdBy = createdBy;
   }
 
   public String getComments() {
@@ -93,28 +70,22 @@ public class Workflow extends DataModelBase {
     return this.status;
   }
 
-  public void setStatus(final EWorkflowStatus status) {
-    this.status = status;
-  }
-
-  public void setStatusInt(final Integer status) {
-    this.status = EWorkflowStatus.ofValue(status);
-  }
-
   public Integer getStatusInt() {
     return this.status.getValue().intValue();
   }
 
-  public boolean isStatusArchive() {
-    return this.status == EWorkflowStatus.ARCHIVED;
+  public void setStatus(final Integer status) {
+    this.status = EWorkflowStatus.ofValue(status);
   }
 
-  @Override
+  public void setStatus(final EWorkflowStatus status) {
+    this.status = status;
+  }
+
   public Integer getVersion() {
     return this.version;
   }
 
-  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
@@ -145,54 +116,40 @@ public class Workflow extends DataModelBase {
     }
   }
 
-  public void addAction(final WorkflowAction action) {
-    this.actions.add(action);
-
+  public String getWorkflowTypeIdentity() {
+    return workflowTypeIdentity;
   }
 
-  public boolean isAfterStep(final Workflow other) {
-    return this.currentStep.isAfterStep(other.getCurrentStep());
+  public void setWorkflowTypeIdentity(final String workflowTypeIdentity) {
+    this.workflowTypeIdentity = workflowTypeIdentity;
   }
 
-  public boolean isBeforeStep(final Workflow other) {
-    return this.currentStep.isBeforeStep(other.getCurrentStep());
+  public String getCurrentStepIdentity() {
+    return currentStepIdentity;
   }
 
-  public boolean isTheSameStep(final Workflow other) {
-    return this.currentStep.isTheSameStep(other.getCurrentStep());
+  public void setCurrentStepIdentity(final String currentStepIdentity) {
+    this.currentStepIdentity = currentStepIdentity;
   }
 
-  public boolean isAfter(final WorkflowTypeStep step) {
-    return this.currentStep.isAfterStep(step);
+  public boolean isCurrentStepIdentity(final String stepIdentity) {
+    return currentStepIdentity.equals(stepIdentity);
   }
 
-  public boolean isBefore(final WorkflowTypeStep step) {
-    return this.currentStep.isBeforeStep(step);
+  public String getControllerIdentity() {
+    return controllerIdentity;
   }
 
-  public boolean isTheSame(final WorkflowTypeStep step) {
-    return this.currentStep.isTheSameStep(step);
+  public void setControllerIdentity(final String controllerIdentity) {
+    this.controllerIdentity = controllerIdentity;
   }
 
-  public boolean isInitializing() {
-    return this.isNew() && (this.getStatus() == EWorkflowStatus.INITIALIZE);
+  public String getCreatedByIdentity() {
+    return createdByIdentity;
   }
 
-  public boolean isOffering() {
-    return this.getStatus() == EWorkflowStatus.OFFERING;
-  }
-
-  public boolean isDone() {
-    return this.getStatus() == EWorkflowStatus.DONE;
-  }
-
-  public boolean isArchived() {
-    return this.getStatus() == EWorkflowStatus.ARCHIVED;
-  }
-
-  @Override
-  public boolean isNew() {
-    return (this.getId() == null) || (this.getId() <= 0);
+  public void setCreatedByIdentity(final String createdByIdentity) {
+    this.createdByIdentity = createdByIdentity;
   }
 
   public boolean hasActiveAction() {
@@ -233,12 +190,49 @@ public class Workflow extends DataModelBase {
     return this.hasActiveAction() && this.getActiveAction().isAssigned();
   }
 
-  public void setActiveActionAssignTo(final Long userId) {
-    this.getActiveAction().setAssignTo(userId);
+  public void setActiveActionAssignTo(final String userIdentity) {
+    this.getActiveAction().setAssignToIdentity(userIdentity);
   }
 
   public void setActiveActionStatus(final EWorkflowActionStatus status) {
     this.getActiveAction().setStatus(status);
+  }
+
+  public boolean isInitializing() {
+    return EWorkflowStatus.INITIALIZE.equals(this.status);
+  }
+
+  public boolean isOffering() {
+    return EWorkflowStatus.OFFERING.equals(this.status);
+  }
+
+  public boolean isArchived() {
+    return EWorkflowStatus.ARCHIVED.equals(this.status);
+  }
+
+  public boolean isAssignedStatus() {
+    return EWorkflowStatus.ASSIGNED.equals(this.status);
+  }
+
+  public boolean isDone() {
+    return EWorkflowStatus.DONE.equals(this.status);
+  }
+
+  public boolean hasController() {
+    return StringUtils.isNoneEmpty(this.controllerIdentity);
+  }
+
+  public boolean hasCreatedBy() {
+    return StringUtils.isNoneEmpty(this.createdByIdentity);
+  }
+
+  public boolean hasWorkflowType() {
+    return this.workflowType != null;
+  }
+
+  public void addAction(final WorkflowAction action) {
+    action.setWorkflowIdentity(this.identity);
+    this.actions.add(action);
   }
 
 }

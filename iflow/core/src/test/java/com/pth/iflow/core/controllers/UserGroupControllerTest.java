@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import java.util.List;
+import java.util.Set;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,7 +22,7 @@ import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConve
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
+import com.pth.iflow.common.edo.models.IdentityListEdo;
 import com.pth.iflow.common.edo.models.UserGroupEdo;
 import com.pth.iflow.common.edo.models.UserGroupListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
@@ -60,34 +61,35 @@ public class UserGroupControllerTest extends TestDataProducer {
   public void testReadUserGroupById() throws Exception {
 
     final UserGroup model = this.getTestUserGroup();
-    when(this.userGroupService.getById(any(Long.class))).thenReturn(model);
+    when(this.userGroupService.getByIdentity(any(String.class))).thenReturn(model);
 
     final UserGroupEdo modelEdo = CoreModelEdoMapper.toEdo(model);
 
     final String modelAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelEdo);
 
     this.mockMvc
-                .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.USERGROUP_READ_BY_ID, model.getId())
+                .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.USERGROUP_READ_BY_IDENTITY, model.getIdentity())
                                                .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
                 .andExpect(content().xml(modelAsXmlString));
 
-    verify(this.userGroupService, times(1)).getById(any(Long.class));
+    verify(this.userGroupService, times(1)).getByIdentity(any(String.class));
 
   }
 
   @Test
   public void testReadUserGroupList() throws Exception {
 
-    final List<Long> idList = this.getTestUserGroupIdList();
+    final Set<String> idList = this.getTestUserGroupIdSet();
+    final IdentityListEdo edoList = new IdentityListEdo(idList);
     final List<UserGroup> list = this.getTestUserGroupList();
-    when(this.userGroupService.getListByIdList(any(List.class))).thenReturn(list);
+    when(this.userGroupService.getListByIdentityList(any(Set.class))).thenReturn(list);
 
-    final UserGroupListEdo edoList = new UserGroupListEdo(CoreModelEdoMapper.toUserGroupEdoList(list));
+    final UserGroupListEdo edoResultList = new UserGroupListEdo(CoreModelEdoMapper.toUserGroupEdoList(list));
 
-    final String contentAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(idList);
-    final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
+    final String contentAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
+    final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoResultList);
 
     this.mockMvc
                 .perform(MockMvcRequestBuilders.post(IflowRestPaths.CoreModule.USERGROUP_READ_LIST)
@@ -98,7 +100,7 @@ public class UserGroupControllerTest extends TestDataProducer {
                 .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
                 .andExpect(content().xml(listAsXmlString));
 
-    verify(this.userGroupService, times(1)).getListByIdList(any(List.class));
+    verify(this.userGroupService, times(1)).getListByIdentityList(any(Set.class));
 
   }
 
@@ -106,20 +108,20 @@ public class UserGroupControllerTest extends TestDataProducer {
   public void testReadUserGroupListByCompany() throws Exception {
 
     final List<UserGroup> list = this.getTestUserGroupList();
-    when(this.userGroupService.getListByIdCompanyId(any(Long.class))).thenReturn(list);
+    when(this.userGroupService.getListByIdCompanyIdentity(any(String.class))).thenReturn(list);
 
     final UserGroupListEdo edoList = new UserGroupListEdo(CoreModelEdoMapper.toUserGroupEdoList(list));
 
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
 
     this.mockMvc
-                .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.USERGROUP_READ_LIST_BY_COMPANY, 1L)
+                .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.USERGROUP_READ_LIST_BY_COMPANYIDENTITY, "companyidentity")
                                                .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
                 .andExpect(content().xml(listAsXmlString));
 
-    verify(this.userGroupService, times(1)).getListByIdCompanyId(any(Long.class));
+    verify(this.userGroupService, times(1)).getListByIdCompanyIdentity(any(String.class));
 
   }
 

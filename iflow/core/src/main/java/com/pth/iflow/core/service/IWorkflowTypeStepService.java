@@ -1,16 +1,17 @@
 package com.pth.iflow.core.service;
 
+import java.util.Collection;
 import java.util.List;
-
 import com.pth.iflow.core.model.WorkflowTypeStep;
+import com.pth.iflow.core.model.helper.CoreModelHelper;
 
 public interface IWorkflowTypeStepService {
 
-  WorkflowTypeStep save(WorkflowTypeStep model);
+  CoreModelHelper save(WorkflowTypeStep model);
 
-  WorkflowTypeStep getById(Long id);
+  WorkflowTypeStep getByIdentity(String identity);
 
-  List<WorkflowTypeStep> getListByWorkflowTypeId(final Long workflowId);
+  List<WorkflowTypeStep> getListByWorkflowTypeIdentity(final String workflowIdentity);
 
-  List<WorkflowTypeStep> getListByIdList(final List<Long> idList);
+  List<WorkflowTypeStep> getListByIdentityList(final Collection<String> idList);
 }

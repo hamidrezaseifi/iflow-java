@@ -5,8 +5,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,15 +24,18 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.pth.iflow.common.enums.EWorkflowIdentity;
+import com.pth.iflow.core.model.helper.ICoreIdentityModel;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 
 @Transactional
 @Repository
 public abstract class DaoBasicClass<M> {
-  protected static final Logger logger = LoggerFactory.getLogger(DaoBasicClass.class);
+
+  protected static final Logger        logger = LoggerFactory.getLogger(DaoBasicClass.class);
 
   @Autowired
-  protected JdbcTemplate jdbcTemplate;
+  protected JdbcTemplate               jdbcTemplate;
 
   @Autowired
   protected PlatformTransactionManager platformTransactionManager;
@@ -46,6 +54,33 @@ public abstract class DaoBasicClass<M> {
       model = this.jdbcTemplate.query(con -> {
         final PreparedStatement ps = con.prepareStatement(sqlSelect);
         ps.setLong(1, id);
+        return ps;
+
+      }, (rs) -> {
+        if (rs.next()) {
+          return modelFromResultSet(rs);
+        } else {
+          return null;
+        }
+      });
+
+    } catch (final Exception e) {
+      throw new IFlowStorageException("Unable to retrieve " + modelName + " data: " + e.toString());
+    }
+
+    return model;
+  }
+
+  protected M getModelByIdentity(final String identity, final String sqlSelect, final String modelName) throws IFlowStorageException {
+    logger.info("Dao Read {} by identity: {}", modelName, identity);
+
+    M model;
+
+    try {
+
+      model = this.jdbcTemplate.query(con -> {
+        final PreparedStatement ps = con.prepareStatement(sqlSelect);
+        ps.setString(1, identity);
         return ps;
 
       }, (rs) -> {
@@ -115,7 +150,33 @@ public abstract class DaoBasicClass<M> {
     return list;
   }
 
-  protected List<Long> getModelIdListById(final Long id, final String sqlSelect, final String modelName, final String idFieldName)
+  protected List<M> getModelListByIdentity(final String id, final String sqlSelect, final String modelName)
+      throws IFlowStorageException {
+    logger.info("Dao read {} by id: {}", modelName, id);
+
+    List<M> list = new ArrayList<>();
+
+    try {
+      list = jdbcTemplate.query(con -> {
+        final PreparedStatement ps = con.prepareStatement(sqlSelect);
+        ps.setString(1, id);
+
+        return ps;
+
+      }, (rs, rowNum) -> {
+
+        return modelFromResultSet(rs);
+
+      });
+
+    } catch (final Exception e) {
+      throw new IFlowStorageException("Unable to Read " + modelName + " : " + e.toString());
+    }
+
+    return list;
+  }
+
+  protected Set<Long> getModelIdListById(final Long id, final String sqlSelect, final String modelName, final String idFieldName)
       throws IFlowStorageException {
     logger.info("Dao read {} id list by id: {}", modelName, id);
 
@@ -138,10 +199,36 @@ public abstract class DaoBasicClass<M> {
       throw new IFlowStorageException("Unable to Read " + modelName + " : " + e.toString());
     }
 
-    return list;
+    return new HashSet<>(list.stream().collect(Collectors.toSet()));
   }
 
-  protected List<Long> getIdListById(final Long id, final String sqlSelect, final String columnName, final String modelName)
+  protected Set<String> getModelIdentityListById(final Long id, final String sqlSelect, final String modelName,
+      final String idFieldName) throws IFlowStorageException {
+    logger.info("Dao read {} id list by id: {}", modelName, id);
+
+    List<String> list = new ArrayList<>();
+
+    try {
+      list = jdbcTemplate.query(con -> {
+        final PreparedStatement ps = con.prepareStatement(sqlSelect);
+        ps.setLong(1, id);
+
+        return ps;
+
+      }, (rs, rowNum) -> {
+
+        return rs.getString(idFieldName);
+
+      });
+
+    } catch (final Exception e) {
+      throw new IFlowStorageException("Unable to Read " + modelName + " : " + e.toString());
+    }
+
+    return new HashSet<>(list.stream().collect(Collectors.toSet()));
+  }
+
+  protected Set<Long> getIdListById(final Long id, final String sqlSelect, final String columnName, final String modelName)
       throws IFlowStorageException {
     logger.info("Dao read {} by id: {}", modelName, id);
 
@@ -164,45 +251,103 @@ public abstract class DaoBasicClass<M> {
       throw new IFlowStorageException("Unable to Read " + modelName + " : " + e.toString());
     }
 
-    return list;
+    return new HashSet<>(list.stream().collect(Collectors.toSet()));
   }
 
-  protected List<M> getModelListByIdList(final List<Long> idList, final String sqlSelect, final String modelName)
+  protected Set<String> getIdentityListById(final Long id, final String sqlSelect, final String columnName, final String modelName)
       throws IFlowStorageException {
-    logger.info("Dao read {} list: {}", modelName, idList);
+    logger.info("Dao read {} by id: {}", modelName, id);
 
-    List<M> list = new ArrayList<>();
-
-    if (idList.isEmpty()) {
-      return list;
-    }
+    List<String> list = new ArrayList<>();
 
     try {
       list = jdbcTemplate.query(con -> {
         final PreparedStatement ps = con.prepareStatement(sqlSelect);
-        int index = 1;
-        for (final Long id : idList) {
-          ps.setLong(index++, id);
-        }
+        ps.setLong(1, id);
 
         return ps;
 
       }, (rs, rowNum) -> {
 
-        return modelFromResultSet(rs);
+        return rs.getString(columnName);
 
       });
 
     } catch (final Exception e) {
-      throw new IFlowStorageException("Unable to Read " + modelName + " list from list: " + e.toString());
+      throw new IFlowStorageException("Unable to Read " + modelName + " : " + e.toString());
     }
 
+    return new HashSet<>(list.stream().collect(Collectors.toSet()));
+  }
+
+  protected List<M> getModelListByIdList(final Set<Long> idList, final String sqlSelect, final String modelName)
+      throws IFlowStorageException {
+    logger.info("Dao read {} list: {}", modelName, idList);
+
+    List<M> list = new ArrayList<>();
+
+    if (idList.isEmpty() == false) {
+
+      try {
+        list = jdbcTemplate.query(con -> {
+          final PreparedStatement ps = con.prepareStatement(sqlSelect);
+          int index = 1;
+          for (final Long id : idList) {
+            ps.setLong(index++, id);
+          }
+
+          return ps;
+
+        }, (rs, rowNum) -> {
+
+          return modelFromResultSet(rs);
+
+        });
+
+      } catch (final Exception e) {
+        throw new IFlowStorageException("Unable to Read " + modelName + " list from list: " + e.toString());
+      }
+    }
+    return list;
+  }
+
+  protected List<M> getModelListByIdentityList(final Collection<String> idList, final String sqlSelect, final String modelName)
+      throws IFlowStorageException {
+    logger.info("Dao read {} list: {}", modelName, idList);
+
+    List<M> list = new ArrayList<>();
+
+    if (idList.isEmpty() == false) {
+
+      try {
+        list = jdbcTemplate.query(con -> {
+          final PreparedStatement ps = con.prepareStatement(sqlSelect);
+          int index = 1;
+          for (final String id : idList) {
+            ps.setString(index++, id);
+          }
+
+          return ps;
+
+        }, (rs, rowNum) -> {
+
+          return modelFromResultSet(rs);
+
+        });
+
+      } catch (final Exception e) {
+        throw new IFlowStorageException("Unable to Read " + modelName + " list from list: " + e.toString());
+      }
+    }
     return list;
   }
 
   protected Long createModel(final M model, final String modelName, final String insertSql, final boolean withTransaction)
       throws IFlowStorageException {
     logger.debug("insert " + modelName + " ...");
+
+    validateIdentity(model, modelName);
+
     final TransactionStatus transactionStatus = startTransaction(withTransaction);
     final KeyHolder keyHolder = new GeneratedKeyHolder();
 
@@ -223,6 +368,20 @@ public abstract class DaoBasicClass<M> {
     return keyHolder.getKey().longValue();
 
   }
+
+  private void validateIdentity(final M model, final String modelName) {
+    if (model instanceof ICoreIdentityModel) {
+
+      final ICoreIdentityModel identityMode = (ICoreIdentityModel) model;
+      if (EWorkflowIdentity.isNotSet(identityMode.getIdentity())) {
+        final String identity = generateIdentity(model);
+        identityMode.setIdentity(identity);
+      }
+
+    }
+  }
+
+  protected abstract String generateIdentity(M model);
 
   protected Long createModelWithStatementNoTransaction(final String modelName, final PreparedStatementCreator statement)
       throws IFlowStorageException {
@@ -318,6 +477,19 @@ public abstract class DaoBasicClass<M> {
     if (withTransaction && transactionStatus != null) {
       DaoControlHelper.commitCurrentTransaction(platformTransactionManager, transactionStatus);
     }
+  }
+
+  protected String identityLongToHex(final Long l) {
+    return Long.toHexString(l).toLowerCase();
+  }
+
+  protected String identityIntToHex(final Integer l, final int leadingSize) {
+    String s = Integer.toHexString(l).toLowerCase();
+    if (s.length() < leadingSize) {
+      s = StringUtils.repeat("0", leadingSize - s.length()) + s;
+    }
+
+    return s;
   }
 
   protected abstract M modelFromResultSet(final ResultSet rs) throws SQLException;

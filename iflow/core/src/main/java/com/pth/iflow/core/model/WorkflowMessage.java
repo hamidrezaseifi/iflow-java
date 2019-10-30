@@ -2,15 +2,23 @@ package com.pth.iflow.core.model;
 
 import java.time.LocalDateTime;
 
-import com.pth.iflow.common.edo.models.base.DataModelBase;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.enums.EWorkflowMessageType;
+import com.pth.iflow.core.model.helper.CoreModelHelper;
 
-public class WorkflowMessage extends DataModelBase {
+public class WorkflowMessage extends CoreModelHelper {
 
   private Long                   id;
 
-  private Long                   workflowId;
+  private Workflow               workflow;
+
+  private String                 workflowIdentity;
+
+  private String                 stepIdentity;
+
+  private String                 userIdentity;
+
+  private String                 createdByIdentity;
 
   private Long                   stepId;
 
@@ -37,20 +45,45 @@ public class WorkflowMessage extends DataModelBase {
     return this.id;
   }
 
+  @Override
   public void setId(final Long id) {
     this.id = id;
   }
 
-  public Long getWorkflowId() {
-    return this.workflowId;
+  public Workflow getWorkflow() {
+    return workflow;
   }
 
-  public void setWorkflowId(final Long workflowId) {
-    this.workflowId = workflowId;
+  public void setWorkflow(final Workflow workflow) {
+    this.workflow = workflow;
+  }
+
+  public String getWorkflowIdentity() {
+    return workflowIdentity;
+  }
+
+  public void setWorkflowIdentity(final String workflowIdentity) {
+    this.workflowIdentity = workflowIdentity;
+  }
+
+  public String getStepIdentity() {
+    return stepIdentity;
+  }
+
+  public void setStepIdentity(final String stepIdentity) {
+    this.stepIdentity = stepIdentity;
+  }
+
+  public String getUserIdentity() {
+    return userIdentity;
+  }
+
+  public void setUserIdentity(final String userIdentity) {
+    this.userIdentity = userIdentity;
   }
 
   public Long getStepId() {
-    return this.stepId;
+    return stepId;
   }
 
   public void setStepId(final Long stepId) {
@@ -58,7 +91,7 @@ public class WorkflowMessage extends DataModelBase {
   }
 
   public Long getUserId() {
-    return this.userId;
+    return userId;
   }
 
   public void setUserId(final Long userId) {
@@ -79,6 +112,14 @@ public class WorkflowMessage extends DataModelBase {
 
   public void setCreatedBy(final Long createdBy) {
     this.createdBy = createdBy;
+  }
+
+  public String getCreatedByIdentity() {
+    return createdByIdentity;
+  }
+
+  public void setCreatedByIdentity(final String createdByIdentity) {
+    this.createdByIdentity = createdByIdentity;
   }
 
   public EWorkflowMessageType getMessageType() {

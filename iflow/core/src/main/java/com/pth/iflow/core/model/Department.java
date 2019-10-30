@@ -3,13 +3,14 @@ package com.pth.iflow.core.model;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import com.pth.iflow.core.model.helper.CoreModelHelper;
+import com.pth.iflow.core.model.helper.ICoreIdentityModel;
 
-import com.pth.iflow.common.edo.models.base.DataModelBase;
-
-public class Department extends DataModelBase {
+public class Department extends CoreModelHelper implements ICoreIdentityModel {
 
   private Long                        id;
   private Long                        companyId;
+  private String                      identity;
   private String                      title;
   private Integer                     status;
   private Integer                     version;
@@ -22,8 +23,24 @@ public class Department extends DataModelBase {
     return this.id;
   }
 
+  @Override
   public void setId(final Long id) {
     this.id = id;
+  }
+
+  /*
+   * (non-Javadoc)
+   *
+   * @see com.pth.iflow.core.model.ICoreIdentityModel#getIdentity()
+   */
+  @Override
+  public String getIdentity() {
+    return identity;
+  }
+
+  @Override
+  public void setIdentity(final String identity) {
+    this.identity = identity;
   }
 
   public Long getCompanyId() {

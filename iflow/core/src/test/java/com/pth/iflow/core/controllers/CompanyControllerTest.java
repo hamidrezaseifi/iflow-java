@@ -6,6 +6,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,13 +36,13 @@ import com.pth.iflow.core.service.ICompanyService;
 public class CompanyControllerTest extends TestDataProducer {
 
   @Autowired
-  private MockMvc mockMvc;
+  private MockMvc                                mockMvc;
 
   @Autowired
   private MappingJackson2XmlHttpMessageConverter xmlConverter;
 
   @MockBean
-  private ICompanyService companyService;
+  private ICompanyService                        companyService;
 
   @Before
   public void setUp() throws Exception {
@@ -58,20 +59,19 @@ public class CompanyControllerTest extends TestDataProducer {
   public void testReadCompany() throws Exception {
 
     final Company company = getTestCompany();
-    when(this.companyService.getById(any(Long.class))).thenReturn(company);
+    when(this.companyService.getByIdentity(any(String.class))).thenReturn(company);
 
     final CompanyEdo companyEdo = CoreModelEdoMapper.toEdo(company);
 
     final String companyAsString = this.xmlConverter.getObjectMapper().writeValueAsString(companyEdo);
 
     this.mockMvc
-                .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.COMPANY_READ_BY_ID, company.getId())
-                                               .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
-                .andExpect(content().xml(companyAsString));
+        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.COMPANY_READ_BY_IDENTITY, company.getIdentity())
+            .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
+        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(content().xml(companyAsString));
 
-    verify(this.companyService, times(1)).getById(any(Long.class));
+    verify(this.companyService, times(1)).getByIdentity(any(String.class));
 
   }
 

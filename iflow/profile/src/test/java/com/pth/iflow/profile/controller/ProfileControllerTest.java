@@ -6,7 +6,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,6 +31,7 @@ import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
 import com.pth.iflow.profile.TestDataProducer;
 import com.pth.iflow.profile.model.Company;
 import com.pth.iflow.profile.model.Department;
+import com.pth.iflow.profile.model.ProfileResponse;
 import com.pth.iflow.profile.model.User;
 import com.pth.iflow.profile.model.UserAuthenticationSession;
 import com.pth.iflow.profile.model.UserGroup;
@@ -45,50 +48,54 @@ import com.pth.iflow.profile.service.IUsersService;
 public class ProfileControllerTest extends TestDataProducer {
 
   @Autowired
-  private MockMvc mockMvc;
+  private MockMvc                                mockMvc;
 
   @Autowired
   private MappingJackson2XmlHttpMessageConverter xmlConverter;
 
   @Autowired
-  private ISessionManager sessionManager;
+  private ISessionManager                        sessionManager;
 
   @MockBean
-  private IUsersService usersService;
+  private IUsersService                          usersService;
 
   @MockBean
-  private ICompanyService companyService;
+  private ICompanyService                        companyService;
 
   @MockBean
-  private IUserGroupService userGroupService;
+  private IUserGroupService                      userGroupService;
 
   @MockBean
-  private IDepartmentService departmentService;
+  private IDepartmentService                     departmentService;
 
-  private UserAuthenticationSession authenticatedSession = null;
+  private UserAuthenticationSession              authenticatedSession = null;
 
-  private User user;
+  private User                                   user;
 
-  private Company company;
+  private Company                                company;
 
-  private List<Department> departmentList;
+  private List<Department>                       departmentList;
 
-  private List<UserGroup> groupList;
+  private List<UserGroup>                        groupList;
+
+  private ProfileResponse                        validProfileResponse;
 
   @Before
   public void setUp() throws Exception {
 
-    this.authenticatedSession = this.sessionManager.addSession("email@test.de");
+    this.authenticatedSession = this.sessionManager.addSession("email@test.de", "valid-company");
 
-    this.user = getTestUser();
-    this.company = getTestCompany();
-    this.departmentList = getTestDepartmentList();
-    this.groupList = getTestUserGroupList();
+    this.user = this.getTestUser();
+    this.company = this.getTestCompany();
+    this.departmentList = this.getTestDepartmentList();
+    this.groupList = this.getTestUserGroupList();
+    this.validProfileResponse = this.getTestProfileResponse(this.authenticatedSession.getSessionid());
 
     when(this.usersService.getUserByEmail(any(String.class))).thenReturn(this.user);
-    when(this.companyService.getById(any(Long.class))).thenReturn(this.company);
-    when(this.departmentService.getListByCompanyId(any(Long.class))).thenReturn(this.departmentList);
-    when(this.userGroupService.getListByCompanyId(any(Long.class))).thenReturn(this.groupList);
+    when(this.usersService.getUserProfileByEmail(any(String.class))).thenReturn(this.validProfileResponse);
+    when(this.companyService.getByIdentity(any(String.class))).thenReturn(this.company);
+    when(this.departmentService.getListByCompanyIdentity(any(String.class))).thenReturn(this.departmentList);
+    when(this.userGroupService.getListByCompanyIdentity(any(String.class))).thenReturn(this.groupList);
   }
 
   @After
@@ -98,55 +105,45 @@ public class ProfileControllerTest extends TestDataProducer {
   @Test
   public void testReadAuthenticatedInfo() throws Exception {
 
-    final AuthenticatedProfileRequestEdo profReq = getTestAuthenticatedProfileRequestEdo(this.authenticatedSession.getEmail(),
-                                                                                         this.authenticatedSession.getToken());
+    final AuthenticatedProfileRequestEdo profReq = this
+        .getTestAuthenticatedProfileRequestEdo(this.authenticatedSession.getUserIdentity(), this.authenticatedSession.getToken());
 
-    final ProfileResponseEdo responseEdo = getTestProfileResponseEdo(this.authenticatedSession.getSessionid(),
-                                                                     ProfileModelEdoMapper.toEdo(this.user),
-                                                                     ProfileModelEdoMapper.toEdo(this.company));
+    final ProfileResponseEdo responseEdo = this.getTestProfileResponseEdo(this.authenticatedSession.getSessionid(),
+        ProfileModelEdoMapper.toEdo(this.user), ProfileModelEdoMapper.toEdo(this.company));
 
     final String modelAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(profReq);
     final String responseAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(responseEdo);
 
     this.mockMvc
-                .perform(MockMvcRequestBuilders.post(IflowRestPaths.ProfileModule.PROFILE_READ_AUTHENTOCATEDINFO)
-                                               .content(modelAsXmlString)
-                                               .contentType(MediaType.APPLICATION_XML_VALUE)
-                                               .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY,
-                                                       this.authenticatedSession.getToken()))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
-                .andExpect(content().xml(responseAsXmlString));
+        .perform(MockMvcRequestBuilders.post(IflowRestPaths.ProfileModule.PROFILE_READ_AUTHENTOCATEDINFO).content(modelAsXmlString)
+            .contentType(MediaType.APPLICATION_XML_VALUE)
+            .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, this.authenticatedSession.getToken()))
+        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(content().xml(responseAsXmlString));
 
-    verify(this.usersService, times(1)).getUserByEmail(any(String.class));
-    verify(this.companyService, times(1)).getById(any(Long.class));
+    verify(this.usersService, times(1)).getUserProfileByEmail(any(String.class));
 
   }
 
   @Test
   public void testReadTokenInfo() throws Exception {
 
-    final TokenProfileRequestEdo tokenInoRequest = getTokenProfileRequestEdo(this.authenticatedSession.getToken());
+    final TokenProfileRequestEdo tokenInoRequest = this.getTokenProfileRequestEdo(this.authenticatedSession.getToken());
 
-    final ProfileResponseEdo responseEdo = getTestProfileResponseEdo(this.authenticatedSession.getSessionid(),
-                                                                     ProfileModelEdoMapper.toEdo(this.user),
-                                                                     ProfileModelEdoMapper.toEdo(this.company));
+    final ProfileResponseEdo responseEdo = this.getTestProfileResponseEdo(this.authenticatedSession.getSessionid(),
+        ProfileModelEdoMapper.toEdo(this.user), ProfileModelEdoMapper.toEdo(this.company));
 
     final String modelAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(tokenInoRequest);
     final String responseAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(responseEdo);
 
     this.mockMvc
-                .perform(MockMvcRequestBuilders.post(IflowRestPaths.ProfileModule.PROFILE_READ_TOKENINFO)
-                                               .content(modelAsXmlString)
-                                               .contentType(MediaType.APPLICATION_XML_VALUE)
-                                               .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY,
-                                                       this.authenticatedSession.getToken()))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
-                .andExpect(content().xml(responseAsXmlString));
+        .perform(MockMvcRequestBuilders.post(IflowRestPaths.ProfileModule.PROFILE_READ_TOKENINFO).content(modelAsXmlString)
+            .contentType(MediaType.APPLICATION_XML_VALUE)
+            .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, this.authenticatedSession.getToken()))
+        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(content().xml(responseAsXmlString));
 
-    verify(this.usersService, times(1)).getUserByEmail(any(String.class));
-    verify(this.companyService, times(1)).getById(any(Long.class));
+    verify(this.usersService, times(1)).getUserProfileByEmail(any(String.class));
 
   }
 

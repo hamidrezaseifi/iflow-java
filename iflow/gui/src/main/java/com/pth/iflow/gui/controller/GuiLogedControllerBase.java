@@ -13,17 +13,17 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.configurations.GuiSecurityConfigurations;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
-import com.pth.iflow.gui.models.GuiCompany;
-import com.pth.iflow.gui.models.GuiUser;
-import com.pth.iflow.gui.models.GuiWorkflowMessage;
-import com.pth.iflow.gui.models.ui.GuiSessionUserInfo;
+import com.pth.iflow.gui.models.Company;
+import com.pth.iflow.gui.models.User;
+import com.pth.iflow.gui.models.WorkflowMessage;
+import com.pth.iflow.gui.models.ui.SessionUserInfo;
 import com.pth.iflow.gui.services.IWorkflowMessageHanlder;
 
 @Component
 public class GuiLogedControllerBase {
 
   @Autowired
-  private GuiSessionUserInfo sessionUserInfo;
+  private SessionUserInfo sessionUserInfo;
 
   @Autowired
   private IWorkflowMessageHanlder workflowMessageHanlder;
@@ -48,17 +48,17 @@ public class GuiLogedControllerBase {
 
   }
 
-  protected GuiSessionUserInfo getSessionUserInfo() {
+  protected SessionUserInfo getSessionUserInfo() {
 
     return this.sessionUserInfo;
   }
 
-  protected GuiUser getLoggedUser() {
+  protected User getLoggedUser() {
 
     return this.sessionUserInfo.getUser();
   }
 
-  protected GuiCompany getLoggedCompany() {
+  protected Company getLoggedCompany() {
 
     return this.sessionUserInfo.getCompanyProfile().getCompany();
   }
@@ -77,7 +77,7 @@ public class GuiLogedControllerBase {
     return workflowMessageHanlder;
   }
 
-  public List<GuiWorkflowMessage> readUserMessages() throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+  public List<WorkflowMessage> readUserMessages() throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     return workflowMessageHanlder.readUserMessages();
   }
 
@@ -85,7 +85,4 @@ public class GuiLogedControllerBase {
     workflowMessageHanlder.callUserMessageReset();
   }
 
-  public GuiWorkflowMessage getCachedWorkflowMessage(final Long id) {
-    return workflowMessageHanlder.getCachedMessage(id);
-  }
 }

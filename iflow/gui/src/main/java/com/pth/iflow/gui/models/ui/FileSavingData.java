@@ -17,15 +17,17 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.pth.iflow.common.enums.EWorkflowIdentity;
+
 public class FileSavingData {
 
   public static String[] AVAILEABLE_EXTENTIONS = { "pdf", "jpg", "gif", "png", "doc", "docx" };
 
   private String         title;
   private String         fileExtention;
-  private Long           workflowId;
-  private Long           actionId;
-  private Long           companyId;
+  private String         workflowIdentity;
+  private String         actionIdentity;
+  private String         companyIdentity;
   private String         filePath;
   private String         tempFilePath;
 
@@ -33,13 +35,13 @@ public class FileSavingData {
     this.fileExtention = fileExtention;
   }
 
-  public FileSavingData(final String title, final String fileExtention, final Long workflowId, final Long actionId,
-      final Long companyId) {
+  public FileSavingData(final String title, final String fileExtention, final String workflowIdentity, final String actionIdentity,
+      final String companyIdentity) {
     this.title = title;
     this.fileExtention = fileExtention;
-    this.workflowId = workflowId;
-    this.actionId = actionId;
-    this.companyId = companyId;
+    this.workflowIdentity = workflowIdentity;
+    this.actionIdentity = actionIdentity;
+    this.companyIdentity = companyIdentity;
   }
 
   /**
@@ -73,43 +75,31 @@ public class FileSavingData {
   /**
    * @return the workflowId
    */
-  public Long getWorkflowId() {
-    return this.workflowId;
+  public String getWorkflowIdentity() {
+    return this.workflowIdentity;
   }
 
   /**
    * @param workflowId the workflowId to set
    */
-  public void setWorkflowId(final Long workflowId) {
-    this.workflowId = workflowId == null ? 0 : workflowId;
+  public void setWorkflowIdentity(final String workflowIdentity) {
+    this.workflowIdentity = workflowIdentity == null ? EWorkflowIdentity.NOT_SET.getName() : workflowIdentity;
   }
 
-  /**
-   * @return the actionId
-   */
-  public Long getActionId() {
-    return this.actionId;
+  public String getActionIdentity() {
+    return this.actionIdentity;
   }
 
-  /**
-   * @param actionId the actionId to set
-   */
-  public void setActionId(final Long actionId) {
-    this.actionId = actionId == null ? 0 : actionId;
+  public void setActionIdentity(final String actionIdentity) {
+    this.actionIdentity = actionIdentity;
   }
 
-  /**
-   * @return the companyId
-   */
-  public Long getCompanyId() {
-    return this.companyId;
+  public String getCompanyIdentity() {
+    return this.companyIdentity;
   }
 
-  /**
-   * @param companyId the companyId to set
-   */
-  public void setCompanyId(final Long companyId) {
-    this.companyId = companyId == null ? 0 : companyId;
+  public void setCompanyIdentity(final String companyIdentity) {
+    this.companyIdentity = companyIdentity;
   }
 
   /**
@@ -146,7 +136,8 @@ public class FileSavingData {
    * @return the saving file path preffix
    */
   public String generateSavingFilePathPreffix() {
-    return String.format("%d/%d/%d/%s.%s", this.companyId, this.workflowId, this.actionId, this.title, this.fileExtention);
+    return String.format("%s/%s/%s/%s.%s", this.companyIdentity, this.workflowIdentity, this.actionIdentity, this.title,
+        this.fileExtention);
   }
 
   /**
@@ -161,10 +152,6 @@ public class FileSavingData {
   }
 
   public String generateNameExtention() {
-
-    final LocalDate dt = LocalDate.now();
-    final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY/MM/dd");
-
     return String.format("%s.%s", this.title, this.fileExtention);
   }
 

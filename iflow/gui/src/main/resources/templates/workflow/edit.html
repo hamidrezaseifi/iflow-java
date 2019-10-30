@@ -14,7 +14,7 @@
 		
 		<div class="content-container" ng-controller="WorkflowCreateController">
 			<div class="page-toolbar">
-				<div class="page-title" th:text="#{menu-workflow-create}"></div>
+				<div class="page-title" th:text="#{workflow-editing}"></div>
 				<a class="toolbar-link" href="/workflow/list"><i class="material-icons">list</i></a>
 				<button class="toolbar-button" ng-click="reload();"><i class="material-icons">refresh</i></button>
 			</div>
@@ -36,7 +36,7 @@
 								<span ng-if="hasNoAssigns()" th:text="#{workflow-select-assign}"></span>
 								<div class="user-item-box" ng-repeat="item in workflowCreateRequest.assigns">
 									<span>{{item.title}} </span>
-									<button ng-click="removeAssign(item.itemId, item.itemType)"><i class="material-icons">close</i></button>
+									<button ng-click="removeAssign(item.itemIdentity, item.itemType)"><i class="material-icons">close</i></button>
 								</div>
 								<div class="clear"></div>
 							</div>
@@ -48,7 +48,7 @@
 						<div class="item-content">
 							<select type="text" ng-model="workflowCreateRequest.workflow.controller">
 								<option th:text="#{workflow-select-controller}" value="0"></option>
-								<option ng-repeat="item in users" ng-value="item.id">{{item.fullName}}</option>
+								<option ng-repeat="item in users" ng-value="item.identity">{{item.fullName}}</option>
 							</select>
 						</div>
 						<div class="clear"></div>
@@ -63,7 +63,7 @@
 					<div class="item-row">
 						
 						<div class="item-content workflow-step-button-bar">
-							<button ng-click="makeActionDone(item.id)" class="button-bar-button step-button" ng-repeat="item in listAvaileableSteps()">{{item.title}}</button>
+							<button ng-click="makeActionDone(item.identity)" class="button-bar-button step-button" ng-repeat="item in listAvaileableSteps()">{{item.title}}</button>
 							<button ng-click="saveWorkflow()" class="button-bar-button step-button button-save">
 								<span th:text="#{common.save}"></span>
 								<i class="material-icons">save</i>
@@ -112,7 +112,7 @@
 								<div id="tabusers" class="tab-pane fade in active">
 									<ul class="list-item-container">
 										<li ng-repeat="item in users" class="list-item">
-											<input data-assigntitle="{{item.fullName}}" type="checkbox" class="assign-checkbox" ng-checked="isItemAssigned(item.id, 'user')" data-assigntype="user" ng-value="item.id"/> 
+											<input data-assigntitle="{{item.fullName}}" type="checkbox" class="assign-checkbox" ng-checked="isItemAssigned(item.identity, 'user')" data-assigntype="user" ng-value="item.identity"/> 
 											&nbsp; &nbsp; 
 											{{item.fullName}}										
 										</li>
@@ -121,12 +121,12 @@
 								<div id="tabdepartments" class="tab-pane fade">
 									<ul class="list-item-container">
 										<li ng-repeat="dep in departments" class="list-item">
-											<input type="checkbox" data-assigntitle="{{dep.title}}" class="assign-checkbox" ng-checked="isItemAssigned(dep.id, 'department')" data-assigntype="department" ng-value="dep.id"/> 
+											<input type="checkbox" data-assigntitle="{{dep.title}}" class="assign-checkbox" ng-checked="isItemAssigned(dep.identity, 'department')" data-assigntype="department" ng-value="dep.identity"/> 
 											&nbsp; &nbsp; 
 											{{dep.title}}	
 											<ul class="list-item-container">
 												<li ng-repeat="depgrp in dep.departmentGroups" class="list-item">
-													<input type="checkbox" class="assign-checkbox" data-assigntitle="{{depgrp.title}}" ng-checked="isItemAssigned(depgrp.id, 'departmentgroup')" data-assigntype="departmentgroup" ng-value="depgrp.id"/> 
+													<input type="checkbox" class="assign-checkbox" data-assigntitle="{{depgrp.title}}" ng-checked="isItemAssigned(depgrp.identity, 'departmentgroup')" data-assigntype="departmentgroup" ng-value="depgrp.identity"/> 
 													&nbsp; &nbsp; 
 													{{depgrp.title}}										
 												</li>
@@ -150,11 +150,12 @@
 		
 		    		    
 		    <script th:inline="javascript">
-				var loadUrl = "/workflow/data/workflow/edit/[[${workflowId}]]";
+				var loadUrl = "/workflow/data/workflow/edit/";
 				var saveUrl = "/workflow/data/workflow/save";
 				var archiveUrl = "/workflow/data/workflow/archive";
 				var doneUrl = "/workflow/data/workflow/done";
 				var listUrl = "/workflow/list";
+				var widnt = [[${workflowIdentity}]];
 				
 				var userAssignType = /*[[${UserAssign}]]*/ '';
 				var departmentAssignType = /*[[${DepartmentAssign}]]*/ '';

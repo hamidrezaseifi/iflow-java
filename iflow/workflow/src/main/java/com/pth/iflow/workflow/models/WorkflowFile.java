@@ -3,13 +3,13 @@ package com.pth.iflow.workflow.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.pth.iflow.common.edo.models.base.DataModelBase;
+import com.pth.iflow.common.edo.models.helper.IdentityModel;
 
-public class WorkflowFile extends DataModelBase {
+public class WorkflowFile extends IdentityModel {
 
-  private Long                            id;
-  private Long                            workflowId;
-  private Long                            createdBy;
+  private String                          identity;
+  private String                          workflowIdentity;
+  private String                          createdByIdentity;
   private String                          title;
   private String                          extention;
   private String                          activeFilePath;
@@ -20,20 +20,29 @@ public class WorkflowFile extends DataModelBase {
   private final List<WorkflowFileVersion> fileVersions = new ArrayList<>();
 
   @Override
-  public Long getId() {
-    return this.id;
+  public String getIdentity() {
+    return identity;
   }
 
-  public void setId(final Long id) {
-    this.id = id;
+  @Override
+  public void setIdentity(final String identity) {
+    this.identity = identity;
   }
 
-  public Long getWorkflowId() {
-    return this.workflowId;
+  public String getWorkflowIdentity() {
+    return workflowIdentity;
   }
 
-  public void setWorkflowId(final Long workflowId) {
-    this.workflowId = workflowId;
+  public void setWorkflowIdentity(final String workflowIdentity) {
+    this.workflowIdentity = workflowIdentity;
+  }
+
+  public String getCreatedByIdentity() {
+    return createdByIdentity;
+  }
+
+  public void setCreatedByIdentity(final String createdByIdentity) {
+    this.createdByIdentity = createdByIdentity;
   }
 
   public String getActiveFilePath() {
@@ -42,14 +51,6 @@ public class WorkflowFile extends DataModelBase {
 
   public void setActiveFilePath(final String filePath) {
     this.activeFilePath = filePath;
-  }
-
-  public Long getCreatedBy() {
-    return this.createdBy;
-  }
-
-  public void setCreatedBy(final Long createdBy) {
-    this.createdBy = createdBy;
   }
 
   public String getTitle() {
@@ -92,12 +93,10 @@ public class WorkflowFile extends DataModelBase {
     this.status = status;
   }
 
-  @Override
   public Integer getVersion() {
     return this.version;
   }
 
-  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }

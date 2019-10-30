@@ -6,7 +6,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,6 +23,7 @@ import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConve
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
 import com.pth.iflow.common.edo.models.WorkflowMessageListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
@@ -35,16 +38,16 @@ import com.pth.iflow.workflow.models.mapper.WorkflowModelEdoMapper;
 public class WorkflowMessageControllerTest extends TestDataProducer {
 
   @Autowired
-  private MockMvc mockMvc;
+  private MockMvc                                mockMvc;
 
   @Autowired
   private MappingJackson2XmlHttpMessageConverter xmlConverter;
 
   @MockBean
-  private IWorkflowMessageDataService workflowMessageDataService;
+  private IWorkflowMessageDataService            workflowMessageDataService;
 
   @Value("${iflow.common.rest.api.security.client-id.internal}")
-  private String innerModulesRequestHeaderValue;
+  private String                                 innerModulesRequestHeaderValue;
 
   @Before
   public void setUp() throws Exception {
@@ -58,20 +61,21 @@ public class WorkflowMessageControllerTest extends TestDataProducer {
   public void testReadUserWorkflowMessageList() throws Exception {
 
     final List<WorkflowMessage> messageList = this.getTestWorkflowMessageList();
-    final WorkflowMessageListEdo messageListEdo = new WorkflowMessageListEdo(WorkflowModelEdoMapper.toWorkflowMessageEdoList(messageList));
+    final WorkflowMessageListEdo messageListEdo = new WorkflowMessageListEdo(
+        WorkflowModelEdoMapper.toWorkflowMessageEdoList(messageList));
 
     final String resultAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(messageListEdo);
 
-    when(this.workflowMessageDataService.getListForUser(any(Long.class), any(Integer.class), any(String.class))).thenReturn(messageList);
+    when(this.workflowMessageDataService.getListForUser(any(String.class), any(Integer.class), any(String.class)))
+        .thenReturn(messageList);
 
     this.mockMvc
-                .perform(MockMvcRequestBuilders.get(IflowRestPaths.WorkflowModule.READ_WORKFLOWMESSAGE_READ_BY_USER(1L, 0))
-                                               .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, "test-roken"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
-                .andExpect(content().xml(resultAsXmlString));
+        .perform(MockMvcRequestBuilders.get(IflowRestPaths.WorkflowModule.READ_WORKFLOWMESSAGE_READ_BY_USER("user1", 0))
+            .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, "test-roken"))
+        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(content().xml(resultAsXmlString));
 
-    verify(workflowMessageDataService, times(1)).getListForUser(any(Long.class), any(Integer.class), any(String.class));
+    verify(workflowMessageDataService, times(1)).getListForUser(any(String.class), any(Integer.class), any(String.class));
 
   }
 

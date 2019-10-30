@@ -1,7 +1,6 @@
 package com.pth.iflow.workflow.bl.strategy.steps;
 
 import java.net.MalformedURLException;
-
 import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.iflow.common.exceptions.IFlowCustomeException;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
@@ -21,25 +20,24 @@ public class ValidateWorkflowDetailStrategyStep extends AbstractWorkflowSaveStra
 
     final Workflow processingWorkflow = this.getWorkflowSaveStrategy().getProcessingWorkflow();
 
-    if (processingWorkflow.getController() == null || processingWorkflow.getController() <= 0) {
+    if (processingWorkflow.hasController() == false) {
 
       throw new IFlowCustomeException("Invalid workflow controller!", EIFlowErrorType.INVALID_WORKFLOW_DETAIL);
     }
 
-    if (processingWorkflow.getCreatedBy() == null || processingWorkflow.getCreatedBy() <= 0) {
+    if (processingWorkflow.hasCreatedBy() == false) {
 
       throw new IFlowCustomeException("Invalid workflow CreatedBy!", EIFlowErrorType.INVALID_WORKFLOW_DETAIL);
     }
 
-    if (processingWorkflow.getWorkflowTypeId() == null || processingWorkflow.getWorkflowTypeId() <= 0) {
+    if (processingWorkflow.hasWorkflowType() == false) {
 
       throw new IFlowCustomeException("Invalid workflow WorkflowType!", EIFlowErrorType.INVALID_WORKFLOW_DETAIL);
     }
 
-    if (processingWorkflow.getCurrentStep() == null) {
+    if (processingWorkflow.isInitializing() == false && processingWorkflow.getCurrentStep() == null) {
 
-      throw new IFlowCustomeException("Unknown processingWorkflow step id:" + processingWorkflow.getId(),
-          EIFlowErrorType.UNKNOWN_WORKFLOW_TYPE_STEP);
+      throw new IFlowCustomeException("Unknown processingWorkflow typestep", EIFlowErrorType.UNKNOWN_WORKFLOW_TYPE_STEP);
     }
 
   }

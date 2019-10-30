@@ -15,7 +15,7 @@ import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.authentication.GuiAuthenticationDetails;
 import com.pth.iflow.gui.authentication.GuiAuthenticationToken;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
-import com.pth.iflow.gui.models.GuiUserAuthenticationResponse;
+import com.pth.iflow.gui.models.UserAuthenticationResponse;
 import com.pth.iflow.gui.services.IProfileAccess;
 
 @Component
@@ -39,7 +39,7 @@ public class GuiCustomAuthenticationProvider implements AuthenticationProvider {
       final String password = authentication.getCredentials().toString();
       final String companyid = ((GuiAuthenticationDetails) authentication.getDetails()).getCompanyid();
 
-      GuiUserAuthenticationResponse authResponse = null;
+      UserAuthenticationResponse authResponse = null;
       try {
         authResponse = this.profileValidator.authenticate(username, password, companyid);
       } catch (final GuiCustomizedException e) {

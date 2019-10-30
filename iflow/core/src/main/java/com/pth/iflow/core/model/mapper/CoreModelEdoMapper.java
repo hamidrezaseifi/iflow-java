@@ -9,8 +9,10 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 
 import com.pth.iflow.common.edo.models.CompanyEdo;
+import com.pth.iflow.common.edo.models.CompanyProfileEdo;
 import com.pth.iflow.common.edo.models.DepartmentEdo;
 import com.pth.iflow.common.edo.models.DepartmentGroupEdo;
+import com.pth.iflow.common.edo.models.ProfileResponseEdo;
 import com.pth.iflow.common.edo.models.UserEdo;
 import com.pth.iflow.common.edo.models.UserGroupEdo;
 import com.pth.iflow.common.edo.models.WorkflowActionEdo;
@@ -26,8 +28,10 @@ import com.pth.iflow.common.enums.EWorkflowMessageType;
 import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.core.model.Company;
+import com.pth.iflow.core.model.CompanyProfile;
 import com.pth.iflow.core.model.Department;
 import com.pth.iflow.core.model.DepartmentGroup;
+import com.pth.iflow.core.model.ProfileResponse;
 import com.pth.iflow.core.model.User;
 import com.pth.iflow.core.model.UserGroup;
 import com.pth.iflow.core.model.Workflow;
@@ -46,10 +50,9 @@ public class CoreModelEdoMapper {
   public static CompanyEdo toEdo(final Company model) {
     final CompanyEdo edo = new CompanyEdo();
     edo.setCompanyName(model.getCompanyName());
-    edo.setIdentifyid(model.getIdentifyid());
+    edo.setIdentity(model.getIdentity());
     edo.setStatus(model.getStatus());
     edo.setVersion(model.getVersion());
-    edo.setId(model.getId());
 
     return edo;
   }
@@ -59,45 +62,53 @@ public class CoreModelEdoMapper {
 
     final Company model = new Company();
     model.setCompanyName(edo.getCompanyName());
-    model.setIdentifyid(edo.getIdentifyid());
+    model.setIdentity(edo.getIdentity());
     model.setStatus(edo.getStatus());
     model.setVersion(edo.getVersion());
-    model.setId(edo.getId());
 
     return model;
+  }
+
+  public static CompanyProfileEdo toEdo(final CompanyProfile model) {
+    final CompanyProfileEdo edo = new CompanyProfileEdo(toEdo(model.getCompany()), toDepartmentEdoList(model.getDepartments()),
+        toUserGroupEdoList(model.getUserGroups()));
+
+    return edo;
+  }
+
+  public static ProfileResponseEdo toEdo(final ProfileResponse model) {
+    return new ProfileResponseEdo(toEdo(model.getUser()), toEdo(model.getCompanyProfile()), model.getSessionid());
   }
 
   public static WorkflowMessage fromEdo(final WorkflowMessageEdo edo) throws IFlowMessageConversionFailureException {
     validateCustomer(edo);
 
     final WorkflowMessage model = new WorkflowMessage();
-    model.setId(edo.getId());
     model.setStatus(EWorkflowMessageStatus.ofValue(edo.getStatus()));
-    model.setUserId(edo.getUserId());
-    model.setCreatedBy(edo.getCreatedBy());
+    model.setUserIdentity(edo.getUserIdentity());
+    model.setCreatedByIdentity(edo.getCreatedByIdentity());
     model.setVersion(edo.getVersion());
-    model.setWorkflowId(edo.getWorkflowId());
+    model.setWorkflowIdentity(edo.getWorkflowIdentity());
     model.setMessageType(EWorkflowMessageType.ofValue(edo.getMessageType()));
     model.setExpireDays(edo.getExpireDays());
     model.setMessage(edo.getMessage());
-    model.setStepId(edo.getStepId());
+    model.setStepIdentity(edo.getStepIdentity());
 
     return model;
   }
 
   public static WorkflowMessageEdo toEdo(final WorkflowMessage model) {
     final WorkflowMessageEdo edo = new WorkflowMessageEdo();
-    edo.setId(model.getId());
     edo.setStatus(model.getStatus().getValue());
-    edo.setUserId(model.getUserId());
-    edo.setCreatedBy(model.getCreatedBy());
+    edo.setUserIdentity(model.getUserIdentity());
+    edo.setCreatedByIdentity(model.getCreatedByIdentity());
     edo.setVersion(model.getVersion());
-    edo.setWorkflowId(model.getWorkflowId());
+    edo.setWorkflowIdentity(model.getWorkflow().getIdentity());
     edo.setMessageType(model.getMessageType().getValue());
     edo.setExpireDays(model.getExpireDays());
     edo.setMessage(model.getMessage());
     edo.setCreatedAt(model.getCreatedAt());
-    edo.setStepId(model.getStepId());
+    edo.setStepIdentity(model.getStepIdentity());
 
     return edo;
   }
@@ -106,9 +117,8 @@ public class CoreModelEdoMapper {
     final DepartmentEdo edo = new DepartmentEdo();
     edo.setTitle(model.getTitle());
     edo.setStatus(model.getStatus());
-    edo.setId(model.getId());
-    edo.setCompanyId(model.getCompanyId());
-    edo.setDepartmentGroups(CoreModelEdoMapper.toDepartmentGroupEdoList(model.getDepartmentGroups()));
+    edo.setIdentity(model.getIdentity());
+    edo.setDepartmentGroups(toDepartmentGroupEdoList(model.getDepartmentGroups()));
     edo.setVersion(model.getVersion());
 
     return edo;
@@ -121,9 +131,8 @@ public class CoreModelEdoMapper {
 
     model.setTitle(edo.getTitle());
     model.setStatus(edo.getStatus());
-    model.setId(edo.getId());
-    model.setCompanyId(edo.getCompanyId());
-    model.setDepartmentGroups(CoreModelEdoMapper.fromDepartmentGroupEdoList(edo.getDepartmentGroups()));
+    model.setIdentity(edo.getIdentity());
+    model.setDepartmentGroups(fromDepartmentGroupEdoList(edo.getDepartmentGroups()));
     model.setVersion(edo.getVersion());
 
     return model;
@@ -133,8 +142,7 @@ public class CoreModelEdoMapper {
     final DepartmentGroupEdo edo = new DepartmentGroupEdo();
     edo.setTitle(model.getTitle());
     edo.setStatus(model.getStatus());
-    edo.setId(model.getId());
-    edo.setDepartmentId(model.getDepartmentId());
+    edo.setIdentity(model.getIdentity());
     edo.setVersion(model.getVersion());
 
     return edo;
@@ -147,8 +155,7 @@ public class CoreModelEdoMapper {
 
     model.setTitle(edo.getTitle());
     model.setStatus(edo.getStatus());
-    model.setId(edo.getId());
-    model.setDepartmentId(edo.getDepartmentId());
+    model.setIdentity(edo.getIdentity());
     model.setVersion(edo.getVersion());
 
     return model;
@@ -163,8 +170,7 @@ public class CoreModelEdoMapper {
     edo.setVersion(model.getVersion());
     edo.setEmail(model.getEmail());
     edo.setBirthDate(model.getBirthDate());
-    edo.setId(model.getId());
-    edo.setCompanyId(model.getCompanyId());
+    edo.setCompanyIdentity(model.getCompanyIdentity());
     edo.setGroups(model.getGroups());
     edo.setDepartments(model.getDepartments());
     edo.setDepartmentGroups(model.getDepartmentGroups());
@@ -186,8 +192,7 @@ public class CoreModelEdoMapper {
     model.setVersion(edo.getVersion());
     model.setEmail(edo.getEmail());
     model.setBirthDate(edo.getBirthDate());
-    model.setId(edo.getId());
-    model.setCompanyId(edo.getCompanyId());
+    model.setCompanyIdentity(edo.getCompanyIdentity());
     model.setGroups(edo.getGroups());
     model.setDepartments(edo.getDepartments());
     model.setDepartmentGroups(edo.getDepartmentGroups());
@@ -201,9 +206,10 @@ public class CoreModelEdoMapper {
     final UserGroupEdo edo = new UserGroupEdo();
     edo.setTitle(model.getTitle());
     edo.setStatus(model.getStatus());
-    edo.setId(model.getId());
-    edo.setCompanyId(model.getCompanyId());
+    edo.setIdentity(model.getIdentity());
     edo.setVersion(model.getVersion());
+    edo.setIdentity(model.getIdentity());
+    edo.setCompanyIdentity(model.getCompanyIdentity());
 
     return edo;
   }
@@ -215,9 +221,10 @@ public class CoreModelEdoMapper {
 
     model.setTitle(edo.getTitle());
     model.setStatus(edo.getStatus());
-    model.setId(edo.getId());
-    model.setCompanyId(edo.getCompanyId());
+    model.setIdentity(edo.getIdentity());
     model.setVersion(edo.getVersion());
+    model.setIdentity(edo.getIdentity());
+    model.setCompanyIdentity(edo.getCompanyIdentity());
 
     return model;
   }
@@ -226,12 +233,12 @@ public class CoreModelEdoMapper {
     final WorkflowEdo edo = new WorkflowEdo();
     edo.setComments(model.getComments());
     edo.setStatus(model.getStatusInt());
-    edo.setId(model.getId());
-    edo.setController(model.getController());
-    edo.setCurrentStepId(model.getCurrentStepId());
-    edo.setCreatedBy(model.getCreatedBy());
-    edo.setWorkflowTypeId(model.getWorkflowTypeId());
+    edo.setControllerIdentity(model.getControllerIdentity());
+    edo.setCurrentStepIdentity(model.getCurrentStepIdentity());
+    edo.setCreatedByIdentity(model.getCreatedByIdentity());
+    edo.setWorkflowTypeIdentity(model.getWorkflowTypeIdentity());
     edo.setVersion(model.getVersion());
+    edo.setIdentity(model.getIdentity());
 
     edo.setFiles(toWorkflowFileEdoList(model.getFiles()));
     edo.setActions(toWorkflowActionEdoList(model.getActions()));
@@ -246,12 +253,12 @@ public class CoreModelEdoMapper {
 
     model.setComments(edo.getComments());
     model.setStatus(edo.getStatus());
-    model.setId(edo.getId());
-    model.setController(edo.getController());
-    model.setCreatedBy(edo.getCreatedBy());
-    model.setWorkflowTypeId(edo.getWorkflowTypeId());
     model.setVersion(edo.getVersion());
-    model.setCurrentStepId(edo.getCurrentStepId());
+    model.setControllerIdentity(edo.getControllerIdentity());
+    model.setCurrentStepIdentity(edo.getCurrentStepIdentity());
+    model.setCreatedByIdentity(edo.getCreatedByIdentity());
+    model.setWorkflowTypeIdentity(edo.getWorkflowTypeIdentity());
+    model.setIdentity(edo.getIdentity());
 
     model.setFiles(fromWorkflowFileEdoList(edo.getFiles()));
     model.setActions(fromWorkflowActionEdoList(edo.getActions()));
@@ -263,11 +270,10 @@ public class CoreModelEdoMapper {
     final WorkflowActionEdo edo = new WorkflowActionEdo();
     edo.setComments(model.getComments());
     edo.setStatus(model.getStatus());
-    edo.setId(model.getId());
-    edo.setAssignTo(model.getAssignTo());
-    edo.setCurrentStepId(model.getCurrentStepId());
-    edo.setWorkflowId(model.getWorkflowId());
+    edo.setAssignToIdentity(model.getAssignToIdentity());
+    edo.setCurrentStepIdentity(model.getCurrentStepIdentity());
     edo.setVersion(model.getVersion());
+    edo.setIdentity(model.getIdentity());
 
     return edo;
   }
@@ -279,11 +285,10 @@ public class CoreModelEdoMapper {
 
     model.setComments(edo.getComments());
     model.setStatus(edo.getStatus());
-    model.setId(edo.getId());
-    model.setCurrentStepId(edo.getCurrentStepId());
-    model.setWorkflowId(edo.getWorkflowId());
     model.setVersion(edo.getVersion());
-    model.setAssignTo(edo.getAssignTo());
+    model.setIdentity(edo.getIdentity());
+    model.setCurrentStepIdentity(edo.getCurrentStepIdentity());
+    model.setAssignToIdentity(edo.getAssignToIdentity());
 
     return model;
   }
@@ -296,8 +301,7 @@ public class CoreModelEdoMapper {
     edo.setTitle(model.getTitle());
     edo.setComments(model.getComments());
     edo.setStatus(model.getStatus());
-    edo.setId(model.getId());
-    edo.setWorkflowTypeId(model.getWorkflowTypeId());
+    edo.setIdentity(model.getIdentity());
     edo.setVersion(model.getVersion());
 
     return edo;
@@ -315,8 +319,7 @@ public class CoreModelEdoMapper {
     model.setComments(edo.getComments());
     model.setStatus(edo.getStatus());
     model.setVersion(edo.getVersion());
-    model.setId(edo.getId());
-    model.setWorkflowTypeId(edo.getWorkflowTypeId());
+    model.setIdentity(edo.getIdentity());
 
     return model;
   }
@@ -327,11 +330,10 @@ public class CoreModelEdoMapper {
     edo.setExtention(model.getExtention());
     edo.setComments(model.getComments());
     edo.setStatus(model.getStatus());
-    edo.setId(model.getId());
-    edo.setCreatedBy(model.getCreatedBy());
+    edo.setIdentity(model.getIdentity());
+    edo.setCreatedByIdentity(model.getCreatedByIdentity());
     edo.setActiveFilePath(model.getActiveFilePath());
     edo.setActiveFileVersion(model.getActiveFileVersion());
-    edo.setWorkflowId(model.getWorkflowId());
     edo.setVersion(model.getVersion());
 
     edo.setFileVersions(toWorkflowFileVersionEdoList(model.getFileVersions()));
@@ -347,11 +349,10 @@ public class CoreModelEdoMapper {
     model.setExtention(edo.getExtention());
     model.setComments(edo.getComments());
     model.setStatus(edo.getStatus());
-    model.setId(edo.getId());
-    model.setCreatedBy(edo.getCreatedBy());
+    model.setIdentity(edo.getIdentity());
+    model.setCreatedByIdentity(edo.getCreatedByIdentity());
     model.setActiveFilePath(edo.getActiveFilePath());
     model.setActiveFileVersion(edo.getActiveFileVersion());
-    model.setWorkflowId(edo.getWorkflowId());
     model.setVersion(edo.getVersion());
 
     model.setFileVersions(fromWorkflowFileVersionEdoList(edo.getFileVersions()));
@@ -363,11 +364,9 @@ public class CoreModelEdoMapper {
     final WorkflowFileVersionEdo edo = new WorkflowFileVersionEdo();
     edo.setComments(model.getComments());
     edo.setStatus(model.getStatus());
-    edo.setId(model.getId());
-    edo.setCreatedBy(model.getCreatedBy());
+    edo.setCreatedByIdentity(model.getCreatedBy().getIdentity());
     edo.setFilePath(model.getFilePath());
     edo.setFileVersion(model.getFileVersion());
-    edo.setWorkflowFileId(model.getWorkflowFileId());
     edo.setVersion(model.getVersion());
 
     return edo;
@@ -379,11 +378,9 @@ public class CoreModelEdoMapper {
 
     model.setComments(edo.getComments());
     model.setStatus(edo.getStatus());
-    model.setId(edo.getId());
-    model.setCreatedBy(edo.getCreatedBy());
+    model.setCreatedByIdentity(edo.getCreatedByIdentity());
     model.setFilePath(edo.getFilePath());
     model.setFileVersion(edo.getFileVersion());
-    model.setWorkflowFileId(edo.getWorkflowFileId());
     model.setVersion(edo.getVersion());
 
     return model;
@@ -394,9 +391,9 @@ public class CoreModelEdoMapper {
     edo.setTitle(model.getTitle());
     edo.setComments(model.getComments());
     edo.setStatus(model.getStatus());
-    edo.setId(model.getId());
-    edo.setCompanyId(model.getCompanyId());
-    edo.setBaseTypeId(model.getBaseTypeId());
+    edo.setIdentity(model.getIdentity());
+    edo.setCompanyIdentity(model.getCompanyIdentity());
+    edo.setBaseTypeIdentity(model.getBaseTypeIdentity());
     edo.setSendToController(model.getSendToController());
     edo.setAssignType(model.geAssignType().getValue());
     edo.setIncreaseStepAutomatic(model.getIncreaseStepAutomatic());
@@ -414,9 +411,9 @@ public class CoreModelEdoMapper {
     model.setTitle(edo.getTitle());
     model.setComments(edo.getComments());
     model.setStatus(edo.getStatus());
-    model.setId(edo.getId());
-    model.setCompanyId(edo.getCompanyId());
-    model.setBaseTypeId(edo.getBaseTypeId());
+    model.setIdentity(edo.getIdentity());
+    model.setCompanyIdentity(edo.getCompanyIdentity());
+    model.setBaseTypeIdentity(edo.getBaseTypeIdentity());
     model.setSendToController(edo.getSendToController());
     model.setAssignType(EWorkflowTypeAssignType.ofValue(edo.getAssignType()));
     model.setAllowAssign(edo.getAllowAssign());
@@ -429,10 +426,10 @@ public class CoreModelEdoMapper {
 
   public static WorkflowSearchFilterEdo toEdo(final WorkflowSearchFilter model) {
     final WorkflowSearchFilterEdo edo = new WorkflowSearchFilterEdo();
-    edo.setAssignedUserIdList(model.getAssignedUserIdList());
-    edo.setStatusList(model.getStatusList());
-    edo.setWorkflowStepeIdList(model.getWorkflowStepeIdList());
-    edo.setWorkflowTypeIdList(model.getWorkflowTypeIdList());
+    edo.setAssignedUserIdentitySet(model.getAssignedUserIdSet());
+    edo.setStatusSet(model.getStatusSet());
+    edo.setWorkflowStepeIdentitySet(model.getWorkflowStepeIdSet());
+    edo.setWorkflowTypeIdentitySet(model.getWorkflowTypeIdSet());
 
     return edo;
   }
@@ -441,10 +438,10 @@ public class CoreModelEdoMapper {
     validateCustomer(edo);
 
     final WorkflowSearchFilter model = new WorkflowSearchFilter();
-    model.setAssignedUserIdList(edo.getAssignedUserIdList());
-    model.setStatusList(edo.getStatusList());
-    model.setWorkflowStepeIdList(edo.getWorkflowStepeIdList());
-    model.setWorkflowTypeIdList(edo.getWorkflowTypeIdList());
+    model.setAssignedUserIdSet(edo.getAssignedUserIdentitySet());
+    model.setStatusSet(edo.getStatusSet());
+    model.setWorkflowStepeIdSet(edo.getWorkflowStepeIdentitySet());
+    model.setWorkflowTypeIdSet(edo.getWorkflowTypeIdentitySet());
 
     return model;
 

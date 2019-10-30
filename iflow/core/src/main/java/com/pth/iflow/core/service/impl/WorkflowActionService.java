@@ -37,13 +37,13 @@ public class WorkflowActionService implements IWorkflowActionService {
   }
 
   @Override
-  public WorkflowAction getById(final Long id) {
-    return workflowActionDao.getById(id);
+  public WorkflowAction getByIdentity(final String identity) {
+    return workflowActionDao.getByIdentity(identity);
   }
 
   @Override
-  public List<WorkflowAction> getListByIdWorkflowId(final Long id) {
-    return workflowActionDao.getListByWorkflowId(id);
+  public List<WorkflowAction> getListByIdWorkflowIdentity(final String identity) {
+    return workflowActionDao.getListByWorkflowIdentity(identity);
   }
 
 }

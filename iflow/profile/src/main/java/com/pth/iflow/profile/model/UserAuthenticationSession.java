@@ -4,7 +4,8 @@ import java.util.Date;
 
 public class UserAuthenticationSession {
 
-  private String    email;
+  private String    companyIdentity;
+  private String    userIdentity;
   private String    token;
   private String    sessionid;
   private Long      created;
@@ -12,22 +13,42 @@ public class UserAuthenticationSession {
   private final int ageLimit;
   private boolean   isFixedSession;
 
-  public UserAuthenticationSession(final int ageLimit) {
+  public UserAuthenticationSession(final String userIdentity, final String companyIdentity, final int ageLimit) {
     System.currentTimeMillis();
 
     this.created = System.currentTimeMillis();
 
     this.lastAccess = System.currentTimeMillis();
     this.ageLimit = ageLimit;
+
+    this.setUserIdentity(userIdentity);
+    this.setCompanyIdentity(companyIdentity);
   }
 
-  public String getEmail() {
-    return this.email;
+  public String getUserIdentity() {
+    return this.userIdentity;
   }
 
-  public UserAuthenticationSession setEmail(final String email) {
-    this.email = email;
+  public UserAuthenticationSession setUserIdentity(final String userIdentity) {
+    this.userIdentity = userIdentity;
     return this;
+  }
+
+  public boolean hasUserIdentity(final String userIdentity) {
+    return this.userIdentity.equals(userIdentity);
+  }
+
+  public String getCompanyIdentity() {
+    return this.companyIdentity;
+  }
+
+  public UserAuthenticationSession setCompanyIdentity(final String companyIdentity) {
+    this.companyIdentity = companyIdentity;
+    return this;
+  }
+
+  public boolean hasCompanyIdentity(final String companyIdentity) {
+    return this.companyIdentity.equals(companyIdentity);
   }
 
   /**
@@ -125,7 +146,7 @@ public class UserAuthenticationSession {
    * @return boolean
    */
   public boolean isValid() {
-    return this.isFixedSession || isExpired();
+    return this.isFixedSession || this.isExpired();
   }
 
   private boolean isExpired() {

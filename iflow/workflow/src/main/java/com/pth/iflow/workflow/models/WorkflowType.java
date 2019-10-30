@@ -3,14 +3,14 @@ package com.pth.iflow.workflow.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.pth.iflow.common.edo.models.base.DataModelBase;
+import com.pth.iflow.common.edo.models.helper.IdentityModel;
 import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
 
-public class WorkflowType extends DataModelBase {
+public class WorkflowType extends IdentityModel {
 
-  private Long                         id;
-  private Long                         companyId;
-  private Long                         baseTypeId;
+  private String                       identity;
+  private String                       companyIdentity;
+  private String                       baseTypeIdentity;
   private String                       title;
   private String                       comments;
   private Integer                      status;
@@ -22,34 +22,29 @@ public class WorkflowType extends DataModelBase {
   private final List<WorkflowTypeStep> steps = new ArrayList<>();
 
   @Override
-  public Long getId() {
-    return this.id;
+  public String getIdentity() {
+    return identity;
   }
 
-  public void setId(final Long id) {
-    this.id = id;
+  @Override
+  public void setIdentity(final String identity) {
+    this.identity = identity;
   }
 
-  public Long getCompanyId() {
-    return this.companyId;
+  public String getCompanyIdentity() {
+    return companyIdentity;
   }
 
-  public void setCompanyId(final Long companyId) {
-    this.companyId = companyId;
+  public void setCompanyIdentity(final String companyIdentity) {
+    this.companyIdentity = companyIdentity;
   }
 
-  /**
-   * @return the baseTypeId
-   */
-  public Long getBaseTypeId() {
-    return this.baseTypeId;
+  public String getBaseTypeIdentity() {
+    return baseTypeIdentity;
   }
 
-  /**
-   * @param baseTypeId the baseTypeId to set
-   */
-  public void setBaseTypeId(final Long baseTypeId) {
-    this.baseTypeId = baseTypeId;
+  public void setBaseTypeIdentity(final String baseTypeIdentity) {
+    this.baseTypeIdentity = baseTypeIdentity;
   }
 
   public String getTitle() {
@@ -92,14 +87,6 @@ public class WorkflowType extends DataModelBase {
     this.assignType = assignType;
   }
 
-  public boolean isAssignTypeManual() {
-    return this.assignType == EWorkflowTypeAssignType.MANUAL;
-  }
-
-  public boolean isAssignTypeOffering() {
-    return this.assignType == EWorkflowTypeAssignType.OFFER;
-  }
-
   public Boolean getIncreaseStepAutomatic() {
     return this.increaseStepAutomatic;
   }
@@ -116,12 +103,10 @@ public class WorkflowType extends DataModelBase {
     this.allowAssign = allowAssign;
   }
 
-  @Override
   public Integer getVersion() {
     return this.version;
   }
 
-  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
@@ -141,9 +126,12 @@ public class WorkflowType extends DataModelBase {
     this.steps.add(stepId);
   }
 
-  @Override
-  public boolean isNew() {
-    return (this.id == null) || (this.id <= 0);
+  public boolean isAssignTypeManual() {
+    return this.assignType == EWorkflowTypeAssignType.MANUAL;
+  }
+
+  public boolean isAssignTypeOffering() {
+    return this.assignType == EWorkflowTypeAssignType.OFFER;
   }
 
 }

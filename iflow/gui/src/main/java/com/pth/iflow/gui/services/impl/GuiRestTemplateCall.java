@@ -24,10 +24,10 @@ import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.response.IFlowErrorRestResponse;
 import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
-import com.pth.iflow.gui.services.IBackendRestTemplateCall;
+import com.pth.iflow.gui.services.IGuiRestTemplateCall;
 
 @Component
-public class GuiRestTemplateCall implements IBackendRestTemplateCall {
+public class GuiRestTemplateCall implements IGuiRestTemplateCall {
 
   protected final Logger                         log = LoggerFactory.getLogger(GuiRestTemplateCall.class);
 

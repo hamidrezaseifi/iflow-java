@@ -20,6 +20,8 @@ DROP TABLE IF EXISTS `user_usergroup`;
 
 DROP TABLE IF EXISTS `user_deputy`;
 
+DROP TABLE IF EXISTS `user_department_groups`;
+
 DROP TABLE IF EXISTS `user_departments`;
 
 DROP TABLE IF EXISTS `departments_group`;
@@ -35,19 +37,20 @@ DROP TABLE IF EXISTS `companies`;
  
 CREATE TABLE `companies` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `identifyid` varchar(45) DEFAULT NULL,
+  `identity` varchar(45) DEFAULT NULL,
   `company_name` varchar(45) NOT NULL,
   `status` smallint(6) NOT NULL DEFAULT '1',
   `version` int(11) NOT NULL DEFAULT '1',
   `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   `updated_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   PRIMARY KEY (`id`),
-  UNIQUE KEY `identifyid_UNIQUE` (`identifyid`)
+  UNIQUE KEY `identity_UNIQUE` (`identity`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 ;
 
 
 CREATE TABLE `departments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `identity` varchar(45) DEFAULT NULL,
   `company_id` int(11) NOT NULL DEFAULT '1',
   `title` varchar(200) NOT NULL,
   `status` smallint(6) NOT NULL DEFAULT '1',
@@ -56,6 +59,7 @@ CREATE TABLE `departments` (
   `updated_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   PRIMARY KEY (`id`),
   KEY `FK_DEPARTMENTS_COMPANY_idx` (`company_id`),
+  UNIQUE KEY `identity_UNIQUE` (`identity`),
   CONSTRAINT `FK_DEPARTMENTS_COMPANY` FOREIGN KEY (`company_id`) REFERENCES `companies` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 ;
 
@@ -63,6 +67,7 @@ CREATE TABLE `departments` (
  
 CREATE TABLE `departments_group` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `identity` varchar(45) DEFAULT NULL,
   `department_id` int(11) NOT NULL,
   `title` varchar(200) NOT NULL,
   `status` smallint(6) NOT NULL DEFAULT '1',
@@ -70,6 +75,7 @@ CREATE TABLE `departments_group` (
   `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   `updated_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   PRIMARY KEY (`id`),
+  UNIQUE KEY `identity_UNIQUE` (`identity`),
   KEY `FK_DEPARTMENTGROUP_DEPARTMENT_idx` (`department_id`),
   CONSTRAINT `FK_DEPARTMENTGROUP_DEPARTMENT` FOREIGN KEY (`department_id`) REFERENCES `departments` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=5 ;
@@ -106,6 +112,16 @@ CREATE TABLE `user_departments` (
   CONSTRAINT `FK_USERDEPARTMENTS_USERS` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB ;
 
+CREATE TABLE `user_department_groups` (
+  `user_id` int(11) NOT NULL,
+  `department_group_id` int(11) NOT NULL,
+  `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  PRIMARY KEY (`user_id`,`department_group_id`),
+  KEY `FK_USERDEPARTMENTGROUPS_DEPARTMENTS_idx` (`department_group_id`),
+  CONSTRAINT `FK_USERDEPARTMENTGROUPS_DEPARTMENTGROUPS` FOREIGN KEY (`department_group_id`) REFERENCES `departments_group` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_USERDEPARTMENTGROUPS_USERS` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
  
 CREATE TABLE `user_deputy` (
   `user_id` int(11) NOT NULL,
@@ -121,6 +137,7 @@ CREATE TABLE `user_deputy` (
  
 CREATE TABLE `user_group` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `identity` varchar(45) DEFAULT NULL,
   `title` varchar(200) NOT NULL,
   `company_id` int(11) NOT NULL DEFAULT '1',
   `status` smallint(6) NOT NULL DEFAULT '1',
@@ -128,6 +145,7 @@ CREATE TABLE `user_group` (
   `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   `updated_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   PRIMARY KEY (`id`),
+  UNIQUE KEY `identity_UNIQUE` (`identity`),
   KEY `FK_USERGROUP_COMPANY_idx` (`company_id`),
   CONSTRAINT `FK_USERGROUP_COMPANY` FOREIGN KEY (`company_id`) REFERENCES `companies` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 ;
@@ -147,8 +165,9 @@ CREATE TABLE `user_usergroup` (
 
 CREATE TABLE `workflow_type` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `identity` varchar(45) DEFAULT NULL,
   `company_id` int(11) NOT NULL,
-  `workflow_base_type` int(11) NOT NULL DEFAULT '0',
+  `workflow_base_type` varchar(45) NOT NULL DEFAULT '0',
   `title` varchar(200) NOT NULL,
   `assign_type` SMALLINT(2) NOT NULL DEFAULT 1,
   `send_to_controller` smallint(2) NOT NULL DEFAULT '1',
@@ -160,6 +179,7 @@ CREATE TABLE `workflow_type` (
   `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   `updated_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   PRIMARY KEY (`id`),
+  UNIQUE KEY `identity_UNIQUE` (`identity`),
   KEY `FK_WORKFLOWTYPE_COMPANY_idx` (`company_id`),
   CONSTRAINT `FK_WORKFLOWTYPE_COMPANY` FOREIGN KEY (`company_id`) REFERENCES `companies` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 ;
@@ -181,6 +201,7 @@ CREATE TABLE `workflow_type_properties` (
  
 CREATE TABLE `workflow_type_step` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `identity` varchar(45) DEFAULT NULL,
   `workflow_type_id` int(11) NOT NULL,
   `title` varchar(200) NOT NULL,
   `step_index` smallint(6) NOT NULL DEFAULT 0,
@@ -192,6 +213,7 @@ CREATE TABLE `workflow_type_step` (
   `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   `updated_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   PRIMARY KEY (`id`),
+  UNIQUE KEY `identity_UNIQUE` (`identity`),
   KEY `FK_WORKFLOWTYPESTEP_WORKFLOWTYPE_idx` (`workflow_type_id`),
   CONSTRAINT `FK_WORKFLOWTYPESTEP_WORKFLOWTYPE` FOREIGN KEY (`workflow_type_id`) REFERENCES `workflow_type` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB ;
@@ -199,6 +221,7 @@ CREATE TABLE `workflow_type_step` (
  
 CREATE TABLE `workflow` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `identity` varchar(45) DEFAULT NULL,
   `workflow_type_id` int(11) NOT NULL,
   `current_step` int(11) NOT NULL,
   `status` int(11) NOT NULL,
@@ -209,6 +232,7 @@ CREATE TABLE `workflow` (
   `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   `updated_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   PRIMARY KEY (`id`),
+  UNIQUE KEY `identity_UNIQUE` (`identity`),
   KEY `FK_WORKFLOW_WORKFLOWTYPE_idx` (`workflow_type_id`),
   KEY `FK_WORKFLOW_WORKFLOWTYPESTEP_idx` (`current_step`),
   KEY `FK_WORKFLOW_USERS_idx` (`created_by`),
@@ -220,6 +244,7 @@ CREATE TABLE `workflow` (
  
 CREATE TABLE `workflow_actions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `identity` varchar(45) DEFAULT NULL,
   `workflow_id` int(11) NOT NULL,
   `assign_to` int(11) NOT NULL DEFAULT '0',
   `current_step_id` int(11) NOT NULL DEFAULT '0',
@@ -229,6 +254,7 @@ CREATE TABLE `workflow_actions` (
   `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   `updated_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   PRIMARY KEY (`id`),
+  UNIQUE KEY `identity_UNIQUE` (`identity`),
   KEY `FK_WORKFLOWACTION_WORKFLOW_idx` (`workflow_id`),
   CONSTRAINT `FK_WORKFLOWACTION_WORKFLOW` FOREIGN KEY (`workflow_id`) REFERENCES `workflow` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 ;
@@ -236,6 +262,7 @@ CREATE TABLE `workflow_actions` (
  
 CREATE TABLE `workflow_files` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `identity` varchar(45) DEFAULT NULL,
   `workflow_id` int(11) NOT NULL,
   `title` varchar(200) NOT NULL,
   `extention` varchar(10) NOT NULL,
@@ -248,6 +275,7 @@ CREATE TABLE `workflow_files` (
   `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   `updated_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   PRIMARY KEY (`id`),
+  UNIQUE KEY `identity_UNIQUE` (`identity`),
   KEY `FK_WORKFLOWFILE_WORKFLOW_idx` (`workflow_id`),
   KEY `FK_WORKFLOWFILE_USERS_idx` (`created_by`),
   CONSTRAINT `FK_WORKFLOWFILE_USERS` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,

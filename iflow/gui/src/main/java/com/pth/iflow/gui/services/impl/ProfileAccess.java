@@ -14,8 +14,8 @@ import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.configurations.GuiConfiguration;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
-import com.pth.iflow.gui.models.GuiProfileResponse;
-import com.pth.iflow.gui.models.GuiUserAuthenticationResponse;
+import com.pth.iflow.gui.models.ProfileResponse;
+import com.pth.iflow.gui.models.UserAuthenticationResponse;
 import com.pth.iflow.gui.models.mapper.GuiModelEdoMapper;
 import com.pth.iflow.gui.services.IProfileAccess;
 import com.pth.iflow.gui.services.IRestTemplateCall;
@@ -35,7 +35,7 @@ public class ProfileAccess implements IProfileAccess {
   }
 
   @Override
-  public GuiProfileResponse isTokenValid(final String token) throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+  public ProfileResponse isTokenValid(final String token) throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     logger.debug("Validate token {} from profile service", token);
 
@@ -53,7 +53,7 @@ public class ProfileAccess implements IProfileAccess {
   }
 
   @Override
-  public GuiUserAuthenticationResponse authenticate(final String username, final String password, final String companyIdentity) throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+  public UserAuthenticationResponse authenticate(final String username, final String password, final String companyIdentity) throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     logger.debug("Authenticate user {} from profile service", username);
 
     final UserAuthenticationRequestEdo request = new UserAuthenticationRequestEdo();
@@ -72,7 +72,7 @@ public class ProfileAccess implements IProfileAccess {
   }
 
   @Override
-  public GuiProfileResponse readProfile(final String username, final String token) throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+  public ProfileResponse readProfile(final String username, final String token) throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     logger.debug("Read profile for user {} from profile service", username);
 
     final AuthenticatedProfileRequestEdo request = new AuthenticatedProfileRequestEdo();

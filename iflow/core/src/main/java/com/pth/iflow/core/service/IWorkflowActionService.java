@@ -8,8 +8,8 @@ public interface IWorkflowActionService {
 
   public WorkflowAction save(WorkflowAction model);
 
-  public WorkflowAction getById(Long id);
+  public WorkflowAction getByIdentity(String identity);
 
-  public List<WorkflowAction> getListByIdWorkflowId(final Long id);
+  public List<WorkflowAction> getListByIdWorkflowIdentity(final String identity);
 
 }

@@ -1,11 +1,10 @@
 package com.pth.iflow.workflow.models;
 
-import com.pth.iflow.common.edo.models.base.DataModelBase;
+import com.pth.iflow.common.edo.models.helper.IdentityModel;
 
-public class WorkflowTypeStep extends DataModelBase {
+public class WorkflowTypeStep extends IdentityModel {
 
-  private Long    id;
-  private Long    workflowTypeId;
+  private String  identity;
   private String  title;
   private Integer stepIndex;
   private String  viewName;
@@ -15,20 +14,13 @@ public class WorkflowTypeStep extends DataModelBase {
   private Integer version;
 
   @Override
-  public Long getId() {
-    return this.id;
+  public String getIdentity() {
+    return identity;
   }
 
-  public void setId(final Long id) {
-    this.id = id;
-  }
-
-  public Long getWorkflowTypeId() {
-    return this.workflowTypeId;
-  }
-
-  public void setWorkflowTypeId(final Long workflowTypeId) {
-    this.workflowTypeId = workflowTypeId;
+  @Override
+  public void setIdentity(final String identity) {
+    this.identity = identity;
   }
 
   public String getTitle() {
@@ -77,26 +69,12 @@ public class WorkflowTypeStep extends DataModelBase {
     this.status = status;
   }
 
-  @Override
   public Integer getVersion() {
     return this.version;
   }
 
-  @Override
   public void setVersion(final Integer version) {
     this.version = version;
-  }
-
-  public boolean isAfterStep(final WorkflowTypeStep other) {
-    return this.stepIndex > other.getStepIndex();
-  }
-
-  public boolean isBeforeStep(final WorkflowTypeStep other) {
-    return this.stepIndex < other.getStepIndex();
-  }
-
-  public boolean isTheSameStep(final WorkflowTypeStep other) {
-    return this.stepIndex == other.getStepIndex();
   }
 
   public Integer getExpireDays() {

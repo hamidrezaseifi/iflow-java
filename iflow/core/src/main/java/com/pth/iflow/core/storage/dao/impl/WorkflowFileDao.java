@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -13,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pth.iflow.core.model.WorkflowFile;
 import com.pth.iflow.core.model.WorkflowFileVersion;
+import com.pth.iflow.core.storage.dao.IUserDao;
 import com.pth.iflow.core.storage.dao.IWorkflowFileDao;
 import com.pth.iflow.core.storage.dao.IWorkflowFileVersionDao;
 import com.pth.iflow.core.storage.dao.basic.DaoBasicClass;
@@ -22,6 +25,9 @@ import com.pth.iflow.core.storage.dao.utils.SqlUtils;
 @Transactional
 @Repository
 public class WorkflowFileDao extends DaoBasicClass<WorkflowFile> implements IWorkflowFileDao {
+
+  @Autowired
+  private IUserDao                userDao;
 
   @Autowired
   private IWorkflowFileVersionDao workflowFileVersionDao;
@@ -39,7 +45,12 @@ public class WorkflowFileDao extends DaoBasicClass<WorkflowFile> implements IWor
   }
 
   @Override
-  public List<WorkflowFile> getListByIdList(final List<Long> idList) throws IFlowStorageException {
+  public WorkflowFile getByIdentity(final String identity) throws IFlowStorageException {
+    return getModelByIdentity(identity, "SELECT * FROM workflow_files where identity=?", "WorkflowFile");
+  }
+
+  @Override
+  public List<WorkflowFile> getListByIdList(final Set<Long> idList) throws IFlowStorageException {
     final List<WorkflowFile> list = new ArrayList<>();
 
     for (final Long wId : idList) {
@@ -53,6 +64,7 @@ public class WorkflowFileDao extends DaoBasicClass<WorkflowFile> implements IWor
     final WorkflowFile model = new WorkflowFile();
 
     model.setId(rs.getLong("id"));
+    model.setIdentity(rs.getString("identity"));
     model.setTitle(rs.getString("title"));
     model.setExtention(rs.getString("extention"));
     model.setActiveFilePath(rs.getString("active_filepath"));
@@ -62,7 +74,7 @@ public class WorkflowFileDao extends DaoBasicClass<WorkflowFile> implements IWor
     model.setVersion(rs.getInt("version"));
     model.setComments(rs.getString("comments"));
     model.setActiveFileVersion(rs.getInt("active_version"));
-    model.setCreatedBy(rs.getLong("created_by"));
+    model.setCreatedByIdentity(userDao.getById(rs.getLong("created_by")).getIdentity());
     model.setWorkflowId(rs.getLong("workflow_id"));
 
     return model;
@@ -71,8 +83,18 @@ public class WorkflowFileDao extends DaoBasicClass<WorkflowFile> implements IWor
   @Override
   public List<WorkflowFile> getListByWorkflowId(final Long id) throws IFlowStorageException {
 
-    final List<Long> idList = this.getModelIdListById(id, "SELECT * FROM workflow_files where workflow_id=?", "WorkflowFile", "id");
-    final List<WorkflowFile> list = this.getListByIdList(idList);
+    final List<WorkflowFile> list = this.getModelListById(id, "SELECT * FROM workflow_files where workflow_id=?", "WorkflowFile");
+
+    return list;
+
+  }
+
+  @Override
+  public List<WorkflowFile> getListByWorkflowIdentity(final String workflowIdentity) throws IFlowStorageException {
+
+    final List<WorkflowFile> list = this.getModelListByIdentity(workflowIdentity,
+        "SELECT workflow_files.* FROM workflow_files inner join workflow on workflow.id=workflow_files.workflow_id where workflow.identity=?",
+        "WorkflowFile");
 
     return list;
 
@@ -80,8 +102,8 @@ public class WorkflowFileDao extends DaoBasicClass<WorkflowFile> implements IWor
 
   @Override
   public WorkflowFile create(final WorkflowFile workflow, final boolean withTransaction) throws IFlowStorageException {
-    final String sql = "INSERT INTO workflow_files (workflow_id, title, extention, active_filepath, active_version, comments, created_by, version, status)"
-        + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    final String sql = "INSERT INTO workflow_files (identity, workflow_id, title, extention, active_filepath, active_version, comments, created_by, version, status)"
+        + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     final TransactionStatus transactionStatus = this.startTransaction(withTransaction);
     try {
@@ -101,7 +123,7 @@ public class WorkflowFileDao extends DaoBasicClass<WorkflowFile> implements IWor
   @Override
   public WorkflowFile update(final WorkflowFile workflowFile, final boolean withTransaction) throws IFlowStorageException {
     final String sql = "UPDATE workflow_files SET workflow_id = ?, title = ?, extention = ?, active_filepath = ?, active_version = ?, comments = ?,"
-        + " created_by = ?, version = ?, status = ? WHERE id = ?";
+        + " version = ?, status = ? WHERE id = ?";
 
     final TransactionStatus transactionStatus = this.startTransaction(withTransaction);
     try {
@@ -128,6 +150,9 @@ public class WorkflowFileDao extends DaoBasicClass<WorkflowFile> implements IWor
     for (final WorkflowFileVersion model : workflowFile.getFileVersions()) {
 
       model.setWorkflowFileId(workflowFileId);
+      if (model.getCreatedBy() == null) {
+        model.setCreatedBy(userDao.getByEmail(model.getCreatedByIdentity()));
+      }
       resultList.add(this.workflowFileVersionDao.create(model, false));
 
     }
@@ -139,15 +164,16 @@ public class WorkflowFileDao extends DaoBasicClass<WorkflowFile> implements IWor
   @Override
   protected PreparedStatement prepareInsertPreparedStatement(final WorkflowFile model, final PreparedStatement ps)
       throws SQLException {
-    ps.setLong(1, model.getWorkflowId());
-    ps.setString(2, model.getTitle());
-    ps.setString(3, model.getExtention());
-    ps.setString(4, model.getActiveFilePath());
-    ps.setInt(5, model.getActiveFileVersion());
-    ps.setString(6, model.getComments());
-    ps.setLong(7, model.getCreatedBy());
-    ps.setInt(8, model.getVersion());
-    ps.setInt(9, model.getStatus());
+    ps.setString(1, model.getIdentity());
+    ps.setLong(2, model.getWorkflowId());
+    ps.setString(3, model.getTitle());
+    ps.setString(4, model.getExtention());
+    ps.setString(5, model.getActiveFilePath());
+    ps.setInt(6, model.getActiveFileVersion());
+    ps.setString(7, model.getComments());
+    ps.setLong(8, userDao.getByEmail(model.getCreatedByIdentity()).getId());
+    ps.setInt(9, model.getVersion());
+    ps.setInt(10, model.getStatus());
 
     return ps;
   }
@@ -161,10 +187,9 @@ public class WorkflowFileDao extends DaoBasicClass<WorkflowFile> implements IWor
     ps.setString(4, model.getActiveFilePath());
     ps.setInt(5, model.getActiveFileVersion());
     ps.setString(6, model.getComments());
-    ps.setLong(7, model.getCreatedBy());
-    ps.setInt(8, model.getVersion());
-    ps.setInt(9, model.getStatus());
-    ps.setLong(10, model.getId());
+    ps.setInt(7, model.getVersion());
+    ps.setInt(8, model.getStatus());
+    ps.setLong(9, model.getId());
 
     return ps;
   }
@@ -187,6 +212,14 @@ public class WorkflowFileDao extends DaoBasicClass<WorkflowFile> implements IWor
       this.deleteModel(workflowFile.getId(), "WorkflowFile", "Delete from workflow_files where id=?", withTransaction, false);
     }
 
+  }
+
+  @Override
+  protected String generateIdentity(final WorkflowFile model) {
+
+    final Random rand = new Random();
+    return String.format("w%sf%s-%s", identityLongToHex(model.getWorkflowId()), identityLongToHex(System.currentTimeMillis()),
+        identityIntToHex(rand.nextInt(1000000), 6));
   }
 
 }

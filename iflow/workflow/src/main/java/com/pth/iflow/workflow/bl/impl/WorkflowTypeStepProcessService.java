@@ -2,6 +2,7 @@ package com.pth.iflow.workflow.bl.impl;
 
 import java.net.MalformedURLException;
 import java.util.List;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,34 +32,34 @@ public class WorkflowTypeStepProcessService implements IWorkflowTypeStepProcessS
   }
 
   @Override
-  public WorkflowTypeStep getById(final Long id, final String token)
+  public WorkflowTypeStep getByIdentity(final String identity, final String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    logger.debug("Request workflow-step data for id {}", id);
+    logger.debug("Request workflow-step data for id {}", identity);
 
     this.tokenValidator.isTokenValid(token);
 
-    return this.workflowTypeStepDataService.getById(id, token);
+    return this.workflowTypeStepDataService.getByIdentity(identity, token);
   }
 
   @Override
-  public List<WorkflowTypeStep> getListByWorkflowId(final Long workflowId, final String token)
+  public List<WorkflowTypeStep> getListByWorkflowIdentity(final String workflowIdentity, final String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
-    logger.debug("Request workflow-step list for workflow id {}", workflowId);
+    logger.debug("Request workflow-step list for workflow id {}", workflowIdentity);
 
     this.tokenValidator.isTokenValid(token);
 
-    return this.workflowTypeStepDataService.getListByWorkflowId(workflowId, token);
+    return this.workflowTypeStepDataService.getListByWorkflowIdentity(workflowIdentity, token);
   }
 
   @Override
-  public List<WorkflowTypeStep> getListByIdList(final List<Long> idList, final String token)
+  public List<WorkflowTypeStep> getListByIdentityList(final Set<String> identityList, final String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
-    logger.debug("Request workflow-step list for id list {}", idList);
+    logger.debug("Request workflow-step list for id list");
 
     this.tokenValidator.isTokenValid(token);
 
-    return this.workflowTypeStepDataService.getListByIdList(idList, token);
+    return this.workflowTypeStepDataService.getListByIdentityList(identityList, token);
   }
 
 }

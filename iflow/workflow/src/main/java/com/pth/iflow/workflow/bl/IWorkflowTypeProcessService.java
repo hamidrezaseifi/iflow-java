@@ -2,6 +2,7 @@ package com.pth.iflow.workflow.bl;
 
 import java.net.MalformedURLException;
 import java.util.List;
+import java.util.Set;
 
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
@@ -10,15 +11,15 @@ import com.pth.iflow.workflow.models.WorkflowTypeStep;
 
 public interface IWorkflowTypeProcessService {
 
-  public WorkflowType getById(Long id, final String token)
+  public WorkflowType getByIdentity(String identity, final String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  public List<WorkflowType> getListByIdCompanyId(final Long id, final String token)
+  public List<WorkflowType> getListByCompanyIdentity(String identity, final String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  public List<WorkflowTypeStep> getStepsById(final Long id, final String token)
+  public List<WorkflowTypeStep> getStepsByIdentity(String identity, final String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  public List<WorkflowType> getListByIdList(final List<Long> idList, final String token)
+  public List<WorkflowType> getListByIdentityList(final Set<String> identityList, final String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 }

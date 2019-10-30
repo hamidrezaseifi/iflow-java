@@ -3,16 +3,25 @@ package com.pth.iflow.core.storage.dao.impl;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.pth.iflow.core.model.Department;
+import com.pth.iflow.core.model.DepartmentGroup;
 import com.pth.iflow.core.model.User;
+import com.pth.iflow.core.model.UserGroup;
+import com.pth.iflow.core.storage.dao.IDepartmentDao;
+import com.pth.iflow.core.storage.dao.IDepartmentGroupDao;
 import com.pth.iflow.core.storage.dao.IUserDao;
+import com.pth.iflow.core.storage.dao.IUserGroupDao;
 import com.pth.iflow.core.storage.dao.basic.DaoBasicClass;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 import com.pth.iflow.core.storage.dao.utils.SqlUtils;
@@ -20,6 +29,15 @@ import com.pth.iflow.core.storage.dao.utils.SqlUtils;
 @Transactional
 @Repository
 public class UserDao extends DaoBasicClass<User> implements IUserDao {
+
+  @Autowired
+  private IDepartmentDao      departmentDao;
+
+  @Autowired
+  private IDepartmentGroupDao departmentGroupDao;
+
+  @Autowired
+  private IUserGroupDao       userGroupDao;
 
   public UserDao() {
 
@@ -30,6 +48,7 @@ public class UserDao extends DaoBasicClass<User> implements IUserDao {
     final User user = new User();
     user.setId(rs.getLong("id"));
     user.setCompanyId(rs.getLong("company_id"));
+    user.setCompanyIdentity(rs.getString("company_identity"));
     user.setEmail(rs.getString("email"));
     user.setBirthDate(rs.getDate("birthdate").toLocalDate());
     user.setFirstName(rs.getString("firstname"));
@@ -39,9 +58,10 @@ public class UserDao extends DaoBasicClass<User> implements IUserDao {
     user.setUpdatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("updated_at")));
     user.setVersion(rs.getInt("version"));
     user.setPermission(rs.getInt("permission"));
-    user.setGroups(this.getGroupIdListById(user.getId()));
-    user.setDepartments(this.getDepartmentIdListIdById(user.getId()));
-    user.setDeputies(this.getDeputyIdListById(user.getId()));
+    user.setGroups(this.getGroupIdentityListById(user.getId()));
+    user.setDepartments(this.getDepartmentIdentityListById(user.getId()));
+    user.setDepartmentGroups(this.getDepartmentGroupIdentityListById(user.getId()));
+    user.setDeputies(this.getDeputyIdentityListById(user.getId()));
     user.setRoles(this.getRoleListById(user.getId()));
 
     return user;
@@ -49,46 +69,60 @@ public class UserDao extends DaoBasicClass<User> implements IUserDao {
 
   @Override
   public User getById(final Long id) throws IFlowStorageException {
-    return this.getModelById(id, "SELECT * FROM users where id=?", "User");
+    return this.getModelById(id,
+        "SELECT users.*,companies.identity as company_identity FROM users inner join companies on users.company_id=companies.id where users.id=?",
+        "User");
   }
 
   @Override
-  public List<User> getListByIdList(final List<Long> idList) throws IFlowStorageException {
-    String sqlSelect = "SELECT * FROM users where id in (";
+  public List<User> getListByIdentityList(final Set<String> idList) throws IFlowStorageException {
+    String sqlSelect = "SELECT users.*,companies.identity as company_identity FROM users inner join companies on users.company_id=companies.id where users.email in (";
     sqlSelect += StringUtils.repeat("?, ", idList.size());
 
     sqlSelect = sqlSelect.trim();
     sqlSelect = sqlSelect.endsWith(",") ? sqlSelect.substring(0, sqlSelect.length() - 1) : sqlSelect;
     sqlSelect += ")";
 
-    return this.getModelListByIdList(idList, sqlSelect, "User");
+    return this.getModelListByIdentityList(idList, sqlSelect, "User");
   }
 
-  private List<Long> getDeputyIdListById(final Long id) throws IFlowStorageException {
+  private Set<String> getDeputyIdentityListById(final Long id) throws IFlowStorageException {
 
-    return this.getIdListById(id, "SELECT * FROM user_deputy where user_id=?", "deputy_id", "User Deputies");
+    return this.getIdentityListById(id,
+        "SELECT email FROM user_deputy inner join users on user_deputy.deputy_id=users.id  where user_id=?", "email", "User Deputies");
   }
 
-  private List<Long> getGroupIdListById(final Long id) throws IFlowStorageException {
+  private Set<String> getGroupIdentityListById(final Long id) throws IFlowStorageException {
 
-    return this.getIdListById(id, "SELECT * FROM user_usergroup where user_id=?", "user_group", "User Groups");
+    return this.getIdentityListById(id,
+        "SELECT identity FROM user_usergroup inner join user_group on user_usergroup.user_group=user_group.id   where user_id=?",
+        "identity", "User Groups");
   }
 
-  private List<Long> getDepartmentIdListIdById(final Long id) throws IFlowStorageException {
+  private Set<String> getDepartmentIdentityListById(final Long id) throws IFlowStorageException {
 
-    return this.getIdListById(id, "SELECT * FROM user_departments where user_id=?", "department_id", "User Departments");
+    return this.getIdentityListById(id,
+        "SELECT identity FROM user_departments inner join departments on user_departments.department_id=departments.id  where user_departments.user_id=?",
+        "identity", "User Departments");
   }
 
-  private List<Integer> getRoleListById(final Long id) throws IFlowStorageException {
+  private Set<String> getDepartmentGroupIdentityListById(final Long id) throws IFlowStorageException {
 
-    return this.getIdListById(id, "SELECT * FROM user_roles where user_id=?", "role", "User Roles").stream().map(r -> r.intValue())
-        .collect(Collectors.toList());
+    return this.getIdentityListById(id,
+        "SELECT identity FROM user_department_groups inner join departments_group on user_department_groups.department_group_id=departments_group.id  where user_department_groups.user_id=?",
+        "identity", "User Department Groups");
+  }
+
+  private Set<Integer> getRoleListById(final Long id) throws IFlowStorageException {
+
+    return new HashSet<>(this.getIdListById(id, "SELECT * FROM user_roles where user_id=?", "role", "User Roles").stream()
+        .map(r -> r.intValue()).collect(Collectors.toSet()));
   }
 
   @Override
   public User getByEmail(final String email) throws IFlowStorageException {
     logger.info("Dao Read User by email: " + email);
-    final String sqlSelect = "SELECT *  FROM users where email=?";
+    final String sqlSelect = "SELECT users.*,companies.identity as company_identity FROM users inner join companies on users.company_id=companies.id where email=?";
 
     User user;
 
@@ -156,6 +190,8 @@ public class UserDao extends DaoBasicClass<User> implements IUserDao {
 
       this.createUserDepartments(model, createdId);
 
+      this.createUserDepartmentGroups(model, createdId);
+
       this.createUserDeputies(model, createdId);
 
       this.createUserRoles(model, createdId);
@@ -176,11 +212,13 @@ public class UserDao extends DaoBasicClass<User> implements IUserDao {
 
     final String insSql = "INSERT INTO user_usergroup (user_id, user_group) VALUES (?, ?)";
 
-    for (final Long groupId : model.getGroups()) {
+    for (final String groupIdentity : model.getGroups()) {
+      final UserGroup group = userGroupDao.getByIdentity(groupIdentity);
+
       this.jdbcTemplate.update(con -> {
         final PreparedStatement ps = con.prepareStatement(insSql);
         ps.setLong(1, userId);
-        ps.setLong(2, groupId);
+        ps.setLong(2, group.getId());
         return ps;
       });
 
@@ -193,11 +231,34 @@ public class UserDao extends DaoBasicClass<User> implements IUserDao {
 
     final String insSql = "INSERT INTO user_departments (user_id, department_id) VALUES (?, ?)";
 
-    for (final Long groupId : model.getGroups()) {
+    for (final String departmentIdentity : model.getDepartments()) {
+
+      final Department department = departmentDao.getByIdentity(departmentIdentity);
+
       this.jdbcTemplate.update(con -> {
         final PreparedStatement ps = con.prepareStatement(insSql);
         ps.setLong(1, userId);
-        ps.setLong(2, groupId);
+        ps.setLong(2, department.getId());
+        return ps;
+      });
+
+    }
+  }
+
+  private void createUserDepartmentGroups(final User model, final Long userId) {
+
+    this.deleteUserDepartmentGroups(userId);
+
+    final String insSql = "INSERT INTO user_department_groups (user_id, department_group_id) VALUES (?, ?)";
+
+    for (final String departmentIdentity : model.getDepartmentGroups()) {
+
+      final DepartmentGroup departmentGroup = departmentGroupDao.getByIdentity(departmentIdentity);
+
+      this.jdbcTemplate.update(con -> {
+        final PreparedStatement ps = con.prepareStatement(insSql);
+        ps.setLong(1, userId);
+        ps.setLong(2, departmentGroup.getId());
         return ps;
       });
 
@@ -210,11 +271,13 @@ public class UserDao extends DaoBasicClass<User> implements IUserDao {
 
     final String insSql = "INSERT INTO user_deputy (user_id, deputy_id) VALUES (?, ?)";
 
-    for (final Long groupId : model.getGroups()) {
+    for (final String email : model.getDeputies()) {
       this.jdbcTemplate.update(con -> {
         final PreparedStatement ps = con.prepareStatement(insSql);
+        final User deputy = getByEmail(email);
+
         ps.setLong(1, userId);
-        ps.setLong(2, groupId);
+        ps.setLong(2, deputy.getId());
         return ps;
       });
 
@@ -248,6 +311,8 @@ public class UserDao extends DaoBasicClass<User> implements IUserDao {
     this.createUserGroups(model, model.getId());
 
     this.createUserDepartments(model, model.getId());
+
+    this.createUserDepartmentGroups(model, model.getId());
 
     this.createUserDeputies(model, model.getId());
 
@@ -291,15 +356,26 @@ public class UserDao extends DaoBasicClass<User> implements IUserDao {
     this.deleteModel(id, "User Departments", "Delete FROM user_departments where user_id=?", false, false);
   }
 
+  private void deleteUserDepartmentGroups(final Long id) {
+    this.deleteModel(id, "User DepartmentGroups", "Delete FROM user_department_groups where user_id=?", false, false);
+  }
+
   private void deleteUserGroups(final Long id) {
     this.deleteModel(id, "User Groups", "Delete FROM user_usergroup where user_id=?", false, false);
   }
 
   @Override
-  public List<User> getListByCompanyId(final Long id) throws IFlowStorageException {
-    final List<Long> idList = this.getIdListById(id, "SELECT * FROM users where company_id=?", "id", "User");
+  public List<User> getListByCompanyIdentity(final String identity) throws IFlowStorageException {
+    final List<User> list = this.getModelListByIdentity(identity,
+        "SELECT users.*,companies.identity company_identity FROM users inner join companies on users.company_id=companies.id where companies.identity=?",
+        "User");
 
-    return this.getListByIdList(idList);
+    return list;
+  }
+
+  @Override
+  protected String generateIdentity(final User model) {
+    return null;
   }
 
 }

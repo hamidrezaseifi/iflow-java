@@ -4,6 +4,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
+import java.util.Set;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -31,7 +32,7 @@ public class WorkflowTypeServiceTest extends TestDataProducer {
   private IWorkflowTypeService workflowTypeService;
 
   @MockBean
-  private IWorkflowTypeDao workflowTypeDao;
+  private IWorkflowTypeDao     workflowTypeDao;
 
   @MockBean
   private IWorkflowTypeStepDao workflowTypeStepDao;
@@ -49,9 +50,9 @@ public class WorkflowTypeServiceTest extends TestDataProducer {
   public void testGetById() throws Exception {
 
     final WorkflowType workflowType = getTestWorkflowType();
-    when(this.workflowTypeDao.getById(any(Long.class))).thenReturn(workflowType);
+    when(this.workflowTypeDao.getByIdentity(any(String.class))).thenReturn(workflowType);
 
-    final WorkflowType resWorkflowType = this.workflowTypeService.getById(workflowType.getId());
+    final WorkflowType resWorkflowType = this.workflowTypeService.getByIdentity("identity");
 
     Assert.assertNotNull("Result workflow-type is not null!", resWorkflowType);
     Assert.assertEquals("Result workflow-type has id 1!", resWorkflowType.getId(), workflowType.getId());
@@ -64,11 +65,11 @@ public class WorkflowTypeServiceTest extends TestDataProducer {
   @Test
   public void testGetListByIdList() throws Exception {
 
-    final List<Long> idList = getTestWorkflowTypeIdList();
+    final Set<String> idList = getTestWorkflowTypeIdSet();
     final List<WorkflowType> list = getTestWorkflowTypeList();
-    when(this.workflowTypeDao.getListByIdList(any(List.class))).thenReturn(list);
+    when(this.workflowTypeDao.getListByIdentityList(any(Set.class))).thenReturn(list);
 
-    final List<WorkflowType> resList = this.workflowTypeService.getListByIdList(idList);
+    final List<WorkflowType> resList = this.workflowTypeService.getListByIdentityList(idList);
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());
@@ -79,9 +80,9 @@ public class WorkflowTypeServiceTest extends TestDataProducer {
   public void testGetListByIdCompanyId() throws Exception {
 
     final List<WorkflowType> list = getTestWorkflowTypeList();
-    when(this.workflowTypeDao.getListByCompanyId(any(Long.class))).thenReturn(list);
+    when(this.workflowTypeDao.getListByCompanyIdentity(any(String.class))).thenReturn(list);
 
-    final List<WorkflowType> resList = this.workflowTypeService.getListByIdCompanyId(1L);
+    final List<WorkflowType> resList = this.workflowTypeService.getListByIdCompanyId("identity");
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());
@@ -93,12 +94,10 @@ public class WorkflowTypeServiceTest extends TestDataProducer {
 
     final WorkflowType workflowType = getTestWorkflowType();
     final List<WorkflowTypeStep> list = getTestWorkflowTypeStepList();
-    final List<Long> idList = getTestWorkflowTypeIdList();
 
-    when(this.workflowTypeDao.getById(any(Long.class))).thenReturn(workflowType);
-    when(this.workflowTypeStepDao.getListByIdList(any(List.class))).thenReturn(list);
+    when(this.workflowTypeDao.getByIdentity(any(String.class))).thenReturn(workflowType);
 
-    final List<WorkflowTypeStep> resList = this.workflowTypeService.getStepsById(1L);
+    final List<WorkflowTypeStep> resList = this.workflowTypeService.getStepsByIdentity("identity");
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());

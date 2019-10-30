@@ -17,16 +17,18 @@ import com.pth.iflow.profile.model.UserAuthenticationSession;
 public class ProfileSessionManagerTest extends TestDataProducer {
 
   @Autowired
-  private ISessionManager sessionManager;
+  private ISessionManager           sessionManager;
 
-  private final String initialEmail = "valid-email";
+  private final String              validCompanyIdentity = "valid-company";
 
-  private UserAuthenticationSession initialSession = null;
+  private final String              initialEmail         = "valid-email";
+
+  private UserAuthenticationSession initialSession       = null;
 
   @Before
   public void setUp() throws Exception {
 
-    this.initialSession = this.sessionManager.addSession(this.initialEmail);
+    this.initialSession = this.sessionManager.addSession(this.initialEmail, this.validCompanyIdentity);
 
   }
 
@@ -40,21 +42,23 @@ public class ProfileSessionManagerTest extends TestDataProducer {
     final UserAuthenticationSession session = this.sessionManager.getBackendValidSession();
 
     Assert.assertNotNull("Result session is not null!", session);
-    Assert.assertEquals("Result session has the same session-id as initial!", session.getEmail(), this.sessionManager.getBackendValidEMail());
+    Assert.assertEquals("Result session has the same session-id as initial!", session.getUserIdentity(),
+        this.sessionManager.getBackendValidUserIdentity());
 
   }
 
   @Test
   public void testAddSession() throws Exception {
 
-    UserAuthenticationSession session = this.sessionManager.addSession(this.initialEmail);
+    UserAuthenticationSession session = this.sessionManager.addSession(this.initialEmail, this.validCompanyIdentity);
 
     Assert.assertNotNull("Result session is not null!", session);
-    Assert.assertEquals("Result session has the same session-id as initial!", session.getSessionid(), this.initialSession.getSessionid());
+    Assert.assertEquals("Result session has the same session-id as initial!", session.getSessionid(),
+        this.initialSession.getSessionid());
     Assert.assertEquals("Result session has the same token as initial!", session.getToken(), this.initialSession.getToken());
 
     final String newEmail = "newEmail" + String.valueOf(System.currentTimeMillis());
-    session = this.sessionManager.addSession(newEmail);
+    session = this.sessionManager.addSession(newEmail, this.validCompanyIdentity);
 
     Assert.assertNotNull("Result session is not null!", session);
     Assert.assertNotEquals("Result session has not the same session-id as initial!", session.getSessionid(),
@@ -67,9 +71,9 @@ public class ProfileSessionManagerTest extends TestDataProducer {
   public void testFindByEmail() throws Exception {
 
     final String newEmail1 = "newEmail" + String.valueOf(System.currentTimeMillis());
-    final UserAuthenticationSession session1 = this.sessionManager.addSession(newEmail1);
+    final UserAuthenticationSession session1 = this.sessionManager.addSession(newEmail1, this.validCompanyIdentity);
 
-    final UserAuthenticationSession session2 = this.sessionManager.findByEmail(newEmail1);
+    final UserAuthenticationSession session2 = this.sessionManager.findByUserIdentity(newEmail1);
 
     Assert.assertNotNull("Result session2 is not null!", session1);
     Assert.assertEquals("Result session has the same session-id as session1!", session1.getSessionid(), session2.getSessionid());
@@ -85,7 +89,7 @@ public class ProfileSessionManagerTest extends TestDataProducer {
   @Test
   public void testFindBySessionId() throws Exception {
     final String newEmail1 = "newEmail" + String.valueOf(System.currentTimeMillis());
-    final UserAuthenticationSession session1 = this.sessionManager.addSession(newEmail1);
+    final UserAuthenticationSession session1 = this.sessionManager.addSession(newEmail1, this.validCompanyIdentity);
 
     final UserAuthenticationSession session2 = this.sessionManager.findBySessionId(session1.getSessionid());
 
@@ -97,7 +101,7 @@ public class ProfileSessionManagerTest extends TestDataProducer {
   @Test
   public void testFindByToken() throws Exception {
     final String newEmail1 = "newEmail" + String.valueOf(System.currentTimeMillis());
-    final UserAuthenticationSession session1 = this.sessionManager.addSession(newEmail1);
+    final UserAuthenticationSession session1 = this.sessionManager.addSession(newEmail1, this.validCompanyIdentity);
 
     final UserAuthenticationSession session2 = this.sessionManager.findByToken(session1.getToken());
 
@@ -109,7 +113,7 @@ public class ProfileSessionManagerTest extends TestDataProducer {
   @Test
   public void testUpdateByToken() throws Exception {
     final String newEmail1 = "newEmail" + String.valueOf(System.currentTimeMillis());
-    final UserAuthenticationSession session1 = this.sessionManager.addSession(newEmail1);
+    final UserAuthenticationSession session1 = this.sessionManager.addSession(newEmail1, this.validCompanyIdentity);
 
     final UserAuthenticationSession session2 = this.sessionManager.updateByToken(session1.getToken());
 
@@ -118,12 +122,12 @@ public class ProfileSessionManagerTest extends TestDataProducer {
     Assert.assertEquals("Result session has the same token as session1!", session1.getToken(), session2.getToken());
     Assert.assertEquals("Result session has the same session-id as session1!", session1.getSessionid(), session2.getSessionid());
   }
-  
+
   @Test
   public void testRemoveSession() throws Exception {
-    
+
     String newEmail = "newEmail" + String.valueOf(System.currentTimeMillis());
-    UserAuthenticationSession session = this.sessionManager.addSession(newEmail);
+    UserAuthenticationSession session = this.sessionManager.addSession(newEmail, this.validCompanyIdentity);
 
     Assert.assertNotNull("Result session is not null!", session);
     Assert.assertNotEquals("Result session has not the same session-id as initial!", session.getSessionid(),
@@ -131,11 +135,11 @@ public class ProfileSessionManagerTest extends TestDataProducer {
     Assert.assertNotEquals("Result session has the same token as initial!", session.getToken(), this.initialSession.getToken());
 
     this.sessionManager.removeExpiredSession(session.getSessionid());
-    session = this.sessionManager.findByEmail(newEmail);
+    session = this.sessionManager.findByUserIdentity(newEmail);
     Assert.assertNull("Result session is nul means it is deleted!", session);
 
     newEmail = "newEmail-ses" + String.valueOf(System.currentTimeMillis());
-    session = this.sessionManager.addSession(newEmail);
+    session = this.sessionManager.addSession(newEmail, this.validCompanyIdentity);
 
     Assert.assertNotNull("Result session is not null!", session);
     Assert.assertNotEquals("Result session has not the same session-id as initial!", session.getSessionid(),
@@ -143,33 +147,33 @@ public class ProfileSessionManagerTest extends TestDataProducer {
     Assert.assertNotEquals("Result session has the same token as initial!", session.getToken(), this.initialSession.getToken());
 
     this.sessionManager.removeExpiredSession(session);
-    session = this.sessionManager.findByEmail(newEmail);
+    session = this.sessionManager.findByUserIdentity(newEmail);
     Assert.assertNull("Result session is nul means it is deleted!", session);
   }
-  
+
   @Test
   public void testRemoveExpiredSession() throws Exception {
-    
+
     String newEmail = "newEmail" + String.valueOf(System.currentTimeMillis());
-    UserAuthenticationSession session = this.sessionManager.addSession(newEmail);
+    UserAuthenticationSession session = this.sessionManager.addSession(newEmail, this.validCompanyIdentity);
 
     Assert.assertNotNull("Result session is not null!", session);
     Assert.assertNotEquals("Result session has not the same session-id as initial!", session.getSessionid(),
         this.initialSession.getSessionid());
     Assert.assertNotEquals("Result session has the same token as initial!", session.getToken(), this.initialSession.getToken());
-    
+
     Thread.sleep(5000);
-    
-    session = this.sessionManager.findByEmail(newEmail);
-    
+
+    session = this.sessionManager.findByUserIdentity(newEmail);
+
     Assert.assertNotNull("Result session is not null!", session);
     Assert.assertNotEquals("Result session has not the same session-id as initial!", session.getSessionid(),
         this.initialSession.getSessionid());
     Assert.assertNotEquals("Result session has the same token as initial!", session.getToken(), this.initialSession.getToken());
-    
+
     this.sessionManager.setSessionMaxAge(3);
     newEmail = "newEmail" + String.valueOf(System.currentTimeMillis());
-    session = this.sessionManager.addSession(newEmail);
+    session = this.sessionManager.addSession(newEmail, this.validCompanyIdentity);
 
     Assert.assertNotNull("Result session is not null!", session);
     Assert.assertNotEquals("Result session has not the same session-id as initial!", session.getSessionid(),
@@ -180,12 +184,12 @@ public class ProfileSessionManagerTest extends TestDataProducer {
 
     this.sessionManager.removeAllExpiredSessions();
 
-    session = this.sessionManager.findByEmail(newEmail);
+    session = this.sessionManager.findByUserIdentity(newEmail);
     Assert.assertNull("Result session is nul means it is deleted!", session);
 
     this.sessionManager.setSessionMaxAge(7200);
   }
-  
+
   @Test
   public void testUpdateUser() throws Exception {
 

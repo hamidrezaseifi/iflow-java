@@ -14,12 +14,8 @@ import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 @XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "WorkflowTypeStep" + IFlowJaxbDefinition.TYPE_PREFIX)
 public class WorkflowTypeStepEdo {
 
-  @XmlElement(name = "ID", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long    id;
-
-  @NotNull
-  @XmlElement(name = "WorkflowTypeId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long    workflowTypeId;
+  @XmlElement(name = "Identity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String  identity;
 
   @NotNull
   @XmlElement(name = "Title", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
@@ -49,20 +45,12 @@ public class WorkflowTypeStepEdo {
   @XmlElement(name = "ExpireDays", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer expireDays;
 
-  public Long getId() {
-    return this.id;
+  public String getIdentity() {
+    return this.identity;
   }
 
-  public void setId(final Long id) {
-    this.id = id;
-  }
-
-  public Long getWorkflowTypeId() {
-    return this.workflowTypeId;
-  }
-
-  public void setWorkflowTypeId(final Long workflowId) {
-    this.workflowTypeId = workflowId;
+  public void setIdentity(final String identity) {
+    this.identity = identity;
   }
 
   public String getTitle() {

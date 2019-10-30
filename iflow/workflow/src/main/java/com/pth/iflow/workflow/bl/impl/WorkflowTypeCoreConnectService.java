@@ -2,6 +2,7 @@ package com.pth.iflow.workflow.bl.impl;
 
 import java.net.MalformedURLException;
 import java.util.List;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,50 +38,50 @@ public class WorkflowTypeCoreConnectService implements IWorkflowTypeDataService 
   }
 
   @Override
-  public WorkflowType getById(final Long id, final String token)
+  public WorkflowType getByIdentity(final String identity, final String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    logger.debug("Request workflow data for id {}", id);
+    logger.debug("Request workflow data for id {}", identity);
 
     final WorkflowTypeEdo edo = this.restTemplate.callRestGet(
-        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.READ_WORKFLOWTYPE_BY_ID(id)), token, EModule.CORE,
-        WorkflowTypeEdo.class, true, id);
+        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.READ_WORKFLOWTYPE_BY_IDENTITY(identity)), token,
+        EModule.CORE, WorkflowTypeEdo.class, true);
 
     return WorkflowModelEdoMapper.fromEdo(edo);
   }
 
   @Override
-  public List<WorkflowType> getListByIdCompanyId(final Long id, final String token)
+  public List<WorkflowType> getListByCompanyIdentity(final String identity, final String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
-    logger.debug("Request workflow list for company id {}", id);
+    logger.debug("Request workflow list for company id {}", identity);
 
     final WorkflowTypeListEdo edoList = this.restTemplate.callRestGet(
-        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.READ_WORKFLOWTYPE_LIST_BY_COMPANY(id)), token, EModule.CORE,
-        WorkflowTypeListEdo.class, true, id);
+        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.READ_WORKFLOWTYPE_LIST_BY_COMPANY(identity)), token,
+        EModule.CORE, WorkflowTypeListEdo.class, true);
 
     return WorkflowModelEdoMapper.fromWorkflowTypeEdoList(edoList.getWorkflowTypes());
   }
 
   @Override
-  public List<WorkflowType> getListByIdList(final List<Long> idList, final String token)
+  public List<WorkflowType> getListByIdentityList(final Set<String> identityList, final String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
-    logger.debug("Request workflow list for id list {}", idList);
+    logger.debug("Request workflow list for id list");
 
     final WorkflowTypeListEdo edoList = this.restTemplate.callRestPost(
-        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.READ_WORKFLOWTYPE_LIST()), token, EModule.CORE, idList,
+        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.READ_WORKFLOWTYPE_LIST()), token, EModule.CORE, identityList,
         WorkflowTypeListEdo.class, true);
 
     return WorkflowModelEdoMapper.fromWorkflowTypeEdoList(edoList.getWorkflowTypes());
   }
 
   @Override
-  public List<WorkflowTypeStep> getStepsById(final Long id, final String token)
+  public List<WorkflowTypeStep> getStepsByIdentity(final String identity, final String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
-    logger.debug("Request workflow-step list for workflow id {}", id);
+    logger.debug("Request workflow-step list for workflow id {}", identity);
 
     final WorkflowTypeStepListEdo edoList = this.restTemplate.callRestGet(
-        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.READ_WORKFLOWTYPESTEP_LIST_BY_WORKFLOW(id)), token,
-        EModule.CORE, WorkflowTypeStepListEdo.class, true, id);
+        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.READ_WORKFLOWTYPESTEP_LIST_BY_WORKFLOW(identity)), token,
+        EModule.CORE, WorkflowTypeStepListEdo.class, true);
 
     return WorkflowModelEdoMapper.fromWorkflowTypeStepEdoList(edoList.getWorkflowTypeSteps());
   }

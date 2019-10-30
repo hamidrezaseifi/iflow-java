@@ -26,12 +26,12 @@ public class ValidateWorkflowTypeStepStrategyStep extends AbstractWorkflowSaveSt
 
     if (processingWorkflow.getCurrentStep() == null) {
 
-      this.setWorkflowCurrectStep(processingWorkflow, processingWorkflowType);
+      this.setWorkflowCurrentStep(processingWorkflow, processingWorkflowType);
     }
 
     if (processingWorkflow.getCurrentStep() == null) {
 
-      throw new IFlowCustomeException("Unknown processingWorkflow step id:" + processingWorkflow.getId(),
+      throw new IFlowCustomeException("Unknown processingWorkflow step identity:" + processingWorkflow.getIdentity(),
           EIFlowErrorType.UNKNOWN_WORKFLOW_TYPE_STEP);
     }
 
@@ -39,13 +39,13 @@ public class ValidateWorkflowTypeStepStrategyStep extends AbstractWorkflowSaveSt
 
   }
 
-  private void setWorkflowCurrectStep(final Workflow workflow, final WorkflowType workflowType) {
+  private void setWorkflowCurrentStep(final Workflow workflow, final WorkflowType workflowType) {
 
     if (workflow.isInitializing() || workflow.isOffering()) {
       final WorkflowTypeStep firstStep = this.getWorkflowSaveStrategy().findFirstStep(workflowType);
       if (firstStep != null) {
         workflow.setCurrentStep(firstStep);
-        workflow.setCurrentStepId(firstStep.getId());
+        workflow.setCurrentStepIdentity(firstStep.getIdentity());
       }
     }
 

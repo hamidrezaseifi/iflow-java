@@ -26,22 +26,22 @@ public class CollectAssignedUserIdListStep extends AbstractWorkflowSaveStrategyS
 
     final WorkflowSaveRequest processingWorkflowSaveRequest = this.getWorkflowSaveStrategy().getProcessingWorkflowSaveRequest();
 
-    final Set<Long> assignedUsers = new HashSet<>();
+    final Set<String> assignedUsers = new HashSet<>();
 
     for (final AssignItem assign : processingWorkflowSaveRequest.getAssigns()) {
 
       if (assign.getItemType() == EAssignType.USER) {
-        assignedUsers.add(assign.getItemId());
+        assignedUsers.add(assign.getItemIdentity());
       }
 
       if (assign.getItemType() == EAssignType.DEPARTMENT) {
-        final List<User> departmentUserIds = this.getWorkflowSaveStrategy().getDepartmentUserList(assign.getItemId());
-        assignedUsers.addAll(departmentUserIds.stream().map(u -> u.getId()).collect(Collectors.toSet()));
+        final List<User> departmentUserIds = this.getWorkflowSaveStrategy().getDepartmentUserList(assign.getItemIdentity());
+        assignedUsers.addAll(departmentUserIds.stream().map(u -> u.getIdentity()).collect(Collectors.toSet()));
       }
 
       if (assign.getItemType() == EAssignType.DEPARTMENTGROUP) {
-        final List<User> departmentUserIds = this.getWorkflowSaveStrategy().getDepartmentGroupUserList(assign.getItemId());
-        assignedUsers.addAll(departmentUserIds.stream().map(u -> u.getId()).collect(Collectors.toSet()));
+        final List<User> departmentUserIds = this.getWorkflowSaveStrategy().getDepartmentGroupUserList(assign.getItemIdentity());
+        assignedUsers.addAll(departmentUserIds.stream().map(u -> u.getIdentity()).collect(Collectors.toSet()));
       }
     }
 

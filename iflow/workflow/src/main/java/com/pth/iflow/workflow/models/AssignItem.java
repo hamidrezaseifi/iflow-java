@@ -4,25 +4,24 @@ import com.pth.iflow.common.enums.EAssignType;
 
 public class AssignItem {
 
-  private Long        itemId;
-
+  private String      itemIdentity;
   private EAssignType itemType;
 
   public AssignItem() {
 
   }
 
-  public AssignItem(final Long itemId, final EAssignType itemType) {
-    this.setItemId(itemId);
+  public AssignItem(final String itemIdentity, final EAssignType itemType) {
+    this.setItemIdentity(itemIdentity);
     this.setItemType(itemType);
   }
 
-  public Long getItemId() {
-    return this.itemId;
+  public String getItemIdentity() {
+    return itemIdentity;
   }
 
-  public void setItemId(final Long itemId) {
-    this.itemId = itemId;
+  public void setItemIdentity(final String itemIdentity) {
+    this.itemIdentity = itemIdentity;
   }
 
   public EAssignType getItemType() {

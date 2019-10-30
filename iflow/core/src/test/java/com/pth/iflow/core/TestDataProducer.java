@@ -2,9 +2,11 @@ package com.pth.iflow.core;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Set;
 
+import com.pth.iflow.common.enums.EWorkflowIdentity;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.enums.EWorkflowMessageType;
 import com.pth.iflow.common.enums.EWorkflowStatus;
@@ -12,6 +14,7 @@ import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
 import com.pth.iflow.core.model.Company;
 import com.pth.iflow.core.model.Department;
 import com.pth.iflow.core.model.DepartmentGroup;
+import com.pth.iflow.core.model.ProfileResponse;
 import com.pth.iflow.core.model.User;
 import com.pth.iflow.core.model.UserGroup;
 import com.pth.iflow.core.model.Workflow;
@@ -29,11 +32,18 @@ public class TestDataProducer {
     final Company company = new Company();
     company.setCompanyName("companyName");
     company.setId(1L);
-    company.setIdentifyid("identifyid");
+    company.setIdentity("identifyid");
     company.setStatus(1);
     company.setVersion(1);
 
     return company;
+  }
+
+  protected ProfileResponse getTestProfileResponse() {
+    final Company company = getTestCompany();
+    final User user = getTestUser();
+
+    return new ProfileResponse(user, company, getTestDepartmentList(), getTestUserGroupList(), "not-set");
   }
 
   protected User getTestUser() {
@@ -47,10 +57,11 @@ public class TestDataProducer {
     model.setStatus(1);
     model.setVersion(1);
     model.setPermission(1);
-    model.setDepartmentGroups(this.getTestDepartmentGroupIdList());
-    model.setDepartments(this.getTestDepartmentIdList());
-    model.setDeputies(this.getTestDeputiyIdList());
-    model.setGroups(this.getTestUserGroupIdList());
+    model.setDepartmentGroups(this.getTestDepartmentGroupIdSet());
+    model.setDepartments(this.getTestDepartmentIdSet());
+    model.setDeputies(this.getTestDeputiyIdSet());
+    model.setGroups(this.getTestUserGroupIdSet());
+    model.setCompanyIdentity("companyIdentity");
 
     return model;
   }
@@ -66,10 +77,10 @@ public class TestDataProducer {
     model.setStatus(1);
     model.setVersion(1);
     model.setPermission(1);
-    model.setDepartmentGroups(this.getTestDepartmentGroupIdList());
-    model.setDepartments(this.getTestDepartmentIdList());
-    model.setDeputies(this.getTestDeputiyIdList());
-    model.setGroups(this.getTestUserGroupIdList());
+    model.setDepartmentGroups(this.getTestDepartmentGroupIdSet());
+    model.setDepartments(this.getTestDepartmentIdSet());
+    model.setDeputies(this.getTestDeputiyIdSet());
+    model.setGroups(this.getTestUserGroupIdSet());
 
     return model;
   }
@@ -84,10 +95,10 @@ public class TestDataProducer {
     model.setStatus(1);
     model.setVersion(1);
     model.setPermission(1);
-    model.setDepartmentGroups(this.getTestDepartmentGroupIdList());
-    model.setDepartments(this.getTestDepartmentIdList());
-    model.setDeputies(this.getTestDeputiyIdList());
-    model.setGroups(this.getTestUserGroupIdList());
+    model.setDepartmentGroups(this.getTestDepartmentGroupIdSet());
+    model.setDepartments(this.getTestDepartmentIdSet());
+    model.setDeputies(this.getTestDeputiyIdSet());
+    model.setGroups(this.getTestUserGroupIdSet());
 
     return model;
   }
@@ -107,6 +118,7 @@ public class TestDataProducer {
     model.setStatus(1);
     model.setVersion(1);
     model.setDepartmentGroups(this.getTestDepartmentGroupList());
+    model.setIdentity("dep-1");
 
     return model;
   }
@@ -119,6 +131,7 @@ public class TestDataProducer {
     model.setStatus(1);
     model.setVersion(1);
     model.setDepartmentGroups(this.getTestDepartmentGroupList());
+    model.setIdentity("det-1");
 
     return model;
   }
@@ -137,6 +150,7 @@ public class TestDataProducer {
     model.setTitle("utest title");
     model.setStatus(1);
     model.setVersion(1);
+    model.setIdentity("depgroup-1");
 
     return model;
   }
@@ -148,6 +162,7 @@ public class TestDataProducer {
     model.setTitle(title);
     model.setStatus(1);
     model.setVersion(1);
+    model.setIdentity("depgroup-1");
 
     return model;
   }
@@ -166,6 +181,8 @@ public class TestDataProducer {
     model.setTitle("utest title");
     model.setStatus(1);
     model.setVersion(1);
+    model.setIdentity("usergroup-1");
+    model.setCompanyIdentity("companyIdentity");
 
     return model;
   }
@@ -177,6 +194,7 @@ public class TestDataProducer {
     model.setTitle(title);
     model.setStatus(1);
     model.setVersion(1);
+    model.setIdentity("usergroup-" + id);
 
     return model;
   }
@@ -190,14 +208,20 @@ public class TestDataProducer {
 
   protected Workflow getTestWorkflow(final Long Id) {
     final Workflow model = new Workflow();
-    model.setWorkflowTypeId(1L);
+    model.setWorkflowType(getTestWorkflowType());
+    model.setWorkflowTypeIdentity(model.getWorkflowType().getIdentity());
     model.setId(Id);
+    model.setIdentity(EWorkflowIdentity.NOT_SET.getName());
     model.setStatus(EWorkflowStatus.INITIALIZE.getValue().intValue());
     model.setVersion(1);
     model.setComments("comments");
-    model.setController(1L);
-    model.setCurrentStepId(1L);
-    model.setCreatedBy(1L);
+    model.setIdentity("workflow-1");
+    model.setController(getTestUser(1L, "fname", "lname", "email1"));
+    model.setCurrentStep(getTestWorkflowTypeStep());
+    model.setCreatedBy(getTestUser(2L, "fname", "lname", "email2"));
+    model.setControllerIdentity(model.getController().getEmail());
+    model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
+    model.setCreatedByIdentity(model.getCreatedBy().getEmail());
 
     model.setActions(
         Arrays.asList(this.getTestWorkflowAction(1L, 1L), this.getTestWorkflowAction(2L, 2L), this.getTestWorkflowAction(3L, 3L)));
@@ -207,10 +231,11 @@ public class TestDataProducer {
     return model;
   }
 
-  protected WorkflowMessage getTestWorkflowMessage(final Long id, final String message) {
+  protected WorkflowMessage getTestWorkflowMessage(final Workflow workflow, final String message) {
     final WorkflowMessage model = new WorkflowMessage();
-    model.setWorkflowId(id);
+    model.setWorkflowIdentity(workflow.getIdentity());
     model.setId(null);
+    model.setWorkflow(workflow);
     model.setMessage(message);
     model.setStatus(EWorkflowMessageStatus.OFFERING);
     model.setVersion(1);
@@ -218,26 +243,38 @@ public class TestDataProducer {
     model.setMessageType(EWorkflowMessageType.OFFERING_WORKFLOW);
     model.setUserId(1L);
     model.setCreatedBy(1L);
-    model.setStepId(1L);
+    model.setCreatedByIdentity("createdByIdentity");
+    model.setStepIdentity("stepIdentity");
+    model.setUserIdentity("userIdentity");
+
+    model.setMessage("title test");
+    model.setStepId(workflow.getCurrentStep().getId());
 
     return model;
   }
 
-  protected List<WorkflowMessage> getTestWorkflowMessageList() {
-    return Arrays.asList(this.getTestWorkflowMessage(1L, "Message-1"), this.getTestWorkflowMessage(2L, "Message-2"),
-        this.getTestWorkflowMessage(3L, "Message-3"));
+  protected List<WorkflowMessage> getTestWorkflowMessageList(final Workflow workflow) {
+    return Arrays.asList(this.getTestWorkflowMessage(workflow, "Message-1"), this.getTestWorkflowMessage(workflow, "Message-2"),
+        this.getTestWorkflowMessage(workflow, "Message-3"));
   }
 
   protected Workflow getTestNewWorkflow() {
     final Workflow model = new Workflow();
-    model.setWorkflowTypeId(1L);
+    model.setWorkflowType(getTestWorkflowType());
+    model.setWorkflowTypeIdentity(model.getWorkflowType().getIdentity());
     model.setId(null);
+    model.setIdentity(EWorkflowIdentity.NOT_SET.getName());
     model.setStatus(EWorkflowStatus.INITIALIZE.getValue().intValue());
     model.setVersion(1);
     model.setComments("comments");
-    model.setController(1L);
-    model.setCurrentStepId(1L);
-    model.setCreatedBy(1L);
+    model.setIdentity("workflow-1");
+    model.setController(getTestUser(1L, "fname", "lname", "email1"));
+    model.setCurrentStep(getTestWorkflowTypeStep());
+    model.setCreatedBy(getTestUser(2L, "fname", "lname", "email2"));
+    model.setControllerIdentity(model.getController().getEmail());
+    model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
+    model.setCreatedByIdentity(model.getCreatedBy().getEmail());
+
     model.setActions(Arrays.asList(this.getTestNewWorkflowAction(), this.getTestNewWorkflowAction(), this.getTestNewWorkflowAction()));
     model.setFiles(Arrays.asList(this.getTestNewWorkflowFile(), this.getTestNewWorkflowFile(), this.getTestNewWorkflowFile()));
 
@@ -249,11 +286,6 @@ public class TestDataProducer {
     return Arrays.asList(this.getTestWorkflow(1L), this.getTestWorkflow(2L), this.getTestWorkflow(3L));
   }
 
-  protected List<Long> getTestWorkflowIdList() {
-
-    return this.getTestWorkflowList().stream().map(w -> w.getId()).collect(Collectors.toList());
-  }
-
   protected WorkflowAction getTestWorkflowAction(final Long Id, final Long workflowId) {
     final WorkflowAction model = new WorkflowAction();
     model.setWorkflowId(workflowId);
@@ -263,6 +295,9 @@ public class TestDataProducer {
     model.setCurrentStepId(1L);
     model.setComments("comments");
     model.setAssignTo(1L);
+    model.setIdentity("action-" + Id);
+    model.setAssignToIdentity("assignToIdentity");
+    model.setCurrentStepIdentity("currentStepIdIdentity");
 
     return model;
   }
@@ -281,6 +316,7 @@ public class TestDataProducer {
     model.setCurrentStepId(1L);
     model.setComments("comments");
     model.setAssignTo(1L);
+    model.setIdentity("");
 
     return model;
   }
@@ -291,12 +327,14 @@ public class TestDataProducer {
     model.setId(Id);
     model.setStatus(1);
     model.setVersion(1);
-    model.setCreatedBy(1L);
+    model.setCreatedByIdentity("user@iflow.de");
     model.setComments("comments");
     model.setActiveFilePath("filePath");
     model.setActiveFileVersion(1);
     model.setTitle("title " + Id);
     model.setExtention("ext");
+    model.setIdentity("file-1");
+
     model.setFileVersions(Arrays.asList(this.getTestWorkflowFileVersion(1L, 1, 1L), this.getTestWorkflowFileVersion(2L, 2, 1L),
         this.getTestWorkflowFileVersion(3L, 3, 1L)));
 
@@ -314,12 +352,14 @@ public class TestDataProducer {
     model.setId(null);
     model.setStatus(1);
     model.setVersion(1);
-    model.setCreatedBy(1L);
+    model.setCreatedByIdentity("user@iflow.de");
     model.setComments("comments");
     model.setActiveFilePath("filePath");
     model.setActiveFileVersion(1);
     model.setTitle("utest title new");
     model.setExtention("ext");
+    model.setIdentity("");
+
     model.setFileVersions(Arrays.asList(this.getTestNewWorkflowFileVersion(1), this.getTestNewWorkflowFileVersion(2),
         this.getTestNewWorkflowFileVersion(3)));
 
@@ -332,10 +372,11 @@ public class TestDataProducer {
     model.setId(Id);
     model.setStatus(1);
     model.setVersion(1);
-    model.setCreatedBy(1L);
+    model.setCreatedByIdentity("user@iflow.de");
     model.setComments("comments");
     model.setFilePath("filePath");
     model.setFileVersion(version);
+    model.setCreatedBy(getTestUser());
 
     return model;
   }
@@ -346,7 +387,7 @@ public class TestDataProducer {
     model.setId(null);
     model.setStatus(1);
     model.setVersion(1);
-    model.setCreatedBy(1L);
+    model.setCreatedByIdentity("user@iflow.de");
     model.setComments("comments");
     model.setFilePath("filePath");
     model.setFileVersion(version);
@@ -358,7 +399,7 @@ public class TestDataProducer {
     final WorkflowType model = new WorkflowType();
     model.setCompanyId(1L);
     model.setId(1L);
-    model.setBaseTypeId(1L);
+    model.setBaseTypeIdentity("baseTypeIdentity");
     model.setTitle("utest title");
     model.setStatus(1);
     model.setVersion(1);
@@ -366,9 +407,11 @@ public class TestDataProducer {
     model.setSendToController(true);
     model.setIncreaseStepAutomatic(true);
     model.setAllowAssign(true);
+    model.setIdentity("workflowtype-1");
     model.setSteps(Arrays.asList(this.getTestWorkflowTypeStep(1L, "step 1"), this.getTestWorkflowTypeStep(2L, "step 2"),
         this.getTestWorkflowTypeStep(3L, "step 3")));
     model.setComments("comments");
+    model.setCompanyIdentity("companyIdentity");
 
     return model;
   }
@@ -377,6 +420,7 @@ public class TestDataProducer {
     final WorkflowType model = new WorkflowType();
     model.setCompanyId(1L);
     model.setId(id);
+    model.setIdentity("workflowtype-1");
     model.setTitle(title);
     model.setStatus(1);
     model.setVersion(1);
@@ -401,6 +445,7 @@ public class TestDataProducer {
     final WorkflowTypeStep model = new WorkflowTypeStep();
     model.setWorkflowTypeId(1L);
     model.setId(1L);
+    model.setIdentity("workflowtypestep-1");
     model.setTitle("utest title");
     model.setStatus(1);
     model.setVersion(1);
@@ -414,6 +459,7 @@ public class TestDataProducer {
 
   protected WorkflowTypeStep getTestWorkflowTypeStep(final Long id, final String title) {
     final WorkflowTypeStep model = new WorkflowTypeStep();
+    model.setIdentity("workflowtypestep-1");
     model.setWorkflowTypeId(1L);
     model.setId(id);
     model.setTitle(title);
@@ -434,40 +480,45 @@ public class TestDataProducer {
     return list;
   }
 
-  protected List<Long> getTestUserGroupIdList() {
-    return Arrays.asList(1L, 2L, 3L);
+  protected Set<String> getTestUserGroupIdSet() {
+    return new HashSet<String>(Arrays.asList("Group-1", "Group-2", "Group-3"));
   }
 
-  protected List<Long> getTestDepartmentIdList() {
-    return Arrays.asList(1L, 2L, 3L);
+  protected Set<String> getTestDepartmentIdSet() {
+    return new HashSet<String>(Arrays.asList("dep1", "dep2", "dep3"));
   }
 
-  protected List<Long> getTestDepartmentGroupIdList() {
-    return Arrays.asList(1L, 2L, 3L);
+  protected Set<String> getTestDepartmentGroupIdSet() {
+    return new HashSet<String>(Arrays.asList("depgrp11", "depgrp11", "depgrp13"));
   }
 
-  protected List<Long> getTestWorkflowTypeIdList() {
-    return Arrays.asList(1L, 2L, 3L);
+  protected Set<String> getTestWorkflowTypeIdSet() {
+    return new HashSet<String>(Arrays.asList("threetasktype1", "singletasktype1", "invocetasktype1"));
   }
 
-  protected List<Long> getTestDeputiyIdList() {
-    return Arrays.asList(1L, 2L, 3L);
+  protected Set<String> getTestDeputiyIdSet() {
+    return new HashSet<String>(Arrays.asList("user@iflow.de", "user2@iflow.de", "user3@iflow.de"));
   }
 
-  protected List<Long> getTestUserIdList() {
-    return Arrays.asList(1L, 2L, 3L);
+  protected Set<String> getTestUserIdSet() {
+    return new HashSet<String>(Arrays.asList("user@iflow.de", "user2@iflow.de", "user3@iflow.de"));
   }
 
-  protected List<Long> getTestWorkflowTypeStepIdList() {
-    return Arrays.asList(1L, 2L, 3L);
+  protected Set<String> getTestWorkflowTypeStepIdSet() {
+    return new HashSet<String>(Arrays.asList("threetasktype1step1", "threetasktype1step2", "threetasktype1step3"));
+  }
+
+  protected Set<String> getTestWorkflowIdentityList() {
+
+    return new HashSet<String>(Arrays.asList("workflow-1", "workflow-2", "workflow-3"));
   }
 
   protected WorkflowSearchFilter getTestWorkflowSearchFilter() {
     final WorkflowSearchFilter filter = new WorkflowSearchFilter();
-    filter.setAssignedUserIdList(this.getTestUserIdList());
-    filter.setStatusList(Arrays.asList(1, 2, 3));
-    filter.setWorkflowStepeIdList(this.getTestWorkflowTypeStepIdList());
-    filter.setWorkflowTypeIdList(this.getTestWorkflowTypeIdList());
+    filter.setAssignedUserIdSet(this.getTestUserIdSet());
+    filter.setStatusSet(new HashSet<>(Arrays.asList(1, 2, 3)));
+    filter.setWorkflowStepeIdSet(this.getTestWorkflowTypeStepIdSet());
+    filter.setWorkflowTypeIdSet(this.getTestWorkflowTypeIdSet());
 
     return filter;
   }

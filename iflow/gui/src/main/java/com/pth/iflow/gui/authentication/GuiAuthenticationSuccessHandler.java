@@ -15,9 +15,9 @@ import org.springframework.stereotype.Component;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.configurations.GuiSecurityConfigurations;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
-import com.pth.iflow.gui.models.GuiCompanyProfile;
-import com.pth.iflow.gui.models.GuiProfileResponse;
-import com.pth.iflow.gui.models.GuiUser;
+import com.pth.iflow.gui.models.CompanyProfile;
+import com.pth.iflow.gui.models.ProfileResponse;
+import com.pth.iflow.gui.models.User;
 import com.pth.iflow.gui.services.IProfileAccess;
 import com.pth.iflow.gui.services.IWorkflowMessageHanlder;
 
@@ -44,7 +44,7 @@ public class GuiAuthenticationSuccessHandler extends SimpleUrlAuthenticationSucc
 
       String url = GuiSecurityConfigurations.ROOT_URL;
 
-      GuiProfileResponse profileResponse = null;
+      ProfileResponse profileResponse = null;
       try {
         profileResponse = this.profileValidator.readProfile(tbToken.getUsername(), tbToken.getToken());
       }
@@ -57,8 +57,8 @@ public class GuiAuthenticationSuccessHandler extends SimpleUrlAuthenticationSucc
       }
       else {
 
-        final GuiUser user = profileResponse.getUser();
-        final GuiCompanyProfile companyProfile = profileResponse.getCompanyProfile();
+        final User user = profileResponse.getUser();
+        final CompanyProfile companyProfile = profileResponse.getCompanyProfile();
 
         final GuiAuthenticationToken newToken = new GuiAuthenticationToken(tbToken.getUsername(),
                                                                            tbToken.getCompanyId(),

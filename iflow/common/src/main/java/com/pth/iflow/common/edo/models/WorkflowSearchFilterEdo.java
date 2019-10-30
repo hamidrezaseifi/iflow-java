@@ -1,7 +1,7 @@
 package com.pth.iflow.common.edo.models;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
 
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -19,71 +19,71 @@ import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 @XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "WorkflowSearchFilter" + IFlowJaxbDefinition.TYPE_PREFIX)
 public class WorkflowSearchFilterEdo {
 
-  @NotNull(message = "AssignedUserId must not be null")
-  @XmlElementWrapper(name = "AssignedUserIdList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  @NotNull(message = "AssignedUserIdentitySet must not be null")
+  @XmlElementWrapper(name = "AssignedUserIdentitySet", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "AssignedUserId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private List<Long>    assignedUserIdList  = new ArrayList<>();
+  private Set<String>  assignedUserIdentitySet  = new HashSet<>();
 
-  @NotNull(message = "StatusList must not be null")
-  @XmlElementWrapper(name = "StatusList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  @NotNull(message = "StatusSet must not be null")
+  @XmlElementWrapper(name = "StatusSet", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "Status", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private List<Integer> statusList          = new ArrayList<>();
+  private Set<Integer> statusSet                = new HashSet<>();
 
-  @NotNull(message = "WorkflowTypeIdList must not be null")
-  @XmlElementWrapper(name = "WorkflowTypeIdList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  @XmlElement(name = "WorkflowTypeId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private List<Long>    workflowTypeIdList  = new ArrayList<>();
+  @NotNull(message = "WorkflowTypeIdentitySet must not be null")
+  @XmlElementWrapper(name = "WorkflowTypeIdentitySet", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  @XmlElement(name = "WorkflowTypeIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private Set<String>  workflowTypeIdentitySet  = new HashSet<>();
 
-  @NotNull(message = "WorkflowStepIdList must not be null")
-  @XmlElementWrapper(name = "WorkflowStepIdList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  @XmlElement(name = "WorkflowStepId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private List<Long>    workflowStepeIdList = new ArrayList<>();
+  @NotNull(message = "WorkflowStepIdentitySet must not be null")
+  @XmlElementWrapper(name = "WorkflowStepIdentitySet", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  @XmlElement(name = "WorkflowStepIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private Set<String>  workflowStepeIdentitySet = new HashSet<>();
 
-  public List<Long> getAssignedUserIdList() {
-    return this.assignedUserIdList;
+  public Set<String> getAssignedUserIdentitySet() {
+    return this.assignedUserIdentitySet;
   }
 
   @JsonSetter
-  public void setAssignedUserIdList(final List<Long> assignedUserIdList) {
-    this.assignedUserIdList = new ArrayList<>();
-    if (assignedUserIdList != null) {
-      this.assignedUserIdList.addAll(assignedUserIdList);
+  public void setAssignedUserIdentitySet(final Set<String> assignedUserIdentitySet) {
+    this.assignedUserIdentitySet = new HashSet<>();
+    if (assignedUserIdentitySet != null) {
+      this.assignedUserIdentitySet.addAll(assignedUserIdentitySet);
     }
   }
 
-  public List<Integer> getStatusList() {
-    return this.statusList;
+  public Set<Integer> getStatusSet() {
+    return this.statusSet;
   }
 
   @JsonSetter
-  public void setStatusList(final List<Integer> statusList) {
-    this.statusList = new ArrayList<>();
-    if (statusList != null) {
-      this.statusList.addAll(statusList);
+  public void setStatusSet(final Set<Integer> statusSet) {
+    this.statusSet = new HashSet<>();
+    if (statusSet != null) {
+      this.statusSet.addAll(statusSet);
     }
   }
 
-  public List<Long> getWorkflowTypeIdList() {
-    return this.workflowTypeIdList;
+  public Set<String> getWorkflowTypeIdentitySet() {
+    return this.workflowTypeIdentitySet;
   }
 
   @JsonSetter
-  public void setWorkflowTypeIdList(final List<Long> workflowTypeIdList) {
-    this.workflowTypeIdList = new ArrayList<>();
-    if (workflowTypeIdList != null) {
-      this.workflowTypeIdList.addAll(workflowTypeIdList);
+  public void setWorkflowTypeIdentitySet(final Set<String> workflowTypeIdentitySet) {
+    this.workflowTypeIdentitySet = new HashSet<>();
+    if (workflowTypeIdentitySet != null) {
+      this.workflowTypeIdentitySet.addAll(workflowTypeIdentitySet);
     }
   }
 
-  public List<Long> getWorkflowStepeIdList() {
-    return this.workflowStepeIdList;
+  public Set<String> getWorkflowStepeIdentitySet() {
+    return this.workflowStepeIdentitySet;
   }
 
   @JsonSetter
-  public void setWorkflowStepeIdList(final List<Long> workflowStepeIdList) {
-    this.workflowStepeIdList = new ArrayList<>();
-    if (workflowStepeIdList != null) {
-      this.workflowStepeIdList.addAll(workflowStepeIdList);
+  public void setWorkflowStepeIdentitySet(final Set<String> workflowStepeIdentitySet) {
+    this.workflowStepeIdentitySet = new HashSet<>();
+    if (workflowStepeIdentitySet != null) {
+      this.workflowStepeIdentitySet.addAll(workflowStepeIdentitySet);
     }
   }
 

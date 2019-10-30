@@ -1,7 +1,6 @@
 package com.pth.iflow.workflow.bl.strategy.steps;
 
 import java.net.MalformedURLException;
-
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.strategy.strategies.AbstractWorkflowSaveStrategy;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
@@ -20,9 +19,8 @@ public class SaveWorkflowOfferForAssignedUseresInCoreStep extends AbstractWorkfl
 
     final Workflow processingWorkflow = this.getWorkflowSaveStrategy().getSavedSingleWorkflow();
 
-    for (final Long userId : this.getWorkflowSaveStrategy().getAssignedUsers()) {
-      this.getWorkflowSaveStrategy().createWorkflowMessage(processingWorkflow.getId(), processingWorkflow.getCurrentStepId(),
-          processingWorkflow.getCreatedBy(), userId);
+    for (final String userIdentity : this.getWorkflowSaveStrategy().getAssignedUsers()) {
+      this.getWorkflowSaveStrategy().createWorkflowMessage(processingWorkflow, userIdentity);
     }
 
   }

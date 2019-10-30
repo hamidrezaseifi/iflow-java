@@ -39,10 +39,9 @@ public class ProfileModelEdoMapper {
   public static CompanyEdo toEdo(final Company model) {
     final CompanyEdo edo = new CompanyEdo();
     edo.setCompanyName(model.getCompanyName());
-    edo.setIdentifyid(model.getIdentifyid());
+    edo.setIdentity(model.getIdentity());
     edo.setStatus(model.getStatus());
     edo.setVersion(model.getVersion());
-    edo.setId(model.getId());
 
     return edo;
   }
@@ -52,10 +51,9 @@ public class ProfileModelEdoMapper {
 
     final Company model = new Company();
     model.setCompanyName(edo.getCompanyName());
-    model.setIdentifyid(edo.getIdentifyid());
+    model.setIdentity(edo.getIdentity());
     model.setStatus(edo.getStatus());
     model.setVersion(edo.getVersion());
-    model.setId(edo.getId());
 
     return model;
   }
@@ -64,34 +62,32 @@ public class ProfileModelEdoMapper {
     validateCustomer(edo);
 
     final WorkflowMessage model = new WorkflowMessage();
-    model.setId(edo.getId());
     model.setStatus(EWorkflowMessageStatus.ofValue(edo.getStatus()));
-    model.setUserId(edo.getUserId());
-    model.setCreatedBy(edo.getCreatedBy());
+    model.setUserIdentity(edo.getUserIdentity());
+    model.setCreatedByIdentity(edo.getCreatedByIdentity());
     model.setVersion(edo.getVersion());
-    model.setWorkflowId(edo.getWorkflowId());
+    model.setWorkflowIdentity(edo.getWorkflowIdentity());
     model.setMessageType(EWorkflowMessageType.ofValue(edo.getMessageType()));
     model.setExpireDays(edo.getExpireDays());
     model.setMessage(edo.getMessage());
+    model.setStepIdentity(edo.getStepIdentity());
     model.setCreatedAt(edo.getCreatedAt());
-    model.setStepId(edo.getStepId());
 
     return model;
   }
 
   public static WorkflowMessageEdo toEdo(final WorkflowMessage model) {
     final WorkflowMessageEdo edo = new WorkflowMessageEdo();
-    edo.setId(model.getId());
     edo.setStatus(model.getStatus().getValue());
-    edo.setUserId(model.getUserId());
-    edo.setCreatedBy(model.getCreatedBy());
+    edo.setUserIdentity(model.getUserIdentity());
+    edo.setCreatedByIdentity(model.getCreatedByIdentity());
     edo.setVersion(model.getVersion());
-    edo.setWorkflowId(model.getWorkflowId());
+    edo.setWorkflowIdentity(model.getWorkflowIdentity());
     edo.setMessageType(model.getMessageType().getValue());
     edo.setExpireDays(model.getExpireDays());
     edo.setMessage(model.getMessage());
     edo.setCreatedAt(model.getCreatedAt());
-    edo.setStepId(model.getStepId());
+    edo.setStepIdentity(model.getStepIdentity());
 
     return edo;
   }
@@ -100,21 +96,35 @@ public class ProfileModelEdoMapper {
     final DepartmentEdo edo = new DepartmentEdo();
     edo.setTitle(model.getTitle());
     edo.setStatus(model.getStatus());
-    edo.setId(model.getId());
-    edo.setCompanyId(model.getCompanyId());
-    edo.setDepartmentGroups(ProfileModelEdoMapper.toDepartmentGroupEdoList(model.getDepartmentGroups()));
+    edo.setIdentity(model.getIdentity());
+    edo.setDepartmentGroups(toDepartmentGroupEdoList(model.getDepartmentGroups()));
     edo.setVersion(model.getVersion());
 
     return edo;
+  }
+
+  public static Department fromEdo(final DepartmentEdo edo) throws IFlowMessageConversionFailureException {
+    validateCustomer(edo);
+
+    final Department model = new Department();
+
+    model.setTitle(edo.getTitle());
+    model.setStatus(edo.getStatus());
+    model.setIdentity(edo.getIdentity());
+    model.setDepartmentGroups(fromDepartmentGroupEdoList(edo.getDepartmentGroups()));
+    model.setVersion(edo.getVersion());
+
+    return model;
   }
 
   public static UserAuthenticationResponseEdo toEdo(final UserAuthenticationSession model) {
     final UserAuthenticationResponseEdo edo = new UserAuthenticationResponseEdo();
     edo.setSessionid(model.getSessionid());
     edo.setToken(model.getToken());
-    edo.setEmail(model.getEmail());
+    edo.setUserIdentity(model.getUserIdentity());
     edo.setCreated(model.getCreatedLong());
     edo.setLastAccess(model.getLastAccessLong());
+    edo.setCompanyIdentity(model.getCompanyIdentity());
 
     return edo;
   }
@@ -138,27 +148,11 @@ public class ProfileModelEdoMapper {
     return user;
   }
 
-  public static Department fromEdo(final DepartmentEdo edo) throws IFlowMessageConversionFailureException {
-    validateCustomer(edo);
-
-    final Department model = new Department();
-
-    model.setTitle(edo.getTitle());
-    model.setStatus(edo.getStatus());
-    model.setId(edo.getId());
-    model.setCompanyId(edo.getCompanyId());
-    model.setDepartmentGroups(ProfileModelEdoMapper.fromDepartmentGroupEdoList(edo.getDepartmentGroups()));
-    model.setVersion(edo.getVersion());
-
-    return model;
-  }
-
   public static DepartmentGroupEdo toEdo(final DepartmentGroup model) {
     final DepartmentGroupEdo edo = new DepartmentGroupEdo();
     edo.setTitle(model.getTitle());
     edo.setStatus(model.getStatus());
-    edo.setId(model.getId());
-    edo.setDepartmentId(model.getDepartmentId());
+    edo.setIdentity(model.getIdentity());
     edo.setVersion(model.getVersion());
 
     return edo;
@@ -171,8 +165,7 @@ public class ProfileModelEdoMapper {
 
     model.setTitle(edo.getTitle());
     model.setStatus(edo.getStatus());
-    model.setId(edo.getId());
-    model.setDepartmentId(edo.getDepartmentId());
+    model.setIdentity(edo.getIdentity());
     model.setVersion(edo.getVersion());
 
     return model;
@@ -187,8 +180,7 @@ public class ProfileModelEdoMapper {
     edo.setVersion(model.getVersion());
     edo.setEmail(model.getEmail());
     edo.setBirthDate(model.getBirthDate());
-    edo.setId(model.getId());
-    edo.setCompanyId(model.getCompanyId());
+    edo.setCompanyIdentity(model.getCompanyIdentity());
     edo.setGroups(model.getGroups());
     edo.setDepartments(model.getDepartments());
     edo.setDepartmentGroups(model.getDepartmentGroups());
@@ -210,8 +202,7 @@ public class ProfileModelEdoMapper {
     model.setVersion(edo.getVersion());
     model.setEmail(edo.getEmail());
     model.setBirthDate(edo.getBirthDate());
-    model.setId(edo.getId());
-    model.setCompanyId(edo.getCompanyId());
+    model.setCompanyIdentity(edo.getCompanyIdentity());
     model.setGroups(edo.getGroups());
     model.setDepartments(edo.getDepartments());
     model.setDepartmentGroups(edo.getDepartmentGroups());
@@ -225,9 +216,10 @@ public class ProfileModelEdoMapper {
     final UserGroupEdo edo = new UserGroupEdo();
     edo.setTitle(model.getTitle());
     edo.setStatus(model.getStatus());
-    edo.setId(model.getId());
-    edo.setCompanyId(model.getCompanyId());
+    edo.setIdentity(model.getIdentity());
     edo.setVersion(model.getVersion());
+    edo.setIdentity(model.getIdentity());
+    edo.setCompanyIdentity(model.getCompanyIdentity());
 
     return edo;
   }
@@ -239,9 +231,10 @@ public class ProfileModelEdoMapper {
 
     model.setTitle(edo.getTitle());
     model.setStatus(edo.getStatus());
-    model.setId(edo.getId());
-    model.setCompanyId(edo.getCompanyId());
+    model.setIdentity(edo.getIdentity());
     model.setVersion(edo.getVersion());
+    model.setIdentity(edo.getIdentity());
+    model.setCompanyIdentity(edo.getCompanyIdentity());
 
     return model;
   }
@@ -356,6 +349,17 @@ public class ProfileModelEdoMapper {
 
   public static ProfileResponseEdo toEdo(final ProfileResponse model) {
     return new ProfileResponseEdo(toEdo(model.getUser()), toEdo(model.getCompanyProfile()), model.getSessionid());
+  }
+
+  public static ProfileResponse fromEdo(final ProfileResponseEdo edo) throws IFlowMessageConversionFailureException {
+    return new ProfileResponse(fromEdo(edo.getUser()), fromEdo(edo.getCompanyProfile()), edo.getSessionid());
+  }
+
+  private static CompanyProfile fromEdo(final CompanyProfileEdo edo) throws IFlowMessageConversionFailureException {
+    final CompanyProfile model = new CompanyProfile(fromEdo(edo.getCompany()), fromDepartmentEdoList(edo.getDepartments()),
+        fromUserGroupEdoList(edo.getUserGroups()));
+
+    return model;
   }
 
   public static List<User> fromUserEdoList(final List<UserEdo> edoList) throws IFlowMessageConversionFailureException {

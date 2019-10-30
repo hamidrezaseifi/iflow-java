@@ -10,14 +10,13 @@ public interface IWorkflowMessageService {
 
   public WorkflowMessage save(WorkflowMessage model) throws IFlowStorageException;
 
-  public void updateStatusByWorkflow(Long workflowId, Long stepId, EWorkflowMessageStatus status) throws IFlowStorageException;
+  public void updateStatusByWorkflow(String workflowIdentity, String stepIdentity, EWorkflowMessageStatus status)
+      throws IFlowStorageException;
 
-  public WorkflowMessage getById(Long id) throws IFlowStorageException;
+  public List<WorkflowMessage> getNotClosedNotExpiredListByUserEmail(final String email) throws IFlowStorageException;
 
-  public List<WorkflowMessage> getNotClosedNotExpiredListByUserId(final Long userId) throws IFlowStorageException;
+  public List<WorkflowMessage> getNotClosedNotExpiredListByWorkflowId(final String workflowIdentity) throws IFlowStorageException;
 
-  public List<WorkflowMessage> getNotClosedNotExpiredListByWorkflowId(final Long workflowId) throws IFlowStorageException;
-
-  public void updateWorkflowMessageStatus(final Long workflowId, final Long stepId, final Long userid,
+  public void updateWorkflowMessageStatus(final String workflowIdentity, final String stepIdentity, final String email,
       final EWorkflowMessageStatus status) throws IFlowStorageException;
 }

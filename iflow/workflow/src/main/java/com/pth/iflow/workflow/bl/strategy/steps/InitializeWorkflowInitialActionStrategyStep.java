@@ -21,10 +21,10 @@ public class InitializeWorkflowInitialActionStrategyStep extends AbstractWorkflo
     final Workflow processingWorkflow = this.getWorkflowSaveStrategy().getProcessingWorkflow();
 
     if (processingWorkflow.hasAction() == false) {
-      final WorkflowAction action = this.getWorkflowSaveStrategy().initialFirstStep(processingWorkflow);
+      final WorkflowAction action = this.getWorkflowSaveStrategy().getInitialStepAction(processingWorkflow);
 
       processingWorkflow.addAction(action);
-      processingWorkflow.setCurrentStepId(action.getCurrentStepId());
+      processingWorkflow.setCurrentStepIdentity(action.getCurrentStepIdentity());
       processingWorkflow.setCurrentStep(action.getCurrentStep());
     }
 

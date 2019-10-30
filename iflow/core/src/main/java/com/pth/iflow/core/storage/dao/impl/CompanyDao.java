@@ -3,6 +3,7 @@ package com.pth.iflow.core.storage.dao.impl;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Random;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,8 +28,8 @@ public class CompanyDao extends DaoBasicClass<Company> implements ICompanyDao {
   }
 
   @Override
-  public Company getByIdentifyId(final String identifyId) {
-    return getModelByStringId(identifyId, "SELECT * FROM companies where identifyid=?", "Company");
+  public Company getByIdentity(final String identity) {
+    return getModelByStringId(identity, "SELECT * FROM companies where identity=?", "Company");
   }
 
   @Override
@@ -37,7 +38,7 @@ public class CompanyDao extends DaoBasicClass<Company> implements ICompanyDao {
     company.setId(rs.getLong("id"));
     company.setCompanyName(rs.getString("company_name"));
     company.setStatus(rs.getInt("status"));
-    company.setIdentifyid(rs.getString("identifyid"));
+    company.setIdentity(rs.getString("identity"));
     company.setVersion(rs.getInt("version"));
     company.setCreatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("created_at")));
     company.setUpdatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("updated_at")));
@@ -47,7 +48,7 @@ public class CompanyDao extends DaoBasicClass<Company> implements ICompanyDao {
 
   @Override
   protected PreparedStatement prepareInsertPreparedStatement(final Company model, final PreparedStatement ps) throws SQLException {
-    ps.setString(1, model.getIdentifyid());
+    ps.setString(1, model.getIdentity());
     ps.setString(2, model.getCompanyName());
     ps.setInt(3, model.getVersion());
     ps.setInt(4, model.getStatus());
@@ -57,7 +58,7 @@ public class CompanyDao extends DaoBasicClass<Company> implements ICompanyDao {
 
   @Override
   protected PreparedStatement prepareUpdatePreparedStatement(final Company model, final PreparedStatement ps) throws SQLException {
-    ps.setString(1, model.getIdentifyid());
+    ps.setString(1, model.getIdentity());
     ps.setString(2, model.getCompanyName());
     ps.setInt(3, model.getVersion());
     ps.setInt(4, model.getStatus());
@@ -80,6 +81,13 @@ public class CompanyDao extends DaoBasicClass<Company> implements ICompanyDao {
     updateModel(model, "Company", sql, true);
 
     return getById(model.getId());
+  }
+
+  @Override
+  protected String generateIdentity(final Company model) {
+
+    final Random rand = new Random();
+    return String.format("c%d-%06d", System.currentTimeMillis(), rand.nextInt(1000000));
   }
 
 }

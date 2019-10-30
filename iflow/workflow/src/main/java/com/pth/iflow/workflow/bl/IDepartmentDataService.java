@@ -9,10 +9,10 @@ import com.pth.iflow.workflow.models.User;
 
 public interface IDepartmentDataService {
 
-  public List<User> getUserListByDepartmentId(final Long departmentId, final String token)
+  public List<User> getUserListByDepartmentIdentity(final String departmentIdentity, final String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  public List<User> getUserListByDepartmentGroupId(final Long departmentGroupId, final String token)
+  public List<User> getUserListByDepartmentGroupIdentity(final String departmentGroupIdentity, final String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
 }

@@ -3,14 +3,10 @@ package com.pth.iflow.workflow.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.pth.iflow.common.edo.models.base.DataModelBase;
-
-public class CompanyProfile extends DataModelBase {
+public class CompanyProfile {
 
   private Company                company;
-
   private final List<Department> departments = new ArrayList<>();
-
   private final List<UserGroup>  userGroups  = new ArrayList<>();
 
   public CompanyProfile() {
@@ -60,17 +56,14 @@ public class CompanyProfile extends DataModelBase {
     }
   }
 
-  @Override
   public Integer getVersion() {
     return null;
   }
 
-  @Override
   public Long getId() {
     return null;
   }
 
-  @Override
   public void setVersion(final Integer version) {
 
   }

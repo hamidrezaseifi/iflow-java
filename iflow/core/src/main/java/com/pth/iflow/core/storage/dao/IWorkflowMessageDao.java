@@ -12,16 +12,18 @@ public interface IWorkflowMessageDao {
 
   public WorkflowMessage update(WorkflowMessage model) throws IFlowStorageException;
 
-  public void updateStatusByWorkflow(Long workflowId, final Long stepId, EWorkflowMessageStatus status) throws IFlowStorageException;
-
-  public void updateStatusByWorkflowAndUser(Long workflowId, final Long stepId, final Long userid, EWorkflowMessageStatus status)
+  public void updateStatusByWorkflowIdentity(String workflowIdentity, final String stepIdentity, EWorkflowMessageStatus status)
       throws IFlowStorageException;
+
+  public void updateStatusByWorkflowAndUser(String workflowIdentity, final String stepIdentity, final String email,
+      EWorkflowMessageStatus status) throws IFlowStorageException;
 
   public WorkflowMessage getById(Long id) throws IFlowStorageException;
 
-  public List<WorkflowMessage> getNotClosedNotExpiredListByUserId(final Long userId) throws IFlowStorageException;
+  public List<WorkflowMessage> getNotClosedNotExpiredListByUserEmail(final String email) throws IFlowStorageException;
 
-  public List<WorkflowMessage> getNotClosedNotExpiredListByWorkflowId(final Long workflowId) throws IFlowStorageException;
+  public List<WorkflowMessage> getNotClosedNotExpiredListByWorkflowIdentity(final String workflowIdentity)
+      throws IFlowStorageException;
 
   void deleteWorkflowMessage(final Long messageId) throws IFlowStorageException;
 

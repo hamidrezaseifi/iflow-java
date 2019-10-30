@@ -3,22 +3,29 @@ package com.pth.iflow.core.model;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.pth.iflow.common.edo.models.base.DataModelBase;
+import com.pth.iflow.common.enums.EWorkflowIdentity;
 import com.pth.iflow.common.enums.EWorkflowStatus;
+import com.pth.iflow.core.model.helper.CoreModelHelper;
+import com.pth.iflow.core.model.helper.ICoreIdentityModel;
 
-public class Workflow extends DataModelBase {
+public class Workflow extends CoreModelHelper implements ICoreIdentityModel {
 
-  private Long                       id;
-  private Long                       workflowTypeId;
-  private Long                       currentStepId;
-  private Long                       controller;
-  private Long                       createdBy;
-  private String                     comments;
-  private EWorkflowStatus            status;
-  private Integer                    version;
-  private LocalDateTime              createdAt;
-  private LocalDateTime              updatedAt;
+  private Long             id;
+  private String           identity;
+  private WorkflowType     workflowType;
+  private WorkflowTypeStep currentStep;
+  private User             controller;
+  private User             createdBy;
+  private String           comments;
+  private EWorkflowStatus  status;
+  private Integer          version;
+  private LocalDateTime    createdAt;
+  private LocalDateTime    updatedAt;
+
+  private String workflowTypeIdentity;
+  private String currentStepIdentity;
+  private String controllerIdentity;
+  private String createdByIdentity;
 
   private final List<WorkflowFile>   files   = new ArrayList<>();
   private final List<WorkflowAction> actions = new ArrayList<>();
@@ -28,39 +35,54 @@ public class Workflow extends DataModelBase {
     return this.id;
   }
 
+  @Override
   public void setId(final Long id) {
     this.id = id;
   }
 
-  public Long getWorkflowTypeId() {
-    return this.workflowTypeId;
+  @Override
+  public String getIdentity() {
+    return identity;
   }
 
-  public void setWorkflowTypeId(final Long workflowTypeId) {
-    this.workflowTypeId = workflowTypeId;
+  @Override
+  public void setIdentity(final String identity) {
+    this.identity = identity;
   }
 
-  public Long getCurrentStepId() {
-    return currentStepId;
+  public boolean isIdentityNotSet() {
+    return EWorkflowIdentity.NOT_SET.getName().equals(getIdentity());
   }
 
-  public void setCurrentStepId(final Long currentStepId) {
-    this.currentStepId = currentStepId;
+  public WorkflowType getWorkflowType() {
+    return workflowType;
   }
 
-  public Long getController() {
-    return this.controller;
+  public void setWorkflowType(final WorkflowType workflowType) {
+    this.workflowType = workflowType;
   }
 
-  public void setController(final Long controller) {
+  public WorkflowTypeStep getCurrentStep() {
+    return currentStep;
+  }
+
+  public void setCurrentStep(final WorkflowTypeStep currentStep) {
+    this.currentStep = currentStep;
+  }
+
+  public User getController() {
+    return controller;
+  }
+
+  public void setController(final User controller) {
     this.controller = controller;
   }
 
-  public Long getCreatedBy() {
-    return this.createdBy;
+  public User getCreatedBy() {
+    return createdBy;
   }
 
-  public void setCreatedBy(final Long createdBy) {
+  public void setCreatedBy(final User createdBy) {
     this.createdBy = createdBy;
   }
 
@@ -130,6 +152,38 @@ public class Workflow extends DataModelBase {
     if (actions != null) {
       this.actions.addAll(actions);
     }
+  }
+
+  public String getWorkflowTypeIdentity() {
+    return workflowTypeIdentity;
+  }
+
+  public void setWorkflowTypeIdentity(final String workflowTypeIdentity) {
+    this.workflowTypeIdentity = workflowTypeIdentity;
+  }
+
+  public String getCurrentStepIdentity() {
+    return currentStepIdentity;
+  }
+
+  public void setCurrentStepIdentity(final String currentStepIdentity) {
+    this.currentStepIdentity = currentStepIdentity;
+  }
+
+  public String getControllerIdentity() {
+    return controllerIdentity;
+  }
+
+  public void setControllerIdentity(final String controllerIdentity) {
+    this.controllerIdentity = controllerIdentity;
+  }
+
+  public String getCreatedByIdentity() {
+    return createdByIdentity;
+  }
+
+  public void setCreatedByIdentity(final String createdByIdentity) {
+    this.createdByIdentity = createdByIdentity;
   }
 
 }

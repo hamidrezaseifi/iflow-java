@@ -1,15 +1,14 @@
 package com.pth.iflow.core.service.impl;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.pth.iflow.core.model.Department;
 import com.pth.iflow.core.model.DepartmentGroup;
 import com.pth.iflow.core.model.User;
+import com.pth.iflow.core.model.helper.ICoreIdentityModel;
 import com.pth.iflow.core.service.IDepartmentService;
 import com.pth.iflow.core.storage.dao.IDepartmentDao;
 import com.pth.iflow.core.storage.dao.IDepartmentGroupDao;
@@ -23,38 +22,39 @@ public class DepartmentService implements IDepartmentService {
   private final IDepartmentGroupDao departmentGroupDao;
   private final IUserDao            userDao;
 
-  public DepartmentService(@Autowired final IDepartmentDao departmentDao, @Autowired final IDepartmentGroupDao departmentGroupDao,
-      @Autowired final IUserDao userDao) {
+  public DepartmentService(@Autowired final IDepartmentDao departmentDao,
+                           @Autowired final IDepartmentGroupDao departmentGroupDao,
+                           @Autowired final IUserDao userDao) {
     this.departmentDao = departmentDao;
     this.departmentGroupDao = departmentGroupDao;
     this.userDao = userDao;
   }
 
   @Override
-  public Department getById(final Long id) {
-    return this.departmentDao.getById(id);
+  public Department getByIdentity(final String identity) {
+    return this.departmentDao.getByIdentity(identity);
   }
 
   @Override
-  public List<DepartmentGroup> getDepartmentGroups(final Long id) {
-    final Department department = this.getById(id);
+  public List<DepartmentGroup> getDepartmentGroups(final String identity) {
+    final Department department = this.getByIdentity(identity);
 
-    return department.getDepartmentGroups().stream().collect(Collectors.toList());
+    return department.getDepartmentGroups();
   }
 
   @Override
-  public List<Department> getListByIdList(final List<Long> idList) {
+  public List<Department> getListByIdentityList(final Collection<String> idList) {
 
-    return this.departmentDao.getListByIdList(idList);
+    return this.departmentDao.getListByIdentityList(idList);
   }
 
   @Override
-  public List<Department> getListByIdCompanyId(final Long id) {
-    return this.departmentDao.getListByCompanyId(id);
+  public List<Department> getListByIdCompanyIdentity(final String identity) {
+    return this.departmentDao.getListByCompanyIdentity(identity);
   }
 
   @Override
-  public Department save(final Department model) {
+  public ICoreIdentityModel save(final Department model) {
     if (model.isNew()) {
       model.increaseVersion();
       return this.departmentDao.create(model);
@@ -71,18 +71,17 @@ public class DepartmentService implements IDepartmentService {
   }
 
   @Override
-  public List<User> getAllUserListByDepartmentId(final Long id) {
+  public List<User> getAllUserListByDepartmentIdentity(final String identity) {
 
-    final List<Long> idList = this.departmentDao.getAllUserIdListByDepartmentId(id);
+    final Department department = getByIdentity(identity);
+    final Set<String> idList = this.departmentDao.getAllUserIdentityListByDepartmentId(department.getId());
 
-    final Set<Long> idSet = idList.stream().collect(Collectors.toSet());
-
-    final List<DepartmentGroup> groups = this.getDepartmentGroups(id);
+    final List<DepartmentGroup> groups = department.getDepartmentGroups();
     for (final DepartmentGroup group : groups) {
-      idSet.addAll(this.departmentGroupDao.getAllUserIdListByDepartmentGroupId(group.getId()));
+      idList.addAll(this.departmentGroupDao.getAllUserIdentityListByDepartmentGroupId(group.getId()));
     }
 
-    return this.userDao.getListByIdList(idSet.stream().collect(Collectors.toList()));
+    return this.userDao.getListByIdentityList(idList);
   }
 
 }

@@ -69,15 +69,15 @@ public class BackendConfiguration {
       return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.PROFILE_READ_AUTHENTOCATEDINFO);
     }
 
-    public URI getReadCompanyUserListUri(final Long companyId) throws MalformedURLException {
+    public URI getReadCompanyUserListUri(final String companyId) throws MalformedURLException {
       return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.READ_USERLIST_BY_COMPANYID_URIBUILDER(companyId));
     }
 
-    public URI getReadWorkflowUri(final Long id) throws MalformedURLException {
-      return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.READ_WORKFLOW_BY_ID_URIBUILDER(id));
+    public URI getReadWorkflowUri(final String id) throws MalformedURLException {
+      return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.READ_WORKFLOW_BY_IDENTITY_URIBUILDER(id));
     }
 
-    public URI getReadWorkflowTypeListUri(final Long companyId) throws MalformedURLException {
+    public URI getReadWorkflowTypeListUri(final String companyId) throws MalformedURLException {
       return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.READ_WORKFLOWTYPELIST_BY_COMPANYID_URIBUILDER(companyId));
     }
 

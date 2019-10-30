@@ -30,10 +30,6 @@ iflowApp.controller('WorkflowTypesController', function WorkflowTypesController(
 	    	
 	    	$scope.workflowTypes = response.data.workflowTypes;
 	    	$scope.searchFilter = response.data.newSearchFilter;
-
-	    	//$scope.items = response.data.workflowTypes;
-	    	
-	    	initialSearchFilter();
 	    	
 	    	$scope.reload();
 
@@ -104,21 +100,7 @@ iflowApp.controller('WorkflowTypesController', function WorkflowTypesController(
 		return JSON.stringify($scope.searchFilter.statusList);
 		
 	};
-
 	
-	function initialSearchFilter(){
-
-		var temp = $scope.workflowTypes;
-		$scope.workflowTypes = {};
-		for(index in temp){
-			$scope.workflowTypes[temp[index].id] = temp[index];
-		}
-
-		$scope.searchFilter.workflowTypeIdList = []; 
-		for(index in temp){
-			$scope.searchFilter.workflowTypeIdList.push(temp[index].id);
-		}
-	}
 	
 	function prepareWorkflowList(items){
 		

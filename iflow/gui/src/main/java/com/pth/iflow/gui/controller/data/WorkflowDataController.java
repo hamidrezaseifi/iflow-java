@@ -5,13 +5,12 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,18 +23,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.pth.iflow.common.enums.EWorkflowIdentity;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
-import com.pth.iflow.gui.models.GuiDepartment;
-import com.pth.iflow.gui.models.GuiUser;
-import com.pth.iflow.gui.models.GuiWorkflow;
-import com.pth.iflow.gui.models.GuiWorkflowMessage;
-import com.pth.iflow.gui.models.GuiWorkflowSaveRequest;
-import com.pth.iflow.gui.models.GuiWorkflowSearchFilter;
-import com.pth.iflow.gui.models.GuiWorkflowType;
+import com.pth.iflow.gui.models.Department;
+import com.pth.iflow.gui.models.User;
+import com.pth.iflow.gui.models.Workflow;
+import com.pth.iflow.gui.models.WorkflowMessage;
+import com.pth.iflow.gui.models.WorkflowSaveRequest;
+import com.pth.iflow.gui.models.WorkflowSearchFilter;
+import com.pth.iflow.gui.models.WorkflowType;
 import com.pth.iflow.gui.models.ui.FileSavingData;
 import com.pth.iflow.gui.models.ui.UploadFileSavingData;
 import com.pth.iflow.gui.services.IUploadFileManager;
@@ -47,10 +46,10 @@ import com.pth.iflow.gui.services.IWorkflowHandler;
 public class WorkflowDataController extends GuiDataControllerBase {
 
   @Autowired
-  private IWorkflowHandler   workflowHandler;
+  private IWorkflowHandler workflowHandler;
 
   @Autowired
-  private IUserAccess        userAccess;
+  private IUserAccess userAccess;
 
   @Autowired
   private IUploadFileManager uploadFileManager;
@@ -58,13 +57,13 @@ public class WorkflowDataController extends GuiDataControllerBase {
   @ResponseStatus(HttpStatus.OK)
   @PostMapping(path = { "/workflowlist/init" })
   @ResponseBody
-  public Map<String, Object> loadWorkflowListInitialData()
-      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+  public Map<String,
+             Object> loadWorkflowListInitialData() throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     final Map<String, Object> map = new HashMap<>();
 
-    final List<GuiWorkflowType> workflowTypeList = this.workflowHandler.readWorkflowTypeList(this.getLoggedCompany().getId());
-    final GuiWorkflowSearchFilter workflowSearchFilter = GuiWorkflowSearchFilter.generateNew();
+    final List<WorkflowType> workflowTypeList = this.workflowHandler.readWorkflowTypeList(this.getLoggedCompany().getIdentity());
+    final WorkflowSearchFilter workflowSearchFilter = WorkflowSearchFilter.generateNew(workflowTypeList);
 
     map.put("workflowTypes", workflowTypeList);
     map.put("newSearchFilter", workflowSearchFilter);
@@ -75,14 +74,13 @@ public class WorkflowDataController extends GuiDataControllerBase {
   @ResponseStatus(HttpStatus.OK)
   @PostMapping(path = { "/workflowlist/search" })
   @ResponseBody
-  public List<GuiWorkflow> searchWorkflows(@RequestBody final GuiWorkflowSearchFilter workflowSearchFilter)
-      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+  public List<Workflow> searchWorkflows(@RequestBody final WorkflowSearchFilter workflowSearchFilter) throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     if (workflowSearchFilter.isMeAssigned()) {
-      workflowSearchFilter.setAssignedUserIdList(Arrays.asList(this.getLoggedUser().getId()));
+      workflowSearchFilter.setAssignedUserIdSet(new HashSet(Arrays.asList(this.getLoggedUser().getIdentity())));
     }
 
-    final List<GuiWorkflow> workflowList = this.workflowHandler.searchWorkflow(workflowSearchFilter);
+    final List<Workflow> workflowList = this.workflowHandler.searchWorkflow(workflowSearchFilter);
 
     return workflowList;
   }
@@ -90,10 +88,9 @@ public class WorkflowDataController extends GuiDataControllerBase {
   @ResponseStatus(HttpStatus.OK)
   @PostMapping(path = { "/companyusers" })
   @ResponseBody
-  public List<GuiUser> listCompanyUsers()
-      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+  public List<User> listCompanyUsers() throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    final List<GuiUser> userList = this.userAccess.getCompanyUserList(this.getLoggedCompany().getId());
+    final List<User> userList = this.userAccess.getCompanyUserList(this.getLoggedCompany().getIdentity());
 
     return userList;
   }
@@ -101,18 +98,21 @@ public class WorkflowDataController extends GuiDataControllerBase {
   @ResponseStatus(HttpStatus.OK)
   @PostMapping(path = { "/workflowcreate/init" })
   @ResponseBody
-  public Map<String, Object> loadWorkflowCreateData()
-      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+  public Map<String,
+             Object> loadWorkflowCreateData() throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     final Map<String, Object> map = new HashMap<>();
 
-    final List<GuiUser> userList = this.userAccess.getCompanyUserList(this.getLoggedCompany().getId());
-    final List<GuiWorkflowType> workflowTypeList = this.workflowHandler.readWorkflowTypeList(this.getLoggedCompany().getId());
+    final List<User> userList = this.userAccess.getCompanyUserList(this.getLoggedCompany().getIdentity());
+    final List<WorkflowType> workflowTypeList = this.workflowHandler.readWorkflowTypeList(this.getLoggedCompany().getIdentity());
 
-    final GuiWorkflow newWorkflow = GuiWorkflow.generateInitial(this.getLoggedUser().getId());
+    final Workflow newWorkflow = Workflow.generateInitial(this.getLoggedUser().getIdentity());
 
-    final GuiWorkflowSaveRequest workflowReq = GuiWorkflowSaveRequest.generateNewWihExpireDays(newWorkflow,
-        newWorkflow.getHasActiveAction() ? newWorkflow.getActiveAction().getCurrentStep().getExpireDays() : 15);
+    final WorkflowSaveRequest workflowReq = WorkflowSaveRequest.generateNewWihExpireDays(newWorkflow,
+                                                                                         newWorkflow.getHasActiveAction() ? newWorkflow.getActiveAction()
+                                                                                                                                       .getCurrentStep()
+                                                                                                                                       .getExpireDays()
+                                                                                                                          : 15);
 
     map.put("users", userList);
     map.put("workflowTypes", workflowTypeList);
@@ -122,15 +122,15 @@ public class WorkflowDataController extends GuiDataControllerBase {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @PostMapping(path = { "/workflowcreate/typedata/{typeId}" })
+  @PostMapping(path = { "/workflowcreate/typedata/{typeIdentity}" })
   @ResponseBody
-  public Map<String, Object> loadWorkflowTypeInitData(@PathVariable final Long typeId)
-      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+  public Map<String,
+             Object> loadWorkflowTypeInitData(@PathVariable final String typeIdentity) throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     final Map<String, Object> map = new HashMap<>();
 
-    final List<GuiUser> userList = this.getSessionUserInfo().getCompanyUserList();
-    final List<GuiDepartment> departmentList = this.getSessionUserInfo().getCompanyDepartments();
+    final List<User> userList = this.getSessionUserInfo().getCompanyUserList();
+    final List<Department> departmentList = this.getSessionUserInfo().getCompanyDepartments();
 
     map.put("users", userList);
     map.put("departments", departmentList);
@@ -139,21 +139,21 @@ public class WorkflowDataController extends GuiDataControllerBase {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @PostMapping(path = { "/workflow/edit/{workflowId}" })
+  @PostMapping(path = { "/workflow/edit/{workflowIdentity}" })
   @ResponseBody
-  public Map<String, Object> loadWorkflowEditData(@PathVariable final Long workflowId)
-      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+  public Map<String,
+             Object> loadWorkflowEditData(@PathVariable final String workflowIdentity) throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     final Map<String, Object> map = new HashMap<>();
 
-    final List<GuiUser> userList = this.userAccess.getCompanyUserList(this.getLoggedCompany().getId());
+    final List<User> userList = this.userAccess.getCompanyUserList(this.getLoggedCompany().getIdentity());
 
-    final GuiWorkflow workflow = this.workflowHandler.readWorkflow(workflowId);
+    final Workflow workflow = this.workflowHandler.readWorkflow(workflowIdentity);
 
-    final List<GuiDepartment> departmentList = this.getSessionUserInfo().getCompanyDepartments();
+    final List<Department> departmentList = this.getSessionUserInfo().getCompanyDepartments();
 
     final Integer expireDays = workflow.getHasActiveAction() ? workflow.getActiveAction().getCurrentStep().getExpireDays() : 0;
-    final GuiWorkflowSaveRequest saveRequest = GuiWorkflowSaveRequest.generateNewWihExpireDays(workflow, expireDays);
+    final WorkflowSaveRequest saveRequest = WorkflowSaveRequest.generateNewWihExpireDays(workflow, expireDays);
 
     map.put("users", userList);
     map.put("workflow", workflow);
@@ -166,8 +166,7 @@ public class WorkflowDataController extends GuiDataControllerBase {
   @ResponseStatus(HttpStatus.CREATED)
   @PostMapping(path = { "/workflowcreate/create" })
   @ResponseBody
-  public List<GuiWorkflow> createWorkflow(@RequestBody final GuiWorkflowSaveRequest createRequest, final HttpSession session)
-      throws GuiCustomizedException, IOException, IFlowMessageConversionFailureException {
+  public List<Workflow> createWorkflow(@RequestBody final WorkflowSaveRequest createRequest, final HttpSession session) throws GuiCustomizedException, IOException, IFlowMessageConversionFailureException {
 
     return this.workflowHandler.createWorkflow(createRequest, session);
 
@@ -176,9 +175,8 @@ public class WorkflowDataController extends GuiDataControllerBase {
   @ResponseStatus(HttpStatus.CREATED)
   @PostMapping(path = { "/workflowcreate/file" })
   @ResponseBody
-  public Map<String, Object> createWorkflowFile(@RequestParam(value = "files") final MultipartFile[] files,
-      @RequestParam("titles") final String[] titles, final HttpSession session)
-      throws GuiCustomizedException, JsonParseException, JsonMappingException, IOException {
+  public Map<String,
+             Object> createWorkflowFile(@RequestParam(value = "files") final MultipartFile[] files, @RequestParam("titles") final String[] titles, final HttpSession session) throws GuiCustomizedException, JsonParseException, JsonMappingException, IOException {
 
     List<UploadFileSavingData> tempFiles = new ArrayList<>();
     if (files.length > 0) {
@@ -191,7 +189,12 @@ public class WorkflowDataController extends GuiDataControllerBase {
           title = ext.isEmpty() == false ? title.substring(0, title.length() - ext.length() - 1) : title;
         }
 
-        saveFiles.add(new UploadFileSavingData(files[i], title, ext, 0L, 0l, this.getLoggedCompany().getId()));
+        saveFiles.add(new UploadFileSavingData(files[i],
+                                               title,
+                                               ext,
+                                               EWorkflowIdentity.NOT_SET.getName(),
+                                               "no-action",
+                                               this.getLoggedCompany().getIdentity()));
       }
 
       tempFiles = this.uploadFileManager.saveInTemp(saveFiles);
@@ -212,8 +215,7 @@ public class WorkflowDataController extends GuiDataControllerBase {
   @ResponseStatus(HttpStatus.CREATED)
   @PostMapping(path = { "/workflow/save" })
   @ResponseBody
-  public void saveWorkflow(@RequestBody final GuiWorkflow workflow, final HttpSession session)
-      throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
+  public void saveWorkflow(@RequestBody final Workflow workflow, final HttpSession session) throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
 
     this.workflowHandler.saveWorkflow(workflow, session);
 
@@ -222,8 +224,7 @@ public class WorkflowDataController extends GuiDataControllerBase {
   @ResponseStatus(HttpStatus.CREATED)
   @PostMapping(path = { "/workflow/archive" })
   @ResponseBody
-  public void archiveWorkflow(@RequestBody final GuiWorkflow workflow, final HttpSession session)
-      throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
+  public void archiveWorkflow(@RequestBody final Workflow workflow, final HttpSession session) throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
 
     this.workflowHandler.archiveWorkflow(workflow, session);
 
@@ -232,8 +233,7 @@ public class WorkflowDataController extends GuiDataControllerBase {
   @ResponseStatus(HttpStatus.CREATED)
   @PostMapping(path = { "/workflow/done" })
   @ResponseBody
-  public void makeDoneWorkflow(@RequestBody final GuiWorkflowSaveRequest saveRequest, final HttpSession session)
-      throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
+  public void makeDoneWorkflow(@RequestBody final WorkflowSaveRequest saveRequest, final HttpSession session) throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
 
     this.workflowHandler.doneWorkflow(saveRequest, session);
 
@@ -242,26 +242,24 @@ public class WorkflowDataController extends GuiDataControllerBase {
   @ResponseStatus(HttpStatus.OK)
   @PostMapping(path = { "/workflowmessages" })
   @ResponseBody
-  public List<GuiWorkflowMessage> listWorkflowMessages(final HttpServletRequest request)
-      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+  public List<WorkflowMessage> listWorkflowMessages(final HttpServletRequest request) throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     final String resetCach = request.getParameter("reset");
     if ("1".equals(resetCach)) {
       this.callUserMessageReset();
     }
 
-    final List<GuiWorkflowMessage> messageList = this.readUserMessages();
+    final List<WorkflowMessage> messageList = this.readUserMessages();
 
     return messageList;
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @PostMapping(path = { "/assignworkflow/{workflowId}" })
+  @PostMapping(path = { "/assignworkflow/{workflowIdentity}" })
   @ResponseBody
-  public GuiWorkflow assignWorkflow(@PathVariable final Long workflowId)
-      throws GuiCustomizedException, IFlowMessageConversionFailureException, IOException {
+  public Workflow assignWorkflow(@PathVariable final String workflowIdentity) throws GuiCustomizedException, IFlowMessageConversionFailureException, IOException {
 
-    final GuiWorkflow workflow = this.workflowHandler.assignWorkflow(workflowId);
+    final Workflow workflow = this.workflowHandler.assignWorkflow(workflowIdentity);
 
     return workflow;
   }

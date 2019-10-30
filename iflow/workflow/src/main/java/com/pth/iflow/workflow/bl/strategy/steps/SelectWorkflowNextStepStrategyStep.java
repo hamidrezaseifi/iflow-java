@@ -26,11 +26,12 @@ public class SelectWorkflowNextStepStrategyStep extends AbstractWorkflowSaveStra
 
     final WorkflowTypeStep nextStep = this.getWorkflowSaveStrategy().findNextStep(processingWorkflowType, processingWorkflow);
     if (nextStep == null) {
-      throw new IFlowCustomeException("Invalid workflow step id:" + processingWorkflow.getId(), EIFlowErrorType.INVALID_WORKFLOW_STEP);
+      throw new IFlowCustomeException(String.format("Invalid workflow step id:%s", processingWorkflow.getIdentity()),
+          EIFlowErrorType.INVALID_WORKFLOW_STEP);
     }
 
     processingWorkflow.setCurrentStep(nextStep);
-    processingWorkflow.setCurrentStepId(nextStep.getId());
+    processingWorkflow.setCurrentStepIdentity(nextStep.getIdentity());
 
   }
 

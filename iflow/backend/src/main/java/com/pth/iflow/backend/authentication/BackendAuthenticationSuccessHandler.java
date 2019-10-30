@@ -11,8 +11,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 import com.pth.iflow.backend.configurations.BackendSecurityConfigurations;
-import com.pth.iflow.backend.models.BackendCompanyProfile;
-import com.pth.iflow.backend.models.BackendUser;
+import com.pth.iflow.backend.models.CompanyProfile;
+import com.pth.iflow.backend.models.User;
 import com.pth.iflow.backend.models.ProfileResponse;
 import com.pth.iflow.backend.services.IProfileAccess;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
@@ -46,8 +46,8 @@ public class BackendAuthenticationSuccessHandler extends SimpleUrlAuthentication
       }
       else {
 
-        final BackendUser user = profileResponse.getUser();
-        final BackendCompanyProfile companyProfile = profileResponse.getCompanyProfile();
+        final User user = profileResponse.getUser();
+        final CompanyProfile companyProfile = profileResponse.getCompanyProfile();
 
         final BackendAuthenticationToken newToken = new BackendAuthenticationToken(tbToken.getUsername(),
                                                                                    tbToken.getCompanyId(),

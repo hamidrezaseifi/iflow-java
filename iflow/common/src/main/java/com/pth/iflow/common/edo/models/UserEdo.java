@@ -1,9 +1,9 @@
 package com.pth.iflow.common.edo.models;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -12,102 +12,85 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 import com.pth.iflow.common.edo.models.helper.DateEdoAdapter;
+import com.pth.iflow.common.edo.models.helper.StringToStringCollection;
+import io.micrometer.core.lang.Nullable;
 
 @XmlRootElement(name = "User", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "User" + IFlowJaxbDefinition.TYPE_PREFIX)
 public class UserEdo {
 
-  @XmlElement(name = "ID", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long                id;
-
-  @NotNull(message = "CompanyId must not be null")
-  @XmlElement(name = "CompanyId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long                companyId;
+  @NotNull(message = "CompanyIdentity must not be null")
+  @XmlElement(name = "CompanyIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String companyIdentity;
 
   @NotNull(message = "Email must not be null")
   @XmlElement(name = "Email", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String              email;
+  private String email;
 
   @XmlJavaTypeAdapter(DateEdoAdapter.class)
   @XmlElement(name = "BirthDate", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private LocalDate           birthDate;
+  private LocalDate birthDate;
 
   @NotNull(message = "FirstName must not be null")
   @XmlElement(name = "FirstName", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String              firstName;
+  private String firstName;
 
   @NotNull(message = "LastName must not be null")
   @XmlElement(name = "LastName", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String              lastName;
+  private String lastName;
 
   @NotNull(message = "Status must not be null")
   @XmlElement(name = "Status", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Integer             status;
+  private Integer status;
 
   @NotNull(message = "Version must not be null")
   @XmlElement(name = "Version", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Integer             version;
+  private Integer version;
 
   @NotNull(message = "Permission must not be null")
   @XmlElement(name = "Permission", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Integer             permission;
+  private Integer permission;
 
   @NotNull(message = "GroupList must not be null")
   @XmlElementWrapper(name = "GroupList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "Group")
-  private final List<Long>    groups           = new ArrayList<>();
+  @JsonDeserialize(using = StringToStringCollection.class)
+  private final Set<String> groups = new HashSet<>();
 
   @NotNull(message = "DepartmentList must not be null")
   @XmlElementWrapper(name = "DepartmentList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "Department", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private final List<Long>    departments      = new ArrayList<>();
+  @JsonDeserialize(using = StringToStringCollection.class)
+  private final Set<String> departments = new HashSet<>();
 
   @NotNull(message = "DepartmentGroupList must not be null")
   @XmlElementWrapper(name = "DepartmentGroupList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "DepartmentGroup", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private final List<Long>    departmentGroups = new ArrayList<>();
+  @JsonDeserialize(using = StringToStringCollection.class)
+  private final Set<String> departmentGroups = new HashSet<>();
 
   @NotNull(message = "DeputyList must not be null")
   @XmlElementWrapper(name = "DeputyList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "Deputy", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private final List<Long>    deputies         = new ArrayList<>();
+  @JsonDeserialize(using = StringToStringCollection.class)
+  private final Set<String> deputies = new HashSet<>();
 
   @NotNull(message = "RoleList must not be null")
   @XmlElementWrapper(name = "RoleList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "Role", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private final List<Integer> roles            = new ArrayList<>();
+  private final Set<Integer> roles = new HashSet<>();
 
-  /**
-   * @return the id
-   */
-  public Long getId() {
-    return this.id;
+  public String getCompanyIdentity() {
+    return this.companyIdentity;
   }
 
-  /**
-   * @param id the id to set
-   */
-  public void setId(final Long id) {
-    this.id = id;
-  }
-
-  /**
-   * @return the companyIid
-   */
-  public Long getCompanyId() {
-    return this.companyId;
-  }
-
-  /**
-   * @param companyIid the companyIid to set
-   */
-  public void setCompanyId(final Long companyIid) {
-    this.companyId = companyIid;
+  public void setCompanyIdentity(final String companyIdentity) {
+    this.companyIdentity = companyIdentity;
   }
 
   /**
@@ -196,76 +179,76 @@ public class UserEdo {
     this.permission = permission;
   }
 
-  public List<Long> getGroups() {
+  public Set<String> getGroups() {
     return this.groups;
   }
 
   @JsonSetter
-  public void setGroups(final List<Long> groups) {
+  public void setGroups(final Collection<String> groups) {
     this.groups.clear();
     if (groups != null) {
       this.groups.addAll(groups);
     }
   }
 
-  public void addGroup(final Long groupId) {
+  public void addGroup(final String groupId) {
     this.groups.add(groupId);
   }
 
-  public List<Long> getDepartments() {
+  public Set<String> getDepartments() {
     return this.departments;
   }
 
   @JsonSetter
-  public void setDepartments(final List<Long> departments) {
+  public void setDepartments(final Collection<String> departments) {
     this.departments.clear();
     if (departments != null) {
       this.departments.addAll(departments);
     }
   }
 
-  public void addDepartment(final Long departmentId) {
+  public void addDepartment(final String departmentId) {
     this.departments.add(departmentId);
   }
 
-  public List<Long> getDepartmentGroups() {
+  public Set<String> getDepartmentGroups() {
     return this.departmentGroups;
   }
 
   @JsonSetter
-  public void setDepartmentGroups(final List<Long> departmentGroups) {
+  public void setDepartmentGroups(@Nullable final Collection<String> departmentGroups) {
     this.departmentGroups.clear();
     if (departmentGroups != null) {
       this.departmentGroups.addAll(departmentGroups);
     }
   }
 
-  public void addDepartmentGroup(final Long departmentGroupId) {
+  public void addDepartmentGroup(final String departmentGroupId) {
     this.departmentGroups.add(departmentGroupId);
   }
 
-  public List<Long> getDeputies() {
+  public Set<String> getDeputies() {
     return this.deputies;
   }
 
   @JsonSetter
-  public void setDeputies(final List<Long> deputies) {
+  public void setDeputies(final Collection<String> deputies) {
     this.deputies.clear();
     if (deputies != null) {
       this.deputies.addAll(deputies);
     }
   }
 
-  public void addDeputy(final Long deputyId) {
+  public void addDeputy(final String deputyId) {
     this.deputies.add(deputyId);
   }
 
-  public List<Integer> getRoles() {
+  public Set<Integer> getRoles() {
     return this.roles;
   }
 
   @JsonSetter
-  public void setRoles(final List<Integer> roles) {
+  public void setRoles(final Set<Integer> roles) {
     this.roles.clear();
     if (roles != null) {
       this.roles.addAll(roles);

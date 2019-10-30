@@ -21,9 +21,10 @@ public class ChangeWorkflowOfferStatusToCloseForWorkflowInCoreStep extends Abstr
 
     final Workflow processingWorkflow = this.getWorkflowSaveStrategy().getSavedSingleWorkflow();
     final WorkflowAction prevAction = this.getWorkflowSaveStrategy().getPrevActiveAction();
-    final Long stepId = prevAction != null ? prevAction.getCurrentStepId() : processingWorkflow.getCurrentStepId();
+    final String stepId = prevAction != null ? prevAction.getCurrentStepIdentity() : processingWorkflow.getCurrentStepIdentity();
 
-    this.getWorkflowSaveStrategy().updateWorkflowMessageStatus(processingWorkflow.getId(), stepId, EWorkflowMessageStatus.CLOSED);
+    this.getWorkflowSaveStrategy().updateWorkflowMessageStatus(processingWorkflow.getIdentity(), stepId,
+        EWorkflowMessageStatus.CLOSED);
 
   }
 

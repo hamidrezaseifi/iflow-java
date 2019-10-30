@@ -4,13 +4,15 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.pth.iflow.common.edo.models.base.DataModelBase;
+import com.pth.iflow.core.model.helper.CoreModelHelper;
+import com.pth.iflow.core.model.helper.ICoreIdentityModel;
 
-public class WorkflowFile extends DataModelBase {
+public class WorkflowFile extends CoreModelHelper implements ICoreIdentityModel {
 
   private Long                            id;
+  private String                          identity;
   private Long                            workflowId;
-  private Long                            createdBy;
+  private String                          createdByIdentity;
   private String                          title;
   private String                          extention;
   private String                          activeFilePath;
@@ -27,8 +29,19 @@ public class WorkflowFile extends DataModelBase {
     return this.id;
   }
 
+  @Override
   public void setId(final Long id) {
     this.id = id;
+  }
+
+  @Override
+  public String getIdentity() {
+    return identity;
+  }
+
+  @Override
+  public void setIdentity(final String identity) {
+    this.identity = identity;
   }
 
   public Long getWorkflowId() {
@@ -47,12 +60,12 @@ public class WorkflowFile extends DataModelBase {
     this.activeFilePath = filePath;
   }
 
-  public Long getCreatedBy() {
-    return this.createdBy;
+  public String getCreatedByIdentity() {
+    return createdByIdentity;
   }
 
-  public void setCreatedBy(final Long createdBy) {
-    this.createdBy = createdBy;
+  public void setCreatedByIdentity(final String createdByIdentity) {
+    this.createdByIdentity = createdByIdentity;
   }
 
   public String getTitle() {

@@ -29,6 +29,7 @@ import com.pth.iflow.common.edo.models.WorkflowMessageListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.XmlRestConfig;
 import com.pth.iflow.core.TestDataProducer;
+import com.pth.iflow.core.model.Workflow;
 import com.pth.iflow.core.model.WorkflowMessage;
 import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
 import com.pth.iflow.core.service.IWorkflowMessageService;
@@ -61,26 +62,28 @@ public class WorkflowMessageControllerTest extends TestDataProducer {
   @Test
   public void testReadWorkflowMessage() throws Exception {
 
-    final List<WorkflowMessage> modelList = getTestWorkflowMessageList();
+    final Workflow workflow = getTestWorkflow(1L);
+    final List<WorkflowMessage> modelList = getTestWorkflowMessageList(workflow);
     final WorkflowMessageListEdo modelListEdo = new WorkflowMessageListEdo(CoreModelEdoMapper.toWorkflowMessageEdoList(modelList));
 
-    when(this.workflowMessageService.getNotClosedNotExpiredListByUserId(any(Long.class))).thenReturn(modelList);
+    when(this.workflowMessageService.getNotClosedNotExpiredListByUserEmail(any(String.class))).thenReturn(modelList);
 
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelListEdo);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.READ_WORKFLOWMESSAGE_READ_BY_USER(1L, 1))
+        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.READ_WORKFLOWMESSAGE_READ_BY_USER("email", 1))
             .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
         .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(listAsXmlString));
 
-    verify(this.workflowMessageService, times(1)).getNotClosedNotExpiredListByUserId(any(Long.class));
+    verify(this.workflowMessageService, times(1)).getNotClosedNotExpiredListByUserEmail(any(String.class));
 
   }
 
   @Test
   public void testSaveWorkflowMessage() throws Exception {
-    final WorkflowMessage model = this.getTestWorkflowMessage(1L, "Test-Message");
+    final Workflow workflow = getTestWorkflow(1L);
+    final WorkflowMessage model = this.getTestWorkflowMessage(workflow, "Test-Message");
     final WorkflowMessageEdo modelEdo = CoreModelEdoMapper.toEdo(model);
 
     when(this.workflowMessageService.save(any(WorkflowMessage.class))).thenReturn(model);

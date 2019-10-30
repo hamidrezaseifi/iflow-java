@@ -1,49 +1,41 @@
 package com.pth.iflow.core.service.impl;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pth.iflow.core.model.Company;
 import com.pth.iflow.core.model.Department;
 import com.pth.iflow.core.model.DepartmentGroup;
+import com.pth.iflow.core.model.ProfileResponse;
 import com.pth.iflow.core.model.User;
 import com.pth.iflow.core.model.UserGroup;
 import com.pth.iflow.core.service.IUsersService;
+import com.pth.iflow.core.storage.dao.ICompanyDao;
 import com.pth.iflow.core.storage.dao.IDepartmentDao;
 import com.pth.iflow.core.storage.dao.IDepartmentGroupDao;
 import com.pth.iflow.core.storage.dao.IUserDao;
 import com.pth.iflow.core.storage.dao.IUserGroupDao;
-import com.pth.iflow.core.storage.dao.IWorkflowTypeDao;
-import com.pth.iflow.core.storage.dao.IWorkflowTypeStepDao;
 import com.pth.iflow.core.storage.dao.exception.IFlowOptimisticLockException;
 
 @Service
 public class UsersService implements IUsersService {
 
-  private final IUserDao             userDao;
-  private final IUserGroupDao        userGroupDao;
-  private final IDepartmentDao       departmentDao;
-  private final IDepartmentGroupDao  departmentGroupDao;
-  private final IWorkflowTypeDao     workflowDao;
-  private final IWorkflowTypeStepDao workflowStepDao;
+  private final ICompanyDao         companyDao;
+  private final IUserDao            userDao;
+  private final IUserGroupDao       userGroupDao;
+  private final IDepartmentDao      departmentDao;
+  private final IDepartmentGroupDao departmentGroupDao;
 
-  public UsersService(@Autowired final IUserDao userDao, @Autowired final IUserGroupDao userGroupDao,
-      @Autowired final IDepartmentDao departmentDao, @Autowired final IDepartmentGroupDao departmentGroupDao,
-      @Autowired final IWorkflowTypeDao workflowDao, @Autowired final IWorkflowTypeStepDao workflowStepDao) {
+  public UsersService(@Autowired final ICompanyDao companyDao, @Autowired final IUserDao userDao,
+      @Autowired final IUserGroupDao userGroupDao, @Autowired final IDepartmentDao departmentDao,
+      @Autowired final IDepartmentGroupDao departmentGroupDao) {
+    this.companyDao = companyDao;
     this.userDao = userDao;
     this.userGroupDao = userGroupDao;
     this.departmentDao = departmentDao;
     this.departmentGroupDao = departmentGroupDao;
-    this.workflowDao = workflowDao;
-    this.workflowStepDao = workflowStepDao;
-  }
-
-  @Override
-  public User getUserById(final Long id) {
-
-    return userDao.getById(id);
   }
 
   @Override
@@ -53,31 +45,30 @@ public class UsersService implements IUsersService {
   }
 
   @Override
-  public List<UserGroup> getUserGroups(final Long id) {
-    final User user = getUserById(id);
-    final List<UserGroup> list = userGroupDao.getListByIdList(user.getGroups().stream().collect(Collectors.toList()));
+  public List<UserGroup> getUserGroups(final String email) {
+    final User user = getUserByEmail(email);
+    final List<UserGroup> list = userGroupDao.getListByIdentityList(user.getGroups());
     return list;
   }
 
   @Override
-  public List<Department> getUserDepartments(final Long id) {
-    final User user = getUserById(id);
-    final List<Department> list = departmentDao.getListByIdList(user.getDepartments().stream().collect(Collectors.toList()));
+  public List<Department> getUserDepartments(final String email) {
+    final User user = getUserByEmail(email);
+    final List<Department> list = departmentDao.getListByIdentityList(user.getDepartments());
     return list;
   }
 
   @Override
-  public List<DepartmentGroup> getUserDepartmentGroups(final Long id) {
-    final User user = getUserById(id);
-    final List<DepartmentGroup> list = departmentGroupDao
-        .getListByIdList(user.getDepartmentGroups().stream().collect(Collectors.toList()));
+  public List<DepartmentGroup> getUserDepartmentGroups(final String email) {
+    final User user = getUserByEmail(email);
+    final List<DepartmentGroup> list = departmentGroupDao.getListByIdentityList(user.getDepartmentGroups());
     return list;
   }
 
   @Override
-  public List<User> getUserDeputies(final Long id) {
-    final User user = getUserById(id);
-    final List<User> list = userDao.getListByIdList(user.getDeputies().stream().collect(Collectors.toList()));
+  public List<User> getUserDeputies(final String email) {
+    final User user = getUserByEmail(email);
+    final List<User> list = userDao.getListByIdentityList(user.getDeputies());
     return list;
   }
 
@@ -99,9 +90,17 @@ public class UsersService implements IUsersService {
   }
 
   @Override
-  public List<User> getCompanyUsers(final Long companyId) {
+  public List<User> getCompanyUsers(final String companyIdentity) {
 
-    return userDao.getListByCompanyId(companyId);
+    return userDao.getListByCompanyIdentity(companyIdentity);
+  }
+
+  @Override
+  public ProfileResponse getProfileResponseByEmail(final String email) {
+    final User user = this.getUserByEmail(email);
+    final Company company = companyDao.getByIdentity(user.getCompanyIdentity());
+
+    return new ProfileResponse(user, company, this.getUserDepartments(email), this.getUserGroups(email), "sot-set");
   }
 
 }

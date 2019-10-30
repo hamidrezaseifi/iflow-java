@@ -1,62 +1,54 @@
 package com.pth.iflow.workflow.models;
 
-import com.pth.iflow.common.edo.models.base.WorkflowActionModelBase;
+import com.pth.iflow.common.edo.models.helper.IdentityModel;
 import com.pth.iflow.common.enums.EWorkflowActionStatus;
 
-public class WorkflowAction extends WorkflowActionModelBase {
+public class WorkflowAction extends IdentityModel {
 
-  private Long                  id;
-  private Long                  workflowId;
-  private Long                  assignTo;
-  private Long                  currentStepId;
-  private WorkflowTypeStep      currentStep;
+  private String                identity;
+  private String                workflowIdentity;
+  private String                assignToIdentity;
+  private String                currentStepIdentity;
   private String                comments;
   private EWorkflowActionStatus status;
   private Integer               version;
 
+  private WorkflowTypeStep      currentStep;
+  private User                  assignToUser;
+  private Workflow              workflow;
+
   @Override
-  public Long getId() {
-    return this.id;
+  public String getIdentity() {
+    return identity;
   }
 
-  public void setId(final Long id) {
-    this.id = id;
+  @Override
+  public void setIdentity(final String identity) {
+    this.identity = identity;
   }
 
-  public Long getWorkflowId() {
-    return this.workflowId;
+  public String getWorkflowIdentity() {
+    return workflowIdentity;
   }
 
-  public void setWorkflowId(final Long workflowId) {
-    this.workflowId = workflowId;
+  public void setWorkflowIdentity(final String workflowIdentity) {
+    this.workflowIdentity = workflowIdentity;
   }
 
-  public Long getAssignTo() {
-    return this.assignTo;
+  public String getAssignToIdentity() {
+    return assignToIdentity;
   }
 
-  public boolean isAssigned() {
-    return (this.assignTo != null) && (this.assignTo > 0);
+  public void setAssignToIdentity(final String assignToIdentity) {
+    this.assignToIdentity = assignToIdentity;
   }
 
-  public void setAssignTo(final Long assignTo) {
-    this.assignTo = assignTo;
+  public String getCurrentStepIdentity() {
+    return currentStepIdentity;
   }
 
-  public Long getCurrentStepId() {
-    return currentStepId;
-  }
-
-  public void setCurrentStepId(final Long currectStepId) {
-    this.currentStepId = currectStepId;
-  }
-
-  public WorkflowTypeStep getCurrentStep() {
-    return currentStep;
-  }
-
-  public void setCurrentStep(final WorkflowTypeStep currentStep) {
-    this.currentStep = currentStep;
+  public void setCurrentStepIdentity(final String currentStepIdIdentity) {
+    this.currentStepIdentity = currentStepIdIdentity;
   }
 
   public String getComments() {
@@ -67,31 +59,56 @@ public class WorkflowAction extends WorkflowActionModelBase {
     this.comments = comments;
   }
 
-  @Override
-  public Integer getStatusInt() {
-    return this.status.getValue();
-  }
-
   public EWorkflowActionStatus getStatus() {
     return this.status;
+  }
+
+  public void setStatus(final int status) {
+    this.status = EWorkflowActionStatus.ofValue(status);
   }
 
   public void setStatus(final EWorkflowActionStatus status) {
     this.status = status;
   }
 
-  public void setStatus(final Integer status) {
-    this.status = EWorkflowActionStatus.ofValue(status);
-  }
-
-  @Override
   public Integer getVersion() {
     return this.version;
   }
 
-  @Override
   public void setVersion(final Integer version) {
     this.version = version;
+  }
+
+  public boolean isAssigned() {
+    return isIdentityNew(this.assignToIdentity) == false;
+  }
+
+  public boolean getIsActive() {
+    return EWorkflowActionStatus.getIsActive(this.getStatus().getValue());
+  }
+
+  public WorkflowTypeStep getCurrentStep() {
+    return currentStep;
+  }
+
+  public void setCurrentStep(final WorkflowTypeStep currentStep) {
+    this.currentStep = currentStep;
+  }
+
+  public User getAssignToUser() {
+    return assignToUser;
+  }
+
+  public void setAssignToUser(final User assignToUser) {
+    this.assignToUser = assignToUser;
+  }
+
+  public Workflow getWorkflow() {
+    return workflow;
+  }
+
+  public void setWorkflow(final Workflow workflow) {
+    this.workflow = workflow;
   }
 
 }

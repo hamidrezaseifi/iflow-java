@@ -37,13 +37,13 @@ public class WorkflowFileService implements IWorkflowFileService {
   }
 
   @Override
-  public WorkflowFile getById(final Long id) {
-    return workflowFileDao.getById(id);
+  public WorkflowFile getByIdentity(final String identity) {
+    return workflowFileDao.getByIdentity(identity);
   }
 
   @Override
-  public List<WorkflowFile> getListByIdWorkflowId(final Long id) {
-    return workflowFileDao.getListByWorkflowId(id);
+  public List<WorkflowFile> getListByIdWorkflowIdentity(final String identity) {
+    return workflowFileDao.getListByWorkflowIdentity(identity);
   }
 
 }

@@ -61,10 +61,10 @@ public class UserGroupServiceTest extends TestDataProducer {
     when(this.restTemplate.callRestGet(any(String.class), any(EModule.class), any(Class.class), any(boolean.class), any()))
         .thenReturn(userGroupEdo);
 
-    final UserGroup resUserGroup = this.userGroupService.getById(userGroup.getId());
+    final UserGroup resUserGroup = this.userGroupService.getById(userGroup.getIdentity());
 
     Assert.assertNotNull("Result user-group is not null!", resUserGroup);
-    Assert.assertEquals("Result user-group has id 1!", resUserGroup.getId(), userGroup.getId());
+    Assert.assertEquals("Result user-group has id 1!", resUserGroup.getIdentity(), userGroup.getIdentity());
     Assert.assertEquals("Result user-group has title '" + userGroup.getTitle() + "'!", resUserGroup.getTitle(), userGroup.getTitle());
     Assert.assertEquals("Result user-group has status 1!", resUserGroup.getStatus(), userGroup.getStatus());
 
@@ -79,7 +79,7 @@ public class UserGroupServiceTest extends TestDataProducer {
     when(this.restTemplate.callRestGet(any(String.class), any(EModule.class), eq(UserGroupListEdo.class), any(boolean.class), any()))
         .thenReturn(listEdo);
 
-    final List<UserGroup> resList = this.userGroupService.getListByCompanyId(1L);
+    final List<UserGroup> resList = this.userGroupService.getListByCompanyIdentity("companyId");
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());

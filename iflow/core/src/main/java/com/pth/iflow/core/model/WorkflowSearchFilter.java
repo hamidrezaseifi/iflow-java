@@ -1,59 +1,59 @@
 package com.pth.iflow.core.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
 
 public class WorkflowSearchFilter {
 
-  private List<Long>    assignedUserIdList  = new ArrayList<>();
+  private Set<String>  assignedUserIdSet  = new HashSet<>();
 
-  private List<Integer> statusList          = new ArrayList<>();
+  private Set<Integer> statusSet          = new HashSet<>();
 
-  private List<Long>    workflowTypeIdList  = new ArrayList<>();
+  private Set<String>  workflowTypeIdSet  = new HashSet<>();
 
-  private List<Long>    workflowStepeIdList = new ArrayList<>();
+  private Set<String>  workflowStepeIdSet = new HashSet<>();
 
-  public List<Long> getAssignedUserIdList() {
-    return this.assignedUserIdList;
+  public Set<String> getAssignedUserIdSet() {
+    return this.assignedUserIdSet;
   }
 
-  public void setAssignedUserIdList(final List<Long> assignedUserIdList) {
-    this.assignedUserIdList = new ArrayList<>();
-    if (assignedUserIdList != null) {
-      this.assignedUserIdList.addAll(assignedUserIdList);
+  public void setAssignedUserIdSet(final Set<String> assignedUserIdSet) {
+    this.assignedUserIdSet = new HashSet<>();
+    if (assignedUserIdSet != null) {
+      this.assignedUserIdSet.addAll(assignedUserIdSet);
     }
   }
 
-  public List<Integer> getStatusList() {
-    return this.statusList;
+  public Set<Integer> getStatusSet() {
+    return this.statusSet;
   }
 
-  public void setStatusList(final List<Integer> statusList) {
-    this.statusList = new ArrayList<>();
-    if (statusList != null) {
-      this.statusList.addAll(statusList);
+  public void setStatusSet(final Set<Integer> statusSet) {
+    this.statusSet = new HashSet<>();
+    if (statusSet != null) {
+      this.statusSet.addAll(statusSet);
     }
   }
 
-  public List<Long> getWorkflowTypeIdList() {
-    return this.workflowTypeIdList;
+  public Set<String> getWorkflowTypeIdSet() {
+    return this.workflowTypeIdSet;
   }
 
-  public void setWorkflowTypeIdList(final List<Long> workflowTypeIdList) {
-    this.workflowTypeIdList = new ArrayList<>();
-    if (workflowTypeIdList != null) {
-      this.workflowTypeIdList.addAll(workflowTypeIdList);
+  public void setWorkflowTypeIdSet(final Set<String> workflowTypeIdSet) {
+    this.workflowTypeIdSet = new HashSet<>();
+    if (workflowTypeIdSet != null) {
+      this.workflowTypeIdSet.addAll(workflowTypeIdSet);
     }
   }
 
-  public List<Long> getWorkflowStepeIdList() {
-    return this.workflowStepeIdList;
+  public Set<String> getWorkflowStepeIdSet() {
+    return this.workflowStepeIdSet;
   }
 
-  public void setWorkflowStepeIdList(final List<Long> workflowStepeIdList) {
-    this.workflowStepeIdList = new ArrayList<>();
-    if (workflowStepeIdList != null) {
-      this.workflowStepeIdList.addAll(workflowStepeIdList);
+  public void setWorkflowStepeIdSet(final Set<String> workflowStepeIdSet) {
+    this.workflowStepeIdSet = new HashSet<>();
+    if (workflowStepeIdSet != null) {
+      this.workflowStepeIdSet.addAll(workflowStepeIdSet);
     }
   }
 

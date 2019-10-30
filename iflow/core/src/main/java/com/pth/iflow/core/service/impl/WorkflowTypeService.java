@@ -1,11 +1,9 @@
 package com.pth.iflow.core.service.impl;
 
+import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.pth.iflow.core.model.WorkflowType;
 import com.pth.iflow.core.model.WorkflowTypeStep;
 import com.pth.iflow.core.service.IWorkflowTypeService;
@@ -22,24 +20,24 @@ public class WorkflowTypeService implements IWorkflowTypeService {
   }
 
   @Override
-  public WorkflowType getById(final Long id) {
-    return this.workflowTypeDao.getById(id);
+  public WorkflowType getByIdentity(final String identity) {
+    return this.workflowTypeDao.getByIdentity(identity);
   }
 
   @Override
-  public List<WorkflowTypeStep> getStepsById(final Long id) {
-    final WorkflowType workflow = getById(id);
-    return workflow.getSteps().stream().collect(Collectors.toList());
+  public List<WorkflowTypeStep> getStepsByIdentity(final String identity) {
+    final WorkflowType workflow = getByIdentity(identity);
+    return workflow.getSteps();
   }
 
   @Override
-  public List<WorkflowType> getListByIdCompanyId(final Long id) {
-    return this.workflowTypeDao.getListByCompanyId(id);
+  public List<WorkflowType> getListByIdCompanyId(final String identity) {
+    return this.workflowTypeDao.getListByCompanyIdentity(identity);
   }
 
   @Override
-  public List<WorkflowType> getListByIdList(final List<Long> idList) {
-    return this.workflowTypeDao.getListByIdList(idList);
+  public List<WorkflowType> getListByIdentityList(final Collection<String> idList) {
+    return this.workflowTypeDao.getListByIdentityList(idList);
   }
 
   @Override

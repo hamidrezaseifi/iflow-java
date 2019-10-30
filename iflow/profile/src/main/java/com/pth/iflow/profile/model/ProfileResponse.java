@@ -4,11 +4,9 @@ import java.util.List;
 
 public class ProfileResponse {
 
-  private User user;
-
+  private User           user;
   private CompanyProfile companyProfile;
-
-  private String sessionid;
+  private String         sessionid;
 
   public ProfileResponse() {
     this.user = null;
@@ -22,11 +20,8 @@ public class ProfileResponse {
     this.sessionid = sessionid;
   }
 
-  public ProfileResponse(final User user,
-                         final Company company,
-                         final List<Department> departments,
-                         final List<UserGroup> userGroups,
-                         final String sessionid) {
+  public ProfileResponse(final User user, final Company company, final List<Department> departments, final List<UserGroup> userGroups,
+      final String sessionid) {
     this.user = user;
     this.companyProfile = new CompanyProfile(company, departments, userGroups);
     this.sessionid = sessionid;

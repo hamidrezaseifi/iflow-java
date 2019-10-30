@@ -122,7 +122,7 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 		$scope.userAssigned = {};
     	for(o in $scope.users){
     		var user =$scope.users[o];
-    		$scope.userAssigned[user.id] = false;
+    		$scope.userAssigned[user.identity] = false;
     	}
 	}
 	
@@ -137,7 +137,7 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 	$scope.getUserById = function(id){
 		for(o in $scope.users){
     		var user =$scope.users[o];
-    		if(user.id == id){
+    		if(user.identity == id){
     			return user;
     		}
     	}

@@ -4,6 +4,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
+import java.util.Set;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -16,48 +17,45 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.pth.iflow.core.TestDataProducer;
+import com.pth.iflow.core.model.Company;
 import com.pth.iflow.core.model.Department;
 import com.pth.iflow.core.model.DepartmentGroup;
+import com.pth.iflow.core.model.ProfileResponse;
 import com.pth.iflow.core.model.User;
 import com.pth.iflow.core.model.UserGroup;
 import com.pth.iflow.core.service.IUsersService;
 import com.pth.iflow.core.service.impl.UsersService;
+import com.pth.iflow.core.storage.dao.ICompanyDao;
 import com.pth.iflow.core.storage.dao.IDepartmentDao;
 import com.pth.iflow.core.storage.dao.IDepartmentGroupDao;
 import com.pth.iflow.core.storage.dao.IUserDao;
 import com.pth.iflow.core.storage.dao.IUserGroupDao;
-import com.pth.iflow.core.storage.dao.IWorkflowTypeDao;
-import com.pth.iflow.core.storage.dao.IWorkflowTypeStepDao;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 public class UserServiceTest extends TestDataProducer {
 
-  private IUsersService userService;
+  private IUsersService       userService;
 
   @MockBean
-  private IUserDao userDao;
+  private ICompanyDao         companyDao;
 
   @MockBean
-  private IUserGroupDao userGroupDao;
+  private IUserDao            userDao;
 
   @MockBean
-  private IDepartmentDao departmentDao;
+  private IUserGroupDao       userGroupDao;
+
+  @MockBean
+  private IDepartmentDao      departmentDao;
 
   @MockBean
   private IDepartmentGroupDao departmentGroupDao;
 
-  @MockBean
-  private IWorkflowTypeDao workflowDao;
-
-  @MockBean
-  private IWorkflowTypeStepDao workflowStepDao;
-
   @Before
   public void setUp() throws Exception {
-    this.userService = new UsersService(this.userDao, this.userGroupDao, this.departmentDao, this.departmentGroupDao, this.workflowDao,
-        this.workflowStepDao);
+    this.userService = new UsersService(this.companyDao, this.userDao, this.userGroupDao, this.departmentDao, this.departmentGroupDao);
   }
 
   @After
@@ -68,9 +66,9 @@ public class UserServiceTest extends TestDataProducer {
   public void testReadUserById() throws Exception {
 
     final User user = getTestUser();
-    when(this.userDao.getById(any(Long.class))).thenReturn(user);
+    when(this.userDao.getByEmail(any(String.class))).thenReturn(user);
 
-    final User resUser = this.userService.getUserById(1L);
+    final User resUser = this.userService.getUserByEmail("email");
 
     Assert.assertNotNull("Result user is not null!", resUser);
     Assert.assertEquals("Result user has id 1!", resUser.getId(), user.getId());
@@ -97,68 +95,95 @@ public class UserServiceTest extends TestDataProducer {
     Assert.assertEquals("Result user has status 1!", resUser.getStatus(), user.getStatus());
 
   }
-  
+
   @Test
   public void testGetUserDepartmentGroups() throws Exception {
 
     final User user = getTestUser();
     final List<DepartmentGroup> list = getTestDepartmentGroupList();
 
-    when(this.userDao.getById(any(Long.class))).thenReturn(user);
-    when(this.departmentGroupDao.getListByIdList(any(List.class))).thenReturn(list);
+    when(this.userDao.getByEmail(any(String.class))).thenReturn(user);
+    when(this.departmentGroupDao.getListByIdentityList(any(Set.class))).thenReturn(list);
 
-    final List<DepartmentGroup> resList = this.userService.getUserDepartmentGroups(1L);
+    final List<DepartmentGroup> resList = this.userService.getUserDepartmentGroups("identity");
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());
 
   }
-  
+
   @Test
   public void testGetUserDepartments() throws Exception {
 
     final User user = getTestUser();
     final List<Department> list = getTestDepartmentList();
 
-    when(this.userDao.getById(any(Long.class))).thenReturn(user);
-    when(this.departmentDao.getListByIdList(any(List.class))).thenReturn(list);
+    when(this.userDao.getByEmail(any(String.class))).thenReturn(user);
+    when(this.departmentDao.getListByIdentityList(any(Set.class))).thenReturn(list);
 
-    final List<Department> resList = this.userService.getUserDepartments(1L);
+    final List<Department> resList = this.userService.getUserDepartments("identity");
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());
 
   }
-  
+
   @Test
   public void testGetUserDeputies() throws Exception {
 
     final User user = getTestUser();
     final List<User> list = getTestUserList();
 
-    when(this.userDao.getById(any(Long.class))).thenReturn(user);
-    when(this.userDao.getListByIdList(any(List.class))).thenReturn(list);
+    when(this.userDao.getByEmail(any(String.class))).thenReturn(user);
+    when(this.userDao.getListByIdentityList(any(Set.class))).thenReturn(list);
 
-    final List<User> resList = this.userService.getUserDeputies(1L);
+    final List<User> resList = this.userService.getUserDeputies("identity");
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());
 
   }
-  
+
   @Test
   public void testGetUserGroups() throws Exception {
 
     final User user = getTestUser();
     final List<UserGroup> list = getTestUserGroupList();
 
-    when(this.userDao.getById(any(Long.class))).thenReturn(user);
-    when(this.userGroupDao.getListByIdList(any(List.class))).thenReturn(list);
+    when(this.userDao.getByEmail(any(String.class))).thenReturn(user);
+    when(this.userGroupDao.getListByIdentityList(any(Set.class))).thenReturn(list);
 
-    final List<UserGroup> resList = this.userService.getUserGroups(1L);
+    final List<UserGroup> resList = this.userService.getUserGroups("identity");
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());
+
+  }
+
+  @Test
+  public void testGetProfileResponseByEmail() throws Exception {
+
+    final User user = getTestUser();
+    final Company company = this.getTestCompany();
+    final List<UserGroup> grouplist = getTestUserGroupList();
+    final List<Department> deplist = getTestDepartmentList();
+
+    when(this.userDao.getByEmail(any(String.class))).thenReturn(user);
+    when(this.userGroupDao.getListByIdentityList(any(Set.class))).thenReturn(grouplist);
+    when(this.departmentDao.getListByIdentityList(any(Set.class))).thenReturn(deplist);
+    when(this.companyDao.getByIdentity(any(String.class))).thenReturn(company);
+
+    final ProfileResponse result = this.userService.getProfileResponseByEmail("identity");
+
+    Assert.assertNotNull("Result not null!", result);
+    Assert.assertEquals("Result company has title '" + company.getCompanyName() + "'", company.getCompanyName(),
+        result.getCompanyProfile().getCompany().getCompanyName());
+    Assert.assertEquals("Result user has fname '" + user.getFirstName() + "'", user.getFirstName(), result.getUser().getFirstName());
+    Assert.assertEquals("Result user has lname '" + user.getLastName() + "'", user.getLastName(), result.getUser().getLastName());
+    Assert.assertEquals("Result user has '" + grouplist.size() + "' usergroups", grouplist.size(),
+        result.getCompanyProfile().getUserGroups().size());
+    Assert.assertEquals("Result user has '" + deplist.size() + "' departments", deplist.size(),
+        result.getCompanyProfile().getDepartments().size());
 
   }
 

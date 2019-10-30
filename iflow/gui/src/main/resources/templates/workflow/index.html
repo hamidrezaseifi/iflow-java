@@ -46,7 +46,7 @@
 		    			<td>{{item.currentStep.title}}</td>
 		    			<td>{{item.status}}</td>
 		    			<td>{{item.assignToUserFullName}}</td>
-		    			<td><a class="tool-link" ng-href="/workflow/edit/{{item.id}}"><i class="material-icons">edit</i></a></td>
+		    			<td><a class="tool-link" ng-href="/workflow/edit/{{item.identity}}"><i class="material-icons">edit</i></a></td>
 		    		</tr>
 		     		
 		    	
@@ -54,7 +54,7 @@
 		    </table>
 		    
 		    <div style="min-height: 20px; border: 1px solid gray; ">
-		    {{getDebugStatusList()}}
+		    {{searchFilter}}
 		    </div>
 		    
 		    <script type="text/javascript">

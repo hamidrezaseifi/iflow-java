@@ -20,7 +20,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
-import com.pth.iflow.gui.models.ui.GuiSessionUserInfo;
+import com.pth.iflow.gui.models.ui.SessionUserInfo;
 import com.pth.iflow.gui.models.ui.UiMenuItem;
 import com.pth.iflow.gui.services.IBreadCrumbLoader;
 import com.pth.iflow.gui.services.UiMenuService;
@@ -38,7 +38,7 @@ public class GlobalExceptionHandler /* implements ErrorController */ {
   private UiMenuService       menuService;
 
   @Autowired
-  private GuiSessionUserInfo  sessionUserInfo;
+  private SessionUserInfo  sessionUserInfo;
 
   protected List<UiMenuItem> getMenus() {
     return this.menuService.getAllMenus();

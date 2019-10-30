@@ -1,48 +1,36 @@
 package com.pth.iflow.core.service.impl;
 
+import java.util.Collection;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.pth.iflow.core.model.User;
 import com.pth.iflow.core.model.UserGroup;
 import com.pth.iflow.core.service.IUserGroupService;
-import com.pth.iflow.core.storage.dao.IUserDao;
 import com.pth.iflow.core.storage.dao.IUserGroupDao;
 import com.pth.iflow.core.storage.dao.exception.IFlowOptimisticLockException;
 
 @Service
 public class UserGroupService implements IUserGroupService {
 
-  private final IUserDao userDao;
   private final IUserGroupDao userGroupDao;
 
-  public UserGroupService(@Autowired final IUserDao userDao, @Autowired final IUserGroupDao userGroupDao) {
-    this.userDao = userDao;
+  public UserGroupService(@Autowired final IUserGroupDao userGroupDao) {
     this.userGroupDao = userGroupDao;
   }
 
   @Override
-  public UserGroup getById(final Long id) {
-    return this.userGroupDao.getById(id);
+  public UserGroup getByIdentity(final String identity) {
+    return this.userGroupDao.getByIdentity(identity);
   }
 
   @Override
-  public List<UserGroup> getListByIdList(final List<Long> idList) {
-    return this.userGroupDao.getListByIdList(idList);
+  public List<UserGroup> getListByIdentityList(final Collection<String> idList) {
+    return this.userGroupDao.getListByIdentityList(idList);
   }
 
   @Override
-  public List<UserGroup> getListByIdCompanyId(final Long companyId) {
-    return this.userGroupDao.getListByCompanyId(companyId);
-  }
-
-  @Override
-  public List<User> listGroupUsers(final Long id) {
-    final List<Long> list = this.userGroupDao.listGroupUserId(id);
-
-    return this.userDao.getListByIdList(list);
+  public List<UserGroup> getListByIdCompanyIdentity(final String companyIdentity) {
+    return this.userGroupDao.getListByCompanyIdentity(companyIdentity);
   }
 
   @Override

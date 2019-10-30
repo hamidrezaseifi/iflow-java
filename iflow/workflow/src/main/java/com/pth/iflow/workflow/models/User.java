@@ -1,64 +1,34 @@
 package com.pth.iflow.workflow.models;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-import com.pth.iflow.common.edo.models.base.DataModelBase;
+import com.pth.iflow.common.edo.models.helper.IdentityModel;
 import com.pth.iflow.common.enums.EUserStatus;
 
-public class User extends DataModelBase {
+public class User extends IdentityModel {
 
-  private Long                id;
-  private Long                companyId;
-  private String              email;
-  private LocalDate           birthDate;
-  private String              firstName;
-  private String              lastName;
-  private Integer             status;
-  private Integer             permission;
-  private Integer             version;
-  private LocalDateTime       createdAt;
-  private LocalDateTime       updatedAt;
-  private final List<Long>    groups           = new ArrayList<>();
-  private final List<Long>    departments      = new ArrayList<>();
-  private final List<Long>    departmentGroups = new ArrayList<>();
-  private final List<Long>    deputies         = new ArrayList<>();
-  private final List<Integer> roles            = new ArrayList<>();
+  private String             companyIdentity;
+  private String             email;
+  private LocalDate          birthDate;
+  private String             firstName;
+  private String             lastName;
+  private Integer            status;
+  private Integer            permission;
+  private Integer            version;
+  private final Set<String>  groups           = new HashSet<>();
+  private final Set<String>  departments      = new HashSet<>();
+  private final Set<String>  departmentGroups = new HashSet<>();
+  private final Set<String>  deputies         = new HashSet<>();
+  private final Set<Integer> roles            = new HashSet<>();
 
-  /**
-   * @return the id
-   */
-
-  @Override
-  public Long getId() {
-    return this.id;
+  public String getCompanyIdentity() {
+    return companyIdentity;
   }
 
-  public boolean hasId(final Long id) {
-    return this.id == id;
-  }
-
-  /**
-   * @param id the id to set
-   */
-  public void setId(final Long id) {
-    this.id = id;
-  }
-
-  /**
-   * @return the companyIid
-   */
-  public Long getCompanyId() {
-    return this.companyId;
-  }
-
-  /**
-   * @param companyIid the companyIid to set
-   */
-  public void setCompanyId(final Long companyId) {
-    this.companyId = companyId;
+  public void setCompanyIdentity(final String companyIdentity) {
+    this.companyIdentity = companyIdentity;
   }
 
   public String getEmail() {
@@ -134,7 +104,6 @@ public class User extends DataModelBase {
    * @return the version
    */
 
-  @Override
   public Integer getVersion() {
     return this.version;
   }
@@ -143,37 +112,8 @@ public class User extends DataModelBase {
    * @param version the version to set
    */
 
-  @Override
   public void setVersion(final Integer version) {
     this.version = version;
-  }
-
-  /**
-   * @return the createdAt
-   */
-  public LocalDateTime getCreatedAt() {
-    return this.createdAt;
-  }
-
-  /**
-   * @param createdAt the createdAt to set
-   */
-  public void setCreatedAt(final LocalDateTime createdAt) {
-    this.createdAt = createdAt;
-  }
-
-  /**
-   * @return the updatedAt
-   */
-  public LocalDateTime getUpdatedAt() {
-    return this.updatedAt;
-  }
-
-  /**
-   * @param updatedAt the updatedAt to set
-   */
-  public void setUpdatedAt(final LocalDateTime updatedAt) {
-    this.updatedAt = updatedAt;
   }
 
   /**
@@ -183,71 +123,71 @@ public class User extends DataModelBase {
     this.permission = permission;
   }
 
-  public List<Long> getGroups() {
+  public Set<String> getGroups() {
     return this.groups;
   }
 
-  public void setGroups(final List<Long> groups) {
+  public void setGroups(final Set<String> groups) {
     this.groups.clear();
     if (groups != null) {
       this.groups.addAll(groups);
     }
   }
 
-  public void addGroup(final Long groupId) {
+  public void addGroup(final String groupId) {
     this.groups.add(groupId);
   }
 
-  public List<Long> getDepartments() {
+  public Set<String> getDepartments() {
     return this.departments;
   }
 
-  public void setDepartments(final List<Long> departments) {
+  public void setDepartments(final Set<String> departments) {
     this.departments.clear();
     if (departments != null) {
       this.departments.addAll(departments);
     }
   }
 
-  public void addDepartment(final Long departmentId) {
+  public void addDepartment(final String departmentId) {
     this.departments.add(departmentId);
   }
 
-  public List<Long> getDepartmentGroups() {
+  public Set<String> getDepartmentGroups() {
     return this.departmentGroups;
   }
 
-  public void setDepartmentGroups(final List<Long> departmentGroups) {
+  public void setDepartmentGroups(final Set<String> departmentGroups) {
     this.departmentGroups.clear();
     if (departmentGroups != null) {
       this.departmentGroups.addAll(departmentGroups);
     }
   }
 
-  public void addDepartmentGroup(final Long departmentGroupId) {
+  public void addDepartmentGroup(final String departmentGroupId) {
     this.departmentGroups.add(departmentGroupId);
   }
 
-  public List<Long> getDeputies() {
+  public Set<String> getDeputies() {
     return this.deputies;
   }
 
-  public void setDeputies(final List<Long> deputies) {
+  public void setDeputies(final Set<String> deputies) {
     this.deputies.clear();
     if (deputies != null) {
       this.deputies.addAll(deputies);
     }
   }
 
-  public void addDeputy(final Long deputyId) {
+  public void addDeputy(final String deputyId) {
     this.deputies.add(deputyId);
   }
 
-  public List<Integer> getRoles() {
+  public Set<Integer> getRoles() {
     return this.roles;
   }
 
-  public void setRoles(final List<Integer> roles) {
+  public void setRoles(final Set<Integer> roles) {
     this.roles.clear();
     if (roles != null) {
       this.roles.addAll(roles);
@@ -256,6 +196,16 @@ public class User extends DataModelBase {
 
   public void addRole(final Integer role) {
     this.roles.add(role);
+  }
+
+  @Override
+  public String getIdentity() {
+    return email;
+  }
+
+  @Override
+  public void setIdentity(final String identity) {
+    email = identity;
   }
 
 }

@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.pth.iflow.common.edo.models.IdLongListEdo;
+import com.pth.iflow.common.edo.models.IdentityListEdo;
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.common.rest.IflowRestPaths;
@@ -32,39 +32,40 @@ public class ProfileCachDataDataService implements IProfileCachDataDataService {
   }
 
   @Override
-  public void resetCachDataForUser(final Long companyId, final Long userId, final String token)
+  public void resetCachDataForUser(final String companyIdentity, final String userIdentity, final String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     logger.debug("Reset cach data request for user");
 
     this.restTemplate.callRestGet(
-        this.moduleAccessConfig.generateProfileUrl(IflowRestPaths.ProfileModule.CAL_CACHDATA_USER_DATARESET(companyId, userId)), token,
-        EModule.CORE, Void.class, true);
+        this.moduleAccessConfig
+            .generateProfileUrl(IflowRestPaths.ProfileModule.CAL_CACHDATA_USER_DATARESET(companyIdentity, userIdentity)),
+        token, EModule.CORE, Void.class, true);
 
   }
 
   @Override
-  public void resetCachDataForUserList(final Long companyId, final Set<Long> userIdList, final String token)
+  public void resetCachDataForUserList(final String companyIdentity, final Set<String> userIdentityList, final String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     logger.debug("Reset cach data request for user list");
 
-    final IdLongListEdo idListEdo = new IdLongListEdo(userIdList);
+    final IdentityListEdo idListEdo = new IdentityListEdo(userIdentityList);
     this.restTemplate.callRestPost(
-        this.moduleAccessConfig.generateProfileUrl(IflowRestPaths.ProfileModule.CAL_CACHDATA_USERLIST_DATARESET(companyId)), token,
-        EModule.CORE, idListEdo, Void.class, true);
+        this.moduleAccessConfig.generateProfileUrl(IflowRestPaths.ProfileModule.CAL_CACHDATA_USERLIST_DATARESET(companyIdentity)),
+        token, EModule.CORE, idListEdo, Void.class, true);
 
   }
 
   @Override
-  public void resetCachDataForWorkflow(final Long companyId, final Long workflowId, final String token)
+  public void resetCachDataForWorkflow(final String companyIdentity, final String workflowIdentity, final String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     logger.debug("Reset cach data request for workflow");
 
     this.restTemplate.callRestGet(
         this.moduleAccessConfig
-            .generateProfileUrl(IflowRestPaths.ProfileModule.CAL_CACHDATA_WORKFLOW_DATARESET(companyId, workflowId)),
+            .generateProfileUrl(IflowRestPaths.ProfileModule.CAL_CACHDATA_WORKFLOW_DATARESET(companyIdentity, workflowIdentity)),
         token, EModule.CORE, Void.class, true);
 
   }

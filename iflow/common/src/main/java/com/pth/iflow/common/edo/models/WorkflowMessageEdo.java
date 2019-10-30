@@ -24,27 +24,24 @@ import com.pth.iflow.common.enums.EWorkflowMessageType;
 @XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "WorkflowMessage" + IFlowJaxbDefinition.TYPE_PREFIX)
 public class WorkflowMessageEdo {
 
-  @XmlElement(name = "ID", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long          id;
+  @NotNull(message = "WorkflowIdentity must not be null")
+  @XmlElement(name = "WorkflowIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String        workflowIdentity;
 
-  @NotNull(message = "workflowId must not be null")
-  @XmlElement(name = "WorkflowId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long          workflowId;
-
-  @NotNull(message = "StepId must not be null")
-  @XmlElement(name = "StepId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long          stepId;
+  @NotNull(message = "StepIdentity must not be null")
+  @XmlElement(name = "StepIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String        stepIdentity;
 
   @NotNull(message = "UserId must not be null")
   @XmlElement(name = "UserId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long          userId;
+  private String        userIdentity;
 
   @XmlElement(name = "Message", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String        message;
 
-  @NotNull(message = "CreatedBy must not be null")
-  @XmlElement(name = "CreatedBy", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long          createdBy;
+  @NotNull(message = "CreatedByIdentity must not be null")
+  @XmlElement(name = "CreatedByIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String        createdByIdentity;
 
   @NotNull(message = "MessageType must not be null")
   @AEnumValueValidator(enumClazz = EWorkflowMessageType.class)
@@ -70,36 +67,28 @@ public class WorkflowMessageEdo {
   @XmlElement(name = "CreatedAt", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private LocalDateTime createdAt;
 
-  public Long getId() {
-    return this.id;
+  public String getWorkflowIdentity() {
+    return this.workflowIdentity;
   }
 
-  public void setId(final Long id) {
-    this.id = id;
+  public void setWorkflowIdentity(final String workflowIdentity) {
+    this.workflowIdentity = workflowIdentity;
   }
 
-  public Long getWorkflowId() {
-    return this.workflowId;
+  public String getStepIdentity() {
+    return this.stepIdentity;
   }
 
-  public void setWorkflowId(final Long workflowId) {
-    this.workflowId = workflowId;
+  public void setStepIdentity(final String stepIdentity) {
+    this.stepIdentity = stepIdentity;
   }
 
-  public Long getStepId() {
-    return this.stepId;
+  public String getUserIdentity() {
+    return this.userIdentity;
   }
 
-  public void setStepId(final Long stepId) {
-    this.stepId = stepId;
-  }
-
-  public Long getUserId() {
-    return this.userId;
-  }
-
-  public void setUserId(final Long userId) {
-    this.userId = userId;
+  public void setUserIdentity(final String userIdentity) {
+    this.userIdentity = userIdentity;
   }
 
   public String getMessage() {
@@ -110,12 +99,12 @@ public class WorkflowMessageEdo {
     this.message = message;
   }
 
-  public Long getCreatedBy() {
-    return this.createdBy;
+  public String getCreatedByIdentity() {
+    return this.createdByIdentity;
   }
 
-  public void setCreatedBy(final Long createdBy) {
-    this.createdBy = createdBy;
+  public void setCreatedByIdentity(final String createdByIdentity) {
+    this.createdByIdentity = createdByIdentity;
   }
 
   public Integer getMessageType() {

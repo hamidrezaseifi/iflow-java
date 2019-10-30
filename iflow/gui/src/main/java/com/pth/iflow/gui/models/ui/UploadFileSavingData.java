@@ -13,13 +13,9 @@ public class UploadFileSavingData extends FileSavingData {
     super(fileExtention);
   }
 
-  public UploadFileSavingData(final MultipartFile file,
-                              final String title,
-                              final String fileExtention,
-                              final Long workflowId,
-                              final Long actionId,
-                              final Long companyId) {
-    super(title, fileExtention, workflowId, actionId, companyId);
+  public UploadFileSavingData(final MultipartFile file, final String title, final String fileExtention, final String workflowIdentity,
+      final String actionIdentity, final String companyIdentity) {
+    super(title, fileExtention, workflowIdentity, actionIdentity, companyIdentity);
     this.file = file;
 
   }
@@ -39,8 +35,9 @@ public class UploadFileSavingData extends FileSavingData {
   }
 
   public FileSavingData toFileSavingData() {
-    final FileSavingData file = new FileSavingData(getTitle(), getFileExtention(), getWorkflowId(), getActionId(), getCompanyId());
-    file.setFilePath(getFilePath());
+    final FileSavingData file = new FileSavingData(this.getTitle(), this.getFileExtention(), this.getWorkflowIdentity(),
+        this.getActionIdentity(), this.getCompanyIdentity());
+    file.setFilePath(this.getFilePath());
     return file;
   }
 

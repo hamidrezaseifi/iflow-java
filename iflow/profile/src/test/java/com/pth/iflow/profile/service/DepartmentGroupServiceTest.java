@@ -56,16 +56,16 @@ public class DepartmentGroupServiceTest extends TestDataProducer {
   @Test
   public void testGetById() throws Exception {
 
-    final DepartmentGroup departmentGroup = this.getTestDepartmentGroup();
+    final DepartmentGroup departmentGroup = this.getTestDepartmentGroup("depgrp1", "deparment-grp 1");
     final DepartmentGroupEdo departmentGroupEdo = ProfileModelEdoMapper.toEdo(departmentGroup);
 
     when(this.restTemplate.callRestGet(any(String.class), any(EModule.class), any(Class.class), any(boolean.class), any()))
         .thenReturn(departmentGroupEdo);
 
-    final DepartmentGroup resDepartment = this.departmentGroupService.getById(departmentGroup.getId());
+    final DepartmentGroup resDepartment = this.departmentGroupService.getByIdentity(departmentGroup.getIdentity());
 
     Assert.assertNotNull("Result department-group is not null!", resDepartment);
-    Assert.assertEquals("Result department-group has id 1!", resDepartment.getId(), departmentGroup.getId());
+    Assert.assertEquals("Result department-group has id 1!", resDepartment.getIdentity(), departmentGroup.getIdentity());
     Assert.assertEquals("Result department-group has title '" + departmentGroup.getTitle() + "'!", resDepartment.getTitle(),
         departmentGroup.getTitle());
     Assert.assertEquals("Result department-group has status 1!", resDepartment.getStatus(), departmentGroup.getStatus());
@@ -81,7 +81,7 @@ public class DepartmentGroupServiceTest extends TestDataProducer {
     when(this.restTemplate.callRestGet(any(String.class), any(EModule.class), eq(UserListEdo.class), any(boolean.class), any()))
         .thenReturn(listEdo);
 
-    final List<User> resList = this.departmentGroupService.getAllUserListByDepartmentGroupId(1L);
+    final List<User> resList = this.departmentGroupService.getAllUserListByDepartmentGroupId("ident1");
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());

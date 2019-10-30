@@ -5,11 +5,9 @@ import java.util.List;
 
 public class CompanyProfile {
 
-  private Company company;
-
+  private Company                company;
   private final List<Department> departments = new ArrayList<>();
-
-  private final List<UserGroup> userGroups = new ArrayList<>();
+  private final List<UserGroup>  userGroups  = new ArrayList<>();
 
   public CompanyProfile() {
 
@@ -56,6 +54,18 @@ public class CompanyProfile {
     if (users != null) {
       this.userGroups.addAll(users);
     }
+  }
+
+  public Integer getVersion() {
+    return null;
+  }
+
+  public Long getId() {
+    return null;
+  }
+
+  public void setVersion(final Integer version) {
+
   }
 
 }

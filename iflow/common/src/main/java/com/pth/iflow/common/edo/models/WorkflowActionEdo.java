@@ -15,19 +15,15 @@ import com.pth.iflow.common.enums.EWorkflowActionStatus;
 @XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "WorkflowAction" + IFlowJaxbDefinition.TYPE_PREFIX)
 public class WorkflowActionEdo {
 
-  @XmlElement(name = "ID", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long    id;
+  @XmlElement(name = "Identity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String  identity;
 
-  @NotNull(message = "WorkflowId must not be null")
-  @XmlElement(name = "WorkflowId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long    workflowId;
+  @XmlElement(name = "AssignToIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String  assignToIdentity;
 
-  @XmlElement(name = "AssignTo", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long    assignTo;
-
-  @NotNull(message = "CurrectStepId must not be null")
-  @XmlElement(name = "CurrectStepId", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Long    currectStepId;
+  @NotNull(message = "CurrentStepIdentity must not be null")
+  @XmlElement(name = "CurrentStepIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String  currentStepIdentity;
 
   @XmlElement(name = "Comments", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String  comments;
@@ -40,36 +36,28 @@ public class WorkflowActionEdo {
   @XmlElement(name = "Version", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer version;
 
-  public Long getId() {
-    return this.id;
+  public String getIdentity() {
+    return this.identity;
   }
 
-  public void setId(final Long id) {
-    this.id = id;
+  public void setIdentity(final String identity) {
+    this.identity = identity;
   }
 
-  public Long getWorkflowId() {
-    return this.workflowId;
+  public String getAssignToIdentity() {
+    return this.assignToIdentity;
   }
 
-  public void setWorkflowId(final Long workflowId) {
-    this.workflowId = workflowId;
+  public void setAssignToIdentity(final String assignToIdentity) {
+    this.assignToIdentity = assignToIdentity;
   }
 
-  public Long getCurrentStepId() {
-    return this.currectStepId;
+  public String getCurrentStepIdentity() {
+    return this.currentStepIdentity;
   }
 
-  public void setCurrentStepId(final Long currectStepId) {
-    this.currectStepId = currectStepId;
-  }
-
-  public Long getAssignTo() {
-    return this.assignTo;
-  }
-
-  public void setAssignTo(final Long assignTo) {
-    this.assignTo = assignTo;
+  public void setCurrentStepIdentity(final String currectStepIdentity) {
+    this.currentStepIdentity = currectStepIdentity;
   }
 
   public String getComments() {

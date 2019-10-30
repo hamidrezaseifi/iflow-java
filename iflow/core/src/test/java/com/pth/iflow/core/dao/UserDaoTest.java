@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.junit.After;
@@ -27,7 +28,7 @@ import com.pth.iflow.core.storage.dao.IUserDao;
 public class UserDaoTest extends TestDataProducer {
 
   @Autowired
-  private IUserDao userDao;
+  private IUserDao         userDao;
 
   private final List<User> createdModels = new ArrayList<>();
 
@@ -36,7 +37,7 @@ public class UserDaoTest extends TestDataProducer {
 
   }
 
-  private void createWorlflowList() throws Exception {
+  private void createUserList() throws Exception {
     for (int i = 1; i <= 3; i++) {
       final User user = getTestNewUser();
       user.setEmail("utest email " + i);
@@ -58,7 +59,7 @@ public class UserDaoTest extends TestDataProducer {
   @Test
   public void testGetById() throws Exception {
 
-    createWorlflowList();
+    createUserList();
 
     final User user = createdModels.get(0);
 
@@ -75,13 +76,13 @@ public class UserDaoTest extends TestDataProducer {
   }
 
   @Test
-  public void testGetListByIdList() throws Exception {
+  public void testGetListByIdentityList() throws Exception {
 
-    createWorlflowList();
+    createUserList();
 
-    final List<Long> idList = createdModels.stream().map(w -> w.getId()).collect(Collectors.toList());
+    final Set<String> idList = createdModels.stream().map(w -> w.getIdentity()).collect(Collectors.toSet());
 
-    final List<User> resList = this.userDao.getListByIdList(idList);
+    final List<User> resList = this.userDao.getListByIdentityList(idList);
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + createdModels.size() + " items.", resList.size(), createdModels.size());
@@ -91,9 +92,9 @@ public class UserDaoTest extends TestDataProducer {
   @Test
   public void testGetListByCompanyId() throws Exception {
 
-    createWorlflowList();
+    createUserList();
 
-    final List<User> resList = this.userDao.getListByCompanyId(createdModels.get(0).getCompanyId());
+    final List<User> resList = this.userDao.getListByCompanyIdentity(createdModels.get(0).getCompanyIdentity());
 
     Assert.assertNotNull("Result list is not null!", resList);
 
