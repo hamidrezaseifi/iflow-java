@@ -2,44 +2,28 @@ package com.pth.iflow.common.response;
 
 import org.springframework.http.HttpStatus;
 
+import com.pth.iflow.common.exceptions.EIFlowErrorType;
+
 public class IFlowErrorRestResponse {
 
-  private final HttpStatus status;
-  final String             errorType;
-  private final String     message;
-  private final Integer    errorId;
-
-  public static String NoError = "NoError";
+  private final HttpStatus      status;
+  private final EIFlowErrorType errorType;
+  private final String          message;
+  private final String          details;
 
   public IFlowErrorRestResponse() {
     this.status = HttpStatus.OK;
-    this.errorType = NoError;
+    this.errorType = EIFlowErrorType.NONE;
     this.message = "";
-    this.errorId = 0;
+    this.details = "";
 
   }
 
-  public IFlowErrorRestResponse(final HttpStatus status, final String errorType, final String message) {
+  public IFlowErrorRestResponse(final HttpStatus status, final Exception ex, final EIFlowErrorType errorType) {
     this.status = status;
     this.errorType = errorType;
-    this.errorId = 0;
-    this.message = message;
-
-  }
-
-  public IFlowErrorRestResponse(final HttpStatus status, final String errorType, final String message, final Integer errorId) {
-    this.status = status;
-    this.errorType = errorType;
-    this.message = message;
-    this.errorId = errorId;
-
-  }
-
-  public IFlowErrorRestResponse(final HttpStatus status, final Exception ex) {
-    this.status = status;
-    this.errorType = ex.getMessage();
-    this.message = ex.getMessage(); // stackListToString(ex.getStackTrace());
-    this.errorId = 0;
+    this.message = ex.getMessage();
+    this.details = stackListToString(ex.getStackTrace());
 
   }
 
@@ -47,23 +31,16 @@ public class IFlowErrorRestResponse {
     return this.status;
   }
 
-  public String getErrorType() {
+  public EIFlowErrorType getErrorType() {
     return this.errorType;
   }
 
   public boolean hasError() {
-    return !this.errorType.equals(NoError);
+    return !this.errorType.equals(EIFlowErrorType.NONE);
   }
 
   public String getMessage() {
     return this.message;
-  }
-
-  /**
-   * @return the errorId
-   */
-  public Integer getErrorId() {
-    return this.errorId;
   }
 
   public static String stackListToString(final StackTraceElement[] list) {
@@ -73,6 +50,10 @@ public class IFlowErrorRestResponse {
     }
 
     return res;
+  }
+
+  public String getDetails() {
+    return this.details;
   }
 
   @Override

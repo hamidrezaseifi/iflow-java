@@ -3,7 +3,6 @@ package com.pth.iflow.workflow.bl.strategy.steps;
 import java.net.MalformedURLException;
 
 import com.pth.iflow.common.exceptions.EIFlowErrorType;
-import com.pth.iflow.common.exceptions.IFlowCustomeException;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.strategy.strategies.AbstractWorkflowSaveStrategy;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
@@ -22,7 +21,7 @@ public class ValidateWorkflowActiveActionStrategyStep extends AbstractWorkflowSa
     final Workflow processingWorkflow = this.getWorkflowSaveStrategy().getProcessingWorkflow();
 
     if (processingWorkflow.hasActiveAction() == false) {
-      throw new IFlowCustomeException("The workflow has no active action identity:" + processingWorkflow.getIdentity(),
+      throw new WorkflowCustomizedException("The workflow has no active action identity:" + processingWorkflow.getIdentity(),
           EIFlowErrorType.INVALID_WORKFLOW_STATUS);
 
     }

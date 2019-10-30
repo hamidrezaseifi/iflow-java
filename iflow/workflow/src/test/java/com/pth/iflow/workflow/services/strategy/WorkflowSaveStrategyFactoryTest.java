@@ -1,6 +1,7 @@
 package com.pth.iflow.workflow.services.strategy;
 
 import java.util.ArrayList;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -10,9 +11,9 @@ import org.mockito.Mock;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
 import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
-import com.pth.iflow.common.exceptions.IFlowCustomeException;
 import com.pth.iflow.workflow.TestDataProducer;
 import com.pth.iflow.workflow.bl.IDepartmentDataService;
 import com.pth.iflow.workflow.bl.IProfileCachDataDataService;
@@ -32,6 +33,7 @@ import com.pth.iflow.workflow.bl.strategy.strategies.validation.CreateManualAssi
 import com.pth.iflow.workflow.bl.strategy.strategies.validation.CreateOfferlAssignWorkflowValidationStrategy;
 import com.pth.iflow.workflow.bl.strategy.strategies.validation.DoneExistingWorkflowValidationStrategy;
 import com.pth.iflow.workflow.bl.strategy.strategies.validation.SaveExistingWorkflowValidationStrategy;
+import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.WorkflowSaveRequest;
 import com.pth.iflow.workflow.models.WorkflowType;
 
@@ -40,13 +42,13 @@ import com.pth.iflow.workflow.models.WorkflowType;
 @AutoConfigureMockMvc
 public class WorkflowSaveStrategyFactoryTest extends TestDataProducer {
 
-  private IWorkStrategyFactory workStrategyFactory;
+  private IWorkStrategyFactory        workStrategyFactory;
 
   @Mock
-  private IWorkflowDataService workflowDataService;
+  private IWorkflowDataService        workflowDataService;
 
   @Mock
-  private IDepartmentDataService departmentDataService;
+  private IDepartmentDataService      departmentDataService;
 
   @Mock
   private IWorkflowMessageDataService workflowMessageDataService;
@@ -55,17 +57,14 @@ public class WorkflowSaveStrategyFactoryTest extends TestDataProducer {
   private IProfileCachDataDataService cachDataDataService;
 
   @Mock
-  private IWorkflowPrepare workflowPrepare;
+  private IWorkflowPrepare            workflowPrepare;
 
-  private String validTocken;
+  private String                      validTocken;
 
   @Before
   public void setUp() throws Exception {
-    this.workStrategyFactory = new WorkStrategyFactory(this.workflowDataService,
-                                                       this.departmentDataService,
-                                                       this.workflowMessageDataService,
-                                                       this.cachDataDataService,
-                                                       this.workflowPrepare);
+    this.workStrategyFactory = new WorkStrategyFactory(this.workflowDataService, this.departmentDataService,
+        this.workflowMessageDataService, this.cachDataDataService, this.workflowPrepare);
 
     // when(this.workflowDataService.generateCoreUrl(any(String.class))).thenReturn(new
     // URL("http://any-string"));
@@ -86,9 +85,8 @@ public class WorkflowSaveStrategyFactoryTest extends TestDataProducer {
     final IWorkflowSaveStrategy saveWorkflowStrategy = this.workStrategyFactory.selectSaveWorkStrategy(request, this.validTocken);
 
     Assert.assertNotNull("Result strategy is not null!", saveWorkflowStrategy);
-    Assert.assertEquals("Selected strategy is ArchivingWorkflowStrategy!",
-                        saveWorkflowStrategy.getClass(),
-                        ArchivingWorkflowStrategy.class);
+    Assert.assertEquals("Selected strategy is ArchivingWorkflowStrategy!", saveWorkflowStrategy.getClass(),
+        ArchivingWorkflowStrategy.class);
 
   }
 
@@ -102,9 +100,8 @@ public class WorkflowSaveStrategyFactoryTest extends TestDataProducer {
     final IWorkflowSaveStrategy saveWorkflowStrategy = this.workStrategyFactory.selectSaveWorkStrategy(request, this.validTocken);
 
     Assert.assertNotNull("Result strategy is not null!", saveWorkflowStrategy);
-    Assert.assertEquals("Selected strategy is DoneExistingWorkflowStrategy!",
-                        saveWorkflowStrategy.getClass(),
-                        DoneExistingWorkflowStrategy.class);
+    Assert.assertEquals("Selected strategy is DoneExistingWorkflowStrategy!", saveWorkflowStrategy.getClass(),
+        DoneExistingWorkflowStrategy.class);
 
   }
 
@@ -118,13 +115,12 @@ public class WorkflowSaveStrategyFactoryTest extends TestDataProducer {
     final IWorkflowSaveStrategy saveWorkflowStrategy = this.workStrategyFactory.selectSaveWorkStrategy(request, this.validTocken);
 
     Assert.assertNotNull("Result strategy is not null!", saveWorkflowStrategy);
-    Assert.assertEquals("Selected strategy is SaveExistingWorkflowStrategy!",
-                        saveWorkflowStrategy.getClass(),
-                        SaveExistingWorkflowStrategy.class);
+    Assert.assertEquals("Selected strategy is SaveExistingWorkflowStrategy!", saveWorkflowStrategy.getClass(),
+        SaveExistingWorkflowStrategy.class);
 
   }
 
-  @Test(expected = IFlowCustomeException.class)
+  @Test(expected = WorkflowCustomizedException.class)
   public void testSelectNoneStrategy() throws Exception {
 
     final WorkflowSaveRequest request = this.getTestWorkflowCreateRequest();
@@ -146,12 +142,11 @@ public class WorkflowSaveStrategyFactoryTest extends TestDataProducer {
     workflowCreateReq.getWorkflow().setIdentityToNew();
 
     final IWorkflowSaveStrategy createWorkflowStrategy = this.workStrategyFactory.selectSaveWorkStrategy(workflowCreateReq,
-                                                                                                         this.validTocken);
+        this.validTocken);
 
     Assert.assertNotNull("Result strategy is not null!", createWorkflowStrategy);
-    Assert.assertEquals("Selected strategy is CreateManualAssignWorkflowStrategy!",
-                        createWorkflowStrategy.getClass(),
-                        CreateManualAssignWorkflowStrategy.class);
+    Assert.assertEquals("Selected strategy is CreateManualAssignWorkflowStrategy!", createWorkflowStrategy.getClass(),
+        CreateManualAssignWorkflowStrategy.class);
 
   }
 
@@ -163,12 +158,11 @@ public class WorkflowSaveStrategyFactoryTest extends TestDataProducer {
     workflowCreateReq.getWorkflow().getWorkflowType().setAssignType(EWorkflowTypeAssignType.OFFER);
 
     final IWorkflowSaveStrategy createWorkflowStrategy = this.workStrategyFactory.selectSaveWorkStrategy(workflowCreateReq,
-                                                                                                         this.validTocken);
+        this.validTocken);
 
     Assert.assertNotNull("Result strategy is not null!", createWorkflowStrategy);
-    Assert.assertEquals("Selected strategy is CreateOfferlAssignWorkflowStrategy!",
-                        createWorkflowStrategy.getClass(),
-                        CreateOfferlAssignWorkflowStrategy.class);
+    Assert.assertEquals("Selected strategy is CreateOfferlAssignWorkflowStrategy!", createWorkflowStrategy.getClass(),
+        CreateOfferlAssignWorkflowStrategy.class);
 
   }
 
@@ -181,12 +175,11 @@ public class WorkflowSaveStrategyFactoryTest extends TestDataProducer {
     request.setCommand(EWorkflowProcessCommand.ARCHIVE);
 
     final IWorkflowSaveStrategy saveWorkflowStrategy = this.workStrategyFactory.selectValidationWorkStrategy(request,
-                                                                                                             this.validTocken);
+        this.validTocken);
 
     Assert.assertNotNull("Result strategy is not null!", saveWorkflowStrategy);
-    Assert.assertEquals("Selected strategy is ArchivingWorkflowValidationStrategy!",
-                        saveWorkflowStrategy.getClass(),
-                        ArchivingWorkflowValidationStrategy.class);
+    Assert.assertEquals("Selected strategy is ArchivingWorkflowValidationStrategy!", saveWorkflowStrategy.getClass(),
+        ArchivingWorkflowValidationStrategy.class);
 
   }
 
@@ -198,12 +191,11 @@ public class WorkflowSaveStrategyFactoryTest extends TestDataProducer {
     request.setCommand(EWorkflowProcessCommand.DONE);
     request.getWorkflow().setWorkflowType(getTestWorkflowType());
     final IWorkflowSaveStrategy saveWorkflowStrategy = this.workStrategyFactory.selectValidationWorkStrategy(request,
-                                                                                                             this.validTocken);
+        this.validTocken);
 
     Assert.assertNotNull("Result strategy is not null!", saveWorkflowStrategy);
-    Assert.assertEquals("Selected strategy is DoneExistingWorkflowValidationStrategy!",
-                        saveWorkflowStrategy.getClass(),
-                        DoneExistingWorkflowValidationStrategy.class);
+    Assert.assertEquals("Selected strategy is DoneExistingWorkflowValidationStrategy!", saveWorkflowStrategy.getClass(),
+        DoneExistingWorkflowValidationStrategy.class);
 
   }
 
@@ -215,16 +207,15 @@ public class WorkflowSaveStrategyFactoryTest extends TestDataProducer {
     request.setCommand(EWorkflowProcessCommand.SAVE);
 
     final IWorkflowSaveStrategy saveWorkflowStrategy = this.workStrategyFactory.selectValidationWorkStrategy(request,
-                                                                                                             this.validTocken);
+        this.validTocken);
 
     Assert.assertNotNull("Result strategy is not null!", saveWorkflowStrategy);
-    Assert.assertEquals("Selected strategy is SaveExistingWorkflowValidationStrategy!",
-                        saveWorkflowStrategy.getClass(),
-                        SaveExistingWorkflowValidationStrategy.class);
+    Assert.assertEquals("Selected strategy is SaveExistingWorkflowValidationStrategy!", saveWorkflowStrategy.getClass(),
+        SaveExistingWorkflowValidationStrategy.class);
 
   }
 
-  @Test(expected = IFlowCustomeException.class)
+  @Test(expected = WorkflowCustomizedException.class)
   public void testSelectNoneValidationStrategy() throws Exception {
 
     final WorkflowSaveRequest request = this.getTestWorkflowCreateRequest();
@@ -242,12 +233,11 @@ public class WorkflowSaveStrategyFactoryTest extends TestDataProducer {
     workflowCreateReq.getWorkflow().getWorkflowType().setAssignType(EWorkflowTypeAssignType.MANUAL);
 
     final IWorkflowSaveStrategy createWorkflowStrategy = this.workStrategyFactory.selectValidationWorkStrategy(workflowCreateReq,
-                                                                                                               this.validTocken);
+        this.validTocken);
 
     Assert.assertNotNull("Result strategy is not null!", createWorkflowStrategy);
-    Assert.assertEquals("Selected strategy is CreateManualAssignWorkflowValidationStrategy!",
-                        createWorkflowStrategy.getClass(),
-                        CreateManualAssignWorkflowValidationStrategy.class);
+    Assert.assertEquals("Selected strategy is CreateManualAssignWorkflowValidationStrategy!", createWorkflowStrategy.getClass(),
+        CreateManualAssignWorkflowValidationStrategy.class);
 
   }
 
@@ -263,12 +253,11 @@ public class WorkflowSaveStrategyFactoryTest extends TestDataProducer {
     workflowCreateReq.getWorkflow().setIdentityToNew();
 
     final IWorkflowSaveStrategy createWorkflowStrategy = this.workStrategyFactory.selectValidationWorkStrategy(workflowCreateReq,
-                                                                                                               this.validTocken);
+        this.validTocken);
 
     Assert.assertNotNull("Result strategy is not null!", createWorkflowStrategy);
-    Assert.assertEquals("Selected strategy is CreateOfferlAssignWorkflowValidationStrategy!",
-                        createWorkflowStrategy.getClass(),
-                        CreateOfferlAssignWorkflowValidationStrategy.class);
+    Assert.assertEquals("Selected strategy is CreateOfferlAssignWorkflowValidationStrategy!", createWorkflowStrategy.getClass(),
+        CreateOfferlAssignWorkflowValidationStrategy.class);
 
   }
 }
