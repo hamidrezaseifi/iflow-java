@@ -127,7 +127,7 @@
 						<div class="content-container alert bg-danger alert-danger" style="margin-bottom:0;">
 						
 							<div class="errorcontent-message" ng-bind-html="errorMessage"></div>
-							<div>
+							<div ng-show="hasErrorDetail()">
 								<input style="float:right" type="checkbox" id="showerrordetailcheck" ng-model="showErrorDetail" >
 								<label style="float:right; margin-right: 10px;" class="form-check-label" for="showerrordetailcheck" th:text="#{common.details}"></label>
 							</div>

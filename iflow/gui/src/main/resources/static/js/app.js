@@ -66,21 +66,21 @@ iflowApp.factory('ShowErrorService', function() {
 
     	    	$("#errormessagedialog").modal();
     			return;
-				}
+			}
 				
 				
-				if(typeof scope.$parent !== "undefined"){
-					scope.$parent.errorMessage = response.data.message;
-					scope.$parent.errorDetails = (response.data.detailes ? response.data.detailes + "\r\n" : "") + (response.data.stackTraceElement ? response.data.stackTraceElement : "");
-				}
-				else{
-					scope.errorMessage = response.data.message;
-					scope.errorDetails = (response.data.detailes ? response.data.detailes + "\r\n" : "") + (response.data.stackTraceElement ? response.data.stackTraceElement : "");
+			if(typeof scope.$parent !== "undefined"){
+				scope.$parent.errorMessage = response.data.message;
+				scope.$parent.errorDetails = (response.data.details ? response.data.details + "\r\n" : "");
+			}
+			else{
+				scope.errorMessage = response.data.message;
+				scope.errorDetails = (response.data.details ? response.data.details + "\r\n" : "");
 
-				}
-					
+			}
 				
-				$("#errormessagedialog").modal();
+			
+			$("#errormessagedialog").modal();
 
     	}
     };
@@ -92,7 +92,6 @@ iflowApp.controller('BodyController', function ($scope, $mdSidenav, $mdComponent
 	$scope.showloading = false;
 	$scope.isShowError = true;
 	$scope.isShowMessage = false;
-	$scope.testData = "test-data-app";
 
 	$scope.errorMessage = "";
 	$scope.errorDetails = "";
@@ -103,11 +102,15 @@ iflowApp.controller('BodyController', function ($scope, $mdSidenav, $mdComponent
 	
 	$scope.$on("angular-resizable.resizeEnd", function(event, args) {        
 		
-			if (args.height && args.id == 'message-panel-container'){
-				$scope.messagePanelHeight = args.height;
-			}
+		if (args.height && args.id == 'message-panel-container'){
+			$scope.messagePanelHeight = args.height;
+		}
 				
 	});
+    
+	$scope.hasErrorDetail = function(){
+		return $scope.errorDetails !== null && $scope.errorDetails !== "";
+    };
     
 	$scope.toggleRight = function(){
 		$mdSidenav('rightSidenav').toggle();

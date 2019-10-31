@@ -10,20 +10,44 @@ public class IFlowErrorRestResponse {
   private final EIFlowErrorType errorType;
   private final String          message;
   private final String          details;
+  private final String          moduleName;
 
   public IFlowErrorRestResponse() {
     this.status = HttpStatus.OK;
     this.errorType = EIFlowErrorType.NONE;
     this.message = "";
     this.details = "";
+    this.moduleName = "";
 
   }
 
-  public IFlowErrorRestResponse(final HttpStatus status, final Exception ex, final EIFlowErrorType errorType) {
+  public IFlowErrorRestResponse(final HttpStatus status, final Exception ex, final String moduleName,
+      final EIFlowErrorType errorType) {
     this.status = status;
     this.errorType = errorType;
     this.message = ex.getMessage();
     this.details = stackListToString(ex.getStackTrace());
+    this.moduleName = moduleName;
+
+  }
+
+  public IFlowErrorRestResponse(final HttpStatus status, final String message, final String moduleName,
+      final EIFlowErrorType errorType) {
+    this.status = status;
+    this.errorType = errorType;
+    this.message = message;
+    this.details = "";
+    this.moduleName = moduleName;
+
+  }
+
+  public IFlowErrorRestResponse(final HttpStatus status, final String message, final String details, final String moduleName,
+      final EIFlowErrorType errorType) {
+    this.status = status;
+    this.errorType = errorType;
+    this.message = message;
+    this.details = details;
+    this.moduleName = moduleName;
 
   }
 
@@ -54,6 +78,10 @@ public class IFlowErrorRestResponse {
 
   public String getDetails() {
     return this.details;
+  }
+
+  public String getModuleName() {
+    return this.moduleName;
   }
 
   @Override
