@@ -116,7 +116,8 @@ public class RestTemplateCall implements IRestTemplateCall {
         response = this.converter.getObjectMapper().readValue(resp, IFlowErrorRestResponse.class);
       } catch (final IOException e1) {
         final GuiCustomizedException uiCustomizedException = new GuiCustomizedException(
-            "failed to Get: " + uri + "(" + e1.getMessage() + ")", e1.getStackTrace());
+            "failed to Get: " + uri + "(" + e1.getMessage() + ")", service.getModuleName(), EIFlowErrorType.SERVICE_NOT_FOUND,
+            e1.getStackTrace());
         uiCustomizedException.initCause(e1);
         throw uiCustomizedException;
       }

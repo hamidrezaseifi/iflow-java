@@ -17,6 +17,7 @@ import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 
 import com.pth.iflow.common.enums.EModule;
+import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.iflow.common.response.IFlowErrorRestResponse;
 import com.pth.iflow.profile.exceptions.ProfileCustomizedException;
 import com.pth.iflow.profile.service.IProfileRestTemplateCall;
@@ -126,15 +127,15 @@ public class ProfileRestTemplateCall implements IProfileRestTemplateCall {
       if (!throwError) {
         return null;
       }
-      throw new ProfileCustomizedException("Service " + service.getModuleName() + " is not availeable.", "",
-          EModule.GUI.getModuleName());
+      throw new ProfileCustomizedException("Service " + service.getModuleName() + " is not availeable.", "", service.getModuleName(),
+          EIFlowErrorType.SERVICE_NOT_FOUND);
     } catch (final Exception e) {
       if (!throwError) {
         return null;
       }
 
       throw new ProfileCustomizedException(this.generateServiceErrorMessage(url, service),
-          IFlowErrorRestResponse.stackListToString(e.getStackTrace()), EModule.GUI.getModuleName());
+          IFlowErrorRestResponse.stackListToString(e.getStackTrace()), EModule.PROFILE.getModuleName());
     }
   }
 
@@ -185,8 +186,7 @@ public class ProfileRestTemplateCall implements IProfileRestTemplateCall {
       if (!throwError) {
         return null;
       }
-      throw new ProfileCustomizedException("Service " + service.getModuleName() + " is not availeable.", "",
-          EModule.GUI.getModuleName());
+      throw new ProfileCustomizedException("Service " + service.getModuleName() + " is not availeable.", "", service.getModuleName());
     }
 
   }
@@ -221,7 +221,7 @@ public class ProfileRestTemplateCall implements IProfileRestTemplateCall {
       }
 
       throw new ProfileCustomizedException(this.generateServiceErrorMessage(url, service),
-          IFlowErrorRestResponse.stackListToString(e.getStackTrace()), EModule.GUI.getModuleName());
+          IFlowErrorRestResponse.stackListToString(e.getStackTrace()), service.getModuleName());
     }
   }
 

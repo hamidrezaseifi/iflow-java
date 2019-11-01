@@ -86,8 +86,8 @@ public class RestTemplateCall implements IRestTemplateCall {
       if (!throwError) {
         return null;
       }
-      throw new WorkflowCustomizedException("Service " + service.getModuleName() + " is not availeable.", e,
-          EModule.GUI.getModuleName(), EIFlowErrorType.SERVICE_NOT_FOUND);
+      throw new WorkflowCustomizedException("Service " + service.getModuleName() + " is not availeable.", e, service.getModuleName(),
+          EIFlowErrorType.SERVICE_NOT_FOUND);
     }
   }
 
@@ -133,8 +133,8 @@ public class RestTemplateCall implements IRestTemplateCall {
       if (!throwError) {
         return null;
       }
-      throw new WorkflowCustomizedException("Service " + service.getModuleName() + " is not availeable.", e,
-          EModule.GUI.getModuleName(), EIFlowErrorType.SERVICE_NOT_FOUND);
+      throw new WorkflowCustomizedException("Service " + service.getModuleName() + " is not availeable.", e, service.getModuleName(),
+          EIFlowErrorType.SERVICE_NOT_FOUND);
     }
 
   }
