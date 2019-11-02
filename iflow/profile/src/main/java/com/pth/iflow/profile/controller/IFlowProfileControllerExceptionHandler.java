@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
+import com.pth.iflow.common.enums.EModule;
+import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.iflow.common.response.IFlowErrorRestResponse;
 import com.pth.iflow.profile.exceptions.ProfileCustomizedException;
 
@@ -19,7 +21,7 @@ public class IFlowProfileControllerExceptionHandler {
   protected ResponseEntity<IFlowErrorRestResponse> handleProfileCustomizedException(final ProfileCustomizedException ex,
       final HttpServletRequest request) {
 
-    final IFlowErrorRestResponse errorResponse = new IFlowErrorRestResponse(HttpStatus.CONFLICT, "", ex.getMessage(),
+    final IFlowErrorRestResponse errorResponse = new IFlowErrorRestResponse(HttpStatus.CONFLICT, ex, ex.getModuleName(),
         ex.getErrorType());
 
     return ControllerHelper.createErrorResponseEntity(request, errorResponse, HttpStatus.CONFLICT);
@@ -30,7 +32,8 @@ public class IFlowProfileControllerExceptionHandler {
   @ResponseStatus(HttpStatus.CONFLICT)
   protected ResponseEntity<IFlowErrorRestResponse> handleConflict(final RuntimeException ex, final HttpServletRequest request) {
 
-    final IFlowErrorRestResponse errorResponse = new IFlowErrorRestResponse(HttpStatus.CONFLICT, ex);
+    final IFlowErrorRestResponse errorResponse = new IFlowErrorRestResponse(HttpStatus.CONFLICT, ex, EModule.PROFILE.getModuleName(),
+        EIFlowErrorType.RUNTIME_UNKNOWN);
     return ControllerHelper.createErrorResponseEntity(request, errorResponse, HttpStatus.CONFLICT);
 
   }

@@ -21,6 +21,7 @@ import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 
 import com.pth.iflow.common.enums.EModule;
+import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.iflow.common.response.IFlowErrorRestResponse;
 import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
@@ -71,24 +72,22 @@ public class RestTemplateCall implements IRestTemplateCall {
       try {
         response = this.converter.getObjectMapper().readValue(resp, IFlowErrorRestResponse.class);
       } catch (final IOException e1) {
-        final WorkflowCustomizedException uiCustomizedException = new WorkflowCustomizedException("failed to POST: " + url,
-            e1.getMessage(), service.name());
+        final WorkflowCustomizedException uiCustomizedException = new WorkflowCustomizedException("failed to POST: " + url, e1,
+            service.name(), EIFlowErrorType.SERVICE_NOT_FOUND);
         uiCustomizedException.initCause(e1);
         throw uiCustomizedException;
       }
 
-      throw new WorkflowCustomizedException(response.getMessage(), response.getErrorType(), service.getModuleName());
+      throw new WorkflowCustomizedException(response.getMessage(), response.getDetails(), service.getModuleName(),
+          response.getErrorType());
     } catch (final RestClientException e) {
       this.log.error("ERROR in connection with \"{}\" through url \"{}\": ", service.getModuleName(), url, e);
 
       if (!throwError) {
         return null;
       }
-      throw new WorkflowCustomizedException("Service " + service.getModuleName() + " is not availeable.", "",
-          EModule.GUI.getModuleName());
-    } catch (final Exception e) {
-
-      throw new WorkflowCustomizedException(e.getMessage(), "", service.getModuleName());
+      throw new WorkflowCustomizedException("Service " + service.getModuleName() + " is not availeable.", e, service.getModuleName(),
+          EIFlowErrorType.SERVICE_NOT_FOUND);
     }
   }
 
@@ -120,24 +119,22 @@ public class RestTemplateCall implements IRestTemplateCall {
       try {
         response = this.converter.getObjectMapper().readValue(resp, IFlowErrorRestResponse.class);
       } catch (final IOException e1) {
-        final WorkflowCustomizedException uiCustomizedException = new WorkflowCustomizedException("failed to POST: " + url,
-            e1.getMessage(), service.name());
+        final WorkflowCustomizedException uiCustomizedException = new WorkflowCustomizedException("failed to POST: " + url, e1,
+            service.name(), EIFlowErrorType.SERVICE_NOT_FOUND);
         uiCustomizedException.initCause(e1);
         throw uiCustomizedException;
       }
 
-      throw new WorkflowCustomizedException(response.getMessage(), response.getErrorType(), service.getModuleName());
+      throw new WorkflowCustomizedException(response.getMessage(), response.getDetails(), service.getModuleName(),
+          response.getErrorType());
     } catch (final RestClientException e) {
       this.log.error("ERROR in connection with \"{}\" through url \"{}\": ", service.getModuleName(), url, e);
 
       if (!throwError) {
         return null;
       }
-      throw new WorkflowCustomizedException("Service " + service.getModuleName() + " is not availeable.", "",
-          EModule.GUI.getModuleName());
-    } catch (final Exception e) {
-
-      throw new WorkflowCustomizedException(e.getMessage(), "", service.getModuleName());
+      throw new WorkflowCustomizedException("Service " + service.getModuleName() + " is not availeable.", e, service.getModuleName(),
+          EIFlowErrorType.SERVICE_NOT_FOUND);
     }
 
   }

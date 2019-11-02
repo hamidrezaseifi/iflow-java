@@ -41,13 +41,47 @@ iflowApp.config(['$httpProvider', function($httpProvider) {
     $httpProvider.defaults.timeout = 10000;
 }]);
 
-iflowApp.controller('LoginController', function ($scope, $http, $sce, $element, $compile, $mdSidenav, $mdComponentRegistry) {
+
+iflowApp.factory('ShowErrorService', function() {
+    return {
+    	showError: function(response, scope) {
+    		if(!response){
+    	    	scope.errorMessage = "No Message!";
+    	    	scope.errorDetails = "No Details!";
+
+    	    	$("#errormessagedialog").modal();
+    			return;
+    		}
+    		
+    		if(!response.data){
+    	    	scope.errorMessage = "No Message Data!";
+    	    	scope.errorDetails = "No Details Data!";
+
+    	    	$("#errormessagedialog").modal();
+    			return;
+    		}
+    		
+    		if(!response.data.message){
+    	    	scope.errorMessage = "No Message In Data!";
+    	    	scope.errorDetails = "No Details Data!";
+
+    	    	$("#errormessagedialog").modal();
+    			return;
+    		}
+    		
+	    	scope.errorMessage = response.data.message;
+	    	scope.errorDetails = (response.data.detailes ? response.data.detailes + "\r\n" : "") + (response.data.stackTraceElement ? response.data.stackTraceElement : "");
+
+	    	$("#errormessagedialog").modal();
+
+    	}
+    };
+});
+
+iflowApp.controller('LoginController', function ($scope, $http, $sce, $element, $compile, $mdSidenav, $mdComponentRegistry, ShowErrorService) {
 
 	$scope.showloading = false;
-	$scope.isShowError = true;
 	$scope.isShowMessage = false;
-
-	$scope.errorMessage = "";
 
 	$scope.messageTitle = "";
 	$scope.messageContent = "";
@@ -87,21 +121,7 @@ iflowApp.controller('LoginController', function ($scope, $http, $sce, $element, 
 	};
     
 	$('[data-toggle="tooltip"]').tooltip();   
-  
-	$scope.ShowErrorBox = function(message, details, moduleName){
-		if(moduleName == undefined){
-			moduleName = "GUI";
-		}
-		if(details == undefined || !details){
-			details = "";
-		}
-		$scope.errorMessage = moduleName + ": " + message;
-		$scope.errorHasDetails = details!= "";
-		$scope.errorDetails = convertPlainTextToHtml(details);
-	    $scope.isShowError = true;
-	    $scope.showErrorDetails = false;
-	};
-	
+  	
 	$scope.toggleShowErrorDetails = function(){
 		$scope.showErrorDetails = !$scope.showErrorDetails;
 	}

@@ -20,9 +20,11 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
+import com.pth.iflow.gui.exceptions.GuiErrorRestResponse;
 import com.pth.iflow.gui.models.ui.SessionUserInfo;
 import com.pth.iflow.gui.models.ui.UiMenuItem;
 import com.pth.iflow.gui.services.IBreadCrumbLoader;
+import com.pth.iflow.gui.services.IMessagesHelper;
 import com.pth.iflow.gui.services.UiMenuService;
 
 @Controller
@@ -38,7 +40,10 @@ public class GlobalExceptionHandler /* implements ErrorController */ {
   private UiMenuService       menuService;
 
   @Autowired
-  private SessionUserInfo  sessionUserInfo;
+  private SessionUserInfo     sessionUserInfo;
+
+  @Autowired
+  private IMessagesHelper     messagesHelper;
 
   protected List<UiMenuItem> getMenus() {
     return this.menuService.getAllMenus();
@@ -67,9 +72,10 @@ public class GlobalExceptionHandler /* implements ErrorController */ {
   @ExceptionHandler(GuiCustomizedException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   @ResponseBody
-  public GuiCustomizedException handleGuiCustomizedException(final Model model, final GuiCustomizedException ex) {
+  public GuiErrorRestResponse handleGuiCustomizedException(final Model model, final GuiCustomizedException ex) {
 
-    return ex;
+    return new GuiErrorRestResponse(HttpStatus.BAD_REQUEST, this.messagesHelper.getErrorMessage(ex.getErrorType(), ex.getModuleName()),
+        ex);
   }
 
   // @RequestMapping("/error")

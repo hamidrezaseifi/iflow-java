@@ -2,7 +2,9 @@ package com.pth.iflow.workflow.services.strategy.strategies;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+
 import java.util.Arrays;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -12,9 +14,9 @@ import org.mockito.Mock;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
 import com.pth.iflow.common.enums.EAssignType;
 import com.pth.iflow.common.enums.EWorkflowProcessCommand;
-import com.pth.iflow.common.exceptions.IFlowCustomeException;
 import com.pth.iflow.workflow.TestDataProducer;
 import com.pth.iflow.workflow.bl.IDepartmentDataService;
 import com.pth.iflow.workflow.bl.IProfileCachDataDataService;
@@ -22,6 +24,7 @@ import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.IWorkflowMessageDataService;
 import com.pth.iflow.workflow.bl.IWorkflowPrepare;
 import com.pth.iflow.workflow.bl.strategy.strategies.AssignWorkflowStrategy;
+import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.AssignItem;
 import com.pth.iflow.workflow.models.Workflow;
 import com.pth.iflow.workflow.models.WorkflowSaveRequest;
@@ -31,13 +34,13 @@ import com.pth.iflow.workflow.models.WorkflowSaveRequest;
 @AutoConfigureMockMvc
 public class AssignWorkflowStrategyTest extends TestDataProducer {
 
-  private AssignWorkflowStrategy workflowStrategy;
+  private AssignWorkflowStrategy      workflowStrategy;
 
   @Mock
-  private IWorkflowDataService workflowDataService;
+  private IWorkflowDataService        workflowDataService;
 
   @Mock
-  private IDepartmentDataService departmentDataService;
+  private IDepartmentDataService      departmentDataService;
 
   @Mock
   private IWorkflowMessageDataService workflowMessageDataService;
@@ -46,9 +49,9 @@ public class AssignWorkflowStrategyTest extends TestDataProducer {
   private IProfileCachDataDataService cachDataDataService;
 
   @Mock
-  private IWorkflowPrepare workflowPrepare;
+  private IWorkflowPrepare            workflowPrepare;
 
-  private String validTocken;
+  private String                      validTocken;
 
   @Before
   public void setUp() throws Exception {
@@ -70,26 +73,20 @@ public class AssignWorkflowStrategyTest extends TestDataProducer {
     when(this.workflowPrepare.prepareWorkflow(any(String.class), any(Workflow.class))).thenReturn(request.getWorkflow());
     when(this.workflowDataService.save(any(Workflow.class), any(String.class))).thenReturn(request.getWorkflow());
 
-    this.workflowStrategy = new AssignWorkflowStrategy(request,
-                                                       this.validTocken,
-                                                       this.departmentDataService,
-                                                       this.workflowMessageDataService,
-                                                       this.cachDataDataService,
-                                                       this.workflowDataService,
-                                                       this.workflowPrepare);
+    this.workflowStrategy = new AssignWorkflowStrategy(request, this.validTocken, this.departmentDataService,
+        this.workflowMessageDataService, this.cachDataDataService, this.workflowDataService, this.workflowPrepare);
 
     this.workflowStrategy.process();
 
     final Workflow resultWorkflow = this.workflowStrategy.getSingleProceedWorkflow();
 
     Assert.assertNotNull("Result workflow is not null!", resultWorkflow);
-    Assert.assertEquals("The status of result workflow is not changed!",
-                        resultWorkflow.getStatus(),
-                        request.getWorkflow().getStatus());
+    Assert.assertEquals("The status of result workflow is not changed!", resultWorkflow.getStatus(),
+        request.getWorkflow().getStatus());
 
   }
 
-  @Test(expected = IFlowCustomeException.class)
+  @Test(expected = WorkflowCustomizedException.class)
   public void testProccessStrategyError() throws Exception {
 
     final WorkflowSaveRequest request = this.getTestWorkflowCreateRequestForStrategy();
@@ -98,13 +95,8 @@ public class AssignWorkflowStrategyTest extends TestDataProducer {
 
     when(this.workflowDataService.save(any(Workflow.class), any(String.class))).thenReturn(request.getWorkflow());
 
-    this.workflowStrategy = new AssignWorkflowStrategy(request,
-                                                       this.validTocken,
-                                                       this.departmentDataService,
-                                                       this.workflowMessageDataService,
-                                                       this.cachDataDataService,
-                                                       this.workflowDataService,
-                                                       this.workflowPrepare);
+    this.workflowStrategy = new AssignWorkflowStrategy(request, this.validTocken, this.departmentDataService,
+        this.workflowMessageDataService, this.cachDataDataService, this.workflowDataService, this.workflowPrepare);
 
     this.workflowStrategy.process();
 

@@ -3,7 +3,6 @@ package com.pth.iflow.workflow.bl.strategy.steps;
 import java.net.MalformedURLException;
 
 import com.pth.iflow.common.exceptions.EIFlowErrorType;
-import com.pth.iflow.common.exceptions.IFlowCustomeException;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.strategy.strategies.AbstractWorkflowSaveStrategy;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
@@ -26,7 +25,7 @@ public class SelectWorkflowNextStepStrategyStep extends AbstractWorkflowSaveStra
 
     final WorkflowTypeStep nextStep = this.getWorkflowSaveStrategy().findNextStep(processingWorkflowType, processingWorkflow);
     if (nextStep == null) {
-      throw new IFlowCustomeException(String.format("Invalid workflow step id:%s", processingWorkflow.getIdentity()),
+      throw new WorkflowCustomizedException(String.format("Invalid workflow step id:%s", processingWorkflow.getIdentity()),
           EIFlowErrorType.INVALID_WORKFLOW_STEP);
     }
 

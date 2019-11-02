@@ -22,6 +22,7 @@ import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 
 import com.pth.iflow.common.enums.EModule;
+import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.iflow.common.response.IFlowErrorRestResponse;
 import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
@@ -72,24 +73,24 @@ public class RestTemplateCall implements IRestTemplateCall {
       try {
         response = this.converter.getObjectMapper().readValue(resp, IFlowErrorRestResponse.class);
       } catch (final IOException e1) {
-        final GuiCustomizedException uiCustomizedException = new GuiCustomizedException("failed to POST: " + uri, e1.getMessage(),
-            service.name(), e1.getStackTrace());
+        final GuiCustomizedException uiCustomizedException = new GuiCustomizedException(
+            "failed to POST: " + uri + "(" + e1.getMessage() + ")", e1.getStackTrace());
         uiCustomizedException.initCause(e1);
         throw uiCustomizedException;
       }
 
-      throw new GuiCustomizedException(response.getMessage(), response.getErrorType(), service.getModuleName(), e.getStackTrace());
+      throw new GuiCustomizedException(response.getMessage(), response.getModuleName(), response.getErrorType(), e.getStackTrace());
     } catch (final RestClientException e) {
       this.log.error("ERROR in connection with \"{}\" through url \"{}\": ", service.getModuleName(), uri, e);
 
       if (!throwError) {
         return null;
       }
-      throw new GuiCustomizedException("Service " + service.getModuleName() + " is not availeable.", "", EModule.GUI.getModuleName(),
-          e.getStackTrace());
+      throw new GuiCustomizedException("Service " + service.getModuleName() + " is not availeable.", service.getModuleName(),
+          EIFlowErrorType.SERVICE_NOT_FOUND);
     } catch (final Exception e) {
 
-      throw new GuiCustomizedException(e.getMessage(), "", service.getModuleName(), e.getStackTrace());
+      throw new GuiCustomizedException(e.getMessage(), e.getStackTrace());
     }
   }
 
@@ -114,24 +115,25 @@ public class RestTemplateCall implements IRestTemplateCall {
       try {
         response = this.converter.getObjectMapper().readValue(resp, IFlowErrorRestResponse.class);
       } catch (final IOException e1) {
-        final GuiCustomizedException uiCustomizedException = new GuiCustomizedException("failed to POST: " + uri, e1.getMessage(),
-            service.name(), e1.getStackTrace());
+        final GuiCustomizedException uiCustomizedException = new GuiCustomizedException(
+            "failed to Get: " + uri + "(" + e1.getMessage() + ")", service.getModuleName(), EIFlowErrorType.SERVICE_NOT_FOUND,
+            e1.getStackTrace());
         uiCustomizedException.initCause(e1);
         throw uiCustomizedException;
       }
 
-      throw new GuiCustomizedException(response.getMessage(), response.getErrorType(), service.getModuleName(), e.getStackTrace());
+      throw new GuiCustomizedException(response.getMessage(), response.getModuleName(), response.getErrorType(), e.getStackTrace());
     } catch (final RestClientException e) {
       this.log.error("ERROR in connection with \"{}\" through url \"{}\": ", service.getModuleName(), uri, e);
 
       if (!throwError) {
         return null;
       }
-      throw new GuiCustomizedException("Service " + service.getModuleName() + " is not availeable.", "", EModule.GUI.getModuleName(),
-          e.getStackTrace());
+      throw new GuiCustomizedException("Service " + service.getModuleName() + " is not availeable.", service.getModuleName(),
+          EIFlowErrorType.SERVICE_NOT_FOUND);
     } catch (final Exception e) {
 
-      throw new GuiCustomizedException(e.getMessage(), "", service.getModuleName(), e.getStackTrace());
+      throw new GuiCustomizedException(e.getMessage(), e.getStackTrace());
     }
 
   }

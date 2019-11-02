@@ -78,7 +78,8 @@ public class RestTemplateCall implements IRestTemplateCall {
         throw uiCustomizedException;
       }
 
-      throw new BackendCustomizedException(response.getMessage(), response.getErrorType(), service.getModuleName());
+      throw new BackendCustomizedException(response.getMessage(), response.getDetails(), service.getModuleName(),
+          response.getErrorType());
     } catch (final RestClientException e) {
       this.log.error("ERROR in connection with \"{}\" through url \"{}\": ", service.getModuleName(), uri, e);
 
@@ -120,7 +121,8 @@ public class RestTemplateCall implements IRestTemplateCall {
         throw uiCustomizedException;
       }
 
-      throw new BackendCustomizedException(response.getMessage(), response.getErrorType(), service.getModuleName());
+      throw new BackendCustomizedException(response.getMessage(), response.getDetails(), service.getModuleName(),
+          response.getErrorType());
     } catch (final RestClientException e) {
       this.log.error("ERROR in connection with \"{}\" through url \"{}\": ", service.getModuleName(), uri, e);
 

@@ -3,7 +3,7 @@
  */
 
 
-iflowApp.controller('WorkflowCreateController', function WorkflowTypesController($scope, $http, $sce, $element, $mdSidenav) {
+iflowApp.controller('WorkflowCreateController', function WorkflowTypesController($scope, $http, ShowErrorService) {
 	  //$scope.phones = [];
 	
 	$scope.loadUrl = loadUrl;
@@ -48,7 +48,7 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 	
 	    }, function errorCallback(response) {
 	        
-	        alert(response.data);
+	        ShowErrorService.showError(response, $scope);
 	    });
 		
 	};	
@@ -113,7 +113,7 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 	
 	    }, function errorCallback(response) {
 	        
-	        alert(response.data);
+	        ShowErrorService.showError(response, $scope);
 	    });
 	};
 
@@ -136,7 +136,7 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 	
 	    }, function errorCallback(response) {
 	        
-	        alert(response.data);
+	        ShowErrorService.showError(response, $scope);
 	    });
 	};
 
@@ -160,7 +160,7 @@ iflowApp.controller('WorkflowCreateController', function WorkflowTypesController
 	
 	    }, function errorCallback(response) {
 	        
-	        alert(response.data);
+	        ShowErrorService.showError(response, $scope);
 	    });
 	};
 	

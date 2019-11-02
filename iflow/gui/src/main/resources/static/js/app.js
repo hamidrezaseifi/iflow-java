@@ -66,36 +66,51 @@ iflowApp.factory('ShowErrorService', function() {
 
     	    	$("#errormessagedialog").modal();
     			return;
-    		}
-    		
-	    	scope.errorMessage = response.data.message;
-	    	scope.errorDetails = (response.data.detailes ? response.data.detailes + "\r\n" : "") + (response.data.stackTraceElement ? response.data.stackTraceElement : "");
+			}
+				
+				
+			if(typeof scope.$parent !== "undefined"){
+				scope.$parent.errorMessage = response.data.message;
+				scope.$parent.errorDetails = (response.data.details ? response.data.details + "\r\n" : "");
+			}
+			else{
+				scope.errorMessage = response.data.message;
+				scope.errorDetails = (response.data.details ? response.data.details + "\r\n" : "");
 
-	    	$("#errormessagedialog").modal();
+			}
+				
+			
+			$("#errormessagedialog").modal();
 
     	}
     };
 });
 
-iflowApp.controller('BodyController', function ($scope, $http, $sce, $element, $compile, $mdSidenav, $mdComponentRegistry) {
+iflowApp.controller('BodyController', function ($scope, $mdSidenav, $mdComponentRegistry) {
 
+	$scope.isAppScope = true;
 	$scope.showloading = false;
 	$scope.isShowError = true;
 	$scope.isShowMessage = false;
 
 	$scope.errorMessage = "";
+	$scope.errorDetails = "";
 	$scope.menulist = [];
 
 	$scope.messageTitle = "";
 	$scope.messageContent = "";
 	
-    $scope.$on("angular-resizable.resizeEnd", function(event, args) {        
-    	
-        if (args.height && args.id == 'message-panel-container'){
-        	$scope.messagePanelHeight = args.height;
-        }
-        	
-    });
+	$scope.$on("angular-resizable.resizeEnd", function(event, args) {        
+		
+		if (args.height && args.id == 'message-panel-container'){
+			$scope.messagePanelHeight = args.height;
+		}
+				
+	});
+    
+	$scope.hasErrorDetail = function(){
+		return $scope.errorDetails !== null && $scope.errorDetails !== "";
+    };
     
 	$scope.toggleRight = function(){
 		$mdSidenav('rightSidenav').toggle();

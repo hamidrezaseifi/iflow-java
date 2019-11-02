@@ -6,16 +6,16 @@ import com.pth.iflow.common.exceptions.EIFlowErrorType;
 
 public class BackendCustomizedException extends ValidationException {
 
-  private static final long serialVersionUID = 1L;
-  private final String      detailes;
-  private final String      moduleName;
-  private final Integer     errorType;
+  private static final long     serialVersionUID = 1L;
+  private final String          detailes;
+  private final String          moduleName;
+  private final EIFlowErrorType errorType;
 
   public BackendCustomizedException(final String message, final String detailes, final String moduleName) {
     super(message);
     this.detailes = detailes;
     this.moduleName = moduleName;
-    this.errorType = EIFlowErrorType.NONE.getValue();
+    this.errorType = EIFlowErrorType.NONE;
   }
 
   public BackendCustomizedException(final String message, final String detailes, final String moduleName,
@@ -23,7 +23,7 @@ public class BackendCustomizedException extends ValidationException {
     super(message);
     this.detailes = detailes;
     this.moduleName = moduleName;
-    this.errorType = errorType.getValue();
+    this.errorType = errorType;
   }
 
   public String getDetailes() {
@@ -37,7 +37,7 @@ public class BackendCustomizedException extends ValidationException {
   /**
    * @return the errorType
    */
-  public Integer getErrorType() {
+  public EIFlowErrorType getErrorType() {
     return this.errorType;
   }
 

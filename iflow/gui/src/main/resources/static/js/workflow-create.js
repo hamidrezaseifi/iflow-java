@@ -19,7 +19,7 @@ iflowApp.directive('fileModel', [ '$parse', function($parse) {
     };
 } ]);
 
-iflowApp.controller('WorkflowCreateController', function WorkflowCreateController($scope, $http, $sce, $element, $mdSidenav, ShowErrorService) {
+iflowApp.controller('WorkflowCreateController', function WorkflowCreateController($scope, $http, ShowErrorService) {
 	  //$scope.phones = [];
 	
 	$scope.loadUrl = loadUrl;
@@ -57,10 +57,7 @@ iflowApp.controller('WorkflowCreateController', function WorkflowCreateControlle
 	
 	    }, function errorCallback(response) {
 	        
-	    	$scope.errorMessage = response.data.message;
-	    	$scope.errorDetails = response.data.detailes + "\r\n" + response.data.stackTraceElement;
-
-	    	$("#errormessagedialog").modal();
+	    	ShowErrorService.showError(response, $scope);
 	    });
 		
 	};
@@ -85,10 +82,7 @@ iflowApp.controller('WorkflowCreateController', function WorkflowCreateControlle
 	
 	    }, function errorCallback(response) {
 	        
-	    	$scope.errorMessage = response.data.message;
-	    	$scope.errorDetails = response.data.detailes + "\r\n" + response.data.stackTraceElement;
-
-	    	$("#errormessagedialog").modal();
+	    	ShowErrorService.showError(response, $scope);
 	    });
 		
 	};
@@ -128,21 +122,13 @@ iflowApp.controller('WorkflowCreateController', function WorkflowCreateControlle
             	    	
             	    	window.location = $scope.listUrl;
             	
-            	    }, function errorCallback(response) {
-            	    	//$scope.errorMessage = response.data.message;
-            	    	//$scope.errorDetails = response.data.detailes + "\r\n" + response.data.stackTraceElement;
-
-            	    	//$("#errormessagedialog").modal();
-            	    	
+            	    }, function errorCallback(response) {            	    	
             	    	ShowErrorService.showError(response, $scope);
             	    });
                 	
                 },
                 function (errResponse) {
-        	    	$scope.errorMessage = response.data.message;
-        	    	$scope.errorDetails = response.data.detailes + "\r\n" + response.data.stackTraceElement;
-
-        	    	$("#errormessagedialog").modal();
+        	    	ShowErrorService.showError(response, $scope);
                 }
             );
 
@@ -275,21 +261,6 @@ iflowApp.controller('WorkflowCreateController', function WorkflowCreateControlle
                 	alert( errResponse.data);
                 }
             );
-		
-        /*$http({
-            url: $scope.saveFileUrl,
-            method: "POST",
-            data: formData,
-            headers: {'Content-Type': 'multipart/form-data'}
-        }).then(function successCallback(response) {
-	    	
-	    	alert( response);
-	    	
-	
-	    }, function errorCallback(response) {
-	        
-	        alert(response);
-	    });*/
  		
 		
 	};

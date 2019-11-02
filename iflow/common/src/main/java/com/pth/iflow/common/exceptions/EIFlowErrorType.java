@@ -22,6 +22,12 @@ public enum EIFlowErrorType implements IEnumValueValidator {
   NO_WORKFLOW_ASSIGN_CREATE_STRATEGY(91, ""),
   INVALID_WORKFLOW_ASSIGN_LIST(100, ""),
 
+  OPTIMISTICLOCK_FAILURE(110, ""),
+  DAO_STORAGE_FAILURE(120, ""),
+
+  RUNTIME_UNKNOWN(910, ""),
+  SERVICE_NOT_FOUND(920, ""),
+
   UNKNOWN(1000, "");
 
   private final Integer errorCode;

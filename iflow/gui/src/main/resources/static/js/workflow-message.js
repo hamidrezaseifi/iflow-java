@@ -1,7 +1,7 @@
 
 
 
-iflowApp.controller('WorkflowMessageController', function ($scope, $http, $sce, $element, $compile, $mdSidenav, $mdComponentRegistry) {
+iflowApp.controller('WorkflowMessageController', function ($scope, $http, ShowErrorService) {
 
 	$scope.loadMessageUrl = typeof loadMessageUrl == undefined ? false : loadMessageUrl;
 	$scope.assignWorkflowUrl = typeof assignWorkflowUrl == undefined ? false : assignWorkflowUrl;
@@ -56,7 +56,7 @@ iflowApp.controller('WorkflowMessageController', function ($scope, $http, $sce, 
 	
 	    }, function errorCallback(response) {
 	        
-	        alert(response.data);
+	        ShowErrorService.showError(response, $scope);
 	    });
 		
 	}; 
@@ -99,7 +99,7 @@ iflowApp.controller('WorkflowMessageController', function ($scope, $http, $sce, 
 	
 	    }, function errorCallback(response) {
 	        
-	        alert(response.data);
+	        ShowErrorService.showError(response, $scope);
 	    });
 		
 	}; 

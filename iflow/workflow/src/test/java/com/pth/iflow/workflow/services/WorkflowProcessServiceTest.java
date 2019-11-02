@@ -4,9 +4,11 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -16,10 +18,10 @@ import org.mockito.Mock;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
 import com.pth.iflow.common.enums.EWorkflowActionStatus;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 import com.pth.iflow.common.exceptions.EIFlowErrorType;
-import com.pth.iflow.common.exceptions.IFlowCustomeException;
 import com.pth.iflow.workflow.TestDataProducer;
 import com.pth.iflow.workflow.bl.ITokenValidator;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
@@ -28,6 +30,7 @@ import com.pth.iflow.workflow.bl.IWorkflowProcessService;
 import com.pth.iflow.workflow.bl.impl.WorkflowProcessService;
 import com.pth.iflow.workflow.bl.strategy.IWorkStrategyFactory;
 import com.pth.iflow.workflow.bl.strategy.IWorkflowSaveStrategy;
+import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.ProfileResponse;
 import com.pth.iflow.workflow.models.Workflow;
 import com.pth.iflow.workflow.models.WorkflowSaveRequest;
@@ -41,35 +44,33 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
   private IWorkflowProcessService workflowProcessService;
 
   @Mock
-  private IWorkflowDataService workflowDataService;
+  private IWorkflowDataService    workflowDataService;
 
   @Mock
-  private IWorkflowPrepare workflowPrepare;
+  private IWorkflowPrepare        workflowPrepare;
 
   @Mock
-  private ITokenValidator tokenValidator;
+  private ITokenValidator         tokenValidator;
 
   @Mock
-  IWorkStrategyFactory workStrategyFactory;
+  IWorkStrategyFactory            workStrategyFactory;
 
   @Mock
-  private IWorkflowSaveStrategy saveStrategy;
+  private IWorkflowSaveStrategy   saveStrategy;
 
   @Mock
-  private IWorkflowSaveStrategy validateStrategy;
+  private IWorkflowSaveStrategy   validateStrategy;
 
-  private String validTocken;
+  private String                  validTocken;
 
-  private String validSession;
+  private String                  validSession;
 
-  private ProfileResponse profileResponse;
+  private ProfileResponse         profileResponse;
 
   @Before
   public void setUp() throws Exception {
-    this.workflowProcessService = new WorkflowProcessService(this.workflowDataService,
-                                                             this.tokenValidator,
-                                                             this.workStrategyFactory,
-                                                             this.workflowPrepare);
+    this.workflowProcessService = new WorkflowProcessService(this.workflowDataService, this.tokenValidator, this.workStrategyFactory,
+        this.workflowPrepare);
 
     this.validTocken = "validTocken";
 
@@ -80,10 +81,10 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
     when(this.tokenValidator.isTokenValid(this.validTocken)).thenReturn(this.profileResponse);
 
     when(this.workStrategyFactory.selectSaveWorkStrategy(any(WorkflowSaveRequest.class), any(String.class)))
-                                                                                                            .thenReturn(this.saveStrategy);
+        .thenReturn(this.saveStrategy);
 
     when(this.workStrategyFactory.selectValidationWorkStrategy(any(WorkflowSaveRequest.class), any(String.class)))
-                                                                                                                  .thenReturn(this.validateStrategy);
+        .thenReturn(this.validateStrategy);
 
   }
 
@@ -107,16 +108,13 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
 
   }
 
-  @Test(expected = IFlowCustomeException.class)
+  @Test(expected = WorkflowCustomizedException.class)
   public void testSaveWorkflowUnknownWorkflowStatus() throws Exception {
 
     final WorkflowSaveRequest request = this.getTestWorkflowCreateRequest();
     request.setWorkflow(this.getTestWorkflow("workflow1", EWorkflowActionStatus.ERROR));
 
-    doThrow(new IFlowCustomeException(EIFlowErrorType.INVALID_WORKFLOW_STATUS)).when(this.saveStrategy).process();
-
-    // when(this.saveStrategy.process()).thenThrow(new
-    // IFlowCustomeException(EIFlowErrorType.UNKNOWN_WORKFLOW_SAVE_STRATEGY));
+    doThrow(new WorkflowCustomizedException("", EIFlowErrorType.INVALID_WORKFLOW_STATUS)).when(this.saveStrategy).process();
 
     final Workflow resWorkflow = this.workflowProcessService.save(request, this.validTocken);
 
@@ -146,9 +144,8 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
 
     Assert.assertNotNull("Result workflow-type is not null!", resWorkflow);
     Assert.assertEquals("Result workflow-type has id 1!", resWorkflow.getIdentity(), workflowSaveResult.getIdentity());
-    Assert.assertEquals("Result workflow-type has status '" + workflowSaveResult.getStatus() + "'!",
-                        resWorkflow.getStatus(),
-                        workflowSaveResult.getStatus());
+    Assert.assertEquals("Result workflow-type has status '" + workflowSaveResult.getStatus() + "'!", resWorkflow.getStatus(),
+        workflowSaveResult.getStatus());
 
   }
 
@@ -171,9 +168,8 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
 
     Assert.assertNotNull("Result workflow-type is not null!", resWorkflow);
     Assert.assertEquals("Result workflow-type has id 1!", resWorkflow.getIdentity(), workflowSaveResult.getIdentity());
-    Assert.assertEquals("Result workflow-type has status '" + workflowSaveResult.getStatus() + "'!",
-                        resWorkflow.getStatus(),
-                        workflowSaveResult.getStatus());
+    Assert.assertEquals("Result workflow-type has status '" + workflowSaveResult.getStatus() + "'!", resWorkflow.getStatus(),
+        workflowSaveResult.getStatus());
 
   }
 
@@ -196,16 +192,16 @@ public class WorkflowProcessServiceTest extends TestDataProducer {
 
     Assert.assertNotNull("Result workflow-type is not null!", resWorkflow);
     Assert.assertEquals("Result workflow-type has id 1!", resWorkflow.getIdentity(), workflowSaveResult.getIdentity());
-    Assert.assertEquals("Result workflow-type has status '" + workflowSaveResult.getStatus() + "'!",
-                        resWorkflow.getStatus(),
-                        workflowSaveResult.getStatus());
+    Assert.assertEquals("Result workflow-type has status '" + workflowSaveResult.getStatus() + "'!", resWorkflow.getStatus(),
+        workflowSaveResult.getStatus());
 
   }
 
   @Test
   public void testGetListByIdList() throws Exception {
 
-    final Set<String> idList = this.getTestWorkflowIdSet();;
+    final Set<String> idList = this.getTestWorkflowIdSet();
+    ;
     final List<Workflow> list = this.getTestWorkflowList();
 
     when(this.workflowDataService.getListByIdentityList(any(Set.class), any(String.class))).thenReturn(list);

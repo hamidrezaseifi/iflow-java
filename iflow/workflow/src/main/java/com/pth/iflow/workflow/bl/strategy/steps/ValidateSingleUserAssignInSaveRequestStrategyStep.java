@@ -4,7 +4,6 @@ import java.net.MalformedURLException;
 
 import com.pth.iflow.common.enums.EAssignType;
 import com.pth.iflow.common.exceptions.EIFlowErrorType;
-import com.pth.iflow.common.exceptions.IFlowCustomeException;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.strategy.strategies.AbstractWorkflowSaveStrategy;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
@@ -24,7 +23,7 @@ public class ValidateSingleUserAssignInSaveRequestStrategyStep extends AbstractW
 
     if (processingWorkflowSaveRequest.getAssigns().size() != 1
         || processingWorkflowSaveRequest.getAssigns().get(0).getItemType() != EAssignType.USER) {
-      throw new IFlowCustomeException("Invalid assign list or item", EIFlowErrorType.INVALID_WORKFLOW_ASSIGN_LIST);
+      throw new WorkflowCustomizedException("Invalid assign list or item", EIFlowErrorType.INVALID_WORKFLOW_ASSIGN_LIST);
 
     }
 

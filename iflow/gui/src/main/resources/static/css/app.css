@@ -765,6 +765,9 @@ ul.list-item-container{
     padding-bottom: 15px;
 }
 
-
+#errormessagedialog .modal-dialog{
+	min-width: 50vw;
+    max-width: 95vw;
+}
     
 
