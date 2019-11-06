@@ -3,27 +3,25 @@ package com.pth.iflow.workflow.models;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-
 import org.apache.commons.lang3.StringUtils;
-
 import com.pth.iflow.common.edo.models.helper.IdentityModel;
 import com.pth.iflow.common.enums.EWorkflowActionStatus;
 import com.pth.iflow.common.enums.EWorkflowIdentity;
 import com.pth.iflow.common.enums.EWorkflowStatus;
+import com.pth.iflow.common.enums.EWorkflowType;
 
-public class Workflow extends IdentityModel {
+public abstract class Workflow extends IdentityModel {
 
-  private String                     identity;
-  private WorkflowType               workflowType;
-  private WorkflowTypeStep           currentStep;
-  private String                     comments;
-  private EWorkflowStatus            status;
-  private Integer                    version;
+  private String           identity;
+  private WorkflowType     workflowType;
+  private WorkflowTypeStep currentStep;
+  private String           comments;
+  private EWorkflowStatus  status;
+  private Integer          version;
 
-  private String                     workflowTypeIdentity;
-  private String                     currentStepIdentity;
-  private String                     controllerIdentity;
-  private String                     createdByIdentity;
+  private String currentStepIdentity;
+  private String controllerIdentity;
+  private String createdByIdentity;
 
   private final List<WorkflowFile>   files   = new ArrayList<>();
   private final List<WorkflowAction> actions = new ArrayList<>();
@@ -116,13 +114,7 @@ public class Workflow extends IdentityModel {
     }
   }
 
-  public String getWorkflowTypeIdentity() {
-    return workflowTypeIdentity;
-  }
-
-  public void setWorkflowTypeIdentity(final String workflowTypeIdentity) {
-    this.workflowTypeIdentity = workflowTypeIdentity;
-  }
+  public abstract EWorkflowType getWorkflowTypeEnum();
 
   public String getCurrentStepIdentity() {
     return currentStepIdentity;
@@ -179,7 +171,10 @@ public class Workflow extends IdentityModel {
       public int compare(final WorkflowAction action1, final WorkflowAction action2) {
 
         return action1.getCurrentStep().getStepIndex() > action2.getCurrentStep().getStepIndex() ? 1
-            : action1.getCurrentStep().getStepIndex() < action2.getCurrentStep().getStepIndex() ? -1 : 0;
+                                                                                                 : action1.getCurrentStep()
+                                                                                                          .getStepIndex() < action2.getCurrentStep()
+                                                                                                                                   .getStepIndex() ? -1
+                                                                                                                                                   : 0;
       }
     });
 

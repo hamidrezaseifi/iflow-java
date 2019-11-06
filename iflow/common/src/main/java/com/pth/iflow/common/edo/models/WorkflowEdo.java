@@ -3,27 +3,16 @@ package com.pth.iflow.common.edo.models;
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 
-@XmlRootElement(name = "Workflow", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "Workflow" + IFlowJaxbDefinition.TYPE_PREFIX)
-public class WorkflowEdo {
+public abstract class WorkflowEdo {
 
   @NotNull(message = "Identity is not allowed to be null!")
   @XmlElement(name = "Identity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String identity;
-
-  @NotNull(message = "WorkflowTypeIdentity is not allowed to be null!")
-  @XmlElement(name = "WorkflowTypeIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String workflowTypeIdentity;
 
   @XmlElement(name = "CurrentStepIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String currentStepIdentity;
@@ -63,13 +52,7 @@ public class WorkflowEdo {
     this.identity = identity;
   }
 
-  public String getWorkflowTypeIdentity() {
-    return this.workflowTypeIdentity;
-  }
-
-  public void setWorkflowTypeIdentity(final String workflowTypeIdentity) {
-    this.workflowTypeIdentity = workflowTypeIdentity;
-  }
+  public abstract String getWorkflowType();
 
   public String getCurrentStepIdentity() {
     return this.currentStepIdentity;
