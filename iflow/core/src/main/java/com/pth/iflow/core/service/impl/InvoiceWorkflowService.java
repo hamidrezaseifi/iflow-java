@@ -6,24 +6,24 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.pth.iflow.core.model.Workflow;
+import com.pth.iflow.core.model.InvoiceWorkflow;
 import com.pth.iflow.core.model.WorkflowSearchFilter;
-import com.pth.iflow.core.service.IWorkflowService;
+import com.pth.iflow.core.service.IInvoiceWorkflowService;
 import com.pth.iflow.core.storage.dao.IWorkflowDao;
 import com.pth.iflow.core.storage.dao.exception.IFlowOptimisticLockException;
 
 @Service
-public class WorkflowService implements IWorkflowService {
+public class InvoiceWorkflowService implements IInvoiceWorkflowService {
 
   private final IWorkflowDao workflowDao;
 
-  public WorkflowService(@Autowired final IWorkflowDao workflowDao) {
+  public InvoiceWorkflowService(@Autowired final IWorkflowDao workflowDao) {
     this.workflowDao = workflowDao;
   }
 
   @Override
-  public Workflow save(final Workflow model) {
-    Workflow exists = null;
+  public InvoiceWorkflow save(final InvoiceWorkflow model) {
+    InvoiceWorkflow exists = null;
     if (model.isIdentityNotSet() == false) {
       exists = this.getByIdentity(model.getIdentity());
       model.setId(exists.getId());
@@ -37,7 +37,7 @@ public class WorkflowService implements IWorkflowService {
     exists = exists != null ? exists : this.workflowDao.getById(model.getId());
 
     if (exists.getVersion() > model.getVersion()) {
-      throw new IFlowOptimisticLockException("Workflow with id " + model.getId() + " is old!");
+      throw new IFlowOptimisticLockException("InvoiceWorkflow with id " + model.getId() + " is old!");
     }
 
     model.setVersion(model.getVersion() + 1);
@@ -46,30 +46,30 @@ public class WorkflowService implements IWorkflowService {
   }
 
   @Override
-  public Workflow getByIdentity(final String identity) {
+  public InvoiceWorkflow getByIdentity(final String identity) {
     return this.workflowDao.getByIdentity(identity);
   }
 
   @Override
-  public List<Workflow> getListByTypeId(final String identity) {
+  public List<InvoiceWorkflow> getListByTypeId(final String identity) {
 
     return this.workflowDao.getListByWorkflowTypeIdentity(identity);
   }
 
   @Override
-  public List<Workflow> getListForUser(final String email, final int status) {
+  public List<InvoiceWorkflow> getListForUser(final String email, final int status) {
 
     return this.workflowDao.getListForUserEmail(email, status);
   }
 
   @Override
-  public List<Workflow> search(final WorkflowSearchFilter workflowSearchFilter) {
+  public List<InvoiceWorkflow> search(final WorkflowSearchFilter workflowSearchFilter) {
 
     return this.workflowDao.search(workflowSearchFilter);
   }
 
   @Override
-  public List<Workflow> getListByIdentityList(final Collection<String> idList) {
+  public List<InvoiceWorkflow> getListByIdentityList(final Collection<String> idList) {
 
     return this.workflowDao.getListByIdentityList(idList);
   }
