@@ -1,36 +1,36 @@
 package com.pth.iflow.core.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import com.pth.iflow.common.enums.EInvoiceType;
 
 public class InvoiceWorkflow extends Workflow {
 
-  private String        sender;
+  private String       sender;
 
-  private String        registerNumber;
+  private String       registerNumber;
 
-  private LocalDateTime invoceDate;
+  private LocalDate    invoceDate;
 
-  private String        partnerCode;
+  private String       partnerCode;
 
-  private String        vendorNumber;
+  private String       vendorNumber;
 
-  private String        vendorName;
+  private String       vendorName;
 
-  private Boolean       isDirectDebit;
+  private Boolean      isDirectDebitPermission;
 
-  private EInvoiceType  invoiceType;
+  private EInvoiceType invoiceType;
 
-  private LocalDateTime discountEnterDate;
+  private LocalDate    discountEnterDate;
 
-  private Integer       discountDeadline;
+  private Integer      discountDeadline;
 
-  private Double        discountRate;
+  private Double       discountRate;
 
-  private LocalDateTime discountDate;
+  private LocalDate    discountDate;
 
-  private Double        paymentAmount;
+  private Double       paymentAmount;
 
   public String getSender() {
     return sender;
@@ -48,11 +48,11 @@ public class InvoiceWorkflow extends Workflow {
     this.registerNumber = registerNumber;
   }
 
-  public LocalDateTime getInvoceDate() {
+  public LocalDate getInvoceDate() {
     return invoceDate;
   }
 
-  public void setInvoceDate(final LocalDateTime invoceDate) {
+  public void setInvoceDate(final LocalDate invoceDate) {
     this.invoceDate = invoceDate;
   }
 
@@ -80,12 +80,12 @@ public class InvoiceWorkflow extends Workflow {
     this.vendorName = vendorName;
   }
 
-  public Boolean getIsDirectDebit() {
-    return isDirectDebit;
+  public Boolean getIsDirectDebitPermission() {
+    return isDirectDebitPermission;
   }
 
-  public void setIsDirectDebit(final Boolean isDirectDebit) {
-    this.isDirectDebit = isDirectDebit;
+  public void setIsDirectDebitPermission(final Boolean isDirectDebit) {
+    this.isDirectDebitPermission = isDirectDebit;
   }
 
   public EInvoiceType getInvoiceType() {
@@ -100,11 +100,11 @@ public class InvoiceWorkflow extends Workflow {
     this.invoiceType = EInvoiceType.ofValue(invoiceType);
   }
 
-  public LocalDateTime getDiscountEnterDate() {
+  public LocalDate getDiscountEnterDate() {
     return discountEnterDate;
   }
 
-  public void setDiscountEnterDate(final LocalDateTime discountEnterDate) {
+  public void setDiscountEnterDate(final LocalDate discountEnterDate) {
     this.discountEnterDate = discountEnterDate;
   }
 
@@ -124,11 +124,11 @@ public class InvoiceWorkflow extends Workflow {
     this.discountRate = discountRate;
   }
 
-  public LocalDateTime getDiscountDate() {
+  public LocalDate getDiscountDate() {
     return discountDate;
   }
 
-  public void setDiscountDate(final LocalDateTime discountDate) {
+  public void setDiscountDate(final LocalDate discountDate) {
     this.discountDate = discountDate;
   }
 

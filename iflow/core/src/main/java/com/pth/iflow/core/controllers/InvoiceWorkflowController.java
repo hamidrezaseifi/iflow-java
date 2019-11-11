@@ -35,13 +35,13 @@ import com.pth.iflow.core.service.IWorkflowFileService;
 
 @RestController
 @RequestMapping
-public class WorkflowController {
+public class InvoiceWorkflowController {
 
   final IInvoiceWorkflowService invoiceWorkflowService;
   final IWorkflowActionService  workflowActionService;
   final IWorkflowFileService    workflowFileService;
 
-  public WorkflowController(@Autowired final IInvoiceWorkflowService invoiceWorkflowService,
+  public InvoiceWorkflowController(@Autowired final IInvoiceWorkflowService invoiceWorkflowService,
       @Autowired final IWorkflowActionService workflowActionService, @Autowired final IWorkflowFileService workflowFileService) {
     this.invoiceWorkflowService = invoiceWorkflowService;
     this.workflowActionService = workflowActionService;

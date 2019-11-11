@@ -9,16 +9,16 @@ import org.springframework.stereotype.Service;
 import com.pth.iflow.core.model.InvoiceWorkflow;
 import com.pth.iflow.core.model.WorkflowSearchFilter;
 import com.pth.iflow.core.service.IInvoiceWorkflowService;
-import com.pth.iflow.core.storage.dao.IWorkflowDao;
+import com.pth.iflow.core.storage.dao.IInvoiceWorkflowDao;
 import com.pth.iflow.core.storage.dao.exception.IFlowOptimisticLockException;
 
 @Service
 public class InvoiceWorkflowService implements IInvoiceWorkflowService {
 
-  private final IWorkflowDao workflowDao;
+  private final IInvoiceWorkflowDao invoiceWorkflowDao;
 
-  public InvoiceWorkflowService(@Autowired final IWorkflowDao workflowDao) {
-    this.workflowDao = workflowDao;
+  public InvoiceWorkflowService(@Autowired final IInvoiceWorkflowDao invoiceWorkflowDao) {
+    this.invoiceWorkflowDao = invoiceWorkflowDao;
   }
 
   @Override
@@ -31,10 +31,10 @@ public class InvoiceWorkflowService implements IInvoiceWorkflowService {
 
     if (model.isNew()) {
       model.increaseVersion();
-      return this.workflowDao.create(model);
+      return this.invoiceWorkflowDao.create(model);
     }
 
-    exists = exists != null ? exists : this.workflowDao.getById(model.getId());
+    exists = exists != null ? exists : this.invoiceWorkflowDao.getById(model.getId());
 
     if (exists.getVersion() > model.getVersion()) {
       throw new IFlowOptimisticLockException("InvoiceWorkflow with id " + model.getId() + " is old!");
@@ -42,36 +42,30 @@ public class InvoiceWorkflowService implements IInvoiceWorkflowService {
 
     model.setVersion(model.getVersion() + 1);
 
-    return this.workflowDao.update(model);
+    return this.invoiceWorkflowDao.update(model);
   }
 
   @Override
   public InvoiceWorkflow getByIdentity(final String identity) {
-    return this.workflowDao.getByIdentity(identity);
-  }
-
-  @Override
-  public List<InvoiceWorkflow> getListByTypeId(final String identity) {
-
-    return this.workflowDao.getListByWorkflowTypeIdentity(identity);
+    return this.invoiceWorkflowDao.getByIdentity(identity);
   }
 
   @Override
   public List<InvoiceWorkflow> getListForUser(final String email, final int status) {
 
-    return this.workflowDao.getListForUserEmail(email, status);
+    return this.invoiceWorkflowDao.getListForUserEmail(email, status);
   }
 
   @Override
   public List<InvoiceWorkflow> search(final WorkflowSearchFilter workflowSearchFilter) {
 
-    return this.workflowDao.search(workflowSearchFilter);
+    return this.invoiceWorkflowDao.search(workflowSearchFilter);
   }
 
   @Override
   public List<InvoiceWorkflow> getListByIdentityList(final Collection<String> idList) {
 
-    return this.workflowDao.getListByIdentityList(idList);
+    return this.invoiceWorkflowDao.getListByIdentityList(idList);
   }
 
 }

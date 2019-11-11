@@ -18,24 +18,24 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.pth.iflow.common.enums.EWorkflowIdentity;
 import com.pth.iflow.core.TestDataProducer;
-import com.pth.iflow.core.model.Workflow;
-import com.pth.iflow.core.service.IWorkflowService;
-import com.pth.iflow.core.service.impl.WorkflowService;
-import com.pth.iflow.core.storage.dao.IWorkflowDao;
+import com.pth.iflow.core.model.InvoiceWorkflow;
+import com.pth.iflow.core.service.IInvoiceWorkflowService;
+import com.pth.iflow.core.service.impl.InvoiceWorkflowService;
+import com.pth.iflow.core.storage.dao.IInvoiceWorkflowDao;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class WorkflowServiceTest extends TestDataProducer {
+public class InvoiceWorkflowServiceTest extends TestDataProducer {
 
-  private IWorkflowService workflowService;
+  private IInvoiceWorkflowService invoiceWorkflowService;
 
   @MockBean
-  private IWorkflowDao     workflowDao;
+  private IInvoiceWorkflowDao     invoiceWorkflowDao;
 
   @Before
   public void setUp() throws Exception {
-    this.workflowService = new WorkflowService(this.workflowDao);
+    this.invoiceWorkflowService = new InvoiceWorkflowService(this.invoiceWorkflowDao);
   }
 
   @After
@@ -45,10 +45,10 @@ public class WorkflowServiceTest extends TestDataProducer {
   @Test
   public void testGetById() throws Exception {
 
-    final Workflow workflow = getTestWorkflow(1L);
-    when(this.workflowDao.getByIdentity(any(String.class))).thenReturn(workflow);
+    final InvoiceWorkflow workflow = getTestInvoiceWorkflow(1L);
+    when(this.invoiceWorkflowDao.getByIdentity(any(String.class))).thenReturn(workflow);
 
-    final Workflow resWorkflow = this.workflowService.getByIdentity("identity");
+    final InvoiceWorkflow resWorkflow = this.invoiceWorkflowService.getByIdentity("identity");
 
     Assert.assertNotNull("Result workflow-type is not null!", resWorkflow);
     Assert.assertEquals("Result workflow-type has id 1!", resWorkflow.getId(), workflow.getId());
@@ -60,23 +60,10 @@ public class WorkflowServiceTest extends TestDataProducer {
   public void testGetListByIdList() throws Exception {
 
     final Set<String> idList = getTestWorkflowIdentityList();
-    final List<Workflow> list = getTestWorkflowList();
-    when(this.workflowDao.getListByIdentityList(any(Set.class))).thenReturn(list);
+    final List<InvoiceWorkflow> list = getTestInvoiceWorkflowList();
+    when(this.invoiceWorkflowDao.getListByIdentityList(any(Set.class))).thenReturn(list);
 
-    final List<Workflow> resList = this.workflowService.getListByIdentityList(idList);
-
-    Assert.assertNotNull("Result list is not null!", resList);
-    Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());
-
-  }
-
-  @Test
-  public void testGetListByIdTypeId() throws Exception {
-
-    final List<Workflow> list = getTestWorkflowList();
-    when(this.workflowDao.getListByWorkflowTypeIdentity(any(String.class))).thenReturn(list);
-
-    final List<Workflow> resList = this.workflowService.getListByTypeId("identity");
+    final List<InvoiceWorkflow> resList = this.invoiceWorkflowService.getListByIdentityList(idList);
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());
@@ -86,29 +73,29 @@ public class WorkflowServiceTest extends TestDataProducer {
   @Test
   public void testSave() throws Exception {
 
-    Workflow workflow = getTestWorkflow(1L);
+    InvoiceWorkflow workflow = getTestInvoiceWorkflow(1L);
     workflow.setId(null);
     workflow.setIdentity(EWorkflowIdentity.NOT_SET.getName());
     workflow.setVersion(21);
 
-    when(this.workflowDao.create(any(Workflow.class))).thenReturn(workflow);
-    when(this.workflowDao.update(any(Workflow.class))).thenReturn(workflow);
-    when(this.workflowDao.getByIdentity(any(String.class))).thenReturn(workflow);
+    when(this.invoiceWorkflowDao.create(any(InvoiceWorkflow.class))).thenReturn(workflow);
+    when(this.invoiceWorkflowDao.update(any(InvoiceWorkflow.class))).thenReturn(workflow);
+    when(this.invoiceWorkflowDao.getByIdentity(any(String.class))).thenReturn(workflow);
 
-    Workflow resWorkflow = this.workflowService.save(workflow);
+    InvoiceWorkflow resWorkflow = this.invoiceWorkflowService.save(workflow);
 
     Assert.assertNotNull("Result workflow-type is not null!", resWorkflow);
     Assert.assertEquals("Result workflow-type has id 1!", resWorkflow.getId(), workflow.getId());
     Assert.assertEquals("Result workflow-type has status 1!", resWorkflow.getStatus(), workflow.getStatus());
     Assert.assertEquals("Result workflow-type has version 22!", resWorkflow.getVersion().intValue(), 22);
 
-    workflow = getTestWorkflow(1L);
+    workflow = getTestInvoiceWorkflow(1L);
 
-    when(this.workflowDao.create(any(Workflow.class))).thenReturn(workflow);
-    when(this.workflowDao.update(any(Workflow.class))).thenReturn(workflow);
-    when(this.workflowDao.getByIdentity(any(String.class))).thenReturn(workflow);
+    when(this.invoiceWorkflowDao.create(any(InvoiceWorkflow.class))).thenReturn(workflow);
+    when(this.invoiceWorkflowDao.update(any(InvoiceWorkflow.class))).thenReturn(workflow);
+    when(this.invoiceWorkflowDao.getByIdentity(any(String.class))).thenReturn(workflow);
 
-    resWorkflow = this.workflowService.save(workflow);
+    resWorkflow = this.invoiceWorkflowService.save(workflow);
 
     Assert.assertNotNull("Result workflow-type is not null!", resWorkflow);
     Assert.assertEquals("Result workflow-type has id 1!", resWorkflow.getId(), workflow.getId());

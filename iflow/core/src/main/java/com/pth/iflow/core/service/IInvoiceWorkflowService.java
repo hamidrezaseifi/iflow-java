@@ -12,8 +12,6 @@ public interface IInvoiceWorkflowService {
 
   public InvoiceWorkflow getByIdentity(String identity);
 
-  public List<InvoiceWorkflow> getListByTypeId(final String identity);
-
   public List<InvoiceWorkflow> getListForUser(final String email, final int status);
 
   public List<InvoiceWorkflow> getListByIdentityList(final Collection<String> idList);

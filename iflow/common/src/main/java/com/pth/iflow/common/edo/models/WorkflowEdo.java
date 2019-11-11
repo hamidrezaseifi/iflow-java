@@ -2,42 +2,44 @@ package com.pth.iflow.common.edo.models;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
+
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 
-public abstract class WorkflowEdo {
+public class WorkflowEdo {
 
   @NotNull(message = "Identity is not allowed to be null!")
   @XmlElement(name = "Identity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String identity;
+  private String                  identity;
 
   @XmlElement(name = "CurrentStepIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String currentStepIdentity;
+  private String                  currentStepIdentity;
 
   @XmlElement(name = "ControllerIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String controllerIdentity;
+  private String                  controllerIdentity;
 
   @XmlElement(name = "CreatedByIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String createdByIdentity;
+  private String                  createdByIdentity;
 
   @XmlElement(name = "Comments", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String comments;
+  private String                  comments;
 
   @NotNull(message = "Status is not allowed to be null!")
   @XmlElement(name = "Status", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Integer status;
+  private Integer                 status;
 
   @NotNull(message = "Version is not allowed to be null!")
   @XmlElement(name = "Version", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Integer version;
+  private Integer                 version;
 
   @NotNull(message = "WorkflowFileEdo is not allowed to be null!")
   @XmlElementWrapper(name = "WorkflowFileSet", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "WorkflowFile", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private List<WorkflowFileEdo> files = new ArrayList<>();
+  private List<WorkflowFileEdo>   files   = new ArrayList<>();
 
   @NotNull(message = "WorkflowActionSet is not allowed to be null!")
   @XmlElementWrapper(name = "WorkflowActionSet", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
@@ -51,8 +53,6 @@ public abstract class WorkflowEdo {
   public void setIdentity(final String identity) {
     this.identity = identity;
   }
-
-  public abstract String getWorkflowType();
 
   public String getCurrentStepIdentity() {
     return this.currentStepIdentity;

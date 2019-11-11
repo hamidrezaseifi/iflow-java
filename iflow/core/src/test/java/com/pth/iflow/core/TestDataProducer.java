@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.pth.iflow.common.enums.EInvoiceType;
 import com.pth.iflow.common.enums.EWorkflowIdentity;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.enums.EWorkflowMessageType;
@@ -14,6 +15,7 @@ import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
 import com.pth.iflow.core.model.Company;
 import com.pth.iflow.core.model.Department;
 import com.pth.iflow.core.model.DepartmentGroup;
+import com.pth.iflow.core.model.InvoiceWorkflow;
 import com.pth.iflow.core.model.ProfileResponse;
 import com.pth.iflow.core.model.User;
 import com.pth.iflow.core.model.UserGroup;
@@ -231,6 +233,59 @@ public class TestDataProducer {
     return model;
   }
 
+  protected InvoiceWorkflow getTestInvoiceWorkflow(final Long Id) {
+    final InvoiceWorkflow model = new InvoiceWorkflow();
+    model.setWorkflowType(getTestWorkflowType());
+    model.setWorkflowTypeIdentity(model.getWorkflowType().getIdentity());
+    model.setId(Id);
+    model.setIdentity(EWorkflowIdentity.NOT_SET.getName());
+    model.setStatus(EWorkflowStatus.INITIALIZE.getValue().intValue());
+    model.setVersion(1);
+    model.setComments("comments");
+    model.setIdentity("workflow-1");
+    model.setController(getTestUser(1L, "fname", "lname", "email1"));
+    model.setCurrentStep(getTestWorkflowTypeStep());
+    model.setCreatedBy(getTestUser(2L, "fname", "lname", "email2"));
+    model.setControllerIdentity(model.getController().getEmail());
+    model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
+    model.setCreatedByIdentity(model.getCreatedBy().getEmail());
+
+    model.setActions(
+        Arrays.asList(this.getTestWorkflowAction(1L, 1L), this.getTestWorkflowAction(2L, 2L), this.getTestWorkflowAction(3L, 3L)));
+    model
+        .setFiles(Arrays.asList(this.getTestWorkflowFile(1L, 1L), this.getTestWorkflowFile(2L, 2L), this.getTestWorkflowFile(3L, 3L)));
+
+    model.setSender("sender");
+    model.setRegisterNumber("ext_reg_number");
+    model.setInvoceDate(LocalDate.now());
+    model.setPartnerCode("partner_code");
+    model.setVendorNumber("vendor_number");
+    model.setVendorName("vendor_name");
+    model.setIsDirectDebitPermission(Boolean.TRUE);
+    model.setInvoiceType(EInvoiceType.PAYMENT);
+    model.setDiscountEnterDate(LocalDate.now());
+    model.setDiscountRate(10.0);
+    model.setDiscountDeadline(10);
+    model.setDiscountDate(LocalDate.now());
+    model.setPaymentAmount(1000.0);
+
+    return model;
+  }
+
+  protected InvoiceWorkflow getTestNewInvoiceWorkflow() {
+    final InvoiceWorkflow model = getTestInvoiceWorkflow(0L);
+    model.setId(null);
+    model.setIdentity("");
+    for (final WorkflowAction action : model.getActions()) {
+      action.setIdentity("");
+    }
+    for (final WorkflowFile file : model.getFiles()) {
+      file.setIdentity("");
+    }
+
+    return model;
+  }
+
   protected WorkflowMessage getTestWorkflowMessage(final Workflow workflow, final String message) {
     final WorkflowMessage model = new WorkflowMessage();
     model.setWorkflowIdentity(workflow.getIdentity());
@@ -286,6 +341,11 @@ public class TestDataProducer {
     return Arrays.asList(this.getTestWorkflow(1L), this.getTestWorkflow(2L), this.getTestWorkflow(3L));
   }
 
+  protected List<InvoiceWorkflow> getTestInvoiceWorkflowList() {
+
+    return Arrays.asList(this.getTestInvoiceWorkflow(1L), this.getTestInvoiceWorkflow(2L), this.getTestInvoiceWorkflow(3L));
+  }
+
   protected WorkflowAction getTestWorkflowAction(final Long Id, final Long workflowId) {
     final WorkflowAction model = new WorkflowAction();
     model.setWorkflowId(workflowId);
@@ -333,7 +393,7 @@ public class TestDataProducer {
     model.setActiveFileVersion(1);
     model.setTitle("title " + Id);
     model.setExtention("ext");
-    model.setIdentity("file-1");
+    model.setIdentity("file-" + Id);
 
     model.setFileVersions(Arrays.asList(this.getTestWorkflowFileVersion(1L, 1, 1L), this.getTestWorkflowFileVersion(2L, 2, 1L),
         this.getTestWorkflowFileVersion(3L, 3, 1L)));
@@ -515,10 +575,10 @@ public class TestDataProducer {
 
   protected WorkflowSearchFilter getTestWorkflowSearchFilter() {
     final WorkflowSearchFilter filter = new WorkflowSearchFilter();
-    filter.setAssignedUserIdSet(this.getTestUserIdSet());
+    filter.setAssignedUserIdentitySet(this.getTestUserIdSet());
     filter.setStatusSet(new HashSet<>(Arrays.asList(1, 2, 3)));
-    filter.setWorkflowStepeIdSet(this.getTestWorkflowTypeStepIdSet());
-    filter.setWorkflowTypeIdSet(this.getTestWorkflowTypeIdSet());
+    filter.setWorkflowStepIdentitySet(this.getTestWorkflowTypeStepIdSet());
+    filter.setWorkflowTypeIdentitySet(this.getTestWorkflowTypeIdSet());
 
     return filter;
   }

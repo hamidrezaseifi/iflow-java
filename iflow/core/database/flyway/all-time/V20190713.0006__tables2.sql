@@ -29,7 +29,7 @@ CREATE TABLE `invoice_workflow` (
   `partner_code` varchar(45) DEFAULT NULL,
   `vendor_number` varchar(45) DEFAULT NULL,
   `vendor_name` varchar(45) DEFAULT NULL,
-  `direct_debit` smallint(6) NOT NULL DEFAULT '0',
+  `direct_debit_permission` smallint(6) NOT NULL DEFAULT '0',
   `invoice_type` smallint(6) NOT NULL DEFAULT '1',
   `discount_enter` date NOT NULL,
   `discount_rate` double NOT NULL DEFAULT '0',

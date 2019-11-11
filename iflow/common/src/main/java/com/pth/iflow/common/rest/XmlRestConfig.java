@@ -22,6 +22,7 @@ import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
 import com.pth.iflow.common.edo.models.CompanyEdo;
 import com.pth.iflow.common.edo.models.DepartmentEdo;
 import com.pth.iflow.common.edo.models.DepartmentGroupEdo;
+import com.pth.iflow.common.edo.models.InvoiceWorkflowEdo;
 import com.pth.iflow.common.edo.models.UserEdo;
 import com.pth.iflow.common.edo.models.UserGroupEdo;
 import com.pth.iflow.common.edo.models.WorkflowActionEdo;
@@ -63,7 +64,7 @@ public class XmlRestConfig {
     final Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
 
     marshaller.setClassesToBeBound(new Class[] { UserEdo.class, UserGroupEdo.class, CompanyEdo.class, DepartmentEdo.class,
-        DepartmentGroupEdo.class, WorkflowEdo.class, WorkflowTypeEdo.class, WorkflowTypeStepEdo.class, WorkflowActionEdo.class,
+        DepartmentGroupEdo.class, InvoiceWorkflowEdo.class, WorkflowTypeEdo.class, WorkflowTypeStepEdo.class, WorkflowActionEdo.class,
         WorkflowFileEdo.class, WorkflowFileVersionEdo.class });
 
     // marshaller.setClassesToBeBound(new Class[] { WorkflowTypeStepEdo.class, });

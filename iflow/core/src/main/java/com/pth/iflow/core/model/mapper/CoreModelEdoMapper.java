@@ -248,7 +248,7 @@ public class CoreModelEdoMapper {
     edo.setDiscountRate(model.getDiscountRate());
     edo.setInvoceDate(model.getInvoceDate());
     edo.setInvoiceType(model.getInvoiceType().getValue());
-    edo.setIsDirectDebit(model.getIsDirectDebit());
+    edo.setIsDirectDebitPermission(model.getIsDirectDebitPermission());
     edo.setPartnerCode(model.getPartnerCode());
     edo.setPaymentAmount(model.getPaymentAmount());
     edo.setRegisterNumber(model.getRegisterNumber());
@@ -281,7 +281,7 @@ public class CoreModelEdoMapper {
     model.setDiscountRate(edo.getDiscountRate());
     model.setInvoceDate(edo.getInvoceDate());
     model.setInvoiceType(edo.getInvoiceType());
-    model.setIsDirectDebit(edo.getIsDirectDebit());
+    model.setIsDirectDebitPermission(edo.getIsDirectDebitPermission());
     model.setPartnerCode(edo.getPartnerCode());
     model.setPaymentAmount(edo.getPaymentAmount());
     model.setRegisterNumber(edo.getRegisterNumber());
@@ -452,10 +452,10 @@ public class CoreModelEdoMapper {
 
   public static WorkflowSearchFilterEdo toEdo(final WorkflowSearchFilter model) {
     final WorkflowSearchFilterEdo edo = new WorkflowSearchFilterEdo();
-    edo.setAssignedUserIdentitySet(model.getAssignedUserIdSet());
+    edo.setAssignedUserIdentitySet(model.getAssignedUserIdentitySet());
     edo.setStatusSet(model.getStatusSet());
-    edo.setWorkflowStepeIdentitySet(model.getWorkflowStepeIdSet());
-    edo.setWorkflowTypeIdentitySet(model.getWorkflowTypeIdSet());
+    edo.setWorkflowStepeIdentitySet(model.getWorkflowStepIdentitySet());
+    edo.setWorkflowTypeIdentitySet(model.getWorkflowTypeIdentitySet());
 
     return edo;
   }
@@ -464,10 +464,10 @@ public class CoreModelEdoMapper {
     validateCustomer(edo);
 
     final WorkflowSearchFilter model = new WorkflowSearchFilter();
-    model.setAssignedUserIdSet(edo.getAssignedUserIdentitySet());
+    model.setAssignedUserIdentitySet(edo.getAssignedUserIdentitySet());
     model.setStatusSet(edo.getStatusSet());
-    model.setWorkflowStepeIdSet(edo.getWorkflowStepeIdentitySet());
-    model.setWorkflowTypeIdSet(edo.getWorkflowTypeIdentitySet());
+    model.setWorkflowStepIdentitySet(edo.getWorkflowStepeIdentitySet());
+    model.setWorkflowTypeIdentitySet(edo.getWorkflowTypeIdentitySet());
 
     return model;
 

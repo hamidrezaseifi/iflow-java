@@ -336,8 +336,8 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
 
         int index = 1;
 
-        if (workflowSearchFilter.getAssignedUserIdSet().isEmpty() == false) {
-          final List<User> list = userDao.getListByIdentityList(workflowSearchFilter.getAssignedUserIdSet());
+        if (workflowSearchFilter.getAssignedUserIdentitySet().isEmpty() == false) {
+          final List<User> list = userDao.getListByIdentityList(workflowSearchFilter.getAssignedUserIdentitySet());
           for (final User user : list) {
             ps.setLong(index, user.getId());
             index++;
@@ -350,15 +350,15 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
             index++;
           }
         }
-        if (workflowSearchFilter.getWorkflowStepeIdSet().isEmpty() == false) {
-          final List<WorkflowTypeStep> list = workflowTypeStepDao.getListByIdentityList(workflowSearchFilter.getWorkflowStepeIdSet());
+        if (workflowSearchFilter.getWorkflowStepIdentitySet().isEmpty() == false) {
+          final List<WorkflowTypeStep> list = workflowTypeStepDao.getListByIdentityList(workflowSearchFilter.getWorkflowStepIdentitySet());
           for (final WorkflowTypeStep step : list) {
             ps.setLong(index, step.getId());
             index++;
           }
         }
-        if (workflowSearchFilter.getWorkflowTypeIdSet().isEmpty() == false) {
-          final List<WorkflowType> list = workflowTypeDao.getListByIdentityList(workflowSearchFilter.getWorkflowTypeIdSet());
+        if (workflowSearchFilter.getWorkflowTypeIdentitySet().isEmpty() == false) {
+          final List<WorkflowType> list = workflowTypeDao.getListByIdentityList(workflowSearchFilter.getWorkflowTypeIdentitySet());
           for (final WorkflowType type : list) {
             ps.setLong(index, type.getId());
             index++;
@@ -385,21 +385,21 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
 
   private String prepareSearchWhereClause(final WorkflowSearchFilter workflowSearchFilter) {
     String whereClause = "";
-    if (workflowSearchFilter.getAssignedUserIdSet().isEmpty() == false) {
+    if (workflowSearchFilter.getAssignedUserIdentitySet().isEmpty() == false) {
       whereClause += "id in (select workflow_id from workflow_actions where assign_to in ("
-          + StringUtils.repeat("?,", workflowSearchFilter.getAssignedUserIdSet().size()) + ")) ";
+          + StringUtils.repeat("?,", workflowSearchFilter.getAssignedUserIdentitySet().size()) + ")) ";
     }
     if (workflowSearchFilter.getStatusSet().isEmpty() == false) {
       whereClause += whereClause.isEmpty() ? "" : "and";
       whereClause += " status in (" + StringUtils.repeat("?,", workflowSearchFilter.getStatusSet().size()) + ") ";
     }
-    if (workflowSearchFilter.getWorkflowStepeIdSet().isEmpty() == false) {
+    if (workflowSearchFilter.getWorkflowStepIdentitySet().isEmpty() == false) {
       whereClause += whereClause.isEmpty() ? "" : "and";
-      whereClause += " current_step in (" + StringUtils.repeat("?,", workflowSearchFilter.getWorkflowStepeIdSet().size()) + ") ";
+      whereClause += " current_step in (" + StringUtils.repeat("?,", workflowSearchFilter.getWorkflowStepIdentitySet().size()) + ") ";
     }
-    if (workflowSearchFilter.getWorkflowTypeIdSet().isEmpty() == false) {
+    if (workflowSearchFilter.getWorkflowTypeIdentitySet().isEmpty() == false) {
       whereClause += whereClause.isEmpty() ? "" : "and";
-      whereClause += " workflow_type_id in (" + StringUtils.repeat("?,", workflowSearchFilter.getWorkflowTypeIdSet().size()) + ") ";
+      whereClause += " workflow_type_id in (" + StringUtils.repeat("?,", workflowSearchFilter.getWorkflowTypeIdentitySet().size()) + ") ";
     }
 
     whereClause = whereClause.replace(",)", ")");
