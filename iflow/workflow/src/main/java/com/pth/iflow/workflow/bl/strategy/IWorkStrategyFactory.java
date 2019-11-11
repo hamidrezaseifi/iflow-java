@@ -4,14 +4,14 @@ import java.net.MalformedURLException;
 
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
-import com.pth.iflow.workflow.models.WorkflowSaveRequest;
+import com.pth.iflow.workflow.models.base.IWorkflowSaveRequest;
 
 public interface IWorkStrategyFactory {
 
-  IWorkflowSaveStrategy selectSaveWorkStrategy(final WorkflowSaveRequest workflowSaveRequest, final String token)
+  IWorkflowSaveStrategy selectSaveWorkStrategy(final IWorkflowSaveRequest workflowSaveRequest, final String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  IWorkflowSaveStrategy selectValidationWorkStrategy(final WorkflowSaveRequest workflowSaveRequest, final String token)
+  IWorkflowSaveStrategy selectValidationWorkStrategy(final IWorkflowSaveRequest workflowSaveRequest, final String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
 }

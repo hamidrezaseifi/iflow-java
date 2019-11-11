@@ -19,7 +19,7 @@ import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 @XmlRootElement(name = "WorkflowCreateRequest", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "WorkflowCreateRequest" + IFlowJaxbDefinition.TYPE_PREFIX)
-public class WorkflowSaveRequestEdo {
+public class InvoiceWorkflowSaveRequestEdo {
 
   @NotNull(message = "Command is not allowed to be null!")
   @AEnumNameValidator(enumClazz = EWorkflowProcessCommand.class)
@@ -28,7 +28,7 @@ public class WorkflowSaveRequestEdo {
 
   @NotNull(message = "Workflow must not be null")
   @XmlElement(name = "Workflow", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private WorkflowEdo         workflow;
+  private InvoiceWorkflowEdo  workflow;
 
   @NotNull(message = "ExpireDays must not be null")
   @XmlElement(name = "ExpireDays", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
@@ -39,7 +39,7 @@ public class WorkflowSaveRequestEdo {
   @XmlElement(name = "AssignedList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private List<AssignItemEdo> assigns = new ArrayList<>();
 
-  public WorkflowSaveRequestEdo() {
+  public InvoiceWorkflowSaveRequestEdo() {
 
   }
 
@@ -54,14 +54,14 @@ public class WorkflowSaveRequestEdo {
   /**
    * @return the workflow
    */
-  public WorkflowEdo getWorkflow() {
+  public InvoiceWorkflowEdo getWorkflow() {
     return this.workflow;
   }
 
   /**
    * @param workflow the workflow to set
    */
-  public void setWorkflow(final WorkflowEdo workflow) {
+  public void setWorkflow(final InvoiceWorkflowEdo workflow) {
     this.workflow = workflow;
   }
 

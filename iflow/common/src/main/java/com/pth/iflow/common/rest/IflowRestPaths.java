@@ -225,15 +225,6 @@ public class IflowRestPaths {
     public static final String WORKFLOWTYPESTEP_READ_LIST_BY_WORKFLOWIDENTITY = "/workflowtypestep/workflowtype/list/{identity}";
     public static final String WORKFLOWTYPESTEP_READ_LIST                     = "/workflowtypestep/list";
 
-    public static final String WORKFLOW_CREATE                                = "/workflow/create";
-    public static final String WORKFLOW_SAVE                                  = "/workflow/save";
-    public static final String WORKFLOW_READ_BY_IDENTITY                      = "/workflow/readbyid/{identity}";
-    public static final String WORKFLOW_READ_LIST                             = "/workflow/list";
-    public static final String WORKFLOW_READ_LIST_BY_TYPEIDENTITY             = "/workflow/type/list/{identity}";
-    public static final String WORKFLOW_READ_LIST_BY_USEREMAIL                = "/workflow/user/list/{email}/{status}";
-    public static final String WORKFLOW_SEARCH                                = "/workflow/search";
-    public static final String WORKFLOW_VALIDATE                              = "/workflow/validate";
-
     public static final String WORKFLOWMESSAGE_READ_BY_USEREMAIL              = "/workflowoffer/user/{email}/{status}";
 
     public static final String INVOICE_CREATE                                 = "/invoice/create";
@@ -263,41 +254,6 @@ public class IflowRestPaths {
     public static URI READ_WORKFLOWTYPESTELIST_BY_WORKFLOWID_URIBUILDER(final String identity) {
       final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOWTYPESTEP_READ_LIST_BY_WORKFLOWIDENTITY);
       return builder.build(identity);
-    }
-
-    public static URI READ_WORKFLOW_BY_IDENTITY_URIBUILDER(final String identity) {
-      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOW_READ_BY_IDENTITY);
-      return builder.build(identity);
-    }
-
-    public static URI READ_WORKFLOWLIST_BY_TYPEID_URIBUILDER(final String identity) {
-      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOW_READ_LIST_BY_TYPEIDENTITY);
-      return builder.build(identity);
-    }
-
-    public static URI READ_WORKFLOWLIST_BY_USERID_URIBUILDER(final String email, final int status) {
-      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOW_READ_LIST_BY_USEREMAIL);
-      return builder.build(email, status);
-    }
-
-    public static URI CREATE_WORKFLOW() {
-      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOW_CREATE);
-      return builder.build();
-    }
-
-    public static URI SAVE_WORKFLOW() {
-      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOW_SAVE);
-      return builder.build();
-    }
-
-    public static URI SEARCH_WORKFLOW() {
-      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOW_SEARCH);
-      return builder.build();
-    }
-
-    public static URI VALIDATE_WORKFLOW() {
-      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOW_VALIDATE);
-      return builder.build();
     }
 
     public static URI READ_INVOICE_BY_IDENTITY_URIBUILDER(final String identity) {

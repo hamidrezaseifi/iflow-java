@@ -4,32 +4,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.pth.iflow.common.enums.EWorkflowProcessCommand;
+import com.pth.iflow.workflow.models.base.IWorkflowSaveRequest;
 
-public class WorkflowSaveRequest {
+public class InvoiceWorkflowSaveRequest implements IWorkflowSaveRequest {
 
-  private Workflow                workflow;
+  private InvoiceWorkflow         workflow;
   private Integer                 expireDays;
   private List<AssignItem>        assigns = new ArrayList<>();
   private EWorkflowProcessCommand command;
 
-  public WorkflowSaveRequest() {
+  public InvoiceWorkflowSaveRequest() {
 
   }
 
   /**
    * @return the workflow
    */
-  public Workflow getWorkflow() {
+  @Override
+  public InvoiceWorkflow getWorkflow() {
     return this.workflow;
   }
 
   /**
    * @param workflow the workflow to set
    */
-  public void setWorkflow(final Workflow workflow) {
+  public void setWorkflow(final InvoiceWorkflow workflow) {
     this.workflow = workflow;
   }
 
+  @Override
   public Integer getExpireDays() {
     return this.expireDays;
   }
@@ -41,6 +44,7 @@ public class WorkflowSaveRequest {
   /**
    * @return the assignedUsers
    */
+  @Override
   public List<AssignItem> getAssigns() {
     return this.assigns;
   }
@@ -55,26 +59,32 @@ public class WorkflowSaveRequest {
     }
   }
 
+  @Override
   public EWorkflowProcessCommand getCommand() {
     return this.command;
   }
 
+  @Override
   public boolean isAssignCommand() {
     return this.command == EWorkflowProcessCommand.ASSIGN;
   }
 
+  @Override
   public boolean isArchiveCommand() {
     return this.command == EWorkflowProcessCommand.ARCHIVE;
   }
 
+  @Override
   public boolean isCreateCommand() {
     return this.command == EWorkflowProcessCommand.CREATE;
   }
 
+  @Override
   public boolean isDoneCommand() {
     return this.command == EWorkflowProcessCommand.DONE;
   }
 
+  @Override
   public boolean isSaveCommand() {
     return this.command == EWorkflowProcessCommand.SAVE;
   }

@@ -6,27 +6,24 @@ import java.util.Set;
 
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
-import com.pth.iflow.workflow.models.Workflow;
+import com.pth.iflow.workflow.models.InvoiceWorkflow;
 import com.pth.iflow.workflow.models.WorkflowSearchFilter;
 
-public interface IWorkflowDataService {
+public interface IInvoiceWorkflowDataService {
 
-  public Workflow save(final Workflow model, final String token)
+  public InvoiceWorkflow save(final InvoiceWorkflow model, final String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  public Workflow getByIdentity(final String identity, final String token)
+  public InvoiceWorkflow getByIdentity(final String identity, final String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  public List<Workflow> getListByTypeIdentity(final String identity, final String token)
+  public List<InvoiceWorkflow> getListForUser(final String identity, int status, final String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  public List<Workflow> getListForUser(final String identity, int status, final String token)
+  public List<InvoiceWorkflow> getListByIdentityList(final Set<String> idList, final String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  public List<Workflow> getListByIdentityList(final Set<String> idList, final String token)
-      throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
-
-  public List<Workflow> search(final WorkflowSearchFilter workflowSearchFilter, String token)
+  public List<InvoiceWorkflow> search(final WorkflowSearchFilter workflowSearchFilter, String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
 }

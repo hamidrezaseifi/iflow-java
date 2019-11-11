@@ -5,18 +5,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.IWorkflowPrepare;
 import com.pth.iflow.workflow.bl.IWorkflowTypeDataService;
-import com.pth.iflow.workflow.models.Workflow;
 import com.pth.iflow.workflow.models.WorkflowAction;
 import com.pth.iflow.workflow.models.WorkflowType;
 import com.pth.iflow.workflow.models.WorkflowTypeStep;
+import com.pth.iflow.workflow.models.base.IWorkflow;
 
 @Service
-public class WorkflowPrepare implements IWorkflowPrepare {
+public class WorkflowPrepare implements IWorkflowPrepare<IWorkflow> {
 
   private final IWorkflowTypeDataService workflowTypeDataService;
 
@@ -25,7 +27,8 @@ public class WorkflowPrepare implements IWorkflowPrepare {
   }
 
   @Override
-  public Workflow prepareWorkflow(final String token, final Workflow workflow) throws MalformedURLException, IFlowMessageConversionFailureException {
+  public IWorkflow prepareWorkflow(final String token, final IWorkflow workflow)
+      throws MalformedURLException, IFlowMessageConversionFailureException {
     final WorkflowType workflowType = this.workflowTypeDataService.getByIdentity(workflow.getWorkflowTypeIdentity(), token);
 
     workflow.setWorkflowType(workflowType);
@@ -47,10 +50,11 @@ public class WorkflowPrepare implements IWorkflowPrepare {
   }
 
   @Override
-  public List<Workflow> prepareWorkflowList(final String token, final List<Workflow> workflowList) throws MalformedURLException, IFlowMessageConversionFailureException {
-    final List<Workflow> list = new ArrayList<>();
+  public List<IWorkflow> prepareWorkflowList(final String token, final List<IWorkflow> workflowList)
+      throws MalformedURLException, IFlowMessageConversionFailureException {
+    final List<IWorkflow> list = new ArrayList<>();
     if (workflowList != null) {
-      for (final Workflow workflow : workflowList) {
+      for (final IWorkflow workflow : workflowList) {
         list.add(this.prepareWorkflow(token, workflow));
       }
 
@@ -61,9 +65,8 @@ public class WorkflowPrepare implements IWorkflowPrepare {
 
   private Map<String, WorkflowTypeStep> getIdMapedSteps(final WorkflowType workflowType) {
 
-    final Map<String, WorkflowTypeStep> list = workflowType.getSteps()
-                                                           .stream()
-                                                           .collect(Collectors.toMap(s -> s.getIdentity(), s -> s));
+    final Map<String, WorkflowTypeStep> list = workflowType.getSteps().stream()
+        .collect(Collectors.toMap(s -> s.getIdentity(), s -> s));
 
     return list;
   }
