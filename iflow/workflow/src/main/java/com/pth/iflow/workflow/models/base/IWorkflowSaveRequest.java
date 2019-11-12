@@ -1,16 +1,17 @@
 package com.pth.iflow.workflow.models.base;
 
 import java.util.List;
-
 import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 import com.pth.iflow.workflow.models.AssignItem;
 
-public interface IWorkflowSaveRequest {
+public interface IWorkflowSaveRequest<W extends IWorkflow> {
 
   /**
    * @return the workflow
    */
-  public IWorkflow getWorkflow();
+  public W getWorkflow();
+
+  public void setWorkflow(W workflow);
 
   public Integer getExpireDays();
 

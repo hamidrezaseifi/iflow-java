@@ -1,16 +1,15 @@
 package com.pth.iflow.workflow.bl.strategy.steps;
 
 import java.net.MalformedURLException;
-
 import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.strategy.strategies.AbstractWorkflowSaveStrategy;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
-import com.pth.iflow.workflow.models.Workflow;
+import com.pth.iflow.workflow.models.base.IWorkflow;
 
-public class ValidateWorkflowDetailStrategyStep extends AbstractWorkflowSaveStrategyStep {
+public class ValidateWorkflowDetailStrategyStep<W extends IWorkflow> extends AbstractWorkflowSaveStrategyStep<W> {
 
-  public ValidateWorkflowDetailStrategyStep(final AbstractWorkflowSaveStrategy workflowSaveStrategy) {
+  public ValidateWorkflowDetailStrategyStep(final AbstractWorkflowSaveStrategy<W> workflowSaveStrategy) {
     super(workflowSaveStrategy);
 
   }
@@ -18,7 +17,7 @@ public class ValidateWorkflowDetailStrategyStep extends AbstractWorkflowSaveStra
   @Override
   public void process() throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    final Workflow processingWorkflow = this.getWorkflowSaveStrategy().getProcessingWorkflow();
+    final W processingWorkflow = this.getWorkflowSaveStrategy().getProcessingWorkflow();
 
     if (processingWorkflow.hasController() == false) {
 

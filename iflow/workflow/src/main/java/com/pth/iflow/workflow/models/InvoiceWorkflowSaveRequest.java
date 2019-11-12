@@ -2,11 +2,10 @@ package com.pth.iflow.workflow.models;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 import com.pth.iflow.workflow.models.base.IWorkflowSaveRequest;
 
-public class InvoiceWorkflowSaveRequest implements IWorkflowSaveRequest {
+public class InvoiceWorkflowSaveRequest implements IWorkflowSaveRequest<InvoiceWorkflow> {
 
   private InvoiceWorkflow         workflow;
   private Integer                 expireDays;
@@ -28,6 +27,7 @@ public class InvoiceWorkflowSaveRequest implements IWorkflowSaveRequest {
   /**
    * @param workflow the workflow to set
    */
+  @Override
   public void setWorkflow(final InvoiceWorkflow workflow) {
     this.workflow = workflow;
   }

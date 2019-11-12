@@ -1,18 +1,17 @@
 package com.pth.iflow.workflow.bl.strategy.steps;
 
 import java.net.MalformedURLException;
-
 import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.strategy.strategies.AbstractWorkflowSaveStrategy;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
-import com.pth.iflow.workflow.models.Workflow;
 import com.pth.iflow.workflow.models.WorkflowType;
 import com.pth.iflow.workflow.models.WorkflowTypeStep;
+import com.pth.iflow.workflow.models.base.IWorkflow;
 
-public class ValidateCurrentStepExistsInWorkflowTypeStrategyStep extends AbstractWorkflowSaveStrategyStep {
+public class ValidateCurrentStepExistsInWorkflowTypeStrategyStep<W extends IWorkflow> extends AbstractWorkflowSaveStrategyStep<W> {
 
-  public ValidateCurrentStepExistsInWorkflowTypeStrategyStep(final AbstractWorkflowSaveStrategy workflowSaveStrategy) {
+  public ValidateCurrentStepExistsInWorkflowTypeStrategyStep(final AbstractWorkflowSaveStrategy<W> workflowSaveStrategy) {
     super(workflowSaveStrategy);
 
   }
@@ -20,14 +19,14 @@ public class ValidateCurrentStepExistsInWorkflowTypeStrategyStep extends Abstrac
   @Override
   public void process() throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    final Workflow processingWorkflow = this.getWorkflowSaveStrategy().getProcessingWorkflow();
+    final W processingWorkflow = this.getWorkflowSaveStrategy().getProcessingWorkflow();
     final WorkflowType processingWorkflowType = this.getWorkflowSaveStrategy().getProcessingWorkflowType();
 
     final boolean isValid = this.validateCurrentStepExistsInWorkflowType(processingWorkflow.getCurrentStep(), processingWorkflowType);
     if (isValid == false) {
 
       throw new WorkflowCustomizedException("Invalid workflow step id:" + processingWorkflow.getIdentity(),
-          EIFlowErrorType.INVALID_WORKFLOW_STEP);
+                                            EIFlowErrorType.INVALID_WORKFLOW_STEP);
 
     }
 

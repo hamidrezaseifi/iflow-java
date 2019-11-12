@@ -1,7 +1,6 @@
 package com.pth.iflow.workflow.models.base;
 
 import java.util.List;
-
 import com.pth.iflow.common.enums.EWorkflowActionStatus;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 import com.pth.iflow.common.enums.EWorkflowType;
@@ -57,6 +56,8 @@ public interface IWorkflow {
   public String getCurrentStepIdentity();
 
   public void setCurrentStepIdentity(final String currentStepIdentity);
+
+  public boolean isCurrentStepIdentity(final String stepIdentity);
 
   public String getControllerIdentity();
 

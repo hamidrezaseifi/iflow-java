@@ -1,18 +1,17 @@
 package com.pth.iflow.workflow.bl.strategy.steps;
 
 import java.net.MalformedURLException;
-
 import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.strategy.strategies.AbstractWorkflowSaveStrategy;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
-import com.pth.iflow.workflow.models.Workflow;
 import com.pth.iflow.workflow.models.WorkflowType;
 import com.pth.iflow.workflow.models.WorkflowTypeStep;
+import com.pth.iflow.workflow.models.base.IWorkflow;
 
-public class ValidateWorkflowTypeStepStrategyStep extends AbstractWorkflowSaveStrategyStep {
+public class ValidateWorkflowTypeStepStrategyStep<W extends IWorkflow> extends AbstractWorkflowSaveStrategyStep<W> {
 
-  public ValidateWorkflowTypeStepStrategyStep(final AbstractWorkflowSaveStrategy workflowSaveStrategy) {
+  public ValidateWorkflowTypeStepStrategyStep(final AbstractWorkflowSaveStrategy<W> workflowSaveStrategy) {
     super(workflowSaveStrategy);
 
   }
@@ -20,7 +19,7 @@ public class ValidateWorkflowTypeStepStrategyStep extends AbstractWorkflowSaveSt
   @Override
   public void process() throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    final Workflow processingWorkflow = this.getWorkflowSaveStrategy().getProcessingWorkflow();
+    final W processingWorkflow = this.getWorkflowSaveStrategy().getProcessingWorkflow();
     final WorkflowType processingWorkflowType = this.getWorkflowSaveStrategy().getProcessingWorkflowType();
 
     if (processingWorkflow.getCurrentStep() == null) {
@@ -31,14 +30,14 @@ public class ValidateWorkflowTypeStepStrategyStep extends AbstractWorkflowSaveSt
     if (processingWorkflow.getCurrentStep() == null) {
 
       throw new WorkflowCustomizedException("Unknown processingWorkflow step identity:" + processingWorkflow.getIdentity(),
-          EIFlowErrorType.UNKNOWN_WORKFLOW_TYPE_STEP);
+                                            EIFlowErrorType.UNKNOWN_WORKFLOW_TYPE_STEP);
     }
 
     this.getWorkflowSaveStrategy().validateCurrentStepExistsInWorkflowType(processingWorkflow, processingWorkflowType);
 
   }
 
-  private void setWorkflowCurrentStep(final Workflow workflow, final WorkflowType workflowType) {
+  private void setWorkflowCurrentStep(final IWorkflow workflow, final WorkflowType workflowType) {
 
     if (workflow.isInitializing() || workflow.isOffering()) {
       final WorkflowTypeStep firstStep = this.getWorkflowSaveStrategy().findFirstStep(workflowType);
