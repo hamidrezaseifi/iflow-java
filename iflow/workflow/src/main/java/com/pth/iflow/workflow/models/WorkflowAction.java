@@ -13,9 +13,8 @@ public class WorkflowAction extends IdentityModel {
   private EWorkflowActionStatus status;
   private Integer               version;
 
-  private WorkflowTypeStep      currentStep;
-  private User                  assignToUser;
-  private Workflow              workflow;
+  private WorkflowTypeStep currentStep;
+  private User             assignToUser;
 
   @Override
   public String getIdentity() {
@@ -101,14 +100,6 @@ public class WorkflowAction extends IdentityModel {
 
   public void setAssignToUser(final User assignToUser) {
     this.assignToUser = assignToUser;
-  }
-
-  public Workflow getWorkflow() {
-    return workflow;
-  }
-
-  public void setWorkflow(final Workflow workflow) {
-    this.workflow = workflow;
   }
 
 }
