@@ -16,6 +16,7 @@ import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.IDepartmentDataService;
 import com.pth.iflow.workflow.bl.IProfileCachDataDataService;
+import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.IWorkflowMessageDataService;
 import com.pth.iflow.workflow.bl.IWorkflowPrepare;
 import com.pth.iflow.workflow.bl.strategy.IWorkflowSaveStrategy;
@@ -34,7 +35,7 @@ public abstract class AbstractWorkflowSaveStrategy<W extends IWorkflow> implemen
   private final IDepartmentDataService      departmentDataService;
   private final IWorkflowMessageDataService workflowMessageDataService;
   private final IProfileCachDataDataService profileCachDataDataService;
-  private final IWorkflowDataService        workflowDataService;
+  private final IWorkflowDataService<W>     workflowDataService;
   private final IWorkflowPrepare<W>         workflowPrepare;
 
   protected final IWorkflowSaveRequest<W> processingWorkflowSaveRequest;
@@ -55,7 +56,7 @@ public abstract class AbstractWorkflowSaveStrategy<W extends IWorkflow> implemen
                                       final IDepartmentDataService departmentDataService,
                                       final IWorkflowMessageDataService workflowMessageDataService,
                                       final IProfileCachDataDataService profileCachDataDataService,
-                                      final IWorkflowDataService workflowDataService,
+                                      final IWorkflowDataService<W> workflowDataService,
                                       final IWorkflowPrepare<W> workflowPrepare)
                                                                                  throws WorkflowCustomizedException,
                                                                                  MalformedURLException,
@@ -90,7 +91,7 @@ public abstract class AbstractWorkflowSaveStrategy<W extends IWorkflow> implemen
   }
 
   public void createWorkflowMessage(final W workflow, final String userIdentity) throws MalformedURLException, IFlowMessageConversionFailureException {
-    final WorkflowMessage<W> message = new WorkflowMessage<W>();
+    final WorkflowMessage message = new WorkflowMessage();
     message.setCreatedByIdentity(workflow.getCreatedByIdentity());
     message.setExpireDays(this.processingWorkflowSaveRequest.getExpireDays());
     message.setMessage("Offering Workflow Message");
@@ -100,7 +101,6 @@ public abstract class AbstractWorkflowSaveStrategy<W extends IWorkflow> implemen
     message.setWorkflowIdentity(workflow.getIdentity());
     message.setStepIdentity(workflow.getCurrentStepIdentity());
     message.setVersion(1);
-    message.setWorkflow(workflow);
     getWorkflowMessageDataService().save(message, this.getToken());
   }
 

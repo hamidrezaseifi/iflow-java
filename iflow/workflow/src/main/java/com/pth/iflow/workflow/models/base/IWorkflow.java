@@ -98,4 +98,6 @@ public interface IWorkflow {
   public void addAction(final WorkflowAction action);
 
   public String getWorkflowTypeIdentity();
+
+  public boolean isNew();
 }

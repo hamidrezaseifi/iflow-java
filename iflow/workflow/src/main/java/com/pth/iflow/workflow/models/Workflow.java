@@ -3,9 +3,7 @@ package com.pth.iflow.workflow.models;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-
 import org.apache.commons.lang3.StringUtils;
-
 import com.pth.iflow.common.edo.models.helper.IdentityModel;
 import com.pth.iflow.common.enums.EWorkflowActionStatus;
 import com.pth.iflow.common.enums.EWorkflowIdentity;
@@ -15,16 +13,16 @@ import com.pth.iflow.workflow.models.base.IWorkflow;
 
 public abstract class Workflow extends IdentityModel implements IWorkflow {
 
-  private String                     identity;
-  private WorkflowType               workflowType;
-  private WorkflowTypeStep           currentStep;
-  private String                     comments;
-  private EWorkflowStatus            status;
-  private Integer                    version;
+  private String           identity;
+  private WorkflowType     workflowType;
+  private WorkflowTypeStep currentStep;
+  private String           comments;
+  private EWorkflowStatus  status;
+  private Integer          version;
 
-  private String                     currentStepIdentity;
-  private String                     controllerIdentity;
-  private String                     createdByIdentity;
+  private String currentStepIdentity;
+  private String controllerIdentity;
+  private String createdByIdentity;
 
   private final List<WorkflowFile>   files   = new ArrayList<>();
   private final List<WorkflowAction> actions = new ArrayList<>();
@@ -148,6 +146,7 @@ public abstract class Workflow extends IdentityModel implements IWorkflow {
     this.currentStepIdentity = currentStepIdentity;
   }
 
+  @Override
   public boolean isCurrentStepIdentity(final String stepIdentity) {
     return currentStepIdentity.equals(stepIdentity);
   }
@@ -202,7 +201,10 @@ public abstract class Workflow extends IdentityModel implements IWorkflow {
       public int compare(final WorkflowAction action1, final WorkflowAction action2) {
 
         return action1.getCurrentStep().getStepIndex() > action2.getCurrentStep().getStepIndex() ? 1
-            : action1.getCurrentStep().getStepIndex() < action2.getCurrentStep().getStepIndex() ? -1 : 0;
+                                                                                                 : action1.getCurrentStep()
+                                                                                                          .getStepIndex() < action2.getCurrentStep()
+                                                                                                                                   .getStepIndex() ? -1
+                                                                                                                                                   : 0;
       }
     });
 
@@ -270,4 +272,8 @@ public abstract class Workflow extends IdentityModel implements IWorkflow {
     this.actions.add(action);
   }
 
+  @Override
+  public boolean isNew() {
+    return IdentityModel.isIdentityNew(this.getIdentity());
+  }
 }

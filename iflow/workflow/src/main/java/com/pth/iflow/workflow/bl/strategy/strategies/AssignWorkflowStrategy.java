@@ -21,20 +21,21 @@ import com.pth.iflow.workflow.bl.strategy.steps.ValidateWorkflowActiveActionStra
 import com.pth.iflow.workflow.bl.strategy.steps.ValidateWorkflowDetailStrategyStep;
 import com.pth.iflow.workflow.bl.strategy.steps.ValidateWorkflowTypeStepStrategyStep;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
-import com.pth.iflow.workflow.models.WorkflowSaveRequest;
+import com.pth.iflow.workflow.models.base.IWorkflow;
+import com.pth.iflow.workflow.models.base.IWorkflowSaveRequest;
 
-public class AssignWorkflowStrategy extends AbstractWorkflowSaveStrategy {
+public class AssignWorkflowStrategy<W extends IWorkflow> extends AbstractWorkflowSaveStrategy<W> {
 
-  public AssignWorkflowStrategy(final WorkflowSaveRequest workflowCreateRequest,
+  public AssignWorkflowStrategy(final IWorkflowSaveRequest<W> workflowCreateRequest,
                                 final String token,
                                 final IDepartmentDataService departmentDataService,
                                 final IWorkflowMessageDataService workflowMessageDataService,
                                 final IProfileCachDataDataService cachDataDataService,
-                                final IWorkflowDataService workflowDataService,
-                                final IWorkflowPrepare workflowPrepare)
-                                                                        throws WorkflowCustomizedException,
-                                                                        MalformedURLException,
-                                                                        IFlowMessageConversionFailureException {
+                                final IWorkflowDataService<W> workflowDataService,
+                                final IWorkflowPrepare<W> workflowPrepare)
+                                                                           throws WorkflowCustomizedException,
+                                                                           MalformedURLException,
+                                                                           IFlowMessageConversionFailureException {
     super(workflowCreateRequest,
           token,
           departmentDataService,
@@ -47,19 +48,19 @@ public class AssignWorkflowStrategy extends AbstractWorkflowSaveStrategy {
 
   @Override
   public void setup() {
-    steps.add(new ValidateWorkflowDetailStrategyStep(this));
-    steps.add(new ValidateWorkflowTypeStepStrategyStep(this));
-    steps.add(new ValidateCurrentStepExistsInWorkflowTypeStrategyStep(this));
-    steps.add(new InitializeWorkflowInitialActionStrategyStep(this));
-    steps.add(new InitializeWorkflowActiveActionStrategyStep(this));
-    steps.add(new ValidateWorkflowActiveActionStrategyStep(this));
-    steps.add(new ValidateSingleUserAssignInSaveRequestStrategyStep(this));
-    steps.add(new AssignWorkflowActiveActionStrategyStep(this));
-    steps.add(new PrepareAssigningWorkflowStep(this));
-    steps.add(new SaveWorkflowInCoreStep(this));
-    steps.add(new ChangeWorkflowOfferStatusToCloseForWorkflowInCoreStep(this));
-    steps.add(new ChangeWorkflowOfferStatusToAssignForUserAndWorkflowInCoreStep(this));
-    steps.add(new SendWorkflowOffersToProfileStep(this));
+    steps.add(new ValidateWorkflowDetailStrategyStep<W>(this));
+    steps.add(new ValidateWorkflowTypeStepStrategyStep<W>(this));
+    steps.add(new ValidateCurrentStepExistsInWorkflowTypeStrategyStep<W>(this));
+    steps.add(new InitializeWorkflowInitialActionStrategyStep<W>(this));
+    steps.add(new InitializeWorkflowActiveActionStrategyStep<W>(this));
+    steps.add(new ValidateWorkflowActiveActionStrategyStep<W>(this));
+    steps.add(new ValidateSingleUserAssignInSaveRequestStrategyStep<W>(this));
+    steps.add(new AssignWorkflowActiveActionStrategyStep<W>(this));
+    steps.add(new PrepareAssigningWorkflowStep<W>(this));
+    steps.add(new SaveWorkflowInCoreStep<W>(this));
+    steps.add(new ChangeWorkflowOfferStatusToCloseForWorkflowInCoreStep<W>(this));
+    steps.add(new ChangeWorkflowOfferStatusToAssignForUserAndWorkflowInCoreStep<W>(this));
+    steps.add(new SendWorkflowOffersToProfileStep<W>(this));
 
   }
 

@@ -23,7 +23,7 @@ import com.pth.iflow.workflow.services.IRestTemplateCall;
 @Service
 public class WorkflowMessageDataService implements IWorkflowMessageDataService {
 
-  private static final Logger logger = LoggerFactory.getLogger(WorkflowCoreConnectService.class);
+  private static final Logger logger = LoggerFactory.getLogger(WorkflowMessageDataService.class);
 
   private final IRestTemplateCall                        restTemplate;
   private final WorkflowConfiguration.ModuleAccessConfig moduleAccessConfig;

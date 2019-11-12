@@ -21,7 +21,7 @@ import com.pth.iflow.common.edo.models.InvoiceWorkflowSaveRequestEdo;
 import com.pth.iflow.common.edo.models.WorkflowSearchFilterEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
-import com.pth.iflow.workflow.bl.IInvoiceWorkflowProcessService;
+import com.pth.iflow.workflow.bl.IWorkflowProcessService;
 import com.pth.iflow.workflow.models.InvoiceWorkflow;
 import com.pth.iflow.workflow.models.mapper.WorkflowModelEdoMapper;
 
@@ -29,9 +29,9 @@ import com.pth.iflow.workflow.models.mapper.WorkflowModelEdoMapper;
 @RequestMapping
 public class InvoiceController {
 
-  final IInvoiceWorkflowProcessService invoiceWorkflowService;
+  final IWorkflowProcessService<InvoiceWorkflow> invoiceWorkflowService;
 
-  public InvoiceController(@Autowired final IInvoiceWorkflowProcessService invoiceWorkflowService) {
+  public InvoiceController(@Autowired final IWorkflowProcessService<InvoiceWorkflow> invoiceWorkflowService) {
     this.invoiceWorkflowService = invoiceWorkflowService;
   }
 

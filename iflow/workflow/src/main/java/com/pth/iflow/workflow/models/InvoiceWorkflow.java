@@ -1,37 +1,36 @@
 package com.pth.iflow.workflow.models;
 
 import java.time.LocalDate;
-
 import com.pth.iflow.common.enums.EInvoiceType;
 import com.pth.iflow.common.enums.EWorkflowType;
 
 public class InvoiceWorkflow extends Workflow {
 
-  private String       sender;
+  private String sender;
 
-  private String       registerNumber;
+  private String registerNumber;
 
-  private LocalDate    invoceDate;
+  private LocalDate invoceDate;
 
-  private String       partnerCode;
+  private String partnerCode;
 
-  private String       vendorNumber;
+  private String vendorNumber;
 
-  private String       vendorName;
+  private String vendorName;
 
-  private Boolean      isDirectDebit;
+  private Boolean isDirectDebit;
 
   private EInvoiceType invoiceType;
 
-  private LocalDate    discountEnterDate;
+  private LocalDate discountEnterDate;
 
-  private Integer      discountDeadline;
+  private Integer discountDeadline;
 
-  private Double       discountRate;
+  private Double discountRate;
 
-  private LocalDate    discountDate;
+  private LocalDate discountDate;
 
-  private Double       paymentAmount;
+  private Double paymentAmount;
 
   public String getSender() {
     return sender;

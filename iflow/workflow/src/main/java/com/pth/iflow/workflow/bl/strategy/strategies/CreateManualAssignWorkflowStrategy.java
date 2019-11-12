@@ -17,20 +17,21 @@ import com.pth.iflow.workflow.bl.strategy.steps.ValidateWorkflowActiveActionStra
 import com.pth.iflow.workflow.bl.strategy.steps.ValidateWorkflowDetailStrategyStep;
 import com.pth.iflow.workflow.bl.strategy.steps.ValidateWorkflowTypeStepStrategyStep;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
-import com.pth.iflow.workflow.models.WorkflowSaveRequest;
+import com.pth.iflow.workflow.models.base.IWorkflow;
+import com.pth.iflow.workflow.models.base.IWorkflowSaveRequest;
 
-public class CreateManualAssignWorkflowStrategy extends AbstractWorkflowSaveStrategy {
+public class CreateManualAssignWorkflowStrategy<W extends IWorkflow> extends AbstractWorkflowSaveStrategy<W> {
 
-  public CreateManualAssignWorkflowStrategy(final WorkflowSaveRequest workflowCreateRequest,
+  public CreateManualAssignWorkflowStrategy(final IWorkflowSaveRequest<W> workflowCreateRequest,
                                             final String token,
                                             final IDepartmentDataService departmentDataService,
                                             final IWorkflowMessageDataService workflowMessageDataService,
                                             final IProfileCachDataDataService cachDataDataService,
-                                            final IWorkflowDataService workflowDataService,
-                                            final IWorkflowPrepare workflowPrepare)
-                                                                                    throws WorkflowCustomizedException,
-                                                                                    MalformedURLException,
-                                                                                    IFlowMessageConversionFailureException {
+                                            final IWorkflowDataService<W> workflowDataService,
+                                            final IWorkflowPrepare<W> workflowPrepare)
+                                                                                       throws WorkflowCustomizedException,
+                                                                                       MalformedURLException,
+                                                                                       IFlowMessageConversionFailureException {
     super(workflowCreateRequest,
           token,
           departmentDataService,
@@ -43,15 +44,15 @@ public class CreateManualAssignWorkflowStrategy extends AbstractWorkflowSaveStra
 
   @Override
   public void setup() {
-    steps.add(new ValidateWorkflowDetailStrategyStep(this));
-    steps.add(new ValidateAssignInSaveRequestStrategyStep(this));
-    steps.add(new CollectAssignedUserIdListStep(this));
-    steps.add(new ValidateWorkflowTypeStepStrategyStep(this));
-    steps.add(new ValidateCurrentStepExistsInWorkflowTypeStrategyStep(this));
-    steps.add(new InitializeWorkflowInitialActionStrategyStep(this));
-    steps.add(new InitializeWorkflowActiveActionStrategyStep(this));
-    steps.add(new ValidateWorkflowActiveActionStrategyStep(this));
-    steps.add(new SaveWorkflowForAssignedUseresInCoreStep(this));
+    steps.add(new ValidateWorkflowDetailStrategyStep<W>(this));
+    steps.add(new ValidateAssignInSaveRequestStrategyStep<W>(this));
+    steps.add(new CollectAssignedUserIdListStep<W>(this));
+    steps.add(new ValidateWorkflowTypeStepStrategyStep<W>(this));
+    steps.add(new ValidateCurrentStepExistsInWorkflowTypeStrategyStep<W>(this));
+    steps.add(new InitializeWorkflowInitialActionStrategyStep<W>(this));
+    steps.add(new InitializeWorkflowActiveActionStrategyStep<W>(this));
+    steps.add(new ValidateWorkflowActiveActionStrategyStep<W>(this));
+    steps.add(new SaveWorkflowForAssignedUseresInCoreStep<W>(this));
 
   }
 
