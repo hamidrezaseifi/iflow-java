@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import com.pth.iflow.common.enums.EAssignType;
 import com.pth.iflow.common.enums.EWorkflowActionStatus;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
@@ -19,14 +18,14 @@ import com.pth.iflow.workflow.models.Company;
 import com.pth.iflow.workflow.models.CompanyProfile;
 import com.pth.iflow.workflow.models.Department;
 import com.pth.iflow.workflow.models.DepartmentGroup;
+import com.pth.iflow.workflow.models.InvoiceWorkflow;
+import com.pth.iflow.workflow.models.InvoiceWorkflowSaveRequest;
 import com.pth.iflow.workflow.models.User;
 import com.pth.iflow.workflow.models.UserGroup;
-import com.pth.iflow.workflow.models.Workflow;
 import com.pth.iflow.workflow.models.WorkflowAction;
 import com.pth.iflow.workflow.models.WorkflowFile;
 import com.pth.iflow.workflow.models.WorkflowFileVersion;
 import com.pth.iflow.workflow.models.WorkflowMessage;
-import com.pth.iflow.workflow.models.WorkflowSaveRequest;
 import com.pth.iflow.workflow.models.WorkflowSearchFilter;
 import com.pth.iflow.workflow.models.WorkflowType;
 import com.pth.iflow.workflow.models.WorkflowTypeStep;
@@ -45,8 +44,9 @@ public class TestDataProducer {
 
   protected CompanyProfile getTestCompanyProfile() {
 
-    final CompanyProfile companyProfile = new CompanyProfile(this.getTestCompany(), this.getTestDepartmentList(),
-        this.getTestUserGroupList());
+    final CompanyProfile companyProfile = new CompanyProfile(this.getTestCompany(),
+                                                             this.getTestDepartmentList(),
+                                                             this.getTestUserGroupList());
 
     return companyProfile;
   }
@@ -89,15 +89,14 @@ public class TestDataProducer {
 
   protected List<User> getTestUserList() {
     final List<User> list = Arrays.asList(this.getTestUser("fname 1", "lname 1", "email 1"),
-        this.getTestUser("fname 2", "lname 2", "email 2"), this.getTestUser("fname 3", "lname 3", "email 3"));
+                                          this.getTestUser("fname 2", "lname 2", "email 2"),
+                                          this.getTestUser("fname 3", "lname 3", "email 3"));
 
     return list;
   }
 
-  protected Workflow getTestWorkflow(final String identity) {
-    final Workflow model = new Workflow();
-    model.setWorkflowType(getTestWorkflowType("workflowTypeIdentity", "workflowtype 1"));
-    model.setWorkflowTypeIdentity(model.getWorkflowType().getIdentity());
+  protected InvoiceWorkflow getTestInvoiceWorkflow(final String identity) {
+    final InvoiceWorkflow model = new InvoiceWorkflow();
     model.setIdentity(identity);
     model.setStatus(EWorkflowStatus.INITIALIZE);
     model.setVersion(1);
@@ -108,17 +107,18 @@ public class TestDataProducer {
     model.setCreatedByIdentity("createdByIdentity");
 
     model.setActions(Arrays.asList(this.getTestWorkflowAction("action1", model.getIdentity()),
-        this.getTestWorkflowAction("action2", model.getIdentity()), this.getTestWorkflowAction("action3", model.getIdentity())));
+                                   this.getTestWorkflowAction("action2", model.getIdentity()),
+                                   this.getTestWorkflowAction("action3", model.getIdentity())));
     model.setFiles(Arrays.asList(this.getTestWorkflowFile("file1", model.getIdentity()),
-        this.getTestWorkflowFile("file2", model.getIdentity()), this.getTestWorkflowFile("file3", model.getIdentity())));
+                                 this.getTestWorkflowFile("file2", model.getIdentity()),
+                                 this.getTestWorkflowFile("file3", model.getIdentity())));
 
     return model;
   }
 
-  protected Workflow getTestWorkflow(final String identity, final WorkflowType workflowType) {
-    final Workflow model = new Workflow();
+  protected InvoiceWorkflow getTestInvoiceWorkflow(final String identity, final WorkflowType workflowType) {
+    final InvoiceWorkflow model = new InvoiceWorkflow();
     model.setWorkflowType(workflowType);
-    model.setWorkflowTypeIdentity(workflowType.getIdentity());
     model.setIdentity(identity);
     model.setStatus(EWorkflowStatus.INITIALIZE);
     model.setVersion(1);
@@ -129,16 +129,17 @@ public class TestDataProducer {
     model.setCreatedByIdentity("createdByIdentity");
 
     model.setActions(Arrays.asList(this.getTestWorkflowAction("action1", model.getIdentity()),
-        this.getTestWorkflowAction("action2", model.getIdentity()), this.getTestWorkflowAction("action3", model.getIdentity())));
+                                   this.getTestWorkflowAction("action2", model.getIdentity()),
+                                   this.getTestWorkflowAction("action3", model.getIdentity())));
     model.setFiles(Arrays.asList(this.getTestWorkflowFile("file1", model.getIdentity()),
-        this.getTestWorkflowFile("file2", model.getIdentity()), this.getTestWorkflowFile("file3", model.getIdentity())));
+                                 this.getTestWorkflowFile("file2", model.getIdentity()),
+                                 this.getTestWorkflowFile("file3", model.getIdentity())));
 
     return model;
   }
 
-  protected Workflow getTestWorkflow(final String identity, final EWorkflowActionStatus actionStatus) {
-    final Workflow model = new Workflow();
-    model.setWorkflowTypeIdentity("workflowTypeIdentity");
+  protected InvoiceWorkflow getInvoiceTestWorkflow(final String identity, final EWorkflowActionStatus actionStatus) {
+    final InvoiceWorkflow model = new InvoiceWorkflow();
     model.setIdentity(identity);
     model.setStatus(EWorkflowStatus.INITIALIZE);
     model.setVersion(1);
@@ -148,9 +149,11 @@ public class TestDataProducer {
     model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
     model.setCreatedByIdentity("createdByIdentity");
     model.setActions(Arrays.asList(this.getTestWorkflowAction("action1", identity, actionStatus),
-        this.getTestWorkflowAction("action2", identity, actionStatus), this.getTestWorkflowAction("action3", identity, actionStatus)));
-    model.setFiles(Arrays.asList(this.getTestWorkflowFile("file1", identity), this.getTestWorkflowFile("file2", identity),
-        this.getTestWorkflowFile("file3", identity)));
+                                   this.getTestWorkflowAction("action2", identity, actionStatus),
+                                   this.getTestWorkflowAction("action3", identity, actionStatus)));
+    model.setFiles(Arrays.asList(this.getTestWorkflowFile("file1", identity),
+                                 this.getTestWorkflowFile("file2", identity),
+                                 this.getTestWorkflowFile("file3", identity)));
 
     return model;
   }
@@ -168,13 +171,13 @@ public class TestDataProducer {
     model.setTitle("title " + identity);
     model.setExtention("ext");
     model.setFileVersions(Arrays.asList(this.getTestWorkflowFileVersion("filever1", 1, identity),
-        this.getTestWorkflowFileVersion("filever2", 2, identity), this.getTestWorkflowFileVersion("filever3", 3, identity)));
+                                        this.getTestWorkflowFileVersion("filever2", 2, identity),
+                                        this.getTestWorkflowFileVersion("filever3", 3, identity)));
 
     return model;
   }
 
-  protected WorkflowFileVersion getTestWorkflowFileVersion(final String identity, final int version,
-      final String workflowFileIdentity) {
+  protected WorkflowFileVersion getTestWorkflowFileVersion(final String identity, final int version, final String workflowFileIdentity) {
     final WorkflowFileVersion model = new WorkflowFileVersion();
     model.setStatus(1);
     model.setVersion(1);
@@ -202,8 +205,7 @@ public class TestDataProducer {
     return model;
   }
 
-  protected WorkflowAction getTestWorkflowAction(final String identity, final String workflowIdentity,
-      final EWorkflowActionStatus actionStatus) {
+  protected WorkflowAction getTestWorkflowAction(final String identity, final String workflowIdentity, final EWorkflowActionStatus actionStatus) {
     final WorkflowAction model = new WorkflowAction();
     model.setWorkflowIdentity(workflowIdentity);
     model.setIdentity(identity);
@@ -231,7 +233,8 @@ public class TestDataProducer {
     model.setIncreaseStepAutomatic(true);
     model.setAllowAssign(true);
     model.setSteps(Arrays.asList(this.getTestWorkflowTypeStep("step1", "step 1", 1),
-        this.getTestWorkflowTypeStep("step2", "step 2", 2), this.getTestWorkflowTypeStep("step3", "step 3", 3)));
+                                 this.getTestWorkflowTypeStep("step2", "step 2", 2),
+                                 this.getTestWorkflowTypeStep("step3", "step 3", 3)));
     model.setComments("comments");
 
     return model;
@@ -250,7 +253,8 @@ public class TestDataProducer {
     model.setAllowAssign(true);
     model.setBaseTypeIdentity("baseTypeIdentity");
     model.setSteps(Arrays.asList(this.getTestWorkflowTypeStep("step1", "step 1", 1),
-        this.getTestWorkflowTypeStep("step2", "step 2", 2), this.getTestWorkflowTypeStep("step3", "step 3", 3)));
+                                 this.getTestWorkflowTypeStep("step2", "step 2", 2),
+                                 this.getTestWorkflowTypeStep("step3", "step 3", 3)));
     model.setComments("comments");
 
     return model;
@@ -258,7 +262,8 @@ public class TestDataProducer {
 
   protected List<WorkflowType> getTestWorkflowTypeList() {
     final List<WorkflowType> list = Arrays.asList(this.getTestWorkflowType("type1", "WorkflowType 1"),
-        this.getTestWorkflowType("type2", "WorkflowType 2"), this.getTestWorkflowType("type3", "WorkflowType 3"));
+                                                  this.getTestWorkflowType("type2", "WorkflowType 2"),
+                                                  this.getTestWorkflowType("type3", "WorkflowType 3"));
 
     return list;
   }
@@ -292,15 +297,17 @@ public class TestDataProducer {
     return model;
   }
 
-  protected List<Workflow> getTestWorkflowList() {
+  protected List<InvoiceWorkflow> getTestInvoiceWorkflowList() {
 
-    return Arrays.asList(this.getTestWorkflow("workflow1"), this.getTestWorkflow("workflow2"), this.getTestWorkflow("workflow3"));
+    return Arrays.asList(this.getTestInvoiceWorkflow("workflow1"),
+                         this.getTestInvoiceWorkflow("workflow2"),
+                         this.getTestInvoiceWorkflow("workflow3"));
   }
 
   protected List<WorkflowTypeStep> getTestWorkflowTypeStepList() {
     final List<WorkflowTypeStep> list = Arrays.asList(this.getTestWorkflowTypeStep("step1", "WorkflowTypeStep 1", 1),
-        this.getTestWorkflowTypeStep("step2", "WorkflowTypeStep 2", 2),
-        this.getTestWorkflowTypeStep("step3", "WorkflowTypeStep 3", 3));
+                                                      this.getTestWorkflowTypeStep("step2", "WorkflowTypeStep 2", 2),
+                                                      this.getTestWorkflowTypeStep("step3", "WorkflowTypeStep 3", 3));
 
     return list;
   }
@@ -339,14 +346,16 @@ public class TestDataProducer {
 
   protected List<Department> getTestDepartmentList() {
     final List<Department> list = Arrays.asList(this.getTestDepartment("dep1", "Department 1"),
-        this.getTestDepartment("dep2", "Department 2"), this.getTestDepartment("dep3", "Department 3"));
+                                                this.getTestDepartment("dep2", "Department 2"),
+                                                this.getTestDepartment("dep3", "Department 3"));
 
     return list;
   }
 
   protected List<UserGroup> getTestUserGroupList() {
     final List<UserGroup> list = Arrays.asList(this.getTestUserGroup("usergrp1", "UserGroup 1"),
-        this.getTestUserGroup("usergrp2", "UserGroup 2"), this.getTestUserGroup("usergrp3", "UserGroup 3"));
+                                               this.getTestUserGroup("usergrp2", "UserGroup 2"),
+                                               this.getTestUserGroup("usergrp3", "UserGroup 3"));
 
     return list;
   }
@@ -376,7 +385,8 @@ public class TestDataProducer {
 
   protected List<DepartmentGroup> getTestDepartmentGroupList() {
     final List<DepartmentGroup> list = Arrays.asList(this.getTestDepartmentGroup("depgrp1", "DepartmentGroup 1"),
-        this.getTestDepartmentGroup("depgrp2", "DepartmentGroup 2"), this.getTestDepartmentGroup("depgrp3", "DepartmentGroup 3"));
+                                                     this.getTestDepartmentGroup("depgrp2", "DepartmentGroup 2"),
+                                                     this.getTestDepartmentGroup("depgrp3", "DepartmentGroup 3"));
 
     return list;
   }
@@ -402,20 +412,20 @@ public class TestDataProducer {
     return filter;
   }
 
-  protected WorkflowSaveRequest getTestWorkflowCreateRequest() {
-    final WorkflowSaveRequest request = new WorkflowSaveRequest();
+  protected InvoiceWorkflowSaveRequest getTestInvoiceWorkflowSaveRequest() {
+    final InvoiceWorkflowSaveRequest request = new InvoiceWorkflowSaveRequest();
     request.setAssigns(this.getTestAssignedList());
-    request.setWorkflow(this.getTestWorkflow("workflow1"));
+    request.setWorkflow(this.getTestInvoiceWorkflow("workflow1"));
     request.setExpireDays(10);
     request.setCommand(EWorkflowProcessCommand.NONE);
 
     return request;
   }
 
-  protected WorkflowSaveRequest getTestNewWorkflowCreateRequest() {
-    final WorkflowSaveRequest request = new WorkflowSaveRequest();
+  protected InvoiceWorkflowSaveRequest getTestNewInvoiceWorkflowSaveRequest() {
+    final InvoiceWorkflowSaveRequest request = new InvoiceWorkflowSaveRequest();
     request.setAssigns(this.getTestAssignedList());
-    request.setWorkflow(this.getTestWorkflow("workflow1"));
+    request.setWorkflow(this.getTestInvoiceWorkflow("workflow1"));
     request.setExpireDays(10);
     request.setCommand(EWorkflowProcessCommand.NONE);
 
@@ -427,12 +437,12 @@ public class TestDataProducer {
     return request;
   }
 
-  protected WorkflowSaveRequest getTestWorkflowCreateRequestForStrategy() {
+  protected InvoiceWorkflowSaveRequest getTestInvoiceWorkflowCreateRequestForStrategy() {
     final WorkflowType workflowType = this.getTestWorkflowType("workflowtype1", "Workflowtype 1");
 
-    final WorkflowSaveRequest request = new WorkflowSaveRequest();
+    final InvoiceWorkflowSaveRequest request = new InvoiceWorkflowSaveRequest();
     request.setAssigns(this.getTestAssignedList());
-    request.setWorkflow(this.getTestWorkflow("workflow1", workflowType));
+    request.setWorkflow(this.getTestInvoiceWorkflow("workflow1", workflowType));
     request.setExpireDays(10);
     request.setCommand(EWorkflowProcessCommand.NONE);
 
@@ -450,11 +460,12 @@ public class TestDataProducer {
   }
 
   protected List<AssignItem> getTestAssignedList() {
-    return Arrays.asList(new AssignItem("user1", EAssignType.USER), new AssignItem("user2", EAssignType.USER),
-        new AssignItem("user3", EAssignType.USER));
+    return Arrays.asList(new AssignItem("user1", EAssignType.USER),
+                         new AssignItem("user2", EAssignType.USER),
+                         new AssignItem("user3", EAssignType.USER));
   }
 
-  protected WorkflowMessage getTestWorkflowMessage(final String userId, final Workflow workflow) {
+  protected WorkflowMessage getTestWorkflowMessage(final String userId, final String workflowIdentity) {
     final WorkflowMessage message = new WorkflowMessage();
     message.setCreatedAt(LocalDateTime.now());
     message.setCreatedByIdentity("createdByIdentity");
@@ -465,17 +476,16 @@ public class TestDataProducer {
     message.setStepIdentity("stepIdentity");
     message.setUserIdentity(userId);
     message.setVersion(1);
-    message.setWorkflowIdentity(workflow.getIdentity());
-    message.setWorkflow(workflow);
+    message.setWorkflowIdentity(workflowIdentity);
 
     return message;
   }
 
   protected List<WorkflowMessage> getTestWorkflowMessageList() {
-    final Workflow workflow = getTestWorkflow("workflow1");
 
-    return Arrays.asList(getTestWorkflowMessage("user1", workflow), getTestWorkflowMessage("user2", workflow),
-        getTestWorkflowMessage("user3", workflow));
+    return Arrays.asList(getTestWorkflowMessage("user1", "workflow1"),
+                         getTestWorkflowMessage("user2", "workflow1"),
+                         getTestWorkflowMessage("user3", "workflow1"));
   }
 
 }
