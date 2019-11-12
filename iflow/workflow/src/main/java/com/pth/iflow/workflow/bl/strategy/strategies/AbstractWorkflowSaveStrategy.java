@@ -292,7 +292,7 @@ public abstract class AbstractWorkflowSaveStrategy<W extends IWorkflow> implemen
     return processingWorkflowSaveRequest.getWorkflow().getWorkflowType();
   }
 
-  public IWorkflowDataService getWorkflowDataService() {
+  public IWorkflowDataService<W> getWorkflowDataService() {
     return workflowDataService;
   }
 
