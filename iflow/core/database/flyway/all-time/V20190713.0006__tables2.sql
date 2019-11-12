@@ -46,13 +46,13 @@ INSERT INTO `workflow_type`(id, identity, company_id, workflow_base_type, title,
 
 INSERT INTO `workflow_type_step`(id, identity, workflow_type_id, title, step_index, view_name, expire_days, commecnts, status, version) VALUES (1,'singletasktypestep', 1,'Augabe',1,'workflow/edit',15,NULL,1,1);
 
-INSERT INTO `workflow_type_step`(id, identity, workflow_type_id, title, step_index, view_name, expire_days, commecnts, status, version) VALUES (2,'threetasktype1step', 2,'Schritt 1',1,'workflow/edit',15,NULL,1,1);
-INSERT INTO `workflow_type_step`(id, identity, workflow_type_id, title, step_index, view_name, expire_days, commecnts, status, version) VALUES (3,'threetasktype1step', 2,'Schritt 2',2,'workflow/edit',15,NULL,1,1);
-INSERT INTO `workflow_type_step`(id, identity, workflow_type_id, title, step_index, view_name, expire_days, commecnts, status, version) VALUES (4,'threetasktype1step', 2,'Schritt 3',3,'workflow/edit',15,NULL,1,1);
+INSERT INTO `workflow_type_step`(id, identity, workflow_type_id, title, step_index, view_name, expire_days, commecnts, status, version) VALUES (2,'threetasktypestep1', 2,'Schritt 1',1,'workflow/edit',15,NULL,1,1);
+INSERT INTO `workflow_type_step`(id, identity, workflow_type_id, title, step_index, view_name, expire_days, commecnts, status, version) VALUES (3,'threetasktypestep2', 2,'Schritt 2',2,'workflow/edit',15,NULL,1,1);
+INSERT INTO `workflow_type_step`(id, identity, workflow_type_id, title, step_index, view_name, expire_days, commecnts, status, version) VALUES (4,'threetasktypestep3', 2,'Schritt 3',3,'workflow/edit',15,NULL,1,1);
 
-INSERT INTO `workflow_type_step`(id, identity, workflow_type_id, title, step_index, view_name, expire_days, commecnts, status, version) VALUES (5,'invocetasktype1step', 3,'Rechungsverteilung',1,'workflow/invoce/invoice_assign',15,NULL,1,1);
-INSERT INTO `workflow_type_step`(id, identity, workflow_type_id, title, step_index, view_name, expire_days, commecnts, status, version) VALUES (6,'invocetasktype1step', 3,'Rechungsprüfung',2,'workflow/invoce/invoice_testing',15,NULL,1,1);
-INSERT INTO `workflow_type_step`(id, identity, workflow_type_id, title, step_index, view_name, expire_days, commecnts, status, version) VALUES (7,'invocetasktype1step', 3,'Rechungsfreigabe',3,'workflow/invoce/invoice_release',15,NULL,1,1);
+INSERT INTO `workflow_type_step`(id, identity, workflow_type_id, title, step_index, view_name, expire_days, commecnts, status, version) VALUES (5,'invocetasktypestep1', 3,'Rechungsverteilung',1,'workflow/invoce/invoice_assign',15,NULL,1,1);
+INSERT INTO `workflow_type_step`(id, identity, workflow_type_id, title, step_index, view_name, expire_days, commecnts, status, version) VALUES (6,'invocetasktypestep2', 3,'Rechungsprüfung',2,'workflow/invoce/invoice_testing',15,NULL,1,1);
+INSERT INTO `workflow_type_step`(id, identity, workflow_type_id, title, step_index, view_name, expire_days, commecnts, status, version) VALUES (7,'invocetasktypestep3', 3,'Rechungsfreigabe',3,'workflow/invoce/invoice_release',15,NULL,1,1);
 
 CREATE TABLE `workflow_message` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

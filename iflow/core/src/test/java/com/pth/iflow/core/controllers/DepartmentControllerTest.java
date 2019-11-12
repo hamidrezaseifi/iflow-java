@@ -139,7 +139,7 @@ public class DepartmentControllerTest extends TestDataProducer {
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
 
     this.mockMvc
-                .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.DEPARTMENT_READ_ALLUSERLIST_BY_DEPARTMENTIDENTITY, "identity")
+                .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.READ_DEPARTMENT_ALLUSERLIST_BY_DEPARTMENT("identity"))
                                                .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))

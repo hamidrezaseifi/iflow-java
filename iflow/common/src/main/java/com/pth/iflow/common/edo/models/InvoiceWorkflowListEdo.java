@@ -14,7 +14,7 @@ import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 
 @XmlRootElement(name = "InvoiceWorkflowList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "WorkflowList" + IFlowJaxbDefinition.TYPE_PREFIX)
+@XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "InvoiceWorkflowList" + IFlowJaxbDefinition.TYPE_PREFIX)
 public class InvoiceWorkflowListEdo {
 
   @NotNull

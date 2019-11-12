@@ -6,9 +6,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import java.util.List;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,7 +21,6 @@ import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConve
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
 import com.pth.iflow.common.edo.models.WorkflowMessageEdo;
 import com.pth.iflow.common.edo.models.WorkflowMessageListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
@@ -40,16 +37,16 @@ import com.pth.iflow.core.service.IWorkflowMessageService;
 public class WorkflowMessageControllerTest extends TestDataProducer {
 
   @Autowired
-  private MockMvc                                mockMvc;
+  private MockMvc mockMvc;
 
   @Autowired
   private MappingJackson2XmlHttpMessageConverter xmlConverter;
 
   @MockBean
-  private IWorkflowMessageService                workflowMessageService;
+  private IWorkflowMessageService workflowMessageService;
 
   @Value("${iflow.common.rest.api.security.client-id.internal}")
-  private String                                 innerModulesRequestHeaderValue;
+  private String innerModulesRequestHeaderValue;
 
   @Before
   public void setUp() throws Exception {
@@ -70,11 +67,14 @@ public class WorkflowMessageControllerTest extends TestDataProducer {
 
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelListEdo);
 
+    System.out.println("listAsXmlString:   " + listAsXmlString);
+
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.READ_WORKFLOWMESSAGE_READ_BY_USER("email", 1))
-            .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
-        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
-        .andExpect(content().xml(listAsXmlString));
+                .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.READ_WORKFLOWMESSAGE_READ_BY_USER("email", 1))
+                                               .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+                .andExpect(content().xml(listAsXmlString));
 
     verify(this.workflowMessageService, times(1)).getNotClosedNotExpiredListByUserEmail(any(String.class));
 
@@ -91,11 +91,13 @@ public class WorkflowMessageControllerTest extends TestDataProducer {
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelEdo);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.post(IflowRestPaths.CoreModule.WORKFLOWMESSAGE_SAVE).content(listAsXmlString)
-            .contentType(MediaType.APPLICATION_XML_VALUE)
-            .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
-        .andExpect(status().isCreated()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
-        .andExpect(content().xml(listAsXmlString));
+                .perform(MockMvcRequestBuilders.post(IflowRestPaths.CoreModule.WORKFLOWMESSAGE_SAVE)
+                                               .content(listAsXmlString)
+                                               .contentType(MediaType.APPLICATION_XML_VALUE)
+                                               .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
+                .andExpect(status().isCreated())
+                .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+                .andExpect(content().xml(listAsXmlString));
 
     verify(this.workflowMessageService, times(1)).save(any(WorkflowMessage.class));
   }
