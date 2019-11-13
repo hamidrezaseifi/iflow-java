@@ -34,14 +34,14 @@ import com.pth.iflow.core.service.IWorkflowService;
 @RequestMapping
 public class InvoiceWorkflowController {
 
-  final IWorkflowService<InvoiceWorkflow> invoiceWorkflowService;
+  final IWorkflowService<InvoiceWorkflow> workflowService;
   final IWorkflowActionService            workflowActionService;
   final IWorkflowFileService              workflowFileService;
 
   public InvoiceWorkflowController(@Autowired final IWorkflowService<InvoiceWorkflow> invoiceWorkflowService,
                                    @Autowired final IWorkflowActionService workflowActionService,
                                    @Autowired final IWorkflowFileService workflowFileService) {
-    this.invoiceWorkflowService = invoiceWorkflowService;
+    this.workflowService = invoiceWorkflowService;
     this.workflowActionService = workflowActionService;
     this.workflowFileService = workflowFileService;
   }
@@ -50,7 +50,7 @@ public class InvoiceWorkflowController {
   @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.INVOICEWORKFLOW_READ_BY_IDENTITY)
   public ResponseEntity<InvoiceWorkflowEdo> readWorkflow(@PathVariable(name = "identity") final String identity, final HttpServletRequest request) throws Exception {
 
-    final InvoiceWorkflow model = this.invoiceWorkflowService.getByIdentity(identity);
+    final InvoiceWorkflow model = this.workflowService.getByIdentity(identity);
 
     return ControllerHelper.createResponseEntity(request, CoreModelEdoMapper.toEdo(model), HttpStatus.OK);
   }
@@ -59,7 +59,7 @@ public class InvoiceWorkflowController {
   @IflowPostRequestMapping(path = IflowRestPaths.CoreModule.INVOICEWORKFLOW_SAVE)
   public ResponseEntity<InvoiceWorkflowEdo> saveWorkflow(@RequestBody final InvoiceWorkflowEdo invoiceWorkflowEdo, final HttpServletRequest request) throws Exception {
 
-    final InvoiceWorkflow model = this.invoiceWorkflowService.save(CoreModelEdoMapper.fromEdo(invoiceWorkflowEdo));
+    final InvoiceWorkflow model = this.workflowService.save(CoreModelEdoMapper.fromEdo(invoiceWorkflowEdo));
     return ControllerHelper.createResponseEntity(request, CoreModelEdoMapper.toEdo(model), HttpStatus.ACCEPTED);
   }
 
@@ -67,7 +67,7 @@ public class InvoiceWorkflowController {
   @IflowPostRequestMapping(path = IflowRestPaths.CoreModule.INVOICEWORKFLOW_READ_LIST)
   public ResponseEntity<InvoiceWorkflowListEdo> readWorkflowList(@RequestBody final IdentityListEdo idList, final HttpServletRequest request) throws Exception {
 
-    final List<InvoiceWorkflow> modelList = this.invoiceWorkflowService.getListByIdentityList(idList.getIdentityList());
+    final List<InvoiceWorkflow> modelList = this.workflowService.getListByIdentityList(idList.getIdentityList());
 
     return ControllerHelper.createResponseEntity(request,
                                                  new InvoiceWorkflowListEdo(CoreModelEdoMapper.toInvoiceWorkflowEdoList(modelList)),
@@ -78,7 +78,7 @@ public class InvoiceWorkflowController {
   @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.INVOICEWORKFLOW_READ_LIST_BY_USERIDENTITY)
   public ResponseEntity<InvoiceWorkflowListEdo> readWorkflowListForUser(@PathVariable(name = "email") final String email, @PathVariable(required = false) final int status, final HttpServletRequest request) throws Exception {
 
-    final List<InvoiceWorkflow> modelList = this.invoiceWorkflowService.getListForUser(email, status);
+    final List<InvoiceWorkflow> modelList = this.workflowService.getListForUser(email, status);
 
     return ControllerHelper.createResponseEntity(request,
                                                  new InvoiceWorkflowListEdo(CoreModelEdoMapper.toInvoiceWorkflowEdoList(modelList)),
@@ -147,7 +147,7 @@ public class InvoiceWorkflowController {
   @IflowPostRequestMapping(path = IflowRestPaths.CoreModule.INVOICEWORKFLOW_SEARCH)
   public ResponseEntity<InvoiceWorkflowListEdo> searchWorkflow(@RequestBody final WorkflowSearchFilterEdo workflowSearchFilterEdo, final HttpServletRequest request) throws Exception {
 
-    final List<InvoiceWorkflow> modelList = this.invoiceWorkflowService.search(CoreModelEdoMapper.fromEdo(workflowSearchFilterEdo));
+    final List<InvoiceWorkflow> modelList = this.workflowService.search(CoreModelEdoMapper.fromEdo(workflowSearchFilterEdo));
 
     return ControllerHelper.createResponseEntity(request,
                                                  new InvoiceWorkflowListEdo(CoreModelEdoMapper.toInvoiceWorkflowEdoList(modelList)),

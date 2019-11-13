@@ -1,27 +1,27 @@
-package com.pth.iflow.core.service.impl;
+package com.pth.iflow.core.service.impl.workflow;
 
 import java.util.Collection;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.pth.iflow.core.model.workflow.InvoiceWorkflow;
+import com.pth.iflow.core.model.workflow.TestThreeTaskWorkflow;
 import com.pth.iflow.core.model.workflow.sub.WorkflowSearchFilter;
 import com.pth.iflow.core.service.IWorkflowService;
 import com.pth.iflow.core.storage.dao.IWorkflowDao;
 import com.pth.iflow.core.storage.dao.exception.IFlowOptimisticLockException;
 
 @Service
-public class InvoiceWorkflowService implements IWorkflowService<InvoiceWorkflow> {
+public class TestThreeTaskWorkflowService implements IWorkflowService<TestThreeTaskWorkflow> {
 
-  private final IWorkflowDao<InvoiceWorkflow> invoiceWorkflowDao;
+  private final IWorkflowDao<TestThreeTaskWorkflow> invoiceWorkflowDao;
 
-  public InvoiceWorkflowService(@Autowired final IWorkflowDao<InvoiceWorkflow> invoiceWorkflowDao) {
+  public TestThreeTaskWorkflowService(@Autowired final IWorkflowDao<TestThreeTaskWorkflow> invoiceWorkflowDao) {
     this.invoiceWorkflowDao = invoiceWorkflowDao;
   }
 
   @Override
-  public InvoiceWorkflow save(final InvoiceWorkflow model) {
-    InvoiceWorkflow exists = null;
+  public TestThreeTaskWorkflow save(final TestThreeTaskWorkflow model) {
+    TestThreeTaskWorkflow exists = null;
     if (model.isIdentityNotSet() == false) {
       exists = this.getByIdentity(model.getIdentity());
       model.setId(exists.getId());
@@ -35,7 +35,7 @@ public class InvoiceWorkflowService implements IWorkflowService<InvoiceWorkflow>
     exists = exists != null ? exists : this.invoiceWorkflowDao.getById(model.getId());
 
     if (exists.getVersion() > model.getVersion()) {
-      throw new IFlowOptimisticLockException("InvoiceWorkflow with id " + model.getId() + " is old!");
+      throw new IFlowOptimisticLockException("TestThreeTaskWorkflow with id " + model.getId() + " is old!");
     }
 
     model.setVersion(model.getVersion() + 1);
@@ -44,24 +44,24 @@ public class InvoiceWorkflowService implements IWorkflowService<InvoiceWorkflow>
   }
 
   @Override
-  public InvoiceWorkflow getByIdentity(final String identity) {
+  public TestThreeTaskWorkflow getByIdentity(final String identity) {
     return this.invoiceWorkflowDao.getByIdentity(identity);
   }
 
   @Override
-  public List<InvoiceWorkflow> getListForUser(final String email, final int status) {
+  public List<TestThreeTaskWorkflow> getListForUser(final String email, final int status) {
 
     return this.invoiceWorkflowDao.getListForUserEmail(email, status);
   }
 
   @Override
-  public List<InvoiceWorkflow> search(final WorkflowSearchFilter workflowSearchFilter) {
+  public List<TestThreeTaskWorkflow> search(final WorkflowSearchFilter workflowSearchFilter) {
 
     return this.invoiceWorkflowDao.search(workflowSearchFilter);
   }
 
   @Override
-  public List<InvoiceWorkflow> getListByIdentityList(final Collection<String> idList) {
+  public List<TestThreeTaskWorkflow> getListByIdentityList(final Collection<String> idList) {
 
     return this.invoiceWorkflowDao.getListByIdentityList(idList);
   }

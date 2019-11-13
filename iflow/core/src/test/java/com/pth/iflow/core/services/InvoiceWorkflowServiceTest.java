@@ -17,7 +17,7 @@ import com.pth.iflow.common.enums.EWorkflowIdentity;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.workflow.InvoiceWorkflow;
 import com.pth.iflow.core.service.IWorkflowService;
-import com.pth.iflow.core.service.impl.InvoiceWorkflowService;
+import com.pth.iflow.core.service.impl.workflow.InvoiceWorkflowService;
 import com.pth.iflow.core.storage.dao.IWorkflowDao;
 
 @RunWith(SpringRunner.class)

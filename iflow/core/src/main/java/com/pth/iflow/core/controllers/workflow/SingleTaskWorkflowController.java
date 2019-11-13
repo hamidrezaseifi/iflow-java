@@ -34,40 +34,40 @@ import com.pth.iflow.core.service.IWorkflowService;
 @RequestMapping
 public class SingleTaskWorkflowController {
 
-  final IWorkflowService<SingleTaskWorkflow> invoiceWorkflowService;
+  final IWorkflowService<SingleTaskWorkflow> workflowService;
   final IWorkflowActionService               workflowActionService;
   final IWorkflowFileService                 workflowFileService;
 
   public SingleTaskWorkflowController(@Autowired final IWorkflowService<SingleTaskWorkflow> invoiceWorkflowService,
                                       @Autowired final IWorkflowActionService workflowActionService,
                                       @Autowired final IWorkflowFileService workflowFileService) {
-    this.invoiceWorkflowService = invoiceWorkflowService;
+    this.workflowService = invoiceWorkflowService;
     this.workflowActionService = workflowActionService;
     this.workflowFileService = workflowFileService;
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.INVOICEWORKFLOW_READ_BY_IDENTITY)
+  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.SINGLETASKWORKFLOW_READ_BY_IDENTITY)
   public ResponseEntity<SingleTaskWorkflowEdo> readWorkflow(@PathVariable(name = "identity") final String identity, final HttpServletRequest request) throws Exception {
 
-    final SingleTaskWorkflow model = this.invoiceWorkflowService.getByIdentity(identity);
+    final SingleTaskWorkflow model = this.workflowService.getByIdentity(identity);
 
     return ControllerHelper.createResponseEntity(request, CoreModelEdoMapper.toEdo(model), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.ACCEPTED)
-  @IflowPostRequestMapping(path = IflowRestPaths.CoreModule.INVOICEWORKFLOW_SAVE)
+  @IflowPostRequestMapping(path = IflowRestPaths.CoreModule.SINGLETASKWORKFLOW_SAVE)
   public ResponseEntity<SingleTaskWorkflowEdo> saveWorkflow(@RequestBody final SingleTaskWorkflowEdo invoiceWorkflowEdo, final HttpServletRequest request) throws Exception {
 
-    final SingleTaskWorkflow model = this.invoiceWorkflowService.save(CoreModelEdoMapper.fromEdo(invoiceWorkflowEdo));
+    final SingleTaskWorkflow model = this.workflowService.save(CoreModelEdoMapper.fromEdo(invoiceWorkflowEdo));
     return ControllerHelper.createResponseEntity(request, CoreModelEdoMapper.toEdo(model), HttpStatus.ACCEPTED);
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowPostRequestMapping(path = IflowRestPaths.CoreModule.INVOICEWORKFLOW_READ_LIST)
+  @IflowPostRequestMapping(path = IflowRestPaths.CoreModule.SINGLETASKWORKFLOW_READ_LIST)
   public ResponseEntity<SingleTaskWorkflowListEdo> readWorkflowList(@RequestBody final IdentityListEdo idList, final HttpServletRequest request) throws Exception {
 
-    final List<SingleTaskWorkflow> modelList = this.invoiceWorkflowService.getListByIdentityList(idList.getIdentityList());
+    final List<SingleTaskWorkflow> modelList = this.workflowService.getListByIdentityList(idList.getIdentityList());
 
     return ControllerHelper.createResponseEntity(request,
                                                  new SingleTaskWorkflowListEdo(CoreModelEdoMapper.toSingleTaskWorkflowEdoList(modelList)),
@@ -75,10 +75,10 @@ public class SingleTaskWorkflowController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.INVOICEWORKFLOW_READ_LIST_BY_USERIDENTITY)
+  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.SINGLETASKWORKFLOW_READ_LIST_BY_USERIDENTITY)
   public ResponseEntity<SingleTaskWorkflowListEdo> readWorkflowListForUser(@PathVariable(name = "email") final String email, @PathVariable(required = false) final int status, final HttpServletRequest request) throws Exception {
 
-    final List<SingleTaskWorkflow> modelList = this.invoiceWorkflowService.getListForUser(email, status);
+    final List<SingleTaskWorkflow> modelList = this.workflowService.getListForUser(email, status);
 
     return ControllerHelper.createResponseEntity(request,
                                                  new SingleTaskWorkflowListEdo(CoreModelEdoMapper.toSingleTaskWorkflowEdoList(modelList)),
@@ -86,7 +86,7 @@ public class SingleTaskWorkflowController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.INVOICEWORKFLOW_ACTION_READ_BY_IDENTITY)
+  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.SINGLETASKWORKFLOW_ACTION_READ_BY_IDENTITY)
   public ResponseEntity<WorkflowActionEdo> readWorkflowAction(@PathVariable(name = "identity") final String identity, final HttpServletRequest request) throws Exception {
 
     final WorkflowAction model = this.workflowActionService.getByIdentity(identity);
@@ -95,7 +95,7 @@ public class SingleTaskWorkflowController {
   }
 
   @ResponseStatus(HttpStatus.ACCEPTED)
-  @IflowPostRequestMapping(path = IflowRestPaths.CoreModule.INVOICEWORKFLOW_ACTION_SAVE)
+  @IflowPostRequestMapping(path = IflowRestPaths.CoreModule.SINGLETASKWORKFLOW_ACTION_SAVE)
   public ResponseEntity<WorkflowActionEdo> saveWorkflowAction(@RequestBody final WorkflowActionEdo workflowActionEdo, final HttpServletRequest request) throws Exception {
 
     final WorkflowAction model = this.workflowActionService.save(CoreModelEdoMapper.fromEdo(workflowActionEdo));
@@ -104,7 +104,7 @@ public class SingleTaskWorkflowController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.INVOICEWORKFLOW_ACTION_READ_LIST_BY_WORKFLOWIDENTITY)
+  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.SINGLETASKWORKFLOW_ACTION_READ_LIST_BY_WORKFLOWIDENTITY)
   public ResponseEntity<WorkflowActionListEdo> readWorkflowActionListByWorkflow(@PathVariable(name = "identity") final String identity, final HttpServletRequest request) throws Exception {
 
     final List<WorkflowAction> modelList = this.workflowActionService.getListByIdWorkflowIdentity(identity);
@@ -115,7 +115,7 @@ public class SingleTaskWorkflowController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.INVOICEWORKFLOW_FILE_READ_BY_IDENTITY)
+  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.SINGLETASKWORKFLOW_FILE_READ_BY_IDENTITY)
   public ResponseEntity<WorkflowFileEdo> readWorkflowFile(@PathVariable(name = "identity") final String identity, final HttpServletRequest request) throws Exception {
 
     final WorkflowFile model = this.workflowFileService.getByIdentity(identity);
@@ -124,7 +124,7 @@ public class SingleTaskWorkflowController {
   }
 
   @ResponseStatus(HttpStatus.ACCEPTED)
-  @IflowPostRequestMapping(path = IflowRestPaths.CoreModule.INVOICEWORKFLOW_FILE_SAVE)
+  @IflowPostRequestMapping(path = IflowRestPaths.CoreModule.SINGLETASKWORKFLOW_FILE_SAVE)
   public ResponseEntity<WorkflowFileEdo> saveWorkflowFile(@RequestBody final WorkflowFileEdo workflowActionEdo, final HttpServletRequest request) throws Exception {
 
     final WorkflowFile model = this.workflowFileService.save(CoreModelEdoMapper.fromEdo(workflowActionEdo));
@@ -133,7 +133,7 @@ public class SingleTaskWorkflowController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.INVOICEWORKFLOW_FILE_READ_LIST_BY_WORKFLOWIDENTITY)
+  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.SINGLETASKWORKFLOW_FILE_READ_LIST_BY_WORKFLOWIDENTITY)
   public ResponseEntity<WorkflowFileListEdo> readWorkflowFileListByWorkflow(@PathVariable(name = "identity") final String identity, final HttpServletRequest request) throws Exception {
 
     final List<WorkflowFile> modelList = this.workflowFileService.getListByIdWorkflowIdentity(identity);
@@ -144,10 +144,10 @@ public class SingleTaskWorkflowController {
   }
 
   @ResponseStatus(HttpStatus.ACCEPTED)
-  @IflowPostRequestMapping(path = IflowRestPaths.CoreModule.INVOICEWORKFLOW_SEARCH)
+  @IflowPostRequestMapping(path = IflowRestPaths.CoreModule.SINGLETASKWORKFLOW_SEARCH)
   public ResponseEntity<SingleTaskWorkflowListEdo> searchWorkflow(@RequestBody final WorkflowSearchFilterEdo workflowSearchFilterEdo, final HttpServletRequest request) throws Exception {
 
-    final List<SingleTaskWorkflow> modelList = this.invoiceWorkflowService.search(CoreModelEdoMapper.fromEdo(workflowSearchFilterEdo));
+    final List<SingleTaskWorkflow> modelList = this.workflowService.search(CoreModelEdoMapper.fromEdo(workflowSearchFilterEdo));
 
     return ControllerHelper.createResponseEntity(request,
                                                  new SingleTaskWorkflowListEdo(CoreModelEdoMapper.toSingleTaskWorkflowEdoList(modelList)),

@@ -1,4 +1,4 @@
-package com.pth.iflow.core.storage.dao.impl;
+package com.pth.iflow.core.storage.dao.impl.base;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -20,7 +20,6 @@ import com.pth.iflow.core.model.workflow.sub.WorkflowSearchFilter;
 import com.pth.iflow.core.storage.dao.IWorkflowDao;
 import com.pth.iflow.core.storage.dao.basic.DaoBasicClass;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
-import com.pth.iflow.core.storage.dao.impl.base.WorkflowDaoHelper;
 import com.pth.iflow.core.storage.dao.utils.SqlUtils;
 
 @Transactional
