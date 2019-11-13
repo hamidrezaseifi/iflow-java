@@ -90,16 +90,14 @@ public class InvoiceWorkflowDao extends DaoBasicClass<InvoiceWorkflow> implement
     model.setComments(rs.getString("comments"));
     model.setIdentity(rs.getString("identity"));
 
-    workflowDaoHelper.verifyWorkflowTypeById(model, rs.getLong("workflow_type_id"));
+    model.setWorkflowTypeId(rs.getLong("workflow_type_id"));
+    model.setCurrentStepId(rs.getLong("current_step"));
+    model.setControllerId(rs.getLong("controller"));
+    model.setCreatedById(rs.getLong("created_by"));
+
     workflowDaoHelper.verifyCurrentStepById(model, rs.getLong("current_step"));
     workflowDaoHelper.verifyControllerById(model, rs.getLong("controller"));
     workflowDaoHelper.verifyCreatedByById(model, rs.getLong("created_by"));
-
-    model.setWorkflowTypeIdentity(model.getWorkflowType().getIdentity());
-
-    model.setControllerIdentity(model.getController().getIdentity());
-    model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
-    model.setCreatedByIdentity(model.getCreatedBy().getIdentity());
 
     model.setSender(rs.getString("sender"));
     model.setRegisterNumber(rs.getString("ext_reg_number"));
@@ -244,11 +242,11 @@ public class InvoiceWorkflowDao extends DaoBasicClass<InvoiceWorkflow> implement
   @Override
   protected PreparedStatement prepareInsertPreparedStatement(final InvoiceWorkflow model, final PreparedStatement ps) throws SQLException {
     ps.setString(1, model.getIdentity());
-    ps.setLong(2, model.getWorkflowType().getId());
-    ps.setLong(3, model.getCurrentStep().getId());
+    ps.setLong(2, model.getWorkflowTypeId());
+    ps.setLong(3, model.getCurrentStepId());
     ps.setString(4, model.getComments());
-    ps.setLong(5, model.getController().getId());
-    ps.setLong(6, model.getCreatedBy().getId());
+    ps.setLong(5, model.getControllerId());
+    ps.setLong(6, model.getCreatedById());
     ps.setInt(7, model.getVersion());
     ps.setInt(8, model.getStatusInt());
 
@@ -297,11 +295,11 @@ public class InvoiceWorkflowDao extends DaoBasicClass<InvoiceWorkflow> implement
 
   @Override
   protected PreparedStatement prepareUpdatePreparedStatement(final InvoiceWorkflow model, final PreparedStatement ps) throws SQLException {
-    ps.setLong(1, model.getWorkflowType().getId());
-    ps.setLong(2, model.getCurrentStep().getId());
+    ps.setLong(1, model.getWorkflowTypeId());
+    ps.setLong(2, model.getCurrentStepId());
     ps.setString(3, model.getComments());
-    ps.setLong(4, model.getController().getId());
-    ps.setLong(5, model.getCreatedBy().getId());
+    ps.setLong(4, model.getControllerId());
+    ps.setLong(5, model.getCreatedById());
     ps.setInt(6, model.getVersion());
     ps.setInt(7, model.getStatusInt());
     ps.setLong(8, model.getId());
@@ -410,7 +408,7 @@ public class InvoiceWorkflowDao extends DaoBasicClass<InvoiceWorkflow> implement
 
     final Random rand = new Random();
     return String.format("t%sw%s-%s",
-                         identityLongToHex(model.getWorkflowType().getId()),
+                         identityLongToHex(model.getWorkflowTypeId()),
                          identityLongToHex(System.currentTimeMillis()),
                          identityIntToHex(rand.nextInt(1000000), 6));
   }

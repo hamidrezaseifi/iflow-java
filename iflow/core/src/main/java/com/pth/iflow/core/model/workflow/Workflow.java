@@ -186,7 +186,6 @@ public class Workflow extends CoreModelHelper implements ICoreIdentityModel, IWo
     return workflowTypeIdentity;
   }
 
-  @Override
   public void setWorkflowTypeIdentity(final String workflowTypeIdentity) {
     this.workflowTypeIdentity = workflowTypeIdentity;
   }

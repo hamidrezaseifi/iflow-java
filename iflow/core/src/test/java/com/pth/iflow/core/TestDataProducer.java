@@ -288,7 +288,6 @@ public class TestDataProducer {
   protected SingleTaskWorkflow getTestSingleTaskWorkflow(final Long Id) {
     final SingleTaskWorkflow model = new SingleTaskWorkflow();
     model.setWorkflowType(getTestWorkflowType());
-    model.setWorkflowTypeIdentity(model.getWorkflowType().getIdentity());
     model.setId(Id);
     model.setIdentity(EWorkflowIdentity.NOT_SET.getName());
     model.setStatus(EWorkflowStatus.INITIALIZE.getValue().intValue());
@@ -315,7 +314,6 @@ public class TestDataProducer {
   protected TestThreeTaskWorkflow getTestTestThreeTaskWorkflow(final Long Id) {
     final TestThreeTaskWorkflow model = new TestThreeTaskWorkflow();
     model.setWorkflowType(getTestWorkflowType());
-    model.setWorkflowTypeIdentity(model.getWorkflowType().getIdentity());
     model.setId(Id);
     model.setIdentity(EWorkflowIdentity.NOT_SET.getName());
     model.setStatus(EWorkflowStatus.INITIALIZE.getValue().intValue());

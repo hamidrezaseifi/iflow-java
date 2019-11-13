@@ -5,32 +5,30 @@ import java.util.ArrayList;
 import java.util.List;
 import com.pth.iflow.common.enums.EWorkflowIdentity;
 import com.pth.iflow.common.enums.EWorkflowStatus;
-import com.pth.iflow.core.model.User;
+import com.pth.iflow.common.enums.EWorkflowType;
 import com.pth.iflow.core.model.helper.CoreModelHelper;
 import com.pth.iflow.core.model.helper.ICoreIdentityModel;
 import com.pth.iflow.core.model.workflow.sub.WorkflowAction;
 import com.pth.iflow.core.model.workflow.sub.WorkflowFile;
-import com.pth.iflow.core.model.workflow.sub.WorkflowType;
-import com.pth.iflow.core.model.workflow.sub.WorkflowTypeStep;
 
 public class TestThreeTaskWorkflow extends CoreModelHelper implements ICoreIdentityModel, IWorkflow {
 
-  private Long             id;
-  private String           identity;
-  private WorkflowType     workflowType;
-  private WorkflowTypeStep currentStep;
-  private User             controller;
-  private User             createdBy;
-  private String           comments;
-  private EWorkflowStatus  status;
-  private Integer          version;
-  private LocalDateTime    createdAt;
-  private LocalDateTime    updatedAt;
+  private Long            id;
+  private String          identity;
+  private String          comments;
+  private EWorkflowStatus status;
+  private Integer         version;
+  private LocalDateTime   createdAt;
+  private LocalDateTime   updatedAt;
 
-  private String workflowTypeIdentity;
   private String currentStepIdentity;
   private String controllerIdentity;
   private String createdByIdentity;
+
+  private Long currentStepId;
+  private Long controllerId;
+  private Long createdById;
+  private Long workflowTypeId;
 
   private final List<WorkflowFile>   files   = new ArrayList<>();
   private final List<WorkflowAction> actions = new ArrayList<>();
@@ -58,46 +56,6 @@ public class TestThreeTaskWorkflow extends CoreModelHelper implements ICoreIdent
   @Override
   public boolean isIdentityNotSet() {
     return EWorkflowIdentity.NOT_SET.getName().equals(getIdentity());
-  }
-
-  @Override
-  public WorkflowType getWorkflowType() {
-    return workflowType;
-  }
-
-  @Override
-  public void setWorkflowType(final WorkflowType workflowType) {
-    this.workflowType = workflowType;
-  }
-
-  @Override
-  public WorkflowTypeStep getCurrentStep() {
-    return currentStep;
-  }
-
-  @Override
-  public void setCurrentStep(final WorkflowTypeStep currentStep) {
-    this.currentStep = currentStep;
-  }
-
-  @Override
-  public User getController() {
-    return controller;
-  }
-
-  @Override
-  public void setController(final User controller) {
-    this.controller = controller;
-  }
-
-  @Override
-  public User getCreatedBy() {
-    return createdBy;
-  }
-
-  @Override
-  public void setCreatedBy(final User createdBy) {
-    this.createdBy = createdBy;
   }
 
   @Override
@@ -183,12 +141,7 @@ public class TestThreeTaskWorkflow extends CoreModelHelper implements ICoreIdent
 
   @Override
   public String getWorkflowTypeIdentity() {
-    return workflowTypeIdentity;
-  }
-
-  @Override
-  public void setWorkflowTypeIdentity(final String workflowTypeIdentity) {
-    this.workflowTypeIdentity = workflowTypeIdentity;
+    return EWorkflowType.THREE_TASK_WORKFLOW_TYPE.getName();
   }
 
   @Override
@@ -221,4 +174,43 @@ public class TestThreeTaskWorkflow extends CoreModelHelper implements ICoreIdent
     this.createdByIdentity = createdByIdentity;
   }
 
+  @Override
+  public Long getCurrentStepId() {
+    return currentStepId;
+  }
+
+  @Override
+  public void setCurrentStepId(final Long currentStepId) {
+    this.currentStepId = currentStepId;
+  }
+
+  @Override
+  public Long getControllerId() {
+    return controllerId;
+  }
+
+  @Override
+  public void setControllerId(final Long controllerId) {
+    this.controllerId = controllerId;
+  }
+
+  @Override
+  public Long getCreatedById() {
+    return createdById;
+  }
+
+  @Override
+  public void setCreatedById(final Long createdById) {
+    this.createdById = createdById;
+  }
+
+  @Override
+  public Long getWorkflowTypeId() {
+    return workflowTypeId;
+  }
+
+  @Override
+  public void setWorkflowTypeId(final Long workflowTypeId) {
+    this.workflowTypeId = workflowTypeId;
+  }
 }

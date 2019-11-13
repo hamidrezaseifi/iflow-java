@@ -67,59 +67,52 @@ public class WorkflowDaoHelper<W extends IWorkflow> {
   }
 
   public void verifyWorkflowTypeByIdentity(final W workflow) {
-    if (workflow.getWorkflowType() == null) {
-      final WorkflowType type = workflowTypeDao.getByIdentity(workflow.getWorkflowTypeIdentity());
-      workflow.setWorkflowType(type);
-    }
+
+    final WorkflowType type = workflowTypeDao.getByIdentity(workflow.getWorkflowTypeIdentity());
+    workflow.setWorkflowTypeId(type.getId());
+
   }
 
   public void verifyCurrentStepByIdentity(final W workflow) {
-    if (workflow.getCurrentStep() == null) {
-      final WorkflowTypeStep type = workflowTypeStepDao.getByIdentity(workflow.getCurrentStepIdentity());
-      workflow.setCurrentStep(type);
-    }
+
+    final WorkflowTypeStep type = workflowTypeStepDao.getByIdentity(workflow.getCurrentStepIdentity());
+    workflow.setCurrentStepId(type.getId());
+
   }
 
   public void verifyControllerByIdentity(final W workflow) {
-    if (workflow.getController() == null) {
-      final User type = userDao.getByEmail(workflow.getControllerIdentity());
-      workflow.setController(type);
-    }
+
+    final User type = userDao.getByEmail(workflow.getControllerIdentity());
+    workflow.setControllerId(type.getId());
+
   }
 
   public void verifyCreatedByByIdentity(final W workflow) {
-    if (workflow.getCreatedBy() == null) {
-      final User type = userDao.getByEmail(workflow.getCreatedByIdentity());
-      workflow.setCreatedBy(type);
-    }
-  }
 
-  public void verifyWorkflowTypeById(final W workflow, final Long id) {
-    if (workflow.getWorkflowType() == null) {
-      final WorkflowType type = workflowTypeDao.getById(id);
-      workflow.setWorkflowType(type);
-    }
+    final User type = userDao.getByEmail(workflow.getCreatedByIdentity());
+    workflow.setCreatedById(type.getId());
+
   }
 
   public void verifyCurrentStepById(final W workflow, final Long id) {
-    if (workflow.getCurrentStep() == null) {
-      final WorkflowTypeStep type = workflowTypeStepDao.getById(id);
-      workflow.setCurrentStep(type);
-    }
+
+    final WorkflowTypeStep type = workflowTypeStepDao.getById(id);
+    workflow.setCurrentStepIdentity(type.getIdentity());
+
   }
 
   public void verifyControllerById(final W workflow, final Long id) {
-    if (workflow.getController() == null) {
-      final User type = userDao.getById(id);
-      workflow.setController(type);
-    }
+
+    final User type = userDao.getById(id);
+    workflow.setControllerIdentity(type.getIdentity());
+
   }
 
   public void verifyCreatedByById(final W workflow, final Long id) {
-    if (workflow.getCreatedBy() == null) {
-      final User type = userDao.getById(id);
-      workflow.setCreatedBy(type);
-    }
+
+    final User type = userDao.getById(id);
+    workflow.setCreatedByIdentity(type.getIdentity());
+
   }
 
   public void setWorkflowDetails(final W workflow) {
