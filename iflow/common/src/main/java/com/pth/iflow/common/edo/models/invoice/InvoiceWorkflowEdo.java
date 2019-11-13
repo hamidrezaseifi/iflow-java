@@ -1,4 +1,4 @@
-package com.pth.iflow.common.edo.models;
+package com.pth.iflow.common.edo.models.invoice;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -14,6 +14,8 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.pth.iflow.common.edo.models.WorkflowActionEdo;
+import com.pth.iflow.common.edo.models.WorkflowFileEdo;
 import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 import com.pth.iflow.common.edo.models.base.IWorkflowBaseEdo;
 import com.pth.iflow.common.edo.models.helper.IsoFormats;

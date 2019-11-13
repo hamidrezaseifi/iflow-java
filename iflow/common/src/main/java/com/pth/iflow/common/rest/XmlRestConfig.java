@@ -26,9 +26,6 @@ import com.pth.iflow.common.edo.models.DepartmentGroupEdo;
 import com.pth.iflow.common.edo.models.DepartmentGroupListEdo;
 import com.pth.iflow.common.edo.models.DepartmentListEdo;
 import com.pth.iflow.common.edo.models.IdentityListEdo;
-import com.pth.iflow.common.edo.models.InvoiceWorkflowEdo;
-import com.pth.iflow.common.edo.models.InvoiceWorkflowListEdo;
-import com.pth.iflow.common.edo.models.InvoiceWorkflowSaveRequestEdo;
 import com.pth.iflow.common.edo.models.ProfileResponseEdo;
 import com.pth.iflow.common.edo.models.TokenProfileRequestEdo;
 import com.pth.iflow.common.edo.models.UserAuthenticationRequestEdo;
@@ -51,6 +48,15 @@ import com.pth.iflow.common.edo.models.WorkflowTypeEdo;
 import com.pth.iflow.common.edo.models.WorkflowTypeListEdo;
 import com.pth.iflow.common.edo.models.WorkflowTypeStepEdo;
 import com.pth.iflow.common.edo.models.WorkflowTypeStepListEdo;
+import com.pth.iflow.common.edo.models.invoice.InvoiceWorkflowEdo;
+import com.pth.iflow.common.edo.models.invoice.InvoiceWorkflowListEdo;
+import com.pth.iflow.common.edo.models.invoice.InvoiceWorkflowSaveRequestEdo;
+import com.pth.iflow.common.edo.models.singletask.SingleTaskWorkflowEdo;
+import com.pth.iflow.common.edo.models.singletask.SingleTaskWorkflowListEdo;
+import com.pth.iflow.common.edo.models.singletask.SingleTaskWorkflowSaveRequestEdo;
+import com.pth.iflow.common.edo.models.testthreetask.TestThreeTaskWorkflowEdo;
+import com.pth.iflow.common.edo.models.testthreetask.TestThreeTaskWorkflowListEdo;
+import com.pth.iflow.common.edo.models.testthreetask.TestThreeTaskWorkflowSaveRequestEdo;
 
 /**
  * contains configs for XML Rest-Controller
@@ -116,7 +122,13 @@ public class XmlRestConfig {
                                                  WorkflowTypeEdo.class,
                                                  WorkflowTypeListEdo.class,
                                                  WorkflowTypeStepEdo.class,
-                                                 WorkflowTypeStepListEdo.class });
+                                                 WorkflowTypeStepListEdo.class,
+                                                 SingleTaskWorkflowEdo.class,
+                                                 SingleTaskWorkflowListEdo.class,
+                                                 SingleTaskWorkflowSaveRequestEdo.class,
+                                                 TestThreeTaskWorkflowEdo.class,
+                                                 TestThreeTaskWorkflowListEdo.class,
+                                                 TestThreeTaskWorkflowSaveRequestEdo.class });
 
     // marshaller.setClassesToBeBound(new Class[] { WorkflowTypeStepEdo.class, });
 

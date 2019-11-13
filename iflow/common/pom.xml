@@ -170,9 +170,6 @@
 				<source>src/main/java/com/pth/iflow/common/edo/models/DepartmentGroupListEdo.java</source>
 				<source>src/main/java/com/pth/iflow/common/edo/models/DepartmentListEdo.java</source>
 				<source>src/main/java/com/pth/iflow/common/edo/models/IdentityListEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/InvoiceWorkflowEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/InvoiceWorkflowListEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/InvoiceWorkflowSaveRequestEdo.java</source>
 				<source>src/main/java/com/pth/iflow/common/edo/models/ProfileResponseEdo.java</source>
 				<source>src/main/java/com/pth/iflow/common/edo/models/TokenProfileRequestEdo.java</source>
 				<source>src/main/java/com/pth/iflow/common/edo/models/UserAuthenticationRequestEdo.java</source>
@@ -195,7 +192,18 @@
 				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowTypeListEdo.java</source>
 				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowTypeStepEdo.java</source>
 				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowTypeStepListEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/invoice/InvoiceWorkflowEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/invoice/InvoiceWorkflowListEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/invoice/InvoiceWorkflowSaveRequestEdo.java</source>
 
+				<source>src/main/java/com/pth/iflow/common/edo/models/singletask/SingleTaskWorkflowEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/singletask/SingleTaskWorkflowListEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/singletask/SingleTaskWorkflowSaveRequestEdo.java</source>
+
+				<source>src/main/java/com/pth/iflow/common/edo/models/testthreetask/TestThreeTaskWorkflowEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/testthreetask/TestThreeTaskWorkflowListEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/testthreetask/TestThreeTaskWorkflowSaveRequestEdo.java</source>
+                                                
               </sources>
               <outputDirectory>${project.build.directory}/generated-resources/schemagen</outputDirectory>
               <transformSchemas>

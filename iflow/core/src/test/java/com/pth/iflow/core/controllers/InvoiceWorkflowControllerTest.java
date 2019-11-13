@@ -26,13 +26,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.pth.iflow.common.edo.models.IdentityListEdo;
-import com.pth.iflow.common.edo.models.InvoiceWorkflowEdo;
-import com.pth.iflow.common.edo.models.InvoiceWorkflowListEdo;
 import com.pth.iflow.common.edo.models.WorkflowActionEdo;
 import com.pth.iflow.common.edo.models.WorkflowActionListEdo;
 import com.pth.iflow.common.edo.models.WorkflowFileEdo;
 import com.pth.iflow.common.edo.models.WorkflowFileListEdo;
 import com.pth.iflow.common.edo.models.WorkflowSearchFilterEdo;
+import com.pth.iflow.common.edo.models.invoice.InvoiceWorkflowEdo;
+import com.pth.iflow.common.edo.models.invoice.InvoiceWorkflowListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.XmlRestConfig;
 import com.pth.iflow.core.TestDataProducer;

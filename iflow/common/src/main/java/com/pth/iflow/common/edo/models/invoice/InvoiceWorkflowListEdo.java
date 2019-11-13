@@ -1,4 +1,4 @@
-package com.pth.iflow.common.edo.models;
+package com.pth.iflow.common.edo.models.invoice;
 
 import java.util.ArrayList;
 import java.util.List;
