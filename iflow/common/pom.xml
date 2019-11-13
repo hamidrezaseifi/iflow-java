@@ -180,11 +180,9 @@
 				<source>src/main/java/com/pth/iflow/common/edo/models/UserListEdo.java</source>
 				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowActionEdo.java</source>
 				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowActionListEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowEdo.java</source>
 				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowFileEdo.java</source>
 				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowFileListEdo.java</source>
 				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowFileVersionEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowListEdo.java</source>
 				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowMessageEdo.java</source>
 				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowMessageListEdo.java</source>
 				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowSearchFilterEdo.java</source>
@@ -192,6 +190,7 @@
 				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowTypeListEdo.java</source>
 				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowTypeStepEdo.java</source>
 				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowTypeStepListEdo.java</source>
+				
 				<source>src/main/java/com/pth/iflow/common/edo/models/invoice/InvoiceWorkflowEdo.java</source>
 				<source>src/main/java/com/pth/iflow/common/edo/models/invoice/InvoiceWorkflowListEdo.java</source>
 				<source>src/main/java/com/pth/iflow/common/edo/models/invoice/InvoiceWorkflowSaveRequestEdo.java</source>

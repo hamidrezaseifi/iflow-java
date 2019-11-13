@@ -36,11 +36,9 @@ import com.pth.iflow.common.edo.models.UserGroupListEdo;
 import com.pth.iflow.common.edo.models.UserListEdo;
 import com.pth.iflow.common.edo.models.WorkflowActionEdo;
 import com.pth.iflow.common.edo.models.WorkflowActionListEdo;
-import com.pth.iflow.common.edo.models.WorkflowEdo;
 import com.pth.iflow.common.edo.models.WorkflowFileEdo;
 import com.pth.iflow.common.edo.models.WorkflowFileListEdo;
 import com.pth.iflow.common.edo.models.WorkflowFileVersionEdo;
-import com.pth.iflow.common.edo.models.WorkflowListEdo;
 import com.pth.iflow.common.edo.models.WorkflowMessageEdo;
 import com.pth.iflow.common.edo.models.WorkflowMessageListEdo;
 import com.pth.iflow.common.edo.models.WorkflowSearchFilterEdo;
@@ -111,11 +109,9 @@ public class XmlRestConfig {
                                                  UserListEdo.class,
                                                  WorkflowActionEdo.class,
                                                  WorkflowActionListEdo.class,
-                                                 WorkflowEdo.class,
                                                  WorkflowFileEdo.class,
                                                  WorkflowFileListEdo.class,
                                                  WorkflowFileVersionEdo.class,
-                                                 WorkflowListEdo.class,
                                                  WorkflowMessageEdo.class,
                                                  WorkflowMessageListEdo.class,
                                                  WorkflowSearchFilterEdo.class,
@@ -175,7 +171,7 @@ public class XmlRestConfig {
 
       }
 
-      if (messageConverters.get(i).canRead(WorkflowEdo.class, MediaType.APPLICATION_XML)) {
+      if (messageConverters.get(i).canRead(InvoiceWorkflowEdo.class, MediaType.APPLICATION_XML)) {
         // need to replace the default MappingJackson2XmlHttpMessageConverter with the
         // one that understands JAXB annotations | CK2-153
         // messageConverters.set(i, converter);
