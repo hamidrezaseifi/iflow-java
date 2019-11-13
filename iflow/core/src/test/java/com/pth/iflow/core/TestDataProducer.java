@@ -19,6 +19,8 @@ import com.pth.iflow.core.model.ProfileResponse;
 import com.pth.iflow.core.model.User;
 import com.pth.iflow.core.model.UserGroup;
 import com.pth.iflow.core.model.workflow.InvoiceWorkflow;
+import com.pth.iflow.core.model.workflow.SingleTaskWorkflow;
+import com.pth.iflow.core.model.workflow.TestThreeTaskWorkflow;
 import com.pth.iflow.core.model.workflow.Workflow;
 import com.pth.iflow.core.model.workflow.sub.WorkflowAction;
 import com.pth.iflow.core.model.workflow.sub.WorkflowFile;
@@ -283,6 +285,60 @@ public class TestDataProducer {
     return model;
   }
 
+  protected SingleTaskWorkflow getTestSingleTaskWorkflow(final Long Id) {
+    final SingleTaskWorkflow model = new SingleTaskWorkflow();
+    model.setWorkflowType(getTestWorkflowType());
+    model.setWorkflowTypeIdentity(model.getWorkflowType().getIdentity());
+    model.setId(Id);
+    model.setIdentity(EWorkflowIdentity.NOT_SET.getName());
+    model.setStatus(EWorkflowStatus.INITIALIZE.getValue().intValue());
+    model.setVersion(1);
+    model.setComments("comments");
+    model.setIdentity("workflow-1");
+    model.setController(getTestUser(1L, "fname", "lname", "email1"));
+    model.setCurrentStep(getTestWorkflowTypeStep());
+    model.setCreatedBy(getTestUser(2L, "fname", "lname", "email2"));
+    model.setControllerIdentity(model.getController().getEmail());
+    model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
+    model.setCreatedByIdentity(model.getCreatedBy().getEmail());
+
+    model.setActions(
+                     Arrays.asList(this.getTestWorkflowAction(1L, 1L),
+                                   this.getTestWorkflowAction(2L, 2L),
+                                   this.getTestWorkflowAction(3L, 3L)));
+    model
+         .setFiles(Arrays.asList(this.getTestWorkflowFile(1L, 1L), this.getTestWorkflowFile(2L, 2L), this.getTestWorkflowFile(3L, 3L)));
+
+    return model;
+  }
+
+  protected TestThreeTaskWorkflow getTestTestThreeTaskWorkflow(final Long Id) {
+    final TestThreeTaskWorkflow model = new TestThreeTaskWorkflow();
+    model.setWorkflowType(getTestWorkflowType());
+    model.setWorkflowTypeIdentity(model.getWorkflowType().getIdentity());
+    model.setId(Id);
+    model.setIdentity(EWorkflowIdentity.NOT_SET.getName());
+    model.setStatus(EWorkflowStatus.INITIALIZE.getValue().intValue());
+    model.setVersion(1);
+    model.setComments("comments");
+    model.setIdentity("workflow-1");
+    model.setController(getTestUser(1L, "fname", "lname", "email1"));
+    model.setCurrentStep(getTestWorkflowTypeStep());
+    model.setCreatedBy(getTestUser(2L, "fname", "lname", "email2"));
+    model.setControllerIdentity(model.getController().getEmail());
+    model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
+    model.setCreatedByIdentity(model.getCreatedBy().getEmail());
+
+    model.setActions(
+                     Arrays.asList(this.getTestWorkflowAction(1L, 1L),
+                                   this.getTestWorkflowAction(2L, 2L),
+                                   this.getTestWorkflowAction(3L, 3L)));
+    model
+         .setFiles(Arrays.asList(this.getTestWorkflowFile(1L, 1L), this.getTestWorkflowFile(2L, 2L), this.getTestWorkflowFile(3L, 3L)));
+
+    return model;
+  }
+
   protected InvoiceWorkflow getTestNewInvoiceWorkflow() {
     final InvoiceWorkflow model = getTestInvoiceWorkflow(0L);
     model.setId(null);
@@ -357,6 +413,18 @@ public class TestDataProducer {
   protected List<InvoiceWorkflow> getTestInvoiceWorkflowList() {
 
     return Arrays.asList(this.getTestInvoiceWorkflow(1L), this.getTestInvoiceWorkflow(2L), this.getTestInvoiceWorkflow(3L));
+  }
+
+  protected List<SingleTaskWorkflow> getTestSingleTaskWorkflowList() {
+
+    return Arrays.asList(this.getTestSingleTaskWorkflow(1L), this.getTestSingleTaskWorkflow(2L), this.getTestSingleTaskWorkflow(3L));
+  }
+
+  protected List<TestThreeTaskWorkflow> getTestTestThreeWorkflowList() {
+
+    return Arrays.asList(this.getTestTestThreeTaskWorkflow(1L),
+                         this.getTestTestThreeTaskWorkflow(2L),
+                         this.getTestTestThreeTaskWorkflow(3L));
   }
 
   protected WorkflowAction getTestWorkflowAction(final Long Id, final Long workflowId) {

@@ -1,4 +1,4 @@
-package com.pth.iflow.core.controllers;
+package com.pth.iflow.core.controllers.workflow;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
@@ -28,13 +28,13 @@ import com.pth.iflow.common.edo.models.WorkflowActionListEdo;
 import com.pth.iflow.common.edo.models.WorkflowFileEdo;
 import com.pth.iflow.common.edo.models.WorkflowFileListEdo;
 import com.pth.iflow.common.edo.models.WorkflowSearchFilterEdo;
-import com.pth.iflow.common.edo.models.invoice.InvoiceWorkflowEdo;
-import com.pth.iflow.common.edo.models.invoice.InvoiceWorkflowListEdo;
+import com.pth.iflow.common.edo.models.testthreetask.TestThreeTaskWorkflowEdo;
+import com.pth.iflow.common.edo.models.testthreetask.TestThreeTaskWorkflowListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.XmlRestConfig;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
-import com.pth.iflow.core.model.workflow.InvoiceWorkflow;
+import com.pth.iflow.core.model.workflow.TestThreeTaskWorkflow;
 import com.pth.iflow.core.model.workflow.sub.WorkflowAction;
 import com.pth.iflow.core.model.workflow.sub.WorkflowFile;
 import com.pth.iflow.core.model.workflow.sub.WorkflowSearchFilter;
@@ -45,7 +45,7 @@ import com.pth.iflow.core.service.IWorkflowService;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class InvoiceWorkflowControllerTest extends TestDataProducer {
+public class TestThreeTaskWorkflowControllerTest extends TestDataProducer {
 
   @Autowired
   private MockMvc mockMvc;
@@ -54,7 +54,7 @@ public class InvoiceWorkflowControllerTest extends TestDataProducer {
   private MappingJackson2XmlHttpMessageConverter xmlConverter;
 
   @MockBean
-  private IWorkflowService<InvoiceWorkflow> invoiceWorkflowService;
+  private IWorkflowService<TestThreeTaskWorkflow> invoiceWorkflowService;
 
   @MockBean
   private IWorkflowActionService workflowActionService;
@@ -75,16 +75,16 @@ public class InvoiceWorkflowControllerTest extends TestDataProducer {
 
   @Test
   public void testReadWorkflow() throws Exception {
-    final InvoiceWorkflow model = this.getTestInvoiceWorkflow(1L);
+    final TestThreeTaskWorkflow model = this.getTestTestThreeTaskWorkflow(1L);
 
     when(this.invoiceWorkflowService.getByIdentity(any(String.class))).thenReturn(model);
 
-    final InvoiceWorkflowEdo modelEdo = CoreModelEdoMapper.toEdo(model);
+    final TestThreeTaskWorkflowEdo modelEdo = CoreModelEdoMapper.toEdo(model);
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelEdo);
 
     // System.out.println("listAsXmlString: \n" + listAsXmlString);
     this.mockMvc
-                .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.INVOICEWORKFLOW_READ_BY_IDENTITY, model.getIdentity())
+                .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.TESTTHREETASKWORKFLOW_READ_BY_IDENTITY, model.getIdentity())
                                                .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
@@ -103,7 +103,8 @@ public class InvoiceWorkflowControllerTest extends TestDataProducer {
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelEdo);
 
     this.mockMvc
-                .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.INVOICEWORKFLOW_ACTION_READ_BY_IDENTITY, model.getIdentity())
+                .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.TESTTHREETASKWORKFLOW_ACTION_READ_BY_IDENTITY,
+                                                    model.getIdentity())
                                                .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
@@ -123,7 +124,7 @@ public class InvoiceWorkflowControllerTest extends TestDataProducer {
     final String listEdoAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelListEdo);
 
     this.mockMvc
-                .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.INVOICEWORKFLOW_ACTION_READ_LIST_BY_WORKFLOWIDENTITY,
+                .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.TESTTHREETASKWORKFLOW_ACTION_READ_LIST_BY_WORKFLOWIDENTITY,
                                                     "identity")
                                                .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
                 .andExpect(status().isOk())
@@ -144,7 +145,8 @@ public class InvoiceWorkflowControllerTest extends TestDataProducer {
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelEdo);
 
     this.mockMvc
-                .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.INVOICEWORKFLOW_FILE_READ_BY_IDENTITY, model.getIdentity())
+                .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.TESTTHREETASKWORKFLOW_FILE_READ_BY_IDENTITY,
+                                                    model.getIdentity())
                                                .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
@@ -164,7 +166,7 @@ public class InvoiceWorkflowControllerTest extends TestDataProducer {
     final String listEdoAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelListEdo);
 
     this.mockMvc
-                .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.INVOICEWORKFLOW_FILE_READ_LIST_BY_WORKFLOWIDENTITY,
+                .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.TESTTHREETASKWORKFLOW_FILE_READ_LIST_BY_WORKFLOWIDENTITY,
                                                     "identity")
                                                .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
                 .andExpect(status().isOk())
@@ -180,8 +182,9 @@ public class InvoiceWorkflowControllerTest extends TestDataProducer {
     final Set<String> list = this.getTestWorkflowIdentityList();
     final IdentityListEdo edoList = new IdentityListEdo(list);
 
-    final List<InvoiceWorkflow> modelList = getTestInvoiceWorkflowList();
-    final InvoiceWorkflowListEdo modelListEdo = new InvoiceWorkflowListEdo(CoreModelEdoMapper.toInvoiceWorkflowEdoList(modelList));
+    final List<TestThreeTaskWorkflow> modelList = getTestTestThreeWorkflowList();
+    final TestThreeTaskWorkflowListEdo modelListEdo =
+                                                    new TestThreeTaskWorkflowListEdo(CoreModelEdoMapper.toTestThreeTaskWorkflowEdoList(modelList));
 
     when(this.invoiceWorkflowService.getListByIdentityList(any(Set.class))).thenReturn(modelList);
 
@@ -189,7 +192,7 @@ public class InvoiceWorkflowControllerTest extends TestDataProducer {
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelListEdo);
 
     this.mockMvc
-                .perform(MockMvcRequestBuilders.post(IflowRestPaths.CoreModule.INVOICEWORKFLOW_READ_LIST)
+                .perform(MockMvcRequestBuilders.post(IflowRestPaths.CoreModule.TESTTHREETASKWORKFLOW_READ_LIST)
                                                .content(modelAsXmlString)
                                                .contentType(MediaType.APPLICATION_XML_VALUE)
                                                .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
@@ -203,15 +206,15 @@ public class InvoiceWorkflowControllerTest extends TestDataProducer {
 
   @Test
   public void testSaveWorkflow() throws Exception {
-    final InvoiceWorkflow model = this.getTestInvoiceWorkflow(1L);
-    final InvoiceWorkflowEdo modelEdo = CoreModelEdoMapper.toEdo(model);
+    final TestThreeTaskWorkflow model = this.getTestTestThreeTaskWorkflow(1L);
+    final TestThreeTaskWorkflowEdo modelEdo = CoreModelEdoMapper.toEdo(model);
 
-    when(this.invoiceWorkflowService.save(any(InvoiceWorkflow.class))).thenReturn(model);
+    when(this.invoiceWorkflowService.save(any(TestThreeTaskWorkflow.class))).thenReturn(model);
 
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelEdo);
 
     this.mockMvc
-                .perform(MockMvcRequestBuilders.post(IflowRestPaths.CoreModule.INVOICEWORKFLOW_SAVE)
+                .perform(MockMvcRequestBuilders.post(IflowRestPaths.CoreModule.TESTTHREETASKWORKFLOW_SAVE)
                                                .content(listAsXmlString)
                                                .contentType(MediaType.APPLICATION_XML_VALUE)
                                                .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
@@ -219,7 +222,7 @@ public class InvoiceWorkflowControllerTest extends TestDataProducer {
                 .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
                 .andExpect(content().xml(listAsXmlString));
 
-    verify(this.invoiceWorkflowService, times(1)).save(any(InvoiceWorkflow.class));
+    verify(this.invoiceWorkflowService, times(1)).save(any(TestThreeTaskWorkflow.class));
   }
 
   @Test
@@ -232,7 +235,7 @@ public class InvoiceWorkflowControllerTest extends TestDataProducer {
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelEdo);
 
     this.mockMvc
-                .perform(MockMvcRequestBuilders.post(IflowRestPaths.CoreModule.INVOICEWORKFLOW_ACTION_SAVE)
+                .perform(MockMvcRequestBuilders.post(IflowRestPaths.CoreModule.TESTTHREETASKWORKFLOW_ACTION_SAVE)
                                                .content(listAsXmlString)
                                                .contentType(MediaType.APPLICATION_XML_VALUE)
                                                .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
@@ -254,7 +257,7 @@ public class InvoiceWorkflowControllerTest extends TestDataProducer {
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelEdo);
 
     this.mockMvc
-                .perform(MockMvcRequestBuilders.post(IflowRestPaths.CoreModule.INVOICEWORKFLOW_FILE_SAVE)
+                .perform(MockMvcRequestBuilders.post(IflowRestPaths.CoreModule.TESTTHREETASKWORKFLOW_FILE_SAVE)
                                                .content(listAsXmlString)
                                                .contentType(MediaType.APPLICATION_XML_VALUE)
                                                .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
@@ -271,8 +274,9 @@ public class InvoiceWorkflowControllerTest extends TestDataProducer {
     final WorkflowSearchFilter model = this.getTestWorkflowSearchFilter();
     final WorkflowSearchFilterEdo modelEdo = CoreModelEdoMapper.toEdo(model);
 
-    final List<InvoiceWorkflow> modelList = getTestInvoiceWorkflowList();
-    final InvoiceWorkflowListEdo modelListEdo = new InvoiceWorkflowListEdo(CoreModelEdoMapper.toInvoiceWorkflowEdoList(modelList));
+    final List<TestThreeTaskWorkflow> modelList = getTestTestThreeWorkflowList();
+    final TestThreeTaskWorkflowListEdo modelListEdo =
+                                                    new TestThreeTaskWorkflowListEdo(CoreModelEdoMapper.toTestThreeTaskWorkflowEdoList(modelList));
 
     when(this.invoiceWorkflowService.search(any(WorkflowSearchFilter.class))).thenReturn(modelList);
 
@@ -280,7 +284,7 @@ public class InvoiceWorkflowControllerTest extends TestDataProducer {
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelListEdo);
 
     this.mockMvc
-                .perform(MockMvcRequestBuilders.post(IflowRestPaths.CoreModule.INVOICEWORKFLOW_SEARCH)
+                .perform(MockMvcRequestBuilders.post(IflowRestPaths.CoreModule.TESTTHREETASKWORKFLOW_SEARCH)
                                                .content(modelAsXmlString)
                                                .contentType(MediaType.APPLICATION_XML_VALUE)
                                                .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
