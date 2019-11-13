@@ -12,9 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.pth.iflow.core.model.WorkflowFile;
-import com.pth.iflow.core.model.WorkflowFileVersion;
+import com.pth.iflow.core.model.workflow.sub.WorkflowFile;
+import com.pth.iflow.core.model.workflow.sub.WorkflowFileVersion;
 import com.pth.iflow.core.storage.dao.IUserDao;
 import com.pth.iflow.core.storage.dao.IWorkflowFileDao;
 import com.pth.iflow.core.storage.dao.IWorkflowFileVersionDao;

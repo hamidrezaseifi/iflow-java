@@ -1,44 +1,44 @@
-package com.pth.iflow.core.model;
+package com.pth.iflow.core.model.workflow.sub;
 
 import java.time.LocalDateTime;
-
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.enums.EWorkflowMessageType;
 import com.pth.iflow.core.model.helper.CoreModelHelper;
+import com.pth.iflow.core.model.workflow.Workflow;
 
 public class WorkflowMessage extends CoreModelHelper {
 
-  private Long                   id;
+  private Long id;
 
-  private Workflow               workflow;
+  private Workflow workflow;
 
-  private String                 workflowIdentity;
+  private String workflowIdentity;
 
-  private String                 stepIdentity;
+  private String stepIdentity;
 
-  private String                 userIdentity;
+  private String userIdentity;
 
-  private String                 createdByIdentity;
+  private String createdByIdentity;
 
-  private Long                   stepId;
+  private Long stepId;
 
-  private Long                   userId;
+  private Long userId;
 
-  private String                 message;
+  private String message;
 
-  private Long                   createdBy;
+  private Long createdBy;
 
-  private EWorkflowMessageType   messageType;
+  private EWorkflowMessageType messageType;
 
   private EWorkflowMessageStatus status;
 
-  private Integer                version;
+  private Integer version;
 
-  private Integer                expireDays;
+  private Integer expireDays;
 
-  private LocalDateTime          createdAt;
+  private LocalDateTime createdAt;
 
-  private LocalDateTime          updatedAt;
+  private LocalDateTime updatedAt;
 
   @Override
   public Long getId() {

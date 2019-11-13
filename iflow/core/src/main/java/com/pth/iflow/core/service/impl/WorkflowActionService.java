@@ -4,8 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.pth.iflow.core.model.WorkflowAction;
+import com.pth.iflow.core.model.workflow.sub.WorkflowAction;
 import com.pth.iflow.core.service.IWorkflowActionService;
 import com.pth.iflow.core.storage.dao.IWorkflowActionDao;
 import com.pth.iflow.core.storage.dao.exception.IFlowOptimisticLockException;

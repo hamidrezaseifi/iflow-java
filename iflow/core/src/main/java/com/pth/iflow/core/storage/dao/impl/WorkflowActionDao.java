@@ -13,8 +13,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pth.iflow.core.model.User;
-import com.pth.iflow.core.model.WorkflowAction;
-import com.pth.iflow.core.model.WorkflowTypeStep;
+import com.pth.iflow.core.model.workflow.sub.WorkflowAction;
+import com.pth.iflow.core.model.workflow.sub.WorkflowTypeStep;
 import com.pth.iflow.core.storage.dao.IUserDao;
 import com.pth.iflow.core.storage.dao.IWorkflowActionDao;
 import com.pth.iflow.core.storage.dao.IWorkflowTypeStepDao;

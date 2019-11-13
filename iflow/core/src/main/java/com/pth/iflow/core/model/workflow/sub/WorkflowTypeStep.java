@@ -1,23 +1,22 @@
-package com.pth.iflow.core.model;
+package com.pth.iflow.core.model.workflow.sub;
 
 import java.time.LocalDateTime;
 
 import com.pth.iflow.core.model.helper.CoreModelHelper;
 import com.pth.iflow.core.model.helper.ICoreIdentityModel;
 
-public class WorkflowAction extends CoreModelHelper implements ICoreIdentityModel {
+public class WorkflowTypeStep extends CoreModelHelper implements ICoreIdentityModel {
 
   private Long          id;
   private String        identity;
-  private Long          workflowId;
-  private Long          assignTo;
-  private Long          currentStepId;
-  private String        assignToIdentity;
-  private String        currentStepIdentity;
+  private Long          workflowTypeId;
+  private String        title;
+  private Integer       stepIndex;
+  private String        viewName;
+  private Integer       expireDays;
   private String        comments;
   private Integer       status;
   private Integer       version;
-
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
 
@@ -31,6 +30,10 @@ public class WorkflowAction extends CoreModelHelper implements ICoreIdentityMode
     this.id = id;
   }
 
+  public Long getWorkflowTypeId() {
+    return this.workflowTypeId;
+  }
+
   @Override
   public String getIdentity() {
     return identity;
@@ -41,44 +44,38 @@ public class WorkflowAction extends CoreModelHelper implements ICoreIdentityMode
     this.identity = identity;
   }
 
-  public Long getWorkflowId() {
-    return this.workflowId;
+  public void setWorkflowTypeId(final Long workflowTypeId) {
+    this.workflowTypeId = workflowTypeId;
   }
 
-  public void setWorkflowId(final Long workflowId) {
-    this.workflowId = workflowId;
+  public String getTitle() {
+    return this.title;
   }
 
-  public Long getAssignTo() {
-    return assignTo;
+  public void setTitle(final String title) {
+    this.title = title;
   }
 
-  public void setAssignTo(final Long assignTo) {
-    this.assignTo = assignTo;
+  /**
+   * @return the stepIndex
+   */
+  public Integer getStepIndex() {
+    return this.stepIndex;
   }
 
-  public Long getCurrentStepId() {
-    return currentStepId;
+  /**
+   * @param stepIndex the stepIndex to set
+   */
+  public void setStepIndex(final Integer stepIndex) {
+    this.stepIndex = stepIndex;
   }
 
-  public void setCurrentStepId(final Long currentStepId) {
-    this.currentStepId = currentStepId;
+  public String getViewName() {
+    return this.viewName;
   }
 
-  public String getAssignToIdentity() {
-    return assignToIdentity;
-  }
-
-  public void setAssignToIdentity(final String assignToIdentity) {
-    this.assignToIdentity = assignToIdentity;
-  }
-
-  public String getCurrentStepIdentity() {
-    return currentStepIdentity;
-  }
-
-  public void setCurrentStepIdentity(final String currentStepIdIdentity) {
-    this.currentStepIdentity = currentStepIdIdentity;
+  public void setViewName(final String viewName) {
+    this.viewName = viewName;
   }
 
   public String getComments() {
@@ -121,6 +118,14 @@ public class WorkflowAction extends CoreModelHelper implements ICoreIdentityMode
 
   public void setUpdatedAt(final LocalDateTime updatedAt) {
     this.updatedAt = updatedAt;
+  }
+
+  public Integer getExpireDays() {
+    return expireDays;
+  }
+
+  public void setExpireDays(final Integer expireDays) {
+    this.expireDays = expireDays;
   }
 
 }

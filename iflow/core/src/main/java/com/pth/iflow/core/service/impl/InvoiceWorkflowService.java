@@ -2,22 +2,20 @@ package com.pth.iflow.core.service.impl;
 
 import java.util.Collection;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.pth.iflow.core.model.InvoiceWorkflow;
-import com.pth.iflow.core.model.WorkflowSearchFilter;
-import com.pth.iflow.core.service.IInvoiceWorkflowService;
-import com.pth.iflow.core.storage.dao.IInvoiceWorkflowDao;
+import com.pth.iflow.core.model.workflow.InvoiceWorkflow;
+import com.pth.iflow.core.model.workflow.sub.WorkflowSearchFilter;
+import com.pth.iflow.core.service.IWorkflowService;
+import com.pth.iflow.core.storage.dao.IWorkflowDao;
 import com.pth.iflow.core.storage.dao.exception.IFlowOptimisticLockException;
 
 @Service
-public class InvoiceWorkflowService implements IInvoiceWorkflowService {
+public class InvoiceWorkflowService implements IWorkflowService<InvoiceWorkflow> {
 
-  private final IInvoiceWorkflowDao invoiceWorkflowDao;
+  private final IWorkflowDao<InvoiceWorkflow> invoiceWorkflowDao;
 
-  public InvoiceWorkflowService(@Autowired final IInvoiceWorkflowDao invoiceWorkflowDao) {
+  public InvoiceWorkflowService(@Autowired final IWorkflowDao<InvoiceWorkflow> invoiceWorkflowDao) {
     this.invoiceWorkflowDao = invoiceWorkflowDao;
   }
 

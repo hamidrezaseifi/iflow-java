@@ -2,7 +2,7 @@ package com.pth.iflow.core.storage.dao;
 
 import java.util.List;
 import java.util.Set;
-import com.pth.iflow.core.model.WorkflowFileVersion;
+import com.pth.iflow.core.model.workflow.sub.WorkflowFileVersion;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 
 public interface IWorkflowFileVersionDao {

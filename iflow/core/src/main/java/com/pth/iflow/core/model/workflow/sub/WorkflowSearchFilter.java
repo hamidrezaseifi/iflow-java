@@ -1,4 +1,4 @@
-package com.pth.iflow.core.model;
+package com.pth.iflow.core.model.workflow.sub;
 
 import java.util.HashSet;
 import java.util.Set;

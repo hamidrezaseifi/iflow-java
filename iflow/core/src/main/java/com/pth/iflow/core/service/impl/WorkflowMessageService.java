@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.pth.iflow.common.edo.models.helper.IdentityModel;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
-import com.pth.iflow.core.model.WorkflowMessage;
+import com.pth.iflow.core.model.workflow.sub.WorkflowMessage;
 import com.pth.iflow.core.service.IWorkflowMessageService;
 import com.pth.iflow.core.storage.dao.IWorkflowMessageDao;
 import com.pth.iflow.core.storage.dao.exception.IFlowOptimisticLockException;

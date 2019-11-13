@@ -20,8 +20,8 @@ import com.pth.iflow.common.edo.models.WorkflowMessageEdo;
 import com.pth.iflow.common.edo.models.WorkflowMessageListEdo;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.rest.IflowRestPaths;
-import com.pth.iflow.core.model.WorkflowMessage;
 import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
+import com.pth.iflow.core.model.workflow.sub.WorkflowMessage;
 import com.pth.iflow.core.service.IWorkflowMessageService;
 
 @RestController

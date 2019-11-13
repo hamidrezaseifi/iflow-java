@@ -1,8 +1,7 @@
 package com.pth.iflow.core.service;
 
 import java.util.List;
-
-import com.pth.iflow.core.model.WorkflowAction;
+import com.pth.iflow.core.model.workflow.sub.WorkflowAction;
 
 public interface IWorkflowActionService {
 

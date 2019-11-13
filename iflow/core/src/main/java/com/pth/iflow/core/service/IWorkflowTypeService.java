@@ -2,8 +2,8 @@ package com.pth.iflow.core.service;
 
 import java.util.Collection;
 import java.util.List;
-import com.pth.iflow.core.model.WorkflowType;
-import com.pth.iflow.core.model.WorkflowTypeStep;
+import com.pth.iflow.core.model.workflow.sub.WorkflowType;
+import com.pth.iflow.core.model.workflow.sub.WorkflowTypeStep;
 
 public interface IWorkflowTypeService {
 

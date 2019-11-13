@@ -17,8 +17,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.pth.iflow.core.TestDataProducer;
-import com.pth.iflow.core.model.WorkflowType;
-import com.pth.iflow.core.model.WorkflowTypeStep;
+import com.pth.iflow.core.model.workflow.sub.WorkflowType;
+import com.pth.iflow.core.model.workflow.sub.WorkflowTypeStep;
 import com.pth.iflow.core.service.IWorkflowTypeService;
 import com.pth.iflow.core.service.impl.WorkflowTypeService;
 import com.pth.iflow.core.storage.dao.IWorkflowTypeDao;

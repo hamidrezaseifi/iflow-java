@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -14,11 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import com.pth.iflow.common.enums.EWorkflowIdentity;
 import com.pth.iflow.core.TestDataProducer;
-import com.pth.iflow.core.model.InvoiceWorkflow;
-import com.pth.iflow.core.storage.dao.IInvoiceWorkflowDao;
+import com.pth.iflow.core.model.workflow.InvoiceWorkflow;
+import com.pth.iflow.core.storage.dao.IWorkflowDao;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -26,7 +24,7 @@ import com.pth.iflow.core.storage.dao.IInvoiceWorkflowDao;
 public class InvoiceWorkflowDaoTest extends TestDataProducer {
 
   @Autowired
-  private IInvoiceWorkflowDao         invoiceWorkflowDao;
+  private IWorkflowDao<InvoiceWorkflow> invoiceWorkflowDao;
 
   private final List<InvoiceWorkflow> createdModels = new ArrayList<>();
 

@@ -28,8 +28,8 @@ import com.pth.iflow.common.edo.models.WorkflowTypeListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.XmlRestConfig;
 import com.pth.iflow.core.TestDataProducer;
-import com.pth.iflow.core.model.WorkflowType;
 import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
+import com.pth.iflow.core.model.workflow.sub.WorkflowType;
 import com.pth.iflow.core.service.IWorkflowTypeService;
 
 @RunWith(SpringRunner.class)

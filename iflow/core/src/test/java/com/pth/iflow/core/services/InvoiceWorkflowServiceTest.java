@@ -2,10 +2,8 @@ package com.pth.iflow.core.services;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-
 import java.util.List;
 import java.util.Set;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -15,23 +13,22 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import com.pth.iflow.common.enums.EWorkflowIdentity;
 import com.pth.iflow.core.TestDataProducer;
-import com.pth.iflow.core.model.InvoiceWorkflow;
-import com.pth.iflow.core.service.IInvoiceWorkflowService;
+import com.pth.iflow.core.model.workflow.InvoiceWorkflow;
+import com.pth.iflow.core.service.IWorkflowService;
 import com.pth.iflow.core.service.impl.InvoiceWorkflowService;
-import com.pth.iflow.core.storage.dao.IInvoiceWorkflowDao;
+import com.pth.iflow.core.storage.dao.IWorkflowDao;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 public class InvoiceWorkflowServiceTest extends TestDataProducer {
 
-  private IInvoiceWorkflowService invoiceWorkflowService;
+  private IWorkflowService<InvoiceWorkflow> invoiceWorkflowService;
 
   @MockBean
-  private IInvoiceWorkflowDao     invoiceWorkflowDao;
+  private IWorkflowDao<InvoiceWorkflow> invoiceWorkflowDao;
 
   @Before
   public void setUp() throws Exception {

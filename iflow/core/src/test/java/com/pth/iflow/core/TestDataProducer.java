@@ -15,18 +15,18 @@ import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
 import com.pth.iflow.core.model.Company;
 import com.pth.iflow.core.model.Department;
 import com.pth.iflow.core.model.DepartmentGroup;
-import com.pth.iflow.core.model.InvoiceWorkflow;
 import com.pth.iflow.core.model.ProfileResponse;
 import com.pth.iflow.core.model.User;
 import com.pth.iflow.core.model.UserGroup;
-import com.pth.iflow.core.model.Workflow;
-import com.pth.iflow.core.model.WorkflowAction;
-import com.pth.iflow.core.model.WorkflowFile;
-import com.pth.iflow.core.model.WorkflowFileVersion;
-import com.pth.iflow.core.model.WorkflowMessage;
-import com.pth.iflow.core.model.WorkflowSearchFilter;
-import com.pth.iflow.core.model.WorkflowType;
-import com.pth.iflow.core.model.WorkflowTypeStep;
+import com.pth.iflow.core.model.workflow.InvoiceWorkflow;
+import com.pth.iflow.core.model.workflow.Workflow;
+import com.pth.iflow.core.model.workflow.sub.WorkflowAction;
+import com.pth.iflow.core.model.workflow.sub.WorkflowFile;
+import com.pth.iflow.core.model.workflow.sub.WorkflowFileVersion;
+import com.pth.iflow.core.model.workflow.sub.WorkflowMessage;
+import com.pth.iflow.core.model.workflow.sub.WorkflowSearchFilter;
+import com.pth.iflow.core.model.workflow.sub.WorkflowType;
+import com.pth.iflow.core.model.workflow.sub.WorkflowTypeStep;
 
 public class TestDataProducer {
 

@@ -9,17 +9,15 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.pth.iflow.common.enums.EInvoiceType;
-import com.pth.iflow.core.model.InvoiceWorkflow;
-import com.pth.iflow.core.model.WorkflowSearchFilter;
-import com.pth.iflow.core.storage.dao.IInvoiceWorkflowDao;
+import com.pth.iflow.core.model.workflow.InvoiceWorkflow;
+import com.pth.iflow.core.model.workflow.sub.WorkflowSearchFilter;
+import com.pth.iflow.core.storage.dao.IWorkflowDao;
 import com.pth.iflow.core.storage.dao.basic.DaoBasicClass;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 import com.pth.iflow.core.storage.dao.impl.base.WorkflowDaoHelper;
@@ -27,10 +25,10 @@ import com.pth.iflow.core.storage.dao.utils.SqlUtils;
 
 @Transactional
 @Repository
-public class InvoiceWorkflowDao extends DaoBasicClass<InvoiceWorkflow> implements IInvoiceWorkflowDao {
+public class InvoiceWorkflowDao extends DaoBasicClass<InvoiceWorkflow> implements IWorkflowDao<InvoiceWorkflow> {
 
   @Autowired
-  private WorkflowDaoHelper workflowDaoHelper;
+  private WorkflowDaoHelper<InvoiceWorkflow> workflowDaoHelper;
 
   public InvoiceWorkflowDao() {
 
@@ -39,8 +37,8 @@ public class InvoiceWorkflowDao extends DaoBasicClass<InvoiceWorkflow> implement
   @Override
   public InvoiceWorkflow getById(final Long id) throws IFlowStorageException {
     final InvoiceWorkflow workflow = this.getModelById(id,
-        "SELECT * FROM workflow inner join invoice_workflow on invoice_workflow.workflow_id=workflow.id where id=?",
-        "InvoiceWorkflow");
+                                                       "SELECT * FROM workflow inner join invoice_workflow on invoice_workflow.workflow_id=workflow.id where id=?",
+                                                       "InvoiceWorkflow");
 
     if (workflow != null) {
       workflowDaoHelper.setWorkflowDetails(workflow);
@@ -51,8 +49,8 @@ public class InvoiceWorkflowDao extends DaoBasicClass<InvoiceWorkflow> implement
   @Override
   public InvoiceWorkflow getByIdentity(final String identity) throws IFlowStorageException {
     final InvoiceWorkflow workflow = this.getModelByIdentity(identity,
-        "SELECT * FROM workflow inner join invoice_workflow on invoice_workflow.workflow_id=workflow.id where identity=?",
-        "InvoiceWorkflow");
+                                                             "SELECT * FROM workflow inner join invoice_workflow on invoice_workflow.workflow_id=workflow.id where identity=?",
+                                                             "InvoiceWorkflow");
 
     if (workflow != null) {
       workflowDaoHelper.setWorkflowDetails(workflow);
@@ -69,7 +67,8 @@ public class InvoiceWorkflowDao extends DaoBasicClass<InvoiceWorkflow> implement
   @Override
   public List<InvoiceWorkflow> getListByIdentityList(final Collection<String> idList) {
 
-    String sqlSelect = "SELECT  * FROM workflow inner join invoice_workflow on invoice_workflow.workflow_id=workflow.id where identity in (";
+    String sqlSelect =
+                     "SELECT  * FROM workflow inner join invoice_workflow on invoice_workflow.workflow_id=workflow.id where identity in (";
     sqlSelect += StringUtils.repeat("?, ", idList.size());
 
     sqlSelect = sqlSelect.trim();
@@ -132,7 +131,7 @@ public class InvoiceWorkflowDao extends DaoBasicClass<InvoiceWorkflow> implement
   @Override
   public InvoiceWorkflow create(final InvoiceWorkflow workflow) throws IFlowStorageException {
     final String sql = "INSERT INTO workflow (identity, workflow_type_id, current_step, comments, controller, created_by, version, status)"
-        + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                       + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
     workflowDaoHelper.verifyWorkflowTypeByIdentity(workflow);
     workflowDaoHelper.verifyCurrentStepByIdentity(workflow);
@@ -154,7 +153,8 @@ public class InvoiceWorkflowDao extends DaoBasicClass<InvoiceWorkflow> implement
 
       return this.getById(workflowId);
 
-    } catch (final Exception e) {
+    }
+    catch (final Exception e) {
       this.rollbackTransaction(true, transactionStatus);
       logger.error("Unable to create InvoiceWorkflow: {}", e.toString(), e);
       throw new IFlowStorageException(e.toString(), e);
@@ -165,9 +165,9 @@ public class InvoiceWorkflowDao extends DaoBasicClass<InvoiceWorkflow> implement
   private void createInvoiceWorkflow(final InvoiceWorkflow workflow, final Long workflowId) {
 
     final String sql = "INSERT INTO invoice_workflow"
-        + "(workflow_id, sender, ext_reg_number, invoce_date, partner_code, vendor_number, vendor_name, direct_debit_permission,"
-        + " invoice_type, discount_enter, discount_rate, discount_deadline, discount_date, payment_amount)"
-        + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                       + "(workflow_id, sender, ext_reg_number, invoce_date, partner_code, vendor_number, vendor_name, direct_debit_permission,"
+                       + " invoice_type, discount_enter, discount_rate, discount_deadline, discount_date, payment_amount)"
+                       + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     this.jdbcTemplate.update(con -> {
       PreparedStatement ps = con.prepareStatement(sql);
@@ -180,8 +180,8 @@ public class InvoiceWorkflowDao extends DaoBasicClass<InvoiceWorkflow> implement
   private void updateInvoiceWorkflow(final InvoiceWorkflow workflow) {
 
     final String sql = "Update invoice_workflow set sender=?, ext_reg_number=?, invoce_date=?, partner_code=?, vendor_number=?, "
-        + "vendor_name=?, direct_debit_permission=?, invoice_type=?, discount_enter=?, discount_rate=?, discount_deadline=?, "
-        + "discount_date=?, payment_amount=? where workflow_id=?";
+                       + "vendor_name=?, direct_debit_permission=?, invoice_type=?, discount_enter=?, discount_rate=?, discount_deadline=?, "
+                       + "discount_date=?, payment_amount=? where workflow_id=?";
 
     this.jdbcTemplate.update(con -> {
       PreparedStatement ps = con.prepareStatement(sql);
@@ -194,7 +194,7 @@ public class InvoiceWorkflowDao extends DaoBasicClass<InvoiceWorkflow> implement
   @Override
   public InvoiceWorkflow update(final InvoiceWorkflow workflow) throws IFlowStorageException {
     final String sql = "UPDATE workflow SET workflow_type_id = ?, current_step = ?, comments = ?,"
-        + " controller = ?, created_by = ?, version = ?, status = ? WHERE id = ?";
+                       + " controller = ?, created_by = ?, version = ?, status = ? WHERE id = ?";
 
     workflowDaoHelper.verifyWorkflowTypeByIdentity(workflow);
     workflowDaoHelper.verifyCurrentStepByIdentity(workflow);
@@ -215,7 +215,8 @@ public class InvoiceWorkflowDao extends DaoBasicClass<InvoiceWorkflow> implement
       this.commitTransaction(true, transactionStatus);
 
       return this.getById(workflow.getId());
-    } catch (final Exception e) {
+    }
+    catch (final Exception e) {
       this.rollbackTransaction(true, transactionStatus);
       logger.error("Unable to update InvoiceWorkflow: {}", e.toString(), e);
       throw new IFlowStorageException(e.toString(), e);
@@ -233,7 +234,8 @@ public class InvoiceWorkflowDao extends DaoBasicClass<InvoiceWorkflow> implement
 
       this.commitTransaction(true, transactionStatus);
 
-    } catch (final Exception e) {
+    }
+    catch (final Exception e) {
       this.rollbackTransaction(true, transactionStatus);
       logger.error("Unable to delete InvoiceWorkflow:{} {}", workflowId, e.toString(), e);
       throw new IFlowStorageException(e.toString(), e);
@@ -241,8 +243,7 @@ public class InvoiceWorkflowDao extends DaoBasicClass<InvoiceWorkflow> implement
   }
 
   @Override
-  protected PreparedStatement prepareInsertPreparedStatement(final InvoiceWorkflow model, final PreparedStatement ps)
-      throws SQLException {
+  protected PreparedStatement prepareInsertPreparedStatement(final InvoiceWorkflow model, final PreparedStatement ps) throws SQLException {
     ps.setString(1, model.getIdentity());
     ps.setLong(2, model.getWorkflowType().getId());
     ps.setLong(3, model.getCurrentStep().getId());
@@ -255,8 +256,7 @@ public class InvoiceWorkflowDao extends DaoBasicClass<InvoiceWorkflow> implement
     return ps;
   }
 
-  private PreparedStatement prepareInsertInvoicePreparedStatement(final InvoiceWorkflow model, final Long workflowId,
-      final PreparedStatement ps) throws SQLException {
+  private PreparedStatement prepareInsertInvoicePreparedStatement(final InvoiceWorkflow model, final Long workflowId, final PreparedStatement ps) throws SQLException {
 
     ps.setLong(1, workflowId);
     ps.setString(2, model.getSender());
@@ -276,8 +276,7 @@ public class InvoiceWorkflowDao extends DaoBasicClass<InvoiceWorkflow> implement
     return ps;
   }
 
-  private PreparedStatement prepareUpdateInvoicePreparedStatement(final InvoiceWorkflow model, final PreparedStatement ps)
-      throws SQLException {
+  private PreparedStatement prepareUpdateInvoicePreparedStatement(final InvoiceWorkflow model, final PreparedStatement ps) throws SQLException {
 
     ps.setString(1, model.getSender());
     ps.setString(2, model.getRegisterNumber());
@@ -298,8 +297,7 @@ public class InvoiceWorkflowDao extends DaoBasicClass<InvoiceWorkflow> implement
   }
 
   @Override
-  protected PreparedStatement prepareUpdatePreparedStatement(final InvoiceWorkflow model, final PreparedStatement ps)
-      throws SQLException {
+  protected PreparedStatement prepareUpdatePreparedStatement(final InvoiceWorkflow model, final PreparedStatement ps) throws SQLException {
     ps.setLong(1, model.getWorkflowType().getId());
     ps.setLong(2, model.getCurrentStep().getId());
     ps.setString(3, model.getComments());
@@ -317,8 +315,9 @@ public class InvoiceWorkflowDao extends DaoBasicClass<InvoiceWorkflow> implement
 
     logger.info("Dao read InvoiceWorkflow for user");
 
-    final String sql = "SELECT * FROM (workflow inner join invoice_workflow on invoice_workflow.workflow_id=workflow.id) where workflow.id in (select workflow_id from workflow_actions inner join users on users.id=workflow_actions.assign_to where users.email=?) "
-        + (status > -1 ? " and status=?" : "");
+    final String sql =
+                     "SELECT * FROM (workflow inner join invoice_workflow on invoice_workflow.workflow_id=workflow.id) where workflow.id in (select workflow_id from workflow_actions inner join users on users.id=workflow_actions.assign_to where users.email=?) "
+                       + (status > -1 ? " and status=?" : "");
 
     final List<InvoiceWorkflow> workflowList = this.getModelListByIdentity(email, sql, "InvoiceWorkflow");
 
@@ -335,7 +334,7 @@ public class InvoiceWorkflowDao extends DaoBasicClass<InvoiceWorkflow> implement
     final String whereClause = this.prepareSearchWhereClause(workflowSearchFilter);
 
     final String searchSql = "SELECT * FROM (workflow inner join invoice_workflow on invoice_workflow.workflow_id=workflow.id) where "
-        + whereClause;
+                             + whereClause;
 
     try {
       idList = this.jdbcTemplate.query(con -> {
@@ -371,7 +370,8 @@ public class InvoiceWorkflowDao extends DaoBasicClass<InvoiceWorkflow> implement
 
       });
 
-    } catch (final Exception e) {
+    }
+    catch (final Exception e) {
       throw new IFlowStorageException("Unable to search InvoiceWorkflow : " + e.toString());
     }
 
@@ -385,7 +385,8 @@ public class InvoiceWorkflowDao extends DaoBasicClass<InvoiceWorkflow> implement
     String whereClause = "";
     if (workflowSearchFilter.getAssignedUserIdentitySet().isEmpty() == false) {
       whereClause += "id in (select workflow_id from workflow_actions where assign_to in ("
-          + StringUtils.repeat("?,", workflowSearchFilter.getAssignedUserIdentitySet().size()) + ")) ";
+                     + StringUtils.repeat("?,", workflowSearchFilter.getAssignedUserIdentitySet().size())
+                     + ")) ";
     }
     if (workflowSearchFilter.getStatusSet().isEmpty() == false) {
       whereClause += whereClause.isEmpty() ? "" : "and";
@@ -398,7 +399,7 @@ public class InvoiceWorkflowDao extends DaoBasicClass<InvoiceWorkflow> implement
     if (workflowSearchFilter.getWorkflowTypeIdentitySet().isEmpty() == false) {
       whereClause += whereClause.isEmpty() ? "" : "and";
       whereClause += " workflow_type_id in (" + StringUtils.repeat("?,", workflowSearchFilter.getWorkflowTypeIdentitySet().size())
-          + ") ";
+                     + ") ";
     }
 
     whereClause = whereClause.replace(",)", ")");
@@ -409,7 +410,10 @@ public class InvoiceWorkflowDao extends DaoBasicClass<InvoiceWorkflow> implement
   protected String generateIdentity(final InvoiceWorkflow model) {
 
     final Random rand = new Random();
-    return String.format("t%sw%s-%s", identityLongToHex(model.getWorkflowType().getId()),
-        identityLongToHex(System.currentTimeMillis()), identityIntToHex(rand.nextInt(1000000), 6));
+    return String.format("t%sw%s-%s",
+                         identityLongToHex(model.getWorkflowType().getId()),
+                         identityLongToHex(System.currentTimeMillis()),
+                         identityIntToHex(rand.nextInt(1000000), 6));
   }
+
 }

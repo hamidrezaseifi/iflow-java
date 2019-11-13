@@ -1,6 +1,7 @@
-package com.pth.iflow.core.model;
+package com.pth.iflow.core.model.workflow.sub;
 
 import java.time.LocalDateTime;
+import com.pth.iflow.core.model.User;
 
 public class WorkflowFileVersion {
 

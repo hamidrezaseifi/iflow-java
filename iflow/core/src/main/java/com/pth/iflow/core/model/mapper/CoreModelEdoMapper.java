@@ -3,11 +3,9 @@ package com.pth.iflow.core.model.mapper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
-
 import com.pth.iflow.common.edo.models.CompanyEdo;
 import com.pth.iflow.common.edo.models.CompanyProfileEdo;
 import com.pth.iflow.common.edo.models.DepartmentEdo;
@@ -23,6 +21,8 @@ import com.pth.iflow.common.edo.models.WorkflowSearchFilterEdo;
 import com.pth.iflow.common.edo.models.WorkflowTypeEdo;
 import com.pth.iflow.common.edo.models.WorkflowTypeStepEdo;
 import com.pth.iflow.common.edo.models.invoice.InvoiceWorkflowEdo;
+import com.pth.iflow.common.edo.models.singletask.SingleTaskWorkflowEdo;
+import com.pth.iflow.common.edo.models.testthreetask.TestThreeTaskWorkflowEdo;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.enums.EWorkflowMessageType;
 import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
@@ -31,17 +31,19 @@ import com.pth.iflow.core.model.Company;
 import com.pth.iflow.core.model.CompanyProfile;
 import com.pth.iflow.core.model.Department;
 import com.pth.iflow.core.model.DepartmentGroup;
-import com.pth.iflow.core.model.InvoiceWorkflow;
 import com.pth.iflow.core.model.ProfileResponse;
 import com.pth.iflow.core.model.User;
 import com.pth.iflow.core.model.UserGroup;
-import com.pth.iflow.core.model.WorkflowAction;
-import com.pth.iflow.core.model.WorkflowFile;
-import com.pth.iflow.core.model.WorkflowFileVersion;
-import com.pth.iflow.core.model.WorkflowMessage;
-import com.pth.iflow.core.model.WorkflowSearchFilter;
-import com.pth.iflow.core.model.WorkflowType;
-import com.pth.iflow.core.model.WorkflowTypeStep;
+import com.pth.iflow.core.model.workflow.InvoiceWorkflow;
+import com.pth.iflow.core.model.workflow.SingleTaskWorkflow;
+import com.pth.iflow.core.model.workflow.TestThreeTaskWorkflow;
+import com.pth.iflow.core.model.workflow.sub.WorkflowAction;
+import com.pth.iflow.core.model.workflow.sub.WorkflowFile;
+import com.pth.iflow.core.model.workflow.sub.WorkflowFileVersion;
+import com.pth.iflow.core.model.workflow.sub.WorkflowMessage;
+import com.pth.iflow.core.model.workflow.sub.WorkflowSearchFilter;
+import com.pth.iflow.core.model.workflow.sub.WorkflowType;
+import com.pth.iflow.core.model.workflow.sub.WorkflowTypeStep;
 
 public class CoreModelEdoMapper {
 
@@ -70,8 +72,9 @@ public class CoreModelEdoMapper {
   }
 
   public static CompanyProfileEdo toEdo(final CompanyProfile model) {
-    final CompanyProfileEdo edo = new CompanyProfileEdo(toEdo(model.getCompany()), toDepartmentEdoList(model.getDepartments()),
-        toUserGroupEdoList(model.getUserGroups()));
+    final CompanyProfileEdo edo = new CompanyProfileEdo(toEdo(model.getCompany()),
+                                                        toDepartmentEdoList(model.getDepartments()),
+                                                        toUserGroupEdoList(model.getUserGroups()));
 
     return edo;
   }
@@ -103,7 +106,7 @@ public class CoreModelEdoMapper {
     edo.setUserIdentity(model.getUserIdentity());
     edo.setCreatedByIdentity(model.getCreatedByIdentity());
     edo.setVersion(model.getVersion());
-    edo.setWorkflowIdentity(model.getWorkflow().getIdentity());
+    edo.setWorkflowIdentity(model.getWorkflowIdentity());
     edo.setMessageType(model.getMessageType().getValue());
     edo.setExpireDays(model.getExpireDays());
     edo.setMessage(model.getMessage());
@@ -288,6 +291,76 @@ public class CoreModelEdoMapper {
     model.setSender(edo.getSender());
     model.setVendorName(edo.getVendorName());
     model.setVendorNumber(edo.getVendorNumber());
+
+    return model;
+  }
+
+  public static SingleTaskWorkflowEdo toEdo(final SingleTaskWorkflow model) {
+    final SingleTaskWorkflowEdo edo = new SingleTaskWorkflowEdo();
+    edo.setComments(model.getComments());
+    edo.setStatus(model.getStatusInt());
+    edo.setControllerIdentity(model.getControllerIdentity());
+    edo.setCurrentStepIdentity(model.getCurrentStepIdentity());
+    edo.setCreatedByIdentity(model.getCreatedByIdentity());
+    edo.setVersion(model.getVersion());
+    edo.setIdentity(model.getIdentity());
+
+    edo.setFiles(toWorkflowFileEdoList(model.getFiles()));
+    edo.setActions(toWorkflowActionEdoList(model.getActions()));
+
+    return edo;
+  }
+
+  public static SingleTaskWorkflow fromEdo(final SingleTaskWorkflowEdo edo) throws IFlowMessageConversionFailureException {
+    validateCustomer(edo);
+
+    final SingleTaskWorkflow model = new SingleTaskWorkflow();
+
+    model.setComments(edo.getComments());
+    model.setStatus(edo.getStatus());
+    model.setVersion(edo.getVersion());
+    model.setControllerIdentity(edo.getControllerIdentity());
+    model.setCurrentStepIdentity(edo.getCurrentStepIdentity());
+    model.setCreatedByIdentity(edo.getCreatedByIdentity());
+    model.setIdentity(edo.getIdentity());
+
+    model.setFiles(fromWorkflowFileEdoList(edo.getFiles()));
+    model.setActions(fromWorkflowActionEdoList(edo.getActions()));
+
+    return model;
+  }
+
+  public static TestThreeTaskWorkflowEdo toEdo(final TestThreeTaskWorkflow model) {
+    final TestThreeTaskWorkflowEdo edo = new TestThreeTaskWorkflowEdo();
+    edo.setComments(model.getComments());
+    edo.setStatus(model.getStatusInt());
+    edo.setControllerIdentity(model.getControllerIdentity());
+    edo.setCurrentStepIdentity(model.getCurrentStepIdentity());
+    edo.setCreatedByIdentity(model.getCreatedByIdentity());
+    edo.setVersion(model.getVersion());
+    edo.setIdentity(model.getIdentity());
+
+    edo.setFiles(toWorkflowFileEdoList(model.getFiles()));
+    edo.setActions(toWorkflowActionEdoList(model.getActions()));
+
+    return edo;
+  }
+
+  public static TestThreeTaskWorkflow fromEdo(final TestThreeTaskWorkflowEdo edo) throws IFlowMessageConversionFailureException {
+    validateCustomer(edo);
+
+    final TestThreeTaskWorkflow model = new TestThreeTaskWorkflow();
+
+    model.setComments(edo.getComments());
+    model.setStatus(edo.getStatus());
+    model.setVersion(edo.getVersion());
+    model.setControllerIdentity(edo.getControllerIdentity());
+    model.setCurrentStepIdentity(edo.getCurrentStepIdentity());
+    model.setCreatedByIdentity(edo.getCreatedByIdentity());
+    model.setIdentity(edo.getIdentity());
+
+    model.setFiles(fromWorkflowFileEdoList(edo.getFiles()));
+    model.setActions(fromWorkflowActionEdoList(edo.getActions()));
 
     return model;
   }
@@ -482,8 +555,7 @@ public class CoreModelEdoMapper {
     return edoList;
   }
 
-  public static List<WorkflowFileVersion> fromWorkflowFileVersionEdoList(final List<WorkflowFileVersionEdo> edoList)
-      throws IFlowMessageConversionFailureException {
+  public static List<WorkflowFileVersion> fromWorkflowFileVersionEdoList(final List<WorkflowFileVersionEdo> edoList) throws IFlowMessageConversionFailureException {
     final List<WorkflowFileVersion> modelList = new ArrayList<>();
     for (final WorkflowFileVersionEdo edo : edoList) {
       modelList.add(fromEdo(edo));
@@ -501,8 +573,7 @@ public class CoreModelEdoMapper {
     return edoList;
   }
 
-  public static List<WorkflowFile> fromWorkflowFileEdoList(final List<WorkflowFileEdo> edoList)
-      throws IFlowMessageConversionFailureException {
+  public static List<WorkflowFile> fromWorkflowFileEdoList(final List<WorkflowFileEdo> edoList) throws IFlowMessageConversionFailureException {
     final List<WorkflowFile> modelList = new ArrayList<>();
     for (final WorkflowFileEdo edo : edoList) {
       modelList.add(fromEdo(edo));
@@ -529,8 +600,7 @@ public class CoreModelEdoMapper {
     return edoList;
   }
 
-  public static List<WorkflowAction> fromWorkflowActionEdoList(final List<WorkflowActionEdo> edoList)
-      throws IFlowMessageConversionFailureException {
+  public static List<WorkflowAction> fromWorkflowActionEdoList(final List<WorkflowActionEdo> edoList) throws IFlowMessageConversionFailureException {
     final List<WorkflowAction> modelList = new ArrayList<>();
     for (final WorkflowActionEdo edo : edoList) {
       modelList.add(fromEdo(edo));
@@ -548,8 +618,7 @@ public class CoreModelEdoMapper {
     return edoList;
   }
 
-  public static List<WorkflowTypeStep> fromWorkflowTypeStepEdoList(final List<WorkflowTypeStepEdo> edoList)
-      throws IFlowMessageConversionFailureException {
+  public static List<WorkflowTypeStep> fromWorkflowTypeStepEdoList(final List<WorkflowTypeStepEdo> edoList) throws IFlowMessageConversionFailureException {
     final List<WorkflowTypeStep> modelList = new ArrayList<>();
     for (final WorkflowTypeStepEdo edo : edoList) {
       modelList.add(fromEdo(edo));
@@ -567,8 +636,7 @@ public class CoreModelEdoMapper {
     return edoList;
   }
 
-  public static List<DepartmentGroup> fromDepartmentGroupEdoList(final List<DepartmentGroupEdo> edoList)
-      throws IFlowMessageConversionFailureException {
+  public static List<DepartmentGroup> fromDepartmentGroupEdoList(final List<DepartmentGroupEdo> edoList) throws IFlowMessageConversionFailureException {
     final List<DepartmentGroup> modelList = new ArrayList<>();
     for (final DepartmentGroupEdo edo : edoList) {
       modelList.add(fromEdo(edo));
@@ -580,6 +648,24 @@ public class CoreModelEdoMapper {
   public static List<InvoiceWorkflowEdo> toInvoiceWorkflowEdoList(final List<InvoiceWorkflow> modelList) {
     final List<InvoiceWorkflowEdo> edoList = new ArrayList<>();
     for (final InvoiceWorkflow model : modelList) {
+      edoList.add(toEdo(model));
+    }
+
+    return edoList;
+  }
+
+  public static List<TestThreeTaskWorkflowEdo> toTestThreeTaskWorkflowEdoList(final List<TestThreeTaskWorkflow> modelList) {
+    final List<TestThreeTaskWorkflowEdo> edoList = new ArrayList<>();
+    for (final TestThreeTaskWorkflow model : modelList) {
+      edoList.add(toEdo(model));
+    }
+
+    return edoList;
+  }
+
+  public static List<SingleTaskWorkflowEdo> toSingleTaskWorkflowEdoList(final List<SingleTaskWorkflow> modelList) {
+    final List<SingleTaskWorkflowEdo> edoList = new ArrayList<>();
+    for (final SingleTaskWorkflow model : modelList) {
       edoList.add(toEdo(model));
     }
 

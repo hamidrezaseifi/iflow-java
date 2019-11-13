@@ -2,10 +2,8 @@ package com.pth.iflow.core.dao;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -15,12 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import com.pth.iflow.common.enums.EWorkflowIdentity;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.core.TestDataProducer;
-import com.pth.iflow.core.model.Workflow;
-import com.pth.iflow.core.model.WorkflowMessage;
+import com.pth.iflow.core.model.workflow.Workflow;
+import com.pth.iflow.core.model.workflow.sub.WorkflowMessage;
 import com.pth.iflow.core.storage.dao.IWorkflowDao;
 import com.pth.iflow.core.storage.dao.IWorkflowMessageDao;
 
@@ -30,14 +27,14 @@ import com.pth.iflow.core.storage.dao.IWorkflowMessageDao;
 public class WorkflowMessageDaoTest extends TestDataProducer {
 
   @Autowired
-  private IWorkflowDao                workflowDao;
+  private IWorkflowDao<Workflow> workflowDao;
 
   @Autowired
-  private IWorkflowMessageDao         workflowMessageDao;
+  private IWorkflowMessageDao workflowMessageDao;
 
-  private final List<WorkflowMessage> createdModels   = new ArrayList<>();
+  private final List<WorkflowMessage> createdModels = new ArrayList<>();
 
-  private Workflow                    createdWorkflow = null;
+  private Workflow createdWorkflow = null;
 
   @Before
   public void setUp() throws Exception {
@@ -76,7 +73,8 @@ public class WorkflowMessageDaoTest extends TestDataProducer {
 
     WorkflowMessage workflowMessage = createdModels.get(0);
     this.workflowMessageDao.updateStatusByWorkflowIdentity(workflowMessage.getWorkflow().getIdentity(),
-        workflowMessage.getStepIdentity(), EWorkflowMessageStatus.CLOSED);
+                                                           workflowMessage.getStepIdentity(),
+                                                           EWorkflowMessageStatus.CLOSED);
     workflowMessage = workflowMessageDao.getById(workflowMessage.getId());
 
     Assert.assertNotNull("Result is not null!", workflowMessage);
@@ -90,7 +88,8 @@ public class WorkflowMessageDaoTest extends TestDataProducer {
     createWorlflowList();
 
     final List<WorkflowMessage> resList = this.workflowMessageDao
-        .getNotClosedNotExpiredListByUserEmail(createdModels.get(0).getUserIdentity());
+                                                                 .getNotClosedNotExpiredListByUserEmail(createdModels.get(0)
+                                                                                                                     .getUserIdentity());
 
     Assert.assertNotNull("Result list is not null!", resList);
 
@@ -104,7 +103,9 @@ public class WorkflowMessageDaoTest extends TestDataProducer {
     createWorlflowList();
 
     final List<WorkflowMessage> resList = this.workflowMessageDao
-        .getNotClosedNotExpiredListByWorkflowIdentity(createdModels.get(0).getWorkflow().getIdentity());
+                                                                 .getNotClosedNotExpiredListByWorkflowIdentity(createdModels.get(0)
+                                                                                                                            .getWorkflow()
+                                                                                                                            .getIdentity());
 
     Assert.assertNotNull("Result list is not null!", resList);
 
@@ -175,13 +176,16 @@ public class WorkflowMessageDaoTest extends TestDataProducer {
   private void compareExpectedAndResult(final WorkflowMessage workflow, final WorkflowMessage resWorkflow) {
     Assert.assertNotNull("Result workflow is not null!", resWorkflow);
 
-    Assert.assertEquals("Result workflow has message '" + workflow.getMessage() + "'!", resWorkflow.getMessage(),
-        workflow.getMessage());
+    Assert.assertEquals("Result workflow has message '" + workflow.getMessage() + "'!",
+                        resWorkflow.getMessage(),
+                        workflow.getMessage());
     Assert.assertEquals("Result workflow has status 1!", resWorkflow.getStatus(), workflow.getStatus());
-    Assert.assertEquals("Result workflow has message-type " + workflow.getMessageType() + "!", resWorkflow.getMessageType(),
-        workflow.getMessageType());
-    Assert.assertEquals("Result workflow has expiredays " + workflow.getExpireDays() + "!", resWorkflow.getExpireDays(),
-        workflow.getExpireDays());
+    Assert.assertEquals("Result workflow has message-type " + workflow.getMessageType() + "!",
+                        resWorkflow.getMessageType(),
+                        workflow.getMessageType());
+    Assert.assertEquals("Result workflow has expiredays " + workflow.getExpireDays() + "!",
+                        resWorkflow.getExpireDays(),
+                        workflow.getExpireDays());
   }
 
   private void createReferenceWorkflow() {

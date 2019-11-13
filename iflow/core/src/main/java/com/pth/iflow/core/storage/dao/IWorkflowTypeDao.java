@@ -3,7 +3,7 @@ package com.pth.iflow.core.storage.dao;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
-import com.pth.iflow.core.model.WorkflowType;
+import com.pth.iflow.core.model.workflow.sub.WorkflowType;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 
 public interface IWorkflowTypeDao {

@@ -3,7 +3,7 @@ package com.pth.iflow.core.storage.dao;
 import java.util.List;
 
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
-import com.pth.iflow.core.model.WorkflowMessage;
+import com.pth.iflow.core.model.workflow.sub.WorkflowMessage;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 
 public interface IWorkflowMessageDao {
