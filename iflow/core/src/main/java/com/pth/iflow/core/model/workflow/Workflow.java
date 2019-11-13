@@ -5,27 +5,20 @@ import java.util.ArrayList;
 import java.util.List;
 import com.pth.iflow.common.enums.EWorkflowIdentity;
 import com.pth.iflow.common.enums.EWorkflowStatus;
-import com.pth.iflow.core.model.User;
 import com.pth.iflow.core.model.helper.CoreModelHelper;
 import com.pth.iflow.core.model.helper.ICoreIdentityModel;
 import com.pth.iflow.core.model.workflow.sub.WorkflowAction;
 import com.pth.iflow.core.model.workflow.sub.WorkflowFile;
-import com.pth.iflow.core.model.workflow.sub.WorkflowType;
-import com.pth.iflow.core.model.workflow.sub.WorkflowTypeStep;
 
 public class Workflow extends CoreModelHelper implements ICoreIdentityModel, IWorkflow {
 
-  private Long             id;
-  private String           identity;
-  private WorkflowType     workflowType;
-  private WorkflowTypeStep currentStep;
-  private User             controller;
-  private User             createdBy;
-  private String           comments;
-  private EWorkflowStatus  status;
-  private Integer          version;
-  private LocalDateTime    createdAt;
-  private LocalDateTime    updatedAt;
+  private Long            id;
+  private String          identity;
+  private String          comments;
+  private EWorkflowStatus status;
+  private Integer         version;
+  private LocalDateTime   createdAt;
+  private LocalDateTime   updatedAt;
 
   private String workflowTypeIdentity;
   private String currentStepIdentity;

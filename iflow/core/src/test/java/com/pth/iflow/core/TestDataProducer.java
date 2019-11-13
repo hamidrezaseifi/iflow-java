@@ -219,20 +219,19 @@ public class TestDataProducer {
 
   protected Workflow getTestWorkflow(final Long Id) {
     final Workflow model = new Workflow();
-    model.setWorkflowType(getTestWorkflowType());
-    model.setWorkflowTypeIdentity(model.getWorkflowType().getIdentity());
     model.setId(Id);
     model.setIdentity(EWorkflowIdentity.NOT_SET.getName());
     model.setStatus(EWorkflowStatus.INITIALIZE.getValue().intValue());
     model.setVersion(1);
     model.setComments("comments");
     model.setIdentity("workflow-1");
-    model.setController(getTestUser(1L, "fname", "lname", "email1"));
-    model.setCurrentStep(getTestWorkflowTypeStep());
-    model.setCreatedBy(getTestUser(2L, "fname", "lname", "email2"));
-    model.setControllerIdentity(model.getController().getEmail());
-    model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
-    model.setCreatedByIdentity(model.getCreatedBy().getEmail());
+    model.setControllerId(1l);
+    model.setCurrentStepId(1l);
+    model.setCreatedById(1l);
+    model.setControllerIdentity("ControllerIdentity");
+    model.setCurrentStepIdentity("currentStepIdentity");
+    model.setCreatedByIdentity("createdByIdentity");
+    model.setWorkflowTypeId(1l);
 
     model.setActions(
                      Arrays.asList(this.getTestWorkflowAction(1L, 1L),
@@ -246,20 +245,19 @@ public class TestDataProducer {
 
   protected InvoiceWorkflow getTestInvoiceWorkflow(final Long Id) {
     final InvoiceWorkflow model = new InvoiceWorkflow();
-    model.setWorkflowType(getTestWorkflowType());
-    model.setWorkflowTypeIdentity(model.getWorkflowType().getIdentity());
     model.setId(Id);
     model.setIdentity(EWorkflowIdentity.NOT_SET.getName());
     model.setStatus(EWorkflowStatus.INITIALIZE.getValue().intValue());
     model.setVersion(1);
     model.setComments("comments");
     model.setIdentity("workflow-1");
-    model.setController(getTestUser(1L, "fname", "lname", "email1"));
-    model.setCurrentStep(getTestWorkflowTypeStep());
-    model.setCreatedBy(getTestUser(2L, "fname", "lname", "email2"));
-    model.setControllerIdentity(model.getController().getEmail());
-    model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
-    model.setCreatedByIdentity(model.getCreatedBy().getEmail());
+    model.setControllerId(1l);
+    model.setCurrentStepId(1l);
+    model.setCreatedById(1l);
+    model.setControllerIdentity("ControllerIdentity");
+    model.setCurrentStepIdentity("currentStepIdentity");
+    model.setCreatedByIdentity("createdByIdentity");
+    model.setWorkflowTypeId(1l);
 
     model.setActions(
                      Arrays.asList(this.getTestWorkflowAction(1L, 1L),
@@ -287,19 +285,19 @@ public class TestDataProducer {
 
   protected SingleTaskWorkflow getTestSingleTaskWorkflow(final Long Id) {
     final SingleTaskWorkflow model = new SingleTaskWorkflow();
-    model.setWorkflowType(getTestWorkflowType());
+    model.setWorkflowTypeId(1l);
     model.setId(Id);
     model.setIdentity(EWorkflowIdentity.NOT_SET.getName());
     model.setStatus(EWorkflowStatus.INITIALIZE.getValue().intValue());
     model.setVersion(1);
     model.setComments("comments");
     model.setIdentity("workflow-1");
-    model.setController(getTestUser(1L, "fname", "lname", "email1"));
-    model.setCurrentStep(getTestWorkflowTypeStep());
-    model.setCreatedBy(getTestUser(2L, "fname", "lname", "email2"));
-    model.setControllerIdentity(model.getController().getEmail());
-    model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
-    model.setCreatedByIdentity(model.getCreatedBy().getEmail());
+    model.setControllerId(1l);
+    model.setCurrentStepId(1l);
+    model.setCreatedById(1l);
+    model.setControllerIdentity("ControllerIdentity");
+    model.setCurrentStepIdentity("currentStepIdentity");
+    model.setCreatedByIdentity("createdByIdentity");
 
     model.setActions(
                      Arrays.asList(this.getTestWorkflowAction(1L, 1L),
@@ -313,19 +311,19 @@ public class TestDataProducer {
 
   protected TestThreeTaskWorkflow getTestTestThreeTaskWorkflow(final Long Id) {
     final TestThreeTaskWorkflow model = new TestThreeTaskWorkflow();
-    model.setWorkflowType(getTestWorkflowType());
     model.setId(Id);
     model.setIdentity(EWorkflowIdentity.NOT_SET.getName());
     model.setStatus(EWorkflowStatus.INITIALIZE.getValue().intValue());
     model.setVersion(1);
     model.setComments("comments");
     model.setIdentity("workflow-1");
-    model.setController(getTestUser(1L, "fname", "lname", "email1"));
-    model.setCurrentStep(getTestWorkflowTypeStep());
-    model.setCreatedBy(getTestUser(2L, "fname", "lname", "email2"));
-    model.setControllerIdentity(model.getController().getEmail());
-    model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
-    model.setCreatedByIdentity(model.getCreatedBy().getEmail());
+    model.setControllerId(1l);
+    model.setCurrentStepId(1l);
+    model.setCreatedById(1l);
+    model.setControllerIdentity("ControllerIdentity");
+    model.setCurrentStepIdentity("currentStepIdentity");
+    model.setCreatedByIdentity("createdByIdentity");
+    model.setWorkflowTypeId(1l);
 
     model.setActions(
                      Arrays.asList(this.getTestWorkflowAction(1L, 1L),
@@ -369,7 +367,7 @@ public class TestDataProducer {
     model.setCreatedAt(LocalDateTime.now());
 
     model.setMessage("title test");
-    model.setStepId(workflow.getCurrentStep().getId());
+    model.setStepId(workflow.getCurrentStepId());
 
     return model;
   }
@@ -382,20 +380,20 @@ public class TestDataProducer {
 
   protected Workflow getTestNewWorkflow() {
     final Workflow model = new Workflow();
-    model.setWorkflowType(getTestWorkflowType());
-    model.setWorkflowTypeIdentity(model.getWorkflowType().getIdentity());
+    model.setWorkflowTypeIdentity("wtidentity");
     model.setId(null);
     model.setIdentity(EWorkflowIdentity.NOT_SET.getName());
     model.setStatus(EWorkflowStatus.INITIALIZE.getValue().intValue());
     model.setVersion(1);
     model.setComments("comments");
     model.setIdentity("workflow-1");
-    model.setController(getTestUser(1L, "fname", "lname", "email1"));
-    model.setCurrentStep(getTestWorkflowTypeStep());
-    model.setCreatedBy(getTestUser(2L, "fname", "lname", "email2"));
-    model.setControllerIdentity(model.getController().getEmail());
-    model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
-    model.setCreatedByIdentity(model.getCreatedBy().getEmail());
+    model.setControllerId(1l);
+    model.setCurrentStepId(1l);
+    model.setCreatedById(1l);
+    model.setControllerIdentity("ControllerIdentity");
+    model.setCurrentStepIdentity("currentStepIdentity");
+    model.setCreatedByIdentity("createdByIdentity");
+    model.setWorkflowTypeId(1l);
 
     model.setActions(Arrays.asList(this.getTestNewWorkflowAction(), this.getTestNewWorkflowAction(), this.getTestNewWorkflowAction()));
     model.setFiles(Arrays.asList(this.getTestNewWorkflowFile(), this.getTestNewWorkflowFile(), this.getTestNewWorkflowFile()));
