@@ -68,9 +68,9 @@ public class WorkflowMessageDao extends DaoBasicClass<WorkflowMessage> implement
   }
 
   private void verifyWorkflow(final WorkflowMessage model) {
-    if (model.getWorkflow() == null) {
-      model.setWorkflow(workflowDao.getByIdentity(model.getWorkflowIdentity()));
-    }
+
+    model.setWorkflowId(workflowDao.getByIdentity(model.getWorkflowIdentity()).getId());
+
   }
 
   private void verifyUsers(final WorkflowMessage model) {
@@ -111,7 +111,7 @@ public class WorkflowMessageDao extends DaoBasicClass<WorkflowMessage> implement
 
   private void verifyWorkflowIdentity(final WorkflowMessage model) {
     if (EWorkflowIdentity.isNotSet(model.getWorkflowIdentity())) {
-      model.setWorkflowIdentity(workflowDao.getById(model.getWorkflow().getId()).getIdentity());
+      model.setWorkflowIdentity(workflowDao.getById(model.getWorkflowId()).getIdentity());
     }
   }
 
@@ -268,7 +268,7 @@ public class WorkflowMessageDao extends DaoBasicClass<WorkflowMessage> implement
   protected WorkflowMessage modelFromResultSet(final ResultSet rs) throws SQLException {
     final WorkflowMessage model = new WorkflowMessage();
     model.setId(rs.getLong("id"));
-    model.setWorkflow(workflowDao.getById(rs.getLong("workflow_id")));
+    model.setWorkflowId(rs.getLong("workflow_id"));
     model.setStepId(rs.getLong("step_id"));
     model.setUserId(rs.getLong("user_id"));
     model.setMessage(rs.getString("message"));
@@ -290,7 +290,7 @@ public class WorkflowMessageDao extends DaoBasicClass<WorkflowMessage> implement
 
   @Override
   protected PreparedStatement prepareInsertPreparedStatement(final WorkflowMessage model, final PreparedStatement ps) throws SQLException {
-    ps.setLong(1, model.getWorkflow().getId());
+    ps.setLong(1, model.getWorkflowId());
     ps.setLong(2, model.getStepId());
     ps.setLong(3, model.getUserId());
     ps.setString(4, model.getMessage());
@@ -305,7 +305,7 @@ public class WorkflowMessageDao extends DaoBasicClass<WorkflowMessage> implement
 
   @Override
   protected PreparedStatement prepareUpdatePreparedStatement(final WorkflowMessage model, final PreparedStatement ps) throws SQLException {
-    ps.setLong(1, model.getWorkflow().getId());
+    ps.setLong(1, model.getWorkflowId());
     ps.setLong(2, model.getStepId());
     ps.setLong(3, model.getUserId());
     ps.setString(4, model.getMessage());

@@ -1,4 +1,4 @@
-package com.pth.iflow.core.dao;
+package com.pth.iflow.core.dao.workflow;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,18 +15,18 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import com.pth.iflow.common.enums.EWorkflowIdentity;
 import com.pth.iflow.core.TestDataProducer;
-import com.pth.iflow.core.model.workflow.Workflow;
+import com.pth.iflow.core.model.workflow.InvoiceWorkflow;
 import com.pth.iflow.core.storage.dao.IWorkflowDao;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class WorkflowDaoTest extends TestDataProducer {
+public class InvoiceWorkflowDaoTest extends TestDataProducer {
 
   @Autowired
-  private IWorkflowDao<Workflow> workflowDao;
+  private IWorkflowDao<InvoiceWorkflow> invoiceWorkflowDao;
 
-  private final List<Workflow> createdModels = new ArrayList<>();
+  private final List<InvoiceWorkflow> createdModels = new ArrayList<>();
 
   @Before
   public void setUp() throws Exception {
@@ -35,10 +35,10 @@ public class WorkflowDaoTest extends TestDataProducer {
 
   private void createWorlflowList() throws Exception {
     for (int i = 1; i <= 3; i++) {
-      final Workflow workflow = getTestNewWorkflow();
+      final InvoiceWorkflow workflow = getTestNewInvoiceWorkflow();
       workflow.setId(null);
       workflow.setIdentity(EWorkflowIdentity.NOT_SET.getName());
-      final Workflow res = workflowDao.create(workflow);
+      final InvoiceWorkflow res = invoiceWorkflowDao.create(workflow);
       createdModels.add(res);
     }
   }
@@ -46,8 +46,8 @@ public class WorkflowDaoTest extends TestDataProducer {
   @After
   public void tearDown() throws Exception {
 
-    for (final Workflow workflow : createdModels) {
-      workflowDao.deleteWorkflow(workflow.getId());
+    for (final InvoiceWorkflow workflow : createdModels) {
+      invoiceWorkflowDao.deleteWorkflow(workflow.getId());
     }
   }
 
@@ -56,9 +56,9 @@ public class WorkflowDaoTest extends TestDataProducer {
 
     createWorlflowList();
 
-    final Workflow workflow = createdModels.get(0);
+    final InvoiceWorkflow workflow = createdModels.get(0);
 
-    final Workflow resWorkflow = this.workflowDao.getById(createdModels.get(0).getId());
+    final InvoiceWorkflow resWorkflow = this.invoiceWorkflowDao.getById(createdModels.get(0).getId());
 
     Assert.assertNotNull("Result workflow is not null!", resWorkflow);
     Assert.assertEquals("Result workflow has id 1!", resWorkflow.getId(), workflow.getId());
@@ -73,7 +73,7 @@ public class WorkflowDaoTest extends TestDataProducer {
 
     final Set<Long> idList = createdModels.stream().map(w -> w.getId()).collect(Collectors.toSet());
 
-    final List<Workflow> resList = this.workflowDao.getListByIdList(idList);
+    final List<InvoiceWorkflow> resList = this.invoiceWorkflowDao.getListByIdList(idList);
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + createdModels.size() + " items.", resList.size(), createdModels.size());
@@ -83,9 +83,9 @@ public class WorkflowDaoTest extends TestDataProducer {
   @Test
   public void testCreate() throws Exception {
 
-    final Workflow workflow = getTestNewWorkflow();
+    final InvoiceWorkflow workflow = getTestNewInvoiceWorkflow();
     workflow.setVersion(10);
-    final Workflow resWorkflow = workflowDao.create(workflow);
+    final InvoiceWorkflow resWorkflow = invoiceWorkflowDao.create(workflow);
     createdModels.add(resWorkflow);
 
     Assert.assertNotNull("Result workflow is not null!", resWorkflow);
@@ -97,9 +97,9 @@ public class WorkflowDaoTest extends TestDataProducer {
   @Test
   public void testUpdate() throws Exception {
 
-    final Workflow workflow = getTestNewWorkflow();
+    final InvoiceWorkflow workflow = getTestNewInvoiceWorkflow();
     workflow.setVersion(10);
-    final Workflow createdWorkflow = workflowDao.create(workflow);
+    final InvoiceWorkflow createdWorkflow = invoiceWorkflowDao.create(workflow);
     createdModels.add(createdWorkflow);
 
     Assert.assertNotNull("Result created workflow is not null!", createdWorkflow);
@@ -107,7 +107,7 @@ public class WorkflowDaoTest extends TestDataProducer {
     createdWorkflow.setVersion(22);
     createdWorkflow.setStatus(10);
 
-    final Workflow updatedWorkflow = workflowDao.update(createdWorkflow);
+    final InvoiceWorkflow updatedWorkflow = invoiceWorkflowDao.update(createdWorkflow);
 
     Assert.assertNotNull("Result workflow is not null!", updatedWorkflow);
     Assert.assertEquals("Result workflow has the same id as created!", createdWorkflow.getId(), updatedWorkflow.getId());
@@ -119,15 +119,15 @@ public class WorkflowDaoTest extends TestDataProducer {
   @Test
   public void testDelete() throws Exception {
 
-    final Workflow workflow = getTestNewWorkflow();
+    final InvoiceWorkflow workflow = getTestNewInvoiceWorkflow();
     workflow.setVersion(10);
-    final Workflow resWorkflow = workflowDao.create(workflow);
+    final InvoiceWorkflow resWorkflow = invoiceWorkflowDao.create(workflow);
 
     Assert.assertNotNull("Result workflow is not null!", resWorkflow);
 
-    workflowDao.deleteWorkflow(resWorkflow.getId());
+    invoiceWorkflowDao.deleteWorkflow(resWorkflow.getId());
 
-    final Workflow deletedWorkflow = this.workflowDao.getById(resWorkflow.getId());
+    final InvoiceWorkflow deletedWorkflow = this.invoiceWorkflowDao.getById(resWorkflow.getId());
 
     Assert.assertNull("Result workflow is null!", deletedWorkflow);
 

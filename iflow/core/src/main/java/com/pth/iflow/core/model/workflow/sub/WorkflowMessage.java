@@ -4,13 +4,12 @@ import java.time.LocalDateTime;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.enums.EWorkflowMessageType;
 import com.pth.iflow.core.model.helper.CoreModelHelper;
-import com.pth.iflow.core.model.workflow.Workflow;
 
 public class WorkflowMessage extends CoreModelHelper {
 
   private Long id;
 
-  private Workflow workflow;
+  private Long workflowId;
 
   private String workflowIdentity;
 
@@ -50,12 +49,12 @@ public class WorkflowMessage extends CoreModelHelper {
     this.id = id;
   }
 
-  public Workflow getWorkflow() {
-    return workflow;
+  public Long getWorkflowId() {
+    return workflowId;
   }
 
-  public void setWorkflow(final Workflow workflow) {
-    this.workflow = workflow;
+  public void setWorkflowId(final Long workflowId) {
+    this.workflowId = workflowId;
   }
 
   public String getWorkflowIdentity() {

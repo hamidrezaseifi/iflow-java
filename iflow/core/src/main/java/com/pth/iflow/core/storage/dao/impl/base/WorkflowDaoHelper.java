@@ -76,21 +76,21 @@ public class WorkflowDaoHelper<W extends IWorkflow> {
   public void verifyCurrentStepByIdentity(final W workflow) {
 
     final WorkflowTypeStep type = workflowTypeStepDao.getByIdentity(workflow.getCurrentStepIdentity());
-    workflow.setCurrentStepId(type.getId());
+    workflow.setCurrentStepId(type == null ? 0L : type.getId());
 
   }
 
   public void verifyControllerByIdentity(final W workflow) {
 
     final User type = userDao.getByEmail(workflow.getControllerIdentity());
-    workflow.setControllerId(type.getId());
+    workflow.setControllerId(type == null ? 0L : type.getId());
 
   }
 
   public void verifyCreatedByByIdentity(final W workflow) {
 
     final User type = userDao.getByEmail(workflow.getCreatedByIdentity());
-    workflow.setCreatedById(type.getId());
+    workflow.setCreatedById(type == null ? 0L : type.getId());
 
   }
 

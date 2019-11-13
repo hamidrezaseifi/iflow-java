@@ -18,6 +18,7 @@ import com.pth.iflow.core.model.DepartmentGroup;
 import com.pth.iflow.core.model.ProfileResponse;
 import com.pth.iflow.core.model.User;
 import com.pth.iflow.core.model.UserGroup;
+import com.pth.iflow.core.model.workflow.IWorkflow;
 import com.pth.iflow.core.model.workflow.InvoiceWorkflow;
 import com.pth.iflow.core.model.workflow.SingleTaskWorkflow;
 import com.pth.iflow.core.model.workflow.TestThreeTaskWorkflow;
@@ -346,14 +347,22 @@ public class TestDataProducer {
       file.setIdentity("");
     }
 
+    model.setCurrentStepIdentity("invocetasktypestep1");
+    model.setControllerId(null);
+    model.setWorkflowTypeId(null);
+    model.setCreatedById(null);
+    model.setCurrentStepId(null);
+    model.setControllerIdentity("admin@iflow.de");
+    model.setCreatedByIdentity("admin@iflow.de");
+
     return model;
   }
 
-  protected WorkflowMessage getTestWorkflowMessage(final Workflow workflow, final String message) {
+  protected WorkflowMessage getTestWorkflowMessage(final IWorkflow workflow, final String message) {
     final WorkflowMessage model = new WorkflowMessage();
     model.setWorkflowIdentity(workflow.getIdentity());
     model.setId(null);
-    model.setWorkflow(workflow);
+    model.setWorkflowId(workflow.getId());
     model.setMessage(message);
     model.setStatus(EWorkflowMessageStatus.OFFERING);
     model.setVersion(1);
@@ -394,6 +403,44 @@ public class TestDataProducer {
     model.setCurrentStepIdentity("currentStepIdentity");
     model.setCreatedByIdentity("createdByIdentity");
     model.setWorkflowTypeId(1l);
+
+    model.setActions(Arrays.asList(this.getTestNewWorkflowAction(), this.getTestNewWorkflowAction(), this.getTestNewWorkflowAction()));
+    model.setFiles(Arrays.asList(this.getTestNewWorkflowFile(), this.getTestNewWorkflowFile(), this.getTestNewWorkflowFile()));
+
+    return model;
+  }
+
+  protected SingleTaskWorkflow getTestNewSingleTaskWorkflowWorkflow() {
+    final SingleTaskWorkflow model = new SingleTaskWorkflow();
+
+    model.setId(null);
+    model.setIdentity(EWorkflowIdentity.NOT_SET.getName());
+    model.setStatus(EWorkflowStatus.INITIALIZE.getValue().intValue());
+    model.setVersion(1);
+    model.setComments("comments");
+    model.setIdentity("");
+    model.setControllerIdentity("admin@iflow.de");
+    model.setCurrentStepIdentity("singletasktypestep");
+    model.setCreatedByIdentity("admin@iflow.de");
+
+    model.setActions(Arrays.asList(this.getTestNewWorkflowAction(), this.getTestNewWorkflowAction(), this.getTestNewWorkflowAction()));
+    model.setFiles(Arrays.asList(this.getTestNewWorkflowFile(), this.getTestNewWorkflowFile(), this.getTestNewWorkflowFile()));
+
+    return model;
+  }
+
+  protected TestThreeTaskWorkflow getTestNewTestThreeTaskWorkflow() {
+    final TestThreeTaskWorkflow model = new TestThreeTaskWorkflow();
+
+    model.setId(null);
+    model.setIdentity(EWorkflowIdentity.NOT_SET.getName());
+    model.setStatus(EWorkflowStatus.INITIALIZE.getValue().intValue());
+    model.setVersion(1);
+    model.setComments("comments");
+    model.setIdentity("");
+    model.setControllerIdentity("admin@iflow.de");
+    model.setCurrentStepIdentity("threetasktypestep1");
+    model.setCreatedByIdentity("admin@iflow.de");
 
     model.setActions(Arrays.asList(this.getTestNewWorkflowAction(), this.getTestNewWorkflowAction(), this.getTestNewWorkflowAction()));
     model.setFiles(Arrays.asList(this.getTestNewWorkflowFile(), this.getTestNewWorkflowFile(), this.getTestNewWorkflowFile()));

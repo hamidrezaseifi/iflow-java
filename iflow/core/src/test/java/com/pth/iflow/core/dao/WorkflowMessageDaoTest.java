@@ -13,10 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import com.pth.iflow.common.enums.EWorkflowIdentity;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.core.TestDataProducer;
-import com.pth.iflow.core.model.workflow.Workflow;
+import com.pth.iflow.core.model.workflow.SingleTaskWorkflow;
 import com.pth.iflow.core.model.workflow.sub.WorkflowMessage;
 import com.pth.iflow.core.storage.dao.IWorkflowDao;
 import com.pth.iflow.core.storage.dao.IWorkflowMessageDao;
@@ -27,14 +26,14 @@ import com.pth.iflow.core.storage.dao.IWorkflowMessageDao;
 public class WorkflowMessageDaoTest extends TestDataProducer {
 
   @Autowired
-  private IWorkflowDao<Workflow> workflowDao;
+  private IWorkflowDao<SingleTaskWorkflow> workflowDao;
 
   @Autowired
   private IWorkflowMessageDao workflowMessageDao;
 
   private final List<WorkflowMessage> createdModels = new ArrayList<>();
 
-  private Workflow createdWorkflow = null;
+  private SingleTaskWorkflow createdWorkflow = null;
 
   @Before
   public void setUp() throws Exception {
@@ -72,7 +71,7 @@ public class WorkflowMessageDaoTest extends TestDataProducer {
     createWorlflowList();
 
     WorkflowMessage workflowMessage = createdModels.get(0);
-    this.workflowMessageDao.updateStatusByWorkflowIdentity(workflowMessage.getWorkflow().getIdentity(),
+    this.workflowMessageDao.updateStatusByWorkflowIdentity(workflowMessage.getWorkflowIdentity(),
                                                            workflowMessage.getStepIdentity(),
                                                            EWorkflowMessageStatus.CLOSED);
     workflowMessage = workflowMessageDao.getById(workflowMessage.getId());
@@ -104,8 +103,7 @@ public class WorkflowMessageDaoTest extends TestDataProducer {
 
     final List<WorkflowMessage> resList = this.workflowMessageDao
                                                                  .getNotClosedNotExpiredListByWorkflowIdentity(createdModels.get(0)
-                                                                                                                            .getWorkflow()
-                                                                                                                            .getIdentity());
+                                                                                                                            .getWorkflowIdentity());
 
     Assert.assertNotNull("Result list is not null!", resList);
 
@@ -189,9 +187,7 @@ public class WorkflowMessageDaoTest extends TestDataProducer {
   }
 
   private void createReferenceWorkflow() {
-    final Workflow workflow = getTestNewWorkflow();
-    workflow.setId(null);
-    workflow.setIdentity(EWorkflowIdentity.NOT_SET.getName());
+    final SingleTaskWorkflow workflow = getTestNewSingleTaskWorkflowWorkflow();
     createdWorkflow = workflowDao.create(workflow);
   }
 
