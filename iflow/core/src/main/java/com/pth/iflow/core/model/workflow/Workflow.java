@@ -32,6 +32,11 @@ public class Workflow extends CoreModelHelper implements ICoreIdentityModel, IWo
   private String controllerIdentity;
   private String createdByIdentity;
 
+  private Long currentStepId;
+  private Long controllerId;
+  private Long createdById;
+  private Long workflowTypeId;
+
   private final List<WorkflowFile>   files   = new ArrayList<>();
   private final List<WorkflowAction> actions = new ArrayList<>();
 
@@ -58,46 +63,6 @@ public class Workflow extends CoreModelHelper implements ICoreIdentityModel, IWo
   @Override
   public boolean isIdentityNotSet() {
     return EWorkflowIdentity.NOT_SET.getName().equals(getIdentity());
-  }
-
-  @Override
-  public WorkflowType getWorkflowType() {
-    return workflowType;
-  }
-
-  @Override
-  public void setWorkflowType(final WorkflowType workflowType) {
-    this.workflowType = workflowType;
-  }
-
-  @Override
-  public WorkflowTypeStep getCurrentStep() {
-    return currentStep;
-  }
-
-  @Override
-  public void setCurrentStep(final WorkflowTypeStep currentStep) {
-    this.currentStep = currentStep;
-  }
-
-  @Override
-  public User getController() {
-    return controller;
-  }
-
-  @Override
-  public void setController(final User controller) {
-    this.controller = controller;
-  }
-
-  @Override
-  public User getCreatedBy() {
-    return createdBy;
-  }
-
-  @Override
-  public void setCreatedBy(final User createdBy) {
-    this.createdBy = createdBy;
   }
 
   @Override
@@ -218,6 +183,46 @@ public class Workflow extends CoreModelHelper implements ICoreIdentityModel, IWo
   @Override
   public void setCreatedByIdentity(final String createdByIdentity) {
     this.createdByIdentity = createdByIdentity;
+  }
+
+  @Override
+  public Long getCurrentStepId() {
+    return currentStepId;
+  }
+
+  @Override
+  public void setCurrentStepId(final Long currentStepId) {
+    this.currentStepId = currentStepId;
+  }
+
+  @Override
+  public Long getControllerId() {
+    return controllerId;
+  }
+
+  @Override
+  public void setControllerId(final Long controllerId) {
+    this.controllerId = controllerId;
+  }
+
+  @Override
+  public Long getCreatedById() {
+    return createdById;
+  }
+
+  @Override
+  public void setCreatedById(final Long createdById) {
+    this.createdById = createdById;
+  }
+
+  @Override
+  public Long getWorkflowTypeId() {
+    return workflowTypeId;
+  }
+
+  @Override
+  public void setWorkflowTypeId(final Long workflowTypeId) {
+    this.workflowTypeId = workflowTypeId;
   }
 
 }
