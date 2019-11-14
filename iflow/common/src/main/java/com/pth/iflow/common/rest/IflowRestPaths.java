@@ -254,14 +254,32 @@ public class IflowRestPaths {
 
     public static final String WORKFLOWMESSAGE_READ_BY_USEREMAIL = "/workflowoffer/user/{email}/{status}";
 
-    public static final String INVOICE_CREATE                    = "/invoice/create";
-    public static final String INVOICE_SAVE                      = "/invoice/save";
-    public static final String INVOICE_READ_BY_IDENTITY          = "/invoice/readbyid/{identity}";
-    public static final String INVOICE_READ_LIST                 = "/invoice/list";
-    public static final String INVOICE_READ_LIST_BY_TYPEIDENTITY = "/invoice/type/list/{identity}";
-    public static final String INVOICE_READ_LIST_BY_USEREMAIL    = "/invoice/user/list/{email}/{status}";
-    public static final String INVOICE_SEARCH                    = "/invoice/search";
-    public static final String INVOICE_VALIDATE                  = "/invoice/validate";
+    public static final String INVOICEWORKFLOW_CREATE                    = "/workflow/invoice/create";
+    public static final String INVOICEWORKFLOW_SAVE                      = "/workflow/invoice/save";
+    public static final String INVOICEWORKFLOW_READ_BY_IDENTITY          = "/workflow/invoice/readbyid/{identity}";
+    public static final String INVOICEWORKFLOW_READ_LIST                 = "/workflow/invoice/list";
+    public static final String INVOICEWORKFLOW_READ_LIST_BY_TYPEIDENTITY = "/workflow/invoice/type/list/{identity}";
+    public static final String INVOICEWORKFLOW_READ_LIST_BY_USEREMAIL    = "/workflow/invoice/user/list/{email}/{status}";
+    public static final String INVOICEWORKFLOW_SEARCH                    = "/workflow/invoice/search";
+    public static final String INVOICEWORKFLOW_VALIDATE                  = "/workflow/invoice/validate";
+
+    public static final String SINGLETASKWORKFLOW_CREATE                    = "/workflow/singletask/create";
+    public static final String SINGLETASKWORKFLOW_SAVE                      = "/workflow/singletask/save";
+    public static final String SINGLETASKWORKFLOW_READ_BY_IDENTITY          = "/workflow/singletask/readbyid/{identity}";
+    public static final String SINGLETASKWORKFLOW_READ_LIST                 = "/workflow/singletask/list";
+    public static final String SINGLETASKWORKFLOW_READ_LIST_BY_TYPEIDENTITY = "/workflow/singletask/type/list/{identity}";
+    public static final String SINGLETASKWORKFLOW_READ_LIST_BY_USEREMAIL    = "/workflow/singletask/user/list/{email}/{status}";
+    public static final String SINGLETASKWORKFLOW_SEARCH                    = "/workflow/singletask/search";
+    public static final String SINGLETASKWORKFLOW_VALIDATE                  = "/workflow/singletask/validate";
+
+    public static final String TESTTHREETASKWORKFLOW_CREATE                    = "/workflow/testthreetask/create";
+    public static final String TESTTHREETASKWORKFLOW_SAVE                      = "/workflow/testthreetask/save";
+    public static final String TESTTHREETASKWORKFLOW_READ_BY_IDENTITY          = "/workflow/testthreetask/readbyid/{identity}";
+    public static final String TESTTHREETASKWORKFLOW_READ_LIST                 = "/workflow/testthreetask/list";
+    public static final String TESTTHREETASKWORKFLOW_READ_LIST_BY_TYPEIDENTITY = "/workflow/testthreetask/type/list/{identity}";
+    public static final String TESTTHREETASKWORKFLOW_READ_LIST_BY_USEREMAIL    = "/workflow/testthreetask/user/list/{email}/{status}";
+    public static final String TESTTHREETASKWORKFLOW_SEARCH                    = "/workflow/testthreetask/search";
+    public static final String TESTTHREETASKWORKFLOW_VALIDATE                  = "/workflow/testthreetask/validate";
 
     public static URI WORKFLOWTYPE_BY_ID_URIBUILDER(final String identity) {
       final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOWTYPE_READ_BY_IDENTITY);
@@ -284,37 +302,37 @@ public class IflowRestPaths {
     }
 
     public static URI READ_INVOICE_BY_IDENTITY_URIBUILDER(final String identity) {
-      final IflowUriBuilder builder = new IflowUriBuilder(INVOICE_READ_BY_IDENTITY);
+      final IflowUriBuilder builder = new IflowUriBuilder(INVOICEWORKFLOW_READ_BY_IDENTITY);
       return builder.build(identity);
     }
 
     public static URI READ_INVOICELIST_BY_TYPEID_URIBUILDER(final String identity) {
-      final IflowUriBuilder builder = new IflowUriBuilder(INVOICE_READ_LIST_BY_TYPEIDENTITY);
+      final IflowUriBuilder builder = new IflowUriBuilder(INVOICEWORKFLOW_READ_LIST_BY_TYPEIDENTITY);
       return builder.build(identity);
     }
 
     public static URI READ_INVOICELIST_BY_USERID_URIBUILDER(final String email, final int status) {
-      final IflowUriBuilder builder = new IflowUriBuilder(INVOICE_READ_LIST_BY_USEREMAIL);
+      final IflowUriBuilder builder = new IflowUriBuilder(INVOICEWORKFLOW_READ_LIST_BY_USEREMAIL);
       return builder.build(email, status);
     }
 
     public static URI CREATE_INVOICE() {
-      final IflowUriBuilder builder = new IflowUriBuilder(INVOICE_CREATE);
+      final IflowUriBuilder builder = new IflowUriBuilder(INVOICEWORKFLOW_CREATE);
       return builder.build();
     }
 
     public static URI SAVE_INVOICE() {
-      final IflowUriBuilder builder = new IflowUriBuilder(INVOICE_SAVE);
+      final IflowUriBuilder builder = new IflowUriBuilder(INVOICEWORKFLOW_SAVE);
       return builder.build();
     }
 
     public static URI SEARCH_INVOICE() {
-      final IflowUriBuilder builder = new IflowUriBuilder(INVOICE_SEARCH);
+      final IflowUriBuilder builder = new IflowUriBuilder(INVOICEWORKFLOW_SEARCH);
       return builder.build();
     }
 
     public static URI VALIDATE_INVOICE() {
-      final IflowUriBuilder builder = new IflowUriBuilder(INVOICE_VALIDATE);
+      final IflowUriBuilder builder = new IflowUriBuilder(INVOICEWORKFLOW_VALIDATE);
       return builder.build();
     }
 

@@ -100,7 +100,7 @@ public class WorkflowDataServiceTest extends TestDataProducer {
 
     final WorkflowSearchFilter filter = this.getTestWorkflowSearchFilter();
     final List<Workflow> list = this.getTestWorkflowList();
-    final WorkflowListEdo edoList = new WorkflowListEdo(WorkflowModelEdoMapper.toWorkflowEdoList(list));
+    final WorkflowListEdo edoList = new WorkflowListEdo(WorkflowModelEdoMapper.toInvoiceWorkflowEdoList(list));
 
     when(this.restTemplate.callRestPost(any(URI.class), any(String.class), any(EModule.class), any(WorkflowSearchFilterEdo.class),
         eq(WorkflowListEdo.class), any(boolean.class))).thenReturn(edoList);
@@ -117,7 +117,7 @@ public class WorkflowDataServiceTest extends TestDataProducer {
 
     final Set<String> idList = this.getTestWorkflowIdSet();
     final List<Workflow> list = this.getTestWorkflowList();
-    final WorkflowListEdo edoList = new WorkflowListEdo(WorkflowModelEdoMapper.toWorkflowEdoList(list));
+    final WorkflowListEdo edoList = new WorkflowListEdo(WorkflowModelEdoMapper.toInvoiceWorkflowEdoList(list));
 
     when(this.restTemplate.callRestPost(any(URI.class), any(String.class), any(EModule.class), any(Set.class),
         eq(WorkflowListEdo.class), any(boolean.class))).thenReturn(edoList);
@@ -133,7 +133,7 @@ public class WorkflowDataServiceTest extends TestDataProducer {
   public void testGetListByTypeId() throws Exception {
 
     final List<Workflow> list = this.getTestWorkflowList();
-    final WorkflowListEdo edoList = new WorkflowListEdo(WorkflowModelEdoMapper.toWorkflowEdoList(list));
+    final WorkflowListEdo edoList = new WorkflowListEdo(WorkflowModelEdoMapper.toInvoiceWorkflowEdoList(list));
 
     when(this.restTemplate.callRestGet(any(URI.class), any(String.class), any(EModule.class), eq(WorkflowListEdo.class),
         any(boolean.class), any())).thenReturn(edoList);

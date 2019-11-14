@@ -1,4 +1,4 @@
-package com.pth.iflow.workflow.bl.impl;
+package com.pth.iflow.workflow.bl.impl.workflowservice.invoice;
 
 import java.net.MalformedURLException;
 import java.util.List;

@@ -8,13 +8,12 @@ import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.WorkflowSearchFilter;
 import com.pth.iflow.workflow.models.base.IWorkflow;
 import com.pth.iflow.workflow.models.base.IWorkflowSaveRequest;
-import com.pth.iflow.workflow.models.workflow.invoice.InvoiceWorkflowSaveRequest;
 
 public interface IWorkflowProcessService<W extends IWorkflow> {
 
-  public List<W> create(InvoiceWorkflowSaveRequest model, String token) throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
+  public List<W> create(IWorkflowSaveRequest<W> model, String token) throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  public W save(InvoiceWorkflowSaveRequest request, String token) throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
+  public W save(IWorkflowSaveRequest<W> request, String token) throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
   public W getByIdentity(String identity, String token) throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 

@@ -16,93 +16,93 @@ import com.pth.iflow.common.annotations.IflowGetRequestMapping;
 import com.pth.iflow.common.annotations.IflowPostRequestMapping;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
 import com.pth.iflow.common.edo.models.WorkflowSearchFilterEdo;
-import com.pth.iflow.common.edo.models.workflow.invoice.InvoiceWorkflowEdo;
-import com.pth.iflow.common.edo.models.workflow.invoice.InvoiceWorkflowListEdo;
-import com.pth.iflow.common.edo.models.workflow.invoice.InvoiceWorkflowSaveRequestEdo;
+import com.pth.iflow.common.edo.models.workflow.singletask.SingleTaskWorkflowEdo;
+import com.pth.iflow.common.edo.models.workflow.singletask.SingleTaskWorkflowListEdo;
+import com.pth.iflow.common.edo.models.workflow.singletask.SingleTaskWorkflowSaveRequestEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
 import com.pth.iflow.workflow.bl.IWorkflowProcessService;
 import com.pth.iflow.workflow.models.mapper.WorkflowModelEdoMapper;
-import com.pth.iflow.workflow.models.workflow.invoice.InvoiceWorkflow;
+import com.pth.iflow.workflow.models.workflow.singletask.SingleTaskWorkflow;
 
 @RestController
 @RequestMapping
 public class SingleTaskController {
 
-  final IWorkflowProcessService<InvoiceWorkflow> workflowService;
+  final IWorkflowProcessService<SingleTaskWorkflow> workflowService;
 
-  public SingleTaskController(@Autowired final IWorkflowProcessService<InvoiceWorkflow> invoiceWorkflowService) {
-    this.workflowService = invoiceWorkflowService;
+  public SingleTaskController(@Autowired final IWorkflowProcessService<SingleTaskWorkflow> workflowService) {
+    this.workflowService = workflowService;
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(path = IflowRestPaths.WorkflowModule.INVOICE_READ_BY_IDENTITY)
-  public ResponseEntity<InvoiceWorkflowEdo> readInvoice(@PathVariable final String identity, final HttpServletRequest request, @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws Exception {
+  @IflowGetRequestMapping(path = IflowRestPaths.WorkflowModule.SINGLETASKWORKFLOW_READ_BY_IDENTITY)
+  public ResponseEntity<SingleTaskWorkflowEdo> readWorkflow(@PathVariable final String identity, final HttpServletRequest request, @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws Exception {
 
-    final InvoiceWorkflow model = this.workflowService.getByIdentity(identity, headerTokenId);
+    final SingleTaskWorkflow model = this.workflowService.getByIdentity(identity, headerTokenId);
 
     return ControllerHelper.createResponseEntity(request, WorkflowModelEdoMapper.toEdo(model), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.CREATED)
-  @IflowPostRequestMapping(path = IflowRestPaths.WorkflowModule.INVOICE_CREATE)
-  public ResponseEntity<InvoiceWorkflowListEdo> createInvoice(@RequestBody final InvoiceWorkflowSaveRequestEdo workflowCreateRequestEdo, final HttpServletRequest request, @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws Exception {
+  @IflowPostRequestMapping(path = IflowRestPaths.WorkflowModule.SINGLETASKWORKFLOW_CREATE)
+  public ResponseEntity<SingleTaskWorkflowListEdo> createWorkflow(@RequestBody final SingleTaskWorkflowSaveRequestEdo workflowCreateRequestEdo, final HttpServletRequest request, @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws Exception {
 
-    final List<InvoiceWorkflow> modelList = this.workflowService
-                                                                .create(WorkflowModelEdoMapper.fromEdo(workflowCreateRequestEdo),
-                                                                        headerTokenId);
+    final List<SingleTaskWorkflow> modelList = this.workflowService
+                                                                   .create(WorkflowModelEdoMapper.fromEdo(workflowCreateRequestEdo),
+                                                                           headerTokenId);
 
     return ControllerHelper.createResponseEntity(request,
-                                                 new InvoiceWorkflowListEdo(WorkflowModelEdoMapper.toWorkflowEdoList(modelList)),
+                                                 new SingleTaskWorkflowListEdo(WorkflowModelEdoMapper.toSingleTaskWorkflowEdoList(modelList)),
                                                  HttpStatus.CREATED);
   }
 
   @ResponseStatus(HttpStatus.ACCEPTED)
-  @IflowPostRequestMapping(path = IflowRestPaths.WorkflowModule.INVOICE_SAVE)
-  public ResponseEntity<InvoiceWorkflowEdo> saveInvoice(@RequestBody final InvoiceWorkflowSaveRequestEdo requestEdo, final HttpServletRequest request, @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws Exception {
+  @IflowPostRequestMapping(path = IflowRestPaths.WorkflowModule.SINGLETASKWORKFLOW_SAVE)
+  public ResponseEntity<SingleTaskWorkflowEdo> saveWorkflow(@RequestBody final SingleTaskWorkflowSaveRequestEdo requestEdo, final HttpServletRequest request, @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws Exception {
 
-    final InvoiceWorkflow model = this.workflowService.save(WorkflowModelEdoMapper.fromEdo(requestEdo), headerTokenId);
+    final SingleTaskWorkflow model = this.workflowService.save(WorkflowModelEdoMapper.fromEdo(requestEdo), headerTokenId);
 
     return ControllerHelper.createResponseEntity(request, WorkflowModelEdoMapper.toEdo(model), HttpStatus.ACCEPTED);
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowPostRequestMapping(path = IflowRestPaths.WorkflowModule.INVOICE_READ_LIST)
-  public ResponseEntity<InvoiceWorkflowListEdo> readInvoiceList(@RequestBody final Set<String> idList, final HttpServletRequest request, @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws Exception {
+  @IflowPostRequestMapping(path = IflowRestPaths.WorkflowModule.SINGLETASKWORKFLOW_READ_LIST)
+  public ResponseEntity<SingleTaskWorkflowListEdo> readWorkflowList(@RequestBody final Set<String> idList, final HttpServletRequest request, @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws Exception {
 
-    final List<InvoiceWorkflow> modelList = this.workflowService.getListByIdentityList(idList, headerTokenId);
+    final List<SingleTaskWorkflow> modelList = this.workflowService.getListByIdentityList(idList, headerTokenId);
 
     return ControllerHelper.createResponseEntity(request,
-                                                 new InvoiceWorkflowListEdo(WorkflowModelEdoMapper.toWorkflowEdoList(modelList)),
+                                                 new SingleTaskWorkflowListEdo(WorkflowModelEdoMapper.toSingleTaskWorkflowEdoList(modelList)),
                                                  HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(path = IflowRestPaths.WorkflowModule.INVOICE_READ_LIST_BY_USEREMAIL)
-  public ResponseEntity<InvoiceWorkflowListEdo> readInvoiceListForUser(@PathVariable final String email, @PathVariable(required = false) final int status, final HttpServletRequest request, @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws Exception {
+  @IflowGetRequestMapping(path = IflowRestPaths.WorkflowModule.SINGLETASKWORKFLOW_READ_LIST_BY_USEREMAIL)
+  public ResponseEntity<SingleTaskWorkflowListEdo> readWorkflowListForUser(@PathVariable final String email, @PathVariable(required = false) final int status, final HttpServletRequest request, @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws Exception {
 
-    final List<InvoiceWorkflow> modelList = this.workflowService.getListForUser(email, status, headerTokenId);
+    final List<SingleTaskWorkflow> modelList = this.workflowService.getListForUser(email, status, headerTokenId);
 
     return ControllerHelper.createResponseEntity(request,
-                                                 new InvoiceWorkflowListEdo(WorkflowModelEdoMapper.toWorkflowEdoList(modelList)),
+                                                 new SingleTaskWorkflowListEdo(WorkflowModelEdoMapper.toSingleTaskWorkflowEdoList(modelList)),
                                                  HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowPostRequestMapping(path = IflowRestPaths.WorkflowModule.INVOICE_SEARCH)
-  public ResponseEntity<InvoiceWorkflowListEdo> searchInvoice(@RequestBody final WorkflowSearchFilterEdo workflowSearchFilterEdo, final HttpServletRequest request, @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws Exception {
+  @IflowPostRequestMapping(path = IflowRestPaths.WorkflowModule.SINGLETASKWORKFLOW_SEARCH)
+  public ResponseEntity<SingleTaskWorkflowListEdo> searchWorkflow(@RequestBody final WorkflowSearchFilterEdo workflowSearchFilterEdo, final HttpServletRequest request, @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws Exception {
 
-    final List<InvoiceWorkflow> modelList = this.workflowService.search(WorkflowModelEdoMapper.fromEdo(workflowSearchFilterEdo),
-                                                                        headerTokenId);
+    final List<SingleTaskWorkflow> modelList = this.workflowService.search(WorkflowModelEdoMapper.fromEdo(workflowSearchFilterEdo),
+                                                                           headerTokenId);
 
     return ControllerHelper.createResponseEntity(request,
-                                                 new InvoiceWorkflowListEdo(WorkflowModelEdoMapper.toWorkflowEdoList(modelList)),
+                                                 new SingleTaskWorkflowListEdo(WorkflowModelEdoMapper.toSingleTaskWorkflowEdoList(modelList)),
                                                  HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.ACCEPTED)
-  @IflowPostRequestMapping(path = IflowRestPaths.WorkflowModule.INVOICE_VALIDATE)
-  public void validateInvoiceRequest(@RequestBody final InvoiceWorkflowSaveRequestEdo workflowCreateRequestEdo, final HttpServletRequest request, @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws Exception {
+  @IflowPostRequestMapping(path = IflowRestPaths.WorkflowModule.SINGLETASKWORKFLOW_VALIDATE)
+  public void validateWorkflowRequest(@RequestBody final SingleTaskWorkflowSaveRequestEdo workflowCreateRequestEdo, final HttpServletRequest request, @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws Exception {
 
     this.workflowService.validate(WorkflowModelEdoMapper.fromEdo(workflowCreateRequestEdo), headerTokenId);
 

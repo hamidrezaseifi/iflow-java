@@ -87,7 +87,7 @@ public class WorkflowControllerTest extends TestDataProducer {
     final WorkflowSaveRequest request = this.getTestWorkflowCreateRequest();
     final WorkflowSaveRequestEdo requestEdo = WorkflowModelEdoMapper.toEdo(request);
     final List<Workflow> list = this.getTestWorkflowList();
-    final WorkflowListEdo listEdo = new WorkflowListEdo(WorkflowModelEdoMapper.toWorkflowEdoList(list));
+    final WorkflowListEdo listEdo = new WorkflowListEdo(WorkflowModelEdoMapper.toInvoiceWorkflowEdoList(list));
 
     when(this.workflowService.create(any(WorkflowSaveRequest.class), any(String.class))).thenReturn(list);
 
@@ -135,7 +135,7 @@ public class WorkflowControllerTest extends TestDataProducer {
 
     final Set<String> idList = this.getTestWorkflowIdSet();
     final List<Workflow> list = this.getTestWorkflowList();
-    final WorkflowListEdo listEdo = new WorkflowListEdo(WorkflowModelEdoMapper.toWorkflowEdoList(list));
+    final WorkflowListEdo listEdo = new WorkflowListEdo(WorkflowModelEdoMapper.toInvoiceWorkflowEdoList(list));
 
     when(this.workflowService.getListByIdentityList(any(Set.class), any(String.class))).thenReturn(list);
 
@@ -159,7 +159,7 @@ public class WorkflowControllerTest extends TestDataProducer {
     final WorkflowSearchFilter filter = this.getTestWorkflowSearchFilter();
     final WorkflowSearchFilterEdo filterEdo = WorkflowModelEdoMapper.toEdo(filter);
     final List<Workflow> list = this.getTestWorkflowList();
-    final WorkflowListEdo listEdo = new WorkflowListEdo(WorkflowModelEdoMapper.toWorkflowEdoList(list));
+    final WorkflowListEdo listEdo = new WorkflowListEdo(WorkflowModelEdoMapper.toInvoiceWorkflowEdoList(list));
 
     when(this.workflowService.search(any(WorkflowSearchFilter.class), any(String.class))).thenReturn(list);
 
@@ -181,7 +181,7 @@ public class WorkflowControllerTest extends TestDataProducer {
   public void testReadWorkflowTypeListByCompany() throws Exception {
 
     final List<Workflow> list = this.getTestWorkflowList();
-    final WorkflowListEdo listEdo = new WorkflowListEdo(WorkflowModelEdoMapper.toWorkflowEdoList(list));
+    final WorkflowListEdo listEdo = new WorkflowListEdo(WorkflowModelEdoMapper.toInvoiceWorkflowEdoList(list));
     final String resultAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(listEdo);
 
     when(this.workflowService.getListByTypeIdentity(any(String.class), any(String.class))).thenReturn(list);
