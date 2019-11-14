@@ -1,8 +1,9 @@
-package com.pth.iflow.workflow.models;
+package com.pth.iflow.workflow.models.workflow;
 
 import java.util.ArrayList;
 import java.util.List;
 import com.pth.iflow.common.enums.EWorkflowProcessCommand;
+import com.pth.iflow.workflow.models.AssignItem;
 import com.pth.iflow.workflow.models.base.IWorkflowSaveRequest;
 
 public class InvoiceWorkflowSaveRequest implements IWorkflowSaveRequest<InvoiceWorkflow> {

@@ -1,4 +1,4 @@
-package com.pth.iflow.workflow.models;
+package com.pth.iflow.workflow.models.workflow;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -11,6 +11,10 @@ import com.pth.iflow.common.enums.EWorkflowActionStatus;
 import com.pth.iflow.common.enums.EWorkflowIdentity;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 import com.pth.iflow.common.enums.EWorkflowType;
+import com.pth.iflow.workflow.models.WorkflowAction;
+import com.pth.iflow.workflow.models.WorkflowFile;
+import com.pth.iflow.workflow.models.WorkflowType;
+import com.pth.iflow.workflow.models.WorkflowTypeStep;
 import com.pth.iflow.workflow.models.base.IWorkflow;
 
 public class InvoiceWorkflow extends IdentityModel implements IWorkflow {
