@@ -1,4 +1,4 @@
-package com.pth.iflow.workflow.models.workflow;
+package com.pth.iflow.workflow.models.workflow.invoice;
 
 import java.util.ArrayList;
 import java.util.List;

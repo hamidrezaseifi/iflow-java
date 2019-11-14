@@ -1,4 +1,4 @@
-package com.pth.iflow.common.edo.models.testthreetask;
+package com.pth.iflow.common.edo.models.workflow.invoice;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +15,10 @@ import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 import com.pth.iflow.common.edo.models.validation.AEnumNameValidator;
 import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 
-@XmlRootElement(name = "TestThreeTaskWorkflowSaveRequest", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+@XmlRootElement(name = "InvoiceWorkflowCreateRequest", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "TestThreeTaskWorkflowSaveRequest" + IFlowJaxbDefinition.TYPE_PREFIX)
-public class TestThreeTaskWorkflowSaveRequestEdo {
+@XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "InvoiceWorkflowCreateRequest" + IFlowJaxbDefinition.TYPE_PREFIX)
+public class InvoiceWorkflowSaveRequestEdo {
 
   @NotNull(message = "Command is not allowed to be null!")
   @AEnumNameValidator(enumClazz = EWorkflowProcessCommand.class)
@@ -27,7 +27,7 @@ public class TestThreeTaskWorkflowSaveRequestEdo {
 
   @NotNull(message = "Workflow must not be null")
   @XmlElement(name = "Workflow", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private TestThreeTaskWorkflowEdo workflow;
+  private InvoiceWorkflowEdo workflow;
 
   @NotNull(message = "ExpireDays must not be null")
   @XmlElement(name = "ExpireDays", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
@@ -38,7 +38,7 @@ public class TestThreeTaskWorkflowSaveRequestEdo {
   @XmlElement(name = "AssignedList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private List<AssignItemEdo> assigns = new ArrayList<>();
 
-  public TestThreeTaskWorkflowSaveRequestEdo() {
+  public InvoiceWorkflowSaveRequestEdo() {
 
   }
 
@@ -53,14 +53,14 @@ public class TestThreeTaskWorkflowSaveRequestEdo {
   /**
    * @return the workflow
    */
-  public TestThreeTaskWorkflowEdo getWorkflow() {
+  public InvoiceWorkflowEdo getWorkflow() {
     return this.workflow;
   }
 
   /**
    * @param workflow the workflow to set
    */
-  public void setWorkflow(final TestThreeTaskWorkflowEdo workflow) {
+  public void setWorkflow(final InvoiceWorkflowEdo workflow) {
     this.workflow = workflow;
   }
 

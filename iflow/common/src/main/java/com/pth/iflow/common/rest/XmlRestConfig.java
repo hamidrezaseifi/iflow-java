@@ -46,15 +46,15 @@ import com.pth.iflow.common.edo.models.WorkflowTypeEdo;
 import com.pth.iflow.common.edo.models.WorkflowTypeListEdo;
 import com.pth.iflow.common.edo.models.WorkflowTypeStepEdo;
 import com.pth.iflow.common.edo.models.WorkflowTypeStepListEdo;
-import com.pth.iflow.common.edo.models.invoice.InvoiceWorkflowEdo;
-import com.pth.iflow.common.edo.models.invoice.InvoiceWorkflowListEdo;
-import com.pth.iflow.common.edo.models.invoice.InvoiceWorkflowSaveRequestEdo;
-import com.pth.iflow.common.edo.models.singletask.SingleTaskWorkflowEdo;
-import com.pth.iflow.common.edo.models.singletask.SingleTaskWorkflowListEdo;
-import com.pth.iflow.common.edo.models.singletask.SingleTaskWorkflowSaveRequestEdo;
-import com.pth.iflow.common.edo.models.testthreetask.TestThreeTaskWorkflowEdo;
-import com.pth.iflow.common.edo.models.testthreetask.TestThreeTaskWorkflowListEdo;
-import com.pth.iflow.common.edo.models.testthreetask.TestThreeTaskWorkflowSaveRequestEdo;
+import com.pth.iflow.common.edo.models.workflow.invoice.InvoiceWorkflowEdo;
+import com.pth.iflow.common.edo.models.workflow.invoice.InvoiceWorkflowListEdo;
+import com.pth.iflow.common.edo.models.workflow.invoice.InvoiceWorkflowSaveRequestEdo;
+import com.pth.iflow.common.edo.models.workflow.singletask.SingleTaskWorkflowEdo;
+import com.pth.iflow.common.edo.models.workflow.singletask.SingleTaskWorkflowListEdo;
+import com.pth.iflow.common.edo.models.workflow.singletask.SingleTaskWorkflowSaveRequestEdo;
+import com.pth.iflow.common.edo.models.workflow.testthreetask.TestThreeTaskWorkflowEdo;
+import com.pth.iflow.common.edo.models.workflow.testthreetask.TestThreeTaskWorkflowListEdo;
+import com.pth.iflow.common.edo.models.workflow.testthreetask.TestThreeTaskWorkflowSaveRequestEdo;
 
 /**
  * contains configs for XML Rest-Controller

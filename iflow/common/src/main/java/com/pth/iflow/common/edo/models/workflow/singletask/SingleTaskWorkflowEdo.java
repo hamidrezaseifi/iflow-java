@@ -1,4 +1,4 @@
-package com.pth.iflow.common.edo.models.singletask;
+package com.pth.iflow.common.edo.models.workflow.singletask;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -21,8 +21,8 @@ import com.pth.iflow.common.edo.models.WorkflowMessageEdo;
 import com.pth.iflow.common.edo.models.WorkflowSearchFilterEdo;
 import com.pth.iflow.common.edo.models.WorkflowTypeEdo;
 import com.pth.iflow.common.edo.models.WorkflowTypeStepEdo;
-import com.pth.iflow.common.edo.models.invoice.InvoiceWorkflowEdo;
-import com.pth.iflow.common.edo.models.invoice.InvoiceWorkflowSaveRequestEdo;
+import com.pth.iflow.common.edo.models.workflow.invoice.InvoiceWorkflowEdo;
+import com.pth.iflow.common.edo.models.workflow.invoice.InvoiceWorkflowSaveRequestEdo;
 import com.pth.iflow.common.enums.EAssignType;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.enums.EWorkflowMessageType;
@@ -44,8 +44,8 @@ import com.pth.iflow.workflow.models.WorkflowMessage;
 import com.pth.iflow.workflow.models.WorkflowSearchFilter;
 import com.pth.iflow.workflow.models.WorkflowType;
 import com.pth.iflow.workflow.models.WorkflowTypeStep;
-import com.pth.iflow.workflow.models.workflow.InvoiceWorkflow;
-import com.pth.iflow.workflow.models.workflow.InvoiceWorkflowSaveRequest;
+import com.pth.iflow.workflow.models.workflow.invoice.InvoiceWorkflow;
+import com.pth.iflow.workflow.models.workflow.invoice.InvoiceWorkflowSaveRequest;
 
 public class WorkflowModelEdoMapper {
 

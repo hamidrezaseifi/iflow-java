@@ -16,14 +16,14 @@ import com.pth.iflow.common.annotations.IflowGetRequestMapping;
 import com.pth.iflow.common.annotations.IflowPostRequestMapping;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
 import com.pth.iflow.common.edo.models.WorkflowSearchFilterEdo;
-import com.pth.iflow.common.edo.models.invoice.InvoiceWorkflowEdo;
-import com.pth.iflow.common.edo.models.invoice.InvoiceWorkflowListEdo;
-import com.pth.iflow.common.edo.models.invoice.InvoiceWorkflowSaveRequestEdo;
+import com.pth.iflow.common.edo.models.workflow.invoice.InvoiceWorkflowEdo;
+import com.pth.iflow.common.edo.models.workflow.invoice.InvoiceWorkflowListEdo;
+import com.pth.iflow.common.edo.models.workflow.invoice.InvoiceWorkflowSaveRequestEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
 import com.pth.iflow.workflow.bl.IWorkflowProcessService;
 import com.pth.iflow.workflow.models.mapper.WorkflowModelEdoMapper;
-import com.pth.iflow.workflow.models.workflow.InvoiceWorkflow;
+import com.pth.iflow.workflow.models.workflow.invoice.InvoiceWorkflow;
 
 @RestController
 @RequestMapping
@@ -49,8 +49,8 @@ public class SingleTaskController {
   public ResponseEntity<InvoiceWorkflowListEdo> createInvoice(@RequestBody final InvoiceWorkflowSaveRequestEdo workflowCreateRequestEdo, final HttpServletRequest request, @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws Exception {
 
     final List<InvoiceWorkflow> modelList = this.workflowService
-                                                                       .create(WorkflowModelEdoMapper.fromEdo(workflowCreateRequestEdo),
-                                                                               headerTokenId);
+                                                                .create(WorkflowModelEdoMapper.fromEdo(workflowCreateRequestEdo),
+                                                                        headerTokenId);
 
     return ControllerHelper.createResponseEntity(request,
                                                  new InvoiceWorkflowListEdo(WorkflowModelEdoMapper.toWorkflowEdoList(modelList)),
@@ -93,7 +93,7 @@ public class SingleTaskController {
   public ResponseEntity<InvoiceWorkflowListEdo> searchInvoice(@RequestBody final WorkflowSearchFilterEdo workflowSearchFilterEdo, final HttpServletRequest request, @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws Exception {
 
     final List<InvoiceWorkflow> modelList = this.workflowService.search(WorkflowModelEdoMapper.fromEdo(workflowSearchFilterEdo),
-                                                                               headerTokenId);
+                                                                        headerTokenId);
 
     return ControllerHelper.createResponseEntity(request,
                                                  new InvoiceWorkflowListEdo(WorkflowModelEdoMapper.toWorkflowEdoList(modelList)),

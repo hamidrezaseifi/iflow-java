@@ -13,7 +13,7 @@ import com.pth.iflow.workflow.bl.IWorkflowTypeDataService;
 import com.pth.iflow.workflow.models.WorkflowAction;
 import com.pth.iflow.workflow.models.WorkflowType;
 import com.pth.iflow.workflow.models.WorkflowTypeStep;
-import com.pth.iflow.workflow.models.workflow.InvoiceWorkflow;
+import com.pth.iflow.workflow.models.workflow.invoice.InvoiceWorkflow;
 
 @Service
 public class InvoiceWorkflowPrepare implements IWorkflowPrepare<InvoiceWorkflow> {

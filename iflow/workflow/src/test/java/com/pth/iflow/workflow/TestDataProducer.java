@@ -27,8 +27,8 @@ import com.pth.iflow.workflow.models.WorkflowMessage;
 import com.pth.iflow.workflow.models.WorkflowSearchFilter;
 import com.pth.iflow.workflow.models.WorkflowType;
 import com.pth.iflow.workflow.models.WorkflowTypeStep;
-import com.pth.iflow.workflow.models.workflow.InvoiceWorkflow;
-import com.pth.iflow.workflow.models.workflow.InvoiceWorkflowSaveRequest;
+import com.pth.iflow.workflow.models.workflow.invoice.InvoiceWorkflow;
+import com.pth.iflow.workflow.models.workflow.invoice.InvoiceWorkflowSaveRequest;
 
 public class TestDataProducer {
 

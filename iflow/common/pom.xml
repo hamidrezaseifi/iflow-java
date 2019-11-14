@@ -191,17 +191,17 @@
 				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowTypeStepEdo.java</source>
 				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowTypeStepListEdo.java</source>
 				
-				<source>src/main/java/com/pth/iflow/common/edo/models/invoice/InvoiceWorkflowEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/invoice/InvoiceWorkflowListEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/invoice/InvoiceWorkflowSaveRequestEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/workflow/invoice/InvoiceWorkflowEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/workflow/invoice/InvoiceWorkflowListEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/workflow/invoice/InvoiceWorkflowSaveRequestEdo.java</source>
 
-				<source>src/main/java/com/pth/iflow/common/edo/models/singletask/SingleTaskWorkflowEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/singletask/SingleTaskWorkflowListEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/singletask/SingleTaskWorkflowSaveRequestEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/workflow/singletask/SingleTaskWorkflowEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/workflow/singletask/SingleTaskWorkflowListEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/workflow/singletask/SingleTaskWorkflowSaveRequestEdo.java</source>
 
-				<source>src/main/java/com/pth/iflow/common/edo/models/testthreetask/TestThreeTaskWorkflowEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/testthreetask/TestThreeTaskWorkflowListEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/testthreetask/TestThreeTaskWorkflowSaveRequestEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/workflow/testthreetask/TestThreeTaskWorkflowEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/workflow/testthreetask/TestThreeTaskWorkflowListEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/workflow/testthreetask/TestThreeTaskWorkflowSaveRequestEdo.java</source>
                                                 
               </sources>
               <outputDirectory>${project.build.directory}/generated-resources/schemagen</outputDirectory>
