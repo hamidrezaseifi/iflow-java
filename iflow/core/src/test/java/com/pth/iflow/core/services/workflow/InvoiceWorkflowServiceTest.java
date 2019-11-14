@@ -1,4 +1,4 @@
-package com.pth.iflow.core.services;
+package com.pth.iflow.core.services.workflow;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
