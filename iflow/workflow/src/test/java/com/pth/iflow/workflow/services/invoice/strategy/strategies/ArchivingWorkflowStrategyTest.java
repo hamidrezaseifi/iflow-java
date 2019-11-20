@@ -20,18 +20,18 @@ import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.IWorkflowMessageDataService;
 import com.pth.iflow.workflow.bl.IWorkflowPrepare;
 import com.pth.iflow.workflow.bl.strategy.strategies.ArchivingWorkflowStrategy;
-import com.pth.iflow.workflow.models.Workflow;
-import com.pth.iflow.workflow.models.WorkflowSaveRequest;
+import com.pth.iflow.workflow.models.workflow.invoice.InvoiceWorkflow;
+import com.pth.iflow.workflow.models.workflow.invoice.InvoiceWorkflowSaveRequest;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 public class ArchivingWorkflowStrategyTest extends TestDataProducer {
 
-  private ArchivingWorkflowStrategy workflowStrategy;
+  private ArchivingWorkflowStrategy<InvoiceWorkflow> workflowStrategy;
 
   @Mock
-  private IWorkflowDataService workflowDataService;
+  private IWorkflowDataService<InvoiceWorkflow> workflowDataService;
 
   @Mock
   private IDepartmentDataService departmentDataService;
@@ -43,7 +43,7 @@ public class ArchivingWorkflowStrategyTest extends TestDataProducer {
   private IProfileCachDataDataService cachDataDataService;
 
   @Mock
-  private IWorkflowPrepare workflowPrepare;
+  private IWorkflowPrepare<InvoiceWorkflow> workflowPrepare;
 
   private String validTocken;
 
@@ -63,23 +63,23 @@ public class ArchivingWorkflowStrategyTest extends TestDataProducer {
   @Test
   public void testProccessStrategy() throws Exception {
 
-    final WorkflowSaveRequest request = this.getTestWorkflowCreateRequestForStrategy();
+    final InvoiceWorkflowSaveRequest request = this.getTestInvoiceWorkflowSaveRequest();
     request.setCommand(EWorkflowProcessCommand.ARCHIVE);
 
-    when(this.workflowDataService.save(any(Workflow.class), any(String.class))).thenReturn(request.getWorkflow());
-    when(this.workflowPrepare.prepareWorkflow(any(String.class), any(Workflow.class))).thenReturn(request.getWorkflow());
+    when(this.workflowDataService.save(any(InvoiceWorkflow.class), any(String.class))).thenReturn(request.getWorkflow());
+    when(this.workflowPrepare.prepareWorkflow(any(String.class), any(InvoiceWorkflow.class))).thenReturn(request.getWorkflow());
 
-    this.workflowStrategy = new ArchivingWorkflowStrategy(request,
-                                                          this.validTocken,
-                                                          this.departmentDataService,
-                                                          this.workflowMessageDataService,
-                                                          this.cachDataDataService,
-                                                          this.workflowDataService,
-                                                          this.workflowPrepare);
+    this.workflowStrategy = new ArchivingWorkflowStrategy<InvoiceWorkflow>(request,
+                                                                           this.validTocken,
+                                                                           this.departmentDataService,
+                                                                           this.workflowMessageDataService,
+                                                                           this.cachDataDataService,
+                                                                           this.workflowDataService,
+                                                                           this.workflowPrepare);
 
     this.workflowStrategy.process();
 
-    final Workflow resultWorkflow = this.workflowStrategy.getSingleProceedWorkflow();
+    final InvoiceWorkflow resultWorkflow = this.workflowStrategy.getSingleProceedWorkflow();
 
     Assert.assertNotNull("Result workflow is not null!", resultWorkflow);
     Assert.assertEquals("The status of result workflow is ARCHIVED!", resultWorkflow.getStatus(), EWorkflowStatus.ARCHIVED);

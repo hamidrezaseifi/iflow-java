@@ -19,18 +19,18 @@ import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.IWorkflowMessageDataService;
 import com.pth.iflow.workflow.bl.IWorkflowPrepare;
 import com.pth.iflow.workflow.bl.strategy.strategies.SaveExistingWorkflowStrategy;
-import com.pth.iflow.workflow.models.Workflow;
-import com.pth.iflow.workflow.models.WorkflowSaveRequest;
+import com.pth.iflow.workflow.models.workflow.testthree.TestThreeTaskWorkflow;
+import com.pth.iflow.workflow.models.workflow.testthree.TestThreeTaskWorkflowSaveRequest;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 public class SaveExistingWorkflowStrategyTest extends TestDataProducer {
 
-  private SaveExistingWorkflowStrategy workflowStrategy;
+  private SaveExistingWorkflowStrategy<TestThreeTaskWorkflow> workflowStrategy;
 
   @Mock
-  private IWorkflowDataService workflowDataService;
+  private IWorkflowDataService<TestThreeTaskWorkflow> workflowDataService;
 
   @Mock
   private IDepartmentDataService departmentDataService;
@@ -42,7 +42,7 @@ public class SaveExistingWorkflowStrategyTest extends TestDataProducer {
   private IProfileCachDataDataService cachDataDataService;
 
   @Mock
-  private IWorkflowPrepare workflowPrepare;
+  private IWorkflowPrepare<TestThreeTaskWorkflow> workflowPrepare;
 
   private String validTocken;
 
@@ -62,25 +62,25 @@ public class SaveExistingWorkflowStrategyTest extends TestDataProducer {
   @Test
   public void testProccessStrategy() throws Exception {
 
-    final WorkflowSaveRequest request = this.getTestWorkflowCreateRequestForStrategy();
+    final TestThreeTaskWorkflowSaveRequest request = this.getTestTestThreeTaskWorkflowSaveRequest();
     request.setCommand(EWorkflowProcessCommand.DONE);
     request.getWorkflow().getActiveAction().setAssignToUser(getTestUser("fname", "lname", "email"));
     request.getWorkflow().getActiveAction().setAssignToIdentity("email");
 
-    when(this.workflowDataService.save(any(Workflow.class), any(String.class))).thenReturn(request.getWorkflow());
-    when(this.workflowPrepare.prepareWorkflow(any(String.class), any(Workflow.class))).thenReturn(request.getWorkflow());
+    when(this.workflowDataService.save(any(TestThreeTaskWorkflow.class), any(String.class))).thenReturn(request.getWorkflow());
+    when(this.workflowPrepare.prepareWorkflow(any(String.class), any(TestThreeTaskWorkflow.class))).thenReturn(request.getWorkflow());
 
-    this.workflowStrategy = new SaveExistingWorkflowStrategy(request,
-                                                             this.validTocken,
-                                                             this.departmentDataService,
-                                                             this.workflowMessageDataService,
-                                                             this.cachDataDataService,
-                                                             this.workflowDataService,
-                                                             this.workflowPrepare);
+    this.workflowStrategy = new SaveExistingWorkflowStrategy<TestThreeTaskWorkflow>(request,
+                                                                                    this.validTocken,
+                                                                                    this.departmentDataService,
+                                                                                    this.workflowMessageDataService,
+                                                                                    this.cachDataDataService,
+                                                                                    this.workflowDataService,
+                                                                                    this.workflowPrepare);
 
     this.workflowStrategy.process();
 
-    final Workflow resultWorkflow = this.workflowStrategy.getSingleProceedWorkflow();
+    final TestThreeTaskWorkflow resultWorkflow = this.workflowStrategy.getSingleProceedWorkflow();
 
     Assert.assertNotNull("Result workflow is not null!", resultWorkflow);
     Assert.assertEquals("The status of result workflow is ARCHIVED!", resultWorkflow.getStatus(), request.getWorkflow().getStatus());

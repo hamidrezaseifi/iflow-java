@@ -22,19 +22,19 @@ import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.IWorkflowMessageDataService;
 import com.pth.iflow.workflow.bl.IWorkflowPrepare;
 import com.pth.iflow.workflow.bl.strategy.strategies.DoneExistingWorkflowStrategy;
-import com.pth.iflow.workflow.models.Workflow;
 import com.pth.iflow.workflow.models.WorkflowAction;
-import com.pth.iflow.workflow.models.WorkflowSaveRequest;
+import com.pth.iflow.workflow.models.workflow.invoice.InvoiceWorkflow;
+import com.pth.iflow.workflow.models.workflow.invoice.InvoiceWorkflowSaveRequest;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 public class DoneExistingWorkflowStrategyTest extends TestDataProducer {
 
-  private DoneExistingWorkflowStrategy workflowStrategy;
+  private DoneExistingWorkflowStrategy<InvoiceWorkflow> workflowStrategy;
 
   @Mock
-  private IWorkflowDataService workflowDataService;
+  private IWorkflowDataService<InvoiceWorkflow> workflowDataService;
 
   @Mock
   private IDepartmentDataService departmentDataService;
@@ -46,7 +46,7 @@ public class DoneExistingWorkflowStrategyTest extends TestDataProducer {
   private IProfileCachDataDataService cachDataDataService;
 
   @Mock
-  private IWorkflowPrepare workflowPrepare;
+  private IWorkflowPrepare<InvoiceWorkflow> workflowPrepare;
 
   private String validTocken;
 
@@ -66,7 +66,7 @@ public class DoneExistingWorkflowStrategyTest extends TestDataProducer {
   @Test
   public void testProccessStrategy() throws Exception {
 
-    final WorkflowSaveRequest request = this.getTestWorkflowCreateRequestForStrategy();
+    final InvoiceWorkflowSaveRequest request = this.getTestInvoiceWorkflowSaveRequest();
     request.setCommand(EWorkflowProcessCommand.DONE);
     final List<WorkflowAction> actions = request.getWorkflow().getActions();
 
@@ -77,20 +77,20 @@ public class DoneExistingWorkflowStrategyTest extends TestDataProducer {
     actions.get(actions.size() - 1).setStatus(EWorkflowActionStatus.OPEN);
 
     when(this.workflowDataService.getByIdentity(any(String.class), any(String.class))).thenReturn(request.getWorkflow());
-    when(this.workflowDataService.save(any(Workflow.class), any(String.class))).thenReturn(request.getWorkflow());
-    when(this.workflowPrepare.prepareWorkflow(any(String.class), any(Workflow.class))).thenReturn(request.getWorkflow());
+    when(this.workflowDataService.save(any(InvoiceWorkflow.class), any(String.class))).thenReturn(request.getWorkflow());
+    when(this.workflowPrepare.prepareWorkflow(any(String.class), any(InvoiceWorkflow.class))).thenReturn(request.getWorkflow());
 
-    this.workflowStrategy = new DoneExistingWorkflowStrategy(request,
-                                                             this.validTocken,
-                                                             this.departmentDataService,
-                                                             this.workflowMessageDataService,
-                                                             this.cachDataDataService,
-                                                             this.workflowDataService,
-                                                             this.workflowPrepare);
+    this.workflowStrategy = new DoneExistingWorkflowStrategy<InvoiceWorkflow>(request,
+                                                                              this.validTocken,
+                                                                              this.departmentDataService,
+                                                                              this.workflowMessageDataService,
+                                                                              this.cachDataDataService,
+                                                                              this.workflowDataService,
+                                                                              this.workflowPrepare);
 
     this.workflowStrategy.process();
 
-    final Workflow resultWorkflow = this.workflowStrategy.getSingleProceedWorkflow();
+    final InvoiceWorkflow resultWorkflow = this.workflowStrategy.getSingleProceedWorkflow();
 
     Assert.assertNotNull("Result workflow is not null!", resultWorkflow);
     Assert.assertEquals("The status of result workflow is " + EWorkflowStatus.DONE + "!",
