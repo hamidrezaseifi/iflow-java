@@ -238,6 +238,79 @@ public class IflowRestPaths {
       return builder.build(email, status);
     }
 
+    /*
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     */
+
+    public static URI READ_SINGLETASKWORKFLOW_BY_IDENTITY(final String identity) {
+      final IflowUriBuilder builder = new IflowUriBuilder(SINGLETASKWORKFLOW_READ_BY_IDENTITY);
+      return builder.build(identity);
+    }
+
+    public static URI SAVE_SINGLETASKWORKFLOW() {
+      final IflowUriBuilder builder = new IflowUriBuilder(SINGLETASKWORKFLOW_SAVE);
+      return builder.build();
+    }
+
+    public static URI READ_SINGLETASKWORKFLOW_LIST() {
+      final IflowUriBuilder builder = new IflowUriBuilder(SINGLETASKWORKFLOW_READ_LIST);
+      return builder.build();
+    }
+
+    public static URI SEARCH_SINGLETASKWORKFLOW() {
+      final IflowUriBuilder builder = new IflowUriBuilder(SINGLETASKWORKFLOW_SEARCH);
+      return builder.build();
+    }
+
+    public static URI READ_SINGLETASKWORKFLOW_LIST_BY_USERIDENTITY(final String email, final int status) {
+      final IflowUriBuilder builder = new IflowUriBuilder(SINGLETASKWORKFLOW_READ_LIST_BY_USERIDENTITY);
+      return builder.build(email, status);
+    }
+
+    /*
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     */
+
+    public static URI READ_TESTTHREETASKWORKFLOW_BY_IDENTITY(final String identity) {
+      final IflowUriBuilder builder = new IflowUriBuilder(TESTTHREETASKWORKFLOW_READ_BY_IDENTITY);
+      return builder.build(identity);
+    }
+
+    public static URI SAVE_TESTTHREETASKWORKFLOW() {
+      final IflowUriBuilder builder = new IflowUriBuilder(TESTTHREETASKWORKFLOW_SAVE);
+      return builder.build();
+    }
+
+    public static URI READ_TESTTHREETASKWORKFLOW_LIST() {
+      final IflowUriBuilder builder = new IflowUriBuilder(TESTTHREETASKWORKFLOW_READ_LIST);
+      return builder.build();
+    }
+
+    public static URI SEARCH_TESTTHREETASKWORKFLOW() {
+      final IflowUriBuilder builder = new IflowUriBuilder(TESTTHREETASKWORKFLOW_SEARCH);
+      return builder.build();
+    }
+
+    public static URI READ_TESTTHREETASKWORKFLOW_LIST_BY_USERIDENTITY(final String email, final int status) {
+      final IflowUriBuilder builder = new IflowUriBuilder(TESTTHREETASKWORKFLOW_READ_LIST_BY_USERIDENTITY);
+      return builder.build(email, status);
+    }
   }
 
   public static class WorkflowModule {

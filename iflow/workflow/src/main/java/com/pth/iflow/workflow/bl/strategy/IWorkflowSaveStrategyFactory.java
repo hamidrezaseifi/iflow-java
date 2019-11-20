@@ -6,7 +6,7 @@ import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.base.IWorkflow;
 import com.pth.iflow.workflow.models.base.IWorkflowSaveRequest;
 
-public interface IWorkStrategyFactory<W extends IWorkflow> {
+public interface IWorkflowSaveStrategyFactory<W extends IWorkflow> {
 
   IWorkflowSaveStrategy<W> selectSaveWorkStrategy(final IWorkflowSaveRequest<W> workflowSaveRequest, final String token) throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 

@@ -1,7 +1,8 @@
-package com.pth.iflow.workflow.services.strategy.strategies;
+package com.pth.iflow.workflow.services.singletask.strategy.strategies;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import java.util.List;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -11,23 +12,26 @@ import org.mockito.Mock;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import com.pth.iflow.common.enums.EWorkflowActionStatus;
 import com.pth.iflow.common.enums.EWorkflowProcessCommand;
+import com.pth.iflow.common.enums.EWorkflowStatus;
 import com.pth.iflow.workflow.TestDataProducer;
 import com.pth.iflow.workflow.bl.IDepartmentDataService;
 import com.pth.iflow.workflow.bl.IProfileCachDataDataService;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.IWorkflowMessageDataService;
 import com.pth.iflow.workflow.bl.IWorkflowPrepare;
-import com.pth.iflow.workflow.bl.strategy.strategies.SaveExistingWorkflowStrategy;
+import com.pth.iflow.workflow.bl.strategy.strategies.DoneExistingWorkflowStrategy;
 import com.pth.iflow.workflow.models.Workflow;
+import com.pth.iflow.workflow.models.WorkflowAction;
 import com.pth.iflow.workflow.models.WorkflowSaveRequest;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class SaveExistingWorkflowStrategyTest extends TestDataProducer {
+public class DoneExistingWorkflowStrategyTest extends TestDataProducer {
 
-  private SaveExistingWorkflowStrategy workflowStrategy;
+  private DoneExistingWorkflowStrategy workflowStrategy;
 
   @Mock
   private IWorkflowDataService workflowDataService;
@@ -64,13 +68,19 @@ public class SaveExistingWorkflowStrategyTest extends TestDataProducer {
 
     final WorkflowSaveRequest request = this.getTestWorkflowCreateRequestForStrategy();
     request.setCommand(EWorkflowProcessCommand.DONE);
-    request.getWorkflow().getActiveAction().setAssignToUser(getTestUser("fname", "lname", "email"));
-    request.getWorkflow().getActiveAction().setAssignToIdentity("email");
+    final List<WorkflowAction> actions = request.getWorkflow().getActions();
 
+    for (final WorkflowAction action : actions) {
+      action.setAssignToIdentity("assignToIdentity");
+      action.setStatus(EWorkflowActionStatus.DONE);
+    }
+    actions.get(actions.size() - 1).setStatus(EWorkflowActionStatus.OPEN);
+
+    when(this.workflowDataService.getByIdentity(any(String.class), any(String.class))).thenReturn(request.getWorkflow());
     when(this.workflowDataService.save(any(Workflow.class), any(String.class))).thenReturn(request.getWorkflow());
     when(this.workflowPrepare.prepareWorkflow(any(String.class), any(Workflow.class))).thenReturn(request.getWorkflow());
 
-    this.workflowStrategy = new SaveExistingWorkflowStrategy(request,
+    this.workflowStrategy = new DoneExistingWorkflowStrategy(request,
                                                              this.validTocken,
                                                              this.departmentDataService,
                                                              this.workflowMessageDataService,
@@ -83,7 +93,9 @@ public class SaveExistingWorkflowStrategyTest extends TestDataProducer {
     final Workflow resultWorkflow = this.workflowStrategy.getSingleProceedWorkflow();
 
     Assert.assertNotNull("Result workflow is not null!", resultWorkflow);
-    Assert.assertEquals("The status of result workflow is ARCHIVED!", resultWorkflow.getStatus(), request.getWorkflow().getStatus());
+    Assert.assertEquals("The status of result workflow is " + EWorkflowStatus.DONE + "!",
+                        EWorkflowStatus.DONE,
+                        resultWorkflow.getStatus());
 
   }
 

@@ -13,7 +13,7 @@ import com.pth.iflow.workflow.bl.ITokenValidator;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.IWorkflowPrepare;
 import com.pth.iflow.workflow.bl.IWorkflowProcessService;
-import com.pth.iflow.workflow.bl.strategy.IWorkStrategyFactory;
+import com.pth.iflow.workflow.bl.strategy.IWorkflowSaveStrategyFactory;
 import com.pth.iflow.workflow.bl.strategy.IWorkflowSaveStrategy;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.WorkflowSearchFilter;
@@ -29,13 +29,13 @@ public class TestThreeTaskWorkProcessService implements IWorkflowProcessService<
 
   private final ITokenValidator tokenValidator;
 
-  private final IWorkStrategyFactory<TestThreeTaskWorkflow> workStrategyFactory;
+  private final IWorkflowSaveStrategyFactory<TestThreeTaskWorkflow> workStrategyFactory;
 
   private final IWorkflowPrepare<TestThreeTaskWorkflow> workflowPrepare;
 
   public TestThreeTaskWorkProcessService(@Autowired final IWorkflowDataService<TestThreeTaskWorkflow> workflowDataService,
                                          @Autowired final ITokenValidator tokenValidator,
-                                         @Autowired final IWorkStrategyFactory<TestThreeTaskWorkflow> workStrategyFactory,
+                                         @Autowired final IWorkflowSaveStrategyFactory<TestThreeTaskWorkflow> workStrategyFactory,
                                          @Autowired final IWorkflowPrepare<TestThreeTaskWorkflow> workflowPrepare) {
 
     this.wrkflowDataService = workflowDataService;

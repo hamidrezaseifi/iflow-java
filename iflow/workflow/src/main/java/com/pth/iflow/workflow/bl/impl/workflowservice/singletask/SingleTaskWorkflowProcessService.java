@@ -13,7 +13,7 @@ import com.pth.iflow.workflow.bl.ITokenValidator;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.IWorkflowPrepare;
 import com.pth.iflow.workflow.bl.IWorkflowProcessService;
-import com.pth.iflow.workflow.bl.strategy.IWorkStrategyFactory;
+import com.pth.iflow.workflow.bl.strategy.IWorkflowSaveStrategyFactory;
 import com.pth.iflow.workflow.bl.strategy.IWorkflowSaveStrategy;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.WorkflowSearchFilter;
@@ -29,13 +29,13 @@ public class SingleTaskWorkflowProcessService implements IWorkflowProcessService
 
   private final ITokenValidator tokenValidator;
 
-  private final IWorkStrategyFactory<SingleTaskWorkflow> workStrategyFactory;
+  private final IWorkflowSaveStrategyFactory<SingleTaskWorkflow> workStrategyFactory;
 
   private final IWorkflowPrepare<SingleTaskWorkflow> workflowPrepare;
 
   public SingleTaskWorkflowProcessService(@Autowired final IWorkflowDataService<SingleTaskWorkflow> workflowDataService,
                                           @Autowired final ITokenValidator tokenValidator,
-                                          @Autowired final IWorkStrategyFactory<SingleTaskWorkflow> workStrategyFactory,
+                                          @Autowired final IWorkflowSaveStrategyFactory<SingleTaskWorkflow> workStrategyFactory,
                                           @Autowired final IWorkflowPrepare<SingleTaskWorkflow> workflowPrepare) {
 
     this.wrkflowDataService = workflowDataService;

@@ -1,4 +1,4 @@
-package com.pth.iflow.workflow.services.strategy.strategies;
+package com.pth.iflow.workflow.services.singletask.strategy.strategies;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;

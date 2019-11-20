@@ -13,7 +13,7 @@ import com.pth.iflow.workflow.bl.ITokenValidator;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.IWorkflowPrepare;
 import com.pth.iflow.workflow.bl.IWorkflowProcessService;
-import com.pth.iflow.workflow.bl.strategy.IWorkStrategyFactory;
+import com.pth.iflow.workflow.bl.strategy.IWorkflowSaveStrategyFactory;
 import com.pth.iflow.workflow.bl.strategy.IWorkflowSaveStrategy;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.WorkflowSearchFilter;
@@ -29,13 +29,13 @@ public class InvoiceWorkflowProcessService implements IWorkflowProcessService<In
 
   private final ITokenValidator tokenValidator;
 
-  private final IWorkStrategyFactory<InvoiceWorkflow> workStrategyFactory;
+  private final IWorkflowSaveStrategyFactory<InvoiceWorkflow> workStrategyFactory;
 
   private final IWorkflowPrepare<InvoiceWorkflow> workflowPrepare;
 
   public InvoiceWorkflowProcessService(@Autowired final IWorkflowDataService<InvoiceWorkflow> invoiceWorkflowDataService,
                                        @Autowired final ITokenValidator tokenValidator,
-                                       @Autowired final IWorkStrategyFactory<InvoiceWorkflow> workStrategyFactory,
+                                       @Autowired final IWorkflowSaveStrategyFactory<InvoiceWorkflow> workStrategyFactory,
                                        @Autowired final IWorkflowPrepare<InvoiceWorkflow> workflowPrepare) {
 
     this.invoiceWorkflowDataService = invoiceWorkflowDataService;

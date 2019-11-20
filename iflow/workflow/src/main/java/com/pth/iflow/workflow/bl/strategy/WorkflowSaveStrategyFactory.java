@@ -29,9 +29,9 @@ import com.pth.iflow.workflow.models.base.IWorkflow;
 import com.pth.iflow.workflow.models.base.IWorkflowSaveRequest;
 
 @Service
-public class WorkStrategyFactory<W extends IWorkflow> implements IWorkStrategyFactory<W> {
+public class WorkflowSaveStrategyFactory<W extends IWorkflow> implements IWorkflowSaveStrategyFactory<W> {
 
-  private static final Logger logger = LoggerFactory.getLogger(WorkStrategyFactory.class);
+  private static final Logger logger = LoggerFactory.getLogger(WorkflowSaveStrategyFactory.class);
 
   private final IWorkflowDataService<W> invoiceWorkflowDataService;
 
@@ -43,7 +43,7 @@ public class WorkStrategyFactory<W extends IWorkflow> implements IWorkStrategyFa
 
   private final IWorkflowPrepare<W> invoiceWorkflowPrepare;
 
-  public WorkStrategyFactory(@Autowired final IWorkflowDataService<W> workflowDataService,
+  public WorkflowSaveStrategyFactory(@Autowired final IWorkflowDataService<W> workflowDataService,
                              @Autowired final IDepartmentDataService departmentDataService,
                              @Autowired final IWorkflowMessageDataService workflowMessageDataService,
                              @Autowired final IProfileCachDataDataService cachDataDataService,

@@ -29,6 +29,10 @@ import com.pth.iflow.workflow.models.WorkflowType;
 import com.pth.iflow.workflow.models.WorkflowTypeStep;
 import com.pth.iflow.workflow.models.workflow.invoice.InvoiceWorkflow;
 import com.pth.iflow.workflow.models.workflow.invoice.InvoiceWorkflowSaveRequest;
+import com.pth.iflow.workflow.models.workflow.singletask.SingleTaskWorkflow;
+import com.pth.iflow.workflow.models.workflow.singletask.SingleTaskWorkflowSaveRequest;
+import com.pth.iflow.workflow.models.workflow.testthree.TestThreeTaskWorkflow;
+import com.pth.iflow.workflow.models.workflow.testthree.TestThreeTaskWorkflowSaveRequest;
 
 public class TestDataProducer {
 
@@ -154,6 +158,88 @@ public class TestDataProducer {
     model.setFiles(Arrays.asList(this.getTestWorkflowFile("file1", identity),
                                  this.getTestWorkflowFile("file2", identity),
                                  this.getTestWorkflowFile("file3", identity)));
+
+    return model;
+  }
+
+  protected SingleTaskWorkflow getSingleTaskTestWorkflow(final String identity, final EWorkflowActionStatus actionStatus) {
+    final SingleTaskWorkflow model = new SingleTaskWorkflow();
+    model.setIdentity(identity);
+    model.setStatus(EWorkflowStatus.INITIALIZE);
+    model.setVersion(1);
+    model.setComments("comments");
+    model.setControllerIdentity("controllerIdentity");
+    model.setCurrentStep(this.getTestWorkflowTypeStep());
+    model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
+    model.setCreatedByIdentity("createdByIdentity");
+    model.setActions(Arrays.asList(this.getTestWorkflowAction("action1", identity, actionStatus),
+                                   this.getTestWorkflowAction("action2", identity, actionStatus),
+                                   this.getTestWorkflowAction("action3", identity, actionStatus)));
+    model.setFiles(Arrays.asList(this.getTestWorkflowFile("file1", identity),
+                                 this.getTestWorkflowFile("file2", identity),
+                                 this.getTestWorkflowFile("file3", identity)));
+
+    return model;
+  }
+
+  protected TestThreeTaskWorkflow getTestThreeTaskTestWorkflow(final String identity, final EWorkflowActionStatus actionStatus) {
+    final TestThreeTaskWorkflow model = new TestThreeTaskWorkflow();
+    model.setIdentity(identity);
+    model.setStatus(EWorkflowStatus.INITIALIZE);
+    model.setVersion(1);
+    model.setComments("comments");
+    model.setControllerIdentity("controllerIdentity");
+    model.setCurrentStep(this.getTestWorkflowTypeStep());
+    model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
+    model.setCreatedByIdentity("createdByIdentity");
+    model.setActions(Arrays.asList(this.getTestWorkflowAction("action1", identity, actionStatus),
+                                   this.getTestWorkflowAction("action2", identity, actionStatus),
+                                   this.getTestWorkflowAction("action3", identity, actionStatus)));
+    model.setFiles(Arrays.asList(this.getTestWorkflowFile("file1", identity),
+                                 this.getTestWorkflowFile("file2", identity),
+                                 this.getTestWorkflowFile("file3", identity)));
+
+    return model;
+  }
+
+  protected SingleTaskWorkflow getTestSingleTaskWorkflow(final String identity) {
+    final SingleTaskWorkflow model = new SingleTaskWorkflow();
+    model.setIdentity(identity);
+    model.setStatus(EWorkflowStatus.INITIALIZE);
+    model.setVersion(1);
+    model.setComments("comments");
+    model.setControllerIdentity("controllerIdentity");
+    model.setCurrentStep(this.getTestWorkflowTypeStep());
+    model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
+    model.setCreatedByIdentity("createdByIdentity");
+
+    model.setActions(Arrays.asList(this.getTestWorkflowAction("action1", model.getIdentity()),
+                                   this.getTestWorkflowAction("action2", model.getIdentity()),
+                                   this.getTestWorkflowAction("action3", model.getIdentity())));
+    model.setFiles(Arrays.asList(this.getTestWorkflowFile("file1", model.getIdentity()),
+                                 this.getTestWorkflowFile("file2", model.getIdentity()),
+                                 this.getTestWorkflowFile("file3", model.getIdentity())));
+
+    return model;
+  }
+
+  protected TestThreeTaskWorkflow getTestTestThreeTaskWorkflow(final String identity) {
+    final TestThreeTaskWorkflow model = new TestThreeTaskWorkflow();
+    model.setIdentity(identity);
+    model.setStatus(EWorkflowStatus.INITIALIZE);
+    model.setVersion(1);
+    model.setComments("comments");
+    model.setControllerIdentity("controllerIdentity");
+    model.setCurrentStep(this.getTestWorkflowTypeStep());
+    model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
+    model.setCreatedByIdentity("createdByIdentity");
+
+    model.setActions(Arrays.asList(this.getTestWorkflowAction("action1", model.getIdentity()),
+                                   this.getTestWorkflowAction("action2", model.getIdentity()),
+                                   this.getTestWorkflowAction("action3", model.getIdentity())));
+    model.setFiles(Arrays.asList(this.getTestWorkflowFile("file1", model.getIdentity()),
+                                 this.getTestWorkflowFile("file2", model.getIdentity()),
+                                 this.getTestWorkflowFile("file3", model.getIdentity())));
 
     return model;
   }
@@ -304,6 +390,20 @@ public class TestDataProducer {
                          this.getTestInvoiceWorkflow("workflow3"));
   }
 
+  protected List<SingleTaskWorkflow> getTestSingleTaskWorkflowList() {
+
+    return Arrays.asList(this.getTestSingleTaskWorkflow("workflow1"),
+                         this.getTestSingleTaskWorkflow("workflow2"),
+                         this.getTestSingleTaskWorkflow("workflow3"));
+  }
+
+  protected List<TestThreeTaskWorkflow> getTestTestThreeTaskWorkflowList() {
+
+    return Arrays.asList(this.getTestTestThreeTaskWorkflow("workflow1"),
+                         this.getTestTestThreeTaskWorkflow("workflow2"),
+                         this.getTestTestThreeTaskWorkflow("workflow3"));
+  }
+
   protected List<WorkflowTypeStep> getTestWorkflowTypeStepList() {
     final List<WorkflowTypeStep> list = Arrays.asList(this.getTestWorkflowTypeStep("step1", "WorkflowTypeStep 1", 1),
                                                       this.getTestWorkflowTypeStep("step2", "WorkflowTypeStep 2", 2),
@@ -416,6 +516,26 @@ public class TestDataProducer {
     final InvoiceWorkflowSaveRequest request = new InvoiceWorkflowSaveRequest();
     request.setAssigns(this.getTestAssignedList());
     request.setWorkflow(this.getTestInvoiceWorkflow("workflow1"));
+    request.setExpireDays(10);
+    request.setCommand(EWorkflowProcessCommand.NONE);
+
+    return request;
+  }
+
+  protected SingleTaskWorkflowSaveRequest getTestSingleTaskWorkflowSaveRequest() {
+    final SingleTaskWorkflowSaveRequest request = new SingleTaskWorkflowSaveRequest();
+    request.setAssigns(this.getTestAssignedList());
+    request.setWorkflow(this.getTestSingleTaskWorkflow("workflow1"));
+    request.setExpireDays(10);
+    request.setCommand(EWorkflowProcessCommand.NONE);
+
+    return request;
+  }
+
+  protected TestThreeTaskWorkflowSaveRequest getTestTestThreeTaskWorkflowSaveRequest() {
+    final TestThreeTaskWorkflowSaveRequest request = new TestThreeTaskWorkflowSaveRequest();
+    request.setAssigns(this.getTestAssignedList());
+    request.setWorkflow(this.getTestTestThreeTaskWorkflow("workflow1"));
     request.setExpireDays(10);
     request.setCommand(EWorkflowProcessCommand.NONE);
 

@@ -40,7 +40,7 @@ public class SingleTaskWorkflowCoreConnectService implements IWorkflowDataServic
     logger.debug("Request workflow data for identity {}", identity);
 
     final SingleTaskWorkflowEdo edo = this.restTemplate.callRestGet(
-                                                                    this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.READ_INVOICEWORKFLOW_BY_IDENTITY(identity)),
+                                                                    this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.READ_SINGLETASKWORKFLOW_BY_IDENTITY(identity)),
                                                                     token,
                                                                     EModule.CORE,
                                                                     SingleTaskWorkflowEdo.class,
@@ -54,7 +54,7 @@ public class SingleTaskWorkflowCoreConnectService implements IWorkflowDataServic
     logger.debug("Request workflow list for id list {}", idList);
 
     final SingleTaskWorkflowListEdo edoList = this.restTemplate.callRestPost(
-                                                                             this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.READ_INVOICEWORKFLOW_LIST()),
+                                                                             this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.READ_SINGLETASKWORKFLOW_LIST()),
                                                                              token,
                                                                              EModule.CORE,
                                                                              idList,
@@ -69,7 +69,7 @@ public class SingleTaskWorkflowCoreConnectService implements IWorkflowDataServic
     logger.debug("Request save workflow");
 
     final SingleTaskWorkflowEdo edo = this.restTemplate.callRestPost(
-                                                                     this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.SAVE_INVOICEWORKFLOW()),
+                                                                     this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.SAVE_SINGLETASKWORKFLOW()),
                                                                      token,
                                                                      EModule.CORE,
                                                                      WorkflowModelEdoMapper.toEdo(model),
@@ -84,8 +84,8 @@ public class SingleTaskWorkflowCoreConnectService implements IWorkflowDataServic
     logger.debug("Request workflow list for company identity {}", identity);
 
     final SingleTaskWorkflowListEdo edoList = this.restTemplate.callRestGet(
-                                                                            this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.READ_INVOICEWORKFLOW_LIST_BY_USERIDENTITY(identity,
-                                                                                                                                                                                        status)),
+                                                                            this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.READ_SINGLETASKWORKFLOW_LIST_BY_USERIDENTITY(identity,
+                                                                                                                                                                                           status)),
                                                                             token,
                                                                             EModule.CORE,
                                                                             SingleTaskWorkflowListEdo.class,
@@ -99,7 +99,7 @@ public class SingleTaskWorkflowCoreConnectService implements IWorkflowDataServic
     logger.debug("Search workflow");
 
     final SingleTaskWorkflowListEdo edoList = this.restTemplate.callRestPost(
-                                                                             this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.SEARCH_INVOICEWORKFLOW()),
+                                                                             this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.SEARCH_SINGLETASKWORKFLOW()),
                                                                              token,
                                                                              EModule.CORE,
                                                                              WorkflowModelEdoMapper.toEdo(workflowSearchFilter),

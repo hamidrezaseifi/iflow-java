@@ -40,7 +40,7 @@ public class TestThreeTaskWorkflowCoreConnectService implements IWorkflowDataSer
     logger.debug("Request workflow data for identity {}", identity);
 
     final TestThreeTaskWorkflowEdo edo = this.restTemplate.callRestGet(
-                                                                       this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.READ_INVOICEWORKFLOW_BY_IDENTITY(identity)),
+                                                                       this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.READ_TESTTHREETASKWORKFLOW_BY_IDENTITY(identity)),
                                                                        token,
                                                                        EModule.CORE,
                                                                        TestThreeTaskWorkflowEdo.class,
@@ -54,7 +54,7 @@ public class TestThreeTaskWorkflowCoreConnectService implements IWorkflowDataSer
     logger.debug("Request workflow list for id list {}", idList);
 
     final TestThreeTaskWorkflowListEdo edoList = this.restTemplate.callRestPost(
-                                                                                this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.READ_INVOICEWORKFLOW_LIST()),
+                                                                                this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.READ_TESTTHREETASKWORKFLOW_LIST()),
                                                                                 token,
                                                                                 EModule.CORE,
                                                                                 idList,
@@ -69,7 +69,7 @@ public class TestThreeTaskWorkflowCoreConnectService implements IWorkflowDataSer
     logger.debug("Request save workflow");
 
     final TestThreeTaskWorkflowEdo edo = this.restTemplate.callRestPost(
-                                                                        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.SAVE_INVOICEWORKFLOW()),
+                                                                        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.SAVE_TESTTHREETASKWORKFLOW()),
                                                                         token,
                                                                         EModule.CORE,
                                                                         WorkflowModelEdoMapper.toEdo(model),
@@ -84,8 +84,8 @@ public class TestThreeTaskWorkflowCoreConnectService implements IWorkflowDataSer
     logger.debug("Request workflow list for company identity {}", identity);
 
     final TestThreeTaskWorkflowListEdo edoList = this.restTemplate.callRestGet(
-                                                                               this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.READ_INVOICEWORKFLOW_LIST_BY_USERIDENTITY(identity,
-                                                                                                                                                                                           status)),
+                                                                               this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.READ_TESTTHREETASKWORKFLOW_LIST_BY_USERIDENTITY(identity,
+                                                                                                                                                                                                 status)),
                                                                                token,
                                                                                EModule.CORE,
                                                                                TestThreeTaskWorkflowListEdo.class,
@@ -99,7 +99,7 @@ public class TestThreeTaskWorkflowCoreConnectService implements IWorkflowDataSer
     logger.debug("Search workflow");
 
     final TestThreeTaskWorkflowListEdo edoList = this.restTemplate.callRestPost(
-                                                                                this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.TESTTHREETASKWORKFLOW_SEARCH),
+                                                                                this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.SEARCH_TESTTHREETASKWORKFLOW()),
                                                                                 token,
                                                                                 EModule.CORE,
                                                                                 WorkflowModelEdoMapper.toEdo(workflowSearchFilter),

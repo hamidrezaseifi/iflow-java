@@ -1,10 +1,9 @@
-package com.pth.iflow.workflow.services.strategy.strategies;
+package com.pth.iflow.workflow.services.testthreetask.strategy.strategies;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
-import java.util.List;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -24,7 +23,7 @@ import com.pth.iflow.workflow.bl.IProfileCachDataDataService;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.IWorkflowMessageDataService;
 import com.pth.iflow.workflow.bl.IWorkflowPrepare;
-import com.pth.iflow.workflow.bl.strategy.strategies.CreateOfferlAssignWorkflowStrategy;
+import com.pth.iflow.workflow.bl.strategy.strategies.AssignWorkflowStrategy;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.AssignItem;
 import com.pth.iflow.workflow.models.Workflow;
@@ -33,32 +32,29 @@ import com.pth.iflow.workflow.models.WorkflowSaveRequest;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class CreateOfferlAssignWorkflowStrategyTest extends TestDataProducer {
+public class AssignWorkflowStrategyTest extends TestDataProducer {
 
-  private CreateOfferlAssignWorkflowStrategy workflowStrategy;
-
-  @Mock
-  private IWorkflowDataService               workflowDataService;
+  private AssignWorkflowStrategy      workflowStrategy;
 
   @Mock
-  private IDepartmentDataService             departmentDataService;
+  private IWorkflowDataService        workflowDataService;
 
   @Mock
-  private IWorkflowMessageDataService        workflowMessageDataService;
+  private IDepartmentDataService      departmentDataService;
 
   @Mock
-  private IProfileCachDataDataService        cachDataDataService;
+  private IWorkflowMessageDataService workflowMessageDataService;
 
   @Mock
-  private IWorkflowPrepare                   workflowPrepare;
+  private IProfileCachDataDataService cachDataDataService;
 
-  private String                             validTocken;
+  @Mock
+  private IWorkflowPrepare            workflowPrepare;
+
+  private String                      validTocken;
 
   @Before
   public void setUp() throws Exception {
-
-    // when(this.workflowDataService.generateCoreUrl(any(String.class))).thenReturn(new
-    // URL("http://any-string"));
 
     this.validTocken = "validTocken";
   }
@@ -72,24 +68,21 @@ public class CreateOfferlAssignWorkflowStrategyTest extends TestDataProducer {
 
     final WorkflowSaveRequest request = this.getTestWorkflowCreateRequestForStrategy();
     request.setCommand(EWorkflowProcessCommand.DONE);
-    request.setAssigns(Arrays.asList(new AssignItem("user1", EAssignType.USER), new AssignItem("user2", EAssignType.DEPARTMENT)));
+    request.setAssigns(Arrays.asList(new AssignItem("user1", EAssignType.USER)));
 
-    when(this.workflowDataService.save(any(Workflow.class), any(String.class))).thenReturn(request.getWorkflow());
     when(this.workflowPrepare.prepareWorkflow(any(String.class), any(Workflow.class))).thenReturn(request.getWorkflow());
+    when(this.workflowDataService.save(any(Workflow.class), any(String.class))).thenReturn(request.getWorkflow());
 
-    when(this.departmentDataService.getUserListByDepartmentIdentity(any(String.class), any(String.class)))
-        .thenReturn(getTestUserList());
-
-    this.workflowStrategy = new CreateOfferlAssignWorkflowStrategy(request, this.validTocken, this.departmentDataService,
+    this.workflowStrategy = new AssignWorkflowStrategy(request, this.validTocken, this.departmentDataService,
         this.workflowMessageDataService, this.cachDataDataService, this.workflowDataService, this.workflowPrepare);
 
     this.workflowStrategy.process();
 
     final Workflow resultWorkflow = this.workflowStrategy.getSingleProceedWorkflow();
-    final List<Workflow> resultWorkflowList = this.workflowStrategy.getSavedWorkflowList();
 
     Assert.assertNotNull("Result workflow is not null!", resultWorkflow);
-    Assert.assertEquals("The status of result workflow is not changed!", resultWorkflowList.size(), 0);
+    Assert.assertEquals("The status of result workflow is not changed!", resultWorkflow.getStatus(),
+        request.getWorkflow().getStatus());
 
   }
 
@@ -102,7 +95,7 @@ public class CreateOfferlAssignWorkflowStrategyTest extends TestDataProducer {
 
     when(this.workflowDataService.save(any(Workflow.class), any(String.class))).thenReturn(request.getWorkflow());
 
-    this.workflowStrategy = new CreateOfferlAssignWorkflowStrategy(request, this.validTocken, this.departmentDataService,
+    this.workflowStrategy = new AssignWorkflowStrategy(request, this.validTocken, this.departmentDataService,
         this.workflowMessageDataService, this.cachDataDataService, this.workflowDataService, this.workflowPrepare);
 
     this.workflowStrategy.process();
