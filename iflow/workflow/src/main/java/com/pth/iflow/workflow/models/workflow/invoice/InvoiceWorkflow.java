@@ -45,7 +45,7 @@ public class InvoiceWorkflow extends IdentityModel implements IWorkflow {
 
   private String vendorName;
 
-  private Boolean isDirectDebit;
+  private Boolean isDirectDebitPermission;
 
   private EInvoiceType invoiceType;
 
@@ -107,12 +107,12 @@ public class InvoiceWorkflow extends IdentityModel implements IWorkflow {
     this.vendorName = vendorName;
   }
 
-  public Boolean getIsDirectDebit() {
-    return isDirectDebit;
+  public Boolean getIsDirectDebitPermission() {
+    return isDirectDebitPermission;
   }
 
-  public void setIsDirectDebit(final Boolean isDirectDebit) {
-    this.isDirectDebit = isDirectDebit;
+  public void setIsDirectDebitPermission(final Boolean isDirectDebitPermission) {
+    this.isDirectDebitPermission = isDirectDebitPermission;
   }
 
   public EInvoiceType getInvoiceType() {
