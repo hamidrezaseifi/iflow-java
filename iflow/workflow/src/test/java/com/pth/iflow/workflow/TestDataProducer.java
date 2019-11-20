@@ -12,6 +12,7 @@ import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.enums.EWorkflowMessageType;
 import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 import com.pth.iflow.common.enums.EWorkflowStatus;
+import com.pth.iflow.common.enums.EWorkflowType;
 import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
 import com.pth.iflow.workflow.models.AssignItem;
 import com.pth.iflow.workflow.models.Company;
@@ -109,6 +110,7 @@ public class TestDataProducer {
     model.setCurrentStep(this.getTestWorkflowTypeStep());
     model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
     model.setCreatedByIdentity("createdByIdentity");
+    model.setWorkflowType(getTestInvoiceWorkflowType());
 
     model.setActions(Arrays.asList(this.getTestWorkflowAction("action1", model.getIdentity()),
                                    this.getTestWorkflowAction("action2", model.getIdentity()),
@@ -131,6 +133,7 @@ public class TestDataProducer {
     model.setCurrentStep(workflowType.getSteps().get(0));
     model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
     model.setCreatedByIdentity("createdByIdentity");
+    model.setWorkflowType(getTestInvoiceWorkflowType());
 
     model.setActions(Arrays.asList(this.getTestWorkflowAction("action1", model.getIdentity()),
                                    this.getTestWorkflowAction("action2", model.getIdentity()),
@@ -152,6 +155,8 @@ public class TestDataProducer {
     model.setCurrentStep(this.getTestWorkflowTypeStep());
     model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
     model.setCreatedByIdentity("createdByIdentity");
+    model.setWorkflowType(getTestInvoiceWorkflowType());
+
     model.setActions(Arrays.asList(this.getTestWorkflowAction("action1", identity, actionStatus),
                                    this.getTestWorkflowAction("action2", identity, actionStatus),
                                    this.getTestWorkflowAction("action3", identity, actionStatus)));
@@ -172,6 +177,7 @@ public class TestDataProducer {
     model.setCurrentStep(this.getTestWorkflowTypeStep());
     model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
     model.setCreatedByIdentity("createdByIdentity");
+    model.setWorkflowType(getTestSingleTaskWorkflowType());
     model.setActions(Arrays.asList(this.getTestWorkflowAction("action1", identity, actionStatus),
                                    this.getTestWorkflowAction("action2", identity, actionStatus),
                                    this.getTestWorkflowAction("action3", identity, actionStatus)));
@@ -192,6 +198,7 @@ public class TestDataProducer {
     model.setCurrentStep(this.getTestWorkflowTypeStep());
     model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
     model.setCreatedByIdentity("createdByIdentity");
+    model.setWorkflowType(getTestTestThreeTaskWorkflowType());
     model.setActions(Arrays.asList(this.getTestWorkflowAction("action1", identity, actionStatus),
                                    this.getTestWorkflowAction("action2", identity, actionStatus),
                                    this.getTestWorkflowAction("action3", identity, actionStatus)));
@@ -212,7 +219,7 @@ public class TestDataProducer {
     model.setCurrentStep(this.getTestWorkflowTypeStep());
     model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
     model.setCreatedByIdentity("createdByIdentity");
-
+    model.setWorkflowType(getTestSingleTaskWorkflowType());
     model.setActions(Arrays.asList(this.getTestWorkflowAction("action1", model.getIdentity()),
                                    this.getTestWorkflowAction("action2", model.getIdentity()),
                                    this.getTestWorkflowAction("action3", model.getIdentity())));
@@ -233,6 +240,7 @@ public class TestDataProducer {
     model.setCurrentStep(this.getTestWorkflowTypeStep());
     model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
     model.setCreatedByIdentity("createdByIdentity");
+    model.setWorkflowType(getTestTestThreeTaskWorkflowType());
 
     model.setActions(Arrays.asList(this.getTestWorkflowAction("action1", model.getIdentity()),
                                    this.getTestWorkflowAction("action2", model.getIdentity()),
@@ -306,10 +314,10 @@ public class TestDataProducer {
     return model;
   }
 
-  protected WorkflowType getTestWorkflowType() {
+  private WorkflowType getTestWorkflowType(final EWorkflowType workflowTypeEnum) {
     final WorkflowType model = new WorkflowType();
     model.setCompanyIdentity("companyIdentity");
-    model.setIdentity("identity");
+    model.setIdentity(workflowTypeEnum.getName());
     model.setBaseTypeIdentity("baseTypeIdentity");
     model.setTitle("utest title");
     model.setStatus(1);
@@ -324,6 +332,21 @@ public class TestDataProducer {
     model.setComments("comments");
 
     return model;
+  }
+
+  protected WorkflowType getTestInvoiceWorkflowType() {
+
+    return getTestWorkflowType(EWorkflowType.INVOICE_WORKFLOW_TYPE);
+  }
+
+  protected WorkflowType getTestSingleTaskWorkflowType() {
+
+    return getTestWorkflowType(EWorkflowType.SINGLE_TASK_WORKFLOW_TYPE);
+  }
+
+  protected WorkflowType getTestTestThreeTaskWorkflowType() {
+
+    return getTestWorkflowType(EWorkflowType.THREE_TASK_WORKFLOW_TYPE);
   }
 
   protected WorkflowType getTestWorkflowType(final String identity, final String title) {

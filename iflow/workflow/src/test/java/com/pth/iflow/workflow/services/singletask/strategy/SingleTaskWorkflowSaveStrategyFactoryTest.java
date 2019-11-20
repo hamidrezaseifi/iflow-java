@@ -101,7 +101,7 @@ public class SingleTaskWorkflowSaveStrategyFactoryTest extends TestDataProducer 
     final SingleTaskWorkflowSaveRequest request = this.getTestSingleTaskWorkflowSaveRequest();
 
     request.setCommand(EWorkflowProcessCommand.DONE);
-    request.getWorkflow().setWorkflowType(getTestWorkflowType());
+    request.getWorkflow().setWorkflowType(getTestSingleTaskWorkflowType());
     final IWorkflowSaveStrategy<SingleTaskWorkflow> saveWorkflowStrategy =
                                                                          this.workStrategyFactory.selectSaveWorkStrategy(request,
                                                                                                                          this.validTocken);
@@ -205,7 +205,7 @@ public class SingleTaskWorkflowSaveStrategyFactoryTest extends TestDataProducer 
     final SingleTaskWorkflowSaveRequest request = this.getTestSingleTaskWorkflowSaveRequest();
 
     request.setCommand(EWorkflowProcessCommand.DONE);
-    request.getWorkflow().setWorkflowType(getTestWorkflowType());
+    request.getWorkflow().setWorkflowType(getTestSingleTaskWorkflowType());
     final IWorkflowSaveStrategy<SingleTaskWorkflow> saveWorkflowStrategy = this.workStrategyFactory.selectValidationWorkStrategy(request,
                                                                                                                                  this.validTocken);
 

@@ -100,7 +100,7 @@ public class InvoiceWorkflowSaveStrategyFactoryTest extends TestDataProducer {
     final InvoiceWorkflowSaveRequest request = this.getTestNewInvoiceWorkflowSaveRequest();
 
     request.setCommand(EWorkflowProcessCommand.DONE);
-    request.getWorkflow().setWorkflowType(getTestWorkflowType());
+    request.getWorkflow().setWorkflowType(getTestInvoiceWorkflowType());
     final IWorkflowSaveStrategy<InvoiceWorkflow> saveWorkflowStrategy = this.workStrategyFactory.selectSaveWorkStrategy(request,
                                                                                                                         this.validTocken);
 
@@ -200,7 +200,7 @@ public class InvoiceWorkflowSaveStrategyFactoryTest extends TestDataProducer {
     final InvoiceWorkflowSaveRequest request = this.getTestNewInvoiceWorkflowSaveRequest();
 
     request.setCommand(EWorkflowProcessCommand.DONE);
-    request.getWorkflow().setWorkflowType(getTestWorkflowType());
+    request.getWorkflow().setWorkflowType(getTestInvoiceWorkflowType());
     final IWorkflowSaveStrategy<InvoiceWorkflow> saveWorkflowStrategy = this.workStrategyFactory.selectValidationWorkStrategy(request,
                                                                                                                               this.validTocken);
 

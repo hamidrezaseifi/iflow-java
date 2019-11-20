@@ -101,7 +101,7 @@ public class TestThreeTaskWorkflowSaveStrategyFactoryTest extends TestDataProduc
     final TestThreeTaskWorkflowSaveRequest request = this.getTestTestThreeTaskWorkflowSaveRequest();
 
     request.setCommand(EWorkflowProcessCommand.DONE);
-    request.getWorkflow().setWorkflowType(getTestWorkflowType());
+    request.getWorkflow().setWorkflowType(getTestTestThreeTaskWorkflowType());
     final IWorkflowSaveStrategy<TestThreeTaskWorkflow> saveWorkflowStrategy =
                                                                             this.workStrategyFactory.selectSaveWorkStrategy(request,
                                                                                                                             this.validTocken);
@@ -205,7 +205,7 @@ public class TestThreeTaskWorkflowSaveStrategyFactoryTest extends TestDataProduc
     final TestThreeTaskWorkflowSaveRequest request = this.getTestTestThreeTaskWorkflowSaveRequest();
 
     request.setCommand(EWorkflowProcessCommand.DONE);
-    request.getWorkflow().setWorkflowType(getTestWorkflowType());
+    request.getWorkflow().setWorkflowType(getTestTestThreeTaskWorkflowType());
     final IWorkflowSaveStrategy<TestThreeTaskWorkflow> saveWorkflowStrategy = this.workStrategyFactory.selectValidationWorkStrategy(request,
                                                                                                                                     this.validTocken);
 
