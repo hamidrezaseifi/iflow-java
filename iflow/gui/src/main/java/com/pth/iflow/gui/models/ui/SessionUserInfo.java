@@ -21,6 +21,7 @@ import com.pth.iflow.gui.models.Department;
 import com.pth.iflow.gui.models.User;
 import com.pth.iflow.gui.models.UserGroup;
 import com.pth.iflow.gui.models.WorkflowType;
+import com.pth.iflow.gui.models.WorkflowTypeStep;
 import com.pth.iflow.gui.models.workflow.IWorkflow;
 import com.pth.iflow.gui.services.IUserAccess;
 import com.pth.iflow.gui.services.IWorkflowTypeHandler;
@@ -174,11 +175,7 @@ public class SessionUserInfo {
     return this.comapnyWorkflowTypes;
   }
 
-  /**
-   * @return the GuiWorkflowType
-   * @throws IFlowMessageConversionFailureException
-   */
-  public WorkflowType getWorkflowTypeById(final String workflowTypId) throws IFlowMessageConversionFailureException {
+  public WorkflowType getWorkflowTypeById(final String workflowTypIdentity) throws IFlowMessageConversionFailureException {
     if (this.comapnyWorkflowTypes.size() == 0) {
       try {
         final List<WorkflowType> typeList = this.workflowTypeHandler.readWorkflowTypeList(this.companyProfile.getCompany().getIdentity(),
@@ -190,7 +187,27 @@ public class SessionUserInfo {
       }
     }
 
-    return this.comapnyWorkflowTypes.containsKey(workflowTypId) ? this.comapnyWorkflowTypes.get(workflowTypId) : null;
+    return this.comapnyWorkflowTypes.containsKey(workflowTypIdentity) ? this.comapnyWorkflowTypes.get(workflowTypIdentity) : null;
+  }
+
+  public WorkflowTypeStep getWorkflowStepTypeByIdentity(final String workflowTypIdentity, final String workflowTypStepIdentity) throws IFlowMessageConversionFailureException {
+    if (this.comapnyWorkflowTypes.size() == 0) {
+      try {
+        final List<WorkflowType> typeList = this.workflowTypeHandler.readWorkflowTypeList(this.companyProfile.getCompany().getIdentity(),
+                                                                                          this.getToken());
+        this.comapnyWorkflowTypes.putAll(typeList.stream().collect(Collectors.toMap(t -> t.getIdentity(), t -> t)));
+      }
+      catch (GuiCustomizedException | MalformedURLException e) {
+        logger.error("error in reading company workflowtype: {} \n {}", e.getMessage(), e);
+      }
+    }
+
+    if (this.comapnyWorkflowTypes.containsKey(workflowTypIdentity)) {
+      final WorkflowType type = this.comapnyWorkflowTypes.get(workflowTypIdentity);
+      return type.getStepByIdentity(workflowTypStepIdentity);
+    }
+
+    return null;
   }
 
   /**

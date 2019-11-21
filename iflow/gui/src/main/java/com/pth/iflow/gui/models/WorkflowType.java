@@ -2,7 +2,6 @@ package com.pth.iflow.gui.models;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.pth.iflow.common.edo.models.helper.IdentityModel;
 import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
@@ -124,6 +123,15 @@ public class WorkflowType extends IdentityModel {
 
   public List<WorkflowTypeStep> getSteps() {
     return this.steps;
+  }
+
+  public WorkflowTypeStep getStepByIdentity(final String stepIdentity) {
+    for (final WorkflowTypeStep step : this.steps) {
+      if (step.hasSameIdentity(stepIdentity)) {
+        return step;
+      }
+    }
+    return null;
   }
 
   public void setSteps(final List<WorkflowTypeStep> steps) {

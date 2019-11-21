@@ -16,6 +16,7 @@ import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.Company;
 import com.pth.iflow.gui.models.User;
 import com.pth.iflow.gui.models.WorkflowMessage;
+import com.pth.iflow.gui.models.WorkflowTypeStep;
 import com.pth.iflow.gui.models.ui.SessionUserInfo;
 import com.pth.iflow.gui.services.IWorkflowMessageHanlder;
 
@@ -61,6 +62,11 @@ public class GuiLogedControllerBase {
   protected Company getLoggedCompany() {
 
     return this.sessionUserInfo.getCompanyProfile().getCompany();
+  }
+
+  protected WorkflowTypeStep getWorkflowStepTypeByIdentity(final String workflowTypIdentity, final String workflowTypStepIdentity) throws IFlowMessageConversionFailureException {
+
+    return this.sessionUserInfo.getWorkflowStepTypeByIdentity(workflowTypIdentity, workflowTypStepIdentity);
   }
 
   protected String getLoggedToken() {

@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import com.pth.iflow.common.enums.EAssignType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
-import com.pth.iflow.gui.models.WorkflowFile;
-import com.pth.iflow.gui.models.ui.FileSavingData;
 import com.pth.iflow.gui.services.IUploadFileManager;
 
 @Controller
@@ -47,8 +45,8 @@ public class WorkflowPageController extends GuiPageControllerBase {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @GetMapping(path = { "/edit/{workflowIdentity}" })
-  public String showWorkflowEdit(final Model model, @PathVariable(required = false) final String workflowIdentity, final HttpServletResponse response) throws GuiCustomizedException, IOException, IFlowMessageConversionFailureException {
+  @GetMapping(path = { "/edit/{workflowIdentity}/{workflowTypeIdentity}/{workflowTypeStepIdentity}" })
+  public String showWorkflowEdit(final Model model, @PathVariable(required = false) final String workflowIdentity, @PathVariable(required = false) final String workflowTypeIdentity, @PathVariable(required = false) final String workflowTypeStepIdentity, final HttpServletResponse response) throws GuiCustomizedException, IOException, IFlowMessageConversionFailureException {
 
     // final Workflow workflow = this.workflowHandler.readWorkflow(workflowIdentity);
 
@@ -57,26 +55,21 @@ public class WorkflowPageController extends GuiPageControllerBase {
     model.addAttribute("DepartmentGroupAssign", EAssignType.DEPARTMENTGROUP.getName());
     model.addAttribute("workflowIdentity", workflowIdentity);
 
-    return workflow.getCurrentStep().getViewName();
+    return this.getWorkflowStepTypeByIdentity(workflowTypeIdentity, workflowTypeStepIdentity).getViewName();
   }
 
   @ResponseStatus(HttpStatus.OK)
   @GetMapping(path = { "/file/view/{workflowIdentity}/{fileIdentity}" })
   public void viewWorkflowFile(final Model model, @PathVariable(required = true) final String fileIdentity, @PathVariable(required = true) final String workflowIdentity, final HttpServletResponse response) throws GuiCustomizedException, IOException, IFlowMessageConversionFailureException {
 
-    final WorkflowFile wfile = this.workflowHandler.readWorkflowFile(workflowIdentity, fileIdentity);
-
-    final FileSavingData fData = new FileSavingData(wfile.getTitle(),
-                                                    wfile.getExtention(),
-                                                    workflowIdentity,
-                                                    "no-asction",
-                                                    this.getLoggedCompany().getIdentity());
-    final String readFilePath = this.uploadFileManager.getFilePath(fData);
-
-    // final ResponseEntity<InputStreamResource> respEntity =
-    // fData.generateFileReposneEntity(readFilePath);
-
-    fData.prepareReposne(readFilePath, response);
+    /*
+     * final WorkflowFile wfile = this.workflowHandler.readWorkflowFile(workflowIdentity, fileIdentity);
+     *
+     * final FileSavingData fData = new FileSavingData(wfile.getTitle(), wfile.getExtention(), workflowIdentity, "no-asction",
+     * this.getLoggedCompany().getIdentity()); final String readFilePath = this.uploadFileManager.getFilePath(fData);
+     *
+     * fData.prepareReposne(readFilePath, response);
+     */
 
   }
 
@@ -85,18 +78,18 @@ public class WorkflowPageController extends GuiPageControllerBase {
   @ResponseBody
   public ResponseEntity<InputStreamResource> downloadWorkflowFile(final Model model, @PathVariable(required = true) final String fileIdentity, @PathVariable(required = true) final String workflowIdentity, final HttpServletResponse response) throws GuiCustomizedException, IOException, IFlowMessageConversionFailureException {
 
-    final WorkflowFile wfile = this.workflowHandler.readWorkflowFile(workflowIdentity, fileIdentity);
+    /*
+     * final WorkflowFile wfile = this.workflowHandler.readWorkflowFile(workflowIdentity, fileIdentity);
+     *
+     * final FileSavingData fData = new FileSavingData(wfile.getTitle(), wfile.getExtention(), workflowIdentity, "no-asction",
+     * this.getLoggedCompany().getIdentity()); final String readFilePath = this.uploadFileManager.getFilePath(fData);
+     *
+     * final ResponseEntity<InputStreamResource> respEntity = fData.generateFileReposneEntity(readFilePath);
+     *
+     * return respEntity;
+     */
 
-    final FileSavingData fData = new FileSavingData(wfile.getTitle(),
-                                                    wfile.getExtention(),
-                                                    workflowIdentity,
-                                                    "no-asction",
-                                                    this.getLoggedCompany().getIdentity());
-    final String readFilePath = this.uploadFileManager.getFilePath(fData);
-
-    final ResponseEntity<InputStreamResource> respEntity = fData.generateFileReposneEntity(readFilePath);
-
-    return respEntity;
+    return null;
   }
 
   @ResponseStatus(HttpStatus.OK)
