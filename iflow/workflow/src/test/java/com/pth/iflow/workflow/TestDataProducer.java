@@ -2,6 +2,7 @@ package com.pth.iflow.workflow;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -29,6 +30,7 @@ import com.pth.iflow.workflow.models.WorkflowMessage;
 import com.pth.iflow.workflow.models.WorkflowSearchFilter;
 import com.pth.iflow.workflow.models.WorkflowType;
 import com.pth.iflow.workflow.models.WorkflowTypeStep;
+import com.pth.iflow.workflow.models.base.IWorkflow;
 import com.pth.iflow.workflow.models.workflow.invoice.InvoiceWorkflow;
 import com.pth.iflow.workflow.models.workflow.invoice.InvoiceWorkflowSaveRequest;
 import com.pth.iflow.workflow.models.workflow.singletask.SingleTaskWorkflow;
@@ -113,9 +115,8 @@ public class TestDataProducer {
     model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
     model.setCreatedByIdentity("createdByIdentity");
 
-    model.setActions(Arrays.asList(this.getTestWorkflowAction("action1", model.getIdentity()),
-                                   this.getTestWorkflowAction("action2", model.getIdentity()),
-                                   this.getTestWorkflowAction("action3", model.getIdentity())));
+    model.setActions(getTestWorkflowActionListFromType(model));
+
     model.setFiles(Arrays.asList(this.getTestWorkflowFile("file1", model.getIdentity()),
                                  this.getTestWorkflowFile("file2", model.getIdentity()),
                                  this.getTestWorkflowFile("file3", model.getIdentity())));
@@ -149,9 +150,8 @@ public class TestDataProducer {
     model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
     model.setCreatedByIdentity("createdByIdentity");
 
-    model.setActions(Arrays.asList(this.getTestWorkflowAction("action1", identity, actionStatus),
-                                   this.getTestWorkflowAction("action2", identity, actionStatus),
-                                   this.getTestWorkflowAction("action3", identity, actionStatus)));
+    model.setActions(getTestWorkflowActionListFromType(model));
+
     model.setFiles(Arrays.asList(this.getTestWorkflowFile("file1", identity),
                                  this.getTestWorkflowFile("file2", identity),
                                  this.getTestWorkflowFile("file3", identity)));
@@ -184,9 +184,9 @@ public class TestDataProducer {
     model.setCurrentStep(model.getWorkflowType().getSteps().get(0));
     model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
     model.setCreatedByIdentity("createdByIdentity");
-    model.setActions(Arrays.asList(this.getTestWorkflowAction("action1", identity, actionStatus),
-                                   this.getTestWorkflowAction("action2", identity, actionStatus),
-                                   this.getTestWorkflowAction("action3", identity, actionStatus)));
+
+    model.setActions(getTestWorkflowActionListFromType(model));
+
     model.setFiles(Arrays.asList(this.getTestWorkflowFile("file1", identity),
                                  this.getTestWorkflowFile("file2", identity),
                                  this.getTestWorkflowFile("file3", identity)));
@@ -205,9 +205,9 @@ public class TestDataProducer {
     model.setCurrentStep(model.getWorkflowType().getSteps().get(0));
     model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
     model.setCreatedByIdentity("createdByIdentity");
-    model.setActions(Arrays.asList(this.getTestWorkflowAction("action1", identity, actionStatus),
-                                   this.getTestWorkflowAction("action2", identity, actionStatus),
-                                   this.getTestWorkflowAction("action3", identity, actionStatus)));
+
+    model.setActions(getTestWorkflowActionListFromType(model));
+
     model.setFiles(Arrays.asList(this.getTestWorkflowFile("file1", identity),
                                  this.getTestWorkflowFile("file2", identity),
                                  this.getTestWorkflowFile("file3", identity)));
@@ -226,9 +226,9 @@ public class TestDataProducer {
     model.setCurrentStep(model.getWorkflowType().getSteps().get(0));
     model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
     model.setCreatedByIdentity("createdByIdentity");
-    model.setActions(Arrays.asList(this.getTestWorkflowAction("action1", model.getIdentity()),
-                                   this.getTestWorkflowAction("action2", model.getIdentity()),
-                                   this.getTestWorkflowAction("action3", model.getIdentity())));
+
+    model.setActions(getTestWorkflowActionListFromType(model));
+
     model.setFiles(Arrays.asList(this.getTestWorkflowFile("file1", model.getIdentity()),
                                  this.getTestWorkflowFile("file2", model.getIdentity()),
                                  this.getTestWorkflowFile("file3", model.getIdentity())));
@@ -248,14 +248,26 @@ public class TestDataProducer {
     model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
     model.setCreatedByIdentity("createdByIdentity");
 
-    model.setActions(Arrays.asList(this.getTestWorkflowAction("action1", model.getIdentity()),
-                                   this.getTestWorkflowAction("action2", model.getIdentity()),
-                                   this.getTestWorkflowAction("action3", model.getIdentity())));
+    model.setActions(getTestWorkflowActionListFromType(model));
     model.setFiles(Arrays.asList(this.getTestWorkflowFile("file1", model.getIdentity()),
                                  this.getTestWorkflowFile("file2", model.getIdentity()),
                                  this.getTestWorkflowFile("file3", model.getIdentity())));
 
     return model;
+  }
+
+  private List<WorkflowAction> getTestWorkflowActionListFromType(final IWorkflow workflow) {
+
+    final WorkflowType workflowType = workflow.getWorkflowType();
+    final List<WorkflowAction> list = new ArrayList<>();
+    for (final WorkflowTypeStep step : workflowType.getSteps()) {
+      final WorkflowAction action = this.getTestWorkflowAction("action1", workflow.getIdentity());
+      action.setCurrentStep(step);
+      action.setCurrentStepIdentity(step.getIdentity());
+      list.add(action);
+    }
+
+    return list;
   }
 
   protected WorkflowFile getTestWorkflowFile(final String identity, final String workflowIdentity) {
