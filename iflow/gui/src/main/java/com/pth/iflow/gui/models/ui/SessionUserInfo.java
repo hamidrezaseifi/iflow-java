@@ -23,7 +23,7 @@ import com.pth.iflow.gui.models.UserGroup;
 import com.pth.iflow.gui.models.WorkflowType;
 import com.pth.iflow.gui.models.workflow.IWorkflow;
 import com.pth.iflow.gui.services.IUserAccess;
-import com.pth.iflow.gui.services.IWorkflowAccess;
+import com.pth.iflow.gui.services.IWorkflowTypeHandler;
 
 @SessionScope(proxyMode = ScopedProxyMode.TARGET_CLASS)
 @Component
@@ -52,7 +52,7 @@ public class SessionUserInfo {
   IUserAccess userAccess;
 
   @Autowired
-  IWorkflowAccess workflowAccess;
+  IWorkflowTypeHandler workflowTypeHandler;
 
   public boolean isLoggedIn() {
     return (this.user != null) && (this.companyProfile != null);
@@ -162,8 +162,8 @@ public class SessionUserInfo {
   public Map<String, WorkflowType> getCompanyWorkflowTypes() throws IFlowMessageConversionFailureException {
     if (this.comapnyWorkflowTypes.size() == 0) {
       try {
-        final List<WorkflowType> typeList = this.workflowAccess.readWorkflowTypeList(this.companyProfile.getCompany().getIdentity(),
-                                                                                     this.getToken());
+        final List<WorkflowType> typeList = this.workflowTypeHandler.readWorkflowTypeList(this.companyProfile.getCompany().getIdentity(),
+                                                                                          this.getToken());
         this.comapnyWorkflowTypes.putAll(typeList.stream().collect(Collectors.toMap(t -> t.getIdentity(), t -> t)));
       }
       catch (GuiCustomizedException | MalformedURLException e) {
@@ -181,8 +181,8 @@ public class SessionUserInfo {
   public WorkflowType getWorkflowTypeById(final String workflowTypId) throws IFlowMessageConversionFailureException {
     if (this.comapnyWorkflowTypes.size() == 0) {
       try {
-        final List<WorkflowType> typeList = this.workflowAccess.readWorkflowTypeList(this.companyProfile.getCompany().getIdentity(),
-                                                                                     this.getToken());
+        final List<WorkflowType> typeList = this.workflowTypeHandler.readWorkflowTypeList(this.companyProfile.getCompany().getIdentity(),
+                                                                                          this.getToken());
         this.comapnyWorkflowTypes.putAll(typeList.stream().collect(Collectors.toMap(t -> t.getIdentity(), t -> t)));
       }
       catch (GuiCustomizedException | MalformedURLException e) {

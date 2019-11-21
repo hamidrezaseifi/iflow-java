@@ -5,7 +5,6 @@ import java.util.List;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.WorkflowSearchFilter;
-import com.pth.iflow.gui.models.WorkflowType;
 import com.pth.iflow.gui.models.workflow.IWorkflow;
 import com.pth.iflow.gui.models.workflow.IWorkflowSaveRequest;
 
@@ -16,8 +15,6 @@ public interface IWorkflowAccess<W extends IWorkflow, WS extends IWorkflowSaveRe
   List<W> createWorkflow(final WS createRequest, final String token) throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
   W saveWorkflow(final WS request, final String token) throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
-
-  List<WorkflowType> readWorkflowTypeList(final String companyIdentity, final String token) throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
   List<W> searchWorkflow(final WorkflowSearchFilter workflowSearchFilter, final String token) throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 

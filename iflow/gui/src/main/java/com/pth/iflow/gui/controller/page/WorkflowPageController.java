@@ -17,18 +17,13 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import com.pth.iflow.common.enums.EAssignType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
-import com.pth.iflow.gui.models.Workflow;
 import com.pth.iflow.gui.models.WorkflowFile;
 import com.pth.iflow.gui.models.ui.FileSavingData;
 import com.pth.iflow.gui.services.IUploadFileManager;
-import com.pth.iflow.gui.services.IWorkflowHandler;
 
 @Controller
 @RequestMapping(value = "/workflow")
 public class WorkflowPageController extends GuiPageControllerBase {
-
-  @Autowired
-  private IWorkflowHandler workflowHandler;
 
   @Autowired
   private IUploadFileManager uploadFileManager;
@@ -55,14 +50,14 @@ public class WorkflowPageController extends GuiPageControllerBase {
   @GetMapping(path = { "/edit/{workflowIdentity}" })
   public String showWorkflowEdit(final Model model, @PathVariable(required = false) final String workflowIdentity, final HttpServletResponse response) throws GuiCustomizedException, IOException, IFlowMessageConversionFailureException {
 
-    final Workflow workflow = this.workflowHandler.readWorkflow(workflowIdentity);
+    // final Workflow workflow = this.workflowHandler.readWorkflow(workflowIdentity);
 
     model.addAttribute("UserAssign", EAssignType.USER.getName());
     model.addAttribute("DepartmentAssign", EAssignType.DEPARTMENT.getName());
     model.addAttribute("DepartmentGroupAssign", EAssignType.DEPARTMENTGROUP.getName());
     model.addAttribute("workflowIdentity", workflowIdentity);
 
-    return workflow.getCurrentStep().getViewName(); // "workflow/edit";
+    return workflow.getCurrentStep().getViewName();
   }
 
   @ResponseStatus(HttpStatus.OK)

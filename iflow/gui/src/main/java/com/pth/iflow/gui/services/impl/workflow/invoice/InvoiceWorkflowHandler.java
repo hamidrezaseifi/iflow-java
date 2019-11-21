@@ -181,13 +181,6 @@ public class InvoiceWorkflowHandler implements IWorkflowHandler<InvoiceWorkflow,
   }
 
   @Override
-  public List<WorkflowType> readWorkflowTypeList(final String companyIdentity) throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
-    logger.debug("Read all workflow from company");
-
-    return this.workflowAccess.readWorkflowTypeList(companyIdentity, this.sessionUserInfo.getToken());
-  }
-
-  @Override
   public List<InvoiceWorkflow> searchWorkflow(final WorkflowSearchFilter workflowSearchFilter) throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     logger.debug("Search workflow from company");
