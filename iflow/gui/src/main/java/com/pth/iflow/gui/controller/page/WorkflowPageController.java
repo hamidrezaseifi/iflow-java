@@ -35,11 +35,12 @@ public class WorkflowPageController extends GuiPageControllerBase {
 
   @ResponseStatus(HttpStatus.OK)
   @GetMapping(path = { "/create" })
-  public String showWorkflowCreate(final Model model) throws GuiCustomizedException, MalformedURLException {
+  public String showWorkflowCreate(final Model model) throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     model.addAttribute("UserAssign", EAssignType.USER.getName());
     model.addAttribute("DepartmentAssign", EAssignType.DEPARTMENT.getName());
     model.addAttribute("DepartmentGroupAssign", EAssignType.DEPARTMENTGROUP.getName());
+    model.addAttribute("WorkflowTyoeList", this.getAllWorkflowTypes());
 
     return "workflow/create";
   }

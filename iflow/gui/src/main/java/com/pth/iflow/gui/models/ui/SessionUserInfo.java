@@ -1,6 +1,7 @@
 package com.pth.iflow.gui.models.ui;
 
 import java.net.MalformedURLException;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -161,46 +162,25 @@ public class SessionUserInfo {
    * @throws IFlowMessageConversionFailureException
    */
   public Map<String, WorkflowType> getCompanyWorkflowTypes() throws IFlowMessageConversionFailureException {
-    if (this.comapnyWorkflowTypes.size() == 0) {
-      try {
-        final List<WorkflowType> typeList = this.workflowTypeHandler.readWorkflowTypeList(this.companyProfile.getCompany().getIdentity(),
-                                                                                          this.getToken());
-        this.comapnyWorkflowTypes.putAll(typeList.stream().collect(Collectors.toMap(t -> t.getIdentity(), t -> t)));
-      }
-      catch (GuiCustomizedException | MalformedURLException e) {
-        logger.error("error in reading company workflowtype list: {} \n {}", e.getMessage(), e);
-      }
-    }
+    verifyWorkflowTypes();
 
     return this.comapnyWorkflowTypes;
   }
 
   public WorkflowType getWorkflowTypeById(final String workflowTypIdentity) throws IFlowMessageConversionFailureException {
-    if (this.comapnyWorkflowTypes.size() == 0) {
-      try {
-        final List<WorkflowType> typeList = this.workflowTypeHandler.readWorkflowTypeList(this.companyProfile.getCompany().getIdentity(),
-                                                                                          this.getToken());
-        this.comapnyWorkflowTypes.putAll(typeList.stream().collect(Collectors.toMap(t -> t.getIdentity(), t -> t)));
-      }
-      catch (GuiCustomizedException | MalformedURLException e) {
-        logger.error("error in reading company workflowtype: {} \n {}", e.getMessage(), e);
-      }
-    }
+    verifyWorkflowTypes();
 
     return this.comapnyWorkflowTypes.containsKey(workflowTypIdentity) ? this.comapnyWorkflowTypes.get(workflowTypIdentity) : null;
   }
 
+  public Collection<WorkflowType> getAllWorkflowTypes() throws IFlowMessageConversionFailureException {
+    verifyWorkflowTypes();
+
+    return this.comapnyWorkflowTypes.values();
+  }
+
   public WorkflowTypeStep getWorkflowStepTypeByIdentity(final String workflowTypIdentity, final String workflowTypStepIdentity) throws IFlowMessageConversionFailureException {
-    if (this.comapnyWorkflowTypes.size() == 0) {
-      try {
-        final List<WorkflowType> typeList = this.workflowTypeHandler.readWorkflowTypeList(this.companyProfile.getCompany().getIdentity(),
-                                                                                          this.getToken());
-        this.comapnyWorkflowTypes.putAll(typeList.stream().collect(Collectors.toMap(t -> t.getIdentity(), t -> t)));
-      }
-      catch (GuiCustomizedException | MalformedURLException e) {
-        logger.error("error in reading company workflowtype: {} \n {}", e.getMessage(), e);
-      }
-    }
+    verifyWorkflowTypes();
 
     if (this.comapnyWorkflowTypes.containsKey(workflowTypIdentity)) {
       final WorkflowType type = this.comapnyWorkflowTypes.get(workflowTypIdentity);
@@ -252,6 +232,19 @@ public class SessionUserInfo {
 
   public List<UserGroup> getCompanyUserGroups() {
     return this.companyProfile.getUserGroups();
+  }
+
+  private void verifyWorkflowTypes() throws IFlowMessageConversionFailureException {
+    if (this.comapnyWorkflowTypes.size() == 0) {
+      try {
+        final List<WorkflowType> typeList = this.workflowTypeHandler.readWorkflowTypeList(this.companyProfile.getCompany().getIdentity(),
+                                                                                          this.getToken());
+        this.comapnyWorkflowTypes.putAll(typeList.stream().collect(Collectors.toMap(t -> t.getIdentity(), t -> t)));
+      }
+      catch (GuiCustomizedException | MalformedURLException e) {
+        logger.error("error in reading company workflowtype: {} \n {}", e.getMessage(), e);
+      }
+    }
   }
 
 }

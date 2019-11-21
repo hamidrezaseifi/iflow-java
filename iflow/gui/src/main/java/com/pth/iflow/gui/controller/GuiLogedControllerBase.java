@@ -1,6 +1,7 @@
 package com.pth.iflow.gui.controller;
 
 import java.net.MalformedURLException;
+import java.util.Collection;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +17,7 @@ import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.Company;
 import com.pth.iflow.gui.models.User;
 import com.pth.iflow.gui.models.WorkflowMessage;
+import com.pth.iflow.gui.models.WorkflowType;
 import com.pth.iflow.gui.models.WorkflowTypeStep;
 import com.pth.iflow.gui.models.ui.SessionUserInfo;
 import com.pth.iflow.gui.services.IWorkflowMessageHanlder;
@@ -67,6 +69,11 @@ public class GuiLogedControllerBase {
   protected WorkflowTypeStep getWorkflowStepTypeByIdentity(final String workflowTypIdentity, final String workflowTypStepIdentity) throws IFlowMessageConversionFailureException {
 
     return this.sessionUserInfo.getWorkflowStepTypeByIdentity(workflowTypIdentity, workflowTypStepIdentity);
+  }
+
+  protected Collection<WorkflowType> getAllWorkflowTypes() throws IFlowMessageConversionFailureException {
+
+    return this.sessionUserInfo.getAllWorkflowTypes();
   }
 
   protected String getLoggedToken() {
