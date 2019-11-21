@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
-
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.Company;
@@ -22,8 +20,8 @@ import com.pth.iflow.gui.models.CompanyProfile;
 import com.pth.iflow.gui.models.Department;
 import com.pth.iflow.gui.models.User;
 import com.pth.iflow.gui.models.UserGroup;
-import com.pth.iflow.gui.models.Workflow;
 import com.pth.iflow.gui.models.WorkflowType;
+import com.pth.iflow.gui.models.workflow.IWorkflow;
 import com.pth.iflow.gui.services.IUserAccess;
 import com.pth.iflow.gui.services.IWorkflowAccess;
 
@@ -31,30 +29,30 @@ import com.pth.iflow.gui.services.IWorkflowAccess;
 @Component
 public class SessionUserInfo {
 
-  private static final Logger             logger                     = LoggerFactory.getLogger(SessionUserInfo.class);
+  private static final Logger logger = LoggerFactory.getLogger(SessionUserInfo.class);
 
-  public static String                    SESSION_LOGGEDUSERINFO_KEY = "mdm-session-user";
+  public static String SESSION_LOGGEDUSERINFO_KEY = "mdm-session-user";
 
-  private Date                            loginTime;
-  private User                            user;
-  private CompanyProfile                  companyProfile;
-  private String                          token;
-  private String                          sessionId;
+  private Date           loginTime;
+  private User           user;
+  private CompanyProfile companyProfile;
+  private String         token;
+  private String         sessionId;
 
-  private final Map<String, Workflow>     cachedWorkflow             = new HashMap<>();
+  private final Map<String, IWorkflow> cachedWorkflow = new HashMap<>();
 
-  private final Map<String, User>         companyUsers               = new HashMap<>();
+  private final Map<String, User> companyUsers = new HashMap<>();
 
-  private final Map<String, WorkflowType> comapnyWorkflowTypes       = new HashMap<>();
+  private final Map<String, WorkflowType> comapnyWorkflowTypes = new HashMap<>();
 
   @Value("${server.session.timeout}")
-  private int                             sessionTimeOut;
+  private int sessionTimeOut;
 
   @Autowired
-  IUserAccess                             userAccess;
+  IUserAccess userAccess;
 
   @Autowired
-  IWorkflowAccess                         workflowAccess;
+  IWorkflowAccess workflowAccess;
 
   public boolean isLoggedIn() {
     return (this.user != null) && (this.companyProfile != null);
@@ -142,7 +140,8 @@ public class SessionUserInfo {
       try {
         final List<User> userList = this.userAccess.getCompanyUserList(this.companyProfile.getCompany().getIdentity());
         this.companyUsers.putAll(userList.stream().collect(Collectors.toMap(u -> u.getEmail(), u -> u)));
-      } catch (GuiCustomizedException | MalformedURLException e) {
+      }
+      catch (GuiCustomizedException | MalformedURLException e) {
         logger.error("error in reading company user list: {} \n {}", e.getMessage(), e);
       }
     }
@@ -164,9 +163,10 @@ public class SessionUserInfo {
     if (this.comapnyWorkflowTypes.size() == 0) {
       try {
         final List<WorkflowType> typeList = this.workflowAccess.readWorkflowTypeList(this.companyProfile.getCompany().getIdentity(),
-            this.getToken());
+                                                                                     this.getToken());
         this.comapnyWorkflowTypes.putAll(typeList.stream().collect(Collectors.toMap(t -> t.getIdentity(), t -> t)));
-      } catch (GuiCustomizedException | MalformedURLException e) {
+      }
+      catch (GuiCustomizedException | MalformedURLException e) {
         logger.error("error in reading company workflowtype list: {} \n {}", e.getMessage(), e);
       }
     }
@@ -182,9 +182,10 @@ public class SessionUserInfo {
     if (this.comapnyWorkflowTypes.size() == 0) {
       try {
         final List<WorkflowType> typeList = this.workflowAccess.readWorkflowTypeList(this.companyProfile.getCompany().getIdentity(),
-            this.getToken());
+                                                                                     this.getToken());
         this.comapnyWorkflowTypes.putAll(typeList.stream().collect(Collectors.toMap(t -> t.getIdentity(), t -> t)));
-      } catch (GuiCustomizedException | MalformedURLException e) {
+      }
+      catch (GuiCustomizedException | MalformedURLException e) {
         logger.error("error in reading company workflowtype: {} \n {}", e.getMessage(), e);
       }
     }
@@ -201,7 +202,8 @@ public class SessionUserInfo {
       try {
         final List<User> userList = this.userAccess.getCompanyUserList(this.companyProfile.getCompany().getIdentity());
         this.companyUsers.putAll(userList.stream().collect(Collectors.toMap(u -> u.getIdentity(), u -> u)));
-      } catch (GuiCustomizedException | MalformedURLException e) {
+      }
+      catch (GuiCustomizedException | MalformedURLException e) {
         logger.error("error in reading user list: {} \n {}", e.getMessage(), e);
       }
     }
@@ -211,7 +213,7 @@ public class SessionUserInfo {
 
   // Map<String, GuiWorkflow> cachedWorkflow
 
-  public void addCachedWorkflow(final Workflow workflow) {
+  public void addCachedWorkflow(final IWorkflow workflow) {
     this.cachedWorkflow.put(workflow.getIdentity(), workflow);
   }
 
@@ -219,7 +221,7 @@ public class SessionUserInfo {
     return this.cachedWorkflow.containsKey(identity);
   }
 
-  public Workflow getCachedWorkflow(final String identity) {
+  public IWorkflow getCachedWorkflow(final String identity) {
     return this.cachedWorkflow.get(identity);
   }
 

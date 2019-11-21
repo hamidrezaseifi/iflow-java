@@ -327,14 +327,13 @@ public class IflowRestPaths {
 
     public static final String WORKFLOWMESSAGE_READ_BY_USEREMAIL = "/workflowoffer/user/{email}/{status}";
 
-    public static final String INVOICEWORKFLOW_CREATE                    = "/workflow/invoice/create";
-    public static final String INVOICEWORKFLOW_SAVE                      = "/workflow/invoice/save";
-    public static final String INVOICEWORKFLOW_READ_BY_IDENTITY          = "/workflow/invoice/readbyid/{identity}";
-    public static final String INVOICEWORKFLOW_READ_LIST                 = "/workflow/invoice/list";
-    public static final String INVOICEWORKFLOW_READ_LIST_BY_TYPEIDENTITY = "/workflow/invoice/type/list/{identity}";
-    public static final String INVOICEWORKFLOW_READ_LIST_BY_USEREMAIL    = "/workflow/invoice/user/list/{email}/{status}";
-    public static final String INVOICEWORKFLOW_SEARCH                    = "/workflow/invoice/search";
-    public static final String INVOICEWORKFLOW_VALIDATE                  = "/workflow/invoice/validate";
+    public static final String INVOICEWORKFLOW_CREATE                 = "/workflow/invoice/create";
+    public static final String INVOICEWORKFLOW_SAVE                   = "/workflow/invoice/save";
+    public static final String INVOICEWORKFLOW_READ_BY_IDENTITY       = "/workflow/invoice/readbyid/{identity}";
+    public static final String INVOICEWORKFLOW_READ_LIST              = "/workflow/invoice/list";
+    public static final String INVOICEWORKFLOW_READ_LIST_BY_USEREMAIL = "/workflow/invoice/user/list/{email}/{status}";
+    public static final String INVOICEWORKFLOW_SEARCH                 = "/workflow/invoice/search";
+    public static final String INVOICEWORKFLOW_VALIDATE               = "/workflow/invoice/validate";
 
     public static final String SINGLETASKWORKFLOW_CREATE                    = "/workflow/singletask/create";
     public static final String SINGLETASKWORKFLOW_SAVE                      = "/workflow/singletask/save";
@@ -374,44 +373,99 @@ public class IflowRestPaths {
       return builder.build(identity);
     }
 
-    public static URI READ_INVOICE_BY_IDENTITY_URIBUILDER(final String identity) {
+    public static URI READ_WORKFLOWMESSAGE_READ_BY_USER(final String email, final int status) {
+      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOWMESSAGE_READ_BY_USEREMAIL);
+      return builder.build(email, status);
+    }
+
+    public static URI READ_INVOICEWORKFLOW_BY_IDENTITY_URIBUILDER(final String identity) {
       final IflowUriBuilder builder = new IflowUriBuilder(INVOICEWORKFLOW_READ_BY_IDENTITY);
       return builder.build(identity);
     }
 
-    public static URI READ_INVOICELIST_BY_TYPEID_URIBUILDER(final String identity) {
-      final IflowUriBuilder builder = new IflowUriBuilder(INVOICEWORKFLOW_READ_LIST_BY_TYPEIDENTITY);
-      return builder.build(identity);
-    }
-
-    public static URI READ_INVOICELIST_BY_USERID_URIBUILDER(final String email, final int status) {
+    public static URI READ_INVOICEWORKFLOWLIST_BY_USERID_URIBUILDER(final String email, final int status) {
       final IflowUriBuilder builder = new IflowUriBuilder(INVOICEWORKFLOW_READ_LIST_BY_USEREMAIL);
       return builder.build(email, status);
     }
 
-    public static URI CREATE_INVOICE() {
+    public static URI CREATE_INVOICEWORKFLOW() {
       final IflowUriBuilder builder = new IflowUriBuilder(INVOICEWORKFLOW_CREATE);
       return builder.build();
     }
 
-    public static URI SAVE_INVOICE() {
+    public static URI SAVE_INVOICEWORKFLOW() {
       final IflowUriBuilder builder = new IflowUriBuilder(INVOICEWORKFLOW_SAVE);
       return builder.build();
     }
 
-    public static URI SEARCH_INVOICE() {
+    public static URI SEARCH_INVOICEWORKFLOW() {
       final IflowUriBuilder builder = new IflowUriBuilder(INVOICEWORKFLOW_SEARCH);
       return builder.build();
     }
 
-    public static URI VALIDATE_INVOICE() {
+    public static URI VALIDATE_INVOICEWORKFLOW() {
       final IflowUriBuilder builder = new IflowUriBuilder(INVOICEWORKFLOW_VALIDATE);
       return builder.build();
     }
 
-    public static URI READ_WORKFLOWMESSAGE_READ_BY_USER(final String email, final int status) {
-      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOWMESSAGE_READ_BY_USEREMAIL);
+    public static URI READ_SINGLETASKWORKFLOW_BY_IDENTITY_URIBUILDER(final String identity) {
+      final IflowUriBuilder builder = new IflowUriBuilder(SINGLETASKWORKFLOW_READ_BY_IDENTITY);
+      return builder.build(identity);
+    }
+
+    public static URI READ_SINGLETASKWORKFLOWLIST_BY_USERID_URIBUILDER(final String email, final int status) {
+      final IflowUriBuilder builder = new IflowUriBuilder(SINGLETASKWORKFLOW_READ_LIST_BY_USEREMAIL);
       return builder.build(email, status);
+    }
+
+    public static URI CREATE_SINGLETASKWORKFLOW() {
+      final IflowUriBuilder builder = new IflowUriBuilder(SINGLETASKWORKFLOW_CREATE);
+      return builder.build();
+    }
+
+    public static URI SAVE_SINGLETASKWORKFLOW() {
+      final IflowUriBuilder builder = new IflowUriBuilder(SINGLETASKWORKFLOW_SAVE);
+      return builder.build();
+    }
+
+    public static URI SEARCH_SINGLETASKWORKFLOW() {
+      final IflowUriBuilder builder = new IflowUriBuilder(SINGLETASKWORKFLOW_SEARCH);
+      return builder.build();
+    }
+
+    public static URI VALIDATE_SINGLETASKWORKFLOW() {
+      final IflowUriBuilder builder = new IflowUriBuilder(SINGLETASKWORKFLOW_VALIDATE);
+      return builder.build();
+    }
+
+    public static URI READ_TESTTHREETASKWORKFLOW_BY_IDENTITY_URIBUILDER(final String identity) {
+      final IflowUriBuilder builder = new IflowUriBuilder(TESTTHREETASKWORKFLOW_READ_BY_IDENTITY);
+      return builder.build(identity);
+    }
+
+    public static URI READ_TESTTHREETASKWORKFLOWLIST_BY_USERID_URIBUILDER(final String email, final int status) {
+      final IflowUriBuilder builder = new IflowUriBuilder(TESTTHREETASKWORKFLOW_READ_LIST_BY_USEREMAIL);
+      return builder.build(email, status);
+    }
+
+    public static URI CREATE_TESTTHREETASKWORKFLOW() {
+      final IflowUriBuilder builder = new IflowUriBuilder(TESTTHREETASKWORKFLOW_CREATE);
+      return builder.build();
+    }
+
+    public static URI SAVE_TESTTHREETASKWORKFLOW() {
+      final IflowUriBuilder builder = new IflowUriBuilder(TESTTHREETASKWORKFLOW_SAVE);
+      return builder.build();
+    }
+
+    public static URI SEARCH_TESTTHREETASKWORKFLOW() {
+      final IflowUriBuilder builder = new IflowUriBuilder(TESTTHREETASKWORKFLOW_SEARCH);
+      return builder.build();
+    }
+
+    public static URI VALIDATE_TESTTHREETASKWORKFLOW() {
+      final IflowUriBuilder builder = new IflowUriBuilder(TESTTHREETASKWORKFLOW_VALIDATE);
+      return builder.build();
     }
 
   }
