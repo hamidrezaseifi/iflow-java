@@ -29,6 +29,7 @@ import com.pth.iflow.common.edo.models.workflow.singletask.SingleTaskWorkflowSav
 import com.pth.iflow.common.edo.models.workflow.testthreetask.TestThreeTaskWorkflowEdo;
 import com.pth.iflow.common.edo.models.workflow.testthreetask.TestThreeTaskWorkflowSaveRequestEdo;
 import com.pth.iflow.common.enums.EAssignType;
+import com.pth.iflow.common.enums.EInvoiceType;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.enums.EWorkflowMessageType;
 import com.pth.iflow.common.enums.EWorkflowProcessCommand;
@@ -252,7 +253,7 @@ public class GuiModelEdoMapper {
     model.setDiscountEnterDate(edo.getDiscountEnterDate());
     model.setDiscountRate(edo.getDiscountRate());
     model.setInvoceDate(edo.getInvoceDate());
-    model.setInvoiceType(edo.getInvoiceType());
+    model.setInvoiceType(EInvoiceType.ofValue(edo.getInvoiceType()));
     model.setIsDirectDebitPermission(edo.getIsDirectDebitPermission());
     model.setPartnerCode(edo.getPartnerCode());
     model.setPaymentAmount(edo.getPaymentAmount());

@@ -1,9 +1,6 @@
 package com.pth.iflow.gui.models.workflow;
 
 import java.util.List;
-import com.pth.iflow.common.enums.EWorkflowActionStatus;
-import com.pth.iflow.common.enums.EWorkflowStatus;
-import com.pth.iflow.common.enums.EWorkflowType;
 import com.pth.iflow.gui.models.User;
 import com.pth.iflow.gui.models.WorkflowAction;
 import com.pth.iflow.gui.models.WorkflowFile;
@@ -11,12 +8,6 @@ import com.pth.iflow.gui.models.WorkflowType;
 import com.pth.iflow.gui.models.WorkflowTypeStep;
 
 public interface IWorkflow {
-
-  public String getIdentity();
-
-  public void setIdentity(final String identity);
-
-  public boolean isIdentityNotSet();
 
   public WorkflowType getWorkflowType();
 
@@ -30,14 +21,6 @@ public interface IWorkflow {
 
   public void setComments(final String comments);
 
-  public EWorkflowStatus getStatus();
-
-  public Integer getStatusInt();
-
-  public void setStatus(final Integer status);
-
-  public void setStatus(final EWorkflowStatus status);
-
   public Integer getVersion();
 
   public void setVersion(final Integer version);
@@ -48,17 +31,11 @@ public interface IWorkflow {
 
   public List<WorkflowAction> getActions();
 
-  public boolean hasAction();
-
   public void setActions(final List<WorkflowAction> actions);
-
-  public abstract EWorkflowType getWorkflowTypeEnum();
 
   public String getCurrentStepIdentity();
 
   public void setCurrentStepIdentity(final String currentStepIdentity);
-
-  public boolean isCurrentStepIdentity(final String stepIdentity);
 
   public String getControllerIdentity();
 
@@ -68,39 +45,15 @@ public interface IWorkflow {
 
   public void setCreatedByIdentity(final String createdByIdentity);
 
-  public boolean hasActiveAction();
-
   public WorkflowAction getActiveAction();
-
-  public WorkflowAction getLastAction();
 
   public boolean isAssigned();
 
-  public void setActiveActionAssignTo(final String userIdentity);
-
-  public void setActiveActionStatus(final EWorkflowActionStatus status);
-
   public boolean isInitializing();
-
-  public boolean isOffering();
-
-  public boolean isArchived();
-
-  public boolean isAssignedStatus();
-
-  public boolean isDone();
-
-  public boolean hasController();
-
-  public boolean hasCreatedBy();
-
-  public boolean hasWorkflowType();
 
   public void addAction(final WorkflowAction action);
 
   public String getWorkflowTypeIdentity();
-
-  public boolean isNew();
 
   public boolean getHasActiveAction();
 
@@ -111,5 +64,9 @@ public interface IWorkflow {
   public void setControllerUser(User controllerUser);
 
   public void setCurrentUserIdentity(String currentUserIdentity);
+
+  public WorkflowFile addNewFile(String generateSavingFilePathPreffix, String identity2, String title, String fileExtention, String string);
+
+  public String getIdentity();
 
 }

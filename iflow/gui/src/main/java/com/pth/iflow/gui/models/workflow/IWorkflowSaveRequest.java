@@ -29,4 +29,10 @@ public interface IWorkflowSaveRequest<W extends IWorkflow> {
 
   public boolean isSaveCommand();
 
+  public String getSessionKey();
+
+  public void setSessionKey(String sessionKey);
+
+  void setAssignUser(final String userId);
+
 }

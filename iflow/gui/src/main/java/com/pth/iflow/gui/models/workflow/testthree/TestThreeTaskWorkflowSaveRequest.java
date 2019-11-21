@@ -2,6 +2,7 @@ package com.pth.iflow.gui.models.workflow.testthree;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.pth.iflow.common.enums.EAssignType;
 import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 import com.pth.iflow.gui.models.AssignItem;
 import com.pth.iflow.gui.models.workflow.IWorkflowSaveRequest;
@@ -12,6 +13,7 @@ public class TestThreeTaskWorkflowSaveRequest implements IWorkflowSaveRequest<Te
   private Integer                 expireDays;
   private List<AssignItem>        assigns = new ArrayList<>();
   private EWorkflowProcessCommand command;
+  private String                  sessionKey;
 
   public TestThreeTaskWorkflowSaveRequest() {
 
@@ -94,4 +96,29 @@ public class TestThreeTaskWorkflowSaveRequest implements IWorkflowSaveRequest<Te
     this.command = command;
   }
 
+  @Override
+  public void setAssignUser(final String userId) {
+    this.assigns.clear();
+    this.assigns.add(new AssignItem(userId, EAssignType.USER));
+  }
+
+  public static TestThreeTaskWorkflowSaveRequest generateNewNoExpireDays(final TestThreeTaskWorkflow workflow) {
+    final TestThreeTaskWorkflowSaveRequest request = new TestThreeTaskWorkflowSaveRequest();
+
+    request.setWorkflow(workflow);
+    request.setExpireDays(0);
+    request.setCommand(EWorkflowProcessCommand.CREATE);
+
+    return request;
+  }
+
+  @Override
+  public String getSessionKey() {
+    return sessionKey;
+  }
+
+  @Override
+  public void setSessionKey(final String sessionKey) {
+    this.sessionKey = sessionKey;
+  }
 }
