@@ -53,7 +53,7 @@ public class WorkflowHandlerTest extends TestDataProducer {
     when(this.sessionUserInfo.getToken()).thenReturn(this.validTocken);
     when(this.sessionUserInfo.getUserByIdentity(any(String.class))).thenReturn(this.getTestUser());
     when(this.sessionUserInfo.getUser()).thenReturn(this.getTestUser());
-    when(this.sessionUserInfo.getWorkflowTypeById(any(String.class))).thenReturn(this.getTestWorkflowType());
+    when(this.sessionUserInfo.getWorkflowTypeByIdentity(any(String.class))).thenReturn(this.getTestWorkflowType());
     when(this.messagesHelper.get(any(String.class))).thenReturn("");
 
     this.workflowHandler = new WorkflowHandler(this.workflowAccess, this.sessionUserInfo, this.uploadFileManager, this.messagesHelper);

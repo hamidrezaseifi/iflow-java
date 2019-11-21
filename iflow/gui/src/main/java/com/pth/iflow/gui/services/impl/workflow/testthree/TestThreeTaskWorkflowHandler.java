@@ -241,7 +241,7 @@ public class TestThreeTaskWorkflowHandler implements IWorkflowHandler<TestThreeT
 
   private TestThreeTaskWorkflow prepareWorkflow(final TestThreeTaskWorkflow workflow) throws IFlowMessageConversionFailureException {
 
-    workflow.setWorkflowType(this.sessionUserInfo.getWorkflowTypeById(workflow.getWorkflowTypeIdentity()));
+    workflow.setWorkflowType(this.sessionUserInfo.getWorkflowTypeByIdentity(workflow.getWorkflowTypeIdentity()));
     workflow.setCreatedByUser(this.sessionUserInfo.getUserByIdentity(workflow.getCreatedByIdentity()));
     workflow.setControllerUser(this.sessionUserInfo.getUserByIdentity(workflow.getControllerIdentity()));
     workflow.setCurrentUserIdentity(this.sessionUserInfo.getUser().getIdentity());

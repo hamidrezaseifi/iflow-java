@@ -167,7 +167,7 @@ public class SessionUserInfo {
     return this.comapnyWorkflowTypes;
   }
 
-  public WorkflowType getWorkflowTypeById(final String workflowTypIdentity) throws IFlowMessageConversionFailureException {
+  public WorkflowType getWorkflowTypeByIdentity(final String workflowTypIdentity) throws IFlowMessageConversionFailureException {
     verifyWorkflowTypes();
 
     return this.comapnyWorkflowTypes.containsKey(workflowTypIdentity) ? this.comapnyWorkflowTypes.get(workflowTypIdentity) : null;

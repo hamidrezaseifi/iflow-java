@@ -66,7 +66,7 @@ public class UserAccessTest extends TestDataProducer {
 
     when(this.sessionUserInfo.getToken()).thenReturn(this.validTocken);
     when(this.sessionUserInfo.getUserByIdentity(any(String.class))).thenReturn(this.getTestUser());
-    when(this.sessionUserInfo.getWorkflowTypeById(any(String.class))).thenReturn(this.getTestWorkflowType());
+    when(this.sessionUserInfo.getWorkflowTypeByIdentity(any(String.class))).thenReturn(this.getTestWorkflowType());
 
     this.userAccess = new UserAccess(this.restTemplate, this.profileModuleAccessConfig, this.sessionUserInfo);
 

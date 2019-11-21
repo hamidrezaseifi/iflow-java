@@ -3,6 +3,7 @@ package com.pth.iflow.gui.controller.page;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
@@ -35,14 +36,20 @@ public class WorkflowPageController extends GuiPageControllerBase {
 
   @ResponseStatus(HttpStatus.OK)
   @GetMapping(path = { "/create" })
-  public String showWorkflowCreate(final Model model) throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+  public String showCreateWorkflow(final Model model, @PathVariable(required = false) final String workflowTypeIdentity) throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     model.addAttribute("UserAssign", EAssignType.USER.getName());
     model.addAttribute("DepartmentAssign", EAssignType.DEPARTMENT.getName());
     model.addAttribute("DepartmentGroupAssign", EAssignType.DEPARTMENTGROUP.getName());
     model.addAttribute("WorkflowTyoeList", this.getAllWorkflowTypes());
 
-    return "workflow/create";
+    if (StringUtils.isEmpty(workflowTypeIdentity)) {
+      return "workflow/create";
+    }
+    else {
+      return this.getWorkflowTypeByIdentity(workflowTypeIdentity).getSteps().get(0).getViewName();
+    }
+
   }
 
   @ResponseStatus(HttpStatus.OK)

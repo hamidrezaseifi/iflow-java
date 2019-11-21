@@ -76,6 +76,11 @@ public class GuiLogedControllerBase {
     return this.sessionUserInfo.getAllWorkflowTypes();
   }
 
+  protected WorkflowType getWorkflowTypeByIdentity(final String workflowTypIdentity) throws IFlowMessageConversionFailureException {
+
+    return this.sessionUserInfo.getWorkflowTypeByIdentity(workflowTypIdentity);
+  }
+
   protected String getLoggedToken() {
 
     return this.sessionUserInfo.getToken();
