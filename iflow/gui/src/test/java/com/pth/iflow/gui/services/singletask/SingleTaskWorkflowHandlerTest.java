@@ -1,9 +1,12 @@
-package com.pth.iflow.gui.services;
+package com.pth.iflow.gui.services.singletask;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+
 import java.util.List;
+
 import javax.servlet.http.HttpSession;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -13,37 +16,37 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
+
 import com.pth.iflow.gui.TestDataProducer;
-import com.pth.iflow.gui.models.Workflow;
-import com.pth.iflow.gui.models.WorkflowSaveRequest;
 import com.pth.iflow.gui.models.WorkflowSearchFilter;
-import com.pth.iflow.gui.models.WorkflowType;
 import com.pth.iflow.gui.models.ui.SessionUserInfo;
-import com.pth.iflow.gui.services.impl.WorkflowHandler;
+import com.pth.iflow.gui.models.workflow.singletask.SingleTaskWorkflow;
+import com.pth.iflow.gui.models.workflow.singletask.SingleTaskWorkflowSaveRequest;
+import com.pth.iflow.gui.services.IUploadFileManager;
+import com.pth.iflow.gui.services.IWorkflowAccess;
+import com.pth.iflow.gui.services.IWorkflowHandler;
+import com.pth.iflow.gui.services.impl.workflow.singletask.SingleTaskWorkflowHandler;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class WorkflowHandlerTest extends TestDataProducer {
+public class SingleTaskWorkflowHandlerTest extends TestDataProducer {
 
-  private IWorkflowHandler workflowHandler;
-
-  @MockBean
-  private IWorkflowAccess workflowAccess;
+  private IWorkflowHandler<SingleTaskWorkflow, SingleTaskWorkflowSaveRequest> workflowHandler;
 
   @MockBean
-  private SessionUserInfo sessionUserInfo;
+  private IWorkflowAccess<SingleTaskWorkflow, SingleTaskWorkflowSaveRequest>  workflowAccess;
 
   @MockBean
-  private IUploadFileManager uploadFileManager;
+  private SessionUserInfo                                                     sessionUserInfo;
 
   @MockBean
-  private HttpSession mockedSession;
+  private IUploadFileManager                                                  uploadFileManager;
 
   @MockBean
-  private IMessagesHelper messagesHelper;
+  private HttpSession                                                         mockedSession;
 
-  private String validTocken;
+  private String                                                              validTocken;
 
   @Before
   public void setUp() throws Exception {
@@ -54,9 +57,8 @@ public class WorkflowHandlerTest extends TestDataProducer {
     when(this.sessionUserInfo.getUserByIdentity(any(String.class))).thenReturn(this.getTestUser());
     when(this.sessionUserInfo.getUser()).thenReturn(this.getTestUser());
     when(this.sessionUserInfo.getWorkflowTypeByIdentity(any(String.class))).thenReturn(this.getTestWorkflowType());
-    when(this.messagesHelper.get(any(String.class))).thenReturn("");
 
-    this.workflowHandler = new WorkflowHandler(this.workflowAccess, this.sessionUserInfo, this.uploadFileManager, this.messagesHelper);
+    this.workflowHandler = new SingleTaskWorkflowHandler(this.workflowAccess, this.sessionUserInfo, this.uploadFileManager);
 
   }
 
@@ -67,11 +69,11 @@ public class WorkflowHandlerTest extends TestDataProducer {
   @Test
   public void testReadWorkflow() throws Exception {
 
-    final Workflow workflow = this.getTestWorkflow("identity1");
+    final SingleTaskWorkflow workflow = this.getTestSingleTaskWorkflow("identity1");
 
     when(this.workflowAccess.readWorkflow(any(String.class), any(String.class))).thenReturn(workflow);
 
-    final Workflow resWorkflow = this.workflowHandler.readWorkflow(workflow.getIdentity());
+    final SingleTaskWorkflow resWorkflow = this.workflowHandler.readWorkflow(workflow.getIdentity());
 
     Assert.assertNotNull("Result workflow is not null!", resWorkflow);
     Assert.assertEquals("Result workflow has id 1!", resWorkflow.getIdentity(), workflow.getIdentity());
@@ -82,13 +84,13 @@ public class WorkflowHandlerTest extends TestDataProducer {
   @Test
   public void testCreateWorkflow() throws Exception {
 
-    final WorkflowSaveRequest createRequest = this.getTestWorkflowSaveRequest();
+    final SingleTaskWorkflowSaveRequest createRequest = this.getTestSingleTaskWorkflowSaveRequest();
 
-    final List<Workflow> workflowList = this.getTestWorkflowList();
+    final List<SingleTaskWorkflow> workflowList = this.getTestSingleTaskWorkflowList();
 
-    when(this.workflowAccess.createWorkflow(any(WorkflowSaveRequest.class), any(String.class))).thenReturn(workflowList);
+    when(this.workflowAccess.createWorkflow(any(SingleTaskWorkflowSaveRequest.class), any(String.class))).thenReturn(workflowList);
 
-    final List<Workflow> resWorkflowList = this.workflowHandler.createWorkflow(createRequest, this.mockedSession);
+    final List<SingleTaskWorkflow> resWorkflowList = this.workflowHandler.createWorkflow(createRequest, this.mockedSession);
 
     Assert.assertNotNull("Result result-list is not null!", resWorkflowList);
     Assert.assertEquals("Result result-list has the same size as expected!", resWorkflowList.size(), workflowList.size());
@@ -97,11 +99,11 @@ public class WorkflowHandlerTest extends TestDataProducer {
 
   @Test
   public void testSaveWorkflow() throws Exception {
-    final Workflow workflow = this.getTestWorkflow("identity1");
+    final SingleTaskWorkflow workflow = this.getTestSingleTaskWorkflow("identity1");
 
-    when(this.workflowAccess.saveWorkflow(any(WorkflowSaveRequest.class), any(String.class))).thenReturn(workflow);
+    when(this.workflowAccess.saveWorkflow(any(SingleTaskWorkflowSaveRequest.class), any(String.class))).thenReturn(workflow);
 
-    final Workflow resWorkflow = this.workflowHandler.saveWorkflow(workflow, this.mockedSession);
+    final SingleTaskWorkflow resWorkflow = this.workflowHandler.saveWorkflow(workflow, this.mockedSession);
 
     Assert.assertNotNull("Result workflow is not null!", resWorkflow);
     Assert.assertEquals("Result workflow has id 1!", resWorkflow.getIdentity(), workflow.getIdentity());
@@ -110,28 +112,14 @@ public class WorkflowHandlerTest extends TestDataProducer {
   }
 
   @Test
-  public void testReadWorkflowTypeList() throws Exception {
-
-    final List<WorkflowType> workflowTypeList = this.getTestWorkflowTypeList();
-
-    when(this.workflowAccess.readWorkflowTypeList(any(String.class), any(String.class))).thenReturn(workflowTypeList);
-
-    final List<WorkflowType> resWorkflowList = this.workflowHandler.readWorkflowTypeList("test-company");
-
-    Assert.assertNotNull("Result result-list is not null!", resWorkflowList);
-    Assert.assertEquals("Result result-list has the same size as expected!", resWorkflowList.size(), workflowTypeList.size());
-
-  }
-
-  @Test
   public void testSearchWorkflow() throws Exception {
     final WorkflowSearchFilter searchFilter = this.getTestWorkflowSearchFilter();
 
-    final List<Workflow> workflowList = this.getTestWorkflowList();
+    final List<SingleTaskWorkflow> workflowList = this.getTestSingleTaskWorkflowList();
 
     when(this.workflowAccess.searchWorkflow(any(WorkflowSearchFilter.class), any(String.class))).thenReturn(workflowList);
 
-    final List<Workflow> resWorkflowList = this.workflowHandler.searchWorkflow(searchFilter);
+    final List<SingleTaskWorkflow> resWorkflowList = this.workflowHandler.searchWorkflow(searchFilter);
 
     Assert.assertNotNull("Result result-list is not null!", resWorkflowList);
     Assert.assertEquals("Result result-list has the same size as expected!", resWorkflowList.size(), workflowList.size());

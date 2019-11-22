@@ -6,12 +6,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
 import javax.servlet.http.HttpSession;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.pth.iflow.common.edo.models.helper.IdentityModel;
 import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
@@ -26,7 +29,6 @@ import com.pth.iflow.gui.models.ui.SessionUserInfo;
 import com.pth.iflow.gui.models.ui.UploadFileSavingData;
 import com.pth.iflow.gui.models.workflow.singletask.SingleTaskWorkflow;
 import com.pth.iflow.gui.models.workflow.singletask.SingleTaskWorkflowSaveRequest;
-import com.pth.iflow.gui.services.IMessagesHelper;
 import com.pth.iflow.gui.services.IUploadFileManager;
 import com.pth.iflow.gui.services.IWorkflowAccess;
 import com.pth.iflow.gui.services.IWorkflowHandler;
@@ -34,28 +36,25 @@ import com.pth.iflow.gui.services.IWorkflowHandler;
 @Service
 public class SingleTaskWorkflowHandler implements IWorkflowHandler<SingleTaskWorkflow, SingleTaskWorkflowSaveRequest> {
 
-  private static final Logger logger = LoggerFactory.getLogger(SingleTaskWorkflowHandler.class);
+  private static final Logger                                                      logger = LoggerFactory
+      .getLogger(SingleTaskWorkflowHandler.class);
 
   private final IWorkflowAccess<SingleTaskWorkflow, SingleTaskWorkflowSaveRequest> workflowAccess;
 
-  private final SessionUserInfo sessionUserInfo;
+  private final SessionUserInfo                                                    sessionUserInfo;
 
-  private final IUploadFileManager uploadFileManager;
-
-  private final IMessagesHelper messagesHelper;
+  private final IUploadFileManager                                                 uploadFileManager;
 
   public SingleTaskWorkflowHandler(@Autowired final IWorkflowAccess<SingleTaskWorkflow, SingleTaskWorkflowSaveRequest> workflowAccess,
-                                   @Autowired final SessionUserInfo sessionUserInfo,
-                                   @Autowired final IUploadFileManager uploadFileManager,
-                                   @Autowired final IMessagesHelper messagesHelper) {
+      @Autowired final SessionUserInfo sessionUserInfo, @Autowired final IUploadFileManager uploadFileManager) {
     this.workflowAccess = workflowAccess;
     this.sessionUserInfo = sessionUserInfo;
     this.uploadFileManager = uploadFileManager;
-    this.messagesHelper = messagesHelper;
   }
 
   @Override
-  public SingleTaskWorkflow readWorkflow(final String workflowIdentity) throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+  public SingleTaskWorkflow readWorkflow(final String workflowIdentity)
+      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     logger.debug("Read workflow {}", workflowIdentity);
 
@@ -64,7 +63,8 @@ public class SingleTaskWorkflowHandler implements IWorkflowHandler<SingleTaskWor
   }
 
   @Override
-  public List<SingleTaskWorkflow> createWorkflow(final SingleTaskWorkflowSaveRequest createRequest, final HttpSession session) throws GuiCustomizedException, IOException, IFlowMessageConversionFailureException {
+  public List<SingleTaskWorkflow> createWorkflow(final SingleTaskWorkflowSaveRequest createRequest, final HttpSession session)
+      throws GuiCustomizedException, IOException, IFlowMessageConversionFailureException {
     logger.debug("Create workflow");
 
     createRequest.setCommand(EWorkflowProcessCommand.CREATE);
@@ -98,7 +98,8 @@ public class SingleTaskWorkflowHandler implements IWorkflowHandler<SingleTaskWor
           final FileSavingData archiveSavingFileInfo = tempFile.toFileSavingData();
           archiveSavingFileInfo.setWorkflowIdentity(workflow.getIdentity());
           archiveSavingFileInfo
-                               .setActionIdentity(workflow.getHasActiveAction() ? workflow.getActiveAction().getIdentity() : "no-action");;
+              .setActionIdentity(workflow.getHasActiveAction() ? workflow.getActiveAction().getIdentity() : "no-action");
+          ;
           archiveSavingFileInfo.setFilePath(archiveSavingFileInfo.generateSavingFilePathPreffix());
           archiveSavingFileInfo.setTempFilePath(tempFile.getFilePath());
 
@@ -107,11 +108,8 @@ public class SingleTaskWorkflowHandler implements IWorkflowHandler<SingleTaskWor
         final List<FileSavingData> savedArchiveFiles = this.uploadFileManager.copyFromTempToArchive(archiveSavingFileInfoList);
         for (final FileSavingData savedArchiveFile : savedArchiveFiles) {
 
-          workflow.addNewFile(savedArchiveFile.generateSavingFilePathPreffix(),
-                              this.sessionUserInfo.getUser().getIdentity(),
-                              savedArchiveFile.getTitle(),
-                              savedArchiveFile.getFileExtention(),
-                              "");
+          workflow.addNewFile(savedArchiveFile.generateSavingFilePathPreffix(), this.sessionUserInfo.getUser().getIdentity(),
+              savedArchiveFile.getTitle(), savedArchiveFile.getFileExtention(), "");
         }
 
         final SingleTaskWorkflow finalWorkflow = this.saveWorkflow(workflow, session);
@@ -126,7 +124,8 @@ public class SingleTaskWorkflowHandler implements IWorkflowHandler<SingleTaskWor
   }
 
   @Override
-  public SingleTaskWorkflow saveWorkflow(final SingleTaskWorkflow workflow, final HttpSession session) throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
+  public SingleTaskWorkflow saveWorkflow(final SingleTaskWorkflow workflow, final HttpSession session)
+      throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
     logger.debug("Save workflow");
 
     if (workflow.getHasActiveAction()) {
@@ -143,7 +142,8 @@ public class SingleTaskWorkflowHandler implements IWorkflowHandler<SingleTaskWor
   }
 
   @Override
-  public SingleTaskWorkflow assignWorkflow(final String workflowIdentity) throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
+  public SingleTaskWorkflow assignWorkflow(final String workflowIdentity)
+      throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
     logger.debug("Assign workflow");
 
     final SingleTaskWorkflow workflow = this.readWorkflow(workflowIdentity);
@@ -160,7 +160,8 @@ public class SingleTaskWorkflowHandler implements IWorkflowHandler<SingleTaskWor
   }
 
   @Override
-  public SingleTaskWorkflow doneWorkflow(final SingleTaskWorkflowSaveRequest saveRequest, final HttpSession session) throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
+  public SingleTaskWorkflow doneWorkflow(final SingleTaskWorkflowSaveRequest saveRequest, final HttpSession session)
+      throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
     logger.debug("Make workflow done");
 
     saveRequest.setCommand(EWorkflowProcessCommand.DONE);
@@ -172,7 +173,8 @@ public class SingleTaskWorkflowHandler implements IWorkflowHandler<SingleTaskWor
   }
 
   @Override
-  public SingleTaskWorkflow archiveWorkflow(final SingleTaskWorkflow workflow, final HttpSession session) throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
+  public SingleTaskWorkflow archiveWorkflow(final SingleTaskWorkflow workflow, final HttpSession session)
+      throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
     logger.debug("Make workflow archive");
 
     final SingleTaskWorkflowSaveRequest request = SingleTaskWorkflowSaveRequest.generateNewNoExpireDays(workflow);
@@ -185,7 +187,8 @@ public class SingleTaskWorkflowHandler implements IWorkflowHandler<SingleTaskWor
   }
 
   @Override
-  public List<SingleTaskWorkflow> searchWorkflow(final WorkflowSearchFilter workflowSearchFilter) throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+  public List<SingleTaskWorkflow> searchWorkflow(final WorkflowSearchFilter workflowSearchFilter)
+      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     logger.debug("Search workflow from company");
     final List<SingleTaskWorkflow> list = this.workflowAccess.searchWorkflow(workflowSearchFilter, this.sessionUserInfo.getToken());
@@ -194,13 +197,13 @@ public class SingleTaskWorkflowHandler implements IWorkflowHandler<SingleTaskWor
   }
 
   @Override
-  public WorkflowFile readWorkflowFile(final String workflowIdentity, final String fileIdentity) throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+  public WorkflowFile readWorkflowFile(final String workflowIdentity, final String fileIdentity)
+      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     SingleTaskWorkflow workflow = null;
     if (this.sessionUserInfo.hasCachedWorkflowIdentity(workflowIdentity)) {
       workflow = (SingleTaskWorkflow) this.sessionUserInfo.getCachedWorkflow(workflowIdentity);
-    }
-    else {
+    } else {
       workflow = this.readWorkflow(workflowIdentity);
     }
 
@@ -209,7 +212,8 @@ public class SingleTaskWorkflowHandler implements IWorkflowHandler<SingleTaskWor
     return workflowFile;
   }
 
-  private List<SingleTaskWorkflow> prepareWorkflowList(final List<SingleTaskWorkflow> pureWorkflowList) throws IFlowMessageConversionFailureException {
+  private List<SingleTaskWorkflow> prepareWorkflowList(final List<SingleTaskWorkflow> pureWorkflowList)
+      throws IFlowMessageConversionFailureException {
 
     final List<SingleTaskWorkflow> workflowList = new ArrayList<>();
 
@@ -224,9 +228,8 @@ public class SingleTaskWorkflowHandler implements IWorkflowHandler<SingleTaskWor
 
   private Map<String, WorkflowTypeStep> getIdMapedSteps(final WorkflowType workflowType) {
 
-    final Map<String, WorkflowTypeStep> list = workflowType.getSteps()
-                                                           .stream()
-                                                           .collect(Collectors.toMap(s -> s.getIdentity(), s -> s));
+    final Map<String, WorkflowTypeStep> list = workflowType.getSteps().stream()
+        .collect(Collectors.toMap(s -> s.getIdentity(), s -> s));
 
     return list;
   }
@@ -237,8 +240,7 @@ public class SingleTaskWorkflowHandler implements IWorkflowHandler<SingleTaskWor
 
     if (steps.containsKey(stepId)) {
       return steps.get(stepId);
-    }
-    else {
+    } else {
       return null;
     }
   }

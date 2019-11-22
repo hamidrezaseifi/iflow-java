@@ -2,17 +2,21 @@ package com.pth.iflow.gui;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
 import com.pth.iflow.common.enums.EAssignType;
+import com.pth.iflow.common.enums.EInvoiceType;
 import com.pth.iflow.common.enums.EWorkflowActionStatus;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.enums.EWorkflowMessageType;
 import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 import com.pth.iflow.common.enums.EWorkflowStatus;
+import com.pth.iflow.common.enums.EWorkflowType;
 import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
 import com.pth.iflow.gui.models.AssignItem;
 import com.pth.iflow.gui.models.Company;
@@ -21,17 +25,22 @@ import com.pth.iflow.gui.models.Department;
 import com.pth.iflow.gui.models.DepartmentGroup;
 import com.pth.iflow.gui.models.User;
 import com.pth.iflow.gui.models.UserGroup;
-import com.pth.iflow.gui.models.Workflow;
 import com.pth.iflow.gui.models.WorkflowAction;
 import com.pth.iflow.gui.models.WorkflowFile;
 import com.pth.iflow.gui.models.WorkflowFileVersion;
 import com.pth.iflow.gui.models.WorkflowMessage;
-import com.pth.iflow.gui.models.WorkflowSaveRequest;
 import com.pth.iflow.gui.models.WorkflowSearchFilter;
 import com.pth.iflow.gui.models.WorkflowType;
 import com.pth.iflow.gui.models.WorkflowTypeStep;
 import com.pth.iflow.gui.models.ui.SessionUserInfo;
 import com.pth.iflow.gui.models.ui.enums.EUiUserRole;
+import com.pth.iflow.gui.models.workflow.IWorkflow;
+import com.pth.iflow.gui.models.workflow.invoice.InvoiceWorkflow;
+import com.pth.iflow.gui.models.workflow.invoice.InvoiceWorkflowSaveRequest;
+import com.pth.iflow.gui.models.workflow.singletask.SingleTaskWorkflow;
+import com.pth.iflow.gui.models.workflow.singletask.SingleTaskWorkflowSaveRequest;
+import com.pth.iflow.gui.models.workflow.testthree.TestThreeTaskWorkflow;
+import com.pth.iflow.gui.models.workflow.testthree.TestThreeTaskWorkflowSaveRequest;
 
 public class TestDataProducer {
 
@@ -47,9 +56,8 @@ public class TestDataProducer {
 
   protected CompanyProfile getTestCompanyProfile() {
 
-    final CompanyProfile companyProfile = new CompanyProfile(this.getTestCompany(),
-                                                             this.getTestDepartmentList(),
-                                                             this.getTestUserGroupList());
+    final CompanyProfile companyProfile = new CompanyProfile(this.getTestCompany(), this.getTestDepartmentList(),
+        this.getTestUserGroupList());
 
     return companyProfile;
   }
@@ -94,75 +102,139 @@ public class TestDataProducer {
 
   protected List<User> getTestUserList() {
     final List<User> list = Arrays.asList(this.getTestUser("fname 1", "lname 1", "email 1"),
-                                          this.getTestUser("fname 2", "lname 2", "email 2"),
-                                          this.getTestUser("fname 3", "lname 3", "email 3"));
+        this.getTestUser("fname 2", "lname 2", "email 2"), this.getTestUser("fname 3", "lname 3", "email 3"));
 
     return list;
   }
 
-  protected Workflow getTestWorkflow(final String identity) {
-    final Workflow model = new Workflow();
-    model.setWorkflowType(getTestWorkflowType("workflowTypeIdentity", "workflowtype 1"));
+  protected WorkflowType getTestInvoiceWorkflowType() {
+
+    return this.getTestWorkflowType(EWorkflowType.INVOICE_WORKFLOW_TYPE);
+  }
+
+  protected WorkflowType getTestSingleTaskWorkflowType() {
+
+    return this.getTestWorkflowType(EWorkflowType.SINGLE_TASK_WORKFLOW_TYPE);
+  }
+
+  protected WorkflowType getTestTestThreeTaskWorkflowType() {
+
+    return this.getTestWorkflowType(EWorkflowType.THREE_TASK_WORKFLOW_TYPE);
+  }
+
+  private WorkflowType getTestWorkflowType(final EWorkflowType workflowTypeEnum) {
+    final WorkflowType model = new WorkflowType();
+    model.setCompanyIdentity("companyIdentity");
+    model.setIdentity(workflowTypeEnum.getIdentity());
+    model.setBaseTypeIdentity("baseTypeIdentity");
+    model.setTitle("utest title");
+    model.setStatus(1);
+    model.setVersion(1);
+    model.setAssignType(EWorkflowTypeAssignType.MANUAL);
+    model.setSendToController(true);
+    model.setIncreaseStepAutomatic(true);
+    model.setAllowAssign(true);
+    model.setSteps(Arrays.asList(this.getTestWorkflowTypeStep("step1", "step 1", 1),
+        this.getTestWorkflowTypeStep("step2", "step 2", 2), this.getTestWorkflowTypeStep("step3", "step 3", 3)));
+    model.setComments("comments");
+
+    return model;
+  }
+
+  private List<WorkflowAction> getTestWorkflowActionListFromType(final IWorkflow workflow) {
+
+    final WorkflowType workflowType = workflow.getWorkflowType();
+    final List<WorkflowAction> list = new ArrayList<>();
+    for (final WorkflowTypeStep step : workflowType.getSteps()) {
+      final WorkflowAction action = this.getTestWorkflowAction("action1", workflow.getIdentity());
+      action.setCurrentStep(step);
+      action.setCurrentStepIdentity(step.getIdentity());
+      list.add(action);
+    }
+
+    return list;
+  }
+
+  protected InvoiceWorkflow getTestInvoiceWorkflow(final String identity) {
+    final InvoiceWorkflow model = new InvoiceWorkflow();
+    model.setWorkflowType(this.getTestInvoiceWorkflowType());
     model.setWorkflowTypeIdentity(model.getWorkflowType().getIdentity());
     model.setIdentity(identity);
     model.setStatus(EWorkflowStatus.INITIALIZE);
     model.setVersion(1);
     model.setComments("comments");
     model.setControllerIdentity("controllerIdentity");
-    model.setCurrentStep(this.getTestWorkflowTypeStep());
+    model.setCurrentStep(model.getWorkflowType().getSteps().get(0));
     model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
     model.setCreatedByIdentity("createdByIdentity");
 
-    model.setActions(Arrays.asList(this.getTestWorkflowAction("action1", model.getIdentity()),
-                                   this.getTestWorkflowAction("action2", model.getIdentity()),
-                                   this.getTestWorkflowAction("action3", model.getIdentity())));
+    model.setActions(this.getTestWorkflowActionListFromType(model));
+
     model.setFiles(Arrays.asList(this.getTestWorkflowFile("file1", model.getIdentity()),
-                                 this.getTestWorkflowFile("file2", model.getIdentity()),
-                                 this.getTestWorkflowFile("file3", model.getIdentity())));
+        this.getTestWorkflowFile("file2", model.getIdentity()), this.getTestWorkflowFile("file3", model.getIdentity())));
+
+    model.setSender("sender");
+    model.setRegisterNumber("ext_reg_number");
+    model.setInvoceDate(LocalDate.now());
+    model.setPartnerCode("partner_code");
+    model.setVendorNumber("vendor_number");
+    model.setVendorName("vendor_name");
+    model.setIsDirectDebitPermission(Boolean.TRUE);
+    model.setInvoiceType(EInvoiceType.PAYMENT);
+    model.setDiscountEnterDate(LocalDate.now());
+    model.setDiscountRate(10.0);
+    model.setDiscountDeadline(10);
+    model.setDiscountDate(LocalDate.now());
+    model.setPaymentAmount(1000.0);
 
     return model;
   }
 
-  protected Workflow getTestWorkflow(final String identity, final WorkflowType workflowType) {
-    final Workflow model = new Workflow();
-    model.setWorkflowType(workflowType);
-    model.setWorkflowTypeIdentity(workflowType.getIdentity());
+  protected InvoiceWorkflow getTestInvoiceWorkflow(final String identity, final EWorkflowActionStatus actionStatus) {
+    final InvoiceWorkflow model = this.getTestInvoiceWorkflow(identity);
+    for (final WorkflowAction action : model.getActions()) {
+      action.setStatus(actionStatus);
+    }
+    return model;
+  }
+
+  protected SingleTaskWorkflow getTestSingleTaskWorkflow(final String identity) {
+    final SingleTaskWorkflow model = new SingleTaskWorkflow();
+    model.setWorkflowType(this.getTestSingleTaskWorkflowType());
+    model.setWorkflowTypeIdentity(model.getWorkflowType().getIdentity());
     model.setIdentity(identity);
     model.setStatus(EWorkflowStatus.INITIALIZE);
     model.setVersion(1);
     model.setComments("comments");
     model.setControllerIdentity("controllerIdentity");
-    model.setCurrentStep(workflowType.getSteps().get(0));
+    model.setCurrentStep(model.getWorkflowType().getSteps().get(0));
     model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
     model.setCreatedByIdentity("createdByIdentity");
 
-    model.setActions(Arrays.asList(this.getTestWorkflowAction("action1", model.getIdentity()),
-                                   this.getTestWorkflowAction("action2", model.getIdentity()),
-                                   this.getTestWorkflowAction("action3", model.getIdentity())));
+    model.setActions(this.getTestWorkflowActionListFromType(model));
+
     model.setFiles(Arrays.asList(this.getTestWorkflowFile("file1", model.getIdentity()),
-                                 this.getTestWorkflowFile("file2", model.getIdentity()),
-                                 this.getTestWorkflowFile("file3", model.getIdentity())));
+        this.getTestWorkflowFile("file2", model.getIdentity()), this.getTestWorkflowFile("file3", model.getIdentity())));
 
     return model;
   }
 
-  protected Workflow getTestWorkflow(final String identity, final EWorkflowActionStatus actionStatus) {
-    final Workflow model = new Workflow();
-    model.setWorkflowTypeIdentity("workflowTypeIdentity");
+  protected TestThreeTaskWorkflow getTestTestThreeTaskWorkflow(final String identity) {
+    final TestThreeTaskWorkflow model = new TestThreeTaskWorkflow();
+    model.setWorkflowType(this.getTestTestThreeTaskWorkflowType());
+    model.setWorkflowTypeIdentity(model.getWorkflowType().getIdentity());
     model.setIdentity(identity);
     model.setStatus(EWorkflowStatus.INITIALIZE);
     model.setVersion(1);
     model.setComments("comments");
     model.setControllerIdentity("controllerIdentity");
-    model.setCurrentStep(this.getTestWorkflowTypeStep());
+    model.setCurrentStep(model.getWorkflowType().getSteps().get(0));
     model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
     model.setCreatedByIdentity("createdByIdentity");
-    model.setActions(Arrays.asList(this.getTestWorkflowAction("action1", identity, actionStatus),
-                                   this.getTestWorkflowAction("action2", identity, actionStatus),
-                                   this.getTestWorkflowAction("action3", identity, actionStatus)));
-    model.setFiles(Arrays.asList(this.getTestWorkflowFile("file1", identity),
-                                 this.getTestWorkflowFile("file2", identity),
-                                 this.getTestWorkflowFile("file3", identity)));
+
+    model.setActions(this.getTestWorkflowActionListFromType(model));
+    model.setFiles(Arrays.asList(this.getTestWorkflowFile("file1", model.getIdentity()),
+        this.getTestWorkflowFile("file2", model.getIdentity()), this.getTestWorkflowFile("file3", model.getIdentity())));
 
     return model;
   }
@@ -180,17 +252,17 @@ public class TestDataProducer {
     model.setTitle("title " + identity);
     model.setExtention("ext");
     model.setFileVersions(Arrays.asList(this.getTestWorkflowFileVersion("filever1", 1, identity),
-                                        this.getTestWorkflowFileVersion("filever2", 2, identity),
-                                        this.getTestWorkflowFileVersion("filever3", 3, identity)));
+        this.getTestWorkflowFileVersion("filever2", 2, identity), this.getTestWorkflowFileVersion("filever3", 3, identity)));
 
     return model;
   }
 
-  protected WorkflowFileVersion getTestWorkflowFileVersion(final String identity, final int version, final String workflowFileIdentity) {
+  protected WorkflowFileVersion getTestWorkflowFileVersion(final String identity, final int version,
+      final String workflowFileIdentity) {
     final WorkflowFileVersion model = new WorkflowFileVersion();
     model.setStatus(1);
     model.setVersion(1);
-    model.setCreatedBy(getTestUser());
+    model.setCreatedBy(this.getTestUser());
     model.setCreatedByIdentity(model.getCreatedBy().getIdentity());
     model.setComments("comments");
     model.setFilePath("filePath");
@@ -205,25 +277,26 @@ public class TestDataProducer {
     model.setIdentity(identity);
     model.setStatus(EWorkflowActionStatus.OPEN);
     model.setVersion(1);
-    model.setCurrentStep(getTestWorkflowTypeStep());
+    model.setCurrentStep(this.getTestWorkflowTypeStep());
     model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
     model.setComments("comments");
-    model.setAssignToUser(getTestUser("fname", "lname", "assignedemail"));
+    model.setAssignToUser(this.getTestUser("fname", "lname", "assignedemail"));
     model.setAssignToIdentity(model.getAssignToUser().getIdentity());
 
     return model;
   }
 
-  protected WorkflowAction getTestWorkflowAction(final String identity, final String workflowIdentity, final EWorkflowActionStatus actionStatus) {
+  protected WorkflowAction getTestWorkflowAction(final String identity, final String workflowIdentity,
+      final EWorkflowActionStatus actionStatus) {
     final WorkflowAction model = new WorkflowAction();
     model.setWorkflowIdentity(workflowIdentity);
     model.setIdentity(identity);
     model.setStatus(actionStatus);
     model.setVersion(1);
-    model.setCurrentStep(getTestWorkflowTypeStep());
+    model.setCurrentStep(this.getTestWorkflowTypeStep());
     model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
     model.setComments("comments");
-    model.setAssignToUser(getTestUser("fname", "lname", "assignedemail"));
+    model.setAssignToUser(this.getTestUser("fname", "lname", "assignedemail"));
     model.setAssignToIdentity(model.getAssignToUser().getIdentity());
 
     return model;
@@ -242,8 +315,7 @@ public class TestDataProducer {
     model.setIncreaseStepAutomatic(true);
     model.setAllowAssign(true);
     model.setSteps(Arrays.asList(this.getTestWorkflowTypeStep("step1", "step 1", 1),
-                                 this.getTestWorkflowTypeStep("step2", "step 2", 2),
-                                 this.getTestWorkflowTypeStep("step3", "step 3", 3)));
+        this.getTestWorkflowTypeStep("step2", "step 2", 2), this.getTestWorkflowTypeStep("step3", "step 3", 3)));
     model.setComments("comments");
 
     return model;
@@ -262,8 +334,7 @@ public class TestDataProducer {
     model.setAllowAssign(true);
     model.setBaseTypeIdentity("baseTypeIdentity");
     model.setSteps(Arrays.asList(this.getTestWorkflowTypeStep("step1", "step 1", 1),
-                                 this.getTestWorkflowTypeStep("step2", "step 2", 2),
-                                 this.getTestWorkflowTypeStep("step3", "step 3", 3)));
+        this.getTestWorkflowTypeStep("step2", "step 2", 2), this.getTestWorkflowTypeStep("step3", "step 3", 3)));
     model.setComments("comments");
 
     return model;
@@ -271,8 +342,7 @@ public class TestDataProducer {
 
   protected List<WorkflowType> getTestWorkflowTypeList() {
     final List<WorkflowType> list = Arrays.asList(this.getTestWorkflowType("type1", "WorkflowType 1"),
-                                                  this.getTestWorkflowType("type2", "WorkflowType 2"),
-                                                  this.getTestWorkflowType("type3", "WorkflowType 3"));
+        this.getTestWorkflowType("type2", "WorkflowType 2"), this.getTestWorkflowType("type3", "WorkflowType 3"));
 
     return list;
   }
@@ -306,15 +376,28 @@ public class TestDataProducer {
     return model;
   }
 
-  protected List<Workflow> getTestWorkflowList() {
+  protected List<InvoiceWorkflow> getTestInvoiceWorkflowList() {
 
-    return Arrays.asList(this.getTestWorkflow("workflow1"), this.getTestWorkflow("workflow2"), this.getTestWorkflow("workflow3"));
+    return Arrays.asList(this.getTestInvoiceWorkflow("workflow1"), this.getTestInvoiceWorkflow("workflow2"),
+        this.getTestInvoiceWorkflow("workflow3"));
+  }
+
+  protected List<SingleTaskWorkflow> getTestSingleTaskWorkflowList() {
+
+    return Arrays.asList(this.getTestSingleTaskWorkflow("workflow1"), this.getTestSingleTaskWorkflow("workflow2"),
+        this.getTestSingleTaskWorkflow("workflow3"));
+  }
+
+  protected List<TestThreeTaskWorkflow> getTestTestThreeTaskWorkflowList() {
+
+    return Arrays.asList(this.getTestTestThreeTaskWorkflow("workflow1"), this.getTestTestThreeTaskWorkflow("workflow2"),
+        this.getTestTestThreeTaskWorkflow("workflow3"));
   }
 
   protected List<WorkflowTypeStep> getTestWorkflowTypeStepList() {
     final List<WorkflowTypeStep> list = Arrays.asList(this.getTestWorkflowTypeStep("step1", "WorkflowTypeStep 1", 1),
-                                                      this.getTestWorkflowTypeStep("step2", "WorkflowTypeStep 2", 2),
-                                                      this.getTestWorkflowTypeStep("step3", "WorkflowTypeStep 3", 3));
+        this.getTestWorkflowTypeStep("step2", "WorkflowTypeStep 2", 2),
+        this.getTestWorkflowTypeStep("step3", "WorkflowTypeStep 3", 3));
 
     return list;
   }
@@ -353,16 +436,14 @@ public class TestDataProducer {
 
   protected List<Department> getTestDepartmentList() {
     final List<Department> list = Arrays.asList(this.getTestDepartment("dep1", "Department 1"),
-                                                this.getTestDepartment("dep2", "Department 2"),
-                                                this.getTestDepartment("dep3", "Department 3"));
+        this.getTestDepartment("dep2", "Department 2"), this.getTestDepartment("dep3", "Department 3"));
 
     return list;
   }
 
   protected List<UserGroup> getTestUserGroupList() {
     final List<UserGroup> list = Arrays.asList(this.getTestUserGroup("usergrp1", "UserGroup 1"),
-                                               this.getTestUserGroup("usergrp2", "UserGroup 2"),
-                                               this.getTestUserGroup("usergrp3", "UserGroup 3"));
+        this.getTestUserGroup("usergrp2", "UserGroup 2"), this.getTestUserGroup("usergrp3", "UserGroup 3"));
 
     return list;
   }
@@ -392,8 +473,7 @@ public class TestDataProducer {
 
   protected List<DepartmentGroup> getTestDepartmentGroupList() {
     final List<DepartmentGroup> list = Arrays.asList(this.getTestDepartmentGroup("depgrp1", "DepartmentGroup 1"),
-                                                     this.getTestDepartmentGroup("depgrp2", "DepartmentGroup 2"),
-                                                     this.getTestDepartmentGroup("depgrp3", "DepartmentGroup 3"));
+        this.getTestDepartmentGroup("depgrp2", "DepartmentGroup 2"), this.getTestDepartmentGroup("depgrp3", "DepartmentGroup 3"));
 
     return list;
   }
@@ -419,18 +499,38 @@ public class TestDataProducer {
     return filter;
   }
 
-  protected WorkflowSaveRequest getTestWorkflowSaveRequest() {
-    final WorkflowSaveRequest request = new WorkflowSaveRequest();
+  protected InvoiceWorkflowSaveRequest getTestInvoiceWorkflowSaveRequest() {
+    final InvoiceWorkflowSaveRequest request = new InvoiceWorkflowSaveRequest();
     request.setAssigns(this.getTestAssignedList());
-    request.setWorkflow(this.getTestWorkflow("workflow1"));
+    request.setWorkflow(this.getTestInvoiceWorkflow("workflow1"));
     request.setExpireDays(10);
     request.setCommand(EWorkflowProcessCommand.NONE);
 
     return request;
   }
 
-  protected WorkflowSaveRequest getTestWorkflowSaveRequest(final Workflow workflow) {
-    final WorkflowSaveRequest request = new WorkflowSaveRequest();
+  protected SingleTaskWorkflowSaveRequest getTestSingleTaskWorkflowSaveRequest() {
+    final SingleTaskWorkflowSaveRequest request = new SingleTaskWorkflowSaveRequest();
+    request.setAssigns(this.getTestAssignedList());
+    request.setWorkflow(this.getTestSingleTaskWorkflow("workflow1"));
+    request.setExpireDays(10);
+    request.setCommand(EWorkflowProcessCommand.NONE);
+
+    return request;
+  }
+
+  protected TestThreeTaskWorkflowSaveRequest getTestTestThreeTaskWorkflowSaveRequest() {
+    final TestThreeTaskWorkflowSaveRequest request = new TestThreeTaskWorkflowSaveRequest();
+    request.setAssigns(this.getTestAssignedList());
+    request.setWorkflow(this.getTestTestThreeTaskWorkflow("workflow1"));
+    request.setExpireDays(10);
+    request.setCommand(EWorkflowProcessCommand.NONE);
+
+    return request;
+  }
+
+  protected InvoiceWorkflowSaveRequest getTestInvoiceWorkflowSaveRequest(final InvoiceWorkflow workflow) {
+    final InvoiceWorkflowSaveRequest request = new InvoiceWorkflowSaveRequest();
     request.setAssigns(this.getTestAssignedList());
     request.setWorkflow(workflow);
     request.setExpireDays(10);
@@ -439,50 +539,71 @@ public class TestDataProducer {
     return request;
   }
 
-  protected WorkflowSaveRequest getTestNewWorkflowSaveRequest() {
-    final WorkflowSaveRequest request = new WorkflowSaveRequest();
+  protected SingleTaskWorkflowSaveRequest getTestSingleTaskWorkflowSaveRequest(final SingleTaskWorkflow workflow) {
+    final SingleTaskWorkflowSaveRequest request = new SingleTaskWorkflowSaveRequest();
     request.setAssigns(this.getTestAssignedList());
-    request.setWorkflow(this.getTestWorkflow("workflow1"));
+    request.setWorkflow(workflow);
     request.setExpireDays(10);
     request.setCommand(EWorkflowProcessCommand.NONE);
 
-    final WorkflowType workflowType = this.getTestWorkflowType("type1", "");
-    workflowType.setAssignType(EWorkflowTypeAssignType.MANUAL);
-    request.getWorkflow().setWorkflowType(workflowType);
+    return request;
+  }
+
+  protected TestThreeTaskWorkflowSaveRequest getTestTestThreeTaskWorkflowSaveRequest(final TestThreeTaskWorkflow workflow) {
+    final TestThreeTaskWorkflowSaveRequest request = new TestThreeTaskWorkflowSaveRequest();
+    request.setAssigns(this.getTestAssignedList());
+    request.setWorkflow(workflow);
+    request.setExpireDays(10);
+    request.setCommand(EWorkflowProcessCommand.NONE);
+
+    return request;
+  }
+
+  protected InvoiceWorkflowSaveRequest getTestNewInvoiceWorkflowSaveRequest() {
+    final InvoiceWorkflowSaveRequest request = new InvoiceWorkflowSaveRequest();
+    request.setAssigns(this.getTestAssignedList());
+    request.setWorkflow(this.getTestInvoiceWorkflow("workflow1"));
+    request.setExpireDays(10);
+    request.setCommand(EWorkflowProcessCommand.NONE);
+
+    request.getWorkflow().getWorkflowType().setAssignType(EWorkflowTypeAssignType.MANUAL);
     request.getWorkflow().setIdentityToNew();
 
     return request;
   }
 
-  protected WorkflowSaveRequest getTestWorkflowSaveRequestForStrategy() {
-    final WorkflowType workflowType = this.getTestWorkflowType("workflowtype1", "Workflowtype 1");
-
-    final WorkflowSaveRequest request = new WorkflowSaveRequest();
+  protected SingleTaskWorkflowSaveRequest getTestNewSingleTaskWorkflowSaveRequest() {
+    final SingleTaskWorkflowSaveRequest request = new SingleTaskWorkflowSaveRequest();
     request.setAssigns(this.getTestAssignedList());
-    request.setWorkflow(this.getTestWorkflow("workflow1", workflowType));
+    request.setWorkflow(this.getTestSingleTaskWorkflow("workflow1"));
     request.setExpireDays(10);
     request.setCommand(EWorkflowProcessCommand.NONE);
 
-    workflowType.setAssignType(EWorkflowTypeAssignType.MANUAL);
-    request.getWorkflow().setWorkflowType(workflowType);
-    request.getWorkflow().setIdentity("identity");
+    request.getWorkflow().getWorkflowType().setAssignType(EWorkflowTypeAssignType.MANUAL);
+    request.getWorkflow().setIdentityToNew();
 
-    int stepIdndex = 0;
-    for (final WorkflowAction action : request.getWorkflow().getActions()) {
-      action.setCurrentStep(workflowType.getSteps().get(stepIdndex++));
-      action.setCurrentStepIdentity(action.getCurrentStep().getIdentity());
-    }
+    return request;
+  }
+
+  protected TestThreeTaskWorkflowSaveRequest getTestNewTestThreeTaskWorkflowSaveRequest() {
+    final TestThreeTaskWorkflowSaveRequest request = new TestThreeTaskWorkflowSaveRequest();
+    request.setAssigns(this.getTestAssignedList());
+    request.setWorkflow(this.getTestTestThreeTaskWorkflow("workflow1"));
+    request.setExpireDays(10);
+    request.setCommand(EWorkflowProcessCommand.NONE);
+
+    request.getWorkflow().getWorkflowType().setAssignType(EWorkflowTypeAssignType.MANUAL);
+    request.getWorkflow().setIdentityToNew();
 
     return request;
   }
 
   protected List<AssignItem> getTestAssignedList() {
-    return Arrays.asList(new AssignItem("user1", EAssignType.USER),
-                         new AssignItem("user2", EAssignType.USER),
-                         new AssignItem("user3", EAssignType.USER));
+    return Arrays.asList(new AssignItem("user1", EAssignType.USER), new AssignItem("user2", EAssignType.USER),
+        new AssignItem("user3", EAssignType.USER));
   }
 
-  protected WorkflowMessage getTestWorkflowMessage(final String userId, final Workflow workflow) {
+  protected WorkflowMessage getTestWorkflowMessage(final String userId, final String workflowIdentity) {
     final WorkflowMessage message = new WorkflowMessage();
     message.setCreatedAt(LocalDateTime.now());
     message.setCreatedByIdentity("createdByIdentity");
@@ -493,18 +614,15 @@ public class TestDataProducer {
     message.setStepIdentity("stepIdentity");
     message.setUserIdentity(userId);
     message.setVersion(1);
-    message.setWorkflowIdentity(workflow.getIdentity());
-    message.setWorkflow(workflow);
+    message.setWorkflowIdentity(workflowIdentity);
 
     return message;
   }
 
   protected List<WorkflowMessage> getTestWorkflowMessageList() {
-    final Workflow workflow = getTestWorkflow("workflow1");
 
-    return Arrays.asList(getTestWorkflowMessage("user1", workflow),
-                         getTestWorkflowMessage("user2", workflow),
-                         getTestWorkflowMessage("user3", workflow));
+    return Arrays.asList(this.getTestWorkflowMessage("user1", "workflow1"), this.getTestWorkflowMessage("user2", "workflow1"),
+        this.getTestWorkflowMessage("user3", "workflow1"));
   }
 
   protected User createUiUser(final String email, final String fname, final String lname, final List<EUiUserRole> roles) {
@@ -527,7 +645,7 @@ public class TestDataProducer {
   protected SessionUserInfo createGuiSessionUserInfo() {
 
     final SessionUserInfo info = new SessionUserInfo(this.createUiUser("admin", "", "", Arrays.asList(EUiUserRole.ADMIN)),
-                                                     this.getTestCompanyProfile());
+        this.getTestCompanyProfile());
     info.setToken("test-token");
     info.setSessionId("test-sessionId");
     info.update();

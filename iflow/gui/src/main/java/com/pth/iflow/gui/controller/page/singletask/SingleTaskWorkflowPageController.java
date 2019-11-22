@@ -5,7 +5,6 @@ import java.net.MalformedURLException;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
@@ -48,12 +47,9 @@ public class SingleTaskWorkflowPageController extends GuiPageControllerBase {
     model.addAttribute("UserAssign", EAssignType.USER.getIdentity());
     model.addAttribute("DepartmentAssign", EAssignType.DEPARTMENT.getIdentity());
     model.addAttribute("DepartmentGroupAssign", EAssignType.DEPARTMENTGROUP.getIdentity());
+    model.addAttribute("workflowIdentity", "");
 
-    if (StringUtils.isEmpty(workflowTypeIdentity)) {
-      return "workflow/create";
-    } else {
-      return this.getWorkflowTypeByIdentity(workflowTypeIdentity).getSteps().get(0).getViewName();
-    }
+    return "workflow/singletask/edit";
 
   }
 
