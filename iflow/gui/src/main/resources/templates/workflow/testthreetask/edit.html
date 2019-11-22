@@ -149,12 +149,11 @@
 		    </div>
 		
 		    		    
-		    <script th:inline="javascript">				
-				var loadUrl = "/workflow/singletask/data/initcreate";
-				var saveUrl = "/workflow/singletask/data/save";
-				var saveFileUrl = "/workflow/singletask/data/createfile";
-				var archiveUrl = "/workflow/singletask/data/archive";
-				var doneUrl = "/workflow/singletask/data/done";
+		    <script th:inline="javascript">
+				var loadUrl = "/workflow/data/workflow/edit/";
+				var saveUrl = "/workflow/data/workflow/save";
+				var archiveUrl = "/workflow/data/workflow/archive";
+				var doneUrl = "/workflow/data/workflow/done";
 				var listUrl = "/workflow/list";
 				var widnt = [[${workflowIdentity}]];
 				

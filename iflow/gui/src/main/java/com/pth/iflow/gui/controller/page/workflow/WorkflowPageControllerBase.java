@@ -1,44 +1,39 @@
-package com.pth.iflow.gui.controller.page.invoice;
+package com.pth.iflow.gui.controller.page.workflow;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.pth.iflow.common.enums.EAssignType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
-import com.pth.iflow.common.rest.IflowRestPaths.GuiModule;
 import com.pth.iflow.gui.controller.page.GuiPageControllerBase;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.WorkflowFile;
 import com.pth.iflow.gui.models.ui.FileSavingData;
-import com.pth.iflow.gui.models.workflow.invoice.InvoiceWorkflow;
-import com.pth.iflow.gui.models.workflow.invoice.InvoiceWorkflowSaveRequest;
+import com.pth.iflow.gui.models.workflow.IWorkflow;
+import com.pth.iflow.gui.models.workflow.IWorkflowSaveRequest;
 import com.pth.iflow.gui.services.IUploadFileManager;
 import com.pth.iflow.gui.services.IWorkflowHandler;
 
-@Controller
-@RequestMapping(value = GuiModule.INVOICEWORKFLOW_PAGE_BASE)
-public class InvoiceWorkflowPageController extends GuiPageControllerBase {
+public abstract class WorkflowPageControllerBase<W extends IWorkflow, WS extends IWorkflowSaveRequest<W>>
+    extends GuiPageControllerBase {
 
   @Autowired
-  private IWorkflowHandler<InvoiceWorkflow, InvoiceWorkflowSaveRequest> invoiceWorkflowHandler;
+  protected IWorkflowHandler<W, WS> workflowHandler;
 
   @Autowired
-  private IUploadFileManager                                            uploadFileManager;
+  protected IUploadFileManager      uploadFileManager;
 
   @ResponseStatus(HttpStatus.OK)
   @GetMapping(path = { "/create" })
@@ -49,11 +44,7 @@ public class InvoiceWorkflowPageController extends GuiPageControllerBase {
     model.addAttribute("DepartmentAssign", EAssignType.DEPARTMENT.getIdentity());
     model.addAttribute("DepartmentGroupAssign", EAssignType.DEPARTMENTGROUP.getIdentity());
 
-    if (StringUtils.isEmpty(workflowTypeIdentity)) {
-      return "workflow/create";
-    } else {
-      return this.getWorkflowTypeByIdentity(workflowTypeIdentity).getSteps().get(0).getViewName();
-    }
+    return this.getCreateView();
 
   }
 
@@ -64,8 +55,7 @@ public class InvoiceWorkflowPageController extends GuiPageControllerBase {
       @PathVariable(required = false) final String workflowTypeStepIdentity, final HttpServletResponse response)
       throws GuiCustomizedException, IOException, IFlowMessageConversionFailureException {
 
-    // final Workflow workflow =
-    // this.workflowHandler.readWorkflow(workflowIdentity);
+    // final W workflow = this.workflowHandler.readWorkflow(workflowIdentity);
 
     model.addAttribute("UserAssign", EAssignType.USER.getIdentity());
     model.addAttribute("DepartmentAssign", EAssignType.DEPARTMENT.getIdentity());
@@ -81,7 +71,7 @@ public class InvoiceWorkflowPageController extends GuiPageControllerBase {
       @PathVariable(required = true) final String workflowIdentity, final HttpServletResponse response)
       throws GuiCustomizedException, IOException, IFlowMessageConversionFailureException {
 
-    final WorkflowFile wfile = this.invoiceWorkflowHandler.readWorkflowFile(workflowIdentity, fileIdentity);
+    final WorkflowFile wfile = this.workflowHandler.readWorkflowFile(workflowIdentity, fileIdentity);
 
     final FileSavingData fData = new FileSavingData(wfile.getTitle(), wfile.getExtention(), workflowIdentity, "no-asction",
         this.getLoggedCompany().getIdentity());
@@ -98,7 +88,7 @@ public class InvoiceWorkflowPageController extends GuiPageControllerBase {
       @PathVariable(required = true) final String fileIdentity, @PathVariable(required = true) final String workflowIdentity,
       final HttpServletResponse response) throws GuiCustomizedException, IOException, IFlowMessageConversionFailureException {
 
-    final WorkflowFile wfile = this.invoiceWorkflowHandler.readWorkflowFile(workflowIdentity, fileIdentity);
+    final WorkflowFile wfile = this.workflowHandler.readWorkflowFile(workflowIdentity, fileIdentity);
 
     final FileSavingData fData = new FileSavingData(wfile.getTitle(), wfile.getExtention(), workflowIdentity, "no-asction",
         this.getLoggedCompany().getIdentity());
@@ -116,5 +106,9 @@ public class InvoiceWorkflowPageController extends GuiPageControllerBase {
 
     return "workflow/invalid-message";
   }
+
+  protected abstract String getCreateView();
+
+  protected abstract String getEditView();
 
 }

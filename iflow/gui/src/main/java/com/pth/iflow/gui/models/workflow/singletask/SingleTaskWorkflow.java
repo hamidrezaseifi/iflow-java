@@ -2,7 +2,9 @@ package com.pth.iflow.gui.models.workflow.singletask;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import com.pth.iflow.common.edo.models.helper.IdentityModel;
 import com.pth.iflow.common.enums.EWorkflowIdentity;
 import com.pth.iflow.common.enums.EWorkflowStatus;
@@ -17,19 +19,19 @@ import com.pth.iflow.gui.models.workflow.invoice.InvoiceWorkflow;
 @JsonIgnoreProperties(value = { "isAssignTo" })
 public class SingleTaskWorkflow extends IdentityModel implements IWorkflow {
 
-  private String           identity;
-  private String           workflowTypeIdentity;
-  private WorkflowType     workflowType;
-  private WorkflowTypeStep currentStep;
-  private String           currentStepIdentity;
-  private String           controllerIdentity;
-  private User             controllerUser;
-  private String           createdByIdentity;
-  private User             createdByUser;
-  private String           comments;
-  private EWorkflowStatus  status;
-  private Integer          version;
-  private String           currentUserIdentity;
+  private String                     identity;
+  private String                     workflowTypeIdentity;
+  private WorkflowType               workflowType;
+  private WorkflowTypeStep           currentStep;
+  private String                     currentStepIdentity;
+  private String                     controllerIdentity;
+  private User                       controllerUser;
+  private String                     createdByIdentity;
+  private User                       createdByUser;
+  private String                     comments;
+  private EWorkflowStatus            status;
+  private Integer                    version;
+  private String                     currentUserIdentity;
 
   private final List<WorkflowFile>   files   = new ArrayList<>();
   private final List<WorkflowAction> actions = new ArrayList<>();
@@ -153,6 +155,7 @@ public class SingleTaskWorkflow extends IdentityModel implements IWorkflow {
     return this.status;
   }
 
+  @JsonSetter
   public void setStatus(final EWorkflowStatus status) {
     this.status = status;
   }
@@ -208,7 +211,8 @@ public class SingleTaskWorkflow extends IdentityModel implements IWorkflow {
   }
 
   @Override
-  public WorkflowFile addNewFile(final String path, final String userId, final String title, final String extention, final String comments) {
+  public WorkflowFile addNewFile(final String path, final String userId, final String title, final String extention,
+      final String comments) {
     final WorkflowFile wfile = new WorkflowFile();
     wfile.setActiveFilePath(path);
     wfile.setActiveFileVersion(1);

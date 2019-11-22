@@ -2,6 +2,7 @@ package com.pth.iflow.gui.models.workflow.singletask;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import com.pth.iflow.common.enums.EAssignType;
 import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 import com.pth.iflow.gui.models.AssignItem;
@@ -106,9 +107,19 @@ public class SingleTaskWorkflowSaveRequest implements IWorkflowSaveRequest<Singl
     return request;
   }
 
+  public static SingleTaskWorkflowSaveRequest generateNewWihExpireDays(final SingleTaskWorkflow workflow, final int expireDays) {
+    final SingleTaskWorkflowSaveRequest request = new SingleTaskWorkflowSaveRequest();
+
+    request.setWorkflow(workflow);
+    request.setExpireDays(expireDays);
+    request.setCommand(EWorkflowProcessCommand.CREATE);
+
+    return request;
+  }
+
   @Override
   public String getSessionKey() {
-    return sessionKey;
+    return this.sessionKey;
   }
 
   @Override

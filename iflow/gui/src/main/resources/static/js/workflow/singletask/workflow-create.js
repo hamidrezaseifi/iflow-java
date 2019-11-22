@@ -23,7 +23,6 @@ iflowApp.controller('WorkflowCreateController', function WorkflowCreateControlle
 	  //$scope.phones = [];
 	
 	$scope.loadUrl = loadUrl;
-	$scope.loadWorkflowTypeDataUrl = loadWorkflowTypeDataUrl;
 	$scope.saveUrl = saveUrl;
 	$scope.saveFileUrl = saveFileUrl;
 	$scope.listUrl = listUrl;
@@ -35,13 +34,7 @@ iflowApp.controller('WorkflowCreateController', function WorkflowCreateControlle
 	$scope.fileTitles = [];
 	
 	
-	$scope.navigateTo = function(identity){
-				
-		alert(identity);
-	};
-	
-	
-	/*$scope.reload = function (){
+	$scope.reload = function (){
 		
 		//alert(JSON.stringify($scope.query)); 
 
@@ -60,29 +53,6 @@ iflowApp.controller('WorkflowCreateController', function WorkflowCreateControlle
 	    	
 	    	$scope.workflowTypes = response.data.workflowTypes;
 	    	$scope.workflowCreateRequest = initWorkFlow(response.data.workflowCreateRequest);
-	
-	    }, function errorCallback(response) {
-	        
-	    	ShowErrorService.showError(response, $scope);
-	    });
-		
-	};
-
-	$scope.reloadWorkflowTypeData = function (){
-		
-		//alert($scope.loadWorkflowTypeDataUrl + $scope.workflowCreateRequest.workflow.workflowTypeId); 
-
-		$scope.users = [];
-		$scope.departments = [];
-			
-		$http({
-	        method : "POST",
-	        headers: {
-	        	'Content-type': 'application/json; charset=UTF-8',
-	        },
-	        url : $scope.loadWorkflowTypeDataUrl + $scope.workflowCreateRequest.workflow.workflowTypeId,
-	    }).then(function successCallback(response) {
-	    	
 	    	$scope.users = response.data.users;
 	    	$scope.departments = response.data.departments;
 	
@@ -91,7 +61,7 @@ iflowApp.controller('WorkflowCreateController', function WorkflowCreateControlle
 	    	ShowErrorService.showError(response, $scope);
 	    });
 		
-	};*/
+	};
 
 	$scope.save = function (){
 		
@@ -137,9 +107,6 @@ iflowApp.controller('WorkflowCreateController', function WorkflowCreateControlle
         	    	ShowErrorService.showError(response, $scope);
                 }
             );
-
-		
-			
 		
 		
 	};
@@ -211,11 +178,6 @@ iflowApp.controller('WorkflowCreateController', function WorkflowCreateControlle
 		return [];
 	};
 	
-	$scope.isWorkflowTypeSelected = function(){
-		
-		return $scope.workflowCreateRequest.workflow && $scope.workflowCreateRequest.workflow.workflowTypeIdentity != '';
-	};
-	
 	$scope.hasNoAssigns = function(){
 		if($scope.workflowCreateRequest && $scope.workflowCreateRequest.assigns){
 			return $scope.workflowCreateRequest.assigns.length == 0;
@@ -284,6 +246,6 @@ iflowApp.controller('WorkflowCreateController', function WorkflowCreateControlle
 		return workflowReq;
 	};
 	
-	//$scope.addFile();
-	//$scope.reload();
+	$scope.addFile();
+	$scope.reload();
 });

@@ -2,6 +2,7 @@ package com.pth.iflow.gui.models.workflow.invoice;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import com.pth.iflow.common.enums.EAssignType;
 import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 import com.pth.iflow.gui.models.AssignItem;
@@ -106,9 +107,19 @@ public class InvoiceWorkflowSaveRequest implements IWorkflowSaveRequest<InvoiceW
     return request;
   }
 
+  public static InvoiceWorkflowSaveRequest generateNewWihExpireDays(final InvoiceWorkflow workflow, final int expireDays) {
+    final InvoiceWorkflowSaveRequest request = new InvoiceWorkflowSaveRequest();
+
+    request.setWorkflow(workflow);
+    request.setExpireDays(expireDays);
+    request.setCommand(EWorkflowProcessCommand.CREATE);
+
+    return request;
+  }
+
   @Override
   public String getSessionKey() {
-    return sessionKey;
+    return this.sessionKey;
   }
 
   @Override

@@ -655,7 +655,7 @@ public class GuiModelEdoMapper {
     validateCustomer(edo);
 
     final WorkflowSearchFilter model = new WorkflowSearchFilter();
-    model.setAssignedUserIdSet(edo.getAssignedUserIdentitySet());
+    model.setAssignedUserIdentitySet(edo.getAssignedUserIdentitySet());
     model.setStatusList(edo.getStatusSet());
     model.setWorkflowSteps(edo.getWorkflowStepeIdentitySet());
     model.setWorkflowTypes(edo.getWorkflowTypeIdentitySet());
