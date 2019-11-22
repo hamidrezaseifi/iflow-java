@@ -35,7 +35,13 @@ iflowApp.controller('WorkflowCreateController', function WorkflowCreateControlle
 	$scope.fileTitles = [];
 	
 	
-	$scope.reload = function (){
+	$scope.navigateTo = function(identity){
+				
+		alert(identity);
+	};
+	
+	
+	/*$scope.reload = function (){
 		
 		//alert(JSON.stringify($scope.query)); 
 
@@ -85,7 +91,7 @@ iflowApp.controller('WorkflowCreateController', function WorkflowCreateControlle
 	    	ShowErrorService.showError(response, $scope);
 	    });
 		
-	};
+	};*/
 
 	$scope.save = function (){
 		
@@ -278,6 +284,6 @@ iflowApp.controller('WorkflowCreateController', function WorkflowCreateControlle
 		return workflowReq;
 	};
 	
-	$scope.addFile();
-	$scope.reload();
+	//$scope.addFile();
+	//$scope.reload();
 });

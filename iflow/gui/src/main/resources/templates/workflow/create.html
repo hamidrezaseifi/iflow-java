@@ -13,20 +13,14 @@
 		<div class="content-container" ng-controller="WorkflowCreateController">
 			<div class="page-toolbar">
 				<div class="page-title" th:text="#{menu-workflow-create}"></div>
-				<button class="toolbar-button" ng-click="save();"><i class="material-icons">save</i></button>
 				<a class="toolbar-link" href="/workflow/list"><i class="material-icons">list</i></a>
-				<button class="toolbar-button" ng-click="reload();"><i class="material-icons">refresh</i></button>
-				<button class="toolbar-button" ng-click="testUpload();"><i class="material-icons">cloud_upload</i></button>
 			</div>
 		
 			<div class="workflow-content">
 				<div class="item-row">
-					<div class="item-label" th:text="#{workflow-type}"></div>
-					<div class="item-content">
-						<select type="text" ng-model="workflowCreateRequest.workflow.workflowTypeIdentity" ng-change="reloadWorkflowTypeData()">
-							<option th:text="#{workflow-select-type}" value="0"></option>
-							<option ng-repeat="item in workflowTypes" ng-value="item.identity">{{item.title}}</option>
-						</select>
+					<div class="list-group">
+					  <a class="list-group-item list-group-item-action list-group-item-title" th:text="#{workflow-type}"></a>
+					  <a th:each="type: ${WorkflowTyoeList}" th:href="@{'/workflow/create/' + ${type.identity}}" class="list-group-item list-group-item-action link-out" th:text="${type.title}"></a>
 					</div>
 					<div class="clear"></div>
 				</div>
