@@ -2,8 +2,10 @@ package com.pth.iflow.gui.models;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.pth.iflow.common.edo.models.helper.IdentityModel;
+import com.pth.iflow.common.enums.EWorkflowType;
 import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
 
 public class WorkflowType extends IdentityModel {
@@ -143,6 +145,15 @@ public class WorkflowType extends IdentityModel {
 
   public void addStep(final WorkflowTypeStep stepId) {
     this.steps.add(stepId);
+  }
+
+  public EWorkflowType getTypeEnum() {
+    return EWorkflowType.valueFromIdentity(this.identity);
+  }
+
+  public String getControllerPreffix() {
+    return this.getTypeEnum().getPagePreffix();
+
   }
 
 }

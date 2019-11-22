@@ -174,7 +174,7 @@ public class InvoiceWorkflow extends IdentityModel implements IWorkflow {
 
   @Override
   public String getWorkflowTypeIdentity() {
-    return getWorkflowTypeEnum().getName();
+    return getWorkflowTypeEnum().getIdentity();
   }
 
   @Override
@@ -189,7 +189,7 @@ public class InvoiceWorkflow extends IdentityModel implements IWorkflow {
 
   @Override
   public boolean isIdentityNotSet() {
-    return EWorkflowIdentity.NOT_SET.getName().equals(getIdentity());
+    return EWorkflowIdentity.NOT_SET.getIdentity().equals(getIdentity());
   }
 
   @Override

@@ -1,6 +1,7 @@
 package com.pth.iflow.common.rest;
 
 import java.net.URI;
+
 import org.springframework.web.util.DefaultUriBuilderFactory;
 
 public class IflowRestPaths {
@@ -22,86 +23,81 @@ public class IflowRestPaths {
 
   public static class CoreModule {
 
-    public static final int PORT = 1010;
+    public static final int    PORT                                                             = 1010;
 
-    public static final String USER_SAVE                           = "/users/save";
-    public static final String USER_READ_BY_EMAIL                  = "/users/readbyemail/{email}";
-    public static final String USER_USERGROUPS_LIST_BY_EMAIL       = "/users/user/groups/{email}";
-    public static final String USER_DEPARTMENTS_LIST_BY_EMAIL      = "/users/user/departments/{email}";
-    public static final String USER_DEPARTMENTGROUPS_LIST_BY_EMAIL = "/users/user/departmentgroups/{email}";
-    public static final String USER_DEPUTIES_LIST_BY_EMAIL         = "/users/user/deputies/{email}";
-    public static final String USER_USER_LIST_BY_COMPANYIDENTITY   = "/users/company/users/{companyidentity}";
-    public static final String USERPROFILE_READ_BY_EMAIL           = "/users/readprofile/{email}";
+    public static final String USER_SAVE                                                        = "/users/save";
+    public static final String USER_READ_BY_EMAIL                                               = "/users/readbyemail/{email}";
+    public static final String USER_USERGROUPS_LIST_BY_EMAIL                                    = "/users/user/groups/{email}";
+    public static final String USER_DEPARTMENTS_LIST_BY_EMAIL                                   = "/users/user/departments/{email}";
+    public static final String USER_DEPARTMENTGROUPS_LIST_BY_EMAIL                              = "/users/user/departmentgroups/{email}";
+    public static final String USER_DEPUTIES_LIST_BY_EMAIL                                      = "/users/user/deputies/{email}";
+    public static final String USER_USER_LIST_BY_COMPANYIDENTITY                                = "/users/company/users/{companyidentity}";
+    public static final String USERPROFILE_READ_BY_EMAIL                                        = "/users/readprofile/{email}";
 
-    public static final String COMPANY_READ_BY_IDENTITY = "/companies/readbyid/{companyidentity}";
+    public static final String COMPANY_READ_BY_IDENTITY                                         = "/companies/readbyid/{companyidentity}";
 
-    public static final String DEPARTMENT_READ_BY_IDENTITY                       = "/department/readbyid/{identity}";
-    public static final String DEPARTMENT_READ_LIST                              = "/department/list";
-    public static final String DEPARTMENT_READ_LIST_BY_COMPANYIDENTITY           = "/department/company/list/{companyidentity}";
-    public static final String DEPARTMENT_READ_ALLUSERLIST_BY_DEPARTMENTIDENTITY = "/department/alluser/list/{identity}";
+    public static final String DEPARTMENT_READ_BY_IDENTITY                                      = "/department/readbyid/{identity}";
+    public static final String DEPARTMENT_READ_LIST                                             = "/department/list";
+    public static final String DEPARTMENT_READ_LIST_BY_COMPANYIDENTITY                          = "/department/company/list/{companyidentity}";
+    public static final String DEPARTMENT_READ_ALLUSERLIST_BY_DEPARTMENTIDENTITY                = "/department/alluser/list/{identity}";
 
-    public static final String DEPARTMENTGRPUP_READ_BY_IDENTITY                            = "/departmentgroup/readbyid/{identity}";
-    public static final String DEPARTMENTGRPUP_READ_LIST_BY_DEPARTMENTIDENTITY             = "/departmentgroup/department/list/{identity}";
-    public static final String DEPARTMENTGRPUP_READ_LIST                                   = "/departmentgroup/list";
-    public static final String DEPARTMENTGRPUP_READ_ALLUSERLIST_BY_DEPARTMENTGROUPIDENTITY = "/departmentgroup/alluser/list/{identity}";
+    public static final String DEPARTMENTGRPUP_READ_BY_IDENTITY                                 = "/departmentgroup/readbyid/{identity}";
+    public static final String DEPARTMENTGRPUP_READ_LIST_BY_DEPARTMENTIDENTITY                  = "/departmentgroup/department/list/{identity}";
+    public static final String DEPARTMENTGRPUP_READ_LIST                                        = "/departmentgroup/list";
+    public static final String DEPARTMENTGRPUP_READ_ALLUSERLIST_BY_DEPARTMENTGROUPIDENTITY      = "/departmentgroup/alluser/list/{identity}";
 
-    public static final String WORKFLOWTYPE_READ_BY_IDENTITY             = "/workflowtype/readbyid/{identity}";
-    public static final String WORKFLOWTYPE_READ_LIST                    = "/workflowtype/list";
-    public static final String WORKFLOWTYPE_READ_LIST_BY_COMPANYIDENTITY = "/workflowtype/company/list/{companyidentity}";
+    public static final String WORKFLOWTYPE_READ_BY_IDENTITY                                    = "/workflowtype/readbyid/{identity}";
+    public static final String WORKFLOWTYPE_READ_LIST                                           = "/workflowtype/list";
+    public static final String WORKFLOWTYPE_READ_LIST_BY_COMPANYIDENTITY                        = "/workflowtype/company/list/{companyidentity}";
 
-    public static final String WORKFLOWTYPESTEP_READ_BY_IDENTITY              = "/workflowtypestep/readbyid/{identity}";
-    public static final String WORKFLOWTYPESTEP_READ_LIST_BY_WORKFLOWIDENTITY = "/workflowtypestep/workflowtype/list/{identity}";
-    public static final String WORKFLOWTYPESTEP_READ_LIST                     = "/workflowtypestep/list";
+    public static final String WORKFLOWTYPESTEP_READ_BY_IDENTITY                                = "/workflowtypestep/readbyid/{identity}";
+    public static final String WORKFLOWTYPESTEP_READ_LIST_BY_WORKFLOWIDENTITY                   = "/workflowtypestep/workflowtype/list/{identity}";
+    public static final String WORKFLOWTYPESTEP_READ_LIST                                       = "/workflowtypestep/list";
 
-    public static final String USERGROUP_READ_BY_IDENTITY             = "/usergroup/readbyid/{identity}";
-    public static final String USERGROUP_READ_LIST                    = "/usergroup/list";
-    public static final String USERGROUP_READ_LIST_BY_COMPANYIDENTITY = "/usergroup/company/list/{companyidentity}";
+    public static final String USERGROUP_READ_BY_IDENTITY                                       = "/usergroup/readbyid/{identity}";
+    public static final String USERGROUP_READ_LIST                                              = "/usergroup/list";
+    public static final String USERGROUP_READ_LIST_BY_COMPANYIDENTITY                           = "/usergroup/company/list/{companyidentity}";
 
-    public static final String INVOICEWORKFLOW_SAVE                                 = "/invworkflow/save";
-    public static final String INVOICEWORKFLOW_READ_BY_IDENTITY                     = "/invworkflow/readbyid/{identity}";
-    public static final String INVOICEWORKFLOW_READ_LIST                            = "/invworkflow/list";
-    public static final String INVOICEWORKFLOW_READ_LIST_BY_USERIDENTITY            = "/invworkflow/user/list/{email}/{status}";
-    public static final String INVOICEWORKFLOW_ACTION_SAVE                          = "/invworkflow/action/save";
-    public static final String INVOICEWORKFLOW_ACTION_READ_BY_IDENTITY              = "/invworkflow/action/readbyid/{identity}";
-    public static final String INVOICEWORKFLOW_ACTION_READ_LIST_BY_WORKFLOWIDENTITY = "/invworkflow/action/workflow/list/{identity}";
-    public static final String INVOICEWORKFLOW_FILE_SAVE                            = "/invworkflow/file/save";
-    public static final String INVOICEWORKFLOW_FILE_READ_BY_IDENTITY                = "/invworkflow/file/readbyid/{identity}";
-    public static final String INVOICEWORKFLOW_FILE_READ_LIST_BY_WORKFLOWIDENTITY   = "/invworkflow/file/workflow/list/{identity}";
-    public static final String INVOICEWORKFLOW_SEARCH                               = "/invworkflow/search";
+    public static final String INVOICEWORKFLOW_SAVE                                             = "/invworkflow/save";
+    public static final String INVOICEWORKFLOW_READ_BY_IDENTITY                                 = "/invworkflow/readbyid/{identity}";
+    public static final String INVOICEWORKFLOW_READ_LIST                                        = "/invworkflow/list";
+    public static final String INVOICEWORKFLOW_READ_LIST_BY_USERIDENTITY                        = "/invworkflow/user/list/{email}/{status}";
+    public static final String INVOICEWORKFLOW_ACTION_SAVE                                      = "/invworkflow/action/save";
+    public static final String INVOICEWORKFLOW_ACTION_READ_BY_IDENTITY                          = "/invworkflow/action/readbyid/{identity}";
+    public static final String INVOICEWORKFLOW_ACTION_READ_LIST_BY_WORKFLOWIDENTITY             = "/invworkflow/action/workflow/list/{identity}";
+    public static final String INVOICEWORKFLOW_FILE_SAVE                                        = "/invworkflow/file/save";
+    public static final String INVOICEWORKFLOW_FILE_READ_BY_IDENTITY                            = "/invworkflow/file/readbyid/{identity}";
+    public static final String INVOICEWORKFLOW_FILE_READ_LIST_BY_WORKFLOWIDENTITY               = "/invworkflow/file/workflow/list/{identity}";
+    public static final String INVOICEWORKFLOW_SEARCH                                           = "/invworkflow/search";
 
-    public static final String SINGLETASKWORKFLOW_SAVE                                 = "/singletaskworkflow/save";
-    public static final String SINGLETASKWORKFLOW_READ_BY_IDENTITY                     = "/singletaskworkflow/readbyid/{identity}";
-    public static final String SINGLETASKWORKFLOW_READ_LIST                            = "/singletaskworkflow/list";
-    public static final String SINGLETASKWORKFLOW_READ_LIST_BY_USERIDENTITY            = "/singletaskworkflow/user/list/{email}/{status}";
-    public static final String SINGLETASKWORKFLOW_ACTION_SAVE                          = "/singletaskworkflow/action/save";
-    public static final String SINGLETASKWORKFLOW_ACTION_READ_BY_IDENTITY              = "/singletaskworkflow/action/readbyid/{identity}";
-    public static final String SINGLETASKWORKFLOW_ACTION_READ_LIST_BY_WORKFLOWIDENTITY =
-                                                                                       "/singletaskworkflow/action/workflow/list/{identity}";
-    public static final String SINGLETASKWORKFLOW_FILE_SAVE                            = "/singletaskworkflow/file/save";
-    public static final String SINGLETASKWORKFLOW_FILE_READ_BY_IDENTITY                = "/singletaskworkflow/file/readbyid/{identity}";
-    public static final String SINGLETASKWORKFLOW_FILE_READ_LIST_BY_WORKFLOWIDENTITY   =
-                                                                                     "/singletaskworkflow/file/workflow/list/{identity}";
-    public static final String SINGLETASKWORKFLOW_SEARCH                               = "/singletaskworkflow/search";
+    public static final String SINGLETASKWORKFLOW_SAVE                                          = "/singletaskworkflow/save";
+    public static final String SINGLETASKWORKFLOW_READ_BY_IDENTITY                              = "/singletaskworkflow/readbyid/{identity}";
+    public static final String SINGLETASKWORKFLOW_READ_LIST                                     = "/singletaskworkflow/list";
+    public static final String SINGLETASKWORKFLOW_READ_LIST_BY_USERIDENTITY                     = "/singletaskworkflow/user/list/{email}/{status}";
+    public static final String SINGLETASKWORKFLOW_ACTION_SAVE                                   = "/singletaskworkflow/action/save";
+    public static final String SINGLETASKWORKFLOW_ACTION_READ_BY_IDENTITY                       = "/singletaskworkflow/action/readbyid/{identity}";
+    public static final String SINGLETASKWORKFLOW_ACTION_READ_LIST_BY_WORKFLOWIDENTITY          = "/singletaskworkflow/action/workflow/list/{identity}";
+    public static final String SINGLETASKWORKFLOW_FILE_SAVE                                     = "/singletaskworkflow/file/save";
+    public static final String SINGLETASKWORKFLOW_FILE_READ_BY_IDENTITY                         = "/singletaskworkflow/file/readbyid/{identity}";
+    public static final String SINGLETASKWORKFLOW_FILE_READ_LIST_BY_WORKFLOWIDENTITY            = "/singletaskworkflow/file/workflow/list/{identity}";
+    public static final String SINGLETASKWORKFLOW_SEARCH                                        = "/singletaskworkflow/search";
 
-    public static final String TESTTHREETASKWORKFLOW_SAVE                                 = "/threetaskworkflow/save";
-    public static final String TESTTHREETASKWORKFLOW_READ_BY_IDENTITY                     = "/threetaskworkflow/readbyid/{identity}";
-    public static final String TESTTHREETASKWORKFLOW_READ_LIST                            = "/threetaskworkflow/list";
-    public static final String TESTTHREETASKWORKFLOW_READ_LIST_BY_USERIDENTITY            = "/threetaskworkflow/user/list/{email}/{status}";
-    public static final String TESTTHREETASKWORKFLOW_ACTION_SAVE                          = "/threetaskworkflow/action/save";
-    public static final String TESTTHREETASKWORKFLOW_ACTION_READ_BY_IDENTITY              = "/threetaskworkflow/action/readbyid/{identity}";
-    public static final String TESTTHREETASKWORKFLOW_ACTION_READ_LIST_BY_WORKFLOWIDENTITY =
-                                                                                          "/threetaskworkflow/action/workflow/list/{identity}";
-    public static final String TESTTHREETASKWORKFLOW_FILE_SAVE                            = "/threetaskworkflow/file/save";
-    public static final String TESTTHREETASKWORKFLOW_FILE_READ_BY_IDENTITY                = "/threetaskworkflow/file/readbyid/{identity}";
-    public static final String TESTTHREETASKWORKFLOW_FILE_READ_LIST_BY_WORKFLOWIDENTITY   =
-                                                                                        "/threetaskworkflow/file/workflow/list/{identity}";
-    public static final String TESTTHREETASKWORKFLOW_SEARCH                               = "/threetaskworkflow/search";
+    public static final String TESTTHREETASKWORKFLOW_SAVE                                       = "/threetaskworkflow/save";
+    public static final String TESTTHREETASKWORKFLOW_READ_BY_IDENTITY                           = "/threetaskworkflow/readbyid/{identity}";
+    public static final String TESTTHREETASKWORKFLOW_READ_LIST                                  = "/threetaskworkflow/list";
+    public static final String TESTTHREETASKWORKFLOW_READ_LIST_BY_USERIDENTITY                  = "/threetaskworkflow/user/list/{email}/{status}";
+    public static final String TESTTHREETASKWORKFLOW_ACTION_SAVE                                = "/threetaskworkflow/action/save";
+    public static final String TESTTHREETASKWORKFLOW_ACTION_READ_BY_IDENTITY                    = "/threetaskworkflow/action/readbyid/{identity}";
+    public static final String TESTTHREETASKWORKFLOW_ACTION_READ_LIST_BY_WORKFLOWIDENTITY       = "/threetaskworkflow/action/workflow/list/{identity}";
+    public static final String TESTTHREETASKWORKFLOW_FILE_SAVE                                  = "/threetaskworkflow/file/save";
+    public static final String TESTTHREETASKWORKFLOW_FILE_READ_BY_IDENTITY                      = "/threetaskworkflow/file/readbyid/{identity}";
+    public static final String TESTTHREETASKWORKFLOW_FILE_READ_LIST_BY_WORKFLOWIDENTITY         = "/threetaskworkflow/file/workflow/list/{identity}";
+    public static final String TESTTHREETASKWORKFLOW_SEARCH                                     = "/threetaskworkflow/search";
 
     public static final String WORKFLOWMESSAGE_READ_BY_USEREMAIL                                = "/workflowmessage/user/{email}/{status}";
     public static final String WORKFLOWMESSAGE_READ_BY_WORKFLOWIDENTITY                         = "/workflowmessage/workflow/{workflowid}";
     public static final String WORKFLOWMESSAGE_SAVE                                             = "/workflowmessage/save";
-    public static final String WORKFLOWMESSAGE_CHANGE_WORKFLOWMESSAGE_STAUS_BY_WORKFLOWIDENTITY =
-                                                                                                "/workflowmessage/changestatus/{workflowid}/{stepidentity}/{email}/{status}";
+    public static final String WORKFLOWMESSAGE_CHANGE_WORKFLOWMESSAGE_STAUS_BY_WORKFLOWIDENTITY = "/workflowmessage/changestatus/{workflowid}/{stepidentity}/{email}/{status}";
 
     public static URI READ_WORKFLOWMESSAGE_READ_BY_USER(final String email, final int status) {
       final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOWMESSAGE_READ_BY_USEREMAIL);
@@ -118,7 +114,8 @@ public class IflowRestPaths {
       return builder.build();
     }
 
-    public static URI CHANGE_WORKFLOWMESSAGE_WORKFLOWMESSAGE_STAUS(final String workflowidentity, final String stepidentity, final String email, final int status) {
+    public static URI CHANGE_WORKFLOWMESSAGE_WORKFLOWMESSAGE_STAUS(final String workflowidentity, final String stepidentity,
+        final String email, final int status) {
       final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOWMESSAGE_CHANGE_WORKFLOWMESSAGE_STAUS_BY_WORKFLOWIDENTITY);
       return builder.build(workflowidentity, stepidentity, email, status);
     }
@@ -315,34 +312,34 @@ public class IflowRestPaths {
 
   public static class WorkflowModule {
 
-    public static final int PORT = 1030;
+    public static final int    PORT                                            = 1030;
 
-    public static final String WORKFLOWTYPE_READ_BY_IDENTITY             = "/workflowtype/readbyid/{identity}";
-    public static final String WORKFLOWTYPE_READ_LIST                    = "/workflowtype/list";
-    public static final String WORKFLOWTYPE_READ_LIST_BY_COMPANYIDENTITY = "/workflowtype/company/list/{identity}";
+    public static final String WORKFLOWTYPE_READ_BY_IDENTITY                   = "/workflowtype/readbyid/{identity}";
+    public static final String WORKFLOWTYPE_READ_LIST                          = "/workflowtype/list";
+    public static final String WORKFLOWTYPE_READ_LIST_BY_COMPANYIDENTITY       = "/workflowtype/company/list/{identity}";
 
-    public static final String WORKFLOWTYPESTEP_READ_BY_IDENTITY              = "/workflowtypestep/readbyid/{identity}";
-    public static final String WORKFLOWTYPESTEP_READ_LIST_BY_WORKFLOWIDENTITY = "/workflowtypestep/workflowtype/list/{identity}";
-    public static final String WORKFLOWTYPESTEP_READ_LIST                     = "/workflowtypestep/list";
+    public static final String WORKFLOWTYPESTEP_READ_BY_IDENTITY               = "/workflowtypestep/readbyid/{identity}";
+    public static final String WORKFLOWTYPESTEP_READ_LIST_BY_WORKFLOWIDENTITY  = "/workflowtypestep/workflowtype/list/{identity}";
+    public static final String WORKFLOWTYPESTEP_READ_LIST                      = "/workflowtypestep/list";
 
-    public static final String WORKFLOWMESSAGE_READ_BY_USEREMAIL = "/workflowoffer/user/{email}/{status}";
+    public static final String WORKFLOWMESSAGE_READ_BY_USEREMAIL               = "/workflowoffer/user/{email}/{status}";
 
-    public static final String INVOICEWORKFLOW_CREATE                 = "/workflow/invoice/create";
-    public static final String INVOICEWORKFLOW_SAVE                   = "/workflow/invoice/save";
-    public static final String INVOICEWORKFLOW_READ_BY_IDENTITY       = "/workflow/invoice/readbyid/{identity}";
-    public static final String INVOICEWORKFLOW_READ_LIST              = "/workflow/invoice/list";
-    public static final String INVOICEWORKFLOW_READ_LIST_BY_USEREMAIL = "/workflow/invoice/user/list/{email}/{status}";
-    public static final String INVOICEWORKFLOW_SEARCH                 = "/workflow/invoice/search";
-    public static final String INVOICEWORKFLOW_VALIDATE               = "/workflow/invoice/validate";
+    public static final String INVOICEWORKFLOW_CREATE                          = "/workflow/invoice/create";
+    public static final String INVOICEWORKFLOW_SAVE                            = "/workflow/invoice/save";
+    public static final String INVOICEWORKFLOW_READ_BY_IDENTITY                = "/workflow/invoice/readbyid/{identity}";
+    public static final String INVOICEWORKFLOW_READ_LIST                       = "/workflow/invoice/list";
+    public static final String INVOICEWORKFLOW_READ_LIST_BY_USEREMAIL          = "/workflow/invoice/user/list/{email}/{status}";
+    public static final String INVOICEWORKFLOW_SEARCH                          = "/workflow/invoice/search";
+    public static final String INVOICEWORKFLOW_VALIDATE                        = "/workflow/invoice/validate";
 
-    public static final String SINGLETASKWORKFLOW_CREATE                    = "/workflow/singletask/create";
-    public static final String SINGLETASKWORKFLOW_SAVE                      = "/workflow/singletask/save";
-    public static final String SINGLETASKWORKFLOW_READ_BY_IDENTITY          = "/workflow/singletask/readbyid/{identity}";
-    public static final String SINGLETASKWORKFLOW_READ_LIST                 = "/workflow/singletask/list";
-    public static final String SINGLETASKWORKFLOW_READ_LIST_BY_TYPEIDENTITY = "/workflow/singletask/type/list/{identity}";
-    public static final String SINGLETASKWORKFLOW_READ_LIST_BY_USEREMAIL    = "/workflow/singletask/user/list/{email}/{status}";
-    public static final String SINGLETASKWORKFLOW_SEARCH                    = "/workflow/singletask/search";
-    public static final String SINGLETASKWORKFLOW_VALIDATE                  = "/workflow/singletask/validate";
+    public static final String SINGLETASKWORKFLOW_CREATE                       = "/workflow/singletask/create";
+    public static final String SINGLETASKWORKFLOW_SAVE                         = "/workflow/singletask/save";
+    public static final String SINGLETASKWORKFLOW_READ_BY_IDENTITY             = "/workflow/singletask/readbyid/{identity}";
+    public static final String SINGLETASKWORKFLOW_READ_LIST                    = "/workflow/singletask/list";
+    public static final String SINGLETASKWORKFLOW_READ_LIST_BY_TYPEIDENTITY    = "/workflow/singletask/type/list/{identity}";
+    public static final String SINGLETASKWORKFLOW_READ_LIST_BY_USEREMAIL       = "/workflow/singletask/user/list/{email}/{status}";
+    public static final String SINGLETASKWORKFLOW_SEARCH                       = "/workflow/singletask/search";
+    public static final String SINGLETASKWORKFLOW_VALIDATE                     = "/workflow/singletask/validate";
 
     public static final String TESTTHREETASKWORKFLOW_CREATE                    = "/workflow/testthreetask/create";
     public static final String TESTTHREETASKWORKFLOW_SAVE                      = "/workflow/testthreetask/save";
@@ -472,34 +469,31 @@ public class IflowRestPaths {
 
   public static class ProfileModule {
 
-    public static final int PORT = 1020;
+    public static final int    PORT                                                = 1020;
 
-    public static final String AUTHENTICATION_AUTHENTICATE    = "/auth/authenticate";
-    public static final String PROFILE_READ_AUTHENTOCATEDINFO = "/profile/read/authinfo";
-    public static final String PROFILE_READ_TOKENINFO         = "/profile/read/tokeninfo";
-    public static final String PROFILE_VALIDATE_TOKEN         = "/profile/validate/token";
+    public static final String AUTHENTICATION_AUTHENTICATE                         = "/auth/authenticate";
+    public static final String PROFILE_READ_AUTHENTOCATEDINFO                      = "/profile/read/authinfo";
+    public static final String PROFILE_READ_TOKENINFO                              = "/profile/read/tokeninfo";
+    public static final String PROFILE_VALIDATE_TOKEN                              = "/profile/validate/token";
 
-    public static final String COMPANYIDENTITY_READ_BY_IDENTITY     = "/company/readbyid/{companyidentity}";
-    public static final String COMPANYIDENTITY_READ_USER_LIST       = "/company/read/user/{companyidentity}";
-    public static final String COMPANYIDENTITY_READ_USERGROUP_LIST  = "/company/read/usergroup/{companyidentity}";
-    public static final String COMPANYIDENTITY_READ_DEPARTMENT_LIST = "/company/read/department/{companyidentity}";
-    public static final String COMPANYIDENTITY_READ_PROFILE         = "/company/read/profile/{companyidentity}";
+    public static final String COMPANYIDENTITY_READ_BY_IDENTITY                    = "/company/readbyid/{companyidentity}";
+    public static final String COMPANYIDENTITY_READ_USER_LIST                      = "/company/read/user/{companyidentity}";
+    public static final String COMPANYIDENTITY_READ_USERGROUP_LIST                 = "/company/read/usergroup/{companyidentity}";
+    public static final String COMPANYIDENTITY_READ_DEPARTMENT_LIST                = "/company/read/department/{companyidentity}";
+    public static final String COMPANYIDENTITY_READ_PROFILE                        = "/company/read/profile/{companyidentity}";
 
-    public static final String DEPARTMENT_READ_BY_IDENTITY          = "/department/readbyid/{identity}";
-    public static final String DEPARTMENT_READ_DEPARTMENTGROUP_LIST = "/department/read/departmentgroup/{identity}";
-    public static final String DEPARTMENT_READ_ALLUSERS_LIST        = "/department/read/allusers/{identity}";
+    public static final String DEPARTMENT_READ_BY_IDENTITY                         = "/department/readbyid/{identity}";
+    public static final String DEPARTMENT_READ_DEPARTMENTGROUP_LIST                = "/department/read/departmentgroup/{identity}";
+    public static final String DEPARTMENT_READ_ALLUSERS_LIST                       = "/department/read/allusers/{identity}";
 
-    public static final String DEPARTMENTGROUP_READ_BY_IDENTITY = "/departmentgroup/readbyid/{identity}";
-    public static final String DEPARTMENTGROUP_READ_USER_LIST   = "/departmentgroup/read/user/{identity}";
+    public static final String DEPARTMENTGROUP_READ_BY_IDENTITY                    = "/departmentgroup/readbyid/{identity}";
+    public static final String DEPARTMENTGROUP_READ_USER_LIST                      = "/departmentgroup/read/user/{identity}";
 
-    public static final String CACHDATA_READ_USER_WORKFLOWMESSAGELIST              =
-                                                                      "/cachdata/user/readworkflowmessagelist/{companyidentity}/{email}";
-    public static final String CACHDATA_ADD_USER_WORKFLOWMESSAGELIST               =
-                                                                     "/cachdata/user/addworkflowmessagelist/{companyidentity}/{email}";
+    public static final String CACHDATA_READ_USER_WORKFLOWMESSAGELIST              = "/cachdata/user/readworkflowmessagelist/{companyidentity}/{email}";
+    public static final String CACHDATA_ADD_USER_WORKFLOWMESSAGELIST               = "/cachdata/user/addworkflowmessagelist/{companyidentity}/{email}";
     public static final String CACHDATA_CAL_USER_DATARESET_BY_COMPANYIDENTITY      = "/cachdata/user/datareset/{companyidentity}/{email}";
     public static final String CACHDATA_CAL_USERLIST_DATARESET_BY_COMPANYIDENTITY  = "/cachdata/userlist/datareset/{companyidentity}";
-    public static final String CACHDATA_CAL_WORKFLOW_DATARESET_BY_WORKFLOWIDENTITY =
-                                                                                   "/cachdata/workflow/datareset/{companyidentity}/{identity}";
+    public static final String CACHDATA_CAL_WORKFLOW_DATARESET_BY_WORKFLOWIDENTITY = "/cachdata/workflow/datareset/{companyidentity}/{identity}";
 
     public static URI READ_COMPANY_BY_ID_URIBUILDER(final String companyidentity) {
       final IflowUriBuilder builder = new IflowUriBuilder(COMPANYIDENTITY_READ_BY_IDENTITY);
@@ -590,6 +584,28 @@ public class IflowRestPaths {
       final IflowUriBuilder builder = new IflowUriBuilder(PROFILE_READ_AUTHENTOCATEDINFO);
       return builder.build();
     }
+
+  }
+
+  public static class GuiModule {
+
+    private GuiModule() {
+    }
+
+    public static final int    PORT                                   = 1200;
+
+    public static final String INVOICEWORKFLOW_PAGE_BASE              = "/workflow/invoice/";
+    public static final String SINGLETASKWORKFLOW_PAGE_BASE           = "/workflow/singletask/";
+    public static final String TESTTHREETASKWORKFLOW_PAGE_BASE        = "/workflow/testthreetask/";
+
+    public static final String INVOICEWORKFLOW_CREATE                 = "/workflow/create";
+
+    public static final String INVOICEWORKFLOW_SAVE                   = "/workflow/invoice/save";
+    public static final String INVOICEWORKFLOW_READ_BY_IDENTITY       = "/workflow/invoice/readbyid/{identity}";
+    public static final String INVOICEWORKFLOW_READ_LIST              = "/workflow/invoice/list";
+    public static final String INVOICEWORKFLOW_READ_LIST_BY_USEREMAIL = "/workflow/invoice/user/list/{email}/{status}";
+    public static final String INVOICEWORKFLOW_SEARCH                 = "/workflow/invoice/search";
+    public static final String INVOICEWORKFLOW_VALIDATE               = "/workflow/invoice/validate";
 
   }
 }

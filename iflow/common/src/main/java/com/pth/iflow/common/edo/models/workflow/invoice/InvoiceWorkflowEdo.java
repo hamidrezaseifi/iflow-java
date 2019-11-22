@@ -311,7 +311,7 @@ public class InvoiceWorkflowEdo implements IWorkflowBaseEdo {
 
   @Override
   public String getWorkflowType() {
-    return EWorkflowType.INVOICE_WORKFLOW_TYPE.getName();
+    return EWorkflowType.INVOICE_WORKFLOW_TYPE.getIdentity();
   }
 
 }

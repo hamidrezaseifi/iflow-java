@@ -72,7 +72,7 @@ public class SingleTaskWorkflowServiceTest extends TestDataProducer {
 
     SingleTaskWorkflow workflow = getTestSingleTaskWorkflow(1L);
     workflow.setId(null);
-    workflow.setIdentity(EWorkflowIdentity.NOT_SET.getName());
+    workflow.setIdentity(EWorkflowIdentity.NOT_SET.getIdentity());
     workflow.setVersion(21);
 
     when(this.workflowDao.create(any(SingleTaskWorkflow.class))).thenReturn(workflow);

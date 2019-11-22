@@ -72,7 +72,7 @@ public class InvoiceWorkflowServiceTest extends TestDataProducer {
 
     InvoiceWorkflow workflow = getTestInvoiceWorkflow(1L);
     workflow.setId(null);
-    workflow.setIdentity(EWorkflowIdentity.NOT_SET.getName());
+    workflow.setIdentity(EWorkflowIdentity.NOT_SET.getIdentity());
     workflow.setVersion(21);
 
     when(this.invoiceWorkflowDao.create(any(InvoiceWorkflow.class))).thenReturn(workflow);

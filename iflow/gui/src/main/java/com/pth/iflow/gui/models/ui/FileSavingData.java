@@ -83,7 +83,7 @@ public class FileSavingData {
    * @param workflowId the workflowId to set
    */
   public void setWorkflowIdentity(final String workflowIdentity) {
-    this.workflowIdentity = workflowIdentity == null ? EWorkflowIdentity.NOT_SET.getName() : workflowIdentity;
+    this.workflowIdentity = workflowIdentity == null ? EWorkflowIdentity.NOT_SET.getIdentity() : workflowIdentity;
   }
 
   public String getActionIdentity() {

@@ -137,7 +137,7 @@ public class SingleTaskWorkflowEdo implements IWorkflowBaseEdo {
 
   @Override
   public String getWorkflowType() {
-    return EWorkflowType.SINGLE_TASK_WORKFLOW_TYPE.getName();
+    return EWorkflowType.SINGLE_TASK_WORKFLOW_TYPE.getIdentity();
   }
 
 }

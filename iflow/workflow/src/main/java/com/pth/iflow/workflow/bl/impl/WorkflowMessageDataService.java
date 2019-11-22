@@ -72,7 +72,7 @@ public class WorkflowMessageDataService implements IWorkflowMessageDataService {
                                   this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule
                                                                                                    .CHANGE_WORKFLOWMESSAGE_WORKFLOWMESSAGE_STAUS(workflowIdentity,
                                                                                                                                                  stepIdentity,
-                                                                                                                                                 EWorkflowIdentity.NOT_SET.getName(),
+                                                                                                                                                 EWorkflowIdentity.NOT_SET.getIdentity(),
                                                                                                                                                  status.getValue())),
                                   token,
                                   EModule.CORE,

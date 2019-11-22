@@ -83,7 +83,7 @@ public class InvoiceWorkflow extends CoreModelHelper implements ICoreIdentityMod
 
   @Override
   public boolean isIdentityNotSet() {
-    return EWorkflowIdentity.NOT_SET.getName().equals(getIdentity());
+    return EWorkflowIdentity.NOT_SET.getIdentity().equals(getIdentity());
   }
 
   @Override
@@ -169,7 +169,7 @@ public class InvoiceWorkflow extends CoreModelHelper implements ICoreIdentityMod
 
   @Override
   public String getWorkflowTypeIdentity() {
-    return EWorkflowType.INVOICE_WORKFLOW_TYPE.getName();
+    return EWorkflowType.INVOICE_WORKFLOW_TYPE.getIdentity();
   }
 
   @Override

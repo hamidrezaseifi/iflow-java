@@ -474,7 +474,7 @@ public class InvoiceWorkflow extends IdentityModel implements IWorkflow {
     newWorkflow.setVersion(0);
     newWorkflow.setWorkflowTypeIdentity("");
     newWorkflow.setComments("");
-    newWorkflow.setIdentity(EWorkflowIdentity.NOT_SET.getName());
+    newWorkflow.setIdentity(EWorkflowIdentity.NOT_SET.getIdentity());
 
     return newWorkflow;
   }

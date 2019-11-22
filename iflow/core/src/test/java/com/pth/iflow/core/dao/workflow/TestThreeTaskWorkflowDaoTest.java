@@ -37,7 +37,7 @@ public class TestThreeTaskWorkflowDaoTest extends TestDataProducer {
     for (int i = 1; i <= 3; i++) {
       final TestThreeTaskWorkflow workflow = getTestNewTestThreeTaskWorkflow();
       workflow.setId(null);
-      workflow.setIdentity(EWorkflowIdentity.NOT_SET.getName());
+      workflow.setIdentity(EWorkflowIdentity.NOT_SET.getIdentity());
       final TestThreeTaskWorkflow res = workflowDao.create(workflow);
       createdModels.add(res);
     }

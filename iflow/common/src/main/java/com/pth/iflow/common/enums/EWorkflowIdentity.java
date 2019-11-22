@@ -14,7 +14,7 @@ public enum EWorkflowIdentity implements IEnumNameValidator {
   }
 
   @Override
-  public String getName() {
+  public String getIdentity() {
     return this.enumName;
   }
 
@@ -33,7 +33,7 @@ public enum EWorkflowIdentity implements IEnumNameValidator {
       return true;
     }
 
-    return NOT_SET.getName().equals(identity);
+    return NOT_SET.getIdentity().equals(identity);
   }
 
 }

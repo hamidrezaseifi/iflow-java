@@ -55,7 +55,7 @@ public class Workflow extends CoreModelHelper implements ICoreIdentityModel, IWo
 
   @Override
   public boolean isIdentityNotSet() {
-    return EWorkflowIdentity.NOT_SET.getName().equals(getIdentity());
+    return EWorkflowIdentity.NOT_SET.getIdentity().equals(getIdentity());
   }
 
   @Override

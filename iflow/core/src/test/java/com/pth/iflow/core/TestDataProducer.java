@@ -221,7 +221,7 @@ public class TestDataProducer {
   protected Workflow getTestWorkflow(final Long Id) {
     final Workflow model = new Workflow();
     model.setId(Id);
-    model.setIdentity(EWorkflowIdentity.NOT_SET.getName());
+    model.setIdentity(EWorkflowIdentity.NOT_SET.getIdentity());
     model.setStatus(EWorkflowStatus.INITIALIZE.getValue().intValue());
     model.setVersion(1);
     model.setComments("comments");
@@ -247,7 +247,7 @@ public class TestDataProducer {
   protected InvoiceWorkflow getTestInvoiceWorkflow(final Long Id) {
     final InvoiceWorkflow model = new InvoiceWorkflow();
     model.setId(Id);
-    model.setIdentity(EWorkflowIdentity.NOT_SET.getName());
+    model.setIdentity(EWorkflowIdentity.NOT_SET.getIdentity());
     model.setStatus(EWorkflowStatus.INITIALIZE.getValue().intValue());
     model.setVersion(1);
     model.setComments("comments");
@@ -288,7 +288,7 @@ public class TestDataProducer {
     final SingleTaskWorkflow model = new SingleTaskWorkflow();
     model.setWorkflowTypeId(1l);
     model.setId(Id);
-    model.setIdentity(EWorkflowIdentity.NOT_SET.getName());
+    model.setIdentity(EWorkflowIdentity.NOT_SET.getIdentity());
     model.setStatus(EWorkflowStatus.INITIALIZE.getValue().intValue());
     model.setVersion(1);
     model.setComments("comments");
@@ -313,7 +313,7 @@ public class TestDataProducer {
   protected TestThreeTaskWorkflow getTestTestThreeTaskWorkflow(final Long Id) {
     final TestThreeTaskWorkflow model = new TestThreeTaskWorkflow();
     model.setId(Id);
-    model.setIdentity(EWorkflowIdentity.NOT_SET.getName());
+    model.setIdentity(EWorkflowIdentity.NOT_SET.getIdentity());
     model.setStatus(EWorkflowStatus.INITIALIZE.getValue().intValue());
     model.setVersion(1);
     model.setComments("comments");
@@ -391,7 +391,7 @@ public class TestDataProducer {
     final Workflow model = new Workflow();
     model.setWorkflowTypeIdentity("wtidentity");
     model.setId(null);
-    model.setIdentity(EWorkflowIdentity.NOT_SET.getName());
+    model.setIdentity(EWorkflowIdentity.NOT_SET.getIdentity());
     model.setStatus(EWorkflowStatus.INITIALIZE.getValue().intValue());
     model.setVersion(1);
     model.setComments("comments");
@@ -414,7 +414,7 @@ public class TestDataProducer {
     final SingleTaskWorkflow model = new SingleTaskWorkflow();
 
     model.setId(null);
-    model.setIdentity(EWorkflowIdentity.NOT_SET.getName());
+    model.setIdentity(EWorkflowIdentity.NOT_SET.getIdentity());
     model.setStatus(EWorkflowStatus.INITIALIZE.getValue().intValue());
     model.setVersion(1);
     model.setComments("comments");
@@ -433,7 +433,7 @@ public class TestDataProducer {
     final TestThreeTaskWorkflow model = new TestThreeTaskWorkflow();
 
     model.setId(null);
-    model.setIdentity(EWorkflowIdentity.NOT_SET.getName());
+    model.setIdentity(EWorkflowIdentity.NOT_SET.getIdentity());
     model.setStatus(EWorkflowStatus.INITIALIZE.getValue().intValue());
     model.setVersion(1);
     model.setComments("comments");

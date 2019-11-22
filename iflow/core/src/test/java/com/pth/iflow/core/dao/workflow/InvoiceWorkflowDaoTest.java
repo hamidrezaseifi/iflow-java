@@ -37,7 +37,7 @@ public class InvoiceWorkflowDaoTest extends TestDataProducer {
     for (int i = 1; i <= 3; i++) {
       final InvoiceWorkflow workflow = getTestNewInvoiceWorkflow();
       workflow.setId(null);
-      workflow.setIdentity(EWorkflowIdentity.NOT_SET.getName());
+      workflow.setIdentity(EWorkflowIdentity.NOT_SET.getIdentity());
       final InvoiceWorkflow res = invoiceWorkflowDao.create(workflow);
       createdModels.add(res);
     }

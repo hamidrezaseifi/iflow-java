@@ -55,7 +55,7 @@ public class SingleTaskWorkflow extends CoreModelHelper implements ICoreIdentity
 
   @Override
   public boolean isIdentityNotSet() {
-    return EWorkflowIdentity.NOT_SET.getName().equals(getIdentity());
+    return EWorkflowIdentity.NOT_SET.getIdentity().equals(getIdentity());
   }
 
   @Override
@@ -141,7 +141,7 @@ public class SingleTaskWorkflow extends CoreModelHelper implements ICoreIdentity
 
   @Override
   public String getWorkflowTypeIdentity() {
-    return EWorkflowType.SINGLE_TASK_WORKFLOW_TYPE.getName();
+    return EWorkflowType.SINGLE_TASK_WORKFLOW_TYPE.getIdentity();
   }
 
   @Override

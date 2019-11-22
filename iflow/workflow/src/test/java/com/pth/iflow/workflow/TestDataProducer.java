@@ -335,7 +335,7 @@ public class TestDataProducer {
   private WorkflowType getTestWorkflowType(final EWorkflowType workflowTypeEnum) {
     final WorkflowType model = new WorkflowType();
     model.setCompanyIdentity("companyIdentity");
-    model.setIdentity(workflowTypeEnum.getName());
+    model.setIdentity(workflowTypeEnum.getIdentity());
     model.setBaseTypeIdentity("baseTypeIdentity");
     model.setTitle("utest title");
     model.setStatus(1);

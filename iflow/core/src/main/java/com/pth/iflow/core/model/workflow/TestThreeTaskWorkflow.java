@@ -55,7 +55,7 @@ public class TestThreeTaskWorkflow extends CoreModelHelper implements ICoreIdent
 
   @Override
   public boolean isIdentityNotSet() {
-    return EWorkflowIdentity.NOT_SET.getName().equals(getIdentity());
+    return EWorkflowIdentity.NOT_SET.getIdentity().equals(getIdentity());
   }
 
   @Override
@@ -141,7 +141,7 @@ public class TestThreeTaskWorkflow extends CoreModelHelper implements ICoreIdent
 
   @Override
   public String getWorkflowTypeIdentity() {
-    return EWorkflowType.THREE_TASK_WORKFLOW_TYPE.getName();
+    return EWorkflowType.THREE_TASK_WORKFLOW_TYPE.getIdentity();
   }
 
   @Override

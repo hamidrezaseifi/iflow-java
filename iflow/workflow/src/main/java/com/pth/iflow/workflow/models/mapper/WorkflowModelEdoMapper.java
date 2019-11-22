@@ -350,7 +350,7 @@ public class WorkflowModelEdoMapper {
   public static SingleTaskWorkflowSaveRequestEdo toEdo(final SingleTaskWorkflowSaveRequest model) {
     final SingleTaskWorkflowSaveRequestEdo request = new SingleTaskWorkflowSaveRequestEdo();
     request.setAssigns(toAssignItemEdoList(model.getAssigns()));
-    request.setCommand(model.getCommand().getName());
+    request.setCommand(model.getCommand().getIdentity());
     request.setExpireDays(model.getExpireDays());
     request.setWorkflow(toEdo(model.getWorkflow()));
 
@@ -427,7 +427,7 @@ public class WorkflowModelEdoMapper {
   public static TestThreeTaskWorkflowSaveRequestEdo toEdo(final TestThreeTaskWorkflowSaveRequest model) {
     final TestThreeTaskWorkflowSaveRequestEdo request = new TestThreeTaskWorkflowSaveRequestEdo();
     request.setAssigns(toAssignItemEdoList(model.getAssigns()));
-    request.setCommand(model.getCommand().getName());
+    request.setCommand(model.getCommand().getIdentity());
     request.setExpireDays(model.getExpireDays());
     request.setWorkflow(toEdo(model.getWorkflow()));
 
@@ -866,7 +866,7 @@ public class WorkflowModelEdoMapper {
   public static InvoiceWorkflowSaveRequestEdo toEdo(final InvoiceWorkflowSaveRequest model) {
     final InvoiceWorkflowSaveRequestEdo request = new InvoiceWorkflowSaveRequestEdo();
     request.setAssigns(toAssignItemEdoList(model.getAssigns()));
-    request.setCommand(model.getCommand().getName());
+    request.setCommand(model.getCommand().getIdentity());
     request.setExpireDays(model.getExpireDays());
     request.setWorkflow(toEdo(model.getWorkflow()));
 
@@ -883,7 +883,7 @@ public class WorkflowModelEdoMapper {
   }
 
   private static AssignItemEdo toEdo(final AssignItem model) {
-    final AssignItemEdo edo = new AssignItemEdo(model.getItemIdentity(), model.getItemType().getName());
+    final AssignItemEdo edo = new AssignItemEdo(model.getItemIdentity(), model.getItemType().getIdentity());
 
     return edo;
   }

@@ -37,7 +37,7 @@ public class SingleTaskWorkflowDaoTest extends TestDataProducer {
     for (int i = 1; i <= 3; i++) {
       final SingleTaskWorkflow workflow = getTestNewSingleTaskWorkflowWorkflow();
       workflow.setId(null);
-      workflow.setIdentity(EWorkflowIdentity.NOT_SET.getName());
+      workflow.setIdentity(EWorkflowIdentity.NOT_SET.getIdentity());
       final SingleTaskWorkflow res = workflowDao.create(workflow);
       createdModels.add(res);
     }

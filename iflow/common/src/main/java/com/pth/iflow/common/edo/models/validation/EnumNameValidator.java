@@ -21,7 +21,7 @@ public class EnumNameValidator implements ConstraintValidator<AEnumNameValidator
     final IEnumNameValidator[] enumValArr = enumClass.getEnumConstants();
 
     for (final IEnumNameValidator enumVal : enumValArr) {
-      this.validValues.add(enumVal.getName());
+      this.validValues.add(enumVal.getIdentity());
     }
 
   }

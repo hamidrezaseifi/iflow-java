@@ -363,7 +363,7 @@ public class GuiModelEdoMapper {
   public static SingleTaskWorkflowSaveRequestEdo toEdo(final SingleTaskWorkflowSaveRequest model) {
     final SingleTaskWorkflowSaveRequestEdo request = new SingleTaskWorkflowSaveRequestEdo();
     request.setAssigns(toAssignItemEdoList(model.getAssigns()));
-    request.setCommand(model.getCommand().getName());
+    request.setCommand(model.getCommand().getIdentity());
     request.setExpireDays(model.getExpireDays());
     request.setWorkflow(toEdo(model.getWorkflow()));
 
@@ -438,7 +438,7 @@ public class GuiModelEdoMapper {
   public static TestThreeTaskWorkflowSaveRequestEdo toEdo(final TestThreeTaskWorkflowSaveRequest model) {
     final TestThreeTaskWorkflowSaveRequestEdo request = new TestThreeTaskWorkflowSaveRequestEdo();
     request.setAssigns(toAssignItemEdoList(model.getAssigns()));
-    request.setCommand(model.getCommand().getName());
+    request.setCommand(model.getCommand().getIdentity());
     request.setExpireDays(model.getExpireDays());
     request.setWorkflow(toEdo(model.getWorkflow()));
 
@@ -478,7 +478,7 @@ public class GuiModelEdoMapper {
   public static InvoiceWorkflowSaveRequestEdo toEdo(final InvoiceWorkflowSaveRequest model) {
     final InvoiceWorkflowSaveRequestEdo request = new InvoiceWorkflowSaveRequestEdo();
     request.setAssigns(toAssignItemEdoList(model.getAssigns()));
-    request.setCommand(model.getCommand().getName());
+    request.setCommand(model.getCommand().getIdentity());
     request.setExpireDays(model.getExpireDays());
     request.setWorkflow(toEdo(model.getWorkflow()));
 
@@ -853,7 +853,7 @@ public class GuiModelEdoMapper {
   }
 
   private static AssignItemEdo toEdo(final AssignItem model) {
-    return new AssignItemEdo(model.getItemIdentity(), model.getItemType().getName());
+    return new AssignItemEdo(model.getItemIdentity(), model.getItemType().getIdentity());
   }
 
   public static List<WorkflowType> fromWorkflowTypeEdoList(final List<WorkflowTypeEdo> edoList) throws IFlowMessageConversionFailureException {
