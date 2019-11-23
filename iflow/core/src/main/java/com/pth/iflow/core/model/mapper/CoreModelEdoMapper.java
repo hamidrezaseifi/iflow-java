@@ -105,7 +105,12 @@ public class CoreModelEdoMapper {
 
   public static WorkflowResultEdo toEdo(final WorkflowResult model) {
     final WorkflowResultEdo edo = new WorkflowResultEdo();
-    edo.setWorkflowIdentity(model.getWorkflowIdentity());
+
+    edo.setStatus(model.getStatus().getValue());
+    edo.setControllerIdentity(model.getControllerIdentity());
+    edo.setCurrentStepIdentity(model.getCurrentStepIdentity());
+    edo.setCreatedByIdentity(model.getCreatedByIdentity());
+    edo.setIdentity(model.getIdentity());
     edo.setWorkflowTypeIdentity(model.getWorkflowTypeIdentity());
 
     return edo;

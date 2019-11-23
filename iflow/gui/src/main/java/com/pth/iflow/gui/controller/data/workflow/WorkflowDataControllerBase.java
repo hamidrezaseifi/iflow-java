@@ -72,21 +72,6 @@ public abstract class WorkflowDataControllerBase<W extends IWorkflow, WS extends
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @PostMapping(path = { "/workflowlist/search" })
-  @ResponseBody
-  public List<W> searchWorkflows(@RequestBody final WorkflowSearchFilter workflowSearchFilter)
-      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
-
-    if (workflowSearchFilter.isMeAssigned()) {
-      workflowSearchFilter.addAssignedUserIdentity(this.getLoggedUser().getIdentity());
-    }
-
-    final List<W> workflowList = this.workflowHandler.searchWorkflow(workflowSearchFilter);
-
-    return workflowList;
-  }
-
-  @ResponseStatus(HttpStatus.OK)
   @PostMapping(path = { "/initcreate" })
   @ResponseBody
   public Map<String, Object> loadWorkflowCreateData()

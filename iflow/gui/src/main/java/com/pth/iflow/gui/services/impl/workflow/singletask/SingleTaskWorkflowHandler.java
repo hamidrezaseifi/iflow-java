@@ -21,7 +21,6 @@ import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.WorkflowAction;
 import com.pth.iflow.gui.models.WorkflowFile;
-import com.pth.iflow.gui.models.WorkflowSearchFilter;
 import com.pth.iflow.gui.models.WorkflowType;
 import com.pth.iflow.gui.models.WorkflowTypeStep;
 import com.pth.iflow.gui.models.ui.FileSavingData;
@@ -184,16 +183,6 @@ public class SingleTaskWorkflowHandler implements IWorkflowHandler<SingleTaskWor
 
     final SingleTaskWorkflow result = this.workflowAccess.saveWorkflow(request, this.sessionUserInfo.getToken());
     return this.prepareWorkflow(result);
-  }
-
-  @Override
-  public List<SingleTaskWorkflow> searchWorkflow(final WorkflowSearchFilter workflowSearchFilter)
-      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
-
-    logger.debug("Search workflow from company");
-    final List<SingleTaskWorkflow> list = this.workflowAccess.searchWorkflow(workflowSearchFilter, this.sessionUserInfo.getToken());
-
-    return this.prepareWorkflowList(list);
   }
 
   @Override

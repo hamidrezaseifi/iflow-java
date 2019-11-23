@@ -3,8 +3,10 @@ package com.pth.iflow.core.storage.dao.impl.base;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import com.pth.iflow.core.model.User;
 import com.pth.iflow.core.model.workflow.IWorkflow;
 import com.pth.iflow.core.model.workflow.sub.WorkflowAction;
@@ -22,19 +24,19 @@ import com.pth.iflow.core.storage.dao.IWorkflowTypeStepDao;
 public class WorkflowDaoHelper<W extends IWorkflow> {
 
   @Autowired
-  private IWorkflowActionDao workflowActionDao;
+  private IWorkflowActionDao   workflowActionDao;
 
   @Autowired
-  private IWorkflowFileDao workflowFileDao;
+  private IWorkflowFileDao     workflowFileDao;
 
   @Autowired
-  private IWorkflowTypeDao workflowTypeDao;
+  private IWorkflowTypeDao     workflowTypeDao;
 
   @Autowired
   private IWorkflowTypeStepDao workflowTypeStepDao;
 
   @Autowired
-  private IUserDao userDao;
+  private IUserDao             userDao;
 
   public void createWorkflowActions(final W workflow, final Long workflowId, final boolean withTransaction) {
 
@@ -101,6 +103,12 @@ public class WorkflowDaoHelper<W extends IWorkflow> {
 
   }
 
+  public String getCurrentStepIdentityById(final Long id) {
+
+    final WorkflowTypeStep type = workflowTypeStepDao.getById(id);
+    return type.getIdentity();
+  }
+
   public void verifyControllerById(final W workflow, final Long id) {
 
     final User type = userDao.getById(id);
@@ -108,11 +116,23 @@ public class WorkflowDaoHelper<W extends IWorkflow> {
 
   }
 
+  public String getControllerIdentityById(final Long id) {
+
+    final User type = userDao.getById(id);
+    return type.getIdentity();
+  }
+
   public void verifyCreatedByById(final W workflow, final Long id) {
 
     final User type = userDao.getById(id);
     workflow.setCreatedByIdentity(type.getIdentity());
 
+  }
+
+  public String getCreatedByIdentityById(final Long id) {
+
+    final User type = userDao.getById(id);
+    return type.getIdentity();
   }
 
   public void setWorkflowDetails(final W workflow) {

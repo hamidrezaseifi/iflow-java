@@ -14,20 +14,37 @@ import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 @XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "WorkflowResult" + IFlowJaxbDefinition.TYPE_PREFIX)
 public class WorkflowResultEdo {
 
-  @NotNull(message = "WorkflowIdentity is not allowed to be null!")
-  @XmlElement(name = "WorkflowIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String workflowIdentity;
+  @NotNull(message = "Identity is not allowed to be null!")
+  @XmlElement(name = "Identity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String  identity;
 
   @NotNull(message = "WorkflowTypeIdentity is not allowed to be null!")
   @XmlElement(name = "WorkflowTypeIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String workflowTypeIdentity;
+  private String  workflowTypeIdentity;
 
-  public String getWorkflowIdentity() {
-    return this.workflowIdentity;
+  @XmlElement(name = "CurrentStepIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String  currentStepIdentity;
+
+  @XmlElement(name = "ControllerIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String  controllerIdentity;
+
+  @XmlElement(name = "CreatedByIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String  createdByIdentity;
+
+  @NotNull(message = "Status is not allowed to be null!")
+  @XmlElement(name = "Status", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private Integer status;
+
+  public WorkflowResultEdo() {
+
   }
 
-  public void setWorkflowIdentity(final String workflowIdentity) {
-    this.workflowIdentity = workflowIdentity;
+  public String getIdentity() {
+    return this.identity;
+  }
+
+  public void setIdentity(final String identity) {
+    this.identity = identity;
   }
 
   public String getWorkflowTypeIdentity() {
@@ -36,6 +53,38 @@ public class WorkflowResultEdo {
 
   public void setWorkflowTypeIdentity(final String workflowTypeIdentity) {
     this.workflowTypeIdentity = workflowTypeIdentity;
+  }
+
+  public String getCurrentStepIdentity() {
+    return this.currentStepIdentity;
+  }
+
+  public void setCurrentStepIdentity(final String currentStepIdentity) {
+    this.currentStepIdentity = currentStepIdentity;
+  }
+
+  public String getControllerIdentity() {
+    return this.controllerIdentity;
+  }
+
+  public void setControllerIdentity(final String controllerIdentity) {
+    this.controllerIdentity = controllerIdentity;
+  }
+
+  public String getCreatedByIdentity() {
+    return this.createdByIdentity;
+  }
+
+  public void setCreatedByIdentity(final String createdByIdentity) {
+    this.createdByIdentity = createdByIdentity;
+  }
+
+  public Integer getStatus() {
+    return this.status;
+  }
+
+  public void setStatus(final Integer status) {
+    this.status = status;
   }
 
 }

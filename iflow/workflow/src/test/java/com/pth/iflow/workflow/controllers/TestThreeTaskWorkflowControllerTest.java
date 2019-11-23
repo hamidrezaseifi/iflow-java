@@ -6,8 +6,10 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import java.util.List;
 import java.util.Set;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,14 +24,13 @@ import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConve
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import com.pth.iflow.common.edo.models.WorkflowSearchFilterEdo;
+
 import com.pth.iflow.common.edo.models.workflow.testthreetask.TestThreeTaskWorkflowListEdo;
 import com.pth.iflow.common.edo.models.workflow.testthreetask.TestThreeTaskWorkflowSaveRequestEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
 import com.pth.iflow.workflow.TestDataProducer;
 import com.pth.iflow.workflow.bl.IWorkflowProcessService;
-import com.pth.iflow.workflow.models.WorkflowSearchFilter;
 import com.pth.iflow.workflow.models.mapper.WorkflowModelEdoMapper;
 import com.pth.iflow.workflow.models.workflow.testthree.TestThreeTaskWorkflow;
 import com.pth.iflow.workflow.models.workflow.testthree.TestThreeTaskWorkflowSaveRequest;
@@ -40,16 +41,16 @@ import com.pth.iflow.workflow.models.workflow.testthree.TestThreeTaskWorkflowSav
 public class TestThreeTaskWorkflowControllerTest extends TestDataProducer {
 
   @Autowired
-  private MockMvc mockMvc;
+  private MockMvc                                        mockMvc;
 
   @Autowired
-  private MappingJackson2XmlHttpMessageConverter xmlConverter;
+  private MappingJackson2XmlHttpMessageConverter         xmlConverter;
 
   @MockBean
   private IWorkflowProcessService<TestThreeTaskWorkflow> workflowService;
 
   @Value("${iflow.common.rest.api.security.client-id.internal}")
-  private String innerModulesRequestHeaderValue;
+  private String                                         innerModulesRequestHeaderValue;
 
   @Before
   public void setUp() throws Exception {
@@ -69,12 +70,10 @@ public class TestThreeTaskWorkflowControllerTest extends TestDataProducer {
     when(this.workflowService.getByIdentity(any(String.class), any(String.class))).thenReturn(model);
 
     this.mockMvc
-                .perform(MockMvcRequestBuilders.get(IflowRestPaths.WorkflowModule.TESTTHREETASKWORKFLOW_READ_BY_IDENTITY,
-                                                    model.getIdentity())
-                                               .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, "test-roken"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
-                .andExpect(content().xml(resultAsXmlString));
+        .perform(MockMvcRequestBuilders.get(IflowRestPaths.WorkflowModule.TESTTHREETASKWORKFLOW_READ_BY_IDENTITY, model.getIdentity())
+            .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, "test-roken"))
+        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(content().xml(resultAsXmlString));
 
     verify(this.workflowService, times(1)).getByIdentity(any(String.class), any(String.class));
 
@@ -86,8 +85,8 @@ public class TestThreeTaskWorkflowControllerTest extends TestDataProducer {
     final TestThreeTaskWorkflowSaveRequest request = this.getTestTestThreeTaskWorkflowSaveRequest();
     final TestThreeTaskWorkflowSaveRequestEdo requestEdo = WorkflowModelEdoMapper.toEdo(request);
     final List<TestThreeTaskWorkflow> list = this.getTestTestThreeTaskWorkflowList();
-    final TestThreeTaskWorkflowListEdo listEdo =
-                                               new TestThreeTaskWorkflowListEdo(WorkflowModelEdoMapper.toTestThreeTaskWorkflowEdoList(list));
+    final TestThreeTaskWorkflowListEdo listEdo = new TestThreeTaskWorkflowListEdo(
+        WorkflowModelEdoMapper.toTestThreeTaskWorkflowEdoList(list));
 
     when(this.workflowService.create(any(TestThreeTaskWorkflowSaveRequest.class), any(String.class))).thenReturn(list);
 
@@ -95,13 +94,11 @@ public class TestThreeTaskWorkflowControllerTest extends TestDataProducer {
     final String resultAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(listEdo);
 
     this.mockMvc
-                .perform(MockMvcRequestBuilders.post(IflowRestPaths.WorkflowModule.TESTTHREETASKWORKFLOW_CREATE)
-                                               .content(contentAsXmlString)
-                                               .contentType(MediaType.APPLICATION_XML_VALUE)
-                                               .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, "test-roken"))
-                .andExpect(status().isCreated())
-                .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
-                .andExpect(content().xml(resultAsXmlString));
+        .perform(MockMvcRequestBuilders.post(IflowRestPaths.WorkflowModule.TESTTHREETASKWORKFLOW_CREATE).content(contentAsXmlString)
+            .contentType(MediaType.APPLICATION_XML_VALUE)
+            .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, "test-roken"))
+        .andExpect(status().isCreated()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(content().xml(resultAsXmlString));
 
     verify(this.workflowService, times(1)).create(any(TestThreeTaskWorkflowSaveRequest.class), any(String.class));
 
@@ -122,13 +119,11 @@ public class TestThreeTaskWorkflowControllerTest extends TestDataProducer {
     final String contentAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(requestModelEdo);
 
     this.mockMvc
-                .perform(MockMvcRequestBuilders.post(IflowRestPaths.WorkflowModule.TESTTHREETASKWORKFLOW_SAVE)
-                                               .content(contentAsXmlString)
-                                               .contentType(MediaType.APPLICATION_XML_VALUE)
-                                               .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, "test-roken"))
-                .andExpect(status().isAccepted())
-                .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
-                .andExpect(content().xml(resultAsXmlString));
+        .perform(MockMvcRequestBuilders.post(IflowRestPaths.WorkflowModule.TESTTHREETASKWORKFLOW_SAVE).content(contentAsXmlString)
+            .contentType(MediaType.APPLICATION_XML_VALUE)
+            .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, "test-roken"))
+        .andExpect(status().isAccepted()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(content().xml(resultAsXmlString));
 
     verify(this.workflowService, times(1)).save(any(TestThreeTaskWorkflowSaveRequest.class), any(String.class));
 
@@ -139,8 +134,8 @@ public class TestThreeTaskWorkflowControllerTest extends TestDataProducer {
 
     final Set<String> idList = this.getTestWorkflowIdSet();
     final List<TestThreeTaskWorkflow> list = this.getTestTestThreeTaskWorkflowList();
-    final TestThreeTaskWorkflowListEdo listEdo =
-                                               new TestThreeTaskWorkflowListEdo(WorkflowModelEdoMapper.toTestThreeTaskWorkflowEdoList(list));
+    final TestThreeTaskWorkflowListEdo listEdo = new TestThreeTaskWorkflowListEdo(
+        WorkflowModelEdoMapper.toTestThreeTaskWorkflowEdoList(list));
 
     when(this.workflowService.getListByIdentityList(any(Set.class), any(String.class))).thenReturn(list);
 
@@ -148,42 +143,13 @@ public class TestThreeTaskWorkflowControllerTest extends TestDataProducer {
     final String resultAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(listEdo);
 
     this.mockMvc
-                .perform(MockMvcRequestBuilders.post(IflowRestPaths.WorkflowModule.TESTTHREETASKWORKFLOW_READ_LIST)
-                                               .content(contentAsXmlString)
-                                               .contentType(MediaType.APPLICATION_XML_VALUE)
-                                               .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, "test-roken"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
-                .andExpect(content().xml(resultAsXmlString));
+        .perform(MockMvcRequestBuilders.post(IflowRestPaths.WorkflowModule.TESTTHREETASKWORKFLOW_READ_LIST).content(contentAsXmlString)
+            .contentType(MediaType.APPLICATION_XML_VALUE)
+            .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, "test-roken"))
+        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(content().xml(resultAsXmlString));
 
     verify(this.workflowService, times(1)).getListByIdentityList(any(Set.class), any(String.class));
-
-  }
-
-  @Test
-  public void testSearchWorkflow() throws Exception {
-
-    final WorkflowSearchFilter filter = this.getTestWorkflowSearchFilter();
-    final WorkflowSearchFilterEdo filterEdo = WorkflowModelEdoMapper.toEdo(filter);
-    final List<TestThreeTaskWorkflow> list = this.getTestTestThreeTaskWorkflowList();
-    final TestThreeTaskWorkflowListEdo listEdo =
-                                               new TestThreeTaskWorkflowListEdo(WorkflowModelEdoMapper.toTestThreeTaskWorkflowEdoList(list));
-
-    when(this.workflowService.search(any(WorkflowSearchFilter.class), any(String.class))).thenReturn(list);
-
-    final String contentAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(filterEdo);
-    final String resultAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(listEdo);
-
-    this.mockMvc
-                .perform(MockMvcRequestBuilders.post(IflowRestPaths.WorkflowModule.TESTTHREETASKWORKFLOW_SEARCH)
-                                               .content(contentAsXmlString)
-                                               .contentType(MediaType.APPLICATION_XML_VALUE)
-                                               .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, "test-roken"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
-                .andExpect(content().xml(resultAsXmlString));
-
-    verify(this.workflowService, times(1)).search(any(WorkflowSearchFilter.class), any(String.class));
 
   }
 
@@ -196,10 +162,8 @@ public class TestThreeTaskWorkflowControllerTest extends TestDataProducer {
     final String contentAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(requestEdo);
 
     this.mockMvc.perform(MockMvcRequestBuilders.post(IflowRestPaths.WorkflowModule.TESTTHREETASKWORKFLOW_VALIDATE)
-                                               .content(contentAsXmlString)
-                                               .contentType(MediaType.APPLICATION_XML_VALUE)
-                                               .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, "test-roken"))
-                .andExpect(status().isAccepted());
+        .content(contentAsXmlString).contentType(MediaType.APPLICATION_XML_VALUE)
+        .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, "test-roken")).andExpect(status().isAccepted());
 
     verify(this.workflowService, times(1)).validate(any(TestThreeTaskWorkflowSaveRequest.class), any(String.class));
 

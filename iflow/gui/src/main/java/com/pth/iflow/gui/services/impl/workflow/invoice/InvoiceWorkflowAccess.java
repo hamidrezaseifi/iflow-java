@@ -75,20 +75,6 @@ public class InvoiceWorkflowAccess implements IWorkflowAccess<InvoiceWorkflow, I
   }
 
   @Override
-  public List<InvoiceWorkflow> searchWorkflow(final WorkflowSearchFilter workflowSearchFilter, final String token) throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
-    logger.debug("Search workflow");
-
-    final InvoiceWorkflowListEdo responseListEdo = this.restTemplate.callRestPost(this.moduleAccessConfig.getSearchInvoiceWorkflowUri(),
-                                                                                  EModule.WORKFLOW,
-                                                                                  GuiModelEdoMapper.toEdo(workflowSearchFilter),
-                                                                                  InvoiceWorkflowListEdo.class,
-                                                                                  token,
-                                                                                  true);
-
-    return GuiModelEdoMapper.fromInvoiceWorkflowEdoList(responseListEdo.getWorkflows());
-  }
-
-  @Override
   public void validateWorkflow(final InvoiceWorkflowSaveRequest request, final String token) throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     logger.debug("save workflow");
 

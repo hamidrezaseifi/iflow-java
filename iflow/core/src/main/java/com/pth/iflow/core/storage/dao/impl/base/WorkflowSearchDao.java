@@ -34,9 +34,15 @@ public class WorkflowSearchDao implements IWorkflowSearchDao {
 
   private WorkflowResult modelFromResultSet(final ResultSet rs) throws SQLException {
     final WorkflowResult model = new WorkflowResult();
-    model.setWorkflowIdentity(rs.getString("identity"));
+
+    model.setIdentity(rs.getString("identity"));
+    model.setStatus(rs.getInt("status"));
 
     model.setWorkflowTypeIdentity(rs.getString("workflow_type_identity"));
+
+    model.setCurrentStepIdentity(rs.getString("current_step_identity"));
+    model.setCreatedByIdentity(rs.getString("createdby_identity"));
+    model.setControllerIdentity(rs.getString("controller_identity"));
 
     return model;
   }
@@ -49,8 +55,14 @@ public class WorkflowSearchDao implements IWorkflowSearchDao {
 
     final String whereClause = this.prepareSearchWhereClause(workflowSearchFilter);
 
-    final String searchSql = "SELECT workflow.*,workflow_type.identity as workflow_type_identity FROM workflow iiner join workflow_type on workflow_type.id = workflow.workflow_type_id where "
-        + whereClause;
+    final String searchSql = "SELECT "
+        + "workflow.*, workflow_type.identity as workflow_type_identity, steps.identity as current_step_identity, "
+        + "controlleruser.email as controller_identity,createdbyuser.email as createdby_identity  \r\n"
+        + "FROM                                                                                   \r\n"
+        + "(((workflow inner join workflow_type on workflow_type.id = workflow.workflow_type_id) \r\n"
+        + "inner join workflow_type_step steps on steps.id = workflow.current_step)\r\n"
+        + "left outer join users controlleruser on controlleruser.id = workflow.controller)\r\n"
+        + "left outer join users createdbyuser on createdbyuser.id = workflow.created_by where " + whereClause;
 
     try {
       resultList = this.jdbcTemplate.query(con -> {

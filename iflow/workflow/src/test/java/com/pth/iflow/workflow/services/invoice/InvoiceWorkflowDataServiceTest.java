@@ -3,9 +3,11 @@ package com.pth.iflow.workflow.services.invoice;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
+
 import java.net.URI;
 import java.util.List;
 import java.util.Set;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -16,7 +18,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
-import com.pth.iflow.common.edo.models.WorkflowSearchFilterEdo;
+
 import com.pth.iflow.common.edo.models.workflow.invoice.InvoiceWorkflowEdo;
 import com.pth.iflow.common.edo.models.workflow.invoice.InvoiceWorkflowListEdo;
 import com.pth.iflow.common.enums.EModule;
@@ -25,7 +27,6 @@ import com.pth.iflow.workflow.TestDataProducer;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.impl.workflowservice.invoice.InvoiceWorkflowCoreConnectService;
 import com.pth.iflow.workflow.config.WorkflowConfiguration;
-import com.pth.iflow.workflow.models.WorkflowSearchFilter;
 import com.pth.iflow.workflow.models.mapper.WorkflowModelEdoMapper;
 import com.pth.iflow.workflow.models.workflow.invoice.InvoiceWorkflow;
 import com.pth.iflow.workflow.services.IRestTemplateCall;
@@ -35,15 +36,15 @@ import com.pth.iflow.workflow.services.IRestTemplateCall;
 @AutoConfigureMockMvc
 public class InvoiceWorkflowDataServiceTest extends TestDataProducer {
 
-  private IWorkflowDataService<InvoiceWorkflow> workflowDataService;
+  private IWorkflowDataService<InvoiceWorkflow>    workflowDataService;
 
   @Mock
-  private IRestTemplateCall restTemplate;
+  private IRestTemplateCall                        restTemplate;
 
   @MockBean
   private WorkflowConfiguration.ModuleAccessConfig moduleAccessConfig;
 
-  private String validTocken;
+  private String                                   validTocken;
 
   @Before
   public void setUp() throws Exception {
@@ -66,12 +67,8 @@ public class InvoiceWorkflowDataServiceTest extends TestDataProducer {
     final InvoiceWorkflow workflow = this.getInvoiceTestWorkflow("workflow1", EWorkflowActionStatus.OPEN);
     final InvoiceWorkflowEdo workflowEdo = WorkflowModelEdoMapper.toEdo(workflow);
 
-    when(this.restTemplate.callRestGet(any(URI.class),
-                                       any(String.class),
-                                       any(EModule.class),
-                                       any(Class.class),
-                                       any(boolean.class),
-                                       any())).thenReturn(workflowEdo);
+    when(this.restTemplate.callRestGet(any(URI.class), any(String.class), any(EModule.class), any(Class.class), any(boolean.class),
+        any())).thenReturn(workflowEdo);
 
     final InvoiceWorkflow resWorkflow = this.workflowDataService.getByIdentity(workflow.getIdentity(), this.validTocken);
 
@@ -87,12 +84,8 @@ public class InvoiceWorkflowDataServiceTest extends TestDataProducer {
     final InvoiceWorkflow workflow = this.getInvoiceTestWorkflow("workflow1", EWorkflowActionStatus.OPEN);
     final InvoiceWorkflowEdo workflowEdo = WorkflowModelEdoMapper.toEdo(workflow);
 
-    when(this.restTemplate.callRestPost(any(URI.class),
-                                        any(String.class),
-                                        any(EModule.class),
-                                        any(InvoiceWorkflowEdo.class),
-                                        any(Class.class),
-                                        any(boolean.class))).thenReturn(workflowEdo);
+    when(this.restTemplate.callRestPost(any(URI.class), any(String.class), any(EModule.class), any(InvoiceWorkflowEdo.class),
+        any(Class.class), any(boolean.class))).thenReturn(workflowEdo);
 
     final InvoiceWorkflow resWorkflow = this.workflowDataService.save(workflow, this.validTocken);
 
@@ -103,39 +96,14 @@ public class InvoiceWorkflowDataServiceTest extends TestDataProducer {
   }
 
   @Test
-  public void testSearchWorkflow() throws Exception {
-
-    final WorkflowSearchFilter filter = this.getTestWorkflowSearchFilter();
-    final List<InvoiceWorkflow> list = this.getTestInvoiceWorkflowList();
-    final InvoiceWorkflowListEdo edoList = new InvoiceWorkflowListEdo(WorkflowModelEdoMapper.toInvoiceWorkflowEdoList(list));
-
-    when(this.restTemplate.callRestPost(any(URI.class),
-                                        any(String.class),
-                                        any(EModule.class),
-                                        any(WorkflowSearchFilterEdo.class),
-                                        eq(InvoiceWorkflowListEdo.class),
-                                        any(boolean.class))).thenReturn(edoList);
-
-    final List<InvoiceWorkflow> resWorkflowList = this.workflowDataService.search(filter, this.validTocken);
-
-    Assert.assertNotNull("Result workflow-type is not null!", resWorkflowList);
-    Assert.assertEquals("Result workflow-type has id 1!", resWorkflowList.size(), list.size());
-
-  }
-
-  @Test
   public void testGetListByIdList() throws Exception {
 
     final Set<String> idList = this.getTestWorkflowIdSet();
     final List<InvoiceWorkflow> list = this.getTestInvoiceWorkflowList();
     final InvoiceWorkflowListEdo edoList = new InvoiceWorkflowListEdo(WorkflowModelEdoMapper.toInvoiceWorkflowEdoList(list));
 
-    when(this.restTemplate.callRestPost(any(URI.class),
-                                        any(String.class),
-                                        any(EModule.class),
-                                        any(Set.class),
-                                        eq(InvoiceWorkflowListEdo.class),
-                                        any(boolean.class))).thenReturn(edoList);
+    when(this.restTemplate.callRestPost(any(URI.class), any(String.class), any(EModule.class), any(Set.class),
+        eq(InvoiceWorkflowListEdo.class), any(boolean.class))).thenReturn(edoList);
 
     final List<InvoiceWorkflow> resList = this.workflowDataService.getListByIdentityList(idList, this.validTocken);
 

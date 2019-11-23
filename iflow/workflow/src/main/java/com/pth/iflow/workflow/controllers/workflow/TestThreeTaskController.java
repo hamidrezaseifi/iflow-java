@@ -2,7 +2,9 @@ package com.pth.iflow.workflow.controllers.workflow;
 
 import java.util.List;
 import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.pth.iflow.common.annotations.IflowGetRequestMapping;
 import com.pth.iflow.common.annotations.IflowPostRequestMapping;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
-import com.pth.iflow.common.edo.models.WorkflowSearchFilterEdo;
 import com.pth.iflow.common.edo.models.workflow.testthreetask.TestThreeTaskWorkflowEdo;
 import com.pth.iflow.common.edo.models.workflow.testthreetask.TestThreeTaskWorkflowListEdo;
 import com.pth.iflow.common.edo.models.workflow.testthreetask.TestThreeTaskWorkflowSaveRequestEdo;
@@ -37,7 +39,8 @@ public class TestThreeTaskController {
 
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(path = IflowRestPaths.WorkflowModule.TESTTHREETASKWORKFLOW_READ_BY_IDENTITY)
-  public ResponseEntity<TestThreeTaskWorkflowEdo> readWorkflow(@PathVariable final String identity, final HttpServletRequest request, @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws Exception {
+  public ResponseEntity<TestThreeTaskWorkflowEdo> readWorkflow(@PathVariable final String identity, final HttpServletRequest request,
+      @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws Exception {
 
     final TestThreeTaskWorkflow model = this.workflowService.getByIdentity(identity, headerTokenId);
 
@@ -46,20 +49,22 @@ public class TestThreeTaskController {
 
   @ResponseStatus(HttpStatus.CREATED)
   @IflowPostRequestMapping(path = IflowRestPaths.WorkflowModule.TESTTHREETASKWORKFLOW_CREATE)
-  public ResponseEntity<TestThreeTaskWorkflowListEdo> createWorkflow(@RequestBody final TestThreeTaskWorkflowSaveRequestEdo workflowCreateRequestEdo, final HttpServletRequest request, @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws Exception {
+  public ResponseEntity<TestThreeTaskWorkflowListEdo> createWorkflow(
+      @RequestBody final TestThreeTaskWorkflowSaveRequestEdo workflowCreateRequestEdo, final HttpServletRequest request,
+      @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws Exception {
 
-    final List<TestThreeTaskWorkflow> modelList = this.workflowService
-                                                                      .create(WorkflowModelEdoMapper.fromEdo(workflowCreateRequestEdo),
-                                                                              headerTokenId);
+    final List<TestThreeTaskWorkflow> modelList = this.workflowService.create(WorkflowModelEdoMapper.fromEdo(workflowCreateRequestEdo),
+        headerTokenId);
 
     return ControllerHelper.createResponseEntity(request,
-                                                 new TestThreeTaskWorkflowListEdo(WorkflowModelEdoMapper.toTestThreeTaskWorkflowEdoList(modelList)),
-                                                 HttpStatus.CREATED);
+        new TestThreeTaskWorkflowListEdo(WorkflowModelEdoMapper.toTestThreeTaskWorkflowEdoList(modelList)), HttpStatus.CREATED);
   }
 
   @ResponseStatus(HttpStatus.ACCEPTED)
   @IflowPostRequestMapping(path = IflowRestPaths.WorkflowModule.TESTTHREETASKWORKFLOW_SAVE)
-  public ResponseEntity<TestThreeTaskWorkflowEdo> saveWorkflow(@RequestBody final TestThreeTaskWorkflowSaveRequestEdo requestEdo, final HttpServletRequest request, @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws Exception {
+  public ResponseEntity<TestThreeTaskWorkflowEdo> saveWorkflow(@RequestBody final TestThreeTaskWorkflowSaveRequestEdo requestEdo,
+      final HttpServletRequest request,
+      @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws Exception {
 
     final TestThreeTaskWorkflow model = this.workflowService.save(WorkflowModelEdoMapper.fromEdo(requestEdo), headerTokenId);
 
@@ -68,41 +73,33 @@ public class TestThreeTaskController {
 
   @ResponseStatus(HttpStatus.OK)
   @IflowPostRequestMapping(path = IflowRestPaths.WorkflowModule.TESTTHREETASKWORKFLOW_READ_LIST)
-  public ResponseEntity<TestThreeTaskWorkflowListEdo> readWorkflowList(@RequestBody final Set<String> idList, final HttpServletRequest request, @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws Exception {
+  public ResponseEntity<TestThreeTaskWorkflowListEdo> readWorkflowList(@RequestBody final Set<String> idList,
+      final HttpServletRequest request,
+      @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws Exception {
 
     final List<TestThreeTaskWorkflow> modelList = this.workflowService.getListByIdentityList(idList, headerTokenId);
 
     return ControllerHelper.createResponseEntity(request,
-                                                 new TestThreeTaskWorkflowListEdo(WorkflowModelEdoMapper.toTestThreeTaskWorkflowEdoList(modelList)),
-                                                 HttpStatus.OK);
+        new TestThreeTaskWorkflowListEdo(WorkflowModelEdoMapper.toTestThreeTaskWorkflowEdoList(modelList)), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(path = IflowRestPaths.WorkflowModule.TESTTHREETASKWORKFLOW_READ_LIST_BY_USEREMAIL)
-  public ResponseEntity<TestThreeTaskWorkflowListEdo> readWorkflowListForUser(@PathVariable final String email, @PathVariable(required = false) final int status, final HttpServletRequest request, @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws Exception {
+  public ResponseEntity<TestThreeTaskWorkflowListEdo> readWorkflowListForUser(@PathVariable final String email,
+      @PathVariable(required = false) final int status, final HttpServletRequest request,
+      @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws Exception {
 
     final List<TestThreeTaskWorkflow> modelList = this.workflowService.getListForUser(email, status, headerTokenId);
 
     return ControllerHelper.createResponseEntity(request,
-                                                 new TestThreeTaskWorkflowListEdo(WorkflowModelEdoMapper.toTestThreeTaskWorkflowEdoList(modelList)),
-                                                 HttpStatus.OK);
-  }
-
-  @ResponseStatus(HttpStatus.OK)
-  @IflowPostRequestMapping(path = IflowRestPaths.WorkflowModule.TESTTHREETASKWORKFLOW_SEARCH)
-  public ResponseEntity<TestThreeTaskWorkflowListEdo> searchWorkflow(@RequestBody final WorkflowSearchFilterEdo workflowSearchFilterEdo, final HttpServletRequest request, @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws Exception {
-
-    final List<TestThreeTaskWorkflow> modelList = this.workflowService.search(WorkflowModelEdoMapper.fromEdo(workflowSearchFilterEdo),
-                                                                              headerTokenId);
-
-    return ControllerHelper.createResponseEntity(request,
-                                                 new TestThreeTaskWorkflowListEdo(WorkflowModelEdoMapper.toTestThreeTaskWorkflowEdoList(modelList)),
-                                                 HttpStatus.OK);
+        new TestThreeTaskWorkflowListEdo(WorkflowModelEdoMapper.toTestThreeTaskWorkflowEdoList(modelList)), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.ACCEPTED)
   @IflowPostRequestMapping(path = IflowRestPaths.WorkflowModule.TESTTHREETASKWORKFLOW_VALIDATE)
-  public void validateWorkflowRequest(@RequestBody final TestThreeTaskWorkflowSaveRequestEdo workflowCreateRequestEdo, final HttpServletRequest request, @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws Exception {
+  public void validateWorkflowRequest(@RequestBody final TestThreeTaskWorkflowSaveRequestEdo workflowCreateRequestEdo,
+      final HttpServletRequest request,
+      @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws Exception {
 
     this.workflowService.validate(WorkflowModelEdoMapper.fromEdo(workflowCreateRequestEdo), headerTokenId);
 

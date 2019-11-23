@@ -318,7 +318,6 @@ public class IflowRestPaths {
     public static final String INVOICEWORKFLOW_READ_BY_IDENTITY                = "/workflow/invoice/readbyid/{identity}";
     public static final String INVOICEWORKFLOW_READ_LIST                       = "/workflow/invoice/list";
     public static final String INVOICEWORKFLOW_READ_LIST_BY_USEREMAIL          = "/workflow/invoice/user/list/{email}/{status}";
-    public static final String INVOICEWORKFLOW_SEARCH                          = "/workflow/invoice/search";
     public static final String INVOICEWORKFLOW_VALIDATE                        = "/workflow/invoice/validate";
 
     public static final String SINGLETASKWORKFLOW_CREATE                       = "/workflow/singletask/create";
@@ -327,7 +326,6 @@ public class IflowRestPaths {
     public static final String SINGLETASKWORKFLOW_READ_LIST                    = "/workflow/singletask/list";
     public static final String SINGLETASKWORKFLOW_READ_LIST_BY_TYPEIDENTITY    = "/workflow/singletask/type/list/{identity}";
     public static final String SINGLETASKWORKFLOW_READ_LIST_BY_USEREMAIL       = "/workflow/singletask/user/list/{email}/{status}";
-    public static final String SINGLETASKWORKFLOW_SEARCH                       = "/workflow/singletask/search";
     public static final String SINGLETASKWORKFLOW_VALIDATE                     = "/workflow/singletask/validate";
 
     public static final String TESTTHREETASKWORKFLOW_CREATE                    = "/workflow/testthreetask/create";
@@ -336,8 +334,9 @@ public class IflowRestPaths {
     public static final String TESTTHREETASKWORKFLOW_READ_LIST                 = "/workflow/testthreetask/list";
     public static final String TESTTHREETASKWORKFLOW_READ_LIST_BY_TYPEIDENTITY = "/workflow/testthreetask/type/list/{identity}";
     public static final String TESTTHREETASKWORKFLOW_READ_LIST_BY_USEREMAIL    = "/workflow/testthreetask/user/list/{email}/{status}";
-    public static final String TESTTHREETASKWORKFLOW_SEARCH                    = "/workflow/testthreetask/search";
     public static final String TESTTHREETASKWORKFLOW_VALIDATE                  = "/workflow/testthreetask/validate";
+
+    public static final String WORKFLOW_SEARCH                                 = "/workflow/search";
 
     public static URI WORKFLOWTYPE_BY_ID_URIBUILDER(final String identity) {
       final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOWTYPE_READ_BY_IDENTITY);
@@ -384,11 +383,6 @@ public class IflowRestPaths {
       return builder.build();
     }
 
-    public static URI SEARCH_INVOICEWORKFLOW() {
-      final IflowUriBuilder builder = new IflowUriBuilder(INVOICEWORKFLOW_SEARCH);
-      return builder.build();
-    }
-
     public static URI VALIDATE_INVOICEWORKFLOW() {
       final IflowUriBuilder builder = new IflowUriBuilder(INVOICEWORKFLOW_VALIDATE);
       return builder.build();
@@ -411,11 +405,6 @@ public class IflowRestPaths {
 
     public static URI SAVE_SINGLETASKWORKFLOW() {
       final IflowUriBuilder builder = new IflowUriBuilder(SINGLETASKWORKFLOW_SAVE);
-      return builder.build();
-    }
-
-    public static URI SEARCH_SINGLETASKWORKFLOW() {
-      final IflowUriBuilder builder = new IflowUriBuilder(SINGLETASKWORKFLOW_SEARCH);
       return builder.build();
     }
 
@@ -444,16 +433,15 @@ public class IflowRestPaths {
       return builder.build();
     }
 
-    public static URI SEARCH_TESTTHREETASKWORKFLOW() {
-      final IflowUriBuilder builder = new IflowUriBuilder(TESTTHREETASKWORKFLOW_SEARCH);
-      return builder.build();
-    }
-
     public static URI VALIDATE_TESTTHREETASKWORKFLOW() {
       final IflowUriBuilder builder = new IflowUriBuilder(TESTTHREETASKWORKFLOW_VALIDATE);
       return builder.build();
     }
 
+    public static URI SEARCH_WORKFLOW() {
+      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOW_SEARCH);
+      return builder.build();
+    }
   }
 
   public static class ProfileModule {
@@ -581,24 +569,17 @@ public class IflowRestPaths {
     private GuiModule() {
     }
 
-    public static final int    PORT                                   = 1200;
+    public static final int    PORT                            = 1200;
 
-    public static final String INVOICEWORKFLOW_PAGE_BASE              = "/workflow/invoice/";
-    public static final String SINGLETASKWORKFLOW_PAGE_BASE           = "/workflow/singletask/";
-    public static final String TESTTHREETASKWORKFLOW_PAGE_BASE        = "/workflow/testthreetask/";
+    public static final String INVOICEWORKFLOW_PAGE_BASE       = "/workflow/invoice/";
+    public static final String SINGLETASKWORKFLOW_PAGE_BASE    = "/workflow/singletask/";
+    public static final String TESTTHREETASKWORKFLOW_PAGE_BASE = "/workflow/testthreetask/";
 
-    public static final String INVOICEWORKFLOW_DATA_BASE              = "/workflow/invoice/data/";
-    public static final String SINGLETASKWORKFLOW_DATA_BASE           = "/workflow/singletask/data/";
-    public static final String TESTTHREETASKWORKFLOW_DATA_BASE        = "/workflow/testthreetask/data/";
+    public static final String INVOICEWORKFLOW_DATA_BASE       = "/workflow/invoice/data/";
+    public static final String SINGLETASKWORKFLOW_DATA_BASE    = "/workflow/singletask/data/";
+    public static final String TESTTHREETASKWORKFLOW_DATA_BASE = "/workflow/testthreetask/data/";
 
-    public static final String INVOICEWORKFLOW_CREATE                 = "/workflow/create";
-
-    public static final String INVOICEWORKFLOW_SAVE                   = "/workflow/invoice/save";
-    public static final String INVOICEWORKFLOW_READ_BY_IDENTITY       = "/workflow/invoice/readbyid/{identity}";
-    public static final String INVOICEWORKFLOW_READ_LIST              = "/workflow/invoice/list";
-    public static final String INVOICEWORKFLOW_READ_LIST_BY_USEREMAIL = "/workflow/invoice/user/list/{email}/{status}";
-    public static final String INVOICEWORKFLOW_SEARCH                 = "/workflow/invoice/search";
-    public static final String INVOICEWORKFLOW_VALIDATE               = "/workflow/invoice/validate";
+    public static final String WORKFLOWGENERAL_DATA_BASE       = "/workflow/general/data/";
 
   }
 }

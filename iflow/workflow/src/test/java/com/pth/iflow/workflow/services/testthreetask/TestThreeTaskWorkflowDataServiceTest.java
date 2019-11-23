@@ -3,9 +3,11 @@ package com.pth.iflow.workflow.services.testthreetask;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
+
 import java.net.URI;
 import java.util.List;
 import java.util.Set;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -16,7 +18,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
-import com.pth.iflow.common.edo.models.WorkflowSearchFilterEdo;
+
 import com.pth.iflow.common.edo.models.workflow.testthreetask.TestThreeTaskWorkflowEdo;
 import com.pth.iflow.common.edo.models.workflow.testthreetask.TestThreeTaskWorkflowListEdo;
 import com.pth.iflow.common.enums.EModule;
@@ -24,7 +26,6 @@ import com.pth.iflow.workflow.TestDataProducer;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.impl.workflowservice.testthreetask.TestThreeTaskWorkflowCoreConnectService;
 import com.pth.iflow.workflow.config.WorkflowConfiguration;
-import com.pth.iflow.workflow.models.WorkflowSearchFilter;
 import com.pth.iflow.workflow.models.mapper.WorkflowModelEdoMapper;
 import com.pth.iflow.workflow.models.workflow.testthree.TestThreeTaskWorkflow;
 import com.pth.iflow.workflow.services.IRestTemplateCall;
@@ -37,12 +38,12 @@ public class TestThreeTaskWorkflowDataServiceTest extends TestDataProducer {
   private IWorkflowDataService<TestThreeTaskWorkflow> workflowDataService;
 
   @Mock
-  private IRestTemplateCall restTemplate;
+  private IRestTemplateCall                           restTemplate;
 
   @MockBean
-  private WorkflowConfiguration.ModuleAccessConfig moduleAccessConfig;
+  private WorkflowConfiguration.ModuleAccessConfig    moduleAccessConfig;
 
-  private String validTocken;
+  private String                                      validTocken;
 
   @Before
   public void setUp() throws Exception {
@@ -65,12 +66,8 @@ public class TestThreeTaskWorkflowDataServiceTest extends TestDataProducer {
     final TestThreeTaskWorkflow workflow = this.getTestTestThreeTaskWorkflow("workflow1");
     final TestThreeTaskWorkflowEdo workflowEdo = WorkflowModelEdoMapper.toEdo(workflow);
 
-    when(this.restTemplate.callRestGet(any(URI.class),
-                                       any(String.class),
-                                       any(EModule.class),
-                                       any(Class.class),
-                                       any(boolean.class),
-                                       any())).thenReturn(workflowEdo);
+    when(this.restTemplate.callRestGet(any(URI.class), any(String.class), any(EModule.class), any(Class.class), any(boolean.class),
+        any())).thenReturn(workflowEdo);
 
     final TestThreeTaskWorkflow resWorkflow = this.workflowDataService.getByIdentity(workflow.getIdentity(), this.validTocken);
 
@@ -86,12 +83,8 @@ public class TestThreeTaskWorkflowDataServiceTest extends TestDataProducer {
     final TestThreeTaskWorkflow workflow = this.getTestTestThreeTaskWorkflow("workflow1");
     final TestThreeTaskWorkflowEdo workflowEdo = WorkflowModelEdoMapper.toEdo(workflow);
 
-    when(this.restTemplate.callRestPost(any(URI.class),
-                                        any(String.class),
-                                        any(EModule.class),
-                                        any(TestThreeTaskWorkflowEdo.class),
-                                        any(Class.class),
-                                        any(boolean.class))).thenReturn(workflowEdo);
+    when(this.restTemplate.callRestPost(any(URI.class), any(String.class), any(EModule.class), any(TestThreeTaskWorkflowEdo.class),
+        any(Class.class), any(boolean.class))).thenReturn(workflowEdo);
 
     final TestThreeTaskWorkflow resWorkflow = this.workflowDataService.save(workflow, this.validTocken);
 
@@ -102,41 +95,15 @@ public class TestThreeTaskWorkflowDataServiceTest extends TestDataProducer {
   }
 
   @Test
-  public void testSearchWorkflow() throws Exception {
-
-    final WorkflowSearchFilter filter = this.getTestWorkflowSearchFilter();
-    final List<TestThreeTaskWorkflow> list = this.getTestTestThreeTaskWorkflowList();
-    final TestThreeTaskWorkflowListEdo edoList =
-                                               new TestThreeTaskWorkflowListEdo(WorkflowModelEdoMapper.toTestThreeTaskWorkflowEdoList(list));
-
-    when(this.restTemplate.callRestPost(any(URI.class),
-                                        any(String.class),
-                                        any(EModule.class),
-                                        any(WorkflowSearchFilterEdo.class),
-                                        eq(TestThreeTaskWorkflowListEdo.class),
-                                        any(boolean.class))).thenReturn(edoList);
-
-    final List<TestThreeTaskWorkflow> resWorkflowList = this.workflowDataService.search(filter, this.validTocken);
-
-    Assert.assertNotNull("Result workflow-type is not null!", resWorkflowList);
-    Assert.assertEquals("Result workflow-type has id 1!", resWorkflowList.size(), list.size());
-
-  }
-
-  @Test
   public void testGetListByIdList() throws Exception {
 
     final Set<String> idList = this.getTestWorkflowIdSet();
     final List<TestThreeTaskWorkflow> list = this.getTestTestThreeTaskWorkflowList();
-    final TestThreeTaskWorkflowListEdo edoList =
-                                               new TestThreeTaskWorkflowListEdo(WorkflowModelEdoMapper.toTestThreeTaskWorkflowEdoList(list));
+    final TestThreeTaskWorkflowListEdo edoList = new TestThreeTaskWorkflowListEdo(
+        WorkflowModelEdoMapper.toTestThreeTaskWorkflowEdoList(list));
 
-    when(this.restTemplate.callRestPost(any(URI.class),
-                                        any(String.class),
-                                        any(EModule.class),
-                                        any(Set.class),
-                                        eq(TestThreeTaskWorkflowListEdo.class),
-                                        any(boolean.class))).thenReturn(edoList);
+    when(this.restTemplate.callRestPost(any(URI.class), any(String.class), any(EModule.class), any(Set.class),
+        eq(TestThreeTaskWorkflowListEdo.class), any(boolean.class))).thenReturn(edoList);
 
     final List<TestThreeTaskWorkflow> resList = this.workflowDataService.getListByIdentityList(idList, this.validTocken);
 

@@ -1,4 +1,4 @@
-package com.pth.iflow.core.model.workflow;
+package com.pth.iflow.workflow.models.workflow;
 
 import com.pth.iflow.common.enums.EWorkflowStatus;
 
