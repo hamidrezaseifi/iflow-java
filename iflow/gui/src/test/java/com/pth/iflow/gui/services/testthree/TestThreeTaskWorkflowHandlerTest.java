@@ -18,7 +18,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.pth.iflow.gui.TestDataProducer;
-import com.pth.iflow.gui.models.WorkflowSearchFilter;
 import com.pth.iflow.gui.models.ui.SessionUserInfo;
 import com.pth.iflow.gui.models.workflow.testthree.TestThreeTaskWorkflow;
 import com.pth.iflow.gui.models.workflow.testthree.TestThreeTaskWorkflowSaveRequest;
@@ -108,21 +107,6 @@ public class TestThreeTaskWorkflowHandlerTest extends TestDataProducer {
     Assert.assertNotNull("Result workflow is not null!", resWorkflow);
     Assert.assertEquals("Result workflow has id 1!", resWorkflow.getIdentity(), workflow.getIdentity());
     Assert.assertEquals("Result workflow has status 1!", resWorkflow.getStatus(), workflow.getStatus());
-
-  }
-
-  @Test
-  public void testSearchWorkflow() throws Exception {
-    final WorkflowSearchFilter searchFilter = this.getTestWorkflowSearchFilter();
-
-    final List<TestThreeTaskWorkflow> workflowList = this.getTestTestThreeTaskWorkflowList();
-
-    when(this.workflowAccess.searchWorkflow(any(WorkflowSearchFilter.class), any(String.class))).thenReturn(workflowList);
-
-    final List<TestThreeTaskWorkflow> resWorkflowList = this.workflowHandler.searchWorkflow(searchFilter);
-
-    Assert.assertNotNull("Result result-list is not null!", resWorkflowList);
-    Assert.assertEquals("Result result-list has the same size as expected!", resWorkflowList.size(), workflowList.size());
 
   }
 

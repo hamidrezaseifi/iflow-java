@@ -35,6 +35,7 @@ import com.pth.iflow.gui.models.WorkflowTypeStep;
 import com.pth.iflow.gui.models.ui.SessionUserInfo;
 import com.pth.iflow.gui.models.ui.enums.EUiUserRole;
 import com.pth.iflow.gui.models.workflow.IWorkflow;
+import com.pth.iflow.gui.models.workflow.WorkflowResult;
 import com.pth.iflow.gui.models.workflow.invoice.InvoiceWorkflow;
 import com.pth.iflow.gui.models.workflow.invoice.InvoiceWorkflowSaveRequest;
 import com.pth.iflow.gui.models.workflow.singletask.SingleTaskWorkflow;
@@ -499,6 +500,19 @@ public class TestDataProducer {
     return filter;
   }
 
+  protected WorkflowResult getTestWorkflowResult(final String identity, final String typeIdentity) {
+    final WorkflowResult model = new WorkflowResult();
+
+    model.setIdentity(identity);
+    model.setStatus(EWorkflowStatus.INITIALIZE.getValue().intValue());
+    model.setWorkflowTypeIdentity(typeIdentity);
+    model.setControllerIdentity("ControllerIdentity");
+    model.setCurrentStepIdentity("currentStepIdentity");
+    model.setCreatedByIdentity("createdByIdentity");
+
+    return model;
+  }
+
   protected InvoiceWorkflowSaveRequest getTestInvoiceWorkflowSaveRequest() {
     final InvoiceWorkflowSaveRequest request = new InvoiceWorkflowSaveRequest();
     request.setAssigns(this.getTestAssignedList());
@@ -623,6 +637,12 @@ public class TestDataProducer {
 
     return Arrays.asList(this.getTestWorkflowMessage("user1", "workflow1"), this.getTestWorkflowMessage("user2", "workflow1"),
         this.getTestWorkflowMessage("user3", "workflow1"));
+  }
+
+  protected List<WorkflowResult> getTestWorkflowResultList() {
+
+    return Arrays.asList(this.getTestWorkflowResult("workflow1", "type1"), this.getTestWorkflowResult("workflow2", "type2"),
+        this.getTestWorkflowResult("workflow3", "type3"));
   }
 
   protected User createUiUser(final String email, final String fname, final String lname, final List<EUiUserRole> roles) {

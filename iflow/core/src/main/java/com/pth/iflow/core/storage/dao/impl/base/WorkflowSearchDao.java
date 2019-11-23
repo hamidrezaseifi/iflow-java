@@ -70,8 +70,8 @@ public class WorkflowSearchDao implements IWorkflowSearchDao {
 
         int index = 1;
 
-        for (final Long id : workflowSearchFilter.getAssignedUserIdSet()) {
-          ps.setLong(index, id);
+        for (final String identity : workflowSearchFilter.getAssignedUserIdentitySet()) {
+          ps.setString(index, identity);
           index++;
         }
 
@@ -80,13 +80,13 @@ public class WorkflowSearchDao implements IWorkflowSearchDao {
           index++;
         }
 
-        for (final Long id : workflowSearchFilter.getWorkflowStepIdSet()) {
-          ps.setLong(index, id);
+        for (final String identity : workflowSearchFilter.getWorkflowStepIdentitySet()) {
+          ps.setString(index, identity);
           index++;
         }
 
-        for (final Long id : workflowSearchFilter.getWorkflowTypeIdSet()) {
-          ps.setLong(index, id);
+        for (final String identity : workflowSearchFilter.getWorkflowTypeIdentitySet()) {
+          ps.setString(index, identity);
           index++;
         }
 
@@ -109,21 +109,22 @@ public class WorkflowSearchDao implements IWorkflowSearchDao {
   private String prepareSearchWhereClause(final WorkflowSearchFilter workflowSearchFilter) {
     String whereClause = "";
     if (workflowSearchFilter.getAssignedUserIdentitySet().isEmpty() == false) {
-      whereClause += "id in (select workflow_id from workflow_actions where assign_to in ("
+      whereClause += " workflow.id in (select workflow_id from workflow_actions inner join users on workflow_actions.assign_to=users.id where users.email in ("
           + StringUtils.repeat("?,", workflowSearchFilter.getAssignedUserIdentitySet().size()) + ")) ";
     }
     if (workflowSearchFilter.getStatusSet().isEmpty() == false) {
       whereClause += whereClause.isEmpty() ? "" : "and";
-      whereClause += " status in (" + StringUtils.repeat("?,", workflowSearchFilter.getStatusSet().size()) + ") ";
+      whereClause += " workflow.status in (" + StringUtils.repeat("?,", workflowSearchFilter.getStatusSet().size()) + ") ";
     }
     if (workflowSearchFilter.getWorkflowStepIdentitySet().isEmpty() == false) {
       whereClause += whereClause.isEmpty() ? "" : "and";
-      whereClause += " current_step in (" + StringUtils.repeat("?,", workflowSearchFilter.getWorkflowStepIdentitySet().size()) + ") ";
+      whereClause += " steps.identity in (" + StringUtils.repeat("?,", workflowSearchFilter.getWorkflowStepIdentitySet().size())
+          + ") ";
     }
     if (workflowSearchFilter.getWorkflowTypeIdentitySet().isEmpty() == false) {
       whereClause += whereClause.isEmpty() ? "" : "and";
-      whereClause += " workflow_type_id in (" + StringUtils.repeat("?,", workflowSearchFilter.getWorkflowTypeIdentitySet().size())
-          + ") ";
+      whereClause += " workflow_type.identity in ("
+          + StringUtils.repeat("?,", workflowSearchFilter.getWorkflowTypeIdentitySet().size()) + ") ";
     }
 
     whereClause = whereClause.replace(",)", ")");

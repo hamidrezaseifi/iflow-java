@@ -2,7 +2,6 @@ package com.pth.iflow.core.storage.dao.impl.base;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -11,7 +10,6 @@ import com.pth.iflow.core.model.User;
 import com.pth.iflow.core.model.workflow.IWorkflow;
 import com.pth.iflow.core.model.workflow.sub.WorkflowAction;
 import com.pth.iflow.core.model.workflow.sub.WorkflowFile;
-import com.pth.iflow.core.model.workflow.sub.WorkflowSearchFilter;
 import com.pth.iflow.core.model.workflow.sub.WorkflowType;
 import com.pth.iflow.core.model.workflow.sub.WorkflowTypeStep;
 import com.pth.iflow.core.storage.dao.IUserDao;
@@ -144,26 +142,6 @@ public class WorkflowDaoHelper<W extends IWorkflow> {
     this.workflowActionDao.deleteByWorkflowId(workflowId, withTransaction);
 
     this.workflowFileDao.deleteByWorkflowId(workflowId, withTransaction);
-  }
-
-  public void prepareWorkflowSearchFilter(final WorkflowSearchFilter workflowSearchFilter) {
-    if (workflowSearchFilter.getAssignedUserIdentitySet().isEmpty() == false) {
-      final List<User> list = userDao.getListByIdentityList(workflowSearchFilter.getAssignedUserIdentitySet());
-
-      workflowSearchFilter.setAssignedUserIdSet(list.stream().map(u -> u.getId()).collect(Collectors.toSet()));
-    }
-
-    if (workflowSearchFilter.getWorkflowStepIdentitySet().isEmpty() == false) {
-      final List<WorkflowTypeStep> list = workflowTypeStepDao.getListByIdentityList(workflowSearchFilter.getWorkflowStepIdentitySet());
-      workflowSearchFilter.setWorkflowStepeIdSet(list.stream().map(u -> u.getId()).collect(Collectors.toSet()));
-
-    }
-
-    if (workflowSearchFilter.getWorkflowTypeIdentitySet().isEmpty() == false) {
-      final List<WorkflowType> list = workflowTypeDao.getListByIdentityList(workflowSearchFilter.getWorkflowTypeIdentitySet());
-      workflowSearchFilter.setWorkflowTypeIdSet(list.stream().map(u -> u.getId()).collect(Collectors.toSet()));
-    }
-
   }
 
 }

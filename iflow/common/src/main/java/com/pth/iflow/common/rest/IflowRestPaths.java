@@ -569,17 +569,19 @@ public class IflowRestPaths {
     private GuiModule() {
     }
 
-    public static final int    PORT                            = 1200;
+    public static final int    PORT                                  = 1200;
 
-    public static final String INVOICEWORKFLOW_PAGE_BASE       = "/workflow/invoice/";
-    public static final String SINGLETASKWORKFLOW_PAGE_BASE    = "/workflow/singletask/";
-    public static final String TESTTHREETASKWORKFLOW_PAGE_BASE = "/workflow/testthreetask/";
+    public static final String INVOICEWORKFLOW_PAGE_BASE             = "/workflow/invoice";
+    public static final String SINGLETASKWORKFLOW_PAGE_BASE          = "/workflow/singletask";
+    public static final String TESTTHREETASKWORKFLOW_PAGE_BASE       = "/workflow/testthreetask";
 
-    public static final String INVOICEWORKFLOW_DATA_BASE       = "/workflow/invoice/data/";
-    public static final String SINGLETASKWORKFLOW_DATA_BASE    = "/workflow/singletask/data/";
-    public static final String TESTTHREETASKWORKFLOW_DATA_BASE = "/workflow/testthreetask/data/";
+    public static final String INVOICEWORKFLOW_DATA_BASE             = "/workflow/invoice/data";
+    public static final String SINGLETASKWORKFLOW_DATA_BASE          = "/workflow/singletask/data";
+    public static final String TESTTHREETASKWORKFLOW_DATA_BASE       = "/workflow/testthreetask/data";
 
-    public static final String WORKFLOWGENERAL_DATA_BASE       = "/workflow/general/data/";
+    public static final String WORKFLOWGENERAL_DATA_BASE             = "/workflow/general/data";
+    public static final String WORKFLOWGENERAL_DATA_INITIALIZESEARCH = WORKFLOWGENERAL_DATA_BASE + "/initsearch";
+    public static final String WORKFLOWGENERAL_DATA_SEARCH           = WORKFLOWGENERAL_DATA_BASE + "/search";
 
   }
 }

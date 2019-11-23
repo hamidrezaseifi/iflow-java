@@ -31,7 +31,6 @@ import com.pth.iflow.gui.controller.data.GuiDataControllerBase;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.Department;
 import com.pth.iflow.gui.models.User;
-import com.pth.iflow.gui.models.WorkflowSearchFilter;
 import com.pth.iflow.gui.models.WorkflowType;
 import com.pth.iflow.gui.models.ui.FileSavingData;
 import com.pth.iflow.gui.models.ui.UploadFileSavingData;
@@ -53,23 +52,6 @@ public abstract class WorkflowDataControllerBase<W extends IWorkflow, WS extends
 
   @Autowired
   private IUploadFileManager      uploadFileManager;
-
-  @ResponseStatus(HttpStatus.OK)
-  @PostMapping(path = { "/workflowlist/init" })
-  @ResponseBody
-  public Map<String, Object> loadWorkflowListInitialData()
-      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
-
-    final Map<String, Object> map = new HashMap<>();
-
-    final Collection<WorkflowType> workflowTypeList = this.getAllWorkflowTypes();
-    final WorkflowSearchFilter workflowSearchFilter = WorkflowSearchFilter.generateNew(workflowTypeList);
-
-    map.put("workflowTypes", workflowTypeList);
-    map.put("newSearchFilter", workflowSearchFilter);
-
-    return map;
-  }
 
   @ResponseStatus(HttpStatus.OK)
   @PostMapping(path = { "/initcreate" })

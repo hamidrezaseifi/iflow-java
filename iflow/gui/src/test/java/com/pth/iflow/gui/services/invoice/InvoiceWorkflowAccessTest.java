@@ -18,14 +18,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.pth.iflow.common.edo.models.WorkflowSearchFilterEdo;
 import com.pth.iflow.common.edo.models.workflow.invoice.InvoiceWorkflowEdo;
 import com.pth.iflow.common.edo.models.workflow.invoice.InvoiceWorkflowListEdo;
 import com.pth.iflow.common.edo.models.workflow.invoice.InvoiceWorkflowSaveRequestEdo;
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.gui.TestDataProducer;
 import com.pth.iflow.gui.configurations.GuiConfiguration;
-import com.pth.iflow.gui.models.WorkflowSearchFilter;
 import com.pth.iflow.gui.models.mapper.GuiModelEdoMapper;
 import com.pth.iflow.gui.models.workflow.invoice.InvoiceWorkflow;
 import com.pth.iflow.gui.models.workflow.invoice.InvoiceWorkflowSaveRequest;
@@ -65,7 +63,6 @@ public class InvoiceWorkflowAccessTest extends TestDataProducer {
     when(this.profileModuleAccessConfig.getReadTokenInfoUri()).thenReturn(this.testUri);
     when(this.workflowModuleAccessConfig.getReadWorkflowTypeListUri(any(String.class))).thenReturn(this.testUri);
     when(this.workflowModuleAccessConfig.getReadInvoiceWorkflowUri(any(String.class))).thenReturn(this.testUri);
-    when(this.workflowModuleAccessConfig.getSearchInvoiceWorkflowUri()).thenReturn(this.testUri);
 
     this.workflowAccess = new InvoiceWorkflowAccess(this.restTemplate, this.workflowModuleAccessConfig);
 
@@ -124,23 +121,6 @@ public class InvoiceWorkflowAccessTest extends TestDataProducer {
     Assert.assertNotNull("Result workflow is not null!", resWorkflow);
     Assert.assertEquals("Result workflow has id 1!", resWorkflow.getIdentity(), workflow.getIdentity());
     Assert.assertEquals("Result workflow has status 1!", resWorkflow.getStatus(), workflow.getStatus());
-
-  }
-
-  @Test
-  public void testSearchWorkflow() throws Exception {
-    final WorkflowSearchFilter searchFilter = this.getTestWorkflowSearchFilter();
-
-    final List<InvoiceWorkflow> workflowList = this.getTestInvoiceWorkflowList();
-
-    when(this.restTemplate.callRestPost(any(URI.class), any(EModule.class), any(WorkflowSearchFilterEdo.class),
-        eq(InvoiceWorkflowListEdo.class), any(String.class), any(boolean.class)))
-            .thenReturn(new InvoiceWorkflowListEdo(GuiModelEdoMapper.toInvoiceWorkflowEdoList(workflowList)));
-
-    final List<InvoiceWorkflow> resWorkflowList = this.workflowAccess.searchWorkflow(searchFilter, this.testToken);
-
-    Assert.assertNotNull("Result result-list is not null!", resWorkflowList);
-    Assert.assertEquals("Result result-list has the same size as expected!", resWorkflowList.size(), workflowList.size());
 
   }
 
