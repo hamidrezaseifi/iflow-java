@@ -57,7 +57,7 @@ iflowApp.controller('WorkflowTypesController', function WorkflowTypesController(
 	        data : query,
 	    }).then(function successCallback(response) {
 	
-	    	$scope.items = prepareWorkflowList(response.data);
+	    	$scope.items = prepareWorkflowList(response.data.list);
 	    	
 	
 	    }, function errorCallback(response) {

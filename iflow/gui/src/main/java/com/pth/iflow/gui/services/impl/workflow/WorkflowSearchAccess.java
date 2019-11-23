@@ -17,18 +17,35 @@ import com.pth.iflow.gui.models.WorkflowSearchFilter;
 import com.pth.iflow.gui.models.mapper.GuiModelEdoMapper;
 import com.pth.iflow.gui.models.ui.SessionUserInfo;
 import com.pth.iflow.gui.models.workflow.WorkflowResult;
+import com.pth.iflow.gui.models.workflow.invoice.InvoiceWorkflow;
+import com.pth.iflow.gui.models.workflow.invoice.InvoiceWorkflowSaveRequest;
+import com.pth.iflow.gui.models.workflow.singletask.SingleTaskWorkflow;
+import com.pth.iflow.gui.models.workflow.singletask.SingleTaskWorkflowSaveRequest;
+import com.pth.iflow.gui.models.workflow.testthree.TestThreeTaskWorkflow;
+import com.pth.iflow.gui.models.workflow.testthree.TestThreeTaskWorkflowSaveRequest;
 import com.pth.iflow.gui.services.IRestTemplateCall;
+import com.pth.iflow.gui.services.IWorkflowHandler;
 import com.pth.iflow.gui.services.IWorkflowSearchAccess;
 import com.pth.iflow.gui.services.impl.workflow.testthree.TestThreeTaskWorkflowAccess;
 
 @Service
 public class WorkflowSearchAccess implements IWorkflowSearchAccess {
 
-  private static final Logger                               logger = LoggerFactory.getLogger(TestThreeTaskWorkflowAccess.class);
+  private static final Logger                                               logger = LoggerFactory
+      .getLogger(TestThreeTaskWorkflowAccess.class);
 
-  private final IRestTemplateCall                           restTemplate;
-  private final GuiConfiguration.WorkflowModuleAccessConfig moduleAccessConfig;
-  private final SessionUserInfo                             sessionUserInfo;
+  private final IRestTemplateCall                                           restTemplate;
+  private final GuiConfiguration.WorkflowModuleAccessConfig                 moduleAccessConfig;
+  private final SessionUserInfo                                             sessionUserInfo;
+
+  @Autowired
+  IWorkflowHandler<InvoiceWorkflow, InvoiceWorkflowSaveRequest>             invoiceWorkflowHandler;
+
+  @Autowired
+  IWorkflowHandler<SingleTaskWorkflow, SingleTaskWorkflowSaveRequest>       singleTaskWorkflowHandler;
+
+  @Autowired
+  IWorkflowHandler<TestThreeTaskWorkflow, TestThreeTaskWorkflowSaveRequest> testThreeTaskWorkflowHandler;
 
   public WorkflowSearchAccess(@Autowired final IRestTemplateCall restTemplate,
       @Autowired final GuiConfiguration.WorkflowModuleAccessConfig moduleAccessConfig,
@@ -47,7 +64,16 @@ public class WorkflowSearchAccess implements IWorkflowSearchAccess {
         EModule.WORKFLOW, GuiModelEdoMapper.toEdo(workflowSearchFilter), WorkflowResultListEdo.class, this.sessionUserInfo.getToken(),
         true);
 
-    return GuiModelEdoMapper.fromWorkflowResultEdoList(responseListEdo.getWorkflows());
+    final List<WorkflowResult> list = GuiModelEdoMapper.fromWorkflowResultEdoList(responseListEdo.getWorkflows());
+    for (final WorkflowResult res : list) {
+
+      res.setWorkflowType(this.sessionUserInfo.getWorkflowTypeByIdentity(res.getWorkflowTypeIdentity()));
+      res.setCurrentStep(
+          this.sessionUserInfo.getWorkflowStepTypeByIdentity(res.getWorkflowTypeIdentity(), res.getCurrentStepIdentity()));
+
+    }
+
+    return list;
 
   }
 
