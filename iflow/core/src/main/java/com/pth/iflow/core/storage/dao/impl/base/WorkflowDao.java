@@ -8,12 +8,13 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.pth.iflow.core.model.workflow.Workflow;
-import com.pth.iflow.core.model.workflow.sub.WorkflowSearchFilter;
 import com.pth.iflow.core.storage.dao.IWorkflowDao;
 import com.pth.iflow.core.storage.dao.basic.DaoBasicClass;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
@@ -133,9 +134,8 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
 
     logger.info("Dao read Workflow for user");
 
-    final String sql =
-                     "SELECT * FROM workflow where id in (select workflow_id from workflow_actions inner join users on users.id=workflow_actions.assign_to where users.email=?) "
-                       + (status > -1 ? " and status=?" : "");
+    final String sql = "SELECT * FROM workflow where id in (select workflow_id from workflow_actions inner join users on users.id=workflow_actions.assign_to where users.email=?) "
+        + (status > -1 ? " and status=?" : "");
 
     final List<Workflow> workflowList = this.getModelListByIdentity(email, sql, "Workflow");
 
@@ -143,92 +143,11 @@ public class WorkflowDao extends DaoBasicClass<Workflow> implements IWorkflowDao
   }
 
   @Override
-  public List<Workflow> search(final WorkflowSearchFilter workflowSearchFilter) {
-    logger.info("Dao search Workflow ");
-
-    List<Long> idList = new ArrayList<>();
-
-    final String whereClause = this.prepareSearchWhereClause(workflowSearchFilter);
-
-    final String searchSql = "SELECT * FROM workflow where " + whereClause;
-
-    try {
-      idList = this.jdbcTemplate.query(con -> {
-        final PreparedStatement ps = con.prepareStatement(searchSql);
-
-        int index = 1;
-
-        for (final Long id : workflowSearchFilter.getAssignedUserIdSet()) {
-          ps.setLong(index, id);
-          index++;
-        }
-
-        for (final Integer id : workflowSearchFilter.getStatusSet()) {
-          ps.setInt(index, id);
-          index++;
-        }
-
-        for (final Long id : workflowSearchFilter.getWorkflowStepIdSet()) {
-          ps.setLong(index, id);
-          index++;
-        }
-
-        for (final Long id : workflowSearchFilter.getWorkflowTypeIdSet()) {
-          ps.setLong(index, id);
-          index++;
-        }
-
-        return ps;
-
-      }, (rs, rowNum) -> {
-
-        return rs.getLong("id");
-
-      });
-
-    }
-    catch (final Exception e) {
-      throw new IFlowStorageException("Unable to search Workflow : " + e.toString());
-    }
-
-    final List<Workflow> workflowList = this.readWorkflowListFromIdList(idList);
-
-    return workflowList;
-
-  }
-
-  private String prepareSearchWhereClause(final WorkflowSearchFilter workflowSearchFilter) {
-    String whereClause = "";
-    if (workflowSearchFilter.getAssignedUserIdentitySet().isEmpty() == false) {
-      whereClause += "id in (select workflow_id from workflow_actions where assign_to in ("
-                     + StringUtils.repeat("?,", workflowSearchFilter.getAssignedUserIdentitySet().size())
-                     + ")) ";
-    }
-    if (workflowSearchFilter.getStatusSet().isEmpty() == false) {
-      whereClause += whereClause.isEmpty() ? "" : "and";
-      whereClause += " status in (" + StringUtils.repeat("?,", workflowSearchFilter.getStatusSet().size()) + ") ";
-    }
-    if (workflowSearchFilter.getWorkflowStepIdentitySet().isEmpty() == false) {
-      whereClause += whereClause.isEmpty() ? "" : "and";
-      whereClause += " current_step in (" + StringUtils.repeat("?,", workflowSearchFilter.getWorkflowStepIdentitySet().size()) + ") ";
-    }
-    if (workflowSearchFilter.getWorkflowTypeIdentitySet().isEmpty() == false) {
-      whereClause += whereClause.isEmpty() ? "" : "and";
-      whereClause += " workflow_type_id in (" + StringUtils.repeat("?,", workflowSearchFilter.getWorkflowTypeIdentitySet().size()) + ") ";
-    }
-
-    whereClause = whereClause.replace(",)", ")");
-    return whereClause;
-  }
-
-  @Override
   protected String generateIdentity(final Workflow model) {
 
     final Random rand = new Random();
-    return String.format("t%sw%s-%s",
-                         identityLongToHex(model.getWorkflowTypeId()),
-                         identityLongToHex(System.currentTimeMillis()),
-                         identityIntToHex(rand.nextInt(1000000), 6));
+    return String.format("t%sw%s-%s", identityLongToHex(model.getWorkflowTypeId()), identityLongToHex(System.currentTimeMillis()),
+        identityIntToHex(rand.nextInt(1000000), 6));
   }
 
   @Override

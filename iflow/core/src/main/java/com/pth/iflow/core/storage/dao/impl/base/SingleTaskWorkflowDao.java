@@ -8,13 +8,14 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.pth.iflow.core.model.workflow.SingleTaskWorkflow;
-import com.pth.iflow.core.model.workflow.sub.WorkflowSearchFilter;
 import com.pth.iflow.core.storage.dao.IWorkflowDao;
 import com.pth.iflow.core.storage.dao.basic.DaoBasicClass;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
@@ -33,9 +34,7 @@ public class SingleTaskWorkflowDao extends DaoBasicClass<SingleTaskWorkflow> imp
 
   @Override
   public SingleTaskWorkflow getById(final Long id) throws IFlowStorageException {
-    final SingleTaskWorkflow workflow = this.getModelById(id,
-                                                          "SELECT * FROM workflow where id=?",
-                                                          "SingleTaskWorkflow");
+    final SingleTaskWorkflow workflow = this.getModelById(id, "SELECT * FROM workflow where id=?", "SingleTaskWorkflow");
 
     if (workflow != null) {
       workflowDaoHelper.setWorkflowDetails(workflow);
@@ -45,9 +44,8 @@ public class SingleTaskWorkflowDao extends DaoBasicClass<SingleTaskWorkflow> imp
 
   @Override
   public SingleTaskWorkflow getByIdentity(final String identity) throws IFlowStorageException {
-    final SingleTaskWorkflow workflow = this.getModelByIdentity(identity,
-                                                                "SELECT * FROM workflow where identity=?",
-                                                                "SingleTaskWorkflow");
+    final SingleTaskWorkflow workflow = this.getModelByIdentity(identity, "SELECT * FROM workflow where identity=?",
+        "SingleTaskWorkflow");
 
     if (workflow != null) {
       workflowDaoHelper.setWorkflowDetails(workflow);
@@ -64,8 +62,7 @@ public class SingleTaskWorkflowDao extends DaoBasicClass<SingleTaskWorkflow> imp
   @Override
   public List<SingleTaskWorkflow> getListByIdentityList(final Collection<String> idList) {
 
-    String sqlSelect =
-                     "SELECT  * FROM workflow where identity in (";
+    String sqlSelect = "SELECT  * FROM workflow where identity in (";
     sqlSelect += StringUtils.repeat("?, ", idList.size());
 
     sqlSelect = sqlSelect.trim();
@@ -112,7 +109,7 @@ public class SingleTaskWorkflowDao extends DaoBasicClass<SingleTaskWorkflow> imp
   @Override
   public SingleTaskWorkflow create(final SingleTaskWorkflow workflow) throws IFlowStorageException {
     final String sql = "INSERT INTO workflow (identity, workflow_type_id, current_step, comments, controller, created_by, version, status)"
-                       + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
     workflowDaoHelper.verifyWorkflowTypeByIdentity(workflow);
     workflowDaoHelper.verifyCurrentStepByIdentity(workflow);
@@ -132,8 +129,7 @@ public class SingleTaskWorkflowDao extends DaoBasicClass<SingleTaskWorkflow> imp
 
       return this.getById(workflowId);
 
-    }
-    catch (final Exception e) {
+    } catch (final Exception e) {
       this.rollbackTransaction(true, transactionStatus);
       logger.error("Unable to create SingleTaskWorkflow: {}", e.toString(), e);
       throw new IFlowStorageException(e.toString(), e);
@@ -144,7 +140,7 @@ public class SingleTaskWorkflowDao extends DaoBasicClass<SingleTaskWorkflow> imp
   @Override
   public SingleTaskWorkflow update(final SingleTaskWorkflow workflow) throws IFlowStorageException {
     final String sql = "UPDATE workflow SET workflow_type_id = ?, current_step = ?, comments = ?,"
-                       + " controller = ?, created_by = ?, version = ?, status = ? WHERE id = ?";
+        + " controller = ?, created_by = ?, version = ?, status = ? WHERE id = ?";
 
     workflowDaoHelper.verifyWorkflowTypeByIdentity(workflow);
     workflowDaoHelper.verifyCurrentStepByIdentity(workflow);
@@ -163,8 +159,7 @@ public class SingleTaskWorkflowDao extends DaoBasicClass<SingleTaskWorkflow> imp
       this.commitTransaction(true, transactionStatus);
 
       return this.getById(workflow.getId());
-    }
-    catch (final Exception e) {
+    } catch (final Exception e) {
       this.rollbackTransaction(true, transactionStatus);
       logger.error("Unable to update SingleTaskWorkflow: {}", e.toString(), e);
       throw new IFlowStorageException(e.toString(), e);
@@ -182,8 +177,7 @@ public class SingleTaskWorkflowDao extends DaoBasicClass<SingleTaskWorkflow> imp
 
       this.commitTransaction(true, transactionStatus);
 
-    }
-    catch (final Exception e) {
+    } catch (final Exception e) {
       this.rollbackTransaction(true, transactionStatus);
       logger.error("Unable to delete SingleTaskWorkflow:{} {}", workflowId, e.toString(), e);
       throw new IFlowStorageException(e.toString(), e);
@@ -191,7 +185,8 @@ public class SingleTaskWorkflowDao extends DaoBasicClass<SingleTaskWorkflow> imp
   }
 
   @Override
-  protected PreparedStatement prepareInsertPreparedStatement(final SingleTaskWorkflow model, final PreparedStatement ps) throws SQLException {
+  protected PreparedStatement prepareInsertPreparedStatement(final SingleTaskWorkflow model, final PreparedStatement ps)
+      throws SQLException {
     ps.setString(1, model.getIdentity());
     ps.setLong(2, model.getWorkflowTypeId());
     ps.setLong(3, model.getCurrentStepId());
@@ -205,7 +200,8 @@ public class SingleTaskWorkflowDao extends DaoBasicClass<SingleTaskWorkflow> imp
   }
 
   @Override
-  protected PreparedStatement prepareUpdatePreparedStatement(final SingleTaskWorkflow model, final PreparedStatement ps) throws SQLException {
+  protected PreparedStatement prepareUpdatePreparedStatement(final SingleTaskWorkflow model, final PreparedStatement ps)
+      throws SQLException {
     ps.setLong(1, model.getWorkflowTypeId());
     ps.setLong(2, model.getCurrentStepId());
     ps.setString(3, model.getComments());
@@ -223,9 +219,8 @@ public class SingleTaskWorkflowDao extends DaoBasicClass<SingleTaskWorkflow> imp
 
     logger.info("Dao read SingleTaskWorkflow for user");
 
-    final String sql =
-                     "SELECT * FROM workflow where workflow.id in (select workflow_id from workflow_actions inner join users on users.id=workflow_actions.assign_to where users.email=?) "
-                       + (status > -1 ? " and status=?" : "");
+    final String sql = "SELECT * FROM workflow where workflow.id in (select workflow_id from workflow_actions inner join users on users.id=workflow_actions.assign_to where users.email=?) "
+        + (status > -1 ? " and status=?" : "");
 
     final List<SingleTaskWorkflow> workflowList = this.getModelListByIdentity(email, sql, "SingleTaskWorkflow");
 
@@ -233,95 +228,11 @@ public class SingleTaskWorkflowDao extends DaoBasicClass<SingleTaskWorkflow> imp
   }
 
   @Override
-  public List<SingleTaskWorkflow> search(final WorkflowSearchFilter workflowSearchFilter) {
-    logger.info("Dao search SingleTaskWorkflow ");
-
-    workflowDaoHelper.prepareWorkflowSearchFilter(workflowSearchFilter);
-    List<Long> idList = new ArrayList<>();
-
-    final String whereClause = this.prepareSearchWhereClause(workflowSearchFilter);
-
-    final String searchSql = "SELECT * FROM workflow where "
-                             + whereClause;
-
-    try {
-      idList = this.jdbcTemplate.query(con -> {
-        final PreparedStatement ps = con.prepareStatement(searchSql);
-
-        int index = 1;
-
-        for (final Long id : workflowSearchFilter.getAssignedUserIdSet()) {
-          ps.setLong(index, id);
-          index++;
-        }
-
-        for (final Integer id : workflowSearchFilter.getStatusSet()) {
-          ps.setInt(index, id);
-          index++;
-        }
-
-        for (final Long id : workflowSearchFilter.getWorkflowStepIdSet()) {
-          ps.setLong(index, id);
-          index++;
-        }
-
-        for (final Long id : workflowSearchFilter.getWorkflowTypeIdSet()) {
-          ps.setLong(index, id);
-          index++;
-        }
-
-        return ps;
-
-      }, (rs, rowNum) -> {
-
-        return rs.getLong("id");
-
-      });
-
-    }
-    catch (final Exception e) {
-      throw new IFlowStorageException("Unable to search SingleTaskWorkflow : " + e.toString());
-    }
-
-    final List<SingleTaskWorkflow> workflowList = this.readWorkflowListFromIdList(idList);
-
-    return workflowList;
-
-  }
-
-  private String prepareSearchWhereClause(final WorkflowSearchFilter workflowSearchFilter) {
-    String whereClause = "";
-    if (workflowSearchFilter.getAssignedUserIdentitySet().isEmpty() == false) {
-      whereClause += "id in (select workflow_id from workflow_actions where assign_to in ("
-                     + StringUtils.repeat("?,", workflowSearchFilter.getAssignedUserIdentitySet().size())
-                     + ")) ";
-    }
-    if (workflowSearchFilter.getStatusSet().isEmpty() == false) {
-      whereClause += whereClause.isEmpty() ? "" : "and";
-      whereClause += " status in (" + StringUtils.repeat("?,", workflowSearchFilter.getStatusSet().size()) + ") ";
-    }
-    if (workflowSearchFilter.getWorkflowStepIdentitySet().isEmpty() == false) {
-      whereClause += whereClause.isEmpty() ? "" : "and";
-      whereClause += " current_step in (" + StringUtils.repeat("?,", workflowSearchFilter.getWorkflowStepIdentitySet().size()) + ") ";
-    }
-    if (workflowSearchFilter.getWorkflowTypeIdentitySet().isEmpty() == false) {
-      whereClause += whereClause.isEmpty() ? "" : "and";
-      whereClause += " workflow_type_id in (" + StringUtils.repeat("?,", workflowSearchFilter.getWorkflowTypeIdentitySet().size())
-                     + ") ";
-    }
-
-    whereClause = whereClause.replace(",)", ")");
-    return whereClause;
-  }
-
-  @Override
   protected String generateIdentity(final SingleTaskWorkflow model) {
 
     final Random rand = new Random();
-    return String.format("t%sw%s-%s",
-                         identityLongToHex(model.getWorkflowTypeId()),
-                         identityLongToHex(System.currentTimeMillis()),
-                         identityIntToHex(rand.nextInt(1000000), 6));
+    return String.format("t%sw%s-%s", identityLongToHex(model.getWorkflowTypeId()), identityLongToHex(System.currentTimeMillis()),
+        identityIntToHex(rand.nextInt(1000000), 6));
   }
 
 }

@@ -2,10 +2,11 @@ package com.pth.iflow.core.service.impl.workflow;
 
 import java.util.Collection;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.pth.iflow.core.model.workflow.SingleTaskWorkflow;
-import com.pth.iflow.core.model.workflow.sub.WorkflowSearchFilter;
 import com.pth.iflow.core.service.IWorkflowService;
 import com.pth.iflow.core.storage.dao.IWorkflowDao;
 import com.pth.iflow.core.storage.dao.exception.IFlowOptimisticLockException;
@@ -52,12 +53,6 @@ public class SingleTaskWorkflowService implements IWorkflowService<SingleTaskWor
   public List<SingleTaskWorkflow> getListForUser(final String email, final int status) {
 
     return this.workflowDao.getListForUserEmail(email, status);
-  }
-
-  @Override
-  public List<SingleTaskWorkflow> search(final WorkflowSearchFilter workflowSearchFilter) {
-
-    return this.workflowDao.search(workflowSearchFilter);
   }
 
   @Override

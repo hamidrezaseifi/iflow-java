@@ -58,6 +58,8 @@ public class IflowRestPaths {
     public static final String USERGROUP_READ_LIST                                              = "/usergroup/list";
     public static final String USERGROUP_READ_LIST_BY_COMPANYIDENTITY                           = "/usergroup/company/list/{companyidentity}";
 
+    public static final String WORKFLOW_SEARCH                                                  = "/workflow/search";
+
     public static final String INVOICEWORKFLOW_SAVE                                             = "/invworkflow/save";
     public static final String INVOICEWORKFLOW_READ_BY_IDENTITY                                 = "/invworkflow/readbyid/{identity}";
     public static final String INVOICEWORKFLOW_READ_LIST                                        = "/invworkflow/list";
@@ -68,7 +70,6 @@ public class IflowRestPaths {
     public static final String INVOICEWORKFLOW_FILE_SAVE                                        = "/invworkflow/file/save";
     public static final String INVOICEWORKFLOW_FILE_READ_BY_IDENTITY                            = "/invworkflow/file/readbyid/{identity}";
     public static final String INVOICEWORKFLOW_FILE_READ_LIST_BY_WORKFLOWIDENTITY               = "/invworkflow/file/workflow/list/{identity}";
-    public static final String INVOICEWORKFLOW_SEARCH                                           = "/invworkflow/search";
 
     public static final String SINGLETASKWORKFLOW_SAVE                                          = "/singletaskworkflow/save";
     public static final String SINGLETASKWORKFLOW_READ_BY_IDENTITY                              = "/singletaskworkflow/readbyid/{identity}";
@@ -80,7 +81,6 @@ public class IflowRestPaths {
     public static final String SINGLETASKWORKFLOW_FILE_SAVE                                     = "/singletaskworkflow/file/save";
     public static final String SINGLETASKWORKFLOW_FILE_READ_BY_IDENTITY                         = "/singletaskworkflow/file/readbyid/{identity}";
     public static final String SINGLETASKWORKFLOW_FILE_READ_LIST_BY_WORKFLOWIDENTITY            = "/singletaskworkflow/file/workflow/list/{identity}";
-    public static final String SINGLETASKWORKFLOW_SEARCH                                        = "/singletaskworkflow/search";
 
     public static final String TESTTHREETASKWORKFLOW_SAVE                                       = "/threetaskworkflow/save";
     public static final String TESTTHREETASKWORKFLOW_READ_BY_IDENTITY                           = "/threetaskworkflow/readbyid/{identity}";
@@ -92,7 +92,6 @@ public class IflowRestPaths {
     public static final String TESTTHREETASKWORKFLOW_FILE_SAVE                                  = "/threetaskworkflow/file/save";
     public static final String TESTTHREETASKWORKFLOW_FILE_READ_BY_IDENTITY                      = "/threetaskworkflow/file/readbyid/{identity}";
     public static final String TESTTHREETASKWORKFLOW_FILE_READ_LIST_BY_WORKFLOWIDENTITY         = "/threetaskworkflow/file/workflow/list/{identity}";
-    public static final String TESTTHREETASKWORKFLOW_SEARCH                                     = "/threetaskworkflow/search";
 
     public static final String WORKFLOWMESSAGE_READ_BY_USEREMAIL                                = "/workflowmessage/user/{email}/{status}";
     public static final String WORKFLOWMESSAGE_READ_BY_WORKFLOWIDENTITY                         = "/workflowmessage/workflow/{workflowid}";
@@ -210,6 +209,11 @@ public class IflowRestPaths {
       return builder.build();
     }
 
+    public static URI SEARCH_WORKFLOW() {
+      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOW_SEARCH);
+      return builder.build();
+    }
+
     public static URI READ_INVOICEWORKFLOW_BY_IDENTITY(final String identity) {
       final IflowUriBuilder builder = new IflowUriBuilder(INVOICEWORKFLOW_READ_BY_IDENTITY);
       return builder.build(identity);
@@ -222,11 +226,6 @@ public class IflowRestPaths {
 
     public static URI READ_INVOICEWORKFLOW_LIST() {
       final IflowUriBuilder builder = new IflowUriBuilder(INVOICEWORKFLOW_READ_LIST);
-      return builder.build();
-    }
-
-    public static URI SEARCH_INVOICEWORKFLOW() {
-      final IflowUriBuilder builder = new IflowUriBuilder(INVOICEWORKFLOW_SEARCH);
       return builder.build();
     }
 
@@ -262,11 +261,6 @@ public class IflowRestPaths {
       return builder.build();
     }
 
-    public static URI SEARCH_SINGLETASKWORKFLOW() {
-      final IflowUriBuilder builder = new IflowUriBuilder(SINGLETASKWORKFLOW_SEARCH);
-      return builder.build();
-    }
-
     public static URI READ_SINGLETASKWORKFLOW_LIST_BY_USERIDENTITY(final String email, final int status) {
       final IflowUriBuilder builder = new IflowUriBuilder(SINGLETASKWORKFLOW_READ_LIST_BY_USERIDENTITY);
       return builder.build(email, status);
@@ -296,11 +290,6 @@ public class IflowRestPaths {
 
     public static URI READ_TESTTHREETASKWORKFLOW_LIST() {
       final IflowUriBuilder builder = new IflowUriBuilder(TESTTHREETASKWORKFLOW_READ_LIST);
-      return builder.build();
-    }
-
-    public static URI SEARCH_TESTTHREETASKWORKFLOW() {
-      final IflowUriBuilder builder = new IflowUriBuilder(TESTTHREETASKWORKFLOW_SEARCH);
       return builder.build();
     }
 
