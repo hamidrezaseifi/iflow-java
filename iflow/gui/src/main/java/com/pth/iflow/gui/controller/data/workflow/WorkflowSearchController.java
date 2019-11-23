@@ -1,7 +1,9 @@
 package com.pth.iflow.gui.controller.data.workflow;
 
 import java.net.MalformedURLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +19,7 @@ import com.pth.iflow.common.rest.IflowRestPaths.GuiModule;
 import com.pth.iflow.gui.controller.data.GuiDataControllerBase;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.WorkflowSearchFilter;
+import com.pth.iflow.gui.models.workflow.WorkflowResult;
 import com.pth.iflow.gui.services.IWorkflowSearchAccess;
 
 @Controller
@@ -29,16 +32,20 @@ public abstract class WorkflowSearchController extends GuiDataControllerBase {
   @ResponseStatus(HttpStatus.OK)
   @PostMapping(path = { "/search" })
   @ResponseBody
-  public List<W> searchWorkflows(@RequestBody final WorkflowSearchFilter workflowSearchFilter)
+  public Map<String, Object> searchWorkflows(@RequestBody final WorkflowSearchFilter workflowSearchFilter)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     if (workflowSearchFilter.isMeAssigned()) {
       workflowSearchFilter.addAssignedUserIdentity(this.getLoggedUser().getIdentity());
     }
 
-    final List<W> workflowList = this.workflowSearchAccess.searchWorkflow(workflowSearchFilter);
+    final List<WorkflowResult> workflowList = this.workflowSearchAccess.searchWorkflow(workflowSearchFilter);
 
-    return workflowList;
+    final Map<String, Object> mapped = new HashMap<>();
+    mapped.put("res", "ok");
+    mapped.put("list", workflowList);
+
+    return mapped;
   }
 
 }
