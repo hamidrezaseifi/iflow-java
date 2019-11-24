@@ -358,7 +358,7 @@ public class TestDataProducer {
 
   protected WorkflowType getTestTestThreeTaskWorkflowType() {
 
-    return getTestWorkflowType(EWorkflowType.THREE_TASK_WORKFLOW_TYPE);
+    return getTestWorkflowType(EWorkflowType.TESTTHREE_TASK_WORKFLOW_TYPE);
   }
 
   protected WorkflowType getTestWorkflowType(final String identity, final String title) {

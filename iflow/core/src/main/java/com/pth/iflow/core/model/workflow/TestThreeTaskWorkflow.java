@@ -141,7 +141,7 @@ public class TestThreeTaskWorkflow extends CoreModelHelper implements ICoreIdent
 
   @Override
   public String getWorkflowTypeIdentity() {
-    return EWorkflowType.THREE_TASK_WORKFLOW_TYPE.getIdentity();
+    return EWorkflowType.TESTTHREE_TASK_WORKFLOW_TYPE.getIdentity();
   }
 
   @Override

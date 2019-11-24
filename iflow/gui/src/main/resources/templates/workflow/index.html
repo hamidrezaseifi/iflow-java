@@ -28,21 +28,19 @@
 				
 			</div>
 		
-		    <table class="iflow-table">
-		    	<thead>
+		    <table class="table table-bordered table-responsive iflow-table">
+		    	<thead class="thead-dark">
 		    		<tr>
-		    			<th th:text="#{workflow-title}"></th>
-		    			<th th:text="#{workflow-type}"></th>
-		    			<th th:text="#{workflow-current-step}"></th>
-		    			<th th:text="#{workflow-status}"></th>
-		    			<th th:text="#{workflow-assignto}"></th>
-		    			<th></th>
+		    			<th scope="col" th:text="#{workflow-type}"></th>
+		    			<th scope="col" th:text="#{workflow-current-step}"></th>
+		    			<th scope="col" th:text="#{workflow-status}"></th>
+		    			<th scope="col" th:text="#{workflow-assignto}"></th>
+		    			<th scope="col"></th>
 		    		</tr>
 		    	</thead>
 		    	<tbody>
 		     		<tr ng-repeat="item in items">
-		    			<td>{{item.title}}</td>
-		    			<td>{{item.workflowType.title}}</td>
+		    			<td scope="row">{{item.workflowType.title}}</td>
 		    			<td>{{item.currentStep.title}}</td>
 		    			<td>{{item.status}}</td>
 		    			<td>{{item.assignToUserFullName}}</td>

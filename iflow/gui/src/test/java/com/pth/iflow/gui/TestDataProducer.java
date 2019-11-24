@@ -120,7 +120,7 @@ public class TestDataProducer {
 
   protected WorkflowType getTestTestThreeTaskWorkflowType() {
 
-    return this.getTestWorkflowType(EWorkflowType.THREE_TASK_WORKFLOW_TYPE);
+    return this.getTestWorkflowType(EWorkflowType.TESTTHREE_TASK_WORKFLOW_TYPE);
   }
 
   private WorkflowType getTestWorkflowType(final EWorkflowType workflowTypeEnum) {

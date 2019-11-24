@@ -10,12 +10,14 @@ import org.springframework.stereotype.Service;
 
 import com.pth.iflow.common.edo.models.workflow.results.WorkflowResultListEdo;
 import com.pth.iflow.common.enums.EModule;
+import com.pth.iflow.common.enums.EWorkflowType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.configurations.GuiConfiguration;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.WorkflowSearchFilter;
 import com.pth.iflow.gui.models.mapper.GuiModelEdoMapper;
 import com.pth.iflow.gui.models.ui.SessionUserInfo;
+import com.pth.iflow.gui.models.workflow.IWorkflow;
 import com.pth.iflow.gui.models.workflow.WorkflowResult;
 import com.pth.iflow.gui.models.workflow.invoice.InvoiceWorkflow;
 import com.pth.iflow.gui.models.workflow.invoice.InvoiceWorkflowSaveRequest;
@@ -65,16 +67,40 @@ public class WorkflowSearchAccess implements IWorkflowSearchAccess {
         true);
 
     final List<WorkflowResult> list = GuiModelEdoMapper.fromWorkflowResultEdoList(responseListEdo.getWorkflows());
-    for (final WorkflowResult res : list) {
+    for (final WorkflowResult resultWorkflow : list) {
 
-      res.setWorkflowType(this.sessionUserInfo.getWorkflowTypeByIdentity(res.getWorkflowTypeIdentity()));
-      res.setCurrentStep(
-          this.sessionUserInfo.getWorkflowStepTypeByIdentity(res.getWorkflowTypeIdentity(), res.getCurrentStepIdentity()));
-
+      this.prepareResult(resultWorkflow);
     }
 
     return list;
 
+  }
+
+  private IWorkflowHandler getHandlerByWorkflowType(final EWorkflowType eEorkflowType) {
+    if (eEorkflowType == EWorkflowType.INVOICE_WORKFLOW_TYPE) {
+      return this.invoiceWorkflowHandler;
+    }
+    if (eEorkflowType == EWorkflowType.SINGLE_TASK_WORKFLOW_TYPE) {
+      return this.singleTaskWorkflowHandler;
+    }
+    if (eEorkflowType == EWorkflowType.TESTTHREE_TASK_WORKFLOW_TYPE) {
+      return this.testThreeTaskWorkflowHandler;
+    }
+    return null;
+  }
+
+  private void prepareResult(final WorkflowResult resultWorkflow)
+      throws IFlowMessageConversionFailureException, GuiCustomizedException, MalformedURLException {
+    resultWorkflow.setWorkflowType(this.sessionUserInfo.getWorkflowTypeByIdentity(resultWorkflow.getWorkflowTypeIdentity()));
+    resultWorkflow.setCurrentStep(this.sessionUserInfo.getWorkflowStepTypeByIdentity(resultWorkflow.getWorkflowTypeIdentity(),
+        resultWorkflow.getCurrentStepIdentity()));
+
+    final IWorkflowHandler handler = this.getHandlerByWorkflowType(resultWorkflow.getWorkflowType().getTypeEnum());
+    final IWorkflow readWorkflow = handler.readWorkflow(resultWorkflow.getIdentity());
+    resultWorkflow.setActions(readWorkflow.getActions());
+    resultWorkflow.setFiles(readWorkflow.getFiles());
+
+    resultWorkflow.setCurrentUserIdentity(this.sessionUserInfo.getUser().getIdentity());
   }
 
 }

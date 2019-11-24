@@ -46,7 +46,7 @@ public class TestThreeTaskWorkflow extends IdentityModel implements IWorkflow {
   }
 
   public EWorkflowType getWorkflowTypeEnum() {
-    return EWorkflowType.THREE_TASK_WORKFLOW_TYPE;
+    return EWorkflowType.TESTTHREE_TASK_WORKFLOW_TYPE;
   }
 
   @Override

@@ -13,7 +13,7 @@ public enum EWorkflowType implements IEnumNameValidator {
 
   NONE("None", ""),
   SINGLE_TASK_WORKFLOW_TYPE("singletaskworkflowtype", "singletask"),
-  THREE_TASK_WORKFLOW_TYPE("threetaskworkflowtype", "testthreetask"),
+  TESTTHREE_TASK_WORKFLOW_TYPE("threetaskworkflowtype", "testthreetask"),
   INVOICE_WORKFLOW_TYPE("invoiceworkflowtype", "invoice");
 
   private final String typeIdentity;

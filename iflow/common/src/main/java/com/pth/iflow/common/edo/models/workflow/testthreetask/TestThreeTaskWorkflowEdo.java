@@ -157,7 +157,7 @@ public class TestThreeTaskWorkflowEdo implements IWorkflowEdoBase {
 
   @Override
   public String getWorkflowType() {
-    return EWorkflowType.THREE_TASK_WORKFLOW_TYPE.getIdentity();
+    return EWorkflowType.TESTTHREE_TASK_WORKFLOW_TYPE.getIdentity();
   }
 
 }
