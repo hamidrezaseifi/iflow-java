@@ -8,10 +8,13 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+
 import com.pth.iflow.common.controllers.helper.IflowSpringProfiles;
 import com.pth.iflow.common.rest.XmlRestConfig;
 
 @SpringBootApplication(scanBasePackageClasses = { IflowSpringProfiles.class, CoreApp.class })
+@EnableJpaAuditing
 public class CoreApp implements ApplicationListener<ApplicationReadyEvent> {
 
   private static final Logger logger = LoggerFactory.getLogger(CoreApp.class);
