@@ -159,7 +159,6 @@ public class TestDataProducer {
   protected InvoiceWorkflow getTestInvoiceWorkflow(final String identity) {
     final InvoiceWorkflow model = new InvoiceWorkflow();
     model.setWorkflowType(this.getTestInvoiceWorkflowType());
-    model.setWorkflowTypeIdentity(model.getWorkflowType().getIdentity());
     model.setIdentity(identity);
     model.setStatus(EWorkflowStatus.INITIALIZE);
     model.setVersion(1);
@@ -202,7 +201,6 @@ public class TestDataProducer {
   protected SingleTaskWorkflow getTestSingleTaskWorkflow(final String identity) {
     final SingleTaskWorkflow model = new SingleTaskWorkflow();
     model.setWorkflowType(this.getTestSingleTaskWorkflowType());
-    model.setWorkflowTypeIdentity(model.getWorkflowType().getIdentity());
     model.setIdentity(identity);
     model.setStatus(EWorkflowStatus.INITIALIZE);
     model.setVersion(1);
@@ -223,7 +221,6 @@ public class TestDataProducer {
   protected TestThreeTaskWorkflow getTestTestThreeTaskWorkflow(final String identity) {
     final TestThreeTaskWorkflow model = new TestThreeTaskWorkflow();
     model.setWorkflowType(this.getTestTestThreeTaskWorkflowType());
-    model.setWorkflowTypeIdentity(model.getWorkflowType().getIdentity());
     model.setIdentity(identity);
     model.setStatus(EWorkflowStatus.INITIALIZE);
     model.setVersion(1);

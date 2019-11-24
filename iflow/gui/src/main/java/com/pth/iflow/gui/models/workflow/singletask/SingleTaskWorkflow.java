@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.pth.iflow.common.edo.models.helper.IdentityModel;
 import com.pth.iflow.common.enums.EWorkflowIdentity;
 import com.pth.iflow.common.enums.EWorkflowStatus;
+import com.pth.iflow.common.enums.EWorkflowType;
 import com.pth.iflow.gui.models.User;
 import com.pth.iflow.gui.models.WorkflowAction;
 import com.pth.iflow.gui.models.WorkflowFile;
@@ -20,7 +21,6 @@ import com.pth.iflow.gui.models.workflow.invoice.InvoiceWorkflow;
 public class SingleTaskWorkflow extends IdentityModel implements IWorkflow {
 
   private String                     identity;
-  private String                     workflowTypeIdentity;
   private WorkflowType               workflowType;
   private WorkflowTypeStep           currentStep;
   private String                     currentStepIdentity;
@@ -46,13 +46,13 @@ public class SingleTaskWorkflow extends IdentityModel implements IWorkflow {
     this.identity = identity;
   }
 
-  @Override
-  public String getWorkflowTypeIdentity() {
-    return this.workflowTypeIdentity;
+  public EWorkflowType getWorkflowTypeEnum() {
+    return EWorkflowType.SINGLE_TASK_WORKFLOW_TYPE;
   }
 
-  public void setWorkflowTypeIdentity(final String workflowTypeIdentity) {
-    this.workflowTypeIdentity = workflowTypeIdentity;
+  @Override
+  public String getWorkflowTypeIdentity() {
+    return this.getWorkflowTypeEnum().getIdentity();
   }
 
   /**
@@ -345,7 +345,6 @@ public class SingleTaskWorkflow extends IdentityModel implements IWorkflow {
     newWorkflow.setControllerIdentity("");
     newWorkflow.setCurrentStepIdentity("");
     newWorkflow.setVersion(0);
-    newWorkflow.setWorkflowTypeIdentity("");
     newWorkflow.setComments("");
     newWorkflow.setIdentity(EWorkflowIdentity.NOT_SET.getIdentity());
 

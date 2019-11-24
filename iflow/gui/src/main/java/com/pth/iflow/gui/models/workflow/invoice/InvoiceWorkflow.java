@@ -3,11 +3,13 @@ package com.pth.iflow.gui.models.workflow.invoice;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.pth.iflow.common.edo.models.helper.IdentityModel;
 import com.pth.iflow.common.enums.EInvoiceType;
 import com.pth.iflow.common.enums.EWorkflowIdentity;
 import com.pth.iflow.common.enums.EWorkflowStatus;
+import com.pth.iflow.common.enums.EWorkflowType;
 import com.pth.iflow.gui.models.User;
 import com.pth.iflow.gui.models.WorkflowAction;
 import com.pth.iflow.gui.models.WorkflowFile;
@@ -18,48 +20,47 @@ import com.pth.iflow.gui.models.workflow.IWorkflow;
 @JsonIgnoreProperties(value = { "isAssignTo" })
 public class InvoiceWorkflow extends IdentityModel implements IWorkflow {
 
-  private String           identity;
-  private String           workflowTypeIdentity;
-  private WorkflowType     workflowType;
-  private WorkflowTypeStep currentStep;
-  private String           currentStepIdentity;
-  private String           controllerIdentity;
-  private User             controllerUser;
-  private String           createdByIdentity;
-  private User             createdByUser;
-  private String           comments;
-  private EWorkflowStatus  status;
-  private Integer          version;
-  private String           currentUserIdentity;
+  private String                     identity;
+  private WorkflowType               workflowType;
+  private WorkflowTypeStep           currentStep;
+  private String                     currentStepIdentity;
+  private String                     controllerIdentity;
+  private User                       controllerUser;
+  private String                     createdByIdentity;
+  private User                       createdByUser;
+  private String                     comments;
+  private EWorkflowStatus            status;
+  private Integer                    version;
+  private String                     currentUserIdentity;
 
   private final List<WorkflowFile>   files   = new ArrayList<>();
   private final List<WorkflowAction> actions = new ArrayList<>();
 
-  private String sender;
+  private String                     sender;
 
-  private String registerNumber;
+  private String                     registerNumber;
 
-  private LocalDate invoceDate;
+  private LocalDate                  invoceDate;
 
-  private String partnerCode;
+  private String                     partnerCode;
 
-  private String vendorNumber;
+  private String                     vendorNumber;
 
-  private String vendorName;
+  private String                     vendorName;
 
-  private Boolean isDirectDebitPermission;
+  private Boolean                    isDirectDebitPermission;
 
-  private EInvoiceType invoiceType;
+  private EInvoiceType               invoiceType;
 
-  private LocalDate discountEnterDate;
+  private LocalDate                  discountEnterDate;
 
-  private Integer discountDeadline;
+  private Integer                    discountDeadline;
 
-  private Double discountRate;
+  private Double                     discountRate;
 
-  private LocalDate discountDate;
+  private LocalDate                  discountDate;
 
-  private Double paymentAmount;
+  private Double                     paymentAmount;
 
   @Override
   public String getIdentity() {
@@ -71,13 +72,13 @@ public class InvoiceWorkflow extends IdentityModel implements IWorkflow {
     this.identity = identity;
   }
 
-  @Override
-  public String getWorkflowTypeIdentity() {
-    return this.workflowTypeIdentity;
+  public EWorkflowType getWorkflowTypeEnum() {
+    return EWorkflowType.INVOICE_WORKFLOW_TYPE;
   }
 
-  public void setWorkflowTypeIdentity(final String workflowTypeIdentity) {
-    this.workflowTypeIdentity = workflowTypeIdentity;
+  @Override
+  public String getWorkflowTypeIdentity() {
+    return this.getWorkflowTypeEnum().getIdentity();
   }
 
   /**
@@ -235,7 +236,8 @@ public class InvoiceWorkflow extends IdentityModel implements IWorkflow {
   }
 
   @Override
-  public WorkflowFile addNewFile(final String path, final String userId, final String title, final String extention, final String comments) {
+  public WorkflowFile addNewFile(final String path, final String userId, final String title, final String extention,
+      final String comments) {
     final WorkflowFile wfile = new WorkflowFile();
     wfile.setActiveFilePath(path);
     wfile.setActiveFileVersion(1);
@@ -281,7 +283,7 @@ public class InvoiceWorkflow extends IdentityModel implements IWorkflow {
   }
 
   public String getSender() {
-    return sender;
+    return this.sender;
   }
 
   public void setSender(final String sender) {
@@ -289,7 +291,7 @@ public class InvoiceWorkflow extends IdentityModel implements IWorkflow {
   }
 
   public String getRegisterNumber() {
-    return registerNumber;
+    return this.registerNumber;
   }
 
   public void setRegisterNumber(final String registerNumber) {
@@ -297,7 +299,7 @@ public class InvoiceWorkflow extends IdentityModel implements IWorkflow {
   }
 
   public LocalDate getInvoceDate() {
-    return invoceDate;
+    return this.invoceDate;
   }
 
   public void setInvoceDate(final LocalDate invoceDate) {
@@ -305,7 +307,7 @@ public class InvoiceWorkflow extends IdentityModel implements IWorkflow {
   }
 
   public String getPartnerCode() {
-    return partnerCode;
+    return this.partnerCode;
   }
 
   public void setPartnerCode(final String partnerCode) {
@@ -313,7 +315,7 @@ public class InvoiceWorkflow extends IdentityModel implements IWorkflow {
   }
 
   public String getVendorNumber() {
-    return vendorNumber;
+    return this.vendorNumber;
   }
 
   public void setVendorNumber(final String vendorNumber) {
@@ -321,7 +323,7 @@ public class InvoiceWorkflow extends IdentityModel implements IWorkflow {
   }
 
   public String getVendorName() {
-    return vendorName;
+    return this.vendorName;
   }
 
   public void setVendorName(final String vendorName) {
@@ -329,7 +331,7 @@ public class InvoiceWorkflow extends IdentityModel implements IWorkflow {
   }
 
   public Boolean getIsDirectDebitPermission() {
-    return isDirectDebitPermission;
+    return this.isDirectDebitPermission;
   }
 
   public void setIsDirectDebitPermission(final Boolean isDirectDebitPermission) {
@@ -337,7 +339,7 @@ public class InvoiceWorkflow extends IdentityModel implements IWorkflow {
   }
 
   public EInvoiceType getInvoiceType() {
-    return invoiceType;
+    return this.invoiceType;
   }
 
   public void setInvoiceType(final EInvoiceType invoiceType) {
@@ -345,7 +347,7 @@ public class InvoiceWorkflow extends IdentityModel implements IWorkflow {
   }
 
   public LocalDate getDiscountEnterDate() {
-    return discountEnterDate;
+    return this.discountEnterDate;
   }
 
   public void setDiscountEnterDate(final LocalDate discountEnterDate) {
@@ -353,7 +355,7 @@ public class InvoiceWorkflow extends IdentityModel implements IWorkflow {
   }
 
   public Integer getDiscountDeadline() {
-    return discountDeadline;
+    return this.discountDeadline;
   }
 
   public void setDiscountDeadline(final Integer discountDeadline) {
@@ -361,7 +363,7 @@ public class InvoiceWorkflow extends IdentityModel implements IWorkflow {
   }
 
   public Double getDiscountRate() {
-    return discountRate;
+    return this.discountRate;
   }
 
   public void setDiscountRate(final Double discountRate) {
@@ -369,7 +371,7 @@ public class InvoiceWorkflow extends IdentityModel implements IWorkflow {
   }
 
   public LocalDate getDiscountDate() {
-    return discountDate;
+    return this.discountDate;
   }
 
   public void setDiscountDate(final LocalDate discountDate) {
@@ -377,7 +379,7 @@ public class InvoiceWorkflow extends IdentityModel implements IWorkflow {
   }
 
   public Double getPaymentAmount() {
-    return paymentAmount;
+    return this.paymentAmount;
   }
 
   public void setPaymentAmount(final Double paymentAmount) {
@@ -472,7 +474,6 @@ public class InvoiceWorkflow extends IdentityModel implements IWorkflow {
     newWorkflow.setControllerIdentity("");
     newWorkflow.setCurrentStepIdentity("");
     newWorkflow.setVersion(0);
-    newWorkflow.setWorkflowTypeIdentity("");
     newWorkflow.setComments("");
     newWorkflow.setIdentity(EWorkflowIdentity.NOT_SET.getIdentity());
 
