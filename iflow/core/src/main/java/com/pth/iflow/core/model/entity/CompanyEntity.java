@@ -4,55 +4,49 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
 @Entity
-@Table(name = "user_group")
-public class UserGroupEntity {
+@Table(name = "companies")
+public class CompanyEntity {
 
   @Id
   @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long          id;
+  private Long    id;
 
   @Column(name = "identity")
-  private String        identity;
+  private String  identity;
 
-  @Column(name = "company_id")
-  private Long          companyId;
-
-  @Column(name = "title")
-  private String        title;
+  @Column(name = "company_name")
+  private String  companyName;
 
   @Column(name = "status")
-  private Integer       status;
+  private Integer status;
 
   @Column(name = "version")
-  private Integer       version;
-
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "company_id", insertable = false, updatable = false)
-  @Fetch(FetchMode.JOIN)
-  private CompanyEntity company;
+  private Integer version;
 
   @Column(name = "created_at")
-  private Date          createdAt;
+  private Date    createdAt;
 
   @Column(name = "updated_at")
-  private Date          updatedAt;
+  private Date    updatedAt;
+
+  /**
+   * @return the id
+   */
 
   public Long getId() {
     return this.id;
   }
+
+  /**
+   * @param id the id to set
+   */
 
   public void setId(final Long id) {
     this.id = id;
@@ -66,58 +60,74 @@ public class UserGroupEntity {
     this.identity = identity;
   }
 
-  public Long getCompanyId() {
-    return this.companyId;
+  /**
+   * @return the companyName
+   */
+  public String getCompanyName() {
+    return this.companyName;
   }
 
-  public void setCompanyId(final Long companyId) {
-    this.companyId = companyId;
+  /**
+   * @param companyName the companyName to set
+   */
+  public void setCompanyName(final String companyName) {
+    this.companyName = companyName;
   }
 
-  public String getTitle() {
-    return this.title;
-  }
-
-  public void setTitle(final String title) {
-    this.title = title;
-  }
-
+  /**
+   * @return the status
+   */
   public Integer getStatus() {
     return this.status;
   }
 
+  /**
+   * @param status the status to set
+   */
   public void setStatus(final Integer status) {
     this.status = status;
   }
+
+  /**
+   * @return the version
+   */
 
   public Integer getVersion() {
     return this.version;
   }
 
+  /**
+   * @param version the version to set
+   */
+
   public void setVersion(final Integer version) {
     this.version = version;
   }
 
-  public CompanyEntity getCompany() {
-    return company;
-  }
-
-  public void setCompany(final CompanyEntity company) {
-    this.company = company;
-  }
-
+  /**
+   * @return the createdAt
+   */
   public Date getCreatedAt() {
     return this.createdAt;
   }
 
+  /**
+   * @param createdAt the createdAt to set
+   */
   public void setCreatedAt(final Date createdAt) {
     this.createdAt = createdAt;
   }
 
+  /**
+   * @return the updatedAt
+   */
   public Date getUpdatedAt() {
     return this.updatedAt;
   }
 
+  /**
+   * @param updatedAt the updatedAt to set
+   */
   public void setUpdatedAt(final Date updatedAt) {
     this.updatedAt = updatedAt;
   }

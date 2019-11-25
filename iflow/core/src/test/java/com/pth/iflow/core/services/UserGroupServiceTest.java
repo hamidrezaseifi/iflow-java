@@ -34,7 +34,7 @@ public class UserGroupServiceTest extends TestDataProducer {
 
   @Before
   public void setUp() throws Exception {
-    this.userGroupService = new UserGroupService();
+    this.userGroupService = new UserGroupService(userGroupDao);
   }
 
   @After

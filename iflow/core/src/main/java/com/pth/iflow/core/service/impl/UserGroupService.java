@@ -12,19 +12,14 @@ import com.pth.iflow.core.model.UserGroup;
 import com.pth.iflow.core.service.IUserGroupService;
 import com.pth.iflow.core.storage.dao.IUserGroupDao;
 import com.pth.iflow.core.storage.dao.exception.IFlowOptimisticLockException;
-import com.pth.iflow.core.storage.dao.impl.UserGroupDaoRepository;
 
 @Service
 public class UserGroupService implements IUserGroupService {
 
-  @Autowired
-  private IUserGroupDao          userGroupDao;
+  private final IUserGroupDao userGroupDao;
 
-  @Autowired
-  private UserGroupDaoRepository repository;
-
-  public UserGroupService() {
-
+  public UserGroupService(@Autowired final IUserGroupDao userGroupDao) {
+    this.userGroupDao = userGroupDao;
   }
 
   @PostConstruct
@@ -34,7 +29,6 @@ public class UserGroupService implements IUserGroupService {
 
   @Override
   public UserGroup getByIdentity(final String identity) {
-    // final UserGroupEntity u = repository.findByIdentity(identity);
 
     return this.userGroupDao.getByIdentity(identity);
   }
@@ -48,8 +42,6 @@ public class UserGroupService implements IUserGroupService {
   @Override
   public List<UserGroup> getListByIdCompanyIdentity(final String companyIdentity) {
 
-    // final List<UserGroupEntity> list =
-    // repository.findAllByCompanyIdentity(companyIdentity);
     return this.userGroupDao.getListByCompanyIdentity(companyIdentity);
   }
 

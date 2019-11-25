@@ -7,17 +7,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
 @Component
 @PropertySource("classpath:config/db.properties")
-@EnableJpaRepositories(basePackages = { "com.pth.iflow.core.model.entity" })
-@EnableTransactionManagement
 public class DbConfiguration {
 
   private final Logger log = LoggerFactory.getLogger(getClass());
@@ -80,34 +76,6 @@ public class DbConfiguration {
     ds.validate();
     return ds;
   }
-
-  /*
-   * @Bean public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-   * final LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new
-   * LocalContainerEntityManagerFactoryBean();
-   * entityManagerFactoryBean.setDataSource(dataSource());
-   * entityManagerFactoryBean.setPersistenceProviderClass(); //
-   * HibernatePersistence.class
-   * entityManagerFactoryBean.setPackagesToScan("com.pth.iflow.core.model.entity")
-   * ;
-   *
-   * entityManagerFactoryBean.setJpaProperties(hibProperties());
-   * entityManagerFactoryBean.afterPropertiesSet();
-   *
-   * return entityManagerFactoryBean; }
-   *
-   * private Properties hibProperties() { final Properties properties = new
-   * Properties(); properties.put("hibernate.dialect",
-   * "org.hibernate.dialect.MySQL5InnoDBDialect");
-   * properties.put("hibernate.show_sql", "true");
-   *
-   * return properties; }
-   *
-   * @Bean public JpaTransactionManager transactionManager() { final
-   * JpaTransactionManager transactionManager = new JpaTransactionManager();
-   * transactionManager.setEntityManagerFactory(entityManagerFactory().getObject()
-   * ); return transactionManager; }
-   */
 
   public String getPoolName() {
     return poolName;
