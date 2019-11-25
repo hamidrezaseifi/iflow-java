@@ -1,6 +1,9 @@
 package com.pth.iflow.gui.controller.page;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
@@ -49,6 +52,21 @@ public class WorkflowPageController extends GuiPageControllerBase {
   public String showInvalidMessage(final Model model) throws GuiCustomizedException, MalformedURLException {
 
     return "workflow/invalid-message";
+  }
+
+  @ResponseStatus(HttpStatus.OK)
+  @GetMapping(path = { "/edit/{workflowTypeIdentity}/{workflowIdentity}/{workflowTypeStepIdentity}" })
+  public String showWorkflowEdit(final Model model, @PathVariable(required = false) final String workflowIdentity,
+      @PathVariable(required = false) final String workflowTypeIdentity,
+      @PathVariable(required = false) final String workflowTypeStepIdentity, final HttpServletResponse response)
+      throws GuiCustomizedException, IOException, IFlowMessageConversionFailureException {
+
+    String url = this.getWorkflowBaseUrl(workflowTypeIdentity);
+
+    url += "/edit/" + workflowIdentity + "/" + workflowTypeIdentity + "/" + workflowTypeStepIdentity;
+
+    response.sendRedirect(url);
+    return "redirect:" + url;
   }
 
 }

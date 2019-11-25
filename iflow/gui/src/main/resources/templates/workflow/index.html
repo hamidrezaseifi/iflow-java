@@ -44,7 +44,7 @@
 		    			<td>{{item.currentStep.title}}</td>
 		    			<td>{{item.status}}</td>
 		    			<td>{{item.assignToUserFullName}}</td>
-		    			<td><a class="tool-link" ng-href="/workflow/edit/{{item.identity}}"><i class="material-icons">edit</i></a></td>
+		    			<td><a class="tool-link" ng-href="/workflow/edit/{{item.workflowType.identity}}/{{item.identity}}/{{item.currentStep.identity}}"><i class="material-icons">edit</i></a></td>
 		    		</tr>
 		     		
 		    	

@@ -3,15 +3,20 @@ package com.pth.iflow.gui.controller;
 import java.net.MalformedURLException;
 import java.util.Collection;
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import com.pth.iflow.common.enums.EWorkflowType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
+import com.pth.iflow.common.rest.IflowRestPaths.GuiModule;
 import com.pth.iflow.gui.configurations.GuiSecurityConfigurations;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.Company;
@@ -26,7 +31,7 @@ import com.pth.iflow.gui.services.IWorkflowMessageHanlder;
 public class GuiLogedControllerBase {
 
   @Autowired
-  private SessionUserInfo sessionUserInfo;
+  private SessionUserInfo         sessionUserInfo;
 
   @Autowired
   private IWorkflowMessageHanlder workflowMessageHanlder;
@@ -42,7 +47,8 @@ public class GuiLogedControllerBase {
   }
 
   @ModelAttribute
-  public void addAttributes(final Model model, final HttpSession session, final HttpServletResponse response, final HttpServletRequest request) throws Exception {
+  public void addAttributes(final Model model, final HttpSession session, final HttpServletResponse response,
+      final HttpServletRequest request) throws Exception {
 
     if (this.sessionUserInfo == null || !this.sessionUserInfo.isValid()) {
       response.sendRedirect(GuiSecurityConfigurations.LOGIN_URL);
@@ -66,7 +72,8 @@ public class GuiLogedControllerBase {
     return this.sessionUserInfo.getCompanyProfile().getCompany();
   }
 
-  protected WorkflowTypeStep getWorkflowStepTypeByIdentity(final String workflowTypIdentity, final String workflowTypStepIdentity) throws IFlowMessageConversionFailureException {
+  protected WorkflowTypeStep getWorkflowStepTypeByIdentity(final String workflowTypIdentity, final String workflowTypStepIdentity)
+      throws IFlowMessageConversionFailureException {
 
     return this.sessionUserInfo.getWorkflowStepTypeByIdentity(workflowTypIdentity, workflowTypStepIdentity);
   }
@@ -92,15 +99,32 @@ public class GuiLogedControllerBase {
   }
 
   public IWorkflowMessageHanlder getWorkflowMessageHanlder() {
-    return workflowMessageHanlder;
+    return this.workflowMessageHanlder;
   }
 
-  public List<WorkflowMessage> readUserMessages() throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
-    return workflowMessageHanlder.readUserMessages();
+  public List<WorkflowMessage> readUserMessages()
+      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+    return this.workflowMessageHanlder.readUserMessages();
   }
 
   public void callUserMessageReset() throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
-    workflowMessageHanlder.callUserMessageReset();
+    this.workflowMessageHanlder.callUserMessageReset();
+  }
+
+  protected String getWorkflowBaseUrl(final String workflowTypeIdentity) throws IFlowMessageConversionFailureException {
+    final WorkflowType type = this.getWorkflowTypeByIdentity(workflowTypeIdentity);
+
+    String url = "";
+    if (type.getTypeEnum() == EWorkflowType.INVOICE_WORKFLOW_TYPE) {
+      url = GuiModule.INVOICEWORKFLOW_PAGE_BASE;
+    }
+    if (type.getTypeEnum() == EWorkflowType.SINGLE_TASK_WORKFLOW_TYPE) {
+      url = GuiModule.SINGLETASKWORKFLOW_PAGE_BASE;
+    }
+    if (type.getTypeEnum() == EWorkflowType.TESTTHREE_TASK_WORKFLOW_TYPE) {
+      url = GuiModule.TESTTHREETASKWORKFLOW_PAGE_BASE;
+    }
+    return url;
   }
 
 }
