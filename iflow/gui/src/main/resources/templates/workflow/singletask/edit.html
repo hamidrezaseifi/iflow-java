@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" ng-app="iflowApp" >
     <head>
     	<th:block th:include="layout/mainLayout :: pageheader" />
-		<script th:src="@{/js/workflow-edit.js}"></script>
+		<script th:src="@{/js/workflow/singletask/workflow-edit.js}"></script>
 		<link th:href="@{/css/table.css}" rel="stylesheet" />
 		<link th:href="@{/css/workflow-create.css}" rel="stylesheet" />
 		
@@ -40,16 +40,6 @@
 								</div>
 								<div class="clear"></div>
 							</div>
-						</div>
-						<div class="clear"></div>
-					</div>
-					<div class="item-row" ng-if="workflow.workflowType.isAssignTypeManual">
-						<div class="item-label" th:text="#{workflow-select-assign}"></div>
-						<div class="item-content">
-							<select type="text" ng-model="workflowCreateRequest.workflow.controller">
-								<option th:text="#{workflow-select-controller}" value="0"></option>
-								<option ng-repeat="item in users" ng-value="item.identity">{{item.fullName}}</option>
-							</select>
 						</div>
 						<div class="clear"></div>
 					</div>
@@ -150,7 +140,7 @@
 		
 		    		    
 		    <script th:inline="javascript">				
-				var loadUrl = "/workflow/singletask/data/initcreate";
+				var loadUrl = "/workflow/singletask/data/initedit/";
 				var saveUrl = "/workflow/singletask/data/save";
 				var saveFileUrl = "/workflow/singletask/data/createfile";
 				var archiveUrl = "/workflow/singletask/data/archive";

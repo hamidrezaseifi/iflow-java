@@ -37,7 +37,7 @@ public abstract class WorkflowPageControllerBase<W extends IWorkflow, WS extends
 
   @ResponseStatus(HttpStatus.OK)
   @GetMapping(path = { "/create" })
-  public String showCreateWorkflow(final Model model, @PathVariable(required = false) final String workflowTypeIdentity)
+  protected String showCreateWorkflow(final Model model, @PathVariable(required = false) final String workflowTypeIdentity)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     model.addAttribute("UserAssign", EAssignType.USER.getIdentity());

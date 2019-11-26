@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" ng-app="iflowApp" >
     <head>
     	<th:block th:include="layout/mainLayout :: pageheader" />
-		<script th:src="@{/js/workflow-edit.js}"></script>
+		<script th:src="@{/js/workflow/invoice/workflow-edit.js}"></script>
 		<link th:href="@{/css/table.css}" rel="stylesheet" />
 		<link th:href="@{/css/workflow-create.css}" rel="stylesheet" />
 		
@@ -14,7 +14,7 @@
 		
 		<div class="content-container" ng-controller="WorkflowCreateController">
 			<div class="page-toolbar">
-				<div class="page-title" th:text="#{workflow-editing}"></div>
+				<div class="page-title" th:text="#{invoice-testingview-title}"></div>
 				<a class="toolbar-link" href="/workflow/list"><i class="material-icons">list</i></a>
 				<button class="toolbar-button" ng-click="reload();"><i class="material-icons">refresh</i></button>
 			</div>

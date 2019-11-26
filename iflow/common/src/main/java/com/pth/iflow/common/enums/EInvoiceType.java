@@ -1,5 +1,8 @@
 package com.pth.iflow.common.enums;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.pth.iflow.common.exceptions.IFlowInvalidEnumValueException;
 
 public enum EInvoiceType implements IEnumValueValidator {
@@ -15,9 +18,9 @@ public enum EInvoiceType implements IEnumValueValidator {
   }
 
   public static EInvoiceType ofValue(final int value) {
-    for (final EInvoiceType status : values()) {
-      if (status.getValue().intValue() == value) {
-        return status;
+    for (final EInvoiceType type : values()) {
+      if (type.getValue().intValue() == value) {
+        return type;
       }
     }
 
@@ -27,6 +30,17 @@ public enum EInvoiceType implements IEnumValueValidator {
   @Override
   public Integer getValue() {
     return this.id;
+  }
+
+  public static Map<Integer, String> nameValueMap() {
+
+    final Map<Integer, String> map = new HashMap<>();
+    for (final EInvoiceType type : values()) {
+      map.put(type.getValue(), type.toString());
+    }
+
+    return map;
+
   }
 
 }
