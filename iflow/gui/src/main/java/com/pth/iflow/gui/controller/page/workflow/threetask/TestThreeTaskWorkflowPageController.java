@@ -18,9 +18,4 @@ public class TestThreeTaskWorkflowPageController
     return "workflow/testthreetask/create";
   }
 
-  @Override
-  protected String getEditView() {
-    return "workflow/testthreetask/edit";
-  }
-
 }

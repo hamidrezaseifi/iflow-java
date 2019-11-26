@@ -17,9 +17,4 @@ public class SingleTaskWorkflowPageController extends WorkflowPageControllerBase
     return "workflow/singletask/create";
   }
 
-  @Override
-  protected String getEditView() {
-    return "workflow/singletask/edit";
-  }
-
 }

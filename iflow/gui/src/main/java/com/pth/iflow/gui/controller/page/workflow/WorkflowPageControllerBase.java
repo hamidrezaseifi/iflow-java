@@ -63,6 +63,7 @@ public abstract class WorkflowPageControllerBase<W extends IWorkflow, WS extends
     model.addAttribute("workflowIdentity", workflowIdentity);
 
     return this.getWorkflowStepTypeByIdentity(workflowTypeIdentity, workflowTypeStepIdentity).getViewName();
+
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -108,7 +109,5 @@ public abstract class WorkflowPageControllerBase<W extends IWorkflow, WS extends
   }
 
   protected abstract String getCreateView();
-
-  protected abstract String getEditView();
 
 }

@@ -31,11 +31,6 @@ public class InvoiceWorkflowPageController extends WorkflowPageControllerBase<In
   }
 
   @Override
-  protected String getEditView() {
-    return "workflow/invoice/invoice_testing";
-  }
-
-  @Override
   @ResponseStatus(HttpStatus.OK)
   @GetMapping(path = { "/create" })
   protected String showCreateWorkflow(final Model model, @PathVariable(required = false) final String workflowTypeIdentity)
