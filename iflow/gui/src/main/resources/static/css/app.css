@@ -783,3 +783,9 @@ ul.list-item-container{
     background-size: 20px;
 }
 
+.ui-datepicker-month, .ui-datepicker-year{
+	color: #555 !important;	
+}
+
+
+
