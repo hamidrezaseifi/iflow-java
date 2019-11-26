@@ -3,6 +3,7 @@ package com.pth.iflow.gui.controller.data.workflow.threetask;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.pth.iflow.common.enums.EWorkflowType;
 import com.pth.iflow.common.rest.IflowRestPaths.GuiModule;
 import com.pth.iflow.gui.controller.data.workflow.WorkflowDataControllerBase;
 import com.pth.iflow.gui.models.workflow.testthree.TestThreeTaskWorkflow;
@@ -15,7 +16,10 @@ public class TestThreeTaskWorkflowDataController
 
   @Override
   protected TestThreeTaskWorkflow generateInitialWorkflow(final String userIdentity) {
-    return TestThreeTaskWorkflow.generateInitial(userIdentity);
+
+    final TestThreeTaskWorkflow workflow = TestThreeTaskWorkflow.generateInitial(userIdentity);
+    workflow.setWorkflowType(this.getWorkflowTypeByEnumType(EWorkflowType.TESTTHREE_TASK_WORKFLOW_TYPE));
+    return workflow;
   }
 
   @Override

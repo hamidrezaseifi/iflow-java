@@ -4,13 +4,18 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.pth.iflow.common.edo.models.helper.IdentityModel;
 import com.pth.iflow.common.enums.EInvoiceType;
 import com.pth.iflow.common.enums.EWorkflowIdentity;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 import com.pth.iflow.common.enums.EWorkflowType;
+import com.pth.iflow.gui.helper.GuiDateDeserializer;
+import com.pth.iflow.gui.helper.GuiDateSerializer;
 import com.pth.iflow.gui.models.User;
 import com.pth.iflow.gui.models.WorkflowAction;
 import com.pth.iflow.gui.models.WorkflowFile;
@@ -41,6 +46,9 @@ public class InvoiceWorkflow extends IdentityModel implements IWorkflow {
 
   private String                     registerNumber;
 
+  @JsonDeserialize(using = GuiDateDeserializer.class)
+  @JsonSerialize(using = GuiDateSerializer.class)
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
   private LocalDate                  invoceDate;
 
   private String                     partnerCode;
@@ -53,12 +61,18 @@ public class InvoiceWorkflow extends IdentityModel implements IWorkflow {
 
   private EInvoiceType               invoiceType;
 
+  @JsonDeserialize(using = GuiDateDeserializer.class)
+  @JsonSerialize(using = GuiDateSerializer.class)
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
   private LocalDate                  discountEnterDate;
 
   private Integer                    discountDeadline;
 
   private Double                     discountRate;
 
+  @JsonDeserialize(using = GuiDateDeserializer.class)
+  @JsonSerialize(using = GuiDateSerializer.class)
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
   private LocalDate                  discountDate;
 
   private Double                     paymentAmount;
@@ -478,6 +492,8 @@ public class InvoiceWorkflow extends IdentityModel implements IWorkflow {
     newWorkflow.setVersion(0);
     newWorkflow.setComments("");
     newWorkflow.setIdentity(EWorkflowIdentity.NOT_SET.getIdentity());
+    newWorkflow.setInvoceDate(LocalDate.now());
+    newWorkflow.setDiscountDate(LocalDate.now().plusDays(25));
 
     return newWorkflow;
   }
