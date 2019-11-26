@@ -1,6 +1,7 @@
 package com.pth.iflow.gui.controller.page.workflow.invoice;
 
 import java.net.MalformedURLException;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
@@ -44,11 +45,13 @@ public class InvoiceWorkflowPageController extends WorkflowPageControllerBase<In
     model.addAttribute("DepartmentAssign", EAssignType.DEPARTMENT.getIdentity());
     model.addAttribute("DepartmentGroupAssign", EAssignType.DEPARTMENTGROUP.getIdentity());
 
-    final Map<Integer, String> invoiceTypes = EInvoiceType.nameValueMap();
-    invoiceTypes.remove(EInvoiceType.NO_TYPE.getValue());
-    for (final Integer key : invoiceTypes.keySet()) {
-      final String val = invoiceTypes.get(key);
-      invoiceTypes.put(key, this.messagesHelper.get("invoice-invoicetype-" + val.toLowerCase()));
+    final Map<EInvoiceType, String> invoiceTypes = new HashMap<>();// EInvoiceType.nameValueMap();
+    // invoiceTypes.remove(EInvoiceType.NO_TYPE.getValue());
+    for (final EInvoiceType key : EInvoiceType.values()) {
+      if (key == EInvoiceType.NO_TYPE) {
+        continue;
+      }
+      invoiceTypes.put(key, this.messagesHelper.get("invoice-invoicetype-" + key.toString().toLowerCase()));
     }
 
     model.addAttribute("invoiceTypes", invoiceTypes);

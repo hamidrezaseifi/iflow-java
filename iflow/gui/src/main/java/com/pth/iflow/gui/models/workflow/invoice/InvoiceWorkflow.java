@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import com.pth.iflow.common.edo.models.helper.IdentityModel;
 import com.pth.iflow.common.enums.EInvoiceType;
 import com.pth.iflow.common.enums.EWorkflowIdentity;
@@ -181,6 +182,7 @@ public class InvoiceWorkflow extends IdentityModel implements IWorkflow {
     return this.status;
   }
 
+  @JsonSetter
   public void setStatus(final EWorkflowStatus status) {
     this.status = status;
   }

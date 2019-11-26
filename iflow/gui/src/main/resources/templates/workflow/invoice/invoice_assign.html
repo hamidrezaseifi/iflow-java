@@ -21,185 +21,178 @@
 		
 			<div class="workflow-content-container">
 				<div class="workflow-content">
-
-					<div class="panel panel-default">
-						<div class="panel-heading" th:text="#{invoice-invoice}"></div>
-						<div class="panel-body">
-							<div class="item-row" ng-show="true">
-								<div class="item-label label-large" th:text="#{invoice-sender}"></div>
-								<div class="item-content large-content">
-									<input type="text" ng-model="workflowCreateRequest.workflow.sender" >
-								</div>
-								<div class="item-label small-label" th:text="#{invoice-trusted}"></div>
-								<div class="item-content">
-									<input type="checkbox"  >
-								</div>
-								<div class="clear"></div>
-							</div>
-							<div class="item-row" ng-show="true">
-								<div class="item-label label-large" th:text="#{invoice-invoicenumber}"></div>
-								<div class="item-content large-content" >
-									<input type="text" ng-model="workflowCreateRequest.workflow.registerNumber" >
-								</div>
-								<div  class="item-label small-label" th:text="#{invoice-invoicedate}"></div>
-								<div class="item-content">
-									<input type="text" class="select-date" ng-model="workflowCreateRequest.workflow.invoceDate" >
-								</div>
-								<div class="clear"></div>
-								<div class="clear"></div>
-							</div>
-							<div class="item-row" ng-show="true">
-								<div class="item-label label-large" th:text="#{invoice-paymentamount}"></div>
-								<div class="item-content large-content" >
-									<input type="text" ng-model="workflowCreateRequest.workflow.paymentAmount" >
-								</div>
-								<div class="item-label small-label" th:text="#{invoice-invoicetype}"></div>
-								<div class="item-content">
-									<select ng-model="workflowCreateRequest.workflow.invoiceType" >
-										<option th:each="invoiceType : ${invoiceTypes}" th:value="${invoiceType.key}" th:text="${invoiceType.value}"></option>
-									</select>
-								</div>
-								<div class="clear"></div>
-							</div>
-					
-						</div>
-					</div>
-					
-					<div class="twopannel">
-						<div class="panel panel-default panel-vendor">
-							<div class="panel-heading" th:text="#{invoice-vendor}"></div>
+					<form id="workflow-form" name="workflowForm">
+						<div class="panel panel-default">
+							<div class="panel-heading" th:text="#{invoice-invoice}"></div>
 							<div class="panel-body">
-						
-											
 								<div class="item-row" ng-show="true">
-									<div class="item-label label-large" th:text="#{invoice-vendornumber}"></div>
-									<div class="item-content fullrowfromlabel">
-										<input type="text" ng-model="workflowCreateRequest.workflow.vendorNumber" >
+									<div class="item-label label-required label-large" th:text="#{invoice-sender}"></div>
+									<div class="item-content large-content">
+										<input type="text" required name="sender" ng-model="workflowCreateRequest.workflow.sender" >
+										<span class="error" ng-show="workflowForm.sender.$error.required">Required!</span>
+									</div>
+									<div class="item-label small-label" th:text="#{invoice-trusted}"></div>
+									<div class="item-content small-content">
+										<input type="checkbox"  >
 									</div>
 									<div class="clear"></div>
 								</div>
 								<div class="item-row" ng-show="true">
-									<div class="item-label label-large" th:text="#{invoice-partnercode}"></div>
-									<div class="item-content fullrowfromlabel">
-										<input type="text" ng-model="workflowCreateRequest.workflow.partnerCode" >
+									<div class="item-label label-required label-large" th:text="#{invoice-invoicenumber}"></div>
+									<div class="item-content large-content" >
+										<input type="text" required name="registerNumber" ng-model="workflowCreateRequest.workflow.registerNumber" >
+									</div>
+									<div  class="item-label label-required small-label" th:text="#{invoice-invoicedate}"></div>
+									<div class="item-content small-content">
+										<input type="text" required name="invoceDate" class="select-date" ng-model="workflowCreateRequest.workflow.invoceDate" >
 									</div>
 									<div class="clear"></div>
-								</div>					
-								<div class="item-row" ng-show="true">
-									<div class="item-label label-large" th:text="#{invoice-vendorname}"></div>
-									<div class="item-content fullrowfromlabel">
-										<input type="text" ng-model="workflowCreateRequest.workflow.vendorName" >
-									</div>
 									<div class="clear"></div>
 								</div>
 								<div class="item-row" ng-show="true">
-									<div class="item-label label-large" th:text="#{invoice-isdirectdebitpermission}"></div>
-									<div class="item-content fullrowfromlabel">
-										<input type="checkbox" ng-model="workflowCreateRequest.workflow.isDirectDebitPermission" ng-checked="workflowCreateRequest.workflow.isDirectDebitPermission == 1" >
+									<div class="item-label label-required label-large" th:text="#{invoice-paymentamount}"></div>
+									<div class="item-content large-content" >
+										<input type="text" required name="paymentAmount" ng-model="workflowCreateRequest.workflow.paymentAmount" >
 									</div>
-									<div class="clear"></div>
-								</div>
-						
-							</div>
-						</div>
-	
-	
-						<div class="panel panel-default panel-discount">
-							<div class="panel-heading" th:text="#{invoice-discount}"></div>
-							<div class="panel-body">
-						
-								<div class="item-row" ng-show="true">
-									<div class="item-label small-label" th:text="#{invoice-discountenterdate-short}"></div>
-									<div class="item-content">
-										<input type="text" class="select-date" ng-model="workflowCreateRequest.workflow.discountEnterDate" >
-									</div>
-									<div class="clear"></div>
-								</div>
-								<div class="item-row" ng-show="true">
-									<div class="item-label small-label" th:text="#{invoice-discountrate-short}"></div>
-									<div class="item-content">
-										<input type="text" class="" ng-model="workflowCreateRequest.workflow.discountRate" > %
-									</div>
-									<div class="clear"></div>
-								</div>
-								<div class="item-row" ng-show="true">
-									<div class="item-label small-label" th:text="#{invoice-discountdeadline-short}"></div>
-									<div class="item-content">
-										<input type="text" class="" ng-model="workflowCreateRequest.workflow.discountDeadline" > <span th:text="#{common.days}"></span>
-									</div>
-									<div class="clear"></div>
-								</div>
-								<div class="item-row" ng-show="true">
-									<div class="item-label small-label" th:text="#{invoice-discountdate}"></div>
-									<div class="item-content">
-										<input type="text" class="select-date" ng-model="workflowCreateRequest.workflow.discountDate" >
+									<div class="item-label label-required small-label" th:text="#{invoice-invoicetype}"></div>
+									<div class="item-content small-content">
+										<select required name="invoiceType" ng-model="workflowCreateRequest.workflow.invoiceType" >
+											<option th:each="invoiceType : ${invoiceTypes}" th:value="${invoiceType.key}" th:text="${invoiceType.value}"></option>
+										</select>
 									</div>
 									<div class="clear"></div>
 								</div>
 						
 							</div>
-						</div>						
-					</div>
-				
-					
-					
-					<div class="item-row">
-						<div class="item-label label-large" th:text="#{workflow-comments}"></div>
-						<div class="item-content fullrowfromlabel">
-							<textarea class="comments-fullrow" ng-model="workflow.activeAction.comments"></textarea>
 						</div>
-						<div class="clear"></div>
-					</div>
-					
-					<div class="item-row" ng-if="workflow.workflowType.isAssignTypeOffering">
-						<div class="item-label label-large" th:text="#{workflow-assignto}"></div>
-						<div class="item-content">
-							<div class="assign-list" >
-								<button class="show-select-dialog" data-toggle="modal" data-target="#assignlistdialog"><i class="material-icons">playlist_add</i></button>
-								<span ng-if="hasNoAssigns()" th:text="#{workflow-select-assign}"></span>
-								<div class="user-item-box" ng-repeat="item in workflowCreateRequest.assigns">
-									<span>{{item.title}} </span>
-									<button ng-click="removeAssign(item.itemIdentity, item.itemType)"><i class="material-icons">close</i></button>
-								</div>
-								<div class="clear"></div>
-							</div>
-						</div>
-						<div class="clear"></div>
-					</div>
-					<div class="item-row" ng-if="workflow.workflowType.isAssignTypeManual">
-						<div class="item-label label-large" th:text="#{workflow-select-assign}"></div>
-						<div class="item-content">
-							<select type="text" ng-model="workflowCreateRequest.workflow.controller">
-								<option th:text="#{workflow-select-controller}" value="0"></option>
-								<option ng-repeat="item in users" ng-value="item.identity">{{item.fullName}}</option>
-							</select>
-						</div>
-						<div class="clear"></div>
-					</div>
-
-
-
-					<div class="item-row">
 						
-						<div class="workflow-step-button-bar">
-							<button ng-click="saveWorkflow()" class="button-bar-button step-button button-save">
-								<span th:text="#{common.save}"></span>
-								<i class="material-icons">save</i>
-							</button>
-							<button ng-click="makeActionDone()" class="button-bar-button step-button button-save">
-								<span th:text="#{common.savedone}"></span>
-								<i class="material-icons">save</i>
-							</button>
+						<div class="twopannel">
+							<div class="panel panel-default panel-vendor">
+								<div class="panel-heading" th:text="#{invoice-vendor}"></div>
+								<div class="panel-body">
+							
+												
+									<div class="item-row" ng-show="true">
+										<div class="item-label label-required label-large" th:text="#{invoice-vendornumber}"></div>
+										<div class="item-content fullrowfromlabel">
+											<input type="text" required name="vendorNumber" ng-model="workflowCreateRequest.workflow.vendorNumber" >
+										</div>
+										<div class="clear"></div>
+									</div>
+									<div class="item-row" ng-show="true">
+										<div class="item-label label-required label-large" th:text="#{invoice-partnercode}"></div>
+										<div class="item-content fullrowfromlabel">
+											<input type="text" required name="partnerCode" ng-model="workflowCreateRequest.workflow.partnerCode" >
+										</div>
+										<div class="clear"></div>
+									</div>					
+									<div class="item-row" ng-show="true">
+										<div class="item-label label-required label-large" th:text="#{invoice-vendorname}"></div>
+										<div class="item-content fullrowfromlabel">
+											<input type="text" required name="vendorName" ng-model="workflowCreateRequest.workflow.vendorName" >
+										</div>
+										<div class="clear"></div>
+									</div>
+									<div class="item-row" ng-show="true">
+										<div class="item-label label-required label-large" th:text="#{invoice-isdirectdebitpermission}"></div>
+										<div class="item-content fullrowfromlabel">
+											<input type="checkbox" name="isDirectDebitPermission" ng-model="workflowCreateRequest.workflow.isDirectDebitPermission" ng-checked="workflowCreateRequest.workflow.isDirectDebitPermission == 1" >
+										</div>
+										<div class="clear"></div>
+									</div>
+							
+								</div>
+							</div>
+		
+		
+							<div class="panel panel-default panel-discount">
+								<div class="panel-heading" th:text="#{invoice-discount}"></div>
+								<div class="panel-body">
+							
+									<div class="item-row" ng-show="true">
+										<div class="item-label label-required small-label" th:text="#{invoice-discountenterdate-short}"></div>
+										<div class="item-content">
+											<input type="text" required name="discountEnterDate" class="select-date" ng-model="workflowCreateRequest.workflow.discountEnterDate" >
+										</div>
+										<div class="clear"></div>
+									</div>
+									<div class="item-row" ng-show="true">
+										<div class="item-label label-required small-label" th:text="#{invoice-discountrate-short}"></div>
+										<div class="item-content">
+											<input type="text" required name="discountRate" class="" ng-model="workflowCreateRequest.workflow.discountRate" > %
+										</div>
+										<div class="clear"></div>
+									</div>
+									<div class="item-row" ng-show="true">
+										<div class="item-label label-required small-label" th:text="#{invoice-discountdeadline-short}"></div>
+										<div class="item-content">
+											<input type="text" required name="discountDeadline" class="" ng-model="workflowCreateRequest.workflow.discountDeadline" > <span th:text="#{common.days}"></span>
+										</div>
+										<div class="clear"></div>
+									</div>
+									<div class="item-row" ng-show="true">
+										<div class="item-label label-required small-label" th:text="#{invoice-discountdate}"></div>
+										<div class="item-content">
+											<input type="text" required name="discountDate" class="select-date" ng-model="workflowCreateRequest.workflow.discountDate" >
+										</div>
+										<div class="clear"></div>
+									</div>
+							
+								</div>
+							</div>						
+						</div>
+					
+						
+						
+						<div class="item-row">
+							<div class="item-label label-large" th:text="#{workflow-comments}"></div>
+							<div class="item-content fullrowfromlabel">
+								<textarea class="comments-fullrow" ng-model="workflow.activeAction.comments"></textarea>
+							</div>
 							<div class="clear"></div>
 						</div>
 						
-						
-					</div>
-				
-				</div>
-				<div class="workflow-record">
-					<div th:replace="workflow/layout/workflow_actions_panel :: panelItemWorkflow" ></div>
-				
+						<div class="item-row" ng-if="workflow.workflowType.isAssignTypeOffering">
+							<div class="item-label label-required label-large" th:text="#{workflow-assignto}"></div>
+							<div class="item-content">
+								<div class="assign-list" >
+									<button class="show-select-dialog" data-toggle="modal" data-target="#assignlistdialog"><i class="material-icons">playlist_add</i></button>
+									<span ng-if="hasNoAssigns()" th:text="#{workflow-select-assign}"></span>
+									<div class="user-item-box" ng-repeat="item in workflowCreateRequest.assigns">
+										<span>{{item.title}} </span>
+										<button ng-click="removeAssign(item.itemIdentity, item.itemType)"><i class="material-icons">close</i></button>
+									</div>
+									<div class="clear"></div>
+								</div>
+							</div>
+							<div class="clear"></div>
+						</div>
+						<div class="item-row" ng-if="workflow.workflowType.isAssignTypeManual">
+							<div class="item-label label-required label-large" th:text="#{workflow-select-assign}"></div>
+							<div class="item-content">
+								<select required name="controller" type="text" ng-model="workflowCreateRequest.workflow.controller">
+									<option th:text="#{workflow-select-controller}" value="0"></option>
+									<option ng-repeat="item in users" ng-value="item.identity">{{item.fullName}}</option>
+								</select>
+							</div>
+							<div class="clear"></div>
+						</div>
+	
+	
+	
+						<div class="item-row">
+							
+							<div class="workflow-step-button-bar">
+								<button type="button" ng-click="save()" ng-disabled="workflowForm.$valid === false" class="button-bar-button step-button button-save">
+									<span th:text="#{common.create}"></span>
+									<i class="material-icons">save</i>
+								</button>
+								<div class="clear"></div>
+							</div>
+							
+							
+						</div>
+					</form>
 				</div>
 				<div class="clear"></div>
 				<hr>
