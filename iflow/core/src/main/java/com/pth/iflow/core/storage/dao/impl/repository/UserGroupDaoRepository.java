@@ -1,4 +1,4 @@
-package com.pth.iflow.core.storage.dao.impl;
+package com.pth.iflow.core.storage.dao.impl.repository;
 
 import java.util.List;
 

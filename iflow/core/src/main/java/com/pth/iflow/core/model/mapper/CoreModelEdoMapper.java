@@ -37,6 +37,7 @@ import com.pth.iflow.core.model.DepartmentGroup;
 import com.pth.iflow.core.model.ProfileResponse;
 import com.pth.iflow.core.model.User;
 import com.pth.iflow.core.model.UserGroup;
+import com.pth.iflow.core.model.entity.WorkflowResultEntity;
 import com.pth.iflow.core.model.workflow.InvoiceWorkflow;
 import com.pth.iflow.core.model.workflow.SingleTaskWorkflow;
 import com.pth.iflow.core.model.workflow.TestThreeTaskWorkflow;
@@ -112,6 +113,19 @@ public class CoreModelEdoMapper {
     edo.setCreatedByIdentity(model.getCreatedByIdentity());
     edo.setIdentity(model.getIdentity());
     edo.setWorkflowTypeIdentity(model.getWorkflowTypeIdentity());
+
+    return edo;
+  }
+
+  public static WorkflowResultEdo toEdo(final WorkflowResultEntity model) {
+    final WorkflowResultEdo edo = new WorkflowResultEdo();
+
+    edo.setStatus(model.getStatus().getValue());
+    edo.setControllerIdentity(model.getController().getIdentity());
+    edo.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
+    edo.setCreatedByIdentity(model.getCreatedBy().getIdentity());
+    edo.setIdentity(model.getIdentity());
+    edo.setWorkflowTypeIdentity(model.getWorkflowType().getIdentity());
 
     return edo;
   }
@@ -678,6 +692,15 @@ public class CoreModelEdoMapper {
   public static List<WorkflowResultEdo> toWorkflowResultEdoList(final List<WorkflowResult> modelList) {
     final List<WorkflowResultEdo> edoList = new ArrayList<>();
     for (final WorkflowResult model : modelList) {
+      edoList.add(toEdo(model));
+    }
+
+    return edoList;
+  }
+
+  public static List<WorkflowResultEdo> toWorkflowResultEntityEdoList(final List<WorkflowResultEntity> modelList) {
+    final List<WorkflowResultEdo> edoList = new ArrayList<>();
+    for (final WorkflowResultEntity model : modelList) {
       edoList.add(toEdo(model));
     }
 

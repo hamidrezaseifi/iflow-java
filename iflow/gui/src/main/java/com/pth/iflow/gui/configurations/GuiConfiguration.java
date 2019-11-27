@@ -51,6 +51,10 @@ public class GuiConfiguration {
       return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.SEARCH_WORKFLOW());
     }
 
+    public URI getReadWorkflowListByIdentityListUri() throws MalformedURLException {
+      return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.READ_WORKFLOWLIST());
+    }
+
     /*
      *
      *

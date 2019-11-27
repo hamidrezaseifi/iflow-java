@@ -59,6 +59,7 @@ public class IflowRestPaths {
     public static final String USERGROUP_READ_LIST_BY_COMPANYIDENTITY                           = "/usergroup/company/list/{companyidentity}";
 
     public static final String WORKFLOW_SEARCH                                                  = "/workflow/search";
+    public static final String WORKFLOW_READLIST                                                = "/workflow/readlist";
 
     public static final String INVOICEWORKFLOW_SAVE                                             = "/invworkflow/save";
     public static final String INVOICEWORKFLOW_READ_BY_IDENTITY                                 = "/invworkflow/readbyid/{identity}";
@@ -214,6 +215,11 @@ public class IflowRestPaths {
       return builder.build();
     }
 
+    public static URI READ_WORKFLOWLIST() {
+      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOW_READLIST);
+      return builder.build();
+    }
+
     public static URI READ_INVOICEWORKFLOW_BY_IDENTITY(final String identity) {
       final IflowUriBuilder builder = new IflowUriBuilder(INVOICEWORKFLOW_READ_BY_IDENTITY);
       return builder.build(identity);
@@ -337,6 +343,7 @@ public class IflowRestPaths {
     public static final String TESTTHREETASKWORKFLOW_VALIDATE                  = "/workflow/testthreetask/validate";
 
     public static final String WORKFLOW_SEARCH                                 = "/workflow/search";
+    public static final String WORKFLOW_READLIST                               = "/workflow/readlist";
 
     public static URI WORKFLOWTYPE_BY_ID_URIBUILDER(final String identity) {
       final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOWTYPE_READ_BY_IDENTITY);
@@ -440,6 +447,11 @@ public class IflowRestPaths {
 
     public static URI SEARCH_WORKFLOW() {
       final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOW_SEARCH);
+      return builder.build();
+    }
+
+    public static URI READ_WORKFLOWLIST() {
+      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOW_READLIST);
       return builder.build();
     }
   }

@@ -1,6 +1,7 @@
 package com.pth.iflow.gui.services.impl;
 
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -10,9 +11,12 @@ import org.springframework.stereotype.Service;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.WorkflowMessage;
+import com.pth.iflow.gui.models.WorkflowType;
+import com.pth.iflow.gui.models.WorkflowTypeStep;
 import com.pth.iflow.gui.models.ui.SessionUserInfo;
 import com.pth.iflow.gui.services.IWorkflowMessageAccess;
 import com.pth.iflow.gui.services.IWorkflowMessageHanlder;
+import com.pth.iflow.gui.services.IWorkflowSearchAccess;
 
 @Service
 public class WorkflowMessageHanlder implements IWorkflowMessageHanlder {
@@ -21,10 +25,13 @@ public class WorkflowMessageHanlder implements IWorkflowMessageHanlder {
 
   private final SessionUserInfo        sessionUserInfo;
 
+  private final IWorkflowSearchAccess  workflowSearchAccess;
+
   public WorkflowMessageHanlder(@Autowired final IWorkflowMessageAccess workflowMessageAccess,
-      @Autowired final SessionUserInfo sessionUserInfo) {
+      @Autowired final SessionUserInfo sessionUserInfo, @Autowired final IWorkflowSearchAccess workflowSearchAccess) {
     this.workflowMessageAccess = workflowMessageAccess;
     this.sessionUserInfo = sessionUserInfo;
+    this.workflowSearchAccess = workflowSearchAccess;
   }
 
   @Override
@@ -50,33 +57,34 @@ public class WorkflowMessageHanlder implements IWorkflowMessageHanlder {
       }
     });
 
-    // this.prepareWorkflowMessageList(readList);
+    this.prepareWorkflowMessageList(readList);
 
     return readList;
   }
 
-  /*
-   * private List<WorkflowMessage> prepareWorkflowMessageList(final
-   * List<WorkflowMessage> messageList) throws GuiCustomizedException,
-   * MalformedURLException, IFlowMessageConversionFailureException { final
-   * List<WorkflowMessage> resultList = new ArrayList<>(); for (final
-   * WorkflowMessage message : messageList) {
-   * resultList.add(this.prepareWorkflowMessage(message)); } return resultList; }
-   *
-   * private WorkflowMessage prepareWorkflowMessage(final WorkflowMessage message)
-   * throws GuiCustomizedException, MalformedURLException,
-   * IFlowMessageConversionFailureException {
-   *
-   * message.setWorkflow(this.workflowHandler.readWorkflow(message.
-   * getWorkflowIdentity()));
-   *
-   * final WorkflowType type = message.getWorkflow().getWorkflowType();
-   *
-   * for (final WorkflowTypeStep step : type.getSteps()) { if
-   * (step.hasSameIdentity(message.getStepIdentity())) { message.setStep(step); }
-   * }
-   *
-   * return message; }
-   */
+  private List<WorkflowMessage> prepareWorkflowMessageList(final List<WorkflowMessage> messageList)
+      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+    final List<WorkflowMessage> resultList = new ArrayList<>();
+    for (final WorkflowMessage message : messageList) {
+      resultList.add(this.prepareWorkflowMessage(message));
+    }
+    return resultList;
+  }
+
+  private WorkflowMessage prepareWorkflowMessage(final WorkflowMessage message)
+      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+
+    message.setWorkflow(this.workflowHandler.readWorkflow(message.getWorkflowIdentity()));
+
+    final WorkflowType type = message.getWorkflow().getWorkflowType();
+
+    for (final WorkflowTypeStep step : type.getSteps()) {
+      if (step.hasSameIdentity(message.getStepIdentity())) {
+        message.setStep(step);
+      }
+    }
+
+    return message;
+  }
 
 }

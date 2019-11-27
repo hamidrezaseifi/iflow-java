@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pth.iflow.common.annotations.IflowPostRequestMapping;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
+import com.pth.iflow.common.edo.models.IdentityListEdo;
 import com.pth.iflow.common.edo.models.WorkflowSearchFilterEdo;
 import com.pth.iflow.common.edo.models.workflow.results.WorkflowResultListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
@@ -36,6 +37,19 @@ public class WorkflowController {
   @ResponseStatus(HttpStatus.OK)
   @IflowPostRequestMapping(path = IflowRestPaths.WorkflowModule.WORKFLOW_SEARCH)
   public ResponseEntity<WorkflowResultListEdo> searchWorkflow(@RequestBody final WorkflowSearchFilterEdo workflowSearchFilterEdo,
+      final HttpServletRequest request,
+      @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws Exception {
+
+    final List<WorkflowResult> modelList = this.workflowService.search(WorkflowModelEdoMapper.fromEdo(workflowSearchFilterEdo),
+        headerTokenId);
+
+    return ControllerHelper.createResponseEntity(request,
+        new WorkflowResultListEdo(WorkflowModelEdoMapper.toWorkflowResultEdoList(modelList)), HttpStatus.OK);
+  }
+
+  @ResponseStatus(HttpStatus.OK)
+  @IflowPostRequestMapping(path = IflowRestPaths.WorkflowModule.WORKFLOW_READLIST)
+  public ResponseEntity<WorkflowResultListEdo> readWorkflowList(@RequestBody final IdentityListEdo identityList,
       final HttpServletRequest request,
       @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws Exception {
 

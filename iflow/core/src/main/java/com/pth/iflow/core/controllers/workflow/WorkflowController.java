@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pth.iflow.common.annotations.IflowPostRequestMapping;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
+import com.pth.iflow.common.edo.models.IdentityListEdo;
 import com.pth.iflow.common.edo.models.WorkflowSearchFilterEdo;
 import com.pth.iflow.common.edo.models.workflow.results.WorkflowResultListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
+import com.pth.iflow.core.model.entity.WorkflowResultEntity;
 import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
 import com.pth.iflow.core.model.workflow.WorkflowResult;
 import com.pth.iflow.core.service.IWorkflowSearchService;
@@ -40,6 +42,17 @@ public class WorkflowController {
 
     return ControllerHelper.createResponseEntity(request,
         new WorkflowResultListEdo(CoreModelEdoMapper.toWorkflowResultEdoList(modelList)), HttpStatus.ACCEPTED);
+  }
+
+  @ResponseStatus(HttpStatus.ACCEPTED)
+  @IflowPostRequestMapping(path = IflowRestPaths.CoreModule.WORKFLOW_READLIST)
+  public ResponseEntity<WorkflowResultListEdo> searchWorkflow(@RequestBody final IdentityListEdo identityList,
+      final HttpServletRequest request) throws Exception {
+
+    final List<WorkflowResultEntity> modelList = this.workflowSearchService.readByIdentityList(identityList.getIdentityList());
+
+    return ControllerHelper.createResponseEntity(request,
+        new WorkflowResultListEdo(CoreModelEdoMapper.toWorkflowResultEntityEdoList(modelList)), HttpStatus.ACCEPTED);
   }
 
 }
