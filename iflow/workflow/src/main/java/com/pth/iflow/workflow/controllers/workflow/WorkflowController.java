@@ -53,7 +53,7 @@ public class WorkflowController {
       final HttpServletRequest request,
       @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws Exception {
 
-    final List<WorkflowResult> modelList = this.workflowService.search(WorkflowModelEdoMapper.fromEdo(workflowSearchFilterEdo),
+    final List<WorkflowResult> modelList = this.workflowService.readWorkflowListByIdentityList(identityList.getIdentityList(),
         headerTokenId);
 
     return ControllerHelper.createResponseEntity(request,

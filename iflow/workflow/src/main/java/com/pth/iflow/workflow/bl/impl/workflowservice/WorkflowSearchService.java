@@ -2,12 +2,14 @@ package com.pth.iflow.workflow.bl.impl.workflowservice;
 
 import java.net.MalformedURLException;
 import java.util.List;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pth.iflow.common.edo.models.IdentityListEdo;
 import com.pth.iflow.common.edo.models.workflow.results.WorkflowResultListEdo;
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
@@ -42,6 +44,18 @@ public class WorkflowSearchService implements IWorkflowSearchService {
     final WorkflowResultListEdo edoList = this.restTemplate.callRestPost(
         this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.SEARCH_WORKFLOW()), token, EModule.CORE,
         WorkflowModelEdoMapper.toEdo(workflowSearchFilter), WorkflowResultListEdo.class, true);
+
+    return WorkflowModelEdoMapper.fromWorkflowResultEdoList(edoList.getWorkflows());
+  }
+
+  @Override
+  public List<WorkflowResult> readWorkflowListByIdentityList(final Set<String> identityList, final String token)
+      throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+    logger.debug("Read workflow List");
+
+    final WorkflowResultListEdo edoList = this.restTemplate.callRestPost(
+        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.SEARCH_WORKFLOW()), token, EModule.CORE,
+        new IdentityListEdo(identityList), WorkflowResultListEdo.class, true);
 
     return WorkflowModelEdoMapper.fromWorkflowResultEdoList(edoList.getWorkflows());
   }

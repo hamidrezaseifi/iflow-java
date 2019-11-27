@@ -8,15 +8,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-
-import com.pth.iflow.common.enums.EWorkflowStatus;
+import org.hibernate.annotations.Subselect;
 
 @Entity
-@Table(name = "workflow")
+@Subselect("SELECT " + "workflow.*, workflow_type.identity as workflow_type_identity, steps.identity as current_step_identity, "
+    + "controlleruser.email as controller_identity,createdbyuser.email as createdby_identity  \r\n"
+    + "FROM                                                                                   \r\n"
+    + "(((workflow inner join workflow_type on workflow_type.id = workflow.workflow_type_id) \r\n"
+    + "inner join workflow_type_step steps on steps.id = workflow.current_step)\r\n"
+    + "left outer join users controlleruser on controlleruser.id = workflow.controller)\r\n"
+    + "left outer join users createdbyuser on createdbyuser.id = workflow.created_by ")
 public class WorkflowResultEntity {
 
   @Id
@@ -26,7 +30,7 @@ public class WorkflowResultEntity {
 
   @Column(name = "identity")
   private String                 identity;
-//id, identity, workflow_type_id, current_step, status, comments, controller, created_by, version, created_at, updated_at
+
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "workflow_type_id", insertable = false, updatable = false)
   @Fetch(FetchMode.JOIN)
@@ -47,8 +51,20 @@ public class WorkflowResultEntity {
   @Fetch(FetchMode.JOIN)
   private UserEntity             createdBy;
 
+  @Column(name = "workflow_type_identity")
+  private String                 workflowTypeIdentity;
+
+  @Column(name = "current_step_identity")
+  private String                 currentStepIdentity;
+
+  @Column(name = "controller_identity")
+  private String                 controllerIdentity;
+
+  @Column(name = "createdby_identity")
+  private String                 createdByIdentity;
+
   @Column(name = "status")
-  private EWorkflowStatus        status;
+  private Integer                status;
 
   public WorkflowResultEntity() {
 
@@ -102,15 +118,44 @@ public class WorkflowResultEntity {
     this.createdBy = createdBy;
   }
 
-  public EWorkflowStatus getStatus() {
+  public Integer getStatus() {
     return this.status;
   }
 
   public void setStatus(final Integer status) {
-    this.status = EWorkflowStatus.ofValue(status);
-  }
-
-  public void setStatus(final EWorkflowStatus status) {
     this.status = status;
   }
+
+  public String getWorkflowTypeIdentity() {
+    return workflowTypeIdentity;
+  }
+
+  public void setWorkflowTypeIdentity(final String workflowTypeIdentity) {
+    this.workflowTypeIdentity = workflowTypeIdentity;
+  }
+
+  public String getCurrentStepIdentity() {
+    return currentStepIdentity;
+  }
+
+  public void setCurrentStepIdentity(final String currentStepIdentity) {
+    this.currentStepIdentity = currentStepIdentity;
+  }
+
+  public String getControllerIdentity() {
+    return controllerIdentity;
+  }
+
+  public void setControllerIdentity(final String controllerIdentity) {
+    this.controllerIdentity = controllerIdentity;
+  }
+
+  public String getCreatedByIdentity() {
+    return createdByIdentity;
+  }
+
+  public void setCreatedByIdentity(final String createdByIdentity) {
+    this.createdByIdentity = createdByIdentity;
+  }
+
 }
