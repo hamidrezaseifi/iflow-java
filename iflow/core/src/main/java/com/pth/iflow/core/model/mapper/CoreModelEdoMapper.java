@@ -37,7 +37,7 @@ import com.pth.iflow.core.model.DepartmentGroup;
 import com.pth.iflow.core.model.ProfileResponse;
 import com.pth.iflow.core.model.User;
 import com.pth.iflow.core.model.UserGroup;
-import com.pth.iflow.core.model.entity.WorkflowResultEntity;
+import com.pth.iflow.core.model.entity.workflow.WorkflowResultEntity;
 import com.pth.iflow.core.model.workflow.InvoiceWorkflow;
 import com.pth.iflow.core.model.workflow.SingleTaskWorkflow;
 import com.pth.iflow.core.model.workflow.TestThreeTaskWorkflow;

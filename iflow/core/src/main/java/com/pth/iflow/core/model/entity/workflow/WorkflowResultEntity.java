@@ -1,4 +1,4 @@
-package com.pth.iflow.core.model.entity;
+package com.pth.iflow.core.model.entity.workflow;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Subselect;
+import com.pth.iflow.core.model.entity.UserEntity;
 
 @Entity
 @Subselect("SELECT " + "workflow.*, workflow_type.identity as workflow_type_identity, steps.identity as current_step_identity, "

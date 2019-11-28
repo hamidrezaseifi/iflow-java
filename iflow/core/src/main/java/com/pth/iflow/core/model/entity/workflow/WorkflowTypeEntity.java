@@ -1,4 +1,4 @@
-package com.pth.iflow.core.model.entity;
+package com.pth.iflow.core.model.entity.workflow;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -20,6 +20,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
+import com.pth.iflow.core.model.entity.CompanyEntity;
 
 @Entity
 @Table(name = "workflow_type")

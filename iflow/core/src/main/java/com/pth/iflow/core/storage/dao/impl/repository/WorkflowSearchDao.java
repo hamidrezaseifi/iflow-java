@@ -11,8 +11,8 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Subquery;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.pth.iflow.core.model.entity.WorkflowActionEntity;
-import com.pth.iflow.core.model.entity.WorkflowResultEntity;
+import com.pth.iflow.core.model.entity.workflow.WorkflowActionEntity;
+import com.pth.iflow.core.model.entity.workflow.WorkflowResultEntity;
 import com.pth.iflow.core.model.workflow.sub.WorkflowSearchFilter;
 import com.pth.iflow.core.storage.dao.IWorkflowSearchDao;
 

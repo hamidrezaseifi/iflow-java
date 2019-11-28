@@ -1,4 +1,4 @@
-package com.pth.iflow.core.model.entity;
+package com.pth.iflow.core.model.entity.workflow;
 
 import java.sql.Date;
 
