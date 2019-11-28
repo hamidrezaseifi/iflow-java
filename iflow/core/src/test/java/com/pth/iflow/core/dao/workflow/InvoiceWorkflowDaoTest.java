@@ -47,7 +47,7 @@ public class InvoiceWorkflowDaoTest extends TestDataProducer {
   public void tearDown() throws Exception {
 
     for (final InvoiceWorkflow workflow : createdModels) {
-      invoiceWorkflowDao.deleteWorkflow(workflow.getId());
+      invoiceWorkflowDao.deleteById(workflow.getId());
     }
   }
 
@@ -125,7 +125,7 @@ public class InvoiceWorkflowDaoTest extends TestDataProducer {
 
     Assert.assertNotNull("Result workflow is not null!", resWorkflow);
 
-    invoiceWorkflowDao.deleteWorkflow(resWorkflow.getId());
+    invoiceWorkflowDao.deleteById(resWorkflow.getId());
 
     final InvoiceWorkflow deletedWorkflow = this.invoiceWorkflowDao.getById(resWorkflow.getId());
 

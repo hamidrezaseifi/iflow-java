@@ -45,7 +45,7 @@ public class WorkflowMessageService implements IWorkflowMessageService {
   @Override
   public List<WorkflowMessage> getNotClosedNotExpiredListByUserEmail(final String email) throws IFlowStorageException {
 
-    return this.workflowMessageDao.getNotClosedNotExpiredListByUserEmail(email);
+    return this.workflowMessageDao.getNotClosedNotExpiredListByUserIdentity(email);
   }
 
   @Override

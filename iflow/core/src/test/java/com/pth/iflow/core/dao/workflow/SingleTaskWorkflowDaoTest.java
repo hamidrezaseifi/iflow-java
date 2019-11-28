@@ -47,7 +47,7 @@ public class SingleTaskWorkflowDaoTest extends TestDataProducer {
   public void tearDown() throws Exception {
 
     for (final SingleTaskWorkflow workflow : createdModels) {
-      workflowDao.deleteWorkflow(workflow.getId());
+      workflowDao.deleteById(workflow.getId());
     }
   }
 
@@ -125,7 +125,7 @@ public class SingleTaskWorkflowDaoTest extends TestDataProducer {
 
     Assert.assertNotNull("Result workflow is not null!", resWorkflow);
 
-    workflowDao.deleteWorkflow(resWorkflow.getId());
+    workflowDao.deleteById(resWorkflow.getId());
 
     final SingleTaskWorkflow deletedWorkflow = this.workflowDao.getById(resWorkflow.getId());
 

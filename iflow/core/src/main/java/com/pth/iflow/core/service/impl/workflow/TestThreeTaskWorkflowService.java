@@ -52,7 +52,7 @@ public class TestThreeTaskWorkflowService implements IWorkflowService<TestThreeT
   @Override
   public List<TestThreeTaskWorkflow> getListForUser(final String email, final int status) {
 
-    return this.invoiceWorkflowDao.getListForUserEmail(email, status);
+    return this.invoiceWorkflowDao.getListForUserIdentity(email, status);
   }
 
   @Override

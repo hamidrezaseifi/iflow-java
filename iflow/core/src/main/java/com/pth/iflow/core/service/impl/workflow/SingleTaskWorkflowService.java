@@ -52,7 +52,7 @@ public class SingleTaskWorkflowService implements IWorkflowService<SingleTaskWor
   @Override
   public List<SingleTaskWorkflow> getListForUser(final String email, final int status) {
 
-    return this.workflowDao.getListForUserEmail(email, status);
+    return this.workflowDao.getListForUserIdentity(email, status);
   }
 
   @Override

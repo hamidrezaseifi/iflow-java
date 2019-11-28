@@ -1,5 +1,6 @@
 package com.pth.iflow.core.storage.dao.impl;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -71,16 +72,21 @@ public class WorkflowMessageDao implements IWorkflowMessageDao {
   }
 
   @Override
-  public List<WorkflowMessageEntity> getNotClosedNotExpiredListByUserEmail(final String email) throws IFlowStorageException {
-    // TODO Auto-generated method stub
-    return null;
+  public List<WorkflowMessageEntity> getNotClosedNotExpiredListByUserIdentity(final String userIdentity) throws IFlowStorageException {
+
+    final List<Integer> statusList = Arrays.asList(EWorkflowMessageStatus.ASSIGNED.getValue(),
+        EWorkflowMessageStatus.ASSIGNED.getValue(), EWorkflowMessageStatus.OFFERING.getValue());
+
+    return repository.findNotExpiredUserWorkflowMessagesByStatus(userIdentity, statusList);
   }
 
   @Override
   public List<WorkflowMessageEntity> getNotClosedNotExpiredListByWorkflowIdentity(final String workflowIdentity)
       throws IFlowStorageException {
-    // TODO Auto-generated method stub
-    return null;
+    final List<Integer> statusList = Arrays.asList(EWorkflowMessageStatus.ASSIGNED.getValue(),
+        EWorkflowMessageStatus.ASSIGNED.getValue(), EWorkflowMessageStatus.OFFERING.getValue());
+
+    return repository.findNotExpiredWorkflowWorkflowMessagesByStatus(workflowIdentity, statusList);
   }
 
   @Override

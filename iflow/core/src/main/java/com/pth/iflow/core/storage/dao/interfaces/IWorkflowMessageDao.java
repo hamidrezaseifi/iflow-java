@@ -26,7 +26,7 @@ public interface IWorkflowMessageDao {
 
   public WorkflowMessageEntity getById(Long id) throws IFlowStorageException;
 
-  public List<WorkflowMessageEntity> getNotClosedNotExpiredListByUserEmail(final String userIdentity) throws IFlowStorageException;
+  public List<WorkflowMessageEntity> getNotClosedNotExpiredListByUserIdentity(final String userIdentity) throws IFlowStorageException;
 
   public List<WorkflowMessageEntity> getNotClosedNotExpiredListByWorkflowIdentity(final String workflowIdentity)
       throws IFlowStorageException;

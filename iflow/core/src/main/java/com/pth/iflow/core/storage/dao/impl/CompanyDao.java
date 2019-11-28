@@ -14,7 +14,7 @@ import com.pth.iflow.core.storage.dao.interfaces.ICompanyDao;
 public class CompanyDao implements ICompanyDao {
 
   @Autowired
-  CompanyRepository companyRepository;
+  CompanyRepository repository;
 
   public CompanyDao() {
 
@@ -22,20 +22,20 @@ public class CompanyDao implements ICompanyDao {
 
   @Override
   public CompanyEntity getById(final Long id) throws IFlowStorageException {
-    final Optional<CompanyEntity> model = companyRepository.findById(id);
+    final Optional<CompanyEntity> model = repository.findById(id);
 
     return model.isPresent() ? model.get() : null;
   }
 
   @Override
   public CompanyEntity getByIdentity(final String identity) {
-    return companyRepository.findByIdentity(identity);
+    return repository.findByIdentity(identity);
   }
 
   @Override
   public CompanyEntity create(final CompanyEntity model) throws IFlowStorageException {
 
-    final CompanyEntity newModel = companyRepository.save(model);
+    final CompanyEntity newModel = repository.save(model);
 
     return newModel;
   }
@@ -43,7 +43,7 @@ public class CompanyDao implements ICompanyDao {
   @Override
   public CompanyEntity update(final CompanyEntity model) throws IFlowStorageException {
 
-    final CompanyEntity updatedModel = companyRepository.save(model);
+    final CompanyEntity updatedModel = repository.save(model);
 
     return updatedModel;
   }

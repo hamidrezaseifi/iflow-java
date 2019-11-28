@@ -48,7 +48,7 @@ public class WorkflowMessageDaoTest extends TestDataProducer {
     }
 
     if (createdWorkflow != null) {
-      workflowDao.deleteWorkflow(createdWorkflow.getId());
+      workflowDao.deleteById(createdWorkflow.getId());
     }
   }
 
@@ -87,7 +87,7 @@ public class WorkflowMessageDaoTest extends TestDataProducer {
     createWorlflowList();
 
     final List<WorkflowMessage> resList = this.workflowMessageDao
-                                                                 .getNotClosedNotExpiredListByUserEmail(createdModels.get(0)
+                                                                 .getNotClosedNotExpiredListByUserIdentity(createdModels.get(0)
                                                                                                                      .getUserIdentity());
 
     Assert.assertNotNull("Result list is not null!", resList);

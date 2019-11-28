@@ -52,7 +52,7 @@ public class InvoiceWorkflowService implements IWorkflowService<InvoiceWorkflow>
   @Override
   public List<InvoiceWorkflow> getListForUser(final String email, final int status) {
 
-    return this.workflowDao.getListForUserEmail(email, status);
+    return this.workflowDao.getListForUserIdentity(email, status);
   }
 
   @Override
