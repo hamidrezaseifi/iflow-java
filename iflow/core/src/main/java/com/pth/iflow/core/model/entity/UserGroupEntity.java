@@ -15,9 +15,11 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+import com.pth.iflow.core.storage.dao.helper.EntityHelper;
+
 @Entity
 @Table(name = "user_group")
-public class UserGroupEntity {
+public class UserGroupEntity extends EntityHelper {
 
   @Id
   @Column(name = "id")
@@ -58,10 +60,12 @@ public class UserGroupEntity {
     this.id = id;
   }
 
+  @Override
   public String getIdentity() {
     return identity;
   }
 
+  @Override
   public void setIdentity(final String identity) {
     this.identity = identity;
   }
@@ -90,10 +94,12 @@ public class UserGroupEntity {
     this.status = status;
   }
 
+  @Override
   public Integer getVersion() {
     return this.version;
   }
 
+  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
@@ -120,6 +126,11 @@ public class UserGroupEntity {
 
   public void setUpdatedAt(final Date updatedAt) {
     this.updatedAt = updatedAt;
+  }
+
+  @Override
+  public String getIdentityPreffix() {
+    return "ug";
   }
 
 }

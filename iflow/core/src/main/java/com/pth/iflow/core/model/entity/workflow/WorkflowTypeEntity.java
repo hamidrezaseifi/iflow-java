@@ -21,10 +21,11 @@ import org.hibernate.annotations.FetchMode;
 
 import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
 import com.pth.iflow.core.model.entity.CompanyEntity;
+import com.pth.iflow.core.storage.dao.helper.EntityHelper;
 
 @Entity
 @Table(name = "workflow_type")
-public class WorkflowTypeEntity {
+public class WorkflowTypeEntity extends EntityHelper {
 
   @Id
   @Column(name = "id")
@@ -87,10 +88,12 @@ public class WorkflowTypeEntity {
     this.id = id;
   }
 
+  @Override
   public String getIdentity() {
     return identity;
   }
 
+  @Override
   public void setIdentity(final String identity) {
     this.identity = identity;
   }
@@ -171,10 +174,12 @@ public class WorkflowTypeEntity {
     this.allowAssign = allowAssign;
   }
 
+  @Override
   public Integer getVersion() {
     return this.version;
   }
 
+  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
@@ -208,6 +213,11 @@ public class WorkflowTypeEntity {
 
   public void addStep(final WorkflowTypeStepEntity stepId) {
     this.steps.add(stepId);
+  }
+
+  @Override
+  public String getIdentityPreffix() {
+    return "wtp";
   }
 
 }

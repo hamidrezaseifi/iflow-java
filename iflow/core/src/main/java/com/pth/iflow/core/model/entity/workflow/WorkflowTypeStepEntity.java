@@ -9,9 +9,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.pth.iflow.core.storage.dao.helper.EntityHelper;
+
 @Entity
 @Table(name = "workflow_type_step")
-public class WorkflowTypeStepEntity {
+public class WorkflowTypeStepEntity extends EntityHelper {
 
   @Id
   @Column(name = "id")
@@ -63,10 +65,12 @@ public class WorkflowTypeStepEntity {
     return this.workflowTypeId;
   }
 
+  @Override
   public String getIdentity() {
     return identity;
   }
 
+  @Override
   public void setIdentity(final String identity) {
     this.identity = identity;
   }
@@ -121,10 +125,12 @@ public class WorkflowTypeStepEntity {
     this.status = status;
   }
 
+  @Override
   public Integer getVersion() {
     return this.version;
   }
 
+  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
@@ -151,6 +157,11 @@ public class WorkflowTypeStepEntity {
 
   public void setExpireDays(final Integer expireDays) {
     this.expireDays = expireDays;
+  }
+
+  @Override
+  public String getIdentityPreffix() {
+    return "wtps";
   }
 
 }

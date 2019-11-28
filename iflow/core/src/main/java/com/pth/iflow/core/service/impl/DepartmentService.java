@@ -10,10 +10,10 @@ import com.pth.iflow.core.model.DepartmentGroup;
 import com.pth.iflow.core.model.User;
 import com.pth.iflow.core.model.helper.ICoreIdentityModel;
 import com.pth.iflow.core.service.IDepartmentService;
-import com.pth.iflow.core.storage.dao.IDepartmentDao;
-import com.pth.iflow.core.storage.dao.IDepartmentGroupDao;
-import com.pth.iflow.core.storage.dao.IUserDao;
 import com.pth.iflow.core.storage.dao.exception.IFlowOptimisticLockException;
+import com.pth.iflow.core.storage.dao.interfaces.IDepartmentDao;
+import com.pth.iflow.core.storage.dao.interfaces.IDepartmentGroupDao;
+import com.pth.iflow.core.storage.dao.interfaces.IUserDao;
 
 @Service
 public class DepartmentService implements IDepartmentService {
@@ -36,7 +36,7 @@ public class DepartmentService implements IDepartmentService {
   }
 
   @Override
-  public List<DepartmentGroup> getDepartmentGroups(final String identity) {
+  public List<DepartmentGroupEntity> getDepartmentGroups(final String identity) {
     final Department department = this.getByIdentity(identity);
 
     return department.getDepartmentGroups();
@@ -76,8 +76,8 @@ public class DepartmentService implements IDepartmentService {
     final Department department = getByIdentity(identity);
     final Set<String> idList = this.departmentDao.getAllUserIdentityListByDepartmentId(department.getId());
 
-    final List<DepartmentGroup> groups = department.getDepartmentGroups();
-    for (final DepartmentGroup group : groups) {
+    final List<DepartmentGroupEntity> groups = department.getDepartmentGroups();
+    for (final DepartmentGroupEntity group : groups) {
       idList.addAll(this.departmentGroupDao.getAllUserIdentityListByDepartmentGroupId(group.getId()));
     }
 

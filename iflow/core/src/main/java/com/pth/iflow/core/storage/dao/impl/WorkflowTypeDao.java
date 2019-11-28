@@ -16,10 +16,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
 import com.pth.iflow.core.model.workflow.sub.WorkflowType;
 import com.pth.iflow.core.model.workflow.sub.WorkflowTypeStep;
-import com.pth.iflow.core.storage.dao.IWorkflowTypeDao;
-import com.pth.iflow.core.storage.dao.IWorkflowTypeStepDao;
 import com.pth.iflow.core.storage.dao.basic.DaoBasicClass;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
+import com.pth.iflow.core.storage.dao.interfaces.IWorkflowTypeDao;
+import com.pth.iflow.core.storage.dao.interfaces.IWorkflowTypeStepDao;
 import com.pth.iflow.core.storage.dao.utils.SqlUtils;
 
 @Transactional

@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service;
 
 import com.pth.iflow.core.model.Company;
 import com.pth.iflow.core.service.ICompanyService;
-import com.pth.iflow.core.storage.dao.ICompanyDao;
 import com.pth.iflow.core.storage.dao.exception.IFlowOptimisticLockException;
+import com.pth.iflow.core.storage.dao.interfaces.ICompanyDao;
 
 @Service
 public class CompanyService implements ICompanyService {

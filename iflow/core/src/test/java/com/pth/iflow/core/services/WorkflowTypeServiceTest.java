@@ -21,8 +21,8 @@ import com.pth.iflow.core.model.workflow.sub.WorkflowType;
 import com.pth.iflow.core.model.workflow.sub.WorkflowTypeStep;
 import com.pth.iflow.core.service.IWorkflowTypeService;
 import com.pth.iflow.core.service.impl.WorkflowTypeService;
-import com.pth.iflow.core.storage.dao.IWorkflowTypeDao;
-import com.pth.iflow.core.storage.dao.IWorkflowTypeStepDao;
+import com.pth.iflow.core.storage.dao.interfaces.IWorkflowTypeDao;
+import com.pth.iflow.core.storage.dao.interfaces.IWorkflowTypeStepDao;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

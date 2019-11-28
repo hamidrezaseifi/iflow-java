@@ -16,9 +16,9 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pth.iflow.core.model.workflow.SingleTaskWorkflow;
-import com.pth.iflow.core.storage.dao.IWorkflowDao;
 import com.pth.iflow.core.storage.dao.basic.DaoBasicClass;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
+import com.pth.iflow.core.storage.dao.interfaces.workflow.IWorkflowDao;
 import com.pth.iflow.core.storage.dao.utils.SqlUtils;
 
 @Transactional

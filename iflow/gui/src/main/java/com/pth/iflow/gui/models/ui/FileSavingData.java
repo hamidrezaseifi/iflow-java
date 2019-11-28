@@ -17,7 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.pth.iflow.common.enums.EWorkflowIdentity;
+import com.pth.iflow.common.enums.EIdentity;
 
 public class FileSavingData {
 
@@ -83,7 +83,7 @@ public class FileSavingData {
    * @param workflowId the workflowId to set
    */
   public void setWorkflowIdentity(final String workflowIdentity) {
-    this.workflowIdentity = workflowIdentity == null ? EWorkflowIdentity.NOT_SET.getIdentity() : workflowIdentity;
+    this.workflowIdentity = workflowIdentity == null ? EIdentity.NOT_SET.getIdentity() : workflowIdentity;
   }
 
   public String getActionIdentity() {

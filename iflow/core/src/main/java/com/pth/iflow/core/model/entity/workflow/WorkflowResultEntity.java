@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Subselect;
+
 import com.pth.iflow.core.model.entity.UserEntity;
 
 @Entity

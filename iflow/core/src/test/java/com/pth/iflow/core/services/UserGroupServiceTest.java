@@ -20,7 +20,7 @@ import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.UserGroup;
 import com.pth.iflow.core.service.IUserGroupService;
 import com.pth.iflow.core.service.impl.UserGroupService;
-import com.pth.iflow.core.storage.dao.IUserGroupDao;
+import com.pth.iflow.core.storage.dao.interfaces.IUserGroupDao;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

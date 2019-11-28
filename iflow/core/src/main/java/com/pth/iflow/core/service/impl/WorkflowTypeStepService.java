@@ -8,9 +8,9 @@ import com.pth.iflow.core.model.helper.CoreModelHelper;
 import com.pth.iflow.core.model.workflow.sub.WorkflowType;
 import com.pth.iflow.core.model.workflow.sub.WorkflowTypeStep;
 import com.pth.iflow.core.service.IWorkflowTypeStepService;
-import com.pth.iflow.core.storage.dao.IWorkflowTypeDao;
-import com.pth.iflow.core.storage.dao.IWorkflowTypeStepDao;
 import com.pth.iflow.core.storage.dao.exception.IFlowOptimisticLockException;
+import com.pth.iflow.core.storage.dao.interfaces.IWorkflowTypeDao;
+import com.pth.iflow.core.storage.dao.interfaces.IWorkflowTypeStepDao;
 
 @Service
 public class WorkflowTypeStepService implements IWorkflowTypeStepService {

@@ -9,9 +9,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.pth.iflow.core.storage.dao.helper.EntityHelper;
+
 @Entity
 @Table(name = "companies")
-public class CompanyEntity {
+public class CompanyEntity extends EntityHelper {
 
   @Id
   @Column(name = "id")
@@ -52,10 +54,12 @@ public class CompanyEntity {
     this.id = id;
   }
 
+  @Override
   public String getIdentity() {
     return identity;
   }
 
+  @Override
   public void setIdentity(final String identity) {
     this.identity = identity;
   }
@@ -92,6 +96,7 @@ public class CompanyEntity {
    * @return the version
    */
 
+  @Override
   public Integer getVersion() {
     return this.version;
   }
@@ -100,6 +105,7 @@ public class CompanyEntity {
    * @param version the version to set
    */
 
+  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
@@ -130,6 +136,11 @@ public class CompanyEntity {
    */
   public void setUpdatedAt(final Date updatedAt) {
     this.updatedAt = updatedAt;
+  }
+
+  @Override
+  public String getIdentityPreffix() {
+    return "c";
   }
 
 }

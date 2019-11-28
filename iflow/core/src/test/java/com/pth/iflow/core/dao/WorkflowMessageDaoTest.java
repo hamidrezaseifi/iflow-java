@@ -16,9 +16,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.workflow.SingleTaskWorkflow;
-import com.pth.iflow.core.model.workflow.sub.WorkflowMessage;
-import com.pth.iflow.core.storage.dao.IWorkflowDao;
-import com.pth.iflow.core.storage.dao.IWorkflowMessageDao;
+import com.pth.iflow.core.model.workflow.WorkflowMessage;
+import com.pth.iflow.core.storage.dao.interfaces.IWorkflowMessageDao;
+import com.pth.iflow.core.storage.dao.interfaces.workflow.IWorkflowDao;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -44,7 +44,7 @@ public class WorkflowMessageDaoTest extends TestDataProducer {
   public void tearDown() throws Exception {
 
     for (final WorkflowMessage workflowMessage : createdModels) {
-      workflowMessageDao.deleteWorkflowMessage(workflowMessage.getId());
+      workflowMessageDao.deleteById(workflowMessage.getId());
     }
 
     if (createdWorkflow != null) {
@@ -163,7 +163,7 @@ public class WorkflowMessageDaoTest extends TestDataProducer {
 
     Assert.assertNotNull("Result workflow is not null!", resWorkflow);
 
-    workflowMessageDao.deleteWorkflowMessage(resWorkflow.getId());
+    workflowMessageDao.deleteById(resWorkflow.getId());
 
     final WorkflowMessage deletedWorkflow = this.workflowMessageDao.getById(resWorkflow.getId());
 

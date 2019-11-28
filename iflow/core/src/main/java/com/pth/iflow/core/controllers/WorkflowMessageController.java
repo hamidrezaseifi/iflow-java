@@ -20,8 +20,8 @@ import com.pth.iflow.common.edo.models.WorkflowMessageEdo;
 import com.pth.iflow.common.edo.models.WorkflowMessageListEdo;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.rest.IflowRestPaths;
+import com.pth.iflow.core.model.entity.workflow.WorkflowMessageEntity;
 import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
-import com.pth.iflow.core.model.workflow.sub.WorkflowMessage;
 import com.pth.iflow.core.service.IWorkflowMessageService;
 
 @RestController
@@ -40,7 +40,7 @@ public class WorkflowMessageController {
   public ResponseEntity<WorkflowMessageListEdo> readWorkflowMessage(@PathVariable(name = "email") final String email,
       @PathVariable(required = false) final Integer status, final HttpServletRequest request) throws Exception {
 
-    final List<WorkflowMessage> messageList = this.workflowMessageService.getNotClosedNotExpiredListByUserEmail(email);
+    final List<WorkflowMessageEntity> messageList = this.workflowMessageService.getNotClosedNotExpiredListByUserEmail(email);
 
     return ControllerHelper.createResponseEntity(request,
         new WorkflowMessageListEdo(CoreModelEdoMapper.toWorkflowMessageEdoList(messageList)), HttpStatus.OK);
@@ -51,7 +51,7 @@ public class WorkflowMessageController {
   public ResponseEntity<WorkflowMessageListEdo> readWorkflowMessageByWorkflow(
       @PathVariable(name = "workflowid") final String workflowid, final HttpServletRequest request) throws Exception {
 
-    final List<WorkflowMessage> messageList = this.workflowMessageService.getNotClosedNotExpiredListByWorkflowId(workflowid);
+    final List<WorkflowMessageEntity> messageList = this.workflowMessageService.getNotClosedNotExpiredListByWorkflowId(workflowid);
 
     return ControllerHelper.createResponseEntity(request,
         new WorkflowMessageListEdo(CoreModelEdoMapper.toWorkflowMessageEdoList(messageList)), HttpStatus.OK);
@@ -62,7 +62,7 @@ public class WorkflowMessageController {
   public ResponseEntity<WorkflowMessageEdo> saveWorkflowMessage(@RequestBody(required = true) final WorkflowMessageEdo message,
       final HttpServletRequest request) throws Exception {
 
-    final WorkflowMessage result = this.workflowMessageService.save(CoreModelEdoMapper.fromEdo(message));
+    final WorkflowMessageEntity result = this.workflowMessageService.save(CoreModelEdoMapper.fromEdo(message));
 
     return ControllerHelper.createResponseEntity(request, CoreModelEdoMapper.toEdo(result), HttpStatus.CREATED);
   }

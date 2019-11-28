@@ -20,7 +20,7 @@ public interface IUsersService {
 
   List<Department> getUserDepartments(final String identity);
 
-  List<DepartmentGroup> getUserDepartmentGroups(final String identity);
+  List<DepartmentGroupEntity> getUserDepartmentGroups(final String identity);
 
   List<User> getUserDeputies(final String identity);
 

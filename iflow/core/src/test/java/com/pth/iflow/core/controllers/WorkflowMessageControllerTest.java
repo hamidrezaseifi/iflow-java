@@ -28,7 +28,7 @@ import com.pth.iflow.common.rest.XmlRestConfig;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
 import com.pth.iflow.core.model.workflow.Workflow;
-import com.pth.iflow.core.model.workflow.sub.WorkflowMessage;
+import com.pth.iflow.core.model.workflow.WorkflowMessage;
 import com.pth.iflow.core.service.IWorkflowMessageService;
 
 @RunWith(SpringRunner.class)

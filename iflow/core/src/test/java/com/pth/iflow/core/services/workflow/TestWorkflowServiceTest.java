@@ -16,12 +16,12 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.pth.iflow.core.TestDataProducer;
+import com.pth.iflow.core.model.WorkflowSearchFilter;
 import com.pth.iflow.core.model.workflow.TestThreeTaskWorkflow;
 import com.pth.iflow.core.model.workflow.WorkflowResult;
-import com.pth.iflow.core.model.workflow.sub.WorkflowSearchFilter;
 import com.pth.iflow.core.service.IWorkflowSearchService;
 import com.pth.iflow.core.service.impl.workflow.WorkflowSearchService;
-import com.pth.iflow.core.storage.dao.IWorkflowSearchDao;
+import com.pth.iflow.core.storage.dao.interfaces.IWorkflowSearchDao;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

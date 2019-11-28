@@ -8,7 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.pth.iflow.common.edo.models.helper.IdentityModel;
 import com.pth.iflow.common.enums.EInvoiceType;
 import com.pth.iflow.common.enums.EWorkflowActionStatus;
-import com.pth.iflow.common.enums.EWorkflowIdentity;
+import com.pth.iflow.common.enums.EIdentity;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 import com.pth.iflow.common.enums.EWorkflowType;
 import com.pth.iflow.workflow.models.WorkflowAction;
@@ -189,7 +189,7 @@ public class InvoiceWorkflow extends IdentityModel implements IWorkflow {
 
   @Override
   public boolean isIdentityNotSet() {
-    return EWorkflowIdentity.NOT_SET.getIdentity().equals(getIdentity());
+    return EIdentity.NOT_SET.getIdentity().equals(getIdentity());
   }
 
   @Override

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.pth.iflow.common.edo.models.WorkflowMessageEdo;
 import com.pth.iflow.common.edo.models.WorkflowMessageListEdo;
 import com.pth.iflow.common.enums.EModule;
-import com.pth.iflow.common.enums.EWorkflowIdentity;
+import com.pth.iflow.common.enums.EIdentity;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.common.rest.IflowRestPaths;
@@ -72,7 +72,7 @@ public class WorkflowMessageDataService implements IWorkflowMessageDataService {
                                   this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule
                                                                                                    .CHANGE_WORKFLOWMESSAGE_WORKFLOWMESSAGE_STAUS(workflowIdentity,
                                                                                                                                                  stepIdentity,
-                                                                                                                                                 EWorkflowIdentity.NOT_SET.getIdentity(),
+                                                                                                                                                 EIdentity.NOT_SET.getIdentity(),
                                                                                                                                                  status.getValue())),
                                   token,
                                   EModule.CORE,

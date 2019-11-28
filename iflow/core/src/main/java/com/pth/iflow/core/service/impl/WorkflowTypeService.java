@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 import com.pth.iflow.core.model.workflow.sub.WorkflowType;
 import com.pth.iflow.core.model.workflow.sub.WorkflowTypeStep;
 import com.pth.iflow.core.service.IWorkflowTypeService;
-import com.pth.iflow.core.storage.dao.IWorkflowTypeDao;
 import com.pth.iflow.core.storage.dao.exception.IFlowOptimisticLockException;
+import com.pth.iflow.core.storage.dao.interfaces.IWorkflowTypeDao;
 
 @Service
 public class WorkflowTypeService implements IWorkflowTypeService {

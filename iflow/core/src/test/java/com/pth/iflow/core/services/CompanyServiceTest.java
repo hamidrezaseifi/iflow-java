@@ -17,7 +17,7 @@ import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.Company;
 import com.pth.iflow.core.service.ICompanyService;
 import com.pth.iflow.core.service.impl.CompanyService;
-import com.pth.iflow.core.storage.dao.ICompanyDao;
+import com.pth.iflow.core.storage.dao.interfaces.ICompanyDao;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

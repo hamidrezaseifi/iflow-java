@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
 import com.pth.iflow.core.model.DepartmentGroup;
 import com.pth.iflow.core.model.User;
 import com.pth.iflow.core.service.IDepartmentGroupService;
-import com.pth.iflow.core.storage.dao.IDepartmentGroupDao;
-import com.pth.iflow.core.storage.dao.IUserDao;
 import com.pth.iflow.core.storage.dao.exception.IFlowOptimisticLockException;
+import com.pth.iflow.core.storage.dao.interfaces.IDepartmentGroupDao;
+import com.pth.iflow.core.storage.dao.interfaces.IUserDao;
 
 @Service
 public class DepartmentGroupService implements IDepartmentGroupService {
@@ -24,29 +24,29 @@ public class DepartmentGroupService implements IDepartmentGroupService {
   }
 
   @Override
-  public DepartmentGroup getByIdentity(final String identity) {
+  public DepartmentGroupEntity getByIdentity(final String identity) {
     return this.departmentGroupDao.getByIdentity(identity);
   }
 
   @Override
-  public List<DepartmentGroup> getListByIdentityList(final Collection<String> idList) {
+  public List<DepartmentGroupEntity> getListByIdentityList(final Collection<String> idList) {
     return this.departmentGroupDao.getListByIdentityList(idList);
   }
 
   @Override
-  public List<DepartmentGroup> getListByDepartmentIdentity(final String departmentIdentity) {
+  public List<DepartmentGroupEntity> getListByDepartmentIdentity(final String departmentIdentity) {
     // TODO Auto-generated method stub
     return this.departmentGroupDao.getListByDepartmentIdentity(departmentIdentity);
   }
 
   @Override
-  public DepartmentGroup save(final DepartmentGroup model) {
+  public DepartmentGroupEntity save(final DepartmentGroupEntity model) {
     if (model.isNew()) {
       model.increaseVersion();
       return departmentGroupDao.create(model);
     }
 
-    final DepartmentGroup exists = departmentGroupDao.getById(model.getId());
+    final DepartmentGroupEntity exists = departmentGroupDao.getById(model.getId());
     if (exists.getVersion() > model.getVersion()) {
       throw new IFlowOptimisticLockException("DepartmentGroup with id " + model.getId() + " is old!");
     }
@@ -58,7 +58,7 @@ public class DepartmentGroupService implements IDepartmentGroupService {
 
   @Override
   public List<User> getAllUserListByDepartmentGroupId(final String identity) {
-    final DepartmentGroup departmentGroup = getByIdentity(identity);
+    final DepartmentGroupEntity departmentGroup = getByIdentity(identity);
     final Set<String> idList = departmentGroupDao.getAllUserIdentityListByDepartmentGroupId(departmentGroup.getId());
 
     return userDao.getListByIdentityList(idList);

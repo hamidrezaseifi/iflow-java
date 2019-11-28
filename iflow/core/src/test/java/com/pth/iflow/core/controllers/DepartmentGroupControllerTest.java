@@ -62,7 +62,7 @@ public class DepartmentGroupControllerTest extends TestDataProducer {
   @Test
   public void testReadDepartmentGroupById() throws Exception {
 
-    final DepartmentGroup model = this.getTestDepartmentGroup();
+    final DepartmentGroupEntity model = this.getTestDepartmentGroup();
     when(this.departmentGroupService.getByIdentity(any(String.class))).thenReturn(model);
 
     final DepartmentGroupEdo modelEdo = CoreModelEdoMapper.toEdo(model);
@@ -85,7 +85,7 @@ public class DepartmentGroupControllerTest extends TestDataProducer {
 
     final Set<String> idList = this.getTestDepartmentGroupIdSet();
     final IdentityListEdo edoList = new IdentityListEdo(idList);
-    final List<DepartmentGroup> list = this.getTestDepartmentGroupList();
+    final List<DepartmentGroupEntity> list = this.getTestDepartmentGroupList();
 
     when(this.departmentGroupService.getListByIdentityList(any(Set.class))).thenReturn(list);
 
@@ -110,7 +110,7 @@ public class DepartmentGroupControllerTest extends TestDataProducer {
   @Test
   public void testReadDepartmentGroupListByCompany() throws Exception {
 
-    final List<DepartmentGroup> list = this.getTestDepartmentGroupList();
+    final List<DepartmentGroupEntity> list = this.getTestDepartmentGroupList();
     when(this.departmentGroupService.getListByDepartmentIdentity(any(String.class))).thenReturn(list);
 
     final DepartmentGroupListEdo edoList = new DepartmentGroupListEdo(CoreModelEdoMapper.toDepartmentGroupEdoList(list));

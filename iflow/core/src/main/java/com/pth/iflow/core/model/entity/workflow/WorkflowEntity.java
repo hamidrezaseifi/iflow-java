@@ -3,102 +3,113 @@ package com.pth.iflow.core.model.entity.workflow;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import org.hibernate.annotations.Subselect;
-import com.pth.iflow.common.enums.EWorkflowIdentity;
-import com.pth.iflow.core.model.helper.CoreModelHelper;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+import com.pth.iflow.common.enums.EIdentity;
+import com.pth.iflow.core.model.entity.UserEntity;
+import com.pth.iflow.core.storage.dao.helper.EntityHelper;
 
 @Entity
-@Subselect("select workflow.* ,steps.identity as current_step_identity, controllerusers.email as controller_identity, "
-           + "createdbyusers.email as createdby_identity, workflow_type.identity as workflow_type_identity from"
-           + "(((workflow inner join workflow_type_step steps on steps.id = workflow.current_step)"
-           + "inner join users controllerusers on controllerusers.id = workflow.controller)"
-           + "inner join workflow_type on workflow_type.id = workflow.workflow_type_id)"
-           + "inner join users createdbyusers on createdbyusers.id = workflow.created_by")
-public class WorkflowEntity extends CoreModelHelper {
+@Table(name = "workflow")
+public class WorkflowEntity extends EntityHelper {
 
   @Id
   @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private Long                             id;
 
   @Column(name = "identity")
-  private String identity;
+  private String                           identity;
 
   @Column(name = "workflow_type_id")
-  private Long workflowTypeId;
-
-  @Column(name = "current_step_identity")
-  private String currentStepIdentity;
-
-  @Column(name = "controller_identity")
-  private String controllerIdentity;
-
-  @Column(name = "createdby_identity")
-  private String createdByIdentity;
-
-  @Column(name = "workflow_type_identity")
-  private String workflowTypeIdentity;
+  private Long                             workflowTypeId;
 
   @Column(name = "current_step")
-  private Long currentStepId;
+  private Long                             currentStepId;
 
   @Column(name = "controller")
-  private Long controllerId;
+  private Long                             controllerId;
 
   @Column(name = "created_by")
-  private Long createdById;
+  private Long                             createdById;
 
   @Column(name = "comments")
-  private String comments;
+  private String                           comments;
 
   @Column(name = "status")
-  private Integer status;
+  private Integer                          status;
 
   @Column(name = "version")
-  private Integer version;
+  private Integer                          version;
 
   @Column(name = "created_at")
-  private Date createdAt;
+  private Date                             createdAt;
 
   @Column(name = "updated_at")
-  private Date updatedAt;
+  private Date                             updatedAt;
 
   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
   @JoinColumn(name = "workflow_id")
-  private final List<WorkflowFileEntity> files = new ArrayList<>();
+  private final List<WorkflowFileEntity>   files   = new ArrayList<>();
 
   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
   @JoinColumn(name = "workflow_id")
   private final List<WorkflowActionEntity> actions = new ArrayList<>();
 
-  @Override
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "controller", insertable = false, updatable = false)
+  @Fetch(FetchMode.JOIN)
+  private UserEntity                       controllerUser;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "created_by", insertable = false, updatable = false)
+  @Fetch(FetchMode.JOIN)
+  private UserEntity                       createdByUser;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "workflow_type_id", insertable = false, updatable = false)
+  @Fetch(FetchMode.JOIN)
+  private WorkflowTypeEntity               workflowType;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "current_step", insertable = false, updatable = false)
+  @Fetch(FetchMode.JOIN)
+  private WorkflowTypeStepEntity           currentStep;
+
   public Long getId() {
     return this.id;
   }
 
-  @Override
   public void setId(final Long id) {
     this.id = id;
   }
 
+  @Override
   public String getIdentity() {
     return identity;
   }
 
+  @Override
   public void setIdentity(final String identity) {
     this.identity = identity;
   }
 
   public boolean isIdentityNotSet() {
-    return EWorkflowIdentity.NOT_SET.getIdentity().equals(getIdentity());
+    return EIdentity.NOT_SET.getIdentity().equals(getIdentity());
   }
 
   public String getComments() {
@@ -166,35 +177,19 @@ public class WorkflowEntity extends CoreModelHelper {
   }
 
   public String getWorkflowTypeIdentity() {
-    return workflowTypeIdentity;
-  }
-
-  public void setWorkflowTypeIdentity(final String workflowTypeIdentity) {
-    this.workflowTypeIdentity = workflowTypeIdentity;
+    return workflowType.getIdentity();
   }
 
   public String getCurrentStepIdentity() {
-    return currentStepIdentity;
-  }
-
-  public void setCurrentStepIdentity(final String currentStepIdentity) {
-    this.currentStepIdentity = currentStepIdentity;
+    return currentStep.getIdentity();
   }
 
   public String getControllerIdentity() {
-    return controllerIdentity;
-  }
-
-  public void setControllerIdentity(final String controllerIdentity) {
-    this.controllerIdentity = controllerIdentity;
+    return controllerUser.getIdentity();
   }
 
   public String getCreatedByIdentity() {
-    return createdByIdentity;
-  }
-
-  public void setCreatedByIdentity(final String createdByIdentity) {
-    this.createdByIdentity = createdByIdentity;
+    return createdByUser.getIdentity();
   }
 
   public Long getCurrentStepId() {
@@ -227,6 +222,11 @@ public class WorkflowEntity extends CoreModelHelper {
 
   public void setWorkflowTypeId(final Long workflowTypeId) {
     this.workflowTypeId = workflowTypeId;
+  }
+
+  @Override
+  public String getIdentityPreffix() {
+    return "w";
   }
 
 }

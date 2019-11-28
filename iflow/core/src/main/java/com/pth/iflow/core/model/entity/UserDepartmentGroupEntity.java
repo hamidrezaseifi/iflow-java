@@ -37,7 +37,7 @@ public class UserDepartmentGroupEntity implements Serializable {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "department_group_id", insertable = false, updatable = false)
   @Fetch(FetchMode.JOIN)
-  private DepartmentGroup   departmentGroup;
+  private DepartmentGroupEntity   departmentGroup;
 
   public Long getUserId() {
     return userId;
@@ -63,11 +63,11 @@ public class UserDepartmentGroupEntity implements Serializable {
     this.createdAt = createdAt;
   }
 
-  public DepartmentGroup getDepartmentGroup() {
+  public DepartmentGroupEntity getDepartmentGroup() {
     return departmentGroup;
   }
 
-  public void setDepartmentGroup(final DepartmentGroup departmentGroup) {
+  public void setDepartmentGroup(final DepartmentGroupEntity departmentGroup) {
     this.departmentGroup = departmentGroup;
   }
 

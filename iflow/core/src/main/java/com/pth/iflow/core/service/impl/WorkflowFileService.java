@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.pth.iflow.core.model.workflow.sub.WorkflowFile;
 import com.pth.iflow.core.service.IWorkflowFileService;
-import com.pth.iflow.core.storage.dao.IWorkflowFileDao;
 import com.pth.iflow.core.storage.dao.exception.IFlowOptimisticLockException;
+import com.pth.iflow.core.storage.dao.interfaces.IWorkflowFileDao;
 
 @Service
 public class WorkflowFileService implements IWorkflowFileService {

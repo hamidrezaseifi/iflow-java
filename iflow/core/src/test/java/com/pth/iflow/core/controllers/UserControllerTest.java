@@ -127,7 +127,7 @@ public class UserControllerTest extends TestDataProducer {
   @Test
   public void testReadUserDepartmentGroups() throws Exception {
 
-    final List<DepartmentGroup> list = this.getTestDepartmentGroupList();
+    final List<DepartmentGroupEntity> list = this.getTestDepartmentGroupList();
     when(this.usersService.getUserDepartmentGroups(any(String.class))).thenReturn(list);
 
     final DepartmentGroupListEdo edoList = new DepartmentGroupListEdo(CoreModelEdoMapper.toDepartmentGroupEdoList(list));

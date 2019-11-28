@@ -25,11 +25,11 @@ import com.pth.iflow.core.model.User;
 import com.pth.iflow.core.model.UserGroup;
 import com.pth.iflow.core.service.IUsersService;
 import com.pth.iflow.core.service.impl.UsersService;
-import com.pth.iflow.core.storage.dao.ICompanyDao;
-import com.pth.iflow.core.storage.dao.IDepartmentDao;
-import com.pth.iflow.core.storage.dao.IDepartmentGroupDao;
-import com.pth.iflow.core.storage.dao.IUserDao;
-import com.pth.iflow.core.storage.dao.IUserGroupDao;
+import com.pth.iflow.core.storage.dao.interfaces.ICompanyDao;
+import com.pth.iflow.core.storage.dao.interfaces.IDepartmentDao;
+import com.pth.iflow.core.storage.dao.interfaces.IDepartmentGroupDao;
+import com.pth.iflow.core.storage.dao.interfaces.IUserDao;
+import com.pth.iflow.core.storage.dao.interfaces.IUserGroupDao;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -100,12 +100,12 @@ public class UserServiceTest extends TestDataProducer {
   public void testGetUserDepartmentGroups() throws Exception {
 
     final User user = getTestUser();
-    final List<DepartmentGroup> list = getTestDepartmentGroupList();
+    final List<DepartmentGroupEntity> list = getTestDepartmentGroupList();
 
     when(this.userDao.getByEmail(any(String.class))).thenReturn(user);
     when(this.departmentGroupDao.getListByIdentityList(any(Set.class))).thenReturn(list);
 
-    final List<DepartmentGroup> resList = this.userService.getUserDepartmentGroups("identity");
+    final List<DepartmentGroupEntity> resList = this.userService.getUserDepartmentGroups("identity");
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());

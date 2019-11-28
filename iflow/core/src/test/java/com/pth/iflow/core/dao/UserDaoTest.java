@@ -20,7 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.User;
-import com.pth.iflow.core.storage.dao.IUserDao;
+import com.pth.iflow.core.storage.dao.interfaces.IUserDao;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

@@ -21,8 +21,8 @@ import com.pth.iflow.common.edo.models.IdentityListEdo;
 import com.pth.iflow.common.edo.models.WorkflowTypeStepEdo;
 import com.pth.iflow.common.edo.models.WorkflowTypeStepListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
+import com.pth.iflow.core.model.entity.workflow.WorkflowTypeStepEntity;
 import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
-import com.pth.iflow.core.model.workflow.sub.WorkflowTypeStep;
 import com.pth.iflow.core.service.IWorkflowTypeStepService;
 
 @RestController
@@ -40,7 +40,7 @@ public class WorkflowTypeStepController {
   public ResponseEntity<WorkflowTypeStepEdo> readDepartmentGroup(@PathVariable(name = "identity") final String identity,
       final HttpServletRequest request) throws Exception {
 
-    final WorkflowTypeStep model = this.workflowStepService.getByIdentity(identity);
+    final WorkflowTypeStepEntity model = this.workflowStepService.getByIdentity(identity);
 
     return ControllerHelper.createResponseEntity(request, CoreModelEdoMapper.toEdo(model), HttpStatus.OK);
   }
@@ -50,7 +50,7 @@ public class WorkflowTypeStepController {
   public ResponseEntity<WorkflowTypeStepListEdo> readDepartmentList(@RequestBody final IdentityListEdo idList,
       final HttpServletRequest request) throws Exception {
 
-    final List<WorkflowTypeStep> modelList = idList.getIdentityList().isEmpty() ? new ArrayList<>()
+    final List<WorkflowTypeStepEntity> modelList = idList.getIdentityList().isEmpty() ? new ArrayList<>()
         : this.workflowStepService.getListByIdentityList(idList.getIdentityList());
 
     return ControllerHelper.createResponseEntity(request,
@@ -62,7 +62,7 @@ public class WorkflowTypeStepController {
   public ResponseEntity<WorkflowTypeStepListEdo> readDepartmentListByCompany(@PathVariable(name = "identity") final String identity,
       final HttpServletRequest request) throws Exception {
 
-    final List<WorkflowTypeStep> modelList = this.workflowStepService.getListByWorkflowTypeIdentity(identity);
+    final List<WorkflowTypeStepEntity> modelList = this.workflowStepService.getListByWorkflowTypeIdentity(identity);
 
     return ControllerHelper.createResponseEntity(request,
         new WorkflowTypeStepListEdo(CoreModelEdoMapper.toWorkflowTypeStepEdoList(modelList)), HttpStatus.OK);

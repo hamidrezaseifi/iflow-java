@@ -19,44 +19,46 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+import com.pth.iflow.core.storage.dao.helper.EntityHelper;
+
 @Entity
 @Table(name = "departments")
-public class DepartmentEntity {
+public class DepartmentEntity extends EntityHelper {
 
   @Id
   @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long                        id;
+  private Long                              id;
 
   @Column(name = "company_id")
-  private Long                        companyId;
+  private Long                              companyId;
 
   @Column(name = "identity")
-  private String                      identity;
+  private String                            identity;
 
   @Column(name = "title")
-  private String                      title;
+  private String                            title;
 
   @Column(name = "status")
-  private Integer                     status;
+  private Integer                           status;
 
   @Column(name = "version")
-  private Integer                     version;
+  private Integer                           version;
 
   @Column(name = "created_at")
-  private Date                        createdAt;
+  private Date                              createdAt;
 
   @Column(name = "updated_at")
-  private Date                        updatedAt;
+  private Date                              updatedAt;
 
   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
   @JoinColumn(name = "department_id")
-  private final List<DepartmentGroup> departmentGroups = new ArrayList<>();
+  private final List<DepartmentGroupEntity> departmentGroups = new ArrayList<>();
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "company_id", insertable = false, updatable = false)
   @Fetch(FetchMode.JOIN)
-  private CompanyEntity               company;
+  private CompanyEntity                     company;
 
   public Long getId() {
     return this.id;
@@ -72,10 +74,12 @@ public class DepartmentEntity {
    * @see com.pth.iflow.core.model.ICoreIdentityModel#getIdentity()
    */
 
+  @Override
   public String getIdentity() {
     return identity;
   }
 
+  @Override
   public void setIdentity(final String identity) {
     this.identity = identity;
   }
@@ -104,10 +108,12 @@ public class DepartmentEntity {
     this.status = status;
   }
 
+  @Override
   public Integer getVersion() {
     return this.version;
   }
 
+  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
@@ -128,19 +134,24 @@ public class DepartmentEntity {
     this.updatedAt = updatedAt;
   }
 
-  public List<DepartmentGroup> getDepartmentGroups() {
+  public List<DepartmentGroupEntity> getDepartmentGroups() {
     return this.departmentGroups;
   }
 
-  public void setDepartmentGroups(final List<DepartmentGroup> groups) {
+  public void setDepartmentGroups(final List<DepartmentGroupEntity> groups) {
     this.departmentGroups.clear();
     if (groups != null) {
       this.departmentGroups.addAll(groups);
     }
   }
 
-  public void addDepartmentGroup(final DepartmentGroup group) {
+  public void addDepartmentGroup(final DepartmentGroupEntity group) {
     this.departmentGroups.add(group);
+  }
+
+  @Override
+  public String getIdentityPreffix() {
+    return "dp";
   }
 
 }

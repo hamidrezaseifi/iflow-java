@@ -13,12 +13,12 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
-import com.pth.iflow.common.enums.EWorkflowIdentity;
+import com.pth.iflow.common.enums.EIdentity;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.workflow.InvoiceWorkflow;
 import com.pth.iflow.core.service.IWorkflowService;
 import com.pth.iflow.core.service.impl.workflow.InvoiceWorkflowService;
-import com.pth.iflow.core.storage.dao.IWorkflowDao;
+import com.pth.iflow.core.storage.dao.interfaces.workflow.IWorkflowDao;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -72,7 +72,7 @@ public class InvoiceWorkflowServiceTest extends TestDataProducer {
 
     InvoiceWorkflow workflow = getTestInvoiceWorkflow(1L);
     workflow.setId(null);
-    workflow.setIdentity(EWorkflowIdentity.NOT_SET.getIdentity());
+    workflow.setIdentity(EIdentity.NOT_SET.getIdentity());
     workflow.setVersion(21);
 
     when(this.invoiceWorkflowDao.create(any(InvoiceWorkflow.class))).thenReturn(workflow);

@@ -6,7 +6,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.pth.iflow.common.edo.models.helper.IdentityModel;
-import com.pth.iflow.common.enums.EWorkflowIdentity;
+import com.pth.iflow.common.enums.EIdentity;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 import com.pth.iflow.common.enums.EWorkflowType;
 import com.pth.iflow.gui.models.User;
@@ -346,7 +346,7 @@ public class TestThreeTaskWorkflow extends IdentityModel implements IWorkflow {
     newWorkflow.setCurrentStepIdentity("");
     newWorkflow.setVersion(0);
     newWorkflow.setComments("");
-    newWorkflow.setIdentity(EWorkflowIdentity.NOT_SET.getIdentity());
+    newWorkflow.setIdentity(EIdentity.NOT_SET.getIdentity());
 
     return newWorkflow;
   }

@@ -22,11 +22,11 @@ import com.pth.iflow.common.edo.models.UserEdo;
 import com.pth.iflow.common.edo.models.UserGroupListEdo;
 import com.pth.iflow.common.edo.models.UserListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
-import com.pth.iflow.core.model.Department;
-import com.pth.iflow.core.model.DepartmentGroup;
 import com.pth.iflow.core.model.ProfileResponse;
-import com.pth.iflow.core.model.User;
-import com.pth.iflow.core.model.UserGroup;
+import com.pth.iflow.core.model.entity.DepartmentEntity;
+import com.pth.iflow.core.model.entity.DepartmentGroupEntity;
+import com.pth.iflow.core.model.entity.UserEntity;
+import com.pth.iflow.core.model.entity.UserGroupEntity;
 import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
 import com.pth.iflow.core.service.IUsersService;
 
@@ -44,7 +44,7 @@ public class UserController {
   @IflowPostRequestMapping(path = IflowRestPaths.CoreModule.USER_SAVE)
   public ResponseEntity<UserEdo> saveUser(@PathVariable final UserEdo userEdo, final HttpServletRequest request) throws Exception {
 
-    final User user = this.usersService.save(CoreModelEdoMapper.fromEdo(userEdo));
+    final UserEntity user = this.usersService.save(CoreModelEdoMapper.fromEdo(userEdo));
 
     return ControllerHelper.createResponseEntity(request, CoreModelEdoMapper.toEdo(user), HttpStatus.ACCEPTED);
   }
@@ -54,7 +54,7 @@ public class UserController {
   public ResponseEntity<UserEdo> readUserByEmail(@PathVariable(name = "email") final String email, final HttpServletRequest request)
       throws Exception {
 
-    final User user = this.usersService.getUserByEmail(email);
+    final UserEntity user = this.usersService.getUserByEmail(email);
 
     return ControllerHelper.createResponseEntity(request, CoreModelEdoMapper.toEdo(user), HttpStatus.OK);
   }
@@ -64,7 +64,7 @@ public class UserController {
   public ResponseEntity<UserGroupListEdo> readUserGroups(@PathVariable(name = "email") final String email,
       final HttpServletRequest request) throws Exception {
 
-    final List<UserGroup> groups = this.usersService.getUserGroups(email);
+    final List<UserGroupEntity> groups = this.usersService.getUserGroups(email);
 
     return ControllerHelper.createResponseEntity(request, new UserGroupListEdo(CoreModelEdoMapper.toUserGroupEdoList(groups)),
         HttpStatus.OK);
@@ -75,7 +75,7 @@ public class UserController {
   public ResponseEntity<DepartmentListEdo> readUserDepartments(@PathVariable(name = "email") final String email,
       final HttpServletRequest request) throws Exception {
 
-    final List<Department> list = this.usersService.getUserDepartments(email);
+    final List<DepartmentEntity> list = this.usersService.getUserDepartments(email);
 
     return ControllerHelper.createResponseEntity(request, new DepartmentListEdo(CoreModelEdoMapper.toDepartmentEdoList(list)),
         HttpStatus.OK);
@@ -86,7 +86,7 @@ public class UserController {
   public ResponseEntity<DepartmentGroupListEdo> readUserDepartmentGroups(@PathVariable(name = "email") final String email,
       final HttpServletRequest request) throws Exception {
 
-    final List<DepartmentGroup> list = this.usersService.getUserDepartmentGroups(email);
+    final List<DepartmentGroupEntity> list = this.usersService.getUserDepartmentGroups(email);
 
     return ControllerHelper.createResponseEntity(request,
         new DepartmentGroupListEdo(CoreModelEdoMapper.toDepartmentGroupEdoList(list)), HttpStatus.OK);
@@ -97,7 +97,7 @@ public class UserController {
   public ResponseEntity<UserListEdo> readUserDeputies(@PathVariable(name = "email") final String email,
       final HttpServletRequest request) throws Exception {
 
-    final List<User> list = this.usersService.getUserDeputies(email);
+    final List<UserEntity> list = this.usersService.getUserDeputies(email);
     final UserListEdo edo = new UserListEdo();
     edo.setUsers(CoreModelEdoMapper.toUserEdoList(list));
     return ControllerHelper.createResponseEntity(request, edo, HttpStatus.OK);
@@ -108,7 +108,7 @@ public class UserController {
   public ResponseEntity<UserListEdo> readCompanyUsers(@PathVariable(name = "companyidentity") final String companyidentity,
       final HttpServletRequest request) throws Exception {
 
-    final List<User> list = this.usersService.getCompanyUsers(companyidentity);
+    final List<UserEntity> list = this.usersService.getCompanyUsers(companyidentity);
     final UserListEdo edo = new UserListEdo();
     edo.setUsers(CoreModelEdoMapper.toUserEdoList(list));
     return ControllerHelper.createResponseEntity(request, edo, HttpStatus.OK);

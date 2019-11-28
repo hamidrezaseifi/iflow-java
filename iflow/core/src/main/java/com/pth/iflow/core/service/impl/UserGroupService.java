@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 
 import com.pth.iflow.core.model.UserGroup;
 import com.pth.iflow.core.service.IUserGroupService;
-import com.pth.iflow.core.storage.dao.IUserGroupDao;
 import com.pth.iflow.core.storage.dao.exception.IFlowOptimisticLockException;
+import com.pth.iflow.core.storage.dao.interfaces.IUserGroupDao;
 
 @Service
 public class UserGroupService implements IUserGroupService {

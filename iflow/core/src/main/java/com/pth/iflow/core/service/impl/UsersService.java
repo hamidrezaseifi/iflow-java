@@ -12,12 +12,12 @@ import com.pth.iflow.core.model.ProfileResponse;
 import com.pth.iflow.core.model.User;
 import com.pth.iflow.core.model.UserGroup;
 import com.pth.iflow.core.service.IUsersService;
-import com.pth.iflow.core.storage.dao.ICompanyDao;
-import com.pth.iflow.core.storage.dao.IDepartmentDao;
-import com.pth.iflow.core.storage.dao.IDepartmentGroupDao;
-import com.pth.iflow.core.storage.dao.IUserDao;
-import com.pth.iflow.core.storage.dao.IUserGroupDao;
 import com.pth.iflow.core.storage.dao.exception.IFlowOptimisticLockException;
+import com.pth.iflow.core.storage.dao.interfaces.ICompanyDao;
+import com.pth.iflow.core.storage.dao.interfaces.IDepartmentDao;
+import com.pth.iflow.core.storage.dao.interfaces.IDepartmentGroupDao;
+import com.pth.iflow.core.storage.dao.interfaces.IUserDao;
+import com.pth.iflow.core.storage.dao.interfaces.IUserGroupDao;
 
 @Service
 public class UsersService implements IUsersService {
@@ -59,9 +59,9 @@ public class UsersService implements IUsersService {
   }
 
   @Override
-  public List<DepartmentGroup> getUserDepartmentGroups(final String email) {
+  public List<DepartmentGroupEntity> getUserDepartmentGroups(final String email) {
     final User user = getUserByEmail(email);
-    final List<DepartmentGroup> list = departmentGroupDao.getListByIdentityList(user.getDepartmentGroups());
+    final List<DepartmentGroupEntity> list = departmentGroupDao.getListByIdentityList(user.getDepartmentGroups());
     return list;
   }
 

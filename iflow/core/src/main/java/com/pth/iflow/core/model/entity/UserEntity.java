@@ -20,10 +20,11 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import com.pth.iflow.common.enums.EUserStatus;
+import com.pth.iflow.core.storage.dao.helper.EntityHelper;
 
 @Entity
 @Table(name = "users")
-public class UserEntity {
+public class UserEntity extends EntityHelper {
 
   @Id
   @Column(name = "id")
@@ -192,6 +193,7 @@ public class UserEntity {
    * @return the version
    */
 
+  @Override
   public Integer getVersion() {
     return this.version;
   }
@@ -200,6 +202,7 @@ public class UserEntity {
    * @param version the version to set
    */
 
+  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
@@ -267,10 +270,17 @@ public class UserEntity {
     return deputies;
   }
 
+  @Override
   public String getIdentity() {
     return email;
   }
 
+  @Override
+  public String getIdentityPreffix() {
+    return "u";
+  }
+
+  @Override
   public void setIdentity(final String identity) {
 
   }

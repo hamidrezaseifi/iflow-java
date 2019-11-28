@@ -1,57 +1,71 @@
 package com.pth.iflow.core.model.entity.workflow;
 
 import java.sql.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Subselect;
 
+import com.pth.iflow.core.model.entity.UserEntity;
+
 @Entity
-@Subselect("select workflow_actions.*,steps.identity as current_step_identity, users.email as assign_to_identity from \r\n" +
-           "(workflow_actions inner join workflow_type_step steps on steps.id = workflow_actions.current_step_id)\r\n"
-           + " left outer join users on users.id = workflow_actions.assign_to ")
+@Subselect("select workflow_actions.*,steps.identity as current_step_identity, users.email as assign_to_identity from \r\n"
+    + "(workflow_actions inner join workflow_type_step steps on steps.id = workflow_actions.current_step_id)\r\n"
+    + " left outer join users on users.id = workflow_actions.assign_to ")
+@Table(name = "workflow_actions")
 public class WorkflowActionEntity {
 
-  // id, identity, workflow_id, assign_to, current_step_id, comments, status, version, created_at, updated_at
   @Id
   @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private Long                   id;
 
   @Column(name = "identity")
-  private String identity;
+  private String                 identity;
 
   @Column(name = "workflow_id")
-  private Long workflowId;
+  private Long                   workflowId;
 
   @Column(name = "assign_to")
-  private Long assignTo;
+  private Long                   assignTo;
 
   @Column(name = "current_step_id")
-  private Long currentStepId;
-
-  @Column(name = "assign_to_identity")
-  private String assignToIdentity;
-
-  @Column(name = "current_step_identity")
-  private String currentStepIdentity;
+  private Long                   currentStepId;
 
   @Column(name = "comments")
-  private String comments;
+  private String                 comments;
 
   @Column(name = "status")
-  private Integer status;
+  private Integer                status;
 
   @Column(name = "version")
-  private Integer version;
+  private Integer                version;
 
   @Column(name = "created_at")
-  private Date createdAt;
+  private Date                   createdAt;
 
   @Column(name = "updated_at")
-  private Date updatedAt;
+  private Date                   updatedAt;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "assign_to", insertable = false, updatable = false)
+  @Fetch(FetchMode.JOIN)
+  private UserEntity             assignToUser;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "current_step_id", insertable = false, updatable = false)
+  @Fetch(FetchMode.JOIN)
+  private WorkflowTypeStepEntity currentStep;
 
   public Long getId() {
     return this.id;
@@ -94,19 +108,11 @@ public class WorkflowActionEntity {
   }
 
   public String getAssignToIdentity() {
-    return assignToIdentity;
-  }
-
-  public void setAssignToIdentity(final String assignToIdentity) {
-    this.assignToIdentity = assignToIdentity;
+    return assignToUser.getIdentity();
   }
 
   public String getCurrentStepIdentity() {
-    return currentStepIdentity;
-  }
-
-  public void setCurrentStepIdentity(final String currentStepIdIdentity) {
-    this.currentStepIdentity = currentStepIdIdentity;
+    return currentStep.getIdentity();
   }
 
   public String getComments() {

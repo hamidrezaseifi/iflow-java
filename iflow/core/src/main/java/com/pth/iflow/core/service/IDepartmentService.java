@@ -17,7 +17,7 @@ public interface IDepartmentService {
 
   List<Department> getListByIdCompanyIdentity(final String identity);
 
-  List<DepartmentGroup> getDepartmentGroups(final String identity);
+  List<DepartmentGroupEntity> getDepartmentGroups(final String identity);
 
   List<User> getAllUserListByDepartmentIdentity(final String identity);
 

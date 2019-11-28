@@ -21,8 +21,8 @@ import com.pth.iflow.core.model.DepartmentGroup;
 import com.pth.iflow.core.model.User;
 import com.pth.iflow.core.service.IDepartmentGroupService;
 import com.pth.iflow.core.service.impl.DepartmentGroupService;
-import com.pth.iflow.core.storage.dao.IDepartmentGroupDao;
-import com.pth.iflow.core.storage.dao.IUserDao;
+import com.pth.iflow.core.storage.dao.interfaces.IDepartmentGroupDao;
+import com.pth.iflow.core.storage.dao.interfaces.IUserDao;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -49,10 +49,10 @@ public class DepartmentGroupServiceTest extends TestDataProducer {
   @Test
   public void testGetById() throws Exception {
 
-    final DepartmentGroup departmentGroup = this.getTestDepartmentGroup();
+    final DepartmentGroupEntity departmentGroup = this.getTestDepartmentGroup();
     when(this.departmentGroupDao.getByIdentity(any(String.class))).thenReturn(departmentGroup);
 
-    final DepartmentGroup resDepartmentGroup = this.departmentGroupService.getByIdentity(departmentGroup.getIdentity());
+    final DepartmentGroupEntity resDepartmentGroup = this.departmentGroupService.getByIdentity(departmentGroup.getIdentity());
 
     Assert.assertNotNull("Result department group is not null!", resDepartmentGroup);
     Assert.assertEquals("Result department group has id 1!", resDepartmentGroup.getId(), departmentGroup.getId());
@@ -66,10 +66,10 @@ public class DepartmentGroupServiceTest extends TestDataProducer {
   public void testGetListByIdList() throws Exception {
 
     final Set<String> idList = this.getTestDepartmentIdSet();
-    final List<DepartmentGroup> list = this.getTestDepartmentGroupList();
+    final List<DepartmentGroupEntity> list = this.getTestDepartmentGroupList();
     when(this.departmentGroupDao.getListByIdentityList(any(Set.class))).thenReturn(list);
 
-    final List<DepartmentGroup> resList = this.departmentGroupService.getListByIdentityList(idList);
+    final List<DepartmentGroupEntity> resList = this.departmentGroupService.getListByIdentityList(idList);
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());
@@ -79,10 +79,10 @@ public class DepartmentGroupServiceTest extends TestDataProducer {
   @Test
   public void testGetListByDepartmentId() throws Exception {
 
-    final List<DepartmentGroup> list = this.getTestDepartmentGroupList();
+    final List<DepartmentGroupEntity> list = this.getTestDepartmentGroupList();
     when(this.departmentGroupDao.getListByDepartmentIdentity(any(String.class))).thenReturn(list);
 
-    final List<DepartmentGroup> resList = this.departmentGroupService.getListByDepartmentIdentity("departmentIdentity");
+    final List<DepartmentGroupEntity> resList = this.departmentGroupService.getListByDepartmentIdentity("departmentIdentity");
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());
@@ -94,7 +94,7 @@ public class DepartmentGroupServiceTest extends TestDataProducer {
 
     final Set<String> list = this.getTestUserIdSet();
     final List<User> userList = this.getTestUserList();
-    final DepartmentGroup departmentGroup = getTestDepartmentGroup();
+    final DepartmentGroupEntity departmentGroup = getTestDepartmentGroup();
 
     when(this.departmentGroupDao.getAllUserIdentityListByDepartmentGroupId(any(Long.class))).thenReturn(list);
     when(this.userDao.getListByIdentityList(any(Set.class))).thenReturn(userList);

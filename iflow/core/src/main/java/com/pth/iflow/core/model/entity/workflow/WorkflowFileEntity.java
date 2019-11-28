@@ -3,6 +3,7 @@ package com.pth.iflow.core.model.entity.workflow;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,59 +15,62 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+
 import com.pth.iflow.core.model.entity.UserEntity;
+import com.pth.iflow.core.storage.dao.helper.EntityHelper;
 
 @Entity
 @Table(name = "workflow_files")
-public class WorkflowFileEntity {
+public class WorkflowFileEntity extends EntityHelper {
 
   @Id
   @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private Long                                  id;
 
   @Column(name = "identity")
-  private String identity;
+  private String                                identity;
 
   @Column(name = "workflow_id")
-  private Long workflowId;
+  private Long                                  workflowId;
 
   @Column(name = "title")
-  private String title;
+  private String                                title;
 
   @Column(name = "extention")
-  private String extention;
+  private String                                extention;
 
   @Column(name = "active_filepath")
-  private String activeFilePath;
+  private String                                activeFilePath;
 
   @Column(name = "active_version")
-  private Integer activeFileVersion;
+  private Integer                               activeFileVersion;
 
   @Column(name = "created_by")
-  private Long createdById;
+  private Long                                  createdById;
 
   @Column(name = "comments")
-  private String comments;
+  private String                                comments;
 
   @Column(name = "status")
-  private Integer status;
+  private Integer                               status;
 
   @Column(name = "version")
-  private Integer version;
+  private Integer                               version;
 
   @Column(name = "created_at")
-  private Date createdAt;
+  private Date                                  createdAt;
 
   @Column(name = "updated_at")
-  private Date updatedAt;
+  private Date                                  updatedAt;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "created_by", insertable = false, updatable = false)
   @Fetch(FetchMode.JOIN)
-  private UserEntity createdBy;
+  private UserEntity                            createdBy;
 
   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
   @JoinColumn(name = "workflow_file_id")
@@ -80,10 +84,12 @@ public class WorkflowFileEntity {
     this.id = id;
   }
 
+  @Override
   public String getIdentity() {
     return identity;
   }
 
+  @Override
   public void setIdentity(final String identity) {
     this.identity = identity;
   }
@@ -160,10 +166,12 @@ public class WorkflowFileEntity {
     this.status = status;
   }
 
+  @Override
   public Integer getVersion() {
     return this.version;
   }
 
+  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
@@ -193,6 +201,11 @@ public class WorkflowFileEntity {
     if (fileVersions != null) {
       this.fileVersions.addAll(fileVersions);
     }
+  }
+
+  @Override
+  public String getIdentityPreffix() {
+    return "wf";
   }
 
 }

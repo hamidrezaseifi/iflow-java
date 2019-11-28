@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.pth.iflow.core.model.workflow.SingleTaskWorkflow;
 import com.pth.iflow.core.service.IWorkflowService;
-import com.pth.iflow.core.storage.dao.IWorkflowDao;
 import com.pth.iflow.core.storage.dao.exception.IFlowOptimisticLockException;
+import com.pth.iflow.core.storage.dao.interfaces.workflow.IWorkflowDao;
 
 @Service
 public class SingleTaskWorkflowService implements IWorkflowService<SingleTaskWorkflow> {

@@ -13,10 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import com.pth.iflow.common.enums.EWorkflowIdentity;
+import com.pth.iflow.common.enums.EIdentity;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.workflow.SingleTaskWorkflow;
-import com.pth.iflow.core.storage.dao.IWorkflowDao;
+import com.pth.iflow.core.storage.dao.interfaces.workflow.IWorkflowDao;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -37,7 +37,7 @@ public class SingleTaskWorkflowDaoTest extends TestDataProducer {
     for (int i = 1; i <= 3; i++) {
       final SingleTaskWorkflow workflow = getTestNewSingleTaskWorkflowWorkflow();
       workflow.setId(null);
-      workflow.setIdentity(EWorkflowIdentity.NOT_SET.getIdentity());
+      workflow.setIdentity(EIdentity.NOT_SET.getIdentity());
       final SingleTaskWorkflow res = workflowDao.create(workflow);
       createdModels.add(res);
     }

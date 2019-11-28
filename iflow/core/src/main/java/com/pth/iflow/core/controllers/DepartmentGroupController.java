@@ -22,8 +22,8 @@ import com.pth.iflow.common.edo.models.DepartmentGroupListEdo;
 import com.pth.iflow.common.edo.models.IdentityListEdo;
 import com.pth.iflow.common.edo.models.UserListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
-import com.pth.iflow.core.model.DepartmentGroup;
-import com.pth.iflow.core.model.User;
+import com.pth.iflow.core.model.entity.DepartmentGroupEntity;
+import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
 import com.pth.iflow.core.service.IDepartmentGroupService;
 
@@ -42,7 +42,7 @@ public class DepartmentGroupController {
   public ResponseEntity<DepartmentGroupEdo> readDepartmentGroup(@PathVariable(name = "identity") final String identity,
       final HttpServletRequest request) throws Exception {
 
-    final DepartmentGroup model = this.departmentGroupService.getByIdentity(identity);
+    final DepartmentGroupEntity model = this.departmentGroupService.getByIdentity(identity);
 
     return ControllerHelper.createResponseEntity(request, CoreModelEdoMapper.toEdo(model), HttpStatus.OK);
   }
@@ -52,7 +52,7 @@ public class DepartmentGroupController {
   public ResponseEntity<DepartmentGroupListEdo> readDepartmentList(@RequestBody final IdentityListEdo idList,
       final HttpServletRequest request) throws Exception {
 
-    final List<DepartmentGroup> modelList = idList.getIdentityList().isEmpty() ? new ArrayList<>()
+    final List<DepartmentGroupEntity> modelList = idList.getIdentityList().isEmpty() ? new ArrayList<>()
         : this.departmentGroupService.getListByIdentityList(idList.getIdentityList());
 
     return ControllerHelper.createResponseEntity(request,
@@ -64,7 +64,7 @@ public class DepartmentGroupController {
   public ResponseEntity<DepartmentGroupListEdo> readDepartmentListByDepartment(@PathVariable(name = "identity") final String identity,
       final HttpServletRequest request) throws Exception {
 
-    final List<DepartmentGroup> modelList = this.departmentGroupService.getListByDepartmentIdentity(identity);
+    final List<DepartmentGroupEntity> modelList = this.departmentGroupService.getListByDepartmentIdentity(identity);
 
     return ControllerHelper.createResponseEntity(request,
         new DepartmentGroupListEdo(CoreModelEdoMapper.toDepartmentGroupEdoList(modelList)), HttpStatus.OK);
@@ -75,7 +75,7 @@ public class DepartmentGroupController {
   public ResponseEntity<UserListEdo> readAllUserListByDepartmentGroup(@PathVariable(name = "identity") final String identity,
       final HttpServletRequest request) throws Exception {
 
-    final List<User> modelList = this.departmentGroupService.getAllUserListByDepartmentGroupId(identity);
+    final List<UserEntity> modelList = this.departmentGroupService.getAllUserListByDepartmentGroupId(identity);
 
     return ControllerHelper.createResponseEntity(request, new UserListEdo(CoreModelEdoMapper.toUserEdoList(modelList)), HttpStatus.OK);
   }

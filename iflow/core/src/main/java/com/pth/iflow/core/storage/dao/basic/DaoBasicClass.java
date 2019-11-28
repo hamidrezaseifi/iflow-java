@@ -24,7 +24,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.pth.iflow.common.enums.EWorkflowIdentity;
+import com.pth.iflow.common.enums.EIdentity;
 import com.pth.iflow.core.model.helper.ICoreIdentityModel;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 
@@ -373,7 +373,7 @@ public abstract class DaoBasicClass<M> {
     if (model instanceof ICoreIdentityModel) {
 
       final ICoreIdentityModel identityMode = (ICoreIdentityModel) model;
-      if (EWorkflowIdentity.isNotSet(identityMode.getIdentity())) {
+      if (EIdentity.isNotSet(identityMode.getIdentity())) {
         final String identity = generateIdentity(model);
         identityMode.setIdentity(identity);
       }

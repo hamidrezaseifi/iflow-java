@@ -7,13 +7,13 @@ import com.pth.iflow.core.model.User;
 
 public interface IDepartmentGroupService {
 
-  DepartmentGroup save(DepartmentGroup model);
+  DepartmentGroupEntity save(DepartmentGroupEntity model);
 
-  DepartmentGroup getByIdentity(final String identity);
+  DepartmentGroupEntity getByIdentity(final String identity);
 
-  List<DepartmentGroup> getListByDepartmentIdentity(final String departmentIdentity);
+  List<DepartmentGroupEntity> getListByDepartmentIdentity(final String departmentIdentity);
 
-  List<DepartmentGroup> getListByIdentityList(final Collection<String> idList);
+  List<DepartmentGroupEntity> getListByIdentityList(final Collection<String> idList);
 
   List<User> getAllUserListByDepartmentGroupId(final String identity);
 

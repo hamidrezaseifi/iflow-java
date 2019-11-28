@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.pth.iflow.common.enums.EInvoiceType;
-import com.pth.iflow.common.enums.EWorkflowIdentity;
+import com.pth.iflow.common.enums.EIdentity;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.enums.EWorkflowMessageType;
 import com.pth.iflow.common.enums.EWorkflowStatus;
@@ -19,17 +19,17 @@ import com.pth.iflow.core.model.DepartmentGroup;
 import com.pth.iflow.core.model.ProfileResponse;
 import com.pth.iflow.core.model.User;
 import com.pth.iflow.core.model.UserGroup;
+import com.pth.iflow.core.model.WorkflowSearchFilter;
 import com.pth.iflow.core.model.workflow.IWorkflow;
 import com.pth.iflow.core.model.workflow.InvoiceWorkflow;
 import com.pth.iflow.core.model.workflow.SingleTaskWorkflow;
 import com.pth.iflow.core.model.workflow.TestThreeTaskWorkflow;
 import com.pth.iflow.core.model.workflow.Workflow;
+import com.pth.iflow.core.model.workflow.WorkflowMessage;
 import com.pth.iflow.core.model.workflow.WorkflowResult;
 import com.pth.iflow.core.model.workflow.sub.WorkflowAction;
 import com.pth.iflow.core.model.workflow.sub.WorkflowFile;
 import com.pth.iflow.core.model.workflow.sub.WorkflowFileVersion;
-import com.pth.iflow.core.model.workflow.sub.WorkflowMessage;
-import com.pth.iflow.core.model.workflow.sub.WorkflowSearchFilter;
 import com.pth.iflow.core.model.workflow.sub.WorkflowType;
 import com.pth.iflow.core.model.workflow.sub.WorkflowTypeStep;
 
@@ -152,8 +152,8 @@ public class TestDataProducer {
     return list;
   }
 
-  protected DepartmentGroup getTestDepartmentGroup() {
-    final DepartmentGroup model = new DepartmentGroup();
+  protected DepartmentGroupEntity getTestDepartmentGroup() {
+    final DepartmentGroupEntity model = new DepartmentGroupEntity();
     model.setDepartmentId(1L);
     model.setId(1L);
     model.setTitle("utest title");
@@ -164,8 +164,8 @@ public class TestDataProducer {
     return model;
   }
 
-  protected DepartmentGroup getTestDepartmentGroup(final Long id, final String title) {
-    final DepartmentGroup model = new DepartmentGroup();
+  protected DepartmentGroupEntity getTestDepartmentGroup(final Long id, final String title) {
+    final DepartmentGroupEntity model = new DepartmentGroupEntity();
     model.setDepartmentId(1L);
     model.setId(id);
     model.setTitle(title);
@@ -176,8 +176,8 @@ public class TestDataProducer {
     return model;
   }
 
-  protected List<DepartmentGroup> getTestDepartmentGroupList() {
-    final List<DepartmentGroup> list = Arrays.asList(this.getTestDepartmentGroup(1L, "DepartmentGroup 1"),
+  protected List<DepartmentGroupEntity> getTestDepartmentGroupList() {
+    final List<DepartmentGroupEntity> list = Arrays.asList(this.getTestDepartmentGroup(1L, "DepartmentGroup 1"),
         this.getTestDepartmentGroup(2L, "DepartmentGroup 2"), this.getTestDepartmentGroup(3L, "DepartmentGroup 3"));
 
     return list;
@@ -219,7 +219,7 @@ public class TestDataProducer {
   protected Workflow getTestWorkflow(final Long Id) {
     final Workflow model = new Workflow();
     model.setId(Id);
-    model.setIdentity(EWorkflowIdentity.NOT_SET.getIdentity());
+    model.setIdentity(EIdentity.NOT_SET.getIdentity());
     model.setStatus(EWorkflowStatus.INITIALIZE.getValue().intValue());
     model.setVersion(1);
     model.setComments("comments");
@@ -243,7 +243,7 @@ public class TestDataProducer {
   protected InvoiceWorkflow getTestInvoiceWorkflow(final Long Id) {
     final InvoiceWorkflow model = new InvoiceWorkflow();
     model.setId(Id);
-    model.setIdentity(EWorkflowIdentity.NOT_SET.getIdentity());
+    model.setIdentity(EIdentity.NOT_SET.getIdentity());
     model.setStatus(EWorkflowStatus.INITIALIZE.getValue().intValue());
     model.setVersion(1);
     model.setComments("comments");
@@ -282,7 +282,7 @@ public class TestDataProducer {
     final SingleTaskWorkflow model = new SingleTaskWorkflow();
     model.setWorkflowTypeId(1l);
     model.setId(Id);
-    model.setIdentity(EWorkflowIdentity.NOT_SET.getIdentity());
+    model.setIdentity(EIdentity.NOT_SET.getIdentity());
     model.setStatus(EWorkflowStatus.INITIALIZE.getValue().intValue());
     model.setVersion(1);
     model.setComments("comments");
@@ -305,7 +305,7 @@ public class TestDataProducer {
   protected TestThreeTaskWorkflow getTestTestThreeTaskWorkflow(final Long Id) {
     final TestThreeTaskWorkflow model = new TestThreeTaskWorkflow();
     model.setId(Id);
-    model.setIdentity(EWorkflowIdentity.NOT_SET.getIdentity());
+    model.setIdentity(EIdentity.NOT_SET.getIdentity());
     model.setStatus(EWorkflowStatus.INITIALIZE.getValue().intValue());
     model.setVersion(1);
     model.setComments("comments");
@@ -393,7 +393,7 @@ public class TestDataProducer {
     final Workflow model = new Workflow();
     model.setWorkflowTypeIdentity("wtidentity");
     model.setId(null);
-    model.setIdentity(EWorkflowIdentity.NOT_SET.getIdentity());
+    model.setIdentity(EIdentity.NOT_SET.getIdentity());
     model.setStatus(EWorkflowStatus.INITIALIZE.getValue().intValue());
     model.setVersion(1);
     model.setComments("comments");
@@ -416,7 +416,7 @@ public class TestDataProducer {
     final SingleTaskWorkflow model = new SingleTaskWorkflow();
 
     model.setId(null);
-    model.setIdentity(EWorkflowIdentity.NOT_SET.getIdentity());
+    model.setIdentity(EIdentity.NOT_SET.getIdentity());
     model.setStatus(EWorkflowStatus.INITIALIZE.getValue().intValue());
     model.setVersion(1);
     model.setComments("comments");
@@ -435,7 +435,7 @@ public class TestDataProducer {
     final TestThreeTaskWorkflow model = new TestThreeTaskWorkflow();
 
     model.setId(null);
-    model.setIdentity(EWorkflowIdentity.NOT_SET.getIdentity());
+    model.setIdentity(EIdentity.NOT_SET.getIdentity());
     model.setStatus(EWorkflowStatus.INITIALIZE.getValue().intValue());
     model.setVersion(1);
     model.setComments("comments");

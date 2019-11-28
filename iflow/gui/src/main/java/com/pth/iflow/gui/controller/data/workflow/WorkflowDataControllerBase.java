@@ -25,7 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.pth.iflow.common.enums.EWorkflowIdentity;
+import com.pth.iflow.common.enums.EIdentity;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.controller.data.GuiDataControllerBase;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
@@ -131,7 +131,7 @@ public abstract class WorkflowDataControllerBase<W extends IWorkflow, WS extends
           title = ext.isEmpty() == false ? title.substring(0, title.length() - ext.length() - 1) : title;
         }
 
-        saveFiles.add(new UploadFileSavingData(files[i], title, ext, EWorkflowIdentity.NOT_SET.getIdentity(), "no-action",
+        saveFiles.add(new UploadFileSavingData(files[i], title, ext, EIdentity.NOT_SET.getIdentity(), "no-action",
             this.getLoggedCompany().getIdentity()));
       }
 

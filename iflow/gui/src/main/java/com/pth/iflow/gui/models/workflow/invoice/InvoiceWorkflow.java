@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.pth.iflow.common.edo.models.helper.IdentityModel;
 import com.pth.iflow.common.enums.EInvoiceType;
-import com.pth.iflow.common.enums.EWorkflowIdentity;
+import com.pth.iflow.common.enums.EIdentity;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 import com.pth.iflow.common.enums.EWorkflowType;
 import com.pth.iflow.gui.helper.GuiDateDeserializer;
@@ -491,7 +491,7 @@ public class InvoiceWorkflow extends IdentityModel implements IWorkflow {
     newWorkflow.setCurrentStepIdentity("");
     newWorkflow.setVersion(0);
     newWorkflow.setComments("");
-    newWorkflow.setIdentity(EWorkflowIdentity.NOT_SET.getIdentity());
+    newWorkflow.setIdentity(EIdentity.NOT_SET.getIdentity());
     newWorkflow.setInvoceDate(LocalDate.now());
     newWorkflow.setDiscountDate(LocalDate.now().plusDays(25));
 

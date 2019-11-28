@@ -1,7 +1,7 @@
 package com.pth.iflow.common.edo.models.helper;
 
 import org.apache.commons.lang3.StringUtils;
-import com.pth.iflow.common.enums.EWorkflowIdentity;
+import com.pth.iflow.common.enums.EIdentity;
 
 public abstract class IdentityModel {
 
@@ -18,7 +18,7 @@ public abstract class IdentityModel {
   }
 
   public static boolean isIdentityNew(final String identity) {
-    return EWorkflowIdentity.isNotSet(identity);
+    return EIdentity.isNotSet(identity);
   }
 
   public boolean hasSameIdentity(final String identity) {

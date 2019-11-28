@@ -29,9 +29,9 @@ import com.pth.iflow.common.edo.models.workflow.results.WorkflowResultListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.XmlRestConfig;
 import com.pth.iflow.core.TestDataProducer;
+import com.pth.iflow.core.model.WorkflowSearchFilter;
 import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
 import com.pth.iflow.core.model.workflow.WorkflowResult;
-import com.pth.iflow.core.model.workflow.sub.WorkflowSearchFilter;
 import com.pth.iflow.core.service.IWorkflowSearchService;
 
 @RunWith(SpringRunner.class)

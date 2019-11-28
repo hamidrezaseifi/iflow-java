@@ -24,9 +24,9 @@ import com.pth.iflow.core.model.DepartmentGroup;
 import com.pth.iflow.core.model.User;
 import com.pth.iflow.core.service.IDepartmentService;
 import com.pth.iflow.core.service.impl.DepartmentService;
-import com.pth.iflow.core.storage.dao.IDepartmentDao;
-import com.pth.iflow.core.storage.dao.IDepartmentGroupDao;
-import com.pth.iflow.core.storage.dao.IUserDao;
+import com.pth.iflow.core.storage.dao.interfaces.IDepartmentDao;
+import com.pth.iflow.core.storage.dao.interfaces.IDepartmentGroupDao;
+import com.pth.iflow.core.storage.dao.interfaces.IUserDao;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -101,10 +101,10 @@ public class DepartmentServiceTest extends TestDataProducer {
 
     final Department department = this.getTestDepartment();
 
-    final List<DepartmentGroup> list = this.getTestDepartmentGroupList();
+    final List<DepartmentGroupEntity> list = this.getTestDepartmentGroupList();
     when(this.departmentDao.getByIdentity(any(String.class))).thenReturn(department);
 
-    final List<DepartmentGroup> resList = this.departmentService.getDepartmentGroups("identity");
+    final List<DepartmentGroupEntity> resList = this.departmentService.getDepartmentGroups("identity");
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());
@@ -116,7 +116,7 @@ public class DepartmentServiceTest extends TestDataProducer {
 
     final Set<String> list = new HashSet<>(Arrays.asList("item-1", "item-2", "item-3"));
     final List<User> userList = this.getTestUserList();
-    final List<DepartmentGroup> departmentGroupList = this.getTestDepartmentGroupList();
+    final List<DepartmentGroupEntity> departmentGroupList = this.getTestDepartmentGroupList();
     final Department department = this.getTestDepartment();
 
     when(this.departmentDao.getByIdentity(any(String.class))).thenReturn(department);
