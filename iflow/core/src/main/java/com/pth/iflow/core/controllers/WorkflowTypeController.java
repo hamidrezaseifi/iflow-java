@@ -23,7 +23,7 @@ import com.pth.iflow.common.edo.models.WorkflowTypeListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.core.model.entity.workflow.WorkflowTypeEntity;
 import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
-import com.pth.iflow.core.service.IWorkflowTypeService;
+import com.pth.iflow.core.service.interfaces.IWorkflowTypeService;
 
 @RestController
 @RequestMapping

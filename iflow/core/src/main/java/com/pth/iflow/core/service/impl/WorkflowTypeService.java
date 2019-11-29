@@ -2,12 +2,13 @@ package com.pth.iflow.core.service.impl;
 
 import java.util.Collection;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.pth.iflow.core.model.workflow.sub.WorkflowType;
-import com.pth.iflow.core.model.workflow.sub.WorkflowTypeStep;
-import com.pth.iflow.core.service.IWorkflowTypeService;
-import com.pth.iflow.core.storage.dao.exception.IFlowOptimisticLockException;
+
+import com.pth.iflow.core.model.entity.workflow.WorkflowTypeEntity;
+import com.pth.iflow.core.model.entity.workflow.WorkflowTypeStepEntity;
+import com.pth.iflow.core.service.interfaces.IWorkflowTypeService;
 import com.pth.iflow.core.storage.dao.interfaces.IWorkflowTypeDao;
 
 @Service
@@ -20,39 +21,34 @@ public class WorkflowTypeService implements IWorkflowTypeService {
   }
 
   @Override
-  public WorkflowType getByIdentity(final String identity) {
+  public WorkflowTypeEntity getByIdentity(final String identity) {
     return this.workflowTypeDao.getByIdentity(identity);
   }
 
   @Override
-  public List<WorkflowTypeStep> getStepsByIdentity(final String identity) {
-    final WorkflowType workflow = getByIdentity(identity);
+  public List<WorkflowTypeStepEntity> getStepsByIdentity(final String identity) {
+    final WorkflowTypeEntity workflow = getByIdentity(identity);
     return workflow.getSteps();
   }
 
   @Override
-  public List<WorkflowType> getListByIdCompanyId(final String identity) {
+  public List<WorkflowTypeEntity> getListByIdCompanyId(final String identity) {
     return this.workflowTypeDao.getListByCompanyIdentity(identity);
   }
 
   @Override
-  public List<WorkflowType> getListByIdentityList(final Collection<String> idList) {
+  public List<WorkflowTypeEntity> getListByIdentityList(final Collection<String> idList) {
     return this.workflowTypeDao.getListByIdentityList(idList);
   }
 
   @Override
-  public WorkflowType save(final WorkflowType model) {
+  public WorkflowTypeEntity save(final WorkflowTypeEntity model) {
     if (model.isNew()) {
-      model.increaseVersion();
       return workflowTypeDao.create(model);
     }
 
-    final WorkflowType exists = workflowTypeDao.getById(model.getId());
-    if (exists.getVersion() > model.getVersion()) {
-      throw new IFlowOptimisticLockException("WorkflowType with id " + model.getId() + " is old!");
-    }
-
-    model.setVersion(model.getVersion() + 1);
+    final WorkflowTypeEntity exists = workflowTypeDao.getById(model.getId());
+    model.verifyVersion(exists);
 
     return workflowTypeDao.update(model);
   }

@@ -1,8 +1,8 @@
 package com.pth.iflow.core.storage.dao.impl;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -43,7 +43,13 @@ public class UserGroupDao implements IUserGroupDao {
   }
 
   @Override
-  public List<UserGroupEntity> getListByIdentityList(final Set<String> idList) throws IFlowStorageException {
+  public List<UserGroupEntity> getListByIdList(final Collection<Long> idList) throws IFlowStorageException {
+
+    return repository.findAllById(idList);
+  }
+
+  @Override
+  public List<UserGroupEntity> getListByIdentityList(final Collection<String> idList) throws IFlowStorageException {
 
     return repository.findAllByIdentityList(idList);
   }

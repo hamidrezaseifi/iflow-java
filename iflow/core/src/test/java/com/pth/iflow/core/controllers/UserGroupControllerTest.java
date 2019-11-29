@@ -30,7 +30,7 @@ import com.pth.iflow.common.rest.XmlRestConfig;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.UserGroup;
 import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
-import com.pth.iflow.core.service.IUserGroupService;
+import com.pth.iflow.core.service.interfaces.IUserGroupService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

@@ -30,7 +30,7 @@ import com.pth.iflow.common.rest.XmlRestConfig;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
 import com.pth.iflow.core.model.workflow.sub.WorkflowType;
-import com.pth.iflow.core.service.IWorkflowTypeService;
+import com.pth.iflow.core.service.interfaces.IWorkflowTypeService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

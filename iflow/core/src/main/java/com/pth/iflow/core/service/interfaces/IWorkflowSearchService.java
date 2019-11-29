@@ -1,4 +1,4 @@
-package com.pth.iflow.core.service;
+package com.pth.iflow.core.service.interfaces;
 
 import java.util.List;
 import java.util.Set;

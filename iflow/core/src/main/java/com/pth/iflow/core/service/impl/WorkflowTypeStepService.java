@@ -2,13 +2,13 @@ package com.pth.iflow.core.service.impl;
 
 import java.util.Collection;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.pth.iflow.core.model.helper.CoreModelHelper;
-import com.pth.iflow.core.model.workflow.sub.WorkflowType;
-import com.pth.iflow.core.model.workflow.sub.WorkflowTypeStep;
-import com.pth.iflow.core.service.IWorkflowTypeStepService;
-import com.pth.iflow.core.storage.dao.exception.IFlowOptimisticLockException;
+
+import com.pth.iflow.core.model.entity.workflow.WorkflowTypeEntity;
+import com.pth.iflow.core.model.entity.workflow.WorkflowTypeStepEntity;
+import com.pth.iflow.core.service.interfaces.IWorkflowTypeStepService;
 import com.pth.iflow.core.storage.dao.interfaces.IWorkflowTypeDao;
 import com.pth.iflow.core.storage.dao.interfaces.IWorkflowTypeStepDao;
 
@@ -19,43 +19,38 @@ public class WorkflowTypeStepService implements IWorkflowTypeStepService {
   private final IWorkflowTypeDao     workflowTypeDao;
 
   public WorkflowTypeStepService(@Autowired final IWorkflowTypeStepDao workflowStepDao,
-                                 @Autowired final IWorkflowTypeDao workflowDao) {
+      @Autowired final IWorkflowTypeDao workflowDao) {
     this.workflowStepDao = workflowStepDao;
     this.workflowTypeDao = workflowDao;
   }
 
   @Override
-  public WorkflowTypeStep getByIdentity(final String identity) {
+  public WorkflowTypeStepEntity getByIdentity(final String identity) {
 
     return this.workflowStepDao.getByIdentity(identity);
   }
 
   @Override
-  public List<WorkflowTypeStep> getListByWorkflowTypeIdentity(final String workflowTypeIdentity) {
+  public List<WorkflowTypeStepEntity> getListByWorkflowTypeIdentity(final String workflowTypeIdentity) {
 
-    final WorkflowType type = workflowTypeDao.getByIdentity(workflowTypeIdentity);
+    final WorkflowTypeEntity type = workflowTypeDao.getByIdentity(workflowTypeIdentity);
     return type.getSteps();
   }
 
   @Override
-  public CoreModelHelper save(final WorkflowTypeStep model) {
+  public WorkflowTypeStepEntity save(final WorkflowTypeStepEntity model) {
     if (model.isNew()) {
-      model.increaseVersion();
-      return workflowStepDao.create(model, true);
+      return workflowStepDao.create(model);
     }
 
-    final WorkflowTypeStep exists = workflowStepDao.getById(model.getId());
-    if (exists.getVersion() > model.getVersion()) {
-      throw new IFlowOptimisticLockException("WorkflowTypeStep with id " + model.getId() + " is old!");
-    }
-
-    model.setVersion(model.getVersion() + 1);
+    final WorkflowTypeStepEntity exists = workflowStepDao.getById(model.getId());
+    model.verifyVersion(exists);
 
     return workflowStepDao.update(model);
   }
 
   @Override
-  public List<WorkflowTypeStep> getListByIdentityList(final Collection<String> idList) {
+  public List<WorkflowTypeStepEntity> getListByIdentityList(final Collection<String> idList) {
     return this.workflowStepDao.getListByIdentityList(idList);
   }
 

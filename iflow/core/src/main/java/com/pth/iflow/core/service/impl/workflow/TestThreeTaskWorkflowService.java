@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pth.iflow.core.model.workflow.TestThreeTaskWorkflow;
-import com.pth.iflow.core.service.IWorkflowService;
+import com.pth.iflow.core.service.interfaces.workflow.IWorkflowService;
 import com.pth.iflow.core.storage.dao.exception.IFlowOptimisticLockException;
 import com.pth.iflow.core.storage.dao.interfaces.workflow.IWorkflowDao;
 

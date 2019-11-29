@@ -19,8 +19,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.DepartmentGroup;
 import com.pth.iflow.core.model.User;
-import com.pth.iflow.core.service.IDepartmentGroupService;
 import com.pth.iflow.core.service.impl.DepartmentGroupService;
+import com.pth.iflow.core.service.interfaces.IDepartmentGroupService;
 import com.pth.iflow.core.storage.dao.interfaces.IDepartmentGroupDao;
 import com.pth.iflow.core.storage.dao.interfaces.IUserDao;
 

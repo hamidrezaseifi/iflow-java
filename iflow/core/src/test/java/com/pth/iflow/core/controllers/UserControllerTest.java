@@ -36,7 +36,7 @@ import com.pth.iflow.core.model.ProfileResponse;
 import com.pth.iflow.core.model.User;
 import com.pth.iflow.core.model.UserGroup;
 import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
-import com.pth.iflow.core.service.IUsersService;
+import com.pth.iflow.core.service.interfaces.IUsersService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

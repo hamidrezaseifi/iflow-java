@@ -1,13 +1,14 @@
 package com.pth.iflow.core.service.impl;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.pth.iflow.common.edo.models.helper.IdentityModel;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
-import com.pth.iflow.core.model.workflow.WorkflowMessage;
-import com.pth.iflow.core.service.IWorkflowMessageService;
-import com.pth.iflow.core.storage.dao.exception.IFlowOptimisticLockException;
+import com.pth.iflow.core.model.entity.workflow.WorkflowMessageEntity;
+import com.pth.iflow.core.service.interfaces.IWorkflowMessageService;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 import com.pth.iflow.core.storage.dao.interfaces.IWorkflowMessageDao;
 
@@ -21,46 +22,45 @@ public class WorkflowMessageService implements IWorkflowMessageService {
   }
 
   @Override
-  public WorkflowMessage save(final WorkflowMessage model) throws IFlowStorageException {
+  public WorkflowMessageEntity save(final WorkflowMessageEntity model) throws IFlowStorageException {
     if (model.isNew()) {
-      model.increaseVersion();
+
       return this.workflowMessageDao.create(model);
     }
 
-    final WorkflowMessage exists = this.workflowMessageDao.getById(model.getId());
-    if (exists.getVersion() > model.getVersion()) {
-      throw new IFlowOptimisticLockException("Workflow with id " + model.getId() + " is old!");
-    }
-
-    model.setVersion(model.getVersion() + 1);
+    final WorkflowMessageEntity exists = this.workflowMessageDao.getById(model.getId());
+    model.verifyVersion(exists);
 
     return this.workflowMessageDao.update(model);
   }
 
   @Override
-  public void updateStatusByWorkflow(final String workflowIdentity, final String stepIdentity, final EWorkflowMessageStatus status) throws IFlowStorageException {
+  public void updateStatusByWorkflow(final String workflowIdentity, final String stepIdentity, final EWorkflowMessageStatus status)
+      throws IFlowStorageException {
+
     this.workflowMessageDao.updateStatusByWorkflowIdentity(workflowIdentity, stepIdentity, status);
   }
 
   @Override
-  public List<WorkflowMessage> getNotClosedNotExpiredListByUserEmail(final String email) throws IFlowStorageException {
+  public List<WorkflowMessageEntity> getNotClosedNotExpiredListByUserEmail(final String email) throws IFlowStorageException {
 
     return this.workflowMessageDao.getNotClosedNotExpiredListByUserIdentity(email);
   }
 
   @Override
-  public List<WorkflowMessage> getNotClosedNotExpiredListByWorkflowId(final String workflowIdentity) throws IFlowStorageException {
+  public List<WorkflowMessageEntity> getNotClosedNotExpiredListByWorkflowId(final String workflowIdentity)
+      throws IFlowStorageException {
 
     return this.workflowMessageDao.getNotClosedNotExpiredListByWorkflowIdentity(workflowIdentity);
   }
 
   @Override
-  public void updateWorkflowMessageStatus(final String workflowIdentity, final String stepIdentity, final String email, final EWorkflowMessageStatus status) throws IFlowStorageException {
+  public void updateWorkflowMessageStatus(final String workflowIdentity, final String stepIdentity, final String email,
+      final EWorkflowMessageStatus status) throws IFlowStorageException {
 
     if (IdentityModel.isIdentityNew(email)) {
       this.workflowMessageDao.updateStatusByWorkflowIdentity(workflowIdentity, stepIdentity, status);
-    }
-    else {
+    } else {
       this.workflowMessageDao.updateStatusByWorkflowAndUser(workflowIdentity, stepIdentity, email, status);
     }
   }

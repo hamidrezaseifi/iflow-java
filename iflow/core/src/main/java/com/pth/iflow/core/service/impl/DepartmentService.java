@@ -2,86 +2,58 @@ package com.pth.iflow.core.service.impl;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.pth.iflow.core.model.Department;
-import com.pth.iflow.core.model.DepartmentGroup;
-import com.pth.iflow.core.model.User;
-import com.pth.iflow.core.model.helper.ICoreIdentityModel;
-import com.pth.iflow.core.service.IDepartmentService;
-import com.pth.iflow.core.storage.dao.exception.IFlowOptimisticLockException;
+
+import com.pth.iflow.core.model.entity.DepartmentEntity;
+import com.pth.iflow.core.model.entity.DepartmentGroupEntity;
+import com.pth.iflow.core.service.interfaces.IDepartmentService;
 import com.pth.iflow.core.storage.dao.interfaces.IDepartmentDao;
-import com.pth.iflow.core.storage.dao.interfaces.IDepartmentGroupDao;
-import com.pth.iflow.core.storage.dao.interfaces.IUserDao;
 
 @Service
 public class DepartmentService implements IDepartmentService {
 
-  private final IDepartmentDao      departmentDao;
-  private final IDepartmentGroupDao departmentGroupDao;
-  private final IUserDao            userDao;
+  private final IDepartmentDao departmentDao;
 
-  public DepartmentService(@Autowired final IDepartmentDao departmentDao,
-                           @Autowired final IDepartmentGroupDao departmentGroupDao,
-                           @Autowired final IUserDao userDao) {
+  public DepartmentService(@Autowired final IDepartmentDao departmentDao) {
     this.departmentDao = departmentDao;
-    this.departmentGroupDao = departmentGroupDao;
-    this.userDao = userDao;
+
   }
 
   @Override
-  public Department getByIdentity(final String identity) {
+  public DepartmentEntity getByIdentity(final String identity) {
     return this.departmentDao.getByIdentity(identity);
   }
 
   @Override
   public List<DepartmentGroupEntity> getDepartmentGroups(final String identity) {
-    final Department department = this.getByIdentity(identity);
+    final DepartmentEntity department = this.getByIdentity(identity);
 
     return department.getDepartmentGroups();
   }
 
   @Override
-  public List<Department> getListByIdentityList(final Collection<String> idList) {
+  public List<DepartmentEntity> getListByIdentityList(final Collection<String> idList) {
 
     return this.departmentDao.getListByIdentityList(idList);
   }
 
   @Override
-  public List<Department> getListByIdCompanyIdentity(final String identity) {
+  public List<DepartmentEntity> getListByIdCompanyIdentity(final String identity) {
     return this.departmentDao.getListByCompanyIdentity(identity);
   }
 
   @Override
-  public ICoreIdentityModel save(final Department model) {
+  public DepartmentEntity save(final DepartmentEntity model) {
     if (model.isNew()) {
-      model.increaseVersion();
       return this.departmentDao.create(model);
     }
 
-    final Department exists = this.departmentDao.getById(model.getId());
-    if (exists.getVersion() > model.getVersion()) {
-      throw new IFlowOptimisticLockException("Department with id " + model.getId() + " is old!");
-    }
-
-    model.setVersion(model.getVersion() + 1);
+    final DepartmentEntity exists = this.departmentDao.getById(model.getId());
+    model.verifyVersion(exists);
 
     return this.departmentDao.update(model);
-  }
-
-  @Override
-  public List<User> getAllUserListByDepartmentIdentity(final String identity) {
-
-    final Department department = getByIdentity(identity);
-    final Set<String> idList = this.departmentDao.getAllUserIdentityListByDepartmentId(department.getId());
-
-    final List<DepartmentGroupEntity> groups = department.getDepartmentGroups();
-    for (final DepartmentGroupEntity group : groups) {
-      idList.addAll(this.departmentGroupDao.getAllUserIdentityListByDepartmentGroupId(group.getId()));
-    }
-
-    return this.userDao.getListByIdentityList(idList);
   }
 
 }

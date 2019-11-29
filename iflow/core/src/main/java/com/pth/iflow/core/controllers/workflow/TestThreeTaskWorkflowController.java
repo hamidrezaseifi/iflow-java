@@ -30,7 +30,7 @@ import com.pth.iflow.core.model.entity.workflow.WorkflowFileEntity;
 import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
 import com.pth.iflow.core.service.IWorkflowActionService;
 import com.pth.iflow.core.service.IWorkflowFileService;
-import com.pth.iflow.core.service.IWorkflowService;
+import com.pth.iflow.core.service.interfaces.workflow.IWorkflowService;
 
 @RestController
 @RequestMapping

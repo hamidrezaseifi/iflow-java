@@ -29,7 +29,7 @@ import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
 import com.pth.iflow.core.model.workflow.Workflow;
 import com.pth.iflow.core.model.workflow.WorkflowMessage;
-import com.pth.iflow.core.service.IWorkflowMessageService;
+import com.pth.iflow.core.service.interfaces.IWorkflowMessageService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

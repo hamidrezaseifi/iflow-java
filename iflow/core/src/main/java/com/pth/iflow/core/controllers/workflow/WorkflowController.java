@@ -20,7 +20,7 @@ import com.pth.iflow.common.edo.models.workflow.results.WorkflowResultListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.core.model.entity.workflow.WorkflowResultEntity;
 import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
-import com.pth.iflow.core.service.IWorkflowSearchService;
+import com.pth.iflow.core.service.interfaces.IWorkflowSearchService;
 
 @RestController
 @RequestMapping

@@ -19,8 +19,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.workflow.sub.WorkflowType;
 import com.pth.iflow.core.model.workflow.sub.WorkflowTypeStep;
-import com.pth.iflow.core.service.IWorkflowTypeService;
 import com.pth.iflow.core.service.impl.WorkflowTypeService;
+import com.pth.iflow.core.service.interfaces.IWorkflowTypeService;
 import com.pth.iflow.core.storage.dao.interfaces.IWorkflowTypeDao;
 import com.pth.iflow.core.storage.dao.interfaces.IWorkflowTypeStepDao;
 

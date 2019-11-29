@@ -18,8 +18,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.UserGroup;
-import com.pth.iflow.core.service.IUserGroupService;
 import com.pth.iflow.core.service.impl.UserGroupService;
+import com.pth.iflow.core.service.interfaces.IUserGroupService;
 import com.pth.iflow.core.storage.dao.interfaces.IUserGroupDao;
 
 @RunWith(SpringRunner.class)

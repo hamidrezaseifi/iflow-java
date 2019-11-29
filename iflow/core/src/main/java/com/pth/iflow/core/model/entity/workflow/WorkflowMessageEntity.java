@@ -16,8 +16,9 @@ import org.hibernate.annotations.FetchMode;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.enums.EWorkflowMessageType;
 import com.pth.iflow.core.model.entity.UserEntity;
+import com.pth.iflow.core.storage.dao.helper.EntityHelper;
 
-public class WorkflowMessageEntity {
+public class WorkflowMessageEntity extends EntityHelper {
 
   @Id
   @Column(name = "id")
@@ -77,6 +78,7 @@ public class WorkflowMessageEntity {
   @Fetch(FetchMode.JOIN)
   private WorkflowEntity         workflow;
 
+  @Override
   public Long getId() {
     return this.id;
   }
@@ -173,10 +175,12 @@ public class WorkflowMessageEntity {
     this.status = status.getValue();
   }
 
+  @Override
   public Integer getVersion() {
     return this.version;
   }
 
+  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
@@ -203,6 +207,23 @@ public class WorkflowMessageEntity {
 
   public void setUpdatedAt(final Date updatedAt) {
     this.updatedAt = updatedAt;
+  }
+
+  @Override
+  public String getIdentity() {
+
+    return "";
+  }
+
+  @Override
+  public void setIdentity(final String identity) {
+
+  }
+
+  @Override
+  public String getIdentityPreffix() {
+
+    return "";
   }
 
 }

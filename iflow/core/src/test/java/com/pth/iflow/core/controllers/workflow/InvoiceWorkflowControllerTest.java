@@ -41,7 +41,7 @@ import com.pth.iflow.core.model.workflow.sub.WorkflowAction;
 import com.pth.iflow.core.model.workflow.sub.WorkflowFile;
 import com.pth.iflow.core.service.IWorkflowActionService;
 import com.pth.iflow.core.service.IWorkflowFileService;
-import com.pth.iflow.core.service.IWorkflowService;
+import com.pth.iflow.core.service.interfaces.workflow.IWorkflowService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

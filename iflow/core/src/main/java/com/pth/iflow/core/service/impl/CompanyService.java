@@ -3,9 +3,8 @@ package com.pth.iflow.core.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.pth.iflow.core.model.Company;
-import com.pth.iflow.core.service.ICompanyService;
-import com.pth.iflow.core.storage.dao.exception.IFlowOptimisticLockException;
+import com.pth.iflow.core.model.entity.CompanyEntity;
+import com.pth.iflow.core.service.interfaces.ICompanyService;
 import com.pth.iflow.core.storage.dao.interfaces.ICompanyDao;
 
 @Service
@@ -18,24 +17,20 @@ public class CompanyService implements ICompanyService {
   }
 
   @Override
-  public Company getByIdentity(final String identity) {
+  public CompanyEntity getByIdentity(final String identity) {
 
     return this.companyDao.getByIdentity(identity);
   }
 
   @Override
-  public Company save(final Company model) {
+  public CompanyEntity save(final CompanyEntity model) {
     if (model.isNew()) {
       model.increaseVersion();
       return companyDao.create(model);
     }
 
-    final Company exists = companyDao.getById(model.getId());
-    if (exists.getVersion() > model.getVersion()) {
-      throw new IFlowOptimisticLockException("Company with id " + model.getId() + " is old!");
-    }
-
-    model.setVersion(model.getVersion() + 1);
+    final CompanyEntity exists = companyDao.getById(model.getId());
+    model.verifyVersion(exists);
 
     return companyDao.update(model);
   }

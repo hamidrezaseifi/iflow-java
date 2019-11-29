@@ -16,8 +16,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.pth.iflow.common.enums.EIdentity;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.workflow.InvoiceWorkflow;
-import com.pth.iflow.core.service.IWorkflowService;
 import com.pth.iflow.core.service.impl.workflow.InvoiceWorkflowService;
+import com.pth.iflow.core.service.interfaces.workflow.IWorkflowService;
 import com.pth.iflow.core.storage.dao.interfaces.workflow.IWorkflowDao;
 
 @RunWith(SpringRunner.class)

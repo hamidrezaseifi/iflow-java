@@ -23,7 +23,7 @@ import com.pth.iflow.common.edo.models.UserGroupListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.core.model.entity.UserGroupEntity;
 import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
-import com.pth.iflow.core.service.IUserGroupService;
+import com.pth.iflow.core.service.interfaces.IUserGroupService;
 
 @RestController
 @RequestMapping

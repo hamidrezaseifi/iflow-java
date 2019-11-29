@@ -32,7 +32,7 @@ import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.WorkflowSearchFilter;
 import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
 import com.pth.iflow.core.model.workflow.WorkflowResult;
-import com.pth.iflow.core.service.IWorkflowSearchService;
+import com.pth.iflow.core.service.interfaces.IWorkflowSearchService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

@@ -15,8 +15,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.Company;
-import com.pth.iflow.core.service.ICompanyService;
 import com.pth.iflow.core.service.impl.CompanyService;
+import com.pth.iflow.core.service.interfaces.ICompanyService;
 import com.pth.iflow.core.storage.dao.interfaces.ICompanyDao;
 
 @RunWith(SpringRunner.class)

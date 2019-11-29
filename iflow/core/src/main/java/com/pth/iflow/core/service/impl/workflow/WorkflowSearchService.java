@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.pth.iflow.core.model.WorkflowSearchFilter;
 import com.pth.iflow.core.model.entity.workflow.WorkflowResultEntity;
-import com.pth.iflow.core.service.IWorkflowSearchService;
+import com.pth.iflow.core.service.interfaces.IWorkflowSearchService;
 import com.pth.iflow.core.storage.dao.interfaces.IWorkflowSearchDao;
 
 @Service

@@ -22,7 +22,7 @@ import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.core.model.entity.workflow.WorkflowMessageEntity;
 import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
-import com.pth.iflow.core.service.IWorkflowMessageService;
+import com.pth.iflow.core.service.interfaces.IWorkflowMessageService;
 
 @RestController
 @RequestMapping

@@ -32,7 +32,7 @@ import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.DepartmentGroup;
 import com.pth.iflow.core.model.User;
 import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
-import com.pth.iflow.core.service.IDepartmentGroupService;
+import com.pth.iflow.core.service.interfaces.IDepartmentGroupService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

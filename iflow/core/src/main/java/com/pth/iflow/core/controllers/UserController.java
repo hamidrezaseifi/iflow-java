@@ -28,7 +28,7 @@ import com.pth.iflow.core.model.entity.DepartmentGroupEntity;
 import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.model.entity.UserGroupEntity;
 import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
-import com.pth.iflow.core.service.IUsersService;
+import com.pth.iflow.core.service.interfaces.IUsersService;
 
 @RestController
 @RequestMapping
