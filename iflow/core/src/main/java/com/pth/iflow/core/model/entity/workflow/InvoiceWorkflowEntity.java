@@ -10,9 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
 import com.pth.iflow.common.enums.EInvoiceType;
 import com.pth.iflow.common.enums.EWorkflowType;
 
@@ -25,8 +22,7 @@ public class InvoiceWorkflowEntity {
   private Long           workflowId;
 
   @OneToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "id", insertable = true, updatable = true)
-  @Fetch(FetchMode.JOIN)
+  @JoinColumn(name = "workflowId")
   private WorkflowEntity workflow;
 
   @Column(name = "sender")

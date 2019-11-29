@@ -20,12 +20,12 @@ public class WorkflowTypeDao implements IWorkflowTypeDao {
 
   @Override
   public WorkflowTypeEntity create(final WorkflowTypeEntity model) throws IFlowStorageException {
-    return repository.saveAndFlush(model);
+    return repository.save(model);
   }
 
   @Override
   public WorkflowTypeEntity update(final WorkflowTypeEntity model) throws IFlowStorageException {
-    return repository.saveAndFlush(model);
+    return repository.save(model);
   }
 
   @Override

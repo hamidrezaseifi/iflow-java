@@ -25,7 +25,7 @@ public class UserRoleEntity implements Serializable {
   @Column(name = "role")
   private Integer           role;
 
-  @Column(name = "created_at")
+  @Column(name = "created_at", insertable = false, updatable = false)
   private Date              createdAt;
 
   public Long getUserId() {

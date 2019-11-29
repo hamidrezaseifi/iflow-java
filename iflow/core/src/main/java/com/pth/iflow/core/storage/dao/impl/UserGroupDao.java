@@ -20,12 +20,12 @@ public class UserGroupDao implements IUserGroupDao {
 
   @Override
   public UserGroupEntity create(final UserGroupEntity model) throws IFlowStorageException {
-    return repository.saveAndFlush(model);
+    return repository.save(model);
   }
 
   @Override
   public UserGroupEntity update(final UserGroupEntity model) throws IFlowStorageException {
-    return repository.saveAndFlush(model);
+    return repository.save(model);
   }
 
   @Override

@@ -23,7 +23,7 @@ public interface WorkflowMessageRepository extends JpaRepository<WorkflowMessage
   List<WorkflowMessageEntity> findNotExpiredUserWorkflowMessagesByStatus(@Param("uident") String userIdentity,
       @Param("statuslist") Collection<Integer> statusList);
 
-  @Query("SELECT ug FROM WorkflowMessageEntity ug inner join WorkflowEntity w on ug.workflowId=w.id where w.identity=:wident and ug.status in :statuslist and TIMESTAMPDIFF(DAY, created_at, now()) < expire_days")
+  @Query("SELECT ug FROM WorkflowMessageEntity ug inner join WorkflowEntity w on ug.workflow.id=w.id where w.identity=:wident and ug.status in :statuslist and TIMESTAMPDIFF(DAY, created_at, now()) < expire_days")
   List<WorkflowMessageEntity> findNotExpiredWorkflowWorkflowMessagesByStatus(@Param("wident") String userIdentity,
       @Param("statuslist") Collection<Integer> statusList);
 

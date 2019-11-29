@@ -2,9 +2,6 @@ package com.pth.iflow.core.storage.dao.helper;
 
 import java.util.Random;
 
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-
 import com.pth.iflow.common.enums.EIdentity;
 import com.pth.iflow.core.storage.dao.exception.IFlowOptimisticLockException;
 
@@ -30,7 +27,7 @@ public abstract class EntityHelper {
 
   public abstract String getIdentityPreffix();
 
-  protected String generateIdentity() {
+  public String generateIdentity() {
 
     final Random rand = new Random();
     return String.format(getIdentityPreffix() + "%d-%06d", System.currentTimeMillis(), rand.nextInt(1000000));
@@ -46,23 +43,6 @@ public abstract class EntityHelper {
     if (exists.getVersion() > getVersion()) {
       throw new IFlowOptimisticLockException(this.getClass().getTypeName() + " with id " + getId() + " is old!");
     }
-  }
-
-  @PrePersist
-  public void prePersist() {
-    if (isIdentityNew()) {
-      setIdentity(generateIdentity());
-      if (getVersion() <= 0) {
-        setVersion(1);
-      }
-
-    }
-  }
-
-  @PreUpdate
-  public void preUpdate() {
-    increaseVersion();
-
   }
 
 }

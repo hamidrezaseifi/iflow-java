@@ -31,7 +31,7 @@ public class UserDeputyEntity implements Serializable {
   @Column(name = "deputy_id")
   private Long              deputyId;
 
-  @Column(name = "created_at")
+  @Column(name = "created_at", insertable = false, updatable = false)
   private Date              createdAt;
 
   @ManyToOne(fetch = FetchType.LAZY)

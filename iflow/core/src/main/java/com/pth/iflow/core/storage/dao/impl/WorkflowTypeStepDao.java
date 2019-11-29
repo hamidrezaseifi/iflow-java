@@ -20,12 +20,12 @@ public class WorkflowTypeStepDao implements IWorkflowTypeStepDao {
 
   @Override
   public WorkflowTypeStepEntity create(final WorkflowTypeStepEntity model) throws IFlowStorageException {
-    return repository.saveAndFlush(model);
+    return repository.save(model);
   }
 
   @Override
   public WorkflowTypeStepEntity update(final WorkflowTypeStepEntity model) throws IFlowStorageException {
-    return repository.saveAndFlush(model);
+    return repository.save(model);
   }
 
   @Override

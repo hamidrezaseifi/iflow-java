@@ -6,7 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pth.iflow.core.model.entity.workflow.WorkflowActionEntity;
 import com.pth.iflow.core.model.entity.workflow.WorkflowEntity;
+import com.pth.iflow.core.model.entity.workflow.WorkflowFileEntity;
+import com.pth.iflow.core.model.entity.workflow.WorkflowFileVersionEntity;
 import com.pth.iflow.core.service.interfaces.workflow.IWorkflowService;
 import com.pth.iflow.core.storage.dao.interfaces.IUserDao;
 import com.pth.iflow.core.storage.dao.interfaces.IWorkflowTypeDao;
@@ -38,7 +41,6 @@ public class WorkflowService implements IWorkflowService {
     }
 
     final WorkflowEntity exists = workflowDao.getById(model.getId());
-    model.verifyVersion(exists);
 
     return workflowDao.update(model);
 
@@ -63,13 +65,41 @@ public class WorkflowService implements IWorkflowService {
 
   @Override
   public WorkflowEntity prepareSavingModel(final WorkflowEntity model) {
-    model.setControllerId(usersDao.getByIdentity(model.getControllerIdentity()).getId());
 
-    model.setCreatedById(usersDao.getByIdentity(model.getCreatedByIdentity()).getId());
+    model.setControllerUser(usersDao.getByIdentity(model.getControllerIdentity()));
+    model.setControllerId(model.getControllerUser().getId());
 
-    model.setCurrentStepId(workflowTypeStepDao.getByIdentity(model.getCurrentStepIdentity()).getId());
+    model.setCreatedByUser(usersDao.getByIdentity(model.getCreatedByIdentity()));
+    model.setCreatedById(model.getCreatedByUser().getId());
 
-    model.setWorkflowTypeId(workflowTypeDao.getByIdentity(model.getWorkflowType().getIdentity()).getId());
+    model.setCurrentStep(workflowTypeStepDao.getByIdentity(model.getCurrentStepIdentity()));
+    model.setCurrentStepId(model.getCurrentStep().getId());
+
+    model.setWorkflowType(workflowTypeDao.getByIdentity(model.getWorkflowType().getIdentity()));
+    model.setWorkflowTypeId(model.getWorkflowType().getId());
+
+    for (final WorkflowActionEntity action : model.getActions()) {
+
+      action.setAssignToUser(usersDao.getByIdentity(action.getAssignToIdentity()));
+      action.setAssignTo(action.getAssignToUser() == null ? 0 : action.getAssignToUser().getId());
+      action.setCurrentStep(workflowTypeStepDao.getByIdentity(action.getCurrentStepIdentity()));
+      action.setCurrentStepId(action.getCurrentStep().getId());
+
+    }
+
+    for (final WorkflowFileEntity file : model.getFiles()) {
+
+      file.setCreatedByUser(usersDao.getByIdentity(file.getCreatedByUser().getIdentity()));
+      file.setCreatedById(file.getCreatedByUser().getId());
+
+      for (final WorkflowFileVersionEntity fileVersion : file.getFileVersions()) {
+
+        fileVersion.setCreatedByUser(usersDao.getByIdentity(fileVersion.getCreatedByUser().getIdentity()));
+        fileVersion.setCreatedById(fileVersion.getCreatedByUser().getId());
+
+      }
+
+    }
 
     return model;
   }

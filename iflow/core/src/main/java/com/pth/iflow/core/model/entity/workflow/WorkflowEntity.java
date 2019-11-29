@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,8 +23,10 @@ import org.hibernate.annotations.FetchMode;
 import com.pth.iflow.common.enums.EIdentity;
 import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.storage.dao.helper.EntityHelper;
+import com.pth.iflow.core.storage.dao.helper.EntityListener;
 
 @Entity
+@EntityListeners(EntityListener.class)
 @Table(name = "workflow")
 public class WorkflowEntity extends EntityHelper {
 
@@ -56,18 +59,18 @@ public class WorkflowEntity extends EntityHelper {
   @Column(name = "version")
   private Integer                          version;
 
-  @Column(name = "created_at")
+  @Column(name = "created_at", insertable = false, updatable = false)
   private Date                             createdAt;
 
-  @Column(name = "updated_at")
+  @Column(name = "updated_at", insertable = false, updatable = false)
   private Date                             updatedAt;
 
   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-  @JoinColumn(name = "workflow_id")
+  @JoinColumn(name = "workflow_id", nullable = false)
   private final List<WorkflowFileEntity>   files   = new ArrayList<>();
 
   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-  @JoinColumn(name = "workflow_id")
+  @JoinColumn(name = "workflow_id", nullable = false)
   private final List<WorkflowActionEntity> actions = new ArrayList<>();
 
   @ManyToOne(fetch = FetchType.LAZY)

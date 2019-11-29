@@ -16,9 +16,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.pth.iflow.core.model.entity.workflow.InvoiceWorkflowEntity;
+import com.pth.iflow.core.model.entity.workflow.WorkflowEntity;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 import com.pth.iflow.core.storage.dao.impl.repository.workflow.InvoiceWorkflowRepository;
 import com.pth.iflow.core.storage.dao.interfaces.workflow.IInvoiceWorkflowDao;
+import com.pth.iflow.core.storage.dao.interfaces.workflow.IWorkflowDao;
 
 @Repository
 public class InvoiceWorkflowDao implements IInvoiceWorkflowDao {
@@ -27,16 +29,22 @@ public class InvoiceWorkflowDao implements IInvoiceWorkflowDao {
   private InvoiceWorkflowRepository repository;
 
   @Autowired
+  private IWorkflowDao              workflowDao;
+
+  @Autowired
   private EntityManager             entityManager;
 
   @Override
   public InvoiceWorkflowEntity create(final InvoiceWorkflowEntity model) throws IFlowStorageException {
-    return repository.saveAndFlush(model);
+    final WorkflowEntity workflow = workflowDao.create(model.getWorkflow());
+    model.setWorkflow(workflow);
+    model.setWorkflowId(workflow.getId());
+    return repository.save(model);
   }
 
   @Override
   public InvoiceWorkflowEntity update(final InvoiceWorkflowEntity model) throws IFlowStorageException {
-    return repository.saveAndFlush(model);
+    return repository.save(model);
   }
 
   @Override

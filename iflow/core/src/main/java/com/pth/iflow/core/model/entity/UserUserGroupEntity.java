@@ -31,7 +31,7 @@ public class UserUserGroupEntity implements Serializable {
   @Column(name = "user_group")
   private Long              userGroupId;
 
-  @Column(name = "created_at")
+  @Column(name = "created_at", insertable = false, updatable = false)
   private Date              createdAt;
 
   @ManyToOne(fetch = FetchType.LAZY)

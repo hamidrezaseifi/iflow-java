@@ -31,13 +31,15 @@ public class WorkflowDao implements IWorkflowDao {
 
   @Override
   public WorkflowEntity create(final WorkflowEntity model) throws IFlowStorageException {
-    return repository.saveAndFlush(model);
+
+    return repository.save(model);
   }
 
   @Override
   public WorkflowEntity update(final WorkflowEntity model) throws IFlowStorageException {
     deleteAllSubItemsById(model.getId());
-    return repository.saveAndFlush(model);
+    model.increaseVersion();
+    return repository.save(model);
   }
 
   @Override

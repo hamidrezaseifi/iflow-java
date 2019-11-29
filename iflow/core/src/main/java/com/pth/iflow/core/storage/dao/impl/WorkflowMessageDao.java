@@ -30,12 +30,12 @@ public class WorkflowMessageDao implements IWorkflowMessageDao {
 
   @Override
   public WorkflowMessageEntity create(final WorkflowMessageEntity model) throws IFlowStorageException {
-    return repository.saveAndFlush(model);
+    return repository.save(model);
   }
 
   @Override
   public WorkflowMessageEntity update(final WorkflowMessageEntity model) throws IFlowStorageException {
-    return repository.saveAndFlush(model);
+    return repository.save(model);
   }
 
   @Override
@@ -68,7 +68,7 @@ public class WorkflowMessageDao implements IWorkflowMessageDao {
 
     final WorkflowMessageEntity message = findMessageForWorkflowAndStepAnUser(workflowIdentity, stepIdentity, userIdentity);
     message.setStatusEnum(status);
-    repository.saveAndFlush(message);
+    repository.save(message);
   }
 
   @Override

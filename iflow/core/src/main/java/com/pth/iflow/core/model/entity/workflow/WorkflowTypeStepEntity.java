@@ -4,15 +4,18 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.pth.iflow.core.storage.dao.helper.EntityHelper;
+import com.pth.iflow.core.storage.dao.helper.EntityListener;
 
 @Entity
 @Table(name = "workflow_type_step")
+@EntityListeners(EntityListener.class)
 public class WorkflowTypeStepEntity extends EntityHelper {
 
   @Id
@@ -47,10 +50,10 @@ public class WorkflowTypeStepEntity extends EntityHelper {
   @Column(name = "version")
   private Integer version;
 
-  @Column(name = "created_at")
+  @Column(name = "created_at", insertable = false, updatable = false)
   private Date    createdAt;
 
-  @Column(name = "updated_at")
+  @Column(name = "updated_at", insertable = false, updatable = false)
   private Date    updatedAt;
 
   public WorkflowTypeStepEntity() {

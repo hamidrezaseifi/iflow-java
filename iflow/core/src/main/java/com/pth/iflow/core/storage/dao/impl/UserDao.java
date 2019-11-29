@@ -30,12 +30,12 @@ public class UserDao implements IUserDao {
 
   @Override
   public UserEntity create(final UserEntity model) throws IFlowStorageException {
-    return repository.saveAndFlush(model);
+    return repository.save(model);
   }
 
   @Override
   public UserEntity update(final UserEntity model) throws IFlowStorageException {
-    return repository.saveAndFlush(model);
+    return repository.save(model);
   }
 
   @Override

@@ -16,9 +16,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.pth.iflow.core.model.entity.workflow.TestThreeTaskWorkflowEntity;
+import com.pth.iflow.core.model.entity.workflow.WorkflowEntity;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 import com.pth.iflow.core.storage.dao.impl.repository.workflow.TestThreeTaskWorkflowRepository;
 import com.pth.iflow.core.storage.dao.interfaces.workflow.ITestThreeTaskWorkflowDao;
+import com.pth.iflow.core.storage.dao.interfaces.workflow.IWorkflowDao;
 
 @Repository
 public class TestThreeTaskWorkflowDao implements ITestThreeTaskWorkflowDao {
@@ -27,16 +29,22 @@ public class TestThreeTaskWorkflowDao implements ITestThreeTaskWorkflowDao {
   private TestThreeTaskWorkflowRepository repository;
 
   @Autowired
+  private IWorkflowDao                    workflowDao;
+
+  @Autowired
   private EntityManager                   entityManager;
 
   @Override
   public TestThreeTaskWorkflowEntity create(final TestThreeTaskWorkflowEntity model) throws IFlowStorageException {
-    return repository.saveAndFlush(model);
+    final WorkflowEntity workflow = workflowDao.create(model.getWorkflow());
+    model.setWorkflow(workflow);
+    model.setWorkflowId(workflow.getId());
+    return repository.save(model);
   }
 
   @Override
   public TestThreeTaskWorkflowEntity update(final TestThreeTaskWorkflowEntity model) throws IFlowStorageException {
-    return repository.saveAndFlush(model);
+    return repository.save(model);
   }
 
   @Override

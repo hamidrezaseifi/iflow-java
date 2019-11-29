@@ -29,8 +29,8 @@ public class WorkflowMessageEntity extends EntityHelper {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long                   id;
 
-  @Column(name = "workflow_id")
-  private Long                   workflowId;
+  // @Column(name = "workflow_id")
+  // private Long workflowId;
 
   @Column(name = "step_id")
   private Long                   stepId;
@@ -56,10 +56,10 @@ public class WorkflowMessageEntity extends EntityHelper {
   @Column(name = "expire_days")
   private Integer                expireDays;
 
-  @Column(name = "created_at")
+  @Column(name = "created_at", insertable = false, updatable = false)
   private Date                   createdAt;
 
-  @Column(name = "updated_at")
+  @Column(name = "updated_at", insertable = false, updatable = false)
   private Date                   updatedAt;
 
   @ManyToOne(fetch = FetchType.LAZY)
@@ -79,7 +79,6 @@ public class WorkflowMessageEntity extends EntityHelper {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "workflow_id", insertable = false, updatable = false)
-  @Fetch(FetchMode.JOIN)
   private WorkflowEntity         workflow;
 
   public WorkflowMessageEntity() {
@@ -99,13 +98,12 @@ public class WorkflowMessageEntity extends EntityHelper {
     this.id = id;
   }
 
-  public Long getWorkflowId() {
-    return workflowId;
-  }
-
-  public void setWorkflowId(final Long workflowId) {
-    this.workflowId = workflowId;
-  }
+  /*
+   * public Long getWorkflowId() { return workflowId; }
+   *
+   * public void setWorkflowId(final Long workflowId) { this.workflowId =
+   * workflowId; }
+   */
 
   public String getWorkflowIdentity() {
     return workflow.getIdentity();

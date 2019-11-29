@@ -26,8 +26,8 @@ public class WorkflowFileVersionEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long       id;
 
-  @Column(name = "workflow_file_id")
-  private Long       workflowFileId;
+  // @Column(name = "workflow_file_id")
+  // private Long workflowFileId;
 
   @Column(name = "created_by")
   private Long       createdById;
@@ -47,10 +47,10 @@ public class WorkflowFileVersionEntity {
   @Column(name = "version")
   private Integer    version;
 
-  @Column(name = "created_at")
+  @Column(name = "created_at", insertable = false, updatable = false)
   private Date       createdAt;
 
-  @Column(name = "updated_at")
+  @Column(name = "updated_at", insertable = false, updatable = false)
   private Date       updatedAt;
 
   @ManyToOne(fetch = FetchType.LAZY)
@@ -71,13 +71,12 @@ public class WorkflowFileVersionEntity {
     this.id = id;
   }
 
-  public Long getWorkflowFileId() {
-    return this.workflowFileId;
-  }
-
-  public void setWorkflowFileId(final Long workflowFileId) {
-    this.workflowFileId = workflowFileId;
-  }
+  /*
+   * public Long getWorkflowFileId() { return this.workflowFileId; }
+   *
+   * public void setWorkflowFileId(final Long workflowFileId) {
+   * this.workflowFileId = workflowFileId; }
+   */
 
   public String getFilePath() {
     return this.filePath;

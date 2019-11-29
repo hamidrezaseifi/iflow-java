@@ -35,7 +35,7 @@ public class CompanyDao implements ICompanyDao {
   @Override
   public CompanyEntity create(final CompanyEntity model) throws IFlowStorageException {
 
-    final CompanyEntity newModel = repository.saveAndFlush(model);
+    final CompanyEntity newModel = repository.save(model);
 
     return newModel;
   }
@@ -43,7 +43,7 @@ public class CompanyDao implements ICompanyDao {
   @Override
   public CompanyEntity update(final CompanyEntity model) throws IFlowStorageException {
 
-    final CompanyEntity updatedModel = repository.saveAndFlush(model);
+    final CompanyEntity updatedModel = repository.save(model);
 
     return updatedModel;
   }

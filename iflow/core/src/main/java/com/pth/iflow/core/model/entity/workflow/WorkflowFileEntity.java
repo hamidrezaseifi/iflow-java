@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,9 +22,11 @@ import org.hibernate.annotations.FetchMode;
 
 import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.storage.dao.helper.EntityHelper;
+import com.pth.iflow.core.storage.dao.helper.EntityListener;
 
 @Entity
 @Table(name = "workflow_files")
+@EntityListeners(EntityListener.class)
 public class WorkflowFileEntity extends EntityHelper {
 
   @Id
@@ -34,8 +37,8 @@ public class WorkflowFileEntity extends EntityHelper {
   @Column(name = "identity")
   private String                                identity;
 
-  @Column(name = "workflow_id")
-  private Long                                  workflowId;
+  // @Column(name = "workflow_id")
+  // private Long workflowId;
 
   @Column(name = "title")
   private String                                title;
@@ -61,20 +64,24 @@ public class WorkflowFileEntity extends EntityHelper {
   @Column(name = "version")
   private Integer                               version;
 
-  @Column(name = "created_at")
+  @Column(name = "created_at", insertable = false, updatable = false)
   private Date                                  createdAt;
 
-  @Column(name = "updated_at")
+  @Column(name = "updated_at", insertable = false, updatable = false)
   private Date                                  updatedAt;
+
+  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+  @JoinColumn(name = "workflow_file_id", nullable = false)
+  private final List<WorkflowFileVersionEntity> fileVersions = new ArrayList<>();
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "created_by", insertable = false, updatable = false)
   @Fetch(FetchMode.JOIN)
   private UserEntity                            createdByUser;
 
-  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-  @JoinColumn(name = "workflow_file_id")
-  private final List<WorkflowFileVersionEntity> fileVersions = new ArrayList<>();
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "workflow_id", insertable = false, updatable = false)
+  private WorkflowEntity                        workflow;
 
   public WorkflowFileEntity() {
     createdByUser = new UserEntity();
@@ -100,13 +107,12 @@ public class WorkflowFileEntity extends EntityHelper {
     this.identity = identity;
   }
 
-  public Long getWorkflowId() {
-    return this.workflowId;
-  }
-
-  public void setWorkflowId(final Long workflowId) {
-    this.workflowId = workflowId;
-  }
+  /*
+   * public Long getWorkflowId() { return this.workflowId; }
+   *
+   * public void setWorkflowId(final Long workflowId) { this.workflowId =
+   * workflowId; }
+   */
 
   public String getActiveFilePath() {
     return this.activeFilePath;

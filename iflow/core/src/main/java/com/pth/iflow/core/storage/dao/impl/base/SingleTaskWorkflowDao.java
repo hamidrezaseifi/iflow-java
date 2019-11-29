@@ -38,13 +38,13 @@ public class SingleTaskWorkflowDao implements ISingleTaskWorkflowDao {
   public SingleTaskWorkflowEntity create(final SingleTaskWorkflowEntity model) throws IFlowStorageException {
     final WorkflowEntity workflow = workflowDao.create(model.getWorkflow());
     model.setWorkflow(workflow);
-
-    return repository.saveAndFlush(model);
+    model.setWorkflowId(workflow.getId());
+    return repository.save(model);
   }
 
   @Override
   public SingleTaskWorkflowEntity update(final SingleTaskWorkflowEntity model) throws IFlowStorageException {
-    return repository.saveAndFlush(model);
+    return repository.save(model);
   }
 
   @Override
