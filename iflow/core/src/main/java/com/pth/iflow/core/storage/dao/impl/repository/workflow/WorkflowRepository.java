@@ -18,4 +18,10 @@ public interface WorkflowRepository extends JpaRepository<WorkflowEntity, Long> 
 
   @Query("SELECT ug FROM WorkflowEntity ug where ug.identity in :identlist")
   List<WorkflowEntity> findAllByIdentityList(@Param("identlist") Collection<String> identityList);
+
+  @Query("delete FROM WorkflowFileEntity ug where ug.workflowId=wid")
+  List<WorkflowEntity> deleteAllWorkflowFiles(@Param("wid") Long workflowId);
+
+  @Query("delete FROM WorkflowActionEntity ug where ug.workflowId=wid")
+  List<WorkflowEntity> deleteAllWorkflowActions(@Param("wid") Long workflowId);
 }

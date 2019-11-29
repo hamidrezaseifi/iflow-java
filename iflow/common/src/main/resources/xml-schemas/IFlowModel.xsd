@@ -1,0 +1,626 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://namespace.ifow.com/edo/v1" targetNamespace="http://namespace.ifow.com/edo/v1" version="1.0">
+
+  <xs:element name="AssignItem" type="tns:AssignItemTP"/>
+
+  <xs:element name="AuthenticatedProfileRequest" type="tns:AuthenticatedProfileRequestTP"/>
+
+  <xs:element name="Company" type="tns:CompanyTP"/>
+
+  <xs:element name="CompanyProfile" type="tns:CompanyProfileTP"/>
+
+  <xs:element name="Department" type="tns:DepartmentTP"/>
+
+  <xs:element name="DepartmentGroup" type="tns:DepartmentGroupTP"/>
+
+  <xs:element name="DepartmentGroupList" type="tns:DepartmentGroupListTP"/>
+
+  <xs:element name="DepartmentList" type="tns:DepartmentListTP"/>
+
+  <xs:element name="IdentityList" type="tns:IdListTP"/>
+
+  <xs:element name="InvoiceWorkflow" type="tns:InvoiceWorkflowTP"/>
+
+  <xs:element name="InvoiceWorkflowCreateRequest" type="tns:InvoiceWorkflowCreateRequestTP"/>
+
+  <xs:element name="InvoiceWorkflowList" type="tns:InvoiceWorkflowListTP"/>
+
+  <xs:element name="ProfileResponse" type="tns:ProfileResponseTP"/>
+
+  <xs:element name="SingleTaskWorkflow" type="tns:SingleTaskWorkflowTP"/>
+
+  <xs:element name="SingleTaskWorkflowList" type="tns:SingleTaskWorkflowListTP"/>
+
+  <xs:element name="SingleTaskWorkflowSaveRequest" type="tns:SingleTaskWorkflowSaveRequestTP"/>
+
+  <xs:element name="TestThreeTaskWorkflow" type="tns:TestThreeTaskWorkflowTP"/>
+
+  <xs:element name="TestThreeTaskWorkflowList" type="tns:TestThreeTaskWorkflowListTP"/>
+
+  <xs:element name="TestThreeTaskWorkflowSaveRequest" type="tns:TestThreeTaskWorkflowSaveRequestTP"/>
+
+  <xs:element name="TokenProfileRequest" type="tns:TokenProfileRequestTP"/>
+
+  <xs:element name="User" type="tns:UserTP"/>
+
+  <xs:element name="UserAuthenticationRequest" type="tns:UserAuthenticationRequestTP"/>
+
+  <xs:element name="UserAuthenticationResponse" type="tns:UserAuthenticationResponseTP"/>
+
+  <xs:element name="UserGroup" type="tns:UserGroupTP"/>
+
+  <xs:element name="UserGroupList" type="tns:UserGroupListTP"/>
+
+  <xs:element name="UserList" type="tns:UserListTP"/>
+
+  <xs:element name="Workflow" type="tns:WorkflowTP"/>
+
+  <xs:element name="WorkflowAction" type="tns:WorkflowActionTP"/>
+
+  <xs:element name="WorkflowActionList" type="tns:WorkflowActionListTP"/>
+
+  <xs:element name="WorkflowFile" type="tns:WorkflowFileTP"/>
+
+  <xs:element name="WorkflowFileList" type="tns:WorkflowFileListTP"/>
+
+  <xs:element name="WorkflowFileVersion" type="tns:WorkflowFileVersionTP"/>
+
+  <xs:element name="WorkflowMessage" type="tns:WorkflowMessageTP"/>
+
+  <xs:element name="WorkflowMessageList" type="tns:WorkflowMessageListTP"/>
+
+  <xs:element name="WorkflowSearchFilter" type="tns:WorkflowSearchFilterTP"/>
+
+  <xs:element name="WorkflowType" type="tns:WorkflowTypeTP"/>
+
+  <xs:element name="WorkflowTypeList" type="tns:WorkflowTypeListTP"/>
+
+  <xs:element name="WorkflowTypeStep" type="tns:WorkflowTypeStepTP"/>
+
+  <xs:element name="WorkflowTypeStepList" type="tns:WorkflowTypeStepListTP"/>
+
+  <xs:complexType name="AssignItemTP">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="ItemIdentity" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="ItemType" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="AuthenticatedProfileRequestTP">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="Email" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Token" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="CompanyTP">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="Identity" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="CompanyName" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Status" type="xs:int"/>
+      <xs:element form="qualified" minOccurs="0" name="Version" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="CompanyProfileTP">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="tns:Company"/>
+      <xs:element form="qualified" minOccurs="0" name="DepartmentList">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:Department"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element form="qualified" minOccurs="0" name="UserGroupList">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:UserGroup"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="DepartmentTP">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="Identity" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Title" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Status" type="xs:int"/>
+      <xs:element form="qualified" minOccurs="0" name="Version" type="xs:int"/>
+      <xs:element form="qualified" minOccurs="0" name="DepartmentGroupList">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:DepartmentGroup"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="DepartmentGroupTP">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="Identity" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Title" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Status" type="xs:int"/>
+      <xs:element form="qualified" minOccurs="0" name="Version" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="UserGroupTP">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="Identity" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="CompanyIdentity" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Title" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Status" type="xs:int"/>
+      <xs:element form="qualified" minOccurs="0" name="Version" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="DepartmentGroupListTP">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="DepartmentGroupList">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="DepartmentGroup" type="tns:DepartmentGroupTP"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="DepartmentListTP">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="DepartmentList">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:Department"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="IdListTP">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="IdList">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="ID" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ProfileResponseTP">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="tns:User"/>
+      <xs:element minOccurs="0" ref="tns:CompanyProfile"/>
+      <xs:element form="qualified" minOccurs="0" name="Sessionid" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="UserTP">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="CompanyIdentity" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Email" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="BirthDate" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="FirstName" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="LastName" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Status" type="xs:int"/>
+      <xs:element form="qualified" minOccurs="0" name="Version" type="xs:int"/>
+      <xs:element form="qualified" minOccurs="0" name="Permission" type="xs:int"/>
+      <xs:element form="qualified" minOccurs="0" name="GroupList">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="Group" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element form="qualified" minOccurs="0" name="DepartmentList">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="Department" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element form="qualified" minOccurs="0" name="DepartmentGroupList">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="DepartmentGroup" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element form="qualified" minOccurs="0" name="DeputyList">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="Deputy" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element form="qualified" minOccurs="0" name="RoleList">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="Role" type="xs:int"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="TokenProfileRequestTP">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="Token" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="UserAuthenticationRequestTP">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="Email" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Password" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="CompanyIdentity" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="UserAuthenticationResponseTP">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="UserIdentity" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="CompanyIdentity" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Token" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="SessionId" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Created" type="xs:long"/>
+      <xs:element form="qualified" minOccurs="0" name="LastAccess" type="xs:long"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="UserGroupListTP">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="UserGroupList">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:UserGroup"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="UserListTP">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="UserList">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:User"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="WorkflowActionTP">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="Identity" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="AssignToIdentity" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="CurrentStepIdentity" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Comments" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Status" type="xs:int"/>
+      <xs:element form="qualified" minOccurs="0" name="Version" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="WorkflowActionListTP">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="WorkflowActionList">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:WorkflowAction"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="WorkflowFileTP">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="Identity" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="CreatedByIdentity" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Title" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Extention" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="ActiveFilePath" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="ActiveFileVersion" type="xs:int"/>
+      <xs:element form="qualified" minOccurs="0" name="Comments" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Status" type="xs:int"/>
+      <xs:element form="qualified" minOccurs="0" name="Version" type="xs:int"/>
+      <xs:element form="qualified" minOccurs="0" name="FileVersionList">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="FileVersion" type="tns:WorkflowFileVersionTP"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="WorkflowFileVersionTP">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="CreatedByIdentity" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="FilePath" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Comments" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="FileVersion" type="xs:int"/>
+      <xs:element form="qualified" minOccurs="0" name="Status" type="xs:int"/>
+      <xs:element form="qualified" minOccurs="0" name="Version" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="WorkflowFileListTP">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="WorkflowFileList">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:WorkflowFile"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="WorkflowMessageTP">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="WorkflowIdentity" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="StepIdentity" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="UserId" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Message" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="CreatedByIdentity" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="MessageType" type="xs:int"/>
+      <xs:element form="qualified" minOccurs="0" name="Status" type="xs:int"/>
+      <xs:element form="qualified" minOccurs="0" name="Version" type="xs:int"/>
+      <xs:element form="qualified" minOccurs="0" name="ExpireDays" type="xs:int"/>
+      <xs:element form="qualified" minOccurs="0" name="CreatedAt" type="xs:dateTime"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="WorkflowMessageListTP">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="WorkflowMessageList">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:WorkflowMessage"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="WorkflowSearchFilterTP">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="AssignedUserIdentitySet">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="AssignedUserId" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element form="qualified" minOccurs="0" name="StatusSet">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="Status" type="xs:int"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element form="qualified" minOccurs="0" name="WorkflowTypeIdentitySet">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="WorkflowTypeIdentity" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element form="qualified" minOccurs="0" name="WorkflowStepIdentitySet">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="WorkflowStepIdentity" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="WorkflowTypeTP">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="Identity" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="CompanyIdentity" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="BaseTypeIdentity" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Title" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Comments" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Status" type="xs:int"/>
+      <xs:element form="qualified" minOccurs="0" name="Version" type="xs:int"/>
+      <xs:element form="qualified" minOccurs="0" name="SendToController" type="xs:boolean"/>
+      <xs:element form="qualified" minOccurs="0" name="AssignType" type="xs:int"/>
+      <xs:element form="qualified" minOccurs="0" name="IncreaseStepAutomatic" type="xs:boolean"/>
+      <xs:element form="qualified" minOccurs="0" name="AllowAssign" type="xs:boolean"/>
+      <xs:element form="qualified" minOccurs="0" name="WorkflowTypeStepList">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:WorkflowTypeStep"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="WorkflowTypeStepTP">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="Identity" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Title" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="StepIndex" type="xs:int"/>
+      <xs:element form="qualified" minOccurs="0" name="ViewName" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Comments" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Status" type="xs:int"/>
+      <xs:element form="qualified" minOccurs="0" name="Version" type="xs:int"/>
+      <xs:element form="qualified" minOccurs="0" name="ExpireDays" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="WorkflowTypeListTP">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="WorkflowTypeList">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:WorkflowType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="WorkflowTypeStepListTP">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="WorkflowTypeStepList">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:WorkflowTypeStep"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="InvoiceWorkflowTP">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="tns:Workflow"/>
+      <xs:element form="qualified" minOccurs="0" name="Sender" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="RegisterNumber" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="InvoceDate" type="xs:dateTime"/>
+      <xs:element form="qualified" minOccurs="0" name="PartnerCode" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="VendorNumber" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="VendorName" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="IsDirectDebit" type="xs:boolean"/>
+      <xs:element form="qualified" minOccurs="0" name="InvoiceType" type="xs:int"/>
+      <xs:element form="qualified" minOccurs="0" name="DiscountEnterDate" type="xs:dateTime"/>
+      <xs:element form="qualified" minOccurs="0" name="DiscountDeadline" type="xs:int"/>
+      <xs:element form="qualified" minOccurs="0" name="DiscountRate" type="xs:double"/>
+      <xs:element form="qualified" minOccurs="0" name="DiscountDate" type="xs:dateTime"/>
+      <xs:element form="qualified" minOccurs="0" name="PaymentAmount" type="xs:double"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="WorkflowTP">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="Identity" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="WorkflowTypeIdentity" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="CurrentStepIdentity" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="ControllerIdentity" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="CreatedByIdentity" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Comments" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Status" type="xs:int"/>
+      <xs:element form="qualified" minOccurs="0" name="Version" type="xs:int"/>
+      <xs:element form="qualified" minOccurs="0" name="WorkflowFileSet">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:WorkflowFile"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element form="qualified" minOccurs="0" name="WorkflowActionSet">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:WorkflowAction"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="InvoiceWorkflowListTP">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="InvoiceWorkflowList">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:InvoiceWorkflow"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="InvoiceWorkflowCreateRequestTP">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="Command" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Workflow" type="tns:InvoiceWorkflowTP"/>
+      <xs:element form="qualified" minOccurs="0" name="ExpireDays" type="xs:int"/>
+      <xs:element form="qualified" minOccurs="0" name="AssignedList">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="AssignedList" type="tns:AssignItemTP"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="SingleTaskWorkflowTP">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="tns:Workflow"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="SingleTaskWorkflowListTP">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="SingleTaskWorkflowList">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:SingleTaskWorkflow"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="SingleTaskWorkflowSaveRequestTP">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="Command" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Workflow" type="tns:SingleTaskWorkflowTP"/>
+      <xs:element form="qualified" minOccurs="0" name="ExpireDays" type="xs:int"/>
+      <xs:element form="qualified" minOccurs="0" name="AssignedList">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="AssignedList" type="tns:AssignItemTP"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="TestThreeTaskWorkflowTP">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="tns:Workflow"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="TestThreeTaskWorkflowListTP">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="TestThreeTaskWorkflowList">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:TestThreeTaskWorkflow"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="TestThreeTaskWorkflowSaveRequestTP">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="Command" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="Workflow" type="tns:TestThreeTaskWorkflowTP"/>
+      <xs:element form="qualified" minOccurs="0" name="ExpireDays" type="xs:int"/>
+      <xs:element form="qualified" minOccurs="0" name="AssignedList">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="AssignedList" type="tns:AssignItemTP"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

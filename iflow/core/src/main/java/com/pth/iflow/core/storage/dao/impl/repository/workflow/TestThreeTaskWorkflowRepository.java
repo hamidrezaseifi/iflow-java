@@ -13,9 +13,9 @@ import com.pth.iflow.core.model.entity.workflow.TestThreeTaskWorkflowEntity;
 @Repository
 public interface TestThreeTaskWorkflowRepository extends JpaRepository<TestThreeTaskWorkflowEntity, Long> {
 
-  @Query("SELECT ug FROM TestThreeTaskWorkflowEntity ug where ug.identity=:ident")
+  @Query("SELECT ug FROM TestThreeTaskWorkflowEntity ug where ug.workflow.identity=:ident")
   TestThreeTaskWorkflowEntity findByIdentity(@Param("ident") String identity);
 
-  @Query("SELECT ug FROM TestThreeTaskWorkflowEntity ug where ug.identity in :identlist")
+  @Query("SELECT ug FROM TestThreeTaskWorkflowEntity ug where ug.workflow.identity in :identlist")
   List<TestThreeTaskWorkflowEntity> findAllByIdentityList(@Param("identlist") Collection<String> identityList);
 }

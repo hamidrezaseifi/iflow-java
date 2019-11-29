@@ -26,15 +26,19 @@ import com.pth.iflow.core.model.entity.DepartmentGroupEntity;
 import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
 import com.pth.iflow.core.service.interfaces.IDepartmentGroupService;
+import com.pth.iflow.core.service.interfaces.IUsersService;
 
 @RestController
 @RequestMapping
 public class DepartmentGroupController {
 
   final IDepartmentGroupService departmentGroupService;
+  final IUsersService           userService;
 
-  public DepartmentGroupController(@Autowired final IDepartmentGroupService departmentGroupService) {
+  public DepartmentGroupController(@Autowired final IDepartmentGroupService departmentGroupService,
+      @Autowired final IUsersService userService) {
     this.departmentGroupService = departmentGroupService;
+    this.userService = userService;
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -60,22 +64,11 @@ public class DepartmentGroupController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.DEPARTMENTGRPUP_READ_LIST_BY_DEPARTMENTIDENTITY)
-  public ResponseEntity<DepartmentGroupListEdo> readDepartmentListByDepartment(@PathVariable(name = "identity") final String identity,
-      final HttpServletRequest request) throws Exception {
-
-    final List<DepartmentGroupEntity> modelList = this.departmentGroupService.getListByDepartmentIdentity(identity);
-
-    return ControllerHelper.createResponseEntity(request,
-        new DepartmentGroupListEdo(CoreModelEdoMapper.toDepartmentGroupEdoList(modelList)), HttpStatus.OK);
-  }
-
-  @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.DEPARTMENTGRPUP_READ_ALLUSERLIST_BY_DEPARTMENTGROUPIDENTITY)
   public ResponseEntity<UserListEdo> readAllUserListByDepartmentGroup(@PathVariable(name = "identity") final String identity,
       final HttpServletRequest request) throws Exception {
 
-    final List<UserEntity> modelList = this.departmentGroupService.getAllUserListByDepartmentGroupId(identity);
+    final List<UserEntity> modelList = this.userService.getAllUserIdentityListByDepartmentGroupId(identity);
 
     return ControllerHelper.createResponseEntity(request, new UserListEdo(CoreModelEdoMapper.toUserEdoList(modelList)), HttpStatus.OK);
   }

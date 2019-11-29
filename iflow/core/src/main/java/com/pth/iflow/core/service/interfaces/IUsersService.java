@@ -7,6 +7,7 @@ import com.pth.iflow.core.model.entity.DepartmentEntity;
 import com.pth.iflow.core.model.entity.DepartmentGroupEntity;
 import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.model.entity.UserGroupEntity;
+import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 
 public interface IUsersService {
 
@@ -25,5 +26,9 @@ public interface IUsersService {
   List<UserEntity> getUserDeputies(final String identity);
 
   List<UserEntity> getCompanyUsers(final String companyIdentity);
+
+  List<UserEntity> getAllUserIdentityListByDepartmentId(final String identity) throws IFlowStorageException;
+
+  List<UserEntity> getAllUserIdentityListByDepartmentGroupId(final String identity) throws IFlowStorageException;
 
 }

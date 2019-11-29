@@ -7,4 +7,5 @@ public interface ICompanyService {
   CompanyEntity save(CompanyEntity model);
 
   CompanyEntity getByIdentity(final String identifyId);
+
 }

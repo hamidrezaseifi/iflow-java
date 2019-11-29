@@ -58,8 +58,13 @@ public class DepartmentEntity extends EntityHelper {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "company_id", insertable = false, updatable = false)
   @Fetch(FetchMode.JOIN)
-  private CompanyEntity                     company;
+  private final CompanyEntity               company;
 
+  public DepartmentEntity() {
+    company = new CompanyEntity();
+  }
+
+  @Override
   public Long getId() {
     return this.id;
   }

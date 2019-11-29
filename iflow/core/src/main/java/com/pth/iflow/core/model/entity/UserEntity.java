@@ -86,10 +86,15 @@ public class UserEntity extends EntityHelper {
   @JoinColumn(name = "user_id")
   private final Set<UserDepartmentGroupEntity> departmentGroups = new HashSet<>();
 
+  public UserEntity() {
+    company = new CompanyEntity();
+  }
+
   /**
    * @return the id
    */
 
+  @Override
   public Long getId() {
     return this.id;
   }
@@ -282,7 +287,57 @@ public class UserEntity extends EntityHelper {
 
   @Override
   public void setIdentity(final String identity) {
+    this.email = identity;
+  }
 
+  public void fillGroupsFromIdentityList(final Set<String> identityList) {
+    for (final String identity : identityList) {
+      final UserUserGroupEntity entity = new UserUserGroupEntity();
+      entity.setUserGroup(new UserGroupEntity());
+      entity.getUserGroup().setIdentity(identity);
+      entity.setUserId(id);
+      this.groups.add(entity);
+    }
+
+  }
+
+  public void fillDepartmentsFromIdentityList(final Set<String> identityList) {
+    for (final String identity : identityList) {
+      final UserDepartmentEntity entity = new UserDepartmentEntity();
+      entity.setDepartment(new DepartmentEntity());
+      entity.getDepartment().setIdentity(identity);
+      entity.setUserId(id);
+      this.departments.add(entity);
+    }
+  }
+
+  public void fillDepartmentGroupsFromIdentityList(final Set<String> identityList) {
+    for (final String identity : identityList) {
+      final UserDepartmentGroupEntity entity = new UserDepartmentGroupEntity();
+      entity.setDepartmentGroup(new DepartmentGroupEntity());
+      entity.getDepartmentGroup().setIdentity(identity);
+      entity.setUserId(id);
+      this.departmentGroups.add(entity);
+    }
+  }
+
+  public void fillDeputiesFromIdentityList(final Set<String> identityList) {
+    for (final String identity : identityList) {
+      final UserDeputyEntity entity = new UserDeputyEntity();
+      entity.setDeputy(new UserEntity());
+      entity.getDeputy().setIdentity(identity);
+      entity.setUserId(id);
+      this.deputies.add(entity);
+    }
+  }
+
+  public void fillRolesFromRoleList(final Set<Integer> roleList) {
+    for (final Integer role : roleList) {
+      final UserRoleEntity entity = new UserRoleEntity();
+      entity.setRole(role);
+      entity.setUserId(id);
+      this.roles.add(entity);
+    }
   }
 
 }

@@ -3,7 +3,6 @@ package com.pth.iflow.core.storage.dao.impl;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -31,12 +30,12 @@ public class UserDao implements IUserDao {
 
   @Override
   public UserEntity create(final UserEntity model) throws IFlowStorageException {
-    return repository.save(model);
+    return repository.saveAndFlush(model);
   }
 
   @Override
   public UserEntity update(final UserEntity model) throws IFlowStorageException {
-    return repository.save(model);
+    return repository.saveAndFlush(model);
   }
 
   @Override
@@ -54,7 +53,7 @@ public class UserDao implements IUserDao {
   }
 
   @Override
-  public UserEntity getByEmail(final String email) throws IFlowStorageException {
+  public UserEntity getByIdentity(final String email) throws IFlowStorageException {
 
     return repository.findByIdentity(email);
   }
@@ -72,31 +71,31 @@ public class UserDao implements IUserDao {
   }
 
   @Override
-  public Set<String> getAllUserIdentityListByDepartmentId(final Long id) throws IFlowStorageException {
+  public List<UserEntity> getAllUserIdentityListByDepartmentId(final String identity) throws IFlowStorageException {
     final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
     final CriteriaQuery<UserEntity> query = criteriaBuilder.createQuery(UserEntity.class);
     final Root<UserEntity> userRoot = query.from(UserEntity.class);
     userRoot.join("departments", JoinType.INNER);
 
-    query.select(userRoot).where(criteriaBuilder.equal(userRoot.get("departmentId"), id));
+    query.select(userRoot).where(criteriaBuilder.equal(userRoot.get("department").get("identity"), identity));
     final TypedQuery<UserEntity> typedQuery = entityManager.createQuery(query);
     final List<UserEntity> list = typedQuery.getResultList();
 
-    return list.stream().map(u -> u.getIdentity()).collect(Collectors.toSet());
+    return list;
   }
 
   @Override
-  public Set<String> getAllUserIdentityListByDepartmentGroupId(final Long id) throws IFlowStorageException {
+  public List<UserEntity> getAllUserIdentityListByDepartmentGroupId(final String identity) throws IFlowStorageException {
     final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
     final CriteriaQuery<UserEntity> query = criteriaBuilder.createQuery(UserEntity.class);
     final Root<UserEntity> userRoot = query.from(UserEntity.class);
     userRoot.join("departmentGroups", JoinType.INNER);
 
-    query.select(userRoot).where(criteriaBuilder.equal(userRoot.get("departmentGroupId"), id));
+    query.select(userRoot).where(criteriaBuilder.equal(userRoot.get("departmentGroup").get("identity"), identity));
     final TypedQuery<UserEntity> typedQuery = entityManager.createQuery(query);
     final List<UserEntity> list = typedQuery.getResultList();
 
-    return list.stream().map(u -> u.getIdentity()).collect(Collectors.toSet());
+    return list;
   }
 
 }

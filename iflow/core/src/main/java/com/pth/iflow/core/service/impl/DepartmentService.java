@@ -56,4 +56,7 @@ public class DepartmentService implements IDepartmentService {
     return this.departmentDao.update(model);
   }
 
+  protected DepartmentEntity prepareSavingModel(final DepartmentEntity model) {
+    return model;
+  }
 }

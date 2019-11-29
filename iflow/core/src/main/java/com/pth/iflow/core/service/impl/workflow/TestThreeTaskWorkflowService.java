@@ -6,59 +6,58 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.pth.iflow.core.model.workflow.TestThreeTaskWorkflow;
+import com.pth.iflow.core.model.entity.workflow.TestThreeTaskWorkflowEntity;
+import com.pth.iflow.core.service.interfaces.workflow.ITestThreeTaskWorkflowService;
 import com.pth.iflow.core.service.interfaces.workflow.IWorkflowService;
-import com.pth.iflow.core.storage.dao.exception.IFlowOptimisticLockException;
-import com.pth.iflow.core.storage.dao.interfaces.workflow.IWorkflowDao;
+import com.pth.iflow.core.storage.dao.interfaces.workflow.ITestThreeTaskWorkflowDao;
 
 @Service
-public class TestThreeTaskWorkflowService implements IWorkflowService<TestThreeTaskWorkflow> {
+public class TestThreeTaskWorkflowService implements ITestThreeTaskWorkflowService {
 
-  private final IWorkflowDao<TestThreeTaskWorkflow> invoiceWorkflowDao;
+  private final ITestThreeTaskWorkflowDao testThreeTaskWorkflowDao;
 
-  public TestThreeTaskWorkflowService(@Autowired final IWorkflowDao<TestThreeTaskWorkflow> invoiceWorkflowDao) {
-    this.invoiceWorkflowDao = invoiceWorkflowDao;
+  private final IWorkflowService          workflowService;
+
+  public TestThreeTaskWorkflowService(@Autowired final ITestThreeTaskWorkflowDao workflowDao,
+      @Autowired final IWorkflowService workflowService) {
+    this.testThreeTaskWorkflowDao = workflowDao;
+    this.workflowService = workflowService;
   }
 
   @Override
-  public TestThreeTaskWorkflow save(final TestThreeTaskWorkflow model) {
-    TestThreeTaskWorkflow exists = null;
-    if (model.isIdentityNotSet() == false) {
-      exists = this.getByIdentity(model.getIdentity());
-      model.setId(exists.getId());
-    }
+  public TestThreeTaskWorkflowEntity save(final TestThreeTaskWorkflowEntity model) {
 
     if (model.isNew()) {
-      model.increaseVersion();
-      return this.invoiceWorkflowDao.create(model);
+
+      return testThreeTaskWorkflowDao.create(model);
     }
 
-    exists = exists != null ? exists : this.invoiceWorkflowDao.getById(model.getId());
+    final TestThreeTaskWorkflowEntity exists = testThreeTaskWorkflowDao.getById(model.getWorkflowId());
+    model.verifyVersion(exists);
 
-    if (exists.getVersion() > model.getVersion()) {
-      throw new IFlowOptimisticLockException("TestThreeTaskWorkflow with id " + model.getId() + " is old!");
-    }
+    return testThreeTaskWorkflowDao.update(model);
 
-    model.setVersion(model.getVersion() + 1);
-
-    return this.invoiceWorkflowDao.update(model);
   }
 
   @Override
-  public TestThreeTaskWorkflow getByIdentity(final String identity) {
-    return this.invoiceWorkflowDao.getByIdentity(identity);
+  public TestThreeTaskWorkflowEntity getByIdentity(final String identity) {
+    return this.testThreeTaskWorkflowDao.getByIdentity(identity);
   }
 
   @Override
-  public List<TestThreeTaskWorkflow> getListForUser(final String email, final int status) {
+  public List<TestThreeTaskWorkflowEntity> getListForUser(final String email, final int status) {
 
-    return this.invoiceWorkflowDao.getListForUserIdentity(email, status);
+    return this.testThreeTaskWorkflowDao.getListForUserIdentity(email, status);
   }
 
   @Override
-  public List<TestThreeTaskWorkflow> getListByIdentityList(final Collection<String> idList) {
+  public List<TestThreeTaskWorkflowEntity> getListByIdentityList(final Collection<String> idList) {
 
-    return this.invoiceWorkflowDao.getListByIdentityList(idList);
+    return this.testThreeTaskWorkflowDao.getListByIdentityList(idList);
   }
 
+  protected TestThreeTaskWorkflowEntity prepareSavingModel(final TestThreeTaskWorkflowEntity model) {
+    workflowService.prepareSavingModel(model.getWorkflow());
+    return model;
+  }
 }

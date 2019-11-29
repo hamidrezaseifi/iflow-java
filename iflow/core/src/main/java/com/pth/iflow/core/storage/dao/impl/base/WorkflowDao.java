@@ -31,12 +31,13 @@ public class WorkflowDao implements IWorkflowDao {
 
   @Override
   public WorkflowEntity create(final WorkflowEntity model) throws IFlowStorageException {
-    return repository.save(model);
+    return repository.saveAndFlush(model);
   }
 
   @Override
   public WorkflowEntity update(final WorkflowEntity model) throws IFlowStorageException {
-    return repository.save(model);
+    deleteAllSubItemsById(model.getId());
+    return repository.saveAndFlush(model);
   }
 
   @Override
@@ -78,6 +79,13 @@ public class WorkflowDao implements IWorkflowDao {
   public List<WorkflowEntity> getListByIdentityList(final Collection<String> idList) {
 
     return repository.findAllByIdentityList(idList);
+  }
+
+  @Override
+  public void deleteAllSubItemsById(final Long workflowId) throws IFlowStorageException {
+    repository.deleteAllWorkflowActions(workflowId);
+    repository.deleteAllWorkflowFiles(workflowId);
+
   }
 
 }

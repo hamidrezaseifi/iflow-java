@@ -24,34 +24,39 @@ public class DepartmentGroupEntity extends EntityHelper {
   @Id
   @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long             id;
+  private Long                   id;
 
   @Column(name = "identity")
-  private String           identity;
+  private String                 identity;
 
   @Column(name = "department_id")
-  private Long             departmentId;
+  private Long                   departmentId;
 
   @Column(name = "title")
-  private String           title;
+  private String                 title;
 
   @Column(name = "status")
-  private Integer          status;
+  private Integer                status;
 
   @Column(name = "version")
-  private Integer          version;
+  private Integer                version;
 
   @Column(name = "created_at")
-  private Date             createdAt;
+  private Date                   createdAt;
 
   @Column(name = "updated_at")
-  private Date             updatedAt;
+  private Date                   updatedAt;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "department_id", insertable = false, updatable = false)
   @Fetch(FetchMode.JOIN)
-  private DepartmentEntity department;
+  private final DepartmentEntity department;
 
+  public DepartmentGroupEntity() {
+    department = new DepartmentEntity();
+  }
+
+  @Override
   public Long getId() {
     return this.id;
   }

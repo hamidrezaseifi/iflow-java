@@ -56,4 +56,7 @@ public class UserGroupService implements IUserGroupService {
     return userGroupDao.update(model);
   }
 
+  protected UserGroupEntity prepareSavingModel(final UserGroupEntity model) {
+    return model;
+  }
 }

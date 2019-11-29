@@ -65,4 +65,7 @@ public class WorkflowMessageService implements IWorkflowMessageService {
     }
   }
 
+  protected WorkflowMessageEntity prepareSavingModel(final WorkflowMessageEntity model) {
+    return model;
+  }
 }

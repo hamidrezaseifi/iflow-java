@@ -52,6 +52,11 @@ public class UserGroupEntity extends EntityHelper {
   @Column(name = "updated_at")
   private Date          updatedAt;
 
+  public UserGroupEntity() {
+    company = new CompanyEntity();
+  }
+
+  @Override
   public Long getId() {
     return this.id;
   }

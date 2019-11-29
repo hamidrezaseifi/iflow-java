@@ -39,6 +39,10 @@ public class UserUserGroupEntity implements Serializable {
   @Fetch(FetchMode.JOIN)
   private UserGroupEntity   userGroup;
 
+  public UserUserGroupEntity() {
+    userGroup = new UserGroupEntity();
+  }
+
   public Long getUserId() {
     return userId;
   }
@@ -61,6 +65,14 @@ public class UserUserGroupEntity implements Serializable {
 
   public void setCreatedAt(final Date createdAt) {
     this.createdAt = createdAt;
+  }
+
+  public UserGroupEntity getUserGroup() {
+    return userGroup;
+  }
+
+  public void setUserGroup(final UserGroupEntity userGroup) {
+    this.userGroup = userGroup;
   }
 
 }

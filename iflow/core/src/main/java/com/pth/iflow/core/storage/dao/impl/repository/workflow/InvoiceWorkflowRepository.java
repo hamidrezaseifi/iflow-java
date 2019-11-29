@@ -13,9 +13,9 @@ import com.pth.iflow.core.model.entity.workflow.InvoiceWorkflowEntity;
 @Repository
 public interface InvoiceWorkflowRepository extends JpaRepository<InvoiceWorkflowEntity, Long> {
 
-  @Query("SELECT ug FROM InvoiceWorkflowEntity ug where ug.identity=:ident")
+  @Query("SELECT ug FROM InvoiceWorkflowEntity ug where ug.workflow.identity=:ident")
   InvoiceWorkflowEntity findByIdentity(@Param("ident") String identity);
 
-  @Query("SELECT ug FROM InvoiceWorkflowEntity ug where ug.identity in :identlist")
+  @Query("SELECT ug FROM InvoiceWorkflowEntity ug where ug.workflow.identity in :identlist")
   List<InvoiceWorkflowEntity> findAllByIdentityList(@Param("identlist") Collection<String> identityList);
 }

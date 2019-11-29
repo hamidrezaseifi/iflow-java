@@ -31,12 +31,12 @@ public class TestThreeTaskWorkflowDao implements ITestThreeTaskWorkflowDao {
 
   @Override
   public TestThreeTaskWorkflowEntity create(final TestThreeTaskWorkflowEntity model) throws IFlowStorageException {
-    return repository.save(model);
+    return repository.saveAndFlush(model);
   }
 
   @Override
   public TestThreeTaskWorkflowEntity update(final TestThreeTaskWorkflowEntity model) throws IFlowStorageException {
-    return repository.save(model);
+    return repository.saveAndFlush(model);
   }
 
   @Override

@@ -372,7 +372,7 @@ public class TestDataProducer {
     model.setExpireDays(10);
     model.setMessageType(EWorkflowMessageType.OFFERING_WORKFLOW);
     model.setUserId(1L);
-    model.setCreatedBy(1L);
+    model.setCreatedByUser(1L);
     model.setCreatedByIdentity("createdByIdentity");
     model.setStepIdentity("stepIdentity");
     model.setUserIdentity("userIdentity");
@@ -567,7 +567,7 @@ public class TestDataProducer {
     model.setComments("comments");
     model.setFilePath("filePath");
     model.setFileVersion(version);
-    model.setCreatedBy(getTestUser());
+    model.setCreatedByUser(getTestUser());
 
     return model;
   }

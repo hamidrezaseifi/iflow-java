@@ -39,6 +39,10 @@ public class UserDeputyEntity implements Serializable {
   @Fetch(FetchMode.JOIN)
   private UserEntity        deputy;
 
+  public UserDeputyEntity() {
+    deputy = new UserEntity();
+  }
+
   public Long getUserId() {
     return userId;
   }

@@ -26,15 +26,18 @@ import com.pth.iflow.core.model.entity.DepartmentEntity;
 import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
 import com.pth.iflow.core.service.interfaces.IDepartmentService;
+import com.pth.iflow.core.service.interfaces.IUsersService;
 
 @RestController
 @RequestMapping
 public class DepartmentController {
 
   final IDepartmentService departmentService;
+  final IUsersService      userService;
 
-  public DepartmentController(@Autowired final IDepartmentService departmentService) {
+  public DepartmentController(@Autowired final IDepartmentService departmentService, @Autowired final IUsersService userService) {
     this.departmentService = departmentService;
+    this.userService = userService;
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -75,7 +78,7 @@ public class DepartmentController {
   public ResponseEntity<UserListEdo> readAllUserListByDepartmentGroup(@PathVariable(name = "identity") final String identity,
       final HttpServletRequest request) throws Exception {
 
-    final List<UserEntity> modelList = this.departmentService.getAllUserListByDepartmentIdentity(identity);
+    final List<UserEntity> modelList = this.userService.getAllUserIdentityListByDepartmentId(identity);
 
     return ControllerHelper.createResponseEntity(request, new UserListEdo(CoreModelEdoMapper.toUserEdoList(modelList)), HttpStatus.OK);
   }

@@ -16,9 +16,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.pth.iflow.core.model.entity.workflow.SingleTaskWorkflowEntity;
+import com.pth.iflow.core.model.entity.workflow.WorkflowEntity;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 import com.pth.iflow.core.storage.dao.impl.repository.workflow.SingleTaskWorkflowRepository;
 import com.pth.iflow.core.storage.dao.interfaces.workflow.ISingleTaskWorkflowDao;
+import com.pth.iflow.core.storage.dao.interfaces.workflow.IWorkflowDao;
 
 @Repository
 public class SingleTaskWorkflowDao implements ISingleTaskWorkflowDao {
@@ -27,16 +29,22 @@ public class SingleTaskWorkflowDao implements ISingleTaskWorkflowDao {
   private SingleTaskWorkflowRepository repository;
 
   @Autowired
+  private IWorkflowDao                 workflowDao;
+
+  @Autowired
   private EntityManager                entityManager;
 
   @Override
   public SingleTaskWorkflowEntity create(final SingleTaskWorkflowEntity model) throws IFlowStorageException {
-    return repository.save(model);
+    final WorkflowEntity workflow = workflowDao.create(model.getWorkflow());
+    model.setWorkflow(workflow);
+
+    return repository.saveAndFlush(model);
   }
 
   @Override
   public SingleTaskWorkflowEntity update(final SingleTaskWorkflowEntity model) throws IFlowStorageException {
-    return repository.save(model);
+    return repository.saveAndFlush(model);
   }
 
   @Override

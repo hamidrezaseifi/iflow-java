@@ -4,11 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pth.iflow.core.model.entity.CompanyEntity;
+import com.pth.iflow.core.model.mapper.CoreModelEdoMapperBase;
 import com.pth.iflow.core.service.interfaces.ICompanyService;
 import com.pth.iflow.core.storage.dao.interfaces.ICompanyDao;
 
 @Service
-public class CompanyService implements ICompanyService {
+public class CompanyService extends CoreModelEdoMapperBase implements ICompanyService {
 
   private final ICompanyDao companyDao;
 
@@ -25,7 +26,7 @@ public class CompanyService implements ICompanyService {
   @Override
   public CompanyEntity save(final CompanyEntity model) {
     if (model.isNew()) {
-      model.increaseVersion();
+
       return companyDao.create(model);
     }
 
@@ -35,4 +36,7 @@ public class CompanyService implements ICompanyService {
     return companyDao.update(model);
   }
 
+  protected CompanyEntity prepareSavingModel(final CompanyEntity model) {
+    return model;
+  }
 }

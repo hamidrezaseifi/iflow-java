@@ -14,14 +14,10 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.Subselect;
 
 import com.pth.iflow.core.model.entity.UserEntity;
 
 @Entity
-@Subselect("select workflow_actions.*,steps.identity as current_step_identity, users.email as assign_to_identity from \r\n"
-    + "(workflow_actions inner join workflow_type_step steps on steps.id = workflow_actions.current_step_id)\r\n"
-    + " left outer join users on users.id = workflow_actions.assign_to ")
 @Table(name = "workflow_actions")
 public class WorkflowActionEntity {
 
@@ -66,6 +62,11 @@ public class WorkflowActionEntity {
   @JoinColumn(name = "current_step_id", insertable = false, updatable = false)
   @Fetch(FetchMode.JOIN)
   private WorkflowTypeStepEntity currentStep;
+
+  public WorkflowActionEntity() {
+    currentStep = new WorkflowTypeStepEntity();
+    assignToUser = new UserEntity();
+  }
 
   public Long getId() {
     return this.id;
@@ -153,6 +154,22 @@ public class WorkflowActionEntity {
 
   public void setUpdatedAt(final Date updatedAt) {
     this.updatedAt = updatedAt;
+  }
+
+  public UserEntity getAssignToUser() {
+    return assignToUser;
+  }
+
+  public void setAssignToUser(final UserEntity assignToUser) {
+    this.assignToUser = assignToUser;
+  }
+
+  public WorkflowTypeStepEntity getCurrentStep() {
+    return currentStep;
+  }
+
+  public void setCurrentStep(final WorkflowTypeStepEntity currentStep) {
+    this.currentStep = currentStep;
   }
 
 }

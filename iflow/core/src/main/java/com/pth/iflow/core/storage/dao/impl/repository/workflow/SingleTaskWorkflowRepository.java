@@ -13,9 +13,9 @@ import com.pth.iflow.core.model.entity.workflow.SingleTaskWorkflowEntity;
 @Repository
 public interface SingleTaskWorkflowRepository extends JpaRepository<SingleTaskWorkflowEntity, Long> {
 
-  @Query("SELECT ug FROM SingleTaskWorkflowEntity ug where ug.identity=:ident")
+  @Query("SELECT ug FROM SingleTaskWorkflowEntity ug where ug.workflow.identity=:ident")
   SingleTaskWorkflowEntity findByIdentity(@Param("ident") String identity);
 
-  @Query("SELECT ug FROM SingleTaskWorkflowEntity ug where ug.identity in :identlist")
+  @Query("SELECT ug FROM SingleTaskWorkflowEntity ug where ug.workflow.identity in :identlist")
   List<SingleTaskWorkflowEntity> findAllByIdentityList(@Param("identlist") Collection<String> identityList);
 }

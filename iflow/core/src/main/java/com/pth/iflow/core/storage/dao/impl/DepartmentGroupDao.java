@@ -19,12 +19,12 @@ public class DepartmentGroupDao implements IDepartmentGroupDao {
 
   @Override
   public DepartmentGroupEntity create(final DepartmentGroupEntity model) throws IFlowStorageException {
-    return repository.save(model);
+    return repository.saveAndFlush(model);
   }
 
   @Override
   public DepartmentGroupEntity update(final DepartmentGroupEntity model) throws IFlowStorageException {
-    return repository.save(model);
+    return repository.saveAndFlush(model);
   }
 
   @Override

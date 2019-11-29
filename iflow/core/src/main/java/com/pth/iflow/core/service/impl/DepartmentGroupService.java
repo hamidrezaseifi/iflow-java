@@ -41,4 +41,7 @@ public class DepartmentGroupService implements IDepartmentGroupService {
     return departmentGroupDao.update(model);
   }
 
+  protected DepartmentGroupEntity prepareSavingModel(final DepartmentGroupEntity model) {
+    return model;
+  }
 }

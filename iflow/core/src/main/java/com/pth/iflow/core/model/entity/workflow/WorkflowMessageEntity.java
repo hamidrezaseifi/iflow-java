@@ -3,12 +3,14 @@ package com.pth.iflow.core.model.entity.workflow;
 import java.sql.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -18,6 +20,8 @@ import com.pth.iflow.common.enums.EWorkflowMessageType;
 import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.storage.dao.helper.EntityHelper;
 
+@Entity
+@Table(name = "workflow_message")
 public class WorkflowMessageEntity extends EntityHelper {
 
   @Id
@@ -77,6 +81,14 @@ public class WorkflowMessageEntity extends EntityHelper {
   @JoinColumn(name = "workflow_id", insertable = false, updatable = false)
   @Fetch(FetchMode.JOIN)
   private WorkflowEntity         workflow;
+
+  public WorkflowMessageEntity() {
+    step = new WorkflowTypeStepEntity();
+    user = new UserEntity();
+    createdByUser = new UserEntity();
+    workflow = new WorkflowEntity();
+
+  }
 
   @Override
   public Long getId() {
@@ -224,6 +236,38 @@ public class WorkflowMessageEntity extends EntityHelper {
   public String getIdentityPreffix() {
 
     return "";
+  }
+
+  public WorkflowTypeStepEntity getStep() {
+    return step;
+  }
+
+  public void setStep(final WorkflowTypeStepEntity step) {
+    this.step = step;
+  }
+
+  public UserEntity getUser() {
+    return user;
+  }
+
+  public void setUser(final UserEntity user) {
+    this.user = user;
+  }
+
+  public UserEntity getCreatedByUser() {
+    return createdByUser;
+  }
+
+  public void setCreatedByUser(final UserEntity createdByUser) {
+    this.createdByUser = createdByUser;
+  }
+
+  public WorkflowEntity getWorkflow() {
+    return workflow;
+  }
+
+  public void setWorkflow(final WorkflowEntity workflow) {
+    this.workflow = workflow;
   }
 
 }

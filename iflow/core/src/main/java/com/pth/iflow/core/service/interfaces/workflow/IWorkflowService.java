@@ -15,4 +15,6 @@ public interface IWorkflowService {
 
   public List<WorkflowEntity> getListByIdentityList(final Collection<String> idList);
 
+  WorkflowEntity prepareSavingModel(final WorkflowEntity model);
+
 }

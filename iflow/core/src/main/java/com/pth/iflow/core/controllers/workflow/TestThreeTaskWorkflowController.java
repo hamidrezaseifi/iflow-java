@@ -17,34 +17,22 @@ import com.pth.iflow.common.annotations.IflowGetRequestMapping;
 import com.pth.iflow.common.annotations.IflowPostRequestMapping;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
 import com.pth.iflow.common.edo.models.IdentityListEdo;
-import com.pth.iflow.common.edo.models.WorkflowActionEdo;
-import com.pth.iflow.common.edo.models.WorkflowActionListEdo;
-import com.pth.iflow.common.edo.models.WorkflowFileEdo;
-import com.pth.iflow.common.edo.models.WorkflowFileListEdo;
 import com.pth.iflow.common.edo.models.workflow.testthreetask.TestThreeTaskWorkflowEdo;
 import com.pth.iflow.common.edo.models.workflow.testthreetask.TestThreeTaskWorkflowListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.core.model.entity.workflow.TestThreeTaskWorkflowEntity;
-import com.pth.iflow.core.model.entity.workflow.WorkflowActionEntity;
-import com.pth.iflow.core.model.entity.workflow.WorkflowFileEntity;
 import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
-import com.pth.iflow.core.service.IWorkflowActionService;
-import com.pth.iflow.core.service.IWorkflowFileService;
-import com.pth.iflow.core.service.interfaces.workflow.IWorkflowService;
+import com.pth.iflow.core.service.interfaces.workflow.ITestThreeTaskWorkflowService;
 
 @RestController
 @RequestMapping
 public class TestThreeTaskWorkflowController {
 
-  final IWorkflowService<TestThreeTaskWorkflowEntity> workflowService;
-  final IWorkflowActionService                        workflowActionService;
-  final IWorkflowFileService                          workflowFileService;
+  final ITestThreeTaskWorkflowService workflowService;
 
-  public TestThreeTaskWorkflowController(@Autowired final IWorkflowService<TestThreeTaskWorkflowEntity> invoiceWorkflowService,
-      @Autowired final IWorkflowActionService workflowActionService, @Autowired final IWorkflowFileService workflowFileService) {
-    this.workflowService = invoiceWorkflowService;
-    this.workflowActionService = workflowActionService;
-    this.workflowFileService = workflowFileService;
+  public TestThreeTaskWorkflowController(@Autowired final ITestThreeTaskWorkflowService workflowService) {
+    this.workflowService = workflowService;
+
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -86,68 +74,6 @@ public class TestThreeTaskWorkflowController {
 
     return ControllerHelper.createResponseEntity(request,
         new TestThreeTaskWorkflowListEdo(CoreModelEdoMapper.toTestThreeTaskWorkflowEdoList(modelList)), HttpStatus.OK);
-  }
-
-  @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.TESTTHREETASKWORKFLOW_ACTION_READ_BY_IDENTITY)
-  public ResponseEntity<WorkflowActionEdo> readWorkflowAction(@PathVariable(name = "identity") final String identity,
-      final HttpServletRequest request) throws Exception {
-
-    final WorkflowActionEntity model = this.workflowActionService.getByIdentity(identity);
-
-    return ControllerHelper.createResponseEntity(request, CoreModelEdoMapper.toEdo(model), HttpStatus.OK);
-  }
-
-  @ResponseStatus(HttpStatus.ACCEPTED)
-  @IflowPostRequestMapping(path = IflowRestPaths.CoreModule.TESTTHREETASKWORKFLOW_ACTION_SAVE)
-  public ResponseEntity<WorkflowActionEdo> saveWorkflowAction(@RequestBody final WorkflowActionEdo workflowActionEdo,
-      final HttpServletRequest request) throws Exception {
-
-    final WorkflowActionEntity model = this.workflowActionService.save(CoreModelEdoMapper.fromEdo(workflowActionEdo));
-
-    return ControllerHelper.createResponseEntity(request, CoreModelEdoMapper.toEdo(model), HttpStatus.ACCEPTED);
-  }
-
-  @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.TESTTHREETASKWORKFLOW_ACTION_READ_LIST_BY_WORKFLOWIDENTITY)
-  public ResponseEntity<WorkflowActionListEdo> readWorkflowActionListByWorkflow(@PathVariable(name = "identity") final String identity,
-      final HttpServletRequest request) throws Exception {
-
-    final List<WorkflowActionEntity> modelList = this.workflowActionService.getListByIdWorkflowIdentity(identity);
-
-    return ControllerHelper.createResponseEntity(request,
-        new WorkflowActionListEdo(CoreModelEdoMapper.toWorkflowActionEdoList(modelList)), HttpStatus.OK);
-  }
-
-  @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.TESTTHREETASKWORKFLOW_FILE_READ_BY_IDENTITY)
-  public ResponseEntity<WorkflowFileEdo> readWorkflowFile(@PathVariable(name = "identity") final String identity,
-      final HttpServletRequest request) throws Exception {
-
-    final WorkflowFileEntity model = this.workflowFileService.getByIdentity(identity);
-
-    return ControllerHelper.createResponseEntity(request, CoreModelEdoMapper.toEdo(model), HttpStatus.OK);
-  }
-
-  @ResponseStatus(HttpStatus.ACCEPTED)
-  @IflowPostRequestMapping(path = IflowRestPaths.CoreModule.TESTTHREETASKWORKFLOW_FILE_SAVE)
-  public ResponseEntity<WorkflowFileEdo> saveWorkflowFile(@RequestBody final WorkflowFileEdo workflowActionEdo,
-      final HttpServletRequest request) throws Exception {
-
-    final WorkflowFileEntity model = this.workflowFileService.save(CoreModelEdoMapper.fromEdo(workflowActionEdo));
-
-    return ControllerHelper.createResponseEntity(request, CoreModelEdoMapper.toEdo(model), HttpStatus.ACCEPTED);
-  }
-
-  @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.TESTTHREETASKWORKFLOW_FILE_READ_LIST_BY_WORKFLOWIDENTITY)
-  public ResponseEntity<WorkflowFileListEdo> readWorkflowFileListByWorkflow(@PathVariable(name = "identity") final String identity,
-      final HttpServletRequest request) throws Exception {
-
-    final List<WorkflowFileEntity> modelList = this.workflowFileService.getListByIdWorkflowIdentity(identity);
-
-    return ControllerHelper.createResponseEntity(request, new WorkflowFileListEdo(CoreModelEdoMapper.toWorkflowFileEdoList(modelList)),
-        HttpStatus.OK);
   }
 
 }

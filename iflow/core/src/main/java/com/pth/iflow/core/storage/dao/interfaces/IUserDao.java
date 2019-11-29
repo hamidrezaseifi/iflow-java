@@ -16,14 +16,14 @@ public interface IUserDao {
 
   public void deleteById(Long id) throws IFlowStorageException;
 
-  public UserEntity getByEmail(final String email) throws IFlowStorageException;
+  public UserEntity getByIdentity(final String email) throws IFlowStorageException;
 
   public List<UserEntity> getListByIdentityList(Set<String> idList) throws IFlowStorageException;
 
   public List<UserEntity> getListByCompanyIdentity(String identity) throws IFlowStorageException;
 
-  public Set<String> getAllUserIdentityListByDepartmentId(final Long id) throws IFlowStorageException;
+  public List<UserEntity> getAllUserIdentityListByDepartmentId(final String identity) throws IFlowStorageException;
 
-  public Set<String> getAllUserIdentityListByDepartmentGroupId(final Long id) throws IFlowStorageException;
+  public List<UserEntity> getAllUserIdentityListByDepartmentGroupId(final String identity) throws IFlowStorageException;
 
 }

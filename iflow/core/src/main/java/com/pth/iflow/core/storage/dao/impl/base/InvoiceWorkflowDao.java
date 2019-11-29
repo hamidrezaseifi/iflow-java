@@ -31,12 +31,12 @@ public class InvoiceWorkflowDao implements IInvoiceWorkflowDao {
 
   @Override
   public InvoiceWorkflowEntity create(final InvoiceWorkflowEntity model) throws IFlowStorageException {
-    return repository.save(model);
+    return repository.saveAndFlush(model);
   }
 
   @Override
   public InvoiceWorkflowEntity update(final InvoiceWorkflowEntity model) throws IFlowStorageException {
-    return repository.save(model);
+    return repository.saveAndFlush(model);
   }
 
   @Override

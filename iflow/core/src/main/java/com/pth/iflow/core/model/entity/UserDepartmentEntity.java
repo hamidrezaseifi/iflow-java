@@ -39,6 +39,10 @@ public class UserDepartmentEntity implements Serializable {
   @Fetch(FetchMode.JOIN)
   private DepartmentEntity  department;
 
+  public UserDepartmentEntity() {
+    department = new DepartmentEntity();
+  }
+
   public Long getUserId() {
     return userId;
   }

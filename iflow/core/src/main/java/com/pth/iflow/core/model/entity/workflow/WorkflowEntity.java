@@ -90,6 +90,15 @@ public class WorkflowEntity extends EntityHelper {
   @Fetch(FetchMode.JOIN)
   private WorkflowTypeStepEntity           currentStep;
 
+  public WorkflowEntity() {
+    currentStep = new WorkflowTypeStepEntity();
+    createdByUser = new UserEntity();
+    controllerUser = new UserEntity();
+    workflowType = new WorkflowTypeEntity();
+
+  }
+
+  @Override
   public Long getId() {
     return this.id;
   }
@@ -227,6 +236,38 @@ public class WorkflowEntity extends EntityHelper {
   @Override
   public String getIdentityPreffix() {
     return "w";
+  }
+
+  public UserEntity getControllerUser() {
+    return controllerUser;
+  }
+
+  public void setControllerUser(final UserEntity controllerUser) {
+    this.controllerUser = controllerUser;
+  }
+
+  public UserEntity getCreatedByUser() {
+    return createdByUser;
+  }
+
+  public void setCreatedByUser(final UserEntity createdByUser) {
+    this.createdByUser = createdByUser;
+  }
+
+  public WorkflowTypeEntity getWorkflowType() {
+    return workflowType;
+  }
+
+  public void setWorkflowType(final WorkflowTypeEntity workflowType) {
+    this.workflowType = workflowType;
+  }
+
+  public WorkflowTypeStepEntity getCurrentStep() {
+    return currentStep;
+  }
+
+  public void setCurrentStep(final WorkflowTypeStepEntity currentStep) {
+    this.currentStep = currentStep;
   }
 
 }

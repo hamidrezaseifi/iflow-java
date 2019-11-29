@@ -70,12 +70,18 @@ public class WorkflowFileEntity extends EntityHelper {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "created_by", insertable = false, updatable = false)
   @Fetch(FetchMode.JOIN)
-  private UserEntity                            createdBy;
+  private UserEntity                            createdByUser;
 
   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
   @JoinColumn(name = "workflow_file_id")
   private final List<WorkflowFileVersionEntity> fileVersions = new ArrayList<>();
 
+  public WorkflowFileEntity() {
+    createdByUser = new UserEntity();
+
+  }
+
+  @Override
   public Long getId() {
     return this.id;
   }
@@ -150,12 +156,12 @@ public class WorkflowFileEntity extends EntityHelper {
     this.createdById = createdById;
   }
 
-  public UserEntity getCreatedBy() {
-    return createdBy;
+  public UserEntity getCreatedByUser() {
+    return createdByUser;
   }
 
-  public void setCreatedBy(final UserEntity createdBy) {
-    this.createdBy = createdBy;
+  public void setCreatedByUser(final UserEntity createdBy) {
+    this.createdByUser = createdBy;
   }
 
   public Integer getStatus() {

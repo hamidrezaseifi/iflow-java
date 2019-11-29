@@ -13,35 +13,30 @@ import com.pth.iflow.core.model.entity.DepartmentGroupEntity;
 import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.model.entity.UserGroupEntity;
 import com.pth.iflow.core.service.interfaces.IUsersService;
+import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 import com.pth.iflow.core.storage.dao.interfaces.ICompanyDao;
-import com.pth.iflow.core.storage.dao.interfaces.IDepartmentDao;
-import com.pth.iflow.core.storage.dao.interfaces.IDepartmentGroupDao;
 import com.pth.iflow.core.storage.dao.interfaces.IUserDao;
 import com.pth.iflow.core.storage.dao.interfaces.IUserGroupDao;
 
 @Service
 public class UsersService implements IUsersService {
 
-  private final ICompanyDao         companyDao;
-  private final IUserDao            userDao;
-  private final IUserGroupDao       userGroupDao;
-  private final IDepartmentDao      departmentDao;
-  private final IDepartmentGroupDao departmentGroupDao;
+  private final ICompanyDao   companyDao;
+  private final IUserDao      userDao;
+  private final IUserGroupDao userGroupDao;
 
   public UsersService(@Autowired final ICompanyDao companyDao, @Autowired final IUserDao userDao,
-      @Autowired final IUserGroupDao userGroupDao, @Autowired final IDepartmentDao departmentDao,
-      @Autowired final IDepartmentGroupDao departmentGroupDao) {
+      @Autowired final IUserGroupDao userGroupDao) {
     this.companyDao = companyDao;
     this.userDao = userDao;
     this.userGroupDao = userGroupDao;
-    this.departmentDao = departmentDao;
-    this.departmentGroupDao = departmentGroupDao;
+
   }
 
   @Override
   public UserEntity getUserByEmail(final String email) {
 
-    return userDao.getByEmail(email);
+    return userDao.getByIdentity(email);
   }
 
   @Override
@@ -79,7 +74,7 @@ public class UsersService implements IUsersService {
   @Override
   public UserEntity save(final UserEntity model) {
     if (model.isNew()) {
-      model.increaseVersion();
+
       return userDao.create(model);
     }
 
@@ -103,4 +98,19 @@ public class UsersService implements IUsersService {
     return new ProfileResponse(user, company, this.getUserDepartments(email), this.getUserGroups(email), "sot-set");
   }
 
+  @Override
+  public List<UserEntity> getAllUserIdentityListByDepartmentId(final String identity) throws IFlowStorageException {
+
+    return userDao.getAllUserIdentityListByDepartmentId(identity);
+  }
+
+  @Override
+  public List<UserEntity> getAllUserIdentityListByDepartmentGroupId(final String identity) throws IFlowStorageException {
+
+    return userDao.getAllUserIdentityListByDepartmentGroupId(identity);
+  }
+
+  protected UserEntity prepareSavingModel(final UserEntity model) {
+    return model;
+  }
 }

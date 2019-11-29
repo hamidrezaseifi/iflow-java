@@ -53,6 +53,11 @@ public class WorkflowTypeStepEntity extends EntityHelper {
   @Column(name = "updated_at")
   private Date    updatedAt;
 
+  public WorkflowTypeStepEntity() {
+
+  }
+
+  @Override
   public Long getId() {
     return this.id;
   }

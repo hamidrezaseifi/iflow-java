@@ -8,22 +8,32 @@ import org.springframework.stereotype.Service;
 
 import com.pth.iflow.core.model.entity.workflow.WorkflowEntity;
 import com.pth.iflow.core.service.interfaces.workflow.IWorkflowService;
+import com.pth.iflow.core.storage.dao.interfaces.IUserDao;
+import com.pth.iflow.core.storage.dao.interfaces.IWorkflowTypeDao;
+import com.pth.iflow.core.storage.dao.interfaces.IWorkflowTypeStepDao;
 import com.pth.iflow.core.storage.dao.interfaces.workflow.IWorkflowDao;
 
 @Service
 public class WorkflowService implements IWorkflowService {
 
-  private final IWorkflowDao workflowDao;
+  private final IWorkflowDao         workflowDao;
+  private final IWorkflowTypeDao     workflowTypeDao;
+  private final IWorkflowTypeStepDao workflowTypeStepDao;
+  private final IUserDao             usersDao;
 
-  public WorkflowService(@Autowired final IWorkflowDao invoiceWorkflowDao) {
-    this.workflowDao = invoiceWorkflowDao;
+  public WorkflowService(@Autowired final IWorkflowDao workflowDao, @Autowired final IWorkflowTypeDao workflowTypeDao,
+      @Autowired final IWorkflowTypeStepDao workflowTypeStepDao, @Autowired final IUserDao usersDao) {
+    this.workflowDao = workflowDao;
+    this.workflowTypeDao = workflowTypeDao;
+    this.workflowTypeStepDao = workflowTypeStepDao;
+    this.usersDao = usersDao;
   }
 
   @Override
   public WorkflowEntity save(final WorkflowEntity model) {
 
+    prepareSavingModel(model);
     if (model.isNew()) {
-      model.increaseVersion();
       return workflowDao.create(model);
     }
 
@@ -51,4 +61,16 @@ public class WorkflowService implements IWorkflowService {
     return this.workflowDao.getListByIdentityList(idList);
   }
 
+  @Override
+  public WorkflowEntity prepareSavingModel(final WorkflowEntity model) {
+    model.setControllerId(usersDao.getByIdentity(model.getControllerIdentity()).getId());
+
+    model.setCreatedById(usersDao.getByIdentity(model.getCreatedByIdentity()).getId());
+
+    model.setCurrentStepId(workflowTypeStepDao.getByIdentity(model.getCurrentStepIdentity()).getId());
+
+    model.setWorkflowTypeId(workflowTypeDao.getByIdentity(model.getWorkflowType().getIdentity()).getId());
+
+    return model;
+  }
 }

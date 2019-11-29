@@ -66,7 +66,7 @@ public class UserServiceTest extends TestDataProducer {
   public void testReadUserById() throws Exception {
 
     final User user = getTestUser();
-    when(this.userDao.getByEmail(any(String.class))).thenReturn(user);
+    when(this.userDao.getByIdentity(any(String.class))).thenReturn(user);
 
     final User resUser = this.userService.getUserByEmail("email");
 
@@ -83,7 +83,7 @@ public class UserServiceTest extends TestDataProducer {
   public void testReadUserByEmail() throws Exception {
 
     final User user = getTestUser();
-    when(this.userDao.getByEmail(any(String.class))).thenReturn(user);
+    when(this.userDao.getByIdentity(any(String.class))).thenReturn(user);
 
     final User resUser = this.userService.getUserByEmail(user.getEmail());
 
@@ -102,7 +102,7 @@ public class UserServiceTest extends TestDataProducer {
     final User user = getTestUser();
     final List<DepartmentGroupEntity> list = getTestDepartmentGroupList();
 
-    when(this.userDao.getByEmail(any(String.class))).thenReturn(user);
+    when(this.userDao.getByIdentity(any(String.class))).thenReturn(user);
     when(this.departmentGroupDao.getListByIdentityList(any(Set.class))).thenReturn(list);
 
     final List<DepartmentGroupEntity> resList = this.userService.getUserDepartmentGroups("identity");
@@ -118,7 +118,7 @@ public class UserServiceTest extends TestDataProducer {
     final User user = getTestUser();
     final List<Department> list = getTestDepartmentList();
 
-    when(this.userDao.getByEmail(any(String.class))).thenReturn(user);
+    when(this.userDao.getByIdentity(any(String.class))).thenReturn(user);
     when(this.departmentDao.getListByIdentityList(any(Set.class))).thenReturn(list);
 
     final List<Department> resList = this.userService.getUserDepartments("identity");
@@ -134,7 +134,7 @@ public class UserServiceTest extends TestDataProducer {
     final User user = getTestUser();
     final List<User> list = getTestUserList();
 
-    when(this.userDao.getByEmail(any(String.class))).thenReturn(user);
+    when(this.userDao.getByIdentity(any(String.class))).thenReturn(user);
     when(this.userDao.getListByIdentityList(any(Set.class))).thenReturn(list);
 
     final List<User> resList = this.userService.getUserDeputies("identity");
@@ -150,7 +150,7 @@ public class UserServiceTest extends TestDataProducer {
     final User user = getTestUser();
     final List<UserGroup> list = getTestUserGroupList();
 
-    when(this.userDao.getByEmail(any(String.class))).thenReturn(user);
+    when(this.userDao.getByIdentity(any(String.class))).thenReturn(user);
     when(this.userGroupDao.getListByIdentityList(any(Set.class))).thenReturn(list);
 
     final List<UserGroup> resList = this.userService.getUserGroups("identity");
@@ -168,7 +168,7 @@ public class UserServiceTest extends TestDataProducer {
     final List<UserGroup> grouplist = getTestUserGroupList();
     final List<Department> deplist = getTestDepartmentList();
 
-    when(this.userDao.getByEmail(any(String.class))).thenReturn(user);
+    when(this.userDao.getByIdentity(any(String.class))).thenReturn(user);
     when(this.userGroupDao.getListByIdentityList(any(Set.class))).thenReturn(grouplist);
     when(this.departmentDao.getListByIdentityList(any(Set.class))).thenReturn(deplist);
     when(this.companyDao.getByIdentity(any(String.class))).thenReturn(company);

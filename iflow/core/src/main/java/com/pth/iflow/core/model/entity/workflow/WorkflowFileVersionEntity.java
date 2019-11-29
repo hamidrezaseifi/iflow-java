@@ -1,6 +1,7 @@
 package com.pth.iflow.core.model.entity.workflow;
 
 import java.sql.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,8 +11,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+
 import com.pth.iflow.core.model.entity.UserEntity;
 
 @Entity
@@ -21,39 +24,44 @@ public class WorkflowFileVersionEntity {
   @Id
   @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private Long       id;
 
   @Column(name = "workflow_file_id")
-  private Long workflowFileId;
+  private Long       workflowFileId;
 
   @Column(name = "created_by")
-  private Long createdById;
+  private Long       createdById;
 
   @Column(name = "filepath")
-  private String filePath;
+  private String     filePath;
 
   @Column(name = "file_version")
-  private Integer fileVersion;
+  private Integer    fileVersion;
 
   @Column(name = "comments")
-  private String comments;
+  private String     comments;
 
   @Column(name = "status")
-  private Integer status;
+  private Integer    status;
 
   @Column(name = "version")
-  private Integer version;
+  private Integer    version;
 
   @Column(name = "created_at")
-  private Date createdAt;
+  private Date       createdAt;
 
   @Column(name = "updated_at")
-  private Date updatedAt;
+  private Date       updatedAt;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "created_by", insertable = false, updatable = false)
   @Fetch(FetchMode.JOIN)
-  private UserEntity createdBy;
+  private UserEntity createdByUser;
+
+  public WorkflowFileVersionEntity() {
+    createdByUser = new UserEntity();
+
+  }
 
   public Long getId() {
     return this.id;
@@ -87,12 +95,12 @@ public class WorkflowFileVersionEntity {
     this.createdById = createdById;
   }
 
-  public UserEntity getCreatedBy() {
-    return createdBy;
+  public UserEntity getCreatedByUser() {
+    return createdByUser;
   }
 
-  public void setCreatedBy(final UserEntity createdBy) {
-    this.createdBy = createdBy;
+  public void setCreatedByUser(final UserEntity createdBy) {
+    this.createdByUser = createdBy;
   }
 
   public String getComments() {

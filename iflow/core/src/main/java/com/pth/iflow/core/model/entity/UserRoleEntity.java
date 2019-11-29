@@ -23,7 +23,7 @@ public class UserRoleEntity implements Serializable {
 
   @Id
   @Column(name = "role")
-  private Long              role;
+  private Integer           role;
 
   @Column(name = "created_at")
   private Date              createdAt;
@@ -36,11 +36,11 @@ public class UserRoleEntity implements Serializable {
     this.userId = userId;
   }
 
-  public Long getRole() {
+  public Integer getRole() {
     return role;
   }
 
-  public void setRole(final Long role) {
+  public void setRole(final Integer role) {
     this.role = role;
   }
 

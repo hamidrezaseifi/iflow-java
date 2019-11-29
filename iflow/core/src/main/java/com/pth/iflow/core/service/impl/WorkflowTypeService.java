@@ -53,4 +53,7 @@ public class WorkflowTypeService implements IWorkflowTypeService {
     return workflowTypeDao.update(model);
   }
 
+  protected WorkflowTypeEntity prepareSavingModel(final WorkflowTypeEntity model) {
+    return model;
+  }
 }

@@ -6,59 +6,58 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.pth.iflow.core.model.workflow.InvoiceWorkflow;
+import com.pth.iflow.core.model.entity.workflow.InvoiceWorkflowEntity;
+import com.pth.iflow.core.service.interfaces.workflow.IInvoiceWorkflowService;
 import com.pth.iflow.core.service.interfaces.workflow.IWorkflowService;
-import com.pth.iflow.core.storage.dao.exception.IFlowOptimisticLockException;
-import com.pth.iflow.core.storage.dao.interfaces.workflow.IWorkflowDao;
+import com.pth.iflow.core.storage.dao.interfaces.workflow.IInvoiceWorkflowDao;
 
 @Service
-public class InvoiceWorkflowService implements IWorkflowService<InvoiceWorkflow> {
+public class InvoiceWorkflowService implements IInvoiceWorkflowService {
 
-  private final IWorkflowDao<InvoiceWorkflow> workflowDao;
+  private final IInvoiceWorkflowDao invoiceWorkflowDao;
 
-  public InvoiceWorkflowService(@Autowired final IWorkflowDao<InvoiceWorkflow> invoiceWorkflowDao) {
-    this.workflowDao = invoiceWorkflowDao;
+  private final IWorkflowService    workflowService;
+
+  public InvoiceWorkflowService(@Autowired final IInvoiceWorkflowDao singleTaskorkflowDao,
+      @Autowired final IWorkflowService workflowService) {
+    this.invoiceWorkflowDao = singleTaskorkflowDao;
+    this.workflowService = workflowService;
   }
 
   @Override
-  public InvoiceWorkflow save(final InvoiceWorkflow model) {
-    InvoiceWorkflow exists = null;
-    if (model.isIdentityNotSet() == false) {
-      exists = this.getByIdentity(model.getIdentity());
-      model.setId(exists.getId());
-    }
+  public InvoiceWorkflowEntity save(final InvoiceWorkflowEntity model) {
 
     if (model.isNew()) {
-      model.increaseVersion();
-      return this.workflowDao.create(model);
+
+      return invoiceWorkflowDao.create(model);
     }
 
-    exists = exists != null ? exists : this.workflowDao.getById(model.getId());
+    final InvoiceWorkflowEntity exists = invoiceWorkflowDao.getById(model.getWorkflowId());
+    model.verifyVersion(exists);
 
-    if (exists.getVersion() > model.getVersion()) {
-      throw new IFlowOptimisticLockException("InvoiceWorkflow with id " + model.getId() + " is old!");
-    }
+    return invoiceWorkflowDao.update(model);
 
-    model.setVersion(model.getVersion() + 1);
-
-    return this.workflowDao.update(model);
   }
 
   @Override
-  public InvoiceWorkflow getByIdentity(final String identity) {
-    return this.workflowDao.getByIdentity(identity);
+  public InvoiceWorkflowEntity getByIdentity(final String identity) {
+    return this.invoiceWorkflowDao.getByIdentity(identity);
   }
 
   @Override
-  public List<InvoiceWorkflow> getListForUser(final String email, final int status) {
+  public List<InvoiceWorkflowEntity> getListForUser(final String email, final int status) {
 
-    return this.workflowDao.getListForUserIdentity(email, status);
+    return this.invoiceWorkflowDao.getListForUserIdentity(email, status);
   }
 
   @Override
-  public List<InvoiceWorkflow> getListByIdentityList(final Collection<String> idList) {
+  public List<InvoiceWorkflowEntity> getListByIdentityList(final Collection<String> idList) {
 
-    return this.workflowDao.getListByIdentityList(idList);
+    return this.invoiceWorkflowDao.getListByIdentityList(idList);
   }
 
+  protected InvoiceWorkflowEntity prepareSavingModel(final InvoiceWorkflowEntity model) {
+    workflowService.prepareSavingModel(model.getWorkflow());
+    return model;
+  }
 }

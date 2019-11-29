@@ -54,4 +54,8 @@ public class WorkflowTypeStepService implements IWorkflowTypeStepService {
     return this.workflowStepDao.getListByIdentityList(idList);
   }
 
+  protected WorkflowTypeStepEntity prepareSavingModel(final WorkflowTypeStepEntity model) {
+
+    return model;
+  }
 }

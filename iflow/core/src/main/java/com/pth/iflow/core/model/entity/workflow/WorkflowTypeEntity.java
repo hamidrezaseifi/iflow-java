@@ -80,6 +80,11 @@ public class WorkflowTypeEntity extends EntityHelper {
   @Fetch(FetchMode.JOIN)
   private CompanyEntity                      company;
 
+  public WorkflowTypeEntity() {
+    company = new CompanyEntity();
+  }
+
+  @Override
   public Long getId() {
     return this.id;
   }
@@ -218,6 +223,14 @@ public class WorkflowTypeEntity extends EntityHelper {
   @Override
   public String getIdentityPreffix() {
     return "wtp";
+  }
+
+  public CompanyEntity getCompany() {
+    return company;
+  }
+
+  public void setCompany(final CompanyEntity company) {
+    this.company = company;
   }
 
 }

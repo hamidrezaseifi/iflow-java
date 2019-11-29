@@ -6,59 +6,59 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.pth.iflow.core.model.workflow.SingleTaskWorkflow;
+import com.pth.iflow.core.model.entity.workflow.SingleTaskWorkflowEntity;
+import com.pth.iflow.core.service.interfaces.workflow.ISingleTaskWorkflowService;
 import com.pth.iflow.core.service.interfaces.workflow.IWorkflowService;
-import com.pth.iflow.core.storage.dao.exception.IFlowOptimisticLockException;
-import com.pth.iflow.core.storage.dao.interfaces.workflow.IWorkflowDao;
+import com.pth.iflow.core.storage.dao.interfaces.workflow.ISingleTaskWorkflowDao;
 
 @Service
-public class SingleTaskWorkflowService implements IWorkflowService<SingleTaskWorkflow> {
+public class SingleTaskWorkflowService implements ISingleTaskWorkflowService {
 
-  private final IWorkflowDao<SingleTaskWorkflow> workflowDao;
+  private final ISingleTaskWorkflowDao singleTaskWorkflowDao;
 
-  public SingleTaskWorkflowService(@Autowired final IWorkflowDao<SingleTaskWorkflow> invoiceWorkflowDao) {
-    this.workflowDao = invoiceWorkflowDao;
+  private final IWorkflowService       workflowService;
+
+  public SingleTaskWorkflowService(@Autowired final ISingleTaskWorkflowDao singleTaskorkflowDao,
+      @Autowired final IWorkflowService workflowService) {
+    this.singleTaskWorkflowDao = singleTaskorkflowDao;
+    this.workflowService = workflowService;
   }
 
   @Override
-  public SingleTaskWorkflow save(final SingleTaskWorkflow model) {
-    SingleTaskWorkflow exists = null;
-    if (model.isIdentityNotSet() == false) {
-      exists = this.getByIdentity(model.getIdentity());
-      model.setId(exists.getId());
-    }
+  public SingleTaskWorkflowEntity save(final SingleTaskWorkflowEntity model) {
 
+    prepareSavingModel(model);
     if (model.isNew()) {
-      model.increaseVersion();
-      return this.workflowDao.create(model);
+
+      return singleTaskWorkflowDao.create(model);
     }
 
-    exists = exists != null ? exists : this.workflowDao.getById(model.getId());
+    final SingleTaskWorkflowEntity exists = singleTaskWorkflowDao.getById(model.getWorkflowId());
+    model.verifyVersion(exists);
 
-    if (exists.getVersion() > model.getVersion()) {
-      throw new IFlowOptimisticLockException("SingleTaskWorkflow with id " + model.getId() + " is old!");
-    }
+    return singleTaskWorkflowDao.update(model);
 
-    model.setVersion(model.getVersion() + 1);
-
-    return this.workflowDao.update(model);
   }
 
   @Override
-  public SingleTaskWorkflow getByIdentity(final String identity) {
-    return this.workflowDao.getByIdentity(identity);
+  public SingleTaskWorkflowEntity getByIdentity(final String identity) {
+    return this.singleTaskWorkflowDao.getByIdentity(identity);
   }
 
   @Override
-  public List<SingleTaskWorkflow> getListForUser(final String email, final int status) {
+  public List<SingleTaskWorkflowEntity> getListForUser(final String email, final int status) {
 
-    return this.workflowDao.getListForUserIdentity(email, status);
+    return this.singleTaskWorkflowDao.getListForUserIdentity(email, status);
   }
 
   @Override
-  public List<SingleTaskWorkflow> getListByIdentityList(final Collection<String> idList) {
+  public List<SingleTaskWorkflowEntity> getListByIdentityList(final Collection<String> idList) {
 
-    return this.workflowDao.getListByIdentityList(idList);
+    return this.singleTaskWorkflowDao.getListByIdentityList(idList);
   }
 
+  protected SingleTaskWorkflowEntity prepareSavingModel(final SingleTaskWorkflowEntity model) {
+    workflowService.prepareSavingModel(model.getWorkflow());
+    return model;
+  }
 }

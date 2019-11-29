@@ -21,23 +21,27 @@ public class UserDepartmentGroupEntity implements Serializable {
   /**
    *
    */
-  private static final long serialVersionUID = 1L;
+  private static final long     serialVersionUID = 1L;
 
   @Id
   @Column(name = "user_id")
-  private Long              userId;
+  private Long                  userId;
 
   @Id
   @Column(name = "department_group_id")
-  private Long              departmentGroupId;
+  private Long                  departmentGroupId;
 
   @Column(name = "created_at")
-  private Date              createdAt;
+  private Date                  createdAt;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "department_group_id", insertable = false, updatable = false)
   @Fetch(FetchMode.JOIN)
-  private DepartmentGroupEntity   departmentGroup;
+  private DepartmentGroupEntity departmentGroup;
+
+  public UserDepartmentGroupEntity() {
+    departmentGroup = new DepartmentGroupEntity();
+  }
 
   public Long getUserId() {
     return userId;
