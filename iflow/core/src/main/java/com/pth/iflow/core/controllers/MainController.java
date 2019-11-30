@@ -1,5 +1,7 @@
 package com.pth.iflow.core.controllers;
 
+import java.time.LocalDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -10,9 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pth.iflow.common.edo.models.WorkflowActionEdo;
 import com.pth.iflow.common.edo.models.WorkflowFileEdo;
 import com.pth.iflow.common.edo.models.WorkflowFileVersionEdo;
+import com.pth.iflow.common.edo.models.WorkflowMessageEdo;
 import com.pth.iflow.common.edo.models.workflow.WorkflowEdo;
 import com.pth.iflow.common.edo.models.workflow.singletask.SingleTaskWorkflowEdo;
 import com.pth.iflow.common.enums.EIdentity;
+import com.pth.iflow.common.enums.EWorkflowMessageStatus;
+import com.pth.iflow.common.enums.EWorkflowMessageType;
 import com.pth.iflow.common.enums.EWorkflowType;
 import com.pth.iflow.core.helper.BuildInfoProperties;
 
@@ -33,6 +38,32 @@ public class MainController {
   public SingleTaskWorkflowEdo test() {
     final SingleTaskWorkflowEdo edo = new SingleTaskWorkflowEdo();
 
+    final WorkflowEdo workflow = createWorkflow();
+
+    edo.setWorkflow(workflow);
+    return edo;
+  }
+
+  @ResponseStatus(HttpStatus.OK)
+  @GetMapping(path = "/testmsg", produces = MediaType.APPLICATION_XML_VALUE)
+  public WorkflowMessageEdo testSHowMessage() {
+    final WorkflowMessageEdo edo = new WorkflowMessageEdo();
+
+    edo.setCreatedAt(LocalDateTime.now());
+    edo.setCreatedByIdentity("admin@iflow.de");
+    edo.setExpireDays(15);
+    edo.setMessage("message");
+    edo.setMessageType(EWorkflowMessageType.OFFERING_WORKFLOW.getValue());
+    edo.setStatus(EWorkflowMessageStatus.OFFERING.getValue());
+    edo.setStepIdentity("invocetasktypestep1");
+    edo.setUserIdentity("user@iflow.de");
+    edo.setVersion(1);
+    edo.setWorkflowIdentity("w1575062673592-557642");
+
+    return edo;
+  }
+
+  private WorkflowEdo createWorkflow() {
     final WorkflowEdo workflow = new WorkflowEdo();
     workflow.setComments("comments");
     workflow.setControllerIdentity("admin@iflow.de");
@@ -75,7 +106,6 @@ public class MainController {
 
     workflow.getActions().add(ac);
 
-    edo.setWorkflow(workflow);
-    return edo;
+    return workflow;
   }
 }

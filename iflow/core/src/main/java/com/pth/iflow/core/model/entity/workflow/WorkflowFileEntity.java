@@ -85,7 +85,7 @@ public class WorkflowFileEntity extends EntityHelper {
 
   public WorkflowFileEntity() {
     createdByUser = new UserEntity();
-
+    workflow = new WorkflowEntity();
   }
 
   @Override
@@ -213,6 +213,14 @@ public class WorkflowFileEntity extends EntityHelper {
     if (fileVersions != null) {
       this.fileVersions.addAll(fileVersions);
     }
+  }
+
+  public WorkflowEntity getWorkflow() {
+    return workflow;
+  }
+
+  public void setWorkflow(final WorkflowEntity workflow) {
+    this.workflow = workflow;
   }
 
   @Override

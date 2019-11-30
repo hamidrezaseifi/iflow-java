@@ -70,6 +70,7 @@ public class WorkflowActionEntity extends EntityHelper {
   public WorkflowActionEntity() {
     currentStep = new WorkflowTypeStepEntity();
     assignToUser = new UserEntity();
+    workflow = new WorkflowEntity();
     assignTo = 0L;
   }
 

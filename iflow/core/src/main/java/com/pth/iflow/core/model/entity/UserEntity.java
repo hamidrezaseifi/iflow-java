@@ -32,62 +32,62 @@ public class UserEntity extends EntityHelper {
   @Id
   @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long                                 id;
+  private Long                           id;
 
   @Column(name = "email")
-  private String                               email;
+  private String                         email;
 
   @Column(name = "company_id")
-  private Long                                 companyId;
+  private Long                           companyId;
 
   @Column(name = "birthdate")
-  private Date                                 birthDate;
+  private Date                           birthDate;
 
   @Column(name = "firstname")
-  private String                               firstName;
+  private String                         firstName;
 
   @Column(name = "lastname")
-  private String                               lastName;
+  private String                         lastName;
 
   @Column(name = "status")
-  private Integer                              status;
+  private Integer                        status;
 
   @Column(name = "permission")
-  private Integer                              permission;
+  private Integer                        permission;
 
   @Column(name = "version")
-  private Integer                              version;
+  private Integer                        version;
 
   @Column(name = "created_at", insertable = false, updatable = false)
-  private Date                                 createdAt;
+  private Date                           createdAt;
 
   @Column(name = "updated_at", insertable = false, updatable = false)
-  private Date                                 updatedAt;
+  private Date                           updatedAt;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "company_id", insertable = false, updatable = false)
   @Fetch(FetchMode.JOIN)
-  private CompanyEntity                        company;
+  private CompanyEntity                  company;
 
   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
   @JoinColumn(name = "user_id")
-  private final Set<UserRoleEntity>            roles            = new HashSet<>();
+  private Set<UserRoleEntity>            roles            = new HashSet<>();
 
   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
   @JoinColumn(name = "user_id")
-  private final Set<UserDeputyEntity>          deputies         = new HashSet<>();
+  private Set<UserDeputyEntity>          deputies         = new HashSet<>();
 
   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
   @JoinColumn(name = "user_id")
-  private final Set<UserUserGroupEntity>       groups           = new HashSet<>();
+  private Set<UserUserGroupEntity>       groups           = new HashSet<>();
 
   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
   @JoinColumn(name = "user_id")
-  private final Set<UserDepartmentEntity>      departments      = new HashSet<>();
+  private Set<UserDepartmentEntity>      departments      = new HashSet<>();
 
   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
   @JoinColumn(name = "user_id")
-  private final Set<UserDepartmentGroupEntity> departmentGroups = new HashSet<>();
+  private Set<UserDepartmentGroupEntity> departmentGroups = new HashSet<>();
 
   public UserEntity() {
     company = new CompanyEntity();
@@ -291,6 +291,26 @@ public class UserEntity extends EntityHelper {
   @Override
   public void setIdentity(final String identity) {
     this.email = identity;
+  }
+
+  public void setRoles(final Set<UserRoleEntity> roles) {
+    this.roles = roles;
+  }
+
+  public void setDeputies(final Set<UserDeputyEntity> deputies) {
+    this.deputies = deputies;
+  }
+
+  public void setGroups(final Set<UserUserGroupEntity> groups) {
+    this.groups = groups;
+  }
+
+  public void setDepartments(final Set<UserDepartmentEntity> departments) {
+    this.departments = departments;
+  }
+
+  public void setDepartmentGroups(final Set<UserDepartmentGroupEntity> departmentGroups) {
+    this.departmentGroups = departmentGroups;
   }
 
   public void fillGroupsFromIdentityList(final Set<String> identityList) {
