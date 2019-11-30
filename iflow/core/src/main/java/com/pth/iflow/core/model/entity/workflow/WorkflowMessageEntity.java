@@ -12,8 +12,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.enums.EWorkflowMessageType;
@@ -29,8 +31,8 @@ public class WorkflowMessageEntity extends EntityHelper {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long                   id;
 
-  // @Column(name = "workflow_id")
-  // private Long workflowId;
+  @Column(name = "workflow_id")
+  private Long                   workflowId;
 
   @Column(name = "step_id")
   private Long                   stepId;
@@ -56,10 +58,12 @@ public class WorkflowMessageEntity extends EntityHelper {
   @Column(name = "expire_days")
   private Integer                expireDays;
 
-  @Column(name = "created_at", insertable = false, updatable = false)
+  @CreationTimestamp
+  @Column(name = "created_at")
   private Date                   createdAt;
 
-  @Column(name = "updated_at", insertable = false, updatable = false)
+  @UpdateTimestamp
+  @Column(name = "updated_at")
   private Date                   updatedAt;
 
   @ManyToOne(fetch = FetchType.LAZY)
@@ -98,12 +102,13 @@ public class WorkflowMessageEntity extends EntityHelper {
     this.id = id;
   }
 
-  /*
-   * public Long getWorkflowId() { return workflowId; }
-   *
-   * public void setWorkflowId(final Long workflowId) { this.workflowId =
-   * workflowId; }
-   */
+  public Long getWorkflowId() {
+    return workflowId;
+  }
+
+  public void setWorkflowId(final Long workflowId) {
+    this.workflowId = workflowId;
+  }
 
   public String getWorkflowIdentity() {
     return workflow.getIdentity();

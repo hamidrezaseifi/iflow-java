@@ -12,6 +12,7 @@ import javax.persistence.criteria.Root;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.core.model.entity.workflow.WorkflowMessageEntity;
@@ -19,6 +20,7 @@ import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 import com.pth.iflow.core.storage.dao.impl.repository.WorkflowMessageRepository;
 import com.pth.iflow.core.storage.dao.interfaces.IWorkflowMessageDao;
 
+@Transactional
 @Repository
 public class WorkflowMessageDao implements IWorkflowMessageDao {
 
@@ -30,12 +32,17 @@ public class WorkflowMessageDao implements IWorkflowMessageDao {
 
   @Override
   public WorkflowMessageEntity create(final WorkflowMessageEntity model) throws IFlowStorageException {
-    return repository.save(model);
+
+    entityManager.persist(model);
+
+    return getById(model.getId());
   }
 
   @Override
   public WorkflowMessageEntity update(final WorkflowMessageEntity model) throws IFlowStorageException {
-    return repository.save(model);
+    entityManager.persist(model);
+
+    return getById(model.getId());
   }
 
   @Override

@@ -17,8 +17,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import com.pth.iflow.common.enums.EIdentity;
 import com.pth.iflow.core.model.entity.UserEntity;
@@ -59,10 +61,12 @@ public class WorkflowEntity extends EntityHelper {
   @Column(name = "version")
   private Integer                          version;
 
-  @Column(name = "created_at", insertable = false, updatable = false)
+  @CreationTimestamp
+  @Column(name = "created_at")
   private Date                             createdAt;
 
-  @Column(name = "updated_at", insertable = false, updatable = false)
+  @UpdateTimestamp
+  @Column(name = "updated_at")
   private Date                             updatedAt;
 
   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)

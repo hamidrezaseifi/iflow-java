@@ -84,14 +84,14 @@ public class WorkflowService implements IWorkflowService {
       action.setAssignTo(action.getAssignToUser() == null ? 0 : action.getAssignToUser().getId());
       action.setCurrentStep(workflowTypeStepDao.getByIdentity(action.getCurrentStepIdentity()));
       action.setCurrentStepId(action.getCurrentStep().getId());
-
+      action.setWorkflow(model);
     }
 
     for (final WorkflowFileEntity file : model.getFiles()) {
 
       file.setCreatedByUser(usersDao.getByIdentity(file.getCreatedByUser().getIdentity()));
       file.setCreatedById(file.getCreatedByUser().getId());
-
+      file.setWorkflow(model);
       for (final WorkflowFileVersionEntity fileVersion : file.getFileVersions()) {
 
         fileVersion.setCreatedByUser(usersDao.getByIdentity(fileVersion.getCreatedByUser().getIdentity()));

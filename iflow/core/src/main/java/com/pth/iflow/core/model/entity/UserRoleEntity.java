@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 @Entity
 @Table(name = "user_roles")
 public class UserRoleEntity implements Serializable {
@@ -25,7 +27,8 @@ public class UserRoleEntity implements Serializable {
   @Column(name = "role")
   private Integer           role;
 
-  @Column(name = "created_at", insertable = false, updatable = false)
+  @CreationTimestamp
+  @Column(name = "created_at")
   private Date              createdAt;
 
   public Long getUserId() {

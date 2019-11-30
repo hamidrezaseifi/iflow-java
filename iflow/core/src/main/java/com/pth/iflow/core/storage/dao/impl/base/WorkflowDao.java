@@ -14,12 +14,14 @@ import javax.persistence.criteria.Root;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.pth.iflow.core.model.entity.workflow.WorkflowEntity;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 import com.pth.iflow.core.storage.dao.impl.repository.workflow.WorkflowRepository;
 import com.pth.iflow.core.storage.dao.interfaces.workflow.IWorkflowDao;
 
+@Transactional
 @Repository
 public class WorkflowDao implements IWorkflowDao {
 
@@ -32,14 +34,18 @@ public class WorkflowDao implements IWorkflowDao {
   @Override
   public WorkflowEntity create(final WorkflowEntity model) throws IFlowStorageException {
 
-    return repository.save(model);
+    entityManager.persist(model);
+
+    return getById(model.getId());
   }
 
   @Override
   public WorkflowEntity update(final WorkflowEntity model) throws IFlowStorageException {
     deleteAllSubItemsById(model.getId());
-    model.increaseVersion();
-    return repository.save(model);
+    // model.increaseVersion();
+    entityManager.persist(model);
+
+    return getById(model.getId());
   }
 
   @Override

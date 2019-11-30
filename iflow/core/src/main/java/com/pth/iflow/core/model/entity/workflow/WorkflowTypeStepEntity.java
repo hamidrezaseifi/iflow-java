@@ -10,6 +10,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import com.pth.iflow.core.storage.dao.helper.EntityHelper;
 import com.pth.iflow.core.storage.dao.helper.EntityListener;
 
@@ -50,10 +53,12 @@ public class WorkflowTypeStepEntity extends EntityHelper {
   @Column(name = "version")
   private Integer version;
 
-  @Column(name = "created_at", insertable = false, updatable = false)
+  @CreationTimestamp
+  @Column(name = "created_at")
   private Date    createdAt;
 
-  @Column(name = "updated_at", insertable = false, updatable = false)
+  @UpdateTimestamp
+  @Column(name = "updated_at")
   private Date    updatedAt;
 
   public WorkflowTypeStepEntity() {
