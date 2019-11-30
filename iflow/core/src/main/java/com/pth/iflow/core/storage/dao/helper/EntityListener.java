@@ -6,18 +6,22 @@ import javax.persistence.PreUpdate;
 public class EntityListener {
 
   @PrePersist
-  public void prePersist(final EntityHelper entity) {
+  public void prePersist(final EntityIdentityHelper entity) {
     if (entity.isIdentityNew()) {
       entity.setIdentity(entity.generateIdentity());
       if (entity.getVersion() <= 0) {
         entity.setVersion(1);
       }
 
+    } else {
+      entity.increaseVersion();
     }
+
   }
 
   @PreUpdate
-  public void preUpdate(final EntityHelper entity) {
+  public void preUpdate(final EntityIdentityHelper entity) {
+
     entity.increaseVersion();
 
   }

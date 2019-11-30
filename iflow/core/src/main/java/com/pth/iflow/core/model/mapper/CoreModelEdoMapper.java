@@ -373,7 +373,7 @@ public class CoreModelEdoMapper {
     edo.setComments(model.getComments());
     edo.setStatus(model.getStatus());
     edo.setAssignToIdentity(model.getAssignToIdentity());
-    edo.setCurrentStepIdentity(model.getCurrentStepIdentity());
+    edo.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
     edo.setVersion(model.getVersion());
     edo.setIdentity(model.getIdentity());
 
@@ -383,14 +383,12 @@ public class CoreModelEdoMapper {
   public static WorkflowActionEntity fromEdo(final WorkflowActionEdo edo) throws IFlowMessageConversionFailureException {
     validateCustomer(edo);
 
-    final WorkflowActionEntity model = new WorkflowActionEntity();
+    final WorkflowActionEntity model = new WorkflowActionEntity(edo.getAssignToIdentity(), edo.getCurrentStepIdentity());
 
     model.setComments(edo.getComments());
     model.setStatus(edo.getStatus());
     model.setVersion(edo.getVersion());
     model.setIdentity(edo.getIdentity());
-    model.getCurrentStep().setIdentity(edo.getCurrentStepIdentity());
-    model.getAssignToUser().setIdentity(edo.getAssignToIdentity());
 
     return model;
   }

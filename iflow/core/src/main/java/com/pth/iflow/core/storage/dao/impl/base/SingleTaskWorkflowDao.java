@@ -14,6 +14,7 @@ import javax.persistence.criteria.Root;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.pth.iflow.core.model.entity.workflow.SingleTaskWorkflowEntity;
 import com.pth.iflow.core.model.entity.workflow.WorkflowEntity;
@@ -22,6 +23,7 @@ import com.pth.iflow.core.storage.dao.impl.repository.workflow.SingleTaskWorkflo
 import com.pth.iflow.core.storage.dao.interfaces.workflow.ISingleTaskWorkflowDao;
 import com.pth.iflow.core.storage.dao.interfaces.workflow.IWorkflowDao;
 
+@Transactional
 @Repository
 public class SingleTaskWorkflowDao implements ISingleTaskWorkflowDao {
 
@@ -39,12 +41,17 @@ public class SingleTaskWorkflowDao implements ISingleTaskWorkflowDao {
     final WorkflowEntity workflow = workflowDao.create(model.getWorkflow());
     model.setWorkflow(workflow);
     model.setWorkflowId(workflow.getId());
-    return repository.save(model);
+    return entityManager.merge(model);
   }
 
   @Override
   public SingleTaskWorkflowEntity update(final SingleTaskWorkflowEntity model) throws IFlowStorageException {
-    return repository.save(model);
+
+    final WorkflowEntity workflow = workflowDao.update(model.getWorkflow());
+    model.setWorkflow(workflow);
+    model.setWorkflowId(workflow.getId());
+    return entityManager.merge(model);
+
   }
 
   @Override

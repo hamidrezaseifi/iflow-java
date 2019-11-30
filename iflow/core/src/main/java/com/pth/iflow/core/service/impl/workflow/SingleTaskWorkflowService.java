@@ -59,6 +59,7 @@ public class SingleTaskWorkflowService implements ISingleTaskWorkflowService {
 
   protected SingleTaskWorkflowEntity prepareSavingModel(final SingleTaskWorkflowEntity model) {
     workflowService.prepareSavingModel(model.getWorkflow());
+    model.setWorkflowId(model.getWorkflow().getId());
     return model;
   }
 }

@@ -18,13 +18,13 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.pth.iflow.core.storage.dao.helper.EntityHelper;
+import com.pth.iflow.core.storage.dao.helper.EntityIdentityHelper;
 import com.pth.iflow.core.storage.dao.helper.EntityListener;
 
 @Entity
 @Table(name = "user_group")
 @EntityListeners(EntityListener.class)
-public class UserGroupEntity extends EntityHelper {
+public class UserGroupEntity extends EntityIdentityHelper {
 
   @Id
   @Column(name = "id")
@@ -143,6 +143,11 @@ public class UserGroupEntity extends EntityHelper {
   @Override
   public String getIdentityPreffix() {
     return "ug";
+  }
+
+  @Override
+  public void increaseVersion() {
+    version += 1;
   }
 
 }

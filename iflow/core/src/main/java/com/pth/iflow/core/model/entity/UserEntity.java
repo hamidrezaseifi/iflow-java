@@ -23,13 +23,13 @@ import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.pth.iflow.common.enums.EUserStatus;
-import com.pth.iflow.core.storage.dao.helper.EntityHelper;
+import com.pth.iflow.core.storage.dao.helper.EntityIdentityHelper;
 import com.pth.iflow.core.storage.dao.helper.EntityListener;
 
 @Entity
 @Table(name = "users")
 @EntityListeners(EntityListener.class)
-public class UserEntity extends EntityHelper {
+public class UserEntity extends EntityIdentityHelper {
 
   @Id
   @Column(name = "id")
@@ -367,4 +367,8 @@ public class UserEntity extends EntityHelper {
     }
   }
 
+  @Override
+  public void increaseVersion() {
+    version += 1;
+  }
 }

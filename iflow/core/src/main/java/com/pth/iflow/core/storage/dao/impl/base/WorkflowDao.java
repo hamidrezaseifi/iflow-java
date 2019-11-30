@@ -41,10 +41,17 @@ public class WorkflowDao implements IWorkflowDao {
 
   @Override
   public WorkflowEntity update(final WorkflowEntity model) throws IFlowStorageException {
-    deleteAllSubItemsById(model.getId());
+    // deleteAllSubItems(model);
     // model.increaseVersion();
-    entityManager.persist(model);
+    final WorkflowEntity dbModel = entityManager.find(WorkflowEntity.class, model.getId());
 
+    dbModel.updateFromExists(model);
+
+    // dbModel.setComments(model.getComments());
+    // final WorkflowEntity merged = entityManager.merge(model);
+
+    entityManager.persist(dbModel);
+    entityManager.flush();
     return getById(model.getId());
   }
 
@@ -89,10 +96,30 @@ public class WorkflowDao implements IWorkflowDao {
     return repository.findAllByIdentityList(idList);
   }
 
-  @Override
-  public void deleteAllSubItemsById(final Long workflowId) throws IFlowStorageException {
-    repository.deleteAllWorkflowActions(workflowId);
-    repository.deleteAllWorkflowFiles(workflowId);
+  public void deleteAllSubItems(final WorkflowEntity model) throws IFlowStorageException {
+
+    entityManager.remove(model.getActions().get(0));
+    entityManager.remove(model.getFiles().get(0));
+
+    /*
+     * Query deleteQuery = entityManager.
+     * createQuery("delete FROM WorkflowActionEntity ug where ug.workflow.id=:wid");
+     * deleteQuery.setParameter("wid", model.getId()); int deletedCount =
+     * deleteQuery.executeUpdate();
+     *
+     * deleteQuery = entityManager.
+     * createQuery("delete FROM WorkflowFileEntity ug where ug.workflow.id=:wid");
+     * deleteQuery.setParameter("wid", model.getId()); deletedCount =
+     * deleteQuery.executeUpdate();
+     */
+
+    entityManager.flush();
+
+    // delete FROM WorkflowFileEntity ug where ug.workflow.id=wid
+    // int deletedCount = .executeUpdate();
+
+    // repository.deleteAllWorkflowActions(workflowId);
+    // repository.deleteAllWorkflowFiles(workflowId);
 
   }
 

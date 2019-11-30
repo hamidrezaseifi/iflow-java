@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pth.iflow.common.enums.EIdentity;
 import com.pth.iflow.core.model.entity.workflow.WorkflowActionEntity;
 import com.pth.iflow.core.model.entity.workflow.WorkflowEntity;
 import com.pth.iflow.core.model.entity.workflow.WorkflowFileEntity;
@@ -41,6 +42,7 @@ public class WorkflowService implements IWorkflowService {
     }
 
     final WorkflowEntity exists = workflowDao.getById(model.getId());
+    model.verifyVersion(exists);
 
     return workflowDao.update(model);
 
@@ -66,6 +68,11 @@ public class WorkflowService implements IWorkflowService {
   @Override
   public WorkflowEntity prepareSavingModel(final WorkflowEntity model) {
 
+    if (EIdentity.isNotSet(model.getIdentity()) == false) {
+      final WorkflowEntity exists = workflowDao.getByIdentity(model.getIdentity());
+      model.setId(exists.getId());
+    }
+
     model.setControllerUser(usersDao.getByIdentity(model.getControllerIdentity()));
     model.setControllerId(model.getControllerUser().getId());
 
@@ -80,9 +87,11 @@ public class WorkflowService implements IWorkflowService {
 
     for (final WorkflowActionEntity action : model.getActions()) {
 
-      action.setAssignToUser(usersDao.getByIdentity(action.getAssignToIdentity()));
-      action.setAssignTo(action.getAssignToUser() == null ? 0 : action.getAssignToUser().getId());
-      action.setCurrentStep(workflowTypeStepDao.getByIdentity(action.getCurrentStepIdentity()));
+      if (EIdentity.isNotSet(action.getAssignToEdoIdentity()) == false) {
+        action.setAssignTo(usersDao.getByIdentity(action.getAssignToIdentity()).getId());
+      }
+
+      action.setCurrentStep(workflowTypeStepDao.getByIdentity(action.getCurrentStepEdoIdentity()));
       action.setCurrentStepId(action.getCurrentStep().getId());
       action.setWorkflow(model);
     }

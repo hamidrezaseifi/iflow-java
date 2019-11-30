@@ -14,8 +14,6 @@ public interface IWorkflowDao {
 
   void deleteById(final Long workflowId) throws IFlowStorageException;
 
-  void deleteAllSubItemsById(final Long workflowId) throws IFlowStorageException;
-
   WorkflowEntity getById(Long id) throws IFlowStorageException;
 
   WorkflowEntity getByIdentity(String identity) throws IFlowStorageException;

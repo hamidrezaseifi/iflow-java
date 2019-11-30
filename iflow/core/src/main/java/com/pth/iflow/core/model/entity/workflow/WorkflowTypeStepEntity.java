@@ -13,13 +13,13 @@ import javax.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.pth.iflow.core.storage.dao.helper.EntityHelper;
+import com.pth.iflow.core.storage.dao.helper.EntityIdentityHelper;
 import com.pth.iflow.core.storage.dao.helper.EntityListener;
 
 @Entity
 @Table(name = "workflow_type_step")
 @EntityListeners(EntityListener.class)
-public class WorkflowTypeStepEntity extends EntityHelper {
+public class WorkflowTypeStepEntity extends EntityIdentityHelper {
 
   @Id
   @Column(name = "id")
@@ -177,4 +177,8 @@ public class WorkflowTypeStepEntity extends EntityHelper {
     return "wtps";
   }
 
+  @Override
+  public void increaseVersion() {
+    version += 1;
+  }
 }

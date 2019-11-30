@@ -4,6 +4,7 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,55 +19,63 @@ import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.pth.iflow.core.model.entity.UserEntity;
+import com.pth.iflow.core.storage.dao.helper.EntityIdentityHelper;
+import com.pth.iflow.core.storage.dao.helper.EntityListener;
 
 @Entity
 @Table(name = "workflow_files_versions")
-public class WorkflowFileVersionEntity {
+@EntityListeners(EntityListener.class)
+public class WorkflowFileVersionEntity extends EntityIdentityHelper {
 
   @Id
   @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long       id;
+  private Long               id;
 
   // @Column(name = "workflow_file_id")
   // private Long workflowFileId;
 
   @Column(name = "created_by")
-  private Long       createdById;
+  private Long               createdById;
 
   @Column(name = "filepath")
-  private String     filePath;
+  private String             filePath;
 
   @Column(name = "file_version")
-  private Integer    fileVersion;
+  private Integer            fileVersion;
 
   @Column(name = "comments")
-  private String     comments;
+  private String             comments;
 
   @Column(name = "status")
-  private Integer    status;
+  private Integer            status;
 
   @Column(name = "version")
-  private Integer    version;
+  private Integer            version;
 
   @CreationTimestamp
   @Column(name = "created_at")
-  private Date       createdAt;
+  private Date               createdAt;
 
   @UpdateTimestamp
   @Column(name = "updated_at")
-  private Date       updatedAt;
+  private Date               updatedAt;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "created_by", insertable = false, updatable = false)
   @Fetch(FetchMode.JOIN)
-  private UserEntity createdByUser;
+  private UserEntity         createdByUser;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "workflow_file_id", insertable = false, updatable = false)
+  private WorkflowFileEntity workflowFile;
 
   public WorkflowFileVersionEntity() {
     createdByUser = new UserEntity();
 
   }
 
+  @Override
   public Long getId() {
     return this.id;
   }
@@ -130,10 +139,12 @@ public class WorkflowFileVersionEntity {
     this.status = status;
   }
 
+  @Override
   public Integer getVersion() {
     return this.version;
   }
 
+  @Override
   public void setVersion(final Integer version) {
     this.version = version;
   }
@@ -154,4 +165,38 @@ public class WorkflowFileVersionEntity {
     this.updatedAt = updatedAt;
   }
 
+  public void updateFromExists(final WorkflowFileVersionEntity exists) {
+    if (exists == null) {
+      return;
+    }
+    this.comments = exists.comments;
+    this.createdById = exists.createdById;
+    this.filePath = exists.filePath;
+    this.fileVersion = exists.fileVersion;
+    this.status = exists.status;
+    this.version = exists.version;
+
+  }
+
+  @Override
+  public String getIdentity() {
+
+    return "";
+  }
+
+  @Override
+  public void setIdentity(final String identity) {
+
+  }
+
+  @Override
+  public String getIdentityPreffix() {
+    return "wfv";
+  }
+
+  @Override
+  public void increaseVersion() {
+    version += 1;
+    workflowFile.increaseVersion();
+  }
 }

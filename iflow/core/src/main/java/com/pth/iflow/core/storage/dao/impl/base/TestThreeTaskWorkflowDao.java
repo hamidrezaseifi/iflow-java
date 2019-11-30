@@ -14,6 +14,7 @@ import javax.persistence.criteria.Root;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.pth.iflow.core.model.entity.workflow.TestThreeTaskWorkflowEntity;
 import com.pth.iflow.core.model.entity.workflow.WorkflowEntity;
@@ -22,6 +23,7 @@ import com.pth.iflow.core.storage.dao.impl.repository.workflow.TestThreeTaskWork
 import com.pth.iflow.core.storage.dao.interfaces.workflow.ITestThreeTaskWorkflowDao;
 import com.pth.iflow.core.storage.dao.interfaces.workflow.IWorkflowDao;
 
+@Transactional
 @Repository
 public class TestThreeTaskWorkflowDao implements ITestThreeTaskWorkflowDao {
 

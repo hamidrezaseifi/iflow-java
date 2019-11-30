@@ -24,13 +24,13 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import com.pth.iflow.common.enums.EIdentity;
 import com.pth.iflow.core.model.entity.UserEntity;
-import com.pth.iflow.core.storage.dao.helper.EntityHelper;
+import com.pth.iflow.core.storage.dao.helper.EntityIdentityHelper;
 import com.pth.iflow.core.storage.dao.helper.EntityListener;
 
 @Entity
 @EntityListeners(EntityListener.class)
 @Table(name = "workflow")
-public class WorkflowEntity extends EntityHelper {
+public class WorkflowEntity extends EntityIdentityHelper {
 
   @Id
   @Column(name = "id")
@@ -277,4 +277,46 @@ public class WorkflowEntity extends EntityHelper {
     this.currentStep = currentStep;
   }
 
+  public WorkflowActionEntity getActionByIdentity(final String identity) {
+    for (final WorkflowActionEntity action : actions) {
+      if (action.hasTheSameIdentity(identity)) {
+        return action;
+      }
+    }
+    return null;
+  }
+
+  public WorkflowFileEntity getFileByIdentity(final String identity) {
+    for (final WorkflowFileEntity file : files) {
+      if (file.hasTheSameIdentity(identity)) {
+        return file;
+      }
+    }
+    return null;
+  }
+
+  public void updateFromExists(final WorkflowEntity exists) {
+    if (exists == null) {
+      return;
+    }
+    this.comments = exists.comments;
+    this.controllerId = exists.controllerId;
+    this.createdById = exists.createdById;
+    this.currentStepId = exists.currentStepId;
+    this.status = exists.status;
+    this.version = exists.version;
+
+    for (final WorkflowActionEntity action : actions) {
+      action.updateFromExists(exists.getActionByIdentity(action.getIdentity()));
+    }
+
+    for (final WorkflowFileEntity file : files) {
+      file.updateFromExists(exists.getFileByIdentity(file.getIdentity()));
+    }
+  }
+
+  @Override
+  public void increaseVersion() {
+    version += 1;
+  }
 }

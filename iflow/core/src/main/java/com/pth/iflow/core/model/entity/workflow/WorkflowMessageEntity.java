@@ -20,11 +20,11 @@ import org.hibernate.annotations.UpdateTimestamp;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.enums.EWorkflowMessageType;
 import com.pth.iflow.core.model.entity.UserEntity;
-import com.pth.iflow.core.storage.dao.helper.EntityHelper;
+import com.pth.iflow.core.storage.dao.helper.EntityIdentityHelper;
 
 @Entity
 @Table(name = "workflow_message")
-public class WorkflowMessageEntity extends EntityHelper {
+public class WorkflowMessageEntity extends EntityIdentityHelper {
 
   @Id
   @Column(name = "id")
@@ -273,4 +273,8 @@ public class WorkflowMessageEntity extends EntityHelper {
     this.workflow = workflow;
   }
 
+  @Override
+  public void increaseVersion() {
+    version += 1;
+  }
 }

@@ -23,13 +23,13 @@ import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.pth.iflow.core.model.entity.UserEntity;
-import com.pth.iflow.core.storage.dao.helper.EntityHelper;
+import com.pth.iflow.core.storage.dao.helper.EntityIdentityHelper;
 import com.pth.iflow.core.storage.dao.helper.EntityListener;
 
 @Entity
 @Table(name = "workflow_files")
 @EntityListeners(EntityListener.class)
-public class WorkflowFileEntity extends EntityHelper {
+public class WorkflowFileEntity extends EntityIdentityHelper {
 
   @Id
   @Column(name = "id")
@@ -232,4 +232,37 @@ public class WorkflowFileEntity extends EntityHelper {
     return "wf";
   }
 
+  public void updateFromExists(final WorkflowFileEntity exists) {
+    if (exists == null) {
+      return;
+    }
+
+    this.comments = exists.comments;
+    this.createdById = exists.createdById;
+    this.activeFilePath = exists.activeFilePath;
+    this.activeFileVersion = exists.activeFileVersion;
+    this.status = exists.status;
+    this.version = exists.version;
+    this.extention = exists.extention;
+    this.title = exists.title;
+
+    for (final WorkflowFileVersionEntity fileVersion : fileVersions) {
+      fileVersion.updateFromExists(exists.getFileVersionByFileVersion(fileVersion.getFileVersion()));
+    }
+  }
+
+  private WorkflowFileVersionEntity getFileVersionByFileVersion(final Integer fileVersion) {
+    for (final WorkflowFileVersionEntity fileVersionItem : fileVersions) {
+      if (fileVersionItem.getFileVersion() == fileVersion) {
+        return fileVersionItem;
+      }
+    }
+    return null;
+  }
+
+  @Override
+  public void increaseVersion() {
+    version += 1;
+    workflow.increaseVersion();
+  }
 }

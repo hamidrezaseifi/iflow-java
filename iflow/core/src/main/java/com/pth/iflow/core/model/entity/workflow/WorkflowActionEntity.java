@@ -12,19 +12,24 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.pth.iflow.common.enums.EIdentity;
 import com.pth.iflow.core.model.entity.UserEntity;
-import com.pth.iflow.core.storage.dao.helper.EntityHelper;
+import com.pth.iflow.core.storage.dao.helper.EntityIdentityHelper;
 import com.pth.iflow.core.storage.dao.helper.EntityListener;
 
 @Entity
 @Table(name = "workflow_actions")
 @EntityListeners(EntityListener.class)
-public class WorkflowActionEntity extends EntityHelper {
+public class WorkflowActionEntity extends EntityIdentityHelper {
 
   @Id
   @Column(name = "id")
@@ -60,8 +65,10 @@ public class WorkflowActionEntity extends EntityHelper {
   @Column(name = "updated_at")
   private Date                   updatedAt;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "assign_to", insertable = false, updatable = false)
+  @Fetch(FetchMode.JOIN)
+  @ManyToOne(fetch = FetchType.EAGER, optional = true)
+  @JoinColumn(name = "assign_to", nullable = true, insertable = false, updatable = false)
+  @NotFound(action = NotFoundAction.IGNORE)
   private UserEntity             assignToUser;
 
   @ManyToOne(fetch = FetchType.LAZY)
@@ -72,10 +79,23 @@ public class WorkflowActionEntity extends EntityHelper {
   @JoinColumn(name = "workflow_id", insertable = false, updatable = false)
   private WorkflowEntity         workflow;
 
+  @Transient
+  private String                 assignToEdoIdentity;
+
+  @Transient
+  private String                 currentStepEdoIdentity;
+
   public WorkflowActionEntity() {
-    currentStep = new WorkflowTypeStepEntity();
-    assignToUser = new UserEntity();
-    workflow = new WorkflowEntity();
+
+    // workflow = new WorkflowEntity();
+    assignTo = 0L;
+  }
+
+  public WorkflowActionEntity(final String assignToEdoIdentity, final String currentStepEdoIdentity) {
+
+    this.assignToEdoIdentity = assignToEdoIdentity;
+    this.currentStepEdoIdentity = currentStepEdoIdentity;
+
     assignTo = 0L;
   }
 
@@ -121,13 +141,9 @@ public class WorkflowActionEntity extends EntityHelper {
     this.currentStepId = currentStepId;
   }
 
-  public String getAssignToIdentity() {
-    return assignToUser == null ? EIdentity.NOT_SET.getIdentity() : assignToUser.getIdentity();
-  }
-
-  public String getCurrentStepIdentity() {
-    return currentStep.getIdentity();
-  }
+  // public String getCurrentStepIdentity() {
+  // return currentStep.getIdentity();
+  // }
 
   public String getComments() {
     return this.comments;
@@ -195,10 +211,40 @@ public class WorkflowActionEntity extends EntityHelper {
     this.workflow = workflow;
   }
 
+  public String getAssignToIdentity() {
+    return assignToUser == null ? EIdentity.NOT_SET.getIdentity() : assignToUser.getIdentity();
+  }
+
+  public String getAssignToEdoIdentity() {
+    return assignToEdoIdentity;
+  }
+
+  public String getCurrentStepEdoIdentity() {
+    return currentStepEdoIdentity;
+  }
+
   @Override
   public String getIdentityPreffix() {
 
     return "wa";
   }
 
+  public void updateFromExists(final WorkflowActionEntity exists) {
+    if (exists == null) {
+      return;
+    }
+
+    this.comments = exists.comments;
+    this.assignTo = exists.assignTo;
+    this.currentStepId = exists.currentStepId;
+    this.status = exists.status;
+    this.version = exists.version;
+
+  }
+
+  @Override
+  public void increaseVersion() {
+    version += 1;
+    workflow.increaseVersion();
+  }
 }

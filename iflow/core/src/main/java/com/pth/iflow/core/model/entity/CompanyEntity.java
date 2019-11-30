@@ -13,13 +13,13 @@ import javax.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.pth.iflow.core.storage.dao.helper.EntityHelper;
+import com.pth.iflow.core.storage.dao.helper.EntityIdentityHelper;
 import com.pth.iflow.core.storage.dao.helper.EntityListener;
 
 @Entity
 @Table(name = "companies")
 @EntityListeners(EntityListener.class)
-public class CompanyEntity extends EntityHelper {
+public class CompanyEntity extends EntityIdentityHelper {
 
   @Id
   @Column(name = "id")
@@ -152,4 +152,8 @@ public class CompanyEntity extends EntityHelper {
     return "c";
   }
 
+  @Override
+  public void increaseVersion() {
+    version += 1;
+  }
 }

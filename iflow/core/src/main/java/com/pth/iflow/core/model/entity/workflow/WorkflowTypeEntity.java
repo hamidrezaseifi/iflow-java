@@ -24,13 +24,13 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
 import com.pth.iflow.core.model.entity.CompanyEntity;
-import com.pth.iflow.core.storage.dao.helper.EntityHelper;
+import com.pth.iflow.core.storage.dao.helper.EntityIdentityHelper;
 import com.pth.iflow.core.storage.dao.helper.EntityListener;
 
 @Entity
 @Table(name = "workflow_type")
 @EntityListeners(EntityListener.class)
-public class WorkflowTypeEntity extends EntityHelper {
+public class WorkflowTypeEntity extends EntityIdentityHelper {
 
   @Id
   @Column(name = "id")
@@ -240,4 +240,8 @@ public class WorkflowTypeEntity extends EntityHelper {
     this.company = company;
   }
 
+  @Override
+  public void increaseVersion() {
+    version += 1;
+  }
 }
