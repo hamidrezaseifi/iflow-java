@@ -247,7 +247,14 @@ public class WorkflowFileEntity extends EntityIdentityHelper {
     this.title = exists.title;
 
     for (final WorkflowFileVersionEntity fileVersion : fileVersions) {
-      fileVersion.updateFromExists(exists.getFileVersionByFileVersion(fileVersion.getFileVersion()));
+      final WorkflowFileVersionEntity found = getFileVersionByFileVersion(fileVersion.getFileVersion());
+
+      if (found == null) {
+        fileVersions.add(fileVersion);
+      } else {
+        found.updateFromExists(fileVersion);
+      }
+      // fileVersion.updateFromExists(exists.getFileVersionByFileVersion(fileVersion.getFileVersion()));
     }
   }
 

@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Fetch;
@@ -97,12 +98,15 @@ public class WorkflowEntity extends EntityIdentityHelper {
   @Fetch(FetchMode.JOIN)
   private WorkflowTypeStepEntity           currentStep;
 
+  @Transient
+  private boolean                          isUpdated;
+
   public WorkflowEntity() {
     currentStep = new WorkflowTypeStepEntity();
     createdByUser = new UserEntity();
     controllerUser = new UserEntity();
     workflowType = new WorkflowTypeEntity();
-
+    isUpdated = false;
   }
 
   @Override
@@ -306,17 +310,35 @@ public class WorkflowEntity extends EntityIdentityHelper {
     this.status = exists.status;
     this.version = exists.version;
 
-    for (final WorkflowActionEntity action : actions) {
-      action.updateFromExists(exists.getActionByIdentity(action.getIdentity()));
+    for (final WorkflowActionEntity action : exists.actions) {
+      final WorkflowActionEntity found = getActionByIdentity(action.getIdentity());
+      if (found == null) {
+        actions.add(action);
+      } else {
+        found.updateFromExists(action);
+      }
+      // action.updateFromExists(exists.getActionByIdentity(action.getIdentity()));
     }
 
-    for (final WorkflowFileEntity file : files) {
-      file.updateFromExists(exists.getFileByIdentity(file.getIdentity()));
+    for (final WorkflowFileEntity file : exists.files) {
+      final WorkflowFileEntity found = getFileByIdentity(file.getIdentity());
+
+      if (found == null) {
+        files.add(file);
+      } else {
+        found.updateFromExists(file);
+      }
+      // file.updateFromExists(exists.getFileByIdentity(file.getIdentity()));
     }
   }
 
   @Override
   public void increaseVersion() {
+    if (isUpdated) {
+      return;
+    }
+
     version += 1;
+    isUpdated = true;
   }
 }
