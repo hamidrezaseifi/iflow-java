@@ -197,6 +197,11 @@ public class IflowRestPaths {
       return builder.build();
     }
 
+    public static URI READ_WORKFLOW(final String identity) {
+      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOW_READ);
+      return builder.build(identity);
+    }
+
     public static URI READ_INVOICEWORKFLOW_BY_IDENTITY(final String identity) {
       final IflowUriBuilder builder = new IflowUriBuilder(INVOICEWORKFLOW_READ_BY_IDENTITY);
       return builder.build(identity);

@@ -25,14 +25,17 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.pth.iflow.common.edo.models.WorkflowSearchFilterEdo;
+import com.pth.iflow.common.edo.models.workflow.WorkflowEdo;
 import com.pth.iflow.common.edo.models.workflow.results.WorkflowResultListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.XmlRestConfig;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.WorkflowSearchFilter;
+import com.pth.iflow.core.model.entity.workflow.WorkflowEntity;
+import com.pth.iflow.core.model.entity.workflow.WorkflowResultEntity;
 import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
-import com.pth.iflow.core.model.workflow.WorkflowResult;
 import com.pth.iflow.core.service.interfaces.IWorkflowSearchService;
+import com.pth.iflow.core.service.interfaces.workflow.IWorkflowService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -48,6 +51,9 @@ public class WorkflowControllerTest extends TestDataProducer {
   @MockBean
   private IWorkflowSearchService                 workflowSearchService;
 
+  @MockBean
+  private IWorkflowService                       workflowService;
+
   @Value("${iflow.common.rest.api.security.client-id.internal}")
   private String                                 innerModulesRequestHeaderValue;
 
@@ -60,11 +66,29 @@ public class WorkflowControllerTest extends TestDataProducer {
   }
 
   @Test
+  public void testReadWorkflow() throws Exception {
+    final WorkflowEntity model = this.getTestWorkflow(1L);
+
+    final WorkflowEdo modelEdo = CoreModelEdoMapper.toEdo(model);
+
+    when(this.workflowService.getByIdentity(any(String.class))).thenReturn(model);
+
+    final String resultAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelEdo);
+
+    this.mockMvc.perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.READ_WORKFLOW("test-identity"))
+
+        .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue)).andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE)).andExpect(content().xml(resultAsXmlString));
+
+    verify(this.workflowService, times(1)).getByIdentity(any(String.class));
+  }
+
+  @Test
   public void testSearchWorkflow() throws Exception {
     final WorkflowSearchFilter model = this.getTestWorkflowSearchFilter();
     final WorkflowSearchFilterEdo modelEdo = CoreModelEdoMapper.toEdo(model);
 
-    final List<WorkflowResult> modelList = getTestWorkflowResultList();
+    final List<WorkflowResultEntity> modelList = getTestWorkflowResultList();
     final WorkflowResultListEdo modelListEdo = new WorkflowResultListEdo(CoreModelEdoMapper.toWorkflowResultEdoList(modelList));
 
     when(this.workflowSearchService.search(any(WorkflowSearchFilter.class))).thenReturn(modelList);

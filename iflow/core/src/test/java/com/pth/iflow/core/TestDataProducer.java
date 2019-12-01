@@ -233,8 +233,7 @@ public class TestDataProducer {
     model.setCreatedById(1l);
     model.setWorkflowTypeId(1l);
 
-    model.setActions(
-        Arrays.asList(this.getTestWorkflowAction(1L, 1L), this.getTestWorkflowAction(2L, 2L), this.getTestWorkflowAction(3L, 3L)));
+    model.setActions(getTestWorkflowActionList(model));
     model
         .setFiles(Arrays.asList(this.getTestWorkflowFile(1L, 1L), this.getTestWorkflowFile(2L, 2L), this.getTestWorkflowFile(3L, 3L)));
 
@@ -411,9 +410,9 @@ public class TestDataProducer {
         getTestWorkflowResult("workflow3", "type3"));
   }
 
-  protected WorkflowActionEntity getTestWorkflowAction(final Long Id, final Long workflowId) {
+  protected WorkflowActionEntity getTestWorkflowAction(final Long Id, final WorkflowEntity workflow) {
     final WorkflowActionEntity model = new WorkflowActionEntity();
-    model.getWorkflow().setId(workflowId);
+    model.setWorkflow(workflow);
     model.setId(Id);
     model.setStatus(1);
     model.setVersion(1);
@@ -421,15 +420,16 @@ public class TestDataProducer {
     model.setComments("comments");
     model.setAssignTo(1L);
     model.setIdentity("action-" + Id);
+    model.setCurrentStep(getTestWorkflowTypeStep());
     // model.setAssignToIdentity("assignToIdentity");
     // model.setCurrentStepIdentity("currentStepIdIdentity");
 
     return model;
   }
 
-  protected List<WorkflowActionEntity> getTestWorkflowActionList(final Long workflowId) {
-    return Arrays.asList(this.getTestWorkflowAction(1L, workflowId), this.getTestWorkflowAction(2L, workflowId),
-        this.getTestWorkflowAction(3L, workflowId));
+  protected List<WorkflowActionEntity> getTestWorkflowActionList(final WorkflowEntity workflow) {
+    return Arrays.asList(this.getTestWorkflowAction(1L, workflow), this.getTestWorkflowAction(2L, workflow),
+        this.getTestWorkflowAction(3L, workflow));
   }
 
   protected WorkflowActionEntity getTestNewWorkflowAction(final WorkflowEntity workflow) {
