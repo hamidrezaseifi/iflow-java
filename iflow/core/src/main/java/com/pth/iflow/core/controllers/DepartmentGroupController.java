@@ -68,7 +68,7 @@ public class DepartmentGroupController {
   public ResponseEntity<UserListEdo> readAllUserListByDepartmentGroup(@PathVariable(name = "identity") final String identity,
       final HttpServletRequest request) throws Exception {
 
-    final List<UserEntity> modelList = this.userService.getAllUserIdentityListByDepartmentGroupId(identity);
+    final List<UserEntity> modelList = this.userService.getAllUserIdentityListByDepartmentGroupIdentity(identity);
 
     return ControllerHelper.createResponseEntity(request, new UserListEdo(CoreModelEdoMapper.toUserEdoList(modelList)), HttpStatus.OK);
   }

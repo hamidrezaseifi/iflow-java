@@ -71,6 +71,7 @@ public class TestDataProducer {
     model.setDepartments(this.getTestUserDepartmentEntitySet(1L));
     model.setDeputies(this.getTestUserDeputyEntitySet(1L));
     model.setGroups(this.getTestUserUserGroupEntitySet(1L));
+    model.setCompany(getTestCompany());
     // model.setCompanyIdentity("companyIdentity");
 
     return model;
@@ -110,6 +111,7 @@ public class TestDataProducer {
     model.setDeputies(this.getTestUserDeputyEntitySet(1L));
     model.setGroups(this.getTestUserUserGroupEntitySet(1L));
     model.setBirthDate(getTestBirthDate());
+    model.setCompany(getTestCompany());
 
     return model;
   }
@@ -209,6 +211,7 @@ public class TestDataProducer {
     model.setStatus(1);
     model.setVersion(1);
     model.setIdentity("usergroup-" + id);
+    model.setCompany(getTestCompany());
 
     return model;
   }
@@ -232,6 +235,10 @@ public class TestDataProducer {
     model.setCurrentStepId(1l);
     model.setCreatedById(1l);
     model.setWorkflowTypeId(1l);
+    model.setControllerUser(getTestUser());
+    model.setCreatedByUser(getTestUser());
+    model.setCurrentStep(getTestWorkflowTypeStep());
+    model.setWorkflowType(getTestWorkflowType());
 
     model.setActions(getTestWorkflowActionList(model));
     model
@@ -620,6 +627,7 @@ public class TestDataProducer {
     final UserDepartmentGroupEntity model = new UserDepartmentGroupEntity();
     model.setDepartmentGroupId(departmentGroupId);
     model.setUserId(userId);
+    model.setDepartmentGroup(getTestDepartmentGroup());
     return model;
   }
 
@@ -632,6 +640,7 @@ public class TestDataProducer {
     final UserDepartmentEntity model = new UserDepartmentEntity();
     model.setDepartmentId(departmentId);
     model.setUserId(userId);
+    model.setDepartment(getTestDepartment());
     return model;
   }
 
@@ -644,6 +653,7 @@ public class TestDataProducer {
     final UserUserGroupEntity model = new UserUserGroupEntity();
     model.setUserGroupId(userGroupId);
     model.setUserId(userId);
+    model.setUserGroup(getTestUserGroup());
     return model;
   }
 
@@ -656,6 +666,8 @@ public class TestDataProducer {
     final UserDeputyEntity model = new UserDeputyEntity();
     model.setDeputyId(deputyId);
     model.setUserId(userId);
+    model.setDeputy(new UserEntity());
+    model.getDeputy().setIdentity("deputy-identity");
     return model;
   }
 

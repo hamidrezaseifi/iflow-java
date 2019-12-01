@@ -99,13 +99,13 @@ public class UsersService implements IUsersService {
   }
 
   @Override
-  public List<UserEntity> getAllUserIdentityListByDepartmentId(final String identity) throws IFlowStorageException {
+  public List<UserEntity> getAllUserIdentityListByDepartmentIdentity(final String identity) throws IFlowStorageException {
 
     return userDao.getAllUserIdentityListByDepartmentId(identity);
   }
 
   @Override
-  public List<UserEntity> getAllUserIdentityListByDepartmentGroupId(final String identity) throws IFlowStorageException {
+  public List<UserEntity> getAllUserIdentityListByDepartmentGroupIdentity(final String identity) throws IFlowStorageException {
 
     return userDao.getAllUserIdentityListByDepartmentGroupId(identity);
   }

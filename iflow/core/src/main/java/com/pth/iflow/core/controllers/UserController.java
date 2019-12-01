@@ -115,6 +115,28 @@ public class UserController {
   }
 
   @ResponseStatus(HttpStatus.OK)
+  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.USER_USER_LIST_BY_DEPARTMENTIDENTITY)
+  public ResponseEntity<UserListEdo> readDepartmentUsers(@PathVariable(name = "identity") final String identity,
+      final HttpServletRequest request) throws Exception {
+
+    final List<UserEntity> list = this.usersService.getAllUserIdentityListByDepartmentIdentity(identity);
+    final UserListEdo edo = new UserListEdo();
+    edo.setUsers(CoreModelEdoMapper.toUserEdoList(list));
+    return ControllerHelper.createResponseEntity(request, edo, HttpStatus.OK);
+  }
+
+  @ResponseStatus(HttpStatus.OK)
+  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.USER_USER_LIST_BY_DEPARTMENTGROUPIDENTITY)
+  public ResponseEntity<UserListEdo> readDepartmentGroupUsers(@PathVariable(name = "identity") final String identity,
+      final HttpServletRequest request) throws Exception {
+
+    final List<UserEntity> list = this.usersService.getAllUserIdentityListByDepartmentGroupIdentity(identity);
+    final UserListEdo edo = new UserListEdo();
+    edo.setUsers(CoreModelEdoMapper.toUserEdoList(list));
+    return ControllerHelper.createResponseEntity(request, edo, HttpStatus.OK);
+  }
+
+  @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.USERPROFILE_READ_BY_EMAIL)
   public ResponseEntity<ProfileResponseEdo> readUserProfileByEmail(@PathVariable(name = "email") final String email,
       final HttpServletRequest request) throws Exception {

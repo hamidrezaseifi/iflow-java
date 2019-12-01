@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 
@@ -75,9 +76,10 @@ public class UserDao implements IUserDao {
     final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
     final CriteriaQuery<UserEntity> query = criteriaBuilder.createQuery(UserEntity.class);
     final Root<UserEntity> userRoot = query.from(UserEntity.class);
-    userRoot.join("departments", JoinType.INNER);
 
-    query.select(userRoot).where(criteriaBuilder.equal(userRoot.get("department").get("identity"), identity));
+    final Join<Object, Object> departmentJoin = userRoot.join("departments", JoinType.INNER);
+
+    query.select(userRoot).where(criteriaBuilder.equal(departmentJoin.get("department").get("identity"), identity));
     final TypedQuery<UserEntity> typedQuery = entityManager.createQuery(query);
     final List<UserEntity> list = typedQuery.getResultList();
 
@@ -86,12 +88,14 @@ public class UserDao implements IUserDao {
 
   @Override
   public List<UserEntity> getAllUserIdentityListByDepartmentGroupId(final String identity) throws IFlowStorageException {
+
     final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
     final CriteriaQuery<UserEntity> query = criteriaBuilder.createQuery(UserEntity.class);
     final Root<UserEntity> userRoot = query.from(UserEntity.class);
-    userRoot.join("departmentGroups", JoinType.INNER);
 
-    query.select(userRoot).where(criteriaBuilder.equal(userRoot.get("departmentGroup").get("identity"), identity));
+    final Join<Object, Object> departmentJoin = userRoot.join("departmentGroups", JoinType.INNER);
+
+    query.select(userRoot).where(criteriaBuilder.equal(departmentJoin.get("departmentGroup").get("identity"), identity));
     final TypedQuery<UserEntity> typedQuery = entityManager.createQuery(query);
     final List<UserEntity> list = typedQuery.getResultList();
 

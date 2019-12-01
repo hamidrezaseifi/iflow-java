@@ -32,6 +32,8 @@ public class IflowRestPaths {
     public static final String USER_DEPARTMENTGROUPS_LIST_BY_EMAIL                              = "/users/user/departmentgroups/{email}";
     public static final String USER_DEPUTIES_LIST_BY_EMAIL                                      = "/users/user/deputies/{email}";
     public static final String USER_USER_LIST_BY_COMPANYIDENTITY                                = "/users/company/users/{companyidentity}";
+    public static final String USER_USER_LIST_BY_DEPARTMENTIDENTITY                             = "/users/department/users/{identity}";
+    public static final String USER_USER_LIST_BY_DEPARTMENTGROUPIDENTITY                        = "/users/departmentgroup/users/{identity}";
     public static final String USERPROFILE_READ_BY_EMAIL                                        = "/users/readprofile/{email}";
 
     public static final String COMPANY_READ_BY_IDENTITY                                         = "/companies/readbyid/{companyidentity}";

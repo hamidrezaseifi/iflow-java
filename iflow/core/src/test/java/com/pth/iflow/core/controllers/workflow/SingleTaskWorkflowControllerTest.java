@@ -26,22 +26,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.pth.iflow.common.edo.models.IdentityListEdo;
-import com.pth.iflow.common.edo.models.WorkflowActionEdo;
-import com.pth.iflow.common.edo.models.WorkflowActionListEdo;
-import com.pth.iflow.common.edo.models.WorkflowFileEdo;
-import com.pth.iflow.common.edo.models.WorkflowFileListEdo;
 import com.pth.iflow.common.edo.models.workflow.singletask.SingleTaskWorkflowEdo;
 import com.pth.iflow.common.edo.models.workflow.singletask.SingleTaskWorkflowListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.XmlRestConfig;
 import com.pth.iflow.core.TestDataProducer;
+import com.pth.iflow.core.model.entity.workflow.SingleTaskWorkflowEntity;
 import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
-import com.pth.iflow.core.model.workflow.SingleTaskWorkflow;
-import com.pth.iflow.core.model.workflow.sub.WorkflowAction;
-import com.pth.iflow.core.model.workflow.sub.WorkflowFile;
-import com.pth.iflow.core.service.IWorkflowActionService;
-import com.pth.iflow.core.service.IWorkflowFileService;
-import com.pth.iflow.core.service.interfaces.workflow.IWorkflowService;
+import com.pth.iflow.core.service.interfaces.workflow.ISingleTaskWorkflowService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -55,13 +47,7 @@ public class SingleTaskWorkflowControllerTest extends TestDataProducer {
   private MappingJackson2XmlHttpMessageConverter xmlConverter;
 
   @MockBean
-  private IWorkflowService<SingleTaskWorkflow>   workflowService;
-
-  @MockBean
-  private IWorkflowActionService                 workflowActionService;
-
-  @MockBean
-  private IWorkflowFileService                   workflowFileService;
+  private ISingleTaskWorkflowService             workflowService;
 
   @Value("${iflow.common.rest.api.security.client-id.internal}")
   private String                                 innerModulesRequestHeaderValue;
@@ -76,7 +62,7 @@ public class SingleTaskWorkflowControllerTest extends TestDataProducer {
 
   @Test
   public void testReadWorkflow() throws Exception {
-    final SingleTaskWorkflow model = this.getTestSingleTaskWorkflow(1L);
+    final SingleTaskWorkflowEntity model = this.getTestSingleTaskWorkflow(1L);
 
     when(this.workflowService.getByIdentity(any(String.class))).thenReturn(model);
 
@@ -85,7 +71,8 @@ public class SingleTaskWorkflowControllerTest extends TestDataProducer {
 
     // System.out.println("listAsXmlString: \n" + listAsXmlString);
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.SINGLETASKWORKFLOW_READ_BY_IDENTITY, model.getIdentity())
+        .perform(MockMvcRequestBuilders
+            .get(IflowRestPaths.CoreModule.SINGLETASKWORKFLOW_READ_BY_IDENTITY, model.getWorkflow().getIdentity())
             .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
         .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(listAsXmlString));
@@ -94,81 +81,24 @@ public class SingleTaskWorkflowControllerTest extends TestDataProducer {
   }
 
   @Test
-  public void testReadWorkflowAction() throws Exception {
-    final WorkflowAction model = this.getTestWorkflowAction(1L, 1L);
-    final WorkflowActionEdo modelEdo = CoreModelEdoMapper.toEdo(model);
+  public void testReadWorkflowForUser() throws Exception {
+    final List<SingleTaskWorkflowEntity> modelList = getTestSingleTaskWorkflowList();
+    final SingleTaskWorkflowListEdo modelListEdo = new SingleTaskWorkflowListEdo(
+        CoreModelEdoMapper.toSingleTaskWorkflowEdoList(modelList));
 
-    when(this.workflowActionService.getByIdentity(any(String.class))).thenReturn(model);
+    when(this.workflowService.getListForUser(any(String.class), any(Integer.class))).thenReturn(modelList);
 
-    final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelEdo);
+    final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelListEdo);
 
+    // System.out.println("listAsXmlString: \n" + listAsXmlString);
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.SINGLETASKWORKFLOW_ACTION_READ_BY_IDENTITY, model.getIdentity())
-            .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
+        .perform(
+            MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.READ_SINGLETASKWORKFLOW_LIST_BY_USERIDENTITY("test-user-identity", 1))
+                .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
         .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(listAsXmlString));
 
-    verify(this.workflowActionService, times(1)).getByIdentity(any(String.class));
-
-  }
-
-  @Test
-  public void testReadWorkflowActionListByWorkflow() throws Exception {
-    final List<WorkflowAction> modelList = this.getTestWorkflowActionList(1L);
-    final WorkflowActionListEdo modelListEdo = new WorkflowActionListEdo(CoreModelEdoMapper.toWorkflowActionEdoList(modelList));
-
-    when(this.workflowActionService.getListByIdWorkflowIdentity(any(String.class))).thenReturn(modelList);
-
-    final String listEdoAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelListEdo);
-
-    this.mockMvc
-        .perform(
-            MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.SINGLETASKWORKFLOW_ACTION_READ_LIST_BY_WORKFLOWIDENTITY, "identity")
-                .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
-        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
-        .andExpect(content().xml(listEdoAsXmlString));
-
-    verify(this.workflowActionService, times(1)).getListByIdWorkflowIdentity(any(String.class));
-
-  }
-
-  @Test
-  public void testReadWorkflowFile() throws Exception {
-    final WorkflowFile model = this.getTestWorkflowFile(1L, 1L);
-    final WorkflowFileEdo modelEdo = CoreModelEdoMapper.toEdo(model);
-
-    when(this.workflowFileService.getByIdentity(any(String.class))).thenReturn(model);
-
-    final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelEdo);
-
-    this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.SINGLETASKWORKFLOW_FILE_READ_BY_IDENTITY, model.getIdentity())
-            .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
-        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
-        .andExpect(content().xml(listAsXmlString));
-
-    verify(this.workflowFileService, times(1)).getByIdentity(any(String.class));
-
-  }
-
-  @Test
-  public void testReadWorkflowFileListbyWorkflow() throws Exception {
-    final List<WorkflowFile> modelList = this.getTestWorkflowFileList(1L);
-    final WorkflowFileListEdo modelListEdo = new WorkflowFileListEdo(CoreModelEdoMapper.toWorkflowFileEdoList(modelList));
-
-    when(this.workflowFileService.getListByIdWorkflowIdentity(any(String.class))).thenReturn(modelList);
-
-    final String listEdoAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelListEdo);
-
-    this.mockMvc
-        .perform(
-            MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.SINGLETASKWORKFLOW_FILE_READ_LIST_BY_WORKFLOWIDENTITY, "identity")
-                .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
-        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
-        .andExpect(content().xml(listEdoAsXmlString));
-
-    verify(this.workflowFileService, times(1)).getListByIdWorkflowIdentity(any(String.class));
-
+    verify(this.workflowService, times(1)).getListForUser(any(String.class), any(Integer.class));
   }
 
   @Test
@@ -176,7 +106,7 @@ public class SingleTaskWorkflowControllerTest extends TestDataProducer {
     final Set<String> list = this.getTestWorkflowIdentityList();
     final IdentityListEdo edoList = new IdentityListEdo(list);
 
-    final List<SingleTaskWorkflow> modelList = getTestSingleTaskWorkflowList();
+    final List<SingleTaskWorkflowEntity> modelList = getTestSingleTaskWorkflowList();
     final SingleTaskWorkflowListEdo modelListEdo = new SingleTaskWorkflowListEdo(
         CoreModelEdoMapper.toSingleTaskWorkflowEdoList(modelList));
 
@@ -198,10 +128,10 @@ public class SingleTaskWorkflowControllerTest extends TestDataProducer {
 
   @Test
   public void testSaveWorkflow() throws Exception {
-    final SingleTaskWorkflow model = this.getTestSingleTaskWorkflow(1L);
+    final SingleTaskWorkflowEntity model = this.getTestSingleTaskWorkflow(1L);
     final SingleTaskWorkflowEdo modelEdo = CoreModelEdoMapper.toEdo(model);
 
-    when(this.workflowService.save(any(SingleTaskWorkflow.class))).thenReturn(model);
+    when(this.workflowService.save(any(SingleTaskWorkflowEntity.class))).thenReturn(model);
 
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelEdo);
 
@@ -212,47 +142,7 @@ public class SingleTaskWorkflowControllerTest extends TestDataProducer {
         .andExpect(status().isAccepted()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(listAsXmlString));
 
-    verify(this.workflowService, times(1)).save(any(SingleTaskWorkflow.class));
-  }
-
-  @Test
-  public void testSaveWorkflowAction() throws Exception {
-    final WorkflowAction model = this.getTestWorkflowAction(1L, 1L);
-    final WorkflowActionEdo modelEdo = CoreModelEdoMapper.toEdo(model);
-
-    when(this.workflowActionService.save(any(WorkflowAction.class))).thenReturn(model);
-
-    final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelEdo);
-
-    this.mockMvc
-        .perform(MockMvcRequestBuilders.post(IflowRestPaths.CoreModule.SINGLETASKWORKFLOW_ACTION_SAVE).content(listAsXmlString)
-            .contentType(MediaType.APPLICATION_XML_VALUE)
-            .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
-        .andExpect(status().isAccepted()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
-        .andExpect(content().xml(listAsXmlString));
-
-    verify(this.workflowActionService, times(1)).save(any(WorkflowAction.class));
-
-  }
-
-  @Test
-  public void testSaveWorkflowFile() throws Exception {
-    final WorkflowFile model = this.getTestWorkflowFile(1L, 1L);
-    final WorkflowFileEdo modelEdo = CoreModelEdoMapper.toEdo(model);
-
-    when(this.workflowFileService.save(any(WorkflowFile.class))).thenReturn(model);
-
-    final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelEdo);
-
-    this.mockMvc
-        .perform(MockMvcRequestBuilders.post(IflowRestPaths.CoreModule.SINGLETASKWORKFLOW_FILE_SAVE).content(listAsXmlString)
-            .contentType(MediaType.APPLICATION_XML_VALUE)
-            .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
-        .andExpect(status().isAccepted()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
-        .andExpect(content().xml(listAsXmlString));
-
-    verify(this.workflowFileService, times(1)).save(any(WorkflowFile.class));
-
+    verify(this.workflowService, times(1)).save(any(SingleTaskWorkflowEntity.class));
   }
 
 }

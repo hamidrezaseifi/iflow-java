@@ -26,7 +26,7 @@ import com.pth.iflow.common.edo.models.CompanyEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.XmlRestConfig;
 import com.pth.iflow.core.TestDataProducer;
-import com.pth.iflow.core.model.Company;
+import com.pth.iflow.core.model.entity.CompanyEntity;
 import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
 import com.pth.iflow.core.service.interfaces.ICompanyService;
 
@@ -58,7 +58,7 @@ public class CompanyControllerTest extends TestDataProducer {
   @Test
   public void testReadCompany() throws Exception {
 
-    final Company company = getTestCompany();
+    final CompanyEntity company = getTestCompany();
     when(this.companyService.getByIdentity(any(String.class))).thenReturn(company);
 
     final CompanyEdo companyEdo = CoreModelEdoMapper.toEdo(company);

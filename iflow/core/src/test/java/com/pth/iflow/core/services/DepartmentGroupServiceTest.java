@@ -96,7 +96,7 @@ public class DepartmentGroupServiceTest extends TestDataProducer {
     final List<User> userList = this.getTestUserList();
     final DepartmentGroupEntity departmentGroup = getTestDepartmentGroup();
 
-    when(this.departmentGroupDao.getAllUserIdentityListByDepartmentGroupId(any(Long.class))).thenReturn(list);
+    when(this.departmentGroupDao.getAllUserIdentityListByDepartmentGroupIdentity(any(Long.class))).thenReturn(list);
     when(this.userDao.getListByIdentityList(any(Set.class))).thenReturn(userList);
     when(this.departmentGroupDao.getByIdentity(any(String.class))).thenReturn(departmentGroup);
 

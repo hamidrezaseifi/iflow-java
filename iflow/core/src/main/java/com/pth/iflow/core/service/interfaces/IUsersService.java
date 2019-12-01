@@ -27,8 +27,8 @@ public interface IUsersService {
 
   List<UserEntity> getCompanyUsers(final String companyIdentity);
 
-  List<UserEntity> getAllUserIdentityListByDepartmentId(final String identity) throws IFlowStorageException;
+  List<UserEntity> getAllUserIdentityListByDepartmentIdentity(final String identity) throws IFlowStorageException;
 
-  List<UserEntity> getAllUserIdentityListByDepartmentGroupId(final String identity) throws IFlowStorageException;
+  List<UserEntity> getAllUserIdentityListByDepartmentGroupIdentity(final String identity) throws IFlowStorageException;
 
 }
