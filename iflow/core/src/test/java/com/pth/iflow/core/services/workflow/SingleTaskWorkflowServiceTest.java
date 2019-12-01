@@ -1,9 +1,13 @@
 package com.pth.iflow.core.services.workflow;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
 import java.util.List;
 import java.util.Set;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -13,26 +17,31 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
-import com.pth.iflow.common.enums.EIdentity;
+
 import com.pth.iflow.core.TestDataProducer;
-import com.pth.iflow.core.model.workflow.SingleTaskWorkflow;
+import com.pth.iflow.core.model.entity.workflow.SingleTaskWorkflowEntity;
+import com.pth.iflow.core.model.entity.workflow.WorkflowEntity;
 import com.pth.iflow.core.service.impl.workflow.SingleTaskWorkflowService;
+import com.pth.iflow.core.service.interfaces.workflow.ISingleTaskWorkflowService;
 import com.pth.iflow.core.service.interfaces.workflow.IWorkflowService;
-import com.pth.iflow.core.storage.dao.interfaces.workflow.IWorkflowDao;
+import com.pth.iflow.core.storage.dao.interfaces.workflow.ISingleTaskWorkflowDao;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 public class SingleTaskWorkflowServiceTest extends TestDataProducer {
 
-  private IWorkflowService<SingleTaskWorkflow> workflowService;
+  private ISingleTaskWorkflowService singleTaskWorkflowService;
 
   @MockBean
-  private IWorkflowDao<SingleTaskWorkflow> workflowDao;
+  private ISingleTaskWorkflowDao     workflowDao;
+
+  @MockBean
+  private IWorkflowService           workflowService;
 
   @Before
   public void setUp() throws Exception {
-    this.workflowService = new SingleTaskWorkflowService(this.workflowDao);
+    this.singleTaskWorkflowService = new SingleTaskWorkflowService(this.workflowDao, this.workflowService);
   }
 
   @After
@@ -40,65 +49,108 @@ public class SingleTaskWorkflowServiceTest extends TestDataProducer {
   }
 
   @Test
-  public void testGetById() throws Exception {
+  public void testSaveCreate() {
+    final SingleTaskWorkflowEntity model = getTestNewSingleTaskWorkflowWorkflow();
 
-    final SingleTaskWorkflow workflow = getTestSingleTaskWorkflow(1L);
-    when(this.workflowDao.getByIdentity(any(String.class))).thenReturn(workflow);
+    final SingleTaskWorkflowEntity savedModel = getTestSingleTaskWorkflow(1L);
 
-    final SingleTaskWorkflow resWorkflow = this.workflowService.getByIdentity("identity");
+    when(this.workflowDao.create(any(SingleTaskWorkflowEntity.class))).thenReturn(savedModel);
+    when(this.workflowDao.getById(any(Long.class))).thenReturn(savedModel);
+    when(this.workflowService.prepareSavingModel(any(WorkflowEntity.class))).thenReturn(savedModel.getWorkflow());
 
-    Assert.assertNotNull("Result workflow-type is not null!", resWorkflow);
-    Assert.assertEquals("Result workflow-type has id 1!", resWorkflow.getId(), workflow.getId());
-    Assert.assertEquals("Result workflow-type has status 1!", resWorkflow.getStatus(), workflow.getStatus());
+    final SingleTaskWorkflowEntity result = singleTaskWorkflowService.save(model);
+
+    Assert.assertNotNull("Result is not null!", result);
+    Assert.assertEquals("Result has " + result.getWorkflow().getIdentity() + " identity.", result.getWorkflow().getIdentity(),
+        result.getWorkflow().getIdentity());
+    Assert.assertEquals("Result has " + result.getWorkflow().getControllerIdentity() + " controller.",
+        result.getWorkflow().getControllerIdentity(), result.getWorkflow().getControllerIdentity());
+    Assert.assertEquals("Result has " + result.getWorkflow().getCurrentStep().getIdentity() + " step.",
+        result.getWorkflow().getCurrentStep().getIdentity(), result.getWorkflow().getCurrentStep().getIdentity());
+    Assert.assertEquals("Result has " + result.getWorkflow().getWorkflowTypeIdentity() + " workflow-type.",
+        result.getWorkflow().getWorkflowTypeIdentity(), result.getWorkflow().getWorkflowTypeIdentity());
+
+    verify(this.workflowDao, times(1)).create(any(SingleTaskWorkflowEntity.class));
+    verify(this.workflowDao, times(0)).getById(any(long.class));
+    verify(this.workflowService, times(1)).prepareSavingModel(any(WorkflowEntity.class));
 
   }
 
   @Test
-  public void testGetListByIdList() throws Exception {
+  public void testSaveUpdate() {
+    final SingleTaskWorkflowEntity model = getTestSingleTaskWorkflow(1L);
 
+    final SingleTaskWorkflowEntity savedModel = getTestSingleTaskWorkflow(1L);
+
+    when(this.workflowDao.update(any(SingleTaskWorkflowEntity.class))).thenReturn(savedModel);
+    when(this.workflowDao.getById(any(Long.class))).thenReturn(savedModel);
+    when(this.workflowService.prepareSavingModel(any(WorkflowEntity.class))).thenReturn(savedModel.getWorkflow());
+
+    final SingleTaskWorkflowEntity result = singleTaskWorkflowService.save(model);
+
+    Assert.assertNotNull("Result is not null!", result);
+    Assert.assertEquals("Result has " + result.getWorkflow().getIdentity() + " identity.", result.getWorkflow().getIdentity(),
+        result.getWorkflow().getIdentity());
+    Assert.assertEquals("Result has " + result.getWorkflow().getControllerIdentity() + " controller.",
+        result.getWorkflow().getControllerIdentity(), result.getWorkflow().getControllerIdentity());
+    Assert.assertEquals("Result has " + result.getWorkflow().getCurrentStep().getIdentity() + " step.",
+        result.getWorkflow().getCurrentStep().getIdentity(), result.getWorkflow().getCurrentStep().getIdentity());
+    Assert.assertEquals("Result has " + result.getWorkflow().getWorkflowTypeIdentity() + " workflow-type.",
+        result.getWorkflow().getWorkflowTypeIdentity(), result.getWorkflow().getWorkflowTypeIdentity());
+
+    verify(this.workflowDao, times(1)).update(any(SingleTaskWorkflowEntity.class));
+    verify(this.workflowDao, times(1)).getById(any(long.class));
+    verify(this.workflowService, times(1)).prepareSavingModel(any(WorkflowEntity.class));
+  }
+
+  @Test
+  public void testGetByIdentity() {
+    final SingleTaskWorkflowEntity model = getTestSingleTaskWorkflow(1L);
+
+    when(this.workflowDao.getByIdentity(any(String.class))).thenReturn(model);
+
+    final SingleTaskWorkflowEntity result = singleTaskWorkflowService.getByIdentity("test-identity");
+
+    Assert.assertNotNull("Result is not null!", result);
+    Assert.assertEquals("Result has " + result.getWorkflow().getIdentity() + " identity.", result.getWorkflow().getIdentity(),
+        result.getWorkflow().getIdentity());
+    Assert.assertEquals("Result has " + result.getWorkflow().getControllerIdentity() + " controller.",
+        result.getWorkflow().getControllerIdentity(), result.getWorkflow().getControllerIdentity());
+    Assert.assertEquals("Result has " + result.getWorkflow().getCurrentStep().getIdentity() + " step.",
+        result.getWorkflow().getCurrentStep().getIdentity(), result.getWorkflow().getCurrentStep().getIdentity());
+    Assert.assertEquals("Result has " + result.getWorkflow().getWorkflowTypeIdentity() + " workflow-type.",
+        result.getWorkflow().getWorkflowTypeIdentity(), result.getWorkflow().getWorkflowTypeIdentity());
+
+    verify(this.workflowDao, times(1)).getByIdentity(any(String.class));
+
+  }
+
+  @Test
+  public void testGetListForUser() {
+    final List<SingleTaskWorkflowEntity> modelList = getTestSingleTaskWorkflowList();
+
+    when(this.workflowDao.getListForUserIdentity(any(String.class), any(Integer.class))).thenReturn(modelList);
+
+    final List<SingleTaskWorkflowEntity> resultList = singleTaskWorkflowService.getListForUser("test-identity", 1);
+
+    Assert.assertNotNull("Result list is not null!", resultList);
+    Assert.assertEquals("Result list has " + modelList.size() + " items.", resultList.size(), modelList.size());
+
+    verify(this.workflowDao, times(1)).getListForUserIdentity(any(String.class), any(Integer.class));
+  }
+
+  @Test
+  public void testGetListByIdentityList() {
     final Set<String> idList = getTestWorkflowIdentityList();
-    final List<SingleTaskWorkflow> list = getTestSingleTaskWorkflowList();
-    when(this.workflowDao.getListByIdentityList(any(Set.class))).thenReturn(list);
+    final List<SingleTaskWorkflowEntity> modelList = getTestSingleTaskWorkflowList();
 
-    final List<SingleTaskWorkflow> resList = this.workflowService.getListByIdentityList(idList);
+    when(this.workflowDao.getListByIdentityList(any(Set.class))).thenReturn(modelList);
 
-    Assert.assertNotNull("Result list is not null!", resList);
-    Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());
+    final List<SingleTaskWorkflowEntity> resultList = singleTaskWorkflowService.getListByIdentityList(idList);
 
+    Assert.assertNotNull("Result list is not null!", resultList);
+    Assert.assertEquals("Result list has " + modelList.size() + " items.", resultList.size(), modelList.size());
+
+    verify(this.workflowDao, times(1)).getListByIdentityList(any(Set.class));
   }
-
-  @Test
-  public void testSave() throws Exception {
-
-    SingleTaskWorkflow workflow = getTestSingleTaskWorkflow(1L);
-    workflow.setId(null);
-    workflow.setIdentity(EIdentity.NOT_SET.getIdentity());
-    workflow.setVersion(21);
-
-    when(this.workflowDao.create(any(SingleTaskWorkflow.class))).thenReturn(workflow);
-    when(this.workflowDao.update(any(SingleTaskWorkflow.class))).thenReturn(workflow);
-    when(this.workflowDao.getByIdentity(any(String.class))).thenReturn(workflow);
-
-    SingleTaskWorkflow resWorkflow = this.workflowService.save(workflow);
-
-    Assert.assertNotNull("Result workflow-type is not null!", resWorkflow);
-    Assert.assertEquals("Result workflow-type has id 1!", resWorkflow.getId(), workflow.getId());
-    Assert.assertEquals("Result workflow-type has status 1!", resWorkflow.getStatus(), workflow.getStatus());
-    Assert.assertEquals("Result workflow-type has version 22!", resWorkflow.getVersion().intValue(), 22);
-
-    workflow = getTestSingleTaskWorkflow(1L);
-
-    when(this.workflowDao.create(any(SingleTaskWorkflow.class))).thenReturn(workflow);
-    when(this.workflowDao.update(any(SingleTaskWorkflow.class))).thenReturn(workflow);
-    when(this.workflowDao.getByIdentity(any(String.class))).thenReturn(workflow);
-
-    resWorkflow = this.workflowService.save(workflow);
-
-    Assert.assertNotNull("Result workflow-type is not null!", resWorkflow);
-    Assert.assertEquals("Result workflow-type has id 1!", resWorkflow.getId(), workflow.getId());
-    Assert.assertEquals("Result workflow-type has status 1!", resWorkflow.getStatus(), workflow.getStatus());
-    Assert.assertEquals("Result workflow-type has version 1!", resWorkflow.getVersion(), workflow.getVersion());
-
-  }
-
 }

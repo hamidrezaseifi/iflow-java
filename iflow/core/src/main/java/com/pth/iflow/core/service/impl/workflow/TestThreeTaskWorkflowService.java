@@ -27,6 +27,7 @@ public class TestThreeTaskWorkflowService implements ITestThreeTaskWorkflowServi
   @Override
   public TestThreeTaskWorkflowEntity save(final TestThreeTaskWorkflowEntity model) {
 
+    prepareSavingModel(model);
     if (model.isNew()) {
 
       return testThreeTaskWorkflowDao.create(model);
@@ -58,6 +59,7 @@ public class TestThreeTaskWorkflowService implements ITestThreeTaskWorkflowServi
 
   protected TestThreeTaskWorkflowEntity prepareSavingModel(final TestThreeTaskWorkflowEntity model) {
     workflowService.prepareSavingModel(model.getWorkflow());
+    model.setWorkflowId(model.getWorkflow().getId());
     return model;
   }
 }

@@ -227,7 +227,6 @@ public class TestDataProducer {
   protected WorkflowEntity getTestWorkflow(final Long Id) {
     final WorkflowEntity model = new WorkflowEntity();
     model.setId(Id);
-    model.setIdentity(EIdentity.NOT_SET.getIdentity());
     model.setStatus(EWorkflowStatus.INITIALIZE.getValue().intValue());
     model.setVersion(1);
     model.setComments("comments");
@@ -352,26 +351,23 @@ public class TestDataProducer {
 
   protected WorkflowEntity getTestNewWorkflow() {
     final WorkflowEntity model = new WorkflowEntity();
-    model.getWorkflowType().setIdentity("wtidentity");
-    model.setWorkflowTypeId(1L);
     model.setId(null);
     model.setIdentity(EIdentity.NOT_SET.getIdentity());
     model.setStatus(EWorkflowStatus.INITIALIZE.getValue().intValue());
     model.setVersion(1);
     model.setComments("comments");
-    model.setIdentity("workflow-1");
     model.setControllerId(1l);
     model.setCurrentStepId(1l);
     model.setCreatedById(1l);
-    // model.setControllerIdentity("ControllerIdentity");
-    // model.setCurrentStepIdentity("currentStepIdentity");
-    // model.setCreatedByIdentity("createdByIdentity");
     model.setWorkflowTypeId(1l);
+    model.setControllerUser(getTestUser());
+    model.setCreatedByUser(getTestUser());
+    model.setCurrentStep(getTestWorkflowTypeStep());
+    model.setWorkflowType(getTestWorkflowType());
 
-    model.setActions(Arrays.asList(this.getTestNewWorkflowAction(model), this.getTestNewWorkflowAction(model),
-        this.getTestNewWorkflowAction(model)));
-    model.setFiles(
-        Arrays.asList(this.getTestNewWorkflowFile(model), this.getTestNewWorkflowFile(model), this.getTestNewWorkflowFile(model)));
+    model.setActions(getTestWorkflowActionList(model));
+    model
+        .setFiles(Arrays.asList(this.getTestWorkflowFile(1L, 1L), this.getTestWorkflowFile(2L, 2L), this.getTestWorkflowFile(3L, 3L)));
 
     return model;
   }
@@ -422,7 +418,7 @@ public class TestDataProducer {
   }
 
   protected WorkflowActionEntity getTestWorkflowAction(final Long Id, final WorkflowEntity workflow) {
-    final WorkflowActionEntity model = new WorkflowActionEntity();
+    final WorkflowActionEntity model = new WorkflowActionEntity("assign-to-identity", "step-identity");
     model.setWorkflow(workflow);
     model.setId(Id);
     model.setStatus(1);
@@ -432,6 +428,7 @@ public class TestDataProducer {
     model.setAssignTo(1L);
     model.setIdentity("action-" + Id);
     model.setCurrentStep(getTestWorkflowTypeStep());
+
     // model.setAssignToIdentity("assignToIdentity");
     // model.setCurrentStepIdentity("currentStepIdIdentity");
 
@@ -444,7 +441,7 @@ public class TestDataProducer {
   }
 
   protected WorkflowActionEntity getTestNewWorkflowAction(final WorkflowEntity workflow) {
-    final WorkflowActionEntity model = new WorkflowActionEntity();
+    final WorkflowActionEntity model = new WorkflowActionEntity("assign-to-identity", "step-identity");
 
     model.setId(null);
     model.setWorkflow(workflow);

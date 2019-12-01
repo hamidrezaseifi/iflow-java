@@ -27,6 +27,7 @@ public class InvoiceWorkflowService implements IInvoiceWorkflowService {
   @Override
   public InvoiceWorkflowEntity save(final InvoiceWorkflowEntity model) {
 
+    prepareSavingModel(model);
     if (model.isNew()) {
 
       return invoiceWorkflowDao.create(model);
@@ -58,6 +59,7 @@ public class InvoiceWorkflowService implements IInvoiceWorkflowService {
 
   protected InvoiceWorkflowEntity prepareSavingModel(final InvoiceWorkflowEntity model) {
     workflowService.prepareSavingModel(model.getWorkflow());
+    model.setWorkflowId(model.getWorkflow().getId());
     return model;
   }
 }

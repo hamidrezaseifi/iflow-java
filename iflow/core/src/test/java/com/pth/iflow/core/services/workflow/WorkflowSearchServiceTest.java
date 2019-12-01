@@ -17,8 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.WorkflowSearchFilter;
-import com.pth.iflow.core.model.workflow.TestThreeTaskWorkflow;
-import com.pth.iflow.core.model.workflow.WorkflowResult;
+import com.pth.iflow.core.model.entity.workflow.WorkflowResultEntity;
 import com.pth.iflow.core.service.impl.workflow.WorkflowSearchService;
 import com.pth.iflow.core.service.interfaces.IWorkflowSearchService;
 import com.pth.iflow.core.storage.dao.interfaces.IWorkflowSearchDao;
@@ -26,7 +25,7 @@ import com.pth.iflow.core.storage.dao.interfaces.IWorkflowSearchDao;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class TestWorkflowServiceTest extends TestDataProducer {
+public class WorkflowSearchServiceTest extends TestDataProducer {
 
   private IWorkflowSearchService workflowService;
 
@@ -46,15 +45,14 @@ public class TestWorkflowServiceTest extends TestDataProducer {
   public void testSearch() throws Exception {
 
     final WorkflowSearchFilter searchFilter = this.getTestWorkflowSearchFilter();
-    final List<WorkflowResult> modelList = getTestWorkflowResultList();
+    final List<WorkflowResultEntity> modelList = getTestWorkflowResultList();
 
-    final List<TestThreeTaskWorkflow> list = getTestTestThreeWorkflowList();
     when(this.workflowDao.search(any(WorkflowSearchFilter.class))).thenReturn(modelList);
 
-    final List<WorkflowResult> resList = this.workflowService.search(searchFilter);
+    final List<WorkflowResultEntity> resList = this.workflowService.search(searchFilter);
 
     Assert.assertNotNull("Result list is not null!", resList);
-    Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());
+    Assert.assertEquals("Result list has " + modelList.size() + " items.", resList.size(), modelList.size());
 
   }
 
