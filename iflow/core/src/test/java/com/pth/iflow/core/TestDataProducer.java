@@ -199,6 +199,7 @@ public class TestDataProducer {
     model.setStatus(1);
     model.setVersion(1);
     model.setIdentity("usergroup-1");
+    model.setCompany(getTestCompany());
 
     return model;
   }
@@ -337,6 +338,9 @@ public class TestDataProducer {
     model.setCreatedAt(new Date(Calendar.getInstance().getTime().getTime()));
     model.setMessage("title test");
     model.setStepId(workflow.getCurrentStepId());
+    model.setCreatedByUser(getTestUser());
+    model.setStep(getTestWorkflowTypeStep());
+    model.setUser(getTestUser());
 
     return model;
   }
@@ -546,6 +550,7 @@ public class TestDataProducer {
     model.setComments("comments");
     // model.setCompanyIdentity("companyIdentity");
     model.setCompanyId(1L);
+    model.setCompany(getTestCompany());
 
     return model;
   }
@@ -568,6 +573,7 @@ public class TestDataProducer {
     model.setSteps(Arrays.asList(this.getTestWorkflowTypeStep(1L, "step 1"), this.getTestWorkflowTypeStep(2L, "step 2"),
         this.getTestWorkflowTypeStep(3L, "step 3")));
     model.setComments("comments");
+    model.setCompany(getTestCompany());
 
     return model;
   }

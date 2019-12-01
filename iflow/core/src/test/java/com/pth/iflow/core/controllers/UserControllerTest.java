@@ -208,6 +208,48 @@ public class UserControllerTest extends TestDataProducer {
   }
 
   @Test
+  public void testReadDepartmentUsers() throws Exception {
+
+    final List<UserEntity> list = this.getTestUserList();
+    when(this.usersService.getAllUserIdentityListByDepartmentIdentity(any(String.class))).thenReturn(list);
+
+    final UserListEdo listEdo = new UserListEdo();
+    listEdo.setUsers(CoreModelEdoMapper.toUserEdoList(list));
+
+    final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(listEdo);
+
+    this.mockMvc
+        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.USER_USER_LIST_BY_DEPARTMENTIDENTITY, "companyidentity")
+            .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
+        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(content().xml(listAsXmlString));
+
+    verify(this.usersService, times(1)).getAllUserIdentityListByDepartmentIdentity(any(String.class));
+
+  }
+
+  @Test
+  public void testReadDepartmentGroupUsers() throws Exception {
+
+    final List<UserEntity> list = this.getTestUserList();
+    when(this.usersService.getAllUserIdentityListByDepartmentGroupIdentity(any(String.class))).thenReturn(list);
+
+    final UserListEdo listEdo = new UserListEdo();
+    listEdo.setUsers(CoreModelEdoMapper.toUserEdoList(list));
+
+    final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(listEdo);
+
+    this.mockMvc
+        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.USER_USER_LIST_BY_DEPARTMENTGROUPIDENTITY, "companyidentity")
+            .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
+        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(content().xml(listAsXmlString));
+
+    verify(this.usersService, times(1)).getAllUserIdentityListByDepartmentGroupIdentity(any(String.class));
+
+  }
+
+  @Test
   public void testReadUserProfileByEmail() throws Exception {
 
     final ProfileResponse profile = this.getTestProfileResponse();
