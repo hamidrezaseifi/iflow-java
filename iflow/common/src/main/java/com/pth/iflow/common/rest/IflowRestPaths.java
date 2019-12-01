@@ -58,6 +58,7 @@ public class IflowRestPaths {
     public static final String USERGROUP_READ_LIST_BY_COMPANYIDENTITY                           = "/usergroup/company/list/{companyidentity}";
 
     public static final String WORKFLOW_SEARCH                                                  = "/workflow/search";
+    public static final String WORKFLOW_READ                                                    = "/workflow/read/{identity}";
     public static final String WORKFLOW_READLIST                                                = "/workflow/readlist";
 
     public static final String INVOICEWORKFLOW_SAVE                                             = "/invworkflow/save";

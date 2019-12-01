@@ -1,6 +1,8 @@
 package com.pth.iflow.core.controllers;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +15,7 @@ import com.pth.iflow.common.edo.models.WorkflowActionEdo;
 import com.pth.iflow.common.edo.models.WorkflowFileEdo;
 import com.pth.iflow.common.edo.models.WorkflowFileVersionEdo;
 import com.pth.iflow.common.edo.models.WorkflowMessageEdo;
+import com.pth.iflow.common.edo.models.WorkflowSearchFilterEdo;
 import com.pth.iflow.common.edo.models.workflow.WorkflowEdo;
 import com.pth.iflow.common.edo.models.workflow.singletask.SingleTaskWorkflowEdo;
 import com.pth.iflow.common.enums.EIdentity;
@@ -59,6 +62,18 @@ public class MainController {
     edo.setUserIdentity("user@iflow.de");
     edo.setVersion(1);
     edo.setWorkflowIdentity("w1575062673592-557642");
+
+    return edo;
+  }
+
+  @ResponseStatus(HttpStatus.OK)
+  @GetMapping(path = "/testsearch", produces = MediaType.APPLICATION_XML_VALUE)
+  public WorkflowSearchFilterEdo testSHowSearch() {
+    final WorkflowSearchFilterEdo edo = new WorkflowSearchFilterEdo();
+
+    final Set<String> set = new HashSet<>();
+    set.add("admin@iflow.de");
+    edo.setAssignedUserIdentitySet(set);
 
     return edo;
   }

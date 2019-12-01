@@ -37,7 +37,7 @@ import com.pth.iflow.core.service.interfaces.IWorkflowSearchService;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class TestWorkflowControllerTest extends TestDataProducer {
+public class WorkflowControllerTest extends TestDataProducer {
 
   @Autowired
   private MockMvc                                mockMvc;

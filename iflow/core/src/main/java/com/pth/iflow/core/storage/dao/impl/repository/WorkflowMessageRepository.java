@@ -13,17 +13,17 @@ import com.pth.iflow.core.model.entity.workflow.WorkflowMessageEntity;
 @Repository
 public interface WorkflowMessageRepository extends JpaRepository<WorkflowMessageEntity, Long> {
 
-  @Query("SELECT ug FROM WorkflowMessageEntity ug where ug.workflow.identity=:wident and ug.step.identity=:sident")
+  @Query("SELECT msg FROM WorkflowMessageEntity msg where msg.workflow.identity=:wident and msg.step.identity=:sident")
   WorkflowMessageEntity findByWorkflowAndStep(@Param("wident") String workflowIdentity, @Param("sident") String stepIdentity);
 
-  @Query("SELECT ug FROM WorkflowMessageEntity ug inner join UserEntity ut on ug.userId=ut.id where ut.email=:uident")
+  @Query("SELECT msg FROM WorkflowMessageEntity msg inner join UserEntity ut on msg.userId=ut.id where ut.email=:uident")
   List<WorkflowMessageEntity> findUserWorkflowMessages(@Param("uident") String userIdentity);
 
-  @Query("SELECT ug FROM WorkflowMessageEntity ug inner join UserEntity ut on ug.userId=ut.id where ut.email=:uident and ug.status in :statuslist and TIMESTAMPDIFF(DAY, created_at, now()) < expire_days")
+  @Query("SELECT msg FROM WorkflowMessageEntity msg inner join UserEntity ut on msg.userId=ut.id where ut.email=:uident and msg.status in :statuslist and TIMESTAMPDIFF(DAY, msg.createdAt, now()) < msg.expireDays")
   List<WorkflowMessageEntity> findNotExpiredUserWorkflowMessagesByStatus(@Param("uident") String userIdentity,
       @Param("statuslist") Collection<Integer> statusList);
 
-  @Query("SELECT ug FROM WorkflowMessageEntity ug inner join WorkflowEntity w on ug.workflow.id=w.id where w.identity=:wident and ug.status in :statuslist and TIMESTAMPDIFF(DAY, created_at, now()) < expire_days")
+  @Query("SELECT msg FROM WorkflowMessageEntity msg inner join WorkflowEntity w on msg.workflow.id=w.id where w.identity=:wident and msg.status in :statuslist and TIMESTAMPDIFF(DAY, msg.createdAt, now()) < msg.expireDays")
   List<WorkflowMessageEntity> findNotExpiredWorkflowWorkflowMessagesByStatus(@Param("wident") String userIdentity,
       @Param("statuslist") Collection<Integer> statusList);
 

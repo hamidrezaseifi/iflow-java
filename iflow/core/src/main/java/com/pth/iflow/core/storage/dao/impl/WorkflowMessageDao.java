@@ -82,7 +82,7 @@ public class WorkflowMessageDao implements IWorkflowMessageDao {
   public List<WorkflowMessageEntity> getNotClosedNotExpiredListByUserIdentity(final String userIdentity) throws IFlowStorageException {
 
     final List<Integer> statusList = Arrays.asList(EWorkflowMessageStatus.ASSIGNED.getValue(),
-        EWorkflowMessageStatus.ASSIGNED.getValue(), EWorkflowMessageStatus.OFFERING.getValue());
+        EWorkflowMessageStatus.OFFERING.getValue());
 
     return repository.findNotExpiredUserWorkflowMessagesByStatus(userIdentity, statusList);
   }
@@ -91,7 +91,7 @@ public class WorkflowMessageDao implements IWorkflowMessageDao {
   public List<WorkflowMessageEntity> getNotClosedNotExpiredListByWorkflowIdentity(final String workflowIdentity)
       throws IFlowStorageException {
     final List<Integer> statusList = Arrays.asList(EWorkflowMessageStatus.ASSIGNED.getValue(),
-        EWorkflowMessageStatus.ASSIGNED.getValue(), EWorkflowMessageStatus.OFFERING.getValue());
+        EWorkflowMessageStatus.OFFERING.getValue());
 
     return repository.findNotExpiredWorkflowWorkflowMessagesByStatus(workflowIdentity, statusList);
   }

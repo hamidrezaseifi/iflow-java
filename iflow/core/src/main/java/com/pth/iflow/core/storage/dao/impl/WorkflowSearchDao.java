@@ -51,13 +51,13 @@ public class WorkflowSearchDao implements IWorkflowSearchDao {
       final Subquery<Long> assignSubQuery = query.subquery(Long.class);
       final Root<WorkflowActionEntity> assignRoot = assignSubQuery.from(WorkflowActionEntity.class);
 
-      final Path<Long> assignPath = assignRoot.get("assignToIdentity");
-      final Path<Long> workflowIdPath = assignRoot.get("workflowId");
+      final Path<Long> assignPath = assignRoot.get("assignToUser").get("email");
+      final Path<Long> workflowIdPath = assignRoot.get("workflow").get("id");
 
       final Predicate assignInPredicate = assignPath.in(workflowSearchFilter.getAssignedUserIdentitySet());
       final Predicate workflowIdPredicate = criteriaBuilder.equal(workflowIdPath, root.get("id"));
 
-      assignSubQuery.select(assignRoot.get("workflowId")).where(criteriaBuilder.and(assignInPredicate, workflowIdPredicate));
+      assignSubQuery.select(workflowIdPath).where(criteriaBuilder.and(assignInPredicate, workflowIdPredicate));
 
       final Path<Long> path = root.get("id");
       final Predicate predicate = path.in(assignSubQuery);
