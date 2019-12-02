@@ -12,6 +12,7 @@ import com.pth.iflow.common.enums.EInvoiceType;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.enums.EWorkflowMessageType;
 import com.pth.iflow.common.enums.EWorkflowStatus;
+import com.pth.iflow.common.enums.EWorkflowType;
 import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
 import com.pth.iflow.core.model.ProfileResponse;
 import com.pth.iflow.core.model.WorkflowSearchFilter;
@@ -231,10 +232,7 @@ public class TestDataProducer {
     model.setVersion(1);
     model.setComments("comments");
     model.setIdentity("workflow-1");
-    model.setControllerId(1l);
-    model.setCurrentStepId(1l);
-    model.setCreatedById(1l);
-    model.setWorkflowTypeId(1l);
+
     model.setControllerUser(getTestUser());
     model.setCreatedByUser(getTestUser());
     model.setCurrentStep(getTestWorkflowTypeStep());
@@ -300,21 +298,10 @@ public class TestDataProducer {
 
   protected InvoiceWorkflowEntity getTestNewInvoiceWorkflow() {
     final InvoiceWorkflowEntity model = getTestInvoiceWorkflow(0L);
-    model.setWorkflow(getTestNewWorkflow());
-    model.setWorkflowId(null);
-
-    for (final WorkflowActionEntity action : model.getWorkflow().getActions()) {
-      action.setIdentity("");
-    }
-    for (final WorkflowFileEntity file : model.getWorkflow().getFiles()) {
-      file.setIdentity("");
-    }
+    model.setWorkflow(getTestNewWorkflowForSave());
 
     model.getWorkflow().getCurrentStep().setIdentity("invocetasktypestep1");
-    model.getWorkflow().setControllerId(null);
-    model.getWorkflow().setWorkflowTypeId(null);
-    model.getWorkflow().setCreatedById(null);
-    model.getWorkflow().setCurrentStepId(null);
+    model.getWorkflow().getWorkflowType().setIdentity(EWorkflowType.INVOICE_WORKFLOW_TYPE.getIdentity());
     model.getWorkflow().getControllerUser().setIdentity("admin@iflow.de");
     model.getWorkflow().getCreatedByUser().setIdentity("admin@iflow.de");
 
@@ -336,7 +323,7 @@ public class TestDataProducer {
     model.setUserId(1L);
     model.setCreatedAt(new Date(Calendar.getInstance().getTime().getTime()));
     model.setMessage("title test");
-    model.setStepId(workflow.getCurrentStepId());
+    model.setStepId(workflow.getCurrentStep().getId());
     model.setCreatedByUser(getTestUser());
     model.setStep(getTestWorkflowTypeStep());
     model.setUser(getTestUser());
@@ -356,10 +343,10 @@ public class TestDataProducer {
     model.setStatus(EWorkflowStatus.INITIALIZE.getValue().intValue());
     model.setVersion(1);
     model.setComments("comments");
-    model.setControllerId(1l);
-    model.setCurrentStepId(1l);
-    model.setCreatedById(1l);
-    model.setWorkflowTypeId(1l);
+    model.setControllerUser(getTestUser());
+    model.setCurrentStep(getTestWorkflowTypeStep());
+    model.setCreatedByUser(getTestUser());
+    model.setWorkflowType(getTestWorkflowType());
     model.setControllerUser(getTestUser());
     model.setCreatedByUser(getTestUser());
     model.setCurrentStep(getTestWorkflowTypeStep());
@@ -379,10 +366,12 @@ public class TestDataProducer {
     model.setStatus(EWorkflowStatus.INITIALIZE.getValue().intValue());
     model.setVersion(1);
     model.setComments("comments");
-    model.setControllerId(1l);
-    model.setCurrentStepId(1l);
-    model.setCreatedById(1l);
-    model.setWorkflowTypeId(1l);
+
+    model.getCurrentStep().setIdentity("invocetasktypestep1");
+    model.getWorkflowType().setIdentity(EWorkflowType.INVOICE_WORKFLOW_TYPE.getIdentity());
+    model.getControllerUser().setIdentity("admin@iflow.de");
+    model.getCreatedByUser().setIdentity("admin@iflow.de");
+
     model.setControllerUser(getTestUser());
     model.setCreatedByUser(getTestUser());
     model.setCurrentStep(getTestWorkflowTypeStep());
@@ -396,35 +385,28 @@ public class TestDataProducer {
 
   protected WorkflowActionEntity getTestWorkflowActionForSave(final WorkflowEntity workflow) {
     final WorkflowActionEntity model = new WorkflowActionEntity("assign-to-identity", "step-identity");
-    model.setWorkflow(workflow);
+    model.setWorkflowEntity(workflow);
     model.setId(null);
     model.setStatus(1);
-    model.setVersion(1);
-    model.setCurrentStepId(workflow.getCurrentStep().getId());
-    model.setComments("comments");
-    model.setAssignTo(0L);
-    model.setIdentity(EIdentity.NOT_SET.getIdentity());
     model.setCurrentStep(workflow.getCurrentStep());
-
-    // model.setAssignToIdentity("assignToIdentity");
-    // model.setCurrentStepIdentity("currentStepIdIdentity");
+    model.setComments("comments");
+    model.setAssignToUser(getTestUser());
+    model.setCurrentStep(workflow.getCurrentStep());
 
     return model;
   }
 
   protected WorkflowFileEntity getTestWorkflowFileForSave(final WorkflowEntity workflow) {
     final WorkflowFileEntity model = new WorkflowFileEntity();
-    model.setWorkflow(workflow);
+    model.setWorkflowEntity(workflow);
     model.setId(null);
     model.setStatus(1);
-    model.setVersion(1);
     model.getCreatedByUser().setIdentity("user@iflow.de");
     model.setComments("comments");
     model.setActiveFilePath("filePath");
     model.setActiveFileVersion(1);
     model.setTitle("title ");
     model.setExtention("ext");
-    model.setIdentity(EIdentity.NOT_SET.getIdentity());
 
     model.setFileVersions(Arrays.asList(this.getTestWorkflowFileVersionForSave()));
 
@@ -436,7 +418,6 @@ public class TestDataProducer {
     // model.setWorkflowFileId(workflowFileId);
     model.setId(null);
     model.setStatus(1);
-    model.setVersion(1);
     model.getCreatedByUser().setIdentity("user@iflow.de");
     model.setComments("comments");
     model.setFilePath("filePath");
@@ -493,14 +474,12 @@ public class TestDataProducer {
 
   protected WorkflowActionEntity getTestWorkflowAction(final Long Id, final WorkflowEntity workflow) {
     final WorkflowActionEntity model = new WorkflowActionEntity("assign-to-identity", "step-identity");
-    model.setWorkflow(workflow);
+    model.setWorkflowEntity(workflow);
     model.setId(Id);
     model.setStatus(1);
-    model.setVersion(1);
-    model.setCurrentStepId(1L);
+    model.setCurrentStep(getTestWorkflowTypeStep());
     model.setComments("comments");
-    model.setAssignTo(1L);
-    model.setIdentity("action-" + Id);
+    model.setAssignToUser(getTestUser());
     model.setCurrentStep(getTestWorkflowTypeStep());
 
     // model.setAssignToIdentity("assignToIdentity");
@@ -518,30 +497,26 @@ public class TestDataProducer {
     final WorkflowActionEntity model = new WorkflowActionEntity("assign-to-identity", "step-identity");
 
     model.setId(null);
-    model.setWorkflow(workflow);
+    model.setWorkflowEntity(workflow);
     model.setStatus(1);
-    model.setVersion(1);
-    model.setCurrentStepId(1L);
+    model.setCurrentStep(getTestWorkflowTypeStep());
     model.setComments("comments");
-    model.setAssignTo(1L);
-    model.setIdentity("");
+    model.setAssignToUser(getTestUser());
 
     return model;
   }
 
   protected WorkflowFileEntity getTestWorkflowFile(final Long Id, final Long workflowId) {
     final WorkflowFileEntity model = new WorkflowFileEntity();
-    model.getWorkflow().setId(workflowId);
+    model.getWorkflowEntity().setId(workflowId);
     model.setId(Id);
     model.setStatus(1);
-    model.setVersion(1);
     model.getCreatedByUser().setIdentity("user@iflow.de");
     model.setComments("comments");
     model.setActiveFilePath("filePath");
     model.setActiveFileVersion(1);
     model.setTitle("title " + Id);
     model.setExtention("ext");
-    model.setIdentity("file-" + Id);
 
     model.setFileVersions(Arrays.asList(this.getTestWorkflowFileVersion(1L, 1, 1L), this.getTestWorkflowFileVersion(2L, 2, 1L),
         this.getTestWorkflowFileVersion(3L, 3, 1L)));
@@ -556,17 +531,15 @@ public class TestDataProducer {
 
   protected WorkflowFileEntity getTestNewWorkflowFile(final WorkflowEntity workflow) {
     final WorkflowFileEntity model = new WorkflowFileEntity();
-    model.setWorkflow(workflow);
+    model.setWorkflowEntity(workflow);
     model.setId(null);
     model.setStatus(1);
-    model.setVersion(1);
     model.getCreatedByUser().setIdentity("user@iflow.de");
     model.setComments("comments");
     model.setActiveFilePath("filePath");
     model.setActiveFileVersion(1);
     model.setTitle("utest title new");
     model.setExtention("ext");
-    model.setIdentity("");
 
     model.setFileVersions(Arrays.asList(this.getTestNewWorkflowFileVersion(1), this.getTestNewWorkflowFileVersion(2),
         this.getTestNewWorkflowFileVersion(3)));
@@ -579,7 +552,6 @@ public class TestDataProducer {
     // model.setWorkflowFileId(workflowFileId);
     model.setId(Id);
     model.setStatus(1);
-    model.setVersion(1);
     model.getCreatedByUser().setIdentity("user@iflow.de");
     model.setComments("comments");
     model.setFilePath("filePath");
@@ -594,7 +566,6 @@ public class TestDataProducer {
     // model.setWorkflowFileId(null);
     model.setId(null);
     model.setStatus(1);
-    model.setVersion(1);
     model.getCreatedByUser().setIdentity("user@iflow.de");
     model.setComments("comments");
     model.setFilePath("filePath");
