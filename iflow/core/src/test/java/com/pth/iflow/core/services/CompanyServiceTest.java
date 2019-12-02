@@ -2,7 +2,6 @@ package com.pth.iflow.core.services;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -12,9 +11,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import com.pth.iflow.core.TestDataProducer;
-import com.pth.iflow.core.model.Company;
+import com.pth.iflow.core.model.entity.CompanyEntity;
 import com.pth.iflow.core.service.impl.CompanyService;
 import com.pth.iflow.core.service.interfaces.ICompanyService;
 import com.pth.iflow.core.storage.dao.interfaces.ICompanyDao;
@@ -27,7 +25,7 @@ public class CompanyServiceTest extends TestDataProducer {
   private ICompanyService companyService;
 
   @MockBean
-  private ICompanyDao     companyDao;
+  private ICompanyDao companyDao;
 
   @Before
   public void setUp() throws Exception {
@@ -41,10 +39,10 @@ public class CompanyServiceTest extends TestDataProducer {
   @Test
   public void testReadCompany() throws Exception {
 
-    final Company company = getTestCompany();
+    final CompanyEntity company = getTestCompany();
     when(this.companyDao.getByIdentity(any(String.class))).thenReturn(company);
 
-    final Company resCompany = this.companyService.getByIdentity("identifyId");
+    final CompanyEntity resCompany = this.companyService.getByIdentity("identifyId");
 
     Assert.assertNotNull("Result company is not null!", resCompany);
     Assert.assertEquals("Result company has id 1!", resCompany.getId(), company.getId());

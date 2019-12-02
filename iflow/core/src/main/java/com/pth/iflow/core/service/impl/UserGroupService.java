@@ -2,12 +2,9 @@ package com.pth.iflow.core.service.impl;
 
 import java.util.Collection;
 import java.util.List;
-
 import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.pth.iflow.core.model.entity.UserGroupEntity;
 import com.pth.iflow.core.service.interfaces.IUserGroupService;
 import com.pth.iflow.core.storage.dao.interfaces.IUserGroupDao;
@@ -50,7 +47,7 @@ public class UserGroupService implements IUserGroupService {
       return userGroupDao.create(model);
     }
 
-    final UserGroupEntity exists = userGroupDao.getById(model.getId());
+    final UserGroupEntity exists = userGroupDao.getByIdentity(model.getIdentity());
     model.verifyVersion(exists);
 
     return userGroupDao.update(model);

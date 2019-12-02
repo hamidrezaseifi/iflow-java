@@ -2,10 +2,8 @@ package com.pth.iflow.core.service.impl;
 
 import java.util.Collection;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.pth.iflow.core.model.entity.DepartmentGroupEntity;
 import com.pth.iflow.core.service.interfaces.IDepartmentGroupService;
 import com.pth.iflow.core.storage.dao.interfaces.IDepartmentGroupDao;
@@ -35,7 +33,7 @@ public class DepartmentGroupService implements IDepartmentGroupService {
       return departmentGroupDao.create(model);
     }
 
-    final DepartmentGroupEntity exists = departmentGroupDao.getById(model.getId());
+    final DepartmentGroupEntity exists = departmentGroupDao.getByIdentity(model.getIdentity());
     model.verifyVersion(exists);
 
     return departmentGroupDao.update(model);

@@ -1,10 +1,8 @@
 package com.pth.iflow.core.service.impl;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.pth.iflow.common.edo.models.helper.IdentityModel;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.core.model.entity.workflow.WorkflowMessageEntity;
@@ -24,8 +22,9 @@ public class WorkflowMessageService implements IWorkflowMessageService {
   private final IWorkflowDao         workflowDao;
 
   public WorkflowMessageService(@Autowired final IWorkflowMessageDao workflowMessageDao,
-      @Autowired final IWorkflowTypeStepDao workflowTypeStepDao, @Autowired final IUserDao usersDao,
-      @Autowired final IWorkflowDao workflowDao) {
+                                @Autowired final IWorkflowTypeStepDao workflowTypeStepDao,
+                                @Autowired final IUserDao usersDao,
+                                @Autowired final IWorkflowDao workflowDao) {
     this.workflowMessageDao = workflowMessageDao;
     this.workflowTypeStepDao = workflowTypeStepDao;
     this.usersDao = usersDao;
@@ -41,7 +40,9 @@ public class WorkflowMessageService implements IWorkflowMessageService {
       return savedModel;
     }
 
-    final WorkflowMessageEntity exists = this.workflowMessageDao.getById(model.getId());
+    final WorkflowMessageEntity exists = this.workflowMessageDao.findMessageForWorkflowAndStepAnUser(model.getWorkflowIdentity(),
+                                                                                                     model.getStepIdentity(),
+                                                                                                     model.getUserIdentity());
     model.verifyVersion(exists);
 
     final WorkflowMessageEntity savedModel = this.workflowMessageDao.update(model);
@@ -49,8 +50,7 @@ public class WorkflowMessageService implements IWorkflowMessageService {
   }
 
   @Override
-  public void updateStatusByWorkflow(final String workflowIdentity, final String stepIdentity, final EWorkflowMessageStatus status)
-      throws IFlowStorageException {
+  public void updateStatusByWorkflow(final String workflowIdentity, final String stepIdentity, final EWorkflowMessageStatus status) throws IFlowStorageException {
 
     this.workflowMessageDao.updateStatusByWorkflowIdentity(workflowIdentity, stepIdentity, status);
   }
@@ -62,19 +62,18 @@ public class WorkflowMessageService implements IWorkflowMessageService {
   }
 
   @Override
-  public List<WorkflowMessageEntity> getNotClosedNotExpiredListByWorkflowId(final String workflowIdentity)
-      throws IFlowStorageException {
+  public List<WorkflowMessageEntity> getNotClosedNotExpiredListByWorkflowId(final String workflowIdentity) throws IFlowStorageException {
 
     return this.workflowMessageDao.getNotClosedNotExpiredListByWorkflowIdentity(workflowIdentity);
   }
 
   @Override
-  public void updateWorkflowMessageStatus(final String workflowIdentity, final String stepIdentity, final String email,
-      final EWorkflowMessageStatus status) throws IFlowStorageException {
+  public void updateWorkflowMessageStatus(final String workflowIdentity, final String stepIdentity, final String email, final EWorkflowMessageStatus status) throws IFlowStorageException {
 
     if (IdentityModel.isIdentityNew(email)) {
       this.workflowMessageDao.updateStatusByWorkflowIdentity(workflowIdentity, stepIdentity, status);
-    } else {
+    }
+    else {
       this.workflowMessageDao.updateStatusByWorkflowAndUser(workflowIdentity, stepIdentity, email, status);
     }
   }

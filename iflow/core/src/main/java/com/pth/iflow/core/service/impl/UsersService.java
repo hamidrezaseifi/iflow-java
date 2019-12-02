@@ -2,10 +2,8 @@ package com.pth.iflow.core.service.impl;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.pth.iflow.core.model.ProfileResponse;
 import com.pth.iflow.core.model.entity.CompanyEntity;
 import com.pth.iflow.core.model.entity.DepartmentEntity;
@@ -25,8 +23,9 @@ public class UsersService implements IUsersService {
   private final IUserDao      userDao;
   private final IUserGroupDao userGroupDao;
 
-  public UsersService(@Autowired final ICompanyDao companyDao, @Autowired final IUserDao userDao,
-      @Autowired final IUserGroupDao userGroupDao) {
+  public UsersService(@Autowired final ICompanyDao companyDao,
+                      @Autowired final IUserDao userDao,
+                      @Autowired final IUserGroupDao userGroupDao) {
     this.companyDao = companyDao;
     this.userDao = userDao;
     this.userGroupDao = userGroupDao;
@@ -41,11 +40,13 @@ public class UsersService implements IUsersService {
 
   @Override
   public List<UserGroupEntity> getUserGroups(final String email) {
-    final UserEntity user = getUserByEmail(email);
-    ;
+    final UserEntity user = getUserByEmail(email);;
 
     final List<UserGroupEntity> list = userGroupDao
-        .getListByIdList(user.getGroups().stream().map(uug -> uug.getUserGroupId()).collect(Collectors.toSet()));
+                                                   .getListByIdList(user.getGroups()
+                                                                        .stream()
+                                                                        .map(uug -> uug.getUserGroupId())
+                                                                        .collect(Collectors.toSet()));
     return list;
   }
 
@@ -59,8 +60,10 @@ public class UsersService implements IUsersService {
   @Override
   public List<DepartmentGroupEntity> getUserDepartmentGroups(final String email) {
     final UserEntity user = getUserByEmail(email);
-    final List<DepartmentGroupEntity> list = user.getDepartmentGroups().stream().map(ud -> ud.getDepartmentGroup())
-        .collect(Collectors.toList());
+    final List<DepartmentGroupEntity> list = user.getDepartmentGroups()
+                                                 .stream()
+                                                 .map(ud -> ud.getDepartmentGroup())
+                                                 .collect(Collectors.toList());
     return list;
   }
 
@@ -78,7 +81,7 @@ public class UsersService implements IUsersService {
       return userDao.create(model);
     }
 
-    final UserEntity exists = userDao.getById(model.getId());
+    final UserEntity exists = userDao.getByIdentity(model.getIdentity());
     model.verifyVersion(exists);
 
     return userDao.update(model);

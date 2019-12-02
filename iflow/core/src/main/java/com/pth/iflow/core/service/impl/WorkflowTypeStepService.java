@@ -2,10 +2,8 @@ package com.pth.iflow.core.service.impl;
 
 import java.util.Collection;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.pth.iflow.core.model.entity.workflow.WorkflowTypeEntity;
 import com.pth.iflow.core.model.entity.workflow.WorkflowTypeStepEntity;
 import com.pth.iflow.core.service.interfaces.IWorkflowTypeStepService;
@@ -19,7 +17,7 @@ public class WorkflowTypeStepService implements IWorkflowTypeStepService {
   private final IWorkflowTypeDao     workflowTypeDao;
 
   public WorkflowTypeStepService(@Autowired final IWorkflowTypeStepDao workflowStepDao,
-      @Autowired final IWorkflowTypeDao workflowDao) {
+                                 @Autowired final IWorkflowTypeDao workflowDao) {
     this.workflowStepDao = workflowStepDao;
     this.workflowTypeDao = workflowDao;
   }
@@ -43,7 +41,7 @@ public class WorkflowTypeStepService implements IWorkflowTypeStepService {
       return workflowStepDao.create(model);
     }
 
-    final WorkflowTypeStepEntity exists = workflowStepDao.getById(model.getId());
+    final WorkflowTypeStepEntity exists = workflowStepDao.getByIdentity(model.getIdentity());
     model.verifyVersion(exists);
 
     return workflowStepDao.update(model);

@@ -2,7 +2,6 @@ package com.pth.iflow.core.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.pth.iflow.core.model.entity.CompanyEntity;
 import com.pth.iflow.core.model.mapper.CoreModelEdoMapperBase;
 import com.pth.iflow.core.service.interfaces.ICompanyService;
@@ -30,7 +29,7 @@ public class CompanyService extends CoreModelEdoMapperBase implements ICompanySe
       return companyDao.create(model);
     }
 
-    final CompanyEntity exists = companyDao.getById(model.getId());
+    final CompanyEntity exists = companyDao.getByIdentity(model.getIdentity());
     model.verifyVersion(exists);
 
     return companyDao.update(model);
