@@ -244,13 +244,11 @@ CREATE TABLE `workflow` (
  
 CREATE TABLE `workflow_actions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `identity` varchar(45) DEFAULT NULL,
   `workflow_id` int(11) NOT NULL,
   `assign_to` int(11) NOT NULL DEFAULT '0',
   `current_step_id` int(11) NOT NULL DEFAULT '0',
   `comments` varchar(45) DEFAULT NULL,
   `status` int(11) DEFAULT '1',
-  `version` int(11) NOT NULL DEFAULT '1',
   `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   `updated_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   PRIMARY KEY (`id`),
@@ -262,7 +260,6 @@ CREATE TABLE `workflow_actions` (
  
 CREATE TABLE `workflow_files` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `identity` varchar(45) DEFAULT NULL,
   `workflow_id` int(11) NOT NULL,
   `title` varchar(200) NOT NULL,
   `extention` varchar(10) NOT NULL,
@@ -270,7 +267,6 @@ CREATE TABLE `workflow_files` (
   `comments` text,
   `active_version` int(11) NOT NULL DEFAULT '1',
   `status` smallint(6) NOT NULL DEFAULT '1',
-  `version` int(11) NOT NULL DEFAULT '1',
   `created_by` int(11) DEFAULT NULL,
   `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   `updated_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
@@ -305,7 +301,6 @@ CREATE TABLE `workflow_files_versions` (
   `comments` text,
   `file_version` int(11) NOT NULL DEFAULT '1',
   `status` smallint(6) NOT NULL DEFAULT '1',
-  `version` int(11) NOT NULL DEFAULT '1',
   `created_by` int(11) DEFAULT NULL,
   `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   `updated_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),

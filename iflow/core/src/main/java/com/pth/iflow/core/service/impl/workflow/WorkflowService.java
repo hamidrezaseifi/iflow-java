@@ -74,37 +74,36 @@ public class WorkflowService implements IWorkflowService {
     }
 
     model.setControllerUser(usersDao.getByIdentity(model.getControllerIdentity()));
-    model.setControllerId(model.getControllerUser().getId());
 
     model.setCreatedByUser(usersDao.getByIdentity(model.getCreatedByIdentity()));
-    model.setCreatedById(model.getCreatedByUser().getId());
 
     model.setCurrentStep(workflowTypeStepDao.getByIdentity(model.getCurrentStepIdentity()));
-    model.setCurrentStepId(model.getCurrentStep().getId());
 
     model.setWorkflowType(workflowTypeDao.getByIdentity(model.getWorkflowType().getIdentity()));
-    model.setWorkflowTypeId(model.getWorkflowType().getId());
 
     for (final WorkflowActionEntity action : model.getActions()) {
 
       if (EIdentity.isNotSet(action.getAssignToEdoIdentity()) == false) {
-        action.setAssignTo(usersDao.getByIdentity(action.getAssignToIdentity()).getId());
+        action.setAssignToUser(usersDao.getByIdentity(action.getAssignToEdoIdentity()));
       }
 
-      action.setCurrentStep(workflowTypeStepDao.getByIdentity(action.getCurrentStepEdoIdentity()));
-      action.setCurrentStepId(action.getCurrentStep().getId());
-      action.setWorkflow(model);
+      if (EIdentity.isNotSet(action.getCurrentStepEdoIdentity()) == false) {
+        action.setCurrentStep(workflowTypeStepDao.getByIdentity(action.getCurrentStepEdoIdentity()));
+      }
+
     }
 
     for (final WorkflowFileEntity file : model.getFiles()) {
 
-      file.setCreatedByUser(usersDao.getByIdentity(file.getCreatedByUser().getIdentity()));
-      file.setCreatedById(file.getCreatedByUser().getId());
-      file.setWorkflow(model);
+      if (EIdentity.isNotSet(file.getCreatedByUserEdoIdentity()) == false) {
+        file.setCreatedByUser(usersDao.getByIdentity(file.getCreatedByUserEdoIdentity()));
+      }
+
       for (final WorkflowFileVersionEntity fileVersion : file.getFileVersions()) {
 
-        fileVersion.setCreatedByUser(usersDao.getByIdentity(fileVersion.getCreatedByUser().getIdentity()));
-        fileVersion.setCreatedById(fileVersion.getCreatedByUser().getId());
+        if (EIdentity.isNotSet(fileVersion.getCreatedByUserEdoIdentity()) == false) {
+          fileVersion.setCreatedByUser(usersDao.getByIdentity(fileVersion.getCreatedByUserEdoIdentity()));
+        }
 
       }
 

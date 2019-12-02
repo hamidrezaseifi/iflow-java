@@ -373,9 +373,7 @@ public class CoreModelEdoMapper {
     edo.setComments(model.getComments());
     edo.setStatus(model.getStatus());
     edo.setAssignToIdentity(model.getAssignToIdentity());
-    edo.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
-    edo.setVersion(model.getVersion());
-    edo.setIdentity(model.getIdentity());
+    edo.setCurrentStepIdentity(model.getCurrentStepIdentity());
 
     return edo;
   }
@@ -387,8 +385,6 @@ public class CoreModelEdoMapper {
 
     model.setComments(edo.getComments());
     model.setStatus(edo.getStatus());
-    model.setVersion(edo.getVersion());
-    model.setIdentity(edo.getIdentity());
 
     return model;
   }
@@ -430,11 +426,9 @@ public class CoreModelEdoMapper {
     edo.setExtention(model.getExtention());
     edo.setComments(model.getComments());
     edo.setStatus(model.getStatus());
-    edo.setIdentity(model.getIdentity());
-    edo.setCreatedByIdentity(model.getCreatedByUser().getIdentity());
+    edo.setCreatedByIdentity(model.getCreatedByIdentity());
     edo.setActiveFilePath(model.getActiveFilePath());
     edo.setActiveFileVersion(model.getActiveFileVersion());
-    edo.setVersion(model.getVersion());
 
     edo.setFileVersions(toWorkflowFileVersionEdoList(model.getFileVersions()));
 
@@ -449,11 +443,9 @@ public class CoreModelEdoMapper {
     model.setExtention(edo.getExtention());
     model.setComments(edo.getComments());
     model.setStatus(edo.getStatus());
-    model.setIdentity(edo.getIdentity());
-    model.getCreatedByUser().setIdentity(edo.getCreatedByIdentity());
+    model.setCreatedByUserEdoIdentity(edo.getCreatedByIdentity());
     model.setActiveFilePath(edo.getActiveFilePath());
     model.setActiveFileVersion(edo.getActiveFileVersion());
-    model.setVersion(edo.getVersion());
 
     model.setFileVersions(fromWorkflowFileVersionEdoList(edo.getFileVersions()));
 
@@ -464,10 +456,9 @@ public class CoreModelEdoMapper {
     final WorkflowFileVersionEdo edo = new WorkflowFileVersionEdo();
     edo.setComments(model.getComments());
     edo.setStatus(model.getStatus());
-    edo.setCreatedByIdentity(model.getCreatedByUser().getIdentity());
+    edo.setCreatedByIdentity(model.getCreatedByUserIdentity());
     edo.setFilePath(model.getFilePath());
     edo.setFileVersion(model.getFileVersion());
-    edo.setVersion(model.getVersion());
 
     return edo;
   }
@@ -478,10 +469,9 @@ public class CoreModelEdoMapper {
 
     model.setComments(edo.getComments());
     model.setStatus(edo.getStatus());
-    model.getCreatedByUser().setIdentity(edo.getCreatedByIdentity());
+    model.setCreatedByUserEdoIdentity(edo.getCreatedByIdentity());
     model.setFilePath(edo.getFilePath());
     model.setFileVersion(edo.getFileVersion());
-    model.setVersion(edo.getVersion());
 
     return model;
   }

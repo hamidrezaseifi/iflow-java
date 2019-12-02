@@ -19,10 +19,6 @@ import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 @XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "WorkflowFile" + IFlowJaxbDefinition.TYPE_PREFIX)
 public class WorkflowFileEdo {
 
-  @NotNull(message = "Identity is not allowed to be null!")
-  @XmlElement(name = "Identity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String                       identity;
-
   @XmlElement(name = "CreatedByIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String                       createdByIdentity;
 
@@ -48,21 +44,9 @@ public class WorkflowFileEdo {
   private Integer                      status;
 
   @NotNull
-  @XmlElement(name = "Version", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Integer                      version;
-
-  @NotNull
   @XmlElementWrapper(name = "FileVersionList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "FileVersion", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private List<WorkflowFileVersionEdo> fileVersions = new ArrayList<>();
-
-  public String getIdentity() {
-    return this.identity;
-  }
-
-  public void setIdentity(final String identity) {
-    this.identity = identity;
-  }
 
   public String getActiveFilePath() {
     return this.activeFilePath;
@@ -118,14 +102,6 @@ public class WorkflowFileEdo {
 
   public void setStatus(final Integer status) {
     this.status = status;
-  }
-
-  public Integer getVersion() {
-    return this.version;
-  }
-
-  public void setVersion(final Integer version) {
-    this.version = version;
   }
 
   public List<WorkflowFileVersionEdo> getFileVersions() {

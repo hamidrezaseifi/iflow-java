@@ -8,7 +8,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,11 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.pth.iflow.common.enums.EIdentity;
@@ -41,17 +37,15 @@ public class WorkflowEntity extends EntityIdentityHelper {
   @Column(name = "identity")
   private String                           identity;
 
-  @Column(name = "workflow_type_id")
-  private Long                             workflowTypeId;
-
-  @Column(name = "current_step")
-  private Long                             currentStepId;
-
-  @Column(name = "controller")
-  private Long                             controllerId;
-
-  @Column(name = "created_by")
-  private Long                             createdById;
+  /*
+   * @Column(name = "workflow_type_id") private Long workflowTypeId;
+   *
+   * @Column(name = "current_step") private Long currentStepId;
+   *
+   * @Column(name = "controller") private Long controllerId;
+   *
+   * @Column(name = "created_by") private Long createdById;
+   */
 
   @Column(name = "comments")
   private String                           comments;
@@ -70,43 +64,37 @@ public class WorkflowEntity extends EntityIdentityHelper {
   @Column(name = "updated_at")
   private Date                             updatedAt;
 
-  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-  @JoinColumn(name = "workflow_id", nullable = false)
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "workflowEntity")
+  // @JoinColumn(name = "workflow_id", nullable = false)
   private final List<WorkflowFileEntity>   files   = new ArrayList<>();
 
-  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-  @JoinColumn(name = "workflow_id", nullable = false)
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "workflowEntity")
+//  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+  // @JoinColumn(name = "workflow_id", nullable = false)
   private final List<WorkflowActionEntity> actions = new ArrayList<>();
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "controller", insertable = false, updatable = false)
-  @Fetch(FetchMode.JOIN)
+  @ManyToOne
+  @JoinColumn(name = "controller")
   private UserEntity                       controllerUser;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "created_by", insertable = false, updatable = false)
-  @Fetch(FetchMode.JOIN)
+  @ManyToOne
+  @JoinColumn(name = "created_by")
   private UserEntity                       createdByUser;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "workflow_type_id", insertable = false, updatable = false)
-  @Fetch(FetchMode.JOIN)
+  @ManyToOne
+  @JoinColumn(name = "workflow_type_id")
   private WorkflowTypeEntity               workflowType;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "current_step", insertable = false, updatable = false)
-  @Fetch(FetchMode.JOIN)
+  @ManyToOne
+  @JoinColumn(name = "current_step")
   private WorkflowTypeStepEntity           currentStep;
-
-  @Transient
-  private boolean                          isUpdated;
 
   public WorkflowEntity() {
     currentStep = new WorkflowTypeStepEntity();
     createdByUser = new UserEntity();
     controllerUser = new UserEntity();
     workflowType = new WorkflowTypeEntity();
-    isUpdated = false;
+
   }
 
   @Override
@@ -181,7 +169,10 @@ public class WorkflowEntity extends EntityIdentityHelper {
   public void setFiles(final List<WorkflowFileEntity> files) {
     this.files.clear();
     if (files != null) {
-      this.files.addAll(files);
+      for (final WorkflowFileEntity file : files) {
+        file.setWorkflowEntity(this);
+        this.files.add(file);
+      }
     }
   }
 
@@ -192,7 +183,11 @@ public class WorkflowEntity extends EntityIdentityHelper {
   public void setActions(final List<WorkflowActionEntity> actions) {
     this.actions.clear();
     if (actions != null) {
-      this.actions.addAll(actions);
+      for (final WorkflowActionEntity action : actions) {
+        action.setWorkflowEntity(this);
+        this.actions.add(action);
+      }
+
     }
   }
 
@@ -212,37 +207,27 @@ public class WorkflowEntity extends EntityIdentityHelper {
     return createdByUser.getIdentity();
   }
 
-  public Long getCurrentStepId() {
-    return currentStepId;
-  }
-
-  public void setCurrentStepId(final Long currentStepId) {
-    this.currentStepId = currentStepId;
-  }
-
-  public Long getControllerId() {
-    return controllerId;
-  }
-
-  public void setControllerId(final Long controllerId) {
-    this.controllerId = controllerId;
-  }
-
-  public Long getCreatedById() {
-    return createdById;
-  }
-
-  public void setCreatedById(final Long createdById) {
-    this.createdById = createdById;
-  }
-
-  public Long getWorkflowTypeId() {
-    return workflowTypeId;
-  }
-
-  public void setWorkflowTypeId(final Long workflowTypeId) {
-    this.workflowTypeId = workflowTypeId;
-  }
+  /*
+   * public Long getCurrentStepId() { return currentStepId; }
+   *
+   * public void setCurrentStepId(final Long currentStepId) { this.currentStepId =
+   * currentStepId; }
+   *
+   * public Long getControllerId() { return controllerId; }
+   *
+   * public void setControllerId(final Long controllerId) { this.controllerId =
+   * controllerId; }
+   *
+   * public Long getCreatedById() { return createdById; }
+   *
+   * public void setCreatedById(final Long createdById) { this.createdById =
+   * createdById; }
+   *
+   * public Long getWorkflowTypeId() { return workflowTypeId; }
+   *
+   * public void setWorkflowTypeId(final Long workflowTypeId) {
+   * this.workflowTypeId = workflowTypeId; }
+   */
 
   @Override
   public String getIdentityPreffix() {
@@ -281,64 +266,29 @@ public class WorkflowEntity extends EntityIdentityHelper {
     this.currentStep = currentStep;
   }
 
-  public WorkflowActionEntity getActionByIdentity(final String identity) {
-    for (final WorkflowActionEntity action : actions) {
-      if (action.hasTheSameIdentity(identity)) {
-        return action;
-      }
-    }
-    return null;
-  }
-
-  public WorkflowFileEntity getFileByIdentity(final String identity) {
-    for (final WorkflowFileEntity file : files) {
-      if (file.hasTheSameIdentity(identity)) {
-        return file;
-      }
-    }
-    return null;
-  }
-
   public void updateFromExists(final WorkflowEntity exists) {
     if (exists == null) {
       return;
     }
     this.comments = exists.comments;
-    this.controllerId = exists.controllerId;
-    this.createdById = exists.createdById;
-    this.currentStepId = exists.currentStepId;
+    this.controllerUser = exists.controllerUser;
+    this.createdByUser = exists.createdByUser;
+    this.currentStep = exists.currentStep;
+    this.workflowType = exists.workflowType;
     this.status = exists.status;
     this.version = exists.version;
 
-    for (final WorkflowActionEntity action : exists.actions) {
-      final WorkflowActionEntity found = getActionByIdentity(action.getIdentity());
-      if (found == null) {
-        actions.add(action);
-      } else {
-        found.updateFromExists(action);
-      }
-      // action.updateFromExists(exists.getActionByIdentity(action.getIdentity()));
-    }
+    actions.clear();
+    actions.addAll(exists.actions);
 
-    for (final WorkflowFileEntity file : exists.files) {
-      final WorkflowFileEntity found = getFileByIdentity(file.getIdentity());
+    files.clear();
+    files.addAll(exists.files);
 
-      if (found == null) {
-        files.add(file);
-      } else {
-        found.updateFromExists(file);
-      }
-      // file.updateFromExists(exists.getFileByIdentity(file.getIdentity()));
-    }
   }
 
   @Override
   public void increaseVersion() {
-    if (isUpdated) {
-      return;
-    }
-
     version += 1;
-    isUpdated = true;
+
   }
 }

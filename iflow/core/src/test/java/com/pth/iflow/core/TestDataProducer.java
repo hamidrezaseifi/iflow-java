@@ -372,6 +372,80 @@ public class TestDataProducer {
     return model;
   }
 
+  protected WorkflowEntity getTestNewWorkflowForSave() {
+    final WorkflowEntity model = new WorkflowEntity();
+    model.setId(null);
+    model.setIdentity(EIdentity.NOT_SET.getIdentity());
+    model.setStatus(EWorkflowStatus.INITIALIZE.getValue().intValue());
+    model.setVersion(1);
+    model.setComments("comments");
+    model.setControllerId(1l);
+    model.setCurrentStepId(1l);
+    model.setCreatedById(1l);
+    model.setWorkflowTypeId(1l);
+    model.setControllerUser(getTestUser());
+    model.setCreatedByUser(getTestUser());
+    model.setCurrentStep(getTestWorkflowTypeStep());
+    model.setWorkflowType(getTestWorkflowType());
+
+    model.setActions(Arrays.asList(getTestWorkflowActionForSave(model)));
+    model.setFiles(Arrays.asList(this.getTestWorkflowFileForSave(model)));
+
+    return model;
+  }
+
+  protected WorkflowActionEntity getTestWorkflowActionForSave(final WorkflowEntity workflow) {
+    final WorkflowActionEntity model = new WorkflowActionEntity("assign-to-identity", "step-identity");
+    model.setWorkflow(workflow);
+    model.setId(null);
+    model.setStatus(1);
+    model.setVersion(1);
+    model.setCurrentStepId(workflow.getCurrentStep().getId());
+    model.setComments("comments");
+    model.setAssignTo(0L);
+    model.setIdentity(EIdentity.NOT_SET.getIdentity());
+    model.setCurrentStep(workflow.getCurrentStep());
+
+    // model.setAssignToIdentity("assignToIdentity");
+    // model.setCurrentStepIdentity("currentStepIdIdentity");
+
+    return model;
+  }
+
+  protected WorkflowFileEntity getTestWorkflowFileForSave(final WorkflowEntity workflow) {
+    final WorkflowFileEntity model = new WorkflowFileEntity();
+    model.setWorkflow(workflow);
+    model.setId(null);
+    model.setStatus(1);
+    model.setVersion(1);
+    model.getCreatedByUser().setIdentity("user@iflow.de");
+    model.setComments("comments");
+    model.setActiveFilePath("filePath");
+    model.setActiveFileVersion(1);
+    model.setTitle("title ");
+    model.setExtention("ext");
+    model.setIdentity(EIdentity.NOT_SET.getIdentity());
+
+    model.setFileVersions(Arrays.asList(this.getTestWorkflowFileVersionForSave()));
+
+    return model;
+  }
+
+  protected WorkflowFileVersionEntity getTestWorkflowFileVersionForSave() {
+    final WorkflowFileVersionEntity model = new WorkflowFileVersionEntity();
+    // model.setWorkflowFileId(workflowFileId);
+    model.setId(null);
+    model.setStatus(1);
+    model.setVersion(1);
+    model.getCreatedByUser().setIdentity("user@iflow.de");
+    model.setComments("comments");
+    model.setFilePath("filePath");
+    model.setFileVersion(1);
+    model.setCreatedByUser(getTestUser());
+
+    return model;
+  }
+
   protected SingleTaskWorkflowEntity getTestNewSingleTaskWorkflowWorkflow() {
     final SingleTaskWorkflowEntity model = new SingleTaskWorkflowEntity();
 

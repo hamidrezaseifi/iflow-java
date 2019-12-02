@@ -33,10 +33,6 @@ public class WorkflowFileVersionEdo {
   @XmlElement(name = "Status", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer status;
 
-  @NotNull(message = "Version must not be null!")
-  @XmlElement(name = "Version", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Integer version;
-
   public String getFilePath() {
     return this.filePath;
   }
@@ -75,14 +71,6 @@ public class WorkflowFileVersionEdo {
 
   public void setStatus(final Integer status) {
     this.status = status;
-  }
-
-  public Integer getVersion() {
-    return this.version;
-  }
-
-  public void setVersion(final Integer version) {
-    this.version = version;
   }
 
 }

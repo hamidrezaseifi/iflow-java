@@ -35,7 +35,7 @@ public class WorkflowDao implements IWorkflowDao {
   public WorkflowEntity create(final WorkflowEntity model) throws IFlowStorageException {
 
     entityManager.persist(model);
-
+    entityManager.flush();
     return getById(model.getId());
   }
 

@@ -15,9 +15,6 @@ import com.pth.iflow.common.enums.EWorkflowActionStatus;
 @XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "WorkflowAction" + IFlowJaxbDefinition.TYPE_PREFIX)
 public class WorkflowActionEdo {
 
-  @XmlElement(name = "Identity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String  identity;
-
   @XmlElement(name = "AssignToIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String  assignToIdentity;
 
@@ -31,18 +28,6 @@ public class WorkflowActionEdo {
   @NotNull(message = "Status must not be null")
   @XmlElement(name = "Status", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer status;
-
-  @NotNull(message = "Version must not be null")
-  @XmlElement(name = "Version", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Integer version;
-
-  public String getIdentity() {
-    return this.identity;
-  }
-
-  public void setIdentity(final String identity) {
-    this.identity = identity;
-  }
 
   public String getAssignToIdentity() {
     return this.assignToIdentity;
@@ -74,14 +59,6 @@ public class WorkflowActionEdo {
 
   public void setStatus(final Integer status) {
     this.status = status;
-  }
-
-  public Integer getVersion() {
-    return this.version;
-  }
-
-  public void setVersion(final Integer version) {
-    this.version = version;
   }
 
   public boolean getIsActive() {

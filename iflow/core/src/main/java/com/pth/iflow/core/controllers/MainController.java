@@ -95,7 +95,6 @@ public class MainController {
     fver.setFilePath("filePath");
     fver.setFileVersion(1);
     fver.setStatus(1);
-    fver.setVersion(1);
 
     final WorkflowFileEdo f = new WorkflowFileEdo();
     f.setActiveFilePath("filePath");
@@ -103,10 +102,8 @@ public class MainController {
     f.setComments("comments");
     f.setCreatedByIdentity("admin@iflow.de");
     f.setExtention("extention");
-    f.setIdentity("identity");
     f.setStatus(1);
     f.setTitle("title");
-    f.setVersion(1);
     f.getFileVersions().add(fver);
 
     workflow.getFiles().add(f);
@@ -115,9 +112,7 @@ public class MainController {
     ac.setAssignToIdentity("");
     ac.setComments("comments");
     ac.setCurrentStepIdentity("singletasktypestep");
-    ac.setIdentity("identity");
     ac.setStatus(1);
-    ac.setVersion(1);
 
     workflow.getActions().add(ac);
 

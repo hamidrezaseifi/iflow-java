@@ -41,7 +41,9 @@ public class SingleTaskWorkflowDao implements ISingleTaskWorkflowDao {
     final WorkflowEntity workflow = workflowDao.create(model.getWorkflow());
     model.setWorkflow(workflow);
     model.setWorkflowId(workflow.getId());
-    return entityManager.merge(model);
+    entityManager.persist(model);
+    entityManager.flush();
+    return getById(workflow.getId());
   }
 
   @Override

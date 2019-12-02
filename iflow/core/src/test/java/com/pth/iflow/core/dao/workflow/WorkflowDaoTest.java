@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
 import com.pth.iflow.common.enums.EIdentity;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.entity.workflow.WorkflowEntity;
@@ -24,7 +26,7 @@ import com.pth.iflow.core.storage.dao.interfaces.workflow.IWorkflowDao;
 public class WorkflowDaoTest extends TestDataProducer {
 
   @Autowired
-  private IWorkflowDao workflowDao;
+  private IWorkflowDao               workflowDao;
 
   private final List<WorkflowEntity> createdModels = new ArrayList<>();
 
@@ -35,7 +37,7 @@ public class WorkflowDaoTest extends TestDataProducer {
 
   private void createWorlflowList() throws Exception {
     for (int i = 1; i <= 3; i++) {
-      final WorkflowEntity workflow = getTestNewWorkflow();
+      final WorkflowEntity workflow = getTestNewWorkflowForSave();
       workflow.setId(null);
       workflow.setIdentity(EIdentity.NOT_SET.getIdentity());
       final WorkflowEntity res = workflowDao.create(workflow);
@@ -98,7 +100,7 @@ public class WorkflowDaoTest extends TestDataProducer {
   @Test
   public void testCreate() throws Exception {
 
-    final WorkflowEntity workflow = getTestNewWorkflow();
+    final WorkflowEntity workflow = getTestNewWorkflowForSave();
     workflow.setVersion(10);
     final WorkflowEntity resWorkflow = workflowDao.create(workflow);
     createdModels.add(resWorkflow);
@@ -112,7 +114,7 @@ public class WorkflowDaoTest extends TestDataProducer {
   @Test
   public void testUpdate() throws Exception {
 
-    final WorkflowEntity workflow = getTestNewWorkflow();
+    final WorkflowEntity workflow = getTestNewWorkflowForSave();
     workflow.setVersion(10);
     final WorkflowEntity createdWorkflow = workflowDao.create(workflow);
     createdModels.add(createdWorkflow);
@@ -134,7 +136,7 @@ public class WorkflowDaoTest extends TestDataProducer {
   @Test
   public void testDelete() throws Exception {
 
-    final WorkflowEntity workflow = getTestNewWorkflow();
+    final WorkflowEntity workflow = getTestNewWorkflowForSave();
     workflow.setVersion(10);
     final WorkflowEntity resWorkflow = workflowDao.create(workflow);
 

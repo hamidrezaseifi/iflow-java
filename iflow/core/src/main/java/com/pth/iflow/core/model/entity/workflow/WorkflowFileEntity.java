@@ -7,7 +7,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,29 +17,22 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.pth.iflow.core.model.entity.UserEntity;
-import com.pth.iflow.core.storage.dao.helper.EntityIdentityHelper;
-import com.pth.iflow.core.storage.dao.helper.EntityListener;
 
 @Entity
 @Table(name = "workflow_files")
-@EntityListeners(EntityListener.class)
-public class WorkflowFileEntity extends EntityIdentityHelper {
+public class WorkflowFileEntity {
 
   @Id
   @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long                                  id;
 
-  @Column(name = "identity")
-  private String                                identity;
-
-  // @Column(name = "workflow_id")
-  // private Long workflowId;
+  /*
+   * @Column(name = "workflow_id") private Long workflowId;
+   */
 
   @Column(name = "title")
   private String                                title;
@@ -54,17 +46,11 @@ public class WorkflowFileEntity extends EntityIdentityHelper {
   @Column(name = "active_version")
   private Integer                               activeFileVersion;
 
-  @Column(name = "created_by")
-  private Long                                  createdById;
-
   @Column(name = "comments")
   private String                                comments;
 
   @Column(name = "status")
   private Integer                               status;
-
-  @Column(name = "version")
-  private Integer                               version;
 
   @CreationTimestamp
   @Column(name = "created_at")
@@ -74,41 +60,27 @@ public class WorkflowFileEntity extends EntityIdentityHelper {
   @Column(name = "updated_at")
   private Date                                  updatedAt;
 
-  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-  @JoinColumn(name = "workflow_file_id", nullable = false)
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "workflowFileEntity")
   private final List<WorkflowFileVersionEntity> fileVersions = new ArrayList<>();
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "created_by", insertable = false, updatable = false)
-  @Fetch(FetchMode.JOIN)
-  private UserEntity                            createdByUser;
+  @JoinColumn(name = "workflow_id", nullable = false)
+  private WorkflowEntity                        workflowEntity;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "workflow_id", insertable = false, updatable = false)
-  private WorkflowEntity                        workflow;
+  @ManyToOne
+  @JoinColumn(name = "created_by")
+  private UserEntity                            createdByUser;
 
   public WorkflowFileEntity() {
     createdByUser = new UserEntity();
-    workflow = new WorkflowEntity();
   }
 
-  @Override
   public Long getId() {
     return this.id;
   }
 
   public void setId(final Long id) {
     this.id = id;
-  }
-
-  @Override
-  public String getIdentity() {
-    return identity;
-  }
-
-  @Override
-  public void setIdentity(final String identity) {
-    this.identity = identity;
   }
 
   /*
@@ -158,20 +130,24 @@ public class WorkflowFileEntity extends EntityIdentityHelper {
     this.activeFileVersion = fileVersion;
   }
 
-  public Long getCreatedById() {
-    return createdById;
+  public String getCreatedByIdentity() {
+    return createdByUser.getIdentity();
   }
 
-  public void setCreatedById(final Long createdById) {
-    this.createdById = createdById;
+  public String getCreatedByUserEdoIdentity() {
+    return createdByUser.getIdentity();
+  }
+
+  public void setCreatedByUserEdoIdentity(final String createdByUserEdoIdentity) {
+    this.createdByUser.setIdentity(createdByUserEdoIdentity);
   }
 
   public UserEntity getCreatedByUser() {
     return createdByUser;
   }
 
-  public void setCreatedByUser(final UserEntity createdBy) {
-    this.createdByUser = createdBy;
+  public void setCreatedByUser(final UserEntity createdByUser) {
+    this.createdByUser = createdByUser;
   }
 
   public Integer getStatus() {
@@ -180,16 +156,6 @@ public class WorkflowFileEntity extends EntityIdentityHelper {
 
   public void setStatus(final Integer status) {
     this.status = status;
-  }
-
-  @Override
-  public Integer getVersion() {
-    return this.version;
-  }
-
-  @Override
-  public void setVersion(final Integer version) {
-    this.version = version;
   }
 
   public Date getCreatedAt() {
@@ -215,61 +181,19 @@ public class WorkflowFileEntity extends EntityIdentityHelper {
   public void setFileVersions(final List<WorkflowFileVersionEntity> fileVersions) {
     this.fileVersions.clear();
     if (fileVersions != null) {
-      this.fileVersions.addAll(fileVersions);
-    }
-  }
-
-  public WorkflowEntity getWorkflow() {
-    return workflow;
-  }
-
-  public void setWorkflow(final WorkflowEntity workflow) {
-    this.workflow = workflow;
-  }
-
-  @Override
-  public String getIdentityPreffix() {
-    return "wf";
-  }
-
-  public void updateFromExists(final WorkflowFileEntity exists) {
-    if (exists == null) {
-      return;
-    }
-
-    this.comments = exists.comments;
-    this.createdById = exists.createdById;
-    this.activeFilePath = exists.activeFilePath;
-    this.activeFileVersion = exists.activeFileVersion;
-    this.status = exists.status;
-    this.version = exists.version;
-    this.extention = exists.extention;
-    this.title = exists.title;
-
-    for (final WorkflowFileVersionEntity fileVersion : fileVersions) {
-      final WorkflowFileVersionEntity found = getFileVersionByFileVersion(fileVersion.getFileVersion());
-
-      if (found == null) {
-        fileVersions.add(fileVersion);
-      } else {
-        found.updateFromExists(fileVersion);
-      }
-      // fileVersion.updateFromExists(exists.getFileVersionByFileVersion(fileVersion.getFileVersion()));
-    }
-  }
-
-  private WorkflowFileVersionEntity getFileVersionByFileVersion(final Integer fileVersion) {
-    for (final WorkflowFileVersionEntity fileVersionItem : fileVersions) {
-      if (fileVersionItem.getFileVersion() == fileVersion) {
-        return fileVersionItem;
+      for (final WorkflowFileVersionEntity fileVer : fileVersions) {
+        fileVer.setWorkflowFileEntity(this);
+        this.fileVersions.add(fileVer);
       }
     }
-    return null;
   }
 
-  @Override
-  public void increaseVersion() {
-    version += 1;
-    workflow.increaseVersion();
+  public WorkflowEntity getWorkflowEntity() {
+    return workflowEntity;
   }
+
+  public void setWorkflowEntity(final WorkflowEntity workflowEntity) {
+    this.workflowEntity = workflowEntity;
+  }
+
 }

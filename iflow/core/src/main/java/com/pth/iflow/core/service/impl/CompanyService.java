@@ -2,13 +2,13 @@ package com.pth.iflow.core.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.pth.iflow.core.model.entity.CompanyEntity;
-import com.pth.iflow.core.model.mapper.CoreModelEdoMapperBase;
 import com.pth.iflow.core.service.interfaces.ICompanyService;
 import com.pth.iflow.core.storage.dao.interfaces.ICompanyDao;
 
 @Service
-public class CompanyService extends CoreModelEdoMapperBase implements ICompanyService {
+public class CompanyService implements ICompanyService {
 
   private final ICompanyDao companyDao;
 
