@@ -3,7 +3,6 @@ package com.pth.iflow.core.model.entity.workflow;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,10 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
 import com.pth.iflow.core.model.entity.UserEntity;
 
 @Entity
@@ -28,50 +25,51 @@ public class WorkflowFileEntity {
   @Id
   @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long                                  id;
+  private Long id;
 
   /*
    * @Column(name = "workflow_id") private Long workflowId;
    */
 
   @Column(name = "title")
-  private String                                title;
+  private String title;
 
   @Column(name = "extention")
-  private String                                extention;
+  private String extention;
 
   @Column(name = "active_filepath")
-  private String                                activeFilePath;
+  private String activeFilePath;
 
   @Column(name = "active_version")
-  private Integer                               activeFileVersion;
+  private Integer activeFileVersion;
 
   @Column(name = "comments")
-  private String                                comments;
+  private String comments;
 
   @Column(name = "status")
-  private Integer                               status;
+  private Integer status;
 
   @CreationTimestamp
   @Column(name = "created_at")
-  private Date                                  createdAt;
+  private Date createdAt;
 
   @UpdateTimestamp
   @Column(name = "updated_at")
-  private Date                                  updatedAt;
+  private Date updatedAt;
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "workflowFileEntity")
   private final List<WorkflowFileVersionEntity> fileVersions = new ArrayList<>();
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "workflow_id", nullable = false)
-  private WorkflowEntity                        workflowEntity;
+  private WorkflowEntity workflowEntity;
 
   @ManyToOne
   @JoinColumn(name = "created_by")
-  private UserEntity                            createdByUser;
+  private UserEntity createdByUser;
 
   public WorkflowFileEntity() {
+    workflowEntity = new WorkflowEntity();
     createdByUser = new UserEntity();
   }
 
@@ -86,8 +84,7 @@ public class WorkflowFileEntity {
   /*
    * public Long getWorkflowId() { return this.workflowId; }
    *
-   * public void setWorkflowId(final Long workflowId) { this.workflowId =
-   * workflowId; }
+   * public void setWorkflowId(final Long workflowId) { this.workflowId = workflowId; }
    */
 
   public String getActiveFilePath() {
