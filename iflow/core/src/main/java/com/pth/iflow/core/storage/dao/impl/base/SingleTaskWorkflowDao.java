@@ -42,17 +42,18 @@ public class SingleTaskWorkflowDao implements ISingleTaskWorkflowDao {
     model.setWorkflow(workflow);
     model.setWorkflowId(workflow.getId());
     entityManager.persist(model);
-    entityManager.flush();
-    return getById(workflow.getId());
+    return getById(model.getWorkflowId());
   }
 
   @Override
   public SingleTaskWorkflowEntity update(final SingleTaskWorkflowEntity model) throws IFlowStorageException {
 
-    final WorkflowEntity workflow = workflowDao.update(model.getWorkflow());
-    model.setWorkflow(workflow);
-    model.setWorkflowId(workflow.getId());
-    return entityManager.merge(model);
+    final SingleTaskWorkflowEntity dbModel = entityManager.find(SingleTaskWorkflowEntity.class, model.getWorkflowId());
+    dbModel.updateFromExists(model);
+
+    entityManager.merge(dbModel);
+    entityManager.flush();
+    return getById(model.getWorkflowId());
 
   }
 
@@ -70,7 +71,11 @@ public class SingleTaskWorkflowDao implements ISingleTaskWorkflowDao {
 
   @Override
   public void deleteById(final Long workflowId) throws IFlowStorageException {
-    repository.deleteById(workflowId);
+    final SingleTaskWorkflowEntity entity = getById(workflowId);
+
+    if (entity != null) {
+      entityManager.remove(entity);
+    }
   }
 
   @Override

@@ -41,12 +41,18 @@ public class InvoiceWorkflowDao implements IInvoiceWorkflowDao {
     final WorkflowEntity workflow = workflowDao.create(model.getWorkflow());
     model.setWorkflow(workflow);
     model.setWorkflowId(workflow.getId());
-    return repository.save(model);
+    entityManager.persist(model);
+    return getById(model.getWorkflowId());
   }
 
   @Override
   public InvoiceWorkflowEntity update(final InvoiceWorkflowEntity model) throws IFlowStorageException {
-    return repository.save(model);
+    final InvoiceWorkflowEntity dbModel = entityManager.find(InvoiceWorkflowEntity.class, model.getWorkflowId());
+    dbModel.updateFromExists(model);
+
+    entityManager.merge(dbModel);
+    entityManager.flush();
+    return getById(model.getWorkflowId());
   }
 
   @Override
@@ -63,7 +69,11 @@ public class InvoiceWorkflowDao implements IInvoiceWorkflowDao {
 
   @Override
   public void deleteById(final Long workflowId) throws IFlowStorageException {
-    repository.deleteById(workflowId);
+    final InvoiceWorkflowEntity entity = getById(workflowId);
+
+    if (entity != null) {
+      entityManager.remove(entity);
+    }
   }
 
   @Override

@@ -15,9 +15,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.pth.iflow.common.enums.EIdentity;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.entity.workflow.WorkflowEntity;
+import com.pth.iflow.core.service.interfaces.workflow.IWorkflowService;
 import com.pth.iflow.core.storage.dao.interfaces.workflow.IWorkflowDao;
 
 @RunWith(SpringRunner.class)
@@ -27,6 +27,9 @@ public class WorkflowDaoTest extends TestDataProducer {
 
   @Autowired
   private IWorkflowDao               workflowDao;
+
+  @Autowired
+  private IWorkflowService           workflowService;
 
   private final List<WorkflowEntity> createdModels = new ArrayList<>();
 
@@ -38,9 +41,9 @@ public class WorkflowDaoTest extends TestDataProducer {
   private void createWorlflowList() throws Exception {
     for (int i = 1; i <= 3; i++) {
       final WorkflowEntity workflow = getTestNewWorkflowForSave();
-      workflow.setId(null);
-      workflow.setIdentity(EIdentity.NOT_SET.getIdentity());
-      final WorkflowEntity res = workflowDao.create(workflow);
+
+      final WorkflowEntity res = saveWorkflow(workflow);
+
       createdModels.add(res);
     }
   }
@@ -102,7 +105,7 @@ public class WorkflowDaoTest extends TestDataProducer {
 
     final WorkflowEntity workflow = getTestNewWorkflowForSave();
     workflow.setVersion(10);
-    final WorkflowEntity resWorkflow = workflowDao.create(workflow);
+    final WorkflowEntity resWorkflow = saveWorkflow(workflow);
     createdModels.add(resWorkflow);
 
     Assert.assertNotNull("Result workflow is not null!", resWorkflow);
@@ -116,11 +119,13 @@ public class WorkflowDaoTest extends TestDataProducer {
 
     final WorkflowEntity workflow = getTestNewWorkflowForSave();
     workflow.setVersion(10);
-    final WorkflowEntity createdWorkflow = workflowDao.create(workflow);
+    final WorkflowEntity createdWorkflow = saveWorkflow(workflow);
     createdModels.add(createdWorkflow);
 
     Assert.assertNotNull("Result created workflow is not null!", createdWorkflow);
 
+    final String newComments = createdWorkflow.getComments() + " - updated";
+    createdWorkflow.setComments(newComments);
     createdWorkflow.setVersion(22);
     createdWorkflow.setStatus(10);
 
@@ -129,7 +134,8 @@ public class WorkflowDaoTest extends TestDataProducer {
     Assert.assertNotNull("Result workflow is not null!", updatedWorkflow);
     Assert.assertEquals("Result workflow has the same id as created!", createdWorkflow.getId(), updatedWorkflow.getId());
     Assert.assertEquals("Result workflow has status 10!", updatedWorkflow.getStatus().intValue(), 10);
-    Assert.assertEquals("Result workflow has version 22!", updatedWorkflow.getVersion().intValue(), 22);
+    Assert.assertEquals("Result workflow has version 23!", updatedWorkflow.getVersion().intValue(), 23);
+    Assert.assertEquals("Result workflow has version 23!", updatedWorkflow.getComments(), newComments);
 
   }
 
@@ -138,7 +144,7 @@ public class WorkflowDaoTest extends TestDataProducer {
 
     final WorkflowEntity workflow = getTestNewWorkflowForSave();
     workflow.setVersion(10);
-    final WorkflowEntity resWorkflow = workflowDao.create(workflow);
+    final WorkflowEntity resWorkflow = saveWorkflow(workflow);
 
     Assert.assertNotNull("Result workflow is not null!", resWorkflow);
 
@@ -148,6 +154,13 @@ public class WorkflowDaoTest extends TestDataProducer {
 
     Assert.assertNull("Result workflow is null!", deletedWorkflow);
 
+  }
+
+  private WorkflowEntity saveWorkflow(final WorkflowEntity workflow) {
+    final WorkflowEntity preparedWorkflow = workflowService.prepareSavingModel(workflow);
+
+    final WorkflowEntity res = workflowDao.create(preparedWorkflow);
+    return res;
   }
 
 }

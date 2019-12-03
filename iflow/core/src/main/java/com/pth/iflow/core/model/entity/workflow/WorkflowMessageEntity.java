@@ -4,92 +4,66 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.enums.EWorkflowMessageType;
-import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.storage.dao.helper.EntityIdentityHelper;
+import com.pth.iflow.core.storage.dao.helper.EntityListener;
 
 @Entity
+@EntityListeners(EntityListener.class)
 @Table(name = "workflow_message")
 public class WorkflowMessageEntity extends EntityIdentityHelper {
 
   @Id
   @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long                   id;
+  private Long    id;
 
   @Column(name = "workflow_id")
-  private Long                   workflowId;
+  private Long    workflowId;
 
   @Column(name = "step_id")
-  private Long                   stepId;
+  private Long    stepId;
 
   @Column(name = "user_id")
-  private Long                   userId;
+  private Long    userId;
 
   @Column(name = "message")
-  private String                 message;
+  private String  message;
 
   @Column(name = "created_by")
-  private Long                   createdBy;
+  private Long    createdBy;
 
   @Column(name = "message_type")
-  private Integer                messageType;
+  private Integer messageType;
 
   @Column(name = "status")
-  private Integer                status;
+  private Integer status;
 
   @Column(name = "version")
-  private Integer                version;
+  private Integer version;
 
   @Column(name = "expire_days")
-  private Integer                expireDays;
+  private Integer expireDays;
 
   @CreationTimestamp
   @Column(name = "created_at")
-  private Date                   createdAt;
+  private Date    createdAt;
 
   @UpdateTimestamp
   @Column(name = "updated_at")
-  private Date                   updatedAt;
-
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "step_id", insertable = false, updatable = false)
-  @Fetch(FetchMode.JOIN)
-  private WorkflowTypeStepEntity step;
-
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "user_id", insertable = false, updatable = false)
-  @Fetch(FetchMode.JOIN)
-  private UserEntity             user;
-
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "created_by", insertable = false, updatable = false)
-  @Fetch(FetchMode.JOIN)
-  private UserEntity             createdByUser;
-
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "workflow_id", insertable = false, updatable = false)
-  private WorkflowEntity         workflow;
+  private Date    updatedAt;
 
   public WorkflowMessageEntity() {
-    step = new WorkflowTypeStepEntity();
-    user = new UserEntity();
-    createdByUser = new UserEntity();
-    workflow = new WorkflowEntity();
 
   }
 
@@ -108,18 +82,6 @@ public class WorkflowMessageEntity extends EntityIdentityHelper {
 
   public void setWorkflowId(final Long workflowId) {
     this.workflowId = workflowId;
-  }
-
-  public String getWorkflowIdentity() {
-    return workflow.getIdentity();
-  }
-
-  public String getStepIdentity() {
-    return step.getIdentity();
-  }
-
-  public String getUserIdentity() {
-    return user.getIdentity();
   }
 
   public Long getStepId() {
@@ -152,10 +114,6 @@ public class WorkflowMessageEntity extends EntityIdentityHelper {
 
   public void setCreatedBy(final Long createdBy) {
     this.createdBy = createdBy;
-  }
-
-  public String getCreatedByIdentity() {
-    return createdByUser.getIdentity();
   }
 
   public Integer getMessageType() {
@@ -241,40 +199,25 @@ public class WorkflowMessageEntity extends EntityIdentityHelper {
     return "";
   }
 
-  public WorkflowTypeStepEntity getStep() {
-    return step;
-  }
-
-  public void setStep(final WorkflowTypeStepEntity step) {
-    this.step = step;
-  }
-
-  public UserEntity getUser() {
-    return user;
-  }
-
-  public void setUser(final UserEntity user) {
-    this.user = user;
-  }
-
-  public UserEntity getCreatedByUser() {
-    return createdByUser;
-  }
-
-  public void setCreatedByUser(final UserEntity createdByUser) {
-    this.createdByUser = createdByUser;
-  }
-
-  public WorkflowEntity getWorkflow() {
-    return workflow;
-  }
-
-  public void setWorkflow(final WorkflowEntity workflow) {
-    this.workflow = workflow;
-  }
-
   @Override
   public void increaseVersion() {
     version += 1;
+  }
+
+  public void updateFromExists(final WorkflowMessageEntity exists) {
+    if (exists == null) {
+      return;
+    }
+    this.createdBy = exists.createdBy;
+    this.expireDays = exists.expireDays;
+    this.id = exists.id;
+    this.message = exists.message;
+    this.messageType = exists.messageType;
+    this.status = exists.status;
+    this.version = exists.version;
+    this.stepId = exists.stepId;
+    this.userId = exists.userId;
+    this.workflowId = exists.workflowId;
+
   }
 }

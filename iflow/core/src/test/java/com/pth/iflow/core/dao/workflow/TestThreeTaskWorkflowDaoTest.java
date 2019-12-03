@@ -2,8 +2,8 @@ package com.pth.iflow.core.dao.workflow;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -13,10 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import com.pth.iflow.common.enums.EIdentity;
+
 import com.pth.iflow.core.TestDataProducer;
-import com.pth.iflow.core.model.workflow.TestThreeTaskWorkflow;
-import com.pth.iflow.core.storage.dao.interfaces.workflow.IWorkflowDao;
+import com.pth.iflow.core.model.entity.workflow.TestThreeTaskWorkflowEntity;
+import com.pth.iflow.core.service.interfaces.workflow.IWorkflowService;
+import com.pth.iflow.core.storage.dao.interfaces.workflow.ITestThreeTaskWorkflowDao;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -24,9 +25,12 @@ import com.pth.iflow.core.storage.dao.interfaces.workflow.IWorkflowDao;
 public class TestThreeTaskWorkflowDaoTest extends TestDataProducer {
 
   @Autowired
-  private IWorkflowDao<TestThreeTaskWorkflow> workflowDao;
+  private ITestThreeTaskWorkflowDao               workflowDao;
 
-  private final List<TestThreeTaskWorkflow> createdModels = new ArrayList<>();
+  @Autowired
+  private IWorkflowService                        workflowService;
+
+  private final List<TestThreeTaskWorkflowEntity> createdModels = new ArrayList<>();
 
   @Before
   public void setUp() throws Exception {
@@ -35,10 +39,10 @@ public class TestThreeTaskWorkflowDaoTest extends TestDataProducer {
 
   private void createWorlflowList() throws Exception {
     for (int i = 1; i <= 3; i++) {
-      final TestThreeTaskWorkflow workflow = getTestNewTestThreeTaskWorkflow();
-      workflow.setId(null);
-      workflow.setIdentity(EIdentity.NOT_SET.getIdentity());
-      final TestThreeTaskWorkflow res = workflowDao.create(workflow);
+      final TestThreeTaskWorkflowEntity workflow = getTestTestThreeTaskWorkflowEntityForSave();
+
+      final TestThreeTaskWorkflowEntity res = saveWorkflow(workflow);
+
       createdModels.add(res);
     }
   }
@@ -46,8 +50,8 @@ public class TestThreeTaskWorkflowDaoTest extends TestDataProducer {
   @After
   public void tearDown() throws Exception {
 
-    for (final TestThreeTaskWorkflow workflow : createdModels) {
-      workflowDao.deleteById(workflow.getId());
+    for (final TestThreeTaskWorkflowEntity workflow : createdModels) {
+      workflowDao.deleteById(workflow.getWorkflowId());
     }
   }
 
@@ -56,24 +60,24 @@ public class TestThreeTaskWorkflowDaoTest extends TestDataProducer {
 
     createWorlflowList();
 
-    final TestThreeTaskWorkflow workflow = createdModels.get(0);
+    final TestThreeTaskWorkflowEntity workflow = createdModels.get(0);
 
-    final TestThreeTaskWorkflow resWorkflow = this.workflowDao.getById(createdModels.get(0).getId());
+    final TestThreeTaskWorkflowEntity resWorkflow = this.workflowDao.getById(createdModels.get(0).getWorkflowId());
 
     Assert.assertNotNull("Result workflow is not null!", resWorkflow);
-    Assert.assertEquals("Result workflow has id 1!", resWorkflow.getId(), workflow.getId());
-    Assert.assertEquals("Result workflow has status 1!", resWorkflow.getStatus(), workflow.getStatus());
+    Assert.assertEquals("Result workflow has id 1!", resWorkflow.getWorkflow().getId(), workflow.getWorkflow().getId());
+    Assert.assertEquals("Result workflow has status 1!", resWorkflow.getWorkflow().getStatus(), workflow.getWorkflow().getStatus());
 
   }
 
   @Test
-  public void testGetListByIdList() throws Exception {
+  public void testGetListByIdentityList() throws Exception {
 
     createWorlflowList();
 
-    final Set<Long> idList = createdModels.stream().map(w -> w.getId()).collect(Collectors.toSet());
+    final List<String> identityList = createdModels.stream().map(w -> w.getWorkflow().getIdentity()).collect(Collectors.toList());
 
-    final List<TestThreeTaskWorkflow> resList = this.workflowDao.getListByIdList(idList);
+    final List<TestThreeTaskWorkflowEntity> resList = this.workflowDao.getListByIdentityList(identityList);
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + createdModels.size() + " items.", resList.size(), createdModels.size());
@@ -83,54 +87,66 @@ public class TestThreeTaskWorkflowDaoTest extends TestDataProducer {
   @Test
   public void testCreate() throws Exception {
 
-    final TestThreeTaskWorkflow workflow = getTestNewTestThreeTaskWorkflow();
-    workflow.setVersion(10);
-    final TestThreeTaskWorkflow resWorkflow = workflowDao.create(workflow);
+    final TestThreeTaskWorkflowEntity workflow = getTestTestThreeTaskWorkflowEntityForSave();
+    workflow.getWorkflow().setVersion(10);
+    final TestThreeTaskWorkflowEntity resWorkflow = saveWorkflow(workflow);
+
     createdModels.add(resWorkflow);
 
     Assert.assertNotNull("Result workflow is not null!", resWorkflow);
-    Assert.assertEquals("Result workflow has status 1!", resWorkflow.getStatus(), workflow.getStatus());
-    Assert.assertEquals("Result workflow has version " + workflow.getVersion() + "!", resWorkflow.getVersion(), workflow.getVersion());
+    Assert.assertEquals("Result workflow has status 1!", resWorkflow.getWorkflow().getStatus(), workflow.getWorkflow().getStatus());
+    Assert.assertEquals("Result workflow has version " + workflow.getWorkflow().getVersion() + "!",
+        resWorkflow.getWorkflow().getVersion(), workflow.getWorkflow().getVersion());
 
   }
 
   @Test
   public void testUpdate() throws Exception {
 
-    final TestThreeTaskWorkflow workflow = getTestNewTestThreeTaskWorkflow();
-    workflow.setVersion(10);
-    final TestThreeTaskWorkflow createdWorkflow = workflowDao.create(workflow);
+    final TestThreeTaskWorkflowEntity workflow = getTestTestThreeTaskWorkflowEntityForSave();
+    workflow.getWorkflow().setVersion(10);
+    final TestThreeTaskWorkflowEntity createdWorkflow = saveWorkflow(workflow);
+
     createdModels.add(createdWorkflow);
 
     Assert.assertNotNull("Result created workflow is not null!", createdWorkflow);
 
-    createdWorkflow.setVersion(22);
-    createdWorkflow.setStatus(10);
+    createdWorkflow.getWorkflow().setVersion(22);
+    createdWorkflow.getWorkflow().setStatus(10);
 
-    final TestThreeTaskWorkflow updatedWorkflow = workflowDao.update(createdWorkflow);
+    final TestThreeTaskWorkflowEntity updatedWorkflow = workflowDao.update(createdWorkflow);
 
     Assert.assertNotNull("Result workflow is not null!", updatedWorkflow);
-    Assert.assertEquals("Result workflow has the same id as created!", createdWorkflow.getId(), updatedWorkflow.getId());
-    Assert.assertEquals("Result workflow has status 10!", updatedWorkflow.getStatusInt().intValue(), 10);
-    Assert.assertEquals("Result workflow has version 22!", updatedWorkflow.getVersion().intValue(), 22);
+    Assert.assertEquals("Result workflow has the same id as created!", createdWorkflow.getWorkflow().getId(),
+        updatedWorkflow.getWorkflow().getId());
+    Assert.assertEquals("Result workflow has status 10!", updatedWorkflow.getWorkflow().getStatus().intValue(), 10);
+    Assert.assertEquals("Result workflow has version 22!", updatedWorkflow.getWorkflow().getVersion().intValue(), 23);
 
   }
 
   @Test
   public void testDelete() throws Exception {
 
-    final TestThreeTaskWorkflow workflow = getTestNewTestThreeTaskWorkflow();
-    workflow.setVersion(10);
-    final TestThreeTaskWorkflow resWorkflow = workflowDao.create(workflow);
+    final TestThreeTaskWorkflowEntity workflow = getTestTestThreeTaskWorkflowEntityForSave();
+    workflow.getWorkflow().setVersion(10);
+    final TestThreeTaskWorkflowEntity resWorkflow = saveWorkflow(workflow);
 
     Assert.assertNotNull("Result workflow is not null!", resWorkflow);
 
-    workflowDao.deleteById(resWorkflow.getId());
+    workflowDao.deleteById(resWorkflow.getWorkflow().getId());
 
-    final TestThreeTaskWorkflow deletedWorkflow = this.workflowDao.getById(resWorkflow.getId());
+    final TestThreeTaskWorkflowEntity deletedWorkflow = this.workflowDao.getById(resWorkflow.getWorkflow().getId());
 
     Assert.assertNull("Result workflow is null!", deletedWorkflow);
 
+  }
+
+  private TestThreeTaskWorkflowEntity saveWorkflow(final TestThreeTaskWorkflowEntity workflow) {
+
+    workflowService.prepareSavingModel(workflow.getWorkflow());
+
+    final TestThreeTaskWorkflowEntity res = workflowDao.create(workflow);
+    return res;
   }
 
 }

@@ -60,15 +60,7 @@ public class SingleTaskWorkflowServiceTest extends TestDataProducer {
 
     final SingleTaskWorkflowEntity result = singleTaskWorkflowService.save(model);
 
-    Assert.assertNotNull("Result is not null!", result);
-    Assert.assertEquals("Result has " + result.getWorkflow().getIdentity() + " identity.", result.getWorkflow().getIdentity(),
-        result.getWorkflow().getIdentity());
-    Assert.assertEquals("Result has " + result.getWorkflow().getControllerIdentity() + " controller.",
-        result.getWorkflow().getControllerIdentity(), result.getWorkflow().getControllerIdentity());
-    Assert.assertEquals("Result has " + result.getWorkflow().getCurrentStep().getIdentity() + " step.",
-        result.getWorkflow().getCurrentStep().getIdentity(), result.getWorkflow().getCurrentStep().getIdentity());
-    Assert.assertEquals("Result has " + result.getWorkflow().getWorkflowTypeIdentity() + " workflow-type.",
-        result.getWorkflow().getWorkflowTypeIdentity(), result.getWorkflow().getWorkflowTypeIdentity());
+    assetWorkflow(savedModel, result);
 
     verify(this.workflowDao, times(1)).create(any(SingleTaskWorkflowEntity.class));
     verify(this.workflowDao, times(0)).getById(any(long.class));
@@ -88,15 +80,7 @@ public class SingleTaskWorkflowServiceTest extends TestDataProducer {
 
     final SingleTaskWorkflowEntity result = singleTaskWorkflowService.save(model);
 
-    Assert.assertNotNull("Result is not null!", result);
-    Assert.assertEquals("Result has " + result.getWorkflow().getIdentity() + " identity.", result.getWorkflow().getIdentity(),
-        result.getWorkflow().getIdentity());
-    Assert.assertEquals("Result has " + result.getWorkflow().getControllerIdentity() + " controller.",
-        result.getWorkflow().getControllerIdentity(), result.getWorkflow().getControllerIdentity());
-    Assert.assertEquals("Result has " + result.getWorkflow().getCurrentStep().getIdentity() + " step.",
-        result.getWorkflow().getCurrentStep().getIdentity(), result.getWorkflow().getCurrentStep().getIdentity());
-    Assert.assertEquals("Result has " + result.getWorkflow().getWorkflowTypeIdentity() + " workflow-type.",
-        result.getWorkflow().getWorkflowTypeIdentity(), result.getWorkflow().getWorkflowTypeIdentity());
+    assetWorkflow(savedModel, result);
 
     verify(this.workflowDao, times(1)).update(any(SingleTaskWorkflowEntity.class));
     verify(this.workflowDao, times(1)).getById(any(long.class));
@@ -111,15 +95,7 @@ public class SingleTaskWorkflowServiceTest extends TestDataProducer {
 
     final SingleTaskWorkflowEntity result = singleTaskWorkflowService.getByIdentity("test-identity");
 
-    Assert.assertNotNull("Result is not null!", result);
-    Assert.assertEquals("Result has " + result.getWorkflow().getIdentity() + " identity.", result.getWorkflow().getIdentity(),
-        result.getWorkflow().getIdentity());
-    Assert.assertEquals("Result has " + result.getWorkflow().getControllerIdentity() + " controller.",
-        result.getWorkflow().getControllerIdentity(), result.getWorkflow().getControllerIdentity());
-    Assert.assertEquals("Result has " + result.getWorkflow().getCurrentStep().getIdentity() + " step.",
-        result.getWorkflow().getCurrentStep().getIdentity(), result.getWorkflow().getCurrentStep().getIdentity());
-    Assert.assertEquals("Result has " + result.getWorkflow().getWorkflowTypeIdentity() + " workflow-type.",
-        result.getWorkflow().getWorkflowTypeIdentity(), result.getWorkflow().getWorkflowTypeIdentity());
+    assetWorkflow(model, result);
 
     verify(this.workflowDao, times(1)).getByIdentity(any(String.class));
 
@@ -153,4 +129,17 @@ public class SingleTaskWorkflowServiceTest extends TestDataProducer {
 
     verify(this.workflowDao, times(1)).getListByIdentityList(any(Set.class));
   }
+
+  private void assetWorkflow(final SingleTaskWorkflowEntity savedModel, final SingleTaskWorkflowEntity result) {
+    Assert.assertNotNull("Result is not null!", result);
+    Assert.assertEquals("Result has " + result.getWorkflow().getIdentity() + " identity.", result.getWorkflow().getIdentity(),
+        savedModel.getWorkflow().getIdentity());
+    Assert.assertEquals("Result has " + result.getWorkflow().getControllerIdentity() + " controller.",
+        result.getWorkflow().getControllerIdentity(), savedModel.getWorkflow().getControllerIdentity());
+    Assert.assertEquals("Result has " + result.getWorkflow().getCurrentStepId() + " step.", result.getWorkflow().getCurrentStepId(),
+        savedModel.getWorkflow().getCurrentStepId());
+    Assert.assertEquals("Result has " + result.getWorkflow().getWorkflowTypeIdentity() + " workflow-type.",
+        result.getWorkflow().getWorkflowTypeIdentity(), savedModel.getWorkflow().getWorkflowTypeIdentity());
+  }
+
 }

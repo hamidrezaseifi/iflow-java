@@ -1,5 +1,6 @@
 package com.pth.iflow.core.model.entity.workflow;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -7,7 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import com.pth.iflow.common.enums.EWorkflowType;
 
 @Entity
 @Table(name = "testthreetask_workflow")
@@ -15,15 +15,13 @@ public class TestThreeTaskWorkflowEntity {
 
   @Id
   @Column(name = "workflow_id")
-  private Long workflowId;
+  private Long           workflowId;
 
-  @OneToOne(fetch = FetchType.LAZY)
+  @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   @JoinColumn(name = "workflowId")
   private WorkflowEntity workflow;
 
   public TestThreeTaskWorkflowEntity() {
-    workflow = new WorkflowEntity();
-    workflow.setWorkflowTypeIdentity(EWorkflowType.TESTTHREE_TASK_WORKFLOW_TYPE.getIdentity());
 
   }
 
@@ -50,6 +48,15 @@ public class TestThreeTaskWorkflowEntity {
 
   public void verifyVersion(final TestThreeTaskWorkflowEntity exists) {
     workflow.verifyVersion(exists.getWorkflow());
+  }
+
+  public void updateFromExists(final TestThreeTaskWorkflowEntity exists) {
+    if (exists == null) {
+      return;
+    }
+
+    this.workflow.updateFromExists(exists.workflow);
+
   }
 
 }

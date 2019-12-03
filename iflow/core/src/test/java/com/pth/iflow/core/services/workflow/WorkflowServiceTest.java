@@ -19,7 +19,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.pth.iflow.core.TestDataProducer;
+import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.model.entity.workflow.WorkflowEntity;
+import com.pth.iflow.core.model.entity.workflow.WorkflowTypeEntity;
+import com.pth.iflow.core.model.entity.workflow.WorkflowTypeStepEntity;
 import com.pth.iflow.core.service.impl.workflow.WorkflowService;
 import com.pth.iflow.core.service.interfaces.workflow.IWorkflowService;
 import com.pth.iflow.core.storage.dao.interfaces.IUserDao;
@@ -58,25 +61,21 @@ public class WorkflowServiceTest extends TestDataProducer {
   @Test
   public void testSaveCreate() {
     final WorkflowEntity model = getTestNewWorkflow();
+    final UserEntity testUser = getTestUser(1L, "fn", "ln", "email");
+    final WorkflowTypeStepEntity testStep = getTestWorkflowTypeStep(1L, "step1");
+    final WorkflowTypeEntity testType = getTestWorkflowType(1L, "test-type");
 
     final WorkflowEntity savedModel = getTestWorkflow(1L);
 
     when(this.workflowDao.create(any(WorkflowEntity.class))).thenReturn(savedModel);
     when(this.workflowDao.getByIdentity(any(String.class))).thenReturn(savedModel);
-    when(this.usersDao.getByIdentity(any(String.class))).thenReturn(savedModel.getControllerUser());
-    when(this.workflowTypeStepDao.getByIdentity(any(String.class))).thenReturn(savedModel.getCurrentStep());
-    when(this.workflowTypeDao.getByIdentity(any(String.class))).thenReturn(savedModel.getWorkflowType());
+    when(this.usersDao.getByIdentity(any(String.class))).thenReturn(testUser);
+    when(this.workflowTypeStepDao.getByIdentity(any(String.class))).thenReturn(testStep);
+    when(this.workflowTypeDao.getByIdentity(any(String.class))).thenReturn(testType);
 
     final WorkflowEntity result = workflowService.save(model);
 
-    Assert.assertNotNull("Result is not null!", result);
-    Assert.assertEquals("Result has " + result.getIdentity() + " identity.", result.getIdentity(), savedModel.getIdentity());
-    Assert.assertEquals("Result has " + result.getControllerIdentity() + " controller.", result.getControllerIdentity(),
-        savedModel.getControllerIdentity());
-    Assert.assertEquals("Result has " + result.getCurrentStep().getIdentity() + " step.", result.getCurrentStep().getIdentity(),
-        savedModel.getCurrentStep().getIdentity());
-    Assert.assertEquals("Result has " + result.getWorkflowTypeIdentity() + " workflow-type.", result.getWorkflowTypeIdentity(),
-        savedModel.getWorkflowTypeIdentity());
+    assetWorkflow(savedModel, result);
 
     verify(this.workflowDao, times(1)).create(any(WorkflowEntity.class));
     verify(this.usersDao, times(17)).getByIdentity(any(String.class));
@@ -88,26 +87,22 @@ public class WorkflowServiceTest extends TestDataProducer {
   @Test
   public void testSaveUpdate() {
     final WorkflowEntity model = getTestWorkflow(1L);
+    final UserEntity testUser = getTestUser(1L, "fn", "ln", "email");
+    final WorkflowTypeStepEntity testStep = getTestWorkflowTypeStep(1L, "step1");
+    final WorkflowTypeEntity testType = getTestWorkflowType(1L, "test-type");
 
     final WorkflowEntity savedModel = getTestWorkflow(1L);
 
     when(this.workflowDao.update(any(WorkflowEntity.class))).thenReturn(savedModel);
     when(this.workflowDao.getByIdentity(any(String.class))).thenReturn(savedModel);
     when(this.workflowDao.getById(any(Long.class))).thenReturn(savedModel);
-    when(this.usersDao.getByIdentity(any(String.class))).thenReturn(savedModel.getControllerUser());
-    when(this.workflowTypeStepDao.getByIdentity(any(String.class))).thenReturn(savedModel.getCurrentStep());
-    when(this.workflowTypeDao.getByIdentity(any(String.class))).thenReturn(savedModel.getWorkflowType());
+    when(this.usersDao.getByIdentity(any(String.class))).thenReturn(testUser);
+    when(this.workflowTypeStepDao.getByIdentity(any(String.class))).thenReturn(testStep);
+    when(this.workflowTypeDao.getByIdentity(any(String.class))).thenReturn(testType);
 
     final WorkflowEntity result = workflowService.save(model);
 
-    Assert.assertNotNull("Result is not null!", result);
-    Assert.assertEquals("Result has " + result.getIdentity() + " identity.", result.getIdentity(), savedModel.getIdentity());
-    Assert.assertEquals("Result has " + result.getControllerIdentity() + " controller.", result.getControllerIdentity(),
-        savedModel.getControllerIdentity());
-    Assert.assertEquals("Result has " + result.getCurrentStep().getIdentity() + " step.", result.getCurrentStep().getIdentity(),
-        savedModel.getCurrentStep().getIdentity());
-    Assert.assertEquals("Result has " + result.getWorkflowTypeIdentity() + " workflow-type.", result.getWorkflowTypeIdentity(),
-        savedModel.getWorkflowTypeIdentity());
+    assetWorkflow(savedModel, result);
 
     verify(this.workflowDao, times(1)).update(any(WorkflowEntity.class));
     verify(this.workflowDao, times(1)).getById(any(Long.class));
@@ -125,14 +120,7 @@ public class WorkflowServiceTest extends TestDataProducer {
 
     final WorkflowEntity result = workflowService.getByIdentity("test-identity");
 
-    Assert.assertNotNull("Result is not null!", result);
-    Assert.assertEquals("Result has " + result.getIdentity() + " identity.", result.getIdentity(), model.getIdentity());
-    Assert.assertEquals("Result has " + result.getControllerIdentity() + " controller.", result.getControllerIdentity(),
-        model.getControllerIdentity());
-    Assert.assertEquals("Result has " + result.getCurrentStep().getIdentity() + " step.", result.getCurrentStep().getIdentity(),
-        model.getCurrentStep().getIdentity());
-    Assert.assertEquals("Result has " + result.getWorkflowTypeIdentity() + " workflow-type.", result.getWorkflowTypeIdentity(),
-        model.getWorkflowTypeIdentity());
+    assetWorkflow(model, result);
 
     verify(this.workflowDao, times(1)).getByIdentity(any(String.class));
 
@@ -165,6 +153,17 @@ public class WorkflowServiceTest extends TestDataProducer {
     Assert.assertEquals("Result list has " + modelList.size() + " items.", resultList.size(), modelList.size());
 
     verify(this.workflowDao, times(1)).getListByIdentityList(any(Set.class));
+  }
+
+  private void assetWorkflow(final WorkflowEntity savedModel, final WorkflowEntity result) {
+    Assert.assertNotNull("Result is not null!", result);
+    Assert.assertEquals("Result has " + result.getIdentity() + " identity.", result.getIdentity(), savedModel.getIdentity());
+    Assert.assertEquals("Result has " + result.getControllerIdentity() + " controller.", result.getControllerIdentity(),
+        savedModel.getControllerIdentity());
+    Assert.assertEquals("Result has " + result.getCurrentStepId() + " step.", result.getCurrentStepId(),
+        savedModel.getCurrentStepId());
+    Assert.assertEquals("Result has " + result.getWorkflowTypeIdentity() + " workflow-type.", result.getWorkflowTypeIdentity(),
+        savedModel.getWorkflowTypeIdentity());
   }
 
 }
