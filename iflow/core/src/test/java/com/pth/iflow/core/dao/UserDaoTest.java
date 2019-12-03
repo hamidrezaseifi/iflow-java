@@ -2,12 +2,10 @@ package com.pth.iflow.core.dao;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -17,9 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import com.pth.iflow.core.TestDataProducer;
-import com.pth.iflow.core.model.User;
+import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.storage.dao.interfaces.IUserDao;
 
 @RunWith(SpringRunner.class)
@@ -28,9 +25,9 @@ import com.pth.iflow.core.storage.dao.interfaces.IUserDao;
 public class UserDaoTest extends TestDataProducer {
 
   @Autowired
-  private IUserDao         userDao;
+  private IUserDao userDao;
 
-  private final List<User> createdModels = new ArrayList<>();
+  private final List<UserEntity> createdModels = new ArrayList<>();
 
   @Before
   public void setUp() throws Exception {
@@ -39,11 +36,11 @@ public class UserDaoTest extends TestDataProducer {
 
   private void createUserList() throws Exception {
     for (int i = 1; i <= 3; i++) {
-      final User user = getTestNewUser();
+      final UserEntity user = getTestNewUser();
       user.setEmail("utest email " + i);
       user.setFirstName("utest firstName " + i);
       user.setLastName("utest lastName " + i);
-      final User res = userDao.create(user);
+      final UserEntity res = userDao.create(user);
       createdModels.add(res);
     }
   }
@@ -51,7 +48,7 @@ public class UserDaoTest extends TestDataProducer {
   @After
   public void tearDown() throws Exception {
 
-    for (final User model : createdModels) {
+    for (final UserEntity model : createdModels) {
       userDao.deleteById(model.getId());
     }
   }
@@ -61,9 +58,9 @@ public class UserDaoTest extends TestDataProducer {
 
     createUserList();
 
-    final User user = createdModels.get(0);
+    final UserEntity user = createdModels.get(0);
 
-    final User resUser = this.userDao.getById(createdModels.get(0).getId());
+    final UserEntity resUser = this.userDao.getById(createdModels.get(0).getId());
 
     Assert.assertNotNull("Result user is not null!", resUser);
     Assert.assertEquals("Result user has id 1!", resUser.getId(), user.getId());
@@ -82,7 +79,7 @@ public class UserDaoTest extends TestDataProducer {
 
     final Set<String> idList = createdModels.stream().map(w -> w.getIdentity()).collect(Collectors.toSet());
 
-    final List<User> resList = this.userDao.getListByIdentityList(idList);
+    final List<UserEntity> resList = this.userDao.getListByIdentityList(idList);
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + createdModels.size() + " items.", resList.size(), createdModels.size());
@@ -94,7 +91,7 @@ public class UserDaoTest extends TestDataProducer {
 
     createUserList();
 
-    final List<User> resList = this.userDao.getListByCompanyIdentity(createdModels.get(0).getCompanyIdentity());
+    final List<UserEntity> resList = this.userDao.getListByCompanyIdentity(createdModels.get(0).getCompany().getIdentity());
 
     Assert.assertNotNull("Result list is not null!", resList);
 
@@ -105,9 +102,9 @@ public class UserDaoTest extends TestDataProducer {
   @Test
   public void testCreate() throws Exception {
 
-    final User user = getTestNewUser();
+    final UserEntity user = getTestNewUser();
     user.setVersion(10);
-    final User resUser = userDao.create(user);
+    final UserEntity resUser = userDao.create(user);
     createdModels.add(resUser);
 
     Assert.assertNotNull("Result user is not null!", resUser);
@@ -122,9 +119,9 @@ public class UserDaoTest extends TestDataProducer {
   @Test
   public void testUpdate() throws Exception {
 
-    final User user = getTestNewUser();
+    final UserEntity user = getTestNewUser();
     user.setVersion(10);
-    final User createdUser = userDao.create(user);
+    final UserEntity createdUser = userDao.create(user);
     createdModels.add(createdUser);
 
     Assert.assertNotNull("Result created user is not null!", createdUser);
@@ -133,7 +130,7 @@ public class UserDaoTest extends TestDataProducer {
     createdUser.setVersion(22);
     createdUser.setStatus(10);
 
-    final User updatedUser = userDao.update(createdUser);
+    final UserEntity updatedUser = userDao.update(createdUser);
 
     Assert.assertNotNull("Result user is not null!", updatedUser);
     Assert.assertEquals("Result user has the same id as created!", createdUser.getId(), updatedUser.getId());
@@ -146,14 +143,14 @@ public class UserDaoTest extends TestDataProducer {
   @Test
   public void testDelete() throws Exception {
 
-    final User user = getTestNewUser();
-    final User resUser = userDao.create(user);
+    final UserEntity user = getTestNewUser();
+    final UserEntity resUser = userDao.create(user);
 
     Assert.assertNotNull("Result user is not null!", resUser);
 
     userDao.deleteById(resUser.getId());
 
-    final User deletedUser = this.userDao.getById(resUser.getId());
+    final UserEntity deletedUser = this.userDao.getById(resUser.getId());
 
     Assert.assertNull("Result user is null!", deletedUser);
 

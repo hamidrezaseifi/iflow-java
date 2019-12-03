@@ -15,8 +15,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.core.TestDataProducer;
-import com.pth.iflow.core.model.workflow.SingleTaskWorkflow;
-import com.pth.iflow.core.model.workflow.WorkflowMessage;
+import com.pth.iflow.core.model.entity.workflow.WorkflowEntity;
+import com.pth.iflow.core.model.entity.workflow.WorkflowMessageEntity;
+import com.pth.iflow.core.service.interfaces.workflow.IWorkflowService;
 import com.pth.iflow.core.storage.dao.interfaces.IWorkflowMessageDao;
 import com.pth.iflow.core.storage.dao.interfaces.workflow.IWorkflowDao;
 
@@ -26,14 +27,17 @@ import com.pth.iflow.core.storage.dao.interfaces.workflow.IWorkflowDao;
 public class WorkflowMessageDaoTest extends TestDataProducer {
 
   @Autowired
-  private IWorkflowDao<SingleTaskWorkflow> workflowDao;
+  private IWorkflowDao workflowDao;
+
+  @Autowired
+  private IWorkflowService workflowService;
 
   @Autowired
   private IWorkflowMessageDao workflowMessageDao;
 
-  private final List<WorkflowMessage> createdModels = new ArrayList<>();
+  private final List<WorkflowMessageEntity> createdModels = new ArrayList<>();
 
-  private SingleTaskWorkflow createdWorkflow = null;
+  private WorkflowEntity createdWorkflow = null;
 
   @Before
   public void setUp() throws Exception {
@@ -43,7 +47,7 @@ public class WorkflowMessageDaoTest extends TestDataProducer {
   @After
   public void tearDown() throws Exception {
 
-    for (final WorkflowMessage workflowMessage : createdModels) {
+    for (final WorkflowMessageEntity workflowMessage : createdModels) {
       workflowMessageDao.deleteById(workflowMessage.getId());
     }
 
@@ -57,9 +61,9 @@ public class WorkflowMessageDaoTest extends TestDataProducer {
 
     createWorlflowList();
 
-    final WorkflowMessage workflow = createdModels.get(0);
+    final WorkflowMessageEntity workflow = createdModels.get(0);
 
-    final WorkflowMessage resWorkflow = this.workflowMessageDao.getById(createdModels.get(0).getId());
+    final WorkflowMessageEntity resWorkflow = this.workflowMessageDao.getById(createdModels.get(0).getId());
 
     compareExpectedAndResult(workflow, resWorkflow);
 
@@ -70,7 +74,7 @@ public class WorkflowMessageDaoTest extends TestDataProducer {
 
     createWorlflowList();
 
-    WorkflowMessage workflowMessage = createdModels.get(0);
+    WorkflowMessageEntity workflowMessage = createdModels.get(0);
     this.workflowMessageDao.updateStatusByWorkflowIdentity(workflowMessage.getWorkflowIdentity(),
                                                            workflowMessage.getStepIdentity(),
                                                            EWorkflowMessageStatus.CLOSED);
@@ -86,9 +90,9 @@ public class WorkflowMessageDaoTest extends TestDataProducer {
 
     createWorlflowList();
 
-    final List<WorkflowMessage> resList = this.workflowMessageDao
-                                                                 .getNotClosedNotExpiredListByUserIdentity(createdModels.get(0)
-                                                                                                                     .getUserIdentity());
+    final List<WorkflowMessageEntity> resList = this.workflowMessageDao
+                                                                       .getNotClosedNotExpiredListByUserIdentity(createdModels.get(0)
+                                                                                                                              .getUserIdentity());
 
     Assert.assertNotNull("Result list is not null!", resList);
 
@@ -101,9 +105,9 @@ public class WorkflowMessageDaoTest extends TestDataProducer {
 
     createWorlflowList();
 
-    final List<WorkflowMessage> resList = this.workflowMessageDao
-                                                                 .getNotClosedNotExpiredListByWorkflowIdentity(createdModels.get(0)
-                                                                                                                            .getWorkflowIdentity());
+    final List<WorkflowMessageEntity> resList = this.workflowMessageDao
+                                                                       .getNotClosedNotExpiredListByWorkflowIdentity(createdModels.get(0)
+                                                                                                                                  .getWorkflowIdentity());
 
     Assert.assertNotNull("Result list is not null!", resList);
 
@@ -116,10 +120,10 @@ public class WorkflowMessageDaoTest extends TestDataProducer {
 
     createReferenceWorkflow();
 
-    final WorkflowMessage workflowMessage = getTestWorkflowMessage(createdWorkflow, "Test_Message");
+    final WorkflowMessageEntity workflowMessage = getTestWorkflowMessage(createdWorkflow, "Test_Message");
     workflowMessage.setVersion(10);
 
-    final WorkflowMessage resWorkflow = workflowMessageDao.create(workflowMessage);
+    final WorkflowMessageEntity resWorkflow = workflowMessageDao.create(workflowMessage);
     createdModels.add(resWorkflow);
 
     compareExpectedAndResult(workflowMessage, resWorkflow);
@@ -131,19 +135,19 @@ public class WorkflowMessageDaoTest extends TestDataProducer {
 
     createReferenceWorkflow();
 
-    final WorkflowMessage workflowMessage = getTestWorkflowMessage(createdWorkflow, "Test_Message");
+    final WorkflowMessageEntity workflowMessage = getTestWorkflowMessage(createdWorkflow, "Test_Message");
     workflowMessage.setVersion(10);
 
-    final WorkflowMessage createdWorkflow = workflowMessageDao.create(workflowMessage);
+    final WorkflowMessageEntity createdWorkflow = workflowMessageDao.create(workflowMessage);
     createdModels.add(createdWorkflow);
 
     Assert.assertNotNull("Result created workflow is not null!", createdWorkflow);
 
     createdWorkflow.setMessage("new updated title test");
     createdWorkflow.setVersion(22);
-    createdWorkflow.setStatus(EWorkflowMessageStatus.ASSIGNED);
+    createdWorkflow.setStatus(EWorkflowMessageStatus.ASSIGNED.getValue());
 
-    final WorkflowMessage updatedWorkflow = workflowMessageDao.update(createdWorkflow);
+    final WorkflowMessageEntity updatedWorkflow = workflowMessageDao.update(createdWorkflow);
 
     compareExpectedAndResult(createdWorkflow, updatedWorkflow);
 
@@ -156,22 +160,22 @@ public class WorkflowMessageDaoTest extends TestDataProducer {
 
     createReferenceWorkflow();
 
-    final WorkflowMessage workflowMessage = getTestWorkflowMessage(createdWorkflow, "Test_Message");
+    final WorkflowMessageEntity workflowMessage = getTestWorkflowMessage(createdWorkflow, "Test_Message");
     workflowMessage.setVersion(10);
 
-    final WorkflowMessage resWorkflow = workflowMessageDao.create(workflowMessage);
+    final WorkflowMessageEntity resWorkflow = workflowMessageDao.create(workflowMessage);
 
     Assert.assertNotNull("Result workflow is not null!", resWorkflow);
 
     workflowMessageDao.deleteById(resWorkflow.getId());
 
-    final WorkflowMessage deletedWorkflow = this.workflowMessageDao.getById(resWorkflow.getId());
+    final WorkflowMessageEntity deletedWorkflow = this.workflowMessageDao.getById(resWorkflow.getId());
 
     Assert.assertNull("Result workflow is null!", deletedWorkflow);
 
   }
 
-  private void compareExpectedAndResult(final WorkflowMessage workflow, final WorkflowMessage resWorkflow) {
+  private void compareExpectedAndResult(final WorkflowMessageEntity workflow, final WorkflowMessageEntity resWorkflow) {
     Assert.assertNotNull("Result workflow is not null!", resWorkflow);
 
     Assert.assertEquals("Result workflow has message '" + workflow.getMessage() + "'!",
@@ -187,19 +191,21 @@ public class WorkflowMessageDaoTest extends TestDataProducer {
   }
 
   private void createReferenceWorkflow() {
-    final SingleTaskWorkflow workflow = getTestNewSingleTaskWorkflowWorkflow();
-    createdWorkflow = workflowDao.create(workflow);
+    final WorkflowEntity workflow = getTestNewWorkflowForSave();
+    final WorkflowEntity preparedWorkflow = workflowService.prepareSavingModel(workflow);
+
+    createdWorkflow = workflowDao.create(preparedWorkflow);
   }
 
   private void createWorlflowList() throws Exception {
     createReferenceWorkflow();
 
     for (int i = 1; i <= 3; i++) {
-      final WorkflowMessage workflowMessage = getTestWorkflowMessage(createdWorkflow, "Test_Message");
+      final WorkflowMessageEntity workflowMessage = getTestWorkflowMessage(createdWorkflow, "Test_Message");
       workflowMessage.setId(null);
       workflowMessage.setMessage("message " + i);
 
-      final WorkflowMessage res = workflowMessageDao.create(workflowMessage);
+      final WorkflowMessageEntity res = workflowMessageDao.create(workflowMessage);
       createdModels.add(res);
     }
   }

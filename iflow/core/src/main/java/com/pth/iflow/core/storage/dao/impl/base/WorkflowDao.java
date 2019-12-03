@@ -3,7 +3,6 @@ package com.pth.iflow.core.storage.dao.impl.base;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -11,11 +10,9 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.pth.iflow.core.model.entity.workflow.WorkflowEntity;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 import com.pth.iflow.core.storage.dao.impl.repository.workflow.WorkflowRepository;
@@ -29,7 +26,7 @@ public class WorkflowDao implements IWorkflowDao {
   private WorkflowRepository repository;
 
   @Autowired
-  private EntityManager      entityManager;
+  private EntityManager entityManager;
 
   @Override
   public WorkflowEntity create(final WorkflowEntity model) throws IFlowStorageException {
@@ -69,7 +66,13 @@ public class WorkflowDao implements IWorkflowDao {
 
   @Override
   public void deleteById(final Long workflowId) throws IFlowStorageException {
-    repository.deleteById(workflowId);
+
+    final WorkflowEntity entity = getById(workflowId);
+
+    if (entity != null) {
+      entityManager.remove(entity);
+    }
+
   }
 
   @Override
@@ -102,15 +105,11 @@ public class WorkflowDao implements IWorkflowDao {
     entityManager.remove(model.getFiles().get(0));
 
     /*
-     * Query deleteQuery = entityManager.
-     * createQuery("delete FROM WorkflowActionEntity ug where ug.workflow.id=:wid");
-     * deleteQuery.setParameter("wid", model.getId()); int deletedCount =
-     * deleteQuery.executeUpdate();
+     * Query deleteQuery = entityManager. createQuery("delete FROM WorkflowActionEntity ug where ug.workflow.id=:wid");
+     * deleteQuery.setParameter("wid", model.getId()); int deletedCount = deleteQuery.executeUpdate();
      *
-     * deleteQuery = entityManager.
-     * createQuery("delete FROM WorkflowFileEntity ug where ug.workflow.id=:wid");
-     * deleteQuery.setParameter("wid", model.getId()); deletedCount =
-     * deleteQuery.executeUpdate();
+     * deleteQuery = entityManager. createQuery("delete FROM WorkflowFileEntity ug where ug.workflow.id=:wid");
+     * deleteQuery.setParameter("wid", model.getId()); deletedCount = deleteQuery.executeUpdate();
      */
 
     entityManager.flush();

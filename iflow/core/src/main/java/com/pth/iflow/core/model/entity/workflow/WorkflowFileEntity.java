@@ -69,7 +69,7 @@ public class WorkflowFileEntity {
   private UserEntity createdByUser;
 
   public WorkflowFileEntity() {
-    workflowEntity = new WorkflowEntity();
+    // workflowEntity = new WorkflowEntity();
     createdByUser = new UserEntity();
   }
 
