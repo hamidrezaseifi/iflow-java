@@ -11,7 +11,6 @@ import com.pth.iflow.common.enums.EInvoiceType;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.enums.EWorkflowMessageType;
 import com.pth.iflow.common.enums.EWorkflowStatus;
-import com.pth.iflow.common.enums.EWorkflowType;
 import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
 import com.pth.iflow.core.model.ProfileResponse;
 import com.pth.iflow.core.model.WorkflowSearchFilter;
@@ -236,10 +235,10 @@ public class TestDataProducer {
     model.setComments("comments");
     model.setIdentity("workflow-1");
 
-    model.setControllerUser(getTestUser());
-    model.setCreatedByUser(getTestUser());
-    model.setCurrentStep(getTestWorkflowTypeStep());
-    model.setWorkflowType(getTestWorkflowType());
+    model.setControllerId(1L);
+    model.setCreatedById(1L);
+    model.setCurrentStepId(1L);
+    model.setWorkflowTypeId(1L);
 
     model.setActions(getTestWorkflowActionList(model));
     model
@@ -305,10 +304,10 @@ public class TestDataProducer {
     final InvoiceWorkflowEntity model = getTestInvoiceWorkflow(0L);
     model.setWorkflow(getTestNewWorkflowForSave());
 
-    model.getWorkflow().getCurrentStep().setIdentity("invocetasktypestep1");
-    model.getWorkflow().getWorkflowType().setIdentity(EWorkflowType.INVOICE_WORKFLOW_TYPE.getIdentity());
-    model.getWorkflow().getControllerUser().setIdentity("admin@iflow.de");
-    model.getWorkflow().getCreatedByUser().setIdentity("admin@iflow.de");
+    model.getWorkflow().setControllerId(1L);
+    model.getWorkflow().setCreatedById(1L);
+    model.getWorkflow().setCurrentStepId(1L);
+    model.getWorkflow().setWorkflowTypeId(1L);
 
     return model;
   }
@@ -329,7 +328,7 @@ public class TestDataProducer {
     model.setUserId(1L);
     model.setCreatedAt(new Date(Calendar.getInstance().getTime().getTime()));
     model.setMessage("title test");
-    model.setStepId(workflow.getCurrentStep().getId());
+    model.setStepId(workflow.getCurrentStepId());
     model.setCreatedByUser(getTestUser());
     model.setStep(getTestWorkflowTypeStep());
     model.setUser(getTestUser());
@@ -350,14 +349,11 @@ public class TestDataProducer {
     model.setStatus(EWorkflowStatus.INITIALIZE.getValue().intValue());
     model.setVersion(1);
     model.setComments("comments");
-    model.setControllerUser(getTestUser());
-    model.setCurrentStep(getTestWorkflowTypeStep());
-    model.setCreatedByUser(getTestUser());
-    model.setWorkflowType(getTestWorkflowType());
-    model.setControllerUser(getTestUser());
-    model.setCreatedByUser(getTestUser());
-    model.setCurrentStep(getTestWorkflowTypeStep());
-    model.setWorkflowType(getTestWorkflowType());
+
+    model.setControllerId(1L);
+    model.setCreatedById(1L);
+    model.setCurrentStepId(1L);
+    model.setWorkflowTypeId(1L);
 
     model.setActions(getTestWorkflowActionList(model));
     model
@@ -376,10 +372,10 @@ public class TestDataProducer {
     model.setVersion(1);
     model.setComments("comments");
 
-    model.getCurrentStep().setIdentity("singletasktypestep");
-    model.getWorkflowType().setIdentity(EWorkflowType.SINGLE_TASK_WORKFLOW_TYPE.getIdentity());
-    model.getControllerUser().setIdentity("admin@iflow.de");
-    model.getCreatedByUser().setIdentity("admin@iflow.de");
+    model.setControllerId(1L);
+    model.setCreatedById(1L);
+    model.setCurrentStepId(1L);
+    model.setWorkflowTypeId(1L);
 
     model.setActions(Arrays.asList(this.getTestWorkflowActionForSave(model)));
     model.setFiles(Arrays.asList(this.getTestWorkflowFileForSave(model)));
@@ -402,7 +398,7 @@ public class TestDataProducer {
     model.setWorkflowEntity(workflow);
     model.setId(null);
     model.setStatus(1);
-    model.getCreatedByUser().setIdentity("user@iflow.de");
+    model.setCreatedByUserId(1L);
     model.setComments("comments");
     model.setActiveFilePath("filePath");
     model.setActiveFileVersion(1);
@@ -419,7 +415,7 @@ public class TestDataProducer {
     model.setWorkflowFileEntity(workflowFileEntity);
     model.setId(null);
     model.setStatus(1);
-    model.getCreatedByUser().setIdentity("user@iflow.de");
+    model.setCreatedByUserId(1L);
     model.setComments("comments");
     model.setFilePath("filePath");
     model.setFileVersion(1);
@@ -479,10 +475,10 @@ public class TestDataProducer {
     model.setWorkflowEntity(workflow);
     model.setId(Id);
     model.setStatus(1);
-    model.setCurrentStep(getTestWorkflowTypeStep());
+    model.setCurrentStepId(1L);
     model.setComments("comments");
-    model.setAssignToUser(getTestUser());
-    model.setCurrentStep(getTestWorkflowTypeStep());
+    model.setAssignToId(1L);
+    model.setCurrentStepId(1L);
 
     // model.setAssignToIdentity("assignToIdentity");
     // model.setCurrentStepIdentity("currentStepIdIdentity");
@@ -502,9 +498,9 @@ public class TestDataProducer {
     model.setId(null);
     model.setWorkflowEntity(workflow);
     model.setStatus(1);
-    model.setCurrentStep(getTestWorkflowTypeStep());
+    model.setCurrentStepId(1L);
     model.setComments("comments");
-    model.setAssignToUser(getTestUser());
+    model.setAssignToId(1L);
 
     return model;
   }
@@ -514,7 +510,7 @@ public class TestDataProducer {
     model.setWorkflowEntity(workflow);
     model.setId(Id);
     model.setStatus(1);
-    model.getCreatedByUser().setIdentity("user@iflow.de");
+    model.setCreatedByUserId(1L);
     model.setComments("comments");
     model.setActiveFilePath("filePath");
     model.setActiveFileVersion(1);
@@ -539,7 +535,7 @@ public class TestDataProducer {
     model.setWorkflowEntity(workflow);
     model.setId(null);
     model.setStatus(1);
-    model.getCreatedByUser().setIdentity("user@iflow.de");
+    model.setCreatedByUserId(1L);
     model.setComments("comments");
     model.setActiveFilePath("filePath");
     model.setActiveFileVersion(1);
@@ -558,11 +554,10 @@ public class TestDataProducer {
     // model.setWorkflowFileId(workflowFileId);
     model.setId(Id);
     model.setStatus(1);
-    model.getCreatedByUser().setIdentity("user@iflow.de");
+    model.setCreatedByUserId(1L);
     model.setComments("comments");
     model.setFilePath("filePath");
     model.setFileVersion(version);
-    model.setCreatedByUser(getTestUser());
 
     return model;
   }
@@ -572,7 +567,7 @@ public class TestDataProducer {
     // model.setWorkflowFileId(null);
     model.setId(null);
     model.setStatus(1);
-    model.getCreatedByUser().setIdentity("user@iflow.de");
+    model.setCreatedByUserId(1L);
     model.setComments("comments");
     model.setFilePath("filePath");
     model.setFileVersion(version);
