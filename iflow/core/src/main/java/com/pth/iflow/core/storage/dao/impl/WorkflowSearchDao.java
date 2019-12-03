@@ -2,7 +2,6 @@ package com.pth.iflow.core.storage.dao.impl;
 
 import java.util.List;
 import java.util.Set;
-
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -11,10 +10,8 @@ import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Subquery;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import com.pth.iflow.core.model.WorkflowSearchFilter;
 import com.pth.iflow.core.model.entity.workflow.WorkflowActionEntity;
 import com.pth.iflow.core.model.entity.workflow.WorkflowResultEntity;
@@ -52,7 +49,7 @@ public class WorkflowSearchDao implements IWorkflowSearchDao {
       final Root<WorkflowActionEntity> assignRoot = assignSubQuery.from(WorkflowActionEntity.class);
 
       final Path<Long> assignPath = assignRoot.get("assignToUser").get("email");
-      final Path<Long> workflowIdPath = assignRoot.get("workflow").get("id");
+      final Path<Long> workflowIdPath = assignRoot.get("workflowEntity").get("id");
 
       final Predicate assignInPredicate = assignPath.in(workflowSearchFilter.getAssignedUserIdentitySet());
       final Predicate workflowIdPredicate = criteriaBuilder.equal(workflowIdPath, root.get("id"));
