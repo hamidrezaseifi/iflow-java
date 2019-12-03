@@ -3,7 +3,6 @@ package com.pth.iflow.core.model.entity.workflow;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,10 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
 import com.pth.iflow.common.enums.EIdentity;
 import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.storage.dao.helper.EntityIdentityHelper;
@@ -32,62 +29,52 @@ public class WorkflowEntity extends EntityIdentityHelper {
   @Id
   @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long                             id;
+  private Long id;
 
   @Column(name = "identity")
-  private String                           identity;
-
-  /*
-   * @Column(name = "workflow_type_id") private Long workflowTypeId;
-   *
-   * @Column(name = "current_step") private Long currentStepId;
-   *
-   * @Column(name = "controller") private Long controllerId;
-   *
-   * @Column(name = "created_by") private Long createdById;
-   */
+  private String identity;
 
   @Column(name = "comments")
-  private String                           comments;
+  private String comments;
 
   @Column(name = "status")
-  private Integer                          status;
+  private Integer status;
 
   @Column(name = "version")
-  private Integer                          version;
+  private Integer version;
 
   @CreationTimestamp
   @Column(name = "created_at")
-  private Date                             createdAt;
+  private Date createdAt;
 
   @UpdateTimestamp
   @Column(name = "updated_at")
-  private Date                             updatedAt;
+  private Date updatedAt;
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "workflowEntity")
   // @JoinColumn(name = "workflow_id", nullable = false)
-  private final List<WorkflowFileEntity>   files   = new ArrayList<>();
+  private final List<WorkflowFileEntity> files = new ArrayList<>();
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "workflowEntity")
-//  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+  // @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
   // @JoinColumn(name = "workflow_id", nullable = false)
   private final List<WorkflowActionEntity> actions = new ArrayList<>();
 
   @ManyToOne
   @JoinColumn(name = "controller")
-  private UserEntity                       controllerUser;
+  private UserEntity controllerUser;
 
   @ManyToOne
   @JoinColumn(name = "created_by")
-  private UserEntity                       createdByUser;
+  private UserEntity createdByUser;
 
   @ManyToOne
   @JoinColumn(name = "workflow_type_id")
-  private WorkflowTypeEntity               workflowType;
+  private WorkflowTypeEntity workflowType;
 
   @ManyToOne
   @JoinColumn(name = "current_step")
-  private WorkflowTypeStepEntity           currentStep;
+  private WorkflowTypeStepEntity currentStep;
 
   public WorkflowEntity() {
     currentStep = new WorkflowTypeStepEntity();
@@ -210,23 +197,19 @@ public class WorkflowEntity extends EntityIdentityHelper {
   /*
    * public Long getCurrentStepId() { return currentStepId; }
    *
-   * public void setCurrentStepId(final Long currentStepId) { this.currentStepId =
-   * currentStepId; }
+   * public void setCurrentStepId(final Long currentStepId) { this.currentStepId = currentStepId; }
    *
    * public Long getControllerId() { return controllerId; }
    *
-   * public void setControllerId(final Long controllerId) { this.controllerId =
-   * controllerId; }
+   * public void setControllerId(final Long controllerId) { this.controllerId = controllerId; }
    *
    * public Long getCreatedById() { return createdById; }
    *
-   * public void setCreatedById(final Long createdById) { this.createdById =
-   * createdById; }
+   * public void setCreatedById(final Long createdById) { this.createdById = createdById; }
    *
    * public Long getWorkflowTypeId() { return workflowTypeId; }
    *
-   * public void setWorkflowTypeId(final Long workflowTypeId) {
-   * this.workflowTypeId = workflowTypeId; }
+   * public void setWorkflowTypeId(final Long workflowTypeId) { this.workflowTypeId = workflowTypeId; }
    */
 
   @Override

@@ -14,9 +14,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import com.pth.iflow.core.model.entity.UserEntity;
 
 @Entity
 @Table(name = "workflow_files")
@@ -43,6 +43,9 @@ public class WorkflowFileEntity {
   @Column(name = "active_version")
   private Integer activeFileVersion;
 
+  @Column(name = "created_by")
+  private Long createdByUserId;
+
   @Column(name = "comments")
   private String comments;
 
@@ -64,13 +67,11 @@ public class WorkflowFileEntity {
   @JoinColumn(name = "workflow_id", nullable = false)
   private WorkflowEntity workflowEntity;
 
-  @ManyToOne
-  @JoinColumn(name = "created_by")
-  private UserEntity createdByUser;
+  @Transient
+  private String createdByIdentity;
 
   public WorkflowFileEntity() {
-    // workflowEntity = new WorkflowEntity();
-    createdByUser = new UserEntity();
+
   }
 
   public Long getId() {
@@ -127,24 +128,20 @@ public class WorkflowFileEntity {
     this.activeFileVersion = fileVersion;
   }
 
+  public Long getCreatedByUserId() {
+    return createdByUserId;
+  }
+
+  public void setCreatedByUserId(final Long createdByUserId) {
+    this.createdByUserId = createdByUserId;
+  }
+
   public String getCreatedByIdentity() {
-    return createdByUser.getIdentity();
+    return createdByIdentity;
   }
 
-  public String getCreatedByUserEdoIdentity() {
-    return createdByUser.getIdentity();
-  }
-
-  public void setCreatedByUserEdoIdentity(final String createdByUserEdoIdentity) {
-    this.createdByUser.setIdentity(createdByUserEdoIdentity);
-  }
-
-  public UserEntity getCreatedByUser() {
-    return createdByUser;
-  }
-
-  public void setCreatedByUser(final UserEntity createdByUser) {
-    this.createdByUser = createdByUser;
+  public void setCreatedByIdentity(final String createdByIdentity) {
+    this.createdByIdentity = createdByIdentity;
   }
 
   public Integer getStatus() {

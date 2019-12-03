@@ -2,10 +2,8 @@ package com.pth.iflow.core.service.impl.workflow;
 
 import java.util.Collection;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.pth.iflow.common.enums.EIdentity;
 import com.pth.iflow.core.model.entity.workflow.WorkflowActionEntity;
 import com.pth.iflow.core.model.entity.workflow.WorkflowEntity;
@@ -25,8 +23,10 @@ public class WorkflowService implements IWorkflowService {
   private final IWorkflowTypeStepDao workflowTypeStepDao;
   private final IUserDao             usersDao;
 
-  public WorkflowService(@Autowired final IWorkflowDao workflowDao, @Autowired final IWorkflowTypeDao workflowTypeDao,
-      @Autowired final IWorkflowTypeStepDao workflowTypeStepDao, @Autowired final IUserDao usersDao) {
+  public WorkflowService(@Autowired final IWorkflowDao workflowDao,
+                         @Autowired final IWorkflowTypeDao workflowTypeDao,
+                         @Autowired final IWorkflowTypeStepDao workflowTypeStepDao,
+                         @Autowired final IUserDao usersDao) {
     this.workflowDao = workflowDao;
     this.workflowTypeDao = workflowTypeDao;
     this.workflowTypeStepDao = workflowTypeStepDao;
@@ -83,26 +83,26 @@ public class WorkflowService implements IWorkflowService {
 
     for (final WorkflowActionEntity action : model.getActions()) {
 
-      if (EIdentity.isNotSet(action.getAssignToEdoIdentity()) == false) {
-        action.setAssignToUser(usersDao.getByIdentity(action.getAssignToEdoIdentity()));
+      if (EIdentity.isNotSet(action.getAssignToIdentity()) == false) {
+        action.setAssignToId(usersDao.getByIdentity(action.getAssignToIdentity()).getId());
       }
 
-      if (EIdentity.isNotSet(action.getCurrentStepEdoIdentity()) == false) {
-        action.setCurrentStep(workflowTypeStepDao.getByIdentity(action.getCurrentStepEdoIdentity()));
+      if (EIdentity.isNotSet(action.getCurrentStepIdentity()) == false) {
+        action.setCurrentStepId(workflowTypeStepDao.getByIdentity(action.getCurrentStepIdentity()).getId());
       }
 
     }
 
     for (final WorkflowFileEntity file : model.getFiles()) {
 
-      if (EIdentity.isNotSet(file.getCreatedByUserEdoIdentity()) == false) {
-        file.setCreatedByUser(usersDao.getByIdentity(file.getCreatedByUserEdoIdentity()));
+      if (EIdentity.isNotSet(file.getCreatedByIdentity()) == false) {
+        file.setCreatedByUserId(usersDao.getByIdentity(file.getCreatedByIdentity()).getId());
       }
 
       for (final WorkflowFileVersionEntity fileVersion : file.getFileVersions()) {
 
-        if (EIdentity.isNotSet(fileVersion.getCreatedByUserEdoIdentity()) == false) {
-          fileVersion.setCreatedByUser(usersDao.getByIdentity(fileVersion.getCreatedByUserEdoIdentity()));
+        if (EIdentity.isNotSet(fileVersion.getCreatedByIdentity()) == false) {
+          fileVersion.setCreatedByUserId(usersDao.getByIdentity(fileVersion.getCreatedByIdentity()).getId());
         }
 
       }

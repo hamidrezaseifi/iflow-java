@@ -1,7 +1,6 @@
 package com.pth.iflow.core.model.entity.workflow;
 
 import java.sql.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,12 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
+import javax.persistence.Transient;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
-import com.pth.iflow.common.enums.EIdentity;
-import com.pth.iflow.core.model.entity.UserEntity;
 
 @Entity
 @Table(name = "workflow_actions")
@@ -25,51 +21,53 @@ public class WorkflowActionEntity {
   @Id
   @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long                   id;
+  private Long id;
 
   @Column(name = "comments")
-  private String                 comments;
+  private String comments;
+
+  @Column(name = "assign_to")
+  private Long assignToId;
+
+  @Column(name = "current_step_id")
+  private Long currentStepId;
 
   @Column(name = "status")
-  private Integer                status;
+  private Integer status;
 
   @CreationTimestamp
   @Column(name = "created_at")
-  private Date                   createdAt;
+  private Date createdAt;
 
   @UpdateTimestamp
   @Column(name = "updated_at")
-  private Date                   updatedAt;
+  private Date updatedAt;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "workflow_id", nullable = false)
-  private WorkflowEntity         workflowEntity;
+  private WorkflowEntity workflowEntity;
 
-  @ManyToOne
-  @JoinColumn(name = "assign_to")
-  private UserEntity             assignToUser;
+  @Transient
+  private final String currentStepIdentity;
 
-  @ManyToOne
-  @JoinColumn(name = "current_step_id")
-  private WorkflowTypeStepEntity currentStep;
+  @Transient
+  private final String assignToIdentity;
 
   public WorkflowActionEntity() {
 
-    assignToUser = new UserEntity();
-    assignToUser.setId(0L);
+    assignToId = 0L;
 
-    currentStep = new WorkflowTypeStepEntity();
+    this.currentStepIdentity = "";
+    this.assignToIdentity = "";
 
   }
 
   public WorkflowActionEntity(final String assignToEdoIdentity, final String currentStepEdoIdentity) {
 
-    assignToUser = new UserEntity();
-    assignToUser.setId(0L);
-    assignToUser.setIdentity(assignToEdoIdentity);
+    assignToId = 0L;
 
-    currentStep = new WorkflowTypeStepEntity();
-    currentStep.setIdentity(currentStepEdoIdentity);
+    this.currentStepIdentity = currentStepEdoIdentity;
+    this.assignToIdentity = assignToEdoIdentity;
 
   }
 
@@ -113,36 +111,28 @@ public class WorkflowActionEntity {
     this.updatedAt = updatedAt;
   }
 
-  public String getAssignToIdentity() {
-    return assignToUser == null ? EIdentity.NOT_SET.getIdentity() : assignToUser.getIdentity();
+  public Long getCurrentStepId() {
+    return currentStepId;
   }
 
-  public String getAssignToEdoIdentity() {
-    return assignToUser.getIdentity();
+  public void setCurrentStepId(final Long currentStepId) {
+    this.currentStepId = currentStepId;
   }
 
-  public String getCurrentStepEdoIdentity() {
-    return currentStep.getIdentity();
+  public Long getAssignToId() {
+    return assignToId;
+  }
+
+  public void setAssignToId(final Long assignToId) {
+    this.assignToId = assignToId;
   }
 
   public String getCurrentStepIdentity() {
-    return currentStep.getIdentity();
+    return currentStepIdentity;
   }
 
-  public UserEntity getAssignToUser() {
-    return assignToUser;
-  }
-
-  public void setAssignToUser(final UserEntity assignToUser) {
-    this.assignToUser = assignToUser;
-  }
-
-  public WorkflowTypeStepEntity getCurrentStep() {
-    return currentStep;
-  }
-
-  public void setCurrentStep(final WorkflowTypeStepEntity currentStep) {
-    this.currentStep = currentStep;
+  public String getAssignToIdentity() {
+    return assignToIdentity;
   }
 
   public WorkflowEntity getWorkflowEntity() {

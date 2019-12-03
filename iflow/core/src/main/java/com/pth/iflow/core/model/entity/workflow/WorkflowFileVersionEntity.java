@@ -1,7 +1,6 @@
 package com.pth.iflow.core.model.entity.workflow;
 
 import java.sql.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,11 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
+import javax.persistence.Transient;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
-import com.pth.iflow.core.model.entity.UserEntity;
 
 @Entity
 @Table(name = "workflow_files_versions")
@@ -24,38 +21,40 @@ public class WorkflowFileVersionEntity {
   @Id
   @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long               id;
+  private Long id;
 
   @Column(name = "filepath")
-  private String             filePath;
+  private String filePath;
 
   @Column(name = "file_version")
-  private Integer            fileVersion;
+  private Integer fileVersion;
+
+  @Column(name = "created_by")
+  private Long createdByUserId;
 
   @Column(name = "comments")
-  private String             comments;
+  private String comments;
 
   @Column(name = "status")
-  private Integer            status;
+  private Integer status;
 
   @CreationTimestamp
   @Column(name = "created_at")
-  private Date               createdAt;
+  private Date createdAt;
 
   @UpdateTimestamp
   @Column(name = "updated_at")
-  private Date               updatedAt;
+  private Date updatedAt;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "workflow_file_id", nullable = false)
   private WorkflowFileEntity workflowFileEntity;
 
-  @ManyToOne
-  @JoinColumn(name = "created_by")
-  private UserEntity         createdByUser;
+  @Transient
+  private String createdByIdentity;
 
   public WorkflowFileVersionEntity() {
-    createdByUser = new UserEntity();
+
   }
 
   public Long getId() {
@@ -114,24 +113,20 @@ public class WorkflowFileVersionEntity {
     this.updatedAt = updatedAt;
   }
 
-  public String getCreatedByUserEdoIdentity() {
-    return createdByUser.getIdentity();
+  public Long getCreatedByUserId() {
+    return createdByUserId;
   }
 
-  public void setCreatedByUserEdoIdentity(final String createdByUserEdoIdentity) {
-    this.createdByUser.setIdentity(createdByUserEdoIdentity);
+  public void setCreatedByUserId(final Long createdByUserId) {
+    this.createdByUserId = createdByUserId;
   }
 
-  public String getCreatedByUserIdentity() {
-    return createdByUser.getIdentity();
+  public String getCreatedByIdentity() {
+    return createdByIdentity;
   }
 
-  public UserEntity getCreatedByUser() {
-    return createdByUser;
-  }
-
-  public void setCreatedByUser(final UserEntity createdByUser) {
-    this.createdByUser = createdByUser;
+  public void setCreatedByIdentity(final String createdByIdentity) {
+    this.createdByIdentity = createdByIdentity;
   }
 
   public WorkflowFileEntity getWorkflowFileEntity() {
