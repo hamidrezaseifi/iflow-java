@@ -210,7 +210,6 @@ public class WorkflowMessageEntity extends EntityIdentityHelper {
     }
     this.createdBy = exists.createdBy;
     this.expireDays = exists.expireDays;
-    this.id = exists.id;
     this.message = exists.message;
     this.messageType = exists.messageType;
     this.status = exists.status;

@@ -211,6 +211,7 @@ public class InvoiceWorkflowEntity {
     }
 
     this.workflow.updateFromExists(exists.workflow);
+
     this.discountDate = exists.discountDate;
     this.discountDeadline = exists.discountDeadline;
     this.discountEnterDate = exists.discountEnterDate;
@@ -224,7 +225,6 @@ public class InvoiceWorkflowEntity {
     this.sender = exists.sender;
     this.vendorName = exists.vendorName;
     this.vendorNumber = exists.vendorNumber;
-    this.workflowId = exists.workflowId;
 
   }
 }
