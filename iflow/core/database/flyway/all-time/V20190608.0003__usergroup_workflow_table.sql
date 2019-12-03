@@ -252,7 +252,6 @@ CREATE TABLE `workflow_actions` (
   `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   `updated_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   PRIMARY KEY (`id`),
-  UNIQUE KEY `identity_UNIQUE` (`identity`),
   KEY `FK_WORKFLOWACTION_WORKFLOW_idx` (`workflow_id`),
   CONSTRAINT `FK_WORKFLOWACTION_WORKFLOW` FOREIGN KEY (`workflow_id`) REFERENCES `workflow` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 ;
@@ -271,7 +270,6 @@ CREATE TABLE `workflow_files` (
   `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   `updated_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   PRIMARY KEY (`id`),
-  UNIQUE KEY `identity_UNIQUE` (`identity`),
   KEY `FK_WORKFLOWFILE_WORKFLOW_idx` (`workflow_id`),
   KEY `FK_WORKFLOWFILE_USERS_idx` (`created_by`),
   CONSTRAINT `FK_WORKFLOWFILE_USERS` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
