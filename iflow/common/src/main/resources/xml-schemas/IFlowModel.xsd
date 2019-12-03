@@ -300,12 +300,10 @@
 
   <xs:complexType name="WorkflowActionTP">
     <xs:sequence>
-      <xs:element form="qualified" minOccurs="0" name="Identity" type="xs:string"/>
       <xs:element form="qualified" minOccurs="0" name="AssignToIdentity" type="xs:string"/>
       <xs:element form="qualified" minOccurs="0" name="CurrentStepIdentity" type="xs:string"/>
       <xs:element form="qualified" minOccurs="0" name="Comments" type="xs:string"/>
       <xs:element form="qualified" minOccurs="0" name="Status" type="xs:int"/>
-      <xs:element form="qualified" minOccurs="0" name="Version" type="xs:int"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -323,7 +321,6 @@
 
   <xs:complexType name="WorkflowFileTP">
     <xs:sequence>
-      <xs:element form="qualified" minOccurs="0" name="Identity" type="xs:string"/>
       <xs:element form="qualified" minOccurs="0" name="CreatedByIdentity" type="xs:string"/>
       <xs:element form="qualified" minOccurs="0" name="Title" type="xs:string"/>
       <xs:element form="qualified" minOccurs="0" name="Extention" type="xs:string"/>
@@ -331,7 +328,6 @@
       <xs:element form="qualified" minOccurs="0" name="ActiveFileVersion" type="xs:int"/>
       <xs:element form="qualified" minOccurs="0" name="Comments" type="xs:string"/>
       <xs:element form="qualified" minOccurs="0" name="Status" type="xs:int"/>
-      <xs:element form="qualified" minOccurs="0" name="Version" type="xs:int"/>
       <xs:element form="qualified" minOccurs="0" name="FileVersionList">
         <xs:complexType>
           <xs:sequence>
@@ -349,7 +345,6 @@
       <xs:element form="qualified" minOccurs="0" name="Comments" type="xs:string"/>
       <xs:element form="qualified" minOccurs="0" name="FileVersion" type="xs:int"/>
       <xs:element form="qualified" minOccurs="0" name="Status" type="xs:int"/>
-      <xs:element form="qualified" minOccurs="0" name="Version" type="xs:int"/>
     </xs:sequence>
   </xs:complexType>
 
