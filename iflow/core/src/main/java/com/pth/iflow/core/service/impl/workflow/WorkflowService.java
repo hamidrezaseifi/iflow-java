@@ -73,13 +73,13 @@ public class WorkflowService implements IWorkflowService {
       model.setId(exists.getId());
     }
 
-    model.setControllerUser(usersDao.getByIdentity(model.getControllerIdentity()));
+    model.setControllerId(usersDao.getByIdentity(model.getControllerIdentity()).getId());
 
-    model.setCreatedByUser(usersDao.getByIdentity(model.getCreatedByIdentity()));
+    model.setCreatedById(usersDao.getByIdentity(model.getCreatedByIdentity()).getId());
 
-    model.setCurrentStep(workflowTypeStepDao.getByIdentity(model.getCurrentStepIdentity()));
+    model.setCurrentStepId(workflowTypeStepDao.getByIdentity(model.getCurrentStepIdentity()).getId());
 
-    model.setWorkflowType(workflowTypeDao.getByIdentity(model.getWorkflowType().getIdentity()));
+    model.setWorkflowTypeId(workflowTypeDao.getByIdentity(model.getWorkflowTypeIdentity()).getId());
 
     for (final WorkflowActionEntity action : model.getActions()) {
 

@@ -300,10 +300,10 @@ public class CoreModelEdoMapper {
     model.setComments(edo.getComments());
     model.setStatus(edo.getStatus());
     model.setVersion(edo.getVersion());
-    model.getControllerUser().setIdentity(edo.getControllerIdentity());
-    model.getCurrentStep().setIdentity(edo.getCurrentStepIdentity());
-    model.getCreatedByUser().setIdentity(edo.getCreatedByIdentity());
-    model.getWorkflowType().setIdentity(edo.getWorkflowTypeIdentity());
+    model.setControllerIdentity(edo.getControllerIdentity());
+    model.setCurrentStepIdentity(edo.getCurrentStepIdentity());
+    model.setCreatedByIdentity(edo.getCreatedByIdentity());
+    model.setWorkflowTypeIdentity(edo.getWorkflowTypeIdentity());
     model.setIdentity(edo.getIdentity());
 
     model.setFiles(fromWorkflowFileEdoList(edo.getFiles()));

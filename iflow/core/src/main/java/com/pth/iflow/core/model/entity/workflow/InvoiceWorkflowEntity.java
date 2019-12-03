@@ -1,7 +1,6 @@
 package com.pth.iflow.core.model.entity.workflow;
 
 import java.sql.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,7 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
 import com.pth.iflow.common.enums.EInvoiceType;
 import com.pth.iflow.common.enums.EWorkflowType;
 
@@ -19,54 +17,54 @@ public class InvoiceWorkflowEntity {
 
   @Id
   @Column(name = "workflow_id")
-  private Long           workflowId;
+  private Long workflowId;
 
   @OneToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "workflowId")
   private WorkflowEntity workflow;
 
   @Column(name = "sender")
-  private String         sender;
+  private String sender;
 
   @Column(name = "ext_reg_number")
-  private String         registerNumber;
+  private String registerNumber;
 
   @Column(name = "invoce_date")
-  private Date           invoceDate;
+  private Date invoceDate;
 
   @Column(name = "partner_code")
-  private String         partnerCode;
+  private String partnerCode;
 
   @Column(name = "vendor_number")
-  private String         vendorNumber;
+  private String vendorNumber;
 
   @Column(name = "vendor_name")
-  private String         vendorName;
+  private String vendorName;
 
   @Column(name = "direct_debit_permission")
-  private Boolean        isDirectDebitPermission;
+  private Boolean isDirectDebitPermission;
 
   @Column(name = "invoice_type")
-  private Integer        invoiceType;
+  private Integer invoiceType;
 
   @Column(name = "discount_enter")
-  private Date           discountEnterDate;
+  private Date discountEnterDate;
 
   @Column(name = "discount_deadline")
-  private Integer        discountDeadline;
+  private Integer discountDeadline;
 
   @Column(name = "discount_rate")
-  private Double         discountRate;
+  private Double discountRate;
 
   @Column(name = "discount_date")
-  private Date           discountDate;
+  private Date discountDate;
 
   @Column(name = "payment_amount")
-  private Double         paymentAmount;
+  private Double paymentAmount;
 
   public InvoiceWorkflowEntity() {
     workflow = new WorkflowEntity();
-    workflow.getWorkflowType().setIdentity(EWorkflowType.INVOICE_WORKFLOW_TYPE.getIdentity());
+    workflow.setWorkflowTypeIdentity(EWorkflowType.INVOICE_WORKFLOW_TYPE.getIdentity());
 
   }
 

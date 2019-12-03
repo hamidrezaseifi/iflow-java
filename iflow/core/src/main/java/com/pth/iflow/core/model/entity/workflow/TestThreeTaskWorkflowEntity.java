@@ -7,7 +7,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
 import com.pth.iflow.common.enums.EWorkflowType;
 
 @Entity
@@ -16,7 +15,7 @@ public class TestThreeTaskWorkflowEntity {
 
   @Id
   @Column(name = "workflow_id")
-  private Long           workflowId;
+  private Long workflowId;
 
   @OneToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "workflowId")
@@ -24,7 +23,7 @@ public class TestThreeTaskWorkflowEntity {
 
   public TestThreeTaskWorkflowEntity() {
     workflow = new WorkflowEntity();
-    workflow.getWorkflowType().setIdentity(EWorkflowType.TESTTHREE_TASK_WORKFLOW_TYPE.getIdentity());
+    workflow.setWorkflowTypeIdentity(EWorkflowType.TESTTHREE_TASK_WORKFLOW_TYPE.getIdentity());
 
   }
 

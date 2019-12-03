@@ -10,14 +10,12 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import com.pth.iflow.common.enums.EIdentity;
-import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.storage.dao.helper.EntityIdentityHelper;
 import com.pth.iflow.core.storage.dao.helper.EntityListener;
 
@@ -33,6 +31,18 @@ public class WorkflowEntity extends EntityIdentityHelper {
 
   @Column(name = "identity")
   private String identity;
+
+  @Column(name = "controller")
+  private Long controllerId;
+
+  @Column(name = "created_by")
+  private Long createdById;
+
+  @Column(name = "workflow_type_id")
+  private Long workflowTypeId;
+
+  @Column(name = "current_step")
+  private Long currentStepId;
 
   @Column(name = "comments")
   private String comments;
@@ -52,35 +62,24 @@ public class WorkflowEntity extends EntityIdentityHelper {
   private Date updatedAt;
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "workflowEntity")
-  // @JoinColumn(name = "workflow_id", nullable = false)
   private final List<WorkflowFileEntity> files = new ArrayList<>();
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "workflowEntity")
-  // @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-  // @JoinColumn(name = "workflow_id", nullable = false)
   private final List<WorkflowActionEntity> actions = new ArrayList<>();
 
-  @ManyToOne
-  @JoinColumn(name = "controller")
-  private UserEntity controllerUser;
+  @Transient
+  private String controllerIdentity;
 
-  @ManyToOne
-  @JoinColumn(name = "created_by")
-  private UserEntity createdByUser;
+  @Transient
+  private String createdByIdentity;
 
-  @ManyToOne
-  @JoinColumn(name = "workflow_type_id")
-  private WorkflowTypeEntity workflowType;
+  @Transient
+  private String workflowTypeIdentity;
 
-  @ManyToOne
-  @JoinColumn(name = "current_step")
-  private WorkflowTypeStepEntity currentStep;
+  @Transient
+  private String currentStepIdentity;
 
   public WorkflowEntity() {
-    currentStep = new WorkflowTypeStepEntity();
-    createdByUser = new UserEntity();
-    controllerUser = new UserEntity();
-    workflowType = new WorkflowTypeEntity();
 
   }
 
@@ -178,75 +177,73 @@ public class WorkflowEntity extends EntityIdentityHelper {
     }
   }
 
-  public String getWorkflowTypeIdentity() {
-    return workflowType.getIdentity();
-  }
-
-  public String getCurrentStepIdentity() {
-    return currentStep.getIdentity();
-  }
-
-  public String getControllerIdentity() {
-    return controllerUser.getIdentity();
-  }
-
-  public String getCreatedByIdentity() {
-    return createdByUser.getIdentity();
-  }
-
-  /*
-   * public Long getCurrentStepId() { return currentStepId; }
-   *
-   * public void setCurrentStepId(final Long currentStepId) { this.currentStepId = currentStepId; }
-   *
-   * public Long getControllerId() { return controllerId; }
-   *
-   * public void setControllerId(final Long controllerId) { this.controllerId = controllerId; }
-   *
-   * public Long getCreatedById() { return createdById; }
-   *
-   * public void setCreatedById(final Long createdById) { this.createdById = createdById; }
-   *
-   * public Long getWorkflowTypeId() { return workflowTypeId; }
-   *
-   * public void setWorkflowTypeId(final Long workflowTypeId) { this.workflowTypeId = workflowTypeId; }
-   */
-
   @Override
   public String getIdentityPreffix() {
     return "w";
   }
 
-  public UserEntity getControllerUser() {
-    return controllerUser;
+  public Long getControllerId() {
+    return controllerId;
   }
 
-  public void setControllerUser(final UserEntity controllerUser) {
-    this.controllerUser = controllerUser;
+  public void setControllerId(final Long controllerId) {
+    this.controllerId = controllerId;
   }
 
-  public UserEntity getCreatedByUser() {
-    return createdByUser;
+  public Long getCreatedById() {
+    return createdById;
   }
 
-  public void setCreatedByUser(final UserEntity createdByUser) {
-    this.createdByUser = createdByUser;
+  public void setCreatedById(final Long createdById) {
+    this.createdById = createdById;
   }
 
-  public WorkflowTypeEntity getWorkflowType() {
-    return workflowType;
+  public Long getWorkflowTypeId() {
+    return workflowTypeId;
   }
 
-  public void setWorkflowType(final WorkflowTypeEntity workflowType) {
-    this.workflowType = workflowType;
+  public void setWorkflowTypeId(final Long workflowTypeId) {
+    this.workflowTypeId = workflowTypeId;
   }
 
-  public WorkflowTypeStepEntity getCurrentStep() {
-    return currentStep;
+  public Long getCurrentStepId() {
+    return currentStepId;
   }
 
-  public void setCurrentStep(final WorkflowTypeStepEntity currentStep) {
-    this.currentStep = currentStep;
+  public void setCurrentStepId(final Long currentStepId) {
+    this.currentStepId = currentStepId;
+  }
+
+  public String getControllerIdentity() {
+    return controllerIdentity;
+  }
+
+  public void setControllerIdentity(final String controllerIdentity) {
+    this.controllerIdentity = controllerIdentity;
+  }
+
+  public String getCreatedByIdentity() {
+    return createdByIdentity;
+  }
+
+  public void setCreatedByIdentity(final String createdByIdentity) {
+    this.createdByIdentity = createdByIdentity;
+  }
+
+  public String getWorkflowTypeIdentity() {
+    return workflowTypeIdentity;
+  }
+
+  public void setWorkflowTypeIdentity(final String workflowTypeIdentity) {
+    this.workflowTypeIdentity = workflowTypeIdentity;
+  }
+
+  public String getCurrentStepIdentity() {
+    return currentStepIdentity;
+  }
+
+  public void setCurrentStepIdentity(final String currentStepIdentity) {
+    this.currentStepIdentity = currentStepIdentity;
   }
 
   public void updateFromExists(final WorkflowEntity exists) {
@@ -254,10 +251,10 @@ public class WorkflowEntity extends EntityIdentityHelper {
       return;
     }
     this.comments = exists.comments;
-    this.controllerUser = exists.controllerUser;
-    this.createdByUser = exists.createdByUser;
-    this.currentStep = exists.currentStep;
-    this.workflowType = exists.workflowType;
+    this.controllerId = exists.controllerId;
+    this.createdById = exists.createdById;
+    this.currentStepId = exists.currentStepId;
+    this.workflowTypeId = exists.workflowTypeId;
     this.status = exists.status;
     this.version = exists.version;
 
