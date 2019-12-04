@@ -41,7 +41,7 @@ public class WorkflowMessageEntity extends EntityIdentityHelper {
   private String  message;
 
   @Column(name = "created_by")
-  private Long    createdBy;
+  private Long    createdById;
 
   @Column(name = "message_type")
   private Integer messageType;
@@ -108,12 +108,12 @@ public class WorkflowMessageEntity extends EntityIdentityHelper {
     this.message = message;
   }
 
-  public Long getCreatedBy() {
-    return createdBy;
+  public Long getCreatedById() {
+    return createdById;
   }
 
-  public void setCreatedBy(final Long createdBy) {
-    this.createdBy = createdBy;
+  public void setCreatedById(final Long createdBy) {
+    this.createdById = createdBy;
   }
 
   public Integer getMessageType() {
@@ -208,7 +208,7 @@ public class WorkflowMessageEntity extends EntityIdentityHelper {
     if (exists == null) {
       return;
     }
-    this.createdBy = exists.createdBy;
+    this.createdById = exists.createdById;
     this.expireDays = exists.expireDays;
     this.message = exists.message;
     this.messageType = exists.messageType;

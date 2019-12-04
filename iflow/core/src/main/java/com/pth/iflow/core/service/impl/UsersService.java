@@ -1,6 +1,7 @@
 package com.pth.iflow.core.service.impl;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,14 +45,14 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
   }
 
   @Override
-  public UserEntity getUserByEmail(final String email) {
+  public UserEntity getUserByIdentity(final String email) {
 
     return userDao.getByIdentity(email);
   }
 
   @Override
   public List<UserGroupEntity> getUserGroups(final String email) {
-    final UserEntity user = getUserByEmail(email);
+    final UserEntity user = getUserByIdentity(email);
     ;
 
     final List<UserGroupEntity> list = userGroupDao
@@ -61,14 +62,14 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
 
   @Override
   public List<DepartmentEntity> getUserDepartments(final String email) {
-    final UserEntity user = getUserByEmail(email);
+    final UserEntity user = getUserByIdentity(email);
     final List<DepartmentEntity> list = user.getDepartments().stream().map(ud -> ud.getDepartment()).collect(Collectors.toList());
     return list;
   }
 
   @Override
   public List<DepartmentGroupEntity> getUserDepartmentGroups(final String email) {
-    final UserEntity user = getUserByEmail(email);
+    final UserEntity user = getUserByIdentity(email);
     final List<DepartmentGroupEntity> list = user.getDepartmentGroups().stream().map(ud -> ud.getDepartmentGroup())
         .collect(Collectors.toList());
     return list;
@@ -76,7 +77,7 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
 
   @Override
   public List<UserEntity> getUserDeputies(final String email) {
-    final UserEntity user = getUserByEmail(email);
+    final UserEntity user = getUserByIdentity(email);
     final List<UserEntity> list = user.getDeputies().stream().map(ud -> ud.getDeputy()).collect(Collectors.toList());
     return list;
   }
@@ -102,7 +103,7 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
 
   @Override
   public ProfileResponse getProfileResponseByEmail(final String email) {
-    final UserEntity user = this.getUserByEmail(email);
+    final UserEntity user = this.getUserByIdentity(email);
     final CompanyEntity company = companyDao.getByIdentity(user.getCompany().getIdentity());
 
     return new ProfileResponse(user, company, this.getUserDepartments(email), this.getUserGroups(email), "sot-set");
@@ -183,6 +184,12 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
         departmentService.toEdoList(model.getDepartments()), groupService.toEdoList(model.getUserGroups()));
 
     return edo;
+  }
+
+  @Override
+  public List<UserEntity> getUserListByIdentityList(final Set<String> identityList) throws IFlowStorageException {
+
+    return userDao.getListByIdentityList(identityList);
   }
 
 }

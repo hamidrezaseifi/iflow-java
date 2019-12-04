@@ -39,15 +39,14 @@ public class WorkflowMessageService extends CoreModelEdoMapperService<WorkflowMe
 
   @Override
   public WorkflowMessageEntity save(final WorkflowMessageEntity model) throws IFlowStorageException {
-    prepareSavingModel(model);
+
     if (model.isNew()) {
 
       final WorkflowMessageEntity savedModel = this.workflowMessageDao.create(model);
       return savedModel;
     }
 
-    final WorkflowMessageEntity exists = this.workflowMessageDao.findMessageForWorkflowAndStepAnUser(model.getWorkflowIdentity(),
-        model.getStepIdentity(), model.getUserIdentity());
+    final WorkflowMessageEntity exists = this.workflowMessageDao.getById(model.getId());
     model.verifyVersion(exists);
 
     final WorkflowMessageEntity savedModel = this.workflowMessageDao.update(model);
@@ -85,31 +84,6 @@ public class WorkflowMessageService extends CoreModelEdoMapperService<WorkflowMe
     }
   }
 
-  protected WorkflowMessageEntity prepareSavingModel(final WorkflowMessageEntity model) {
-
-    if (model.getCreatedBy() == null || model.getCreatedBy() <= 0) {
-      model.setCreatedByUser(usersDao.getByIdentity(model.getCreatedByIdentity()));
-      model.setCreatedBy(model.getCreatedByUser().getId());
-    }
-
-    if (model.getUserId() == null || model.getUserId() <= 0) {
-      model.setUser(usersDao.getByIdentity(model.getUserIdentity()));
-      model.setUserId(model.getUser().getId());
-    }
-
-    if (model.getStepId() == null || model.getStepId() <= 0) {
-      model.setStep(workflowTypeStepDao.getByIdentity(model.getStepIdentity()));
-      model.setStepId(model.getStep().getId());
-    }
-
-    if (model.getWorkflowId() == null || model.getWorkflowId() <= 0) {
-      model.setWorkflow(workflowDao.getByIdentity(model.getWorkflowIdentity()));
-      model.setWorkflowId(model.getWorkflow().getId());
-    }
-
-    return model;
-  }
-
   @Override
   public WorkflowMessageEntity fromEdo(final WorkflowMessageEdo edo) throws IFlowMessageConversionFailureException {
     validateCustomer(edo);
@@ -117,14 +91,14 @@ public class WorkflowMessageService extends CoreModelEdoMapperService<WorkflowMe
     final WorkflowMessageEntity model = new WorkflowMessageEntity();
 
     model.setStatus(edo.getStatus());
-    model.getUser().setIdentity(edo.getUserIdentity());
-    model.getCreatedByUser().setIdentity(edo.getCreatedByIdentity());
     model.setVersion(edo.getVersion());
-    model.getWorkflow().setIdentity(edo.getWorkflowIdentity());
     model.setMessageType(edo.getMessageType());
     model.setExpireDays(edo.getExpireDays());
     model.setMessage(edo.getMessage());
-    model.getStep().setIdentity(edo.getStepIdentity());
+    model.setUserId(usersDao.getByIdentity(edo.getUserIdentity()).getId());
+    model.setCreatedById(usersDao.getByIdentity(edo.getCreatedByIdentity()).getId());
+    model.setWorkflowId(workflowDao.getByIdentity(edo.getWorkflowIdentity()).getId());
+    model.setStepId(workflowTypeStepDao.getByIdentity(edo.getStepIdentity()).getId());
 
     return model;
   }
@@ -133,15 +107,15 @@ public class WorkflowMessageService extends CoreModelEdoMapperService<WorkflowMe
   public WorkflowMessageEdo toEdo(final WorkflowMessageEntity model) {
     final WorkflowMessageEdo edo = new WorkflowMessageEdo();
     edo.setStatus(model.getStatus());
-    edo.setUserIdentity(model.getUserIdentity());
-    edo.setCreatedByIdentity(model.getCreatedByIdentity());
     edo.setVersion(model.getVersion());
-    edo.setWorkflowIdentity(model.getWorkflowIdentity());
     edo.setMessageType(model.getMessageType());
     edo.setExpireDays(model.getExpireDays());
     edo.setMessage(model.getMessage());
     edo.setCreatedAt(CoreDataHelper.toLocalDateTime(model.getCreatedAt()));
-    edo.setStepIdentity(model.getStepIdentity());
+    edo.setUserIdentity(usersDao.getById(model.getUserId()).getIdentity());
+    edo.setCreatedByIdentity(usersDao.getById(model.getCreatedById()).getIdentity());
+    edo.setStepIdentity(workflowDao.getById(model.getWorkflowId()).getIdentity());
+    edo.setWorkflowIdentity(workflowTypeStepDao.getById(model.getStepId()).getIdentity());
 
     return edo;
   }

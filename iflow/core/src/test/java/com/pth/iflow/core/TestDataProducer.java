@@ -325,7 +325,7 @@ public class TestDataProducer {
     model.setExpireDays(10);
     model.setMessageType(EWorkflowMessageType.OFFERING_WORKFLOW.getValue());
     model.setUserId(1L);
-    model.setCreatedBy(1L);
+    model.setCreatedById(1L);
     model.setUserId(1L);
     model.setCreatedAt(new Date(Calendar.getInstance().getTime().getTime()));
     model.setMessage("title test");

@@ -1,6 +1,7 @@
 package com.pth.iflow.core.service.interfaces;
 
 import java.util.List;
+import java.util.Set;
 
 import com.pth.iflow.common.edo.models.ProfileResponseEdo;
 import com.pth.iflow.common.edo.models.UserEdo;
@@ -16,7 +17,7 @@ public interface IUsersService extends ICoreModelEdoMapperService<UserEntity, Us
 
   UserEntity save(UserEntity model);
 
-  UserEntity getUserByEmail(final String email);
+  UserEntity getUserByIdentity(final String email);
 
   ProfileResponse getProfileResponseByEmail(final String email);
 
@@ -33,6 +34,8 @@ public interface IUsersService extends ICoreModelEdoMapperService<UserEntity, Us
   List<UserEntity> getAllUserIdentityListByDepartmentIdentity(final String identity) throws IFlowStorageException;
 
   List<UserEntity> getAllUserIdentityListByDepartmentGroupIdentity(final String identity) throws IFlowStorageException;
+
+  List<UserEntity> getUserListByIdentityList(final Set<String> identityList) throws IFlowStorageException;
 
   ProfileResponseEdo toProfileResponseEdo(final ProfileResponse model);
 

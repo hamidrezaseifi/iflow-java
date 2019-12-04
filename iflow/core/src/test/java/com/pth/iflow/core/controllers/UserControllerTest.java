@@ -70,7 +70,7 @@ public class UserControllerTest extends TestDataProducer {
   public void testReadUserById() throws Exception {
 
     final UserEntity user = this.getTestUser();
-    when(this.usersService.getUserByEmail(any(String.class))).thenReturn(user);
+    when(this.usersService.getUserByIdentity(any(String.class))).thenReturn(user);
 
     final UserEdo userEdo = CoreModelEdoMapper.toEdo(user);
 
@@ -82,7 +82,7 @@ public class UserControllerTest extends TestDataProducer {
         .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(userAsXmlString));
 
-    verify(this.usersService, times(1)).getUserByEmail(any(String.class));
+    verify(this.usersService, times(1)).getUserByIdentity(any(String.class));
 
   }
 
@@ -90,7 +90,7 @@ public class UserControllerTest extends TestDataProducer {
   public void testReadUserByEmail() throws Exception {
 
     final UserEntity user = this.getTestUser();
-    when(this.usersService.getUserByEmail(any(String.class))).thenReturn(user);
+    when(this.usersService.getUserByIdentity(any(String.class))).thenReturn(user);
 
     final UserEdo userEdo = CoreModelEdoMapper.toEdo(user);
 
@@ -101,7 +101,7 @@ public class UserControllerTest extends TestDataProducer {
             .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
         .andExpect(content().xml(userAsXmlString));
 
-    verify(this.usersService, times(1)).getUserByEmail(any(String.class));
+    verify(this.usersService, times(1)).getUserByIdentity(any(String.class));
 
   }
 

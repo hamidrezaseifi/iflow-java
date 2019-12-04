@@ -8,6 +8,8 @@ import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 
 public interface IWorkflowMessageDao {
 
+  public WorkflowMessageEntity getById(Long id) throws IFlowStorageException;
+
   public WorkflowMessageEntity create(WorkflowMessageEntity model) throws IFlowStorageException;
 
   public WorkflowMessageEntity update(WorkflowMessageEntity model) throws IFlowStorageException;
@@ -23,8 +25,6 @@ public interface IWorkflowMessageDao {
 
   public void updateStatusByWorkflowAndUser(String workflowIdentity, final String stepIdentity, final String userIdentity,
       EWorkflowMessageStatus status) throws IFlowStorageException;
-
-  public WorkflowMessageEntity getById(Long id) throws IFlowStorageException;
 
   public List<WorkflowMessageEntity> getNotClosedNotExpiredListByUserIdentity(final String userIdentity) throws IFlowStorageException;
 

@@ -1,11 +1,13 @@
 package com.pth.iflow.core.service.impl.workflow;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pth.iflow.common.edo.models.WorkflowActionEdo;
 import com.pth.iflow.common.edo.models.workflow.WorkflowEdo;
 import com.pth.iflow.common.enums.EIdentity;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
@@ -124,11 +126,13 @@ public class WorkflowService extends CoreModelEdoMapperService<WorkflowEntity, W
     model.setComments(edo.getComments());
     model.setStatus(edo.getStatus());
     model.setVersion(edo.getVersion());
-    model.setControllerIdentity(edo.getControllerIdentity());
-    model.setCurrentStepIdentity(edo.getCurrentStepIdentity());
-    model.setCreatedByIdentity(edo.getCreatedByIdentity());
-    model.setWorkflowTypeIdentity(edo.getWorkflowTypeIdentity());
     model.setIdentity(edo.getIdentity());
+
+    model.setControllerId(usersDao.getByIdentity(edo.getControllerIdentity()).getId());
+    model.setCurrentStepId(workflowTypeStepDao.getByIdentity(edo.getCurrentStepIdentity()).getId());
+    model.setCreatedById(usersDao.getByIdentity(edo.getCreatedByIdentity()).getId());
+    model.setId(EIdentity.isNotSet(edo.getIdentity()) ? null : workflowDao.getByIdentity(edo.getIdentity()).getId());
+    model.setWorkflowTypeId(workflowTypeDao.getByIdentity(edo.getWorkflowTypeIdentity()).getId());
 
     model.setFiles(fromWorkflowFileEdoList(edo.getFiles()));
     model.setActions(fromWorkflowActionEdoList(edo.getActions()));
@@ -136,17 +140,33 @@ public class WorkflowService extends CoreModelEdoMapperService<WorkflowEntity, W
     return model;
   }
 
+  private List<WorkflowActionEntity> fromWorkflowActionEdoList(final List<WorkflowActionEdo> actions) {
+    final List<WorkflowActionEntity> modelList = new ArrayList();
+
+    for (final WorkflowActionEdo edo : actions) {
+      modelList.add(fromActionEdo(edo));
+    }
+
+    return null;
+  }
+
+  private WorkflowActionEntity fromActionEdo(final WorkflowActionEdo edo) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
   @Override
   public WorkflowEdo toEdo(final WorkflowEntity model) {
     final WorkflowEdo edo = new WorkflowEdo();
     edo.setComments(model.getComments());
     edo.setStatus(model.getStatus());
-    edo.setControllerIdentity(model.getControllerIdentity());
-    edo.setCurrentStepIdentity(model.getCurrentStepIdentity());
-    edo.setCreatedByIdentity(model.getCreatedByIdentity());
     edo.setVersion(model.getVersion());
     edo.setIdentity(model.getIdentity());
-    edo.setWorkflowTypeIdentity(model.getWorkflowTypeIdentity());
+
+    edo.setControllerIdentity(usersDao.getById(model.getControllerId()).getIdentity());
+    edo.setCurrentStepIdentity(workflowTypeStepDao.getById(model.getCurrentStepId()).getIdentity());
+    edo.setCreatedByIdentity(usersDao.getById(model.getCreatedById()).getIdentity());
+    edo.setWorkflowTypeIdentity(workflowTypeDao.getById(model.getWorkflowTypeId()).getIdentity());
 
     edo.setFiles(toWorkflowFileEdoList(model.getFiles()));
     edo.setActions(toWorkflowActionEdoList(model.getActions()));

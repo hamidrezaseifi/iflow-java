@@ -61,7 +61,7 @@ public class UserServiceTest extends TestDataProducer {
     final UserEntity user = getTestUser();
     when(this.userDao.getByIdentity(any(String.class))).thenReturn(user);
 
-    final UserEntity resUser = this.userService.getUserByEmail("email");
+    final UserEntity resUser = this.userService.getUserByIdentity("email");
 
     Assert.assertNotNull("Result user is not null!", resUser);
     Assert.assertEquals("Result user has id 1!", resUser.getId(), user.getId());
@@ -78,7 +78,7 @@ public class UserServiceTest extends TestDataProducer {
     final UserEntity user = getTestUser();
     when(this.userDao.getByIdentity(any(String.class))).thenReturn(user);
 
-    final UserEntity resUser = this.userService.getUserByEmail(user.getEmail());
+    final UserEntity resUser = this.userService.getUserByIdentity(user.getEmail());
 
     Assert.assertNotNull("Result user is not null!", resUser);
     Assert.assertEquals("Result user has id 1!", resUser.getId(), user.getId());

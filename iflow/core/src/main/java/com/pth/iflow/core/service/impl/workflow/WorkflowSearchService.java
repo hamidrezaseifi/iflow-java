@@ -60,6 +60,13 @@ public class WorkflowSearchService extends CoreModelEdoMapperService<WorkflowRes
   @Override
   public WorkflowSearchFilter fromWorkflowSearchFilterEdo(final WorkflowSearchFilterEdo workflowSearchFilterEdo) {
 
+    final WorkflowSearchFilter searchFilter = new WorkflowSearchFilter();
+    searchFilter.setStatusSet(workflowSearchFilterEdo.getStatusSet());
+    searchFilter.setAssignedUserIdentitySet(workflowSearchFilterEdo.getAssignedUserIdentitySet());
+    searchFilter.setWorkflowStepIdentitySet(workflowSearchFilterEdo.getWorkflowStepeIdentitySet());
+    searchFilter.setWorkflowTypeIdentitySet(workflowSearchFilterEdo.getWorkflowTypeIdentitySet());
+
+    return searchFilter;
   }
 
 }

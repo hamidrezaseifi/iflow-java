@@ -63,7 +63,7 @@ public class UserController {
   public ResponseEntity<UserEdo> readUserByEmail(@PathVariable(name = "email") final String email, final HttpServletRequest request)
       throws Exception {
 
-    final UserEntity user = this.usersService.getUserByEmail(email);
+    final UserEntity user = this.usersService.getUserByIdentity(email);
 
     return ControllerHelper.createResponseEntity(request, this.usersService.toEdo(user), HttpStatus.OK);
   }
