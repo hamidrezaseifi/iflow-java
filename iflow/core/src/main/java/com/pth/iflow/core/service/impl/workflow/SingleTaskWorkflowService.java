@@ -31,7 +31,6 @@ public class SingleTaskWorkflowService extends CoreModelEdoMapperService<SingleT
   @Override
   public SingleTaskWorkflowEntity save(final SingleTaskWorkflowEntity model) {
 
-    prepareSavingModel(model);
     if (model.isNew()) {
 
       return singleTaskWorkflowDao.create(model);
@@ -59,12 +58,6 @@ public class SingleTaskWorkflowService extends CoreModelEdoMapperService<SingleT
   public List<SingleTaskWorkflowEntity> getListByIdentityList(final Collection<String> idList) {
 
     return this.singleTaskWorkflowDao.getListByIdentityList(idList);
-  }
-
-  protected SingleTaskWorkflowEntity prepareSavingModel(final SingleTaskWorkflowEntity model) {
-    workflowService.prepareSavingModel(model.getWorkflow());
-    model.setWorkflowId(model.getWorkflow().getId());
-    return model;
   }
 
   @Override

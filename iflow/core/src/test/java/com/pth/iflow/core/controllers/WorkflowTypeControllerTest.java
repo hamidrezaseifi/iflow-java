@@ -32,7 +32,6 @@ import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.XmlRestConfig;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.entity.workflow.WorkflowTypeEntity;
-import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
 import com.pth.iflow.core.service.interfaces.IWorkflowTypeService;
 
 @RunWith(SpringRunner.class)
@@ -64,9 +63,10 @@ public class WorkflowTypeControllerTest extends TestDataProducer {
   public void testReadWorkflowTypeById() throws Exception {
 
     final WorkflowTypeEntity model = this.getTestWorkflowType();
+    final WorkflowTypeEdo modelEdo = getTestWorkflowTypeEdo();
     when(this.workflowService.getByIdentity(any(String.class))).thenReturn(model);
+    when(this.workflowService.toEdo(any(WorkflowTypeEntity.class))).thenReturn(modelEdo);
 
-    final WorkflowTypeEdo modelEdo = CoreModelEdoMapper.toEdo(model);
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelEdo);
 
     this.mockMvc
@@ -83,13 +83,17 @@ public class WorkflowTypeControllerTest extends TestDataProducer {
   public void testReadWorkflowTypeList() throws Exception {
 
     final Set<String> idList = this.getTestWorkflowTypeIdSet();
-    final IdentityListEdo edoList = new IdentityListEdo(idList);
+    final IdentityListEdo edoIdentityList = new IdentityListEdo(idList);
     final List<WorkflowTypeEntity> list = this.getTestWorkflowTypeList();
+
+    final List<WorkflowTypeEdo> edoList = getTestWorkflowTypeEdoList();
+
     when(this.workflowService.getListByIdentityList(any(Set.class))).thenReturn(list);
+    when(this.workflowService.toEdoList(any(List.class))).thenReturn(edoList);
 
-    final WorkflowTypeListEdo edoResultList = new WorkflowTypeListEdo(CoreModelEdoMapper.toWorkflowTypeEdoList(list));
+    final WorkflowTypeListEdo edoResultList = new WorkflowTypeListEdo(edoList);
 
-    final String contentAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
+    final String contentAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoIdentityList);
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoResultList);
 
     this.mockMvc
@@ -107,9 +111,12 @@ public class WorkflowTypeControllerTest extends TestDataProducer {
   public void testReadWorkflowTypeListByCompany() throws Exception {
 
     final List<WorkflowTypeEntity> list = this.getTestWorkflowTypeList();
-    when(this.workflowService.getListByIdCompanyId(any(String.class))).thenReturn(list);
+    final List<WorkflowTypeEdo> edoConvertedList = getTestWorkflowTypeEdoList();
 
-    final WorkflowTypeListEdo edoList = new WorkflowTypeListEdo(CoreModelEdoMapper.toWorkflowTypeEdoList(list));
+    when(this.workflowService.getListByIdCompanyId(any(String.class))).thenReturn(list);
+    when(this.workflowService.toEdoList(any(List.class))).thenReturn(edoConvertedList);
+
+    final WorkflowTypeListEdo edoList = new WorkflowTypeListEdo(edoConvertedList);
 
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
 

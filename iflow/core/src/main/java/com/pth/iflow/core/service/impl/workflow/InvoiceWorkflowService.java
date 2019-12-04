@@ -32,7 +32,6 @@ public class InvoiceWorkflowService extends CoreModelEdoMapperService<InvoiceWor
   @Override
   public InvoiceWorkflowEntity save(final InvoiceWorkflowEntity model) {
 
-    prepareSavingModel(model);
     if (model.isNew()) {
 
       return invoiceWorkflowDao.create(model);
@@ -60,12 +59,6 @@ public class InvoiceWorkflowService extends CoreModelEdoMapperService<InvoiceWor
   public List<InvoiceWorkflowEntity> getListByIdentityList(final Collection<String> idList) {
 
     return this.invoiceWorkflowDao.getListByIdentityList(idList);
-  }
-
-  protected InvoiceWorkflowEntity prepareSavingModel(final InvoiceWorkflowEntity model) {
-    workflowService.prepareSavingModel(model.getWorkflow());
-    model.setWorkflowId(model.getWorkflow().getId());
-    return model;
   }
 
   @Override

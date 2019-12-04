@@ -31,7 +31,6 @@ public class TestThreeTaskWorkflowService extends CoreModelEdoMapperService<Test
   @Override
   public TestThreeTaskWorkflowEntity save(final TestThreeTaskWorkflowEntity model) {
 
-    prepareSavingModel(model);
     if (model.isNew()) {
 
       return testThreeTaskWorkflowDao.create(model);
@@ -59,12 +58,6 @@ public class TestThreeTaskWorkflowService extends CoreModelEdoMapperService<Test
   public List<TestThreeTaskWorkflowEntity> getListByIdentityList(final Collection<String> idList) {
 
     return this.testThreeTaskWorkflowDao.getListByIdentityList(idList);
-  }
-
-  protected TestThreeTaskWorkflowEntity prepareSavingModel(final TestThreeTaskWorkflowEntity model) {
-    workflowService.prepareSavingModel(model.getWorkflow());
-    model.setWorkflowId(model.getWorkflow().getId());
-    return model;
   }
 
   @Override

@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pth.iflow.common.edo.models.WorkflowActionEdo;
+import com.pth.iflow.common.edo.models.WorkflowFileEdo;
+import com.pth.iflow.common.edo.models.WorkflowFileVersionEdo;
 import com.pth.iflow.common.edo.models.workflow.WorkflowEdo;
 import com.pth.iflow.common.enums.EIdentity;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
@@ -41,7 +43,6 @@ public class WorkflowService extends CoreModelEdoMapperService<WorkflowEntity, W
   @Override
   public WorkflowEntity save(final WorkflowEntity model) {
 
-    prepareSavingModel(model);
     if (model.isNew()) {
       return workflowDao.create(model);
     }
@@ -71,53 +72,6 @@ public class WorkflowService extends CoreModelEdoMapperService<WorkflowEntity, W
   }
 
   @Override
-  public WorkflowEntity prepareSavingModel(final WorkflowEntity model) {
-
-    if (EIdentity.isNotSet(model.getIdentity()) == false) {
-      final WorkflowEntity exists = workflowDao.getByIdentity(model.getIdentity());
-      model.setId(exists.getId());
-    }
-
-    model.setControllerId(usersDao.getByIdentity(model.getControllerIdentity()).getId());
-
-    model.setCreatedById(usersDao.getByIdentity(model.getCreatedByIdentity()).getId());
-
-    model.setCurrentStepId(workflowTypeStepDao.getByIdentity(model.getCurrentStepIdentity()).getId());
-
-    model.setWorkflowTypeId(workflowTypeDao.getByIdentity(model.getWorkflowTypeIdentity()).getId());
-
-    for (final WorkflowActionEntity action : model.getActions()) {
-
-      if (EIdentity.isNotSet(action.getAssignToIdentity()) == false) {
-        action.setAssignToId(usersDao.getByIdentity(action.getAssignToIdentity()).getId());
-      }
-
-      if (EIdentity.isNotSet(action.getCurrentStepIdentity()) == false) {
-        action.setCurrentStepId(workflowTypeStepDao.getByIdentity(action.getCurrentStepIdentity()).getId());
-      }
-
-    }
-
-    for (final WorkflowFileEntity file : model.getFiles()) {
-
-      if (EIdentity.isNotSet(file.getCreatedByIdentity()) == false) {
-        file.setCreatedByUserId(usersDao.getByIdentity(file.getCreatedByIdentity()).getId());
-      }
-
-      for (final WorkflowFileVersionEntity fileVersion : file.getFileVersions()) {
-
-        if (EIdentity.isNotSet(fileVersion.getCreatedByIdentity()) == false) {
-          fileVersion.setCreatedByUserId(usersDao.getByIdentity(fileVersion.getCreatedByIdentity()).getId());
-        }
-
-      }
-
-    }
-
-    return model;
-  }
-
-  @Override
   public WorkflowEntity fromEdo(final WorkflowEdo edo) throws IFlowMessageConversionFailureException {
     validateCustomer(edo);
 
@@ -140,19 +94,92 @@ public class WorkflowService extends CoreModelEdoMapperService<WorkflowEntity, W
     return model;
   }
 
-  private List<WorkflowActionEntity> fromWorkflowActionEdoList(final List<WorkflowActionEdo> actions) {
-    final List<WorkflowActionEntity> modelList = new ArrayList();
+  private List<WorkflowFileEntity> fromWorkflowFileEdoList(final List<WorkflowFileEdo> files)
+      throws IFlowMessageConversionFailureException {
+    final List<WorkflowFileEntity> modelList = new ArrayList<>();
+
+    for (final WorkflowFileEdo edo : files) {
+      modelList.add(fromFileEdo(edo));
+    }
+
+    return modelList;
+  }
+
+  private WorkflowFileEntity fromFileEdo(final WorkflowFileEdo edo) throws IFlowMessageConversionFailureException {
+    validateCustomer(edo);
+    final WorkflowFileEntity model = new WorkflowFileEntity();
+
+    model.setTitle(edo.getTitle());
+    model.setExtention(edo.getExtention());
+    model.setComments(edo.getComments());
+    model.setStatus(edo.getStatus());
+    model.setCreatedByUserId(usersDao.getByIdentity(edo.getCreatedByIdentity()).getId());
+    model.setActiveFilePath(edo.getActiveFilePath());
+    model.setActiveFileVersion(edo.getActiveFileVersion());
+
+    model.setFileVersions(fromWorkflowFileVersionEdoList(edo.getFileVersions()));
+
+    return model;
+  }
+
+  private List<WorkflowFileVersionEntity> fromWorkflowFileVersionEdoList(final List<WorkflowFileVersionEdo> fileVersions)
+      throws IFlowMessageConversionFailureException {
+    final List<WorkflowFileVersionEntity> modelList = new ArrayList<>();
+
+    for (final WorkflowFileVersionEdo edo : fileVersions) {
+      modelList.add(fromFileVersionEdo(edo));
+    }
+
+    return modelList;
+  }
+
+  private WorkflowFileVersionEntity fromFileVersionEdo(final WorkflowFileVersionEdo edo) throws IFlowMessageConversionFailureException {
+    validateCustomer(edo);
+
+    final WorkflowFileVersionEntity model = new WorkflowFileVersionEntity();
+
+    model.setComments(edo.getComments());
+    model.setStatus(edo.getStatus());
+    model.setCreatedByUserId(usersDao.getByIdentity(edo.getCreatedByIdentity()).getId());
+    model.setFilePath(edo.getFilePath());
+    model.setFileVersion(edo.getFileVersion());
+
+    return model;
+  }
+
+  private List<WorkflowActionEntity> fromWorkflowActionEdoList(final List<WorkflowActionEdo> actions)
+      throws IFlowMessageConversionFailureException {
+    final List<WorkflowActionEntity> modelList = new ArrayList<>();
 
     for (final WorkflowActionEdo edo : actions) {
       modelList.add(fromActionEdo(edo));
     }
 
-    return null;
+    return modelList;
   }
 
-  private WorkflowActionEntity fromActionEdo(final WorkflowActionEdo edo) {
-    // TODO Auto-generated method stub
-    return null;
+  private WorkflowActionEntity fromActionEdo(final WorkflowActionEdo edo) throws IFlowMessageConversionFailureException {
+    validateCustomer(edo);
+
+    final WorkflowActionEntity model = new WorkflowActionEntity();
+
+    model.setComments(edo.getComments());
+    model.setStatus(edo.getStatus());
+    model.setCurrentStepId(workflowTypeStepDao.getByIdentity(edo.getCurrentStepIdentity()).getId());
+    model.setAssignToId(EIdentity.isNotSet(edo.getAssignToIdentity()) ? 0L : usersDao.getByIdentity(edo.getAssignToIdentity()).getId());
+
+    return model;
+  }
+
+  public WorkflowActionEdo toActionEdo(final WorkflowActionEntity model) {
+    final WorkflowActionEdo edo = new WorkflowActionEdo();
+    edo.setComments(model.getComments());
+    edo.setStatus(model.getStatus());
+    edo.setAssignToIdentity(
+        model.getAssignToId() > 0L ? usersDao.getById(model.getAssignToId()).getIdentity() : EIdentity.NOT_SET.getIdentity());
+    edo.setCurrentStepIdentity(workflowTypeStepDao.getById(model.getCurrentStepId()).getIdentity());
+
+    return edo;
   }
 
   @Override
@@ -172,5 +199,61 @@ public class WorkflowService extends CoreModelEdoMapperService<WorkflowEntity, W
     edo.setActions(toWorkflowActionEdoList(model.getActions()));
 
     return edo;
+  }
+
+  private List<WorkflowFileEdo> toWorkflowFileEdoList(final List<WorkflowFileEntity> files) {
+    final List<WorkflowFileEdo> edoList = new ArrayList<>();
+
+    for (final WorkflowFileEntity model : files) {
+      edoList.add(toFileEdo(model));
+    }
+
+    return edoList;
+  }
+
+  private WorkflowFileEdo toFileEdo(final WorkflowFileEntity model) {
+    final WorkflowFileEdo edo = new WorkflowFileEdo();
+    edo.setTitle(model.getTitle());
+    edo.setExtention(model.getExtention());
+    edo.setComments(model.getComments());
+    edo.setStatus(model.getStatus());
+    edo.setCreatedByIdentity(usersDao.getById(model.getCreatedByUserId()).getIdentity());
+    edo.setActiveFilePath(model.getActiveFilePath());
+    edo.setActiveFileVersion(model.getActiveFileVersion());
+
+    edo.setFileVersions(toWorkflowFileVersionEdoList(model.getFileVersions()));
+
+    return edo;
+  }
+
+  private List<WorkflowFileVersionEdo> toWorkflowFileVersionEdoList(final List<WorkflowFileVersionEntity> fileVersions) {
+    final List<WorkflowFileVersionEdo> edoList = new ArrayList<>();
+
+    for (final WorkflowFileVersionEntity model : fileVersions) {
+      edoList.add(toFileVersionEdo(model));
+    }
+
+    return edoList;
+  }
+
+  private WorkflowFileVersionEdo toFileVersionEdo(final WorkflowFileVersionEntity model) {
+    final WorkflowFileVersionEdo edo = new WorkflowFileVersionEdo();
+    edo.setComments(model.getComments());
+    edo.setStatus(model.getStatus());
+    edo.setCreatedByIdentity(usersDao.getById(model.getCreatedByUserId()).getIdentity());
+    edo.setFilePath(model.getFilePath());
+    edo.setFileVersion(model.getFileVersion());
+
+    return edo;
+  }
+
+  private List<WorkflowActionEdo> toWorkflowActionEdoList(final List<WorkflowActionEntity> actions) {
+    final List<WorkflowActionEdo> edoList = new ArrayList<>();
+
+    for (final WorkflowActionEntity model : actions) {
+      edoList.add(toActionEdo(model));
+    }
+
+    return edoList;
   }
 }

@@ -34,7 +34,6 @@ import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.XmlRestConfig;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.entity.workflow.WorkflowTypeStepEntity;
-import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
 import com.pth.iflow.core.service.interfaces.IWorkflowTypeStepService;
 
 @RunWith(SpringRunner.class)
@@ -66,9 +65,10 @@ public class WorkflowTypeStepControllerTest extends TestDataProducer {
   public void testReadWorkflowTypeStepById() throws Exception {
 
     final WorkflowTypeStepEntity model = this.getTestWorkflowTypeStep();
-    when(this.workflowStepService.getByIdentity(any(String.class))).thenReturn(model);
+    final WorkflowTypeStepEdo modelEdo = getTestWorkflowTypeStepEdo();
 
-    final WorkflowTypeStepEdo modelEdo = CoreModelEdoMapper.toEdo(model);
+    when(this.workflowStepService.getByIdentity(any(String.class))).thenReturn(model);
+    when(this.workflowStepService.toEdo(any(WorkflowTypeStepEntity.class))).thenReturn(modelEdo);
 
     final String modelAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelEdo);
 
@@ -86,13 +86,17 @@ public class WorkflowTypeStepControllerTest extends TestDataProducer {
   public void testReadWorkflowTypeStepList() throws Exception {
 
     final Set<String> idList = new HashSet<>(Arrays.asList("item-1", "item-2", "item-3"));
-    final IdentityListEdo edoList = new IdentityListEdo(idList);
+    final List<WorkflowTypeStepEdo> edoList = getTestWorkflowTypeStepEdoList();
+
+    final IdentityListEdo edoIdentityList = new IdentityListEdo(idList);
     final List<WorkflowTypeStepEntity> list = this.getTestWorkflowTypeStepList();
+
     when(this.workflowStepService.getListByIdentityList(any(Set.class))).thenReturn(list);
+    when(this.workflowStepService.toEdoList(any(List.class))).thenReturn(edoList);
 
-    final WorkflowTypeStepListEdo edoResultList = new WorkflowTypeStepListEdo(CoreModelEdoMapper.toWorkflowTypeStepEdoList(list));
+    final WorkflowTypeStepListEdo edoResultList = new WorkflowTypeStepListEdo(edoList);
 
-    final String contentAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
+    final String contentAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoIdentityList);
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoResultList);
 
     System.out.println("listAsXmlString:\n" + listAsXmlString);
@@ -111,9 +115,12 @@ public class WorkflowTypeStepControllerTest extends TestDataProducer {
   public void testReadWorkflowTypeStepListByWorkflow() throws Exception {
 
     final List<WorkflowTypeStepEntity> list = this.getTestWorkflowTypeStepList();
-    when(this.workflowStepService.getListByWorkflowTypeIdentity(any(String.class))).thenReturn(list);
+    final List<WorkflowTypeStepEdo> edoConvertedList = getTestWorkflowTypeStepEdoList();
 
-    final WorkflowTypeStepListEdo edoList = new WorkflowTypeStepListEdo(CoreModelEdoMapper.toWorkflowTypeStepEdoList(list));
+    when(this.workflowStepService.getListByWorkflowTypeIdentity(any(String.class))).thenReturn(list);
+    when(this.workflowStepService.toEdoList(any(List.class))).thenReturn(edoConvertedList);
+
+    final WorkflowTypeStepListEdo edoList = new WorkflowTypeStepListEdo(edoConvertedList);
 
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
 

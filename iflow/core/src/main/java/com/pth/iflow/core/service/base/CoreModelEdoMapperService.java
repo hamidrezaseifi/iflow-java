@@ -36,19 +36,19 @@ public abstract class CoreModelEdoMapperService<M, E> {
     return modelList;
   }
 
-  protected void validateCustomer(final E model) throws IFlowMessageConversionFailureException {
-    final Set<ConstraintViolation<E>> violations = VALIDATOR.validate(model);
+  protected <V> void validateCustomer(final V model) throws IFlowMessageConversionFailureException {
+    final Set<ConstraintViolation<V>> violations = VALIDATOR.validate(model);
     if (violations != null && violations.size() > 0) {
       final String validationErrorMessage = createValidationErrorMessage(violations);
       throw new IFlowMessageConversionFailureException(validationErrorMessage);
     }
   }
 
-  protected String createValidationErrorMessage(final Set<ConstraintViolation<E>> violations) {
+  protected <V> String createValidationErrorMessage(final Set<ConstraintViolation<V>> violations) {
     final StringBuilder builder = new StringBuilder();
     builder.append("There are errors in the received XML:");
     builder.append(System.lineSeparator());
-    for (final ConstraintViolation<E> violation : violations) {
+    for (final ConstraintViolation<V> violation : violations) {
       builder.append("Error " + violation.getRootBean().toString() + ") :");
       builder.append("(");
       builder.append(violation.getMessage());

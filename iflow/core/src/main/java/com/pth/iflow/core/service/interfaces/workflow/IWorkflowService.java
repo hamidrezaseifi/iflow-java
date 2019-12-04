@@ -18,10 +18,10 @@ public interface IWorkflowService extends ICoreModelEdoMapperService<WorkflowEnt
 
   public List<WorkflowEntity> getListByIdentityList(final Collection<String> idList);
 
-  public WorkflowEntity prepareSavingModel(final WorkflowEntity model);
-
+  @Override
   public WorkflowEdo toEdo(final WorkflowEntity model);
 
+  @Override
   public WorkflowEntity fromEdo(final WorkflowEdo edo) throws IFlowMessageConversionFailureException;
 
 }

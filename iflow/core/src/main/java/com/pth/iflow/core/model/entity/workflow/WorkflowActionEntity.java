@@ -13,7 +13,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.annotations.UpdateTimestamp;
+
+import com.pth.iflow.core.model.entity.UserEntity;
 
 @Entity
 @Table(name = "workflow_actions")
@@ -47,6 +51,11 @@ public class WorkflowActionEntity {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "workflow_id", nullable = false)
   private WorkflowEntity workflowEntity;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "assign_to", nullable = true, insertable = false, updatable = false)
+  @NotFound(action = NotFoundAction.IGNORE)
+  private UserEntity     assignToUser;
 
   public WorkflowActionEntity() {
 

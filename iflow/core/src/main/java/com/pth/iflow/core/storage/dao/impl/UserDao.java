@@ -97,6 +97,9 @@ public class UserDao implements IUserDao {
 
     query.select(userRoot).where(criteriaBuilder.equal(departmentJoin.get("departmentGroup").get("identity"), identity));
     final TypedQuery<UserEntity> typedQuery = entityManager.createQuery(query);
+
+    final String qr = DaoHelper.retreiveRawSql(typedQuery);
+
     final List<UserEntity> list = typedQuery.getResultList();
 
     return list;

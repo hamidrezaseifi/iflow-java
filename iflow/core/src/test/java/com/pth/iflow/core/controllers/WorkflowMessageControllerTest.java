@@ -31,7 +31,6 @@ import com.pth.iflow.common.rest.XmlRestConfig;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.entity.workflow.WorkflowEntity;
 import com.pth.iflow.core.model.entity.workflow.WorkflowMessageEntity;
-import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
 import com.pth.iflow.core.service.interfaces.IWorkflowMessageService;
 
 @RunWith(SpringRunner.class)
@@ -64,11 +63,13 @@ public class WorkflowMessageControllerTest extends TestDataProducer {
 
     final WorkflowEntity workflow = getTestWorkflow(1L);
     final List<WorkflowMessageEntity> modelList = getTestWorkflowMessageList(workflow);
-    final WorkflowMessageListEdo modelListEdo = new WorkflowMessageListEdo(CoreModelEdoMapper.toWorkflowMessageEdoList(modelList));
+    final List<WorkflowMessageEdo> edoList = getTestWorkflowMessageEdoist(workflow);
+    final WorkflowMessageListEdo modelListEdo = new WorkflowMessageListEdo(edoList);
 
     when(this.workflowMessageService.getNotClosedNotExpiredListByUserEmail(any(String.class))).thenReturn(modelList);
+    when(this.workflowMessageService.toEdoList(any(List.class))).thenReturn(modelList);
 
-    final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelListEdo);
+    final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
 
     System.out.println("listAsXmlString:   " + listAsXmlString);
 
@@ -86,9 +87,11 @@ public class WorkflowMessageControllerTest extends TestDataProducer {
   public void testSaveWorkflowMessage() throws Exception {
     final WorkflowEntity workflow = getTestWorkflow(1L);
     final WorkflowMessageEntity model = this.getTestWorkflowMessage(workflow, "Test-Message");
-    final WorkflowMessageEdo modelEdo = CoreModelEdoMapper.toEdo(model);
+
+    final WorkflowMessageEdo modelEdo = getTestWorkflowMessageEdo(workflow, "Test-Message");
 
     when(this.workflowMessageService.save(any(WorkflowMessageEntity.class))).thenReturn(model);
+    when(this.workflowMessageService.toEdo(any(WorkflowMessageEntity.class))).thenReturn(modelEdo);
 
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelEdo);
 

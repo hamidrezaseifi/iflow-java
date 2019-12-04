@@ -78,9 +78,6 @@ public class WorkflowServiceTest extends TestDataProducer {
     assetWorkflow(savedModel, result);
 
     verify(this.workflowDao, times(1)).create(any(WorkflowEntity.class));
-    verify(this.usersDao, times(17)).getByIdentity(any(String.class));
-    verify(this.workflowTypeStepDao, times(4)).getByIdentity(any(String.class));
-    verify(this.workflowTypeDao, times(1)).getByIdentity(any(String.class));
 
   }
 
@@ -106,10 +103,6 @@ public class WorkflowServiceTest extends TestDataProducer {
 
     verify(this.workflowDao, times(1)).update(any(WorkflowEntity.class));
     verify(this.workflowDao, times(1)).getById(any(Long.class));
-    verify(this.workflowDao, times(1)).getByIdentity(any(String.class));
-    verify(this.usersDao, times(17)).getByIdentity(any(String.class));
-    verify(this.workflowTypeStepDao, times(4)).getByIdentity(any(String.class));
-    verify(this.workflowTypeDao, times(1)).getByIdentity(any(String.class));
   }
 
   @Test
@@ -158,12 +151,10 @@ public class WorkflowServiceTest extends TestDataProducer {
   private void assetWorkflow(final WorkflowEntity savedModel, final WorkflowEntity result) {
     Assert.assertNotNull("Result is not null!", result);
     Assert.assertEquals("Result has " + result.getIdentity() + " identity.", result.getIdentity(), savedModel.getIdentity());
-    Assert.assertEquals("Result has " + result.getControllerIdentity() + " controller.", result.getControllerIdentity(),
-        savedModel.getControllerIdentity());
-    Assert.assertEquals("Result has " + result.getCurrentStepId() + " step.", result.getCurrentStepId(),
-        savedModel.getCurrentStepId());
-    Assert.assertEquals("Result has " + result.getWorkflowTypeIdentity() + " workflow-type.", result.getWorkflowTypeIdentity(),
-        savedModel.getWorkflowTypeIdentity());
+    Assert.assertEquals("Result has " + result.getControllerId() + " controller.", result.getControllerId(), savedModel.getControllerId());
+    Assert.assertEquals("Result has " + result.getCurrentStepId() + " step.", result.getCurrentStepId(), savedModel.getCurrentStepId());
+    Assert.assertEquals("Result has " + result.getWorkflowTypeId() + " workflow-type.", result.getWorkflowTypeId(),
+        savedModel.getWorkflowTypeId());
   }
 
 }

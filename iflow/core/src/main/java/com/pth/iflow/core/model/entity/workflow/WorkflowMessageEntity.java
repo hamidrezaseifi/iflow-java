@@ -5,9 +5,12 @@ import java.sql.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -26,42 +29,50 @@ public class WorkflowMessageEntity extends EntityIdentityHelper {
   @Id
   @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long    id;
+  private Long                   id;
 
   @Column(name = "workflow_id")
-  private Long    workflowId;
+  private Long                   workflowId;
 
   @Column(name = "step_id")
-  private Long    stepId;
+  private Long                   stepId;
 
   @Column(name = "user_id")
-  private Long    userId;
+  private Long                   userId;
 
   @Column(name = "message")
-  private String  message;
+  private String                 message;
 
   @Column(name = "created_by")
-  private Long    createdById;
+  private Long                   createdById;
 
   @Column(name = "message_type")
-  private Integer messageType;
+  private Integer                messageType;
 
   @Column(name = "status")
-  private Integer status;
+  private Integer                status;
 
   @Column(name = "version")
-  private Integer version;
+  private Integer                version;
 
   @Column(name = "expire_days")
-  private Integer expireDays;
+  private Integer                expireDays;
 
   @CreationTimestamp
   @Column(name = "created_at")
-  private Date    createdAt;
+  private Date                   createdAt;
 
   @UpdateTimestamp
   @Column(name = "updated_at")
-  private Date    updatedAt;
+  private Date                   updatedAt;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "workflow_id", nullable = false, insertable = false, updatable = false)
+  private WorkflowEntity         workflow;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "step_id", nullable = false, insertable = false, updatable = false)
+  private WorkflowTypeStepEntity step;
 
   public WorkflowMessageEntity() {
 

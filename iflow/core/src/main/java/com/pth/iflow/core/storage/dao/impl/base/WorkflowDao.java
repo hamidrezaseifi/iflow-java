@@ -102,25 +102,7 @@ public class WorkflowDao implements IWorkflowDao {
     entityManager.remove(model.getActions().get(0));
     entityManager.remove(model.getFiles().get(0));
 
-    /*
-     * Query deleteQuery = entityManager.
-     * createQuery("delete FROM WorkflowActionEntity ug where ug.workflow.id=:wid");
-     * deleteQuery.setParameter("wid", model.getId()); int deletedCount =
-     * deleteQuery.executeUpdate();
-     *
-     * deleteQuery = entityManager.
-     * createQuery("delete FROM WorkflowFileEntity ug where ug.workflow.id=:wid");
-     * deleteQuery.setParameter("wid", model.getId()); deletedCount =
-     * deleteQuery.executeUpdate();
-     */
-
     entityManager.flush();
-
-    // delete FROM WorkflowFileEntity ug where ug.workflow.id=wid
-    // int deletedCount = .executeUpdate();
-
-    // repository.deleteAllWorkflowActions(workflowId);
-    // repository.deleteAllWorkflowFiles(workflowId);
 
   }
 

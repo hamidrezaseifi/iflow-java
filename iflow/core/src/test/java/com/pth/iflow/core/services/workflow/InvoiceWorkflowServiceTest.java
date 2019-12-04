@@ -20,7 +20,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.entity.workflow.InvoiceWorkflowEntity;
-import com.pth.iflow.core.model.entity.workflow.WorkflowEntity;
 import com.pth.iflow.core.service.impl.workflow.InvoiceWorkflowService;
 import com.pth.iflow.core.service.interfaces.workflow.IInvoiceWorkflowService;
 import com.pth.iflow.core.service.interfaces.workflow.IWorkflowService;
@@ -56,7 +55,6 @@ public class InvoiceWorkflowServiceTest extends TestDataProducer {
 
     when(this.workflowDao.create(any(InvoiceWorkflowEntity.class))).thenReturn(savedModel);
     when(this.workflowDao.getById(any(Long.class))).thenReturn(savedModel);
-    when(this.workflowService.prepareSavingModel(any(WorkflowEntity.class))).thenReturn(savedModel.getWorkflow());
 
     final InvoiceWorkflowEntity result = invoiceWorkflowService.save(model);
 
@@ -64,7 +62,6 @@ public class InvoiceWorkflowServiceTest extends TestDataProducer {
 
     verify(this.workflowDao, times(1)).create(any(InvoiceWorkflowEntity.class));
     verify(this.workflowDao, times(0)).getById(any(long.class));
-    verify(this.workflowService, times(1)).prepareSavingModel(any(WorkflowEntity.class));
 
   }
 
@@ -76,7 +73,6 @@ public class InvoiceWorkflowServiceTest extends TestDataProducer {
 
     when(this.workflowDao.update(any(InvoiceWorkflowEntity.class))).thenReturn(savedModel);
     when(this.workflowDao.getById(any(Long.class))).thenReturn(savedModel);
-    when(this.workflowService.prepareSavingModel(any(WorkflowEntity.class))).thenReturn(savedModel.getWorkflow());
 
     final InvoiceWorkflowEntity result = invoiceWorkflowService.save(model);
 
@@ -84,7 +80,7 @@ public class InvoiceWorkflowServiceTest extends TestDataProducer {
 
     verify(this.workflowDao, times(1)).update(any(InvoiceWorkflowEntity.class));
     verify(this.workflowDao, times(1)).getById(any(long.class));
-    verify(this.workflowService, times(1)).prepareSavingModel(any(WorkflowEntity.class));
+
   }
 
   @Test
@@ -134,11 +130,11 @@ public class InvoiceWorkflowServiceTest extends TestDataProducer {
     Assert.assertNotNull("Result is not null!", result);
     Assert.assertEquals("Result has " + result.getWorkflow().getIdentity() + " identity.", result.getWorkflow().getIdentity(),
         savedModel.getWorkflow().getIdentity());
-    Assert.assertEquals("Result has " + result.getWorkflow().getControllerIdentity() + " controller.",
-        result.getWorkflow().getControllerIdentity(), savedModel.getWorkflow().getControllerIdentity());
+    Assert.assertEquals("Result has " + result.getWorkflow().getControllerId() + " controller.", result.getWorkflow().getControllerId(),
+        savedModel.getWorkflow().getControllerId());
     Assert.assertEquals("Result has " + result.getWorkflow().getCurrentStepId() + " step.", result.getWorkflow().getCurrentStepId(),
         savedModel.getWorkflow().getCurrentStepId());
-    Assert.assertEquals("Result has " + result.getWorkflow().getWorkflowTypeIdentity() + " workflow-type.",
-        result.getWorkflow().getWorkflowTypeIdentity(), savedModel.getWorkflow().getWorkflowTypeIdentity());
+    Assert.assertEquals("Result has " + result.getWorkflow().getWorkflowTypeId() + " workflow-type.",
+        result.getWorkflow().getWorkflowTypeId(), savedModel.getWorkflow().getWorkflowTypeId());
   }
 }
