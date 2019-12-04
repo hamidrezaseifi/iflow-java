@@ -32,7 +32,6 @@ import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.XmlRestConfig;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.entity.DepartmentEntity;
-import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
 import com.pth.iflow.core.service.interfaces.IDepartmentService;
 
 @RunWith(SpringRunner.class)
@@ -64,9 +63,9 @@ public class DepartmentControllerTest extends TestDataProducer {
   public void testReadDepartmentById() throws Exception {
 
     final DepartmentEntity model = this.getTestDepartment();
+    final DepartmentEdo modelEdo = this.getTestDepartmentEdo();
     when(this.departmentService.getByIdentity(any(String.class))).thenReturn(model);
-
-    final DepartmentEdo modelEdo = CoreModelEdoMapper.toEdo(model);
+    when(this.departmentService.toEdo(any(DepartmentEntity.class))).thenReturn(modelEdo);
 
     final String modelAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelEdo);
 
@@ -84,12 +83,16 @@ public class DepartmentControllerTest extends TestDataProducer {
   public void testReadDepartmentList() throws Exception {
 
     final Set<String> idList = this.getTestDepartmentIdSet();
+
     final IdentityListEdo edoList = new IdentityListEdo(idList);
+
+    final List<DepartmentEdo> edoConvertedList = getTestDepartmentEdoList();
 
     final List<DepartmentEntity> list = this.getTestDepartmentList();
     when(this.departmentService.getListByIdentityList(any(Set.class))).thenReturn(list);
+    when(this.departmentService.toEdoList(any(List.class))).thenReturn(edoConvertedList);
 
-    final DepartmentListEdo edoResultList = new DepartmentListEdo(CoreModelEdoMapper.toDepartmentEdoList(list));
+    final DepartmentListEdo edoResultList = new DepartmentListEdo(edoConvertedList);
 
     final String contentAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoResultList);
@@ -109,9 +112,13 @@ public class DepartmentControllerTest extends TestDataProducer {
   public void testReadDepartmentListByCompany() throws Exception {
 
     final List<DepartmentEntity> list = this.getTestDepartmentList();
-    when(this.departmentService.getListByIdCompanyIdentity(any(String.class))).thenReturn(list);
 
-    final DepartmentListEdo edoList = new DepartmentListEdo(CoreModelEdoMapper.toDepartmentEdoList(list));
+    final List<DepartmentEdo> edoConvertedList = getTestDepartmentEdoList();
+
+    when(this.departmentService.getListByIdCompanyIdentity(any(String.class))).thenReturn(list);
+    when(this.departmentService.toEdoList(any(List.class))).thenReturn(edoConvertedList);
+
+    final DepartmentListEdo edoList = new DepartmentListEdo(edoConvertedList);
 
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
 

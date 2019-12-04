@@ -27,7 +27,6 @@ import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.XmlRestConfig;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.entity.CompanyEntity;
-import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
 import com.pth.iflow.core.service.interfaces.ICompanyService;
 
 @RunWith(SpringRunner.class)
@@ -59,9 +58,10 @@ public class CompanyControllerTest extends TestDataProducer {
   public void testReadCompany() throws Exception {
 
     final CompanyEntity company = getTestCompany();
-    when(this.companyService.getByIdentity(any(String.class))).thenReturn(company);
+    final CompanyEdo companyEdo = getTestCompanyEdo();
 
-    final CompanyEdo companyEdo = CoreModelEdoMapper.toEdo(company);
+    when(this.companyService.getByIdentity(any(String.class))).thenReturn(company);
+    when(this.companyService.toEdo(any(CompanyEntity.class))).thenReturn(companyEdo);
 
     final String companyAsString = this.xmlConverter.getObjectMapper().writeValueAsString(companyEdo);
 

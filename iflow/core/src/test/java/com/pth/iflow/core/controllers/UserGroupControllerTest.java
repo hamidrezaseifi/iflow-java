@@ -32,7 +32,6 @@ import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.XmlRestConfig;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.entity.UserGroupEntity;
-import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
 import com.pth.iflow.core.service.interfaces.IUserGroupService;
 
 @RunWith(SpringRunner.class)
@@ -64,9 +63,10 @@ public class UserGroupControllerTest extends TestDataProducer {
   public void testReadUserGroupById() throws Exception {
 
     final UserGroupEntity model = this.getTestUserGroup();
-    when(this.userGroupService.getByIdentity(any(String.class))).thenReturn(model);
+    final UserGroupEdo modelEdo = getTestUserGroupEdo();
 
-    final UserGroupEdo modelEdo = CoreModelEdoMapper.toEdo(model);
+    when(this.userGroupService.getByIdentity(any(String.class))).thenReturn(model);
+    when(this.userGroupService.toEdo(any(UserGroupEntity.class))).thenReturn(modelEdo);
 
     final String modelAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelEdo);
 
@@ -77,6 +77,7 @@ public class UserGroupControllerTest extends TestDataProducer {
         .andExpect(content().xml(modelAsXmlString));
 
     verify(this.userGroupService, times(1)).getByIdentity(any(String.class));
+    verify(this.userGroupService, times(1)).toEdo(any(UserGroupEntity.class));
 
   }
 
@@ -84,11 +85,13 @@ public class UserGroupControllerTest extends TestDataProducer {
   public void testReadUserGroupList() throws Exception {
 
     final Set<String> idList = this.getTestUserGroupIdSet();
+    final List<UserGroupEdo> edoConvertList = getTestUserGroupEdoList();
     final IdentityListEdo edoList = new IdentityListEdo(idList);
     final List<UserGroupEntity> list = this.getTestUserGroupList();
     when(this.userGroupService.getListByIdentityList(any(Set.class))).thenReturn(list);
+    when(this.userGroupService.toEdoList(any(List.class))).thenReturn(edoConvertList);
 
-    final UserGroupListEdo edoResultList = new UserGroupListEdo(CoreModelEdoMapper.toUserGroupEdoList(list));
+    final UserGroupListEdo edoResultList = new UserGroupListEdo(edoConvertList);
 
     final String contentAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoResultList);
@@ -108,9 +111,11 @@ public class UserGroupControllerTest extends TestDataProducer {
   public void testReadUserGroupListByCompany() throws Exception {
 
     final List<UserGroupEntity> list = this.getTestUserGroupList();
+    final List<UserGroupEdo> edoConvertList = getTestUserGroupEdoList();
     when(this.userGroupService.getListByIdCompanyIdentity(any(String.class))).thenReturn(list);
+    when(this.userGroupService.toEdoList(any(List.class))).thenReturn(edoConvertList);
 
-    final UserGroupListEdo edoList = new UserGroupListEdo(CoreModelEdoMapper.toUserGroupEdoList(list));
+    final UserGroupListEdo edoList = new UserGroupListEdo(edoConvertList);
 
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
 

@@ -67,11 +67,9 @@ public class WorkflowMessageControllerTest extends TestDataProducer {
     final WorkflowMessageListEdo modelListEdo = new WorkflowMessageListEdo(edoList);
 
     when(this.workflowMessageService.getNotClosedNotExpiredListByUserEmail(any(String.class))).thenReturn(modelList);
-    when(this.workflowMessageService.toEdoList(any(List.class))).thenReturn(modelList);
+    when(this.workflowMessageService.toEdoList(any(List.class))).thenReturn(edoList);
 
-    final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
-
-    System.out.println("listAsXmlString:   " + listAsXmlString);
+    final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelListEdo);
 
     this.mockMvc
         .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.READ_WORKFLOWMESSAGE_READ_BY_USER("email", 1))
@@ -92,6 +90,7 @@ public class WorkflowMessageControllerTest extends TestDataProducer {
 
     when(this.workflowMessageService.save(any(WorkflowMessageEntity.class))).thenReturn(model);
     when(this.workflowMessageService.toEdo(any(WorkflowMessageEntity.class))).thenReturn(modelEdo);
+    when(this.workflowMessageService.fromEdo(any(WorkflowMessageEdo.class))).thenReturn(model);
 
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelEdo);
 

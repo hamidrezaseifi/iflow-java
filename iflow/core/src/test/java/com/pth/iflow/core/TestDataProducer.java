@@ -1,6 +1,7 @@
 package com.pth.iflow.core;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -8,9 +9,22 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.pth.iflow.common.edo.models.CompanyEdo;
+import com.pth.iflow.common.edo.models.CompanyProfileEdo;
+import com.pth.iflow.common.edo.models.DepartmentEdo;
+import com.pth.iflow.common.edo.models.DepartmentGroupEdo;
+import com.pth.iflow.common.edo.models.ProfileResponseEdo;
+import com.pth.iflow.common.edo.models.UserEdo;
+import com.pth.iflow.common.edo.models.UserGroupEdo;
+import com.pth.iflow.common.edo.models.WorkflowActionEdo;
+import com.pth.iflow.common.edo.models.WorkflowFileEdo;
+import com.pth.iflow.common.edo.models.WorkflowFileVersionEdo;
 import com.pth.iflow.common.edo.models.WorkflowMessageEdo;
+import com.pth.iflow.common.edo.models.WorkflowSearchFilterEdo;
 import com.pth.iflow.common.edo.models.WorkflowTypeEdo;
 import com.pth.iflow.common.edo.models.WorkflowTypeStepEdo;
+import com.pth.iflow.common.edo.models.workflow.WorkflowEdo;
+import com.pth.iflow.common.edo.models.workflow.results.WorkflowResultEdo;
 import com.pth.iflow.common.enums.EIdentity;
 import com.pth.iflow.common.enums.EInvoiceType;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
@@ -53,11 +67,29 @@ public class TestDataProducer {
     return company;
   }
 
+  protected CompanyEdo getTestCompanyEdo() {
+    final CompanyEdo edo = new CompanyEdo();
+    edo.setCompanyName("companyName");
+    edo.setIdentity("identifyid");
+    edo.setStatus(1);
+    edo.setVersion(1);
+
+    return edo;
+  }
+
   protected ProfileResponse getTestProfileResponse() {
     final CompanyEntity company = getTestCompany();
     final UserEntity user = getTestUser();
 
     return new ProfileResponse(user, company, getTestDepartmentList(), getTestUserGroupList(), "not-set");
+  }
+
+  protected ProfileResponseEdo getTestProfileResponseEdo() {
+    final CompanyEdo company = getTestCompanyEdo();
+    final UserEdo user = getTestUserEdo();
+
+    final CompanyProfileEdo companyProfileEdo = new CompanyProfileEdo(company, getTestDepartmentEdoList(), getTestUserGroupEdoList());
+    return new ProfileResponseEdo(user, companyProfileEdo, "not-set");
   }
 
   protected UserEntity getTestUser() {
@@ -79,6 +111,24 @@ public class TestDataProducer {
     // model.setCompanyIdentity("companyIdentity");
 
     return model;
+  }
+
+  protected UserEdo getTestUserEdo() {
+    final UserEdo edo = new UserEdo();
+    edo.setCompanyIdentity("companyIdentity");
+    edo.setEmail("email");
+    edo.setBirthDate(LocalDate.now().minusYears(30));
+    edo.setFirstName("firstName");
+    edo.setLastName("lastName");
+    edo.setStatus(1);
+    edo.setVersion(1);
+    edo.setPermission(1);
+    edo.setDepartmentGroups(this.getTestDepartmentGroupIdSet());
+    edo.setDepartments(this.getTestDepartmentIdSet());
+    edo.setDeputies(this.getTestDepartmentIdSet());
+    edo.setGroups(this.getTestUserGroupIdSet());
+
+    return edo;
   }
 
   protected UserEntity getTestNewUser() {
@@ -120,6 +170,25 @@ public class TestDataProducer {
     return model;
   }
 
+  protected UserEdo getTestUserEdo(final Long id, final String fname, final String lname, final String email) {
+    final UserEdo edo = new UserEdo();
+
+    edo.setEmail(email);
+    edo.setFirstName(fname);
+    edo.setLastName(lname);
+    edo.setStatus(1);
+    edo.setVersion(1);
+    edo.setPermission(1);
+    edo.setDepartmentGroups(this.getTestDepartmentGroupIdSet());
+    edo.setDepartments(this.getTestDepartmentIdSet());
+    edo.setDeputies(this.getTestDepartmentIdSet());
+    edo.setGroups(this.getTestUserGroupIdSet());
+    edo.setBirthDate(LocalDate.now().minusYears(30));
+    edo.setCompanyIdentity("companyIdentity");
+
+    return edo;
+  }
+
   private Date getTestBirthDate() {
     return new Date(Calendar.getInstance().getTime().getTime() - 30 * 365 * 24 * 60 * 60 * 100);
   }
@@ -127,6 +196,13 @@ public class TestDataProducer {
   protected List<UserEntity> getTestUserList() {
     final List<UserEntity> list = Arrays.asList(this.getTestUser(1L, "fname 1", "lname 1", "email 1"),
         this.getTestUser(2L, "fname 2", "lname 2", "email 2"), this.getTestUser(3L, "fname 3", "lname 3", "email 3"));
+
+    return list;
+  }
+
+  protected List<UserEdo> getTestUserEdoList() {
+    final List<UserEdo> list = Arrays.asList(this.getTestUserEdo(1L, "fname 1", "lname 1", "email 1"),
+        this.getTestUserEdo(2L, "fname 2", "lname 2", "email 2"), this.getTestUserEdo(3L, "fname 3", "lname 3", "email 3"));
 
     return list;
   }
@@ -144,6 +220,18 @@ public class TestDataProducer {
     return model;
   }
 
+  protected DepartmentEdo getTestDepartmentEdo() {
+    final DepartmentEdo edo = new DepartmentEdo();
+
+    edo.setTitle("utest title");
+    edo.setStatus(1);
+    edo.setVersion(1);
+    edo.setDepartmentGroups(this.getTestDepartmentGroupEdoList());
+    edo.setIdentity("dep-1");
+
+    return edo;
+  }
+
   protected DepartmentEntity getTestDepartment(final Long id, final String title) {
     final DepartmentEntity model = new DepartmentEntity();
     model.setCompanyId(1L);
@@ -157,9 +245,27 @@ public class TestDataProducer {
     return model;
   }
 
+  protected DepartmentEdo getTestDepartmentEdo(final Long id, final String title) {
+    final DepartmentEdo edo = new DepartmentEdo();
+    edo.setTitle(title);
+    edo.setStatus(1);
+    edo.setVersion(1);
+    edo.setDepartmentGroups(this.getTestDepartmentGroupEdoList());
+    edo.setIdentity("det-1");
+
+    return edo;
+  }
+
   protected List<DepartmentEntity> getTestDepartmentList() {
     final List<DepartmentEntity> list = Arrays.asList(this.getTestDepartment(1L, "DepartmentEntity 1"),
         this.getTestDepartment(2L, "DepartmentEntity 2"), this.getTestDepartment(3L, "DepartmentEntity 3"));
+
+    return list;
+  }
+
+  protected List<DepartmentEdo> getTestDepartmentEdoList() {
+    final List<DepartmentEdo> list = Arrays.asList(this.getTestDepartmentEdo(1L, "DepartmentEntity 1"),
+        this.getTestDepartmentEdo(2L, "DepartmentEntity 2"), this.getTestDepartmentEdo(3L, "DepartmentEntity 3"));
 
     return list;
   }
@@ -176,6 +282,17 @@ public class TestDataProducer {
     return model;
   }
 
+  protected DepartmentGroupEdo getTestDepartmentGroupEdo() {
+    final DepartmentGroupEdo edo = new DepartmentGroupEdo();
+
+    edo.setTitle("utest title");
+    edo.setStatus(1);
+    edo.setVersion(1);
+    edo.setIdentity("depgroup-1");
+
+    return edo;
+  }
+
   protected DepartmentGroupEntity getTestDepartmentGroup(final Long id, final String title) {
     final DepartmentGroupEntity model = new DepartmentGroupEntity();
     model.setDepartmentId(1L);
@@ -188,9 +305,26 @@ public class TestDataProducer {
     return model;
   }
 
+  protected DepartmentGroupEdo getTestDepartmentGroupEdo(final Long id, final String title) {
+    final DepartmentGroupEdo edo = new DepartmentGroupEdo();
+    edo.setTitle(title);
+    edo.setStatus(1);
+    edo.setVersion(1);
+    edo.setIdentity("depgroup-1");
+
+    return edo;
+  }
+
   protected List<DepartmentGroupEntity> getTestDepartmentGroupList() {
     final List<DepartmentGroupEntity> list = Arrays.asList(this.getTestDepartmentGroup(1L, "DepartmentGroup 1"),
         this.getTestDepartmentGroup(2L, "DepartmentGroup 2"), this.getTestDepartmentGroup(3L, "DepartmentGroup 3"));
+
+    return list;
+  }
+
+  protected List<DepartmentGroupEdo> getTestDepartmentGroupEdoList() {
+    final List<DepartmentGroupEdo> list = Arrays.asList(this.getTestDepartmentGroupEdo(1L, "DepartmentGroup 1"),
+        this.getTestDepartmentGroupEdo(2L, "DepartmentGroup 2"), this.getTestDepartmentGroupEdo(3L, "DepartmentGroup 3"));
 
     return list;
   }
@@ -204,6 +338,28 @@ public class TestDataProducer {
     model.setVersion(1);
     model.setIdentity("usergroup-1");
     model.setCompany(getTestCompany());
+
+    return model;
+  }
+
+  protected UserGroupEdo getTestUserGroupEdo() {
+    final UserGroupEdo model = new UserGroupEdo();
+    model.setCompanyIdentity("companyIdentity");
+    model.setTitle("utest title");
+    model.setStatus(1);
+    model.setVersion(1);
+    model.setIdentity("usergroup-1");
+
+    return model;
+  }
+
+  protected UserGroupEdo getTestUserGroupEdo(final Long id, final String title) {
+    final UserGroupEdo model = new UserGroupEdo();
+    model.setCompanyIdentity("companyIdentity");
+    model.setTitle(title);
+    model.setStatus(1);
+    model.setVersion(1);
+    model.setIdentity("usergroup-" + id);
 
     return model;
   }
@@ -228,6 +384,13 @@ public class TestDataProducer {
     return list;
   }
 
+  protected List<UserGroupEdo> getTestUserGroupEdoList() {
+    final List<UserGroupEdo> list = Arrays.asList(this.getTestUserGroupEdo(1L, "UserGroupEntity 1"),
+        this.getTestUserGroupEdo(2L, "UserGroupEntity 2"), this.getTestUserGroupEdo(3L, "UserGroupEntity 3"));
+
+    return list;
+  }
+
   protected WorkflowEntity getTestWorkflow(final Long Id) {
     final WorkflowEntity model = new WorkflowEntity();
     model.setId(Id);
@@ -246,6 +409,26 @@ public class TestDataProducer {
         Arrays.asList(this.getTestWorkflowFile(1L, model), this.getTestWorkflowFile(2L, model), this.getTestWorkflowFile(3L, model)));
 
     return model;
+  }
+
+  protected WorkflowEdo getTestWorkflowEdo() {
+    final WorkflowEdo edo = new WorkflowEdo();
+
+    edo.setStatus(EWorkflowStatus.INITIALIZE.getValue().intValue());
+    edo.setVersion(1);
+    edo.setComments("comments");
+    edo.setIdentity("workflow-1");
+
+    edo.setControllerIdentity("controllerIdentity");
+    ;
+    edo.setCreatedByIdentity("createdByIdentity");
+    edo.setCurrentStepIdentity("currentStepIdentity");
+    edo.setWorkflowTypeIdentity("workflowTypeIdentity");
+
+    edo.setActions(getTestWorkflowActionEdoList());
+    edo.setFiles(Arrays.asList(this.getTestWorkflowFileEdo(1L), this.getTestWorkflowFileEdo(2L), this.getTestWorkflowFileEdo(3L)));
+
+    return edo;
   }
 
   protected InvoiceWorkflowEntity getTestInvoiceWorkflow(final Long Id) {
@@ -297,6 +480,19 @@ public class TestDataProducer {
     model.setCreatedByIdentity("createdByIdentity");
 
     return model;
+  }
+
+  protected WorkflowResultEdo getTestWorkflowResultEdo(final String identity, final String typeIdentity) {
+    final WorkflowResultEdo edo = new WorkflowResultEdo();
+
+    edo.setIdentity(identity);
+    edo.setStatus(EWorkflowStatus.INITIALIZE.getValue().intValue());
+    edo.setWorkflowTypeIdentity(typeIdentity);
+    edo.setControllerIdentity("ControllerIdentity");
+    edo.setCurrentStepIdentity("currentStepIdentity");
+    edo.setCreatedByIdentity("createdByIdentity");
+
+    return edo;
   }
 
   protected InvoiceWorkflowEntity getTestNewInvoiceWorkflow() {
@@ -506,6 +702,12 @@ public class TestDataProducer {
         getTestWorkflowResult("workflow3", "type3"));
   }
 
+  protected List<WorkflowResultEdo> getTestWorkflowResultEdoList() {
+
+    return Arrays.asList(getTestWorkflowResultEdo("workflow1", "type1"), getTestWorkflowResultEdo("workflow2", "type2"),
+        getTestWorkflowResultEdo("workflow3", "type3"));
+  }
+
   protected WorkflowActionEntity getTestWorkflowAction(final Long Id, final WorkflowEntity workflow) {
     final WorkflowActionEntity model = new WorkflowActionEntity();
     model.setWorkflowEntity(workflow);
@@ -522,9 +724,25 @@ public class TestDataProducer {
     return model;
   }
 
+  protected WorkflowActionEdo getTestWorkflowActionEdo() {
+    final WorkflowActionEdo edo = new WorkflowActionEdo();
+
+    edo.setStatus(1);
+    edo.setCurrentStepIdentity("currectStepIdentity");
+    edo.setComments("comments");
+    edo.setAssignToIdentity("assignToIdentity");
+    edo.setCurrentStepIdentity("currectStepIdentity");
+
+    return edo;
+  }
+
   protected List<WorkflowActionEntity> getTestWorkflowActionList(final WorkflowEntity workflow) {
     return Arrays.asList(this.getTestWorkflowAction(1L, workflow), this.getTestWorkflowAction(2L, workflow),
         this.getTestWorkflowAction(3L, workflow));
+  }
+
+  protected List<WorkflowActionEdo> getTestWorkflowActionEdoList() {
+    return Arrays.asList(this.getTestWorkflowActionEdo(), this.getTestWorkflowActionEdo(), this.getTestWorkflowActionEdo());
   }
 
   protected WorkflowActionEntity getTestNewWorkflowAction(final WorkflowEntity workflow) {
@@ -556,6 +774,23 @@ public class TestDataProducer {
         this.getTestWorkflowFileVersion(3L, 3, 1L)));
 
     return model;
+  }
+
+  protected WorkflowFileEdo getTestWorkflowFileEdo(final Long Id) {
+    final WorkflowFileEdo edo = new WorkflowFileEdo();
+
+    edo.setStatus(1);
+    edo.setCreatedByIdentity("createdByIdentity");
+    edo.setComments("comments");
+    edo.setActiveFilePath("filePath");
+    edo.setActiveFileVersion(1);
+    edo.setTitle("title " + Id);
+    edo.setExtention("ext");
+
+    edo.setFileVersions(Arrays.asList(this.getTestWorkflowFileVersionEdo(1L, 1), this.getTestWorkflowFileVersionEdo(2L, 2),
+        this.getTestWorkflowFileVersionEdo(3L, 3)));
+
+    return edo;
   }
 
   protected List<WorkflowFileEntity> getTestWorkflowFileList(final WorkflowEntity workflow) {
@@ -592,6 +827,19 @@ public class TestDataProducer {
     model.setFileVersion(version);
 
     return model;
+  }
+
+  protected WorkflowFileVersionEdo getTestWorkflowFileVersionEdo(final Long Id, final int version) {
+    final WorkflowFileVersionEdo edo = new WorkflowFileVersionEdo();
+    // model.setWorkflowFileId(workflowFileId);
+
+    edo.setStatus(1);
+    edo.setCreatedByIdentity("createdByIdentity");
+    edo.setComments("comments");
+    edo.setFilePath("filePath");
+    edo.setFileVersion(version);
+
+    return edo;
   }
 
   protected WorkflowFileVersionEntity getTestNewWorkflowFileVersion(final int version) {
@@ -833,6 +1081,16 @@ public class TestDataProducer {
     filter.setAssignedUserIdentitySet(this.getTestUserIdSet());
     filter.setStatusSet(new HashSet<>(Arrays.asList(1, 2, 3)));
     filter.setWorkflowStepIdentitySet(this.getTestWorkflowTypeStepIdSet());
+    filter.setWorkflowTypeIdentitySet(this.getTestWorkflowTypeIdSet());
+
+    return filter;
+  }
+
+  protected WorkflowSearchFilterEdo getTestWorkflowSearchFilterEdo() {
+    final WorkflowSearchFilterEdo filter = new WorkflowSearchFilterEdo();
+    filter.setAssignedUserIdentitySet(this.getTestUserIdSet());
+    filter.setStatusSet(new HashSet<>(Arrays.asList(1, 2, 3)));
+    filter.setWorkflowStepeIdentitySet(this.getTestWorkflowTypeStepIdSet());
     filter.setWorkflowTypeIdentitySet(this.getTestWorkflowTypeIdSet());
 
     return filter;

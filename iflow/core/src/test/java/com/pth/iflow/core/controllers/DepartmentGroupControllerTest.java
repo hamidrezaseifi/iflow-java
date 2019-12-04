@@ -32,7 +32,6 @@ import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.XmlRestConfig;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.entity.DepartmentGroupEntity;
-import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
 import com.pth.iflow.core.service.interfaces.IDepartmentGroupService;
 
 @RunWith(SpringRunner.class)
@@ -64,9 +63,9 @@ public class DepartmentGroupControllerTest extends TestDataProducer {
   public void testReadDepartmentGroupById() throws Exception {
 
     final DepartmentGroupEntity model = this.getTestDepartmentGroup();
+    final DepartmentGroupEdo modelEdo = getTestDepartmentGroupEdo();
     when(this.departmentGroupService.getByIdentity(any(String.class))).thenReturn(model);
-
-    final DepartmentGroupEdo modelEdo = CoreModelEdoMapper.toEdo(model);
+    when(this.departmentGroupService.toEdo(any(DepartmentGroupEntity.class))).thenReturn(modelEdo);
 
     final String modelAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelEdo);
 
@@ -84,12 +83,15 @@ public class DepartmentGroupControllerTest extends TestDataProducer {
   public void testReadDepartmentGroupList() throws Exception {
 
     final Set<String> idList = this.getTestDepartmentGroupIdSet();
+    final List<DepartmentGroupEdo> edoConvertedList = getTestDepartmentGroupEdoList();
+
     final IdentityListEdo edoList = new IdentityListEdo(idList);
     final List<DepartmentGroupEntity> list = this.getTestDepartmentGroupList();
 
     when(this.departmentGroupService.getListByIdentityList(any(Set.class))).thenReturn(list);
+    when(this.departmentGroupService.toEdoList(any(List.class))).thenReturn(edoConvertedList);
 
-    final DepartmentGroupListEdo edoResultList = new DepartmentGroupListEdo(CoreModelEdoMapper.toDepartmentGroupEdoList(list));
+    final DepartmentGroupListEdo edoResultList = new DepartmentGroupListEdo(edoConvertedList);
 
     final String contentAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoResultList);
