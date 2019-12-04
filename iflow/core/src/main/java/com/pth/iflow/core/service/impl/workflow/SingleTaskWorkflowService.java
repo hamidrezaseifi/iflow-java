@@ -6,13 +6,17 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pth.iflow.common.edo.models.workflow.singletask.SingleTaskWorkflowEdo;
+import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.core.model.entity.workflow.SingleTaskWorkflowEntity;
+import com.pth.iflow.core.service.base.CoreModelEdoMapperService;
 import com.pth.iflow.core.service.interfaces.workflow.ISingleTaskWorkflowService;
 import com.pth.iflow.core.service.interfaces.workflow.IWorkflowService;
 import com.pth.iflow.core.storage.dao.interfaces.workflow.ISingleTaskWorkflowDao;
 
 @Service
-public class SingleTaskWorkflowService implements ISingleTaskWorkflowService {
+public class SingleTaskWorkflowService extends CoreModelEdoMapperService<SingleTaskWorkflowEntity, SingleTaskWorkflowEdo>
+    implements ISingleTaskWorkflowService {
 
   private final ISingleTaskWorkflowDao singleTaskWorkflowDao;
 
@@ -61,5 +65,24 @@ public class SingleTaskWorkflowService implements ISingleTaskWorkflowService {
     workflowService.prepareSavingModel(model.getWorkflow());
     model.setWorkflowId(model.getWorkflow().getId());
     return model;
+  }
+
+  @Override
+  public SingleTaskWorkflowEntity fromEdo(final SingleTaskWorkflowEdo edo) throws IFlowMessageConversionFailureException {
+    validateCustomer(edo);
+
+    final SingleTaskWorkflowEntity model = new SingleTaskWorkflowEntity();
+
+    model.setWorkflow(workflowService.fromEdo(edo.getWorkflow()));
+
+    return model;
+  }
+
+  @Override
+  public SingleTaskWorkflowEdo toEdo(final SingleTaskWorkflowEntity model) {
+    final SingleTaskWorkflowEdo edo = new SingleTaskWorkflowEdo();
+    edo.setWorkflow(workflowService.toEdo(model.getWorkflow()));
+
+    return edo;
   }
 }

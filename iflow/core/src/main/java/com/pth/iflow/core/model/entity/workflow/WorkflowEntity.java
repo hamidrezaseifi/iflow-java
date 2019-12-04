@@ -3,6 +3,7 @@ package com.pth.iflow.core.model.entity.workflow;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,9 +13,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
 import com.pth.iflow.common.enums.EIdentity;
 import com.pth.iflow.core.storage.dao.helper.EntityIdentityHelper;
 import com.pth.iflow.core.storage.dao.helper.EntityListener;
@@ -27,57 +29,45 @@ public class WorkflowEntity extends EntityIdentityHelper {
   @Id
   @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private Long                             id;
 
   @Column(name = "identity")
-  private String identity;
+  private String                           identity;
 
   @Column(name = "controller")
-  private Long controllerId;
+  private Long                             controllerId;
 
   @Column(name = "created_by")
-  private Long createdById;
+  private Long                             createdById;
 
   @Column(name = "workflow_type_id")
-  private Long workflowTypeId;
+  private Long                             workflowTypeId;
 
   @Column(name = "current_step")
-  private Long currentStepId;
+  private Long                             currentStepId;
 
   @Column(name = "comments")
-  private String comments;
+  private String                           comments;
 
   @Column(name = "status")
-  private Integer status;
+  private Integer                          status;
 
   @Column(name = "version")
-  private Integer version;
+  private Integer                          version;
 
   @CreationTimestamp
   @Column(name = "created_at")
-  private Date createdAt;
+  private Date                             createdAt;
 
   @UpdateTimestamp
   @Column(name = "updated_at")
-  private Date updatedAt;
+  private Date                             updatedAt;
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "workflowEntity")
-  private final List<WorkflowFileEntity> files = new ArrayList<>();
+  private final List<WorkflowFileEntity>   files   = new ArrayList<>();
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "workflowEntity")
   private final List<WorkflowActionEntity> actions = new ArrayList<>();
-
-  @Transient
-  private String controllerIdentity;
-
-  @Transient
-  private String createdByIdentity;
-
-  @Transient
-  private String workflowTypeIdentity;
-
-  @Transient
-  private String currentStepIdentity;
 
   public WorkflowEntity() {
 
@@ -212,38 +202,6 @@ public class WorkflowEntity extends EntityIdentityHelper {
 
   public void setCurrentStepId(final Long currentStepId) {
     this.currentStepId = currentStepId;
-  }
-
-  public String getControllerIdentity() {
-    return controllerIdentity;
-  }
-
-  public void setControllerIdentity(final String controllerIdentity) {
-    this.controllerIdentity = controllerIdentity;
-  }
-
-  public String getCreatedByIdentity() {
-    return createdByIdentity;
-  }
-
-  public void setCreatedByIdentity(final String createdByIdentity) {
-    this.createdByIdentity = createdByIdentity;
-  }
-
-  public String getWorkflowTypeIdentity() {
-    return workflowTypeIdentity;
-  }
-
-  public void setWorkflowTypeIdentity(final String workflowTypeIdentity) {
-    this.workflowTypeIdentity = workflowTypeIdentity;
-  }
-
-  public String getCurrentStepIdentity() {
-    return currentStepIdentity;
-  }
-
-  public void setCurrentStepIdentity(final String currentStepIdentity) {
-    this.currentStepIdentity = currentStepIdentity;
   }
 
   public void updateFromExists(final WorkflowEntity exists) {

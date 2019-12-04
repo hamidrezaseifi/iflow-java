@@ -2,14 +2,20 @@ package com.pth.iflow.core.service.impl;
 
 import java.util.Collection;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.pth.iflow.common.edo.models.DepartmentGroupEdo;
+import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.core.model.entity.DepartmentGroupEntity;
+import com.pth.iflow.core.service.base.CoreModelEdoMapperService;
 import com.pth.iflow.core.service.interfaces.IDepartmentGroupService;
 import com.pth.iflow.core.storage.dao.interfaces.IDepartmentGroupDao;
 
 @Service
-public class DepartmentGroupService implements IDepartmentGroupService {
+public class DepartmentGroupService extends CoreModelEdoMapperService<DepartmentGroupEntity, DepartmentGroupEdo>
+    implements IDepartmentGroupService {
 
   private final IDepartmentGroupDao departmentGroupDao;
 
@@ -41,5 +47,30 @@ public class DepartmentGroupService implements IDepartmentGroupService {
 
   protected DepartmentGroupEntity prepareSavingModel(final DepartmentGroupEntity model) {
     return model;
+  }
+
+  @Override
+  public DepartmentGroupEntity fromEdo(final DepartmentGroupEdo edo) throws IFlowMessageConversionFailureException {
+    validateCustomer(edo);
+
+    final DepartmentGroupEntity model = new DepartmentGroupEntity();
+
+    model.setTitle(edo.getTitle());
+    model.setStatus(edo.getStatus());
+    model.setIdentity(edo.getIdentity());
+    model.setVersion(edo.getVersion());
+
+    return model;
+  }
+
+  @Override
+  public DepartmentGroupEdo toEdo(final DepartmentGroupEntity model) {
+    final DepartmentGroupEdo edo = new DepartmentGroupEdo();
+    edo.setTitle(model.getTitle());
+    edo.setStatus(model.getStatus());
+    edo.setIdentity(model.getIdentity());
+    edo.setVersion(model.getVersion());
+
+    return edo;
   }
 }

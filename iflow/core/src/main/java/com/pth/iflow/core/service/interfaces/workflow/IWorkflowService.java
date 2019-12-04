@@ -3,9 +3,12 @@ package com.pth.iflow.core.service.interfaces.workflow;
 import java.util.Collection;
 import java.util.List;
 
+import com.pth.iflow.common.edo.models.workflow.WorkflowEdo;
+import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.core.model.entity.workflow.WorkflowEntity;
+import com.pth.iflow.core.service.base.ICoreModelEdoMapperService;
 
-public interface IWorkflowService {
+public interface IWorkflowService extends ICoreModelEdoMapperService<WorkflowEntity, WorkflowEdo> {
 
   public WorkflowEntity save(WorkflowEntity model);
 
@@ -15,6 +18,10 @@ public interface IWorkflowService {
 
   public List<WorkflowEntity> getListByIdentityList(final Collection<String> idList);
 
-  WorkflowEntity prepareSavingModel(final WorkflowEntity model);
+  public WorkflowEntity prepareSavingModel(final WorkflowEntity model);
+
+  public WorkflowEdo toEdo(final WorkflowEntity model);
+
+  public WorkflowEntity fromEdo(final WorkflowEdo edo) throws IFlowMessageConversionFailureException;
 
 }

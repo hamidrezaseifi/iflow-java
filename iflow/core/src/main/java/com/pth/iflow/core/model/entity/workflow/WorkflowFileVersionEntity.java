@@ -1,6 +1,7 @@
 package com.pth.iflow.core.model.entity.workflow;
 
 import java.sql.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -21,37 +22,34 @@ public class WorkflowFileVersionEntity {
   @Id
   @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private Long               id;
 
   @Column(name = "filepath")
-  private String filePath;
+  private String             filePath;
 
   @Column(name = "file_version")
-  private Integer fileVersion;
+  private Integer            fileVersion;
 
   @Column(name = "created_by")
-  private Long createdByUserId;
+  private Long               createdByUserId;
 
   @Column(name = "comments")
-  private String comments;
+  private String             comments;
 
   @Column(name = "status")
-  private Integer status;
+  private Integer            status;
 
   @CreationTimestamp
   @Column(name = "created_at")
-  private Date createdAt;
+  private Date               createdAt;
 
   @UpdateTimestamp
   @Column(name = "updated_at")
-  private Date updatedAt;
+  private Date               updatedAt;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "workflow_file_id", nullable = false)
   private WorkflowFileEntity workflowFileEntity;
-
-  @Transient
-  private String createdByIdentity;
 
   public WorkflowFileVersionEntity() {
 
@@ -119,14 +117,6 @@ public class WorkflowFileVersionEntity {
 
   public void setCreatedByUserId(final Long createdByUserId) {
     this.createdByUserId = createdByUserId;
-  }
-
-  public String getCreatedByIdentity() {
-    return createdByIdentity;
-  }
-
-  public void setCreatedByIdentity(final String createdByIdentity) {
-    this.createdByIdentity = createdByIdentity;
   }
 
   public WorkflowFileEntity getWorkflowFileEntity() {

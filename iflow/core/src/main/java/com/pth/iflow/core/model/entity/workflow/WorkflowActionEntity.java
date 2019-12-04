@@ -1,6 +1,7 @@
 package com.pth.iflow.core.model.entity.workflow;
 
 import java.sql.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -21,53 +22,35 @@ public class WorkflowActionEntity {
   @Id
   @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private Long           id;
 
   @Column(name = "comments")
-  private String comments;
+  private String         comments;
 
   @Column(name = "assign_to")
-  private Long assignToId;
+  private Long           assignToId;
 
   @Column(name = "current_step_id")
-  private Long currentStepId;
+  private Long           currentStepId;
 
   @Column(name = "status")
-  private Integer status;
+  private Integer        status;
 
   @CreationTimestamp
   @Column(name = "created_at")
-  private Date createdAt;
+  private Date           createdAt;
 
   @UpdateTimestamp
   @Column(name = "updated_at")
-  private Date updatedAt;
+  private Date           updatedAt;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "workflow_id", nullable = false)
   private WorkflowEntity workflowEntity;
 
-  @Transient
-  private final String currentStepIdentity;
-
-  @Transient
-  private final String assignToIdentity;
-
   public WorkflowActionEntity() {
 
     assignToId = 0L;
-
-    this.currentStepIdentity = "";
-    this.assignToIdentity = "";
-
-  }
-
-  public WorkflowActionEntity(final String assignToEdoIdentity, final String currentStepEdoIdentity) {
-
-    assignToId = 0L;
-
-    this.currentStepIdentity = currentStepEdoIdentity;
-    this.assignToIdentity = assignToEdoIdentity;
 
   }
 
@@ -125,14 +108,6 @@ public class WorkflowActionEntity {
 
   public void setAssignToId(final Long assignToId) {
     this.assignToId = assignToId;
-  }
-
-  public String getCurrentStepIdentity() {
-    return currentStepIdentity;
-  }
-
-  public String getAssignToIdentity() {
-    return assignToIdentity;
   }
 
   public WorkflowEntity getWorkflowEntity() {

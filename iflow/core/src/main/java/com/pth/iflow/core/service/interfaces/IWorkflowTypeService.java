@@ -3,10 +3,12 @@ package com.pth.iflow.core.service.interfaces;
 import java.util.Collection;
 import java.util.List;
 
+import com.pth.iflow.common.edo.models.WorkflowTypeEdo;
 import com.pth.iflow.core.model.entity.workflow.WorkflowTypeEntity;
 import com.pth.iflow.core.model.entity.workflow.WorkflowTypeStepEntity;
+import com.pth.iflow.core.service.base.ICoreModelEdoMapperService;
 
-public interface IWorkflowTypeService {
+public interface IWorkflowTypeService extends ICoreModelEdoMapperService<WorkflowTypeEntity, WorkflowTypeEdo> {
 
   WorkflowTypeEntity save(WorkflowTypeEntity model);
 
@@ -17,4 +19,5 @@ public interface IWorkflowTypeService {
   List<WorkflowTypeStepEntity> getStepsByIdentity(final String identity);
 
   List<WorkflowTypeEntity> getListByIdentityList(final Collection<String> idList);
+
 }

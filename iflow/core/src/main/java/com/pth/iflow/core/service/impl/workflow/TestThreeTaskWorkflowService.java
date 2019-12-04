@@ -6,13 +6,17 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pth.iflow.common.edo.models.workflow.testthreetask.TestThreeTaskWorkflowEdo;
+import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.core.model.entity.workflow.TestThreeTaskWorkflowEntity;
+import com.pth.iflow.core.service.base.CoreModelEdoMapperService;
 import com.pth.iflow.core.service.interfaces.workflow.ITestThreeTaskWorkflowService;
 import com.pth.iflow.core.service.interfaces.workflow.IWorkflowService;
 import com.pth.iflow.core.storage.dao.interfaces.workflow.ITestThreeTaskWorkflowDao;
 
 @Service
-public class TestThreeTaskWorkflowService implements ITestThreeTaskWorkflowService {
+public class TestThreeTaskWorkflowService extends CoreModelEdoMapperService<TestThreeTaskWorkflowEntity, TestThreeTaskWorkflowEdo>
+    implements ITestThreeTaskWorkflowService {
 
   private final ITestThreeTaskWorkflowDao testThreeTaskWorkflowDao;
 
@@ -61,5 +65,24 @@ public class TestThreeTaskWorkflowService implements ITestThreeTaskWorkflowServi
     workflowService.prepareSavingModel(model.getWorkflow());
     model.setWorkflowId(model.getWorkflow().getId());
     return model;
+  }
+
+  @Override
+  public TestThreeTaskWorkflowEntity fromEdo(final TestThreeTaskWorkflowEdo edo) throws IFlowMessageConversionFailureException {
+    validateCustomer(edo);
+
+    final TestThreeTaskWorkflowEntity model = new TestThreeTaskWorkflowEntity();
+
+    model.setWorkflow(workflowService.fromEdo(edo.getWorkflow()));
+
+    return model;
+  }
+
+  @Override
+  public TestThreeTaskWorkflowEdo toEdo(final TestThreeTaskWorkflowEntity model) {
+    final TestThreeTaskWorkflowEdo edo = new TestThreeTaskWorkflowEdo();
+    edo.setWorkflow(workflowService.toEdo(model.getWorkflow()));
+
+    return edo;
   }
 }

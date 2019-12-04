@@ -3,9 +3,11 @@ package com.pth.iflow.core.service.interfaces.workflow;
 import java.util.Collection;
 import java.util.List;
 
+import com.pth.iflow.common.edo.models.workflow.singletask.SingleTaskWorkflowEdo;
 import com.pth.iflow.core.model.entity.workflow.SingleTaskWorkflowEntity;
+import com.pth.iflow.core.service.base.ICoreModelEdoMapperService;
 
-public interface ISingleTaskWorkflowService {
+public interface ISingleTaskWorkflowService extends ICoreModelEdoMapperService<SingleTaskWorkflowEntity, SingleTaskWorkflowEdo> {
 
   public SingleTaskWorkflowEntity save(SingleTaskWorkflowEntity model);
 

@@ -5,22 +5,22 @@ import java.util.Set;
 
 public class WorkflowSearchFilter {
 
-  private Set<String>  assignedUserIdentitySet = new HashSet<>();
+  private Set<Long>    assignedUserIdSet = new HashSet<>();
 
-  private Set<Integer> statusSet               = new HashSet<>();
+  private Set<Integer> statusSet         = new HashSet<>();
 
-  private Set<String>  workflowTypeIdentitySet = new HashSet<>();
+  private Set<Long>    workflowTypeIdSet = new HashSet<>();
 
-  private Set<String>  workflowStepIdentitySet = new HashSet<>();
+  private Set<Long>    workflowStepIdSet = new HashSet<>();
 
-  public Set<String> getAssignedUserIdentitySet() {
-    return this.assignedUserIdentitySet;
+  public Set<Long> getAssignedUserIdSet() {
+    return this.assignedUserIdSet;
   }
 
-  public void setAssignedUserIdentitySet(final Set<String> assignedUserIdSet) {
-    this.assignedUserIdentitySet = new HashSet<>();
+  public void setAssignedUserIdSet(final Set<Long> assignedUserIdSet) {
+    this.assignedUserIdSet = new HashSet<>();
     if (assignedUserIdSet != null) {
-      this.assignedUserIdentitySet.addAll(assignedUserIdSet);
+      this.assignedUserIdSet.addAll(assignedUserIdSet);
     }
   }
 
@@ -35,25 +35,25 @@ public class WorkflowSearchFilter {
     }
   }
 
-  public Set<String> getWorkflowTypeIdentitySet() {
-    return this.workflowTypeIdentitySet;
+  public Set<Long> getWorkflowTypeIdSet() {
+    return this.workflowTypeIdSet;
   }
 
-  public void setWorkflowTypeIdentitySet(final Set<String> workflowTypeIdSet) {
-    this.workflowTypeIdentitySet = new HashSet<>();
+  public void setWorkflowTypeIdSet(final Set<Long> workflowTypeIdSet) {
+    this.workflowTypeIdSet = new HashSet<>();
     if (workflowTypeIdSet != null) {
-      this.workflowTypeIdentitySet.addAll(workflowTypeIdSet);
+      this.workflowTypeIdSet.addAll(workflowTypeIdSet);
     }
   }
 
-  public Set<String> getWorkflowStepIdentitySet() {
-    return this.workflowStepIdentitySet;
+  public Set<Long> getWorkflowStepIdSet() {
+    return this.workflowStepIdSet;
   }
 
-  public void setWorkflowStepIdentitySet(final Set<String> workflowStepIdSet) {
-    this.workflowStepIdentitySet = new HashSet<>();
+  public void setWorkflowStepIdSet(final Set<Long> workflowStepIdSet) {
+    this.workflowStepIdSet = new HashSet<>();
     if (workflowStepIdSet != null) {
-      this.workflowStepIdentitySet.addAll(workflowStepIdSet);
+      this.workflowStepIdSet.addAll(workflowStepIdSet);
     }
   }
 

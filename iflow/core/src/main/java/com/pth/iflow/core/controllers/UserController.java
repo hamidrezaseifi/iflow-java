@@ -27,26 +27,35 @@ import com.pth.iflow.core.model.entity.DepartmentEntity;
 import com.pth.iflow.core.model.entity.DepartmentGroupEntity;
 import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.model.entity.UserGroupEntity;
-import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
+import com.pth.iflow.core.service.interfaces.IDepartmentGroupService;
+import com.pth.iflow.core.service.interfaces.IDepartmentService;
+import com.pth.iflow.core.service.interfaces.IUserGroupService;
 import com.pth.iflow.core.service.interfaces.IUsersService;
 
 @RestController
 @RequestMapping
 public class UserController {
 
-  final IUsersService usersService;
+  final IUsersService           usersService;
+  final IUserGroupService       userGroupService;
+  final IDepartmentService      departmentService;
+  final IDepartmentGroupService departmentGroupService;
 
-  public UserController(@Autowired final IUsersService usersService) {
+  public UserController(@Autowired final IUsersService usersService, @Autowired final IUserGroupService userGroupService,
+      @Autowired final IDepartmentService departmentService, @Autowired final IDepartmentGroupService departmentGroupService) {
     this.usersService = usersService;
+    this.userGroupService = userGroupService;
+    this.departmentService = departmentService;
+    this.departmentGroupService = departmentGroupService;
   }
 
   @ResponseStatus(HttpStatus.ACCEPTED)
   @IflowPostRequestMapping(path = IflowRestPaths.CoreModule.USER_SAVE)
   public ResponseEntity<UserEdo> saveUser(@PathVariable final UserEdo userEdo, final HttpServletRequest request) throws Exception {
 
-    final UserEntity user = this.usersService.save(CoreModelEdoMapper.fromEdo(userEdo));
+    final UserEntity user = this.usersService.save(this.usersService.fromEdo(userEdo));
 
-    return ControllerHelper.createResponseEntity(request, CoreModelEdoMapper.toEdo(user), HttpStatus.ACCEPTED);
+    return ControllerHelper.createResponseEntity(request, this.usersService.toEdo(user), HttpStatus.ACCEPTED);
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -56,7 +65,7 @@ public class UserController {
 
     final UserEntity user = this.usersService.getUserByEmail(email);
 
-    return ControllerHelper.createResponseEntity(request, CoreModelEdoMapper.toEdo(user), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, this.usersService.toEdo(user), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -66,7 +75,7 @@ public class UserController {
 
     final List<UserGroupEntity> groups = this.usersService.getUserGroups(email);
 
-    return ControllerHelper.createResponseEntity(request, new UserGroupListEdo(CoreModelEdoMapper.toUserGroupEdoList(groups)),
+    return ControllerHelper.createResponseEntity(request, new UserGroupListEdo(this.userGroupService.toEdoList(groups)),
         HttpStatus.OK);
   }
 
@@ -77,7 +86,7 @@ public class UserController {
 
     final List<DepartmentEntity> list = this.usersService.getUserDepartments(email);
 
-    return ControllerHelper.createResponseEntity(request, new DepartmentListEdo(CoreModelEdoMapper.toDepartmentEdoList(list)),
+    return ControllerHelper.createResponseEntity(request, new DepartmentListEdo(this.departmentService.toEdoList(list)),
         HttpStatus.OK);
   }
 
@@ -88,8 +97,8 @@ public class UserController {
 
     final List<DepartmentGroupEntity> list = this.usersService.getUserDepartmentGroups(email);
 
-    return ControllerHelper.createResponseEntity(request,
-        new DepartmentGroupListEdo(CoreModelEdoMapper.toDepartmentGroupEdoList(list)), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, new DepartmentGroupListEdo(this.departmentGroupService.toEdoList(list)),
+        HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -99,7 +108,7 @@ public class UserController {
 
     final List<UserEntity> list = this.usersService.getUserDeputies(email);
     final UserListEdo edo = new UserListEdo();
-    edo.setUsers(CoreModelEdoMapper.toUserEdoList(list));
+    edo.setUsers(this.usersService.toEdoList(list));
     return ControllerHelper.createResponseEntity(request, edo, HttpStatus.OK);
   }
 
@@ -110,7 +119,7 @@ public class UserController {
 
     final List<UserEntity> list = this.usersService.getCompanyUsers(companyidentity);
     final UserListEdo edo = new UserListEdo();
-    edo.setUsers(CoreModelEdoMapper.toUserEdoList(list));
+    edo.setUsers(this.usersService.toEdoList(list));
     return ControllerHelper.createResponseEntity(request, edo, HttpStatus.OK);
   }
 
@@ -121,7 +130,7 @@ public class UserController {
 
     final List<UserEntity> list = this.usersService.getAllUserIdentityListByDepartmentIdentity(identity);
     final UserListEdo edo = new UserListEdo();
-    edo.setUsers(CoreModelEdoMapper.toUserEdoList(list));
+    edo.setUsers(this.usersService.toEdoList(list));
     return ControllerHelper.createResponseEntity(request, edo, HttpStatus.OK);
   }
 
@@ -132,7 +141,7 @@ public class UserController {
 
     final List<UserEntity> list = this.usersService.getAllUserIdentityListByDepartmentGroupIdentity(identity);
     final UserListEdo edo = new UserListEdo();
-    edo.setUsers(CoreModelEdoMapper.toUserEdoList(list));
+    edo.setUsers(this.usersService.toEdoList(list));
     return ControllerHelper.createResponseEntity(request, edo, HttpStatus.OK);
   }
 
@@ -143,6 +152,6 @@ public class UserController {
 
     final ProfileResponse profile = this.usersService.getProfileResponseByEmail(email);
 
-    return ControllerHelper.createResponseEntity(request, CoreModelEdoMapper.toEdo(profile), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, this.usersService.toProfileResponseEdo(profile), HttpStatus.OK);
   }
 }

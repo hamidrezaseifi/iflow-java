@@ -22,7 +22,6 @@ import com.pth.iflow.common.edo.models.WorkflowTypeStepEdo;
 import com.pth.iflow.common.edo.models.WorkflowTypeStepListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.core.model.entity.workflow.WorkflowTypeStepEntity;
-import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
 import com.pth.iflow.core.service.interfaces.IWorkflowTypeStepService;
 
 @RestController
@@ -42,7 +41,7 @@ public class WorkflowTypeStepController {
 
     final WorkflowTypeStepEntity model = this.workflowStepService.getByIdentity(identity);
 
-    return ControllerHelper.createResponseEntity(request, CoreModelEdoMapper.toEdo(model), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, this.workflowStepService.toEdo(model), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -53,8 +52,8 @@ public class WorkflowTypeStepController {
     final List<WorkflowTypeStepEntity> modelList = idList.getIdentityList().isEmpty() ? new ArrayList<>()
         : this.workflowStepService.getListByIdentityList(idList.getIdentityList());
 
-    return ControllerHelper.createResponseEntity(request,
-        new WorkflowTypeStepListEdo(CoreModelEdoMapper.toWorkflowTypeStepEdoList(modelList)), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, new WorkflowTypeStepListEdo(this.workflowStepService.toEdoList(modelList)),
+        HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -64,8 +63,8 @@ public class WorkflowTypeStepController {
 
     final List<WorkflowTypeStepEntity> modelList = this.workflowStepService.getListByWorkflowTypeIdentity(identity);
 
-    return ControllerHelper.createResponseEntity(request,
-        new WorkflowTypeStepListEdo(CoreModelEdoMapper.toWorkflowTypeStepEdoList(modelList)), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, new WorkflowTypeStepListEdo(this.workflowStepService.toEdoList(modelList)),
+        HttpStatus.OK);
   }
 
 }

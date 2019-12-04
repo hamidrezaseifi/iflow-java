@@ -2,15 +2,22 @@ package com.pth.iflow.core.service.impl;
 
 import java.util.Collection;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.pth.iflow.common.edo.models.WorkflowTypeEdo;
+import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
+import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.core.model.entity.workflow.WorkflowTypeEntity;
 import com.pth.iflow.core.model.entity.workflow.WorkflowTypeStepEntity;
+import com.pth.iflow.core.service.base.CoreModelEdoMapperService;
 import com.pth.iflow.core.service.interfaces.IWorkflowTypeService;
 import com.pth.iflow.core.storage.dao.interfaces.IWorkflowTypeDao;
 
 @Service
-public class WorkflowTypeService implements IWorkflowTypeService {
+public class WorkflowTypeService extends CoreModelEdoMapperService<WorkflowTypeEntity, WorkflowTypeEdo>
+    implements IWorkflowTypeService {
 
   private final IWorkflowTypeDao workflowTypeDao;
 
@@ -54,4 +61,52 @@ public class WorkflowTypeService implements IWorkflowTypeService {
   protected WorkflowTypeEntity prepareSavingModel(final WorkflowTypeEntity model) {
     return model;
   }
+
+  @Override
+  public WorkflowTypeEntity fromEdo(final WorkflowTypeEdo edo) throws IFlowMessageConversionFailureException {
+    validateCustomer(edo);
+
+    final WorkflowTypeStepService stepService = new WorkflowTypeStepService(null, null);
+
+    final WorkflowTypeEntity model = new WorkflowTypeEntity();
+
+    model.setTitle(edo.getTitle());
+    model.setComments(edo.getComments());
+    model.setStatus(edo.getStatus());
+    model.setIdentity(edo.getIdentity());
+    model.getCompany().setIdentity(edo.getCompanyIdentity());
+    model.setBaseTypeIdentity(edo.getBaseTypeIdentity());
+    model.setSendToController(edo.getSendToController());
+    model.setAssignType(EWorkflowTypeAssignType.ofValue(edo.getAssignType()));
+    model.setAllowAssign(edo.getAllowAssign());
+    model.setIncreaseStepAutomatic(edo.getIncreaseStepAutomatic());
+    model.setVersion(edo.getVersion());
+    model.setSteps(stepService.fromEdoList(edo.getSteps()));
+
+    return model;
+  }
+
+  @Override
+  public WorkflowTypeEdo toEdo(final WorkflowTypeEntity model) {
+
+    final WorkflowTypeStepService stepService = new WorkflowTypeStepService(null, null);
+
+    final WorkflowTypeEdo edo = new WorkflowTypeEdo();
+
+    edo.setTitle(model.getTitle());
+    edo.setComments(model.getComments());
+    edo.setStatus(model.getStatus());
+    edo.setIdentity(model.getIdentity());
+    edo.setCompanyIdentity(model.getCompany().getIdentity());
+    edo.setBaseTypeIdentity(model.getBaseTypeIdentity());
+    edo.setSendToController(model.getSendToController());
+    edo.setAssignType(model.geAssignType().getValue());
+    edo.setIncreaseStepAutomatic(model.getIncreaseStepAutomatic());
+    edo.setAllowAssign(model.getAllowAssign());
+    edo.setSteps(stepService.toEdoList(model.getSteps()));
+    edo.setVersion(model.getVersion());
+
+    return edo;
+  }
+
 }

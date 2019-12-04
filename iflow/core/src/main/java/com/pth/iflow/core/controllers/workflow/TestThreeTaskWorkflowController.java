@@ -21,7 +21,6 @@ import com.pth.iflow.common.edo.models.workflow.testthreetask.TestThreeTaskWorkf
 import com.pth.iflow.common.edo.models.workflow.testthreetask.TestThreeTaskWorkflowListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.core.model.entity.workflow.TestThreeTaskWorkflowEntity;
-import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
 import com.pth.iflow.core.service.interfaces.workflow.ITestThreeTaskWorkflowService;
 
 @RestController
@@ -42,7 +41,7 @@ public class TestThreeTaskWorkflowController {
 
     final TestThreeTaskWorkflowEntity model = this.workflowService.getByIdentity(identity);
 
-    return ControllerHelper.createResponseEntity(request, CoreModelEdoMapper.toEdo(model), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, this.workflowService.toEdo(model), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.ACCEPTED)
@@ -50,8 +49,8 @@ public class TestThreeTaskWorkflowController {
   public ResponseEntity<TestThreeTaskWorkflowEdo> saveWorkflow(@RequestBody final TestThreeTaskWorkflowEdo invoiceWorkflowEdo,
       final HttpServletRequest request) throws Exception {
 
-    final TestThreeTaskWorkflowEntity model = this.workflowService.save(CoreModelEdoMapper.fromEdo(invoiceWorkflowEdo));
-    return ControllerHelper.createResponseEntity(request, CoreModelEdoMapper.toEdo(model), HttpStatus.ACCEPTED);
+    final TestThreeTaskWorkflowEntity model = this.workflowService.save(this.workflowService.fromEdo(invoiceWorkflowEdo));
+    return ControllerHelper.createResponseEntity(request, this.workflowService.toEdo(model), HttpStatus.ACCEPTED);
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -61,8 +60,8 @@ public class TestThreeTaskWorkflowController {
 
     final List<TestThreeTaskWorkflowEntity> modelList = this.workflowService.getListByIdentityList(idList.getIdentityList());
 
-    return ControllerHelper.createResponseEntity(request,
-        new TestThreeTaskWorkflowListEdo(CoreModelEdoMapper.toTestThreeTaskWorkflowEdoList(modelList)), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, new TestThreeTaskWorkflowListEdo(this.workflowService.toEdoList(modelList)),
+        HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -72,8 +71,8 @@ public class TestThreeTaskWorkflowController {
 
     final List<TestThreeTaskWorkflowEntity> modelList = this.workflowService.getListForUser(email, status);
 
-    return ControllerHelper.createResponseEntity(request,
-        new TestThreeTaskWorkflowListEdo(CoreModelEdoMapper.toTestThreeTaskWorkflowEdoList(modelList)), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, new TestThreeTaskWorkflowListEdo(this.workflowService.toEdoList(modelList)),
+        HttpStatus.OK);
   }
 
 }

@@ -21,7 +21,6 @@ import com.pth.iflow.common.edo.models.workflow.singletask.SingleTaskWorkflowEdo
 import com.pth.iflow.common.edo.models.workflow.singletask.SingleTaskWorkflowListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.core.model.entity.workflow.SingleTaskWorkflowEntity;
-import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
 import com.pth.iflow.core.service.interfaces.workflow.ISingleTaskWorkflowService;
 
 @RestController
@@ -41,7 +40,7 @@ public class SingleTaskWorkflowController {
 
     final SingleTaskWorkflowEntity model = this.workflowService.getByIdentity(identity);
 
-    return ControllerHelper.createResponseEntity(request, CoreModelEdoMapper.toEdo(model), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, this.workflowService.toEdo(model), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.ACCEPTED)
@@ -49,8 +48,8 @@ public class SingleTaskWorkflowController {
   public ResponseEntity<SingleTaskWorkflowEdo> saveWorkflow(@RequestBody final SingleTaskWorkflowEdo invoiceWorkflowEdo,
       final HttpServletRequest request) throws Exception {
 
-    final SingleTaskWorkflowEntity model = this.workflowService.save(CoreModelEdoMapper.fromEdo(invoiceWorkflowEdo));
-    return ControllerHelper.createResponseEntity(request, CoreModelEdoMapper.toEdo(model), HttpStatus.ACCEPTED);
+    final SingleTaskWorkflowEntity model = this.workflowService.save(this.workflowService.fromEdo(invoiceWorkflowEdo));
+    return ControllerHelper.createResponseEntity(request, this.workflowService.toEdo(model), HttpStatus.ACCEPTED);
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -60,8 +59,8 @@ public class SingleTaskWorkflowController {
 
     final List<SingleTaskWorkflowEntity> modelList = this.workflowService.getListByIdentityList(idList.getIdentityList());
 
-    return ControllerHelper.createResponseEntity(request,
-        new SingleTaskWorkflowListEdo(CoreModelEdoMapper.toSingleTaskWorkflowEdoList(modelList)), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, new SingleTaskWorkflowListEdo(this.workflowService.toEdoList(modelList)),
+        HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -71,8 +70,8 @@ public class SingleTaskWorkflowController {
 
     final List<SingleTaskWorkflowEntity> modelList = this.workflowService.getListForUser(email, status);
 
-    return ControllerHelper.createResponseEntity(request,
-        new SingleTaskWorkflowListEdo(CoreModelEdoMapper.toSingleTaskWorkflowEdoList(modelList)), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, new SingleTaskWorkflowListEdo(this.workflowService.toEdoList(modelList)),
+        HttpStatus.OK);
   }
 
 }

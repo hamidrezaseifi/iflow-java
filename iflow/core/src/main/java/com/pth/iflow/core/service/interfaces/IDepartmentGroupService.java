@@ -3,9 +3,11 @@ package com.pth.iflow.core.service.interfaces;
 import java.util.Collection;
 import java.util.List;
 
+import com.pth.iflow.common.edo.models.DepartmentGroupEdo;
 import com.pth.iflow.core.model.entity.DepartmentGroupEntity;
+import com.pth.iflow.core.service.base.ICoreModelEdoMapperService;
 
-public interface IDepartmentGroupService {
+public interface IDepartmentGroupService extends ICoreModelEdoMapperService<DepartmentGroupEntity, DepartmentGroupEdo> {
 
   DepartmentGroupEntity save(DepartmentGroupEntity model);
 

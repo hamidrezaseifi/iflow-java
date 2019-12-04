@@ -21,7 +21,6 @@ import com.pth.iflow.common.edo.models.WorkflowMessageListEdo;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.core.model.entity.workflow.WorkflowMessageEntity;
-import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
 import com.pth.iflow.core.service.interfaces.IWorkflowMessageService;
 
 @RestController
@@ -43,7 +42,7 @@ public class WorkflowMessageController {
     final List<WorkflowMessageEntity> messageList = this.workflowMessageService.getNotClosedNotExpiredListByUserEmail(email);
 
     return ControllerHelper.createResponseEntity(request,
-        new WorkflowMessageListEdo(CoreModelEdoMapper.toWorkflowMessageEdoList(messageList)), HttpStatus.OK);
+        new WorkflowMessageListEdo(this.workflowMessageService.toEdoList(messageList)), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -54,7 +53,7 @@ public class WorkflowMessageController {
     final List<WorkflowMessageEntity> messageList = this.workflowMessageService.getNotClosedNotExpiredListByWorkflowId(workflowid);
 
     return ControllerHelper.createResponseEntity(request,
-        new WorkflowMessageListEdo(CoreModelEdoMapper.toWorkflowMessageEdoList(messageList)), HttpStatus.OK);
+        new WorkflowMessageListEdo(this.workflowMessageService.toEdoList(messageList)), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.CREATED)
@@ -62,9 +61,9 @@ public class WorkflowMessageController {
   public ResponseEntity<WorkflowMessageEdo> saveWorkflowMessage(@RequestBody(required = true) final WorkflowMessageEdo message,
       final HttpServletRequest request) throws Exception {
 
-    final WorkflowMessageEntity result = this.workflowMessageService.save(CoreModelEdoMapper.fromEdo(message));
+    final WorkflowMessageEntity result = this.workflowMessageService.save(this.workflowMessageService.fromEdo(message));
 
-    return ControllerHelper.createResponseEntity(request, CoreModelEdoMapper.toEdo(result), HttpStatus.CREATED);
+    return ControllerHelper.createResponseEntity(request, this.workflowMessageService.toEdo(result), HttpStatus.CREATED);
   }
 
   @ResponseStatus(HttpStatus.CREATED)

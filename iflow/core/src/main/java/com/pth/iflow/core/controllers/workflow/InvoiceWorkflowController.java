@@ -21,7 +21,6 @@ import com.pth.iflow.common.edo.models.workflow.invoice.InvoiceWorkflowEdo;
 import com.pth.iflow.common.edo.models.workflow.invoice.InvoiceWorkflowListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.core.model.entity.workflow.InvoiceWorkflowEntity;
-import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
 import com.pth.iflow.core.service.interfaces.workflow.IInvoiceWorkflowService;
 
 @RestController
@@ -42,7 +41,7 @@ public class InvoiceWorkflowController {
 
     final InvoiceWorkflowEntity model = this.workflowService.getByIdentity(identity);
 
-    return ControllerHelper.createResponseEntity(request, CoreModelEdoMapper.toEdo(model), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, this.workflowService.toEdo(model), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.ACCEPTED)
@@ -50,8 +49,8 @@ public class InvoiceWorkflowController {
   public ResponseEntity<InvoiceWorkflowEdo> saveWorkflow(@RequestBody final InvoiceWorkflowEdo invoiceWorkflowEdo,
       final HttpServletRequest request) throws Exception {
 
-    final InvoiceWorkflowEntity model = this.workflowService.save(CoreModelEdoMapper.fromEdo(invoiceWorkflowEdo));
-    return ControllerHelper.createResponseEntity(request, CoreModelEdoMapper.toEdo(model), HttpStatus.ACCEPTED);
+    final InvoiceWorkflowEntity model = this.workflowService.save(this.workflowService.fromEdo(invoiceWorkflowEdo));
+    return ControllerHelper.createResponseEntity(request, this.workflowService.toEdo(model), HttpStatus.ACCEPTED);
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -61,8 +60,8 @@ public class InvoiceWorkflowController {
 
     final List<InvoiceWorkflowEntity> modelList = this.workflowService.getListByIdentityList(idList.getIdentityList());
 
-    return ControllerHelper.createResponseEntity(request,
-        new InvoiceWorkflowListEdo(CoreModelEdoMapper.toInvoiceWorkflowEdoList(modelList)), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, new InvoiceWorkflowListEdo(this.workflowService.toEdoList(modelList)),
+        HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -72,8 +71,8 @@ public class InvoiceWorkflowController {
 
     final List<InvoiceWorkflowEntity> modelList = this.workflowService.getListForUser(email, status);
 
-    return ControllerHelper.createResponseEntity(request,
-        new InvoiceWorkflowListEdo(CoreModelEdoMapper.toInvoiceWorkflowEdoList(modelList)), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, new InvoiceWorkflowListEdo(this.workflowService.toEdoList(modelList)),
+        HttpStatus.OK);
   }
 
 }

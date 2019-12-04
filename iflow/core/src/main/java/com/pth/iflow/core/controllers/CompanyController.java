@@ -15,7 +15,6 @@ import com.pth.iflow.common.controllers.helper.ControllerHelper;
 import com.pth.iflow.common.edo.models.CompanyEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.core.model.entity.CompanyEntity;
-import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
 import com.pth.iflow.core.service.interfaces.ICompanyService;
 
 @RestController
@@ -35,7 +34,7 @@ public class CompanyController {
 
     final CompanyEntity company = this.companyService.getByIdentity(companyidentity);
 
-    return ControllerHelper.createResponseEntity(request, CoreModelEdoMapper.toEdo(company), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, this.companyService.toEdo(company), HttpStatus.OK);
   }
 
 }
