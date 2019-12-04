@@ -32,7 +32,6 @@ import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.XmlRestConfig;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.entity.workflow.TestThreeTaskWorkflowEntity;
-import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
 import com.pth.iflow.core.service.interfaces.workflow.ITestThreeTaskWorkflowService;
 
 @RunWith(SpringRunner.class)
@@ -63,17 +62,18 @@ public class TestThreeTaskWorkflowControllerTest extends TestDataProducer {
   @Test
   public void testReadWorkflow() throws Exception {
     final TestThreeTaskWorkflowEntity model = this.getTestTestThreeTaskWorkflow(1L);
+    final TestThreeTaskWorkflowEdo modelEdo = this.getTestTestThreeTaskWorkflowEdo();
 
     when(this.workflowService.getByIdentity(any(String.class))).thenReturn(model);
+    when(this.workflowService.toEdo(any(TestThreeTaskWorkflowEntity.class))).thenReturn(modelEdo);
 
-    final TestThreeTaskWorkflowEdo modelEdo = CoreModelEdoMapper.toEdo(model);
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelEdo);
 
     // System.out.println("listAsXmlString: \n" + listAsXmlString);
     this.mockMvc
-        .perform(MockMvcRequestBuilders
-            .get(IflowRestPaths.CoreModule.TESTTHREETASKWORKFLOW_READ_BY_IDENTITY, model.getWorkflow().getIdentity())
-            .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
+        .perform(
+            MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.TESTTHREETASKWORKFLOW_READ_BY_IDENTITY, model.getWorkflow().getIdentity())
+                .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
         .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(listAsXmlString));
 
@@ -83,18 +83,20 @@ public class TestThreeTaskWorkflowControllerTest extends TestDataProducer {
   @Test
   public void testReadWorkflowForUser() throws Exception {
     final List<TestThreeTaskWorkflowEntity> modelList = getTestTestThreeWorkflowList();
-    final TestThreeTaskWorkflowListEdo modelListEdo = new TestThreeTaskWorkflowListEdo(
-        CoreModelEdoMapper.toTestThreeTaskWorkflowEdoList(modelList));
+    final List<TestThreeTaskWorkflowEdo> modelEdoList = getTestTestThreeWorkflowEdoList();
+
+    final TestThreeTaskWorkflowListEdo modelListEdo = new TestThreeTaskWorkflowListEdo(modelEdoList);
 
     when(this.workflowService.getListForUser(any(String.class), any(Integer.class))).thenReturn(modelList);
+    when(this.workflowService.toEdoList(any(List.class))).thenReturn(modelEdoList);
 
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelListEdo);
 
     // System.out.println("listAsXmlString: \n" + listAsXmlString);
     this.mockMvc
-        .perform(MockMvcRequestBuilders
-            .get(IflowRestPaths.CoreModule.READ_TESTTHREETASKWORKFLOW_LIST_BY_USERIDENTITY("test-user-identity", 1))
-            .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
+        .perform(
+            MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.READ_TESTTHREETASKWORKFLOW_LIST_BY_USERIDENTITY("test-user-identity", 1))
+                .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
         .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(listAsXmlString));
 
@@ -107,10 +109,12 @@ public class TestThreeTaskWorkflowControllerTest extends TestDataProducer {
     final IdentityListEdo edoList = new IdentityListEdo(list);
 
     final List<TestThreeTaskWorkflowEntity> modelList = getTestTestThreeWorkflowList();
-    final TestThreeTaskWorkflowListEdo modelListEdo = new TestThreeTaskWorkflowListEdo(
-        CoreModelEdoMapper.toTestThreeTaskWorkflowEdoList(modelList));
+    final List<TestThreeTaskWorkflowEdo> modelEdoList = getTestTestThreeWorkflowEdoList();
+
+    final TestThreeTaskWorkflowListEdo modelListEdo = new TestThreeTaskWorkflowListEdo(modelEdoList);
 
     when(this.workflowService.getListByIdentityList(any(Set.class))).thenReturn(modelList);
+    when(this.workflowService.toEdoList(any(List.class))).thenReturn(modelEdoList);
 
     final String modelAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelListEdo);
@@ -129,9 +133,11 @@ public class TestThreeTaskWorkflowControllerTest extends TestDataProducer {
   @Test
   public void testSaveWorkflow() throws Exception {
     final TestThreeTaskWorkflowEntity model = this.getTestTestThreeTaskWorkflow(1L);
-    final TestThreeTaskWorkflowEdo modelEdo = CoreModelEdoMapper.toEdo(model);
+    final TestThreeTaskWorkflowEdo modelEdo = this.getTestTestThreeTaskWorkflowEdo();
 
     when(this.workflowService.save(any(TestThreeTaskWorkflowEntity.class))).thenReturn(model);
+    when(this.workflowService.toEdo(any(TestThreeTaskWorkflowEntity.class))).thenReturn(modelEdo);
+    when(this.workflowService.fromEdo(any(TestThreeTaskWorkflowEdo.class))).thenReturn(model);
 
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelEdo);
 

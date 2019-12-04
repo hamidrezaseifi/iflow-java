@@ -24,7 +24,10 @@ import com.pth.iflow.common.edo.models.WorkflowSearchFilterEdo;
 import com.pth.iflow.common.edo.models.WorkflowTypeEdo;
 import com.pth.iflow.common.edo.models.WorkflowTypeStepEdo;
 import com.pth.iflow.common.edo.models.workflow.WorkflowEdo;
+import com.pth.iflow.common.edo.models.workflow.invoice.InvoiceWorkflowEdo;
 import com.pth.iflow.common.edo.models.workflow.results.WorkflowResultEdo;
+import com.pth.iflow.common.edo.models.workflow.singletask.SingleTaskWorkflowEdo;
+import com.pth.iflow.common.edo.models.workflow.testthreetask.TestThreeTaskWorkflowEdo;
 import com.pth.iflow.common.enums.EIdentity;
 import com.pth.iflow.common.enums.EInvoiceType;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
@@ -453,10 +456,38 @@ public class TestDataProducer {
     return model;
   }
 
+  protected InvoiceWorkflowEdo getTestInvoiceWorkflowEdo() {
+    final InvoiceWorkflowEdo model = new InvoiceWorkflowEdo();
+    model.setWorkflow(getTestWorkflowEdo());
+
+    model.setSender("sender");
+    model.setRegisterNumber("ext_reg_number");
+    model.setInvoceDate(LocalDate.now());
+    model.setPartnerCode("partner_code");
+    model.setVendorNumber("vendor_number");
+    model.setVendorName("vendor_name");
+    model.setIsDirectDebitPermission(Boolean.TRUE);
+    model.setInvoiceType(EInvoiceType.PAYMENT.getValue());
+    model.setDiscountEnterDate(LocalDate.now());
+    model.setDiscountRate(10.0);
+    model.setDiscountDeadline(10);
+    model.setDiscountDate(LocalDate.now());
+    model.setPaymentAmount(1000.0);
+
+    return model;
+  }
+
   protected SingleTaskWorkflowEntity getTestSingleTaskWorkflow(final Long Id) {
     final SingleTaskWorkflowEntity model = new SingleTaskWorkflowEntity();
     model.setWorkflow(getTestWorkflow(Id));
     model.setWorkflowId(Id);
+
+    return model;
+  }
+
+  protected SingleTaskWorkflowEdo getTestSingleTaskWorkflowEdo() {
+    final SingleTaskWorkflowEdo model = new SingleTaskWorkflowEdo();
+    model.setWorkflow(getTestWorkflowEdo());
 
     return model;
   }
@@ -467,6 +498,13 @@ public class TestDataProducer {
     model.setWorkflowId(Id);
 
     return model;
+  }
+
+  protected TestThreeTaskWorkflowEdo getTestTestThreeTaskWorkflowEdo() {
+    final TestThreeTaskWorkflowEdo edo = new TestThreeTaskWorkflowEdo();
+    edo.setWorkflow(getTestWorkflowEdo());
+
+    return edo;
   }
 
   protected WorkflowResultEntity getTestWorkflowResult(final String identity, final String typeIdentity) {
@@ -694,6 +732,22 @@ public class TestDataProducer {
 
     return Arrays.asList(this.getTestTestThreeTaskWorkflow(1L), this.getTestTestThreeTaskWorkflow(2L),
         this.getTestTestThreeTaskWorkflow(3L));
+  }
+
+  protected List<TestThreeTaskWorkflowEdo> getTestTestThreeWorkflowEdoList() {
+
+    return Arrays.asList(this.getTestTestThreeTaskWorkflowEdo(), this.getTestTestThreeTaskWorkflowEdo(),
+        this.getTestTestThreeTaskWorkflowEdo());
+  }
+
+  protected List<SingleTaskWorkflowEdo> getTestSingleTaskWorkflowEdoList() {
+
+    return Arrays.asList(this.getTestSingleTaskWorkflowEdo(), this.getTestSingleTaskWorkflowEdo(), this.getTestSingleTaskWorkflowEdo());
+  }
+
+  protected List<InvoiceWorkflowEdo> getTestInvoiceWorkflowEdoList() {
+
+    return Arrays.asList(this.getTestInvoiceWorkflowEdo(), this.getTestInvoiceWorkflowEdo(), this.getTestInvoiceWorkflowEdo());
   }
 
   protected List<WorkflowResultEntity> getTestWorkflowResultList() {

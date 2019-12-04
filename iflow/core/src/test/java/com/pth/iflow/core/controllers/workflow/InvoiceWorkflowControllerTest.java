@@ -32,7 +32,6 @@ import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.XmlRestConfig;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.entity.workflow.InvoiceWorkflowEntity;
-import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
 import com.pth.iflow.core.service.interfaces.workflow.IInvoiceWorkflowService;
 
 @RunWith(SpringRunner.class)
@@ -63,17 +62,17 @@ public class InvoiceWorkflowControllerTest extends TestDataProducer {
   @Test
   public void testReadWorkflow() throws Exception {
     final InvoiceWorkflowEntity model = this.getTestInvoiceWorkflow(1L);
+    final InvoiceWorkflowEdo modelEdo = this.getTestInvoiceWorkflowEdo();
 
     when(this.workflowService.getByIdentity(any(String.class))).thenReturn(model);
+    when(this.workflowService.toEdo(any(InvoiceWorkflowEntity.class))).thenReturn(modelEdo);
 
-    final InvoiceWorkflowEdo modelEdo = CoreModelEdoMapper.toEdo(model);
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelEdo);
 
     // System.out.println("listAsXmlString: \n" + listAsXmlString);
     this.mockMvc
-        .perform(
-            MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.INVOICEWORKFLOW_READ_BY_IDENTITY, model.getWorkflow().getIdentity())
-                .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
+        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.INVOICEWORKFLOW_READ_BY_IDENTITY, model.getWorkflow().getIdentity())
+            .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
         .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(listAsXmlString));
 
@@ -83,17 +82,19 @@ public class InvoiceWorkflowControllerTest extends TestDataProducer {
   @Test
   public void testReadWorkflowForUser() throws Exception {
     final List<InvoiceWorkflowEntity> modelList = getTestInvoiceWorkflowList();
-    final InvoiceWorkflowListEdo modelListEdo = new InvoiceWorkflowListEdo(CoreModelEdoMapper.toInvoiceWorkflowEdoList(modelList));
+    final List<InvoiceWorkflowEdo> modelEdoList = getTestInvoiceWorkflowEdoList();
+
+    final InvoiceWorkflowListEdo modelListEdo = new InvoiceWorkflowListEdo(modelEdoList);
 
     when(this.workflowService.getListForUser(any(String.class), any(Integer.class))).thenReturn(modelList);
+    when(this.workflowService.toEdoList(any(List.class))).thenReturn(modelEdoList);
 
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelListEdo);
 
     // System.out.println("listAsXmlString: \n" + listAsXmlString);
     this.mockMvc
-        .perform(
-            MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.READ_INVOICEWORKFLOW_LIST_BY_USERIDENTITY("test-user-identity", 1))
-                .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
+        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.READ_INVOICEWORKFLOW_LIST_BY_USERIDENTITY("test-user-identity", 1))
+            .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
         .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(listAsXmlString));
 
@@ -106,9 +107,12 @@ public class InvoiceWorkflowControllerTest extends TestDataProducer {
     final IdentityListEdo edoList = new IdentityListEdo(list);
 
     final List<InvoiceWorkflowEntity> modelList = getTestInvoiceWorkflowList();
-    final InvoiceWorkflowListEdo modelListEdo = new InvoiceWorkflowListEdo(CoreModelEdoMapper.toInvoiceWorkflowEdoList(modelList));
+    final List<InvoiceWorkflowEdo> modelEdoList = getTestInvoiceWorkflowEdoList();
+
+    final InvoiceWorkflowListEdo modelListEdo = new InvoiceWorkflowListEdo(modelEdoList);
 
     when(this.workflowService.getListByIdentityList(any(Set.class))).thenReturn(modelList);
+    when(this.workflowService.toEdoList(any(List.class))).thenReturn(modelEdoList);
 
     final String modelAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelListEdo);
@@ -127,9 +131,11 @@ public class InvoiceWorkflowControllerTest extends TestDataProducer {
   @Test
   public void testSaveWorkflow() throws Exception {
     final InvoiceWorkflowEntity model = this.getTestInvoiceWorkflow(1L);
-    final InvoiceWorkflowEdo modelEdo = CoreModelEdoMapper.toEdo(model);
+    final InvoiceWorkflowEdo modelEdo = this.getTestInvoiceWorkflowEdo();
 
     when(this.workflowService.save(any(InvoiceWorkflowEntity.class))).thenReturn(model);
+    when(this.workflowService.toEdo(any(InvoiceWorkflowEntity.class))).thenReturn(modelEdo);
+    when(this.workflowService.fromEdo(any(InvoiceWorkflowEdo.class))).thenReturn(model);
 
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelEdo);
 
