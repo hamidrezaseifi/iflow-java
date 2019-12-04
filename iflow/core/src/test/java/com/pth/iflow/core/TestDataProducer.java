@@ -661,6 +661,7 @@ public class TestDataProducer {
     model.setStatus(1);
     model.setComments("comments");
     model.setAssignToId(0L);
+    model.setCurrentStepId(1L);
 
     return model;
   }

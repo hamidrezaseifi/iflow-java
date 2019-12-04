@@ -230,4 +230,5 @@ public class WorkflowMessageEntity extends EntityIdentityHelper {
     this.workflowId = exists.workflowId;
 
   }
+
 }

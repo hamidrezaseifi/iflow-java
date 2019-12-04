@@ -58,12 +58,16 @@ public class WorkflowMessageDao implements IWorkflowMessageDao {
 
   @Override
   public void deleteById(final Long id) throws IFlowStorageException {
-    repository.deleteById(id);
+    final WorkflowMessageEntity entity = getById(id);
+
+    if (entity != null) {
+      entityManager.remove(entity);
+    }
   }
 
   @Override
-  public void updateStatusByWorkflowIdentity(final String workflowIdentity, final String stepIdentity,
-      final EWorkflowMessageStatus status) throws IFlowStorageException {
+  public void updateStatusByWorkflowIdentity(final String workflowIdentity, final String stepIdentity, final EWorkflowMessageStatus status)
+      throws IFlowStorageException {
     final List<WorkflowMessageEntity> messages = findMessageListForWorkflowAndStep(workflowIdentity, stepIdentity);
 
     for (final WorkflowMessageEntity message : messages) {
@@ -85,8 +89,7 @@ public class WorkflowMessageDao implements IWorkflowMessageDao {
   @Override
   public List<WorkflowMessageEntity> getNotClosedNotExpiredListByUserIdentity(final String userIdentity) throws IFlowStorageException {
 
-    final List<Integer> statusList = Arrays.asList(EWorkflowMessageStatus.ASSIGNED.getValue(),
-        EWorkflowMessageStatus.OFFERING.getValue());
+    final List<Integer> statusList = Arrays.asList(EWorkflowMessageStatus.ASSIGNED.getValue(), EWorkflowMessageStatus.OFFERING.getValue());
 
     return repository.findNotExpiredUserWorkflowMessagesByStatus(userIdentity, statusList);
   }
@@ -94,8 +97,7 @@ public class WorkflowMessageDao implements IWorkflowMessageDao {
   @Override
   public List<WorkflowMessageEntity> getNotClosedNotExpiredListByWorkflowIdentity(final String workflowIdentity)
       throws IFlowStorageException {
-    final List<Integer> statusList = Arrays.asList(EWorkflowMessageStatus.ASSIGNED.getValue(),
-        EWorkflowMessageStatus.OFFERING.getValue());
+    final List<Integer> statusList = Arrays.asList(EWorkflowMessageStatus.ASSIGNED.getValue(), EWorkflowMessageStatus.OFFERING.getValue());
 
     return repository.findNotExpiredWorkflowWorkflowMessagesByStatus(workflowIdentity, statusList);
   }

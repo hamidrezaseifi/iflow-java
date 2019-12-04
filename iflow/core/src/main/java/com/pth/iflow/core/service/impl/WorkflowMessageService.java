@@ -67,8 +67,7 @@ public class WorkflowMessageService extends CoreModelEdoMapperService<WorkflowMe
   }
 
   @Override
-  public List<WorkflowMessageEntity> getNotClosedNotExpiredListByWorkflowId(final String workflowIdentity)
-      throws IFlowStorageException {
+  public List<WorkflowMessageEntity> getNotClosedNotExpiredListByWorkflowId(final String workflowIdentity) throws IFlowStorageException {
 
     return this.workflowMessageDao.getNotClosedNotExpiredListByWorkflowIdentity(workflowIdentity);
   }
@@ -114,8 +113,8 @@ public class WorkflowMessageService extends CoreModelEdoMapperService<WorkflowMe
     edo.setCreatedAt(CoreDataHelper.toLocalDateTime(model.getCreatedAt()));
     edo.setUserIdentity(usersDao.getById(model.getUserId()).getIdentity());
     edo.setCreatedByIdentity(usersDao.getById(model.getCreatedById()).getIdentity());
-    edo.setStepIdentity(workflowDao.getById(model.getWorkflowId()).getIdentity());
-    edo.setWorkflowIdentity(workflowTypeStepDao.getById(model.getStepId()).getIdentity());
+    edo.setWorkflowIdentity(workflowDao.getById(model.getWorkflowId()).getIdentity());
+    edo.setStepIdentity(workflowTypeStepDao.getById(model.getStepId()).getIdentity());
 
     return edo;
   }
