@@ -1,9 +1,7 @@
 package com.pth.iflow.core.storage.dao.impl.base;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -13,68 +11,16 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Subquery;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import com.pth.iflow.core.model.entity.workflow.WorkflowActionEntity;
 import com.pth.iflow.core.model.entity.workflow.WorkflowEntity;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
-import com.pth.iflow.core.storage.dao.impl.repository.workflow.WorkflowRepository;
-import com.pth.iflow.core.storage.dao.interfaces.workflow.IWorkflowDao;
 
-@Transactional
-@Repository
-public class WorkflowDao implements IWorkflowDao {
+public class WorkflowDaoBase {
 
   @Autowired
-  private WorkflowRepository repository;
+  protected EntityManager entityManager;
 
-  @Autowired
-  private EntityManager entityManager;
-
-  @Override
-  public WorkflowEntity create(final WorkflowEntity model) throws IFlowStorageException {
-
-    entityManager.persist(model);
-    entityManager.flush();
-    return getById(model.getId());
-  }
-
-  @Override
-  public WorkflowEntity update(final WorkflowEntity model) throws IFlowStorageException {
-
-    final WorkflowEntity dbModel = entityManager.find(WorkflowEntity.class, model.getId());
-    dbModel.updateFromExists(model);
-
-    entityManager.merge(dbModel);
-    entityManager.flush();
-    return getById(model.getId());
-  }
-
-  @Override
-  public WorkflowEntity getById(final Long id) throws IFlowStorageException {
-    final Optional<WorkflowEntity> model = repository.findById(id);
-
-    return model.isPresent() ? model.get() : null;
-  }
-
-  @Override
-  public WorkflowEntity getByIdentity(final String identity) throws IFlowStorageException {
-    return repository.findByIdentity(identity);
-  }
-
-  @Override
-  public void deleteById(final Long workflowId) throws IFlowStorageException {
-
-    final WorkflowEntity entity = getById(workflowId);
-
-    if (entity != null) {
-      entityManager.remove(entity);
-    }
-
-  }
-
-  @Override
-  public List<WorkflowEntity> getListForUserIdentity(final String userIdentity, final int status) throws IFlowStorageException {
+  public <W> List<WorkflowEntity> getListForUserIdentity(final String userIdentity, final int status) throws IFlowStorageException {
 
     final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
     final CriteriaQuery<WorkflowEntity> query = criteriaBuilder.createQuery(WorkflowEntity.class);
@@ -110,21 +56,6 @@ public class WorkflowDao implements IWorkflowDao {
     // typedQuery.unwrap(org.hibernate.query.Query.class).getQueryString();
     // System.out.println("search workflow query: " + qr);
     return typedQuery.getResultList();
-
-  }
-
-  @Override
-  public List<WorkflowEntity> getListByIdentityList(final Collection<String> idList) {
-
-    return repository.findAllByIdentityList(idList);
-  }
-
-  public void deleteAllSubItems(final WorkflowEntity model) throws IFlowStorageException {
-
-    entityManager.remove(model.getActions().get(0));
-    entityManager.remove(model.getFiles().get(0));
-
-    entityManager.flush();
 
   }
 

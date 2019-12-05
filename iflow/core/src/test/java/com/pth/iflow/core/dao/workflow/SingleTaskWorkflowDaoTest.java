@@ -1,5 +1,6 @@
 package com.pth.iflow.core.dao.workflow;
 
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -124,6 +125,18 @@ public class SingleTaskWorkflowDaoTest extends TestDataProducer {
     final SingleTaskWorkflowEntity deletedWorkflow = this.workflowDao.getById(resWorkflow.getWorkflow().getId());
 
     Assert.assertNull("Result workflow is null!", deletedWorkflow);
+
+  }
+
+  @Test
+  public void testGetListForUserIdentity() throws Exception {
+
+    createWorlflowList();
+
+    final List<SingleTaskWorkflowEntity> resList = this.workflowDao.getListForUserIdentity("admin@iflow.de", -1);
+
+    Assert.assertNotNull("Result list is not null!", resList);
+    Assert.assertThat("Result list has " + createdModels.size() + " items.", resList.size(), greaterThanOrEqualTo(createdModels.size()));
 
   }
 
