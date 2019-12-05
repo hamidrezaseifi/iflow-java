@@ -1,7 +1,7 @@
 package com.pth.iflow.core.model.entity;
 
 import java.sql.Date;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -69,19 +69,19 @@ public class UserEntity extends EntityIdentityHelper {
   private CompanyEntity company;
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "userEntity")
-  private final Set<UserRoleEntity> roles = new HashSet<>();
+  private final List<UserRoleEntity> roles = new ArrayList<>();
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "userEntity")
-  private final Set<UserDeputyEntity> deputies = new HashSet<>();
+  private final List<UserDeputyEntity> deputies = new ArrayList<>();
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "userEntity")
-  private final Set<UserUserGroupEntity> groups = new HashSet<>();
+  private final List<UserUserGroupEntity> groups = new ArrayList<>();
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "userEntity")
-  private final Set<UserDepartmentEntity> departments = new HashSet<>();
+  private final List<UserDepartmentEntity> departments = new ArrayList<>();
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "userEntity")
-  private final Set<UserDepartmentGroupEntity> departmentGroups = new HashSet<>();
+  private final List<UserDepartmentGroupEntity> departmentGroups = new ArrayList<>();
 
   public UserEntity() {
 
@@ -244,15 +244,15 @@ public class UserEntity extends EntityIdentityHelper {
     this.permission = permission;
   }
 
-  public Set<UserUserGroupEntity> getGroups() {
+  public List<UserUserGroupEntity> getGroups() {
     return groups;
   }
 
-  public Set<UserDepartmentEntity> getDepartments() {
+  public List<UserDepartmentEntity> getDepartments() {
     return departments;
   }
 
-  public Set<UserDepartmentGroupEntity> getDepartmentGroups() {
+  public List<UserDepartmentGroupEntity> getDepartmentGroups() {
     return departmentGroups;
   }
 
@@ -264,11 +264,11 @@ public class UserEntity extends EntityIdentityHelper {
     this.company = company;
   }
 
-  public Set<UserRoleEntity> getRoles() {
+  public List<UserRoleEntity> getRoles() {
     return roles;
   }
 
-  public Set<UserDeputyEntity> getDeputies() {
+  public List<UserDeputyEntity> getDeputies() {
     return deputies;
   }
 
