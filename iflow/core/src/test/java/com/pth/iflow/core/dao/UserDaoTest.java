@@ -62,13 +62,7 @@ public class UserDaoTest extends TestDataProducer {
 
     final UserEntity resUser = this.userDao.getById(createdModels.get(0).getId());
 
-    Assert.assertNotNull("Result user is not null!", resUser);
-    Assert.assertEquals("Result user has id 1!", resUser.getId(), user.getId());
-    Assert.assertEquals("Result user has email '" + user.getEmail() + "'!", resUser.getEmail(), user.getEmail());
-    Assert.assertEquals("Result user has firstname '" + user.getFirstName() + "'!", resUser.getFirstName(), user.getFirstName());
-    Assert.assertEquals("Result user has lastname '" + user.getLastName() + "'!", resUser.getLastName(), user.getLastName());
-    Assert.assertEquals("Result user has status 1!", resUser.getStatus(), user.getStatus());
-    Assert.assertEquals("Result user has the same groups!", resUser.getGroups(), user.getGroups());
+    compareUsers(user, resUser);
 
   }
 
@@ -107,12 +101,7 @@ public class UserDaoTest extends TestDataProducer {
     final UserEntity resUser = userDao.create(user);
     createdModels.add(resUser);
 
-    Assert.assertNotNull("Result user is not null!", resUser);
-    Assert.assertEquals("Result user has email '" + user.getEmail() + "'!", resUser.getEmail(), user.getEmail());
-    Assert.assertEquals("Result user has firstname '" + user.getFirstName() + "'!", resUser.getFirstName(), user.getFirstName());
-    Assert.assertEquals("Result user has lastname '" + user.getLastName() + "'!", resUser.getLastName(), user.getLastName());
-    Assert.assertEquals("Result user has status 1!", resUser.getStatus(), user.getStatus());
-    Assert.assertEquals("Result user has the same groups!", resUser.getGroups(), user.getGroups());
+    compareUsers(user, resUser);
 
   }
 
@@ -132,9 +121,8 @@ public class UserDaoTest extends TestDataProducer {
 
     final UserEntity updatedUser = userDao.update(createdUser);
 
-    Assert.assertNotNull("Result user is not null!", updatedUser);
-    Assert.assertEquals("Result user has the same id as created!", createdUser.getId(), updatedUser.getId());
-    Assert.assertEquals("Result user has title '" + createdUser.getEmail() + "'!", createdUser.getEmail(), createdUser.getEmail());
+    compareUsers(createdUser, updatedUser);
+
     Assert.assertEquals("Result user has status 10!", updatedUser.getStatus().intValue(), 10);
     Assert.assertEquals("Result user has version 22!", updatedUser.getVersion().intValue(), 22);
 
@@ -155,4 +143,15 @@ public class UserDaoTest extends TestDataProducer {
     Assert.assertNull("Result user is null!", deletedUser);
 
   }
+
+  private void compareUsers(final UserEntity user, final UserEntity resUser) {
+    Assert.assertNotNull("Result user is not null!", resUser);
+    Assert.assertEquals("Result user has id 1!", resUser.getId(), user.getId());
+    Assert.assertEquals("Result user has email '" + user.getEmail() + "'!", resUser.getEmail(), user.getEmail());
+    Assert.assertEquals("Result user has firstname '" + user.getFirstName() + "'!", resUser.getFirstName(), user.getFirstName());
+    Assert.assertEquals("Result user has lastname '" + user.getLastName() + "'!", resUser.getLastName(), user.getLastName());
+    Assert.assertEquals("Result user has status 1!", resUser.getStatus(), user.getStatus());
+    Assert.assertEquals("Result user has the same groups!", resUser.getGroups().size(), user.getGroups().size());
+  }
+
 }

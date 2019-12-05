@@ -46,7 +46,7 @@ public class UserUserGroupEntity implements Serializable {
   private UserEntity userEntity;
 
   public UserUserGroupEntity() {
-    userGroup = new UserGroupEntity();
+
   }
 
   /*

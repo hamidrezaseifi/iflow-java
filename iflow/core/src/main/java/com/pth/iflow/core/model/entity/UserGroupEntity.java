@@ -1,7 +1,6 @@
 package com.pth.iflow.core.model.entity;
 
 import java.sql.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -12,12 +11,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.UpdateTimestamp;
-
 import com.pth.iflow.core.storage.dao.helper.EntityIdentityHelper;
 import com.pth.iflow.core.storage.dao.helper.EntityListener;
 
@@ -29,22 +26,22 @@ public class UserGroupEntity extends EntityIdentityHelper {
   @Id
   @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long          id;
+  private Long id;
 
   @Column(name = "identity")
-  private String        identity;
+  private String identity;
 
   @Column(name = "company_id")
-  private Long          companyId;
+  private Long companyId;
 
   @Column(name = "title")
-  private String        title;
+  private String title;
 
   @Column(name = "status")
-  private Integer       status;
+  private Integer status;
 
   @Column(name = "version")
-  private Integer       version;
+  private Integer version;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "company_id", insertable = false, updatable = false)
@@ -53,14 +50,14 @@ public class UserGroupEntity extends EntityIdentityHelper {
 
   @CreationTimestamp
   @Column(name = "created_at")
-  private Date          createdAt;
+  private Date createdAt;
 
   @UpdateTimestamp
   @Column(name = "updated_at")
-  private Date          updatedAt;
+  private Date updatedAt;
 
   public UserGroupEntity() {
-    company = new CompanyEntity();
+
   }
 
   @Override

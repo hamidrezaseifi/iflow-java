@@ -46,7 +46,7 @@ public class UserDepartmentEntity implements Serializable {
   private UserEntity userEntity;
 
   public UserDepartmentEntity() {
-    department = new DepartmentEntity();
+
   }
 
   /*

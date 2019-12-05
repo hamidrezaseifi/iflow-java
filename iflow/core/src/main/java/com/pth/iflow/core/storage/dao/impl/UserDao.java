@@ -1,7 +1,6 @@
 package com.pth.iflow.core.storage.dao.impl;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -47,9 +46,10 @@ public class UserDao implements IUserDao {
 
   @Override
   public UserEntity getById(final Long id) throws IFlowStorageException {
-    final Optional<UserEntity> model = repository.findById(id);
 
-    return model.isPresent() ? model.get() : null;
+    final UserEntity dbModel = entityManager.find(UserEntity.class, id);
+
+    return dbModel;
   }
 
   @Override

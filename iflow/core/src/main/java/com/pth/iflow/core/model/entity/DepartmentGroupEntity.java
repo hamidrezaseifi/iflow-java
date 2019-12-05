@@ -1,7 +1,6 @@
 package com.pth.iflow.core.model.entity;
 
 import java.sql.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -12,12 +11,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.UpdateTimestamp;
-
 import com.pth.iflow.core.storage.dao.helper.EntityIdentityHelper;
 import com.pth.iflow.core.storage.dao.helper.EntityListener;
 
@@ -29,38 +26,38 @@ public class DepartmentGroupEntity extends EntityIdentityHelper {
   @Id
   @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long                   id;
+  private Long id;
 
   @Column(name = "identity")
-  private String                 identity;
+  private String identity;
 
   @Column(name = "department_id")
-  private Long                   departmentId;
+  private Long departmentId;
 
   @Column(name = "title")
-  private String                 title;
+  private String title;
 
   @Column(name = "status")
-  private Integer                status;
+  private Integer status;
 
   @Column(name = "version")
-  private Integer                version;
+  private Integer version;
 
   @CreationTimestamp
   @Column(name = "created_at")
-  private Date                   createdAt;
+  private Date createdAt;
 
   @UpdateTimestamp
   @Column(name = "updated_at")
-  private Date                   updatedAt;
+  private Date updatedAt;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "department_id", insertable = false, updatable = false)
   @Fetch(FetchMode.JOIN)
-  private final DepartmentEntity department;
+  private DepartmentEntity department;
 
   public DepartmentGroupEntity() {
-    department = new DepartmentEntity();
+
   }
 
   @Override
