@@ -3,7 +3,6 @@ package com.pth.iflow.core.storage.dao.impl;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -11,32 +10,39 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
+import org.springframework.transaction.annotation.Transactional;
 import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 import com.pth.iflow.core.storage.dao.impl.repository.UserRepository;
 import com.pth.iflow.core.storage.dao.interfaces.IUserDao;
 
+@Transactional
 @Repository
 public class UserDao implements IUserDao {
 
   @Autowired
-  UserRepository        repository;
+  UserRepository repository;
 
   @Autowired
   private EntityManager entityManager;
 
   @Override
   public UserEntity create(final UserEntity model) throws IFlowStorageException {
-    return repository.save(model);
+    entityManager.persist(model);
+    entityManager.flush();
+    return getById(model.getId());
   }
 
   @Override
   public UserEntity update(final UserEntity model) throws IFlowStorageException {
-    return repository.save(model);
+    final UserEntity dbModel = entityManager.find(UserEntity.class, model.getId());
+    dbModel.updateFromExists(model);
+
+    entityManager.merge(dbModel);
+    entityManager.flush();
+    return getById(model.getId());
   }
 
   @Override
@@ -48,9 +54,11 @@ public class UserDao implements IUserDao {
 
   @Override
   public void deleteById(final Long id) throws IFlowStorageException {
+    final UserEntity entity = getById(id);
 
-    repository.deleteById(id);
-
+    if (entity != null) {
+      entityManager.remove(entity);
+    }
   }
 
   @Override

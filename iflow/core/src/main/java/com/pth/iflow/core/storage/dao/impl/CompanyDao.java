@@ -1,15 +1,15 @@
 package com.pth.iflow.core.storage.dao.impl;
 
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
+import org.springframework.transaction.annotation.Transactional;
 import com.pth.iflow.core.model.entity.CompanyEntity;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 import com.pth.iflow.core.storage.dao.impl.repository.CompanyRepository;
 import com.pth.iflow.core.storage.dao.interfaces.ICompanyDao;
 
+@Transactional
 @Repository
 public class CompanyDao implements ICompanyDao {
 

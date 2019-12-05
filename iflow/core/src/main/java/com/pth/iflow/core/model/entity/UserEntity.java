@@ -2,8 +2,8 @@ package com.pth.iflow.core.model.entity;
 
 import java.sql.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,12 +16,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.UpdateTimestamp;
-
 import com.pth.iflow.common.enums.EUserStatus;
 import com.pth.iflow.core.storage.dao.helper.EntityIdentityHelper;
 import com.pth.iflow.core.storage.dao.helper.EntityListener;
@@ -34,67 +30,61 @@ public class UserEntity extends EntityIdentityHelper {
   @Id
   @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long                           id;
+  private Long id;
 
   @Column(name = "email")
-  private String                         email;
+  private String email;
 
   @Column(name = "company_id")
-  private Long                           companyId;
+  private Long companyId;
 
   @Column(name = "birthdate")
-  private Date                           birthDate;
+  private Date birthDate;
 
   @Column(name = "firstname")
-  private String                         firstName;
+  private String firstName;
 
   @Column(name = "lastname")
-  private String                         lastName;
+  private String lastName;
 
   @Column(name = "status")
-  private Integer                        status;
+  private Integer status;
 
   @Column(name = "permission")
-  private Integer                        permission;
+  private Integer permission;
 
   @Column(name = "version")
-  private Integer                        version;
+  private Integer version;
 
   @CreationTimestamp
   @Column(name = "created_at")
-  private Date                           createdAt;
+  private Date createdAt;
 
   @UpdateTimestamp
   @Column(name = "updated_at")
-  private Date                           updatedAt;
+  private Date updatedAt;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "company_id", insertable = false, updatable = false)
-  @Fetch(FetchMode.JOIN)
-  private CompanyEntity                  company;
+  private CompanyEntity company;
 
-  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-  @JoinColumn(name = "user_id")
-  private Set<UserRoleEntity>            roles            = new HashSet<>();
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "userEntity")
+  private final Set<UserRoleEntity> roles = new HashSet<>();
 
-  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-  @JoinColumn(name = "user_id")
-  private Set<UserDeputyEntity>          deputies         = new HashSet<>();
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "userEntity")
+  private final Set<UserDeputyEntity> deputies = new HashSet<>();
 
-  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-  @JoinColumn(name = "user_id")
-  private Set<UserUserGroupEntity>       groups           = new HashSet<>();
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "userEntity")
+  private final Set<UserUserGroupEntity> groups = new HashSet<>();
 
-  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-  @JoinColumn(name = "user_id")
-  private Set<UserDepartmentEntity>      departments      = new HashSet<>();
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "userEntity")
+  private final Set<UserDepartmentEntity> departments = new HashSet<>();
 
-  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-  @JoinColumn(name = "user_id")
-  private Set<UserDepartmentGroupEntity> departmentGroups = new HashSet<>();
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "userEntity")
+  private final Set<UserDepartmentGroupEntity> departmentGroups = new HashSet<>();
 
   public UserEntity() {
-    company = new CompanyEntity();
+
   }
 
   /**
@@ -298,72 +288,108 @@ public class UserEntity extends EntityIdentityHelper {
   }
 
   public void setRoles(final Set<UserRoleEntity> roles) {
-    this.roles = roles;
+    this.roles.clear();
+    for (final UserRoleEntity entity : roles) {
+      entity.setUserEntity(this);
+
+      this.roles.add(entity);
+    }
+
+  }
+
+  public void setRolesFromIntegerList(final Set<Integer> roles) {
+    this.roles.clear();
+    for (final Integer role : roles) {
+      final UserRoleEntity entity = new UserRoleEntity();
+
+      entity.setUserEntity(this);
+      entity.setRole(role);
+
+      this.roles.add(entity);
+    }
   }
 
   public void setDeputies(final Set<UserDeputyEntity> deputies) {
-    this.deputies = deputies;
+    this.deputies.clear();
+    for (final UserDeputyEntity entity : deputies) {
+      entity.setUserEntity(this);
+
+      this.deputies.add(entity);
+    }
+
+  }
+
+  public void setDeputies(final List<UserEntity> deputies) {
+    this.deputies.clear();
+    for (final UserEntity model : deputies) {
+
+      final UserDeputyEntity entity = new UserDeputyEntity();
+      entity.setUserEntity(this);
+      entity.setDeputyId(model.getId());
+
+      this.deputies.add(entity);
+    }
   }
 
   public void setGroups(final Set<UserUserGroupEntity> groups) {
-    this.groups = groups;
-  }
+    this.groups.clear();
+    for (final UserUserGroupEntity entity : groups) {
+      entity.setUserEntity(this);
 
-  public void setDepartments(final Set<UserDepartmentEntity> departments) {
-    this.departments = departments;
-  }
-
-  public void setDepartmentGroups(final Set<UserDepartmentGroupEntity> departmentGroups) {
-    this.departmentGroups = departmentGroups;
-  }
-
-  public void fillGroupsFromIdentityList(final Set<String> identityList) {
-    for (final String identity : identityList) {
-      final UserUserGroupEntity entity = new UserUserGroupEntity();
-      entity.setUserGroup(new UserGroupEntity());
-      entity.getUserGroup().setIdentity(identity);
-      entity.setUserId(id);
       this.groups.add(entity);
     }
 
   }
 
-  public void fillDepartmentsFromIdentityList(final Set<String> identityList) {
-    for (final String identity : identityList) {
-      final UserDepartmentEntity entity = new UserDepartmentEntity();
-      entity.setDepartment(new DepartmentEntity());
-      entity.getDepartment().setIdentity(identity);
-      entity.setUserId(id);
+  public void setGroups(final List<UserGroupEntity> groups) {
+    this.groups.clear();
+    for (final UserGroupEntity model : groups) {
+
+      final UserUserGroupEntity entity = new UserUserGroupEntity();
+      entity.setUserEntity(this);
+      entity.setUserGroupId(model.getId());
+
+      this.groups.add(entity);
+    }
+  }
+
+  public void setDepartments(final Set<UserDepartmentEntity> departments) {
+    this.departments.clear();
+    for (final UserDepartmentEntity entity : departments) {
+      entity.setUserEntity(this);
+
       this.departments.add(entity);
     }
   }
 
-  public void fillDepartmentGroupsFromIdentityList(final Set<String> identityList) {
-    for (final String identity : identityList) {
-      final UserDepartmentGroupEntity entity = new UserDepartmentGroupEntity();
-      entity.setDepartmentGroup(new DepartmentGroupEntity());
-      entity.getDepartmentGroup().setIdentity(identity);
-      entity.setUserId(id);
+  public void setDepartments(final List<DepartmentEntity> departments) {
+    this.departments.clear();
+    for (final DepartmentEntity model : departments) {
+      final UserDepartmentEntity entity = new UserDepartmentEntity();
+      entity.setUserEntity(this);
+      entity.setDepartmentId(model.getId());
+
+      this.departments.add(entity);
+    }
+  }
+
+  public void setDepartmentGroups(final Set<UserDepartmentGroupEntity> departmentGroups) {
+    this.departmentGroups.clear();
+    for (final UserDepartmentGroupEntity entity : departmentGroups) {
+      entity.setUserEntity(this);
+
       this.departmentGroups.add(entity);
     }
   }
 
-  public void fillDeputiesFromIdentityList(final Set<String> identityList) {
-    for (final String identity : identityList) {
-      final UserDeputyEntity entity = new UserDeputyEntity();
-      entity.setDeputy(new UserEntity());
-      entity.getDeputy().setIdentity(identity);
-      entity.setUserId(id);
-      this.deputies.add(entity);
-    }
-  }
+  public void setDepartmentGroups(final List<DepartmentGroupEntity> departmentGroups) {
+    this.departmentGroups.clear();
+    for (final DepartmentGroupEntity model : departmentGroups) {
+      final UserDepartmentGroupEntity entity = new UserDepartmentGroupEntity();
+      entity.setUserEntity(this);
+      entity.setDepartmentGroupId(model.getId());
 
-  public void fillRolesFromRoleList(final Set<Integer> roleList) {
-    for (final Integer role : roleList) {
-      final UserRoleEntity entity = new UserRoleEntity();
-      entity.setRole(role);
-      entity.setUserId(id);
-      this.roles.add(entity);
+      this.departmentGroups.add(entity);
     }
   }
 
@@ -371,4 +397,32 @@ public class UserEntity extends EntityIdentityHelper {
   public void increaseVersion() {
     version += 1;
   }
+
+  public void updateFromExists(final UserEntity exists) {
+    if (exists == null) {
+      return;
+    }
+    this.birthDate = exists.birthDate;
+    this.companyId = exists.companyId;
+    this.email = exists.email;
+    this.firstName = exists.firstName;
+    this.lastName = exists.lastName;
+    this.status = exists.status;
+    this.version = exists.version;
+    this.permission = exists.permission;
+
+    this.departmentGroups.clear();
+    this.departments.clear();
+    this.deputies.clear();
+    this.groups.clear();
+    this.roles.clear();
+
+    this.departmentGroups.addAll(exists.departmentGroups);
+    this.departments.addAll(exists.departments);
+    this.deputies.addAll(exists.deputies);
+    this.groups.addAll(exists.groups);
+    this.roles.addAll(exists.roles);
+
+  }
+
 }

@@ -27,6 +27,8 @@ import com.pth.iflow.core.model.entity.UserGroupEntity;
 import com.pth.iflow.core.service.impl.UsersService;
 import com.pth.iflow.core.service.interfaces.IUsersService;
 import com.pth.iflow.core.storage.dao.interfaces.ICompanyDao;
+import com.pth.iflow.core.storage.dao.interfaces.IDepartmentDao;
+import com.pth.iflow.core.storage.dao.interfaces.IDepartmentGroupDao;
 import com.pth.iflow.core.storage.dao.interfaces.IUserDao;
 import com.pth.iflow.core.storage.dao.interfaces.IUserGroupDao;
 
@@ -46,9 +48,15 @@ public class UserServiceTest extends TestDataProducer {
   @MockBean
   private IUserGroupDao userGroupDao;
 
+  @MockBean
+  private IDepartmentDao departmentDao;
+
+  @MockBean
+  private IDepartmentGroupDao departmentGroupDao;
+
   @Before
   public void setUp() throws Exception {
-    this.userService = new UsersService(this.companyDao, this.userDao, this.userGroupDao);
+    this.userService = new UsersService(this.companyDao, this.userDao, this.userGroupDao, this.departmentDao, this.departmentGroupDao);
   }
 
   @After

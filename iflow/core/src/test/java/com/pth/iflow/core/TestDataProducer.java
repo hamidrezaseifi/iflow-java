@@ -105,10 +105,10 @@ public class TestDataProducer {
     model.setStatus(1);
     model.setVersion(1);
     model.setPermission(1);
-    model.setDepartmentGroups(this.getTestUserDepartmentEntityGroupSet(1L));
-    model.setDepartments(this.getTestUserDepartmentEntitySet(1L));
-    model.setDeputies(this.getTestUserDeputyEntitySet(1L));
-    model.setGroups(this.getTestUserUserGroupEntitySet(1L));
+    model.setDepartmentGroups(this.getTestUserDepartmentEntityGroupSet(model));
+    model.setDepartments(this.getTestUserDepartmentEntitySet(model));
+    model.setDeputies(this.getTestUserDeputyEntitySet(model));
+    model.setGroups(this.getTestUserUserGroupEntitySet(model));
     model.setCompany(getTestCompany());
     // model.setCompanyIdentity("companyIdentity");
 
@@ -162,10 +162,10 @@ public class TestDataProducer {
     model.setStatus(1);
     model.setVersion(1);
     model.setPermission(1);
-    model.setDepartmentGroups(this.getTestUserDepartmentEntityGroupSet(1L));
-    model.setDepartments(this.getTestUserDepartmentEntitySet(1L));
-    model.setDeputies(this.getTestUserDeputyEntitySet(1L));
-    model.setGroups(this.getTestUserUserGroupEntitySet(1L));
+    model.setDepartmentGroups(this.getTestUserDepartmentEntityGroupSet(model));
+    model.setDepartments(this.getTestUserDepartmentEntitySet(model));
+    model.setDeputies(this.getTestUserDeputyEntitySet(model));
+    model.setGroups(this.getTestUserUserGroupEntitySet(model));
     model.setBirthDate(getTestBirthDate());
     model.setCompany(getTestCompany());
 
@@ -1071,61 +1071,57 @@ public class TestDataProducer {
     return list;
   }
 
-  protected Set<UserDepartmentGroupEntity> getTestUserDepartmentEntityGroupSet(final Long userId) {
-    return new HashSet<UserDepartmentGroupEntity>(Arrays.asList(getTestUserDepartmentGroupEntity(userId, 1L),
-                                                                getTestUserDepartmentGroupEntity(userId, 2L),
-                                                                getTestUserDepartmentGroupEntity(userId, 3L)));
+  protected Set<UserDepartmentGroupEntity> getTestUserDepartmentEntityGroupSet(final UserEntity user) {
+    return new HashSet<UserDepartmentGroupEntity>(Arrays.asList(getTestUserDepartmentGroupEntity(user, 1L),
+                                                                getTestUserDepartmentGroupEntity(user, 2L),
+                                                                getTestUserDepartmentGroupEntity(user, 3L)));
   }
 
-  private UserDepartmentGroupEntity getTestUserDepartmentGroupEntity(final Long userId, final Long departmentGroupId) {
+  private UserDepartmentGroupEntity getTestUserDepartmentGroupEntity(final UserEntity user, final Long departmentGroupId) {
     final UserDepartmentGroupEntity model = new UserDepartmentGroupEntity();
     model.setDepartmentGroupId(departmentGroupId);
-    model.setUserId(userId);
-    model.setDepartmentGroup(getTestDepartmentGroup());
+    model.setUserEntity(user);
+    model.setDepartmentGroup(null);
     return model;
   }
 
-  protected Set<UserDepartmentEntity> getTestUserDepartmentEntitySet(final Long userId) {
-    return new HashSet<UserDepartmentEntity>(Arrays.asList(getTestUserDepartmentEntity(userId, 1L),
-                                                           getTestUserDepartmentEntity(userId, 2L),
-                                                           getTestUserDepartmentEntity(userId, 3L)));
+  protected Set<UserDepartmentEntity> getTestUserDepartmentEntitySet(final UserEntity user) {
+    return new HashSet<UserDepartmentEntity>(Arrays.asList(getTestUserDepartmentEntity(user, 1L),
+                                                           getTestUserDepartmentEntity(user, 2L),
+                                                           getTestUserDepartmentEntity(user, 3L)));
   }
 
-  private UserDepartmentEntity getTestUserDepartmentEntity(final Long userId, final Long departmentId) {
+  private UserDepartmentEntity getTestUserDepartmentEntity(final UserEntity user, final Long departmentId) {
     final UserDepartmentEntity model = new UserDepartmentEntity();
     model.setDepartmentId(departmentId);
-    model.setUserId(userId);
-    model.setDepartment(getTestDepartment());
+    model.setUserEntity(user);
     return model;
   }
 
-  protected Set<UserUserGroupEntity> getTestUserUserGroupEntitySet(final Long userId) {
-    return new HashSet<UserUserGroupEntity>(Arrays.asList(getTestUserUserGroupEntity(userId, 1L),
-                                                          getTestUserUserGroupEntity(userId, 2L),
-                                                          getTestUserUserGroupEntity(userId, 3L)));
+  protected Set<UserUserGroupEntity> getTestUserUserGroupEntitySet(final UserEntity user) {
+    return new HashSet<UserUserGroupEntity>(Arrays.asList(getTestUserUserGroupEntity(user, 1L),
+                                                          getTestUserUserGroupEntity(user, 2L),
+                                                          getTestUserUserGroupEntity(user, 3L)));
   }
 
-  private UserUserGroupEntity getTestUserUserGroupEntity(final Long userId, final Long userGroupId) {
+  private UserUserGroupEntity getTestUserUserGroupEntity(final UserEntity user, final Long userGroupId) {
     final UserUserGroupEntity model = new UserUserGroupEntity();
     model.setUserGroupId(userGroupId);
-    model.setUserId(userId);
-    model.setUserGroup(getTestUserGroup());
+    model.setUserEntity(user);
     return model;
   }
 
-  protected Set<UserDeputyEntity> getTestUserDeputyEntitySet(final Long userId) {
+  protected Set<UserDeputyEntity> getTestUserDeputyEntitySet(final UserEntity user) {
     return new HashSet<UserDeputyEntity>(
-                                         Arrays.asList(getTestUserDeputyEntity(userId, 1L),
-                                                       getTestUserDeputyEntity(userId, 2L),
-                                                       getTestUserDeputyEntity(userId, 3L)));
+                                         Arrays.asList(getTestUserDeputyEntity(user, 1L),
+                                                       getTestUserDeputyEntity(user, 2L),
+                                                       getTestUserDeputyEntity(user, 3L)));
   }
 
-  private UserDeputyEntity getTestUserDeputyEntity(final Long userId, final Long deputyId) {
+  private UserDeputyEntity getTestUserDeputyEntity(final UserEntity user, final Long deputyId) {
     final UserDeputyEntity model = new UserDeputyEntity();
     model.setDeputyId(deputyId);
-    model.setUserId(userId);
-    model.setDeputy(new UserEntity());
-    model.getDeputy().setIdentity("deputy-identity");
+    model.setUserEntity(user);
     return model;
   }
 

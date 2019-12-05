@@ -2,7 +2,6 @@ package com.pth.iflow.core.model.entity;
 
 import java.io.Serializable;
 import java.sql.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,7 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -24,34 +22,38 @@ public class UserUserGroupEntity implements Serializable {
    */
   private static final long serialVersionUID = 1L;
 
-  @Id
-  @Column(name = "user_id")
-  private Long              userId;
+  /*
+   * @Id
+   *
+   * @Column(name = "user_id") private Long userId;
+   */
 
   @Id
   @Column(name = "user_group")
-  private Long              userGroupId;
+  private Long userGroupId;
 
   @CreationTimestamp
   @Column(name = "created_at")
-  private Date              createdAt;
+  private Date createdAt;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_group", insertable = false, updatable = false)
   @Fetch(FetchMode.JOIN)
-  private UserGroupEntity   userGroup;
+  private UserGroupEntity userGroup;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "user_id", nullable = false)
+  private UserEntity userEntity;
 
   public UserUserGroupEntity() {
     userGroup = new UserGroupEntity();
   }
 
-  public Long getUserId() {
-    return userId;
-  }
-
-  public void setUserId(final Long userId) {
-    this.userId = userId;
-  }
+  /*
+   * public Long getUserId() { return userId; }
+   *
+   * public void setUserId(final Long userId) { this.userId = userId; }
+   */
 
   public Long getUserGroupId() {
     return userGroupId;
@@ -75,6 +77,14 @@ public class UserUserGroupEntity implements Serializable {
 
   public void setUserGroup(final UserGroupEntity userGroup) {
     this.userGroup = userGroup;
+  }
+
+  public UserEntity getUserEntity() {
+    return userEntity;
+  }
+
+  public void setUserEntity(final UserEntity userEntity) {
+    this.userEntity = userEntity;
   }
 
 }

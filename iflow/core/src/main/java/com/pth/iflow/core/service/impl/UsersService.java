@@ -3,10 +3,8 @@ package com.pth.iflow.core.service.impl;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.pth.iflow.common.edo.models.CompanyProfileEdo;
 import com.pth.iflow.common.edo.models.ProfileResponseEdo;
 import com.pth.iflow.common.edo.models.UserEdo;
@@ -26,21 +24,30 @@ import com.pth.iflow.core.service.interfaces.IUserGroupService;
 import com.pth.iflow.core.service.interfaces.IUsersService;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 import com.pth.iflow.core.storage.dao.interfaces.ICompanyDao;
+import com.pth.iflow.core.storage.dao.interfaces.IDepartmentDao;
+import com.pth.iflow.core.storage.dao.interfaces.IDepartmentGroupDao;
 import com.pth.iflow.core.storage.dao.interfaces.IUserDao;
 import com.pth.iflow.core.storage.dao.interfaces.IUserGroupDao;
 
 @Service
 public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo> implements IUsersService {
 
-  private final ICompanyDao   companyDao;
-  private final IUserDao      userDao;
-  private final IUserGroupDao userGroupDao;
+  private final ICompanyDao         companyDao;
+  private final IUserDao            userDao;
+  private final IUserGroupDao       userGroupDao;
+  private final IDepartmentDao      departmentDao;
+  private final IDepartmentGroupDao departmentGroupDao;
 
-  public UsersService(@Autowired final ICompanyDao companyDao, @Autowired final IUserDao userDao,
-      @Autowired final IUserGroupDao userGroupDao) {
+  public UsersService(@Autowired final ICompanyDao companyDao,
+                      @Autowired final IUserDao userDao,
+                      @Autowired final IUserGroupDao userGroupDao,
+                      @Autowired final IDepartmentDao departmentDao,
+                      @Autowired final IDepartmentGroupDao departmentGroupDao) {
     this.companyDao = companyDao;
     this.userDao = userDao;
     this.userGroupDao = userGroupDao;
+    this.departmentDao = departmentDao;
+    this.departmentGroupDao = departmentGroupDao;
 
   }
 
@@ -52,11 +59,13 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
 
   @Override
   public List<UserGroupEntity> getUserGroups(final String email) {
-    final UserEntity user = getUserByIdentity(email);
-    ;
+    final UserEntity user = getUserByIdentity(email);;
 
     final List<UserGroupEntity> list = userGroupDao
-        .getListByIdList(user.getGroups().stream().map(uug -> uug.getUserGroupId()).collect(Collectors.toSet()));
+                                                   .getListByIdList(user.getGroups()
+                                                                        .stream()
+                                                                        .map(uug -> uug.getUserGroupId())
+                                                                        .collect(Collectors.toSet()));
     return list;
   }
 
@@ -70,8 +79,10 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
   @Override
   public List<DepartmentGroupEntity> getUserDepartmentGroups(final String email) {
     final UserEntity user = getUserByIdentity(email);
-    final List<DepartmentGroupEntity> list = user.getDepartmentGroups().stream().map(ud -> ud.getDepartmentGroup())
-        .collect(Collectors.toList());
+    final List<DepartmentGroupEntity> list = user.getDepartmentGroups()
+                                                 .stream()
+                                                 .map(ud -> ud.getDepartmentGroup())
+                                                 .collect(Collectors.toList());
     return list;
   }
 
@@ -139,11 +150,11 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
     model.setEmail(edo.getEmail());
     model.setBirthDate(CoreDataHelper.fromLocalDate(edo.getBirthDate()));
     model.getCompany().setIdentity(edo.getCompanyIdentity());
-    model.fillGroupsFromIdentityList(edo.getGroups());
-    model.fillDepartmentsFromIdentityList(edo.getDepartments());
-    model.fillDepartmentGroupsFromIdentityList(edo.getDepartmentGroups());
-    model.fillDeputiesFromIdentityList(edo.getDeputies());
-    model.fillRolesFromRoleList(edo.getRoles());
+    model.setGroups(userGroupDao.getListByIdentityList(edo.getGroups()));
+    model.setDepartments(departmentDao.getListByIdentityList(edo.getDepartments()));
+    model.setDepartmentGroups(departmentGroupDao.getListByIdentityList(edo.getDepartmentGroups()));
+    model.setDeputies(userDao.getListByIdentityList(edo.getDeputies()));
+    model.setRolesFromIntegerList(edo.getRoles());
 
     return model;
   }
@@ -162,7 +173,10 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
     edo.setGroups(model.getGroups().stream().map(g -> g.getUserGroup().getIdentity()).collect(Collectors.toSet()));
     edo.setDepartments(model.getDepartments().stream().map(g -> g.getDepartment().getIdentity()).collect(Collectors.toSet()));
     edo.setDepartmentGroups(
-        model.getDepartmentGroups().stream().map(g -> g.getDepartmentGroup().getIdentity()).collect(Collectors.toSet()));
+                            model.getDepartmentGroups()
+                                 .stream()
+                                 .map(g -> g.getDepartmentGroup().getIdentity())
+                                 .collect(Collectors.toSet()));
     edo.setDeputies(model.getDeputies().stream().map(g -> g.getDeputy().getIdentity()).collect(Collectors.toSet()));
     edo.setRoles(model.getRoles().stream().map(g -> g.getRole()).collect(Collectors.toSet()));
 
@@ -181,7 +195,8 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
     final ICompanyService companyService = new CompanyService(null);
 
     final CompanyProfileEdo edo = new CompanyProfileEdo(companyService.toEdo(model.getCompany()),
-        departmentService.toEdoList(model.getDepartments()), groupService.toEdoList(model.getUserGroups()));
+                                                        departmentService.toEdoList(model.getDepartments()),
+                                                        groupService.toEdoList(model.getUserGroups()));
 
     return edo;
   }
