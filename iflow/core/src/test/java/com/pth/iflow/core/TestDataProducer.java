@@ -3,11 +3,13 @@ package com.pth.iflow.core;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 import com.pth.iflow.common.edo.models.CompanyEdo;
 import com.pth.iflow.common.edo.models.CompanyProfileEdo;
 import com.pth.iflow.common.edo.models.DepartmentEdo;
@@ -43,7 +45,6 @@ import com.pth.iflow.core.model.entity.UserDepartmentGroupEntity;
 import com.pth.iflow.core.model.entity.UserDeputyEntity;
 import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.model.entity.UserGroupEntity;
-import com.pth.iflow.core.model.entity.UserUserGroupEntity;
 import com.pth.iflow.core.model.entity.workflow.InvoiceWorkflowEntity;
 import com.pth.iflow.core.model.entity.workflow.SingleTaskWorkflowEntity;
 import com.pth.iflow.core.model.entity.workflow.TestThreeTaskWorkflowEntity;
@@ -81,14 +82,14 @@ public class TestDataProducer {
 
   protected ProfileResponse getTestProfileResponse() {
     final CompanyEntity company = getTestCompany();
-    final UserEntity user = getTestUser();
+    final UserEntity    user    = getTestUser();
 
     return new ProfileResponse(user, company, getTestDepartmentList(), getTestUserGroupList(), "not-set");
   }
 
   protected ProfileResponseEdo getTestProfileResponseEdo() {
-    final CompanyEdo company = getTestCompanyEdo();
-    final UserEdo user = getTestUserEdo();
+    final CompanyEdo        company           = getTestCompanyEdo();
+    final UserEdo           user              = getTestUserEdo();
 
     final CompanyProfileEdo companyProfileEdo = new CompanyProfileEdo(company, getTestDepartmentEdoList(), getTestUserGroupEdoList());
     return new ProfileResponseEdo(user, companyProfileEdo, "not-set");
@@ -105,10 +106,10 @@ public class TestDataProducer {
     model.setStatus(1);
     model.setVersion(1);
     model.setPermission(1);
-    model.setDepartmentGroups(this.getTestUserDepartmentEntityGroupSet(model));
-    model.setDepartments(this.getTestUserDepartmentEntitySet(model));
-    model.setDeputies(this.getTestUserDeputyEntitySet(model));
-    model.setGroups(this.getTestUserUserGroupEntitySet(model));
+    model.setDepartmentGroups(Arrays.asList(getTestDepartmentGroup(1L, "depgrp1"), getTestDepartmentGroup(2L, "depgrp2")));
+    model.setDepartments(Arrays.asList(getTestDepartment(1L, "dep1"), getTestDepartment(2L, "dep2")));
+    model.setDeputies(Arrays.asList());
+    model.setGroups(Arrays.asList(getTestUserGroup(1L, "grp1"), getTestUserGroup(2L, "grp2")));
     model.setCompany(getTestCompany());
     // model.setCompanyIdentity("companyIdentity");
 
@@ -144,10 +145,17 @@ public class TestDataProducer {
     model.setStatus(1);
     model.setVersion(1);
     model.setPermission(1);
-    model.setDepartmentGroups(this.getTestUserDepartmentEntityGroupSet(null));
-    model.setDepartments(this.getTestUserDepartmentEntitySet(null));
-    model.setDeputies(this.getTestUserDeputyEntitySet(null));
-    model.setGroups(this.getTestUserUserGroupEntitySet(null));
+    model.setDepartmentGroups(Arrays.asList(getTestDepartmentGroup(1L, "depgrp1"), getTestDepartmentGroup(2L, "depgrp2")));
+    model.setDepartments(Arrays.asList(getTestDepartment(1L, "dep1"), getTestDepartment(2L, "dep2")));
+    model.setDeputies(Arrays.asList(getTestUser(1L, "fname", "lname", "email")));
+    model.setGroups(Arrays.asList(getTestUserGroup(1L, "grp1"), getTestUserGroup(2L, "grp2")));
+    model.setRolesFromIntegerList(Arrays.asList(1, 2, 3));
+
+    model.setGroups(new ArrayList<>());
+    model.setDepartmentGroups(new ArrayList<>());
+    model.setDepartments(new ArrayList<>());
+    model.setDeputies(new ArrayList<>());
+    model.setRoles(new ArrayList<>());
 
     return model;
   }
@@ -162,10 +170,10 @@ public class TestDataProducer {
     model.setStatus(1);
     model.setVersion(1);
     model.setPermission(1);
-    model.setDepartmentGroups(this.getTestUserDepartmentEntityGroupSet(model));
-    model.setDepartments(this.getTestUserDepartmentEntitySet(model));
-    model.setDeputies(this.getTestUserDeputyEntitySet(model));
-    model.setGroups(this.getTestUserUserGroupEntitySet(model));
+    model.setDepartmentGroups(Arrays.asList(getTestDepartmentGroup(1L, "depgrp1"), getTestDepartmentGroup(2L, "depgrp2")));
+    model.setDepartments(Arrays.asList(getTestDepartment(1L, "dep1"), getTestDepartment(2L, "dep2")));
+    model.setDeputies(Arrays.asList(getTestUser()));
+    model.setGroups(Arrays.asList(getTestUserGroup(1L, "grp1"), getTestUserGroup(2L, "grp2")));
     model.setBirthDate(getTestBirthDate());
     model.setCompany(getTestCompany());
 
@@ -197,16 +205,14 @@ public class TestDataProducer {
 
   protected List<UserEntity> getTestUserList() {
     final List<UserEntity> list = Arrays.asList(this.getTestUser(1L, "fname 1", "lname 1", "email 1"),
-                                                this.getTestUser(2L, "fname 2", "lname 2", "email 2"),
-                                                this.getTestUser(3L, "fname 3", "lname 3", "email 3"));
+        this.getTestUser(2L, "fname 2", "lname 2", "email 2"), this.getTestUser(3L, "fname 3", "lname 3", "email 3"));
 
     return list;
   }
 
   protected List<UserEdo> getTestUserEdoList() {
     final List<UserEdo> list = Arrays.asList(this.getTestUserEdo(1L, "fname 1", "lname 1", "email 1"),
-                                             this.getTestUserEdo(2L, "fname 2", "lname 2", "email 2"),
-                                             this.getTestUserEdo(3L, "fname 3", "lname 3", "email 3"));
+        this.getTestUserEdo(2L, "fname 2", "lname 2", "email 2"), this.getTestUserEdo(3L, "fname 3", "lname 3", "email 3"));
 
     return list;
   }
@@ -262,16 +268,14 @@ public class TestDataProducer {
 
   protected List<DepartmentEntity> getTestDepartmentList() {
     final List<DepartmentEntity> list = Arrays.asList(this.getTestDepartment(1L, "DepartmentEntity 1"),
-                                                      this.getTestDepartment(2L, "DepartmentEntity 2"),
-                                                      this.getTestDepartment(3L, "DepartmentEntity 3"));
+        this.getTestDepartment(2L, "DepartmentEntity 2"), this.getTestDepartment(3L, "DepartmentEntity 3"));
 
     return list;
   }
 
   protected List<DepartmentEdo> getTestDepartmentEdoList() {
     final List<DepartmentEdo> list = Arrays.asList(this.getTestDepartmentEdo(1L, "DepartmentEntity 1"),
-                                                   this.getTestDepartmentEdo(2L, "DepartmentEntity 2"),
-                                                   this.getTestDepartmentEdo(3L, "DepartmentEntity 3"));
+        this.getTestDepartmentEdo(2L, "DepartmentEntity 2"), this.getTestDepartmentEdo(3L, "DepartmentEntity 3"));
 
     return list;
   }
@@ -323,16 +327,14 @@ public class TestDataProducer {
 
   protected List<DepartmentGroupEntity> getTestDepartmentGroupList() {
     final List<DepartmentGroupEntity> list = Arrays.asList(this.getTestDepartmentGroup(1L, "DepartmentGroup 1"),
-                                                           this.getTestDepartmentGroup(2L, "DepartmentGroup 2"),
-                                                           this.getTestDepartmentGroup(3L, "DepartmentGroup 3"));
+        this.getTestDepartmentGroup(2L, "DepartmentGroup 2"), this.getTestDepartmentGroup(3L, "DepartmentGroup 3"));
 
     return list;
   }
 
   protected List<DepartmentGroupEdo> getTestDepartmentGroupEdoList() {
     final List<DepartmentGroupEdo> list = Arrays.asList(this.getTestDepartmentGroupEdo(1L, "DepartmentGroup 1"),
-                                                        this.getTestDepartmentGroupEdo(2L, "DepartmentGroup 2"),
-                                                        this.getTestDepartmentGroupEdo(3L, "DepartmentGroup 3"));
+        this.getTestDepartmentGroupEdo(2L, "DepartmentGroup 2"), this.getTestDepartmentGroupEdo(3L, "DepartmentGroup 3"));
 
     return list;
   }
@@ -387,16 +389,14 @@ public class TestDataProducer {
 
   protected List<UserGroupEntity> getTestUserGroupList() {
     final List<UserGroupEntity> list = Arrays.asList(this.getTestUserGroup(1L, "UserGroupEntity 1"),
-                                                     this.getTestUserGroup(2L, "UserGroupEntity 2"),
-                                                     this.getTestUserGroup(3L, "UserGroupEntity 3"));
+        this.getTestUserGroup(2L, "UserGroupEntity 2"), this.getTestUserGroup(3L, "UserGroupEntity 3"));
 
     return list;
   }
 
   protected List<UserGroupEdo> getTestUserGroupEdoList() {
     final List<UserGroupEdo> list = Arrays.asList(this.getTestUserGroupEdo(1L, "UserGroupEntity 1"),
-                                                  this.getTestUserGroupEdo(2L, "UserGroupEntity 2"),
-                                                  this.getTestUserGroupEdo(3L, "UserGroupEntity 3"));
+        this.getTestUserGroupEdo(2L, "UserGroupEntity 2"), this.getTestUserGroupEdo(3L, "UserGroupEntity 3"));
 
     return list;
   }
@@ -416,9 +416,7 @@ public class TestDataProducer {
 
     model.setActions(getTestWorkflowActionList(model));
     model.setFiles(
-                   Arrays.asList(this.getTestWorkflowFile(1L, model),
-                                 this.getTestWorkflowFile(2L, model),
-                                 this.getTestWorkflowFile(3L, model)));
+        Arrays.asList(this.getTestWorkflowFile(1L, model), this.getTestWorkflowFile(2L, model), this.getTestWorkflowFile(3L, model)));
 
     return model;
   }
@@ -431,7 +429,8 @@ public class TestDataProducer {
     edo.setComments("comments");
     edo.setIdentity("workflow-1");
 
-    edo.setControllerIdentity("controllerIdentity");;
+    edo.setControllerIdentity("controllerIdentity");
+    ;
     edo.setCreatedByIdentity("createdByIdentity");
     edo.setCurrentStepIdentity("currentStepIdentity");
     edo.setWorkflowTypeIdentity("workflowTypeIdentity");
@@ -592,16 +591,14 @@ public class TestDataProducer {
   }
 
   protected List<WorkflowMessageEntity> getTestWorkflowMessageList(final WorkflowEntity workflow) {
-    return Arrays.asList(this.getTestWorkflowMessage(workflow, "Message-1"),
-                         this.getTestWorkflowMessage(workflow, "Message-2"),
-                         this.getTestWorkflowMessage(workflow, "Message-3"));
+    return Arrays.asList(this.getTestWorkflowMessage(workflow, "Message-1"), this.getTestWorkflowMessage(workflow, "Message-2"),
+        this.getTestWorkflowMessage(workflow, "Message-3"));
   }
 
   protected List<WorkflowMessageEdo> getTestWorkflowMessageEdoist(final WorkflowEntity workflow) {
 
-    return Arrays.asList(getTestWorkflowMessageEdo(workflow, "message-1"),
-                         getTestWorkflowMessageEdo(workflow, "message-2"),
-                         getTestWorkflowMessageEdo(workflow, "message-3"));
+    return Arrays.asList(getTestWorkflowMessageEdo(workflow, "message-1"), getTestWorkflowMessageEdo(workflow, "message-2"),
+        getTestWorkflowMessageEdo(workflow, "message-3"));
   }
 
   protected WorkflowEntity getTestNewWorkflow() {
@@ -619,9 +616,7 @@ public class TestDataProducer {
 
     model.setActions(getTestWorkflowActionList(model));
     model.setFiles(
-                   Arrays.asList(this.getTestWorkflowFile(1L, model),
-                                 this.getTestWorkflowFile(2L, model),
-                                 this.getTestWorkflowFile(3L, model)));
+        Arrays.asList(this.getTestWorkflowFile(1L, model), this.getTestWorkflowFile(2L, model), this.getTestWorkflowFile(3L, model)));
 
     return model;
   }
@@ -743,16 +738,13 @@ public class TestDataProducer {
 
   protected List<TestThreeTaskWorkflowEntity> getTestTestThreeWorkflowList() {
 
-    return Arrays.asList(this.getTestTestThreeTaskWorkflow(1L),
-                         this.getTestTestThreeTaskWorkflow(2L),
-                         this.getTestTestThreeTaskWorkflow(3L));
+    return Arrays.asList(this.getTestTestThreeTaskWorkflow(1L), this.getTestTestThreeTaskWorkflow(2L), this.getTestTestThreeTaskWorkflow(3L));
   }
 
   protected List<TestThreeTaskWorkflowEdo> getTestTestThreeWorkflowEdoList() {
 
-    return Arrays.asList(this.getTestTestThreeTaskWorkflowEdo(),
-                         this.getTestTestThreeTaskWorkflowEdo(),
-                         this.getTestTestThreeTaskWorkflowEdo());
+    return Arrays.asList(this.getTestTestThreeTaskWorkflowEdo(), this.getTestTestThreeTaskWorkflowEdo(),
+        this.getTestTestThreeTaskWorkflowEdo());
   }
 
   protected List<SingleTaskWorkflowEdo> getTestSingleTaskWorkflowEdoList() {
@@ -767,16 +759,14 @@ public class TestDataProducer {
 
   protected List<WorkflowResultEntity> getTestWorkflowResultList() {
 
-    return Arrays.asList(getTestWorkflowResult("workflow1", "type1"),
-                         getTestWorkflowResult("workflow2", "type2"),
-                         getTestWorkflowResult("workflow3", "type3"));
+    return Arrays.asList(getTestWorkflowResult("workflow1", "type1"), getTestWorkflowResult("workflow2", "type2"),
+        getTestWorkflowResult("workflow3", "type3"));
   }
 
   protected List<WorkflowResultEdo> getTestWorkflowResultEdoList() {
 
-    return Arrays.asList(getTestWorkflowResultEdo("workflow1", "type1"),
-                         getTestWorkflowResultEdo("workflow2", "type2"),
-                         getTestWorkflowResultEdo("workflow3", "type3"));
+    return Arrays.asList(getTestWorkflowResultEdo("workflow1", "type1"), getTestWorkflowResultEdo("workflow2", "type2"),
+        getTestWorkflowResultEdo("workflow3", "type3"));
   }
 
   protected WorkflowActionEntity getTestWorkflowAction(final Long Id, final WorkflowEntity workflow) {
@@ -808,9 +798,8 @@ public class TestDataProducer {
   }
 
   protected List<WorkflowActionEntity> getTestWorkflowActionList(final WorkflowEntity workflow) {
-    return Arrays.asList(this.getTestWorkflowAction(1L, workflow),
-                         this.getTestWorkflowAction(2L, workflow),
-                         this.getTestWorkflowAction(3L, workflow));
+    return Arrays.asList(this.getTestWorkflowAction(1L, workflow), this.getTestWorkflowAction(2L, workflow),
+        this.getTestWorkflowAction(3L, workflow));
   }
 
   protected List<WorkflowActionEdo> getTestWorkflowActionEdoList() {
@@ -842,9 +831,8 @@ public class TestDataProducer {
     model.setTitle("title " + Id);
     model.setExtention("ext");
 
-    model.setFileVersions(Arrays.asList(this.getTestWorkflowFileVersion(1L, 1, 1L),
-                                        this.getTestWorkflowFileVersion(2L, 2, 1L),
-                                        this.getTestWorkflowFileVersion(3L, 3, 1L)));
+    model.setFileVersions(Arrays.asList(this.getTestWorkflowFileVersion(1L, 1, 1L), this.getTestWorkflowFileVersion(2L, 2, 1L),
+        this.getTestWorkflowFileVersion(3L, 3, 1L)));
 
     return model;
   }
@@ -860,17 +848,15 @@ public class TestDataProducer {
     edo.setTitle("title " + Id);
     edo.setExtention("ext");
 
-    edo.setFileVersions(Arrays.asList(this.getTestWorkflowFileVersionEdo(1L, 1),
-                                      this.getTestWorkflowFileVersionEdo(2L, 2),
-                                      this.getTestWorkflowFileVersionEdo(3L, 3)));
+    edo.setFileVersions(Arrays.asList(this.getTestWorkflowFileVersionEdo(1L, 1), this.getTestWorkflowFileVersionEdo(2L, 2),
+        this.getTestWorkflowFileVersionEdo(3L, 3)));
 
     return edo;
   }
 
   protected List<WorkflowFileEntity> getTestWorkflowFileList(final WorkflowEntity workflow) {
-    return Arrays.asList(this.getTestWorkflowFile(1L, workflow),
-                         this.getTestWorkflowFile(2L, workflow),
-                         this.getTestWorkflowFile(3L, workflow));
+    return Arrays.asList(this.getTestWorkflowFile(1L, workflow), this.getTestWorkflowFile(2L, workflow),
+        this.getTestWorkflowFile(3L, workflow));
   }
 
   protected WorkflowFileEntity getTestNewWorkflowFile(final WorkflowEntity workflow) {
@@ -886,9 +872,7 @@ public class TestDataProducer {
     model.setExtention("ext");
 
     model.setFileVersions(
-                          Arrays.asList(this.getTestNewWorkflowFileVersion(1),
-                                        this.getTestNewWorkflowFileVersion(2),
-                                        this.getTestNewWorkflowFileVersion(3)));
+        Arrays.asList(this.getTestNewWorkflowFileVersion(1), this.getTestNewWorkflowFileVersion(2), this.getTestNewWorkflowFileVersion(3)));
 
     return model;
   }
@@ -945,9 +929,8 @@ public class TestDataProducer {
     model.setIncreaseStepAutomatic(true);
     model.setAllowAssign(true);
     model.setIdentity("workflowtype-1");
-    model.setSteps(Arrays.asList(this.getTestWorkflowTypeStep(1L, "step 1"),
-                                 this.getTestWorkflowTypeStep(2L, "step 2"),
-                                 this.getTestWorkflowTypeStep(3L, "step 3")));
+    model.setSteps(Arrays.asList(this.getTestWorkflowTypeStep(1L, "step 1"), this.getTestWorkflowTypeStep(2L, "step 2"),
+        this.getTestWorkflowTypeStep(3L, "step 3")));
     model.setComments("comments");
     // model.setCompanyIdentity("companyIdentity");
     model.setCompanyId(1L);
@@ -994,9 +977,8 @@ public class TestDataProducer {
     model.setAssignType(EWorkflowTypeAssignType.MANUAL);
     model.setSendToController(true);
     model.setIncreaseStepAutomatic(true);
-    model.setSteps(Arrays.asList(this.getTestWorkflowTypeStep(1L, "step 1"),
-                                 this.getTestWorkflowTypeStep(2L, "step 2"),
-                                 this.getTestWorkflowTypeStep(3L, "step 3")));
+    model.setSteps(Arrays.asList(this.getTestWorkflowTypeStep(1L, "step 1"), this.getTestWorkflowTypeStep(2L, "step 2"),
+        this.getTestWorkflowTypeStep(3L, "step 3")));
     model.setComments("comments");
     model.setCompany(getTestCompany());
 
@@ -1005,8 +987,7 @@ public class TestDataProducer {
 
   protected List<WorkflowTypeEntity> getTestWorkflowTypeList() {
     final List<WorkflowTypeEntity> list = Arrays.asList(this.getTestWorkflowType(1L, "WorkflowTypeEntity 1"),
-                                                        this.getTestWorkflowType(2L, "WorkflowTypeEntity 2"),
-                                                        this.getTestWorkflowType(3L, "WorkflowTypeEntity 3"));
+        this.getTestWorkflowType(2L, "WorkflowTypeEntity 2"), this.getTestWorkflowType(3L, "WorkflowTypeEntity 3"));
 
     return list;
   }
@@ -1065,16 +1046,14 @@ public class TestDataProducer {
 
   protected List<WorkflowTypeStepEntity> getTestWorkflowTypeStepList() {
     final List<WorkflowTypeStepEntity> list = Arrays.asList(this.getTestWorkflowTypeStep(1L, "WorkflowTypeStepEntity 1"),
-                                                            this.getTestWorkflowTypeStep(2L, "WorkflowTypeStepEntity 2"),
-                                                            this.getTestWorkflowTypeStep(3L, "WorkflowTypeStepEntity 3"));
+        this.getTestWorkflowTypeStep(2L, "WorkflowTypeStepEntity 2"), this.getTestWorkflowTypeStep(3L, "WorkflowTypeStepEntity 3"));
 
     return list;
   }
 
   protected Set<UserDepartmentGroupEntity> getTestUserDepartmentEntityGroupSet(final UserEntity user) {
     return new HashSet<UserDepartmentGroupEntity>(Arrays.asList(getTestUserDepartmentGroupEntity(user, 1L),
-                                                                getTestUserDepartmentGroupEntity(user, 2L),
-                                                                getTestUserDepartmentGroupEntity(user, 3L)));
+        getTestUserDepartmentGroupEntity(user, 2L), getTestUserDepartmentGroupEntity(user, 3L)));
   }
 
   private UserDepartmentGroupEntity getTestUserDepartmentGroupEntity(final UserEntity user, final Long departmentGroupId) {
@@ -1086,9 +1065,8 @@ public class TestDataProducer {
   }
 
   protected Set<UserDepartmentEntity> getTestUserDepartmentEntitySet(final UserEntity user) {
-    return new HashSet<UserDepartmentEntity>(Arrays.asList(getTestUserDepartmentEntity(user, 1L),
-                                                           getTestUserDepartmentEntity(user, 2L),
-                                                           getTestUserDepartmentEntity(user, 3L)));
+    return new HashSet<UserDepartmentEntity>(
+        Arrays.asList(getTestUserDepartmentEntity(user, 1L), getTestUserDepartmentEntity(user, 2L), getTestUserDepartmentEntity(user, 3L)));
   }
 
   private UserDepartmentEntity getTestUserDepartmentEntity(final UserEntity user, final Long departmentId) {
@@ -1098,24 +1076,9 @@ public class TestDataProducer {
     return model;
   }
 
-  protected Set<UserUserGroupEntity> getTestUserUserGroupEntitySet(final UserEntity user) {
-    return new HashSet<UserUserGroupEntity>(Arrays.asList(getTestUserUserGroupEntity(user, 1L),
-                                                          getTestUserUserGroupEntity(user, 2L),
-                                                          getTestUserUserGroupEntity(user, 3L)));
-  }
-
-  private UserUserGroupEntity getTestUserUserGroupEntity(final UserEntity user, final Long userGroupId) {
-    final UserUserGroupEntity model = new UserUserGroupEntity();
-    model.setUserGroupId(userGroupId);
-    model.setUserEntity(user);
-    return model;
-  }
-
   protected Set<UserDeputyEntity> getTestUserDeputyEntitySet(final UserEntity user) {
     return new HashSet<UserDeputyEntity>(
-                                         Arrays.asList(getTestUserDeputyEntity(user, 1L),
-                                                       getTestUserDeputyEntity(user, 2L),
-                                                       getTestUserDeputyEntity(user, 3L)));
+        Arrays.asList(getTestUserDeputyEntity(user, 1L), getTestUserDeputyEntity(user, 2L), getTestUserDeputyEntity(user, 3L)));
   }
 
   private UserDeputyEntity getTestUserDeputyEntity(final UserEntity user, final Long deputyId) {

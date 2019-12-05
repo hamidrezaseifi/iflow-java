@@ -2,8 +2,10 @@ package com.pth.iflow.core.model.entity;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,11 +15,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.UpdateTimestamp;
+
 import com.pth.iflow.common.enums.EUserStatus;
 import com.pth.iflow.core.storage.dao.helper.EntityIdentityHelper;
 import com.pth.iflow.core.storage.dao.helper.EntityListener;
@@ -30,58 +38,93 @@ public class UserEntity extends EntityIdentityHelper {
   @Id
   @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private Long                           id;
 
   @Column(name = "email")
-  private String email;
+  private String                         email;
 
   @Column(name = "company_id")
-  private Long companyId;
+  private Long                           companyId;
 
   @Column(name = "birthdate")
-  private Date birthDate;
+  private Date                           birthDate;
 
   @Column(name = "firstname")
-  private String firstName;
+  private String                         firstName;
 
   @Column(name = "lastname")
-  private String lastName;
+  private String                         lastName;
 
   @Column(name = "status")
-  private Integer status;
+  private Integer                        status;
 
   @Column(name = "permission")
-  private Integer permission;
+  private Integer                        permission;
 
   @Column(name = "version")
-  private Integer version;
+  private Integer                        version;
 
   @CreationTimestamp
   @Column(name = "created_at")
-  private Date createdAt;
+  private Date                           createdAt;
 
   @UpdateTimestamp
   @Column(name = "updated_at")
-  private Date updatedAt;
+  private Date                           updatedAt;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "company_id", insertable = false, updatable = false)
-  private CompanyEntity company;
+  private CompanyEntity                  company;
 
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "userEntity")
-  private final List<UserRoleEntity> roles = new ArrayList<>();
+  // @ManyToMany(cascade = CascadeType.ALL)
+  // @JoinTable(
+  // name = "user_usergroup", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "user_group") }
+  // )
+  // @Fetch(value = FetchMode.SUBSELECT)
+  // List<UserGroupEntity> groups = new ArrayList<>();
 
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "userEntity")
-  private final List<UserDeputyEntity> deputies = new ArrayList<>();
+  @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  @JoinTable(name = "user_deputy", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "deputy_id") })
+  @Fetch(value = FetchMode.SUBSELECT)
+  List<UserEntity>                       deputies         = new ArrayList<>();
 
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "userEntity")
-  private final List<UserUserGroupEntity> groups = new ArrayList<>();
+  @ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
+  @JoinTable(
+      name = "user_departments", joinColumns = { @JoinColumn(name = "user_id"
+  ) }, inverseJoinColumns = { @JoinColumn(name = "department_id") })
+      @Fetch(value = FetchMode.SUBSELECT)
+  List<DepartmentEntity>                 departments      = new ArrayList<>();
 
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "userEntity")
-  private final List<UserDepartmentEntity> departments = new ArrayList<>();
+  @ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
+  @JoinTable(
+      name = "user_department_groups", joinColumns = { @JoinColumn(name = "user_id"
+  ) }, inverseJoinColumns = { @JoinColumn(name = "department_group_id") })
+      @Fetch(value = FetchMode.SUBSELECT)
+  List<DepartmentGroupEntity>            departmentGroups = new ArrayList<>();
 
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "userEntity")
-  private final List<UserDepartmentGroupEntity> departmentGroups = new ArrayList<>();
+  // @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "userEntity")
+  // @Fetch(value = FetchMode.SUBSELECT)
+  // private final List<UserRoleEntity> roles = new ArrayList<>();
+
+  // @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "userEntity")
+  // @Fetch(value = FetchMode.SUBSELECT)
+  // private final List<UserDeputyEntity> deputies = new ArrayList<>();
+
+  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "userEntity")
+  // @Fetch(value = FetchMode.SUBSELECT)
+  private final Set<UserUserGroupEntity> groups           = new HashSet<>();
+
+  // @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "userEntity")
+  // @Fetch(value = FetchMode.SUBSELECT)
+  // private final List<UserDepartmentEntity> departments = new ArrayList<>();
+
+  // @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "userEntity")
+  // @Fetch(value = FetchMode.SUBSELECT)
+  // private final List<UserDepartmentGroupEntity> departmentGroups = new ArrayList<>();
+
+  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "userEntity")
+  @Fetch(value = FetchMode.SUBSELECT)
+  private final List<UserRoleEntity>     roles            = new ArrayList<>();
 
   public UserEntity() {
 
@@ -244,15 +287,15 @@ public class UserEntity extends EntityIdentityHelper {
     this.permission = permission;
   }
 
-  public List<UserUserGroupEntity> getGroups() {
+  public Set<UserUserGroupEntity> getGroups() {
     return groups;
   }
 
-  public List<UserDepartmentEntity> getDepartments() {
+  public List<DepartmentEntity> getDepartments() {
     return departments;
   }
 
-  public List<UserDepartmentGroupEntity> getDepartmentGroups() {
+  public List<DepartmentGroupEntity> getDepartmentGroups() {
     return departmentGroups;
   }
 
@@ -268,7 +311,7 @@ public class UserEntity extends EntityIdentityHelper {
     return roles;
   }
 
-  public List<UserDeputyEntity> getDeputies() {
+  public List<UserEntity> getDeputies() {
     return deputies;
   }
 
@@ -287,7 +330,7 @@ public class UserEntity extends EntityIdentityHelper {
     this.email = identity;
   }
 
-  public void setRoles(final Set<UserRoleEntity> roles) {
+  public void setRoles(final List<UserRoleEntity> roles) {
     this.roles.clear();
     for (final UserRoleEntity entity : roles) {
       entity.setUserEntity(this);
@@ -297,7 +340,7 @@ public class UserEntity extends EntityIdentityHelper {
 
   }
 
-  public void setRolesFromIntegerList(final Set<Integer> roles) {
+  public void setRolesFromIntegerList(final List<Integer> roles) {
     this.roles.clear();
     for (final Integer role : roles) {
       final UserRoleEntity entity = new UserRoleEntity();
@@ -309,37 +352,35 @@ public class UserEntity extends EntityIdentityHelper {
     }
   }
 
-  public void setDeputies(final Set<UserDeputyEntity> deputies) {
-    this.deputies.clear();
-    for (final UserDeputyEntity entity : deputies) {
-      entity.setUserEntity(this);
-
-      this.deputies.add(entity);
-    }
-
-  }
+  /*
+   * public void setDeputies(final List<UserDeputyEntity> deputies) { this.deputies.clear(); for (final UserDeputyEntity entity : deputies) {
+   * entity.setUserEntity(this);
+   *
+   * this.deputies.add(entity); }
+   *
+   * }
+   */
 
   public void setDeputies(final List<UserEntity> deputies) {
     this.deputies.clear();
     for (final UserEntity model : deputies) {
 
-      final UserDeputyEntity entity = new UserDeputyEntity();
-      entity.setUserEntity(this);
-      entity.setDeputyId(model.getId());
+      // final UserDeputyEntity entity = new UserDeputyEntity();
+      // deputies.setUserEntity(this);
+      // deputies.setDeputyId(model.getId());
 
-      this.deputies.add(entity);
+      this.deputies.add(model);
     }
   }
 
-  public void setGroups(final Set<UserUserGroupEntity> groups) {
-    this.groups.clear();
-    for (final UserUserGroupEntity entity : groups) {
-      entity.setUserEntity(this);
-
-      this.groups.add(entity);
-    }
-
-  }
+  /*
+   * public void setGroups(final List<UserUserGroupEntity> groups) { this.groups.clear(); for (final UserUserGroupEntity entity : groups) {
+   * entity.setUserEntity(this);
+   *
+   * this.groups.add(entity); }
+   *
+   * }
+   */
 
   public void setGroups(final List<UserGroupEntity> groups) {
     this.groups.clear();
@@ -347,49 +388,48 @@ public class UserEntity extends EntityIdentityHelper {
 
       final UserUserGroupEntity entity = new UserUserGroupEntity();
       entity.setUserEntity(this);
-      entity.setUserGroupId(model.getId());
+      entity.setUserGroup(model);
 
       this.groups.add(entity);
+
+      // this.groups.add(model);
+      // model.getUsers().add(this);
     }
   }
 
-  public void setDepartments(final Set<UserDepartmentEntity> departments) {
-    this.departments.clear();
-    for (final UserDepartmentEntity entity : departments) {
-      entity.setUserEntity(this);
-
-      this.departments.add(entity);
-    }
-  }
+  /*
+   * public void setDepartments(final List<UserDepartmentEntity> departments) { this.departments.clear(); for (final UserDepartmentEntity
+   * entity : departments) { entity.setUserEntity(this);
+   *
+   * this.departments.add(entity); } }
+   */
 
   public void setDepartments(final List<DepartmentEntity> departments) {
     this.departments.clear();
     for (final DepartmentEntity model : departments) {
-      final UserDepartmentEntity entity = new UserDepartmentEntity();
-      entity.setUserEntity(this);
-      entity.setDepartmentId(model.getId());
+      // final UserDepartmentEntity entity = new UserDepartmentEntity();
+      // entity.setUserEntity(this);
+      // entity.setDepartmentId(model.getId());
 
-      this.departments.add(entity);
+      this.departments.add(model);
     }
   }
 
-  public void setDepartmentGroups(final Set<UserDepartmentGroupEntity> departmentGroups) {
-    this.departmentGroups.clear();
-    for (final UserDepartmentGroupEntity entity : departmentGroups) {
-      entity.setUserEntity(this);
-
-      this.departmentGroups.add(entity);
-    }
-  }
+  /*
+   * public void setDepartmentGroups(final List<UserDepartmentGroupEntity> departmentGroups) { this.departmentGroups.clear(); for (final
+   * UserDepartmentGroupEntity entity : departmentGroups) { entity.setUserEntity(this);
+   *
+   * this.departmentGroups.add(entity); } }
+   */
 
   public void setDepartmentGroups(final List<DepartmentGroupEntity> departmentGroups) {
     this.departmentGroups.clear();
     for (final DepartmentGroupEntity model : departmentGroups) {
-      final UserDepartmentGroupEntity entity = new UserDepartmentGroupEntity();
-      entity.setUserEntity(this);
-      entity.setDepartmentGroupId(model.getId());
+      // final UserDepartmentGroupEntity entity = new UserDepartmentGroupEntity();
+      // entity.setUserEntity(this);
+      // entity.setDepartmentGroupId(model.getId());
 
-      this.departmentGroups.add(entity);
+      this.departmentGroups.add(model);
     }
   }
 

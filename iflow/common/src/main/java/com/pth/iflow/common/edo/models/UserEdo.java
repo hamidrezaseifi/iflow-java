@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -12,11 +13,13 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 import com.pth.iflow.common.edo.models.helper.DateEdoAdapter;
 import com.pth.iflow.common.edo.models.helper.StringToStringCollection;
+
 import io.micrometer.core.lang.Nullable;
 
 @XmlRootElement(name = "User", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
@@ -26,64 +29,64 @@ public class UserEdo {
 
   @NotNull(message = "CompanyIdentity must not be null")
   @XmlElement(name = "CompanyIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String companyIdentity;
+  private String             companyIdentity;
 
   @NotNull(message = "Email must not be null")
   @XmlElement(name = "Email", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String email;
+  private String             email;
 
   @XmlJavaTypeAdapter(DateEdoAdapter.class)
   @XmlElement(name = "BirthDate", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private LocalDate birthDate;
+  private LocalDate          birthDate;
 
   @NotNull(message = "FirstName must not be null")
   @XmlElement(name = "FirstName", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String firstName;
+  private String             firstName;
 
   @NotNull(message = "LastName must not be null")
   @XmlElement(name = "LastName", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String lastName;
+  private String             lastName;
 
   @NotNull(message = "Status must not be null")
   @XmlElement(name = "Status", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Integer status;
+  private Integer            status;
 
   @NotNull(message = "Version must not be null")
   @XmlElement(name = "Version", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Integer version;
+  private Integer            version;
 
   @NotNull(message = "Permission must not be null")
   @XmlElement(name = "Permission", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Integer permission;
+  private Integer            permission;
 
   @NotNull(message = "GroupList must not be null")
   @XmlElementWrapper(name = "GroupList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "Group")
   @JsonDeserialize(using = StringToStringCollection.class)
-  private final Set<String> groups = new HashSet<>();
+  private final Set<String>  groups           = new HashSet<>();
 
   @NotNull(message = "DepartmentList must not be null")
   @XmlElementWrapper(name = "DepartmentList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "Department", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @JsonDeserialize(using = StringToStringCollection.class)
-  private final Set<String> departments = new HashSet<>();
+  private final Set<String>  departments      = new HashSet<>();
 
   @NotNull(message = "DepartmentGroupList must not be null")
   @XmlElementWrapper(name = "DepartmentGroupList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "DepartmentGroup", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @JsonDeserialize(using = StringToStringCollection.class)
-  private final Set<String> departmentGroups = new HashSet<>();
+  private final Set<String>  departmentGroups = new HashSet<>();
 
   @NotNull(message = "DeputyList must not be null")
   @XmlElementWrapper(name = "DeputyList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "Deputy", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @JsonDeserialize(using = StringToStringCollection.class)
-  private final Set<String> deputies = new HashSet<>();
+  private final Set<String>  deputies         = new HashSet<>();
 
   @NotNull(message = "RoleList must not be null")
   @XmlElementWrapper(name = "RoleList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "Role", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private final Set<Integer> roles = new HashSet<>();
+  private final Set<Integer> roles            = new HashSet<>();
 
   public String getCompanyIdentity() {
     return this.companyIdentity;

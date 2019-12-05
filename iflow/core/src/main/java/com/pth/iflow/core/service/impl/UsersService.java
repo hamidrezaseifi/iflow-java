@@ -3,8 +3,10 @@ package com.pth.iflow.core.service.impl;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.pth.iflow.common.edo.models.CompanyProfileEdo;
 import com.pth.iflow.common.edo.models.ProfileResponseEdo;
 import com.pth.iflow.common.edo.models.UserEdo;
@@ -38,11 +40,8 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
   private final IDepartmentDao      departmentDao;
   private final IDepartmentGroupDao departmentGroupDao;
 
-  public UsersService(@Autowired final ICompanyDao companyDao,
-                      @Autowired final IUserDao userDao,
-                      @Autowired final IUserGroupDao userGroupDao,
-                      @Autowired final IDepartmentDao departmentDao,
-                      @Autowired final IDepartmentGroupDao departmentGroupDao) {
+  public UsersService(@Autowired final ICompanyDao companyDao, @Autowired final IUserDao userDao, @Autowired final IUserGroupDao userGroupDao,
+      @Autowired final IDepartmentDao departmentDao, @Autowired final IDepartmentGroupDao departmentGroupDao) {
     this.companyDao = companyDao;
     this.userDao = userDao;
     this.userGroupDao = userGroupDao;
@@ -59,38 +58,33 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
 
   @Override
   public List<UserGroupEntity> getUserGroups(final String email) {
-    final UserEntity user = getUserByIdentity(email);;
+    final UserEntity user = getUserByIdentity(email);
 
-    final List<UserGroupEntity> list = userGroupDao
-                                                   .getListByIdList(user.getGroups()
-                                                                        .stream()
-                                                                        .map(uug -> uug.getUserGroupId())
-                                                                        .collect(Collectors.toSet()));
-    return list;
+    // final List<UserGroupEntity> list = userGroupDao
+    // .getListByIdList(user.getGroups().stream().map(uug -> uug.getUserGroupId()).collect(Collectors.toSet()));
+    return user.getGroups().stream().map(g -> g.getUserGroup()).collect(Collectors.toList());
   }
 
   @Override
   public List<DepartmentEntity> getUserDepartments(final String email) {
     final UserEntity user = getUserByIdentity(email);
-    final List<DepartmentEntity> list = user.getDepartments().stream().map(ud -> ud.getDepartment()).collect(Collectors.toList());
-    return list;
+    // final List<DepartmentEntity> list = user.getDepartments().stream().map(ud -> ud.getDepartment()).collect(Collectors.toList());
+    return user.getDepartments().stream().collect(Collectors.toList());
   }
 
   @Override
   public List<DepartmentGroupEntity> getUserDepartmentGroups(final String email) {
     final UserEntity user = getUserByIdentity(email);
-    final List<DepartmentGroupEntity> list = user.getDepartmentGroups()
-                                                 .stream()
-                                                 .map(ud -> ud.getDepartmentGroup())
-                                                 .collect(Collectors.toList());
-    return list;
+    // final List<DepartmentGroupEntity> list = user.getDepartmentGroups().stream().map(ud -> ud.getDepartmentGroup())
+    // .collect(Collectors.toList());
+    return user.getDepartmentGroups().stream().collect(Collectors.toList());
   }
 
   @Override
   public List<UserEntity> getUserDeputies(final String email) {
     final UserEntity user = getUserByIdentity(email);
-    final List<UserEntity> list = user.getDeputies().stream().map(ud -> ud.getDeputy()).collect(Collectors.toList());
-    return list;
+    // final List<UserEntity> list = user.getDeputies().stream().map(ud -> ud.getDeputy()).collect(Collectors.toList());
+    return user.getDeputies().stream().collect(Collectors.toList());
   }
 
   @Override
@@ -114,7 +108,7 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
 
   @Override
   public ProfileResponse getProfileResponseByEmail(final String email) {
-    final UserEntity user = this.getUserByIdentity(email);
+    final UserEntity    user    = this.getUserByIdentity(email);
     final CompanyEntity company = companyDao.getByIdentity(user.getCompany().getIdentity());
 
     return new ProfileResponse(user, company, this.getUserDepartments(email), this.getUserGroups(email), "sot-set");
@@ -154,7 +148,7 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
     model.setDepartments(departmentDao.getListByIdentityList(edo.getDepartments()));
     model.setDepartmentGroups(departmentGroupDao.getListByIdentityList(edo.getDepartmentGroups()));
     model.setDeputies(userDao.getListByIdentityList(edo.getDeputies()));
-    model.setRolesFromIntegerList(edo.getRoles());
+    model.setRolesFromIntegerList(edo.getRoles().stream().collect(Collectors.toList()));
 
     return model;
   }
@@ -171,14 +165,10 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
     edo.setBirthDate(model.getBirthDate().toLocalDate());
     edo.setCompanyIdentity(model.getCompany().getIdentity());
     edo.setGroups(model.getGroups().stream().map(g -> g.getUserGroup().getIdentity()).collect(Collectors.toSet()));
-    edo.setDepartments(model.getDepartments().stream().map(g -> g.getDepartment().getIdentity()).collect(Collectors.toSet()));
-    edo.setDepartmentGroups(
-                            model.getDepartmentGroups()
-                                 .stream()
-                                 .map(g -> g.getDepartmentGroup().getIdentity())
-                                 .collect(Collectors.toSet()));
-    edo.setDeputies(model.getDeputies().stream().map(g -> g.getDeputy().getIdentity()).collect(Collectors.toSet()));
-    edo.setRoles(model.getRoles().stream().map(g -> g.getRole()).collect(Collectors.toSet()));
+    edo.setDepartments(model.getDepartments().stream().map(g -> g.getIdentity()).collect(Collectors.toSet()));
+    edo.setDepartmentGroups(model.getDepartmentGroups().stream().map(g -> g.getIdentity()).collect(Collectors.toSet()));
+    edo.setDeputies(model.getDeputies().stream().map(g -> g.getIdentity()).collect(Collectors.toSet()));
+    edo.setRoles(model.getRoles().stream().map(r -> r.getRole()).collect(Collectors.toSet()));
 
     return edo;
   }
@@ -190,13 +180,12 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
 
   public CompanyProfileEdo toCompanyProfileEdo(final CompanyProfile model) {
 
-    final IUserGroupService groupService = new UserGroupService(null);
+    final IUserGroupService  groupService      = new UserGroupService(null);
     final IDepartmentService departmentService = new DepartmentService(null);
-    final ICompanyService companyService = new CompanyService(null);
+    final ICompanyService    companyService    = new CompanyService(null);
 
-    final CompanyProfileEdo edo = new CompanyProfileEdo(companyService.toEdo(model.getCompany()),
-                                                        departmentService.toEdoList(model.getDepartments()),
-                                                        groupService.toEdoList(model.getUserGroups()));
+    final CompanyProfileEdo  edo               = new CompanyProfileEdo(companyService.toEdo(model.getCompany()),
+        departmentService.toEdoList(model.getDepartments()), groupService.toEdoList(model.getUserGroups()));
 
     return edo;
   }

@@ -2,6 +2,7 @@ package com.pth.iflow.core.model.entity;
 
 import java.io.Serializable;
 import java.sql.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
 import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
@@ -20,21 +22,21 @@ public class UserRoleEntity implements Serializable {
    */
   private static final long serialVersionUID = 1L;
 
-  // @Id
-  // @Column(name = "user_id")
-  // private Long userId;
+  @Id
+  @Column(name = "user_id")
+  private Long              userId;
 
   @Id
   @Column(name = "role")
-  private Integer role;
+  private Integer           role;
 
   @CreationTimestamp
   @Column(name = "created_at")
-  private Date createdAt;
+  private Date              createdAt;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id", nullable = false)
-  private UserEntity userEntity;
+  private UserEntity        userEntity;
 
   /*
    * public Long getUserId() { return userId; }
