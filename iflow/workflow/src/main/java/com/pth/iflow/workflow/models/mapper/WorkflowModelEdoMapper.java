@@ -513,8 +513,6 @@ public class WorkflowModelEdoMapper {
     edo.setStatus(model.getStatus().getValue());
     edo.setAssignToIdentity(model.getAssignToIdentity());
     edo.setCurrentStepIdentity(model.getCurrentStepIdentity());
-    edo.setVersion(model.getVersion());
-    edo.setIdentity(model.getIdentity());
 
     return edo;
   }
@@ -716,8 +714,7 @@ public class WorkflowModelEdoMapper {
     return edoList;
   }
 
-  public static List<WorkflowFile> fromWorkflowFileEdoList(final List<WorkflowFileEdo> edoList)
-      throws IFlowMessageConversionFailureException {
+  public static List<WorkflowFile> fromWorkflowFileEdoList(final List<WorkflowFileEdo> edoList) throws IFlowMessageConversionFailureException {
     final List<WorkflowFile> modelList = new ArrayList<>();
     for (final WorkflowFileEdo edo : edoList) {
       modelList.add(fromEdo(edo));
@@ -872,8 +869,7 @@ public class WorkflowModelEdoMapper {
     return modelList;
   }
 
-  private static List<Department> fromDepartmentEdoList(final List<DepartmentEdo> edoList)
-      throws IFlowMessageConversionFailureException {
+  private static List<Department> fromDepartmentEdoList(final List<DepartmentEdo> edoList) throws IFlowMessageConversionFailureException {
     final List<Department> modelList = new ArrayList<>();
     for (final DepartmentEdo edo : edoList) {
       modelList.add(fromEdo(edo));
@@ -892,8 +888,7 @@ public class WorkflowModelEdoMapper {
     return modelList;
   }
 
-  public static List<WorkflowType> fromWorkflowTypeEdoList(final List<WorkflowTypeEdo> edoList)
-      throws IFlowMessageConversionFailureException {
+  public static List<WorkflowType> fromWorkflowTypeEdoList(final List<WorkflowTypeEdo> edoList) throws IFlowMessageConversionFailureException {
     final List<WorkflowType> modelList = new ArrayList<>();
     for (final WorkflowTypeEdo edo : edoList) {
       modelList.add(fromEdo(edo));
@@ -912,8 +907,7 @@ public class WorkflowModelEdoMapper {
     return modelList;
   }
 
-  public static InvoiceWorkflowSaveRequest fromEdo(final InvoiceWorkflowSaveRequestEdo edo)
-      throws IFlowMessageConversionFailureException {
+  public static InvoiceWorkflowSaveRequest fromEdo(final InvoiceWorkflowSaveRequestEdo edo) throws IFlowMessageConversionFailureException {
     validateCustomer(edo);
 
     final InvoiceWorkflowSaveRequest request = new InvoiceWorkflowSaveRequest();
@@ -950,8 +944,7 @@ public class WorkflowModelEdoMapper {
     return edo;
   }
 
-  private static List<AssignItem> fromAssignItemEdoList(final List<AssignItemEdo> edoList)
-      throws IFlowMessageConversionFailureException {
+  private static List<AssignItem> fromAssignItemEdoList(final List<AssignItemEdo> edoList) throws IFlowMessageConversionFailureException {
     final List<AssignItem> modelList = new ArrayList<>();
     for (final AssignItemEdo edo : edoList) {
       modelList.add(fromEdo(edo));
