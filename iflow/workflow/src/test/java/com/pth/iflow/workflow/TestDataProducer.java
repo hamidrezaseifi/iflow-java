@@ -32,6 +32,7 @@ import com.pth.iflow.workflow.models.WorkflowSearchFilter;
 import com.pth.iflow.workflow.models.WorkflowType;
 import com.pth.iflow.workflow.models.WorkflowTypeStep;
 import com.pth.iflow.workflow.models.base.IWorkflow;
+import com.pth.iflow.workflow.models.workflow.Workflow;
 import com.pth.iflow.workflow.models.workflow.WorkflowResult;
 import com.pth.iflow.workflow.models.workflow.invoice.InvoiceWorkflow;
 import com.pth.iflow.workflow.models.workflow.invoice.InvoiceWorkflowSaveRequest;
@@ -54,8 +55,7 @@ public class TestDataProducer {
 
   protected CompanyProfile getTestCompanyProfile() {
 
-    final CompanyProfile companyProfile = new CompanyProfile(this.getTestCompany(), this.getTestDepartmentList(),
-        this.getTestUserGroupList());
+    final CompanyProfile companyProfile = new CompanyProfile(this.getTestCompany(), this.getTestDepartmentList(), this.getTestUserGroupList());
 
     return companyProfile;
   }
@@ -97,8 +97,8 @@ public class TestDataProducer {
   }
 
   protected List<User> getTestUserList() {
-    final List<User> list = Arrays.asList(this.getTestUser("fname 1", "lname 1", "email 1"),
-        this.getTestUser("fname 2", "lname 2", "email 2"), this.getTestUser("fname 3", "lname 3", "email 3"));
+    final List<User> list = Arrays.asList(this.getTestUser("fname 1", "lname 1", "email 1"), this.getTestUser("fname 2", "lname 2", "email 2"),
+        this.getTestUser("fname 3", "lname 3", "email 3"));
 
     return list;
   }
@@ -250,10 +250,29 @@ public class TestDataProducer {
     return model;
   }
 
+  protected Workflow getTestWorkflow(final String identity) {
+    final Workflow model = new Workflow();
+    model.setWorkflowType(getTestTestThreeTaskWorkflowType());
+    model.setIdentity(identity);
+    model.setStatus(EWorkflowStatus.INITIALIZE);
+    model.setVersion(1);
+    model.setComments("comments");
+    model.setControllerIdentity("controllerIdentity");
+    model.setCurrentStep(model.getWorkflowType().getSteps().get(0));
+    model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
+    model.setCreatedByIdentity("createdByIdentity");
+
+    model.setActions(getTestWorkflowActionListFromType(model));
+    model.setFiles(Arrays.asList(this.getTestWorkflowFile("file1", model.getIdentity()),
+        this.getTestWorkflowFile("file2", model.getIdentity()), this.getTestWorkflowFile("file3", model.getIdentity())));
+
+    return model;
+  }
+
   private List<WorkflowAction> getTestWorkflowActionListFromType(final IWorkflow workflow) {
 
-    final WorkflowType workflowType = workflow.getWorkflowType();
-    final List<WorkflowAction> list = new ArrayList<>();
+    final WorkflowType         workflowType = workflow.getWorkflowType();
+    final List<WorkflowAction> list         = new ArrayList<>();
     for (final WorkflowTypeStep step : workflowType.getSteps()) {
       final WorkflowAction action = this.getTestWorkflowAction("action1", workflow.getIdentity());
       action.setCurrentStep(step);
@@ -266,10 +285,7 @@ public class TestDataProducer {
 
   protected WorkflowFile getTestWorkflowFile(final String identity, final String workflowIdentity) {
     final WorkflowFile model = new WorkflowFile();
-    model.setWorkflowIdentity(workflowIdentity);
-    model.setIdentity(identity);
     model.setStatus(1);
-    model.setVersion(1);
     model.setCreatedByIdentity("createdByIdentity");
     model.setComments("comments");
     model.setActiveFilePath("filePath");
@@ -282,11 +298,9 @@ public class TestDataProducer {
     return model;
   }
 
-  protected WorkflowFileVersion getTestWorkflowFileVersion(final String identity, final int version,
-      final String workflowFileIdentity) {
+  protected WorkflowFileVersion getTestWorkflowFileVersion(final String identity, final int version, final String workflowFileIdentity) {
     final WorkflowFileVersion model = new WorkflowFileVersion();
     model.setStatus(1);
-    model.setVersion(1);
     model.setCreatedBy(getTestUser());
     model.setCreatedByIdentity(model.getCreatedBy().getIdentity());
     model.setComments("comments");
@@ -298,10 +312,7 @@ public class TestDataProducer {
 
   protected WorkflowAction getTestWorkflowAction(final String identity, final String workflowIdentity) {
     final WorkflowAction model = new WorkflowAction();
-    model.setWorkflowIdentity(workflowIdentity);
-    model.setIdentity(identity);
     model.setStatus(EWorkflowActionStatus.OPEN);
-    model.setVersion(1);
     model.setCurrentStep(getTestWorkflowTypeStep());
     model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
     model.setComments("comments");
@@ -314,10 +325,7 @@ public class TestDataProducer {
   protected WorkflowAction getTestWorkflowAction(final String identity, final String workflowIdentity,
       final EWorkflowActionStatus actionStatus) {
     final WorkflowAction model = new WorkflowAction();
-    model.setWorkflowIdentity(workflowIdentity);
-    model.setIdentity(identity);
     model.setStatus(actionStatus);
-    model.setVersion(1);
     model.setCurrentStep(getTestWorkflowTypeStep());
     model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
     model.setComments("comments");
@@ -339,8 +347,8 @@ public class TestDataProducer {
     model.setSendToController(true);
     model.setIncreaseStepAutomatic(true);
     model.setAllowAssign(true);
-    model.setSteps(Arrays.asList(this.getTestWorkflowTypeStep("step1", "step 1", 1),
-        this.getTestWorkflowTypeStep("step2", "step 2", 2), this.getTestWorkflowTypeStep("step3", "step 3", 3)));
+    model.setSteps(Arrays.asList(this.getTestWorkflowTypeStep("step1", "step 1", 1), this.getTestWorkflowTypeStep("step2", "step 2", 2),
+        this.getTestWorkflowTypeStep("step3", "step 3", 3)));
     model.setComments("comments");
 
     return model;
@@ -373,8 +381,8 @@ public class TestDataProducer {
     model.setIncreaseStepAutomatic(true);
     model.setAllowAssign(true);
     model.setBaseTypeIdentity("baseTypeIdentity");
-    model.setSteps(Arrays.asList(this.getTestWorkflowTypeStep("step1", "step 1", 1),
-        this.getTestWorkflowTypeStep("step2", "step 2", 2), this.getTestWorkflowTypeStep("step3", "step 3", 3)));
+    model.setSteps(Arrays.asList(this.getTestWorkflowTypeStep("step1", "step 1", 1), this.getTestWorkflowTypeStep("step2", "step 2", 2),
+        this.getTestWorkflowTypeStep("step3", "step 3", 3)));
     model.setComments("comments");
 
     return model;
@@ -429,6 +437,11 @@ public class TestDataProducer {
     return model;
   }
 
+  protected List<Workflow> getTestWorkflowList() {
+
+    return Arrays.asList(this.getTestWorkflow("workflow1"), this.getTestWorkflow("workflow2"), this.getTestWorkflow("workflow3"));
+  }
+
   protected List<InvoiceWorkflow> getTestInvoiceWorkflowList() {
 
     return Arrays.asList(this.getTestInvoiceWorkflow("workflow1"), this.getTestInvoiceWorkflow("workflow2"),
@@ -455,8 +468,7 @@ public class TestDataProducer {
 
   protected List<WorkflowTypeStep> getTestWorkflowTypeStepList() {
     final List<WorkflowTypeStep> list = Arrays.asList(this.getTestWorkflowTypeStep("step1", "WorkflowTypeStep 1", 1),
-        this.getTestWorkflowTypeStep("step2", "WorkflowTypeStep 2", 2),
-        this.getTestWorkflowTypeStep("step3", "WorkflowTypeStep 3", 3));
+        this.getTestWorkflowTypeStep("step2", "WorkflowTypeStep 2", 2), this.getTestWorkflowTypeStep("step3", "WorkflowTypeStep 3", 3));
 
     return list;
   }
@@ -494,8 +506,8 @@ public class TestDataProducer {
   }
 
   protected List<Department> getTestDepartmentList() {
-    final List<Department> list = Arrays.asList(this.getTestDepartment("dep1", "Department 1"),
-        this.getTestDepartment("dep2", "Department 2"), this.getTestDepartment("dep3", "Department 3"));
+    final List<Department> list = Arrays.asList(this.getTestDepartment("dep1", "Department 1"), this.getTestDepartment("dep2", "Department 2"),
+        this.getTestDepartment("dep3", "Department 3"));
 
     return list;
   }

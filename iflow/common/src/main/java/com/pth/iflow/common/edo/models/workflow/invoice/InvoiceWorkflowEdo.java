@@ -1,6 +1,7 @@
 package com.pth.iflow.common.edo.models.workflow.invoice;
 
 import java.time.LocalDate;
+
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -9,6 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 import com.pth.iflow.common.edo.models.helper.IsoFormats;
@@ -16,6 +18,7 @@ import com.pth.iflow.common.edo.models.helper.LocalDateEdoAdapter;
 import com.pth.iflow.common.edo.models.validation.AEnumValueValidator;
 import com.pth.iflow.common.edo.models.workflow.WorkflowEdo;
 import com.pth.iflow.common.enums.EInvoiceType;
+import com.pth.iflow.common.enums.EWorkflowType;
 
 @XmlRootElement(name = "InvoiceWorkflow", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -28,71 +31,72 @@ public class InvoiceWorkflowEdo {
 
   @NotNull(message = "Sender is not allowed to be null!")
   @XmlElement(name = "Sender", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String sender;
+  private String      sender;
 
   @NotNull(message = "RegisterNumber is not allowed to be null!")
   @XmlElement(name = "RegisterNumber", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String registerNumber;
+  private String      registerNumber;
 
   @NotNull(message = "InvoceDate is not allowed to be null!")
   @XmlJavaTypeAdapter(LocalDateEdoAdapter.class)
   @JsonFormat(pattern = IsoFormats.DATE_FORMAT_ISO)
   @XmlSchemaType(name = "dateTime")
   @XmlElement(name = "InvoceDate", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private LocalDate invoceDate;
+  private LocalDate   invoceDate;
 
   @NotNull(message = "PartnerCode is not allowed to be null!")
   @XmlElement(name = "PartnerCode", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String partnerCode;
+  private String      partnerCode;
 
   @NotNull(message = "VendorNumber is not allowed to be null!")
   @XmlElement(name = "VendorNumber", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String vendorNumber;
+  private String      vendorNumber;
 
   @NotNull(message = "vendorName is not allowed to be null!")
   @XmlElement(name = "VendorName", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String vendorName;
+  private String      vendorName;
 
   @NotNull(message = "IsDirectDebit is not allowed to be null!")
   @XmlElement(name = "IsDirectDebit", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Boolean isDirectDebitPermission;
+  private Boolean     isDirectDebitPermission;
 
   @NotNull(message = "InvoiceType must not be null")
   @AEnumValueValidator(enumClazz = EInvoiceType.class)
   @XmlElement(name = "InvoiceType", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Integer invoiceType;
+  private Integer     invoiceType;
 
   @NotNull(message = "DiscountEnterDate is not allowed to be null!")
   @XmlJavaTypeAdapter(LocalDateEdoAdapter.class)
   @JsonFormat(pattern = IsoFormats.DATE_FORMAT_ISO)
   @XmlSchemaType(name = "dateTime")
   @XmlElement(name = "DiscountEnterDate", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private LocalDate discountEnterDate;
+  private LocalDate   discountEnterDate;
 
   @NotNull(message = "DiscountDeadline is not allowed to be null!")
   @XmlElement(name = "DiscountDeadline", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Integer discountDeadline;
+  private Integer     discountDeadline;
 
   @NotNull(message = "DiscountRate is not allowed to be null!")
   @XmlElement(name = "DiscountRate", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Double discountRate;
+  private Double      discountRate;
 
   @NotNull(message = "DiscountDate is not allowed to be null!")
   @XmlJavaTypeAdapter(LocalDateEdoAdapter.class)
   @JsonFormat(pattern = IsoFormats.DATE_FORMAT_ISO)
   @XmlSchemaType(name = "dateTime")
   @XmlElement(name = "DiscountDate", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private LocalDate discountDate;
+  private LocalDate   discountDate;
 
   @NotNull(message = "PaymentAmount is not allowed to be null!")
   @XmlElement(name = "PaymentAmount", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Double paymentAmount;
+  private Double      paymentAmount;
 
   public WorkflowEdo getWorkflow() {
-    return workflow;
+    return this.workflow;
   }
 
   public void setWorkflow(final WorkflowEdo workflow) {
+    workflow.setWorkflowTypeIdentity(EWorkflowType.INVOICE_WORKFLOW_TYPE.getIdentity());
     this.workflow = workflow;
   }
 

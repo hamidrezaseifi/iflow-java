@@ -40,7 +40,7 @@ public class WorkflowController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.WORKFLOW_READ)
+  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.WORKFLOW_READ_BY_IDENTITY)
   public ResponseEntity<WorkflowEdo> readWorkflow(@PathVariable(name = "identity") final String identity,
       final HttpServletRequest request) throws Exception {
 

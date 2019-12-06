@@ -76,7 +76,7 @@ public class WorkflowControllerTest extends TestDataProducer {
 
     final String resultAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelEdo);
 
-    this.mockMvc.perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.READ_WORKFLOW("test-identity"))
+    this.mockMvc.perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.READ_WORKFLOW_BY_IDENTITY("test-identity"))
 
         .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue)).andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE)).andExpect(content().xml(resultAsXmlString));

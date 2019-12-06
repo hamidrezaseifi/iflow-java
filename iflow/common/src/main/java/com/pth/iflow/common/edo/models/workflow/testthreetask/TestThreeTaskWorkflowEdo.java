@@ -6,8 +6,10 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+
 import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 import com.pth.iflow.common.edo.models.workflow.WorkflowEdo;
+import com.pth.iflow.common.enums.EWorkflowType;
 
 @XmlRootElement(name = "TestThreeTaskWorkflow", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -19,10 +21,11 @@ public class TestThreeTaskWorkflowEdo {
   private WorkflowEdo workflow;
 
   public WorkflowEdo getWorkflow() {
-    return workflow;
+    return this.workflow;
   }
 
   public void setWorkflow(final WorkflowEdo workflow) {
+    workflow.setWorkflowTypeIdentity(EWorkflowType.TESTTHREE_TASK_WORKFLOW_TYPE.getIdentity());
     this.workflow = workflow;
   }
 
