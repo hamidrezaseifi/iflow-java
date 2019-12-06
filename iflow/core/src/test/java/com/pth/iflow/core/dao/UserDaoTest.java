@@ -76,6 +76,7 @@ public class UserDaoTest extends TestDataProducer {
     final UserEntity resUser = this.userDao.getById(createdModels.get(0).getId());
 
     compareUsers(user, resUser);
+    Assert.assertEquals("Result user has id '" + resUser.getId() + "'!", resUser.getId(), user.getId());
 
   }
 
@@ -89,6 +90,7 @@ public class UserDaoTest extends TestDataProducer {
     final UserEntity resUser = this.userDao.getByIdentity(createdModels.get(0).getIdentity());
 
     compareUsers(user, resUser);
+    Assert.assertEquals("Result user has id '" + resUser.getId() + "'!", resUser.getId(), user.getId());
 
   }
 
@@ -173,7 +175,7 @@ public class UserDaoTest extends TestDataProducer {
 
   private void compareUsers(final UserEntity user, final UserEntity resUser) {
     Assert.assertNotNull("Result user is not null!", resUser);
-    Assert.assertEquals("Result user has id 1!", resUser.getId(), user.getId());
+
     Assert.assertEquals("Result user has email '" + user.getEmail() + "'!", resUser.getEmail(), user.getEmail());
     Assert.assertEquals("Result user has firstname '" + user.getFirstName() + "'!", resUser.getFirstName(), user.getFirstName());
     Assert.assertEquals("Result user has lastname '" + user.getLastName() + "'!", resUser.getLastName(), user.getLastName());

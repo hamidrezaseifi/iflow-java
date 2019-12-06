@@ -100,40 +100,6 @@ CREATE TABLE `users` (
   KEY `FK_USERS_COMPANIES_idx` (`company_id`),
   CONSTRAINT `FK_USERS_COMPANIES` FOREIGN KEY (`company_id`) REFERENCES `companies` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
-
- 
-CREATE TABLE `user_departments` (
-  `user_id` int(11) NOT NULL,
-  `department_id` int(11) NOT NULL,
-  `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-  PRIMARY KEY (`user_id`,`department_id`),
-  KEY `FK_USERDEPARTMENTS_DEPARTMENTS_idx` (`department_id`),
-  CONSTRAINT `FK_USERDEPARTMENTS_DEPARTMENTS` FOREIGN KEY (`department_id`) REFERENCES `departments` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_USERDEPARTMENTS_USERS` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB ;
-
-CREATE TABLE `user_department_groups` (
-  `user_id` int(11) NOT NULL,
-  `department_group_id` int(11) NOT NULL,
-  `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-  PRIMARY KEY (`user_id`,`department_group_id`),
-  KEY `FK_USERDEPARTMENTGROUPS_DEPARTMENTS_idx` (`department_group_id`),
-  CONSTRAINT `FK_USERDEPARTMENTGROUPS_DEPARTMENTGROUPS` FOREIGN KEY (`department_group_id`) REFERENCES `departments_group` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_USERDEPARTMENTGROUPS_USERS` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB;
-
- 
-CREATE TABLE `user_deputy` (
-  `user_id` int(11) NOT NULL,
-  `deputy_id` int(11) NOT NULL,
-  `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-  PRIMARY KEY (`user_id`,`deputy_id`),
-  KEY `FK_USERDEPUTY_DEPUTY_idx` (`deputy_id`),
-  CONSTRAINT `FK_USERDEPUTY_DEPUTY` FOREIGN KEY (`deputy_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_USERDEPUTY_USER` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB ;
-
-
  
 CREATE TABLE `user_group` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -148,18 +114,48 @@ CREATE TABLE `user_group` (
   UNIQUE KEY `identity_UNIQUE` (`identity`),
   KEY `FK_USERGROUP_COMPANY_idx` (`company_id`),
   CONSTRAINT `FK_USERGROUP_COMPANY` FOREIGN KEY (`company_id`) REFERENCES `companies` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB;
 
- 
+CREATE TABLE `user_deputy` (
+  `user_id` int(11) NOT NULL,
+  `deputy_id` int(11) NOT NULL,
+  `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  PRIMARY KEY (`user_id`,`deputy_id`),
+  KEY `FK_USERDEPUTY_DEPUTY_idx` (`deputy_id`),
+  CONSTRAINT `FK_USERDEPUTY_DEPUTY` FOREIGN KEY (`deputy_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `FK_USERDEPUTY_USER` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE `user_departments` (
+  `user_id` int(11) NOT NULL,
+  `department_id` int(11) NOT NULL,
+  `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  PRIMARY KEY (`user_id`,`department_id`),
+  KEY `FK_USERDEPARTMENTS_DEPARTMENTS_idx` (`department_id`),
+  CONSTRAINT `FK_USERDEPARTMENTS_DEPARTMENTS` FOREIGN KEY (`department_id`) REFERENCES `departments` (`id`),
+  CONSTRAINT `FK_USERDEPARTMENTS_USERS` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE `user_department_groups` (
+  `user_id` int(11) NOT NULL,
+  `department_group_id` int(11) NOT NULL,
+  `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  PRIMARY KEY (`user_id`,`department_group_id`),
+  KEY `FK_USERDEPARTMENTGROUPS_D_idx` (`department_group_id`),
+  CONSTRAINT `FK_USERDEPARTMENTGROUPS_D` FOREIGN KEY (`department_group_id`) REFERENCES `departments_group` (`id`),
+  CONSTRAINT `FK_USERDEPARTMENTGROUPS_USERS` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
 CREATE TABLE `user_usergroup` (
   `user_id` int(11) NOT NULL,
   `user_group` int(11) NOT NULL,
   `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   PRIMARY KEY (`user_id`,`user_group`),
   KEY `FK_USERGROUPUSER_GROUP_idx` (`user_group`),
-  CONSTRAINT `FK_USERGROUPUSER_GROUP` FOREIGN KEY (`user_group`) REFERENCES `user_group` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_USERGROUPUSER_GROUP` FOREIGN KEY (`user_group`) REFERENCES `user_group` (`id`),
   CONSTRAINT `FK_USERGROUPUSER_USER` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB ;
+) ENGINE=InnoDB;
+
 
 
 

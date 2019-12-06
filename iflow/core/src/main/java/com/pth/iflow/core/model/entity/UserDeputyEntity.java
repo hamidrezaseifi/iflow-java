@@ -24,9 +24,9 @@ public class UserDeputyEntity implements Serializable {
    */
   private static final long serialVersionUID = 1L;
 
-  @Id
-  @Column(name = "user_id")
-  private Long              userId;
+  // @Id
+  // @Column(name = "user_id")
+  // private Long userId;
 
   @Id
   @Column(name = "deputy_id")

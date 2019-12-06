@@ -3,7 +3,10 @@ package com.pth.iflow.core.storage.dao.impl;
 import java.util.List;
 import java.util.Set;
 
+import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceUnit;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -25,26 +28,39 @@ import com.pth.iflow.core.storage.dao.interfaces.IUserDao;
 public class UserDao implements IUserDao {
 
   @Autowired
-  UserRepository        repository;
+  UserRepository               repository;
 
-  @Autowired
-  private EntityManager entityManager;
+  private EntityManager        entityManager = null;
+
+  @PersistenceUnit(unitName = "default")
+  private EntityManagerFactory entityManagerFactory;
+
+  @PostConstruct
+  public void init() {
+    this.entityManager = this.entityManagerFactory.createEntityManager();
+  }
 
   @Override
   public UserEntity create(final UserEntity model) throws IFlowStorageException {
-    entityManager.persist(model);
-    entityManager.flush();
-    return getById(model.getId());
+    this.entityManager.getTransaction().begin();
+    final UserEntity savedModel = this.entityManager.merge(model);
+    this.entityManager.getTransaction().commit();
+    return savedModel;
   }
 
   @Override
   public UserEntity update(final UserEntity model) throws IFlowStorageException {
-    final UserEntity dbModel = entityManager.find(UserEntity.class, model.getId());
-    dbModel.updateFromExists(model);
+    // final UserEntity dbModel = entityManager.find(UserEntity.class, model.getId());
+    // dbModel.updateFromExists(model);
 
-    entityManager.merge(dbModel);
-    entityManager.flush();
-    return getById(model.getId());
+    // entityManager.merge(dbModel);
+    // entityManager.flush();
+    // return getById(model.getId());
+
+    this.entityManager.getTransaction().begin();
+    final UserEntity savedModel = this.entityManager.merge(model);
+    this.entityManager.getTransaction().commit();
+    return savedModel;
   }
 
   @Override
@@ -58,15 +74,15 @@ public class UserDao implements IUserDao {
   @Override
   public void deleteById(final Long id) throws IFlowStorageException {
 
-    final UserEntity entity = getById(id);
+    final UserEntity entity = this.getById(id);
 
     if (entity != null) {
-      entityManager.remove(entity);
-      entityManager.flush();
-    }
 
-    // repository.deleteById(id);
-    // repository.flush();
+      this.entityManager.getTransaction().begin();
+      this.entityManager.remove(entity);
+      this.entityManager.getTransaction().commit();
+
+    }
   }
 
   @Override

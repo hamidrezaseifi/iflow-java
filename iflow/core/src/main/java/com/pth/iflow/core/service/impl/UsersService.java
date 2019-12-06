@@ -1,5 +1,6 @@
 package com.pth.iflow.core.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -62,7 +63,7 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
 
     // final List<UserGroupEntity> list = userGroupDao
     // .getListByIdList(user.getGroups().stream().map(uug -> uug.getUserGroupId()).collect(Collectors.toSet()));
-    return user.getGroups().stream().map(g -> g.getUserGroup()).collect(Collectors.toList());
+    return user.getGroups().stream().collect(Collectors.toList());
   }
 
   @Override
@@ -82,9 +83,9 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
 
   @Override
   public List<UserEntity> getUserDeputies(final String email) {
-    final UserEntity user = getUserByIdentity(email);
+    // final UserEntity user = getUserByIdentity(email);
     // final List<UserEntity> list = user.getDeputies().stream().map(ud -> ud.getDeputy()).collect(Collectors.toList());
-    return user.getDeputies().stream().collect(Collectors.toList());
+    return new ArrayList<>(); // user.getDeputies().stream().collect(Collectors.toList());
   }
 
   @Override
@@ -147,8 +148,8 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
     model.setGroups(userGroupDao.getListByIdentityList(edo.getGroups()));
     model.setDepartments(departmentDao.getListByIdentityList(edo.getDepartments()));
     model.setDepartmentGroups(departmentGroupDao.getListByIdentityList(edo.getDepartmentGroups()));
-    model.setDeputies(userDao.getListByIdentityList(edo.getDeputies()));
-    model.setRolesFromIntegerList(edo.getRoles().stream().collect(Collectors.toList()));
+    // model.setDeputies(userDao.getListByIdentityList(edo.getDeputies()));
+    // model.setRolesFromIntegerList(edo.getRoles().stream().collect(Collectors.toList()));
 
     return model;
   }
@@ -164,11 +165,11 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
     edo.setEmail(model.getEmail());
     edo.setBirthDate(model.getBirthDate().toLocalDate());
     edo.setCompanyIdentity(model.getCompany().getIdentity());
-    edo.setGroups(model.getGroups().stream().map(g -> g.getUserGroup().getIdentity()).collect(Collectors.toSet()));
+    edo.setGroups(model.getGroups().stream().map(g -> g.getIdentity()).collect(Collectors.toSet()));
     edo.setDepartments(model.getDepartments().stream().map(g -> g.getIdentity()).collect(Collectors.toSet()));
     edo.setDepartmentGroups(model.getDepartmentGroups().stream().map(g -> g.getIdentity()).collect(Collectors.toSet()));
-    edo.setDeputies(model.getDeputies().stream().map(g -> g.getIdentity()).collect(Collectors.toSet()));
-    edo.setRoles(model.getRoles().stream().map(r -> r.getRole()).collect(Collectors.toSet()));
+    // edo.setDeputies(model.getDeputies().stream().map(g -> g.getIdentity()).collect(Collectors.toSet()));
+    // edo.setRoles(model.getRoles().stream().map(r -> r.getRole()).collect(Collectors.toSet()));
 
     return edo;
   }

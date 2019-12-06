@@ -2,7 +2,10 @@ package com.pth.iflow.core.model.entity;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,13 +15,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.UpdateTimestamp;
+
 import com.pth.iflow.core.storage.dao.helper.EntityIdentityHelper;
 import com.pth.iflow.core.storage.dao.helper.EntityListener;
 
@@ -30,30 +36,30 @@ public class DepartmentEntity extends EntityIdentityHelper {
   @Id
   @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private Long                              id;
 
   @Column(name = "company_id")
-  private Long companyId;
+  private Long                              companyId;
 
   @Column(name = "identity")
-  private String identity;
+  private String                            identity;
 
   @Column(name = "title")
-  private String title;
+  private String                            title;
 
   @Column(name = "status")
-  private Integer status;
+  private Integer                           status;
 
   @Column(name = "version")
-  private Integer version;
+  private Integer                           version;
 
   @CreationTimestamp
   @Column(name = "created_at")
-  private Date createdAt;
+  private Date                              createdAt;
 
   @UpdateTimestamp
   @Column(name = "updated_at")
-  private Date updatedAt;
+  private Date                              updatedAt;
 
   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
   @JoinColumn(name = "department_id")
@@ -62,7 +68,10 @@ public class DepartmentEntity extends EntityIdentityHelper {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "company_id", insertable = false, updatable = false)
   @Fetch(FetchMode.JOIN)
-  private CompanyEntity company;
+  private CompanyEntity                     company;
+
+  @ManyToMany(mappedBy = "groups")
+  private Set<UserEntity>                   users            = new HashSet<>();
 
   public DepartmentEntity() {
 
@@ -167,4 +176,13 @@ public class DepartmentEntity extends EntityIdentityHelper {
   public void increaseVersion() {
     version += 1;
   }
+
+  public Set<UserEntity> getUsers() {
+    return users;
+  }
+
+  public void setUsers(final Set<UserEntity> users) {
+    this.users = users;
+  }
+
 }

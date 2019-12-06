@@ -1,8 +1,5 @@
 package com.pth.iflow.core.config;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.sql.DataSource;
 
 import org.slf4j.Logger;
@@ -166,17 +163,6 @@ public class DbConfiguration {
 
   public void setClassName(final String className) {
     this.className = className;
-  }
-
-  public static EntityManager getEntityManager() {
-
-    final EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.pth.iflow.core");
-
-    final EntityManager entityManager = emf.createEntityManager();
-
-    // entityManager.setProperty(propertyName, value);
-
-    return entityManager;
   }
 
 }

@@ -40,8 +40,6 @@ import com.pth.iflow.core.model.WorkflowSearchFilter;
 import com.pth.iflow.core.model.entity.CompanyEntity;
 import com.pth.iflow.core.model.entity.DepartmentEntity;
 import com.pth.iflow.core.model.entity.DepartmentGroupEntity;
-import com.pth.iflow.core.model.entity.UserDepartmentEntity;
-import com.pth.iflow.core.model.entity.UserDepartmentGroupEntity;
 import com.pth.iflow.core.model.entity.UserDeputyEntity;
 import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.model.entity.UserGroupEntity;
@@ -108,7 +106,7 @@ public class TestDataProducer {
     model.setPermission(1);
     model.setDepartmentGroups(Arrays.asList(getTestDepartmentGroup(1L, "depgrp1"), getTestDepartmentGroup(2L, "depgrp2")));
     model.setDepartments(Arrays.asList(getTestDepartment(1L, "dep1"), getTestDepartment(2L, "dep2")));
-    model.setDeputies(Arrays.asList());
+    // model.setDeputies(Arrays.asList());
     model.setGroups(Arrays.asList(getTestUserGroup(1L, "grp1"), getTestUserGroup(2L, "grp2")));
     model.setCompany(getTestCompany());
     // model.setCompanyIdentity("companyIdentity");
@@ -147,15 +145,15 @@ public class TestDataProducer {
     model.setPermission(1);
     model.setDepartmentGroups(Arrays.asList(getTestDepartmentGroup(1L, "depgrp1"), getTestDepartmentGroup(2L, "depgrp2")));
     model.setDepartments(Arrays.asList(getTestDepartment(1L, "dep1"), getTestDepartment(2L, "dep2")));
-    model.setDeputies(Arrays.asList(getTestUser(1L, "fname", "lname", "email")));
+    // model.setDeputies(Arrays.asList(getTestUser(1L, "fname", "lname", "email")));
     model.setGroups(Arrays.asList(getTestUserGroup(1L, "grp1"), getTestUserGroup(2L, "grp2")));
-    model.setRolesFromIntegerList(Arrays.asList(1, 2, 3));
+    // model.setRolesFromIntegerList(Arrays.asList(1, 2, 3));
 
     model.setGroups(new ArrayList<>());
     model.setDepartmentGroups(new ArrayList<>());
     model.setDepartments(new ArrayList<>());
-    model.setDeputies(new ArrayList<>());
-    model.setRoles(new ArrayList<>());
+    // model.setDeputies(new ArrayList<>());
+    // model.setRoles(new ArrayList<>());
 
     return model;
   }
@@ -172,7 +170,7 @@ public class TestDataProducer {
     model.setPermission(1);
     model.setDepartmentGroups(Arrays.asList(getTestDepartmentGroup(1L, "depgrp1"), getTestDepartmentGroup(2L, "depgrp2")));
     model.setDepartments(Arrays.asList(getTestDepartment(1L, "dep1"), getTestDepartment(2L, "dep2")));
-    model.setDeputies(Arrays.asList(getTestUser()));
+    // model.setDeputies(Arrays.asList(getTestUser()));
     model.setGroups(Arrays.asList(getTestUserGroup(1L, "grp1"), getTestUserGroup(2L, "grp2")));
     model.setBirthDate(getTestBirthDate());
     model.setCompany(getTestCompany());
@@ -1049,31 +1047,6 @@ public class TestDataProducer {
         this.getTestWorkflowTypeStep(2L, "WorkflowTypeStepEntity 2"), this.getTestWorkflowTypeStep(3L, "WorkflowTypeStepEntity 3"));
 
     return list;
-  }
-
-  protected Set<UserDepartmentGroupEntity> getTestUserDepartmentEntityGroupSet(final UserEntity user) {
-    return new HashSet<UserDepartmentGroupEntity>(Arrays.asList(getTestUserDepartmentGroupEntity(user, 1L),
-        getTestUserDepartmentGroupEntity(user, 2L), getTestUserDepartmentGroupEntity(user, 3L)));
-  }
-
-  private UserDepartmentGroupEntity getTestUserDepartmentGroupEntity(final UserEntity user, final Long departmentGroupId) {
-    final UserDepartmentGroupEntity model = new UserDepartmentGroupEntity();
-    model.setDepartmentGroupId(departmentGroupId);
-    model.setUserEntity(user);
-    model.setDepartmentGroup(null);
-    return model;
-  }
-
-  protected Set<UserDepartmentEntity> getTestUserDepartmentEntitySet(final UserEntity user) {
-    return new HashSet<UserDepartmentEntity>(
-        Arrays.asList(getTestUserDepartmentEntity(user, 1L), getTestUserDepartmentEntity(user, 2L), getTestUserDepartmentEntity(user, 3L)));
-  }
-
-  private UserDepartmentEntity getTestUserDepartmentEntity(final UserEntity user, final Long departmentId) {
-    final UserDepartmentEntity model = new UserDepartmentEntity();
-    model.setDepartmentId(departmentId);
-    model.setUserEntity(user);
-    return model;
   }
 
   protected Set<UserDeputyEntity> getTestUserDeputyEntitySet(final UserEntity user) {
