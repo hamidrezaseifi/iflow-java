@@ -34,6 +34,8 @@ DROP TABLE IF EXISTS `users`;
 
 DROP TABLE IF EXISTS `companies`;
 
+DROP TABLE IF EXISTS `user_roles`;
+
  
 CREATE TABLE `companies` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -81,7 +83,17 @@ CREATE TABLE `departments_group` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 ;
 
 
+CREATE TABLE `iflow_roles` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(200) NOT NULL,
+  `status` smallint(6) NOT NULL DEFAULT '1',
+  `version` int(11) NOT NULL DEFAULT '1',
+  `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  `updated_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
  
+
 CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `company_id` int(11) NOT NULL DEFAULT '1',
@@ -157,6 +169,15 @@ CREATE TABLE `user_usergroup` (
 ) ENGINE=InnoDB;
 
 
+CREATE TABLE `user_roles` (
+  `user_id` int(11) NOT NULL,
+  `role` int(11) NOT NULL,
+  `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  PRIMARY KEY (`user_id`,`role`),
+  KEY `FK_USERROLES_ROLE_idx` (`role`),
+  CONSTRAINT `FK_USERROLES_ROLE` FOREIGN KEY (`role`) REFERENCES `iflow_roles` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_USERROLES_USERS` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
 
 
 CREATE TABLE `workflow_type` (

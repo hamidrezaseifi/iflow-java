@@ -94,9 +94,9 @@ public class UserEntity extends EntityIdentityHelper {
   @JoinTable(name = "user_deputy", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "deputy_id") })
   private final Set<UserEntity>            deputies         = new HashSet<>();
 
-  // @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "userEntity")
-  // @Fetch(value = FetchMode.SUBSELECT)
-  // private final List<UserRoleEntity> roles = new ArrayList<>();
+  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+  @JoinTable(name = "user_roles", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "role") })
+  private final Set<IflowRoleEntity>       roles            = new HashSet<>();
 
   public UserEntity() {
 
@@ -334,9 +334,19 @@ public class UserEntity extends EntityIdentityHelper {
     this.deputies.clear();
     for (final UserEntity model : deputies) {
 
-      // model.getUsers().add(this);
-
       this.deputies.add(model);
+    }
+  }
+
+  public Set<IflowRoleEntity> getRoles() {
+    return roles;
+  }
+
+  public void setRoles(final Collection<IflowRoleEntity> roles) {
+    this.roles.clear();
+    for (final IflowRoleEntity model : roles) {
+
+      this.roles.add(model);
     }
   }
 

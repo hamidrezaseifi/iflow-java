@@ -60,23 +60,18 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
   public List<UserGroupEntity> getUserGroups(final String email) {
     final UserEntity user = getUserByIdentity(email);
 
-    // final List<UserGroupEntity> list = userGroupDao
-    // .getListByIdList(user.getGroups().stream().map(uug -> uug.getUserGroupId()).collect(Collectors.toSet()));
     return user.getGroups().stream().collect(Collectors.toList());
   }
 
   @Override
   public List<DepartmentEntity> getUserDepartments(final String email) {
     final UserEntity user = getUserByIdentity(email);
-    // final List<DepartmentEntity> list = user.getDepartments().stream().map(ud -> ud.getDepartment()).collect(Collectors.toList());
     return user.getDepartments().stream().collect(Collectors.toList());
   }
 
   @Override
   public List<DepartmentGroupEntity> getUserDepartmentGroups(final String email) {
     final UserEntity user = getUserByIdentity(email);
-    // final List<DepartmentGroupEntity> list = user.getDepartmentGroups().stream().map(ud -> ud.getDepartmentGroup())
-    // .collect(Collectors.toList());
     return user.getDepartmentGroups().stream().collect(Collectors.toList());
   }
 
@@ -148,7 +143,7 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
     model.setDepartments(departmentDao.getListByIdentityList(edo.getDepartments()));
     model.setDepartmentGroups(departmentGroupDao.getListByIdentityList(edo.getDepartmentGroups()));
     model.setDeputies(userDao.getListByIdentityList(edo.getDeputies()));
-    // model.setRolesFromIntegerList(edo.getRoles().stream().collect(Collectors.toList()));
+    // model.setRoles(edo.getRoles());
 
     return model;
   }
@@ -168,7 +163,7 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
     edo.setDepartments(model.getDepartments().stream().map(g -> g.getIdentity()).collect(Collectors.toSet()));
     edo.setDepartmentGroups(model.getDepartmentGroups().stream().map(g -> g.getIdentity()).collect(Collectors.toSet()));
     edo.setDeputies(model.getDeputies().stream().map(g -> g.getIdentity()).collect(Collectors.toSet()));
-    // edo.setRoles(model.getRoles().stream().map(r -> r.getRole()).collect(Collectors.toSet()));
+    edo.setRoles(model.getRoles().stream().map(r -> r.getId().intValue()).collect(Collectors.toSet()));
 
     return edo;
   }

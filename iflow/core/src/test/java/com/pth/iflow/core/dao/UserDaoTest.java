@@ -22,6 +22,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.storage.dao.interfaces.ICompanyDao;
+import com.pth.iflow.core.storage.dao.interfaces.IIflowRoleDao;
 import com.pth.iflow.core.storage.dao.interfaces.IUserDao;
 import com.pth.iflow.core.storage.dao.interfaces.IUserGroupDao;
 
@@ -39,6 +40,9 @@ public class UserDaoTest extends TestDataProducer {
   @Autowired
   private IUserGroupDao          userGroupDao;
 
+  @Autowired
+  private IIflowRoleDao          iflowRoleDao;
+
   private final List<UserEntity> createdModels = new ArrayList<>();
 
   @Before
@@ -54,6 +58,7 @@ public class UserDaoTest extends TestDataProducer {
       user.setLastName("utest lastName " + i);
       user.setGroups(Arrays.asList(userGroupDao.getById(1L), userGroupDao.getById(2L)));
       user.setDeputies(Arrays.asList(userDao.getById(1L), userDao.getById(2L)));
+      user.setRoles(Arrays.asList(iflowRoleDao.getById(1L), iflowRoleDao.getById(2L)));
       final UserEntity res = userDao.create(user);
       createdModels.add(res);
     }

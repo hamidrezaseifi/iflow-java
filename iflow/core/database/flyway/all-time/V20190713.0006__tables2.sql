@@ -2,8 +2,6 @@
 
 DROP TABLE IF EXISTS `user_department_groups`;
 
-DROP TABLE IF EXISTS `user_roles`;
-
 DROP TABLE IF EXISTS `invoice_workflow`;
 
 CREATE TABLE `user_department_groups` (
@@ -14,12 +12,6 @@ CREATE TABLE `user_department_groups` (
 ) ENGINE=InnoDB;
 
 
-CREATE TABLE `user_roles` (
-  `user_id` int(11) NOT NULL,
-  `role` int(11) NOT NULL,
-  `created_at` timestamp(6) NOT NULL DEFAULT current_timestamp(6),
-  PRIMARY KEY (`user_id`,`role`)
-) ENGINE=InnoDB;
 
 CREATE TABLE `invoice_workflow` (
   `workflow_id` int(11) NOT NULL,
