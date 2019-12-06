@@ -2,37 +2,35 @@ package com.pth.iflow.core.storage.dao.impl;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
+
+import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceUnit;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
+
 import com.pth.iflow.core.model.entity.DepartmentEntity;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
+import com.pth.iflow.core.storage.dao.impl.base.EntityDaoBase;
 import com.pth.iflow.core.storage.dao.impl.repository.DepartmentRepository;
 import com.pth.iflow.core.storage.dao.interfaces.IDepartmentDao;
 
-@Transactional
 @Repository
-public class DepartmentDao implements IDepartmentDao {
+public class DepartmentDao extends EntityDaoBase<DepartmentEntity> implements IDepartmentDao {
 
   @Autowired
-  DepartmentRepository repository;
+  DepartmentRepository         repository;
 
-  @Override
-  public DepartmentEntity create(final DepartmentEntity model) throws IFlowStorageException {
-    return repository.save(model);
-  }
+  private EntityManager        entityManager = null;
 
-  @Override
-  public DepartmentEntity update(final DepartmentEntity model) throws IFlowStorageException {
-    return repository.save(model);
-  }
+  @PersistenceUnit(unitName = "default")
+  private EntityManagerFactory entityManagerFactory;
 
-  @Override
-  public DepartmentEntity getById(final Long id) throws IFlowStorageException {
-    final Optional<DepartmentEntity> model = repository.findById(id);
-
-    return model.isPresent() ? model.get() : null;
+  @PostConstruct
+  public void init() {
+    this.entityManager = this.entityManagerFactory.createEntityManager();
   }
 
   @Override
@@ -51,4 +49,13 @@ public class DepartmentDao implements IDepartmentDao {
     return repository.findAllByIdentityList(idList);
   }
 
+  @Override
+  protected Class<DepartmentEntity> entityClass() {
+    return DepartmentEntity.class;
+  }
+
+  @Override
+  protected EntityManager getEntityManager() {
+    return entityManager;
+  }
 }

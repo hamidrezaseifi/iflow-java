@@ -13,4 +13,6 @@ public interface ICompanyDao {
 
   public CompanyEntity getByIdentity(final String identity);
 
+  void deleteById(Long id) throws IFlowStorageException;
+
 }

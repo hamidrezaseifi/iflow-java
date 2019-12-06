@@ -53,6 +53,7 @@ public class UserDaoTest extends TestDataProducer {
       user.setFirstName("utest firstName " + i);
       user.setLastName("utest lastName " + i);
       user.setGroups(Arrays.asList(userGroupDao.getById(1L), userGroupDao.getById(2L)));
+      user.setDeputies(Arrays.asList(userDao.getById(1L), userDao.getById(2L)));
       final UserEntity res = userDao.create(user);
       createdModels.add(res);
     }
@@ -147,13 +148,19 @@ public class UserDaoTest extends TestDataProducer {
     createdUser.setEmail("new updated email test");
     createdUser.setVersion(22);
     createdUser.setStatus(10);
+    createdUser.setFirstName("update firstName");
+    createdUser.setLastName("updated lastName");
 
     final UserEntity updatedUser = userDao.update(createdUser);
 
     compareUsers(createdUser, updatedUser);
 
-    Assert.assertEquals("Result user has status 10!", updatedUser.getStatus().intValue(), 10);
+    Assert.assertEquals("Result user has status 10!", updatedUser.getStatus(), createdUser.getStatus());
     Assert.assertEquals("Result user has version 23!", updatedUser.getVersion().intValue(), 23);
+    Assert.assertEquals("Result user has firstname '" + createdUser.getFirstName() + "'!", updatedUser.getFirstName(),
+        createdUser.getFirstName());
+    Assert.assertEquals("Result user has lastname '" + createdUser.getFirstName() + "'!", updatedUser.getLastName(),
+        createdUser.getLastName());
 
   }
 

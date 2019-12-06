@@ -1,30 +1,36 @@
 package com.pth.iflow.core.storage.dao.impl;
 
-import java.util.Optional;
+import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceUnit;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
+
 import com.pth.iflow.core.model.entity.CompanyEntity;
-import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
+import com.pth.iflow.core.storage.dao.impl.base.EntityDaoBase;
 import com.pth.iflow.core.storage.dao.impl.repository.CompanyRepository;
 import com.pth.iflow.core.storage.dao.interfaces.ICompanyDao;
 
-@Transactional
 @Repository
-public class CompanyDao implements ICompanyDao {
+public class CompanyDao extends EntityDaoBase<CompanyEntity> implements ICompanyDao {
 
   @Autowired
-  CompanyRepository repository;
+  CompanyRepository            repository;
+
+  private EntityManager        entityManager = null;
+
+  @PersistenceUnit(unitName = "default")
+  private EntityManagerFactory entityManagerFactory;
+
+  @PostConstruct
+  public void init() {
+    this.entityManager = this.entityManagerFactory.createEntityManager();
+  }
 
   public CompanyDao() {
 
-  }
-
-  @Override
-  public CompanyEntity getById(final Long id) throws IFlowStorageException {
-    final Optional<CompanyEntity> model = repository.findById(id);
-
-    return model.isPresent() ? model.get() : null;
   }
 
   @Override
@@ -33,19 +39,13 @@ public class CompanyDao implements ICompanyDao {
   }
 
   @Override
-  public CompanyEntity create(final CompanyEntity model) throws IFlowStorageException {
-
-    final CompanyEntity newModel = repository.save(model);
-
-    return newModel;
+  protected Class<CompanyEntity> entityClass() {
+    return CompanyEntity.class;
   }
 
   @Override
-  public CompanyEntity update(final CompanyEntity model) throws IFlowStorageException {
-
-    final CompanyEntity updatedModel = repository.save(model);
-
-    return updatedModel;
+  protected EntityManager getEntityManager() {
+    return entityManager;
   }
 
 }

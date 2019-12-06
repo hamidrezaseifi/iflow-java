@@ -9,9 +9,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.pth.iflow.core.model.entity.workflow.base.IWorkflowContainerEntity;
+
 @Entity
 @Table(name = "testthreetask_workflow")
-public class TestThreeTaskWorkflowEntity {
+public class TestThreeTaskWorkflowEntity implements IWorkflowContainerEntity {
 
   @Id
   @Column(name = "workflow_id")

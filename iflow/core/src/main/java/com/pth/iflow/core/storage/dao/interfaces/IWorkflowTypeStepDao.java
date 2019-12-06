@@ -16,7 +16,7 @@ public interface IWorkflowTypeStepDao {
 
   public WorkflowTypeStepEntity getByIdentity(String identity) throws IFlowStorageException;
 
-  public void deleteById(Long id, final boolean withTransaction) throws IFlowStorageException;
+  public void deleteById(Long id) throws IFlowStorageException;
 
   public List<WorkflowTypeStepEntity> getListByIdentityList(Collection<String> idList) throws IFlowStorageException;
 

@@ -2,37 +2,35 @@ package com.pth.iflow.core.storage.dao.impl;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
+
+import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceUnit;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
+
 import com.pth.iflow.core.model.entity.workflow.WorkflowTypeStepEntity;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
+import com.pth.iflow.core.storage.dao.impl.base.EntityDaoBase;
 import com.pth.iflow.core.storage.dao.impl.repository.WorkflowTypeStepRepository;
 import com.pth.iflow.core.storage.dao.interfaces.IWorkflowTypeStepDao;
 
-@Transactional
 @Repository
-public class WorkflowTypeStepDao implements IWorkflowTypeStepDao {
+public class WorkflowTypeStepDao extends EntityDaoBase<WorkflowTypeStepEntity> implements IWorkflowTypeStepDao {
 
   @Autowired
-  WorkflowTypeStepRepository repository;
+  WorkflowTypeStepRepository   repository;
 
-  @Override
-  public WorkflowTypeStepEntity create(final WorkflowTypeStepEntity model) throws IFlowStorageException {
-    return repository.save(model);
-  }
+  private EntityManager        entityManager = null;
 
-  @Override
-  public WorkflowTypeStepEntity update(final WorkflowTypeStepEntity model) throws IFlowStorageException {
-    return repository.save(model);
-  }
+  @PersistenceUnit(unitName = "default")
+  private EntityManagerFactory entityManagerFactory;
 
-  @Override
-  public WorkflowTypeStepEntity getById(final Long id) throws IFlowStorageException {
-    final Optional<WorkflowTypeStepEntity> model = repository.findById(id);
-
-    return model.isPresent() ? model.get() : null;
+  @PostConstruct
+  public void init() {
+    this.entityManager = this.entityManagerFactory.createEntityManager();
   }
 
   @Override
@@ -47,14 +45,19 @@ public class WorkflowTypeStepDao implements IWorkflowTypeStepDao {
   }
 
   @Override
-  public void deleteById(final Long id, final boolean withTransaction) throws IFlowStorageException {
-    repository.deleteById(id);
-  }
-
-  @Override
   public List<WorkflowTypeStepEntity> getListByWorkflowTypeIdentity(final String workflowTypeIdentity) throws IFlowStorageException {
 
     return repository.findAllByWorkflowTypeIdentity(workflowTypeIdentity);
+  }
+
+  @Override
+  protected Class<WorkflowTypeStepEntity> entityClass() {
+    return WorkflowTypeStepEntity.class;
+  }
+
+  @Override
+  protected EntityManager getEntityManager() {
+    return entityManager;
   }
 
 }

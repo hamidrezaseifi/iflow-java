@@ -12,10 +12,11 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.pth.iflow.common.enums.EInvoiceType;
+import com.pth.iflow.core.model.entity.workflow.base.IWorkflowContainerEntity;
 
 @Entity
 @Table(name = "invoice_workflow")
-public class InvoiceWorkflowEntity {
+public class InvoiceWorkflowEntity implements IWorkflowContainerEntity {
 
   @Id
   @Column(name = "workflow_id")
@@ -68,18 +69,22 @@ public class InvoiceWorkflowEntity {
 
   }
 
+  @Override
   public Long getWorkflowId() {
     return workflowId;
   }
 
+  @Override
   public void setWorkflowId(final Long workflowId) {
     this.workflowId = workflowId;
   }
 
+  @Override
   public WorkflowEntity getWorkflow() {
     return workflow;
   }
 
+  @Override
   public void setWorkflow(final WorkflowEntity workflow) {
     this.workflow = workflow;
   }

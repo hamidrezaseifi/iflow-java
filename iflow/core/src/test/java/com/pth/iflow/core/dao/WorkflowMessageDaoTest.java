@@ -22,7 +22,6 @@ import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.entity.workflow.WorkflowEntity;
 import com.pth.iflow.core.model.entity.workflow.WorkflowMessageEntity;
 import com.pth.iflow.core.service.interfaces.IWorkflowMessageService;
-import com.pth.iflow.core.service.interfaces.workflow.IWorkflowService;
 import com.pth.iflow.core.storage.dao.interfaces.IWorkflowMessageDao;
 import com.pth.iflow.core.storage.dao.interfaces.workflow.IWorkflowDao;
 
@@ -33,9 +32,6 @@ public class WorkflowMessageDaoTest extends TestDataProducer {
 
   @Autowired
   private IWorkflowDao                      workflowDao;
-
-  @Autowired
-  private IWorkflowService                  workflowService;
 
   @Autowired
   private IWorkflowMessageService           workflowMessageService;
@@ -70,7 +66,7 @@ public class WorkflowMessageDaoTest extends TestDataProducer {
 
     createWorlflowList();
 
-    final WorkflowMessageEntity workflow = createdModels.get(0);
+    final WorkflowMessageEntity workflow    = createdModels.get(0);
 
     final WorkflowMessageEntity resWorkflow = this.workflowMessageDao.getById(createdModels.get(0).getId());
 
@@ -83,7 +79,7 @@ public class WorkflowMessageDaoTest extends TestDataProducer {
 
     createWorlflowList();
 
-    WorkflowMessageEntity workflowMessage = createdModels.get(0);
+    WorkflowMessageEntity    workflowMessage    = createdModels.get(0);
     final WorkflowMessageEdo workflowMessageEdo = createdEdoModels.get(0);
 
     this.workflowMessageDao.updateStatusByWorkflowIdentity(createdWorkflow.getIdentity(), workflowMessageEdo.getStepIdentity(),
@@ -99,9 +95,9 @@ public class WorkflowMessageDaoTest extends TestDataProducer {
   public void testGetListByUserId() throws Exception {
 
     createWorlflowList();
-    final WorkflowMessageEdo workflowMessageEdo = createdEdoModels.get(0);
+    final WorkflowMessageEdo          workflowMessageEdo = createdEdoModels.get(0);
 
-    final List<WorkflowMessageEntity> resList = this.workflowMessageDao
+    final List<WorkflowMessageEntity> resList            = this.workflowMessageDao
         .getNotClosedNotExpiredListByUserIdentity(workflowMessageEdo.getUserIdentity());
 
     Assert.assertNotNull("Result list is not null!", resList);
@@ -115,8 +111,8 @@ public class WorkflowMessageDaoTest extends TestDataProducer {
 
     createWorlflowList();
 
-    final List<WorkflowMessageEntity> resList = this.workflowMessageDao
-        .getNotClosedNotExpiredListByWorkflowIdentity(createdWorkflow.getIdentity());
+    final List<
+        WorkflowMessageEntity> resList = this.workflowMessageDao.getNotClosedNotExpiredListByWorkflowIdentity(createdWorkflow.getIdentity());
 
     Assert.assertNotNull("Result list is not null!", resList);
 

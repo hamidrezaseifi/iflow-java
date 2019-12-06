@@ -13,8 +13,6 @@ public abstract class EntityIdentityHelper implements ICoreEntityVersion {
 
   public abstract void setIdentity(String identity);
 
-  public abstract Long getId();
-
   public boolean isIdentityNew() {
     return EIdentity.isNotSet(getIdentity());
   }

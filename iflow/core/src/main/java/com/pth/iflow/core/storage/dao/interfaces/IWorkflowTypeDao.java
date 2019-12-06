@@ -20,4 +20,6 @@ public interface IWorkflowTypeDao {
 
   public List<WorkflowTypeEntity> getListByCompanyIdentity(String companyIdentity) throws IFlowStorageException;
 
+  void deleteById(Long id) throws IFlowStorageException;
+
 }

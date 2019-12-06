@@ -1,4 +1,4 @@
-package com.pth.iflow.core.storage.dao.impl.base;
+package com.pth.iflow.core.storage.dao.impl.workflow;
 
 import java.util.Arrays;
 import java.util.List;

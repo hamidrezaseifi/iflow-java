@@ -90,8 +90,9 @@ public class UserEntity extends EntityIdentityHelper {
   )
   private final Set<DepartmentGroupEntity> departmentGroups = new HashSet<>();
 
-  // @OneToMany(cascade = CascadeType.ALL, mappedBy = "userEntity")
-  // private Set<UserDeputyEntity> deputies;
+  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+  @JoinTable(name = "user_deputy", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "deputy_id") })
+  private final Set<UserEntity>            deputies         = new HashSet<>();
 
   // @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "userEntity")
   // @Fetch(value = FetchMode.SUBSELECT)
@@ -325,36 +326,23 @@ public class UserEntity extends EntityIdentityHelper {
     }
   }
 
+  public Set<UserEntity> getDeputies() {
+    return deputies;
+  }
+
+  public void setDeputies(final Collection<UserEntity> deputies) {
+    this.deputies.clear();
+    for (final UserEntity model : deputies) {
+
+      // model.getUsers().add(this);
+
+      this.deputies.add(model);
+    }
+  }
+
   @Override
   public void increaseVersion() {
     version += 1;
-  }
-
-  public void updateFromExists(final UserEntity exists) {
-    if (exists == null) {
-      return;
-    }
-    this.birthDate = exists.birthDate;
-    this.companyId = exists.companyId;
-    this.email = exists.email;
-    this.firstName = exists.firstName;
-    this.lastName = exists.lastName;
-    this.status = exists.status;
-    this.version = exists.version;
-    this.permission = exists.permission;
-
-    this.departmentGroups.clear();
-    this.departments.clear();
-    // this.deputies.clear();
-    this.groups.clear();
-    // this.roles.clear();
-
-    this.departmentGroups.addAll(exists.departmentGroups);
-    this.departments.addAll(exists.departments);
-    // this.deputies.addAll(exists.deputies);
-    this.groups.addAll(exists.groups);
-    // this.roles.addAll(exists.roles);
-
   }
 
 }

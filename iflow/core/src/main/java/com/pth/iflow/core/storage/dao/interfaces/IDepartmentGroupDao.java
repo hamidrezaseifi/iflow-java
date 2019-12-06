@@ -18,4 +18,6 @@ public interface IDepartmentGroupDao {
 
   public List<DepartmentGroupEntity> getListByIdentityList(Collection<String> idList) throws IFlowStorageException;
 
+  void deleteById(Long id) throws IFlowStorageException;
+
 }

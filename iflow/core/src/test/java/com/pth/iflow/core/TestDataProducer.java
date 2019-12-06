@@ -40,7 +40,6 @@ import com.pth.iflow.core.model.WorkflowSearchFilter;
 import com.pth.iflow.core.model.entity.CompanyEntity;
 import com.pth.iflow.core.model.entity.DepartmentEntity;
 import com.pth.iflow.core.model.entity.DepartmentGroupEntity;
-import com.pth.iflow.core.model.entity.UserDeputyEntity;
 import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.model.entity.UserGroupEntity;
 import com.pth.iflow.core.model.entity.workflow.InvoiceWorkflowEntity;
@@ -106,7 +105,7 @@ public class TestDataProducer {
     model.setPermission(1);
     model.setDepartmentGroups(Arrays.asList(getTestDepartmentGroup(1L, "depgrp1"), getTestDepartmentGroup(2L, "depgrp2")));
     model.setDepartments(Arrays.asList(getTestDepartment(1L, "dep1"), getTestDepartment(2L, "dep2")));
-    // model.setDeputies(Arrays.asList());
+    model.setDeputies(Arrays.asList());
     model.setGroups(Arrays.asList(getTestUserGroup(1L, "grp1"), getTestUserGroup(2L, "grp2")));
     model.setCompany(getTestCompany());
     // model.setCompanyIdentity("companyIdentity");
@@ -145,14 +144,14 @@ public class TestDataProducer {
     model.setPermission(1);
     model.setDepartmentGroups(Arrays.asList(getTestDepartmentGroup(1L, "depgrp1"), getTestDepartmentGroup(2L, "depgrp2")));
     model.setDepartments(Arrays.asList(getTestDepartment(1L, "dep1"), getTestDepartment(2L, "dep2")));
-    // model.setDeputies(Arrays.asList(getTestUser(1L, "fname", "lname", "email")));
+    model.setDeputies(Arrays.asList(getTestUser(1L, "fname", "lname", "email")));
     model.setGroups(Arrays.asList(getTestUserGroup(1L, "grp1"), getTestUserGroup(2L, "grp2")));
     // model.setRolesFromIntegerList(Arrays.asList(1, 2, 3));
 
     model.setGroups(new ArrayList<>());
     model.setDepartmentGroups(new ArrayList<>());
     model.setDepartments(new ArrayList<>());
-    // model.setDeputies(new ArrayList<>());
+    model.setDeputies(new ArrayList<>());
     // model.setRoles(new ArrayList<>());
 
     return model;
@@ -170,7 +169,7 @@ public class TestDataProducer {
     model.setPermission(1);
     model.setDepartmentGroups(Arrays.asList(getTestDepartmentGroup(1L, "depgrp1"), getTestDepartmentGroup(2L, "depgrp2")));
     model.setDepartments(Arrays.asList(getTestDepartment(1L, "dep1"), getTestDepartment(2L, "dep2")));
-    // model.setDeputies(Arrays.asList(getTestUser()));
+    model.setDeputies(Arrays.asList(getTestUser()));
     model.setGroups(Arrays.asList(getTestUserGroup(1L, "grp1"), getTestUserGroup(2L, "grp2")));
     model.setBirthDate(getTestBirthDate());
     model.setCompany(getTestCompany());
@@ -1047,18 +1046,6 @@ public class TestDataProducer {
         this.getTestWorkflowTypeStep(2L, "WorkflowTypeStepEntity 2"), this.getTestWorkflowTypeStep(3L, "WorkflowTypeStepEntity 3"));
 
     return list;
-  }
-
-  protected Set<UserDeputyEntity> getTestUserDeputyEntitySet(final UserEntity user) {
-    return new HashSet<UserDeputyEntity>(
-        Arrays.asList(getTestUserDeputyEntity(user, 1L), getTestUserDeputyEntity(user, 2L), getTestUserDeputyEntity(user, 3L)));
-  }
-
-  private UserDeputyEntity getTestUserDeputyEntity(final UserEntity user, final Long deputyId) {
-    final UserDeputyEntity model = new UserDeputyEntity();
-    model.setDeputyId(deputyId);
-    model.setUserEntity(user);
-    return model;
   }
 
   protected Set<String> getTestUserGroupIdSet() {

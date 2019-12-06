@@ -20,4 +20,6 @@ public interface IDepartmentDao {
 
   public List<DepartmentEntity> getListByIdentityList(Collection<String> idList) throws IFlowStorageException;
 
+  void deleteById(Long id) throws IFlowStorageException;
+
 }
