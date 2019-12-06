@@ -28,10 +28,6 @@ public class WorkflowFileEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long                                  id;
 
-  /*
-   * @Column(name = "workflow_id") private Long workflowId;
-   */
-
   @Column(name = "title")
   private String                                title;
 
@@ -79,13 +75,6 @@ public class WorkflowFileEntity {
   public void setId(final Long id) {
     this.id = id;
   }
-
-  /*
-   * public Long getWorkflowId() { return this.workflowId; }
-   *
-   * public void setWorkflowId(final Long workflowId) { this.workflowId =
-   * workflowId; }
-   */
 
   public String getActiveFilePath() {
     return this.activeFilePath;

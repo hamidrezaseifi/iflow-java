@@ -204,26 +204,6 @@ public class WorkflowEntity extends EntityIdentityHelper {
     this.currentStepId = currentStepId;
   }
 
-  public void updateFromExists(final WorkflowEntity exists) {
-    if (exists == null) {
-      return;
-    }
-    this.comments = exists.comments;
-    this.controllerId = exists.controllerId;
-    this.createdById = exists.createdById;
-    this.currentStepId = exists.currentStepId;
-    this.workflowTypeId = exists.workflowTypeId;
-    this.status = exists.status;
-    this.version = exists.version;
-
-    actions.clear();
-    actions.addAll(exists.actions);
-
-    files.clear();
-    files.addAll(exists.files);
-
-  }
-
   @Override
   public void increaseVersion() {
     version += 1;

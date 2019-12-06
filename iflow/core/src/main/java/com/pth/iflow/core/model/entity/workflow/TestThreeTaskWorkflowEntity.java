@@ -27,18 +27,22 @@ public class TestThreeTaskWorkflowEntity implements IWorkflowContainerEntity {
 
   }
 
+  @Override
   public Long getWorkflowId() {
     return workflowId;
   }
 
+  @Override
   public void setWorkflowId(final Long workflowId) {
     this.workflowId = workflowId;
   }
 
+  @Override
   public WorkflowEntity getWorkflow() {
     return workflow;
   }
 
+  @Override
   public void setWorkflow(final WorkflowEntity workflow) {
     this.workflow = workflow;
   }
@@ -50,15 +54,6 @@ public class TestThreeTaskWorkflowEntity implements IWorkflowContainerEntity {
 
   public void verifyVersion(final TestThreeTaskWorkflowEntity exists) {
     workflow.verifyVersion(exists.getWorkflow());
-  }
-
-  public void updateFromExists(final TestThreeTaskWorkflowEntity exists) {
-    if (exists == null) {
-      return;
-    }
-
-    this.workflow.updateFromExists(exists.workflow);
-
   }
 
 }

@@ -210,26 +210,4 @@ public class InvoiceWorkflowEntity implements IWorkflowContainerEntity {
     workflow.verifyVersion(exists.getWorkflow());
   }
 
-  public void updateFromExists(final InvoiceWorkflowEntity exists) {
-    if (exists == null) {
-      return;
-    }
-
-    this.workflow.updateFromExists(exists.workflow);
-
-    this.discountDate = exists.discountDate;
-    this.discountDeadline = exists.discountDeadline;
-    this.discountEnterDate = exists.discountEnterDate;
-    this.discountRate = exists.discountRate;
-    this.invoceDate = exists.invoceDate;
-    this.invoiceType = exists.invoiceType;
-    this.isDirectDebitPermission = exists.isDirectDebitPermission;
-    this.partnerCode = exists.partnerCode;
-    this.paymentAmount = exists.paymentAmount;
-    this.registerNumber = exists.registerNumber;
-    this.sender = exists.sender;
-    this.vendorName = exists.vendorName;
-    this.vendorNumber = exists.vendorNumber;
-
-  }
 }

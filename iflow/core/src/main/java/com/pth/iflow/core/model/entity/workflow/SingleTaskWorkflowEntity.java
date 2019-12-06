@@ -56,12 +56,4 @@ public class SingleTaskWorkflowEntity implements IWorkflowContainerEntity {
     workflow.verifyVersion(exists.getWorkflow());
   }
 
-  public void updateFromExists(final SingleTaskWorkflowEntity exists) {
-    if (exists == null) {
-      return;
-    }
-
-    this.workflow.updateFromExists(exists.workflow);
-  }
-
 }
