@@ -605,6 +605,7 @@ public class WorkflowModelEdoMapper {
     edo.setCreatedByIdentity(model.getCreatedByIdentity());
     edo.setActiveFilePath(model.getActiveFilePath());
     edo.setActiveFileVersion(model.getActiveFileVersion());
+    edo.setIdentity(model.getIdentity());
 
     edo.setFileVersions(toWorkflowFileVersionEdoList(model.getFileVersions()));
 
@@ -622,6 +623,7 @@ public class WorkflowModelEdoMapper {
     model.setCreatedByIdentity(edo.getCreatedByIdentity());
     model.setActiveFilePath(edo.getActiveFilePath());
     model.setActiveFileVersion(edo.getActiveFileVersion());
+    model.setIdentity(edo.getIdentity());
 
     model.setFileVersions(fromWorkflowFileVersionEdoList(edo.getFileVersions()));
 

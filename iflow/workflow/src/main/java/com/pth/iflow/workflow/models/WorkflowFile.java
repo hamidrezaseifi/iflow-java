@@ -3,8 +3,11 @@ package com.pth.iflow.workflow.models;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WorkflowFile {
+import com.pth.iflow.common.edo.models.helper.IdentityModel;
 
+public class WorkflowFile extends IdentityModel {
+
+  private String                          identity;
   private String                          createdByIdentity;
   private String                          title;
   private String                          extention;
@@ -13,6 +16,16 @@ public class WorkflowFile {
   private Integer                         activeFileVersion;
   private Integer                         status;
   private final List<WorkflowFileVersion> fileVersions = new ArrayList<>();
+
+  @Override
+  public String getIdentity() {
+    return identity;
+  }
+
+  @Override
+  public void setIdentity(final String identity) {
+    this.identity = identity;
+  }
 
   public String getCreatedByIdentity() {
     return createdByIdentity;

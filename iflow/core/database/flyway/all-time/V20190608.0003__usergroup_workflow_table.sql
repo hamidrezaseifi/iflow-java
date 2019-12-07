@@ -276,6 +276,7 @@ CREATE TABLE `workflow_actions` (
  
 CREATE TABLE `workflow_files` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `identity` varchar(45) DEFAULT NULL,
   `workflow_id` int(11) NOT NULL,
   `title` varchar(200) NOT NULL,
   `extention` varchar(10) NOT NULL,
@@ -287,6 +288,7 @@ CREATE TABLE `workflow_files` (
   `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   `updated_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   PRIMARY KEY (`id`),
+  UNIQUE KEY `identity_UNIQUE` (`identity`),
   KEY `FK_WORKFLOWFILE_WORKFLOW_idx` (`workflow_id`),
   KEY `FK_WORKFLOWFILE_USERS_idx` (`created_by`),
   CONSTRAINT `FK_WORKFLOWFILE_USERS` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,

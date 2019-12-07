@@ -827,6 +827,7 @@ public class TestDataProducer {
     model.setActiveFileVersion(1);
     model.setTitle("title " + Id);
     model.setExtention("ext");
+    model.setIdentity("file-identity");
 
     model.setFileVersions(Arrays.asList(this.getTestWorkflowFileVersion(1L, 1, 1L), this.getTestWorkflowFileVersion(2L, 2, 1L),
         this.getTestWorkflowFileVersion(3L, 3, 1L)));
@@ -844,6 +845,7 @@ public class TestDataProducer {
     edo.setActiveFileVersion(1);
     edo.setTitle("title " + Id);
     edo.setExtention("ext");
+    edo.setIdentity("file-identity");
 
     edo.setFileVersions(Arrays.asList(this.getTestWorkflowFileVersionEdo(1L, 1), this.getTestWorkflowFileVersionEdo(2L, 2),
         this.getTestWorkflowFileVersionEdo(3L, 3)));

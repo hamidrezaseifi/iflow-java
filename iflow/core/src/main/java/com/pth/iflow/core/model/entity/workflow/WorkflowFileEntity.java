@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,14 +20,21 @@ import javax.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.pth.iflow.core.storage.dao.helper.EntityIdentityHelper;
+import com.pth.iflow.core.storage.dao.helper.EntityListener;
+
 @Entity
 @Table(name = "workflow_files")
-public class WorkflowFileEntity {
+@EntityListeners(EntityListener.class)
+public class WorkflowFileEntity extends EntityIdentityHelper {
 
   @Id
   @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long                                  id;
+
+  @Column(name = "identity")
+  private String                                identity;
 
   @Column(name = "title")
   private String                                title;
@@ -68,12 +76,23 @@ public class WorkflowFileEntity {
 
   }
 
+  @Override
   public Long getId() {
     return this.id;
   }
 
   public void setId(final Long id) {
     this.id = id;
+  }
+
+  @Override
+  public String getIdentity() {
+    return identity;
+  }
+
+  @Override
+  public void setIdentity(final String identity) {
+    this.identity = identity;
   }
 
   public String getActiveFilePath() {
@@ -168,6 +187,26 @@ public class WorkflowFileEntity {
 
   public void setWorkflowEntity(final WorkflowEntity workflowEntity) {
     this.workflowEntity = workflowEntity;
+  }
+
+  @Override
+  public void setVersion(final Integer version) {
+
+  }
+
+  @Override
+  public Integer getVersion() {
+    return 0;
+  }
+
+  @Override
+  public void increaseVersion() {
+
+  }
+
+  @Override
+  public String getIdentityPreffix() {
+    return "wf";
   }
 
 }

@@ -1,6 +1,7 @@
 package com.pth.iflow.gui.models.workflow;
 
 import java.util.List;
+
 import com.pth.iflow.gui.models.User;
 import com.pth.iflow.gui.models.WorkflowAction;
 import com.pth.iflow.gui.models.WorkflowFile;
@@ -26,6 +27,8 @@ public interface IWorkflow {
   public void setVersion(final Integer version);
 
   public List<WorkflowFile> getFiles();
+
+  public WorkflowFile getFileByIdentity(final String fileIdentity);
 
   public void setFiles(final List<WorkflowFile> files);
 
@@ -57,8 +60,6 @@ public interface IWorkflow {
 
   public boolean getHasActiveAction();
 
-  public WorkflowFile getFileByIdentity(String identity);
-
   public void setCreatedByUser(User createdByUser);
 
   public void setControllerUser(User controllerUser);
@@ -68,5 +69,7 @@ public interface IWorkflow {
   public WorkflowFile addNewFile(String generateSavingFilePathPreffix, String identity2, String title, String fileExtention, String string);
 
   public String getIdentity();
+
+  public Integer getStatusInt();
 
 }

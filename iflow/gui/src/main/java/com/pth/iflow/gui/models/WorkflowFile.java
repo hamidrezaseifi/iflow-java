@@ -2,6 +2,7 @@ package com.pth.iflow.gui.models;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import com.pth.iflow.common.edo.models.helper.IdentityModel;
 
 public class WorkflowFile extends IdentityModel {
@@ -15,21 +16,18 @@ public class WorkflowFile extends IdentityModel {
   private String                          comments;
   private Integer                         activeFileVersion;
   private Integer                         status;
-  private Integer                         version;
   private final List<WorkflowFileVersion> fileVersions = new ArrayList<>();
 
-  @Override
   public String getIdentity() {
-    return identity;
+    return this.identity;
   }
 
-  @Override
   public void setIdentity(final String identity) {
     this.identity = identity;
   }
 
   public String getWorkflowIdentity() {
-    return workflowIdentity;
+    return this.workflowIdentity;
   }
 
   public void setWorkflowIdentity(final String workflowIdentity) {
@@ -37,7 +35,7 @@ public class WorkflowFile extends IdentityModel {
   }
 
   public String getCreatedByIdentity() {
-    return createdByIdentity;
+    return this.createdByIdentity;
   }
 
   public void setCreatedByIdentity(final String createdByIdentity) {
@@ -90,14 +88,6 @@ public class WorkflowFile extends IdentityModel {
 
   public void setStatus(final Integer status) {
     this.status = status;
-  }
-
-  public Integer getVersion() {
-    return this.version;
-  }
-
-  public void setVersion(final Integer version) {
-    this.version = version;
   }
 
   public List<WorkflowFileVersion> getFileVersions() {

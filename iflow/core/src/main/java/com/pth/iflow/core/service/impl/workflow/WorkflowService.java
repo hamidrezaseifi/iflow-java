@@ -94,8 +94,7 @@ public class WorkflowService extends CoreModelEdoMapperService<WorkflowEntity, W
     return model;
   }
 
-  private List<WorkflowFileEntity> fromWorkflowFileEdoList(final List<WorkflowFileEdo> files)
-      throws IFlowMessageConversionFailureException {
+  private List<WorkflowFileEntity> fromWorkflowFileEdoList(final List<WorkflowFileEdo> files) throws IFlowMessageConversionFailureException {
     final List<WorkflowFileEntity> modelList = new ArrayList<>();
 
     for (final WorkflowFileEdo edo : files) {
@@ -116,7 +115,7 @@ public class WorkflowService extends CoreModelEdoMapperService<WorkflowEntity, W
     model.setCreatedByUserId(usersDao.getByIdentity(edo.getCreatedByIdentity()).getId());
     model.setActiveFilePath(edo.getActiveFilePath());
     model.setActiveFileVersion(edo.getActiveFileVersion());
-
+    model.setIdentity(edo.getIdentity());
     model.setFileVersions(fromWorkflowFileVersionEdoList(edo.getFileVersions()));
 
     return model;
@@ -220,6 +219,7 @@ public class WorkflowService extends CoreModelEdoMapperService<WorkflowEntity, W
     edo.setCreatedByIdentity(usersDao.getById(model.getCreatedByUserId()).getIdentity());
     edo.setActiveFilePath(model.getActiveFilePath());
     edo.setActiveFileVersion(model.getActiveFileVersion());
+    edo.setIdentity(model.getIdentity());
 
     edo.setFileVersions(toWorkflowFileVersionEdoList(model.getFileVersions()));
 
