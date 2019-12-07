@@ -292,6 +292,7 @@ public class TestDataProducer {
     model.setActiveFileVersion(1);
     model.setTitle("title " + identity);
     model.setExtention("ext");
+    model.setIdentity(identity);
     model.setFileVersions(Arrays.asList(this.getTestWorkflowFileVersion("filever1", 1, identity),
         this.getTestWorkflowFileVersion("filever2", 2, identity), this.getTestWorkflowFileVersion("filever3", 3, identity)));
 

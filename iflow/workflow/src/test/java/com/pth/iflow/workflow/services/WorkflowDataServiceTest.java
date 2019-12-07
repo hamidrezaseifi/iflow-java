@@ -23,7 +23,7 @@ import com.pth.iflow.common.edo.models.workflow.results.WorkflowResultListEdo;
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.workflow.TestDataProducer;
 import com.pth.iflow.workflow.bl.IWorkflowSearchService;
-import com.pth.iflow.workflow.bl.impl.workflowservice.base.WorkflowSearchService;
+import com.pth.iflow.workflow.bl.impl.workflowservice.workflow.WorkflowSearchService;
 import com.pth.iflow.workflow.config.WorkflowConfiguration;
 import com.pth.iflow.workflow.models.WorkflowSearchFilter;
 import com.pth.iflow.workflow.models.mapper.WorkflowModelEdoMapper;
