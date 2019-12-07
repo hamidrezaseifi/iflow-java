@@ -2,14 +2,10 @@ package com.pth.iflow.gui.services.impl.workflow.testthree;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,21 +15,18 @@ import com.pth.iflow.common.edo.models.helper.IdentityModel;
 import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
-import com.pth.iflow.gui.models.WorkflowAction;
 import com.pth.iflow.gui.models.WorkflowFile;
-import com.pth.iflow.gui.models.WorkflowType;
-import com.pth.iflow.gui.models.WorkflowTypeStep;
-import com.pth.iflow.gui.models.ui.FileSavingData;
 import com.pth.iflow.gui.models.ui.SessionUserInfo;
-import com.pth.iflow.gui.models.ui.UploadFileSavingData;
 import com.pth.iflow.gui.models.workflow.testthree.TestThreeTaskWorkflow;
 import com.pth.iflow.gui.models.workflow.testthree.TestThreeTaskWorkflowSaveRequest;
 import com.pth.iflow.gui.services.IUploadFileManager;
 import com.pth.iflow.gui.services.IWorkflowAccess;
 import com.pth.iflow.gui.services.IWorkflowHandler;
+import com.pth.iflow.gui.services.impl.workflow.base.WorkflowHandlerHelper;
 
 @Service
-public class TestThreeTaskWorkflowHandler implements IWorkflowHandler<TestThreeTaskWorkflow, TestThreeTaskWorkflowSaveRequest> {
+public class TestThreeTaskWorkflowHandler extends WorkflowHandlerHelper<TestThreeTaskWorkflow>
+    implements IWorkflowHandler<TestThreeTaskWorkflow, TestThreeTaskWorkflowSaveRequest> {
 
   private static final Logger                                                            logger = LoggerFactory
       .getLogger(TestThreeTaskWorkflowHandler.class);
@@ -44,8 +37,7 @@ public class TestThreeTaskWorkflowHandler implements IWorkflowHandler<TestThreeT
 
   private final IUploadFileManager                                                       uploadFileManager;
 
-  public TestThreeTaskWorkflowHandler(
-      @Autowired final IWorkflowAccess<TestThreeTaskWorkflow, TestThreeTaskWorkflowSaveRequest> workflowAccess,
+  public TestThreeTaskWorkflowHandler(@Autowired final IWorkflowAccess<TestThreeTaskWorkflow, TestThreeTaskWorkflowSaveRequest> workflowAccess,
       @Autowired final SessionUserInfo sessionUserInfo, @Autowired final IUploadFileManager uploadFileManager) {
     this.workflowAccess = workflowAccess;
     this.sessionUserInfo = sessionUserInfo;
@@ -75,52 +67,8 @@ public class TestThreeTaskWorkflowHandler implements IWorkflowHandler<TestThreeT
     this.workflowAccess.validateWorkflow(createRequest, this.sessionUserInfo.getToken());
 
     final List<TestThreeTaskWorkflow> list = this.workflowAccess.createWorkflow(createRequest, this.sessionUserInfo.getToken());
-    final List<TestThreeTaskWorkflow> preparedList = this.prepareWorkflowList(list);
+    return this.prepareUploadedFiles(createRequest, session, list);
 
-    if (StringUtils.isEmpty(createRequest.getSessionKey())) {
-      return preparedList;
-    }
-
-    final Object oFileList = session.getAttribute(createRequest.getSessionKey());
-    if ((oFileList == null) || ((oFileList instanceof List) == false)) {
-      throw new GuiCustomizedException("Uploaded files not found!");
-
-    }
-
-    final List<UploadFileSavingData> tempFiles = (List<UploadFileSavingData>) oFileList;
-
-    final List<TestThreeTaskWorkflow> finalList = new ArrayList<>();
-    if (preparedList != null && tempFiles.isEmpty() == false) {
-      for (final TestThreeTaskWorkflow workflow : preparedList) {
-        final List<FileSavingData> archiveSavingFileInfoList = new ArrayList<>();
-        for (final UploadFileSavingData tempFile : tempFiles) {
-
-          final FileSavingData archiveSavingFileInfo = tempFile.toFileSavingData();
-          archiveSavingFileInfo.setWorkflowIdentity(workflow.getIdentity());
-          archiveSavingFileInfo
-              .setActionIdentity(workflow.getHasActiveAction() ? workflow.getActiveAction().getIdentity() : "no-action");
-          ;
-          archiveSavingFileInfo.setFilePath(archiveSavingFileInfo.generateSavingFilePathPreffix());
-          archiveSavingFileInfo.setTempFilePath(tempFile.getFilePath());
-
-          archiveSavingFileInfoList.add(archiveSavingFileInfo);
-        }
-        final List<FileSavingData> savedArchiveFiles = this.uploadFileManager.copyFromTempToArchive(archiveSavingFileInfoList);
-        for (final FileSavingData savedArchiveFile : savedArchiveFiles) {
-
-          workflow.addNewFile(savedArchiveFile.generateSavingFilePathPreffix(), this.sessionUserInfo.getUser().getIdentity(),
-              savedArchiveFile.getTitle(), savedArchiveFile.getFileExtention(), "");
-        }
-
-        final TestThreeTaskWorkflow finalWorkflow = this.saveWorkflow(workflow, session);
-
-        finalList.add(finalWorkflow);
-      }
-    }
-
-    this.uploadFileManager.deleteFromTemp(UploadFileSavingData.toFileSavingDataList(tempFiles));
-
-    return finalList;
   }
 
   @Override
@@ -146,9 +94,9 @@ public class TestThreeTaskWorkflowHandler implements IWorkflowHandler<TestThreeT
       throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
     logger.debug("Assign workflow");
 
-    final TestThreeTaskWorkflow workflow = this.readWorkflow(workflowIdentity);
+    final TestThreeTaskWorkflow            workflow = this.readWorkflow(workflowIdentity);
 
-    final TestThreeTaskWorkflowSaveRequest request = TestThreeTaskWorkflowSaveRequest.generateNewNoExpireDays(workflow);
+    final TestThreeTaskWorkflowSaveRequest request  = TestThreeTaskWorkflowSaveRequest.generateNewNoExpireDays(workflow);
     request.setCommand(EWorkflowProcessCommand.ASSIGN);
     request.setAssignUser(this.sessionUserInfo.getUser().getIdentity());
 
@@ -193,7 +141,8 @@ public class TestThreeTaskWorkflowHandler implements IWorkflowHandler<TestThreeT
     TestThreeTaskWorkflow workflow = null;
     if (this.sessionUserInfo.hasCachedWorkflowIdentity(workflowIdentity)) {
       workflow = (TestThreeTaskWorkflow) this.sessionUserInfo.getCachedWorkflow(workflowIdentity);
-    } else {
+    }
+    else {
       workflow = this.readWorkflow(workflowIdentity);
     }
 
@@ -202,63 +151,21 @@ public class TestThreeTaskWorkflowHandler implements IWorkflowHandler<TestThreeT
     return workflowFile;
   }
 
-  private List<TestThreeTaskWorkflow> prepareWorkflowList(final List<TestThreeTaskWorkflow> pureWorkflowList)
-      throws IFlowMessageConversionFailureException {
-
-    final List<TestThreeTaskWorkflow> workflowList = new ArrayList<>();
-
-    if (pureWorkflowList != null) {
-      for (final TestThreeTaskWorkflow workflow : pureWorkflowList) {
-        workflowList.add(this.prepareWorkflow(workflow));
-      }
-    }
-
-    return workflowList;
+  @Override
+  protected SessionUserInfo getSessionUserInfo() {
+    return this.sessionUserInfo;
   }
 
-  private Map<String, WorkflowTypeStep> getIdMapedSteps(final WorkflowType workflowType) {
+  @Override
+  protected IUploadFileManager getUploadFileManager() {
 
-    final Map<String, WorkflowTypeStep> list = workflowType.getSteps().stream()
-        .collect(Collectors.toMap(s -> s.getIdentity(), s -> s));
-
-    return list;
+    return this.uploadFileManager;
   }
 
-  private WorkflowTypeStep findStepByIdInWorkflowType(final String stepId, final WorkflowType workflowType) {
-
-    final Map<String, WorkflowTypeStep> steps = this.getIdMapedSteps(workflowType);
-
-    if (steps.containsKey(stepId)) {
-      return steps.get(stepId);
-    } else {
-      return null;
-    }
-  }
-
-  private TestThreeTaskWorkflow prepareWorkflow(final TestThreeTaskWorkflow workflow) throws IFlowMessageConversionFailureException {
-
-    workflow.setWorkflowType(this.sessionUserInfo.getWorkflowTypeByIdentity(workflow.getWorkflowTypeIdentity()));
-    workflow.setCreatedByUser(this.sessionUserInfo.getUserByIdentity(workflow.getCreatedByIdentity()));
-    workflow.setControllerUser(this.sessionUserInfo.getUserByIdentity(workflow.getControllerIdentity()));
-    workflow.setCurrentUserIdentity(this.sessionUserInfo.getUser().getIdentity());
-    workflow.setCurrentStep(this.findStepByIdInWorkflowType(workflow.getCurrentStepIdentity(), workflow.getWorkflowType()));
-
-    this.prepareWorkflowActions(workflow);
-
-    this.sessionUserInfo.addCachedWorkflow(workflow);
-
-    return workflow;
-  }
-
-  private TestThreeTaskWorkflow prepareWorkflowActions(final TestThreeTaskWorkflow workflow)
-      throws IFlowMessageConversionFailureException {
-
-    for (final WorkflowAction action : workflow.getActions()) {
-      action.setAssignToUser(this.sessionUserInfo.getUserByIdentity(action.getAssignToIdentity()));
-      action.setCurrentStep(this.findStepByIdInWorkflowType(action.getCurrentStepIdentity(), workflow.getWorkflowType()));
-    }
-
-    return workflow;
+  @Override
+  protected TestThreeTaskWorkflow innerSaveWorkflow(final TestThreeTaskWorkflow workflow, final HttpSession session)
+      throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
+    return this.saveWorkflow(workflow, session);
   }
 
 }

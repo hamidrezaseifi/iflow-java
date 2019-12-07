@@ -2,14 +2,10 @@ package com.pth.iflow.gui.services.impl.workflow.singletask;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,21 +15,18 @@ import com.pth.iflow.common.edo.models.helper.IdentityModel;
 import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
-import com.pth.iflow.gui.models.WorkflowAction;
 import com.pth.iflow.gui.models.WorkflowFile;
-import com.pth.iflow.gui.models.WorkflowType;
-import com.pth.iflow.gui.models.WorkflowTypeStep;
-import com.pth.iflow.gui.models.ui.FileSavingData;
 import com.pth.iflow.gui.models.ui.SessionUserInfo;
-import com.pth.iflow.gui.models.ui.UploadFileSavingData;
 import com.pth.iflow.gui.models.workflow.singletask.SingleTaskWorkflow;
 import com.pth.iflow.gui.models.workflow.singletask.SingleTaskWorkflowSaveRequest;
 import com.pth.iflow.gui.services.IUploadFileManager;
 import com.pth.iflow.gui.services.IWorkflowAccess;
 import com.pth.iflow.gui.services.IWorkflowHandler;
+import com.pth.iflow.gui.services.impl.workflow.base.WorkflowHandlerHelper;
 
 @Service
-public class SingleTaskWorkflowHandler implements IWorkflowHandler<SingleTaskWorkflow, SingleTaskWorkflowSaveRequest> {
+public class SingleTaskWorkflowHandler extends WorkflowHandlerHelper<SingleTaskWorkflow>
+    implements IWorkflowHandler<SingleTaskWorkflow, SingleTaskWorkflowSaveRequest> {
 
   private static final Logger                                                      logger = LoggerFactory
       .getLogger(SingleTaskWorkflowHandler.class);
@@ -74,52 +67,8 @@ public class SingleTaskWorkflowHandler implements IWorkflowHandler<SingleTaskWor
     this.workflowAccess.validateWorkflow(createRequest, this.sessionUserInfo.getToken());
 
     final List<SingleTaskWorkflow> list = this.workflowAccess.createWorkflow(createRequest, this.sessionUserInfo.getToken());
-    final List<SingleTaskWorkflow> preparedList = this.prepareWorkflowList(list);
+    return this.prepareUploadedFiles(createRequest, session, list);
 
-    if (StringUtils.isEmpty(createRequest.getSessionKey())) {
-      return preparedList;
-    }
-
-    final Object oFileList = session.getAttribute(createRequest.getSessionKey());
-    if ((oFileList == null) || ((oFileList instanceof List) == false)) {
-      throw new GuiCustomizedException("Uploaded files not found!");
-
-    }
-
-    final List<UploadFileSavingData> tempFiles = (List<UploadFileSavingData>) oFileList;
-
-    final List<SingleTaskWorkflow> finalList = new ArrayList<>();
-    if (preparedList != null && tempFiles.isEmpty() == false) {
-      for (final SingleTaskWorkflow workflow : preparedList) {
-        final List<FileSavingData> archiveSavingFileInfoList = new ArrayList<>();
-        for (final UploadFileSavingData tempFile : tempFiles) {
-
-          final FileSavingData archiveSavingFileInfo = tempFile.toFileSavingData();
-          archiveSavingFileInfo.setWorkflowIdentity(workflow.getIdentity());
-          archiveSavingFileInfo
-              .setActionIdentity(workflow.getHasActiveAction() ? workflow.getActiveAction().getIdentity() : "no-action");
-          ;
-          archiveSavingFileInfo.setFilePath(archiveSavingFileInfo.generateSavingFilePathPreffix());
-          archiveSavingFileInfo.setTempFilePath(tempFile.getFilePath());
-
-          archiveSavingFileInfoList.add(archiveSavingFileInfo);
-        }
-        final List<FileSavingData> savedArchiveFiles = this.uploadFileManager.copyFromTempToArchive(archiveSavingFileInfoList);
-        for (final FileSavingData savedArchiveFile : savedArchiveFiles) {
-
-          workflow.addNewFile(savedArchiveFile.generateSavingFilePathPreffix(), this.sessionUserInfo.getUser().getIdentity(),
-              savedArchiveFile.getTitle(), savedArchiveFile.getFileExtention(), "");
-        }
-
-        final SingleTaskWorkflow finalWorkflow = this.saveWorkflow(workflow, session);
-
-        finalList.add(finalWorkflow);
-      }
-    }
-
-    this.uploadFileManager.deleteFromTemp(UploadFileSavingData.toFileSavingDataList(tempFiles));
-
-    return finalList;
   }
 
   @Override
@@ -145,9 +94,9 @@ public class SingleTaskWorkflowHandler implements IWorkflowHandler<SingleTaskWor
       throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
     logger.debug("Assign workflow");
 
-    final SingleTaskWorkflow workflow = this.readWorkflow(workflowIdentity);
+    final SingleTaskWorkflow            workflow = this.readWorkflow(workflowIdentity);
 
-    final SingleTaskWorkflowSaveRequest request = SingleTaskWorkflowSaveRequest.generateNewNoExpireDays(workflow);
+    final SingleTaskWorkflowSaveRequest request  = SingleTaskWorkflowSaveRequest.generateNewNoExpireDays(workflow);
     request.setCommand(EWorkflowProcessCommand.ASSIGN);
     request.setAssignUser(this.sessionUserInfo.getUser().getIdentity());
 
@@ -192,7 +141,8 @@ public class SingleTaskWorkflowHandler implements IWorkflowHandler<SingleTaskWor
     SingleTaskWorkflow workflow = null;
     if (this.sessionUserInfo.hasCachedWorkflowIdentity(workflowIdentity)) {
       workflow = (SingleTaskWorkflow) this.sessionUserInfo.getCachedWorkflow(workflowIdentity);
-    } else {
+    }
+    else {
       workflow = this.readWorkflow(workflowIdentity);
     }
 
@@ -201,62 +151,21 @@ public class SingleTaskWorkflowHandler implements IWorkflowHandler<SingleTaskWor
     return workflowFile;
   }
 
-  private List<SingleTaskWorkflow> prepareWorkflowList(final List<SingleTaskWorkflow> pureWorkflowList)
-      throws IFlowMessageConversionFailureException {
-
-    final List<SingleTaskWorkflow> workflowList = new ArrayList<>();
-
-    if (pureWorkflowList != null) {
-      for (final SingleTaskWorkflow workflow : pureWorkflowList) {
-        workflowList.add(this.prepareWorkflow(workflow));
-      }
-    }
-
-    return workflowList;
+  @Override
+  protected SessionUserInfo getSessionUserInfo() {
+    return this.sessionUserInfo;
   }
 
-  private Map<String, WorkflowTypeStep> getIdMapedSteps(final WorkflowType workflowType) {
+  @Override
+  protected IUploadFileManager getUploadFileManager() {
 
-    final Map<String, WorkflowTypeStep> list = workflowType.getSteps().stream()
-        .collect(Collectors.toMap(s -> s.getIdentity(), s -> s));
-
-    return list;
+    return this.uploadFileManager;
   }
 
-  private WorkflowTypeStep findStepByIdInWorkflowType(final String stepId, final WorkflowType workflowType) {
-
-    final Map<String, WorkflowTypeStep> steps = this.getIdMapedSteps(workflowType);
-
-    if (steps.containsKey(stepId)) {
-      return steps.get(stepId);
-    } else {
-      return null;
-    }
-  }
-
-  private SingleTaskWorkflow prepareWorkflow(final SingleTaskWorkflow workflow) throws IFlowMessageConversionFailureException {
-
-    workflow.setWorkflowType(this.sessionUserInfo.getWorkflowTypeByIdentity(workflow.getWorkflowTypeIdentity()));
-    workflow.setCreatedByUser(this.sessionUserInfo.getUserByIdentity(workflow.getCreatedByIdentity()));
-    workflow.setControllerUser(this.sessionUserInfo.getUserByIdentity(workflow.getControllerIdentity()));
-    workflow.setCurrentUserIdentity(this.sessionUserInfo.getUser().getIdentity());
-    workflow.setCurrentStep(this.findStepByIdInWorkflowType(workflow.getCurrentStepIdentity(), workflow.getWorkflowType()));
-
-    this.prepareWorkflowActions(workflow);
-
-    this.sessionUserInfo.addCachedWorkflow(workflow);
-
-    return workflow;
-  }
-
-  private SingleTaskWorkflow prepareWorkflowActions(final SingleTaskWorkflow workflow) throws IFlowMessageConversionFailureException {
-
-    for (final WorkflowAction action : workflow.getActions()) {
-      action.setAssignToUser(this.sessionUserInfo.getUserByIdentity(action.getAssignToIdentity()));
-      action.setCurrentStep(this.findStepByIdInWorkflowType(action.getCurrentStepIdentity(), workflow.getWorkflowType()));
-    }
-
-    return workflow;
+  @Override
+  protected SingleTaskWorkflow innerSaveWorkflow(final SingleTaskWorkflow workflow, final HttpSession session)
+      throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
+    return this.saveWorkflow(workflow, session);
   }
 
 }
