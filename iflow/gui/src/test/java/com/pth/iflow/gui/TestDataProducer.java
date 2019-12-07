@@ -497,6 +497,7 @@ public class TestDataProducer {
     model.setControllerIdentity("ControllerIdentity");
     model.setCurrentStepIdentity("currentStepIdentity");
     model.setCreatedByIdentity("createdByIdentity");
+    model.setWorkflowType(this.getTestSingleTaskWorkflowType());
 
     return model;
   }

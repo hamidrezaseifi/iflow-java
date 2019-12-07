@@ -2,13 +2,16 @@ package com.pth.iflow.gui.services.impl.workflow.workflow;
 
 import java.net.MalformedURLException;
 import java.util.List;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pth.iflow.common.edo.models.IdentityListEdo;
 import com.pth.iflow.common.edo.models.workflow.WorkflowEdo;
+import com.pth.iflow.common.edo.models.workflow.WorkflowListEdo;
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.configurations.GuiConfiguration;
@@ -39,7 +42,7 @@ public class WorkflowAccess implements IWorkflowAccess<Workflow, WorkflowSaveReq
 
     logger.debug("Read workflow: {}", workflowIdentity);
 
-    final WorkflowEdo responseEdo = this.restTemplate.callRestGet(this.moduleAccessConfig.getReadTestThreeTaskWorkflowUri(workflowIdentity),
+    final WorkflowEdo responseEdo = this.restTemplate.callRestGet(this.moduleAccessConfig.getReadWorkflowUri(workflowIdentity),
         EModule.WORKFLOW, WorkflowEdo.class, token, true);
 
     return GuiModelEdoMapper.fromEdo(responseEdo);
@@ -65,6 +68,20 @@ public class WorkflowAccess implements IWorkflowAccess<Workflow, WorkflowSaveReq
 
     throw new GuiCustomizedException("not implemented");
 
+  }
+
+  @Override
+  public List<Workflow> readWorkflowList(final Set<String> workflowIdentityList, final String token)
+      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+    logger.debug("Read workflow by identity list");
+
+    final IdentityListEdo listEdo         = new IdentityListEdo(workflowIdentityList);
+    final WorkflowListEdo responseListEdo = this.restTemplate.callRestPost(this.moduleAccessConfig.getReadWorkflowListUri(), EModule.WORKFLOW,
+        listEdo, WorkflowListEdo.class, token, true);
+
+    final List<Workflow>  list            = GuiModelEdoMapper.fromWorkflowEdoList(responseListEdo.getWorkflows());
+
+    return list;
   }
 
 }

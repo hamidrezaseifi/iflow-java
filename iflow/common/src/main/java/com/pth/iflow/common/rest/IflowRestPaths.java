@@ -214,7 +214,7 @@ public class IflowRestPaths {
       return builder.build();
     }
 
-    public static URI READ_INVOICEWORKFLOW_LIST() {
+    public static URI READ_INVOICEWORKFLOWLIST_BY_IDENTITYLIST() {
       final IflowUriBuilder builder = new IflowUriBuilder(INVOICEWORKFLOW_READ_LIST);
       return builder.build();
     }
@@ -246,7 +246,7 @@ public class IflowRestPaths {
       return builder.build();
     }
 
-    public static URI READ_SINGLETASKWORKFLOW_LIST() {
+    public static URI READ_SINGLETASKWORKFLOWLIST_BY_IDENTITYLIST() {
       final IflowUriBuilder builder = new IflowUriBuilder(SINGLETASKWORKFLOW_READ_LIST);
       return builder.build();
     }
@@ -278,7 +278,7 @@ public class IflowRestPaths {
       return builder.build();
     }
 
-    public static URI READ_TESTTHREETASKWORKFLOW_LIST() {
+    public static URI READ_TESTTHREETASKWORKFLOWLIST_BY_IDENTITYLIST() {
       final IflowUriBuilder builder = new IflowUriBuilder(TESTTHREETASKWORKFLOW_READ_LIST);
       return builder.build();
     }
@@ -327,7 +327,7 @@ public class IflowRestPaths {
     public static final String TESTTHREETASKWORKFLOW_VALIDATE                  = "/workflow/testthreetask/validate";
 
     public static final String WORKFLOW_SEARCH                                 = "/workflow/search";
-    public static final String WORKFLOW_READLIST                               = "/workflow/readlist";
+    public static final String WORKFLOW_READLISTBY_IDENTITYLIST                = "/workflow/readlist";
     public static final String WORKFLOW_READ_BY_IDENTITY                       = "/workflow/readbyid/{identity}";
 
     public static URI WORKFLOWTYPE_BY_ID_URIBUILDER(final String identity) {
@@ -360,6 +360,11 @@ public class IflowRestPaths {
       return builder.build(identity);
     }
 
+    public static URI READ_INVOICEWORKFLOWLIST_BY_IDENTITYLIST_URIBUILDER() {
+      final IflowUriBuilder builder = new IflowUriBuilder(INVOICEWORKFLOW_READ_LIST);
+      return builder.build();
+    }
+
     public static URI READ_INVOICEWORKFLOWLIST_BY_USERID_URIBUILDER(final String email, final int status) {
       final IflowUriBuilder builder = new IflowUriBuilder(INVOICEWORKFLOW_READ_LIST_BY_USEREMAIL);
       return builder.build(email, status);
@@ -390,6 +395,11 @@ public class IflowRestPaths {
       return builder.build(email, status);
     }
 
+    public static URI READ_SINGLETASKWORKFLOWLIST_BY_IDENTITYLIST_URIBUILDER() {
+      final IflowUriBuilder builder = new IflowUriBuilder(SINGLETASKWORKFLOW_READ_LIST);
+      return builder.build();
+    }
+
     public static URI CREATE_SINGLETASKWORKFLOW() {
       final IflowUriBuilder builder = new IflowUriBuilder(SINGLETASKWORKFLOW_CREATE);
       return builder.build();
@@ -408,6 +418,11 @@ public class IflowRestPaths {
     public static URI READ_TESTTHREETASKWORKFLOW_BY_IDENTITY_URIBUILDER(final String identity) {
       final IflowUriBuilder builder = new IflowUriBuilder(TESTTHREETASKWORKFLOW_READ_BY_IDENTITY);
       return builder.build(identity);
+    }
+
+    public static URI READ_TESTTHREETASKWORKFLOWLIST_BY_IDENTITYLIST_URIBUILDER() {
+      final IflowUriBuilder builder = new IflowUriBuilder(TESTTHREETASKWORKFLOW_READ_LIST);
+      return builder.build();
     }
 
     public static URI READ_TESTTHREETASKWORKFLOWLIST_BY_USERID_URIBUILDER(final String email, final int status) {
@@ -435,8 +450,8 @@ public class IflowRestPaths {
       return builder.build();
     }
 
-    public static URI READ_WORKFLOWLIST() {
-      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOW_READLIST);
+    public static URI READ_WORKFLOWLIST_BY_IDENTITYLIST() {
+      final IflowUriBuilder builder = new IflowUriBuilder(WORKFLOW_READLISTBY_IDENTITYLIST);
       return builder.build();
     }
 

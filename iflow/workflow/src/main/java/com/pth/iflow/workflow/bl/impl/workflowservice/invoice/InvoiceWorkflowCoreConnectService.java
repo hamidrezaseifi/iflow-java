@@ -42,8 +42,8 @@ public class InvoiceWorkflowCoreConnectService implements IWorkflowDataService<I
     logger.debug("Request workflow data for identity {}", identity);
 
     final InvoiceWorkflowEdo edo = this.restTemplate.callRestGet(
-        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.READ_INVOICEWORKFLOW_BY_IDENTITY(identity)), token,
-        EModule.CORE, InvoiceWorkflowEdo.class, true);
+        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.READ_INVOICEWORKFLOW_BY_IDENTITY(identity)), token, EModule.CORE,
+        InvoiceWorkflowEdo.class, true);
 
     return WorkflowModelEdoMapper.fromEdo(edo);
   }
@@ -54,8 +54,8 @@ public class InvoiceWorkflowCoreConnectService implements IWorkflowDataService<I
     logger.debug("Request workflow list for id list {}", idList);
 
     final InvoiceWorkflowListEdo edoList = this.restTemplate.callRestPost(
-        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.READ_INVOICEWORKFLOW_LIST()), token, EModule.CORE, idList,
-        InvoiceWorkflowListEdo.class, true);
+        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.READ_INVOICEWORKFLOWLIST_BY_IDENTITYLIST()), token, EModule.CORE,
+        idList, InvoiceWorkflowListEdo.class, true);
 
     return WorkflowModelEdoMapper.fromInvoiceWorkflowEdoList(edoList.getWorkflows());
   }
@@ -78,8 +78,8 @@ public class InvoiceWorkflowCoreConnectService implements IWorkflowDataService<I
     logger.debug("Request workflow list for company identity {}", identity);
 
     final InvoiceWorkflowListEdo edoList = this.restTemplate.callRestGet(
-        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.READ_INVOICEWORKFLOW_LIST_BY_USERIDENTITY(identity, status)),
-        token, EModule.CORE, InvoiceWorkflowListEdo.class, true);
+        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.READ_INVOICEWORKFLOW_LIST_BY_USERIDENTITY(identity, status)), token,
+        EModule.CORE, InvoiceWorkflowListEdo.class, true);
 
     return WorkflowModelEdoMapper.fromInvoiceWorkflowEdoList(edoList.getWorkflows());
   }

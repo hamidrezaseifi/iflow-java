@@ -54,8 +54,8 @@ public class TestThreeTaskWorkflowCoreConnectService implements IWorkflowDataSer
     logger.debug("Request workflow list for id list {}", idList);
 
     final TestThreeTaskWorkflowListEdo edoList = this.restTemplate.callRestPost(
-        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.READ_TESTTHREETASKWORKFLOW_LIST()), token, EModule.CORE,
-        idList, TestThreeTaskWorkflowListEdo.class, true);
+        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.READ_TESTTHREETASKWORKFLOWLIST_BY_IDENTITYLIST()), token,
+        EModule.CORE, idList, TestThreeTaskWorkflowListEdo.class, true);
 
     return WorkflowModelEdoMapper.fromTestThreeTaskWorkflowEdoList(edoList.getWorkflows());
   }
@@ -78,8 +78,7 @@ public class TestThreeTaskWorkflowCoreConnectService implements IWorkflowDataSer
     logger.debug("Request workflow list for company identity {}", identity);
 
     final TestThreeTaskWorkflowListEdo edoList = this.restTemplate.callRestGet(
-        this.moduleAccessConfig
-            .generateCoreUrl(IflowRestPaths.CoreModule.READ_TESTTHREETASKWORKFLOW_LIST_BY_USERIDENTITY(identity, status)),
+        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.READ_TESTTHREETASKWORKFLOW_LIST_BY_USERIDENTITY(identity, status)),
         token, EModule.CORE, TestThreeTaskWorkflowListEdo.class, true);
 
     return WorkflowModelEdoMapper.fromTestThreeTaskWorkflowEdoList(edoList.getWorkflows());

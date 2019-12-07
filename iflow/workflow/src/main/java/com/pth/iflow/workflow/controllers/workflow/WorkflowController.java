@@ -57,7 +57,7 @@ public class WorkflowController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowPostRequestMapping(path = IflowRestPaths.WorkflowModule.WORKFLOW_READLIST)
+  @IflowPostRequestMapping(path = IflowRestPaths.WorkflowModule.WORKFLOW_READLISTBY_IDENTITYLIST)
   public ResponseEntity<WorkflowResultListEdo> readWorkflowList(@RequestBody final IdentityListEdo identityList,
       final HttpServletRequest request, @RequestHeader(
         TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY

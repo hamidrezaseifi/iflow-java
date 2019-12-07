@@ -42,8 +42,8 @@ public class SingleTaskWorkflowCoreConnectService implements IWorkflowDataServic
     logger.debug("Request workflow data for identity {}", identity);
 
     final SingleTaskWorkflowEdo edo = this.restTemplate.callRestGet(
-        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.READ_SINGLETASKWORKFLOW_BY_IDENTITY(identity)), token,
-        EModule.CORE, SingleTaskWorkflowEdo.class, true);
+        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.READ_SINGLETASKWORKFLOW_BY_IDENTITY(identity)), token, EModule.CORE,
+        SingleTaskWorkflowEdo.class, true);
 
     return WorkflowModelEdoMapper.fromEdo(edo);
   }
@@ -54,8 +54,8 @@ public class SingleTaskWorkflowCoreConnectService implements IWorkflowDataServic
     logger.debug("Request workflow list for id list {}", idList);
 
     final SingleTaskWorkflowListEdo edoList = this.restTemplate.callRestPost(
-        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.READ_SINGLETASKWORKFLOW_LIST()), token, EModule.CORE, idList,
-        SingleTaskWorkflowListEdo.class, true);
+        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.READ_SINGLETASKWORKFLOWLIST_BY_IDENTITYLIST()), token, EModule.CORE,
+        idList, SingleTaskWorkflowListEdo.class, true);
 
     return WorkflowModelEdoMapper.fromSingleTaskWorkflowEdoList(edoList.getWorkflows());
   }
@@ -78,8 +78,7 @@ public class SingleTaskWorkflowCoreConnectService implements IWorkflowDataServic
     logger.debug("Request workflow list for company identity {}", identity);
 
     final SingleTaskWorkflowListEdo edoList = this.restTemplate.callRestGet(
-        this.moduleAccessConfig
-            .generateCoreUrl(IflowRestPaths.CoreModule.READ_SINGLETASKWORKFLOW_LIST_BY_USERIDENTITY(identity, status)),
+        this.moduleAccessConfig.generateCoreUrl(IflowRestPaths.CoreModule.READ_SINGLETASKWORKFLOW_LIST_BY_USERIDENTITY(identity, status)),
         token, EModule.CORE, SingleTaskWorkflowListEdo.class, true);
 
     return WorkflowModelEdoMapper.fromSingleTaskWorkflowEdoList(edoList.getWorkflows());

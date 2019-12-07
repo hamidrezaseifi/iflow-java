@@ -35,28 +35,30 @@ import com.pth.iflow.gui.services.impl.workflow.testthree.TestThreeTaskWorkflowA
 @Service
 public class WorkflowSearchAccess implements IWorkflowSearchAccess {
 
-  private static final Logger                                               logger = LoggerFactory
+  private static final Logger                                                             logger = LoggerFactory
       .getLogger(TestThreeTaskWorkflowAccess.class);
 
-  private final IRestTemplateCall                                           restTemplate;
-  private final GuiConfiguration.WorkflowModuleAccessConfig                 moduleAccessConfig;
-  private final SessionUserInfo                                             sessionUserInfo;
+  private final IRestTemplateCall                                                         restTemplate;
+  private final GuiConfiguration.WorkflowModuleAccessConfig                               moduleAccessConfig;
+  private final SessionUserInfo                                                           sessionUserInfo;
 
-  @Autowired
-  IWorkflowHandler<InvoiceWorkflow, InvoiceWorkflowSaveRequest>             invoiceWorkflowHandler;
+  private final IWorkflowHandler<InvoiceWorkflow, InvoiceWorkflowSaveRequest>             invoiceWorkflowHandler;
 
-  @Autowired
-  IWorkflowHandler<SingleTaskWorkflow, SingleTaskWorkflowSaveRequest>       singleTaskWorkflowHandler;
+  private final IWorkflowHandler<SingleTaskWorkflow, SingleTaskWorkflowSaveRequest>       singleTaskWorkflowHandler;
 
-  @Autowired
-  IWorkflowHandler<TestThreeTaskWorkflow, TestThreeTaskWorkflowSaveRequest> testThreeTaskWorkflowHandler;
+  private final IWorkflowHandler<TestThreeTaskWorkflow, TestThreeTaskWorkflowSaveRequest> testThreeTaskWorkflowHandler;
 
   public WorkflowSearchAccess(@Autowired final IRestTemplateCall restTemplate,
-      @Autowired final GuiConfiguration.WorkflowModuleAccessConfig moduleAccessConfig,
-      @Autowired final SessionUserInfo sessionUserInfo) {
+      @Autowired final GuiConfiguration.WorkflowModuleAccessConfig moduleAccessConfig, @Autowired final SessionUserInfo sessionUserInfo,
+      @Autowired final IWorkflowHandler<InvoiceWorkflow, InvoiceWorkflowSaveRequest> invoiceWorkflowHandler,
+      @Autowired final IWorkflowHandler<SingleTaskWorkflow, SingleTaskWorkflowSaveRequest> singleTaskWorkflowHandler,
+      @Autowired final IWorkflowHandler<TestThreeTaskWorkflow, TestThreeTaskWorkflowSaveRequest> testThreeTaskWorkflowHandler) {
     this.restTemplate = restTemplate;
     this.moduleAccessConfig = moduleAccessConfig;
     this.sessionUserInfo = sessionUserInfo;
+    this.invoiceWorkflowHandler = invoiceWorkflowHandler;
+    this.singleTaskWorkflowHandler = singleTaskWorkflowHandler;
+    this.testThreeTaskWorkflowHandler = testThreeTaskWorkflowHandler;
   }
 
   @Override
@@ -65,10 +67,9 @@ public class WorkflowSearchAccess implements IWorkflowSearchAccess {
     logger.debug("Search workflow");
 
     final WorkflowResultListEdo responseListEdo = this.restTemplate.callRestPost(this.moduleAccessConfig.getSearchWorkflowUri(),
-        EModule.WORKFLOW, GuiModelEdoMapper.toEdo(workflowSearchFilter), WorkflowResultListEdo.class, this.sessionUserInfo.getToken(),
-        true);
+        EModule.WORKFLOW, GuiModelEdoMapper.toEdo(workflowSearchFilter), WorkflowResultListEdo.class, this.sessionUserInfo.getToken(), true);
 
-    final List<WorkflowResult> list = GuiModelEdoMapper.fromWorkflowResultEdoList(responseListEdo.getWorkflows());
+    final List<WorkflowResult>  list            = GuiModelEdoMapper.fromWorkflowResultEdoList(responseListEdo.getWorkflows());
     for (final WorkflowResult resultWorkflow : list) {
 
       this.prepareResult(resultWorkflow);
@@ -81,14 +82,14 @@ public class WorkflowSearchAccess implements IWorkflowSearchAccess {
   @Override
   public List<WorkflowResult> readByIdentityList(final Set<String> identityList)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
-    logger.debug("Search workflow");
+    logger.debug("Read workflowresult by identity list");
 
-    final IdentityListEdo listEdo = new IdentityListEdo(identityList);
+    final IdentityListEdo       listEdo         = new IdentityListEdo(identityList);
     final WorkflowResultListEdo responseListEdo = this.restTemplate.callRestPost(
         this.moduleAccessConfig.getReadWorkflowListByIdentityListUri(), EModule.WORKFLOW, listEdo, WorkflowResultListEdo.class,
         this.sessionUserInfo.getToken(), true);
 
-    final List<WorkflowResult> list = GuiModelEdoMapper.fromWorkflowResultEdoList(responseListEdo.getWorkflows());
+    final List<WorkflowResult>  list            = GuiModelEdoMapper.fromWorkflowResultEdoList(responseListEdo.getWorkflows());
     for (final WorkflowResult resultWorkflow : list) {
 
       this.prepareResult(resultWorkflow);
@@ -113,11 +114,11 @@ public class WorkflowSearchAccess implements IWorkflowSearchAccess {
   private void prepareResult(final WorkflowResult resultWorkflow)
       throws IFlowMessageConversionFailureException, GuiCustomizedException, MalformedURLException {
     resultWorkflow.setWorkflowType(this.sessionUserInfo.getWorkflowTypeByIdentity(resultWorkflow.getWorkflowTypeIdentity()));
-    resultWorkflow.setCurrentStep(this.sessionUserInfo.getWorkflowStepTypeByIdentity(resultWorkflow.getWorkflowTypeIdentity(),
-        resultWorkflow.getCurrentStepIdentity()));
+    resultWorkflow.setCurrentStep(
+        this.sessionUserInfo.getWorkflowStepTypeByIdentity(resultWorkflow.getWorkflowTypeIdentity(), resultWorkflow.getCurrentStepIdentity()));
 
-    final IWorkflowHandler handler = this.getHandlerByWorkflowType(resultWorkflow.getWorkflowType().getTypeEnum());
-    final IWorkflow readWorkflow = handler.readWorkflow(resultWorkflow.getIdentity());
+    final IWorkflowHandler handler      = this.getHandlerByWorkflowType(resultWorkflow.getWorkflowType().getTypeEnum());
+    final IWorkflow        readWorkflow = handler.readWorkflow(resultWorkflow.getIdentity());
     resultWorkflow.setActions(readWorkflow.getActions());
     resultWorkflow.setFiles(readWorkflow.getFiles());
 
