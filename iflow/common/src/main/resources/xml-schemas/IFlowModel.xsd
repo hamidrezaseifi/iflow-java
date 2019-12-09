@@ -321,6 +321,7 @@
 
   <xs:complexType name="WorkflowFileTP">
     <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="Identity" type="xs:string"/>
       <xs:element form="qualified" minOccurs="0" name="CreatedByIdentity" type="xs:string"/>
       <xs:element form="qualified" minOccurs="0" name="Title" type="xs:string"/>
       <xs:element form="qualified" minOccurs="0" name="Extention" type="xs:string"/>
