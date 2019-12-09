@@ -1,11 +1,47 @@
-<a [routerLink]="['/']">
-  <h1>My Store</h1>
-</a>
+    <header>
 
-<a [routerLink]="['/cart']" class="button fancy-button"><i class="material-icons">shopping_cart</i>Checkout</a>
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="nav-link" class="navbar-brand" href="/"><img class="logo" src="/assets/images/fbim2.png" /></a>
+				</div>
 
-<!-- 
-Copyright Google LLC. All Rights Reserved.
-Use of this source code is governed by an MIT-style license that
-can be found in the LICENSE file at http://angular.io/license
--->
+				<ul class="navbar-nav">
+					<li *ngFor="let menu of menus; index as menuIndex" class="nav-item" [ngClass]="{'dropdown': menu.children.length > 0}">
+						<a class="nav-link" href="{{ menu.url }}" *ngIf="menu.children.length === 0">
+							<span class="glyphicon glyphicon-home menu-image"></span>
+							<span>{{ menu.label }}</span>
+						</a>
+
+						<a class="nav-link" href="{{ menu.url }}" *ngIf="menu.children.length > 0" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+							<span class="glyphicon glyphicon-home menu-image"></span>
+							<span>{{ menu.label }}</span>
+						</a>
+					    <div class="dropdown-menu" *ngIf="menu.children.length > 0">
+					      <a class="dropdown-item" *ngFor="let submenu of menu.children;" href="{{ submenu.url }}">{{ submenu.label }}</a>
+					    </div>
+										
+					</li>
+
+				</ul>							
+				
+				<div class="navbar-user-detail">
+					<div class="user-detail dropdown"> 
+						<button class="user-meu-button" type="button" ng-transclude="" (click)="toggleRight()">
+							<span>Admin, Admin</span>
+							
+						</button>
+					</div>
+				</div>
+				
+			</div>
+		</nav>    			    
+  
+    </header>
+	<div style="background-color: #eeeeee;">
+		<ul class="breadcrumb" >
+			<li>
+				<a href="/">Home</a>
+			</li>
+		</ul>			
+	</div>

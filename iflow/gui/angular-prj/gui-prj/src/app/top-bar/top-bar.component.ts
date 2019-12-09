@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { menus } from '../menus';
 
 @Component({
   selector: 'app-top-bar',
@@ -6,10 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./top-bar.component.css']
 })
 export class TopBarComponent implements OnInit {
-
+	menus;
+	
   constructor() { }
 
   ngOnInit() {
+	  this.menus = menus;
   }
 
 }
