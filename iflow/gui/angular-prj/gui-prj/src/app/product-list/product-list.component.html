@@ -1,0 +1,27 @@
+<h2>Products</h2>
+
+<ul class="list-group">
+	<li style="" class="list-group-item">Products</li>
+	
+	<li *ngFor="let product of products; index as productId" style="margin-bottom: 5px; padding: 6px;" class="list-group-item-primary">
+	
+		<a [title]="product.name + ' details'" [routerLink]="['/products', productId]">
+		  {{ product.name }}
+		</a>
+
+	<div *ngIf="product.description" class="alert alert-success" role="alert">
+	  Description: {{ product.description }}
+	</div>
+	
+	<div *ngIf="!product.description" class="alert alert-danger" role="alert">
+	  No-Description
+	</div>
+	
+	<button (click)="share()" type="button" class="btn btn-primary">
+	    Share
+	</button>
+	      
+	<app-product-alerts [product]="product" (notify)="onNotify()"></app-product-alerts>
+	      
+	</li>
+</ul>
