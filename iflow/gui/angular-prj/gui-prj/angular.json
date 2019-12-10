@@ -25,13 +25,14 @@
               "src/assets"
             ],
             "styles": [
-              "src/assets/bootstrap/css/bootstrap.min.css",
+              //"src/custom-theme.scss",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/assets/css/app.css"
             ],
             "scripts": [
-	            "src/assets/jquery/jquery.min.js",
-	            "src/assets/bootstrap/js/bootstrap.min.js",
-	            "src/assets/popper/popper.min.js"
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/popper.js/dist/umd/popper.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.min.js"
             ]
           },
           "configurations": {
@@ -126,6 +127,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "gui-prj"
 }

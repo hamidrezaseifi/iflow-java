@@ -13,7 +13,12 @@ export class TopBarComponent implements OnInit {
 
   ngOnInit() {
 	  this.menus = menus;
+	  
+	  for(var o in this.menus){
+		  this.menus[o].isExpanded = false;
+	  }
   }
+ 
 
 }
 

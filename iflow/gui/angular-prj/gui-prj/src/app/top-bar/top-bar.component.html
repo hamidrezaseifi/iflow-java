@@ -1,13 +1,13 @@
     <header>
 
-		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<nav class="navbar navbar-expand-lg navbar-toggleable-md navbar-light bg-light navbar-fixed-top">
 			<div class="container-fluid">
 				<div class="navbar-header">
 					<a class="nav-link" class="navbar-brand" href="/"><img class="logo" src="/assets/images/fbim2.png" /></a>
 				</div>
 
 				<ul class="navbar-nav">
-					<li *ngFor="let menu of menus; index as menuIndex" class="nav-item" [ngClass]="{'dropdown': menu.children.length > 0}">
+					<li *ngFor="let menu of menus; index as menuIndex" class="nav-item appDropdown" [ngClass]="{'dropdown': menu.children.length > 0}">
 						<a class="nav-link" href="{{ menu.url }}" *ngIf="menu.children.length === 0">
 							<span class="glyphicon glyphicon-home menu-image"></span>
 							<span>{{ menu.label }}</span>
