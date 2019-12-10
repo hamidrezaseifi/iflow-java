@@ -18,8 +18,7 @@ import com.pth.iflow.gui.configurations.GuiSecurityConfigurations;
 import com.pth.iflow.gui.services.IMessagesHelper;
 
 /**
- * controller class to manage rest api for static page lihe home ans about and
- * ...
+ * controller class to manage rest api for static page lihe home ans about and ...
  *
  * @author rezasei
  *
@@ -32,13 +31,13 @@ public class AuthenticationController {
   private IMessagesHelper messages;
 
   @GetMapping("/login")
-  public String showLogin(
-      @CookieValue(value = GuiSecurityConfigurations.COMPANYINDICATOR_COOKIE_KEY, defaultValue = "") final String companyIndicator,
-      final Model model, final HttpServletRequest request) throws ServletException, UnsupportedEncodingException {
+  public String showLogin(@CookieValue(
+      value = GuiSecurityConfigurations.COMPANYINDICATOR_COOKIE_KEY, defaultValue = ""
+  ) final String companyIndicator, final Model model, final HttpServletRequest request) throws ServletException, UnsupportedEncodingException {
 
-    String message = "";
-    String username = "";
-    String company = companyIndicator;
+    String       message  = "";
+    String       username = "";
+    String       company  = companyIndicator;
     final String password = "";
 
     if (request.getParameter("error") != null) {
@@ -66,7 +65,7 @@ public class AuthenticationController {
     model.addAttribute("logginMessage", message);
     model.addAttribute("rooturl", GuiSecurityConfigurations.ROOT_URL);
 
-    return "auth/login";
+    return "auth/index";
   }
 
 }

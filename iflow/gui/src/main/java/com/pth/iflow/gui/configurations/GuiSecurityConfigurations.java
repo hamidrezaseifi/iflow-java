@@ -51,9 +51,9 @@ public class GuiSecurityConfigurations extends WebSecurityConfigurerAdapter impl
   @Override
   protected void configure(final HttpSecurity http) throws Exception {
 
-    http.authorizeRequests().antMatchers("/images/*").permitAll().antMatchers("/js/*").permitAll().antMatchers("/css/*").permitAll()
-        .antMatchers("/angular/*").permitAll().antMatchers("/fonts/*").permitAll().antMatchers(LOGIN_URL).permitAll()
-        .antMatchers("/admin/**").hasAnyRole("ADMIN", "COMPANY_ADMIN")
+    http.authorizeRequests().antMatchers("/images/*").permitAll().antMatchers("/js/*").permitAll().antMatchers("/scripts/*").permitAll()
+        .antMatchers("/assets/*").permitAll().antMatchers("/css/*").permitAll().antMatchers("/angular/*").permitAll().antMatchers("/fonts/*")
+        .permitAll().antMatchers(LOGIN_URL).permitAll().antMatchers("/admin/**").hasAnyRole("ADMIN", "COMPANY_ADMIN")
         .antMatchers("/admin/user/**", "/admin/data/**", "/admin/data/user/**").hasAnyRole("ADMIN", "COMPANY_ADMIN").antMatchers("/**")
         .authenticated().and();
 
@@ -61,9 +61,9 @@ public class GuiSecurityConfigurations extends WebSecurityConfigurerAdapter impl
 
     http.csrf().disable();
 
-    http.formLogin().authenticationDetailsSource(this.authenticationDetailsSource()).loginPage(LOGIN_URL).permitAll()
-        .defaultSuccessUrl("/").usernameParameter(USERNAME_FIELD_NAME).passwordParameter(PASSWORD_FIELD_NAME)
-        .successHandler(this.uiAuthenticationSuccessHandler).failureHandler(this.authenticationFailureHandler).permitAll();
+    http.formLogin().authenticationDetailsSource(this.authenticationDetailsSource()).loginPage(LOGIN_URL).permitAll().defaultSuccessUrl("/")
+        .usernameParameter(USERNAME_FIELD_NAME).passwordParameter(PASSWORD_FIELD_NAME).successHandler(this.uiAuthenticationSuccessHandler)
+        .failureHandler(this.authenticationFailureHandler).permitAll();
 
     http.logout().logoutUrl("/logout").logoutSuccessUrl("/");
 

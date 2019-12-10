@@ -24,7 +24,7 @@
 		
     <app-root></app-root>
 
-    <div th:replace="layout/message_panel :: message_panel" ></div>
+    <div th:if="${isLogged}" th:replace="layout/message_panel :: message_panel" ></div>
 
     <footer th:replace="layout/footer :: footer" ></footer>
 
