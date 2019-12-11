@@ -28,6 +28,10 @@
 			   <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
 			   Anmelden
 			</button>
+            <div *ngIf="submitted && failedLogin" class="invalid-message">
+              <div>{{loginResponse.message}}</div>
+            </div>
+			
           </div> 
 		</form>
 		
