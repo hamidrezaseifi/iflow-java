@@ -28,6 +28,7 @@ public class GuiSecurityConfigurations extends WebSecurityConfigurerAdapter impl
   public static final String PASSWORD_FIELD_NAME         = "password";
   public static final String COMPANYID_FIELD_NAME        = "companyid";
   public static final String LOGIN_URL                   = "/auth/login";
+  public static final String LOGIN_PROCESSING_URL        = "/auth/authenticate";
   public static final String INITUSER_URL                = "/activation/user";
   public static final String INITCOMPANY_URL             = "/activation/company";
   public static final String ROOT_URL                    = "/";
@@ -65,6 +66,8 @@ public class GuiSecurityConfigurations extends WebSecurityConfigurerAdapter impl
         .permitAll()
         .antMatchers("/fonts/*")
         .permitAll()
+        .antMatchers(LOGIN_PROCESSING_URL)
+        .permitAll()
         .antMatchers(LOGIN_URL)
         .permitAll()
         .antMatchers("/admin/**")
@@ -82,6 +85,8 @@ public class GuiSecurityConfigurations extends WebSecurityConfigurerAdapter impl
     http.formLogin()
         .authenticationDetailsSource(this.authenticationDetailsSource())
         .loginPage(LOGIN_URL)
+        .permitAll()
+        .loginProcessingUrl(LOGIN_PROCESSING_URL)
         .permitAll()
         .defaultSuccessUrl("/")
         .usernameParameter(USERNAME_FIELD_NAME)

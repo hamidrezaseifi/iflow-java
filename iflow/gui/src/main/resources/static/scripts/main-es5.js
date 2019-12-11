@@ -623,15 +623,24 @@
                         return;
                     }
                     this.loading = true;
-                    var params = {
-                        "username": this.loginForm.controls["username"].value,
-                        "password": this.loginForm.controls["password"].value,
-                        "companyid": this.loginForm.controls["companyid"].value
+                    var loginData = new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpParams"]()
+                        .set('username', this.loginForm.controls["username"].value)
+                        .set('password', this.loginForm.controls["password"].value)
+                        .set('companyid', this.loginForm.controls["companyid"].value);
+                    var httpOptions = {
+                        headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpHeaders"]({
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'Authorization': 'my-auth-token'
+                        })
                     };
-                    var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpHeaders"]().set("Content-Type", "application/json");
-                    this.http.post("/auth/login", params, { headers: headers }).subscribe(function (val) {
+                    this.http.post("/auth/authenticate", loginData, httpOptions).subscribe(function (val) {
                         _this.loginResponse = val;
-                        _this.failedLogin = true;
+                        if (_this.loginResponse.res === 'ok') {
+                            _this.router.navigate(['/']);
+                        }
+                        else {
+                            _this.failedLogin = true;
+                        }
                     }, function (response) {
                         console.log("GET call in error", response);
                         alert("GET call in error: " + response);

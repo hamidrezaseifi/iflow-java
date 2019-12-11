@@ -85,36 +85,42 @@ interface LoginResponse {
 	        }
 
 	        this.loading = true;
-	        	
-	        const params = {
-	        		"username": this.loginForm.controls["username"].value,
-	    	        "password": this.loginForm.controls["password"].value,
-	    	        "companyid": this.loginForm.controls["companyid"].value
-	        };
+	        	        
+	        const loginData = new HttpParams()
+	        .set('username', this.loginForm.controls["username"].value)
+	        .set('password', this.loginForm.controls["password"].value)
+	        .set('companyid', this.loginForm.controls["companyid"].value);
 	        
-	        const headers = new HttpHeaders().set("Content-Type", "application/json");
-			  this.http.post("/auth/login", params, {headers}).subscribe(
-				        val => {
-				            this.loginResponse = <LoginResponse>val;
-				            
-				            if(this.loginResponse.res === 'ok'){
-				            	this.router.navigate(['/']);
-				            }
-				            else{
-				            	this.failedLogin = true;
-				            }
-				            
-				        },
-				        response => {
-				            console.log("GET call in error", response);
-				            alert("GET call in error: "+ response);
-				            this.loginResponse.message = "Error in login!";
-				            this.failedLogin = true;
-				        },
-				        () => {
-				            this.loading = false;				            
-				        }
-				    );	        
+	        const httpOptions = {
+	        		  headers: new HttpHeaders({
+	        		    'Content-Type':  'application/x-www-form-urlencoded',
+	        		    'Authorization': 'my-auth-token'
+	        		  })
+	        		};
+	        
+	        
+		  this.http.post("/auth/authenticate", loginData, httpOptions).subscribe(
+			        val => {
+			            this.loginResponse = <LoginResponse>val;
+			            
+			            if(this.loginResponse.res === 'ok'){
+			            	this.router.navigate(['/']);
+			            }
+			            else{
+			            	this.failedLogin = true;
+			            }
+			            
+			        },
+			        response => {
+			            console.log("GET call in error", response);
+			            alert("GET call in error: "+ response);
+			            this.loginResponse.message = "Error in login!";
+			            this.failedLogin = true;
+			        },
+			        () => {
+			            this.loading = false;				            
+			        }
+			    );	        
 			  
 	    }	  
 
