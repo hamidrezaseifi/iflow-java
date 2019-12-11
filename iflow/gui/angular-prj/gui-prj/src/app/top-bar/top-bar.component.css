@@ -1,0 +1,18 @@
+
+.navbar-user-detail {
+    float: right;
+    margin-right: 30px;
+}
+
+button.user-toggle-button {
+    background-color: #cecece;
+    border: none;
+    background-image: url(/scripts/static/md-contact.svg);
+    background-position: 140px center;
+    background-repeat: no-repeat;
+    background-size: 24px;
+    width: 170px;
+    text-align: left;
+    height: 34px;
+}   
+    

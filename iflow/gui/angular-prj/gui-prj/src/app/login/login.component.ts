@@ -8,13 +8,9 @@ import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 
+import { User, LoginResponse } from '../ui-models';
+import { GlobalService } from '../helper/global.service';
 
-interface LoginResponse {
-	timestamp: string;
-	exception:string;
-	message:string;
-	res:string;
-}
 
 @Component({ templateUrl: 'login.component.html' })
 	export class LoginComponent implements OnInit {
@@ -33,10 +29,10 @@ interface LoginResponse {
 		private route: ActivatedRoute,
 		private router: Router,
 		private http:HttpClient,
+		private global: GlobalService,
 		
-	  ) { 
-		  
-		  
+	  ) { 	  
+		  this.loginResponse = new LoginResponse;
 	  }
 	  
 
@@ -46,34 +42,9 @@ interface LoginResponse {
 	            password: ['', Validators.required],
 	            companyid: ['test-company-1', Validators.required],
 	        });
-
-		  
-		  
-		  
-
 	  }
 	  
 	  get forms() { return this.loginForm.controls; }
-	  
-	  onTest(){
-		  const headers = new HttpHeaders().set("Content-Type", "application/json");
-		  this.http.get("/auth/testloginmsg", {headers}).subscribe(
-			        val => {
-			            console.log("GET call successful value returned in body", 
-		                        val);
-			            alert("GET call successful value returned in body: "+ 
-		                        val);
-			            this.loginResponse = <LoginResponse>val;
-			        },
-			        response => {
-			            console.log("GET call in error", response);
-			            alert("GET call in error: "+ response);
-			        },
-			        () => {
-			            
-			        }
-			    );
-	  }
 	  
 	  onSubmit() {
 	        this.submitted = true;
@@ -99,11 +70,12 @@ interface LoginResponse {
 	        		};
 	        
 	        
-		  this.http.post("/auth/authenticate", loginData, httpOptions).subscribe(
+	        this.http.post("/auth/authenticate", loginData, httpOptions).subscribe(
 			        val => {
 			            this.loginResponse = <LoginResponse>val;
 			            
 			            if(this.loginResponse.res === 'ok'){
+			            	this.global.loadAllSetting();
 			            	this.router.navigate(['/']);
 			            }
 			            else{

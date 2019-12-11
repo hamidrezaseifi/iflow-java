@@ -46,6 +46,10 @@ public class User extends IdentityModel {
     this.companyIdentity = companyIdentity;
   }
 
+  public String getUsername() {
+    return this.email;
+  }
+
   public String getEmail() {
     return this.email;
   }
@@ -81,6 +85,10 @@ public class User extends IdentityModel {
    */
   public String getLastName() {
     return this.lastName;
+  }
+
+  public String geFullName() {
+    return this.lastName + ", " + this.firstName;
   }
 
   /**

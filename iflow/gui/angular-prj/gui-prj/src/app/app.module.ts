@@ -10,6 +10,9 @@ import { appRoutingModule } from './app.routing';
 import { HomeComponent } from './home';
 import { LoginComponent } from './login';
 import { AlertComponent } from './_components';
+import { TopBarComponent } from './top-bar/top-bar.component';
+import { FooterComponent } from './footer/footer.component';
+import { MessageBarComponent } from './message-bar/message-bar.component';
 
 @NgModule({
   imports: [
@@ -21,9 +24,12 @@ import { AlertComponent } from './_components';
   ],
   declarations: [
     AppComponent,
+    TopBarComponent,
+    FooterComponent,
     HomeComponent,
     LoginComponent,
-    AlertComponent
+    AlertComponent,
+    MessageBarComponent
   ],
   
   bootstrap: [ AppComponent ]

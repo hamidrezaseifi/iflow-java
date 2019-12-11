@@ -4,8 +4,10 @@ import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+
 import com.pth.iflow.gui.authentication.GuiAuthenticationErrorUrlCreator;
 import com.pth.iflow.gui.configurations.GuiSecurityConfigurations;
 import com.pth.iflow.gui.services.IMessagesHelper;
@@ -35,12 +38,12 @@ public class AuthenticationController {
 
   @GetMapping("/login")
   public String showLogin(@CookieValue(
-                                       value = GuiSecurityConfigurations.COMPANYINDICATOR_COOKIE_KEY,
-                                       defaultValue = "") final String companyIndicator, final Model model, final HttpServletRequest request) throws ServletException, UnsupportedEncodingException {
+      value = GuiSecurityConfigurations.COMPANYINDICATOR_COOKIE_KEY, defaultValue = ""
+  ) final String companyIndicator, final Model model, final HttpServletRequest request) throws ServletException, UnsupportedEncodingException {
 
-    String message = "";
-    String username = "";
-    String company = companyIndicator;
+    String       message  = "";
+    String       username = "";
+    String       company  = companyIndicator;
     final String password = "";
 
     if (request.getParameter("error") != null) {
@@ -68,7 +71,7 @@ public class AuthenticationController {
     model.addAttribute("logginMessage", message);
     model.addAttribute("rooturl", GuiSecurityConfigurations.ROOT_URL);
 
-    return "auth/index";
+    return "ang/index";
   }
 
   @ResponseStatus(HttpStatus.OK)

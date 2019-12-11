@@ -38,7 +38,7 @@ public class GuiLogedControllerBase {
 
   protected String getCurrentRelativeUrl() {
     ServletUriComponentsBuilder builder = ServletUriComponentsBuilder.fromCurrentContextPath();
-    final String root = builder.build().toUriString();
+    final String                root    = builder.build().toUriString();
     builder = ServletUriComponentsBuilder.fromCurrentRequestUri();
     String path = builder.build().toUriString();
     path = path.replace(root, "");
@@ -47,8 +47,8 @@ public class GuiLogedControllerBase {
   }
 
   @ModelAttribute
-  public void addAttributes(final Model model, final HttpSession session, final HttpServletResponse response,
-      final HttpServletRequest request) throws Exception {
+  public void addAttributes(final Model model, final HttpSession session, final HttpServletResponse response, final HttpServletRequest request)
+      throws Exception {
 
     if (this.sessionUserInfo == null || !this.sessionUserInfo.isValid()) {
       response.sendRedirect(GuiSecurityConfigurations.LOGIN_URL);
@@ -87,7 +87,8 @@ public class GuiLogedControllerBase {
 
     try {
       return this.sessionUserInfo.getWorkflowTypeByEnumType(type);
-    } catch (final IFlowMessageConversionFailureException e) {
+    }
+    catch (final IFlowMessageConversionFailureException e) {
 
     }
     return null;
@@ -96,7 +97,8 @@ public class GuiLogedControllerBase {
   protected WorkflowType getWorkflowTypeByIdentity(final String workflowTypIdentity) {
     try {
       return this.sessionUserInfo.getWorkflowTypeByIdentity(workflowTypIdentity);
-    } catch (final IFlowMessageConversionFailureException e) {
+    }
+    catch (final IFlowMessageConversionFailureException e) {
 
     }
     return null;
@@ -128,7 +130,7 @@ public class GuiLogedControllerBase {
   protected String getWorkflowBaseUrl(final String workflowTypeIdentity) throws IFlowMessageConversionFailureException {
     final WorkflowType type = this.getWorkflowTypeByIdentity(workflowTypeIdentity);
 
-    String url = "";
+    String             url  = "";
     if (type.getTypeEnum() == EWorkflowType.INVOICE_WORKFLOW_TYPE) {
       url = GuiModule.INVOICEWORKFLOW_PAGE_BASE;
     }
