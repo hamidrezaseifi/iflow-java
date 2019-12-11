@@ -97,7 +97,13 @@ interface LoginResponse {
 				        val => {
 				            this.loginResponse = <LoginResponse>val;
 				            
-				            this.failedLogin = true;
+				            if(this.loginResponse.res === 'ok'){
+				            	this.router.navigate(['/']);
+				            }
+				            else{
+				            	this.failedLogin = true;
+				            }
+				            
 				        },
 				        response => {
 				            console.log("GET call in error", response);
