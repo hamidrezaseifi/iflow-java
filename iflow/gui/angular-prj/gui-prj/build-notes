@@ -1,0 +1,4 @@
+
+build:
+ng build --deployUrl=/scripts/
+ 
