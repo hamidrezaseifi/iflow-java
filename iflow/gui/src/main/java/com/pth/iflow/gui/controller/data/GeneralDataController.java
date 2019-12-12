@@ -1,12 +1,12 @@
 package com.pth.iflow.gui.controller.data;
 
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -15,33 +15,50 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
-import com.pth.iflow.gui.controller.page.GuiPageControllerBase;
+import com.pth.iflow.gui.controller.GuiLogedControllerBase;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.Department;
 import com.pth.iflow.gui.models.User;
 import com.pth.iflow.gui.models.WorkflowMessage;
 import com.pth.iflow.gui.models.ui.UiMenuItem;
+import com.pth.iflow.gui.services.IMessagesHelper;
+import com.pth.iflow.gui.services.UiMenuService;
 
 @Controller
 @RequestMapping(value = "/general/data")
-public class GeneralDataController extends GuiPageControllerBase {
+public class GeneralDataController extends GuiLogedControllerBase {
+
+  @Autowired
+  private UiMenuService menuService;
+
+  @Autowired
+  protected IMessagesHelper messagesHelper;
 
   @ResponseStatus(HttpStatus.OK)
   @GetMapping(path = { "/generaldatat" }, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   @ResponseBody
   public Map<String, Object> loadGeneralData() throws IFlowMessageConversionFailureException {
 
-    final Map<String, Object> map            = new HashMap<>();
-
-    final List<User>          userList       = this.getSessionUserInfo().getCompanyUserList();
-    final List<Department>    departmentList = this.getSessionUserInfo().getCompanyDepartments();
-
+    final Map<String, Object> map = new HashMap<>();
+    map.put("isLogged", "false");
     map.put("currectUser", this.getLoggedUser());
-    map.put("users", userList);
-    map.put("departments", departmentList);
-    map.put("menus", this.getMenus());
+    map.put("users", new ArrayList<>());
+    map.put("departments", new ArrayList<>());
+    map.put("menus", new ArrayList<>());
+
+    if (isSessionValidAndLoggedIn()) {
+
+      final List<User> userList = this.getSessionUserInfo().getCompanyUserList();
+      final List<Department> departmentList = this.getSessionUserInfo().getCompanyDepartments();
+
+      map.put("isLogged", "true");
+      map.put("currectUser", this.getLoggedUser());
+      map.put("users", userList);
+      map.put("departments", departmentList);
+      map.put("menus", this.getMenus());
+
+    }
 
     return map;
   }
@@ -49,25 +66,27 @@ public class GeneralDataController extends GuiPageControllerBase {
   @ResponseStatus(HttpStatus.OK)
   @PostMapping(path = { "/workflowmessages" }, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   @ResponseBody
-  public List<WorkflowMessage> listWorkflowMessages(final HttpServletRequest request)
-      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+  public List<WorkflowMessage> listWorkflowMessages(final HttpServletRequest request) throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    final String resetCach = request.getParameter("reset");
-    if ("1".equals(resetCach)) {
-      this.callUserMessageReset();
+    if (isSessionValidAndLoggedIn()) {
+      final String resetCach = request.getParameter("reset");
+      if ("1".equals(resetCach)) {
+        this.callUserMessageReset();
+      }
+
+      final List<WorkflowMessage> messageList = this.readUserMessages();
+
+      return messageList;
     }
-
-    final List<WorkflowMessage> messageList = this.readUserMessages();
-
-    return messageList;
+    return new ArrayList<>();
   }
 
-  @ResponseStatus(HttpStatus.OK)
-  @GetMapping(path = { "/menulist" }, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-  @ResponseBody
-  public List<UiMenuItem> loadMenuList() {
+  protected List<UiMenuItem> getMenus() {
+    return this.menuService.getAllMenus();
 
-    return this.getMenus();
   }
 
+  private boolean isSessionValidAndLoggedIn() {
+    return this.getSessionUserInfo() != null && this.getSessionUserInfo().isValid();
+  }
 }

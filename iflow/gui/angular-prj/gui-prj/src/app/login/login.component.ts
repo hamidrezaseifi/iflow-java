@@ -75,7 +75,7 @@ import { GlobalService } from '../helper/global.service';
 			            this.loginResponse = <LoginResponse>val;
 			            
 			            if(this.loginResponse.res === 'ok'){
-			            	this.global.loadAllSetting();
+			            	this.global.loadAllSetting(null);
 			            	this.router.navigate(['/']);
 			            }
 			            else{

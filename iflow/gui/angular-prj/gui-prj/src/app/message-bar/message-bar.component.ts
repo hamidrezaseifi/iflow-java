@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 import { WorkflowMessage } from '../wf-models';
-import { User, MenuItem, IComponent } from '../ui-models';
+import { User, MenuItem } from '../ui-models';
+import { IGeneralDataComponent, GeneralLoadingComponent } from '../_components';
 import { GlobalService } from '../helper/global.service';
 import { Router } from '@angular/router';
 
@@ -9,30 +10,30 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-message-bar',
   templateUrl: './message-bar.component.html',
-  styleUrls: ['./message-bar.component.css']
+  styleUrls: ['./message-bar.component.css'],
+  providers: [ GlobalService ]
 })
-export class MessageBarComponent implements OnInit, IComponent {
+export class MessageBarComponent extends GeneralLoadingComponent implements OnInit, IGeneralDataComponent {
 
 	messages: WorkflowMessage[] = [];
-  	constructor(private router: Router, private global: GlobalService) { }
 
 	menus: MenuItem[] = [];
 	currentUser: User = null;
+	isLogged: boolean = false;
 
+  	constructor(protected router: Router, protected global: GlobalService) { 
+  		super(router, global);
+  		
+  	}
 
 	ngOnInit() {
-		
-		this.router.events
-	    .subscribe((event) => {
-	      this.global.getMenus(this);
-	    });
+		super.ngOnInit();
 		
 	}
-  
+	
   	showWorkflowView(id){
 	  
   	}
 
-	get isLogedIn() { return this.currentUser != null; }
 
 }

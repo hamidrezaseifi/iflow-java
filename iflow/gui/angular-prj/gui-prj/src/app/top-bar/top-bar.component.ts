@@ -1,33 +1,34 @@
 import { Component, OnInit } from '@angular/core';
 
 import { GlobalService } from '../helper/global.service';
-import { User, MenuItem, IComponent } from '../ui-models';
+import { User, MenuItem } from '../ui-models';
+import { IGeneralDataComponent, GeneralLoadingComponent } from '../_components';
 import { Router } from '@angular/router';
 
 
 @Component({
   selector: 'app-top-bar',
   templateUrl: './top-bar.component.html',
-  styleUrls: ['./top-bar.component.css']
+  styleUrls: ['./top-bar.component.css'],
+  providers: [ GlobalService ]
 })
-export class TopBarComponent implements OnInit, IComponent {
+export class TopBarComponent extends GeneralLoadingComponent implements OnInit, IGeneralDataComponent {
   
 	menus: MenuItem[] = [];
 	currentUser: User = null;
+	isLogged: boolean = false;
 
-	constructor(private router: Router, private global: GlobalService) { 
+	constructor(protected router: Router, protected global: GlobalService) { 
+  		super(router, global);
+
 	}
-
+	
 	ngOnInit() {
-		
-		this.router.events
-	    .subscribe((event) => {
-	      this.global.getMenus(this);
-	    });
+		super.ngOnInit();
 		
 	}
 	
-	get isLogedIn() { return this.currentUser != null; }
+	
 
 }
 
