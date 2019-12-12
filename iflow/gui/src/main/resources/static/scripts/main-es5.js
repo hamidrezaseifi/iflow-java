@@ -85,7 +85,7 @@ var __extends = (this && this.__extends) || (function () {
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("<h1>Home!</h1>\r\n");
+            /* harmony default export */ __webpack_exports__["default"] = ("<h1>Home!</h1>\n");
             /***/ 
         }),
         /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/login/login.component.html": 
@@ -107,7 +107,7 @@ var __extends = (this && this.__extends) || (function () {
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("<div resizable=\"\" r-directions=\"['top']\" class=\"message-panel-container\" id=\"message-panel-container\" *ngIf=\"isLogedIn\">\r\n\t<div class=\"message-panel-toolbar\">\r\n\t\t<span class=\"title\">Meldungen</span>\r\n\t\t<button class=\"toolbar-button\" ng-if=\"messagePanelShowed\" ng-click=\"closeMessages();\"><i class=\"material-icons\">keyboard_arrow_down</i></button>\r\n\t\t<button class=\"toolbar-button\" ng-if=\"messagePanelShowed == false\" ng-click=\"showMessages();\"><i class=\"material-icons\">keyboard_arrow_up</i></button>\r\n\t\t<button class=\"toolbar-button\" ng-if=\"messagePanelShowed\" ng-click=\"reloadMessages(true);\"><i class=\"material-icons\">refresh</i></button>\r\n\t\r\n\t</div>\r\n\t<div class=\"message-panel-items-container\">\r\n\t\t<div class=\"message-panel-item\" *ngFor=\"let message of messages;\">\r\n\t\t\t<a href=\"javascript:void(0);\" (click)=\"showWorkflowView(message.workflowId)\">\r\n\t\t\t\t<div>{{message.message}} ({{message.workflow.workflowType.title}}) ({{message.createdAtString}}) ({{message.remainingDays}}) ({{message.status}})</div>\r\n\t\t\t</a>\r\n\t\t</div>\r\n\t</div>\r\n\t\t\t\t\t\r\n</div>");
+            /* harmony default export */ __webpack_exports__["default"] = ("<div resizable=\"\" r-directions=\"['top']\" class=\"message-panel-container\" id=\"message-panel-container\" *ngIf=\"isLogedIn\">\n\t<div class=\"message-panel-toolbar\">\n\t\t<span class=\"title\">Meldungen</span>\n\t\t<button class=\"toolbar-button\" ng-if=\"messagePanelShowed\" ng-click=\"closeMessages();\"><i class=\"material-icons\">keyboard_arrow_down</i></button>\n\t\t<button class=\"toolbar-button\" ng-if=\"messagePanelShowed == false\" ng-click=\"showMessages();\"><i class=\"material-icons\">keyboard_arrow_up</i></button>\n\t\t<button class=\"toolbar-button\" ng-if=\"messagePanelShowed\" ng-click=\"reloadMessages(true);\"><i class=\"material-icons\">refresh</i></button>\n\t\n\t</div>\n\t<div class=\"message-panel-items-container\">\n\t\t<div class=\"message-panel-item\" *ngFor=\"let message of messages;\">\n\t\t\t<a href=\"javascript:void(0);\" (click)=\"showWorkflowView(message.workflowId)\">\n\t\t\t\t<div>{{message.message}} ({{message.workflow.workflowType.title}}) ({{message.createdAtString}}) ({{message.remainingDays}}) ({{message.status}})</div>\n\t\t\t</a>\n\t\t</div>\n\t</div>\n\t\t\t\t\t\n</div>");
             /***/ 
         }),
         /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/top-bar/top-bar.component.html": 
@@ -1449,7 +1449,7 @@ var __extends = (this && this.__extends) || (function () {
           \***************************/
         /*! no static exports found */
         /***/ (function (module, exports, __webpack_require__) {
-            module.exports = __webpack_require__(/*! C:\Development\Git\home\test\iflow-java\iflow\gui\angular-prj\gui-prj\src\main.ts */ "./src/main.ts");
+            module.exports = __webpack_require__(/*! C:\Git\home\iflow\iflow-java\iflow\gui\angular-prj\gui-prj\src\main.ts */ "./src/main.ts");
             /***/ 
         })
     }, [[0, "runtime", "vendor"]]]);

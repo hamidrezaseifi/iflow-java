@@ -5,7 +5,7 @@ import { User, MenuItem } from '../ui-models';
 import { IGeneralDataComponent, GeneralLoadingComponent } from '../_components';
 import { GlobalService } from '../helper/global.service';
 import { Router } from '@angular/router';
-
+import * as moment from 'moment'; 
 
 @Component({
   selector: 'app-message-bar',

@@ -9,7 +9,7 @@ import com.pth.iflow.gui.models.workflow.singletask.SingleTaskWorkflow;
 import com.pth.iflow.gui.models.workflow.singletask.SingleTaskWorkflowSaveRequest;
 
 @Controller
-@RequestMapping(value = GuiModule.SINGLETASKWORKFLOW_PAGE_BASE)
+@RequestMapping(value = GuiModule.SINGLETASKWORKFLOW_PAGE_BASE + "-old")
 public class SingleTaskWorkflowPageController extends WorkflowPageControllerBase<SingleTaskWorkflow, SingleTaskWorkflowSaveRequest> {
 
   @Override

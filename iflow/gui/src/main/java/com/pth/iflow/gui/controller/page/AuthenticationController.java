@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import com.pth.iflow.gui.authentication.GuiAuthenticationErrorUrlCreator;
 import com.pth.iflow.gui.configurations.GuiSecurityConfigurations;
 import com.pth.iflow.gui.services.IMessagesHelper;
 
@@ -40,36 +39,6 @@ public class AuthenticationController {
   public String showLogin(@CookieValue(
       value = GuiSecurityConfigurations.COMPANYINDICATOR_COOKIE_KEY, defaultValue = ""
   ) final String companyIndicator, final Model model, final HttpServletRequest request) throws ServletException, UnsupportedEncodingException {
-
-    String       message  = "";
-    String       username = "";
-    String       company  = companyIndicator;
-    final String password = "";
-
-    if (request.getParameter("error") != null) {
-
-      final Map<String, String> params = GuiAuthenticationErrorUrlCreator.decodeErrorUrl(request.getParameter("error"));
-
-      if (params.get("err").equals("auth")) {
-        message = this.messages.get("common.invalidlogin");
-      }
-      if (params.get("err").equals("access")) {
-        message = this.messages.get("common.noaccesssite");
-      }
-
-      username = params.get("u");
-      company = params.get("c");
-      // no password in error url // password = params.get("u");
-
-    }
-
-    model.addAttribute("username", username);
-    model.addAttribute("password", password);
-    model.addAttribute("companyid", company);
-    model.addAttribute("isLogged", false);
-
-    model.addAttribute("logginMessage", message);
-    model.addAttribute("rooturl", GuiSecurityConfigurations.ROOT_URL);
 
     return "ang/index";
   }

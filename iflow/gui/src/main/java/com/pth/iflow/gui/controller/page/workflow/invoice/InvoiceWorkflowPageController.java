@@ -22,7 +22,7 @@ import com.pth.iflow.gui.models.workflow.invoice.InvoiceWorkflow;
 import com.pth.iflow.gui.models.workflow.invoice.InvoiceWorkflowSaveRequest;
 
 @Controller
-@RequestMapping(value = GuiModule.INVOICEWORKFLOW_PAGE_BASE)
+@RequestMapping(value = GuiModule.INVOICEWORKFLOW_PAGE_BASE + "-old")
 public class InvoiceWorkflowPageController extends WorkflowPageControllerBase<InvoiceWorkflow, InvoiceWorkflowSaveRequest> {
 
   @Override

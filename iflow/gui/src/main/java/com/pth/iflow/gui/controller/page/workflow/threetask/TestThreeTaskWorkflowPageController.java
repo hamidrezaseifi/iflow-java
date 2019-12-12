@@ -9,9 +9,8 @@ import com.pth.iflow.gui.models.workflow.testthree.TestThreeTaskWorkflow;
 import com.pth.iflow.gui.models.workflow.testthree.TestThreeTaskWorkflowSaveRequest;
 
 @Controller
-@RequestMapping(value = GuiModule.TESTTHREETASKWORKFLOW_PAGE_BASE)
-public class TestThreeTaskWorkflowPageController
-    extends WorkflowPageControllerBase<TestThreeTaskWorkflow, TestThreeTaskWorkflowSaveRequest> {
+@RequestMapping(value = GuiModule.TESTTHREETASKWORKFLOW_PAGE_BASE + "-old")
+public class TestThreeTaskWorkflowPageController extends WorkflowPageControllerBase<TestThreeTaskWorkflow, TestThreeTaskWorkflowSaveRequest> {
 
   @Override
   protected String getCreateView() {

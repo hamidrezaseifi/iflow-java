@@ -17,7 +17,7 @@ import com.pth.iflow.gui.models.WorkflowType;
 import com.pth.iflow.gui.services.IWorkflowTypeHandler;
 
 @Controller
-@RequestMapping(value = "/companies")
+@RequestMapping(value = "/companies-old")
 public class CompanyController extends GuiPageControllerBase {
 
   @Autowired
