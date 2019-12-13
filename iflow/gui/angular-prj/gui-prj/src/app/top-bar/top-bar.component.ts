@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { GlobalService } from '../helper/global.service';
+import { AuthenticationService } from '../services';
 import { User, MenuItem } from '../ui-models';
-import { IGeneralDataComponent, GeneralLoadingComponent } from '../_components';
-import { Router } from '@angular/router';
 
 
 @Component({
@@ -12,29 +12,28 @@ import { Router } from '@angular/router';
   styleUrls: ['./top-bar.component.css'],
   providers: [ GlobalService ]
 })
-export class TopBarComponent extends GeneralLoadingComponent implements OnInit, IGeneralDataComponent {
+export class TopBarComponent implements OnInit {
   
-	menus: MenuItem[] = [];
-	currentUser: User = null;
-	isLogged: boolean = false;
+	@Input('menus') menus: MenuItem[];
+	@Input('currentUser') currentUser: User;
+	@Input('isLogged') isLogged: boolean;
 
-	constructor(protected router: Router, protected global: GlobalService) { 
-  		super(router, global);
-
-	}
+	constructor(
+		    private router: Router,
+			private autService: AuthenticationService,
+			private global: GlobalService,
+		) { 
+  		
+ 	}
 	
 	ngOnInit() {
-		super.ngOnInit();
-		
+
 	}
 	
-	
 
+	logout(){
+		this.autService.logout();
+		this.global.clear();
+		this.router.navigate(['/logout']);
+	}		
 }
-
-
-/*
-Copyright Google LLC. All Rights Reserved.
-Use of this source code is governed by an MIT-style license that
-can be found in the LICENSE file at http://angular.io/license
-*/

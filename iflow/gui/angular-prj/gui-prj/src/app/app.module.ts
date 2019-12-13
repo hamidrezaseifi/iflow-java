@@ -17,7 +17,7 @@ import { MessageBarComponent } from './message-bar/message-bar.component';
 
 import { HomeComponent } from './home';
 import { AboutComponent } from './about';
-import { LoginComponent } from './login';
+import { LoginComponent, LogoutComponent } from './login';
 import { WorkflowCreateComponent } from './workflow-create/workflow-create.component';
 import { WorkflowListComponent } from './workflow-list/workflow-list.component';
 
@@ -38,6 +38,7 @@ import { WorkflowListComponent } from './workflow-list/workflow-list.component';
     HomeComponent,
     AboutComponent,
     LoginComponent,
+    LogoutComponent,
     WorkflowCreateComponent,
     WorkflowListComponent,
     

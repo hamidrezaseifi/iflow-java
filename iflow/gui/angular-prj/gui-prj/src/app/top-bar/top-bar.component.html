@@ -5,7 +5,7 @@
 				<div class="navbar-header">
 					<a class="navbar-brand" href="/"><img class="logo" src="/images/fbim2.png"></a>
 				</div>
-				<ul class="navbar-nav" *ngIf="isLogedIn">
+				<ul class="navbar-nav" *ngIf="isLogged">
 					<li class="nav-item" *ngFor="let menu of menus;" [ngClass]="{'dropdown' : menu.children.length > 0}">
 						<a class="nav-link" [routerLink]="[menu.url]" *ngIf="menu.children.length == 0">
 							<span class="glyphicon glyphicon-home menu-image"></span>
@@ -26,14 +26,14 @@
 				</ul>
 						
 						
-				<div class="btn-group navbar-user-detail" *ngIf="isLogedIn" >
+				<div class="btn-group navbar-user-detail" *ngIf="isLogged" >
 				  <button type="button" class="btn user-toggle-button" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">
 				    <span>{{currentUser.fullName}}</span>
 				  </button>
 				  <div class="dropdown-menu dropdown-menu-lg-right">
 				    <button class="dropdown-item" type="button">Profile</button>
 				    <div class="dropdown-divider"></div>
-				    <a href="/logout" class="dropdown-item">Logout</a>
+				    <button (click)="logout()"  class="dropdown-item" type="button">Logout</button>
 				  </div>
 				</div>
 						

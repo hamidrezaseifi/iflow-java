@@ -5,16 +5,19 @@ import java.net.MalformedURLException;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.configurations.GuiSecurityConfigurations;
@@ -29,30 +32,31 @@ import com.pth.iflow.gui.services.IWorkflowMessageHanlder;
 @Component
 public class GuiAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
-  private static final Logger logger = LoggerFactory.getLogger(GuiAuthenticationSuccessHandler.class);
+  private static final Logger     logger       = LoggerFactory.getLogger(GuiAuthenticationSuccessHandler.class);
 
   @Autowired
-  private GuiSessionUserService sessionUserService;
+  private GuiSessionUserService   sessionUserService;
 
   @Autowired
-  private IProfileAccess profileValidator;
+  private IProfileAccess          profileValidator;
 
   @Autowired
   private IWorkflowMessageHanlder workflowMessageHanlder;
 
   @Autowired
-  private IMessagesHelper messages;
+  private IMessagesHelper         messages;
 
-  private final ObjectMapper objectMapper = new ObjectMapper();
+  private final ObjectMapper      objectMapper = new ObjectMapper();
 
   @Override
-  public void onAuthenticationSuccess(final HttpServletRequest request, final HttpServletResponse response, final Authentication auth) throws IOException, ServletException {
+  public void onAuthenticationSuccess(final HttpServletRequest request, final HttpServletResponse response, final Authentication auth)
+      throws IOException, ServletException {
 
     if ((auth instanceof GuiAuthenticationToken) == true) {
 
-      final GuiAuthenticationToken tbToken = (GuiAuthenticationToken) auth;
+      final GuiAuthenticationToken tbToken         = (GuiAuthenticationToken) auth;
 
-      ProfileResponse profileResponse = null;
+      ProfileResponse              profileResponse = null;
       try {
         profileResponse = this.profileValidator.readProfile(tbToken.getUsername(), tbToken.getToken());
       }
@@ -66,6 +70,7 @@ public class GuiAuthenticationSuccessHandler extends SimpleUrlAuthenticationSucc
       data.put("exception", "");
       data.put("message", "");
       data.put("res", "ok");
+      data.put("user", null);
 
       if (profileResponse == null) {
         data.put("exception", "no response");
@@ -75,14 +80,11 @@ public class GuiAuthenticationSuccessHandler extends SimpleUrlAuthenticationSucc
       }
       else {
 
-        final User user = profileResponse.getUser();
-        final CompanyProfile companyProfile = profileResponse.getCompanyProfile();
+        final User                   user           = profileResponse.getUser();
+        final CompanyProfile         companyProfile = profileResponse.getCompanyProfile();
 
-        final GuiAuthenticationToken newToken = new GuiAuthenticationToken(tbToken.getUsername(),
-                                                                           tbToken.getCompanyId(),
-                                                                           tbToken.getToken(),
-                                                                           tbToken.getSessionId(),
-                                                                           user.getAuthorities());
+        final GuiAuthenticationToken newToken       = new GuiAuthenticationToken(tbToken.getUsername(), tbToken.getCompanyId(),
+            tbToken.getToken(), tbToken.getSessionId(), user.getAuthorities());
 
         if (user.isEnabled() == false) {
 
@@ -100,24 +102,25 @@ public class GuiAuthenticationSuccessHandler extends SimpleUrlAuthenticationSucc
           }
 
           if (tbToken.getDetails() instanceof GuiAuthenticationDetails) {
-            final String companyid = ((GuiAuthenticationDetails) tbToken.getDetails()).getCompanyid();
+            final String companyid        = ((GuiAuthenticationDetails) tbToken.getDetails()).getCompanyid();
             final Cookie companyIndCookie = new Cookie(GuiSecurityConfigurations.COMPANYINDICATOR_COOKIE_KEY, companyid);
             companyIndCookie.setMaxAge(10 * 365 * 24 * 60 * 60);
             response.addCookie(companyIndCookie);
             data.put("res", "ok");
+            data.put("user", user);
           }
 
         }
       }
 
       try {
-        workflowMessageHanlder.callUserMessageReset();
+        this.workflowMessageHanlder.callUserMessageReset();
       }
       catch (GuiCustomizedException | IFlowMessageConversionFailureException e) {
         logger.error("Error in calling user message reset in profile.", e);
       }
 
-      response.getOutputStream().println(objectMapper.writeValueAsString(data));
+      response.getOutputStream().println(this.objectMapper.writeValueAsString(data));
 
     }
 

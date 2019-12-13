@@ -10,10 +10,12 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 
 import { User, LoginResponse } from '../ui-models';
 import { GlobalService } from '../helper/global.service';
+import { ILoginComponent } from '../_components';
+import { AuthenticationService } from '../services';
 
 
 @Component({ templateUrl: 'login.component.html' })
-	export class LoginComponent implements OnInit {
+	export class LoginComponent implements OnInit, ILoginComponent {
 
 	
 	loginForm: FormGroup;
@@ -29,10 +31,25 @@ import { GlobalService } from '../helper/global.service';
 		private route: ActivatedRoute,
 		private router: Router,
 		private http:HttpClient,
+		private autService: AuthenticationService,
 		private global: GlobalService,
 		
 	  ) { 	  
 		  this.loginResponse = new LoginResponse;
+		  
+		  
+		  this.global.currentSessionDataLogin.subscribe(
+	  				x => {
+	  					
+			  		},
+			  		error => {
+			  			
+			  		},
+			  		() => {
+			  			
+			  			this.router.navigate(['/']);
+			  		},
+	  		);		  
 	  }
 	  
 
@@ -50,50 +67,46 @@ import { GlobalService } from '../helper/global.service';
 	        this.submitted = true;
 	        this.failedLogin = false;
 
-	        // stop here if form is invalid
 	        if (this.loginForm.invalid) {
 	            return;
 	        }
 
 	        this.loading = true;
 	        	        
-	        const loginData = new HttpParams()
-	        .set('username', this.loginForm.controls["username"].value)
-	        .set('password', this.loginForm.controls["password"].value)
-	        .set('companyid', this.loginForm.controls["companyid"].value);
-	        
-	        const httpOptions = {
-	        		  headers: new HttpHeaders({
-	        		    'Content-Type':  'application/x-www-form-urlencoded',
-	        		    'Authorization': 'my-auth-token'
-	        		  })
-	        		};
-	        
-	        
-	        this.http.post("/auth/authenticate", loginData, httpOptions).subscribe(
-			        val => {
-			            this.loginResponse = <LoginResponse>val;
-			            
-			            if(this.loginResponse.res === 'ok'){
-			            	this.global.loadAllSetting(null);
-			            	this.router.navigate(['/']);
-			            }
-			            else{
-			            	this.failedLogin = true;
-			            }
-			            
-			        },
-			        response => {
-			            console.log("GET call in error", response);
-			            alert("GET call in error: "+ response);
-			            this.loginResponse.message = "Error in login!";
-			            this.failedLogin = true;
-			        },
-			        () => {
-			            this.loading = false;				            
-			        }
-			    );	        
-			  
+	        this.autService.login(
+	        		this.loginForm.controls["username"].value,
+	        		this.loginForm.controls["password"].value,
+	        		this.loginForm.controls["companyid"].value,
+	        		this
+	        		);
 	    }	  
+	  
+	  
+	  	processLoginResult(loginResponse: LoginResponse){
+            
+	  		this.loginResponse = loginResponse;
+	  		
+            if(this.loginResponse.res === 'ok'){
+            	
+            	this.global.loadAllSetting();
+            	
+            }
+            else{
+            	this.failedLogin = true;
+            }
+		}
+		
+		processFailedResult(responseObj: Object){
+			console.log("GET call in error", responseObj);
+            alert("GET call in error: "+ responseObj);
+            this.loginResponse.message = "Error in login!";
+            this.failedLogin = true;
+		}
+		
+		processEndLoading(){
+			this.loading = false;		
+		}
+	  
 
+		
 }

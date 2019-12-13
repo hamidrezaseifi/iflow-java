@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 import { WorkflowMessage } from '../wf-models';
 import { User, MenuItem } from '../ui-models';
-import { IGeneralDataComponent, GeneralLoadingComponent } from '../_components';
 import { GlobalService } from '../helper/global.service';
 import { Router } from '@angular/router';
 import * as moment from 'moment'; 
@@ -13,21 +12,19 @@ import * as moment from 'moment';
   styleUrls: ['./message-bar.component.css'],
   providers: [ GlobalService ]
 })
-export class MessageBarComponent extends GeneralLoadingComponent implements OnInit, IGeneralDataComponent {
+export class MessageBarComponent implements OnInit {
 
 	messages: WorkflowMessage[] = [];
 
-	menus: MenuItem[] = [];
-	currentUser: User = null;
-	isLogged: boolean = false;
+	@Input('currentUser') currentUser: User;
+	@Input('isLogged') isLogged: boolean;
 
-  	constructor(protected router: Router, protected global: GlobalService) { 
-  		super(router, global);
-  		
-  	}
+	constructor(protected router: Router) { 
+		
+	}
+	
 
 	ngOnInit() {
-		super.ngOnInit();
 		
 	}
 	

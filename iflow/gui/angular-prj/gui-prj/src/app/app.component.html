@@ -1,4 +1,4 @@
-<app-top-bar></app-top-bar>
+<app-top-bar [menus]="appMenus" [currentUser]="appCurrentUser" [isLogged]="appIsLogged"></app-top-bar>
 
 <div class="container">
     <div class="row">
@@ -9,6 +9,6 @@
     </div>
 </div>
 
-<app-message-bar></app-message-bar>
+<app-message-bar [currentUser]="appCurrentUser" [isLogged]="appIsLogged"></app-message-bar>
 
 <app-footer></app-footer>
