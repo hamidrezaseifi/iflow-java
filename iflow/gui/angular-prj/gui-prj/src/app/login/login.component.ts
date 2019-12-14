@@ -38,18 +38,6 @@ import { AuthenticationService } from '../services';
 		  this.loginResponse = new LoginResponse;
 		  
 		  
-		  this.global.currentSessionDataLogin.subscribe(
-	  				x => {
-	  					
-			  		},
-			  		error => {
-			  			
-			  		},
-			  		() => {
-			  			
-			  			this.router.navigate(['/']);
-			  		},
-	  		);		  
 	  }
 	  
 
@@ -88,7 +76,7 @@ import { AuthenticationService } from '../services';
 	  		
             if(this.loginResponse.res === 'ok'){
             	
-            	this.global.loadAllSetting();
+            	this.global.loadAllSetting(this);
             	
             }
             else{
@@ -107,6 +95,8 @@ import { AuthenticationService } from '../services';
 			this.loading = false;		
 		}
 	  
-
+		finishGeneralDataLoading(){
+  			this.router.navigate(['/']);
+		}
 		
 }

@@ -21,8 +21,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.controller.GuiLogedControllerBase;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
-import com.pth.iflow.gui.models.Department;
-import com.pth.iflow.gui.models.User;
 import com.pth.iflow.gui.models.WorkflowMessage;
 import com.pth.iflow.gui.models.ui.UiMenuItem;
 import com.pth.iflow.gui.services.IMessagesHelper;
@@ -45,21 +43,32 @@ public class GeneralDataController extends GuiLogedControllerBase {
 
     final Map<String, Object> map = new HashMap<>();
     map.put("isLogged", "false");
-    map.put("currentUser", this.getLoggedUser());
-    map.put("users", new ArrayList<>());
-    map.put("departments", new ArrayList<>());
-    map.put("menus", new ArrayList<>());
+    map.put("user", null);
+    map.put("app", null);
+    map.put("workflow", null);
+    map.put("company", null);
 
     if (this.isSessionValidAndLoggedIn()) {
 
-      final List<User>       userList       = this.getSessionUserInfo().getCompanyUserList();
-      final List<Department> departmentList = this.getSessionUserInfo().getCompanyDepartments();
+      Map<String, Object> childsMap = new HashMap<>();
+      childsMap.put("company", this.getSessionUserInfo().getCompany());
+      childsMap.put("departments", this.getSessionUserInfo().getCompanyDepartments());
+      childsMap.put("users", this.getSessionUserInfo().getCompanyUserList());
+      map.put("company", childsMap);
+
+      childsMap = new HashMap<>();
+      childsMap.put("worlflowTypes", this.getSessionUserInfo().getAllWorkflowTypes());
+      map.put("workflow", childsMap);
+
+      childsMap = new HashMap<>();
+      childsMap.put("currentUser", this.getLoggedUser());
+      map.put("user", childsMap);
+
+      childsMap = new HashMap<>();
+      childsMap.put("menus", this.getMenus());
+      map.put("app", childsMap);
 
       map.put("isLogged", "true");
-      map.put("currentUser", this.getLoggedUser());
-      map.put("users", userList);
-      map.put("departments", departmentList);
-      map.put("menus", this.getMenus());
 
     }
 

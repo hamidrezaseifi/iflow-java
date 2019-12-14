@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { GlobalService } from '../helper/global.service';
@@ -17,6 +17,8 @@ export class TopBarComponent implements OnInit {
 	@Input('menus') menus: MenuItem[];
 	@Input('currentUser') currentUser: User;
 	@Input('isLogged') isLogged: boolean;
+	
+	@Output() loggingOut = new EventEmitter<boolean>();
 
 	constructor(
 		    private router: Router,
@@ -32,8 +34,10 @@ export class TopBarComponent implements OnInit {
 	
 
 	logout(){
-		this.autService.logout();
-		this.global.clear();
-		this.router.navigate(['/logout']);
+		this.loggingOut.emit(true);
+		
+		//this.autService.logout();
+		//this.global.clear();
+		//this.router.navigate(['/auth/login']);
 	}		
 }

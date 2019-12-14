@@ -11,25 +11,20 @@ import { GlobalService } from '../helper/global.service';
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
     private currentUserSubject: BehaviorSubject<User>;
-    //public currentUser: Observable<User>;
-    //public currentUser: User;
 
     constructor(
     		private http: HttpClient,
     		private global: GlobalService,
     ) {
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
-        //this.currentUser = this.currentUserSubject.asObservable();
     }
 
     public get currentUserValue(): User {
         return this.currentUserSubject.value;
-        //return this.currentUser;
     }
 
     public get isLogedIn(): boolean {
         return this.currentUserSubject.value != null;
-        //return this.currentUser;
     }
 
     login(username, password, companyid, loginComponent: ILoginComponent) {
@@ -52,7 +47,6 @@ export class AuthenticationService {
 		        	localStorage.setItem('currentUser', JSON.stringify(loginResponse.user));
 		        	this.currentUserSubject.next(loginResponse.user);
 		        	this.currentUserSubject.complete();
-		        	//this.global.loadAllSetting();
 		        	loginComponent.processLoginResult(<LoginResponse>val);
 		            
 		        },
@@ -72,5 +66,6 @@ export class AuthenticationService {
         localStorage.removeItem('currentUser');
         this.global.clear();
         this.currentUserSubject.next(null);
+        this.currentUserSubject.complete();
     }
 }

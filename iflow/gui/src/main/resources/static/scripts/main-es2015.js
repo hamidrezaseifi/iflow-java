@@ -58,7 +58,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<app-top-bar [menus]=\"appMenus\" [currentUser]=\"appCurrentUser\" [isLogged]=\"appIsLogged\"></app-top-bar>\r\n\r\n<div class=\"container\">\r\n    <div class=\"row\">\r\n        <div class=\"col-sm-6 offset-sm-3\">\r\n            <alert></alert>\r\n            <router-outlet></router-outlet>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<app-message-bar [currentUser]=\"appCurrentUser\" [isLogged]=\"appIsLogged\"></app-message-bar>\r\n\r\n<app-footer></app-footer>\r\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<app-top-bar [menus]=\"appMenus\" [currentUser]=\"appCurrentUser\" [isLogged]=\"appIsLogged\" (loggingOut)=\"onLoggingOut($event)\"></app-top-bar>\r\n\r\n<div class=\"container\">\r\n    <div class=\"row\">\r\n        <div class=\"col-sm-6 offset-sm-3\">\r\n            <alert></alert>\r\n            <router-outlet></router-outlet>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<app-message-bar [currentUser]=\"appCurrentUser\" [isLogged]=\"appIsLogged\"></app-message-bar>\r\n\r\n<app-footer></app-footer>\r\n");
 
 /***/ }),
 
@@ -85,19 +85,6 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ("<h1>Home!</h1>\n");
-
-/***/ }),
-
-/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/login/index.ts":
-/*!**********************************************************************!*\
-  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/login/index.ts ***!
-  \**********************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("export * from './login.component';\r\nexport * from './logout.component';\r\n");
 
 /***/ }),
 
@@ -531,10 +518,10 @@ let AppComponent = class AppComponent {
         this.appMenus = [];
         this.appCurrentUser = null;
         this.appIsLogged = false;
-        this.global.currentSessionDataTopMenu.subscribe(x => {
+        this.global.currentSessionDataSubject.subscribe(x => {
             if (x != null) {
-                this.appMenus = x.menus;
-                this.appCurrentUser = x.currentUser;
+                this.appMenus = x.app.menus;
+                this.appCurrentUser = x.user.currentUser;
                 this.appIsLogged = x.isLogged;
             }
             else {
@@ -553,13 +540,32 @@ let AppComponent = class AppComponent {
                 this.appIsLogged = false;
             }
         });
+        this.router.routeReuseStrategy.shouldReuseRoute = function () {
+            return false;
+        };
+        this.router.events.subscribe((evt) => {
+            if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_2__["NavigationEnd"]) {
+                // trick the Router into believing it's last link wasn't previously loaded
+                this.router.navigated = false;
+                if (this.global.currentSessionDataValue && this.global.currentSessionDataValue.isLogged) {
+                    this.appMenus = this.global.currentSessionDataValue.app.menus;
+                    this.appCurrentUser = this.global.currentSessionDataValue.user.currentUser;
+                    this.appIsLogged = this.global.currentSessionDataValue.isLogged;
+                }
+                else {
+                    this.appMenus = [];
+                    this.appCurrentUser = null;
+                    this.appIsLogged = false;
+                }
+            }
+        });
     }
     ngOnInit() {
     }
-    logout() {
+    onLoggingOut(data) {
         this.autService.logout();
         this.global.clear();
-        this.router.navigate(['/logout']);
+        this.router.navigate(['/auth/login']);
     }
 };
 AppComponent.ctorParameters = () => [
@@ -603,15 +609,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
 /* harmony import */ var _app_routing__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./app.routing */ "./src/app/app.routing.ts");
 /* harmony import */ var _helper_global_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./helper/global.service */ "./src/app/helper/global.service.ts");
-/* harmony import */ var _components__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./_components */ "./src/app/_components/index.ts");
-/* harmony import */ var _top_bar_top_bar_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./top-bar/top-bar.component */ "./src/app/top-bar/top-bar.component.ts");
-/* harmony import */ var _footer_footer_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./footer/footer.component */ "./src/app/footer/footer.component.ts");
-/* harmony import */ var _message_bar_message_bar_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./message-bar/message-bar.component */ "./src/app/message-bar/message-bar.component.ts");
-/* harmony import */ var _home__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./home */ "./src/app/home/index.ts");
-/* harmony import */ var _about__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./about */ "./src/app/about/index.ts");
-/* harmony import */ var _login__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./login */ "./src/app/login/index.ts");
-/* harmony import */ var _workflow_create_workflow_create_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./workflow-create/workflow-create.component */ "./src/app/workflow-create/workflow-create.component.ts");
-/* harmony import */ var _workflow_list_workflow_list_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./workflow-list/workflow-list.component */ "./src/app/workflow-list/workflow-list.component.ts");
+/* harmony import */ var _services_authentication_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./services/authentication.service */ "./src/app/services/authentication.service.ts");
+/* harmony import */ var _components__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./_components */ "./src/app/_components/index.ts");
+/* harmony import */ var _top_bar_top_bar_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./top-bar/top-bar.component */ "./src/app/top-bar/top-bar.component.ts");
+/* harmony import */ var _footer_footer_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./footer/footer.component */ "./src/app/footer/footer.component.ts");
+/* harmony import */ var _message_bar_message_bar_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./message-bar/message-bar.component */ "./src/app/message-bar/message-bar.component.ts");
+/* harmony import */ var _home__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./home */ "./src/app/home/index.ts");
+/* harmony import */ var _about__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./about */ "./src/app/about/index.ts");
+/* harmony import */ var _login__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./login */ "./src/app/login/index.ts");
+/* harmony import */ var _workflow_create_workflow_create_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./workflow-create/workflow-create.component */ "./src/app/workflow-create/workflow-create.component.ts");
+/* harmony import */ var _workflow_list_workflow_list_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./workflow-list/workflow-list.component */ "./src/app/workflow-list/workflow-list.component.ts");
+
 
 
 
@@ -643,18 +651,17 @@ AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         ],
         declarations: [
             _app_component__WEBPACK_IMPORTED_MODULE_6__["AppComponent"],
-            _top_bar_top_bar_component__WEBPACK_IMPORTED_MODULE_10__["TopBarComponent"],
-            _footer_footer_component__WEBPACK_IMPORTED_MODULE_11__["FooterComponent"],
-            _components__WEBPACK_IMPORTED_MODULE_9__["AlertComponent"],
-            _message_bar_message_bar_component__WEBPACK_IMPORTED_MODULE_12__["MessageBarComponent"],
-            _home__WEBPACK_IMPORTED_MODULE_13__["HomeComponent"],
-            _about__WEBPACK_IMPORTED_MODULE_14__["AboutComponent"],
-            _login__WEBPACK_IMPORTED_MODULE_15__["LoginComponent"],
-            _login__WEBPACK_IMPORTED_MODULE_15__["LogoutComponent"],
-            _workflow_create_workflow_create_component__WEBPACK_IMPORTED_MODULE_16__["WorkflowCreateComponent"],
-            _workflow_list_workflow_list_component__WEBPACK_IMPORTED_MODULE_17__["WorkflowListComponent"],
+            _top_bar_top_bar_component__WEBPACK_IMPORTED_MODULE_11__["TopBarComponent"],
+            _footer_footer_component__WEBPACK_IMPORTED_MODULE_12__["FooterComponent"],
+            _components__WEBPACK_IMPORTED_MODULE_10__["AlertComponent"],
+            _message_bar_message_bar_component__WEBPACK_IMPORTED_MODULE_13__["MessageBarComponent"],
+            _home__WEBPACK_IMPORTED_MODULE_14__["HomeComponent"],
+            _about__WEBPACK_IMPORTED_MODULE_15__["AboutComponent"],
+            _login__WEBPACK_IMPORTED_MODULE_16__["LoginComponent"],
+            _workflow_create_workflow_create_component__WEBPACK_IMPORTED_MODULE_17__["WorkflowCreateComponent"],
+            _workflow_list_workflow_list_component__WEBPACK_IMPORTED_MODULE_18__["WorkflowListComponent"],
         ],
-        providers: [_helper_global_service__WEBPACK_IMPORTED_MODULE_8__["GlobalService"]],
+        providers: [_helper_global_service__WEBPACK_IMPORTED_MODULE_8__["GlobalService"], _services_authentication_service__WEBPACK_IMPORTED_MODULE_9__["AuthenticationService"]],
         bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_6__["AppComponent"]]
     })
 ], AppModule);
@@ -700,7 +707,6 @@ const routes = [
     { path: 'workflow/list', component: _workflow_list_workflow_list_component__WEBPACK_IMPORTED_MODULE_6__["WorkflowListComponent"], canActivate: [_helper__WEBPACK_IMPORTED_MODULE_7__["AuthGuard"]] },
     { path: 'workflow/create', component: _workflow_create_workflow_create_component__WEBPACK_IMPORTED_MODULE_5__["WorkflowCreateComponent"], canActivate: [_helper__WEBPACK_IMPORTED_MODULE_7__["AuthGuard"]] },
     { path: 'auth/login', component: _login__WEBPACK_IMPORTED_MODULE_4__["LoginComponent"] },
-    { path: 'logout', component: _login__WEBPACK_IMPORTED_MODULE_4__["LogoutComponent"] },
     // otherwise redirect to home
     { path: '**', redirectTo: '', canActivate: [_helper__WEBPACK_IMPORTED_MODULE_7__["AuthGuard"]] }
 ];
@@ -788,7 +794,7 @@ let AuthGuard = class AuthGuard {
             return true;
         }
         // not logged in so redirect to login page with the return url
-        this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+        this.router.navigate(['auth/login'], { queryParams: { returnUrl: state.url } });
         return false;
     }
 };
@@ -826,26 +832,33 @@ let GlobalService = class GlobalService {
     constructor(http) {
         this.http = http;
         this.currentSessionDataSubject = new rxjs__WEBPACK_IMPORTED_MODULE_3__["BehaviorSubject"](JSON.parse(localStorage.getItem('currentSessionData')));
-        this.currentSessionDataTopMenu = this.currentSessionDataSubject.asObservable();
-        this.currentSessionDataLogin = this.currentSessionDataSubject.asObservable();
+        this.currentSessionDataObs = this.currentSessionDataSubject.asObservable();
     }
-    loadAllSetting() {
+    get currentSessionDataValue() {
+        return this.currentSessionDataSubject.value;
+    }
+    loadAllSetting(login) {
         this.http.get("/general/data/generaldatat").subscribe(val => {
             console.log("GET call successful generaldata", val);
             //alert("GET call generaldata");
             var generalData = val;
             localStorage.setItem('currentSessionData', JSON.stringify(generalData));
             this.currentSessionDataSubject.next(generalData);
-            this.currentSessionDataSubject.complete();
         }, response => {
             console.log("Error in read menu list", response);
             //alert("Error in read menu list: "+ response);
         }, () => {
+            if (login != null) {
+                login.finishGeneralDataLoading();
+            }
+            //alert("Finish call successful generaldata");
+            this.currentSessionDataSubject.complete();
         });
     }
     clear() {
         localStorage.removeItem('currentSessionData');
         this.currentSessionDataSubject.next(null);
+        this.currentSessionDataSubject.complete();
     }
 };
 GlobalService.ctorParameters = () => [
@@ -933,7 +946,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!********************************!*\
   !*** ./src/app/login/index.ts ***!
   \********************************/
-/*! exports provided: LoginComponent, LogoutComponent */
+/*! exports provided: LoginComponent */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -941,10 +954,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _login_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./login.component */ "./src/app/login/login.component.ts");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "LoginComponent", function() { return _login_component__WEBPACK_IMPORTED_MODULE_1__["LoginComponent"]; });
-
-/* harmony import */ var _logout_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./logout.component */ "./src/app/login/logout.component.ts");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "LogoutComponent", function() { return _logout_component__WEBPACK_IMPORTED_MODULE_2__["LogoutComponent"]; });
-
 
 
 
@@ -990,11 +999,6 @@ let LoginComponent = class LoginComponent {
         this.submitted = false;
         this.failedLogin = false;
         this.loginResponse = new _ui_models__WEBPACK_IMPORTED_MODULE_5__["LoginResponse"];
-        this.global.currentSessionDataLogin.subscribe(x => {
-        }, error => {
-        }, () => {
-            this.router.navigate(['/']);
-        });
     }
     ngOnInit() {
         this.loginForm = this.formBuilder.group({
@@ -1016,7 +1020,7 @@ let LoginComponent = class LoginComponent {
     processLoginResult(loginResponse) {
         this.loginResponse = loginResponse;
         if (this.loginResponse.res === 'ok') {
-            this.global.loadAllSetting();
+            this.global.loadAllSetting(this);
         }
         else {
             this.failedLogin = true;
@@ -1031,6 +1035,9 @@ let LoginComponent = class LoginComponent {
     processEndLoading() {
         this.loading = false;
     }
+    finishGeneralDataLoading() {
+        this.router.navigate(['/']);
+    }
 };
 LoginComponent.ctorParameters = () => [
     { type: _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormBuilder"] },
@@ -1043,55 +1050,6 @@ LoginComponent.ctorParameters = () => [
 LoginComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({ template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./login.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/login/login.component.html")).default })
 ], LoginComponent);
-
-
-
-/***/ }),
-
-/***/ "./src/app/login/logout.component.ts":
-/*!*******************************************!*\
-  !*** ./src/app/login/logout.component.ts ***!
-  \*******************************************/
-/*! exports provided: LogoutComponent */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LogoutComponent", function() { return LogoutComponent; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
-/* harmony import */ var _helper_global_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../helper/global.service */ "./src/app/helper/global.service.ts");
-/* harmony import */ var _services__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../services */ "./src/app/services/index.ts");
-
-
-
-
-
-let LogoutComponent = class LogoutComponent {
-    constructor(route, router, autService, global) {
-        this.route = route;
-        this.router = router;
-        this.autService = autService;
-        this.global = global;
-        this.autService.logout();
-        this.global.clear();
-    }
-    ngOnInit() {
-        this.autService.logout();
-        this.global.clear();
-        this.router.navigate(['/auth/login']);
-    }
-};
-LogoutComponent.ctorParameters = () => [
-    { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"] },
-    { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] },
-    { type: _services__WEBPACK_IMPORTED_MODULE_4__["AuthenticationService"] },
-    { type: _helper_global_service__WEBPACK_IMPORTED_MODULE_3__["GlobalService"] }
-];
-LogoutComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({ template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./ */ "./node_modules/raw-loader/dist/cjs.js!./src/app/login/index.ts")).default })
-], LogoutComponent);
 
 
 
@@ -1219,21 +1177,16 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let AuthenticationService = class AuthenticationService {
-    //public currentUser: Observable<User>;
-    //public currentUser: User;
     constructor(http, global) {
         this.http = http;
         this.global = global;
         this.currentUserSubject = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](JSON.parse(localStorage.getItem('currentUser')));
-        //this.currentUser = this.currentUserSubject.asObservable();
     }
     get currentUserValue() {
         return this.currentUserSubject.value;
-        //return this.currentUser;
     }
     get isLogedIn() {
         return this.currentUserSubject.value != null;
-        //return this.currentUser;
     }
     login(username, password, companyid, loginComponent) {
         const loginData = new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpParams"]()
@@ -1251,7 +1204,6 @@ let AuthenticationService = class AuthenticationService {
             localStorage.setItem('currentUser', JSON.stringify(loginResponse.user));
             this.currentUserSubject.next(loginResponse.user);
             this.currentUserSubject.complete();
-            //this.global.loadAllSetting();
             loginComponent.processLoginResult(val);
         }, response => {
             this.currentUserSubject.next(null);
@@ -1265,6 +1217,7 @@ let AuthenticationService = class AuthenticationService {
         localStorage.removeItem('currentUser');
         this.global.clear();
         this.currentUserSubject.next(null);
+        this.currentUserSubject.complete();
     }
 };
 AuthenticationService.ctorParameters = () => [
@@ -1381,13 +1334,15 @@ let TopBarComponent = class TopBarComponent {
         this.router = router;
         this.autService = autService;
         this.global = global;
+        this.loggingOut = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
     }
     ngOnInit() {
     }
     logout() {
-        this.autService.logout();
-        this.global.clear();
-        this.router.navigate(['/logout']);
+        this.loggingOut.emit(true);
+        //this.autService.logout();
+        //this.global.clear();
+        //this.router.navigate(['/auth/login']);
     }
 };
 TopBarComponent.ctorParameters = () => [
@@ -1404,6 +1359,9 @@ tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])('isLogged')
 ], TopBarComponent.prototype, "isLogged", void 0);
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Output"])()
+], TopBarComponent.prototype, "loggingOut", void 0);
 TopBarComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
         selector: 'app-top-bar',

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 
 import { GlobalService } from './helper/global.service';
 import { AuthenticationService } from './services';
@@ -21,11 +21,11 @@ export class AppComponent implements OnInit  {
 		private autService: AuthenticationService,
 		private global: GlobalService,
 	) {
- 		this.global.currentSessionDataTopMenu.subscribe(
+ 		this.global.currentSessionDataSubject.subscribe(
   				x => {
   					if(x != null){
-  			  			this.appMenus = x.menus;
-  			  			this.appCurrentUser = x.currentUser;
+  			  			this.appMenus = x.app.menus;
+  			  			this.appCurrentUser = x.user.currentUser;
   			  			this.appIsLogged = x.isLogged;  						
   					}
   					else{
@@ -48,18 +48,42 @@ export class AppComponent implements OnInit  {
 		  		},
   		);
 
+ 		this.router.routeReuseStrategy.shouldReuseRoute = function(){
+ 	        return false;
+ 	     }
+
+ 	     this.router.events.subscribe((evt) => {
+ 	        if (evt instanceof NavigationEnd) {
+ 	           // trick the Router into believing it's last link wasn't previously loaded
+ 	           this.router.navigated = false;
+ 	           
+ 	          if(this.global.currentSessionDataValue && this.global.currentSessionDataValue.isLogged){
+ 	 			this.appMenus = this.global.currentSessionDataValue.app.menus;
+ 	 	  		this.appCurrentUser = this.global.currentSessionDataValue.user.currentUser;
+ 	 	  		this.appIsLogged = this.global.currentSessionDataValue.isLogged; 
+ 	 	  		
+	 	 	  }
+ 	          else{
+				this.appMenus = [];
+				this.appCurrentUser = null;
+				this.appIsLogged = false;
+ 	          }
+ 	          
+ 	        }
+ 	    });
+ 	     
 	}
 	
 	ngOnInit() {
-
+		
 	
 	}
 	
-	logout(){
+	onLoggingOut(data: boolean) {
 		this.autService.logout();
 		this.global.clear();
-		this.router.navigate(['/logout']);
-	}		
+		this.router.navigate(['/auth/login']);
+	}	
 	
 }
 

@@ -8,6 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { appRoutingModule } from './app.routing';
 import { GlobalService } from './helper/global.service';
+import { AuthenticationService } from './services/authentication.service';
 
 
 import { AlertComponent } from './_components';
@@ -17,7 +18,7 @@ import { MessageBarComponent } from './message-bar/message-bar.component';
 
 import { HomeComponent } from './home';
 import { AboutComponent } from './about';
-import { LoginComponent, LogoutComponent } from './login';
+import { LoginComponent } from './login';
 import { WorkflowCreateComponent } from './workflow-create/workflow-create.component';
 import { WorkflowListComponent } from './workflow-list/workflow-list.component';
 
@@ -38,12 +39,11 @@ import { WorkflowListComponent } from './workflow-list/workflow-list.component';
     HomeComponent,
     AboutComponent,
     LoginComponent,
-    LogoutComponent,
     WorkflowCreateComponent,
     WorkflowListComponent,
     
   ],
-  providers: [GlobalService ],
+  providers: [GlobalService, AuthenticationService ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

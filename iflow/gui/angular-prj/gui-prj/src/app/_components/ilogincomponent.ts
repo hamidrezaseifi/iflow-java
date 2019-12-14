@@ -10,6 +10,8 @@ export interface ILoginComponent {
 	
 	processEndLoading();
 	
+	finishGeneralDataLoading();
+	
 }
 
 
