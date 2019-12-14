@@ -2,7 +2,7 @@ package com.pth.iflow.workflow.models;
 
 public class WorkflowFileVersion {
 
-  private User    createdBy;
+  // private User createdBy;
   private String  createdByIdentity;
   private String  filePath;
   private String  comments;
@@ -17,13 +17,11 @@ public class WorkflowFileVersion {
     this.filePath = filePath;
   }
 
-  public User getCreatedBy() {
-    return this.createdBy;
-  }
-
-  public void setCreatedBy(final User createdBy) {
-    this.createdBy = createdBy;
-  }
+  /*
+   * public User getCreatedBy() { return this.createdBy; }
+   * 
+   * public void setCreatedBy(final User createdBy) { this.createdBy = createdBy; }
+   */
 
   public String getCreatedByIdentity() {
     return createdByIdentity;

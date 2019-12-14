@@ -634,7 +634,7 @@ public class WorkflowModelEdoMapper {
     final WorkflowFileVersionEdo edo = new WorkflowFileVersionEdo();
     edo.setComments(model.getComments());
     edo.setStatus(model.getStatus());
-    edo.setCreatedByIdentity(model.getCreatedBy().getIdentity());
+    edo.setCreatedByIdentity(model.getCreatedByIdentity());
     edo.setFilePath(model.getFilePath());
     edo.setFileVersion(model.getFileVersion());
 

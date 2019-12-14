@@ -17,7 +17,7 @@ import { GlobalService } from '../services/global.service';
 export class MessageBarComponent implements OnInit, OnDestroy {
 
 	messages: WorkflowMessage[] = [];
-	messageSearchInterval = 6000;
+	messageSearchInterval = 60000;
 	messageReloadTimeoutId = 0;
 
 	@Input('currentUser') currentUser: User;

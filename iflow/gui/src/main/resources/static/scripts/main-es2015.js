@@ -1020,18 +1020,17 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let MessageBarComponent = class MessageBarComponent {
-    //@Input('isLogged') isLogged: boolean;
     constructor(router, messageService, global) {
         this.router = router;
         this.messageService = messageService;
         this.global = global;
         this.messages = [];
-        this.messageSearchInterval = 6000;
+        this.messageSearchInterval = 60000;
         this.messageReloadTimeoutId = 0;
         this._isLogged = false;
     }
     set isLogged(value) {
-        console.log("change isLogged inside comp. this: " + this._isLogged + ",   app: " + value);
+        //console.log("change isLogged inside comp. this: " + this._isLogged + ",   app: " + value); 	    
         this._isLogged = value === 'true';
         this.reloadMessages(true);
     }
@@ -1049,7 +1048,7 @@ let MessageBarComponent = class MessageBarComponent {
     }
     reloadMessages(reset) {
         clearTimeout(this.messageReloadTimeoutId);
-        console.log("start reloadMessages.  _isLogged:" + (this._isLogged === true));
+        //console.log("start reloadMessages.  _isLogged:" + (this._isLogged === true));
         if (this._isLogged === true) {
             this.subscribeService();
             this.messageService.loadMessages(reset);
@@ -1070,7 +1069,7 @@ let MessageBarComponent = class MessageBarComponent {
             this.messages = [];
         }, () => {
             //this.messageService.workflowMessageListSubject.unsubscribe();
-            console.log("Compelete read message list from comp. start next timeout");
+            //console.log("Compelete read message list from comp. start next timeout");
             this.messageReloadTimeoutId = setTimeout(() => {
                 this.reloadMessages(false);
             }, this.messageSearchInterval);
@@ -1386,10 +1385,10 @@ let WorkflowMessageService = class WorkflowMessageService {
             messageList = this.buildMessageList(messageList);
             this.workflowMessageListSubject.next(messageList);
         }, response => {
-            console.log("Error in read message list", response);
+            //console.log("Error in read message list", response);
             this.workflowMessageListSubject.next([]);
         }, () => {
-            console.log("Compelete read message list ");
+            //console.log("Compelete read message list ");
             this.workflowMessageListSubject.complete();
         });
     }

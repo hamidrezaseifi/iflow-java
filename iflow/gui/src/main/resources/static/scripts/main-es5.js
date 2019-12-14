@@ -955,19 +955,18 @@
             /* harmony import */ var _services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/workflow/workflow-message.service */ "./src/app/services/workflow/workflow-message.service.ts");
             /* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../services/global.service */ "./src/app/services/global.service.ts");
             var MessageBarComponent = /** @class */ (function () {
-                //@Input('isLogged') isLogged: boolean;
                 function MessageBarComponent(router, messageService, global) {
                     this.router = router;
                     this.messageService = messageService;
                     this.global = global;
                     this.messages = [];
-                    this.messageSearchInterval = 6000;
+                    this.messageSearchInterval = 60000;
                     this.messageReloadTimeoutId = 0;
                     this._isLogged = false;
                 }
                 Object.defineProperty(MessageBarComponent.prototype, "isLogged", {
                     set: function (value) {
-                        console.log("change isLogged inside comp. this: " + this._isLogged + ",   app: " + value);
+                        //console.log("change isLogged inside comp. this: " + this._isLogged + ",   app: " + value); 	    
                         this._isLogged = value === 'true';
                         this.reloadMessages(true);
                     },
@@ -992,7 +991,7 @@
                 };
                 MessageBarComponent.prototype.reloadMessages = function (reset) {
                     clearTimeout(this.messageReloadTimeoutId);
-                    console.log("start reloadMessages.  _isLogged:" + (this._isLogged === true));
+                    //console.log("start reloadMessages.  _isLogged:" + (this._isLogged === true));
                     if (this._isLogged === true) {
                         this.subscribeService();
                         this.messageService.loadMessages(reset);
@@ -1014,7 +1013,7 @@
                         _this.messages = [];
                     }, function () {
                         //this.messageService.workflowMessageListSubject.unsubscribe();
-                        console.log("Compelete read message list from comp. start next timeout");
+                        //console.log("Compelete read message list from comp. start next timeout");
                         _this.messageReloadTimeoutId = setTimeout(function () {
                             _this.reloadMessages(false);
                         }, _this.messageSearchInterval);
@@ -1307,10 +1306,10 @@
                         messageList = _this.buildMessageList(messageList);
                         _this.workflowMessageListSubject.next(messageList);
                     }, function (response) {
-                        console.log("Error in read message list", response);
+                        //console.log("Error in read message list", response);
                         _this.workflowMessageListSubject.next([]);
                     }, function () {
-                        console.log("Compelete read message list ");
+                        //console.log("Compelete read message list ");
                         _this.workflowMessageListSubject.complete();
                     });
                 };

@@ -302,8 +302,7 @@ public class TestDataProducer {
   protected WorkflowFileVersion getTestWorkflowFileVersion(final String identity, final int version, final String workflowFileIdentity) {
     final WorkflowFileVersion model = new WorkflowFileVersion();
     model.setStatus(1);
-    model.setCreatedBy(getTestUser());
-    model.setCreatedByIdentity(model.getCreatedBy().getIdentity());
+    model.setCreatedByIdentity("createdByIdentity");
     model.setComments("comments");
     model.setFilePath("filePath");
     model.setFileVersion(version);
