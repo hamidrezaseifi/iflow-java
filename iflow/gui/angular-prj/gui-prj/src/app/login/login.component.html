@@ -2,21 +2,21 @@
 	<div class="login-container">
 		<form method="POST" [formGroup]="loginForm" id="formlogin" >
           <div class="form-group">
-	          <label>Firmenidentifikator</label> 
+	          <label>{{ 'common.companyidentificator' | translate:param }}</label> 
 	          <input type="text" name="companyid" autofocus="" formControlName="companyid" class="form-control" [ngClass]="{ 'is-invalid': submitted && forms.companyid.errors }">          
 	          <div *ngIf="submitted && forms.companyid.errors" class="invalid-feedback">
 	              <div *ngIf="forms.companyid.errors.required">CopmayId is required</div>
 	          </div>
           </div>
           <div class="form-group">          
-	          <label>Benutzername</label> 
+	          <label>{{ 'common.username' | translate:param }}</label> 
 	          <input type="text" name="username" autofocus="" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && forms.username.errors }">
 	          <div *ngIf="submitted && forms.username.errors" class="invalid-feedback">
 	              <div *ngIf="forms.username.errors.required">Username is required</div>
 	          </div>
           </div>
           <div class="form-group">          
-	          <label>Kennwort</label> 
+	          <label>{{ 'common.password' | translate:param }}</label> 
 	          <input type="password" name="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && forms.password.errors }"> 
 	          <div *ngIf="submitted && forms.password.errors" class="invalid-feedback">
 	            <div *ngIf="forms.password.errors.required">Password is required</div>
@@ -26,7 +26,7 @@
              
 			<button (click)="onSubmit()" type="button" [disabled]="loading" class="btn btn-primary">
 			   <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-			   Anmelden
+			   {{ 'common.login' | translate:param }}
 			</button>
             <div *ngIf="submitted && failedLogin" class="invalid-message">
               <div>{{loginResponse.message}}</div>

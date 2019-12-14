@@ -4,9 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {HttpParams} from "@angular/common/http";
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry, map } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
-import { HttpHeaders } from '@angular/common/http';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import {TranslateService} from '@ngx-translate/core';
 
 import { User, LoginResponse } from '../ui-models';
 import { GlobalService } from '../services/global.service';
@@ -30,13 +28,14 @@ import { AuthenticationService } from '../services';
 	  	private formBuilder: FormBuilder,
 		private route: ActivatedRoute,
 		private router: Router,
-		private http:HttpClient,
 		private autService: AuthenticationService,
 		private global: GlobalService,
+		translate: TranslateService,
 		
 	  ) { 	  
-		  this.loginResponse = new LoginResponse;
-		  
+		  this.loginResponse = new LoginResponse;		  
+	        translate.setDefaultLang('de');
+	        translate.use('de');
 		  
 	  }
 	  

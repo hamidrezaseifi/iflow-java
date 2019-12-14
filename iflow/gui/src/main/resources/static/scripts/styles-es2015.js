@@ -11,6 +11,17 @@ module.exports = [[module.i, "/*!\n * Bootstrap v4.4.1 (https://getbootstrap.com
 
 /***/ }),
 
+/***/ "./node_modules/@angular-devkit/build-angular/src/angular-cli-files/plugins/raw-css-loader.js!./node_modules/postcss-loader/src/index.js?!./src/assets/css/angular-resizable.css":
+/*!***************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/@angular-devkit/build-angular/src/angular-cli-files/plugins/raw-css-loader.js!./node_modules/postcss-loader/src??embedded!./src/assets/css/angular-resizable.css ***!
+  \***************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = [[module.i, ".resizable {\r\n  position: relative;\r\n}\r\n.resizable.no-transition {\r\n  transition: none !important;\r\n}\r\n.rg-right, .rg-left, .rg-top, .rg-bottom {\r\n  display: block;\r\n  width: 14px;\r\n  height: 14px;\r\n  line-height: 14px;\r\n  position: absolute;\r\n  z-index: 1;\r\n  -moz-user-select: -moz-none;\r\n  -ms-user-select: none;\r\n  -webkit-user-select: none;\r\n  user-select: none;\r\n  background: transparent;\r\n}\r\n.rg-right span, .rg-left span, .rg-top span, .rg-bottom span {\r\n  position: absolute;\r\n  box-sizing: border-box;\r\n  display: block;\r\n  border: 1px solid #ccc;\r\n}\r\n.rg-right span, .rg-left span {\r\n  border-width: 0 1px;\r\n  top: 50%;\r\n  margin-top: -10px;\r\n  margin: -10px 0 0 3.5px;\r\n  height: 20px;\r\n  width: 7px;\r\n}\r\n.rg-top span, .rg-bottom span {\r\n  border-width: 1px 0;\r\n  left: 50%;\r\n  margin: 3.5px 0 0 -10px;\r\n  width: 20px;\r\n  height: 7px;\r\n}\r\n.rg-top {\r\n  cursor: row-resize;\r\n  width: 100%;\r\n  top: 0;\r\n  left: 0;\r\n  margin-top: -14px;\r\n}\r\n.rg-right {\r\n  cursor: col-resize;\r\n  height: 100%;\r\n  right: 0;\r\n  top: 0;\r\n  margin-right: -14px;\r\n}\r\n.rg-bottom {\r\n  cursor: row-resize;\r\n  width: 100%;\r\n  bottom: 0;\r\n  left: 0;\r\n  margin-bottom: -14px;\r\n}\r\n.rg-left {\r\n  cursor: col-resize;\r\n  height: 100%;\r\n  left: 0;\r\n  top: 0;\r\n  margin-left: -14px;\r\n}\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hc3NldHMvY3NzL2FuZ3VsYXItcmVzaXphYmxlLmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLGtCQUFrQjtBQUNwQjtBQUNBO0VBQ0UsMkJBQTJCO0FBQzdCO0FBRUE7RUFDRSxjQUFjO0VBQ2QsV0FBVztFQUNYLFlBQVk7RUFDWixpQkFBaUI7RUFDakIsa0JBQWtCO0VBQ2xCLFVBQVU7RUFDViwyQkFBMkI7RUFDM0IscUJBQXFCO0VBQ3JCLHlCQUF5QjtFQUN6QixpQkFBaUI7RUFDakIsdUJBQXVCO0FBQ3pCO0FBQ0E7RUFDRSxrQkFBa0I7RUFDbEIsc0JBQXNCO0VBQ3RCLGNBQWM7RUFDZCxzQkFBc0I7QUFDeEI7QUFFQTtFQUNFLG1CQUFtQjtFQUNuQixRQUFRO0VBQ1IsaUJBQWlCO0VBQ2pCLHVCQUF1QjtFQUN2QixZQUFZO0VBQ1osVUFBVTtBQUNaO0FBRUE7RUFDRSxtQkFBbUI7RUFDbkIsU0FBUztFQUNULHVCQUF1QjtFQUN2QixXQUFXO0VBQ1gsV0FBVztBQUNiO0FBRUE7RUFDRSxrQkFBa0I7RUFDbEIsV0FBVztFQUNYLE1BQU07RUFDTixPQUFPO0VBQ1AsaUJBQWlCO0FBQ25CO0FBRUE7RUFDRSxrQkFBa0I7RUFDbEIsWUFBWTtFQUNaLFFBQVE7RUFDUixNQUFNO0VBQ04sbUJBQW1CO0FBQ3JCO0FBRUE7RUFDRSxrQkFBa0I7RUFDbEIsV0FBVztFQUNYLFNBQVM7RUFDVCxPQUFPO0VBQ1Asb0JBQW9CO0FBQ3RCO0FBRUE7RUFDRSxrQkFBa0I7RUFDbEIsWUFBWTtFQUNaLE9BQU87RUFDUCxNQUFNO0VBQ04sa0JBQWtCO0FBQ3BCIiwiZmlsZSI6InNyYy9hc3NldHMvY3NzL2FuZ3VsYXItcmVzaXphYmxlLmNzcyIsInNvdXJjZXNDb250ZW50IjpbIi5yZXNpemFibGUge1xyXG4gIHBvc2l0aW9uOiByZWxhdGl2ZTtcclxufVxyXG4ucmVzaXphYmxlLm5vLXRyYW5zaXRpb24ge1xyXG4gIHRyYW5zaXRpb246IG5vbmUgIWltcG9ydGFudDtcclxufVxyXG5cclxuLnJnLXJpZ2h0LCAucmctbGVmdCwgLnJnLXRvcCwgLnJnLWJvdHRvbSB7XHJcbiAgZGlzcGxheTogYmxvY2s7XHJcbiAgd2lkdGg6IDE0cHg7XHJcbiAgaGVpZ2h0OiAxNHB4O1xyXG4gIGxpbmUtaGVpZ2h0OiAxNHB4O1xyXG4gIHBvc2l0aW9uOiBhYnNvbHV0ZTtcclxuICB6LWluZGV4OiAxO1xyXG4gIC1tb3otdXNlci1zZWxlY3Q6IC1tb3otbm9uZTtcclxuICAtbXMtdXNlci1zZWxlY3Q6IG5vbmU7XHJcbiAgLXdlYmtpdC11c2VyLXNlbGVjdDogbm9uZTtcclxuICB1c2VyLXNlbGVjdDogbm9uZTtcclxuICBiYWNrZ3JvdW5kOiB0cmFuc3BhcmVudDtcclxufVxyXG4ucmctcmlnaHQgc3BhbiwgLnJnLWxlZnQgc3BhbiwgLnJnLXRvcCBzcGFuLCAucmctYm90dG9tIHNwYW4ge1xyXG4gIHBvc2l0aW9uOiBhYnNvbHV0ZTtcclxuICBib3gtc2l6aW5nOiBib3JkZXItYm94O1xyXG4gIGRpc3BsYXk6IGJsb2NrO1xyXG4gIGJvcmRlcjogMXB4IHNvbGlkICNjY2M7XHJcbn1cclxuXHJcbi5yZy1yaWdodCBzcGFuLCAucmctbGVmdCBzcGFuIHtcclxuICBib3JkZXItd2lkdGg6IDAgMXB4O1xyXG4gIHRvcDogNTAlO1xyXG4gIG1hcmdpbi10b3A6IC0xMHB4O1xyXG4gIG1hcmdpbjogLTEwcHggMCAwIDMuNXB4O1xyXG4gIGhlaWdodDogMjBweDtcclxuICB3aWR0aDogN3B4O1xyXG59XHJcblxyXG4ucmctdG9wIHNwYW4sIC5yZy1ib3R0b20gc3BhbiB7XHJcbiAgYm9yZGVyLXdpZHRoOiAxcHggMDtcclxuICBsZWZ0OiA1MCU7XHJcbiAgbWFyZ2luOiAzLjVweCAwIDAgLTEwcHg7XHJcbiAgd2lkdGg6IDIwcHg7XHJcbiAgaGVpZ2h0OiA3cHg7XHJcbn1cclxuXHJcbi5yZy10b3Age1xyXG4gIGN1cnNvcjogcm93LXJlc2l6ZTtcclxuICB3aWR0aDogMTAwJTtcclxuICB0b3A6IDA7XHJcbiAgbGVmdDogMDtcclxuICBtYXJnaW4tdG9wOiAtMTRweDtcclxufVxyXG5cclxuLnJnLXJpZ2h0IHtcclxuICBjdXJzb3I6IGNvbC1yZXNpemU7XHJcbiAgaGVpZ2h0OiAxMDAlO1xyXG4gIHJpZ2h0OiAwO1xyXG4gIHRvcDogMDtcclxuICBtYXJnaW4tcmlnaHQ6IC0xNHB4O1xyXG59XHJcblxyXG4ucmctYm90dG9tIHtcclxuICBjdXJzb3I6IHJvdy1yZXNpemU7XHJcbiAgd2lkdGg6IDEwMCU7XHJcbiAgYm90dG9tOiAwO1xyXG4gIGxlZnQ6IDA7XHJcbiAgbWFyZ2luLWJvdHRvbTogLTE0cHg7XHJcbn1cclxuXHJcbi5yZy1sZWZ0IHtcclxuICBjdXJzb3I6IGNvbC1yZXNpemU7XHJcbiAgaGVpZ2h0OiAxMDAlO1xyXG4gIGxlZnQ6IDA7XHJcbiAgdG9wOiAwO1xyXG4gIG1hcmdpbi1sZWZ0OiAtMTRweDtcclxufSJdfQ== */", '', '']]
+
+/***/ }),
+
 /***/ "./node_modules/@angular-devkit/build-angular/src/angular-cli-files/plugins/raw-css-loader.js!./node_modules/postcss-loader/src/index.js?!./src/assets/css/app.css":
 /*!*************************************************************************************************************************************************************************!*\
   !*** ./node_modules/@angular-devkit/build-angular/src/angular-cli-files/plugins/raw-css-loader.js!./node_modules/postcss-loader/src??embedded!./src/assets/css/app.css ***!
@@ -342,6 +353,33 @@ module.exports = function (list, options) {
 
 /***/ }),
 
+/***/ "./src/assets/css/angular-resizable.css":
+/*!**********************************************!*\
+  !*** ./src/assets/css/angular-resizable.css ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var content = __webpack_require__(/*! !../../../node_modules/@angular-devkit/build-angular/src/angular-cli-files/plugins/raw-css-loader.js!../../../node_modules/postcss-loader/src??embedded!./angular-resizable.css */ "./node_modules/@angular-devkit/build-angular/src/angular-cli-files/plugins/raw-css-loader.js!./node_modules/postcss-loader/src/index.js?!./src/assets/css/angular-resizable.css");
+
+if (typeof content === 'string') {
+  content = [[module.i, content, '']];
+}
+
+var options = {}
+
+options.insert = "head";
+options.singleton = false;
+
+var update = __webpack_require__(/*! ../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js")(content, options);
+
+if (content.locals) {
+  module.exports = content.locals;
+}
+
+
+/***/ }),
+
 /***/ "./src/assets/css/app.css":
 /*!********************************!*\
   !*** ./src/assets/css/app.css ***!
@@ -370,13 +408,14 @@ if (content.locals) {
 /***/ }),
 
 /***/ 3:
-/*!******************************************************************************************!*\
-  !*** multi ./node_modules/bootstrap/dist/css/bootstrap.min.css ./src/assets/css/app.css ***!
-  \******************************************************************************************/
+/*!*********************************************************************************************************************************!*\
+  !*** multi ./node_modules/bootstrap/dist/css/bootstrap.min.css ./src/assets/css/angular-resizable.css ./src/assets/css/app.css ***!
+  \*********************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! C:\Git\home\iflow\iflow-java\iflow\gui\angular-prj\gui-prj\node_modules\bootstrap\dist\css\bootstrap.min.css */"./node_modules/bootstrap/dist/css/bootstrap.min.css");
+__webpack_require__(/*! C:\Git\home\iflow\iflow-java\iflow\gui\angular-prj\gui-prj\src\assets\css\angular-resizable.css */"./src/assets/css/angular-resizable.css");
 module.exports = __webpack_require__(/*! C:\Git\home\iflow\iflow-java\iflow\gui\angular-prj\gui-prj\src\assets\css\app.css */"./src/assets/css/app.css");
 
 

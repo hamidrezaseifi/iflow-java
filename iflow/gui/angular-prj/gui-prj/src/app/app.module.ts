@@ -6,6 +6,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { ResizableModule } from 'angular-resizable-element';
 
 import { AppComponent } from './app.component';
 import { appRoutingModule } from './app.routing';
@@ -25,8 +26,8 @@ import { LoginComponent } from './login';
 import { WorkflowCreateComponent } from './workflow-create/workflow-create.component';
 import { WorkflowListComponent } from './workflow-list/workflow-list.component';
 
-export function HttpLoaderFactory(http: HttpClient) {
-    return new TranslateHttpLoader(http);
+export function createTranslateLoader(http: HttpClient) {
+    return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
 @NgModule({
@@ -36,10 +37,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     HttpClientModule,
     appRoutingModule,
     BrowserAnimationsModule,
+    ResizableModule,
     TranslateModule.forRoot({
         loader: {
             provide: TranslateLoader,
-            useFactory: HttpLoaderFactory,
+            useFactory: (createTranslateLoader),
             deps: [HttpClient]
         }
     }),

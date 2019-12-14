@@ -1,5 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
+import {TranslateService} from '@ngx-translate/core';
+import { Title } from '@angular/platform-browser';
 
 import { GlobalService } from './services/global.service';
 import { AuthenticationService } from './services';
@@ -21,7 +23,19 @@ export class AppComponent implements OnInit, OnDestroy  {
 	    private router: Router,
 		private autService: AuthenticationService,
 		private global: GlobalService,
+		translate: TranslateService,
+		private titleService: Title,
 	) {
+		
+        // this language will be used as a fallback when a translation isn't found in the current language
+        translate.setDefaultLang('de');
+
+         // the lang to use, if the lang isn't available, it will use the current loader to get them
+        translate.use('de');
+        
+        translate.get('site.title').subscribe((res: string) => {
+        	this.titleService.setTitle( res );
+        });
 		
 		this.router.routeReuseStrategy.shouldReuseRoute = function(){
  	        return false;

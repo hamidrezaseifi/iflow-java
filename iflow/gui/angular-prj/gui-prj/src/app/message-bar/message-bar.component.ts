@@ -1,9 +1,11 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import * as moment from 'moment'; 
+import { ResizeEvent } from 'angular-resizable-element';
 
+import { Workflow } from '../wf-models';
 import { WorkflowMessage } from '../wf-models';
 import { User, MenuItem } from '../ui-models';
 import { Router, NavigationEnd } from '@angular/router';
-import * as moment from 'moment'; 
 
 import { WorkflowMessageService } from '../services/workflow/workflow-message.service';
 import { GlobalService } from '../services/global.service';
@@ -17,9 +19,27 @@ import { GlobalService } from '../services/global.service';
 export class MessageBarComponent implements OnInit, OnDestroy {
 
 	messages: WorkflowMessage[] = [];
+	viewWorkflow :Workflow;
+
 	messageSearchInterval = 60000;
 	messageReloadTimeoutId = 0;
+	messagePanelHeight = 170;
+	messagePanelShowed :boolean= true;
 
+	
+	closeMessages(){
+		//$('#message-panel-container').height(25);
+		document.getElementById("message-panel-container").style.height = "25px";
+		this.messagePanelShowed = false;
+    };
+
+	showMessages(){
+		//$('#message-panel-container').height(this.messagePanelHeight);
+		//alert("show pabel");
+		document.getElementById("message-panel-container").style.height = this.messagePanelHeight + "px";
+		this.messagePanelShowed = true;
+    };
+    
 	@Input('currentUser') currentUser: User;
 	
 	private _isLogged: boolean = false;
@@ -55,6 +75,12 @@ export class MessageBarComponent implements OnInit, OnDestroy {
 	
 	ngOnDestroy() {
 		//this.messageService.workflowMessageListSubject.unsubscribe();
+	}
+	
+	onResizeEnd(event: ResizeEvent): void {
+		this.messagePanelHeight = event.rectangle.height;
+		document.getElementById("message-panel-container").style.height = this.messagePanelHeight + "px";
+		//alert(this.messagePanelHeight);
 	}
 	
 	private reloadMessages(reset: boolean){

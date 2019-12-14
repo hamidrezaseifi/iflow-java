@@ -61,7 +61,7 @@
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("<footer class=\"footer\">\r\n    <strong><span>iFlow GUI</span></strong>\r\n\t<span class=\"footer-title\"></span>\r\n</footer>");
+            /* harmony default export */ __webpack_exports__["default"] = ("<footer class=\"footer\">\r\n    <strong><span>{{ 'site.footer' | translate:param }}</span></strong>\r\n\t<span class=\"footer-title\"></span>\r\n</footer>");
             /***/ 
         }),
         /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/home/home.component.html": 
@@ -83,7 +83,7 @@
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("<div class=\"login-container-parent layout-align-center-center layout-row\" layout=\"row\" layout-align=\"center center\">\r\n\t<div class=\"login-container\">\r\n\t\t<form method=\"POST\" [formGroup]=\"loginForm\" id=\"formlogin\" >\r\n          <div class=\"form-group\">\r\n\t          <label>Firmenidentifikator</label> \r\n\t          <input type=\"text\" name=\"companyid\" autofocus=\"\" formControlName=\"companyid\" class=\"form-control\" [ngClass]=\"{ 'is-invalid': submitted && forms.companyid.errors }\">          \r\n\t          <div *ngIf=\"submitted && forms.companyid.errors\" class=\"invalid-feedback\">\r\n\t              <div *ngIf=\"forms.companyid.errors.required\">CopmayId is required</div>\r\n\t          </div>\r\n          </div>\r\n          <div class=\"form-group\">          \r\n\t          <label>Benutzername</label> \r\n\t          <input type=\"text\" name=\"username\" autofocus=\"\" formControlName=\"username\" class=\"form-control\" [ngClass]=\"{ 'is-invalid': submitted && forms.username.errors }\">\r\n\t          <div *ngIf=\"submitted && forms.username.errors\" class=\"invalid-feedback\">\r\n\t              <div *ngIf=\"forms.username.errors.required\">Username is required</div>\r\n\t          </div>\r\n          </div>\r\n          <div class=\"form-group\">          \r\n\t          <label>Kennwort</label> \r\n\t          <input type=\"password\" name=\"password\" formControlName=\"password\" class=\"form-control\" [ngClass]=\"{ 'is-invalid': submitted && forms.password.errors }\"> \r\n\t          <div *ngIf=\"submitted && forms.password.errors\" class=\"invalid-feedback\">\r\n\t            <div *ngIf=\"forms.password.errors.required\">Password is required</div>\r\n\t          </div>\r\n          </div>  \r\n          <div layout=\"row\" class=\"layout-row form-group\">\r\n             \r\n\t\t\t<button (click)=\"onSubmit()\" type=\"button\" [disabled]=\"loading\" class=\"btn btn-primary\">\r\n\t\t\t   <span *ngIf=\"loading\" class=\"spinner-border spinner-border-sm mr-1\"></span>\r\n\t\t\t   Anmelden\r\n\t\t\t</button>\r\n            <div *ngIf=\"submitted && failedLogin\" class=\"invalid-message\">\r\n              <div>{{loginResponse.message}}</div>\r\n            </div>\r\n\t\t\t\r\n          </div> \r\n\t\t</form>\r\n\t\t\r\n\t</div>\r\n\r\n</div>\r\n\r\n\r\n");
+            /* harmony default export */ __webpack_exports__["default"] = ("<div class=\"login-container-parent layout-align-center-center layout-row\" layout=\"row\" layout-align=\"center center\">\r\n\t<div class=\"login-container\">\r\n\t\t<form method=\"POST\" [formGroup]=\"loginForm\" id=\"formlogin\" >\r\n          <div class=\"form-group\">\r\n\t          <label>{{ 'common.companyidentificator' | translate:param }}</label> \r\n\t          <input type=\"text\" name=\"companyid\" autofocus=\"\" formControlName=\"companyid\" class=\"form-control\" [ngClass]=\"{ 'is-invalid': submitted && forms.companyid.errors }\">          \r\n\t          <div *ngIf=\"submitted && forms.companyid.errors\" class=\"invalid-feedback\">\r\n\t              <div *ngIf=\"forms.companyid.errors.required\">CopmayId is required</div>\r\n\t          </div>\r\n          </div>\r\n          <div class=\"form-group\">          \r\n\t          <label>{{ 'common.username' | translate:param }}</label> \r\n\t          <input type=\"text\" name=\"username\" autofocus=\"\" formControlName=\"username\" class=\"form-control\" [ngClass]=\"{ 'is-invalid': submitted && forms.username.errors }\">\r\n\t          <div *ngIf=\"submitted && forms.username.errors\" class=\"invalid-feedback\">\r\n\t              <div *ngIf=\"forms.username.errors.required\">Username is required</div>\r\n\t          </div>\r\n          </div>\r\n          <div class=\"form-group\">          \r\n\t          <label>{{ 'common.password' | translate:param }}</label> \r\n\t          <input type=\"password\" name=\"password\" formControlName=\"password\" class=\"form-control\" [ngClass]=\"{ 'is-invalid': submitted && forms.password.errors }\"> \r\n\t          <div *ngIf=\"submitted && forms.password.errors\" class=\"invalid-feedback\">\r\n\t            <div *ngIf=\"forms.password.errors.required\">Password is required</div>\r\n\t          </div>\r\n          </div>  \r\n          <div layout=\"row\" class=\"layout-row form-group\">\r\n             \r\n\t\t\t<button (click)=\"onSubmit()\" type=\"button\" [disabled]=\"loading\" class=\"btn btn-primary\">\r\n\t\t\t   <span *ngIf=\"loading\" class=\"spinner-border spinner-border-sm mr-1\"></span>\r\n\t\t\t   {{ 'common.login' | translate:param }}\r\n\t\t\t</button>\r\n            <div *ngIf=\"submitted && failedLogin\" class=\"invalid-message\">\r\n              <div>{{loginResponse.message}}</div>\r\n            </div>\r\n\t\t\t\r\n          </div> \r\n\t\t</form>\r\n\t\t\r\n\t</div>\r\n\r\n</div>\r\n\r\n\r\n");
             /***/ 
         }),
         /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/message-bar/message-bar.component.html": 
@@ -94,7 +94,7 @@
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("<div resizable=\"\" r-directions=\"['top']\" class=\"message-panel-container\" id=\"message-panel-container\" *ngIf=\"isAppLogged\">\n\t<div class=\"message-panel-toolbar\">\n\t\t<span class=\"title\">Meldungen</span>\n\t\t<button class=\"toolbar-button\" *ngIf=\"messagePanelShowed\" (click)=\"closeMessages();\"><i class=\"material-icons\">keyboard_arrow_down</i></button>\n\t\t<button class=\"toolbar-button\" *ngIf=\"messagePanelShowed == false\" (click)=\"showMessages();\"><i class=\"material-icons\">keyboard_arrow_up</i></button>\n\t\t<button class=\"toolbar-button\" *ngIf=\"messagePanelShowed\" (click)=\"reloadMessages(true);\"><i class=\"material-icons\">refresh</i></button>\n\t\n\t</div>\n\t<div class=\"message-panel-items-container\">\n\t\t<div class=\"message-panel-item\" *ngFor=\"let message of messages;\">\n\t\t\t<a href=\"javascript:void(0);\" (click)=\"showWorkflowView(message.workflowId)\">\n\t\t\t\t<div>{{message.message}} ({{message.workflow.workflowType.title}}) ({{message.createdAtString}}) ({{message.remainingDays}}) ({{message.status}})</div>\n\t\t\t</a>\n\t\t</div>\n\t</div>\n\t\t\t\t\t\n</div>");
+            /* harmony default export */ __webpack_exports__["default"] = ("<div mwlResizable [enableGhostResize]=\"true\" [resizeEdges]=\"{ bottom: false, right: false, top: true, left: false }\" (resizeEnd)=\"onResizeEnd($event)\" class=\"message-panel-container\" id=\"message-panel-container\" *ngIf=\"isAppLogged\">\n\t<div class=\"message-panel-toolbar\">\n\t\t<span class=\"title\">Meldungen</span>\n\t\t<button class=\"toolbar-button\" *ngIf=\"messagePanelShowed\" (click)=\"closeMessages();\"><i class=\"material-icons\">keyboard_arrow_down</i></button>\n\t\t<button class=\"toolbar-button\" *ngIf=\"messagePanelShowed == false\" (click)=\"showMessages();\"><i class=\"material-icons\">keyboard_arrow_up</i></button>\n\t\t<button class=\"toolbar-button\" *ngIf=\"messagePanelShowed\" (click)=\"reloadMessages(true);\"><i class=\"material-icons\">refresh</i></button>\n\t\n\t</div>\n\t<div class=\"message-panel-items-container\">\n\t\t<div class=\"message-panel-item\" *ngFor=\"let message of messages;\">\n\t\t\t<a href=\"javascript:void(0);\" (click)=\"showWorkflowView(message.workflowId)\">\n\t\t\t\t<div>{{message.message}} ({{message.workflow.workflowType.title}}) ({{message.createdAtString}}) ({{message.remainingDays}}) ({{message.status}})</div>\n\t\t\t</a>\n\t\t</div>\n\t</div>\n\t\t\t\t\t\n</div>");
             /***/ 
         }),
         /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/top-bar/top-bar.component.html": 
@@ -527,17 +527,27 @@
             /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
             /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
             /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
-            /* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./services/global.service */ "./src/app/services/global.service.ts");
-            /* harmony import */ var _services__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./services */ "./src/app/services/index.ts");
+            /* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm2015/ngx-translate-core.js");
+            /* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm2015/platform-browser.js");
+            /* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./services/global.service */ "./src/app/services/global.service.ts");
+            /* harmony import */ var _services__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./services */ "./src/app/services/index.ts");
             var AppComponent = /** @class */ (function () {
-                function AppComponent(router, autService, global) {
+                function AppComponent(router, autService, global, translate, titleService) {
                     var _this = this;
                     this.router = router;
                     this.autService = autService;
                     this.global = global;
+                    this.titleService = titleService;
                     this.appMenus = [];
                     this.appCurrentUser = null;
                     this.appIsLogged = false;
+                    // this language will be used as a fallback when a translation isn't found in the current language
+                    translate.setDefaultLang('de');
+                    // the lang to use, if the lang isn't available, it will use the current loader to get them
+                    translate.use('de');
+                    translate.get('site.title').subscribe(function (res) {
+                        _this.titleService.setTitle(res);
+                    });
                     this.router.routeReuseStrategy.shouldReuseRoute = function () {
                         return false;
                     };
@@ -585,14 +595,16 @@
             }());
             AppComponent.ctorParameters = function () { return [
                 { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] },
-                { type: _services__WEBPACK_IMPORTED_MODULE_4__["AuthenticationService"] },
-                { type: _services_global_service__WEBPACK_IMPORTED_MODULE_3__["GlobalService"] }
+                { type: _services__WEBPACK_IMPORTED_MODULE_6__["AuthenticationService"] },
+                { type: _services_global_service__WEBPACK_IMPORTED_MODULE_5__["GlobalService"] },
+                { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_3__["TranslateService"] },
+                { type: _angular_platform_browser__WEBPACK_IMPORTED_MODULE_4__["Title"] }
             ]; };
             AppComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
                 Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
                     selector: 'app-root',
                     template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./app.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/app.component.html")).default,
-                    providers: [_services_global_service__WEBPACK_IMPORTED_MODULE_3__["GlobalService"]],
+                    providers: [_services_global_service__WEBPACK_IMPORTED_MODULE_5__["GlobalService"]],
                     styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./app.component.css */ "./src/app/app.component.css")).default]
                 })
             ], AppComponent);
@@ -607,10 +619,11 @@
         /*!*******************************!*\
           !*** ./src/app/app.module.ts ***!
           \*******************************/
-        /*! exports provided: AppModule */
+        /*! exports provided: createTranslateLoader, AppModule */
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
+            /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createTranslateLoader", function () { return createTranslateLoader; });
             /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppModule", function () { return AppModule; });
             /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
             /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
@@ -618,20 +631,26 @@
             /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
             /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
             /* harmony import */ var _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/platform-browser/animations */ "./node_modules/@angular/platform-browser/fesm2015/animations.js");
-            /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
-            /* harmony import */ var _app_routing__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./app.routing */ "./src/app/app.routing.ts");
-            /* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./services/global.service */ "./src/app/services/global.service.ts");
-            /* harmony import */ var _services_authentication_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./services/authentication.service */ "./src/app/services/authentication.service.ts");
-            /* harmony import */ var _services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./services/workflow/workflow-message.service */ "./src/app/services/workflow/workflow-message.service.ts");
-            /* harmony import */ var _components__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./_components */ "./src/app/_components/index.ts");
-            /* harmony import */ var _top_bar_top_bar_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./top-bar/top-bar.component */ "./src/app/top-bar/top-bar.component.ts");
-            /* harmony import */ var _footer_footer_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./footer/footer.component */ "./src/app/footer/footer.component.ts");
-            /* harmony import */ var _message_bar_message_bar_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./message-bar/message-bar.component */ "./src/app/message-bar/message-bar.component.ts");
-            /* harmony import */ var _home__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./home */ "./src/app/home/index.ts");
-            /* harmony import */ var _about__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./about */ "./src/app/about/index.ts");
-            /* harmony import */ var _login__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./login */ "./src/app/login/index.ts");
-            /* harmony import */ var _workflow_create_workflow_create_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./workflow-create/workflow-create.component */ "./src/app/workflow-create/workflow-create.component.ts");
-            /* harmony import */ var _workflow_list_workflow_list_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./workflow-list/workflow-list.component */ "./src/app/workflow-list/workflow-list.component.ts");
+            /* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm2015/ngx-translate-core.js");
+            /* harmony import */ var _ngx_translate_http_loader__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ngx-translate/http-loader */ "./node_modules/@ngx-translate/http-loader/fesm2015/ngx-translate-http-loader.js");
+            /* harmony import */ var angular_resizable_element__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! angular-resizable-element */ "./node_modules/angular-resizable-element/fesm2015/angular-resizable-element.js");
+            /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
+            /* harmony import */ var _app_routing__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./app.routing */ "./src/app/app.routing.ts");
+            /* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./services/global.service */ "./src/app/services/global.service.ts");
+            /* harmony import */ var _services_authentication_service__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./services/authentication.service */ "./src/app/services/authentication.service.ts");
+            /* harmony import */ var _services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./services/workflow/workflow-message.service */ "./src/app/services/workflow/workflow-message.service.ts");
+            /* harmony import */ var _components__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./_components */ "./src/app/_components/index.ts");
+            /* harmony import */ var _top_bar_top_bar_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./top-bar/top-bar.component */ "./src/app/top-bar/top-bar.component.ts");
+            /* harmony import */ var _footer_footer_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./footer/footer.component */ "./src/app/footer/footer.component.ts");
+            /* harmony import */ var _message_bar_message_bar_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./message-bar/message-bar.component */ "./src/app/message-bar/message-bar.component.ts");
+            /* harmony import */ var _home__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./home */ "./src/app/home/index.ts");
+            /* harmony import */ var _about__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./about */ "./src/app/about/index.ts");
+            /* harmony import */ var _login__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./login */ "./src/app/login/index.ts");
+            /* harmony import */ var _workflow_create_workflow_create_component__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./workflow-create/workflow-create.component */ "./src/app/workflow-create/workflow-create.component.ts");
+            /* harmony import */ var _workflow_list_workflow_list_component__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./workflow-list/workflow-list.component */ "./src/app/workflow-list/workflow-list.component.ts");
+            function createTranslateLoader(http) {
+                return new _ngx_translate_http_loader__WEBPACK_IMPORTED_MODULE_7__["TranslateHttpLoader"](http, './assets/i18n/', '.json');
+            }
             var AppModule = /** @class */ (function () {
                 function AppModule() {
                 }
@@ -643,23 +662,31 @@
                         _angular_platform_browser__WEBPACK_IMPORTED_MODULE_2__["BrowserModule"],
                         _angular_forms__WEBPACK_IMPORTED_MODULE_3__["ReactiveFormsModule"],
                         _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClientModule"],
-                        _app_routing__WEBPACK_IMPORTED_MODULE_7__["appRoutingModule"],
-                        _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_5__["BrowserAnimationsModule"]
+                        _app_routing__WEBPACK_IMPORTED_MODULE_10__["appRoutingModule"],
+                        _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_5__["BrowserAnimationsModule"],
+                        angular_resizable_element__WEBPACK_IMPORTED_MODULE_8__["ResizableModule"],
+                        _ngx_translate_core__WEBPACK_IMPORTED_MODULE_6__["TranslateModule"].forRoot({
+                            loader: {
+                                provide: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_6__["TranslateLoader"],
+                                useFactory: (createTranslateLoader),
+                                deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"]]
+                            }
+                        }),
                     ],
                     declarations: [
-                        _app_component__WEBPACK_IMPORTED_MODULE_6__["AppComponent"],
-                        _top_bar_top_bar_component__WEBPACK_IMPORTED_MODULE_12__["TopBarComponent"],
-                        _footer_footer_component__WEBPACK_IMPORTED_MODULE_13__["FooterComponent"],
-                        _components__WEBPACK_IMPORTED_MODULE_11__["AlertComponent"],
-                        _message_bar_message_bar_component__WEBPACK_IMPORTED_MODULE_14__["MessageBarComponent"],
-                        _home__WEBPACK_IMPORTED_MODULE_15__["HomeComponent"],
-                        _about__WEBPACK_IMPORTED_MODULE_16__["AboutComponent"],
-                        _login__WEBPACK_IMPORTED_MODULE_17__["LoginComponent"],
-                        _workflow_create_workflow_create_component__WEBPACK_IMPORTED_MODULE_18__["WorkflowCreateComponent"],
-                        _workflow_list_workflow_list_component__WEBPACK_IMPORTED_MODULE_19__["WorkflowListComponent"],
+                        _app_component__WEBPACK_IMPORTED_MODULE_9__["AppComponent"],
+                        _top_bar_top_bar_component__WEBPACK_IMPORTED_MODULE_15__["TopBarComponent"],
+                        _footer_footer_component__WEBPACK_IMPORTED_MODULE_16__["FooterComponent"],
+                        _components__WEBPACK_IMPORTED_MODULE_14__["AlertComponent"],
+                        _message_bar_message_bar_component__WEBPACK_IMPORTED_MODULE_17__["MessageBarComponent"],
+                        _home__WEBPACK_IMPORTED_MODULE_18__["HomeComponent"],
+                        _about__WEBPACK_IMPORTED_MODULE_19__["AboutComponent"],
+                        _login__WEBPACK_IMPORTED_MODULE_20__["LoginComponent"],
+                        _workflow_create_workflow_create_component__WEBPACK_IMPORTED_MODULE_21__["WorkflowCreateComponent"],
+                        _workflow_list_workflow_list_component__WEBPACK_IMPORTED_MODULE_22__["WorkflowListComponent"],
                     ],
-                    providers: [_services_global_service__WEBPACK_IMPORTED_MODULE_8__["GlobalService"], _services_authentication_service__WEBPACK_IMPORTED_MODULE_9__["AuthenticationService"], _services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_10__["WorkflowMessageService"]],
-                    bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_6__["AppComponent"]]
+                    providers: [_services_global_service__WEBPACK_IMPORTED_MODULE_11__["GlobalService"], _services_authentication_service__WEBPACK_IMPORTED_MODULE_12__["AuthenticationService"], _services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_13__["WorkflowMessageService"]],
+                    bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_9__["AppComponent"]]
                 })
             ], AppModule);
             /*
@@ -720,13 +747,19 @@
             /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FooterComponent", function () { return FooterComponent; });
             /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
             /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+            /* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm2015/ngx-translate-core.js");
             var FooterComponent = /** @class */ (function () {
-                function FooterComponent() {
+                function FooterComponent(translate) {
+                    translate.setDefaultLang('de');
+                    translate.use('de');
                 }
                 FooterComponent.prototype.ngOnInit = function () {
                 };
                 return FooterComponent;
             }());
+            FooterComponent.ctorParameters = function () { return [
+                { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_2__["TranslateService"] }
+            ]; };
             FooterComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
                 Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
                     selector: 'app-footer',
@@ -855,22 +888,23 @@
             /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
             /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
             /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
-            /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+            /* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm2015/ngx-translate-core.js");
             /* harmony import */ var _ui_models__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../ui-models */ "./src/app/ui-models/index.ts");
             /* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../services/global.service */ "./src/app/services/global.service.ts");
             /* harmony import */ var _services__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../services */ "./src/app/services/index.ts");
             var LoginComponent = /** @class */ (function () {
-                function LoginComponent(formBuilder, route, router, http, autService, global) {
+                function LoginComponent(formBuilder, route, router, autService, global, translate) {
                     this.formBuilder = formBuilder;
                     this.route = route;
                     this.router = router;
-                    this.http = http;
                     this.autService = autService;
                     this.global = global;
                     this.loading = false;
                     this.submitted = false;
                     this.failedLogin = false;
                     this.loginResponse = new _ui_models__WEBPACK_IMPORTED_MODULE_5__["LoginResponse"];
+                    translate.setDefaultLang('de');
+                    translate.use('de');
                 }
                 LoginComponent.prototype.ngOnInit = function () {
                     this.loginForm = this.formBuilder.group({
@@ -920,9 +954,9 @@
                 { type: _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormBuilder"] },
                 { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"] },
                 { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] },
-                { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"] },
                 { type: _services__WEBPACK_IMPORTED_MODULE_7__["AuthenticationService"] },
-                { type: _services_global_service__WEBPACK_IMPORTED_MODULE_6__["GlobalService"] }
+                { type: _services_global_service__WEBPACK_IMPORTED_MODULE_6__["GlobalService"] },
+                { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_4__["TranslateService"] }
             ]; };
             LoginComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
                 Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({ template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./login.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/login/login.component.html")).default })
@@ -962,8 +996,23 @@
                     this.messages = [];
                     this.messageSearchInterval = 60000;
                     this.messageReloadTimeoutId = 0;
+                    this.messagePanelHeight = 170;
+                    this.messagePanelShowed = true;
                     this._isLogged = false;
                 }
+                MessageBarComponent.prototype.closeMessages = function () {
+                    //$('#message-panel-container').height(25);
+                    document.getElementById("message-panel-container").style.height = "25px";
+                    this.messagePanelShowed = false;
+                };
+                ;
+                MessageBarComponent.prototype.showMessages = function () {
+                    //$('#message-panel-container').height(this.messagePanelHeight);
+                    //alert("show pabel");
+                    document.getElementById("message-panel-container").style.height = this.messagePanelHeight + "px";
+                    this.messagePanelShowed = true;
+                };
+                ;
                 Object.defineProperty(MessageBarComponent.prototype, "isLogged", {
                     set: function (value) {
                         //console.log("change isLogged inside comp. this: " + this._isLogged + ",   app: " + value); 	    
@@ -988,6 +1037,11 @@
                 };
                 MessageBarComponent.prototype.ngOnDestroy = function () {
                     //this.messageService.workflowMessageListSubject.unsubscribe();
+                };
+                MessageBarComponent.prototype.onResizeEnd = function (event) {
+                    this.messagePanelHeight = event.rectangle.height;
+                    document.getElementById("message-panel-container").style.height = this.messagePanelHeight + "px";
+                    //alert(this.messagePanelHeight);
                 };
                 MessageBarComponent.prototype.reloadMessages = function (reset) {
                     clearTimeout(this.messageReloadTimeoutId);
