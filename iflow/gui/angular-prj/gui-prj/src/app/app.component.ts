@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 
-import { GlobalService } from './helper/global.service';
+import { GlobalService } from './services/global.service';
 import { AuthenticationService } from './services';
 import { User, MenuItem } from './ui-models';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: [ './app.component.css' ]
+  styleUrls: [ './app.component.css' ],
+providers: [ GlobalService ]
 })
-export class AppComponent implements OnInit  {
+export class AppComponent implements OnInit, OnDestroy  {
 	
 	appMenus: MenuItem[] = [];
 	appCurrentUser: User = null;
@@ -21,38 +22,12 @@ export class AppComponent implements OnInit  {
 		private autService: AuthenticationService,
 		private global: GlobalService,
 	) {
- 		this.global.currentSessionDataSubject.subscribe(
-  				x => {
-  					if(x != null){
-  			  			this.appMenus = x.app.menus;
-  			  			this.appCurrentUser = x.user.currentUser;
-  			  			this.appIsLogged = x.isLogged;  						
-  					}
-  					else{
-  						this.appMenus = [];
-  			  			this.appCurrentUser = null;
-  			  			this.appIsLogged = false;
-  					}
-		  		},
-		  		error => {
-		  			this.appMenus = [];
-		  			this.appCurrentUser = null;
-		  			this.appIsLogged = false;
-		  		},
-		  		() => {
-		  			if(this.appIsLogged === false){
-		  				this.appMenus = [];
-			  			this.appCurrentUser = null;
-			  			this.appIsLogged = false;
-		  			}
-		  		},
-  		);
-
- 		this.router.routeReuseStrategy.shouldReuseRoute = function(){
+		
+		this.router.routeReuseStrategy.shouldReuseRoute = function(){
  	        return false;
- 	     }
+		}
 
- 	     this.router.events.subscribe((evt) => {
+		this.router.events.subscribe((evt) => {
  	        if (evt instanceof NavigationEnd) {
  	           // trick the Router into believing it's last link wasn't previously loaded
  	           this.router.navigated = false;
@@ -61,23 +36,39 @@ export class AppComponent implements OnInit  {
  	 			this.appMenus = this.global.currentSessionDataValue.app.menus;
  	 	  		this.appCurrentUser = this.global.currentSessionDataValue.user.currentUser;
  	 	  		this.appIsLogged = this.global.currentSessionDataValue.isLogged; 
- 	 	  		
+ 	 	  		console.log("set gloabl-data from app-comp. appIsLogged: " + this.appIsLogged);
 	 	 	  }
  	          else{
 				this.appMenus = [];
 				this.appCurrentUser = null;
 				this.appIsLogged = false;
  	          }
- 	          
+ 	         //alert("app-comp globaldata navigate. menus:" + this.appMenus.length);
  	        }
- 	    });
+		});
  	     
 	}
 	
 	ngOnInit() {
+		if(this.global.currentSessionDataValue && this.global.currentSessionDataValue.isLogged){
+			this.appMenus = this.global.currentSessionDataValue.app.menus;
+	  		this.appCurrentUser = this.global.currentSessionDataValue.user.currentUser;
+	  		this.appIsLogged = this.global.currentSessionDataValue.isLogged; 
+	  		console.log("set gloabl-data from app-comp. appIsLogged: " + this.appIsLogged);
+		}
+		else{
+			this.appMenus = [];
+			this.appCurrentUser = null;
+			this.appIsLogged = false;
+		}
 		
 	
 	}
+	
+	ngOnDestroy() {
+		//this.global.currentSessionDataSubject.unsubscribe();
+	}
+	
 	
 	onLoggingOut(data: boolean) {
 		this.autService.logout();

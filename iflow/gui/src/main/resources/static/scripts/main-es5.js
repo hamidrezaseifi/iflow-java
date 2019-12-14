@@ -94,7 +94,7 @@
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("<div resizable=\"\" r-directions=\"['top']\" class=\"message-panel-container\" id=\"message-panel-container\" *ngIf=\"isLogged\">\n\t<div class=\"message-panel-toolbar\">\n\t\t<span class=\"title\">Meldungen</span>\n\t\t<button class=\"toolbar-button\" ng-if=\"messagePanelShowed\" ng-click=\"closeMessages();\"><i class=\"material-icons\">keyboard_arrow_down</i></button>\n\t\t<button class=\"toolbar-button\" ng-if=\"messagePanelShowed == false\" ng-click=\"showMessages();\"><i class=\"material-icons\">keyboard_arrow_up</i></button>\n\t\t<button class=\"toolbar-button\" ng-if=\"messagePanelShowed\" ng-click=\"reloadMessages(true);\"><i class=\"material-icons\">refresh</i></button>\n\t\n\t</div>\n\t<div class=\"message-panel-items-container\">\n\t\t<div class=\"message-panel-item\" *ngFor=\"let message of messages;\">\n\t\t\t<a href=\"javascript:void(0);\" (click)=\"showWorkflowView(message.workflowId)\">\n\t\t\t\t<div>{{message.message}} ({{message.workflow.workflowType.title}}) ({{message.createdAtString}}) ({{message.remainingDays}}) ({{message.status}})</div>\n\t\t\t</a>\n\t\t</div>\n\t</div>\n\t\t\t\t\t\n</div>");
+            /* harmony default export */ __webpack_exports__["default"] = ("<div resizable=\"\" r-directions=\"['top']\" class=\"message-panel-container\" id=\"message-panel-container\" *ngIf=\"isAppLogged\">\n\t<div class=\"message-panel-toolbar\">\n\t\t<span class=\"title\">Meldungen</span>\n\t\t<button class=\"toolbar-button\" *ngIf=\"messagePanelShowed\" (click)=\"closeMessages();\"><i class=\"material-icons\">keyboard_arrow_down</i></button>\n\t\t<button class=\"toolbar-button\" *ngIf=\"messagePanelShowed == false\" (click)=\"showMessages();\"><i class=\"material-icons\">keyboard_arrow_up</i></button>\n\t\t<button class=\"toolbar-button\" *ngIf=\"messagePanelShowed\" (click)=\"reloadMessages(true);\"><i class=\"material-icons\">refresh</i></button>\n\t\n\t</div>\n\t<div class=\"message-panel-items-container\">\n\t\t<div class=\"message-panel-item\" *ngFor=\"let message of messages;\">\n\t\t\t<a href=\"javascript:void(0);\" (click)=\"showWorkflowView(message.workflowId)\">\n\t\t\t\t<div>{{message.message}} ({{message.workflow.workflowType.title}}) ({{message.createdAtString}}) ({{message.remainingDays}}) ({{message.status}})</div>\n\t\t\t</a>\n\t\t</div>\n\t</div>\n\t\t\t\t\t\n</div>");
             /***/ 
         }),
         /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/top-bar/top-bar.component.html": 
@@ -527,7 +527,7 @@
             /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
             /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
             /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
-            /* harmony import */ var _helper_global_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./helper/global.service */ "./src/app/helper/global.service.ts");
+            /* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./services/global.service */ "./src/app/services/global.service.ts");
             /* harmony import */ var _services__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./services */ "./src/app/services/index.ts");
             var AppComponent = /** @class */ (function () {
                 function AppComponent(router, autService, global) {
@@ -538,28 +538,6 @@
                     this.appMenus = [];
                     this.appCurrentUser = null;
                     this.appIsLogged = false;
-                    this.global.currentSessionDataSubject.subscribe(function (x) {
-                        if (x != null) {
-                            _this.appMenus = x.app.menus;
-                            _this.appCurrentUser = x.user.currentUser;
-                            _this.appIsLogged = x.isLogged;
-                        }
-                        else {
-                            _this.appMenus = [];
-                            _this.appCurrentUser = null;
-                            _this.appIsLogged = false;
-                        }
-                    }, function (error) {
-                        _this.appMenus = [];
-                        _this.appCurrentUser = null;
-                        _this.appIsLogged = false;
-                    }, function () {
-                        if (_this.appIsLogged === false) {
-                            _this.appMenus = [];
-                            _this.appCurrentUser = null;
-                            _this.appIsLogged = false;
-                        }
-                    });
                     this.router.routeReuseStrategy.shouldReuseRoute = function () {
                         return false;
                     };
@@ -571,16 +549,32 @@
                                 _this.appMenus = _this.global.currentSessionDataValue.app.menus;
                                 _this.appCurrentUser = _this.global.currentSessionDataValue.user.currentUser;
                                 _this.appIsLogged = _this.global.currentSessionDataValue.isLogged;
+                                console.log("set gloabl-data from app-comp. appIsLogged: " + _this.appIsLogged);
                             }
                             else {
                                 _this.appMenus = [];
                                 _this.appCurrentUser = null;
                                 _this.appIsLogged = false;
                             }
+                            //alert("app-comp globaldata navigate. menus:" + this.appMenus.length);
                         }
                     });
                 }
                 AppComponent.prototype.ngOnInit = function () {
+                    if (this.global.currentSessionDataValue && this.global.currentSessionDataValue.isLogged) {
+                        this.appMenus = this.global.currentSessionDataValue.app.menus;
+                        this.appCurrentUser = this.global.currentSessionDataValue.user.currentUser;
+                        this.appIsLogged = this.global.currentSessionDataValue.isLogged;
+                        console.log("set gloabl-data from app-comp. appIsLogged: " + this.appIsLogged);
+                    }
+                    else {
+                        this.appMenus = [];
+                        this.appCurrentUser = null;
+                        this.appIsLogged = false;
+                    }
+                };
+                AppComponent.prototype.ngOnDestroy = function () {
+                    //this.global.currentSessionDataSubject.unsubscribe();
                 };
                 AppComponent.prototype.onLoggingOut = function (data) {
                     this.autService.logout();
@@ -592,12 +586,13 @@
             AppComponent.ctorParameters = function () { return [
                 { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] },
                 { type: _services__WEBPACK_IMPORTED_MODULE_4__["AuthenticationService"] },
-                { type: _helper_global_service__WEBPACK_IMPORTED_MODULE_3__["GlobalService"] }
+                { type: _services_global_service__WEBPACK_IMPORTED_MODULE_3__["GlobalService"] }
             ]; };
             AppComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
                 Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
                     selector: 'app-root',
                     template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./app.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/app.component.html")).default,
+                    providers: [_services_global_service__WEBPACK_IMPORTED_MODULE_3__["GlobalService"]],
                     styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./app.component.css */ "./src/app/app.component.css")).default]
                 })
             ], AppComponent);
@@ -625,17 +620,18 @@
             /* harmony import */ var _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/platform-browser/animations */ "./node_modules/@angular/platform-browser/fesm2015/animations.js");
             /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
             /* harmony import */ var _app_routing__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./app.routing */ "./src/app/app.routing.ts");
-            /* harmony import */ var _helper_global_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./helper/global.service */ "./src/app/helper/global.service.ts");
+            /* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./services/global.service */ "./src/app/services/global.service.ts");
             /* harmony import */ var _services_authentication_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./services/authentication.service */ "./src/app/services/authentication.service.ts");
-            /* harmony import */ var _components__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./_components */ "./src/app/_components/index.ts");
-            /* harmony import */ var _top_bar_top_bar_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./top-bar/top-bar.component */ "./src/app/top-bar/top-bar.component.ts");
-            /* harmony import */ var _footer_footer_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./footer/footer.component */ "./src/app/footer/footer.component.ts");
-            /* harmony import */ var _message_bar_message_bar_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./message-bar/message-bar.component */ "./src/app/message-bar/message-bar.component.ts");
-            /* harmony import */ var _home__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./home */ "./src/app/home/index.ts");
-            /* harmony import */ var _about__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./about */ "./src/app/about/index.ts");
-            /* harmony import */ var _login__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./login */ "./src/app/login/index.ts");
-            /* harmony import */ var _workflow_create_workflow_create_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./workflow-create/workflow-create.component */ "./src/app/workflow-create/workflow-create.component.ts");
-            /* harmony import */ var _workflow_list_workflow_list_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./workflow-list/workflow-list.component */ "./src/app/workflow-list/workflow-list.component.ts");
+            /* harmony import */ var _services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./services/workflow/workflow-message.service */ "./src/app/services/workflow/workflow-message.service.ts");
+            /* harmony import */ var _components__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./_components */ "./src/app/_components/index.ts");
+            /* harmony import */ var _top_bar_top_bar_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./top-bar/top-bar.component */ "./src/app/top-bar/top-bar.component.ts");
+            /* harmony import */ var _footer_footer_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./footer/footer.component */ "./src/app/footer/footer.component.ts");
+            /* harmony import */ var _message_bar_message_bar_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./message-bar/message-bar.component */ "./src/app/message-bar/message-bar.component.ts");
+            /* harmony import */ var _home__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./home */ "./src/app/home/index.ts");
+            /* harmony import */ var _about__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./about */ "./src/app/about/index.ts");
+            /* harmony import */ var _login__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./login */ "./src/app/login/index.ts");
+            /* harmony import */ var _workflow_create_workflow_create_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./workflow-create/workflow-create.component */ "./src/app/workflow-create/workflow-create.component.ts");
+            /* harmony import */ var _workflow_list_workflow_list_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./workflow-list/workflow-list.component */ "./src/app/workflow-list/workflow-list.component.ts");
             var AppModule = /** @class */ (function () {
                 function AppModule() {
                 }
@@ -652,17 +648,17 @@
                     ],
                     declarations: [
                         _app_component__WEBPACK_IMPORTED_MODULE_6__["AppComponent"],
-                        _top_bar_top_bar_component__WEBPACK_IMPORTED_MODULE_11__["TopBarComponent"],
-                        _footer_footer_component__WEBPACK_IMPORTED_MODULE_12__["FooterComponent"],
-                        _components__WEBPACK_IMPORTED_MODULE_10__["AlertComponent"],
-                        _message_bar_message_bar_component__WEBPACK_IMPORTED_MODULE_13__["MessageBarComponent"],
-                        _home__WEBPACK_IMPORTED_MODULE_14__["HomeComponent"],
-                        _about__WEBPACK_IMPORTED_MODULE_15__["AboutComponent"],
-                        _login__WEBPACK_IMPORTED_MODULE_16__["LoginComponent"],
-                        _workflow_create_workflow_create_component__WEBPACK_IMPORTED_MODULE_17__["WorkflowCreateComponent"],
-                        _workflow_list_workflow_list_component__WEBPACK_IMPORTED_MODULE_18__["WorkflowListComponent"],
+                        _top_bar_top_bar_component__WEBPACK_IMPORTED_MODULE_12__["TopBarComponent"],
+                        _footer_footer_component__WEBPACK_IMPORTED_MODULE_13__["FooterComponent"],
+                        _components__WEBPACK_IMPORTED_MODULE_11__["AlertComponent"],
+                        _message_bar_message_bar_component__WEBPACK_IMPORTED_MODULE_14__["MessageBarComponent"],
+                        _home__WEBPACK_IMPORTED_MODULE_15__["HomeComponent"],
+                        _about__WEBPACK_IMPORTED_MODULE_16__["AboutComponent"],
+                        _login__WEBPACK_IMPORTED_MODULE_17__["LoginComponent"],
+                        _workflow_create_workflow_create_component__WEBPACK_IMPORTED_MODULE_18__["WorkflowCreateComponent"],
+                        _workflow_list_workflow_list_component__WEBPACK_IMPORTED_MODULE_19__["WorkflowListComponent"],
                     ],
-                    providers: [_helper_global_service__WEBPACK_IMPORTED_MODULE_8__["GlobalService"], _services_authentication_service__WEBPACK_IMPORTED_MODULE_9__["AuthenticationService"]],
+                    providers: [_services_global_service__WEBPACK_IMPORTED_MODULE_8__["GlobalService"], _services_authentication_service__WEBPACK_IMPORTED_MODULE_9__["AuthenticationService"], _services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_10__["WorkflowMessageService"]],
                     bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_6__["AppComponent"]]
                 })
             ], AppModule);
@@ -784,79 +780,17 @@
             ], AuthGuard);
             /***/ 
         }),
-        /***/ "./src/app/helper/global.service.ts": 
-        /*!******************************************!*\
-          !*** ./src/app/helper/global.service.ts ***!
-          \******************************************/
-        /*! exports provided: GlobalService */
-        /***/ (function (module, __webpack_exports__, __webpack_require__) {
-            "use strict";
-            __webpack_require__.r(__webpack_exports__);
-            /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GlobalService", function () { return GlobalService; });
-            /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-            /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-            /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
-            /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
-            var GlobalService = /** @class */ (function () {
-                function GlobalService(http) {
-                    this.http = http;
-                    this.currentSessionDataSubject = new rxjs__WEBPACK_IMPORTED_MODULE_3__["BehaviorSubject"](JSON.parse(localStorage.getItem('currentSessionData')));
-                    this.currentSessionDataObs = this.currentSessionDataSubject.asObservable();
-                }
-                Object.defineProperty(GlobalService.prototype, "currentSessionDataValue", {
-                    get: function () {
-                        return this.currentSessionDataSubject.value;
-                    },
-                    enumerable: true,
-                    configurable: true
-                });
-                GlobalService.prototype.loadAllSetting = function (login) {
-                    var _this = this;
-                    this.http.get("/general/data/generaldatat").subscribe(function (val) {
-                        console.log("GET call successful generaldata", val);
-                        //alert("GET call generaldata");
-                        var generalData = val;
-                        localStorage.setItem('currentSessionData', JSON.stringify(generalData));
-                        _this.currentSessionDataSubject.next(generalData);
-                    }, function (response) {
-                        console.log("Error in read menu list", response);
-                        //alert("Error in read menu list: "+ response);
-                    }, function () {
-                        if (login != null) {
-                            login.finishGeneralDataLoading();
-                        }
-                        //alert("Finish call successful generaldata");
-                        _this.currentSessionDataSubject.complete();
-                    });
-                };
-                GlobalService.prototype.clear = function () {
-                    localStorage.removeItem('currentSessionData');
-                    this.currentSessionDataSubject.next(null);
-                    this.currentSessionDataSubject.complete();
-                };
-                return GlobalService;
-            }());
-            GlobalService.ctorParameters = function () { return [
-                { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] }
-            ]; };
-            GlobalService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-                Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({ providedIn: 'root' })
-            ], GlobalService);
-            /***/ 
-        }),
         /***/ "./src/app/helper/index.ts": 
         /*!*********************************!*\
           !*** ./src/app/helper/index.ts ***!
           \*********************************/
-        /*! exports provided: GlobalService, AuthGuard */
+        /*! exports provided: AuthGuard */
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
             /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
             /* harmony import */ var _auth_guard__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./auth.guard */ "./src/app/helper/auth.guard.ts");
             /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AuthGuard", function () { return _auth_guard__WEBPACK_IMPORTED_MODULE_1__["AuthGuard"]; });
-            /* harmony import */ var _global_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./global.service */ "./src/app/helper/global.service.ts");
-            /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "GlobalService", function () { return _global_service__WEBPACK_IMPORTED_MODULE_2__["GlobalService"]; });
             /***/ 
         }),
         /***/ "./src/app/home/home.component.ts": 
@@ -923,7 +857,7 @@
             /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
             /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
             /* harmony import */ var _ui_models__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../ui-models */ "./src/app/ui-models/index.ts");
-            /* harmony import */ var _helper_global_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../helper/global.service */ "./src/app/helper/global.service.ts");
+            /* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../services/global.service */ "./src/app/services/global.service.ts");
             /* harmony import */ var _services__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../services */ "./src/app/services/index.ts");
             var LoginComponent = /** @class */ (function () {
                 function LoginComponent(formBuilder, route, router, http, autService, global) {
@@ -988,7 +922,7 @@
                 { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] },
                 { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"] },
                 { type: _services__WEBPACK_IMPORTED_MODULE_7__["AuthenticationService"] },
-                { type: _helper_global_service__WEBPACK_IMPORTED_MODULE_6__["GlobalService"] }
+                { type: _services_global_service__WEBPACK_IMPORTED_MODULE_6__["GlobalService"] }
             ]; };
             LoginComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
                 Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({ template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./login.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/login/login.component.html")).default })
@@ -1017,33 +951,93 @@
             /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MessageBarComponent", function () { return MessageBarComponent; });
             /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
             /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-            /* harmony import */ var _helper_global_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../helper/global.service */ "./src/app/helper/global.service.ts");
-            /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+            /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+            /* harmony import */ var _services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/workflow/workflow-message.service */ "./src/app/services/workflow/workflow-message.service.ts");
+            /* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../services/global.service */ "./src/app/services/global.service.ts");
             var MessageBarComponent = /** @class */ (function () {
-                function MessageBarComponent(router) {
+                //@Input('isLogged') isLogged: boolean;
+                function MessageBarComponent(router, messageService, global) {
                     this.router = router;
+                    this.messageService = messageService;
+                    this.global = global;
                     this.messages = [];
+                    this.messageSearchInterval = 6000;
+                    this.messageReloadTimeoutId = 0;
+                    this._isLogged = false;
                 }
+                Object.defineProperty(MessageBarComponent.prototype, "isLogged", {
+                    set: function (value) {
+                        console.log("change isLogged inside comp. this: " + this._isLogged + ",   app: " + value);
+                        this._isLogged = value === 'true';
+                        this.reloadMessages(true);
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
+                Object.defineProperty(MessageBarComponent.prototype, "isAppLogged", {
+                    get: function () {
+                        return this._isLogged;
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
                 MessageBarComponent.prototype.ngOnInit = function () {
+                    if (this._isLogged == true) {
+                        console.log("start read message list from comp.");
+                        this.reloadMessages(true);
+                    }
+                };
+                MessageBarComponent.prototype.ngOnDestroy = function () {
+                    //this.messageService.workflowMessageListSubject.unsubscribe();
+                };
+                MessageBarComponent.prototype.reloadMessages = function (reset) {
+                    clearTimeout(this.messageReloadTimeoutId);
+                    console.log("start reloadMessages.  _isLogged:" + (this._isLogged === true));
+                    if (this._isLogged === true) {
+                        this.subscribeService();
+                        this.messageService.loadMessages(reset);
+                    }
                 };
                 MessageBarComponent.prototype.showWorkflowView = function (id) {
+                };
+                MessageBarComponent.prototype.subscribeService = function () {
+                    var _this = this;
+                    this.messageService.workflowMessageListSubject.subscribe(function (x) {
+                        if (x != null) {
+                            _this.messages = x;
+                        }
+                        else {
+                            _this.messages = [];
+                        }
+                        //alert("app-comp globaldata change. menus:" + this.appMenus.length);
+                    }, function (error) {
+                        _this.messages = [];
+                    }, function () {
+                        //this.messageService.workflowMessageListSubject.unsubscribe();
+                        console.log("Compelete read message list from comp. start next timeout");
+                        _this.messageReloadTimeoutId = setTimeout(function () {
+                            _this.reloadMessages(false);
+                        }, _this.messageSearchInterval);
+                    });
                 };
                 return MessageBarComponent;
             }());
             MessageBarComponent.ctorParameters = function () { return [
-                { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"] }
+                { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] },
+                { type: _services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_3__["WorkflowMessageService"] },
+                { type: _services_global_service__WEBPACK_IMPORTED_MODULE_4__["GlobalService"] }
             ]; };
             tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
                 Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])('currentUser')
             ], MessageBarComponent.prototype, "currentUser", void 0);
             tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
                 Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])('isLogged')
-            ], MessageBarComponent.prototype, "isLogged", void 0);
+            ], MessageBarComponent.prototype, "isLogged", null);
             MessageBarComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
                 Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
                     selector: 'app-message-bar',
                     template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./message-bar.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/message-bar/message-bar.component.html")).default,
-                    providers: [_helper_global_service__WEBPACK_IMPORTED_MODULE_2__["GlobalService"]],
+                    providers: [_services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_3__["WorkflowMessageService"]],
                     styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./message-bar.component.css */ "./src/app/message-bar/message-bar.component.css")).default]
                 })
             ], MessageBarComponent);
@@ -1096,7 +1090,7 @@
             /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
             /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
             /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
-            /* harmony import */ var _helper_global_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../helper/global.service */ "./src/app/helper/global.service.ts");
+            /* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../services/global.service */ "./src/app/services/global.service.ts");
             var AuthenticationService = /** @class */ (function () {
                 function AuthenticationService(http, global) {
                     this.http = http;
@@ -1153,18 +1147,78 @@
             }());
             AuthenticationService.ctorParameters = function () { return [
                 { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"] },
-                { type: _helper_global_service__WEBPACK_IMPORTED_MODULE_4__["GlobalService"] }
+                { type: _services_global_service__WEBPACK_IMPORTED_MODULE_4__["GlobalService"] }
             ]; };
             AuthenticationService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
                 Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({ providedIn: 'root' })
             ], AuthenticationService);
             /***/ 
         }),
+        /***/ "./src/app/services/global.service.ts": 
+        /*!********************************************!*\
+          !*** ./src/app/services/global.service.ts ***!
+          \********************************************/
+        /*! exports provided: GlobalService */
+        /***/ (function (module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            __webpack_require__.r(__webpack_exports__);
+            /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GlobalService", function () { return GlobalService; });
+            /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+            /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+            /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+            /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+            var GlobalService = /** @class */ (function () {
+                function GlobalService(http) {
+                    this.http = http;
+                    this.currentSessionDataSubject = new rxjs__WEBPACK_IMPORTED_MODULE_3__["BehaviorSubject"](JSON.parse(localStorage.getItem('currentSessionData')));
+                    this.currentSessionDataObs = this.currentSessionDataSubject.asObservable();
+                }
+                Object.defineProperty(GlobalService.prototype, "currentSessionDataValue", {
+                    get: function () {
+                        return this.currentSessionDataSubject.value;
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
+                GlobalService.prototype.loadAllSetting = function (login) {
+                    var _this = this;
+                    this.http.get("/general/data/generaldatat").subscribe(function (val) {
+                        console.log("GET call successful generaldata", val);
+                        //alert("GET call generaldata");
+                        var generalData = val;
+                        localStorage.setItem('currentSessionData', JSON.stringify(generalData));
+                        _this.currentSessionDataSubject.next(generalData);
+                    }, function (response) {
+                        console.log("Error in read menu list", response);
+                        //alert("Error in read menu list: "+ response);
+                    }, function () {
+                        if (login != null) {
+                            login.finishGeneralDataLoading();
+                        }
+                        //alert("Finish call successful generaldata");
+                        _this.currentSessionDataSubject.complete();
+                    });
+                };
+                GlobalService.prototype.clear = function () {
+                    localStorage.removeItem('currentSessionData');
+                    this.currentSessionDataSubject.next(null);
+                    this.currentSessionDataSubject.complete();
+                };
+                return GlobalService;
+            }());
+            GlobalService.ctorParameters = function () { return [
+                { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] }
+            ]; };
+            GlobalService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+                Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({ providedIn: 'root' })
+            ], GlobalService);
+            /***/ 
+        }),
         /***/ "./src/app/services/index.ts": 
         /*!***********************************!*\
           !*** ./src/app/services/index.ts ***!
           \***********************************/
-        /*! exports provided: AuthenticationService, UserService */
+        /*! exports provided: GlobalService, AuthenticationService, UserService */
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
@@ -1173,6 +1227,8 @@
             /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AuthenticationService", function () { return _authentication_service__WEBPACK_IMPORTED_MODULE_1__["AuthenticationService"]; });
             /* harmony import */ var _user_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./user.service */ "./src/app/services/user.service.ts");
             /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "UserService", function () { return _user_service__WEBPACK_IMPORTED_MODULE_2__["UserService"]; });
+            /* harmony import */ var _global_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./global.service */ "./src/app/services/global.service.ts");
+            /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "GlobalService", function () { return _global_service__WEBPACK_IMPORTED_MODULE_3__["GlobalService"]; });
             /***/ 
         }),
         /***/ "./src/app/services/user.service.ts": 
@@ -1210,6 +1266,74 @@
             ], UserService);
             /***/ 
         }),
+        /***/ "./src/app/services/workflow/workflow-message.service.ts": 
+        /*!***************************************************************!*\
+          !*** ./src/app/services/workflow/workflow-message.service.ts ***!
+          \***************************************************************/
+        /*! exports provided: WorkflowMessageService */
+        /***/ (function (module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            __webpack_require__.r(__webpack_exports__);
+            /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WorkflowMessageService", function () { return WorkflowMessageService; });
+            /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+            /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+            /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+            /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+            var WorkflowMessageService = /** @class */ (function () {
+                function WorkflowMessageService(http) {
+                    this.http = http;
+                    this.loadMessageUrl = "/general/data/workflowmessages";
+                    this.assignWorkflowUrl = "/workflow/data/assignworkflow/";
+                    this.workflowMessageListSubject = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"]([]);
+                }
+                Object.defineProperty(WorkflowMessageService.prototype, "workflowMessageList", {
+                    get: function () {
+                        return this.workflowMessageListSubject.value;
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
+                WorkflowMessageService.prototype.loadMessages = function (resetCach) {
+                    var _this = this;
+                    var url = this.loadMessageUrl + "?reset=" + (resetCach ? "1" : "0");
+                    var httpOptions = {
+                        headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpHeaders"]({
+                            'Content-Type': 'application/json; charset=UTF-8'
+                        })
+                    };
+                    this.http.post(url, new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpParams"](), httpOptions).subscribe(function (val) {
+                        console.log("Read message list", val);
+                        var messageList = val;
+                        messageList = _this.buildMessageList(messageList);
+                        _this.workflowMessageListSubject.next(messageList);
+                    }, function (response) {
+                        console.log("Error in read message list", response);
+                        _this.workflowMessageListSubject.next([]);
+                    }, function () {
+                        console.log("Compelete read message list ");
+                        _this.workflowMessageListSubject.complete();
+                    });
+                };
+                WorkflowMessageService.prototype.buildMessageList = function (messages) {
+                    var messageList = [];
+                    for (var index in messages) {
+                        var message = messages[index];
+                        messageList.push(message);
+                    }
+                    return messageList;
+                };
+                return WorkflowMessageService;
+            }());
+            WorkflowMessageService.ctorParameters = function () { return [
+                { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"] }
+            ]; };
+            WorkflowMessageService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+                Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+                    providedIn: 'root'
+                })
+            ], WorkflowMessageService);
+            /***/ 
+        }),
         /***/ "./src/app/top-bar/top-bar.component.css": 
         /*!***********************************************!*\
           !*** ./src/app/top-bar/top-bar.component.css ***!
@@ -1233,29 +1357,20 @@
             /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
             /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
             /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
-            /* harmony import */ var _helper_global_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../helper/global.service */ "./src/app/helper/global.service.ts");
-            /* harmony import */ var _services__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../services */ "./src/app/services/index.ts");
             var TopBarComponent = /** @class */ (function () {
-                function TopBarComponent(router, autService, global) {
+                function TopBarComponent(router) {
                     this.router = router;
-                    this.autService = autService;
-                    this.global = global;
                     this.loggingOut = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
                 }
                 TopBarComponent.prototype.ngOnInit = function () {
                 };
                 TopBarComponent.prototype.logout = function () {
                     this.loggingOut.emit(true);
-                    //this.autService.logout();
-                    //this.global.clear();
-                    //this.router.navigate(['/auth/login']);
                 };
                 return TopBarComponent;
             }());
             TopBarComponent.ctorParameters = function () { return [
-                { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] },
-                { type: _services__WEBPACK_IMPORTED_MODULE_4__["AuthenticationService"] },
-                { type: _helper_global_service__WEBPACK_IMPORTED_MODULE_3__["GlobalService"] }
+                { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] }
             ]; };
             tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
                 Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])('menus')
@@ -1273,7 +1388,6 @@
                 Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
                     selector: 'app-top-bar',
                     template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./top-bar.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/top-bar/top-bar.component.html")).default,
-                    providers: [_helper_global_service__WEBPACK_IMPORTED_MODULE_3__["GlobalService"]],
                     styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./top-bar.component.css */ "./src/app/top-bar/top-bar.component.css")).default]
                 })
             ], TopBarComponent);

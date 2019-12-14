@@ -9,7 +9,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 
 import { User, LoginResponse } from '../ui-models';
-import { GlobalService } from '../helper/global.service';
+import { GlobalService } from '../services/global.service';
 import { ILoginComponent } from '../_components';
 import { AuthenticationService } from '../services';
 

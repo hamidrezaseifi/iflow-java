@@ -46,7 +46,7 @@ export class GlobalService {
 		            this.currentSessionDataSubject.complete();
 		        }
 		    );
-  }
+	}
   
 	clear(){
 		localStorage.removeItem('currentSessionData');

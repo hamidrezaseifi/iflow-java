@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { GlobalService } from '../helper/global.service';
 import { AuthenticationService } from '../services';
 import { User, MenuItem } from '../ui-models';
 
@@ -10,7 +9,6 @@ import { User, MenuItem } from '../ui-models';
   selector: 'app-top-bar',
   templateUrl: './top-bar.component.html',
   styleUrls: ['./top-bar.component.css'],
-  providers: [ GlobalService ]
 })
 export class TopBarComponent implements OnInit {
   
@@ -22,8 +20,6 @@ export class TopBarComponent implements OnInit {
 
 	constructor(
 		    private router: Router,
-			private autService: AuthenticationService,
-			private global: GlobalService,
 		) { 
   		
  	}
@@ -36,8 +32,5 @@ export class TopBarComponent implements OnInit {
 	logout(){
 		this.loggingOut.emit(true);
 		
-		//this.autService.logout();
-		//this.global.clear();
-		//this.router.navigate(['/auth/login']);
 	}		
 }
