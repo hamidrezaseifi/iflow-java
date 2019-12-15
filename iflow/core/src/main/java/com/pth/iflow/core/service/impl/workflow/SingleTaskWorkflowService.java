@@ -36,6 +36,7 @@ public class SingleTaskWorkflowService extends CoreModelEdoMapperService<SingleT
       return singleTaskWorkflowDao.create(model);
     }
 
+    model.setWorkflowId(model.getWorkflowId() == null ? model.getWorkflow().getId() : model.getWorkflowId());
     final SingleTaskWorkflowEntity exists = singleTaskWorkflowDao.getById(model.getWorkflowId());
     model.verifyVersion(exists);
 

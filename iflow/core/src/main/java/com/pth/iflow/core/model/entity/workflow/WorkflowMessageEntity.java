@@ -18,6 +18,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.enums.EWorkflowMessageType;
+import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.storage.dao.helper.EntityIdentityHelper;
 import com.pth.iflow.core.storage.dao.helper.EntityListener;
 
@@ -73,6 +74,10 @@ public class WorkflowMessageEntity extends EntityIdentityHelper {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "step_id", nullable = false, insertable = false, updatable = false)
   private WorkflowTypeStepEntity step;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "user_id", nullable = false, insertable = false, updatable = false)
+  private UserEntity             user;
 
   public WorkflowMessageEntity() {
 

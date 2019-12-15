@@ -1,5 +1,6 @@
 package com.pth.iflow.gui.controller.data;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,18 +25,29 @@ import com.pth.iflow.gui.controller.GuiLogedControllerBase;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.WorkflowMessage;
 import com.pth.iflow.gui.models.ui.UiMenuItem;
+import com.pth.iflow.gui.models.workflow.IWorkflow;
+import com.pth.iflow.gui.models.workflow.workflow.Workflow;
+import com.pth.iflow.gui.models.workflow.workflow.WorkflowSaveRequest;
 import com.pth.iflow.gui.services.IMessagesHelper;
+import com.pth.iflow.gui.services.IWorkflowHandler;
 import com.pth.iflow.gui.services.UiMenuService;
+import com.pth.iflow.gui.services.impl.workflow.WorkflowHandlerSelect;
 
 @Controller
 @RequestMapping(value = "/general/data")
 public class GeneralDataController extends GuiLogedControllerBase {
 
   @Autowired
-  private UiMenuService     menuService;
+  private UiMenuService                                   menuService;
 
   @Autowired
-  protected IMessagesHelper messagesHelper;
+  protected IMessagesHelper                               messagesHelper;
+
+  @Autowired
+  private IWorkflowHandler<Workflow, WorkflowSaveRequest> workflowHandlerBase;
+
+  @Autowired
+  WorkflowHandlerSelect                                   workflowHandlerSelect;
 
   @ResponseStatus(HttpStatus.OK)
   @GetMapping(path = { "/generaldatat" }, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -97,6 +110,24 @@ public class GeneralDataController extends GuiLogedControllerBase {
   protected List<UiMenuItem> getMenus() {
     return this.menuService.getAllMenus();
 
+  }
+
+  @ResponseStatus(HttpStatus.OK)
+  @PostMapping(path = { "/workflow/assign/{workflowIdentity}" })
+  @ResponseBody
+  public IWorkflow assignWorkflow(@PathVariable final String workflowIdentity)
+      throws GuiCustomizedException, IFlowMessageConversionFailureException, IOException {
+
+    if (this.isSessionValidAndLoggedIn()) {
+      final Workflow         workflow         = this.workflowHandlerBase.readWorkflow(workflowIdentity);
+
+      final IWorkflowHandler handler          = this.workflowHandlerSelect.getHandlerByType(workflow.getWorkflowTypeEnum());
+
+      final IWorkflow        assignedWorkflow = handler.assignWorkflow(workflowIdentity);
+
+      return workflow;
+    }
+    throw new GuiCustomizedException("not loggeg in!");
   }
 
   private boolean isSessionValidAndLoggedIn() {

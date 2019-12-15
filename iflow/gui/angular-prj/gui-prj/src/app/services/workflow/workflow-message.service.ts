@@ -14,7 +14,7 @@ import { ErrorServiceService } from '../error-service.service';
 export class WorkflowMessageService {
 	
 	loadMessageUrl :string = "/general/data/workflowmessages";
-	assignWorkflowUrl :string = "/workflow/data/assignworkflow/";
+	assignWorkflowUrl :string = "/general/data/workflow/assign/";
 
 	isReloadingMessages : boolean = false;
 	
@@ -54,8 +54,6 @@ export class WorkflowMessageService {
 	        response => {
 	        	console.log("Error in read message list", response);
 	        	this.workflowMessageListSubject.next([]);
-	  			//this.errorService.showError("Error in read message list.", "Error in read message list.\nError in read message list.\nError in read message list.");
-	        	//alert(JSON.stringify(response));
 	  			this.errorService.showErrorResponse(response);
 	        	
 	        },
@@ -69,6 +67,20 @@ export class WorkflowMessageService {
 	        }
     	);	      
     	
+	}
+	
+	assignMe(workflowIdentity: string){
+    	
+    	this.isReloadingMessages = true;
+    	var url = this.assignWorkflowUrl + workflowIdentity;
+    	       
+        const httpOptions = {
+        		  headers: new HttpHeaders({
+        		    'Content-Type':  'application/json; charset=UTF-8'
+        		  })
+        		};
+    	
+    	return this.http.post(url, new HttpParams(), httpOptions);	      
 	}
     
     

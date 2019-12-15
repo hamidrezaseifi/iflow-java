@@ -27,7 +27,7 @@ import com.pth.iflow.gui.services.IWorkflowSearchAccess;
 public class WorkflowSearchController extends GuiDataControllerBase {
 
   @Autowired
-  private IWorkflowSearchAccess workflowSearchAccess;
+  private IWorkflowSearchAccess                           workflowSearchAccess;
 
   @ResponseStatus(HttpStatus.OK)
   @PostMapping(path = { GuiModule.WORKFLOWGENERAL_DATA_INITIALIZESEARCH })
@@ -35,10 +35,10 @@ public class WorkflowSearchController extends GuiDataControllerBase {
   public Map<String, Object> loadWorkflowListInitialData()
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    final Map<String, Object> map = new HashMap<>();
+    final Map<String, Object>      map                  = new HashMap<>();
 
-    final Collection<WorkflowType> workflowTypeList = this.getAllWorkflowTypes();
-    final WorkflowSearchFilter workflowSearchFilter = WorkflowSearchFilter.generateNew(workflowTypeList);
+    final Collection<WorkflowType> workflowTypeList     = this.getAllWorkflowTypes();
+    final WorkflowSearchFilter     workflowSearchFilter = WorkflowSearchFilter.generateNew(workflowTypeList);
 
     map.put("workflowTypes", workflowTypeList);
     map.put("newSearchFilter", workflowSearchFilter);
@@ -58,7 +58,7 @@ public class WorkflowSearchController extends GuiDataControllerBase {
 
     final List<WorkflowResult> workflowList = this.workflowSearchAccess.searchWorkflow(workflowSearchFilter);
 
-    final Map<String, Object> mapped = new HashMap<>();
+    final Map<String, Object>  mapped       = new HashMap<>();
     mapped.put("res", "ok");
     mapped.put("list", workflowList);
 

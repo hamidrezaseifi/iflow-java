@@ -23,8 +23,7 @@ public class InvoiceWorkflowService extends CoreModelEdoMapperService<InvoiceWor
 
   private final IWorkflowService    workflowService;
 
-  public InvoiceWorkflowService(@Autowired final IInvoiceWorkflowDao singleTaskorkflowDao,
-      @Autowired final IWorkflowService workflowService) {
+  public InvoiceWorkflowService(@Autowired final IInvoiceWorkflowDao singleTaskorkflowDao, @Autowired final IWorkflowService workflowService) {
     this.invoiceWorkflowDao = singleTaskorkflowDao;
     this.workflowService = workflowService;
   }
@@ -37,6 +36,7 @@ public class InvoiceWorkflowService extends CoreModelEdoMapperService<InvoiceWor
       return invoiceWorkflowDao.create(model);
     }
 
+    model.setWorkflowId(model.getWorkflowId() == null ? model.getWorkflow().getId() : model.getWorkflowId());
     final InvoiceWorkflowEntity exists = invoiceWorkflowDao.getById(model.getWorkflowId());
     model.verifyVersion(exists);
 

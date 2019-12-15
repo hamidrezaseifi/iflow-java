@@ -1,5 +1,7 @@
 package com.pth.iflow.core.storage.dao.impl.base;
 
+import java.util.ArrayList;
+
 import javax.persistence.EntityManager;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +30,21 @@ public abstract class WorkflowParentEntityDaoBase<T extends IWorkflowContainerEn
 
   @Transactional
   public T update(final T model) throws IFlowStorageException {
-    this.getEntityManager().getTransaction().begin();
+    if (this.getEntityManager().getTransaction().isActive() == false) {
+      this.getEntityManager().getTransaction().begin();
+    }
+
+    final WorkflowEntity workflowModel = this.getEntityManager().find(WorkflowEntity.class, model.getWorkflowId());
+    workflowModel.setFiles(new ArrayList<>());
+    workflowModel.setActions(new ArrayList<>());
+    this.getEntityManager().merge(workflowModel);
+
+    this.getEntityManager().getTransaction().commit();
+
+    if (this.getEntityManager().getTransaction().isActive() == false) {
+      this.getEntityManager().getTransaction().begin();
+    }
+
     final WorkflowEntity workflow = this.getEntityManager().merge(model.getWorkflow());
     model.setWorkflow(workflow);
     model.setWorkflowId(workflow.getId());

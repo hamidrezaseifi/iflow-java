@@ -8,6 +8,7 @@ import { User, MenuItem } from '../ui-models';
 import { Router, NavigationEnd } from '@angular/router';
 
 import { WorkflowMessageService } from '../services/workflow/workflow-message.service';
+import { ErrorServiceService } from '../services/error-service.service';
 
 @Component({
   selector: 'app-message-bar',
@@ -18,7 +19,8 @@ import { WorkflowMessageService } from '../services/workflow/workflow-message.se
 export class MessageBarComponent implements OnInit {
 
 	messages: WorkflowMessage[] = [];
-	viewWorkflow :Workflow;
+	viewWorkflowModel :Workflow;
+	viewWorkflow :boolean = false;
 
 	messageSearchInterval = 60000;
 	messageReloadTimeoutId = 0;
@@ -63,7 +65,8 @@ export class MessageBarComponent implements OnInit {
 
 	
 	constructor(protected router: Router, 
-			private messageService :WorkflowMessageService,) { 
+			private messageService :WorkflowMessageService,
+			private errorService: ErrorServiceService,) { 
 		
 	}
 	
@@ -95,8 +98,40 @@ export class MessageBarComponent implements OnInit {
 				
 	}
 	
-  	showWorkflowView(id){
+	showWorkflowView(identity){
 	  
+		for(var index in this.messages){
+			if(this.messages[index].workflowIdentity == identity){
+				this.viewWorkflowModel = this.messages[index].workflow;
+				this.viewWorkflow = true;
+				break;
+			}
+		}
+  		
+  	}
+	
+	hideViewModal(){
+		this.viewWorkflow = false;
+  	}
+	
+	assignWorkflowMe(workflowIdentity){
+		
+		this.messageService.assignMe(workflowIdentity).subscribe(
+		        val => {
+		        	console.log("Workflow assigned to me");
+		        	this.reloadMessages(true);
+		            
+		        },
+		        response => {
+		        	console.log("Error in assigning workflow", response);
+		  			this.errorService.showErrorResponse(response);
+		        	
+		        },
+		        () => {
+		        	this.viewWorkflow = false;
+		        }
+	    	);	      
+		
   	}
   	
   	private subscribeService(){

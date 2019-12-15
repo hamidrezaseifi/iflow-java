@@ -56,17 +56,17 @@ public class WorkflowEntity extends EntityIdentityHelper {
   private Integer                          version;
 
   @CreationTimestamp
-  @Column(name = "created_at")
+  @Column(name = "created_at", insertable = false, updatable = false)
   private Date                             createdAt;
 
   @UpdateTimestamp
-  @Column(name = "updated_at")
+  @Column(name = "updated_at", insertable = false, updatable = false)
   private Date                             updatedAt;
 
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "workflowEntity")
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "workflowEntity", orphanRemoval = true)
   private final List<WorkflowFileEntity>   files   = new ArrayList<>();
 
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "workflowEntity")
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "workflowEntity", orphanRemoval = true)
   private final List<WorkflowActionEntity> actions = new ArrayList<>();
 
   public WorkflowEntity() {

@@ -36,6 +36,7 @@ public class TestThreeTaskWorkflowService extends CoreModelEdoMapperService<Test
       return testThreeTaskWorkflowDao.create(model);
     }
 
+    model.setWorkflowId(model.getWorkflowId() == null ? model.getWorkflow().getId() : model.getWorkflowId());
     final TestThreeTaskWorkflowEntity exists = testThreeTaskWorkflowDao.getById(model.getWorkflowId());
     model.verifyVersion(exists);
 

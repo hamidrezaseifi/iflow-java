@@ -594,6 +594,7 @@ public class IflowRestPaths {
     public static final String WORKFLOWGENERAL_DATA_BASE             = "/workflow/general/data";
     public static final String WORKFLOWGENERAL_DATA_INITIALIZESEARCH = WORKFLOWGENERAL_DATA_BASE + "/initsearch";
     public static final String WORKFLOWGENERAL_DATA_SEARCH           = WORKFLOWGENERAL_DATA_BASE + "/search";
+    public static final String WORKFLOWGENERAL_DATA_ASSIGN           = WORKFLOWGENERAL_DATA_BASE + "/assign/{workflowIdentity}";
 
   }
 }
