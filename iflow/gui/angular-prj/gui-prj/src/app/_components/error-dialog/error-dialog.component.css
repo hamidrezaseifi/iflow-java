@@ -1,0 +1,29 @@
+
+[hidden] {
+  display: none !important;
+}
+
+
+#errormessagedialog .modal-dialog{
+	min-width: 50vw;
+    max-width: 50vw;
+    
+}
+
+#errormessagedialog .modal-footer{
+    padding: 5px !important;
+}
+
+#errormessagedialog .modal-footer .btn{
+    padding: 5px !important;
+    line-height: 14px !important;
+}
+
+.errorcontent-message {
+    margin-bottom: 5px;
+    padding-left: 5px;
+    border-bottom: 1px solid;
+    padding-bottom: 15px;
+}
+
+

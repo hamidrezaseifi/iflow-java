@@ -5,6 +5,8 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 
 import { WorkflowMessage } from '../../wf-models/workflowmessage';
 
+import { ErrorServiceService } from '../error-service.service';
+
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +19,9 @@ export class WorkflowMessageService {
 	public workflowMessageListSubject: BehaviorSubject<WorkflowMessage[]>;
 
 
-	constructor(private http:HttpClient, ) { 
+	constructor(
+			private http:HttpClient, 
+			private errorService: ErrorServiceService,) { 
 		this.workflowMessageListSubject = new BehaviorSubject<WorkflowMessage[]>([]);
         
 	}
@@ -45,8 +49,11 @@ export class WorkflowMessageService {
 	            
 	        },
 	        response => {
-	        	//console.log("Error in read message list", response);
+	        	console.log("Error in read message list", response);
 	        	this.workflowMessageListSubject.next([]);
+	  			//this.errorService.showError("Error in read message list.", "Error in read message list.\nError in read message list.\nError in read message list.");
+	        	//alert(JSON.stringify(response));
+	  			this.errorService.showErrorResponse(response);
 	        	
 	        },
 	        () => {

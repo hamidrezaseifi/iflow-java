@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { ResizableModule } from 'angular-resizable-element';
+import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { appRoutingModule } from './app.routing';
@@ -19,6 +20,8 @@ import { AlertComponent } from './_components';
 import { TopBarComponent } from './top-bar/top-bar.component';
 import { FooterComponent } from './footer/footer.component';
 import { MessageBarComponent } from './message-bar/message-bar.component';
+import { ErrorDialogComponent } from './_components/error-dialog/error-dialog.component';
+import { LoadingDialogComponent } from './_components/loading-dialog/loading-dialog.component';
 
 import { HomeComponent } from './home';
 import { AboutComponent } from './about';
@@ -38,6 +41,7 @@ export function createTranslateLoader(http: HttpClient) {
     appRoutingModule,
     BrowserAnimationsModule,
     ResizableModule,
+    FormsModule,
     TranslateModule.forRoot({
         loader: {
             provide: TranslateLoader,
@@ -52,6 +56,8 @@ export function createTranslateLoader(http: HttpClient) {
     FooterComponent,
     AlertComponent,
     MessageBarComponent,
+    ErrorDialogComponent,
+    LoadingDialogComponent,
     HomeComponent,
     AboutComponent,
     LoginComponent,

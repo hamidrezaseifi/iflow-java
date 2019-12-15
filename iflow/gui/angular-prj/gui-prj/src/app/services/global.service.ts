@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 import { User, MenuItem, GeneralData } from '../ui-models';
 import { TopBarComponent } from '../top-bar/top-bar.component';

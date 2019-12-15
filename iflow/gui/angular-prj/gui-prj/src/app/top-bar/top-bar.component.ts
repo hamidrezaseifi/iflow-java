@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ErrorServiceService } from '../services/error-service.service';
 
 import { AuthenticationService } from '../services';
 import { User, MenuItem } from '../ui-models';
@@ -20,6 +21,7 @@ export class TopBarComponent implements OnInit {
 
 	constructor(
 		    private router: Router,
+		    private errorService: ErrorServiceService,
 		) { 
   		
  	}
@@ -31,6 +33,11 @@ export class TopBarComponent implements OnInit {
 
 	logout(){
 		this.loggingOut.emit(true);
+		
+	}		
+
+	test(){
+		this.errorService.showError("test error", "test error\ntest error\ntest error\ntest error");
 		
 	}		
 }

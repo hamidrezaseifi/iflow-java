@@ -36,6 +36,32 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/_components/error-dialog/error-dialog.component.html":
+/*!************************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/_components/error-dialog/error-dialog.component.html ***!
+  \************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("\n<div class=\"modal fade show\" tabindex=\"-1\" *ngIf=\"showError\" id=\"errormessagedialog\" role=\"dialog\" aria-labelledby=\"errorMessagedialogCenterTitle\" style=\"display: block; padding-right: 17px;background-color: #808080D0;\">\n\t<div class=\"modal-dialog modal-dialog-centered\" role=\"document\">\n\t\t\t<div class=\"modal-content\">\n\t\t\t\t<div class=\"modal-header\">\n\t\t\t\t\t<h5 class=\"modal-title dialog-title\" id=\"errorMessagedialogTitle\">{{ 'common.errormessagetitle' | translate:param }}</h5>\n\t\t\t\t\t<button class=\"dialog-toolbar-button close\" (click)=\"hideModal()\" aria-label=\"Close\">\n\t\t\t\t\t\t<i class=\"material-icons\">close</i>\n\t\t\t\t\t</button>\n\t\t\t</div>\n\t\t\t\t<div class=\"modal-body\">\n\t\t\t\t\n\t\t\t<div class=\"content-container alert alert alert-danger\" style=\"margin-bottom:0;\">\n\t\t\t\n\t\t\t\t<div class=\"errorcontent-message\" [innerHTML]=\"errorMessage\"></div>\n\t\t\t\t<div [hidden]=\"hasErrorDetail === false\">\n\t\t\t\t\t<input style=\"float:right\" type=\"checkbox\" id=\"showerrordetailcheck\" [(ngModel)]=\"showErrorDetail\" >\n\t\t\t\t\t<label style=\"float:right; margin-right: 10px;\" class=\"form-check-label\" for=\"showerrordetailcheck\">{{ 'common.details' | translate:param }}</label>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t<div id=\"errorcontent-detail\" style=\"padding: 10px; background-color:#d9e3ea; \" [hidden]=\"showErrorDetail === false\">\n\t\t\t\t\t<div style=\"height: 300px; width: 100%; overflow: auto;\">\n\t\t\t\t\t\t<pre [innerHTML]=\"errorDetails\"></pre> \n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t\n\t\t\t\n\t\t\t</div>\n\t\t\t\t\t\n\t\t\t\t</div>\n\t\t\t\t<div class=\"modal-footer\">\n\t\t\t<button type=\"button\" class=\"btn btn-secondary\" (click)=\"hideModal()\"><i class=\"material-icons\">close</i></button>\n\t\t\t\t</div>\n\t\t\t</div>\n\t</div>\n\t\t\t\n</div>\n");
+
+/***/ }),
+
+/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/_components/loading-dialog/loading-dialog.component.html":
+/*!****************************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/_components/loading-dialog/loading-dialog.component.html ***!
+  \****************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<p>loading-dialog works!</p>\n");
+
+/***/ }),
+
 /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/about/about.component.html":
 /*!**********************************************************************************!*\
   !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/about/about.component.html ***!
@@ -58,7 +84,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<app-top-bar [menus]=\"appMenus\" [currentUser]=\"appCurrentUser\" [isLogged]=\"appIsLogged\" (loggingOut)=\"onLoggingOut($event)\"></app-top-bar>\r\n\r\n<div class=\"container\">\r\n    <div class=\"row\">\r\n        <div class=\"col-sm-6 offset-sm-3\">\r\n            <alert></alert>\r\n            <router-outlet></router-outlet>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<app-message-bar [currentUser]=\"appCurrentUser\" [isLogged]=\"appIsLogged\"></app-message-bar>\r\n\r\n<app-footer></app-footer>\r\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<app-top-bar [menus]=\"appMenus\" [currentUser]=\"appCurrentUser\" [isLogged]=\"appIsLogged\" (loggingOut)=\"onLoggingOut($event)\"></app-top-bar>\r\n\r\n<div class=\"container\">\r\n    <div class=\"row\">\r\n        <div class=\"col-sm-6 offset-sm-3\">\r\n            <alert></alert>\r\n            <router-outlet></router-outlet>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<app-message-bar [currentUser]=\"appCurrentUser\" [isLogged]=\"appIsLogged\"></app-message-bar>\r\n\r\n<app-error-dialog></app-error-dialog>\r\n\r\n<app-loading-dialog [appShowLoading]=\"appShowLoading\"></app-loading-dialog>\r\n\r\n<app-footer></app-footer>\r\n");
 
 /***/ }),
 
@@ -123,7 +149,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<header>\r\n\r\n\t\t<nav class=\"navbar navbar-expand-lg navbar-toggleable-md navbar-light bg-light navbar-fixed-top\">\r\n\t\t\t<div class=\"container-fluid\">\r\n\t\t\t\t<div class=\"navbar-header\">\r\n\t\t\t\t\t<a class=\"navbar-brand\" href=\"/\"><img class=\"logo\" src=\"/images/fbim2.png\"></a>\r\n\t\t\t\t</div>\r\n\t\t\t\t<ul class=\"navbar-nav\" *ngIf=\"isLogged\">\r\n\t\t\t\t\t<li class=\"nav-item\" *ngFor=\"let menu of menus;\" [ngClass]=\"{'dropdown' : menu.children.length > 0}\">\r\n\t\t\t\t\t\t<a class=\"nav-link\" [routerLink]=\"[menu.url]\" *ngIf=\"menu.children.length == 0\">\r\n\t\t\t\t\t\t\t<span class=\"glyphicon glyphicon-home menu-image\"></span>\r\n\t\t\t\t\t\t\t<span>{{menu.label}}</span>\r\n\t\t\t\t\t\t</a>\r\n\t\t\t\t\t\t<a class=\"nav-link dropdown-toggle\" *ngIf=\"menu.children.length > 0\" href=\"#\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">\r\n\t\t\t\t\t\t\t<span class=\"{{menu.image}}\"></span>\r\n\t\t\t\t\t\t\t<span>{{menu.label}}</span>\r\n\t\t\t\t\t\t\t<span class=\"caret\"></span>\r\n\t\t\t\t\t\t</a>\r\n\t\t\t\t\t\t<div class=\"dropdown-menu\" *ngIf=\"menu.children.length > 0\">\r\n\t\t\t\t\t\t\t<a [routerLink]=\"[submenu.url]\" *ngFor=\"let submenu of menu.children;\" class=\"dropdown-item\">\r\n\t\t\t\t\t\t\t\t<span class=\"{{submenu.image}}\"></span>\r\n\t\t\t\t\t\t\t\t<span>{{submenu.label}}</span>\r\n\t\t\t\t\t\t\t</a>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</li>\r\n\t\t\t\t</ul>\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t\r\n\t\t\t\t<div class=\"btn-group navbar-user-detail\" *ngIf=\"isLogged\" >\r\n\t\t\t\t  <button type=\"button\" class=\"btn user-toggle-button\" data-toggle=\"dropdown\" data-display=\"static\" aria-haspopup=\"true\" aria-expanded=\"false\">\r\n\t\t\t\t    <span>{{currentUser.fullName}}</span>\r\n\t\t\t\t  </button>\r\n\t\t\t\t  <div class=\"dropdown-menu dropdown-menu-lg-right\">\r\n\t\t\t\t    <button class=\"dropdown-item\" type=\"button\">Profile</button>\r\n\t\t\t\t    <div class=\"dropdown-divider\"></div>\r\n\t\t\t\t    <button (click)=\"logout()\"  class=\"dropdown-item\" type=\"button\">Logout</button>\r\n\t\t\t\t  </div>\r\n\t\t\t\t</div>\r\n\t\t\t\t\t\t\r\n\t\t\t</div>\r\n\t\t</nav>    \t\t\t    \r\n\t\t\r\n\t        \r\n</header>\r\n\r\n<div style=\"background-color: #eeeeee;\">\r\n\t<ul class=\"breadcrumb\">\r\n\t\t<li>\r\n\t\t\t<span>Home</span>\r\n\t\t</li>\r\n\t</ul>\r\n</div>\r\n\t");
+/* harmony default export */ __webpack_exports__["default"] = ("<header>\r\n\r\n\t\t<nav class=\"navbar navbar-expand-lg navbar-toggleable-md navbar-light bg-light navbar-fixed-top\">\r\n\t\t\t<div class=\"container-fluid\">\r\n\t\t\t\t<div class=\"navbar-header\">\r\n\t\t\t\t\t<a class=\"navbar-brand\" href=\"/\"><img class=\"logo\" src=\"/images/fbim2.png\"></a>\r\n\t\t\t\t</div>\r\n\t\t\t\t<ul class=\"navbar-nav\" *ngIf=\"isLogged\">\r\n\t\t\t\t\t<li class=\"nav-item\" *ngFor=\"let menu of menus;\" [ngClass]=\"{'dropdown' : menu.children.length > 0}\">\r\n\t\t\t\t\t\t<a class=\"nav-link\" [routerLink]=\"[menu.url]\" *ngIf=\"menu.children.length == 0\">\r\n\t\t\t\t\t\t\t<span class=\"glyphicon glyphicon-home menu-image\"></span>\r\n\t\t\t\t\t\t\t<span>{{menu.label}}</span>\r\n\t\t\t\t\t\t</a>\r\n\t\t\t\t\t\t<a class=\"nav-link dropdown-toggle\" *ngIf=\"menu.children.length > 0\" href=\"#\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">\r\n\t\t\t\t\t\t\t<span class=\"{{menu.image}}\"></span>\r\n\t\t\t\t\t\t\t<span>{{menu.label}}</span>\r\n\t\t\t\t\t\t\t<span class=\"caret\"></span>\r\n\t\t\t\t\t\t</a>\r\n\t\t\t\t\t\t<div class=\"dropdown-menu\" *ngIf=\"menu.children.length > 0\">\r\n\t\t\t\t\t\t\t<a [routerLink]=\"[submenu.url]\" *ngFor=\"let submenu of menu.children;\" class=\"dropdown-item\">\r\n\t\t\t\t\t\t\t\t<span class=\"{{submenu.image}}\"></span>\r\n\t\t\t\t\t\t\t\t<span>{{submenu.label}}</span>\r\n\t\t\t\t\t\t\t</a>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</li>\r\n\t\t\t\t</ul>\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t\r\n\t\t\t\t<div class=\"btn-group navbar-user-detail\" *ngIf=\"isLogged\" >\r\n\t\t\t\t  <button type=\"button\" class=\"btn user-toggle-button\" data-toggle=\"dropdown\" data-display=\"static\" aria-haspopup=\"true\" aria-expanded=\"false\">\r\n\t\t\t\t    <span>{{currentUser.fullName}}</span>\r\n\t\t\t\t  </button>\r\n\t\t\t\t  <div class=\"dropdown-menu dropdown-menu-lg-right\">\r\n\t\t\t\t    <button (click)=\"test()\" class=\"dropdown-item\" type=\"button\">Profile</button>\r\n\t\t\t\t    <div class=\"dropdown-divider\"></div>\r\n\t\t\t\t    <button (click)=\"logout()\"  class=\"dropdown-item\" type=\"button\">Logout</button>\r\n\t\t\t\t  </div>\r\n\t\t\t\t</div>\r\n\t\t\t\t\t\t\r\n\t\t\t</div>\r\n\t\t</nav>    \t\t\t    \r\n\t\t\r\n\t        \r\n</header>\r\n\r\n<div style=\"background-color: #eeeeee;\">\r\n\t<ul class=\"breadcrumb\">\r\n\t\t<li>\r\n\t\t\t<span>Home</span>\r\n\t\t</li>\r\n\t</ul>\r\n</div>\r\n\t");
 
 /***/ }),
 
@@ -411,6 +437,92 @@ AlertComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 
 /***/ }),
 
+/***/ "./src/app/_components/error-dialog/error-dialog.component.css":
+/*!*********************************************************************!*\
+  !*** ./src/app/_components/error-dialog/error-dialog.component.css ***!
+  \*********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("\r\n[hidden] {\r\n  display: none !important;\r\n}\r\n\r\n\r\n#errormessagedialog .modal-dialog{\r\n\tmin-width: 50vw;\r\n    max-width: 50vw;\r\n    \r\n}\r\n\r\n\r\n#errormessagedialog .modal-footer{\r\n    padding: 5px !important;\r\n}\r\n\r\n\r\n#errormessagedialog .modal-footer .btn{\r\n    padding: 5px !important;\r\n    line-height: 14px !important;\r\n}\r\n\r\n\r\n.errorcontent-message {\r\n    margin-bottom: 5px;\r\n    padding-left: 5px;\r\n    border-bottom: 1px solid;\r\n    padding-bottom: 15px;\r\n}\r\n\r\n\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvX2NvbXBvbmVudHMvZXJyb3ItZGlhbG9nL2Vycm9yLWRpYWxvZy5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7QUFDQTtFQUNFLHdCQUF3QjtBQUMxQjs7O0FBR0E7Q0FDQyxlQUFlO0lBQ1osZUFBZTs7QUFFbkI7OztBQUVBO0lBQ0ksdUJBQXVCO0FBQzNCOzs7QUFFQTtJQUNJLHVCQUF1QjtJQUN2Qiw0QkFBNEI7QUFDaEM7OztBQUVBO0lBQ0ksa0JBQWtCO0lBQ2xCLGlCQUFpQjtJQUNqQix3QkFBd0I7SUFDeEIsb0JBQW9CO0FBQ3hCIiwiZmlsZSI6InNyYy9hcHAvX2NvbXBvbmVudHMvZXJyb3ItZGlhbG9nL2Vycm9yLWRpYWxvZy5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiXHJcbltoaWRkZW5dIHtcclxuICBkaXNwbGF5OiBub25lICFpbXBvcnRhbnQ7XHJcbn1cclxuXHJcblxyXG4jZXJyb3JtZXNzYWdlZGlhbG9nIC5tb2RhbC1kaWFsb2d7XHJcblx0bWluLXdpZHRoOiA1MHZ3O1xyXG4gICAgbWF4LXdpZHRoOiA1MHZ3O1xyXG4gICAgXHJcbn1cclxuXHJcbiNlcnJvcm1lc3NhZ2VkaWFsb2cgLm1vZGFsLWZvb3RlcntcclxuICAgIHBhZGRpbmc6IDVweCAhaW1wb3J0YW50O1xyXG59XHJcblxyXG4jZXJyb3JtZXNzYWdlZGlhbG9nIC5tb2RhbC1mb290ZXIgLmJ0bntcclxuICAgIHBhZGRpbmc6IDVweCAhaW1wb3J0YW50O1xyXG4gICAgbGluZS1oZWlnaHQ6IDE0cHggIWltcG9ydGFudDtcclxufVxyXG5cclxuLmVycm9yY29udGVudC1tZXNzYWdlIHtcclxuICAgIG1hcmdpbi1ib3R0b206IDVweDtcclxuICAgIHBhZGRpbmctbGVmdDogNXB4O1xyXG4gICAgYm9yZGVyLWJvdHRvbTogMXB4IHNvbGlkO1xyXG4gICAgcGFkZGluZy1ib3R0b206IDE1cHg7XHJcbn1cclxuXHJcblxyXG4iXX0= */");
+
+/***/ }),
+
+/***/ "./src/app/_components/error-dialog/error-dialog.component.ts":
+/*!********************************************************************!*\
+  !*** ./src/app/_components/error-dialog/error-dialog.component.ts ***!
+  \********************************************************************/
+/*! exports provided: ErrorDialogComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ErrorDialogComponent", function() { return ErrorDialogComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm2015/ngx-translate-core.js");
+/* harmony import */ var _services_error_service_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../services/error-service.service */ "./src/app/services/error-service.service.ts");
+
+
+
+
+let ErrorDialogComponent = class ErrorDialogComponent {
+    constructor(translate, errorService) {
+        this.errorService = errorService;
+        this.showErrorDetail = false;
+        this.showError = false;
+        this.errorMessage = "";
+        this.errorDetails = "";
+        translate.setDefaultLang('de');
+        translate.use('de');
+    }
+    ngOnInit() {
+        this.errorDetail = this.errorService.errorObservable;
+        this.subscribeErrorService();
+    }
+    subscribeErrorService() {
+        this.errorService.errorSubject.subscribe((data) => {
+            if (data && data != null) {
+                this.errorMessage = data.errorMessage;
+                this.errorDetails = data.errorDetail;
+                this.showErrorDetail = false;
+                this.showError = true;
+                //alert("error coms: " + this.errorMessage + " , show: " + (this.showError === true));
+            }
+            else {
+                this.showError = false;
+                this.showErrorDetail = false;
+                //alert("no error");
+            }
+            //this.subscribeErrorService();
+        });
+    }
+    hideModal() {
+        this.showError = false;
+        this.showErrorDetail = false;
+    }
+    get hasErrorDetail() {
+        return this.errorDetails !== null && this.errorDetails !== "";
+    }
+};
+ErrorDialogComponent.ctorParameters = () => [
+    { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_2__["TranslateService"] },
+    { type: _services_error_service_service__WEBPACK_IMPORTED_MODULE_3__["ErrorServiceService"] }
+];
+ErrorDialogComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+        selector: 'app-error-dialog',
+        template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./error-dialog.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/_components/error-dialog/error-dialog.component.html")).default,
+        styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./error-dialog.component.css */ "./src/app/_components/error-dialog/error-dialog.component.css")).default]
+    })
+], ErrorDialogComponent);
+
+
+
+/***/ }),
+
 /***/ "./src/app/_components/index.ts":
 /*!**************************************!*\
   !*** ./src/app/_components/index.ts ***!
@@ -425,6 +537,61 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AlertComponent", function() { return _alert_component__WEBPACK_IMPORTED_MODULE_1__["AlertComponent"]; });
 
 
+
+
+
+/***/ }),
+
+/***/ "./src/app/_components/loading-dialog/loading-dialog.component.css":
+/*!*************************************************************************!*\
+  !*** ./src/app/_components/loading-dialog/loading-dialog.component.css ***!
+  \*************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL19jb21wb25lbnRzL2xvYWRpbmctZGlhbG9nL2xvYWRpbmctZGlhbG9nLmNvbXBvbmVudC5jc3MifQ== */");
+
+/***/ }),
+
+/***/ "./src/app/_components/loading-dialog/loading-dialog.component.ts":
+/*!************************************************************************!*\
+  !*** ./src/app/_components/loading-dialog/loading-dialog.component.ts ***!
+  \************************************************************************/
+/*! exports provided: LoadingDialogComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LoadingDialogComponent", function() { return LoadingDialogComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+
+
+let LoadingDialogComponent = class LoadingDialogComponent {
+    constructor() {
+        this._showLoading = false;
+    }
+    set appShowLoading(value) {
+        this._showLoading = value === 'true';
+    }
+    get showLoading() {
+        return this._showLoading;
+    }
+    ngOnInit() {
+    }
+};
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])('appShowLoading')
+], LoadingDialogComponent.prototype, "appShowLoading", null);
+LoadingDialogComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+        selector: 'app-loading-dialog',
+        template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./loading-dialog.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/_components/loading-dialog/loading-dialog.component.html")).default,
+        styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./loading-dialog.component.css */ "./src/app/_components/loading-dialog/loading-dialog.component.css")).default]
+    })
+], LoadingDialogComponent);
 
 
 
@@ -523,6 +690,7 @@ let AppComponent = class AppComponent {
         this.appMenus = [];
         this.appCurrentUser = null;
         this.appIsLogged = false;
+        this.appShowLoading = false;
         // this language will be used as a fallback when a translation isn't found in the current language
         translate.setDefaultLang('de');
         // the lang to use, if the lang isn't available, it will use the current loader to get them
@@ -565,8 +733,8 @@ let AppComponent = class AppComponent {
             this.appIsLogged = false;
         }
     }
-    ngOnDestroy() {
-        //this.global.currentSessionDataSubject.unsubscribe();
+    showLoading() {
+        this.appShowLoading = true;
     }
     onLoggingOut(data) {
         this.autService.logout();
@@ -628,11 +796,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _top_bar_top_bar_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./top-bar/top-bar.component */ "./src/app/top-bar/top-bar.component.ts");
 /* harmony import */ var _footer_footer_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./footer/footer.component */ "./src/app/footer/footer.component.ts");
 /* harmony import */ var _message_bar_message_bar_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./message-bar/message-bar.component */ "./src/app/message-bar/message-bar.component.ts");
-/* harmony import */ var _home__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./home */ "./src/app/home/index.ts");
-/* harmony import */ var _about__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./about */ "./src/app/about/index.ts");
-/* harmony import */ var _login__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./login */ "./src/app/login/index.ts");
-/* harmony import */ var _workflow_create_workflow_create_component__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./workflow-create/workflow-create.component */ "./src/app/workflow-create/workflow-create.component.ts");
-/* harmony import */ var _workflow_list_workflow_list_component__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./workflow-list/workflow-list.component */ "./src/app/workflow-list/workflow-list.component.ts");
+/* harmony import */ var _components_error_dialog_error_dialog_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./_components/error-dialog/error-dialog.component */ "./src/app/_components/error-dialog/error-dialog.component.ts");
+/* harmony import */ var _components_loading_dialog_loading_dialog_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./_components/loading-dialog/loading-dialog.component */ "./src/app/_components/loading-dialog/loading-dialog.component.ts");
+/* harmony import */ var _home__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./home */ "./src/app/home/index.ts");
+/* harmony import */ var _about__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./about */ "./src/app/about/index.ts");
+/* harmony import */ var _login__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./login */ "./src/app/login/index.ts");
+/* harmony import */ var _workflow_create_workflow_create_component__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./workflow-create/workflow-create.component */ "./src/app/workflow-create/workflow-create.component.ts");
+/* harmony import */ var _workflow_list_workflow_list_component__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./workflow-list/workflow-list.component */ "./src/app/workflow-list/workflow-list.component.ts");
+
+
+
 
 
 
@@ -670,6 +843,7 @@ AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
             _app_routing__WEBPACK_IMPORTED_MODULE_10__["appRoutingModule"],
             _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_5__["BrowserAnimationsModule"],
             angular_resizable_element__WEBPACK_IMPORTED_MODULE_8__["ResizableModule"],
+            _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"],
             _ngx_translate_core__WEBPACK_IMPORTED_MODULE_6__["TranslateModule"].forRoot({
                 loader: {
                     provide: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_6__["TranslateLoader"],
@@ -684,11 +858,13 @@ AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
             _footer_footer_component__WEBPACK_IMPORTED_MODULE_16__["FooterComponent"],
             _components__WEBPACK_IMPORTED_MODULE_14__["AlertComponent"],
             _message_bar_message_bar_component__WEBPACK_IMPORTED_MODULE_17__["MessageBarComponent"],
-            _home__WEBPACK_IMPORTED_MODULE_18__["HomeComponent"],
-            _about__WEBPACK_IMPORTED_MODULE_19__["AboutComponent"],
-            _login__WEBPACK_IMPORTED_MODULE_20__["LoginComponent"],
-            _workflow_create_workflow_create_component__WEBPACK_IMPORTED_MODULE_21__["WorkflowCreateComponent"],
-            _workflow_list_workflow_list_component__WEBPACK_IMPORTED_MODULE_22__["WorkflowListComponent"],
+            _components_error_dialog_error_dialog_component__WEBPACK_IMPORTED_MODULE_18__["ErrorDialogComponent"],
+            _components_loading_dialog_loading_dialog_component__WEBPACK_IMPORTED_MODULE_19__["LoadingDialogComponent"],
+            _home__WEBPACK_IMPORTED_MODULE_20__["HomeComponent"],
+            _about__WEBPACK_IMPORTED_MODULE_21__["AboutComponent"],
+            _login__WEBPACK_IMPORTED_MODULE_22__["LoginComponent"],
+            _workflow_create_workflow_create_component__WEBPACK_IMPORTED_MODULE_23__["WorkflowCreateComponent"],
+            _workflow_list_workflow_list_component__WEBPACK_IMPORTED_MODULE_24__["WorkflowListComponent"],
         ],
         providers: [_services_global_service__WEBPACK_IMPORTED_MODULE_11__["GlobalService"], _services_authentication_service__WEBPACK_IMPORTED_MODULE_12__["AuthenticationService"], _services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_13__["WorkflowMessageService"]],
         bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_9__["AppComponent"]]
@@ -1054,17 +1230,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
 /* harmony import */ var _services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/workflow/workflow-message.service */ "./src/app/services/workflow/workflow-message.service.ts");
-/* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../services/global.service */ "./src/app/services/global.service.ts");
-
 
 
 
 
 let MessageBarComponent = class MessageBarComponent {
-    constructor(router, messageService, global) {
+    constructor(router, messageService) {
         this.router = router;
         this.messageService = messageService;
-        this.global = global;
         this.messages = [];
         this.messageSearchInterval = 60000;
         this.messageReloadTimeoutId = 0;
@@ -1099,9 +1272,6 @@ let MessageBarComponent = class MessageBarComponent {
             this.reloadMessages(true);
         }
     }
-    ngOnDestroy() {
-        //this.messageService.workflowMessageListSubject.unsubscribe();
-    }
     onResizeEnd(event) {
         this.messagePanelHeight = event.rectangle.height;
         document.getElementById("message-panel-container").style.height = this.messagePanelHeight + "px";
@@ -1125,8 +1295,8 @@ let MessageBarComponent = class MessageBarComponent {
             else {
                 this.messages = [];
             }
-            //alert("app-comp globaldata change. menus:" + this.appMenus.length);
         }, error => {
+            //console.log("Error in read message list.", error);
             this.messages = [];
         }, () => {
             //this.messageService.workflowMessageListSubject.unsubscribe();
@@ -1139,8 +1309,7 @@ let MessageBarComponent = class MessageBarComponent {
 };
 MessageBarComponent.ctorParameters = () => [
     { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] },
-    { type: _services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_3__["WorkflowMessageService"] },
-    { type: _services_global_service__WEBPACK_IMPORTED_MODULE_4__["GlobalService"] }
+    { type: _services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_3__["WorkflowMessageService"] }
 ];
 tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])('currentUser')
@@ -1270,6 +1439,50 @@ AuthenticationService.ctorParameters = () => [
 AuthenticationService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({ providedIn: 'root' })
 ], AuthenticationService);
+
+
+
+/***/ }),
+
+/***/ "./src/app/services/error-service.service.ts":
+/*!***************************************************!*\
+  !*** ./src/app/services/error-service.service.ts ***!
+  \***************************************************/
+/*! exports provided: ErrorServiceService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ErrorServiceService", function() { return ErrorServiceService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+/* harmony import */ var _ui_models__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../ui-models */ "./src/app/ui-models/index.ts");
+
+
+
+
+let ErrorServiceService = class ErrorServiceService {
+    constructor() {
+        this.errorSubject = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](null);
+    }
+    get errorObservable() {
+        return this.errorSubject.asObservable();
+    }
+    showError(errorMessage, errorDetail) {
+        var err = new _ui_models__WEBPACK_IMPORTED_MODULE_3__["ErrorDetail"](errorMessage, errorDetail);
+        this.errorSubject.next(err);
+    }
+    showErrorResponse(response) {
+        var errResp = new _ui_models__WEBPACK_IMPORTED_MODULE_3__["ErrorResponse"](response);
+        this.showError(errResp.message, errResp.details);
+    }
+};
+ErrorServiceService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+        providedIn: 'root'
+    })
+], ErrorServiceService);
 
 
 
@@ -1419,13 +1632,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+/* harmony import */ var _error_service_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../error-service.service */ "./src/app/services/error-service.service.ts");
+
 
 
 
 
 let WorkflowMessageService = class WorkflowMessageService {
-    constructor(http) {
+    constructor(http, errorService) {
         this.http = http;
+        this.errorService = errorService;
         this.loadMessageUrl = "/general/data/workflowmessages";
         this.assignWorkflowUrl = "/workflow/data/assignworkflow/";
         this.workflowMessageListSubject = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"]([]);
@@ -1446,8 +1662,11 @@ let WorkflowMessageService = class WorkflowMessageService {
             messageList = this.buildMessageList(messageList);
             this.workflowMessageListSubject.next(messageList);
         }, response => {
-            //console.log("Error in read message list", response);
+            console.log("Error in read message list", response);
             this.workflowMessageListSubject.next([]);
+            //this.errorService.showError("Error in read message list.", "Error in read message list.\nError in read message list.\nError in read message list.");
+            //alert(JSON.stringify(response));
+            this.errorService.showErrorResponse(response);
         }, () => {
             //console.log("Compelete read message list ");
             this.workflowMessageListSubject.complete();
@@ -1463,7 +1682,8 @@ let WorkflowMessageService = class WorkflowMessageService {
     }
 };
 WorkflowMessageService.ctorParameters = () => [
-    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"] }
+    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"] },
+    { type: _error_service_service__WEBPACK_IMPORTED_MODULE_4__["ErrorServiceService"] }
 ];
 WorkflowMessageService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
@@ -1501,12 +1721,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+/* harmony import */ var _services_error_service_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/error-service.service */ "./src/app/services/error-service.service.ts");
+
 
 
 
 let TopBarComponent = class TopBarComponent {
-    constructor(router) {
+    constructor(router, errorService) {
         this.router = router;
+        this.errorService = errorService;
         this.loggingOut = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
     }
     ngOnInit() {
@@ -1514,9 +1737,13 @@ let TopBarComponent = class TopBarComponent {
     logout() {
         this.loggingOut.emit(true);
     }
+    test() {
+        this.errorService.showError("test error", "test error\ntest error\ntest error\ntest error");
+    }
 };
 TopBarComponent.ctorParameters = () => [
-    { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] }
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] },
+    { type: _services_error_service_service__WEBPACK_IMPORTED_MODULE_3__["ErrorServiceService"] }
 ];
 tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])('menus')
@@ -1542,11 +1769,80 @@ TopBarComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 
 /***/ }),
 
+/***/ "./src/app/ui-models/error-detail.ts":
+/*!*******************************************!*\
+  !*** ./src/app/ui-models/error-detail.ts ***!
+  \*******************************************/
+/*! exports provided: ErrorDetail */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ErrorDetail", function() { return ErrorDetail; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+
+class ErrorDetail {
+    constructor(errorMessage, errorDetail) {
+        this.errorMessage = errorMessage;
+        this.errorDetail = errorDetail;
+    }
+}
+
+
+/***/ }),
+
+/***/ "./src/app/ui-models/error-response.ts":
+/*!*********************************************!*\
+  !*** ./src/app/ui-models/error-response.ts ***!
+  \*********************************************/
+/*! exports provided: ErrorResponse */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ErrorResponse", function() { return ErrorResponse; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+
+class ErrorResponse {
+    constructor(response) {
+        this.message = "Unknown response error!";
+        this.details = "";
+        if (response && response != null) {
+            if (response.status) {
+                if (response.status === 0) {
+                    this.message = "Connection Error!";
+                    this.details = "";
+                }
+                else {
+                    if (response.error) {
+                        if (response.error.message) {
+                            this.message = response.error.message;
+                            this.details = "";
+                            if (response.error.details) {
+                                this.details = response.error.details;
+                            }
+                        }
+                        else {
+                            if (response.message) {
+                                this.message = response.message;
+                                this.details = "";
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+/***/ }),
+
 /***/ "./src/app/ui-models/index.ts":
 /*!************************************!*\
   !*** ./src/app/ui-models/index.ts ***!
   \************************************/
-/*! exports provided: User, MenuItem, LoginResponse */
+/*! exports provided: User, MenuItem, LoginResponse, ErrorDetail, ErrorResponse */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1560,6 +1856,14 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony import */ var _loginmessage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./loginmessage */ "./src/app/ui-models/loginmessage.ts");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "LoginResponse", function() { return _loginmessage__WEBPACK_IMPORTED_MODULE_3__["LoginResponse"]; });
+
+/* harmony import */ var _error_detail__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./error-detail */ "./src/app/ui-models/error-detail.ts");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ErrorDetail", function() { return _error_detail__WEBPACK_IMPORTED_MODULE_4__["ErrorDetail"]; });
+
+/* harmony import */ var _error_response__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./error-response */ "./src/app/ui-models/error-response.ts");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ErrorResponse", function() { return _error_response__WEBPACK_IMPORTED_MODULE_5__["ErrorResponse"]; });
+
+
 
 
 

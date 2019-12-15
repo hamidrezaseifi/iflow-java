@@ -1,10 +1,12 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import { Title } from '@angular/platform-browser';
 
 import { GlobalService } from './services/global.service';
 import { AuthenticationService } from './services';
+
+
 import { User, MenuItem } from './ui-models';
 
 @Component({
@@ -13,11 +15,14 @@ import { User, MenuItem } from './ui-models';
   styleUrls: [ './app.component.css' ],
 providers: [ GlobalService ]
 })
-export class AppComponent implements OnInit, OnDestroy  {
+export class AppComponent implements OnInit  {
 	
 	appMenus: MenuItem[] = [];
 	appCurrentUser: User = null;
 	appIsLogged: boolean = false;
+
+	appShowLoading: boolean = false;
+	
 
 	constructor(
 	    private router: Router,
@@ -25,6 +30,7 @@ export class AppComponent implements OnInit, OnDestroy  {
 		private global: GlobalService,
 		translate: TranslateService,
 		private titleService: Title,
+		
 	) {
 		
         // this language will be used as a fallback when a translation isn't found in the current language
@@ -78,9 +84,10 @@ export class AppComponent implements OnInit, OnDestroy  {
 		
 	
 	}
-	
-	ngOnDestroy() {
-		//this.global.currentSessionDataSubject.unsubscribe();
+
+	showLoading(){
+		
+		this.appShowLoading = true;
 	}
 	
 	

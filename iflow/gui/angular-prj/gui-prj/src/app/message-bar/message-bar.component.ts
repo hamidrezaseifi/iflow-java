@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import * as moment from 'moment'; 
 import { ResizeEvent } from 'angular-resizable-element';
 
@@ -8,7 +8,6 @@ import { User, MenuItem } from '../ui-models';
 import { Router, NavigationEnd } from '@angular/router';
 
 import { WorkflowMessageService } from '../services/workflow/workflow-message.service';
-import { GlobalService } from '../services/global.service';
 
 @Component({
   selector: 'app-message-bar',
@@ -16,7 +15,7 @@ import { GlobalService } from '../services/global.service';
   styleUrls: ['./message-bar.component.css'],
   providers: [ WorkflowMessageService ]
 })
-export class MessageBarComponent implements OnInit, OnDestroy {
+export class MessageBarComponent implements OnInit {
 
 	messages: WorkflowMessage[] = [];
 	viewWorkflow :Workflow;
@@ -57,24 +56,18 @@ export class MessageBarComponent implements OnInit, OnDestroy {
 		return this._isLogged; 
 	}	
 
-	constructor(protected router: Router, private messageService :WorkflowMessageService, private global: GlobalService,) { 
-	
-		
+	constructor(protected router: Router, 
+			private messageService :WorkflowMessageService,) { 
 		
 	}
 	
 
-	ngOnInit() {
-		
+	ngOnInit() {		
 		
 		if(this._isLogged == true){
 	    	console.log("start read message list from comp.");
 	    	this.reloadMessages(true);
 	    }
-	}
-	
-	ngOnDestroy() {
-		//this.messageService.workflowMessageListSubject.unsubscribe();
 	}
 	
 	onResizeEnd(event: ResizeEvent): void {
@@ -110,10 +103,10 @@ export class MessageBarComponent implements OnInit, OnDestroy {
   					else{
   						this.messages = [];
   					}
-  					//alert("app-comp globaldata change. menus:" + this.appMenus.length);
   					
 		  		},
 		  		error => {
+		  			//console.log("Error in read message list.", error);
 		  			this.messages = [];
 		  		},
 		  		() => {
