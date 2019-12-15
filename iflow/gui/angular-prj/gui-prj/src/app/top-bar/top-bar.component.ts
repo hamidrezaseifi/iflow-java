@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ErrorServiceService } from '../services/error-service.service';
+import { LoadingServiceService } from '../services/loading-service.service';
 
 import { AuthenticationService } from '../services';
 import { User, MenuItem } from '../ui-models';
@@ -21,7 +21,7 @@ export class TopBarComponent implements OnInit {
 
 	constructor(
 		    private router: Router,
-		    private errorService: ErrorServiceService,
+		    private loadingService: LoadingServiceService,
 		) { 
   		
  	}
@@ -37,7 +37,7 @@ export class TopBarComponent implements OnInit {
 	}		
 
 	test(){
-		this.errorService.showError("test error", "test error\ntest error\ntest error\ntest error");
+		this.loadingService.showLoading();
 		
 	}		
 }

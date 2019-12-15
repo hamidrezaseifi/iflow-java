@@ -56,6 +56,12 @@ export class MessageBarComponent implements OnInit {
 		return this._isLogged; 
 	}	
 
+	
+	get isReloadingMessages(): boolean { 
+		return this.messageService.isReloadingMessages; 
+	}	
+
+	
 	constructor(protected router: Router, 
 			private messageService :WorkflowMessageService,) { 
 		

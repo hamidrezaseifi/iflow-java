@@ -9,10 +9,6 @@ import { ErrorDetail, ErrorResponse } from '../ui-models';
 export class ErrorServiceService {
 
 	errorSubject = new BehaviorSubject<ErrorDetail>(null); 
-
-	get errorObservable() {
-	    return this.errorSubject.asObservable();
-	}
 	
 	constructor() { 
 		

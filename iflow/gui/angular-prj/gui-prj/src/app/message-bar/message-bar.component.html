@@ -4,6 +4,7 @@
 		<button class="toolbar-button" *ngIf="messagePanelShowed" (click)="closeMessages();"><i class="material-icons">keyboard_arrow_down</i></button>
 		<button class="toolbar-button" *ngIf="messagePanelShowed == false" (click)="showMessages();"><i class="material-icons">keyboard_arrow_up</i></button>
 		<button class="toolbar-button" *ngIf="messagePanelShowed" (click)="reloadMessages(true);"><i class="material-icons">refresh</i></button>
+		<img class="toolbar-image" *ngIf="isReloadingMessages" src="assets/images/loading200.gif" />
 	
 	</div>
 	<div class="message-panel-items-container">

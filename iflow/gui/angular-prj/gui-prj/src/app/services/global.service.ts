@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { User, MenuItem, GeneralData } from '../ui-models';
 import { TopBarComponent } from '../top-bar/top-bar.component';
 import { ILoginComponent } from '../_components';
+import { LoadingServiceService } from './loading-service.service';
 
 
 
@@ -14,7 +15,7 @@ export class GlobalService {
 	public currentSessionDataSubject: BehaviorSubject<GeneralData>;
 	public currentSessionDataObs :Observable<GeneralData>;		
 
-	constructor(private http:HttpClient, ) { 
+	constructor(private http:HttpClient, private loadingService: LoadingServiceService,) { 
 		this.currentSessionDataSubject = new BehaviorSubject<GeneralData>(JSON.parse(localStorage.getItem('currentSessionData')));
         this.currentSessionDataObs = this.currentSessionDataSubject.asObservable();		
 	}
@@ -24,6 +25,8 @@ export class GlobalService {
     }
 	
 	loadAllSetting(login: ILoginComponent){
+		this.loadingService.showLoading();
+		
 	  this.http.get("/general/data/generaldatat").subscribe(
 		        val => {
 		            console.log("GET call successful generaldata", val);
@@ -44,6 +47,8 @@ export class GlobalService {
 		            }
 		            //alert("Finish call successful generaldata");
 		            this.currentSessionDataSubject.complete();
+		            
+		            this.loadingService.hideLoading();
 		        }
 		    );
 	}

@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { LoadingServiceService } from '../../services/loading-service.service';
 
 @Component({
   selector: 'app-loading-dialog',
@@ -9,22 +10,14 @@ export class LoadingDialogComponent implements OnInit {
 
 	_showLoading : boolean = false;
 
-	@Input('appShowLoading')
-	set appShowLoading(value: string) {
-	    
-		this._showLoading = value === 'true';
-		
-	}
+	showLoading :boolean = false;
 	
-	
-	get showLoading(): boolean { 
-		return this._showLoading; 
-	}	
-
-	
-	constructor() { }
+	constructor(private loadingService: LoadingServiceService,) { }
 
 	ngOnInit() {
+		this.loadingService.loadingSubject.subscribe((data : boolean) => {
+			this.showLoading = data;
+		});
 	}
 
 }

@@ -15,6 +15,8 @@ export class WorkflowMessageService {
 	
 	loadMessageUrl :string = "/general/data/workflowmessages";
 	assignWorkflowUrl :string = "/workflow/data/assignworkflow/";
+
+	isReloadingMessages : boolean = false;
 	
 	public workflowMessageListSubject: BehaviorSubject<WorkflowMessage[]>;
 
@@ -32,6 +34,7 @@ export class WorkflowMessageService {
 	
 	loadMessages(resetCach: boolean){
     	
+    	this.isReloadingMessages = true;
     	var url = this.loadMessageUrl + "?reset=" + (resetCach ? "1" : "0");
     	        
         const httpOptions = {
@@ -57,8 +60,12 @@ export class WorkflowMessageService {
 	        	
 	        },
 	        () => {
-	        	//console.log("Compelete read message list ");
-	        	this.workflowMessageListSubject.complete();            
+	        	this.workflowMessageListSubject.complete();  
+	        	
+	        	setTimeout(()=>{ 
+	        		this.isReloadingMessages = false;
+	        	 }, 500);
+	        	
 	        }
     	);	      
     	

@@ -13,7 +13,6 @@ import { ErrorDetail } from '../../ui-models';
 })
 export class ErrorDialogComponent implements OnInit {
 
-	errorDetail: Observable<ErrorDetail>;
 	
 	showErrorDetail :boolean = false;
 	showError :boolean = false;
@@ -33,7 +32,6 @@ export class ErrorDialogComponent implements OnInit {
 	
 
 	ngOnInit() {
-		this.errorDetail = this.errorService.errorObservable;		
 		this.subscribeErrorService();		
 	}
 	
