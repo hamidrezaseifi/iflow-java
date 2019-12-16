@@ -149,7 +149,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<header>\r\n\r\n\t\t<nav class=\"navbar navbar-expand-lg navbar-toggleable-md navbar-light bg-light navbar-fixed-top\">\r\n\t\t\t<div class=\"container-fluid\">\r\n\t\t\t\t<div class=\"navbar-header\">\r\n\t\t\t\t\t<a class=\"navbar-brand\" href=\"/\"><img class=\"logo\" src=\"/images/fbim2.png\"></a>\r\n\t\t\t\t</div>\r\n\t\t\t\t<ul class=\"navbar-nav\" *ngIf=\"isLogged\">\r\n\t\t\t\t\t<li class=\"nav-item\" *ngFor=\"let menu of menus;\" [ngClass]=\"{'dropdown' : menu.children.length > 0}\">\r\n\t\t\t\t\t\t<a class=\"nav-link\" [routerLink]=\"[menu.url]\" *ngIf=\"menu.children.length == 0\">\r\n\t\t\t\t\t\t\t<span class=\"glyphicon glyphicon-home menu-image\"></span>\r\n\t\t\t\t\t\t\t<span>{{menu.label}}</span>\r\n\t\t\t\t\t\t</a>\r\n\t\t\t\t\t\t<a class=\"nav-link dropdown-toggle\" *ngIf=\"menu.children.length > 0\" href=\"#\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">\r\n\t\t\t\t\t\t\t<span class=\"{{menu.image}}\"></span>\r\n\t\t\t\t\t\t\t<span>{{menu.label}}</span>\r\n\t\t\t\t\t\t\t<span class=\"caret\"></span>\r\n\t\t\t\t\t\t</a>\r\n\t\t\t\t\t\t<div class=\"dropdown-menu\" *ngIf=\"menu.children.length > 0\">\r\n\t\t\t\t\t\t\t<a [routerLink]=\"[submenu.url]\" *ngFor=\"let submenu of menu.children;\" class=\"dropdown-item\">\r\n\t\t\t\t\t\t\t\t<span class=\"{{submenu.image}}\"></span>\r\n\t\t\t\t\t\t\t\t<span>{{submenu.label}}</span>\r\n\t\t\t\t\t\t\t</a>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</li>\r\n\t\t\t\t</ul>\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t\r\n\t\t\t\t<div class=\"btn-group navbar-user-detail\" *ngIf=\"isLogged\" >\r\n\t\t\t\t  <button type=\"button\" class=\"btn user-toggle-button\" data-toggle=\"dropdown\" data-display=\"static\" aria-haspopup=\"true\" aria-expanded=\"false\">\r\n\t\t\t\t    <span>{{currentUser.fullName}}</span>\r\n\t\t\t\t  </button>\r\n\t\t\t\t  <div class=\"dropdown-menu dropdown-menu-lg-right\">\r\n\t\t\t\t    <button (click)=\"test()\" class=\"dropdown-item\" type=\"button\">Profile</button>\r\n\t\t\t\t    <div class=\"dropdown-divider\"></div>\r\n\t\t\t\t    <button (click)=\"logout()\"  class=\"dropdown-item\" type=\"button\">Logout</button>\r\n\t\t\t\t  </div>\r\n\t\t\t\t</div>\r\n\t\t\t\t\t\t\r\n\t\t\t</div>\r\n\t\t</nav>    \t\t\t    \r\n\t\t\r\n\t        \r\n</header>\r\n\r\n<div style=\"background-color: #eeeeee;\">\r\n\t<ul class=\"breadcrumb\">\r\n\t\t<li>\r\n\t\t\t<span>Home</span>\r\n\t\t</li>\r\n\t</ul>\r\n</div>\r\n\t");
+/* harmony default export */ __webpack_exports__["default"] = ("<header>\r\n\r\n\t\t<nav class=\"navbar navbar-expand-lg navbar-toggleable-md navbar-light bg-light navbar-fixed-top\">\r\n\t\t\t<div class=\"container-fluid\">\r\n\t\t\t\t<div class=\"navbar-header\">\r\n\t\t\t\t\t<a class=\"navbar-brand\" href=\"/\"><img class=\"logo\" src=\"/images/fbim2.png\"></a>\r\n\t\t\t\t</div>\r\n\t\t\t\t<ul class=\"navbar-nav\" *ngIf=\"isLogged\">\r\n\t\t\t\t\t<li class=\"nav-item\" *ngFor=\"let menu of menus;\" [ngClass]=\"{'dropdown' : menu.children.length > 0}\">\r\n\t\t\t\t\t\t<a class=\"nav-link\" [routerLink]=\"[menu.url]\" *ngIf=\"menu.children.length == 0\">\r\n\t\t\t\t\t\t\t<span class=\"glyphicon glyphicon-home menu-image\"></span>\r\n\t\t\t\t\t\t\t<span>{{menu.label}}</span>\r\n\t\t\t\t\t\t</a>\r\n\t\t\t\t\t\t<a class=\"nav-link dropdown-toggle\" *ngIf=\"menu.children.length > 0\" href=\"#\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">\r\n\t\t\t\t\t\t\t<span class=\"{{menu.image}}\"></span>\r\n\t\t\t\t\t\t\t<span>{{menu.label}}</span>\r\n\t\t\t\t\t\t\t<span class=\"caret\"></span>\r\n\t\t\t\t\t\t</a>\r\n\t\t\t\t\t\t<div class=\"dropdown-menu\" *ngIf=\"menu.children.length > 0\">\r\n\t\t\t\t\t\t\t<a [routerLink]=\"[submenu.url]\" *ngFor=\"let submenu of menu.children;\" class=\"dropdown-item\">\r\n\t\t\t\t\t\t\t\t<span class=\"{{submenu.image}}\"></span>\r\n\t\t\t\t\t\t\t\t<span>{{submenu.label}}</span>\r\n\t\t\t\t\t\t\t</a>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</li>\r\n\t\t\t\t</ul>\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t\r\n\t\t\t\t<div class=\"btn-group navbar-user-detail\" *ngIf=\"isLogged\" >\r\n\t\t\t\t  <button type=\"button\" class=\"btn user-toggle-button\" data-toggle=\"dropdown\" data-display=\"static\" aria-haspopup=\"true\" aria-expanded=\"false\">\r\n\t\t\t\t    <span>{{currentUser.fullName}}</span>\r\n\t\t\t\t  </button>\r\n\t\t\t\t  <div class=\"dropdown-menu dropdown-menu-lg-right\">\r\n\t\t\t\t    <button (click)=\"test()\" class=\"dropdown-item\" type=\"button\">Profile</button>\r\n\t\t\t\t    <div class=\"dropdown-divider\"></div>\r\n\t\t\t\t    <button (click)=\"logout()\"  class=\"dropdown-item\" type=\"button\">Logout</button>\r\n\t\t\t\t  </div>\r\n\t\t\t\t</div>\r\n\t\t\t\t\t\t\r\n\t\t\t</div>\r\n\t\t</nav>    \t\t\t    \r\n\t\t\r\n\t        \r\n</header>\r\n\r\n<div style=\"background-color: #eeeeee;\">\r\n\t<ul class=\"breadcrumb\">\r\n\t\t<li>\r\n\t\t\t<span>Home</span>\r\n\t\t</li>\r\n\t\t<li>\r\n\t\t\t<button (click)=\"test()\" type=\"button\">Test</button>\r\n\t\t</li>\r\n\t</ul>\r\n\t\r\n\t\r\n</div>\r\n\t");
 
 /***/ }),
 
@@ -698,40 +698,37 @@ let AppComponent = class AppComponent {
         translate.get('site.title').subscribe((res) => {
             this.titleService.setTitle(res);
         });
+        //this.currentSessionDataObs = this.global.currentSessionDataObs;
         this.router.routeReuseStrategy.shouldReuseRoute = function () {
             return false;
         };
         this.router.events.subscribe((evt) => {
             if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_2__["NavigationEnd"]) {
-                // trick the Router into believing it's last link wasn't previously loaded
-                this.router.navigated = false;
-                if (this.global.currentSessionDataValue && this.global.currentSessionDataValue.isLogged) {
-                    this.appMenus = this.global.currentSessionDataValue.app.menus;
-                    this.appCurrentUser = this.global.currentSessionDataValue.user.currentUser;
-                    this.appIsLogged = this.global.currentSessionDataValue.isLogged;
-                    console.log("set gloabl-data from app-comp. appIsLogged: " + this.appIsLogged);
+                if (this.autService.isLoggedIn === true && this.appCurrentUser === null) {
+                    this.global.loadAllSetting(null);
                 }
-                else {
-                    this.appMenus = [];
-                    this.appCurrentUser = null;
-                    this.appIsLogged = false;
-                }
-                //alert("app-comp globaldata navigate. menus:" + this.appMenus.length);
+                //alert("app-comp navigate. menus:" + this.appMenus.length);
             }
         });
     }
     ngOnInit() {
-        if (this.global.currentSessionDataValue && this.global.currentSessionDataValue.isLogged) {
-            this.appMenus = this.global.currentSessionDataValue.app.menus;
-            this.appCurrentUser = this.global.currentSessionDataValue.user.currentUser;
-            this.appIsLogged = this.global.currentSessionDataValue.isLogged;
-            console.log("set gloabl-data from app-comp. appIsLogged: " + this.appIsLogged);
-        }
-        else {
-            this.appMenus = [];
-            this.appCurrentUser = null;
-            this.appIsLogged = false;
-        }
+        this.subscribeToGeneralData();
+    }
+    subscribeToGeneralData() {
+        this.global.currentSessionDataSubject.subscribe((data) => {
+            //alert("from app-comp: \n" + JSON.stringify(data));
+            if (data && data != null) {
+                this.appMenus = data.app.menus;
+                this.appCurrentUser = data.user.currentUser;
+                this.appIsLogged = data.isLogged;
+                console.log("set gloabl-data from app-comp. appIsLogged: " + this.appIsLogged);
+            }
+            else {
+                this.appMenus = [];
+                this.appCurrentUser = null;
+                this.appIsLogged = false;
+            }
+        });
     }
     showLoading() {
         this.appShowLoading = true;
@@ -758,11 +755,6 @@ AppComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     })
 ], AppComponent);
 
-/*
-Copyright Google LLC. All Rights Reserved.
-Use of this source code is governed by an MIT-style license that
-can be found in the LICENSE file at http://angular.io/license
-*/ 
 
 
 /***/ }),
@@ -897,7 +889,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _login__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./login */ "./src/app/login/index.ts");
 /* harmony import */ var _workflow_create_workflow_create_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./workflow-create/workflow-create.component */ "./src/app/workflow-create/workflow-create.component.ts");
 /* harmony import */ var _workflow_list_workflow_list_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./workflow-list/workflow-list.component */ "./src/app/workflow-list/workflow-list.component.ts");
-/* harmony import */ var _helper__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./helper */ "./src/app/helper/index.ts");
+/* harmony import */ var _services_authentication_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./services/authentication.service */ "./src/app/services/authentication.service.ts");
 
 
 
@@ -905,15 +897,16 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+//import { AuthGuard } from './helper';
 
 const routes = [
-    { path: '', component: _home__WEBPACK_IMPORTED_MODULE_2__["HomeComponent"], canActivate: [_helper__WEBPACK_IMPORTED_MODULE_7__["AuthGuard"]] },
-    { path: 'about', component: _about__WEBPACK_IMPORTED_MODULE_3__["AboutComponent"], canActivate: [_helper__WEBPACK_IMPORTED_MODULE_7__["AuthGuard"]] },
-    { path: 'workflow/list', component: _workflow_list_workflow_list_component__WEBPACK_IMPORTED_MODULE_6__["WorkflowListComponent"], canActivate: [_helper__WEBPACK_IMPORTED_MODULE_7__["AuthGuard"]] },
-    { path: 'workflow/create', component: _workflow_create_workflow_create_component__WEBPACK_IMPORTED_MODULE_5__["WorkflowCreateComponent"], canActivate: [_helper__WEBPACK_IMPORTED_MODULE_7__["AuthGuard"]] },
+    { path: '', component: _home__WEBPACK_IMPORTED_MODULE_2__["HomeComponent"], canActivate: [_services_authentication_service__WEBPACK_IMPORTED_MODULE_7__["AuthenticationService"]] },
+    { path: 'about', component: _about__WEBPACK_IMPORTED_MODULE_3__["AboutComponent"], canActivate: [_services_authentication_service__WEBPACK_IMPORTED_MODULE_7__["AuthenticationService"]] },
+    { path: 'workflow/list', component: _workflow_list_workflow_list_component__WEBPACK_IMPORTED_MODULE_6__["WorkflowListComponent"], canActivate: [_services_authentication_service__WEBPACK_IMPORTED_MODULE_7__["AuthenticationService"]] },
+    { path: 'workflow/create', component: _workflow_create_workflow_create_component__WEBPACK_IMPORTED_MODULE_5__["WorkflowCreateComponent"], canActivate: [_services_authentication_service__WEBPACK_IMPORTED_MODULE_7__["AuthenticationService"]] },
     { path: 'auth/login', component: _login__WEBPACK_IMPORTED_MODULE_4__["LoginComponent"] },
     // otherwise redirect to home
-    { path: '**', redirectTo: '', canActivate: [_helper__WEBPACK_IMPORTED_MODULE_7__["AuthGuard"]] }
+    { path: '**', redirectTo: '', canActivate: [_services_authentication_service__WEBPACK_IMPORTED_MODULE_7__["AuthenticationService"]] }
 ];
 const appRoutingModule = _angular_router__WEBPACK_IMPORTED_MODULE_1__["RouterModule"].forRoot(routes);
 
@@ -973,71 +966,6 @@ Copyright Google LLC. All Rights Reserved.
 Use of this source code is governed by an MIT-style license that
 can be found in the LICENSE file at http://angular.io/license
 */ 
-
-
-/***/ }),
-
-/***/ "./src/app/helper/auth.guard.ts":
-/*!**************************************!*\
-  !*** ./src/app/helper/auth.guard.ts ***!
-  \**************************************/
-/*! exports provided: AuthGuard */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthGuard", function() { return AuthGuard; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
-/* harmony import */ var _services_authentication_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/authentication.service */ "./src/app/services/authentication.service.ts");
-
-
-
-
-let AuthGuard = class AuthGuard {
-    constructor(router, authenticationService) {
-        this.router = router;
-        this.authenticationService = authenticationService;
-    }
-    canActivate(route, state) {
-        const currentUser = this.authenticationService.currentUserValue;
-        if (currentUser) {
-            // logged in so return true
-            return true;
-        }
-        // not logged in so redirect to login page with the return url
-        this.router.navigate(['auth/login'], { queryParams: { returnUrl: state.url } });
-        return false;
-    }
-};
-AuthGuard.ctorParameters = () => [
-    { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] },
-    { type: _services_authentication_service__WEBPACK_IMPORTED_MODULE_3__["AuthenticationService"] }
-];
-AuthGuard = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({ providedIn: 'root' })
-], AuthGuard);
-
-
-
-/***/ }),
-
-/***/ "./src/app/helper/index.ts":
-/*!*********************************!*\
-  !*** ./src/app/helper/index.ts ***!
-  \*********************************/
-/*! exports provided: AuthGuard */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _auth_guard__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./auth.guard */ "./src/app/helper/auth.guard.ts");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AuthGuard", function() { return _auth_guard__WEBPACK_IMPORTED_MODULE_1__["AuthGuard"]; });
-
-
-
 
 
 /***/ }),
@@ -1152,7 +1080,7 @@ let LoginComponent = class LoginComponent {
         this.loginForm = this.formBuilder.group({
             username: ['admin@iflow.de', _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required],
             password: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required],
-            companyid: ['test-company-1', _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required],
+            companyid: [localStorage.getItem('companyId'), _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required],
         });
     }
     get forms() { return this.loginForm.controls; }
@@ -1168,6 +1096,7 @@ let LoginComponent = class LoginComponent {
     processLoginResult(loginResponse) {
         this.loginResponse = loginResponse;
         if (this.loginResponse.res === 'ok') {
+            localStorage.setItem('companyId', this.loginForm.controls["companyid"].value);
             this.global.loadAllSetting(this);
         }
         else {
@@ -1411,17 +1340,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
-/* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../services/global.service */ "./src/app/services/global.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+/* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../services/global.service */ "./src/app/services/global.service.ts");
+/* harmony import */ var _loading_service_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./loading-service.service */ "./src/app/services/loading-service.service.ts");
+
+
 
 
 
 
 
 let AuthenticationService = class AuthenticationService {
-    constructor(http, global) {
+    constructor(http, global, router, loadingService) {
         this.http = http;
         this.global = global;
-        this.currentUserSubject = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](JSON.parse(localStorage.getItem('currentUser')));
+        this.router = router;
+        this.loadingService = loadingService;
+        this.isLoggedIn = false;
+        this.currentUserSubject = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](null);
     }
     get currentUserValue() {
         return this.currentUserSubject.value;
@@ -1442,28 +1378,70 @@ let AuthenticationService = class AuthenticationService {
         };
         this.http.post("/auth/authenticate", loginData, httpOptions).subscribe(val => {
             var loginResponse = val;
-            localStorage.setItem('currentUser', JSON.stringify(loginResponse.user));
             this.currentUserSubject.next(loginResponse.user);
             this.currentUserSubject.complete();
+            this.isLoggedIn = true;
             loginComponent.processLoginResult(val);
         }, response => {
             this.currentUserSubject.next(null);
             this.currentUserSubject.complete();
+            this.isLoggedIn = false;
             loginComponent.processFailedResult(response);
         }, () => {
             loginComponent.processEndLoading();
         });
     }
+    checkLoginState(returnUrl, router) {
+        this.loadingService.showLoading();
+        this.global.loadAllSettingObserv().subscribe((generalData) => {
+            console.log("GET call successful generaldata", generalData);
+            if (generalData.isLogged) {
+                this.isLoggedIn = true;
+                this.currentUserSubject.next(generalData.user.currentUser);
+                this.currentUserSubject.complete();
+                this.global.setGeneralData(generalData);
+                //alert("from authentication- redirect to : " + returnUrl + ": \n" + JSON.stringify(generalData));
+                router.navigate([returnUrl]);
+            }
+            else {
+                this.isLoggedIn = false;
+                this.currentUserSubject.next(null);
+                this.currentUserSubject.complete();
+                //alert("from authentication- redirect to login : \n" + JSON.stringify(generalData));
+                router.navigate(['auth/login'], { queryParams: { returnUrl: returnUrl } });
+            }
+        }, response => {
+            console.log("Error in read menu list", response);
+            this.isLoggedIn = false;
+            this.currentUserSubject.next(null);
+            this.currentUserSubject.complete();
+            router.navigate(['auth/login'], { queryParams: { returnUrl: returnUrl } });
+        }, () => {
+            this.loadingService.hideLoading();
+        });
+    }
     logout() {
-        localStorage.removeItem('currentUser');
         this.global.clear();
         this.currentUserSubject.next(null);
         this.currentUserSubject.complete();
+        window.location.assign("/logout");
+    }
+    canActivate(route, state) {
+        //alert("check authentication: isLoggedIn: " + this.isLoggedIn);
+        if (this.isLoggedIn === true) {
+            return true;
+        }
+        this.checkLoginState(state.url, this.router);
+        // not logged in so redirect to login page with the return url
+        //this.router.navigate(['auth/login'], { queryParams: { returnUrl: state.url } });
+        return false;
     }
 };
 AuthenticationService.ctorParameters = () => [
     { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"] },
-    { type: _services_global_service__WEBPACK_IMPORTED_MODULE_4__["GlobalService"] }
+    { type: _services_global_service__WEBPACK_IMPORTED_MODULE_5__["GlobalService"] },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"] },
+    { type: _loading_service_service__WEBPACK_IMPORTED_MODULE_6__["LoadingServiceService"] }
 ];
 AuthenticationService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({ providedIn: 'root' })
@@ -1535,37 +1513,41 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let GlobalService = class GlobalService {
+    //public currentSessionDataObs :Observable<GeneralData>;		
     constructor(http, loadingService) {
         this.http = http;
         this.loadingService = loadingService;
-        this.currentSessionDataSubject = new rxjs__WEBPACK_IMPORTED_MODULE_3__["BehaviorSubject"](JSON.parse(localStorage.getItem('currentSessionData')));
-        this.currentSessionDataObs = this.currentSessionDataSubject.asObservable();
+        this.currentSessionDataSubject = new rxjs__WEBPACK_IMPORTED_MODULE_3__["BehaviorSubject"](null);
+        //this.currentSessionDataSubject = new BehaviorSubject<GeneralData>(null);
+        //this.currentSessionDataObs = this.currentSessionDataSubject.asObservable();		
     }
-    get currentSessionDataValue() {
+    /*public get currentSessionDataValue(): GeneralData {
         return this.currentSessionDataSubject.value;
-    }
+    }*/
     loadAllSetting(login) {
         this.loadingService.showLoading();
-        this.http.get("/general/data/generaldatat").subscribe(val => {
-            console.log("GET call successful generaldata", val);
-            //alert("GET call generaldata");
-            var generalData = val;
-            localStorage.setItem('currentSessionData', JSON.stringify(generalData));
+        this.http.get("/general/data/generaldatat").subscribe((generalData) => {
+            console.log("GET call successful generaldata", generalData);
             this.currentSessionDataSubject.next(generalData);
         }, response => {
             console.log("Error in read menu list", response);
-            //alert("Error in read menu list: "+ response);
         }, () => {
             if (login != null) {
                 login.finishGeneralDataLoading();
             }
-            //alert("Finish call successful generaldata");
             this.currentSessionDataSubject.complete();
             this.loadingService.hideLoading();
         });
     }
+    setGeneralData(generalData) {
+        this.currentSessionDataSubject.next(generalData);
+        this.currentSessionDataSubject.complete();
+    }
+    loadAllSettingObserv() {
+        return this.http.get("/general/data/generaldatat");
+    }
     clear() {
-        localStorage.removeItem('currentSessionData');
+        //alert("clear global");
         this.currentSessionDataSubject.next(null);
         this.currentSessionDataSubject.complete();
     }
@@ -1802,15 +1784,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
-/* harmony import */ var _services_loading_service_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/loading-service.service */ "./src/app/services/loading-service.service.ts");
+/* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/global.service */ "./src/app/services/global.service.ts");
 
 
 
 
 let TopBarComponent = class TopBarComponent {
-    constructor(router, loadingService) {
+    constructor(router, global) {
         this.router = router;
-        this.loadingService = loadingService;
+        this.global = global;
         this.loggingOut = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
     }
     ngOnInit() {
@@ -1819,12 +1801,12 @@ let TopBarComponent = class TopBarComponent {
         this.loggingOut.emit(true);
     }
     test() {
-        this.loadingService.showLoading();
+        this.global.loadAllSetting(null);
     }
 };
 TopBarComponent.ctorParameters = () => [
     { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] },
-    { type: _services_loading_service_service__WEBPACK_IMPORTED_MODULE_3__["LoadingServiceService"] }
+    { type: _services_global_service__WEBPACK_IMPORTED_MODULE_3__["GlobalService"] }
 ];
 tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])('menus')

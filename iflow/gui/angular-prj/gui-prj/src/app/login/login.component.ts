@@ -44,8 +44,9 @@ import { AuthenticationService } from '../services';
 		  this.loginForm = this.formBuilder.group({
 	            username: ['admin@iflow.de', Validators.required],
 	            password: ['', Validators.required],
-	            companyid: ['test-company-1', Validators.required],
+	            companyid: [localStorage.getItem('companyId'), Validators.required],
 	        });
+		  
 	  }
 	  
 	  get forms() { return this.loginForm.controls; }
@@ -75,6 +76,7 @@ import { AuthenticationService } from '../services';
 	  		
             if(this.loginResponse.res === 'ok'){
             	
+            	localStorage.setItem('companyId', this.loginForm.controls["companyid"].value);
             	this.global.loadAllSetting(this);
             	
             }

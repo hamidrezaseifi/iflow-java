@@ -2,25 +2,26 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import { Title } from '@angular/platform-browser';
+import { Observable } from 'rxjs';
 
 import { GlobalService } from './services/global.service';
 import { AuthenticationService } from './services';
 
 
-import { User, MenuItem } from './ui-models';
+import { User, MenuItem, GeneralData } from './ui-models';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: [ './app.component.css' ],
-providers: [ GlobalService ]
+  providers: [ GlobalService ]
 })
 export class AppComponent implements OnInit  {
 	
 	appMenus: MenuItem[] = [];
 	appCurrentUser: User = null;
 	appIsLogged: boolean = false;
-
+	
 	appShowLoading: boolean = false;
 	
 
@@ -42,49 +43,50 @@ export class AppComponent implements OnInit  {
         translate.get('site.title').subscribe((res: string) => {
         	this.titleService.setTitle( res );
         });
-		
+        
+        //this.currentSessionDataObs = this.global.currentSessionDataObs;
+        		
 		this.router.routeReuseStrategy.shouldReuseRoute = function(){
  	        return false;
 		}
 
 		this.router.events.subscribe((evt) => {
  	        if (evt instanceof NavigationEnd) {
- 	           // trick the Router into believing it's last link wasn't previously loaded
- 	           this.router.navigated = false;
+ 	        	
+ 	        	if(this.autService.isLoggedIn === true && this.appCurrentUser === null){
+ 	        		this.global.loadAllSetting(null);
+ 	        	}
  	           
- 	          if(this.global.currentSessionDataValue && this.global.currentSessionDataValue.isLogged){
- 	 			this.appMenus = this.global.currentSessionDataValue.app.menus;
- 	 	  		this.appCurrentUser = this.global.currentSessionDataValue.user.currentUser;
- 	 	  		this.appIsLogged = this.global.currentSessionDataValue.isLogged; 
- 	 	  		console.log("set gloabl-data from app-comp. appIsLogged: " + this.appIsLogged);
-	 	 	  }
- 	          else{
-				this.appMenus = [];
-				this.appCurrentUser = null;
-				this.appIsLogged = false;
- 	          }
- 	         //alert("app-comp globaldata navigate. menus:" + this.appMenus.length);
+ 	         //alert("app-comp navigate. menus:" + this.appMenus.length);
  	        }
 		});
  	     
 	}
 	
 	ngOnInit() {
-		if(this.global.currentSessionDataValue && this.global.currentSessionDataValue.isLogged){
-			this.appMenus = this.global.currentSessionDataValue.app.menus;
-	  		this.appCurrentUser = this.global.currentSessionDataValue.user.currentUser;
-	  		this.appIsLogged = this.global.currentSessionDataValue.isLogged; 
-	  		console.log("set gloabl-data from app-comp. appIsLogged: " + this.appIsLogged);
-		}
-		else{
-			this.appMenus = [];
-			this.appCurrentUser = null;
-			this.appIsLogged = false;
-		}
 		
+        
+		this.subscribeToGeneralData();
 	
 	}
 
+	private subscribeToGeneralData(){
+		this.global.currentSessionDataSubject.subscribe((data : GeneralData) => {
+        	//alert("from app-comp: \n" + JSON.stringify(data));
+			if(data && data != null){
+ 	 			this.appMenus = data.app.menus;
+ 	 	  		this.appCurrentUser = data.user.currentUser;
+ 	 	  		this.appIsLogged = data.isLogged; 
+ 	 	  		console.log("set gloabl-data from app-comp. appIsLogged: " + this.appIsLogged);
+			}
+			else{
+				this.appMenus = [];
+				this.appCurrentUser = null;
+				this.appIsLogged = false;
+			}
+		  });
+	}
+	
 	showLoading(){
 		
 		this.appShowLoading = true;
@@ -100,8 +102,3 @@ export class AppComponent implements OnInit  {
 }
 
 
-/*
-Copyright Google LLC. All Rights Reserved.
-Use of this source code is governed by an MIT-style license that
-can be found in the LICENSE file at http://angular.io/license
-*/

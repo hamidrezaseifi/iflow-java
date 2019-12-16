@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoadingServiceService } from '../services/loading-service.service';
+import { GlobalService } from '../services/global.service';
 
 import { AuthenticationService } from '../services';
 import { User, MenuItem } from '../ui-models';
@@ -21,7 +22,7 @@ export class TopBarComponent implements OnInit {
 
 	constructor(
 		    private router: Router,
-		    private loadingService: LoadingServiceService,
+		    private global: GlobalService,
 		) { 
   		
  	}
@@ -36,8 +37,12 @@ export class TopBarComponent implements OnInit {
 		
 	}		
 
+	showProfile(){
+		
+	}
+	
 	test(){
-		this.loadingService.showLoading();
+		this.global.loadAllSetting(null);
 		
 	}		
 }

@@ -39,7 +39,7 @@ public class GuiPageControllerBase extends GuiLogedControllerBase {
   @Override
   protected String getCurrentRelativeUrl() {
     ServletUriComponentsBuilder builder = ServletUriComponentsBuilder.fromCurrentContextPath();
-    final String root = builder.build().toUriString();
+    final String                root    = builder.build().toUriString();
     builder = ServletUriComponentsBuilder.fromCurrentRequestUri();
     String path = builder.build().toUriString();
     path = path.replace(root, "");
@@ -47,10 +47,9 @@ public class GuiPageControllerBase extends GuiLogedControllerBase {
     return path;
   }
 
-  @Override
   @ModelAttribute
-  public void addAttributes(final Model model, final HttpSession session, final HttpServletResponse response,
-      final HttpServletRequest request) throws Exception {
+  public void addAttributes(final Model model, final HttpSession session, final HttpServletResponse response, final HttpServletRequest request)
+      throws Exception {
 
     if (this.getSessionUserInfo() == null || !this.getSessionUserInfo().isValid()) {
       response.sendRedirect(GuiSecurityConfigurations.LOGIN_URL);

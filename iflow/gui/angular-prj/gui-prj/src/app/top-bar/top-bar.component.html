@@ -31,7 +31,7 @@
 				    <span>{{currentUser.fullName}}</span>
 				  </button>
 				  <div class="dropdown-menu dropdown-menu-lg-right">
-				    <button (click)="test()" class="dropdown-item" type="button">Profile</button>
+				    <button (click)="showProfile()" class="dropdown-item" type="button">Profile</button>
 				    <div class="dropdown-divider"></div>
 				    <button (click)="logout()"  class="dropdown-item" type="button">Logout</button>
 				  </div>
@@ -48,6 +48,11 @@
 		<li>
 			<span>Home</span>
 		</li>
+		<li>
+			<button (click)="test()" type="button">Test</button>
+		</li>
 	</ul>
+	
+	
 </div>
 	

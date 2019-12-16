@@ -7,54 +7,58 @@ import { TopBarComponent } from '../top-bar/top-bar.component';
 import { ILoginComponent } from '../_components';
 import { LoadingServiceService } from './loading-service.service';
 
-
-
 @Injectable({ providedIn: 'root' })
 export class GlobalService {
 	
-	public currentSessionDataSubject: BehaviorSubject<GeneralData>;
-	public currentSessionDataObs :Observable<GeneralData>;		
+	public currentSessionDataSubject: BehaviorSubject<GeneralData> = new BehaviorSubject<GeneralData>(null);
+	//public currentSessionDataObs :Observable<GeneralData>;		
 
 	constructor(private http:HttpClient, private loadingService: LoadingServiceService,) { 
-		this.currentSessionDataSubject = new BehaviorSubject<GeneralData>(JSON.parse(localStorage.getItem('currentSessionData')));
-        this.currentSessionDataObs = this.currentSessionDataSubject.asObservable();		
+		//this.currentSessionDataSubject = new BehaviorSubject<GeneralData>(null);
+        //this.currentSessionDataObs = this.currentSessionDataSubject.asObservable();		
 	}
 	
-    public get currentSessionDataValue(): GeneralData {
+    /*public get currentSessionDataValue(): GeneralData {
         return this.currentSessionDataSubject.value;
-    }
+    }*/
 	
-	loadAllSetting(login: ILoginComponent){
+	loadAllSetting(login: ILoginComponent, ){
 		this.loadingService.showLoading();
 		
-	  this.http.get("/general/data/generaldatat").subscribe(
-		        val => {
-		            console.log("GET call successful generaldata", val);
-		            //alert("GET call generaldata");
-		            var generalData = <GeneralData>val;
+		this.http.get("/general/data/generaldatat").subscribe(
+				(generalData :GeneralData) => {
+		            console.log("GET call successful generaldata", generalData);
 		            
-		        	localStorage.setItem('currentSessionData', JSON.stringify(generalData));
 		        	this.currentSessionDataSubject.next(generalData);
 		        	
 		        },
 		        response => {
 		            console.log("Error in read menu list", response);
-		            //alert("Error in read menu list: "+ response);
+		            
 		        },
 		        () => {
 		            if(login != null){
 		            	login.finishGeneralDataLoading();
 		            }
-		            //alert("Finish call successful generaldata");
+		            
 		            this.currentSessionDataSubject.complete();
 		            
 		            this.loadingService.hideLoading();
 		        }
-		    );
+		);
+	}
+	
+	setGeneralData(generalData :GeneralData){
+		this.currentSessionDataSubject.next(generalData);
+		this.currentSessionDataSubject.complete();
 	}
   
-	clear(){
-		localStorage.removeItem('currentSessionData');
+	loadAllSettingObserv(){		
+		return this.http.get("/general/data/generaldatat");
+	}
+  
+	clear(){	
+		//alert("clear global");
 		this.currentSessionDataSubject.next(null);
 		this.currentSessionDataSubject.complete();
 	}

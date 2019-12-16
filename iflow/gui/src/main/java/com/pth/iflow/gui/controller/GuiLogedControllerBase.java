@@ -4,20 +4,13 @@ import java.net.MalformedURLException;
 import java.util.Collection;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.pth.iflow.common.enums.EWorkflowType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.common.rest.IflowRestPaths.GuiModule;
-import com.pth.iflow.gui.configurations.GuiSecurityConfigurations;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.Company;
 import com.pth.iflow.gui.models.User;
@@ -44,17 +37,6 @@ public class GuiLogedControllerBase {
     path = path.replace(root, "");
 
     return path;
-  }
-
-  @ModelAttribute
-  public void addAttributes(final Model model, final HttpSession session, final HttpServletResponse response, final HttpServletRequest request)
-      throws Exception {
-
-    if (this.sessionUserInfo == null || !this.sessionUserInfo.isValid()) {
-      response.sendRedirect(GuiSecurityConfigurations.LOGIN_URL);
-
-    }
-
   }
 
   protected SessionUserInfo getSessionUserInfo() {
