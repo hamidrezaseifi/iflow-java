@@ -23,39 +23,35 @@
 				</ul>				
 								
 			</div>
-			<div style="border: 1px solid gray; padding: 5px; background-color: #f1f1f1;">{{debugSearchFilter}}</div>
+			<div *ngIf="showDebug" style="border: 1px solid gray; padding: 5px; background-color: #f1f1f1;">{{debugSearchFilter}}</div>
 			
-		    <table class="table table-bordered table-responsive iflow-table">
-		    	<thead class="thead-dark">
-		    		<tr>
-		    			<th scope="col">{{ 'workflow-type' | translate:param }}</th>
-		    			<th scope="col">{{ 'workflow-current-step' | translate:param }}</th>
-		    			<th scope="col">{{ 'workflow-status' | translate:param }}</th>
-		    			<th scope="col">{{ 'workflow-assignto' | translate:param }}</th>
-		    			<th scope="col"></th>
-		    		</tr>
-		    	</thead>
-		    	<tbody>
-		     		<tr *ngFor="let item of resultWorlflows;">
+			<table class="table table-striped" [svData]="resultWorlflows" #sv="svDataTable" [svRowsOnPage]="5" svSortBy="name" svSortOrder="asc">
+			    <thead>
+			    <tr>
+			        <th><sv-default-sorter by="workflowType.title">{{ 'workflow-type' | translate:param }}</sv-default-sorter></th>
+			        <th><sv-default-sorter by="currentStep.title">{{ 'workflow-current-step' | translate:param }}</sv-default-sorter></th>
+			        <th><sv-default-sorter by="status">{{ 'workflow-status' | translate:param }}</sv-default-sorter></th>
+			        <th><sv-default-sorter by="assignToUserFullName">{{ 'workflow-assignto' | translate:param }}</sv-default-sorter></th>
+			        <th>
+			            <sv-default-sorter by="updated">{{ 'workflow-updated' | translate:param }}</sv-default-sorter>
+			        </th>
+			        <th></th>
+			    </tr>
+			    </thead>
+			    <tbody>
+				    <tr *ngFor="let item of sv.data">
 		    			<td scope="row">{{item.workflowType.title}}</td>
 		    			<td>{{item.currentStep.title}}</td>
 		    			<td>{{item.status}}</td>
 		    			<td>{{item.assignToUserFullName}}</td>
+		    			<td></td>
 		    			<td><a class="tool-link" [routerLink]="['/workflow/edit/' + item.workflowType.identity + '/' + item.identity + '/' + item.currentStep.identity]"><i class="material-icons">edit</i></a></td>
-		    		</tr>
-		     		
-		    	
-		    	</tbody>
-		    </table>
-		    
-		    <div style="min-height: 20px; border: 1px solid gray; ">
-		    {{searchFilter}}
-		    </div>
-		    
-		    <script type="text/javascript">
-				var loadInitialUrl = "/workflow/general/data/initsearch";
-				var loadUrl = "/workflow/general/data/search";
-		    </script>
+				    </tr>
+				    <tr *ngIf="resultWorlflows.length == 0">
+		    			<td colspan="6">{{ 'workflow-no-result-found' | translate:param }}</td>
+				    </tr>
+			    </tbody>
+			</table>
 		
 		
 		</div>

@@ -149,7 +149,7 @@
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("\t\t<div class=\"content-container\">\r\n\t\t\t<div class=\"page-toolbar\">\r\n\t\t\t\t<div class=\"page-title\">{{ 'menu-workflow-list' | translate:param }}</div>\r\n\t\t\t\t<button class=\"toolbar-button\" (click)=\"reload()\"><i class=\"material-icons\">refresh</i></button>\r\n\t\t\t\t<a class=\"toolbar-link\" href=\"/workflow/create\"><i class=\"material-icons\">playlist_add</i></a>\r\n\t\t\t\t\r\n\t\t\t\t<ul class=\"nav nav-pills search-toolbar\">\r\n\t\t\t\t\t<li class=\"nav-item dropdown\">\r\n\t\t\t\t\t\t<a class=\"nav-link dropdown-toggle\" data-toggle=\"dropdown\" href=\"#\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">Status</a>\r\n\t\t\t\t\t\t<div class=\"dropdown-menu\">\r\n\t\t\t\t\t\t\t<div *ngFor=\"let wstatus of statusList;\" class=\"dropdown-item\">\r\n\t\t\t\t\t\t\t\t<input type=\"checkbox\" class=\"form-check-input\" [checked]=\"isStatusSelected(wstatus)\" (click)=\"toggleStatusSelected(wstatus)\"  id=\"status-check-{{wstatus}}\">\r\n\t\t\t\t\t\t\t\t<label class=\"form-check-label\" for=\"status-check-{{wstatus}}\">{{wstatus}}</label>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</li>\r\n\t\t\t\t  \t<li class=\"nav-item\">\r\n\t\t\t\t  \t\t<div class=\"dropdown-item search-toolbar-item\">\r\n\t\t\t\t\t\t\t<input type=\"checkbox\" class=\"toggle-checkbox form-check-input\" [checked]=\"isMeAssigned\" [(ngModel)]=\"isMeAssigned\"  id=\"me-assigned-check\">\r\n\t\t\t\t\t\t\t<label class=\"form-check-label\" for=\"me-assigned-check\">{{ 'workflow-assigned-me' | translate:param }}</label>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t  \t</li>\r\n\t\t\t\t</ul>\t\t\t\t\r\n\t\t\t\t\t\t\t\t\r\n\t\t\t</div>\r\n\t\t\t<div style=\"border: 1px solid gray; padding: 5px; background-color: #f1f1f1;\">{{debugSearchFilter}}</div>\r\n\t\t\t\r\n\t\t    <table class=\"table table-bordered table-responsive iflow-table\">\r\n\t\t    \t<thead class=\"thead-dark\">\r\n\t\t    \t\t<tr>\r\n\t\t    \t\t\t<th scope=\"col\">{{ 'workflow-type' | translate:param }}</th>\r\n\t\t    \t\t\t<th scope=\"col\">{{ 'workflow-current-step' | translate:param }}</th>\r\n\t\t    \t\t\t<th scope=\"col\">{{ 'workflow-status' | translate:param }}</th>\r\n\t\t    \t\t\t<th scope=\"col\">{{ 'workflow-assignto' | translate:param }}</th>\r\n\t\t    \t\t\t<th scope=\"col\"></th>\r\n\t\t    \t\t</tr>\r\n\t\t    \t</thead>\r\n\t\t    \t<tbody>\r\n\t\t     \t\t<tr *ngFor=\"let item of resultWorlflows;\">\r\n\t\t    \t\t\t<td scope=\"row\">{{item.workflowType.title}}</td>\r\n\t\t    \t\t\t<td>{{item.currentStep.title}}</td>\r\n\t\t    \t\t\t<td>{{item.status}}</td>\r\n\t\t    \t\t\t<td>{{item.assignToUserFullName}}</td>\r\n\t\t    \t\t\t<td><a class=\"tool-link\" [routerLink]=\"['/workflow/edit/' + item.workflowType.identity + '/' + item.identity + '/' + item.currentStep.identity]\"><i class=\"material-icons\">edit</i></a></td>\r\n\t\t    \t\t</tr>\r\n\t\t     \t\t\r\n\t\t    \t\r\n\t\t    \t</tbody>\r\n\t\t    </table>\r\n\t\t    \r\n\t\t    <div style=\"min-height: 20px; border: 1px solid gray; \">\r\n\t\t    {{searchFilter}}\r\n\t\t    </div>\r\n\t\t    \r\n\t\t    <script type=\"text/javascript\">\r\n\t\t\t\tvar loadInitialUrl = \"/workflow/general/data/initsearch\";\r\n\t\t\t\tvar loadUrl = \"/workflow/general/data/search\";\r\n\t\t    </script>\r\n\t\t\r\n\t\t\r\n\t\t</div>\r\n\r\n");
+            /* harmony default export */ __webpack_exports__["default"] = ("\t\t<div class=\"content-container\">\r\n\t\t\t<div class=\"page-toolbar\">\r\n\t\t\t\t<div class=\"page-title\">{{ 'menu-workflow-list' | translate:param }}</div>\r\n\t\t\t\t<button class=\"toolbar-button\" (click)=\"reload()\"><i class=\"material-icons\">refresh</i></button>\r\n\t\t\t\t<a class=\"toolbar-link\" href=\"/workflow/create\"><i class=\"material-icons\">playlist_add</i></a>\r\n\t\t\t\t\r\n\t\t\t\t<ul class=\"nav nav-pills search-toolbar\">\r\n\t\t\t\t\t<li class=\"nav-item dropdown\">\r\n\t\t\t\t\t\t<a class=\"nav-link dropdown-toggle\" data-toggle=\"dropdown\" href=\"#\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">Status</a>\r\n\t\t\t\t\t\t<div class=\"dropdown-menu\">\r\n\t\t\t\t\t\t\t<div *ngFor=\"let wstatus of statusList;\" class=\"dropdown-item\">\r\n\t\t\t\t\t\t\t\t<input type=\"checkbox\" class=\"form-check-input\" [checked]=\"isStatusSelected(wstatus)\" (click)=\"toggleStatusSelected(wstatus)\"  id=\"status-check-{{wstatus}}\">\r\n\t\t\t\t\t\t\t\t<label class=\"form-check-label\" for=\"status-check-{{wstatus}}\">{{wstatus}}</label>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</li>\r\n\t\t\t\t  \t<li class=\"nav-item\">\r\n\t\t\t\t  \t\t<div class=\"dropdown-item search-toolbar-item\">\r\n\t\t\t\t\t\t\t<input type=\"checkbox\" class=\"toggle-checkbox form-check-input\" [checked]=\"isMeAssigned\" [(ngModel)]=\"isMeAssigned\"  id=\"me-assigned-check\">\r\n\t\t\t\t\t\t\t<label class=\"form-check-label\" for=\"me-assigned-check\">{{ 'workflow-assigned-me' | translate:param }}</label>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t  \t</li>\r\n\t\t\t\t</ul>\t\t\t\t\r\n\t\t\t\t\t\t\t\t\r\n\t\t\t</div>\r\n\t\t\t<div *ngIf=\"showDebug\" style=\"border: 1px solid gray; padding: 5px; background-color: #f1f1f1;\">{{debugSearchFilter}}</div>\r\n\t\t\t\r\n\t\t\t<table class=\"table table-striped\" [svData]=\"resultWorlflows\" #sv=\"svDataTable\" [svRowsOnPage]=\"5\" svSortBy=\"name\" svSortOrder=\"asc\">\r\n\t\t\t    <thead>\r\n\t\t\t    <tr>\r\n\t\t\t        <th><sv-default-sorter by=\"workflowType.title\">{{ 'workflow-type' | translate:param }}</sv-default-sorter></th>\r\n\t\t\t        <th><sv-default-sorter by=\"currentStep.title\">{{ 'workflow-current-step' | translate:param }}</sv-default-sorter></th>\r\n\t\t\t        <th><sv-default-sorter by=\"status\">{{ 'workflow-status' | translate:param }}</sv-default-sorter></th>\r\n\t\t\t        <th><sv-default-sorter by=\"assignToUserFullName\">{{ 'workflow-assignto' | translate:param }}</sv-default-sorter></th>\r\n\t\t\t        <th>\r\n\t\t\t            <sv-default-sorter by=\"updated\">{{ 'workflow-updated' | translate:param }}</sv-default-sorter>\r\n\t\t\t        </th>\r\n\t\t\t        <th></th>\r\n\t\t\t    </tr>\r\n\t\t\t    </thead>\r\n\t\t\t    <tbody>\r\n\t\t\t\t    <tr *ngFor=\"let item of sv.data\">\r\n\t\t    \t\t\t<td scope=\"row\">{{item.workflowType.title}}</td>\r\n\t\t    \t\t\t<td>{{item.currentStep.title}}</td>\r\n\t\t    \t\t\t<td>{{item.status}}</td>\r\n\t\t    \t\t\t<td>{{item.assignToUserFullName}}</td>\r\n\t\t    \t\t\t<td></td>\r\n\t\t    \t\t\t<td><a class=\"tool-link\" [routerLink]=\"['/workflow/edit/' + item.workflowType.identity + '/' + item.identity + '/' + item.currentStep.identity]\"><i class=\"material-icons\">edit</i></a></td>\r\n\t\t\t\t    </tr>\r\n\t\t\t\t    <tr *ngIf=\"resultWorlflows.length == 0\">\r\n\t\t    \t\t\t<td colspan=\"6\">{{ 'workflow-no-result-found' | translate:param }}</td>\r\n\t\t\t\t    </tr>\r\n\t\t\t    </tbody>\r\n\t\t\t</table>\r\n\t\t\r\n\t\t\r\n\t\t</div>\r\n\r\n");
             /***/ 
         }),
         /***/ "./node_modules/tslib/tslib.es6.js": 
@@ -788,22 +788,24 @@
             /* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm2015/ngx-translate-core.js");
             /* harmony import */ var _ngx_translate_http_loader__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ngx-translate/http-loader */ "./node_modules/@ngx-translate/http-loader/fesm2015/ngx-translate-http-loader.js");
             /* harmony import */ var angular_resizable_element__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! angular-resizable-element */ "./node_modules/angular-resizable-element/fesm2015/angular-resizable-element.js");
-            /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
-            /* harmony import */ var _app_routing__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./app.routing */ "./src/app/app.routing.ts");
-            /* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./services/global.service */ "./src/app/services/global.service.ts");
-            /* harmony import */ var _services_authentication_service__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./services/authentication.service */ "./src/app/services/authentication.service.ts");
-            /* harmony import */ var _services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./services/workflow/workflow-message.service */ "./src/app/services/workflow/workflow-message.service.ts");
-            /* harmony import */ var _components__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./_components */ "./src/app/_components/index.ts");
-            /* harmony import */ var _top_bar_top_bar_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./top-bar/top-bar.component */ "./src/app/top-bar/top-bar.component.ts");
-            /* harmony import */ var _footer_footer_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./footer/footer.component */ "./src/app/footer/footer.component.ts");
-            /* harmony import */ var _message_bar_message_bar_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./message-bar/message-bar.component */ "./src/app/message-bar/message-bar.component.ts");
-            /* harmony import */ var _components_error_dialog_error_dialog_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./_components/error-dialog/error-dialog.component */ "./src/app/_components/error-dialog/error-dialog.component.ts");
-            /* harmony import */ var _components_loading_dialog_loading_dialog_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./_components/loading-dialog/loading-dialog.component */ "./src/app/_components/loading-dialog/loading-dialog.component.ts");
-            /* harmony import */ var _home__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./home */ "./src/app/home/index.ts");
-            /* harmony import */ var _about__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./about */ "./src/app/about/index.ts");
-            /* harmony import */ var _login__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./login */ "./src/app/login/index.ts");
-            /* harmony import */ var _wm_components_workflow_create_workflow_create_component__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./wm-components/workflow-create/workflow-create.component */ "./src/app/wm-components/workflow-create/workflow-create.component.ts");
-            /* harmony import */ var _wm_components_workflow_list_workflow_list_component__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./wm-components/workflow-list/workflow-list.component */ "./src/app/wm-components/workflow-list/workflow-list.component.ts");
+            /* harmony import */ var ng_angular8_datatable__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ng-angular8-datatable */ "./node_modules/ng-angular8-datatable/index.js");
+            /* harmony import */ var ng_angular8_datatable__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/ __webpack_require__.n(ng_angular8_datatable__WEBPACK_IMPORTED_MODULE_9__);
+            /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
+            /* harmony import */ var _app_routing__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./app.routing */ "./src/app/app.routing.ts");
+            /* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./services/global.service */ "./src/app/services/global.service.ts");
+            /* harmony import */ var _services_authentication_service__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./services/authentication.service */ "./src/app/services/authentication.service.ts");
+            /* harmony import */ var _services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./services/workflow/workflow-message.service */ "./src/app/services/workflow/workflow-message.service.ts");
+            /* harmony import */ var _components__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./_components */ "./src/app/_components/index.ts");
+            /* harmony import */ var _top_bar_top_bar_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./top-bar/top-bar.component */ "./src/app/top-bar/top-bar.component.ts");
+            /* harmony import */ var _footer_footer_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./footer/footer.component */ "./src/app/footer/footer.component.ts");
+            /* harmony import */ var _message_bar_message_bar_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./message-bar/message-bar.component */ "./src/app/message-bar/message-bar.component.ts");
+            /* harmony import */ var _components_error_dialog_error_dialog_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./_components/error-dialog/error-dialog.component */ "./src/app/_components/error-dialog/error-dialog.component.ts");
+            /* harmony import */ var _components_loading_dialog_loading_dialog_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./_components/loading-dialog/loading-dialog.component */ "./src/app/_components/loading-dialog/loading-dialog.component.ts");
+            /* harmony import */ var _home__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./home */ "./src/app/home/index.ts");
+            /* harmony import */ var _about__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./about */ "./src/app/about/index.ts");
+            /* harmony import */ var _login__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./login */ "./src/app/login/index.ts");
+            /* harmony import */ var _wm_components_workflow_create_workflow_create_component__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./wm-components/workflow-create/workflow-create.component */ "./src/app/wm-components/workflow-create/workflow-create.component.ts");
+            /* harmony import */ var _wm_components_workflow_list_workflow_list_component__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./wm-components/workflow-list/workflow-list.component */ "./src/app/wm-components/workflow-list/workflow-list.component.ts");
             function createTranslateLoader(http) {
                 return new _ngx_translate_http_loader__WEBPACK_IMPORTED_MODULE_7__["TranslateHttpLoader"](http, './assets/i18n/', '.json');
             }
@@ -818,9 +820,10 @@
                         _angular_platform_browser__WEBPACK_IMPORTED_MODULE_2__["BrowserModule"],
                         _angular_forms__WEBPACK_IMPORTED_MODULE_3__["ReactiveFormsModule"],
                         _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClientModule"],
-                        _app_routing__WEBPACK_IMPORTED_MODULE_10__["appRoutingModule"],
+                        _app_routing__WEBPACK_IMPORTED_MODULE_11__["appRoutingModule"],
                         _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_5__["BrowserAnimationsModule"],
                         angular_resizable_element__WEBPACK_IMPORTED_MODULE_8__["ResizableModule"],
+                        ng_angular8_datatable__WEBPACK_IMPORTED_MODULE_9__["DataTableModule"],
                         _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"],
                         _ngx_translate_core__WEBPACK_IMPORTED_MODULE_6__["TranslateModule"].forRoot({
                             loader: {
@@ -831,21 +834,21 @@
                         }),
                     ],
                     declarations: [
-                        _app_component__WEBPACK_IMPORTED_MODULE_9__["AppComponent"],
-                        _top_bar_top_bar_component__WEBPACK_IMPORTED_MODULE_15__["TopBarComponent"],
-                        _footer_footer_component__WEBPACK_IMPORTED_MODULE_16__["FooterComponent"],
-                        _components__WEBPACK_IMPORTED_MODULE_14__["AlertComponent"],
-                        _message_bar_message_bar_component__WEBPACK_IMPORTED_MODULE_17__["MessageBarComponent"],
-                        _components_error_dialog_error_dialog_component__WEBPACK_IMPORTED_MODULE_18__["ErrorDialogComponent"],
-                        _components_loading_dialog_loading_dialog_component__WEBPACK_IMPORTED_MODULE_19__["LoadingDialogComponent"],
-                        _home__WEBPACK_IMPORTED_MODULE_20__["HomeComponent"],
-                        _about__WEBPACK_IMPORTED_MODULE_21__["AboutComponent"],
-                        _login__WEBPACK_IMPORTED_MODULE_22__["LoginComponent"],
-                        _wm_components_workflow_create_workflow_create_component__WEBPACK_IMPORTED_MODULE_23__["WorkflowCreateComponent"],
-                        _wm_components_workflow_list_workflow_list_component__WEBPACK_IMPORTED_MODULE_24__["WorkflowListComponent"],
+                        _app_component__WEBPACK_IMPORTED_MODULE_10__["AppComponent"],
+                        _top_bar_top_bar_component__WEBPACK_IMPORTED_MODULE_16__["TopBarComponent"],
+                        _footer_footer_component__WEBPACK_IMPORTED_MODULE_17__["FooterComponent"],
+                        _components__WEBPACK_IMPORTED_MODULE_15__["AlertComponent"],
+                        _message_bar_message_bar_component__WEBPACK_IMPORTED_MODULE_18__["MessageBarComponent"],
+                        _components_error_dialog_error_dialog_component__WEBPACK_IMPORTED_MODULE_19__["ErrorDialogComponent"],
+                        _components_loading_dialog_loading_dialog_component__WEBPACK_IMPORTED_MODULE_20__["LoadingDialogComponent"],
+                        _home__WEBPACK_IMPORTED_MODULE_21__["HomeComponent"],
+                        _about__WEBPACK_IMPORTED_MODULE_22__["AboutComponent"],
+                        _login__WEBPACK_IMPORTED_MODULE_23__["LoginComponent"],
+                        _wm_components_workflow_create_workflow_create_component__WEBPACK_IMPORTED_MODULE_24__["WorkflowCreateComponent"],
+                        _wm_components_workflow_list_workflow_list_component__WEBPACK_IMPORTED_MODULE_25__["WorkflowListComponent"],
                     ],
-                    providers: [_services_global_service__WEBPACK_IMPORTED_MODULE_11__["GlobalService"], _services_authentication_service__WEBPACK_IMPORTED_MODULE_12__["AuthenticationService"], _services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_13__["WorkflowMessageService"]],
-                    bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_9__["AppComponent"]]
+                    providers: [_services_global_service__WEBPACK_IMPORTED_MODULE_12__["GlobalService"], _services_authentication_service__WEBPACK_IMPORTED_MODULE_13__["AuthenticationService"], _services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_14__["WorkflowMessageService"]],
+                    bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_10__["AppComponent"]]
                 })
             ], AppModule);
             /*
@@ -1653,7 +1656,7 @@
                     this.loadingService = loadingService;
                     this.searchInitialDataSubject = new rxjs__WEBPACK_IMPORTED_MODULE_3__["BehaviorSubject"](null);
                     this.loadInitialUrl = "/workflow/general/data/initsearch";
-                    this.loadUrl = "/workflow/general/data/search";
+                    this.searchUrl = "/workflow/general/data/search";
                     this.listInitialData = null;
                 }
                 WorkflowSearchService.prototype.loadInitialData = function () {
@@ -1676,6 +1679,16 @@
                         _this.loadingService.hideLoading();
                     });
                 };
+                WorkflowSearchService.prototype.search = function (searchFilter) {
+                    var httpOptions = {
+                        headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
+                            'Content-type': 'application/json; charset=UTF-8',
+                            'Authorization': 'my-auth-token'
+                        })
+                    };
+                    return this.http.post(this.searchUrl, searchFilter, httpOptions);
+                };
+                ;
                 return WorkflowSearchService;
             }());
             WorkflowSearchService.ctorParameters = function () { return [
@@ -1915,7 +1928,7 @@
         /*!************************************!*\
           !*** ./src/app/wf-models/index.ts ***!
           \************************************/
-        /*! exports provided: Workflow, WorkflowMessage, WorkflowType, WorkflowTypeStep, WorkflowAction, WorkflowFile, WorkflowFileVersion, WorkflowSearchFilter, WorkflowListInitialData */
+        /*! exports provided: Workflow, WorkflowMessage, WorkflowType, WorkflowTypeStep, WorkflowAction, WorkflowFile, WorkflowFileVersion, WorkflowSearchFilter, WorkflowListInitialData, WorkflowSearchResult, WorkflowResult */
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
@@ -1938,6 +1951,10 @@
             /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "WorkflowSearchFilter", function () { return _workflow_search_filter__WEBPACK_IMPORTED_MODULE_8__["WorkflowSearchFilter"]; });
             /* harmony import */ var _workflow_list_initialdata__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./workflow-list-initialdata */ "./src/app/wf-models/workflow-list-initialdata.ts");
             /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "WorkflowListInitialData", function () { return _workflow_list_initialdata__WEBPACK_IMPORTED_MODULE_9__["WorkflowListInitialData"]; });
+            /* harmony import */ var _workflow_search_result__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./workflow-search-result */ "./src/app/wf-models/workflow-search-result.ts");
+            /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "WorkflowSearchResult", function () { return _workflow_search_result__WEBPACK_IMPORTED_MODULE_10__["WorkflowSearchResult"]; });
+            /* harmony import */ var _workflow_result__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./workflow-result */ "./src/app/wf-models/workflow-result.ts");
+            /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "WorkflowResult", function () { return _workflow_result__WEBPACK_IMPORTED_MODULE_11__["WorkflowResult"]; });
             /***/ 
         }),
         /***/ "./src/app/wf-models/workflow-list-initialdata.ts": 
@@ -1960,6 +1977,23 @@
             }());
             /***/ 
         }),
+        /***/ "./src/app/wf-models/workflow-result.ts": 
+        /*!**********************************************!*\
+          !*** ./src/app/wf-models/workflow-result.ts ***!
+          \**********************************************/
+        /*! exports provided: WorkflowResult */
+        /***/ (function (module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            __webpack_require__.r(__webpack_exports__);
+            /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WorkflowResult", function () { return WorkflowResult; });
+            /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+            var WorkflowResult = /** @class */ (function () {
+                function WorkflowResult() {
+                }
+                return WorkflowResult;
+            }());
+            /***/ 
+        }),
         /***/ "./src/app/wf-models/workflow-search-filter.ts": 
         /*!*****************************************************!*\
           !*** ./src/app/wf-models/workflow-search-filter.ts ***!
@@ -1979,6 +2013,24 @@
                     this.workflowSteps = [];
                 }
                 return WorkflowSearchFilter;
+            }());
+            /***/ 
+        }),
+        /***/ "./src/app/wf-models/workflow-search-result.ts": 
+        /*!*****************************************************!*\
+          !*** ./src/app/wf-models/workflow-search-result.ts ***!
+          \*****************************************************/
+        /*! exports provided: WorkflowSearchResult */
+        /***/ (function (module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            __webpack_require__.r(__webpack_exports__);
+            /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WorkflowSearchResult", function () { return WorkflowSearchResult; });
+            /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+            var WorkflowSearchResult = /** @class */ (function () {
+                function WorkflowSearchResult() {
+                    this.list = [];
+                }
+                return WorkflowSearchResult;
             }());
             /***/ 
         }),
@@ -2193,7 +2245,7 @@
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("\r\n.search-toolbar {\r\n    width: calc(100% - 300px);\r\n    float: right;\r\n}\r\n\r\n.search-toolbar .nav-item{\r\n    margin-right: 30px;\r\n    \r\n}\r\n\r\n.search-toolbar .nav-item input.form-check-input[type=checkbox]{\r\n    width: 16px;\r\n    height: 16px;\r\n    \r\n}\r\n\r\n.search-toolbar .nav-item .form-check-label{\r\n\tmargin-bottom: 0;\r\n    padding-left: 10px;\r\n    line-height: 20px;\r\n}\r\n\r\n.search-toolbar-item{\r\n\theight: 100%;\r\n    padding-top: 9px;\r\n}\r\n\r\n.search-toolbar .nav-item {\r\n    background-color: transparent !important;\r\n}\r\n\r\n.search-toolbar .nav-link.active, .search-toolbar .show>.nav-link {\r\n    color: #fff !important;\r\n    background-color: #c7c9cb !important;\r\n}\r\n\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvd20tY29tcG9uZW50cy93b3JrZmxvdy1saXN0L3dvcmtmbG93LWxpc3QuY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiO0FBQ0E7SUFDSSx5QkFBeUI7SUFDekIsWUFBWTtBQUNoQjs7QUFFQTtJQUNJLGtCQUFrQjs7QUFFdEI7O0FBRUE7SUFDSSxXQUFXO0lBQ1gsWUFBWTs7QUFFaEI7O0FBRUE7Q0FDQyxnQkFBZ0I7SUFDYixrQkFBa0I7SUFDbEIsaUJBQWlCO0FBQ3JCOztBQUVBO0NBQ0MsWUFBWTtJQUNULGdCQUFnQjtBQUNwQjs7QUFFQTtJQUNJLHdDQUF3QztBQUM1Qzs7QUFFQTtJQUNJLHNCQUFzQjtJQUN0QixvQ0FBb0M7QUFDeEMiLCJmaWxlIjoic3JjL2FwcC93bS1jb21wb25lbnRzL3dvcmtmbG93LWxpc3Qvd29ya2Zsb3ctbGlzdC5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiXHJcbi5zZWFyY2gtdG9vbGJhciB7XHJcbiAgICB3aWR0aDogY2FsYygxMDAlIC0gMzAwcHgpO1xyXG4gICAgZmxvYXQ6IHJpZ2h0O1xyXG59XHJcblxyXG4uc2VhcmNoLXRvb2xiYXIgLm5hdi1pdGVte1xyXG4gICAgbWFyZ2luLXJpZ2h0OiAzMHB4O1xyXG4gICAgXHJcbn1cclxuXHJcbi5zZWFyY2gtdG9vbGJhciAubmF2LWl0ZW0gaW5wdXQuZm9ybS1jaGVjay1pbnB1dFt0eXBlPWNoZWNrYm94XXtcclxuICAgIHdpZHRoOiAxNnB4O1xyXG4gICAgaGVpZ2h0OiAxNnB4O1xyXG4gICAgXHJcbn1cclxuXHJcbi5zZWFyY2gtdG9vbGJhciAubmF2LWl0ZW0gLmZvcm0tY2hlY2stbGFiZWx7XHJcblx0bWFyZ2luLWJvdHRvbTogMDtcclxuICAgIHBhZGRpbmctbGVmdDogMTBweDtcclxuICAgIGxpbmUtaGVpZ2h0OiAyMHB4O1xyXG59XHJcblxyXG4uc2VhcmNoLXRvb2xiYXItaXRlbXtcclxuXHRoZWlnaHQ6IDEwMCU7XHJcbiAgICBwYWRkaW5nLXRvcDogOXB4O1xyXG59XHJcblxyXG4uc2VhcmNoLXRvb2xiYXIgLm5hdi1pdGVtIHtcclxuICAgIGJhY2tncm91bmQtY29sb3I6IHRyYW5zcGFyZW50ICFpbXBvcnRhbnQ7XHJcbn1cclxuXHJcbi5zZWFyY2gtdG9vbGJhciAubmF2LWxpbmsuYWN0aXZlLCAuc2VhcmNoLXRvb2xiYXIgLnNob3c+Lm5hdi1saW5rIHtcclxuICAgIGNvbG9yOiAjZmZmICFpbXBvcnRhbnQ7XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjYzdjOWNiICFpbXBvcnRhbnQ7XHJcbn1cclxuXHJcbiJdfQ== */");
+            /* harmony default export */ __webpack_exports__["default"] = ("\r\n.search-toolbar {\r\n    width: calc(100% - 300px);\r\n    float: right;\r\n}\r\n\r\n.search-toolbar .nav-item{\r\n    margin-right: 30px;\r\n    \r\n}\r\n\r\n.search-toolbar .nav-item input.form-check-input[type=checkbox]{\r\n    width: 16px;\r\n    height: 16px;\r\n    \r\n}\r\n\r\n.search-toolbar .nav-item .form-check-label{\r\n\tmargin-bottom: 0;\r\n    padding-left: 10px;\r\n    line-height: 20px;\r\n}\r\n\r\n.search-toolbar-item{\r\n\theight: 100%;\r\n    padding-top: 9px;\r\n}\r\n\r\n.search-toolbar .nav-item {\r\n    background-color: transparent !important;\r\n}\r\n\r\n.search-toolbar .nav-link.active, .search-toolbar .show>.nav-link {\r\n    color: #fff !important;\r\n    background-color: #c7c9cb !important;\r\n}\r\n\r\n.table-striped{\r\n\t\r\n}\r\n\r\n.table-striped thead{\r\n\tbackground-color: #c1c4c4;\r\n}\r\n\r\n.table-striped thead tr th, .table-striped thead tr td{\t\r\n\tborder: 2px solid #dee2e6;\r\n\tpadding: 4px 6px;\r\n}\r\n\r\n.table-striped th, .table-striped td{\t\r\n\tborder: 2px solid #dee2e6;\r\n\tpadding: 4px 6px;\r\n}\r\n\r\n.table-striped tbody tr{\t\r\n\tborder: 2px solid #dee2e6;\r\n}\r\n\r\n.table-striped tbody tr:nth-child(odd){\t\r\n\tbackground-color: #fdffd9;\r\n}\r\n\r\n.table-striped tbody tr:nth-child(even){\t\r\n\tbackground-color: #dfe1ff;\r\n}\r\n\r\n.table-striped tbody tr:hove{\t\r\n\tbackground-color: #dff7ff;\r\n}\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvd20tY29tcG9uZW50cy93b3JrZmxvdy1saXN0L3dvcmtmbG93LWxpc3QuY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiO0FBQ0E7SUFDSSx5QkFBeUI7SUFDekIsWUFBWTtBQUNoQjs7QUFFQTtJQUNJLGtCQUFrQjs7QUFFdEI7O0FBRUE7SUFDSSxXQUFXO0lBQ1gsWUFBWTs7QUFFaEI7O0FBRUE7Q0FDQyxnQkFBZ0I7SUFDYixrQkFBa0I7SUFDbEIsaUJBQWlCO0FBQ3JCOztBQUVBO0NBQ0MsWUFBWTtJQUNULGdCQUFnQjtBQUNwQjs7QUFFQTtJQUNJLHdDQUF3QztBQUM1Qzs7QUFFQTtJQUNJLHNCQUFzQjtJQUN0QixvQ0FBb0M7QUFDeEM7O0FBRUE7O0FBRUE7O0FBRUE7Q0FDQyx5QkFBeUI7QUFDMUI7O0FBRUE7Q0FDQyx5QkFBeUI7Q0FDekIsZ0JBQWdCO0FBQ2pCOztBQUVBO0NBQ0MseUJBQXlCO0NBQ3pCLGdCQUFnQjtBQUNqQjs7QUFFQTtDQUNDLHlCQUF5QjtBQUMxQjs7QUFFQTtDQUNDLHlCQUF5QjtBQUMxQjs7QUFFQTtDQUNDLHlCQUF5QjtBQUMxQjs7QUFFQTtDQUNDLHlCQUF5QjtBQUMxQiIsImZpbGUiOiJzcmMvYXBwL3dtLWNvbXBvbmVudHMvd29ya2Zsb3ctbGlzdC93b3JrZmxvdy1saXN0LmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyJcclxuLnNlYXJjaC10b29sYmFyIHtcclxuICAgIHdpZHRoOiBjYWxjKDEwMCUgLSAzMDBweCk7XHJcbiAgICBmbG9hdDogcmlnaHQ7XHJcbn1cclxuXHJcbi5zZWFyY2gtdG9vbGJhciAubmF2LWl0ZW17XHJcbiAgICBtYXJnaW4tcmlnaHQ6IDMwcHg7XHJcbiAgICBcclxufVxyXG5cclxuLnNlYXJjaC10b29sYmFyIC5uYXYtaXRlbSBpbnB1dC5mb3JtLWNoZWNrLWlucHV0W3R5cGU9Y2hlY2tib3hde1xyXG4gICAgd2lkdGg6IDE2cHg7XHJcbiAgICBoZWlnaHQ6IDE2cHg7XHJcbiAgICBcclxufVxyXG5cclxuLnNlYXJjaC10b29sYmFyIC5uYXYtaXRlbSAuZm9ybS1jaGVjay1sYWJlbHtcclxuXHRtYXJnaW4tYm90dG9tOiAwO1xyXG4gICAgcGFkZGluZy1sZWZ0OiAxMHB4O1xyXG4gICAgbGluZS1oZWlnaHQ6IDIwcHg7XHJcbn1cclxuXHJcbi5zZWFyY2gtdG9vbGJhci1pdGVte1xyXG5cdGhlaWdodDogMTAwJTtcclxuICAgIHBhZGRpbmctdG9wOiA5cHg7XHJcbn1cclxuXHJcbi5zZWFyY2gtdG9vbGJhciAubmF2LWl0ZW0ge1xyXG4gICAgYmFja2dyb3VuZC1jb2xvcjogdHJhbnNwYXJlbnQgIWltcG9ydGFudDtcclxufVxyXG5cclxuLnNlYXJjaC10b29sYmFyIC5uYXYtbGluay5hY3RpdmUsIC5zZWFyY2gtdG9vbGJhciAuc2hvdz4ubmF2LWxpbmsge1xyXG4gICAgY29sb3I6ICNmZmYgIWltcG9ydGFudDtcclxuICAgIGJhY2tncm91bmQtY29sb3I6ICNjN2M5Y2IgIWltcG9ydGFudDtcclxufVxyXG5cclxuLnRhYmxlLXN0cmlwZWR7XHJcblx0XHJcbn1cclxuXHJcbi50YWJsZS1zdHJpcGVkIHRoZWFke1xyXG5cdGJhY2tncm91bmQtY29sb3I6ICNjMWM0YzQ7XHJcbn1cclxuXHJcbi50YWJsZS1zdHJpcGVkIHRoZWFkIHRyIHRoLCAudGFibGUtc3RyaXBlZCB0aGVhZCB0ciB0ZHtcdFxyXG5cdGJvcmRlcjogMnB4IHNvbGlkICNkZWUyZTY7XHJcblx0cGFkZGluZzogNHB4IDZweDtcclxufVxyXG5cclxuLnRhYmxlLXN0cmlwZWQgdGgsIC50YWJsZS1zdHJpcGVkIHRke1x0XHJcblx0Ym9yZGVyOiAycHggc29saWQgI2RlZTJlNjtcclxuXHRwYWRkaW5nOiA0cHggNnB4O1xyXG59XHJcblxyXG4udGFibGUtc3RyaXBlZCB0Ym9keSB0cntcdFxyXG5cdGJvcmRlcjogMnB4IHNvbGlkICNkZWUyZTY7XHJcbn1cclxuXHJcbi50YWJsZS1zdHJpcGVkIHRib2R5IHRyOm50aC1jaGlsZChvZGQpe1x0XHJcblx0YmFja2dyb3VuZC1jb2xvcjogI2ZkZmZkOTtcclxufVxyXG5cclxuLnRhYmxlLXN0cmlwZWQgdGJvZHkgdHI6bnRoLWNoaWxkKGV2ZW4pe1x0XHJcblx0YmFja2dyb3VuZC1jb2xvcjogI2RmZTFmZjtcclxufVxyXG5cclxuLnRhYmxlLXN0cmlwZWQgdGJvZHkgdHI6aG92ZXtcdFxyXG5cdGJhY2tncm91bmQtY29sb3I6ICNkZmY3ZmY7XHJcbn1cclxuIl19 */");
             /***/ 
         }),
         /***/ "./src/app/wm-components/workflow-list/workflow-list.component.ts": 
@@ -2211,16 +2263,19 @@
             /* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm2015/ngx-translate-core.js");
             /* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../services/global.service */ "./src/app/services/global.service.ts");
             /* harmony import */ var _services_workflow_workflow_search_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../services/workflow/workflow-search.service */ "./src/app/services/workflow/workflow-search.service.ts");
-            /* harmony import */ var _wf_models__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../wf-models */ "./src/app/wf-models/index.ts");
+            /* harmony import */ var _services_loading_service_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../services/loading-service.service */ "./src/app/services/loading-service.service.ts");
+            /* harmony import */ var _wf_models__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../wf-models */ "./src/app/wf-models/index.ts");
             var WorkflowListComponent = /** @class */ (function () {
-                function WorkflowListComponent(router, global, translate, searchService) {
+                function WorkflowListComponent(router, global, translate, searchService, loadingService) {
                     var _this = this;
                     this.router = router;
                     this.global = global;
                     this.searchService = searchService;
+                    this.loadingService = loadingService;
                     this.worlflowTypes = [];
                     this.resultWorlflows = [];
-                    this.listInitialData = new _wf_models__WEBPACK_IMPORTED_MODULE_6__["WorkflowListInitialData"]();
+                    this.listInitialData = new _wf_models__WEBPACK_IMPORTED_MODULE_7__["WorkflowListInitialData"]();
+                    this.showDebug = false;
                     this.router.events.subscribe(function (evt) {
                         if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_2__["NavigationEnd"]) {
                             _this.loadInitialData();
@@ -2278,6 +2333,16 @@
                     });
                 };
                 WorkflowListComponent.prototype.reload = function () {
+                    var _this = this;
+                    this.loadingService.showLoading();
+                    this.searchService.search(this.listInitialData.searchFilter).subscribe(function (result) {
+                        console.log("search successful workflow", result);
+                        _this.resultWorlflows = result.list;
+                    }, function (response) {
+                        console.log("Error in search workflow", response);
+                    }, function () {
+                        _this.loadingService.hideLoading();
+                    });
                 };
                 WorkflowListComponent.prototype.isStatusSelected = function (wstatus) {
                     if (this.listInitialData &&
@@ -2320,7 +2385,8 @@
                 { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] },
                 { type: _services_global_service__WEBPACK_IMPORTED_MODULE_4__["GlobalService"] },
                 { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_3__["TranslateService"] },
-                { type: _services_workflow_workflow_search_service__WEBPACK_IMPORTED_MODULE_5__["WorkflowSearchService"] }
+                { type: _services_workflow_workflow_search_service__WEBPACK_IMPORTED_MODULE_5__["WorkflowSearchService"] },
+                { type: _services_loading_service_service__WEBPACK_IMPORTED_MODULE_6__["LoadingServiceService"] }
             ]; };
             WorkflowListComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
                 Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({

@@ -4,8 +4,9 @@ import {TranslateService} from '@ngx-translate/core';
 
 import { GlobalService } from '../../services/global.service';
 import { WorkflowSearchService } from '../../services/workflow/workflow-search.service';
+import { LoadingServiceService } from '../../services/loading-service.service';
 
-import { WorkflowType, Workflow, WorkflowTypeStep, WorkflowSearchFilter, WorkflowListInitialData } from '../../wf-models';
+import { WorkflowType, Workflow, WorkflowTypeStep, WorkflowSearchFilter, WorkflowListInitialData, WorkflowResult, WorkflowSearchResult } from '../../wf-models';
 import { User, GeneralData } from '../../ui-models';
 
 @Component({
@@ -15,9 +16,10 @@ import { User, GeneralData } from '../../ui-models';
 })
 export class WorkflowListComponent implements OnInit {
 	worlflowTypes		:WorkflowType[] = [];
-	resultWorlflows		:Workflow[] = [];
+	resultWorlflows		:WorkflowResult[] = [];
 	listInitialData 	:WorkflowListInitialData = new WorkflowListInitialData();
 
+	showDebug : boolean = false;
 
 
 	constructor(
@@ -25,6 +27,7 @@ export class WorkflowListComponent implements OnInit {
 			private global: GlobalService,
 			translate: TranslateService,
 			private searchService :WorkflowSearchService,
+			private loadingService: LoadingServiceService,
 			
 	) {
 		
@@ -89,6 +92,23 @@ export class WorkflowListComponent implements OnInit {
 	
 	reload(){
 		
+		this.loadingService.showLoading();
+		
+		this.searchService.search(this.listInitialData.searchFilter).subscribe(
+	        (result :WorkflowSearchResult) => {
+	        	
+	            console.log("search successful workflow", result);
+	        	
+	            this.resultWorlflows = result.list;
+	        },
+	        response => {
+	        	console.log("Error in search workflow", response);
+	        },
+	        () => {
+	        	
+	        	this.loadingService.hideLoading();	            
+	        }
+		);	       	
 	}
 	
 	isStatusSelected(wstatus){

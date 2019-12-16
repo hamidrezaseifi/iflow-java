@@ -7,3 +7,5 @@ export * from './workflowfile';
 export * from './workflowfileversion';
 export * from './workflow-search-filter';
 export * from './workflow-list-initialdata';
+export * from './workflow-search-result';
+export * from './workflow-result';

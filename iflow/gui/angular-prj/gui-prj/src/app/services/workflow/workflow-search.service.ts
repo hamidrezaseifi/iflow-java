@@ -5,7 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 import { LoadingServiceService } from '../loading-service.service';
 
-import { WorkflowSearchFilter, WorkflowListInitialData } from '../../wf-models';
+import { WorkflowSearchFilter, WorkflowListInitialData, WorkflowResult, WorkflowSearchResult } from '../../wf-models';
 
 
 @Injectable({
@@ -16,7 +16,7 @@ export class WorkflowSearchService {
 	public searchInitialDataSubject: BehaviorSubject<WorkflowListInitialData> = new BehaviorSubject<WorkflowListInitialData>(null);
 	
 	loadInitialUrl :string = "/workflow/general/data/initsearch";
-	loadUrl :string = "/workflow/general/data/search";
+	searchUrl :string = "/workflow/general/data/search";
 	listInitialData :WorkflowListInitialData = null;
 
 	constructor(
@@ -60,5 +60,19 @@ export class WorkflowSearchService {
 		    );	       	
     	
     }
+    
+	search(searchFilter: WorkflowSearchFilter){
+		
+		const httpOptions = {
+      		  headers: new HttpHeaders({
+      			'Content-type': 'application/json; charset=UTF-8',
+      		    'Authorization': 'my-auth-token'
+      		  })
+      		};
+      
+		return this.http.post(this.searchUrl, searchFilter, httpOptions);	    
+		
+	};
+    
 
 }

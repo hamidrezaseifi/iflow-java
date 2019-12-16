@@ -8,6 +8,7 @@ import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { ResizableModule } from 'angular-resizable-element';
 import { FormsModule } from '@angular/forms';
+import { DataTableModule } from 'ng-angular8-datatable';
 
 import { AppComponent } from './app.component';
 import { appRoutingModule } from './app.routing';
@@ -41,6 +42,7 @@ export function createTranslateLoader(http: HttpClient) {
     appRoutingModule,
     BrowserAnimationsModule,
     ResizableModule,
+    DataTableModule,
     FormsModule,
     TranslateModule.forRoot({
         loader: {
