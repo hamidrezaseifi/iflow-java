@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pth.iflow.common.enums.EWorkflowStatus;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.common.rest.IflowRestPaths.GuiModule;
 import com.pth.iflow.gui.controller.data.GuiDataControllerBase;
@@ -27,7 +28,7 @@ import com.pth.iflow.gui.services.IWorkflowSearchAccess;
 public class WorkflowSearchController extends GuiDataControllerBase {
 
   @Autowired
-  private IWorkflowSearchAccess                           workflowSearchAccess;
+  private IWorkflowSearchAccess workflowSearchAccess;
 
   @ResponseStatus(HttpStatus.OK)
   @PostMapping(path = { GuiModule.WORKFLOWGENERAL_DATA_INITIALIZESEARCH })
@@ -39,9 +40,10 @@ public class WorkflowSearchController extends GuiDataControllerBase {
 
     final Collection<WorkflowType> workflowTypeList     = this.getAllWorkflowTypes();
     final WorkflowSearchFilter     workflowSearchFilter = WorkflowSearchFilter.generateNew(workflowTypeList);
+    EWorkflowStatus.values();
 
-    map.put("workflowTypes", workflowTypeList);
-    map.put("newSearchFilter", workflowSearchFilter);
+    map.put("workflowStatusList", EWorkflowStatus.values());
+    map.put("searchFilter", workflowSearchFilter);
 
     return map;
   }

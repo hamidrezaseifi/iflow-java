@@ -84,7 +84,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<app-top-bar [menus]=\"appMenus\" [currentUser]=\"appCurrentUser\" [isLogged]=\"appIsLogged\" (loggingOut)=\"onLoggingOut($event)\"></app-top-bar>\r\n\r\n<div class=\"container\">\r\n    <div class=\"row\">\r\n        <div class=\"col-sm-6 offset-sm-3\">\r\n            <alert></alert>\r\n            <router-outlet></router-outlet>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<app-message-bar [currentUser]=\"appCurrentUser\" [isLogged]=\"appIsLogged\"></app-message-bar>\r\n\r\n<app-error-dialog></app-error-dialog>\r\n\r\n<app-loading-dialog></app-loading-dialog>\r\n\r\n<app-footer></app-footer>\r\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<app-top-bar [menus]=\"appMenus\" [currentUser]=\"appCurrentUser\" [isLogged]=\"appIsLogged\" (loggingOut)=\"onLoggingOut($event)\"></app-top-bar>\r\n\r\n<div class=\"container\">\r\n    \r\n\t<router-outlet></router-outlet>\r\n\t\r\n</div>\r\n\r\n<app-message-bar [currentUser]=\"appCurrentUser\" [isLogged]=\"appIsLogged\"></app-message-bar>\r\n\r\n<app-error-dialog></app-error-dialog>\r\n\r\n<app-loading-dialog></app-loading-dialog>\r\n\r\n<app-footer></app-footer>\r\n");
 
 /***/ }),
 
@@ -153,29 +153,29 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/workflow-create/workflow-create.component.html":
-/*!******************************************************************************************************!*\
-  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/workflow-create/workflow-create.component.html ***!
-  \******************************************************************************************************/
+/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/wm-components/workflow-create/workflow-create.component.html":
+/*!********************************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/wm-components/workflow-create/workflow-create.component.html ***!
+  \********************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<h2>Workflow Create</h2>\r\n\r\n\r\n");
+/* harmony default export */ __webpack_exports__["default"] = ("\t\t<div class=\"content-container\">\r\n\t\t\t<div class=\"page-toolbar\">\r\n\t\t\t\t<div class=\"page-title\">{{ 'menu-workflow-create' | translate:param }}</div>\r\n\t\t\t\t<a class=\"toolbar-link\" [routerLink]=\"['/workflow/list']\"><i class=\"material-icons\">list</i></a>\r\n\t\t\t</div>\r\n\t\t\r\n\t\t\t<div class=\"workflow-content\">\r\n\t\t\t\t<div class=\"item-row\">\r\n\t\t\t\t\t<div class=\"list-group\">\r\n\t\t\t\t\t  <a class=\"list-group-item list-group-item-action list-group-item-title\">{{ 'workflow-type' | translate:param }}</a>\r\n\t\t\t\t\t  <a *ngFor=\"let type of worlflowTypes;\" [routerLink]=\"['/workflow/' + type.controllerPreffix + '/create']\" class=\"list-group-item list-group-item-action link-out\" >{{type.title}}</a>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t\t<div class=\"clear\"></div>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t\r\n\t\t</div>\r\n\r\n\r\n\r\n");
 
 /***/ }),
 
-/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/workflow-list/workflow-list.component.html":
-/*!**************************************************************************************************!*\
-  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/workflow-list/workflow-list.component.html ***!
-  \**************************************************************************************************/
+/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/wm-components/workflow-list/workflow-list.component.html":
+/*!****************************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/wm-components/workflow-list/workflow-list.component.html ***!
+  \****************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<h2>Workflow List</h2>\r\n");
+/* harmony default export */ __webpack_exports__["default"] = ("\t\t<div class=\"content-container\">\r\n\t\t\t<div class=\"page-toolbar\">\r\n\t\t\t\t<div class=\"page-title\">{{ 'menu-workflow-list' | translate:param }}</div>\r\n\t\t\t\t<button class=\"toolbar-button\" (click)=\"reload()\"><i class=\"material-icons\">refresh</i></button>\r\n\t\t\t\t<a class=\"toolbar-link\" href=\"/workflow/create\"><i class=\"material-icons\">playlist_add</i></a>\r\n\t\t\t\t\r\n\t\t\t\t<span class=\"toolbar-separator w100\"></span>\r\n\t\t\t\t\r\n\t\t\t\t<span class=\"form-check abc-checkbox abc-checkbox\">\r\n\t\t\t\t\t<input type=\"checkbox\" class=\"toggle-checkbox form-check-input\" [checked]=\"isMeAssigned\" id=\"me-assigned-check\">\r\n\t\t\t\t\t<label class=\"form-check-label\" for=\"me-assigned-check\">{{ 'workflow-assigned-me' | translate:param }}</label>\r\n\t\t\t\t</span>\r\n\t\t\t\t\r\n\t\t\t\t<span class=\"form-check abc-checkbox abc-checkbox\">\r\n\t\t\t\t\t<input type=\"checkbox\" class=\"toggle-checkbox form-check-input\" [checked]=\"hasNoArhiveStatus()\" id=\"no-archive-check\" ng-click=\"toggleSearchArchive()\">\r\n\t\t\t\t\t<label class=\"form-check-label\" for=\"no-archive-check\">{{ 'workflow-not-archive' | translate:param }}</label>\r\n\t\t\t\t</span>\r\n\t\t\t\t\r\n\t\t\t</div>\r\n\t\t\t<select>\r\n\t\t\t\t<option *ngFor=\"let wstatus of statusList;\">{{wstatus}}</option>\r\n\t\t\t</select>\r\n\t\t    <table class=\"table table-bordered table-responsive iflow-table\">\r\n\t\t    \t<thead class=\"thead-dark\">\r\n\t\t    \t\t<tr>\r\n\t\t    \t\t\t<th scope=\"col\">{{ 'workflow-type' | translate:param }}</th>\r\n\t\t    \t\t\t<th scope=\"col\">{{ 'workflow-current-step' | translate:param }}</th>\r\n\t\t    \t\t\t<th scope=\"col\">{{ 'workflow-status' | translate:param }}</th>\r\n\t\t    \t\t\t<th scope=\"col\">{{ 'workflow-assignto' | translate:param }}</th>\r\n\t\t    \t\t\t<th scope=\"col\"></th>\r\n\t\t    \t\t</tr>\r\n\t\t    \t</thead>\r\n\t\t    \t<tbody>\r\n\t\t     \t\t<tr *ngFor=\"let item of resultWorlflows;\">\r\n\t\t    \t\t\t<td scope=\"row\">{{item.workflowType.title}}</td>\r\n\t\t    \t\t\t<td>{{item.currentStep.title}}</td>\r\n\t\t    \t\t\t<td>{{item.status}}</td>\r\n\t\t    \t\t\t<td>{{item.assignToUserFullName}}</td>\r\n\t\t    \t\t\t<td><a class=\"tool-link\" [routerLink]=\"['/workflow/edit/' + item.workflowType.identity + '/' + item.identity + '/' + item.currentStep.identity]\"><i class=\"material-icons\">edit</i></a></td>\r\n\t\t    \t\t</tr>\r\n\t\t     \t\t\r\n\t\t    \t\r\n\t\t    \t</tbody>\r\n\t\t    </table>\r\n\t\t    \r\n\t\t    <div style=\"min-height: 20px; border: 1px solid gray; \">\r\n\t\t    {{searchFilter}}\r\n\t\t    </div>\r\n\t\t    \r\n\t\t    <script type=\"text/javascript\">\r\n\t\t\t\tvar loadInitialUrl = \"/workflow/general/data/initsearch\";\r\n\t\t\t\tvar loadUrl = \"/workflow/general/data/search\";\r\n\t\t    </script>\r\n\t\t\r\n\t\t\r\n\t\t</div>\r\n\r\n");
 
 /***/ }),
 
@@ -801,8 +801,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _home__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./home */ "./src/app/home/index.ts");
 /* harmony import */ var _about__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./about */ "./src/app/about/index.ts");
 /* harmony import */ var _login__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./login */ "./src/app/login/index.ts");
-/* harmony import */ var _workflow_create_workflow_create_component__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./workflow-create/workflow-create.component */ "./src/app/workflow-create/workflow-create.component.ts");
-/* harmony import */ var _workflow_list_workflow_list_component__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./workflow-list/workflow-list.component */ "./src/app/workflow-list/workflow-list.component.ts");
+/* harmony import */ var _wm_components_workflow_create_workflow_create_component__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./wm-components/workflow-create/workflow-create.component */ "./src/app/wm-components/workflow-create/workflow-create.component.ts");
+/* harmony import */ var _wm_components_workflow_list_workflow_list_component__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./wm-components/workflow-list/workflow-list.component */ "./src/app/wm-components/workflow-list/workflow-list.component.ts");
 
 
 
@@ -863,8 +863,8 @@ AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
             _home__WEBPACK_IMPORTED_MODULE_20__["HomeComponent"],
             _about__WEBPACK_IMPORTED_MODULE_21__["AboutComponent"],
             _login__WEBPACK_IMPORTED_MODULE_22__["LoginComponent"],
-            _workflow_create_workflow_create_component__WEBPACK_IMPORTED_MODULE_23__["WorkflowCreateComponent"],
-            _workflow_list_workflow_list_component__WEBPACK_IMPORTED_MODULE_24__["WorkflowListComponent"],
+            _wm_components_workflow_create_workflow_create_component__WEBPACK_IMPORTED_MODULE_23__["WorkflowCreateComponent"],
+            _wm_components_workflow_list_workflow_list_component__WEBPACK_IMPORTED_MODULE_24__["WorkflowListComponent"],
         ],
         providers: [_services_global_service__WEBPACK_IMPORTED_MODULE_11__["GlobalService"], _services_authentication_service__WEBPACK_IMPORTED_MODULE_12__["AuthenticationService"], _services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_13__["WorkflowMessageService"]],
         bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_9__["AppComponent"]]
@@ -895,8 +895,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _home__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./home */ "./src/app/home/index.ts");
 /* harmony import */ var _about__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./about */ "./src/app/about/index.ts");
 /* harmony import */ var _login__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./login */ "./src/app/login/index.ts");
-/* harmony import */ var _workflow_create_workflow_create_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./workflow-create/workflow-create.component */ "./src/app/workflow-create/workflow-create.component.ts");
-/* harmony import */ var _workflow_list_workflow_list_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./workflow-list/workflow-list.component */ "./src/app/workflow-list/workflow-list.component.ts");
+/* harmony import */ var _wm_components_workflow_create_workflow_create_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./wm-components/workflow-create/workflow-create.component */ "./src/app/wm-components/workflow-create/workflow-create.component.ts");
+/* harmony import */ var _wm_components_workflow_list_workflow_list_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./wm-components/workflow-list/workflow-list.component */ "./src/app/wm-components/workflow-list/workflow-list.component.ts");
 /* harmony import */ var _services_authentication_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./services/authentication.service */ "./src/app/services/authentication.service.ts");
 
 
@@ -910,8 +910,8 @@ __webpack_require__.r(__webpack_exports__);
 const routes = [
     { path: '', component: _home__WEBPACK_IMPORTED_MODULE_2__["HomeComponent"], canActivate: [_services_authentication_service__WEBPACK_IMPORTED_MODULE_7__["AuthenticationService"]] },
     { path: 'about', component: _about__WEBPACK_IMPORTED_MODULE_3__["AboutComponent"], canActivate: [_services_authentication_service__WEBPACK_IMPORTED_MODULE_7__["AuthenticationService"]] },
-    { path: 'workflow/list', component: _workflow_list_workflow_list_component__WEBPACK_IMPORTED_MODULE_6__["WorkflowListComponent"], canActivate: [_services_authentication_service__WEBPACK_IMPORTED_MODULE_7__["AuthenticationService"]] },
-    { path: 'workflow/create', component: _workflow_create_workflow_create_component__WEBPACK_IMPORTED_MODULE_5__["WorkflowCreateComponent"], canActivate: [_services_authentication_service__WEBPACK_IMPORTED_MODULE_7__["AuthenticationService"]] },
+    { path: 'workflow/list', component: _wm_components_workflow_list_workflow_list_component__WEBPACK_IMPORTED_MODULE_6__["WorkflowListComponent"], canActivate: [_services_authentication_service__WEBPACK_IMPORTED_MODULE_7__["AuthenticationService"]] },
+    { path: 'workflow/create', component: _wm_components_workflow_create_workflow_create_component__WEBPACK_IMPORTED_MODULE_5__["WorkflowCreateComponent"], canActivate: [_services_authentication_service__WEBPACK_IMPORTED_MODULE_7__["AuthenticationService"]] },
     { path: 'auth/login', component: _login__WEBPACK_IMPORTED_MODULE_4__["LoginComponent"] },
     // otherwise redirect to home
     { path: '**', redirectTo: '', canActivate: [_services_authentication_service__WEBPACK_IMPORTED_MODULE_7__["AuthenticationService"]] }
@@ -1296,44 +1296,6 @@ MessageBarComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 
 /***/ }),
 
-/***/ "./src/app/products.ts":
-/*!*****************************!*\
-  !*** ./src/app/products.ts ***!
-  \*****************************/
-/*! exports provided: products */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "products", function() { return products; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-
-const products = [
-    {
-        name: 'Phone XL',
-        price: 799,
-        description: 'A large phone with one of the best screens'
-    },
-    {
-        name: 'Phone Mini',
-        price: 699,
-        description: 'A great phone with one of the best cameras'
-    },
-    {
-        name: 'Phone Standard',
-        price: 299,
-        description: ''
-    }
-];
-/*
-Copyright Google LLC. All Rights Reserved.
-Use of this source code is governed by an MIT-style license that
-can be found in the LICENSE file at http://angular.io/license
-*/ 
-
-
-/***/ }),
-
 /***/ "./src/app/services/authentication.service.ts":
 /*!****************************************************!*\
   !*** ./src/app/services/authentication.service.ts ***!
@@ -1365,6 +1327,7 @@ let AuthenticationService = class AuthenticationService {
         this.router = router;
         this.loadingService = loadingService;
         this.isLoggedIn = false;
+        this.authenticateUrl = "/auth/authenticate";
         this.currentUserSubject = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](null);
     }
     get currentUserValue() {
@@ -1384,7 +1347,7 @@ let AuthenticationService = class AuthenticationService {
                 'Authorization': 'my-auth-token'
             })
         };
-        this.http.post("/auth/authenticate", loginData, httpOptions).subscribe(val => {
+        this.http.post(this.authenticateUrl, loginData, httpOptions).subscribe(val => {
             var loginResponse = val;
             this.currentUserSubject.next(loginResponse.user);
             this.currentUserSubject.complete();
@@ -1436,7 +1399,7 @@ let AuthenticationService = class AuthenticationService {
         window.location.assign("/logout");
     }
     canActivate(route, state) {
-        //alert("check authentication: isLoggedIn: " + this.isLoggedIn);
+        //alert("check authentication fo : " + state.url + " : isLoggedIn: " + this.isLoggedIn);
         if (this.isLoggedIn === true) {
             return true;
         }
@@ -1522,24 +1485,26 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let GlobalService = class GlobalService {
-    //public currentSessionDataObs :Observable<GeneralData>;		
     constructor(http, loadingService) {
         this.http = http;
         this.loadingService = loadingService;
         this.currentSessionDataSubject = new rxjs__WEBPACK_IMPORTED_MODULE_3__["BehaviorSubject"](null);
+        //public currentSessionDataObs :Observable<GeneralData>;		
+        this.loadedGeneralData = null;
         //this.currentSessionDataSubject = new BehaviorSubject<GeneralData>(null);
         //this.currentSessionDataObs = this.currentSessionDataSubject.asObservable();		
     }
-    /*public get currentSessionDataValue(): GeneralData {
+    get currentSessionDataValue() {
         return this.currentSessionDataSubject.value;
-    }*/
+    }
     loadAllSetting(login) {
         this.loadingService.showLoading();
         this.http.get("/general/data/generaldatat").subscribe((generalData) => {
             console.log("GET call successful generaldata", generalData);
+            this.loadedGeneralData = JSON.parse(JSON.stringify(generalData));
             this.currentSessionDataSubject.next(generalData);
         }, response => {
-            console.log("Error in read menu list", response);
+            console.log("Error in read general list", response);
         }, () => {
             if (login != null) {
                 login.finishGeneralDataLoading();
@@ -1762,6 +1727,69 @@ WorkflowMessageService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         providedIn: 'root'
     })
 ], WorkflowMessageService);
+
+
+
+/***/ }),
+
+/***/ "./src/app/services/workflow/workflow-search.service.ts":
+/*!**************************************************************!*\
+  !*** ./src/app/services/workflow/workflow-search.service.ts ***!
+  \**************************************************************/
+/*! exports provided: WorkflowSearchService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WorkflowSearchService", function() { return WorkflowSearchService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+/* harmony import */ var _loading_service_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../loading-service.service */ "./src/app/services/loading-service.service.ts");
+
+
+
+
+
+let WorkflowSearchService = class WorkflowSearchService {
+    constructor(http, loadingService) {
+        this.http = http;
+        this.loadingService = loadingService;
+        this.searchInitialDataSubject = new rxjs__WEBPACK_IMPORTED_MODULE_3__["BehaviorSubject"](null);
+        this.loadInitialUrl = "/workflow/general/data/initsearch";
+        this.loadUrl = "/workflow/general/data/search";
+        this.listInitialData = null;
+    }
+    loadInitialData() {
+        this.loadingService.showLoading();
+        const httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Authorization': 'my-auth-token'
+            })
+        };
+        this.http.post(this.loadInitialUrl, new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpParams"](), httpOptions).subscribe((initialData) => {
+            console.log("GET successful search inital data", initialData);
+            this.listInitialData = JSON.parse(JSON.stringify(initialData));
+            this.searchInitialDataSubject.next(initialData);
+        }, response => {
+            console.log("Error in read search inital data", response);
+        }, () => {
+            this.searchInitialDataSubject.complete();
+            this.loadingService.hideLoading();
+        });
+    }
+};
+WorkflowSearchService.ctorParameters = () => [
+    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] },
+    { type: _loading_service_service__WEBPACK_IMPORTED_MODULE_4__["LoadingServiceService"] }
+];
+WorkflowSearchService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+        providedIn: 'root'
+    })
+], WorkflowSearchService);
 
 
 
@@ -2026,23 +2054,249 @@ class User {
 
 /***/ }),
 
-/***/ "./src/app/workflow-create/workflow-create.component.css":
-/*!***************************************************************!*\
-  !*** ./src/app/workflow-create/workflow-create.component.css ***!
-  \***************************************************************/
+/***/ "./src/app/wf-models/index.ts":
+/*!************************************!*\
+  !*** ./src/app/wf-models/index.ts ***!
+  \************************************/
+/*! exports provided: Workflow, WorkflowMessage, WorkflowType, WorkflowTypeStep, WorkflowAction, WorkflowFile, WorkflowFileVersion, WorkflowSearchFilter, WorkflowListInitialData */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _workflow__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./workflow */ "./src/app/wf-models/workflow.ts");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Workflow", function() { return _workflow__WEBPACK_IMPORTED_MODULE_1__["Workflow"]; });
+
+/* harmony import */ var _workflowmessage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./workflowmessage */ "./src/app/wf-models/workflowmessage.ts");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "WorkflowMessage", function() { return _workflowmessage__WEBPACK_IMPORTED_MODULE_2__["WorkflowMessage"]; });
+
+/* harmony import */ var _workflowtype__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./workflowtype */ "./src/app/wf-models/workflowtype.ts");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "WorkflowType", function() { return _workflowtype__WEBPACK_IMPORTED_MODULE_3__["WorkflowType"]; });
+
+/* harmony import */ var _workflowtypestep__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./workflowtypestep */ "./src/app/wf-models/workflowtypestep.ts");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "WorkflowTypeStep", function() { return _workflowtypestep__WEBPACK_IMPORTED_MODULE_4__["WorkflowTypeStep"]; });
+
+/* harmony import */ var _workflowaction__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./workflowaction */ "./src/app/wf-models/workflowaction.ts");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "WorkflowAction", function() { return _workflowaction__WEBPACK_IMPORTED_MODULE_5__["WorkflowAction"]; });
+
+/* harmony import */ var _workflowfile__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./workflowfile */ "./src/app/wf-models/workflowfile.ts");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "WorkflowFile", function() { return _workflowfile__WEBPACK_IMPORTED_MODULE_6__["WorkflowFile"]; });
+
+/* harmony import */ var _workflowfileversion__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./workflowfileversion */ "./src/app/wf-models/workflowfileversion.ts");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "WorkflowFileVersion", function() { return _workflowfileversion__WEBPACK_IMPORTED_MODULE_7__["WorkflowFileVersion"]; });
+
+/* harmony import */ var _workflow_search_filter__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./workflow-search-filter */ "./src/app/wf-models/workflow-search-filter.ts");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "WorkflowSearchFilter", function() { return _workflow_search_filter__WEBPACK_IMPORTED_MODULE_8__["WorkflowSearchFilter"]; });
+
+/* harmony import */ var _workflow_list_initialdata__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./workflow-list-initialdata */ "./src/app/wf-models/workflow-list-initialdata.ts");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "WorkflowListInitialData", function() { return _workflow_list_initialdata__WEBPACK_IMPORTED_MODULE_9__["WorkflowListInitialData"]; });
+
+
+
+
+
+
+
+
+
+
+
+
+
+/***/ }),
+
+/***/ "./src/app/wf-models/workflow-list-initialdata.ts":
+/*!********************************************************!*\
+  !*** ./src/app/wf-models/workflow-list-initialdata.ts ***!
+  \********************************************************/
+/*! exports provided: WorkflowListInitialData */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WorkflowListInitialData", function() { return WorkflowListInitialData; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _workflow_search_filter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./workflow-search-filter */ "./src/app/wf-models/workflow-search-filter.ts");
+
+
+class WorkflowListInitialData {
+    constructor() {
+        this.workflowStatusList = [];
+        this.searchFilter = new _workflow_search_filter__WEBPACK_IMPORTED_MODULE_1__["WorkflowSearchFilter"]();
+    }
+}
+
+
+/***/ }),
+
+/***/ "./src/app/wf-models/workflow-search-filter.ts":
+/*!*****************************************************!*\
+  !*** ./src/app/wf-models/workflow-search-filter.ts ***!
+  \*****************************************************/
+/*! exports provided: WorkflowSearchFilter */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WorkflowSearchFilter", function() { return WorkflowSearchFilter; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+
+class WorkflowSearchFilter {
+    constructor() {
+        this.meAssigned = true;
+        this.assignedUserIdSet = [];
+        this.statusList = [];
+        this.workflowTypes = [];
+        this.workflowSteps = [];
+    }
+}
+
+
+/***/ }),
+
+/***/ "./src/app/wf-models/workflow.ts":
+/*!***************************************!*\
+  !*** ./src/app/wf-models/workflow.ts ***!
+  \***************************************/
+/*! exports provided: Workflow */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Workflow", function() { return Workflow; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+
+class Workflow {
+}
+
+
+/***/ }),
+
+/***/ "./src/app/wf-models/workflowaction.ts":
+/*!*********************************************!*\
+  !*** ./src/app/wf-models/workflowaction.ts ***!
+  \*********************************************/
+/*! exports provided: WorkflowAction */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WorkflowAction", function() { return WorkflowAction; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+
+class WorkflowAction {
+}
+
+
+/***/ }),
+
+/***/ "./src/app/wf-models/workflowfile.ts":
+/*!*******************************************!*\
+  !*** ./src/app/wf-models/workflowfile.ts ***!
+  \*******************************************/
+/*! exports provided: WorkflowFile */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WorkflowFile", function() { return WorkflowFile; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+
+class WorkflowFile {
+}
+
+
+/***/ }),
+
+/***/ "./src/app/wf-models/workflowfileversion.ts":
+/*!**************************************************!*\
+  !*** ./src/app/wf-models/workflowfileversion.ts ***!
+  \**************************************************/
+/*! exports provided: WorkflowFileVersion */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WorkflowFileVersion", function() { return WorkflowFileVersion; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+
+class WorkflowFileVersion {
+}
+
+
+/***/ }),
+
+/***/ "./src/app/wf-models/workflowmessage.ts":
+/*!**********************************************!*\
+  !*** ./src/app/wf-models/workflowmessage.ts ***!
+  \**********************************************/
+/*! exports provided: WorkflowMessage */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WorkflowMessage", function() { return WorkflowMessage; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+
+class WorkflowMessage {
+}
+
+
+/***/ }),
+
+/***/ "./src/app/wf-models/workflowtype.ts":
+/*!*******************************************!*\
+  !*** ./src/app/wf-models/workflowtype.ts ***!
+  \*******************************************/
+/*! exports provided: WorkflowType */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WorkflowType", function() { return WorkflowType; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+
+class WorkflowType {
+}
+
+
+/***/ }),
+
+/***/ "./src/app/wf-models/workflowtypestep.ts":
+/*!***********************************************!*\
+  !*** ./src/app/wf-models/workflowtypestep.ts ***!
+  \***********************************************/
+/*! exports provided: WorkflowTypeStep */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WorkflowTypeStep", function() { return WorkflowTypeStep; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+
+class WorkflowTypeStep {
+}
+
+
+/***/ }),
+
+/***/ "./src/app/wm-components/workflow-create/workflow-create.component.css":
+/*!*****************************************************************************!*\
+  !*** ./src/app/wm-components/workflow-create/workflow-create.component.css ***!
+  \*****************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("\r\n\r\n/*\r\nCopyright Google LLC. All Rights Reserved.\r\nUse of this source code is governed by an MIT-style license that\r\ncan be found in the LICENSE file at http://angular.io/license\r\n*/\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvd29ya2Zsb3ctY3JlYXRlL3dvcmtmbG93LWNyZWF0ZS5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBRUE7Ozs7Q0FJQyIsImZpbGUiOiJzcmMvYXBwL3dvcmtmbG93LWNyZWF0ZS93b3JrZmxvdy1jcmVhdGUuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIlxyXG5cclxuLypcclxuQ29weXJpZ2h0IEdvb2dsZSBMTEMuIEFsbCBSaWdodHMgUmVzZXJ2ZWQuXHJcblVzZSBvZiB0aGlzIHNvdXJjZSBjb2RlIGlzIGdvdmVybmVkIGJ5IGFuIE1JVC1zdHlsZSBsaWNlbnNlIHRoYXRcclxuY2FuIGJlIGZvdW5kIGluIHRoZSBMSUNFTlNFIGZpbGUgYXQgaHR0cDovL2FuZ3VsYXIuaW8vbGljZW5zZVxyXG4qLyJdfQ== */");
+/* harmony default export */ __webpack_exports__["default"] = ("\r\n\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL3dtLWNvbXBvbmVudHMvd29ya2Zsb3ctY3JlYXRlL3dvcmtmbG93LWNyZWF0ZS5jb21wb25lbnQuY3NzIn0= */");
 
 /***/ }),
 
-/***/ "./src/app/workflow-create/workflow-create.component.ts":
-/*!**************************************************************!*\
-  !*** ./src/app/workflow-create/workflow-create.component.ts ***!
-  \**************************************************************/
+/***/ "./src/app/wm-components/workflow-create/workflow-create.component.ts":
+/*!****************************************************************************!*\
+  !*** ./src/app/wm-components/workflow-create/workflow-create.component.ts ***!
+  \****************************************************************************/
 /*! exports provided: WorkflowCreateComponent */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -2051,55 +2305,90 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WorkflowCreateComponent", function() { return WorkflowCreateComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-/* harmony import */ var _products__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../products */ "./src/app/products.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm2015/ngx-translate-core.js");
+/* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../services/global.service */ "./src/app/services/global.service.ts");
+
+
 
 
 
 let WorkflowCreateComponent = class WorkflowCreateComponent {
-    constructor() {
-        this.products = _products__WEBPACK_IMPORTED_MODULE_2__["products"];
+    constructor(router, global, translate) {
+        this.router = router;
+        this.global = global;
+        this.worlflowTypes = [];
+        this.router.events.subscribe((evt) => {
+            if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_2__["NavigationEnd"]) {
+                this.loadInitialData();
+            }
+        });
     }
-    share() {
-        window.alert('The product has been shared!');
+    ngOnInit() {
+        this.loadInitialData();
     }
-    onNotify() {
-        window.alert('You will be notified when the product goes on sale');
+    loadInitialData() {
+        if (this.global.loadedGeneralData !== null) {
+            this.worlflowTypes = this.global.loadedGeneralData.workflow.worlflowTypes;
+        }
+        else {
+            this.subscribeToGeneralData();
+            this.global.loadAllSetting(null);
+        }
+    }
+    subscribeToGeneralData() {
+        this.global.currentSessionDataSubject.subscribe((data) => {
+            console.log("set gloabl-data from workflow-create. appIsLogged: ");
+            //alert("from app-comp: \n" + JSON.stringify(data));
+            if (data && data !== null) {
+                var value = data.isLogged + "";
+                if (value === "true" === true) {
+                    this.worlflowTypes = data.workflow.worlflowTypes;
+                }
+                else {
+                    this.worlflowTypes = [];
+                }
+            }
+            else {
+                this.worlflowTypes = [];
+            }
+        });
     }
 };
+WorkflowCreateComponent.ctorParameters = () => [
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] },
+    { type: _services_global_service__WEBPACK_IMPORTED_MODULE_4__["GlobalService"] },
+    { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_3__["TranslateService"] }
+];
 WorkflowCreateComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
         selector: 'app-workflow-create',
-        template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./workflow-create.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/workflow-create/workflow-create.component.html")).default,
-        styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./workflow-create.component.css */ "./src/app/workflow-create/workflow-create.component.css")).default]
+        template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./workflow-create.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/wm-components/workflow-create/workflow-create.component.html")).default,
+        styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./workflow-create.component.css */ "./src/app/wm-components/workflow-create/workflow-create.component.css")).default]
     })
 ], WorkflowCreateComponent);
 
-/*
-Copyright Google LLC. All Rights Reserved.
-Use of this source code is governed by an MIT-style license that
-can be found in the LICENSE file at http://angular.io/license
-*/ 
 
 
 /***/ }),
 
-/***/ "./src/app/workflow-list/workflow-list.component.css":
-/*!***********************************************************!*\
-  !*** ./src/app/workflow-list/workflow-list.component.css ***!
-  \***********************************************************/
+/***/ "./src/app/wm-components/workflow-list/workflow-list.component.css":
+/*!*************************************************************************!*\
+  !*** ./src/app/wm-components/workflow-list/workflow-list.component.css ***!
+  \*************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("\r\n\r\n/*\r\nCopyright Google LLC. All Rights Reserved.\r\nUse of this source code is governed by an MIT-style license that\r\ncan be found in the LICENSE file at http://angular.io/license\r\n*/\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvd29ya2Zsb3ctbGlzdC93b3JrZmxvdy1saXN0LmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFFQTs7OztDQUlDIiwiZmlsZSI6InNyYy9hcHAvd29ya2Zsb3ctbGlzdC93b3JrZmxvdy1saXN0LmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyJcclxuXHJcbi8qXHJcbkNvcHlyaWdodCBHb29nbGUgTExDLiBBbGwgUmlnaHRzIFJlc2VydmVkLlxyXG5Vc2Ugb2YgdGhpcyBzb3VyY2UgY29kZSBpcyBnb3Zlcm5lZCBieSBhbiBNSVQtc3R5bGUgbGljZW5zZSB0aGF0XHJcbmNhbiBiZSBmb3VuZCBpbiB0aGUgTElDRU5TRSBmaWxlIGF0IGh0dHA6Ly9hbmd1bGFyLmlvL2xpY2Vuc2VcclxuKi8iXX0= */");
+/* harmony default export */ __webpack_exports__["default"] = ("\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL3dtLWNvbXBvbmVudHMvd29ya2Zsb3ctbGlzdC93b3JrZmxvdy1saXN0LmNvbXBvbmVudC5jc3MifQ== */");
 
 /***/ }),
 
-/***/ "./src/app/workflow-list/workflow-list.component.ts":
-/*!**********************************************************!*\
-  !*** ./src/app/workflow-list/workflow-list.component.ts ***!
-  \**********************************************************/
+/***/ "./src/app/wm-components/workflow-list/workflow-list.component.ts":
+/*!************************************************************************!*\
+  !*** ./src/app/wm-components/workflow-list/workflow-list.component.ts ***!
+  \************************************************************************/
 /*! exports provided: WorkflowListComponent */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -2108,34 +2397,88 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WorkflowListComponent", function() { return WorkflowListComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-/* harmony import */ var _products__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../products */ "./src/app/products.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm2015/ngx-translate-core.js");
+/* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../services/global.service */ "./src/app/services/global.service.ts");
+/* harmony import */ var _services_workflow_workflow_search_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../services/workflow/workflow-search.service */ "./src/app/services/workflow/workflow-search.service.ts");
+/* harmony import */ var _wf_models__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../wf-models */ "./src/app/wf-models/index.ts");
+
+
+
+
 
 
 
 let WorkflowListComponent = class WorkflowListComponent {
-    constructor() {
-        this.products = _products__WEBPACK_IMPORTED_MODULE_2__["products"];
+    constructor(router, global, translate, searchService) {
+        this.router = router;
+        this.global = global;
+        this.searchService = searchService;
+        this.worlflowTypes = [];
+        this.resultWorlflows = [];
+        this.listInitialData = new _wf_models__WEBPACK_IMPORTED_MODULE_6__["WorkflowListInitialData"]();
+        this.router.events.subscribe((evt) => {
+            if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_2__["NavigationEnd"]) {
+                this.loadInitialData();
+            }
+        });
     }
-    share() {
-        window.alert('The product has been shared!');
+    get isMeAssigned() {
+        if (this.listInitialData && this.listInitialData != null && this.listInitialData.searchFilter != null) {
+            return this.listInitialData.searchFilter.meAssigned;
+        }
+        return false;
     }
-    onNotify() {
-        window.alert('You will be notified when the product goes on sale');
+    get statusList() {
+        if (this.listInitialData && this.listInitialData != null && this.listInitialData.workflowStatusList != null) {
+            return this.listInitialData.workflowStatusList;
+        }
+        return [];
+    }
+    ngOnInit() {
+        this.loadInitialData();
+    }
+    loadInitialData() {
+        if (this.searchService.listInitialData !== null) {
+            this.listInitialData = this.searchService.listInitialData;
+        }
+        else {
+            this.subscribeToSearchInitialData();
+            this.searchService.loadInitialData();
+        }
+    }
+    subscribeToSearchInitialData() {
+        this.searchService.searchInitialDataSubject.subscribe((data) => {
+            console.log("set gloabl-data from workflow-create. : ", data);
+            //alert("from app-comp: \n" + JSON.stringify(data));
+            if (data && data !== null) {
+                this.listInitialData = data;
+            }
+            else {
+                this.listInitialData = null;
+            }
+        });
+    }
+    reload() {
+    }
+    hasNoArhiveStatus() {
+        return false;
     }
 };
+WorkflowListComponent.ctorParameters = () => [
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] },
+    { type: _services_global_service__WEBPACK_IMPORTED_MODULE_4__["GlobalService"] },
+    { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_3__["TranslateService"] },
+    { type: _services_workflow_workflow_search_service__WEBPACK_IMPORTED_MODULE_5__["WorkflowSearchService"] }
+];
 WorkflowListComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
         selector: 'app-workflow-list',
-        template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./workflow-list.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/workflow-list/workflow-list.component.html")).default,
-        styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./workflow-list.component.css */ "./src/app/workflow-list/workflow-list.component.css")).default]
+        template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./workflow-list.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/wm-components/workflow-list/workflow-list.component.html")).default,
+        styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./workflow-list.component.css */ "./src/app/wm-components/workflow-list/workflow-list.component.css")).default]
     })
 ], WorkflowListComponent);
 
-/*
-Copyright Google LLC. All Rights Reserved.
-Use of this source code is governed by an MIT-style license that
-can be found in the LICENSE file at http://angular.io/license
-*/ 
 
 
 /***/ }),

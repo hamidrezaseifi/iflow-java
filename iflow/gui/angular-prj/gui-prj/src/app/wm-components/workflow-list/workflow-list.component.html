@@ -1,0 +1,57 @@
+		<div class="content-container">
+			<div class="page-toolbar">
+				<div class="page-title">{{ 'menu-workflow-list' | translate:param }}</div>
+				<button class="toolbar-button" (click)="reload()"><i class="material-icons">refresh</i></button>
+				<a class="toolbar-link" href="/workflow/create"><i class="material-icons">playlist_add</i></a>
+				
+				<span class="toolbar-separator w100"></span>
+				
+				<span class="form-check abc-checkbox abc-checkbox">
+					<input type="checkbox" class="toggle-checkbox form-check-input" [checked]="isMeAssigned" id="me-assigned-check">
+					<label class="form-check-label" for="me-assigned-check">{{ 'workflow-assigned-me' | translate:param }}</label>
+				</span>
+				
+				<span class="form-check abc-checkbox abc-checkbox">
+					<input type="checkbox" class="toggle-checkbox form-check-input" [checked]="hasNoArhiveStatus()" id="no-archive-check" ng-click="toggleSearchArchive()">
+					<label class="form-check-label" for="no-archive-check">{{ 'workflow-not-archive' | translate:param }}</label>
+				</span>
+				
+			</div>
+			<select>
+				<option *ngFor="let wstatus of statusList;">{{wstatus}}</option>
+			</select>
+		    <table class="table table-bordered table-responsive iflow-table">
+		    	<thead class="thead-dark">
+		    		<tr>
+		    			<th scope="col">{{ 'workflow-type' | translate:param }}</th>
+		    			<th scope="col">{{ 'workflow-current-step' | translate:param }}</th>
+		    			<th scope="col">{{ 'workflow-status' | translate:param }}</th>
+		    			<th scope="col">{{ 'workflow-assignto' | translate:param }}</th>
+		    			<th scope="col"></th>
+		    		</tr>
+		    	</thead>
+		    	<tbody>
+		     		<tr *ngFor="let item of resultWorlflows;">
+		    			<td scope="row">{{item.workflowType.title}}</td>
+		    			<td>{{item.currentStep.title}}</td>
+		    			<td>{{item.status}}</td>
+		    			<td>{{item.assignToUserFullName}}</td>
+		    			<td><a class="tool-link" [routerLink]="['/workflow/edit/' + item.workflowType.identity + '/' + item.identity + '/' + item.currentStep.identity]"><i class="material-icons">edit</i></a></td>
+		    		</tr>
+		     		
+		    	
+		    	</tbody>
+		    </table>
+		    
+		    <div style="min-height: 20px; border: 1px solid gray; ">
+		    {{searchFilter}}
+		    </div>
+		    
+		    <script type="text/javascript">
+				var loadInitialUrl = "/workflow/general/data/initsearch";
+				var loadUrl = "/workflow/general/data/search";
+		    </script>
+		
+		
+		</div>
+

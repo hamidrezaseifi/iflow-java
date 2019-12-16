@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class MainController {
 
   @ResponseStatus(HttpStatus.OK)
-  @GetMapping(path = { "/", "/about", "/workflow/list", "/workflow/create" })
+  @GetMapping(path = { "/", "/about", "/workflow/*", "/workflow/**" })
   public String index() {
 
     return "ang/index";

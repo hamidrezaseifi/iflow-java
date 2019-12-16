@@ -15,6 +15,8 @@ export class AuthenticationService implements CanActivate{
     private currentUserSubject: BehaviorSubject<User>;
     isLoggedIn :boolean = false;
     
+    authenticateUrl :string = "/auth/authenticate";
+    
     constructor(
     		private http: HttpClient,
     		private global: GlobalService,
@@ -46,7 +48,7 @@ export class AuthenticationService implements CanActivate{
         		  })
         		};
         
-    	this.http.post("/auth/authenticate", loginData, httpOptions).subscribe(
+    	this.http.post(this.authenticateUrl, loginData, httpOptions).subscribe(
 		        val => {
 		        	var loginResponse :LoginResponse = <LoginResponse>val;
 		        	
@@ -127,7 +129,7 @@ export class AuthenticationService implements CanActivate{
     
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     	
-    	//alert("check authentication: isLoggedIn: " + this.isLoggedIn);
+    	//alert("check authentication fo : " + state.url + " : isLoggedIn: " + this.isLoggedIn);
     	
         if (this.isLoggedIn === true) {
         	        	

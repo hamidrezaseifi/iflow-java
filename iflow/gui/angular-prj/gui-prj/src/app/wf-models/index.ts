@@ -5,3 +5,5 @@ export * from './workflowtypestep';
 export * from './workflowaction';
 export * from './workflowfile';
 export * from './workflowfileversion';
+export * from './workflow-search-filter';
+export * from './workflow-list-initialdata';

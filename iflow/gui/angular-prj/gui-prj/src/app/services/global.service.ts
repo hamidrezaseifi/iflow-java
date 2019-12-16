@@ -13,14 +13,15 @@ export class GlobalService {
 	public currentSessionDataSubject: BehaviorSubject<GeneralData> = new BehaviorSubject<GeneralData>(null);
 	//public currentSessionDataObs :Observable<GeneralData>;		
 
+	public loadedGeneralData : GeneralData = null;
 	constructor(private http:HttpClient, private loadingService: LoadingServiceService,) { 
 		//this.currentSessionDataSubject = new BehaviorSubject<GeneralData>(null);
         //this.currentSessionDataObs = this.currentSessionDataSubject.asObservable();		
 	}
 	
-    /*public get currentSessionDataValue(): GeneralData {
+    public get currentSessionDataValue(): GeneralData {
         return this.currentSessionDataSubject.value;
-    }*/
+    }
 	
 	loadAllSetting(login: ILoginComponent, ){
 		this.loadingService.showLoading();
@@ -29,11 +30,13 @@ export class GlobalService {
 				(generalData :GeneralData) => {
 		            console.log("GET call successful generaldata", generalData);
 		            
+		            this.loadedGeneralData = <GeneralData> JSON.parse(JSON.stringify(generalData));
+		            
 		        	this.currentSessionDataSubject.next(generalData);
 		        	
 		        },
 		        response => {
-		            console.log("Error in read menu list", response);
+		            console.log("Error in read general list", response);
 		            
 		        },
 		        () => {

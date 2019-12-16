@@ -26,8 +26,8 @@ import { LoadingDialogComponent } from './_components/loading-dialog/loading-dia
 import { HomeComponent } from './home';
 import { AboutComponent } from './about';
 import { LoginComponent } from './login';
-import { WorkflowCreateComponent } from './workflow-create/workflow-create.component';
-import { WorkflowListComponent } from './workflow-list/workflow-list.component';
+import { WorkflowCreateComponent } from './wm-components/workflow-create/workflow-create.component';
+import { WorkflowListComponent } from './wm-components/workflow-list/workflow-list.component';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');

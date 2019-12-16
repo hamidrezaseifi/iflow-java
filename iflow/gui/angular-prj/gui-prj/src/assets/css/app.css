@@ -364,6 +364,7 @@ i.material-icons.inlist-icon
   padding: 20px;
   border: 1px solid gray;
   border-radius: 6px;
+  margin: 0 auto;
 }
 
 .login-container .login-title

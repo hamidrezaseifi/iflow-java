@@ -10,15 +10,15 @@ import com.pth.iflow.common.enums.EWorkflowStatus;
 
 public class WorkflowSearchFilter {
 
-  private boolean            meAssigned;
+  private boolean                    meAssigned;
 
-  private final Set<String>  assignedUserIdSet = new HashSet<>();
+  private final Set<String>          assignedUserIdSet = new HashSet<>();
 
-  private final Set<Integer> statusList        = new HashSet<>();
+  private final Set<EWorkflowStatus> statusList        = new HashSet<>();
 
-  private final Set<String>  workflowTypes     = new HashSet<>();
+  private final Set<String>          workflowTypes     = new HashSet<>();
 
-  private final Set<String>  workflowSteps     = new HashSet<>();
+  private final Set<String>          workflowSteps     = new HashSet<>();
 
   /**
    * @return the meAssigned
@@ -51,11 +51,11 @@ public class WorkflowSearchFilter {
 
   }
 
-  public Set<Integer> getStatusList() {
+  public Set<EWorkflowStatus> getStatusList() {
     return this.statusList;
   }
 
-  public void setStatusList(final Set<Integer> statusList) {
+  public void setStatusList(final Set<EWorkflowStatus> statusList) {
     this.statusList.clear();
     if (statusList != null) {
       this.statusList.addAll(statusList);
@@ -88,8 +88,8 @@ public class WorkflowSearchFilter {
     final WorkflowSearchFilter workflowSearchFilter = new WorkflowSearchFilter();
 
     workflowSearchFilter.setMeAssigned(true);
-    workflowSearchFilter.setStatusList(Arrays.asList(EWorkflowStatus.values()).stream().filter(e -> e != EWorkflowStatus.ARCHIVED)
-        .map(e -> e.getValue().intValue()).collect(Collectors.toSet()));
+    workflowSearchFilter.setStatusList(
+        Arrays.asList(EWorkflowStatus.values()).stream().filter(e -> e != EWorkflowStatus.ARCHIVED).collect(Collectors.toSet()));
 
     workflowSearchFilter.setWorkflowTypes(workflowTypes.stream().map(t -> t.getIdentity()).collect(Collectors.toSet()));
 

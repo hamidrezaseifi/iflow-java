@@ -30,7 +30,7 @@ export interface WorkflowGeneralData {
 
 export class GeneralData {
 	isLogged: boolean;
-	Workflow: WorkflowGeneralData;
+	workflow: WorkflowGeneralData;
 	company: CompanyGeneralData;
 	app: AppGeneralData;
 	user: UserGeneralData;

@@ -27,7 +27,8 @@
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/assets/css/angular-resizable.css",
-              "src/assets/css/app.css"
+              "src/assets/css/app.css",
+              "src/assets/css/table.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",

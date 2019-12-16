@@ -3,8 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home';
 import { AboutComponent } from './about';
 import { LoginComponent } from './login';
-import { WorkflowCreateComponent } from './workflow-create/workflow-create.component';
-import { WorkflowListComponent } from './workflow-list/workflow-list.component';
+import { WorkflowCreateComponent } from './wm-components/workflow-create/workflow-create.component';
+import { WorkflowListComponent } from './wm-components/workflow-list/workflow-list.component';
 //import { AuthGuard } from './helper';
 import { AuthenticationService } from './services/authentication.service';
 

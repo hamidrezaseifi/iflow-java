@@ -3,6 +3,7 @@ package com.pth.iflow.gui.models.mapper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -37,6 +38,7 @@ import com.pth.iflow.common.enums.EInvoiceType;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.enums.EWorkflowMessageType;
 import com.pth.iflow.common.enums.EWorkflowProcessCommand;
+import com.pth.iflow.common.enums.EWorkflowStatus;
 import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.models.AssignItem;
@@ -738,7 +740,7 @@ public class GuiModelEdoMapper {
   public static WorkflowSearchFilterEdo toEdo(final WorkflowSearchFilter model) {
     final WorkflowSearchFilterEdo edo = new WorkflowSearchFilterEdo();
     edo.setAssignedUserIdentitySet(model.getAssignedUserIdSet());
-    edo.setStatusSet(model.getStatusList());
+    edo.setStatusSet(model.getStatusList().stream().map(e -> e.getValue()).collect(Collectors.toSet()));
     edo.setWorkflowStepeIdentitySet(model.getWorkflowSteps());
     edo.setWorkflowTypeIdentitySet(model.getWorkflowTypes());
 
@@ -750,7 +752,7 @@ public class GuiModelEdoMapper {
 
     final WorkflowSearchFilter model = new WorkflowSearchFilter();
     model.setAssignedUserIdentitySet(edo.getAssignedUserIdentitySet());
-    model.setStatusList(edo.getStatusSet());
+    model.setStatusList(edo.getStatusSet().stream().map(i -> EWorkflowStatus.ofValue(i)).collect(Collectors.toSet()));
     model.setWorkflowSteps(edo.getWorkflowStepeIdentitySet());
     model.setWorkflowTypes(edo.getWorkflowTypeIdentitySet());
 
