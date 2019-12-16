@@ -175,7 +175,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("\t\t<div class=\"content-container\">\r\n\t\t\t<div class=\"page-toolbar\">\r\n\t\t\t\t<div class=\"page-title\">{{ 'menu-workflow-list' | translate:param }}</div>\r\n\t\t\t\t<button class=\"toolbar-button\" (click)=\"reload()\"><i class=\"material-icons\">refresh</i></button>\r\n\t\t\t\t<a class=\"toolbar-link\" href=\"/workflow/create\"><i class=\"material-icons\">playlist_add</i></a>\r\n\t\t\t\t\r\n\t\t\t\t<span class=\"toolbar-separator w100\"></span>\r\n\t\t\t\t\r\n\t\t\t\t<span class=\"form-check abc-checkbox abc-checkbox\">\r\n\t\t\t\t\t<input type=\"checkbox\" class=\"toggle-checkbox form-check-input\" [checked]=\"isMeAssigned\" id=\"me-assigned-check\">\r\n\t\t\t\t\t<label class=\"form-check-label\" for=\"me-assigned-check\">{{ 'workflow-assigned-me' | translate:param }}</label>\r\n\t\t\t\t</span>\r\n\t\t\t\t\r\n\t\t\t\t<span class=\"form-check abc-checkbox abc-checkbox\">\r\n\t\t\t\t\t<input type=\"checkbox\" class=\"toggle-checkbox form-check-input\" [checked]=\"hasNoArhiveStatus()\" id=\"no-archive-check\" ng-click=\"toggleSearchArchive()\">\r\n\t\t\t\t\t<label class=\"form-check-label\" for=\"no-archive-check\">{{ 'workflow-not-archive' | translate:param }}</label>\r\n\t\t\t\t</span>\r\n\t\t\t\t\r\n\t\t\t</div>\r\n\t\t\t<select>\r\n\t\t\t\t<option *ngFor=\"let wstatus of statusList;\">{{wstatus}}</option>\r\n\t\t\t</select>\r\n\t\t    <table class=\"table table-bordered table-responsive iflow-table\">\r\n\t\t    \t<thead class=\"thead-dark\">\r\n\t\t    \t\t<tr>\r\n\t\t    \t\t\t<th scope=\"col\">{{ 'workflow-type' | translate:param }}</th>\r\n\t\t    \t\t\t<th scope=\"col\">{{ 'workflow-current-step' | translate:param }}</th>\r\n\t\t    \t\t\t<th scope=\"col\">{{ 'workflow-status' | translate:param }}</th>\r\n\t\t    \t\t\t<th scope=\"col\">{{ 'workflow-assignto' | translate:param }}</th>\r\n\t\t    \t\t\t<th scope=\"col\"></th>\r\n\t\t    \t\t</tr>\r\n\t\t    \t</thead>\r\n\t\t    \t<tbody>\r\n\t\t     \t\t<tr *ngFor=\"let item of resultWorlflows;\">\r\n\t\t    \t\t\t<td scope=\"row\">{{item.workflowType.title}}</td>\r\n\t\t    \t\t\t<td>{{item.currentStep.title}}</td>\r\n\t\t    \t\t\t<td>{{item.status}}</td>\r\n\t\t    \t\t\t<td>{{item.assignToUserFullName}}</td>\r\n\t\t    \t\t\t<td><a class=\"tool-link\" [routerLink]=\"['/workflow/edit/' + item.workflowType.identity + '/' + item.identity + '/' + item.currentStep.identity]\"><i class=\"material-icons\">edit</i></a></td>\r\n\t\t    \t\t</tr>\r\n\t\t     \t\t\r\n\t\t    \t\r\n\t\t    \t</tbody>\r\n\t\t    </table>\r\n\t\t    \r\n\t\t    <div style=\"min-height: 20px; border: 1px solid gray; \">\r\n\t\t    {{searchFilter}}\r\n\t\t    </div>\r\n\t\t    \r\n\t\t    <script type=\"text/javascript\">\r\n\t\t\t\tvar loadInitialUrl = \"/workflow/general/data/initsearch\";\r\n\t\t\t\tvar loadUrl = \"/workflow/general/data/search\";\r\n\t\t    </script>\r\n\t\t\r\n\t\t\r\n\t\t</div>\r\n\r\n");
+/* harmony default export */ __webpack_exports__["default"] = ("\t\t<div class=\"content-container\">\r\n\t\t\t<div class=\"page-toolbar\">\r\n\t\t\t\t<div class=\"page-title\">{{ 'menu-workflow-list' | translate:param }}</div>\r\n\t\t\t\t<button class=\"toolbar-button\" (click)=\"reload()\"><i class=\"material-icons\">refresh</i></button>\r\n\t\t\t\t<a class=\"toolbar-link\" href=\"/workflow/create\"><i class=\"material-icons\">playlist_add</i></a>\r\n\t\t\t\t\r\n\t\t\t\t<ul class=\"nav nav-pills search-toolbar\">\r\n\t\t\t\t\t<li class=\"nav-item dropdown\">\r\n\t\t\t\t\t\t<a class=\"nav-link dropdown-toggle\" data-toggle=\"dropdown\" href=\"#\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">Status</a>\r\n\t\t\t\t\t\t<div class=\"dropdown-menu\">\r\n\t\t\t\t\t\t\t<div *ngFor=\"let wstatus of statusList;\" class=\"dropdown-item\">\r\n\t\t\t\t\t\t\t\t<input type=\"checkbox\" class=\"form-check-input\" [checked]=\"isStatusSelected(wstatus)\" (click)=\"toggleStatusSelected(wstatus)\"  id=\"status-check-{{wstatus}}\">\r\n\t\t\t\t\t\t\t\t<label class=\"form-check-label\" for=\"status-check-{{wstatus}}\">{{wstatus}}</label>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</li>\r\n\t\t\t\t  \t<li class=\"nav-item\">\r\n\t\t\t\t  \t\t<div class=\"dropdown-item search-toolbar-item\">\r\n\t\t\t\t\t\t\t<input type=\"checkbox\" class=\"toggle-checkbox form-check-input\" [checked]=\"isMeAssigned\" [(ngModel)]=\"isMeAssigned\"  id=\"me-assigned-check\">\r\n\t\t\t\t\t\t\t<label class=\"form-check-label\" for=\"me-assigned-check\">{{ 'workflow-assigned-me' | translate:param }}</label>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t  \t</li>\r\n\t\t\t\t</ul>\t\t\t\t\r\n\t\t\t\t\t\t\t\t\r\n\t\t\t</div>\r\n\t\t\t<div style=\"border: 1px solid gray; padding: 5px; background-color: #f1f1f1;\">{{debugSearchFilter}}</div>\r\n\t\t\t\r\n\t\t    <table class=\"table table-bordered table-responsive iflow-table\">\r\n\t\t    \t<thead class=\"thead-dark\">\r\n\t\t    \t\t<tr>\r\n\t\t    \t\t\t<th scope=\"col\">{{ 'workflow-type' | translate:param }}</th>\r\n\t\t    \t\t\t<th scope=\"col\">{{ 'workflow-current-step' | translate:param }}</th>\r\n\t\t    \t\t\t<th scope=\"col\">{{ 'workflow-status' | translate:param }}</th>\r\n\t\t    \t\t\t<th scope=\"col\">{{ 'workflow-assignto' | translate:param }}</th>\r\n\t\t    \t\t\t<th scope=\"col\"></th>\r\n\t\t    \t\t</tr>\r\n\t\t    \t</thead>\r\n\t\t    \t<tbody>\r\n\t\t     \t\t<tr *ngFor=\"let item of resultWorlflows;\">\r\n\t\t    \t\t\t<td scope=\"row\">{{item.workflowType.title}}</td>\r\n\t\t    \t\t\t<td>{{item.currentStep.title}}</td>\r\n\t\t    \t\t\t<td>{{item.status}}</td>\r\n\t\t    \t\t\t<td>{{item.assignToUserFullName}}</td>\r\n\t\t    \t\t\t<td><a class=\"tool-link\" [routerLink]=\"['/workflow/edit/' + item.workflowType.identity + '/' + item.identity + '/' + item.currentStep.identity]\"><i class=\"material-icons\">edit</i></a></td>\r\n\t\t    \t\t</tr>\r\n\t\t     \t\t\r\n\t\t    \t\r\n\t\t    \t</tbody>\r\n\t\t    </table>\r\n\t\t    \r\n\t\t    <div style=\"min-height: 20px; border: 1px solid gray; \">\r\n\t\t    {{searchFilter}}\r\n\t\t    </div>\r\n\t\t    \r\n\t\t    <script type=\"text/javascript\">\r\n\t\t\t\tvar loadInitialUrl = \"/workflow/general/data/initsearch\";\r\n\t\t\t\tvar loadUrl = \"/workflow/general/data/search\";\r\n\t\t    </script>\r\n\t\t\r\n\t\t\r\n\t\t</div>\r\n\r\n");
 
 /***/ }),
 
@@ -2381,7 +2381,7 @@ WorkflowCreateComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL3dtLWNvbXBvbmVudHMvd29ya2Zsb3ctbGlzdC93b3JrZmxvdy1saXN0LmNvbXBvbmVudC5jc3MifQ== */");
+/* harmony default export */ __webpack_exports__["default"] = ("\r\n.search-toolbar {\r\n    width: calc(100% - 300px);\r\n    float: right;\r\n}\r\n\r\n.search-toolbar .nav-item{\r\n    margin-right: 30px;\r\n    \r\n}\r\n\r\n.search-toolbar .nav-item input.form-check-input[type=checkbox]{\r\n    width: 16px;\r\n    height: 16px;\r\n    \r\n}\r\n\r\n.search-toolbar .nav-item .form-check-label{\r\n\tmargin-bottom: 0;\r\n    padding-left: 10px;\r\n    line-height: 20px;\r\n}\r\n\r\n.search-toolbar-item{\r\n\theight: 100%;\r\n    padding-top: 9px;\r\n}\r\n\r\n.search-toolbar .nav-item {\r\n    background-color: transparent !important;\r\n}\r\n\r\n.search-toolbar .nav-link.active, .search-toolbar .show>.nav-link {\r\n    color: #fff !important;\r\n    background-color: #c7c9cb !important;\r\n}\r\n\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvd20tY29tcG9uZW50cy93b3JrZmxvdy1saXN0L3dvcmtmbG93LWxpc3QuY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiO0FBQ0E7SUFDSSx5QkFBeUI7SUFDekIsWUFBWTtBQUNoQjs7QUFFQTtJQUNJLGtCQUFrQjs7QUFFdEI7O0FBRUE7SUFDSSxXQUFXO0lBQ1gsWUFBWTs7QUFFaEI7O0FBRUE7Q0FDQyxnQkFBZ0I7SUFDYixrQkFBa0I7SUFDbEIsaUJBQWlCO0FBQ3JCOztBQUVBO0NBQ0MsWUFBWTtJQUNULGdCQUFnQjtBQUNwQjs7QUFFQTtJQUNJLHdDQUF3QztBQUM1Qzs7QUFFQTtJQUNJLHNCQUFzQjtJQUN0QixvQ0FBb0M7QUFDeEMiLCJmaWxlIjoic3JjL2FwcC93bS1jb21wb25lbnRzL3dvcmtmbG93LWxpc3Qvd29ya2Zsb3ctbGlzdC5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiXHJcbi5zZWFyY2gtdG9vbGJhciB7XHJcbiAgICB3aWR0aDogY2FsYygxMDAlIC0gMzAwcHgpO1xyXG4gICAgZmxvYXQ6IHJpZ2h0O1xyXG59XHJcblxyXG4uc2VhcmNoLXRvb2xiYXIgLm5hdi1pdGVte1xyXG4gICAgbWFyZ2luLXJpZ2h0OiAzMHB4O1xyXG4gICAgXHJcbn1cclxuXHJcbi5zZWFyY2gtdG9vbGJhciAubmF2LWl0ZW0gaW5wdXQuZm9ybS1jaGVjay1pbnB1dFt0eXBlPWNoZWNrYm94XXtcclxuICAgIHdpZHRoOiAxNnB4O1xyXG4gICAgaGVpZ2h0OiAxNnB4O1xyXG4gICAgXHJcbn1cclxuXHJcbi5zZWFyY2gtdG9vbGJhciAubmF2LWl0ZW0gLmZvcm0tY2hlY2stbGFiZWx7XHJcblx0bWFyZ2luLWJvdHRvbTogMDtcclxuICAgIHBhZGRpbmctbGVmdDogMTBweDtcclxuICAgIGxpbmUtaGVpZ2h0OiAyMHB4O1xyXG59XHJcblxyXG4uc2VhcmNoLXRvb2xiYXItaXRlbXtcclxuXHRoZWlnaHQ6IDEwMCU7XHJcbiAgICBwYWRkaW5nLXRvcDogOXB4O1xyXG59XHJcblxyXG4uc2VhcmNoLXRvb2xiYXIgLm5hdi1pdGVtIHtcclxuICAgIGJhY2tncm91bmQtY29sb3I6IHRyYW5zcGFyZW50ICFpbXBvcnRhbnQ7XHJcbn1cclxuXHJcbi5zZWFyY2gtdG9vbGJhciAubmF2LWxpbmsuYWN0aXZlLCAuc2VhcmNoLXRvb2xiYXIgLnNob3c+Lm5hdi1saW5rIHtcclxuICAgIGNvbG9yOiAjZmZmICFpbXBvcnRhbnQ7XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjYzdjOWNiICFpbXBvcnRhbnQ7XHJcbn1cclxuXHJcbiJdfQ== */");
 
 /***/ }),
 
@@ -2429,6 +2429,11 @@ let WorkflowListComponent = class WorkflowListComponent {
         }
         return false;
     }
+    set isMeAssigned(assigned) {
+        if (this.listInitialData && this.listInitialData != null && this.listInitialData.searchFilter != null) {
+            this.listInitialData.searchFilter.meAssigned = assigned;
+        }
+    }
     get statusList() {
         if (this.listInitialData && this.listInitialData != null && this.listInitialData.workflowStatusList != null) {
             return this.listInitialData.workflowStatusList;
@@ -2461,8 +2466,36 @@ let WorkflowListComponent = class WorkflowListComponent {
     }
     reload() {
     }
-    hasNoArhiveStatus() {
+    isStatusSelected(wstatus) {
+        if (this.listInitialData &&
+            this.listInitialData != null &&
+            this.listInitialData.searchFilter != null &&
+            this.listInitialData.searchFilter.statusList != null) {
+            return this.listInitialData.searchFilter.statusList.indexOf(wstatus) > -1;
+        }
         return false;
+    }
+    toggleStatusSelected(wstatus) {
+        if (this.listInitialData &&
+            this.listInitialData != null &&
+            this.listInitialData.searchFilter != null &&
+            this.listInitialData.searchFilter.statusList != null) {
+            const index = this.listInitialData.searchFilter.statusList.indexOf(wstatus);
+            if (index !== -1) {
+                this.listInitialData.searchFilter.statusList.splice(index, 1);
+            }
+            else {
+                this.listInitialData.searchFilter.statusList.push(wstatus);
+            }
+        }
+    }
+    get debugSearchFilter() {
+        if (this.listInitialData &&
+            this.listInitialData != null &&
+            this.listInitialData.searchFilter != null) {
+            return JSON.stringify(this.listInitialData.searchFilter);
+        }
+        return "";
     }
 };
 WorkflowListComponent.ctorParameters = () => [

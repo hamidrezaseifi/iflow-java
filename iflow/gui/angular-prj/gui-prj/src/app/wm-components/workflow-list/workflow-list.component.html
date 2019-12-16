@@ -4,22 +4,27 @@
 				<button class="toolbar-button" (click)="reload()"><i class="material-icons">refresh</i></button>
 				<a class="toolbar-link" href="/workflow/create"><i class="material-icons">playlist_add</i></a>
 				
-				<span class="toolbar-separator w100"></span>
-				
-				<span class="form-check abc-checkbox abc-checkbox">
-					<input type="checkbox" class="toggle-checkbox form-check-input" [checked]="isMeAssigned" id="me-assigned-check">
-					<label class="form-check-label" for="me-assigned-check">{{ 'workflow-assigned-me' | translate:param }}</label>
-				</span>
-				
-				<span class="form-check abc-checkbox abc-checkbox">
-					<input type="checkbox" class="toggle-checkbox form-check-input" [checked]="hasNoArhiveStatus()" id="no-archive-check" ng-click="toggleSearchArchive()">
-					<label class="form-check-label" for="no-archive-check">{{ 'workflow-not-archive' | translate:param }}</label>
-				</span>
-				
+				<ul class="nav nav-pills search-toolbar">
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Status</a>
+						<div class="dropdown-menu">
+							<div *ngFor="let wstatus of statusList;" class="dropdown-item">
+								<input type="checkbox" class="form-check-input" [checked]="isStatusSelected(wstatus)" (click)="toggleStatusSelected(wstatus)"  id="status-check-{{wstatus}}">
+								<label class="form-check-label" for="status-check-{{wstatus}}">{{wstatus}}</label>
+							</div>
+						</div>
+					</li>
+				  	<li class="nav-item">
+				  		<div class="dropdown-item search-toolbar-item">
+							<input type="checkbox" class="toggle-checkbox form-check-input" [checked]="isMeAssigned" [(ngModel)]="isMeAssigned"  id="me-assigned-check">
+							<label class="form-check-label" for="me-assigned-check">{{ 'workflow-assigned-me' | translate:param }}</label>
+						</div>
+				  	</li>
+				</ul>				
+								
 			</div>
-			<select>
-				<option *ngFor="let wstatus of statusList;">{{wstatus}}</option>
-			</select>
+			<div style="border: 1px solid gray; padding: 5px; background-color: #f1f1f1;">{{debugSearchFilter}}</div>
+			
 		    <table class="table table-bordered table-responsive iflow-table">
 		    	<thead class="thead-dark">
 		    		<tr>

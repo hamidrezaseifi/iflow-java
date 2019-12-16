@@ -41,6 +41,12 @@ export class WorkflowListComponent implements OnInit {
 		}
 		return false;
 	}
+	set isMeAssigned(assigned :boolean){
+		if(this.listInitialData && this.listInitialData != null && this.listInitialData.searchFilter != null){
+			this.listInitialData.searchFilter.meAssigned = assigned;
+		}
+		
+	}
 	  
 	get statusList() :string[]{
 		if(this.listInitialData && this.listInitialData != null && this.listInitialData.workflowStatusList != null){
@@ -85,8 +91,44 @@ export class WorkflowListComponent implements OnInit {
 		
 	}
 	
-	hasNoArhiveStatus(){
+	isStatusSelected(wstatus){
+		if(this.listInitialData && 
+				this.listInitialData != null && 
+				this.listInitialData.searchFilter != null && 
+				this.listInitialData.searchFilter.statusList != null){
+			
+			return this.listInitialData.searchFilter.statusList.indexOf(wstatus) > -1;
+		}
 		return false;
+		
+	}
+	
+	toggleStatusSelected(wstatus){
+		if(this.listInitialData && 
+				this.listInitialData != null && 
+				this.listInitialData.searchFilter != null && 
+				this.listInitialData.searchFilter.statusList != null){
+			
+			const index: number = this.listInitialData.searchFilter.statusList.indexOf(wstatus);
+		    if (index !== -1) {
+		    	this.listInitialData.searchFilter.statusList.splice(index, 1);
+		    }
+		    else{
+		    	this.listInitialData.searchFilter.statusList.push(wstatus);
+		    }
+	    
+		}
+		
+	}
+	
+	get debugSearchFilter() :string{
+		if(this.listInitialData && 
+				this.listInitialData != null && 
+				this.listInitialData.searchFilter != null){
+			
+			return JSON.stringify(this.listInitialData.searchFilter);
+		}
+		return "";
 	}
 	
 }

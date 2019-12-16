@@ -1,1 +1,37 @@
 
+.search-toolbar {
+    width: calc(100% - 300px);
+    float: right;
+}
+
+.search-toolbar .nav-item{
+    margin-right: 30px;
+    
+}
+
+.search-toolbar .nav-item input.form-check-input[type=checkbox]{
+    width: 16px;
+    height: 16px;
+    
+}
+
+.search-toolbar .nav-item .form-check-label{
+	margin-bottom: 0;
+    padding-left: 10px;
+    line-height: 20px;
+}
+
+.search-toolbar-item{
+	height: 100%;
+    padding-top: 9px;
+}
+
+.search-toolbar .nav-item {
+    background-color: transparent !important;
+}
+
+.search-toolbar .nav-link.active, .search-toolbar .show>.nav-link {
+    color: #fff !important;
+    background-color: #c7c9cb !important;
+}
+
