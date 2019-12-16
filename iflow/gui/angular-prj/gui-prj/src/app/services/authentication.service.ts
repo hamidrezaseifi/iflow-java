@@ -76,7 +76,9 @@ export class AuthenticationService implements CanActivate{
 		        (generalData :GeneralData) => {
 		            console.log("GET call successful generaldata", generalData);
 		            
-		            if(generalData.isLogged){
+					var value = generalData.isLogged + "";
+					
+		            if(value === "true" && generalData.user){
 		            	
 		            	this.isLoggedIn = true;
 		            	this.currentUserSubject.next(generalData.user.currentUser);

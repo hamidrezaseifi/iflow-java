@@ -127,7 +127,7 @@
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("<header>\r\n\r\n\t\t<nav class=\"navbar navbar-expand-lg navbar-toggleable-md navbar-light bg-light navbar-fixed-top\">\r\n\t\t\t<div class=\"container-fluid\">\r\n\t\t\t\t<div class=\"navbar-header\">\r\n\t\t\t\t\t<a class=\"navbar-brand\" href=\"/\"><img class=\"logo\" src=\"/images/fbim2.png\"></a>\r\n\t\t\t\t</div>\r\n\t\t\t\t<ul class=\"navbar-nav\" *ngIf=\"isLogged\">\r\n\t\t\t\t\t<li class=\"nav-item\" *ngFor=\"let menu of menus;\" [ngClass]=\"{'dropdown' : menu.children.length > 0}\">\r\n\t\t\t\t\t\t<a class=\"nav-link\" [routerLink]=\"[menu.url]\" *ngIf=\"menu.children.length == 0\">\r\n\t\t\t\t\t\t\t<span class=\"glyphicon glyphicon-home menu-image\"></span>\r\n\t\t\t\t\t\t\t<span>{{menu.label}}</span>\r\n\t\t\t\t\t\t</a>\r\n\t\t\t\t\t\t<a class=\"nav-link dropdown-toggle\" *ngIf=\"menu.children.length > 0\" href=\"#\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">\r\n\t\t\t\t\t\t\t<span class=\"{{menu.image}}\"></span>\r\n\t\t\t\t\t\t\t<span>{{menu.label}}</span>\r\n\t\t\t\t\t\t\t<span class=\"caret\"></span>\r\n\t\t\t\t\t\t</a>\r\n\t\t\t\t\t\t<div class=\"dropdown-menu\" *ngIf=\"menu.children.length > 0\">\r\n\t\t\t\t\t\t\t<a [routerLink]=\"[submenu.url]\" *ngFor=\"let submenu of menu.children;\" class=\"dropdown-item\">\r\n\t\t\t\t\t\t\t\t<span class=\"{{submenu.image}}\"></span>\r\n\t\t\t\t\t\t\t\t<span>{{submenu.label}}</span>\r\n\t\t\t\t\t\t\t</a>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</li>\r\n\t\t\t\t</ul>\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t\r\n\t\t\t\t<div class=\"btn-group navbar-user-detail\" *ngIf=\"isLogged\" >\r\n\t\t\t\t  <button type=\"button\" class=\"btn user-toggle-button\" data-toggle=\"dropdown\" data-display=\"static\" aria-haspopup=\"true\" aria-expanded=\"false\">\r\n\t\t\t\t    <span>{{currentUser.fullName}}</span>\r\n\t\t\t\t  </button>\r\n\t\t\t\t  <div class=\"dropdown-menu dropdown-menu-lg-right\">\r\n\t\t\t\t    <button (click)=\"test()\" class=\"dropdown-item\" type=\"button\">Profile</button>\r\n\t\t\t\t    <div class=\"dropdown-divider\"></div>\r\n\t\t\t\t    <button (click)=\"logout()\"  class=\"dropdown-item\" type=\"button\">Logout</button>\r\n\t\t\t\t  </div>\r\n\t\t\t\t</div>\r\n\t\t\t\t\t\t\r\n\t\t\t</div>\r\n\t\t</nav>    \t\t\t    \r\n\t\t\r\n\t        \r\n</header>\r\n\r\n<div style=\"background-color: #eeeeee;\">\r\n\t<ul class=\"breadcrumb\">\r\n\t\t<li>\r\n\t\t\t<span>Home</span>\r\n\t\t</li>\r\n\t\t<li>\r\n\t\t\t<button (click)=\"test()\" type=\"button\">Test</button>\r\n\t\t</li>\r\n\t</ul>\r\n\t\r\n\t\r\n</div>\r\n\t");
+            /* harmony default export */ __webpack_exports__["default"] = ("<header>\r\n\r\n\t\t<nav class=\"navbar navbar-expand-lg navbar-toggleable-md navbar-light bg-light navbar-fixed-top\">\r\n\t\t\t<div class=\"container-fluid\">\r\n\t\t\t\t<div class=\"navbar-header\">\r\n\t\t\t\t\t<a class=\"navbar-brand\" href=\"/\"><img class=\"logo\" src=\"/images/fbim2.png\"></a>\r\n\t\t\t\t</div>\r\n\t\t\t\t<ul class=\"navbar-nav\" *ngIf=\"isLogged\">\r\n\t\t\t\t\t<li class=\"nav-item\" *ngFor=\"let menu of menus;\" [ngClass]=\"{'dropdown' : menu.children.length > 0}\">\r\n\t\t\t\t\t\t<a class=\"nav-link\" [routerLink]=\"[menu.url]\" *ngIf=\"menu.children.length == 0\">\r\n\t\t\t\t\t\t\t<span class=\"glyphicon glyphicon-home menu-image\"></span>\r\n\t\t\t\t\t\t\t<span>{{menu.label}}</span>\r\n\t\t\t\t\t\t</a>\r\n\t\t\t\t\t\t<a class=\"nav-link dropdown-toggle\" *ngIf=\"menu.children.length > 0\" href=\"#\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">\r\n\t\t\t\t\t\t\t<span class=\"{{menu.image}}\"></span>\r\n\t\t\t\t\t\t\t<span>{{menu.label}}</span>\r\n\t\t\t\t\t\t\t<span class=\"caret\"></span>\r\n\t\t\t\t\t\t</a>\r\n\t\t\t\t\t\t<div class=\"dropdown-menu\" *ngIf=\"menu.children.length > 0\">\r\n\t\t\t\t\t\t\t<a [routerLink]=\"[submenu.url]\" *ngFor=\"let submenu of menu.children;\" class=\"dropdown-item\">\r\n\t\t\t\t\t\t\t\t<span class=\"{{submenu.image}}\"></span>\r\n\t\t\t\t\t\t\t\t<span>{{submenu.label}}</span>\r\n\t\t\t\t\t\t\t</a>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</li>\r\n\t\t\t\t</ul>\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t\r\n\t\t\t\t<div class=\"btn-group navbar-user-detail\" *ngIf=\"isLogged\" >\r\n\t\t\t\t  <button type=\"button\" class=\"btn user-toggle-button\" data-toggle=\"dropdown\" data-display=\"static\" aria-haspopup=\"true\" aria-expanded=\"false\">\r\n\t\t\t\t    <span>{{currentUser.fullName}}</span>\r\n\t\t\t\t  </button>\r\n\t\t\t\t  <div class=\"dropdown-menu dropdown-menu-lg-right\">\r\n\t\t\t\t    <button (click)=\"showProfile()\" class=\"dropdown-item\" type=\"button\">Profile</button>\r\n\t\t\t\t    <div class=\"dropdown-divider\"></div>\r\n\t\t\t\t    <button (click)=\"logout()\"  class=\"dropdown-item\" type=\"button\">Logout</button>\r\n\t\t\t\t  </div>\r\n\t\t\t\t</div>\r\n\t\t\t\t\t\t\r\n\t\t\t</div>\r\n\t\t</nav>    \t\t\t    \r\n\t\t\r\n\t        \r\n</header>\r\n\r\n<div style=\"background-color: #eeeeee;\">\r\n\t<ul class=\"breadcrumb\">\r\n\t\t<li>\r\n\t\t\t<span>Home</span>\r\n\t\t</li>\r\n\t\t<li>\r\n\t\t\t<button (click)=\"test()\" type=\"button\">Test</button>\r\n\t\t</li>\r\n\t</ul>\r\n\t\r\n\t\r\n</div>\r\n\t");
             /***/ 
         }),
         /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/workflow-create/workflow-create.component.html": 
@@ -720,12 +720,20 @@
                 AppComponent.prototype.subscribeToGeneralData = function () {
                     var _this = this;
                     this.global.currentSessionDataSubject.subscribe(function (data) {
+                        console.log("set gloabl-data from app-comp. appIsLogged: " + _this.appIsLogged);
                         //alert("from app-comp: \n" + JSON.stringify(data));
-                        if (data && data != null) {
-                            _this.appMenus = data.app.menus;
-                            _this.appCurrentUser = data.user.currentUser;
-                            _this.appIsLogged = data.isLogged;
-                            console.log("set gloabl-data from app-comp. appIsLogged: " + _this.appIsLogged);
+                        if (data && data !== null) {
+                            var value = data.isLogged + "";
+                            if (value === "true" === true) {
+                                _this.appMenus = data.app.menus;
+                                _this.appCurrentUser = data.user.currentUser;
+                                _this.appIsLogged = true;
+                            }
+                            else {
+                                _this.appMenus = [];
+                                _this.appCurrentUser = null;
+                                _this.appIsLogged = false;
+                            }
                         }
                         else {
                             _this.appMenus = [];
@@ -1329,7 +1337,8 @@
                     this.loadingService.showLoading();
                     this.global.loadAllSettingObserv().subscribe(function (generalData) {
                         console.log("GET call successful generaldata", generalData);
-                        if (generalData.isLogged) {
+                        var value = generalData.isLogged + "";
+                        if (value === "true" && generalData.user) {
                             _this.isLoggedIn = true;
                             _this.currentUserSubject.next(generalData.user.currentUser);
                             _this.currentUserSubject.complete();
@@ -1686,6 +1695,8 @@
                 TopBarComponent.prototype.logout = function () {
                     this.loggingOut.emit(true);
                 };
+                TopBarComponent.prototype.showProfile = function () {
+                };
                 TopBarComponent.prototype.test = function () {
                     this.global.loadAllSetting(null);
                 };
@@ -1779,11 +1790,28 @@
             }());
             /***/ 
         }),
+        /***/ "./src/app/ui-models/generaldata.ts": 
+        /*!******************************************!*\
+          !*** ./src/app/ui-models/generaldata.ts ***!
+          \******************************************/
+        /*! exports provided: GeneralData */
+        /***/ (function (module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            __webpack_require__.r(__webpack_exports__);
+            /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GeneralData", function () { return GeneralData; });
+            /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+            var GeneralData = /** @class */ (function () {
+                function GeneralData() {
+                }
+                return GeneralData;
+            }());
+            /***/ 
+        }),
         /***/ "./src/app/ui-models/index.ts": 
         /*!************************************!*\
           !*** ./src/app/ui-models/index.ts ***!
           \************************************/
-        /*! exports provided: User, MenuItem, LoginResponse, ErrorDetail, ErrorResponse */
+        /*! exports provided: User, MenuItem, LoginResponse, GeneralData, ErrorDetail, ErrorResponse */
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
@@ -1794,10 +1822,12 @@
             /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "MenuItem", function () { return _menuitem__WEBPACK_IMPORTED_MODULE_2__["MenuItem"]; });
             /* harmony import */ var _loginmessage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./loginmessage */ "./src/app/ui-models/loginmessage.ts");
             /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "LoginResponse", function () { return _loginmessage__WEBPACK_IMPORTED_MODULE_3__["LoginResponse"]; });
-            /* harmony import */ var _error_detail__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./error-detail */ "./src/app/ui-models/error-detail.ts");
-            /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ErrorDetail", function () { return _error_detail__WEBPACK_IMPORTED_MODULE_4__["ErrorDetail"]; });
-            /* harmony import */ var _error_response__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./error-response */ "./src/app/ui-models/error-response.ts");
-            /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ErrorResponse", function () { return _error_response__WEBPACK_IMPORTED_MODULE_5__["ErrorResponse"]; });
+            /* harmony import */ var _generaldata__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./generaldata */ "./src/app/ui-models/generaldata.ts");
+            /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "GeneralData", function () { return _generaldata__WEBPACK_IMPORTED_MODULE_4__["GeneralData"]; });
+            /* harmony import */ var _error_detail__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./error-detail */ "./src/app/ui-models/error-detail.ts");
+            /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ErrorDetail", function () { return _error_detail__WEBPACK_IMPORTED_MODULE_5__["ErrorDetail"]; });
+            /* harmony import */ var _error_response__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./error-response */ "./src/app/ui-models/error-response.ts");
+            /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ErrorResponse", function () { return _error_response__WEBPACK_IMPORTED_MODULE_6__["ErrorResponse"]; });
             /***/ 
         }),
         /***/ "./src/app/ui-models/loginmessage.ts": 

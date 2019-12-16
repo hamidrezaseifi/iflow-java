@@ -72,12 +72,26 @@ export class AppComponent implements OnInit  {
 
 	private subscribeToGeneralData(){
 		this.global.currentSessionDataSubject.subscribe((data : GeneralData) => {
-        	//alert("from app-comp: \n" + JSON.stringify(data));
-			if(data && data != null){
- 	 			this.appMenus = data.app.menus;
- 	 	  		this.appCurrentUser = data.user.currentUser;
- 	 	  		this.appIsLogged = data.isLogged; 
- 	 	  		console.log("set gloabl-data from app-comp. appIsLogged: " + this.appIsLogged);
+        	
+			console.log("set gloabl-data from app-comp. appIsLogged: " + this.appIsLogged);
+			//alert("from app-comp: \n" + JSON.stringify(data));
+        	
+			if(data && data !== null){
+				
+				var value = data.isLogged + "";
+				
+				if(value === "true" === true){
+	 	 			this.appMenus = data.app.menus;
+	 	 	  		this.appCurrentUser = data.user.currentUser;
+	 	 	  		this.appIsLogged = true; 
+	 	 	  		
+				}
+				else{
+					this.appMenus = [];
+					this.appCurrentUser = null;
+					this.appIsLogged = false;					
+				}
+ 	 	  		
 			}
 			else{
 				this.appMenus = [];

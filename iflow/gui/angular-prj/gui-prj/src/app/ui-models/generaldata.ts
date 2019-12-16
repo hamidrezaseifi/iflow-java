@@ -28,12 +28,12 @@ export interface WorkflowGeneralData {
 	
 }
 
-export interface GeneralData {
+export class GeneralData {
 	isLogged: boolean;
 	Workflow: WorkflowGeneralData;
 	company: CompanyGeneralData;
 	app: AppGeneralData;
 	user: UserGeneralData;
-	
+
 }
 

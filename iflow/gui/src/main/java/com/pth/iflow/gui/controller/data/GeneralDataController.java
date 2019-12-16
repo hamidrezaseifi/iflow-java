@@ -56,10 +56,6 @@ public class GeneralDataController extends GuiLogedControllerBase {
 
     final Map<String, Object> map = new HashMap<>();
     map.put("isLogged", "false");
-    map.put("user", null);
-    map.put("app", null);
-    map.put("workflow", null);
-    map.put("company", null);
 
     if (this.isSessionValidAndLoggedIn()) {
 
