@@ -6,9 +6,10 @@ import { GlobalService } from '../../../services/global.service';
 import { WorkflowEditService } from '../../../services/workflow/workflow-edit.service';
 import { LoadingServiceService } from '../../../services/loading-service.service';
 
-import { User, Department, DepartmentGroup } from '../../../ui-models';
+import { User, Department, DepartmentGroup, GeneralData } from '../../../ui-models';
 import { WorkflowProcessCommand, Workflow, AssignItem, FileTitle, AssignType } from '../../../wf-models';
 import { WorkflowSaveRequest } from '../../../wf-models/workflow-save-request';
+import { WorkflowSaveRequestInit } from '../../../wf-models/workflow-save-request-init';
 
 @Component({
   selector: 'app-create-singletask',
@@ -77,7 +78,9 @@ export class CreateSingletaskComponent implements OnInit {
 	}
 	
 	
-	
+	get debugData() :string{
+		return (this.workflowSaveRequest && this.workflowSaveRequest != null) ? JSON.stringify(this.workflowSaveRequest): " -- debug";
+	}
 	
 	
 	constructor(
@@ -103,27 +106,66 @@ export class CreateSingletaskComponent implements OnInit {
 	}
 	
 	private loadInitialData(){
-	 	if(this.editService.workflowSaveRequest !== null){
-	 		this.workflowSaveRequest = this.editService.workflowSaveRequest;
+	 	if(this.editService.workflowSaveRequestInit !== null){
+	 		this.workflowSaveRequest = this.editService.workflowSaveRequestInit.workflowSaveRequest;
+	 		
 	 	}
 	 	else{
 	 		this.subscribeToSearchInitialData();
 	 		this.editService.loadCreateInitialData();
 	 	}
-		
+
+     	if(this.global.loadedGeneralData !== null){
+     		this.users = this.global.loadedGeneralData.company.users;
+	 		this.departments = this.global.loadedGeneralData.company.departments;
+     	}
+     	else{
+     		this.subscribeToGeneralData();
+     		this.global.loadAllSetting(null);
+     	}
+	 	
 	}
 	
 	private subscribeToSearchInitialData(){
-		this.editService.workflowSaveRequestSubject.subscribe((data : WorkflowSaveRequest) => {
+		this.editService.workflowSaveRequestInitSubject.subscribe((data : WorkflowSaveRequestInit) => {
 	    	
 			console.log("set gloabl-data from workflow-create. : ", data);
 			//alert("from app-comp: \n" + JSON.stringify(data));
-	    	
+	 		
 			if(data && data !== null){
-				this.workflowSaveRequest = data;
+				this.workflowSaveRequest = data.workflowSaveRequest;
+				
 			}
 			else{
 				this.workflowSaveRequest = null;
+			}
+		  });
+	}
+	
+	private subscribeToGeneralData(){
+		this.global.currentSessionDataSubject.subscribe((data : GeneralData) => {
+	    	
+			console.log("set gloabl-data from workflow-create. appIsLogged: ");
+			//alert("from app-comp: \n" + JSON.stringify(data));
+	    	
+			if(data && data !== null){
+				
+				var value = data.isLogged + "";
+				
+				if(value === "true" === true){
+	 	 			this.users = data.company.users;
+	 	 			this.departments = data.company.departments;
+	 	 	  		
+				}
+				else{
+					this.users =[];
+	 	 			this.departments = data.company.departments;
+				}
+		 	  		
+			}
+			else{
+				this.users =[];
+ 	 			this.departments = data.company.departments;
 			}
 		  });
 	}

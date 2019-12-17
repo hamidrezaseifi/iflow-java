@@ -41,8 +41,7 @@ import com.pth.iflow.gui.services.IUserAccess;
 import com.pth.iflow.gui.services.IWorkflowHandler;
 
 @Controller
-public abstract class WorkflowDataControllerBase<W extends IWorkflow, WS extends IWorkflowSaveRequest<W>>
-    extends GuiDataControllerBase {
+public abstract class WorkflowDataControllerBase<W extends IWorkflow, WS extends IWorkflowSaveRequest<W>> extends GuiDataControllerBase {
 
   @Autowired
   private IWorkflowHandler<W, WS> workflowHandler;
@@ -59,46 +58,18 @@ public abstract class WorkflowDataControllerBase<W extends IWorkflow, WS extends
   public Map<String, Object> loadWorkflowCreateData()
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    final Map<String, Object> map = new HashMap<>();
+    final Map<String, Object>      map              = new HashMap<>();
 
-    final List<User> userList = this.userAccess.getCompanyUserList(this.getLoggedCompany().getIdentity());
+    final List<User>               userList         = this.userAccess.getCompanyUserList(this.getLoggedCompany().getIdentity());
     final Collection<WorkflowType> workflowTypeList = this.getAllWorkflowTypes();
-    final List<Department> departmentList = this.getSessionUserInfo().getCompanyDepartments();
+    final List<Department>         departmentList   = this.getSessionUserInfo().getCompanyDepartments();
 
-    final W newWorkflow = this.generateInitialWorkflow(this.getLoggedUser().getIdentity());
+    final W                        newWorkflow      = this.generateInitialWorkflow(this.getLoggedUser().getIdentity());
 
-    final WS workflowReq = this.generateInitialWorkflowSaveRequest(newWorkflow,
+    final WS                       workflowReq      = this.generateInitialWorkflowSaveRequest(newWorkflow,
         newWorkflow.getHasActiveAction() ? newWorkflow.getActiveAction().getCurrentStep().getExpireDays() : 15);
 
-    map.put("users", userList);
-    map.put("departments", departmentList);
-    map.put("workflowTypes", workflowTypeList);
-    map.put("workflowCreateRequest", workflowReq);
-
-    return map;
-  }
-
-  @ResponseStatus(HttpStatus.OK)
-  @PostMapping(path = { "/initedit/{workflowIdentity}" })
-  @ResponseBody
-  public Map<String, Object> loadWorkflowEditData(@PathVariable final String workflowIdentity)
-      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
-
-    final Map<String, Object> map = new HashMap<>();
-
-    final List<User> userList = this.userAccess.getCompanyUserList(this.getLoggedCompany().getIdentity());
-
-    final W workflow = this.workflowHandler.readWorkflow(workflowIdentity);
-
-    final List<Department> departmentList = this.getSessionUserInfo().getCompanyDepartments();
-
-    final Integer expireDays = workflow.getHasActiveAction() ? workflow.getActiveAction().getCurrentStep().getExpireDays() : 0;
-    final WS saveRequest = this.generateInitialWorkflowSaveRequest(workflow, expireDays);
-
-    map.put("users", userList);
-    map.put("workflow", workflow);
-    map.put("saveRequest", saveRequest);
-    map.put("departments", departmentList);
+    map.put("workflowSaveRequest", workflowReq);
 
     return map;
   }
@@ -116,16 +87,16 @@ public abstract class WorkflowDataControllerBase<W extends IWorkflow, WS extends
   @ResponseStatus(HttpStatus.CREATED)
   @PostMapping(path = { "/createfile" })
   @ResponseBody
-  public Map<String, Object> createWorkflowFile(@RequestParam(value = "files") final MultipartFile[] files,
-      @RequestParam("titles") final String[] titles, final HttpSession session)
-      throws GuiCustomizedException, JsonParseException, JsonMappingException, IOException {
+  public Map<String, Object> createWorkflowFile(@RequestParam(value = "files") final MultipartFile[] files, @RequestParam(
+    "titles"
+  ) final String[] titles, final HttpSession session) throws GuiCustomizedException, JsonParseException, JsonMappingException, IOException {
 
     List<UploadFileSavingData> tempFiles = new ArrayList<>();
     if (files.length > 0) {
       final List<UploadFileSavingData> saveFiles = new ArrayList<>();
       for (int i = 0; i < files.length; i++) {
-        final String ext = FileSavingData.getExtention(files[i]);
-        String title = titles.length > i ? titles[i] : "";
+        final String ext   = FileSavingData.getExtention(files[i]);
+        String       title = titles.length > i ? titles[i] : "";
         if (StringUtils.isEmpty(title)) {
           title = files[i].getOriginalFilename();
           title = ext.isEmpty() == false ? title.substring(0, title.length() - ext.length() - 1) : title;

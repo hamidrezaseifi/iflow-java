@@ -7,16 +7,16 @@ import { LoadingServiceService } from '../loading-service.service';
 import { HttpHepler } from '../../helper/http-hepler';
 
 import { WorkflowProcessCommand, Workflow, AssignItem } from '../../wf-models';
-import { WorkflowSaveRequest } from '../../wf-models/workflow-save-request';
+import { WorkflowSaveRequestInit } from '../../wf-models/workflow-save-request-init';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WorkflowEditService {
 
-	public workflowSaveRequestSubject: BehaviorSubject<WorkflowSaveRequest> = new BehaviorSubject<WorkflowSaveRequest>(null);
+	public workflowSaveRequestInitSubject: BehaviorSubject<WorkflowSaveRequestInit> = new BehaviorSubject<WorkflowSaveRequestInit>(null);
 
-	workflowSaveRequest :WorkflowSaveRequest = null;
+	workflowSaveRequestInit :WorkflowSaveRequestInit = null;
 
 	initCreateUrl :string = "/workflow/singletask/data/initcreate";
 	saveUrl :string = "/workflow/singletask/data/create";
@@ -42,21 +42,21 @@ export class WorkflowEditService {
         const httpOptions = { headers: HttpHepler.generateFormHeader() };
         
         this.http.post(this.initCreateUrl, new HttpParams(), httpOptions).subscribe(
-		        (initialData :WorkflowSaveRequest) => {
+		        (initialData :WorkflowSaveRequestInit) => {
 		        	
-		            console.log("GET successful search inital data", initialData);
+		            console.log("GET successful edit inital data", initialData);
 		            
-		            this.workflowSaveRequest = <WorkflowSaveRequest> JSON.parse(JSON.stringify(initialData));
+		            this.workflowSaveRequestInit = <WorkflowSaveRequestInit> JSON.parse(JSON.stringify(initialData));
 		            
-		            this.workflowSaveRequestSubject.next(initialData);
+		            this.workflowSaveRequestInitSubject.next(initialData);
 		        	
 		            
 		        },
 		        response => {
-		        	console.log("Error in read create inital data", response);
+		        	console.log("Error in read edit inital data", response);
 		        },
 		        () => {
-		        	this.workflowSaveRequestSubject.complete();
+		        	this.workflowSaveRequestInitSubject.complete();
 		        	this.loadingService.hideLoading();	            
 		        }
 		    );	       	

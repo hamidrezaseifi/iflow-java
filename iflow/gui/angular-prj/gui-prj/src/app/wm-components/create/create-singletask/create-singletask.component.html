@@ -14,7 +14,7 @@
 					<div class="item-label">{{ 'workflow-controller' | translate }}</div>
 					<div class="item-content">
 						<select type="text" [(ngModel)]="controllerIdentity">
-							<option>{{ 'workflow-select-controller}" value="0"></option>
+							<option value="0">{{ 'workflow-select-controller' | translate }}</option>
 							<option *ngFor="let user of users;" value="{{user.identity}}">{{user.fullName}}</option>
 						</select>
 					</div>
@@ -70,8 +70,11 @@
 						<div class="clear"></div>
 					</div>
 					
-					
 				</div>
+				<div class="item-row">
+					{{ debugData}}
+				</div>
+
 			</div>
 		    
 		    <div class="modal fade" tabindex="-1" id="assignlistdialog" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
