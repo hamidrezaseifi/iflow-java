@@ -1,11 +1,8 @@
 ﻿
 import { WorkflowType } from '../wf-models/workflowtype';
-import { User } from './user';
-import { MenuItem } from './menuitem';
 import { Company } from './company';
-
-
-	  
+import { Department, MenuItem, User } from '../ui-models';
+ 
 export interface UserGeneralData {
 	currentUser: User;
 	
@@ -17,7 +14,7 @@ export interface AppGeneralData {
 }
 
 export interface CompanyGeneralData {
-	departments: Object[];
+	departments: Department[];
 	users: User[];
 	company: Company;
 	

@@ -6,10 +6,12 @@ import { User, MenuItem, GeneralData } from '../ui-models';
 import { TopBarComponent } from '../top-bar/top-bar.component';
 import { ILoginComponent } from '../_components';
 import { LoadingServiceService } from './loading-service.service';
+import { HttpHepler } from '../helper/http-hepler';
 
 @Injectable({ providedIn: 'root' })
 export class GlobalService {
 	
+	loadGeneralDataUrl :string = "/general/data/generaldatat";
 	public currentSessionDataSubject: BehaviorSubject<GeneralData> = new BehaviorSubject<GeneralData>(null);
 	//public currentSessionDataObs :Observable<GeneralData>;		
 
@@ -26,7 +28,9 @@ export class GlobalService {
 	loadAllSetting(login: ILoginComponent, ){
 		this.loadingService.showLoading();
 		
-		this.http.get("/general/data/generaldatat").subscribe(
+        const httpOptions = { headers: HttpHepler.generateFormHeader() };
+
+		this.http.get(this.loadGeneralDataUrl, httpOptions).subscribe(
 				(generalData :GeneralData) => {
 		            console.log("GET call successful generaldata", generalData);
 		            
@@ -57,7 +61,9 @@ export class GlobalService {
 	}
   
 	loadAllSettingObserv(){		
-		return this.http.get("/general/data/generaldatat");
+        const httpOptions = { headers: HttpHepler.generateFormHeader() };
+        
+		return this.http.get(this.loadGeneralDataUrl, httpOptions);
 	}
   
 	clear(){	

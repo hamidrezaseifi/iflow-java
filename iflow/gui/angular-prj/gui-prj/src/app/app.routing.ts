@@ -17,9 +17,9 @@ const routes: Routes = [
     { path: 'about', component: AboutComponent, canActivate: [AuthenticationService] },
     { path: 'workflow/list', component: WorkflowListComponent, canActivate: [AuthenticationService] },
     { path: 'workflow/create', component: WorkflowCreateComponent, canActivate: [AuthenticationService] },
-    { path: 'workflow/create/aaa', component: CreateSingletaskComponent, canActivate: [AuthenticationService] },
-    { path: 'workflow/create/bbb', component: CreateInvoiceComponent, canActivate: [AuthenticationService] },
-    { path: 'workflow/create/ccc', component: CreateTestthreetaskComponent, canActivate: [AuthenticationService] },
+    { path: 'workflow/singletask/create', component: CreateSingletaskComponent, canActivate: [AuthenticationService] },
+    { path: 'workflow/invoice/create', component: CreateInvoiceComponent, canActivate: [AuthenticationService] },
+    { path: 'workflow/testthreetask/create', component: CreateTestthreetaskComponent, canActivate: [AuthenticationService] },
 
     
     

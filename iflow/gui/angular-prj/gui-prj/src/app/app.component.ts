@@ -7,6 +7,8 @@ import { Observable } from 'rxjs';
 import { GlobalService } from './services/global.service';
 import { AuthenticationService } from './services';
 
+import { environment } from '../environments/environment';
+
 
 import { User, MenuItem, GeneralData } from './ui-models';
 
@@ -61,6 +63,12 @@ export class AppComponent implements OnInit  {
  	        }
 		});
  	     
+		/*if (environment.production) {
+			alert("is in prod");
+		}
+		else{
+			alert("is not in prod");
+		}*/
 	}
 	
 	ngOnInit() {

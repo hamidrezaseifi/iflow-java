@@ -22,7 +22,7 @@
 	<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title dialog-title" id="errorMessagedialogTitle">{{ 'common.view-workflow' | translate:param }}</h5>
+				<h5 class="modal-title dialog-title" id="errorMessagedialogTitle">{{ 'common.view-workflow' | translate }}</h5>
 				<button class="dialog-toolbar-button close" (click)="hideViewModal()" aria-label="Close">
 					<i class="material-icons">close</i>
 				</button>
@@ -35,24 +35,24 @@
 					<div class="workflowview-dialog-content-container">
 						<div class="item-row">
 							<div class="item-row">
-								<div class="item-label">{{ 'workflow-title' | translate:param }}</div>
+								<div class="item-label">{{ 'workflow-title' | translate }}</div>
 								<div class="item-content">{{viewWorkflowModel.workflowType.title}}</div>
 								<div class="clear"></div>
 							</div>
 							<div class="item-row">
-								<div class="item-label">{{ 'workflow-comments' | translate:param }}</div>
+								<div class="item-label">{{ 'workflow-comments' | translate }}</div>
 								<div class="item-content">{{viewWorkflowModel.comments}}</div>	
 								<div class="clear"></div>
 							</div>
 							<div class="item-row">
-								<div class="item-label">{{ 'workflow-current-step' | translate:param }}</div>
+								<div class="item-label">{{ 'workflow-current-step' | translate }}</div>
 								<div class="item-content">
 									{{viewWorkflowModel.currentStep.title}}
 								</div>
 								<div class="clear"></div>
 							</div>
 							<div class="item-row">
-								<div class="item-label">{{ 'workflow-status' | translate:param }}</div>
+								<div class="item-label">{{ 'workflow-status' | translate }}</div>
 								<div class="item-content">
 									{{viewWorkflowModel.status}}
 								</div>
@@ -94,9 +94,9 @@
 	      <div class="modal-footer">
 			<button type="button" class="btn btn-secondary" (click)="hideViewModal()"><i class="material-icons">close</i></button>
 
-			<button type="button" class="btn btn-success"  *ngIf="viewWorkflowModel.notAssigned" (click)="assignWorkflowMe(viewWorkflowModel.identity)"><i class="material-icons">assignment_ind</i></button>
+			<button type="button" class="btn btn-success"  *ngIf="viewWorkflowModel.notAssigned === 'true'" (click)="assignWorkflowMe(viewWorkflowModel.identity)"><i class="material-icons">assignment_ind</i></button>
 
-	        <a type="button" class="btn btn-primary" *ngIf="viewWorkflowModel.meAssigned" href="/workflow/edit/{{viewWorkflowModel.identity}}"><i class="material-icons">pageview</i></a>
+	        <a type="button" class="btn btn-primary" *ngIf="viewWorkflowModel.meAssigned === 'true'" href="/workflow/edit/{{viewWorkflowModel.identity}}"><i class="material-icons">pageview</i></a>
 	      </div>
 	    </div>
 	  </div>		    

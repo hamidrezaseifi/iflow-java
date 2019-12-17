@@ -7,8 +7,10 @@ import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from
 
 import { User, LoginResponse, GeneralData } from '../ui-models';
 import { ILoginComponent } from '../_components';
+
 import { GlobalService } from '../services/global.service';
 import { LoadingServiceService } from './loading-service.service';
+import { HttpHepler } from '../helper/http-hepler';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService implements CanActivate{
@@ -41,12 +43,7 @@ export class AuthenticationService implements CanActivate{
         .set('password', password)
         .set('companyid', companyid);
         
-        const httpOptions = {
-        		  headers: new HttpHeaders({
-        		    'Content-Type':  'application/x-www-form-urlencoded',
-        		    'Authorization': 'my-auth-token'
-        		  })
-        		};
+        const httpOptions = { headers: HttpHepler.generateFormHeader() };
         
     	this.http.post(this.authenticateUrl, loginData, httpOptions).subscribe(
 		        val => {

@@ -85,7 +85,7 @@ export class MessageBarComponent implements OnInit {
 		//alert(this.messagePanelHeight);
 	}
 	
-	private reloadMessages(reset: boolean){
+	reloadMessages(reset: boolean){
 		
 		clearTimeout(this.messageReloadTimeoutId);
 		//console.log("start reloadMessages.  _isLogged:" + (this._isLogged === true));

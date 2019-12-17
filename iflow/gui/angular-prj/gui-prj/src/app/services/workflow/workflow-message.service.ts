@@ -6,6 +6,7 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { WorkflowMessage } from '../../wf-models/workflowmessage';
 
 import { ErrorServiceService } from '../error-service.service';
+import { HttpHepler } from '../../helper/http-hepler';
 
 
 @Injectable({
@@ -37,11 +38,7 @@ export class WorkflowMessageService {
     	this.isReloadingMessages = true;
     	var url = this.loadMessageUrl + "?reset=" + (resetCach ? "1" : "0");
     	        
-        const httpOptions = {
-        		  headers: new HttpHeaders({
-        		    'Content-Type':  'application/json; charset=UTF-8'
-        		  })
-        		};
+        const httpOptions = { headers: HttpHepler.generateJsonHeader() };
     	
     	this.http.post(url, new HttpParams(), httpOptions).subscribe(
 	        val => {
@@ -74,11 +71,7 @@ export class WorkflowMessageService {
     	this.isReloadingMessages = true;
     	var url = this.assignWorkflowUrl + workflowIdentity;
     	       
-        const httpOptions = {
-        		  headers: new HttpHeaders({
-        		    'Content-Type':  'application/json; charset=UTF-8'
-        		  })
-        		};
+        const httpOptions = { headers: HttpHepler.generateJsonHeader() };
     	
     	return this.http.post(url, new HttpParams(), httpOptions);	      
 	}

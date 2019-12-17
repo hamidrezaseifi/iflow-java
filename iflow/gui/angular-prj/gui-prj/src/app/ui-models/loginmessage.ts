@@ -1,7 +1,7 @@
 ﻿import { User } from './user';
 
 export class LoginResponse {
-	timestamp: string;
+	timestamp: Number;
 	exception:string;
 	message:string;
 	res:string;

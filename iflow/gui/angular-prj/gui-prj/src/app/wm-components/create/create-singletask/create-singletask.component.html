@@ -1,44 +1,34 @@
 		<div class="content-container">
 			<div class="page-toolbar">
-				<div class="page-title" th:text="#{menu-workflow-create}"></div>
+				<div class="page-title">{{ 'menu-workflow-create' | translate }}</div>
 				<a class="toolbar-link" href="/workflow/list"><i class="material-icons">list</i></a>
 			</div>
 		
 			<div class="workflow-content">
-				<div class="item-row" ng-if="false">
-					<div class="item-label" th:text="#{workflow-current-step}"></div>
+				<div class="item-row">
+					<div class="item-label">{{ 'common.expiredays' | translate }}</div>
+					<div class="item-content"><input type="number" max="999" min="1" maxlength="3" [(ngModel)]="expireDays" /></div>
+					<div class="clear"></div>
+				</div>
+				<div class="item-row">
+					<div class="item-label">{{ 'workflow-controller' | translate }}</div>
 					<div class="item-content">
-						<select type="text" ng-model="workflowCreateRequest.workflow.currentStepIdentity">
-							<option th:text="#{workflow-select-current-step}" value="0"></option>
-							<option ng-repeat="item in getWorkflowTypeSteps()" ng-value="item.identity">{{item.title}}</option>
+						<select type="text" [(ngModel)]="controllerIdentity">
+							<option>{{ 'workflow-select-controller}" value="0"></option>
+							<option *ngFor="let user of users;" value="{{user.identity}}">{{user.fullName}}</option>
 						</select>
 					</div>
 					<div class="clear"></div>
 				</div>
 				<div class="item-row">
-					<div class="item-label" th:text="#{common.expiredays}"></div>
-					<div class="item-content"><input type="number" max="999" min="1" maxlength="3" ng-model="workflowCreateRequest.expireDays" /></div>
-					<div class="clear"></div>
-				</div>
-				<div class="item-row">
-					<div class="item-label" th:text="#{workflow-controller}"></div>
-					<div class="item-content">
-						<select type="text" ng-model="workflowCreateRequest.workflow.controllerIdentity">
-							<option th:text="#{workflow-select-controller}" value="0"></option>
-							<option ng-repeat="item in users" ng-value="item.identity">{{item.fullName}}</option>
-						</select>
-					</div>
-					<div class="clear"></div>
-				</div>
-				<div class="item-row">
-					<div class="item-label" th:text="#{workflow-assignto}"></div>
+					<div class="item-label">{{ 'workflow-assignto' | translate }}</div>
 					<div class="item-content">
 						<div class="assign-list" >
 							<button class="show-select-dialog" data-toggle="modal" data-target="#assignlistdialog"><i class="material-icons">playlist_add</i></button>
-							<span ng-if="hasNoAssigns()" th:text="#{workflow-select-assign}"></span>
-							<div class="user-item-box" ng-repeat="item in workflowCreateRequest.assigns">
+							<span *ngIf="hasNoAssigns">{{ 'workflow-select-assign' | translate }}</span>
+							<div class="user-item-box" *ngFor="let item of assignedUsers">
 								<span>{{item.title}} </span>
-								<button ng-click="removeAssign(item.itemIdentity, item.itemType)"><i class="material-icons">close</i></button>
+								<button (click)="removeAssign(item.itemIdentity, item.itemType)"><i class="material-icons">close</i></button>
 							</div>
 							<div class="clear"></div>
 						</div>
@@ -46,24 +36,24 @@
 					<div class="clear"></div>
 				</div>
 				<div class="item-row">
-					<div class="item-label" th:text="#{workflow-comments}"></div>
+					<div class="item-label">{{ 'workflow-comments' | translate }}</div>
 					<div class="item-content">
-						<textarea ng-model="workflowCreateRequest.workflow.comments"></textarea>
+						<textarea [(ngModel)]="comments"></textarea>
 					</div>
 					<div class="clear"></div>
 				</div>
 				<div class="item-row">
-					<div class="item-label" th:text="#{workflow-files}"></div>
+					<div class="item-label">{{ 'workflow-files' | translate }}</div>
 					<div class="item-content file-container">
-						<div ng-repeat="file in fileTitles" class="file-row">
-							{{$index + 1}}.
-							<input type="text" class="file-item file-title" placeholder="Datei Titel" ng-model="file.title"/>
+						<div *ngFor="let file of fileTitles; let fileIndex = index" class="file-row">
+							{{fileIndex + 1}}.
+							<input type="text" class="file-item file-title" placeholder="Datei Titel" [(ngModel)]="file.title"/>
 							<input type="file" class="file-item file-file" file-model="file.file"/>
-							<button class="file-action" ng-click="removeFile($index)"><i class="material-icons">delete</i></button>
+							<button class="file-action" (click)="removeFile(fileIndex)"><i class="material-icons">delete</i></button>
 							<div class="clear"></div>
 						</div>
 						<div style="margin-top: 20px;">
-							<button class="file-action" ng-click="addFile()"><i class="material-icons">add</i></button>
+							<button class="file-action" (click)="addFile()"><i class="material-icons">add</i></button>
 							<div class="clear"></div>
 						</div>
 						
@@ -73,8 +63,8 @@
 				<div class="item-row">
 					
 					<div class="item-content workflow-step-button-bar">
-						<button ng-click="save()" class="button-bar-button step-button button-save">
-							<span th:text="#{common.save}"></span>
+						<button (click)="save()" class="button-bar-button step-button button-save">
+							<span>{{ 'common.save' | translate }}</span>
 							<i class="material-icons">save</i>
 						</button>
 						<div class="clear"></div>
@@ -88,21 +78,21 @@
 				<div class="modal-dialog modal-dialog-centered" role="document">
 				    <div class="modal-content">
 				      <div class="modal-header">
-				        <h5 class="modal-title dialog-title" id="exampleModalLongTitle" th:text="#{workflow-select-assign}"></h5>
+				        <h5 class="modal-title dialog-title" id="exampleModalLongTitle">{{ 'workflow-select-assign' | translate }}</h5>
 				        <button class="dialog-toolbar-button close"  data-dismiss="modal" aria-label="Close">
 				        	<i class="material-icons">close</i>
 				        </button>
 				      </div>
 				      <div class="modal-body">
 							<ul class="nav nav-tabs">
-							  <li class="active"><a data-toggle="tab" class="nav-link active" href="#tabusers" th:text="#{common.users}"></a></li>
-							  <li><a data-toggle="tab" class="nav-link" href="#tabdepartments" th:text="#{common.departments}"></a></li>
+							  <li class="active"><a data-toggle="tab" class="nav-link active" href="#tabusers">{{ 'common.users' | translate }}</a></li>
+							  <li><a data-toggle="tab" class="nav-link" href="#tabdepartments">{{ 'common.departments' | translate }}</a></li>
 							</ul>
 							<div class="tab-content tab-body">
 								<div id="tabusers" class="tab-pane fade in active">
 									<ul class="list-item-container">
-										<li ng-repeat="item in users" class="list-item">
-											<input data-assigntitle="{{item.fullName}}" type="checkbox" class="assign-checkbox" ng-checked="isItemAssigned(item.identity, 'user')" data-assigntype="user" ng-value="item.identity"/> 
+										<li class="list-item" *ngFor="let item of users;">
+											<input [attr.data-assigntitle]="item.fullName" type="checkbox" class="assign-checkbox" [checked]="isItemAssigned(item.identity, assignTypeUser)" [attr.data-assigntype]="assignTypeUser" value="{{item.identity}}"/> 
 											&nbsp; &nbsp; 
 											{{item.fullName}}										
 										</li>
@@ -110,13 +100,13 @@
 								</div>
 								<div id="tabdepartments" class="tab-pane fade">
 									<ul class="list-item-container">
-										<li ng-repeat="dep in departments" class="list-item">
-											<input type="checkbox" data-assigntitle="{{dep.title}}" class="assign-checkbox" ng-checked="isItemAssigned(dep.identity, 'department')" data-assigntype="department" ng-value="dep.identity"/> 
+										<li *ngFor="let dep of departments;" class="list-item">
+											<input type="checkbox" [attr.data-assigntitle]="dep.title" class="assign-checkbox" [checked]="isItemAssigned(dep.identity, assignTypeDepartment)" [attr.data-assigntype]="assignTypeDepartment" value="{{dep.identity}}"/> 
 											&nbsp; &nbsp; 
 											{{dep.title}}	
 											<ul class="list-item-container">
-												<li ng-repeat="depgrp in dep.departmentGroups" class="list-item">
-													<input type="checkbox" class="assign-checkbox" data-assigntitle="{{depgrp.title}}" ng-checked="isItemAssigned(depgrp.identity, 'departmentgroup')" data-assigntype="departmentgroup" ng-value="depgrp.identity"/> 
+												<li *ngFor="let depgrp of dep.departmentGroups;" class="list-item">
+													<input type="checkbox" class="assign-checkbox" [attr.data-assigntitle]="depgrp.title" [checked]="isItemAssigned(depgrp.identity, assignTypeDepartmentGroup)" [attr.data-assigntype]="assignTypeDepartmentGroup" value="{{depgrp.identity}}"/> 
 													&nbsp; &nbsp; 
 													{{depgrp.title}}										
 												</li>
@@ -131,24 +121,11 @@
 				      </div>
 				      <div class="modal-footer">
 				        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="material-icons">close</i></button>
-				        <button type="button" class="btn btn-primary" ng-click="applyUserSelect();"><i class="material-icons">check</i></button>
+				        <button type="button" class="btn btn-primary" (click)="applyUserSelect();"><i class="material-icons">check</i></button>
 				      </div>
 				    </div>
 				  </div>		    
 		    	
 		    </div>
-		    
-		    
-		    <script th:inline="javascript">
-			var loadUrl = "/workflow/singletask/data/initcreate";
-			var saveUrl = "/workflow/singletask/data/create";
-			var saveFileUrl = "/workflow/singletask/data/createfile";
-			var listUrl = "/workflow/list";
-			
-			var userAssignType = /*[[${UserAssign}]]*/ '';
-			var departmentAssignType = /*[[${DepartmentAssign}]]*/ '';
-			var departmentGroupAssignType = /*[[${DepartmentGroupAssign}]]*/ '';
-			
-		    </script>
-		
+		    		 		
 		</div>

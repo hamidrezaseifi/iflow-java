@@ -3,6 +3,7 @@ import { map } from 'rxjs/operators';
 import { HttpHeaders, HttpParams, HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 
+import { HttpHepler } from '../../helper/http-hepler';
 import { LoadingServiceService } from '../loading-service.service';
 
 import { WorkflowSearchFilter, WorkflowListInitialData, WorkflowResult, WorkflowSearchResult } from '../../wf-models';
@@ -32,12 +33,7 @@ export class WorkflowSearchService {
     	        
     	this.loadingService.showLoading();
     	
-        const httpOptions = {
-        		  headers: new HttpHeaders({
-        		    'Content-Type':  'application/x-www-form-urlencoded',
-        		    'Authorization': 'my-auth-token'
-        		  })
-        		};
+        const httpOptions = { headers: HttpHepler.generateFormHeader() };
         
     	this.http.post(this.loadInitialUrl, new HttpParams(), httpOptions).subscribe(
 		        (initialData :WorkflowListInitialData) => {
@@ -63,12 +59,8 @@ export class WorkflowSearchService {
     
 	search(searchFilter: WorkflowSearchFilter){
 		
-		const httpOptions = {
-      		  headers: new HttpHeaders({
-      			'Content-type': 'application/json; charset=UTF-8',
-      		    'Authorization': 'my-auth-token'
-      		  })
-      		};
+	    const httpOptions = { headers: HttpHepler.generateJsonHeader() };
+
       
 		return this.http.post(this.searchUrl, searchFilter, httpOptions);	    
 		

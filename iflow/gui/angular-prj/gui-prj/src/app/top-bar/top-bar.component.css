@@ -7,7 +7,7 @@
 button.user-toggle-button {
     background-color: #cecece;
     border: none;
-    background-image: url(/scripts/static/md-contact.svg);
+    background-image: url(/assets/images/md-contact.svg);
     background-position: 140px center;
     background-repeat: no-repeat;
     background-size: 24px;

@@ -13,5 +13,6 @@ export * from './workflow-result';
 export * from './assign-item';
 export * from './assign-type';
 export * from './workflow-process-command';
+export * from './file-title';
 
 

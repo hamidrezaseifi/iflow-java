@@ -6,18 +6,23 @@ import { WorkflowFile } from '../wf-models';
 import { WorkflowAction } from '../wf-models';
 
 export class Workflow {
-	public identity: string;
-	public status: string;
-	public workflowType: WorkflowType;
-	public currentStep: WorkflowTypeStep;
-	public currentStepIdentity: string;
-	public controllerIdentity: string;
-	public controllerUser: User;
-	public comments: string;
+	identity: string;
+	status: string;
+	workflowType: WorkflowType;
+	currentStep: WorkflowTypeStep;
+	currentStepIdentity: string;
+	controllerIdentity: string;
+	controllerUser: User;
+	comments: string;
+
+	assigned: string;
+	initializing: string;
+	meAssigned: string;
+	notAssigned: string;
 
 
-	public files: WorkflowFile[];
-	public actions: WorkflowAction[];
+	files: WorkflowFile[];
+	actions: WorkflowAction[];
 
 
 }

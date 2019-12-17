@@ -4,11 +4,13 @@ import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import { TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { ResizableModule } from 'angular-resizable-element';
 import { FormsModule } from '@angular/forms';
 import { DataTableModule } from 'ng-angular8-datatable';
+
+import { fakeBackendProvider } from './helper';
 
 import { AppComponent } from './app.component';
 import { appRoutingModule } from './app.routing';
@@ -17,7 +19,6 @@ import { AuthenticationService } from './services/authentication.service';
 import { WorkflowMessageService } from './services/workflow/workflow-message.service';
 
 
-import { AlertComponent } from './_components';
 import { TopBarComponent } from './top-bar/top-bar.component';
 import { FooterComponent } from './footer/footer.component';
 import { MessageBarComponent } from './message-bar/message-bar.component';
@@ -59,7 +60,6 @@ export function createTranslateLoader(http: HttpClient) {
     AppComponent,
     TopBarComponent,
     FooterComponent,
-    AlertComponent,
     MessageBarComponent,
     ErrorDialogComponent,
     LoadingDialogComponent,
@@ -73,7 +73,12 @@ export function createTranslateLoader(http: HttpClient) {
     CreateTestthreetaskComponent,
     
   ],
-  providers: [GlobalService, AuthenticationService, WorkflowMessageService ],
+  providers: [
+	  GlobalService, 
+	  AuthenticationService, 
+	  WorkflowMessageService, 
+	  fakeBackendProvider 
+  ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

@@ -4,6 +4,6 @@
     password: string;
 	firstName: string;
     lastName: string;
-	fullname: string;
+	fullName: string;
 	companyIdentity: string;
 }
