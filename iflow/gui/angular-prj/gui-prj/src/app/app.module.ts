@@ -31,7 +31,7 @@ import { WorkflowListComponent } from './wm-components/workflow-list/workflow-li
 import { WorkflowCreateComponent } from './wm-components/create/workflow-create/workflow-create.component';
 import { CreateSingletaskComponent } from './wm-components/create/create-singletask/create-singletask.component';
 import { CreateInvoiceComponent } from './wm-components/create/create-invoice/create-invoice.component';
-import { CreateTetthreetaskComponent } from './wm-components/create/create-tetthreetask/create-tetthreetask.component';
+import { CreateTestthreetaskComponent } from './wm-components/create/create-testthreetask/create-testthreetask.component';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -70,7 +70,7 @@ export function createTranslateLoader(http: HttpClient) {
     WorkflowListComponent,
     CreateSingletaskComponent,
     CreateInvoiceComponent,
-    CreateTetthreetaskComponent,
+    CreateTestthreetaskComponent,
     
   ],
   providers: [GlobalService, AuthenticationService, WorkflowMessageService ],
