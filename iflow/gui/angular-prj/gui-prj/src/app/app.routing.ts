@@ -1,12 +1,13 @@
 import { Routes, RouterModule } from '@angular/router';
 
+import { AuthenticationService } from './services/authentication.service';
+
 import { HomeComponent } from './home';
 import { AboutComponent } from './about';
 import { LoginComponent } from './login';
-import { WorkflowCreateComponent } from './wm-components/workflow-create/workflow-create.component';
+
 import { WorkflowListComponent } from './wm-components/workflow-list/workflow-list.component';
-//import { AuthGuard } from './helper';
-import { AuthenticationService } from './services/authentication.service';
+import { WorkflowCreateComponent } from './wm-components/create/workflow-create/workflow-create.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent, canActivate: [AuthenticationService] },

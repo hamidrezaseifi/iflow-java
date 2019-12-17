@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 
-import { GlobalService } from '../../services/global.service';
+import { GlobalService } from '../../../services/global.service';
 
-import { WorkflowType } from '../../wf-models/workflowtype';
-import { User, GeneralData } from '../../ui-models';
+import { WorkflowType } from '../../../wf-models/workflowtype';
+import { User, GeneralData } from '../../../ui-models';
 
 @Component({
   selector: 'app-workflow-create',
