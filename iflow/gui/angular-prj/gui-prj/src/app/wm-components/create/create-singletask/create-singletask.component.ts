@@ -6,9 +6,10 @@ import { HttpClient, HttpEventType } from '@angular/common/http';
 import { GlobalService } from '../../../services/global.service';
 import { WorkflowEditService } from '../../../services/workflow/workflow-edit.service';
 import { LoadingServiceService } from '../../../services/loading-service.service';
+import { ErrorServiceService } from '../../../services/error-service.service';
 
 import { User, Department, DepartmentGroup, GeneralData } from '../../../ui-models';
-import { WorkflowProcessCommand, Workflow, AssignItem, FileTitle, AssignType } from '../../../wf-models';
+import { WorkflowProcessCommand, Workflow, AssignItem, FileTitle, AssignType, WorkflowUploadFileResult } from '../../../wf-models';
 import { WorkflowSaveRequest } from '../../../wf-models/workflow-save-request';
 import { WorkflowSaveRequestInit } from '../../../wf-models/workflow-save-request-init';
 
@@ -18,6 +19,8 @@ import { WorkflowSaveRequestInit } from '../../../wf-models/workflow-save-reques
   styleUrls: ['./create-singletask.component.css']
 })
 export class CreateSingletaskComponent implements OnInit {
+
+	workflowListUrl :string = "/workflow/list";
 
 	workflowSaveRequest :WorkflowSaveRequest = null;
 	users : User[] = [];
@@ -37,56 +40,15 @@ export class CreateSingletaskComponent implements OnInit {
 
 
 
-
-	fileData: File = null;
-	previewUrl:any = null;
-	fileUploadProgress: string = null;
-	uploadedFilePath: string = null;
-
-
-	fileProgress(fileInput: any) {
-	    this.fileData = <File>fileInput.target.files[0];
-	    this.preview();
+	fileTitleProgress(fileInput: any, file :FileTitle, fileIndex) {
+		
+		if(fileInput.target.files && fileInput.target.files != null && file){
+			file.file = <File>fileInput.target.files[0];
+		}
+		
+	    //this.preview();
 	}
 	
-	preview() {
-	  // Show preview 
-	  var mimeType = this.fileData.type;
-	  if (mimeType.match(/image\/*/) == null) {
-	    return;
-	  }
-	
-	  var reader = new FileReader();      
-	  reader.readAsDataURL(this.fileData); 
-	  reader.onload = (_event) => { 
-	    this.previewUrl = reader.result; 
-	  }
-	}
-	 
-	onSubmit() {
-	    const formData = new FormData();
-	    formData.append('files', this.fileData);
-	     
-	    this.fileUploadProgress = '0%';
-	 
-	    this.http.post('http://localhost:1200/testfileUpload', formData, {
-	      reportProgress: true,
-	      observe: 'events'   
-	    })
-	    .subscribe(events => {
-	      if(events.type === HttpEventType.UploadProgress) {
-	        this.fileUploadProgress = Math.round(events.loaded / events.total * 100) + '%';
-	        console.log(this.fileUploadProgress);
-	      } else if(events.type === HttpEventType.Response) {
-	        this.fileUploadProgress = '';
-	        console.log(events.body);          
-	        alert('SUCCESS !!');
-	      }
-	         
-	    }) 
-	}
-
-
 	get expireDays() : number{
 		if(this.workflowSaveRequest != null){
 			return this.workflowSaveRequest.expireDays;
@@ -147,7 +109,7 @@ export class CreateSingletaskComponent implements OnInit {
 			private editService :WorkflowEditService,
 			private loadingService: LoadingServiceService,
 			private http: HttpClient,
-			
+			private errorService: ErrorServiceService,
 	) {
 		
 		this.router.events.subscribe((evt) => {
@@ -251,13 +213,76 @@ export class CreateSingletaskComponent implements OnInit {
 	addFile(){
 		var ft :FileTitle = new FileTitle();
 		ft.title = "";
-		ft.file = false;
+		ft.file = null;
 		
 		this.fileTitles.push(ft);
 	}
 	
 	save(){
 		
+		this.loadingService.showLoading();
+		
+		if(this.fileTitles.length > 0){
+			this.editService.uploadFiles(this.fileTitles).subscribe(
+			        (result :WorkflowUploadFileResult) => {		        	
+			            console.log("Create workflow upload file result", result);
+			            
+			            this.workflowSaveRequest.sessionKey = result.sessionKey;
+			            
+			            this.editService.saveWorkflow(this.workflowSaveRequest).subscribe(
+			    		        (result) => {		        	
+			    		            console.log("Create workflow result", result);
+			    		            
+			    		            this.router.navigate([this.workflowListUrl]);
+			    		        },
+			    		        response => {
+			    		        	console.log("Error in create workflow", response);
+			    		        	
+			    		        	this.errorService.showErrorResponse(response);
+			    		        	this.loadingService.hideLoading();	 
+			    		        },
+			    		        () => {
+			    		        	
+			    		        	this.loadingService.hideLoading();	 
+			    		        }
+			    		    );	       	
+			            
+			        },
+			        response => {
+			        	console.log("Error in create workflow upload file", response);
+			        	this.loadingService.hideLoading();	 
+			        	this.errorService.showErrorResponse(response);
+			        },
+			        () => {
+			        	
+			        	           
+			        }
+			    );	       	
+			
+		}
+		else{
+            this.workflowSaveRequest.sessionKey = 'not-set';
+            
+            this.editService.saveWorkflow(this.workflowSaveRequest).subscribe(
+    		        (result) => {		        	
+    		            console.log("Create workflow result", result);
+    		            
+    		            this.router.navigate([this.workflowListUrl]);
+    		        },
+    		        response => {
+    		        	console.log("Error in create workflow", response);
+    		        	
+    		        	this.errorService.showErrorResponse(response);
+    		        	this.loadingService.hideLoading();	 
+    		        },
+    		        () => {
+    		        	
+    		        	this.loadingService.hideLoading();	 
+    		        }
+    		    );	       	
+
+		}
+
 	}
 	
 	isItemAssigned(identity :string , type: AssignType){

@@ -46,10 +46,10 @@ export class MessageBarComponent implements OnInit {
 	private _isLogged: boolean = false;
 	
 	@Input('isLogged')
-	set isLogged(value: string) {
+	set isLogged(value: boolean) {
 	    
-		//console.log("change isLogged inside comp. this: " + this._isLogged + ",   app: " + value); 	    
-		this._isLogged = value === 'true';
+		this._isLogged = value;
+		
 	    this.reloadMessages(true);	    
 	}
 	

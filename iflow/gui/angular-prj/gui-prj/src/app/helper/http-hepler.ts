@@ -44,4 +44,21 @@ export class HttpHepler {
 		return header;
 	}
 
+	public static generateFileUploadHeader(): HttpHeaders{
+		
+		var header :HttpHeaders  = new HttpHeaders({
+			//'Content-Type' : undefined
+		});
+		
+		if (environment.fake === true) {
+			header = new HttpHeaders({
+				//'Content-Type' : undefined,
+	  		    'X-Use-Interceptor' : 'user-fake'
+			});
+		}
+		//alert(header.keys());
+		
+		return header;
+	}
+
 }

@@ -18,7 +18,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         // wrap in delayed observable to simulate server api call
         return of(null).pipe(mergeMap(() => {
 
-        	if (request.headers.has(InterceptorUseHeader) === false) {
+        	if (request.headers == undefined || (request.headers && request.headers.has(InterceptorUseHeader) === false)) {
         	      const headers = request.headers;
         	      return next.handle(request.clone({ headers }));
         	}

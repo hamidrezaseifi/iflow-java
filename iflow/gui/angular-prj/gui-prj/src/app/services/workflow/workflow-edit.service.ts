@@ -6,8 +6,11 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { LoadingServiceService } from '../loading-service.service';
 import { HttpHepler } from '../../helper/http-hepler';
 
-import { WorkflowProcessCommand, Workflow, AssignItem } from '../../wf-models';
 import { WorkflowSaveRequestInit } from '../../wf-models/workflow-save-request-init';
+import { WorkflowSaveRequest } from '../../wf-models/workflow-save-request';
+
+import { WorkflowProcessCommand, Workflow, AssignItem, FileTitle, AssignType } from '../../wf-models';
+
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +22,8 @@ export class WorkflowEditService {
 	workflowSaveRequestInit :WorkflowSaveRequestInit = null;
 
 	initCreateUrl :string = "/workflow/singletask/data/initcreate";
-	saveUrl :string = "/workflow/singletask/data/create";
-	saveFileUrl :string = "/workflow/singletask/data/createfile";
+	createWorkflowUrl :string = "/workflow/singletask/data/create";
+	uploadFileUrl :string = "/workflow/singletask/data/createfile";
 	listUrl :string = "/workflow/list";
 	
 	//userAssignType = /*[[${UserAssign}]]*/ '';
@@ -62,4 +65,30 @@ export class WorkflowEditService {
 		    );	       	
 
 	}
+	
+	uploadFiles(fileTitles : FileTitle[]){
+		
+	    const formData = new FormData();
+	    		
+		for (var i = 0; i < fileTitles.length; i++) {
+		    formData.append('files', fileTitles[i].file);
+		    formData.append('titles', fileTitles[i].title);
+		    formData.append('wids', i + "");
+		}
+    	
+        const httpFileUploadOptions = { headers: HttpHepler.generateFileUploadHeader() };
+        
+	    return this.http.post(this.uploadFileUrl, formData, httpFileUploadOptions);
+		
+	}
+	
+	
+	saveWorkflow(workflowSaveRequest :WorkflowSaveRequest){
+    	
+        const httpOptions = { headers: HttpHepler.generateJsonHeader() };
+        
+        return this.http.post(this.createWorkflowUrl , workflowSaveRequest, httpOptions);	       	
+
+	}
+	
 }
