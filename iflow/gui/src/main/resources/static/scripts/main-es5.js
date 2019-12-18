@@ -1,3 +1,16 @@
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["main"], {
         /***/ "./$$_lazy_route_resource lazy recursive": 
         /*!******************************************************!*\
@@ -149,7 +162,7 @@
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("<p>create-testthreetask works!</p>\n");
+            /* harmony default export */ __webpack_exports__["default"] = ("\t\t<div class=\"content-container\">\n\t\t\t<div class=\"page-toolbar\">\n\t\t\t\t<div class=\"page-title\">{{ 'menu-workflow-create' | translate }}</div>\n\t\t\t\t<a class=\"toolbar-link\" href=\"/workflow/list\"><i class=\"material-icons\">list</i></a>\n\t\t\t</div>\n\t\t\n\t\t\t<div class=\"workflow-content\">\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'common.expiredays' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content\"><input type=\"number\" max=\"999\" min=\"1\" maxlength=\"3\" [(ngModel)]=\"expireDays\" /></div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'workflow-controller' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t<select type=\"text\" [(ngModel)]=\"controllerIdentity\">\n\t\t\t\t\t\t\t<option value=\"0\">{{ 'workflow-select-controller' | translate }}</option>\n\t\t\t\t\t\t\t<option *ngFor=\"let user of users;\" value=\"{{user.identity}}\">{{user.fullName}}</option>\n\t\t\t\t\t\t</select>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'workflow-assignto' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t<div class=\"assign-list\" >\n\t\t\t\t\t\t\t<button class=\"show-select-dialog\" (click)=\"showAssignSelect()\"><i class=\"material-icons\">playlist_add</i></button>\n\t\t\t\t\t\t\t<span *ngIf=\"hasNoAssigns\">{{ 'workflow-select-assign' | translate }}</span>\n\t\t\t\t\t\t\t<div class=\"user-item-box\" *ngFor=\"let item of assignedUsers\">\n\t\t\t\t\t\t\t\t<span>{{getAssignItemTitle(item)}} </span>\n\t\t\t\t\t\t\t\t<button (click)=\"removeAssign(item.itemIdentity, item.itemType)\"><i class=\"material-icons\">close</i></button>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'workflow-comments' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t<textarea [(ngModel)]=\"comments\"></textarea>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'workflow-files' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content file-container\">\n\t\t\t\t\t\t<div *ngFor=\"let file of fileTitles; let fileIndex = index\" class=\"file-row\">\n\t\t\t\t\t\t\t{{fileIndex + 1}}.\n\t\t\t\t\t\t\t<input type=\"text\" class=\"file-item file-title\" placeholder=\"Datei Titel\" [(ngModel)]=\"file.title\"/>\n\t\t\t\t\t\t\t<input type=\"file\" class=\"file-item file-file\" (change)=\"fileTitleProgress($event, file, fileIndex)\"/>\n\t\t\t\t\t\t\t<button class=\"file-action\" (click)=\"removeFile(fileIndex)\"><i class=\"material-icons\">delete</i></button>\n\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div style=\"margin-top: 20px;\">\n\t\t\t\t\t\t\t<button class=\"file-action\" (click)=\"addFile()\"><i class=\"material-icons\">add</i></button>\n\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\n\t\t\t\t\t<div class=\"item-content workflow-step-button-bar\">\n\t\t\t\t\t\t<button (click)=\"save()\" class=\"button-bar-button step-button button-save\">\n\t\t\t\t\t\t\t<span>{{ 'common.save' | translate }}</span>\n\t\t\t\t\t\t\t<i class=\"material-icons\">save</i>\n\t\t\t\t\t\t</button>\n\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t</div>\n\t\t\t\t\t\n\t\t\t\t</div>\n\t\t\t\t        \t\t\t\t\n\t\t\t\t<div class=\"item-row\" [innerHTML]=\"debugData\">\n\t\t\t\t</div>\n\n\t\t\t</div>\n\t\t    \n\t\t    <div class=\"modal fade\" [ngClass]=\"{'show' : showAssignModal}\" tabindex=\"-1\" id=\"assignlistdialog\" role=\"dialog\" aria-labelledby=\"exampleModalCenterTitle\">\n\t\t\t\t<div class=\"modal-dialog modal-dialog-centered\" role=\"document\">\n\t\t\t\t    <div class=\"modal-content user-select-modal-content\" >\n\t\t\t\t      <div class=\"modal-header\">\n\t\t\t\t        <h5 class=\"modal-title dialog-title\" id=\"exampleModalLongTitle\">{{ 'workflow-select-assign' | translate }}</h5>\n\t\t\t\t        <button class=\"dialog-toolbar-button close\" (click)=\"hideAssignSelect()\">\n\t\t\t\t        \t<i class=\"material-icons\">close</i>\n\t\t\t\t        </button>\n\t\t\t\t      </div>\n\t\t\t\t      <div class=\"modal-body\">\n\t\t\t\t\t\t\t<ul class=\"nav nav-tabs\">\n\t\t\t\t\t\t\t  <li class=\"active\"><a data-toggle=\"tab\" class=\"nav-link active\" href=\"#tabusers\">{{ 'common.users' | translate }}</a></li>\n\t\t\t\t\t\t\t  <li><a data-toggle=\"tab\" class=\"nav-link\" href=\"#tabdepartments\">{{ 'common.departments' | translate }}</a></li>\n\t\t\t\t\t\t\t</ul>\n\t\t\t\t\t\t\t<div class=\"tab-content tab-body user-select-tab-content\">\n\t\t\t\t\t\t\t\t<div id=\"tabusers\" class=\"tab-pane fade in active show\">\n\t\t\t\t\t\t\t\t\t<ul class=\"list-item-container\">\n\t\t\t\t\t\t\t\t\t\t<li class=\"list-item\" *ngFor=\"let item of users;\">\n\t\t\t\t\t\t\t\t\t\t\t<input [attr.data-assigntitle]=\"item.fullName\" type=\"checkbox\" #inputEl class=\"assign-checkbox\" [checked]=\"isItemAssigned(item.identity, assignTypeUser)\" (change)=\"toggleAssign(item.identity, assignTypeUser, inputEl.checked)\"  value=\"{{item.identity}}\"/> \n\t\t\t\t\t\t\t\t\t\t\t<span class=\"user-select-item-label\">{{item.fullName}}</span>\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t\t</ul>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div id=\"tabdepartments\" class=\"tab-pane fade\">\n\t\t\t\t\t\t\t\t\t<ul class=\"list-item-container\">\n\t\t\t\t\t\t\t\t\t\t<li *ngFor=\"let dep of departments;\" class=\"list-item\">\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" [attr.data-assigntitle]=\"dep.title\" #inputEl class=\"assign-checkbox\" [checked]=\"isItemAssigned(dep.identity, assignTypeDepartment)\" (change)=\"toggleAssign(dep.identity, assignTypeDepartment, inputEl.checked)\" value=\"{{dep.identity}}\"/> \n\t\t\t\t\t\t\t\t\t\t\t<span class=\"user-select-item-label\">{{dep.title}}</span>\n\t\t\t\t\t\t\t\t\t\t\t<ul class=\"list-item-container\">\n\t\t\t\t\t\t\t\t\t\t\t\t<li *ngFor=\"let depgrp of dep.departmentGroups;\" class=\"list-item\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" class=\"assign-checkbox\" #inputEl [attr.data-assigntitle]=\"depgrp.title\" [checked]=\"isItemAssigned(depgrp.identity, assignTypeDepartmentGroup)\" (change)=\"toggleAssign(depgrp.identity, assignTypeDepartmentGroup, inputEl.checked)\" value=\"{{depgrp.identity}}\"/> \t \n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"user-select-item-label\">{{depgrp.title}}</span>\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t\t\t\t</ul>\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t\t</ul>\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t      \n\t\t    \t\t\t\t\n\t\t\t\t      </div>\n\t\t\t\t      <div class=\"modal-footer\">\n\t\t\t\t        <button type=\"button\" class=\"btn btn-secondary\" (click)=\"hideAssignSelect()\"><i class=\"material-icons\">close</i></button>\n\t\t\t\t        <button type=\"button\" class=\"btn btn-primary\" (click)=\"applyUserSelect();\"><i class=\"material-icons\">check</i></button>\n\t\t\t\t      </div>\n\t\t\t\t    </div>\n\t\t\t\t  </div>\t\t    \n\t\t    \t\n\t\t    </div>\n\t\t    \t\t \t\t\n\t\t</div>");
             /***/ 
         }),
         /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/wm-components/create/workflow-create/workflow-create.component.html": 
@@ -1747,40 +1760,151 @@
             ], UserService);
             /***/ 
         }),
-        /***/ "./src/app/services/workflow/workflow-edit.service.ts": 
-        /*!************************************************************!*\
-          !*** ./src/app/services/workflow/workflow-edit.service.ts ***!
-          \************************************************************/
-        /*! exports provided: WorkflowEditService */
+        /***/ "./src/app/services/workflow/singletask/singletask-workflow-edit.service.ts": 
+        /*!**********************************************************************************!*\
+          !*** ./src/app/services/workflow/singletask/singletask-workflow-edit.service.ts ***!
+          \**********************************************************************************/
+        /*! exports provided: SingleTaskWorkflowEditService */
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WorkflowEditService", function () { return WorkflowEditService; });
+            /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SingleTaskWorkflowEditService", function () { return SingleTaskWorkflowEditService; });
+            /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+            /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+            /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+            /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+            /* harmony import */ var _loading_service_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../loading-service.service */ "./src/app/services/loading-service.service.ts");
+            /* harmony import */ var _workflow_edit_base_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../workflow-edit-base.service */ "./src/app/services/workflow/workflow-edit-base.service.ts");
+            var SingleTaskWorkflowEditService = /** @class */ (function (_super) {
+                __extends(SingleTaskWorkflowEditService, _super);
+                //userAssignType = /*[[${UserAssign}]]*/ '';
+                //departmentAssignType = /*[[${DepartmentAssign}]]*/ '';
+                //departmentGroupAssignType = /*[[${DepartmentGroupAssign}]]*/ '';
+                function SingleTaskWorkflowEditService(http, loadingService) {
+                    var _this = _super.call(this, http, loadingService) || this;
+                    _this.http = http;
+                    _this.loadingService = loadingService;
+                    _this.workflowSaveRequestInitSubject = new rxjs__WEBPACK_IMPORTED_MODULE_3__["BehaviorSubject"](null);
+                    _this.workflowSaveRequestInit = null;
+                    return _this;
+                }
+                //initCreateUrl :string = "/workflow/singletask/data/initcreate";
+                //createWorkflowUrl :string = "/workflow/singletask/data/create";
+                //uploadFileUrl :string = "/workflow/singletask/data/createfile";
+                SingleTaskWorkflowEditService.prototype.getInitCreateUrl = function () {
+                    return "/workflow/singletask/data/initcreate";
+                };
+                SingleTaskWorkflowEditService.prototype.getCreateWorkflowUrl = function () {
+                    return "/workflow/singletask/data/create";
+                };
+                SingleTaskWorkflowEditService.prototype.getUploadFileUrl = function () {
+                    return "/workflow/singletask/data/createfile";
+                };
+                return SingleTaskWorkflowEditService;
+            }(_workflow_edit_base_service__WEBPACK_IMPORTED_MODULE_5__["WorkflowEditBaseService"]));
+            SingleTaskWorkflowEditService.ctorParameters = function () { return [
+                { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] },
+                { type: _loading_service_service__WEBPACK_IMPORTED_MODULE_4__["LoadingServiceService"] }
+            ]; };
+            SingleTaskWorkflowEditService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+                Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+                    providedIn: 'root'
+                })
+            ], SingleTaskWorkflowEditService);
+            /***/ 
+        }),
+        /***/ "./src/app/services/workflow/testthreetask/testthreetask-workflow-edit.service.ts": 
+        /*!****************************************************************************************!*\
+          !*** ./src/app/services/workflow/testthreetask/testthreetask-workflow-edit.service.ts ***!
+          \****************************************************************************************/
+        /*! exports provided: TestthreetaskWorkflowEditService */
+        /***/ (function (module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            __webpack_require__.r(__webpack_exports__);
+            /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TestthreetaskWorkflowEditService", function () { return TestthreetaskWorkflowEditService; });
+            /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+            /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+            /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+            /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+            /* harmony import */ var _loading_service_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../loading-service.service */ "./src/app/services/loading-service.service.ts");
+            /* harmony import */ var _workflow_edit_base_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../workflow-edit-base.service */ "./src/app/services/workflow/workflow-edit-base.service.ts");
+            var TestthreetaskWorkflowEditService = /** @class */ (function (_super) {
+                __extends(TestthreetaskWorkflowEditService, _super);
+                //userAssignType = /*[[${UserAssign}]]*/ '';
+                //departmentAssignType = /*[[${DepartmentAssign}]]*/ '';
+                //departmentGroupAssignType = /*[[${DepartmentGroupAssign}]]*/ '';
+                function TestthreetaskWorkflowEditService(http, loadingService) {
+                    var _this = _super.call(this, http, loadingService) || this;
+                    _this.http = http;
+                    _this.loadingService = loadingService;
+                    _this.workflowSaveRequestInitSubject = new rxjs__WEBPACK_IMPORTED_MODULE_3__["BehaviorSubject"](null);
+                    _this.workflowSaveRequestInit = null;
+                    return _this;
+                }
+                //initCreateUrl :string = "/workflow/singletask/data/initcreate";
+                //createWorkflowUrl :string = "/workflow/singletask/data/create";
+                //uploadFileUrl :string = "/workflow/singletask/data/createfile";
+                TestthreetaskWorkflowEditService.prototype.getInitCreateUrl = function () {
+                    return "/workflow/testthreetask/data/initcreate";
+                };
+                TestthreetaskWorkflowEditService.prototype.getCreateWorkflowUrl = function () {
+                    return "/workflow/testthreetask/data/create";
+                };
+                TestthreetaskWorkflowEditService.prototype.getUploadFileUrl = function () {
+                    return "/workflow/testthreetask/data/createfile";
+                };
+                return TestthreetaskWorkflowEditService;
+            }(_workflow_edit_base_service__WEBPACK_IMPORTED_MODULE_5__["WorkflowEditBaseService"]));
+            TestthreetaskWorkflowEditService.ctorParameters = function () { return [
+                { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] },
+                { type: _loading_service_service__WEBPACK_IMPORTED_MODULE_4__["LoadingServiceService"] }
+            ]; };
+            TestthreetaskWorkflowEditService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+                Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+                    providedIn: 'root'
+                })
+            ], TestthreetaskWorkflowEditService);
+            /***/ 
+        }),
+        /***/ "./src/app/services/workflow/workflow-edit-base.service.ts": 
+        /*!*****************************************************************!*\
+          !*** ./src/app/services/workflow/workflow-edit-base.service.ts ***!
+          \*****************************************************************/
+        /*! exports provided: WorkflowEditBaseService */
+        /***/ (function (module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            __webpack_require__.r(__webpack_exports__);
+            /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WorkflowEditBaseService", function () { return WorkflowEditBaseService; });
             /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
             /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
             /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
             /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
             /* harmony import */ var _loading_service_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../loading-service.service */ "./src/app/services/loading-service.service.ts");
             /* harmony import */ var _helper_http_hepler__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../helper/http-hepler */ "./src/app/helper/http-hepler.ts");
-            var WorkflowEditService = /** @class */ (function () {
+            var WorkflowEditBaseService = /** @class */ (function () {
                 //userAssignType = /*[[${UserAssign}]]*/ '';
                 //departmentAssignType = /*[[${DepartmentAssign}]]*/ '';
                 //departmentGroupAssignType = /*[[${DepartmentGroupAssign}]]*/ '';
-                function WorkflowEditService(http, loadingService) {
+                function WorkflowEditBaseService(http, loadingService) {
                     this.http = http;
                     this.loadingService = loadingService;
                     this.workflowSaveRequestInitSubject = new rxjs__WEBPACK_IMPORTED_MODULE_3__["BehaviorSubject"](null);
                     this.workflowSaveRequestInit = null;
-                    this.initCreateUrl = "/workflow/singletask/data/initcreate";
-                    this.createWorkflowUrl = "/workflow/singletask/data/create";
-                    this.uploadFileUrl = "/workflow/singletask/data/createfile";
-                    this.listUrl = "/workflow/list";
                 }
-                WorkflowEditService.prototype.loadCreateInitialData = function () {
+                WorkflowEditBaseService.prototype.getInitCreateUrl = function () {
+                    return "";
+                };
+                WorkflowEditBaseService.prototype.getCreateWorkflowUrl = function () {
+                    return "";
+                };
+                WorkflowEditBaseService.prototype.getUploadFileUrl = function () {
+                    return "";
+                };
+                WorkflowEditBaseService.prototype.loadCreateInitialData = function () {
                     var _this = this;
                     this.loadingService.showLoading();
                     var httpOptions = { headers: _helper_http_hepler__WEBPACK_IMPORTED_MODULE_5__["HttpHepler"].generateFormHeader() };
-                    this.http.post(this.initCreateUrl, new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpParams"](), httpOptions).subscribe(function (initialData) {
+                    this.http.post(this.getInitCreateUrl(), new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpParams"](), httpOptions).subscribe(function (initialData) {
                         console.log("GET successful edit inital data", initialData);
                         _this.workflowSaveRequestInit = JSON.parse(JSON.stringify(initialData));
                         _this.workflowSaveRequestInitSubject.next(initialData);
@@ -1791,7 +1915,7 @@
                         _this.loadingService.hideLoading();
                     });
                 };
-                WorkflowEditService.prototype.uploadFiles = function (fileTitles) {
+                WorkflowEditBaseService.prototype.uploadFiles = function (fileTitles) {
                     var formData = new FormData();
                     for (var i = 0; i < fileTitles.length; i++) {
                         formData.append('files', fileTitles[i].file);
@@ -1799,23 +1923,23 @@
                         formData.append('wids', i + "");
                     }
                     var httpFileUploadOptions = { headers: _helper_http_hepler__WEBPACK_IMPORTED_MODULE_5__["HttpHepler"].generateFileUploadHeader() };
-                    return this.http.post(this.uploadFileUrl, formData, httpFileUploadOptions);
+                    return this.http.post(this.getUploadFileUrl(), formData, httpFileUploadOptions);
                 };
-                WorkflowEditService.prototype.saveWorkflow = function (workflowSaveRequest) {
+                WorkflowEditBaseService.prototype.saveWorkflow = function (workflowSaveRequest) {
                     var httpOptions = { headers: _helper_http_hepler__WEBPACK_IMPORTED_MODULE_5__["HttpHepler"].generateJsonHeader() };
-                    return this.http.post(this.createWorkflowUrl, workflowSaveRequest, httpOptions);
+                    return this.http.post(this.getCreateWorkflowUrl(), workflowSaveRequest, httpOptions);
                 };
-                return WorkflowEditService;
+                return WorkflowEditBaseService;
             }());
-            WorkflowEditService.ctorParameters = function () { return [
+            WorkflowEditBaseService.ctorParameters = function () { return [
                 { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] },
                 { type: _loading_service_service__WEBPACK_IMPORTED_MODULE_4__["LoadingServiceService"] }
             ]; };
-            WorkflowEditService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+            WorkflowEditBaseService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
                 Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
                     providedIn: 'root'
                 })
-            ], WorkflowEditService);
+            ], WorkflowEditBaseService);
             /***/ 
         }),
         /***/ "./src/app/services/workflow/workflow-message.service.ts": 
@@ -2573,7 +2697,7 @@
             /* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm2015/ngx-translate-core.js");
             /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
             /* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../services/global.service */ "./src/app/services/global.service.ts");
-            /* harmony import */ var _services_workflow_workflow_edit_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../services/workflow/workflow-edit.service */ "./src/app/services/workflow/workflow-edit.service.ts");
+            /* harmony import */ var _services_workflow_singletask_singletask_workflow_edit_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../services/workflow/singletask/singletask-workflow-edit.service */ "./src/app/services/workflow/singletask/singletask-workflow-edit.service.ts");
             /* harmony import */ var _services_loading_service_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../services/loading-service.service */ "./src/app/services/loading-service.service.ts");
             /* harmony import */ var _services_error_service_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../services/error-service.service */ "./src/app/services/error-service.service.ts");
             /* harmony import */ var _wf_models__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../wf-models */ "./src/app/wf-models/index.ts");
@@ -2868,7 +2992,7 @@
                 { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] },
                 { type: _services_global_service__WEBPACK_IMPORTED_MODULE_5__["GlobalService"] },
                 { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_3__["TranslateService"] },
-                { type: _services_workflow_workflow_edit_service__WEBPACK_IMPORTED_MODULE_6__["WorkflowEditService"] },
+                { type: _services_workflow_singletask_singletask_workflow_edit_service__WEBPACK_IMPORTED_MODULE_6__["SingleTaskWorkflowEditService"] },
                 { type: _services_loading_service_service__WEBPACK_IMPORTED_MODULE_7__["LoadingServiceService"] },
                 { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"] },
                 { type: _services_error_service_service__WEBPACK_IMPORTED_MODULE_8__["ErrorServiceService"] }
@@ -2890,7 +3014,7 @@
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL3dtLWNvbXBvbmVudHMvY3JlYXRlL2NyZWF0ZS10ZXN0dGhyZWV0YXNrL2NyZWF0ZS10ZXN0dGhyZWV0YXNrLmNvbXBvbmVudC5jc3MifQ== */");
+            /* harmony default export */ __webpack_exports__["default"] = ("\r\ndiv.workflow-content-container{\r\n\tborder: 1px solid lightgray;\r\n    margin: 10px 0px;\r\n    border-radius: 10px;\r\n    padding: 10px;\r\n    background-color: #f1f1f1;\r\n}\r\n\r\ndiv.workflow-content{\r\n    background-color: #dad9d9;\r\n    padding: 15px;\r\n    border-radius: 5px;\r\n}\r\n\r\ndiv.workflow-content-record{\r\n    padding: 15px;\r\n}\r\n\r\ndiv.workflow-content div.item-row, div.workflow-content-record div.item-row {\r\n    margin: 5px 0 10px;\r\n}\r\n\r\ndiv.workflow-content div.workflow-step-button-bar, div.workflow-content-record div.workflow-step-button-bar{\r\n    margin-right: 20px;\r\n    background-color: white;\r\n    padding: 6px;\r\n    margin-left: 130px;\r\n}\r\n\r\ndiv.workflow-content div.item-row div.item-label, div.workflow-content-record div.item-row div.item-label{\r\n    float: left;\r\n    padding-right: 10px;\r\n    padding-left: 2px;\r\n    line-height: 20px;\r\n    font-size: 14px;\r\n    font-weight: bold;\r\n    width: 130px;\r\n}\r\n\r\ndiv.workflow-content div.item-row div.item-content, div.workflow-content-record div.item-row div.item-content {\r\n    float: left;\r\n    \r\n    padding-left: 0px;\r\n    width: calc(100% - 135px);\r\n}\r\n\r\ndiv.workflow-content div.item-row div.item-content input:not(.file-item), \r\ndiv.workflow-content div.item-row div.item-content select,\r\ndiv.workflow-content-record div.item-row div.item-content input, \r\ndiv.workflow-content-record div.item-row div.item-content select\r\n{\r\n    width: 100%;\r\n    height: 26px;\r\n}\r\n\r\ndiv.workflow-content div.item-row div.item-content input.file-title\r\n{\r\n    width: calc(50% - 170px);\r\n    height: 26px;\r\n}\r\n\r\ndiv.workflow-content div.item-row div.item-content input.file-file\r\n{\r\n    width: 50%;\r\n    height: 26px;\r\n    display: inline-block;;\r\n}\r\n\r\ndiv.workflow-content div.item-row div.item-content textarea,\r\ndiv.workflow-content-record div.item-row div.item-content textarea\r\n{\r\n    width: 100%;\r\n    height: 200px;\r\n}\r\n\r\n.assign-list{\r\n\tborder: 1px solid lightgray;\r\n    padding: 6px;\r\n    border-radius: 4px;\r\n    width: 100%;\r\n    min-height: 100px;\r\n    max-height: 200px;\r\n    overflow-y: auto;\r\n    padding-right: 24px;\r\n}\r\n\r\ndiv.assign-list div.user-item-box {\r\n    border: 1px solid lightgray;\r\n    border-radius: 4px;\r\n    padding: 2px 4px;\r\n    float: left;\r\n    background: #e6e6e6;\r\n    margin-right: 5px;\r\n    margin-bottom: 5px;\r\n}\r\n\r\ndiv.assign-list div.user-item-box button {\r\n    border: none;\r\n    background: transparent;\r\n    padding: 0;\r\n    padding-top: 3px;\r\n    float: right;\r\n    margin-left: 5px;\r\n}\r\n\r\ndiv.assign-list div.user-item-box button i.material-icons{\r\n\tfont-size: 16px;\r\n}\r\n\r\ndiv.assign-list div.user-item-box span {\r\n    height: 20px;\r\n    display: inline-block;\r\n    float: left;\r\n}\r\n\r\nbutton.show-select-dialog {\r\n    float: right;\r\n    margin-right: -20px;\r\n    width: 22px;\r\n    border: none;\r\n    padding: 0;\r\n    padding-left: 2px;\r\n}\r\n\r\nbutton.file-action {\r\n    float: right;\r\n    width: 22px;\r\n    border: none;\r\n    padding: 0;\r\n    padding-left: 2px;\r\n    margin-top: 4px;\r\n    background: transparent;\r\n}\r\n\r\n.step-button, .step-button:active{\r\n\tfloat: right;\r\n    margin-left: 10px;\r\n    background-color: gray;\r\n    color: #f7fbc4;\r\n    border: outset 2px #d4d4d1;\r\n    padding: 4px 20px;\r\n}\r\n\r\n.step-button:hover{\r\n    background-color: #9e9e9e;\r\n    color: #fbcbc4;\r\n    border: outset 2px #b7b7b3;\r\n    \r\n}\r\n\r\n.file-container{\r\n\tborder:gray 1px solid; \r\n\tpadding: 6px;\r\n}\r\n\r\n.file-container .file-row{\r\n\tborder:gray 1px solid; \r\n\tpadding: 2px 2px;\r\n\tmargin: 4px 6px;\r\n\tmargin-right: 0;\r\n}\r\n\r\n.file-container .file-row:nth-child(even){\r\n\tbackground: #dbf1fb;\r\n}\r\n\r\n.file-container .file-row:nth-child(odd){\r\n\tbackground: #f3f3e1;\r\n}\r\n\r\n.workflow-file-view-link, .workflow-file-view-link:active, .workflow-file-view-link:visited{\r\n\tcolor: #333;\r\n}\r\n\r\n.workflow-file-view-link:hover{\r\n\tcolor: #551113;\r\n}\r\n\r\n.workflow-file-view-link i.material-icons{\r\n\twidth: 24px;\r\n}\r\n\r\n.user-select-modal-content{\r\n\theight: 500px;\r\n}\r\n\r\n.user-select-tab-content{\r\n\theight: calc(100% - 30px);\r\n}\r\n\r\n.user-select-item-label{\r\n\tmargin-left: 10px;\r\n}\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvd20tY29tcG9uZW50cy9jcmVhdGUvY3JlYXRlLXRlc3R0aHJlZXRhc2svY3JlYXRlLXRlc3R0aHJlZXRhc2suY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiO0FBQ0E7Q0FDQywyQkFBMkI7SUFDeEIsZ0JBQWdCO0lBQ2hCLG1CQUFtQjtJQUNuQixhQUFhO0lBQ2IseUJBQXlCO0FBQzdCOztBQUVBO0lBQ0kseUJBQXlCO0lBQ3pCLGFBQWE7SUFDYixrQkFBa0I7QUFDdEI7O0FBRUE7SUFDSSxhQUFhO0FBQ2pCOztBQUVBO0lBQ0ksa0JBQWtCO0FBQ3RCOztBQUVBO0lBQ0ksa0JBQWtCO0lBQ2xCLHVCQUF1QjtJQUN2QixZQUFZO0lBQ1osa0JBQWtCO0FBQ3RCOztBQUVBO0lBQ0ksV0FBVztJQUNYLG1CQUFtQjtJQUNuQixpQkFBaUI7SUFDakIsaUJBQWlCO0lBQ2pCLGVBQWU7SUFDZixpQkFBaUI7SUFDakIsWUFBWTtBQUNoQjs7QUFFQTtJQUNJLFdBQVc7O0lBRVgsaUJBQWlCO0lBQ2pCLHlCQUF5QjtBQUM3Qjs7QUFFQTs7Ozs7SUFLSSxXQUFXO0lBQ1gsWUFBWTtBQUNoQjs7QUFFQTs7SUFFSSx3QkFBd0I7SUFDeEIsWUFBWTtBQUNoQjs7QUFFQTs7SUFFSSxVQUFVO0lBQ1YsWUFBWTtJQUNaLHFCQUFxQjtBQUN6Qjs7QUFFQTs7O0lBR0ksV0FBVztJQUNYLGFBQWE7QUFDakI7O0FBRUE7Q0FDQywyQkFBMkI7SUFDeEIsWUFBWTtJQUNaLGtCQUFrQjtJQUNsQixXQUFXO0lBQ1gsaUJBQWlCO0lBQ2pCLGlCQUFpQjtJQUNqQixnQkFBZ0I7SUFDaEIsbUJBQW1CO0FBQ3ZCOztBQUVBO0lBQ0ksMkJBQTJCO0lBQzNCLGtCQUFrQjtJQUNsQixnQkFBZ0I7SUFDaEIsV0FBVztJQUNYLG1CQUFtQjtJQUNuQixpQkFBaUI7SUFDakIsa0JBQWtCO0FBQ3RCOztBQUVBO0lBQ0ksWUFBWTtJQUNaLHVCQUF1QjtJQUN2QixVQUFVO0lBQ1YsZ0JBQWdCO0lBQ2hCLFlBQVk7SUFDWixnQkFBZ0I7QUFDcEI7O0FBRUE7Q0FDQyxlQUFlO0FBQ2hCOztBQUVBO0lBQ0ksWUFBWTtJQUNaLHFCQUFxQjtJQUNyQixXQUFXO0FBQ2Y7O0FBRUE7SUFDSSxZQUFZO0lBQ1osbUJBQW1CO0lBQ25CLFdBQVc7SUFDWCxZQUFZO0lBQ1osVUFBVTtJQUNWLGlCQUFpQjtBQUNyQjs7QUFFQTtJQUNJLFlBQVk7SUFDWixXQUFXO0lBQ1gsWUFBWTtJQUNaLFVBQVU7SUFDVixpQkFBaUI7SUFDakIsZUFBZTtJQUNmLHVCQUF1QjtBQUMzQjs7QUFFQTtDQUNDLFlBQVk7SUFDVCxpQkFBaUI7SUFDakIsc0JBQXNCO0lBQ3RCLGNBQWM7SUFDZCwwQkFBMEI7SUFDMUIsaUJBQWlCO0FBQ3JCOztBQUVBO0lBQ0kseUJBQXlCO0lBQ3pCLGNBQWM7SUFDZCwwQkFBMEI7O0FBRTlCOztBQUVBO0NBQ0MscUJBQXFCO0NBQ3JCLFlBQVk7QUFDYjs7QUFFQTtDQUNDLHFCQUFxQjtDQUNyQixnQkFBZ0I7Q0FDaEIsZUFBZTtDQUNmLGVBQWU7QUFDaEI7O0FBRUE7Q0FDQyxtQkFBbUI7QUFDcEI7O0FBRUE7Q0FDQyxtQkFBbUI7QUFDcEI7O0FBRUE7Q0FDQyxXQUFXO0FBQ1o7O0FBRUE7Q0FDQyxjQUFjO0FBQ2Y7O0FBRUE7Q0FDQyxXQUFXO0FBQ1o7O0FBRUE7Q0FDQyxhQUFhO0FBQ2Q7O0FBRUE7Q0FDQyx5QkFBeUI7QUFDMUI7O0FBRUE7Q0FDQyxpQkFBaUI7QUFDbEIiLCJmaWxlIjoic3JjL2FwcC93bS1jb21wb25lbnRzL2NyZWF0ZS9jcmVhdGUtdGVzdHRocmVldGFzay9jcmVhdGUtdGVzdHRocmVldGFzay5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiXHJcbmRpdi53b3JrZmxvdy1jb250ZW50LWNvbnRhaW5lcntcclxuXHRib3JkZXI6IDFweCBzb2xpZCBsaWdodGdyYXk7XHJcbiAgICBtYXJnaW46IDEwcHggMHB4O1xyXG4gICAgYm9yZGVyLXJhZGl1czogMTBweDtcclxuICAgIHBhZGRpbmc6IDEwcHg7XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjZjFmMWYxO1xyXG59XHJcblxyXG5kaXYud29ya2Zsb3ctY29udGVudHtcclxuICAgIGJhY2tncm91bmQtY29sb3I6ICNkYWQ5ZDk7XHJcbiAgICBwYWRkaW5nOiAxNXB4O1xyXG4gICAgYm9yZGVyLXJhZGl1czogNXB4O1xyXG59XHJcblxyXG5kaXYud29ya2Zsb3ctY29udGVudC1yZWNvcmR7XHJcbiAgICBwYWRkaW5nOiAxNXB4O1xyXG59XHJcblxyXG5kaXYud29ya2Zsb3ctY29udGVudCBkaXYuaXRlbS1yb3csIGRpdi53b3JrZmxvdy1jb250ZW50LXJlY29yZCBkaXYuaXRlbS1yb3cge1xyXG4gICAgbWFyZ2luOiA1cHggMCAxMHB4O1xyXG59XHJcblxyXG5kaXYud29ya2Zsb3ctY29udGVudCBkaXYud29ya2Zsb3ctc3RlcC1idXR0b24tYmFyLCBkaXYud29ya2Zsb3ctY29udGVudC1yZWNvcmQgZGl2LndvcmtmbG93LXN0ZXAtYnV0dG9uLWJhcntcclxuICAgIG1hcmdpbi1yaWdodDogMjBweDtcclxuICAgIGJhY2tncm91bmQtY29sb3I6IHdoaXRlO1xyXG4gICAgcGFkZGluZzogNnB4O1xyXG4gICAgbWFyZ2luLWxlZnQ6IDEzMHB4O1xyXG59XHJcblxyXG5kaXYud29ya2Zsb3ctY29udGVudCBkaXYuaXRlbS1yb3cgZGl2Lml0ZW0tbGFiZWwsIGRpdi53b3JrZmxvdy1jb250ZW50LXJlY29yZCBkaXYuaXRlbS1yb3cgZGl2Lml0ZW0tbGFiZWx7XHJcbiAgICBmbG9hdDogbGVmdDtcclxuICAgIHBhZGRpbmctcmlnaHQ6IDEwcHg7XHJcbiAgICBwYWRkaW5nLWxlZnQ6IDJweDtcclxuICAgIGxpbmUtaGVpZ2h0OiAyMHB4O1xyXG4gICAgZm9udC1zaXplOiAxNHB4O1xyXG4gICAgZm9udC13ZWlnaHQ6IGJvbGQ7XHJcbiAgICB3aWR0aDogMTMwcHg7XHJcbn1cclxuXHJcbmRpdi53b3JrZmxvdy1jb250ZW50IGRpdi5pdGVtLXJvdyBkaXYuaXRlbS1jb250ZW50LCBkaXYud29ya2Zsb3ctY29udGVudC1yZWNvcmQgZGl2Lml0ZW0tcm93IGRpdi5pdGVtLWNvbnRlbnQge1xyXG4gICAgZmxvYXQ6IGxlZnQ7XHJcbiAgICBcclxuICAgIHBhZGRpbmctbGVmdDogMHB4O1xyXG4gICAgd2lkdGg6IGNhbGMoMTAwJSAtIDEzNXB4KTtcclxufVxyXG5cclxuZGl2LndvcmtmbG93LWNvbnRlbnQgZGl2Lml0ZW0tcm93IGRpdi5pdGVtLWNvbnRlbnQgaW5wdXQ6bm90KC5maWxlLWl0ZW0pLCBcclxuZGl2LndvcmtmbG93LWNvbnRlbnQgZGl2Lml0ZW0tcm93IGRpdi5pdGVtLWNvbnRlbnQgc2VsZWN0LFxyXG5kaXYud29ya2Zsb3ctY29udGVudC1yZWNvcmQgZGl2Lml0ZW0tcm93IGRpdi5pdGVtLWNvbnRlbnQgaW5wdXQsIFxyXG5kaXYud29ya2Zsb3ctY29udGVudC1yZWNvcmQgZGl2Lml0ZW0tcm93IGRpdi5pdGVtLWNvbnRlbnQgc2VsZWN0XHJcbntcclxuICAgIHdpZHRoOiAxMDAlO1xyXG4gICAgaGVpZ2h0OiAyNnB4O1xyXG59XHJcblxyXG5kaXYud29ya2Zsb3ctY29udGVudCBkaXYuaXRlbS1yb3cgZGl2Lml0ZW0tY29udGVudCBpbnB1dC5maWxlLXRpdGxlXHJcbntcclxuICAgIHdpZHRoOiBjYWxjKDUwJSAtIDE3MHB4KTtcclxuICAgIGhlaWdodDogMjZweDtcclxufVxyXG5cclxuZGl2LndvcmtmbG93LWNvbnRlbnQgZGl2Lml0ZW0tcm93IGRpdi5pdGVtLWNvbnRlbnQgaW5wdXQuZmlsZS1maWxlXHJcbntcclxuICAgIHdpZHRoOiA1MCU7XHJcbiAgICBoZWlnaHQ6IDI2cHg7XHJcbiAgICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7O1xyXG59XHJcblxyXG5kaXYud29ya2Zsb3ctY29udGVudCBkaXYuaXRlbS1yb3cgZGl2Lml0ZW0tY29udGVudCB0ZXh0YXJlYSxcclxuZGl2LndvcmtmbG93LWNvbnRlbnQtcmVjb3JkIGRpdi5pdGVtLXJvdyBkaXYuaXRlbS1jb250ZW50IHRleHRhcmVhXHJcbntcclxuICAgIHdpZHRoOiAxMDAlO1xyXG4gICAgaGVpZ2h0OiAyMDBweDtcclxufVxyXG5cclxuLmFzc2lnbi1saXN0e1xyXG5cdGJvcmRlcjogMXB4IHNvbGlkIGxpZ2h0Z3JheTtcclxuICAgIHBhZGRpbmc6IDZweDtcclxuICAgIGJvcmRlci1yYWRpdXM6IDRweDtcclxuICAgIHdpZHRoOiAxMDAlO1xyXG4gICAgbWluLWhlaWdodDogMTAwcHg7XHJcbiAgICBtYXgtaGVpZ2h0OiAyMDBweDtcclxuICAgIG92ZXJmbG93LXk6IGF1dG87XHJcbiAgICBwYWRkaW5nLXJpZ2h0OiAyNHB4O1xyXG59XHJcblxyXG5kaXYuYXNzaWduLWxpc3QgZGl2LnVzZXItaXRlbS1ib3gge1xyXG4gICAgYm9yZGVyOiAxcHggc29saWQgbGlnaHRncmF5O1xyXG4gICAgYm9yZGVyLXJhZGl1czogNHB4O1xyXG4gICAgcGFkZGluZzogMnB4IDRweDtcclxuICAgIGZsb2F0OiBsZWZ0O1xyXG4gICAgYmFja2dyb3VuZDogI2U2ZTZlNjtcclxuICAgIG1hcmdpbi1yaWdodDogNXB4O1xyXG4gICAgbWFyZ2luLWJvdHRvbTogNXB4O1xyXG59XHJcblxyXG5kaXYuYXNzaWduLWxpc3QgZGl2LnVzZXItaXRlbS1ib3ggYnV0dG9uIHtcclxuICAgIGJvcmRlcjogbm9uZTtcclxuICAgIGJhY2tncm91bmQ6IHRyYW5zcGFyZW50O1xyXG4gICAgcGFkZGluZzogMDtcclxuICAgIHBhZGRpbmctdG9wOiAzcHg7XHJcbiAgICBmbG9hdDogcmlnaHQ7XHJcbiAgICBtYXJnaW4tbGVmdDogNXB4O1xyXG59XHJcblxyXG5kaXYuYXNzaWduLWxpc3QgZGl2LnVzZXItaXRlbS1ib3ggYnV0dG9uIGkubWF0ZXJpYWwtaWNvbnN7XHJcblx0Zm9udC1zaXplOiAxNnB4O1xyXG59XHJcblxyXG5kaXYuYXNzaWduLWxpc3QgZGl2LnVzZXItaXRlbS1ib3ggc3BhbiB7XHJcbiAgICBoZWlnaHQ6IDIwcHg7XHJcbiAgICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XHJcbiAgICBmbG9hdDogbGVmdDtcclxufVxyXG5cclxuYnV0dG9uLnNob3ctc2VsZWN0LWRpYWxvZyB7XHJcbiAgICBmbG9hdDogcmlnaHQ7XHJcbiAgICBtYXJnaW4tcmlnaHQ6IC0yMHB4O1xyXG4gICAgd2lkdGg6IDIycHg7XHJcbiAgICBib3JkZXI6IG5vbmU7XHJcbiAgICBwYWRkaW5nOiAwO1xyXG4gICAgcGFkZGluZy1sZWZ0OiAycHg7XHJcbn1cclxuXHJcbmJ1dHRvbi5maWxlLWFjdGlvbiB7XHJcbiAgICBmbG9hdDogcmlnaHQ7XHJcbiAgICB3aWR0aDogMjJweDtcclxuICAgIGJvcmRlcjogbm9uZTtcclxuICAgIHBhZGRpbmc6IDA7XHJcbiAgICBwYWRkaW5nLWxlZnQ6IDJweDtcclxuICAgIG1hcmdpbi10b3A6IDRweDtcclxuICAgIGJhY2tncm91bmQ6IHRyYW5zcGFyZW50O1xyXG59XHJcblxyXG4uc3RlcC1idXR0b24sIC5zdGVwLWJ1dHRvbjphY3RpdmV7XHJcblx0ZmxvYXQ6IHJpZ2h0O1xyXG4gICAgbWFyZ2luLWxlZnQ6IDEwcHg7XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiBncmF5O1xyXG4gICAgY29sb3I6ICNmN2ZiYzQ7XHJcbiAgICBib3JkZXI6IG91dHNldCAycHggI2Q0ZDRkMTtcclxuICAgIHBhZGRpbmc6IDRweCAyMHB4O1xyXG59XHJcblxyXG4uc3RlcC1idXR0b246aG92ZXJ7XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjOWU5ZTllO1xyXG4gICAgY29sb3I6ICNmYmNiYzQ7XHJcbiAgICBib3JkZXI6IG91dHNldCAycHggI2I3YjdiMztcclxuICAgIFxyXG59XHJcblxyXG4uZmlsZS1jb250YWluZXJ7XHJcblx0Ym9yZGVyOmdyYXkgMXB4IHNvbGlkOyBcclxuXHRwYWRkaW5nOiA2cHg7XHJcbn1cclxuXHJcbi5maWxlLWNvbnRhaW5lciAuZmlsZS1yb3d7XHJcblx0Ym9yZGVyOmdyYXkgMXB4IHNvbGlkOyBcclxuXHRwYWRkaW5nOiAycHggMnB4O1xyXG5cdG1hcmdpbjogNHB4IDZweDtcclxuXHRtYXJnaW4tcmlnaHQ6IDA7XHJcbn1cclxuXHJcbi5maWxlLWNvbnRhaW5lciAuZmlsZS1yb3c6bnRoLWNoaWxkKGV2ZW4pe1xyXG5cdGJhY2tncm91bmQ6ICNkYmYxZmI7XHJcbn1cclxuXHJcbi5maWxlLWNvbnRhaW5lciAuZmlsZS1yb3c6bnRoLWNoaWxkKG9kZCl7XHJcblx0YmFja2dyb3VuZDogI2YzZjNlMTtcclxufVxyXG5cclxuLndvcmtmbG93LWZpbGUtdmlldy1saW5rLCAud29ya2Zsb3ctZmlsZS12aWV3LWxpbms6YWN0aXZlLCAud29ya2Zsb3ctZmlsZS12aWV3LWxpbms6dmlzaXRlZHtcclxuXHRjb2xvcjogIzMzMztcclxufVxyXG5cclxuLndvcmtmbG93LWZpbGUtdmlldy1saW5rOmhvdmVye1xyXG5cdGNvbG9yOiAjNTUxMTEzO1xyXG59XHJcblxyXG4ud29ya2Zsb3ctZmlsZS12aWV3LWxpbmsgaS5tYXRlcmlhbC1pY29uc3tcclxuXHR3aWR0aDogMjRweDtcclxufVxyXG5cclxuLnVzZXItc2VsZWN0LW1vZGFsLWNvbnRlbnR7XHJcblx0aGVpZ2h0OiA1MDBweDtcclxufVxyXG5cclxuLnVzZXItc2VsZWN0LXRhYi1jb250ZW50e1xyXG5cdGhlaWdodDogY2FsYygxMDAlIC0gMzBweCk7XHJcbn1cclxuXHJcbi51c2VyLXNlbGVjdC1pdGVtLWxhYmVse1xyXG5cdG1hcmdpbi1sZWZ0OiAxMHB4O1xyXG59Il19 */");
             /***/ 
         }),
         /***/ "./src/app/wm-components/create/create-testthreetask/create-testthreetask.component.ts": 
@@ -2904,13 +3028,310 @@
             /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CreateTestthreetaskComponent", function () { return CreateTestthreetaskComponent; });
             /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
             /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+            /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+            /* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm2015/ngx-translate-core.js");
+            /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+            /* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../services/global.service */ "./src/app/services/global.service.ts");
+            /* harmony import */ var _services_workflow_testthreetask_testthreetask_workflow_edit_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../services/workflow/testthreetask/testthreetask-workflow-edit.service */ "./src/app/services/workflow/testthreetask/testthreetask-workflow-edit.service.ts");
+            /* harmony import */ var _services_loading_service_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../services/loading-service.service */ "./src/app/services/loading-service.service.ts");
+            /* harmony import */ var _services_error_service_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../services/error-service.service */ "./src/app/services/error-service.service.ts");
+            /* harmony import */ var _wf_models__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../wf-models */ "./src/app/wf-models/index.ts");
             var CreateTestthreetaskComponent = /** @class */ (function () {
-                function CreateTestthreetaskComponent() {
+                function CreateTestthreetaskComponent(router, global, translate, editService, loadingService, http, errorService) {
+                    var _this = this;
+                    this.router = router;
+                    this.global = global;
+                    this.editService = editService;
+                    this.loadingService = loadingService;
+                    this.http = http;
+                    this.errorService = errorService;
+                    this.workflowListUrl = "/workflow/list";
+                    this.workflowSaveRequest = null;
+                    this.users = [];
+                    this.departments = [];
+                    this.fileTitles = [];
+                    this.showDebug = false;
+                    this.showAssignModal = false;
+                    this.selectAssign = [];
+                    this.assignTypeUser = _wf_models__WEBPACK_IMPORTED_MODULE_9__["AssignType"].USER;
+                    this.assignTypeDepartment = _wf_models__WEBPACK_IMPORTED_MODULE_9__["AssignType"].DEPARTMENT;
+                    this.assignTypeDepartmentGroup = _wf_models__WEBPACK_IMPORTED_MODULE_9__["AssignType"].DEPARTMENTGROUP;
+                    this.router.events.subscribe(function (evt) {
+                        if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_2__["NavigationEnd"]) {
+                            _this.loadInitialData();
+                        }
+                    });
                 }
+                CreateTestthreetaskComponent.prototype.fileTitleProgress = function (fileInput, file, fileIndex) {
+                    if (fileInput.target.files && fileInput.target.files != null && file) {
+                        file.file = fileInput.target.files[0];
+                    }
+                    //this.preview();
+                };
+                Object.defineProperty(CreateTestthreetaskComponent.prototype, "expireDays", {
+                    get: function () {
+                        if (this.workflowSaveRequest != null) {
+                            return this.workflowSaveRequest.expireDays;
+                        }
+                        return 0;
+                    },
+                    set: function (days) {
+                        if (this.workflowSaveRequest != null) {
+                            this.workflowSaveRequest.expireDays = days;
+                        }
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
+                Object.defineProperty(CreateTestthreetaskComponent.prototype, "controllerIdentity", {
+                    get: function () {
+                        if (this.workflowSaveRequest != null && this.workflowSaveRequest.workflow != null) {
+                            return this.workflowSaveRequest.workflow.controllerIdentity;
+                        }
+                        return "";
+                    },
+                    set: function (value) {
+                        if (this.workflowSaveRequest != null && this.workflowSaveRequest.workflow != null) {
+                            this.workflowSaveRequest.workflow.controllerIdentity = value;
+                        }
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
+                Object.defineProperty(CreateTestthreetaskComponent.prototype, "assignedUsers", {
+                    get: function () {
+                        if (this.workflowSaveRequest != null) {
+                            return this.workflowSaveRequest.assigns;
+                        }
+                        return [];
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
+                Object.defineProperty(CreateTestthreetaskComponent.prototype, "comments", {
+                    get: function () {
+                        if (this.workflowSaveRequest != null && this.workflowSaveRequest.workflow != null) {
+                            return this.workflowSaveRequest.workflow.comments;
+                        }
+                        return "";
+                    },
+                    set: function (value) {
+                        if (this.workflowSaveRequest != null && this.workflowSaveRequest.workflow != null) {
+                            this.workflowSaveRequest.workflow.comments = value;
+                        }
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
+                Object.defineProperty(CreateTestthreetaskComponent.prototype, "debugData", {
+                    get: function () {
+                        var ssignstr = (this.workflowSaveRequest && this.workflowSaveRequest.assigns) ? JSON.stringify(this.workflowSaveRequest.assigns) : '--';
+                        return ssignstr + "<hr>" + JSON.stringify(this.selectAssign);
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
                 CreateTestthreetaskComponent.prototype.ngOnInit = function () {
+                    this.loadInitialData();
+                };
+                CreateTestthreetaskComponent.prototype.loadInitialData = function () {
+                    if (this.editService.workflowSaveRequestInit !== null) {
+                        this.workflowSaveRequest = this.editService.workflowSaveRequestInit.workflowSaveRequest;
+                    }
+                    else {
+                        this.subscribeToSearchInitialData();
+                        this.editService.loadCreateInitialData();
+                    }
+                    if (this.global.loadedGeneralData !== null) {
+                        this.users = this.global.loadedGeneralData.company.users;
+                        this.departments = this.global.loadedGeneralData.company.departments;
+                    }
+                    else {
+                        this.subscribeToGeneralData();
+                        this.global.loadAllSetting(null);
+                    }
+                };
+                CreateTestthreetaskComponent.prototype.subscribeToSearchInitialData = function () {
+                    var _this = this;
+                    this.editService.workflowSaveRequestInitSubject.subscribe(function (data) {
+                        console.log("set gloabl-data from workflow-create. : ", data);
+                        //alert("from app-comp: \n" + JSON.stringify(data));
+                        if (data && data !== null) {
+                            _this.workflowSaveRequest = data.workflowSaveRequest;
+                        }
+                        else {
+                            _this.workflowSaveRequest = null;
+                        }
+                    });
+                };
+                CreateTestthreetaskComponent.prototype.subscribeToGeneralData = function () {
+                    var _this = this;
+                    this.global.currentSessionDataSubject.subscribe(function (data) {
+                        console.log("set gloabl-data from workflow-create. appIsLogged: ");
+                        //alert("from app-comp: \n" + JSON.stringify(data));
+                        if (data && data !== null) {
+                            var value = data.isLogged + "";
+                            if (value === "true" === true) {
+                                _this.users = data.company.users;
+                                _this.departments = data.company.departments;
+                            }
+                            else {
+                                _this.users = [];
+                                _this.departments = [];
+                            }
+                        }
+                        else {
+                            _this.users = [];
+                            _this.departments = [];
+                        }
+                    });
+                };
+                Object.defineProperty(CreateTestthreetaskComponent.prototype, "hasNoAssigns", {
+                    get: function () {
+                        if (this.workflowSaveRequest && this.workflowSaveRequest.assigns) {
+                            return this.workflowSaveRequest.assigns.length == 0;
+                        }
+                        return false;
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
+                CreateTestthreetaskComponent.prototype.removeAssign = function (identity, type) {
+                    this.workflowSaveRequest.assigns = this.workflowSaveRequest.assigns.filter(function (value, index, arr) {
+                        return value.itemIdentity != identity || value.itemType != type;
+                    });
+                };
+                CreateTestthreetaskComponent.prototype.removeFile = function (index) {
+                    this.fileTitles.splice(index, 1);
+                };
+                CreateTestthreetaskComponent.prototype.addFile = function () {
+                    var ft = new _wf_models__WEBPACK_IMPORTED_MODULE_9__["FileTitle"]();
+                    ft.title = "";
+                    ft.file = null;
+                    this.fileTitles.push(ft);
+                };
+                CreateTestthreetaskComponent.prototype.save = function () {
+                    var _this = this;
+                    this.loadingService.showLoading();
+                    if (this.fileTitles.length > 0) {
+                        this.editService.uploadFiles(this.fileTitles).subscribe(function (result) {
+                            console.log("Create workflow upload file result", result);
+                            _this.workflowSaveRequest.sessionKey = result.sessionKey;
+                            _this.editService.saveWorkflow(_this.workflowSaveRequest).subscribe(function (result) {
+                                console.log("Create workflow result", result);
+                                _this.router.navigate([_this.workflowListUrl]);
+                            }, function (response) {
+                                console.log("Error in create workflow", response);
+                                _this.errorService.showErrorResponse(response);
+                                _this.loadingService.hideLoading();
+                            }, function () {
+                                _this.loadingService.hideLoading();
+                            });
+                        }, function (response) {
+                            console.log("Error in create workflow upload file", response);
+                            _this.loadingService.hideLoading();
+                            _this.errorService.showErrorResponse(response);
+                        }, function () {
+                        });
+                    }
+                    else {
+                        this.workflowSaveRequest.sessionKey = 'not-set';
+                        this.editService.saveWorkflow(this.workflowSaveRequest).subscribe(function (result) {
+                            console.log("Create workflow result", result);
+                            _this.router.navigate([_this.workflowListUrl]);
+                        }, function (response) {
+                            console.log("Error in create workflow", response);
+                            _this.errorService.showErrorResponse(response);
+                            _this.loadingService.hideLoading();
+                        }, function () {
+                            _this.loadingService.hideLoading();
+                        });
+                    }
+                };
+                CreateTestthreetaskComponent.prototype.isItemAssigned = function (identity, type) {
+                    if (this.selectAssign[type] === undefined) {
+                        this.selectAssign[type] = [];
+                    }
+                    if (this.selectAssign[type][identity] === undefined) {
+                        this.selectAssign[type][identity] = false;
+                    }
+                    return this.selectAssign[type][identity];
+                };
+                CreateTestthreetaskComponent.prototype.applyUserSelect = function () {
+                    this.workflowSaveRequest.assigns = [];
+                    for (var type in this.selectAssign) {
+                        for (var identity in this.selectAssign[type]) {
+                            if (this.selectAssign[type][identity]) {
+                                var assign = new _wf_models__WEBPACK_IMPORTED_MODULE_9__["AssignItem"];
+                                assign.itemIdentity = identity;
+                                assign.itemType = type;
+                                this.workflowSaveRequest.assigns.push(assign);
+                            }
+                        }
+                    }
+                    this.hideAssignSelect();
+                };
+                CreateTestthreetaskComponent.prototype.showAssignSelect = function () {
+                    this.selectAssign = [];
+                    for (var index in this.workflowSaveRequest.assigns) {
+                        var assign = this.workflowSaveRequest.assigns[index];
+                        if (this.selectAssign[assign.itemType] === undefined) {
+                            this.selectAssign[assign.itemType] = [];
+                        }
+                        this.selectAssign[assign.itemType][assign.itemIdentity] = true;
+                    }
+                    this.showAssignModal = true;
+                };
+                CreateTestthreetaskComponent.prototype.hideAssignSelect = function () {
+                    this.showAssignModal = false;
+                };
+                CreateTestthreetaskComponent.prototype.toggleAssign = function (identity, type, isChecked) {
+                    if (this.selectAssign[type] === undefined) {
+                        this.selectAssign[type] = [];
+                    }
+                    this.selectAssign[type][identity] = isChecked;
+                };
+                CreateTestthreetaskComponent.prototype.getAssignItemTitle = function (item) {
+                    //assign.itemIdentity = <string>identity;
+                    //assign.itemType = <AssignType>type;
+                    if (item.itemType === _wf_models__WEBPACK_IMPORTED_MODULE_9__["AssignType"].USER) {
+                        for (var index in this.users) {
+                            if (this.users[index].identity === item.itemIdentity) {
+                                return this.users[index].fullName;
+                            }
+                        }
+                        return 'Unknown!';
+                    }
+                    if (item.itemType === _wf_models__WEBPACK_IMPORTED_MODULE_9__["AssignType"].DEPARTMENT) {
+                        for (var index in this.departments) {
+                            if (this.departments[index].identity === item.itemIdentity) {
+                                return this.departments[index].title;
+                            }
+                        }
+                        return 'Unknown!';
+                    }
+                    if (item.itemType === _wf_models__WEBPACK_IMPORTED_MODULE_9__["AssignType"].DEPARTMENTGROUP) {
+                        for (var index in this.departments) {
+                            for (var gindex in this.departments[index].departmentGroups) {
+                                if (this.departments[index].departmentGroups[gindex].identity === item.itemIdentity) {
+                                    return this.departments[index].departmentGroups[gindex].title;
+                                }
+                            }
+                        }
+                        return 'Unknown!';
+                    }
                 };
                 return CreateTestthreetaskComponent;
             }());
+            CreateTestthreetaskComponent.ctorParameters = function () { return [
+                { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] },
+                { type: _services_global_service__WEBPACK_IMPORTED_MODULE_5__["GlobalService"] },
+                { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_3__["TranslateService"] },
+                { type: _services_workflow_testthreetask_testthreetask_workflow_edit_service__WEBPACK_IMPORTED_MODULE_6__["TestthreetaskWorkflowEditService"] },
+                { type: _services_loading_service_service__WEBPACK_IMPORTED_MODULE_7__["LoadingServiceService"] },
+                { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"] },
+                { type: _services_error_service_service__WEBPACK_IMPORTED_MODULE_8__["ErrorServiceService"] }
+            ]; };
             CreateTestthreetaskComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
                 Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
                     selector: 'app-create-testthreetask',

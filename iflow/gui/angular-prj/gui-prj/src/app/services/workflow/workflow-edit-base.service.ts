@@ -11,28 +11,35 @@ import { WorkflowSaveRequest } from '../../wf-models/workflow-save-request';
 
 import { WorkflowProcessCommand, Workflow, AssignItem, FileTitle, AssignType } from '../../wf-models';
 
-
 @Injectable({
   providedIn: 'root'
 })
-export class WorkflowEditService {
+export class WorkflowEditBaseService {
 
 	public workflowSaveRequestInitSubject: BehaviorSubject<WorkflowSaveRequestInit> = new BehaviorSubject<WorkflowSaveRequestInit>(null);
 
 	workflowSaveRequestInit :WorkflowSaveRequestInit = null;
 
-	initCreateUrl :string = "/workflow/singletask/data/initcreate";
-	createWorkflowUrl :string = "/workflow/singletask/data/create";
-	uploadFileUrl :string = "/workflow/singletask/data/createfile";
-	listUrl :string = "/workflow/list";
+	getInitCreateUrl() :string{
+		return "";
+	}
+	
+	getCreateWorkflowUrl() :string{
+		return "";
+	}
+	
+	getUploadFileUrl() :string{
+		return "";
+	}
+	
 	
 	//userAssignType = /*[[${UserAssign}]]*/ '';
 	//departmentAssignType = /*[[${DepartmentAssign}]]*/ '';
 	//departmentGroupAssignType = /*[[${DepartmentGroupAssign}]]*/ '';
 	
 	constructor(
-			private http: HttpClient,
-			private loadingService: LoadingServiceService,
+			protected http: HttpClient,
+			protected loadingService: LoadingServiceService,
 	) { 
 		
 		
@@ -44,7 +51,7 @@ export class WorkflowEditService {
     	
         const httpOptions = { headers: HttpHepler.generateFormHeader() };
         
-        this.http.post(this.initCreateUrl, new HttpParams(), httpOptions).subscribe(
+        this.http.post(this.getInitCreateUrl(), new HttpParams(), httpOptions).subscribe(
 		        (initialData :WorkflowSaveRequestInit) => {
 		        	
 		            console.log("GET successful edit inital data", initialData);
@@ -78,7 +85,7 @@ export class WorkflowEditService {
     	
         const httpFileUploadOptions = { headers: HttpHepler.generateFileUploadHeader() };
         
-	    return this.http.post(this.uploadFileUrl, formData, httpFileUploadOptions);
+	    return this.http.post(this.getUploadFileUrl(), formData, httpFileUploadOptions);
 		
 	}
 	
@@ -87,8 +94,7 @@ export class WorkflowEditService {
     	
         const httpOptions = { headers: HttpHepler.generateJsonHeader() };
         
-        return this.http.post(this.createWorkflowUrl , workflowSaveRequest, httpOptions);	       	
+        return this.http.post(this.getCreateWorkflowUrl() , workflowSaveRequest, httpOptions);	       	
 
 	}
-	
 }

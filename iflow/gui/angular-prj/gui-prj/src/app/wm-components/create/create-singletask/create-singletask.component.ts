@@ -4,7 +4,7 @@ import {TranslateService} from '@ngx-translate/core';
 import { HttpClient, HttpEventType } from '@angular/common/http';
 
 import { GlobalService } from '../../../services/global.service';
-import { WorkflowEditService } from '../../../services/workflow/workflow-edit.service';
+import { SingleTaskWorkflowEditService } from '../../../services/workflow/singletask/singletask-workflow-edit.service';
 import { LoadingServiceService } from '../../../services/loading-service.service';
 import { ErrorServiceService } from '../../../services/error-service.service';
 
@@ -106,7 +106,7 @@ export class CreateSingletaskComponent implements OnInit {
 		    private router: Router,
 			private global: GlobalService,
 			translate: TranslateService,
-			private editService :WorkflowEditService,
+			private editService :SingleTaskWorkflowEditService,
 			private loadingService: LoadingServiceService,
 			private http: HttpClient,
 			private errorService: ErrorServiceService,
