@@ -18,9 +18,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.pth.iflow.common.edo.models.UserEdo;
-import com.pth.iflow.common.edo.models.UserListEdo;
 import com.pth.iflow.common.enums.EModule;
+import com.pth.iflow.common.models.UserEdo;
+import com.pth.iflow.common.models.UserListEdo;
 import com.pth.iflow.gui.TestDataProducer;
 import com.pth.iflow.gui.configurations.GuiConfiguration;
 import com.pth.iflow.gui.models.User;

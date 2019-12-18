@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pth.iflow.common.annotations.IflowPostRequestMapping;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
-import com.pth.iflow.common.edo.models.UserAuthenticationRequestEdo;
-import com.pth.iflow.common.edo.models.UserAuthenticationResponseEdo;
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
+import com.pth.iflow.common.models.UserAuthenticationRequestEdo;
+import com.pth.iflow.common.models.UserAuthenticationResponseEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.profile.exceptions.ProfileCustomizedException;
 import com.pth.iflow.profile.model.ProfileResponse;

@@ -16,10 +16,11 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
-import com.pth.iflow.common.edo.models.WorkflowTypeEdo;
-import com.pth.iflow.common.edo.models.WorkflowTypeListEdo;
-import com.pth.iflow.common.edo.models.WorkflowTypeStepListEdo;
+
 import com.pth.iflow.common.enums.EModule;
+import com.pth.iflow.common.models.WorkflowTypeEdo;
+import com.pth.iflow.common.models.WorkflowTypeListEdo;
+import com.pth.iflow.common.models.WorkflowTypeStepListEdo;
 import com.pth.iflow.workflow.TestDataProducer;
 import com.pth.iflow.workflow.bl.IWorkflowTypeDataService;
 import com.pth.iflow.workflow.bl.impl.WorkflowTypeCoreConnectService;

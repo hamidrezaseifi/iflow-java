@@ -17,9 +17,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.pth.iflow.common.edo.models.WorkflowSearchFilterEdo;
 import com.pth.iflow.common.edo.models.workflow.results.WorkflowResultListEdo;
 import com.pth.iflow.common.enums.EModule;
+import com.pth.iflow.common.models.WorkflowSearchFilterEdo;
 import com.pth.iflow.gui.TestDataProducer;
 import com.pth.iflow.gui.configurations.GuiConfiguration;
 import com.pth.iflow.gui.models.User;

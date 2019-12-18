@@ -3,8 +3,8 @@ package com.pth.iflow.core.service.interfaces;
 import java.util.List;
 import java.util.Set;
 
-import com.pth.iflow.common.edo.models.ProfileResponseEdo;
-import com.pth.iflow.common.edo.models.UserEdo;
+import com.pth.iflow.common.models.ProfileResponseEdo;
+import com.pth.iflow.common.models.UserEdo;
 import com.pth.iflow.core.model.ProfileResponse;
 import com.pth.iflow.core.model.entity.DepartmentEntity;
 import com.pth.iflow.core.model.entity.DepartmentGroupEntity;

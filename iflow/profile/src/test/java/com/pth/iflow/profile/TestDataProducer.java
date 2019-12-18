@@ -7,13 +7,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.pth.iflow.common.edo.models.AuthenticatedProfileRequestEdo;
-import com.pth.iflow.common.edo.models.CompanyEdo;
-import com.pth.iflow.common.edo.models.ProfileResponseEdo;
-import com.pth.iflow.common.edo.models.TokenProfileRequestEdo;
-import com.pth.iflow.common.edo.models.UserEdo;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.enums.EWorkflowMessageType;
+import com.pth.iflow.common.models.AuthenticatedProfileRequestEdo;
+import com.pth.iflow.common.models.CompanyEdo;
+import com.pth.iflow.common.models.ProfileResponseEdo;
+import com.pth.iflow.common.models.TokenProfileRequestEdo;
+import com.pth.iflow.common.models.UserEdo;
 import com.pth.iflow.profile.model.Company;
 import com.pth.iflow.profile.model.CompanyProfile;
 import com.pth.iflow.profile.model.Department;

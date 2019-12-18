@@ -9,11 +9,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.pth.iflow.common.edo.models.workflow.WorkflowEdo;
-import com.pth.iflow.common.edo.models.workflow.WorkflowListEdo;
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
+import com.pth.iflow.common.models.workflow.WorkflowEdo;
+import com.pth.iflow.common.models.workflow.WorkflowListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.config.WorkflowConfiguration;

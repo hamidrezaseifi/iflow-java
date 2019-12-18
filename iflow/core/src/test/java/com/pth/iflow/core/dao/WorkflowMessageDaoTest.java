@@ -16,8 +16,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.pth.iflow.common.edo.models.WorkflowMessageEdo;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
+import com.pth.iflow.common.models.WorkflowMessageEdo;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.entity.workflow.WorkflowEntity;
 import com.pth.iflow.core.model.entity.workflow.WorkflowMessageEntity;

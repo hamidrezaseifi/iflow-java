@@ -3,8 +3,8 @@ package com.pth.iflow.core.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.pth.iflow.common.edo.models.CompanyEdo;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
+import com.pth.iflow.common.models.CompanyEdo;
 import com.pth.iflow.core.model.entity.CompanyEntity;
 import com.pth.iflow.core.service.base.CoreModelEdoMapperService;
 import com.pth.iflow.core.service.interfaces.ICompanyService;

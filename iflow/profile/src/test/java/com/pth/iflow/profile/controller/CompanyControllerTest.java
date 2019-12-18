@@ -24,10 +24,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.pth.iflow.common.edo.models.CompanyEdo;
-import com.pth.iflow.common.edo.models.DepartmentListEdo;
-import com.pth.iflow.common.edo.models.UserGroupListEdo;
-import com.pth.iflow.common.edo.models.UserListEdo;
+import com.pth.iflow.common.models.CompanyEdo;
+import com.pth.iflow.common.models.DepartmentListEdo;
+import com.pth.iflow.common.models.UserGroupListEdo;
+import com.pth.iflow.common.models.UserListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
 import com.pth.iflow.profile.TestDataProducer;

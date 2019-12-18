@@ -2,8 +2,8 @@ package com.pth.iflow.core.service.interfaces;
 
 import java.util.List;
 
-import com.pth.iflow.common.edo.models.WorkflowMessageEdo;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
+import com.pth.iflow.common.models.WorkflowMessageEdo;
 import com.pth.iflow.core.model.entity.workflow.WorkflowMessageEntity;
 import com.pth.iflow.core.service.base.ICoreModelEdoMapperService;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;

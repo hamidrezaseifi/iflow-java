@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.pth.iflow.common.edo.models.DepartmentGroupEdo;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
+import com.pth.iflow.common.models.DepartmentGroupEdo;
 import com.pth.iflow.core.model.entity.DepartmentGroupEntity;
 import com.pth.iflow.core.service.base.CoreModelEdoMapperService;
 import com.pth.iflow.core.service.interfaces.IDepartmentGroupService;

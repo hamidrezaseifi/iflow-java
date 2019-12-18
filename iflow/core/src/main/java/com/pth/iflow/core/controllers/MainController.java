@@ -11,17 +11,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.pth.iflow.common.edo.models.WorkflowActionEdo;
-import com.pth.iflow.common.edo.models.WorkflowFileEdo;
-import com.pth.iflow.common.edo.models.WorkflowFileVersionEdo;
-import com.pth.iflow.common.edo.models.WorkflowMessageEdo;
-import com.pth.iflow.common.edo.models.WorkflowSearchFilterEdo;
-import com.pth.iflow.common.edo.models.workflow.WorkflowEdo;
 import com.pth.iflow.common.edo.models.workflow.singletask.SingleTaskWorkflowEdo;
 import com.pth.iflow.common.enums.EIdentity;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.enums.EWorkflowMessageType;
 import com.pth.iflow.common.enums.EWorkflowType;
+import com.pth.iflow.common.models.WorkflowActionEdo;
+import com.pth.iflow.common.models.WorkflowFileEdo;
+import com.pth.iflow.common.models.WorkflowFileVersionEdo;
+import com.pth.iflow.common.models.WorkflowMessageEdo;
+import com.pth.iflow.common.models.WorkflowSearchFilterEdo;
+import com.pth.iflow.common.models.workflow.WorkflowEdo;
 import com.pth.iflow.core.helper.BuildInfoProperties;
 
 @RestController(value = "/")

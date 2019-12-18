@@ -10,10 +10,10 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.pth.iflow.common.edo.models.AssignItemEdo;
 import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 import com.pth.iflow.common.edo.models.validation.AEnumNameValidator;
 import com.pth.iflow.common.enums.EWorkflowProcessCommand;
+import com.pth.iflow.common.models.AssignItemEdo;
 
 @XmlRootElement(name = "InvoiceWorkflowCreateRequest", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
 @XmlAccessorType(XmlAccessType.FIELD)

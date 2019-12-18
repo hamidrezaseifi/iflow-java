@@ -7,12 +7,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.pth.iflow.common.edo.models.WorkflowActionEdo;
-import com.pth.iflow.common.edo.models.WorkflowFileEdo;
-import com.pth.iflow.common.edo.models.WorkflowFileVersionEdo;
-import com.pth.iflow.common.edo.models.workflow.WorkflowEdo;
 import com.pth.iflow.common.enums.EIdentity;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
+import com.pth.iflow.common.models.WorkflowActionEdo;
+import com.pth.iflow.common.models.WorkflowFileEdo;
+import com.pth.iflow.common.models.WorkflowFileVersionEdo;
+import com.pth.iflow.common.models.workflow.WorkflowEdo;
 import com.pth.iflow.core.model.entity.workflow.WorkflowActionEntity;
 import com.pth.iflow.core.model.entity.workflow.WorkflowEntity;
 import com.pth.iflow.core.model.entity.workflow.WorkflowFileEntity;

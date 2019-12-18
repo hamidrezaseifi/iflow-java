@@ -6,9 +6,9 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.pth.iflow.common.edo.models.WorkflowSearchFilterEdo;
 import com.pth.iflow.common.edo.models.workflow.results.WorkflowResultEdo;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
+import com.pth.iflow.common.models.WorkflowSearchFilterEdo;
 import com.pth.iflow.core.model.WorkflowSearchFilter;
 import com.pth.iflow.core.model.entity.workflow.WorkflowResultEntity;
 import com.pth.iflow.core.service.base.CoreModelEdoMapperService;

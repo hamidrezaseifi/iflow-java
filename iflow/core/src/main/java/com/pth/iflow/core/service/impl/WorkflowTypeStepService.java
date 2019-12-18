@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.pth.iflow.common.edo.models.WorkflowTypeStepEdo;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
+import com.pth.iflow.common.models.WorkflowTypeStepEdo;
 import com.pth.iflow.core.model.entity.workflow.WorkflowTypeEntity;
 import com.pth.iflow.core.model.entity.workflow.WorkflowTypeStepEntity;
 import com.pth.iflow.core.service.base.CoreModelEdoMapperService;
