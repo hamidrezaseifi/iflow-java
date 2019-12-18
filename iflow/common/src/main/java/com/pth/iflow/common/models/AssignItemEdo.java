@@ -7,9 +7,9 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
-import com.pth.iflow.common.edo.models.validation.AEnumNameValidator;
 import com.pth.iflow.common.enums.EAssignType;
+import com.pth.iflow.common.models.base.IFlowJaxbDefinition;
+import com.pth.iflow.common.models.validation.AEnumNameValidator;
 
 @XmlRootElement(name = "AssignItem", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
 @XmlAccessorType(XmlAccessType.FIELD)

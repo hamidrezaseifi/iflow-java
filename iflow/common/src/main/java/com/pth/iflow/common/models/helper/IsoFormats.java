@@ -1,4 +1,4 @@
-package com.pth.iflow.common.edo.models.helper;
+package com.pth.iflow.common.models.helper;
 
 public interface IsoFormats {
 

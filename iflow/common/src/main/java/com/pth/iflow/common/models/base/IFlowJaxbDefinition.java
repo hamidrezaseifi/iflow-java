@@ -1,4 +1,4 @@
-package com.pth.iflow.common.edo.models.base;
+package com.pth.iflow.common.models.base;
 
 public class IFlowJaxbDefinition {
 

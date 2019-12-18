@@ -1,4 +1,4 @@
-package com.pth.iflow.common.edo.models.helper;
+package com.pth.iflow.common.models.helper;
 
 import org.apache.commons.lang3.StringUtils;
 import com.pth.iflow.common.enums.EIdentity;

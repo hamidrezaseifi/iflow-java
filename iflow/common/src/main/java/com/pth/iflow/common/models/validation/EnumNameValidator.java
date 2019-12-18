@@ -1,4 +1,4 @@
-package com.pth.iflow.common.edo.models.validation;
+package com.pth.iflow.common.models.validation;
 
 import java.util.HashSet;
 import java.util.Set;

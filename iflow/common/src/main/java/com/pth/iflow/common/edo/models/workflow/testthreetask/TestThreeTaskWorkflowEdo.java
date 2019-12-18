@@ -7,8 +7,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
 import com.pth.iflow.common.enums.EWorkflowType;
+import com.pth.iflow.common.models.base.IFlowJaxbDefinition;
 import com.pth.iflow.common.models.workflow.WorkflowEdo;
 
 @XmlRootElement(name = "TestThreeTaskWorkflow", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)

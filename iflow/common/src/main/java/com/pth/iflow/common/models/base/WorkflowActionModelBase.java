@@ -1,4 +1,4 @@
-package com.pth.iflow.common.edo.models.base;
+package com.pth.iflow.common.models.base;
 
 import com.pth.iflow.common.enums.EWorkflowActionStatus;
 

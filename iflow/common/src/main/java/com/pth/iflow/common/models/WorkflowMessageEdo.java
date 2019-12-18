@@ -12,12 +12,12 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
-import com.pth.iflow.common.edo.models.helper.IsoFormats;
-import com.pth.iflow.common.edo.models.helper.LocalDateTimeEdoAdapter;
-import com.pth.iflow.common.edo.models.validation.AEnumValueValidator;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.enums.EWorkflowMessageType;
+import com.pth.iflow.common.models.base.IFlowJaxbDefinition;
+import com.pth.iflow.common.models.helper.IsoFormats;
+import com.pth.iflow.common.models.helper.LocalDateTimeEdoAdapter;
+import com.pth.iflow.common.models.validation.AEnumValueValidator;
 
 @XmlRootElement(name = "WorkflowMessage", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
 @XmlAccessorType(XmlAccessType.FIELD)

@@ -1,4 +1,4 @@
-package com.pth.iflow.common.edo.models.validation;
+package com.pth.iflow.common.models.validation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -10,16 +10,16 @@ import javax.validation.Constraint;
 import javax.validation.Payload;
 import javax.validation.ReportAsSingleViolation;
 
-import com.pth.iflow.common.enums.IEnumNameValidator;
+import com.pth.iflow.common.enums.IEnumValueValidator;
 
 @Documented
-@Constraint(validatedBy = EnumNameValidator.class)
+@Constraint(validatedBy = EnumValueValidator.class)
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 @ReportAsSingleViolation
-public @interface AEnumNameValidator {
+public @interface AEnumValueValidator {
 
-  Class<? extends IEnumNameValidator> enumClazz();
+  Class<? extends IEnumValueValidator> enumClazz();
 
   String message() default "Enum value is not valid";
 

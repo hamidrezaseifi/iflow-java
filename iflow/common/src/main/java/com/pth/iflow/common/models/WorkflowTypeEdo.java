@@ -10,9 +10,9 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
-import com.pth.iflow.common.edo.models.validation.AEnumValueValidator;
 import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
+import com.pth.iflow.common.models.base.IFlowJaxbDefinition;
+import com.pth.iflow.common.models.validation.AEnumValueValidator;
 
 @XmlRootElement(name = "WorkflowType", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
 @XmlAccessorType(XmlAccessType.FIELD)

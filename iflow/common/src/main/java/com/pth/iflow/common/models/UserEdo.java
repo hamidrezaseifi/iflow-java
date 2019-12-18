@@ -16,9 +16,9 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.pth.iflow.common.edo.models.base.IFlowJaxbDefinition;
-import com.pth.iflow.common.edo.models.helper.DateEdoAdapter;
-import com.pth.iflow.common.edo.models.helper.StringToStringCollection;
+import com.pth.iflow.common.models.base.IFlowJaxbDefinition;
+import com.pth.iflow.common.models.helper.DateEdoAdapter;
+import com.pth.iflow.common.models.helper.StringToStringCollection;
 
 import io.micrometer.core.lang.Nullable;
 

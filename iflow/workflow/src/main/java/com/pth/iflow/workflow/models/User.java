@@ -4,8 +4,8 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.pth.iflow.common.edo.models.helper.IdentityModel;
 import com.pth.iflow.common.enums.EUserStatus;
+import com.pth.iflow.common.models.helper.IdentityModel;
 
 public class User extends IdentityModel {
 

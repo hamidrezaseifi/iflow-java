@@ -1,7 +1,7 @@
 package com.pth.iflow.workflow.models;
 
-import com.pth.iflow.common.edo.models.helper.IdentityModel;
 import com.pth.iflow.common.enums.EWorkflowActionStatus;
+import com.pth.iflow.common.models.helper.IdentityModel;
 
 public class WorkflowAction {
 
