@@ -21,7 +21,7 @@ import com.pth.iflow.gui.controller.data.GuiDataControllerBase;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.WorkflowSearchFilter;
 import com.pth.iflow.gui.models.WorkflowType;
-import com.pth.iflow.gui.models.workflow.WorkflowResult;
+import com.pth.iflow.gui.models.workflow.workflow.Workflow;
 import com.pth.iflow.gui.services.IWorkflowSearchAccess;
 
 @RestController
@@ -58,9 +58,9 @@ public class WorkflowSearchController extends GuiDataControllerBase {
       workflowSearchFilter.addAssignedUserIdentity(this.getLoggedUser().getIdentity());
     }
 
-    final List<WorkflowResult> workflowList = this.workflowSearchAccess.searchWorkflow(workflowSearchFilter);
+    final List<Workflow>      workflowList = this.workflowSearchAccess.searchWorkflow(workflowSearchFilter);
 
-    final Map<String, Object>  mapped       = new HashMap<>();
+    final Map<String, Object> mapped       = new HashMap<>();
     mapped.put("res", "ok");
     mapped.put("list", workflowList);
 

@@ -35,13 +35,13 @@ import com.pth.iflow.gui.models.WorkflowTypeStep;
 import com.pth.iflow.gui.models.ui.SessionUserInfo;
 import com.pth.iflow.gui.models.ui.enums.EUiUserRole;
 import com.pth.iflow.gui.models.workflow.IWorkflow;
-import com.pth.iflow.gui.models.workflow.WorkflowResult;
 import com.pth.iflow.gui.models.workflow.invoice.InvoiceWorkflow;
 import com.pth.iflow.gui.models.workflow.invoice.InvoiceWorkflowSaveRequest;
 import com.pth.iflow.gui.models.workflow.singletask.SingleTaskWorkflow;
 import com.pth.iflow.gui.models.workflow.singletask.SingleTaskWorkflowSaveRequest;
 import com.pth.iflow.gui.models.workflow.testthree.TestThreeTaskWorkflow;
 import com.pth.iflow.gui.models.workflow.testthree.TestThreeTaskWorkflowSaveRequest;
+import com.pth.iflow.gui.models.workflow.workflow.Workflow;
 
 public class TestDataProducer {
 
@@ -217,6 +217,27 @@ public class TestDataProducer {
     return model;
   }
 
+  protected Workflow getTestWorkflow(final String identity) {
+    final Workflow model = new Workflow();
+    model.setWorkflowType(this.getTestSingleTaskWorkflowType());
+    model.setIdentity(identity);
+    model.setStatus(EWorkflowStatus.INITIALIZE);
+    model.setVersion(1);
+    model.setComments("comments");
+    model.setControllerIdentity("controllerIdentity");
+    model.setCurrentStep(model.getWorkflowType().getSteps().get(0));
+    model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
+    model.setCreatedByIdentity("createdByIdentity");
+    model.setWorkflowTypeIdentity(EWorkflowType.SINGLE_TASK_WORKFLOW_TYPE.getIdentity());
+
+    model.setActions(this.getTestWorkflowActionListFromType(model));
+
+    model.setFiles(Arrays.asList(this.getTestWorkflowFile("file1", model.getIdentity()),
+        this.getTestWorkflowFile("file2", model.getIdentity()), this.getTestWorkflowFile("file3", model.getIdentity())));
+
+    return model;
+  }
+
   protected TestThreeTaskWorkflow getTestTestThreeTaskWorkflow(final String identity) {
     final TestThreeTaskWorkflow model = new TestThreeTaskWorkflow();
     model.setWorkflowType(this.getTestTestThreeTaskWorkflowType());
@@ -366,6 +387,11 @@ public class TestDataProducer {
     return model;
   }
 
+  protected List<Workflow> getTestWorkflowList() {
+
+    return Arrays.asList(this.getTestWorkflow("workflow1"), this.getTestWorkflow("workflow2"), this.getTestWorkflow("workflow3"));
+  }
+
   protected List<InvoiceWorkflow> getTestInvoiceWorkflowList() {
 
     return Arrays.asList(this.getTestInvoiceWorkflow("workflow1"), this.getTestInvoiceWorkflow("workflow2"),
@@ -486,20 +512,6 @@ public class TestDataProducer {
     filter.setWorkflowTypes(this.getTestWorkflowTypeIdSet());
 
     return filter;
-  }
-
-  protected WorkflowResult getTestWorkflowResult(final String identity, final String typeIdentity) {
-    final WorkflowResult model = new WorkflowResult();
-
-    model.setIdentity(identity);
-    model.setStatus(EWorkflowStatus.INITIALIZE.getValue().intValue());
-    model.setWorkflowTypeIdentity(typeIdentity);
-    model.setControllerIdentity("ControllerIdentity");
-    model.setCurrentStepIdentity("currentStepIdentity");
-    model.setCreatedByIdentity("createdByIdentity");
-    model.setWorkflowType(this.getTestSingleTaskWorkflowType());
-
-    return model;
   }
 
   protected InvoiceWorkflowSaveRequest getTestInvoiceWorkflowSaveRequest() {
@@ -626,12 +638,6 @@ public class TestDataProducer {
 
     return Arrays.asList(this.getTestWorkflowMessage("user1", "workflow1"), this.getTestWorkflowMessage("user2", "workflow1"),
         this.getTestWorkflowMessage("user3", "workflow1"));
-  }
-
-  protected List<WorkflowResult> getTestWorkflowResultList() {
-
-    return Arrays.asList(this.getTestWorkflowResult("workflow1", "type1"), this.getTestWorkflowResult("workflow2", "type2"),
-        this.getTestWorkflowResult("workflow3", "type3"));
   }
 
   protected User createUiUser(final String email, final String fname, final String lname, final List<EUiUserRole> roles) {

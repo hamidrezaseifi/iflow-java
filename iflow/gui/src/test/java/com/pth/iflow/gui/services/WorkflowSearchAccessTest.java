@@ -17,9 +17,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.pth.iflow.common.edo.models.workflow.results.WorkflowResultListEdo;
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.models.edo.WorkflowSearchFilterEdo;
+import com.pth.iflow.common.models.edo.workflow.WorkflowListEdo;
 import com.pth.iflow.gui.TestDataProducer;
 import com.pth.iflow.gui.configurations.GuiConfiguration;
 import com.pth.iflow.gui.models.User;
@@ -28,8 +28,8 @@ import com.pth.iflow.gui.models.WorkflowType;
 import com.pth.iflow.gui.models.WorkflowTypeStep;
 import com.pth.iflow.gui.models.mapper.GuiModelEdoMapper;
 import com.pth.iflow.gui.models.ui.SessionUserInfo;
-import com.pth.iflow.gui.models.workflow.WorkflowResult;
 import com.pth.iflow.gui.models.workflow.singletask.SingleTaskWorkflow;
+import com.pth.iflow.gui.models.workflow.workflow.Workflow;
 import com.pth.iflow.gui.services.impl.workflow.WorkflowSearchAccess;
 import com.pth.iflow.gui.services.impl.workflow.invoice.InvoiceWorkflowHandler;
 import com.pth.iflow.gui.services.impl.workflow.singletask.SingleTaskWorkflowHandler;
@@ -93,18 +93,17 @@ public class WorkflowSearchAccessTest extends TestDataProducer {
     final User                 testUser               = this.getTestUser();
     final SingleTaskWorkflow   testSingleTaskWorkflow = this.getTestSingleTaskWorkflow("identity");
 
-    final List<WorkflowResult> workflowList           = this.getTestWorkflowResultList();
+    final List<Workflow>       workflowList           = this.getTestWorkflowList();
 
-    when(this.restTemplate.callRestPost(any(URI.class), any(EModule.class), any(WorkflowSearchFilterEdo.class),
-        eq(WorkflowResultListEdo.class), any(String.class), any(boolean.class)))
-            .thenReturn(new WorkflowResultListEdo(GuiModelEdoMapper.toWorkflowResultEdoList(workflowList)));
+    when(this.restTemplate.callRestPost(any(URI.class), any(EModule.class), any(WorkflowSearchFilterEdo.class), eq(WorkflowListEdo.class),
+        any(String.class), any(boolean.class))).thenReturn(new WorkflowListEdo(GuiModelEdoMapper.toWorkflowEdoList(workflowList)));
 
     when(this.sessionUserInfo.getWorkflowTypeByIdentity(any(String.class))).thenReturn(testSingleTaskType);
     when(this.sessionUserInfo.getWorkflowStepTypeByIdentity(any(String.class), any(String.class))).thenReturn(testWorkflowTypeStep);
     when(this.sessionUserInfo.getUser()).thenReturn(testUser);
     when(this.singleTaskWorkflowHandler.readWorkflow(any(String.class))).thenReturn(testSingleTaskWorkflow);
 
-    final List<WorkflowResult> resWorkflowList = this.workflowSearchAccess.searchWorkflow(searchFilter);
+    final List<Workflow> resWorkflowList = this.workflowSearchAccess.searchWorkflow(searchFilter);
 
     Assert.assertNotNull("Result result-list is not null!", resWorkflowList);
     Assert.assertEquals("Result result-list has the same size as expected!", resWorkflowList.size(), workflowList.size());

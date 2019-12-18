@@ -11,7 +11,6 @@ import javax.validation.Validator;
 
 import com.pth.iflow.common.edo.models.workflow.invoice.InvoiceWorkflowEdo;
 import com.pth.iflow.common.edo.models.workflow.invoice.InvoiceWorkflowSaveRequestEdo;
-import com.pth.iflow.common.edo.models.workflow.results.WorkflowResultEdo;
 import com.pth.iflow.common.edo.models.workflow.singletask.SingleTaskWorkflowEdo;
 import com.pth.iflow.common.edo.models.workflow.singletask.SingleTaskWorkflowSaveRequestEdo;
 import com.pth.iflow.common.edo.models.workflow.testthreetask.TestThreeTaskWorkflowEdo;
@@ -58,7 +57,6 @@ import com.pth.iflow.gui.models.WorkflowSearchFilter;
 import com.pth.iflow.gui.models.WorkflowType;
 import com.pth.iflow.gui.models.WorkflowTypeStep;
 import com.pth.iflow.gui.models.workflow.IWorkflow;
-import com.pth.iflow.gui.models.workflow.WorkflowResult;
 import com.pth.iflow.gui.models.workflow.invoice.InvoiceWorkflow;
 import com.pth.iflow.gui.models.workflow.invoice.InvoiceWorkflowSaveRequest;
 import com.pth.iflow.gui.models.workflow.singletask.SingleTaskWorkflow;
@@ -134,32 +132,6 @@ public class GuiModelEdoMapper {
     edo.setMessage(model.getMessage());
     edo.setCreatedAt(model.getCreatedAt());
     edo.setStepIdentity(model.getStepIdentity());
-
-    return edo;
-  }
-
-  public static WorkflowResult fromEdo(final WorkflowResultEdo edo) {
-    final WorkflowResult model = new WorkflowResult();
-
-    model.setStatus(edo.getStatus());
-    model.setControllerIdentity(edo.getControllerIdentity());
-    model.setCurrentStepIdentity(edo.getCurrentStepIdentity());
-    model.setCreatedByIdentity(edo.getCreatedByIdentity());
-    model.setIdentity(edo.getIdentity());
-    model.setWorkflowTypeIdentity(edo.getWorkflowTypeIdentity());
-
-    return model;
-  }
-
-  public static WorkflowResultEdo toEdo(final WorkflowResult model) {
-    final WorkflowResultEdo edo = new WorkflowResultEdo();
-
-    edo.setStatus(model.getStatus().getValue());
-    edo.setControllerIdentity(model.getControllerIdentity());
-    edo.setCurrentStepIdentity(model.getCurrentStepIdentity());
-    edo.setCreatedByIdentity(model.getCreatedByIdentity());
-    edo.setIdentity(model.getIdentity());
-    edo.setWorkflowTypeIdentity(model.getWorkflowTypeIdentity());
 
     return edo;
   }
@@ -279,6 +251,7 @@ public class GuiModelEdoMapper {
     model.setCurrentStepIdentity(edo.getCurrentStepIdentity());
     model.setCreatedByIdentity(edo.getCreatedByIdentity());
     model.setIdentity(edo.getIdentity());
+    model.setWorkflowTypeIdentity(edo.getWorkflowTypeIdentity());
 
     model.setFiles(fromWorkflowFileEdoList(edo.getFiles()));
     model.setActions(fromWorkflowActionEdoList(edo.getActions()));
@@ -328,6 +301,7 @@ public class GuiModelEdoMapper {
     edo.setCreatedByIdentity(model.getCreatedByIdentity());
     edo.setVersion(model.getVersion());
     edo.setIdentity(model.getIdentity());
+    edo.setWorkflowTypeIdentity(model.getWorkflowTypeIdentity());
 
     edo.setFiles(toWorkflowFileEdoList(model.getFiles()));
     edo.setActions(toWorkflowActionEdoList(model.getActions()));
@@ -344,6 +318,7 @@ public class GuiModelEdoMapper {
     edo.setCreatedByIdentity(model.getCreatedByIdentity());
     edo.setVersion(model.getVersion());
     edo.setIdentity(model.getIdentity());
+    edo.setWorkflowTypeIdentity(model.getWorkflowTypeIdentity());
 
     edo.setFiles(toWorkflowFileEdoList(model.getFiles()));
     edo.setActions(toWorkflowActionEdoList(model.getActions()));
@@ -465,6 +440,15 @@ public class GuiModelEdoMapper {
     return modelList;
   }
 
+  public static List<WorkflowEdo> toWorkflowEdoList(final List<Workflow> modelList) {
+    final List<WorkflowEdo> edoList = new ArrayList<>();
+    for (final Workflow model : modelList) {
+      edoList.add(toEdo(model));
+    }
+
+    return edoList;
+  }
+
   public static TestThreeTaskWorkflowEdo toEdo(final TestThreeTaskWorkflow model) {
 
     final WorkflowEdo              workflowEdo = convertFromIWorkflowToEdo(model);
@@ -543,26 +527,6 @@ public class GuiModelEdoMapper {
     }
 
     return modelList;
-  }
-
-  public static List<WorkflowResult> fromWorkflowResultEdoList(final List<WorkflowResultEdo> edoList)
-      throws IFlowMessageConversionFailureException {
-    final List<WorkflowResult> modelList = new ArrayList<>();
-    for (final WorkflowResultEdo edo : edoList) {
-      modelList.add(fromEdo(edo));
-    }
-
-    return modelList;
-  }
-
-  public static List<WorkflowResultEdo> toWorkflowResultEdoList(final List<WorkflowResult> modelList)
-      throws IFlowMessageConversionFailureException {
-    final List<WorkflowResultEdo> edoList = new ArrayList<>();
-    for (final WorkflowResult model : modelList) {
-      edoList.add(toEdo(model));
-    }
-
-    return edoList;
   }
 
   public static InvoiceWorkflowSaveRequest fromEdo(final InvoiceWorkflowSaveRequestEdo edo) throws IFlowMessageConversionFailureException {

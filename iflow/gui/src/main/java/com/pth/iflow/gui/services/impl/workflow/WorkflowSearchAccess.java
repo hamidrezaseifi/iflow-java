@@ -9,24 +9,24 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.pth.iflow.common.edo.models.workflow.results.WorkflowResultListEdo;
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.enums.EWorkflowType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.common.models.edo.IdentityListEdo;
+import com.pth.iflow.common.models.edo.workflow.WorkflowListEdo;
 import com.pth.iflow.gui.configurations.GuiConfiguration;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.WorkflowSearchFilter;
 import com.pth.iflow.gui.models.mapper.GuiModelEdoMapper;
 import com.pth.iflow.gui.models.ui.SessionUserInfo;
 import com.pth.iflow.gui.models.workflow.IWorkflow;
-import com.pth.iflow.gui.models.workflow.WorkflowResult;
 import com.pth.iflow.gui.models.workflow.invoice.InvoiceWorkflow;
 import com.pth.iflow.gui.models.workflow.invoice.InvoiceWorkflowSaveRequest;
 import com.pth.iflow.gui.models.workflow.singletask.SingleTaskWorkflow;
 import com.pth.iflow.gui.models.workflow.singletask.SingleTaskWorkflowSaveRequest;
 import com.pth.iflow.gui.models.workflow.testthree.TestThreeTaskWorkflow;
 import com.pth.iflow.gui.models.workflow.testthree.TestThreeTaskWorkflowSaveRequest;
+import com.pth.iflow.gui.models.workflow.workflow.Workflow;
 import com.pth.iflow.gui.services.IRestTemplateCall;
 import com.pth.iflow.gui.services.IWorkflowHandler;
 import com.pth.iflow.gui.services.IWorkflowSearchAccess;
@@ -62,15 +62,15 @@ public class WorkflowSearchAccess implements IWorkflowSearchAccess {
   }
 
   @Override
-  public List<WorkflowResult> searchWorkflow(final WorkflowSearchFilter workflowSearchFilter)
+  public List<Workflow> searchWorkflow(final WorkflowSearchFilter workflowSearchFilter)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     logger.debug("Search workflow");
 
-    final WorkflowResultListEdo responseListEdo = this.restTemplate.callRestPost(this.moduleAccessConfig.getSearchWorkflowUri(),
-        EModule.WORKFLOW, GuiModelEdoMapper.toEdo(workflowSearchFilter), WorkflowResultListEdo.class, this.sessionUserInfo.getToken(), true);
+    final WorkflowListEdo responseListEdo = this.restTemplate.callRestPost(this.moduleAccessConfig.getSearchWorkflowUri(), EModule.WORKFLOW,
+        GuiModelEdoMapper.toEdo(workflowSearchFilter), WorkflowListEdo.class, this.sessionUserInfo.getToken(), true);
 
-    final List<WorkflowResult>  list            = GuiModelEdoMapper.fromWorkflowResultEdoList(responseListEdo.getWorkflows());
-    for (final WorkflowResult resultWorkflow : list) {
+    final List<Workflow>  list            = GuiModelEdoMapper.fromWorkflowEdoList(responseListEdo.getWorkflows());
+    for (final Workflow resultWorkflow : list) {
 
       this.prepareResult(resultWorkflow);
     }
@@ -80,17 +80,16 @@ public class WorkflowSearchAccess implements IWorkflowSearchAccess {
   }
 
   @Override
-  public List<WorkflowResult> readByIdentityList(final Set<String> identityList)
+  public List<Workflow> readByIdentityList(final Set<String> identityList)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     logger.debug("Read workflowresult by identity list");
 
-    final IdentityListEdo       listEdo         = new IdentityListEdo(identityList);
-    final WorkflowResultListEdo responseListEdo = this.restTemplate.callRestPost(
-        this.moduleAccessConfig.getReadWorkflowListByIdentityListUri(), EModule.WORKFLOW, listEdo, WorkflowResultListEdo.class,
-        this.sessionUserInfo.getToken(), true);
+    final IdentityListEdo listEdo         = new IdentityListEdo(identityList);
+    final WorkflowListEdo responseListEdo = this.restTemplate.callRestPost(this.moduleAccessConfig.getReadWorkflowListByIdentityListUri(),
+        EModule.WORKFLOW, listEdo, WorkflowListEdo.class, this.sessionUserInfo.getToken(), true);
 
-    final List<WorkflowResult>  list            = GuiModelEdoMapper.fromWorkflowResultEdoList(responseListEdo.getWorkflows());
-    for (final WorkflowResult resultWorkflow : list) {
+    final List<Workflow>  list            = GuiModelEdoMapper.fromWorkflowEdoList(responseListEdo.getWorkflows());
+    for (final Workflow resultWorkflow : list) {
 
       this.prepareResult(resultWorkflow);
     }
@@ -111,7 +110,7 @@ public class WorkflowSearchAccess implements IWorkflowSearchAccess {
     return null;
   }
 
-  private void prepareResult(final WorkflowResult resultWorkflow)
+  private void prepareResult(final Workflow resultWorkflow)
       throws IFlowMessageConversionFailureException, GuiCustomizedException, MalformedURLException {
     resultWorkflow.setWorkflowType(this.sessionUserInfo.getWorkflowTypeByIdentity(resultWorkflow.getWorkflowTypeIdentity()));
     resultWorkflow.setCurrentStep(

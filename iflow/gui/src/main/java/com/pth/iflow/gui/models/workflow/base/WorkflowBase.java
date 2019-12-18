@@ -18,6 +18,7 @@ import com.pth.iflow.gui.models.workflow.invoice.InvoiceWorkflow;
 public class WorkflowBase extends IdentityModel implements IWorkflow {
 
   private String                     identity;
+  private String                     workflowTypeIdentity;
   private WorkflowType               workflowType;
   private WorkflowTypeStep           currentStep;
   private String                     currentStepIdentity;
@@ -44,12 +45,16 @@ public class WorkflowBase extends IdentityModel implements IWorkflow {
   }
 
   public EWorkflowType getWorkflowTypeEnum() {
-    return EWorkflowType.SINGLE_TASK_WORKFLOW_TYPE;
+    return EWorkflowType.valueFromIdentity(this.workflowTypeIdentity);
   }
 
   @Override
   public String getWorkflowTypeIdentity() {
-    return this.getWorkflowTypeEnum().getIdentity();
+    return this.workflowTypeIdentity;
+  }
+
+  public void setWorkflowTypeIdentity(final String workflowTypeIdentity) {
+    this.workflowTypeIdentity = workflowTypeIdentity;
   }
 
   /**
