@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.After;
@@ -24,16 +25,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.pth.iflow.common.edo.models.workflow.results.WorkflowResultEdo;
-import com.pth.iflow.common.edo.models.workflow.results.WorkflowResultListEdo;
 import com.pth.iflow.common.models.edo.WorkflowSearchFilterEdo;
 import com.pth.iflow.common.models.edo.workflow.WorkflowEdo;
+import com.pth.iflow.common.models.edo.workflow.WorkflowListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.XmlRestConfig;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.WorkflowSearchFilter;
 import com.pth.iflow.core.model.entity.workflow.WorkflowEntity;
-import com.pth.iflow.core.model.entity.workflow.WorkflowResultEntity;
 import com.pth.iflow.core.service.interfaces.IWorkflowSearchService;
 import com.pth.iflow.core.service.interfaces.workflow.IWorkflowService;
 
@@ -67,9 +66,9 @@ public class WorkflowControllerTest extends TestDataProducer {
 
   @Test
   public void testReadWorkflow() throws Exception {
-    final WorkflowEntity model = this.getTestWorkflow(1L);
+    final WorkflowEntity model    = this.getTestWorkflow(1L);
 
-    final WorkflowEdo modelEdo = getTestWorkflowEdo();
+    final WorkflowEdo    modelEdo = getTestWorkflowEdo();
 
     when(this.workflowService.getByIdentity(any(String.class))).thenReturn(model);
     when(this.workflowService.toEdo(any(WorkflowEntity.class))).thenReturn(modelEdo);
@@ -86,19 +85,19 @@ public class WorkflowControllerTest extends TestDataProducer {
 
   @Test
   public void testSearchWorkflow() throws Exception {
-    final WorkflowSearchFilter model = this.getTestWorkflowSearchFilter();
-    final WorkflowSearchFilterEdo modelEdo = getTestWorkflowSearchFilterEdo();
+    final WorkflowSearchFilter    model        = this.getTestWorkflowSearchFilter();
+    final WorkflowSearchFilterEdo modelEdo     = getTestWorkflowSearchFilterEdo();
 
-    final List<WorkflowResultEntity> modelList = getTestWorkflowResultList();
-    final List<WorkflowResultEdo> modelEdoList = getTestWorkflowResultEdoList();
-    final WorkflowResultListEdo modelListEdo = new WorkflowResultListEdo(modelEdoList);
+    final List<WorkflowEntity>    modelList    = getTestWorkflowList();
+    final List<WorkflowEdo>       modelEdoList = Arrays.asList(getTestWorkflowEdo(), getTestWorkflowEdo(), getTestWorkflowEdo());
+    final WorkflowListEdo         modelListEdo = new WorkflowListEdo(modelEdoList);
 
     when(this.workflowSearchService.search(any(WorkflowSearchFilter.class))).thenReturn(modelList);
     when(this.workflowSearchService.fromWorkflowSearchFilterEdo(any(WorkflowSearchFilterEdo.class))).thenReturn(model);
     when(this.workflowSearchService.toEdoList(any(List.class))).thenReturn(modelEdoList);
 
     final String modelAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelEdo);
-    final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelListEdo);
+    final String listAsXmlString  = this.xmlConverter.getObjectMapper().writeValueAsString(modelListEdo);
 
     this.mockMvc
         .perform(MockMvcRequestBuilders.post(IflowRestPaths.CoreModule.WORKFLOW_SEARCH).content(modelAsXmlString)

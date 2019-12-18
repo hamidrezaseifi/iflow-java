@@ -7,14 +7,14 @@ import java.util.Set;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.WorkflowSearchFilter;
-import com.pth.iflow.workflow.models.workflow.WorkflowResult;
+import com.pth.iflow.workflow.models.workflow.Workflow;
 
 public interface IWorkflowSearchService {
 
-  public List<WorkflowResult> search(final WorkflowSearchFilter workflowSearchFilter, String token)
+  public List<Workflow> search(final WorkflowSearchFilter workflowSearchFilter, String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  public List<WorkflowResult> readWorkflowListByIdentityList(final Set<String> identityList, String token)
+  public List<Workflow> readWorkflowListByIdentityList(final Set<String> identityList, String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
 }

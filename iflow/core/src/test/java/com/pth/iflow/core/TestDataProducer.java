@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Set;
 
 import com.pth.iflow.common.edo.models.workflow.invoice.InvoiceWorkflowEdo;
-import com.pth.iflow.common.edo.models.workflow.results.WorkflowResultEdo;
 import com.pth.iflow.common.edo.models.workflow.singletask.SingleTaskWorkflowEdo;
 import com.pth.iflow.common.edo.models.workflow.testthreetask.TestThreeTaskWorkflowEdo;
 import com.pth.iflow.common.enums.EIdentity;
@@ -50,7 +49,6 @@ import com.pth.iflow.core.model.entity.workflow.WorkflowEntity;
 import com.pth.iflow.core.model.entity.workflow.WorkflowFileEntity;
 import com.pth.iflow.core.model.entity.workflow.WorkflowFileVersionEntity;
 import com.pth.iflow.core.model.entity.workflow.WorkflowMessageEntity;
-import com.pth.iflow.core.model.entity.workflow.WorkflowResultEntity;
 import com.pth.iflow.core.model.entity.workflow.WorkflowTypeEntity;
 import com.pth.iflow.core.model.entity.workflow.WorkflowTypeStepEntity;
 
@@ -511,32 +509,6 @@ public class TestDataProducer {
     return edo;
   }
 
-  protected WorkflowResultEntity getTestWorkflowResult(final String identity, final String typeIdentity) {
-    final WorkflowResultEntity model = new WorkflowResultEntity();
-
-    model.setIdentity(identity);
-    model.setStatus(EWorkflowStatus.INITIALIZE.getValue().intValue());
-    model.setWorkflowTypeIdentity(typeIdentity);
-    model.setControllerIdentity("ControllerIdentity");
-    model.setCurrentStepIdentity("currentStepIdentity");
-    model.setCreatedByIdentity("createdByIdentity");
-
-    return model;
-  }
-
-  protected WorkflowResultEdo getTestWorkflowResultEdo(final String identity, final String typeIdentity) {
-    final WorkflowResultEdo edo = new WorkflowResultEdo();
-
-    edo.setIdentity(identity);
-    edo.setStatus(EWorkflowStatus.INITIALIZE.getValue().intValue());
-    edo.setWorkflowTypeIdentity(typeIdentity);
-    edo.setControllerIdentity("ControllerIdentity");
-    edo.setCurrentStepIdentity("currentStepIdentity");
-    edo.setCreatedByIdentity("createdByIdentity");
-
-    return edo;
-  }
-
   protected InvoiceWorkflowEntity getTestNewInvoiceWorkflow() {
     final InvoiceWorkflowEntity model = getTestInvoiceWorkflow(0L);
     model.setWorkflow(getTestNewWorkflowForSave());
@@ -752,18 +724,6 @@ public class TestDataProducer {
   protected List<InvoiceWorkflowEdo> getTestInvoiceWorkflowEdoList() {
 
     return Arrays.asList(this.getTestInvoiceWorkflowEdo(), this.getTestInvoiceWorkflowEdo(), this.getTestInvoiceWorkflowEdo());
-  }
-
-  protected List<WorkflowResultEntity> getTestWorkflowResultList() {
-
-    return Arrays.asList(getTestWorkflowResult("workflow1", "type1"), getTestWorkflowResult("workflow2", "type2"),
-        getTestWorkflowResult("workflow3", "type3"));
-  }
-
-  protected List<WorkflowResultEdo> getTestWorkflowResultEdoList() {
-
-    return Arrays.asList(getTestWorkflowResultEdo("workflow1", "type1"), getTestWorkflowResultEdo("workflow2", "type2"),
-        getTestWorkflowResultEdo("workflow3", "type3"));
   }
 
   protected WorkflowActionEntity getTestWorkflowAction(final Long Id, final WorkflowEntity workflow) {

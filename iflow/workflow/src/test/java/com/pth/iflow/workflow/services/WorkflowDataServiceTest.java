@@ -18,16 +18,16 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.pth.iflow.common.edo.models.workflow.results.WorkflowResultListEdo;
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.models.edo.WorkflowSearchFilterEdo;
+import com.pth.iflow.common.models.edo.workflow.WorkflowListEdo;
 import com.pth.iflow.workflow.TestDataProducer;
 import com.pth.iflow.workflow.bl.IWorkflowSearchService;
 import com.pth.iflow.workflow.bl.impl.workflowservice.workflow.WorkflowSearchService;
 import com.pth.iflow.workflow.config.WorkflowConfiguration;
 import com.pth.iflow.workflow.models.WorkflowSearchFilter;
 import com.pth.iflow.workflow.models.mapper.WorkflowModelEdoMapper;
-import com.pth.iflow.workflow.models.workflow.WorkflowResult;
+import com.pth.iflow.workflow.models.workflow.Workflow;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -62,14 +62,14 @@ public class WorkflowDataServiceTest extends TestDataProducer {
   @Test
   public void testSearchWorkflow() throws Exception {
 
-    final WorkflowSearchFilter filter = this.getTestWorkflowSearchFilter();
-    final List<WorkflowResult> list = this.getTestWorkflowResultList();
-    final WorkflowResultListEdo edoList = new WorkflowResultListEdo(WorkflowModelEdoMapper.toWorkflowResultEdoList(list));
+    final WorkflowSearchFilter filter  = this.getTestWorkflowSearchFilter();
+    final List<Workflow>       list    = this.getTestWorkflowList();
+    final WorkflowListEdo      edoList = new WorkflowListEdo(WorkflowModelEdoMapper.toWorkflowEdoList(list));
 
     when(this.restTemplate.callRestPost(any(URI.class), any(String.class), any(EModule.class), any(WorkflowSearchFilterEdo.class),
-        eq(WorkflowResultListEdo.class), any(boolean.class))).thenReturn(edoList);
+        eq(WorkflowListEdo.class), any(boolean.class))).thenReturn(edoList);
 
-    final List<WorkflowResult> resWorkflowList = this.workflowSearchService.search(filter, this.validTocken);
+    final List<Workflow> resWorkflowList = this.workflowSearchService.search(filter, this.validTocken);
 
     Assert.assertNotNull("Result workflow-type is not null!", resWorkflowList);
     Assert.assertEquals("Result workflow-type has id 1!", resWorkflowList.size(), list.size());

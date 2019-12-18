@@ -33,7 +33,6 @@ import com.pth.iflow.workflow.models.WorkflowType;
 import com.pth.iflow.workflow.models.WorkflowTypeStep;
 import com.pth.iflow.workflow.models.base.IWorkflow;
 import com.pth.iflow.workflow.models.workflow.Workflow;
-import com.pth.iflow.workflow.models.workflow.WorkflowResult;
 import com.pth.iflow.workflow.models.workflow.invoice.InvoiceWorkflow;
 import com.pth.iflow.workflow.models.workflow.invoice.InvoiceWorkflowSaveRequest;
 import com.pth.iflow.workflow.models.workflow.singletask.SingleTaskWorkflow;
@@ -424,19 +423,6 @@ public class TestDataProducer {
     return model;
   }
 
-  protected WorkflowResult getTestWorkflowResult(final String identity, final String typeIdentity) {
-    final WorkflowResult model = new WorkflowResult();
-
-    model.setIdentity(identity);
-    model.setStatus(EWorkflowStatus.INITIALIZE.getValue().intValue());
-    model.setWorkflowTypeIdentity(typeIdentity);
-    model.setControllerIdentity("ControllerIdentity");
-    model.setCurrentStepIdentity("currentStepIdentity");
-    model.setCreatedByIdentity("createdByIdentity");
-
-    return model;
-  }
-
   protected List<Workflow> getTestWorkflowList() {
 
     return Arrays.asList(this.getTestWorkflow("workflow1"), this.getTestWorkflow("workflow2"), this.getTestWorkflow("workflow3"));
@@ -458,12 +444,6 @@ public class TestDataProducer {
 
     return Arrays.asList(this.getTestTestThreeTaskWorkflow("workflow1"), this.getTestTestThreeTaskWorkflow("workflow2"),
         this.getTestTestThreeTaskWorkflow("workflow3"));
-  }
-
-  protected List<WorkflowResult> getTestWorkflowResultList() {
-
-    return Arrays.asList(getTestWorkflowResult("workflow1", "type1"), getTestWorkflowResult("workflow2", "type2"),
-        getTestWorkflowResult("workflow3", "type3"));
   }
 
   protected List<WorkflowTypeStep> getTestWorkflowTypeStepList() {

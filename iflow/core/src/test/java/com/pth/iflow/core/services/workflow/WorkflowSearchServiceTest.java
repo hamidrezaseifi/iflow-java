@@ -17,9 +17,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.WorkflowSearchFilter;
-import com.pth.iflow.core.model.entity.workflow.WorkflowResultEntity;
+import com.pth.iflow.core.model.entity.workflow.WorkflowEntity;
 import com.pth.iflow.core.service.impl.workflow.WorkflowSearchService;
 import com.pth.iflow.core.service.interfaces.IWorkflowSearchService;
+import com.pth.iflow.core.service.interfaces.workflow.IWorkflowService;
 import com.pth.iflow.core.storage.dao.interfaces.IWorkflowSearchDao;
 
 @RunWith(SpringRunner.class)
@@ -27,14 +28,17 @@ import com.pth.iflow.core.storage.dao.interfaces.IWorkflowSearchDao;
 @AutoConfigureMockMvc
 public class WorkflowSearchServiceTest extends TestDataProducer {
 
-  private IWorkflowSearchService workflowService;
+  private IWorkflowSearchService workflowSearchService;
 
   @MockBean
   private IWorkflowSearchDao     workflowDao;
 
+  @MockBean
+  private IWorkflowService       workflowService;
+
   @Before
   public void setUp() throws Exception {
-    this.workflowService = new WorkflowSearchService(this.workflowDao);
+    this.workflowSearchService = new WorkflowSearchService(this.workflowDao, this.workflowService);
   }
 
   @After
@@ -45,11 +49,11 @@ public class WorkflowSearchServiceTest extends TestDataProducer {
   public void testSearch() throws Exception {
 
     final WorkflowSearchFilter searchFilter = this.getTestWorkflowSearchFilter();
-    final List<WorkflowResultEntity> modelList = getTestWorkflowResultList();
+    final List<WorkflowEntity> modelList    = getTestWorkflowList();
 
     when(this.workflowDao.search(any(WorkflowSearchFilter.class))).thenReturn(modelList);
 
-    final List<WorkflowResultEntity> resList = this.workflowService.search(searchFilter);
+    final List<WorkflowEntity> resList = this.workflowSearchService.search(searchFilter);
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + modelList.size() + " items.", resList.size(), modelList.size());

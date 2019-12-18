@@ -19,7 +19,7 @@ import org.springframework.stereotype.Repository;
 
 import com.pth.iflow.core.model.WorkflowSearchFilter;
 import com.pth.iflow.core.model.entity.workflow.WorkflowActionEntity;
-import com.pth.iflow.core.model.entity.workflow.WorkflowResultEntity;
+import com.pth.iflow.core.model.entity.workflow.WorkflowEntity;
 import com.pth.iflow.core.storage.dao.interfaces.IWorkflowSearchDao;
 
 @Repository
@@ -40,10 +40,10 @@ public class WorkflowSearchDao implements IWorkflowSearchDao {
   }
 
   @Override
-  public List<WorkflowResultEntity> search(final WorkflowSearchFilter workflowSearchFilter) {
-    final CriteriaBuilder                     criteriaBuilder = entityManager.getCriteriaBuilder();
-    final CriteriaQuery<WorkflowResultEntity> query           = criteriaBuilder.createQuery(WorkflowResultEntity.class);
-    final Root<WorkflowResultEntity>          root            = query.from(WorkflowResultEntity.class);
+  public List<WorkflowEntity> search(final WorkflowSearchFilter workflowSearchFilter) {
+    final CriteriaBuilder               criteriaBuilder = entityManager.getCriteriaBuilder();
+    final CriteriaQuery<WorkflowEntity> query           = criteriaBuilder.createQuery(WorkflowEntity.class);
+    final Root<WorkflowEntity>          root            = query.from(WorkflowEntity.class);
     query.select(root);
 
     Predicate finalPredicate = null;
@@ -91,7 +91,7 @@ public class WorkflowSearchDao implements IWorkflowSearchDao {
       query.where(finalPredicate);
     }
 
-    final TypedQuery<WorkflowResultEntity> typedQuery = entityManager.createQuery(query);
+    final TypedQuery<WorkflowEntity> typedQuery = entityManager.createQuery(query);
 
     // final String qr =
     // typedQuery.unwrap(org.hibernate.query.Query.class).getQueryString();
@@ -100,16 +100,16 @@ public class WorkflowSearchDao implements IWorkflowSearchDao {
   }
 
   @Override
-  public List<WorkflowResultEntity> readByIdentityList(final Set<String> identityList) {
+  public List<WorkflowEntity> readByIdentityList(final Set<String> identityList) {
 
-    final CriteriaBuilder                     criteriaBuilder = entityManager.getCriteriaBuilder();
-    final CriteriaQuery<WorkflowResultEntity> query           = criteriaBuilder.createQuery(WorkflowResultEntity.class);
-    final Root<WorkflowResultEntity>          root            = query.from(WorkflowResultEntity.class);
+    final CriteriaBuilder               criteriaBuilder = entityManager.getCriteriaBuilder();
+    final CriteriaQuery<WorkflowEntity> query           = criteriaBuilder.createQuery(WorkflowEntity.class);
+    final Root<WorkflowEntity>          root            = query.from(WorkflowEntity.class);
 
-    final Predicate                           predicate       = root.get("identity").in(identityList);
+    final Predicate                     predicate       = root.get("identity").in(identityList);
     query.select(root).where(predicate);
 
-    final TypedQuery<WorkflowResultEntity> typedQuery = entityManager.createQuery(query);
+    final TypedQuery<WorkflowEntity> typedQuery = entityManager.createQuery(query);
 
     return typedQuery.getResultList();
   }

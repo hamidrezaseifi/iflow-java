@@ -16,13 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pth.iflow.common.annotations.IflowGetRequestMapping;
 import com.pth.iflow.common.annotations.IflowPostRequestMapping;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
-import com.pth.iflow.common.edo.models.workflow.results.WorkflowResultListEdo;
 import com.pth.iflow.common.models.edo.IdentityListEdo;
 import com.pth.iflow.common.models.edo.WorkflowSearchFilterEdo;
 import com.pth.iflow.common.models.edo.workflow.WorkflowEdo;
+import com.pth.iflow.common.models.edo.workflow.WorkflowListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.core.model.entity.workflow.WorkflowEntity;
-import com.pth.iflow.core.model.entity.workflow.WorkflowResultEntity;
 import com.pth.iflow.core.service.interfaces.IWorkflowSearchService;
 import com.pth.iflow.core.service.interfaces.workflow.IWorkflowService;
 
@@ -33,16 +32,15 @@ public class WorkflowController {
   final IWorkflowSearchService workflowSearchService;
   final IWorkflowService       workflowService;
 
-  public WorkflowController(@Autowired final IWorkflowSearchService workflowSearchService,
-      @Autowired final IWorkflowService workflowService) {
+  public WorkflowController(@Autowired final IWorkflowSearchService workflowSearchService, @Autowired final IWorkflowService workflowService) {
     this.workflowSearchService = workflowSearchService;
     this.workflowService = workflowService;
   }
 
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.WORKFLOW_READ_BY_IDENTITY)
-  public ResponseEntity<WorkflowEdo> readWorkflow(@PathVariable(name = "identity") final String identity,
-      final HttpServletRequest request) throws Exception {
+  public ResponseEntity<WorkflowEdo> readWorkflow(@PathVariable(name = "identity") final String identity, final HttpServletRequest request)
+      throws Exception {
 
     final WorkflowEntity model = this.workflowService.getByIdentity(identity);
 
@@ -51,24 +49,24 @@ public class WorkflowController {
 
   @ResponseStatus(HttpStatus.ACCEPTED)
   @IflowPostRequestMapping(path = IflowRestPaths.CoreModule.WORKFLOW_SEARCH)
-  public ResponseEntity<WorkflowResultListEdo> searchWorkflow(@RequestBody final WorkflowSearchFilterEdo workflowSearchFilterEdo,
+  public ResponseEntity<WorkflowListEdo> searchWorkflow(@RequestBody final WorkflowSearchFilterEdo workflowSearchFilterEdo,
       final HttpServletRequest request) throws Exception {
 
-    final List<WorkflowResultEntity> modelList = this.workflowSearchService
+    final List<WorkflowEntity> modelList = this.workflowSearchService
         .search(this.workflowSearchService.fromWorkflowSearchFilterEdo(workflowSearchFilterEdo));
 
-    return ControllerHelper.createResponseEntity(request, new WorkflowResultListEdo(this.workflowSearchService.toEdoList(modelList)),
+    return ControllerHelper.createResponseEntity(request, new WorkflowListEdo(this.workflowSearchService.toEdoList(modelList)),
         HttpStatus.ACCEPTED);
   }
 
   @ResponseStatus(HttpStatus.ACCEPTED)
   @IflowPostRequestMapping(path = IflowRestPaths.CoreModule.WORKFLOW_READLIST)
-  public ResponseEntity<WorkflowResultListEdo> realWorkflowList(@RequestBody final IdentityListEdo identityList,
-      final HttpServletRequest request) throws Exception {
+  public ResponseEntity<WorkflowListEdo> realWorkflowList(@RequestBody final IdentityListEdo identityList, final HttpServletRequest request)
+      throws Exception {
 
-    final List<WorkflowResultEntity> modelList = this.workflowSearchService.readByIdentityList(identityList.getIdentityList());
+    final List<WorkflowEntity> modelList = this.workflowSearchService.readByIdentityList(identityList.getIdentityList());
 
-    return ControllerHelper.createResponseEntity(request, new WorkflowResultListEdo(this.workflowSearchService.toEdoList(modelList)),
+    return ControllerHelper.createResponseEntity(request, new WorkflowListEdo(this.workflowSearchService.toEdoList(modelList)),
         HttpStatus.ACCEPTED);
   }
 

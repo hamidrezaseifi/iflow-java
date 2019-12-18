@@ -6,55 +6,49 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.pth.iflow.common.edo.models.workflow.results.WorkflowResultEdo;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.common.models.edo.WorkflowSearchFilterEdo;
+import com.pth.iflow.common.models.edo.workflow.WorkflowEdo;
 import com.pth.iflow.core.model.WorkflowSearchFilter;
-import com.pth.iflow.core.model.entity.workflow.WorkflowResultEntity;
+import com.pth.iflow.core.model.entity.workflow.WorkflowEntity;
 import com.pth.iflow.core.service.base.CoreModelEdoMapperService;
 import com.pth.iflow.core.service.interfaces.IWorkflowSearchService;
+import com.pth.iflow.core.service.interfaces.workflow.IWorkflowService;
 import com.pth.iflow.core.storage.dao.interfaces.IWorkflowSearchDao;
 
 @Service
-public class WorkflowSearchService extends CoreModelEdoMapperService<WorkflowResultEntity, WorkflowResultEdo>
-    implements IWorkflowSearchService {
+public class WorkflowSearchService extends CoreModelEdoMapperService<WorkflowEntity, WorkflowEdo> implements IWorkflowSearchService {
 
   private final IWorkflowSearchDao workflowSearchDao;
+  private final IWorkflowService   workflowService;
 
-  public WorkflowSearchService(@Autowired final IWorkflowSearchDao workflowSearchDao) {
+  public WorkflowSearchService(@Autowired final IWorkflowSearchDao workflowSearchDao, @Autowired final IWorkflowService workflowService) {
     this.workflowSearchDao = workflowSearchDao;
+    this.workflowService = workflowService;
   }
 
   @Override
-  public List<WorkflowResultEntity> search(final WorkflowSearchFilter workflowSearchFilter) {
+  public List<WorkflowEntity> search(final WorkflowSearchFilter workflowSearchFilter) {
 
     return workflowSearchDao.search(workflowSearchFilter);
   }
 
   @Override
-  public List<WorkflowResultEntity> readByIdentityList(final Set<String> identityList) {
+  public List<WorkflowEntity> readByIdentityList(final Set<String> identityList) {
 
     return workflowSearchDao.readByIdentityList(identityList);
   }
 
   @Override
-  public WorkflowResultEntity fromEdo(final WorkflowResultEdo edo) throws IFlowMessageConversionFailureException {
+  public WorkflowEntity fromEdo(final WorkflowEdo edo) throws IFlowMessageConversionFailureException {
 
     return null;
   }
 
   @Override
-  public WorkflowResultEdo toEdo(final WorkflowResultEntity model) {
-    final WorkflowResultEdo edo = new WorkflowResultEdo();
+  public WorkflowEdo toEdo(final WorkflowEntity model) {
 
-    edo.setStatus(model.getStatus());
-    edo.setControllerIdentity(model.getControllerIdentity());
-    edo.setCurrentStepIdentity(model.getCurrentStepIdentity());
-    edo.setCreatedByIdentity(model.getCreatedByIdentity());
-    edo.setIdentity(model.getIdentity());
-    edo.setWorkflowTypeIdentity(model.getWorkflowTypeIdentity());
-
-    return edo;
+    return this.workflowService.toEdo(model);
   }
 
   @Override

@@ -24,8 +24,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.pth.iflow.common.edo.models.workflow.results.WorkflowResultListEdo;
 import com.pth.iflow.common.models.edo.WorkflowSearchFilterEdo;
+import com.pth.iflow.common.models.edo.workflow.WorkflowListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
 import com.pth.iflow.workflow.TestDataProducer;
@@ -34,7 +34,6 @@ import com.pth.iflow.workflow.bl.IWorkflowSearchService;
 import com.pth.iflow.workflow.models.WorkflowSearchFilter;
 import com.pth.iflow.workflow.models.mapper.WorkflowModelEdoMapper;
 import com.pth.iflow.workflow.models.workflow.Workflow;
-import com.pth.iflow.workflow.models.workflow.WorkflowResult;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -69,8 +68,8 @@ public class WorkflowControllerTest extends TestDataProducer {
 
     final WorkflowSearchFilter    filter    = this.getTestWorkflowSearchFilter();
     final WorkflowSearchFilterEdo filterEdo = WorkflowModelEdoMapper.toEdo(filter);
-    final List<WorkflowResult>    list      = this.getTestWorkflowResultList();
-    final WorkflowResultListEdo   listEdo   = new WorkflowResultListEdo(WorkflowModelEdoMapper.toWorkflowResultEdoList(list));
+    final List<Workflow>          list      = this.getTestWorkflowList();
+    final WorkflowListEdo         listEdo   = new WorkflowListEdo(WorkflowModelEdoMapper.toWorkflowEdoList(list));
 
     when(this.workflowSearchService.search(any(WorkflowSearchFilter.class), any(String.class))).thenReturn(list);
 

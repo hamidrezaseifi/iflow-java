@@ -17,17 +17,16 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pth.iflow.common.annotations.IflowGetRequestMapping;
 import com.pth.iflow.common.annotations.IflowPostRequestMapping;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
-import com.pth.iflow.common.edo.models.workflow.results.WorkflowResultListEdo;
 import com.pth.iflow.common.models.edo.IdentityListEdo;
 import com.pth.iflow.common.models.edo.WorkflowSearchFilterEdo;
 import com.pth.iflow.common.models.edo.workflow.WorkflowEdo;
+import com.pth.iflow.common.models.edo.workflow.WorkflowListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
 import com.pth.iflow.workflow.bl.IWorkflowProcessService;
 import com.pth.iflow.workflow.bl.IWorkflowSearchService;
 import com.pth.iflow.workflow.models.mapper.WorkflowModelEdoMapper;
 import com.pth.iflow.workflow.models.workflow.Workflow;
-import com.pth.iflow.workflow.models.workflow.WorkflowResult;
 
 @RestController
 @RequestMapping
@@ -44,29 +43,25 @@ public class WorkflowController {
 
   @ResponseStatus(HttpStatus.OK)
   @IflowPostRequestMapping(path = IflowRestPaths.WorkflowModule.WORKFLOW_SEARCH)
-  public ResponseEntity<WorkflowResultListEdo> searchWorkflow(@RequestBody final WorkflowSearchFilterEdo workflowSearchFilterEdo,
+  public ResponseEntity<WorkflowListEdo> searchWorkflow(@RequestBody final WorkflowSearchFilterEdo workflowSearchFilterEdo,
       final HttpServletRequest request, @RequestHeader(
         TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY
       ) final String headerTokenId) throws Exception {
 
-    final List<
-        WorkflowResult> modelList = this.workflowSearchService.search(WorkflowModelEdoMapper.fromEdo(workflowSearchFilterEdo), headerTokenId);
+    final List<Workflow> modelList = this.workflowSearchService.search(WorkflowModelEdoMapper.fromEdo(workflowSearchFilterEdo), headerTokenId);
 
-    return ControllerHelper.createResponseEntity(request, new WorkflowResultListEdo(WorkflowModelEdoMapper.toWorkflowResultEdoList(modelList)),
+    return ControllerHelper.createResponseEntity(request, new WorkflowListEdo(WorkflowModelEdoMapper.toWorkflowEdoList(modelList)),
         HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
   @IflowPostRequestMapping(path = IflowRestPaths.WorkflowModule.WORKFLOW_READLISTBY_IDENTITYLIST)
-  public ResponseEntity<WorkflowResultListEdo> readWorkflowList(@RequestBody final IdentityListEdo identityList,
-      final HttpServletRequest request, @RequestHeader(
-        TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY
-      ) final String headerTokenId) throws Exception {
+  public ResponseEntity<WorkflowListEdo> readWorkflowList(@RequestBody final IdentityListEdo identityList, final HttpServletRequest request,
+      @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws Exception {
 
-    final List<
-        WorkflowResult> modelList = this.workflowSearchService.readWorkflowListByIdentityList(identityList.getIdentityList(), headerTokenId);
+    final List<Workflow> modelList = this.workflowSearchService.readWorkflowListByIdentityList(identityList.getIdentityList(), headerTokenId);
 
-    return ControllerHelper.createResponseEntity(request, new WorkflowResultListEdo(WorkflowModelEdoMapper.toWorkflowResultEdoList(modelList)),
+    return ControllerHelper.createResponseEntity(request, new WorkflowListEdo(WorkflowModelEdoMapper.toWorkflowEdoList(modelList)),
         HttpStatus.OK);
   }
 
