@@ -8,4 +8,5 @@ ng build --deployUrl=/scripts/  --prod
 
  start serve
  
- ng serve --open=true --port=4200 --configuration=serve
+ng serve --open=true --port=4200 --configuration=serve
+ 

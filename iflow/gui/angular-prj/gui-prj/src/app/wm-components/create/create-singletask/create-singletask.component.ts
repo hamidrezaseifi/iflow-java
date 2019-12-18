@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
+import { HttpClient, HttpEventType } from '@angular/common/http';
 
 import { GlobalService } from '../../../services/global.service';
 import { WorkflowEditService } from '../../../services/workflow/workflow-edit.service';
@@ -26,9 +27,64 @@ export class CreateSingletaskComponent implements OnInit {
 
 	showDebug : boolean = false;
 
+	showAssignModal :boolean = false;
+
+	selectAssign : boolean[][] = [];
+
 	assignTypeUser :AssignType = AssignType.USER;
 	assignTypeDepartment :AssignType = AssignType.DEPARTMENT;
 	assignTypeDepartmentGroup :AssignType = AssignType.DEPARTMENTGROUP;
+
+
+
+
+	fileData: File = null;
+	previewUrl:any = null;
+	fileUploadProgress: string = null;
+	uploadedFilePath: string = null;
+
+
+	fileProgress(fileInput: any) {
+	    this.fileData = <File>fileInput.target.files[0];
+	    this.preview();
+	}
+	
+	preview() {
+	  // Show preview 
+	  var mimeType = this.fileData.type;
+	  if (mimeType.match(/image\/*/) == null) {
+	    return;
+	  }
+	
+	  var reader = new FileReader();      
+	  reader.readAsDataURL(this.fileData); 
+	  reader.onload = (_event) => { 
+	    this.previewUrl = reader.result; 
+	  }
+	}
+	 
+	onSubmit() {
+	    const formData = new FormData();
+	    formData.append('files', this.fileData);
+	     
+	    this.fileUploadProgress = '0%';
+	 
+	    this.http.post('http://localhost:1200/testfileUpload', formData, {
+	      reportProgress: true,
+	      observe: 'events'   
+	    })
+	    .subscribe(events => {
+	      if(events.type === HttpEventType.UploadProgress) {
+	        this.fileUploadProgress = Math.round(events.loaded / events.total * 100) + '%';
+	        console.log(this.fileUploadProgress);
+	      } else if(events.type === HttpEventType.Response) {
+	        this.fileUploadProgress = '';
+	        console.log(events.body);          
+	        alert('SUCCESS !!');
+	      }
+	         
+	    }) 
+	}
 
 
 	get expireDays() : number{
@@ -79,7 +135,8 @@ export class CreateSingletaskComponent implements OnInit {
 	
 	
 	get debugData() :string{
-		return (this.workflowSaveRequest && this.workflowSaveRequest != null) ? JSON.stringify(this.workflowSaveRequest): " -- debug";
+		var ssignstr : string =  (this.workflowSaveRequest && this.workflowSaveRequest.assigns) ? JSON.stringify(this.workflowSaveRequest.assigns) : '--';
+		return ssignstr + "<hr>" + JSON.stringify(this.selectAssign);
 	}
 	
 	
@@ -89,6 +146,7 @@ export class CreateSingletaskComponent implements OnInit {
 			translate: TranslateService,
 			private editService :WorkflowEditService,
 			private loadingService: LoadingServiceService,
+			private http: HttpClient,
 			
 	) {
 		
@@ -158,14 +216,14 @@ export class CreateSingletaskComponent implements OnInit {
 	 	 	  		
 				}
 				else{
-					this.users =[];
-	 	 			this.departments = data.company.departments;
+					this.users = [];
+	 	 			this.departments = [];
 				}
 		 	  		
 			}
 			else{
-				this.users =[];
- 	 			this.departments = data.company.departments;
+				this.users = [];
+ 	 			this.departments = [];
 			}
 		  });
 	}
@@ -203,31 +261,100 @@ export class CreateSingletaskComponent implements OnInit {
 	}
 	
 	isItemAssigned(identity :string , type: AssignType){
-		//var type = itype == 'user' ? userAssignType : itype == 'department' ? departmentAssignType : departmentGroupAssignType;
 
-		for(var index in this.workflowSaveRequest.assigns){
-			var assign = this.workflowSaveRequest.assigns[index];
-			
-		    if(assign.itemIdentity == identity && assign.itemType == type){
-		    	return true;
-		    }
+		if(this.selectAssign[type] === undefined){
+			this.selectAssign[type] = [];
 		}
-		
-		return false;
+		if(this.selectAssign[type][identity] === undefined){
+			this.selectAssign[type][identity] = false;
+		}
+
+		return this.selectAssign[type][identity];
 	}
 	
 	applyUserSelect(){
 		this.workflowSaveRequest.assigns = [];
 		
+		for(var type in this.selectAssign){
+			for(var identity in this.selectAssign[type]){
+				
+				if(this.selectAssign[type][identity]){
+					var assign = new AssignItem;
+					assign.itemIdentity = <string>identity;
+					assign.itemType = <AssignType>type;
+					
+					this.workflowSaveRequest.assigns.push(assign);
+					
+				}
+			}			
+		}
 		
-		/*$(".assign-checkbox:checked").each(function(index, item){
-			var jitem = $(item);
-			
-			var type = jitem.data("assigntype") == 'user' ? userAssignType : jitem.data("assigntype") == 'department' ? departmentAssignType : departmentGroupAssignType;
-			
-			this.workflowSaveRequest.assigns.push({itemIdentity: jitem.val(),  itemType: type, title: jitem.data("assigntitle")});
-		});
-    	$('#assignlistdialog').modal('hide');*/
+		this.hideAssignSelect();
+	}
+	
+	showAssignSelect(){
+		
+		this.selectAssign = [];
+		
+		for(var index in this.workflowSaveRequest.assigns){
+			var assign :AssignItem = this.workflowSaveRequest.assigns[index];
+				
+			if(this.selectAssign[assign.itemType] === undefined){
+				this.selectAssign[assign.itemType] = [];
+			}
+			this.selectAssign[assign.itemType][assign.itemIdentity] = true;				
+		}
+		
+
+		
+		this.showAssignModal = true;
+	}
+	
+	hideAssignSelect(){
+		this.showAssignModal = false;
+	}
+	
+	toggleAssign(identity :string , type: AssignType, isChecked: boolean){
+		if(this.selectAssign[type] === undefined){
+			this.selectAssign[type] = [];
+		}
+		this.selectAssign[type][identity] = isChecked;
 		
 	}
+	
+	getAssignItemTitle(item :AssignItem){
+		//assign.itemIdentity = <string>identity;
+		//assign.itemType = <AssignType>type;
+		if(item.itemType === AssignType.USER){
+			for(var index in this.users){
+				if(this.users[index].identity === item.itemIdentity){
+					return this.users[index].fullName;
+				}
+			}
+			return 'Unknown!';
+		}
+		
+		if(item.itemType === AssignType.DEPARTMENT){
+			for(var index in this.departments){
+				if(this.departments[index].identity === item.itemIdentity){
+					return this.departments[index].title;
+				}
+			}
+			return 'Unknown!';
+		}
+		
+		if(item.itemType === AssignType.DEPARTMENTGROUP){
+			for(var index in this.departments){
+				for(var gindex in this.departments[index].departmentGroups){
+					if(this.departments[index].departmentGroups[gindex].identity === item.itemIdentity){
+						return this.departments[index].departmentGroups[gindex].title;
+					}
+				}
+			}
+			return 'Unknown!';
+		}
+		
+	}
+	
+	
 }

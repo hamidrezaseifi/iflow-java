@@ -8,24 +8,13 @@ div.workflow-content-container{
 }
 
 div.workflow-content{
-	float: left;
     background-color: #dad9d9;
     padding: 15px;
     border-radius: 5px;
-    width: calc(75% - 15px);
 }
 
 div.workflow-content-record{
     padding: 15px;
-}
-
-div.workflow-record{
-	float: right;
-    background-color: #dad9d9;
-    padding: 8px;
-    border-radius: 5px;
-    width: 25%;
-    min-height: 500px;
 }
 
 div.workflow-content div.item-row, div.workflow-content-record div.item-row {
@@ -127,7 +116,7 @@ div.assign-list div.user-item-box span {
 
 button.show-select-dialog {
     float: right;
-    margin-right: -22px;
+    margin-right: -20px;
     width: 22px;
     border: none;
     padding: 0;
@@ -192,5 +181,14 @@ button.file-action {
 	width: 24px;
 }
 
+.user-select-modal-content{
+	height: 500px;
+}
 
+.user-select-tab-content{
+	height: calc(100% - 30px);
+}
 
+.user-select-item-label{
+	margin-left: 10px;
+}
