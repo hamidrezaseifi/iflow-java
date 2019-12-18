@@ -16,12 +16,12 @@ import com.pth.iflow.common.enums.EIdentity;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.enums.EWorkflowMessageType;
 import com.pth.iflow.common.enums.EWorkflowType;
-import com.pth.iflow.common.models.WorkflowActionEdo;
-import com.pth.iflow.common.models.WorkflowFileEdo;
-import com.pth.iflow.common.models.WorkflowFileVersionEdo;
-import com.pth.iflow.common.models.WorkflowMessageEdo;
-import com.pth.iflow.common.models.WorkflowSearchFilterEdo;
-import com.pth.iflow.common.models.workflow.WorkflowEdo;
+import com.pth.iflow.common.models.edo.WorkflowActionEdo;
+import com.pth.iflow.common.models.edo.WorkflowFileEdo;
+import com.pth.iflow.common.models.edo.WorkflowFileVersionEdo;
+import com.pth.iflow.common.models.edo.WorkflowMessageEdo;
+import com.pth.iflow.common.models.edo.WorkflowSearchFilterEdo;
+import com.pth.iflow.common.models.edo.workflow.WorkflowEdo;
 import com.pth.iflow.core.helper.BuildInfoProperties;
 
 @RestController(value = "/")

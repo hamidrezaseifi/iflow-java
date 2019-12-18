@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pth.iflow.common.annotations.IflowGetRequestMapping;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
-import com.pth.iflow.common.models.CompanyEdo;
+import com.pth.iflow.common.models.edo.CompanyEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.core.model.entity.CompanyEntity;
 import com.pth.iflow.core.service.interfaces.ICompanyService;

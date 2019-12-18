@@ -15,10 +15,10 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.pth.iflow.common.enums.EInvoiceType;
 import com.pth.iflow.common.enums.EWorkflowType;
 import com.pth.iflow.common.models.base.IFlowJaxbDefinition;
+import com.pth.iflow.common.models.edo.workflow.WorkflowEdo;
 import com.pth.iflow.common.models.helper.IsoFormats;
 import com.pth.iflow.common.models.helper.LocalDateEdoAdapter;
 import com.pth.iflow.common.models.validation.AEnumValueValidator;
-import com.pth.iflow.common.models.workflow.WorkflowEdo;
 
 @XmlRootElement(name = "InvoiceWorkflow", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
 @XmlAccessorType(XmlAccessType.FIELD)

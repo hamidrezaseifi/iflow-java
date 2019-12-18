@@ -14,11 +14,11 @@ import com.pth.iflow.backend.services.IProfileAccess;
 import com.pth.iflow.backend.services.IRestTemplateCall;
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
-import com.pth.iflow.common.models.AuthenticatedProfileRequestEdo;
-import com.pth.iflow.common.models.ProfileResponseEdo;
-import com.pth.iflow.common.models.TokenProfileRequestEdo;
-import com.pth.iflow.common.models.UserAuthenticationRequestEdo;
-import com.pth.iflow.common.models.UserAuthenticationResponseEdo;
+import com.pth.iflow.common.models.edo.AuthenticatedProfileRequestEdo;
+import com.pth.iflow.common.models.edo.ProfileResponseEdo;
+import com.pth.iflow.common.models.edo.TokenProfileRequestEdo;
+import com.pth.iflow.common.models.edo.UserAuthenticationRequestEdo;
+import com.pth.iflow.common.models.edo.UserAuthenticationResponseEdo;
 
 @Service
 public class ProfileAccess implements IProfileAccess {

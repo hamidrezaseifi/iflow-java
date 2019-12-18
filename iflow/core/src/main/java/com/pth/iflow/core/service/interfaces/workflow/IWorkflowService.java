@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.List;
 
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
-import com.pth.iflow.common.models.workflow.WorkflowEdo;
+import com.pth.iflow.common.models.edo.workflow.WorkflowEdo;
 import com.pth.iflow.core.model.entity.workflow.WorkflowEntity;
 import com.pth.iflow.core.service.base.ICoreModelEdoMapperService;
 

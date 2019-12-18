@@ -1,6 +1,6 @@
 package com.pth.iflow.core.service.interfaces;
 
-import com.pth.iflow.common.models.CompanyEdo;
+import com.pth.iflow.common.models.edo.CompanyEdo;
 import com.pth.iflow.core.model.entity.CompanyEntity;
 import com.pth.iflow.core.service.base.ICoreModelEdoMapperService;
 

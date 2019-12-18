@@ -17,14 +17,14 @@ import com.pth.iflow.backend.models.User;
 import com.pth.iflow.backend.models.UserAuthenticationRequest;
 import com.pth.iflow.backend.models.UserGroup;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
-import com.pth.iflow.common.models.CompanyEdo;
-import com.pth.iflow.common.models.CompanyProfileEdo;
-import com.pth.iflow.common.models.DepartmentEdo;
-import com.pth.iflow.common.models.DepartmentGroupEdo;
-import com.pth.iflow.common.models.ProfileResponseEdo;
-import com.pth.iflow.common.models.UserAuthenticationRequestEdo;
-import com.pth.iflow.common.models.UserEdo;
-import com.pth.iflow.common.models.UserGroupEdo;
+import com.pth.iflow.common.models.edo.CompanyEdo;
+import com.pth.iflow.common.models.edo.CompanyProfileEdo;
+import com.pth.iflow.common.models.edo.DepartmentEdo;
+import com.pth.iflow.common.models.edo.DepartmentGroupEdo;
+import com.pth.iflow.common.models.edo.ProfileResponseEdo;
+import com.pth.iflow.common.models.edo.UserAuthenticationRequestEdo;
+import com.pth.iflow.common.models.edo.UserEdo;
+import com.pth.iflow.common.models.edo.UserGroupEdo;
 
 public class BackendModelEdoMapper {
 

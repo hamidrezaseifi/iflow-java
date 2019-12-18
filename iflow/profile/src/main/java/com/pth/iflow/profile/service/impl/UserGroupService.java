@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
-import com.pth.iflow.common.models.UserGroupEdo;
-import com.pth.iflow.common.models.UserGroupListEdo;
+import com.pth.iflow.common.models.edo.UserGroupEdo;
+import com.pth.iflow.common.models.edo.UserGroupListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.profile.config.ProfileConfiguration;
 import com.pth.iflow.profile.exceptions.ProfileCustomizedException;

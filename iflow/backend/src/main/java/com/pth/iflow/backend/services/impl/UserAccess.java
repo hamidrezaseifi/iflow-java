@@ -17,7 +17,7 @@ import com.pth.iflow.backend.services.IRestTemplateCall;
 import com.pth.iflow.backend.services.IUserAccess;
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
-import com.pth.iflow.common.models.UserListEdo;
+import com.pth.iflow.common.models.edo.UserListEdo;
 
 @Service
 public class UserAccess implements IUserAccess {

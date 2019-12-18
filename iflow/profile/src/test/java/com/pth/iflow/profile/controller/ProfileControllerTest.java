@@ -23,9 +23,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.pth.iflow.common.models.AuthenticatedProfileRequestEdo;
-import com.pth.iflow.common.models.ProfileResponseEdo;
-import com.pth.iflow.common.models.TokenProfileRequestEdo;
+import com.pth.iflow.common.models.edo.AuthenticatedProfileRequestEdo;
+import com.pth.iflow.common.models.edo.ProfileResponseEdo;
+import com.pth.iflow.common.models.edo.TokenProfileRequestEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
 import com.pth.iflow.profile.TestDataProducer;

@@ -3,7 +3,7 @@ package com.pth.iflow.core.service.interfaces;
 import java.util.Collection;
 import java.util.List;
 
-import com.pth.iflow.common.models.UserGroupEdo;
+import com.pth.iflow.common.models.edo.UserGroupEdo;
 import com.pth.iflow.core.model.entity.UserGroupEntity;
 import com.pth.iflow.core.service.base.ICoreModelEdoMapperService;
 

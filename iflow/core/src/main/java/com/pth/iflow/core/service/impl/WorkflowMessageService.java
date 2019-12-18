@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
-import com.pth.iflow.common.models.WorkflowMessageEdo;
+import com.pth.iflow.common.models.edo.WorkflowMessageEdo;
 import com.pth.iflow.common.models.helper.IdentityModel;
 import com.pth.iflow.core.helper.CoreDataHelper;
 import com.pth.iflow.core.model.entity.workflow.WorkflowMessageEntity;

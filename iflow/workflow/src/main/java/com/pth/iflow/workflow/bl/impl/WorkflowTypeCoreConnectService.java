@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
 
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
-import com.pth.iflow.common.models.WorkflowTypeEdo;
-import com.pth.iflow.common.models.WorkflowTypeListEdo;
-import com.pth.iflow.common.models.WorkflowTypeStepListEdo;
+import com.pth.iflow.common.models.edo.WorkflowTypeEdo;
+import com.pth.iflow.common.models.edo.WorkflowTypeListEdo;
+import com.pth.iflow.common.models.edo.WorkflowTypeStepListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.workflow.bl.IWorkflowTypeDataService;
 import com.pth.iflow.workflow.config.WorkflowConfiguration;

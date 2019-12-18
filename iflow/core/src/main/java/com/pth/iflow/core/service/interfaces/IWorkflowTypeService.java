@@ -3,7 +3,7 @@ package com.pth.iflow.core.service.interfaces;
 import java.util.Collection;
 import java.util.List;
 
-import com.pth.iflow.common.models.WorkflowTypeEdo;
+import com.pth.iflow.common.models.edo.WorkflowTypeEdo;
 import com.pth.iflow.core.model.entity.workflow.WorkflowTypeEntity;
 import com.pth.iflow.core.model.entity.workflow.WorkflowTypeStepEntity;
 import com.pth.iflow.core.service.base.ICoreModelEdoMapperService;

@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
-import com.pth.iflow.common.models.AuthenticatedProfileRequestEdo;
-import com.pth.iflow.common.models.ProfileResponseEdo;
-import com.pth.iflow.common.models.TokenProfileRequestEdo;
-import com.pth.iflow.common.models.UserAuthenticationRequestEdo;
-import com.pth.iflow.common.models.UserAuthenticationResponseEdo;
+import com.pth.iflow.common.models.edo.AuthenticatedProfileRequestEdo;
+import com.pth.iflow.common.models.edo.ProfileResponseEdo;
+import com.pth.iflow.common.models.edo.TokenProfileRequestEdo;
+import com.pth.iflow.common.models.edo.UserAuthenticationRequestEdo;
+import com.pth.iflow.common.models.edo.UserAuthenticationResponseEdo;
 import com.pth.iflow.gui.configurations.GuiConfiguration;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.ProfileResponse;

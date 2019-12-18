@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlType;
 
 import com.pth.iflow.common.enums.EWorkflowType;
 import com.pth.iflow.common.models.base.IFlowJaxbDefinition;
-import com.pth.iflow.common.models.workflow.WorkflowEdo;
+import com.pth.iflow.common.models.edo.workflow.WorkflowEdo;
 
 @XmlRootElement(name = "TestThreeTaskWorkflow", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
 @XmlAccessorType(XmlAccessType.FIELD)

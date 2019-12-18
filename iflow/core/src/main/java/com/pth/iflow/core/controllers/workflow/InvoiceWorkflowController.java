@@ -18,7 +18,7 @@ import com.pth.iflow.common.annotations.IflowPostRequestMapping;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
 import com.pth.iflow.common.edo.models.workflow.invoice.InvoiceWorkflowEdo;
 import com.pth.iflow.common.edo.models.workflow.invoice.InvoiceWorkflowListEdo;
-import com.pth.iflow.common.models.IdentityListEdo;
+import com.pth.iflow.common.models.edo.IdentityListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.core.model.entity.workflow.InvoiceWorkflowEntity;
 import com.pth.iflow.core.service.interfaces.workflow.IInvoiceWorkflowService;

@@ -9,11 +9,11 @@ import java.util.Set;
 
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.enums.EWorkflowMessageType;
-import com.pth.iflow.common.models.AuthenticatedProfileRequestEdo;
-import com.pth.iflow.common.models.CompanyEdo;
-import com.pth.iflow.common.models.ProfileResponseEdo;
-import com.pth.iflow.common.models.TokenProfileRequestEdo;
-import com.pth.iflow.common.models.UserEdo;
+import com.pth.iflow.common.models.edo.AuthenticatedProfileRequestEdo;
+import com.pth.iflow.common.models.edo.CompanyEdo;
+import com.pth.iflow.common.models.edo.ProfileResponseEdo;
+import com.pth.iflow.common.models.edo.TokenProfileRequestEdo;
+import com.pth.iflow.common.models.edo.UserEdo;
 import com.pth.iflow.profile.model.Company;
 import com.pth.iflow.profile.model.CompanyProfile;
 import com.pth.iflow.profile.model.Department;

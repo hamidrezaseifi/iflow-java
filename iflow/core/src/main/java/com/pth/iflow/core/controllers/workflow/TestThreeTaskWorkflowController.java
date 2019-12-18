@@ -18,7 +18,7 @@ import com.pth.iflow.common.annotations.IflowPostRequestMapping;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
 import com.pth.iflow.common.edo.models.workflow.testthreetask.TestThreeTaskWorkflowEdo;
 import com.pth.iflow.common.edo.models.workflow.testthreetask.TestThreeTaskWorkflowListEdo;
-import com.pth.iflow.common.models.IdentityListEdo;
+import com.pth.iflow.common.models.edo.IdentityListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.core.model.entity.workflow.TestThreeTaskWorkflowEntity;
 import com.pth.iflow.core.service.interfaces.workflow.ITestThreeTaskWorkflowService;
