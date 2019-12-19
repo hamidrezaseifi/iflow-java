@@ -1,6 +1,7 @@
 package com.pth.iflow.workflow.bl.strategy.strategies;
 
 import java.net.MalformedURLException;
+
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.IDepartmentDataService;
 import com.pth.iflow.workflow.bl.IProfileCachDataDataService;
@@ -24,23 +25,13 @@ import com.pth.iflow.workflow.models.base.IWorkflowSaveRequest;
 
 public class CreateOfferlAssignWorkflowStrategy<W extends IWorkflow> extends AbstractWorkflowSaveStrategy<W> {
 
-  public CreateOfferlAssignWorkflowStrategy(final IWorkflowSaveRequest<W> workflowCreateRequest,
-                                            final String token,
-                                            final IDepartmentDataService departmentDataService,
-                                            final IWorkflowMessageDataService workflowMessageDataService,
-                                            final IProfileCachDataDataService cachDataDataService,
-                                            final IWorkflowDataService<W> workflowDataService,
-                                            final IWorkflowPrepare<W> workflowPrepare)
-                                                                                       throws WorkflowCustomizedException,
-                                                                                       MalformedURLException,
-                                                                                       IFlowMessageConversionFailureException {
-    super(workflowCreateRequest,
-          token,
-          departmentDataService,
-          workflowMessageDataService,
-          cachDataDataService,
-          workflowDataService,
-          workflowPrepare);
+  public CreateOfferlAssignWorkflowStrategy(final IWorkflowSaveRequest<W> workflowCreateRequest, final String token,
+      final IDepartmentDataService departmentDataService, final IWorkflowMessageDataService workflowMessageDataService,
+      final IProfileCachDataDataService cachDataDataService, final IWorkflowDataService<W> workflowDataService,
+      final IWorkflowPrepare<W> workflowPrepare)
+      throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+    super(workflowCreateRequest, token, departmentDataService, workflowMessageDataService, cachDataDataService, workflowDataService,
+        workflowPrepare);
 
   }
 
@@ -55,7 +46,6 @@ public class CreateOfferlAssignWorkflowStrategy<W extends IWorkflow> extends Abs
     steps.add(new ValidateCurrentStepExistsInWorkflowTypeStrategyStep<W>(this));
     steps.add(new SaveWorkflowInCoreStep<W>(this));
     steps.add(new CollectAssignedUserIdListStep<W>(this));
-
     steps.add(new SaveWorkflowOfferForAssignedUseresInCoreStep<W>(this));
     steps.add(new SendWorkflowOffersToProfileStep<W>(this));
 

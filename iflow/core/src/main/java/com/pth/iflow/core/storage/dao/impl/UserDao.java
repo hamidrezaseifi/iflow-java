@@ -65,7 +65,7 @@ public class UserDao extends EntityDaoBase<UserEntity> implements IUserDao {
 
     final Join<Object, Object>      departmentJoin  = userRoot.join("departments", JoinType.INNER);
 
-    query.select(userRoot).where(criteriaBuilder.equal(departmentJoin.get("department").get("identity"), identity));
+    query.select(userRoot).where(criteriaBuilder.equal(departmentJoin.get("identity"), identity));
     final TypedQuery<UserEntity> typedQuery = entityManager.createQuery(query);
     final List<UserEntity>       list       = typedQuery.getResultList();
 
@@ -81,7 +81,7 @@ public class UserDao extends EntityDaoBase<UserEntity> implements IUserDao {
 
     final Join<Object, Object>      departmentJoin  = userRoot.join("departmentGroups", JoinType.INNER);
 
-    query.select(userRoot).where(criteriaBuilder.equal(departmentJoin.get("departmentGroup").get("identity"), identity));
+    query.select(userRoot).where(criteriaBuilder.equal(departmentJoin.get("identity"), identity));
     final TypedQuery<UserEntity> typedQuery = entityManager.createQuery(query);
 
     final String                 qr         = DaoHelper.retreiveRawSql(typedQuery);

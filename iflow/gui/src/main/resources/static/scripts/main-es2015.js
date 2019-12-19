@@ -1172,13 +1172,19 @@ class HttpHepler {
     static generateFormHeader() {
         var header = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
             'Content-Type': 'application/x-www-form-urlencoded',
-            'Authorization': 'my-auth-token'
+            'Authorization': 'my-auth-token',
+            'Cache-Control': 'no-cache',
+            'Pragma': 'no-cache',
+            'Expires': 'Sat, 01 Jan 2000 00:00:00 GMT'
         });
         if (_environments_environment__WEBPACK_IMPORTED_MODULE_2__["environment"].fake === true) {
             header = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'Authorization': 'my-auth-token',
-                'X-Use-Interceptor': 'user-fake'
+                'X-Use-Interceptor': 'user-fake',
+                'Cache-Control': 'no-cache',
+                'Pragma': 'no-cache',
+                'Expires': 'Sat, 01 Jan 2000 00:00:00 GMT'
             });
         }
         //alert(header.keys());
@@ -1187,13 +1193,19 @@ class HttpHepler {
     static generateJsonHeader() {
         var header = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
             'Content-Type': 'application/json; charset=UTF-8',
-            'Authorization': 'my-auth-token'
+            'Authorization': 'my-auth-token',
+            'Cache-Control': 'no-cache',
+            'Pragma': 'no-cache',
+            'Expires': 'Sat, 01 Jan 2000 00:00:00 GMT'
         });
         if (_environments_environment__WEBPACK_IMPORTED_MODULE_2__["environment"].fake === true) {
             header = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
                 'Content-Type': 'application/json; charset=UTF-8',
                 'Authorization': 'my-auth-token',
-                'X-Use-Interceptor': 'user-fake'
+                'X-Use-Interceptor': 'user-fake',
+                'Cache-Control': 'no-cache',
+                'Pragma': 'no-cache',
+                'Expires': 'Sat, 01 Jan 2000 00:00:00 GMT'
             });
         }
         //alert(header.keys());
@@ -1201,12 +1213,18 @@ class HttpHepler {
     }
     static generateFileUploadHeader() {
         var header = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
-        //'Content-Type' : undefined
+            //'Content-Type' : undefined,
+            'Cache-Control': 'no-cache',
+            'Pragma': 'no-cache',
+            'Expires': 'Sat, 01 Jan 2000 00:00:00 GMT'
         });
         if (_environments_environment__WEBPACK_IMPORTED_MODULE_2__["environment"].fake === true) {
             header = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
                 //'Content-Type' : undefined,
-                'X-Use-Interceptor': 'user-fake'
+                'X-Use-Interceptor': 'user-fake',
+                'Cache-Control': 'no-cache',
+                'Pragma': 'no-cache',
+                'Expires': 'Sat, 01 Jan 2000 00:00:00 GMT'
             });
         }
         //alert(header.keys());
@@ -1444,6 +1462,7 @@ let MessageBarComponent = class MessageBarComponent {
         this.messageReloadTimeoutId = 0;
         this.messagePanelHeight = 170;
         this.messagePanelShowed = true;
+        this.isReloadingMessages = false;
         this._isLogged = false;
     }
     debugData() {
@@ -1469,9 +1488,6 @@ let MessageBarComponent = class MessageBarComponent {
     get isAppLogged() {
         return this._isLogged;
     }
-    get isReloadingMessages() {
-        return this.messageService.isReloadingMessages;
-    }
     ngOnInit() {
         if (this._isLogged == true) {
             console.log("start read message list from comp.");
@@ -1487,8 +1503,21 @@ let MessageBarComponent = class MessageBarComponent {
         clearTimeout(this.messageReloadTimeoutId);
         //console.log("start reloadMessages.  _isLogged:" + (this._isLogged === true));
         if (this._isLogged === true) {
-            this.subscribeService();
-            this.messageService.loadMessages(reset);
+            this.isReloadingMessages = true;
+            this.messageService.loadMessages(reset).subscribe((messageList) => {
+                console.log("Read message list", messageList);
+                this.messages = messageList;
+            }, response => {
+                console.log("Error in read message list", response);
+                this.messages = [];
+            }, () => {
+                setTimeout(() => {
+                    this.isReloadingMessages = false;
+                }, 500);
+                this.messageReloadTimeoutId = setTimeout(() => {
+                    this.reloadMessages(false);
+                }, this.messageSearchInterval);
+            });
         }
     }
     showWorkflowView(identity) {
@@ -1512,25 +1541,6 @@ let MessageBarComponent = class MessageBarComponent {
             this.errorService.showErrorResponse(response);
         }, () => {
             this.viewWorkflow = false;
-        });
-    }
-    subscribeService() {
-        this.messageService.workflowMessageListSubject.subscribe(x => {
-            if (x != null) {
-                this.messages = x;
-            }
-            else {
-                this.messages = [];
-            }
-        }, error => {
-            //console.log("Error in read message list.", error);
-            this.messages = [];
-        }, () => {
-            //this.messageService.workflowMessageListSubject.unsubscribe();
-            //console.log("Compelete read message list from comp. start next timeout");
-            this.messageReloadTimeoutId = setTimeout(() => {
-                this.reloadMessages(false);
-            }, this.messageSearchInterval);
         });
     }
 };
@@ -2233,35 +2243,13 @@ let WorkflowMessageService = class WorkflowMessageService {
         this.isReloadingMessages = true;
         var url = this.loadMessageUrl + "?reset=" + (resetCach ? "1" : "0");
         const httpOptions = { headers: _helper_http_hepler__WEBPACK_IMPORTED_MODULE_5__["HttpHepler"].generateJsonHeader() };
-        this.http.post(url, new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpParams"](), httpOptions).subscribe(val => {
-            console.log("Read message list", val);
-            var messageList = val;
-            messageList = this.buildMessageList(messageList);
-            this.workflowMessageListSubject.next(messageList);
-        }, response => {
-            console.log("Error in read message list", response);
-            this.workflowMessageListSubject.next([]);
-            this.errorService.showErrorResponse(response);
-        }, () => {
-            this.workflowMessageListSubject.complete();
-            setTimeout(() => {
-                this.isReloadingMessages = false;
-            }, 500);
-        });
+        return this.http.post(url, new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpParams"](), httpOptions);
     }
     assignMe(workflowIdentity) {
         this.isReloadingMessages = true;
         var url = this.assignWorkflowUrl + workflowIdentity;
         const httpOptions = { headers: _helper_http_hepler__WEBPACK_IMPORTED_MODULE_5__["HttpHepler"].generateJsonHeader() };
         return this.http.post(url, new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpParams"](), httpOptions);
-    }
-    buildMessageList(messages) {
-        var messageList = [];
-        for (var index in messages) {
-            var message = messages[index];
-            messageList.push(message);
-        }
-        return messageList;
     }
 };
 WorkflowMessageService.ctorParameters = () => [

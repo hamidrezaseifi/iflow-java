@@ -45,11 +45,13 @@ public class WorkflowMessageDao extends EntityDaoBase<WorkflowMessageEntity> imp
       throws IFlowStorageException {
     final List<WorkflowMessageEntity> messages = findMessageListForWorkflowAndStep(workflowIdentity, stepIdentity);
 
+    entityManager.getTransaction().begin();
+
     for (final WorkflowMessageEntity message : messages) {
       message.setStatusEnum(status);
       entityManager.merge(message);
     }
-    // repository.saveAll(messages);
+    entityManager.getTransaction().commit();
   }
 
   @Transactional
@@ -57,9 +59,13 @@ public class WorkflowMessageDao extends EntityDaoBase<WorkflowMessageEntity> imp
   public void updateStatusByWorkflowAndUser(final String workflowIdentity, final String stepIdentity, final String userIdentity,
       final EWorkflowMessageStatus status) throws IFlowStorageException {
 
+    entityManager.getTransaction().begin();
+
     final WorkflowMessageEntity message = findMessageForWorkflowAndStepAnUser(workflowIdentity, stepIdentity, userIdentity);
     message.setStatusEnum(status);
     entityManager.merge(message);
+
+    entityManager.getTransaction().commit();
   }
 
   @Override

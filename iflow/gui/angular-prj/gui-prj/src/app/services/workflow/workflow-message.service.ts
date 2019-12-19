@@ -40,29 +40,7 @@ export class WorkflowMessageService {
     	        
         const httpOptions = { headers: HttpHepler.generateJsonHeader() };
     	
-    	this.http.post(url, new HttpParams(), httpOptions).subscribe(
-	        val => {
-	        	console.log("Read message list", val);
-	        	var messageList = <WorkflowMessage[]>val;
-	        	messageList = this.buildMessageList(messageList);
-	        	this.workflowMessageListSubject.next(messageList);
-	            
-	        },
-	        response => {
-	        	console.log("Error in read message list", response);
-	        	this.workflowMessageListSubject.next([]);
-	  			this.errorService.showErrorResponse(response);
-	        	
-	        },
-	        () => {
-	        	this.workflowMessageListSubject.complete();  
-	        	
-	        	setTimeout(()=>{ 
-	        		this.isReloadingMessages = false;
-	        	 }, 500);
-	        	
-	        }
-    	);	      
+    	return this.http.post(url, new HttpParams(), httpOptions);	      
     	
 	}
 	
@@ -75,17 +53,5 @@ export class WorkflowMessageService {
     	
     	return this.http.post(url, new HttpParams(), httpOptions);	      
 	}
-    
-    
-	private buildMessageList(messages){
-		var messageList = [];
-		for(var index in messages){
-			var message = messages[index];
-			messageList.push(message);
-		}
-		
-		return messageList;
-	}
-    
 	
 }

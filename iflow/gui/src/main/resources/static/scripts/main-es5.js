@@ -1109,13 +1109,19 @@ var __extends = (this && this.__extends) || (function () {
                 HttpHepler.generateFormHeader = function () {
                     var header = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
                         'Content-Type': 'application/x-www-form-urlencoded',
-                        'Authorization': 'my-auth-token'
+                        'Authorization': 'my-auth-token',
+                        'Cache-Control': 'no-cache',
+                        'Pragma': 'no-cache',
+                        'Expires': 'Sat, 01 Jan 2000 00:00:00 GMT'
                     });
                     if (_environments_environment__WEBPACK_IMPORTED_MODULE_2__["environment"].fake === true) {
                         header = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
                             'Content-Type': 'application/x-www-form-urlencoded',
                             'Authorization': 'my-auth-token',
-                            'X-Use-Interceptor': 'user-fake'
+                            'X-Use-Interceptor': 'user-fake',
+                            'Cache-Control': 'no-cache',
+                            'Pragma': 'no-cache',
+                            'Expires': 'Sat, 01 Jan 2000 00:00:00 GMT'
                         });
                     }
                     //alert(header.keys());
@@ -1124,13 +1130,19 @@ var __extends = (this && this.__extends) || (function () {
                 HttpHepler.generateJsonHeader = function () {
                     var header = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
                         'Content-Type': 'application/json; charset=UTF-8',
-                        'Authorization': 'my-auth-token'
+                        'Authorization': 'my-auth-token',
+                        'Cache-Control': 'no-cache',
+                        'Pragma': 'no-cache',
+                        'Expires': 'Sat, 01 Jan 2000 00:00:00 GMT'
                     });
                     if (_environments_environment__WEBPACK_IMPORTED_MODULE_2__["environment"].fake === true) {
                         header = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
                             'Content-Type': 'application/json; charset=UTF-8',
                             'Authorization': 'my-auth-token',
-                            'X-Use-Interceptor': 'user-fake'
+                            'X-Use-Interceptor': 'user-fake',
+                            'Cache-Control': 'no-cache',
+                            'Pragma': 'no-cache',
+                            'Expires': 'Sat, 01 Jan 2000 00:00:00 GMT'
                         });
                     }
                     //alert(header.keys());
@@ -1138,12 +1150,18 @@ var __extends = (this && this.__extends) || (function () {
                 };
                 HttpHepler.generateFileUploadHeader = function () {
                     var header = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
-                    //'Content-Type' : undefined
+                        //'Content-Type' : undefined,
+                        'Cache-Control': 'no-cache',
+                        'Pragma': 'no-cache',
+                        'Expires': 'Sat, 01 Jan 2000 00:00:00 GMT'
                     });
                     if (_environments_environment__WEBPACK_IMPORTED_MODULE_2__["environment"].fake === true) {
                         header = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
                             //'Content-Type' : undefined,
-                            'X-Use-Interceptor': 'user-fake'
+                            'X-Use-Interceptor': 'user-fake',
+                            'Cache-Control': 'no-cache',
+                            'Pragma': 'no-cache',
+                            'Expires': 'Sat, 01 Jan 2000 00:00:00 GMT'
                         });
                     }
                     //alert(header.keys());
@@ -1341,6 +1359,7 @@ var __extends = (this && this.__extends) || (function () {
                     this.messageReloadTimeoutId = 0;
                     this.messagePanelHeight = 170;
                     this.messagePanelShowed = true;
+                    this.isReloadingMessages = false;
                     this._isLogged = false;
                 }
                 MessageBarComponent.prototype.debugData = function () {
@@ -1374,13 +1393,6 @@ var __extends = (this && this.__extends) || (function () {
                     enumerable: true,
                     configurable: true
                 });
-                Object.defineProperty(MessageBarComponent.prototype, "isReloadingMessages", {
-                    get: function () {
-                        return this.messageService.isReloadingMessages;
-                    },
-                    enumerable: true,
-                    configurable: true
-                });
                 MessageBarComponent.prototype.ngOnInit = function () {
                     if (this._isLogged == true) {
                         console.log("start read message list from comp.");
@@ -1393,11 +1405,25 @@ var __extends = (this && this.__extends) || (function () {
                     //alert(this.messagePanelHeight);
                 };
                 MessageBarComponent.prototype.reloadMessages = function (reset) {
+                    var _this = this;
                     clearTimeout(this.messageReloadTimeoutId);
                     //console.log("start reloadMessages.  _isLogged:" + (this._isLogged === true));
                     if (this._isLogged === true) {
-                        this.subscribeService();
-                        this.messageService.loadMessages(reset);
+                        this.isReloadingMessages = true;
+                        this.messageService.loadMessages(reset).subscribe(function (messageList) {
+                            console.log("Read message list", messageList);
+                            _this.messages = messageList;
+                        }, function (response) {
+                            console.log("Error in read message list", response);
+                            _this.messages = [];
+                        }, function () {
+                            setTimeout(function () {
+                                _this.isReloadingMessages = false;
+                            }, 500);
+                            _this.messageReloadTimeoutId = setTimeout(function () {
+                                _this.reloadMessages(false);
+                            }, _this.messageSearchInterval);
+                        });
                     }
                 };
                 MessageBarComponent.prototype.showWorkflowView = function (identity) {
@@ -1422,26 +1448,6 @@ var __extends = (this && this.__extends) || (function () {
                         _this.errorService.showErrorResponse(response);
                     }, function () {
                         _this.viewWorkflow = false;
-                    });
-                };
-                MessageBarComponent.prototype.subscribeService = function () {
-                    var _this = this;
-                    this.messageService.workflowMessageListSubject.subscribe(function (x) {
-                        if (x != null) {
-                            _this.messages = x;
-                        }
-                        else {
-                            _this.messages = [];
-                        }
-                    }, function (error) {
-                        //console.log("Error in read message list.", error);
-                        _this.messages = [];
-                    }, function () {
-                        //this.messageService.workflowMessageListSubject.unsubscribe();
-                        //console.log("Compelete read message list from comp. start next timeout");
-                        _this.messageReloadTimeoutId = setTimeout(function () {
-                            _this.reloadMessages(false);
-                        }, _this.messageSearchInterval);
                     });
                 };
                 return MessageBarComponent;
@@ -2072,39 +2078,16 @@ var __extends = (this && this.__extends) || (function () {
                     configurable: true
                 });
                 WorkflowMessageService.prototype.loadMessages = function (resetCach) {
-                    var _this = this;
                     this.isReloadingMessages = true;
                     var url = this.loadMessageUrl + "?reset=" + (resetCach ? "1" : "0");
                     var httpOptions = { headers: _helper_http_hepler__WEBPACK_IMPORTED_MODULE_5__["HttpHepler"].generateJsonHeader() };
-                    this.http.post(url, new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpParams"](), httpOptions).subscribe(function (val) {
-                        console.log("Read message list", val);
-                        var messageList = val;
-                        messageList = _this.buildMessageList(messageList);
-                        _this.workflowMessageListSubject.next(messageList);
-                    }, function (response) {
-                        console.log("Error in read message list", response);
-                        _this.workflowMessageListSubject.next([]);
-                        _this.errorService.showErrorResponse(response);
-                    }, function () {
-                        _this.workflowMessageListSubject.complete();
-                        setTimeout(function () {
-                            _this.isReloadingMessages = false;
-                        }, 500);
-                    });
+                    return this.http.post(url, new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpParams"](), httpOptions);
                 };
                 WorkflowMessageService.prototype.assignMe = function (workflowIdentity) {
                     this.isReloadingMessages = true;
                     var url = this.assignWorkflowUrl + workflowIdentity;
                     var httpOptions = { headers: _helper_http_hepler__WEBPACK_IMPORTED_MODULE_5__["HttpHepler"].generateJsonHeader() };
                     return this.http.post(url, new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpParams"](), httpOptions);
-                };
-                WorkflowMessageService.prototype.buildMessageList = function (messages) {
-                    var messageList = [];
-                    for (var index in messages) {
-                        var message = messages[index];
-                        messageList.push(message);
-                    }
-                    return messageList;
                 };
                 return WorkflowMessageService;
             }());

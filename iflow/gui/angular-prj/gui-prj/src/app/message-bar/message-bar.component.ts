@@ -26,6 +26,8 @@ export class MessageBarComponent implements OnInit {
 	messageReloadTimeoutId = 0;
 	messagePanelHeight = 170;
 	messagePanelShowed :boolean= true;
+	
+	isReloadingMessages : boolean = false;
 
 	
 	debugData() :string{
@@ -63,11 +65,6 @@ export class MessageBarComponent implements OnInit {
 	}	
 
 	
-	get isReloadingMessages(): boolean { 
-		return this.messageService.isReloadingMessages; 
-	}	
-
-	
 	constructor(protected router: Router, 
 			private messageService :WorkflowMessageService,
 			private errorService: ErrorServiceService,) { 
@@ -95,8 +92,29 @@ export class MessageBarComponent implements OnInit {
 		//console.log("start reloadMessages.  _isLogged:" + (this._isLogged === true));
 		if(this._isLogged === true){
 			
-			this.subscribeService();
-			this.messageService.loadMessages(reset);
+			this.isReloadingMessages = true;
+			this.messageService.loadMessages(reset).subscribe(
+			        (messageList :WorkflowMessage[]) => {
+			        	console.log("Read message list", messageList);
+			        	
+			        	this.messages = messageList;			            
+			        },
+			        response => {
+			        	console.log("Error in read message list", response);
+			        	this.messages = [];	
+			        	
+			        },
+			        () => {
+			        	
+			        	setTimeout(()=>{ 
+			        		this.isReloadingMessages = false;
+			        	 }, 500);
+			        	
+			        	this.messageReloadTimeoutId = setTimeout(() =>{ 			  				
+		  					this.reloadMessages(false);		  				 
+			        	}, this.messageSearchInterval);			        	
+			        }
+		    	);
 			
 		}
 				
@@ -138,37 +156,4 @@ export class MessageBarComponent implements OnInit {
 		
   	}
   	
-  	private subscribeService(){
-		
- 		this.messageService.workflowMessageListSubject.subscribe(
-  				x => {
-  					if(x != null){
-  			  			this.messages = x;
-  					}
-  					else{
-  						this.messages = [];
-  					}
-  					
-		  		},
-		  		error => {
-		  			//console.log("Error in read message list.", error);
-		  			this.messages = [];
-		  		},
-		  		() => {
-		  			//this.messageService.workflowMessageListSubject.unsubscribe();
-		  			//console.log("Compelete read message list from comp. start next timeout");
-		  			
-		  			this.messageReloadTimeoutId = setTimeout(() =>{ 
-		  				
-		  					this.reloadMessages(false);
-		  				
-		  				 
-		  			}, this.messageSearchInterval);
-		  			
-		  		},
-  		);
-		
-  	}
-
-
 }
