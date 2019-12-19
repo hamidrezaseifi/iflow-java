@@ -25,7 +25,7 @@
 			</div>
 			<div *ngIf="showDebug" style="border: 1px solid gray; padding: 5px; background-color: #f1f1f1;">{{debugSearchFilter}}</div>
 			
-			<table class="table table-striped" [svData]="resultWorlflows" #sv="svDataTable" [svRowsOnPage]="5" svSortBy="name" svSortOrder="asc">
+			<table class="table table-striped" [svData]="resultWorlflows" #sv="svDataTable" [svRowsOnPage]="500" svSortBy="name" svSortOrder="asc">
 			    <thead>
 			    <tr>
 			        <th><sv-default-sorter by="workflowType.title">{{ 'workflow-type' | translate }}</sv-default-sorter></th>

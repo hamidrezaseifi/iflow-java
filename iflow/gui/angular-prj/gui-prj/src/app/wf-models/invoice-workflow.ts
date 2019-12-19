@@ -4,8 +4,9 @@ import { WorkflowType } from '../wf-models';
 import { WorkflowTypeStep } from '../wf-models';
 import { WorkflowFile } from '../wf-models';
 import { WorkflowAction } from '../wf-models';
+import { InvoiceType } from '../wf-models';
 
-export class Workflow {
+export class InvoiceWorkflow {
 	identity: string;
 	status: string;
 	workflowType: WorkflowType;
@@ -24,6 +25,24 @@ export class Workflow {
 	files: WorkflowFile[];
 	actions: WorkflowAction[];
 
+	sender: string;
+	registerNumber: string;
+	invoceDate: Date;
+	partnerCode: string;
+	vendorNumber: string;
+	vendorName: string;
+	isDirectDebitPermission: boolean;
+	invoiceType: InvoiceType;
+	
+	discountEnterDate: Date;
+	discountDeadline: number;
+	discountRate: number;
+	discountDate: Date;
+	
+	paymentAmount: number;
 
 }
+
+
+
 

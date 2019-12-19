@@ -1,11 +1,11 @@
 ﻿
-import { Workflow } from '../wf-models';
+import { InvoiceWorkflow } from './invoice-workflow';
 import { WorkflowProcessCommand } from '../wf-models';
 import { AssignItem } from '../wf-models';
 
-export class WorkflowSaveRequest {
+export class InvoiceWorkflowSaveRequest {
 	
-	workflow :Workflow = null;
+	workflow :InvoiceWorkflow = new InvoiceWorkflow();
 	expireDays :number = 0;
 	assigns :AssignItem[] = [];
 	command :WorkflowProcessCommand = WorkflowProcessCommand.NONE;

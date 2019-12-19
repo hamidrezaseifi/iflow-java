@@ -310,6 +310,7 @@ public class WorkflowModelEdoMapper {
     model.setCurrentStepIdentity(edo.getCurrentStepIdentity());
     model.setCreatedByIdentity(edo.getCreatedByIdentity());
     model.setIdentity(edo.getIdentity());
+    model.setWorkflowTypeIdentity(edo.getWorkflowTypeIdentity());
 
     model.setFiles(fromWorkflowFileEdoList(edo.getFiles()));
     model.setActions(fromWorkflowActionEdoList(edo.getActions()));

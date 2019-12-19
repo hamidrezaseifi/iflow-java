@@ -8,13 +8,18 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.pth.iflow.common.enums.EIdentity;
@@ -68,6 +73,11 @@ public class WorkflowEntity extends EntityIdentityHelper {
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "workflowEntity", orphanRemoval = true)
   private final List<WorkflowActionEntity> actions = new ArrayList<>();
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "workflow_type_id", insertable = false, updatable = false)
+  @Fetch(FetchMode.JOIN)
+  private WorkflowTypeEntity               workflowType;
 
   public WorkflowEntity() {
 
@@ -202,6 +212,10 @@ public class WorkflowEntity extends EntityIdentityHelper {
 
   public void setCurrentStepId(final Long currentStepId) {
     this.currentStepId = currentStepId;
+  }
+
+  public WorkflowTypeEntity getWorkflowType() {
+    return workflowType;
   }
 
   @Override

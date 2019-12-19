@@ -28,6 +28,10 @@ export class MessageBarComponent implements OnInit {
 	messagePanelShowed :boolean= true;
 
 	
+	debugData() :string{
+		return (this.viewWorkflowModel && this.viewWorkflowModel != null) ? JSON.stringify(this.viewWorkflowModel) : 'no data';
+	}
+	
 	closeMessages(){
 		//$('#message-panel-container').height(25);
 		document.getElementById("message-panel-container").style.height = "25px";

@@ -4,35 +4,36 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.enums.EWorkflowMessageType;
-import com.pth.iflow.gui.models.workflow.IWorkflow;
+import com.pth.iflow.gui.models.workflow.workflow.Workflow;
 
 public class WorkflowMessage {
 
-  private String workflowIdentity;
+  private String                 workflowIdentity;
 
-  private IWorkflow workflow;
+  private Workflow               workflow;
 
-  private String stepIdentity;
+  private String                 stepIdentity;
 
-  private WorkflowTypeStep step;
+  private WorkflowTypeStep       step;
 
-  private String userIdentity;
+  private String                 userIdentity;
 
-  private String message;
+  private String                 message;
 
-  private String createdByIdentity;
+  private String                 createdByIdentity;
 
-  private EWorkflowMessageType messageType;
+  private EWorkflowMessageType   messageType;
 
   private EWorkflowMessageStatus status;
 
-  private Integer version;
+  private Integer                version;
 
-  private Integer expireDays;
+  private Integer                expireDays;
 
-  private LocalDateTime createdAt;
+  private LocalDateTime          createdAt;
 
   public String getWorkflowIdentity() {
     return this.workflowIdentity;
@@ -58,11 +59,11 @@ public class WorkflowMessage {
     this.step = step;
   }
 
-  public IWorkflow getWorkflow() {
+  public Workflow getWorkflow() {
     return this.workflow;
   }
 
-  public void setWorkflow(final IWorkflow workflow) {
+  public void setWorkflow(final Workflow workflow) {
     this.workflow = workflow;
   }
 
@@ -149,7 +150,7 @@ public class WorkflowMessage {
 
   public int getRemainingDays() {
     final LocalDate deadline = this.createdAt.plusDays(this.expireDays).toLocalDate();
-    final Period p = LocalDate.now().until(deadline);
+    final Period    p        = LocalDate.now().until(deadline);
 
     return p.getDays();
   }

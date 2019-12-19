@@ -81,7 +81,7 @@ public class WorkflowSearchDao implements IWorkflowSearchDao {
     }
 
     if (workflowSearchFilter.getWorkflowTypeIdentitySet().isEmpty() == false) {
-      final Path<String> path      = root.get("workflowTypeIdentity");
+      final Path<String> path      = root.get("workflowType").get("identity");
       final Predicate    predicate = path.in(workflowSearchFilter.getWorkflowTypeIdentitySet());
       finalPredicate = finalPredicate == null ? predicate : criteriaBuilder.and(finalPredicate, predicate);
       // query.where(predicate);

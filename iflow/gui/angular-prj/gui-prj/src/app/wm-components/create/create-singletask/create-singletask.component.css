@@ -121,6 +121,7 @@ button.show-select-dialog {
     border: none;
     padding: 0;
     padding-left: 2px;
+    background-color: transparent;
 }
 
 button.file-action {

@@ -84,6 +84,9 @@
 									</div>
 								</div>
 							</div>
+							<div style="width: 366px; overflow: auto; max-height: 200px;">
+								{{debugData()}}
+							</div>
 						</div>
 					</div>
 					
@@ -94,9 +97,9 @@
 	      <div class="modal-footer">
 			<button type="button" class="btn btn-secondary" (click)="hideViewModal()"><i class="material-icons">close</i></button>
 
-			<button type="button" class="btn btn-success"  *ngIf="viewWorkflowModel.notAssigned === 'true'" (click)="assignWorkflowMe(viewWorkflowModel.identity)"><i class="material-icons">assignment_ind</i></button>
+			<button type="button" class="btn btn-success"  *ngIf="viewWorkflowModel.notAssigned" (click)="assignWorkflowMe(viewWorkflowModel.identity)"><i class="material-icons">assignment_ind</i></button>
 
-	        <a type="button" class="btn btn-primary" *ngIf="viewWorkflowModel.meAssigned === 'true'" href="/workflow/edit/{{viewWorkflowModel.identity}}"><i class="material-icons">pageview</i></a>
+	        <a type="button" class="btn btn-primary" *ngIf="viewWorkflowModel.meAssigned" href="/workflow/edit/{{viewWorkflowModel.identity}}"><i class="material-icons">pageview</i></a>
 	      </div>
 	    </div>
 	  </div>		    

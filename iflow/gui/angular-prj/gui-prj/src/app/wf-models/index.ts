@@ -15,5 +15,6 @@ export * from './assign-type';
 export * from './workflow-process-command';
 export * from './file-title';
 export * from './workflow-uploadfile-result';
+export * from './invoice-type';
 
 

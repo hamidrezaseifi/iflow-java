@@ -29,6 +29,7 @@ public class Workflow extends IdentityModel implements IWorkflow {
   private String                     currentStepIdentity;
   private String                     controllerIdentity;
   private String                     createdByIdentity;
+  private String                     workflowTypeIdentity;
 
   private final List<WorkflowFile>   files   = new ArrayList<>();
   private final List<WorkflowAction> actions = new ArrayList<>();
@@ -37,14 +38,13 @@ public class Workflow extends IdentityModel implements IWorkflow {
 
   }
 
-  @Override
-  public EWorkflowType getWorkflowTypeEnum() {
-    return EWorkflowType.INVOICE_WORKFLOW_TYPE;
+  public void setWorkflowTypeIdentity(final String workflowTypeIdentity) {
+    this.workflowTypeIdentity = workflowTypeIdentity;
   }
 
   @Override
   public String getWorkflowTypeIdentity() {
-    return getWorkflowTypeEnum().getIdentity();
+    return this.workflowTypeIdentity;
   }
 
   @Override
@@ -288,6 +288,11 @@ public class Workflow extends IdentityModel implements IWorkflow {
   @Override
   public boolean isNew() {
     return IdentityModel.isIdentityNew(this.getIdentity());
+  }
+
+  @Override
+  public EWorkflowType getWorkflowTypeEnum() {
+    return EWorkflowType.valueFromIdentity(workflowTypeIdentity);
   }
 
 }
