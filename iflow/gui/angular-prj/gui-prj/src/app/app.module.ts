@@ -9,7 +9,7 @@ import { TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { ResizableModule } from 'angular-resizable-element';
 import { FormsModule } from '@angular/forms';
 import { DataTableModule } from 'ng-angular8-datatable';
-import {MatNativeDateModule} from '@angular/material/core';
+import { MatNativeDateModule } from '@angular/material/core';
 
 
 import {IFlowMaterialModules} from './material-module';

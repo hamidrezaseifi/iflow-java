@@ -834,3 +834,6 @@ span.mat-icon-button{
   color: #c8c6c6 !important;
 }
 
+.button-bar-alert{
+	padding: 2px 15px 8px 10px;
+}

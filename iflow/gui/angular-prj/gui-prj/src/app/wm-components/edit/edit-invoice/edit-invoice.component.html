@@ -175,10 +175,15 @@
 						<div class="item-row">
 							
 							<div class="workflow-step-button-bar">
-								<button type="button" (click)="save()" [disabled]="invoiceEditForm.invalid" class="button-bar-button step-button button-save">
-									<span>{{ 'common.create' | translate }}</span>
+								<button type="button" (click)="save(false)" [disabled]="invoiceEditForm.invalid" class="button-bar-button step-button button-save">
+									<span>{{ 'common.save' | translate }}</span>
 									<i class="material-icons">save</i>
 								</button>
+								<button type="button" (click)="save(true)" [disabled]="invoiceEditForm.invalid" class="button-bar-button step-button button-save">
+									<span>{{ 'common.savedone' | translate }}</span>
+									<i class="material-icons">save</i>
+								</button>
+								<span *ngIf="saveMessage !== ''" class="alert alert-success button-bar-alert">{{saveMessage}}</span>
 								<div class="clear"></div>
 							</div>
 							

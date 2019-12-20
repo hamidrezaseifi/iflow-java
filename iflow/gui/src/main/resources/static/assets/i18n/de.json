@@ -20,6 +20,7 @@
 	"menu-workflow-create" : "Workflow erstellen",
 	"common.edit" : "Bearbeiten",
 	"common.save" : "Speichern",
+	"common.saved" : "gespeichert",
 	"common.close" : "Schließen",
 	"common.windowclose" : "Fenster Schließen",
 	"common.cancel" : "Abbrechen",

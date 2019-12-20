@@ -135,7 +135,7 @@ public abstract class WorkflowDataControllerBase<W extends IWorkflow, WS extends
   @ResponseStatus(HttpStatus.CREATED)
   @PostMapping(path = { "/save" })
   @ResponseBody
-  public void saveWorkflow(@RequestBody final WS createRequest, final HttpSession session)
+  public void saveWorkflow(@RequestBody final W workflow, final HttpSession session)
       throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
 
     this.workflowHandler.saveWorkflow(workflow, session);
@@ -145,7 +145,7 @@ public abstract class WorkflowDataControllerBase<W extends IWorkflow, WS extends
   @ResponseStatus(HttpStatus.CREATED)
   @PostMapping(path = { "/archive" })
   @ResponseBody
-  public void archiveWorkflow(@RequestBody final WS createRequest, final HttpSession session)
+  public void archiveWorkflow(@RequestBody final W workflow, final HttpSession session)
       throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
 
     this.workflowHandler.archiveWorkflow(workflow, session);

@@ -9,6 +9,7 @@ import { HttpHepler } from '../../../helper/http-hepler';
 
 import { InvoiceWorkflowSaveRequestInit } from '../../../wf-models/invoice-workflow-save-request-init';
 import { InvoiceWorkflowSaveRequest } from '../../../wf-models/invoice-workflow-save-request';
+import { InvoiceWorkflow } from '../../../wf-models/invoice-workflow';
 
 import { WorkflowProcessCommand, Workflow, AssignItem, FileTitle, AssignType } from '../../../wf-models';
 
@@ -128,11 +129,19 @@ export class InvoiceWorkflowEditService {
 
 	}	
 	
-	saveWorkflow(workflowSaveRequest :InvoiceWorkflowSaveRequest){
+	saveWorkflow(workflow :InvoiceWorkflow){
     	
         const httpOptions = { headers: HttpHepler.generateJsonHeader() };
         
-        return this.http.post(this.getSaveWorkflowUrl() , workflowSaveRequest, httpOptions);	       	
+        return this.http.post(this.getSaveWorkflowUrl() , workflow, httpOptions);	       	
+
+	}	
+	
+	doneWorkflow(workflowSaveRequest :InvoiceWorkflowSaveRequest){
+    	
+        const httpOptions = { headers: HttpHepler.generateJsonHeader() };
+        
+        return this.http.post(this.getDoneWorkflowUrl() , workflowSaveRequest, httpOptions);	       	
 
 	}	
 	

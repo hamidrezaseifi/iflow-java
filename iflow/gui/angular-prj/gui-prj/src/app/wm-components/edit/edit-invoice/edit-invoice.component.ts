@@ -25,6 +25,8 @@ import { GermanDateAdapter, parseDate, formatDate } from '../../../helper';
 })
 export class EditInvoiceComponent implements OnInit {
 	
+	saveMessage :string = "";
+	
 	workflowIdentity :string = "";
 
 	invoiceEditForm: FormGroup;
@@ -79,7 +81,7 @@ export class EditInvoiceComponent implements OnInit {
 	constructor(
 		    private router: Router,
 			private global: GlobalService,
-			translate: TranslateService,
+			private translate: TranslateService,
 			private editService :InvoiceWorkflowEditService,
 			private loadingService: LoadingServiceService,
 			private http: HttpClient,
@@ -298,7 +300,7 @@ export class EditInvoiceComponent implements OnInit {
 		this.fileTitles.push(ft);
 	}
 	
-	save(){
+	save(makeDone :boolean){
 		
 		this.setFormControlValues();
 		//return;
@@ -312,7 +314,13 @@ export class EditInvoiceComponent implements OnInit {
 			            
 			            this.workflowSaveRequest.sessionKey = result.sessionKey;
 			            
-			            this.saveWorkflowData();      	
+			            if(makeDone){
+			            	this.doneWorkflowData();
+			            }
+			            else{
+			            	this.saveWorkflowData();
+			            }
+			                  	
 			            
 			        },
 			        response => {
@@ -330,14 +338,45 @@ export class EditInvoiceComponent implements OnInit {
 		else{
 	        this.workflowSaveRequest.sessionKey = 'not-set';
 	        
-	        this.saveWorkflowData();
+            if(makeDone){
+            	this.doneWorkflowData();
+            }
+            else{
+            	this.saveWorkflowData();
+            }
 		}
 	
 	}
 	
 	private saveWorkflowData(){
 		
-        this.editService.saveWorkflow(this.workflowSaveRequest).subscribe(
+        this.editService.saveWorkflow(this.workflowSaveRequest.workflow).subscribe(
+		        (result) => {		        	
+		            console.log("Create workflow result", result);
+		            
+		            this.translate.get('common.saved').subscribe((res: string) => {
+		            	this.saveMessage = res;
+		            });
+		            
+		            
+		        },
+		        response => {
+		        	console.log("Error in create workflow", response);
+		        	
+		        	this.errorService.showErrorResponse(response);
+		        	this.loadingService.hideLoading();	 
+		        },
+		        () => {
+		        	
+		        	this.loadingService.hideLoading();	 
+		        }
+		    );	       	
+		
+	}
+	
+	private doneWorkflowData(){
+		
+        this.editService.doneWorkflow(this.workflowSaveRequest).subscribe(
 		        (result) => {		        	
 		            console.log("Create workflow result", result);
 		            
