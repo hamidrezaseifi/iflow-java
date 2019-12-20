@@ -3,9 +3,12 @@ import { AbstractControl } from '@angular/forms';
 import { InvoiceType } from '../wf-models';
 
 export function InvoiceTypeControllValidator(control: AbstractControl): { [key: string]: boolean } {
-	if (control.value === InvoiceType.SUPPLIER || control.value === InvoiceType.WORKER || control.value === InvoiceType.PAYMENT ) {
-		return { invoiceTypeValid: true };
+	
+	let invoiceType :InvoiceType = (<any>InvoiceType)[control.value]; 
+
+	if (invoiceType !== undefined && (invoiceType === InvoiceType.SUPPLIER || invoiceType === InvoiceType.WORKER || invoiceType === InvoiceType.PAYMENT) ) {
+		return null;
 	}
-	return null;
+	return { invoiceTypeValid: true };
 }
 

@@ -13,7 +13,7 @@ export class ErrorResponse {
 		
 		if(response && response != null){
 			if(response.status){
-				if(response.status === 0 || response.name === "HttpErrorResponse"){
+				if(response.status === 0){
 					this.message = "Connection Error!";
 					this.details = "";
 				}

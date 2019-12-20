@@ -17,6 +17,7 @@ public class InvoiceWorkflowDataController extends WorkflowDataControllerBase<In
   protected InvoiceWorkflow generateInitialWorkflow(final String userIdentity) {
     final InvoiceWorkflow workflow = InvoiceWorkflow.generateInitial(userIdentity);
     workflow.setWorkflowType(this.getWorkflowTypeByEnumType(EWorkflowType.INVOICE_WORKFLOW_TYPE));
+    workflow.setIsDirectDebitPermission(false);
     return workflow;
   }
 

@@ -62,7 +62,7 @@ div.workflow-record{
 
 .item-content select:not(.fullrow), .item-content input[type=text] {
 	height: 26px;
-	width: calc(100% - 20px);
+	width: calc(100%);
 } 
 
 .item-content select.fullrow {

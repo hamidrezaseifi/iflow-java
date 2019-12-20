@@ -42,7 +42,7 @@
 									</div>
 									<div class="item-label label-required small-label">{{ 'invoice-invoicetype' | translate }}</div>
 									<div class="item-content small-content">
-										<select required name="invoiceType" formControlName="invoiceType" >
+										<select required name="invoiceType" formControlName="invoiceType" [ngClass]="{'ng-invalid' : invoiceEditForm.controls.invoiceType.errors}" >
 											<option *ngFor="let invoiceType of invoiceTypes;" value="{{invoiceType.value}}">{{invoiceType.title}}</option>
 										</select>
 									</div>
@@ -183,7 +183,7 @@
 				<div class="clear"></div>
 				<hr>
 				<div >
-					{{debugData}}
+					{{invoiceEditForm.controls.invoiceType.errors | json}}
 				</div>
 				<hr>
 			</div>

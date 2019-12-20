@@ -122,7 +122,7 @@ export class CreateInvoiceComponent implements OnInit {
 			vendorNumber: ['', Validators.required],
 			vendorName: ['', Validators.required],
 			isDirectDebitPermission: [false],
-			invoiceType: [InvoiceType.NO_TYPE, [Validators.required, InvoiceTypeControllValidator]],
+			invoiceType: [InvoiceType.NO_TYPE, [InvoiceTypeControllValidator]],
 			
 			discountEnterDate: [new Date(), Validators.required],
 			discountDeadline: [0, Validators.required],
