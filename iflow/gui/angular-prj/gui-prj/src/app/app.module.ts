@@ -9,6 +9,10 @@ import { TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { ResizableModule } from 'angular-resizable-element';
 import { FormsModule } from '@angular/forms';
 import { DataTableModule } from 'ng-angular8-datatable';
+import {MatNativeDateModule} from '@angular/material/core';
+
+
+import {IFlowMaterialModules} from './material-module';
 
 import { fakeBackendProvider } from './helper';
 
@@ -33,6 +37,7 @@ import { WorkflowCreateComponent } from './wm-components/create/workflow-create/
 import { CreateSingletaskComponent } from './wm-components/create/create-singletask/create-singletask.component';
 import { CreateInvoiceComponent } from './wm-components/create/create-invoice/create-invoice.component';
 import { CreateTestthreetaskComponent } from './wm-components/create/create-testthreetask/create-testthreetask.component';
+import { EditInvoiceComponent } from './wm-components/edit/edit-invoice/edit-invoice.component';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -47,6 +52,8 @@ export function createTranslateLoader(http: HttpClient) {
     BrowserAnimationsModule,
     ResizableModule,
     DataTableModule,
+    MatNativeDateModule,
+    IFlowMaterialModules,
     FormsModule,
     TranslateModule.forRoot({
         loader: {
@@ -71,6 +78,7 @@ export function createTranslateLoader(http: HttpClient) {
     CreateSingletaskComponent,
     CreateInvoiceComponent,
     CreateTestthreetaskComponent,
+    EditInvoiceComponent,
     
   ],
   providers: [

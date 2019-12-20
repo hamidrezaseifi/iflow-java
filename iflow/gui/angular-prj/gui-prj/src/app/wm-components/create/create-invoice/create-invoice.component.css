@@ -1,7 +1,7 @@
 
 div.workflow-content-container{
 	border: 1px solid lightgray;
-    margin: 10px 0px;
+    margin: 10px 0px 50px 0;
     border-radius: 10px;
     padding: 10px;
     background-color: #f1f1f1;
@@ -94,9 +94,10 @@ div.workflow-content-record div.item-row div.item-label{
     float: left;
     padding-right: 10px;
     padding-left: 2px;
-    line-height: 20px;
+    line-height: 25px;
     font-size: 14px;
     font-weight: bold;
+    height: 25px;
 }
 
 div.workflow-content div.item-row .label-large, 
@@ -126,6 +127,7 @@ div.workflow-content div.item-row div.item-content, div.workflow-content-record 
 .item-content input[type=checkbox]{
 	width: 20px;
 	height: 20px;	
+	margin-top: 3px;
 }
 
 div.fullrowfromlabel{
@@ -325,5 +327,14 @@ button.show-select-dialog {
     padding-left: 2px;
 }
 
+input.select-date{
+	width: 100px;
+	height: 26px;
+}
+
+input.short-input{
+	width: 100px;
+	height: 26px;
+}
 
 

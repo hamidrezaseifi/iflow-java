@@ -4,6 +4,7 @@ import { HttpHeaders, HttpParams, HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 import { LoadingServiceService } from '../../loading-service.service';
+import { ErrorServiceService } from '../../error-service.service';
 import { HttpHepler } from '../../../helper/http-hepler';
 
 import { InvoiceWorkflowSaveRequestInit } from '../../../wf-models/invoice-workflow-save-request-init';
@@ -23,14 +24,32 @@ export class InvoiceWorkflowEditService {
 	getInitCreateUrl() :string{
 		return "/workflow/invoice/data/initcreate";
 	}
+
+	getInitEditUrl(identity :string) :string{
+		return "/workflow/invoice/data/initedit/" + identity;
+	}
 	
 	getCreateWorkflowUrl() :string{
 		return "/workflow/invoice/data/create";
 	}
 	
+	getSaveWorkflowUrl() :string{
+		return "/workflow/invoice/data/save";
+	}
+	
+	getDoneWorkflowUrl() :string{
+		return "/workflow/invoice/data/done";
+	}
+	
+	getArchiveWorkflowUrl() :string{
+		return "/workflow/invoice/data/archive";
+	}
+	
 	getUploadFileUrl() :string{
 		return "/workflow/invoice/data/createfile";
 	}
+	
+
 	
 	
 	//userAssignType = /*[[${UserAssign}]]*/ '';
@@ -40,6 +59,7 @@ export class InvoiceWorkflowEditService {
 	constructor(
 			protected http: HttpClient,
 			protected loadingService: LoadingServiceService,
+			private errorService :ErrorServiceService,
 	) { 
 		
 		
@@ -64,12 +84,22 @@ export class InvoiceWorkflowEditService {
 		        },
 		        response => {
 		        	console.log("Error in read edit inital data", response);
+		        	this.errorService.showErrorResponse(response);
 		        },
 		        () => {
 		        	this.workflowSaveRequestInitSubject.complete();
 		        	this.loadingService.hideLoading();	            
 		        }
 		    );	       	
+
+	}
+	
+	
+	loadEditInitialData(identity: string){
+    	
+        const httpOptions = { headers: HttpHepler.generateFormHeader() };
+        
+        return this.http.post(this.getInitEditUrl(identity), new HttpParams(), httpOptions);	       	
 
 	}
 	
@@ -90,11 +120,19 @@ export class InvoiceWorkflowEditService {
 	}
 	
 	
-	saveWorkflow(workflowSaveRequest :InvoiceWorkflowSaveRequest){
+	createWorkflow(workflowSaveRequest :InvoiceWorkflowSaveRequest){
     	
         const httpOptions = { headers: HttpHepler.generateJsonHeader() };
         
         return this.http.post(this.getCreateWorkflowUrl() , workflowSaveRequest, httpOptions);	       	
+
+	}	
+	
+	saveWorkflow(workflowSaveRequest :InvoiceWorkflowSaveRequest){
+    	
+        const httpOptions = { headers: HttpHepler.generateJsonHeader() };
+        
+        return this.http.post(this.getSaveWorkflowUrl() , workflowSaveRequest, httpOptions);	       	
 
 	}	
 	

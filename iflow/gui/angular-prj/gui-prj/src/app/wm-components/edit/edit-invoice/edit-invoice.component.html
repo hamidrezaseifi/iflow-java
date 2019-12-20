@@ -1,0 +1,245 @@
+
+		<div class="content-container">
+			<div class="page-toolbar">
+				<div class="page-title">{{ 'invoice-testingview-title' | translate }}</div>
+				<a class="toolbar-link" href="/workflow/list"><i class="material-icons">list</i></a>
+				<button class="toolbar-button" (click)="reload();"><i class="material-icons">refresh</i></button>
+			</div>
+			
+			<div class="workflow-content-container">
+				<div class="workflow-content">
+					<form id="workflow-form" name="workflowForm" [formGroup]="invoiceEditForm">
+						<div class="panel panel-default">
+							<div class="panel-heading">{{ 'invoice-invoice' | translate }}</div>
+							<div class="panel-body">
+								<div class="item-row">
+									<div class="item-label label-required label-large">{{ 'invoice-sender' | translate }}</div>
+									<div class="item-content large-content">
+										<input type="text" required name="sender" formControlName="sender" >
+									</div>
+									<div class="item-label small-label">{{ 'invoice-trusted' | translate }}</div>
+									<div class="item-content small-content">
+										<input type="checkbox"  >
+									</div>
+									<div class="clear"></div>
+								</div>
+								<div class="item-row">
+									<div class="item-label label-required label-large">{{ 'invoice-invoicenumber' | translate }}</div>
+									<div class="item-content large-content" >
+										<input type="text" required name="registerNumber" formControlName="registerNumber" >
+									</div>
+									<div  class="item-label label-required small-label">{{ 'invoice-invoicedate' | translate }}</div>
+									<div class="item-content small-content">									
+										<input required class="select-date" matInput [matDatepicker]="invocieDatepicker" placeholder="{{ 'invoice-invoicedate-select' | translate }}" formControlName="invocieDate" >
+										<mat-datepicker-toggle matSuffix [for]="invocieDatepicker"></mat-datepicker-toggle>
+										<mat-datepicker #invocieDatepicker startView="month" [startAt]="invoiceEditForm.controls.invocieDate.value"></mat-datepicker>										
+									</div>
+									<div class="clear"></div>
+									<div class="clear"></div>
+								</div>
+								<div class="item-row">
+									<div class="item-label label-required label-large">{{ 'invoice-paymentamount' | translate }}</div>
+									<div class="item-content large-content" >
+										<input type="number" required name="paymentAmount" formControlName="paymentAmount" >
+									</div>
+									<div class="item-label label-required small-label">{{ 'invoice-invoicetype' | translate }}</div>
+									<div class="item-content small-content">
+										<select required name="invoiceType" formControlName="invoiceType" [ngClass]="{'ng-invalid' : invoiceEditForm.controls.invoiceType.errors}" >
+											<option *ngFor="let invoiceType of invoiceTypes;" value="{{invoiceType.value}}">{{invoiceType.title}}</option>
+										</select>
+									</div>
+									<div class="clear"></div>
+								</div>
+						
+							</div>
+						</div>
+						
+						<div class="twopannel">
+							<div class="panel panel-default panel-vendor">
+								<div class="panel-heading">{{ 'invoice-vendor' | translate }}</div>
+								<div class="panel-body">
+							
+												
+									<div class="item-row">
+										<div class="item-label label-required label-large">{{ 'invoice-vendornumber' | translate }}</div>
+										<div class="item-content fullrowfromlabel">
+											<input type="text" required name="vendorNumber" formControlName="vendorNumber" >
+										</div>
+										<div class="clear"></div>
+									</div>
+									<div class="item-row">
+										<div class="item-label label-required label-large">{{ 'invoice-partnercode' | translate }}</div>
+										<div class="item-content fullrowfromlabel">
+											<input type="text" required name="partnerCode" formControlName="partnerCode" >
+										</div>
+										<div class="clear"></div>
+									</div>					
+									<div class="item-row">
+										<div class="item-label label-required label-large">{{ 'invoice-vendorname' | translate }}</div>
+										<div class="item-content fullrowfromlabel">
+											<input type="text" required name="vendorName" formControlName="vendorName" >
+										</div>
+										<div class="clear"></div>
+									</div>
+									<div class="item-row">
+										<div class="item-label label-required label-large">{{ 'invoice-isdirectdebitpermission' | translate }}</div>
+										<div class="item-content fullrowfromlabel">
+											<input type="checkbox" name="isDirectDebitPermission" formControlName="isDirectDebitPermission" [checked]="forms.isDirectDebitPermission.value" >
+										</div>
+										<div class="clear"></div>
+									</div>
+							
+								</div>
+							</div>
+		
+		
+							<div class="panel panel-default panel-discount">
+								<div class="panel-heading">{{ 'invoice-discount' | translate }}</div>
+								<div class="panel-body">
+							
+									<div class="item-row">
+										<div class="item-label label-required small-label">{{ 'invoice-discountenterdate-short' | translate }}</div>
+										<div class="item-content">
+											<input required class="select-date" matInput [matDatepicker]="discountEnterDatepicker" placeholder="{{ 'invoice-discountenterdate' | translate }}" formControlName="discountEnterDate" >
+											<mat-datepicker-toggle matSuffix [for]="discountEnterDatepicker"></mat-datepicker-toggle>
+											<mat-datepicker #discountEnterDatepicker startView="month" [startAt]="invoiceEditForm.controls.discountEnterDate.value"></mat-datepicker>										
+										</div>
+										<div class="clear"></div>
+									</div>
+									<div class="item-row">
+										<div class="item-label label-required small-label">{{ 'invoice-discountrate-short' | translate }}</div>
+										<div class="item-content">
+											<input type="number" required name="discountRate" class="short-input" formControlName="discountRate" > %
+										</div>
+										<div class="clear"></div>
+									</div>
+									<div class="item-row">
+										<div class="item-label label-required small-label">{{ 'invoice-discountdeadline-short' | translate }}</div>
+										<div class="item-content">
+											<input type="number" required name="discountDeadline" class="short-input" formControlName="discountDeadline" > <span>{{ 'common.days' | translate }}</span>
+										</div>
+										<div class="clear"></div>
+									</div>
+									<div class="item-row">
+										<div class="item-label label-required small-label">{{ 'invoice-discountdate' | translate }}</div>
+										<div class="item-content">
+											<input required class="select-date" matInput [matDatepicker]="discountDatepicker" placeholder="{{ 'invoice-discountdate' | translate }}" formControlName="discountDate" >
+											<mat-datepicker-toggle matSuffix [for]="discountDatepicker"></mat-datepicker-toggle>
+											<mat-datepicker #discountDatepicker startView="month" [startAt]="invoiceEditForm.controls.discountDate.value"></mat-datepicker>										
+										</div>
+										<div class="clear"></div>
+									</div>
+							
+								</div>
+							</div>	
+							
+							<div class="clear"></div>					
+						</div>
+					
+						<div class="item-row">
+							<div class="item-label label-required label-large">{{ 'workflow-controller' | translate }}</div>
+							<div class="item-content fullrowfromlabel">
+								<select type="text" class="fullrow" formControlName="controllerIdentity">
+									<option value="0">{{ 'workflow-select-controller' | translate }}</option>
+									<option *ngFor="let user of users;" value="{{user.identity}}">{{user.fullName}}</option>
+								</select>
+							</div>
+							<div class="clear"></div>
+						</div>
+	
+						
+						<div class="item-row">
+							<div class="item-label label-large">{{ 'workflow-comments' | translate }}</div>
+							<div class="item-content fullrowfromlabel">
+								<textarea class="comments-fullrow" formControlName="comments"></textarea>
+							</div>
+							<div class="clear"></div>
+						</div>
+						<div class="item-row">
+							<div class="item-label label-large">{{ 'workflow-assignto' | translate }}</div>
+							<div class="item-content fullrowfromlabel">
+								<div class="assign-list" >
+									<button class="show-select-dialog" (click)="showAssignSelect()"><i class="material-icons">playlist_add</i></button>
+									<span *ngIf="hasNoAssigns">{{ 'workflow-select-assign' | translate }}</span>
+									<div class="user-item-box" *ngFor="let item of assignedUsers">
+										<span>{{getAssignItemTitle(item)}} </span>
+										<button (click)="removeAssign(item.itemIdentity, item.itemType)"><i class="material-icons">close</i></button>
+									</div>
+									<div class="clear"></div>
+								</div>
+							</div>
+							<div class="clear"></div>
+						</div>
+	
+	
+						<div class="item-row">
+							
+							<div class="workflow-step-button-bar">
+								<button type="button" (click)="save()" [disabled]="invoiceEditForm.invalid" class="button-bar-button step-button button-save">
+									<span>{{ 'common.create' | translate }}</span>
+									<i class="material-icons">save</i>
+								</button>
+								<div class="clear"></div>
+							</div>
+							
+							
+						</div>
+					</form>
+				</div>
+				<div class="clear"></div>
+				
+			</div>
+		    		 
+		    <div class="modal fade" [ngClass]="{'show' : showAssignModal}" tabindex="-1" id="assignlistdialog" role="dialog" aria-labelledby="exampleModalCenterTitle">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+				    <div class="modal-content user-select-modal-content" >
+				      <div class="modal-header">
+				        <h5 class="modal-title dialog-title" id="exampleModalLongTitle">{{ 'workflow-select-assign' | translate }}</h5>
+				        <button class="dialog-toolbar-button close" (click)="hideAssignSelect()">
+				        	<i class="material-icons">close</i>
+				        </button>
+				      </div>
+				      <div class="modal-body">
+							<ul class="nav nav-tabs">
+							  <li class="active"><a data-toggle="tab" class="nav-link active" href="#tabusers">{{ 'common.users' | translate }}</a></li>
+							  <li><a data-toggle="tab" class="nav-link" href="#tabdepartments">{{ 'common.departments' | translate }}</a></li>
+							</ul>
+							<div class="tab-content tab-body user-select-tab-content">
+								<div id="tabusers" class="tab-pane fade in active show">
+									<ul class="list-item-container">
+										<li class="list-item" *ngFor="let item of users;">
+											<input [attr.data-assigntitle]="item.fullName" type="checkbox" #inputEl class="assign-checkbox" [checked]="isItemAssigned(item.identity, assignTypeUser)" (change)="toggleAssign(item.identity, assignTypeUser, inputEl.checked)"  value="{{item.identity}}"/> 
+											<span class="user-select-item-label">{{item.fullName}}</span>										
+										</li>
+									</ul>
+								</div>
+								<div id="tabdepartments" class="tab-pane fade">
+									<ul class="list-item-container">
+										<li *ngFor="let dep of departments;" class="list-item">
+											<input type="checkbox" [attr.data-assigntitle]="dep.title" #inputEl class="assign-checkbox" [checked]="isItemAssigned(dep.identity, assignTypeDepartment)" (change)="toggleAssign(dep.identity, assignTypeDepartment, inputEl.checked)" value="{{dep.identity}}"/> 
+											<span class="user-select-item-label">{{dep.title}}</span>
+											<ul class="list-item-container">
+												<li *ngFor="let depgrp of dep.departmentGroups;" class="list-item">
+													<input type="checkbox" class="assign-checkbox" #inputEl [attr.data-assigntitle]="depgrp.title" [checked]="isItemAssigned(depgrp.identity, assignTypeDepartmentGroup)" (change)="toggleAssign(depgrp.identity, assignTypeDepartmentGroup, inputEl.checked)" value="{{depgrp.identity}}"/> 	 
+													<span class="user-select-item-label">{{depgrp.title}}</span>										
+												</li>
+											</ul>									
+										</li>
+									</ul>
+								
+								</div>
+							</div>
+				      
+		    				
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-secondary" (click)="hideAssignSelect()"><i class="material-icons">close</i></button>
+				        <button type="button" class="btn btn-primary" (click)="applyUserSelect();"><i class="material-icons">check</i></button>
+				      </div>
+				    </div>
+				  </div>		    
+		    	
+		    </div>
+		
+		</div>
+

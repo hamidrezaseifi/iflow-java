@@ -121,7 +121,7 @@ public class TestDataProducer {
 
     model.setSender("sender");
     model.setRegisterNumber("ext_reg_number");
-    model.setInvoceDate(LocalDate.now());
+    model.setInvoiceDate(LocalDate.now());
     model.setPartnerCode("partner_code");
     model.setVendorNumber("vendor_number");
     model.setVendorName("vendor_name");
@@ -155,7 +155,7 @@ public class TestDataProducer {
 
     model.setSender("sender");
     model.setRegisterNumber("ext_reg_number");
-    model.setInvoceDate(LocalDate.now());
+    model.setInvoiceDate(LocalDate.now());
     model.setPartnerCode("partner_code");
     model.setVendorNumber("vendor_number");
     model.setVendorName("vendor_name");

@@ -3,7 +3,6 @@ package com.pth.iflow.gui.controller.data.workflow;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,9 +28,6 @@ import com.pth.iflow.common.enums.EIdentity;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.controller.data.GuiDataControllerBase;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
-import com.pth.iflow.gui.models.Department;
-import com.pth.iflow.gui.models.User;
-import com.pth.iflow.gui.models.WorkflowType;
 import com.pth.iflow.gui.models.ui.FileSavingData;
 import com.pth.iflow.gui.models.ui.UploadFileSavingData;
 import com.pth.iflow.gui.models.workflow.IWorkflow;
@@ -58,18 +54,33 @@ public abstract class WorkflowDataControllerBase<W extends IWorkflow, WS extends
   public Map<String, Object> loadWorkflowCreateData()
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    final Map<String, Object>      map              = new HashMap<>();
+    final Map<String, Object> map         = new HashMap<>();
 
-    final List<User>               userList         = this.userAccess.getCompanyUserList(this.getLoggedCompany().getIdentity());
-    final Collection<WorkflowType> workflowTypeList = this.getAllWorkflowTypes();
-    final List<Department>         departmentList   = this.getSessionUserInfo().getCompanyDepartments();
+    final W                   newWorkflow = this.generateInitialWorkflow(this.getLoggedUser().getIdentity());
 
-    final W                        newWorkflow      = this.generateInitialWorkflow(this.getLoggedUser().getIdentity());
-
-    final WS                       workflowReq      = this.generateInitialWorkflowSaveRequest(newWorkflow,
+    final WS                  workflowReq = this.generateInitialWorkflowSaveRequest(newWorkflow,
         newWorkflow.getHasActiveAction() ? newWorkflow.getActiveAction().getCurrentStep().getExpireDays() : 15);
 
     map.put("workflowSaveRequest", workflowReq);
+
+    return map;
+  }
+
+  @ResponseStatus(HttpStatus.OK)
+  @PostMapping(path = { "/initedit/{workflowIdentity}" })
+  @ResponseBody
+  public Map<String, Object> loadWorkflowEditData(@PathVariable final String workflowIdentity)
+      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+
+    final Map<String, Object> map         = new HashMap<>();
+
+    final W                   workflow    = this.workflowHandler.readWorkflow(workflowIdentity);
+
+    final Integer             expireDays  = workflow.getHasActiveAction() ? workflow.getActiveAction().getCurrentStep().getExpireDays() : 0;
+
+    final WS                  saveRequest = this.generateInitialWorkflowSaveRequest(workflow, expireDays);
+
+    map.put("workflowSaveRequest", saveRequest);
 
     return map;
   }
@@ -124,7 +135,7 @@ public abstract class WorkflowDataControllerBase<W extends IWorkflow, WS extends
   @ResponseStatus(HttpStatus.CREATED)
   @PostMapping(path = { "/save" })
   @ResponseBody
-  public void saveWorkflow(@RequestBody final W workflow, final HttpSession session)
+  public void saveWorkflow(@RequestBody final WS createRequest, final HttpSession session)
       throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
 
     this.workflowHandler.saveWorkflow(workflow, session);
@@ -134,7 +145,7 @@ public abstract class WorkflowDataControllerBase<W extends IWorkflow, WS extends
   @ResponseStatus(HttpStatus.CREATED)
   @PostMapping(path = { "/archive" })
   @ResponseBody
-  public void archiveWorkflow(@RequestBody final W workflow, final HttpSession session)
+  public void archiveWorkflow(@RequestBody final WS createRequest, final HttpSession session)
       throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
 
     this.workflowHandler.archiveWorkflow(workflow, session);

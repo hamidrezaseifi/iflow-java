@@ -807,5 +807,30 @@ button.user-meu-button{
     padding-bottom: 15px;
 }
 
+.mat-datepicker-toggle button.mat-icon-button{
+	width: 20px;
+	height: 20px;
+	line-height: 22px;	
+}
 
+span.mat-icon-button{
+	line-height: 22px;	
+}
+
+.mat-datepicker-toggle button.mat-icon-button .mat-button-wrapper svg.mat-datepicker-toggle-default-icon{
+	color: #555555;
+	fill: #555555;
+}
+
+::-webkit-input-placeholder { 
+  color: #c8c6c6 !important;
+}
+
+:-ms-input-placeholder { 
+  color: #c8c6c6 !important;
+}
+
+::placeholder {
+  color: #c8c6c6 !important;
+}
 

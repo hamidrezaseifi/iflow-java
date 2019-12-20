@@ -285,7 +285,7 @@ public class WorkflowModelEdoMapper {
     edo.setDiscountDeadline(model.getDiscountDeadline());
     edo.setDiscountEnterDate(model.getDiscountEnterDate());
     edo.setDiscountRate(model.getDiscountRate());
-    edo.setInvoceDate(model.getInvoceDate());
+    edo.setInvoiceDate(model.getInvoiceDate());
     edo.setInvoiceType(model.getInvoiceType().getValue());
     edo.setIsDirectDebitPermission(model.getIsDirectDebitPermission());
     edo.setPartnerCode(model.getPartnerCode());
@@ -338,7 +338,7 @@ public class WorkflowModelEdoMapper {
     model.setDiscountDeadline(edo.getDiscountDeadline());
     model.setDiscountEnterDate(edo.getDiscountEnterDate());
     model.setDiscountRate(edo.getDiscountRate());
-    model.setInvoceDate(edo.getInvoceDate());
+    model.setInvoiceDate(edo.getInvoiceDate());
     model.setInvoiceType(edo.getInvoiceType());
     model.setIsDirectDebitPermission(edo.getIsDirectDebitPermission());
     model.setPartnerCode(edo.getPartnerCode());

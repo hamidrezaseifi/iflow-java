@@ -11,6 +11,26 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var __read = (this && this.__read) || function (o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+};
+var __spread = (this && this.__spread) || function () {
+    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
+    return ar;
+};
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["main"], {
         /***/ "./$$_lazy_route_resource lazy recursive": 
         /*!******************************************************!*\
@@ -118,7 +138,7 @@ var __extends = (this && this.__extends) || (function () {
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("<div mwlResizable [enableGhostResize]=\"true\" [resizeEdges]=\"{ bottom: false, right: false, top: true, left: false }\" (resizeEnd)=\"onResizeEnd($event)\" class=\"message-panel-container\" id=\"message-panel-container\" *ngIf=\"isAppLogged\">\n\t<div class=\"message-panel-toolbar\">\n\t\t<span class=\"title\">Meldungen</span>\n\t\t<button class=\"toolbar-button\" *ngIf=\"messagePanelShowed\" (click)=\"closeMessages();\"><i class=\"material-icons\">keyboard_arrow_down</i></button>\n\t\t<button class=\"toolbar-button\" *ngIf=\"messagePanelShowed == false\" (click)=\"showMessages();\"><i class=\"material-icons\">keyboard_arrow_up</i></button>\n\t\t<button class=\"toolbar-button\" *ngIf=\"messagePanelShowed\" (click)=\"reloadMessages(true);\"><i class=\"material-icons\">refresh</i></button>\n\t\t<img class=\"toolbar-image\" *ngIf=\"isReloadingMessages\" src=\"assets/images/loading200.gif\" />\n\t\n\t</div>\n\t<div class=\"message-panel-items-container\">\n\t\t<div class=\"message-panel-item\" *ngFor=\"let message of messages;\">\n\t\t\t<a href=\"javascript:void(0);\" (click)=\"showWorkflowView(message.workflowIdentity)\">\n\t\t\t\t<div>{{message.message}} ({{message.workflow.workflowType.title}}) ({{message.createdAtString}}) ({{message.remainingDays}}) ({{message.status}})</div>\n\t\t\t</a>\n\t\t</div>\n\t</div>\n\t\t\t\t\t\n</div>\n\n<div class=\"modal fade show\" tabindex=\"-1\" *ngIf=\"viewWorkflow\" id=\"viewworkflowedialog\" role=\"dialog\">\n\n\t<div class=\"modal-dialog modal-dialog-centered\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<div class=\"modal-header\">\n\t\t\t\t<h5 class=\"modal-title dialog-title\" id=\"errorMessagedialogTitle\">{{ 'common.view-workflow' | translate }}</h5>\n\t\t\t\t<button class=\"dialog-toolbar-button close\" (click)=\"hideViewModal()\" aria-label=\"Close\">\n\t\t\t\t\t<i class=\"material-icons\">close</i>\n\t\t\t\t</button>\n\t\t\t</div>\n\t\t\t\n\t\t      <div class=\"modal-body\">\n\t\t      \n\t\t\t\t<div class=\"content-container\">\n\t\t\t\t\n\t\t\t\t\t<div class=\"workflowview-dialog-content-container\">\n\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t<div class=\"item-label\">{{ 'workflow-title' | translate }}</div>\n\t\t\t\t\t\t\t\t<div class=\"item-content\">{{viewWorkflowModel.workflowType.title}}</div>\n\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t<div class=\"item-label\">{{ 'workflow-comments' | translate }}</div>\n\t\t\t\t\t\t\t\t<div class=\"item-content\">{{viewWorkflowModel.comments}}</div>\t\n\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t<div class=\"item-label\">{{ 'workflow-current-step' | translate }}</div>\n\t\t\t\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t\t\t\t{{viewWorkflowModel.currentStep.title}}\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t<div class=\"item-label\">{{ 'workflow-status' | translate }}</div>\n\t\t\t\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t\t\t\t{{viewWorkflowModel.status}}\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div style=\"padding-top: 10px; padding-left: 10px; border-top: 1px solid gray; margin-top: 10px;\">\n\t\t\t\t\t\t\t\t<div style=\"text-align: center; font-weight: bold;\">Files</div>\n\t\t\t\t\t\t\t\t<div class=\"item-row\" *ngFor=\"let file of viewWorkflowModel.files;\" style=\"border-bottom: 1px #9a9a9a dashed\">\n\t\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t\t<a href=\"/workflow/file/view/{{viewWorkflowModel.identity}}/{{file.identity}}\" class=\"workflow-file-view-link\" target=\"_blank\">\n\t\t\t\t\t\t\t\t\t\t\t<strong>{{file.title}}</strong> (Ver: {{file.activeFileVersion}})\n\t\t\t\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t\t\t\t<a href=\"/workflow/file/download/{{viewWorkflowModel.identity}}/{{file.identity}}\" class=\"workflow-file-view-link\" target=\"_blank\">\n\t\t\t\t\t\t\t\t\t\t\t<i class=\"material-icons\">save_alt</i>\n\t\t\t\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t\t\t</div> \n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div style=\"padding-top: 10px; padding-left: 10px; border-top: 1px solid gray; margin-top: 10px;\">\n\t\t\t\t\t\t\t\t<div style=\"text-align: center; font-weight: bold;\">Actions</div>\n\t\t\t\t\t\t\t\t<div class=\"item-row\" *ngFor=\"let action of viewWorkflowModel.actions;\" style=\"border-bottom: 1px #9a9a9a dashed\">\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"action-content\">\n\t\t\t\t\t\t\t\t\t\t\t<div><strong>{{action.currentStep.title}}</strong>:</div> \n\t\t\t\t\t\t\t\t\t\t\t<div>({{action.status}}) ({{action.assignToUserName}})</div> \n\t\t\t\t\t\t\t\t\t\t\t<div style=\"\">{{action.action}}</div>\n\t\t\t\t\t\t\t\t\t\t</div>\t\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div style=\"width: 366px; overflow: auto; max-height: 200px;\">\n\t\t\t\t\t\t\t\t{{debugData()}}\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t</div>\n\t   \t\t\t\t\n\t\t      </div>\n\t      <div class=\"modal-footer\">\n\t\t\t<button type=\"button\" class=\"btn btn-secondary\" (click)=\"hideViewModal()\"><i class=\"material-icons\">close</i></button>\n\n\t\t\t<button type=\"button\" class=\"btn btn-success\"  *ngIf=\"viewWorkflowModel.notAssigned\" (click)=\"assignWorkflowMe(viewWorkflowModel.identity)\"><i class=\"material-icons\">assignment_ind</i></button>\n\n\t        <a type=\"button\" class=\"btn btn-primary\" *ngIf=\"viewWorkflowModel.meAssigned\" href=\"/workflow/edit/{{viewWorkflowModel.identity}}\"><i class=\"material-icons\">pageview</i></a>\n\t      </div>\n\t    </div>\n\t  </div>\t\t    \n\n\n\t\t\t\n</div>\n\n");
+            /* harmony default export */ __webpack_exports__["default"] = ("<div mwlResizable [enableGhostResize]=\"true\" [resizeEdges]=\"{ bottom: false, right: false, top: true, left: false }\" (resizeEnd)=\"onResizeEnd($event)\" class=\"message-panel-container\" id=\"message-panel-container\" *ngIf=\"isAppLogged\">\n\t<div class=\"message-panel-toolbar\">\n\t\t<span class=\"title\">Meldungen</span>\n\t\t<button class=\"toolbar-button\" *ngIf=\"messagePanelShowed\" (click)=\"closeMessages();\"><i class=\"material-icons\">keyboard_arrow_down</i></button>\n\t\t<button class=\"toolbar-button\" *ngIf=\"messagePanelShowed == false\" (click)=\"showMessages();\"><i class=\"material-icons\">keyboard_arrow_up</i></button>\n\t\t<button class=\"toolbar-button\" *ngIf=\"messagePanelShowed\" (click)=\"reloadMessages(true);\"><i class=\"material-icons\">refresh</i></button>\n\t\t<img class=\"toolbar-image\" *ngIf=\"isReloadingMessages\" src=\"assets/images/loading200.gif\" />\n\t\n\t</div>\n\t<div class=\"message-panel-items-container\">\n\t\t<div class=\"message-panel-item\" *ngFor=\"let message of messages;\">\n\t\t\t<a href=\"javascript:void(0);\" (click)=\"showWorkflowView(message.workflowIdentity)\">\n\t\t\t\t<div>{{message.message}} ({{message.workflow.workflowType.title}}) ({{message.createdAtString}}) ({{message.remainingDays}}) ({{message.status}})</div>\n\t\t\t</a>\n\t\t</div>\n\t</div>\n\t\t\t\t\t\n</div>\n\n<div class=\"modal fade show\" tabindex=\"-1\" *ngIf=\"viewWorkflow\" id=\"viewworkflowedialog\" role=\"dialog\">\n\n\t<div class=\"modal-dialog modal-dialog-centered\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<div class=\"modal-header\">\n\t\t\t\t<h5 class=\"modal-title dialog-title\" id=\"errorMessagedialogTitle\">{{ 'common.view-workflow' | translate }}</h5>\n\t\t\t\t<button class=\"dialog-toolbar-button close\" (click)=\"hideViewModal()\" aria-label=\"Close\">\n\t\t\t\t\t<i class=\"material-icons\">close</i>\n\t\t\t\t</button>\n\t\t\t</div>\n\t\t\t\n\t\t      <div class=\"modal-body\">\n\t\t      \n\t\t\t\t<div class=\"content-container\">\n\t\t\t\t\n\t\t\t\t\t<div class=\"workflowview-dialog-content-container\">\n\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t<div class=\"item-label\">{{ 'workflow-title' | translate }}</div>\n\t\t\t\t\t\t\t\t<div class=\"item-content\">{{viewWorkflowModel.workflowType.title}}</div>\n\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t<div class=\"item-label\">{{ 'workflow-comments' | translate }}</div>\n\t\t\t\t\t\t\t\t<div class=\"item-content\">{{viewWorkflowModel.comments}}</div>\t\n\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t<div class=\"item-label\">{{ 'workflow-current-step' | translate }}</div>\n\t\t\t\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t\t\t\t{{viewWorkflowModel.currentStep.title}}\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t<div class=\"item-label\">{{ 'workflow-status' | translate }}</div>\n\t\t\t\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t\t\t\t{{viewWorkflowModel.status}}\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div style=\"padding-top: 10px; padding-left: 10px; border-top: 1px solid gray; margin-top: 10px;\">\n\t\t\t\t\t\t\t\t<div style=\"text-align: center; font-weight: bold;\">Files</div>\n\t\t\t\t\t\t\t\t<div class=\"item-row\" *ngFor=\"let file of viewWorkflowModel.files;\" style=\"border-bottom: 1px #9a9a9a dashed\">\n\t\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t\t<a href=\"/workflow/file/view/{{viewWorkflowModel.identity}}/{{file.identity}}\" class=\"workflow-file-view-link\" target=\"_blank\">\n\t\t\t\t\t\t\t\t\t\t\t<strong>{{file.title}}</strong> (Ver: {{file.activeFileVersion}})\n\t\t\t\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t\t\t\t<a href=\"/workflow/file/download/{{viewWorkflowModel.identity}}/{{file.identity}}\" class=\"workflow-file-view-link\" target=\"_blank\">\n\t\t\t\t\t\t\t\t\t\t\t<i class=\"material-icons\">save_alt</i>\n\t\t\t\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t\t\t</div> \n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div style=\"padding-top: 10px; padding-left: 10px; border-top: 1px solid gray; margin-top: 10px;\">\n\t\t\t\t\t\t\t\t<div style=\"text-align: center; font-weight: bold;\">Actions</div>\n\t\t\t\t\t\t\t\t<div class=\"item-row\" *ngFor=\"let action of viewWorkflowModel.actions;\" style=\"border-bottom: 1px #9a9a9a dashed\">\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"action-content\">\n\t\t\t\t\t\t\t\t\t\t\t<div><strong>{{action.currentStep.title}}</strong>:</div> \n\t\t\t\t\t\t\t\t\t\t\t<div>({{action.status}}) ({{action.assignToUserName}})</div> \n\t\t\t\t\t\t\t\t\t\t\t<div style=\"\">{{action.action}}</div>\n\t\t\t\t\t\t\t\t\t\t</div>\t\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t</div>\n\t   \t\t\t\t\n\t\t      </div>\n\t      <div class=\"modal-footer\">\n\t\t\t<button type=\"button\" class=\"btn btn-secondary\" (click)=\"hideViewModal()\"><i class=\"material-icons\">close</i></button>\n\n\t\t\t<button type=\"button\" class=\"btn btn-success\"  *ngIf=\"viewWorkflowModel.notAssigned\" (click)=\"assignWorkflowMe(viewWorkflowModel.identity)\"><i class=\"material-icons\">assignment_ind</i></button>\n\n\t        <a type=\"button\" class=\"btn btn-primary\" *ngIf=\"viewWorkflowModel.meAssigned\" href=\"/workflow/edit/{{viewWorkflowModel.identity}}\"><i class=\"material-icons\">pageview</i></a>\n\t      </div>\n\t    </div>\n\t  </div>\t\t    \n\n\n\t\t\t\n</div>\n\n");
             /***/ 
         }),
         /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/top-bar/top-bar.component.html": 
@@ -140,7 +160,7 @@ var __extends = (this && this.__extends) || (function () {
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("\n\t\t<div class=\"content-container\">\n\t\t\t<div class=\"page-toolbar\">\n\t\t\t\t<div class=\"page-title\">{{ 'invoice-assignview-title' | translate }}</div>\n\t\t\t\t<a class=\"toolbar-link\" href=\"/workflow/list\"><i class=\"material-icons\">list</i></a>\n\t\t\t\t<button class=\"toolbar-button\" (click)=\"reload();\"><i class=\"material-icons\">refresh</i></button>\n\t\t\t</div>\n\t\t\t\n\t\t\t<div class=\"workflow-content-container\">\n\t\t\t\t<div class=\"workflow-content\">\n\t\t\t\t\t<form id=\"workflow-form\" name=\"workflowForm\" [formGroup]=\"invoiceEditForm\">\n\t\t\t\t\t\t<div class=\"panel panel-default\">\n\t\t\t\t\t\t\t<div class=\"panel-heading\">{{ 'invoice-invoice' | translate }}</div>\n\t\t\t\t\t\t\t<div class=\"panel-body\">\n\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'invoice-sender' | translate }}</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-content large-content\">\n\t\t\t\t\t\t\t\t\t\t<input type=\"text\" required name=\"sender\" formControlName=\"sender\" >\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-label small-label\">{{ 'invoice-trusted' | translate }}</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-content small-content\">\n\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\"  >\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'invoice-invoicenumber' | translate }}</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-content large-content\" >\n\t\t\t\t\t\t\t\t\t\t<input type=\"text\" required name=\"registerNumber\" formControlName=\"registerNumber\" >\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div  class=\"item-label label-required small-label\">{{ 'invoice-invoicedate' | translate }}</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-content small-content\">\n\t\t\t\t\t\t\t\t\t\t<input type=\"text\" required name=\"invoceDate\" class=\"select-date\" formControlName=\"invoceDate\" >\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'invoice-paymentamount' | translate }}</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-content large-content\" >\n\t\t\t\t\t\t\t\t\t\t<input type=\"number\" required name=\"paymentAmount\" formControlName=\"paymentAmount\" >\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required small-label\">{{ 'invoice-invoicetype' | translate }}</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-content small-content\">\n\t\t\t\t\t\t\t\t\t\t<select required name=\"invoiceType\" formControlName=\"invoiceType\" [ngClass]=\"{'ng-invalid' : invoiceEditForm.controls.invoiceType.errors}\" >\n\t\t\t\t\t\t\t\t\t\t\t<option *ngFor=\"let invoiceType of invoiceTypes;\" value=\"{{invoiceType.value}}\">{{invoiceType.title}}</option>\n\t\t\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\n\t\t\t\t\t\t<div class=\"twopannel\">\n\t\t\t\t\t\t\t<div class=\"panel panel-default panel-vendor\">\n\t\t\t\t\t\t\t\t<div class=\"panel-heading\">{{ 'invoice-vendor' | translate }}</div>\n\t\t\t\t\t\t\t\t<div class=\"panel-body\">\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'invoice-vendornumber' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content fullrowfromlabel\">\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" required name=\"vendorNumber\" formControlName=\"vendorNumber\" >\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'invoice-partnercode' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content fullrowfromlabel\">\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" required name=\"partnerCode\" formControlName=\"partnerCode\" >\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'invoice-vendorname' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content fullrowfromlabel\">\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" required name=\"vendorName\" formControlName=\"vendorName\" >\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'invoice-isdirectdebitpermission' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content fullrowfromlabel\">\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" name=\"isDirectDebitPermission\" formControlName=\"isDirectDebitPermission\" [checked]=\"forms.isDirectDebitPermission.value\" >\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\n\t\t\n\t\t\t\t\t\t\t<div class=\"panel panel-default panel-discount\">\n\t\t\t\t\t\t\t\t<div class=\"panel-heading\">{{ 'invoice-discount' | translate }}</div>\n\t\t\t\t\t\t\t\t<div class=\"panel-body\">\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required small-label\">{{ 'invoice-discountenterdate-short' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" required name=\"discountEnterDate\" class=\"select-date\" formControlName=\"discountEnterDate\" >\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required small-label\">{{ 'invoice-discountrate-short' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" required name=\"discountRate\" class=\"\" formControlName=\"discountRate\" > %\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required small-label\">{{ 'invoice-discountdeadline-short' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" required name=\"discountDeadline\" class=\"\" formControlName=\"discountDeadline\" > <span>{{ 'common.days' | translate }}</span>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required small-label\">{{ 'invoice-discountdate' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" required name=\"discountDate\" class=\"select-date\" formControlName=\"discountDate\" >\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t<div class=\"clear\"></div>\t\t\t\t\t\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\n\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'workflow-controller' | translate }}</div>\n\t\t\t\t\t\t\t<div class=\"item-content fullrowfromlabel\">\n\t\t\t\t\t\t\t\t<select type=\"text\" class=\"fullrow\" formControlName=\"controllerIdentity\">\n\t\t\t\t\t\t\t\t\t<option value=\"0\">{{ 'workflow-select-controller' | translate }}</option>\n\t\t\t\t\t\t\t\t\t<option *ngFor=\"let user of users;\" value=\"{{user.identity}}\">{{user.fullName}}</option>\n\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t</div>\n\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t<div class=\"item-label label-large\">{{ 'workflow-comments' | translate }}</div>\n\t\t\t\t\t\t\t<div class=\"item-content fullrowfromlabel\">\n\t\t\t\t\t\t\t\t<textarea class=\"comments-fullrow\" formControlName=\"comments\"></textarea>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t<div class=\"item-label label-large\">{{ 'workflow-assignto' | translate }}</div>\n\t\t\t\t\t\t\t<div class=\"item-content fullrowfromlabel\">\n\t\t\t\t\t\t\t\t<div class=\"assign-list\" >\n\t\t\t\t\t\t\t\t\t<button class=\"show-select-dialog\" (click)=\"showAssignSelect()\"><i class=\"material-icons\">playlist_add</i></button>\n\t\t\t\t\t\t\t\t\t<span *ngIf=\"hasNoAssigns\">{{ 'workflow-select-assign' | translate }}</span>\n\t\t\t\t\t\t\t\t\t<div class=\"user-item-box\" *ngFor=\"let item of assignedUsers\">\n\t\t\t\t\t\t\t\t\t\t<span>{{getAssignItemTitle(item)}} </span>\n\t\t\t\t\t\t\t\t\t\t<button (click)=\"removeAssign(item.itemIdentity, item.itemType)\"><i class=\"material-icons\">close</i></button>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t</div>\n\t\n\t\n\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t<div class=\"workflow-step-button-bar\">\n\t\t\t\t\t\t\t\t<button type=\"button\" (click)=\"save()\" [disabled]=\"invoiceEditForm.invalid\" class=\"button-bar-button step-button button-save\">\n\t\t\t\t\t\t\t\t\t<span>{{ 'common.create' | translate }}</span>\n\t\t\t\t\t\t\t\t\t<i class=\"material-icons\">save</i>\n\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</form>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t<hr>\n\t\t\t\t<div >\n\t\t\t\t\t{{invoiceEditForm.controls.invoiceType.errors | json}}\n\t\t\t\t</div>\n\t\t\t\t<hr>\n\t\t\t</div>\n\t\t    \t\t \n\t\t    <div class=\"modal fade\" [ngClass]=\"{'show' : showAssignModal}\" tabindex=\"-1\" id=\"assignlistdialog\" role=\"dialog\" aria-labelledby=\"exampleModalCenterTitle\">\n\t\t\t\t<div class=\"modal-dialog modal-dialog-centered\" role=\"document\">\n\t\t\t\t    <div class=\"modal-content user-select-modal-content\" >\n\t\t\t\t      <div class=\"modal-header\">\n\t\t\t\t        <h5 class=\"modal-title dialog-title\" id=\"exampleModalLongTitle\">{{ 'workflow-select-assign' | translate }}</h5>\n\t\t\t\t        <button class=\"dialog-toolbar-button close\" (click)=\"hideAssignSelect()\">\n\t\t\t\t        \t<i class=\"material-icons\">close</i>\n\t\t\t\t        </button>\n\t\t\t\t      </div>\n\t\t\t\t      <div class=\"modal-body\">\n\t\t\t\t\t\t\t<ul class=\"nav nav-tabs\">\n\t\t\t\t\t\t\t  <li class=\"active\"><a data-toggle=\"tab\" class=\"nav-link active\" href=\"#tabusers\">{{ 'common.users' | translate }}</a></li>\n\t\t\t\t\t\t\t  <li><a data-toggle=\"tab\" class=\"nav-link\" href=\"#tabdepartments\">{{ 'common.departments' | translate }}</a></li>\n\t\t\t\t\t\t\t</ul>\n\t\t\t\t\t\t\t<div class=\"tab-content tab-body user-select-tab-content\">\n\t\t\t\t\t\t\t\t<div id=\"tabusers\" class=\"tab-pane fade in active show\">\n\t\t\t\t\t\t\t\t\t<ul class=\"list-item-container\">\n\t\t\t\t\t\t\t\t\t\t<li class=\"list-item\" *ngFor=\"let item of users;\">\n\t\t\t\t\t\t\t\t\t\t\t<input [attr.data-assigntitle]=\"item.fullName\" type=\"checkbox\" #inputEl class=\"assign-checkbox\" [checked]=\"isItemAssigned(item.identity, assignTypeUser)\" (change)=\"toggleAssign(item.identity, assignTypeUser, inputEl.checked)\"  value=\"{{item.identity}}\"/> \n\t\t\t\t\t\t\t\t\t\t\t<span class=\"user-select-item-label\">{{item.fullName}}</span>\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t\t</ul>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div id=\"tabdepartments\" class=\"tab-pane fade\">\n\t\t\t\t\t\t\t\t\t<ul class=\"list-item-container\">\n\t\t\t\t\t\t\t\t\t\t<li *ngFor=\"let dep of departments;\" class=\"list-item\">\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" [attr.data-assigntitle]=\"dep.title\" #inputEl class=\"assign-checkbox\" [checked]=\"isItemAssigned(dep.identity, assignTypeDepartment)\" (change)=\"toggleAssign(dep.identity, assignTypeDepartment, inputEl.checked)\" value=\"{{dep.identity}}\"/> \n\t\t\t\t\t\t\t\t\t\t\t<span class=\"user-select-item-label\">{{dep.title}}</span>\n\t\t\t\t\t\t\t\t\t\t\t<ul class=\"list-item-container\">\n\t\t\t\t\t\t\t\t\t\t\t\t<li *ngFor=\"let depgrp of dep.departmentGroups;\" class=\"list-item\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" class=\"assign-checkbox\" #inputEl [attr.data-assigntitle]=\"depgrp.title\" [checked]=\"isItemAssigned(depgrp.identity, assignTypeDepartmentGroup)\" (change)=\"toggleAssign(depgrp.identity, assignTypeDepartmentGroup, inputEl.checked)\" value=\"{{depgrp.identity}}\"/> \t \n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"user-select-item-label\">{{depgrp.title}}</span>\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t\t\t\t</ul>\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t\t</ul>\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t      \n\t\t    \t\t\t\t\n\t\t\t\t      </div>\n\t\t\t\t      <div class=\"modal-footer\">\n\t\t\t\t        <button type=\"button\" class=\"btn btn-secondary\" (click)=\"hideAssignSelect()\"><i class=\"material-icons\">close</i></button>\n\t\t\t\t        <button type=\"button\" class=\"btn btn-primary\" (click)=\"applyUserSelect();\"><i class=\"material-icons\">check</i></button>\n\t\t\t\t      </div>\n\t\t\t\t    </div>\n\t\t\t\t  </div>\t\t    \n\t\t    \t\n\t\t    </div>\n\t\t\n\t\t</div>\n\n");
+            /* harmony default export */ __webpack_exports__["default"] = ("\n\t\t<div class=\"content-container\">\n\t\t\t<div class=\"page-toolbar\">\n\t\t\t\t<div class=\"page-title\">{{ 'invoice-assignview-title' | translate }}</div>\n\t\t\t\t<a class=\"toolbar-link\" href=\"/workflow/list\"><i class=\"material-icons\">list</i></a>\n\t\t\t\t<button class=\"toolbar-button\" (click)=\"reload();\"><i class=\"material-icons\">refresh</i></button>\n\t\t\t</div>\n\t\t\t\n\t\t\t<div class=\"workflow-content-container\">\n\t\t\t\t<div class=\"workflow-content\">\n\t\t\t\t\t<form id=\"workflow-form\" name=\"workflowForm\" [formGroup]=\"invoiceEditForm\">\n\t\t\t\t\t\t<div class=\"panel panel-default\">\n\t\t\t\t\t\t\t<div class=\"panel-heading\">{{ 'invoice-invoice' | translate }}</div>\n\t\t\t\t\t\t\t<div class=\"panel-body\">\n\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'invoice-sender' | translate }}</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-content large-content\">\n\t\t\t\t\t\t\t\t\t\t<input type=\"text\" required name=\"sender\" formControlName=\"sender\" >\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-label small-label\">{{ 'invoice-trusted' | translate }}</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-content small-content\">\n\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\"  >\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'invoice-invoicenumber' | translate }}</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-content large-content\" >\n\t\t\t\t\t\t\t\t\t\t<input type=\"text\" required name=\"registerNumber\" formControlName=\"registerNumber\" >\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div  class=\"item-label label-required small-label\">{{ 'invoice-invoicedate' | translate }}</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-content small-content\">\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t<input required class=\"select-date\" matInput [matDatepicker]=\"invocieDatepicker\" placeholder=\"{{ 'invoice-invoicedate-select' | translate }}\" formControlName=\"invocieDate\" >\n\t\t\t\t\t\t\t\t\t\t<mat-datepicker-toggle matSuffix [for]=\"invocieDatepicker\"></mat-datepicker-toggle>\n\t\t\t\t\t\t\t\t\t\t<mat-datepicker #invocieDatepicker startView=\"month\" [startAt]=\"invoiceEditForm.controls.invocieDate.value\"></mat-datepicker>\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'invoice-paymentamount' | translate }}</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-content large-content\" >\n\t\t\t\t\t\t\t\t\t\t<input type=\"number\" required name=\"paymentAmount\" formControlName=\"paymentAmount\" >\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required small-label\">{{ 'invoice-invoicetype' | translate }}</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-content small-content\">\n\t\t\t\t\t\t\t\t\t\t<select required name=\"invoiceType\" formControlName=\"invoiceType\" [ngClass]=\"{'ng-invalid' : invoiceEditForm.controls.invoiceType.errors}\" >\n\t\t\t\t\t\t\t\t\t\t\t<option *ngFor=\"let invoiceType of invoiceTypes;\" value=\"{{invoiceType.value}}\">{{invoiceType.title}}</option>\n\t\t\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\n\t\t\t\t\t\t<div class=\"twopannel\">\n\t\t\t\t\t\t\t<div class=\"panel panel-default panel-vendor\">\n\t\t\t\t\t\t\t\t<div class=\"panel-heading\">{{ 'invoice-vendor' | translate }}</div>\n\t\t\t\t\t\t\t\t<div class=\"panel-body\">\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'invoice-vendornumber' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content fullrowfromlabel\">\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" required name=\"vendorNumber\" formControlName=\"vendorNumber\" >\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'invoice-partnercode' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content fullrowfromlabel\">\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" required name=\"partnerCode\" formControlName=\"partnerCode\" >\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'invoice-vendorname' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content fullrowfromlabel\">\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" required name=\"vendorName\" formControlName=\"vendorName\" >\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'invoice-isdirectdebitpermission' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content fullrowfromlabel\">\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" name=\"isDirectDebitPermission\" formControlName=\"isDirectDebitPermission\" [checked]=\"forms.isDirectDebitPermission.value\" >\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\n\t\t\n\t\t\t\t\t\t\t<div class=\"panel panel-default panel-discount\">\n\t\t\t\t\t\t\t\t<div class=\"panel-heading\">{{ 'invoice-discount' | translate }}</div>\n\t\t\t\t\t\t\t\t<div class=\"panel-body\">\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required small-label\">{{ 'invoice-discountenterdate-short' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t\t\t\t\t\t<input required class=\"select-date\" matInput [matDatepicker]=\"discountEnterDatepicker\" placeholder=\"{{ 'invoice-discountenterdate' | translate }}\" formControlName=\"discountEnterDate\" >\n\t\t\t\t\t\t\t\t\t\t\t<mat-datepicker-toggle matSuffix [for]=\"discountEnterDatepicker\"></mat-datepicker-toggle>\n\t\t\t\t\t\t\t\t\t\t\t<mat-datepicker #discountEnterDatepicker startView=\"month\" [startAt]=\"invoiceEditForm.controls.discountEnterDate.value\"></mat-datepicker>\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required small-label\">{{ 'invoice-discountrate-short' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" required name=\"discountRate\" class=\"short-input\" formControlName=\"discountRate\" > %\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required small-label\">{{ 'invoice-discountdeadline-short' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" required name=\"discountDeadline\" class=\"short-input\" formControlName=\"discountDeadline\" > <span>{{ 'common.days' | translate }}</span>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required small-label\">{{ 'invoice-discountdate' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t\t\t\t\t\t<input required class=\"select-date\" matInput [matDatepicker]=\"discountDatepicker\" placeholder=\"{{ 'invoice-discountdate' | translate }}\" formControlName=\"discountDate\" >\n\t\t\t\t\t\t\t\t\t\t\t<mat-datepicker-toggle matSuffix [for]=\"discountDatepicker\"></mat-datepicker-toggle>\n\t\t\t\t\t\t\t\t\t\t\t<mat-datepicker #discountDatepicker startView=\"month\" [startAt]=\"invoiceEditForm.controls.discountDate.value\"></mat-datepicker>\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t<div class=\"clear\"></div>\t\t\t\t\t\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\n\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'workflow-controller' | translate }}</div>\n\t\t\t\t\t\t\t<div class=\"item-content fullrowfromlabel\">\n\t\t\t\t\t\t\t\t<select type=\"text\" class=\"fullrow\" formControlName=\"controllerIdentity\">\n\t\t\t\t\t\t\t\t\t<option value=\"0\">{{ 'workflow-select-controller' | translate }}</option>\n\t\t\t\t\t\t\t\t\t<option *ngFor=\"let user of users;\" value=\"{{user.identity}}\">{{user.fullName}}</option>\n\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t</div>\n\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t<div class=\"item-label label-large\">{{ 'workflow-comments' | translate }}</div>\n\t\t\t\t\t\t\t<div class=\"item-content fullrowfromlabel\">\n\t\t\t\t\t\t\t\t<textarea class=\"comments-fullrow\" formControlName=\"comments\"></textarea>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t<div class=\"item-label label-large\">{{ 'workflow-assignto' | translate }}</div>\n\t\t\t\t\t\t\t<div class=\"item-content fullrowfromlabel\">\n\t\t\t\t\t\t\t\t<div class=\"assign-list\" >\n\t\t\t\t\t\t\t\t\t<button class=\"show-select-dialog\" (click)=\"showAssignSelect()\"><i class=\"material-icons\">playlist_add</i></button>\n\t\t\t\t\t\t\t\t\t<span *ngIf=\"hasNoAssigns\">{{ 'workflow-select-assign' | translate }}</span>\n\t\t\t\t\t\t\t\t\t<div class=\"user-item-box\" *ngFor=\"let item of assignedUsers\">\n\t\t\t\t\t\t\t\t\t\t<span>{{getAssignItemTitle(item)}} </span>\n\t\t\t\t\t\t\t\t\t\t<button (click)=\"removeAssign(item.itemIdentity, item.itemType)\"><i class=\"material-icons\">close</i></button>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t</div>\n\t\n\t\n\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t<div class=\"workflow-step-button-bar\">\n\t\t\t\t\t\t\t\t<button type=\"button\" (click)=\"save()\" [disabled]=\"invoiceEditForm.invalid\" class=\"button-bar-button step-button button-save\">\n\t\t\t\t\t\t\t\t\t<span>{{ 'common.create' | translate }}</span>\n\t\t\t\t\t\t\t\t\t<i class=\"material-icons\">save</i>\n\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</form>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\n\t\t\t</div>\n\t\t    \t\t \n\t\t    <div class=\"modal fade\" [ngClass]=\"{'show' : showAssignModal}\" tabindex=\"-1\" id=\"assignlistdialog\" role=\"dialog\" aria-labelledby=\"exampleModalCenterTitle\">\n\t\t\t\t<div class=\"modal-dialog modal-dialog-centered\" role=\"document\">\n\t\t\t\t    <div class=\"modal-content user-select-modal-content\" >\n\t\t\t\t      <div class=\"modal-header\">\n\t\t\t\t        <h5 class=\"modal-title dialog-title\" id=\"exampleModalLongTitle\">{{ 'workflow-select-assign' | translate }}</h5>\n\t\t\t\t        <button class=\"dialog-toolbar-button close\" (click)=\"hideAssignSelect()\">\n\t\t\t\t        \t<i class=\"material-icons\">close</i>\n\t\t\t\t        </button>\n\t\t\t\t      </div>\n\t\t\t\t      <div class=\"modal-body\">\n\t\t\t\t\t\t\t<ul class=\"nav nav-tabs\">\n\t\t\t\t\t\t\t  <li class=\"active\"><a data-toggle=\"tab\" class=\"nav-link active\" href=\"#tabusers\">{{ 'common.users' | translate }}</a></li>\n\t\t\t\t\t\t\t  <li><a data-toggle=\"tab\" class=\"nav-link\" href=\"#tabdepartments\">{{ 'common.departments' | translate }}</a></li>\n\t\t\t\t\t\t\t</ul>\n\t\t\t\t\t\t\t<div class=\"tab-content tab-body user-select-tab-content\">\n\t\t\t\t\t\t\t\t<div id=\"tabusers\" class=\"tab-pane fade in active show\">\n\t\t\t\t\t\t\t\t\t<ul class=\"list-item-container\">\n\t\t\t\t\t\t\t\t\t\t<li class=\"list-item\" *ngFor=\"let item of users;\">\n\t\t\t\t\t\t\t\t\t\t\t<input [attr.data-assigntitle]=\"item.fullName\" type=\"checkbox\" #inputEl class=\"assign-checkbox\" [checked]=\"isItemAssigned(item.identity, assignTypeUser)\" (change)=\"toggleAssign(item.identity, assignTypeUser, inputEl.checked)\"  value=\"{{item.identity}}\"/> \n\t\t\t\t\t\t\t\t\t\t\t<span class=\"user-select-item-label\">{{item.fullName}}</span>\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t\t</ul>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div id=\"tabdepartments\" class=\"tab-pane fade\">\n\t\t\t\t\t\t\t\t\t<ul class=\"list-item-container\">\n\t\t\t\t\t\t\t\t\t\t<li *ngFor=\"let dep of departments;\" class=\"list-item\">\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" [attr.data-assigntitle]=\"dep.title\" #inputEl class=\"assign-checkbox\" [checked]=\"isItemAssigned(dep.identity, assignTypeDepartment)\" (change)=\"toggleAssign(dep.identity, assignTypeDepartment, inputEl.checked)\" value=\"{{dep.identity}}\"/> \n\t\t\t\t\t\t\t\t\t\t\t<span class=\"user-select-item-label\">{{dep.title}}</span>\n\t\t\t\t\t\t\t\t\t\t\t<ul class=\"list-item-container\">\n\t\t\t\t\t\t\t\t\t\t\t\t<li *ngFor=\"let depgrp of dep.departmentGroups;\" class=\"list-item\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" class=\"assign-checkbox\" #inputEl [attr.data-assigntitle]=\"depgrp.title\" [checked]=\"isItemAssigned(depgrp.identity, assignTypeDepartmentGroup)\" (change)=\"toggleAssign(depgrp.identity, assignTypeDepartmentGroup, inputEl.checked)\" value=\"{{depgrp.identity}}\"/> \t \n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"user-select-item-label\">{{depgrp.title}}</span>\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t\t\t\t</ul>\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t\t</ul>\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t      \n\t\t    \t\t\t\t\n\t\t\t\t      </div>\n\t\t\t\t      <div class=\"modal-footer\">\n\t\t\t\t        <button type=\"button\" class=\"btn btn-secondary\" (click)=\"hideAssignSelect()\"><i class=\"material-icons\">close</i></button>\n\t\t\t\t        <button type=\"button\" class=\"btn btn-primary\" (click)=\"applyUserSelect();\"><i class=\"material-icons\">check</i></button>\n\t\t\t\t      </div>\n\t\t\t\t    </div>\n\t\t\t\t  </div>\t\t    \n\t\t    \t\n\t\t    </div>\n\t\t\n\t\t</div>\n\n");
             /***/ 
         }),
         /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/wm-components/create/create-singletask/create-singletask.component.html": 
@@ -173,7 +193,18 @@ var __extends = (this && this.__extends) || (function () {
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("\t\t<div class=\"content-container\">\r\n\t\t\t<div class=\"page-toolbar\">\r\n\t\t\t\t<div class=\"page-title\">{{ 'menu-workflow-create' | translate }}</div>\r\n\t\t\t\t<a class=\"toolbar-link\" [routerLink]=\"['/workflow/list']\"><i class=\"material-icons\">list</i></a>\r\n\t\t\t</div>\r\n\t\t\r\n\t\t\t<div class=\"workflow-content\">\r\n\t\t\t\t<div class=\"item-row\">\r\n\t\t\t\t\t<div class=\"list-group\">\r\n\t\t\t\t\t  <a class=\"list-group-item list-group-item-action list-group-item-title\">{{ 'workflow-type' | translate }}</a>\r\n\t\t\t\t\t  <a *ngFor=\"let type of worlflowTypes;\" [routerLink]=\"['/workflow/' + type.controllerPreffix + '/create']\" class=\"list-group-item list-group-item-action link-out\" >{{type.title}}</a>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t\t<div class=\"clear\"></div>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t\r\n\t\t</div>\r\n\r\n\r\n\r\n");
+            /* harmony default export */ __webpack_exports__["default"] = ("\t\t<div class=\"content-container\">\r\n\t\t\t<div class=\"page-toolbar\">\r\n\t\t\t\t<div class=\"page-title\">{{ 'menu-workflow-create' | translate }}</div>\r\n\t\t\t\t<a class=\"toolbar-link\" [routerLink]=\"['/workflow/list']\"><i class=\"material-icons\">list</i></a>\r\n\t\t\t</div>\r\n\t\t\r\n\t\t\t<div class=\"workflow-content\">\r\n\t\t\t\t<div class=\"item-row\">\r\n\t\t\t\t\t<div class=\"list-group\">\r\n\t\t\t\t\t  <a class=\"list-group-item list-group-item-action list-group-item-title\">{{ 'workflow-type' | translate }}</a>\r\n\t\t\t\t\t  <a *ngFor=\"let type of worlflowTypes;\" [routerLink]=\"['/workflow/create/' , type.controllerPreffix ]\" class=\"list-group-item list-group-item-action link-out\" >{{type.title}}</a>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t\t<div class=\"clear\"></div>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t\r\n\t\t</div>\r\n\r\n\r\n\r\n");
+            /***/ 
+        }),
+        /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/wm-components/edit/edit-invoice/edit-invoice.component.html": 
+        /*!*******************************************************************************************************************!*\
+          !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/wm-components/edit/edit-invoice/edit-invoice.component.html ***!
+          \*******************************************************************************************************************/
+        /*! exports provided: default */
+        /***/ (function (module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            __webpack_require__.r(__webpack_exports__);
+            /* harmony default export */ __webpack_exports__["default"] = ("\n\t\t<div class=\"content-container\">\n\t\t\t<div class=\"page-toolbar\">\n\t\t\t\t<div class=\"page-title\">{{ 'invoice-testingview-title' | translate }}</div>\n\t\t\t\t<a class=\"toolbar-link\" href=\"/workflow/list\"><i class=\"material-icons\">list</i></a>\n\t\t\t\t<button class=\"toolbar-button\" (click)=\"reload();\"><i class=\"material-icons\">refresh</i></button>\n\t\t\t</div>\n\t\t\t\n\t\t\t<div class=\"workflow-content-container\">\n\t\t\t\t<div class=\"workflow-content\">\n\t\t\t\t\t<form id=\"workflow-form\" name=\"workflowForm\" [formGroup]=\"invoiceEditForm\">\n\t\t\t\t\t\t<div class=\"panel panel-default\">\n\t\t\t\t\t\t\t<div class=\"panel-heading\">{{ 'invoice-invoice' | translate }}</div>\n\t\t\t\t\t\t\t<div class=\"panel-body\">\n\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'invoice-sender' | translate }}</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-content large-content\">\n\t\t\t\t\t\t\t\t\t\t<input type=\"text\" required name=\"sender\" formControlName=\"sender\" >\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-label small-label\">{{ 'invoice-trusted' | translate }}</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-content small-content\">\n\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\"  >\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'invoice-invoicenumber' | translate }}</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-content large-content\" >\n\t\t\t\t\t\t\t\t\t\t<input type=\"text\" required name=\"registerNumber\" formControlName=\"registerNumber\" >\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div  class=\"item-label label-required small-label\">{{ 'invoice-invoicedate' | translate }}</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-content small-content\">\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t<input required class=\"select-date\" matInput [matDatepicker]=\"invocieDatepicker\" placeholder=\"{{ 'invoice-invoicedate-select' | translate }}\" formControlName=\"invocieDate\" >\n\t\t\t\t\t\t\t\t\t\t<mat-datepicker-toggle matSuffix [for]=\"invocieDatepicker\"></mat-datepicker-toggle>\n\t\t\t\t\t\t\t\t\t\t<mat-datepicker #invocieDatepicker startView=\"month\" [startAt]=\"invoiceEditForm.controls.invocieDate.value\"></mat-datepicker>\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'invoice-paymentamount' | translate }}</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-content large-content\" >\n\t\t\t\t\t\t\t\t\t\t<input type=\"number\" required name=\"paymentAmount\" formControlName=\"paymentAmount\" >\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required small-label\">{{ 'invoice-invoicetype' | translate }}</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-content small-content\">\n\t\t\t\t\t\t\t\t\t\t<select required name=\"invoiceType\" formControlName=\"invoiceType\" [ngClass]=\"{'ng-invalid' : invoiceEditForm.controls.invoiceType.errors}\" >\n\t\t\t\t\t\t\t\t\t\t\t<option *ngFor=\"let invoiceType of invoiceTypes;\" value=\"{{invoiceType.value}}\">{{invoiceType.title}}</option>\n\t\t\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\n\t\t\t\t\t\t<div class=\"twopannel\">\n\t\t\t\t\t\t\t<div class=\"panel panel-default panel-vendor\">\n\t\t\t\t\t\t\t\t<div class=\"panel-heading\">{{ 'invoice-vendor' | translate }}</div>\n\t\t\t\t\t\t\t\t<div class=\"panel-body\">\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'invoice-vendornumber' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content fullrowfromlabel\">\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" required name=\"vendorNumber\" formControlName=\"vendorNumber\" >\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'invoice-partnercode' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content fullrowfromlabel\">\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" required name=\"partnerCode\" formControlName=\"partnerCode\" >\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'invoice-vendorname' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content fullrowfromlabel\">\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" required name=\"vendorName\" formControlName=\"vendorName\" >\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'invoice-isdirectdebitpermission' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content fullrowfromlabel\">\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" name=\"isDirectDebitPermission\" formControlName=\"isDirectDebitPermission\" [checked]=\"forms.isDirectDebitPermission.value\" >\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\n\t\t\n\t\t\t\t\t\t\t<div class=\"panel panel-default panel-discount\">\n\t\t\t\t\t\t\t\t<div class=\"panel-heading\">{{ 'invoice-discount' | translate }}</div>\n\t\t\t\t\t\t\t\t<div class=\"panel-body\">\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required small-label\">{{ 'invoice-discountenterdate-short' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t\t\t\t\t\t<input required class=\"select-date\" matInput [matDatepicker]=\"discountEnterDatepicker\" placeholder=\"{{ 'invoice-discountenterdate' | translate }}\" formControlName=\"discountEnterDate\" >\n\t\t\t\t\t\t\t\t\t\t\t<mat-datepicker-toggle matSuffix [for]=\"discountEnterDatepicker\"></mat-datepicker-toggle>\n\t\t\t\t\t\t\t\t\t\t\t<mat-datepicker #discountEnterDatepicker startView=\"month\" [startAt]=\"invoiceEditForm.controls.discountEnterDate.value\"></mat-datepicker>\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required small-label\">{{ 'invoice-discountrate-short' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" required name=\"discountRate\" class=\"short-input\" formControlName=\"discountRate\" > %\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required small-label\">{{ 'invoice-discountdeadline-short' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" required name=\"discountDeadline\" class=\"short-input\" formControlName=\"discountDeadline\" > <span>{{ 'common.days' | translate }}</span>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required small-label\">{{ 'invoice-discountdate' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t\t\t\t\t\t<input required class=\"select-date\" matInput [matDatepicker]=\"discountDatepicker\" placeholder=\"{{ 'invoice-discountdate' | translate }}\" formControlName=\"discountDate\" >\n\t\t\t\t\t\t\t\t\t\t\t<mat-datepicker-toggle matSuffix [for]=\"discountDatepicker\"></mat-datepicker-toggle>\n\t\t\t\t\t\t\t\t\t\t\t<mat-datepicker #discountDatepicker startView=\"month\" [startAt]=\"invoiceEditForm.controls.discountDate.value\"></mat-datepicker>\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t<div class=\"clear\"></div>\t\t\t\t\t\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\n\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'workflow-controller' | translate }}</div>\n\t\t\t\t\t\t\t<div class=\"item-content fullrowfromlabel\">\n\t\t\t\t\t\t\t\t<select type=\"text\" class=\"fullrow\" formControlName=\"controllerIdentity\">\n\t\t\t\t\t\t\t\t\t<option value=\"0\">{{ 'workflow-select-controller' | translate }}</option>\n\t\t\t\t\t\t\t\t\t<option *ngFor=\"let user of users;\" value=\"{{user.identity}}\">{{user.fullName}}</option>\n\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t</div>\n\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t<div class=\"item-label label-large\">{{ 'workflow-comments' | translate }}</div>\n\t\t\t\t\t\t\t<div class=\"item-content fullrowfromlabel\">\n\t\t\t\t\t\t\t\t<textarea class=\"comments-fullrow\" formControlName=\"comments\"></textarea>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t<div class=\"item-label label-large\">{{ 'workflow-assignto' | translate }}</div>\n\t\t\t\t\t\t\t<div class=\"item-content fullrowfromlabel\">\n\t\t\t\t\t\t\t\t<div class=\"assign-list\" >\n\t\t\t\t\t\t\t\t\t<button class=\"show-select-dialog\" (click)=\"showAssignSelect()\"><i class=\"material-icons\">playlist_add</i></button>\n\t\t\t\t\t\t\t\t\t<span *ngIf=\"hasNoAssigns\">{{ 'workflow-select-assign' | translate }}</span>\n\t\t\t\t\t\t\t\t\t<div class=\"user-item-box\" *ngFor=\"let item of assignedUsers\">\n\t\t\t\t\t\t\t\t\t\t<span>{{getAssignItemTitle(item)}} </span>\n\t\t\t\t\t\t\t\t\t\t<button (click)=\"removeAssign(item.itemIdentity, item.itemType)\"><i class=\"material-icons\">close</i></button>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t</div>\n\t\n\t\n\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t<div class=\"workflow-step-button-bar\">\n\t\t\t\t\t\t\t\t<button type=\"button\" (click)=\"save()\" [disabled]=\"invoiceEditForm.invalid\" class=\"button-bar-button step-button button-save\">\n\t\t\t\t\t\t\t\t\t<span>{{ 'common.create' | translate }}</span>\n\t\t\t\t\t\t\t\t\t<i class=\"material-icons\">save</i>\n\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</form>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\n\t\t\t</div>\n\t\t    \t\t \n\t\t    <div class=\"modal fade\" [ngClass]=\"{'show' : showAssignModal}\" tabindex=\"-1\" id=\"assignlistdialog\" role=\"dialog\" aria-labelledby=\"exampleModalCenterTitle\">\n\t\t\t\t<div class=\"modal-dialog modal-dialog-centered\" role=\"document\">\n\t\t\t\t    <div class=\"modal-content user-select-modal-content\" >\n\t\t\t\t      <div class=\"modal-header\">\n\t\t\t\t        <h5 class=\"modal-title dialog-title\" id=\"exampleModalLongTitle\">{{ 'workflow-select-assign' | translate }}</h5>\n\t\t\t\t        <button class=\"dialog-toolbar-button close\" (click)=\"hideAssignSelect()\">\n\t\t\t\t        \t<i class=\"material-icons\">close</i>\n\t\t\t\t        </button>\n\t\t\t\t      </div>\n\t\t\t\t      <div class=\"modal-body\">\n\t\t\t\t\t\t\t<ul class=\"nav nav-tabs\">\n\t\t\t\t\t\t\t  <li class=\"active\"><a data-toggle=\"tab\" class=\"nav-link active\" href=\"#tabusers\">{{ 'common.users' | translate }}</a></li>\n\t\t\t\t\t\t\t  <li><a data-toggle=\"tab\" class=\"nav-link\" href=\"#tabdepartments\">{{ 'common.departments' | translate }}</a></li>\n\t\t\t\t\t\t\t</ul>\n\t\t\t\t\t\t\t<div class=\"tab-content tab-body user-select-tab-content\">\n\t\t\t\t\t\t\t\t<div id=\"tabusers\" class=\"tab-pane fade in active show\">\n\t\t\t\t\t\t\t\t\t<ul class=\"list-item-container\">\n\t\t\t\t\t\t\t\t\t\t<li class=\"list-item\" *ngFor=\"let item of users;\">\n\t\t\t\t\t\t\t\t\t\t\t<input [attr.data-assigntitle]=\"item.fullName\" type=\"checkbox\" #inputEl class=\"assign-checkbox\" [checked]=\"isItemAssigned(item.identity, assignTypeUser)\" (change)=\"toggleAssign(item.identity, assignTypeUser, inputEl.checked)\"  value=\"{{item.identity}}\"/> \n\t\t\t\t\t\t\t\t\t\t\t<span class=\"user-select-item-label\">{{item.fullName}}</span>\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t\t</ul>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div id=\"tabdepartments\" class=\"tab-pane fade\">\n\t\t\t\t\t\t\t\t\t<ul class=\"list-item-container\">\n\t\t\t\t\t\t\t\t\t\t<li *ngFor=\"let dep of departments;\" class=\"list-item\">\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" [attr.data-assigntitle]=\"dep.title\" #inputEl class=\"assign-checkbox\" [checked]=\"isItemAssigned(dep.identity, assignTypeDepartment)\" (change)=\"toggleAssign(dep.identity, assignTypeDepartment, inputEl.checked)\" value=\"{{dep.identity}}\"/> \n\t\t\t\t\t\t\t\t\t\t\t<span class=\"user-select-item-label\">{{dep.title}}</span>\n\t\t\t\t\t\t\t\t\t\t\t<ul class=\"list-item-container\">\n\t\t\t\t\t\t\t\t\t\t\t\t<li *ngFor=\"let depgrp of dep.departmentGroups;\" class=\"list-item\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" class=\"assign-checkbox\" #inputEl [attr.data-assigntitle]=\"depgrp.title\" [checked]=\"isItemAssigned(depgrp.identity, assignTypeDepartmentGroup)\" (change)=\"toggleAssign(depgrp.identity, assignTypeDepartmentGroup, inputEl.checked)\" value=\"{{depgrp.identity}}\"/> \t \n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"user-select-item-label\">{{depgrp.title}}</span>\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t\t\t\t</ul>\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t\t</ul>\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t      \n\t\t    \t\t\t\t\n\t\t\t\t      </div>\n\t\t\t\t      <div class=\"modal-footer\">\n\t\t\t\t        <button type=\"button\" class=\"btn btn-secondary\" (click)=\"hideAssignSelect()\"><i class=\"material-icons\">close</i></button>\n\t\t\t\t        <button type=\"button\" class=\"btn btn-primary\" (click)=\"applyUserSelect();\"><i class=\"material-icons\">check</i></button>\n\t\t\t\t      </div>\n\t\t\t\t    </div>\n\t\t\t\t  </div>\t\t    \n\t\t    \t\n\t\t    </div>\n\t\t\n\t\t</div>\n\n");
             /***/ 
         }),
         /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/wm-components/workflow-list/workflow-list.component.html": 
@@ -184,7 +215,7 @@ var __extends = (this && this.__extends) || (function () {
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("\t\t<div class=\"content-container\">\r\n\t\t\t<div class=\"page-toolbar\">\r\n\t\t\t\t<div class=\"page-title\">{{ 'menu-workflow-list' | translate }}</div>\r\n\t\t\t\t<button class=\"toolbar-button\" (click)=\"reload()\"><i class=\"material-icons\">refresh</i></button>\r\n\t\t\t\t<a class=\"toolbar-link\" href=\"/workflow/create\"><i class=\"material-icons\">playlist_add</i></a>\r\n\t\t\t\t\r\n\t\t\t\t<ul class=\"nav nav-pills search-toolbar\">\r\n\t\t\t\t\t<li class=\"nav-item dropdown\">\r\n\t\t\t\t\t\t<a class=\"nav-link dropdown-toggle\" data-toggle=\"dropdown\" href=\"#\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">Status</a>\r\n\t\t\t\t\t\t<div class=\"dropdown-menu\">\r\n\t\t\t\t\t\t\t<div *ngFor=\"let wstatus of statusList;\" class=\"dropdown-item\">\r\n\t\t\t\t\t\t\t\t<input type=\"checkbox\" class=\"form-check-input\" [checked]=\"isStatusSelected(wstatus)\" (click)=\"toggleStatusSelected(wstatus)\"  id=\"status-check-{{wstatus}}\">\r\n\t\t\t\t\t\t\t\t<label class=\"form-check-label\" for=\"status-check-{{wstatus}}\">{{wstatus}}</label>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</li>\r\n\t\t\t\t  \t<li class=\"nav-item\">\r\n\t\t\t\t  \t\t<div class=\"dropdown-item search-toolbar-item\">\r\n\t\t\t\t\t\t\t<input type=\"checkbox\" class=\"toggle-checkbox form-check-input\" [checked]=\"isMeAssigned\" [(ngModel)]=\"isMeAssigned\"  id=\"me-assigned-check\">\r\n\t\t\t\t\t\t\t<label class=\"form-check-label\" for=\"me-assigned-check\">{{ 'workflow-assigned-me' | translate }}</label>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t  \t</li>\r\n\t\t\t\t</ul>\t\t\t\t\r\n\t\t\t\t\t\t\t\t\r\n\t\t\t</div>\r\n\t\t\t<div *ngIf=\"showDebug\" style=\"border: 1px solid gray; padding: 5px; background-color: #f1f1f1;\">{{debugSearchFilter}}</div>\r\n\t\t\t\r\n\t\t\t<table class=\"table table-striped\" [svData]=\"resultWorlflows\" #sv=\"svDataTable\" [svRowsOnPage]=\"500\" svSortBy=\"name\" svSortOrder=\"asc\">\r\n\t\t\t    <thead>\r\n\t\t\t    <tr>\r\n\t\t\t        <th><sv-default-sorter by=\"workflowType.title\">{{ 'workflow-type' | translate }}</sv-default-sorter></th>\r\n\t\t\t        <th><sv-default-sorter by=\"currentStep.title\">{{ 'workflow-current-step' | translate }}</sv-default-sorter></th>\r\n\t\t\t        <th><sv-default-sorter by=\"status\">{{ 'workflow-status' | translate }}</sv-default-sorter></th>\r\n\t\t\t        <th><sv-default-sorter by=\"assignToUserFullName\">{{ 'workflow-assignto' | translate }}</sv-default-sorter></th>\r\n\t\t\t        <th>\r\n\t\t\t            <sv-default-sorter by=\"updated\">{{ 'workflow-updated' | translate }}</sv-default-sorter>\r\n\t\t\t        </th>\r\n\t\t\t        <th></th>\r\n\t\t\t    </tr>\r\n\t\t\t    </thead>\r\n\t\t\t    <tbody>\r\n\t\t\t\t    <tr *ngFor=\"let item of sv.data\">\r\n\t\t    \t\t\t<td scope=\"row\">{{item.workflowType.title}}</td>\r\n\t\t    \t\t\t<td>{{item.currentStep.title}}</td>\r\n\t\t    \t\t\t<td>{{item.status}}</td>\r\n\t\t    \t\t\t<td>{{item.assignToUserFullName}}</td>\r\n\t\t    \t\t\t<td></td>\r\n\t\t    \t\t\t<td><a class=\"tool-link\" [routerLink]=\"['/workflow/edit/' + item.workflowType.identity + '/' + item.identity + '/' + item.currentStep.identity]\"><i class=\"material-icons\">edit</i></a></td>\r\n\t\t\t\t    </tr>\r\n\t\t\t\t    <tr *ngIf=\"resultWorlflows.length == 0\">\r\n\t\t    \t\t\t<td colspan=\"6\">{{ 'workflow-no-result-found' | translate }}</td>\r\n\t\t\t\t    </tr>\r\n\t\t\t    </tbody>\r\n\t\t\t</table>\r\n\t\t\r\n\t\t\r\n\t\t</div>\r\n\r\n");
+            /* harmony default export */ __webpack_exports__["default"] = ("\t\t<div class=\"content-container\">\r\n\t\t\t<div class=\"page-toolbar\">\r\n\t\t\t\t<div class=\"page-title\">{{ 'menu-workflow-list' | translate }}</div>\r\n\t\t\t\t<button class=\"toolbar-button\" (click)=\"reload()\"><i class=\"material-icons\">refresh</i></button>\r\n\t\t\t\t<a class=\"toolbar-link\" href=\"/workflow/create\"><i class=\"material-icons\">playlist_add</i></a>\r\n\t\t\t\t\r\n\t\t\t\t<ul class=\"nav nav-pills search-toolbar\">\r\n\t\t\t\t\t<li class=\"nav-item dropdown\">\r\n\t\t\t\t\t\t<a class=\"nav-link dropdown-toggle\" data-toggle=\"dropdown\" href=\"#\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">Status</a>\r\n\t\t\t\t\t\t<div class=\"dropdown-menu\">\r\n\t\t\t\t\t\t\t<div *ngFor=\"let wstatus of statusList;\" class=\"dropdown-item\">\r\n\t\t\t\t\t\t\t\t<input type=\"checkbox\" class=\"form-check-input\" [checked]=\"isStatusSelected(wstatus)\" (click)=\"toggleStatusSelected(wstatus)\"  id=\"status-check-{{wstatus}}\">\r\n\t\t\t\t\t\t\t\t<label class=\"form-check-label\" for=\"status-check-{{wstatus}}\">{{wstatus}}</label>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</li>\r\n\t\t\t\t  \t<li class=\"nav-item\">\r\n\t\t\t\t  \t\t<div class=\"dropdown-item search-toolbar-item\">\r\n\t\t\t\t\t\t\t<input type=\"checkbox\" class=\"toggle-checkbox form-check-input\" [checked]=\"isMeAssigned\" [(ngModel)]=\"isMeAssigned\"  id=\"me-assigned-check\">\r\n\t\t\t\t\t\t\t<label class=\"form-check-label\" for=\"me-assigned-check\">{{ 'workflow-assigned-me' | translate }}</label>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t  \t</li>\r\n\t\t\t\t</ul>\t\t\t\t\r\n\t\t\t\t\t\t\t\t\r\n\t\t\t</div>\r\n\t\t\t<div *ngIf=\"showDebug\" style=\"border: 1px solid gray; padding: 5px; background-color: #f1f1f1;\">{{debugSearchFilter}}</div>\r\n\t\t\t\r\n\t\t\t<table class=\"table table-striped\" [svData]=\"resultWorlflows\" #sv=\"svDataTable\" [svRowsOnPage]=\"500\" svSortBy=\"name\" svSortOrder=\"asc\">\r\n\t\t\t    <thead>\r\n\t\t\t    <tr>\r\n\t\t\t        <th><sv-default-sorter by=\"workflowType.title\">{{ 'workflow-type' | translate }}</sv-default-sorter></th>\r\n\t\t\t        <th><sv-default-sorter by=\"currentStep.title\">{{ 'workflow-current-step' | translate }}</sv-default-sorter></th>\r\n\t\t\t        <th><sv-default-sorter by=\"status\">{{ 'workflow-status' | translate }}</sv-default-sorter></th>\r\n\t\t\t        <th><sv-default-sorter by=\"assignToUserFullName\">{{ 'workflow-assignto' | translate }}</sv-default-sorter></th>\r\n\t\t\t        <th>\r\n\t\t\t            <sv-default-sorter by=\"updated\">{{ 'workflow-updated' | translate }}</sv-default-sorter>\r\n\t\t\t        </th>\r\n\t\t\t        <th></th>\r\n\t\t\t    </tr>\r\n\t\t\t    </thead>\r\n\t\t\t    <tbody>\r\n\t\t\t\t    <tr *ngFor=\"let item of sv.data\">\r\n\t\t    \t\t\t<td scope=\"row\">{{item.workflowType.title}}</td>\r\n\t\t    \t\t\t<td>{{item.currentStep.title}}</td>\r\n\t\t    \t\t\t<td>{{item.status}}</td>\r\n\t\t    \t\t\t<td>{{item.assignToUserFullName}}</td>\r\n\t\t    \t\t\t<td></td>\r\n\t\t    \t\t\t<td><a class=\"tool-link\" [routerLink]=\"['/workflow/edit/' + item.workflowType.identity + '/' + item.identity]\"><i class=\"material-icons\">edit</i></a></td>\r\n\t\t\t\t    </tr>\r\n\t\t\t\t    <tr *ngIf=\"resultWorlflows.length == 0\">\r\n\t\t    \t\t\t<td colspan=\"6\">{{ 'workflow-no-result-found' | translate }}</td>\r\n\t\t\t\t    </tr>\r\n\t\t\t    </tbody>\r\n\t\t\t</table>\r\n\t\t\r\n\t\t\r\n\t\t</div>\r\n\r\n");
             /***/ 
         }),
         /***/ "./node_modules/tslib/tslib.es6.js": 
@@ -793,25 +824,28 @@ var __extends = (this && this.__extends) || (function () {
             /* harmony import */ var angular_resizable_element__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! angular-resizable-element */ "./node_modules/angular-resizable-element/fesm2015/angular-resizable-element.js");
             /* harmony import */ var ng_angular8_datatable__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ng-angular8-datatable */ "./node_modules/ng-angular8-datatable/index.js");
             /* harmony import */ var ng_angular8_datatable__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/ __webpack_require__.n(ng_angular8_datatable__WEBPACK_IMPORTED_MODULE_9__);
-            /* harmony import */ var _helper__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./helper */ "./src/app/helper/index.ts");
-            /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
-            /* harmony import */ var _app_routing__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./app.routing */ "./src/app/app.routing.ts");
-            /* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./services/global.service */ "./src/app/services/global.service.ts");
-            /* harmony import */ var _services_authentication_service__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./services/authentication.service */ "./src/app/services/authentication.service.ts");
-            /* harmony import */ var _services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./services/workflow/workflow-message.service */ "./src/app/services/workflow/workflow-message.service.ts");
-            /* harmony import */ var _top_bar_top_bar_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./top-bar/top-bar.component */ "./src/app/top-bar/top-bar.component.ts");
-            /* harmony import */ var _footer_footer_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./footer/footer.component */ "./src/app/footer/footer.component.ts");
-            /* harmony import */ var _message_bar_message_bar_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./message-bar/message-bar.component */ "./src/app/message-bar/message-bar.component.ts");
-            /* harmony import */ var _components_error_dialog_error_dialog_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./_components/error-dialog/error-dialog.component */ "./src/app/_components/error-dialog/error-dialog.component.ts");
-            /* harmony import */ var _components_loading_dialog_loading_dialog_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./_components/loading-dialog/loading-dialog.component */ "./src/app/_components/loading-dialog/loading-dialog.component.ts");
-            /* harmony import */ var _home__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./home */ "./src/app/home/index.ts");
-            /* harmony import */ var _about__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./about */ "./src/app/about/index.ts");
-            /* harmony import */ var _login__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./login */ "./src/app/login/index.ts");
-            /* harmony import */ var _wm_components_workflow_list_workflow_list_component__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./wm-components/workflow-list/workflow-list.component */ "./src/app/wm-components/workflow-list/workflow-list.component.ts");
-            /* harmony import */ var _wm_components_create_workflow_create_workflow_create_component__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./wm-components/create/workflow-create/workflow-create.component */ "./src/app/wm-components/create/workflow-create/workflow-create.component.ts");
-            /* harmony import */ var _wm_components_create_create_singletask_create_singletask_component__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./wm-components/create/create-singletask/create-singletask.component */ "./src/app/wm-components/create/create-singletask/create-singletask.component.ts");
-            /* harmony import */ var _wm_components_create_create_invoice_create_invoice_component__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./wm-components/create/create-invoice/create-invoice.component */ "./src/app/wm-components/create/create-invoice/create-invoice.component.ts");
-            /* harmony import */ var _wm_components_create_create_testthreetask_create_testthreetask_component__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./wm-components/create/create-testthreetask/create-testthreetask.component */ "./src/app/wm-components/create/create-testthreetask/create-testthreetask.component.ts");
+            /* harmony import */ var _angular_material_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/material/core */ "./node_modules/@angular/material/esm2015/core.js");
+            /* harmony import */ var _material_module__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./material-module */ "./src/app/material-module.ts");
+            /* harmony import */ var _helper__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./helper */ "./src/app/helper/index.ts");
+            /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
+            /* harmony import */ var _app_routing__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./app.routing */ "./src/app/app.routing.ts");
+            /* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./services/global.service */ "./src/app/services/global.service.ts");
+            /* harmony import */ var _services_authentication_service__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./services/authentication.service */ "./src/app/services/authentication.service.ts");
+            /* harmony import */ var _services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./services/workflow/workflow-message.service */ "./src/app/services/workflow/workflow-message.service.ts");
+            /* harmony import */ var _top_bar_top_bar_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./top-bar/top-bar.component */ "./src/app/top-bar/top-bar.component.ts");
+            /* harmony import */ var _footer_footer_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./footer/footer.component */ "./src/app/footer/footer.component.ts");
+            /* harmony import */ var _message_bar_message_bar_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./message-bar/message-bar.component */ "./src/app/message-bar/message-bar.component.ts");
+            /* harmony import */ var _components_error_dialog_error_dialog_component__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./_components/error-dialog/error-dialog.component */ "./src/app/_components/error-dialog/error-dialog.component.ts");
+            /* harmony import */ var _components_loading_dialog_loading_dialog_component__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./_components/loading-dialog/loading-dialog.component */ "./src/app/_components/loading-dialog/loading-dialog.component.ts");
+            /* harmony import */ var _home__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./home */ "./src/app/home/index.ts");
+            /* harmony import */ var _about__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./about */ "./src/app/about/index.ts");
+            /* harmony import */ var _login__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./login */ "./src/app/login/index.ts");
+            /* harmony import */ var _wm_components_workflow_list_workflow_list_component__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./wm-components/workflow-list/workflow-list.component */ "./src/app/wm-components/workflow-list/workflow-list.component.ts");
+            /* harmony import */ var _wm_components_create_workflow_create_workflow_create_component__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./wm-components/create/workflow-create/workflow-create.component */ "./src/app/wm-components/create/workflow-create/workflow-create.component.ts");
+            /* harmony import */ var _wm_components_create_create_singletask_create_singletask_component__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./wm-components/create/create-singletask/create-singletask.component */ "./src/app/wm-components/create/create-singletask/create-singletask.component.ts");
+            /* harmony import */ var _wm_components_create_create_invoice_create_invoice_component__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./wm-components/create/create-invoice/create-invoice.component */ "./src/app/wm-components/create/create-invoice/create-invoice.component.ts");
+            /* harmony import */ var _wm_components_create_create_testthreetask_create_testthreetask_component__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./wm-components/create/create-testthreetask/create-testthreetask.component */ "./src/app/wm-components/create/create-testthreetask/create-testthreetask.component.ts");
+            /* harmony import */ var _wm_components_edit_edit_invoice_edit_invoice_component__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./wm-components/edit/edit-invoice/edit-invoice.component */ "./src/app/wm-components/edit/edit-invoice/edit-invoice.component.ts");
             function createTranslateLoader(http) {
                 return new _ngx_translate_http_loader__WEBPACK_IMPORTED_MODULE_7__["TranslateHttpLoader"](http, './assets/i18n/', '.json');
             }
@@ -826,10 +860,12 @@ var __extends = (this && this.__extends) || (function () {
                         _angular_platform_browser__WEBPACK_IMPORTED_MODULE_2__["BrowserModule"],
                         _angular_forms__WEBPACK_IMPORTED_MODULE_3__["ReactiveFormsModule"],
                         _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClientModule"],
-                        _app_routing__WEBPACK_IMPORTED_MODULE_12__["appRoutingModule"],
+                        _app_routing__WEBPACK_IMPORTED_MODULE_14__["appRoutingModule"],
                         _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_5__["BrowserAnimationsModule"],
                         angular_resizable_element__WEBPACK_IMPORTED_MODULE_8__["ResizableModule"],
                         ng_angular8_datatable__WEBPACK_IMPORTED_MODULE_9__["DataTableModule"],
+                        _angular_material_core__WEBPACK_IMPORTED_MODULE_10__["MatNativeDateModule"],
+                        _material_module__WEBPACK_IMPORTED_MODULE_11__["IFlowMaterialModules"],
                         _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"],
                         _ngx_translate_core__WEBPACK_IMPORTED_MODULE_6__["TranslateModule"].forRoot({
                             loader: {
@@ -840,28 +876,29 @@ var __extends = (this && this.__extends) || (function () {
                         }),
                     ],
                     declarations: [
-                        _app_component__WEBPACK_IMPORTED_MODULE_11__["AppComponent"],
-                        _top_bar_top_bar_component__WEBPACK_IMPORTED_MODULE_16__["TopBarComponent"],
-                        _footer_footer_component__WEBPACK_IMPORTED_MODULE_17__["FooterComponent"],
-                        _message_bar_message_bar_component__WEBPACK_IMPORTED_MODULE_18__["MessageBarComponent"],
-                        _components_error_dialog_error_dialog_component__WEBPACK_IMPORTED_MODULE_19__["ErrorDialogComponent"],
-                        _components_loading_dialog_loading_dialog_component__WEBPACK_IMPORTED_MODULE_20__["LoadingDialogComponent"],
-                        _home__WEBPACK_IMPORTED_MODULE_21__["HomeComponent"],
-                        _about__WEBPACK_IMPORTED_MODULE_22__["AboutComponent"],
-                        _login__WEBPACK_IMPORTED_MODULE_23__["LoginComponent"],
-                        _wm_components_create_workflow_create_workflow_create_component__WEBPACK_IMPORTED_MODULE_25__["WorkflowCreateComponent"],
-                        _wm_components_workflow_list_workflow_list_component__WEBPACK_IMPORTED_MODULE_24__["WorkflowListComponent"],
-                        _wm_components_create_create_singletask_create_singletask_component__WEBPACK_IMPORTED_MODULE_26__["CreateSingletaskComponent"],
-                        _wm_components_create_create_invoice_create_invoice_component__WEBPACK_IMPORTED_MODULE_27__["CreateInvoiceComponent"],
-                        _wm_components_create_create_testthreetask_create_testthreetask_component__WEBPACK_IMPORTED_MODULE_28__["CreateTestthreetaskComponent"],
+                        _app_component__WEBPACK_IMPORTED_MODULE_13__["AppComponent"],
+                        _top_bar_top_bar_component__WEBPACK_IMPORTED_MODULE_18__["TopBarComponent"],
+                        _footer_footer_component__WEBPACK_IMPORTED_MODULE_19__["FooterComponent"],
+                        _message_bar_message_bar_component__WEBPACK_IMPORTED_MODULE_20__["MessageBarComponent"],
+                        _components_error_dialog_error_dialog_component__WEBPACK_IMPORTED_MODULE_21__["ErrorDialogComponent"],
+                        _components_loading_dialog_loading_dialog_component__WEBPACK_IMPORTED_MODULE_22__["LoadingDialogComponent"],
+                        _home__WEBPACK_IMPORTED_MODULE_23__["HomeComponent"],
+                        _about__WEBPACK_IMPORTED_MODULE_24__["AboutComponent"],
+                        _login__WEBPACK_IMPORTED_MODULE_25__["LoginComponent"],
+                        _wm_components_create_workflow_create_workflow_create_component__WEBPACK_IMPORTED_MODULE_27__["WorkflowCreateComponent"],
+                        _wm_components_workflow_list_workflow_list_component__WEBPACK_IMPORTED_MODULE_26__["WorkflowListComponent"],
+                        _wm_components_create_create_singletask_create_singletask_component__WEBPACK_IMPORTED_MODULE_28__["CreateSingletaskComponent"],
+                        _wm_components_create_create_invoice_create_invoice_component__WEBPACK_IMPORTED_MODULE_29__["CreateInvoiceComponent"],
+                        _wm_components_create_create_testthreetask_create_testthreetask_component__WEBPACK_IMPORTED_MODULE_30__["CreateTestthreetaskComponent"],
+                        _wm_components_edit_edit_invoice_edit_invoice_component__WEBPACK_IMPORTED_MODULE_31__["EditInvoiceComponent"],
                     ],
                     providers: [
-                        _services_global_service__WEBPACK_IMPORTED_MODULE_13__["GlobalService"],
-                        _services_authentication_service__WEBPACK_IMPORTED_MODULE_14__["AuthenticationService"],
-                        _services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_15__["WorkflowMessageService"],
-                        _helper__WEBPACK_IMPORTED_MODULE_10__["fakeBackendProvider"]
+                        _services_global_service__WEBPACK_IMPORTED_MODULE_15__["GlobalService"],
+                        _services_authentication_service__WEBPACK_IMPORTED_MODULE_16__["AuthenticationService"],
+                        _services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_17__["WorkflowMessageService"],
+                        _helper__WEBPACK_IMPORTED_MODULE_12__["fakeBackendProvider"]
                     ],
-                    bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_11__["AppComponent"]]
+                    bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_13__["AppComponent"]]
                 })
             ], AppModule);
             /*
@@ -891,14 +928,16 @@ var __extends = (this && this.__extends) || (function () {
             /* harmony import */ var _wm_components_create_create_singletask_create_singletask_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./wm-components/create/create-singletask/create-singletask.component */ "./src/app/wm-components/create/create-singletask/create-singletask.component.ts");
             /* harmony import */ var _wm_components_create_create_invoice_create_invoice_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./wm-components/create/create-invoice/create-invoice.component */ "./src/app/wm-components/create/create-invoice/create-invoice.component.ts");
             /* harmony import */ var _wm_components_create_create_testthreetask_create_testthreetask_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./wm-components/create/create-testthreetask/create-testthreetask.component */ "./src/app/wm-components/create/create-testthreetask/create-testthreetask.component.ts");
+            /* harmony import */ var _wm_components_edit_edit_invoice_edit_invoice_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./wm-components/edit/edit-invoice/edit-invoice.component */ "./src/app/wm-components/edit/edit-invoice/edit-invoice.component.ts");
             var routes = [
                 { path: '', component: _home__WEBPACK_IMPORTED_MODULE_3__["HomeComponent"], canActivate: [_services_authentication_service__WEBPACK_IMPORTED_MODULE_2__["AuthenticationService"]] },
                 { path: 'about', component: _about__WEBPACK_IMPORTED_MODULE_4__["AboutComponent"], canActivate: [_services_authentication_service__WEBPACK_IMPORTED_MODULE_2__["AuthenticationService"]] },
                 { path: 'workflow/list', component: _wm_components_workflow_list_workflow_list_component__WEBPACK_IMPORTED_MODULE_6__["WorkflowListComponent"], canActivate: [_services_authentication_service__WEBPACK_IMPORTED_MODULE_2__["AuthenticationService"]] },
                 { path: 'workflow/create', component: _wm_components_create_workflow_create_workflow_create_component__WEBPACK_IMPORTED_MODULE_7__["WorkflowCreateComponent"], canActivate: [_services_authentication_service__WEBPACK_IMPORTED_MODULE_2__["AuthenticationService"]] },
-                { path: 'workflow/singletask/create', component: _wm_components_create_create_singletask_create_singletask_component__WEBPACK_IMPORTED_MODULE_8__["CreateSingletaskComponent"], canActivate: [_services_authentication_service__WEBPACK_IMPORTED_MODULE_2__["AuthenticationService"]] },
-                { path: 'workflow/invoice/create', component: _wm_components_create_create_invoice_create_invoice_component__WEBPACK_IMPORTED_MODULE_9__["CreateInvoiceComponent"], canActivate: [_services_authentication_service__WEBPACK_IMPORTED_MODULE_2__["AuthenticationService"]] },
-                { path: 'workflow/testthreetask/create', component: _wm_components_create_create_testthreetask_create_testthreetask_component__WEBPACK_IMPORTED_MODULE_10__["CreateTestthreetaskComponent"], canActivate: [_services_authentication_service__WEBPACK_IMPORTED_MODULE_2__["AuthenticationService"]] },
+                { path: 'workflow/create/singletask', component: _wm_components_create_create_singletask_create_singletask_component__WEBPACK_IMPORTED_MODULE_8__["CreateSingletaskComponent"], canActivate: [_services_authentication_service__WEBPACK_IMPORTED_MODULE_2__["AuthenticationService"]] },
+                { path: 'workflow/create/invoice', component: _wm_components_create_create_invoice_create_invoice_component__WEBPACK_IMPORTED_MODULE_9__["CreateInvoiceComponent"], canActivate: [_services_authentication_service__WEBPACK_IMPORTED_MODULE_2__["AuthenticationService"]] },
+                { path: 'workflow/create/testthreetask', component: _wm_components_create_create_testthreetask_create_testthreetask_component__WEBPACK_IMPORTED_MODULE_10__["CreateTestthreetaskComponent"], canActivate: [_services_authentication_service__WEBPACK_IMPORTED_MODULE_2__["AuthenticationService"]] },
+                { path: 'workflow/edit/invoiceworkflowtype/:identity', component: _wm_components_edit_edit_invoice_edit_invoice_component__WEBPACK_IMPORTED_MODULE_11__["EditInvoiceComponent"], canActivate: [_services_authentication_service__WEBPACK_IMPORTED_MODULE_2__["AuthenticationService"]] },
                 { path: 'auth/login', component: _login__WEBPACK_IMPORTED_MODULE_5__["LoginComponent"] },
                 // otherwise redirect to home
                 { path: '**', redirectTo: '', canActivate: [_services_authentication_service__WEBPACK_IMPORTED_MODULE_2__["AuthenticationService"]] }
@@ -1016,6 +1055,49 @@ var __extends = (this && this.__extends) || (function () {
             */
             /***/ 
         }),
+        /***/ "./src/app/helper/date-helper.ts": 
+        /*!***************************************!*\
+          !*** ./src/app/helper/date-helper.ts ***!
+          \***************************************/
+        /*! exports provided: parseDate, formatDate, getStringWithOneLeadingZero */
+        /***/ (function (module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            __webpack_require__.r(__webpack_exports__);
+            /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "parseDate", function () { return parseDate; });
+            /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "formatDate", function () { return formatDate; });
+            /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getStringWithOneLeadingZero", function () { return getStringWithOneLeadingZero; });
+            /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+            function parseDate(input, format) {
+                if (input === null || input === undefined) {
+                    return null;
+                }
+                format = format || 'yyyy-mm-dd'; // default format
+                var stringParts = input.match(/(\d+)/g), i = 0, fmt = {};
+                var parts = [Number(stringParts[0]), Number(stringParts[1]), Number(stringParts[2]),];
+                format.replace(/(yyyy|dd|mm)/g, function (part) { fmt[part] = i++; return part; });
+                return new Date(parts[fmt['yyyy']], parts[fmt['mm']] - 1, parts[fmt['dd']]);
+            }
+            function formatDate(input, format) {
+                format = format || 'yyyy-mm-dd'; // default format
+                var stringDate = format;
+                stringDate = stringDate.replace(/(yyyy|dd|mm)/g, function (part) {
+                    if (part === 'yyyy') {
+                        return input.getFullYear() + "";
+                    }
+                    if (part === 'dd') {
+                        return getStringWithOneLeadingZero(input.getDate());
+                    }
+                    if (part === 'mm') {
+                        return getStringWithOneLeadingZero(input.getMonth());
+                    }
+                });
+                return stringDate;
+            }
+            function getStringWithOneLeadingZero(input) {
+                return (input < 10 ? '0' : '') + input + "";
+            }
+            /***/ 
+        }),
         /***/ "./src/app/helper/fake-backend.ts": 
         /*!****************************************!*\
           !*** ./src/app/helper/fake-backend.ts ***!
@@ -1088,6 +1170,51 @@ var __extends = (this && this.__extends) || (function () {
                 useClass: FakeBackendInterceptor,
                 multi: true
             };
+            /***/ 
+        }),
+        /***/ "./src/app/helper/german-date-adapter.ts": 
+        /*!***********************************************!*\
+          !*** ./src/app/helper/german-date-adapter.ts ***!
+          \***********************************************/
+        /*! exports provided: GermanDateAdapter */
+        /***/ (function (module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            __webpack_require__.r(__webpack_exports__);
+            /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GermanDateAdapter", function () { return GermanDateAdapter; });
+            /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+            /* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm2015/material.js");
+            var SUPPORTS_INTL_API = typeof Intl !== 'undefined';
+            var GermanDateAdapter = /** @class */ (function (_super) {
+                __extends(GermanDateAdapter, _super);
+                function GermanDateAdapter() {
+                    var _this = _super.apply(this, __spread(arguments)) || this;
+                    _this.useUtcForDisplay = true;
+                    return _this;
+                }
+                GermanDateAdapter.prototype.parse = function (value) {
+                    if ((typeof value === 'string') && (value.indexOf('/') > -1)) {
+                        var str = value.split('/');
+                        var year = Number(str[2]);
+                        var month = Number(str[1]) - 1;
+                        var date = Number(str[0]);
+                        return new Date(year, month, date);
+                    }
+                    var timestamp = typeof value === 'number' ? value : Date.parse(value);
+                    return isNaN(timestamp) ? null : new Date(timestamp);
+                };
+                // to be removed when mmalerba merge the mods in the next beta
+                GermanDateAdapter.prototype.format = function (date, displayFormat) {
+                    if (SUPPORTS_INTL_API) {
+                        if (this.useUtcForDisplay) {
+                            date = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds(), date.getMilliseconds()));
+                            displayFormat = Object.assign({}, displayFormat, { timeZone: 'utc' });
+                        }
+                        var dtf = new Intl.DateTimeFormat(this.locale, displayFormat);
+                        return dtf.format(date).replace(/[\u200e\u200f]/g, '');
+                    }
+                };
+                return GermanDateAdapter;
+            }(_angular_material__WEBPACK_IMPORTED_MODULE_1__["NativeDateAdapter"]));
             /***/ 
         }),
         /***/ "./src/app/helper/http-hepler.ts": 
@@ -1176,7 +1303,7 @@ var __extends = (this && this.__extends) || (function () {
         /*!*********************************!*\
           !*** ./src/app/helper/index.ts ***!
           \*********************************/
-        /*! exports provided: FakeBackendInterceptor, fakeBackendProvider */
+        /*! exports provided: FakeBackendInterceptor, fakeBackendProvider, GermanDateAdapter, parseDate, formatDate, getStringWithOneLeadingZero */
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
@@ -1184,6 +1311,12 @@ var __extends = (this && this.__extends) || (function () {
             /* harmony import */ var _fake_backend__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./fake-backend */ "./src/app/helper/fake-backend.ts");
             /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "FakeBackendInterceptor", function () { return _fake_backend__WEBPACK_IMPORTED_MODULE_1__["FakeBackendInterceptor"]; });
             /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "fakeBackendProvider", function () { return _fake_backend__WEBPACK_IMPORTED_MODULE_1__["fakeBackendProvider"]; });
+            /* harmony import */ var _german_date_adapter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./german-date-adapter */ "./src/app/helper/german-date-adapter.ts");
+            /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "GermanDateAdapter", function () { return _german_date_adapter__WEBPACK_IMPORTED_MODULE_2__["GermanDateAdapter"]; });
+            /* harmony import */ var _date_helper__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./date-helper */ "./src/app/helper/date-helper.ts");
+            /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "parseDate", function () { return _date_helper__WEBPACK_IMPORTED_MODULE_3__["parseDate"]; });
+            /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "formatDate", function () { return _date_helper__WEBPACK_IMPORTED_MODULE_3__["formatDate"]; });
+            /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getStringWithOneLeadingZero", function () { return _date_helper__WEBPACK_IMPORTED_MODULE_3__["getStringWithOneLeadingZero"]; });
             /***/ 
         }),
         /***/ "./src/app/home/home.component.ts": 
@@ -1322,6 +1455,113 @@ var __extends = (this && this.__extends) || (function () {
             LoginComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
                 Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({ template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./login.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/login/login.component.html")).default })
             ], LoginComponent);
+            /***/ 
+        }),
+        /***/ "./src/app/material-module.ts": 
+        /*!************************************!*\
+          !*** ./src/app/material-module.ts ***!
+          \************************************/
+        /*! exports provided: IFlowMaterialModules */
+        /***/ (function (module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            __webpack_require__.r(__webpack_exports__);
+            /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "IFlowMaterialModules", function () { return IFlowMaterialModules; });
+            /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+            /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+            /* harmony import */ var _angular_cdk_a11y__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/cdk/a11y */ "./node_modules/@angular/cdk/esm2015/a11y.js");
+            /* harmony import */ var _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/cdk/drag-drop */ "./node_modules/@angular/cdk/esm2015/drag-drop.js");
+            /* harmony import */ var _angular_cdk_portal__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/cdk/portal */ "./node_modules/@angular/cdk/esm2015/portal.js");
+            /* harmony import */ var _angular_cdk_scrolling__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/cdk/scrolling */ "./node_modules/@angular/cdk/esm2015/scrolling.js");
+            /* harmony import */ var _angular_cdk_stepper__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/cdk/stepper */ "./node_modules/@angular/cdk/esm2015/stepper.js");
+            /* harmony import */ var _angular_cdk_table__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/cdk/table */ "./node_modules/@angular/cdk/esm2015/table.js");
+            /* harmony import */ var _angular_cdk_tree__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/cdk/tree */ "./node_modules/@angular/cdk/esm2015/tree.js");
+            /* harmony import */ var _angular_material_autocomplete__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/material/autocomplete */ "./node_modules/@angular/material/esm2015/autocomplete.js");
+            /* harmony import */ var _angular_material_badge__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/material/badge */ "./node_modules/@angular/material/esm2015/badge.js");
+            /* harmony import */ var _angular_material_bottom_sheet__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/material/bottom-sheet */ "./node_modules/@angular/material/esm2015/bottom-sheet.js");
+            /* harmony import */ var _angular_material_button__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/material/button */ "./node_modules/@angular/material/esm2015/button.js");
+            /* harmony import */ var _angular_material_button_toggle__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/material/button-toggle */ "./node_modules/@angular/material/esm2015/button-toggle.js");
+            /* harmony import */ var _angular_material_card__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/material/card */ "./node_modules/@angular/material/esm2015/card.js");
+            /* harmony import */ var _angular_material_checkbox__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/material/checkbox */ "./node_modules/@angular/material/esm2015/checkbox.js");
+            /* harmony import */ var _angular_material_chips__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @angular/material/chips */ "./node_modules/@angular/material/esm2015/chips.js");
+            /* harmony import */ var _angular_material_stepper__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @angular/material/stepper */ "./node_modules/@angular/material/esm2015/stepper.js");
+            /* harmony import */ var _angular_material_datepicker__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @angular/material/datepicker */ "./node_modules/@angular/material/esm2015/datepicker.js");
+            /* harmony import */ var _angular_material_dialog__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @angular/material/dialog */ "./node_modules/@angular/material/esm2015/dialog.js");
+            /* harmony import */ var _angular_material_divider__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @angular/material/divider */ "./node_modules/@angular/material/esm2015/divider.js");
+            /* harmony import */ var _angular_material_expansion__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @angular/material/expansion */ "./node_modules/@angular/material/esm2015/expansion.js");
+            /* harmony import */ var _angular_material_grid_list__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! @angular/material/grid-list */ "./node_modules/@angular/material/esm2015/grid-list.js");
+            /* harmony import */ var _angular_material_icon__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! @angular/material/icon */ "./node_modules/@angular/material/esm2015/icon.js");
+            /* harmony import */ var _angular_material_input__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! @angular/material/input */ "./node_modules/@angular/material/esm2015/input.js");
+            /* harmony import */ var _angular_material_list__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! @angular/material/list */ "./node_modules/@angular/material/esm2015/list.js");
+            /* harmony import */ var _angular_material_menu__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! @angular/material/menu */ "./node_modules/@angular/material/esm2015/menu.js");
+            /* harmony import */ var _angular_material_core__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! @angular/material/core */ "./node_modules/@angular/material/esm2015/core.js");
+            /* harmony import */ var _angular_material_paginator__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! @angular/material/paginator */ "./node_modules/@angular/material/esm2015/paginator.js");
+            /* harmony import */ var _angular_material_progress_bar__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! @angular/material/progress-bar */ "./node_modules/@angular/material/esm2015/progress-bar.js");
+            /* harmony import */ var _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! @angular/material/progress-spinner */ "./node_modules/@angular/material/esm2015/progress-spinner.js");
+            /* harmony import */ var _angular_material_radio__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! @angular/material/radio */ "./node_modules/@angular/material/esm2015/radio.js");
+            /* harmony import */ var _angular_material_select__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! @angular/material/select */ "./node_modules/@angular/material/esm2015/select.js");
+            /* harmony import */ var _angular_material_sidenav__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! @angular/material/sidenav */ "./node_modules/@angular/material/esm2015/sidenav.js");
+            /* harmony import */ var _angular_material_slider__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! @angular/material/slider */ "./node_modules/@angular/material/esm2015/slider.js");
+            /* harmony import */ var _angular_material_slide_toggle__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! @angular/material/slide-toggle */ "./node_modules/@angular/material/esm2015/slide-toggle.js");
+            /* harmony import */ var _angular_material_snack_bar__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! @angular/material/snack-bar */ "./node_modules/@angular/material/esm2015/snack-bar.js");
+            /* harmony import */ var _angular_material_sort__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! @angular/material/sort */ "./node_modules/@angular/material/esm2015/sort.js");
+            /* harmony import */ var _angular_material_table__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! @angular/material/table */ "./node_modules/@angular/material/esm2015/table.js");
+            /* harmony import */ var _angular_material_tabs__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! @angular/material/tabs */ "./node_modules/@angular/material/esm2015/tabs.js");
+            /* harmony import */ var _angular_material_toolbar__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! @angular/material/toolbar */ "./node_modules/@angular/material/esm2015/toolbar.js");
+            /* harmony import */ var _angular_material_tooltip__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! @angular/material/tooltip */ "./node_modules/@angular/material/esm2015/tooltip.js");
+            /* harmony import */ var _angular_material_tree__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! @angular/material/tree */ "./node_modules/@angular/material/esm2015/tree.js");
+            var IFlowMaterialModules = /** @class */ (function () {
+                function IFlowMaterialModules() {
+                }
+                return IFlowMaterialModules;
+            }());
+            IFlowMaterialModules = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+                Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
+                    exports: [
+                        _angular_cdk_a11y__WEBPACK_IMPORTED_MODULE_2__["A11yModule"],
+                        _angular_cdk_stepper__WEBPACK_IMPORTED_MODULE_6__["CdkStepperModule"],
+                        _angular_cdk_table__WEBPACK_IMPORTED_MODULE_7__["CdkTableModule"],
+                        _angular_cdk_tree__WEBPACK_IMPORTED_MODULE_8__["CdkTreeModule"],
+                        _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_3__["DragDropModule"],
+                        _angular_material_autocomplete__WEBPACK_IMPORTED_MODULE_9__["MatAutocompleteModule"],
+                        _angular_material_badge__WEBPACK_IMPORTED_MODULE_10__["MatBadgeModule"],
+                        _angular_material_bottom_sheet__WEBPACK_IMPORTED_MODULE_11__["MatBottomSheetModule"],
+                        _angular_material_button__WEBPACK_IMPORTED_MODULE_12__["MatButtonModule"],
+                        _angular_material_button_toggle__WEBPACK_IMPORTED_MODULE_13__["MatButtonToggleModule"],
+                        _angular_material_card__WEBPACK_IMPORTED_MODULE_14__["MatCardModule"],
+                        _angular_material_checkbox__WEBPACK_IMPORTED_MODULE_15__["MatCheckboxModule"],
+                        _angular_material_chips__WEBPACK_IMPORTED_MODULE_16__["MatChipsModule"],
+                        _angular_material_stepper__WEBPACK_IMPORTED_MODULE_17__["MatStepperModule"],
+                        _angular_material_datepicker__WEBPACK_IMPORTED_MODULE_18__["MatDatepickerModule"],
+                        _angular_material_dialog__WEBPACK_IMPORTED_MODULE_19__["MatDialogModule"],
+                        _angular_material_divider__WEBPACK_IMPORTED_MODULE_20__["MatDividerModule"],
+                        _angular_material_expansion__WEBPACK_IMPORTED_MODULE_21__["MatExpansionModule"],
+                        _angular_material_grid_list__WEBPACK_IMPORTED_MODULE_22__["MatGridListModule"],
+                        _angular_material_icon__WEBPACK_IMPORTED_MODULE_23__["MatIconModule"],
+                        _angular_material_input__WEBPACK_IMPORTED_MODULE_24__["MatInputModule"],
+                        _angular_material_list__WEBPACK_IMPORTED_MODULE_25__["MatListModule"],
+                        _angular_material_menu__WEBPACK_IMPORTED_MODULE_26__["MatMenuModule"],
+                        _angular_material_core__WEBPACK_IMPORTED_MODULE_27__["MatNativeDateModule"],
+                        _angular_material_paginator__WEBPACK_IMPORTED_MODULE_28__["MatPaginatorModule"],
+                        _angular_material_progress_bar__WEBPACK_IMPORTED_MODULE_29__["MatProgressBarModule"],
+                        _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_30__["MatProgressSpinnerModule"],
+                        _angular_material_radio__WEBPACK_IMPORTED_MODULE_31__["MatRadioModule"],
+                        _angular_material_core__WEBPACK_IMPORTED_MODULE_27__["MatRippleModule"],
+                        _angular_material_select__WEBPACK_IMPORTED_MODULE_32__["MatSelectModule"],
+                        _angular_material_sidenav__WEBPACK_IMPORTED_MODULE_33__["MatSidenavModule"],
+                        _angular_material_slider__WEBPACK_IMPORTED_MODULE_34__["MatSliderModule"],
+                        _angular_material_slide_toggle__WEBPACK_IMPORTED_MODULE_35__["MatSlideToggleModule"],
+                        _angular_material_snack_bar__WEBPACK_IMPORTED_MODULE_36__["MatSnackBarModule"],
+                        _angular_material_sort__WEBPACK_IMPORTED_MODULE_37__["MatSortModule"],
+                        _angular_material_table__WEBPACK_IMPORTED_MODULE_38__["MatTableModule"],
+                        _angular_material_tabs__WEBPACK_IMPORTED_MODULE_39__["MatTabsModule"],
+                        _angular_material_toolbar__WEBPACK_IMPORTED_MODULE_40__["MatToolbarModule"],
+                        _angular_material_tooltip__WEBPACK_IMPORTED_MODULE_41__["MatTooltipModule"],
+                        _angular_material_tree__WEBPACK_IMPORTED_MODULE_42__["MatTreeModule"],
+                        _angular_cdk_portal__WEBPACK_IMPORTED_MODULE_4__["PortalModule"],
+                        _angular_cdk_scrolling__WEBPACK_IMPORTED_MODULE_5__["ScrollingModule"],
+                    ]
+                })
+            ], IFlowMaterialModules);
             /***/ 
         }),
         /***/ "./src/app/message-bar/message-bar.component.css": 
@@ -1803,22 +2043,36 @@ var __extends = (this && this.__extends) || (function () {
             /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
             /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
             /* harmony import */ var _loading_service_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../loading-service.service */ "./src/app/services/loading-service.service.ts");
-            /* harmony import */ var _helper_http_hepler__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../helper/http-hepler */ "./src/app/helper/http-hepler.ts");
+            /* harmony import */ var _error_service_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../error-service.service */ "./src/app/services/error-service.service.ts");
+            /* harmony import */ var _helper_http_hepler__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../helper/http-hepler */ "./src/app/helper/http-hepler.ts");
             var InvoiceWorkflowEditService = /** @class */ (function () {
                 //userAssignType = /*[[${UserAssign}]]*/ '';
                 //departmentAssignType = /*[[${DepartmentAssign}]]*/ '';
                 //departmentGroupAssignType = /*[[${DepartmentGroupAssign}]]*/ '';
-                function InvoiceWorkflowEditService(http, loadingService) {
+                function InvoiceWorkflowEditService(http, loadingService, errorService) {
                     this.http = http;
                     this.loadingService = loadingService;
+                    this.errorService = errorService;
                     this.workflowSaveRequestInitSubject = new rxjs__WEBPACK_IMPORTED_MODULE_3__["BehaviorSubject"](null);
                     this.workflowSaveRequestInit = null;
                 }
                 InvoiceWorkflowEditService.prototype.getInitCreateUrl = function () {
                     return "/workflow/invoice/data/initcreate";
                 };
+                InvoiceWorkflowEditService.prototype.getInitEditUrl = function (identity) {
+                    return "/workflow/invoice/data/initedit/" + identity;
+                };
                 InvoiceWorkflowEditService.prototype.getCreateWorkflowUrl = function () {
                     return "/workflow/invoice/data/create";
+                };
+                InvoiceWorkflowEditService.prototype.getSaveWorkflowUrl = function () {
+                    return "/workflow/invoice/data/save";
+                };
+                InvoiceWorkflowEditService.prototype.getDoneWorkflowUrl = function () {
+                    return "/workflow/invoice/data/done";
+                };
+                InvoiceWorkflowEditService.prototype.getArchiveWorkflowUrl = function () {
+                    return "/workflow/invoice/data/archive";
                 };
                 InvoiceWorkflowEditService.prototype.getUploadFileUrl = function () {
                     return "/workflow/invoice/data/createfile";
@@ -1826,17 +2080,22 @@ var __extends = (this && this.__extends) || (function () {
                 InvoiceWorkflowEditService.prototype.loadCreateInitialData = function () {
                     var _this = this;
                     this.loadingService.showLoading();
-                    var httpOptions = { headers: _helper_http_hepler__WEBPACK_IMPORTED_MODULE_5__["HttpHepler"].generateFormHeader() };
+                    var httpOptions = { headers: _helper_http_hepler__WEBPACK_IMPORTED_MODULE_6__["HttpHepler"].generateFormHeader() };
                     this.http.post(this.getInitCreateUrl(), new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpParams"](), httpOptions).subscribe(function (initialData) {
                         console.log("GET successful edit inital data", initialData);
                         _this.workflowSaveRequestInit = JSON.parse(JSON.stringify(initialData));
                         _this.workflowSaveRequestInitSubject.next(initialData);
                     }, function (response) {
                         console.log("Error in read edit inital data", response);
+                        _this.errorService.showErrorResponse(response);
                     }, function () {
                         _this.workflowSaveRequestInitSubject.complete();
                         _this.loadingService.hideLoading();
                     });
+                };
+                InvoiceWorkflowEditService.prototype.loadEditInitialData = function (identity) {
+                    var httpOptions = { headers: _helper_http_hepler__WEBPACK_IMPORTED_MODULE_6__["HttpHepler"].generateFormHeader() };
+                    return this.http.post(this.getInitEditUrl(identity), new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpParams"](), httpOptions);
                 };
                 InvoiceWorkflowEditService.prototype.uploadFiles = function (fileTitles) {
                     var formData = new FormData();
@@ -1845,18 +2104,23 @@ var __extends = (this && this.__extends) || (function () {
                         formData.append('titles', fileTitles[i].title);
                         formData.append('wids', i + "");
                     }
-                    var httpFileUploadOptions = { headers: _helper_http_hepler__WEBPACK_IMPORTED_MODULE_5__["HttpHepler"].generateFileUploadHeader() };
+                    var httpFileUploadOptions = { headers: _helper_http_hepler__WEBPACK_IMPORTED_MODULE_6__["HttpHepler"].generateFileUploadHeader() };
                     return this.http.post(this.getUploadFileUrl(), formData, httpFileUploadOptions);
                 };
-                InvoiceWorkflowEditService.prototype.saveWorkflow = function (workflowSaveRequest) {
-                    var httpOptions = { headers: _helper_http_hepler__WEBPACK_IMPORTED_MODULE_5__["HttpHepler"].generateJsonHeader() };
+                InvoiceWorkflowEditService.prototype.createWorkflow = function (workflowSaveRequest) {
+                    var httpOptions = { headers: _helper_http_hepler__WEBPACK_IMPORTED_MODULE_6__["HttpHepler"].generateJsonHeader() };
                     return this.http.post(this.getCreateWorkflowUrl(), workflowSaveRequest, httpOptions);
+                };
+                InvoiceWorkflowEditService.prototype.saveWorkflow = function (workflowSaveRequest) {
+                    var httpOptions = { headers: _helper_http_hepler__WEBPACK_IMPORTED_MODULE_6__["HttpHepler"].generateJsonHeader() };
+                    return this.http.post(this.getSaveWorkflowUrl(), workflowSaveRequest, httpOptions);
                 };
                 return InvoiceWorkflowEditService;
             }());
             InvoiceWorkflowEditService.ctorParameters = function () { return [
                 { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] },
-                { type: _loading_service_service__WEBPACK_IMPORTED_MODULE_4__["LoadingServiceService"] }
+                { type: _loading_service_service__WEBPACK_IMPORTED_MODULE_4__["LoadingServiceService"] },
+                { type: _error_service_service__WEBPACK_IMPORTED_MODULE_5__["ErrorServiceService"] }
             ]; };
             InvoiceWorkflowEditService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
                 Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
@@ -2268,14 +2532,11 @@ var __extends = (this && this.__extends) || (function () {
                             }
                             else {
                                 if (response.error) {
-                                    console.log("Found Error in Response: ", response.error);
                                     if (response.error.message) {
                                         this.message = response.error.message;
                                         this.details = "";
-                                        console.log("Found Error Message in Response: ", this.message);
                                         if (response.error.details) {
                                             this.details = response.error.details;
-                                            console.log("Found Error Detail in Response: ", this.details);
                                         }
                                     }
                                     else {
@@ -2284,9 +2545,6 @@ var __extends = (this && this.__extends) || (function () {
                                             this.details = "";
                                         }
                                     }
-                                }
-                                else {
-                                    console.log("Not-Found Error in Response: ");
                                 }
                             }
                         }
@@ -2791,7 +3049,7 @@ var __extends = (this && this.__extends) || (function () {
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("\r\ndiv.workflow-content-container{\r\n\tborder: 1px solid lightgray;\r\n    margin: 10px 0px;\r\n    border-radius: 10px;\r\n    padding: 10px;\r\n    background-color: #f1f1f1;\r\n}\r\n\r\ndiv.workflow-content{\r\n    background-color: #dad9d9;\r\n    padding: 15px;\r\n    border-radius: 5px;\r\n}\r\n\r\ndiv.workflow-content-record{\r\n    padding: 15px;\r\n}\r\n\r\ndiv.workflow-record{\r\n\tfloat: right;\r\n    background-color: #dad9d9;\r\n    padding: 8px;\r\n    border-radius: 5px;\r\n    width: 25%;\r\n    min-height: 500px;\r\n}\r\n\r\n.workflow-content .panel{\r\n\tbackground-color: #f2f1f1 !important;\r\n\tpadding: 8px;\r\n    margin-bottom: 10px;\r\n}\r\n\r\n.twopannel .panel{\r\n\t\r\n\theight: 230px;\r\n}\r\n\r\n.twopannel .panel.panel-vendor{\r\n\twidth: calc(100% - 310px);\r\n\tfloat: left;\r\n}\r\n\r\n.twopannel .panel.panel-discount{\r\n\twidth: 300px;\r\n\tfloat: right;\r\n}\r\n\r\n.twopannel .panel.panel-discount input[type=text]{\r\n\twidth: 100px;\r\n}\r\n\r\n.small-content{\r\n\twidth: 120px;\r\n}\r\n\r\n.item-content select{\r\n\theight: 26px;\r\n}\r\n\r\n.item-content select:not(.fullrow), .item-content input[type=text] {\r\n\theight: 26px;\r\n\twidth: calc(100%);\r\n}\r\n\r\n.item-content select.fullrow {\r\n\theight: 26px;\r\n\twidth: calc(100%);\r\n}\r\n\r\n.item-content.larg-content{\r\n\twidth: calc(100% - 450px);\r\n}\r\n\r\n.workflow-content .panel .panel-heading{\r\n\tfont-weight: bold;\r\n}\r\n\r\ndiv.workflow-content div.item-row, div.workflow-content-record div.item-row {\r\n    margin: 5px 0 10px;\r\n}\r\n\r\ndiv.workflow-content div.workflow-step-button-bar, div.workflow-content-record div.workflow-step-button-bar{\r\n    background-color: white;\r\n    padding: 6px;\r\n    padding-right: 20px;\r\n   \r\n}\r\n\r\ndiv.workflow-content div.item-row div.item-label, \r\ndiv.workflow-content-record div.item-row div.item-label{\r\n    float: left;\r\n    padding-right: 10px;\r\n    padding-left: 2px;\r\n    line-height: 20px;\r\n    font-size: 14px;\r\n    font-weight: bold;\r\n}\r\n\r\ndiv.workflow-content div.item-row .label-large, \r\ndiv.workflow-content-record div.item-row .label-large{\r\n    width: 150px;\r\n}\r\n\r\n.large-content{\r\n\twidth: calc(100% - 420px);\r\n}\r\n\r\n.large-content input[type=text], .large-content select, .large-content areatext{\r\n\twidth: calc(100% - 30px);\r\n}\r\n\r\ndiv.workflow-content div.item-row .small-label, \r\ndiv.workflow-content-record div.item-row .small-label{\r\n    width: 122px;\r\n}\r\n\r\ndiv.workflow-content div.item-row div.item-content, div.workflow-content-record div.item-row div.item-content {\r\n    padding-left: 0px;\r\n    float: left;\r\n}\r\n\r\n.item-content input[type=checkbox]{\r\n\twidth: 20px;\r\n\theight: 20px;\t\r\n}\r\n\r\ndiv.fullrowfromlabel{\r\n\twidth: calc(100% - 150px);\t\r\n}\r\n\r\ndiv.fullrowfromlabel input[type=text]{\r\n\twidth: calc(100% - 10px);\t\r\n}\r\n\r\ndiv.fullrowfromlabel textarea{\r\n\twidth: calc(100% );\t\r\n\theight: 100px;\t\r\n}\r\n\r\ntextarea.comments-fullrow{\r\n\twidth: calc(100% - 100px);\t\r\n}\r\n\r\ndiv.workflow-content div.item-row div.item-content input.file-title\r\n{\r\n    width: calc(50% - 170px);\r\n    height: 26px;\r\n}\r\n\r\ndiv.workflow-content div.item-row div.item-content input.file-file\r\n{\r\n    width: 50%;\r\n    height: 26px;\r\n    display: inline-block;;\r\n}\r\n\r\n.assign-list{\r\n\tborder: 1px solid lightgray;\r\n    padding: 6px;\r\n    border-radius: 4px;\r\n    width: 100%;\r\n    min-height: 100px;\r\n    max-height: 200px;\r\n    overflow-y: auto;\r\n    padding-right: 24px;\r\n}\r\n\r\ndiv.assign-list div.user-item-box {\r\n    border: 1px solid lightgray;\r\n    border-radius: 4px;\r\n    padding: 2px 4px;\r\n    float: left;\r\n    background: #e6e6e6;\r\n    margin-right: 5px;\r\n    margin-bottom: 5px;\r\n}\r\n\r\ndiv.assign-list div.user-item-box button {\r\n    border: none;\r\n    background: transparent;\r\n    padding: 0;\r\n    padding-top: 3px;\r\n    float: right;\r\n    margin-left: 5px;\r\n}\r\n\r\ndiv.assign-list div.user-item-box button i.material-icons{\r\n\tfont-size: 16px;\r\n}\r\n\r\ndiv.assign-list div.user-item-box span {\r\n    height: 20px;\r\n    display: inline-block;\r\n    float: left;\r\n}\r\n\r\nbutton.show-select-dialog {\r\n    float: right;\r\n    margin-right: -22px;\r\n    width: 22px;\r\n    border: none;\r\n    padding: 0;\r\n    padding-left: 2px;\r\n    background-color: transparent;\r\n}\r\n\r\nbutton.file-action {\r\n    float: right;\r\n    width: 22px;\r\n    border: none;\r\n    padding: 0;\r\n    padding-left: 2px;\r\n    margin-top: 4px;\r\n    background: transparent;\r\n}\r\n\r\n.step-button, .step-button:active{\r\n\tfloat: right;\r\n    margin-left: 10px;\r\n    border: outset 2px #d4d4d1;\r\n    padding: 4px 20px;\r\n}\r\n\r\n.step-button:hover:not(:disbaled){\r\n    background-color: #9e9e9e;\r\n    color: #fbcbc4;\r\n    border: outset 2px #b7b7b3;\r\n    \r\n}\r\n\r\n.step-button:not(:disbaled), \r\n.step-button:active:not(:disbaled){\r\n    background-color: gray;\r\n    color: #f7fbc4;\r\n}\r\n\r\n.step-button:disabled{\r\n    background-color: gray;\r\n    color: #bdbcbc !important;\r\n}\r\n\r\n.file-container{\r\n\tborder:gray 1px solid; \r\n\tpadding: 6px;\r\n}\r\n\r\n.file-container .file-row{\r\n\tborder:gray 1px solid; \r\n\tpadding: 2px 2px;\r\n\tmargin: 4px 6px;\r\n\tmargin-right: 0;\r\n}\r\n\r\n.file-container .file-row:nth-child(even){\r\n\tbackground: #dbf1fb;\r\n}\r\n\r\n.file-container .file-row:nth-child(odd){\r\n\tbackground: #f3f3e1;\r\n}\r\n\r\n.workflow-file-view-link, .workflow-file-view-link:active, .workflow-file-view-link:visited{\r\n\tcolor: #333;\r\n}\r\n\r\n.workflow-file-view-link:hover{\r\n\tcolor: #551113;\r\n}\r\n\r\n.workflow-file-view-link i.material-icons{\r\n\twidth: 24px;\r\n}\r\n\r\n.assign-list{\r\n\tborder: 1px solid lightgray;\r\n    padding: 6px;\r\n    border-radius: 4px;\r\n    width: 100%;\r\n    min-height: 100px;\r\n    max-height: 200px;\r\n    overflow-y: auto;\r\n    padding-right: 24px;\r\n}\r\n\r\ndiv.assign-list div.user-item-box {\r\n    border: 1px solid lightgray;\r\n    border-radius: 4px;\r\n    padding: 2px 4px;\r\n    float: left;\r\n    background: #e6e6e6;\r\n    margin-right: 5px;\r\n    margin-bottom: 5px;\r\n}\r\n\r\ndiv.assign-list div.user-item-box button {\r\n    border: none;\r\n    background: transparent;\r\n    padding: 0;\r\n    padding-top: 3px;\r\n    float: right;\r\n    margin-left: 5px;\r\n}\r\n\r\ndiv.assign-list div.user-item-box button i.material-icons{\r\n\tfont-size: 16px;\r\n}\r\n\r\ndiv.assign-list div.user-item-box span {\r\n    height: 20px;\r\n    display: inline-block;\r\n    float: left;\r\n}\r\n\r\nbutton.show-select-dialog {\r\n    float: right;\r\n    margin-right: -20px;\r\n    width: 22px;\r\n    border: none;\r\n    padding: 0;\r\n    padding-left: 2px;\r\n}\r\n\r\n\r\n\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvd20tY29tcG9uZW50cy9jcmVhdGUvY3JlYXRlLWludm9pY2UvY3JlYXRlLWludm9pY2UuY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiO0FBQ0E7Q0FDQywyQkFBMkI7SUFDeEIsZ0JBQWdCO0lBQ2hCLG1CQUFtQjtJQUNuQixhQUFhO0lBQ2IseUJBQXlCO0FBQzdCOztBQUVBO0lBQ0kseUJBQXlCO0lBQ3pCLGFBQWE7SUFDYixrQkFBa0I7QUFDdEI7O0FBR0E7SUFDSSxhQUFhO0FBQ2pCOztBQUVBO0NBQ0MsWUFBWTtJQUNULHlCQUF5QjtJQUN6QixZQUFZO0lBQ1osa0JBQWtCO0lBQ2xCLFVBQVU7SUFDVixpQkFBaUI7QUFDckI7O0FBRUE7Q0FDQyxvQ0FBb0M7Q0FDcEMsWUFBWTtJQUNULG1CQUFtQjtBQUN2Qjs7QUFFQTs7Q0FFQyxhQUFhO0FBQ2Q7O0FBRUE7Q0FDQyx5QkFBeUI7Q0FDekIsV0FBVztBQUNaOztBQUVBO0NBQ0MsWUFBWTtDQUNaLFlBQVk7QUFDYjs7QUFFQTtDQUNDLFlBQVk7QUFDYjs7QUFFQTtDQUNDLFlBQVk7QUFDYjs7QUFFQTtDQUNDLFlBQVk7QUFDYjs7QUFFQTtDQUNDLFlBQVk7Q0FDWixpQkFBaUI7QUFDbEI7O0FBRUE7Q0FDQyxZQUFZO0NBQ1osaUJBQWlCO0FBQ2xCOztBQUVBO0NBQ0MseUJBQXlCO0FBQzFCOztBQUVBO0NBQ0MsaUJBQWlCO0FBQ2xCOztBQUVBO0lBQ0ksa0JBQWtCO0FBQ3RCOztBQUVBO0lBQ0ksdUJBQXVCO0lBQ3ZCLFlBQVk7SUFDWixtQkFBbUI7O0FBRXZCOztBQUVBOztJQUVJLFdBQVc7SUFDWCxtQkFBbUI7SUFDbkIsaUJBQWlCO0lBQ2pCLGlCQUFpQjtJQUNqQixlQUFlO0lBQ2YsaUJBQWlCO0FBQ3JCOztBQUVBOztJQUVJLFlBQVk7QUFDaEI7O0FBRUE7Q0FDQyx5QkFBeUI7QUFDMUI7O0FBRUE7Q0FDQyx3QkFBd0I7QUFDekI7O0FBR0E7O0lBRUksWUFBWTtBQUNoQjs7QUFFQTtJQUNJLGlCQUFpQjtJQUNqQixXQUFXO0FBQ2Y7O0FBRUE7Q0FDQyxXQUFXO0NBQ1gsWUFBWTtBQUNiOztBQUVBO0NBQ0MseUJBQXlCO0FBQzFCOztBQUVBO0NBQ0Msd0JBQXdCO0FBQ3pCOztBQUVBO0NBQ0Msa0JBQWtCO0NBQ2xCLGFBQWE7QUFDZDs7QUFFQTtDQUNDLHlCQUF5QjtBQUMxQjs7QUFFQTs7SUFFSSx3QkFBd0I7SUFDeEIsWUFBWTtBQUNoQjs7QUFFQTs7SUFFSSxVQUFVO0lBQ1YsWUFBWTtJQUNaLHFCQUFxQjtBQUN6Qjs7QUFFQTtDQUNDLDJCQUEyQjtJQUN4QixZQUFZO0lBQ1osa0JBQWtCO0lBQ2xCLFdBQVc7SUFDWCxpQkFBaUI7SUFDakIsaUJBQWlCO0lBQ2pCLGdCQUFnQjtJQUNoQixtQkFBbUI7QUFDdkI7O0FBRUE7SUFDSSwyQkFBMkI7SUFDM0Isa0JBQWtCO0lBQ2xCLGdCQUFnQjtJQUNoQixXQUFXO0lBQ1gsbUJBQW1CO0lBQ25CLGlCQUFpQjtJQUNqQixrQkFBa0I7QUFDdEI7O0FBRUE7SUFDSSxZQUFZO0lBQ1osdUJBQXVCO0lBQ3ZCLFVBQVU7SUFDVixnQkFBZ0I7SUFDaEIsWUFBWTtJQUNaLGdCQUFnQjtBQUNwQjs7QUFFQTtDQUNDLGVBQWU7QUFDaEI7O0FBRUE7SUFDSSxZQUFZO0lBQ1oscUJBQXFCO0lBQ3JCLFdBQVc7QUFDZjs7QUFFQTtJQUNJLFlBQVk7SUFDWixtQkFBbUI7SUFDbkIsV0FBVztJQUNYLFlBQVk7SUFDWixVQUFVO0lBQ1YsaUJBQWlCO0lBQ2pCLDZCQUE2QjtBQUNqQzs7QUFFQTtJQUNJLFlBQVk7SUFDWixXQUFXO0lBQ1gsWUFBWTtJQUNaLFVBQVU7SUFDVixpQkFBaUI7SUFDakIsZUFBZTtJQUNmLHVCQUF1QjtBQUMzQjs7QUFFQTtDQUNDLFlBQVk7SUFDVCxpQkFBaUI7SUFDakIsMEJBQTBCO0lBQzFCLGlCQUFpQjtBQUNyQjs7QUFFQTtJQUNJLHlCQUF5QjtJQUN6QixjQUFjO0lBQ2QsMEJBQTBCOztBQUU5Qjs7QUFFQTs7SUFFSSxzQkFBc0I7SUFDdEIsY0FBYztBQUNsQjs7QUFFQTtJQUNJLHNCQUFzQjtJQUN0Qix5QkFBeUI7QUFDN0I7O0FBRUE7Q0FDQyxxQkFBcUI7Q0FDckIsWUFBWTtBQUNiOztBQUVBO0NBQ0MscUJBQXFCO0NBQ3JCLGdCQUFnQjtDQUNoQixlQUFlO0NBQ2YsZUFBZTtBQUNoQjs7QUFFQTtDQUNDLG1CQUFtQjtBQUNwQjs7QUFFQTtDQUNDLG1CQUFtQjtBQUNwQjs7QUFFQTtDQUNDLFdBQVc7QUFDWjs7QUFFQTtDQUNDLGNBQWM7QUFDZjs7QUFFQTtDQUNDLFdBQVc7QUFDWjs7QUFHQTtDQUNDLDJCQUEyQjtJQUN4QixZQUFZO0lBQ1osa0JBQWtCO0lBQ2xCLFdBQVc7SUFDWCxpQkFBaUI7SUFDakIsaUJBQWlCO0lBQ2pCLGdCQUFnQjtJQUNoQixtQkFBbUI7QUFDdkI7O0FBRUE7SUFDSSwyQkFBMkI7SUFDM0Isa0JBQWtCO0lBQ2xCLGdCQUFnQjtJQUNoQixXQUFXO0lBQ1gsbUJBQW1CO0lBQ25CLGlCQUFpQjtJQUNqQixrQkFBa0I7QUFDdEI7O0FBRUE7SUFDSSxZQUFZO0lBQ1osdUJBQXVCO0lBQ3ZCLFVBQVU7SUFDVixnQkFBZ0I7SUFDaEIsWUFBWTtJQUNaLGdCQUFnQjtBQUNwQjs7QUFFQTtDQUNDLGVBQWU7QUFDaEI7O0FBRUE7SUFDSSxZQUFZO0lBQ1oscUJBQXFCO0lBQ3JCLFdBQVc7QUFDZjs7QUFFQTtJQUNJLFlBQVk7SUFDWixtQkFBbUI7SUFDbkIsV0FBVztJQUNYLFlBQVk7SUFDWixVQUFVO0lBQ1YsaUJBQWlCO0FBQ3JCIiwiZmlsZSI6InNyYy9hcHAvd20tY29tcG9uZW50cy9jcmVhdGUvY3JlYXRlLWludm9pY2UvY3JlYXRlLWludm9pY2UuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIlxyXG5kaXYud29ya2Zsb3ctY29udGVudC1jb250YWluZXJ7XHJcblx0Ym9yZGVyOiAxcHggc29saWQgbGlnaHRncmF5O1xyXG4gICAgbWFyZ2luOiAxMHB4IDBweDtcclxuICAgIGJvcmRlci1yYWRpdXM6IDEwcHg7XHJcbiAgICBwYWRkaW5nOiAxMHB4O1xyXG4gICAgYmFja2dyb3VuZC1jb2xvcjogI2YxZjFmMTtcclxufVxyXG5cclxuZGl2LndvcmtmbG93LWNvbnRlbnR7XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjZGFkOWQ5O1xyXG4gICAgcGFkZGluZzogMTVweDtcclxuICAgIGJvcmRlci1yYWRpdXM6IDVweDtcclxufVxyXG5cclxuXHJcbmRpdi53b3JrZmxvdy1jb250ZW50LXJlY29yZHtcclxuICAgIHBhZGRpbmc6IDE1cHg7XHJcbn1cclxuXHJcbmRpdi53b3JrZmxvdy1yZWNvcmR7XHJcblx0ZmxvYXQ6IHJpZ2h0O1xyXG4gICAgYmFja2dyb3VuZC1jb2xvcjogI2RhZDlkOTtcclxuICAgIHBhZGRpbmc6IDhweDtcclxuICAgIGJvcmRlci1yYWRpdXM6IDVweDtcclxuICAgIHdpZHRoOiAyNSU7XHJcbiAgICBtaW4taGVpZ2h0OiA1MDBweDtcclxufVxyXG5cclxuLndvcmtmbG93LWNvbnRlbnQgLnBhbmVse1xyXG5cdGJhY2tncm91bmQtY29sb3I6ICNmMmYxZjEgIWltcG9ydGFudDtcclxuXHRwYWRkaW5nOiA4cHg7XHJcbiAgICBtYXJnaW4tYm90dG9tOiAxMHB4O1xyXG59XHJcblxyXG4udHdvcGFubmVsIC5wYW5lbHtcclxuXHRcclxuXHRoZWlnaHQ6IDIzMHB4O1xyXG59XHJcblxyXG4udHdvcGFubmVsIC5wYW5lbC5wYW5lbC12ZW5kb3J7XHJcblx0d2lkdGg6IGNhbGMoMTAwJSAtIDMxMHB4KTtcclxuXHRmbG9hdDogbGVmdDtcclxufVxyXG5cclxuLnR3b3Bhbm5lbCAucGFuZWwucGFuZWwtZGlzY291bnR7XHJcblx0d2lkdGg6IDMwMHB4O1xyXG5cdGZsb2F0OiByaWdodDtcclxufVxyXG5cclxuLnR3b3Bhbm5lbCAucGFuZWwucGFuZWwtZGlzY291bnQgaW5wdXRbdHlwZT10ZXh0XXtcclxuXHR3aWR0aDogMTAwcHg7XHJcbn1cclxuXHJcbi5zbWFsbC1jb250ZW50e1xyXG5cdHdpZHRoOiAxMjBweDtcclxufVxyXG5cclxuLml0ZW0tY29udGVudCBzZWxlY3R7XHJcblx0aGVpZ2h0OiAyNnB4O1xyXG59IFxyXG5cclxuLml0ZW0tY29udGVudCBzZWxlY3Q6bm90KC5mdWxscm93KSwgLml0ZW0tY29udGVudCBpbnB1dFt0eXBlPXRleHRdIHtcclxuXHRoZWlnaHQ6IDI2cHg7XHJcblx0d2lkdGg6IGNhbGMoMTAwJSk7XHJcbn0gXHJcblxyXG4uaXRlbS1jb250ZW50IHNlbGVjdC5mdWxscm93IHtcclxuXHRoZWlnaHQ6IDI2cHg7XHJcblx0d2lkdGg6IGNhbGMoMTAwJSk7XHJcbn0gXHJcblxyXG4uaXRlbS1jb250ZW50LmxhcmctY29udGVudHtcclxuXHR3aWR0aDogY2FsYygxMDAlIC0gNDUwcHgpO1xyXG59XHJcblxyXG4ud29ya2Zsb3ctY29udGVudCAucGFuZWwgLnBhbmVsLWhlYWRpbmd7XHJcblx0Zm9udC13ZWlnaHQ6IGJvbGQ7XHJcbn1cclxuXHJcbmRpdi53b3JrZmxvdy1jb250ZW50IGRpdi5pdGVtLXJvdywgZGl2LndvcmtmbG93LWNvbnRlbnQtcmVjb3JkIGRpdi5pdGVtLXJvdyB7XHJcbiAgICBtYXJnaW46IDVweCAwIDEwcHg7XHJcbn1cclxuXHJcbmRpdi53b3JrZmxvdy1jb250ZW50IGRpdi53b3JrZmxvdy1zdGVwLWJ1dHRvbi1iYXIsIGRpdi53b3JrZmxvdy1jb250ZW50LXJlY29yZCBkaXYud29ya2Zsb3ctc3RlcC1idXR0b24tYmFye1xyXG4gICAgYmFja2dyb3VuZC1jb2xvcjogd2hpdGU7XHJcbiAgICBwYWRkaW5nOiA2cHg7XHJcbiAgICBwYWRkaW5nLXJpZ2h0OiAyMHB4O1xyXG4gICBcclxufVxyXG5cclxuZGl2LndvcmtmbG93LWNvbnRlbnQgZGl2Lml0ZW0tcm93IGRpdi5pdGVtLWxhYmVsLCBcclxuZGl2LndvcmtmbG93LWNvbnRlbnQtcmVjb3JkIGRpdi5pdGVtLXJvdyBkaXYuaXRlbS1sYWJlbHtcclxuICAgIGZsb2F0OiBsZWZ0O1xyXG4gICAgcGFkZGluZy1yaWdodDogMTBweDtcclxuICAgIHBhZGRpbmctbGVmdDogMnB4O1xyXG4gICAgbGluZS1oZWlnaHQ6IDIwcHg7XHJcbiAgICBmb250LXNpemU6IDE0cHg7XHJcbiAgICBmb250LXdlaWdodDogYm9sZDtcclxufVxyXG5cclxuZGl2LndvcmtmbG93LWNvbnRlbnQgZGl2Lml0ZW0tcm93IC5sYWJlbC1sYXJnZSwgXHJcbmRpdi53b3JrZmxvdy1jb250ZW50LXJlY29yZCBkaXYuaXRlbS1yb3cgLmxhYmVsLWxhcmdle1xyXG4gICAgd2lkdGg6IDE1MHB4O1xyXG59XHJcblxyXG4ubGFyZ2UtY29udGVudHtcclxuXHR3aWR0aDogY2FsYygxMDAlIC0gNDIwcHgpO1xyXG59XHJcblxyXG4ubGFyZ2UtY29udGVudCBpbnB1dFt0eXBlPXRleHRdLCAubGFyZ2UtY29udGVudCBzZWxlY3QsIC5sYXJnZS1jb250ZW50IGFyZWF0ZXh0e1xyXG5cdHdpZHRoOiBjYWxjKDEwMCUgLSAzMHB4KTtcclxufVxyXG5cclxuXHJcbmRpdi53b3JrZmxvdy1jb250ZW50IGRpdi5pdGVtLXJvdyAuc21hbGwtbGFiZWwsIFxyXG5kaXYud29ya2Zsb3ctY29udGVudC1yZWNvcmQgZGl2Lml0ZW0tcm93IC5zbWFsbC1sYWJlbHtcclxuICAgIHdpZHRoOiAxMjJweDtcclxufVxyXG5cclxuZGl2LndvcmtmbG93LWNvbnRlbnQgZGl2Lml0ZW0tcm93IGRpdi5pdGVtLWNvbnRlbnQsIGRpdi53b3JrZmxvdy1jb250ZW50LXJlY29yZCBkaXYuaXRlbS1yb3cgZGl2Lml0ZW0tY29udGVudCB7XHJcbiAgICBwYWRkaW5nLWxlZnQ6IDBweDtcclxuICAgIGZsb2F0OiBsZWZ0O1xyXG59XHJcblxyXG4uaXRlbS1jb250ZW50IGlucHV0W3R5cGU9Y2hlY2tib3hde1xyXG5cdHdpZHRoOiAyMHB4O1xyXG5cdGhlaWdodDogMjBweDtcdFxyXG59XHJcblxyXG5kaXYuZnVsbHJvd2Zyb21sYWJlbHtcclxuXHR3aWR0aDogY2FsYygxMDAlIC0gMTUwcHgpO1x0XHJcbn1cclxuXHJcbmRpdi5mdWxscm93ZnJvbWxhYmVsIGlucHV0W3R5cGU9dGV4dF17XHJcblx0d2lkdGg6IGNhbGMoMTAwJSAtIDEwcHgpO1x0XHJcbn1cclxuXHJcbmRpdi5mdWxscm93ZnJvbWxhYmVsIHRleHRhcmVhe1xyXG5cdHdpZHRoOiBjYWxjKDEwMCUgKTtcdFxyXG5cdGhlaWdodDogMTAwcHg7XHRcclxufVxyXG5cclxudGV4dGFyZWEuY29tbWVudHMtZnVsbHJvd3tcclxuXHR3aWR0aDogY2FsYygxMDAlIC0gMTAwcHgpO1x0XHJcbn1cclxuXHJcbmRpdi53b3JrZmxvdy1jb250ZW50IGRpdi5pdGVtLXJvdyBkaXYuaXRlbS1jb250ZW50IGlucHV0LmZpbGUtdGl0bGVcclxue1xyXG4gICAgd2lkdGg6IGNhbGMoNTAlIC0gMTcwcHgpO1xyXG4gICAgaGVpZ2h0OiAyNnB4O1xyXG59XHJcblxyXG5kaXYud29ya2Zsb3ctY29udGVudCBkaXYuaXRlbS1yb3cgZGl2Lml0ZW0tY29udGVudCBpbnB1dC5maWxlLWZpbGVcclxue1xyXG4gICAgd2lkdGg6IDUwJTtcclxuICAgIGhlaWdodDogMjZweDtcclxuICAgIGRpc3BsYXk6IGlubGluZS1ibG9jazs7XHJcbn1cclxuXHJcbi5hc3NpZ24tbGlzdHtcclxuXHRib3JkZXI6IDFweCBzb2xpZCBsaWdodGdyYXk7XHJcbiAgICBwYWRkaW5nOiA2cHg7XHJcbiAgICBib3JkZXItcmFkaXVzOiA0cHg7XHJcbiAgICB3aWR0aDogMTAwJTtcclxuICAgIG1pbi1oZWlnaHQ6IDEwMHB4O1xyXG4gICAgbWF4LWhlaWdodDogMjAwcHg7XHJcbiAgICBvdmVyZmxvdy15OiBhdXRvO1xyXG4gICAgcGFkZGluZy1yaWdodDogMjRweDtcclxufVxyXG5cclxuZGl2LmFzc2lnbi1saXN0IGRpdi51c2VyLWl0ZW0tYm94IHtcclxuICAgIGJvcmRlcjogMXB4IHNvbGlkIGxpZ2h0Z3JheTtcclxuICAgIGJvcmRlci1yYWRpdXM6IDRweDtcclxuICAgIHBhZGRpbmc6IDJweCA0cHg7XHJcbiAgICBmbG9hdDogbGVmdDtcclxuICAgIGJhY2tncm91bmQ6ICNlNmU2ZTY7XHJcbiAgICBtYXJnaW4tcmlnaHQ6IDVweDtcclxuICAgIG1hcmdpbi1ib3R0b206IDVweDtcclxufVxyXG5cclxuZGl2LmFzc2lnbi1saXN0IGRpdi51c2VyLWl0ZW0tYm94IGJ1dHRvbiB7XHJcbiAgICBib3JkZXI6IG5vbmU7XHJcbiAgICBiYWNrZ3JvdW5kOiB0cmFuc3BhcmVudDtcclxuICAgIHBhZGRpbmc6IDA7XHJcbiAgICBwYWRkaW5nLXRvcDogM3B4O1xyXG4gICAgZmxvYXQ6IHJpZ2h0O1xyXG4gICAgbWFyZ2luLWxlZnQ6IDVweDtcclxufVxyXG5cclxuZGl2LmFzc2lnbi1saXN0IGRpdi51c2VyLWl0ZW0tYm94IGJ1dHRvbiBpLm1hdGVyaWFsLWljb25ze1xyXG5cdGZvbnQtc2l6ZTogMTZweDtcclxufVxyXG5cclxuZGl2LmFzc2lnbi1saXN0IGRpdi51c2VyLWl0ZW0tYm94IHNwYW4ge1xyXG4gICAgaGVpZ2h0OiAyMHB4O1xyXG4gICAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xyXG4gICAgZmxvYXQ6IGxlZnQ7XHJcbn1cclxuXHJcbmJ1dHRvbi5zaG93LXNlbGVjdC1kaWFsb2cge1xyXG4gICAgZmxvYXQ6IHJpZ2h0O1xyXG4gICAgbWFyZ2luLXJpZ2h0OiAtMjJweDtcclxuICAgIHdpZHRoOiAyMnB4O1xyXG4gICAgYm9yZGVyOiBub25lO1xyXG4gICAgcGFkZGluZzogMDtcclxuICAgIHBhZGRpbmctbGVmdDogMnB4O1xyXG4gICAgYmFja2dyb3VuZC1jb2xvcjogdHJhbnNwYXJlbnQ7XHJcbn1cclxuXHJcbmJ1dHRvbi5maWxlLWFjdGlvbiB7XHJcbiAgICBmbG9hdDogcmlnaHQ7XHJcbiAgICB3aWR0aDogMjJweDtcclxuICAgIGJvcmRlcjogbm9uZTtcclxuICAgIHBhZGRpbmc6IDA7XHJcbiAgICBwYWRkaW5nLWxlZnQ6IDJweDtcclxuICAgIG1hcmdpbi10b3A6IDRweDtcclxuICAgIGJhY2tncm91bmQ6IHRyYW5zcGFyZW50O1xyXG59XHJcblxyXG4uc3RlcC1idXR0b24sIC5zdGVwLWJ1dHRvbjphY3RpdmV7XHJcblx0ZmxvYXQ6IHJpZ2h0O1xyXG4gICAgbWFyZ2luLWxlZnQ6IDEwcHg7XHJcbiAgICBib3JkZXI6IG91dHNldCAycHggI2Q0ZDRkMTtcclxuICAgIHBhZGRpbmc6IDRweCAyMHB4O1xyXG59XHJcblxyXG4uc3RlcC1idXR0b246aG92ZXI6bm90KDpkaXNiYWxlZCl7XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjOWU5ZTllO1xyXG4gICAgY29sb3I6ICNmYmNiYzQ7XHJcbiAgICBib3JkZXI6IG91dHNldCAycHggI2I3YjdiMztcclxuICAgIFxyXG59XHJcblxyXG4uc3RlcC1idXR0b246bm90KDpkaXNiYWxlZCksIFxyXG4uc3RlcC1idXR0b246YWN0aXZlOm5vdCg6ZGlzYmFsZWQpe1xyXG4gICAgYmFja2dyb3VuZC1jb2xvcjogZ3JheTtcclxuICAgIGNvbG9yOiAjZjdmYmM0O1xyXG59XHJcblxyXG4uc3RlcC1idXR0b246ZGlzYWJsZWR7XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiBncmF5O1xyXG4gICAgY29sb3I6ICNiZGJjYmMgIWltcG9ydGFudDtcclxufVxyXG5cclxuLmZpbGUtY29udGFpbmVye1xyXG5cdGJvcmRlcjpncmF5IDFweCBzb2xpZDsgXHJcblx0cGFkZGluZzogNnB4O1xyXG59XHJcblxyXG4uZmlsZS1jb250YWluZXIgLmZpbGUtcm93e1xyXG5cdGJvcmRlcjpncmF5IDFweCBzb2xpZDsgXHJcblx0cGFkZGluZzogMnB4IDJweDtcclxuXHRtYXJnaW46IDRweCA2cHg7XHJcblx0bWFyZ2luLXJpZ2h0OiAwO1xyXG59XHJcblxyXG4uZmlsZS1jb250YWluZXIgLmZpbGUtcm93Om50aC1jaGlsZChldmVuKXtcclxuXHRiYWNrZ3JvdW5kOiAjZGJmMWZiO1xyXG59XHJcblxyXG4uZmlsZS1jb250YWluZXIgLmZpbGUtcm93Om50aC1jaGlsZChvZGQpe1xyXG5cdGJhY2tncm91bmQ6ICNmM2YzZTE7XHJcbn1cclxuXHJcbi53b3JrZmxvdy1maWxlLXZpZXctbGluaywgLndvcmtmbG93LWZpbGUtdmlldy1saW5rOmFjdGl2ZSwgLndvcmtmbG93LWZpbGUtdmlldy1saW5rOnZpc2l0ZWR7XHJcblx0Y29sb3I6ICMzMzM7XHJcbn1cclxuXHJcbi53b3JrZmxvdy1maWxlLXZpZXctbGluazpob3ZlcntcclxuXHRjb2xvcjogIzU1MTExMztcclxufVxyXG5cclxuLndvcmtmbG93LWZpbGUtdmlldy1saW5rIGkubWF0ZXJpYWwtaWNvbnN7XHJcblx0d2lkdGg6IDI0cHg7XHJcbn1cclxuXHJcblxyXG4uYXNzaWduLWxpc3R7XHJcblx0Ym9yZGVyOiAxcHggc29saWQgbGlnaHRncmF5O1xyXG4gICAgcGFkZGluZzogNnB4O1xyXG4gICAgYm9yZGVyLXJhZGl1czogNHB4O1xyXG4gICAgd2lkdGg6IDEwMCU7XHJcbiAgICBtaW4taGVpZ2h0OiAxMDBweDtcclxuICAgIG1heC1oZWlnaHQ6IDIwMHB4O1xyXG4gICAgb3ZlcmZsb3cteTogYXV0bztcclxuICAgIHBhZGRpbmctcmlnaHQ6IDI0cHg7XHJcbn1cclxuXHJcbmRpdi5hc3NpZ24tbGlzdCBkaXYudXNlci1pdGVtLWJveCB7XHJcbiAgICBib3JkZXI6IDFweCBzb2xpZCBsaWdodGdyYXk7XHJcbiAgICBib3JkZXItcmFkaXVzOiA0cHg7XHJcbiAgICBwYWRkaW5nOiAycHggNHB4O1xyXG4gICAgZmxvYXQ6IGxlZnQ7XHJcbiAgICBiYWNrZ3JvdW5kOiAjZTZlNmU2O1xyXG4gICAgbWFyZ2luLXJpZ2h0OiA1cHg7XHJcbiAgICBtYXJnaW4tYm90dG9tOiA1cHg7XHJcbn1cclxuXHJcbmRpdi5hc3NpZ24tbGlzdCBkaXYudXNlci1pdGVtLWJveCBidXR0b24ge1xyXG4gICAgYm9yZGVyOiBub25lO1xyXG4gICAgYmFja2dyb3VuZDogdHJhbnNwYXJlbnQ7XHJcbiAgICBwYWRkaW5nOiAwO1xyXG4gICAgcGFkZGluZy10b3A6IDNweDtcclxuICAgIGZsb2F0OiByaWdodDtcclxuICAgIG1hcmdpbi1sZWZ0OiA1cHg7XHJcbn1cclxuXHJcbmRpdi5hc3NpZ24tbGlzdCBkaXYudXNlci1pdGVtLWJveCBidXR0b24gaS5tYXRlcmlhbC1pY29uc3tcclxuXHRmb250LXNpemU6IDE2cHg7XHJcbn1cclxuXHJcbmRpdi5hc3NpZ24tbGlzdCBkaXYudXNlci1pdGVtLWJveCBzcGFuIHtcclxuICAgIGhlaWdodDogMjBweDtcclxuICAgIGRpc3BsYXk6IGlubGluZS1ibG9jaztcclxuICAgIGZsb2F0OiBsZWZ0O1xyXG59XHJcblxyXG5idXR0b24uc2hvdy1zZWxlY3QtZGlhbG9nIHtcclxuICAgIGZsb2F0OiByaWdodDtcclxuICAgIG1hcmdpbi1yaWdodDogLTIwcHg7XHJcbiAgICB3aWR0aDogMjJweDtcclxuICAgIGJvcmRlcjogbm9uZTtcclxuICAgIHBhZGRpbmc6IDA7XHJcbiAgICBwYWRkaW5nLWxlZnQ6IDJweDtcclxufVxyXG5cclxuXHJcblxyXG4iXX0= */");
+            /* harmony default export */ __webpack_exports__["default"] = ("\r\ndiv.workflow-content-container{\r\n\tborder: 1px solid lightgray;\r\n    margin: 10px 0px 50px 0;\r\n    border-radius: 10px;\r\n    padding: 10px;\r\n    background-color: #f1f1f1;\r\n}\r\n\r\ndiv.workflow-content{\r\n    background-color: #dad9d9;\r\n    padding: 15px;\r\n    border-radius: 5px;\r\n}\r\n\r\ndiv.workflow-content-record{\r\n    padding: 15px;\r\n}\r\n\r\ndiv.workflow-record{\r\n\tfloat: right;\r\n    background-color: #dad9d9;\r\n    padding: 8px;\r\n    border-radius: 5px;\r\n    width: 25%;\r\n    min-height: 500px;\r\n}\r\n\r\n.workflow-content .panel{\r\n\tbackground-color: #f2f1f1 !important;\r\n\tpadding: 8px;\r\n    margin-bottom: 10px;\r\n}\r\n\r\n.twopannel .panel{\r\n\t\r\n\theight: 230px;\r\n}\r\n\r\n.twopannel .panel.panel-vendor{\r\n\twidth: calc(100% - 310px);\r\n\tfloat: left;\r\n}\r\n\r\n.twopannel .panel.panel-discount{\r\n\twidth: 300px;\r\n\tfloat: right;\r\n}\r\n\r\n.twopannel .panel.panel-discount input[type=text]{\r\n\twidth: 100px;\r\n}\r\n\r\n.small-content{\r\n\twidth: 120px;\r\n}\r\n\r\n.item-content select{\r\n\theight: 26px;\r\n}\r\n\r\n.item-content select:not(.fullrow), .item-content input[type=text] {\r\n\theight: 26px;\r\n\twidth: calc(100%);\r\n}\r\n\r\n.item-content select.fullrow {\r\n\theight: 26px;\r\n\twidth: calc(100%);\r\n}\r\n\r\n.item-content.larg-content{\r\n\twidth: calc(100% - 450px);\r\n}\r\n\r\n.workflow-content .panel .panel-heading{\r\n\tfont-weight: bold;\r\n}\r\n\r\ndiv.workflow-content div.item-row, div.workflow-content-record div.item-row {\r\n    margin: 5px 0 10px;\r\n}\r\n\r\ndiv.workflow-content div.workflow-step-button-bar, div.workflow-content-record div.workflow-step-button-bar{\r\n    background-color: white;\r\n    padding: 6px;\r\n    padding-right: 20px;\r\n   \r\n}\r\n\r\ndiv.workflow-content div.item-row div.item-label, \r\ndiv.workflow-content-record div.item-row div.item-label{\r\n    float: left;\r\n    padding-right: 10px;\r\n    padding-left: 2px;\r\n    line-height: 25px;\r\n    font-size: 14px;\r\n    font-weight: bold;\r\n    height: 25px;\r\n}\r\n\r\ndiv.workflow-content div.item-row .label-large, \r\ndiv.workflow-content-record div.item-row .label-large{\r\n    width: 150px;\r\n}\r\n\r\n.large-content{\r\n\twidth: calc(100% - 420px);\r\n}\r\n\r\n.large-content input[type=text], .large-content select, .large-content areatext{\r\n\twidth: calc(100% - 30px);\r\n}\r\n\r\ndiv.workflow-content div.item-row .small-label, \r\ndiv.workflow-content-record div.item-row .small-label{\r\n    width: 122px;\r\n}\r\n\r\ndiv.workflow-content div.item-row div.item-content, div.workflow-content-record div.item-row div.item-content {\r\n    padding-left: 0px;\r\n    float: left;\r\n}\r\n\r\n.item-content input[type=checkbox]{\r\n\twidth: 20px;\r\n\theight: 20px;\t\r\n\tmargin-top: 3px;\r\n}\r\n\r\ndiv.fullrowfromlabel{\r\n\twidth: calc(100% - 150px);\t\r\n}\r\n\r\ndiv.fullrowfromlabel input[type=text]{\r\n\twidth: calc(100% - 10px);\t\r\n}\r\n\r\ndiv.fullrowfromlabel textarea{\r\n\twidth: calc(100% );\t\r\n\theight: 100px;\t\r\n}\r\n\r\ntextarea.comments-fullrow{\r\n\twidth: calc(100% - 100px);\t\r\n}\r\n\r\ndiv.workflow-content div.item-row div.item-content input.file-title\r\n{\r\n    width: calc(50% - 170px);\r\n    height: 26px;\r\n}\r\n\r\ndiv.workflow-content div.item-row div.item-content input.file-file\r\n{\r\n    width: 50%;\r\n    height: 26px;\r\n    display: inline-block;;\r\n}\r\n\r\n.assign-list{\r\n\tborder: 1px solid lightgray;\r\n    padding: 6px;\r\n    border-radius: 4px;\r\n    width: 100%;\r\n    min-height: 100px;\r\n    max-height: 200px;\r\n    overflow-y: auto;\r\n    padding-right: 24px;\r\n}\r\n\r\ndiv.assign-list div.user-item-box {\r\n    border: 1px solid lightgray;\r\n    border-radius: 4px;\r\n    padding: 2px 4px;\r\n    float: left;\r\n    background: #e6e6e6;\r\n    margin-right: 5px;\r\n    margin-bottom: 5px;\r\n}\r\n\r\ndiv.assign-list div.user-item-box button {\r\n    border: none;\r\n    background: transparent;\r\n    padding: 0;\r\n    padding-top: 3px;\r\n    float: right;\r\n    margin-left: 5px;\r\n}\r\n\r\ndiv.assign-list div.user-item-box button i.material-icons{\r\n\tfont-size: 16px;\r\n}\r\n\r\ndiv.assign-list div.user-item-box span {\r\n    height: 20px;\r\n    display: inline-block;\r\n    float: left;\r\n}\r\n\r\nbutton.show-select-dialog {\r\n    float: right;\r\n    margin-right: -22px;\r\n    width: 22px;\r\n    border: none;\r\n    padding: 0;\r\n    padding-left: 2px;\r\n    background-color: transparent;\r\n}\r\n\r\nbutton.file-action {\r\n    float: right;\r\n    width: 22px;\r\n    border: none;\r\n    padding: 0;\r\n    padding-left: 2px;\r\n    margin-top: 4px;\r\n    background: transparent;\r\n}\r\n\r\n.step-button, .step-button:active{\r\n\tfloat: right;\r\n    margin-left: 10px;\r\n    border: outset 2px #d4d4d1;\r\n    padding: 4px 20px;\r\n}\r\n\r\n.step-button:hover:not(:disbaled){\r\n    background-color: #9e9e9e;\r\n    color: #fbcbc4;\r\n    border: outset 2px #b7b7b3;\r\n    \r\n}\r\n\r\n.step-button:not(:disbaled), \r\n.step-button:active:not(:disbaled){\r\n    background-color: gray;\r\n    color: #f7fbc4;\r\n}\r\n\r\n.step-button:disabled{\r\n    background-color: gray;\r\n    color: #bdbcbc !important;\r\n}\r\n\r\n.file-container{\r\n\tborder:gray 1px solid; \r\n\tpadding: 6px;\r\n}\r\n\r\n.file-container .file-row{\r\n\tborder:gray 1px solid; \r\n\tpadding: 2px 2px;\r\n\tmargin: 4px 6px;\r\n\tmargin-right: 0;\r\n}\r\n\r\n.file-container .file-row:nth-child(even){\r\n\tbackground: #dbf1fb;\r\n}\r\n\r\n.file-container .file-row:nth-child(odd){\r\n\tbackground: #f3f3e1;\r\n}\r\n\r\n.workflow-file-view-link, .workflow-file-view-link:active, .workflow-file-view-link:visited{\r\n\tcolor: #333;\r\n}\r\n\r\n.workflow-file-view-link:hover{\r\n\tcolor: #551113;\r\n}\r\n\r\n.workflow-file-view-link i.material-icons{\r\n\twidth: 24px;\r\n}\r\n\r\n.assign-list{\r\n\tborder: 1px solid lightgray;\r\n    padding: 6px;\r\n    border-radius: 4px;\r\n    width: 100%;\r\n    min-height: 100px;\r\n    max-height: 200px;\r\n    overflow-y: auto;\r\n    padding-right: 24px;\r\n}\r\n\r\ndiv.assign-list div.user-item-box {\r\n    border: 1px solid lightgray;\r\n    border-radius: 4px;\r\n    padding: 2px 4px;\r\n    float: left;\r\n    background: #e6e6e6;\r\n    margin-right: 5px;\r\n    margin-bottom: 5px;\r\n}\r\n\r\ndiv.assign-list div.user-item-box button {\r\n    border: none;\r\n    background: transparent;\r\n    padding: 0;\r\n    padding-top: 3px;\r\n    float: right;\r\n    margin-left: 5px;\r\n}\r\n\r\ndiv.assign-list div.user-item-box button i.material-icons{\r\n\tfont-size: 16px;\r\n}\r\n\r\ndiv.assign-list div.user-item-box span {\r\n    height: 20px;\r\n    display: inline-block;\r\n    float: left;\r\n}\r\n\r\nbutton.show-select-dialog {\r\n    float: right;\r\n    margin-right: -20px;\r\n    width: 22px;\r\n    border: none;\r\n    padding: 0;\r\n    padding-left: 2px;\r\n}\r\n\r\ninput.select-date{\r\n\twidth: 100px;\r\n\theight: 26px;\r\n}\r\n\r\ninput.short-input{\r\n\twidth: 100px;\r\n\theight: 26px;\r\n}\r\n\r\n\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvd20tY29tcG9uZW50cy9jcmVhdGUvY3JlYXRlLWludm9pY2UvY3JlYXRlLWludm9pY2UuY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiO0FBQ0E7Q0FDQywyQkFBMkI7SUFDeEIsdUJBQXVCO0lBQ3ZCLG1CQUFtQjtJQUNuQixhQUFhO0lBQ2IseUJBQXlCO0FBQzdCOztBQUVBO0lBQ0kseUJBQXlCO0lBQ3pCLGFBQWE7SUFDYixrQkFBa0I7QUFDdEI7O0FBR0E7SUFDSSxhQUFhO0FBQ2pCOztBQUVBO0NBQ0MsWUFBWTtJQUNULHlCQUF5QjtJQUN6QixZQUFZO0lBQ1osa0JBQWtCO0lBQ2xCLFVBQVU7SUFDVixpQkFBaUI7QUFDckI7O0FBRUE7Q0FDQyxvQ0FBb0M7Q0FDcEMsWUFBWTtJQUNULG1CQUFtQjtBQUN2Qjs7QUFFQTs7Q0FFQyxhQUFhO0FBQ2Q7O0FBRUE7Q0FDQyx5QkFBeUI7Q0FDekIsV0FBVztBQUNaOztBQUVBO0NBQ0MsWUFBWTtDQUNaLFlBQVk7QUFDYjs7QUFFQTtDQUNDLFlBQVk7QUFDYjs7QUFFQTtDQUNDLFlBQVk7QUFDYjs7QUFFQTtDQUNDLFlBQVk7QUFDYjs7QUFFQTtDQUNDLFlBQVk7Q0FDWixpQkFBaUI7QUFDbEI7O0FBRUE7Q0FDQyxZQUFZO0NBQ1osaUJBQWlCO0FBQ2xCOztBQUVBO0NBQ0MseUJBQXlCO0FBQzFCOztBQUVBO0NBQ0MsaUJBQWlCO0FBQ2xCOztBQUVBO0lBQ0ksa0JBQWtCO0FBQ3RCOztBQUVBO0lBQ0ksdUJBQXVCO0lBQ3ZCLFlBQVk7SUFDWixtQkFBbUI7O0FBRXZCOztBQUVBOztJQUVJLFdBQVc7SUFDWCxtQkFBbUI7SUFDbkIsaUJBQWlCO0lBQ2pCLGlCQUFpQjtJQUNqQixlQUFlO0lBQ2YsaUJBQWlCO0lBQ2pCLFlBQVk7QUFDaEI7O0FBRUE7O0lBRUksWUFBWTtBQUNoQjs7QUFFQTtDQUNDLHlCQUF5QjtBQUMxQjs7QUFFQTtDQUNDLHdCQUF3QjtBQUN6Qjs7QUFHQTs7SUFFSSxZQUFZO0FBQ2hCOztBQUVBO0lBQ0ksaUJBQWlCO0lBQ2pCLFdBQVc7QUFDZjs7QUFFQTtDQUNDLFdBQVc7Q0FDWCxZQUFZO0NBQ1osZUFBZTtBQUNoQjs7QUFFQTtDQUNDLHlCQUF5QjtBQUMxQjs7QUFFQTtDQUNDLHdCQUF3QjtBQUN6Qjs7QUFFQTtDQUNDLGtCQUFrQjtDQUNsQixhQUFhO0FBQ2Q7O0FBRUE7Q0FDQyx5QkFBeUI7QUFDMUI7O0FBRUE7O0lBRUksd0JBQXdCO0lBQ3hCLFlBQVk7QUFDaEI7O0FBRUE7O0lBRUksVUFBVTtJQUNWLFlBQVk7SUFDWixxQkFBcUI7QUFDekI7O0FBRUE7Q0FDQywyQkFBMkI7SUFDeEIsWUFBWTtJQUNaLGtCQUFrQjtJQUNsQixXQUFXO0lBQ1gsaUJBQWlCO0lBQ2pCLGlCQUFpQjtJQUNqQixnQkFBZ0I7SUFDaEIsbUJBQW1CO0FBQ3ZCOztBQUVBO0lBQ0ksMkJBQTJCO0lBQzNCLGtCQUFrQjtJQUNsQixnQkFBZ0I7SUFDaEIsV0FBVztJQUNYLG1CQUFtQjtJQUNuQixpQkFBaUI7SUFDakIsa0JBQWtCO0FBQ3RCOztBQUVBO0lBQ0ksWUFBWTtJQUNaLHVCQUF1QjtJQUN2QixVQUFVO0lBQ1YsZ0JBQWdCO0lBQ2hCLFlBQVk7SUFDWixnQkFBZ0I7QUFDcEI7O0FBRUE7Q0FDQyxlQUFlO0FBQ2hCOztBQUVBO0lBQ0ksWUFBWTtJQUNaLHFCQUFxQjtJQUNyQixXQUFXO0FBQ2Y7O0FBRUE7SUFDSSxZQUFZO0lBQ1osbUJBQW1CO0lBQ25CLFdBQVc7SUFDWCxZQUFZO0lBQ1osVUFBVTtJQUNWLGlCQUFpQjtJQUNqQiw2QkFBNkI7QUFDakM7O0FBRUE7SUFDSSxZQUFZO0lBQ1osV0FBVztJQUNYLFlBQVk7SUFDWixVQUFVO0lBQ1YsaUJBQWlCO0lBQ2pCLGVBQWU7SUFDZix1QkFBdUI7QUFDM0I7O0FBRUE7Q0FDQyxZQUFZO0lBQ1QsaUJBQWlCO0lBQ2pCLDBCQUEwQjtJQUMxQixpQkFBaUI7QUFDckI7O0FBRUE7SUFDSSx5QkFBeUI7SUFDekIsY0FBYztJQUNkLDBCQUEwQjs7QUFFOUI7O0FBRUE7O0lBRUksc0JBQXNCO0lBQ3RCLGNBQWM7QUFDbEI7O0FBRUE7SUFDSSxzQkFBc0I7SUFDdEIseUJBQXlCO0FBQzdCOztBQUVBO0NBQ0MscUJBQXFCO0NBQ3JCLFlBQVk7QUFDYjs7QUFFQTtDQUNDLHFCQUFxQjtDQUNyQixnQkFBZ0I7Q0FDaEIsZUFBZTtDQUNmLGVBQWU7QUFDaEI7O0FBRUE7Q0FDQyxtQkFBbUI7QUFDcEI7O0FBRUE7Q0FDQyxtQkFBbUI7QUFDcEI7O0FBRUE7Q0FDQyxXQUFXO0FBQ1o7O0FBRUE7Q0FDQyxjQUFjO0FBQ2Y7O0FBRUE7Q0FDQyxXQUFXO0FBQ1o7O0FBR0E7Q0FDQywyQkFBMkI7SUFDeEIsWUFBWTtJQUNaLGtCQUFrQjtJQUNsQixXQUFXO0lBQ1gsaUJBQWlCO0lBQ2pCLGlCQUFpQjtJQUNqQixnQkFBZ0I7SUFDaEIsbUJBQW1CO0FBQ3ZCOztBQUVBO0lBQ0ksMkJBQTJCO0lBQzNCLGtCQUFrQjtJQUNsQixnQkFBZ0I7SUFDaEIsV0FBVztJQUNYLG1CQUFtQjtJQUNuQixpQkFBaUI7SUFDakIsa0JBQWtCO0FBQ3RCOztBQUVBO0lBQ0ksWUFBWTtJQUNaLHVCQUF1QjtJQUN2QixVQUFVO0lBQ1YsZ0JBQWdCO0lBQ2hCLFlBQVk7SUFDWixnQkFBZ0I7QUFDcEI7O0FBRUE7Q0FDQyxlQUFlO0FBQ2hCOztBQUVBO0lBQ0ksWUFBWTtJQUNaLHFCQUFxQjtJQUNyQixXQUFXO0FBQ2Y7O0FBRUE7SUFDSSxZQUFZO0lBQ1osbUJBQW1CO0lBQ25CLFdBQVc7SUFDWCxZQUFZO0lBQ1osVUFBVTtJQUNWLGlCQUFpQjtBQUNyQjs7QUFFQTtDQUNDLFlBQVk7Q0FDWixZQUFZO0FBQ2I7O0FBRUE7Q0FDQyxZQUFZO0NBQ1osWUFBWTtBQUNiIiwiZmlsZSI6InNyYy9hcHAvd20tY29tcG9uZW50cy9jcmVhdGUvY3JlYXRlLWludm9pY2UvY3JlYXRlLWludm9pY2UuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIlxyXG5kaXYud29ya2Zsb3ctY29udGVudC1jb250YWluZXJ7XHJcblx0Ym9yZGVyOiAxcHggc29saWQgbGlnaHRncmF5O1xyXG4gICAgbWFyZ2luOiAxMHB4IDBweCA1MHB4IDA7XHJcbiAgICBib3JkZXItcmFkaXVzOiAxMHB4O1xyXG4gICAgcGFkZGluZzogMTBweDtcclxuICAgIGJhY2tncm91bmQtY29sb3I6ICNmMWYxZjE7XHJcbn1cclxuXHJcbmRpdi53b3JrZmxvdy1jb250ZW50e1xyXG4gICAgYmFja2dyb3VuZC1jb2xvcjogI2RhZDlkOTtcclxuICAgIHBhZGRpbmc6IDE1cHg7XHJcbiAgICBib3JkZXItcmFkaXVzOiA1cHg7XHJcbn1cclxuXHJcblxyXG5kaXYud29ya2Zsb3ctY29udGVudC1yZWNvcmR7XHJcbiAgICBwYWRkaW5nOiAxNXB4O1xyXG59XHJcblxyXG5kaXYud29ya2Zsb3ctcmVjb3Jke1xyXG5cdGZsb2F0OiByaWdodDtcclxuICAgIGJhY2tncm91bmQtY29sb3I6ICNkYWQ5ZDk7XHJcbiAgICBwYWRkaW5nOiA4cHg7XHJcbiAgICBib3JkZXItcmFkaXVzOiA1cHg7XHJcbiAgICB3aWR0aDogMjUlO1xyXG4gICAgbWluLWhlaWdodDogNTAwcHg7XHJcbn1cclxuXHJcbi53b3JrZmxvdy1jb250ZW50IC5wYW5lbHtcclxuXHRiYWNrZ3JvdW5kLWNvbG9yOiAjZjJmMWYxICFpbXBvcnRhbnQ7XHJcblx0cGFkZGluZzogOHB4O1xyXG4gICAgbWFyZ2luLWJvdHRvbTogMTBweDtcclxufVxyXG5cclxuLnR3b3Bhbm5lbCAucGFuZWx7XHJcblx0XHJcblx0aGVpZ2h0OiAyMzBweDtcclxufVxyXG5cclxuLnR3b3Bhbm5lbCAucGFuZWwucGFuZWwtdmVuZG9ye1xyXG5cdHdpZHRoOiBjYWxjKDEwMCUgLSAzMTBweCk7XHJcblx0ZmxvYXQ6IGxlZnQ7XHJcbn1cclxuXHJcbi50d29wYW5uZWwgLnBhbmVsLnBhbmVsLWRpc2NvdW50e1xyXG5cdHdpZHRoOiAzMDBweDtcclxuXHRmbG9hdDogcmlnaHQ7XHJcbn1cclxuXHJcbi50d29wYW5uZWwgLnBhbmVsLnBhbmVsLWRpc2NvdW50IGlucHV0W3R5cGU9dGV4dF17XHJcblx0d2lkdGg6IDEwMHB4O1xyXG59XHJcblxyXG4uc21hbGwtY29udGVudHtcclxuXHR3aWR0aDogMTIwcHg7XHJcbn1cclxuXHJcbi5pdGVtLWNvbnRlbnQgc2VsZWN0e1xyXG5cdGhlaWdodDogMjZweDtcclxufSBcclxuXHJcbi5pdGVtLWNvbnRlbnQgc2VsZWN0Om5vdCguZnVsbHJvdyksIC5pdGVtLWNvbnRlbnQgaW5wdXRbdHlwZT10ZXh0XSB7XHJcblx0aGVpZ2h0OiAyNnB4O1xyXG5cdHdpZHRoOiBjYWxjKDEwMCUpO1xyXG59IFxyXG5cclxuLml0ZW0tY29udGVudCBzZWxlY3QuZnVsbHJvdyB7XHJcblx0aGVpZ2h0OiAyNnB4O1xyXG5cdHdpZHRoOiBjYWxjKDEwMCUpO1xyXG59IFxyXG5cclxuLml0ZW0tY29udGVudC5sYXJnLWNvbnRlbnR7XHJcblx0d2lkdGg6IGNhbGMoMTAwJSAtIDQ1MHB4KTtcclxufVxyXG5cclxuLndvcmtmbG93LWNvbnRlbnQgLnBhbmVsIC5wYW5lbC1oZWFkaW5ne1xyXG5cdGZvbnQtd2VpZ2h0OiBib2xkO1xyXG59XHJcblxyXG5kaXYud29ya2Zsb3ctY29udGVudCBkaXYuaXRlbS1yb3csIGRpdi53b3JrZmxvdy1jb250ZW50LXJlY29yZCBkaXYuaXRlbS1yb3cge1xyXG4gICAgbWFyZ2luOiA1cHggMCAxMHB4O1xyXG59XHJcblxyXG5kaXYud29ya2Zsb3ctY29udGVudCBkaXYud29ya2Zsb3ctc3RlcC1idXR0b24tYmFyLCBkaXYud29ya2Zsb3ctY29udGVudC1yZWNvcmQgZGl2LndvcmtmbG93LXN0ZXAtYnV0dG9uLWJhcntcclxuICAgIGJhY2tncm91bmQtY29sb3I6IHdoaXRlO1xyXG4gICAgcGFkZGluZzogNnB4O1xyXG4gICAgcGFkZGluZy1yaWdodDogMjBweDtcclxuICAgXHJcbn1cclxuXHJcbmRpdi53b3JrZmxvdy1jb250ZW50IGRpdi5pdGVtLXJvdyBkaXYuaXRlbS1sYWJlbCwgXHJcbmRpdi53b3JrZmxvdy1jb250ZW50LXJlY29yZCBkaXYuaXRlbS1yb3cgZGl2Lml0ZW0tbGFiZWx7XHJcbiAgICBmbG9hdDogbGVmdDtcclxuICAgIHBhZGRpbmctcmlnaHQ6IDEwcHg7XHJcbiAgICBwYWRkaW5nLWxlZnQ6IDJweDtcclxuICAgIGxpbmUtaGVpZ2h0OiAyNXB4O1xyXG4gICAgZm9udC1zaXplOiAxNHB4O1xyXG4gICAgZm9udC13ZWlnaHQ6IGJvbGQ7XHJcbiAgICBoZWlnaHQ6IDI1cHg7XHJcbn1cclxuXHJcbmRpdi53b3JrZmxvdy1jb250ZW50IGRpdi5pdGVtLXJvdyAubGFiZWwtbGFyZ2UsIFxyXG5kaXYud29ya2Zsb3ctY29udGVudC1yZWNvcmQgZGl2Lml0ZW0tcm93IC5sYWJlbC1sYXJnZXtcclxuICAgIHdpZHRoOiAxNTBweDtcclxufVxyXG5cclxuLmxhcmdlLWNvbnRlbnR7XHJcblx0d2lkdGg6IGNhbGMoMTAwJSAtIDQyMHB4KTtcclxufVxyXG5cclxuLmxhcmdlLWNvbnRlbnQgaW5wdXRbdHlwZT10ZXh0XSwgLmxhcmdlLWNvbnRlbnQgc2VsZWN0LCAubGFyZ2UtY29udGVudCBhcmVhdGV4dHtcclxuXHR3aWR0aDogY2FsYygxMDAlIC0gMzBweCk7XHJcbn1cclxuXHJcblxyXG5kaXYud29ya2Zsb3ctY29udGVudCBkaXYuaXRlbS1yb3cgLnNtYWxsLWxhYmVsLCBcclxuZGl2LndvcmtmbG93LWNvbnRlbnQtcmVjb3JkIGRpdi5pdGVtLXJvdyAuc21hbGwtbGFiZWx7XHJcbiAgICB3aWR0aDogMTIycHg7XHJcbn1cclxuXHJcbmRpdi53b3JrZmxvdy1jb250ZW50IGRpdi5pdGVtLXJvdyBkaXYuaXRlbS1jb250ZW50LCBkaXYud29ya2Zsb3ctY29udGVudC1yZWNvcmQgZGl2Lml0ZW0tcm93IGRpdi5pdGVtLWNvbnRlbnQge1xyXG4gICAgcGFkZGluZy1sZWZ0OiAwcHg7XHJcbiAgICBmbG9hdDogbGVmdDtcclxufVxyXG5cclxuLml0ZW0tY29udGVudCBpbnB1dFt0eXBlPWNoZWNrYm94XXtcclxuXHR3aWR0aDogMjBweDtcclxuXHRoZWlnaHQ6IDIwcHg7XHRcclxuXHRtYXJnaW4tdG9wOiAzcHg7XHJcbn1cclxuXHJcbmRpdi5mdWxscm93ZnJvbWxhYmVse1xyXG5cdHdpZHRoOiBjYWxjKDEwMCUgLSAxNTBweCk7XHRcclxufVxyXG5cclxuZGl2LmZ1bGxyb3dmcm9tbGFiZWwgaW5wdXRbdHlwZT10ZXh0XXtcclxuXHR3aWR0aDogY2FsYygxMDAlIC0gMTBweCk7XHRcclxufVxyXG5cclxuZGl2LmZ1bGxyb3dmcm9tbGFiZWwgdGV4dGFyZWF7XHJcblx0d2lkdGg6IGNhbGMoMTAwJSApO1x0XHJcblx0aGVpZ2h0OiAxMDBweDtcdFxyXG59XHJcblxyXG50ZXh0YXJlYS5jb21tZW50cy1mdWxscm93e1xyXG5cdHdpZHRoOiBjYWxjKDEwMCUgLSAxMDBweCk7XHRcclxufVxyXG5cclxuZGl2LndvcmtmbG93LWNvbnRlbnQgZGl2Lml0ZW0tcm93IGRpdi5pdGVtLWNvbnRlbnQgaW5wdXQuZmlsZS10aXRsZVxyXG57XHJcbiAgICB3aWR0aDogY2FsYyg1MCUgLSAxNzBweCk7XHJcbiAgICBoZWlnaHQ6IDI2cHg7XHJcbn1cclxuXHJcbmRpdi53b3JrZmxvdy1jb250ZW50IGRpdi5pdGVtLXJvdyBkaXYuaXRlbS1jb250ZW50IGlucHV0LmZpbGUtZmlsZVxyXG57XHJcbiAgICB3aWR0aDogNTAlO1xyXG4gICAgaGVpZ2h0OiAyNnB4O1xyXG4gICAgZGlzcGxheTogaW5saW5lLWJsb2NrOztcclxufVxyXG5cclxuLmFzc2lnbi1saXN0e1xyXG5cdGJvcmRlcjogMXB4IHNvbGlkIGxpZ2h0Z3JheTtcclxuICAgIHBhZGRpbmc6IDZweDtcclxuICAgIGJvcmRlci1yYWRpdXM6IDRweDtcclxuICAgIHdpZHRoOiAxMDAlO1xyXG4gICAgbWluLWhlaWdodDogMTAwcHg7XHJcbiAgICBtYXgtaGVpZ2h0OiAyMDBweDtcclxuICAgIG92ZXJmbG93LXk6IGF1dG87XHJcbiAgICBwYWRkaW5nLXJpZ2h0OiAyNHB4O1xyXG59XHJcblxyXG5kaXYuYXNzaWduLWxpc3QgZGl2LnVzZXItaXRlbS1ib3gge1xyXG4gICAgYm9yZGVyOiAxcHggc29saWQgbGlnaHRncmF5O1xyXG4gICAgYm9yZGVyLXJhZGl1czogNHB4O1xyXG4gICAgcGFkZGluZzogMnB4IDRweDtcclxuICAgIGZsb2F0OiBsZWZ0O1xyXG4gICAgYmFja2dyb3VuZDogI2U2ZTZlNjtcclxuICAgIG1hcmdpbi1yaWdodDogNXB4O1xyXG4gICAgbWFyZ2luLWJvdHRvbTogNXB4O1xyXG59XHJcblxyXG5kaXYuYXNzaWduLWxpc3QgZGl2LnVzZXItaXRlbS1ib3ggYnV0dG9uIHtcclxuICAgIGJvcmRlcjogbm9uZTtcclxuICAgIGJhY2tncm91bmQ6IHRyYW5zcGFyZW50O1xyXG4gICAgcGFkZGluZzogMDtcclxuICAgIHBhZGRpbmctdG9wOiAzcHg7XHJcbiAgICBmbG9hdDogcmlnaHQ7XHJcbiAgICBtYXJnaW4tbGVmdDogNXB4O1xyXG59XHJcblxyXG5kaXYuYXNzaWduLWxpc3QgZGl2LnVzZXItaXRlbS1ib3ggYnV0dG9uIGkubWF0ZXJpYWwtaWNvbnN7XHJcblx0Zm9udC1zaXplOiAxNnB4O1xyXG59XHJcblxyXG5kaXYuYXNzaWduLWxpc3QgZGl2LnVzZXItaXRlbS1ib3ggc3BhbiB7XHJcbiAgICBoZWlnaHQ6IDIwcHg7XHJcbiAgICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XHJcbiAgICBmbG9hdDogbGVmdDtcclxufVxyXG5cclxuYnV0dG9uLnNob3ctc2VsZWN0LWRpYWxvZyB7XHJcbiAgICBmbG9hdDogcmlnaHQ7XHJcbiAgICBtYXJnaW4tcmlnaHQ6IC0yMnB4O1xyXG4gICAgd2lkdGg6IDIycHg7XHJcbiAgICBib3JkZXI6IG5vbmU7XHJcbiAgICBwYWRkaW5nOiAwO1xyXG4gICAgcGFkZGluZy1sZWZ0OiAycHg7XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiB0cmFuc3BhcmVudDtcclxufVxyXG5cclxuYnV0dG9uLmZpbGUtYWN0aW9uIHtcclxuICAgIGZsb2F0OiByaWdodDtcclxuICAgIHdpZHRoOiAyMnB4O1xyXG4gICAgYm9yZGVyOiBub25lO1xyXG4gICAgcGFkZGluZzogMDtcclxuICAgIHBhZGRpbmctbGVmdDogMnB4O1xyXG4gICAgbWFyZ2luLXRvcDogNHB4O1xyXG4gICAgYmFja2dyb3VuZDogdHJhbnNwYXJlbnQ7XHJcbn1cclxuXHJcbi5zdGVwLWJ1dHRvbiwgLnN0ZXAtYnV0dG9uOmFjdGl2ZXtcclxuXHRmbG9hdDogcmlnaHQ7XHJcbiAgICBtYXJnaW4tbGVmdDogMTBweDtcclxuICAgIGJvcmRlcjogb3V0c2V0IDJweCAjZDRkNGQxO1xyXG4gICAgcGFkZGluZzogNHB4IDIwcHg7XHJcbn1cclxuXHJcbi5zdGVwLWJ1dHRvbjpob3Zlcjpub3QoOmRpc2JhbGVkKXtcclxuICAgIGJhY2tncm91bmQtY29sb3I6ICM5ZTllOWU7XHJcbiAgICBjb2xvcjogI2ZiY2JjNDtcclxuICAgIGJvcmRlcjogb3V0c2V0IDJweCAjYjdiN2IzO1xyXG4gICAgXHJcbn1cclxuXHJcbi5zdGVwLWJ1dHRvbjpub3QoOmRpc2JhbGVkKSwgXHJcbi5zdGVwLWJ1dHRvbjphY3RpdmU6bm90KDpkaXNiYWxlZCl7XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiBncmF5O1xyXG4gICAgY29sb3I6ICNmN2ZiYzQ7XHJcbn1cclxuXHJcbi5zdGVwLWJ1dHRvbjpkaXNhYmxlZHtcclxuICAgIGJhY2tncm91bmQtY29sb3I6IGdyYXk7XHJcbiAgICBjb2xvcjogI2JkYmNiYyAhaW1wb3J0YW50O1xyXG59XHJcblxyXG4uZmlsZS1jb250YWluZXJ7XHJcblx0Ym9yZGVyOmdyYXkgMXB4IHNvbGlkOyBcclxuXHRwYWRkaW5nOiA2cHg7XHJcbn1cclxuXHJcbi5maWxlLWNvbnRhaW5lciAuZmlsZS1yb3d7XHJcblx0Ym9yZGVyOmdyYXkgMXB4IHNvbGlkOyBcclxuXHRwYWRkaW5nOiAycHggMnB4O1xyXG5cdG1hcmdpbjogNHB4IDZweDtcclxuXHRtYXJnaW4tcmlnaHQ6IDA7XHJcbn1cclxuXHJcbi5maWxlLWNvbnRhaW5lciAuZmlsZS1yb3c6bnRoLWNoaWxkKGV2ZW4pe1xyXG5cdGJhY2tncm91bmQ6ICNkYmYxZmI7XHJcbn1cclxuXHJcbi5maWxlLWNvbnRhaW5lciAuZmlsZS1yb3c6bnRoLWNoaWxkKG9kZCl7XHJcblx0YmFja2dyb3VuZDogI2YzZjNlMTtcclxufVxyXG5cclxuLndvcmtmbG93LWZpbGUtdmlldy1saW5rLCAud29ya2Zsb3ctZmlsZS12aWV3LWxpbms6YWN0aXZlLCAud29ya2Zsb3ctZmlsZS12aWV3LWxpbms6dmlzaXRlZHtcclxuXHRjb2xvcjogIzMzMztcclxufVxyXG5cclxuLndvcmtmbG93LWZpbGUtdmlldy1saW5rOmhvdmVye1xyXG5cdGNvbG9yOiAjNTUxMTEzO1xyXG59XHJcblxyXG4ud29ya2Zsb3ctZmlsZS12aWV3LWxpbmsgaS5tYXRlcmlhbC1pY29uc3tcclxuXHR3aWR0aDogMjRweDtcclxufVxyXG5cclxuXHJcbi5hc3NpZ24tbGlzdHtcclxuXHRib3JkZXI6IDFweCBzb2xpZCBsaWdodGdyYXk7XHJcbiAgICBwYWRkaW5nOiA2cHg7XHJcbiAgICBib3JkZXItcmFkaXVzOiA0cHg7XHJcbiAgICB3aWR0aDogMTAwJTtcclxuICAgIG1pbi1oZWlnaHQ6IDEwMHB4O1xyXG4gICAgbWF4LWhlaWdodDogMjAwcHg7XHJcbiAgICBvdmVyZmxvdy15OiBhdXRvO1xyXG4gICAgcGFkZGluZy1yaWdodDogMjRweDtcclxufVxyXG5cclxuZGl2LmFzc2lnbi1saXN0IGRpdi51c2VyLWl0ZW0tYm94IHtcclxuICAgIGJvcmRlcjogMXB4IHNvbGlkIGxpZ2h0Z3JheTtcclxuICAgIGJvcmRlci1yYWRpdXM6IDRweDtcclxuICAgIHBhZGRpbmc6IDJweCA0cHg7XHJcbiAgICBmbG9hdDogbGVmdDtcclxuICAgIGJhY2tncm91bmQ6ICNlNmU2ZTY7XHJcbiAgICBtYXJnaW4tcmlnaHQ6IDVweDtcclxuICAgIG1hcmdpbi1ib3R0b206IDVweDtcclxufVxyXG5cclxuZGl2LmFzc2lnbi1saXN0IGRpdi51c2VyLWl0ZW0tYm94IGJ1dHRvbiB7XHJcbiAgICBib3JkZXI6IG5vbmU7XHJcbiAgICBiYWNrZ3JvdW5kOiB0cmFuc3BhcmVudDtcclxuICAgIHBhZGRpbmc6IDA7XHJcbiAgICBwYWRkaW5nLXRvcDogM3B4O1xyXG4gICAgZmxvYXQ6IHJpZ2h0O1xyXG4gICAgbWFyZ2luLWxlZnQ6IDVweDtcclxufVxyXG5cclxuZGl2LmFzc2lnbi1saXN0IGRpdi51c2VyLWl0ZW0tYm94IGJ1dHRvbiBpLm1hdGVyaWFsLWljb25ze1xyXG5cdGZvbnQtc2l6ZTogMTZweDtcclxufVxyXG5cclxuZGl2LmFzc2lnbi1saXN0IGRpdi51c2VyLWl0ZW0tYm94IHNwYW4ge1xyXG4gICAgaGVpZ2h0OiAyMHB4O1xyXG4gICAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xyXG4gICAgZmxvYXQ6IGxlZnQ7XHJcbn1cclxuXHJcbmJ1dHRvbi5zaG93LXNlbGVjdC1kaWFsb2cge1xyXG4gICAgZmxvYXQ6IHJpZ2h0O1xyXG4gICAgbWFyZ2luLXJpZ2h0OiAtMjBweDtcclxuICAgIHdpZHRoOiAyMnB4O1xyXG4gICAgYm9yZGVyOiBub25lO1xyXG4gICAgcGFkZGluZzogMDtcclxuICAgIHBhZGRpbmctbGVmdDogMnB4O1xyXG59XHJcblxyXG5pbnB1dC5zZWxlY3QtZGF0ZXtcclxuXHR3aWR0aDogMTAwcHg7XHJcblx0aGVpZ2h0OiAyNnB4O1xyXG59XHJcblxyXG5pbnB1dC5zaG9ydC1pbnB1dHtcclxuXHR3aWR0aDogMTAwcHg7XHJcblx0aGVpZ2h0OiAyNnB4O1xyXG59XHJcblxyXG5cclxuIl19 */");
             /***/ 
         }),
         /***/ "./src/app/wm-components/create/create-invoice/create-invoice.component.ts": 
@@ -2809,15 +3067,17 @@ var __extends = (this && this.__extends) || (function () {
             /* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm2015/ngx-translate-core.js");
             /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
             /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
-            /* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../services/global.service */ "./src/app/services/global.service.ts");
-            /* harmony import */ var _services_workflow_invoice_invoice_workflow_edit_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../services/workflow/invoice/invoice-workflow-edit.service */ "./src/app/services/workflow/invoice/invoice-workflow-edit.service.ts");
-            /* harmony import */ var _services_loading_service_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../services/loading-service.service */ "./src/app/services/loading-service.service.ts");
-            /* harmony import */ var _services_error_service_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../services/error-service.service */ "./src/app/services/error-service.service.ts");
-            /* harmony import */ var _wf_models__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../../wf-models */ "./src/app/wf-models/index.ts");
-            /* harmony import */ var _wf_models_invoice_workflow_save_request__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../../wf-models/invoice-workflow-save-request */ "./src/app/wf-models/invoice-workflow-save-request.ts");
-            /* harmony import */ var _custom_validators_invoice_type_controll_validator__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../../custom-validators/invoice-type-controll-validator */ "./src/app/custom-validators/invoice-type-controll-validator.ts");
+            /* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm2015/material.js");
+            /* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../services/global.service */ "./src/app/services/global.service.ts");
+            /* harmony import */ var _services_workflow_invoice_invoice_workflow_edit_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../services/workflow/invoice/invoice-workflow-edit.service */ "./src/app/services/workflow/invoice/invoice-workflow-edit.service.ts");
+            /* harmony import */ var _services_loading_service_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../services/loading-service.service */ "./src/app/services/loading-service.service.ts");
+            /* harmony import */ var _services_error_service_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../../services/error-service.service */ "./src/app/services/error-service.service.ts");
+            /* harmony import */ var _wf_models__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../../wf-models */ "./src/app/wf-models/index.ts");
+            /* harmony import */ var _wf_models_invoice_workflow_save_request__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../../wf-models/invoice-workflow-save-request */ "./src/app/wf-models/invoice-workflow-save-request.ts");
+            /* harmony import */ var _custom_validators_invoice_type_controll_validator__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../../custom-validators/invoice-type-controll-validator */ "./src/app/custom-validators/invoice-type-controll-validator.ts");
+            /* harmony import */ var _helper__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../../helper */ "./src/app/helper/index.ts");
             var CreateInvoiceComponent = /** @class */ (function () {
-                function CreateInvoiceComponent(router, global, translate, editService, loadingService, http, errorService, formBuilder) {
+                function CreateInvoiceComponent(router, global, translate, editService, loadingService, http, errorService, formBuilder, dateAdapter) {
                     var _this = this;
                     this.router = router;
                     this.global = global;
@@ -2826,28 +3086,25 @@ var __extends = (this && this.__extends) || (function () {
                     this.http = http;
                     this.errorService = errorService;
                     this.formBuilder = formBuilder;
+                    this.dateAdapter = dateAdapter;
                     this.workflowListUrl = "/workflow/list";
-                    this.workflowSaveRequest = new _wf_models_invoice_workflow_save_request__WEBPACK_IMPORTED_MODULE_11__["InvoiceWorkflowSaveRequest"]();
+                    this.workflowSaveRequest = new _wf_models_invoice_workflow_save_request__WEBPACK_IMPORTED_MODULE_12__["InvoiceWorkflowSaveRequest"]();
                     this.users = [];
                     this.departments = [];
                     this.fileTitles = [];
-                    this.showDebug = false;
                     this.showAssignModal = false;
                     this.selectAssign = [];
                     this.invoiceTypes = []; //{InvoiceType.NO_TYPE, InvoiceType.SUPPLIER , InvoiceType.WORKER , InvoiceType.PAYMENT };
-                    this.assignTypeUser = _wf_models__WEBPACK_IMPORTED_MODULE_10__["AssignType"].USER;
-                    this.assignTypeDepartment = _wf_models__WEBPACK_IMPORTED_MODULE_10__["AssignType"].DEPARTMENT;
-                    this.assignTypeDepartmentGroup = _wf_models__WEBPACK_IMPORTED_MODULE_10__["AssignType"].DEPARTMENTGROUP;
+                    this.assignTypeUser = _wf_models__WEBPACK_IMPORTED_MODULE_11__["AssignType"].USER;
+                    this.assignTypeDepartment = _wf_models__WEBPACK_IMPORTED_MODULE_11__["AssignType"].DEPARTMENT;
+                    this.assignTypeDepartmentGroup = _wf_models__WEBPACK_IMPORTED_MODULE_11__["AssignType"].DEPARTMENTGROUP;
                     this.router.events.subscribe(function (evt) {
                         if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_2__["NavigationEnd"]) {
                             _this.loadInitialData();
                         }
                     });
-                    //this.invoiceTypes.push(InvoiceType.NO_TYPE);
-                    //this.invoiceTypes.push(InvoiceType.SUPPLIER);
-                    //this.invoiceTypes.push(InvoiceType.WORKER);
-                    //this.invoiceTypes.push(InvoiceType.PAYMENT);
-                    for (var o in _wf_models__WEBPACK_IMPORTED_MODULE_10__["InvoiceType"]) {
+                    this.dateAdapter.setLocale('de');
+                    for (var o in _wf_models__WEBPACK_IMPORTED_MODULE_11__["InvoiceType"]) {
                         var str = o + "";
                         var num = new Number(o);
                         if (isNaN(num)) {
@@ -2875,8 +3132,9 @@ var __extends = (this && this.__extends) || (function () {
                 });
                 Object.defineProperty(CreateInvoiceComponent.prototype, "debugData", {
                     get: function () {
-                        var ssignstr = (this.workflowSaveRequest) ? JSON.stringify(this.workflowSaveRequest) : '--';
-                        return ssignstr;
+                        var ss = Object(_helper__WEBPACK_IMPORTED_MODULE_14__["formatDate"])(new Date(), 'dd.mm.yyyy');
+                        ss += " -- " + Object(_helper__WEBPACK_IMPORTED_MODULE_14__["parseDate"])(ss, 'dd.mm.yyyy');
+                        return ss;
                     },
                     enumerable: true,
                     configurable: true
@@ -2889,12 +3147,12 @@ var __extends = (this && this.__extends) || (function () {
                         comments: [''],
                         sender: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
                         registerNumber: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
-                        invoceDate: [new Date(), _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
+                        invocieDate: [new Date(), _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
                         partnerCode: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
                         vendorNumber: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
                         vendorName: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
                         isDirectDebitPermission: [false],
-                        invoiceType: [_wf_models__WEBPACK_IMPORTED_MODULE_10__["InvoiceType"].NO_TYPE, [_custom_validators_invoice_type_controll_validator__WEBPACK_IMPORTED_MODULE_12__["InvoiceTypeControllValidator"]]],
+                        invoiceType: [_wf_models__WEBPACK_IMPORTED_MODULE_11__["InvoiceType"].NO_TYPE, [_custom_validators_invoice_type_controll_validator__WEBPACK_IMPORTED_MODULE_13__["InvoiceTypeControllValidator"]]],
                         discountEnterDate: [new Date(), _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
                         discountDeadline: [0, _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
                         discountRate: [0, _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
@@ -2931,17 +3189,17 @@ var __extends = (this && this.__extends) || (function () {
                         this.invoiceEditForm.controls["comments"].setValue(this.workflowSaveRequest.workflow.comments);
                         this.invoiceEditForm.controls["sender"].setValue(this.workflowSaveRequest.workflow.sender);
                         this.invoiceEditForm.controls["registerNumber"].setValue(this.workflowSaveRequest.workflow.registerNumber);
-                        this.invoiceEditForm.controls["invoceDate"].setValue(this.workflowSaveRequest.workflow.invoceDate);
+                        this.invoiceEditForm.controls["invocieDate"].setValue(Object(_helper__WEBPACK_IMPORTED_MODULE_14__["parseDate"])(this.workflowSaveRequest.workflow.invocieDate, 'dd.mm.yyyy'));
                         this.invoiceEditForm.controls["partnerCode"].setValue(this.workflowSaveRequest.workflow.partnerCode);
                         this.invoiceEditForm.controls["vendorNumber"].setValue(this.workflowSaveRequest.workflow.vendorNumber);
                         this.invoiceEditForm.controls["vendorName"].setValue(this.workflowSaveRequest.workflow.vendorName);
                         this.invoiceEditForm.controls["isDirectDebitPermission"].setValue(this.workflowSaveRequest.workflow.isDirectDebitPermission);
                         this.invoiceEditForm.controls["invoiceType"].setValue(this.workflowSaveRequest.workflow.invoiceType);
-                        this.invoiceEditForm.controls["discountEnterDate"].setValue(this.workflowSaveRequest.workflow.discountEnterDate);
+                        this.invoiceEditForm.controls["discountEnterDate"].setValue(Object(_helper__WEBPACK_IMPORTED_MODULE_14__["parseDate"])(this.workflowSaveRequest.workflow.discountEnterDate, 'dd.mm.yyyy'));
                         this.invoiceEditForm.controls["comments"].setValue(this.workflowSaveRequest.workflow.comments);
                         this.invoiceEditForm.controls["discountDeadline"].setValue(this.workflowSaveRequest.workflow.discountDeadline);
                         this.invoiceEditForm.controls["discountRate"].setValue(this.workflowSaveRequest.workflow.discountRate);
-                        this.invoiceEditForm.controls["discountDate"].setValue(this.workflowSaveRequest.workflow.discountDate);
+                        this.invoiceEditForm.controls["discountDate"].setValue(Object(_helper__WEBPACK_IMPORTED_MODULE_14__["parseDate"])(this.workflowSaveRequest.workflow.discountDate, 'dd.mm.yyyy'));
                         this.invoiceEditForm.controls["paymentAmount"].setValue(this.workflowSaveRequest.workflow.paymentAmount);
                     }
                 };
@@ -2951,17 +3209,17 @@ var __extends = (this && this.__extends) || (function () {
                     this.workflowSaveRequest.workflow.comments = this.invoiceEditForm.controls["comments"].value;
                     this.workflowSaveRequest.workflow.sender = this.invoiceEditForm.controls["sender"].value;
                     this.workflowSaveRequest.workflow.registerNumber = this.invoiceEditForm.controls["registerNumber"].value;
-                    this.workflowSaveRequest.workflow.invoceDate = this.invoiceEditForm.controls["invoceDate"].value;
+                    this.workflowSaveRequest.workflow.invocieDate = Object(_helper__WEBPACK_IMPORTED_MODULE_14__["formatDate"])(this.invoiceEditForm.controls["invocieDate"].value, 'dd.mm.yyyy');
                     this.workflowSaveRequest.workflow.partnerCode = this.invoiceEditForm.controls["partnerCode"].value;
                     this.workflowSaveRequest.workflow.vendorNumber = this.invoiceEditForm.controls["vendorNumber"].value;
                     this.workflowSaveRequest.workflow.vendorName = this.invoiceEditForm.controls["vendorName"].value;
                     this.workflowSaveRequest.workflow.isDirectDebitPermission = this.invoiceEditForm.controls["isDirectDebitPermission"].value;
                     this.workflowSaveRequest.workflow.invoiceType = this.invoiceEditForm.controls["invoiceType"].value;
-                    this.workflowSaveRequest.workflow.discountEnterDate = this.invoiceEditForm.controls["discountEnterDate"].value;
+                    this.workflowSaveRequest.workflow.discountEnterDate = Object(_helper__WEBPACK_IMPORTED_MODULE_14__["formatDate"])(this.invoiceEditForm.controls["discountEnterDate"].value, 'dd.mm.yyyy');
                     this.workflowSaveRequest.workflow.comments = this.invoiceEditForm.controls["comments"].value;
                     this.workflowSaveRequest.workflow.discountDeadline = this.invoiceEditForm.controls["discountDeadline"].value;
                     this.workflowSaveRequest.workflow.discountRate = this.invoiceEditForm.controls["discountRate"].value;
-                    this.workflowSaveRequest.workflow.discountDate = this.invoiceEditForm.controls["discountDate"].value;
+                    this.workflowSaveRequest.workflow.discountDate = Object(_helper__WEBPACK_IMPORTED_MODULE_14__["formatDate"])(this.invoiceEditForm.controls["discountDate"].value, 'dd.mm.yyyy');
                     this.workflowSaveRequest.workflow.paymentAmount = this.invoiceEditForm.controls["paymentAmount"].value;
                 };
                 Object.defineProperty(CreateInvoiceComponent.prototype, "forms", {
@@ -3024,7 +3282,7 @@ var __extends = (this && this.__extends) || (function () {
                     this.fileTitles.splice(index, 1);
                 };
                 CreateInvoiceComponent.prototype.addFile = function () {
-                    var ft = new _wf_models__WEBPACK_IMPORTED_MODULE_10__["FileTitle"]();
+                    var ft = new _wf_models__WEBPACK_IMPORTED_MODULE_11__["FileTitle"]();
                     ft.title = "";
                     ft.file = null;
                     this.fileTitles.push(ft);
@@ -3038,16 +3296,7 @@ var __extends = (this && this.__extends) || (function () {
                         this.editService.uploadFiles(this.fileTitles).subscribe(function (result) {
                             console.log("Create workflow upload file result", result);
                             _this.workflowSaveRequest.sessionKey = result.sessionKey;
-                            _this.editService.saveWorkflow(_this.workflowSaveRequest).subscribe(function (result) {
-                                console.log("Create workflow result", result);
-                                _this.router.navigate([_this.workflowListUrl]);
-                            }, function (response) {
-                                console.log("Error in create workflow", response);
-                                _this.errorService.showErrorResponse(response);
-                                _this.loadingService.hideLoading();
-                            }, function () {
-                                _this.loadingService.hideLoading();
-                            });
+                            _this.createWorkflowData();
                         }, function (response) {
                             console.log("Error in create workflow upload file", response);
                             _this.loadingService.hideLoading();
@@ -3057,17 +3306,21 @@ var __extends = (this && this.__extends) || (function () {
                     }
                     else {
                         this.workflowSaveRequest.sessionKey = 'not-set';
-                        this.editService.saveWorkflow(this.workflowSaveRequest).subscribe(function (result) {
-                            console.log("Create workflow result", result);
-                            _this.router.navigate([_this.workflowListUrl]);
-                        }, function (response) {
-                            console.log("Error in create workflow", response);
-                            _this.errorService.showErrorResponse(response);
-                            _this.loadingService.hideLoading();
-                        }, function () {
-                            _this.loadingService.hideLoading();
-                        });
+                        this.createWorkflowData();
                     }
+                };
+                CreateInvoiceComponent.prototype.createWorkflowData = function () {
+                    var _this = this;
+                    this.editService.createWorkflow(this.workflowSaveRequest).subscribe(function (result) {
+                        console.log("Create workflow result", result);
+                        _this.router.navigate([_this.workflowListUrl]);
+                    }, function (response) {
+                        console.log("Error in create workflow", response);
+                        _this.errorService.showErrorResponse(response);
+                        _this.loadingService.hideLoading();
+                    }, function () {
+                        _this.loadingService.hideLoading();
+                    });
                 };
                 CreateInvoiceComponent.prototype.isItemAssigned = function (identity, type) {
                     if (this.selectAssign[type] === undefined) {
@@ -3083,7 +3336,7 @@ var __extends = (this && this.__extends) || (function () {
                     for (var type in this.selectAssign) {
                         for (var identity in this.selectAssign[type]) {
                             if (this.selectAssign[type][identity]) {
-                                var assign = new _wf_models__WEBPACK_IMPORTED_MODULE_10__["AssignItem"];
+                                var assign = new _wf_models__WEBPACK_IMPORTED_MODULE_11__["AssignItem"];
                                 assign.itemIdentity = identity;
                                 assign.itemType = type;
                                 this.workflowSaveRequest.assigns.push(assign);
@@ -3115,7 +3368,7 @@ var __extends = (this && this.__extends) || (function () {
                 CreateInvoiceComponent.prototype.getAssignItemTitle = function (item) {
                     //assign.itemIdentity = <string>identity;
                     //assign.itemType = <AssignType>type;
-                    if (item.itemType === _wf_models__WEBPACK_IMPORTED_MODULE_10__["AssignType"].USER) {
+                    if (item.itemType === _wf_models__WEBPACK_IMPORTED_MODULE_11__["AssignType"].USER) {
                         for (var index in this.users) {
                             if (this.users[index].identity === item.itemIdentity) {
                                 return this.users[index].fullName;
@@ -3123,7 +3376,7 @@ var __extends = (this && this.__extends) || (function () {
                         }
                         return 'Unknown!';
                     }
-                    if (item.itemType === _wf_models__WEBPACK_IMPORTED_MODULE_10__["AssignType"].DEPARTMENT) {
+                    if (item.itemType === _wf_models__WEBPACK_IMPORTED_MODULE_11__["AssignType"].DEPARTMENT) {
                         for (var index in this.departments) {
                             if (this.departments[index].identity === item.itemIdentity) {
                                 return this.departments[index].title;
@@ -3131,7 +3384,7 @@ var __extends = (this && this.__extends) || (function () {
                         }
                         return 'Unknown!';
                     }
-                    if (item.itemType === _wf_models__WEBPACK_IMPORTED_MODULE_10__["AssignType"].DEPARTMENTGROUP) {
+                    if (item.itemType === _wf_models__WEBPACK_IMPORTED_MODULE_11__["AssignType"].DEPARTMENTGROUP) {
                         for (var index in this.departments) {
                             for (var gindex in this.departments[index].departmentGroups) {
                                 if (this.departments[index].departmentGroups[gindex].identity === item.itemIdentity) {
@@ -3146,18 +3399,20 @@ var __extends = (this && this.__extends) || (function () {
             }());
             CreateInvoiceComponent.ctorParameters = function () { return [
                 { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] },
-                { type: _services_global_service__WEBPACK_IMPORTED_MODULE_6__["GlobalService"] },
+                { type: _services_global_service__WEBPACK_IMPORTED_MODULE_7__["GlobalService"] },
                 { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_3__["TranslateService"] },
-                { type: _services_workflow_invoice_invoice_workflow_edit_service__WEBPACK_IMPORTED_MODULE_7__["InvoiceWorkflowEditService"] },
-                { type: _services_loading_service_service__WEBPACK_IMPORTED_MODULE_8__["LoadingServiceService"] },
+                { type: _services_workflow_invoice_invoice_workflow_edit_service__WEBPACK_IMPORTED_MODULE_8__["InvoiceWorkflowEditService"] },
+                { type: _services_loading_service_service__WEBPACK_IMPORTED_MODULE_9__["LoadingServiceService"] },
                 { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"] },
-                { type: _services_error_service_service__WEBPACK_IMPORTED_MODULE_9__["ErrorServiceService"] },
-                { type: _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormBuilder"] }
+                { type: _services_error_service_service__WEBPACK_IMPORTED_MODULE_10__["ErrorServiceService"] },
+                { type: _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormBuilder"] },
+                { type: _angular_material__WEBPACK_IMPORTED_MODULE_6__["DateAdapter"] }
             ]; };
             CreateInvoiceComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
                 Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
                     selector: 'app-create-invoice',
                     template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./create-invoice.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/wm-components/create/create-invoice/create-invoice.component.html")).default,
+                    providers: [{ provide: _angular_material__WEBPACK_IMPORTED_MODULE_6__["DateAdapter"], useClass: _helper__WEBPACK_IMPORTED_MODULE_14__["GermanDateAdapter"] }],
                     styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./create-invoice.component.css */ "./src/app/wm-components/create/create-invoice/create-invoice.component.css")).default]
                 })
             ], CreateInvoiceComponent);
@@ -3915,6 +4170,384 @@ var __extends = (this && this.__extends) || (function () {
                     styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./workflow-create.component.css */ "./src/app/wm-components/create/workflow-create/workflow-create.component.css")).default]
                 })
             ], WorkflowCreateComponent);
+            /***/ 
+        }),
+        /***/ "./src/app/wm-components/edit/edit-invoice/edit-invoice.component.css": 
+        /*!****************************************************************************!*\
+          !*** ./src/app/wm-components/edit/edit-invoice/edit-invoice.component.css ***!
+          \****************************************************************************/
+        /*! exports provided: default */
+        /***/ (function (module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            __webpack_require__.r(__webpack_exports__);
+            /* harmony default export */ __webpack_exports__["default"] = ("\r\ndiv.workflow-content-container{\r\n\tborder: 1px solid lightgray;\r\n    margin: 10px 0px 50px 0;\r\n    border-radius: 10px;\r\n    padding: 10px;\r\n    background-color: #f1f1f1;\r\n}\r\n\r\ndiv.workflow-content{\r\n    background-color: #dad9d9;\r\n    padding: 15px;\r\n    border-radius: 5px;\r\n}\r\n\r\ndiv.workflow-content-record{\r\n    padding: 15px;\r\n}\r\n\r\ndiv.workflow-record{\r\n\tfloat: right;\r\n    background-color: #dad9d9;\r\n    padding: 8px;\r\n    border-radius: 5px;\r\n    width: 25%;\r\n    min-height: 500px;\r\n}\r\n\r\n.workflow-content .panel{\r\n\tbackground-color: #f2f1f1 !important;\r\n\tpadding: 8px;\r\n    margin-bottom: 10px;\r\n}\r\n\r\n.twopannel .panel{\r\n\t\r\n\theight: 230px;\r\n}\r\n\r\n.twopannel .panel.panel-vendor{\r\n\twidth: calc(100% - 310px);\r\n\tfloat: left;\r\n}\r\n\r\n.twopannel .panel.panel-discount{\r\n\twidth: 300px;\r\n\tfloat: right;\r\n}\r\n\r\n.twopannel .panel.panel-discount input[type=text]{\r\n\twidth: 100px;\r\n}\r\n\r\n.small-content{\r\n\twidth: 120px;\r\n}\r\n\r\n.item-content select{\r\n\theight: 26px;\r\n}\r\n\r\n.item-content select:not(.fullrow), .item-content input[type=text] {\r\n\theight: 26px;\r\n\twidth: calc(100%);\r\n}\r\n\r\n.item-content select.fullrow {\r\n\theight: 26px;\r\n\twidth: calc(100%);\r\n}\r\n\r\n.item-content.larg-content{\r\n\twidth: calc(100% - 450px);\r\n}\r\n\r\n.workflow-content .panel .panel-heading{\r\n\tfont-weight: bold;\r\n}\r\n\r\ndiv.workflow-content div.item-row, div.workflow-content-record div.item-row {\r\n    margin: 5px 0 10px;\r\n}\r\n\r\ndiv.workflow-content div.workflow-step-button-bar, div.workflow-content-record div.workflow-step-button-bar{\r\n    background-color: white;\r\n    padding: 6px;\r\n    padding-right: 20px;\r\n   \r\n}\r\n\r\ndiv.workflow-content div.item-row div.item-label, \r\ndiv.workflow-content-record div.item-row div.item-label{\r\n    float: left;\r\n    padding-right: 10px;\r\n    padding-left: 2px;\r\n    line-height: 25px;\r\n    font-size: 14px;\r\n    font-weight: bold;\r\n    height: 25px;\r\n}\r\n\r\ndiv.workflow-content div.item-row .label-large, \r\ndiv.workflow-content-record div.item-row .label-large{\r\n    width: 150px;\r\n}\r\n\r\n.large-content{\r\n\twidth: calc(100% - 420px);\r\n}\r\n\r\n.large-content input[type=text], .large-content select, .large-content areatext{\r\n\twidth: calc(100% - 30px);\r\n}\r\n\r\ndiv.workflow-content div.item-row .small-label, \r\ndiv.workflow-content-record div.item-row .small-label{\r\n    width: 122px;\r\n}\r\n\r\ndiv.workflow-content div.item-row div.item-content, div.workflow-content-record div.item-row div.item-content {\r\n    padding-left: 0px;\r\n    float: left;\r\n}\r\n\r\n.item-content input[type=checkbox]{\r\n\twidth: 20px;\r\n\theight: 20px;\t\r\n\tmargin-top: 3px;\r\n}\r\n\r\ndiv.fullrowfromlabel{\r\n\twidth: calc(100% - 150px);\t\r\n}\r\n\r\ndiv.fullrowfromlabel input[type=text]{\r\n\twidth: calc(100% - 10px);\t\r\n}\r\n\r\ndiv.fullrowfromlabel textarea{\r\n\twidth: calc(100% );\t\r\n\theight: 100px;\t\r\n}\r\n\r\ntextarea.comments-fullrow{\r\n\twidth: calc(100% - 100px);\t\r\n}\r\n\r\ndiv.workflow-content div.item-row div.item-content input.file-title\r\n{\r\n    width: calc(50% - 170px);\r\n    height: 26px;\r\n}\r\n\r\ndiv.workflow-content div.item-row div.item-content input.file-file\r\n{\r\n    width: 50%;\r\n    height: 26px;\r\n    display: inline-block;;\r\n}\r\n\r\n.assign-list{\r\n\tborder: 1px solid lightgray;\r\n    padding: 6px;\r\n    border-radius: 4px;\r\n    width: 100%;\r\n    min-height: 100px;\r\n    max-height: 200px;\r\n    overflow-y: auto;\r\n    padding-right: 24px;\r\n}\r\n\r\ndiv.assign-list div.user-item-box {\r\n    border: 1px solid lightgray;\r\n    border-radius: 4px;\r\n    padding: 2px 4px;\r\n    float: left;\r\n    background: #e6e6e6;\r\n    margin-right: 5px;\r\n    margin-bottom: 5px;\r\n}\r\n\r\ndiv.assign-list div.user-item-box button {\r\n    border: none;\r\n    background: transparent;\r\n    padding: 0;\r\n    padding-top: 3px;\r\n    float: right;\r\n    margin-left: 5px;\r\n}\r\n\r\ndiv.assign-list div.user-item-box button i.material-icons{\r\n\tfont-size: 16px;\r\n}\r\n\r\ndiv.assign-list div.user-item-box span {\r\n    height: 20px;\r\n    display: inline-block;\r\n    float: left;\r\n}\r\n\r\nbutton.show-select-dialog {\r\n    float: right;\r\n    margin-right: -22px;\r\n    width: 22px;\r\n    border: none;\r\n    padding: 0;\r\n    padding-left: 2px;\r\n    background-color: transparent;\r\n}\r\n\r\nbutton.file-action {\r\n    float: right;\r\n    width: 22px;\r\n    border: none;\r\n    padding: 0;\r\n    padding-left: 2px;\r\n    margin-top: 4px;\r\n    background: transparent;\r\n}\r\n\r\n.step-button, .step-button:active{\r\n\tfloat: right;\r\n    margin-left: 10px;\r\n    border: outset 2px #d4d4d1;\r\n    padding: 4px 20px;\r\n}\r\n\r\n.step-button:hover:not(:disbaled){\r\n    background-color: #9e9e9e;\r\n    color: #fbcbc4;\r\n    border: outset 2px #b7b7b3;\r\n    \r\n}\r\n\r\n.step-button:not(:disbaled), \r\n.step-button:active:not(:disbaled){\r\n    background-color: gray;\r\n    color: #f7fbc4;\r\n}\r\n\r\n.step-button:disabled{\r\n    background-color: gray;\r\n    color: #bdbcbc !important;\r\n}\r\n\r\n.file-container{\r\n\tborder:gray 1px solid; \r\n\tpadding: 6px;\r\n}\r\n\r\n.file-container .file-row{\r\n\tborder:gray 1px solid; \r\n\tpadding: 2px 2px;\r\n\tmargin: 4px 6px;\r\n\tmargin-right: 0;\r\n}\r\n\r\n.file-container .file-row:nth-child(even){\r\n\tbackground: #dbf1fb;\r\n}\r\n\r\n.file-container .file-row:nth-child(odd){\r\n\tbackground: #f3f3e1;\r\n}\r\n\r\n.workflow-file-view-link, .workflow-file-view-link:active, .workflow-file-view-link:visited{\r\n\tcolor: #333;\r\n}\r\n\r\n.workflow-file-view-link:hover{\r\n\tcolor: #551113;\r\n}\r\n\r\n.workflow-file-view-link i.material-icons{\r\n\twidth: 24px;\r\n}\r\n\r\n.assign-list{\r\n\tborder: 1px solid lightgray;\r\n    padding: 6px;\r\n    border-radius: 4px;\r\n    width: 100%;\r\n    min-height: 100px;\r\n    max-height: 200px;\r\n    overflow-y: auto;\r\n    padding-right: 24px;\r\n}\r\n\r\ndiv.assign-list div.user-item-box {\r\n    border: 1px solid lightgray;\r\n    border-radius: 4px;\r\n    padding: 2px 4px;\r\n    float: left;\r\n    background: #e6e6e6;\r\n    margin-right: 5px;\r\n    margin-bottom: 5px;\r\n}\r\n\r\ndiv.assign-list div.user-item-box button {\r\n    border: none;\r\n    background: transparent;\r\n    padding: 0;\r\n    padding-top: 3px;\r\n    float: right;\r\n    margin-left: 5px;\r\n}\r\n\r\ndiv.assign-list div.user-item-box button i.material-icons{\r\n\tfont-size: 16px;\r\n}\r\n\r\ndiv.assign-list div.user-item-box span {\r\n    height: 20px;\r\n    display: inline-block;\r\n    float: left;\r\n}\r\n\r\nbutton.show-select-dialog {\r\n    float: right;\r\n    margin-right: -20px;\r\n    width: 22px;\r\n    border: none;\r\n    padding: 0;\r\n    padding-left: 2px;\r\n}\r\n\r\ninput.select-date{\r\n\twidth: 100px;\r\n\theight: 26px;\r\n}\r\n\r\ninput.short-input{\r\n\twidth: 100px;\r\n\theight: 26px;\r\n}\r\n\r\n\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvd20tY29tcG9uZW50cy9lZGl0L2VkaXQtaW52b2ljZS9lZGl0LWludm9pY2UuY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiO0FBQ0E7Q0FDQywyQkFBMkI7SUFDeEIsdUJBQXVCO0lBQ3ZCLG1CQUFtQjtJQUNuQixhQUFhO0lBQ2IseUJBQXlCO0FBQzdCOztBQUVBO0lBQ0kseUJBQXlCO0lBQ3pCLGFBQWE7SUFDYixrQkFBa0I7QUFDdEI7O0FBR0E7SUFDSSxhQUFhO0FBQ2pCOztBQUVBO0NBQ0MsWUFBWTtJQUNULHlCQUF5QjtJQUN6QixZQUFZO0lBQ1osa0JBQWtCO0lBQ2xCLFVBQVU7SUFDVixpQkFBaUI7QUFDckI7O0FBRUE7Q0FDQyxvQ0FBb0M7Q0FDcEMsWUFBWTtJQUNULG1CQUFtQjtBQUN2Qjs7QUFFQTs7Q0FFQyxhQUFhO0FBQ2Q7O0FBRUE7Q0FDQyx5QkFBeUI7Q0FDekIsV0FBVztBQUNaOztBQUVBO0NBQ0MsWUFBWTtDQUNaLFlBQVk7QUFDYjs7QUFFQTtDQUNDLFlBQVk7QUFDYjs7QUFFQTtDQUNDLFlBQVk7QUFDYjs7QUFFQTtDQUNDLFlBQVk7QUFDYjs7QUFFQTtDQUNDLFlBQVk7Q0FDWixpQkFBaUI7QUFDbEI7O0FBRUE7Q0FDQyxZQUFZO0NBQ1osaUJBQWlCO0FBQ2xCOztBQUVBO0NBQ0MseUJBQXlCO0FBQzFCOztBQUVBO0NBQ0MsaUJBQWlCO0FBQ2xCOztBQUVBO0lBQ0ksa0JBQWtCO0FBQ3RCOztBQUVBO0lBQ0ksdUJBQXVCO0lBQ3ZCLFlBQVk7SUFDWixtQkFBbUI7O0FBRXZCOztBQUVBOztJQUVJLFdBQVc7SUFDWCxtQkFBbUI7SUFDbkIsaUJBQWlCO0lBQ2pCLGlCQUFpQjtJQUNqQixlQUFlO0lBQ2YsaUJBQWlCO0lBQ2pCLFlBQVk7QUFDaEI7O0FBRUE7O0lBRUksWUFBWTtBQUNoQjs7QUFFQTtDQUNDLHlCQUF5QjtBQUMxQjs7QUFFQTtDQUNDLHdCQUF3QjtBQUN6Qjs7QUFHQTs7SUFFSSxZQUFZO0FBQ2hCOztBQUVBO0lBQ0ksaUJBQWlCO0lBQ2pCLFdBQVc7QUFDZjs7QUFFQTtDQUNDLFdBQVc7Q0FDWCxZQUFZO0NBQ1osZUFBZTtBQUNoQjs7QUFFQTtDQUNDLHlCQUF5QjtBQUMxQjs7QUFFQTtDQUNDLHdCQUF3QjtBQUN6Qjs7QUFFQTtDQUNDLGtCQUFrQjtDQUNsQixhQUFhO0FBQ2Q7O0FBRUE7Q0FDQyx5QkFBeUI7QUFDMUI7O0FBRUE7O0lBRUksd0JBQXdCO0lBQ3hCLFlBQVk7QUFDaEI7O0FBRUE7O0lBRUksVUFBVTtJQUNWLFlBQVk7SUFDWixxQkFBcUI7QUFDekI7O0FBRUE7Q0FDQywyQkFBMkI7SUFDeEIsWUFBWTtJQUNaLGtCQUFrQjtJQUNsQixXQUFXO0lBQ1gsaUJBQWlCO0lBQ2pCLGlCQUFpQjtJQUNqQixnQkFBZ0I7SUFDaEIsbUJBQW1CO0FBQ3ZCOztBQUVBO0lBQ0ksMkJBQTJCO0lBQzNCLGtCQUFrQjtJQUNsQixnQkFBZ0I7SUFDaEIsV0FBVztJQUNYLG1CQUFtQjtJQUNuQixpQkFBaUI7SUFDakIsa0JBQWtCO0FBQ3RCOztBQUVBO0lBQ0ksWUFBWTtJQUNaLHVCQUF1QjtJQUN2QixVQUFVO0lBQ1YsZ0JBQWdCO0lBQ2hCLFlBQVk7SUFDWixnQkFBZ0I7QUFDcEI7O0FBRUE7Q0FDQyxlQUFlO0FBQ2hCOztBQUVBO0lBQ0ksWUFBWTtJQUNaLHFCQUFxQjtJQUNyQixXQUFXO0FBQ2Y7O0FBRUE7SUFDSSxZQUFZO0lBQ1osbUJBQW1CO0lBQ25CLFdBQVc7SUFDWCxZQUFZO0lBQ1osVUFBVTtJQUNWLGlCQUFpQjtJQUNqQiw2QkFBNkI7QUFDakM7O0FBRUE7SUFDSSxZQUFZO0lBQ1osV0FBVztJQUNYLFlBQVk7SUFDWixVQUFVO0lBQ1YsaUJBQWlCO0lBQ2pCLGVBQWU7SUFDZix1QkFBdUI7QUFDM0I7O0FBRUE7Q0FDQyxZQUFZO0lBQ1QsaUJBQWlCO0lBQ2pCLDBCQUEwQjtJQUMxQixpQkFBaUI7QUFDckI7O0FBRUE7SUFDSSx5QkFBeUI7SUFDekIsY0FBYztJQUNkLDBCQUEwQjs7QUFFOUI7O0FBRUE7O0lBRUksc0JBQXNCO0lBQ3RCLGNBQWM7QUFDbEI7O0FBRUE7SUFDSSxzQkFBc0I7SUFDdEIseUJBQXlCO0FBQzdCOztBQUVBO0NBQ0MscUJBQXFCO0NBQ3JCLFlBQVk7QUFDYjs7QUFFQTtDQUNDLHFCQUFxQjtDQUNyQixnQkFBZ0I7Q0FDaEIsZUFBZTtDQUNmLGVBQWU7QUFDaEI7O0FBRUE7Q0FDQyxtQkFBbUI7QUFDcEI7O0FBRUE7Q0FDQyxtQkFBbUI7QUFDcEI7O0FBRUE7Q0FDQyxXQUFXO0FBQ1o7O0FBRUE7Q0FDQyxjQUFjO0FBQ2Y7O0FBRUE7Q0FDQyxXQUFXO0FBQ1o7O0FBR0E7Q0FDQywyQkFBMkI7SUFDeEIsWUFBWTtJQUNaLGtCQUFrQjtJQUNsQixXQUFXO0lBQ1gsaUJBQWlCO0lBQ2pCLGlCQUFpQjtJQUNqQixnQkFBZ0I7SUFDaEIsbUJBQW1CO0FBQ3ZCOztBQUVBO0lBQ0ksMkJBQTJCO0lBQzNCLGtCQUFrQjtJQUNsQixnQkFBZ0I7SUFDaEIsV0FBVztJQUNYLG1CQUFtQjtJQUNuQixpQkFBaUI7SUFDakIsa0JBQWtCO0FBQ3RCOztBQUVBO0lBQ0ksWUFBWTtJQUNaLHVCQUF1QjtJQUN2QixVQUFVO0lBQ1YsZ0JBQWdCO0lBQ2hCLFlBQVk7SUFDWixnQkFBZ0I7QUFDcEI7O0FBRUE7Q0FDQyxlQUFlO0FBQ2hCOztBQUVBO0lBQ0ksWUFBWTtJQUNaLHFCQUFxQjtJQUNyQixXQUFXO0FBQ2Y7O0FBRUE7SUFDSSxZQUFZO0lBQ1osbUJBQW1CO0lBQ25CLFdBQVc7SUFDWCxZQUFZO0lBQ1osVUFBVTtJQUNWLGlCQUFpQjtBQUNyQjs7QUFFQTtDQUNDLFlBQVk7Q0FDWixZQUFZO0FBQ2I7O0FBRUE7Q0FDQyxZQUFZO0NBQ1osWUFBWTtBQUNiIiwiZmlsZSI6InNyYy9hcHAvd20tY29tcG9uZW50cy9lZGl0L2VkaXQtaW52b2ljZS9lZGl0LWludm9pY2UuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIlxyXG5kaXYud29ya2Zsb3ctY29udGVudC1jb250YWluZXJ7XHJcblx0Ym9yZGVyOiAxcHggc29saWQgbGlnaHRncmF5O1xyXG4gICAgbWFyZ2luOiAxMHB4IDBweCA1MHB4IDA7XHJcbiAgICBib3JkZXItcmFkaXVzOiAxMHB4O1xyXG4gICAgcGFkZGluZzogMTBweDtcclxuICAgIGJhY2tncm91bmQtY29sb3I6ICNmMWYxZjE7XHJcbn1cclxuXHJcbmRpdi53b3JrZmxvdy1jb250ZW50e1xyXG4gICAgYmFja2dyb3VuZC1jb2xvcjogI2RhZDlkOTtcclxuICAgIHBhZGRpbmc6IDE1cHg7XHJcbiAgICBib3JkZXItcmFkaXVzOiA1cHg7XHJcbn1cclxuXHJcblxyXG5kaXYud29ya2Zsb3ctY29udGVudC1yZWNvcmR7XHJcbiAgICBwYWRkaW5nOiAxNXB4O1xyXG59XHJcblxyXG5kaXYud29ya2Zsb3ctcmVjb3Jke1xyXG5cdGZsb2F0OiByaWdodDtcclxuICAgIGJhY2tncm91bmQtY29sb3I6ICNkYWQ5ZDk7XHJcbiAgICBwYWRkaW5nOiA4cHg7XHJcbiAgICBib3JkZXItcmFkaXVzOiA1cHg7XHJcbiAgICB3aWR0aDogMjUlO1xyXG4gICAgbWluLWhlaWdodDogNTAwcHg7XHJcbn1cclxuXHJcbi53b3JrZmxvdy1jb250ZW50IC5wYW5lbHtcclxuXHRiYWNrZ3JvdW5kLWNvbG9yOiAjZjJmMWYxICFpbXBvcnRhbnQ7XHJcblx0cGFkZGluZzogOHB4O1xyXG4gICAgbWFyZ2luLWJvdHRvbTogMTBweDtcclxufVxyXG5cclxuLnR3b3Bhbm5lbCAucGFuZWx7XHJcblx0XHJcblx0aGVpZ2h0OiAyMzBweDtcclxufVxyXG5cclxuLnR3b3Bhbm5lbCAucGFuZWwucGFuZWwtdmVuZG9ye1xyXG5cdHdpZHRoOiBjYWxjKDEwMCUgLSAzMTBweCk7XHJcblx0ZmxvYXQ6IGxlZnQ7XHJcbn1cclxuXHJcbi50d29wYW5uZWwgLnBhbmVsLnBhbmVsLWRpc2NvdW50e1xyXG5cdHdpZHRoOiAzMDBweDtcclxuXHRmbG9hdDogcmlnaHQ7XHJcbn1cclxuXHJcbi50d29wYW5uZWwgLnBhbmVsLnBhbmVsLWRpc2NvdW50IGlucHV0W3R5cGU9dGV4dF17XHJcblx0d2lkdGg6IDEwMHB4O1xyXG59XHJcblxyXG4uc21hbGwtY29udGVudHtcclxuXHR3aWR0aDogMTIwcHg7XHJcbn1cclxuXHJcbi5pdGVtLWNvbnRlbnQgc2VsZWN0e1xyXG5cdGhlaWdodDogMjZweDtcclxufSBcclxuXHJcbi5pdGVtLWNvbnRlbnQgc2VsZWN0Om5vdCguZnVsbHJvdyksIC5pdGVtLWNvbnRlbnQgaW5wdXRbdHlwZT10ZXh0XSB7XHJcblx0aGVpZ2h0OiAyNnB4O1xyXG5cdHdpZHRoOiBjYWxjKDEwMCUpO1xyXG59IFxyXG5cclxuLml0ZW0tY29udGVudCBzZWxlY3QuZnVsbHJvdyB7XHJcblx0aGVpZ2h0OiAyNnB4O1xyXG5cdHdpZHRoOiBjYWxjKDEwMCUpO1xyXG59IFxyXG5cclxuLml0ZW0tY29udGVudC5sYXJnLWNvbnRlbnR7XHJcblx0d2lkdGg6IGNhbGMoMTAwJSAtIDQ1MHB4KTtcclxufVxyXG5cclxuLndvcmtmbG93LWNvbnRlbnQgLnBhbmVsIC5wYW5lbC1oZWFkaW5ne1xyXG5cdGZvbnQtd2VpZ2h0OiBib2xkO1xyXG59XHJcblxyXG5kaXYud29ya2Zsb3ctY29udGVudCBkaXYuaXRlbS1yb3csIGRpdi53b3JrZmxvdy1jb250ZW50LXJlY29yZCBkaXYuaXRlbS1yb3cge1xyXG4gICAgbWFyZ2luOiA1cHggMCAxMHB4O1xyXG59XHJcblxyXG5kaXYud29ya2Zsb3ctY29udGVudCBkaXYud29ya2Zsb3ctc3RlcC1idXR0b24tYmFyLCBkaXYud29ya2Zsb3ctY29udGVudC1yZWNvcmQgZGl2LndvcmtmbG93LXN0ZXAtYnV0dG9uLWJhcntcclxuICAgIGJhY2tncm91bmQtY29sb3I6IHdoaXRlO1xyXG4gICAgcGFkZGluZzogNnB4O1xyXG4gICAgcGFkZGluZy1yaWdodDogMjBweDtcclxuICAgXHJcbn1cclxuXHJcbmRpdi53b3JrZmxvdy1jb250ZW50IGRpdi5pdGVtLXJvdyBkaXYuaXRlbS1sYWJlbCwgXHJcbmRpdi53b3JrZmxvdy1jb250ZW50LXJlY29yZCBkaXYuaXRlbS1yb3cgZGl2Lml0ZW0tbGFiZWx7XHJcbiAgICBmbG9hdDogbGVmdDtcclxuICAgIHBhZGRpbmctcmlnaHQ6IDEwcHg7XHJcbiAgICBwYWRkaW5nLWxlZnQ6IDJweDtcclxuICAgIGxpbmUtaGVpZ2h0OiAyNXB4O1xyXG4gICAgZm9udC1zaXplOiAxNHB4O1xyXG4gICAgZm9udC13ZWlnaHQ6IGJvbGQ7XHJcbiAgICBoZWlnaHQ6IDI1cHg7XHJcbn1cclxuXHJcbmRpdi53b3JrZmxvdy1jb250ZW50IGRpdi5pdGVtLXJvdyAubGFiZWwtbGFyZ2UsIFxyXG5kaXYud29ya2Zsb3ctY29udGVudC1yZWNvcmQgZGl2Lml0ZW0tcm93IC5sYWJlbC1sYXJnZXtcclxuICAgIHdpZHRoOiAxNTBweDtcclxufVxyXG5cclxuLmxhcmdlLWNvbnRlbnR7XHJcblx0d2lkdGg6IGNhbGMoMTAwJSAtIDQyMHB4KTtcclxufVxyXG5cclxuLmxhcmdlLWNvbnRlbnQgaW5wdXRbdHlwZT10ZXh0XSwgLmxhcmdlLWNvbnRlbnQgc2VsZWN0LCAubGFyZ2UtY29udGVudCBhcmVhdGV4dHtcclxuXHR3aWR0aDogY2FsYygxMDAlIC0gMzBweCk7XHJcbn1cclxuXHJcblxyXG5kaXYud29ya2Zsb3ctY29udGVudCBkaXYuaXRlbS1yb3cgLnNtYWxsLWxhYmVsLCBcclxuZGl2LndvcmtmbG93LWNvbnRlbnQtcmVjb3JkIGRpdi5pdGVtLXJvdyAuc21hbGwtbGFiZWx7XHJcbiAgICB3aWR0aDogMTIycHg7XHJcbn1cclxuXHJcbmRpdi53b3JrZmxvdy1jb250ZW50IGRpdi5pdGVtLXJvdyBkaXYuaXRlbS1jb250ZW50LCBkaXYud29ya2Zsb3ctY29udGVudC1yZWNvcmQgZGl2Lml0ZW0tcm93IGRpdi5pdGVtLWNvbnRlbnQge1xyXG4gICAgcGFkZGluZy1sZWZ0OiAwcHg7XHJcbiAgICBmbG9hdDogbGVmdDtcclxufVxyXG5cclxuLml0ZW0tY29udGVudCBpbnB1dFt0eXBlPWNoZWNrYm94XXtcclxuXHR3aWR0aDogMjBweDtcclxuXHRoZWlnaHQ6IDIwcHg7XHRcclxuXHRtYXJnaW4tdG9wOiAzcHg7XHJcbn1cclxuXHJcbmRpdi5mdWxscm93ZnJvbWxhYmVse1xyXG5cdHdpZHRoOiBjYWxjKDEwMCUgLSAxNTBweCk7XHRcclxufVxyXG5cclxuZGl2LmZ1bGxyb3dmcm9tbGFiZWwgaW5wdXRbdHlwZT10ZXh0XXtcclxuXHR3aWR0aDogY2FsYygxMDAlIC0gMTBweCk7XHRcclxufVxyXG5cclxuZGl2LmZ1bGxyb3dmcm9tbGFiZWwgdGV4dGFyZWF7XHJcblx0d2lkdGg6IGNhbGMoMTAwJSApO1x0XHJcblx0aGVpZ2h0OiAxMDBweDtcdFxyXG59XHJcblxyXG50ZXh0YXJlYS5jb21tZW50cy1mdWxscm93e1xyXG5cdHdpZHRoOiBjYWxjKDEwMCUgLSAxMDBweCk7XHRcclxufVxyXG5cclxuZGl2LndvcmtmbG93LWNvbnRlbnQgZGl2Lml0ZW0tcm93IGRpdi5pdGVtLWNvbnRlbnQgaW5wdXQuZmlsZS10aXRsZVxyXG57XHJcbiAgICB3aWR0aDogY2FsYyg1MCUgLSAxNzBweCk7XHJcbiAgICBoZWlnaHQ6IDI2cHg7XHJcbn1cclxuXHJcbmRpdi53b3JrZmxvdy1jb250ZW50IGRpdi5pdGVtLXJvdyBkaXYuaXRlbS1jb250ZW50IGlucHV0LmZpbGUtZmlsZVxyXG57XHJcbiAgICB3aWR0aDogNTAlO1xyXG4gICAgaGVpZ2h0OiAyNnB4O1xyXG4gICAgZGlzcGxheTogaW5saW5lLWJsb2NrOztcclxufVxyXG5cclxuLmFzc2lnbi1saXN0e1xyXG5cdGJvcmRlcjogMXB4IHNvbGlkIGxpZ2h0Z3JheTtcclxuICAgIHBhZGRpbmc6IDZweDtcclxuICAgIGJvcmRlci1yYWRpdXM6IDRweDtcclxuICAgIHdpZHRoOiAxMDAlO1xyXG4gICAgbWluLWhlaWdodDogMTAwcHg7XHJcbiAgICBtYXgtaGVpZ2h0OiAyMDBweDtcclxuICAgIG92ZXJmbG93LXk6IGF1dG87XHJcbiAgICBwYWRkaW5nLXJpZ2h0OiAyNHB4O1xyXG59XHJcblxyXG5kaXYuYXNzaWduLWxpc3QgZGl2LnVzZXItaXRlbS1ib3gge1xyXG4gICAgYm9yZGVyOiAxcHggc29saWQgbGlnaHRncmF5O1xyXG4gICAgYm9yZGVyLXJhZGl1czogNHB4O1xyXG4gICAgcGFkZGluZzogMnB4IDRweDtcclxuICAgIGZsb2F0OiBsZWZ0O1xyXG4gICAgYmFja2dyb3VuZDogI2U2ZTZlNjtcclxuICAgIG1hcmdpbi1yaWdodDogNXB4O1xyXG4gICAgbWFyZ2luLWJvdHRvbTogNXB4O1xyXG59XHJcblxyXG5kaXYuYXNzaWduLWxpc3QgZGl2LnVzZXItaXRlbS1ib3ggYnV0dG9uIHtcclxuICAgIGJvcmRlcjogbm9uZTtcclxuICAgIGJhY2tncm91bmQ6IHRyYW5zcGFyZW50O1xyXG4gICAgcGFkZGluZzogMDtcclxuICAgIHBhZGRpbmctdG9wOiAzcHg7XHJcbiAgICBmbG9hdDogcmlnaHQ7XHJcbiAgICBtYXJnaW4tbGVmdDogNXB4O1xyXG59XHJcblxyXG5kaXYuYXNzaWduLWxpc3QgZGl2LnVzZXItaXRlbS1ib3ggYnV0dG9uIGkubWF0ZXJpYWwtaWNvbnN7XHJcblx0Zm9udC1zaXplOiAxNnB4O1xyXG59XHJcblxyXG5kaXYuYXNzaWduLWxpc3QgZGl2LnVzZXItaXRlbS1ib3ggc3BhbiB7XHJcbiAgICBoZWlnaHQ6IDIwcHg7XHJcbiAgICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XHJcbiAgICBmbG9hdDogbGVmdDtcclxufVxyXG5cclxuYnV0dG9uLnNob3ctc2VsZWN0LWRpYWxvZyB7XHJcbiAgICBmbG9hdDogcmlnaHQ7XHJcbiAgICBtYXJnaW4tcmlnaHQ6IC0yMnB4O1xyXG4gICAgd2lkdGg6IDIycHg7XHJcbiAgICBib3JkZXI6IG5vbmU7XHJcbiAgICBwYWRkaW5nOiAwO1xyXG4gICAgcGFkZGluZy1sZWZ0OiAycHg7XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiB0cmFuc3BhcmVudDtcclxufVxyXG5cclxuYnV0dG9uLmZpbGUtYWN0aW9uIHtcclxuICAgIGZsb2F0OiByaWdodDtcclxuICAgIHdpZHRoOiAyMnB4O1xyXG4gICAgYm9yZGVyOiBub25lO1xyXG4gICAgcGFkZGluZzogMDtcclxuICAgIHBhZGRpbmctbGVmdDogMnB4O1xyXG4gICAgbWFyZ2luLXRvcDogNHB4O1xyXG4gICAgYmFja2dyb3VuZDogdHJhbnNwYXJlbnQ7XHJcbn1cclxuXHJcbi5zdGVwLWJ1dHRvbiwgLnN0ZXAtYnV0dG9uOmFjdGl2ZXtcclxuXHRmbG9hdDogcmlnaHQ7XHJcbiAgICBtYXJnaW4tbGVmdDogMTBweDtcclxuICAgIGJvcmRlcjogb3V0c2V0IDJweCAjZDRkNGQxO1xyXG4gICAgcGFkZGluZzogNHB4IDIwcHg7XHJcbn1cclxuXHJcbi5zdGVwLWJ1dHRvbjpob3Zlcjpub3QoOmRpc2JhbGVkKXtcclxuICAgIGJhY2tncm91bmQtY29sb3I6ICM5ZTllOWU7XHJcbiAgICBjb2xvcjogI2ZiY2JjNDtcclxuICAgIGJvcmRlcjogb3V0c2V0IDJweCAjYjdiN2IzO1xyXG4gICAgXHJcbn1cclxuXHJcbi5zdGVwLWJ1dHRvbjpub3QoOmRpc2JhbGVkKSwgXHJcbi5zdGVwLWJ1dHRvbjphY3RpdmU6bm90KDpkaXNiYWxlZCl7XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiBncmF5O1xyXG4gICAgY29sb3I6ICNmN2ZiYzQ7XHJcbn1cclxuXHJcbi5zdGVwLWJ1dHRvbjpkaXNhYmxlZHtcclxuICAgIGJhY2tncm91bmQtY29sb3I6IGdyYXk7XHJcbiAgICBjb2xvcjogI2JkYmNiYyAhaW1wb3J0YW50O1xyXG59XHJcblxyXG4uZmlsZS1jb250YWluZXJ7XHJcblx0Ym9yZGVyOmdyYXkgMXB4IHNvbGlkOyBcclxuXHRwYWRkaW5nOiA2cHg7XHJcbn1cclxuXHJcbi5maWxlLWNvbnRhaW5lciAuZmlsZS1yb3d7XHJcblx0Ym9yZGVyOmdyYXkgMXB4IHNvbGlkOyBcclxuXHRwYWRkaW5nOiAycHggMnB4O1xyXG5cdG1hcmdpbjogNHB4IDZweDtcclxuXHRtYXJnaW4tcmlnaHQ6IDA7XHJcbn1cclxuXHJcbi5maWxlLWNvbnRhaW5lciAuZmlsZS1yb3c6bnRoLWNoaWxkKGV2ZW4pe1xyXG5cdGJhY2tncm91bmQ6ICNkYmYxZmI7XHJcbn1cclxuXHJcbi5maWxlLWNvbnRhaW5lciAuZmlsZS1yb3c6bnRoLWNoaWxkKG9kZCl7XHJcblx0YmFja2dyb3VuZDogI2YzZjNlMTtcclxufVxyXG5cclxuLndvcmtmbG93LWZpbGUtdmlldy1saW5rLCAud29ya2Zsb3ctZmlsZS12aWV3LWxpbms6YWN0aXZlLCAud29ya2Zsb3ctZmlsZS12aWV3LWxpbms6dmlzaXRlZHtcclxuXHRjb2xvcjogIzMzMztcclxufVxyXG5cclxuLndvcmtmbG93LWZpbGUtdmlldy1saW5rOmhvdmVye1xyXG5cdGNvbG9yOiAjNTUxMTEzO1xyXG59XHJcblxyXG4ud29ya2Zsb3ctZmlsZS12aWV3LWxpbmsgaS5tYXRlcmlhbC1pY29uc3tcclxuXHR3aWR0aDogMjRweDtcclxufVxyXG5cclxuXHJcbi5hc3NpZ24tbGlzdHtcclxuXHRib3JkZXI6IDFweCBzb2xpZCBsaWdodGdyYXk7XHJcbiAgICBwYWRkaW5nOiA2cHg7XHJcbiAgICBib3JkZXItcmFkaXVzOiA0cHg7XHJcbiAgICB3aWR0aDogMTAwJTtcclxuICAgIG1pbi1oZWlnaHQ6IDEwMHB4O1xyXG4gICAgbWF4LWhlaWdodDogMjAwcHg7XHJcbiAgICBvdmVyZmxvdy15OiBhdXRvO1xyXG4gICAgcGFkZGluZy1yaWdodDogMjRweDtcclxufVxyXG5cclxuZGl2LmFzc2lnbi1saXN0IGRpdi51c2VyLWl0ZW0tYm94IHtcclxuICAgIGJvcmRlcjogMXB4IHNvbGlkIGxpZ2h0Z3JheTtcclxuICAgIGJvcmRlci1yYWRpdXM6IDRweDtcclxuICAgIHBhZGRpbmc6IDJweCA0cHg7XHJcbiAgICBmbG9hdDogbGVmdDtcclxuICAgIGJhY2tncm91bmQ6ICNlNmU2ZTY7XHJcbiAgICBtYXJnaW4tcmlnaHQ6IDVweDtcclxuICAgIG1hcmdpbi1ib3R0b206IDVweDtcclxufVxyXG5cclxuZGl2LmFzc2lnbi1saXN0IGRpdi51c2VyLWl0ZW0tYm94IGJ1dHRvbiB7XHJcbiAgICBib3JkZXI6IG5vbmU7XHJcbiAgICBiYWNrZ3JvdW5kOiB0cmFuc3BhcmVudDtcclxuICAgIHBhZGRpbmc6IDA7XHJcbiAgICBwYWRkaW5nLXRvcDogM3B4O1xyXG4gICAgZmxvYXQ6IHJpZ2h0O1xyXG4gICAgbWFyZ2luLWxlZnQ6IDVweDtcclxufVxyXG5cclxuZGl2LmFzc2lnbi1saXN0IGRpdi51c2VyLWl0ZW0tYm94IGJ1dHRvbiBpLm1hdGVyaWFsLWljb25ze1xyXG5cdGZvbnQtc2l6ZTogMTZweDtcclxufVxyXG5cclxuZGl2LmFzc2lnbi1saXN0IGRpdi51c2VyLWl0ZW0tYm94IHNwYW4ge1xyXG4gICAgaGVpZ2h0OiAyMHB4O1xyXG4gICAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xyXG4gICAgZmxvYXQ6IGxlZnQ7XHJcbn1cclxuXHJcbmJ1dHRvbi5zaG93LXNlbGVjdC1kaWFsb2cge1xyXG4gICAgZmxvYXQ6IHJpZ2h0O1xyXG4gICAgbWFyZ2luLXJpZ2h0OiAtMjBweDtcclxuICAgIHdpZHRoOiAyMnB4O1xyXG4gICAgYm9yZGVyOiBub25lO1xyXG4gICAgcGFkZGluZzogMDtcclxuICAgIHBhZGRpbmctbGVmdDogMnB4O1xyXG59XHJcblxyXG5pbnB1dC5zZWxlY3QtZGF0ZXtcclxuXHR3aWR0aDogMTAwcHg7XHJcblx0aGVpZ2h0OiAyNnB4O1xyXG59XHJcblxyXG5pbnB1dC5zaG9ydC1pbnB1dHtcclxuXHR3aWR0aDogMTAwcHg7XHJcblx0aGVpZ2h0OiAyNnB4O1xyXG59XHJcblxyXG5cclxuIl19 */");
+            /***/ 
+        }),
+        /***/ "./src/app/wm-components/edit/edit-invoice/edit-invoice.component.ts": 
+        /*!***************************************************************************!*\
+          !*** ./src/app/wm-components/edit/edit-invoice/edit-invoice.component.ts ***!
+          \***************************************************************************/
+        /*! exports provided: EditInvoiceComponent */
+        /***/ (function (module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            __webpack_require__.r(__webpack_exports__);
+            /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EditInvoiceComponent", function () { return EditInvoiceComponent; });
+            /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+            /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+            /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+            /* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm2015/ngx-translate-core.js");
+            /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+            /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
+            /* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm2015/material.js");
+            /* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../services/global.service */ "./src/app/services/global.service.ts");
+            /* harmony import */ var _services_workflow_invoice_invoice_workflow_edit_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../services/workflow/invoice/invoice-workflow-edit.service */ "./src/app/services/workflow/invoice/invoice-workflow-edit.service.ts");
+            /* harmony import */ var _services_loading_service_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../services/loading-service.service */ "./src/app/services/loading-service.service.ts");
+            /* harmony import */ var _services_error_service_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../../services/error-service.service */ "./src/app/services/error-service.service.ts");
+            /* harmony import */ var _wf_models__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../../wf-models */ "./src/app/wf-models/index.ts");
+            /* harmony import */ var _wf_models_invoice_workflow_save_request__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../../wf-models/invoice-workflow-save-request */ "./src/app/wf-models/invoice-workflow-save-request.ts");
+            /* harmony import */ var _custom_validators_invoice_type_controll_validator__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../../custom-validators/invoice-type-controll-validator */ "./src/app/custom-validators/invoice-type-controll-validator.ts");
+            /* harmony import */ var _helper__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../../helper */ "./src/app/helper/index.ts");
+            var EditInvoiceComponent = /** @class */ (function () {
+                function EditInvoiceComponent(router, global, translate, editService, loadingService, http, errorService, formBuilder, dateAdapter, route) {
+                    var _this = this;
+                    this.router = router;
+                    this.global = global;
+                    this.editService = editService;
+                    this.loadingService = loadingService;
+                    this.http = http;
+                    this.errorService = errorService;
+                    this.formBuilder = formBuilder;
+                    this.dateAdapter = dateAdapter;
+                    this.route = route;
+                    this.workflowIdentity = "";
+                    this.workflowListUrl = "/workflow/list";
+                    this.workflowSaveRequest = new _wf_models_invoice_workflow_save_request__WEBPACK_IMPORTED_MODULE_12__["InvoiceWorkflowSaveRequest"]();
+                    this.users = [];
+                    this.departments = [];
+                    this.fileTitles = [];
+                    this.showAssignModal = false;
+                    this.selectAssign = [];
+                    this.invoiceTypes = []; //{InvoiceType.NO_TYPE, InvoiceType.SUPPLIER , InvoiceType.WORKER , InvoiceType.PAYMENT };
+                    this.assignTypeUser = _wf_models__WEBPACK_IMPORTED_MODULE_11__["AssignType"].USER;
+                    this.assignTypeDepartment = _wf_models__WEBPACK_IMPORTED_MODULE_11__["AssignType"].DEPARTMENT;
+                    this.assignTypeDepartmentGroup = _wf_models__WEBPACK_IMPORTED_MODULE_11__["AssignType"].DEPARTMENTGROUP;
+                    this.router.events.subscribe(function (evt) {
+                        if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_2__["NavigationEnd"]) {
+                            _this.workflowIdentity = _this.route.snapshot.params['identity'];
+                            _this.loadInitialData();
+                        }
+                    });
+                    this.dateAdapter.setLocale('de');
+                    for (var o in _wf_models__WEBPACK_IMPORTED_MODULE_11__["InvoiceType"]) {
+                        var str = o + "";
+                        var num = new Number(o);
+                        if (isNaN(num)) {
+                            translate.get('invoice-invoicetype-' + str.toLowerCase()).subscribe(function (res) {
+                                _this.invoiceTypes.push({ value: o, title: res });
+                            });
+                        }
+                    }
+                }
+                EditInvoiceComponent.prototype.fileTitleProgress = function (fileInput, file, fileIndex) {
+                    if (fileInput.target.files && fileInput.target.files != null && file) {
+                        file.file = fileInput.target.files[0];
+                    }
+                    //this.preview();
+                };
+                Object.defineProperty(EditInvoiceComponent.prototype, "assignedUsers", {
+                    get: function () {
+                        if (this.workflowSaveRequest != null) {
+                            return this.workflowSaveRequest.assigns;
+                        }
+                        return [];
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
+                Object.defineProperty(EditInvoiceComponent.prototype, "debugData", {
+                    get: function () {
+                        var ss = Object(_helper__WEBPACK_IMPORTED_MODULE_14__["formatDate"])(new Date(), 'dd.mm.yyyy');
+                        ss += " -- " + Object(_helper__WEBPACK_IMPORTED_MODULE_14__["parseDate"])(ss, 'dd.mm.yyyy');
+                        return ss;
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
+                EditInvoiceComponent.prototype.ngOnInit = function () {
+                    this.invoiceEditForm = this.formBuilder.group({
+                        expireDays: [10, _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
+                        controllerIdentity: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
+                        comments: [''],
+                        sender: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
+                        registerNumber: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
+                        invocieDate: [new Date(), _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
+                        partnerCode: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
+                        vendorNumber: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
+                        vendorName: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
+                        isDirectDebitPermission: [false],
+                        invoiceType: [_wf_models__WEBPACK_IMPORTED_MODULE_11__["InvoiceType"].NO_TYPE, [_custom_validators_invoice_type_controll_validator__WEBPACK_IMPORTED_MODULE_13__["InvoiceTypeControllValidator"]]],
+                        discountEnterDate: [new Date(), _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
+                        discountDeadline: [0, _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
+                        discountRate: [0, _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
+                        discountDate: [new Date(), _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
+                        paymentAmount: [0, _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
+                    });
+                };
+                EditInvoiceComponent.prototype.reload = function () {
+                    this.loadInitialData();
+                };
+                EditInvoiceComponent.prototype.loadInitialData = function () {
+                    var _this = this;
+                    if (this.workflowIdentity == '') {
+                        return;
+                    }
+                    if (this.global.loadedGeneralData !== null) {
+                        this.users = this.global.loadedGeneralData.company.users;
+                        this.departments = this.global.loadedGeneralData.company.departments;
+                    }
+                    else {
+                        this.subscribeToGeneralData();
+                        this.global.loadAllSetting(null);
+                    }
+                    this.loadingService.showLoading();
+                    this.editService.loadEditInitialData(this.workflowIdentity).subscribe(function (initialData) {
+                        console.log("set inital-data from workflow-edit. : ", initialData);
+                        //alert("from app-comp: \n" + JSON.stringify(data));
+                        if (initialData && initialData !== null) {
+                            _this.workflowSaveRequest = initialData.workflowSaveRequest;
+                            _this.setToControlValues();
+                        }
+                        else {
+                            _this.workflowSaveRequest = null;
+                        }
+                    }, function (response) {
+                        console.log("Error in read edit inital data", response);
+                        _this.errorService.showErrorResponse(response);
+                    }, function () {
+                        _this.loadingService.hideLoading();
+                    });
+                };
+                EditInvoiceComponent.prototype.setToControlValues = function () {
+                    if (this.workflowSaveRequest && this.workflowSaveRequest.workflow) {
+                        this.invoiceEditForm.controls["expireDays"].setValue(this.workflowSaveRequest.expireDays);
+                        this.invoiceEditForm.controls["controllerIdentity"].setValue(this.workflowSaveRequest.workflow.controllerIdentity);
+                        this.invoiceEditForm.controls["comments"].setValue(this.workflowSaveRequest.workflow.comments);
+                        this.invoiceEditForm.controls["sender"].setValue(this.workflowSaveRequest.workflow.sender);
+                        this.invoiceEditForm.controls["registerNumber"].setValue(this.workflowSaveRequest.workflow.registerNumber);
+                        this.invoiceEditForm.controls["invocieDate"].setValue(Object(_helper__WEBPACK_IMPORTED_MODULE_14__["parseDate"])(this.workflowSaveRequest.workflow.invocieDate, 'dd.mm.yyyy'));
+                        this.invoiceEditForm.controls["partnerCode"].setValue(this.workflowSaveRequest.workflow.partnerCode);
+                        this.invoiceEditForm.controls["vendorNumber"].setValue(this.workflowSaveRequest.workflow.vendorNumber);
+                        this.invoiceEditForm.controls["vendorName"].setValue(this.workflowSaveRequest.workflow.vendorName);
+                        this.invoiceEditForm.controls["isDirectDebitPermission"].setValue(this.workflowSaveRequest.workflow.isDirectDebitPermission);
+                        this.invoiceEditForm.controls["invoiceType"].setValue(this.workflowSaveRequest.workflow.invoiceType);
+                        this.invoiceEditForm.controls["discountEnterDate"].setValue(Object(_helper__WEBPACK_IMPORTED_MODULE_14__["parseDate"])(this.workflowSaveRequest.workflow.discountEnterDate, 'dd.mm.yyyy'));
+                        this.invoiceEditForm.controls["comments"].setValue(this.workflowSaveRequest.workflow.comments);
+                        this.invoiceEditForm.controls["discountDeadline"].setValue(this.workflowSaveRequest.workflow.discountDeadline);
+                        this.invoiceEditForm.controls["discountRate"].setValue(this.workflowSaveRequest.workflow.discountRate);
+                        this.invoiceEditForm.controls["discountDate"].setValue(Object(_helper__WEBPACK_IMPORTED_MODULE_14__["parseDate"])(this.workflowSaveRequest.workflow.discountDate, 'dd.mm.yyyy'));
+                        this.invoiceEditForm.controls["paymentAmount"].setValue(this.workflowSaveRequest.workflow.paymentAmount);
+                    }
+                };
+                EditInvoiceComponent.prototype.setFormControlValues = function () {
+                    this.workflowSaveRequest.expireDays = this.invoiceEditForm.controls["expireDays"].value;
+                    this.workflowSaveRequest.workflow.controllerIdentity = this.invoiceEditForm.controls["controllerIdentity"].value;
+                    this.workflowSaveRequest.workflow.comments = this.invoiceEditForm.controls["comments"].value;
+                    this.workflowSaveRequest.workflow.sender = this.invoiceEditForm.controls["sender"].value;
+                    this.workflowSaveRequest.workflow.registerNumber = this.invoiceEditForm.controls["registerNumber"].value;
+                    this.workflowSaveRequest.workflow.invocieDate = Object(_helper__WEBPACK_IMPORTED_MODULE_14__["formatDate"])(this.invoiceEditForm.controls["invocieDate"].value, 'dd.mm.yyyy');
+                    this.workflowSaveRequest.workflow.partnerCode = this.invoiceEditForm.controls["partnerCode"].value;
+                    this.workflowSaveRequest.workflow.vendorNumber = this.invoiceEditForm.controls["vendorNumber"].value;
+                    this.workflowSaveRequest.workflow.vendorName = this.invoiceEditForm.controls["vendorName"].value;
+                    this.workflowSaveRequest.workflow.isDirectDebitPermission = this.invoiceEditForm.controls["isDirectDebitPermission"].value;
+                    this.workflowSaveRequest.workflow.invoiceType = this.invoiceEditForm.controls["invoiceType"].value;
+                    this.workflowSaveRequest.workflow.discountEnterDate = Object(_helper__WEBPACK_IMPORTED_MODULE_14__["formatDate"])(this.invoiceEditForm.controls["discountEnterDate"].value, 'dd.mm.yyyy');
+                    this.workflowSaveRequest.workflow.comments = this.invoiceEditForm.controls["comments"].value;
+                    this.workflowSaveRequest.workflow.discountDeadline = this.invoiceEditForm.controls["discountDeadline"].value;
+                    this.workflowSaveRequest.workflow.discountRate = this.invoiceEditForm.controls["discountRate"].value;
+                    this.workflowSaveRequest.workflow.discountDate = Object(_helper__WEBPACK_IMPORTED_MODULE_14__["formatDate"])(this.invoiceEditForm.controls["discountDate"].value, 'dd.mm.yyyy');
+                    this.workflowSaveRequest.workflow.paymentAmount = this.invoiceEditForm.controls["paymentAmount"].value;
+                };
+                Object.defineProperty(EditInvoiceComponent.prototype, "forms", {
+                    get: function () { return this.invoiceEditForm.controls; },
+                    enumerable: true,
+                    configurable: true
+                });
+                EditInvoiceComponent.prototype.subscribeToGeneralData = function () {
+                    var _this = this;
+                    this.global.currentSessionDataSubject.subscribe(function (data) {
+                        console.log("set gloabl-data from workflow-create. appIsLogged: ");
+                        //alert("from app-comp: \n" + JSON.stringify(data));
+                        if (data && data !== null) {
+                            var value = data.isLogged + "";
+                            if (value === "true" === true) {
+                                _this.users = data.company.users;
+                                _this.departments = data.company.departments;
+                            }
+                            else {
+                                _this.users = [];
+                                _this.departments = [];
+                            }
+                        }
+                        else {
+                            _this.users = [];
+                            _this.departments = [];
+                        }
+                    });
+                };
+                Object.defineProperty(EditInvoiceComponent.prototype, "hasNoAssigns", {
+                    get: function () {
+                        if (this.workflowSaveRequest && this.workflowSaveRequest.assigns) {
+                            return this.workflowSaveRequest.assigns.length == 0;
+                        }
+                        return false;
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
+                EditInvoiceComponent.prototype.removeAssign = function (identity, type) {
+                    this.workflowSaveRequest.assigns = this.workflowSaveRequest.assigns.filter(function (value, index, arr) {
+                        return value.itemIdentity != identity || value.itemType != type;
+                    });
+                };
+                EditInvoiceComponent.prototype.removeFile = function (index) {
+                    this.fileTitles.splice(index, 1);
+                };
+                EditInvoiceComponent.prototype.addFile = function () {
+                    var ft = new _wf_models__WEBPACK_IMPORTED_MODULE_11__["FileTitle"]();
+                    ft.title = "";
+                    ft.file = null;
+                    this.fileTitles.push(ft);
+                };
+                EditInvoiceComponent.prototype.save = function () {
+                    var _this = this;
+                    this.setFormControlValues();
+                    //return;
+                    this.loadingService.showLoading();
+                    if (this.fileTitles.length > 0) {
+                        this.editService.uploadFiles(this.fileTitles).subscribe(function (result) {
+                            console.log("Create workflow upload file result", result);
+                            _this.workflowSaveRequest.sessionKey = result.sessionKey;
+                            _this.saveWorkflowData();
+                        }, function (response) {
+                            console.log("Error in create workflow upload file", response);
+                            _this.loadingService.hideLoading();
+                            _this.errorService.showErrorResponse(response);
+                        }, function () {
+                        });
+                    }
+                    else {
+                        this.workflowSaveRequest.sessionKey = 'not-set';
+                        this.saveWorkflowData();
+                    }
+                };
+                EditInvoiceComponent.prototype.saveWorkflowData = function () {
+                    var _this = this;
+                    this.editService.saveWorkflow(this.workflowSaveRequest).subscribe(function (result) {
+                        console.log("Create workflow result", result);
+                        _this.router.navigate([_this.workflowListUrl]);
+                    }, function (response) {
+                        console.log("Error in create workflow", response);
+                        _this.errorService.showErrorResponse(response);
+                        _this.loadingService.hideLoading();
+                    }, function () {
+                        _this.loadingService.hideLoading();
+                    });
+                };
+                EditInvoiceComponent.prototype.isItemAssigned = function (identity, type) {
+                    if (this.selectAssign[type] === undefined) {
+                        this.selectAssign[type] = [];
+                    }
+                    if (this.selectAssign[type][identity] === undefined) {
+                        this.selectAssign[type][identity] = false;
+                    }
+                    return this.selectAssign[type][identity];
+                };
+                EditInvoiceComponent.prototype.applyUserSelect = function () {
+                    this.workflowSaveRequest.assigns = [];
+                    for (var type in this.selectAssign) {
+                        for (var identity in this.selectAssign[type]) {
+                            if (this.selectAssign[type][identity]) {
+                                var assign = new _wf_models__WEBPACK_IMPORTED_MODULE_11__["AssignItem"];
+                                assign.itemIdentity = identity;
+                                assign.itemType = type;
+                                this.workflowSaveRequest.assigns.push(assign);
+                            }
+                        }
+                    }
+                    this.hideAssignSelect();
+                };
+                EditInvoiceComponent.prototype.showAssignSelect = function () {
+                    this.selectAssign = [];
+                    for (var index in this.workflowSaveRequest.assigns) {
+                        var assign = this.workflowSaveRequest.assigns[index];
+                        if (this.selectAssign[assign.itemType] === undefined) {
+                            this.selectAssign[assign.itemType] = [];
+                        }
+                        this.selectAssign[assign.itemType][assign.itemIdentity] = true;
+                    }
+                    this.showAssignModal = true;
+                };
+                EditInvoiceComponent.prototype.hideAssignSelect = function () {
+                    this.showAssignModal = false;
+                };
+                EditInvoiceComponent.prototype.toggleAssign = function (identity, type, isChecked) {
+                    if (this.selectAssign[type] === undefined) {
+                        this.selectAssign[type] = [];
+                    }
+                    this.selectAssign[type][identity] = isChecked;
+                };
+                EditInvoiceComponent.prototype.getAssignItemTitle = function (item) {
+                    //assign.itemIdentity = <string>identity;
+                    //assign.itemType = <AssignType>type;
+                    if (item.itemType === _wf_models__WEBPACK_IMPORTED_MODULE_11__["AssignType"].USER) {
+                        for (var index in this.users) {
+                            if (this.users[index].identity === item.itemIdentity) {
+                                return this.users[index].fullName;
+                            }
+                        }
+                        return 'Unknown!';
+                    }
+                    if (item.itemType === _wf_models__WEBPACK_IMPORTED_MODULE_11__["AssignType"].DEPARTMENT) {
+                        for (var index in this.departments) {
+                            if (this.departments[index].identity === item.itemIdentity) {
+                                return this.departments[index].title;
+                            }
+                        }
+                        return 'Unknown!';
+                    }
+                    if (item.itemType === _wf_models__WEBPACK_IMPORTED_MODULE_11__["AssignType"].DEPARTMENTGROUP) {
+                        for (var index in this.departments) {
+                            for (var gindex in this.departments[index].departmentGroups) {
+                                if (this.departments[index].departmentGroups[gindex].identity === item.itemIdentity) {
+                                    return this.departments[index].departmentGroups[gindex].title;
+                                }
+                            }
+                        }
+                        return 'Unknown!';
+                    }
+                };
+                return EditInvoiceComponent;
+            }());
+            EditInvoiceComponent.ctorParameters = function () { return [
+                { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] },
+                { type: _services_global_service__WEBPACK_IMPORTED_MODULE_7__["GlobalService"] },
+                { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_3__["TranslateService"] },
+                { type: _services_workflow_invoice_invoice_workflow_edit_service__WEBPACK_IMPORTED_MODULE_8__["InvoiceWorkflowEditService"] },
+                { type: _services_loading_service_service__WEBPACK_IMPORTED_MODULE_9__["LoadingServiceService"] },
+                { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"] },
+                { type: _services_error_service_service__WEBPACK_IMPORTED_MODULE_10__["ErrorServiceService"] },
+                { type: _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormBuilder"] },
+                { type: _angular_material__WEBPACK_IMPORTED_MODULE_6__["DateAdapter"] },
+                { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"] }
+            ]; };
+            EditInvoiceComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+                Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+                    selector: 'app-edit-invoice',
+                    template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./edit-invoice.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/wm-components/edit/edit-invoice/edit-invoice.component.html")).default,
+                    providers: [{ provide: _angular_material__WEBPACK_IMPORTED_MODULE_6__["DateAdapter"], useClass: _helper__WEBPACK_IMPORTED_MODULE_14__["GermanDateAdapter"] }],
+                    styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./edit-invoice.component.css */ "./src/app/wm-components/edit/edit-invoice/edit-invoice.component.css")).default]
+                })
+            ], EditInvoiceComponent);
             /***/ 
         }),
         /***/ "./src/app/wm-components/workflow-list/workflow-list.component.css": 

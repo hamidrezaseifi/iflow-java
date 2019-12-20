@@ -45,7 +45,7 @@
 		    			<td>{{item.status}}</td>
 		    			<td>{{item.assignToUserFullName}}</td>
 		    			<td></td>
-		    			<td><a class="tool-link" [routerLink]="['/workflow/edit/' + item.workflowType.identity + '/' + item.identity + '/' + item.currentStep.identity]"><i class="material-icons">edit</i></a></td>
+		    			<td><a class="tool-link" [routerLink]="['/workflow/edit/' + item.workflowType.identity + '/' + item.identity]"><i class="material-icons">edit</i></a></td>
 				    </tr>
 				    <tr *ngIf="resultWorlflows.length == 0">
 		    			<td colspan="6">{{ 'workflow-no-result-found' | translate }}</td>

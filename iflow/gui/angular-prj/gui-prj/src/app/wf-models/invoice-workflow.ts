@@ -27,17 +27,17 @@ export class InvoiceWorkflow {
 
 	sender: string;
 	registerNumber: string;
-	invoceDate: Date;
+	invocieDate: string;
 	partnerCode: string;
 	vendorNumber: string;
 	vendorName: string;
 	isDirectDebitPermission: boolean;
 	invoiceType: InvoiceType;
 	
-	discountEnterDate: Date;
+	discountEnterDate: string;
 	discountDeadline: number;
 	discountRate: number;
-	discountDate: Date;
+	discountDate: string;
 	
 	paymentAmount: number;
 

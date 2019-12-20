@@ -3,6 +3,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import { HttpClient, HttpEventType } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { DateAdapter } from '@angular/material';
 
 import { GlobalService } from '../../../services/global.service';
 import { InvoiceWorkflowEditService } from '../../../services/workflow/invoice/invoice-workflow-edit.service';
@@ -14,26 +15,27 @@ import { WorkflowProcessCommand, Workflow, AssignItem, FileTitle, AssignType, Wo
 import { InvoiceWorkflowSaveRequest } from '../../../wf-models/invoice-workflow-save-request';
 import { InvoiceWorkflowSaveRequestInit } from '../../../wf-models/invoice-workflow-save-request-init';
 import { InvoiceTypeControllValidator } from '../../../custom-validators/invoice-type-controll-validator';
+import { GermanDateAdapter, parseDate, formatDate } from '../../../helper';
 
 @Component({
   selector: 'app-create-invoice',
   templateUrl: './create-invoice.component.html',
-  styleUrls: ['./create-invoice.component.css']
+  styleUrls: ['./create-invoice.component.css'],
+  providers: [{provide: DateAdapter, useClass: GermanDateAdapter}]
 })
 export class CreateInvoiceComponent implements OnInit {
-
+	
 	invoiceEditForm: FormGroup;
 
 	workflowListUrl :string = "/workflow/list";
 
 	workflowSaveRequest :InvoiceWorkflowSaveRequest = new InvoiceWorkflowSaveRequest();
+	
 	users : User[] = [];
 	departments : Department[] = [];
 	
 	fileTitles : FileTitle[] = [];
-	
-	showDebug : boolean = false;
-	
+		
 	showAssignModal :boolean = false;
 	
 	selectAssign : boolean[][] = [];
@@ -66,8 +68,9 @@ export class CreateInvoiceComponent implements OnInit {
 	
 	
 	get debugData() :string{
-		var ssignstr : string =  (this.workflowSaveRequest) ? JSON.stringify(this.workflowSaveRequest) : '--';
-		return ssignstr;
+		var ss = formatDate(new Date(), 'dd.mm.yyyy');
+		ss += " -- " + parseDate(ss, 'dd.mm.yyyy');
+		return ss;
 	}
 	
 	
@@ -80,6 +83,7 @@ export class CreateInvoiceComponent implements OnInit {
 			private http: HttpClient,
 			private errorService: ErrorServiceService,
 		  	private formBuilder: FormBuilder,
+		  	private dateAdapter: DateAdapter<Date>,
 	) {
 		
 		this.router.events.subscribe((evt) => {
@@ -88,10 +92,8 @@ export class CreateInvoiceComponent implements OnInit {
 			}
 		});
 		
-		//this.invoiceTypes.push(InvoiceType.NO_TYPE);
-		//this.invoiceTypes.push(InvoiceType.SUPPLIER);
-		//this.invoiceTypes.push(InvoiceType.WORKER);
-		//this.invoiceTypes.push(InvoiceType.PAYMENT);
+		this.dateAdapter.setLocale('de');
+		
 		for(var o in InvoiceType){
 			var str = o + "";
 			var num = <number>new Number(o);
@@ -117,7 +119,7 @@ export class CreateInvoiceComponent implements OnInit {
 
 			sender: ['', Validators.required],
 			registerNumber: ['', Validators.required],
-			invoceDate: [new Date(), Validators.required],
+			invocieDate: [new Date(), Validators.required],
 			partnerCode: ['', Validators.required],
 			vendorNumber: ['', Validators.required],
 			vendorName: ['', Validators.required],
@@ -166,6 +168,7 @@ export class CreateInvoiceComponent implements OnInit {
 	
 	setToControlValues(){
 		if(this.workflowSaveRequest && this.workflowSaveRequest.workflow){
+			
 			this.invoiceEditForm.controls["expireDays"].setValue(this.workflowSaveRequest.expireDays);
 			
 			this.invoiceEditForm.controls["controllerIdentity"].setValue(this.workflowSaveRequest.workflow.controllerIdentity);
@@ -173,17 +176,17 @@ export class CreateInvoiceComponent implements OnInit {
 			
 			this.invoiceEditForm.controls["sender"].setValue(this.workflowSaveRequest.workflow.sender);
 			this.invoiceEditForm.controls["registerNumber"].setValue(this.workflowSaveRequest.workflow.registerNumber);
-			this.invoiceEditForm.controls["invoceDate"].setValue(this.workflowSaveRequest.workflow.invoceDate);
+			this.invoiceEditForm.controls["invocieDate"].setValue(parseDate(this.workflowSaveRequest.workflow.invocieDate, 'dd.mm.yyyy'));
 			this.invoiceEditForm.controls["partnerCode"].setValue(this.workflowSaveRequest.workflow.partnerCode);
 			this.invoiceEditForm.controls["vendorNumber"].setValue(this.workflowSaveRequest.workflow.vendorNumber);
 			this.invoiceEditForm.controls["vendorName"].setValue(this.workflowSaveRequest.workflow.vendorName);
 			this.invoiceEditForm.controls["isDirectDebitPermission"].setValue(this.workflowSaveRequest.workflow.isDirectDebitPermission);
 			this.invoiceEditForm.controls["invoiceType"].setValue(this.workflowSaveRequest.workflow.invoiceType);
-			this.invoiceEditForm.controls["discountEnterDate"].setValue(this.workflowSaveRequest.workflow.discountEnterDate);
+			this.invoiceEditForm.controls["discountEnterDate"].setValue(parseDate(this.workflowSaveRequest.workflow.discountEnterDate, 'dd.mm.yyyy'));
 			this.invoiceEditForm.controls["comments"].setValue(this.workflowSaveRequest.workflow.comments);
 			this.invoiceEditForm.controls["discountDeadline"].setValue(this.workflowSaveRequest.workflow.discountDeadline);
 			this.invoiceEditForm.controls["discountRate"].setValue(this.workflowSaveRequest.workflow.discountRate);
-			this.invoiceEditForm.controls["discountDate"].setValue(this.workflowSaveRequest.workflow.discountDate);
+			this.invoiceEditForm.controls["discountDate"].setValue(parseDate(this.workflowSaveRequest.workflow.discountDate, 'dd.mm.yyyy'));
 			this.invoiceEditForm.controls["paymentAmount"].setValue(this.workflowSaveRequest.workflow.paymentAmount);
 						
 		}
@@ -198,17 +201,17 @@ export class CreateInvoiceComponent implements OnInit {
 		
 		this.workflowSaveRequest.workflow.sender = this.invoiceEditForm.controls["sender"].value; 
 		this.workflowSaveRequest.workflow.registerNumber = this.invoiceEditForm.controls["registerNumber"].value;  
-		this.workflowSaveRequest.workflow.invoceDate = this.invoiceEditForm.controls["invoceDate"].value; 
+		this.workflowSaveRequest.workflow.invocieDate = formatDate(this.invoiceEditForm.controls["invocieDate"].value, 'dd.mm.yyyy'); 
 		this.workflowSaveRequest.workflow.partnerCode = this.invoiceEditForm.controls["partnerCode"].value; 
 		this.workflowSaveRequest.workflow.vendorNumber = this.invoiceEditForm.controls["vendorNumber"].value; 
 		this.workflowSaveRequest.workflow.vendorName = this.invoiceEditForm.controls["vendorName"].value; 
 		this.workflowSaveRequest.workflow.isDirectDebitPermission = this.invoiceEditForm.controls["isDirectDebitPermission"].value; 
 		this.workflowSaveRequest.workflow.invoiceType = this.invoiceEditForm.controls["invoiceType"].value; 
-		this.workflowSaveRequest.workflow.discountEnterDate = this.invoiceEditForm.controls["discountEnterDate"].value; 
+		this.workflowSaveRequest.workflow.discountEnterDate = formatDate(this.invoiceEditForm.controls["discountEnterDate"].value, 'dd.mm.yyyy'); 
 		this.workflowSaveRequest.workflow.comments = this.invoiceEditForm.controls["comments"].value; 
 		this.workflowSaveRequest.workflow.discountDeadline = this.invoiceEditForm.controls["discountDeadline"].value; 
 		this.workflowSaveRequest.workflow.discountRate = this.invoiceEditForm.controls["discountRate"].value; 
-		this.workflowSaveRequest.workflow.discountDate = this.invoiceEditForm.controls["discountDate"].value; 
+		this.workflowSaveRequest.workflow.discountDate = formatDate(this.invoiceEditForm.controls["discountDate"].value, 'dd.mm.yyyy'); 
 		this.workflowSaveRequest.workflow.paymentAmount = this.invoiceEditForm.controls["paymentAmount"].value; 
 	}
 	
@@ -301,23 +304,7 @@ export class CreateInvoiceComponent implements OnInit {
 			            
 			            this.workflowSaveRequest.sessionKey = result.sessionKey;
 			            
-			            this.editService.saveWorkflow(this.workflowSaveRequest).subscribe(
-			    		        (result) => {		        	
-			    		            console.log("Create workflow result", result);
-			    		            
-			    		            this.router.navigate([this.workflowListUrl]);
-			    		        },
-			    		        response => {
-			    		        	console.log("Error in create workflow", response);
-			    		        	
-			    		        	this.errorService.showErrorResponse(response);
-			    		        	this.loadingService.hideLoading();	 
-			    		        },
-			    		        () => {
-			    		        	
-			    		        	this.loadingService.hideLoading();	 
-			    		        }
-			    		    );	       	
+			            this.createWorkflowData();      	
 			            
 			        },
 			        response => {
@@ -335,26 +322,31 @@ export class CreateInvoiceComponent implements OnInit {
 		else{
 	        this.workflowSaveRequest.sessionKey = 'not-set';
 	        
-	        this.editService.saveWorkflow(this.workflowSaveRequest).subscribe(
-			        (result) => {		        	
-			            console.log("Create workflow result", result);
-			            
-			            this.router.navigate([this.workflowListUrl]);
-			        },
-			        response => {
-			        	console.log("Error in create workflow", response);
-			        	
-			        	this.errorService.showErrorResponse(response);
-			        	this.loadingService.hideLoading();	 
-			        },
-			        () => {
-			        	
-			        	this.loadingService.hideLoading();	 
-			        }
-			    );	       	
-	
+	        this.createWorkflowData();
 		}
 	
+	}
+	
+	private createWorkflowData(){
+		
+        this.editService.createWorkflow(this.workflowSaveRequest).subscribe(
+		        (result) => {		        	
+		            console.log("Create workflow result", result);
+		            
+		            this.router.navigate([this.workflowListUrl]);
+		        },
+		        response => {
+		        	console.log("Error in create workflow", response);
+		        	
+		        	this.errorService.showErrorResponse(response);
+		        	this.loadingService.hideLoading();	 
+		        },
+		        () => {
+		        	
+		        	this.loadingService.hideLoading();	 
+		        }
+		    );	       	
+		
 	}
 	
 	isItemAssigned(identity :string , type: AssignType){

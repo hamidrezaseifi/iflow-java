@@ -39,7 +39,7 @@ public class InvoiceWorkflow extends IdentityModel implements IWorkflow {
 
   private String                     registerNumber;
 
-  private LocalDate                  invoceDate;
+  private LocalDate                  invoiceDate;
 
   private String                     partnerCode;
 
@@ -77,12 +77,12 @@ public class InvoiceWorkflow extends IdentityModel implements IWorkflow {
     this.registerNumber = registerNumber;
   }
 
-  public LocalDate getInvoceDate() {
-    return invoceDate;
+  public LocalDate getInvoiceDate() {
+    return invoiceDate;
   }
 
-  public void setInvoceDate(final LocalDate invoceDate) {
-    this.invoceDate = invoceDate;
+  public void setInvoiceDate(final LocalDate invoceDate) {
+    this.invoiceDate = invoceDate;
   }
 
   public String getPartnerCode() {

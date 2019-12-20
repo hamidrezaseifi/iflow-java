@@ -11,16 +11,18 @@ import { WorkflowCreateComponent } from './wm-components/create/workflow-create/
 import { CreateSingletaskComponent } from './wm-components/create/create-singletask/create-singletask.component';
 import { CreateInvoiceComponent } from './wm-components/create/create-invoice/create-invoice.component';
 import { CreateTestthreetaskComponent } from './wm-components/create/create-testthreetask/create-testthreetask.component';
+import { EditInvoiceComponent } from './wm-components/edit/edit-invoice/edit-invoice.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent, canActivate: [AuthenticationService] },
     { path: 'about', component: AboutComponent, canActivate: [AuthenticationService] },
     { path: 'workflow/list', component: WorkflowListComponent, canActivate: [AuthenticationService] },
     { path: 'workflow/create', component: WorkflowCreateComponent, canActivate: [AuthenticationService] },
-    { path: 'workflow/singletask/create', component: CreateSingletaskComponent, canActivate: [AuthenticationService] },
-    { path: 'workflow/invoice/create', component: CreateInvoiceComponent, canActivate: [AuthenticationService] },
-    { path: 'workflow/testthreetask/create', component: CreateTestthreetaskComponent, canActivate: [AuthenticationService] },
+    { path: 'workflow/create/singletask', component: CreateSingletaskComponent, canActivate: [AuthenticationService] },
+    { path: 'workflow/create/invoice', component: CreateInvoiceComponent, canActivate: [AuthenticationService] },
+    { path: 'workflow/create/testthreetask', component: CreateTestthreetaskComponent, canActivate: [AuthenticationService] },
 
+    { path: 'workflow/edit/invoiceworkflowtype/:identity', component: EditInvoiceComponent, canActivate: [AuthenticationService] },
     
     
     { path: 'auth/login', component: LoginComponent },

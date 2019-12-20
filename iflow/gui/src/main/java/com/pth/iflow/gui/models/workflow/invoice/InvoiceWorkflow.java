@@ -25,7 +25,7 @@ public class InvoiceWorkflow extends WorkflowBase implements IWorkflow {
   @JsonDeserialize(using = GuiDateDeserializer.class)
   @JsonSerialize(using = GuiDateSerializer.class)
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
-  private LocalDate    invoceDate;
+  private LocalDate    invocieDate;
 
   private String       partnerCode;
 
@@ -79,12 +79,12 @@ public class InvoiceWorkflow extends WorkflowBase implements IWorkflow {
     this.registerNumber = registerNumber;
   }
 
-  public LocalDate getInvoceDate() {
-    return this.invoceDate;
+  public LocalDate getInvoiceDate() {
+    return this.invocieDate;
   }
 
-  public void setInvoceDate(final LocalDate invoceDate) {
-    this.invoceDate = invoceDate;
+  public void setInvoiceDate(final LocalDate invocieDate) {
+    this.invocieDate = invocieDate;
   }
 
   public String getPartnerCode() {
@@ -176,7 +176,7 @@ public class InvoiceWorkflow extends WorkflowBase implements IWorkflow {
     newWorkflow.setVersion(0);
     newWorkflow.setComments("");
     newWorkflow.setIdentity(EIdentity.NOT_SET.getIdentity());
-    newWorkflow.setInvoceDate(LocalDate.now());
+    newWorkflow.setInvoiceDate(LocalDate.now());
     newWorkflow.setDiscountDate(LocalDate.now().plusDays(25));
 
     return newWorkflow;

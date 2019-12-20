@@ -29,8 +29,10 @@
 										<input type="text" required name="registerNumber" formControlName="registerNumber" >
 									</div>
 									<div  class="item-label label-required small-label">{{ 'invoice-invoicedate' | translate }}</div>
-									<div class="item-content small-content">
-										<input type="text" required name="invoceDate" class="select-date" formControlName="invoceDate" >
+									<div class="item-content small-content">									
+										<input required class="select-date" matInput [matDatepicker]="invocieDatepicker" placeholder="{{ 'invoice-invoicedate-select' | translate }}" formControlName="invocieDate" >
+										<mat-datepicker-toggle matSuffix [for]="invocieDatepicker"></mat-datepicker-toggle>
+										<mat-datepicker #invocieDatepicker startView="month" [startAt]="invoiceEditForm.controls.invocieDate.value"></mat-datepicker>										
 									</div>
 									<div class="clear"></div>
 									<div class="clear"></div>
@@ -98,28 +100,32 @@
 									<div class="item-row">
 										<div class="item-label label-required small-label">{{ 'invoice-discountenterdate-short' | translate }}</div>
 										<div class="item-content">
-											<input type="text" required name="discountEnterDate" class="select-date" formControlName="discountEnterDate" >
+											<input required class="select-date" matInput [matDatepicker]="discountEnterDatepicker" placeholder="{{ 'invoice-discountenterdate' | translate }}" formControlName="discountEnterDate" >
+											<mat-datepicker-toggle matSuffix [for]="discountEnterDatepicker"></mat-datepicker-toggle>
+											<mat-datepicker #discountEnterDatepicker startView="month" [startAt]="invoiceEditForm.controls.discountEnterDate.value"></mat-datepicker>										
 										</div>
 										<div class="clear"></div>
 									</div>
 									<div class="item-row">
 										<div class="item-label label-required small-label">{{ 'invoice-discountrate-short' | translate }}</div>
 										<div class="item-content">
-											<input type="number" required name="discountRate" class="" formControlName="discountRate" > %
+											<input type="number" required name="discountRate" class="short-input" formControlName="discountRate" > %
 										</div>
 										<div class="clear"></div>
 									</div>
 									<div class="item-row">
 										<div class="item-label label-required small-label">{{ 'invoice-discountdeadline-short' | translate }}</div>
 										<div class="item-content">
-											<input type="number" required name="discountDeadline" class="" formControlName="discountDeadline" > <span>{{ 'common.days' | translate }}</span>
+											<input type="number" required name="discountDeadline" class="short-input" formControlName="discountDeadline" > <span>{{ 'common.days' | translate }}</span>
 										</div>
 										<div class="clear"></div>
 									</div>
 									<div class="item-row">
 										<div class="item-label label-required small-label">{{ 'invoice-discountdate' | translate }}</div>
 										<div class="item-content">
-											<input type="text" required name="discountDate" class="select-date" formControlName="discountDate" >
+											<input required class="select-date" matInput [matDatepicker]="discountDatepicker" placeholder="{{ 'invoice-discountdate' | translate }}" formControlName="discountDate" >
+											<mat-datepicker-toggle matSuffix [for]="discountDatepicker"></mat-datepicker-toggle>
+											<mat-datepicker #discountDatepicker startView="month" [startAt]="invoiceEditForm.controls.discountDate.value"></mat-datepicker>										
 										</div>
 										<div class="clear"></div>
 									</div>
@@ -181,11 +187,7 @@
 					</form>
 				</div>
 				<div class="clear"></div>
-				<hr>
-				<div >
-					{{invoiceEditForm.controls.invoiceType.errors | json}}
-				</div>
-				<hr>
+				
 			</div>
 		    		 
 		    <div class="modal fade" [ngClass]="{'show' : showAssignModal}" tabindex="-1" id="assignlistdialog" role="dialog" aria-labelledby="exampleModalCenterTitle">

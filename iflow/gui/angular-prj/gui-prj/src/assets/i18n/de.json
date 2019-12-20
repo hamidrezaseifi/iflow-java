@@ -114,6 +114,7 @@
 	"invoice-invoicenumber" : "Rg-Nr.",
 	"invoice-trusted" : "vertraulich",
 	"invoice-invoicedate" : "Datum",
+	"invoice-invoicedate-select" : "Rechungsdatum",
 	"invoice-partnercode" : "PartnerCode",
 	"invoice-vendornumber" : "Kreditorennummer",
 	"invoice-vendorname" : "Kreditorename",

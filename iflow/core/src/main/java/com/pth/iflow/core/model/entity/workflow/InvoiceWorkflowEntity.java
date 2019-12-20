@@ -33,7 +33,7 @@ public class InvoiceWorkflowEntity implements IWorkflowContainerEntity {
   private String         registerNumber;
 
   @Column(name = "invoce_date")
-  private Date           invoceDate;
+  private Date           invoiceDate;
 
   @Column(name = "partner_code")
   private String         partnerCode;
@@ -105,12 +105,12 @@ public class InvoiceWorkflowEntity implements IWorkflowContainerEntity {
     this.registerNumber = registerNumber;
   }
 
-  public Date getInvoceDate() {
-    return invoceDate;
+  public Date getInvoiceDate() {
+    return invoiceDate;
   }
 
-  public void setInvoceDate(final Date invoceDate) {
-    this.invoceDate = invoceDate;
+  public void setInvoiceDate(final Date invoiceDate) {
+    this.invoiceDate = invoiceDate;
   }
 
   public String getPartnerCode() {

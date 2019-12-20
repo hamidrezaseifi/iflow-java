@@ -73,7 +73,7 @@ public class InvoiceWorkflowService extends CoreModelEdoMapperService<InvoiceWor
     model.setDiscountDeadline(edo.getDiscountDeadline());
     model.setDiscountEnterDate(CoreDataHelper.fromLocalDate(edo.getDiscountEnterDate()));
     model.setDiscountRate(edo.getDiscountRate());
-    model.setInvoceDate(CoreDataHelper.fromLocalDate(edo.getInvoceDate()));
+    model.setInvoiceDate(CoreDataHelper.fromLocalDate(edo.getInvoiceDate()));
     model.setInvoiceType(edo.getInvoiceType());
     model.setIsDirectDebitPermission(edo.getIsDirectDebitPermission());
     model.setPartnerCode(edo.getPartnerCode());
@@ -95,7 +95,7 @@ public class InvoiceWorkflowService extends CoreModelEdoMapperService<InvoiceWor
     edo.setDiscountDeadline(model.getDiscountDeadline());
     edo.setDiscountEnterDate(CoreDataHelper.toLocalDate(model.getDiscountEnterDate()));
     edo.setDiscountRate(model.getDiscountRate());
-    edo.setInvoceDate(CoreDataHelper.toLocalDate(model.getInvoceDate()));
+    edo.setInvoiceDate(CoreDataHelper.toLocalDate(model.getInvoiceDate()));
     edo.setInvoiceType(model.getInvoiceType());
     edo.setIsDirectDebitPermission(model.getIsDirectDebitPermission());
     edo.setPartnerCode(model.getPartnerCode());

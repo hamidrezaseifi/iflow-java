@@ -8,7 +8,7 @@
 				<div class="item-row">
 					<div class="list-group">
 					  <a class="list-group-item list-group-item-action list-group-item-title">{{ 'workflow-type' | translate }}</a>
-					  <a *ngFor="let type of worlflowTypes;" [routerLink]="['/workflow/' + type.controllerPreffix + '/create']" class="list-group-item list-group-item-action link-out" >{{type.title}}</a>
+					  <a *ngFor="let type of worlflowTypes;" [routerLink]="['/workflow/create/' , type.controllerPreffix ]" class="list-group-item list-group-item-action link-out" >{{type.title}}</a>
 					</div>
 					<div class="clear"></div>
 				</div>

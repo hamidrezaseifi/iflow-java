@@ -37,12 +37,12 @@ public class InvoiceWorkflowEdo {
   @XmlElement(name = "RegisterNumber", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String      registerNumber;
 
-  @NotNull(message = "InvoceDate is not allowed to be null!")
+  @NotNull(message = "InvoiceDate is not allowed to be null!")
   @XmlJavaTypeAdapter(LocalDateEdoAdapter.class)
   @JsonFormat(pattern = IsoFormats.DATE_FORMAT_ISO)
   @XmlSchemaType(name = "dateTime")
-  @XmlElement(name = "InvoceDate", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private LocalDate   invoceDate;
+  @XmlElement(name = "invocieDate", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private LocalDate   invoiceDate;
 
   @NotNull(message = "PartnerCode is not allowed to be null!")
   @XmlElement(name = "PartnerCode", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
@@ -116,12 +116,12 @@ public class InvoiceWorkflowEdo {
     this.registerNumber = registerNumber;
   }
 
-  public LocalDate getInvoceDate() {
-    return this.invoceDate;
+  public LocalDate getInvoiceDate() {
+    return this.invoiceDate;
   }
 
-  public void setInvoceDate(final LocalDate invoceDate) {
-    this.invoceDate = invoceDate;
+  public void setInvoiceDate(final LocalDate invocieDate) {
+    this.invoiceDate = invocieDate;
   }
 
   public String getPartnerCode() {
