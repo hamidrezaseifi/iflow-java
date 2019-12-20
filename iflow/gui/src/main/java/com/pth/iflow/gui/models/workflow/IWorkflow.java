@@ -22,9 +22,9 @@ public interface IWorkflow {
 
   public void setComments(final String comments);
 
-  public Integer getVersion();
+  public int getVersion();
 
-  public void setVersion(final Integer version);
+  public void setVersion(final int version);
 
   public List<WorkflowFile> getFiles();
 
@@ -70,6 +70,20 @@ public interface IWorkflow {
 
   public String getIdentity();
 
-  public Integer getStatusInt();
+  public int getStatusInt();
+
+  public int getCurrentStepIndex();
+
+  public boolean getIsLastStep();
+
+  public boolean getCanSave();
+
+  public boolean getCanDone();
+
+  public boolean getCanArchive();
+
+  public boolean getIsDone();
+
+  public boolean getCanAssign();
 
 }

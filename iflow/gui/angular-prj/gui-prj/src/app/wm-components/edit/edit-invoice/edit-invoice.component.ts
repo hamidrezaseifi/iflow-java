@@ -26,7 +26,9 @@ import { GermanDateAdapter, parseDate, formatDate } from '../../../helper';
 export class EditInvoiceComponent implements OnInit {
 	
 	saveMessage :string = "";
-	
+
+	pageTitle :string = "not-initialized!";
+
 	workflowIdentity :string = "";
 
 	invoiceEditForm: FormGroup;
@@ -77,6 +79,49 @@ export class EditInvoiceComponent implements OnInit {
 		return ss;
 	}
 	
+	get isWorkflowDone() :boolean{
+		if(this.workflowSaveRequest.workflow){
+			return this.workflowSaveRequest.workflow.isDone;
+		}
+		return false;
+	}
+	
+	get isWorkflowInLastStep() :boolean{
+		if(this.workflowSaveRequest.workflow){
+			return this.workflowSaveRequest.workflow.isLastStep;
+		}
+		return false;		
+	}
+	
+	get canSave() :boolean{
+		if(this.workflowSaveRequest.workflow){
+			return this.workflowSaveRequest.workflow.canSave;
+		}
+		return false;
+	}
+	
+	get canDone() :boolean{
+		if(this.workflowSaveRequest.workflow){
+			return this.workflowSaveRequest.workflow.canDone;
+		}
+		return false;
+	}
+	
+	get canArchive() :boolean{
+		if(this.workflowSaveRequest.workflow){
+			return this.workflowSaveRequest.workflow.canArchive;
+		}
+		return false;
+	}
+	
+	get canAssign() :boolean{
+		if(this.workflowSaveRequest.workflow){
+			return this.workflowSaveRequest.workflow.canAssign;
+		}
+		return true;
+	}
+	
+	
 	
 	constructor(
 		    private router: Router,
@@ -90,6 +135,7 @@ export class EditInvoiceComponent implements OnInit {
 		  	private dateAdapter: DateAdapter<Date>,
 		  	private route: ActivatedRoute,
 	) {
+		
 		
 		this.router.events.subscribe((evt) => {
 			if (evt instanceof NavigationEnd) {
@@ -174,6 +220,7 @@ export class EditInvoiceComponent implements OnInit {
 					if(initialData && initialData !== null){
 						this.workflowSaveRequest = initialData.workflowSaveRequest;
 						this.setToControlValues();
+						
 					}
 					else{
 						this.workflowSaveRequest = null;
@@ -192,8 +239,30 @@ export class EditInvoiceComponent implements OnInit {
 	 	
 	}
 	
+	private setPageTitle(){
+		var pageLabelId = "invoice-assignview-title";
+		
+		if(this.workflowSaveRequest.workflow.currentStepIndex === 1){
+			pageLabelId = "invoice-assignview-title";
+		}
+		
+		if(this.workflowSaveRequest.workflow.currentStepIndex === 2){
+			pageLabelId = "invoice-testingview-title";
+		}
+		
+		if(this.workflowSaveRequest.workflow.currentStepIndex === 3){
+			pageLabelId = "invoice-releaseview-title";
+		}
+		
+        this.translate.get(pageLabelId).subscribe((res: string) => {
+        	this.pageTitle = res;
+        });
+		
+	}
+	
 	setToControlValues(){
 		if(this.workflowSaveRequest && this.workflowSaveRequest.workflow){
+			this.setPageTitle();
 			
 			this.invoiceEditForm.controls["expireDays"].setValue(this.workflowSaveRequest.expireDays);
 			
@@ -348,6 +417,45 @@ export class EditInvoiceComponent implements OnInit {
 	
 	}
 	
+	
+	archive(){
+		
+		this.setFormControlValues();
+		//return;
+		
+		this.loadingService.showLoading();
+		
+		if(this.fileTitles.length > 0){
+			this.editService.uploadFiles(this.fileTitles).subscribe(
+			        (result :WorkflowUploadFileResult) => {		        	
+			            console.log("Create workflow upload file result", result);
+			            
+			            this.workflowSaveRequest.sessionKey = result.sessionKey;			            
+			            this.archiveWorkflowData();
+			            
+			        },
+			        response => {
+			        	console.log("Error in create workflow upload file", response);
+			        	this.loadingService.hideLoading();	 
+			        	this.errorService.showErrorResponse(response);
+			        },
+			        () => {
+			        	
+			        	           
+			        }
+			    );	       	
+			
+		}
+		else{
+	        this.workflowSaveRequest.sessionKey = 'not-set';
+	        
+	        this.archiveWorkflowData();
+		}
+		
+		
+		
+	
+	}	
 	private saveWorkflowData(){
 		
         this.editService.saveWorkflow(this.workflowSaveRequest.workflow).subscribe(
@@ -377,6 +485,28 @@ export class EditInvoiceComponent implements OnInit {
 	private doneWorkflowData(){
 		
         this.editService.doneWorkflow(this.workflowSaveRequest).subscribe(
+		        (result) => {		        	
+		            console.log("Create workflow result", result);
+		            
+		            this.router.navigate([this.workflowListUrl]);
+		        },
+		        response => {
+		        	console.log("Error in create workflow", response);
+		        	
+		        	this.errorService.showErrorResponse(response);
+		        	this.loadingService.hideLoading();	 
+		        },
+		        () => {
+		        	
+		        	this.loadingService.hideLoading();	 
+		        }
+		    );	       	
+		
+	}
+	
+	private archiveWorkflowData(){
+		
+        this.editService.archiveWorkflow(this.workflowSaveRequest).subscribe(
 		        (result) => {		        	
 		            console.log("Create workflow result", result);
 		            

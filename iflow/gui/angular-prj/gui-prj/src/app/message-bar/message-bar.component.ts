@@ -136,9 +136,9 @@ export class MessageBarComponent implements OnInit {
 		this.viewWorkflow = false;
   	}
 	
-	assignWorkflowMe(workflowIdentity){
+	assignWorkflowMe(){
 		
-		this.messageService.assignMe(workflowIdentity).subscribe(
+		this.messageService.assignMe(this.viewWorkflowModel.identity).subscribe(
 		        val => {
 		        	console.log("Workflow assigned to me");
 		        	this.reloadMessages(true);
@@ -153,6 +153,14 @@ export class MessageBarComponent implements OnInit {
 		        	this.viewWorkflow = false;
 		        }
 	    	);	      
+		
+  	}
+	
+	editWorkflow(){
+		
+		this.viewWorkflow = false;
+		this.router.navigate(['/workflow/edit/' + this.viewWorkflowModel.workflowType.identity + '/' + this.viewWorkflowModel.identity]);
+		
 		
   	}
   	

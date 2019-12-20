@@ -644,23 +644,36 @@ div.notic-div, div.notic-div label, div.notic-div div
 	padding-top: 2px;
 }
 
-.invalid-request-container{
-	width: 60vw;
-    min-height: 100px;
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 10vh;
-    padding: 10px;
-	
+.step-button, .step-button:active{
+	float: right;
+    margin-left: 10px;
+    padding: 4px 15px;
+    color: #fff;
 }
 
-.button-save:not(:disbaled){
-	background-color: #4559ba !important;	
+.step-button:hover{
+    color: #ffffb7;    
 }
 
-.button-archive:not(:disbaled){
-	background-color: #689797!important;	
+.step-button.button-save{
+	background-color: #4559ba;	
+    border: outset 2px #4559ba;
+}
+
+.step-button.button-done{
+	background-color: #28a745;	
+    border: outset 2px #28a745;
+}
+
+.step-button.button-archive{
+	background-color: #17a2b8;
+    border: outset 2px #17a2b8;
+}
+
+.step-button:disabled{
+    background-color: gray;
+    color: #bdbcbc !important;
+    border: outset 2px gray;
 }
 
 .button-bar-button span{
@@ -675,6 +688,28 @@ div.notic-div, div.notic-div label, div.notic-div div
     float: right;
     padding: 2px 5px;
 }
+
+
+.file-container{
+	border:gray 1px solid; 
+	padding: 6px;
+}
+
+.file-container .file-row{
+	border:gray 1px solid; 
+	padding: 2px 2px;
+	margin: 4px 6px;
+	margin-right: 0;
+}
+
+.file-container .file-row:nth-child(even){
+	background: #dbf1fb;
+}
+
+.file-container .file-row:nth-child(odd){
+	background: #f3f3e1;
+}
+
 
 .modal-title{
 	float: left;

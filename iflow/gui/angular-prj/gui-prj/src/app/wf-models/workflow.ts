@@ -19,6 +19,13 @@ export class Workflow {
 	initializing: boolean;
 	meAssigned: boolean;
 	notAssigned: boolean;
+	currentStepIndex :number;
+	isDone :boolean;
+	isLastStep :boolean;
+	canDone :boolean;
+	canArchive :boolean;
+	canSave :boolean;
+	canAssign :boolean;
 
 
 	files: WorkflowFile[];

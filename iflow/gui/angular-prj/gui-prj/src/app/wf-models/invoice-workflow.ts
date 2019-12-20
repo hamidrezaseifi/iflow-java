@@ -5,25 +5,9 @@ import { WorkflowTypeStep } from '../wf-models';
 import { WorkflowFile } from '../wf-models';
 import { WorkflowAction } from '../wf-models';
 import { InvoiceType } from '../wf-models';
+import { Workflow } from '../wf-models';
 
-export class InvoiceWorkflow {
-	identity: string;
-	status: string;
-	workflowType: WorkflowType;
-	currentStep: WorkflowTypeStep;
-	currentStepIdentity: string;
-	controllerIdentity: string;
-	controllerUser: User;
-	comments: string;
-
-	assigned: boolean;
-	initializing: boolean;
-	meAssigned: boolean;
-	notAssigned: boolean;
-
-
-	files: WorkflowFile[];
-	actions: WorkflowAction[];
+export class InvoiceWorkflow extends Workflow {
 
 	sender: string;
 	registerNumber: string;

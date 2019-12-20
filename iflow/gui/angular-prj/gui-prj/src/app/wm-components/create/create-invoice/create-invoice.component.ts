@@ -24,6 +24,8 @@ import { GermanDateAdapter, parseDate, formatDate } from '../../../helper';
   providers: [{provide: DateAdapter, useClass: GermanDateAdapter}]
 })
 export class CreateInvoiceComponent implements OnInit {
+
+	pageTitle :string = "not-initialized!";
 	
 	invoiceEditForm: FormGroup;
 
@@ -77,7 +79,7 @@ export class CreateInvoiceComponent implements OnInit {
 	constructor(
 		    private router: Router,
 			private global: GlobalService,
-			translate: TranslateService,
+			private translate: TranslateService,
 			private editService :InvoiceWorkflowEditService,
 			private loadingService: LoadingServiceService,
 			private http: HttpClient,
@@ -166,9 +168,31 @@ export class CreateInvoiceComponent implements OnInit {
 	 	
 	}
 	
+	private setPageTitle(){
+		var pageLabelId = "invoice-assignview-title";
+		
+		if(this.workflowSaveRequest.workflow.currentStepIndex === 1){
+			pageLabelId = "invoice-assignview-title";
+		}
+		
+		if(this.workflowSaveRequest.workflow.currentStepIndex === 2){
+			pageLabelId = "invoice-testingview-title";
+		}
+		
+		if(this.workflowSaveRequest.workflow.currentStepIndex === 3){
+			pageLabelId = "invoice-releaseview-title";
+		}
+		
+        this.translate.get(pageLabelId).subscribe((res: string) => {
+        	this.pageTitle = res;
+        });
+		
+	}
+	
 	setToControlValues(){
 		if(this.workflowSaveRequest && this.workflowSaveRequest.workflow){
-			
+			this.setPageTitle();
+						
 			this.invoiceEditForm.controls["expireDays"].setValue(this.workflowSaveRequest.expireDays);
 			
 			this.invoiceEditForm.controls["controllerIdentity"].setValue(this.workflowSaveRequest.workflow.controllerIdentity);

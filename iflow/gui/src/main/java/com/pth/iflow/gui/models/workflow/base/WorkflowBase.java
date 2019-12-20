@@ -28,7 +28,7 @@ public class WorkflowBase extends IdentityModel implements IWorkflow {
   private User                       createdByUser;
   private String                     comments;
   private EWorkflowStatus            status;
-  private Integer                    version;
+  private int                        version;
   private String                     currentUserIdentity;
 
   private final List<WorkflowFile>   files   = new ArrayList<>();
@@ -166,26 +166,26 @@ public class WorkflowBase extends IdentityModel implements IWorkflow {
     this.status = status;
   }
 
-  public void setStatus(final Integer status) {
+  public void setStatus(final int status) {
     this.status = EWorkflowStatus.ofValue(status);
   }
 
-  public void setStatusInt(final Integer status) {
+  public void setStatusInt(final int status) {
     this.status = EWorkflowStatus.ofValue(status);
   }
 
   @Override
-  public Integer getStatusInt() {
+  public int getStatusInt() {
     return this.status.getValue().intValue();
   }
 
   @Override
-  public Integer getVersion() {
+  public int getVersion() {
     return this.version;
   }
 
   @Override
-  public void setVersion(final Integer version) {
+  public void setVersion(final int version) {
     this.version = version;
   }
 
@@ -321,6 +321,7 @@ public class WorkflowBase extends IdentityModel implements IWorkflow {
     return null;
   }
 
+  @Override
   public boolean getIsDone() {
     return this.status == EWorkflowStatus.DONE;
   }
@@ -342,6 +343,60 @@ public class WorkflowBase extends IdentityModel implements IWorkflow {
       return this.getActiveAction().getAssignToUserName();
     }
     return "";
+  }
+
+  @Override
+  public int getCurrentStepIndex() {
+
+    if (this.currentStep != null) {
+      return this.currentStep.getStepIndex();
+    }
+
+    if (this.getHasActiveAction()) {
+      return this.getActiveAction().getCurrentStep().getStepIndex();
+    }
+
+    if (this.workflowType != null) {
+      return this.workflowType.getSteps().get(0).getStepIndex();
+    }
+
+    return 0;
+  }
+
+  @Override
+  public boolean getIsLastStep() {
+    if (this.workflowType != null) {
+      return this.getLastStep().getStepIndex() == this.getCurrentStepIndex();
+    }
+    return false;
+  }
+
+  private WorkflowTypeStep getLastStep() {
+    if (this.workflowType != null) {
+      return this.workflowType.getSteps().get(this.workflowType.getSteps().size() - 1);
+    }
+    return null;
+  }
+
+  @Override
+  public boolean getCanSave() {
+
+    return this.getIsLastStep() == false || this.getIsDone() == false;
+  }
+
+  @Override
+  public boolean getCanDone() {
+    return this.getIsDone() == false;
+  }
+
+  @Override
+  public boolean getCanArchive() {
+    return this.getIsLastStep() && this.getIsDone() && this.getIsArchived() == false;
+  }
+
+  @Override
+  public boolean getCanAssign() {
+    return this.getIsLastStep() == false;
   }
 
 }

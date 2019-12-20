@@ -145,4 +145,12 @@ export class InvoiceWorkflowEditService {
 
 	}	
 	
+	archiveWorkflow(workflowSaveRequest :InvoiceWorkflowSaveRequest){
+    	
+        const httpOptions = { headers: HttpHepler.generateJsonHeader() };
+        
+        return this.http.post(this.getArchiveWorkflowUrl() , workflowSaveRequest, httpOptions);	       	
+
+	}	
+	
 }
