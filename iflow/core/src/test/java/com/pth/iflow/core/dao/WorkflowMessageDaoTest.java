@@ -59,6 +59,8 @@ public class WorkflowMessageDaoTest extends TestDataProducer {
     if (createdWorkflow != null) {
       workflowDao.deleteById(createdWorkflow.getId());
     }
+
+    // workflowDao.destroy();
   }
 
   @Test

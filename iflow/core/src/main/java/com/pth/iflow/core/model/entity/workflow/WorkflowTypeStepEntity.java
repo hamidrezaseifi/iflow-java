@@ -5,12 +5,17 @@ import java.sql.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.pth.iflow.core.storage.dao.helper.EntityIdentityHelper;
@@ -24,42 +29,47 @@ public class WorkflowTypeStepEntity extends EntityIdentityHelper {
   @Id
   @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long    id;
+  private Long               id;
 
   @Column(name = "identity")
-  private String  identity;
+  private String             identity;
 
   @Column(name = "workflow_type_id")
-  private Long    workflowTypeId;
+  private Long               workflowTypeId;
 
   @Column(name = "title")
-  private String  title;
+  private String             title;
 
   @Column(name = "step_index")
-  private Integer stepIndex;
+  private Integer            stepIndex;
 
   @Column(name = "view_name")
-  private String  viewName;
+  private String             viewName;
 
   @Column(name = "expire_days")
-  private Integer expireDays;
+  private Integer            expireDays;
 
   @Column(name = "commecnts")
-  private String  comments;
+  private String             comments;
 
   @Column(name = "status")
-  private Integer status;
+  private Integer            status;
 
   @Column(name = "version")
-  private Integer version;
+  private Integer            version;
 
   @CreationTimestamp
   @Column(name = "created_at")
-  private Date    createdAt;
+  private Date               createdAt;
 
   @UpdateTimestamp
   @Column(name = "updated_at")
-  private Date    updatedAt;
+  private Date               updatedAt;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "workflow_type_id", insertable = false, updatable = false)
+  @Fetch(FetchMode.JOIN)
+  private WorkflowTypeEntity workflowType;
 
   public WorkflowTypeStepEntity() {
 

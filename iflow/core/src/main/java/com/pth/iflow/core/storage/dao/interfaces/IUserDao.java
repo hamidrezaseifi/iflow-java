@@ -1,7 +1,7 @@
 package com.pth.iflow.core.storage.dao.interfaces;
 
+import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
@@ -18,7 +18,7 @@ public interface IUserDao {
 
   public UserEntity getByIdentity(final String email) throws IFlowStorageException;
 
-  public List<UserEntity> getListByIdentityList(Set<String> idList) throws IFlowStorageException;
+  public List<UserEntity> getListByIdentityList(Collection<String> idList) throws IFlowStorageException;
 
   public List<UserEntity> getListByCompanyIdentity(String identity) throws IFlowStorageException;
 

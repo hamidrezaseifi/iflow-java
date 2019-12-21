@@ -3,10 +3,7 @@ package com.pth.iflow.core.storage.dao.impl;
 import java.util.List;
 import java.util.Set;
 
-import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceUnit;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -21,20 +18,11 @@ import com.pth.iflow.common.enums.EWorkflowActionStatus;
 import com.pth.iflow.core.model.WorkflowSearchFilter;
 import com.pth.iflow.core.model.entity.workflow.WorkflowActionEntity;
 import com.pth.iflow.core.model.entity.workflow.WorkflowEntity;
+import com.pth.iflow.core.storage.dao.impl.base.EntityManagerHelper;
 import com.pth.iflow.core.storage.dao.interfaces.IWorkflowSearchDao;
 
 @Repository
-public class WorkflowSearchDao implements IWorkflowSearchDao {
-
-  private EntityManager        entityManager = null;
-
-  @PersistenceUnit(unitName = "default")
-  private EntityManagerFactory entityManagerFactory;
-
-  @PostConstruct
-  public void init() {
-    this.entityManager = this.entityManagerFactory.createEntityManager();
-  }
+public class WorkflowSearchDao extends EntityManagerHelper implements IWorkflowSearchDao {
 
   public WorkflowSearchDao() {
 
@@ -42,6 +30,8 @@ public class WorkflowSearchDao implements IWorkflowSearchDao {
 
   @Override
   public List<WorkflowEntity> search(final WorkflowSearchFilter workflowSearchFilter) {
+    final EntityManager                 entityManager   = dbConfiguration.getEntityManager();
+
     final CriteriaBuilder               criteriaBuilder = entityManager.getCriteriaBuilder();
     final CriteriaQuery<WorkflowEntity> query           = criteriaBuilder.createQuery(WorkflowEntity.class);
     final Root<WorkflowEntity>          root            = query.from(WorkflowEntity.class);
@@ -100,11 +90,14 @@ public class WorkflowSearchDao implements IWorkflowSearchDao {
 
     // final String qr = typedQuery.unwrap(org.hibernate.query.Query.class).getQueryString();
     // System.out.println("search workflow query: " + qr);
-    return typedQuery.getResultList();
+    final List<WorkflowEntity>       list       = typedQuery.getResultList();
+    entityManager.close();
+    return list;
   }
 
   @Override
   public List<WorkflowEntity> readByIdentityList(final Set<String> identityList) {
+    final EntityManager                 entityManager   = dbConfiguration.getEntityManager();
 
     final CriteriaBuilder               criteriaBuilder = entityManager.getCriteriaBuilder();
     final CriteriaQuery<WorkflowEntity> query           = criteriaBuilder.createQuery(WorkflowEntity.class);
@@ -115,7 +108,9 @@ public class WorkflowSearchDao implements IWorkflowSearchDao {
 
     final TypedQuery<WorkflowEntity> typedQuery = entityManager.createQuery(query);
 
-    return typedQuery.getResultList();
+    final List<WorkflowEntity>       list       = typedQuery.getResultList();
+    entityManager.close();
+    return list;
   }
 
 }

@@ -70,6 +70,10 @@ public class UserDaoTest extends TestDataProducer {
     for (final UserEntity model : createdModels) {
       userDao.deleteById(model.getId());
     }
+
+    // userDao.destroy();
+    // userGroupDao.destroy();
+    // iflowRoleDao.destroy();
   }
 
   @Test

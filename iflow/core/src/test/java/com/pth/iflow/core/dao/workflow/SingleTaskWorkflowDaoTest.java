@@ -1,9 +1,11 @@
 package com.pth.iflow.core.dao.workflow;
 
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.entity.workflow.SingleTaskWorkflowEntity;
 import com.pth.iflow.core.storage.dao.interfaces.workflow.ISingleTaskWorkflowDao;
@@ -23,7 +26,7 @@ import com.pth.iflow.core.storage.dao.interfaces.workflow.ISingleTaskWorkflowDao
 public class SingleTaskWorkflowDaoTest extends TestDataProducer {
 
   @Autowired
-  private ISingleTaskWorkflowDao workflowDao;
+  private ISingleTaskWorkflowDao               workflowDao;
 
   private final List<SingleTaskWorkflowEntity> createdModels = new ArrayList<>();
 
@@ -38,6 +41,8 @@ public class SingleTaskWorkflowDaoTest extends TestDataProducer {
     for (final SingleTaskWorkflowEntity workflow : createdModels) {
       workflowDao.deleteById(workflow.getWorkflowId());
     }
+
+    // workflowDao.destroy();
   }
 
   @Test
@@ -45,7 +50,7 @@ public class SingleTaskWorkflowDaoTest extends TestDataProducer {
 
     createWorlflowList();
 
-    final SingleTaskWorkflowEntity workflow = createdModels.get(0);
+    final SingleTaskWorkflowEntity workflow    = createdModels.get(0);
 
     final SingleTaskWorkflowEntity resWorkflow = this.workflowDao.getById(createdModels.get(0).getWorkflowId());
 
@@ -60,9 +65,10 @@ public class SingleTaskWorkflowDaoTest extends TestDataProducer {
 
     createWorlflowList();
 
-    final List<String> identityList = createdModels.stream().map(w -> w.getWorkflow().getIdentity()).collect(Collectors.toList());
+    final List<String>                   identityList = createdModels.stream().map(w -> w.getWorkflow().getIdentity())
+        .collect(Collectors.toList());
 
-    final List<SingleTaskWorkflowEntity> resList = this.workflowDao.getListByIdentityList(identityList);
+    final List<SingleTaskWorkflowEntity> resList      = this.workflowDao.getListByIdentityList(identityList);
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + createdModels.size() + " items.", resList.size(), createdModels.size());
@@ -80,9 +86,8 @@ public class SingleTaskWorkflowDaoTest extends TestDataProducer {
 
     Assert.assertNotNull("Result workflow is not null!", resWorkflow);
     Assert.assertEquals("Result workflow has status 1!", resWorkflow.getWorkflow().getStatus(), workflow.getWorkflow().getStatus());
-    Assert.assertEquals("Result workflow has version " + workflow.getWorkflow().getVersion() + "!",
-                        resWorkflow.getWorkflow().getVersion(),
-                        workflow.getWorkflow().getVersion());
+    Assert.assertEquals("Result workflow has version " + workflow.getWorkflow().getVersion() + "!", resWorkflow.getWorkflow().getVersion(),
+        workflow.getWorkflow().getVersion());
 
   }
 
@@ -103,9 +108,8 @@ public class SingleTaskWorkflowDaoTest extends TestDataProducer {
     final SingleTaskWorkflowEntity updatedWorkflow = workflowDao.update(createdWorkflow);
 
     Assert.assertNotNull("Result workflow is not null!", updatedWorkflow);
-    Assert.assertEquals("Result workflow has the same id as created!",
-                        createdWorkflow.getWorkflow().getId(),
-                        updatedWorkflow.getWorkflow().getId());
+    Assert.assertEquals("Result workflow has the same id as created!", createdWorkflow.getWorkflow().getId(),
+        updatedWorkflow.getWorkflow().getId());
     Assert.assertEquals("Result workflow has status 10!", updatedWorkflow.getWorkflow().getStatus().intValue(), 10);
     Assert.assertEquals("Result workflow has version 22!", updatedWorkflow.getWorkflow().getVersion().intValue(), 23);
 
@@ -144,7 +148,7 @@ public class SingleTaskWorkflowDaoTest extends TestDataProducer {
     for (int i = 1; i <= 3; i++) {
       final SingleTaskWorkflowEntity workflow = getTestSingleTaskWorkflowEntityForSave();
 
-      final SingleTaskWorkflowEntity res = saveWorkflow(workflow);
+      final SingleTaskWorkflowEntity res      = saveWorkflow(workflow);
 
       createdModels.add(res);
     }

@@ -21,4 +21,5 @@ public interface ISingleTaskWorkflowDao {
   List<SingleTaskWorkflowEntity> getListForUserIdentity(final String userIdentity, final int status) throws IFlowStorageException;
 
   List<SingleTaskWorkflowEntity> getListByIdentityList(Collection<String> idList);
+
 }

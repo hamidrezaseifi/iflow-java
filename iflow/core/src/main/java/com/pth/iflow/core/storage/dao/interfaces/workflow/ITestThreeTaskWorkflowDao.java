@@ -21,4 +21,5 @@ public interface ITestThreeTaskWorkflowDao {
   List<TestThreeTaskWorkflowEntity> getListForUserIdentity(final String userIdentity, final int status) throws IFlowStorageException;
 
   List<TestThreeTaskWorkflowEntity> getListByIdentityList(Collection<String> idList);
+
 }

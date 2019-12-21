@@ -1,10 +1,12 @@
 package com.pth.iflow.core.dao.workflow;
 
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -14,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.entity.workflow.WorkflowEntity;
 import com.pth.iflow.core.service.interfaces.workflow.IWorkflowService;
@@ -25,10 +28,10 @@ import com.pth.iflow.core.storage.dao.interfaces.workflow.IWorkflowDao;
 public class WorkflowDaoTest extends TestDataProducer {
 
   @Autowired
-  private IWorkflowDao workflowDao;
+  private IWorkflowDao               workflowDao;
 
   @Autowired
-  private IWorkflowService workflowService;
+  private IWorkflowService           workflowService;
 
   private final List<WorkflowEntity> createdModels = new ArrayList<>();
 
@@ -43,6 +46,8 @@ public class WorkflowDaoTest extends TestDataProducer {
     for (final WorkflowEntity workflow : createdModels) {
       workflowDao.deleteById(workflow.getId());
     }
+
+    // workflowDao.destroy();
   }
 
   @Test
@@ -50,7 +55,7 @@ public class WorkflowDaoTest extends TestDataProducer {
 
     createWorlflowList();
 
-    final WorkflowEntity workflow = createdModels.get(0);
+    final WorkflowEntity workflow    = createdModels.get(0);
 
     final WorkflowEntity resWorkflow = this.workflowDao.getById(workflow.getId());
 
@@ -65,7 +70,7 @@ public class WorkflowDaoTest extends TestDataProducer {
 
     createWorlflowList();
 
-    final WorkflowEntity workflow = createdModels.get(0);
+    final WorkflowEntity workflow    = createdModels.get(0);
 
     final WorkflowEntity resWorkflow = this.workflowDao.getByIdentity(workflow.getIdentity());
 
@@ -80,9 +85,9 @@ public class WorkflowDaoTest extends TestDataProducer {
 
     createWorlflowList();
 
-    final Set<String> identityList = createdModels.stream().map(w -> w.getIdentity()).collect(Collectors.toSet());
+    final Set<String>          identityList = createdModels.stream().map(w -> w.getIdentity()).collect(Collectors.toSet());
 
-    final List<WorkflowEntity> resList = this.workflowDao.getListByIdentityList(identityList);
+    final List<WorkflowEntity> resList      = this.workflowDao.getListByIdentityList(identityList);
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + createdModels.size() + " items.", resList.size(), createdModels.size());
@@ -161,7 +166,7 @@ public class WorkflowDaoTest extends TestDataProducer {
     for (int i = 1; i <= 3; i++) {
       final WorkflowEntity workflow = getTestNewWorkflowForSave();
 
-      final WorkflowEntity res = saveWorkflow(workflow);
+      final WorkflowEntity res      = saveWorkflow(workflow);
 
       createdModels.add(res);
     }

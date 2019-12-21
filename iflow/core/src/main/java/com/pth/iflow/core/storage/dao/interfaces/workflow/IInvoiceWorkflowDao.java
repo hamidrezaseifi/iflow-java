@@ -21,4 +21,5 @@ public interface IInvoiceWorkflowDao {
   List<InvoiceWorkflowEntity> getListForUserIdentity(final String userIdentity, final int status) throws IFlowStorageException;
 
   List<InvoiceWorkflowEntity> getListByIdentityList(Collection<String> idList);
+
 }
