@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
-import {TranslateService} from '@ngx-translate/core';
+import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { HttpClient, HttpEventType } from '@angular/common/http';
+import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { DateAdapter } from '@angular/material';
 
 import { GlobalService } from '../../../services/global.service';
 import { TestthreetaskWorkflowEditService } from '../../../services/workflow/testthreetask/testthreetask-workflow-edit.service';
@@ -12,25 +14,31 @@ import { User, Department, DepartmentGroup, GeneralData } from '../../../ui-mode
 import { WorkflowProcessCommand, Workflow, AssignItem, FileTitle, AssignType, WorkflowUploadFileResult } from '../../../wf-models';
 import { WorkflowSaveRequest } from '../../../wf-models/workflow-save-request';
 import { WorkflowSaveRequestInit } from '../../../wf-models/workflow-save-request-init';
-
+import { GermanDateAdapter, parseDate, formatDate } from '../../../helper';
 
 @Component({
-  selector: 'app-create-testthreetask',
-  templateUrl: './create-testthreetask.component.html',
-  styleUrls: ['./create-testthreetask.component.css']
+  selector: 'app-edit-testthree-task',
+  templateUrl: './edit-testthree-task.component.html',
+  styleUrls: ['./edit-testthree-task.component.css'],
+  providers: [{provide: DateAdapter, useClass: GermanDateAdapter}]
 })
-export class CreateTestthreetaskComponent implements OnInit {
+export class EditTestthreeTaskComponent implements OnInit {
 
+	saveMessage :string = "";
+
+	workflowIdentity :string = "";
+	
+	workflowEditForm: FormGroup;
+	
 	workflowListUrl :string = "/workflow/list";
-
-	workflowSaveRequest :WorkflowSaveRequest = null;
+	
+	workflowSaveRequest :WorkflowSaveRequest = new WorkflowSaveRequest();
+	
 	users : User[] = [];
 	departments : Department[] = [];
 	
 	fileTitles : FileTitle[] = [];
-	
-	showDebug : boolean = false;
-	
+		
 	showAssignModal :boolean = false;
 	
 	selectAssign : boolean[][] = [];
@@ -50,31 +58,7 @@ export class CreateTestthreetaskComponent implements OnInit {
 	    //this.preview();
 	}
 	
-	get expireDays() : number{
-		if(this.workflowSaveRequest != null){
-			return this.workflowSaveRequest.expireDays;
-		}
-		return 0;
-	}
-	set expireDays(days: number){
-		if(this.workflowSaveRequest != null){
-			this.workflowSaveRequest.expireDays = days;
-		}
-		
-	}
 	
-	get controllerIdentity() : string{
-		if(this.workflowSaveRequest != null && this.workflowSaveRequest.workflow != null){
-			return this.workflowSaveRequest.workflow.controllerIdentity;
-		}
-		return "";
-	}
-	set controllerIdentity(value: string){
-		if(this.workflowSaveRequest != null && this.workflowSaveRequest.workflow != null){
-			this.workflowSaveRequest.workflow.controllerIdentity = value;
-		}
-		
-	}
 	
 	get assignedUsers() : AssignItem[]{
 		if(this.workflowSaveRequest != null){
@@ -83,59 +67,107 @@ export class CreateTestthreetaskComponent implements OnInit {
 		return [];
 	}
 	
-	get comments() : string{
-		if(this.workflowSaveRequest != null && this.workflowSaveRequest.workflow != null){
-			return this.workflowSaveRequest.workflow.comments;
-		}
-		return "";
-	}
-	set comments(value: string){
-		if(this.workflowSaveRequest != null && this.workflowSaveRequest.workflow != null){
-			this.workflowSaveRequest.workflow.comments = value;
-		}
-		
-	}
-	
 	
 	get debugData() :string{
-		var ssignstr : string =  (this.workflowSaveRequest && this.workflowSaveRequest.assigns) ? JSON.stringify(this.workflowSaveRequest.assigns) : '--';
-		return ssignstr + "<hr>" + JSON.stringify(this.selectAssign);
+		var ss = formatDate(new Date(), 'dd.mm.yyyy');
+		ss += " -- " + parseDate(ss, 'dd.mm.yyyy');
+		return ss;
 	}
+	
+	get isWorkflowDone() :boolean{
+		if(this.workflowSaveRequest.workflow){
+			return this.workflowSaveRequest.workflow.isDone;
+		}
+		return false;
+	}
+	
+	get isWorkflowInLastStep() :boolean{
+		if(this.workflowSaveRequest.workflow){
+			return this.workflowSaveRequest.workflow.isLastStep;
+		}
+		return false;		
+	}
+	
+	get canSave() :boolean{
+		if(this.workflowSaveRequest.workflow){
+			return this.workflowSaveRequest.workflow.canSave;
+		}
+		return false;
+	}
+	
+	get canDone() :boolean{
+		if(this.workflowSaveRequest.workflow){
+			return this.workflowSaveRequest.workflow.canDone;
+		}
+		return false;
+	}
+	
+	get canArchive() :boolean{
+		if(this.workflowSaveRequest.workflow){
+			return this.workflowSaveRequest.workflow.canArchive;
+		}
+		return false;
+	}
+	
+	get canAssign() :boolean{
+		if(this.workflowSaveRequest.workflow){
+			return this.workflowSaveRequest.workflow.canAssign;
+		}
+		return true;
+	}
+	
 	
 	
 	constructor(
 		    private router: Router,
 			private global: GlobalService,
-			translate: TranslateService,
+			private translate: TranslateService,
 			private editService :TestthreetaskWorkflowEditService,
 			private loadingService: LoadingServiceService,
 			private http: HttpClient,
 			private errorService: ErrorServiceService,
+		  	private formBuilder: FormBuilder,
+		  	private dateAdapter: DateAdapter<Date>,
+		  	private route: ActivatedRoute,
 	) {
+		
 		
 		this.router.events.subscribe((evt) => {
 			if (evt instanceof NavigationEnd) {
-		    	this.loadInitialData();
+				this.workflowIdentity = this.route.snapshot.params['identity'];
+				this.loadInitialData();
 			}
 		});
+		
+		this.dateAdapter.setLocale('de');
+		
 	}
 	
 	ngOnInit() {
+	
+		this.workflowEditForm = this.formBuilder.group({
+			expireDays: [10, Validators.required],
+	
+			controllerIdentity: ['', Validators.required],
+			comments: [''],
+			
+	    });
+	
+		
+	}
+	
+	reload() {
 		
 		this.loadInitialData();
 	
 	}
 	
 	private loadInitialData(){
-	 	if(this.editService.workflowSaveRequestInit !== null){
-	 		this.workflowSaveRequest = this.editService.workflowSaveRequestInit.workflowSaveRequest;
-	 		
-	 	}
-	 	else{
-	 		this.subscribeToSearchInitialData();
-	 		this.editService.loadCreateInitialData();
-	 	}
-	
+		
+		if(this.workflowIdentity == ''){
+			return;
+		}
+		
 	 	if(this.global.loadedGeneralData !== null){
 	 		this.users = this.global.loadedGeneralData.company.users;
 	 		this.departments = this.global.loadedGeneralData.company.departments;
@@ -144,25 +176,59 @@ export class CreateTestthreetaskComponent implements OnInit {
 	 		this.subscribeToGeneralData();
 	 		this.global.loadAllSetting(null);
 	 	}
+	
+	 	
+		this.loadingService.showLoading();	     
+			this.editService.loadEditInitialData(this.workflowIdentity).subscribe(
+		        (initialData :WorkflowSaveRequestInit) => {
+		        	
+					console.log("set inital-data from workflow-edit. : ", initialData);
+					//alert("from app-comp: \n" + JSON.stringify(data));
+			 		
+					if(initialData && initialData !== null){
+						this.workflowSaveRequest = initialData.workflowSaveRequest;
+						this.setToControlValues();
+						
+					}
+					else{
+						this.workflowSaveRequest = null;
+					}
+		            
+		        },
+		        response => {
+		        	console.log("Error in read edit inital data", response);
+		        	this.errorService.showErrorResponse(response);
+		        },
+		        () => {
+		        	
+		        	this.loadingService.hideLoading();	            
+		        }
+		    );	       	
 	 	
 	}
 	
-	private subscribeToSearchInitialData(){
-		this.editService.workflowSaveRequestInitSubject.subscribe((data : WorkflowSaveRequestInit) => {
-	    	
-			console.log("set gloabl-data from workflow-create. : ", data);
-			//alert("from app-comp: \n" + JSON.stringify(data));
-	 		
-			if(data && data !== null){
-				this.workflowSaveRequest = data.workflowSaveRequest;
-				
-			}
-			else{
-				this.workflowSaveRequest = null;
-			}
-		  });
+	setToControlValues(){
+		if(this.workflowSaveRequest && this.workflowSaveRequest.workflow){
+			
+			this.workflowEditForm.controls["expireDays"].setValue(this.workflowSaveRequest.expireDays);
+			
+			this.workflowEditForm.controls["controllerIdentity"].setValue(this.workflowSaveRequest.workflow.controllerIdentity);
+			this.workflowEditForm.controls["comments"].setValue(this.workflowSaveRequest.workflow.comments);
+									
+		}
 	}
 	
+	setFormControlValues(){
+		
+		this.workflowSaveRequest.expireDays = this.workflowEditForm.controls["expireDays"].value;
+		
+		this.workflowSaveRequest.workflow.controllerIdentity = this.workflowEditForm.controls["controllerIdentity"].value; 
+		this.workflowSaveRequest.workflow.comments = this.workflowEditForm.controls["comments"].value; 
+	}
+	
+	  
+	get forms() { return this.workflowEditForm.controls; }
+		
 	private subscribeToGeneralData(){
 		this.global.currentSessionDataSubject.subscribe((data : GeneralData) => {
 	    	
@@ -219,7 +285,10 @@ export class CreateTestthreetaskComponent implements OnInit {
 		this.fileTitles.push(ft);
 	}
 	
-	save(){
+	save(makeDone :boolean){
+		
+		this.setFormControlValues();
+		//return;
 		
 		this.loadingService.showLoading();
 		
@@ -230,7 +299,13 @@ export class CreateTestthreetaskComponent implements OnInit {
 			            
 			            this.workflowSaveRequest.sessionKey = result.sessionKey;
 			            
-			            this.createWorkflowData();
+			            if(makeDone){
+			            	this.doneWorkflowData();
+			            }
+			            else{
+			            	this.saveWorkflowData();
+			            }
+			                  	
 			            
 			        },
 			        response => {
@@ -248,14 +323,106 @@ export class CreateTestthreetaskComponent implements OnInit {
 		else{
 	        this.workflowSaveRequest.sessionKey = 'not-set';
 	        
-            this.createWorkflowData();
-	
+	        if(makeDone){
+	        	this.doneWorkflowData();
+	        }
+	        else{
+	        	this.saveWorkflowData();
+	        }
 		}
 	
 	}
 	
-	private createWorkflowData(){
-        this.editService.createWorkflow(this.workflowSaveRequest).subscribe(
+	
+	archive(){
+		
+		this.setFormControlValues();
+		//return;
+		
+		this.loadingService.showLoading();
+		
+		if(this.fileTitles.length > 0){
+			this.editService.uploadFiles(this.fileTitles).subscribe(
+			        (result :WorkflowUploadFileResult) => {		        	
+			            console.log("Create workflow upload file result", result);
+			            
+			            this.workflowSaveRequest.sessionKey = result.sessionKey;			            
+			            this.archiveWorkflowData();
+			            
+			        },
+			        response => {
+			        	console.log("Error in create workflow upload file", response);
+			        	this.loadingService.hideLoading();	 
+			        	this.errorService.showErrorResponse(response);
+			        },
+			        () => {
+			        	
+			        	           
+			        }
+			    );	       	
+			
+		}
+		else{
+	        this.workflowSaveRequest.sessionKey = 'not-set';
+	        
+	        this.archiveWorkflowData();
+		}
+		
+		
+		
+	
+	}	
+	private saveWorkflowData(){
+		
+	    this.editService.saveWorkflow(this.workflowSaveRequest.workflow).subscribe(
+		        (result) => {		        	
+		            console.log("Create workflow result", result);
+		            
+		            this.translate.get('common.saved').subscribe((res: string) => {
+		            	this.saveMessage = res;
+		            });
+		            
+		            
+		        },
+		        response => {
+		        	console.log("Error in create workflow", response);
+		        	
+		        	this.errorService.showErrorResponse(response);
+		        	this.loadingService.hideLoading();	 
+		        },
+		        () => {
+		        	
+		        	this.loadingService.hideLoading();	 
+		        }
+		    );	       	
+		
+	}
+	
+	private doneWorkflowData(){
+		
+	    this.editService.doneWorkflow(this.workflowSaveRequest).subscribe(
+		        (result) => {		        	
+		            console.log("Create workflow result", result);
+		            
+		            this.router.navigate([this.workflowListUrl]);
+		        },
+		        response => {
+		        	console.log("Error in create workflow", response);
+		        	
+		        	this.errorService.showErrorResponse(response);
+		        	this.loadingService.hideLoading();	 
+		        },
+		        () => {
+		        	
+		        	this.loadingService.hideLoading();	 
+		        }
+		    );	       	
+		
+	}
+	
+	private archiveWorkflowData(){
+		
+	    this.editService.archiveWorkflow(this.workflowSaveRequest.workflow).subscribe(
 		        (result) => {		        	
 		            console.log("Create workflow result", result);
 		            
@@ -370,6 +537,5 @@ export class CreateTestthreetaskComponent implements OnInit {
 		}
 		
 	}
-	
 
 }

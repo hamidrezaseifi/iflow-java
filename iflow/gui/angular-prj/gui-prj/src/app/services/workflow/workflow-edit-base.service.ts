@@ -33,6 +33,23 @@ export class WorkflowEditBaseService {
 	}
 	
 	
+	getSaveWorkflowUrl() :string{
+		return "";
+	}
+	
+	getDoneWorkflowUrl() :string{
+		return "";
+	}
+	
+	getArchiveWorkflowUrl() :string{
+		return "";
+	}
+	
+	
+	getInitEditUrl(identity :string) :string{
+		return "";
+	}
+
 	//userAssignType = /*[[${UserAssign}]]*/ '';
 	//departmentAssignType = /*[[${DepartmentAssign}]]*/ '';
 	//departmentGroupAssignType = /*[[${DepartmentGroupAssign}]]*/ '';
@@ -73,6 +90,14 @@ export class WorkflowEditBaseService {
 
 	}
 	
+	loadEditInitialData(identity: string){
+    	
+        const httpOptions = { headers: HttpHepler.generateFormHeader() };
+        
+        return this.http.post(this.getInitEditUrl(identity), new HttpParams(), httpOptions);	       	
+
+	}
+
 	uploadFiles(fileTitles : FileTitle[]){
 		
 	    const formData = new FormData();
@@ -89,12 +114,37 @@ export class WorkflowEditBaseService {
 		
 	}
 	
-	
-	saveWorkflow(workflowSaveRequest :WorkflowSaveRequest){
+	createWorkflow(workflowSaveRequest :WorkflowSaveRequest){
     	
         const httpOptions = { headers: HttpHepler.generateJsonHeader() };
         
         return this.http.post(this.getCreateWorkflowUrl() , workflowSaveRequest, httpOptions);	       	
 
 	}
+	
+	
+	saveWorkflow(workflow :Workflow){
+    	
+        const httpOptions = { headers: HttpHepler.generateJsonHeader() };
+        
+        return this.http.post(this.getSaveWorkflowUrl() , workflow, httpOptions);	       	
+
+	}	
+	
+	doneWorkflow(workflowSaveRequest :WorkflowSaveRequest){
+    	
+        const httpOptions = { headers: HttpHepler.generateJsonHeader() };
+        
+        return this.http.post(this.getDoneWorkflowUrl() , workflowSaveRequest, httpOptions);	       	
+
+	}	
+	
+	archiveWorkflow(workflowSaveRequest :Workflow){
+    	
+        const httpOptions = { headers: HttpHepler.generateJsonHeader() };
+        
+        return this.http.post(this.getArchiveWorkflowUrl() , workflowSaveRequest, httpOptions);	       	
+
+	}	
+	
 }

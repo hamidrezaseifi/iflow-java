@@ -67,7 +67,8 @@ public class WorkflowSearchDao implements IWorkflowSearchDao {
 
       final Predicate                  assignInPredicate       = assignPath.in(workflowSearchFilter.getAssignedUserIdentitySet());
       final Predicate                  workflowIdPredicate     = criteriaBuilder.equal(workflowIdPath, root.get("id"));
-      final Predicate                  actionIsActivePredicate = actionStatusPath.in(EWorkflowActionStatus.OPEN.getValue());
+      final Predicate                  actionIsActivePredicate = actionStatusPath.in(EWorkflowActionStatus.OPEN.getValue(),
+          EWorkflowActionStatus.INITIALIZE.getValue());
 
       assignSubQuery.select(workflowIdPath)
           .where(criteriaBuilder.and(assignInPredicate, criteriaBuilder.and(actionIsActivePredicate, workflowIdPredicate)));

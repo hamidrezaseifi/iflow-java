@@ -22,10 +22,6 @@ export class SingleTaskWorkflowEditService extends WorkflowEditBaseService {
 	public workflowSaveRequestInitSubject: BehaviorSubject<WorkflowSaveRequestInit> = new BehaviorSubject<WorkflowSaveRequestInit>(null);
 
 	workflowSaveRequestInit :WorkflowSaveRequestInit = null;
-
-	//initCreateUrl :string = "/workflow/singletask/data/initcreate";
-	//createWorkflowUrl :string = "/workflow/singletask/data/create";
-	//uploadFileUrl :string = "/workflow/singletask/data/createfile";
 	
 	getInitCreateUrl() :string{
 		return "/workflow/singletask/data/initcreate";
@@ -39,10 +35,22 @@ export class SingleTaskWorkflowEditService extends WorkflowEditBaseService {
 		return "/workflow/singletask/data/createfile";
 	}
 	
-	//userAssignType = /*[[${UserAssign}]]*/ '';
-	//departmentAssignType = /*[[${DepartmentAssign}]]*/ '';
-	//departmentGroupAssignType = /*[[${DepartmentGroupAssign}]]*/ '';
+	getSaveWorkflowUrl() :string{
+		return "/workflow/singletask/data/save";
+	}
 	
+	getDoneWorkflowUrl() :string{
+		return "/workflow/singletask/data/done";
+	}
+	
+	getArchiveWorkflowUrl() :string{
+		return "/workflow/singletask/data/archive";
+	}
+	
+	getInitEditUrl(identity :string) :string{
+		return "/workflow/singletask/data/initedit/" + identity;
+	}
+		
 	constructor(
 			protected http: HttpClient,
 			protected loadingService: LoadingServiceService,

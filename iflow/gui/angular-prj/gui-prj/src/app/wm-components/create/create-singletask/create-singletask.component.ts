@@ -229,23 +229,7 @@ export class CreateSingletaskComponent implements OnInit {
 			            
 			            this.workflowSaveRequest.sessionKey = result.sessionKey;
 			            
-			            this.editService.saveWorkflow(this.workflowSaveRequest).subscribe(
-			    		        (result) => {		        	
-			    		            console.log("Create workflow result", result);
-			    		            
-			    		            this.router.navigate([this.workflowListUrl]);
-			    		        },
-			    		        response => {
-			    		        	console.log("Error in create workflow", response);
-			    		        	
-			    		        	this.errorService.showErrorResponse(response);
-			    		        	this.loadingService.hideLoading();	 
-			    		        },
-			    		        () => {
-			    		        	
-			    		        	this.loadingService.hideLoading();	 
-			    		        }
-			    		    );	       	
+			            this.createWorkflowData();       	
 			            
 			        },
 			        response => {
@@ -263,26 +247,30 @@ export class CreateSingletaskComponent implements OnInit {
 		else{
             this.workflowSaveRequest.sessionKey = 'not-set';
             
-            this.editService.saveWorkflow(this.workflowSaveRequest).subscribe(
-    		        (result) => {		        	
-    		            console.log("Create workflow result", result);
-    		            
-    		            this.router.navigate([this.workflowListUrl]);
-    		        },
-    		        response => {
-    		        	console.log("Error in create workflow", response);
-    		        	
-    		        	this.errorService.showErrorResponse(response);
-    		        	this.loadingService.hideLoading();	 
-    		        },
-    		        () => {
-    		        	
-    		        	this.loadingService.hideLoading();	 
-    		        }
-    		    );	       	
-
+            this.createWorkflowData();
 		}
 
+	}
+	
+	private createWorkflowData(){
+        this.editService.createWorkflow(this.workflowSaveRequest).subscribe(
+		        (result) => {		        	
+		            console.log("Create workflow result", result);
+		            
+		            this.router.navigate([this.workflowListUrl]);
+		        },
+		        response => {
+		        	console.log("Error in create workflow", response);
+		        	
+		        	this.errorService.showErrorResponse(response);
+		        	this.loadingService.hideLoading();	 
+		        },
+		        () => {
+		        	
+		        	this.loadingService.hideLoading();	 
+		        }
+		    );	       	
+		
 	}
 	
 	isItemAssigned(identity :string , type: AssignType){

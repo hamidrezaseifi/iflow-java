@@ -21,10 +21,7 @@ export class TestthreetaskWorkflowEditService extends WorkflowEditBaseService {
 	public workflowSaveRequestInitSubject: BehaviorSubject<WorkflowSaveRequestInit> = new BehaviorSubject<WorkflowSaveRequestInit>(null);
 
 	workflowSaveRequestInit :WorkflowSaveRequestInit = null;
-
-	//initCreateUrl :string = "/workflow/singletask/data/initcreate";
-	//createWorkflowUrl :string = "/workflow/singletask/data/create";
-	//uploadFileUrl :string = "/workflow/singletask/data/createfile";
+	
 	
 	getInitCreateUrl() :string{
 		return "/workflow/testthreetask/data/initcreate";
@@ -38,10 +35,18 @@ export class TestthreetaskWorkflowEditService extends WorkflowEditBaseService {
 		return "/workflow/testthreetask/data/createfile";
 	}
 	
-	//userAssignType = /*[[${UserAssign}]]*/ '';
-	//departmentAssignType = /*[[${DepartmentAssign}]]*/ '';
-	//departmentGroupAssignType = /*[[${DepartmentGroupAssign}]]*/ '';
+	getSaveWorkflowUrl() :string{
+		return "/workflow/testthreetask/data/save";
+	}
 	
+	getDoneWorkflowUrl() :string{
+		return "/workflow/testthreetask/data/done";
+	}
+	
+	getArchiveWorkflowUrl() :string{
+		return "/workflow/testthreetask/data/archive";
+	}
+		
 	constructor(
 			protected http: HttpClient,
 			protected loadingService: LoadingServiceService,

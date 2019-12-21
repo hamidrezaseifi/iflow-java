@@ -38,6 +38,8 @@ import { CreateSingletaskComponent } from './wm-components/create/create-singlet
 import { CreateInvoiceComponent } from './wm-components/create/create-invoice/create-invoice.component';
 import { CreateTestthreetaskComponent } from './wm-components/create/create-testthreetask/create-testthreetask.component';
 import { EditInvoiceComponent } from './wm-components/edit/edit-invoice/edit-invoice.component';
+import { EditSingleTaskComponent } from './wm-components/edit/edit-single-task/edit-single-task.component';
+import { EditTestthreeTaskComponent } from './wm-components/edit/edit-testthree-task/edit-testthree-task.component';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -79,6 +81,8 @@ export function createTranslateLoader(http: HttpClient) {
     CreateInvoiceComponent,
     CreateTestthreetaskComponent,
     EditInvoiceComponent,
+    EditSingleTaskComponent,
+    EditTestthreeTaskComponent,
     
   ],
   providers: [
