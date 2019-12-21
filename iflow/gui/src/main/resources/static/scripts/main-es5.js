@@ -4616,7 +4616,7 @@ var __spread = (this && this.__spread) || function () {
                 };
                 EditInvoiceComponent.prototype.archiveWorkflowData = function () {
                     var _this = this;
-                    this.editService.archiveWorkflow(this.workflowSaveRequest).subscribe(function (result) {
+                    this.editService.archiveWorkflow(this.workflowSaveRequest.workflow).subscribe(function (result) {
                         console.log("Create workflow result", result);
                         _this.router.navigate([_this.workflowListUrl]);
                     }, function (response) {

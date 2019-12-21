@@ -506,7 +506,7 @@ export class EditInvoiceComponent implements OnInit {
 	
 	private archiveWorkflowData(){
 		
-        this.editService.archiveWorkflow(this.workflowSaveRequest).subscribe(
+        this.editService.archiveWorkflow(this.workflowSaveRequest.workflow).subscribe(
 		        (result) => {		        	
 		            console.log("Create workflow result", result);
 		            

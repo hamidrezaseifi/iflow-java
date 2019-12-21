@@ -145,7 +145,7 @@ export class InvoiceWorkflowEditService {
 
 	}	
 	
-	archiveWorkflow(workflowSaveRequest :InvoiceWorkflowSaveRequest){
+	archiveWorkflow(workflowSaveRequest :InvoiceWorkflow){
     	
         const httpOptions = { headers: HttpHepler.generateJsonHeader() };
         

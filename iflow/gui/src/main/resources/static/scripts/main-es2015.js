@@ -4895,7 +4895,7 @@ let EditInvoiceComponent = class EditInvoiceComponent {
         });
     }
     archiveWorkflowData() {
-        this.editService.archiveWorkflow(this.workflowSaveRequest).subscribe((result) => {
+        this.editService.archiveWorkflow(this.workflowSaveRequest.workflow).subscribe((result) => {
             console.log("Create workflow result", result);
             this.router.navigate([this.workflowListUrl]);
         }, response => {
