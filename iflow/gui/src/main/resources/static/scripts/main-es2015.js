@@ -2473,6 +2473,9 @@ let TestthreetaskWorkflowEditService = class TestthreetaskWorkflowEditService ex
     getArchiveWorkflowUrl() {
         return "/workflow/testthreetask/data/archive";
     }
+    getInitEditUrl(identity) {
+        return "/workflow/testthreetask/data/initedit/" + identity;
+    }
 };
 TestthreetaskWorkflowEditService.ctorParameters = () => [
     { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] },
@@ -4790,6 +4793,9 @@ let EditInvoiceComponent = class EditInvoiceComponent {
             this.subscribeToGeneralData();
             this.global.loadAllSetting(null);
         }
+        this.loadWorkflowData();
+    }
+    loadWorkflowData() {
         this.loadingService.showLoading();
         this.editService.loadEditInitialData(this.workflowIdentity).subscribe((initialData) => {
             console.log("set inital-data from workflow-edit. : ", initialData);
@@ -4964,6 +4970,7 @@ let EditInvoiceComponent = class EditInvoiceComponent {
             this.translate.get('common.saved').subscribe((res) => {
                 this.saveMessage = res;
             });
+            this.loadWorkflowData();
         }, response => {
             console.log("Error in create workflow", response);
             this.errorService.showErrorResponse(response);
@@ -5253,6 +5260,9 @@ let EditSingleTaskComponent = class EditSingleTaskComponent {
             this.subscribeToGeneralData();
             this.global.loadAllSetting(null);
         }
+        this.loadWorkflowData();
+    }
+    loadWorkflowData() {
         this.loadingService.showLoading();
         this.editService.loadEditInitialData(this.workflowIdentity).subscribe((initialData) => {
             console.log("set inital-data from workflow-edit. : ", initialData);
@@ -5383,6 +5393,7 @@ let EditSingleTaskComponent = class EditSingleTaskComponent {
             this.translate.get('common.saved').subscribe((res) => {
                 this.saveMessage = res;
             });
+            this.loadWorkflowData();
         }, response => {
             console.log("Error in create workflow", response);
             this.errorService.showErrorResponse(response);
@@ -5672,6 +5683,9 @@ let EditTestthreeTaskComponent = class EditTestthreeTaskComponent {
             this.subscribeToGeneralData();
             this.global.loadAllSetting(null);
         }
+        this.loadWorkflowData();
+    }
+    loadWorkflowData() {
         this.loadingService.showLoading();
         this.editService.loadEditInitialData(this.workflowIdentity).subscribe((initialData) => {
             console.log("set inital-data from workflow-edit. : ", initialData);
@@ -5802,6 +5816,7 @@ let EditTestthreeTaskComponent = class EditTestthreeTaskComponent {
             this.translate.get('common.saved').subscribe((res) => {
                 this.saveMessage = res;
             });
+            this.loadWorkflowData();
         }, response => {
             console.log("Error in create workflow", response);
             this.errorService.showErrorResponse(response);

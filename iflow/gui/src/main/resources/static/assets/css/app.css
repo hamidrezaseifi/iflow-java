@@ -872,3 +872,29 @@ span.mat-icon-button{
 .button-bar-alert{
 	padding: 2px 15px 8px 10px;
 }
+
+
+.workflow-file-view-link, .workflow-file-view-link:active, .workflow-file-view-link:visited{
+	color: #333;
+}
+
+.workflow-file-view-link:hover{
+	color: #551113;
+}
+
+.workflow-file-view-link i.material-icons{
+	width: 24px;
+}
+
+.user-select-modal-content{
+	height: 500px;
+}
+
+.user-select-tab-content{
+	height: calc(100% - 30px);
+}
+
+.user-select-item-label{
+	margin-left: 10px;
+}
+

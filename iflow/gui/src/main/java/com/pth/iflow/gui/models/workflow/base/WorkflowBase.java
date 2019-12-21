@@ -381,12 +381,12 @@ public class WorkflowBase extends IdentityModel implements IWorkflow {
   @Override
   public boolean getCanSave() {
 
-    return this.getIsLastStep() == false || this.getIsDone() == false;
+    return (this.getIsLastStep() == false || this.getIsDone() == false) && this.getIsArchived() == false;
   }
 
   @Override
   public boolean getCanDone() {
-    return this.getIsDone() == false;
+    return this.getIsDone() == false && this.getIsArchived() == false;
   }
 
   @Override

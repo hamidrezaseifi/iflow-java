@@ -2273,6 +2273,9 @@ var __spread = (this && this.__spread) || function () {
                 TestthreetaskWorkflowEditService.prototype.getArchiveWorkflowUrl = function () {
                     return "/workflow/testthreetask/data/archive";
                 };
+                TestthreetaskWorkflowEditService.prototype.getInitEditUrl = function (identity) {
+                    return "/workflow/testthreetask/data/initedit/" + identity;
+                };
                 return TestthreetaskWorkflowEditService;
             }(_workflow_edit_base_service__WEBPACK_IMPORTED_MODULE_5__["WorkflowEditBaseService"]));
             TestthreetaskWorkflowEditService.ctorParameters = function () { return [
@@ -4474,7 +4477,6 @@ var __spread = (this && this.__spread) || function () {
                     this.loadInitialData();
                 };
                 EditInvoiceComponent.prototype.loadInitialData = function () {
-                    var _this = this;
                     if (this.workflowIdentity == '') {
                         return;
                     }
@@ -4486,6 +4488,10 @@ var __spread = (this && this.__spread) || function () {
                         this.subscribeToGeneralData();
                         this.global.loadAllSetting(null);
                     }
+                    this.loadWorkflowData();
+                };
+                EditInvoiceComponent.prototype.loadWorkflowData = function () {
+                    var _this = this;
                     this.loadingService.showLoading();
                     this.editService.loadEditInitialData(this.workflowIdentity).subscribe(function (initialData) {
                         console.log("set inital-data from workflow-edit. : ", initialData);
@@ -4673,6 +4679,7 @@ var __spread = (this && this.__spread) || function () {
                         _this.translate.get('common.saved').subscribe(function (res) {
                             _this.saveMessage = res;
                         });
+                        _this.loadWorkflowData();
                     }, function (response) {
                         console.log("Error in create workflow", response);
                         _this.errorService.showErrorResponse(response);
@@ -4967,7 +4974,6 @@ var __spread = (this && this.__spread) || function () {
                     this.loadInitialData();
                 };
                 EditSingleTaskComponent.prototype.loadInitialData = function () {
-                    var _this = this;
                     if (this.workflowIdentity == '') {
                         return;
                     }
@@ -4979,6 +4985,10 @@ var __spread = (this && this.__spread) || function () {
                         this.subscribeToGeneralData();
                         this.global.loadAllSetting(null);
                     }
+                    this.loadWorkflowData();
+                };
+                EditSingleTaskComponent.prototype.loadWorkflowData = function () {
+                    var _this = this;
                     this.loadingService.showLoading();
                     this.editService.loadEditInitialData(this.workflowIdentity).subscribe(function (initialData) {
                         console.log("set inital-data from workflow-edit. : ", initialData);
@@ -5121,6 +5131,7 @@ var __spread = (this && this.__spread) || function () {
                         _this.translate.get('common.saved').subscribe(function (res) {
                             _this.saveMessage = res;
                         });
+                        _this.loadWorkflowData();
                     }, function (response) {
                         console.log("Error in create workflow", response);
                         _this.errorService.showErrorResponse(response);
@@ -5415,7 +5426,6 @@ var __spread = (this && this.__spread) || function () {
                     this.loadInitialData();
                 };
                 EditTestthreeTaskComponent.prototype.loadInitialData = function () {
-                    var _this = this;
                     if (this.workflowIdentity == '') {
                         return;
                     }
@@ -5427,6 +5437,10 @@ var __spread = (this && this.__spread) || function () {
                         this.subscribeToGeneralData();
                         this.global.loadAllSetting(null);
                     }
+                    this.loadWorkflowData();
+                };
+                EditTestthreeTaskComponent.prototype.loadWorkflowData = function () {
+                    var _this = this;
                     this.loadingService.showLoading();
                     this.editService.loadEditInitialData(this.workflowIdentity).subscribe(function (initialData) {
                         console.log("set inital-data from workflow-edit. : ", initialData);
@@ -5569,6 +5583,7 @@ var __spread = (this && this.__spread) || function () {
                         _this.translate.get('common.saved').subscribe(function (res) {
                             _this.saveMessage = res;
                         });
+                        _this.loadWorkflowData();
                     }, function (response) {
                         console.log("Error in create workflow", response);
                         _this.errorService.showErrorResponse(response);

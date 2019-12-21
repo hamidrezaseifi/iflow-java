@@ -22,7 +22,6 @@ export class TestthreetaskWorkflowEditService extends WorkflowEditBaseService {
 
 	workflowSaveRequestInit :WorkflowSaveRequestInit = null;
 	
-	
 	getInitCreateUrl() :string{
 		return "/workflow/testthreetask/data/initcreate";
 	}
@@ -46,7 +45,12 @@ export class TestthreetaskWorkflowEditService extends WorkflowEditBaseService {
 	getArchiveWorkflowUrl() :string{
 		return "/workflow/testthreetask/data/archive";
 	}
-		
+	
+	getInitEditUrl(identity :string) :string{
+		return "/workflow/testthreetask/data/initedit/" + identity;
+	}
+
+	
 	constructor(
 			protected http: HttpClient,
 			protected loadingService: LoadingServiceService,

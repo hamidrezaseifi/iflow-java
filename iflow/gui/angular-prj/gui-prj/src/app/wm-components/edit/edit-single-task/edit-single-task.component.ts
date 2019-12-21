@@ -176,36 +176,42 @@ export class EditSingleTaskComponent implements OnInit {
 	 		this.subscribeToGeneralData();
 	 		this.global.loadAllSetting(null);
 	 	}
-
-	 	
-		this.loadingService.showLoading();	     
- 		this.editService.loadEditInitialData(this.workflowIdentity).subscribe(
-		        (initialData :WorkflowSaveRequestInit) => {
-		        	
-					console.log("set inital-data from workflow-edit. : ", initialData);
-					//alert("from app-comp: \n" + JSON.stringify(data));
-			 		
-					if(initialData && initialData !== null){
-						this.workflowSaveRequest = initialData.workflowSaveRequest;
-						this.setToControlValues();
-						
-					}
-					else{
-						this.workflowSaveRequest = null;
-					}
-		            
-		        },
-		        response => {
-		        	console.log("Error in read edit inital data", response);
-		        	this.errorService.showErrorResponse(response);
-		        },
-		        () => {
-		        	
-		        	this.loadingService.hideLoading();	            
-		        }
-		    );	       	
+	
+	 	this.loadWorkflowData();
 	 	
 	}
+	
+	private loadWorkflowData(){
+		
+		this.loadingService.showLoading();	     
+		this.editService.loadEditInitialData(this.workflowIdentity).subscribe(
+	        (initialData :WorkflowSaveRequestInit) => {
+	        	
+				console.log("set inital-data from workflow-edit. : ", initialData);
+				//alert("from app-comp: \n" + JSON.stringify(data));
+		 		
+				if(initialData && initialData !== null){
+					this.workflowSaveRequest = initialData.workflowSaveRequest;
+					this.setToControlValues();
+					
+				}
+				else{
+					this.workflowSaveRequest = null;
+				}
+	            
+	        },
+	        response => {
+	        	console.log("Error in read edit inital data", response);
+	        	this.errorService.showErrorResponse(response);
+	        },
+	        () => {
+	        	
+	        	this.loadingService.hideLoading();	            
+	        }
+	    );	       	
+		
+	}
+	
 	
 	setToControlValues(){
 		if(this.workflowSaveRequest && this.workflowSaveRequest.workflow){
@@ -382,7 +388,8 @@ export class EditSingleTaskComponent implements OnInit {
 		            	this.saveMessage = res;
 		            });
 		            
-		            
+		            this.loadWorkflowData();
+
 		        },
 		        response => {
 		        	console.log("Error in create workflow", response);
