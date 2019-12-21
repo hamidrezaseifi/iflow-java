@@ -61,7 +61,7 @@ public class DepartmentEntity extends EntityIdentityHelper {
   @Column(name = "updated_at")
   private Date                              updatedAt;
 
-  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
   @JoinColumn(name = "department_id")
   private final List<DepartmentGroupEntity> departmentGroups = new ArrayList<>();
 

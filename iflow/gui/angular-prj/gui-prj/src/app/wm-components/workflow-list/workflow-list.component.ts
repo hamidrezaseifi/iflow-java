@@ -5,6 +5,7 @@ import {TranslateService} from '@ngx-translate/core';
 import { GlobalService } from '../../services/global.service';
 import { WorkflowSearchService } from '../../services/workflow/workflow-search.service';
 import { LoadingServiceService } from '../../services/loading-service.service';
+import { ErrorServiceService } from '../../services/error-service.service';
 
 import { WorkflowType, Workflow, WorkflowTypeStep, WorkflowSearchFilter, WorkflowListInitialData, WorkflowResult, WorkflowSearchResult } from '../../wf-models';
 import { User, GeneralData } from '../../ui-models';
@@ -28,6 +29,7 @@ export class WorkflowListComponent implements OnInit {
 			translate: TranslateService,
 			private searchService :WorkflowSearchService,
 			private loadingService: LoadingServiceService,
+			private errorService: ErrorServiceService,
 			
 	) {
 		
@@ -103,6 +105,8 @@ export class WorkflowListComponent implements OnInit {
 	        },
 	        response => {
 	        	console.log("Error in search workflow", response);
+	        	this.loadingService.hideLoading();	 
+	        	this.errorService.showErrorResponse(response);
 	        },
 	        () => {
 	        	

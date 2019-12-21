@@ -5742,17 +5742,19 @@ var __spread = (this && this.__spread) || function () {
             /* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../services/global.service */ "./src/app/services/global.service.ts");
             /* harmony import */ var _services_workflow_workflow_search_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../services/workflow/workflow-search.service */ "./src/app/services/workflow/workflow-search.service.ts");
             /* harmony import */ var _services_loading_service_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../services/loading-service.service */ "./src/app/services/loading-service.service.ts");
-            /* harmony import */ var _wf_models__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../wf-models */ "./src/app/wf-models/index.ts");
+            /* harmony import */ var _services_error_service_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../services/error-service.service */ "./src/app/services/error-service.service.ts");
+            /* harmony import */ var _wf_models__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../wf-models */ "./src/app/wf-models/index.ts");
             var WorkflowListComponent = /** @class */ (function () {
-                function WorkflowListComponent(router, global, translate, searchService, loadingService) {
+                function WorkflowListComponent(router, global, translate, searchService, loadingService, errorService) {
                     var _this = this;
                     this.router = router;
                     this.global = global;
                     this.searchService = searchService;
                     this.loadingService = loadingService;
+                    this.errorService = errorService;
                     this.worlflowTypes = [];
                     this.resultWorlflows = [];
-                    this.listInitialData = new _wf_models__WEBPACK_IMPORTED_MODULE_7__["WorkflowListInitialData"]();
+                    this.listInitialData = new _wf_models__WEBPACK_IMPORTED_MODULE_8__["WorkflowListInitialData"]();
                     this.showDebug = false;
                     this.router.events.subscribe(function (evt) {
                         if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_2__["NavigationEnd"]) {
@@ -5818,6 +5820,8 @@ var __spread = (this && this.__spread) || function () {
                         _this.resultWorlflows = result.list;
                     }, function (response) {
                         console.log("Error in search workflow", response);
+                        _this.loadingService.hideLoading();
+                        _this.errorService.showErrorResponse(response);
                     }, function () {
                         _this.loadingService.hideLoading();
                     });
@@ -5864,7 +5868,8 @@ var __spread = (this && this.__spread) || function () {
                 { type: _services_global_service__WEBPACK_IMPORTED_MODULE_4__["GlobalService"] },
                 { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_3__["TranslateService"] },
                 { type: _services_workflow_workflow_search_service__WEBPACK_IMPORTED_MODULE_5__["WorkflowSearchService"] },
-                { type: _services_loading_service_service__WEBPACK_IMPORTED_MODULE_6__["LoadingServiceService"] }
+                { type: _services_loading_service_service__WEBPACK_IMPORTED_MODULE_6__["LoadingServiceService"] },
+                { type: _services_error_service_service__WEBPACK_IMPORTED_MODULE_7__["ErrorServiceService"] }
             ]; };
             WorkflowListComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
                 Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({

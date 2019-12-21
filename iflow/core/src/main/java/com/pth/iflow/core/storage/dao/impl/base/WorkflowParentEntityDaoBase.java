@@ -157,7 +157,7 @@ public abstract class WorkflowParentEntityDaoBase<T extends IWorkflowContainerEn
     final Root<T>          root            = query.from(entityClass());
     query.select(root);
 
-    final Path<String> identityPath = root.get("identity");
+    final Path<String> identityPath = root.get("workflow").get("identity");
     final Predicate    predicate    = criteriaBuilder.equal(identityPath, identity);
     query.where(predicate);
 

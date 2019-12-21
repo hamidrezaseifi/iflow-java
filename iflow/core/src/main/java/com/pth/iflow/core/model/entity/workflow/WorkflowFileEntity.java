@@ -65,7 +65,7 @@ public class WorkflowFileEntity extends EntityIdentityHelper {
   @Column(name = "updated_at")
   private Date                                  updatedAt;
 
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "workflowFileEntity")
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "workflowFileEntity", orphanRemoval = true, fetch = FetchType.EAGER)
   private final List<WorkflowFileVersionEntity> fileVersions = new ArrayList<>();
 
   @ManyToOne(fetch = FetchType.LAZY)

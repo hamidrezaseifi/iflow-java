@@ -106,7 +106,8 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
     final UserEntity    user    = this.getUserByIdentity(email);
     final CompanyEntity company = companyDao.getByIdentity(user.getCompany().getIdentity());
 
-    return new ProfileResponse(user, company, this.getUserDepartments(email), this.getUserGroups(email), "sot-set");
+    return new ProfileResponse(user, company, user.getDepartments().stream().collect(Collectors.toList()),
+        user.getGroups().stream().collect(Collectors.toList()), "sot-set");
   }
 
   @Override
