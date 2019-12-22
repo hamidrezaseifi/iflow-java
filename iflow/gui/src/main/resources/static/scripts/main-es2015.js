@@ -3544,10 +3544,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_workflow_invoice_invoice_workflow_edit_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../services/workflow/invoice/invoice-workflow-edit.service */ "./src/app/services/workflow/invoice/invoice-workflow-edit.service.ts");
 /* harmony import */ var _services_loading_service_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../services/loading-service.service */ "./src/app/services/loading-service.service.ts");
 /* harmony import */ var _services_error_service_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../../services/error-service.service */ "./src/app/services/error-service.service.ts");
-/* harmony import */ var _wf_models__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../../wf-models */ "./src/app/wf-models/index.ts");
-/* harmony import */ var _wf_models_invoice_workflow_save_request__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../../wf-models/invoice-workflow-save-request */ "./src/app/wf-models/invoice-workflow-save-request.ts");
-/* harmony import */ var _custom_validators_invoice_type_controll_validator__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../../custom-validators/invoice-type-controll-validator */ "./src/app/custom-validators/invoice-type-controll-validator.ts");
-/* harmony import */ var _helper__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../../helper */ "./src/app/helper/index.ts");
+/* harmony import */ var _invoice_base_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../invoice-base.component */ "./src/app/wm-components/invoice-base.component.ts");
+/* harmony import */ var _helper__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../../helper */ "./src/app/helper/index.ts");
 
 
 
@@ -3561,10 +3559,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-let CreateInvoiceComponent = class CreateInvoiceComponent {
+let CreateInvoiceComponent = class CreateInvoiceComponent extends _invoice_base_component__WEBPACK_IMPORTED_MODULE_11__["InvoiceBaseComponent"] {
     constructor(router, global, translate, editService, loadingService, http, errorService, formBuilder, dateAdapter) {
+        super(router, global, translate, editService, loadingService, http, errorService, formBuilder, dateAdapter);
         this.router = router;
         this.global = global;
         this.translate = translate;
@@ -3574,77 +3571,22 @@ let CreateInvoiceComponent = class CreateInvoiceComponent {
         this.errorService = errorService;
         this.formBuilder = formBuilder;
         this.dateAdapter = dateAdapter;
-        this.pageTitle = "not-initialized!";
-        this.workflowListUrl = "/workflow/list";
-        this.workflowSaveRequest = new _wf_models_invoice_workflow_save_request__WEBPACK_IMPORTED_MODULE_12__["InvoiceWorkflowSaveRequest"]();
-        this.users = [];
-        this.departments = [];
-        this.fileTitles = [];
-        this.showAssignModal = false;
-        this.selectAssign = [];
-        this.invoiceTypes = []; //{InvoiceType.NO_TYPE, InvoiceType.SUPPLIER , InvoiceType.WORKER , InvoiceType.PAYMENT };
-        this.assignTypeUser = _wf_models__WEBPACK_IMPORTED_MODULE_11__["AssignType"].USER;
-        this.assignTypeDepartment = _wf_models__WEBPACK_IMPORTED_MODULE_11__["AssignType"].DEPARTMENT;
-        this.assignTypeDepartmentGroup = _wf_models__WEBPACK_IMPORTED_MODULE_11__["AssignType"].DEPARTMENTGROUP;
         this.router.events.subscribe((evt) => {
             if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_2__["NavigationEnd"]) {
                 this.loadInitialData();
             }
         });
-        this.dateAdapter.setLocale('de');
-        for (var o in _wf_models__WEBPACK_IMPORTED_MODULE_11__["InvoiceType"]) {
-            var str = o + "";
-            var num = new Number(o);
-            if (isNaN(num)) {
-                translate.get('invoice-invoicetype-' + str.toLowerCase()).subscribe((res) => {
-                    this.invoiceTypes.push({ value: o, title: res });
-                });
-            }
-        }
-    }
-    fileTitleProgress(fileInput, file, fileIndex) {
-        if (fileInput.target.files && fileInput.target.files != null && file) {
-            file.file = fileInput.target.files[0];
-        }
-        //this.preview();
-    }
-    get assignedUsers() {
-        if (this.workflowSaveRequest != null) {
-            return this.workflowSaveRequest.assigns;
-        }
-        return [];
     }
     get debugData() {
-        var ss = Object(_helper__WEBPACK_IMPORTED_MODULE_14__["formatDate"])(new Date(), 'dd.mm.yyyy');
-        ss += " -- " + Object(_helper__WEBPACK_IMPORTED_MODULE_14__["parseDate"])(ss, 'dd.mm.yyyy');
+        var ss = Object(_helper__WEBPACK_IMPORTED_MODULE_12__["formatDate"])(new Date(), 'dd.mm.yyyy');
+        ss += " -- " + Object(_helper__WEBPACK_IMPORTED_MODULE_12__["parseDate"])(ss, 'dd.mm.yyyy');
         return ss;
     }
     ngOnInit() {
-        //this.loginForm.controls["username"].value,
-        this.invoiceEditForm = this.formBuilder.group({
-            expireDays: [10, _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
-            controllerIdentity: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
-            comments: [''],
-            sender: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
-            registerNumber: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
-            invocieDate: [new Date(), _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
-            partnerCode: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
-            vendorNumber: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
-            vendorName: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
-            isDirectDebitPermission: [false],
-            invoiceType: [_wf_models__WEBPACK_IMPORTED_MODULE_11__["InvoiceType"].NO_TYPE, [_custom_validators_invoice_type_controll_validator__WEBPACK_IMPORTED_MODULE_13__["InvoiceTypeControllValidator"]]],
-            discountEnterDate: [new Date(), _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
-            discountDeadline: [0, _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
-            discountRate: [0, _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
-            discountDate: [new Date(), _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
-            paymentAmount: [0, _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
-        });
-        this.loadInitialData();
-    }
-    reload() {
-        this.loadInitialData();
+        super.ngOnInit();
     }
     loadInitialData() {
+        super.loadInitialData();
         if (this.editService.workflowSaveRequestInit !== null) {
             this.workflowSaveRequest = this.editService.workflowSaveRequestInit.workflowSaveRequest;
             this.setToControlValues();
@@ -3653,72 +3595,7 @@ let CreateInvoiceComponent = class CreateInvoiceComponent {
             this.subscribeToSearchInitialData();
             this.editService.loadCreateInitialData();
         }
-        if (this.global.loadedGeneralData !== null) {
-            this.users = this.global.loadedGeneralData.company.users;
-            this.departments = this.global.loadedGeneralData.company.departments;
-        }
-        else {
-            this.subscribeToGeneralData();
-            this.global.loadAllSetting(null);
-        }
     }
-    setPageTitle() {
-        var pageLabelId = "invoice-assignview-title";
-        if (this.workflowSaveRequest.workflow.currentStepIndex === 1) {
-            pageLabelId = "invoice-assignview-title";
-        }
-        if (this.workflowSaveRequest.workflow.currentStepIndex === 2) {
-            pageLabelId = "invoice-testingview-title";
-        }
-        if (this.workflowSaveRequest.workflow.currentStepIndex === 3) {
-            pageLabelId = "invoice-releaseview-title";
-        }
-        this.translate.get(pageLabelId).subscribe((res) => {
-            this.pageTitle = res;
-        });
-    }
-    setToControlValues() {
-        if (this.workflowSaveRequest && this.workflowSaveRequest.workflow) {
-            this.setPageTitle();
-            this.invoiceEditForm.controls["expireDays"].setValue(this.workflowSaveRequest.expireDays);
-            this.invoiceEditForm.controls["controllerIdentity"].setValue(this.workflowSaveRequest.workflow.controllerIdentity);
-            this.invoiceEditForm.controls["comments"].setValue(this.workflowSaveRequest.workflow.comments);
-            this.invoiceEditForm.controls["sender"].setValue(this.workflowSaveRequest.workflow.sender);
-            this.invoiceEditForm.controls["registerNumber"].setValue(this.workflowSaveRequest.workflow.registerNumber);
-            this.invoiceEditForm.controls["invocieDate"].setValue(Object(_helper__WEBPACK_IMPORTED_MODULE_14__["parseDate"])(this.workflowSaveRequest.workflow.invocieDate, 'dd.mm.yyyy'));
-            this.invoiceEditForm.controls["partnerCode"].setValue(this.workflowSaveRequest.workflow.partnerCode);
-            this.invoiceEditForm.controls["vendorNumber"].setValue(this.workflowSaveRequest.workflow.vendorNumber);
-            this.invoiceEditForm.controls["vendorName"].setValue(this.workflowSaveRequest.workflow.vendorName);
-            this.invoiceEditForm.controls["isDirectDebitPermission"].setValue(this.workflowSaveRequest.workflow.isDirectDebitPermission);
-            this.invoiceEditForm.controls["invoiceType"].setValue(this.workflowSaveRequest.workflow.invoiceType);
-            this.invoiceEditForm.controls["discountEnterDate"].setValue(Object(_helper__WEBPACK_IMPORTED_MODULE_14__["parseDate"])(this.workflowSaveRequest.workflow.discountEnterDate, 'dd.mm.yyyy'));
-            this.invoiceEditForm.controls["comments"].setValue(this.workflowSaveRequest.workflow.comments);
-            this.invoiceEditForm.controls["discountDeadline"].setValue(this.workflowSaveRequest.workflow.discountDeadline);
-            this.invoiceEditForm.controls["discountRate"].setValue(this.workflowSaveRequest.workflow.discountRate);
-            this.invoiceEditForm.controls["discountDate"].setValue(Object(_helper__WEBPACK_IMPORTED_MODULE_14__["parseDate"])(this.workflowSaveRequest.workflow.discountDate, 'dd.mm.yyyy'));
-            this.invoiceEditForm.controls["paymentAmount"].setValue(this.workflowSaveRequest.workflow.paymentAmount);
-        }
-    }
-    setFormControlValues() {
-        this.workflowSaveRequest.expireDays = this.invoiceEditForm.controls["expireDays"].value;
-        this.workflowSaveRequest.workflow.controllerIdentity = this.invoiceEditForm.controls["controllerIdentity"].value;
-        this.workflowSaveRequest.workflow.comments = this.invoiceEditForm.controls["comments"].value;
-        this.workflowSaveRequest.workflow.sender = this.invoiceEditForm.controls["sender"].value;
-        this.workflowSaveRequest.workflow.registerNumber = this.invoiceEditForm.controls["registerNumber"].value;
-        this.workflowSaveRequest.workflow.invocieDate = Object(_helper__WEBPACK_IMPORTED_MODULE_14__["formatDate"])(this.invoiceEditForm.controls["invocieDate"].value, 'dd.mm.yyyy');
-        this.workflowSaveRequest.workflow.partnerCode = this.invoiceEditForm.controls["partnerCode"].value;
-        this.workflowSaveRequest.workflow.vendorNumber = this.invoiceEditForm.controls["vendorNumber"].value;
-        this.workflowSaveRequest.workflow.vendorName = this.invoiceEditForm.controls["vendorName"].value;
-        this.workflowSaveRequest.workflow.isDirectDebitPermission = this.invoiceEditForm.controls["isDirectDebitPermission"].value;
-        this.workflowSaveRequest.workflow.invoiceType = this.invoiceEditForm.controls["invoiceType"].value;
-        this.workflowSaveRequest.workflow.discountEnterDate = Object(_helper__WEBPACK_IMPORTED_MODULE_14__["formatDate"])(this.invoiceEditForm.controls["discountEnterDate"].value, 'dd.mm.yyyy');
-        this.workflowSaveRequest.workflow.comments = this.invoiceEditForm.controls["comments"].value;
-        this.workflowSaveRequest.workflow.discountDeadline = this.invoiceEditForm.controls["discountDeadline"].value;
-        this.workflowSaveRequest.workflow.discountRate = this.invoiceEditForm.controls["discountRate"].value;
-        this.workflowSaveRequest.workflow.discountDate = Object(_helper__WEBPACK_IMPORTED_MODULE_14__["formatDate"])(this.invoiceEditForm.controls["discountDate"].value, 'dd.mm.yyyy');
-        this.workflowSaveRequest.workflow.paymentAmount = this.invoiceEditForm.controls["paymentAmount"].value;
-    }
-    get forms() { return this.invoiceEditForm.controls; }
     subscribeToSearchInitialData() {
         this.editService.workflowSaveRequestInitSubject.subscribe((data) => {
             console.log("set gloabl-data from workflow-create. : ", data);
@@ -3731,47 +3608,6 @@ let CreateInvoiceComponent = class CreateInvoiceComponent {
                 this.workflowSaveRequest = null;
             }
         });
-    }
-    subscribeToGeneralData() {
-        this.global.currentSessionDataSubject.subscribe((data) => {
-            console.log("set gloabl-data from workflow-create. appIsLogged: ");
-            //alert("from app-comp: \n" + JSON.stringify(data));
-            if (data && data !== null) {
-                var value = data.isLogged + "";
-                if (value === "true" === true) {
-                    this.users = data.company.users;
-                    this.departments = data.company.departments;
-                }
-                else {
-                    this.users = [];
-                    this.departments = [];
-                }
-            }
-            else {
-                this.users = [];
-                this.departments = [];
-            }
-        });
-    }
-    get hasNoAssigns() {
-        if (this.workflowSaveRequest && this.workflowSaveRequest.assigns) {
-            return this.workflowSaveRequest.assigns.length == 0;
-        }
-        return false;
-    }
-    removeAssign(identity, type) {
-        this.workflowSaveRequest.assigns = this.workflowSaveRequest.assigns.filter(function (value, index, arr) {
-            return value.itemIdentity != identity || value.itemType != type;
-        });
-    }
-    removeFile(index) {
-        this.fileTitles.splice(index, 1);
-    }
-    addFile() {
-        var ft = new _wf_models__WEBPACK_IMPORTED_MODULE_11__["FileTitle"]();
-        ft.title = "";
-        ft.file = null;
-        this.fileTitles.push(ft);
     }
     save() {
         this.setFormControlValues();
@@ -3806,79 +3642,6 @@ let CreateInvoiceComponent = class CreateInvoiceComponent {
             this.loadingService.hideLoading();
         });
     }
-    isItemAssigned(identity, type) {
-        if (this.selectAssign[type] === undefined) {
-            this.selectAssign[type] = [];
-        }
-        if (this.selectAssign[type][identity] === undefined) {
-            this.selectAssign[type][identity] = false;
-        }
-        return this.selectAssign[type][identity];
-    }
-    applyUserSelect() {
-        this.workflowSaveRequest.assigns = [];
-        for (var type in this.selectAssign) {
-            for (var identity in this.selectAssign[type]) {
-                if (this.selectAssign[type][identity]) {
-                    var assign = new _wf_models__WEBPACK_IMPORTED_MODULE_11__["AssignItem"];
-                    assign.itemIdentity = identity;
-                    assign.itemType = type;
-                    this.workflowSaveRequest.assigns.push(assign);
-                }
-            }
-        }
-        this.hideAssignSelect();
-    }
-    showAssignSelect() {
-        this.selectAssign = [];
-        for (var index in this.workflowSaveRequest.assigns) {
-            var assign = this.workflowSaveRequest.assigns[index];
-            if (this.selectAssign[assign.itemType] === undefined) {
-                this.selectAssign[assign.itemType] = [];
-            }
-            this.selectAssign[assign.itemType][assign.itemIdentity] = true;
-        }
-        this.showAssignModal = true;
-    }
-    hideAssignSelect() {
-        this.showAssignModal = false;
-    }
-    toggleAssign(identity, type, isChecked) {
-        if (this.selectAssign[type] === undefined) {
-            this.selectAssign[type] = [];
-        }
-        this.selectAssign[type][identity] = isChecked;
-    }
-    getAssignItemTitle(item) {
-        //assign.itemIdentity = <string>identity;
-        //assign.itemType = <AssignType>type;
-        if (item.itemType === _wf_models__WEBPACK_IMPORTED_MODULE_11__["AssignType"].USER) {
-            for (var index in this.users) {
-                if (this.users[index].identity === item.itemIdentity) {
-                    return this.users[index].fullName;
-                }
-            }
-            return 'Unknown!';
-        }
-        if (item.itemType === _wf_models__WEBPACK_IMPORTED_MODULE_11__["AssignType"].DEPARTMENT) {
-            for (var index in this.departments) {
-                if (this.departments[index].identity === item.itemIdentity) {
-                    return this.departments[index].title;
-                }
-            }
-            return 'Unknown!';
-        }
-        if (item.itemType === _wf_models__WEBPACK_IMPORTED_MODULE_11__["AssignType"].DEPARTMENTGROUP) {
-            for (var index in this.departments) {
-                for (var gindex in this.departments[index].departmentGroups) {
-                    if (this.departments[index].departmentGroups[gindex].identity === item.itemIdentity) {
-                        return this.departments[index].departmentGroups[gindex].title;
-                    }
-                }
-            }
-            return 'Unknown!';
-        }
-    }
 };
 CreateInvoiceComponent.ctorParameters = () => [
     { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] },
@@ -3895,7 +3658,7 @@ CreateInvoiceComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
         selector: 'app-create-invoice',
         template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./create-invoice.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/wm-components/create/create-invoice/create-invoice.component.html")).default,
-        providers: [{ provide: _angular_material__WEBPACK_IMPORTED_MODULE_6__["DateAdapter"], useClass: _helper__WEBPACK_IMPORTED_MODULE_14__["GermanDateAdapter"] }],
+        providers: [{ provide: _angular_material__WEBPACK_IMPORTED_MODULE_6__["DateAdapter"], useClass: _helper__WEBPACK_IMPORTED_MODULE_12__["GermanDateAdapter"] }],
         styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./create-invoice.component.css */ "./src/app/wm-components/create/create-invoice/create-invoice.component.css")).default]
     })
 ], CreateInvoiceComponent);
@@ -4662,10 +4425,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_workflow_invoice_invoice_workflow_edit_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../services/workflow/invoice/invoice-workflow-edit.service */ "./src/app/services/workflow/invoice/invoice-workflow-edit.service.ts");
 /* harmony import */ var _services_loading_service_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../services/loading-service.service */ "./src/app/services/loading-service.service.ts");
 /* harmony import */ var _services_error_service_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../../services/error-service.service */ "./src/app/services/error-service.service.ts");
-/* harmony import */ var _wf_models__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../../wf-models */ "./src/app/wf-models/index.ts");
-/* harmony import */ var _wf_models_invoice_workflow_save_request__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../../wf-models/invoice-workflow-save-request */ "./src/app/wf-models/invoice-workflow-save-request.ts");
-/* harmony import */ var _custom_validators_invoice_type_controll_validator__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../../custom-validators/invoice-type-controll-validator */ "./src/app/custom-validators/invoice-type-controll-validator.ts");
-/* harmony import */ var _helper__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../../helper */ "./src/app/helper/index.ts");
+/* harmony import */ var _invoice_base_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../invoice-base.component */ "./src/app/wm-components/invoice-base.component.ts");
+/* harmony import */ var _helper__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../../helper */ "./src/app/helper/index.ts");
 
 
 
@@ -4679,10 +4440,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-let EditInvoiceComponent = class EditInvoiceComponent {
+let EditInvoiceComponent = class EditInvoiceComponent extends _invoice_base_component__WEBPACK_IMPORTED_MODULE_11__["InvoiceBaseComponent"] {
     constructor(router, global, translate, editService, loadingService, http, errorService, formBuilder, dateAdapter, route) {
+        super(router, global, translate, editService, loadingService, http, errorService, formBuilder, dateAdapter);
         this.router = router;
         this.global = global;
         this.translate = translate;
@@ -4693,65 +4453,14 @@ let EditInvoiceComponent = class EditInvoiceComponent {
         this.formBuilder = formBuilder;
         this.dateAdapter = dateAdapter;
         this.route = route;
+        this.workflowIdentity = "not-set";
         this.saveMessage = "";
-        this.pageTitle = "not-initialized!";
-        this.workflowIdentity = "";
-        this.workflowListUrl = "/workflow/list";
-        this.workflowSaveRequest = new _wf_models_invoice_workflow_save_request__WEBPACK_IMPORTED_MODULE_12__["InvoiceWorkflowSaveRequest"]();
-        this.users = [];
-        this.departments = [];
-        this.fileTitles = [];
-        this.showAssignModal = false;
-        this.selectAssign = [];
-        this.invoiceTypes = []; //{InvoiceType.NO_TYPE, InvoiceType.SUPPLIER , InvoiceType.WORKER , InvoiceType.PAYMENT };
-        this.assignTypeUser = _wf_models__WEBPACK_IMPORTED_MODULE_11__["AssignType"].USER;
-        this.assignTypeDepartment = _wf_models__WEBPACK_IMPORTED_MODULE_11__["AssignType"].DEPARTMENT;
-        this.assignTypeDepartmentGroup = _wf_models__WEBPACK_IMPORTED_MODULE_11__["AssignType"].DEPARTMENTGROUP;
         this.router.events.subscribe((evt) => {
             if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_2__["NavigationEnd"]) {
                 this.workflowIdentity = this.route.snapshot.params['identity'];
                 this.loadInitialData();
             }
         });
-        this.dateAdapter.setLocale('de');
-        for (var o in _wf_models__WEBPACK_IMPORTED_MODULE_11__["InvoiceType"]) {
-            var str = o + "";
-            var num = new Number(o);
-            if (isNaN(num)) {
-                translate.get('invoice-invoicetype-' + str.toLowerCase()).subscribe((res) => {
-                    this.invoiceTypes.push({ value: o, title: res });
-                });
-            }
-        }
-    }
-    fileTitleProgress(fileInput, file, fileIndex) {
-        if (fileInput.target.files && fileInput.target.files != null && file) {
-            file.file = fileInput.target.files[0];
-        }
-        //this.preview();
-    }
-    get assignedUsers() {
-        if (this.workflowSaveRequest != null) {
-            return this.workflowSaveRequest.assigns;
-        }
-        return [];
-    }
-    get debugData() {
-        var ss = Object(_helper__WEBPACK_IMPORTED_MODULE_14__["formatDate"])(new Date(), 'dd.mm.yyyy');
-        ss += " -- " + Object(_helper__WEBPACK_IMPORTED_MODULE_14__["parseDate"])(ss, 'dd.mm.yyyy');
-        return ss;
-    }
-    get isWorkflowDone() {
-        if (this.workflowSaveRequest.workflow) {
-            return this.workflowSaveRequest.workflow.isDone;
-        }
-        return false;
-    }
-    get isWorkflowInLastStep() {
-        if (this.workflowSaveRequest.workflow) {
-            return this.workflowSaveRequest.workflow.isLastStep;
-        }
-        return false;
     }
     get canSave() {
         if (this.workflowSaveRequest.workflow) {
@@ -4777,40 +4486,18 @@ let EditInvoiceComponent = class EditInvoiceComponent {
         }
         return true;
     }
-    ngOnInit() {
-        this.invoiceEditForm = this.formBuilder.group({
-            expireDays: [10, _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
-            controllerIdentity: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
-            comments: [''],
-            sender: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
-            registerNumber: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
-            invocieDate: [new Date(), _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
-            partnerCode: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
-            vendorNumber: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
-            vendorName: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
-            isDirectDebitPermission: [false],
-            invoiceType: [_wf_models__WEBPACK_IMPORTED_MODULE_11__["InvoiceType"].NO_TYPE, [_custom_validators_invoice_type_controll_validator__WEBPACK_IMPORTED_MODULE_13__["InvoiceTypeControllValidator"]]],
-            discountEnterDate: [new Date(), _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
-            discountDeadline: [0, _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
-            discountRate: [0, _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
-            discountDate: [new Date(), _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
-            paymentAmount: [0, _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
-        });
+    get debugData() {
+        var ss = Object(_helper__WEBPACK_IMPORTED_MODULE_12__["formatDate"])(new Date(), 'dd.mm.yyyy');
+        ss += " -- " + Object(_helper__WEBPACK_IMPORTED_MODULE_12__["parseDate"])(ss, 'dd.mm.yyyy');
+        return ss;
     }
-    reload() {
-        this.loadInitialData();
+    ngOnInit() {
+        super.ngOnInit();
     }
     loadInitialData() {
+        super.loadInitialData();
         if (this.workflowIdentity == '') {
             return;
-        }
-        if (this.global.loadedGeneralData !== null) {
-            this.users = this.global.loadedGeneralData.company.users;
-            this.departments = this.global.loadedGeneralData.company.departments;
-        }
-        else {
-            this.subscribeToGeneralData();
-            this.global.loadAllSetting(null);
         }
         this.loadWorkflowData();
     }
@@ -4833,107 +4520,8 @@ let EditInvoiceComponent = class EditInvoiceComponent {
             this.loadingService.hideLoading();
         });
     }
-    setPageTitle() {
-        var pageLabelId = "invoice-assignview-title";
-        if (this.workflowSaveRequest.workflow.currentStepIndex === 1) {
-            pageLabelId = "invoice-assignview-title";
-        }
-        if (this.workflowSaveRequest.workflow.currentStepIndex === 2) {
-            pageLabelId = "invoice-testingview-title";
-        }
-        if (this.workflowSaveRequest.workflow.currentStepIndex === 3) {
-            pageLabelId = "invoice-releaseview-title";
-        }
-        this.translate.get(pageLabelId).subscribe((res) => {
-            this.pageTitle = res;
-        });
-    }
-    setToControlValues() {
-        if (this.workflowSaveRequest && this.workflowSaveRequest.workflow) {
-            this.setPageTitle();
-            this.invoiceEditForm.controls["expireDays"].setValue(this.workflowSaveRequest.expireDays);
-            this.invoiceEditForm.controls["controllerIdentity"].setValue(this.workflowSaveRequest.workflow.controllerIdentity);
-            this.invoiceEditForm.controls["comments"].setValue(this.workflowSaveRequest.workflow.comments);
-            this.invoiceEditForm.controls["sender"].setValue(this.workflowSaveRequest.workflow.sender);
-            this.invoiceEditForm.controls["registerNumber"].setValue(this.workflowSaveRequest.workflow.registerNumber);
-            this.invoiceEditForm.controls["invocieDate"].setValue(Object(_helper__WEBPACK_IMPORTED_MODULE_14__["parseDate"])(this.workflowSaveRequest.workflow.invocieDate, 'dd.mm.yyyy'));
-            this.invoiceEditForm.controls["partnerCode"].setValue(this.workflowSaveRequest.workflow.partnerCode);
-            this.invoiceEditForm.controls["vendorNumber"].setValue(this.workflowSaveRequest.workflow.vendorNumber);
-            this.invoiceEditForm.controls["vendorName"].setValue(this.workflowSaveRequest.workflow.vendorName);
-            this.invoiceEditForm.controls["isDirectDebitPermission"].setValue(this.workflowSaveRequest.workflow.isDirectDebitPermission);
-            this.invoiceEditForm.controls["invoiceType"].setValue(this.workflowSaveRequest.workflow.invoiceType);
-            this.invoiceEditForm.controls["discountEnterDate"].setValue(Object(_helper__WEBPACK_IMPORTED_MODULE_14__["parseDate"])(this.workflowSaveRequest.workflow.discountEnterDate, 'dd.mm.yyyy'));
-            this.invoiceEditForm.controls["comments"].setValue(this.workflowSaveRequest.workflow.comments);
-            this.invoiceEditForm.controls["discountDeadline"].setValue(this.workflowSaveRequest.workflow.discountDeadline);
-            this.invoiceEditForm.controls["discountRate"].setValue(this.workflowSaveRequest.workflow.discountRate);
-            this.invoiceEditForm.controls["discountDate"].setValue(Object(_helper__WEBPACK_IMPORTED_MODULE_14__["parseDate"])(this.workflowSaveRequest.workflow.discountDate, 'dd.mm.yyyy'));
-            this.invoiceEditForm.controls["paymentAmount"].setValue(this.workflowSaveRequest.workflow.paymentAmount);
-        }
-    }
-    setFormControlValues() {
-        this.workflowSaveRequest.expireDays = this.invoiceEditForm.controls["expireDays"].value;
-        this.workflowSaveRequest.workflow.controllerIdentity = this.invoiceEditForm.controls["controllerIdentity"].value;
-        this.workflowSaveRequest.workflow.comments = this.invoiceEditForm.controls["comments"].value;
-        this.workflowSaveRequest.workflow.sender = this.invoiceEditForm.controls["sender"].value;
-        this.workflowSaveRequest.workflow.registerNumber = this.invoiceEditForm.controls["registerNumber"].value;
-        this.workflowSaveRequest.workflow.invocieDate = Object(_helper__WEBPACK_IMPORTED_MODULE_14__["formatDate"])(this.invoiceEditForm.controls["invocieDate"].value, 'dd.mm.yyyy');
-        this.workflowSaveRequest.workflow.partnerCode = this.invoiceEditForm.controls["partnerCode"].value;
-        this.workflowSaveRequest.workflow.vendorNumber = this.invoiceEditForm.controls["vendorNumber"].value;
-        this.workflowSaveRequest.workflow.vendorName = this.invoiceEditForm.controls["vendorName"].value;
-        this.workflowSaveRequest.workflow.isDirectDebitPermission = this.invoiceEditForm.controls["isDirectDebitPermission"].value;
-        this.workflowSaveRequest.workflow.invoiceType = this.invoiceEditForm.controls["invoiceType"].value;
-        this.workflowSaveRequest.workflow.discountEnterDate = Object(_helper__WEBPACK_IMPORTED_MODULE_14__["formatDate"])(this.invoiceEditForm.controls["discountEnterDate"].value, 'dd.mm.yyyy');
-        this.workflowSaveRequest.workflow.comments = this.invoiceEditForm.controls["comments"].value;
-        this.workflowSaveRequest.workflow.discountDeadline = this.invoiceEditForm.controls["discountDeadline"].value;
-        this.workflowSaveRequest.workflow.discountRate = this.invoiceEditForm.controls["discountRate"].value;
-        this.workflowSaveRequest.workflow.discountDate = Object(_helper__WEBPACK_IMPORTED_MODULE_14__["formatDate"])(this.invoiceEditForm.controls["discountDate"].value, 'dd.mm.yyyy');
-        this.workflowSaveRequest.workflow.paymentAmount = this.invoiceEditForm.controls["paymentAmount"].value;
-    }
-    get forms() { return this.invoiceEditForm.controls; }
-    subscribeToGeneralData() {
-        this.global.currentSessionDataSubject.subscribe((data) => {
-            console.log("set gloabl-data from workflow-create. appIsLogged: ");
-            //alert("from app-comp: \n" + JSON.stringify(data));
-            if (data && data !== null) {
-                var value = data.isLogged + "";
-                if (value === "true" === true) {
-                    this.users = data.company.users;
-                    this.departments = data.company.departments;
-                }
-                else {
-                    this.users = [];
-                    this.departments = [];
-                }
-            }
-            else {
-                this.users = [];
-                this.departments = [];
-            }
-        });
-    }
-    get hasNoAssigns() {
-        if (this.workflowSaveRequest && this.workflowSaveRequest.assigns) {
-            return this.workflowSaveRequest.assigns.length == 0;
-        }
-        return false;
-    }
-    removeAssign(identity, type) {
-        this.workflowSaveRequest.assigns = this.workflowSaveRequest.assigns.filter(function (value, index, arr) {
-            return value.itemIdentity != identity || value.itemType != type;
-        });
-    }
-    removeFile(index) {
-        this.fileTitles.splice(index, 1);
-    }
-    addFile() {
-        var ft = new _wf_models__WEBPACK_IMPORTED_MODULE_11__["FileTitle"]();
-        ft.title = "";
-        ft.file = null;
-        this.fileTitles.push(ft);
-    }
     save(makeDone) {
         this.setFormControlValues();
-        //return;
         this.loadingService.showLoading();
         if (this.fileTitles.length > 0) {
             this.editService.uploadFiles(this.fileTitles).subscribe((result) => {
@@ -4964,7 +4552,6 @@ let EditInvoiceComponent = class EditInvoiceComponent {
     }
     archive() {
         this.setFormControlValues();
-        //return;
         this.loadingService.showLoading();
         if (this.fileTitles.length > 0) {
             this.editService.uploadFiles(this.fileTitles).subscribe((result) => {
@@ -4984,6 +4571,7 @@ let EditInvoiceComponent = class EditInvoiceComponent {
         }
     }
     saveWorkflowData() {
+        this.saveMessage = "";
         this.editService.saveWorkflow(this.workflowSaveRequest.workflow).subscribe((result) => {
             console.log("Create workflow result", result);
             this.translate.get('common.saved').subscribe((res) => {
@@ -5022,79 +4610,6 @@ let EditInvoiceComponent = class EditInvoiceComponent {
             this.loadingService.hideLoading();
         });
     }
-    isItemAssigned(identity, type) {
-        if (this.selectAssign[type] === undefined) {
-            this.selectAssign[type] = [];
-        }
-        if (this.selectAssign[type][identity] === undefined) {
-            this.selectAssign[type][identity] = false;
-        }
-        return this.selectAssign[type][identity];
-    }
-    applyUserSelect() {
-        this.workflowSaveRequest.assigns = [];
-        for (var type in this.selectAssign) {
-            for (var identity in this.selectAssign[type]) {
-                if (this.selectAssign[type][identity]) {
-                    var assign = new _wf_models__WEBPACK_IMPORTED_MODULE_11__["AssignItem"];
-                    assign.itemIdentity = identity;
-                    assign.itemType = type;
-                    this.workflowSaveRequest.assigns.push(assign);
-                }
-            }
-        }
-        this.hideAssignSelect();
-    }
-    showAssignSelect() {
-        this.selectAssign = [];
-        for (var index in this.workflowSaveRequest.assigns) {
-            var assign = this.workflowSaveRequest.assigns[index];
-            if (this.selectAssign[assign.itemType] === undefined) {
-                this.selectAssign[assign.itemType] = [];
-            }
-            this.selectAssign[assign.itemType][assign.itemIdentity] = true;
-        }
-        this.showAssignModal = true;
-    }
-    hideAssignSelect() {
-        this.showAssignModal = false;
-    }
-    toggleAssign(identity, type, isChecked) {
-        if (this.selectAssign[type] === undefined) {
-            this.selectAssign[type] = [];
-        }
-        this.selectAssign[type][identity] = isChecked;
-    }
-    getAssignItemTitle(item) {
-        //assign.itemIdentity = <string>identity;
-        //assign.itemType = <AssignType>type;
-        if (item.itemType === _wf_models__WEBPACK_IMPORTED_MODULE_11__["AssignType"].USER) {
-            for (var index in this.users) {
-                if (this.users[index].identity === item.itemIdentity) {
-                    return this.users[index].fullName;
-                }
-            }
-            return 'Unknown!';
-        }
-        if (item.itemType === _wf_models__WEBPACK_IMPORTED_MODULE_11__["AssignType"].DEPARTMENT) {
-            for (var index in this.departments) {
-                if (this.departments[index].identity === item.itemIdentity) {
-                    return this.departments[index].title;
-                }
-            }
-            return 'Unknown!';
-        }
-        if (item.itemType === _wf_models__WEBPACK_IMPORTED_MODULE_11__["AssignType"].DEPARTMENTGROUP) {
-            for (var index in this.departments) {
-                for (var gindex in this.departments[index].departmentGroups) {
-                    if (this.departments[index].departmentGroups[gindex].identity === item.itemIdentity) {
-                        return this.departments[index].departmentGroups[gindex].title;
-                    }
-                }
-            }
-            return 'Unknown!';
-        }
-    }
 };
 EditInvoiceComponent.ctorParameters = () => [
     { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] },
@@ -5112,7 +4627,7 @@ EditInvoiceComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
         selector: 'app-edit-invoice',
         template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./edit-invoice.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/wm-components/edit/edit-invoice/edit-invoice.component.html")).default,
-        providers: [{ provide: _angular_material__WEBPACK_IMPORTED_MODULE_6__["DateAdapter"], useClass: _helper__WEBPACK_IMPORTED_MODULE_14__["GermanDateAdapter"] }],
+        providers: [{ provide: _angular_material__WEBPACK_IMPORTED_MODULE_6__["DateAdapter"], useClass: _helper__WEBPACK_IMPORTED_MODULE_12__["GermanDateAdapter"] }],
         styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./edit-invoice.component.css */ "./src/app/wm-components/edit/edit-invoice/edit-invoice.component.css")).default]
     })
 ], EditInvoiceComponent);
@@ -5963,6 +5478,282 @@ EditTestthreeTaskComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     })
 ], EditTestthreeTaskComponent);
 
+
+
+/***/ }),
+
+/***/ "./src/app/wm-components/invoice-base.component.ts":
+/*!*********************************************************!*\
+  !*** ./src/app/wm-components/invoice-base.component.ts ***!
+  \*********************************************************/
+/*! exports provided: InvoiceBaseComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InvoiceBaseComponent", function() { return InvoiceBaseComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
+/* harmony import */ var _wf_models__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../wf-models */ "./src/app/wf-models/index.ts");
+/* harmony import */ var _wf_models_invoice_workflow_save_request__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../wf-models/invoice-workflow-save-request */ "./src/app/wf-models/invoice-workflow-save-request.ts");
+/* harmony import */ var _custom_validators_invoice_type_controll_validator__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../custom-validators/invoice-type-controll-validator */ "./src/app/custom-validators/invoice-type-controll-validator.ts");
+/* harmony import */ var _helper__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../helper */ "./src/app/helper/index.ts");
+
+
+
+
+
+
+class InvoiceBaseComponent {
+    constructor(router, global, translate, editService, loadingService, http, errorService, formBuilder, dateAdapter) {
+        this.router = router;
+        this.global = global;
+        this.translate = translate;
+        this.editService = editService;
+        this.loadingService = loadingService;
+        this.http = http;
+        this.errorService = errorService;
+        this.formBuilder = formBuilder;
+        this.dateAdapter = dateAdapter;
+        this.pageTitle = "not-initialized!";
+        this.workflowListUrl = "/workflow/list";
+        this.workflowSaveRequest = new _wf_models_invoice_workflow_save_request__WEBPACK_IMPORTED_MODULE_3__["InvoiceWorkflowSaveRequest"]();
+        this.users = [];
+        this.departments = [];
+        this.fileTitles = [];
+        this.showAssignModal = false;
+        this.selectAssign = [];
+        this.invoiceTypes = [];
+        this.assignTypeUser = _wf_models__WEBPACK_IMPORTED_MODULE_2__["AssignType"].USER;
+        this.assignTypeDepartment = _wf_models__WEBPACK_IMPORTED_MODULE_2__["AssignType"].DEPARTMENT;
+        this.assignTypeDepartmentGroup = _wf_models__WEBPACK_IMPORTED_MODULE_2__["AssignType"].DEPARTMENTGROUP;
+        this.dateAdapter.setLocale('de');
+        for (var o in _wf_models__WEBPACK_IMPORTED_MODULE_2__["InvoiceType"]) {
+            var str = o + "";
+            var num = new Number(o);
+            if (isNaN(num)) {
+                translate.get('invoice-invoicetype-' + str.toLowerCase()).subscribe((res) => {
+                    this.invoiceTypes.push({ value: o, title: res });
+                });
+            }
+        }
+    }
+    fileTitleProgress(fileInput, file, fileIndex) {
+        if (fileInput.target.files && fileInput.target.files != null && file) {
+            file.file = fileInput.target.files[0];
+        }
+    }
+    get assignedUsers() {
+        if (this.workflowSaveRequest != null) {
+            return this.workflowSaveRequest.assigns;
+        }
+        return [];
+    }
+    ngOnInit() {
+        this.invoiceEditForm = this.formBuilder.group({
+            expireDays: [10, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required],
+            controllerIdentity: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required],
+            comments: [''],
+            sender: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required],
+            registerNumber: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required],
+            invocieDate: [new Date(), _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required],
+            partnerCode: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required],
+            vendorNumber: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required],
+            vendorName: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required],
+            isDirectDebitPermission: [false],
+            invoiceType: [_wf_models__WEBPACK_IMPORTED_MODULE_2__["InvoiceType"].NO_TYPE, [_custom_validators_invoice_type_controll_validator__WEBPACK_IMPORTED_MODULE_4__["InvoiceTypeControllValidator"]]],
+            discountEnterDate: [new Date(), _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required],
+            discountDeadline: [0, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required],
+            discountRate: [0, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required],
+            discountDate: [new Date(), _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required],
+            paymentAmount: [0, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required],
+        });
+    }
+    reload() {
+        this.loadInitialData();
+    }
+    loadInitialData() {
+        if (this.global.loadedGeneralData !== null) {
+            this.users = this.global.loadedGeneralData.company.users;
+            this.departments = this.global.loadedGeneralData.company.departments;
+        }
+        else {
+            this.subscribeToGeneralData();
+            this.global.loadAllSetting(null);
+        }
+    }
+    setPageTitle() {
+        var pageLabelId = "invoice-assignview-title";
+        if (this.workflowSaveRequest.workflow.currentStepIndex === 1) {
+            pageLabelId = "invoice-assignview-title";
+        }
+        if (this.workflowSaveRequest.workflow.currentStepIndex === 2) {
+            pageLabelId = "invoice-testingview-title";
+        }
+        if (this.workflowSaveRequest.workflow.currentStepIndex === 3) {
+            pageLabelId = "invoice-releaseview-title";
+        }
+        this.translate.get(pageLabelId).subscribe((res) => {
+            this.pageTitle = res;
+        });
+    }
+    setToControlValues() {
+        if (this.workflowSaveRequest && this.workflowSaveRequest.workflow) {
+            this.setPageTitle();
+            this.invoiceEditForm.controls["expireDays"].setValue(this.workflowSaveRequest.expireDays);
+            this.invoiceEditForm.controls["controllerIdentity"].setValue(this.workflowSaveRequest.workflow.controllerIdentity);
+            this.invoiceEditForm.controls["comments"].setValue(this.workflowSaveRequest.workflow.comments);
+            this.invoiceEditForm.controls["sender"].setValue(this.workflowSaveRequest.workflow.sender);
+            this.invoiceEditForm.controls["registerNumber"].setValue(this.workflowSaveRequest.workflow.registerNumber);
+            this.invoiceEditForm.controls["invocieDate"].setValue(Object(_helper__WEBPACK_IMPORTED_MODULE_5__["parseDate"])(this.workflowSaveRequest.workflow.invocieDate, 'dd.mm.yyyy'));
+            this.invoiceEditForm.controls["partnerCode"].setValue(this.workflowSaveRequest.workflow.partnerCode);
+            this.invoiceEditForm.controls["vendorNumber"].setValue(this.workflowSaveRequest.workflow.vendorNumber);
+            this.invoiceEditForm.controls["vendorName"].setValue(this.workflowSaveRequest.workflow.vendorName);
+            this.invoiceEditForm.controls["isDirectDebitPermission"].setValue(this.workflowSaveRequest.workflow.isDirectDebitPermission);
+            this.invoiceEditForm.controls["invoiceType"].setValue(this.workflowSaveRequest.workflow.invoiceType);
+            this.invoiceEditForm.controls["discountEnterDate"].setValue(Object(_helper__WEBPACK_IMPORTED_MODULE_5__["parseDate"])(this.workflowSaveRequest.workflow.discountEnterDate, 'dd.mm.yyyy'));
+            this.invoiceEditForm.controls["comments"].setValue(this.workflowSaveRequest.workflow.comments);
+            this.invoiceEditForm.controls["discountDeadline"].setValue(this.workflowSaveRequest.workflow.discountDeadline);
+            this.invoiceEditForm.controls["discountRate"].setValue(this.workflowSaveRequest.workflow.discountRate);
+            this.invoiceEditForm.controls["discountDate"].setValue(Object(_helper__WEBPACK_IMPORTED_MODULE_5__["parseDate"])(this.workflowSaveRequest.workflow.discountDate, 'dd.mm.yyyy'));
+            this.invoiceEditForm.controls["paymentAmount"].setValue(this.workflowSaveRequest.workflow.paymentAmount);
+        }
+    }
+    setFormControlValues() {
+        this.workflowSaveRequest.expireDays = this.invoiceEditForm.controls["expireDays"].value;
+        this.workflowSaveRequest.workflow.controllerIdentity = this.invoiceEditForm.controls["controllerIdentity"].value;
+        this.workflowSaveRequest.workflow.comments = this.invoiceEditForm.controls["comments"].value;
+        this.workflowSaveRequest.workflow.sender = this.invoiceEditForm.controls["sender"].value;
+        this.workflowSaveRequest.workflow.registerNumber = this.invoiceEditForm.controls["registerNumber"].value;
+        this.workflowSaveRequest.workflow.invocieDate = Object(_helper__WEBPACK_IMPORTED_MODULE_5__["formatDate"])(this.invoiceEditForm.controls["invocieDate"].value, 'dd.mm.yyyy');
+        this.workflowSaveRequest.workflow.partnerCode = this.invoiceEditForm.controls["partnerCode"].value;
+        this.workflowSaveRequest.workflow.vendorNumber = this.invoiceEditForm.controls["vendorNumber"].value;
+        this.workflowSaveRequest.workflow.vendorName = this.invoiceEditForm.controls["vendorName"].value;
+        this.workflowSaveRequest.workflow.isDirectDebitPermission = this.invoiceEditForm.controls["isDirectDebitPermission"].value;
+        this.workflowSaveRequest.workflow.invoiceType = this.invoiceEditForm.controls["invoiceType"].value;
+        this.workflowSaveRequest.workflow.discountEnterDate = Object(_helper__WEBPACK_IMPORTED_MODULE_5__["formatDate"])(this.invoiceEditForm.controls["discountEnterDate"].value, 'dd.mm.yyyy');
+        this.workflowSaveRequest.workflow.comments = this.invoiceEditForm.controls["comments"].value;
+        this.workflowSaveRequest.workflow.discountDeadline = this.invoiceEditForm.controls["discountDeadline"].value;
+        this.workflowSaveRequest.workflow.discountRate = this.invoiceEditForm.controls["discountRate"].value;
+        this.workflowSaveRequest.workflow.discountDate = Object(_helper__WEBPACK_IMPORTED_MODULE_5__["formatDate"])(this.invoiceEditForm.controls["discountDate"].value, 'dd.mm.yyyy');
+        this.workflowSaveRequest.workflow.paymentAmount = this.invoiceEditForm.controls["paymentAmount"].value;
+    }
+    get forms() { return this.invoiceEditForm.controls; }
+    subscribeToGeneralData() {
+        this.global.currentSessionDataSubject.subscribe((data) => {
+            console.log("set gloabl-data from workflow-create. appIsLogged: ");
+            //alert("from app-comp: \n" + JSON.stringify(data));
+            if (data && data !== null) {
+                var value = data.isLogged + "";
+                if (value === "true" === true) {
+                    this.users = data.company.users;
+                    this.departments = data.company.departments;
+                }
+                else {
+                    this.users = [];
+                    this.departments = [];
+                }
+            }
+            else {
+                this.users = [];
+                this.departments = [];
+            }
+        });
+    }
+    get hasNoAssigns() {
+        if (this.workflowSaveRequest && this.workflowSaveRequest.assigns) {
+            return this.workflowSaveRequest.assigns.length == 0;
+        }
+        return false;
+    }
+    removeAssign(identity, type) {
+        this.workflowSaveRequest.assigns = this.workflowSaveRequest.assigns.filter(function (value, index, arr) {
+            return value.itemIdentity != identity || value.itemType != type;
+        });
+    }
+    isItemAssigned(identity, type) {
+        if (this.selectAssign[type] === undefined) {
+            this.selectAssign[type] = [];
+        }
+        if (this.selectAssign[type][identity] === undefined) {
+            this.selectAssign[type][identity] = false;
+        }
+        return this.selectAssign[type][identity];
+    }
+    applyUserSelect() {
+        this.workflowSaveRequest.assigns = [];
+        for (var type in this.selectAssign) {
+            for (var identity in this.selectAssign[type]) {
+                if (this.selectAssign[type][identity]) {
+                    var assign = new _wf_models__WEBPACK_IMPORTED_MODULE_2__["AssignItem"];
+                    assign.itemIdentity = identity;
+                    assign.itemType = type;
+                    this.workflowSaveRequest.assigns.push(assign);
+                }
+            }
+        }
+        this.hideAssignSelect();
+    }
+    showAssignSelect() {
+        this.selectAssign = [];
+        for (var index in this.workflowSaveRequest.assigns) {
+            var assign = this.workflowSaveRequest.assigns[index];
+            if (this.selectAssign[assign.itemType] === undefined) {
+                this.selectAssign[assign.itemType] = [];
+            }
+            this.selectAssign[assign.itemType][assign.itemIdentity] = true;
+        }
+        this.showAssignModal = true;
+    }
+    hideAssignSelect() {
+        this.showAssignModal = false;
+    }
+    toggleAssign(identity, type, isChecked) {
+        if (this.selectAssign[type] === undefined) {
+            this.selectAssign[type] = [];
+        }
+        this.selectAssign[type][identity] = isChecked;
+    }
+    getAssignItemTitle(item) {
+        //assign.itemIdentity = <string>identity;
+        //assign.itemType = <AssignType>type;
+        if (item.itemType === _wf_models__WEBPACK_IMPORTED_MODULE_2__["AssignType"].USER) {
+            for (var index in this.users) {
+                if (this.users[index].identity === item.itemIdentity) {
+                    return this.users[index].fullName;
+                }
+            }
+            return 'Unknown!';
+        }
+        if (item.itemType === _wf_models__WEBPACK_IMPORTED_MODULE_2__["AssignType"].DEPARTMENT) {
+            for (var index in this.departments) {
+                if (this.departments[index].identity === item.itemIdentity) {
+                    return this.departments[index].title;
+                }
+            }
+            return 'Unknown!';
+        }
+        if (item.itemType === _wf_models__WEBPACK_IMPORTED_MODULE_2__["AssignType"].DEPARTMENTGROUP) {
+            for (var index in this.departments) {
+                for (var gindex in this.departments[index].departmentGroups) {
+                    if (this.departments[index].departmentGroups[gindex].identity === item.itemIdentity) {
+                        return this.departments[index].departmentGroups[gindex].title;
+                    }
+                }
+            }
+            return 'Unknown!';
+        }
+    }
+    removeFile(index) {
+        this.fileTitles.splice(index, 1);
+    }
+    addFile() {
+        var ft = new _wf_models__WEBPACK_IMPORTED_MODULE_2__["FileTitle"]();
+        ft.title = "";
+        ft.file = null;
+        this.fileTitles.push(ft);
+    }
+}
 
 
 /***/ }),
