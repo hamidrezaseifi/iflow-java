@@ -35,7 +35,7 @@ div.workflow-record{
 
 .twopannel .panel{
 	
-	height: 230px;
+	height: 190px;
 }
 
 .twopannel .panel.panel-vendor{
@@ -109,7 +109,10 @@ div.workflow-content-record div.item-row .label-large{
 	width: calc(100% - 420px);
 }
 
-.large-content input[type=text], .large-content select, .large-content areatext{
+.large-content input[type=text],
+.large-content input[type=number],
+.large-content select, 
+.large-content areatext{
 	width: calc(100% - 30px);
 }
 

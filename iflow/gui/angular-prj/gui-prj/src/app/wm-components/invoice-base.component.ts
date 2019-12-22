@@ -22,6 +22,10 @@ import { GermanDateAdapter, parseDate, formatDate } from '../helper';
 export class InvoiceBaseComponent implements OnInit {
 
 	pageTitle :string = "not-initialized!";
+
+	paymentamountOtherTypesTitle :string = "";
+	paymentamountTypePaymentTitle :string = "";
+
 	
 	invoiceEditForm: FormGroup;
 
@@ -44,7 +48,21 @@ export class InvoiceBaseComponent implements OnInit {
 	assignTypeDepartment :AssignType = AssignType.DEPARTMENT;
 	assignTypeDepartmentGroup :AssignType = AssignType.DEPARTMENTGROUP;
 	
-	
+	//discountEnterDate
+//discountDeadline
+//discountDate
+
+	calcDiscountDate(){
+		//alert("calcDiscountDate ---");
+		
+		var enterDate :Date = this.invoiceEditForm.controls["discountEnterDate"].value;
+		var deadline : number= this.invoiceEditForm.controls["discountDeadline"].value;
+		
+		if(enterDate != null && deadline != null && deadline > 0){
+			this.invoiceEditForm.controls["discountDate"].setValue( new Date(enterDate.getFullYear(), enterDate.getMonth(), enterDate.getDate() + deadline) );
+		}
+
+	}
 	
 	fileTitleProgress(fileInput: any, file :FileTitle, fileIndex) {
 		
@@ -63,6 +81,14 @@ export class InvoiceBaseComponent implements OnInit {
 		return [];
 	}
 	
+	get paymentamountTitle() :string{
+		
+		return this.isPaymentInvoiceType() ? this.paymentamountTypePaymentTitle : this.paymentamountOtherTypesTitle;
+	}
+	
+	isPaymentInvoiceType() :boolean{		
+		return this.invoiceEditForm.controls["invoiceType"].value === "PAYMENT";
+	}
 	
 	constructor(
 		    protected router: Router,
@@ -88,6 +114,15 @@ export class InvoiceBaseComponent implements OnInit {
 			}
 			
 		}
+		
+		this.translate.get('invoice-paymentamount').subscribe((res: string) => {
+        	this.paymentamountOtherTypesTitle = res;
+        });
+
+		this.translate.get('invoice-paymentamount-payment').subscribe((res: string) => {
+        	this.paymentamountTypePaymentTitle = res;
+        });
+		
 		
 	}
 	
@@ -178,7 +213,6 @@ export class InvoiceBaseComponent implements OnInit {
 			this.invoiceEditForm.controls["isDirectDebitPermission"].setValue(this.workflowSaveRequest.workflow.isDirectDebitPermission);
 			this.invoiceEditForm.controls["invoiceType"].setValue(this.workflowSaveRequest.workflow.invoiceType);
 			this.invoiceEditForm.controls["discountEnterDate"].setValue(parseDate(this.workflowSaveRequest.workflow.discountEnterDate, 'dd.mm.yyyy'));
-			this.invoiceEditForm.controls["comments"].setValue(this.workflowSaveRequest.workflow.comments);
 			this.invoiceEditForm.controls["discountDeadline"].setValue(this.workflowSaveRequest.workflow.discountDeadline);
 			this.invoiceEditForm.controls["discountRate"].setValue(this.workflowSaveRequest.workflow.discountRate);
 			this.invoiceEditForm.controls["discountDate"].setValue(parseDate(this.workflowSaveRequest.workflow.discountDate, 'dd.mm.yyyy'));
@@ -203,7 +237,6 @@ export class InvoiceBaseComponent implements OnInit {
 		this.workflowSaveRequest.workflow.isDirectDebitPermission = this.invoiceEditForm.controls["isDirectDebitPermission"].value; 
 		this.workflowSaveRequest.workflow.invoiceType = this.invoiceEditForm.controls["invoiceType"].value; 
 		this.workflowSaveRequest.workflow.discountEnterDate = formatDate(this.invoiceEditForm.controls["discountEnterDate"].value, 'dd.mm.yyyy'); 
-		this.workflowSaveRequest.workflow.comments = this.invoiceEditForm.controls["comments"].value; 
 		this.workflowSaveRequest.workflow.discountDeadline = this.invoiceEditForm.controls["discountDeadline"].value; 
 		this.workflowSaveRequest.workflow.discountRate = this.invoiceEditForm.controls["discountRate"].value; 
 		this.workflowSaveRequest.workflow.discountDate = formatDate(this.invoiceEditForm.controls["discountDate"].value, 'dd.mm.yyyy'); 

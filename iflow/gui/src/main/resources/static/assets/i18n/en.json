@@ -132,6 +132,7 @@
 	"invoice-discountrate-short" : "Satz",
 	"invoice-discountdate" : "Skontodatum",
 	"invoice-paymentamount" : "Zalungsbetrag",
+	"invoice-paymentamount-payment" : "Gutschriftsbetrag",
 	"invoice-discount" : "Skonto",
 	"invoice-invoice" : "Rechnung",
 	"invoice-vendor" : "Kreditore",
