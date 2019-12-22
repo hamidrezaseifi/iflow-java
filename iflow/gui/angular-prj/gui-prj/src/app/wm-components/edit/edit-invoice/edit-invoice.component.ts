@@ -94,7 +94,7 @@ export class EditInvoiceComponent extends InvoiceBaseComponent implements OnInit
 				this.loadInitialData();
 			}
 		});
-				
+
 	}
 	
 	ngOnInit() {

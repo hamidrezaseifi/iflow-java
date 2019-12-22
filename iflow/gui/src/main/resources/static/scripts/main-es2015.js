@@ -1544,19 +1544,27 @@ let LoginComponent = class LoginComponent {
         this.router = router;
         this.autService = autService;
         this.global = global;
+        this.returnUrl = "";
         this.loading = false;
         this.submitted = false;
         this.failedLogin = false;
         this.loginResponse = new _ui_models__WEBPACK_IMPORTED_MODULE_5__["LoginResponse"];
         translate.setDefaultLang('de');
         translate.use('de');
+        this.router.events.subscribe((evt) => {
+            if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_2__["NavigationEnd"]) {
+            }
+        });
     }
+    //returnUrl
     ngOnInit() {
         this.loginForm = this.formBuilder.group({
             username: ['admin@iflow.de', _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required],
             password: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required],
             companyid: [localStorage.getItem('companyId'), _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required],
         });
+        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+        alert(this.returnUrl);
     }
     get forms() { return this.loginForm.controls; }
     onSubmit() {
@@ -1588,7 +1596,7 @@ let LoginComponent = class LoginComponent {
         this.loading = false;
     }
     finishGeneralDataLoading() {
-        this.router.navigate(['/']);
+        this.router.navigate([this.returnUrl]);
     }
 };
 LoginComponent.ctorParameters = () => [

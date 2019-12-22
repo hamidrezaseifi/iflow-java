@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, NavigationEnd, ActivatedRoute  } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {HttpParams} from "@angular/common/http";
 import { Observable, throwError } from 'rxjs';
@@ -15,7 +15,7 @@ import { AuthenticationService } from '../services';
 @Component({ templateUrl: 'login.component.html' })
 	export class LoginComponent implements OnInit, ILoginComponent {
 
-	
+	returnUrl :string = "";
 	loginForm: FormGroup;
 	loading = false;
 	submitted = false;
@@ -31,21 +31,28 @@ import { AuthenticationService } from '../services';
 		private autService: AuthenticationService,
 		private global: GlobalService,
 		translate: TranslateService,
-		
 	  ) { 	  
 		  this.loginResponse = new LoginResponse;		  
 	        translate.setDefaultLang('de');
 	        translate.use('de');
+	        
+			this.router.events.subscribe((evt) => {
+				if (evt instanceof NavigationEnd) {
+				}
+			});
+	        
 		  
 	  }
 	  
-
+//returnUrl
 	  ngOnInit() {
 		  this.loginForm = this.formBuilder.group({
 	            username: ['admin@iflow.de', Validators.required],
 	            password: ['', Validators.required],
 	            companyid: [localStorage.getItem('companyId'), Validators.required],
 	        });
+		  
+		  	this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
 		  
 	  }
 	  
@@ -97,7 +104,7 @@ import { AuthenticationService } from '../services';
 		}
 	  
 		finishGeneralDataLoading(){
-  			this.router.navigate(['/']);
+  			this.router.navigate([this.returnUrl]);
 		}
 		
 }
