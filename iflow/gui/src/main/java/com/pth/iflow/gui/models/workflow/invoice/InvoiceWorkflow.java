@@ -177,7 +177,6 @@ public class InvoiceWorkflow extends WorkflowBase implements IWorkflow {
     newWorkflow.setComments("");
     newWorkflow.setIdentity(EIdentity.NOT_SET.getIdentity());
     newWorkflow.setInvoiceDate(LocalDate.now());
-    newWorkflow.setDiscountDate(LocalDate.now().plusDays(25));
 
     return newWorkflow;
   }

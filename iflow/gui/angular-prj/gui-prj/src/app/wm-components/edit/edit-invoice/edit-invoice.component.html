@@ -30,7 +30,7 @@
 									</div>
 									<div  class="item-label label-required small-label">{{ 'invoice-invoicedate' | translate }}</div>
 									<div class="item-content small-content">									
-										<input required class="select-date" matInput [matDatepicker]="invocieDatepicker" placeholder="{{ 'invoice-invoicedate-select' | translate }}" formControlName="invocieDate" >
+										<input required class="select-date" (change)="invoiceDateChanges()" (dateInput)="invoiceDateChanges()" matInput [matDatepicker]="invocieDatepicker" placeholder="{{ 'invoice-invoicedate-select' | translate }}" formControlName="invocieDate" >
 										<mat-datepicker-toggle matSuffix [for]="invocieDatepicker"></mat-datepicker-toggle>
 										<mat-datepicker #invocieDatepicker startView="month" [startAt]="invoiceEditForm.controls.invocieDate.value"></mat-datepicker>										
 									</div>
@@ -123,9 +123,7 @@
 									<div class="item-row">
 										<div class="item-label label-required small-label">{{ 'invoice-discountdate' | translate }}</div>
 										<div class="item-content">
-											<input required class="select-date" matInput [matDatepicker]="discountDatepicker" placeholder="{{ 'invoice-discountdate' | translate }}" formControlName="discountDate" >
-											<mat-datepicker-toggle matSuffix [for]="discountDatepicker"></mat-datepicker-toggle>
-											<mat-datepicker #discountDatepicker startView="month" [startAt]="invoiceEditForm.controls.discountDate.value"></mat-datepicker>										
+											<input required class="select-date" readonly placeholder="{{ 'invoice-discountdate' | translate }}" formControlName="discountDate" >
 										</div>
 										<div class="clear"></div>
 									</div>

@@ -48,10 +48,6 @@ export class InvoiceBaseComponent implements OnInit {
 	assignTypeDepartment :AssignType = AssignType.DEPARTMENT;
 	assignTypeDepartmentGroup :AssignType = AssignType.DEPARTMENTGROUP;
 	
-	//discountEnterDate
-//discountDeadline
-//discountDate
-
 	calcDiscountDate(){
 		//alert("calcDiscountDate ---");
 		
@@ -59,9 +55,18 @@ export class InvoiceBaseComponent implements OnInit {
 		var deadline : number= this.invoiceEditForm.controls["discountDeadline"].value;
 		
 		if(enterDate != null && deadline != null && deadline > 0){
-			this.invoiceEditForm.controls["discountDate"].setValue( new Date(enterDate.getFullYear(), enterDate.getMonth(), enterDate.getDate() + deadline) );
+			var date = new Date(enterDate.getFullYear(), enterDate.getMonth(), enterDate.getDate() + deadline);
+			this.invoiceEditForm.controls["discountDate"].setValue( formatDate(date, 'dd.mm.yyyy') );
 		}
 
+	}
+	
+	invoiceDateChanges(){
+		var enterDate :Date = this.invoiceEditForm.controls["discountEnterDate"].value;
+	
+		if(enterDate === null && this.invoiceEditForm.controls["invocieDate"].value !== null){
+			this.invoiceEditForm.controls["discountEnterDate"].setValue( this.invoiceEditForm.controls["invocieDate"].value );
+		}
 	}
 	
 	fileTitleProgress(fileInput: any, file :FileTitle, fileIndex) {
@@ -146,7 +151,7 @@ export class InvoiceBaseComponent implements OnInit {
 			discountEnterDate: [new Date(), Validators.required],
 			discountDeadline: [0, Validators.required],
 			discountRate: [0, Validators.required],
-			discountDate: [new Date(), Validators.required],
+			discountDate: ["", Validators.required],
 			
 			paymentAmount: [0, Validators.required],
 			
@@ -197,8 +202,14 @@ export class InvoiceBaseComponent implements OnInit {
 	
 	setToControlValues(){
 		if(this.workflowSaveRequest && this.workflowSaveRequest.workflow){
+			
 			this.setPageTitle();
-						
+				
+			if( (this.workflowSaveRequest.workflow.discountEnterDate === null || this.workflowSaveRequest.workflow.discountEnterDate === '') 
+					&& this.workflowSaveRequest.workflow.invocieDate !== null){
+				this.workflowSaveRequest.workflow.discountEnterDate = this.workflowSaveRequest.workflow.invocieDate;
+			}
+			
 			this.invoiceEditForm.controls["expireDays"].setValue(this.workflowSaveRequest.expireDays);
 			
 			this.invoiceEditForm.controls["controllerIdentity"].setValue(this.workflowSaveRequest.workflow.controllerIdentity);
@@ -215,9 +226,8 @@ export class InvoiceBaseComponent implements OnInit {
 			this.invoiceEditForm.controls["discountEnterDate"].setValue(parseDate(this.workflowSaveRequest.workflow.discountEnterDate, 'dd.mm.yyyy'));
 			this.invoiceEditForm.controls["discountDeadline"].setValue(this.workflowSaveRequest.workflow.discountDeadline);
 			this.invoiceEditForm.controls["discountRate"].setValue(this.workflowSaveRequest.workflow.discountRate);
-			this.invoiceEditForm.controls["discountDate"].setValue(parseDate(this.workflowSaveRequest.workflow.discountDate, 'dd.mm.yyyy'));
+			this.invoiceEditForm.controls["discountDate"].setValue(this.workflowSaveRequest.workflow.discountDate);
 			this.invoiceEditForm.controls["paymentAmount"].setValue(this.workflowSaveRequest.workflow.paymentAmount);
-						
 		}
 	}
 	
@@ -239,7 +249,7 @@ export class InvoiceBaseComponent implements OnInit {
 		this.workflowSaveRequest.workflow.discountEnterDate = formatDate(this.invoiceEditForm.controls["discountEnterDate"].value, 'dd.mm.yyyy'); 
 		this.workflowSaveRequest.workflow.discountDeadline = this.invoiceEditForm.controls["discountDeadline"].value; 
 		this.workflowSaveRequest.workflow.discountRate = this.invoiceEditForm.controls["discountRate"].value; 
-		this.workflowSaveRequest.workflow.discountDate = formatDate(this.invoiceEditForm.controls["discountDate"].value, 'dd.mm.yyyy'); 
+		this.workflowSaveRequest.workflow.discountDate = this.invoiceEditForm.controls["discountDate"].value; 
 		this.workflowSaveRequest.workflow.paymentAmount = this.invoiceEditForm.controls["paymentAmount"].value; 
 	}
 	
