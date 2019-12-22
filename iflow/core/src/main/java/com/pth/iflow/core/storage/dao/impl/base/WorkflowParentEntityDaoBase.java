@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -52,28 +53,30 @@ public abstract class WorkflowParentEntityDaoBase<T extends IWorkflowContainerEn
   @Transactional
   public T update(final T model) throws IFlowStorageException {
 
-    final EntityManager entityManager = dbConfiguration.getEntityManager();
+    final EntityManager     entityManager = dbConfiguration.getEntityManager();
 
-    if (entityManager.getTransaction().isActive() == false) {
-      entityManager.getTransaction().begin();
+    final EntityTransaction transaction   = entityManager.getTransaction();
+    if (transaction.isActive() == false) {
+      transaction.begin();
     }
 
     final WorkflowEntity workflowModel = entityManager.find(WorkflowEntity.class, model.getWorkflowId());
+
     workflowModel.setFiles(new ArrayList<>());
     workflowModel.setActions(new ArrayList<>());
     entityManager.merge(workflowModel);
 
-    entityManager.getTransaction().commit();
+    transaction.commit();
 
-    if (entityManager.getTransaction().isActive() == false) {
-      entityManager.getTransaction().begin();
+    if (transaction.isActive() == false) {
+      transaction.begin();
     }
 
     final WorkflowEntity workflow = entityManager.merge(model.getWorkflow());
     model.setWorkflow(workflow);
     model.setWorkflowId(workflow.getId());
     final T savedModel = entityManager.merge(model);
-    entityManager.getTransaction().commit();
+    transaction.commit();
     entityManager.close();
     return getById(savedModel.getWorkflowId());
   }

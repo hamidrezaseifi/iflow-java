@@ -1,14 +1,19 @@
+import { Injectable } from '@angular/core';
 import { NativeDateAdapter } from '@angular/material';
+
+import { formatDate } from './date-helper';
 
 const SUPPORTS_INTL_API = typeof Intl !== 'undefined';
 
+@Injectable()
 export class GermanDateAdapter extends NativeDateAdapter {
   useUtcForDisplay = true;
   
   parse(value: any): Date | null {
 
-    if ((typeof value === 'string') && (value.indexOf('/') > -1)) {
-      const str = value.split('/');
+    if ((typeof value === 'string') && (value.indexOf('.') > -1)) {
+    
+      const str = value.split('.');
 
       const year = Number(str[2]);
       const month = Number(str[1]) - 1;
@@ -22,6 +27,8 @@ export class GermanDateAdapter extends NativeDateAdapter {
 
   // to be removed when mmalerba merge the mods in the next beta
   format(date: Date, displayFormat: Object): string {
+	  return formatDate(date, "dd.mm.yyyy");
+	  
     if (SUPPORTS_INTL_API) {
       if (this.useUtcForDisplay) {
         date = new Date(Date.UTC(

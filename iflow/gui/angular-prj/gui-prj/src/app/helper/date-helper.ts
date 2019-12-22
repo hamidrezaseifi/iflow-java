@@ -27,7 +27,7 @@ export function formatDate(input :Date, format :string) :string {
 			return getStringWithOneLeadingZero(input.getDate());
 		}
 		if(part === 'mm'){
-			return getStringWithOneLeadingZero(input.getMonth());
+			return getStringWithOneLeadingZero(input.getMonth() + 1);
 		}
 	});
 

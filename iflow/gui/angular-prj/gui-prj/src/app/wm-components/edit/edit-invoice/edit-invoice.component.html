@@ -135,19 +135,7 @@
 							
 							<div class="clear"></div>					
 						</div>
-					
-						<div class="item-row">
-							<div class="item-label label-required label-large">{{ 'workflow-controller' | translate }}</div>
-							<div class="item-content fullrowfromlabel">
-								<select type="text" class="fullrow" formControlName="controllerIdentity">
-									<option value="0">{{ 'workflow-select-controller' | translate }}</option>
-									<option *ngFor="let user of users;" value="{{user.identity}}">{{user.fullName}}</option>
-								</select>
-							</div>
-							<div class="clear"></div>
-						</div>
-	
-						
+											
 						<div class="item-row">
 							<div class="item-label label-large">{{ 'workflow-comments' | translate }}</div>
 							<div class="item-content fullrowfromlabel">

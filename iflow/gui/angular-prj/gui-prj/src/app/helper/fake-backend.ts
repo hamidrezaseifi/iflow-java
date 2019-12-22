@@ -5,7 +5,8 @@ import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
 import { InterceptorUseHeader } from './http-hepler';
 
 import { AuthenticationOKResponse, AuthenticationFailedResponse, GeneralDataOkResponse, 
-	InitialSearchDataOkResponse, WorkflowSearchResultOkResponse, WorkflowSaveRequestInitOkResponse } from '../fake-data';
+	InitialSearchDataOkResponse, WorkflowSearchResultOkResponse, WorkflowSaveRequestInitOkResponse,
+	InvoiceWorkflowSaveRequestInitOkResponse} from '../fake-data';
 
 	
 @Injectable()
@@ -56,9 +57,18 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             }
 
             // get workflow create & edit initial result
-            if (request.url.endsWith('/workflow/singletask/data/initcreate') && request.method === 'POST') {
+            if (
+            		(request.url.endsWith('/workflow/singletask/data/initcreate') || 
+            				request.url.endsWith('/workflow/testthreetask/data/initcreate'))
+            				&& request.method === 'POST') {
             	            	
             	return of(new HttpResponse({ status: 200, body: WorkflowSaveRequestInitOkResponse }));           	
+            }
+
+            // get workflow create & edit initial result
+            if (request.url.endsWith('/workflow/invoice/data/initcreate') && request.method === 'POST') {
+            	            	
+            	return of(new HttpResponse({ status: 200, body: InvoiceWorkflowSaveRequestInitOkResponse }));           	
             }
 
 

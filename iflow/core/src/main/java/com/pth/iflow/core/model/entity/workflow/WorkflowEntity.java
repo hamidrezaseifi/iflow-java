@@ -68,13 +68,13 @@ public class WorkflowEntity extends EntityIdentityHelper {
   @Column(name = "updated_at", insertable = false, updatable = false)
   private Date                             updatedAt;
 
-  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-  @JoinColumn(name = "workflow_id")
+  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "workflowEntity", fetch = FetchType.EAGER)
+  // @JoinColumn(name = "workflow_id")
   @Fetch(value = FetchMode.SUBSELECT)
   private final List<WorkflowFileEntity>   files   = new ArrayList<>();
 
-  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-  @JoinColumn(name = "workflow_id")
+  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "workflowEntity", fetch = FetchType.EAGER)
+  // @JoinColumn(name = "workflow_id")
   @Fetch(value = FetchMode.SUBSELECT)
   private final List<WorkflowActionEntity> actions = new ArrayList<>();
 
