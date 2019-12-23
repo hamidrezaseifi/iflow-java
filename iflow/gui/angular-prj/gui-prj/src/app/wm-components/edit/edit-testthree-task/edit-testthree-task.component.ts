@@ -33,6 +33,8 @@ export class EditTestthreeTaskComponent implements OnInit {
 	workflowListUrl :string = "/workflow/list";
 	
 	workflowSaveRequest :WorkflowSaveRequest = new WorkflowSaveRequest();
+
+	viewWorkflowModel :Workflow = null;
 	
 	users : User[] = [];
 	departments : Department[] = [];
@@ -192,6 +194,7 @@ export class EditTestthreeTaskComponent implements OnInit {
 		 		
 				if(initialData && initialData !== null){
 					this.workflowSaveRequest = initialData.workflowSaveRequest;
+					this.viewWorkflowModel = this.workflowSaveRequest.workflow;
 					this.setToControlValues();
 					
 				}

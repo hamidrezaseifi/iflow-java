@@ -11,6 +11,18 @@ div.workflow-content{
     background-color: #dad9d9;
     padding: 15px;
     border-radius: 5px;
+    width: calc(100% - 310px);
+    float: left;
+    height: 530px;
+}
+
+div.workflow-record{
+    background-color: #dad9d9;
+    padding: 10px;
+    border-radius: 5px;
+    width: 300px;
+    float: right;
+    height: 530px;
 }
 
 div.workflow-content-record{

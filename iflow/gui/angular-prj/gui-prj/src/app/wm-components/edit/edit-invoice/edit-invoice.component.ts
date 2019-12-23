@@ -30,6 +30,9 @@ export class EditInvoiceComponent extends InvoiceBaseComponent implements OnInit
 
 	saveMessage : string = "";	
 
+
+	viewWorkflowModel :Workflow = null;
+
 	get canSave() :boolean{
 		if(this.workflowSaveRequest.workflow){
 			return this.workflowSaveRequest.workflow.canSave;
@@ -126,6 +129,7 @@ export class EditInvoiceComponent extends InvoiceBaseComponent implements OnInit
 		 		
 				if(initialData && initialData !== null){
 					this.workflowSaveRequest = initialData.workflowSaveRequest;
+					this.viewWorkflowModel = this.workflowSaveRequest.workflow;
 					this.setToControlValues();
 					
 				}

@@ -22,10 +22,13 @@ export class Workflow {
 	currentStepIndex :number;
 	isDone :boolean;
 	isLastStep :boolean;
+
 	canDone :boolean;
 	canArchive :boolean;
 	canSave :boolean;
 	canAssign :boolean;
+	canEdit :boolean;
+
 	loggedUserControllerAndDone :boolean;
 
 

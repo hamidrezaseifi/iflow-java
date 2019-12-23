@@ -52,6 +52,12 @@ public interface IWorkflow {
 
   public boolean isAssigned();
 
+  public boolean isMeAssigned();
+
+  public boolean isLoggedUserController();
+
+  public boolean isLoggedUserControllerAndDone();
+
   public boolean isInitializing();
 
   public void addAction(final WorkflowAction action);
@@ -85,5 +91,7 @@ public interface IWorkflow {
   public boolean getIsDone();
 
   public boolean getCanAssign();
+
+  public boolean getCanEdit();
 
 }

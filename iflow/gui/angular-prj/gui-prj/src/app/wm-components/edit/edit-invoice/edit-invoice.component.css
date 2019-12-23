@@ -11,20 +11,23 @@ div.workflow-content{
     background-color: #dad9d9;
     padding: 15px;
     border-radius: 5px;
+    width: calc(100% - 310px);
+    float: left;
+    height: 690px;
+}
+
+div.workflow-record{
+    background-color: #dad9d9;
+    padding: 10px;
+    border-radius: 5px;
+    width: 300px;
+    float: right;
+    height: 690px;
 }
 
 
 div.workflow-content-record{
     padding: 15px;
-}
-
-div.workflow-record{
-	float: right;
-    background-color: #dad9d9;
-    padding: 8px;
-    border-radius: 5px;
-    width: 25%;
-    min-height: 500px;
 }
 
 .workflow-content .panel{

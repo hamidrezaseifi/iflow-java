@@ -297,14 +297,18 @@ public class WorkflowBase extends IdentityModel implements IWorkflow {
     return (this.getStatus() == EWorkflowStatus.ASSIGNED);
   }
 
+  @Override
   public boolean isMeAssigned() {
-    return this.isAssigned() && (this.getHasActiveAction() && this.getActiveAction().isAssignTo(this.currentUserIdentity));
+    return (this.isAssigned() || this.isInitializing())
+        && (this.getHasActiveAction() && this.getActiveAction().isAssignTo(this.currentUserIdentity));
   }
 
+  @Override
   public boolean isLoggedUserController() {
     return this.controllerIdentity.equals(this.currentUserIdentity);
   }
 
+  @Override
   public boolean isLoggedUserControllerAndDone() {
     return this.controllerIdentity.equals(this.currentUserIdentity) && this.getIsDone();
   }
@@ -405,6 +409,12 @@ public class WorkflowBase extends IdentityModel implements IWorkflow {
   @Override
   public boolean getCanAssign() {
     return this.getIsLastStep() == false;
+  }
+
+  @Override
+  public boolean getCanEdit() {
+
+    return this.isMeAssigned() || this.isLoggedUserControllerAndDone();
   }
 
 }

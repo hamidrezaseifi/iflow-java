@@ -70,6 +70,11 @@
 					        				
 					<div class="item-row" [innerHTML]="debugData"></div>
 				</div>
+				
+				<div class="workflow-record">
+					<app-workflow-inlineview [workflow]="viewWorkflowModel"></app-workflow-inlineview>
+				</div>
+				<div class="clear"></div>
 		    </form>
 		    <div class="modal fade" [ngClass]="{'show' : showAssignModal}" tabindex="-1" id="assignlistdialog" role="dialog" aria-labelledby="exampleModalCenterTitle">
 				<div class="modal-dialog modal-dialog-centered" role="document">

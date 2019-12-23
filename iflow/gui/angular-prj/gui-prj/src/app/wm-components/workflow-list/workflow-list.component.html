@@ -46,7 +46,7 @@
 		    			<td>{{item.assignToUserFullName}}</td>
 		    			<td></td>
 		    			<td>
-		    				<a class="tool-link" *ngIf="item.meAssigned || item.loggedUserControllerAndDone" (click)="editWorkflow(item)"><i class="material-icons">edit</i></a>
+		    				<a class="tool-link" *ngIf="item.canEdit" (click)="editWorkflow(item)"><i class="material-icons">edit</i></a>
 		    				<a class="tool-link" (click)="showWorkflow(item.workflowType.identity, idx)"><i class="material-icons">pageview</i></a>
 		    			</td>
 				    </tr>
