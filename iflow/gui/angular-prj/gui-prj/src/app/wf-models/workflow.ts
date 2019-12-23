@@ -26,6 +26,7 @@ export class Workflow {
 	canArchive :boolean;
 	canSave :boolean;
 	canAssign :boolean;
+	loggedUserControllerAndDone :boolean;
 
 
 	files: WorkflowFile[];

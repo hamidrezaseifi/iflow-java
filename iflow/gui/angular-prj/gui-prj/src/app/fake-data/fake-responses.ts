@@ -1,6 +1,6 @@
 
 import { User, LoginResponse, GeneralData } from '../ui-models';
-import { WorkflowListInitialData, WorkflowResult, WorkflowSearchResult } from '../wf-models';
+import { WorkflowListInitialData, Workflow, WorkflowSearchResult } from '../wf-models';
 import { WorkflowSaveRequestInit } from '../wf-models/workflow-save-request-init';
 import { InvoiceWorkflowSaveRequestInit } from '../wf-models/invoice-workflow-save-request-init';
 

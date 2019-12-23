@@ -7,7 +7,7 @@ import { WorkflowSearchService } from '../../services/workflow/workflow-search.s
 import { LoadingServiceService } from '../../services/loading-service.service';
 import { ErrorServiceService } from '../../services/error-service.service';
 
-import { WorkflowType, Workflow, WorkflowTypeStep, WorkflowSearchFilter, WorkflowListInitialData, WorkflowResult, WorkflowSearchResult } from '../../wf-models';
+import { WorkflowType, Workflow, WorkflowTypeStep, WorkflowSearchFilter, WorkflowListInitialData, WorkflowSearchResult } from '../../wf-models';
 import { User, GeneralData } from '../../ui-models';
 
 @Component({
@@ -17,10 +17,12 @@ import { User, GeneralData } from '../../ui-models';
 })
 export class WorkflowListComponent implements OnInit {
 	worlflowTypes		:WorkflowType[] = [];
-	resultWorlflows		:WorkflowResult[] = [];
+	resultWorlflows		:Workflow[] = [];
 	listInitialData 	:WorkflowListInitialData = new WorkflowListInitialData();
 
 	showDebug : boolean = false;
+	viewWorkflowModal :boolean = false;
+	viewWorkflowModel :Workflow = null;
 
 
 	constructor(
@@ -154,6 +156,25 @@ export class WorkflowListComponent implements OnInit {
 		}
 		return "";
 	}
+	
+	showWorkflow(typeIdentity: string, index: number){
+		
+		this.viewWorkflowModel = this.resultWorlflows[index];
+		this.viewWorkflowModal = true;
+		
+	}
+	
+	hideViewModal(){
+		this.viewWorkflowModal = false;
+	}
+	
+	editWorkflow(workflow: Workflow){
+		
+		this.hideViewModal();
+		this.router.navigate(['/workflow/edit/' + workflow.workflowType.identity + '/' + workflow.identity]);
+		
+		
+  	}
 	
 }
 

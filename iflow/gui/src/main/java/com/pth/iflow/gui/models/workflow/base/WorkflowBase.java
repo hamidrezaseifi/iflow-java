@@ -301,6 +301,14 @@ public class WorkflowBase extends IdentityModel implements IWorkflow {
     return this.isAssigned() && (this.getHasActiveAction() && this.getActiveAction().isAssignTo(this.currentUserIdentity));
   }
 
+  public boolean isLoggedUserController() {
+    return this.controllerIdentity.equals(this.currentUserIdentity);
+  }
+
+  public boolean isLoggedUserControllerAndDone() {
+    return this.controllerIdentity.equals(this.currentUserIdentity) && this.getIsDone();
+  }
+
   public boolean isNotAssigned() {
     return this.isAssigned() == false;
   }

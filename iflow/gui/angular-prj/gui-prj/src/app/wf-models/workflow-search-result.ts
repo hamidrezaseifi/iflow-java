@@ -1,8 +1,8 @@
 ﻿
-import { WorkflowResult } from '../wf-models';
+import { Workflow } from '../wf-models';
 
 export class WorkflowSearchResult {
 	res :string;
-	list :WorkflowResult[] = [];
+	list :Workflow[] = [];
 }
 

@@ -6,7 +6,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpHepler } from '../../helper/http-hepler';
 import { LoadingServiceService } from '../loading-service.service';
 
-import { WorkflowSearchFilter, WorkflowListInitialData, WorkflowResult, WorkflowSearchResult } from '../../wf-models';
+import { WorkflowSearchFilter, WorkflowListInitialData, Workflow, WorkflowSearchResult } from '../../wf-models';
 
 
 @Injectable({

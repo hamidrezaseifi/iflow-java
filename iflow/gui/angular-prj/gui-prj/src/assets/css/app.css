@@ -898,3 +898,30 @@ span.mat-icon-button{
 	margin-left: 10px;
 }
 
+a.tool-link{
+	color: #212529;
+	cursor: pointer;
+}
+
+a.tool-link:hover{
+	color: #575b00;
+}
+
+
+.workflowview-dialog-content-container div.item-row div.item-label{
+    float: left;
+    padding-right: 10px;
+    padding-left: 2px;
+    line-height: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    width: 130px;
+}
+
+
+.workflowview-dialog-content-container div.item-row div.item-content {
+    float: left;
+    
+    padding-left: 0px;
+    width: calc(100% - 135px);
+}
