@@ -16,7 +16,8 @@ import { WorkflowSaveRequestInit } from '../../../wf-models/workflow-save-reques
 @Component({
   selector: 'app-create-singletask',
   templateUrl: './create-singletask.component.html',
-  styleUrls: ['./create-singletask.component.css']
+  styleUrls: ['./create-singletask.component.css'],
+  providers: [SingleTaskWorkflowEditService]
 })
 export class CreateSingletaskComponent implements OnInit {
 

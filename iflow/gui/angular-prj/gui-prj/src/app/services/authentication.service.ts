@@ -6,7 +6,7 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
 import { User, LoginResponse, GeneralData } from '../ui-models';
-import { ILoginComponent } from '../_components';
+import { ILoginComponent } from '../components';
 
 import { GlobalService } from '../services/global.service';
 import { LoadingServiceService } from './loading-service.service';
@@ -68,7 +68,7 @@ export class AuthenticationService implements CanActivate{
     	
     }
 
-    checkLoginState(returnUrl :string, router: Router,) {
+    checkLoginState(returnUrl :string, ) {
     	
     	this.loadingService.showLoading();
     	this.global.loadAllSettingObserv().subscribe(
@@ -87,7 +87,7 @@ export class AuthenticationService implements CanActivate{
 			        	
 			        	//alert("from authentication- redirect to : " + returnUrl + ": \n" + JSON.stringify(generalData));
 			        	
-		            	router.navigate([returnUrl]);
+		            	this.router.navigate([returnUrl]);
 		            }
 		            else{
 		            	this.isLoggedIn = false;
@@ -96,7 +96,7 @@ export class AuthenticationService implements CanActivate{
 			        	
 		            	//alert("from authentication- redirect to login : \n" + JSON.stringify(generalData));
 		            	
-		            	router.navigate(['auth/login'], { queryParams: { returnUrl: returnUrl } });
+			        	this.router.navigate(['auth/login'], { queryParams: { returnUrl: returnUrl } });
 		            }
 		        	
 		        },
@@ -106,7 +106,7 @@ export class AuthenticationService implements CanActivate{
 	            	this.currentUserSubject.next(null);
 		        	this.currentUserSubject.complete();
 
-		            router.navigate(['auth/login'], { queryParams: { returnUrl: returnUrl } });
+		            this.router.navigate(['auth/login'], { queryParams: { returnUrl: returnUrl } });
 		        },
 		        () => {
 		            
@@ -116,12 +116,24 @@ export class AuthenticationService implements CanActivate{
     	
     }
 
-    logout() {
+    clearSessionData() {
         
         this.global.clear();
         this.currentUserSubject.next(null);
         this.currentUserSubject.complete();
-        window.location.assign("/logout");
+    }
+
+    resetGeneralSettings() {
+        
+        this.clearSessionData() ;
+        this.global.loadAllSetting(null);
+    }
+
+    logout() {
+        
+        this.clearSessionData();
+        //window.location.assign("/logout");
+        this.router.navigate(['auth/login']);
     }
     
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
@@ -133,7 +145,7 @@ export class AuthenticationService implements CanActivate{
             return true;
         }
 
-        this.checkLoginState(state.url, this.router);
+        this.checkLoginState(state.url);
         
         // not logged in so redirect to login page with the return url
         //this.router.navigate(['auth/login'], { queryParams: { returnUrl: state.url } });

@@ -17,7 +17,8 @@ import { WorkflowSaveRequestInit } from '../../../wf-models/workflow-save-reques
 @Component({
   selector: 'app-create-testthreetask',
   templateUrl: './create-testthreetask.component.html',
-  styleUrls: ['./create-testthreetask.component.css']
+  styleUrls: ['./create-testthreetask.component.css'],
+providers: [TestthreetaskWorkflowEditService]
 })
 export class CreateTestthreetaskComponent implements OnInit {
 

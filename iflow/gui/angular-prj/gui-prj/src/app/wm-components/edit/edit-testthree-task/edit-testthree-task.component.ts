@@ -20,7 +20,7 @@ import { GermanDateAdapter, parseDate, formatDate } from '../../../helper';
   selector: 'app-edit-testthree-task',
   templateUrl: './edit-testthree-task.component.html',
   styleUrls: ['./edit-testthree-task.component.css'],
-  providers: [{provide: DateAdapter, useClass: GermanDateAdapter}]
+  providers: [{provide: DateAdapter, useClass: GermanDateAdapter}, TestthreetaskWorkflowEditService]
 })
 export class EditTestthreeTaskComponent implements OnInit {
 

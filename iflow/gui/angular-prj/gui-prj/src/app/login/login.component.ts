@@ -8,7 +8,7 @@ import {TranslateService} from '@ngx-translate/core';
 
 import { User, LoginResponse } from '../ui-models';
 import { GlobalService } from '../services/global.service';
-import { ILoginComponent } from '../_components';
+import { ILoginComponent } from '../components';
 import { AuthenticationService } from '../services';
 
 
@@ -38,6 +38,7 @@ import { AuthenticationService } from '../services';
 	        
 			this.router.events.subscribe((evt) => {
 				if (evt instanceof NavigationEnd) {
+					this.autService.resetGeneralSettings();
 				}
 			});
 	        

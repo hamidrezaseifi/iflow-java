@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.pth.iflow.gui.controller.GuiLogedControllerBase;
-import com.pth.iflow.gui.exceptions.GuiCustomizedException;
+import com.pth.iflow.gui.exceptions.GuiSessionException;
 
 @Controller
 public class GuiDataControllerBase extends GuiLogedControllerBase {
@@ -31,7 +31,7 @@ public class GuiDataControllerBase extends GuiLogedControllerBase {
       throws Exception {
 
     if (this.getSessionUserInfo() == null || !this.getSessionUserInfo().isValid()) {
-      throw new GuiCustomizedException("Not logged in!");
+      throw new GuiSessionException("Not logged in!");
 
     }
 

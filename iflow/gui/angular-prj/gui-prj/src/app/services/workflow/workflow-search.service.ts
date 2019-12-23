@@ -2,9 +2,12 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { HttpHeaders, HttpParams, HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { HttpHepler } from '../../helper/http-hepler';
+import { HttpErrorResponseHelper } from '../../helper/http-error-response-helper';
 import { LoadingServiceService } from '../loading-service.service';
+import { AuthenticationService } from '../../services';
 
 import { WorkflowSearchFilter, WorkflowListInitialData, Workflow, WorkflowSearchResult } from '../../wf-models';
 
@@ -12,7 +15,7 @@ import { WorkflowSearchFilter, WorkflowListInitialData, Workflow, WorkflowSearch
 @Injectable({
   providedIn: 'root'
 })
-export class WorkflowSearchService {
+export class WorkflowSearchService extends HttpErrorResponseHelper {
 
 	public searchInitialDataSubject: BehaviorSubject<WorkflowListInitialData> = new BehaviorSubject<WorkflowListInitialData>(null);
 	
@@ -21,10 +24,13 @@ export class WorkflowSearchService {
 	listInitialData :WorkflowListInitialData = null;
 
 	constructor(
-			private http: HttpClient,
-			private loadingService: LoadingServiceService,
+			protected http: HttpClient,
+			protected loadingService: LoadingServiceService,
+			protected router: Router, 
+			protected route :ActivatedRoute,
+			protected autService: AuthenticationService,
 	) { 
-		
+		super(router, route, autService);
 		
 	}
 	
@@ -48,6 +54,8 @@ export class WorkflowSearchService {
 		        },
 		        response => {
 		        	console.log("Error in read search inital data", response);
+		        	this.processErrorResponse(response);
+		        	this.loadingService.hideLoading();
 		        },
 		        () => {
 		        	this.searchInitialDataSubject.complete();

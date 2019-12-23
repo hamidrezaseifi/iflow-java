@@ -36,18 +36,14 @@ export class AppComponent implements OnInit  {
 		
 	) {
 		
-        // this language will be used as a fallback when a translation isn't found in the current language
         translate.setDefaultLang('de');
 
-         // the lang to use, if the lang isn't available, it will use the current loader to get them
         translate.use('de');
         
         translate.get('site.title').subscribe((res: string) => {
         	this.titleService.setTitle( res );
         });
-        
-        //this.currentSessionDataObs = this.global.currentSessionDataObs;
-        		
+                		
 		this.router.routeReuseStrategy.shouldReuseRoute = function(){
  	        return false;
 		}
@@ -56,33 +52,30 @@ export class AppComponent implements OnInit  {
  	        if (evt instanceof NavigationEnd) {
  	        	
  	        	if(this.autService.isLoggedIn === true && this.appCurrentUser === null){
+ 	        		//this.subscribeToGeneralData();
  	        		this.global.loadAllSetting(null);
+ 	        		alert("nav end from app-comp");
  	        	}
  	           
- 	         //alert("app-comp navigate. menus:" + this.appMenus.length);
  	        }
 		});
- 	     
-		/*if (environment.production) {
-			alert("is in prod");
-		}
-		else{
-			alert("is not in prod");
-		}*/
+
+		
 	}
 	
 	ngOnInit() {
 		
-        
 		this.subscribeToGeneralData();
-	
+		this.global.loadAllSetting(null);
 	}
 
 	private subscribeToGeneralData(){
+		alert("subscribe");
+		
 		this.global.currentSessionDataSubject.subscribe((data : GeneralData) => {
         	
 			console.log("set gloabl-data from app-comp. appIsLogged: " + this.appIsLogged);
-			//alert("from app-comp: \n" + JSON.stringify(data));
+			alert("from app-comp: \n" + JSON.stringify(data));
         	
 			if(data && data !== null){
 				

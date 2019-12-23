@@ -2,7 +2,7 @@
 		<div class="content-container">
 			<div class="page-toolbar">
 				<div class="page-title">{{ pageTitle }}</div>
-				<a class="toolbar-link" href="/workflow/list"><i class="material-icons">list</i></a>
+				<a class="toolbar-link" [routerLink]="['/workflow/list']"><i class="material-icons">list</i></a>
 				<button class="toolbar-button" (click)="reload();"><i class="material-icons">refresh</i></button>
 			</div>
 			

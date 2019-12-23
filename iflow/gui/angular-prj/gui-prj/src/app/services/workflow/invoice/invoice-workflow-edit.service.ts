@@ -2,10 +2,13 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { HttpHeaders, HttpParams, HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { LoadingServiceService } from '../../loading-service.service';
 import { ErrorServiceService } from '../../error-service.service';
 import { HttpHepler } from '../../../helper/http-hepler';
+import { HttpErrorResponseHelper } from '../../../helper/http-error-response-helper';
+import { AuthenticationService } from '../../authentication.service';
 
 import { InvoiceWorkflowSaveRequestInit } from '../../../wf-models/invoice-workflow-save-request-init';
 import { InvoiceWorkflowSaveRequest } from '../../../wf-models/invoice-workflow-save-request';
@@ -16,7 +19,7 @@ import { WorkflowProcessCommand, Workflow, AssignItem, FileTitle, AssignType } f
 @Injectable({
   providedIn: 'root'
 })
-export class InvoiceWorkflowEditService {
+export class InvoiceWorkflowEditService extends HttpErrorResponseHelper {
 
 	public workflowSaveRequestInitSubject: BehaviorSubject<InvoiceWorkflowSaveRequestInit> = new BehaviorSubject<InvoiceWorkflowSaveRequestInit>(null);
 
@@ -60,10 +63,12 @@ export class InvoiceWorkflowEditService {
 	constructor(
 			protected http: HttpClient,
 			protected loadingService: LoadingServiceService,
-			private errorService :ErrorServiceService,
+			protected errorService :ErrorServiceService,
+			protected router: Router, 
+			protected route :ActivatedRoute,
+			protected autService: AuthenticationService,
 	) { 
-		
-		
+		super(router, route, autService);		
 	}
 	
 	

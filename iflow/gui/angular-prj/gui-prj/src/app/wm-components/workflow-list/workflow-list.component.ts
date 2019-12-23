@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 
 import { GlobalService } from '../../services/global.service';
@@ -13,7 +13,8 @@ import { User, GeneralData } from '../../ui-models';
 @Component({
   selector: 'app-workflow-list',
   templateUrl: './workflow-list.component.html',
-  styleUrls: ['./workflow-list.component.css']
+  styleUrls: ['./workflow-list.component.css'],
+  providers: [WorkflowSearchService]
 })
 export class WorkflowListComponent implements OnInit {
 	worlflowTypes		:WorkflowType[] = [];
@@ -32,6 +33,7 @@ export class WorkflowListComponent implements OnInit {
 			private searchService :WorkflowSearchService,
 			private loadingService: LoadingServiceService,
 			private errorService: ErrorServiceService,
+			private route :ActivatedRoute,
 			
 	) {
 		

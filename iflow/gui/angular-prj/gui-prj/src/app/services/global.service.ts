@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 import { User, MenuItem, GeneralData } from '../ui-models';
 import { TopBarComponent } from '../top-bar/top-bar.component';
-import { ILoginComponent } from '../_components';
+import { ILoginComponent } from '../components';
 import { LoadingServiceService } from './loading-service.service';
 import { HttpHepler } from '../helper/http-hepler';
 

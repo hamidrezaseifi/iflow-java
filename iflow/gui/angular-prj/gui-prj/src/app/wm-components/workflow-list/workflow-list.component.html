@@ -2,7 +2,7 @@
 			<div class="page-toolbar">
 				<div class="page-title">{{ 'menu-workflow-list' | translate }}</div>
 				<button class="toolbar-button" (click)="reload()"><i class="material-icons">refresh</i></button>
-				<a class="toolbar-link" href="/workflow/create"><i class="material-icons">playlist_add</i></a>
+				<a class="toolbar-link" [routerLink]="['/workflow/create']"><i class="material-icons">playlist_add</i></a>
 				
 				<ul class="nav nav-pills search-toolbar">
 					<li class="nav-item dropdown">

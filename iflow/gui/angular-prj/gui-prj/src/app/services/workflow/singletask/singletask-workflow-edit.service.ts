@@ -2,16 +2,17 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { HttpHeaders, HttpParams, HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { LoadingServiceService } from '../../loading-service.service';
 import { HttpHepler } from '../../../helper/http-hepler';
+import { AuthenticationService } from '../../authentication.service';
+import { WorkflowEditBaseService } from '../workflow-edit-base.service';
 
 import { WorkflowSaveRequestInit } from '../../../wf-models/workflow-save-request-init';
 import { WorkflowSaveRequest } from '../../../wf-models/workflow-save-request';
-
 import { WorkflowProcessCommand, Workflow, AssignItem, FileTitle, AssignType } from '../../../wf-models';
 
-import { WorkflowEditBaseService } from '../workflow-edit-base.service';
 
 
 @Injectable({
@@ -54,8 +55,11 @@ export class SingleTaskWorkflowEditService extends WorkflowEditBaseService {
 	constructor(
 			protected http: HttpClient,
 			protected loadingService: LoadingServiceService,
+			protected router: Router, 
+			protected route :ActivatedRoute,
+			protected autService: AuthenticationService,
 	) { 
-		super(http, loadingService);
+		super(http, loadingService, router, route, autService);
 		
 	}
 	

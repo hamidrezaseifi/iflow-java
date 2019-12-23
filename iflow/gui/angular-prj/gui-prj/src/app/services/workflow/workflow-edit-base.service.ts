@@ -2,9 +2,12 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { HttpHeaders, HttpParams, HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { LoadingServiceService } from '../loading-service.service';
 import { HttpHepler } from '../../helper/http-hepler';
+import { HttpErrorResponseHelper } from '../../helper/http-error-response-helper';
+import { AuthenticationService } from '../../services';
 
 import { WorkflowSaveRequestInit } from '../../wf-models/workflow-save-request-init';
 import { WorkflowSaveRequest } from '../../wf-models/workflow-save-request';
@@ -14,7 +17,7 @@ import { WorkflowProcessCommand, Workflow, AssignItem, FileTitle, AssignType } f
 @Injectable({
   providedIn: 'root'
 })
-export class WorkflowEditBaseService {
+export class WorkflowEditBaseService extends HttpErrorResponseHelper {
 
 	public workflowSaveRequestInitSubject: BehaviorSubject<WorkflowSaveRequestInit> = new BehaviorSubject<WorkflowSaveRequestInit>(null);
 
@@ -57,8 +60,11 @@ export class WorkflowEditBaseService {
 	constructor(
 			protected http: HttpClient,
 			protected loadingService: LoadingServiceService,
-	) { 
-		
+			protected router: Router, 
+			protected route :ActivatedRoute,
+			protected autService: AuthenticationService,
+		) { 
+		super(router, route, autService);
 		
 	}
 	
@@ -81,6 +87,8 @@ export class WorkflowEditBaseService {
 		        },
 		        response => {
 		        	console.log("Error in read edit inital data", response);
+		        	this.processErrorResponse(response);
+		        	this.loadingService.hideLoading();
 		        },
 		        () => {
 		        	this.workflowSaveRequestInitSubject.complete();

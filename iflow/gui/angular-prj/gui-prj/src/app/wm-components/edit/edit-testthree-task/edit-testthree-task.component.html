@@ -1,7 +1,7 @@
 		<div class="content-container">
 			<div class="page-toolbar">
 				<div class="page-title">{{ 'workflow-editing' | translate }}</div>
-				<a class="toolbar-link" href="/workflow/list"><i class="material-icons">list</i></a>
+				<a class="toolbar-link" [routerLink]="['/workflow/list']"><i class="material-icons">list</i></a>
 			</div>
 			
 			<form id="workflow-form" name="workflowForm" [formGroup]="workflowEditForm">
@@ -72,6 +72,7 @@
 				</div>
 				
 				<div class="workflow-record">
+					
 					<app-workflow-inlineview [workflow]="viewWorkflowModel"></app-workflow-inlineview>
 				</div>
 				<div class="clear"></div>

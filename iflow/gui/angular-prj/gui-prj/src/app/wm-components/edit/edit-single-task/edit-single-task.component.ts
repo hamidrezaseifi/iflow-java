@@ -20,7 +20,7 @@ import { GermanDateAdapter, parseDate, formatDate } from '../../../helper';
   selector: 'app-edit-single-task',
   templateUrl: './edit-single-task.component.html',
   styleUrls: ['./edit-single-task.component.css'],
-  providers: [{provide: DateAdapter, useClass: GermanDateAdapter}]
+  providers: [{provide: DateAdapter, useClass: GermanDateAdapter}, SingleTaskWorkflowEditService]
 })
 export class EditSingleTaskComponent implements OnInit {
 	

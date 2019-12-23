@@ -26,8 +26,8 @@ import { WorkflowMessageService } from './services/workflow/workflow-message.ser
 import { TopBarComponent } from './top-bar/top-bar.component';
 import { FooterComponent } from './footer/footer.component';
 import { MessageBarComponent } from './message-bar/message-bar.component';
-import { ErrorDialogComponent } from './_components/error-dialog/error-dialog.component';
-import { LoadingDialogComponent } from './_components/loading-dialog/loading-dialog.component';
+import { ErrorDialogComponent } from './components/error-dialog/error-dialog.component';
+import { LoadingDialogComponent } from './components/loading-dialog/loading-dialog.component';
 
 import { HomeComponent } from './home';
 import { AboutComponent } from './about';
@@ -91,7 +91,7 @@ export function createTranslateLoader(http: HttpClient) {
 	  GlobalService, 
 	  AuthenticationService, 
 	  WorkflowMessageService, 
-	  fakeBackendProvider 
+	  fakeBackendProvider,
   ],
   bootstrap: [ AppComponent ]
 })
