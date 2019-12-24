@@ -14,7 +14,7 @@ import { User, MenuItem } from '../ui-models';
 })
 export class TopBarComponent implements OnInit {
   
-	@Input('menus') menus: MenuItem[];
+	@Input('menus') menus: MenuItem[] = [];
 	@Input('currentUser') currentUser: User;
 	@Input('isLogged') isLogged: boolean;
 	

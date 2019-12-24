@@ -132,8 +132,8 @@ export class AuthenticationService implements CanActivate{
     logout() {
         
         this.clearSessionData();
-        //window.location.assign("/logout");
-        this.router.navigate(['auth/login']);
+        window.location.assign("/logout");
+        //this.router.navigate(['auth/login']);
     }
     
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {

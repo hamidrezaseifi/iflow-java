@@ -13,7 +13,7 @@
 				<div class="item-row">
 					<div class="item-label">{{ 'workflow-controller' | translate }}</div>
 					<div class="item-content">
-						<select type="text" [(ngModel)]="controllerIdentity">
+						<select [(ngModel)]="controllerIdentity">
 							<option value="0">{{ 'workflow-select-controller' | translate }}</option>
 							<option *ngFor="let user of users;" value="{{user.identity}}">{{user.fullName}}</option>
 						</select>

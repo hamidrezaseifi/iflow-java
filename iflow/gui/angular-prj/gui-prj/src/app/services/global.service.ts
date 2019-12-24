@@ -16,14 +16,15 @@ export class GlobalService {
 	//public currentSessionDataObs :Observable<GeneralData>;		
 
 	public loadedGeneralData : GeneralData = null;
+	
 	constructor(private http:HttpClient, private loadingService: LoadingServiceService,) { 
 		//this.currentSessionDataSubject = new BehaviorSubject<GeneralData>(null);
         //this.currentSessionDataObs = this.currentSessionDataSubject.asObservable();		
 	}
 	
-    public get currentSessionDataValue(): GeneralData {
+   /* public get currentSessionDataValue(): GeneralData {
         return this.currentSessionDataSubject.value;
-    }
+    }*/
 	
 	loadAllSetting(login: ILoginComponent, ){
 		this.loadingService.showLoading();
@@ -34,21 +35,25 @@ export class GlobalService {
 				(generalData :GeneralData) => {
 		            console.log("GET call successful generaldata", generalData);
 		            
+		            var islogged = generalData.isLogged + "";
+		            generalData.isLogged = islogged === "true";
+		            
 		            this.loadedGeneralData = <GeneralData> JSON.parse(JSON.stringify(generalData));
 		            
 		        	this.currentSessionDataSubject.next(generalData);
 		        	
+		        	this.loadingService.hideLoading();
 		        },
 		        response => {
 		            console.log("Error in read general list", response);
-		            
+		            this.loadingService.hideLoading();
 		        },
 		        () => {
 		            if(login != null){
 		            	login.finishGeneralDataLoading();
 		            }
 		            
-		            this.currentSessionDataSubject.complete();
+		            //this.currentSessionDataSubject.complete();
 		            
 		            this.loadingService.hideLoading();
 		        }
@@ -57,7 +62,7 @@ export class GlobalService {
 	
 	setGeneralData(generalData :GeneralData){
 		this.currentSessionDataSubject.next(generalData);
-		this.currentSessionDataSubject.complete();
+		//this.currentSessionDataSubject.complete();
 	}
   
 	loadAllSettingObserv(){		
@@ -69,7 +74,7 @@ export class GlobalService {
 	clear(){	
 		//alert("clear global");
 		this.currentSessionDataSubject.next(null);
-		this.currentSessionDataSubject.complete();
+		//this.currentSessionDataSubject.complete();
 	}
   
 }

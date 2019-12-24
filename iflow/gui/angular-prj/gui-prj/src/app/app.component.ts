@@ -20,9 +20,11 @@ import { User, MenuItem, GeneralData } from './ui-models';
 })
 export class AppComponent implements OnInit  {
 	
-	appMenus: MenuItem[] = [];
-	appCurrentUser: User = null;
-	appIsLogged: boolean = false;
+	generalDataObs :Observable<GeneralData> = null;
+	
+	//appMenus: MenuItem[] = [];
+	//appCurrentUser: User = null;
+	//appIsLogged: boolean = false;
 	
 	appShowLoading: boolean = false;
 	
@@ -51,25 +53,29 @@ export class AppComponent implements OnInit  {
 		this.router.events.subscribe((evt) => {
  	        if (evt instanceof NavigationEnd) {
  	        	
- 	        	if(this.autService.isLoggedIn === true && this.appCurrentUser === null){
+ 	        	//if(this.autService.isLoggedIn === true && this.appCurrentUser === null){
  	        		//this.subscribeToGeneralData();
  	        		this.global.loadAllSetting(null);
- 	        		alert("nav end from app-comp");
- 	        	}
+ 	        		//alert("nav end from app-comp");
+ 	        	//}
  	           
  	        }
 		});
 
+		this.generalDataObs = this.global.currentSessionDataSubject.asObservable();
 		
 	}
 	
 	ngOnInit() {
 		
-		this.subscribeToGeneralData();
+		
 		this.global.loadAllSetting(null);
+		
+		//this.subscribeToGeneralData();
+		//this.global.loadAllSetting(null);
 	}
 
-	private subscribeToGeneralData(){
+	/*private subscribeToGeneralData(){
 		alert("subscribe");
 		
 		this.global.currentSessionDataSubject.subscribe((data : GeneralData) => {
@@ -100,7 +106,7 @@ export class AppComponent implements OnInit  {
 				this.appIsLogged = false;
 			}
 		  });
-	}
+	}*/
 	
 	showLoading(){
 		
