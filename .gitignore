@@ -30,3 +30,4 @@ iflow/profile/target/*
 iflow/workflow/target/*
 iflow/backend/target/*
 iflow/gui/target/*
+/testspring/
