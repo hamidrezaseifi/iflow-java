@@ -41,6 +41,7 @@ import { EditInvoiceComponent } from './wm-components/edit/edit-invoice/edit-inv
 import { EditSingleTaskComponent } from './wm-components/edit/edit-single-task/edit-single-task.component';
 import { EditTestthreeTaskComponent } from './wm-components/edit/edit-testthree-task/edit-testthree-task.component';
 import { WorkflowInlineviewComponent } from './wm-components/workflow-inlineview/workflow-inlineview.component';
+import { SelectUserComponent } from './components/select-user/select-user.component';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -85,6 +86,7 @@ export function createTranslateLoader(http: HttpClient) {
     EditSingleTaskComponent,
     EditTestthreeTaskComponent,
     WorkflowInlineviewComponent,
+    SelectUserComponent,
     
   ],
   providers: [

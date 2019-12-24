@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import { HttpClient, HttpEventType } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 import { GlobalService } from '../../../services/global.service';
 import { TestthreetaskWorkflowEditService } from '../../../services/workflow/testthreetask/testthreetask-workflow-edit.service';
@@ -27,6 +28,8 @@ export class CreateTestthreetaskComponent implements OnInit {
 	workflowSaveRequest :WorkflowSaveRequest = null;
 	users : User[] = [];
 	departments : Department[] = [];
+	generalDataObs :Observable<GeneralData> = null;
+
 	
 	fileTitles : FileTitle[] = [];
 	
@@ -119,6 +122,8 @@ export class CreateTestthreetaskComponent implements OnInit {
 		    	this.loadInitialData();
 			}
 		});
+		
+		this.generalDataObs = this.global.currentSessionDataSubject.asObservable();
 	}
 	
 	ngOnInit() {
@@ -137,14 +142,14 @@ export class CreateTestthreetaskComponent implements OnInit {
 	 		this.editService.loadCreateInitialData();
 	 	}
 	
-	 	if(this.global.loadedGeneralData !== null){
+	 	/*if(this.global.loadedGeneralData !== null){
 	 		this.users = this.global.loadedGeneralData.company.users;
 	 		this.departments = this.global.loadedGeneralData.company.departments;
 	 	}
 	 	else{
 	 		this.subscribeToGeneralData();
 	 		this.global.loadAllSetting(null);
-	 	}
+	 	}*/
 	 	
 	}
 	
@@ -162,36 +167,13 @@ export class CreateTestthreetaskComponent implements OnInit {
 				this.workflowSaveRequest = null;
 			}
 		  });
+		
+		this.generalDataObs.subscribe( (generalData :GeneralData) => {
+			this.users = generalData.company.users;
+			this.departments = generalData.company.departments;
+		});
 	}
-	
-	private subscribeToGeneralData(){
-		this.global.currentSessionDataSubject.subscribe((data : GeneralData) => {
-	    	
-			console.log("set gloabl-data from workflow-create. appIsLogged: ");
-			//alert("from app-comp: \n" + JSON.stringify(data));
-	    	
-			if(data && data !== null){
-				
-				var value = data.isLogged + "";
-				
-				if(value === "true" === true){
-	 	 			this.users = data.company.users;
-	 	 			this.departments = data.company.departments;
-	 	 	  		
-				}
-				else{
-					this.users = [];
-	 	 			this.departments = [];
-				}
-		 	  		
-			}
-			else{
-				this.users = [];
-		 			this.departments = [];
-			}
-		  });
-	}
-	
+		
 	get hasNoAssigns() :boolean{
 		if(this.workflowSaveRequest && this.workflowSaveRequest.assigns){
 			return this.workflowSaveRequest.assigns.length == 0;
@@ -275,39 +257,7 @@ export class CreateTestthreetaskComponent implements OnInit {
 		    );	       	
 		
 	}
-	
-	isItemAssigned(identity :string , type: AssignType){
-	
-		if(this.selectAssign[type] === undefined){
-			this.selectAssign[type] = [];
-		}
-		if(this.selectAssign[type][identity] === undefined){
-			this.selectAssign[type][identity] = false;
-		}
-	
-		return this.selectAssign[type][identity];
-	}
-	
-	applyUserSelect(){
-		this.workflowSaveRequest.assigns = [];
-		
-		for(var type in this.selectAssign){
-			for(var identity in this.selectAssign[type]){
-				
-				if(this.selectAssign[type][identity]){
-					var assign = new AssignItem;
-					assign.itemIdentity = <string>identity;
-					assign.itemType = <AssignType>type;
-					
-					this.workflowSaveRequest.assigns.push(assign);
-					
-				}
-			}			
-		}
-		
-		this.hideAssignSelect();
-	}
-	
+			
 	showAssignSelect(){
 		
 		this.selectAssign = [];
@@ -321,8 +271,6 @@ export class CreateTestthreetaskComponent implements OnInit {
 			this.selectAssign[assign.itemType][assign.itemIdentity] = true;				
 		}
 		
-	
-		
 		this.showAssignModal = true;
 	}
 	
@@ -330,17 +278,23 @@ export class CreateTestthreetaskComponent implements OnInit {
 		this.showAssignModal = false;
 	}
 	
-	toggleAssign(identity :string , type: AssignType, isChecked: boolean){
-		if(this.selectAssign[type] === undefined){
-			this.selectAssign[type] = [];
-		}
-		this.selectAssign[type][identity] = isChecked;
+	onUsersSelected(assigns: AssignItem[]) {
+		this.workflowSaveRequest.assigns = [];
 		
-	}
+		for(var item in assigns){
+			var assign = new AssignItem;
+			assign.itemIdentity = assigns[item].itemIdentity;
+			assign.itemType = assigns[item].itemType;
+			
+			this.workflowSaveRequest.assigns.push(assign);						
+		}
+		
+		this.hideAssignSelect();
+	}	
+		
 	
 	getAssignItemTitle(item :AssignItem){
-		//assign.itemIdentity = <string>identity;
-		//assign.itemType = <AssignType>type;
+
 		if(item.itemType === AssignType.USER){
 			for(var index in this.users){
 				if(this.users[index].identity === item.itemIdentity){
@@ -371,6 +325,5 @@ export class CreateTestthreetaskComponent implements OnInit {
 		}
 		
 	}
-	
 
 }

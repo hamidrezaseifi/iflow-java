@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import {TranslateService} from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 import { HttpClient, HttpEventType } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { DateAdapter } from '@angular/material';
+import { Observable } from 'rxjs';
 
 import { GlobalService } from '../services/global.service';
 import { InvoiceWorkflowEditService } from '../services/workflow/invoice/invoice-workflow-edit.service';
@@ -35,6 +36,7 @@ export class InvoiceBaseComponent implements OnInit {
 	
 	users : User[] = [];
 	departments : Department[] = [];
+	generalDataObs :Observable<GeneralData> = null;
 	
 	fileTitles : FileTitle[] = [];
 		
@@ -128,6 +130,7 @@ export class InvoiceBaseComponent implements OnInit {
         	this.paymentamountTypePaymentTitle = res;
         });
 		
+		this.generalDataObs = this.global.currentSessionDataSubject.asObservable();
 		
 	}
 	
@@ -168,14 +171,10 @@ export class InvoiceBaseComponent implements OnInit {
 	
 	protected loadInitialData(){
 	 		
-	 	if(this.global.loadedGeneralData !== null){
-	 		this.users = this.global.loadedGeneralData.company.users;
-	 		this.departments = this.global.loadedGeneralData.company.departments;
-	 	}
-	 	else{
-	 		this.subscribeToGeneralData();
-	 		this.global.loadAllSetting(null);
-	 	}
+		this.generalDataObs.subscribe( (generalData :GeneralData) => {
+			this.users = generalData.company.users;
+			this.departments = generalData.company.departments;
+		});
 	 	
 	}
 	
@@ -255,35 +254,7 @@ export class InvoiceBaseComponent implements OnInit {
 	
 	  
 	get forms() { return this.invoiceEditForm.controls; }
-	
-	private subscribeToGeneralData(){
-		this.global.currentSessionDataSubject.subscribe((data : GeneralData) => {
-	    	
-			console.log("set gloabl-data from workflow-create. appIsLogged: ");
-			//alert("from app-comp: \n" + JSON.stringify(data));
-	    	
-			if(data && data !== null){
-				
-				var value = data.isLogged + "";
-				
-				if(value === "true" === true){
-	 	 			this.users = data.company.users;
-	 	 			this.departments = data.company.departments;
-	 	 	  		
-				}
-				else{
-					this.users = [];
-	 	 			this.departments = [];
-				}
-		 	  		
-			}
-			else{
-				this.users = [];
-		 			this.departments = [];
-			}
-		  });
-	}
-	
+		
 	get hasNoAssigns() :boolean{
 		if(this.workflowSaveRequest && this.workflowSaveRequest.assigns){
 			return this.workflowSaveRequest.assigns.length == 0;
@@ -300,37 +271,6 @@ export class InvoiceBaseComponent implements OnInit {
 		
 	}
 	
-	isItemAssigned(identity :string , type: AssignType){
-	
-		if(this.selectAssign[type] === undefined){
-			this.selectAssign[type] = [];
-		}
-		if(this.selectAssign[type][identity] === undefined){
-			this.selectAssign[type][identity] = false;
-		}
-	
-		return this.selectAssign[type][identity];
-	}
-	
-	applyUserSelect(){
-		this.workflowSaveRequest.assigns = [];
-		
-		for(var type in this.selectAssign){
-			for(var identity in this.selectAssign[type]){
-				
-				if(this.selectAssign[type][identity]){
-					var assign = new AssignItem;
-					assign.itemIdentity = <string>identity;
-					assign.itemType = <AssignType>type;
-					
-					this.workflowSaveRequest.assigns.push(assign);
-					
-				}
-			}			
-		}
-		
-		this.hideAssignSelect();
-	}
 	
 	showAssignSelect(){
 		
@@ -345,8 +285,6 @@ export class InvoiceBaseComponent implements OnInit {
 			this.selectAssign[assign.itemType][assign.itemIdentity] = true;				
 		}
 		
-	
-		
 		this.showAssignModal = true;
 	}
 	
@@ -354,17 +292,23 @@ export class InvoiceBaseComponent implements OnInit {
 		this.showAssignModal = false;
 	}
 	
-	toggleAssign(identity :string , type: AssignType, isChecked: boolean){
-		if(this.selectAssign[type] === undefined){
-			this.selectAssign[type] = [];
-		}
-		this.selectAssign[type][identity] = isChecked;
+	onUsersSelected(assigns: AssignItem[]) {
+		this.workflowSaveRequest.assigns = [];
 		
-	}
+		for(var item in assigns){
+			var assign = new AssignItem;
+			assign.itemIdentity = assigns[item].itemIdentity;
+			assign.itemType = assigns[item].itemType;
+			
+			this.workflowSaveRequest.assigns.push(assign);						
+		}
+		
+		this.hideAssignSelect();
+	}	
+		
 	
 	getAssignItemTitle(item :AssignItem){
-		//assign.itemIdentity = <string>identity;
-		//assign.itemType = <AssignType>type;
+
 		if(item.itemType === AssignType.USER){
 			for(var index in this.users){
 				if(this.users[index].identity === item.itemIdentity){

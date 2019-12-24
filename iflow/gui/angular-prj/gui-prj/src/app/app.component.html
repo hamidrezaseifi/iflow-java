@@ -1,4 +1,5 @@
-<app-top-bar [menus]="(generalDataObs | async)?.app.menus" [currentUser]="(generalDataObs | async)?.user.currentUser" [isLogged]="(generalDataObs | async)?.isLogged" (loggingOut)="onLoggingOut($event)"></app-top-bar>
+<app-top-bar [menus]="(generalDataObs | async)?.app.menus" [currentUser]="(generalDataObs | async)?.user.currentUser" [isLogged]="(generalDataObs | async)?.isLogged"
+  (loggingOut)="onLoggingOut($event)"></app-top-bar>
 
 <div class="container">
     
