@@ -577,9 +577,6 @@ let AppComponent = class AppComponent {
         this.global = global;
         this.titleService = titleService;
         this.generalDataObs = null;
-        //appMenus: MenuItem[] = [];
-        //appCurrentUser: User = null;
-        //appIsLogged: boolean = false;
         this.appShowLoading = false;
         translate.setDefaultLang('de');
         translate.use('de');
@@ -593,7 +590,7 @@ let AppComponent = class AppComponent {
             if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_2__["NavigationEnd"]) {
                 //if(this.autService.isLoggedIn === true && this.appCurrentUser === null){
                 //this.subscribeToGeneralData();
-                this.global.loadAllSetting(null);
+                //this.global.loadAllSetting(null);
                 //alert("nav end from app-comp");
                 //}
             }
@@ -602,48 +599,12 @@ let AppComponent = class AppComponent {
     }
     ngOnInit() {
         this.global.loadAllSetting(null);
-        //this.subscribeToGeneralData();
-        //this.global.loadAllSetting(null);
     }
-    /*private subscribeToGeneralData(){
-        alert("subscribe");
-        
-        this.global.currentSessionDataSubject.subscribe((data : GeneralData) => {
-            
-            console.log("set gloabl-data from app-comp. appIsLogged: " + this.appIsLogged);
-            alert("from app-comp: \n" + JSON.stringify(data));
-            
-            if(data && data !== null){
-                
-                var value = data.isLogged + "";
-                
-                if(value === "true" === true){
-                    this.appMenus = data.app.menus;
-                    this.appCurrentUser = data.user.currentUser;
-                    this.appIsLogged = true;
-                    
-                }
-                else{
-                    this.appMenus = [];
-                    this.appCurrentUser = null;
-                    this.appIsLogged = false;
-                }
-                
-            }
-            else{
-                this.appMenus = [];
-                this.appCurrentUser = null;
-                this.appIsLogged = false;
-            }
-          });
-    }*/
     showLoading() {
         this.appShowLoading = true;
     }
     onLoggingOut(data) {
-        this.autService.logout();
-        this.global.clear();
-        this.router.navigate(['/auth/login']);
+        this.autService.logout("");
     }
 };
 AppComponent.ctorParameters = () => [
@@ -1375,8 +1336,8 @@ let HttpErrorResponseHelper = class HttpErrorResponseHelper {
         if (response.error && response.error.status) {
             if (response.error.status === "UNAUTHORIZED" || response.error.status === 401) {
                 var currentUrl = this.route.snapshot.url.map(f => f.path).join('/');
-                this.autService.resetGeneralSettings();
-                this.router.navigate(['auth/login'], { queryParams: { returnUrl: currentUrl } });
+                this.autService.logout(currentUrl);
+                //this.router.navigate(['auth/login'], { queryParams: { returnUrl: currentUrl } });
                 return true;
             }
         }
@@ -1624,7 +1585,7 @@ let LoginComponent = class LoginComponent {
         translate.use('de');
         this.router.events.subscribe((evt) => {
             if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_2__["NavigationEnd"]) {
-                this.autService.resetGeneralSettings();
+                this.global.loadAllSetting(null);
             }
         });
     }
@@ -1929,6 +1890,7 @@ let MessageBarComponent = class MessageBarComponent {
             }, response => {
                 console.log("Error in read message list", response);
                 this.messages = [];
+                this.isReloadingMessages = false;
             }, () => {
                 setTimeout(() => {
                     this.isReloadingMessages = false;
@@ -2025,6 +1987,7 @@ let AuthenticationService = class AuthenticationService {
         this.loadingService = loadingService;
         this.isLoggedIn = false;
         this.authenticateUrl = "/auth/authenticate";
+        this.logoutUrl = "/auth/logout";
         this.currentUserSubject = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](null);
     }
     get currentUserValue() {
@@ -2062,15 +2025,16 @@ let AuthenticationService = class AuthenticationService {
             if (value === "true" && generalData.user) {
                 this.isLoggedIn = true;
                 this.currentUserSubject.next(generalData.user.currentUser);
-                this.currentUserSubject.complete();
-                this.global.setGeneralData(generalData);
+                //this.currentUserSubject.complete();
+                this.global.loadAllSetting(null);
+                //this.global.setGeneralData(generalData);
                 //alert("from authentication- redirect to : " + returnUrl + ": \n" + JSON.stringify(generalData));
                 this.router.navigate([returnUrl]);
             }
             else {
                 this.isLoggedIn = false;
                 this.currentUserSubject.next(null);
-                this.currentUserSubject.complete();
+                //this.currentUserSubject.complete();
                 //alert("from authentication- redirect to login : \n" + JSON.stringify(generalData));
                 this.router.navigate(['auth/login'], { queryParams: { returnUrl: returnUrl } });
             }
@@ -2081,22 +2045,53 @@ let AuthenticationService = class AuthenticationService {
             this.currentUserSubject.complete();
             this.router.navigate(['auth/login'], { queryParams: { returnUrl: returnUrl } });
         }, () => {
-            this.loadingService.hideLoading();
+            //this.loadingService.hideLoading();
         });
     }
-    clearSessionData() {
-        this.global.clear();
-        this.currentUserSubject.next(null);
-        this.currentUserSubject.complete();
-    }
-    resetGeneralSettings() {
-        this.clearSessionData();
+    /*clearSessionData() {
+        
         this.global.loadAllSetting(null);
+        this.currentUserSubject.next(null);
+        //this.currentUserSubject.complete();
     }
-    logout() {
-        this.clearSessionData();
-        window.location.assign("/logout");
+
+    resetGeneralSettings() {
+        
+        this.currentUserSubject.next(null);
+        
+        //this.global.loadAllSetting(null);
+    }*/
+    logout(returnUrl) {
+        if (!returnUrl || returnUrl === null || returnUrl === undefined) {
+            returnUrl = "";
+        }
+        //this.clearSessionData();
+        //window.location.assign("/logout");
         //this.router.navigate(['auth/login']);
+        this.loadingService.showLoading();
+        const httpOptions = { headers: _helper_http_hepler__WEBPACK_IMPORTED_MODULE_7__["HttpHepler"].generateFormHeader() };
+        this.http.get(this.logoutUrl, httpOptions).subscribe(val => {
+            var loginResponse = val;
+            console.log("Is Logged out!");
+            this.currentUserSubject.next(null);
+            //this.currentUserSubject.complete();
+            this.isLoggedIn = false;
+            //loginComponent.processLoginResult(<LoginResponse>val);
+            this.global.loadAllSetting(null);
+            //this.loadingService.hideLoading();
+            this.router.navigate(['auth/login'], { queryParams: { returnUrl: returnUrl } });
+        }, response => {
+            this.currentUserSubject.next(null);
+            console.log("Error in Logging out!", response);
+            //this.currentUserSubject.complete();
+            this.isLoggedIn = false;
+            //loginComponent.processFailedResult(response);
+            this.global.loadAllSetting(null);
+            this.loadingService.hideLoading();
+            this.router.navigate(['auth/login'], { queryParams: { returnUrl: returnUrl } });
+        }, () => {
+            //loginComponent.processEndLoading();		            
+        });
     }
     canActivate(route, state) {
         //alert("check authentication fo : " + state.url + " : isLoggedIn: " + this.isLoggedIn);
@@ -2221,18 +2216,13 @@ let GlobalService = class GlobalService {
             this.loadingService.hideLoading();
         });
     }
-    setGeneralData(generalData) {
+    /*setGeneralData(generalData :GeneralData){
         this.currentSessionDataSubject.next(generalData);
         //this.currentSessionDataSubject.complete();
-    }
+    }*/
     loadAllSettingObserv() {
         const httpOptions = { headers: _helper_http_hepler__WEBPACK_IMPORTED_MODULE_5__["HttpHepler"].generateFormHeader() };
         return this.http.get(this.loadGeneralDataUrl, httpOptions);
-    }
-    clear() {
-        //alert("clear global");
-        this.currentSessionDataSubject.next(null);
-        //this.currentSessionDataSubject.complete();
     }
 };
 GlobalService.ctorParameters = () => [

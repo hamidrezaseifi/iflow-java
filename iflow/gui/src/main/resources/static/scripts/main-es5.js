@@ -622,9 +622,6 @@ var __spread = (this && this.__spread) || function () {
                     this.global = global;
                     this.titleService = titleService;
                     this.generalDataObs = null;
-                    //appMenus: MenuItem[] = [];
-                    //appCurrentUser: User = null;
-                    //appIsLogged: boolean = false;
                     this.appShowLoading = false;
                     translate.setDefaultLang('de');
                     translate.use('de');
@@ -638,7 +635,7 @@ var __spread = (this && this.__spread) || function () {
                         if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_2__["NavigationEnd"]) {
                             //if(this.autService.isLoggedIn === true && this.appCurrentUser === null){
                             //this.subscribeToGeneralData();
-                            _this.global.loadAllSetting(null);
+                            //this.global.loadAllSetting(null);
                             //alert("nav end from app-comp");
                             //}
                         }
@@ -647,48 +644,12 @@ var __spread = (this && this.__spread) || function () {
                 }
                 AppComponent.prototype.ngOnInit = function () {
                     this.global.loadAllSetting(null);
-                    //this.subscribeToGeneralData();
-                    //this.global.loadAllSetting(null);
                 };
-                /*private subscribeToGeneralData(){
-                    alert("subscribe");
-                    
-                    this.global.currentSessionDataSubject.subscribe((data : GeneralData) => {
-                        
-                        console.log("set gloabl-data from app-comp. appIsLogged: " + this.appIsLogged);
-                        alert("from app-comp: \n" + JSON.stringify(data));
-                        
-                        if(data && data !== null){
-                            
-                            var value = data.isLogged + "";
-                            
-                            if(value === "true" === true){
-                                this.appMenus = data.app.menus;
-                                this.appCurrentUser = data.user.currentUser;
-                                this.appIsLogged = true;
-                                
-                            }
-                            else{
-                                this.appMenus = [];
-                                this.appCurrentUser = null;
-                                this.appIsLogged = false;
-                            }
-                            
-                        }
-                        else{
-                            this.appMenus = [];
-                            this.appCurrentUser = null;
-                            this.appIsLogged = false;
-                        }
-                      });
-                }*/
                 AppComponent.prototype.showLoading = function () {
                     this.appShowLoading = true;
                 };
                 AppComponent.prototype.onLoggingOut = function (data) {
-                    this.autService.logout();
-                    this.global.clear();
-                    this.router.navigate(['/auth/login']);
+                    this.autService.logout("");
                 };
                 return AppComponent;
             }());
@@ -1301,8 +1262,8 @@ var __spread = (this && this.__spread) || function () {
                     if (response.error && response.error.status) {
                         if (response.error.status === "UNAUTHORIZED" || response.error.status === 401) {
                             var currentUrl = this.route.snapshot.url.map(function (f) { return f.path; }).join('/');
-                            this.autService.resetGeneralSettings();
-                            this.router.navigate(['auth/login'], { queryParams: { returnUrl: currentUrl } });
+                            this.autService.logout(currentUrl);
+                            //this.router.navigate(['auth/login'], { queryParams: { returnUrl: currentUrl } });
                             return true;
                         }
                     }
@@ -1507,7 +1468,7 @@ var __spread = (this && this.__spread) || function () {
                     translate.use('de');
                     this.router.events.subscribe(function (evt) {
                         if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_2__["NavigationEnd"]) {
-                            _this.autService.resetGeneralSettings();
+                            _this.global.loadAllSetting(null);
                         }
                     });
                 }
@@ -1771,6 +1732,7 @@ var __spread = (this && this.__spread) || function () {
                         }, function (response) {
                             console.log("Error in read message list", response);
                             _this.messages = [];
+                            _this.isReloadingMessages = false;
                         }, function () {
                             setTimeout(function () {
                                 _this.isReloadingMessages = false;
@@ -1857,6 +1819,7 @@ var __spread = (this && this.__spread) || function () {
                     this.loadingService = loadingService;
                     this.isLoggedIn = false;
                     this.authenticateUrl = "/auth/authenticate";
+                    this.logoutUrl = "/auth/logout";
                     this.currentUserSubject = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](null);
                 }
                 Object.defineProperty(AuthenticationService.prototype, "currentUserValue", {
@@ -1904,15 +1867,16 @@ var __spread = (this && this.__spread) || function () {
                         if (value === "true" && generalData.user) {
                             _this.isLoggedIn = true;
                             _this.currentUserSubject.next(generalData.user.currentUser);
-                            _this.currentUserSubject.complete();
-                            _this.global.setGeneralData(generalData);
+                            //this.currentUserSubject.complete();
+                            _this.global.loadAllSetting(null);
+                            //this.global.setGeneralData(generalData);
                             //alert("from authentication- redirect to : " + returnUrl + ": \n" + JSON.stringify(generalData));
                             _this.router.navigate([returnUrl]);
                         }
                         else {
                             _this.isLoggedIn = false;
                             _this.currentUserSubject.next(null);
-                            _this.currentUserSubject.complete();
+                            //this.currentUserSubject.complete();
                             //alert("from authentication- redirect to login : \n" + JSON.stringify(generalData));
                             _this.router.navigate(['auth/login'], { queryParams: { returnUrl: returnUrl } });
                         }
@@ -1923,22 +1887,54 @@ var __spread = (this && this.__spread) || function () {
                         _this.currentUserSubject.complete();
                         _this.router.navigate(['auth/login'], { queryParams: { returnUrl: returnUrl } });
                     }, function () {
-                        _this.loadingService.hideLoading();
+                        //this.loadingService.hideLoading();
                     });
                 };
-                AuthenticationService.prototype.clearSessionData = function () {
-                    this.global.clear();
-                    this.currentUserSubject.next(null);
-                    this.currentUserSubject.complete();
-                };
-                AuthenticationService.prototype.resetGeneralSettings = function () {
-                    this.clearSessionData();
+                /*clearSessionData() {
+                    
                     this.global.loadAllSetting(null);
-                };
-                AuthenticationService.prototype.logout = function () {
-                    this.clearSessionData();
-                    window.location.assign("/logout");
+                    this.currentUserSubject.next(null);
+                    //this.currentUserSubject.complete();
+                }
+            
+                resetGeneralSettings() {
+                    
+                    this.currentUserSubject.next(null);
+                    
+                    //this.global.loadAllSetting(null);
+                }*/
+                AuthenticationService.prototype.logout = function (returnUrl) {
+                    var _this = this;
+                    if (!returnUrl || returnUrl === null || returnUrl === undefined) {
+                        returnUrl = "";
+                    }
+                    //this.clearSessionData();
+                    //window.location.assign("/logout");
                     //this.router.navigate(['auth/login']);
+                    this.loadingService.showLoading();
+                    var httpOptions = { headers: _helper_http_hepler__WEBPACK_IMPORTED_MODULE_7__["HttpHepler"].generateFormHeader() };
+                    this.http.get(this.logoutUrl, httpOptions).subscribe(function (val) {
+                        var loginResponse = val;
+                        console.log("Is Logged out!");
+                        _this.currentUserSubject.next(null);
+                        //this.currentUserSubject.complete();
+                        _this.isLoggedIn = false;
+                        //loginComponent.processLoginResult(<LoginResponse>val);
+                        _this.global.loadAllSetting(null);
+                        //this.loadingService.hideLoading();
+                        _this.router.navigate(['auth/login'], { queryParams: { returnUrl: returnUrl } });
+                    }, function (response) {
+                        _this.currentUserSubject.next(null);
+                        console.log("Error in Logging out!", response);
+                        //this.currentUserSubject.complete();
+                        _this.isLoggedIn = false;
+                        //loginComponent.processFailedResult(response);
+                        _this.global.loadAllSetting(null);
+                        _this.loadingService.hideLoading();
+                        _this.router.navigate(['auth/login'], { queryParams: { returnUrl: returnUrl } });
+                    }, function () {
+                        //loginComponent.processEndLoading();		            
+                    });
                 };
                 AuthenticationService.prototype.canActivate = function (route, state) {
                     //alert("check authentication fo : " + state.url + " : isLoggedIn: " + this.isLoggedIn);
@@ -2048,18 +2044,13 @@ var __spread = (this && this.__spread) || function () {
                         _this.loadingService.hideLoading();
                     });
                 };
-                GlobalService.prototype.setGeneralData = function (generalData) {
+                /*setGeneralData(generalData :GeneralData){
                     this.currentSessionDataSubject.next(generalData);
                     //this.currentSessionDataSubject.complete();
-                };
+                }*/
                 GlobalService.prototype.loadAllSettingObserv = function () {
                     var httpOptions = { headers: _helper_http_hepler__WEBPACK_IMPORTED_MODULE_5__["HttpHepler"].generateFormHeader() };
                     return this.http.get(this.loadGeneralDataUrl, httpOptions);
-                };
-                GlobalService.prototype.clear = function () {
-                    //alert("clear global");
-                    this.currentSessionDataSubject.next(null);
-                    //this.currentSessionDataSubject.complete();
                 };
                 return GlobalService;
             }());

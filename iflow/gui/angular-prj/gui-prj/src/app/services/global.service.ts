@@ -60,10 +60,10 @@ export class GlobalService {
 		);
 	}
 	
-	setGeneralData(generalData :GeneralData){
+	/*setGeneralData(generalData :GeneralData){
 		this.currentSessionDataSubject.next(generalData);
 		//this.currentSessionDataSubject.complete();
-	}
+	}*/
   
 	loadAllSettingObserv(){		
         const httpOptions = { headers: HttpHepler.generateFormHeader() };
@@ -71,10 +71,11 @@ export class GlobalService {
 		return this.http.get(this.loadGeneralDataUrl, httpOptions);
 	}
   
-	clear(){	
+	/*clear(){	
+		
 		//alert("clear global");
 		this.currentSessionDataSubject.next(null);
 		//this.currentSessionDataSubject.complete();
-	}
+	}*/
   
 }

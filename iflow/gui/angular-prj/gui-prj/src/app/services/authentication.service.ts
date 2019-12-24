@@ -18,6 +18,7 @@ export class AuthenticationService implements CanActivate{
     isLoggedIn :boolean = false;
     
     authenticateUrl :string = "/auth/authenticate";
+    logoutUrl :string = "/auth/logout";
     
     constructor(
     		private http: HttpClient,
@@ -81,9 +82,11 @@ export class AuthenticationService implements CanActivate{
 		            	
 		            	this.isLoggedIn = true;
 		            	this.currentUserSubject.next(generalData.user.currentUser);
-			        	this.currentUserSubject.complete();
+			        	//this.currentUserSubject.complete();
 			        	
-			        	this.global.setGeneralData(generalData);
+			        	this.global.loadAllSetting(null);
+			        	
+			        	//this.global.setGeneralData(generalData);
 			        	
 			        	//alert("from authentication- redirect to : " + returnUrl + ": \n" + JSON.stringify(generalData));
 			        	
@@ -92,7 +95,7 @@ export class AuthenticationService implements CanActivate{
 		            else{
 		            	this.isLoggedIn = false;
 		            	this.currentUserSubject.next(null);
-			        	this.currentUserSubject.complete();
+			        	//this.currentUserSubject.complete();
 			        	
 		            	//alert("from authentication- redirect to login : \n" + JSON.stringify(generalData));
 		            	
@@ -110,30 +113,65 @@ export class AuthenticationService implements CanActivate{
 		        },
 		        () => {
 		            
-		            this.loadingService.hideLoading();
+		            //this.loadingService.hideLoading();
 		        }
 		); 	
     	
     }
 
-    clearSessionData() {
+    /*clearSessionData() {
         
-        this.global.clear();
+        this.global.loadAllSetting(null);
         this.currentUserSubject.next(null);
-        this.currentUserSubject.complete();
+        //this.currentUserSubject.complete();
     }
 
     resetGeneralSettings() {
         
-        this.clearSessionData() ;
-        this.global.loadAllSetting(null);
-    }
-
-    logout() {
+    	this.currentUserSubject.next(null);
         
-        this.clearSessionData();
-        window.location.assign("/logout");
+        //this.global.loadAllSetting(null);
+    }*/
+
+    logout(returnUrl :string) {
+        
+    	if(!returnUrl || returnUrl === null || returnUrl === undefined){
+    		returnUrl = "";
+    	}
+        //this.clearSessionData();
+        //window.location.assign("/logout");
         //this.router.navigate(['auth/login']);
+        
+        this.loadingService.showLoading();
+        const httpOptions = { headers: HttpHepler.generateFormHeader() };
+        
+        this.http.get(this.logoutUrl, httpOptions).subscribe(
+		        val => {
+		        	var loginResponse :LoginResponse = <LoginResponse>val;
+		        	console.log("Is Logged out!");
+		        	this.currentUserSubject.next(null);
+		        	//this.currentUserSubject.complete();
+		        	this.isLoggedIn = false;
+		        	//loginComponent.processLoginResult(<LoginResponse>val);
+		        	this.global.loadAllSetting(null);
+		        	//this.loadingService.hideLoading();
+		        	this.router.navigate(['auth/login'], { queryParams: { returnUrl: returnUrl } });
+		        	
+		        },
+		        response => {
+		        	this.currentUserSubject.next(null);
+		        	console.log("Error in Logging out!" , response);
+		        	//this.currentUserSubject.complete();
+		        	this.isLoggedIn = false;
+		        	//loginComponent.processFailedResult(response);
+		        	this.global.loadAllSetting(null);
+		        	this.loadingService.hideLoading();
+		        	this.router.navigate(['auth/login'], { queryParams: { returnUrl: returnUrl } });
+		        },
+		        () => {
+		        	//loginComponent.processEndLoading();		            
+		        }
+		    );	 
     }
     
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {

@@ -102,7 +102,7 @@ export class MessageBarComponent implements OnInit {
 			        response => {
 			        	console.log("Error in read message list", response);
 			        	this.messages = [];	
-			        	
+			        	this.isReloadingMessages = false;
 			        },
 			        () => {
 			        	

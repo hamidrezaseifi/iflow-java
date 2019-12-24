@@ -21,11 +21,7 @@ import { User, MenuItem, GeneralData } from './ui-models';
 export class AppComponent implements OnInit  {
 	
 	generalDataObs :Observable<GeneralData> = null;
-	
-	//appMenus: MenuItem[] = [];
-	//appCurrentUser: User = null;
-	//appIsLogged: boolean = false;
-	
+		
 	appShowLoading: boolean = false;
 	
 
@@ -55,7 +51,7 @@ export class AppComponent implements OnInit  {
  	        	
  	        	//if(this.autService.isLoggedIn === true && this.appCurrentUser === null){
  	        		//this.subscribeToGeneralData();
- 	        		this.global.loadAllSetting(null);
+ 	        		//this.global.loadAllSetting(null);
  	        		//alert("nav end from app-comp");
  	        	//}
  	           
@@ -67,46 +63,9 @@ export class AppComponent implements OnInit  {
 	}
 	
 	ngOnInit() {
-		
-		
-		this.global.loadAllSetting(null);
-		
-		//this.subscribeToGeneralData();
-		//this.global.loadAllSetting(null);
+				
+		this.global.loadAllSetting(null);		
 	}
-
-	/*private subscribeToGeneralData(){
-		alert("subscribe");
-		
-		this.global.currentSessionDataSubject.subscribe((data : GeneralData) => {
-        	
-			console.log("set gloabl-data from app-comp. appIsLogged: " + this.appIsLogged);
-			alert("from app-comp: \n" + JSON.stringify(data));
-        	
-			if(data && data !== null){
-				
-				var value = data.isLogged + "";
-				
-				if(value === "true" === true){
-	 	 			this.appMenus = data.app.menus;
-	 	 	  		this.appCurrentUser = data.user.currentUser;
-	 	 	  		this.appIsLogged = true; 
-	 	 	  		
-				}
-				else{
-					this.appMenus = [];
-					this.appCurrentUser = null;
-					this.appIsLogged = false;					
-				}
- 	 	  		
-			}
-			else{
-				this.appMenus = [];
-				this.appCurrentUser = null;
-				this.appIsLogged = false;
-			}
-		  });
-	}*/
 	
 	showLoading(){
 		
@@ -115,9 +74,7 @@ export class AppComponent implements OnInit  {
 	
 	
 	onLoggingOut(data: boolean) {
-		this.autService.logout();
-		this.global.clear();
-		this.router.navigate(['/auth/login']);
+		this.autService.logout("");
 	}	
 	
 }

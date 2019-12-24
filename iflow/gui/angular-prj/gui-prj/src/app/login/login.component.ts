@@ -38,14 +38,13 @@ import { AuthenticationService } from '../services';
 	        
 			this.router.events.subscribe((evt) => {
 				if (evt instanceof NavigationEnd) {
-					this.autService.resetGeneralSettings();
+					this.global.loadAllSetting(null);
 				}
 			});
 	        
 		  
 	  }
 	  
-//returnUrl
 	  ngOnInit() {
 		  this.loginForm = this.formBuilder.group({
 	            username: ['admin@iflow.de', Validators.required],

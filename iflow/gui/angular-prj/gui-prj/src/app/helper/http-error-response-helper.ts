@@ -21,8 +21,8 @@ export class HttpErrorResponseHelper {
 			if(response.error.status === "UNAUTHORIZED" || response.error.status === 401){
 				var currentUrl = this.route.snapshot.url.map(f => f.path).join('/');
 				
-				this.autService.resetGeneralSettings();
-				this.router.navigate(['auth/login'], { queryParams: { returnUrl: currentUrl } });
+				this.autService.logout(currentUrl);
+				//this.router.navigate(['auth/login'], { queryParams: { returnUrl: currentUrl } });
 				return true;
 			}
 		}
