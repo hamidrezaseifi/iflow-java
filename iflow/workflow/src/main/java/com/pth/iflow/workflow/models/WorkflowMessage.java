@@ -1,13 +1,11 @@
 package com.pth.iflow.workflow.models;
 
 import java.time.LocalDateTime;
-
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.enums.EWorkflowMessageType;
 
 public class WorkflowMessage {
 
-  private Workflow               workflow;
   private String                 workflowIdentity;
   private String                 stepIdentity;
   private String                 userIdentity;
@@ -18,14 +16,6 @@ public class WorkflowMessage {
   private Integer                version;
   private Integer                expireDays;
   private LocalDateTime          createdAt;
-
-  public Workflow getWorkflow() {
-    return workflow;
-  }
-
-  public void setWorkflow(final Workflow workflow) {
-    this.workflow = workflow;
-  }
 
   public String getWorkflowIdentity() {
     return workflowIdentity;

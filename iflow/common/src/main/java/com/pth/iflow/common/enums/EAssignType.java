@@ -23,7 +23,7 @@ public enum EAssignType implements IEnumNameValidator {
 
   @Override
   @JsonValue
-  public String getName() {
+  public String getIdentity() {
     return this.enumName;
   }
 

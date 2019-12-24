@@ -1,6 +1,7 @@
 package com.pth.iflow.gui.models.ui;
 
 import java.net.MalformedURLException;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +16,7 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
+import com.pth.iflow.common.enums.EWorkflowType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.Company;
@@ -22,10 +24,11 @@ import com.pth.iflow.gui.models.CompanyProfile;
 import com.pth.iflow.gui.models.Department;
 import com.pth.iflow.gui.models.User;
 import com.pth.iflow.gui.models.UserGroup;
-import com.pth.iflow.gui.models.Workflow;
 import com.pth.iflow.gui.models.WorkflowType;
+import com.pth.iflow.gui.models.WorkflowTypeStep;
+import com.pth.iflow.gui.models.workflow.IWorkflow;
 import com.pth.iflow.gui.services.IUserAccess;
-import com.pth.iflow.gui.services.IWorkflowAccess;
+import com.pth.iflow.gui.services.IWorkflowTypeHandler;
 
 @SessionScope(proxyMode = ScopedProxyMode.TARGET_CLASS)
 @Component
@@ -41,7 +44,7 @@ public class SessionUserInfo {
   private String                          token;
   private String                          sessionId;
 
-  private final Map<String, Workflow>     cachedWorkflow             = new HashMap<>();
+  private final Map<String, IWorkflow>    cachedWorkflow             = new HashMap<>();
 
   private final Map<String, User>         companyUsers               = new HashMap<>();
 
@@ -54,7 +57,7 @@ public class SessionUserInfo {
   IUserAccess                             userAccess;
 
   @Autowired
-  IWorkflowAccess                         workflowAccess;
+  IWorkflowTypeHandler                    workflowTypeHandler;
 
   public boolean isLoggedIn() {
     return (this.user != null) && (this.companyProfile != null);
@@ -161,35 +164,45 @@ public class SessionUserInfo {
    * @throws IFlowMessageConversionFailureException
    */
   public Map<String, WorkflowType> getCompanyWorkflowTypes() throws IFlowMessageConversionFailureException {
-    if (this.comapnyWorkflowTypes.size() == 0) {
-      try {
-        final List<WorkflowType> typeList = this.workflowAccess.readWorkflowTypeList(this.companyProfile.getCompany().getIdentity(),
-            this.getToken());
-        this.comapnyWorkflowTypes.putAll(typeList.stream().collect(Collectors.toMap(t -> t.getIdentity(), t -> t)));
-      } catch (GuiCustomizedException | MalformedURLException e) {
-        logger.error("error in reading company workflowtype list: {} \n {}", e.getMessage(), e);
-      }
-    }
+    this.verifyWorkflowTypes();
 
     return this.comapnyWorkflowTypes;
   }
 
-  /**
-   * @return the GuiWorkflowType
-   * @throws IFlowMessageConversionFailureException
-   */
-  public WorkflowType getWorkflowTypeById(final String workflowTypId) throws IFlowMessageConversionFailureException {
-    if (this.comapnyWorkflowTypes.size() == 0) {
-      try {
-        final List<WorkflowType> typeList = this.workflowAccess.readWorkflowTypeList(this.companyProfile.getCompany().getIdentity(),
-            this.getToken());
-        this.comapnyWorkflowTypes.putAll(typeList.stream().collect(Collectors.toMap(t -> t.getIdentity(), t -> t)));
-      } catch (GuiCustomizedException | MalformedURLException e) {
-        logger.error("error in reading company workflowtype: {} \n {}", e.getMessage(), e);
+  public WorkflowType getWorkflowTypeByEnumType(final EWorkflowType type) throws IFlowMessageConversionFailureException {
+    this.verifyWorkflowTypes();
+
+    for (final WorkflowType workflowType : this.comapnyWorkflowTypes.values()) {
+      if (workflowType.getTypeEnum() == type) {
+        return workflowType;
       }
     }
 
-    return this.comapnyWorkflowTypes.containsKey(workflowTypId) ? this.comapnyWorkflowTypes.get(workflowTypId) : null;
+    return null;
+  }
+
+  public WorkflowType getWorkflowTypeByIdentity(final String workflowTypIdentity) throws IFlowMessageConversionFailureException {
+    this.verifyWorkflowTypes();
+
+    return this.comapnyWorkflowTypes.containsKey(workflowTypIdentity) ? this.comapnyWorkflowTypes.get(workflowTypIdentity) : null;
+  }
+
+  public Collection<WorkflowType> getAllWorkflowTypes() throws IFlowMessageConversionFailureException {
+    this.verifyWorkflowTypes();
+
+    return this.comapnyWorkflowTypes.values();
+  }
+
+  public WorkflowTypeStep getWorkflowStepTypeByIdentity(final String workflowTypIdentity, final String workflowTypStepIdentity)
+      throws IFlowMessageConversionFailureException {
+    this.verifyWorkflowTypes();
+
+    if (this.comapnyWorkflowTypes.containsKey(workflowTypIdentity)) {
+      final WorkflowType type = this.comapnyWorkflowTypes.get(workflowTypIdentity);
+      return type.getStepByIdentity(workflowTypStepIdentity);
+    }
+
+    return null;
   }
 
   /**
@@ -211,7 +224,7 @@ public class SessionUserInfo {
 
   // Map<String, GuiWorkflow> cachedWorkflow
 
-  public void addCachedWorkflow(final Workflow workflow) {
+  public void addCachedWorkflow(final IWorkflow workflow) {
     this.cachedWorkflow.put(workflow.getIdentity(), workflow);
   }
 
@@ -219,7 +232,7 @@ public class SessionUserInfo {
     return this.cachedWorkflow.containsKey(identity);
   }
 
-  public Workflow getCachedWorkflow(final String identity) {
+  public IWorkflow getCachedWorkflow(final String identity) {
     return this.cachedWorkflow.get(identity);
   }
 
@@ -233,6 +246,18 @@ public class SessionUserInfo {
 
   public List<UserGroup> getCompanyUserGroups() {
     return this.companyProfile.getUserGroups();
+  }
+
+  private void verifyWorkflowTypes() throws IFlowMessageConversionFailureException {
+    if (this.comapnyWorkflowTypes.size() == 0) {
+      try {
+        final List<WorkflowType> typeList = this.workflowTypeHandler
+            .readWorkflowTypeList(this.companyProfile.getCompany().getIdentity(), this.getToken());
+        this.comapnyWorkflowTypes.putAll(typeList.stream().collect(Collectors.toMap(t -> t.getIdentity(), t -> t)));
+      } catch (GuiCustomizedException | MalformedURLException e) {
+        logger.error("error in reading company workflowtype: {} \n {}", e.getMessage(), e);
+      }
+    }
   }
 
 }

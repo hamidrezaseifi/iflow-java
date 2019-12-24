@@ -6,33 +6,26 @@ import java.util.Set;
 
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
-import com.pth.iflow.workflow.models.Workflow;
-import com.pth.iflow.workflow.models.WorkflowSaveRequest;
-import com.pth.iflow.workflow.models.WorkflowSearchFilter;
+import com.pth.iflow.workflow.models.base.IWorkflow;
+import com.pth.iflow.workflow.models.base.IWorkflowSaveRequest;
 
-public interface IWorkflowProcessService {
+public interface IWorkflowProcessService<W extends IWorkflow> {
 
-  public List<Workflow> create(WorkflowSaveRequest model, String token)
+  public List<W> create(IWorkflowSaveRequest<W> model, String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  public Workflow save(WorkflowSaveRequest request, String token)
+  public W save(IWorkflowSaveRequest<W> request, String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  public Workflow getByIdentity(String identity, String token)
+  public W getByIdentity(String identity, String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  public List<Workflow> getListByTypeIdentity(final String identity, String token)
+  public List<W> getListForUser(final String identity, int status, String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  public List<Workflow> getListForUser(final String identity, int status, String token)
+  public List<W> getListByIdentityList(final Set<String> identityList, String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  public List<Workflow> getListByIdentityList(final Set<String> identityList, String token)
-      throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
-
-  public List<Workflow> search(final WorkflowSearchFilter workflowSearchFilter, String token)
-      throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
-
-  public void validate(WorkflowSaveRequest model, String token)
+  public void validate(IWorkflowSaveRequest<W> model, String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 }

@@ -18,9 +18,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.pth.iflow.common.edo.models.DepartmentEdo;
-import com.pth.iflow.common.edo.models.DepartmentListEdo;
 import com.pth.iflow.common.enums.EModule;
+import com.pth.iflow.common.models.edo.DepartmentEdo;
+import com.pth.iflow.common.models.edo.DepartmentListEdo;
 import com.pth.iflow.profile.TestDataProducer;
 import com.pth.iflow.profile.config.ProfileConfiguration;
 import com.pth.iflow.profile.model.Department;

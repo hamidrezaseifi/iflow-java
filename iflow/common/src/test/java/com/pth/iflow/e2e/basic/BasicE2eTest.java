@@ -19,7 +19,7 @@ import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConve
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.RestTemplate;
 
-import com.pth.iflow.common.edo.models.WorkflowTypeListEdo;
+import com.pth.iflow.common.models.edo.WorkflowTypeListEdo;
 import com.pth.iflow.e2e.E2eConfig;
 
 /**

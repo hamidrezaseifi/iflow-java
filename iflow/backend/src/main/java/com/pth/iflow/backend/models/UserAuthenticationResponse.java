@@ -1,6 +1,6 @@
 package com.pth.iflow.backend.models;
 
-import com.pth.iflow.common.edo.models.UserAuthenticationResponseEdo;
+import com.pth.iflow.common.models.edo.UserAuthenticationResponseEdo;
 
 public class UserAuthenticationResponse {
 

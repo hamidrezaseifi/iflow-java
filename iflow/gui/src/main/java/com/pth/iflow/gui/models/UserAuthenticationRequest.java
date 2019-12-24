@@ -1,6 +1,6 @@
 package com.pth.iflow.gui.models;
 
-import com.pth.iflow.common.edo.models.UserAuthenticationRequestEdo;
+import com.pth.iflow.common.models.edo.UserAuthenticationRequestEdo;
 
 public class UserAuthenticationRequest {
 

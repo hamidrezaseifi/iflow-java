@@ -1,145 +1,78 @@
 package com.pth.iflow.core.storage.dao.impl;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
-import java.util.Random;
-import java.util.Set;
 
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
-import com.pth.iflow.core.model.UserGroup;
-import com.pth.iflow.core.storage.dao.ICompanyDao;
-import com.pth.iflow.core.storage.dao.IUserGroupDao;
-import com.pth.iflow.core.storage.dao.basic.DaoBasicClass;
+import com.pth.iflow.core.model.entity.UserGroupEntity;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
-import com.pth.iflow.core.storage.dao.utils.SqlUtils;
+import com.pth.iflow.core.storage.dao.impl.base.EntityDaoBase;
+import com.pth.iflow.core.storage.dao.interfaces.IUserGroupDao;
 
-@Transactional
 @Repository
-public class UserGroupDao extends DaoBasicClass<UserGroup> implements IUserGroupDao {
+public class UserGroupDao extends EntityDaoBase<UserGroupEntity> implements IUserGroupDao {
 
-  @Autowired
-  private ICompanyDao companyDao;
+  @Override
+  public List<UserGroupEntity> getListByIdList(final Collection<Long> idList) throws IFlowStorageException {
+    final EntityManager                  entityManager   = dbConfiguration.getEntityManager();
 
-  public UserGroupDao() {
+    final CriteriaBuilder                criteriaBuilder = entityManager.getCriteriaBuilder();
+    final CriteriaQuery<UserGroupEntity> query           = criteriaBuilder.createQuery(entityClass());
+    final Root<UserGroupEntity>          root            = query.from(entityClass());
+    query.select(root);
+
+    final Path<Long> identityPath = root.get("id");
+    final Predicate  predicate    = identityPath.in(idList);
+    query.where(predicate);
+
+    final TypedQuery<UserGroupEntity> typedQuery = entityManager.createQuery(query);
+
+    // final String qr =
+    // typedQuery.unwrap(org.hibernate.query.Query.class).getQueryString();
+    // System.out.println("search workflow query: " + qr);
+
+    final List<UserGroupEntity>       list       = typedQuery.getResultList();
+    entityManager.close();
+    return list;
+  }
+
+  @Override
+  public List<UserGroupEntity> getListByCompanyIdentity(final String identity) throws IFlowStorageException {
+    final EntityManager                  entityManager   = dbConfiguration.getEntityManager();
+
+    final CriteriaBuilder                criteriaBuilder = entityManager.getCriteriaBuilder();
+    final CriteriaQuery<UserGroupEntity> query           = criteriaBuilder.createQuery(UserGroupEntity.class);
+    final Root<UserGroupEntity>          root            = query.from(UserGroupEntity.class);
+    query.select(root);
+
+    final Path<String> companyIdentityPath = root.get("company").get("identity");
+    final Predicate    predicate           = criteriaBuilder.equal(companyIdentityPath, identity);
+    query.where(predicate);
+
+    final TypedQuery<UserGroupEntity> typedQuery = entityManager.createQuery(query);
+
+    // final String qr =
+    // typedQuery.unwrap(org.hibernate.query.Query.class).getQueryString();
+    // System.out.println("search workflow query: " + qr);
+
+    final List<UserGroupEntity>       list       = typedQuery.getResultList();
+    entityManager.close();
+    return list;
 
   }
 
   @Override
-  public UserGroup getById(final Long id) throws IFlowStorageException {
-    return getModelById(id, "SELECT * FROM user_group where id=?", "User Group");
-  }
-
-  @Override
-  public UserGroup getByIdentity(final String identity) throws IFlowStorageException {
-    return getModelByIdentity(identity, "SELECT * FROM user_group where identity=?", "User Group");
-  }
-
-  @Override
-  public List<UserGroup> getListByIdList(final Set<Long> idList) throws IFlowStorageException {
-
-    String sqlSelect = "SELECT * FROM user_group where id in (";
-    sqlSelect += StringUtils.repeat("?, ", idList.size());
-
-    sqlSelect = sqlSelect.trim();
-    sqlSelect = sqlSelect.endsWith(",") ? sqlSelect.substring(0, sqlSelect.length() - 1) : sqlSelect;
-    sqlSelect += ")";
-
-    return getModelListByIdList(idList, sqlSelect, "User Group");
-  }
-
-  @Override
-  public List<UserGroup> getListByIdentityList(final Collection<String> idList) throws IFlowStorageException {
-    String sqlSelect = "SELECT * FROM user_group where identity in (";
-    sqlSelect += StringUtils.repeat("?, ", idList.size());
-
-    sqlSelect = sqlSelect.trim();
-    sqlSelect = sqlSelect.endsWith(",") ? sqlSelect.substring(0, sqlSelect.length() - 1) : sqlSelect;
-    sqlSelect += ")";
-
-    return this.getModelListByIdentityList(idList, sqlSelect, "User Group");
-  }
-
-  @Override
-  protected UserGroup modelFromResultSet(final ResultSet rs) throws SQLException {
-    final UserGroup model = new UserGroup();
-    model.setId(rs.getLong("id"));
-    model.setCompanyId(rs.getLong("company_id"));
-    model.setTitle(rs.getString("title"));
-    model.setCompanyIdentity(companyDao.getById(model.getCompanyId()).getIdentity());
-    model.setIdentity(rs.getString("identity"));
-    model.setStatus(rs.getInt("status"));
-    model.setCreatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("created_at")));
-    model.setUpdatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("updated_at")));
-    model.setVersion(rs.getInt("version"));
-
-    return model;
-  }
-
-  @Override
-  public List<UserGroup> getListByCompanyId(final Long companyId) throws IFlowStorageException {
-
-    return getModelListById(companyId, "SELECT * FROM user_group where company_id=?", "User Group");
-  }
-
-  @Override
-  public List<UserGroup> getListByCompanyIdentity(final String identity) throws IFlowStorageException {
-
-    return getModelListByIdentity(identity,
-        "SELECT user_group.* FROM user_group inner join companies on user_group.company_id=companies.id where companies.identity=?",
-        "User Group");
-  }
-
-  @Override
-  protected PreparedStatement prepareInsertPreparedStatement(final UserGroup model, final PreparedStatement ps) throws SQLException {
-    ps.setString(1, model.getIdentity());
-    ps.setLong(2, model.getCompanyId());
-    ps.setString(3, model.getTitle());
-    ps.setInt(4, model.getVersion());
-    ps.setInt(5, model.getStatus());
-
-    return ps;
-  }
-
-  @Override
-  protected PreparedStatement prepareUpdatePreparedStatement(final UserGroup model, final PreparedStatement ps) throws SQLException {
-    ps.setLong(1, model.getCompanyId());
-    ps.setString(2, model.getTitle());
-    ps.setInt(3, model.getVersion());
-    ps.setInt(4, model.getStatus());
-    ps.setLong(5, model.getId());
-
-    return ps;
-  }
-
-  @Override
-  public UserGroup create(final UserGroup model) throws IFlowStorageException {
-    final String sql = "INSERT INTO user_group (identity, company_id, title, version, status)" + "VALUES (?, ?, ?, ?, ?)";
-
-    return getById(createModel(model, "UserGroup", sql, true));
-  }
-
-  @Override
-  public UserGroup update(final UserGroup model) throws IFlowStorageException {
-    final String sql = "UPDATE user_group SET company_id = ?, title = ?, version = ?, status =  WHERE id = ?";
-
-    updateModel(model, "UserGroup", sql, true);
-
-    return getById(model.getId());
-  }
-
-  @Override
-  protected String generateIdentity(final UserGroup model) {
-
-    final Random rand = new Random();
-    return String.format("c%sgrp%s-%s", identityLongToHex(model.getCompanyId()), identityLongToHex(System.currentTimeMillis()),
-        identityIntToHex(rand.nextInt(1000000), 6));
+  protected Class<UserGroupEntity> entityClass() {
+    return UserGroupEntity.class;
   }
 
 }

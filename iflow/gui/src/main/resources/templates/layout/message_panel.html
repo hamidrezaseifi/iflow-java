@@ -1,5 +1,5 @@
 
-		<div th:fragment="message_panel">
+		<div th:if="${isLogged}" th:fragment="message_panel">
 			<div ng-controller="WorkflowMessageController">
 				<div resizable r-directions="['top']" class="message-panel-container" id="message-panel-container">
 					<div class="message-panel-toolbar">
@@ -17,7 +17,7 @@
 						</div>
 					</div>
 					<script type="text/javascript">
-					var loadMessageUrl = "/workflow/data/workflowmessages";
+					var loadMessageUrl = "/general/data/workflowmessages";
 					var assignWorkflowUrl = "/workflow/data/assignworkflow/";
 					
 					</script>

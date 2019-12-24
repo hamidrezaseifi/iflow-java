@@ -1,13 +1,11 @@
 package com.pth.iflow.core.services;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -17,36 +15,26 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import com.pth.iflow.core.TestDataProducer;
-import com.pth.iflow.core.model.Department;
-import com.pth.iflow.core.model.DepartmentGroup;
-import com.pth.iflow.core.model.User;
-import com.pth.iflow.core.service.IDepartmentService;
+import com.pth.iflow.core.model.entity.DepartmentEntity;
+import com.pth.iflow.core.model.entity.DepartmentGroupEntity;
 import com.pth.iflow.core.service.impl.DepartmentService;
-import com.pth.iflow.core.storage.dao.IDepartmentDao;
-import com.pth.iflow.core.storage.dao.IDepartmentGroupDao;
-import com.pth.iflow.core.storage.dao.IUserDao;
+import com.pth.iflow.core.service.interfaces.IDepartmentService;
+import com.pth.iflow.core.storage.dao.interfaces.IDepartmentDao;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 public class DepartmentServiceTest extends TestDataProducer {
 
-  private IDepartmentService  departmentService;
+  private IDepartmentService departmentService;
 
   @MockBean
-  private IDepartmentDao      departmentDao;
-
-  @MockBean
-  private IDepartmentGroupDao departmentGroupDao;
-
-  @MockBean
-  private IUserDao            userDao;
+  private IDepartmentDao departmentDao;
 
   @Before
   public void setUp() throws Exception {
-    this.departmentService = new DepartmentService(this.departmentDao, this.departmentGroupDao, this.userDao);
+    this.departmentService = new DepartmentService(this.departmentDao);
   }
 
   @After
@@ -56,15 +44,16 @@ public class DepartmentServiceTest extends TestDataProducer {
   @Test
   public void testGetById() throws Exception {
 
-    final Department department = this.getTestDepartment();
+    final DepartmentEntity department = this.getTestDepartment();
     when(this.departmentDao.getByIdentity(any(String.class))).thenReturn(department);
 
-    final Department resDepartment = this.departmentService.getByIdentity(department.getIdentity());
+    final DepartmentEntity resDepartment = this.departmentService.getByIdentity(department.getIdentity());
 
     Assert.assertNotNull("Result department is not null!", resDepartment);
     Assert.assertEquals("Result department has id 1!", resDepartment.getId(), department.getId());
-    Assert.assertEquals("Result department has title '" + department.getTitle() + "'!", resDepartment.getTitle(),
-        department.getTitle());
+    Assert.assertEquals("Result department has title '" + department.getTitle() + "'!",
+                        resDepartment.getTitle(),
+                        department.getTitle());
     Assert.assertEquals("Result department has status 1!", resDepartment.getStatus(), department.getStatus());
 
   }
@@ -73,10 +62,10 @@ public class DepartmentServiceTest extends TestDataProducer {
   public void testGetListByIdList() throws Exception {
 
     final Set<String> idList = this.getTestDepartmentIdSet();
-    final List<Department> list = this.getTestDepartmentList();
+    final List<DepartmentEntity> list = this.getTestDepartmentList();
     when(this.departmentDao.getListByIdentityList(any(Set.class))).thenReturn(list);
 
-    final List<Department> resList = this.departmentService.getListByIdentityList(idList);
+    final List<DepartmentEntity> resList = this.departmentService.getListByIdentityList(idList);
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());
@@ -86,10 +75,10 @@ public class DepartmentServiceTest extends TestDataProducer {
   @Test
   public void testGetListByIdCompanyId() throws Exception {
 
-    final List<Department> list = this.getTestDepartmentList();
+    final List<DepartmentEntity> list = this.getTestDepartmentList();
     when(this.departmentDao.getListByCompanyIdentity(any(String.class))).thenReturn(list);
 
-    final List<Department> resList = this.departmentService.getListByIdCompanyIdentity("identity");
+    final List<DepartmentEntity> resList = this.departmentService.getListByIdCompanyIdentity("identity");
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());
@@ -99,12 +88,12 @@ public class DepartmentServiceTest extends TestDataProducer {
   @Test
   public void testGetDepartmentGroups() throws Exception {
 
-    final Department department = this.getTestDepartment();
+    final DepartmentEntity department = this.getTestDepartment();
 
-    final List<DepartmentGroup> list = this.getTestDepartmentGroupList();
+    final List<DepartmentEntity> list = this.getTestDepartmentList();
     when(this.departmentDao.getByIdentity(any(String.class))).thenReturn(department);
 
-    final List<DepartmentGroup> resList = this.departmentService.getDepartmentGroups("identity");
+    final List<DepartmentGroupEntity> resList = this.departmentService.getDepartmentGroups("identity");
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());
@@ -112,22 +101,48 @@ public class DepartmentServiceTest extends TestDataProducer {
   }
 
   @Test
-  public void testGetAllUserListByDepartmentId() throws Exception {
+  public void testSaveCreate() throws Exception {
 
-    final Set<String> list = new HashSet<>(Arrays.asList("item-1", "item-2", "item-3"));
-    final List<User> userList = this.getTestUserList();
-    final List<DepartmentGroup> departmentGroupList = this.getTestDepartmentGroupList();
-    final Department department = this.getTestDepartment();
+    final DepartmentEntity department = this.getTestDepartment();
+    department.setId(null);
+    department.setIdentity("");
+    final DepartmentEntity savedDepartment = this.getTestDepartment();
+    when(this.departmentDao.create(any(DepartmentEntity.class))).thenReturn(savedDepartment);
 
-    when(this.departmentDao.getByIdentity(any(String.class))).thenReturn(department);
-    when(this.userDao.getListByIdentityList(any(Set.class))).thenReturn(userList);
-    when(this.departmentGroupDao.getAllUserIdentityListByDepartmentGroupId(any(Long.class))).thenReturn(list);
-    when(this.departmentDao.getAllUserIdentityListByDepartmentId(any(Long.class))).thenReturn(list);
+    final DepartmentEntity result = this.departmentService.save(department);
 
-    final List<User> resList = this.departmentService.getAllUserListByDepartmentIdentity("identity");
+    Assert.assertNotNull("Result department is not null!", result);
+    Assert.assertEquals("Result department has title '" + savedDepartment.getTitle() + "'!",
+                        result.getTitle(),
+                        savedDepartment.getTitle());
+    Assert.assertEquals("Result department has status 1!", result.getStatus(), savedDepartment.getStatus());
 
-    Assert.assertNotNull("Result list is not null!", resList);
-    Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());
+    verify(this.departmentDao, times(1)).create(any(DepartmentEntity.class));
+    verify(this.departmentDao, times(0)).update(any(DepartmentEntity.class));
 
   }
+
+  @Test
+  public void testSaveUpdate() throws Exception {
+
+    final DepartmentEntity department = this.getTestDepartment();
+
+    final DepartmentEntity savedDepartment = this.getTestDepartment();
+    when(this.departmentDao.update(any(DepartmentEntity.class))).thenReturn(savedDepartment);
+    when(this.departmentDao.getByIdentity(any(String.class))).thenReturn(savedDepartment);
+
+    final DepartmentEntity result = this.departmentService.save(department);
+
+    Assert.assertNotNull("Result department is not null!", result);
+    Assert.assertEquals("Result department has title '" + savedDepartment.getTitle() + "'!",
+                        result.getTitle(),
+                        savedDepartment.getTitle());
+    Assert.assertEquals("Result department has status 1!", result.getStatus(), savedDepartment.getStatus());
+
+    verify(this.departmentDao, times(0)).create(any(DepartmentEntity.class));
+    verify(this.departmentDao, times(1)).update(any(DepartmentEntity.class));
+    verify(this.departmentDao, times(1)).getByIdentity(any(String.class));
+
+  }
+
 }

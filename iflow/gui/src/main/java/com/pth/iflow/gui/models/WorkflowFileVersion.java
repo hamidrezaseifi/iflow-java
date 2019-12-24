@@ -8,7 +8,6 @@ public class WorkflowFileVersion {
   private String  comments;
   private Integer fileVersion;
   private Integer status;
-  private Integer version;
 
   public String getFilePath() {
     return this.filePath;
@@ -27,7 +26,7 @@ public class WorkflowFileVersion {
   }
 
   public String getCreatedByIdentity() {
-    return createdByIdentity;
+    return this.createdByIdentity;
   }
 
   public void setCreatedByIdentity(final String createdByIdentity) {
@@ -56,14 +55,6 @@ public class WorkflowFileVersion {
 
   public void setStatus(final Integer status) {
     this.status = status;
-  }
-
-  public Integer getVersion() {
-    return this.version;
-  }
-
-  public void setVersion(final Integer version) {
-    this.version = version;
   }
 
 }

@@ -1,18 +1,17 @@
 package com.pth.iflow.workflow.bl.strategy.steps;
 
 import java.net.MalformedURLException;
-
 import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.strategy.strategies.AbstractWorkflowSaveStrategy;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
-import com.pth.iflow.workflow.models.Workflow;
-import com.pth.iflow.workflow.models.WorkflowSaveRequest;
 import com.pth.iflow.workflow.models.WorkflowType;
+import com.pth.iflow.workflow.models.base.IWorkflow;
+import com.pth.iflow.workflow.models.base.IWorkflowSaveRequest;
 
-public class ValidateAssignInSaveRequestStrategyStep extends AbstractWorkflowSaveStrategyStep {
+public class ValidateAssignInSaveRequestStrategyStep<W extends IWorkflow> extends AbstractWorkflowSaveStrategyStep<W> {
 
-  public ValidateAssignInSaveRequestStrategyStep(final AbstractWorkflowSaveStrategy workflowSaveStrategy) {
+  public ValidateAssignInSaveRequestStrategyStep(final AbstractWorkflowSaveStrategy<W> workflowSaveStrategy) {
     super(workflowSaveStrategy);
 
   }
@@ -20,7 +19,7 @@ public class ValidateAssignInSaveRequestStrategyStep extends AbstractWorkflowSav
   @Override
   public void process() throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    final WorkflowSaveRequest processingWorkflowSaveRequest = this.getWorkflowSaveStrategy().getProcessingWorkflowSaveRequest();
+    final IWorkflowSaveRequest<W> processingWorkflowSaveRequest = this.getWorkflowSaveStrategy().getProcessingWorkflowSaveRequest();
 
     if (processingWorkflowSaveRequest.getAssigns().isEmpty()) {
       throw new WorkflowCustomizedException("No assign by workflow create", EIFlowErrorType.NO_WORKFLOW_ASSIGN_CREATE_STRATEGY);
@@ -30,9 +29,9 @@ public class ValidateAssignInSaveRequestStrategyStep extends AbstractWorkflowSav
 
   @Override
   public boolean shouldProcess() {
-    final Workflow processingWorkflow = this.getWorkflowSaveStrategy().getProcessingWorkflow();
+    final W processingWorkflow = this.getWorkflowSaveStrategy().getProcessingWorkflow();
     final WorkflowType processingWorkflowType = this.getWorkflowSaveStrategy().getProcessingWorkflowType();
-    final WorkflowSaveRequest processingWorkflowSaveRequest = this.getWorkflowSaveStrategy().getProcessingWorkflowSaveRequest();
+    final IWorkflowSaveRequest<W> processingWorkflowSaveRequest = this.getWorkflowSaveStrategy().getProcessingWorkflowSaveRequest();
 
     if (processingWorkflowSaveRequest.isDoneCommand()) {
       if (this.getWorkflowSaveStrategy().isLastStep(processingWorkflowType, processingWorkflow.getCurrentStep())) {

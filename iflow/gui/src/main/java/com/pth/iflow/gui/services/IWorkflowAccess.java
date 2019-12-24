@@ -2,32 +2,27 @@ package com.pth.iflow.gui.services;
 
 import java.net.MalformedURLException;
 import java.util.List;
+import java.util.Set;
 
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
-import com.pth.iflow.gui.models.Workflow;
-import com.pth.iflow.gui.models.WorkflowSaveRequest;
-import com.pth.iflow.gui.models.WorkflowSearchFilter;
-import com.pth.iflow.gui.models.WorkflowType;
+import com.pth.iflow.gui.models.workflow.IWorkflow;
+import com.pth.iflow.gui.models.workflow.IWorkflowSaveRequest;
 
-public interface IWorkflowAccess {
+public interface IWorkflowAccess<W extends IWorkflow, WS extends IWorkflowSaveRequest<W>> {
 
-  Workflow readWorkflow(final String workflowIdentity, final String token)
+  W readWorkflow(final String workflowIdentity, final String token)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  List<Workflow> createWorkflow(final WorkflowSaveRequest createRequest, final String token)
+  List<W> readWorkflowList(final Set<String> workflowIdentityList, final String token)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  Workflow saveWorkflow(final WorkflowSaveRequest request, final String token)
+  List<W> createWorkflow(final WS createRequest, final String token)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  List<WorkflowType> readWorkflowTypeList(final String companyIdentity, final String token)
+  W saveWorkflow(final WS request, final String token)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  List<Workflow> searchWorkflow(final WorkflowSearchFilter workflowSearchFilter, final String token)
-      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
-
-  void validateWorkflow(WorkflowSaveRequest request, String token)
-      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
+  void validateWorkflow(WS request, String token) throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
 }

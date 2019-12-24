@@ -17,13 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pth.iflow.common.annotations.IflowGetRequestMapping;
 import com.pth.iflow.common.annotations.IflowPostRequestMapping;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
-import com.pth.iflow.common.edo.models.IdentityListEdo;
-import com.pth.iflow.common.edo.models.UserGroupEdo;
-import com.pth.iflow.common.edo.models.UserGroupListEdo;
+import com.pth.iflow.common.models.edo.IdentityListEdo;
+import com.pth.iflow.common.models.edo.UserGroupEdo;
+import com.pth.iflow.common.models.edo.UserGroupListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
-import com.pth.iflow.core.model.UserGroup;
-import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
-import com.pth.iflow.core.service.IUserGroupService;
+import com.pth.iflow.core.model.entity.UserGroupEntity;
+import com.pth.iflow.core.service.interfaces.IUserGroupService;
 
 @RestController
 @RequestMapping
@@ -40,9 +39,9 @@ public class UserGroupController {
   public ResponseEntity<UserGroupEdo> readUserGroup(@PathVariable(name = "identity") final String identity,
       final HttpServletRequest request) throws Exception {
 
-    final UserGroup model = this.userGroupService.getByIdentity(identity);
+    final UserGroupEntity model = this.userGroupService.getByIdentity(identity);
 
-    return ControllerHelper.createResponseEntity(request, CoreModelEdoMapper.toEdo(model), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, this.userGroupService.toEdo(model), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -50,10 +49,10 @@ public class UserGroupController {
   public ResponseEntity<UserGroupListEdo> readUserGroupList(@RequestBody final IdentityListEdo idList,
       final HttpServletRequest request) throws Exception {
 
-    final List<UserGroup> modelList = idList.getIdentityList().isEmpty() ? new ArrayList<>()
+    final List<UserGroupEntity> modelList = idList.getIdentityList().isEmpty() ? new ArrayList<>()
         : this.userGroupService.getListByIdentityList(idList.getIdentityList());
 
-    return ControllerHelper.createResponseEntity(request, new UserGroupListEdo(CoreModelEdoMapper.toUserGroupEdoList(modelList)),
+    return ControllerHelper.createResponseEntity(request, new UserGroupListEdo(this.userGroupService.toEdoList(modelList)),
         HttpStatus.OK);
   }
 
@@ -62,9 +61,9 @@ public class UserGroupController {
   public ResponseEntity<UserGroupListEdo> readUserGroupListByCompany(
       @PathVariable(name = "companyidentity") final String companyidentity, final HttpServletRequest request) throws Exception {
 
-    final List<UserGroup> modelList = this.userGroupService.getListByIdCompanyIdentity(companyidentity);
+    final List<UserGroupEntity> modelList = this.userGroupService.getListByIdCompanyIdentity(companyidentity);
 
-    return ControllerHelper.createResponseEntity(request, new UserGroupListEdo(CoreModelEdoMapper.toUserGroupEdoList(modelList)),
+    return ControllerHelper.createResponseEntity(request, new UserGroupListEdo(this.userGroupService.toEdoList(modelList)),
         HttpStatus.OK);
   }
 

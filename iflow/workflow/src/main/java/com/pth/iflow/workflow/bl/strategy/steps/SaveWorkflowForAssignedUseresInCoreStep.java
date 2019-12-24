@@ -3,15 +3,14 @@ package com.pth.iflow.workflow.bl.strategy.steps;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.strategy.strategies.AbstractWorkflowSaveStrategy;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
-import com.pth.iflow.workflow.models.Workflow;
+import com.pth.iflow.workflow.models.base.IWorkflow;
 
-public class SaveWorkflowForAssignedUseresInCoreStep extends AbstractWorkflowSaveStrategyStep {
+public class SaveWorkflowForAssignedUseresInCoreStep<W extends IWorkflow> extends AbstractWorkflowSaveStrategyStep<W> {
 
-  public SaveWorkflowForAssignedUseresInCoreStep(final AbstractWorkflowSaveStrategy workflowSaveStrategy) {
+  public SaveWorkflowForAssignedUseresInCoreStep(final AbstractWorkflowSaveStrategy<W> workflowSaveStrategy) {
     super(workflowSaveStrategy);
 
   }
@@ -19,14 +18,14 @@ public class SaveWorkflowForAssignedUseresInCoreStep extends AbstractWorkflowSav
   @Override
   public void process() throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    final Workflow processingWorkflow = this.getWorkflowSaveStrategy().getProcessingWorkflow();
+    final W processingWorkflow = this.getWorkflowSaveStrategy().getProcessingWorkflow();
 
-    final List<Workflow> result = new ArrayList<>();
+    final List<W> result = new ArrayList<>();
 
     for (final String userIdentity : this.getWorkflowSaveStrategy().getAssignedUsers()) {
       processingWorkflow.setActiveActionAssignTo(userIdentity);
 
-      final Workflow savedWorkflow = this.getWorkflowSaveStrategy().saveWorkflow(processingWorkflow);
+      final W savedWorkflow = this.getWorkflowSaveStrategy().saveWorkflow(processingWorkflow);
       result.add(savedWorkflow);
     }
 

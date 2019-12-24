@@ -24,22 +24,27 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.pth.iflow.common.edo.models.DepartmentGroupListEdo;
-import com.pth.iflow.common.edo.models.DepartmentListEdo;
-import com.pth.iflow.common.edo.models.ProfileResponseEdo;
-import com.pth.iflow.common.edo.models.UserEdo;
-import com.pth.iflow.common.edo.models.UserGroupListEdo;
-import com.pth.iflow.common.edo.models.UserListEdo;
+import com.pth.iflow.common.models.edo.DepartmentEdo;
+import com.pth.iflow.common.models.edo.DepartmentGroupEdo;
+import com.pth.iflow.common.models.edo.DepartmentGroupListEdo;
+import com.pth.iflow.common.models.edo.DepartmentListEdo;
+import com.pth.iflow.common.models.edo.ProfileResponseEdo;
+import com.pth.iflow.common.models.edo.UserEdo;
+import com.pth.iflow.common.models.edo.UserGroupEdo;
+import com.pth.iflow.common.models.edo.UserGroupListEdo;
+import com.pth.iflow.common.models.edo.UserListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.XmlRestConfig;
 import com.pth.iflow.core.TestDataProducer;
-import com.pth.iflow.core.model.Department;
-import com.pth.iflow.core.model.DepartmentGroup;
 import com.pth.iflow.core.model.ProfileResponse;
-import com.pth.iflow.core.model.User;
-import com.pth.iflow.core.model.UserGroup;
-import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
-import com.pth.iflow.core.service.IUsersService;
+import com.pth.iflow.core.model.entity.DepartmentEntity;
+import com.pth.iflow.core.model.entity.DepartmentGroupEntity;
+import com.pth.iflow.core.model.entity.UserEntity;
+import com.pth.iflow.core.model.entity.UserGroupEntity;
+import com.pth.iflow.core.service.interfaces.IDepartmentGroupService;
+import com.pth.iflow.core.service.interfaces.IDepartmentService;
+import com.pth.iflow.core.service.interfaces.IUserGroupService;
+import com.pth.iflow.core.service.interfaces.IUsersService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -55,6 +60,15 @@ public class UserControllerTest extends TestDataProducer {
   @MockBean
   private IUsersService                          usersService;
 
+  @MockBean
+  private IUserGroupService                      userGroupService;
+
+  @MockBean
+  private IDepartmentService                     departmentService;
+
+  @MockBean
+  private IDepartmentGroupService                departmentGroupService;
+
   @Value("${iflow.common.rest.api.security.client-id.internal}")
   private String                                 innerModulesRequestHeaderValue;
 
@@ -69,10 +83,11 @@ public class UserControllerTest extends TestDataProducer {
   @Test
   public void testReadUserById() throws Exception {
 
-    final User user = this.getTestUser();
-    when(this.usersService.getUserByEmail(any(String.class))).thenReturn(user);
+    final UserEntity user = this.getTestUser();
+    final UserEdo userEdo = getTestUserEdo();
 
-    final UserEdo userEdo = CoreModelEdoMapper.toEdo(user);
+    when(this.usersService.getUserByIdentity(any(String.class))).thenReturn(user);
+    when(this.usersService.toEdo(any(UserEntity.class))).thenReturn(userEdo);
 
     final String userAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(userEdo);
 
@@ -82,17 +97,17 @@ public class UserControllerTest extends TestDataProducer {
         .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(userAsXmlString));
 
-    verify(this.usersService, times(1)).getUserByEmail(any(String.class));
+    verify(this.usersService, times(1)).getUserByIdentity(any(String.class));
 
   }
 
   @Test
   public void testReadUserByEmail() throws Exception {
 
-    final User user = this.getTestUser();
-    when(this.usersService.getUserByEmail(any(String.class))).thenReturn(user);
-
-    final UserEdo userEdo = CoreModelEdoMapper.toEdo(user);
+    final UserEntity user = this.getTestUser();
+    final UserEdo userEdo = getTestUserEdo();
+    when(this.usersService.getUserByIdentity(any(String.class))).thenReturn(user);
+    when(this.usersService.toEdo(any(UserEntity.class))).thenReturn(userEdo);
 
     final String userAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(userEdo);
 
@@ -101,17 +116,20 @@ public class UserControllerTest extends TestDataProducer {
             .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
         .andExpect(content().xml(userAsXmlString));
 
-    verify(this.usersService, times(1)).getUserByEmail(any(String.class));
+    verify(this.usersService, times(1)).getUserByIdentity(any(String.class));
 
   }
 
   @Test
   public void testReadUserDepartments() throws Exception {
 
-    final List<Department> list = this.getTestDepartmentList();
-    when(this.usersService.getUserDepartments(any(String.class))).thenReturn(list);
+    final List<DepartmentEntity> list = this.getTestDepartmentList();
+    final List<DepartmentEdo> mappedEdolist = this.getTestDepartmentEdoList();
 
-    final DepartmentListEdo edoList = new DepartmentListEdo(CoreModelEdoMapper.toDepartmentEdoList(list));
+    when(this.usersService.getUserDepartments(any(String.class))).thenReturn(list);
+    when(this.departmentService.toEdoList(any(List.class))).thenReturn(mappedEdolist);
+
+    final DepartmentListEdo edoList = new DepartmentListEdo(mappedEdolist);
 
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
 
@@ -128,10 +146,13 @@ public class UserControllerTest extends TestDataProducer {
   @Test
   public void testReadUserDepartmentGroups() throws Exception {
 
-    final List<DepartmentGroup> list = this.getTestDepartmentGroupList();
-    when(this.usersService.getUserDepartmentGroups(any(String.class))).thenReturn(list);
+    final List<DepartmentGroupEntity> list = this.getTestDepartmentGroupList();
+    final List<DepartmentGroupEdo> mappedEdolist = this.getTestDepartmentGroupEdoList();
 
-    final DepartmentGroupListEdo edoList = new DepartmentGroupListEdo(CoreModelEdoMapper.toDepartmentGroupEdoList(list));
+    when(this.usersService.getUserDepartmentGroups(any(String.class))).thenReturn(list);
+    when(this.departmentGroupService.toEdoList(any(List.class))).thenReturn(mappedEdolist);
+
+    final DepartmentGroupListEdo edoList = new DepartmentGroupListEdo(mappedEdolist);
 
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
 
@@ -148,10 +169,13 @@ public class UserControllerTest extends TestDataProducer {
   @Test
   public void testReadUserGroups() throws Exception {
 
-    final List<UserGroup> list = this.getTestUserGroupList();
-    when(this.usersService.getUserGroups(any(String.class))).thenReturn(list);
+    final List<UserGroupEntity> list = this.getTestUserGroupList();
+    final List<UserGroupEdo> mappedEdolist = getTestUserGroupEdoList();
 
-    final UserGroupListEdo edoList = new UserGroupListEdo(CoreModelEdoMapper.toUserGroupEdoList(list));
+    when(this.usersService.getUserGroups(any(String.class))).thenReturn(list);
+    when(this.userGroupService.toEdoList(any(List.class))).thenReturn(mappedEdolist);
+
+    final UserGroupListEdo edoList = new UserGroupListEdo(mappedEdolist);
 
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
 
@@ -168,11 +192,14 @@ public class UserControllerTest extends TestDataProducer {
   @Test
   public void testReadUserDeputies() throws Exception {
 
-    final List<User> list = this.getTestUserList();
+    final List<UserEntity> list = this.getTestUserList();
+    final List<UserEdo> mappedEdolist = this.getTestUserEdoList();
+
     when(this.usersService.getUserDeputies(any(String.class))).thenReturn(list);
+    when(this.usersService.toEdoList(any(List.class))).thenReturn(mappedEdolist);
 
     final UserListEdo listEdo = new UserListEdo();
-    listEdo.setUsers(CoreModelEdoMapper.toUserEdoList(list));
+    listEdo.setUsers(mappedEdolist);
 
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(listEdo);
 
@@ -189,11 +216,14 @@ public class UserControllerTest extends TestDataProducer {
   @Test
   public void testReadCompanyUsers() throws Exception {
 
-    final List<User> list = this.getTestUserList();
+    final List<UserEntity> list = this.getTestUserList();
+    final List<UserEdo> mappedEdolist = this.getTestUserEdoList();
+
     when(this.usersService.getCompanyUsers(any(String.class))).thenReturn(list);
+    when(this.usersService.toEdoList(any(List.class))).thenReturn(mappedEdolist);
 
     final UserListEdo listEdo = new UserListEdo();
-    listEdo.setUsers(CoreModelEdoMapper.toUserEdoList(list));
+    listEdo.setUsers(mappedEdolist);
 
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(listEdo);
 
@@ -208,12 +238,60 @@ public class UserControllerTest extends TestDataProducer {
   }
 
   @Test
+  public void testReadDepartmentUsers() throws Exception {
+
+    final List<UserEntity> list = this.getTestUserList();
+    final List<UserEdo> mappedEdolist = this.getTestUserEdoList();
+    when(this.usersService.getAllUserIdentityListByDepartmentIdentity(any(String.class))).thenReturn(list);
+    when(this.usersService.toEdoList(any(List.class))).thenReturn(mappedEdolist);
+
+    final UserListEdo listEdo = new UserListEdo();
+    listEdo.setUsers(mappedEdolist);
+
+    final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(listEdo);
+
+    this.mockMvc
+        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.USER_USER_LIST_BY_DEPARTMENTIDENTITY, "companyidentity")
+            .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
+        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(content().xml(listAsXmlString));
+
+    verify(this.usersService, times(1)).getAllUserIdentityListByDepartmentIdentity(any(String.class));
+
+  }
+
+  @Test
+  public void testReadDepartmentGroupUsers() throws Exception {
+
+    final List<UserEntity> list = this.getTestUserList();
+    final List<UserEdo> mappedEdolist = this.getTestUserEdoList();
+
+    when(this.usersService.getAllUserIdentityListByDepartmentGroupIdentity(any(String.class))).thenReturn(list);
+    when(this.usersService.toEdoList(any(List.class))).thenReturn(mappedEdolist);
+
+    final UserListEdo listEdo = new UserListEdo();
+    listEdo.setUsers(mappedEdolist);
+
+    final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(listEdo);
+
+    this.mockMvc
+        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.USER_USER_LIST_BY_DEPARTMENTGROUPIDENTITY, "companyidentity")
+            .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
+        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(content().xml(listAsXmlString));
+
+    verify(this.usersService, times(1)).getAllUserIdentityListByDepartmentGroupIdentity(any(String.class));
+
+  }
+
+  @Test
   public void testReadUserProfileByEmail() throws Exception {
 
     final ProfileResponse profile = this.getTestProfileResponse();
-    when(this.usersService.getProfileResponseByEmail(any(String.class))).thenReturn(profile);
+    final ProfileResponseEdo edo = getTestProfileResponseEdo();
 
-    final ProfileResponseEdo edo = CoreModelEdoMapper.toEdo(profile);
+    when(this.usersService.getProfileResponseByEmail(any(String.class))).thenReturn(profile);
+    when(this.usersService.toProfileResponseEdo(any(ProfileResponse.class))).thenReturn(edo);
 
     final String resultAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edo);
 

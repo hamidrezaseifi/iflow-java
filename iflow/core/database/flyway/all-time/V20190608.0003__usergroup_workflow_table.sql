@@ -34,6 +34,8 @@ DROP TABLE IF EXISTS `users`;
 
 DROP TABLE IF EXISTS `companies`;
 
+DROP TABLE IF EXISTS `user_roles`;
+
  
 CREATE TABLE `companies` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -81,7 +83,17 @@ CREATE TABLE `departments_group` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 ;
 
 
+CREATE TABLE `iflow_roles` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(200) NOT NULL,
+  `status` smallint(6) NOT NULL DEFAULT '1',
+  `version` int(11) NOT NULL DEFAULT '1',
+  `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  `updated_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
  
+
 CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `company_id` int(11) NOT NULL DEFAULT '1',
@@ -100,40 +112,6 @@ CREATE TABLE `users` (
   KEY `FK_USERS_COMPANIES_idx` (`company_id`),
   CONSTRAINT `FK_USERS_COMPANIES` FOREIGN KEY (`company_id`) REFERENCES `companies` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
-
- 
-CREATE TABLE `user_departments` (
-  `user_id` int(11) NOT NULL,
-  `department_id` int(11) NOT NULL,
-  `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-  PRIMARY KEY (`user_id`,`department_id`),
-  KEY `FK_USERDEPARTMENTS_DEPARTMENTS_idx` (`department_id`),
-  CONSTRAINT `FK_USERDEPARTMENTS_DEPARTMENTS` FOREIGN KEY (`department_id`) REFERENCES `departments` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_USERDEPARTMENTS_USERS` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB ;
-
-CREATE TABLE `user_department_groups` (
-  `user_id` int(11) NOT NULL,
-  `department_group_id` int(11) NOT NULL,
-  `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-  PRIMARY KEY (`user_id`,`department_group_id`),
-  KEY `FK_USERDEPARTMENTGROUPS_DEPARTMENTS_idx` (`department_group_id`),
-  CONSTRAINT `FK_USERDEPARTMENTGROUPS_DEPARTMENTGROUPS` FOREIGN KEY (`department_group_id`) REFERENCES `departments_group` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_USERDEPARTMENTGROUPS_USERS` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB;
-
- 
-CREATE TABLE `user_deputy` (
-  `user_id` int(11) NOT NULL,
-  `deputy_id` int(11) NOT NULL,
-  `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-  PRIMARY KEY (`user_id`,`deputy_id`),
-  KEY `FK_USERDEPUTY_DEPUTY_idx` (`deputy_id`),
-  CONSTRAINT `FK_USERDEPUTY_DEPUTY` FOREIGN KEY (`deputy_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_USERDEPUTY_USER` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB ;
-
-
  
 CREATE TABLE `user_group` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -148,19 +126,58 @@ CREATE TABLE `user_group` (
   UNIQUE KEY `identity_UNIQUE` (`identity`),
   KEY `FK_USERGROUP_COMPANY_idx` (`company_id`),
   CONSTRAINT `FK_USERGROUP_COMPANY` FOREIGN KEY (`company_id`) REFERENCES `companies` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB;
 
- 
+CREATE TABLE `user_deputy` (
+  `user_id` int(11) NOT NULL,
+  `deputy_id` int(11) NOT NULL,
+  `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  PRIMARY KEY (`user_id`,`deputy_id`),
+  KEY `FK_USERDEPUTY_DEPUTY_idx` (`deputy_id`),
+  CONSTRAINT `FK_USERDEPUTY_DEPUTY` FOREIGN KEY (`deputy_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `FK_USERDEPUTY_USER` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE `user_departments` (
+  `user_id` int(11) NOT NULL,
+  `department_id` int(11) NOT NULL,
+  `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  PRIMARY KEY (`user_id`,`department_id`),
+  KEY `FK_USERDEPARTMENTS_DEPARTMENTS_idx` (`department_id`),
+  CONSTRAINT `FK_USERDEPARTMENTS_DEPARTMENTS` FOREIGN KEY (`department_id`) REFERENCES `departments` (`id`),
+  CONSTRAINT `FK_USERDEPARTMENTS_USERS` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE `user_department_groups` (
+  `user_id` int(11) NOT NULL,
+  `department_group_id` int(11) NOT NULL,
+  `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  PRIMARY KEY (`user_id`,`department_group_id`),
+  KEY `FK_USERDEPARTMENTGROUPS_D_idx` (`department_group_id`),
+  CONSTRAINT `FK_USERDEPARTMENTGROUPS_D` FOREIGN KEY (`department_group_id`) REFERENCES `departments_group` (`id`),
+  CONSTRAINT `FK_USERDEPARTMENTGROUPS_USERS` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
 CREATE TABLE `user_usergroup` (
   `user_id` int(11) NOT NULL,
   `user_group` int(11) NOT NULL,
   `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   PRIMARY KEY (`user_id`,`user_group`),
   KEY `FK_USERGROUPUSER_GROUP_idx` (`user_group`),
-  CONSTRAINT `FK_USERGROUPUSER_GROUP` FOREIGN KEY (`user_group`) REFERENCES `user_group` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_USERGROUPUSER_GROUP` FOREIGN KEY (`user_group`) REFERENCES `user_group` (`id`),
   CONSTRAINT `FK_USERGROUPUSER_USER` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB ;
+) ENGINE=InnoDB;
 
+
+CREATE TABLE `user_roles` (
+  `user_id` int(11) NOT NULL,
+  `role` int(11) NOT NULL,
+  `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  PRIMARY KEY (`user_id`,`role`),
+  KEY `FK_USERROLES_ROLE_idx` (`role`),
+  CONSTRAINT `FK_USERROLES_ROLE` FOREIGN KEY (`role`) REFERENCES `iflow_roles` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_USERROLES_USERS` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
 
 
 CREATE TABLE `workflow_type` (
@@ -244,17 +261,14 @@ CREATE TABLE `workflow` (
  
 CREATE TABLE `workflow_actions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `identity` varchar(45) DEFAULT NULL,
   `workflow_id` int(11) NOT NULL,
   `assign_to` int(11) NOT NULL DEFAULT '0',
   `current_step_id` int(11) NOT NULL DEFAULT '0',
   `comments` varchar(45) DEFAULT NULL,
   `status` int(11) DEFAULT '1',
-  `version` int(11) NOT NULL DEFAULT '1',
   `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   `updated_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   PRIMARY KEY (`id`),
-  UNIQUE KEY `identity_UNIQUE` (`identity`),
   KEY `FK_WORKFLOWACTION_WORKFLOW_idx` (`workflow_id`),
   CONSTRAINT `FK_WORKFLOWACTION_WORKFLOW` FOREIGN KEY (`workflow_id`) REFERENCES `workflow` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 ;
@@ -270,7 +284,6 @@ CREATE TABLE `workflow_files` (
   `comments` text,
   `active_version` int(11) NOT NULL DEFAULT '1',
   `status` smallint(6) NOT NULL DEFAULT '1',
-  `version` int(11) NOT NULL DEFAULT '1',
   `created_by` int(11) DEFAULT NULL,
   `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   `updated_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
@@ -305,7 +318,6 @@ CREATE TABLE `workflow_files_versions` (
   `comments` text,
   `file_version` int(11) NOT NULL DEFAULT '1',
   `status` smallint(6) NOT NULL DEFAULT '1',
-  `version` int(11) NOT NULL DEFAULT '1',
   `created_by` int(11) DEFAULT NULL,
   `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   `updated_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),

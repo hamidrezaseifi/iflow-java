@@ -1,0 +1,70 @@
+
+.search-toolbar {
+    width: calc(100% - 350px);
+    float: right;
+}
+
+.search-toolbar .nav-item{
+    margin-right: 30px;
+    
+}
+
+.search-toolbar .nav-item input.form-check-input[type=checkbox]{
+    width: 16px;
+    height: 16px;
+    
+}
+
+.search-toolbar .nav-item .form-check-label{
+	margin-bottom: 0;
+    padding-left: 10px;
+    line-height: 20px;
+}
+
+.search-toolbar-item{
+	height: 100%;
+    padding-top: 9px;
+}
+
+.search-toolbar .nav-item {
+    background-color: transparent !important;
+}
+
+.search-toolbar .nav-link.active, .search-toolbar .show>.nav-link {
+    color: #fff !important;
+    background-color: #c7c9cb !important;
+}
+
+.table-striped{
+	
+}
+
+.table-striped thead{
+	background-color: #c1c4c4;
+}
+
+.table-striped thead tr th, .table-striped thead tr td{	
+	border: 2px solid #dee2e6;
+	padding: 4px 6px;
+}
+
+.table-striped th, .table-striped td{	
+	border: 2px solid #dee2e6;
+	padding: 4px 6px;
+}
+
+.table-striped tbody tr{	
+	border: 2px solid #dee2e6;
+}
+
+.table-striped tbody tr:nth-child(odd){	
+	background-color: #fdffd9;
+}
+
+.table-striped tbody tr:nth-child(even){	
+	background-color: #dfe1ff;
+}
+
+.table-striped tbody tr:hove{	
+	background-color: #dff7ff;
+}

@@ -17,24 +17,27 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pth.iflow.common.annotations.IflowGetRequestMapping;
 import com.pth.iflow.common.annotations.IflowPostRequestMapping;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
-import com.pth.iflow.common.edo.models.DepartmentGroupEdo;
-import com.pth.iflow.common.edo.models.DepartmentGroupListEdo;
-import com.pth.iflow.common.edo.models.IdentityListEdo;
-import com.pth.iflow.common.edo.models.UserListEdo;
+import com.pth.iflow.common.models.edo.DepartmentGroupEdo;
+import com.pth.iflow.common.models.edo.DepartmentGroupListEdo;
+import com.pth.iflow.common.models.edo.IdentityListEdo;
+import com.pth.iflow.common.models.edo.UserListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
-import com.pth.iflow.core.model.DepartmentGroup;
-import com.pth.iflow.core.model.User;
-import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
-import com.pth.iflow.core.service.IDepartmentGroupService;
+import com.pth.iflow.core.model.entity.DepartmentGroupEntity;
+import com.pth.iflow.core.model.entity.UserEntity;
+import com.pth.iflow.core.service.interfaces.IDepartmentGroupService;
+import com.pth.iflow.core.service.interfaces.IUsersService;
 
 @RestController
 @RequestMapping
 public class DepartmentGroupController {
 
   final IDepartmentGroupService departmentGroupService;
+  final IUsersService           userService;
 
-  public DepartmentGroupController(@Autowired final IDepartmentGroupService departmentGroupService) {
+  public DepartmentGroupController(@Autowired final IDepartmentGroupService departmentGroupService,
+      @Autowired final IUsersService userService) {
     this.departmentGroupService = departmentGroupService;
+    this.userService = userService;
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -42,9 +45,9 @@ public class DepartmentGroupController {
   public ResponseEntity<DepartmentGroupEdo> readDepartmentGroup(@PathVariable(name = "identity") final String identity,
       final HttpServletRequest request) throws Exception {
 
-    final DepartmentGroup model = this.departmentGroupService.getByIdentity(identity);
+    final DepartmentGroupEntity model = this.departmentGroupService.getByIdentity(identity);
 
-    return ControllerHelper.createResponseEntity(request, CoreModelEdoMapper.toEdo(model), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, this.departmentGroupService.toEdo(model), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -52,22 +55,11 @@ public class DepartmentGroupController {
   public ResponseEntity<DepartmentGroupListEdo> readDepartmentList(@RequestBody final IdentityListEdo idList,
       final HttpServletRequest request) throws Exception {
 
-    final List<DepartmentGroup> modelList = idList.getIdentityList().isEmpty() ? new ArrayList<>()
+    final List<DepartmentGroupEntity> modelList = idList.getIdentityList().isEmpty() ? new ArrayList<>()
         : this.departmentGroupService.getListByIdentityList(idList.getIdentityList());
 
-    return ControllerHelper.createResponseEntity(request,
-        new DepartmentGroupListEdo(CoreModelEdoMapper.toDepartmentGroupEdoList(modelList)), HttpStatus.OK);
-  }
-
-  @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.DEPARTMENTGRPUP_READ_LIST_BY_DEPARTMENTIDENTITY)
-  public ResponseEntity<DepartmentGroupListEdo> readDepartmentListByDepartment(@PathVariable(name = "identity") final String identity,
-      final HttpServletRequest request) throws Exception {
-
-    final List<DepartmentGroup> modelList = this.departmentGroupService.getListByDepartmentIdentity(identity);
-
-    return ControllerHelper.createResponseEntity(request,
-        new DepartmentGroupListEdo(CoreModelEdoMapper.toDepartmentGroupEdoList(modelList)), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, new DepartmentGroupListEdo(this.departmentGroupService.toEdoList(modelList)),
+        HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -75,9 +67,9 @@ public class DepartmentGroupController {
   public ResponseEntity<UserListEdo> readAllUserListByDepartmentGroup(@PathVariable(name = "identity") final String identity,
       final HttpServletRequest request) throws Exception {
 
-    final List<User> modelList = this.departmentGroupService.getAllUserListByDepartmentGroupId(identity);
+    final List<UserEntity> modelList = this.userService.getAllUserIdentityListByDepartmentGroupIdentity(identity);
 
-    return ControllerHelper.createResponseEntity(request, new UserListEdo(CoreModelEdoMapper.toUserEdoList(modelList)), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, new UserListEdo(this.userService.toEdoList(modelList)), HttpStatus.OK);
   }
 
 }

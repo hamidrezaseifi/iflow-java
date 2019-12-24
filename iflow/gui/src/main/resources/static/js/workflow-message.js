@@ -14,6 +14,9 @@ iflowApp.controller('WorkflowMessageController', function ($scope, $http, ShowEr
 
 	$scope.messagePanelShowed = true;
 
+	$scope.messageSearchInterval = 60000;
+
+	
 	$scope.closeMessages = function(){
 		$('#message-panel-container').height(25);
 		$scope.messagePanelShowed = false;
@@ -52,7 +55,7 @@ iflowApp.controller('WorkflowMessageController', function ($scope, $http, ShowEr
 	    	
 	    	setTimeout(function(){ 
 	    		$scope.reloadMessages();
-	    	}, 15000);
+	    	}, $scope.messageSearchInterval);
 	
 	    }, function errorCallback(response) {
 	        

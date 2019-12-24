@@ -22,13 +22,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.pth.iflow.common.edo.models.CompanyEdo;
+import com.pth.iflow.common.models.edo.CompanyEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.XmlRestConfig;
 import com.pth.iflow.core.TestDataProducer;
-import com.pth.iflow.core.model.Company;
-import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
-import com.pth.iflow.core.service.ICompanyService;
+import com.pth.iflow.core.model.entity.CompanyEntity;
+import com.pth.iflow.core.service.interfaces.ICompanyService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -58,10 +57,11 @@ public class CompanyControllerTest extends TestDataProducer {
   @Test
   public void testReadCompany() throws Exception {
 
-    final Company company = getTestCompany();
-    when(this.companyService.getByIdentity(any(String.class))).thenReturn(company);
+    final CompanyEntity company = getTestCompany();
+    final CompanyEdo companyEdo = getTestCompanyEdo();
 
-    final CompanyEdo companyEdo = CoreModelEdoMapper.toEdo(company);
+    when(this.companyService.getByIdentity(any(String.class))).thenReturn(company);
+    when(this.companyService.toEdo(any(CompanyEntity.class))).thenReturn(companyEdo);
 
     final String companyAsString = this.xmlConverter.getObjectMapper().writeValueAsString(companyEdo);
 

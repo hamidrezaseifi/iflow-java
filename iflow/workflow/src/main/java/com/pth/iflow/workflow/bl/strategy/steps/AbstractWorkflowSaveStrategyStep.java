@@ -2,12 +2,13 @@ package com.pth.iflow.workflow.bl.strategy.steps;
 
 import com.pth.iflow.workflow.bl.strategy.IWorkflowSaveStrategyStep;
 import com.pth.iflow.workflow.bl.strategy.strategies.AbstractWorkflowSaveStrategy;
+import com.pth.iflow.workflow.models.base.IWorkflow;
 
-public abstract class AbstractWorkflowSaveStrategyStep implements IWorkflowSaveStrategyStep {
+public abstract class AbstractWorkflowSaveStrategyStep<W extends IWorkflow> implements IWorkflowSaveStrategyStep {
 
-  private final AbstractWorkflowSaveStrategy workflowSaveStrategy;
+  private final AbstractWorkflowSaveStrategy<W> workflowSaveStrategy;
 
-  public AbstractWorkflowSaveStrategyStep(final AbstractWorkflowSaveStrategy workflowSaveStrategy) {
+  public AbstractWorkflowSaveStrategyStep(final AbstractWorkflowSaveStrategy<W> workflowSaveStrategy) {
     this.workflowSaveStrategy = workflowSaveStrategy;
   }
 
@@ -15,7 +16,7 @@ public abstract class AbstractWorkflowSaveStrategyStep implements IWorkflowSaveS
     return workflowSaveStrategy.hasNextStep(currentStep);
   }
 
-  public AbstractWorkflowSaveStrategy getWorkflowSaveStrategy() {
+  public AbstractWorkflowSaveStrategy<W> getWorkflowSaveStrategy() {
     return workflowSaveStrategy;
   }
 

@@ -12,8 +12,8 @@ import org.springframework.security.core.authority.AuthorityUtils;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.pth.iflow.backend.models.ui.enums.EUiUserRole;
-import com.pth.iflow.common.edo.models.helper.IdentityModel;
 import com.pth.iflow.common.enums.EUserStatus;
+import com.pth.iflow.common.models.helper.IdentityModel;
 
 @JsonIgnoreProperties(value = { "authorities", "enabled", })
 public class User extends IdentityModel {

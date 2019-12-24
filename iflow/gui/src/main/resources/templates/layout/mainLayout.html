@@ -41,6 +41,7 @@
     
     
     <script th:src="@{/js/jquery-ui.min.js}"></script>
+    <script th:src="@{/js/datepicker-de.js}"></script>
     <link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}">
     <link rel="stylesheet" th:href="@{/css/build.css}">
     
@@ -52,66 +53,63 @@
         
       <header th:fragment="header">
 
-				<nav class="navbar navbar-default" th:fragment="navbar">
-					<div class="container-fluid">
-						<div class="navbar-header">
-							<a class="navbar-brand" href="/"><img class="logo" th:src="@{/images/fbim2.png}" /></a>
-						</div>
-						<ul class="nav navbar-nav" th:if="${isLogged}">
-							<li th:each="menu: ${pageMenuList}" th:if="${menu.isEnabled()}">
-								<a th:if="${!menu.hasChildren()}" th:href="${menu.getUrl()}" >
+		<nav class="navbar navbar-expand-lg navbar-toggleable-md navbar-light bg-light navbar-fixed-top" th:fragment="navbar">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="/"><img class="logo" th:src="@{/images/fbim2.png}" /></a>
+				</div>
+				<ul class="navbar-nav" th:if="${isLogged}">
+					<li th:each="menu: ${pageMenuList}" th:if="${menu.isEnabled()}" th:class="${menu.hasChildren()}? 'dropdown nav-item' : 'nav-item'">
+						<a class="nav-link" th:if="${!menu.hasChildren()}" th:href="${menu.getUrl()}" >
 							<span th:if="${menu.hasImage()}" th:class="${menu.getCssClass('menu-image')}"></span>
 							<span th:text="${menu.getLabel()}"></span>
 						</a>
-								<a th:if="${menu.hasChildren()}" href="#" th:class="${menu.hasChildren() ? 'dropdown-toggle' : ''}" data-toggle="dropdown">
+						<a class="nav-link dropdown-toggle" th:if="${menu.hasChildren()}" href="#"  data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
 							<span th:if="${menu.hasImage()}" th:class="${menu.getCssClass('menu-image')}"></span>
 							<span th:text="${menu.getLabel()}"></span>
 							<span class="caret" th:if="${menu.hasChildren()}"></span>
 						</a>
-						<ul th:if="${menu.hasChildren()}" class="dropdown-menu">
-								<li th:each="submenu: ${menu.getChildren()}" th:if="${submenu.isEnabled()}">
-									<a th:href="${submenu.getUrl()}" >
+						<div class="dropdown-menu" th:if="${menu.hasChildren()}">
+							<a th:each="submenu: ${menu.getChildren()}" th:if="${submenu.isEnabled()}" th:href="${submenu.getUrl()}" >
 								<span th:if="${submenu.hasImage()}" th:class="${submenu.getCssClass('menu-image')}"></span>
 								<span th:text="${submenu.getLabel()}"></span>
 							</a>
-							</li>
-							
-						</ul>
-						</li>
-						</ul>
-									
-						<div class="navbar-user-detail" th:if="${isLogged}">
-							<div class="user-detail dropdown"> 
-						<md-button ng-click="toggleRight()" style="background-color:#cecece;">
-									<span th:text="${loggedUser.getUserTitle()}">User, User</span>
-									<span class="glyphicon glyphicon-user"></span>
-						</md-button>
-							</div>
 						</div>
-						
+					</li>
+				</ul>
+							
+				<div class="navbar-user-detail" th:if="${isLogged}">
+					<div class="user-detail dropdown"> 
+						<button class="user-meu-button" type="button" ng-transclude="" (click)="toggleRight()">
+							<span th:text="${loggedUser.getUserTitle()}">User, User</span>
+						</button>
 					</div>
-				</nav>    			    
-				<md-sidenav md-component-id="rightSidenav" class="md-sidenav-right" th:if="${isLogged}">
-					<md-list ng-cloak>
-						<md-subheader class="md-no-sticky" th:text="#{common.useractins}"></md-subheader>
-						<md-divider></md-divider>					
-						<md-list-item class="secondary-button-padding">
-								<a href="/logout"><span class="glyphicon glyphicon-log-out"></span> <span th:text="#{common.logout}"></span></a>
-						</md-list-item>
-					</md-list>	
-					
-					<md-button class="md-raised md-primary close-right-menu" ng-click="closeSideRight()"> <span th:text="#{common.close}"></span></md-button>
-				</md-sidenav>
+				</div>
+						
+			</div>
+		</nav>    			    
+		<md-sidenav md-component-id="rightSidenav" class="md-sidenav-right" th:if="false">
+			<md-list ng-cloak>
+				<md-subheader class="md-no-sticky" th:text="#{common.useractins}"></md-subheader>
+				<md-divider></md-divider>					
+				<md-list-item class="secondary-button-padding">
+						<a href="/logout"><span class="glyphicon glyphicon-log-out"></span> <span th:text="#{common.logout}"></span></a>
+				</md-list-item>
+			</md-list>	
+			
+			<md-button class="md-raised md-primary close-right-menu" ng-click="closeSideRight()"> <span th:text="#{common.close}"></span></md-button>
+		</md-sidenav>
 	        
       </header>
-			<div th:fragment="breadcrumb" style="background-color: #eeeeee;">
-				<ul class="breadcrumb" >
-						<li th:each="entry : ${breadCrumb}">
-								<a th:href="${entry.getUrl()}" th:if="${entry.isLink()}" th:text="${entry.getLabel()}"></a>
-								<span th:if="${!entry.isLink()}" th:text="${entry.getLabel()}"></span>
-						</li>
-				</ul>			
-			</div>
+      
+	<div th:fragment="breadcrumb" style="background-color: #eeeeee;">
+		<ul class="breadcrumb" >
+			<li th:each="entry : ${breadCrumb}">
+				<a th:href="${entry.getUrl()}" th:if="${entry.isLink()}" th:text="${entry.getLabel()}"></a>
+				<span th:if="${!entry.isLink()}" th:text="${entry.getLabel()}"></span>
+			</li>
+		</ul>			
+	</div>
  
 			<div th:fragment="errorMessageDialog" class="modal fade" tabindex="-1" id="errormessagedialog" role="dialog" aria-labelledby="errorMessagedialogCenterTitle" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered" role="document">

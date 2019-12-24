@@ -25,6 +25,10 @@ public enum EIFlowErrorType implements IEnumValueValidator {
   OPTIMISTICLOCK_FAILURE(110, ""),
   DAO_STORAGE_FAILURE(120, ""),
 
+  GUI_INVALID_SESSION(210, ""),
+
+  SERVICE_NOT_IMPLEMENTED(820, ""),
+
   RUNTIME_UNKNOWN(910, ""),
   SERVICE_NOT_FOUND(920, ""),
 

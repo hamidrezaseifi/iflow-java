@@ -161,6 +161,7 @@
               <clearOutputDir>true</clearOutputDir>
               <verbose>true</verbose>
               <sources>
+				<source>src/main/java/com/pth/iflow/common/edo/models/AssignItemEdo.java</source>
 				<source>src/main/java/com/pth/iflow/common/edo/models/AuthenticatedProfileRequestEdo.java</source>
 				<source>src/main/java/com/pth/iflow/common/edo/models/CompanyEdo.java</source>
 				<source>src/main/java/com/pth/iflow/common/edo/models/CompanyProfileEdo.java</source>
@@ -168,6 +169,7 @@
 				<source>src/main/java/com/pth/iflow/common/edo/models/DepartmentGroupEdo.java</source>
 				<source>src/main/java/com/pth/iflow/common/edo/models/DepartmentGroupListEdo.java</source>
 				<source>src/main/java/com/pth/iflow/common/edo/models/DepartmentListEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/IdentityListEdo.java</source>
 				<source>src/main/java/com/pth/iflow/common/edo/models/ProfileResponseEdo.java</source>
 				<source>src/main/java/com/pth/iflow/common/edo/models/TokenProfileRequestEdo.java</source>
 				<source>src/main/java/com/pth/iflow/common/edo/models/UserAuthenticationRequestEdo.java</source>
@@ -178,20 +180,29 @@
 				<source>src/main/java/com/pth/iflow/common/edo/models/UserListEdo.java</source>
 				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowActionEdo.java</source>
 				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowActionListEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowCreateRequestEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowEdo.java</source>
 				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowFileEdo.java</source>
 				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowFileListEdo.java</source>
 				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowFileVersionEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowListEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowMessageEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowMessageListEdo.java</source>
 				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowSearchFilterEdo.java</source>
 				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowTypeEdo.java</source>
 				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowTypeListEdo.java</source>
 				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowTypeStepEdo.java</source>
 				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowTypeStepListEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowOfferEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowOfferListEdo.java</source>
+				
+				<source>src/main/java/com/pth/iflow/common/edo/models/workflow/invoice/InvoiceWorkflowEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/workflow/invoice/InvoiceWorkflowListEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/workflow/invoice/InvoiceWorkflowSaveRequestEdo.java</source>
 
+				<source>src/main/java/com/pth/iflow/common/edo/models/workflow/singletask/SingleTaskWorkflowEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/workflow/singletask/SingleTaskWorkflowListEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/workflow/singletask/SingleTaskWorkflowSaveRequestEdo.java</source>
+
+				<source>src/main/java/com/pth/iflow/common/edo/models/workflow/testthreetask/TestThreeTaskWorkflowEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/workflow/testthreetask/TestThreeTaskWorkflowListEdo.java</source>
+				<source>src/main/java/com/pth/iflow/common/edo/models/workflow/testthreetask/TestThreeTaskWorkflowSaveRequestEdo.java</source>
+                                                
               </sources>
               <outputDirectory>${project.build.directory}/generated-resources/schemagen</outputDirectory>
               <transformSchemas>

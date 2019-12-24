@@ -21,6 +21,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.exceptions.GuiErrorRestResponse;
+import com.pth.iflow.gui.exceptions.GuiSessionException;
 import com.pth.iflow.gui.models.ui.SessionUserInfo;
 import com.pth.iflow.gui.models.ui.UiMenuItem;
 import com.pth.iflow.gui.services.IBreadCrumbLoader;
@@ -52,7 +53,7 @@ public class GlobalExceptionHandler /* implements ErrorController */ {
 
   protected String getCurrentRelativeUrl() {
     ServletUriComponentsBuilder builder = ServletUriComponentsBuilder.fromCurrentContextPath();
-    final String root = builder.build().toUriString();
+    final String                root    = builder.build().toUriString();
     builder = ServletUriComponentsBuilder.fromCurrentRequestUri();
     String path = builder.build().toUriString();
     path = path.replace(root, "");
@@ -70,20 +71,27 @@ public class GlobalExceptionHandler /* implements ErrorController */ {
   }
 
   @ExceptionHandler(GuiCustomizedException.class)
-  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  @ResponseStatus(HttpStatus.UNAUTHORIZED)
   @ResponseBody
   public GuiErrorRestResponse handleGuiCustomizedException(final Model model, final GuiCustomizedException ex) {
 
-    return new GuiErrorRestResponse(HttpStatus.BAD_REQUEST, this.messagesHelper.getErrorMessage(ex.getErrorType(), ex.getModuleName()),
-        ex);
+    return new GuiErrorRestResponse(HttpStatus.UNAUTHORIZED, this.messagesHelper.getErrorMessage(ex.getErrorType(), ex.getModuleName()), ex);
+  }
+
+  @ExceptionHandler(GuiSessionException.class)
+  @ResponseStatus(HttpStatus.UNAUTHORIZED)
+  @ResponseBody
+  public GuiErrorRestResponse handleGuiSessionException(final Model model, final GuiSessionException ex) {
+
+    return new GuiErrorRestResponse(HttpStatus.UNAUTHORIZED, ex.getMessage(), ex);
   }
 
   // @RequestMapping("/error")
   public String handleError(final Model model, final HttpServletRequest request) {
-    final Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
-    final Object fwuri = request.getAttribute(RequestDispatcher.FORWARD_REQUEST_URI);
+    final Object status   = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
+    final Object fwuri    = request.getAttribute(RequestDispatcher.FORWARD_REQUEST_URI);
 
-    String viewName = "site/invalid-request";
+    String       viewName = "site/invalid-request";
     if (status != null) {
       final Integer statusCode = Integer.valueOf(status.toString());
       if (statusCode == 404) {

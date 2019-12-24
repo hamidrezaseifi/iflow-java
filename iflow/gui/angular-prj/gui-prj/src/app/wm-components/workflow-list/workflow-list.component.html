@@ -1,0 +1,88 @@
+		<div class="content-container">
+			<div class="page-toolbar">
+				<div class="page-title">{{ 'menu-workflow-list' | translate }}</div>
+				<button class="toolbar-button" (click)="reload()"><i class="material-icons">refresh</i></button>
+				<a class="toolbar-link" [routerLink]="['/workflow/create']"><i class="material-icons">playlist_add</i></a>
+				
+				<ul class="nav nav-pills search-toolbar">
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Status</a>
+						<div class="dropdown-menu">
+							<div *ngFor="let wstatus of statusList;" class="dropdown-item">
+								<input type="checkbox" class="form-check-input" [checked]="isStatusSelected(wstatus)" (click)="toggleStatusSelected(wstatus)"  id="status-check-{{wstatus}}">
+								<label class="form-check-label" for="status-check-{{wstatus}}">{{wstatus}}</label>
+							</div>
+						</div>
+					</li>
+				  	<li class="nav-item">
+				  		<div class="dropdown-item search-toolbar-item">
+							<input type="checkbox" class="toggle-checkbox form-check-input" [checked]="isMeAssigned" [(ngModel)]="isMeAssigned"  id="me-assigned-check">
+							<label class="form-check-label" for="me-assigned-check">{{ 'workflow-assigned-me' | translate }}</label>
+						</div>
+				  	</li>
+				</ul>				
+								
+			</div>
+			<div *ngIf="showDebug" style="border: 1px solid gray; padding: 5px; background-color: #f1f1f1;">{{debugSearchFilter}}</div>
+			
+			<table class="table table-striped" [svData]="resultWorlflows" #sv="svDataTable" [svRowsOnPage]="5000" svSortBy="name" svSortOrder="asc">
+			    <thead>
+			    <tr>
+			        <th><sv-default-sorter by="workflowType.title">{{ 'workflow-type' | translate }}</sv-default-sorter></th>
+			        <th><sv-default-sorter by="currentStep.title">{{ 'workflow-current-step' | translate }}</sv-default-sorter></th>
+			        <th><sv-default-sorter by="status">{{ 'workflow-status' | translate }}</sv-default-sorter></th>
+			        <th><sv-default-sorter by="assignToUserFullName">{{ 'workflow-assignto' | translate }}</sv-default-sorter></th>
+			        <th>
+			            <sv-default-sorter by="updated">{{ 'workflow-updated' | translate }}</sv-default-sorter>
+			        </th>
+			        <th></th>
+			    </tr>
+			    </thead>
+			    <tbody>
+				    <tr *ngFor="let item of sv.data; let idx = index">
+		    			<td scope="row">{{item.workflowType.title}}</td>
+		    			<td>{{item.currentStep.title}}</td>
+		    			<td>{{item.status}}</td>
+		    			<td>{{item.assignToUserFullName}}</td>
+		    			<td></td>
+		    			<td>
+		    				<a class="tool-link" *ngIf="item.canEdit" (click)="editWorkflow(item)"><i class="material-icons">edit</i></a>
+		    				<a class="tool-link" (click)="showWorkflow(item.workflowType.identity, idx)"><i class="material-icons">pageview</i></a>
+		    			</td>
+				    </tr>
+				    <tr *ngIf="resultWorlflows.length == 0">
+		    			<td colspan="6">{{ 'workflow-no-result-found' | translate }}</td>
+				    </tr>
+			    </tbody>
+			</table>
+		
+		
+		</div>
+
+
+<div class="modal fade show" tabindex="-1" *ngIf="viewWorkflowModal" id="viewworkflowedialog" role="dialog">
+
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title dialog-title" id="errorMessagedialogTitle">{{ 'common.view-workflow' | translate }}</h5>
+				<button class="dialog-toolbar-button close" (click)="hideViewModal()" aria-label="Close">
+					<i class="material-icons">close</i>
+				</button>
+			</div>
+			
+		      <div class="modal-body">
+		      
+				<app-workflow-inlineview [workflow]="viewWorkflowModel"></app-workflow-inlineview>
+	   				
+		      </div>
+	      <div class="modal-footer">
+			<button type="button" class="btn btn-secondary" (click)="hideViewModal()"><i class="material-icons">close</i></button>
+
+	        <button type="button" class="btn btn-primary" *ngIf="viewWorkflowModel.meAssigned || viewWorkflowModel.loggedUserControllerAndDone" (click)="editWorkflow(viewWorkflowModel)" ><i class="material-icons">pageview</i></button>
+	      </div>
+	    </div>
+	  </div>		    
+			
+</div>
+

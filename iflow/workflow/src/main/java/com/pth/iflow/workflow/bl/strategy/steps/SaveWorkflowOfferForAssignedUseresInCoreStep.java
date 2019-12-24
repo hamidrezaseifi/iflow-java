@@ -4,12 +4,12 @@ import java.net.MalformedURLException;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.strategy.strategies.AbstractWorkflowSaveStrategy;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
-import com.pth.iflow.workflow.models.Workflow;
 import com.pth.iflow.workflow.models.WorkflowType;
+import com.pth.iflow.workflow.models.base.IWorkflow;
 
-public class SaveWorkflowOfferForAssignedUseresInCoreStep extends AbstractWorkflowSaveStrategyStep {
+public class SaveWorkflowOfferForAssignedUseresInCoreStep<W extends IWorkflow> extends AbstractWorkflowSaveStrategyStep<W> {
 
-  public SaveWorkflowOfferForAssignedUseresInCoreStep(final AbstractWorkflowSaveStrategy workflowSaveStrategy) {
+  public SaveWorkflowOfferForAssignedUseresInCoreStep(final AbstractWorkflowSaveStrategy<W> workflowSaveStrategy) {
     super(workflowSaveStrategy);
 
   }
@@ -17,7 +17,7 @@ public class SaveWorkflowOfferForAssignedUseresInCoreStep extends AbstractWorkfl
   @Override
   public void process() throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    final Workflow processingWorkflow = this.getWorkflowSaveStrategy().getSavedSingleWorkflow();
+    final W processingWorkflow = this.getWorkflowSaveStrategy().getSavedSingleWorkflow();
 
     for (final String userIdentity : this.getWorkflowSaveStrategy().getAssignedUsers()) {
       this.getWorkflowSaveStrategy().createWorkflowMessage(processingWorkflow, userIdentity);
@@ -28,7 +28,7 @@ public class SaveWorkflowOfferForAssignedUseresInCoreStep extends AbstractWorkfl
   @Override
   public boolean shouldProcess() {
     final WorkflowType processingWorkflowType = this.getWorkflowSaveStrategy().getProcessingWorkflowType();
-    final Workflow processingWorkflow = this.getWorkflowSaveStrategy().getProcessingWorkflow();
+    final W processingWorkflow = this.getWorkflowSaveStrategy().getProcessingWorkflow();
 
     if (processingWorkflow.isDone() || processingWorkflow.isArchived()) {
       return false;

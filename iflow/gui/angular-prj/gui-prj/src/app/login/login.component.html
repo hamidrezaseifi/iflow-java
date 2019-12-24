@@ -1,0 +1,42 @@
+<div class="login-container-parent layout-align-center-center layout-row" layout="row" layout-align="center center">
+	<div class="login-container">
+		<form method="POST" [formGroup]="loginForm" id="formlogin" >
+          <div class="form-group">
+	          <label>{{ 'common.companyidentificator' | translate }}</label> 
+	          <input type="text" name="companyid" autofocus="" formControlName="companyid" class="form-control" [ngClass]="{ 'is-invalid': submitted && forms.companyid.errors }">          
+	          <div *ngIf="submitted && forms.companyid.errors" class="invalid-feedback">
+	              <div *ngIf="forms.companyid.errors.required">CopmayId is required</div>
+	          </div>
+          </div>
+          <div class="form-group">          
+	          <label>{{ 'common.username' | translate }}</label> 
+	          <input type="text" name="username" autofocus="" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && forms.username.errors }">
+	          <div *ngIf="submitted && forms.username.errors" class="invalid-feedback">
+	              <div *ngIf="forms.username.errors.required">Username is required</div>
+	          </div>
+          </div>
+          <div class="form-group">          
+	          <label>{{ 'common.password' | translate }}</label> 
+	          <input type="password" name="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && forms.password.errors }"> 
+	          <div *ngIf="submitted && forms.password.errors" class="invalid-feedback">
+	            <div *ngIf="forms.password.errors.required">Password is required</div>
+	          </div>
+          </div>  
+          <div layout="row" class="layout-row form-group">
+             
+			<button (click)="onSubmit()" type="button" [disabled]="loading" class="btn btn-primary">
+			   <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+			   {{ 'common.login' | translate }}
+			</button>
+            <div *ngIf="submitted && failedLogin" class="invalid-message">
+              <div>{{loginResponse.message}}</div>
+            </div>
+			
+          </div> 
+		</form>
+		
+	</div>
+
+</div>
+
+

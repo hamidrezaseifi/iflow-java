@@ -1,0 +1,82 @@
+		<div class="content-container">
+			<div class="page-toolbar">
+				<div class="page-title">{{ 'menu-workflow-create' | translate }}</div>
+				<a class="toolbar-link" [routerLink]="['/workflow/list']"><i class="material-icons">list</i></a>
+			</div>
+		
+			<div class="workflow-content">
+				<div class="item-row">
+					<div class="item-label">{{ 'common.expiredays' | translate }}</div>
+					<div class="item-content"><input type="number" max="999" min="1" maxlength="3" [(ngModel)]="expireDays" /></div>
+					<div class="clear"></div>
+				</div>
+				<div class="item-row">
+					<div class="item-label">{{ 'workflow-controller' | translate }}</div>
+					<div class="item-content">
+						<select type="text" [(ngModel)]="controllerIdentity">
+							<option value="0">{{ 'workflow-select-controller' | translate }}</option>
+							<option *ngFor="let user of (generalDataObs | async)?.company.users;" value="{{user.identity}}">{{user.fullName}}</option>
+						</select>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="item-row">
+					<div class="item-label">{{ 'workflow-assignto' | translate }}</div>
+					<div class="item-content">
+						<div class="assign-list" >
+							<button class="show-select-dialog" (click)="showAssignSelect()"><i class="material-icons">playlist_add</i></button>
+							<span *ngIf="hasNoAssigns">{{ 'workflow-select-assign' | translate }}</span>
+							<div class="user-item-box" *ngFor="let item of assignedUsers">
+								<span>{{getAssignItemTitle(item)}} </span>
+								<button (click)="removeAssign(item.itemIdentity, item.itemType)"><i class="material-icons">close</i></button>
+							</div>
+							<div class="clear"></div>
+						</div>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="item-row">
+					<div class="item-label">{{ 'workflow-comments' | translate }}</div>
+					<div class="item-content">
+						<textarea [(ngModel)]="comments"></textarea>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="item-row">
+					<div class="item-label">{{ 'workflow-files' | translate }}</div>
+					<div class="item-content file-container">
+						<div *ngFor="let file of fileTitles; let fileIndex = index" class="file-row">
+							{{fileIndex + 1}}.
+							<input type="text" class="file-item file-title" placeholder="Datei Titel" [(ngModel)]="file.title"/>
+							<input type="file" class="file-item file-file" (change)="fileTitleProgress($event, file, fileIndex)"/>
+							<button class="file-action" (click)="removeFile(fileIndex)"><i class="material-icons">delete</i></button>
+							<div class="clear"></div>
+						</div>
+						<div style="margin-top: 20px;">
+							<button class="file-action" (click)="addFile()"><i class="material-icons">add</i></button>
+							<div class="clear"></div>
+						</div>
+						
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="item-row">
+					
+					<div class="item-content workflow-step-button-bar">
+						<button (click)="save()" class="button-bar-button step-button button-save">
+							<span>{{ 'common.save' | translate }}</span>
+							<i class="material-icons">save</i>
+						</button>
+						<div class="clear"></div>
+					</div>
+					
+				</div>
+				        				
+				<div class="item-row" [innerHTML]="debugData">
+				</div>
+
+			</div>
+		    
+			<app-select-user [users]="(generalDataObs | async)?.company.users" [departments]="(generalDataObs | async)?.company.departments" 
+				[showAssignModal]="showAssignModal" [selectAssign]="selectAssign" (onUsersSelected)="onUsersSelected($event)"></app-select-user>		    		 		
+		</div>

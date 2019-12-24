@@ -3,11 +3,9 @@ package com.pth.iflow.profile.service.impl;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.util.List;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
@@ -29,21 +27,24 @@ import com.pth.iflow.profile.service.IUsersService;
 @Service
 public class TokenUserDataManager implements ITokenUserDataManager {
 
-  private final ISessionManager         sessionManager;
+  private final ISessionManager sessionManager;
 
-  private final IUsersService           usersService;
+  private final IUsersService usersService;
 
-  private final ICompanyService         companyService;
+  private final ICompanyService companyService;
 
-  private final IUserGroupService       userGroupService;
+  private final IUserGroupService userGroupService;
 
-  private final IDepartmentService      departmentService;
+  private final IDepartmentService departmentService;
 
   private final IDepartmentGroupService departmentGroupService;
 
-  public TokenUserDataManager(@Autowired final ISessionManager sessionManager, @Autowired final IUsersService usersService,
-      @Autowired final ICompanyService companyService, @Autowired final IUserGroupService userGroupService,
-      @Autowired final IDepartmentService departmentService, @Autowired final IDepartmentGroupService departmentGroupService) {
+  public TokenUserDataManager(@Autowired final ISessionManager sessionManager,
+                              @Autowired final IUsersService usersService,
+                              @Autowired final ICompanyService companyService,
+                              @Autowired final IUserGroupService userGroupService,
+                              @Autowired final IDepartmentService departmentService,
+                              @Autowired final IDepartmentGroupService departmentGroupService) {
 
     this.sessionManager = sessionManager;
     this.usersService = usersService;
@@ -54,14 +55,15 @@ public class TokenUserDataManager implements ITokenUserDataManager {
   }
 
   @Override
-  public ProfileResponse getProfileByToken(final String token)
-      throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException {
+  public ProfileResponse getProfileByToken(final String token) throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException {
     final UserAuthenticationSession session = this.validateToken(token);
 
     final ProfileResponse profile = this.usersService.getUserProfileByEmail(session.getUserIdentity());
     if (profile == null) {
-      throw new ProfileCustomizedException("Profile not found!", "", EModule.PROFILE.getModuleName(),
-          EIFlowErrorType.USERPROFILE_NOTFOUND);
+      throw new ProfileCustomizedException("Profile not found!",
+                                           "",
+                                           EModule.PROFILE.getModuleName(),
+                                           EIFlowErrorType.USERPROFILE_NOTFOUND);
     }
     profile.setSessionid(session.getSessionid());
 
@@ -69,8 +71,7 @@ public class TokenUserDataManager implements ITokenUserDataManager {
   }
 
   @Override
-  public ProfileResponse getProfileByTokenAndCheckCompany(final String token, final String companyIdentity)
-      throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException {
+  public ProfileResponse getProfileByTokenAndCheckCompany(final String token, final String companyIdentity) throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException {
     final ProfileResponse profile = this.getProfileByToken(token);
 
     if (profile.getCompanyProfile().getCompany().hasSameIdentity(companyIdentity) == false) {
@@ -81,8 +82,7 @@ public class TokenUserDataManager implements ITokenUserDataManager {
   }
 
   @Override
-  public ProfileResponse getProfileByTokenUserIdentity(final String userIdentity, final String token)
-      throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException {
+  public ProfileResponse getProfileByTokenUserIdentity(final String userIdentity, final String token) throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException {
     if (StringUtils.isEmpty(token)) {
       throw new ProfileCustomizedException("Invalid Token!", "", EModule.PROFILE.getModuleName(), EIFlowErrorType.INVALID_TOKEN);
     }
@@ -95,8 +95,10 @@ public class TokenUserDataManager implements ITokenUserDataManager {
 
     final ProfileResponse profile = this.usersService.getUserProfileByEmail(session.getUserIdentity());
     if (profile == null) {
-      throw new ProfileCustomizedException("Profile not found!", "", EModule.PROFILE.getModuleName(),
-          EIFlowErrorType.USERPROFILE_NOTFOUND);
+      throw new ProfileCustomizedException("Profile not found!",
+                                           "",
+                                           EModule.PROFILE.getModuleName(),
+                                           EIFlowErrorType.USERPROFILE_NOTFOUND);
     }
     profile.setSessionid(session.getSessionid());
 
@@ -104,8 +106,7 @@ public class TokenUserDataManager implements ITokenUserDataManager {
   }
 
   @Override
-  public List<User> getUserListByToken(final String token, final String companyIdentity)
-      throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException {
+  public List<User> getUserListByToken(final String token, final String companyIdentity) throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException {
 
     this.validateTokenAndCompany(token, companyIdentity);
 
@@ -113,8 +114,7 @@ public class TokenUserDataManager implements ITokenUserDataManager {
   }
 
   @Override
-  public List<UserGroup> getUserGroupListByToken(final String token, final String companyIdentity)
-      throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException {
+  public List<UserGroup> getUserGroupListByToken(final String token, final String companyIdentity) throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException {
 
     this.validateTokenAndCompany(token, companyIdentity);
 
@@ -122,8 +122,7 @@ public class TokenUserDataManager implements ITokenUserDataManager {
   }
 
   @Override
-  public List<Department> getDepartmentListByToken(final String token, final String companyIdentity)
-      throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException {
+  public List<Department> getDepartmentListByToken(final String token, final String companyIdentity) throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException {
 
     this.validateTokenAndCompany(token, companyIdentity);
 
@@ -131,8 +130,7 @@ public class TokenUserDataManager implements ITokenUserDataManager {
   }
 
   @Override
-  public Department getDepartmentById(final String token, final String identity)
-      throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException {
+  public Department getDepartmentById(final String token, final String identity) throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException {
 
     this.validateToken(token);
 
@@ -140,17 +138,7 @@ public class TokenUserDataManager implements ITokenUserDataManager {
   }
 
   @Override
-  public List<DepartmentGroup> getDepartmentGroupListByDepartmentId(final String token, final String identity)
-      throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException {
-
-    this.validateToken(token);
-
-    return this.departmentService.getDepartmentGroupListByDepartmentId(identity);
-  }
-
-  @Override
-  public List<User> getAllUserListByDepartmentId(final String token, final String identity)
-      throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException {
+  public List<User> getAllUserListByDepartmentId(final String token, final String identity) throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException {
 
     this.validateToken(token);
 
@@ -158,8 +146,7 @@ public class TokenUserDataManager implements ITokenUserDataManager {
   }
 
   @Override
-  public DepartmentGroup getDepartmentGroupById(final String token, final String identity)
-      throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException {
+  public DepartmentGroup getDepartmentGroupById(final String token, final String identity) throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException {
 
     this.validateToken(token);
 
@@ -167,8 +154,7 @@ public class TokenUserDataManager implements ITokenUserDataManager {
   }
 
   @Override
-  public List<User> getAllUserListByDepartmentGroupId(final String token, final String identity)
-      throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException {
+  public List<User> getAllUserListByDepartmentGroupId(final String token, final String identity) throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException {
 
     this.validateToken(token);
 
@@ -184,29 +170,34 @@ public class TokenUserDataManager implements ITokenUserDataManager {
     final UserAuthenticationSession session = this.sessionManager.findByToken(token);
 
     if (session == null) {
-      throw new ProfileCustomizedException("Token is not authenticated!", "", EModule.PROFILE.getModuleName(),
-          EIFlowErrorType.NO_SESSION_FOUND);
+      throw new ProfileCustomizedException("Token is not authenticated!",
+                                           "",
+                                           EModule.PROFILE.getModuleName(),
+                                           EIFlowErrorType.NO_SESSION_FOUND);
     }
 
     if (session.isValid() == Boolean.FALSE) {
 
       this.sessionManager.removeAllExpiredSessions();
-      throw new ProfileCustomizedException("Token is not authenticated!", "", EModule.PROFILE.getModuleName(),
-          EIFlowErrorType.NO_SESSION_FOUND);
+      throw new ProfileCustomizedException("Token is not authenticated!",
+                                           "",
+                                           EModule.PROFILE.getModuleName(),
+                                           EIFlowErrorType.NO_SESSION_FOUND);
     }
 
     return session;
   }
 
   @Override
-  public void validateTokenAndCompany(final String token, final String companyIdentity)
-      throws ProfileCustomizedException, IFlowMessageConversionFailureException {
+  public void validateTokenAndCompany(final String token, final String companyIdentity) throws ProfileCustomizedException, IFlowMessageConversionFailureException {
 
     final UserAuthenticationSession session = this.validateToken(token);
 
     if (session.hasCompanyIdentity(companyIdentity) == false) {
-      throw new ProfileCustomizedException("Company not found!", "", EModule.PROFILE.getModuleName(),
-          EIFlowErrorType.COMPANY_NOTFOUND);
+      throw new ProfileCustomizedException("Company not found!",
+                                           "",
+                                           EModule.PROFILE.getModuleName(),
+                                           EIFlowErrorType.COMPANY_NOTFOUND);
     }
 
   }

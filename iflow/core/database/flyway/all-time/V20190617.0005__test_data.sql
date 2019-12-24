@@ -18,3 +18,8 @@ INSERT INTO `user_group`(id, identity, title, company_id) VALUES (1,'Group-1','G
 
 INSERT INTO `user_usergroup` VALUES (1,1,'2019-06-14 08:01:51.738670'),(1,2,'2019-06-14 08:01:51.740144');
 
+INSERT INTO `iflow_roles` (`id`, `title`) VALUES ('1', 'Role 1');
+INSERT INTO `iflow_roles` (`id`, `title`) VALUES ('2', 'Role 2');
+INSERT INTO `iflow_roles` (`id`, `title`) VALUES ('3', 'Role 3');
+
+

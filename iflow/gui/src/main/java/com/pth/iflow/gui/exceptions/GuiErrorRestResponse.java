@@ -15,8 +15,13 @@ public class GuiErrorRestResponse extends IFlowErrorRestResponse {
 
   }
 
+  public GuiErrorRestResponse(final HttpStatus status, final String message, final GuiSessionException ex) {
+    super(status, ex, ex.getModuleName(), ex.getErrorType());
+
+  }
+
   public GuiErrorRestResponse(final HttpStatus status, final String message, final GuiCustomizedException ex) {
-    super(status, message, ex.getDetailes(), ex.getErrorType());
+    super(status, message, ex.getDetailes(), ex.getModuleName(), ex.getErrorType());
 
   }
 

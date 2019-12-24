@@ -1,344 +1,177 @@
 package com.pth.iflow.core.storage.dao.impl;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
-import com.pth.iflow.common.enums.EWorkflowIdentity;
+
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
-import com.pth.iflow.common.enums.EWorkflowMessageType;
-import com.pth.iflow.core.model.WorkflowMessage;
-import com.pth.iflow.core.storage.dao.IUserDao;
-import com.pth.iflow.core.storage.dao.IWorkflowDao;
-import com.pth.iflow.core.storage.dao.IWorkflowMessageDao;
-import com.pth.iflow.core.storage.dao.IWorkflowTypeStepDao;
-import com.pth.iflow.core.storage.dao.basic.DaoBasicClass;
+import com.pth.iflow.core.model.entity.workflow.WorkflowMessageEntity;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
-import com.pth.iflow.core.storage.dao.utils.SqlUtils;
+import com.pth.iflow.core.storage.dao.impl.base.EntityDaoBase;
+import com.pth.iflow.core.storage.dao.interfaces.IWorkflowMessageDao;
 
-@Transactional
 @Repository
-public class WorkflowMessageDao extends DaoBasicClass<WorkflowMessage> implements IWorkflowMessageDao {
+public class WorkflowMessageDao extends EntityDaoBase<WorkflowMessageEntity> implements IWorkflowMessageDao {
 
-  @Autowired
-  private IWorkflowDao workflowDao;
+  // @Autowired
+  // WorkflowMessageRepository repository;
 
-  @Autowired
-  private IWorkflowTypeStepDao workflowTypeStepDao;
+  @Transactional
+  @Override
+  public void updateStatusByWorkflowIdentity(final String workflowIdentity, final String stepIdentity, final EWorkflowMessageStatus status)
+      throws IFlowStorageException {
+    final List<WorkflowMessageEntity> messages      = findMessageListForWorkflowAndStep(workflowIdentity, stepIdentity);
+    final EntityManager               entityManager = dbConfiguration.getEntityManager();
 
-  @Autowired
-  private IUserDao userDao;
+    entityManager.getTransaction().begin();
 
-  public WorkflowMessageDao() {
+    for (final WorkflowMessageEntity message : messages) {
+      message.setStatusEnum(status);
+      entityManager.merge(message);
+    }
+    entityManager.getTransaction().commit();
 
+    entityManager.close();
+  }
+
+  @Transactional
+  @Override
+  public void updateStatusByWorkflowAndUser(final String workflowIdentity, final String stepIdentity, final String userIdentity,
+      final EWorkflowMessageStatus status) throws IFlowStorageException {
+    final EntityManager entityManager = dbConfiguration.getEntityManager();
+
+    entityManager.getTransaction().begin();
+
+    final WorkflowMessageEntity message = findMessageForWorkflowAndStepAnUser(workflowIdentity, stepIdentity, userIdentity);
+    message.setStatusEnum(status);
+    entityManager.merge(message);
+
+    entityManager.getTransaction().commit();
+
+    entityManager.close();
   }
 
   @Override
-  public WorkflowMessage create(final WorkflowMessage model) throws IFlowStorageException {
-    final String sql =
-                     "INSERT INTO workflow_message (workflow_id, step_id, user_id, message, created_by, message_type, version, status, expire_days)"
-                       + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+  public List<WorkflowMessageEntity> getNotClosedNotExpiredListByUserIdentity(final String userIdentity) throws IFlowStorageException {
 
-    verifyWorkflow(model);
-    verifyUsers(model);
-    verifyStepId(model);
+    final EntityManager                        entityManager   = dbConfiguration.getEntityManager();
 
-    final TransactionStatus transactionStatus = this.startTransaction(true);
-    try {
+    final List<Integer>                        statusList      = Arrays.asList(EWorkflowMessageStatus.ASSIGNED.getValue(),
+        EWorkflowMessageStatus.OFFERING.getValue());
 
-      final Long workflowId = this.createModel(model, "WorkflowMessage", sql, false);
+    final CriteriaBuilder                      criteriaBuilder = entityManager.getCriteriaBuilder();
+    final CriteriaQuery<WorkflowMessageEntity> query           = criteriaBuilder.createQuery(WorkflowMessageEntity.class);
+    final Root<WorkflowMessageEntity>          root            = query.from(WorkflowMessageEntity.class);
 
-      this.commitTransaction(true, transactionStatus);
+    final Predicate                            userPredicate   = criteriaBuilder.equal(root.get("user").get("email"), userIdentity);
+    final Predicate                            statusPredicate = root.get("status").in(statusList);
 
-      return this.getById(workflowId);
+    query.select(root).where(criteriaBuilder.and(userPredicate, statusPredicate));
 
-    }
-    catch (final Exception e) {
-      this.rollbackTransaction(true, transactionStatus);
-      logger.error("Unable to create WorkflowMessage: {}", e.toString(), e);
-      throw new IFlowStorageException(e.toString(), e);
-    }
+    final TypedQuery<WorkflowMessageEntity> typedQuery = entityManager.createQuery(query);
 
-  }
+    // final String qr = typedQuery.unwrap(org.hibernate.query.Query.class).getQueryString();
+    // System.out.println("search workflow query: " + qr);
 
-  private void verifyWorkflow(final WorkflowMessage model) {
-    if (model.getWorkflow() == null) {
-      model.setWorkflow(workflowDao.getByIdentity(model.getWorkflowIdentity()));
-    }
-  }
-
-  private void verifyUsers(final WorkflowMessage model) {
-    if (model.getCreatedBy() == null || model.getCreatedBy() <= 0) {
-      model.setCreatedBy(userDao.getByEmail(model.getCreatedByIdentity()).getId());
-    }
-    if (model.getUserId() == null || model.getUserId() <= 0) {
-      model.setUserId(userDao.getByEmail(model.getUserIdentity()).getId());
-    }
-  }
-
-  private void verifyStepId(final WorkflowMessage model) {
-    if (model.getStepId() == null || model.getStepId() <= 0) {
-      model.setStepId(workflowTypeStepDao.getByIdentity(model.getStepIdentity()).getId());
-    }
-    if (model.getUserId() == null || model.getUserId() <= 0) {
-      model.setUserId(userDao.getByEmail(model.getUserIdentity()).getId());
-    }
-  }
-
-  private void verifyUserIdentity(final WorkflowMessage model) {
-    if (EWorkflowIdentity.isNotSet(model.getUserIdentity())) {
-      model.setUserIdentity(userDao.getById(model.getUserId()).getIdentity());
-    }
-  }
-
-  private void verifyCreatedByIdentity(final WorkflowMessage model) {
-    if (EWorkflowIdentity.isNotSet(model.getCreatedByIdentity())) {
-      model.setCreatedByIdentity(userDao.getById(model.getCreatedBy()).getIdentity());
-    }
-  }
-
-  private void verifyStepIdentity(final WorkflowMessage model) {
-    if (EWorkflowIdentity.isNotSet(model.getStepIdentity())) {
-      model.setStepIdentity(workflowTypeStepDao.getById(model.getStepId()).getIdentity());
-    }
-  }
-
-  private void verifyWorkflowIdentity(final WorkflowMessage model) {
-    if (EWorkflowIdentity.isNotSet(model.getWorkflowIdentity())) {
-      model.setWorkflowIdentity(workflowDao.getById(model.getWorkflow().getId()).getIdentity());
-    }
-  }
-
-  @Override
-  public WorkflowMessage update(final WorkflowMessage model) throws IFlowStorageException {
-    final String sql =
-                     "UPDATE workflow_message SET workflow_id = ?, step_id = ?, user_id = ?, message=?, created_by = ?, message_type = ?, version = ?, status = ?, expire_days = ? WHERE id = ?";
-
-    verifyWorkflow(model);
-    verifyUsers(model);
-    verifyStepId(model);
-
-    final TransactionStatus transactionStatus = this.startTransaction(true);
-    try {
-
-      this.updateModel(model, "Workflow", sql, false);
-
-      this.commitTransaction(true, transactionStatus);
-
-      return this.getById(model.getId());
-    }
-    catch (final Exception e) {
-      this.rollbackTransaction(true, transactionStatus);
-      logger.error("Unable to update WorkflowMessage: {}", e.toString(), e);
-      throw new IFlowStorageException(e.toString(), e);
-    }
-  }
-
-  @Override
-  public void updateStatusByWorkflowIdentity(final String workflowIdentity, final String stepIdentity, final EWorkflowMessageStatus status) throws IFlowStorageException {
-    final String sql = "UPDATE workflow_message SET status = ? WHERE workflow_id = ? and step_id = ?";
-
-    logger.debug("Updating WorkflowMessage ...");
-    final TransactionStatus transactionStatus = startTransaction(true);
-    try {
-
-      jdbcTemplate.update(con -> {
-        final PreparedStatement ps = con.prepareStatement(sql);
-        ps.setInt(1, status.getValue());
-        ps.setLong(2, workflowDao.getByIdentity(workflowIdentity).getId());
-        ps.setLong(3, workflowTypeStepDao.getByIdentity(stepIdentity).getId());
-
-        return ps;
-      });
-
-      commitTransaction(true, transactionStatus);
-
-    }
-    catch (final Exception e) {
-      rollbackTransaction(true, transactionStatus);
-      logger.error("Unable to update WorkflowMessage: {}", e.toString(), e);
-      throw new IFlowStorageException(e.toString(), e);
-    }
-
-  }
-
-  @Override
-  public void updateStatusByWorkflowAndUser(final String workflowIdentity, final String stepIdentity, final String email, final EWorkflowMessageStatus status) throws IFlowStorageException {
-    final String sql = "UPDATE workflow_message SET status = ? WHERE workflow_id = ? and step_id = ? and user_id = ?";
-
-    logger.debug("Updating WorkflowMessage ...");
-    final TransactionStatus transactionStatus = startTransaction(true);
-    try {
-
-      jdbcTemplate.update(con -> {
-        final PreparedStatement ps = con.prepareStatement(sql);
-        ps.setInt(1, status.getValue());
-        ps.setLong(2, workflowDao.getByIdentity(workflowIdentity).getId());
-        ps.setLong(3, workflowTypeStepDao.getByIdentity(stepIdentity).getId());
-        ps.setLong(4, userDao.getByEmail(email).getId());
-
-        return ps;
-      });
-
-      commitTransaction(true, transactionStatus);
-
-    }
-    catch (final Exception e) {
-      rollbackTransaction(true, transactionStatus);
-      logger.error("Unable to update WorkflowMessage: {}", e.toString(), e);
-      throw new IFlowStorageException(e.toString(), e);
-    }
-
-  }
-
-  @Override
-  public WorkflowMessage getById(final Long id) throws IFlowStorageException {
-    final WorkflowMessage model = this.getModelById(id, "SELECT * FROM workflow_message where id=?", "WorkflowMessage");
-
-    return model;
-  }
-
-  @Override
-  public List<WorkflowMessage> getNotClosedNotExpiredListByUserEmail(final String email) throws IFlowStorageException {
-    logger.info("Dao read WorkflowMessage for user");
-
-    List<WorkflowMessage> list = new ArrayList<>();
-    final String sql =
-                     "SELECT * FROM workflow_message where user_id=? and TIMESTAMPDIFF(DAY, created_at, now()) < expire_days and status!=?";
-
-    try {
-      list = this.jdbcTemplate.query(con -> {
-        final PreparedStatement ps = con.prepareStatement(sql);
-        ps.setLong(1, userDao.getByEmail(email).getId());
-        ps.setInt(2, EWorkflowMessageStatus.CLOSED.getValue());
-
-        return ps;
-
-      }, (rs, rowNum) -> {
-
-        return modelFromResultSet(rs);
-
-      });
-
-    }
-    catch (final Exception e) {
-      throw new IFlowStorageException("Unable to read WorkflowMessage for user :" + e.toString());
-    }
-
+    final List<WorkflowMessageEntity>       list       = typedQuery.getResultList();
+    entityManager.close();
     return list;
+
+//"SELECT msg FROM WorkflowMessageEntity msg inner join UserEntity ut on msg.userId=ut.id where ut.email=:uident and msg.status in :statuslist and TIMESTAMPDIFF(DAY, msg.createdAt, now()) < msg.expireDays"
+
   }
 
   @Override
-  public List<WorkflowMessage> getNotClosedNotExpiredListByWorkflowIdentity(final String workflowIdentity) throws IFlowStorageException {
-    logger.info("Dao read WorkflowMessage for workflow");
+  public List<WorkflowMessageEntity> getNotClosedNotExpiredListByWorkflowIdentity(final String workflowIdentity) throws IFlowStorageException {
 
-    List<WorkflowMessage> list = new ArrayList<>();
-    final String sql =
-                     "SELECT * FROM workflow_message where workflow_id=? and TIMESTAMPDIFF(DAY, created_at, now()) < expire_days and status!=?";
+    // "SELECT msg FROM WorkflowMessageEntity msg inner join WorkflowEntity w on msg.workflow.id=w.id where w.identity=:wident and msg.status
+    // in :statuslist and TIMESTAMPDIFF(DAY, msg.createdAt, now()) < msg.expireDays"
+    final EntityManager                        entityManager     = dbConfiguration.getEntityManager();
 
-    try {
-      list = this.jdbcTemplate.query(con -> {
-        final PreparedStatement ps = con.prepareStatement(sql);
-        ps.setLong(1, workflowDao.getByIdentity(workflowIdentity).getId());
-        ps.setInt(2, EWorkflowMessageStatus.CLOSED.getValue());
+    final List<Integer>                        statusList        = Arrays.asList(EWorkflowMessageStatus.ASSIGNED.getValue(),
+        EWorkflowMessageStatus.OFFERING.getValue());
 
-        return ps;
+    final CriteriaBuilder                      criteriaBuilder   = entityManager.getCriteriaBuilder();
+    final CriteriaQuery<WorkflowMessageEntity> query             = criteriaBuilder.createQuery(WorkflowMessageEntity.class);
+    final Root<WorkflowMessageEntity>          root              = query.from(WorkflowMessageEntity.class);
 
-      }, (rs, rowNum) -> {
+    final Predicate                            identityPredicate = criteriaBuilder.equal(root.get("workflow").get("identity"),
+        workflowIdentity);
+    final Predicate                            statusPredicate   = root.get("status").in(statusList);
 
-        return modelFromResultSet(rs);
+    query.select(root).where(criteriaBuilder.and(identityPredicate, statusPredicate));
 
-      });
+    final TypedQuery<WorkflowMessageEntity> typedQuery = entityManager.createQuery(query);
 
-    }
-    catch (final Exception e) {
-      throw new IFlowStorageException("Unable to read WorkflowMessage for workflow : " + e.toString());
-    }
+    // final String qr = typedQuery.unwrap(org.hibernate.query.Query.class).getQueryString();
+    // System.out.println("search workflow query: " + qr);
 
+    final List<WorkflowMessageEntity>       list       = typedQuery.getResultList();
+    entityManager.close();
     return list;
-  }
-
-  @Override
-  protected WorkflowMessage modelFromResultSet(final ResultSet rs) throws SQLException {
-    final WorkflowMessage model = new WorkflowMessage();
-    model.setId(rs.getLong("id"));
-    model.setWorkflow(workflowDao.getById(rs.getLong("workflow_id")));
-    model.setStepId(rs.getLong("step_id"));
-    model.setUserId(rs.getLong("user_id"));
-    model.setMessage(rs.getString("message"));
-    model.setCreatedBy(rs.getLong("created_by"));
-    model.setVersion(rs.getInt("version"));
-    model.setMessageType(EWorkflowMessageType.ofValue(rs.getInt("message_type")));
-    model.setStatus(EWorkflowMessageStatus.ofValue(rs.getInt("status")));
-    model.setCreatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("created_at")));
-    model.setUpdatedAt(SqlUtils.getDatetimeFromTimestamp(rs.getTimestamp("updated_at")));
-    model.setExpireDays(rs.getInt("expire_days"));
-
-    verifyCreatedByIdentity(model);
-    verifyStepIdentity(model);
-    verifyWorkflowIdentity(model);
-    verifyUserIdentity(model);
-
-    return model;
-  }
-
-  @Override
-  protected PreparedStatement prepareInsertPreparedStatement(final WorkflowMessage model, final PreparedStatement ps) throws SQLException {
-    ps.setLong(1, model.getWorkflow().getId());
-    ps.setLong(2, model.getStepId());
-    ps.setLong(3, model.getUserId());
-    ps.setString(4, model.getMessage());
-    ps.setLong(5, model.getCreatedBy());
-    ps.setInt(6, model.getMessageType().getValue());
-    ps.setInt(7, model.getVersion());
-    ps.setInt(8, model.getStatus().getValue());
-    ps.setInt(9, model.getExpireDays());
-
-    return ps;
-  }
-
-  @Override
-  protected PreparedStatement prepareUpdatePreparedStatement(final WorkflowMessage model, final PreparedStatement ps) throws SQLException {
-    ps.setLong(1, model.getWorkflow().getId());
-    ps.setLong(2, model.getStepId());
-    ps.setLong(3, model.getUserId());
-    ps.setString(4, model.getMessage());
-    ps.setLong(5, model.getCreatedBy());
-    ps.setInt(6, model.getMessageType().getValue());
-    ps.setInt(7, model.getVersion());
-    ps.setInt(8, model.getStatus().getValue());
-    ps.setInt(9, model.getExpireDays());
-    ps.setLong(10, model.getId());
-
-    return ps;
-  }
-
-  @Override
-  public void deleteWorkflowMessage(final Long messageId) throws IFlowStorageException {
-    final TransactionStatus transactionStatus = this.startTransaction(true);
-    try {
-
-      this.deleteModel(messageId, "Workflow", "Delete from workflow_message where id=?", false, true);
-
-      this.commitTransaction(true, transactionStatus);
-
-    }
-    catch (final Exception e) {
-      this.rollbackTransaction(true, transactionStatus);
-      logger.error("Unable to delete WorkflowMessage:{} {}", messageId, e.toString(), e);
-      throw new IFlowStorageException(e.toString(), e);
-    }
 
   }
 
   @Override
-  protected String generateIdentity(final WorkflowMessage model) {
-    return null;
+  public List<WorkflowMessageEntity> findMessageListForWorkflowAndStep(final String workflowIdentity, final String stepIdentity) {
+    final EntityManager                        entityManager   = dbConfiguration.getEntityManager();
+
+    final CriteriaBuilder                      criteriaBuilder = entityManager.getCriteriaBuilder();
+    final CriteriaQuery<WorkflowMessageEntity> query           = criteriaBuilder.createQuery(WorkflowMessageEntity.class);
+    final Root<WorkflowMessageEntity>          userRoot        = query.from(WorkflowMessageEntity.class);
+    // userRoot.join("workflow", JoinType.INNER);
+    // userRoot.join("step", JoinType.INNER);
+
+    query.select(userRoot).where(criteriaBuilder.and(criteriaBuilder.equal(userRoot.get("workflow").get("identity"), workflowIdentity),
+        criteriaBuilder.equal(userRoot.get("step").get("identity"), stepIdentity)));
+    final TypedQuery<WorkflowMessageEntity> typedQuery = entityManager.createQuery(query);
+    // final String qr = typedQuery.unwrap(org.hibernate.query.Query.class).getQueryString();
+    // System.out.println("The query: " + qr);
+
+    final List<WorkflowMessageEntity>       list       = typedQuery.getResultList();
+    entityManager.close();
+    return list;
+
+  }
+
+  @Override
+  public WorkflowMessageEntity findMessageForWorkflowAndStepAnUser(final String workflowIdentity, final String stepIdentity,
+      final String userIdentity) {
+    final EntityManager                        entityManager   = dbConfiguration.getEntityManager();
+
+    final CriteriaBuilder                      criteriaBuilder = entityManager.getCriteriaBuilder();
+    final CriteriaQuery<WorkflowMessageEntity> query           = criteriaBuilder.createQuery(WorkflowMessageEntity.class);
+    final Root<WorkflowMessageEntity>          userRoot        = query.from(WorkflowMessageEntity.class);
+    // userRoot.join Arrays.asList("workflow", "step", "workflow"), JoinType.INNER);
+
+    // userRoot.join("workflow", JoinType.INNER);
+    // userRoot.join("step", JoinType.INNER);
+
+    query.select(userRoot)
+        .where(criteriaBuilder.and(criteriaBuilder.equal(userRoot.get("workflow").get("identity"), workflowIdentity),
+            criteriaBuilder.equal(userRoot.get("step").get("identity"), stepIdentity),
+            criteriaBuilder.equal(userRoot.get("user").get("email"), userIdentity)));
+    final TypedQuery<WorkflowMessageEntity> typedQuery = entityManager.createQuery(query);
+    // final String qr = typedQuery.unwrap(org.hibernate.query.Query.class).getQueryString();
+    // System.out.println("The query: " + qr);
+
+    final WorkflowMessageEntity             result     = typedQuery.getSingleResult();
+    entityManager.close();
+    return result;
+  }
+
+  @Override
+  protected Class<WorkflowMessageEntity> entityClass() {
+    return WorkflowMessageEntity.class;
   }
 
 }

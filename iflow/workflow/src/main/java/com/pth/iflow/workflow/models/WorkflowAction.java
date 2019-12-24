@@ -1,39 +1,17 @@
 package com.pth.iflow.workflow.models;
 
-import com.pth.iflow.common.edo.models.helper.IdentityModel;
 import com.pth.iflow.common.enums.EWorkflowActionStatus;
+import com.pth.iflow.common.models.helper.IdentityModel;
 
-public class WorkflowAction extends IdentityModel {
+public class WorkflowAction {
 
-  private String                identity;
-  private String                workflowIdentity;
   private String                assignToIdentity;
   private String                currentStepIdentity;
   private String                comments;
   private EWorkflowActionStatus status;
-  private Integer               version;
 
   private WorkflowTypeStep      currentStep;
   private User                  assignToUser;
-  private Workflow              workflow;
-
-  @Override
-  public String getIdentity() {
-    return identity;
-  }
-
-  @Override
-  public void setIdentity(final String identity) {
-    this.identity = identity;
-  }
-
-  public String getWorkflowIdentity() {
-    return workflowIdentity;
-  }
-
-  public void setWorkflowIdentity(final String workflowIdentity) {
-    this.workflowIdentity = workflowIdentity;
-  }
 
   public String getAssignToIdentity() {
     return assignToIdentity;
@@ -71,16 +49,8 @@ public class WorkflowAction extends IdentityModel {
     this.status = status;
   }
 
-  public Integer getVersion() {
-    return this.version;
-  }
-
-  public void setVersion(final Integer version) {
-    this.version = version;
-  }
-
   public boolean isAssigned() {
-    return isIdentityNew(this.assignToIdentity) == false;
+    return IdentityModel.isIdentityNew(this.assignToIdentity) == false;
   }
 
   public boolean getIsActive() {
@@ -101,14 +71,6 @@ public class WorkflowAction extends IdentityModel {
 
   public void setAssignToUser(final User assignToUser) {
     this.assignToUser = assignToUser;
-  }
-
-  public Workflow getWorkflow() {
-    return workflow;
-  }
-
-  public void setWorkflow(final Workflow workflow) {
-    this.workflow = workflow;
   }
 
 }

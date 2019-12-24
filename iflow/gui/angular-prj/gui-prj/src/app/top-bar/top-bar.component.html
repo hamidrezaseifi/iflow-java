@@ -1,0 +1,58 @@
+<header>
+
+		<nav class="navbar navbar-expand-lg navbar-toggleable-md navbar-light bg-light navbar-fixed-top">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" [routerLink]="['/']"><img class="logo" src="/assets/images/fbim2.png"></a>
+				</div>
+				<ul class="navbar-nav" *ngIf="isLogged">
+					<li class="nav-item" *ngFor="let menu of menus;" [ngClass]="{'dropdown' : menu.children.length > 0}">
+						<a class="nav-link" [routerLink]="[menu.url]" *ngIf="menu.children.length == 0">
+							<span class="glyphicon glyphicon-home menu-image"></span>
+							<span>{{menu.label}}</span>
+						</a>
+						<a class="nav-link dropdown-toggle" *ngIf="menu.children.length > 0" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+							<span class="{{menu.image}}"></span>
+							<span>{{menu.label}}</span>
+							<span class="caret"></span>
+						</a>
+						<div class="dropdown-menu" *ngIf="menu.children.length > 0">
+							<a [routerLink]="[submenu.url]" *ngFor="let submenu of menu.children;" class="dropdown-item">
+								<span class="{{submenu.image}}"></span>
+								<span>{{submenu.label}}</span>
+							</a>
+						</div>
+					</li>
+				</ul>
+						
+						
+				<div class="btn-group navbar-user-detail" *ngIf="isLogged" >
+				  <button type="button" class="btn user-toggle-button" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">
+				    <span>{{currentUser.fullName}}</span>
+				  </button>
+				  <div class="dropdown-menu dropdown-menu-lg-right">
+				    <button (click)="showProfile()" class="dropdown-item" type="button">Profile</button>
+				    <div class="dropdown-divider"></div>
+				    <button (click)="logout()"  class="dropdown-item" type="button">Logout</button>
+				  </div>
+				</div>
+						
+			</div>
+		</nav>    			    
+		
+	        
+</header>
+
+<div style="background-color: #eeeeee;" *ngIf="isLogged">
+	<ul class="breadcrumb">
+		<li>
+			<span>Home</span>
+		</li>
+		<li>
+			<button (click)="test()" type="button">Test</button>
+		</li>
+	</ul>
+	
+	
+</div>
+	

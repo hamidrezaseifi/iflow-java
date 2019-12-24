@@ -3,7 +3,7 @@ package com.pth.iflow.workflow.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.pth.iflow.common.edo.models.helper.IdentityModel;
+import com.pth.iflow.common.models.helper.IdentityModel;
 
 public class Department extends IdentityModel {
 
