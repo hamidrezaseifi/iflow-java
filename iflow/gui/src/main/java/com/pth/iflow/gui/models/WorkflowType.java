@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.pth.iflow.common.edo.models.helper.IdentityModel;
+import com.pth.iflow.common.enums.EWorkflowType;
 import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
+import com.pth.iflow.common.models.helper.IdentityModel;
 
 public class WorkflowType extends IdentityModel {
 
@@ -126,6 +127,15 @@ public class WorkflowType extends IdentityModel {
     return this.steps;
   }
 
+  public WorkflowTypeStep getStepByIdentity(final String stepIdentity) {
+    for (final WorkflowTypeStep step : this.steps) {
+      if (step.hasSameIdentity(stepIdentity)) {
+        return step;
+      }
+    }
+    return null;
+  }
+
   public void setSteps(final List<WorkflowTypeStep> steps) {
     this.steps.clear();
     if (steps != null) {
@@ -135,6 +145,15 @@ public class WorkflowType extends IdentityModel {
 
   public void addStep(final WorkflowTypeStep stepId) {
     this.steps.add(stepId);
+  }
+
+  public EWorkflowType getTypeEnum() {
+    return EWorkflowType.valueFromIdentity(this.identity);
+  }
+
+  public String getControllerPreffix() {
+    return this.getTypeEnum().getPagePreffix();
+
   }
 
 }

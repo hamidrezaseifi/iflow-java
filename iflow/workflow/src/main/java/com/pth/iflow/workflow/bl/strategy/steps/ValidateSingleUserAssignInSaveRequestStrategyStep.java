@@ -1,17 +1,17 @@
 package com.pth.iflow.workflow.bl.strategy.steps;
 
 import java.net.MalformedURLException;
-
 import com.pth.iflow.common.enums.EAssignType;
 import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.strategy.strategies.AbstractWorkflowSaveStrategy;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
-import com.pth.iflow.workflow.models.WorkflowSaveRequest;
+import com.pth.iflow.workflow.models.base.IWorkflow;
+import com.pth.iflow.workflow.models.base.IWorkflowSaveRequest;
 
-public class ValidateSingleUserAssignInSaveRequestStrategyStep extends AbstractWorkflowSaveStrategyStep {
+public class ValidateSingleUserAssignInSaveRequestStrategyStep<W extends IWorkflow> extends AbstractWorkflowSaveStrategyStep<W> {
 
-  public ValidateSingleUserAssignInSaveRequestStrategyStep(final AbstractWorkflowSaveStrategy workflowSaveStrategy) {
+  public ValidateSingleUserAssignInSaveRequestStrategyStep(final AbstractWorkflowSaveStrategy<W> workflowSaveStrategy) {
     super(workflowSaveStrategy);
 
   }
@@ -19,7 +19,7 @@ public class ValidateSingleUserAssignInSaveRequestStrategyStep extends AbstractW
   @Override
   public void process() throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    final WorkflowSaveRequest processingWorkflowSaveRequest = this.getWorkflowSaveStrategy().getProcessingWorkflowSaveRequest();
+    final IWorkflowSaveRequest<W> processingWorkflowSaveRequest = this.getWorkflowSaveStrategy().getProcessingWorkflowSaveRequest();
 
     if (processingWorkflowSaveRequest.getAssigns().size() != 1
         || processingWorkflowSaveRequest.getAssigns().get(0).getItemType() != EAssignType.USER) {

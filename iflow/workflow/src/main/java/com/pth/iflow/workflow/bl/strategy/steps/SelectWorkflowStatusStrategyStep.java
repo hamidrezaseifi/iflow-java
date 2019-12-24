@@ -1,18 +1,17 @@
 package com.pth.iflow.workflow.bl.strategy.steps;
 
 import java.net.MalformedURLException;
-
 import com.pth.iflow.common.enums.EWorkflowStatus;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.strategy.strategies.AbstractWorkflowSaveStrategy;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
-import com.pth.iflow.workflow.models.Workflow;
 import com.pth.iflow.workflow.models.WorkflowAction;
 import com.pth.iflow.workflow.models.WorkflowType;
+import com.pth.iflow.workflow.models.base.IWorkflow;
 
-public class SelectWorkflowStatusStrategyStep extends AbstractWorkflowSaveStrategyStep {
+public class SelectWorkflowStatusStrategyStep<W extends IWorkflow> extends AbstractWorkflowSaveStrategyStep<W> {
 
-  public SelectWorkflowStatusStrategyStep(final AbstractWorkflowSaveStrategy workflowSaveStrategy) {
+  public SelectWorkflowStatusStrategyStep(final AbstractWorkflowSaveStrategy<W> workflowSaveStrategy) {
     super(workflowSaveStrategy);
 
   }
@@ -20,8 +19,8 @@ public class SelectWorkflowStatusStrategyStep extends AbstractWorkflowSaveStrate
   @Override
   public void process() throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    final AbstractWorkflowSaveStrategy strategy = this.getWorkflowSaveStrategy();
-    final Workflow processingWorkflow = strategy.getProcessingWorkflow();
+    final AbstractWorkflowSaveStrategy<W> strategy = this.getWorkflowSaveStrategy();
+    final W processingWorkflow = strategy.getProcessingWorkflow();
     final WorkflowType processingWorkflowType = strategy.getProcessingWorkflowType();
     final WorkflowAction activeAction = strategy.getActiveAction();
 
@@ -29,7 +28,8 @@ public class SelectWorkflowStatusStrategyStep extends AbstractWorkflowSaveStrate
       if (strategy.isLastStep(processingWorkflowType, processingWorkflow.getCurrentStep())) {
         processingWorkflow.setStatus(EWorkflowStatus.DONE);
       }
-    } else {
+    }
+    else {
       if (activeAction.isAssigned() == false) {
         processingWorkflow.setStatus(EWorkflowStatus.NOT_ASSIGNED);
       }

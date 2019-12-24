@@ -16,20 +16,21 @@ import com.pth.iflow.workflow.bl.strategy.steps.ValidateWorkflowNextStepStrategy
 import com.pth.iflow.workflow.bl.strategy.steps.ValidateWorkflowTypeStepStrategyStep;
 import com.pth.iflow.workflow.bl.strategy.strategies.AbstractWorkflowSaveStrategy;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
-import com.pth.iflow.workflow.models.WorkflowSaveRequest;
+import com.pth.iflow.workflow.models.base.IWorkflow;
+import com.pth.iflow.workflow.models.base.IWorkflowSaveRequest;
 
-public class DoneExistingWorkflowValidationStrategy extends AbstractWorkflowSaveStrategy {
+public class DoneExistingWorkflowValidationStrategy<W extends IWorkflow> extends AbstractWorkflowSaveStrategy<W> {
 
-  public DoneExistingWorkflowValidationStrategy(final WorkflowSaveRequest workflowCreateRequest,
+  public DoneExistingWorkflowValidationStrategy(final IWorkflowSaveRequest<W> workflowCreateRequest,
                                                 final String token,
                                                 final IDepartmentDataService departmentDataService,
                                                 final IWorkflowMessageDataService workflowMessageDataService,
                                                 final IProfileCachDataDataService cachDataDataService,
-                                                final IWorkflowDataService workflowDataService,
-                                                final IWorkflowPrepare workflowPrepare)
-                                                                                        throws WorkflowCustomizedException,
-                                                                                        MalformedURLException,
-                                                                                        IFlowMessageConversionFailureException {
+                                                final IWorkflowDataService<W> workflowDataService,
+                                                final IWorkflowPrepare<W> workflowPrepare)
+                                                                                           throws WorkflowCustomizedException,
+                                                                                           MalformedURLException,
+                                                                                           IFlowMessageConversionFailureException {
     super(workflowCreateRequest,
           token,
           departmentDataService,
@@ -43,13 +44,13 @@ public class DoneExistingWorkflowValidationStrategy extends AbstractWorkflowSave
   @Override
   public void setup() {
 
-    steps.add(new ValidateWorkflowDetailStrategyStep(this));
-    steps.add(new ValidateWorkflowActiveActionStrategyStep(this));
-    steps.add(new ValidateWorkflowAssignedUserStrategyStep(this));
-    steps.add(new ValidateAssignInSaveRequestStrategyStep(this));
-    steps.add(new ValidateWorkflowTypeStepStrategyStep(this));
-    steps.add(new ValidateCurrentStepExistsInWorkflowTypeStrategyStep(this));
-    steps.add(new ValidateWorkflowNextStepStrategyStep(this));
+    steps.add(new ValidateWorkflowDetailStrategyStep<W>(this));
+    steps.add(new ValidateWorkflowActiveActionStrategyStep<W>(this));
+    steps.add(new ValidateWorkflowAssignedUserStrategyStep<W>(this));
+    steps.add(new ValidateAssignInSaveRequestStrategyStep<W>(this));
+    steps.add(new ValidateWorkflowTypeStepStrategyStep<W>(this));
+    steps.add(new ValidateCurrentStepExistsInWorkflowTypeStrategyStep<W>(this));
+    steps.add(new ValidateWorkflowNextStepStrategyStep<W>(this));
 
   }
 

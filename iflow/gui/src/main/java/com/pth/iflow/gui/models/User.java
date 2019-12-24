@@ -13,8 +13,8 @@ import org.springframework.security.core.authority.AuthorityUtils;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.pth.iflow.common.edo.models.helper.IdentityModel;
 import com.pth.iflow.common.enums.EUserStatus;
+import com.pth.iflow.common.models.helper.IdentityModel;
 import com.pth.iflow.gui.models.ui.enums.EUiUserRole;
 
 @JsonIgnoreProperties(value = { "authorities", "enabled", "roles", })
@@ -44,6 +44,10 @@ public class User extends IdentityModel {
 
   public void setCompanyIdentity(final String companyIdentity) {
     this.companyIdentity = companyIdentity;
+  }
+
+  public String getUsername() {
+    return this.email;
   }
 
   public String getEmail() {
@@ -81,6 +85,10 @@ public class User extends IdentityModel {
    */
   public String getLastName() {
     return this.lastName;
+  }
+
+  public String geFullName() {
+    return this.lastName + ", " + this.firstName;
   }
 
   /**

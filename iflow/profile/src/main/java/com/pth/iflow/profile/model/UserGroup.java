@@ -1,6 +1,6 @@
 package com.pth.iflow.profile.model;
 
-import com.pth.iflow.common.edo.models.helper.IdentityModel;
+import com.pth.iflow.common.models.helper.IdentityModel;
 
 public class UserGroup extends IdentityModel {
 

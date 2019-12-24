@@ -3,17 +3,22 @@ package com.pth.iflow.core.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.pth.iflow.core.model.entity.CompanyEntity;
+import com.pth.iflow.core.model.entity.DepartmentEntity;
+import com.pth.iflow.core.model.entity.UserGroupEntity;
+
 public class CompanyProfile {
 
-  private Company                company;
-  private final List<Department> departments = new ArrayList<>();
-  private final List<UserGroup>  userGroups  = new ArrayList<>();
+  private CompanyEntity                company;
+  private final List<DepartmentEntity> departments = new ArrayList<>();
+  private final List<UserGroupEntity>  userGroups  = new ArrayList<>();
 
   public CompanyProfile() {
 
   }
 
-  public CompanyProfile(final Company company, final List<Department> departments, final List<UserGroup> userGroups) {
+  public CompanyProfile(final CompanyEntity company, final List<DepartmentEntity> departments,
+      final List<UserGroupEntity> userGroups) {
     this.setDepartments(departments);
     this.setUserGroups(userGroups);
     this.setCompany(company);
@@ -23,33 +28,33 @@ public class CompanyProfile {
   /**
    * @return the company
    */
-  public Company getCompany() {
+  public CompanyEntity getCompany() {
     return this.company;
   }
 
   /**
    * @param company the company to set
    */
-  public void setCompany(final Company company) {
+  public void setCompany(final CompanyEntity company) {
     this.company = company;
   }
 
-  public List<Department> getDepartments() {
+  public List<DepartmentEntity> getDepartments() {
     return this.departments;
   }
 
-  public void setDepartments(final List<Department> departments) {
+  public void setDepartments(final List<DepartmentEntity> departments) {
     this.departments.clear();
     if (departments != null) {
       this.departments.addAll(departments);
     }
   }
 
-  public List<UserGroup> getUserGroups() {
+  public List<UserGroupEntity> getUserGroups() {
     return this.userGroups;
   }
 
-  public void setUserGroups(final List<UserGroup> users) {
+  public void setUserGroups(final List<UserGroupEntity> users) {
     this.userGroups.clear();
     if (users != null) {
       this.userGroups.addAll(users);

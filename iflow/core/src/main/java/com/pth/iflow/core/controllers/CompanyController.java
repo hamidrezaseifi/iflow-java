@@ -12,11 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pth.iflow.common.annotations.IflowGetRequestMapping;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
-import com.pth.iflow.common.edo.models.CompanyEdo;
+import com.pth.iflow.common.models.edo.CompanyEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
-import com.pth.iflow.core.model.Company;
-import com.pth.iflow.core.model.mapper.CoreModelEdoMapper;
-import com.pth.iflow.core.service.ICompanyService;
+import com.pth.iflow.core.model.entity.CompanyEntity;
+import com.pth.iflow.core.service.interfaces.ICompanyService;
 
 @RestController
 @RequestMapping
@@ -33,9 +32,9 @@ public class CompanyController {
   public ResponseEntity<CompanyEdo> readCompany(@PathVariable(name = "companyidentity") final String companyidentity,
       final HttpServletRequest request) throws Exception {
 
-    final Company company = this.companyService.getByIdentity(companyidentity);
+    final CompanyEntity company = this.companyService.getByIdentity(companyidentity);
 
-    return ControllerHelper.createResponseEntity(request, CoreModelEdoMapper.toEdo(company), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, this.companyService.toEdo(company), HttpStatus.OK);
   }
 
 }

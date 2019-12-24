@@ -20,6 +20,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import com.pth.iflow.gui.authentication.GuiAuthenticationDetails;
 import com.pth.iflow.gui.authentication.GuiAuthenticationFailureHandler;
 import com.pth.iflow.gui.authentication.GuiAuthenticationSuccessHandler;
+import com.pth.iflow.gui.authentication.GuiLogoutSuccessHandler;
 import com.pth.iflow.gui.authentication.provider.GuiCustomAuthenticationProvider;
 
 @Configuration
@@ -31,9 +32,13 @@ public class GuiSecurityConfigurations extends WebSecurityConfigurerAdapter impl
   public static final String              PASSWORD_FIELD_NAME         = "password";
   public static final String              COMPANYID_FIELD_NAME        = "companyid";
   public static final String              LOGIN_URL                   = "/auth/login";
+  public static final String              LOGOUT_URL                  = "/auth/logout";
+  public static final String              LOGIN_PROCESSING_URL        = "/auth/authenticate";
   public static final String              INITUSER_URL                = "/activation/user";
   public static final String              INITCOMPANY_URL             = "/activation/company";
   public static final String              ROOT_URL                    = "/";
+  public static final String              GENERAL_DATA_URL            = "/general/data/generaldatat";
+  public static final String              GENERAL_DATA_ALL_URL        = "/general/data/**";
   public static final String              COMPANYINDICATOR_COOKIE_KEY = "comp_ind";
 
   @Value("${iflow.backend.valid-email}")
@@ -41,6 +46,9 @@ public class GuiSecurityConfigurations extends WebSecurityConfigurerAdapter impl
 
   @Autowired
   private GuiAuthenticationSuccessHandler uiAuthenticationSuccessHandler;
+
+  @Autowired
+  private GuiLogoutSuccessHandler         guiLogoutSuccessHandler;
 
   @Autowired
   private GuiAuthenticationFailureHandler authenticationFailureHandler;
@@ -51,9 +59,11 @@ public class GuiSecurityConfigurations extends WebSecurityConfigurerAdapter impl
   @Override
   protected void configure(final HttpSecurity http) throws Exception {
 
-    http.authorizeRequests().antMatchers("/images/*").permitAll().antMatchers("/js/*").permitAll().antMatchers("/css/*").permitAll()
-        .antMatchers("/angular/*").permitAll().antMatchers("/fonts/*").permitAll().antMatchers(LOGIN_URL).permitAll()
-        .antMatchers("/admin/**").hasAnyRole("ADMIN", "COMPANY_ADMIN")
+    http.authorizeRequests().antMatchers("/auth/testloginmsg").permitAll().antMatchers("/images/*").permitAll().antMatchers("/js/*")
+        .permitAll().antMatchers("/scripts/**").permitAll().antMatchers("/scripts/*").permitAll().antMatchers("/assets/**").permitAll()
+        .antMatchers("/assets/*").permitAll().antMatchers("/css/*").permitAll().antMatchers("/angular/*").permitAll().antMatchers("/fonts/*")
+        .permitAll().antMatchers(LOGIN_PROCESSING_URL).permitAll().antMatchers(GENERAL_DATA_URL).permitAll().antMatchers(GENERAL_DATA_ALL_URL)
+        .permitAll().antMatchers(LOGIN_URL).permitAll().antMatchers("/admin/**").hasAnyRole("ADMIN", "COMPANY_ADMIN")
         .antMatchers("/admin/user/**", "/admin/data/**", "/admin/data/user/**").hasAnyRole("ADMIN", "COMPANY_ADMIN").antMatchers("/**")
         .authenticated().and();
 
@@ -62,10 +72,11 @@ public class GuiSecurityConfigurations extends WebSecurityConfigurerAdapter impl
     http.csrf().disable();
 
     http.formLogin().authenticationDetailsSource(this.authenticationDetailsSource()).loginPage(LOGIN_URL).permitAll()
-        .defaultSuccessUrl("/").usernameParameter(USERNAME_FIELD_NAME).passwordParameter(PASSWORD_FIELD_NAME)
-        .successHandler(this.uiAuthenticationSuccessHandler).failureHandler(this.authenticationFailureHandler).permitAll();
+        .loginProcessingUrl(LOGIN_PROCESSING_URL).permitAll().defaultSuccessUrl("/").usernameParameter(USERNAME_FIELD_NAME)
+        .passwordParameter(PASSWORD_FIELD_NAME).successHandler(this.uiAuthenticationSuccessHandler)
+        .failureHandler(this.authenticationFailureHandler).permitAll();
 
-    http.logout().logoutUrl("/logout").logoutSuccessUrl("/");
+    http.logout().logoutUrl(LOGOUT_URL).logoutSuccessHandler(this.guiLogoutSuccessHandler);
 
   }
 

@@ -5,18 +5,18 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import com.pth.iflow.common.enums.EAssignType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.strategy.strategies.AbstractWorkflowSaveStrategy;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.AssignItem;
 import com.pth.iflow.workflow.models.User;
-import com.pth.iflow.workflow.models.WorkflowSaveRequest;
+import com.pth.iflow.workflow.models.base.IWorkflow;
+import com.pth.iflow.workflow.models.base.IWorkflowSaveRequest;
 
-public class CollectAssignedUserIdListStep extends AbstractWorkflowSaveStrategyStep {
+public class CollectAssignedUserIdListStep<W extends IWorkflow> extends AbstractWorkflowSaveStrategyStep<W> {
 
-  public CollectAssignedUserIdListStep(final AbstractWorkflowSaveStrategy workflowSaveStrategy) {
+  public CollectAssignedUserIdListStep(final AbstractWorkflowSaveStrategy<W> workflowSaveStrategy) {
     super(workflowSaveStrategy);
 
   }
@@ -24,7 +24,7 @@ public class CollectAssignedUserIdListStep extends AbstractWorkflowSaveStrategyS
   @Override
   public void process() throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    final WorkflowSaveRequest processingWorkflowSaveRequest = this.getWorkflowSaveStrategy().getProcessingWorkflowSaveRequest();
+    final IWorkflowSaveRequest<W> processingWorkflowSaveRequest = this.getWorkflowSaveStrategy().getProcessingWorkflowSaveRequest();
 
     final Set<String> assignedUsers = new HashSet<>();
 
@@ -53,7 +53,7 @@ public class CollectAssignedUserIdListStep extends AbstractWorkflowSaveStrategyS
   public boolean shouldProcess() {
 
     return this.getWorkflowSaveStrategy().IsWorkflowCurrectStepChanged()
-        || this.getWorkflowSaveStrategy().getProcessingWorkflowSaveRequest().isCreateCommand();
+           || this.getWorkflowSaveStrategy().getProcessingWorkflowSaveRequest().isCreateCommand();
   }
 
 }

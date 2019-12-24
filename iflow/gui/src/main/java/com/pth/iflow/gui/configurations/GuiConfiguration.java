@@ -47,29 +47,107 @@ public class GuiConfiguration {
 
     }
 
-    public URI getReadWorkflowUri(final String workflowIdentity) throws MalformedURLException {
-      return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.READ_WORKFLOW_BY_IDENTITY_URIBUILDER(workflowIdentity));
-    }
-
-    public URI getReadWorkflowTypeListUri(final String companyIdentity) throws MalformedURLException {
-      return this.baseWorkflowBaseUri
-          .resolve(IflowRestPaths.WorkflowModule.READ_WORKFLOWTYPELIST_BY_COMPANYID_URIBUILDER(companyIdentity));
-    }
-
-    public URI getCreateWorkflowUri() throws MalformedURLException {
-      return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.CREATE_WORKFLOW());
-    }
-
-    public URI getSaveWorkflowUri() throws MalformedURLException {
-      return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.SAVE_WORKFLOW());
-    }
-
     public URI getSearchWorkflowUri() throws MalformedURLException {
       return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.SEARCH_WORKFLOW());
     }
 
-    public URI getValidateWorkflowUri() throws MalformedURLException {
-      return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.VALIDATE_WORKFLOW());
+    public URI getReadWorkflowListByIdentityListUri() throws MalformedURLException {
+      return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.READ_WORKFLOWLIST_BY_IDENTITYLIST());
+    }
+
+    /*
+     *
+     *
+     */
+
+    public URI getReadInvoiceWorkflowUri(final String workflowIdentity) throws MalformedURLException {
+      return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.READ_INVOICEWORKFLOW_BY_IDENTITY_URIBUILDER(workflowIdentity));
+    }
+
+    public URI getReadInvoiceWorkflowListByIdentityListUri() throws MalformedURLException {
+      return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.READ_INVOICEWORKFLOWLIST_BY_IDENTITYLIST_URIBUILDER());
+    }
+
+    public URI getReadWorkflowTypeListUri(final String companyIdentity) throws MalformedURLException {
+      return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.READ_WORKFLOWTYPELIST_BY_COMPANYID_URIBUILDER(companyIdentity));
+    }
+
+    public URI getCreateInvoiceWorkflowUri() throws MalformedURLException {
+      return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.CREATE_INVOICEWORKFLOW());
+    }
+
+    public URI getSaveInvoiceWorkflowUri() throws MalformedURLException {
+      return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.SAVE_INVOICEWORKFLOW());
+    }
+
+    public URI getValidateInvoiceWorkflowUri() throws MalformedURLException {
+      return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.VALIDATE_INVOICEWORKFLOW());
+    }
+
+    /*
+     *
+     *
+     *
+     */
+
+    public URI getReadSingleTaskWorkflowUri(final String workflowIdentity) throws MalformedURLException {
+      return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.READ_SINGLETASKWORKFLOW_BY_IDENTITY_URIBUILDER(workflowIdentity));
+    }
+
+    public URI getCreateSingleTaskWorkflowUri() throws MalformedURLException {
+      return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.CREATE_SINGLETASKWORKFLOW());
+    }
+
+    public URI getSaveSingleTaskWorkflowUri() throws MalformedURLException {
+      return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.SAVE_SINGLETASKWORKFLOW());
+    }
+
+    public URI getValidateSingleTaskWorkflowUri() throws MalformedURLException {
+      return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.VALIDATE_SINGLETASKWORKFLOW());
+    }
+
+    public URI getReadSingleTaskWorkflowListByIdentityListUri() throws MalformedURLException {
+      return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.READ_SINGLETASKWORKFLOWLIST_BY_IDENTITYLIST_URIBUILDER());
+    }
+
+    /*
+    *
+    *
+    *
+    */
+
+    public URI getReadTestThreeTaskWorkflowUri(final String workflowIdentity) throws MalformedURLException {
+      return this.baseWorkflowBaseUri
+          .resolve(IflowRestPaths.WorkflowModule.READ_TESTTHREETASKWORKFLOW_BY_IDENTITY_URIBUILDER(workflowIdentity));
+    }
+
+    public URI getCreateTestThreeTaskWorkflowUri() throws MalformedURLException {
+      return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.CREATE_TESTTHREETASKWORKFLOW());
+    }
+
+    public URI getSaveTestThreeTaskWorkflowUri() throws MalformedURLException {
+      return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.SAVE_TESTTHREETASKWORKFLOW());
+    }
+
+    public URI getValidateTestThreeTaskWorkflowUri() throws MalformedURLException {
+      return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.VALIDATE_TESTTHREETASKWORKFLOW());
+    }
+
+    public URI getReadTestThreeTaskWorkflowListByIdentityListUri() throws MalformedURLException {
+      return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.READ_TESTTHREETASKWORKFLOWLIST_BY_IDENTITYLIST_URIBUILDER());
+    }
+    /*
+    *
+    *
+    *
+    */
+
+    public URI getReadWorkflowUri(final String workflowIdentity) throws MalformedURLException {
+      return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.READ_WORKFLOW_BY_IDENTITY_URIBUILDER(workflowIdentity));
+    }
+
+    public URI getReadWorkflowListUri() throws MalformedURLException {
+      return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.READ_WORKFLOWLIST_BY_IDENTITYLIST());
     }
 
   }
@@ -109,8 +187,7 @@ public class GuiConfiguration {
     }
 
     public URI getReadUserWorkflowMessageListUri(final String companyIdentity, final String userId) throws MalformedURLException {
-      return this.baseProfileBaseUri
-          .resolve(IflowRestPaths.ProfileModule.READ_CACHDATA_USER_WORKFLOWMESSAGELIST(companyIdentity, userId));
+      return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.READ_CACHDATA_USER_WORKFLOWMESSAGELIST(companyIdentity, userId));
     }
 
     public URI getCalUserWorkflowMessageResetUri(final String companyIdentity, final String userId) throws MalformedURLException {

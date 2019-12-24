@@ -3,7 +3,7 @@ package com.pth.iflow.backend.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.pth.iflow.common.edo.models.helper.IdentityModel;
+import com.pth.iflow.common.models.helper.IdentityModel;
 
 public class UserGroup extends IdentityModel {
 

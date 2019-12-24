@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
 
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.enums.EWorkflowMessageType;
+import com.pth.iflow.gui.models.workflow.workflow.Workflow;
 
 public class WorkflowMessage {
 
@@ -149,7 +150,7 @@ public class WorkflowMessage {
 
   public int getRemainingDays() {
     final LocalDate deadline = this.createdAt.plusDays(this.expireDays).toLocalDate();
-    final Period p = LocalDate.now().until(deadline);
+    final Period    p        = LocalDate.now().until(deadline);
 
     return p.getDays();
   }

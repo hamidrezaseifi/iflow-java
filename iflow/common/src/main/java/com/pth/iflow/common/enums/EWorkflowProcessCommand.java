@@ -22,7 +22,7 @@ public enum EWorkflowProcessCommand implements IEnumNameValidator {
   }
 
   @Override
-  public String getName() {
+  public String getIdentity() {
     return this.enumName;
   }
 

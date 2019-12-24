@@ -1,52 +1,42 @@
 package com.pth.iflow.gui.controller.page;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.File;
+import java.io.IOException;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-
-import com.pth.iflow.gui.configurations.IGuiConfiguration;
-import com.pth.iflow.gui.helper.BuildInfoProperties;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping(value = "/")
-public class MainController extends GuiPageControllerBase {
-
-  @Autowired
-  private IGuiConfiguration backendConfigurations;
-  
-  @Autowired
-  BuildInfoProperties buildInfoProperties;
+public class MainController {
 
   @ResponseStatus(HttpStatus.OK)
-  @GetMapping(path = "/")
+  @GetMapping(path = { "/", "/about", "/workflow/*", "/workflow/**" })
   public String index() {
-    
-    return "site/index";
+
+    return "ang/index";
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @GetMapping(path = "/about", produces = MediaType.APPLICATION_XML_VALUE)
+  @PostMapping(path = { "/testfileUpload" })
   @ResponseBody
-  public BuildInfoProperties about() {
-    
-    return this.buildInfoProperties;
+  public String testUploadFile(@RequestParam(value = "files") final MultipartFile[] files) throws IllegalStateException, IOException {
+
+    if (files.length > 0) {
+      final MultipartFile file   = files[0];
+      final File          output = new File("e:/" + file.getOriginalFilename());
+
+      file.transferTo(output);
+    }
+
+    return "ok";
   }
 
-  @ResponseStatus(HttpStatus.OK)
-  @GetMapping(path = "/test", produces = MediaType.APPLICATION_XML_VALUE)
-  @ResponseBody
-  public Map<String, String> test() {
-    final Map<String, String> map = new HashMap<>();
-    map.put("valid-email", this.backendConfigurations.getBackendValidEMail());
-
-    return map;
-  }
 }

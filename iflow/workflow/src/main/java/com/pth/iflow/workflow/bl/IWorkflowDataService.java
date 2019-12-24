@@ -6,27 +6,20 @@ import java.util.Set;
 
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
-import com.pth.iflow.workflow.models.Workflow;
-import com.pth.iflow.workflow.models.WorkflowSearchFilter;
+import com.pth.iflow.workflow.models.base.IWorkflow;
 
-public interface IWorkflowDataService {
+public interface IWorkflowDataService<W extends IWorkflow> {
 
-  public Workflow save(final Workflow model, final String token)
+  public W save(final W model, final String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  public Workflow getByIdentity(final String identity, final String token)
+  public W getByIdentity(final String identity, final String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  public List<Workflow> getListByTypeIdentity(final String identity, final String token)
+  public List<W> getListForUser(final String identity, int status, final String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  public List<Workflow> getListForUser(final String identity, int status, final String token)
-      throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
-
-  public List<Workflow> getListByIdentityList(final Set<String> idList, final String token)
-      throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
-
-  public List<Workflow> search(final WorkflowSearchFilter workflowSearchFilter, String token)
+  public List<W> getListByIdentityList(final Set<String> idList, final String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
 }
