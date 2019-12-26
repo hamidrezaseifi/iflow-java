@@ -152,6 +152,17 @@ var __spread = (this && this.__spread) || function () {
             /* harmony default export */ __webpack_exports__["default"] = ("<div mwlResizable [enableGhostResize]=\"true\" [resizeEdges]=\"{ bottom: false, right: false, top: true, left: false }\" (resizeEnd)=\"onResizeEnd($event)\" class=\"message-panel-container\" id=\"message-panel-container\" *ngIf=\"isAppLogged\">\n\t<div class=\"message-panel-toolbar\">\n\t\t<span class=\"title\">Meldungen</span>\n\t\t<button class=\"toolbar-button\" *ngIf=\"messagePanelShowed\" (click)=\"closeMessages();\"><i class=\"material-icons\">keyboard_arrow_down</i></button>\n\t\t<button class=\"toolbar-button\" *ngIf=\"messagePanelShowed == false\" (click)=\"showMessages();\"><i class=\"material-icons\">keyboard_arrow_up</i></button>\n\t\t<button class=\"toolbar-button\" *ngIf=\"messagePanelShowed\" (click)=\"reloadMessages(true);\"><i class=\"material-icons\">refresh</i></button>\n\t\t<img class=\"toolbar-image\" *ngIf=\"isReloadingMessages\" src=\"assets/images/loading200.gif\" />\n\t\n\t</div>\n\t<div class=\"message-panel-items-container\">\n\t\t<div class=\"message-panel-item\" *ngFor=\"let message of messages;\">\n\t\t\t<a href=\"javascript:void(0);\" (click)=\"showWorkflowView(message.workflowIdentity)\">\n\t\t\t\t<div>{{message.message}} ({{message.workflow.workflowType.title}}) ({{message.createdAtString}}) ({{message.remainingDays}}) ({{message.status}})</div>\n\t\t\t</a>\n\t\t</div>\n\t</div>\n\t\t\t\t\t\n</div>\n\n<div class=\"modal fade show\" tabindex=\"-1\" *ngIf=\"viewWorkflow\" id=\"viewworkflowedialog\" role=\"dialog\">\n\n\t<div class=\"modal-dialog modal-dialog-centered\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<div class=\"modal-header\">\n\t\t\t\t<h5 class=\"modal-title dialog-title\" id=\"errorMessagedialogTitle\">{{ 'common.view-workflow' | translate }}</h5>\n\t\t\t\t<button class=\"dialog-toolbar-button close\" (click)=\"hideViewModal()\" aria-label=\"Close\">\n\t\t\t\t\t<i class=\"material-icons\">close</i>\n\t\t\t\t</button>\n\t\t\t</div>\n\t\t\t\n\t\t      <div class=\"modal-body\">\n\t\t      \n\t\t\t\t<app-workflow-inlineview [workflow]=\"viewWorkflowModel\"></app-workflow-inlineview>\n\t   \t\t\t\t\n\t\t      </div>\n\t      <div class=\"modal-footer\">\n\t\t\t<button type=\"button\" class=\"btn btn-secondary\" (click)=\"hideViewModal()\"><i class=\"material-icons\">close</i></button>\n\n\t\t\t<button type=\"button\" class=\"btn btn-success\"  *ngIf=\"viewWorkflowModel.notAssigned\" (click)=\"assignWorkflowMe()\"><i class=\"material-icons\">assignment_ind</i></button>\n\n\t        <button type=\"button\" class=\"btn btn-primary\" *ngIf=\"viewWorkflowModel.meAssigned\" (click)=\"editWorkflow()\" ><i class=\"material-icons\">pageview</i></button>\n\t      </div>\n\t    </div>\n\t  </div>\t\t    \n\n\n\t\t\t\n</div>\n\n");
             /***/ 
         }),
+        /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/test/test.component.html": 
+        /*!********************************************************************************!*\
+          !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/test/test.component.html ***!
+          \********************************************************************************/
+        /*! exports provided: default */
+        /***/ (function (module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            __webpack_require__.r(__webpack_exports__);
+            /* harmony default export */ __webpack_exports__["default"] = ("<div class=\"main-content\">\n    <div class=\"\">\n        <div>\n        \t<div class=\"form-group\">\n               <button class=\"btn btn-primary\" (click)=\"subscribe()\" type=\"button\" [disabled]=\"subscribed || sending\">Subscribe</button>&nbsp; &nbsp; \n               <button class=\"btn btn-secondary\" (click)=\"unsubscribe()\" type=\"button\" [disabled]=\"subscribed === false || sending\">Unsubscribe</button>\n               &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span>WebSocket connection: {{status}}</span> \n        \t</div>\n        </div>\n        <div>          \n             <div class=\"form-group\">\n                 <label for=\"name\">What is your name?</label>&nbsp; &nbsp; \n                 <input type=\"text\" [(ngModel)]=\"message\" style=\"width: calc(100% - 90px); display: inline-block;\" class=\"form-control\" placeholder=\"Your message here...\">&nbsp; &nbsp; \n                 <button (click)=\"send()\" class=\"btn btn-success\" [disabled]=\"subscribed === false || sending\">Send</button>\n             </div>            \n        </div>\n    </div>\n    \n    <div class=\"responsediv\">\n    \tstate: {{state | json}}\n    </div>\n        \n    <div class=\"responsediv\">\n    \t<div style=\"padding: 5px; border: 1px solid gray; font-weight: bold;\">messageQeue</div>\n    \t<div style=\"padding: 5px; border: 1px solid gray;\" *ngFor=\"let msg of messageQeue; \">{{msg}}</div>\n    </div>\n    \n</div>");
+            /***/ 
+        }),
         /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/top-bar/top-bar.component.html": 
         /*!**************************************************************************************!*\
           !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/top-bar/top-bar.component.html ***!
@@ -685,11 +696,12 @@ var __spread = (this && this.__spread) || function () {
         /*!*******************************!*\
           !*** ./src/app/app.module.ts ***!
           \*******************************/
-        /*! exports provided: createTranslateLoader, AppModule */
+        /*! exports provided: createTranslateLoader, socketProvider, AppModule */
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
             /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createTranslateLoader", function () { return createTranslateLoader; });
+            /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "socketProvider", function () { return socketProvider; });
             /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppModule", function () { return AppModule; });
             /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
             /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
@@ -703,34 +715,61 @@ var __spread = (this && this.__spread) || function () {
             /* harmony import */ var ng_angular8_datatable__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ng-angular8-datatable */ "./node_modules/ng-angular8-datatable/index.js");
             /* harmony import */ var ng_angular8_datatable__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/ __webpack_require__.n(ng_angular8_datatable__WEBPACK_IMPORTED_MODULE_9__);
             /* harmony import */ var _angular_material_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/material/core */ "./node_modules/@angular/material/esm2015/core.js");
-            /* harmony import */ var _material_module__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./material-module */ "./src/app/material-module.ts");
-            /* harmony import */ var _helper__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./helper */ "./src/app/helper/index.ts");
-            /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
-            /* harmony import */ var _app_routing__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./app.routing */ "./src/app/app.routing.ts");
-            /* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./services/global.service */ "./src/app/services/global.service.ts");
-            /* harmony import */ var _services_authentication_service__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./services/authentication.service */ "./src/app/services/authentication.service.ts");
-            /* harmony import */ var _services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./services/workflow/workflow-message.service */ "./src/app/services/workflow/workflow-message.service.ts");
-            /* harmony import */ var _top_bar_top_bar_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./top-bar/top-bar.component */ "./src/app/top-bar/top-bar.component.ts");
-            /* harmony import */ var _footer_footer_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./footer/footer.component */ "./src/app/footer/footer.component.ts");
-            /* harmony import */ var _message_bar_message_bar_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./message-bar/message-bar.component */ "./src/app/message-bar/message-bar.component.ts");
-            /* harmony import */ var _components_error_dialog_error_dialog_component__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/error-dialog/error-dialog.component */ "./src/app/components/error-dialog/error-dialog.component.ts");
-            /* harmony import */ var _components_loading_dialog_loading_dialog_component__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/loading-dialog/loading-dialog.component */ "./src/app/components/loading-dialog/loading-dialog.component.ts");
-            /* harmony import */ var _home__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./home */ "./src/app/home/index.ts");
-            /* harmony import */ var _about__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./about */ "./src/app/about/index.ts");
-            /* harmony import */ var _login__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./login */ "./src/app/login/index.ts");
-            /* harmony import */ var _wm_components_workflow_list_workflow_list_component__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./wm-components/workflow-list/workflow-list.component */ "./src/app/wm-components/workflow-list/workflow-list.component.ts");
-            /* harmony import */ var _wm_components_create_workflow_create_workflow_create_component__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./wm-components/create/workflow-create/workflow-create.component */ "./src/app/wm-components/create/workflow-create/workflow-create.component.ts");
-            /* harmony import */ var _wm_components_create_create_singletask_create_singletask_component__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./wm-components/create/create-singletask/create-singletask.component */ "./src/app/wm-components/create/create-singletask/create-singletask.component.ts");
-            /* harmony import */ var _wm_components_create_create_invoice_create_invoice_component__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./wm-components/create/create-invoice/create-invoice.component */ "./src/app/wm-components/create/create-invoice/create-invoice.component.ts");
-            /* harmony import */ var _wm_components_create_create_testthreetask_create_testthreetask_component__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./wm-components/create/create-testthreetask/create-testthreetask.component */ "./src/app/wm-components/create/create-testthreetask/create-testthreetask.component.ts");
-            /* harmony import */ var _wm_components_edit_edit_invoice_edit_invoice_component__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./wm-components/edit/edit-invoice/edit-invoice.component */ "./src/app/wm-components/edit/edit-invoice/edit-invoice.component.ts");
-            /* harmony import */ var _wm_components_edit_edit_single_task_edit_single_task_component__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./wm-components/edit/edit-single-task/edit-single-task.component */ "./src/app/wm-components/edit/edit-single-task/edit-single-task.component.ts");
-            /* harmony import */ var _wm_components_edit_edit_testthree_task_edit_testthree_task_component__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./wm-components/edit/edit-testthree-task/edit-testthree-task.component */ "./src/app/wm-components/edit/edit-testthree-task/edit-testthree-task.component.ts");
-            /* harmony import */ var _wm_components_workflow_inlineview_workflow_inlineview_component__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./wm-components/workflow-inlineview/workflow-inlineview.component */ "./src/app/wm-components/workflow-inlineview/workflow-inlineview.component.ts");
-            /* harmony import */ var _components_select_user_select_user_component__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./components/select-user/select-user.component */ "./src/app/components/select-user/select-user.component.ts");
+            /* harmony import */ var _stomp_ng2_stompjs__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @stomp/ng2-stompjs */ "./node_modules/@stomp/ng2-stompjs/fesm2015/stomp-ng2-stompjs.js");
+            /* harmony import */ var sockjs_client__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! sockjs-client */ "./node_modules/sockjs-client/lib/entry.js");
+            /* harmony import */ var sockjs_client__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/ __webpack_require__.n(sockjs_client__WEBPACK_IMPORTED_MODULE_12__);
+            /* harmony import */ var _material_module__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./material-module */ "./src/app/material-module.ts");
+            /* harmony import */ var _helper__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./helper */ "./src/app/helper/index.ts");
+            /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
+            /* harmony import */ var _app_routing__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./app.routing */ "./src/app/app.routing.ts");
+            /* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./services/global.service */ "./src/app/services/global.service.ts");
+            /* harmony import */ var _services_authentication_service__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./services/authentication.service */ "./src/app/services/authentication.service.ts");
+            /* harmony import */ var _services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./services/workflow/workflow-message.service */ "./src/app/services/workflow/workflow-message.service.ts");
+            /* harmony import */ var _top_bar_top_bar_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./top-bar/top-bar.component */ "./src/app/top-bar/top-bar.component.ts");
+            /* harmony import */ var _footer_footer_component__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./footer/footer.component */ "./src/app/footer/footer.component.ts");
+            /* harmony import */ var _message_bar_message_bar_component__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./message-bar/message-bar.component */ "./src/app/message-bar/message-bar.component.ts");
+            /* harmony import */ var _components_error_dialog_error_dialog_component__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./components/error-dialog/error-dialog.component */ "./src/app/components/error-dialog/error-dialog.component.ts");
+            /* harmony import */ var _components_loading_dialog_loading_dialog_component__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./components/loading-dialog/loading-dialog.component */ "./src/app/components/loading-dialog/loading-dialog.component.ts");
+            /* harmony import */ var _home__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./home */ "./src/app/home/index.ts");
+            /* harmony import */ var _about__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./about */ "./src/app/about/index.ts");
+            /* harmony import */ var _login__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./login */ "./src/app/login/index.ts");
+            /* harmony import */ var _wm_components_workflow_list_workflow_list_component__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./wm-components/workflow-list/workflow-list.component */ "./src/app/wm-components/workflow-list/workflow-list.component.ts");
+            /* harmony import */ var _wm_components_create_workflow_create_workflow_create_component__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./wm-components/create/workflow-create/workflow-create.component */ "./src/app/wm-components/create/workflow-create/workflow-create.component.ts");
+            /* harmony import */ var _wm_components_create_create_singletask_create_singletask_component__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./wm-components/create/create-singletask/create-singletask.component */ "./src/app/wm-components/create/create-singletask/create-singletask.component.ts");
+            /* harmony import */ var _wm_components_create_create_invoice_create_invoice_component__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./wm-components/create/create-invoice/create-invoice.component */ "./src/app/wm-components/create/create-invoice/create-invoice.component.ts");
+            /* harmony import */ var _wm_components_create_create_testthreetask_create_testthreetask_component__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./wm-components/create/create-testthreetask/create-testthreetask.component */ "./src/app/wm-components/create/create-testthreetask/create-testthreetask.component.ts");
+            /* harmony import */ var _wm_components_edit_edit_invoice_edit_invoice_component__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./wm-components/edit/edit-invoice/edit-invoice.component */ "./src/app/wm-components/edit/edit-invoice/edit-invoice.component.ts");
+            /* harmony import */ var _wm_components_edit_edit_single_task_edit_single_task_component__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./wm-components/edit/edit-single-task/edit-single-task.component */ "./src/app/wm-components/edit/edit-single-task/edit-single-task.component.ts");
+            /* harmony import */ var _wm_components_edit_edit_testthree_task_edit_testthree_task_component__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./wm-components/edit/edit-testthree-task/edit-testthree-task.component */ "./src/app/wm-components/edit/edit-testthree-task/edit-testthree-task.component.ts");
+            /* harmony import */ var _wm_components_workflow_inlineview_workflow_inlineview_component__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./wm-components/workflow-inlineview/workflow-inlineview.component */ "./src/app/wm-components/workflow-inlineview/workflow-inlineview.component.ts");
+            /* harmony import */ var _components_select_user_select_user_component__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./components/select-user/select-user.component */ "./src/app/components/select-user/select-user.component.ts");
+            /* harmony import */ var _test_test_component__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ./test/test.component */ "./src/app/test/test.component.ts");
             function createTranslateLoader(http) {
                 return new _ngx_translate_http_loader__WEBPACK_IMPORTED_MODULE_7__["TranslateHttpLoader"](http, './assets/i18n/', '.json');
             }
+            function socketProvider() {
+                return new sockjs_client__WEBPACK_IMPORTED_MODULE_12__('/iflow-guide-websocket');
+            }
+            var stompConfig = {
+                // Which server?
+                url: socketProvider,
+                // Headers
+                // Typical keys: login, passcode, host
+                headers: {
+                    login: 'guest',
+                    passcode: 'guest'
+                },
+                // How often to heartbeat?
+                // Interval in milliseconds, set to 0 to disable
+                heartbeat_in: 0,
+                heartbeat_out: 20000,
+                // Wait in milliseconds before attempting auto reconnect
+                // Set to 0 to disable
+                // Typical value 5000 (5 seconds)
+                reconnect_delay: 5000,
+                // Will log diagnostics on console
+                debug: true
+            };
             var AppModule = /** @class */ (function () {
                 function AppModule() {
                 }
@@ -742,12 +781,12 @@ var __spread = (this && this.__spread) || function () {
                         _angular_platform_browser__WEBPACK_IMPORTED_MODULE_2__["BrowserModule"],
                         _angular_forms__WEBPACK_IMPORTED_MODULE_3__["ReactiveFormsModule"],
                         _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClientModule"],
-                        _app_routing__WEBPACK_IMPORTED_MODULE_14__["appRoutingModule"],
+                        _app_routing__WEBPACK_IMPORTED_MODULE_16__["appRoutingModule"],
                         _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_5__["BrowserAnimationsModule"],
                         angular_resizable_element__WEBPACK_IMPORTED_MODULE_8__["ResizableModule"],
                         ng_angular8_datatable__WEBPACK_IMPORTED_MODULE_9__["DataTableModule"],
                         _angular_material_core__WEBPACK_IMPORTED_MODULE_10__["MatNativeDateModule"],
-                        _material_module__WEBPACK_IMPORTED_MODULE_11__["IFlowMaterialModules"],
+                        _material_module__WEBPACK_IMPORTED_MODULE_13__["IFlowMaterialModules"],
                         _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"],
                         _ngx_translate_core__WEBPACK_IMPORTED_MODULE_6__["TranslateModule"].forRoot({
                             loader: {
@@ -758,33 +797,39 @@ var __spread = (this && this.__spread) || function () {
                         }),
                     ],
                     declarations: [
-                        _app_component__WEBPACK_IMPORTED_MODULE_13__["AppComponent"],
-                        _top_bar_top_bar_component__WEBPACK_IMPORTED_MODULE_18__["TopBarComponent"],
-                        _footer_footer_component__WEBPACK_IMPORTED_MODULE_19__["FooterComponent"],
-                        _message_bar_message_bar_component__WEBPACK_IMPORTED_MODULE_20__["MessageBarComponent"],
-                        _components_error_dialog_error_dialog_component__WEBPACK_IMPORTED_MODULE_21__["ErrorDialogComponent"],
-                        _components_loading_dialog_loading_dialog_component__WEBPACK_IMPORTED_MODULE_22__["LoadingDialogComponent"],
-                        _home__WEBPACK_IMPORTED_MODULE_23__["HomeComponent"],
-                        _about__WEBPACK_IMPORTED_MODULE_24__["AboutComponent"],
-                        _login__WEBPACK_IMPORTED_MODULE_25__["LoginComponent"],
-                        _wm_components_create_workflow_create_workflow_create_component__WEBPACK_IMPORTED_MODULE_27__["WorkflowCreateComponent"],
-                        _wm_components_workflow_list_workflow_list_component__WEBPACK_IMPORTED_MODULE_26__["WorkflowListComponent"],
-                        _wm_components_create_create_singletask_create_singletask_component__WEBPACK_IMPORTED_MODULE_28__["CreateSingletaskComponent"],
-                        _wm_components_create_create_invoice_create_invoice_component__WEBPACK_IMPORTED_MODULE_29__["CreateInvoiceComponent"],
-                        _wm_components_create_create_testthreetask_create_testthreetask_component__WEBPACK_IMPORTED_MODULE_30__["CreateTestthreetaskComponent"],
-                        _wm_components_edit_edit_invoice_edit_invoice_component__WEBPACK_IMPORTED_MODULE_31__["EditInvoiceComponent"],
-                        _wm_components_edit_edit_single_task_edit_single_task_component__WEBPACK_IMPORTED_MODULE_32__["EditSingleTaskComponent"],
-                        _wm_components_edit_edit_testthree_task_edit_testthree_task_component__WEBPACK_IMPORTED_MODULE_33__["EditTestthreeTaskComponent"],
-                        _wm_components_workflow_inlineview_workflow_inlineview_component__WEBPACK_IMPORTED_MODULE_34__["WorkflowInlineviewComponent"],
-                        _components_select_user_select_user_component__WEBPACK_IMPORTED_MODULE_35__["SelectUserComponent"],
+                        _app_component__WEBPACK_IMPORTED_MODULE_15__["AppComponent"],
+                        _top_bar_top_bar_component__WEBPACK_IMPORTED_MODULE_20__["TopBarComponent"],
+                        _footer_footer_component__WEBPACK_IMPORTED_MODULE_21__["FooterComponent"],
+                        _message_bar_message_bar_component__WEBPACK_IMPORTED_MODULE_22__["MessageBarComponent"],
+                        _components_error_dialog_error_dialog_component__WEBPACK_IMPORTED_MODULE_23__["ErrorDialogComponent"],
+                        _components_loading_dialog_loading_dialog_component__WEBPACK_IMPORTED_MODULE_24__["LoadingDialogComponent"],
+                        _home__WEBPACK_IMPORTED_MODULE_25__["HomeComponent"],
+                        _about__WEBPACK_IMPORTED_MODULE_26__["AboutComponent"],
+                        _login__WEBPACK_IMPORTED_MODULE_27__["LoginComponent"],
+                        _wm_components_create_workflow_create_workflow_create_component__WEBPACK_IMPORTED_MODULE_29__["WorkflowCreateComponent"],
+                        _wm_components_workflow_list_workflow_list_component__WEBPACK_IMPORTED_MODULE_28__["WorkflowListComponent"],
+                        _wm_components_create_create_singletask_create_singletask_component__WEBPACK_IMPORTED_MODULE_30__["CreateSingletaskComponent"],
+                        _wm_components_create_create_invoice_create_invoice_component__WEBPACK_IMPORTED_MODULE_31__["CreateInvoiceComponent"],
+                        _wm_components_create_create_testthreetask_create_testthreetask_component__WEBPACK_IMPORTED_MODULE_32__["CreateTestthreetaskComponent"],
+                        _wm_components_edit_edit_invoice_edit_invoice_component__WEBPACK_IMPORTED_MODULE_33__["EditInvoiceComponent"],
+                        _wm_components_edit_edit_single_task_edit_single_task_component__WEBPACK_IMPORTED_MODULE_34__["EditSingleTaskComponent"],
+                        _wm_components_edit_edit_testthree_task_edit_testthree_task_component__WEBPACK_IMPORTED_MODULE_35__["EditTestthreeTaskComponent"],
+                        _wm_components_workflow_inlineview_workflow_inlineview_component__WEBPACK_IMPORTED_MODULE_36__["WorkflowInlineviewComponent"],
+                        _components_select_user_select_user_component__WEBPACK_IMPORTED_MODULE_37__["SelectUserComponent"],
+                        _test_test_component__WEBPACK_IMPORTED_MODULE_38__["TestComponent"],
                     ],
                     providers: [
-                        _services_global_service__WEBPACK_IMPORTED_MODULE_15__["GlobalService"],
-                        _services_authentication_service__WEBPACK_IMPORTED_MODULE_16__["AuthenticationService"],
-                        _services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_17__["WorkflowMessageService"],
-                        _helper__WEBPACK_IMPORTED_MODULE_12__["fakeBackendProvider"],
+                        _services_global_service__WEBPACK_IMPORTED_MODULE_17__["GlobalService"],
+                        _services_authentication_service__WEBPACK_IMPORTED_MODULE_18__["AuthenticationService"],
+                        _services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_19__["WorkflowMessageService"],
+                        _helper__WEBPACK_IMPORTED_MODULE_14__["fakeBackendProvider"],
+                        _stomp_ng2_stompjs__WEBPACK_IMPORTED_MODULE_11__["StompService"],
+                        {
+                            provide: _stomp_ng2_stompjs__WEBPACK_IMPORTED_MODULE_11__["StompConfig"],
+                            useValue: stompConfig
+                        }
                     ],
-                    bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_13__["AppComponent"]]
+                    bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_15__["AppComponent"]]
                 })
             ], AppModule);
             /*
@@ -817,6 +862,7 @@ var __spread = (this && this.__spread) || function () {
             /* harmony import */ var _wm_components_edit_edit_invoice_edit_invoice_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./wm-components/edit/edit-invoice/edit-invoice.component */ "./src/app/wm-components/edit/edit-invoice/edit-invoice.component.ts");
             /* harmony import */ var _wm_components_edit_edit_single_task_edit_single_task_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./wm-components/edit/edit-single-task/edit-single-task.component */ "./src/app/wm-components/edit/edit-single-task/edit-single-task.component.ts");
             /* harmony import */ var _wm_components_edit_edit_testthree_task_edit_testthree_task_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./wm-components/edit/edit-testthree-task/edit-testthree-task.component */ "./src/app/wm-components/edit/edit-testthree-task/edit-testthree-task.component.ts");
+            /* harmony import */ var _test_test_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./test/test.component */ "./src/app/test/test.component.ts");
             var routes = [
                 { path: '', component: _home__WEBPACK_IMPORTED_MODULE_3__["HomeComponent"], canActivate: [_services_authentication_service__WEBPACK_IMPORTED_MODULE_2__["AuthenticationService"]] },
                 { path: 'about', component: _about__WEBPACK_IMPORTED_MODULE_4__["AboutComponent"], canActivate: [_services_authentication_service__WEBPACK_IMPORTED_MODULE_2__["AuthenticationService"]] },
@@ -828,6 +874,7 @@ var __spread = (this && this.__spread) || function () {
                 { path: 'workflow/edit/singletaskworkflowtype/:identity', component: _wm_components_edit_edit_single_task_edit_single_task_component__WEBPACK_IMPORTED_MODULE_12__["EditSingleTaskComponent"], canActivate: [_services_authentication_service__WEBPACK_IMPORTED_MODULE_2__["AuthenticationService"]] },
                 { path: 'workflow/edit/threetaskworkflowtype/:identity', component: _wm_components_edit_edit_testthree_task_edit_testthree_task_component__WEBPACK_IMPORTED_MODULE_13__["EditTestthreeTaskComponent"], canActivate: [_services_authentication_service__WEBPACK_IMPORTED_MODULE_2__["AuthenticationService"]] },
                 { path: 'workflow/edit/invoiceworkflowtype/:identity', component: _wm_components_edit_edit_invoice_edit_invoice_component__WEBPACK_IMPORTED_MODULE_11__["EditInvoiceComponent"], canActivate: [_services_authentication_service__WEBPACK_IMPORTED_MODULE_2__["AuthenticationService"]] },
+                { path: 'test', component: _test_test_component__WEBPACK_IMPORTED_MODULE_14__["TestComponent"] },
                 { path: 'auth/login', component: _login__WEBPACK_IMPORTED_MODULE_5__["LoginComponent"] },
                 // otherwise redirect to home
                 { path: '**', redirectTo: '', canActivate: [_services_authentication_service__WEBPACK_IMPORTED_MODULE_2__["AuthenticationService"]] }
@@ -2171,7 +2218,7 @@ var __spread = (this && this.__spread) || function () {
         /*!***********************************!*\
           !*** ./src/app/services/index.ts ***!
           \***********************************/
-        /*! exports provided: GlobalService, AuthenticationService, UserService */
+        /*! exports provided: AuthenticationService, GlobalService, UserService */
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
@@ -2747,6 +2794,96 @@ var __spread = (this && this.__spread) || function () {
                     providedIn: 'root'
                 })
             ], WorkflowSearchService);
+            /***/ 
+        }),
+        /***/ "./src/app/test/test.component.css": 
+        /*!*****************************************!*\
+          !*** ./src/app/test/test.component.css ***!
+          \*****************************************/
+        /*! exports provided: default */
+        /***/ (function (module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            __webpack_require__.r(__webpack_exports__);
+            /* harmony default export */ __webpack_exports__["default"] = ("\r\n.main-content{\r\n    margin-top: 40px;\r\n\t\r\n}\r\n\r\n.responsediv {\r\n    border: 1px solid gray;\r\n    min-height: 30px;\r\n    margin-top: 30px;\r\n    padding: 10px;\r\n    border-radius: 5px;\r\n}\r\n\r\n.form-group{\r\n\tmargin-bottom: 30px;\r\n}\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvdGVzdC90ZXN0LmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IjtBQUNBO0lBQ0ksZ0JBQWdCOztBQUVwQjs7QUFFQTtJQUNJLHNCQUFzQjtJQUN0QixnQkFBZ0I7SUFDaEIsZ0JBQWdCO0lBQ2hCLGFBQWE7SUFDYixrQkFBa0I7QUFDdEI7O0FBRUE7Q0FDQyxtQkFBbUI7QUFDcEIiLCJmaWxlIjoic3JjL2FwcC90ZXN0L3Rlc3QuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIlxyXG4ubWFpbi1jb250ZW50e1xyXG4gICAgbWFyZ2luLXRvcDogNDBweDtcclxuXHRcclxufVxyXG5cclxuLnJlc3BvbnNlZGl2IHtcclxuICAgIGJvcmRlcjogMXB4IHNvbGlkIGdyYXk7XHJcbiAgICBtaW4taGVpZ2h0OiAzMHB4O1xyXG4gICAgbWFyZ2luLXRvcDogMzBweDtcclxuICAgIHBhZGRpbmc6IDEwcHg7XHJcbiAgICBib3JkZXItcmFkaXVzOiA1cHg7XHJcbn1cclxuXHJcbi5mb3JtLWdyb3Vwe1xyXG5cdG1hcmdpbi1ib3R0b206IDMwcHg7XHJcbn0iXX0= */");
+            /***/ 
+        }),
+        /***/ "./src/app/test/test.component.ts": 
+        /*!****************************************!*\
+          !*** ./src/app/test/test.component.ts ***!
+          \****************************************/
+        /*! exports provided: TestComponent */
+        /***/ (function (module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            __webpack_require__.r(__webpack_exports__);
+            /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TestComponent", function () { return TestComponent; });
+            /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+            /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+            /* harmony import */ var _stomp_ng2_stompjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @stomp/ng2-stompjs */ "./node_modules/@stomp/ng2-stompjs/fesm2015/stomp-ng2-stompjs.js");
+            var TestComponent = /** @class */ (function () {
+                function TestComponent(_stompService) {
+                    var _this = this;
+                    this._stompService = _stompService;
+                    this.sending = false;
+                    this.status = "Not Connected";
+                    this.response = "";
+                    this.message = "";
+                    this.messageQeue = [];
+                    this.stompClient = null;
+                    this.on_next = function (message) {
+                        console.log("My Message: ", message.body);
+                        _this.messageQeue.push(message.body + '\n');
+                        _this.sending = false;
+                    };
+                }
+                TestComponent.prototype.ngOnInit = function () {
+                    //this.state = this._stompService.state.map((state: number) => StompState[state]);
+                    this.state = this._stompService.state.asObservable();
+                    this.setConnected(false);
+                };
+                TestComponent.prototype.ngOnDestroy = function () {
+                    this.unsubscribe();
+                };
+                TestComponent.prototype.subscribe = function () {
+                    if (this.subscribed) {
+                        return;
+                    }
+                    this.messages = this._stompService.subscribe('/socket/test');
+                    this.subscription = this.messages.subscribe(this.on_next);
+                    this.setConnected(true);
+                };
+                TestComponent.prototype.unsubscribe = function () {
+                    if (!this.subscribed) {
+                        return;
+                    }
+                    // This will internally unsubscribe from Stomp Broker
+                    // There are two subscriptions - one created explicitly, the other created in the template by use of 'async'
+                    this.subscription.unsubscribe();
+                    this.subscription = null;
+                    this.messages = null;
+                    this.setConnected(false);
+                };
+                TestComponent.prototype.send = function () {
+                    this.sending = true;
+                    this._stompService.publish('/socketapp/start', JSON.stringify({ 'sentMessage': this.message }));
+                    this.message = "";
+                };
+                TestComponent.prototype.setConnected = function (subscribed) {
+                    this.subscribed = subscribed;
+                    this.status = subscribed ? "Connected" : "Not Connected";
+                    this.response = "";
+                };
+                return TestComponent;
+            }());
+            TestComponent.ctorParameters = function () { return [
+                { type: _stomp_ng2_stompjs__WEBPACK_IMPORTED_MODULE_2__["StompService"] }
+            ]; };
+            TestComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+                Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+                    selector: 'app-test',
+                    template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./test.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/test/test.component.html")).default,
+                    styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./test.component.css */ "./src/app/test/test.component.css")).default]
+                })
+            ], TestComponent);
             /***/ 
         }),
         /***/ "./src/app/top-bar/top-bar.component.css": 

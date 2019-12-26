@@ -19,7 +19,7 @@ import net.sourceforge.tess4j.TesseractException;
 public class MainController {
 
   @ResponseStatus(HttpStatus.OK)
-  @GetMapping(path = { "/", "/about", "/workflow/*", "/workflow/**" })
+  @GetMapping(path = { "/", "/about", "/test", "/workflow/*", "/workflow/**" })
   public String index() {
 
     return "ang/index";
@@ -31,8 +31,8 @@ public class MainController {
   public String testUploadFile(@RequestParam(value = "files") final MultipartFile[] files) throws IllegalStateException, IOException {
 
     if (files.length > 0) {
-      final MultipartFile file   = files[0];
-      final File          output = new File("e:/" + file.getOriginalFilename());
+      final MultipartFile file = files[0];
+      final File output = new File("e:/" + file.getOriginalFilename());
 
       file.transferTo(output);
     }
@@ -45,7 +45,7 @@ public class MainController {
   @ResponseBody
   public String testOcr() throws IllegalStateException, IOException, TesseractException {
 
-    final File      file      = new File("E:\\TestRechnung\\Unbenannt.png");
+    final File file = new File("E:\\TestRechnung\\Unbenannt.png");
     final Tesseract tesseract = new Tesseract();
     tesseract.setDatapath("F://Softwares//Tess4J//tessdata");
     tesseract.setLanguage("deu");

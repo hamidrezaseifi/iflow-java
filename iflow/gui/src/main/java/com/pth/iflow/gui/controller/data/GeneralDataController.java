@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,16 +40,16 @@ import com.pth.iflow.gui.services.impl.workflow.WorkflowHandlerSelect;
 public class GeneralDataController extends GuiLogedControllerBase {
 
   @Autowired
-  private UiMenuService                                   menuService;
+  private UiMenuService menuService;
 
   @Autowired
-  protected IMessagesHelper                               messagesHelper;
+  protected IMessagesHelper messagesHelper;
 
   @Autowired
   private IWorkflowHandler<Workflow, WorkflowSaveRequest> workflowHandlerBase;
 
   @Autowired
-  WorkflowHandlerSelect                                   workflowHandlerSelect;
+  WorkflowHandlerSelect workflowHandlerSelect;
 
   @ResponseStatus(HttpStatus.OK)
   @GetMapping(path = { "/generaldatat" }, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -124,6 +126,7 @@ public class GeneralDataController extends GuiLogedControllerBase {
   }
 
   protected List<UiMenuItem> getMenus() {
+
     return this.menuService.getAllMenus();
 
   }
@@ -135,18 +138,33 @@ public class GeneralDataController extends GuiLogedControllerBase {
       throws GuiCustomizedException, IFlowMessageConversionFailureException, IOException {
 
     if (this.isSessionValidAndLoggedIn()) {
-      final Workflow         workflow         = this.workflowHandlerBase.readWorkflow(workflowIdentity);
+      final Workflow workflow = this.workflowHandlerBase.readWorkflow(workflowIdentity);
 
-      final IWorkflowHandler handler          = this.workflowHandlerSelect.getHandlerByType(workflow.getWorkflowTypeEnum());
+      final IWorkflowHandler handler = this.workflowHandlerSelect.getHandlerByType(workflow.getWorkflowTypeEnum());
 
-      final IWorkflow        assignedWorkflow = handler.assignWorkflow(workflowIdentity);
+      final IWorkflow assignedWorkflow = handler.assignWorkflow(workflowIdentity);
 
       return workflow;
     }
     throw new GuiCustomizedException("not loggeg in!");
   }
 
+  @MessageMapping("/start")
+  @SendTo("/socket/test")
+  public Map<String, Object> greeting(final Map<String, Object> message) throws Exception {
+
+    final Object sentMessage = message.keySet().contains("sentMessage") ? message.get("sentMessage") : "not found!";
+
+    final Map<String, Object> map = new HashMap<>();
+    map.put("msg", sentMessage);
+    map.put("status", "received");
+
+    Thread.sleep(10000);
+    return map;
+  }
+
   private boolean isSessionValidAndLoggedIn() {
+
     return this.getSessionUserInfo() != null && this.getSessionUserInfo().isValid();
   }
 }

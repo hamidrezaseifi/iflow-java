@@ -14,6 +14,7 @@ import { CreateTestthreetaskComponent } from './wm-components/create/create-test
 import { EditInvoiceComponent } from './wm-components/edit/edit-invoice/edit-invoice.component';
 import { EditSingleTaskComponent } from './wm-components/edit/edit-single-task/edit-single-task.component';
 import { EditTestthreeTaskComponent } from './wm-components/edit/edit-testthree-task/edit-testthree-task.component';
+import { TestComponent } from './test/test.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent, canActivate: [AuthenticationService] },
@@ -28,6 +29,7 @@ const routes: Routes = [
     { path: 'workflow/edit/threetaskworkflowtype/:identity', component: EditTestthreeTaskComponent, canActivate: [AuthenticationService] },
     { path: 'workflow/edit/invoiceworkflowtype/:identity', component: EditInvoiceComponent, canActivate: [AuthenticationService] },
     
+    { path: 'test', component: TestComponent },
     
     { path: 'auth/login', component: LoginComponent },
 
