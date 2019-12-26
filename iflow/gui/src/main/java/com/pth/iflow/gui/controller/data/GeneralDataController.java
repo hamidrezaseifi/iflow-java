@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -50,6 +51,9 @@ public class GeneralDataController extends GuiLogedControllerBase {
 
   @Autowired
   WorkflowHandlerSelect workflowHandlerSelect;
+
+  @Autowired
+  SimpMessagingTemplate simpMessagingTemplate;
 
   @ResponseStatus(HttpStatus.OK)
   @GetMapping(path = { "/generaldatat" }, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -149,6 +153,21 @@ public class GeneralDataController extends GuiLogedControllerBase {
     throw new GuiCustomizedException("not loggeg in!");
   }
 
+  @GetMapping(path = { "/testsocket/{data}" })
+  @ResponseBody
+  public String testSentSocket(@PathVariable final String data) throws Exception {
+
+    Thread.sleep(100);
+
+    final Map<String, Object> map = new HashMap<>();
+    map.put("sentMessage", data);
+    map.put("status", "received-from-test");
+
+    this.simpMessagingTemplate.convertAndSend("/socket/test", map);
+
+    return data;
+  }
+
   @MessageMapping("/start")
   @SendTo("/socket/test")
   public Map<String, Object> greeting(final Map<String, Object> message) throws Exception {
@@ -159,7 +178,7 @@ public class GeneralDataController extends GuiLogedControllerBase {
     map.put("msg", sentMessage);
     map.put("status", "received");
 
-    Thread.sleep(10000);
+    Thread.sleep(100);
     return map;
   }
 
