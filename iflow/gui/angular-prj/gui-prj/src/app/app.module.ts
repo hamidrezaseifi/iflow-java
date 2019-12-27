@@ -51,7 +51,7 @@ export function createTranslateLoader(http: HttpClient) {
 
 export function socketProvider() {
 	  return new SockJS('/iflow-guide-websocket');
-	}
+}
 
 const stompConfig: StompConfig = {
 	// Which server?

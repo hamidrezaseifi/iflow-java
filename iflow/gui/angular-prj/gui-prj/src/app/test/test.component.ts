@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpParams } from "@angular/common/http";
 import { Observable, throwError , Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { StompService, StompState } from '@stomp/ng2-stompjs';
 import { Message } from '@stomp/stompjs';
 
@@ -37,7 +36,7 @@ export class TestComponent implements OnInit, OnDestroy {
 
 	ngOnInit() {
 		//this.state = this._stompService.state.map((state: number) => StompState[state]);
-		this.state = this._stompService.state.asObservable();
+		//this.state = this._stompService.state.asObservable();
 
 		this.setConnected(false);
 		
