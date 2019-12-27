@@ -136,7 +136,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div mwlResizable [enableGhostResize]=\"true\" [resizeEdges]=\"{ bottom: false, right: false, top: true, left: false }\" (resizeEnd)=\"onResizeEnd($event)\" class=\"message-panel-container\" id=\"message-panel-container\" *ngIf=\"isAppLogged\">\n\t<div class=\"message-panel-toolbar\">\n\t\t<span class=\"title\">Meldungen</span>\n\t\t<button class=\"toolbar-button\" *ngIf=\"messagePanelShowed\" (click)=\"closeMessages();\"><i class=\"material-icons\">keyboard_arrow_down</i></button>\n\t\t<button class=\"toolbar-button\" *ngIf=\"messagePanelShowed == false\" (click)=\"showMessages();\"><i class=\"material-icons\">keyboard_arrow_up</i></button>\n\t\t<button class=\"toolbar-button\" *ngIf=\"messagePanelShowed\" (click)=\"reloadMessages(true);\"><i class=\"material-icons\">refresh</i></button>\n\t\t<img class=\"toolbar-image\" *ngIf=\"isReloadingMessages\" src=\"assets/images/loading200.gif\" />\n\t\n\t</div>\n\t<div class=\"message-panel-items-container\">\n\t\t<div class=\"message-panel-item\" *ngFor=\"let message of messages;\">\n\t\t\t<a href=\"javascript:void(0);\" (click)=\"showWorkflowView(message.workflowIdentity)\">\n\t\t\t\t<div>{{message.message}} ({{message.workflow.workflowType.title}}) ({{message.createdAtString}}) ({{message.remainingDays}}) ({{message.status}})</div>\n\t\t\t</a>\n\t\t</div>\n\t</div>\n\t\t\t\t\t\n</div>\n\n<div class=\"modal fade show\" tabindex=\"-1\" *ngIf=\"viewWorkflow\" id=\"viewworkflowedialog\" role=\"dialog\">\n\n\t<div class=\"modal-dialog modal-dialog-centered\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<div class=\"modal-header\">\n\t\t\t\t<h5 class=\"modal-title dialog-title\" id=\"errorMessagedialogTitle\">{{ 'common.view-workflow' | translate }}</h5>\n\t\t\t\t<button class=\"dialog-toolbar-button close\" (click)=\"hideViewModal()\" aria-label=\"Close\">\n\t\t\t\t\t<i class=\"material-icons\">close</i>\n\t\t\t\t</button>\n\t\t\t</div>\n\t\t\t\n\t\t      <div class=\"modal-body\">\n\t\t      \n\t\t\t\t<app-workflow-inlineview [workflow]=\"viewWorkflowModel\"></app-workflow-inlineview>\n\t   \t\t\t\t\n\t\t      </div>\n\t      <div class=\"modal-footer\">\n\t\t\t<button type=\"button\" class=\"btn btn-secondary\" (click)=\"hideViewModal()\"><i class=\"material-icons\">close</i></button>\n\n\t\t\t<button type=\"button\" class=\"btn btn-success\"  *ngIf=\"viewWorkflowModel.notAssigned\" (click)=\"assignWorkflowMe()\"><i class=\"material-icons\">assignment_ind</i></button>\n\n\t        <button type=\"button\" class=\"btn btn-primary\" *ngIf=\"viewWorkflowModel.meAssigned\" (click)=\"editWorkflow()\" ><i class=\"material-icons\">pageview</i></button>\n\t      </div>\n\t    </div>\n\t  </div>\t\t    \n\n\n\t\t\t\n</div>\n\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<div mwlResizable [enableGhostResize]=\"true\" [resizeEdges]=\"{ bottom: false, right: false, top: true, left: false }\" (resizeEnd)=\"onResizeEnd($event)\" class=\"message-panel-container\" id=\"message-panel-container\" *ngIf=\"isAppLogged\">\n\t<div class=\"message-panel-toolbar\">\n\t\t<span class=\"title\">Meldungen {{status}}</span>\n\t\t<button class=\"toolbar-button\" *ngIf=\"messagePanelShowed\" (click)=\"closeMessages();\"><i class=\"material-icons\">keyboard_arrow_down</i></button>\n\t\t<button class=\"toolbar-button\" *ngIf=\"messagePanelShowed == false\" (click)=\"showMessages();\"><i class=\"material-icons\">keyboard_arrow_up</i></button>\n\t\t<button class=\"toolbar-button\" *ngIf=\"messagePanelShowed\" (click)=\"reloadMessages(true);\"><i class=\"material-icons\">refresh</i></button>\n\t\t<img class=\"toolbar-image\" *ngIf=\"isReloadingMessages\" src=\"assets/images/loading200.gif\" />\n\t\n\t</div>\n\t<div class=\"message-panel-items-container\">\n\t\t<div class=\"message-panel-item\" *ngFor=\"let message of messages;\">\n\t\t\t<a href=\"javascript:void(0);\" (click)=\"showWorkflowView(message.workflowIdentity)\">\n\t\t\t\t<div>{{message.message}} ({{message.workflow.workflowType.title}}) ({{message.createdAtString}}) ({{message.remainingDays}}) ({{message.status}})</div>\n\t\t\t</a>\n\t\t</div>\n\t</div>\n\t\t\t\t\t\n</div>\n\n<div class=\"modal fade show\" tabindex=\"-1\" *ngIf=\"viewWorkflow\" id=\"viewworkflowedialog\" role=\"dialog\">\n\n\t<div class=\"modal-dialog modal-dialog-centered\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<div class=\"modal-header\">\n\t\t\t\t<h5 class=\"modal-title dialog-title\" id=\"errorMessagedialogTitle\">{{ 'common.view-workflow' | translate }}</h5>\n\t\t\t\t<button class=\"dialog-toolbar-button close\" (click)=\"hideViewModal()\" aria-label=\"Close\">\n\t\t\t\t\t<i class=\"material-icons\">close</i>\n\t\t\t\t</button>\n\t\t\t</div>\n\t\t\t\n\t\t      <div class=\"modal-body\">\n\t\t      \n\t\t\t\t<app-workflow-inlineview [workflow]=\"viewWorkflowModel\"></app-workflow-inlineview>\n\t   \t\t\t\t\n\t\t      </div>\n\t      <div class=\"modal-footer\">\n\t\t\t<button type=\"button\" class=\"btn btn-secondary\" (click)=\"hideViewModal()\"><i class=\"material-icons\">close</i></button>\n\n\t\t\t<button type=\"button\" class=\"btn btn-success\"  *ngIf=\"viewWorkflowModel.notAssigned\" (click)=\"assignWorkflowMe()\"><i class=\"material-icons\">assignment_ind</i></button>\n\n\t        <button type=\"button\" class=\"btn btn-primary\" *ngIf=\"viewWorkflowModel.meAssigned\" (click)=\"editWorkflow()\" ><i class=\"material-icons\">pageview</i></button>\n\t      </div>\n\t    </div>\n\t  </div>\t\t    \n\n\n\t\t\t\n</div>\n\n");
 
 /***/ }),
 
@@ -1991,19 +1991,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MessageBarComponent", function() { return MessageBarComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
-/* harmony import */ var _services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/workflow/workflow-message.service */ "./src/app/services/workflow/workflow-message.service.ts");
-/* harmony import */ var _services_error_service_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../services/error-service.service */ "./src/app/services/error-service.service.ts");
+/* harmony import */ var _stomp_ng2_stompjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @stomp/ng2-stompjs */ "./node_modules/@stomp/ng2-stompjs/fesm2015/stomp-ng2-stompjs.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+/* harmony import */ var _services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../services/workflow/workflow-message.service */ "./src/app/services/workflow/workflow-message.service.ts");
+/* harmony import */ var _services_error_service_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../services/error-service.service */ "./src/app/services/error-service.service.ts");
+
 
 
 
 
 
 let MessageBarComponent = class MessageBarComponent {
-    constructor(router, messageService, errorService) {
+    constructor(router, messageService, errorService, _stompService) {
         this.router = router;
         this.messageService = messageService;
         this.errorService = errorService;
+        this._stompService = _stompService;
         this.messages = [];
         this.viewWorkflow = false;
         this.messageSearchInterval = 60000;
@@ -2011,7 +2014,19 @@ let MessageBarComponent = class MessageBarComponent {
         this.messagePanelHeight = 170;
         this.messagePanelShowed = true;
         this.isReloadingMessages = false;
+        this.status = "Not Connected";
+        this.requesting = false;
+        this.stompClient = null;
         this._isLogged = false;
+        this.receiveMessage = (message) => {
+            this.requesting = false;
+            console.log("Socket Message: ", message.body);
+            var parsedMessage = JSON.parse(message.body);
+            console.log("Parsed Message: ", parsedMessage);
+            if (parsedMessage.messages) {
+                this.messages = parsedMessage.messages;
+            }
+        };
     }
     debugData() {
         return (this.viewWorkflowModel && this.viewWorkflowModel != null) ? JSON.stringify(this.viewWorkflowModel) : 'no data';
@@ -2031,23 +2046,34 @@ let MessageBarComponent = class MessageBarComponent {
     ;
     set isLogged(value) {
         this._isLogged = value;
-        this.reloadMessages(true);
+        if (this._isLogged === true) {
+            this.subscribe();
+        }
+        else {
+            this.unsubscribe();
+        }
     }
     get isAppLogged() {
         return this._isLogged;
     }
     ngOnInit() {
-        if (this._isLogged == true) {
-            console.log("start read message list from comp.");
-            this.reloadMessages(true);
+        if (this._isLogged === true) {
+            this.subscribe();
         }
+    }
+    ngOnDestroy() {
+        this.unsubscribe();
     }
     onResizeEnd(event) {
         this.messagePanelHeight = event.rectangle.height;
         document.getElementById("message-panel-container").style.height = this.messagePanelHeight + "px";
-        //alert(this.messagePanelHeight);
     }
     reloadMessages(reset) {
+        this.requesting = true;
+        var request = { 'reset': '1', };
+        this._stompService.publish('/socketapp/resetmessage', JSON.stringify(request));
+    }
+    requestMessageList1(reset) {
         clearTimeout(this.messageReloadTimeoutId);
         //console.log("start reloadMessages.  _isLogged:" + (this._isLogged === true));
         if (this._isLogged === true) {
@@ -2063,9 +2089,9 @@ let MessageBarComponent = class MessageBarComponent {
                 setTimeout(() => {
                     this.isReloadingMessages = false;
                 }, 500);
-                this.messageReloadTimeoutId = setTimeout(() => {
+                /*this.messageReloadTimeoutId = setTimeout(() =>{
                     this.reloadMessages(false);
-                }, this.messageSearchInterval);
+                }, this.messageSearchInterval);	*/
             });
         }
     }
@@ -2096,11 +2122,35 @@ let MessageBarComponent = class MessageBarComponent {
         this.viewWorkflow = false;
         this.router.navigate(['/workflow/edit/' + this.viewWorkflowModel.workflowType.identity + '/' + this.viewWorkflowModel.identity]);
     }
+    setConnected(subscribed) {
+        this.subscribed = subscribed;
+        this.status = subscribed ? "Connected" : "Not Connected";
+    }
+    subscribe() {
+        if (this.subscribed) {
+            return;
+        }
+        this.socketMessages = this._stompService.subscribe('/socket/messages');
+        this.subscription = this.socketMessages.subscribe(this.receiveMessage);
+        this.setConnected(true);
+    }
+    unsubscribe() {
+        if (!this.subscribed) {
+            return;
+        }
+        // This will internally unsubscribe from Stomp Broker
+        // There are two subscriptions - one created explicitly, the other created in the template by use of 'async'
+        this.subscription.unsubscribe();
+        this.subscription = null;
+        this.messages = null;
+        this.setConnected(false);
+    }
 };
 MessageBarComponent.ctorParameters = () => [
-    { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] },
-    { type: _services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_3__["WorkflowMessageService"] },
-    { type: _services_error_service_service__WEBPACK_IMPORTED_MODULE_4__["ErrorServiceService"] }
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"] },
+    { type: _services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_4__["WorkflowMessageService"] },
+    { type: _services_error_service_service__WEBPACK_IMPORTED_MODULE_5__["ErrorServiceService"] },
+    { type: _stomp_ng2_stompjs__WEBPACK_IMPORTED_MODULE_2__["StompService"] }
 ];
 tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])('currentUser')
@@ -2112,7 +2162,7 @@ MessageBarComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
         selector: 'app-message-bar',
         template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./message-bar.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/message-bar/message-bar.component.html")).default,
-        providers: [_services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_3__["WorkflowMessageService"]],
+        providers: [_services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_4__["WorkflowMessageService"]],
         styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./message-bar.component.css */ "./src/app/message-bar/message-bar.component.css")).default]
     })
 ], MessageBarComponent);

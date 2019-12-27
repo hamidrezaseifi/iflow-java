@@ -1,6 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import * as moment from 'moment'; 
 import { ResizeEvent } from 'angular-resizable-element';
+import { Observable, throwError , Subscription } from 'rxjs';
+import { StompService, StompState } from '@stomp/ng2-stompjs';
+import { Message } from '@stomp/stompjs';
 
 import { Workflow } from '../wf-models';
 import { WorkflowMessage } from '../wf-models';
@@ -16,7 +19,7 @@ import { ErrorServiceService } from '../services/error-service.service';
   styleUrls: ['./message-bar.component.css'],
   providers: [ WorkflowMessageService ]
 })
-export class MessageBarComponent implements OnInit {
+export class MessageBarComponent implements OnInit, OnDestroy {
 
 	messages: WorkflowMessage[] = [];
 	viewWorkflowModel :Workflow;
@@ -29,6 +32,15 @@ export class MessageBarComponent implements OnInit {
 	
 	isReloadingMessages : boolean = false;
 
+	private subscription: Subscription;
+
+	public status = "Not Connected";
+	public subscribed: boolean;
+	public requesting : boolean = false;
+	private socketMessages: Observable<Message>;
+	private state: Observable<StompState>;
+	
+	private stompClient = null;
 	
 	debugData() :string{
 		return (this.viewWorkflowModel && this.viewWorkflowModel != null) ? JSON.stringify(this.viewWorkflowModel) : 'no data';
@@ -56,7 +68,13 @@ export class MessageBarComponent implements OnInit {
 	    
 		this._isLogged = value;
 		
-	    this.reloadMessages(true);	    
+		if(this._isLogged === true){			
+			this.subscribe();
+	    }
+		else{
+			this.unsubscribe();
+		}
+		
 	}
 	
 	
@@ -67,26 +85,39 @@ export class MessageBarComponent implements OnInit {
 	
 	constructor(protected router: Router, 
 			private messageService :WorkflowMessageService,
-			private errorService: ErrorServiceService,) { 
+			private errorService: ErrorServiceService,
+			private _stompService: StompService,) { 
 		
 	}
 	
 
 	ngOnInit() {		
 		
-		if(this._isLogged == true){
-	    	console.log("start read message list from comp.");
-	    	this.reloadMessages(true);
+		if(this._isLogged === true){
+			this.subscribe();
 	    }
+	}
+	
+	ngOnDestroy() {
+	    this.unsubscribe();
 	}
 	
 	onResizeEnd(event: ResizeEvent): void {
 		this.messagePanelHeight = event.rectangle.height;
 		document.getElementById("message-panel-container").style.height = this.messagePanelHeight + "px";
-		//alert(this.messagePanelHeight);
 	}
 	
 	reloadMessages(reset: boolean){
+		
+		this.requesting = true;
+
+		var request = {'reset': '1', };
+		
+		this._stompService.publish('/socketapp/resetmessage', JSON.stringify(request));
+				
+	}
+	
+	private requestMessageList1(reset: boolean){
 		
 		clearTimeout(this.messageReloadTimeoutId);
 		//console.log("start reloadMessages.  _isLogged:" + (this._isLogged === true));
@@ -110,9 +141,9 @@ export class MessageBarComponent implements OnInit {
 			        		this.isReloadingMessages = false;
 			        	 }, 500);
 			        	
-			        	this.messageReloadTimeoutId = setTimeout(() =>{ 			  				
+			        	/*this.messageReloadTimeoutId = setTimeout(() =>{ 			  				
 		  					this.reloadMessages(false);		  				 
-			        	}, this.messageSearchInterval);			        	
+			        	}, this.messageSearchInterval);	*/		        	
 			        }
 		    	);
 			
@@ -163,5 +194,52 @@ export class MessageBarComponent implements OnInit {
 		
 		
   	}
+	
+	private setConnected(subscribed) {
+		this.subscribed = subscribed;
+	    
+		this.status = subscribed ? "Connected" : "Not Connected";
+	}	
+	
+	private subscribe() {
+		
+		if (this.subscribed) {
+		      return;
+		}
+
+		this.socketMessages = this._stompService.subscribe('/socket/messages');
+
+	    this.subscription = this.socketMessages.subscribe(this.receiveMessage);
+
+	    this.setConnected(true);
+		
+	}
+	
+	private receiveMessage = (message: Message) => {
+
+		this.requesting = false;
+		
+		console.log("Socket Message: " , message.body);
+		var parsedMessage = JSON.parse(message.body);
+		console.log("Parsed Message: " , parsedMessage);
+		
+		if(parsedMessage.messages){
+			this.messages = <WorkflowMessage[]>parsedMessage.messages;
+		}
+	}	
+
+	private unsubscribe() {
+	    if (!this.subscribed) {
+	      return;
+	    }
+
+	    // This will internally unsubscribe from Stomp Broker
+	    // There are two subscriptions - one created explicitly, the other created in the template by use of 'async'
+	    this.subscription.unsubscribe();
+	    this.subscription = null;
+	    this.messages = null;
+
+	    this.setConnected(false);
+	}
   	
 }
