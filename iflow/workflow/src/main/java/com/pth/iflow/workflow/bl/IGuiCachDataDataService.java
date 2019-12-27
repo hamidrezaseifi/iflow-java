@@ -6,7 +6,7 @@ import java.util.Set;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 
-public interface IProfileCachDataDataService {
+public interface IGuiCachDataDataService {
 
   public void resetCachDataForUser(final String companyIdentity, final String userIdentity, String token)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;

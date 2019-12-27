@@ -42,6 +42,7 @@ public class GuiSecurityConfigurations extends WebSecurityConfigurerAdapter impl
   public static final String WEBSOCKET_GUID_URL = "/iflow-guide-websocket/**";
   public static final String WEBSOCKET_APPSTART_URL = "/socketapp/**";
   public static final String WEBSOCKET_BROKER_URL = "/socket/**";
+  public static final String CACHDATA_BASE_URL = "/cachdata/**";
   public static final String COMPANYINDICATOR_COOKIE_KEY = "comp_ind";
 
   @Value("${iflow.backend.valid-email}")
@@ -95,6 +96,8 @@ public class GuiSecurityConfigurations extends WebSecurityConfigurerAdapter impl
         .antMatchers(WEBSOCKET_BROKER_URL)
         .permitAll()
         .antMatchers(WEBSOCKET_APPSTART_URL)
+        .permitAll()
+        .antMatchers(CACHDATA_BASE_URL)
         .permitAll()
         .antMatchers(LOGIN_URL)
         .permitAll()

@@ -60,10 +60,12 @@ public class CachDataController {
   @IflowGetRequestMapping(value = IflowRestPaths.GuiModule.CACHDATA_CAL_USER_DATARESET_BY_COMPANYIDENTITY)
   @ResponseBody
   public void resetUserData(@PathVariable(name = "companyidentity") final String companyidentity,
-      @PathVariable(name = "email") final String userid)
+      @PathVariable(name = "email") final String userid, @RequestHeader(
+        TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY
+      ) final String headerTokenId)
       throws GuiCustomizedException, URISyntaxException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    this.companyCachDataManager.resetUserData(companyidentity, userid);
+    this.companyCachDataManager.resetUserData(companyidentity, userid, headerTokenId, true);
 
   }
 
@@ -71,10 +73,12 @@ public class CachDataController {
   @IflowGetRequestMapping(value = IflowRestPaths.GuiModule.CACHDATA_CAL_WORKFLOW_DATARESET_BY_WORKFLOWIDENTITY)
   @ResponseBody
   public void resetWorkflowrData(@PathVariable(name = "companyidentity") final String companyidentity,
-      @PathVariable(name = "identity") final String workflowidentity, final HttpServletRequest request)
+      @PathVariable(name = "identity") final String workflowidentity, final HttpServletRequest request, @RequestHeader(
+        TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY
+      ) final String headerTokenId)
       throws GuiCustomizedException, URISyntaxException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    this.companyCachDataManager.resetWorkflowStepData(companyidentity, workflowidentity);
+    this.companyCachDataManager.resetWorkflowStepData(companyidentity, workflowidentity, headerTokenId);
 
   }
 
@@ -88,7 +92,7 @@ public class CachDataController {
       ) final String headerTokenId)
       throws GuiCustomizedException, URISyntaxException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    this.companyCachDataManager.resetUserListData(companyidentity, userIdListEdo.getIdentityList());
+    this.companyCachDataManager.resetUserListData(companyidentity, userIdListEdo.getIdentityList(), headerTokenId);
 
   }
 

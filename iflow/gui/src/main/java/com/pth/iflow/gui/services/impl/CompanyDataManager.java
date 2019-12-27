@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
@@ -15,24 +16,22 @@ import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.WorkflowMessage;
 import com.pth.iflow.gui.models.cach.CompanyCachData;
 import com.pth.iflow.gui.models.cach.UserCachData;
-import com.pth.iflow.gui.models.ui.SessionUserInfo;
 import com.pth.iflow.gui.services.ICompanyCachDataManager;
 import com.pth.iflow.gui.services.IWorkflowMessageAccess;
 
 @Service
 public class CompanyDataManager implements ICompanyCachDataManager {
 
+  @Autowired
+  SimpMessagingTemplate simpMessagingTemplate;
+
   private final IWorkflowMessageAccess workflowMessageService;
 
   private final Map<String, CompanyCachData> companiesCachData = new HashMap<>();
 
-  private final SessionUserInfo sessionUserInfo;
-
-  public CompanyDataManager(@Autowired final IWorkflowMessageAccess workflowMessageService,
-      @Autowired final SessionUserInfo sessionUserInfo) {
+  public CompanyDataManager(@Autowired final IWorkflowMessageAccess workflowMessageService) {
 
     this.workflowMessageService = workflowMessageService;
-    this.sessionUserInfo = sessionUserInfo;
   }
 
   public Map<String, CompanyCachData> getCompaniesCachData() {
@@ -59,7 +58,7 @@ public class CompanyDataManager implements ICompanyCachDataManager {
   public void setWorkflowWorkflowMessages(final String companyId, final String workflowId,
       final List<WorkflowMessage> workflowMessageList) {
 
-    this.getCompanyCachData(companyId, true).setWorkflowWorkflowMessages(workflowId, workflowMessageList);
+    this.getCompanyCachData(companyId, true).setWorkflowWorkflowMessages(workflowId, workflowMessageList, this);
 
   }
 
@@ -70,14 +69,20 @@ public class CompanyDataManager implements ICompanyCachDataManager {
   }
 
   @Override
-  public void resetUserData(final String companyId, final String userId)
+  public void resetUserData(final String companyId, final String userIdentity, final String token, final boolean fromController)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     final List<
-        WorkflowMessage> messageList = this.workflowMessageService.getWorkflowMessageListByUser(userId, this.sessionUserInfo.getToken());
+        WorkflowMessage> messageList = this.workflowMessageService
+            .getWorkflowMessageListByUser(userIdentity, token);
 
-    this.removeUserWorkflowMessages(companyId, userId);
-    this.setUserWorkflowMessages(companyId, userId, messageList);
+    this.removeUserWorkflowMessages(companyId, userIdentity);
+    this.setUserWorkflowMessages(companyId, userIdentity, messageList);
+
+    if (fromController) {
+      this.sendResetMessageToSocket(userIdentity);
+    }
+
   }
 
   private void removeUserWorkflowMessages(final String companyId, final String userId) {
@@ -89,26 +94,46 @@ public class CompanyDataManager implements ICompanyCachDataManager {
   }
 
   @Override
-  public void resetWorkflowStepData(final String compnayId, final String workflowId)
+  public void resetWorkflowStepData(final String compnayId, final String workflowId, final String token)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     final List<WorkflowMessage> messageList = this.workflowMessageService
-        .getWorkflowMessageListByWorkflow(workflowId, this.sessionUserInfo.getToken());
+        .getWorkflowMessageListByWorkflow(workflowId, token);
 
     this.setWorkflowWorkflowMessages(compnayId, workflowId, messageList);
 
   }
 
   @Override
-  public void resetUserListData(final String compnayId, final Collection<String> userIdList)
+  public void resetUserListData(final String compnayId, final Collection<String> userIdList, final String token)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    for (final String userId : userIdList) {
+    for (final String userIdentity : userIdList) {
       final List<
-          WorkflowMessage> messageList = this.workflowMessageService.getWorkflowMessageListByUser(userId, this.sessionUserInfo.getToken());
+          WorkflowMessage> messageList = this.workflowMessageService.getWorkflowMessageListByUser(userIdentity, token);
 
-      this.setUserWorkflowMessages(compnayId, userId, messageList);
+      this.setUserWorkflowMessages(compnayId, userIdentity, messageList);
+      this.sendResetMessageToSocket(userIdentity);
     }
+  }
+
+  private CompanyCachData getCompanyCachData(final String companyId, final boolean initialCompanyCachData) {
+
+    if (this.companiesCachData.containsKey(companyId) == false && initialCompanyCachData) {
+      this.initialCompanyCachData(companyId);
+    }
+    if (this.companiesCachData.containsKey(companyId)) {
+      return this.companiesCachData.get(companyId);
+    }
+    return null;
+
+  }
+
+  private UserCachData getUserCachData(final String companyId, final String userId) {
+
+    final CompanyCachData companyCachData = this.getCompanyCachData(companyId, true);
+
+    return companyCachData.getUserCachData(userId, true);
   }
 
   private boolean hasCompanyCachData(final String companyId) {
@@ -129,23 +154,14 @@ public class CompanyDataManager implements ICompanyCachDataManager {
     this.companiesCachData.put(companyCachData.getCompanyId(), companyCachData);
   }
 
-  private CompanyCachData getCompanyCachData(final String companyId, final boolean initialCompanyCachData) {
+  @Override
+  public void sendResetMessageToSocket(final String userIdentity) {
 
-    if (this.companiesCachData.containsKey(companyId) == false && initialCompanyCachData) {
-      this.initialCompanyCachData(companyId);
-    }
-    if (this.companiesCachData.containsKey(companyId)) {
-      return this.companiesCachData.get(companyId);
-    }
-    return null;
+    final Map<String, Object> map = new HashMap<>();
+    map.put("command", "message-reload");
+    map.put("status", "done");
 
-  }
-
-  private UserCachData getUserCachData(final String companyId, final String userId) {
-
-    final CompanyCachData companyCachData = this.getCompanyCachData(companyId, true);
-
-    return companyCachData.getUserCachData(userId, true);
+    this.simpMessagingTemplate.convertAndSendToUser(userIdentity, "/socket/messages", map);
   }
 
 }

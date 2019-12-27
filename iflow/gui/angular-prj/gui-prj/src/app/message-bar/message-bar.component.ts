@@ -66,16 +66,18 @@ export class MessageBarComponent implements OnInit, OnDestroy {
 	@Input('isLogged')
 	set isLogged(value: boolean) {
 	    
-		this._isLogged = value;
-		
-		if(this._isLogged === true){			
-			this.subscribe();
-			this.readMessageList(true);
-	    }
-		else{
-			this.unsubscribe();
+		if(this._isLogged !== value){
+			if(value === true){			
+				this.subscribe();
+		    }
+			else{
+				this.unsubscribe();
+				
+			}			
 		}
-		
+
+		this._isLogged = value;
+
 	}
 	
 	
@@ -96,7 +98,7 @@ export class MessageBarComponent implements OnInit, OnDestroy {
 		
 		if(this._isLogged === true){
 			this.subscribe();
-			this.readMessageList(true);
+			
 	    }
 	}
 	
@@ -110,8 +112,9 @@ export class MessageBarComponent implements OnInit, OnDestroy {
 	}
 	
 	private readMessageList(reset: boolean){
-		
-		clearTimeout(this.messageReloadTimeoutId);
+
+		//clearTimeout(this.messageReloadTimeoutId);
+		console.log("Socket Request Read message list");
 		if(this._isLogged === true){
 			
 			this.isReloadingMessages = true;
@@ -163,7 +166,7 @@ export class MessageBarComponent implements OnInit, OnDestroy {
 		this.messageService.assignMe(this.viewWorkflowModel.identity).subscribe(
 		        val => {
 		        	console.log("Workflow assigned to me");
-		        	this.reloadMessages(true);
+		        	//this.readMessageList(true);
 		            
 		        },
 		        response => {
@@ -204,6 +207,8 @@ export class MessageBarComponent implements OnInit, OnDestroy {
 		
 	    this.subscription = this.socketMessages.subscribe(this.receiveMessage);
 
+	    this.readMessageList(true);
+	    
 	    this.setConnected(true);
 		
 	}
@@ -216,7 +221,7 @@ export class MessageBarComponent implements OnInit, OnDestroy {
 		var parsedMessage = JSON.parse(message.body);
 		console.log("Parsed Message: " , parsedMessage);
 		
-		if(parsedMessage.action && parsedMessage.action === "message-reload"){
+		if(parsedMessage.command && parsedMessage.command === "message-reload"){
 			this.readMessageList(false);			
 		}
 	}	
@@ -233,6 +238,8 @@ export class MessageBarComponent implements OnInit, OnDestroy {
 	    this.subscription.unsubscribe();
 	    this.subscription = null;
 	    this.messages = null;
+	    
+	    this.messages = [];
 
 	    this.setConnected(false);
 	}

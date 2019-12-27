@@ -24,14 +24,15 @@ import com.pth.iflow.gui.services.IWorkflowMessageHanlder;
 public class GuiLogedControllerBase {
 
   @Autowired
-  private SessionUserInfo         sessionUserInfo;
+  private SessionUserInfo sessionUserInfo;
 
   @Autowired
   private IWorkflowMessageHanlder workflowMessageHanlder;
 
   protected String getCurrentRelativeUrl() {
+
     ServletUriComponentsBuilder builder = ServletUriComponentsBuilder.fromCurrentContextPath();
-    final String                root    = builder.build().toUriString();
+    final String root = builder.build().toUriString();
     builder = ServletUriComponentsBuilder.fromCurrentRequestUri();
     String path = builder.build().toUriString();
     path = path.replace(root, "");
@@ -77,6 +78,7 @@ public class GuiLogedControllerBase {
   }
 
   protected WorkflowType getWorkflowTypeByIdentity(final String workflowTypIdentity) {
+
     try {
       return this.sessionUserInfo.getWorkflowTypeByIdentity(workflowTypIdentity);
     }
@@ -97,22 +99,26 @@ public class GuiLogedControllerBase {
   }
 
   public IWorkflowMessageHanlder getWorkflowMessageHanlder() {
+
     return this.workflowMessageHanlder;
   }
 
   public List<WorkflowMessage> readUserMessages()
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+
     return this.workflowMessageHanlder.readUserMessages();
   }
 
   public void callUserMessageReset() throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
-    this.workflowMessageHanlder.callUserMessageReset();
+
+    this.workflowMessageHanlder.callUserMessageReset(false);
   }
 
   protected String getWorkflowBaseUrl(final String workflowTypeIdentity) throws IFlowMessageConversionFailureException {
+
     final WorkflowType type = this.getWorkflowTypeByIdentity(workflowTypeIdentity);
 
-    String             url  = "";
+    String url = "";
     if (type.getTypeEnum() == EWorkflowType.INVOICE_WORKFLOW_TYPE) {
       url = GuiModule.INVOICEWORKFLOW_PAGE_BASE;
     }

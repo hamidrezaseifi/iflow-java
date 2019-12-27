@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.pth.iflow.gui.models.WorkflowMessage;
+import com.pth.iflow.gui.services.ICompanyCachDataManager;
 
 public class CompanyCachData {
 
@@ -47,14 +48,14 @@ public class CompanyCachData {
 
     if (userCachDataList != null) {
 
-      this.userCachList.putAll(userCachDataList.stream().collect(Collectors.toMap(ud -> ud.getUserId(), ud -> ud)));
+      this.userCachList.putAll(userCachDataList.stream().collect(Collectors.toMap(ud -> ud.getUserIdentity(), ud -> ud)));
 
     }
   }
 
   public void addUserCachData(final UserCachData userCachData) {
 
-    this.userCachList.put(userCachData.getUserId(), userCachData);
+    this.userCachList.put(userCachData.getUserIdentity(), userCachData);
   }
 
   public UserCachData getUserCachData(final String userId, final boolean initialUserCachData) {
@@ -93,13 +94,15 @@ public class CompanyCachData {
     }
   }
 
-  public void setWorkflowWorkflowMessages(final String workflowId, final List<WorkflowMessage> workflowMessageList) {
+  public void setWorkflowWorkflowMessages(final String workflowId, final List<WorkflowMessage> workflowMessageList,
+      final ICompanyCachDataManager companyCachDataManager) {
 
     for (final UserCachData userCachData : this.userCachList.values()) {
       if (userCachData.hasWorkflowCachData(workflowId)) {
 
         final WorkflowCachData workflowCachData = userCachData.getWorkflowCachData(workflowId, false);
         workflowCachData.setWorkflowMessages(workflowMessageList);
+        companyCachDataManager.sendResetMessageToSocket(userCachData.getUserIdentity());
       }
     }
 

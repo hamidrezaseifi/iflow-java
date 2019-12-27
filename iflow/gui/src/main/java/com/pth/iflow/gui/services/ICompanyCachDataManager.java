@@ -14,12 +14,14 @@ public interface ICompanyCachDataManager {
 
   public List<WorkflowMessage> getUserWorkflowMessages(String compnayId, String userId);
 
-  public void resetUserData(String compnayId, String userId)
+  public void resetUserData(String compnayId, String userId, String token, boolean fromController)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  public void resetWorkflowStepData(String compnayId, String workflowId)
+  public void resetWorkflowStepData(String compnayId, String workflowId, String token)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  public void resetUserListData(String compnayId, Collection<String> userIdList)
+  public void resetUserListData(String compnayId, Collection<String> userIdList, String token)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
+
+  void sendResetMessageToSocket(final String userIdentity);
 }

@@ -39,9 +39,11 @@ public class WorkflowMessageHanlder implements IWorkflowMessageHanlder {
   }
 
   @Override
-  public void callUserMessageReset() throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+  public void callUserMessageReset(final boolean fromController)
+      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    this.companyCachDataManager.resetUserData(this.getCompanyIdentity(), this.getUserIdentity());
+    this.companyCachDataManager
+        .resetUserData(this.getCompanyIdentity(), this.getUserIdentity(), this.sessionUserInfo.getToken(), fromController);
 
   }
 

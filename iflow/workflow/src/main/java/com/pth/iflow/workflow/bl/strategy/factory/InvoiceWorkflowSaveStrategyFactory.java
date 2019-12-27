@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.IDepartmentDataService;
-import com.pth.iflow.workflow.bl.IProfileCachDataDataService;
+import com.pth.iflow.workflow.bl.IGuiCachDataDataService;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.IWorkflowMessageDataService;
 import com.pth.iflow.workflow.bl.IWorkflowPrepare;
@@ -41,14 +41,14 @@ public class InvoiceWorkflowSaveStrategyFactory implements IWorkflowSaveStrategy
 
   private final IWorkflowMessageDataService workflowMessageDataService;
 
-  private final IProfileCachDataDataService cachDataDataService;
+  private final IGuiCachDataDataService cachDataDataService;
 
   private final IWorkflowPrepare<InvoiceWorkflow> invoiceWorkflowPrepare;
 
   public InvoiceWorkflowSaveStrategyFactory(@Autowired final IWorkflowDataService<InvoiceWorkflow> workflowDataService,
                                             @Autowired final IDepartmentDataService departmentDataService,
                                             @Autowired final IWorkflowMessageDataService workflowMessageDataService,
-                                            @Autowired final IProfileCachDataDataService cachDataDataService,
+                                            @Autowired final IGuiCachDataDataService cachDataDataService,
                                             @Autowired final IWorkflowPrepare<InvoiceWorkflow> invoiceWorkflowPrepare) {
     this.workflowDataService = workflowDataService;
     this.departmentDataService = departmentDataService;

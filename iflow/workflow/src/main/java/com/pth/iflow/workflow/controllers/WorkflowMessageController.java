@@ -51,11 +51,11 @@ public class WorkflowMessageController {
 
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(path = IflowRestPaths.WorkflowModule.WORKFLOWMESSAGE_READ_BY_WORKFLOWIDENTITY)
-  public ResponseEntity<WorkflowMessageListEdo> readWorkfloWorkflowMessageList(@PathVariable(required = true) final String identiy,
+  public ResponseEntity<WorkflowMessageListEdo> readWorkfloWorkflowMessageList(@PathVariable(required = true) final String identity,
       final HttpServletRequest request,
       @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws Exception {
 
-    final List<WorkflowMessage> messageList = this.workflowMessageDataService.getListForWorkflow(identiy, headerTokenId);
+    final List<WorkflowMessage> messageList = this.workflowMessageDataService.getListForWorkflow(identity, headerTokenId);
 
     return ControllerHelper
         .createResponseEntity(request,

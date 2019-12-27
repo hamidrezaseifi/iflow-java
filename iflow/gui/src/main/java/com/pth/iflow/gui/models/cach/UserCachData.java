@@ -11,11 +11,11 @@ import com.pth.iflow.gui.models.WorkflowMessage;
 public class UserCachData {
 
   private final Map<String, WorkflowCachData> workflowDataList = new HashMap<>();
-  private String userId;
+  private String userIdentity;
 
   public UserCachData(final String userId) {
 
-    this.userId = userId;
+    this.userIdentity = userId;
   }
 
   public Map<String, WorkflowCachData> getWorkflowDatas() {
@@ -71,19 +71,19 @@ public class UserCachData {
     return this.workflowDataList.containsKey(workflowId);
   }
 
-  public String getUserId() {
+  public String getUserIdentity() {
 
-    return this.userId;
+    return this.userIdentity;
   }
 
-  public void setUserId(final String userId) {
+  public void setUserIdentity(final String userId) {
 
-    this.userId = userId;
+    this.userIdentity = userId;
   }
 
-  public boolean isUserId(final String userId) {
+  public boolean isUserIdentity(final String userId) {
 
-    return this.userId == userId;
+    return this.userIdentity == userId;
   }
 
   private void removeAllExpired() {

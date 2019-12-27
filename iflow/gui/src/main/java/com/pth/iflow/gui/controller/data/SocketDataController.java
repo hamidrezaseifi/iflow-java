@@ -48,7 +48,7 @@ public class SocketDataController extends GuiSocketControllerBase {
     if (this.isPrincipalValidAndLoggedIn(principal)) {
       // final GuiAuthenticationToken guiAuth = (GuiAuthenticationToken) principal;
 
-      map.put("action", "message-reload");
+      map.put("command", "message-reload");
       map.put("status", "done");
     }
 
