@@ -70,6 +70,7 @@ export class MessageBarComponent implements OnInit, OnDestroy {
 		
 		if(this._isLogged === true){			
 			this.subscribe();
+			this.readMessageList(true);
 	    }
 		else{
 			this.unsubscribe();
@@ -95,6 +96,7 @@ export class MessageBarComponent implements OnInit, OnDestroy {
 		
 		if(this._isLogged === true){
 			this.subscribe();
+			this.readMessageList(true);
 	    }
 	}
 	
@@ -107,20 +109,9 @@ export class MessageBarComponent implements OnInit, OnDestroy {
 		document.getElementById("message-panel-container").style.height = this.messagePanelHeight + "px";
 	}
 	
-	reloadMessages(reset: boolean){
-		
-		this.requesting = true;
-
-		var request = {'reset': '1', };
-		
-		this._stompService.publish('/socketapp/resetmessage', JSON.stringify(request));
-				
-	}
-	
-	private requestMessageList1(reset: boolean){
+	private readMessageList(reset: boolean){
 		
 		clearTimeout(this.messageReloadTimeoutId);
-		//console.log("start reloadMessages.  _isLogged:" + (this._isLogged === true));
 		if(this._isLogged === true){
 			
 			this.isReloadingMessages = true;
@@ -207,15 +198,17 @@ export class MessageBarComponent implements OnInit, OnDestroy {
 		      return;
 		}
 
-		this.socketMessages = this._stompService.subscribe('/socket/messages');
+		this.socketMessages = this._stompService.subscribe('/user/socket/messages');
 
+		console.log("Subscribe Message: " , this.socketMessages);
+		
 	    this.subscription = this.socketMessages.subscribe(this.receiveMessage);
 
 	    this.setConnected(true);
 		
 	}
 	
-	private receiveMessage = (message: Message) => {
+	public receiveMessage = (message: Message) => {
 
 		this.requesting = false;
 		
@@ -223,18 +216,20 @@ export class MessageBarComponent implements OnInit, OnDestroy {
 		var parsedMessage = JSON.parse(message.body);
 		console.log("Parsed Message: " , parsedMessage);
 		
-		if(parsedMessage.messages){
-			this.messages = <WorkflowMessage[]>parsedMessage.messages;
+		if(parsedMessage.action && parsedMessage.action === "message-reload"){
+			this.readMessageList(false);			
 		}
 	}	
 
+	reloadMessages(){
+		this.readMessageList(true);
+	}
+	
 	private unsubscribe() {
 	    if (!this.subscribed) {
 	      return;
 	    }
 
-	    // This will internally unsubscribe from Stomp Broker
-	    // There are two subscriptions - one created explicitly, the other created in the template by use of 'async'
 	    this.subscription.unsubscribe();
 	    this.subscription = null;
 	    this.messages = null;

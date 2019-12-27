@@ -12,8 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -166,20 +164,6 @@ public class GeneralDataController extends GuiLogedControllerBase {
     this.simpMessagingTemplate.convertAndSend("/socket/test", map);
 
     return data;
-  }
-
-  @MessageMapping("/start")
-  @SendTo("/socket/test")
-  public Map<String, Object> greeting(final Map<String, Object> message) throws Exception {
-
-    final Object sentMessage = message.keySet().contains("sentMessage") ? message.get("sentMessage") : "not found!";
-
-    final Map<String, Object> map = new HashMap<>();
-    map.put("msg", sentMessage);
-    map.put("status", "received");
-
-    Thread.sleep(100);
-    return map;
   }
 
   private boolean isSessionValidAndLoggedIn() {

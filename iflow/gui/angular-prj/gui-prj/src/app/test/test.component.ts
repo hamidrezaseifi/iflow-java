@@ -35,9 +35,6 @@ export class TestComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnInit() {
-		//this.state = this._stompService.state.map((state: number) => StompState[state]);
-		//this.state = this._stompService.state.asObservable();
-
 		this.setConnected(false);
 		
 	}

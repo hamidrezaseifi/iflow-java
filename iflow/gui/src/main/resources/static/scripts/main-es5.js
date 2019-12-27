@@ -149,7 +149,7 @@ var __spread = (this && this.__spread) || function () {
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("<div mwlResizable [enableGhostResize]=\"true\" [resizeEdges]=\"{ bottom: false, right: false, top: true, left: false }\" (resizeEnd)=\"onResizeEnd($event)\" class=\"message-panel-container\" id=\"message-panel-container\" *ngIf=\"isAppLogged\">\n\t<div class=\"message-panel-toolbar\">\n\t\t<span class=\"title\">Meldungen {{status}}</span>\n\t\t<button class=\"toolbar-button\" *ngIf=\"messagePanelShowed\" (click)=\"closeMessages();\"><i class=\"material-icons\">keyboard_arrow_down</i></button>\n\t\t<button class=\"toolbar-button\" *ngIf=\"messagePanelShowed == false\" (click)=\"showMessages();\"><i class=\"material-icons\">keyboard_arrow_up</i></button>\n\t\t<button class=\"toolbar-button\" *ngIf=\"messagePanelShowed\" (click)=\"reloadMessages(true);\"><i class=\"material-icons\">refresh</i></button>\n\t\t<img class=\"toolbar-image\" *ngIf=\"isReloadingMessages\" src=\"assets/images/loading200.gif\" />\n\t\n\t</div>\n\t<div class=\"message-panel-items-container\">\n\t\t<div class=\"message-panel-item\" *ngFor=\"let message of messages;\">\n\t\t\t<a href=\"javascript:void(0);\" (click)=\"showWorkflowView(message.workflowIdentity)\">\n\t\t\t\t<div>{{message.message}} ({{message.workflow.workflowType.title}}) ({{message.createdAtString}}) ({{message.remainingDays}}) ({{message.status}})</div>\n\t\t\t</a>\n\t\t</div>\n\t</div>\n\t\t\t\t\t\n</div>\n\n<div class=\"modal fade show\" tabindex=\"-1\" *ngIf=\"viewWorkflow\" id=\"viewworkflowedialog\" role=\"dialog\">\n\n\t<div class=\"modal-dialog modal-dialog-centered\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<div class=\"modal-header\">\n\t\t\t\t<h5 class=\"modal-title dialog-title\" id=\"errorMessagedialogTitle\">{{ 'common.view-workflow' | translate }}</h5>\n\t\t\t\t<button class=\"dialog-toolbar-button close\" (click)=\"hideViewModal()\" aria-label=\"Close\">\n\t\t\t\t\t<i class=\"material-icons\">close</i>\n\t\t\t\t</button>\n\t\t\t</div>\n\t\t\t\n\t\t      <div class=\"modal-body\">\n\t\t      \n\t\t\t\t<app-workflow-inlineview [workflow]=\"viewWorkflowModel\"></app-workflow-inlineview>\n\t   \t\t\t\t\n\t\t      </div>\n\t      <div class=\"modal-footer\">\n\t\t\t<button type=\"button\" class=\"btn btn-secondary\" (click)=\"hideViewModal()\"><i class=\"material-icons\">close</i></button>\n\n\t\t\t<button type=\"button\" class=\"btn btn-success\"  *ngIf=\"viewWorkflowModel.notAssigned\" (click)=\"assignWorkflowMe()\"><i class=\"material-icons\">assignment_ind</i></button>\n\n\t        <button type=\"button\" class=\"btn btn-primary\" *ngIf=\"viewWorkflowModel.meAssigned\" (click)=\"editWorkflow()\" ><i class=\"material-icons\">pageview</i></button>\n\t      </div>\n\t    </div>\n\t  </div>\t\t    \n\n\n\t\t\t\n</div>\n\n");
+            /* harmony default export */ __webpack_exports__["default"] = ("<div mwlResizable [enableGhostResize]=\"true\" [resizeEdges]=\"{ bottom: false, right: false, top: true, left: false }\" (resizeEnd)=\"onResizeEnd($event)\" class=\"message-panel-container\" id=\"message-panel-container\" *ngIf=\"isAppLogged\">\n\t<div class=\"message-panel-toolbar\">\n\t\t<span class=\"title\">Meldungen</span> &nbsp; &nbsp; <span [ngStyle]=\"{'color':subscribed ? 'green' : 'red' }\">{{status}}</span>\n\t\t<button class=\"toolbar-button\" *ngIf=\"messagePanelShowed\" (click)=\"closeMessages();\"><i class=\"material-icons\">keyboard_arrow_down</i></button>\n\t\t<button class=\"toolbar-button\" *ngIf=\"messagePanelShowed == false\" (click)=\"showMessages();\"><i class=\"material-icons\">keyboard_arrow_up</i></button>\n\t\t<button class=\"toolbar-button\" *ngIf=\"messagePanelShowed\" (click)=\"reloadMessages(true);\"><i class=\"material-icons\">refresh</i></button>\n\t\t<img class=\"toolbar-image\" *ngIf=\"isReloadingMessages\" src=\"assets/images/loading200.gif\" />\n\t\n\t</div>\n\t<div class=\"message-panel-items-container\">\n\t\t<div class=\"message-panel-item\" *ngFor=\"let message of messages;\">\n\t\t\t<a href=\"javascript:void(0);\" (click)=\"showWorkflowView(message.workflowIdentity)\">\n\t\t\t\t<div>{{message.message}} ({{message.workflow.workflowType.title}}) ({{message.createdAtString}}) ({{message.remainingDays}}) ({{message.status}})</div>\n\t\t\t</a>\n\t\t</div>\n\t</div>\n\t\t\t\t\t\n</div>\n\n<div class=\"modal fade show\" tabindex=\"-1\" *ngIf=\"viewWorkflow\" id=\"viewworkflowedialog\" role=\"dialog\">\n\n\t<div class=\"modal-dialog modal-dialog-centered\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<div class=\"modal-header\">\n\t\t\t\t<h5 class=\"modal-title dialog-title\" id=\"errorMessagedialogTitle\">{{ 'common.view-workflow' | translate }}</h5>\n\t\t\t\t<button class=\"dialog-toolbar-button close\" (click)=\"hideViewModal()\" aria-label=\"Close\">\n\t\t\t\t\t<i class=\"material-icons\">close</i>\n\t\t\t\t</button>\n\t\t\t</div>\n\t\t\t\n\t\t      <div class=\"modal-body\">\n\t\t      \n\t\t\t\t<app-workflow-inlineview [workflow]=\"viewWorkflowModel\"></app-workflow-inlineview>\n\t   \t\t\t\t\n\t\t      </div>\n\t      <div class=\"modal-footer\">\n\t\t\t<button type=\"button\" class=\"btn btn-secondary\" (click)=\"hideViewModal()\"><i class=\"material-icons\">close</i></button>\n\n\t\t\t<button type=\"button\" class=\"btn btn-success\"  *ngIf=\"viewWorkflowModel.notAssigned\" (click)=\"assignWorkflowMe()\"><i class=\"material-icons\">assignment_ind</i></button>\n\n\t        <button type=\"button\" class=\"btn btn-primary\" *ngIf=\"viewWorkflowModel.meAssigned\" (click)=\"editWorkflow()\" ><i class=\"material-icons\">pageview</i></button>\n\t      </div>\n\t    </div>\n\t  </div>\t\t    \n\n\n\t\t\t\n</div>\n\n");
             /***/ 
         }),
         /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/test/test.component.html": 
@@ -751,23 +751,14 @@ var __spread = (this && this.__spread) || function () {
                 return new sockjs_client__WEBPACK_IMPORTED_MODULE_12__('/iflow-guide-websocket');
             }
             var stompConfig = {
-                // Which server?
                 url: socketProvider,
-                // Headers
-                // Typical keys: login, passcode, host
                 headers: {
                     login: 'guest',
                     passcode: 'guest'
                 },
-                // How often to heartbeat?
-                // Interval in milliseconds, set to 0 to disable
                 heartbeat_in: 0,
                 heartbeat_out: 20000,
-                // Wait in milliseconds before attempting auto reconnect
-                // Set to 0 to disable
-                // Typical value 5000 (5 seconds)
                 reconnect_delay: 5000,
-                // Will log diagnostics on console
                 debug: true
             };
             var AppModule = /** @class */ (function () {
@@ -1839,8 +1830,8 @@ var __spread = (this && this.__spread) || function () {
                         console.log("Socket Message: ", message.body);
                         var parsedMessage = JSON.parse(message.body);
                         console.log("Parsed Message: ", parsedMessage);
-                        if (parsedMessage.messages) {
-                            _this.messages = parsedMessage.messages;
+                        if (parsedMessage.action && parsedMessage.action === "message-reload") {
+                            _this.readMessageList(false);
                         }
                     };
                 }
@@ -1865,6 +1856,7 @@ var __spread = (this && this.__spread) || function () {
                         this._isLogged = value;
                         if (this._isLogged === true) {
                             this.subscribe();
+                            this.readMessageList(true);
                         }
                         else {
                             this.unsubscribe();
@@ -1883,6 +1875,7 @@ var __spread = (this && this.__spread) || function () {
                 MessageBarComponent.prototype.ngOnInit = function () {
                     if (this._isLogged === true) {
                         this.subscribe();
+                        this.readMessageList(true);
                     }
                 };
                 MessageBarComponent.prototype.ngOnDestroy = function () {
@@ -1892,15 +1885,9 @@ var __spread = (this && this.__spread) || function () {
                     this.messagePanelHeight = event.rectangle.height;
                     document.getElementById("message-panel-container").style.height = this.messagePanelHeight + "px";
                 };
-                MessageBarComponent.prototype.reloadMessages = function (reset) {
-                    this.requesting = true;
-                    var request = { 'reset': '1', };
-                    this._stompService.publish('/socketapp/resetmessage', JSON.stringify(request));
-                };
-                MessageBarComponent.prototype.requestMessageList1 = function (reset) {
+                MessageBarComponent.prototype.readMessageList = function (reset) {
                     var _this = this;
                     clearTimeout(this.messageReloadTimeoutId);
-                    //console.log("start reloadMessages.  _isLogged:" + (this._isLogged === true));
                     if (this._isLogged === true) {
                         this.isReloadingMessages = true;
                         this.messageService.loadMessages(reset).subscribe(function (messageList) {
@@ -1956,16 +1943,20 @@ var __spread = (this && this.__spread) || function () {
                     if (this.subscribed) {
                         return;
                     }
-                    this.socketMessages = this._stompService.subscribe('/socket/messages');
+                    this.socketMessages = this._stompService.subscribe('/user/socket/messages');
+                    console.log("Subscribe Message: ", this.socketMessages);
                     this.subscription = this.socketMessages.subscribe(this.receiveMessage);
                     this.setConnected(true);
+                };
+                MessageBarComponent.prototype.reloadMessages = function (reset) {
+                    this.requesting = true;
+                    var request = { 'reset': '1', };
+                    this._stompService.publish('/socketapp/resetmessage', JSON.stringify(request));
                 };
                 MessageBarComponent.prototype.unsubscribe = function () {
                     if (!this.subscribed) {
                         return;
                     }
-                    // This will internally unsubscribe from Stomp Broker
-                    // There are two subscriptions - one created explicitly, the other created in the template by use of 'async'
                     this.subscription.unsubscribe();
                     this.subscription = null;
                     this.messages = null;
@@ -2886,8 +2877,6 @@ var __spread = (this && this.__spread) || function () {
                     };
                 }
                 TestComponent.prototype.ngOnInit = function () {
-                    //this.state = this._stompService.state.map((state: number) => StompState[state]);
-                    this.state = this._stompService.state.asObservable();
                     this.setConnected(false);
                 };
                 TestComponent.prototype.ngOnDestroy = function () {
