@@ -136,7 +136,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div mwlResizable [enableGhostResize]=\"true\" [resizeEdges]=\"{ bottom: false, right: false, top: true, left: false }\" (resizeEnd)=\"onResizeEnd($event)\" class=\"message-panel-container\" id=\"message-panel-container\" *ngIf=\"isAppLogged\">\n\t<div class=\"message-panel-toolbar\">\n\t\t<span class=\"title\">Meldungen</span> &nbsp; &nbsp; <span [ngStyle]=\"{'color':subscribed ? 'green' : 'red' }\">{{status}}</span>\n\t\t<button class=\"toolbar-button\" *ngIf=\"messagePanelShowed\" (click)=\"closeMessages();\"><i class=\"material-icons\">keyboard_arrow_down</i></button>\n\t\t<button class=\"toolbar-button\" *ngIf=\"messagePanelShowed == false\" (click)=\"showMessages();\"><i class=\"material-icons\">keyboard_arrow_up</i></button>\n\t\t<button class=\"toolbar-button\" *ngIf=\"messagePanelShowed\" (click)=\"reloadMessages(true);\"><i class=\"material-icons\">refresh</i></button>\n\t\t<img class=\"toolbar-image\" *ngIf=\"isReloadingMessages\" src=\"assets/images/loading200.gif\" />\n\t\n\t</div>\n\t<div class=\"message-panel-items-container\">\n\t\t<div class=\"message-panel-item\" *ngFor=\"let message of messages;\">\n\t\t\t<a href=\"javascript:void(0);\" (click)=\"showWorkflowView(message.workflowIdentity)\">\n\t\t\t\t<div>{{message.message}} ({{message.workflow.workflowType.title}}) ({{message.createdAtString}}) ({{message.remainingDays}}) ({{message.status}})</div>\n\t\t\t</a>\n\t\t</div>\n\t</div>\n\t\t\t\t\t\n</div>\n\n<div class=\"modal fade show\" tabindex=\"-1\" *ngIf=\"viewWorkflow\" id=\"viewworkflowedialog\" role=\"dialog\">\n\n\t<div class=\"modal-dialog modal-dialog-centered\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<div class=\"modal-header\">\n\t\t\t\t<h5 class=\"modal-title dialog-title\" id=\"errorMessagedialogTitle\">{{ 'common.view-workflow' | translate }}</h5>\n\t\t\t\t<button class=\"dialog-toolbar-button close\" (click)=\"hideViewModal()\" aria-label=\"Close\">\n\t\t\t\t\t<i class=\"material-icons\">close</i>\n\t\t\t\t</button>\n\t\t\t</div>\n\t\t\t\n\t\t      <div class=\"modal-body\">\n\t\t      \n\t\t\t\t<app-workflow-inlineview [workflow]=\"viewWorkflowModel\"></app-workflow-inlineview>\n\t   \t\t\t\t\n\t\t      </div>\n\t      <div class=\"modal-footer\">\n\t\t\t<button type=\"button\" class=\"btn btn-secondary\" (click)=\"hideViewModal()\"><i class=\"material-icons\">close</i></button>\n\n\t\t\t<button type=\"button\" class=\"btn btn-success\"  *ngIf=\"viewWorkflowModel.notAssigned\" (click)=\"assignWorkflowMe()\"><i class=\"material-icons\">assignment_ind</i></button>\n\n\t        <button type=\"button\" class=\"btn btn-primary\" *ngIf=\"viewWorkflowModel.meAssigned\" (click)=\"editWorkflow()\" ><i class=\"material-icons\">pageview</i></button>\n\t      </div>\n\t    </div>\n\t  </div>\t\t    \n\n\n\t\t\t\n</div>\n\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<div mwlResizable [enableGhostResize]=\"true\" [resizeEdges]=\"{ bottom: false, right: false, top: true, left: false }\" (resizeEnd)=\"onResizeEnd($event)\" class=\"message-panel-container\" id=\"message-panel-container\" *ngIf=\"isAppLogged\">\n\t<div class=\"message-panel-toolbar\">\n\t\t<span class=\"title\">Meldungen</span> &nbsp; &nbsp; <span [ngStyle]=\"{'color':subscribed ? 'green' : 'red' }\">{{status}}</span>\n\t\t<button class=\"toolbar-button\" *ngIf=\"messagePanelShowed\" (click)=\"closeMessages();\"><i class=\"material-icons\">keyboard_arrow_down</i></button>\n\t\t<button class=\"toolbar-button\" *ngIf=\"messagePanelShowed == false\" (click)=\"showMessages();\"><i class=\"material-icons\">keyboard_arrow_up</i></button>\n\t\t<button class=\"toolbar-button\" *ngIf=\"messagePanelShowed\" (click)=\"reloadMessages();\"><i class=\"material-icons\">refresh</i></button>\n\t\t<img class=\"toolbar-image\" *ngIf=\"isReloadingMessages\" src=\"assets/images/loading200.gif\" />\n\t\n\t</div>\n\t<div class=\"message-panel-items-container\">\n\t\t<div class=\"message-panel-item\" *ngFor=\"let message of messages;\">\n\t\t\t<a href=\"javascript:void(0);\" (click)=\"showWorkflowView(message.workflowIdentity)\">\n\t\t\t\t<div>{{message.message}} ({{message.workflow.workflowType.title}}) ({{message.createdAtString}}) ({{message.remainingDays}}) ({{message.status}})</div>\n\t\t\t</a>\n\t\t</div>\n\t</div>\n\t\t\t\t\t\n</div>\n\n<div class=\"modal fade show\" tabindex=\"-1\" *ngIf=\"viewWorkflow\" id=\"viewworkflowedialog\" role=\"dialog\">\n\n\t<div class=\"modal-dialog modal-dialog-centered\" role=\"document\">\n\t\t<div class=\"modal-content\">\n\t\t\t<div class=\"modal-header\">\n\t\t\t\t<h5 class=\"modal-title dialog-title\" id=\"errorMessagedialogTitle\">{{ 'common.view-workflow' | translate }}</h5>\n\t\t\t\t<button class=\"dialog-toolbar-button close\" (click)=\"hideViewModal()\" aria-label=\"Close\">\n\t\t\t\t\t<i class=\"material-icons\">close</i>\n\t\t\t\t</button>\n\t\t\t</div>\n\t\t\t\n\t\t      <div class=\"modal-body\">\n\t\t      \n\t\t\t\t<app-workflow-inlineview [workflow]=\"viewWorkflowModel\"></app-workflow-inlineview>\n\t   \t\t\t\t\n\t\t      </div>\n\t      <div class=\"modal-footer\">\n\t\t\t<button type=\"button\" class=\"btn btn-secondary\" (click)=\"hideViewModal()\"><i class=\"material-icons\">close</i></button>\n\n\t\t\t<button type=\"button\" class=\"btn btn-success\"  *ngIf=\"viewWorkflowModel.notAssigned\" (click)=\"assignWorkflowMe()\"><i class=\"material-icons\">assignment_ind</i></button>\n\n\t        <button type=\"button\" class=\"btn btn-primary\" *ngIf=\"viewWorkflowModel.meAssigned\" (click)=\"editWorkflow()\" ><i class=\"material-icons\">pageview</i></button>\n\t      </div>\n\t    </div>\n\t  </div>\t\t    \n\n\n\t\t\t\n</div>\n\n");
 
 /***/ }),
 
@@ -2014,7 +2014,7 @@ let MessageBarComponent = class MessageBarComponent {
             console.log("Socket Message: ", message.body);
             var parsedMessage = JSON.parse(message.body);
             console.log("Parsed Message: ", parsedMessage);
-            if (parsedMessage.action && parsedMessage.action === "message-reload") {
+            if (parsedMessage.command && parsedMessage.command === "message-reload") {
                 this.readMessageList(false);
             }
         };
@@ -2036,14 +2036,15 @@ let MessageBarComponent = class MessageBarComponent {
     }
     ;
     set isLogged(value) {
+        if (this._isLogged !== value) {
+            if (value === true) {
+                this.subscribe();
+            }
+            else {
+                this.unsubscribe();
+            }
+        }
         this._isLogged = value;
-        if (this._isLogged === true) {
-            this.subscribe();
-            this.readMessageList(true);
-        }
-        else {
-            this.unsubscribe();
-        }
     }
     get isAppLogged() {
         return this._isLogged;
@@ -2051,7 +2052,6 @@ let MessageBarComponent = class MessageBarComponent {
     ngOnInit() {
         if (this._isLogged === true) {
             this.subscribe();
-            this.readMessageList(true);
         }
     }
     ngOnDestroy() {
@@ -2062,7 +2062,8 @@ let MessageBarComponent = class MessageBarComponent {
         document.getElementById("message-panel-container").style.height = this.messagePanelHeight + "px";
     }
     readMessageList(reset) {
-        clearTimeout(this.messageReloadTimeoutId);
+        //clearTimeout(this.messageReloadTimeoutId);
+        console.log("Socket Request Read message list");
         if (this._isLogged === true) {
             this.isReloadingMessages = true;
             this.messageService.loadMessages(reset).subscribe((messageList) => {
@@ -2097,7 +2098,7 @@ let MessageBarComponent = class MessageBarComponent {
     assignWorkflowMe() {
         this.messageService.assignMe(this.viewWorkflowModel.identity).subscribe(val => {
             console.log("Workflow assigned to me");
-            this.reloadMessages(true);
+            //this.readMessageList(true);
         }, response => {
             console.log("Error in assigning workflow", response);
             this.errorService.showErrorResponse(response);
@@ -2120,12 +2121,11 @@ let MessageBarComponent = class MessageBarComponent {
         this.socketMessages = this._stompService.subscribe('/user/socket/messages');
         console.log("Subscribe Message: ", this.socketMessages);
         this.subscription = this.socketMessages.subscribe(this.receiveMessage);
+        this.readMessageList(true);
         this.setConnected(true);
     }
-    reloadMessages(reset) {
-        this.requesting = true;
-        var request = { 'reset': '1', };
-        this._stompService.publish('/socketapp/resetmessage', JSON.stringify(request));
+    reloadMessages() {
+        this.readMessageList(true);
     }
     unsubscribe() {
         if (!this.subscribed) {
@@ -2134,6 +2134,7 @@ let MessageBarComponent = class MessageBarComponent {
         this.subscription.unsubscribe();
         this.subscription = null;
         this.messages = null;
+        this.messages = [];
         this.setConnected(false);
     }
 };
