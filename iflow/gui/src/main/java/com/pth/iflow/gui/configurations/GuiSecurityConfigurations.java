@@ -19,8 +19,8 @@ import org.springframework.security.web.authentication.WebAuthenticationDetails;
 
 import com.pth.iflow.gui.authentication.GuiAuthenticationDetails;
 import com.pth.iflow.gui.authentication.GuiAuthenticationFailureHandler;
+import com.pth.iflow.gui.authentication.GuiAuthenticationLogoutHandler;
 import com.pth.iflow.gui.authentication.GuiAuthenticationSuccessHandler;
-import com.pth.iflow.gui.authentication.GuiLogoutSuccessHandler;
 import com.pth.iflow.gui.authentication.provider.GuiCustomAuthenticationProvider;
 
 @Configuration
@@ -39,7 +39,7 @@ public class GuiSecurityConfigurations extends WebSecurityConfigurerAdapter impl
   public static final String ROOT_URL = "/";
   public static final String GENERAL_DATA_URL = "/general/data/generaldatat";
   public static final String GENERAL_DATA_ALL_URL = "/general/data/**";
-  public static final String WEBSOCKET_GUID_URL = "/iflow-guide-websocket";
+  public static final String WEBSOCKET_GUID_URL = "/iflow-guide-websocket/**";
   public static final String WEBSOCKET_APPSTART_URL = "/socketapp/**";
   public static final String WEBSOCKET_BROKER_URL = "/socket/**";
   public static final String COMPANYINDICATOR_COOKIE_KEY = "comp_ind";
@@ -51,7 +51,7 @@ public class GuiSecurityConfigurations extends WebSecurityConfigurerAdapter impl
   private GuiAuthenticationSuccessHandler uiAuthenticationSuccessHandler;
 
   @Autowired
-  private GuiLogoutSuccessHandler guiLogoutSuccessHandler;
+  private GuiAuthenticationLogoutHandler guiLogoutSuccessHandler;
 
   @Autowired
   private GuiAuthenticationFailureHandler authenticationFailureHandler;
@@ -90,12 +90,12 @@ public class GuiSecurityConfigurations extends WebSecurityConfigurerAdapter impl
         .permitAll()
         .antMatchers(GENERAL_DATA_ALL_URL)
         .permitAll()
-        .antMatchers(WEBSOCKET_GUID_URL)
-        .permitAll()
-        .antMatchers(WEBSOCKET_BROKER_URL)
-        .permitAll()
-        .antMatchers(WEBSOCKET_APPSTART_URL)
-        .permitAll()
+        // .antMatchers(WEBSOCKET_GUID_URL)
+        // .permitAll()
+        // .antMatchers(WEBSOCKET_BROKER_URL)
+        // .permitAll()
+        // .antMatchers(WEBSOCKET_APPSTART_URL)
+        // .permitAll()
         .antMatchers(LOGIN_URL)
         .permitAll()
         .antMatchers("/admin/**")

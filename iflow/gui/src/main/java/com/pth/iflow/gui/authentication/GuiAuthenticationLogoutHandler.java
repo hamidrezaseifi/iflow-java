@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Component
-public class GuiLogoutSuccessHandler implements LogoutSuccessHandler {
+public class GuiAuthenticationLogoutHandler implements LogoutSuccessHandler {
 
   private final ObjectMapper objectMapper = new ObjectMapper();
 
