@@ -211,6 +211,7 @@
 
 		<div class="modal fade" [ngClass]="{'show' : showUploading}" tabindex="-1" *ngIf="showUploading" role="dialog">
 			<div class="modal-dialog uploading-dialog " role="document">
+				<div class="loading-upload-icon"></div>
 				<div class="progress uploading-progress">
 					<div class="progress-bar" role="progressbar" [style.width]="intervalValue+'%'" [attr.aria-valuenow]="intervalValue" aria-valuemin="0" aria-valuemax="100"></div>
 				  	<div class="uploading-progress-label"><span>{{ uplaodingMessage }} {{intervalValue}}%</span></div>	

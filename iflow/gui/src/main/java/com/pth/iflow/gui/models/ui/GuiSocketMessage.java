@@ -4,6 +4,7 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.pth.iflow.common.response.IFlowErrorRestResponse;
 import com.pth.iflow.gui.models.ui.enums.ESocketCommands;
 
 public class GuiSocketMessage extends HashMap<String, String> {
@@ -99,10 +100,48 @@ public class GuiSocketMessage extends HashMap<String, String> {
     this.put(ESocketCommands.COMMAND.getValue(), command);
   }
 
+  public String getErrorMessage() {
+
+    return this.get(ESocketCommands.ERROR_MESSAGE.getValue());
+  }
+
+  public void setErrorMessage(final String error) {
+
+    this.put(ESocketCommands.ERROR_MESSAGE.getValue(), error);
+  }
+
+  public String getErrorDetail() {
+
+    return this.get(ESocketCommands.ERROR_DETAIL.getValue());
+  }
+
+  public void setErrorDetail(final String error) {
+
+    this.put(ESocketCommands.ERROR_DETAIL.getValue(), error);
+  }
+
+  public void setErrorDetail(final StackTraceElement[] stackTraces) {
+
+    this.put(ESocketCommands.ERROR_DETAIL.getValue(), IFlowErrorRestResponse.stackListToString(stackTraces));
+  }
+
   public static GuiSocketMessage generate(final String status) {
 
     final GuiSocketMessage message = new GuiSocketMessage();
     message.put(ESocketCommands.STATUS.getValue(), status);
     return message;
   }
+
+  @Override
+  public GuiSocketMessage clone() {
+
+    final GuiSocketMessage message = new GuiSocketMessage();
+    for (final String key : this.keySet()) {
+      message.put(key, this.get(key));
+    }
+
+    return message;
+
+  }
+
 }

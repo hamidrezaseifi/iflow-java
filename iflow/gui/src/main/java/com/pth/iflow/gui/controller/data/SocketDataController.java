@@ -1,6 +1,9 @@
 package com.pth.iflow.gui.controller.data;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,7 @@ import com.pth.iflow.gui.models.ui.GuiSocketMessage;
 import com.pth.iflow.gui.models.ui.enums.ESocketCommands;
 
 import net.sourceforge.tess4j.Tesseract;
+import net.sourceforge.tess4j.TesseractException;
 
 @Controller
 @RequestMapping(value = "/")
@@ -59,9 +63,10 @@ public class SocketDataController extends GuiSocketControllerBase {
   @MessageMapping("/ocrprocess")
   @SendToUser("/socket/ocrprocess")
   public GuiSocketMessage processInvoiceFile(final GuiSocketMessage message, final Principal principal,
-      final SimpMessageHeaderAccessor headerAccessor) throws Exception {
+      final SimpMessageHeaderAccessor headerAccessor) {
 
-    final GuiSocketMessage result = GuiSocketMessage.generate("processing");
+    final GuiSocketMessage result = message.clone();
+    result.setStatus("processing");
 
     if (this.isPrincipalValidAndLoggedIn(principal) && message.hasFileHash() && message.hasHocrFileHash()) {
 
@@ -71,13 +76,45 @@ public class SocketDataController extends GuiSocketControllerBase {
       final File file = new File(filePath);
       if (file.exists()) {
 
-        final Tesseract tesseract = new Tesseract();
-        tesseract.setDatapath("F://Softwares//Tess4J//tessdata");
-        tesseract.setLanguage("deu");
-        tesseract.setHocr(true);
-        final String res = tesseract.doOCR(file);
+        try {
+          final Tesseract tesseract = new Tesseract();
+          tesseract.setDatapath("F://Softwares//Tess4J//tessdata");
+          tesseract.setLanguage("deu");
+          tesseract.setHocr(true);
+          final String hocrResult = tesseract.doOCR(file);
 
-        result.setStatus("done");
+          final BufferedWriter writer = new BufferedWriter(new FileWriter(hocrPath));
+          writer.write(hocrResult);
+
+          writer.close();
+
+          result.setStatus("done");
+        }
+        catch (final IOException e) {
+
+          result.setStatus("error");
+          result.setErrorMessage(e.getLocalizedMessage());
+          result.setErrorDetail(e.getStackTrace());
+        }
+        catch (final TesseractException e) {
+
+          result.setStatus("error");
+          result.setErrorMessage(e.getLocalizedMessage());
+          result.setErrorDetail(e.getStackTrace());
+        }
+        catch (final NoClassDefFoundError e) {
+
+          result.setStatus("error");
+          result.setErrorMessage(e.getLocalizedMessage());
+          result.setErrorDetail(e.getStackTrace());
+        }
+        catch (final Exception e) {
+
+          result.setStatus("error");
+          result.setErrorMessage(e.getLocalizedMessage());
+          result.setErrorDetail(e.getStackTrace());
+        }
+
       }
       else {
         result.setStatus("file not found!");

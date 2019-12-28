@@ -4,6 +4,8 @@ public enum ESocketCommands {
 
   STATUS("status"),
   COMMAND("command"),
+  ERROR_MESSAGE("errorMessage"),
+  ERROR_DETAIL("errorDetail"),
   FILE_HASH("filehash"),
   HOCRFILE_HASH("hocr-filehash"),
   MESSAGE_RELOAD("message-reload");

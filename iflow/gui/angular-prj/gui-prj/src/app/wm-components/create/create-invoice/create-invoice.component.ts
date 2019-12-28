@@ -4,6 +4,9 @@ import {TranslateService} from '@ngx-translate/core';
 import { HttpClient, HttpEventType } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { DateAdapter } from '@angular/material';
+import { Observable, throwError , Subscription } from 'rxjs';
+import { StompService, StompState } from '@stomp/ng2-stompjs';
+import { Message } from '@stomp/stompjs';
 
 import { GlobalService } from '../../../services/global.service';
 import { InvoiceWorkflowEditService } from '../../../services/workflow/invoice/invoice-workflow-edit.service';
@@ -41,6 +44,13 @@ export class CreateInvoiceComponent extends InvoiceBaseComponent implements OnIn
 	
 	intervalValue = 0;
 
+	private subscription: Subscription;
+	private messages: Observable<Message>;
+
+	public subscribed: boolean;
+	
+	
+	stompClient = null;
 
 	get debugData() :string{
 		var ss = formatDate(new Date(), 'dd.mm.yyyy');
@@ -59,6 +69,7 @@ export class CreateInvoiceComponent extends InvoiceBaseComponent implements OnIn
 			protected errorService: ErrorServiceService,
 		  	protected formBuilder: FormBuilder,
 		  	protected dateAdapter: DateAdapter<Date>,
+		  	private _stompService: StompService
 	) {
 		super(router,
 				global,
@@ -105,11 +116,6 @@ export class CreateInvoiceComponent extends InvoiceBaseComponent implements OnIn
 		this.showUploading = true;
 		this.uplaodingMessage = this.uplaodingMessageUploading + " ...";
 		
-		//uplaodingMessageUploading :string = "";
-		//uplaodingMessageFileAnalysing :string = "";
-		//uplaodingMessageShowResult :string = "";
-
-		
 		/*this.intervalId = setInterval(() =>{ 
 
 			this.intervalValue += 10;
@@ -128,12 +134,15 @@ export class CreateInvoiceComponent extends InvoiceBaseComponent implements OnIn
 		            
 		            this.intervalValue += 33;
 		            this.uplaodingMessage = this.uplaodingMessageFileAnalysing + " ...";
+		            		            
+		            this.subscribe();
 		            
-		            
+		            this._stompService.publish('/socketapp/ocrprocess', JSON.stringify(result));
 		            
 		        },
 		        response => {
 		        	console.log("Error in upload invoice file", response);
+		        	this.unsubscribe();
 		        	this.showUploading = false;
 		        	this.errorService.showErrorResponse(response);
 		        },
@@ -144,6 +153,56 @@ export class CreateInvoiceComponent extends InvoiceBaseComponent implements OnIn
 		    );	   
 	}
 	
+	public onRecevieResponse = (message: Message) => {
+
+		console.log("Message Received: " , message.body);
+		var parsedMessage = JSON.parse(message.body);
+		
+		if(parsedMessage.status){
+			if(parsedMessage.status === "done"){
+				this.unsubscribe();
+	            this.intervalValue += 33;
+	            this.uplaodingMessage = this.uplaodingMessageShowResult + " ...";			
+			}
+			if(parsedMessage.status === "error" && parsedMessage.errorMessage){
+				this.unsubscribe();
+				this.showUploading = false;
+				this.errorService.showError(parsedMessage.errorMessage , parsedMessage.errorDetail);			
+			}
+		}
+				
+	}	
+	
+	subscribe() {
+		
+		if (this.subscribed) {
+		      this.unsubscribe();
+		}
+
+		this.messages = this._stompService.subscribe('/user/socket/ocrprocess');
+
+	    this.subscription = this.messages.subscribe(this.onRecevieResponse);
+
+	    this.setConnected(true);
+		
+	}
+
+	unsubscribe() {
+	    if (!this.subscribed) {
+	      return;
+	    }
+
+	    this.subscription.unsubscribe();
+	    this.subscription = null;
+	    this.messages = null;
+
+	    this.setConnected(false);
+	}
+
+	private setConnected(subscribed) {
+		this.subscribed = subscribed;
+	
+	}	
 	
 	protected loadInitialData(){
 		
