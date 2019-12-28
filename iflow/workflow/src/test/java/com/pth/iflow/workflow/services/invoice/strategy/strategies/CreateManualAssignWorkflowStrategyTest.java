@@ -16,7 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 import com.pth.iflow.workflow.TestDataProducer;
 import com.pth.iflow.workflow.bl.IDepartmentDataService;
-import com.pth.iflow.workflow.bl.IProfileCachDataDataService;
+import com.pth.iflow.workflow.bl.IGuiCachDataDataService;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.IWorkflowMessageDataService;
 import com.pth.iflow.workflow.bl.IWorkflowPrepare;
@@ -43,7 +43,7 @@ public class CreateManualAssignWorkflowStrategyTest extends TestDataProducer {
   private IWorkflowMessageDataService workflowMessageDataService;
 
   @Mock
-  private IProfileCachDataDataService cachDataDataService;
+  private IGuiCachDataDataService cachDataDataService;
 
   @Mock
   private IWorkflowPrepare<InvoiceWorkflow> workflowPrepare;

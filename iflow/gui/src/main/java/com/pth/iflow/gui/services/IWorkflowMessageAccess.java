@@ -9,9 +9,12 @@ import com.pth.iflow.gui.models.WorkflowMessage;
 
 public interface IWorkflowMessageAccess {
 
-  public void callUserMessageReset(final String companyIdentity, final String userId, final String token)
+  public List<WorkflowMessage> readUserMessages(final String companyIdentity, final String userId, final String token)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  public List<WorkflowMessage> readUserMessages(final String companyIdentity, final String userId, final String token)
+  public List<WorkflowMessage> getWorkflowMessageListByUser(final String userIdentity, final String token)
+      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
+
+  public List<WorkflowMessage> getWorkflowMessageListByWorkflow(final String workflowIdentity, final String token)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 }

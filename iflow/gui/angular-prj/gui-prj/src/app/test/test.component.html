@@ -1,0 +1,28 @@
+<div class="main-content">
+    <div class="">
+        <div>
+        	<div class="form-group">
+               <button class="btn btn-primary" (click)="subscribe()" type="button" [disabled]="subscribed || sending">Subscribe</button>&nbsp; &nbsp; 
+               <button class="btn btn-secondary" (click)="unsubscribe()" type="button" [disabled]="subscribed === false || sending">Unsubscribe</button>
+               &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span>WebSocket connection: {{status}}</span> 
+        	</div>
+        </div>
+        <div>          
+             <div class="form-group">
+                 <label for="name">What is your name?</label>&nbsp; &nbsp; 
+                 <input type="text" [(ngModel)]="message" style="width: calc(100% - 90px); display: inline-block;" class="form-control" placeholder="Your message here...">&nbsp; &nbsp; 
+                 <button (click)="send()" class="btn btn-success" [disabled]="subscribed === false || sending">Send</button>
+             </div>            
+        </div>
+    </div>
+    
+    <div class="responsediv">
+    	state: {{state | json}}
+    </div>
+        
+    <div class="responsediv">
+    	<div style="padding: 5px; border: 1px solid gray; font-weight: bold;">messageQeue</div>
+    	<div style="padding: 5px; border: 1px solid gray;" *ngFor="let msg of messageQeue; ">{{msg}}</div>
+    </div>
+    
+</div>

@@ -10,7 +10,8 @@ import { ResizableModule } from 'angular-resizable-element';
 import { FormsModule } from '@angular/forms';
 import { DataTableModule } from 'ng-angular8-datatable';
 import { MatNativeDateModule } from '@angular/material/core';
-
+import {StompConfig, StompService} from '@stomp/ng2-stompjs';
+import * as SockJS from 'sockjs-client';
 
 import {IFlowMaterialModules} from './material-module';
 
@@ -42,10 +43,32 @@ import { EditSingleTaskComponent } from './wm-components/edit/edit-single-task/e
 import { EditTestthreeTaskComponent } from './wm-components/edit/edit-testthree-task/edit-testthree-task.component';
 import { WorkflowInlineviewComponent } from './wm-components/workflow-inlineview/workflow-inlineview.component';
 import { SelectUserComponent } from './components/select-user/select-user.component';
+import { TestComponent } from './test/test.component';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
+
+export function socketProvider() {
+	  return new SockJS('/iflow-guide-websocket');
+}
+
+const stompConfig: StompConfig = {
+	url: socketProvider, //'ws://127.0.0.1:15674/ws',
+
+	headers: {
+		login: 'guest',
+		passcode: 'guest'
+	},
+
+	heartbeat_in: 0, // Typical value 0 - disabled
+	heartbeat_out: 20000, // Typical value 20000 - every 20 seconds
+
+	reconnect_delay: 5000,
+
+	debug: true
+};
+
 
 @NgModule({
   imports: [
@@ -87,6 +110,7 @@ export function createTranslateLoader(http: HttpClient) {
     EditTestthreeTaskComponent,
     WorkflowInlineviewComponent,
     SelectUserComponent,
+    TestComponent,
     
   ],
   providers: [
@@ -94,6 +118,11 @@ export function createTranslateLoader(http: HttpClient) {
 	  AuthenticationService, 
 	  WorkflowMessageService, 
 	  fakeBackendProvider,
+	  StompService,
+	    {
+	      provide: StompConfig,
+	      useValue: stompConfig
+	    }
   ],
   bootstrap: [ AppComponent ]
 })

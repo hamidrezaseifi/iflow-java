@@ -106,7 +106,7 @@ public class WorkflowMessage {
     this.createdAt = createdAt;
   }
 
-  public String getTotalIdentity() {
+  public String getIdentityPath() {
     return this.workflowIdentity + "-" + this.stepIdentity + "-" + this.userIdentity;
   }
 

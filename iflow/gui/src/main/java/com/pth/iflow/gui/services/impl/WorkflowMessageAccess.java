@@ -21,13 +21,14 @@ import com.pth.iflow.gui.services.IWorkflowMessageAccess;
 @Service
 public class WorkflowMessageAccess implements IWorkflowMessageAccess {
 
-  private static final Logger                              logger = LoggerFactory.getLogger(WorkflowMessageAccess.class);
+  private static final Logger logger = LoggerFactory.getLogger(WorkflowMessageAccess.class);
 
-  private final IRestTemplateCall                          restTemplate;
-  private final GuiConfiguration.ProfileModuleAccessConfig moduleAccessConfig;
+  private final IRestTemplateCall restTemplate;
+  private final GuiConfiguration.WorkflowModuleAccessConfig moduleAccessConfig;
 
   public WorkflowMessageAccess(@Autowired final IRestTemplateCall restTemplate,
-      @Autowired final GuiConfiguration.ProfileModuleAccessConfig moduleAccessConfig) {
+      @Autowired final GuiConfiguration.WorkflowModuleAccessConfig moduleAccessConfig) {
+
     this.restTemplate = restTemplate;
     this.moduleAccessConfig = moduleAccessConfig;
   }
@@ -35,23 +36,43 @@ public class WorkflowMessageAccess implements IWorkflowMessageAccess {
   @Override
   public List<WorkflowMessage> readUserMessages(final String companyIdentity, final String userId, final String token)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+
     logger.debug("read messages for user");
 
-    final WorkflowMessageListEdo responseListEdo = this.restTemplate.callRestGet(
-        this.moduleAccessConfig.getReadUserWorkflowMessageListUri(companyIdentity, userId), EModule.WORKFLOW,
-        WorkflowMessageListEdo.class, token, true);
+    final WorkflowMessageListEdo responseListEdo = this.restTemplate
+        .callRestGet(
+            this.moduleAccessConfig.getReadUserWorkflowMessageListUri(userId), EModule.WORKFLOW,
+            WorkflowMessageListEdo.class, token, true);
 
     return GuiModelEdoMapper.fromWorkflowMessageEdoList(responseListEdo.getWorkflowMessages());
   }
 
   @Override
-  public void callUserMessageReset(final String companyIdentity, final String userId, final String token)
+  public List<WorkflowMessage> getWorkflowMessageListByUser(final String userIdentity, final String token)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
-    logger.debug("reset messages for user");
 
-    this.restTemplate.callRestGet(this.moduleAccessConfig.getCalUserWorkflowMessageResetUri(companyIdentity, userId), EModule.WORKFLOW,
-        Void.class, token, true);
+    logger.debug("read messages for user");
 
+    final WorkflowMessageListEdo responseListEdo = this.restTemplate
+        .callRestGet(
+            this.moduleAccessConfig.getReadUserWorkflowMessageListUri(userIdentity), EModule.WORKFLOW,
+            WorkflowMessageListEdo.class, token, true);
+
+    return GuiModelEdoMapper.fromWorkflowMessageEdoList(responseListEdo.getWorkflowMessages());
+  }
+
+  @Override
+  public List<WorkflowMessage> getWorkflowMessageListByWorkflow(final String workflowIdentity, final String token)
+      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+
+    logger.debug("read messages for user");
+
+    final WorkflowMessageListEdo responseListEdo = this.restTemplate
+        .callRestGet(
+            this.moduleAccessConfig.getReadWorkflowWorkflowMessageListUri(workflowIdentity), EModule.WORKFLOW,
+            WorkflowMessageListEdo.class, token, true);
+
+    return GuiModelEdoMapper.fromWorkflowMessageEdoList(responseListEdo.getWorkflowMessages());
   }
 
 }

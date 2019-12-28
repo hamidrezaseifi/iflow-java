@@ -4,8 +4,10 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.WorkflowMessage;
@@ -14,40 +16,43 @@ import com.pth.iflow.gui.models.WorkflowTypeStep;
 import com.pth.iflow.gui.models.ui.SessionUserInfo;
 import com.pth.iflow.gui.models.workflow.workflow.Workflow;
 import com.pth.iflow.gui.models.workflow.workflow.WorkflowSaveRequest;
+import com.pth.iflow.gui.services.ICompanyCachDataManager;
 import com.pth.iflow.gui.services.IWorkflowHandler;
-import com.pth.iflow.gui.services.IWorkflowMessageAccess;
 import com.pth.iflow.gui.services.IWorkflowMessageHanlder;
 
 @Service
 public class WorkflowMessageHanlder implements IWorkflowMessageHanlder {
 
-  private final IWorkflowMessageAccess workflowMessageAccess;
-
   private final SessionUserInfo sessionUserInfo;
 
   private final IWorkflowHandler<Workflow, WorkflowSaveRequest> workflowHandler;
 
-  public WorkflowMessageHanlder(@Autowired final IWorkflowMessageAccess workflowMessageAccess,
-                                @Autowired final SessionUserInfo sessionUserInfo,
-                                @Autowired final IWorkflowHandler<Workflow, WorkflowSaveRequest> workflowHandler) {
-    this.workflowMessageAccess = workflowMessageAccess;
+  private final ICompanyCachDataManager companyCachDataManager;
+
+  public WorkflowMessageHanlder(@Autowired final SessionUserInfo sessionUserInfo,
+      @Autowired final IWorkflowHandler<Workflow, WorkflowSaveRequest> workflowHandler,
+      @Autowired final ICompanyCachDataManager companyCachDataManager) {
+
     this.sessionUserInfo = sessionUserInfo;
     this.workflowHandler = workflowHandler;
+    this.companyCachDataManager = companyCachDataManager;
   }
 
   @Override
-  public void callUserMessageReset() throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
-    this.workflowMessageAccess.callUserMessageReset(this.sessionUserInfo.getCompany().getIdentity(),
-                                                    this.sessionUserInfo.getUser().getIdentity(),
-                                                    this.sessionUserInfo.getToken());
+  public void callUserMessageReset(final boolean fromController)
+      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+
+    this.companyCachDataManager
+        .resetUserData(this.getCompanyIdentity(), this.getUserIdentity(), this.sessionUserInfo.getToken(), fromController);
+
   }
 
   @Override
-  public List<WorkflowMessage> readUserMessages() throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+  public List<WorkflowMessage> readUserMessages()
+      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    final List<WorkflowMessage> readList = this.workflowMessageAccess.readUserMessages(this.sessionUserInfo.getCompany().getIdentity(),
-                                                                                       this.sessionUserInfo.getUser().getIdentity(),
-                                                                                       this.sessionUserInfo.getToken());
+    final List<
+        WorkflowMessage> readList = this.companyCachDataManager.getUserWorkflowMessages(this.getCompanyIdentity(), this.getUserIdentity());
 
     readList.sort(new Comparator<WorkflowMessage>() {
 
@@ -55,7 +60,7 @@ public class WorkflowMessageHanlder implements IWorkflowMessageHanlder {
       public int compare(final WorkflowMessage message1, final WorkflowMessage message2) {
 
         return message1.getCreatedAt().isAfter(message2.getCreatedAt()) ? -1
-                                                                        : message1.getCreatedAt().isBefore(message2.getCreatedAt()) ? 1 : 0;
+            : message1.getCreatedAt().isBefore(message2.getCreatedAt()) ? 1 : 0;
       }
     });
 
@@ -64,7 +69,9 @@ public class WorkflowMessageHanlder implements IWorkflowMessageHanlder {
     return readList;
   }
 
-  private List<WorkflowMessage> prepareWorkflowMessageList(final List<WorkflowMessage> messageList) throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+  private List<WorkflowMessage> prepareWorkflowMessageList(final List<WorkflowMessage> messageList)
+      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+
     final List<WorkflowMessage> resultList = new ArrayList<>();
     for (final WorkflowMessage message : messageList) {
       resultList.add(this.prepareWorkflowMessage(message));
@@ -72,7 +79,8 @@ public class WorkflowMessageHanlder implements IWorkflowMessageHanlder {
     return resultList;
   }
 
-  private WorkflowMessage prepareWorkflowMessage(final WorkflowMessage message) throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+  private WorkflowMessage prepareWorkflowMessage(final WorkflowMessage message)
+      throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     message.setWorkflow(this.workflowHandler.readWorkflow(message.getWorkflowIdentity()));
 
@@ -85,6 +93,16 @@ public class WorkflowMessageHanlder implements IWorkflowMessageHanlder {
     }
 
     return message;
+  }
+
+  private String getUserIdentity() {
+
+    return this.sessionUserInfo.getUser().getIdentity();
+  }
+
+  private String getCompanyIdentity() {
+
+    return this.sessionUserInfo.getCompany().getIdentity();
   }
 
 }

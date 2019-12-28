@@ -22,8 +22,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class WorkflowConfiguration {
 
-  public static final String       NO_ACCESS_URL            = "/noaccess";
-  public static final String       INVALID_TOKEN_URL        = "/invalidtoken";
+  public static final String NO_ACCESS_URL = "/noaccess";
+  public static final String INVALID_TOKEN_URL = "/invalidtoken";
 
   public static final List<String> NOAUTHENTICATED_URL_LIST = Arrays.asList(NO_ACCESS_URL, INVALID_TOKEN_URL);
 
@@ -36,20 +36,26 @@ public class WorkflowConfiguration {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Value("${iflow.profile.urls.core.base}")
-    private String       coreBaseUrl;
+    private String coreBaseUrl;
 
     @Value("${iflow.profile.urls.profile.base}")
-    private String       profileBaseUrl;
+    private String profileBaseUrl;
 
-    private URI          baseCoreBaseUri;
+    @Value("${iflow.profile.urls.gui.base}")
+    private String guiBaseUrl;
 
-    private URI          baseProfileBaseUri;
+    private URI baseCoreBaseUri;
+
+    private URI baseProfileBaseUri;
+
+    private URI baseGuiBaseUri;
 
     @PostConstruct
     private void init() throws URISyntaxException {
 
       this.baseCoreBaseUri = new URI(this.coreBaseUrl);
       this.baseProfileBaseUri = new URI(this.profileBaseUrl);
+      this.baseGuiBaseUri = new URI(this.guiBaseUrl);
 
       log.info("CORE Base URL: {}", coreBaseUrl);
       log.info("PROFILE Base URL: {}", profileBaseUrl);
@@ -57,11 +63,18 @@ public class WorkflowConfiguration {
     }
 
     public URI generateCoreUrl(final URI subUrl) throws MalformedURLException {
+
       return this.baseCoreBaseUri.resolve(subUrl);
     }
 
     public URI generateProfileUrl(final URI subUrl) throws MalformedURLException {
+
       return this.baseProfileBaseUri.resolve(subUrl);
+    }
+
+    public URI generateGuieUrl(final URI subUrl) throws MalformedURLException {
+
+      return this.baseGuiBaseUri.resolve(subUrl);
     }
 
   }

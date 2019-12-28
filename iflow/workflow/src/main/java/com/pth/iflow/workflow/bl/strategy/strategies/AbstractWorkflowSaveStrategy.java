@@ -16,7 +16,7 @@ import com.pth.iflow.common.enums.EWorkflowMessageType;
 import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.IDepartmentDataService;
-import com.pth.iflow.workflow.bl.IProfileCachDataDataService;
+import com.pth.iflow.workflow.bl.IGuiCachDataDataService;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.IWorkflowMessageDataService;
 import com.pth.iflow.workflow.bl.IWorkflowPrepare;
@@ -35,7 +35,7 @@ public abstract class AbstractWorkflowSaveStrategy<W extends IWorkflow> implemen
 
   private final IDepartmentDataService            departmentDataService;
   private final IWorkflowMessageDataService       workflowMessageDataService;
-  private final IProfileCachDataDataService       profileCachDataDataService;
+  private final IGuiCachDataDataService       profileCachDataDataService;
   private final IWorkflowDataService<W>           workflowDataService;
   private final IWorkflowPrepare<W>               workflowPrepare;
 
@@ -54,7 +54,7 @@ public abstract class AbstractWorkflowSaveStrategy<W extends IWorkflow> implemen
 
   public AbstractWorkflowSaveStrategy(final IWorkflowSaveRequest<W> workflowCreateRequest, final String token,
       final IDepartmentDataService departmentDataService, final IWorkflowMessageDataService workflowMessageDataService,
-      final IProfileCachDataDataService profileCachDataDataService, final IWorkflowDataService<W> workflowDataService,
+      final IGuiCachDataDataService profileCachDataDataService, final IWorkflowDataService<W> workflowDataService,
       final IWorkflowPrepare<W> workflowPrepare)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
     this.departmentDataService = departmentDataService;

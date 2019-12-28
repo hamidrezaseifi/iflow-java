@@ -12,21 +12,22 @@ import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.common.models.edo.IdentityListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
-import com.pth.iflow.workflow.bl.IProfileCachDataDataService;
+import com.pth.iflow.workflow.bl.IGuiCachDataDataService;
 import com.pth.iflow.workflow.config.WorkflowConfiguration;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.services.IRestTemplateCall;
 
 @Service
-public class ProfileCachDataDataService implements IProfileCachDataDataService {
+public class GuiCachDataDataService implements IGuiCachDataDataService {
 
-  private static final Logger                            logger = LoggerFactory.getLogger(ProfileCachDataDataService.class);
+  private static final Logger logger = LoggerFactory.getLogger(GuiCachDataDataService.class);
 
-  private final IRestTemplateCall                        restTemplate;
+  private final IRestTemplateCall restTemplate;
   private final WorkflowConfiguration.ModuleAccessConfig moduleAccessConfig;
 
-  public ProfileCachDataDataService(@Autowired final IRestTemplateCall restTemplate,
+  public GuiCachDataDataService(@Autowired final IRestTemplateCall restTemplate,
       @Autowired final WorkflowConfiguration.ModuleAccessConfig moduleAccessConfig) {
+
     this.restTemplate = restTemplate;
     this.moduleAccessConfig = moduleAccessConfig;
   }
@@ -37,10 +38,11 @@ public class ProfileCachDataDataService implements IProfileCachDataDataService {
 
     logger.debug("Reset cach data request for user");
 
-    this.restTemplate.callRestGet(
-        this.moduleAccessConfig
-            .generateProfileUrl(IflowRestPaths.ProfileModule.CAL_CACHDATA_USER_DATARESET(companyIdentity, userIdentity)),
-        token, EModule.CORE, Void.class, true);
+    this.restTemplate
+        .callRestGet(
+            this.moduleAccessConfig
+                .generateGuieUrl(IflowRestPaths.GuiModule.CAL_CACHDATA_USER_DATARESET(companyIdentity, userIdentity)),
+            token, EModule.CORE, Void.class, true);
 
   }
 
@@ -51,9 +53,10 @@ public class ProfileCachDataDataService implements IProfileCachDataDataService {
     logger.debug("Reset cach data request for user list");
 
     final IdentityListEdo idListEdo = new IdentityListEdo(userIdentityList);
-    this.restTemplate.callRestPost(
-        this.moduleAccessConfig.generateProfileUrl(IflowRestPaths.ProfileModule.CAL_CACHDATA_USERLIST_DATARESET(companyIdentity)),
-        token, EModule.CORE, idListEdo, Void.class, true);
+    this.restTemplate
+        .callRestPost(
+            this.moduleAccessConfig.generateGuieUrl(IflowRestPaths.GuiModule.CAL_CACHDATA_USERLIST_DATARESET(companyIdentity)),
+            token, EModule.CORE, idListEdo, Void.class, true);
 
   }
 
@@ -63,10 +66,11 @@ public class ProfileCachDataDataService implements IProfileCachDataDataService {
 
     logger.debug("Reset cach data request for workflow");
 
-    this.restTemplate.callRestGet(
-        this.moduleAccessConfig
-            .generateProfileUrl(IflowRestPaths.ProfileModule.CAL_CACHDATA_WORKFLOW_DATARESET(companyIdentity, workflowIdentity)),
-        token, EModule.CORE, Void.class, true);
+    this.restTemplate
+        .callRestGet(
+            this.moduleAccessConfig
+                .generateGuieUrl(IflowRestPaths.GuiModule.CAL_CACHDATA_WORKFLOW_DATARESET(companyIdentity, workflowIdentity)),
+            token, EModule.CORE, Void.class, true);
 
   }
 

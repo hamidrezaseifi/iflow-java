@@ -3,7 +3,7 @@ package com.pth.iflow.workflow.bl.strategy.strategies.validation;
 import java.net.MalformedURLException;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.IDepartmentDataService;
-import com.pth.iflow.workflow.bl.IProfileCachDataDataService;
+import com.pth.iflow.workflow.bl.IGuiCachDataDataService;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.IWorkflowMessageDataService;
 import com.pth.iflow.workflow.bl.IWorkflowPrepare;
@@ -22,7 +22,7 @@ public class ArchivingWorkflowValidationStrategy<W extends IWorkflow> extends Ab
                                              final String token,
                                              final IDepartmentDataService departmentDataService,
                                              final IWorkflowMessageDataService workflowMessageDataService,
-                                             final IProfileCachDataDataService cachDataDataService,
+                                             final IGuiCachDataDataService cachDataDataService,
                                              final IWorkflowDataService<W> workflowDataService,
                                              final IWorkflowPrepare<W> workflowPrepare)
                                                                                         throws WorkflowCustomizedException,

@@ -29,12 +29,13 @@ public class WorkflowMessageController {
   final IWorkflowMessageDataService workflowMessageDataService;
 
   public WorkflowMessageController(@Autowired final IWorkflowMessageDataService workflowMessageDataService) {
+
     this.workflowMessageDataService = workflowMessageDataService;
 
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(path = IflowRestPaths.WorkflowModule.WORKFLOWMESSAGE_READ_BY_USEREMAIL)
+  @IflowGetRequestMapping(path = IflowRestPaths.WorkflowModule.WORKFLOWMESSAGE_READ_BY_USERIDENTITY)
   public ResponseEntity<WorkflowMessageListEdo> readUserWorkflowMessageList(@PathVariable(required = true) final String email,
       @PathVariable(required = false) Integer status, final HttpServletRequest request,
       @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws Exception {
@@ -43,8 +44,22 @@ public class WorkflowMessageController {
 
     final List<WorkflowMessage> messageList = this.workflowMessageDataService.getListForUser(email, status, headerTokenId);
 
-    return ControllerHelper.createResponseEntity(request,
-        new WorkflowMessageListEdo(WorkflowModelEdoMapper.toWorkflowMessageEdoList(messageList)), HttpStatus.OK);
+    return ControllerHelper
+        .createResponseEntity(request,
+            new WorkflowMessageListEdo(WorkflowModelEdoMapper.toWorkflowMessageEdoList(messageList)), HttpStatus.OK);
+  }
+
+  @ResponseStatus(HttpStatus.OK)
+  @IflowGetRequestMapping(path = IflowRestPaths.WorkflowModule.WORKFLOWMESSAGE_READ_BY_WORKFLOWIDENTITY)
+  public ResponseEntity<WorkflowMessageListEdo> readWorkfloWorkflowMessageList(@PathVariable(required = true) final String identity,
+      final HttpServletRequest request,
+      @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws Exception {
+
+    final List<WorkflowMessage> messageList = this.workflowMessageDataService.getListForWorkflow(identity, headerTokenId);
+
+    return ControllerHelper
+        .createResponseEntity(request,
+            new WorkflowMessageListEdo(WorkflowModelEdoMapper.toWorkflowMessageEdoList(messageList)), HttpStatus.OK);
   }
 
 }

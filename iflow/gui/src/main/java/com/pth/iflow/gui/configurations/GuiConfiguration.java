@@ -24,8 +24,8 @@ import com.pth.iflow.common.rest.IflowRestPaths;
 @Component
 public class GuiConfiguration {
 
-  public static final String       NO_ACCESS_URL            = "/noaccess";
-  public static final String       INVALID_TOKEN_URL        = "/invalidtoken";
+  public static final String NO_ACCESS_URL = "/noaccess";
+  public static final String INVALID_TOKEN_URL = "/invalidtoken";
 
   public static final List<String> NOAUTHENTICATED_URL_LIST = Arrays.asList(NO_ACCESS_URL, INVALID_TOKEN_URL);
 
@@ -35,12 +35,13 @@ public class GuiConfiguration {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Value("${iflow.profile.urls.workflow.base}")
-    private String       workflowBaseUrl;
+    private String workflowBaseUrl;
 
-    private URI          baseWorkflowBaseUri;
+    private URI baseWorkflowBaseUri;
 
     @PostConstruct
     private void init() throws URISyntaxException {
+
       this.baseWorkflowBaseUri = new URI(this.workflowBaseUrl);
 
       this.log.info("WORKFLOW Base URI: {}", this.baseWorkflowBaseUri);
@@ -48,10 +49,12 @@ public class GuiConfiguration {
     }
 
     public URI getSearchWorkflowUri() throws MalformedURLException {
+
       return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.SEARCH_WORKFLOW());
     }
 
     public URI getReadWorkflowListByIdentityListUri() throws MalformedURLException {
+
       return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.READ_WORKFLOWLIST_BY_IDENTITYLIST());
     }
 
@@ -61,26 +64,32 @@ public class GuiConfiguration {
      */
 
     public URI getReadInvoiceWorkflowUri(final String workflowIdentity) throws MalformedURLException {
+
       return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.READ_INVOICEWORKFLOW_BY_IDENTITY_URIBUILDER(workflowIdentity));
     }
 
     public URI getReadInvoiceWorkflowListByIdentityListUri() throws MalformedURLException {
+
       return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.READ_INVOICEWORKFLOWLIST_BY_IDENTITYLIST_URIBUILDER());
     }
 
     public URI getReadWorkflowTypeListUri(final String companyIdentity) throws MalformedURLException {
+
       return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.READ_WORKFLOWTYPELIST_BY_COMPANYID_URIBUILDER(companyIdentity));
     }
 
     public URI getCreateInvoiceWorkflowUri() throws MalformedURLException {
+
       return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.CREATE_INVOICEWORKFLOW());
     }
 
     public URI getSaveInvoiceWorkflowUri() throws MalformedURLException {
+
       return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.SAVE_INVOICEWORKFLOW());
     }
 
     public URI getValidateInvoiceWorkflowUri() throws MalformedURLException {
+
       return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.VALIDATE_INVOICEWORKFLOW());
     }
 
@@ -91,22 +100,28 @@ public class GuiConfiguration {
      */
 
     public URI getReadSingleTaskWorkflowUri(final String workflowIdentity) throws MalformedURLException {
-      return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.READ_SINGLETASKWORKFLOW_BY_IDENTITY_URIBUILDER(workflowIdentity));
+
+      return this.baseWorkflowBaseUri
+          .resolve(IflowRestPaths.WorkflowModule.READ_SINGLETASKWORKFLOW_BY_IDENTITY_URIBUILDER(workflowIdentity));
     }
 
     public URI getCreateSingleTaskWorkflowUri() throws MalformedURLException {
+
       return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.CREATE_SINGLETASKWORKFLOW());
     }
 
     public URI getSaveSingleTaskWorkflowUri() throws MalformedURLException {
+
       return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.SAVE_SINGLETASKWORKFLOW());
     }
 
     public URI getValidateSingleTaskWorkflowUri() throws MalformedURLException {
+
       return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.VALIDATE_SINGLETASKWORKFLOW());
     }
 
     public URI getReadSingleTaskWorkflowListByIdentityListUri() throws MalformedURLException {
+
       return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.READ_SINGLETASKWORKFLOWLIST_BY_IDENTITYLIST_URIBUILDER());
     }
 
@@ -117,23 +132,28 @@ public class GuiConfiguration {
     */
 
     public URI getReadTestThreeTaskWorkflowUri(final String workflowIdentity) throws MalformedURLException {
+
       return this.baseWorkflowBaseUri
           .resolve(IflowRestPaths.WorkflowModule.READ_TESTTHREETASKWORKFLOW_BY_IDENTITY_URIBUILDER(workflowIdentity));
     }
 
     public URI getCreateTestThreeTaskWorkflowUri() throws MalformedURLException {
+
       return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.CREATE_TESTTHREETASKWORKFLOW());
     }
 
     public URI getSaveTestThreeTaskWorkflowUri() throws MalformedURLException {
+
       return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.SAVE_TESTTHREETASKWORKFLOW());
     }
 
     public URI getValidateTestThreeTaskWorkflowUri() throws MalformedURLException {
+
       return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.VALIDATE_TESTTHREETASKWORKFLOW());
     }
 
     public URI getReadTestThreeTaskWorkflowListByIdentityListUri() throws MalformedURLException {
+
       return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.READ_TESTTHREETASKWORKFLOWLIST_BY_IDENTITYLIST_URIBUILDER());
     }
     /*
@@ -143,11 +163,23 @@ public class GuiConfiguration {
     */
 
     public URI getReadWorkflowUri(final String workflowIdentity) throws MalformedURLException {
+
       return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.READ_WORKFLOW_BY_IDENTITY_URIBUILDER(workflowIdentity));
     }
 
     public URI getReadWorkflowListUri() throws MalformedURLException {
+
       return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.READ_WORKFLOWLIST_BY_IDENTITYLIST());
+    }
+
+    public URI getReadUserWorkflowMessageListUri(final String userIdentity) throws MalformedURLException {
+
+      return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.READ_WORKFLOWMESSAGE_READ_BY_USER(userIdentity, 0));
+    }
+
+    public URI getReadWorkflowWorkflowMessageListUri(final String workflowIdentity) throws MalformedURLException {
+
+      return this.baseWorkflowBaseUri.resolve(IflowRestPaths.WorkflowModule.READ_WORKFLOWMESSAGE_READ_BY_WORKFLOW(workflowIdentity));
     }
 
   }
@@ -158,12 +190,13 @@ public class GuiConfiguration {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Value("${iflow.profile.urls.profile.base}")
-    private String       profileBaseUrl;
+    private String profileBaseUrl;
 
-    private URI          baseProfileBaseUri;
+    private URI baseProfileBaseUri;
 
     @PostConstruct
     private void init() throws URISyntaxException {
+
       this.baseProfileBaseUri = new URI(this.profileBaseUrl);
 
       this.log.info("PROFILE Base URI: {}", this.baseProfileBaseUri);
@@ -171,27 +204,23 @@ public class GuiConfiguration {
     }
 
     public URI getReadTokenInfoUri() throws MalformedURLException {
+
       return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.READ_PROFILE_TOKENINFO());
     }
 
     public URI getAuthenticationUri() throws MalformedURLException {
+
       return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.AUTHENTICATE_AUTHENTICATION());
     }
 
     public URI getReadAuthenticationInfoUri() throws MalformedURLException {
+
       return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.READ_PROFILE_AUTHENTOCATEDINFO());
     }
 
     public URI getReadCompanyUserListUri(final String companyIdentity) throws MalformedURLException {
+
       return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.READ_USERLIST_BY_COMPANYID_URIBUILDER(companyIdentity));
-    }
-
-    public URI getReadUserWorkflowMessageListUri(final String companyIdentity, final String userId) throws MalformedURLException {
-      return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.READ_CACHDATA_USER_WORKFLOWMESSAGELIST(companyIdentity, userId));
-    }
-
-    public URI getCalUserWorkflowMessageResetUri(final String companyIdentity, final String userId) throws MalformedURLException {
-      return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.CAL_CACHDATA_USER_DATARESET(companyIdentity, userId));
     }
 
   }

@@ -1,27 +1,30 @@
-package com.pth.iflow.profile.model.cach;
+package com.pth.iflow.gui.models.cach;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.pth.iflow.profile.model.WorkflowMessage;
+import com.pth.iflow.gui.models.WorkflowMessage;
 
 public class WorkflowCachData {
 
   private final Map<String, WorkflowTypeStepCachData> workflowSteps = new HashMap<>();
-  private String                                      workflowId;
+  private String workflowId;
 
   public WorkflowCachData(final String workflowId) {
+
     this.workflowId = workflowId;
   }
 
   public Map<String, WorkflowTypeStepCachData> getWorkflowSteps() {
+
     this.removeAllExpired();
     return this.workflowSteps;
   }
 
   public List<WorkflowMessage> getWorkflowMessagesList() {
+
     this.removeAllExpired();
 
     final List<WorkflowMessage> list = new ArrayList<>();
@@ -32,13 +35,12 @@ public class WorkflowCachData {
   }
 
   public void setWorkflowMessages(final List<WorkflowMessage> workflowMessages) {
+
     final Map<String, List<WorkflowMessage>> mapped = this.getStepMappedMessageList(workflowMessages);
 
     /*
-     * for (final WorkflowMessage message : workflowMessages) { if
-     * (mapped.containsKey(message.getStepIdentity()) == false) { final
-     * WorkflowTypeStepCachData cachData = new
-     * WorkflowTypeStepCachData(message.getStepIdentity());
+     * for (final WorkflowMessage message : workflowMessages) { if (mapped.containsKey(message.getStepIdentity()) == false) { final
+     * WorkflowTypeStepCachData cachData = new WorkflowTypeStepCachData(message.getStepIdentity());
      * workflowSteps.put(message.getStepIdentity(), cachData); } }
      */
 
@@ -71,6 +73,7 @@ public class WorkflowCachData {
   }
 
   public WorkflowTypeStepCachData getWorkflowTypeStepCachData(final String stepId, final boolean initial) {
+
     if (initial && !this.hasWorkflowTypeStepCachData(stepId)) {
       final WorkflowTypeStepCachData data = new WorkflowTypeStepCachData(stepId);
       this.workflowSteps.put(stepId, data);
@@ -79,6 +82,7 @@ public class WorkflowCachData {
   }
 
   public boolean hasWorkflowTypeStepCachData(final String stepId) {
+
     return this.workflowSteps.keySet().contains(stepId);
   }
 
@@ -104,14 +108,17 @@ public class WorkflowCachData {
   }
 
   public String getWorkflowId() {
+
     return this.workflowId;
   }
 
   public void setWorkflowId(final String workflowId) {
+
     this.workflowId = workflowId;
   }
 
   public boolean isWorkflowId(final String workflowId) {
+
     return this.workflowId == workflowId;
   }
 
