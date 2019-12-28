@@ -1,8 +1,7 @@
 package com.pth.iflow.gui.controller.data;
 
+import java.io.File;
 import java.security.Principal;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -14,6 +13,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.pth.iflow.gui.controller.GuiSocketControllerBase;
+import com.pth.iflow.gui.models.ui.GuiSocketMessage;
+import com.pth.iflow.gui.models.ui.enums.ESocketCommands;
+
+import net.sourceforge.tess4j.Tesseract;
 
 @Controller
 @RequestMapping(value = "/")
@@ -24,35 +27,65 @@ public class SocketDataController extends GuiSocketControllerBase {
 
   @MessageMapping("/start")
   @SendTo("/socket/test")
-  public Map<String, Object> greeting(final Map<String, Object> message) throws Exception {
+  public GuiSocketMessage greeting(final GuiSocketMessage message) throws Exception {
 
-    final Object sentMessage = message.keySet().contains("sentMessage") ? message.get("sentMessage") : "not found!";
+    final String sentMessage = message.containsKey("sentMessage") ? message.get("sentMessage") : "not found!";
 
-    final Map<String, Object> map = new HashMap<>();
-    map.put("msg", sentMessage);
-    map.put("status", "received");
+    final GuiSocketMessage result = GuiSocketMessage.generate("received");
+
+    result.put("msg", sentMessage);
 
     Thread.sleep(100);
-    return map;
+    return result;
   }
 
   @MessageMapping("/resetmessage")
   @SendToUser("/socket/messages")
-  public Map<String, Object> resetMessageSocket(final Map<String, String> message, final Principal principal,
+  public GuiSocketMessage resetMessageSocket(final GuiSocketMessage message, final Principal principal,
       final SimpMessageHeaderAccessor headerAccessor) throws Exception {
 
-    final Map<String, Object> map = new HashMap<>();
-
-    map.put("status", "process");
+    final GuiSocketMessage result = GuiSocketMessage.generate("processing");
 
     if (this.isPrincipalValidAndLoggedIn(principal)) {
       // final GuiAuthenticationToken guiAuth = (GuiAuthenticationToken) principal;
 
-      map.put("command", "message-reload");
-      map.put("status", "done");
+      result.setCommand(ESocketCommands.MESSAGE_RELOAD.getValue());
+      result.setStatus("done");
     }
 
-    return map;
+    return result;
+  }
+
+  @MessageMapping("/ocrprocess")
+  @SendToUser("/socket/ocrprocess")
+  public GuiSocketMessage processInvoiceFile(final GuiSocketMessage message, final Principal principal,
+      final SimpMessageHeaderAccessor headerAccessor) throws Exception {
+
+    final GuiSocketMessage result = GuiSocketMessage.generate("processing");
+
+    if (this.isPrincipalValidAndLoggedIn(principal) && message.hasFileHash() && message.hasHocrFileHash()) {
+
+      final String filePath = message.getFileNotHash();
+      final String hocrPath = message.getHocrFileNotHash();
+
+      final File file = new File(filePath);
+      if (file.exists()) {
+
+        final Tesseract tesseract = new Tesseract();
+        tesseract.setDatapath("F://Softwares//Tess4J//tessdata");
+        tesseract.setLanguage("deu");
+        tesseract.setHocr(true);
+        final String res = tesseract.doOCR(file);
+
+        result.setStatus("done");
+      }
+      else {
+        result.setStatus("file not found!");
+      }
+
+    }
+
+    return result;
   }
 
 }

@@ -4,6 +4,20 @@
 				<div class="page-title">{{ pageTitle }}</div>
 				<a class="toolbar-link" [routerLink]="['/workflow/list']"><i class="material-icons">list</i></a>
 				<button class="toolbar-button" (click)="reload();"><i class="material-icons">refresh</i></button>
+				&nbsp; &nbsp; &nbsp; 
+				
+				<div class="input-group ocrscan-container">
+				  <div class="input-group-prepend">
+				    <span class="input-group-text" id="inputGroupFileAddon01">{{ 'invoice-create-by-file' | translate }}</span>
+				  </div>
+				  <div class="custom-file">
+				    <input type="file" class="custom-file-input" id="scrscanfile" (change)="scanOcrProgress($event)" aria-describedby="inputGroupFileAddon01">
+				    <label class="custom-file-label" for="scrscanfile">{{ uplaodingFileName }}</label>
+				    <button class="btn btn-primary upload-button" (click)="uploadOcrScanFile();"><i class="material-icons">cloud_upload</i></button>
+				  </div>
+				</div>
+				
+				
 			</div>
 			
 			<div class="workflow-content-container">
@@ -194,3 +208,12 @@
 		
 		</div>
 
+
+		<div class="modal fade" [ngClass]="{'show' : showUploading}" tabindex="-1" *ngIf="showUploading" role="dialog">
+			<div class="modal-dialog uploading-dialog " role="document">
+				<div class="progress uploading-progress">
+					<div class="progress-bar" role="progressbar" [style.width]="intervalValue+'%'" [attr.aria-valuenow]="intervalValue" aria-valuemin="0" aria-valuemax="100"></div>
+				  	<div class="uploading-progress-label"><span>{{ uplaodingMessage }} {{intervalValue}}%</span></div>	
+				</div>			
+			</div>
+		</div>

@@ -3,6 +3,8 @@ package com.pth.iflow.gui.services;
 import java.io.IOException;
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.pth.iflow.gui.models.ui.FileSavingData;
 import com.pth.iflow.gui.models.ui.UploadFileSavingData;
 
@@ -21,5 +23,7 @@ public interface IUploadFileManager {
   public List<String> getFilesPath(List<FileSavingData> files) throws IOException;
 
   public String getFilePath(FileSavingData file) throws IOException;
+
+  public String saveSingleMultipartInTemp(final MultipartFile file) throws IOException;
 
 }

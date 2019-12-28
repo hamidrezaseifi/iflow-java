@@ -306,4 +306,50 @@ input.short-input{
 	height: 26px;
 }
 
+.ocrscan-container {
+    width: 500px;
+    float: right;
+    padding-top: 5px;
+    margin-right: 10px;
+}
 
+.ocrscan-container .custom-file-input{
+    width: calc(100% - 50px);
+}
+
+.ocrscan-container .custom-file-label{
+    width: calc(100% - 50px);
+}
+
+.ocrscan-container .upload-button{
+    padding: 2px 7px;
+    margin-left: 5px;
+}
+
+.uploading-dialog {
+    min-height: 100px;
+    max-height: 100px;
+    padding-top: 35px;
+    margin-top: 20%;
+    background-color: white;
+}
+
+.uploading-progress {
+    height: 30px;
+    margin: 0px 10px;
+}
+
+.uploading-progress-label {
+    width: 100%;
+    display: block;
+    position: absolute;
+    text-align: center;
+}
+
+.uploading-progress-label span {
+    padding: 2px 5px;
+    background-color: #e4ecf599;
+    height: 30px;
+    line-height: 30px;
+    font-size: 16px;
+}

@@ -53,6 +53,10 @@ export class InvoiceWorkflowEditService extends HttpErrorResponseHelper {
 		return "/workflow/invoice/data/createfile";
 	}
 	
+	getUploadOcrScanFileUrl() :string{
+		return "/workflow/invoice/data/uploadinvoicefile";
+	}
+	
 
 	
 	
@@ -122,6 +126,19 @@ export class InvoiceWorkflowEditService extends HttpErrorResponseHelper {
         const httpFileUploadOptions = { headers: HttpHepler.generateFileUploadHeader() };
         
 	    return this.http.post(this.getUploadFileUrl(), formData, httpFileUploadOptions);
+		
+	}
+	
+	uploadOcrScanFiles(ocrScanFile : File){
+		
+	    const formData = new FormData();
+	    formData.append('file', ocrScanFile);
+	    formData.append('wids', "0");
+	    
+    	
+        const httpFileUploadOptions = { headers: HttpHepler.generateFileUploadHeader() };
+        
+	    return this.http.post(this.getUploadOcrScanFileUrl(), formData, httpFileUploadOptions);
 		
 	}
 	

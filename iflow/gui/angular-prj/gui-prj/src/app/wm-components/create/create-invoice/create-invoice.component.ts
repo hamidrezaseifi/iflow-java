@@ -26,6 +26,22 @@ import { GermanDateAdapter, parseDate, formatDate } from '../../../helper';
 })
 export class CreateInvoiceComponent extends InvoiceBaseComponent implements OnInit {
 
+	ocrScanFile: File;
+	showUploading :boolean = false;
+
+	uplaodingMessage :string = "";
+	uplaodingFileName :string = "...";
+
+	uplaodingMessageUploading :string = "";
+	uplaodingMessageFileAnalysing :string = "";
+	uplaodingMessageShowResult :string = "";
+	
+	
+	intervalId = 0;
+	
+	intervalValue = 0;
+
+
 	get debugData() :string{
 		var ss = formatDate(new Date(), 'dd.mm.yyyy');
 		ss += " -- " + parseDate(ss, 'dd.mm.yyyy');
@@ -59,7 +75,16 @@ export class CreateInvoiceComponent extends InvoiceBaseComponent implements OnIn
 		    	this.loadInitialData();
 			}
 		});
-				
+
+		translate.get('common.uploading').subscribe((res: string) => {
+        	this.uplaodingMessageUploading =  res;
+        });
+		translate.get('common.file-analysing').subscribe((res: string) => {
+        	this.uplaodingMessageFileAnalysing =  res;
+        });
+		translate.get('common.show-result').subscribe((res: string) => {
+        	this.uplaodingMessageShowResult =  res;
+        });
 	}
 	
 	ngOnInit() {
@@ -67,6 +92,58 @@ export class CreateInvoiceComponent extends InvoiceBaseComponent implements OnIn
 		super.ngOnInit();
 		
 	}
+	
+	scanOcrProgress(fileInput: any) {
+		
+		this.ocrScanFile = <File>fileInput.target.files[0];
+		this.uplaodingFileName = this.ocrScanFile.name;
+	}
+	
+	uploadOcrScanFile(){
+		
+		this.intervalValue = 0;
+		this.showUploading = true;
+		this.uplaodingMessage = this.uplaodingMessageUploading + " ...";
+		
+		//uplaodingMessageUploading :string = "";
+		//uplaodingMessageFileAnalysing :string = "";
+		//uplaodingMessageShowResult :string = "";
+
+		
+		/*this.intervalId = setInterval(() =>{ 
+
+			this.intervalValue += 10;
+			
+			if(this.intervalValue >= 70){
+				clearInterval(this.intervalId);
+				//this.showUploading = false;
+			}
+			
+			
+		}, 3000);*/
+		
+		this.editService.uploadOcrScanFiles(this.ocrScanFile).subscribe(
+		        (result) => {		        	
+		            console.log("upload invoice file result", result);
+		            
+		            this.intervalValue += 33;
+		            this.uplaodingMessage = this.uplaodingMessageFileAnalysing + " ...";
+		            
+		            
+		            
+		        },
+		        response => {
+		        	console.log("Error in upload invoice file", response);
+		        	this.showUploading = false;
+		        	this.errorService.showErrorResponse(response);
+		        },
+		        () => {
+		        	//this.intervalValue = 0;
+		        	//this.showUploading = false;     
+		        }
+		    );	   
+	}
+	
 	
 	protected loadInitialData(){
 		

@@ -43,10 +43,10 @@ public abstract class WorkflowDataControllerBase<W extends IWorkflow, WS extends
   private IWorkflowHandler<W, WS> workflowHandler;
 
   @Autowired
-  private IUserAccess             userAccess;
+  private IUserAccess userAccess;
 
   @Autowired
-  private IUploadFileManager      uploadFileManager;
+  protected IUploadFileManager uploadFileManager;
 
   @ResponseStatus(HttpStatus.OK)
   @PostMapping(path = { "/initcreate" })
@@ -54,12 +54,13 @@ public abstract class WorkflowDataControllerBase<W extends IWorkflow, WS extends
   public Map<String, Object> loadWorkflowCreateData()
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    final Map<String, Object> map         = new HashMap<>();
+    final Map<String, Object> map = new HashMap<>();
 
-    final W                   newWorkflow = this.generateInitialWorkflow(this.getLoggedUser().getIdentity());
+    final W newWorkflow = this.generateInitialWorkflow(this.getLoggedUser().getIdentity());
 
-    final WS                  workflowReq = this.generateInitialWorkflowSaveRequest(newWorkflow,
-        newWorkflow.getHasActiveAction() ? newWorkflow.getActiveAction().getCurrentStep().getExpireDays() : 15);
+    final WS workflowReq = this
+        .generateInitialWorkflowSaveRequest(newWorkflow,
+            newWorkflow.getHasActiveAction() ? newWorkflow.getActiveAction().getCurrentStep().getExpireDays() : 15);
 
     map.put("workflowSaveRequest", workflowReq);
 
@@ -72,13 +73,13 @@ public abstract class WorkflowDataControllerBase<W extends IWorkflow, WS extends
   public Map<String, Object> loadWorkflowEditData(@PathVariable final String workflowIdentity)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    final Map<String, Object> map         = new HashMap<>();
+    final Map<String, Object> map = new HashMap<>();
 
-    final W                   workflow    = this.workflowHandler.readWorkflow(workflowIdentity);
+    final W workflow = this.workflowHandler.readWorkflow(workflowIdentity);
 
-    final Integer             expireDays  = workflow.getHasActiveAction() ? workflow.getActiveAction().getCurrentStep().getExpireDays() : 0;
+    final Integer expireDays = workflow.getHasActiveAction() ? workflow.getActiveAction().getCurrentStep().getExpireDays() : 0;
 
-    final WS                  saveRequest = this.generateInitialWorkflowSaveRequest(workflow, expireDays);
+    final WS saveRequest = this.generateInitialWorkflowSaveRequest(workflow, expireDays);
 
     map.put("workflowSaveRequest", saveRequest);
 
@@ -106,15 +107,16 @@ public abstract class WorkflowDataControllerBase<W extends IWorkflow, WS extends
     if (files.length > 0) {
       final List<UploadFileSavingData> saveFiles = new ArrayList<>();
       for (int i = 0; i < files.length; i++) {
-        final String ext   = FileSavingData.getExtention(files[i]);
-        String       title = titles.length > i ? titles[i] : "";
+        final String ext = FileSavingData.getExtention(files[i]);
+        String title = titles.length > i ? titles[i] : "";
         if (StringUtils.isEmpty(title)) {
           title = files[i].getOriginalFilename();
           title = ext.isEmpty() == false ? title.substring(0, title.length() - ext.length() - 1) : title;
         }
 
-        saveFiles.add(new UploadFileSavingData(files[i], title, ext, EIdentity.NOT_SET.getIdentity(), "no-action",
-            this.getLoggedCompany().getIdentity()));
+        saveFiles
+            .add(new UploadFileSavingData(files[i], title, ext, EIdentity.NOT_SET.getIdentity(), "no-action",
+                this.getLoggedCompany().getIdentity()));
       }
 
       tempFiles = this.uploadFileManager.saveInTemp(saveFiles);
