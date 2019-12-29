@@ -1,5 +1,6 @@
 package com.pth.iflow.gui.controller.data;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
@@ -33,6 +34,9 @@ import com.pth.iflow.gui.services.IMessagesHelper;
 import com.pth.iflow.gui.services.IWorkflowHandler;
 import com.pth.iflow.gui.services.UiMenuService;
 import com.pth.iflow.gui.services.impl.workflow.WorkflowHandlerSelect;
+
+import net.sourceforge.tess4j.Tesseract;
+import net.sourceforge.tess4j.TesseractException;
 
 @Controller
 @RequestMapping(value = "/general/data")
@@ -170,4 +174,23 @@ public class GeneralDataController extends GuiLogedControllerBase {
 
     return this.getSessionUserInfo() != null && this.getSessionUserInfo().isValid();
   }
+
+  @ResponseStatus(HttpStatus.OK)
+  @GetMapping(path = { "/testocr" })
+  @ResponseBody
+  public String testOcr() throws IllegalStateException, IOException, TesseractException {
+
+    // System.setProperty("jna.library.path", "C:\\Git\\home\\iflow\\iflow-java\\iflow\\gui\\src\\main\\resources\\tess4dlls");
+
+    System.out.println(System.getProperty("jna.library.path"));
+    final File file = new File("E:\\TestRechnung\\2_ohne OCR.pdf");
+    final Tesseract tesseract = new Tesseract();
+    tesseract.setDatapath("F://Softwares//Tess4J//tessdata");
+    tesseract.setLanguage("deu");
+    tesseract.setHocr(true);
+    final String res = tesseract.doOCR(file);
+
+    return res;
+  }
+
 }

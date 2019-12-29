@@ -107,6 +107,7 @@ public class SocketDataController extends GuiSocketControllerBase {
           result.setStatus("error");
           result.setErrorMessage(e.getLocalizedMessage());
           result.setErrorDetail(e.getStackTrace());
+          System.out.println(e);
         }
         catch (final Exception e) {
 
