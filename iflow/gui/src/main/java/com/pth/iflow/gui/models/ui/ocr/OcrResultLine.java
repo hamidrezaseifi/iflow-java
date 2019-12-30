@@ -9,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 
 public class OcrResultLine extends OcrResultItem {
 
+  private static final int WORD_VALUE_RIGHT_LEFT_DIFF = 150;
   private List<OcrResultWord> words = new ArrayList<>();
   private float baselineX, baselineY;
   private float xDescenders, xAscenders;
@@ -166,7 +167,7 @@ public class OcrResultLine extends OcrResultItem {
         final int leftDiff = Math.abs(listWord.getBox().getLeft() - word.getBox().getLeft());
         final int rightDiff = Math.abs(listWord.getBox().getRight() - word.getBox().getRight());
 
-        if (leftDiff < 50 || rightDiff < 50) {
+        if (leftDiff < WORD_VALUE_RIGHT_LEFT_DIFF || rightDiff < WORD_VALUE_RIGHT_LEFT_DIFF) {
           if (listWord.IsValueTypeCorrect(valueType)) {
             clonedWord.getValue().add(listWord.clone());
           }

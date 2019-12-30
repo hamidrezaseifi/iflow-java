@@ -54,22 +54,22 @@ public class OcrResultItem {
 
   public boolean isLeftOf(final OcrResultItem item) {
 
-    return item.getBox().isLeftOf(this.getBox());
+    return this.getBox().isLeftOf(item.getBox());
   }
 
   public boolean isRightOf(final OcrResultItem item) {
 
-    return item.getBox().isRightOf(this.getBox());
+    return this.getBox().isRightOf(item.getBox());
   }
 
   public boolean isTopOf(final OcrResultItem item) {
 
-    return item.getBox().isTopOf(this.getBox());
+    return this.getBox().isTopOf(item.getBox());
   }
 
   public boolean isBottomOf(final OcrResultItem item) {
 
-    return item.getBox().isBottomOf(this.getBox());
+    return this.getBox().isBottomOf(item.getBox());
   }
 
 }
