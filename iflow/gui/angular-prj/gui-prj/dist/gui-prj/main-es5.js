@@ -3628,6 +3628,9 @@ var __spread = (this && this.__spread) || function () {
                                 _this.unsubscribe();
                                 _this.intervalValue += 33;
                                 _this.uplaodingMessage = _this.uplaodingMessageShowResult + " ...";
+                                if (parsedMessage.words) {
+                                    _this.foundWords = parsedMessage.words;
+                                }
                             }
                             if (parsedMessage.status === "error" && parsedMessage.errorMessage) {
                                 _this.unsubscribe();

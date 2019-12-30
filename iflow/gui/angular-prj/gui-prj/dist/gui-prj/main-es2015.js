@@ -4031,6 +4031,9 @@ let CreateInvoiceComponent = class CreateInvoiceComponent extends _invoice_base_
                     this.unsubscribe();
                     this.intervalValue += 33;
                     this.uplaodingMessage = this.uplaodingMessageShowResult + " ...";
+                    if (parsedMessage.words) {
+                        this.foundWords = parsedMessage.words;
+                    }
                 }
                 if (parsedMessage.status === "error" && parsedMessage.errorMessage) {
                     this.unsubscribe();
