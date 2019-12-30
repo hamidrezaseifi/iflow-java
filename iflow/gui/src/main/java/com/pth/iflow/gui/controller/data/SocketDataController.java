@@ -5,6 +5,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -18,6 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.pth.iflow.gui.controller.GuiSocketControllerBase;
 import com.pth.iflow.gui.models.ui.GuiSocketMessage;
 import com.pth.iflow.gui.models.ui.enums.ESocketCommands;
+import com.pth.iflow.gui.models.ui.ocr.OcrResultValueType;
+import com.pth.iflow.gui.models.ui.ocr.OcrResultWord;
+import com.pth.iflow.gui.models.ui.ocr.OcrResults;
 
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
@@ -33,7 +39,7 @@ public class SocketDataController extends GuiSocketControllerBase {
   @SendTo("/socket/test")
   public GuiSocketMessage greeting(final GuiSocketMessage message) throws Exception {
 
-    final String sentMessage = message.containsKey("sentMessage") ? message.get("sentMessage") : "not found!";
+    final String sentMessage = message.containsKey("sentMessage") ? message.get("sentMessage").toString() : "not found!";
 
     final GuiSocketMessage result = GuiSocketMessage.generate("received");
 
@@ -87,6 +93,24 @@ public class SocketDataController extends GuiSocketControllerBase {
           writer.write(hocrResult);
 
           writer.close();
+
+          // final OcrResults results = OcrResults.loadFromHocrFile(hocrPath);
+          final OcrResults results = OcrResults.loadFromHocrText(hocrResult);
+
+          final Set<OcrResultWord> amountWorldList = results.findWord("betrag", false, false, OcrResultValueType.FLOAT);
+          final Set<OcrResultWord> senderWorldList = results.findWord("sender", false, false, OcrResultValueType.TEXT);
+          final Set<OcrResultWord> numberWorldList = results
+              .findWords(new String[] { "R.-Nr.", "Rg-Nr", "R. Nummer", "Rg-Nummer", "Rechnungsnummer" }, false, false,
+                  OcrResultValueType.TEXT);
+          final Set<OcrResultWord> dateWorldList = results.findWord("Datum", false, false, OcrResultValueType.DATE);
+
+          final Map<String, Set<OcrResultWord>> words = new HashMap<>();
+          words.put("amount", amountWorldList);
+          words.put("sender", senderWorldList);
+          words.put("number", numberWorldList);
+          words.put("date", dateWorldList);
+
+          result.setWords(words);
 
           result.setStatus("done");
         }

@@ -14,7 +14,7 @@ import { LoadingServiceService } from '../../../services/loading-service.service
 import { ErrorServiceService } from '../../../services/error-service.service';
 import { InvoiceBaseComponent } from '../../invoice-base.component';
 
-import { User, Department, DepartmentGroup, GeneralData } from '../../../ui-models';
+import { User, Department, DepartmentGroup, GeneralData, OcrWord } from '../../../ui-models';
 import { WorkflowProcessCommand, Workflow, AssignItem, FileTitle, AssignType, WorkflowUploadFileResult, InvoiceType } from '../../../wf-models';
 import { InvoiceWorkflowSaveRequest } from '../../../wf-models/invoice-workflow-save-request';
 import { InvoiceWorkflowSaveRequestInit } from '../../../wf-models/invoice-workflow-save-request-init';
@@ -49,6 +49,7 @@ export class CreateInvoiceComponent extends InvoiceBaseComponent implements OnIn
 
 	public subscribed: boolean;
 	
+	foundWords :OcrWord[];
 	
 	stompClient = null;
 
@@ -162,7 +163,12 @@ export class CreateInvoiceComponent extends InvoiceBaseComponent implements OnIn
 			if(parsedMessage.status === "done"){
 				this.unsubscribe();
 	            this.intervalValue += 33;
-	            this.uplaodingMessage = this.uplaodingMessageShowResult + " ...";			
+	            this.uplaodingMessage = this.uplaodingMessageShowResult + " ...";
+
+	            if(parsedMessage.words){
+	            	this.foundWords = <OcrWord[]>parsedMessage.words;
+	            }
+	            
 			}
 			if(parsedMessage.status === "error" && parsedMessage.errorMessage){
 				this.unsubscribe();

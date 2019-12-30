@@ -3,11 +3,13 @@ package com.pth.iflow.gui.models.ui;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import com.pth.iflow.common.response.IFlowErrorRestResponse;
 import com.pth.iflow.gui.models.ui.enums.ESocketCommands;
+import com.pth.iflow.gui.models.ui.ocr.OcrResultWord;
 
-public class GuiSocketMessage extends HashMap<String, String> {
+public class GuiSocketMessage extends HashMap<String, Object> {
 
   private static final long serialVersionUID = 3425395554514027407L;
 
@@ -38,7 +40,7 @@ public class GuiSocketMessage extends HashMap<String, String> {
 
   public String getFileNotHash() {
 
-    final String encodedString = this.get(ESocketCommands.FILE_HASH.getValue());
+    final String encodedString = this.get(ESocketCommands.FILE_HASH.getValue()).toString();
 
     final String decodedString = new String(Base64.getDecoder().decode(encodedString));
 
@@ -60,7 +62,7 @@ public class GuiSocketMessage extends HashMap<String, String> {
 
   public String getHocrFileNotHash() {
 
-    final String encodedString = this.get(ESocketCommands.HOCRFILE_HASH.getValue());
+    final String encodedString = this.get(ESocketCommands.HOCRFILE_HASH.getValue()).toString();
 
     final String decodedString = new String(Base64.getDecoder().decode(encodedString));
 
@@ -82,7 +84,7 @@ public class GuiSocketMessage extends HashMap<String, String> {
 
   public String getStatus() {
 
-    return this.get(ESocketCommands.STATUS.getValue());
+    return this.get(ESocketCommands.STATUS.getValue()).toString();
   }
 
   public void setStatus(final String status) {
@@ -92,7 +94,7 @@ public class GuiSocketMessage extends HashMap<String, String> {
 
   public String getCommand() {
 
-    return this.get(ESocketCommands.COMMAND.getValue());
+    return this.get(ESocketCommands.COMMAND.getValue()).toString();
   }
 
   public void setCommand(final String command) {
@@ -100,9 +102,14 @@ public class GuiSocketMessage extends HashMap<String, String> {
     this.put(ESocketCommands.COMMAND.getValue(), command);
   }
 
+  public void setWords(final Map<String, Set<OcrResultWord>> words) {
+
+    this.put(ESocketCommands.WORDS.getValue(), words);
+  }
+
   public String getErrorMessage() {
 
-    return this.get(ESocketCommands.ERROR_MESSAGE.getValue());
+    return this.get(ESocketCommands.ERROR_MESSAGE.getValue()).toString();
   }
 
   public void setErrorMessage(final String error) {
@@ -112,7 +119,7 @@ public class GuiSocketMessage extends HashMap<String, String> {
 
   public String getErrorDetail() {
 
-    return this.get(ESocketCommands.ERROR_DETAIL.getValue());
+    return this.get(ESocketCommands.ERROR_DETAIL.getValue()).toString();
   }
 
   public void setErrorDetail(final String error) {

@@ -1,0 +1,41 @@
+package com.pth.iflow.gui.models.ui.ocr;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+public class OcrResultArea extends OcrResultItem {
+
+  private List<OcrResultPar> pars = new ArrayList<>();
+
+  public OcrResultArea() {
+
+  }
+
+  public List<OcrResultPar> getPars() {
+
+    return this.pars;
+  }
+
+  public void setPars(final List<OcrResultPar> pars) {
+
+    this.pars = pars;
+  }
+
+  public void addPar(final OcrResultPar par) {
+
+    this.pars.add(par);
+  }
+
+  public Collection<? extends OcrResultWord> findWord(final String searchWord, final boolean exact, final boolean caseSensitive,
+      final OcrResultValueType valueType) {
+
+    final List<OcrResultWord> words = new ArrayList<>();
+
+    for (final OcrResultPar par : this.pars) {
+      words.addAll(par.findWord(searchWord, exact, caseSensitive, valueType));
+    }
+
+    return words;
+  }
+}
