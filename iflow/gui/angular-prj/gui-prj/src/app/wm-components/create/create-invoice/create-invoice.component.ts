@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import {TranslateService} from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 import { HttpClient, HttpEventType } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { DateAdapter } from '@angular/material';
@@ -31,6 +31,7 @@ export class CreateInvoiceComponent extends InvoiceBaseComponent implements OnIn
 
 	ocrScanFile: File;
 	showUploading :boolean = false;
+	listening :boolean = false;
 
 	uplaodingMessage :string = "";
 	uplaodingFileName :string = "...";
@@ -49,7 +50,10 @@ export class CreateInvoiceComponent extends InvoiceBaseComponent implements OnIn
 
 	public subscribed: boolean;
 	
-	foundWords :OcrWord[];
+	foundWords :OcrWord[] = [];
+	showOcrDetails :boolean = false;
+	scanedPdfPath :string = "";
+	scanedHocrPath :string = "";
 	
 	stompClient = null;
 
@@ -114,6 +118,7 @@ export class CreateInvoiceComponent extends InvoiceBaseComponent implements OnIn
 	uploadOcrScanFile(){
 		
 		this.intervalValue = 0;
+		this.showOcrDetails = false;
 		this.showUploading = true;
 		this.uplaodingMessage = this.uplaodingMessageUploading + " ...";
 		
@@ -156,6 +161,10 @@ export class CreateInvoiceComponent extends InvoiceBaseComponent implements OnIn
 	
 	public onRecevieResponse = (message: Message) => {
 
+		if(this.listening === false){
+			return;
+		}
+		
 		console.log("Message Received: " , message.body);
 		var parsedMessage = JSON.parse(message.body);
 		
@@ -167,6 +176,11 @@ export class CreateInvoiceComponent extends InvoiceBaseComponent implements OnIn
 
 	            if(parsedMessage.words){
 	            	this.foundWords = <OcrWord[]>parsedMessage.words;
+	            	console.log("Received Words: " , this.foundWords);
+	            	this.scanedPdfPath = parsedMessage.fileHash;
+	            	this.scanedHocrPath = parsedMessage.hocrFileHash;
+	            	this.showUploading = false;
+	            	this.showOcrDetails = true;
 	            }
 	            
 			}
@@ -190,10 +204,11 @@ export class CreateInvoiceComponent extends InvoiceBaseComponent implements OnIn
 	    this.subscription = this.messages.subscribe(this.onRecevieResponse);
 
 	    this.setConnected(true);
-		
+		this.listening = true;
 	}
 
 	unsubscribe() {
+		this.listening = false;
 	    if (!this.subscribed) {
 	      return;
 	    }

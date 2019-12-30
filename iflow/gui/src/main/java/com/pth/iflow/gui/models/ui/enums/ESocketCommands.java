@@ -6,8 +6,8 @@ public enum ESocketCommands {
   COMMAND("command"),
   ERROR_MESSAGE("errorMessage"),
   ERROR_DETAIL("errorDetail"),
-  FILE_HASH("filehash"),
-  HOCRFILE_HASH("hocr-filehash"),
+  FILE_HASH("fileHash"),
+  HOCRFILE_HASH("hocrFileHash"),
   WORDS("words"),
   MESSAGE_RELOAD("message-reload");
 

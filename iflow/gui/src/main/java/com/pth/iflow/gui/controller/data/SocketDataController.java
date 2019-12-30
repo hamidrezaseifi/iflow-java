@@ -100,15 +100,15 @@ public class SocketDataController extends GuiSocketControllerBase {
           final Set<OcrResultWord> amountWorldList = results.findWord("betrag", false, false, OcrResultValueType.FLOAT);
           final Set<OcrResultWord> senderWorldList = results.findWord("sender", false, false, OcrResultValueType.TEXT);
           final Set<OcrResultWord> numberWorldList = results
-              .findWords(new String[] { "R.-Nr.", "Rg-Nr", "R. Nummer", "Rg-Nummer", "Rechnungsnummer" }, false, false,
+              .findWords(new String[] { "R.-Nr.", "Rg-Nr", "R. Nummer", "Rg-Nummer", "Rechnungsnummer", "nr." }, false, false,
                   OcrResultValueType.TEXT);
           final Set<OcrResultWord> dateWorldList = results.findWord("Datum", false, false, OcrResultValueType.DATE);
 
           final Map<String, Set<OcrResultWord>> words = new HashMap<>();
-          words.put("amount", amountWorldList);
-          words.put("sender", senderWorldList);
-          words.put("number", numberWorldList);
-          words.put("date", dateWorldList);
+          words.put("invoice-paymentamount", amountWorldList);
+          words.put("invoice-sender", senderWorldList);
+          words.put("invoice-invoicenumber", numberWorldList);
+          words.put("invoice-invoicedate", dateWorldList);
 
           result.setWords(words);
 

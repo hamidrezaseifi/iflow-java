@@ -33,6 +33,7 @@
     "net": "^1.0.2",
     "ng-angular8-datatable": "^0.9.11",
     "ng2-stomp-service": "^1.2.2",
+    "ngx-extended-pdf-viewer": "^1.8.4",
     "ngx-toastr": "^11.2.1",
     "popper.js": "^1.16.0",
     "rxjs": "^6.4.0",

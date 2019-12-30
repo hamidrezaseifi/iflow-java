@@ -334,6 +334,14 @@ input.short-input{
     background-color: white;
 }
 
+.scanned-details-dialog{
+	width: 90vw;
+    max-width: 90vw;
+    min-width: 90vw;
+    background-color: white;
+    pointer-events: all;
+}
+
 .uploading-progress {
     height: 30px;
     margin: 0px 10px;

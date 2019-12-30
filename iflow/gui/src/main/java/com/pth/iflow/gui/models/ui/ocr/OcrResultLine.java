@@ -151,7 +151,7 @@ public class OcrResultLine extends OcrResultItem {
       if (listWord.isRightOf(clonedWord)) {
 
         if (listWord.IsValueTypeCorrect(valueType)) {
-          clonedWord.getValue().add(listWord.clone());
+          clonedWord.addValue(listWord.clone());
         }
 
         break;
@@ -169,7 +169,7 @@ public class OcrResultLine extends OcrResultItem {
 
         if (leftDiff < WORD_VALUE_RIGHT_LEFT_DIFF || rightDiff < WORD_VALUE_RIGHT_LEFT_DIFF) {
           if (listWord.IsValueTypeCorrect(valueType)) {
-            clonedWord.getValue().add(listWord.clone());
+            clonedWord.addValue(listWord.clone());
           }
 
           break;

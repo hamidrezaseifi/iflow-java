@@ -9,7 +9,7 @@ public class OcrResultWord extends OcrResultItem {
 
   private boolean isStrong;
   private String text;
-  private Set<OcrResultWord> value = new HashSet<>();
+  private Set<OcrResultWord> values = new HashSet<>();
   private final OcrResultLine parent;
 
   public OcrResultWord(final OcrResultLine parent) {
@@ -37,14 +37,19 @@ public class OcrResultWord extends OcrResultItem {
     this.text = text;
   }
 
-  public Set<OcrResultWord> getValue() {
+  public Set<OcrResultWord> getValues() {
 
-    return this.value;
+    return this.values;
   }
 
-  public void setValue(final Set<OcrResultWord> value) {
+  public void setValues(final Set<OcrResultWord> values) {
 
-    this.value = value;
+    this.values = values;
+  }
+
+  public void addValue(final OcrResultWord value) {
+
+    this.values.add(value);
   }
 
   @Override

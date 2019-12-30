@@ -1,0 +1,45 @@
+
+.scanned-item-container{
+	background-color: white;	
+	width: 100%;
+	margin: 0;
+}
+
+.scanned-item:not(:disabled){
+	cursor: pointer;
+}
+
+.scanned-item:not(:disabled):hover{
+	background-color: #e8e8fc;
+}
+
+.scanned-item-list-container, 
+.scanned-item-detail-container,
+.scanned-item-preview-container {
+	padding: 10px;
+	margin: 5px;
+	border-radius: 5px;
+	height: 80vh;
+	overflow-x: hidden;
+	overflow-y: auto;
+	background-color: #e0e0e0;
+}
+
+.scanned-item-list-container {
+	max-width: 260px;
+	flex: 0 0 260px;
+}
+
+.scanned-item-detail-container {
+	max-width: 260px;
+	flex: 0 0 260px;
+}
+
+.scanned-item-preview-container {
+	flex: 0 0 calc(100% - 550px);
+    max-width: calc(100% - 550px);
+}
+
+.word-list-item.fade:not(.show) {
+    display: none;
+}

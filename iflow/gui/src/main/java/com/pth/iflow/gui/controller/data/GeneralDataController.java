@@ -9,12 +9,14 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +28,8 @@ import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.controller.GuiLogedControllerBase;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.WorkflowMessage;
+import com.pth.iflow.gui.models.ui.FileSavingData;
+import com.pth.iflow.gui.models.ui.GuiSocketMessage;
 import com.pth.iflow.gui.models.ui.UiMenuItem;
 import com.pth.iflow.gui.models.workflow.IWorkflow;
 import com.pth.iflow.gui.models.workflow.workflow.Workflow;
@@ -153,6 +157,21 @@ public class GeneralDataController extends GuiLogedControllerBase {
       return workflow;
     }
     throw new GuiCustomizedException("not loggeg in!");
+  }
+
+  @ResponseStatus(HttpStatus.OK)
+  @GetMapping(path = { "/file/view/{hashfilepath}" })
+  public void
+      viewWorkflowFile(final Model model, @PathVariable(required = true) final String hashfilepath, final HttpServletResponse response)
+          throws GuiCustomizedException, IOException, IFlowMessageConversionFailureException {
+
+    final String readFilePath = GuiSocketMessage.decodeHashPath(hashfilepath);
+    final String extention = FileSavingData.getExtention(readFilePath);
+
+    final FileSavingData fData = new FileSavingData(extention);
+
+    fData.prepareReposne(readFilePath, response);
+
   }
 
   @GetMapping(path = { "/testsocket/{data}" })

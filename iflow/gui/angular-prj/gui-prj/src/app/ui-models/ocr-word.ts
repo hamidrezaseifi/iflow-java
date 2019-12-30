@@ -7,6 +7,7 @@ export interface OcrWord {
 	id: string;
 	title: string;
 	className: string;
+	values :OcrWord[];
 }
 
 export interface OcrBox {

@@ -42,7 +42,7 @@ public class GuiSocketMessage extends HashMap<String, Object> {
 
     final String encodedString = this.get(ESocketCommands.FILE_HASH.getValue()).toString();
 
-    final String decodedString = new String(Base64.getDecoder().decode(encodedString));
+    final String decodedString = GuiSocketMessage.decodeHashPath(encodedString);
 
     return decodedString;
 
@@ -64,7 +64,7 @@ public class GuiSocketMessage extends HashMap<String, Object> {
 
     final String encodedString = this.get(ESocketCommands.HOCRFILE_HASH.getValue()).toString();
 
-    final String decodedString = new String(Base64.getDecoder().decode(encodedString));
+    final String decodedString = GuiSocketMessage.decodeHashPath(encodedString);
 
     return decodedString;
 
@@ -137,6 +137,13 @@ public class GuiSocketMessage extends HashMap<String, Object> {
     final GuiSocketMessage message = new GuiSocketMessage();
     message.put(ESocketCommands.STATUS.getValue(), status);
     return message;
+  }
+
+  public static String decodeHashPath(final String encodedString) {
+
+    final String decodedString = new String(Base64.getDecoder().decode(encodedString));
+
+    return decodedString;
   }
 
   @Override

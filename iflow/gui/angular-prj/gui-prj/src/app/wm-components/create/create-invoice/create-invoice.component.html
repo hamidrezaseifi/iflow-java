@@ -209,7 +209,7 @@
 		</div>
 
 
-		<div class="modal fade" [ngClass]="{'show' : showUploading}" tabindex="-1" *ngIf="showUploading" role="dialog">
+		<div class="modal fade" [ngClass]="{'show' : showUploading}" tabindex="-1" *ngIf="showUploading" role="dialog" id="scanfileuploadprocessdialog">
 			<div class="modal-dialog uploading-dialog " role="document">
 				<div class="loading-upload-icon"></div>
 				<div class="progress uploading-progress">
@@ -218,3 +218,13 @@
 				</div>			
 			</div>
 		</div>
+
+		<div class="modal fade show" tabindex="-1" *ngIf="showOcrDetails" role="dialog" id="scanneddetailsdialog">
+			<div class="modal-dialog scanned-details-dialog" role="document">
+				<div class="modal-body">
+					<app-invoice-ocr-detail [foundWords]="foundWords" [scanedPdfPath]="scanedPdfPath" [scanedHocrPath]="scanedHocrPath" ></app-invoice-ocr-detail>
+				</div>			
+			</div>
+		</div>
+		
+		

@@ -280,6 +280,13 @@ public class FileSavingData {
     return ext;
   }
 
+  public static String getExtention(final String filePath) {
+
+    final int pointIndex = filePath.lastIndexOf(".");
+    final String ext = pointIndex > 2 ? filePath.substring(pointIndex + 1) : "";
+    return ext;
+  }
+
   public ResponseEntity<InputStreamResource> generateFileReposneEntity(final String readFilePath) throws FileNotFoundException {
 
     final File file = new File(readFilePath);
