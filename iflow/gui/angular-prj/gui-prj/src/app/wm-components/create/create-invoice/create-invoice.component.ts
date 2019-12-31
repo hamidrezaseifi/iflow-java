@@ -328,5 +328,9 @@ export class CreateInvoiceComponent extends InvoiceBaseComponent implements OnIn
 		    );	       	
 		
 	}
+	
+	hideOcrDetails(){
+		this.showOcrDetails = false;
+	}
 
 }

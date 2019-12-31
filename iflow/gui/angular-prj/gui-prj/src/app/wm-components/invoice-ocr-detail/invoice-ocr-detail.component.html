@@ -22,11 +22,11 @@
 			
 		</div>
 	</div>  
-	<div class="scanned-item-preview-container">
+	<div class="scanned-item-preview-container" #scannedItemPreviewContainer>
 		
-		<pdf-viewer *ngIf="fileIsPdf" [src]="fileViewUrl" #scannedItemPreviewContainer useBrowserLocale="true" [zoom]="pdfZoom" [show-all]="showAllPages" [page]="pdfPageIndex" height="99%"></pdf-viewer>
+		<pdf-viewer *ngIf="fileIsPdf" [src]="fileViewUrl" useBrowserLocale="true" [zoom]="pdfZoom" [show-all]="showAllPages" [page]="pdfPageIndex" height="99%"></pdf-viewer>
 
-		<div *ngIf="fileIsImage" id="scannedItemPreviewContainer" #scannedItemPreviewContainer class="scanned-item-preview-image" [style.width.px]="previewWidth"
+		<div *ngIf="fileIsImage" class="scanned-item-preview-image" [style.width.px]="previewWidth"
 			 [style.backgroundImage]="fileViewUrl" ></div>
 		 
 		<div class="selected-word-area" *ngIf="showSelectedArea" [style.width.px]="selectedAreaWidth" [style.height.px]="selectedAreaHeight" 

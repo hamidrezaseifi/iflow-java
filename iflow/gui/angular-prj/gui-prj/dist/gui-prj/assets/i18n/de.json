@@ -90,6 +90,7 @@
 	"common.uploading" : "hochladen",
 	"common.file-analysing" : "Datei analysieren",
 	"common.show-result" : "Ergebnis anzeigen",
+	"common.scann-document-result" : "Ergebnis des Dokumentenscans",
 	"workflow-title" : "Titel",
 	"workflow-type" : "Workflow-Typ",
 	"workflow-comments" : "Kommentar",

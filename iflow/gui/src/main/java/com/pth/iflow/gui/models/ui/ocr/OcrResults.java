@@ -58,7 +58,8 @@ public class OcrResults {
 
     for (final String searchWord : searchWords) {
 
-      words.addAll(this.findWord(searchWord, exact, caseSensitive, valueType));
+      Set<OcrResultWord> foundWords = this.findWord(searchWord, exact, caseSensitive, valueType);
+      words.addAll(foundWords);
 
     }
     return words;

@@ -222,10 +222,20 @@
 
 		<div class="modal fade show" tabindex="-1" *ngIf="showOcrDetails" role="dialog" id="scanneddetailsdialog">
 			<div class="modal-dialog scanned-details-dialog" role="document">
+				<div class="modal-header">
+			 		<h5 class="modal-title">{{ 'common.scann-document-result' | translate }}</h5>
+					<button type="button" class="close" (click)="hideOcrDetails()" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>			
 				<div class="modal-body">
 					<app-invoice-ocr-detail [foundWords]="foundWords" [scanedPdfPath]="scanedPdfPath" [scanedHocrPath]="scanedHocrPath" 
 					[fileIsPdf]="fileIsPdf" [fileIsImage]="fileIsImage" [imageSizeX]="imageSizeX" [imageSizeY]="imageSizeY" ></app-invoice-ocr-detail>
-				</div>			
+				</div>	
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" (click)="hideOcrDetails()">{{ 'common.apply' | translate }}</button>
+					<button type="button" class="btn btn-secondary" (click)="hideOcrDetails()">{{ 'common.close' | translate }}</button>
+				</div>						
 			</div>
 		</div>
 		

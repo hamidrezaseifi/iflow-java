@@ -26,18 +26,18 @@
 }
 
 .scanned-item-list-container {
-	max-width: 260px;
-	flex: 0 0 260px;
+	max-width: calc(50% - 325px);
+    flex: 0 0 calc(50% - 325px);
 }
 
 .scanned-item-detail-container {
-	max-width: 260px;
-	flex: 0 0 260px;
+	max-width: calc(50% - 325px);
+    flex: 0 0 calc(50% - 325px);
 }
 
 .scanned-item-preview-container {
-	flex: 0 0 calc(100% - 550px);
-    max-width: calc(100% - 550px);
+	max-width: 620px;
+	flex: 0 0 620px;
 }
 
 .found-item {

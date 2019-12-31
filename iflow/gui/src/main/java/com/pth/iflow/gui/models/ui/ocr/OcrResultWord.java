@@ -82,6 +82,11 @@ public class OcrResultWord extends OcrResultItem {
       return false;
     }
 
+    if (valueType == OcrResultValueType.TEXT) {
+      return this.text.isEmpty() == false;
+
+    }
+
     if (valueType == OcrResultValueType.INTEGER) {
       return this.text.matches("-?(\\d+[.]){1,10}\\d+");
 

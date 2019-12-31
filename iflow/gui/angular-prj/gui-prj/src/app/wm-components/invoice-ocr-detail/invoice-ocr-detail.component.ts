@@ -49,7 +49,8 @@ export class InvoiceOcrDetailComponent implements OnInit, AfterViewInit  {
 	selectedAreaLeft :number = 400;
 	selectedAreaTop :number = 200;
 	
-	previewWidth :number = 100;
+	previewWidth :number = 600;
+	previewHeight :number = 1100;
 	
 	private yScale :number = 1;
 	private previewLeft :number = 1;
@@ -80,15 +81,13 @@ export class InvoiceOcrDetailComponent implements OnInit, AfterViewInit  {
 	}
 	
 	ngAfterViewInit() {
-		//this.previewContainer.nativeElement.offsetHeight;
 		
 		setTimeout(()=>{
-			this.previewLeft = this.previewContainer.nativeElement.offsetLeft;
+			this.previewLeft = this.previewContainer.nativeElement.offsetLeft + 10;
 			this.previewTop = this.previewContainer.nativeElement.offsetTop;
-			this.yScale = this.previewContainer.nativeElement.offsetHeight / this.imageSizeY;
-			//this.yScale = document.getElementById("scannedItemPreviewContainer").offsetHeight / this.imageSizeY;
-			this.previewWidth = this.yScale * this.imageSizeX;
-		 }, 500);
+			this.yScale = this.previewWidth / this.imageSizeX;
+			this.previewHeight = this.yScale * this.imageSizeY;
+		 }, 100);
 		
 	}
 
@@ -111,8 +110,8 @@ export class InvoiceOcrDetailComponent implements OnInit, AfterViewInit  {
 		this.showSelectedArea = true;
 		this.selectedAreaWidth = selectWidth * this.yScale + 8;
 		this.selectedAreaHeight = selectHeight * this.yScale + 8;
-		this.selectedAreaLeft = this.previewLeft + wordBox.left * this.yScale - 4;
-		this.selectedAreaTop = this.previewTop + wordBox.top * this.yScale - 4;
+		this.selectedAreaLeft = this.previewLeft + (wordBox.left * this.yScale) - 4;
+		this.selectedAreaTop = this.previewTop + (wordBox.top * this.yScale) - 4;
 	}
 	
 	selectDetailItem(key :string){
