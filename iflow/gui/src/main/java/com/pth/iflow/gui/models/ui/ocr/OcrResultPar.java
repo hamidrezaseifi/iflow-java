@@ -8,9 +8,11 @@ import java.util.List;
 public class OcrResultPar extends OcrResultItem {
 
   private List<OcrResultLine> lines = new ArrayList<>();
+  private OcrResultArea parent = null;
 
-  public OcrResultPar() {
+  public OcrResultPar(final OcrResultArea parent) {
 
+    this.parent = parent;
   }
 
   public List<OcrResultLine> getLines() {
@@ -71,6 +73,11 @@ public class OcrResultPar extends OcrResultItem {
     });
 
     return sorted;
+  }
+
+  public OcrResultArea getParent() {
+
+    return this.parent;
   }
 
 }

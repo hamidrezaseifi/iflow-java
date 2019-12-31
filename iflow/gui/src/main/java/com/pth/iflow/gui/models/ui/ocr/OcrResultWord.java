@@ -1,15 +1,15 @@
 package com.pth.iflow.gui.models.ui.ocr;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.apache.commons.lang3.StringUtils;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(value = { "parentPage", "parentLine" })
 public class OcrResultWord extends OcrResultItem {
 
   private boolean isStrong;
   private String text;
-  private Set<OcrResultWord> values = new HashSet<>();
+  private OcrResultWord value;
   private final OcrResultLine parent;
 
   public OcrResultWord(final OcrResultLine parent) {
@@ -37,19 +37,29 @@ public class OcrResultWord extends OcrResultItem {
     this.text = text;
   }
 
-  public Set<OcrResultWord> getValues() {
+  public OcrResultWord getValue() {
 
-    return this.values;
+    return this.value;
   }
 
-  public void setValues(final Set<OcrResultWord> values) {
+  public void setValue(final OcrResultWord value) {
 
-    this.values = values;
+    this.value = value;
   }
 
-  public void addValue(final OcrResultWord value) {
+  public OcrResultLine getParentLine() {
 
-    this.values.add(value);
+    return this.parent;
+  }
+
+  public OcrResultPage getParentPage() {
+
+    return this.parent.getParent().getParent().getParent();
+  }
+
+  public int getPageIndex() {
+
+    return this.getParentPage().getPageNumber();
   }
 
   @Override

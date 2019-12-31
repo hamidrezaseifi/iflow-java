@@ -88,11 +88,11 @@ public class OcrResultLine extends OcrResultItem {
       }
 
       if (exact && inSearchWord.equals(text)) {
-        foundWords.add(this.prepareValue(word, valueType));
+        foundWords.addAll(this.prepareValue(word, valueType));
       }
       else {
         if (text.contains(inSearchWord)) {
-          foundWords.add(this.prepareValue(word, valueType));
+          foundWords.addAll(this.prepareValue(word, valueType));
         }
       }
 
@@ -141,8 +141,14 @@ public class OcrResultLine extends OcrResultItem {
     this.xAscenders = xAscenders;
   }
 
-  private OcrResultWord prepareValue(final OcrResultWord word, final OcrResultValueType valueType) {
+  public OcrResultPar getParent() {
 
+    return this.parent;
+  }
+
+  private List<OcrResultWord> prepareValue(final OcrResultWord word, final OcrResultValueType valueType) {
+
+    final List<OcrResultWord> results = new ArrayList<>();
     final OcrResultWord clonedWord = word.clone();
     List<OcrResultWord> sortedWords = this.getSortedByX();
 
@@ -151,7 +157,8 @@ public class OcrResultLine extends OcrResultItem {
       if (listWord.isRightOf(clonedWord)) {
 
         if (listWord.IsValueTypeCorrect(valueType)) {
-          clonedWord.addValue(listWord.clone());
+          clonedWord.setValue(listWord.clone());
+          results.add(clonedWord);
         }
 
         break;
@@ -169,7 +176,8 @@ public class OcrResultLine extends OcrResultItem {
 
         if (leftDiff < WORD_VALUE_RIGHT_LEFT_DIFF || rightDiff < WORD_VALUE_RIGHT_LEFT_DIFF) {
           if (listWord.IsValueTypeCorrect(valueType)) {
-            clonedWord.addValue(listWord.clone());
+            clonedWord.setValue(listWord.clone());
+            results.add(clonedWord);
           }
 
           break;
@@ -178,7 +186,7 @@ public class OcrResultLine extends OcrResultItem {
       }
     }
 
-    return clonedWord;
+    return results;
   }
 
   protected List<OcrResultWord> getSortedByX() {

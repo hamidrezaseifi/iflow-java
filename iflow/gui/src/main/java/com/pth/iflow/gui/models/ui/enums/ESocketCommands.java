@@ -9,6 +9,13 @@ public enum ESocketCommands {
   FILE_HASH("fileHash"),
   HOCRFILE_HASH("hocrFileHash"),
   WORDS("words"),
+
+  IS_FILE_IMAGE("isFileImage"),
+  IS_FILE_PDF("isFilePdf"),
+  PAGE_COUNT("pageCount"),
+  IMAGE_WIDTH("imageWidth"),
+  IMAGE_HEIGHT("imageHeight"),
+
   MESSAGE_RELOAD("message-reload");
 
   private final String value;

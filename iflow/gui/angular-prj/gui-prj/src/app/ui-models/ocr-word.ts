@@ -7,7 +7,9 @@ export interface OcrWord {
 	id: string;
 	title: string;
 	className: string;
-	values :OcrWord[];
+	value :OcrWord;
+	pageIndex :number;
+
 }
 
 export interface OcrBox {
@@ -15,4 +17,6 @@ export interface OcrBox {
 	right :number;
 	top :number;
 	bottom :number;
+	width :number;
+	height :number;
 }

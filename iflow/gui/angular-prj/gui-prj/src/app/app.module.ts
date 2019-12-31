@@ -12,7 +12,8 @@ import { DataTableModule } from 'ng-angular8-datatable';
 import { MatNativeDateModule } from '@angular/material/core';
 import {StompConfig, StompService} from '@stomp/ng2-stompjs';
 import * as SockJS from 'sockjs-client';
-import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+//import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 import {IFlowMaterialModules} from './material-module';
 
@@ -84,7 +85,8 @@ const stompConfig: StompConfig = {
     MatNativeDateModule,
     IFlowMaterialModules,
     FormsModule,
-    NgxExtendedPdfViewerModule,
+    //NgxExtendedPdfViewerModule,
+    PdfViewerModule,
     TranslateModule.forRoot({
         loader: {
             provide: TranslateLoader,

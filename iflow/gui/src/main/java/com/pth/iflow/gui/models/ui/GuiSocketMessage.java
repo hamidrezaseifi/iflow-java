@@ -132,6 +132,56 @@ public class GuiSocketMessage extends HashMap<String, Object> {
     this.put(ESocketCommands.ERROR_DETAIL.getValue(), IFlowErrorRestResponse.stackListToString(stackTraces));
   }
 
+  public boolean getIsFileImage() {
+
+    return "true".equals(this.get(ESocketCommands.IS_FILE_IMAGE.getValue()).toString());
+  }
+
+  public void setIsFileImage(final boolean value) {
+
+    this.put(ESocketCommands.IS_FILE_IMAGE.getValue(), value);
+  }
+
+  public boolean getIsFilePdf() {
+
+    return "true".equals(this.get(ESocketCommands.IS_FILE_PDF.getValue()).toString());
+  }
+
+  public void setIsFilePdf(final boolean value) {
+
+    this.put(ESocketCommands.IS_FILE_PDF.getValue(), value);
+  }
+
+  public int getPageCount() {
+
+    return Integer.parseInt(this.get(ESocketCommands.PAGE_COUNT.getValue()).toString());
+  }
+
+  public void setPageCount(final int value) {
+
+    this.put(ESocketCommands.PAGE_COUNT.getValue(), value);
+  }
+
+  public int getImageWidth() {
+
+    return Integer.parseInt(this.get(ESocketCommands.IMAGE_WIDTH.getValue()).toString());
+  }
+
+  public void setImageWidth(final int value) {
+
+    this.put(ESocketCommands.IMAGE_WIDTH.getValue(), value);
+  }
+
+  public int getImageHeight() {
+
+    return Integer.parseInt(this.get(ESocketCommands.IMAGE_HEIGHT.getValue()).toString());
+  }
+
+  public void setImageHeight(final int value) {
+
+    this.put(ESocketCommands.IMAGE_HEIGHT.getValue(), value);
+  }
+
   public static GuiSocketMessage generate(final String status) {
 
     final GuiSocketMessage message = new GuiSocketMessage();

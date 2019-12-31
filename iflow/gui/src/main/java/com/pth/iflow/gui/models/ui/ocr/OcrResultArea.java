@@ -7,9 +7,11 @@ import java.util.List;
 public class OcrResultArea extends OcrResultItem {
 
   private List<OcrResultPar> pars = new ArrayList<>();
+  private OcrResultPage parent = null;
 
-  public OcrResultArea() {
+  public OcrResultArea(final OcrResultPage parent) {
 
+    this.parent = parent;
   }
 
   public List<OcrResultPar> getPars() {
@@ -38,4 +40,10 @@ public class OcrResultArea extends OcrResultItem {
 
     return words;
   }
+
+  public OcrResultPage getParent() {
+
+    return this.parent;
+  }
+
 }

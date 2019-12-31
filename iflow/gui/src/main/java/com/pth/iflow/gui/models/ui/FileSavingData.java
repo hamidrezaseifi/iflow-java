@@ -247,29 +247,34 @@ public class FileSavingData {
     return mediaType;
   }
 
-  private boolean isFilePdf() {
+  public boolean isFilePdf() {
 
     return this.fileExtention.toLowerCase().equals("pdf");
   }
 
-  private boolean isFileJpg() {
+  public boolean isFileJpg() {
 
     return this.fileExtention.toLowerCase().equals("jpg");
   }
 
-  private boolean isFileGif() {
+  public boolean isFileGif() {
 
     return this.fileExtention.toLowerCase().equals("gif");
   }
 
-  private boolean isFilePng() {
+  public boolean isFilePng() {
 
     return this.fileExtention.toLowerCase().equals("png");
   }
 
-  private boolean isFileWord() {
+  public boolean isFileWord() {
 
     return this.fileExtention.toLowerCase().equals("doc") || this.fileExtention.toLowerCase().equals("docx");
+  }
+
+  public boolean isFileImage() {
+
+    return this.isFileJpg() || this.isFileGif() || this.isFilePng();
   }
 
   public static String getExtention(final MultipartFile file) {
@@ -277,13 +282,6 @@ public class FileSavingData {
     final String fileName = file.getOriginalFilename();
     final int pointIndex = fileName.lastIndexOf(".");
     final String ext = pointIndex > 2 ? fileName.substring(pointIndex + 1) : "";
-    return ext;
-  }
-
-  public static String getExtention(final String filePath) {
-
-    final int pointIndex = filePath.lastIndexOf(".");
-    final String ext = pointIndex > 2 ? filePath.substring(pointIndex + 1) : "";
     return ext;
   }
 
@@ -313,4 +311,21 @@ public class FileSavingData {
     response.setHeader("Content-disposition", "attachment;filename=" + fileName);
     response.flushBuffer();
   }
+
+  public static String getExtention(final String filePath) {
+
+    final int pointIndex = filePath.lastIndexOf(".");
+    final String ext = pointIndex > 2 ? filePath.substring(pointIndex + 1) : "";
+    return ext;
+  }
+
+  public static FileSavingData generateFromFilePath(final String filePath) {
+
+    final String extention = FileSavingData.getExtention(filePath);
+    final FileSavingData fileSaveData = new FileSavingData(extention);
+    fileSaveData.setFilePath(filePath);
+
+    return fileSaveData;
+  }
+
 }

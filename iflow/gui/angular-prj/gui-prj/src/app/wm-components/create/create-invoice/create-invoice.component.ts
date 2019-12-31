@@ -55,6 +55,11 @@ export class CreateInvoiceComponent extends InvoiceBaseComponent implements OnIn
 	scanedPdfPath :string = "";
 	scanedHocrPath :string = "";
 	
+	fileIsPdf: boolean = true;
+	fileIsImage: boolean = false;
+	imageSizeX :number = 300;
+	imageSizeY :number = 500;
+
 	stompClient = null;
 
 	get debugData() :string{
@@ -179,8 +184,16 @@ export class CreateInvoiceComponent extends InvoiceBaseComponent implements OnIn
 	            	console.log("Received Words: " , this.foundWords);
 	            	this.scanedPdfPath = parsedMessage.fileHash;
 	            	this.scanedHocrPath = parsedMessage.hocrFileHash;
+	            	this.fileIsPdf = parsedMessage.isFilePdf;
+	            	this.fileIsImage = parsedMessage.isFileImage;
+	            	this.imageSizeX = parsedMessage.imageWidth;
+	            	this.imageSizeY = parsedMessage.imageHeight;
+
 	            	this.showUploading = false;
 	            	this.showOcrDetails = true;
+	            	
+	            	
+
 	            }
 	            
 			}

@@ -18,6 +18,7 @@ import com.pth.iflow.common.enums.EWorkflowType;
 import com.pth.iflow.common.rest.IflowRestPaths.GuiModule;
 import com.pth.iflow.gui.controller.data.workflow.WorkflowDataControllerBase;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
+import com.pth.iflow.gui.models.ui.FileSavingData;
 import com.pth.iflow.gui.models.ui.GuiSocketMessage;
 import com.pth.iflow.gui.models.workflow.invoice.InvoiceWorkflow;
 import com.pth.iflow.gui.models.workflow.invoice.InvoiceWorkflowSaveRequest;
@@ -52,6 +53,9 @@ public class InvoiceWorkflowDataController extends WorkflowDataControllerBase<In
     if (file != null && file.getOriginalFilename().isEmpty() == false) {
       final String tempPath = this.uploadFileManager.saveSingleMultipartInTemp(file);
 
+      final FileSavingData fileSaveData = FileSavingData.generateFromFilePath(tempPath);
+      fileSaveData.getFileExtention();
+
       final File tempFile = new File(tempPath);
       String hocrpPath = tempFile.getParent() + "/" + tempFile.getName() + ".hocr";
       hocrpPath = hocrpPath.replace("\\", "/");
@@ -59,6 +63,8 @@ public class InvoiceWorkflowDataController extends WorkflowDataControllerBase<In
       results.setStatus("done");
       results.setFileNotHash(tempPath);
       results.setHocrFileNotHash(hocrpPath);
+      results.setIsFileImage(fileSaveData.isFileImage());
+      results.setIsFilePdf(fileSaveData.isFilePdf());
 
     }
 

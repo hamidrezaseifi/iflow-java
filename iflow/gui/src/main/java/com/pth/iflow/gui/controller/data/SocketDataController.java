@@ -1,5 +1,6 @@
 package com.pth.iflow.gui.controller.data;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -8,6 +9,8 @@ import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+
+import javax.imageio.ImageIO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -95,22 +98,25 @@ public class SocketDataController extends GuiSocketControllerBase {
           writer.close();
 
           // final OcrResults results = OcrResults.loadFromHocrFile(hocrPath);
-          final OcrResults results = OcrResults.loadFromHocrText(hocrResult);
+          final OcrResults ocrResults = OcrResults.loadFromHocrText(hocrResult);
 
-          final Set<OcrResultWord> amountWorldList = results.findWord("betrag", false, false, OcrResultValueType.FLOAT);
-          final Set<OcrResultWord> senderWorldList = results.findWord("sender", false, false, OcrResultValueType.TEXT);
-          final Set<OcrResultWord> numberWorldList = results
-              .findWords(new String[] { "R.-Nr.", "Rg-Nr", "R. Nummer", "Rg-Nummer", "Rechnungsnummer", "nr." }, false, false,
-                  OcrResultValueType.TEXT);
-          final Set<OcrResultWord> dateWorldList = results.findWord("Datum", false, false, OcrResultValueType.DATE);
-
-          final Map<String, Set<OcrResultWord>> words = new HashMap<>();
-          words.put("invoice-paymentamount", amountWorldList);
-          words.put("invoice-sender", senderWorldList);
-          words.put("invoice-invoicenumber", numberWorldList);
-          words.put("invoice-invoicedate", dateWorldList);
+          final Map<String, Set<OcrResultWord>> words = this.retreiveInvoiceDetailWords(ocrResults);
 
           result.setWords(words);
+          result.setPageCount(ocrResults.getPages().size());
+
+          result.setImageWidth(300);
+          result.setImageHeight(500);
+          if (result.getIsFileImage()) {
+            final BufferedImage bimg = ImageIO.read(file);
+            result.setImageWidth(bimg.getWidth());
+            result.setImageHeight(bimg.getHeight());
+          }
+
+          if (result.getIsFilePdf() && ocrResults.getPages().size() > 0) {
+            result.setImageWidth(ocrResults.getPages().get(0).getBox().getWidth());
+            result.setImageHeight(ocrResults.getPages().get(0).getBox().getHeight());
+          }
 
           result.setStatus("done");
         }
@@ -148,6 +154,23 @@ public class SocketDataController extends GuiSocketControllerBase {
     }
 
     return result;
+  }
+
+  private Map<String, Set<OcrResultWord>> retreiveInvoiceDetailWords(final OcrResults ocrResults) {
+
+    final Set<OcrResultWord> amountWorldList = ocrResults.findWord("betrag", false, false, OcrResultValueType.FLOAT);
+    final Set<OcrResultWord> senderWorldList = ocrResults.findWord("sender", false, false, OcrResultValueType.TEXT);
+    final Set<OcrResultWord> numberWorldList = ocrResults
+        .findWords(new String[] { "R.-Nr.", "Rg-Nr", "R. Nummer", "Rg-Nummer", "Rechnungsnummer", "nr." }, false, false,
+            OcrResultValueType.TEXT);
+    final Set<OcrResultWord> dateWorldList = ocrResults.findWord("Datum", false, false, OcrResultValueType.DATE);
+
+    final Map<String, Set<OcrResultWord>> words = new HashMap<>();
+    words.put("invoice-paymentamount", amountWorldList);
+    words.put("invoice-sender", senderWorldList);
+    words.put("invoice-invoicenumber", numberWorldList);
+    words.put("invoice-invoicedate", dateWorldList);
+    return words;
   }
 
 }

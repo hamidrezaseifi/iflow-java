@@ -88,6 +88,16 @@ public class OcrResultBox {
     this.bottom = bottom;
   }
 
+  public int getWidth() {
+
+    return this.right - this.left;
+  }
+
+  public int getHeight() {
+
+    return this.bottom - this.top;
+  }
+
   public boolean isLeftOf(final OcrResultBox box) {
 
     return box.getLeft() > this.left;

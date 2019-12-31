@@ -11,7 +11,8 @@
 				    <span class="input-group-text" id="inputGroupFileAddon01">{{ 'invoice-create-by-file' | translate }}</span>
 				  </div>
 				  <div class="custom-file">
-				    <input type="file" class="custom-file-input" id="scrscanfile" (change)="scanOcrProgress($event)" aria-describedby="inputGroupFileAddon01">
+				    <input type="file" class="custom-file-input" id="scrscanfile" (change)="scanOcrProgress($event)" 
+				    aria-describedby="inputGroupFileAddon01" accept=".pdf,.jpg, .png, .tiff, .bmp">
 				    <label class="custom-file-label" for="scrscanfile">{{ uplaodingFileName }}</label>
 				    <button class="btn btn-primary upload-button" (click)="uploadOcrScanFile();"><i class="material-icons">cloud_upload</i></button>
 				  </div>
@@ -222,7 +223,8 @@
 		<div class="modal fade show" tabindex="-1" *ngIf="showOcrDetails" role="dialog" id="scanneddetailsdialog">
 			<div class="modal-dialog scanned-details-dialog" role="document">
 				<div class="modal-body">
-					<app-invoice-ocr-detail [foundWords]="foundWords" [scanedPdfPath]="scanedPdfPath" [scanedHocrPath]="scanedHocrPath" ></app-invoice-ocr-detail>
+					<app-invoice-ocr-detail [foundWords]="foundWords" [scanedPdfPath]="scanedPdfPath" [scanedHocrPath]="scanedHocrPath" 
+					[fileIsPdf]="fileIsPdf" [fileIsImage]="fileIsImage" [imageSizeX]="imageSizeX" [imageSizeY]="imageSizeY" ></app-invoice-ocr-detail>
 				</div>			
 			</div>
 		</div>

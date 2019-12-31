@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.pth.iflow.gui.helper.MergeDuplicateFieldsJsonNodeDeserializer;
+import com.pth.iflow.gui.models.ui.ocr.helper.OcrResultsDeserializer;
 
 @JsonDeserialize(using = OcrResultsDeserializer.class)
 public class OcrResults {
