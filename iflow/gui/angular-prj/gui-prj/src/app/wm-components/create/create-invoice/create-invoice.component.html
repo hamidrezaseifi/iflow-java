@@ -230,10 +230,12 @@
 				</div>			
 				<div class="modal-body">
 					<app-invoice-ocr-detail [foundWords]="foundWords" [scanedPdfPath]="scanedPdfPath" [scanedHocrPath]="scanedHocrPath" 
-					[fileIsPdf]="fileIsPdf" [fileIsImage]="fileIsImage" [imageSizeX]="imageSizeX" [imageSizeY]="imageSizeY" ></app-invoice-ocr-detail>
+						[fileIsPdf]="fileIsPdf" [fileIsImage]="fileIsImage" [imageSizeX]="imageSizeX" [imageSizeY]="imageSizeY" 
+						[(editedValues)]="scannedSelectedValues" >
+					</app-invoice-ocr-detail>
 				</div>	
 				<div class="modal-footer">
-					<button type="button" class="btn btn-primary" (click)="hideOcrDetails()">{{ 'common.apply' | translate }}</button>
+					<button type="button" class="btn btn-primary" (click)="onApplyScannedValues()">{{ 'common.apply' | translate }}</button>
 					<button type="button" class="btn btn-secondary" (click)="hideOcrDetails()">{{ 'common.close' | translate }}</button>
 				</div>						
 			</div>

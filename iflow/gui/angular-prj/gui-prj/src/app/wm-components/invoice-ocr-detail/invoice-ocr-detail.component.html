@@ -1,23 +1,44 @@
 
-<div class="row scanned-item-container">
+<div class="row scanned-result-container">
 	<div class="scanned-item-list-container">
 		<div class="list-group" id="list-tab" role="tablist">
 			<div class="list-group-item disabled">{{ 'invoice-scanned-properties' | translate }}</div>
-			<a class="list-group-item list-group-item-action scanned-item" *ngFor="let key of keys;" (click)="selectDetailItem(key)" 
-				data-toggle="list" href="#{{key}}">{{ propertyLabels[key] }}</a>
+			<div *ngFor="let key of keys;" class="list-group-item list-group-item-action" [ngClass]="{'active': selectedKey === key}">
+				<a class="scanned-item" [ngClass]="{'active': selectedKey === key}" (click)="selectDetailItem(key)" >{{ propertyLabels[key] }}</a>
+				<div class="item-value-container" [ngClass]="{'active': selectedKey === key}">
+					<input type="text" (blur)="isEditing[key] = false;" (keyup.enter)="isEditing[key] = false;" [(ngModel)]="editedValues[key]" 
+						id="valueeditbox{{key}}" autofocus [readonly]="isEditing[key] === false" value="" class="item-value ">
+					<button class="inline-edit-button-edit" *ngIf="isEditing[key] === false" (click)="startEditKey(key)">
+						<i class="material-icons edit-value-icon">edit</i>
+					</button>
+					<button class="inline-edit-button-apply" *ngIf="isEditing[key] === true" (click)="this.isEditing[key] = false;">
+						<i class="material-icons edit-value-icon">done</i>
+					</button>
+					<div class="clear"></div>
+				</div>
+				
+				<div class="clear"></div>
+			</div>
+			
 		</div>
-  
+  		<div >{{debugData}}</div>
 	</div>
 	<div class="scanned-item-detail-container">
 		
-		<div *ngFor="let key of keys;" class="tab-pane fade word-list-item" id="{{key}}" role="tabpanel" aria-labelledby="list-home-list">
-			<h3>{{ propertyLabels[key] }}</h3>
+		<div *ngFor="let wordKey of keys;" class="tab-pane word-list-item fade" [ngClass]="{'show': selectedKey === wordKey}">
 			
-			<div class="list-group" id="list-tab" role="tablist">
-				<a class="list-group-item list-group-item-action scanned-item found-item" *ngFor="let foundWord of foundWords[key];" 
-					(click)="selectFoundWord(foundWord)" >
-				{{ foundWord.text }} : {{ foundWord.value.text }}
-				</a>
+			<h3>{{ propertyLabels[wordKey] }}</h3>
+			
+			<div>
+				<div *ngFor="let foundWord of foundWords[wordKey];" class="list-group-item list-group-item-action scanned-item-detail-item" 
+					[ngClass]="{'active': isWordSelected(foundWord)}">
+					<a class="scanned-item found-item" (click)="selectFoundWord(foundWord)" >{{ foundWord.text }} : {{ foundWord.value.text }}</a>
+					<button class="inline-edit-button-use" (click)="useFoundWord(foundWord)">
+						<i class="material-icons">arrow_back_ios</i>
+					</button>
+					<div class="clear"></div>				
+				</div>
+				
 			</div>
 			
 		</div>

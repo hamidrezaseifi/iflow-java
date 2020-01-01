@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output, OnInit, ViewChild, ElementRef, AfterViewInit  } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
-import { OcrWord } from '../../ui-models';
+import { OcrWord, OcrBox } from '../../ui-models';
 
 @Component({
   selector: 'app-invoice-ocr-detail',
@@ -14,12 +14,18 @@ export class InvoiceOcrDetailComponent implements OnInit, AfterViewInit  {
 	
 	private _foundWords :OcrWord[] = [];
 	propertyLabels :string[] = [];
+	isEditing :boolean[] = [];
+	
+	selectedKey :string = "";
+	selectedWord :OcrWord = null;
 	
 	@Input('showOcrDetails') showOcrDetails :boolean = false;
 	@Input('scanedPdfPath') scanedPdfPath :string = "";
 	@Input('scanedHocrPath') scanedHocrPath :string = "";
 	@Input('fileIsPdf') fileIsPdf: boolean = true;
 	@Input('fileIsImage') fileIsImage: boolean = false;
+	
+	
 	@Input('imageSizeX') imageSizeX :number = 300;
 	@Input('imageSizeY') imageSizeY :number = 500;
 
@@ -33,12 +39,18 @@ export class InvoiceOcrDetailComponent implements OnInit, AfterViewInit  {
 	    	for(var key in  this._foundWords){
 	    		this.translate.get(key).subscribe((res: string) => {
 		    		this.propertyLabels[key] = res;
+		    		this.isEditing[key] = false;
+		    		this.editedValues[key] = "";
 		        });
 	    	}
 	    }
 	    
 	}
-	// /general/data/file/view/YzovdXBsb2FkL3RlbXAvMjAyMC8xMi8zMC90ZW1wXzE1Nzc3NDE5NjE5MDEuanBn
+	
+	@Input('editedValues') editedValues :string[] = [];
+
+	@Output() onApplyValues = new EventEmitter<string[]>();
+
 	
 	pdfZoom :number = 1;
 	showAllPages :boolean = true;
@@ -53,8 +65,6 @@ export class InvoiceOcrDetailComponent implements OnInit, AfterViewInit  {
 	previewHeight :number = 1100;
 	
 	private yScale :number = 1;
-	private previewLeft :number = 1;
-	private previewTop :number = 1;
 	
 	get foundWords():OcrWord[] {
 		    return this._foundWords;
@@ -69,9 +79,17 @@ export class InvoiceOcrDetailComponent implements OnInit, AfterViewInit  {
 		//return 'url()';
 	}
 		
+	isWordSelected(foundWord :OcrWord):boolean{
+		if(this.selectedWord != null && foundWord != null && this.selectedWord.id === foundWord.id){
+			return true;
+		}
+		return false;
+	}
 	
-	@Output() applyValues = new EventEmitter<boolean>();
-
+	get debugData():string[]{
+		return this.editedValues;
+	}
+	
 	constructor(protected translate: TranslateService,) { 
 		
 	}
@@ -82,43 +100,84 @@ export class InvoiceOcrDetailComponent implements OnInit, AfterViewInit  {
 	
 	ngAfterViewInit() {
 		
+		this.yScale = this.previewWidth / this.imageSizeX;
+		this.previewHeight = this.yScale * this.imageSizeY;
+		
 		setTimeout(()=>{
-			this.previewLeft = this.previewContainer.nativeElement.offsetLeft + 10;
-			this.previewTop = this.previewContainer.nativeElement.offsetTop;
-			this.yScale = this.previewWidth / this.imageSizeX;
-			this.previewHeight = this.yScale * this.imageSizeY;
+			
 		 }, 100);
 		
-	}
-
-	applySelectedValues() {
-		this.applyValues.emit(true);
 	}
 	
 	selectFoundWord(foundWord :OcrWord){
 		
-		//alert(this.previewContainer.nativeElement.offsetHeight);
-		//alert(this.previewContainer.nativeElement.offsetWidth);
+		this.selectedWord = foundWord;
+		
+		var previewLeft = this.previewContainer.nativeElement.offsetLeft + 10;
+		var previewTop = this.previewContainer.nativeElement.offsetTop + 10;
+		
+		var xscale = (this.previewContainer.nativeElement.offsetWidth - 20) / this.imageSizeX;
+		var yscale = (this.previewContainer.nativeElement.offsetHeight - 20) / this.imageSizeY;
+		
 		
 		this.pdfPageIndex = foundWord.pageIndex;
 		
 		var wordBox = foundWord.box;
 		var valueBox = foundWord.value.box;
-		var selectWidth = valueBox.right - wordBox.left;
-		var selectHeight = valueBox.bottom - wordBox.top;
+		
+		var selectBox :OcrBox= this.getSelectBox(foundWord);
+		
+		this.selectedAreaWidth = selectBox.width * xscale + 8;
+		this.selectedAreaHeight = selectBox.height * yscale + 8;
+				
+		this.selectedAreaLeft = previewLeft + (selectBox.left * xscale) - 4;
+		this.selectedAreaTop = previewTop + (selectBox.top * yscale) - 4;
+		
+		var scalestr = "scale         : " + xscale + " : " +  yscale + "\n";
+		scalestr += "wordBox       : " + wordBox.left + " : " + wordBox.top + " : " + wordBox.width + " : " + wordBox.height + "\n";
+		scalestr += "valueBox      : " + valueBox.left + " : " + valueBox.top + " : " + valueBox.width + " : " + valueBox.height + " : " + foundWord.value.text + "\n";
+		scalestr += "selectBox     : " + selectBox.left + " : " + selectBox.top + " : " + selectBox.width + " : " + selectBox.height + "\n";
+		scalestr += "calc dimention: " + this.selectedAreaWidth + " : " + this.selectedAreaHeight + "\n";
+		scalestr += "calc position : " + this.selectedAreaLeft + " : " + this.selectedAreaTop + "\n";
+		
+		console.log(scalestr );
 		
 		this.showSelectedArea = true;
-		this.selectedAreaWidth = selectWidth * this.yScale + 8;
-		this.selectedAreaHeight = selectHeight * this.yScale + 8;
-		this.selectedAreaLeft = this.previewLeft + (wordBox.left * this.yScale) - 4;
-		this.selectedAreaTop = this.previewTop + (wordBox.top * this.yScale) - 4;
 	}
 	
 	selectDetailItem(key :string){
 		
+		this.selectedKey = key;
 		
 		this.showSelectedArea = false;
 		
 	}
+	
+	private getSelectBox(foundWord :OcrWord):OcrBox{
+		var wordBox = foundWord.box;
+		var valueBox = foundWord.value.box;
+		
+		var box: OcrBox = new OcrBox;
+		
+		box.width = Math.abs(valueBox.right - wordBox.left);
+		box.height = Math.abs(valueBox.bottom - wordBox.top);
+		box.left = Math.min(wordBox.left, valueBox.left);
+		box.top = Math.min(wordBox.top, valueBox.top);
+		
+		box.right = box.left + box.width;
+		box.bottom = box.top + box.height;
+		
+		return box;
+	} 
+	
+	startEditKey(key:string){
+		this.isEditing[key] = true;
+		document.getElementById("valueeditbox" + key).focus();
+	}
+	
+	useFoundWord(foundWord :OcrWord){
+		this.editedValues[this.selectedKey] = foundWord.value.text;
+	}
+		
 
 }

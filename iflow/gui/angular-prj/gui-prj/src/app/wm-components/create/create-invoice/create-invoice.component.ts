@@ -68,6 +68,7 @@ export class CreateInvoiceComponent extends InvoiceBaseComponent implements OnIn
 		return ss;
 	}
 	
+	scannedSelectedValues :string[] = [];
 	
 	constructor(
 		    protected router: Router,
@@ -332,5 +333,39 @@ export class CreateInvoiceComponent extends InvoiceBaseComponent implements OnIn
 	hideOcrDetails(){
 		this.showOcrDetails = false;
 	}
+	
+	onApplyScannedValues() {
+		
+		if(this.scannedSelectedValues["invoice-invoicedate"] && this.scannedSelectedValues["invoice-invoicedate"] != ""){
+			
+			this.invoiceEditForm.controls["invocieDate"].setValue(parseDate(this.scannedSelectedValues["invoice-invoicedate"], 'dd.mm.yyyy'));
+			this.invoiceEditForm.controls["discountEnterDate"].setValue(parseDate(this.scannedSelectedValues["invoice-invoicedate"], 'dd.mm.yyyy'));
+			//this.invoiceEditForm.controls["discountDate"].setValue(parseDate(this.scannedSelectedValues["invoice-invoicedate"], 'dd.mm.yyyy'));
+			
+		}
+		
+		if(this.scannedSelectedValues["invoice-invoicenumber"] && this.scannedSelectedValues["invoice-invoicenumber"] != ""){
+			this.invoiceEditForm.controls["registerNumber"].setValue(this.scannedSelectedValues["invoice-invoicenumber"]);
+		}
+		
+		if(this.scannedSelectedValues["invoice-paymentamount"] && this.scannedSelectedValues["invoice-paymentamount"] != ""){
+			var foundPayment = this.scannedSelectedValues["invoice-paymentamount"].replace(/\./g, "").replace(",", ".");
+			
+			alert(foundPayment);
+			if(isNaN(foundPayment) === false){
+				var foundPaymentFloat = parseFloat(foundPayment);
+				alert(foundPaymentFloat);
+				this.invoiceEditForm.controls["paymentAmount"].setValue(foundPaymentFloat);
+			}
+			
+		}
+		
+		if(this.scannedSelectedValues["invoice-sender"] && this.scannedSelectedValues["invoice-sender"] != ""){
+			this.invoiceEditForm.controls["sender"].setValue(this.scannedSelectedValues["invoice-sender"]);
+		}
+		
+		this.showOcrDetails = false;
+	}	
+
 
 }

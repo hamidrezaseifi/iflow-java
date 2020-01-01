@@ -165,12 +165,14 @@ public class SocketDataController extends GuiSocketControllerBase {
             false,
             OcrResultValueType.TEXT);
     final Set<OcrResultWord> dateWorldList = ocrResults.findWord("Datum", false, false, OcrResultValueType.DATE);
+    final Set<OcrResultWord> testList = ocrResults.findWords(new String[] { "ident", "heinstadt" }, false, false, OcrResultValueType.TEXT);
 
     final Map<String, Set<OcrResultWord>> words = new HashMap<>();
     words.put("invoice-paymentamount", amountWorldList);
     words.put("invoice-sender", senderWorldList);
     words.put("invoice-invoicenumber", numberWorldList);
     words.put("invoice-invoicedate", dateWorldList);
+    words.put("test", testList);
     return words;
   }
 

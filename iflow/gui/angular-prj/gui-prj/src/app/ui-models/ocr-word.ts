@@ -1,5 +1,5 @@
 
-export interface OcrWord {
+export class OcrWord {
 	
 	box :OcrBox;
 	isStrong: boolean;
@@ -12,7 +12,7 @@ export interface OcrWord {
 
 }
 
-export interface OcrBox {
+export class OcrBox {
 	left :number;
 	right :number;
 	top :number;
