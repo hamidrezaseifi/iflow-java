@@ -6,10 +6,10 @@ public enum ESocketCommands {
   COMMAND("command"),
   ERROR_MESSAGE("errorMessage"),
   ERROR_DETAIL("errorDetail"),
+  FILE_NAME("fileName"),
   FILE_HASH("fileHash"),
   HOCRFILE_HASH("hocrFileHash"),
   WORDS("words"),
-
   IS_FILE_IMAGE("isFileImage"),
   IS_FILE_PDF("isFilePdf"),
   PAGE_COUNT("pageCount"),

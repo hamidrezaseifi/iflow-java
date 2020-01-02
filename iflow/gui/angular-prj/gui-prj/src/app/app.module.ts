@@ -47,6 +47,7 @@ import { WorkflowInlineviewComponent } from './wm-components/workflow-inlineview
 import { SelectUserComponent } from './components/select-user/select-user.component';
 import { TestComponent } from './test/test.component';
 import { InvoiceOcrDetailComponent } from './wm-components/invoice-ocr-detail/invoice-ocr-detail.component';
+import { FilePreviewComponent } from './components/file-preview/file-preview.component';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -117,6 +118,7 @@ const stompConfig: StompConfig = {
     SelectUserComponent,
     TestComponent,
     InvoiceOcrDetailComponent,
+    FilePreviewComponent,
     
   ],
   providers: [

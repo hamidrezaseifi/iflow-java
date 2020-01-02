@@ -92,6 +92,16 @@ public class GuiSocketMessage extends HashMap<String, Object> {
     this.put(ESocketCommands.STATUS.getValue(), status);
   }
 
+  public String getFileName() {
+
+    return this.get(ESocketCommands.FILE_NAME.getValue()).toString();
+  }
+
+  public void setFileName(final String status) {
+
+    this.put(ESocketCommands.FILE_NAME.getValue(), status);
+  }
+
   public String getCommand() {
 
     return this.get(ESocketCommands.COMMAND.getValue()).toString();

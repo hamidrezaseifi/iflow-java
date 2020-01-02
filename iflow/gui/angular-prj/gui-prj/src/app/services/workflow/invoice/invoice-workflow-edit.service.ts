@@ -54,7 +54,7 @@ export class InvoiceWorkflowEditService extends HttpErrorResponseHelper {
 	}
 	
 	getUploadOcrScanFileUrl() :string{
-		return "/workflow/invoice/data/uploadinvoicefile";
+		return "/general/data/uploadtempfile";
 	}
 	
 
@@ -129,7 +129,7 @@ export class InvoiceWorkflowEditService extends HttpErrorResponseHelper {
 		
 	}
 	
-	uploadOcrScanFiles(ocrScanFile : File){
+	uploadTempFiles(ocrScanFile : File){
 		
 	    const formData = new FormData();
 	    formData.append('file', ocrScanFile);

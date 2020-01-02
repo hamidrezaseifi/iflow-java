@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output, OnInit, ViewChild, ElementRef, AfterViewInit  } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import $ from "jquery";
 
 import { OcrWord, OcrBox } from '../../ui-models';
 
@@ -52,7 +53,7 @@ export class InvoiceOcrDetailComponent implements OnInit, AfterViewInit  {
 	@Output() onApplyValues = new EventEmitter<string[]>();
 
 	
-	pdfZoom :number = 1;
+	pdfZoom :any = 'page-fit';
 	showAllPages :boolean = true;
 	pdfPageIndex :number = 1;
 	showSelectedArea :boolean = false;
@@ -74,8 +75,13 @@ export class InvoiceOcrDetailComponent implements OnInit, AfterViewInit  {
 	    return Object.keys(this._foundWords);
 	}
 	
-	get fileViewUrl():string {
+	get imageFileViewUrl():string {
 		return 'url(/general/data/file/view/' + this.scanedPdfPath + ')';
+		//return 'url()';
+	}
+	
+	get fileViewUrl():string {
+		return '/general/data/file/view/' + this.scanedPdfPath;
 		//return 'url()';
 	}
 		
@@ -112,15 +118,44 @@ export class InvoiceOcrDetailComponent implements OnInit, AfterViewInit  {
 	selectFoundWord(foundWord :OcrWord){
 		
 		this.selectedWord = foundWord;
-		
+		this.pdfPageIndex = foundWord.pageIndex + 1;
+
 		var previewLeft = this.previewContainer.nativeElement.offsetLeft + 10;
 		var previewTop = this.previewContainer.nativeElement.offsetTop + 10;
 		
+		var pdfPage = null;
+		var pdfPageWidth = null;
+		var pdfPageHeight = null;
 		var xscale = (this.previewContainer.nativeElement.offsetWidth - 20) / this.imageSizeX;
 		var yscale = (this.previewContainer.nativeElement.offsetHeight - 20) / this.imageSizeY;
 		
+		if(this.fileIsPdf){
+			
+			pdfPage = $("div.scanned-item-preview-container div.page");
+			if(pdfPage.length > foundWord.pageIndex){
+				pdfPage = pdfPage[foundWord.pageIndex];
+				pdfPageWidth = pdfPage.offsetWidth;
+				pdfPageHeight = pdfPage.offsetHeight;
+				
+				previewLeft += pdfPage.offsetLeft;
+				//previewTop = pdfPage.offsetTop;
+
+				xscale = pdfPageWidth / foundWord.pageWidth;
+				yscale = pdfPageHeight / foundWord.pageHeight;			
+				
+				var scalestr = "page scale    : " + xscale + " : " +  yscale + "\n";
+				scalestr += "page dimention: " + pdfPageWidth + " : " + pdfPageHeight + "\n";
+				scalestr += "page position : " + previewLeft + " : " + previewTop + "\n";
+				scalestr += "foundWord dim : " + foundWord.pageWidth + " : " + foundWord.pageHeight + "\n";
+
+				console.log("pdfPage found:" , pdfPage );
+				console.log(scalestr );
+				
+			}
+			
+			
+		}
 		
-		this.pdfPageIndex = foundWord.pageIndex;
 		
 		var wordBox = foundWord.box;
 		var valueBox = foundWord.value.box;

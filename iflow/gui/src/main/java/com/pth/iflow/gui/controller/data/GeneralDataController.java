@@ -12,8 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,9 +23,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.controller.GuiLogedControllerBase;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
@@ -35,6 +41,7 @@ import com.pth.iflow.gui.models.workflow.IWorkflow;
 import com.pth.iflow.gui.models.workflow.workflow.Workflow;
 import com.pth.iflow.gui.models.workflow.workflow.WorkflowSaveRequest;
 import com.pth.iflow.gui.services.IMessagesHelper;
+import com.pth.iflow.gui.services.IUploadFileManager;
 import com.pth.iflow.gui.services.IWorkflowHandler;
 import com.pth.iflow.gui.services.UiMenuService;
 import com.pth.iflow.gui.services.impl.workflow.WorkflowHandlerSelect;
@@ -60,6 +67,9 @@ public class GeneralDataController extends GuiLogedControllerBase {
 
   @Autowired
   SimpMessagingTemplate simpMessagingTemplate;
+
+  @Autowired
+  protected IUploadFileManager uploadFileManager;
 
   @ResponseStatus(HttpStatus.OK)
   @GetMapping(path = { "/generaldatat" }, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -159,10 +169,41 @@ public class GeneralDataController extends GuiLogedControllerBase {
     throw new GuiCustomizedException("not loggeg in!");
   }
 
+  @ResponseStatus(HttpStatus.CREATED)
+  @PostMapping(path = { "/uploadtempfile" })
+  @ResponseBody
+  public GuiSocketMessage uploadTempFile(@RequestParam(value = "file") final MultipartFile file)
+      throws GuiCustomizedException, JsonParseException, JsonMappingException, IOException {
+
+    final GuiSocketMessage results = GuiSocketMessage.generate("processing");
+
+    if (file != null && file.getOriginalFilename().isEmpty() == false) {
+      final String tempPath = this.uploadFileManager.saveSingleMultipartInTemp(file);
+
+      final FileSavingData fileSaveData = FileSavingData.generateFromFilePath(tempPath);
+      fileSaveData.getFileExtention();
+
+      final File tempFile = new File(tempPath);
+      String hocrpPath = tempFile.getParent() + "/" + tempFile.getName() + ".hocr";
+      hocrpPath = hocrpPath.replace("\\", "/");
+
+      results.setStatus("done");
+      results.setFileName(file.getOriginalFilename());
+      results.setFileNotHash(tempPath);
+      results.setHocrFileNotHash(hocrpPath);
+      results.setIsFileImage(fileSaveData.isFileImage());
+      results.setIsFilePdf(fileSaveData.isFilePdf());
+
+    }
+
+    return results;
+
+  }
+
   @ResponseStatus(HttpStatus.OK)
   @GetMapping(path = { "/file/view/{hashfilepath}" })
   public void
-      viewWorkflowFile(final Model model, @PathVariable(required = true) final String hashfilepath, final HttpServletResponse response)
+      viewUploadedFile(final Model model, @PathVariable(required = true) final String hashfilepath, final HttpServletResponse response)
           throws GuiCustomizedException, IOException, IFlowMessageConversionFailureException {
 
     final String readFilePath = GuiSocketMessage.decodeHashPath(hashfilepath);
@@ -172,6 +213,23 @@ public class GeneralDataController extends GuiLogedControllerBase {
 
     fData.prepareReposne(readFilePath, response);
 
+  }
+
+  @ResponseStatus(HttpStatus.OK)
+  @GetMapping(path = { "/file/download/{hashfilepath}" })
+  @ResponseBody
+  public ResponseEntity<InputStreamResource> downloadUploadedFile(final Model model,
+      @PathVariable(required = true) final String hashfilepath)
+      throws GuiCustomizedException, IOException, IFlowMessageConversionFailureException {
+
+    final String readFilePath = GuiSocketMessage.decodeHashPath(hashfilepath);
+    final String extention = FileSavingData.getExtention(readFilePath);
+
+    final FileSavingData fData = new FileSavingData(extention);
+
+    final ResponseEntity<InputStreamResource> respEntity = fData.generateFileReposneEntity(readFilePath);
+
+    return respEntity;
   }
 
   @GetMapping(path = { "/testsocket/{data}" })

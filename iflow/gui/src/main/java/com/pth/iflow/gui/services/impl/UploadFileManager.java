@@ -5,15 +5,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.pth.iflow.gui.models.UploadedFile;
 import com.pth.iflow.gui.models.ui.FileSavingData;
-import com.pth.iflow.gui.models.ui.UploadFileSavingData;
 import com.pth.iflow.gui.services.IUploadFileManager;
 
 @Service
@@ -28,97 +27,34 @@ public class UploadFileManager implements IUploadFileManager {
   private String arhiveBaseDir;
 
   @Override
-  public List<UploadFileSavingData> saveInTemp(final List<UploadFileSavingData> files) throws IOException {
-
-    final List<UploadFileSavingData> tempFilePathList = new ArrayList<>();
-
-    for (final UploadFileSavingData file : files) {
-      final String tempPath = FileSavingData.generateSavingTempFileFullPath(this.tempBaseDir, file.getFileExtention());
-      final File oFile = this.createFileAndFolders(tempPath);
-      file.getMultipartFile().transferTo(oFile);
-      file.setFilePath(tempPath);
-      tempFilePathList.add(file);
-    }
-    return tempFilePathList;
-  }
-
-  @Override
-  public List<FileSavingData> moveFromTempToArchive(final List<FileSavingData> files) throws IOException {
-
-    final List<FileSavingData> tempFilePathList = new ArrayList<>();
-
-    for (final FileSavingData file : files) {
-      final String archiveath = file.generateSavingFileFullPath(this.arhiveBaseDir);
-      final File archiveFile = this.createFileAndFolders(archiveath);
-      final File tempFile = file.getFile();
-      tempFile.renameTo(archiveFile);
-      file.setFilePath(archiveath);
-
-      tempFilePathList.add(file);
-    }
-    return tempFilePathList;
-  }
-
-  @Override
-  public List<FileSavingData> copyFromTempToArchive(final List<FileSavingData> files) throws IOException {
-
-    final List<FileSavingData> tempFilePathList = new ArrayList<>();
-
-    for (final FileSavingData file : files) {
-      final String archiveath = file.generateSavingFileFullPath(this.arhiveBaseDir);
-
-      final File archiveFile = this.createFileAndFolders(archiveath);
-      final File tempFile = file.getTempFile();
-
-      FileUtils.copyFile(tempFile, archiveFile);
-
-      file.setFilePath(archiveath);
-
-      tempFilePathList.add(file);
-    }
-    return tempFilePathList;
-  }
-
-  @Override
-  public void deleteFromTemp(final List<FileSavingData> files) throws IOException {
-
-    for (final FileSavingData file : files) {
-
-      final File tempFile = file.getFile();
-      tempFile.delete();
-    }
-  }
-
-  @Override
-  public boolean save(final List<UploadFileSavingData> files) throws IOException {
-
-    // TODO Auto-generated method stub
-    return false;
-  }
-
-  @Override
-  public List<String> getFilesPath(final List<FileSavingData> files) throws IOException {
-
-    // TODO Auto-generated method stub
-    return null;
-  }
-
-  @Override
-  public String getFilePath(final FileSavingData file) throws IOException {
-
-    final String realPath = file.generateSavingFileFullPath(this.arhiveBaseDir);
-
-    return realPath;
-  }
-
-  @Override
   public String saveSingleMultipartInTemp(final MultipartFile file) throws IOException {
 
     final String ext = FileSavingData.getExtention(file);
-    final String tempPath = FileSavingData.generateSavingTempFileFullPath(this.tempBaseDir, ext);
+    final String tempPath = FileSavingData.generateSavingFileFullPath(this.tempBaseDir, ext);
     final File oFile = this.createFileAndFolders(tempPath);
     file.transferTo(oFile);
     return tempPath;
+  }
+
+  @Override
+  public List<FileSavingData> moveFromTempToArchive(final List<UploadedFile> files) throws IOException {
+
+    final List<FileSavingData> list = new ArrayList<>();
+
+    for (final UploadedFile tempUploadedFile : files) {
+      final FileSavingData fileSave = FileSavingData.generateFromFilePath(tempUploadedFile.getFilePath());
+
+      final String archiveFilePath = FileSavingData.generateSavingFileFullPath(this.arhiveBaseDir, fileSave.getFileExtention());
+
+      final FileSavingData archiveSaveFile = FileSavingData.generateFromFilePath(archiveFilePath);
+      archiveSaveFile.setTitle(tempUploadedFile.getFileName());
+
+      final File tempFile = fileSave.getFile();
+      tempFile.renameTo(archiveSaveFile.getFile());
+
+      list.add(archiveSaveFile);
+    }
+    return list;
   }
 
   private File createFileAndFolders(final String path) {

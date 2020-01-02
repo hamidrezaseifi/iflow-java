@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,16 +23,17 @@ import com.pth.iflow.gui.services.impl.workflow.base.WorkflowHandlerHelper;
 @Service
 public class WorkflowHandler extends WorkflowHandlerHelper<Workflow> implements IWorkflowHandler<Workflow, WorkflowSaveRequest> {
 
-  private static final Logger                                  logger = LoggerFactory.getLogger(WorkflowHandler.class);
+  private static final Logger logger = LoggerFactory.getLogger(WorkflowHandler.class);
 
   private final IWorkflowAccess<Workflow, WorkflowSaveRequest> workflowAccess;
 
-  private final SessionUserInfo                                sessionUserInfo;
+  private final SessionUserInfo sessionUserInfo;
 
-  private final IUploadFileManager                             uploadFileManager;
+  private final IUploadFileManager uploadFileManager;
 
   public WorkflowHandler(@Autowired final IWorkflowAccess<Workflow, WorkflowSaveRequest> workflowAccess,
       @Autowired final SessionUserInfo sessionUserInfo, @Autowired final IUploadFileManager uploadFileManager) {
+
     this.workflowAccess = workflowAccess;
     this.sessionUserInfo = sessionUserInfo;
     this.uploadFileManager = uploadFileManager;
@@ -51,33 +50,38 @@ public class WorkflowHandler extends WorkflowHandlerHelper<Workflow> implements 
   }
 
   @Override
-  public List<Workflow> createWorkflow(final WorkflowSaveRequest createRequest, final HttpSession session)
+  public List<Workflow> createWorkflow(final WorkflowSaveRequest createRequest)
       throws GuiCustomizedException, IOException, IFlowMessageConversionFailureException {
+
     throw new GuiCustomizedException("not implemented");
   }
 
   @Override
-  public Workflow saveWorkflow(final Workflow workflow, final HttpSession session)
+  public Workflow saveWorkflow(final Workflow workflow)
       throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
+
     throw new GuiCustomizedException("not implemented");
   }
 
   @Override
   public Workflow assignWorkflow(final String workflowIdentity)
       throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
+
     throw new GuiCustomizedException("not implemented");
 
   }
 
   @Override
-  public Workflow doneWorkflow(final WorkflowSaveRequest saveRequest, final HttpSession session)
+  public Workflow doneWorkflow(final WorkflowSaveRequest saveRequest)
       throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
+
     throw new GuiCustomizedException("not implemented");
   }
 
   @Override
-  public Workflow archiveWorkflow(final Workflow workflow, final HttpSession session)
+  public Workflow archiveWorkflow(final Workflow workflow)
       throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
+
     throw new GuiCustomizedException("not implemented");
   }
 
@@ -90,6 +94,7 @@ public class WorkflowHandler extends WorkflowHandlerHelper<Workflow> implements 
 
   @Override
   protected SessionUserInfo getSessionUserInfo() {
+
     return this.sessionUserInfo;
   }
 
@@ -100,9 +105,10 @@ public class WorkflowHandler extends WorkflowHandlerHelper<Workflow> implements 
   }
 
   @Override
-  protected Workflow innerSaveWorkflow(final Workflow workflow, final HttpSession session)
+  protected Workflow innerSaveWorkflow(final Workflow workflow)
       throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
-    return this.saveWorkflow(workflow, session);
+
+    return this.saveWorkflow(workflow);
   }
 
 }

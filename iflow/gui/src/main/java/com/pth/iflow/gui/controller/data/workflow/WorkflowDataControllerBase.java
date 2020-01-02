@@ -2,34 +2,24 @@ package com.pth.iflow.gui.controller.data.workflow;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.pth.iflow.common.enums.EIdentity;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.controller.data.GuiDataControllerBase;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
-import com.pth.iflow.gui.models.ui.FileSavingData;
-import com.pth.iflow.gui.models.ui.UploadFileSavingData;
 import com.pth.iflow.gui.models.workflow.IWorkflow;
 import com.pth.iflow.gui.models.workflow.IWorkflowSaveRequest;
 import com.pth.iflow.gui.services.IUploadFileManager;
@@ -92,45 +82,7 @@ public abstract class WorkflowDataControllerBase<W extends IWorkflow, WS extends
   public List<W> createWorkflow(@RequestBody final WS createRequest, final HttpSession session)
       throws GuiCustomizedException, IOException, IFlowMessageConversionFailureException {
 
-    return this.workflowHandler.createWorkflow(createRequest, session);
-
-  }
-
-  @ResponseStatus(HttpStatus.CREATED)
-  @PostMapping(path = { "/createfile" })
-  @ResponseBody
-  public Map<String, Object> createWorkflowFile(@RequestParam(value = "files") final MultipartFile[] files, @RequestParam(
-    "titles"
-  ) final String[] titles, final HttpSession session) throws GuiCustomizedException, JsonParseException, JsonMappingException, IOException {
-
-    List<UploadFileSavingData> tempFiles = new ArrayList<>();
-    if (files.length > 0) {
-      final List<UploadFileSavingData> saveFiles = new ArrayList<>();
-      for (int i = 0; i < files.length; i++) {
-        final String ext = FileSavingData.getExtention(files[i]);
-        String title = titles.length > i ? titles[i] : "";
-        if (StringUtils.isEmpty(title)) {
-          title = files[i].getOriginalFilename();
-          title = ext.isEmpty() == false ? title.substring(0, title.length() - ext.length() - 1) : title;
-        }
-
-        saveFiles
-            .add(new UploadFileSavingData(files[i], title, ext, EIdentity.NOT_SET.getIdentity(), "no-action",
-                this.getLoggedCompany().getIdentity()));
-      }
-
-      tempFiles = this.uploadFileManager.saveInTemp(saveFiles);
-    }
-
-    final String sessionKey = "temp_uploaded_" + System.currentTimeMillis();
-
-    session.setAttribute(sessionKey, tempFiles);
-
-    final Map<String, Object> results = new HashMap<>();
-    results.put("sessionKey", sessionKey);
-    results.put("titles", tempFiles.stream().map(uf -> uf.getTitle()).collect(Collectors.toList()));
-
-    return results;
+    return this.workflowHandler.createWorkflow(createRequest);
 
   }
 
@@ -140,7 +92,7 @@ public abstract class WorkflowDataControllerBase<W extends IWorkflow, WS extends
   public void saveWorkflow(@RequestBody final W workflow, final HttpSession session)
       throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
 
-    this.workflowHandler.saveWorkflow(workflow, session);
+    this.workflowHandler.saveWorkflow(workflow);
 
   }
 
@@ -150,7 +102,7 @@ public abstract class WorkflowDataControllerBase<W extends IWorkflow, WS extends
   public void archiveWorkflow(@RequestBody final W workflow, final HttpSession session)
       throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
 
-    this.workflowHandler.archiveWorkflow(workflow, session);
+    this.workflowHandler.archiveWorkflow(workflow);
 
   }
 
@@ -160,7 +112,7 @@ public abstract class WorkflowDataControllerBase<W extends IWorkflow, WS extends
   public void makeDoneWorkflow(@RequestBody final WS saveRequest, final HttpSession session)
       throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
 
-    this.workflowHandler.doneWorkflow(saveRequest, session);
+    this.workflowHandler.doneWorkflow(saveRequest);
 
   }
 

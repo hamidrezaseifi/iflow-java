@@ -45,10 +45,11 @@
 	</div>  
 	<div class="scanned-item-preview-container" #scannedItemPreviewContainer>
 		
-		<pdf-viewer *ngIf="fileIsPdf" [src]="fileViewUrl" useBrowserLocale="true" [zoom]="pdfZoom" [show-all]="showAllPages" [page]="pdfPageIndex" height="99%"></pdf-viewer>
+		<pdf-viewer *ngIf="fileIsPdf" [src]="fileViewUrl" useBrowserLocale="true" [zoom]="pdfZoom" [show-all]="showAllPages" 
+			[page]="pdfPageIndex" height="99%"></pdf-viewer>
 
 		<div *ngIf="fileIsImage" class="scanned-item-preview-image" [style.width.px]="previewWidth"
-			 [style.backgroundImage]="fileViewUrl" ></div>
+			 [style.backgroundImage]="imageFileViewUrl" ></div>
 		 
 		<div class="selected-word-area" *ngIf="showSelectedArea" [style.width.px]="selectedAreaWidth" [style.height.px]="selectedAreaHeight" 
 		 [style.left.px]="selectedAreaLeft" [style.top.px]="selectedAreaTop"></div> 

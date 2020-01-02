@@ -62,6 +62,16 @@ public class OcrResultWord extends OcrResultItem {
     return this.getParentPage().getPageNumber();
   }
 
+  public int getPageWidth() {
+
+    return this.getParentPage().getBox().getWidth();
+  }
+
+  public int getPageHeight() {
+
+    return this.getParentPage().getBox().getHeight();
+  }
+
   @Override
   public OcrResultWord clone() {
 

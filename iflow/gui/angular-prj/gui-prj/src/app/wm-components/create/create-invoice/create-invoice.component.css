@@ -33,22 +33,27 @@ div.workflow-record{
     margin-bottom: 10px;
 }
 
-.twopannel .panel{
+.twopannel .panel-1{
 	
 	height: 190px;
 }
 
-.twopannel .panel.panel-vendor{
+.twopannel .panel-2{
+	
+	height: 300px;
+}
+
+.twopannel .panel-twopannelleft{
 	width: calc(100% - 310px);
 	float: left;
 }
 
-.twopannel .panel.panel-discount{
+.twopannel .panel-twopannelright{
 	width: 300px;
 	float: right;
 }
 
-.twopannel .panel.panel-discount input[type=text]{
+.twopannel .panel-twopannelright input[type=text]{
 	width: 100px;
 }
 
@@ -172,6 +177,7 @@ div.workflow-content div.item-row div.item-content input.file-file
     max-height: 200px;
     overflow-y: auto;
     padding-right: 24px;
+    height: 120px;
 }
 
 div.assign-list div.user-item-box {
@@ -246,47 +252,6 @@ button.file-action {
 	width: 24px;
 }
 
-
-.assign-list{
-	border: 1px solid lightgray;
-    padding: 6px;
-    border-radius: 4px;
-    width: 100%;
-    min-height: 100px;
-    max-height: 200px;
-    overflow-y: auto;
-    padding-right: 24px;
-}
-
-div.assign-list div.user-item-box {
-    border: 1px solid lightgray;
-    border-radius: 4px;
-    padding: 2px 4px;
-    float: left;
-    background: #e6e6e6;
-    margin-right: 5px;
-    margin-bottom: 5px;
-}
-
-div.assign-list div.user-item-box button {
-    border: none;
-    background: transparent;
-    padding: 0;
-    padding-top: 3px;
-    float: right;
-    margin-left: 5px;
-}
-
-div.assign-list div.user-item-box button i.material-icons{
-	font-size: 16px;
-}
-
-div.assign-list div.user-item-box span {
-    height: 20px;
-    display: inline-block;
-    float: left;
-}
-
 button.show-select-dialog {
     float: right;
     margin-right: -20px;
@@ -354,10 +319,29 @@ input.short-input{
     text-align: center;
 }
 
-.uploading-progress-label span {
-    padding: 2px 5px;
-    background-color: #e4ecf599;
+.uploaded-file-item {
+	padding: 5px 4px 0 10px;
+	margin-bottom: 3px;
+}
+
+.uploaded-file-item:hover {
+	background-color: #feffea;
+}
+
+.uploaded-file-item .filename {
+	width: 230px;
+    display: inline-block;
+    overflow: hidden;
+    overflow-y: hidden;
     height: 30px;
-    line-height: 30px;
+}
+
+.uploaded-file-item .upload-button{
+    padding: 0px 4px;
+    margin-left: 5px;
+}
+
+.uploaded-file-item .upload-button .material-icons{
     font-size: 16px;
 }
+

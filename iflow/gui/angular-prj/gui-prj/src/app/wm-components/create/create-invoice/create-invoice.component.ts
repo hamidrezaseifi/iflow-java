@@ -7,6 +7,7 @@ import { DateAdapter } from '@angular/material';
 import { Observable, throwError , Subscription } from 'rxjs';
 import { StompService, StompState } from '@stomp/ng2-stompjs';
 import { Message } from '@stomp/stompjs';
+import $ from "jquery";
 
 import { GlobalService } from '../../../services/global.service';
 import { InvoiceWorkflowEditService } from '../../../services/workflow/invoice/invoice-workflow-edit.service';
@@ -14,8 +15,9 @@ import { LoadingServiceService } from '../../../services/loading-service.service
 import { ErrorServiceService } from '../../../services/error-service.service';
 import { InvoiceBaseComponent } from '../../invoice-base.component';
 
-import { User, Department, DepartmentGroup, GeneralData, OcrWord } from '../../../ui-models';
-import { WorkflowProcessCommand, Workflow, AssignItem, FileTitle, AssignType, WorkflowUploadFileResult, InvoiceType } from '../../../wf-models';
+import { User, Department, DepartmentGroup, GeneralData, OcrWord, UploadedFile, UploadedResult } from '../../../ui-models';
+import { WorkflowProcessCommand, Workflow, AssignItem, FileTitle, AssignType, WorkflowUploadFileResult, InvoiceType } 
+	from '../../../wf-models';
 import { InvoiceWorkflowSaveRequest } from '../../../wf-models/invoice-workflow-save-request';
 import { InvoiceWorkflowSaveRequestInit } from '../../../wf-models/invoice-workflow-save-request-init';
 import { InvoiceTypeControllValidator } from '../../../custom-validators/invoice-type-controll-validator';
@@ -29,39 +31,25 @@ import { GermanDateAdapter, parseDate, formatDate } from '../../../helper';
 })
 export class CreateInvoiceComponent extends InvoiceBaseComponent implements OnInit {
 
-	ocrScanFile: File;
-	showUploading :boolean = false;
-	listening :boolean = false;
-
-	uplaodingMessage :string = "";
-	uplaodingFileName :string = "...";
-
-	uplaodingMessageUploading :string = "";
-	uplaodingMessageFileAnalysing :string = "";
-	uplaodingMessageShowResult :string = "";
-	
-	
-	intervalId = 0;
-	
-	intervalValue = 0;
-
+	listening :boolean = false;	
+		
 	private subscription: Subscription;
 	private messages: Observable<Message>;
-
 	public subscribed: boolean;
-	
-	foundWords :OcrWord[] = [];
-	showOcrDetails :boolean = false;
-	scanedPdfPath :string = "";
-	scanedHocrPath :string = "";
-	
-	fileIsPdf: boolean = true;
-	fileIsImage: boolean = false;
-	imageSizeX :number = 300;
-	imageSizeY :number = 500;
-
 	stompClient = null;
+	
+	
+	uploadedFiles :UploadedFile[] = [];
+	
+	scanningFileIndex :number = -1;
+	scanningFile :UploadedFile = null;
+	previewFile :UploadedFile = new UploadedFile;
+	
+	showOcrDetailsDialog :boolean = false;
+	showFilePreviewDialog :boolean = false;
 
+	fileExistsMessage :string = "common.file-exists";
+	
 	get debugData() :string{
 		var ss = formatDate(new Date(), 'dd.mm.yyyy');
 		ss += " -- " + parseDate(ss, 'dd.mm.yyyy');
@@ -98,15 +86,12 @@ export class CreateInvoiceComponent extends InvoiceBaseComponent implements OnIn
 			}
 		});
 
-		translate.get('common.uploading').subscribe((res: string) => {
-        	this.uplaodingMessageUploading =  res;
+		
+		
+		translate.get('common.file-exists').subscribe((res: string) => {
+        	this.fileExistsMessage =  res;
         });
-		translate.get('common.file-analysing').subscribe((res: string) => {
-        	this.uplaodingMessageFileAnalysing =  res;
-        });
-		translate.get('common.show-result').subscribe((res: string) => {
-        	this.uplaodingMessageShowResult =  res;
-        });
+
 	}
 	
 	ngOnInit() {
@@ -114,55 +99,127 @@ export class CreateInvoiceComponent extends InvoiceBaseComponent implements OnIn
 		super.ngOnInit();
 		
 	}
-	
-	scanOcrProgress(fileInput: any) {
 		
-		this.ocrScanFile = <File>fileInput.target.files[0];
-		this.uplaodingFileName = this.ocrScanFile.name;
-	}
-	
-	uploadOcrScanFile(){
+	uploadFile(fileInput: any) {
 		
-		this.intervalValue = 0;
-		this.showOcrDetails = false;
-		this.showUploading = true;
-		this.uplaodingMessage = this.uplaodingMessageUploading + " ...";
 		
-		/*this.intervalId = setInterval(() =>{ 
+		var file = <File>fileInput.target.files[0];
+		console.log("file: ", file);
+		//alert(file.name);
+		if(this.existsUploadedByFileName(file.name)){
+			$("#inlineuploadfile")[0].type = "text";
+			$("#inlineuploadfile")[0].type = "file";
 
-			this.intervalValue += 10;
-			
-			if(this.intervalValue >= 70){
-				clearInterval(this.intervalId);
-				//this.showUploading = false;
-			}
-			
-			
-		}, 3000);*/
+			this.errorService.showError(this.fileExistsMessage , "");	
+			return;
+		}
 		
-		this.editService.uploadOcrScanFiles(this.ocrScanFile).subscribe(
-		        (result) => {		        	
+		$("#inlineuploadfile")[0].type = "text";
+		$("#inlineuploadfile")[0].type = "file";
+		
+		this.loadingService.showLoading();
+		
+		this.editService.uploadTempFiles(file).subscribe(
+		        (result: UploadedResult) => {		        	
 		            console.log("upload invoice file result", result);
+		            this.loadingService.hideLoading();
 		            
-		            this.intervalValue += 33;
-		            this.uplaodingMessage = this.uplaodingMessageFileAnalysing + " ...";
-		            		            
-		            this.subscribe();
+		            if(result.status){
+		    			if(result.status === "done"){
+
+		    				var uploaded :UploadedFile = new UploadedFile;
+		    				 
+			    			uploaded.fileName = result.fileName;
+			    			uploaded.scanedPdfPath = result.fileHash;
+			    			uploaded.scanedHocrPath = result.hocrFileHash;
+			    			uploaded.fileIsPdf = result.isFilePdf;
+			    			uploaded.fileIsImage = result.isFileImage;
+			    			//uploaded.imageSizeX = result.imageWidth;
+			    			//uploaded.imageSizeY = result.imageHeight;
+			    			uploaded.uploadResult = result;
+
+			    			this.uploadedFiles.push(uploaded);
+		    	            
+		    			}
+		    			if(result.status === "error" && result.errorMessage){
+		    				this.unsubscribe();
+		    				this.errorService.showError(result.errorMessage , result.errorDetail);			
+		    			}
+		    		}		            
 		            
-		            this._stompService.publish('/socketapp/ocrprocess', JSON.stringify(result));
+		         		            
+		            
 		            
 		        },
 		        response => {
 		        	console.log("Error in upload invoice file", response);
-		        	this.unsubscribe();
-		        	this.showUploading = false;
-		        	this.errorService.showErrorResponse(response);
+		        	this.loadingService.hideLoading();
 		        },
 		        () => {
-		        	//this.intervalValue = 0;
-		        	//this.showUploading = false;     
 		        }
-		    );	   
+		    );	
+		
+
+	}
+	
+	removeUploadedFile(uploaded){
+		var index = this.uploadedFiles.indexOf(uploaded);
+		if(index > -1){
+			this.uploadedFiles.splice(index , 1);
+		}
+	}
+	
+	ocrUploadedFile(uploaded){
+		
+		var index = this.uploadedFiles.indexOf(uploaded);
+		if(index > -1){
+			this.scanningFileIndex = index;
+			this.scanningFile = this.uploadedFiles[index];
+			
+			this.loadingService.showLoading();
+			
+			this.subscribe();
+	        
+			console.log("ocrUploadedFile : ", this.scanningFile);
+			
+	        this._stompService.publish('/socketapp/ocrprocess', JSON.stringify(uploaded.uploadResult));
+		}
+		
+		
+        
+	}
+	
+	showScanResults(uploaded){
+		
+		var index = this.uploadedFiles.indexOf(uploaded);
+		if(index > -1){
+			this.scanningFileIndex = index;
+			this.scanningFile = this.uploadedFiles[index];
+	    	this.showOcrDetailsDialog = true;
+	    	
+			console.log("showScanResults : ", this.scanningFile);
+
+		}
+		
+	}
+	
+	showFilePreview(uploaded){
+		
+		this.showFilePreviewDialog = false;
+		var index = this.uploadedFiles.indexOf(uploaded);
+		if(index > -1){
+			this.previewFile = this.uploadedFiles[index];
+	    	this.showFilePreviewDialog = true;
+	    	
+			console.log("preview file : ", this.previewFile);
+
+		}
+
+	}
+	
+	onFilePreviewDialogClosed(closed: boolean) {
+		this.showFilePreviewDialog = false;
+		
 	}
 	
 	public onRecevieResponse = (message: Message) => {
@@ -170,37 +227,32 @@ export class CreateInvoiceComponent extends InvoiceBaseComponent implements OnIn
 		if(this.listening === false){
 			return;
 		}
-		
+
+		var uploaded = this.uploadedFiles[this.scanningFileIndex ];
+			
+		this.loadingService.hideLoading();
 		console.log("Message Received: " , message.body);
 		var parsedMessage = JSON.parse(message.body);
 		
 		if(parsedMessage.status){
 			if(parsedMessage.status === "done"){
 				this.unsubscribe();
-	            this.intervalValue += 33;
-	            this.uplaodingMessage = this.uplaodingMessageShowResult + " ...";
 
 	            if(parsedMessage.words){
-	            	this.foundWords = <OcrWord[]>parsedMessage.words;
-	            	console.log("Received Words: " , this.foundWords);
-	            	this.scanedPdfPath = parsedMessage.fileHash;
-	            	this.scanedHocrPath = parsedMessage.hocrFileHash;
-	            	this.fileIsPdf = parsedMessage.isFilePdf;
-	            	this.fileIsImage = parsedMessage.isFileImage;
-	            	this.imageSizeX = parsedMessage.imageWidth;
-	            	this.imageSizeY = parsedMessage.imageHeight;
 
-	            	this.showUploading = false;
-	            	this.showOcrDetails = true;
+	            	this.showOcrDetailsDialog = true;
 	            	
-	            	
-
+	            	this.uploadedFiles[this.scanningFileIndex].foundWords = <OcrWord[]>parsedMessage.words;
+	            	this.uploadedFiles[this.scanningFileIndex].isScanned = true;
+	            	this.uploadedFiles[this.scanningFileIndex].imageSizeX = parsedMessage.imageWidth;
+	            	this.uploadedFiles[this.scanningFileIndex].imageSizeY = parsedMessage.imageHeight;
+	    			
+	            	console.log("Received Words: " , this.uploadedFiles[this.scanningFileIndex].foundWords);
 	            }
 	            
 			}
 			if(parsedMessage.status === "error" && parsedMessage.errorMessage){
 				this.unsubscribe();
-				this.showUploading = false;
 				this.errorService.showError(parsedMessage.errorMessage , parsedMessage.errorDetail);			
 			}
 		}
@@ -259,7 +311,6 @@ export class CreateInvoiceComponent extends InvoiceBaseComponent implements OnIn
 		this.editService.workflowSaveRequestInitSubject.subscribe((data : InvoiceWorkflowSaveRequestInit) => {
 	    	
 			console.log("set gloabl-data from workflow-create. : ", data);
-			//alert("from app-comp: \n" + JSON.stringify(data));
 	 		
 			if(data && data !== null){
 				this.workflowSaveRequest = data.workflowSaveRequest;
@@ -331,7 +382,7 @@ export class CreateInvoiceComponent extends InvoiceBaseComponent implements OnIn
 	}
 	
 	hideOcrDetails(){
-		this.showOcrDetails = false;
+		this.showOcrDetailsDialog = false;
 	}
 	
 	onApplyScannedValues() {
@@ -351,10 +402,8 @@ export class CreateInvoiceComponent extends InvoiceBaseComponent implements OnIn
 		if(this.scannedSelectedValues["invoice-paymentamount"] && this.scannedSelectedValues["invoice-paymentamount"] != ""){
 			var foundPayment = this.scannedSelectedValues["invoice-paymentamount"].replace(/\./g, "").replace(",", ".");
 			
-			alert(foundPayment);
 			if(isNaN(foundPayment) === false){
 				var foundPaymentFloat = parseFloat(foundPayment);
-				alert(foundPaymentFloat);
 				this.invoiceEditForm.controls["paymentAmount"].setValue(foundPaymentFloat);
 			}
 			
@@ -364,8 +413,20 @@ export class CreateInvoiceComponent extends InvoiceBaseComponent implements OnIn
 			this.invoiceEditForm.controls["sender"].setValue(this.scannedSelectedValues["invoice-sender"]);
 		}
 		
-		this.showOcrDetails = false;
+		this.showOcrDetailsDialog = false;
 	}	
 
+	private findUploadedByFileName(fileName: string): UploadedFile{
+		for(var index in this.uploadedFiles){
+			if(this.uploadedFiles[index].fileName === fileName){
+				return this.uploadedFiles[index];
+			}
+		}
+		return null;
+	}
 
+	private existsUploadedByFileName(fileName: string): boolean{
+		
+		return this.findUploadedByFileName(fileName) !== null;
+	}
 }

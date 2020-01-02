@@ -9,6 +9,8 @@ export class OcrWord {
 	className: string;
 	value :OcrWord;
 	pageIndex :number;
+	pageWidth :number;
+	pageHeight :number;
 
 }
 
