@@ -1,7 +1,7 @@
 ﻿
 import { InvoiceWorkflow } from './invoice-workflow';
-import { WorkflowProcessCommand } from '../wf-models';
-import { AssignItem } from '../wf-models';
+import { WorkflowProcessCommand, AssignItem, WorkflowUploadedFile } from '../wf-models';
+import { UploadedFile } from '../ui-models';
 
 export class InvoiceWorkflowSaveRequest {
 	
@@ -9,7 +9,15 @@ export class InvoiceWorkflowSaveRequest {
 	expireDays :number = 0;
 	assigns :AssignItem[] = [];
 	command :WorkflowProcessCommand = WorkflowProcessCommand.NONE;
-	sessionKey :string = "";
+	uploadedFiles :WorkflowUploadedFile[] = [];
 
+	loadUploadedFiles(uploadedFiles :UploadedFile[]){
+		for(var index in uploadedFiles){
+			var wUploadedFile :WorkflowUploadedFile = new WorkflowUploadedFile(uploadedFiles[index]);
+			this.uploadedFiles.push(wUploadedFile);
+		}
+		
+	}
+	
 }
 

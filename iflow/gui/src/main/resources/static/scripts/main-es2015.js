@@ -101,6 +101,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/wm-file-upload/wm-file-upload.component.html":
+/*!***************************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/components/wm-file-upload/wm-file-upload.component.html ***!
+  \***************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("\n\t\t\t\t\t\t\t\t<div class=\"panel-heading\" [ngClass]=\"{'opacity0' : showHeaderTitle === false}\">{{ 'common.attachments' | translate }}</div>\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t<div><input type=\"file\" class=\"hide-file-input\" id=\"inlineuploadfile\" (change)=\"uploadFile($event)\" \n\t\t\t\t    \t\t\t\t\taccept=\".pdf,.jpg, .png, .tiff, .bmp\">\n\t\t\t\t    \t\t\t\t <label class=\"hide-file-label\" for=\"inlineuploadfile\"></label>\n\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t    \t\t\t</div>\n\t\t\t\t    \t\t\t<div class=\"uploaded-file-item-container\">\n\t\t\t\t    \t\t\t\t<div *ngFor=\"let uploaded of uploadedFiles\" class=\"uploaded-file-item list-group-item\" >\n\t\t\t\t    \t\t\t\t\t<span class=\"filename\">{{uploaded.fileName}}</span>\n\t\t\t\t    \t\t\t\t\t\n\t\t\t\t    \t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t<button class=\"btn btn-light upload-button\" style=\"float: right;\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\n\t\t\t\t\t\t\t\t\t\t\t<i class=\"material-icons\">more_horiz</i>\n\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t\t<div class=\"dropdown-menu\" aria-labelledby=\"dropdownMenuButton\">\n\t\t\t\t\t    \t\t\t\t\t<a target=\"_blank\" class=\"btn btn-primary upload-button\" \n\t\t\t\t\t    \t\t\t\t\t\thref=\"/general/data/file/view/{{uploaded.scanedPdfPath}}\"><i class=\"material-icons\">cloud_download</i></a>\n\t\t\t\t\t    \t\t\t\t\t<button class=\"btn btn-primary upload-button\" \n\t\t\t\t\t    \t\t\t\t\t\t(click)=\"showFilePreview(uploaded);\"><i class=\"material-icons\">pageview</i></button>\n\t\t\t\t\t    \t\t\t\t\t<button *ngIf=\"canshowOcrUploadButton(uploaded) && ocrScanningEnabled\" class=\"btn btn-primary upload-button\" \n\t\t\t\t\t    \t\t\t\t\t\t(click)=\"ocrUploadedFile(uploaded);\"><i class=\"material-icons\">play_for_work</i></button>\n\t\t\t\t\t    \t\t\t\t\t<button *ngIf=\"canShowScanResultsButton(uploaded) && ocrScanningEnabled\" class=\"btn btn-success upload-button\" \n\t\t\t\t\t    \t\t\t\t\t\t(click)=\"showScanResults(uploaded);\"><i class=\"material-icons\">details</i></button>\n\t\t\t\t\t    \t\t\t\t\t<button class=\"btn btn-dark upload-button\" \n\t\t\t\t\t    \t\t\t\t\t\t(click)=\"removeUploadedFile(uploaded);\"><i class=\"material-icons\">delete</i></button>\n\t\t\t\t\t\t\t\t\t\t</div>\n  \t\t\t\t    \t\t\t\t\t\n\t\t\t\t    \t\t\t\t\t\n\t\t\t\t    \t\t\t\t</div>\n\t\t\t\t    \t\t\t</div>\n\n\t\t<app-file-preview [showDialog]=\"showFilePreviewDialog\" (dialogClosed)=\"onFilePreviewDialogClosed($event)\" [fileUrl]=\"previewFile.scanedPdfPath\" \n\t\t\t[fileIsPdf]=\"previewFile.fileIsPdf\" [fileIsImage]=\"previewFile.fileIsImage\" [imageSizeX]=\"previewFile.imageSizeX\" \n\t\t\t[imageSizeY]=\"previewFile.imageSizeY\"></app-file-preview>\n\t\t\t\t    \t\t\t");
+
+/***/ }),
+
 /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/footer/footer.component.html":
 /*!************************************************************************************!*\
   !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/footer/footer.component.html ***!
@@ -188,7 +201,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("\n\t\t<div class=\"content-container\">\n\t\t\t<div class=\"page-toolbar\">\n\t\t\t\t<div class=\"page-title\">{{ pageTitle }}</div>\n\t\t\t\t<a class=\"toolbar-link\" [routerLink]=\"['/workflow/list']\"><i class=\"material-icons\">list</i></a>\n\t\t\t\t<button class=\"toolbar-button\" (click)=\"reload();\"><i class=\"material-icons\">refresh</i></button>\n\t\t\t\t\n\t\t\t</div>\n\t\t\t\n\t\t\t<div class=\"workflow-content-container\">\n\t\t\t\t<div class=\"workflow-content\">\n\t\t\t\t\t<form id=\"workflow-form\" name=\"workflowForm\" [formGroup]=\"invoiceEditForm\">\n\t\t\t\t\t\t<div class=\"panel panel-default\">\n\t\t\t\t\t\t\t<div class=\"panel-heading\">{{ 'invoice-invoice' | translate }}</div>\n\t\t\t\t\t\t\t<div class=\"panel-body\">\n\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'invoice-sender' | translate }}</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-content large-content\">\n\t\t\t\t\t\t\t\t\t\t<input type=\"text\" required name=\"sender\" formControlName=\"sender\" >\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-label small-label\">{{ 'invoice-trusted' | translate }}</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-content small-content\">\n\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\"  >\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'invoice-invoicenumber' | translate }}</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-content large-content\" >\n\t\t\t\t\t\t\t\t\t\t<input type=\"text\" required name=\"registerNumber\" formControlName=\"registerNumber\" >\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div  class=\"item-label label-required small-label\">{{ 'invoice-invoicedate' | translate }}</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-content small-content\">\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t<input required class=\"select-date\" (change)=\"invoiceDateChanges()\" (dateInput)=\"invoiceDateChanges()\" matInput [matDatepicker]=\"invocieDatepicker\" placeholder=\"{{ 'invoice-invoicedate-select' | translate }}\" formControlName=\"invocieDate\" >\n\t\t\t\t\t\t\t\t\t\t<mat-datepicker-toggle matSuffix [for]=\"invocieDatepicker\"></mat-datepicker-toggle>\n\t\t\t\t\t\t\t\t\t\t<mat-datepicker #invocieDatepicker startView=\"month\" [startAt]=\"invoiceEditForm.controls.invocieDate.value\"></mat-datepicker>\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ paymentamountTitle }}</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-content large-content\" >\n\t\t\t\t\t\t\t\t\t\t<input type=\"number\" required name=\"paymentAmount\" formControlName=\"paymentAmount\" >\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required small-label\">{{ 'invoice-invoicetype' | translate }}</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-content small-content\">\n\t\t\t\t\t\t\t\t\t\t<select required name=\"invoiceType\" formControlName=\"invoiceType\" [ngClass]=\"{'ng-invalid' : invoiceEditForm.controls.invoiceType.errors}\" >\n\t\t\t\t\t\t\t\t\t\t\t<option *ngFor=\"let invoiceType of invoiceTypes;\" value=\"{{invoiceType.value}}\">{{invoiceType.title}}</option>\n\t\t\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\n\t\t\t\t\t\t<div class=\"twopannel\">\n\t\t\t\t\t\t\t<div class=\"panel panel-1 panel-default panel-twopannelleft\">\n\t\t\t\t\t\t\t\t<div class=\"panel-heading\">{{ 'invoice-vendor' | translate }}</div>\n\t\t\t\t\t\t\t\t<div class=\"panel-body\">\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'invoice-vendornumber' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content fullrowfromlabel\">\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" required name=\"vendorNumber\" formControlName=\"vendorNumber\" >\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'invoice-partnercode' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content fullrowfromlabel\">\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" required name=\"partnerCode\" formControlName=\"partnerCode\" >\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'invoice-vendorname' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content fullrowfromlabel\">\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" required name=\"vendorName\" formControlName=\"vendorName\" >\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'invoice-isdirectdebitpermission' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content fullrowfromlabel\">\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" name=\"isDirectDebitPermission\" formControlName=\"isDirectDebitPermission\" [checked]=\"forms.isDirectDebitPermission.value\" >\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\n\t\t\n\t\t\t\t\t\t\t<div class=\"panel panel-1 panel-default panel-twopannelright\" *ngIf=\"isPaymentInvoiceType() === false\">\n\t\t\t\t\t\t\t\t<div class=\"panel-heading\">{{ 'invoice-discount' | translate }}</div>\n\t\t\t\t\t\t\t\t<div class=\"panel-body\">\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required small-label\">{{ 'invoice-discountenterdate-short' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t\t\t\t\t\t<input required class=\"select-date\" matInput (change)=\"calcDiscountDate()\" (dateInput)=\"calcDiscountDate()\" [matDatepicker]=\"discountEnterDatepicker\" placeholder=\"{{ 'invoice-discountenterdate' | translate }}\" formControlName=\"discountEnterDate\" >\n\t\t\t\t\t\t\t\t\t\t\t<mat-datepicker-toggle matSuffix [for]=\"discountEnterDatepicker\"></mat-datepicker-toggle>\n\t\t\t\t\t\t\t\t\t\t\t<mat-datepicker #discountEnterDatepicker startView=\"month\" [startAt]=\"invoiceEditForm.controls.discountEnterDate.value\"></mat-datepicker>\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required small-label\">{{ 'invoice-discountrate-short' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" required name=\"discountRate\" class=\"short-input\" formControlName=\"discountRate\" > %\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required small-label\">{{ 'invoice-discountdeadline-short' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" required name=\"discountDeadline\" (change)=\"calcDiscountDate()\" class=\"short-input\" formControlName=\"discountDeadline\" > <span>{{ 'common.days' | translate }}</span>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required small-label\">{{ 'invoice-discountdate' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t\t\t\t\t\t<input required class=\"select-date\" readonly placeholder=\"{{ 'invoice-discountdate' | translate }}\" formControlName=\"discountDate\" >\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t<div class=\"clear\"></div>\t\t\t\t\t\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\n\t\t\t\t\t\t<div class=\"twopannel\">\n\t\t\t\t\t\t\t<div class=\"panel panel-2 panel-default panel-twopannelleft\">\n\t\t\t\t\t\t\t\t<div class=\"panel-body\">\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'workflow-controller' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content fullrowfromlabel\">\n\t\t\t\t\t\t\t\t\t\t\t<select type=\"text\" class=\"fullrow\" formControlName=\"controllerIdentity\">\n\t\t\t\t\t\t\t\t\t\t\t\t<option value=\"0\">{{ 'workflow-select-controller' | translate }}</option>\n\t\t\t\t\t\t\t\t\t\t\t\t<option *ngFor=\"let user of users;\" value=\"{{user.identity}}\">{{user.fullName}}</option>\n\t\t\t\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-large\">{{ 'workflow-comments' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content fullrowfromlabel\">\n\t\t\t\t\t\t\t\t\t\t\t<textarea class=\"comments-fullrow\" formControlName=\"comments\"></textarea>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-large\">{{ 'workflow-assignto' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content fullrowfromlabel\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"assign-list\" >\n\t\t\t\t\t\t\t\t\t\t\t\t<button class=\"show-select-dialog\" (click)=\"showAssignSelect()\"><i class=\"material-icons\">playlist_add</i></button>\n\t\t\t\t\t\t\t\t\t\t\t\t<span *ngIf=\"hasNoAssigns\">{{ 'workflow-select-assign' | translate }}</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"user-item-box\" *ngFor=\"let item of assignedUsers\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span>{{getAssignItemTitle(item)}} </span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<button (click)=\"removeAssign(item.itemIdentity, item.itemType)\"><i class=\"material-icons\">close</i></button>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t<div class=\"panel panel-2 panel-default panel-twopannelright\">\n\t\t\t\t\t\t\t\t<div class=\"panel-heading\">{{ 'common.attachments' | translate }}</div>\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t<div><input type=\"file\" class=\"hide-file-input\" id=\"inlineuploadfile\" (change)=\"uploadFile($event)\" \n\t\t\t\t    \t\t\t\t\taccept=\".pdf,.jpg, .png, .tiff, .bmp\">\n\t\t\t\t    \t\t\t\t <label class=\"hide-file-label\" for=\"inlineuploadfile\"></label>\n\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t    \t\t\t</div>\n\t\t\t\t    \t\t\t<div>\n\t\t\t\t    \t\t\t\t<div *ngFor=\"let uploaded of uploadedFiles\" class=\"uploaded-file-item list-group-item\" >\n\t\t\t\t    \t\t\t\t\t<span class=\"filename\">{{uploaded.fileName}}</span>\n\t\t\t\t    \t\t\t\t\t\n\t\t\t\t    \t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t<button class=\"btn btn-light upload-button\" style=\"float: right;\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\n\t\t\t\t\t\t\t\t\t\t\t<i class=\"material-icons\">more_horiz</i>\n\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t\t<div class=\"dropdown-menu\" aria-labelledby=\"dropdownMenuButton\">\n\t\t\t\t\t    \t\t\t\t\t<button class=\"btn btn-dark upload-button\" \n\t\t\t\t\t    \t\t\t\t\t\t(click)=\"removeUploadedFile(uploaded);\"><i class=\"material-icons\">delete</i></button>\n\t\t\t\t\t    \t\t\t\t\t<a target=\"_blank\" class=\"btn btn-primary upload-button\" \n\t\t\t\t\t    \t\t\t\t\t\thref=\"/general/data/file/view/{{uploaded.scanedPdfPath}}\"><i class=\"material-icons\">cloud_download</i></a>\n\t\t\t\t\t    \t\t\t\t\t<button class=\"btn btn-primary upload-button\" \n\t\t\t\t\t    \t\t\t\t\t\t(click)=\"showFilePreview(uploaded);\"><i class=\"material-icons\">pageview</i></button>\n\t\t\t\t\t    \t\t\t\t\t<button *ngIf=\"uploaded.isScanned === false\" class=\"btn btn-primary upload-button\" \n\t\t\t\t\t    \t\t\t\t\t\t(click)=\"ocrUploadedFile(uploaded);\"><i class=\"material-icons\">play_for_work</i></button>\n\t\t\t\t\t    \t\t\t\t\t<button *ngIf=\"uploaded.isScanned === true\" class=\"btn btn-success upload-button\" \n\t\t\t\t\t    \t\t\t\t\t\t(click)=\"showScanResults(uploaded);\"><i class=\"material-icons\">details</i></button>\n\t\t\t\t\t    \t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t\t</div>\n  \t\t\t\t    \t\t\t\t\t\n\t\t\t\t    \t\t\t\t\t\n\t\t\t\t    \t\t\t\t</div>\n\t\t\t\t    \t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t<div class=\"clear\"></div>\t\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\n\t\t\t\t\t\n\t\n\t\n\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t<div class=\"workflow-step-button-bar\">\n\t\t\t\t\t\t\t\t<button type=\"button\" (click)=\"save()\" [disabled]=\"invoiceEditForm.invalid\" class=\"button-bar-button step-button button-save\">\n\t\t\t\t\t\t\t\t\t<span>{{ 'common.create' | translate }}</span>\n\t\t\t\t\t\t\t\t\t<i class=\"material-icons\">save</i>\n\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</form>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\n\t\t\t</div>\n\t\t    \t\t \n\t\t\t<app-select-user [users]=\"(generalDataObs | async)?.company.users\" [departments]=\"(generalDataObs | async)?.company.departments\" \n\t\t\t\t[showAssignModal]=\"showAssignModal\" [selectAssign]=\"selectAssign\" (onUsersSelected)=\"onUsersSelected($event)\"></app-select-user>\t\t    \t\t \t\t\n\n\t\t\n\t\t</div>\n\n\t\t<div class=\"modal fade show\" tabindex=\"-1\" *ngIf=\"showOcrDetailsDialog\" role=\"dialog\" id=\"scanneddetailsdialog\">\n\t\t\t<div class=\"modal-dialog scanned-details-dialog\" role=\"document\">\n\t\t\t\t<div class=\"modal-header\">\n\t\t\t \t\t<h5 class=\"modal-title\">{{ 'common.scann-document-result' | translate }}</h5>\n\t\t\t\t\t<button type=\"button\" class=\"close\" (click)=\"hideOcrDetails()\" aria-label=\"Close\">\n\t\t\t\t\t\t<span aria-hidden=\"true\">&times;</span>\n\t\t\t\t\t</button>\n\t\t\t\t</div>\t\t\t\n\t\t\t\t<div class=\"modal-body\">\n\t\t\t\t\t<app-invoice-ocr-detail [foundWords]=\"scanningFile.foundWords\" [scanedPdfPath]=\"scanningFile.scanedPdfPath\" \n\t\t\t\t\t\t[scanedHocrPath]=\"scanningFile.scanedHocrPath\" [fileIsPdf]=\"scanningFile.fileIsPdf\" \n\t\t\t\t\t\t[fileIsImage]=\"scanningFile.fileIsImage\" [imageSizeX]=\"scanningFile.imageSizeX\" [imageSizeY]=\"scanningFile.imageSizeY\" \n\t\t\t\t\t\t[(editedValues)]=\"scannedSelectedValues\" >\n\t\t\t\t\t</app-invoice-ocr-detail>\n\t\t\t\t</div>\t\n\t\t\t\t<div class=\"modal-footer\">\n\t\t\t\t\t<button type=\"button\" class=\"btn btn-primary\" (click)=\"onApplyScannedValues()\">{{ 'common.apply' | translate }}</button>\n\t\t\t\t\t<button type=\"button\" class=\"btn btn-secondary\" (click)=\"hideOcrDetails()\">{{ 'common.close' | translate }}</button>\n\t\t\t\t</div>\t\t\t\t\t\t\n\t\t\t</div>\n\t\t</div>\n\n\t\t<app-file-preview [showDialog]=\"showFilePreviewDialog\" (dialogClosed)=\"onFilePreviewDialogClosed($event)\" [fileUrl]=\"previewFile.scanedPdfPath\" [fileIsPdf]=\"previewFile.fileIsPdf\" \n\t\t\t\t[fileIsImage]=\"previewFile.fileIsImage\" [imageSizeX]=\"previewFile.imageSizeX\" [imageSizeY]=\"previewFile.imageSizeY\"></app-file-preview>\n\n\t\t\n");
+/* harmony default export */ __webpack_exports__["default"] = ("\n\t\t<div class=\"content-container\">\n\t\t\t<div class=\"page-toolbar\">\n\t\t\t\t<div class=\"page-title\">{{ pageTitle }}</div>\n\t\t\t\t<a class=\"toolbar-link\" [routerLink]=\"['/workflow/list']\"><i class=\"material-icons\">list</i></a>\n\t\t\t\t<button class=\"toolbar-button\" (click)=\"reload();\"><i class=\"material-icons\">refresh</i></button>\n\t\t\t\t\n\t\t\t</div>\n\t\t\t\n\t\t\t<div class=\"workflow-content-container\">\n\t\t\t\t<div class=\"workflow-content\">\n\t\t\t\t\t<form id=\"workflow-form\" name=\"workflowForm\" [formGroup]=\"invoiceEditForm\">\n\t\t\t\t\t\t<div class=\"panel panel-default\">\n\t\t\t\t\t\t\t<div class=\"panel-heading\">{{ 'invoice-invoice' | translate }}</div>\n\t\t\t\t\t\t\t<div class=\"panel-body\">\n\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'invoice-sender' | translate }}</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-content large-content\">\n\t\t\t\t\t\t\t\t\t\t<input type=\"text\" required name=\"sender\" formControlName=\"sender\" >\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-label small-label\">{{ 'invoice-trusted' | translate }}</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-content small-content\">\n\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\"  >\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'invoice-invoicenumber' | translate }}</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-content large-content\" >\n\t\t\t\t\t\t\t\t\t\t<input type=\"text\" required name=\"registerNumber\" formControlName=\"registerNumber\" >\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div  class=\"item-label label-required small-label\">{{ 'invoice-invoicedate' | translate }}</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-content small-content\">\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t<input required class=\"select-date\" (change)=\"invoiceDateChanges()\" (dateInput)=\"invoiceDateChanges()\" matInput [matDatepicker]=\"invocieDatepicker\" placeholder=\"{{ 'invoice-invoicedate-select' | translate }}\" formControlName=\"invocieDate\" >\n\t\t\t\t\t\t\t\t\t\t<mat-datepicker-toggle matSuffix [for]=\"invocieDatepicker\"></mat-datepicker-toggle>\n\t\t\t\t\t\t\t\t\t\t<mat-datepicker #invocieDatepicker startView=\"month\" [startAt]=\"invoiceEditForm.controls.invocieDate.value\"></mat-datepicker>\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ paymentamountTitle }}</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-content large-content\" >\n\t\t\t\t\t\t\t\t\t\t<input type=\"number\" required name=\"paymentAmount\" formControlName=\"paymentAmount\" >\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required small-label\">{{ 'invoice-invoicetype' | translate }}</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-content small-content\">\n\t\t\t\t\t\t\t\t\t\t<select required name=\"invoiceType\" formControlName=\"invoiceType\" [ngClass]=\"{'ng-invalid' : invoiceEditForm.controls.invoiceType.errors}\" >\n\t\t\t\t\t\t\t\t\t\t\t<option *ngFor=\"let invoiceType of invoiceTypes;\" value=\"{{invoiceType.value}}\">{{invoiceType.title}}</option>\n\t\t\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\n\t\t\t\t\t\t<div class=\"twopannel\">\n\t\t\t\t\t\t\t<div class=\"panel panel-1 panel-default panel-twopannelleft\">\n\t\t\t\t\t\t\t\t<div class=\"panel-heading\">{{ 'invoice-vendor' | translate }}</div>\n\t\t\t\t\t\t\t\t<div class=\"panel-body\">\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'invoice-vendornumber' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content fullrowfromlabel\">\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" required name=\"vendorNumber\" formControlName=\"vendorNumber\" >\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'invoice-partnercode' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content fullrowfromlabel\">\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" required name=\"partnerCode\" formControlName=\"partnerCode\" >\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'invoice-vendorname' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content fullrowfromlabel\">\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" required name=\"vendorName\" formControlName=\"vendorName\" >\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'invoice-isdirectdebitpermission' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content fullrowfromlabel\">\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" name=\"isDirectDebitPermission\" formControlName=\"isDirectDebitPermission\" [checked]=\"forms.isDirectDebitPermission.value\" >\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\n\t\t\n\t\t\t\t\t\t\t<div class=\"panel panel-1 panel-default panel-twopannelright\" *ngIf=\"isPaymentInvoiceType() === false\">\n\t\t\t\t\t\t\t\t<div class=\"panel-heading\">{{ 'invoice-discount' | translate }}</div>\n\t\t\t\t\t\t\t\t<div class=\"panel-body\">\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required small-label\">{{ 'invoice-discountenterdate-short' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t\t\t\t\t\t<input required class=\"select-date\" matInput (change)=\"calcDiscountDate()\" (dateInput)=\"calcDiscountDate()\" [matDatepicker]=\"discountEnterDatepicker\" placeholder=\"{{ 'invoice-discountenterdate' | translate }}\" formControlName=\"discountEnterDate\" >\n\t\t\t\t\t\t\t\t\t\t\t<mat-datepicker-toggle matSuffix [for]=\"discountEnterDatepicker\"></mat-datepicker-toggle>\n\t\t\t\t\t\t\t\t\t\t\t<mat-datepicker #discountEnterDatepicker startView=\"month\" [startAt]=\"invoiceEditForm.controls.discountEnterDate.value\"></mat-datepicker>\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required small-label\">{{ 'invoice-discountrate-short' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" required name=\"discountRate\" class=\"short-input\" formControlName=\"discountRate\" > %\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required small-label\">{{ 'invoice-discountdeadline-short' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" required name=\"discountDeadline\" (change)=\"calcDiscountDate()\" class=\"short-input\" formControlName=\"discountDeadline\" > <span>{{ 'common.days' | translate }}</span>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required small-label\">{{ 'invoice-discountdate' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t\t\t\t\t\t<input required class=\"select-date\" readonly placeholder=\"{{ 'invoice-discountdate' | translate }}\" formControlName=\"discountDate\" >\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t<div class=\"clear\"></div>\t\t\t\t\t\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\n\t\t\t\t\t\t<div class=\"twopannel\">\n\t\t\t\t\t\t\t<div class=\"panel panel-2 panel-default panel-twopannelleft\">\n\t\t\t\t\t\t\t\t<div class=\"panel-body\">\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'workflow-controller' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content fullrowfromlabel\">\n\t\t\t\t\t\t\t\t\t\t\t<select type=\"text\" class=\"fullrow\" formControlName=\"controllerIdentity\">\n\t\t\t\t\t\t\t\t\t\t\t\t<option value=\"0\">{{ 'workflow-select-controller' | translate }}</option>\n\t\t\t\t\t\t\t\t\t\t\t\t<option *ngFor=\"let user of users;\" value=\"{{user.identity}}\">{{user.fullName}}</option>\n\t\t\t\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-large\">{{ 'workflow-comments' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content fullrowfromlabel\">\n\t\t\t\t\t\t\t\t\t\t\t<textarea class=\"comments-fullrow\" formControlName=\"comments\"></textarea>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-large\">{{ 'workflow-assignto' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content fullrowfromlabel\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"assign-list\" >\n\t\t\t\t\t\t\t\t\t\t\t\t<button class=\"show-select-dialog\" (click)=\"showAssignSelect()\"><i class=\"material-icons\">playlist_add</i></button>\n\t\t\t\t\t\t\t\t\t\t\t\t<span *ngIf=\"hasNoAssigns\">{{ 'workflow-select-assign' | translate }}</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"user-item-box\" *ngFor=\"let item of assignedUsers\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span>{{getAssignItemTitle(item)}} </span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<button (click)=\"removeAssign(item.itemIdentity, item.itemType)\"><i class=\"material-icons\">close</i></button>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t<div class=\"panel panel-2 panel-default panel-twopannelright\">\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t<app-wm-file-upload [ocrScanningEnabled]=\"true\" [editService]=\"editService\" \n\t\t\t\t\t\t\t\t\t(onOcrUploadedFile)=\"onOcrUploadedFile($event)\" (onUploadedFilesChanged)=\"onUploadedFilesChanged($event)\" \n\t\t\t\t\t\t\t\t\t(onShowUploadedFileScannDetail)=\"onShowUploadedFileScannDetail($event)\" ></app-wm-file-upload>\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t<div class=\"clear\"></div>\t\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\n\t\t\t\t\t\n\t\n\t\n\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t<div class=\"workflow-step-button-bar\">\n\t\t\t\t\t\t\t\t<button type=\"button\" (click)=\"save()\" [disabled]=\"invoiceEditForm.invalid\" class=\"button-bar-button step-button button-save\">\n\t\t\t\t\t\t\t\t\t<span>{{ 'common.create' | translate }}</span>\n\t\t\t\t\t\t\t\t\t<i class=\"material-icons\">save</i>\n\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</form>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\n\t\t\t</div>\n\t\t    \t\t \n\t\t\t<app-select-user [users]=\"(generalDataObs | async)?.company.users\" [departments]=\"(generalDataObs | async)?.company.departments\" \n\t\t\t\t[showAssignModal]=\"showAssignModal\" [selectAssign]=\"selectAssign\" (onUsersSelected)=\"onUsersSelected($event)\"></app-select-user>\t\t    \t\t \t\t\n\n\t\t\n\t\t</div>\n\n\t\t<div class=\"modal fade show\" tabindex=\"-1\" *ngIf=\"showOcrDetailsDialog\" role=\"dialog\" id=\"scanneddetailsdialog\">\n\t\t\t<div class=\"modal-dialog scanned-details-dialog\" role=\"document\">\n\t\t\t\t<div class=\"modal-header\">\n\t\t\t \t\t<h5 class=\"modal-title\">{{ 'common.scann-document-result' | translate }}</h5>\n\t\t\t\t\t<button type=\"button\" class=\"close\" (click)=\"hideOcrDetails()\" aria-label=\"Close\">\n\t\t\t\t\t\t<span aria-hidden=\"true\">&times;</span>\n\t\t\t\t\t</button>\n\t\t\t\t</div>\t\t\t\n\t\t\t\t<div class=\"modal-body\">\n\t\t\t\t\t<app-invoice-ocr-detail [foundWords]=\"scanningFile.foundWords\" [scanedPdfPath]=\"scanningFile.scanedPdfPath\" \n\t\t\t\t\t\t[scanedHocrPath]=\"scanningFile.scanedHocrPath\" [fileIsPdf]=\"scanningFile.fileIsPdf\" \n\t\t\t\t\t\t[fileIsImage]=\"scanningFile.fileIsImage\" [imageSizeX]=\"scanningFile.imageSizeX\" [imageSizeY]=\"scanningFile.imageSizeY\" \n\t\t\t\t\t\t[(editedValues)]=\"scannedSelectedValues\" >\n\t\t\t\t\t</app-invoice-ocr-detail>\n\t\t\t\t</div>\t\n\t\t\t\t<div class=\"modal-footer\">\n\t\t\t\t\t<button type=\"button\" class=\"btn btn-primary\" (click)=\"onApplyScannedValues()\">{{ 'common.apply' | translate }}</button>\n\t\t\t\t\t<button type=\"button\" class=\"btn btn-secondary\" (click)=\"hideOcrDetails()\">{{ 'common.close' | translate }}</button>\n\t\t\t\t</div>\t\t\t\t\t\t\n\t\t\t</div>\n\t\t</div>\n\n\t\t\n");
 
 /***/ }),
 
@@ -201,7 +214,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("\t\t<div class=\"content-container\">\n\t\t\t<div class=\"page-toolbar\">\n\t\t\t\t<div class=\"page-title\">{{ 'menu-workflow-create' | translate }}</div>\n\t\t\t\t<a class=\"toolbar-link\" [routerLink]=\"['/workflow/list']\"><i class=\"material-icons\">list</i></a>\n\t\t\t</div>\n\t\t\n\t\t\t<div class=\"workflow-content\">\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'common.expiredays' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content\"><input type=\"number\" max=\"999\" min=\"1\" maxlength=\"3\" [(ngModel)]=\"expireDays\" /></div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'workflow-controller' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t<select [(ngModel)]=\"controllerIdentity\">\n\t\t\t\t\t\t\t<option value=\"0\">{{ 'workflow-select-controller' | translate }}</option>\n\t\t\t\t\t\t\t<option *ngFor=\"let user of users;\" value=\"{{user.identity}}\">{{user.fullName}}</option>\n\t\t\t\t\t\t</select>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'workflow-assignto' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t<div class=\"assign-list\" >\n\t\t\t\t\t\t\t<button class=\"show-select-dialog\" (click)=\"showAssignSelect()\"><i class=\"material-icons\">playlist_add</i></button>\n\t\t\t\t\t\t\t<span *ngIf=\"hasNoAssigns\">{{ 'workflow-select-assign' | translate }}</span>\n\t\t\t\t\t\t\t<div class=\"user-item-box\" *ngFor=\"let item of assignedUsers\">\n\t\t\t\t\t\t\t\t<span>{{getAssignItemTitle(item)}} </span>\n\t\t\t\t\t\t\t\t<button (click)=\"removeAssign(item.itemIdentity, item.itemType)\"><i class=\"material-icons\">close</i></button>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'workflow-comments' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t<textarea [(ngModel)]=\"comments\"></textarea>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'workflow-files' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content file-container\">\n\t\t\t\t\t\t<div *ngFor=\"let file of fileTitles; let fileIndex = index\" class=\"file-row\">\n\t\t\t\t\t\t\t{{fileIndex + 1}}.\n\t\t\t\t\t\t\t<input type=\"text\" class=\"file-item file-title\" placeholder=\"Datei Titel\" [(ngModel)]=\"file.title\"/>\n\t\t\t\t\t\t\t<input type=\"file\" class=\"file-item file-file\" (change)=\"fileTitleProgress($event, file, fileIndex)\"/>\n\t\t\t\t\t\t\t<button class=\"file-action\" (click)=\"removeFile(fileIndex)\"><i class=\"material-icons\">delete</i></button>\n\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div style=\"margin-top: 20px;\">\n\t\t\t\t\t\t\t<button class=\"file-action\" (click)=\"addFile()\"><i class=\"material-icons\">add</i></button>\n\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\n\t\t\t\t\t<div class=\"item-content workflow-step-button-bar\">\n\t\t\t\t\t\t<button (click)=\"save()\" class=\"button-bar-button step-button button-save\">\n\t\t\t\t\t\t\t<span>{{ 'common.save' | translate }}</span>\n\t\t\t\t\t\t\t<i class=\"material-icons\">save</i>\n\t\t\t\t\t\t</button>\n\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t</div>\n\t\t\t\t\t\n\t\t\t\t</div>\n\t\t\t\t        \t\t\t\t\n\t\t\t\t<div class=\"item-row\" [innerHTML]=\"debugData\">\n\t\t\t\t</div>\n\n\t\t\t</div>\n\t\t    \n\t\t\t<app-select-user [users]=\"(generalDataObs | async)?.company.users\" [departments]=\"(generalDataObs | async)?.company.departments\" \n\t\t\t\t[showAssignModal]=\"showAssignModal\" [selectAssign]=\"selectAssign\" (onUsersSelected)=\"onUsersSelected($event)\"></app-select-user>\t\t    \t\t \t\t\n\n\t\t    \t\t \t\t\n\t\t</div>");
+/* harmony default export */ __webpack_exports__["default"] = ("\t\t<div class=\"content-container\">\n\t\t\t<div class=\"page-toolbar\">\n\t\t\t\t<div class=\"page-title\">{{ 'menu-workflow-create' | translate }}</div>\n\t\t\t\t<a class=\"toolbar-link\" [routerLink]=\"['/workflow/list']\"><i class=\"material-icons\">list</i></a>\n\t\t\t</div>\n\t\t\n\t\t\t<div class=\"workflow-content\">\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'common.expiredays' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content\"><input type=\"number\" max=\"999\" min=\"1\" maxlength=\"3\" [(ngModel)]=\"expireDays\" /></div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'workflow-controller' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t<select [(ngModel)]=\"controllerIdentity\">\n\t\t\t\t\t\t\t<option value=\"0\">{{ 'workflow-select-controller' | translate }}</option>\n\t\t\t\t\t\t\t<option *ngFor=\"let user of users;\" value=\"{{user.identity}}\">{{user.fullName}}</option>\n\t\t\t\t\t\t</select>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'workflow-assignto' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t<div class=\"assign-list\" >\n\t\t\t\t\t\t\t<button class=\"show-select-dialog\" (click)=\"showAssignSelect()\"><i class=\"material-icons\">playlist_add</i></button>\n\t\t\t\t\t\t\t<span *ngIf=\"hasNoAssigns\">{{ 'workflow-select-assign' | translate }}</span>\n\t\t\t\t\t\t\t<div class=\"user-item-box\" *ngFor=\"let item of assignedUsers\">\n\t\t\t\t\t\t\t\t<span>{{getAssignItemTitle(item)}} </span>\n\t\t\t\t\t\t\t\t<button (click)=\"removeAssign(item.itemIdentity, item.itemType)\"><i class=\"material-icons\">close</i></button>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'workflow-comments' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t<textarea [(ngModel)]=\"comments\"></textarea>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'common.attachments' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t<app-wm-file-upload [ocrScanningEnabled]=\"false\" [editService]=\"editService\" [showHeaderTitle]=\"false\" \n\t\t\t\t\t\t(onUploadedFilesChanged)=\"onUploadedFilesChanged($event)\" > </app-wm-file-upload>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\n\t\t\t\t\t<div class=\"item-content workflow-step-button-bar\">\n\t\t\t\t\t\t<button (click)=\"save()\" class=\"button-bar-button step-button button-save\">\n\t\t\t\t\t\t\t<span>{{ 'common.save' | translate }}</span>\n\t\t\t\t\t\t\t<i class=\"material-icons\">save</i>\n\t\t\t\t\t\t</button>\n\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t</div>\n\t\t\t\t\t\n\t\t\t\t</div>\n\t\t\t\t        \t\t\t\t\n\t\t\t\t<div class=\"item-row\" [innerHTML]=\"debugData\">\n\t\t\t\t</div>\n\n\t\t\t</div>\n\t\t    \n\t\t</div>\n\n\t\t<app-select-user [users]=\"(generalDataObs | async)?.company.users\" [departments]=\"(generalDataObs | async)?.company.departments\" \n\t\t\t[showAssignModal]=\"showAssignModal\" [selectAssign]=\"selectAssign\" (onUsersSelected)=\"onUsersSelected($event)\"></app-select-user>\t\t    \t\t \t\t\n\n\t\t    \t\t \t\t\n\t\t");
 
 /***/ }),
 
@@ -735,6 +748,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _test_test_component__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ./test/test.component */ "./src/app/test/test.component.ts");
 /* harmony import */ var _wm_components_invoice_ocr_detail_invoice_ocr_detail_component__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ./wm-components/invoice-ocr-detail/invoice-ocr-detail.component */ "./src/app/wm-components/invoice-ocr-detail/invoice-ocr-detail.component.ts");
 /* harmony import */ var _components_file_preview_file_preview_component__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ./components/file-preview/file-preview.component */ "./src/app/components/file-preview/file-preview.component.ts");
+/* harmony import */ var _components_wm_file_upload_wm_file_upload_component__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ./components/wm-file-upload/wm-file-upload.component */ "./src/app/components/wm-file-upload/wm-file-upload.component.ts");
 
 
 
@@ -750,6 +764,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 //import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+
 
 
 
@@ -844,6 +859,7 @@ AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
             _test_test_component__WEBPACK_IMPORTED_MODULE_39__["TestComponent"],
             _wm_components_invoice_ocr_detail_invoice_ocr_detail_component__WEBPACK_IMPORTED_MODULE_40__["InvoiceOcrDetailComponent"],
             _components_file_preview_file_preview_component__WEBPACK_IMPORTED_MODULE_41__["FilePreviewComponent"],
+            _components_wm_file_upload_wm_file_upload_component__WEBPACK_IMPORTED_MODULE_42__["WmFileUploadComponent"],
         ],
         providers: [
             _services_global_service__WEBPACK_IMPORTED_MODULE_18__["GlobalService"],
@@ -1264,6 +1280,189 @@ SelectUserComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./select-user.component.css */ "./src/app/components/select-user/select-user.component.css")).default]
     })
 ], SelectUserComponent);
+
+
+
+/***/ }),
+
+/***/ "./src/app/components/wm-file-upload/wm-file-upload.component.css":
+/*!************************************************************************!*\
+  !*** ./src/app/components/wm-file-upload/wm-file-upload.component.css ***!
+  \************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("\r\n.panel-heading{\r\n\tfont-weight: bold;\t\r\n}\r\n\r\n.uploaded-file-item-container{\r\n\theight: 220px;\r\n    overflow-y: auto;\r\n}\r\n\r\n.uploaded-file-item {\r\n\tpadding: 5px 4px 0 10px;\r\n\tmargin-bottom: 3px;\r\n}\r\n\r\n.uploaded-file-item:hover {\r\n\tbackground-color: #feffea;\r\n}\r\n\r\n.uploaded-file-item .filename {\r\n\twidth: calc(100% - 54px);\r\n    display: inline-block;\r\n    overflow: hidden;\r\n    overflow-y: hidden;\r\n    height: 30px;\r\n}\r\n\r\n.uploaded-file-item .upload-button{\r\n    padding: 0px 4px;\r\n    margin-left: 5px;\r\n}\r\n\r\n.uploaded-file-item .upload-button .material-icons{\r\n    font-size: 16px;\r\n}\r\n\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29tcG9uZW50cy93bS1maWxlLXVwbG9hZC93bS1maWxlLXVwbG9hZC5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7QUFDQTtDQUNDLGlCQUFpQjtBQUNsQjs7QUFFQTtDQUNDLGFBQWE7SUFDVixnQkFBZ0I7QUFDcEI7O0FBRUE7Q0FDQyx1QkFBdUI7Q0FDdkIsa0JBQWtCO0FBQ25COztBQUVBO0NBQ0MseUJBQXlCO0FBQzFCOztBQUVBO0NBQ0Msd0JBQXdCO0lBQ3JCLHFCQUFxQjtJQUNyQixnQkFBZ0I7SUFDaEIsa0JBQWtCO0lBQ2xCLFlBQVk7QUFDaEI7O0FBRUE7SUFDSSxnQkFBZ0I7SUFDaEIsZ0JBQWdCO0FBQ3BCOztBQUVBO0lBQ0ksZUFBZTtBQUNuQiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvd20tZmlsZS11cGxvYWQvd20tZmlsZS11cGxvYWQuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIlxyXG4ucGFuZWwtaGVhZGluZ3tcclxuXHRmb250LXdlaWdodDogYm9sZDtcdFxyXG59XHJcblxyXG4udXBsb2FkZWQtZmlsZS1pdGVtLWNvbnRhaW5lcntcclxuXHRoZWlnaHQ6IDIyMHB4O1xyXG4gICAgb3ZlcmZsb3cteTogYXV0bztcclxufVxyXG5cclxuLnVwbG9hZGVkLWZpbGUtaXRlbSB7XHJcblx0cGFkZGluZzogNXB4IDRweCAwIDEwcHg7XHJcblx0bWFyZ2luLWJvdHRvbTogM3B4O1xyXG59XHJcblxyXG4udXBsb2FkZWQtZmlsZS1pdGVtOmhvdmVyIHtcclxuXHRiYWNrZ3JvdW5kLWNvbG9yOiAjZmVmZmVhO1xyXG59XHJcblxyXG4udXBsb2FkZWQtZmlsZS1pdGVtIC5maWxlbmFtZSB7XHJcblx0d2lkdGg6IGNhbGMoMTAwJSAtIDU0cHgpO1xyXG4gICAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xyXG4gICAgb3ZlcmZsb3c6IGhpZGRlbjtcclxuICAgIG92ZXJmbG93LXk6IGhpZGRlbjtcclxuICAgIGhlaWdodDogMzBweDtcclxufVxyXG5cclxuLnVwbG9hZGVkLWZpbGUtaXRlbSAudXBsb2FkLWJ1dHRvbntcclxuICAgIHBhZGRpbmc6IDBweCA0cHg7XHJcbiAgICBtYXJnaW4tbGVmdDogNXB4O1xyXG59XHJcblxyXG4udXBsb2FkZWQtZmlsZS1pdGVtIC51cGxvYWQtYnV0dG9uIC5tYXRlcmlhbC1pY29uc3tcclxuICAgIGZvbnQtc2l6ZTogMTZweDtcclxufVxyXG5cclxuIl19 */");
+
+/***/ }),
+
+/***/ "./src/app/components/wm-file-upload/wm-file-upload.component.ts":
+/*!***********************************************************************!*\
+  !*** ./src/app/components/wm-file-upload/wm-file-upload.component.ts ***!
+  \***********************************************************************/
+/*! exports provided: WmFileUploadComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WmFileUploadComponent", function() { return WmFileUploadComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm2015/ngx-translate-core.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _services_loading_service_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../services/loading-service.service */ "./src/app/services/loading-service.service.ts");
+/* harmony import */ var _services_error_service_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../services/error-service.service */ "./src/app/services/error-service.service.ts");
+/* harmony import */ var _ui_models__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../ui-models */ "./src/app/ui-models/index.ts");
+
+
+
+
+
+
+
+let WmFileUploadComponent = class WmFileUploadComponent {
+    constructor(translate, loadingService, errorService) {
+        this.translate = translate;
+        this.loadingService = loadingService;
+        this.errorService = errorService;
+        this.ocrScanningEnabled = false;
+        this.showHeaderTitle = true;
+        this.editService = null;
+        this.onOcrUploadedFile = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
+        this.onShowUploadedFileScannDetail = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
+        this.onUploadedFilesChanged = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
+        this.uploadedFiles = [];
+        this.previewFile = new _ui_models__WEBPACK_IMPORTED_MODULE_6__["UploadedFile"];
+        this.showFilePreviewDialog = false;
+        this.fileExistsMessage = "common.file-exists";
+        translate.get('common.file-exists').subscribe((res) => {
+            this.fileExistsMessage = res;
+        });
+    }
+    ngOnInit() {
+    }
+    canShowScanResultsButton(uploaded) {
+        return uploaded.isScanned === true;
+    }
+    canshowOcrUploadButton(uploaded) {
+        return uploaded.isScanned === false;
+    }
+    uploadFile(fileInput) {
+        var file = fileInput.target.files[0];
+        console.log("file: ", file);
+        //alert(file.name);
+        if (this.existsUploadedByFileName(file.name)) {
+            jquery__WEBPACK_IMPORTED_MODULE_3___default()("#inlineuploadfile")[0].type = "text";
+            jquery__WEBPACK_IMPORTED_MODULE_3___default()("#inlineuploadfile")[0].type = "file";
+            this.errorService.showError(this.fileExistsMessage, "");
+            return;
+        }
+        jquery__WEBPACK_IMPORTED_MODULE_3___default()("#inlineuploadfile")[0].type = "text";
+        jquery__WEBPACK_IMPORTED_MODULE_3___default()("#inlineuploadfile")[0].type = "file";
+        this.loadingService.showLoading();
+        this.editService.uploadTempFiles(file).subscribe((result) => {
+            console.log("upload invoice file result", result);
+            this.loadingService.hideLoading();
+            if (result.status) {
+                if (result.status === "done") {
+                    var uploaded = new _ui_models__WEBPACK_IMPORTED_MODULE_6__["UploadedFile"];
+                    uploaded.fileName = result.fileName;
+                    uploaded.scanedPdfPath = result.fileHash;
+                    uploaded.scanedHocrPath = result.hocrFileHash;
+                    uploaded.fileIsPdf = result.isFilePdf;
+                    uploaded.fileIsImage = result.isFileImage;
+                    //uploaded.imageSizeX = result.imageWidth;
+                    //uploaded.imageSizeY = result.imageHeight;
+                    uploaded.uploadResult = result;
+                    this.uploadedFiles.push(uploaded);
+                    this.onUploadedFilesChanged.emit(this.uploadedFiles);
+                }
+                if (result.status === "error" && result.errorMessage) {
+                    this.errorService.showError(result.errorMessage, result.errorDetail);
+                }
+            }
+        }, response => {
+            console.log("Error in upload invoice file", response);
+            this.loadingService.hideLoading();
+        }, () => {
+        });
+    }
+    removeUploadedFile(uploaded) {
+        var index = this.uploadedFiles.indexOf(uploaded);
+        if (index > -1) {
+            this.uploadedFiles.splice(index, 1);
+            this.onUploadedFilesChanged.emit(this.uploadedFiles);
+        }
+    }
+    ocrUploadedFile(uploaded) {
+        var index = this.uploadedFiles.indexOf(uploaded);
+        if (index > -1) {
+            this.onOcrUploadedFile.emit(this.uploadedFiles[index]);
+        }
+    }
+    showScanResults(uploaded) {
+        var index = this.uploadedFiles.indexOf(uploaded);
+        if (index > -1) {
+            this.onShowUploadedFileScannDetail.emit(this.uploadedFiles[index]);
+        }
+    }
+    showFilePreview(uploaded) {
+        this.showFilePreviewDialog = false;
+        var index = this.uploadedFiles.indexOf(uploaded);
+        if (index > -1) {
+            this.previewFile = this.uploadedFiles[index];
+            this.showFilePreviewDialog = true;
+            console.log("preview file : ", this.previewFile);
+        }
+    }
+    onFilePreviewDialogClosed(closed) {
+        this.showFilePreviewDialog = false;
+    }
+    findUploadedByFileName(fileName) {
+        for (var index in this.uploadedFiles) {
+            if (this.uploadedFiles[index].fileName === fileName) {
+                return this.uploadedFiles[index];
+            }
+        }
+        return null;
+    }
+    existsUploadedByFileName(fileName) {
+        return this.findUploadedByFileName(fileName) !== null;
+    }
+};
+WmFileUploadComponent.ctorParameters = () => [
+    { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_2__["TranslateService"] },
+    { type: _services_loading_service_service__WEBPACK_IMPORTED_MODULE_4__["LoadingServiceService"] },
+    { type: _services_error_service_service__WEBPACK_IMPORTED_MODULE_5__["ErrorServiceService"] }
+];
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])('ocrScanningEnabled')
+], WmFileUploadComponent.prototype, "ocrScanningEnabled", void 0);
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])('showHeaderTitle')
+], WmFileUploadComponent.prototype, "showHeaderTitle", void 0);
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])('editService')
+], WmFileUploadComponent.prototype, "editService", void 0);
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Output"])()
+], WmFileUploadComponent.prototype, "onOcrUploadedFile", void 0);
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Output"])()
+], WmFileUploadComponent.prototype, "onShowUploadedFileScannDetail", void 0);
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Output"])()
+], WmFileUploadComponent.prototype, "onUploadedFilesChanged", void 0);
+WmFileUploadComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+        selector: 'app-wm-file-upload',
+        template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./wm-file-upload.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/wm-file-upload/wm-file-upload.component.html")).default,
+        styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./wm-file-upload.component.css */ "./src/app/components/wm-file-upload/wm-file-upload.component.css")).default]
+    })
+], WmFileUploadComponent);
 
 
 
@@ -2589,7 +2788,7 @@ GlobalService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 /*!***********************************!*\
   !*** ./src/app/services/index.ts ***!
   \***********************************/
-/*! exports provided: GlobalService, AuthenticationService, UserService */
+/*! exports provided: AuthenticationService, GlobalService, UserService */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3773,7 +3972,7 @@ class FileTitle {
 /*!************************************!*\
   !*** ./src/app/wf-models/index.ts ***!
   \************************************/
-/*! exports provided: Workflow, WorkflowMessage, WorkflowType, WorkflowTypeStep, WorkflowAction, WorkflowFile, WorkflowFileVersion, WorkflowSearchFilter, WorkflowListInitialData, WorkflowSearchResult, AssignItem, AssignType, WorkflowProcessCommand, FileTitle, WorkflowUploadFileResult, InvoiceType */
+/*! exports provided: Workflow, WorkflowMessage, WorkflowType, WorkflowTypeStep, WorkflowAction, WorkflowFile, WorkflowFileVersion, WorkflowSearchFilter, WorkflowListInitialData, WorkflowSearchResult, AssignItem, AssignType, WorkflowProcessCommand, FileTitle, WorkflowUploadFileResult, InvoiceType, WorkflowUploadedFile */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3826,6 +4025,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony import */ var _invoice_type__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./invoice-type */ "./src/app/wf-models/invoice-type.ts");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "InvoiceType", function() { return _invoice_type__WEBPACK_IMPORTED_MODULE_16__["InvoiceType"]; });
+
+/* harmony import */ var _ws_uploaded_file__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./ws-uploaded-file */ "./src/app/wf-models/ws-uploaded-file.ts");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "WorkflowUploadedFile", function() { return _ws_uploaded_file__WEBPACK_IMPORTED_MODULE_17__["WorkflowUploadedFile"]; });
+
 
 
 
@@ -3893,7 +4096,13 @@ class InvoiceWorkflowSaveRequest {
         this.expireDays = 0;
         this.assigns = [];
         this.command = _wf_models__WEBPACK_IMPORTED_MODULE_2__["WorkflowProcessCommand"].NONE;
-        this.sessionKey = "";
+        this.uploadedFiles = [];
+    }
+    loadUploadedFiles(uploadedFiles) {
+        for (var index in uploadedFiles) {
+            var wUploadedFile = new _wf_models__WEBPACK_IMPORTED_MODULE_2__["WorkflowUploadedFile"](uploadedFiles[index]);
+            this.uploadedFiles.push(wUploadedFile);
+        }
     }
 }
 
@@ -3989,7 +4198,13 @@ class WorkflowSaveRequest {
         this.expireDays = 0;
         this.assigns = [];
         this.command = _wf_models__WEBPACK_IMPORTED_MODULE_1__["WorkflowProcessCommand"].NONE;
-        this.sessionKey = "";
+        this.uploadedFiles = [];
+    }
+    loadUploadedFiles(uploadedFiles) {
+        for (var index in uploadedFiles) {
+            var wUploadedFile = new _wf_models__WEBPACK_IMPORTED_MODULE_1__["WorkflowUploadedFile"](uploadedFiles[index]);
+            this.uploadedFiles.push(wUploadedFile);
+        }
     }
 }
 
@@ -4190,6 +4405,32 @@ class WorkflowTypeStep {
 
 /***/ }),
 
+/***/ "./src/app/wf-models/ws-uploaded-file.ts":
+/*!***********************************************!*\
+  !*** ./src/app/wf-models/ws-uploaded-file.ts ***!
+  \***********************************************/
+/*! exports provided: WorkflowUploadedFile */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WorkflowUploadedFile", function() { return WorkflowUploadedFile; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+
+class WorkflowUploadedFile {
+    constructor(uploadedFile) {
+        this.fileName = "";
+        this.filePathHashed = "";
+        if (uploadedFile) {
+            this.fileName = uploadedFile.fileName;
+            this.filePathHashed = uploadedFile.scanedPdfPath;
+        }
+    }
+}
+
+
+/***/ }),
+
 /***/ "./src/app/wm-components/create/create-invoice/create-invoice.component.css":
 /*!**********************************************************************************!*\
   !*** ./src/app/wm-components/create/create-invoice/create-invoice.component.css ***!
@@ -4221,15 +4462,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
 /* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm2015/material.js");
 /* harmony import */ var _stomp_ng2_stompjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @stomp/ng2-stompjs */ "./node_modules/@stomp/ng2-stompjs/fesm2015/stomp-ng2-stompjs.js");
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../services/global.service */ "./src/app/services/global.service.ts");
-/* harmony import */ var _services_workflow_invoice_invoice_workflow_edit_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../../services/workflow/invoice/invoice-workflow-edit.service */ "./src/app/services/workflow/invoice/invoice-workflow-edit.service.ts");
-/* harmony import */ var _services_loading_service_service__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../../services/loading-service.service */ "./src/app/services/loading-service.service.ts");
-/* harmony import */ var _services_error_service_service__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../../services/error-service.service */ "./src/app/services/error-service.service.ts");
-/* harmony import */ var _invoice_base_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../invoice-base.component */ "./src/app/wm-components/invoice-base.component.ts");
-/* harmony import */ var _ui_models__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../../ui-models */ "./src/app/ui-models/index.ts");
-/* harmony import */ var _helper__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../../helper */ "./src/app/helper/index.ts");
+/* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../services/global.service */ "./src/app/services/global.service.ts");
+/* harmony import */ var _services_workflow_invoice_invoice_workflow_edit_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../services/workflow/invoice/invoice-workflow-edit.service */ "./src/app/services/workflow/invoice/invoice-workflow-edit.service.ts");
+/* harmony import */ var _services_loading_service_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../../services/loading-service.service */ "./src/app/services/loading-service.service.ts");
+/* harmony import */ var _services_error_service_service__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../../services/error-service.service */ "./src/app/services/error-service.service.ts");
+/* harmony import */ var _invoice_base_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../invoice-base.component */ "./src/app/wm-components/invoice-base.component.ts");
+/* harmony import */ var _helper__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../../helper */ "./src/app/helper/index.ts");
 
 
 
@@ -4244,9 +4482,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-let CreateInvoiceComponent = class CreateInvoiceComponent extends _invoice_base_component__WEBPACK_IMPORTED_MODULE_13__["InvoiceBaseComponent"] {
+let CreateInvoiceComponent = class CreateInvoiceComponent extends _invoice_base_component__WEBPACK_IMPORTED_MODULE_12__["InvoiceBaseComponent"] {
     constructor(router, global, translate, editService, loadingService, http, errorService, formBuilder, dateAdapter, _stompService) {
         super(router, global, translate, editService, loadingService, http, errorService, formBuilder, dateAdapter);
         this.router = router;
@@ -4264,10 +4500,7 @@ let CreateInvoiceComponent = class CreateInvoiceComponent extends _invoice_base_
         this.uploadedFiles = [];
         this.scanningFileIndex = -1;
         this.scanningFile = null;
-        this.previewFile = new _ui_models__WEBPACK_IMPORTED_MODULE_14__["UploadedFile"];
         this.showOcrDetailsDialog = false;
-        this.showFilePreviewDialog = false;
-        this.fileExistsMessage = "common.file-exists";
         this.scannedSelectedValues = [];
         this.onRecevieResponse = (message) => {
             if (this.listening === false) {
@@ -4300,77 +4533,28 @@ let CreateInvoiceComponent = class CreateInvoiceComponent extends _invoice_base_
                 this.loadInitialData();
             }
         });
-        translate.get('common.file-exists').subscribe((res) => {
-            this.fileExistsMessage = res;
-        });
     }
     get debugData() {
-        var ss = Object(_helper__WEBPACK_IMPORTED_MODULE_15__["formatDate"])(new Date(), 'dd.mm.yyyy');
-        ss += " -- " + Object(_helper__WEBPACK_IMPORTED_MODULE_15__["parseDate"])(ss, 'dd.mm.yyyy');
+        var ss = Object(_helper__WEBPACK_IMPORTED_MODULE_13__["formatDate"])(new Date(), 'dd.mm.yyyy');
+        ss += " -- " + Object(_helper__WEBPACK_IMPORTED_MODULE_13__["parseDate"])(ss, 'dd.mm.yyyy');
         return ss;
     }
     ngOnInit() {
         super.ngOnInit();
     }
-    uploadFile(fileInput) {
-        var file = fileInput.target.files[0];
-        console.log("file: ", file);
-        //alert(file.name);
-        if (this.existsUploadedByFileName(file.name)) {
-            jquery__WEBPACK_IMPORTED_MODULE_8___default()("#inlineuploadfile")[0].type = "text";
-            jquery__WEBPACK_IMPORTED_MODULE_8___default()("#inlineuploadfile")[0].type = "file";
-            this.errorService.showError(this.fileExistsMessage, "");
-            return;
-        }
-        jquery__WEBPACK_IMPORTED_MODULE_8___default()("#inlineuploadfile")[0].type = "text";
-        jquery__WEBPACK_IMPORTED_MODULE_8___default()("#inlineuploadfile")[0].type = "file";
-        this.loadingService.showLoading();
-        this.editService.uploadTempFiles(file).subscribe((result) => {
-            console.log("upload invoice file result", result);
-            this.loadingService.hideLoading();
-            if (result.status) {
-                if (result.status === "done") {
-                    var uploaded = new _ui_models__WEBPACK_IMPORTED_MODULE_14__["UploadedFile"];
-                    uploaded.fileName = result.fileName;
-                    uploaded.scanedPdfPath = result.fileHash;
-                    uploaded.scanedHocrPath = result.hocrFileHash;
-                    uploaded.fileIsPdf = result.isFilePdf;
-                    uploaded.fileIsImage = result.isFileImage;
-                    //uploaded.imageSizeX = result.imageWidth;
-                    //uploaded.imageSizeY = result.imageHeight;
-                    uploaded.uploadResult = result;
-                    this.uploadedFiles.push(uploaded);
-                }
-                if (result.status === "error" && result.errorMessage) {
-                    this.unsubscribe();
-                    this.errorService.showError(result.errorMessage, result.errorDetail);
-                }
-            }
-        }, response => {
-            console.log("Error in upload invoice file", response);
-            this.loadingService.hideLoading();
-        }, () => {
-        });
-    }
-    removeUploadedFile(uploaded) {
-        var index = this.uploadedFiles.indexOf(uploaded);
-        if (index > -1) {
-            this.uploadedFiles.splice(index, 1);
-        }
-    }
-    ocrUploadedFile(uploaded) {
-        var index = this.uploadedFiles.indexOf(uploaded);
+    onOcrUploadedFile(uploadedFile) {
+        var index = this.uploadedFiles.indexOf(uploadedFile);
         if (index > -1) {
             this.scanningFileIndex = index;
             this.scanningFile = this.uploadedFiles[index];
             this.loadingService.showLoading();
             this.subscribe();
             console.log("ocrUploadedFile : ", this.scanningFile);
-            this._stompService.publish('/socketapp/ocrprocess', JSON.stringify(uploaded.uploadResult));
+            this._stompService.publish('/socketapp/ocrprocess', JSON.stringify(uploadedFile.uploadResult));
         }
     }
-    showScanResults(uploaded) {
-        var index = this.uploadedFiles.indexOf(uploaded);
+    onShowUploadedFileScannDetail(uploadedFile) {
+        var index = this.uploadedFiles.indexOf(uploadedFile);
         if (index > -1) {
             this.scanningFileIndex = index;
             this.scanningFile = this.uploadedFiles[index];
@@ -4378,17 +4562,8 @@ let CreateInvoiceComponent = class CreateInvoiceComponent extends _invoice_base_
             console.log("showScanResults : ", this.scanningFile);
         }
     }
-    showFilePreview(uploaded) {
-        this.showFilePreviewDialog = false;
-        var index = this.uploadedFiles.indexOf(uploaded);
-        if (index > -1) {
-            this.previewFile = this.uploadedFiles[index];
-            this.showFilePreviewDialog = true;
-            console.log("preview file : ", this.previewFile);
-        }
-    }
-    onFilePreviewDialogClosed(closed) {
-        this.showFilePreviewDialog = false;
+    onUploadedFilesChanged(uploadedFileList) {
+        this.uploadedFiles = uploadedFileList;
     }
     subscribe() {
         if (this.subscribed) {
@@ -4437,26 +4612,8 @@ let CreateInvoiceComponent = class CreateInvoiceComponent extends _invoice_base_
     }
     save() {
         this.setFormControlValues();
-        //return;
+        this.workflowSaveRequest.loadUploadedFiles(this.uploadedFiles);
         this.loadingService.showLoading();
-        if (this.fileTitles.length > 0) {
-            this.editService.uploadFiles(this.fileTitles).subscribe((result) => {
-                console.log("Create workflow upload file result", result);
-                this.workflowSaveRequest.sessionKey = result.sessionKey;
-                this.createWorkflowData();
-            }, response => {
-                console.log("Error in create workflow upload file", response);
-                this.loadingService.hideLoading();
-                this.errorService.showErrorResponse(response);
-            }, () => {
-            });
-        }
-        else {
-            this.workflowSaveRequest.sessionKey = 'not-set';
-            this.createWorkflowData();
-        }
-    }
-    createWorkflowData() {
         this.editService.createWorkflow(this.workflowSaveRequest).subscribe((result) => {
             console.log("Create workflow result", result);
             this.router.navigate([this.workflowListUrl]);
@@ -4473,8 +4630,8 @@ let CreateInvoiceComponent = class CreateInvoiceComponent extends _invoice_base_
     }
     onApplyScannedValues() {
         if (this.scannedSelectedValues["invoice-invoicedate"] && this.scannedSelectedValues["invoice-invoicedate"] != "") {
-            this.invoiceEditForm.controls["invocieDate"].setValue(Object(_helper__WEBPACK_IMPORTED_MODULE_15__["parseDate"])(this.scannedSelectedValues["invoice-invoicedate"], 'dd.mm.yyyy'));
-            this.invoiceEditForm.controls["discountEnterDate"].setValue(Object(_helper__WEBPACK_IMPORTED_MODULE_15__["parseDate"])(this.scannedSelectedValues["invoice-invoicedate"], 'dd.mm.yyyy'));
+            this.invoiceEditForm.controls["invocieDate"].setValue(Object(_helper__WEBPACK_IMPORTED_MODULE_13__["parseDate"])(this.scannedSelectedValues["invoice-invoicedate"], 'dd.mm.yyyy'));
+            this.invoiceEditForm.controls["discountEnterDate"].setValue(Object(_helper__WEBPACK_IMPORTED_MODULE_13__["parseDate"])(this.scannedSelectedValues["invoice-invoicedate"], 'dd.mm.yyyy'));
             //this.invoiceEditForm.controls["discountDate"].setValue(parseDate(this.scannedSelectedValues["invoice-invoicedate"], 'dd.mm.yyyy'));
         }
         if (this.scannedSelectedValues["invoice-invoicenumber"] && this.scannedSelectedValues["invoice-invoicenumber"] != "") {
@@ -4506,12 +4663,12 @@ let CreateInvoiceComponent = class CreateInvoiceComponent extends _invoice_base_
 };
 CreateInvoiceComponent.ctorParameters = () => [
     { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] },
-    { type: _services_global_service__WEBPACK_IMPORTED_MODULE_9__["GlobalService"] },
+    { type: _services_global_service__WEBPACK_IMPORTED_MODULE_8__["GlobalService"] },
     { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_3__["TranslateService"] },
-    { type: _services_workflow_invoice_invoice_workflow_edit_service__WEBPACK_IMPORTED_MODULE_10__["InvoiceWorkflowEditService"] },
-    { type: _services_loading_service_service__WEBPACK_IMPORTED_MODULE_11__["LoadingServiceService"] },
+    { type: _services_workflow_invoice_invoice_workflow_edit_service__WEBPACK_IMPORTED_MODULE_9__["InvoiceWorkflowEditService"] },
+    { type: _services_loading_service_service__WEBPACK_IMPORTED_MODULE_10__["LoadingServiceService"] },
     { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"] },
-    { type: _services_error_service_service__WEBPACK_IMPORTED_MODULE_12__["ErrorServiceService"] },
+    { type: _services_error_service_service__WEBPACK_IMPORTED_MODULE_11__["ErrorServiceService"] },
     { type: _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormBuilder"] },
     { type: _angular_material__WEBPACK_IMPORTED_MODULE_6__["DateAdapter"] },
     { type: _stomp_ng2_stompjs__WEBPACK_IMPORTED_MODULE_7__["StompService"] }
@@ -4520,7 +4677,7 @@ CreateInvoiceComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
         selector: 'app-create-invoice',
         template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./create-invoice.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/wm-components/create/create-invoice/create-invoice.component.html")).default,
-        providers: [{ provide: _angular_material__WEBPACK_IMPORTED_MODULE_6__["DateAdapter"], useClass: _helper__WEBPACK_IMPORTED_MODULE_15__["GermanDateAdapter"] }, _services_workflow_invoice_invoice_workflow_edit_service__WEBPACK_IMPORTED_MODULE_10__["InvoiceWorkflowEditService"]],
+        providers: [{ provide: _angular_material__WEBPACK_IMPORTED_MODULE_6__["DateAdapter"], useClass: _helper__WEBPACK_IMPORTED_MODULE_13__["GermanDateAdapter"] }, _services_workflow_invoice_invoice_workflow_edit_service__WEBPACK_IMPORTED_MODULE_9__["InvoiceWorkflowEditService"]],
         styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./create-invoice.component.css */ "./src/app/wm-components/create/create-invoice/create-invoice.component.css")).default]
     })
 ], CreateInvoiceComponent);
@@ -4576,6 +4733,7 @@ let CreateSingletaskComponent = class CreateSingletaskComponent {
     constructor(router, global, translate, editService, loadingService, http, errorService) {
         this.router = router;
         this.global = global;
+        this.translate = translate;
         this.editService = editService;
         this.loadingService = loadingService;
         this.http = http;
@@ -4585,13 +4743,13 @@ let CreateSingletaskComponent = class CreateSingletaskComponent {
         this.users = [];
         this.departments = [];
         this.generalDataObs = null;
-        this.fileTitles = [];
         this.showDebug = false;
         this.showAssignModal = false;
         this.selectAssign = [];
         this.assignTypeUser = _wf_models__WEBPACK_IMPORTED_MODULE_9__["AssignType"].USER;
         this.assignTypeDepartment = _wf_models__WEBPACK_IMPORTED_MODULE_9__["AssignType"].DEPARTMENT;
         this.assignTypeDepartmentGroup = _wf_models__WEBPACK_IMPORTED_MODULE_9__["AssignType"].DEPARTMENTGROUP;
+        this.uploadedFiles = [];
         this.router.events.subscribe((evt) => {
             if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_2__["NavigationEnd"]) {
                 this.loadInitialData();
@@ -4603,7 +4761,6 @@ let CreateSingletaskComponent = class CreateSingletaskComponent {
         if (fileInput.target.files && fileInput.target.files != null && file) {
             file.file = fileInput.target.files[0];
         }
-        //this.preview();
     }
     get expireDays() {
         if (this.workflowSaveRequest != null) {
@@ -4651,6 +4808,9 @@ let CreateSingletaskComponent = class CreateSingletaskComponent {
     ngOnInit() {
         this.loadInitialData();
     }
+    onUploadedFilesChanged(uploadedFileList) {
+        this.uploadedFiles = uploadedFileList;
+    }
     loadInitialData() {
         if (this.editService.workflowSaveRequestInit !== null) {
             this.workflowSaveRequest = this.editService.workflowSaveRequestInit.workflowSaveRequest;
@@ -4687,33 +4847,9 @@ let CreateSingletaskComponent = class CreateSingletaskComponent {
             return value.itemIdentity != identity || value.itemType != type;
         });
     }
-    removeFile(index) {
-        this.fileTitles.splice(index, 1);
-    }
-    addFile() {
-        var ft = new _wf_models__WEBPACK_IMPORTED_MODULE_9__["FileTitle"]();
-        ft.title = "";
-        ft.file = null;
-        this.fileTitles.push(ft);
-    }
     save() {
         this.loadingService.showLoading();
-        if (this.fileTitles.length > 0) {
-            this.editService.uploadFiles(this.fileTitles).subscribe((result) => {
-                console.log("Create workflow upload file result", result);
-                this.workflowSaveRequest.sessionKey = result.sessionKey;
-                this.createWorkflowData();
-            }, response => {
-                console.log("Error in create workflow upload file", response);
-                this.loadingService.hideLoading();
-                this.errorService.showErrorResponse(response);
-            }, () => {
-            });
-        }
-        else {
-            this.workflowSaveRequest.sessionKey = 'not-set';
-            this.createWorkflowData();
-        }
+        this.createWorkflowData();
     }
     createWorkflowData() {
         this.editService.createWorkflow(this.workflowSaveRequest).subscribe((result) => {
@@ -4979,22 +5115,7 @@ let CreateTestthreetaskComponent = class CreateTestthreetaskComponent {
     }
     save() {
         this.loadingService.showLoading();
-        if (this.fileTitles.length > 0) {
-            this.editService.uploadFiles(this.fileTitles).subscribe((result) => {
-                console.log("Create workflow upload file result", result);
-                this.workflowSaveRequest.sessionKey = result.sessionKey;
-                this.createWorkflowData();
-            }, response => {
-                console.log("Error in create workflow upload file", response);
-                this.loadingService.hideLoading();
-                this.errorService.showErrorResponse(response);
-            }, () => {
-            });
-        }
-        else {
-            this.workflowSaveRequest.sessionKey = 'not-set';
-            this.createWorkflowData();
-        }
+        this.createWorkflowData();
     }
     createWorkflowData() {
         this.editService.createWorkflow(this.workflowSaveRequest).subscribe((result) => {
@@ -5277,52 +5398,17 @@ let EditInvoiceComponent = class EditInvoiceComponent extends _invoice_base_comp
     save(makeDone) {
         this.setFormControlValues();
         this.loadingService.showLoading();
-        if (this.fileTitles.length > 0) {
-            this.editService.uploadFiles(this.fileTitles).subscribe((result) => {
-                console.log("Create workflow upload file result", result);
-                this.workflowSaveRequest.sessionKey = result.sessionKey;
-                if (makeDone) {
-                    this.doneWorkflowData();
-                }
-                else {
-                    this.saveWorkflowData();
-                }
-            }, response => {
-                console.log("Error in create workflow upload file", response);
-                this.loadingService.hideLoading();
-                this.errorService.showErrorResponse(response);
-            }, () => {
-            });
+        if (makeDone) {
+            this.doneWorkflowData();
         }
         else {
-            this.workflowSaveRequest.sessionKey = 'not-set';
-            if (makeDone) {
-                this.doneWorkflowData();
-            }
-            else {
-                this.saveWorkflowData();
-            }
+            this.saveWorkflowData();
         }
     }
     archive() {
         this.setFormControlValues();
         this.loadingService.showLoading();
-        if (this.fileTitles.length > 0) {
-            this.editService.uploadFiles(this.fileTitles).subscribe((result) => {
-                console.log("Create workflow upload file result", result);
-                this.workflowSaveRequest.sessionKey = result.sessionKey;
-                this.archiveWorkflowData();
-            }, response => {
-                console.log("Error in create workflow upload file", response);
-                this.loadingService.hideLoading();
-                this.errorService.showErrorResponse(response);
-            }, () => {
-            });
-        }
-        else {
-            this.workflowSaveRequest.sessionKey = 'not-set';
-            this.archiveWorkflowData();
-        }
+        this.archiveWorkflowData();
     }
     saveWorkflowData() {
         this.saveMessage = "";
@@ -5629,53 +5715,18 @@ let EditSingleTaskComponent = class EditSingleTaskComponent {
         this.setFormControlValues();
         //return;
         this.loadingService.showLoading();
-        if (this.fileTitles.length > 0) {
-            this.editService.uploadFiles(this.fileTitles).subscribe((result) => {
-                console.log("Create workflow upload file result", result);
-                this.workflowSaveRequest.sessionKey = result.sessionKey;
-                if (makeDone) {
-                    this.doneWorkflowData();
-                }
-                else {
-                    this.saveWorkflowData();
-                }
-            }, response => {
-                console.log("Error in create workflow upload file", response);
-                this.loadingService.hideLoading();
-                this.errorService.showErrorResponse(response);
-            }, () => {
-            });
+        if (makeDone) {
+            this.doneWorkflowData();
         }
         else {
-            this.workflowSaveRequest.sessionKey = 'not-set';
-            if (makeDone) {
-                this.doneWorkflowData();
-            }
-            else {
-                this.saveWorkflowData();
-            }
+            this.saveWorkflowData();
         }
     }
     archive() {
         this.setFormControlValues();
         //return;
         this.loadingService.showLoading();
-        if (this.fileTitles.length > 0) {
-            this.editService.uploadFiles(this.fileTitles).subscribe((result) => {
-                console.log("Create workflow upload file result", result);
-                this.workflowSaveRequest.sessionKey = result.sessionKey;
-                this.archiveWorkflowData();
-            }, response => {
-                console.log("Error in create workflow upload file", response);
-                this.loadingService.hideLoading();
-                this.errorService.showErrorResponse(response);
-            }, () => {
-            });
-        }
-        else {
-            this.workflowSaveRequest.sessionKey = 'not-set';
-            this.archiveWorkflowData();
-        }
+        this.archiveWorkflowData();
     }
     saveWorkflowData() {
         this.editService.saveWorkflow(this.workflowSaveRequest.workflow).subscribe((result) => {
@@ -6031,53 +6082,18 @@ let EditTestthreeTaskComponent = class EditTestthreeTaskComponent {
         this.setFormControlValues();
         //return;
         this.loadingService.showLoading();
-        if (this.fileTitles.length > 0) {
-            this.editService.uploadFiles(this.fileTitles).subscribe((result) => {
-                console.log("Create workflow upload file result", result);
-                this.workflowSaveRequest.sessionKey = result.sessionKey;
-                if (makeDone) {
-                    this.doneWorkflowData();
-                }
-                else {
-                    this.saveWorkflowData();
-                }
-            }, response => {
-                console.log("Error in create workflow upload file", response);
-                this.loadingService.hideLoading();
-                this.errorService.showErrorResponse(response);
-            }, () => {
-            });
+        if (makeDone) {
+            this.doneWorkflowData();
         }
         else {
-            this.workflowSaveRequest.sessionKey = 'not-set';
-            if (makeDone) {
-                this.doneWorkflowData();
-            }
-            else {
-                this.saveWorkflowData();
-            }
+            this.saveWorkflowData();
         }
     }
     archive() {
         this.setFormControlValues();
         //return;
         this.loadingService.showLoading();
-        if (this.fileTitles.length > 0) {
-            this.editService.uploadFiles(this.fileTitles).subscribe((result) => {
-                console.log("Create workflow upload file result", result);
-                this.workflowSaveRequest.sessionKey = result.sessionKey;
-                this.archiveWorkflowData();
-            }, response => {
-                console.log("Error in create workflow upload file", response);
-                this.loadingService.hideLoading();
-                this.errorService.showErrorResponse(response);
-            }, () => {
-            });
-        }
-        else {
-            this.workflowSaveRequest.sessionKey = 'not-set';
-            this.archiveWorkflowData();
-        }
+        this.archiveWorkflowData();
     }
     saveWorkflowData() {
         this.editService.saveWorkflow(this.workflowSaveRequest.workflow).subscribe((result) => {

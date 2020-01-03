@@ -16,7 +16,7 @@ import { ErrorServiceService } from '../../../services/error-service.service';
 import { InvoiceBaseComponent } from '../../invoice-base.component';
 
 import { User, Department, DepartmentGroup, GeneralData, OcrWord, UploadedFile, UploadedResult } from '../../../ui-models';
-import { WorkflowProcessCommand, Workflow, AssignItem, FileTitle, AssignType, WorkflowUploadFileResult, InvoiceType } 
+import { WorkflowProcessCommand, Workflow, AssignItem, FileTitle, AssignType, WorkflowUploadFileResult, InvoiceType, WorkflowUploadedFile } 
 	from '../../../wf-models';
 import { InvoiceWorkflowSaveRequest } from '../../../wf-models/invoice-workflow-save-request';
 import { InvoiceWorkflowSaveRequestInit } from '../../../wf-models/invoice-workflow-save-request-init';
@@ -43,12 +43,8 @@ export class CreateInvoiceComponent extends InvoiceBaseComponent implements OnIn
 	
 	scanningFileIndex :number = -1;
 	scanningFile :UploadedFile = null;
-	previewFile :UploadedFile = new UploadedFile;
 	
 	showOcrDetailsDialog :boolean = false;
-	showFilePreviewDialog :boolean = false;
-
-	fileExistsMessage :string = "common.file-exists";
 	
 	get debugData() :string{
 		var ss = formatDate(new Date(), 'dd.mm.yyyy');
@@ -62,7 +58,7 @@ export class CreateInvoiceComponent extends InvoiceBaseComponent implements OnIn
 		    protected router: Router,
 			protected global: GlobalService,
 			protected translate: TranslateService,
-			protected editService :InvoiceWorkflowEditService,
+			public editService :InvoiceWorkflowEditService,
 			protected loadingService: LoadingServiceService,
 			protected http: HttpClient,
 			protected errorService: ErrorServiceService,
@@ -87,10 +83,6 @@ export class CreateInvoiceComponent extends InvoiceBaseComponent implements OnIn
 		});
 
 		
-		
-		translate.get('common.file-exists').subscribe((res: string) => {
-        	this.fileExistsMessage =  res;
-        });
 
 	}
 	
@@ -99,79 +91,10 @@ export class CreateInvoiceComponent extends InvoiceBaseComponent implements OnIn
 		super.ngOnInit();
 		
 	}
-		
-	uploadFile(fileInput: any) {
-		
-		
-		var file = <File>fileInput.target.files[0];
-		console.log("file: ", file);
-		//alert(file.name);
-		if(this.existsUploadedByFileName(file.name)){
-			$("#inlineuploadfile")[0].type = "text";
-			$("#inlineuploadfile")[0].type = "file";
-
-			this.errorService.showError(this.fileExistsMessage , "");	
-			return;
-		}
-		
-		$("#inlineuploadfile")[0].type = "text";
-		$("#inlineuploadfile")[0].type = "file";
-		
-		this.loadingService.showLoading();
-		
-		this.editService.uploadTempFiles(file).subscribe(
-		        (result: UploadedResult) => {		        	
-		            console.log("upload invoice file result", result);
-		            this.loadingService.hideLoading();
-		            
-		            if(result.status){
-		    			if(result.status === "done"){
-
-		    				var uploaded :UploadedFile = new UploadedFile;
-		    				 
-			    			uploaded.fileName = result.fileName;
-			    			uploaded.scanedPdfPath = result.fileHash;
-			    			uploaded.scanedHocrPath = result.hocrFileHash;
-			    			uploaded.fileIsPdf = result.isFilePdf;
-			    			uploaded.fileIsImage = result.isFileImage;
-			    			//uploaded.imageSizeX = result.imageWidth;
-			    			//uploaded.imageSizeY = result.imageHeight;
-			    			uploaded.uploadResult = result;
-
-			    			this.uploadedFiles.push(uploaded);
-		    	            
-		    			}
-		    			if(result.status === "error" && result.errorMessage){
-		    				this.unsubscribe();
-		    				this.errorService.showError(result.errorMessage , result.errorDetail);			
-		    			}
-		    		}		            
-		            
-		         		            
-		            
-		            
-		        },
-		        response => {
-		        	console.log("Error in upload invoice file", response);
-		        	this.loadingService.hideLoading();
-		        },
-		        () => {
-		        }
-		    );	
-		
-
-	}
 	
-	removeUploadedFile(uploaded){
-		var index = this.uploadedFiles.indexOf(uploaded);
-		if(index > -1){
-			this.uploadedFiles.splice(index , 1);
-		}
-	}
-	
-	ocrUploadedFile(uploaded){
+	onOcrUploadedFile(uploadedFile: UploadedFile) {
 		
-		var index = this.uploadedFiles.indexOf(uploaded);
+		var index = this.uploadedFiles.indexOf(uploadedFile);
 		if(index > -1){
 			this.scanningFileIndex = index;
 			this.scanningFile = this.uploadedFiles[index];
@@ -182,16 +105,13 @@ export class CreateInvoiceComponent extends InvoiceBaseComponent implements OnIn
 	        
 			console.log("ocrUploadedFile : ", this.scanningFile);
 			
-	        this._stompService.publish('/socketapp/ocrprocess', JSON.stringify(uploaded.uploadResult));
+	        this._stompService.publish('/socketapp/ocrprocess', JSON.stringify(uploadedFile.uploadResult));
 		}
-		
-		
-        
-	}
+	}	
 	
-	showScanResults(uploaded){
+	onShowUploadedFileScannDetail(uploadedFile: UploadedFile) {
 		
-		var index = this.uploadedFiles.indexOf(uploaded);
+		var index = this.uploadedFiles.indexOf(uploadedFile);
 		if(index > -1){
 			this.scanningFileIndex = index;
 			this.scanningFile = this.uploadedFiles[index];
@@ -200,27 +120,13 @@ export class CreateInvoiceComponent extends InvoiceBaseComponent implements OnIn
 			console.log("showScanResults : ", this.scanningFile);
 
 		}
-		
 	}
-	
-	showFilePreview(uploaded){
-		
-		this.showFilePreviewDialog = false;
-		var index = this.uploadedFiles.indexOf(uploaded);
-		if(index > -1){
-			this.previewFile = this.uploadedFiles[index];
-	    	this.showFilePreviewDialog = true;
-	    	
-			console.log("preview file : ", this.previewFile);
 
-		}
-
-	}
-	
-	onFilePreviewDialogClosed(closed: boolean) {
-		this.showFilePreviewDialog = false;
+	onUploadedFilesChanged(uploadedFileList: UploadedFile[]) {
 		
+		this.uploadedFiles = uploadedFileList;
 	}
+
 	
 	public onRecevieResponse = (message: Message) => {
 
@@ -325,41 +231,10 @@ export class CreateInvoiceComponent extends InvoiceBaseComponent implements OnIn
 	save(){
 		
 		this.setFormControlValues();
-		//return;
-		
+				
+		this.workflowSaveRequest.loadUploadedFiles(this.uploadedFiles);
+		 
 		this.loadingService.showLoading();
-		
-		if(this.fileTitles.length > 0){
-			this.editService.uploadFiles(this.fileTitles).subscribe(
-			        (result :WorkflowUploadFileResult) => {		        	
-			            console.log("Create workflow upload file result", result);
-			            
-			            this.workflowSaveRequest.sessionKey = result.sessionKey;
-			            
-			            this.createWorkflowData();      	
-			            
-			        },
-			        response => {
-			        	console.log("Error in create workflow upload file", response);
-			        	this.loadingService.hideLoading();	 
-			        	this.errorService.showErrorResponse(response);
-			        },
-			        () => {
-			        	
-			        	           
-			        }
-			    );	       	
-			
-		}
-		else{
-	        this.workflowSaveRequest.sessionKey = 'not-set';
-	        
-	        this.createWorkflowData();
-		}
-	
-	}
-	
-	private createWorkflowData(){
 		
         this.editService.createWorkflow(this.workflowSaveRequest).subscribe(
 		        (result) => {		        	

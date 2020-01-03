@@ -14,5 +14,8 @@ export * from './workflow-process-command';
 export * from './file-title';
 export * from './workflow-uploadfile-result';
 export * from './invoice-type';
+export * from './ws-uploaded-file';
+
+
 
 

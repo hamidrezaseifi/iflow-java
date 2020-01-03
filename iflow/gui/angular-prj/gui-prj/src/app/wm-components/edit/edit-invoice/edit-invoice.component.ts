@@ -156,44 +156,12 @@ export class EditInvoiceComponent extends InvoiceBaseComponent implements OnInit
 		
 		this.loadingService.showLoading();
 		
-		if(this.fileTitles.length > 0){
-			this.editService.uploadFiles(this.fileTitles).subscribe(
-			        (result :WorkflowUploadFileResult) => {		        	
-			            console.log("Create workflow upload file result", result);
-			            
-			            this.workflowSaveRequest.sessionKey = result.sessionKey;
-			            
-			            if(makeDone){
-			            	this.doneWorkflowData();
-			            }
-			            else{
-			            	this.saveWorkflowData();
-			            }
-			                  	
-			            
-			        },
-			        response => {
-			        	console.log("Error in create workflow upload file", response);
-			        	this.loadingService.hideLoading();	 
-			        	this.errorService.showErrorResponse(response);
-			        },
-			        () => {
-			        	
-			        	           
-			        }
-			    );	       	
-			
-		}
-		else{
-	        this.workflowSaveRequest.sessionKey = 'not-set';
-	        
-            if(makeDone){
-            	this.doneWorkflowData();
-            }
-            else{
-            	this.saveWorkflowData();
-            }
-		}
+		if(makeDone){
+        	this.doneWorkflowData();
+        }
+        else{
+        	this.saveWorkflowData();
+        }
 	
 	}
 	
@@ -204,35 +172,7 @@ export class EditInvoiceComponent extends InvoiceBaseComponent implements OnInit
 		
 		this.loadingService.showLoading();
 		
-		if(this.fileTitles.length > 0){
-			this.editService.uploadFiles(this.fileTitles).subscribe(
-			        (result :WorkflowUploadFileResult) => {		        	
-			            console.log("Create workflow upload file result", result);
-			            
-			            this.workflowSaveRequest.sessionKey = result.sessionKey;			            
-			            this.archiveWorkflowData();
-			            
-			        },
-			        response => {
-			        	console.log("Error in create workflow upload file", response);
-			        	this.loadingService.hideLoading();	 
-			        	this.errorService.showErrorResponse(response);
-			        },
-			        () => {
-			        	
-			        	           
-			        }
-			    );	       	
-			
-		}
-		else{
-	        this.workflowSaveRequest.sessionKey = 'not-set';
-	        
-	        this.archiveWorkflowData();
-		}
-		
-		
-		
+		this.archiveWorkflowData();
 	
 	}	
 	private saveWorkflowData(){

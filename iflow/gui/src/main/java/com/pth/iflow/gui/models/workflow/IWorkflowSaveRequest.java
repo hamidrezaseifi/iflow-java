@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 import com.pth.iflow.gui.models.AssignItem;
-import com.pth.iflow.gui.models.UploadedFile;
+import com.pth.iflow.gui.models.UploadededFile;
 
 public interface IWorkflowSaveRequest<W extends IWorkflow> {
 
@@ -33,8 +33,8 @@ public interface IWorkflowSaveRequest<W extends IWorkflow> {
 
   void setAssignUser(final String userId);
 
-  public List<UploadedFile> getUploadedFiles();
+  public List<UploadededFile> getUploadedFiles();
 
-  public void setUploadedFiles(final List<UploadedFile> uploadedFiles);
+  public void setUploadedFiles(final List<UploadededFile> uploadedFiles);
 
 }

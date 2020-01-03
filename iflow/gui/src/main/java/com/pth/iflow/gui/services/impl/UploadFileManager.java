@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.pth.iflow.gui.models.UploadedFile;
+import com.pth.iflow.gui.models.UploadededFile;
 import com.pth.iflow.gui.models.ui.FileSavingData;
 import com.pth.iflow.gui.services.IUploadFileManager;
 
@@ -37,11 +37,12 @@ public class UploadFileManager implements IUploadFileManager {
   }
 
   @Override
-  public List<FileSavingData> moveFromTempToArchive(final List<UploadedFile> files) throws IOException {
+  public List<FileSavingData> moveFromTempToArchive(final List<UploadededFile> files) throws IOException {
 
     final List<FileSavingData> list = new ArrayList<>();
 
-    for (final UploadedFile tempUploadedFile : files) {
+    for (final UploadededFile tempUploadedFile : files) {
+
       final FileSavingData fileSave = FileSavingData.generateFromFilePath(tempUploadedFile.getFilePath());
 
       final String archiveFilePath = FileSavingData.generateSavingFileFullPath(this.arhiveBaseDir, fileSave.getFileExtention());

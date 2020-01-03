@@ -16,10 +16,14 @@ import { InvoiceWorkflow } from '../../../wf-models/invoice-workflow';
 
 import { WorkflowProcessCommand, Workflow, AssignItem, FileTitle, AssignType } from '../../../wf-models';
 
+import { WorkflowEditInterfaceService } from '../../../services';
+
+
+
 @Injectable({
   providedIn: 'root'
 })
-export class InvoiceWorkflowEditService extends HttpErrorResponseHelper {
+export class InvoiceWorkflowEditService extends HttpErrorResponseHelper implements WorkflowEditInterfaceService {
 
 	public workflowSaveRequestInitSubject: BehaviorSubject<InvoiceWorkflowSaveRequestInit> = new BehaviorSubject<InvoiceWorkflowSaveRequestInit>(null);
 

@@ -6,7 +6,7 @@ import java.util.List;
 import com.pth.iflow.common.enums.EAssignType;
 import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 import com.pth.iflow.gui.models.AssignItem;
-import com.pth.iflow.gui.models.UploadedFile;
+import com.pth.iflow.gui.models.UploadededFile;
 import com.pth.iflow.gui.models.workflow.IWorkflowSaveRequest;
 
 public class SingleTaskWorkflowSaveRequest implements IWorkflowSaveRequest<SingleTaskWorkflow> {
@@ -15,7 +15,7 @@ public class SingleTaskWorkflowSaveRequest implements IWorkflowSaveRequest<Singl
   private Integer expireDays;
   private List<AssignItem> assigns = new ArrayList<>();
   private EWorkflowProcessCommand command;
-  private List<UploadedFile> uploadedFiles = new ArrayList<>();
+  private List<UploadededFile> uploadedFiles = new ArrayList<>();
 
   public SingleTaskWorkflowSaveRequest() {
 
@@ -112,13 +112,13 @@ public class SingleTaskWorkflowSaveRequest implements IWorkflowSaveRequest<Singl
   }
 
   @Override
-  public List<UploadedFile> getUploadedFiles() {
+  public List<UploadededFile> getUploadedFiles() {
 
     return this.uploadedFiles;
   }
 
   @Override
-  public void setUploadedFiles(final List<UploadedFile> uploadedFiles) {
+  public void setUploadedFiles(final List<UploadededFile> uploadedFiles) {
 
     this.uploadedFiles = uploadedFiles;
   }

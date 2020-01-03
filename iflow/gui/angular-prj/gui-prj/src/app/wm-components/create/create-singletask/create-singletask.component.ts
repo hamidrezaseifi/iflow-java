@@ -9,7 +9,7 @@ import { SingleTaskWorkflowEditService } from '../../../services/workflow/single
 import { LoadingServiceService } from '../../../services/loading-service.service';
 import { ErrorServiceService } from '../../../services/error-service.service';
 
-import { User, Department, DepartmentGroup, GeneralData } from '../../../ui-models';
+import { User, Department, DepartmentGroup, GeneralData, UploadedFile, UploadedResult } from '../../../ui-models';
 import { WorkflowProcessCommand, Workflow, AssignItem, FileTitle, AssignType, WorkflowUploadFileResult } from '../../../wf-models';
 import { WorkflowSaveRequest } from '../../../wf-models/workflow-save-request';
 import { WorkflowSaveRequestInit } from '../../../wf-models/workflow-save-request-init';
@@ -29,8 +29,6 @@ export class CreateSingletaskComponent implements OnInit {
 	departments : Department[] = [];
 	generalDataObs :Observable<GeneralData> = null;
 
-	fileTitles : FileTitle[] = [];
-
 	showDebug : boolean = false;
 
 	showAssignModal :boolean = false;
@@ -41,6 +39,7 @@ export class CreateSingletaskComponent implements OnInit {
 	assignTypeDepartment :AssignType = AssignType.DEPARTMENT;
 	assignTypeDepartmentGroup :AssignType = AssignType.DEPARTMENTGROUP;
 
+	uploadedFiles :UploadedFile[] = [];	
 
 
 	fileTitleProgress(fileInput: any, file :FileTitle, fileIndex) {
@@ -49,8 +48,8 @@ export class CreateSingletaskComponent implements OnInit {
 			file.file = <File>fileInput.target.files[0];
 		}
 		
-	    //this.preview();
 	}
+	
 	
 	get expireDays() : number{
 		if(this.workflowSaveRequest != null){
@@ -108,8 +107,8 @@ export class CreateSingletaskComponent implements OnInit {
 	constructor(
 		    private router: Router,
 			private global: GlobalService,
-			translate: TranslateService,
-			private editService :SingleTaskWorkflowEditService,
+			public  translate: TranslateService,
+			public  editService :SingleTaskWorkflowEditService,
 			private loadingService: LoadingServiceService,
 			private http: HttpClient,
 			private errorService: ErrorServiceService,
@@ -128,6 +127,13 @@ export class CreateSingletaskComponent implements OnInit {
 		this.loadInitialData();
 	
 	}
+	
+
+	onUploadedFilesChanged(uploadedFileList: UploadedFile[]) {
+		
+		this.uploadedFiles = uploadedFileList;
+	}
+
 	
 	private loadInitialData(){
 	 	if(this.editService.workflowSaveRequestInit !== null){
@@ -179,49 +185,12 @@ export class CreateSingletaskComponent implements OnInit {
 		
 	}
 	
-	removeFile(index){
-		this.fileTitles.splice(index, 1);
-	}
-	
-	addFile(){
-		var ft :FileTitle = new FileTitle();
-		ft.title = "";
-		ft.file = null;
-		
-		this.fileTitles.push(ft);
-	}
 	
 	save(){
 		
 		this.loadingService.showLoading();
 		
-		if(this.fileTitles.length > 0){
-			this.editService.uploadFiles(this.fileTitles).subscribe(
-			        (result :WorkflowUploadFileResult) => {		        	
-			            console.log("Create workflow upload file result", result);
-			            
-			            this.workflowSaveRequest.sessionKey = result.sessionKey;
-			            
-			            this.createWorkflowData();       	
-			            
-			        },
-			        response => {
-			        	console.log("Error in create workflow upload file", response);
-			        	this.loadingService.hideLoading();	 
-			        	this.errorService.showErrorResponse(response);
-			        },
-			        () => {
-			        	
-			        	           
-			        }
-			    );	       	
-			
-		}
-		else{
-            this.workflowSaveRequest.sessionKey = 'not-set';
-            
-            this.createWorkflowData();
-		}
+		this.createWorkflowData();
 
 	}
 	

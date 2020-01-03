@@ -1,0 +1,36 @@
+
+.panel-heading{
+	font-weight: bold;	
+}
+
+.uploaded-file-item-container{
+	height: 220px;
+    overflow-y: auto;
+}
+
+.uploaded-file-item {
+	padding: 5px 4px 0 10px;
+	margin-bottom: 3px;
+}
+
+.uploaded-file-item:hover {
+	background-color: #feffea;
+}
+
+.uploaded-file-item .filename {
+	width: calc(100% - 54px);
+    display: inline-block;
+    overflow: hidden;
+    overflow-y: hidden;
+    height: 30px;
+}
+
+.uploaded-file-item .upload-button{
+    padding: 0px 4px;
+    margin-left: 5px;
+}
+
+.uploaded-file-item .upload-button .material-icons{
+    font-size: 16px;
+}
+
