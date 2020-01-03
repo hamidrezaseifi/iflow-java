@@ -127,7 +127,7 @@ var __spread = (this && this.__spread) || function () {
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("\n\t\t\t\t\t\t\t\t<div class=\"panel-heading\" [ngClass]=\"{'opacity0' : showHeaderTitle === false}\">{{ 'common.attachments' | translate }}</div>\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t<div><input type=\"file\" class=\"hide-file-input\" id=\"inlineuploadfile\" (change)=\"uploadFile($event)\" \n\t\t\t\t    \t\t\t\t\taccept=\".pdf,.jpg, .png, .tiff, .bmp\">\n\t\t\t\t    \t\t\t\t <label class=\"hide-file-label\" for=\"inlineuploadfile\"></label>\n\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t    \t\t\t</div>\n\t\t\t\t    \t\t\t<div class=\"uploaded-file-item-container\">\n\t\t\t\t    \t\t\t\t<div *ngFor=\"let uploaded of uploadedFiles\" class=\"uploaded-file-item list-group-item\" >\n\t\t\t\t    \t\t\t\t\t<span class=\"filename\">{{uploaded.fileName}}</span>\n\t\t\t\t    \t\t\t\t\t\n\t\t\t\t    \t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t<button class=\"btn btn-light upload-button\" style=\"float: right;\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\n\t\t\t\t\t\t\t\t\t\t\t<i class=\"material-icons\">more_horiz</i>\n\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t\t<div class=\"dropdown-menu\" aria-labelledby=\"dropdownMenuButton\">\n\t\t\t\t\t    \t\t\t\t\t<a target=\"_blank\" class=\"btn btn-primary upload-button\" \n\t\t\t\t\t    \t\t\t\t\t\thref=\"/general/data/file/view/{{uploaded.scanedPdfPath}}\"><i class=\"material-icons\">cloud_download</i></a>\n\t\t\t\t\t    \t\t\t\t\t<button class=\"btn btn-primary upload-button\" \n\t\t\t\t\t    \t\t\t\t\t\t(click)=\"showFilePreview(uploaded);\"><i class=\"material-icons\">pageview</i></button>\n\t\t\t\t\t    \t\t\t\t\t<button *ngIf=\"canshowOcrUploadButton(uploaded) && ocrScanningEnabled\" class=\"btn btn-primary upload-button\" \n\t\t\t\t\t    \t\t\t\t\t\t(click)=\"ocrUploadedFile(uploaded);\"><i class=\"material-icons\">play_for_work</i></button>\n\t\t\t\t\t    \t\t\t\t\t<button *ngIf=\"canShowScanResultsButton(uploaded) && ocrScanningEnabled\" class=\"btn btn-success upload-button\" \n\t\t\t\t\t    \t\t\t\t\t\t(click)=\"showScanResults(uploaded);\"><i class=\"material-icons\">details</i></button>\n\t\t\t\t\t    \t\t\t\t\t<button class=\"btn btn-dark upload-button\" \n\t\t\t\t\t    \t\t\t\t\t\t(click)=\"removeUploadedFile(uploaded);\"><i class=\"material-icons\">delete</i></button>\n\t\t\t\t\t\t\t\t\t\t</div>\n  \t\t\t\t    \t\t\t\t\t\n\t\t\t\t    \t\t\t\t\t\n\t\t\t\t    \t\t\t\t</div>\n\t\t\t\t    \t\t\t</div>\n\n\t\t<app-file-preview [showDialog]=\"showFilePreviewDialog\" (dialogClosed)=\"onFilePreviewDialogClosed($event)\" [fileUrl]=\"previewFile.scanedPdfPath\" \n\t\t\t[fileIsPdf]=\"previewFile.fileIsPdf\" [fileIsImage]=\"previewFile.fileIsImage\" [imageSizeX]=\"previewFile.imageSizeX\" \n\t\t\t[imageSizeY]=\"previewFile.imageSizeY\"></app-file-preview>\n\t\t\t\t    \t\t\t");
+            /* harmony default export */ __webpack_exports__["default"] = ("\n\t\t\t\t\t\t\t\t<div class=\"panel-heading\" [ngClass]=\"{'opacity0' : showHeaderTitle === false}\">{{ 'common.attachments' | translate }}</div>\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t<div><input type=\"file\" class=\"hide-file-input\" id=\"inlineuploadfile\" (change)=\"uploadFile($event)\" \n\t\t\t\t    \t\t\t\t\taccept=\".pdf,.jpg, .png, .tiff, .bmp\">\n\t\t\t\t    \t\t\t\t <label class=\"hide-file-label\" for=\"inlineuploadfile\"></label>\n\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t    \t\t\t</div>\n\t\t\t\t    \t\t\t<div class=\"uploaded-file-item-container\" [ngClass]=\"{'uploaded-file-item-container-border' : drawBorder}\">\n\t\t\t\t    \t\t\t\t<div *ngFor=\"let uploaded of uploadedFiles\" class=\"uploaded-file-item list-group-item\" >\n\t\t\t\t    \t\t\t\t\t<span class=\"filename\">{{uploaded.fileName}}</span>\n\t\t\t\t    \t\t\t\t\t\n\t\t\t\t    \t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t<button class=\"btn btn-light upload-button\" style=\"float: right;\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\n\t\t\t\t\t\t\t\t\t\t\t<i class=\"material-icons\">more_horiz</i>\n\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t\t<div class=\"dropdown-menu\" aria-labelledby=\"dropdownMenuButton\">\n\t\t\t\t\t    \t\t\t\t\t<a target=\"_blank\" class=\"btn btn-primary upload-button\" \n\t\t\t\t\t    \t\t\t\t\t\thref=\"/general/data/file/view/{{uploaded.scanedPdfPath}}\"><i class=\"material-icons\">cloud_download</i></a>\n\t\t\t\t\t    \t\t\t\t\t<button class=\"btn btn-primary upload-button\" \n\t\t\t\t\t    \t\t\t\t\t\t(click)=\"showFilePreview(uploaded);\"><i class=\"material-icons\">pageview</i></button>\n\t\t\t\t\t    \t\t\t\t\t<button *ngIf=\"canshowOcrUploadButton(uploaded) && ocrScanningEnabled\" class=\"btn btn-primary upload-button\" \n\t\t\t\t\t    \t\t\t\t\t\t(click)=\"ocrUploadedFile(uploaded);\"><i class=\"material-icons\">play_for_work</i></button>\n\t\t\t\t\t    \t\t\t\t\t<button *ngIf=\"canShowScanResultsButton(uploaded) && ocrScanningEnabled\" class=\"btn btn-success upload-button\" \n\t\t\t\t\t    \t\t\t\t\t\t(click)=\"showScanResults(uploaded);\"><i class=\"material-icons\">details</i></button>\n\t\t\t\t\t    \t\t\t\t\t<button class=\"btn btn-dark upload-button\" \n\t\t\t\t\t    \t\t\t\t\t\t(click)=\"removeUploadedFile(uploaded);\"><i class=\"material-icons\">delete</i></button>\n\t\t\t\t\t\t\t\t\t\t</div>\n  \t\t\t\t    \t\t\t\t\t\n\t\t\t\t    \t\t\t\t\t\n\t\t\t\t    \t\t\t\t</div>\n\t\t\t\t    \t\t\t</div>\n\n\t\t<app-file-preview [showDialog]=\"showFilePreviewDialog\" (dialogClosed)=\"onFilePreviewDialogClosed($event)\" [fileUrl]=\"previewFile.scanedPdfPath\" \n\t\t\t[fileIsPdf]=\"previewFile.fileIsPdf\" [fileIsImage]=\"previewFile.fileIsImage\" [imageSizeX]=\"previewFile.imageSizeX\" \n\t\t\t[imageSizeY]=\"previewFile.imageSizeY\"></app-file-preview>\n\t\t\t\t    \t\t\t");
             /***/ 
         }),
         /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/footer/footer.component.html": 
@@ -215,7 +215,7 @@ var __spread = (this && this.__spread) || function () {
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("\t\t<div class=\"content-container\">\n\t\t\t<div class=\"page-toolbar\">\n\t\t\t\t<div class=\"page-title\">{{ 'menu-workflow-create' | translate }}</div>\n\t\t\t\t<a class=\"toolbar-link\" [routerLink]=\"['/workflow/list']\"><i class=\"material-icons\">list</i></a>\n\t\t\t</div>\n\t\t\n\t\t\t<div class=\"workflow-content\">\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'common.expiredays' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content\"><input type=\"number\" max=\"999\" min=\"1\" maxlength=\"3\" [(ngModel)]=\"expireDays\" /></div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'workflow-controller' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t<select [(ngModel)]=\"controllerIdentity\">\n\t\t\t\t\t\t\t<option value=\"0\">{{ 'workflow-select-controller' | translate }}</option>\n\t\t\t\t\t\t\t<option *ngFor=\"let user of users;\" value=\"{{user.identity}}\">{{user.fullName}}</option>\n\t\t\t\t\t\t</select>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'workflow-assignto' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t<div class=\"assign-list\" >\n\t\t\t\t\t\t\t<button class=\"show-select-dialog\" (click)=\"showAssignSelect()\"><i class=\"material-icons\">playlist_add</i></button>\n\t\t\t\t\t\t\t<span *ngIf=\"hasNoAssigns\">{{ 'workflow-select-assign' | translate }}</span>\n\t\t\t\t\t\t\t<div class=\"user-item-box\" *ngFor=\"let item of assignedUsers\">\n\t\t\t\t\t\t\t\t<span>{{getAssignItemTitle(item)}} </span>\n\t\t\t\t\t\t\t\t<button (click)=\"removeAssign(item.itemIdentity, item.itemType)\"><i class=\"material-icons\">close</i></button>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'workflow-comments' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t<textarea [(ngModel)]=\"comments\"></textarea>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'common.attachments' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t<app-wm-file-upload [ocrScanningEnabled]=\"false\" [editService]=\"editService\" [showHeaderTitle]=\"false\" \n\t\t\t\t\t\t(onUploadedFilesChanged)=\"onUploadedFilesChanged($event)\" > </app-wm-file-upload>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\n\t\t\t\t\t<div class=\"item-content workflow-step-button-bar\">\n\t\t\t\t\t\t<button (click)=\"save()\" class=\"button-bar-button step-button button-save\">\n\t\t\t\t\t\t\t<span>{{ 'common.save' | translate }}</span>\n\t\t\t\t\t\t\t<i class=\"material-icons\">save</i>\n\t\t\t\t\t\t</button>\n\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t</div>\n\t\t\t\t\t\n\t\t\t\t</div>\n\t\t\t\t        \t\t\t\t\n\t\t\t\t<div class=\"item-row\" [innerHTML]=\"debugData\">\n\t\t\t\t</div>\n\n\t\t\t</div>\n\t\t    \n\t\t</div>\n\n\t\t<app-select-user [users]=\"(generalDataObs | async)?.company.users\" [departments]=\"(generalDataObs | async)?.company.departments\" \n\t\t\t[showAssignModal]=\"showAssignModal\" [selectAssign]=\"selectAssign\" (onUsersSelected)=\"onUsersSelected($event)\"></app-select-user>\t\t    \t\t \t\t\n\n\t\t    \t\t \t\t\n\t\t");
+            /* harmony default export */ __webpack_exports__["default"] = ("\t\t<div class=\"content-container\">\n\t\t\t<div class=\"page-toolbar\">\n\t\t\t\t<div class=\"page-title\">{{ 'menu-workflow-create' | translate }}</div>\n\t\t\t\t<a class=\"toolbar-link\" [routerLink]=\"['/workflow/list']\"><i class=\"material-icons\">list</i></a>\n\t\t\t</div>\n\t\t\n\t\t\t<div class=\"workflow-content\">\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'common.expiredays' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content\"><input type=\"number\" max=\"999\" min=\"1\" maxlength=\"3\" [(ngModel)]=\"expireDays\" /></div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'workflow-controller' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t<select [(ngModel)]=\"controllerIdentity\">\n\t\t\t\t\t\t\t<option value=\"0\">{{ 'workflow-select-controller' | translate }}</option>\n\t\t\t\t\t\t\t<option *ngFor=\"let user of users;\" value=\"{{user.identity}}\">{{user.fullName}}</option>\n\t\t\t\t\t\t</select>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'workflow-assignto' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t<div class=\"assign-list\" >\n\t\t\t\t\t\t\t<button class=\"show-select-dialog\" (click)=\"showAssignSelect()\"><i class=\"material-icons\">playlist_add</i></button>\n\t\t\t\t\t\t\t<span *ngIf=\"hasNoAssigns\">{{ 'workflow-select-assign' | translate }}</span>\n\t\t\t\t\t\t\t<div class=\"user-item-box\" *ngFor=\"let item of assignedUsers\">\n\t\t\t\t\t\t\t\t<span>{{getAssignItemTitle(item)}} </span>\n\t\t\t\t\t\t\t\t<button (click)=\"removeAssign(item.itemIdentity, item.itemType)\"><i class=\"material-icons\">close</i></button>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'workflow-comments' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t<textarea [(ngModel)]=\"comments\"></textarea>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'common.attachments' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t<app-wm-file-upload [ocrScanningEnabled]=\"false\" [editService]=\"editService\" [showHeaderTitle]=\"false\" \n\t\t\t\t\t\t(onUploadedFilesChanged)=\"onUploadedFilesChanged($event)\" [drawBorder]=\"true\" > </app-wm-file-upload>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\n\t\t\t\t\t<div class=\"item-content workflow-step-button-bar\">\n\t\t\t\t\t\t<button (click)=\"save()\" class=\"button-bar-button step-button button-save\">\n\t\t\t\t\t\t\t<span>{{ 'common.save' | translate }}</span>\n\t\t\t\t\t\t\t<i class=\"material-icons\">save</i>\n\t\t\t\t\t\t</button>\n\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t</div>\n\t\t\t\t\t\n\t\t\t\t</div>\n\t\t\t\t        \t\t\t\t\n\t\t\t\t<div class=\"item-row\" [innerHTML]=\"debugData\">\n\t\t\t\t</div>\n\n\t\t\t</div>\n\t\t    \n\t\t</div>\n\n\t\t<app-select-user [users]=\"(generalDataObs | async)?.company.users\" [departments]=\"(generalDataObs | async)?.company.departments\" \n\t\t\t[showAssignModal]=\"showAssignModal\" [selectAssign]=\"selectAssign\" (onUsersSelected)=\"onUsersSelected($event)\"></app-select-user>\t\t    \t\t \t\t\n\n\t\t    \t\t \t\t\n\t\t");
             /***/ 
         }),
         /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/wm-components/create/create-testthreetask/create-testthreetask.component.html": 
@@ -226,7 +226,7 @@ var __spread = (this && this.__spread) || function () {
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("\t\t<div class=\"content-container\">\n\t\t\t<div class=\"page-toolbar\">\n\t\t\t\t<div class=\"page-title\">{{ 'menu-workflow-create' | translate }}</div>\n\t\t\t\t<a class=\"toolbar-link\" [routerLink]=\"['/workflow/list']\"><i class=\"material-icons\">list</i></a>\n\t\t\t</div>\n\t\t\n\t\t\t<div class=\"workflow-content\">\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'common.expiredays' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content\"><input type=\"number\" max=\"999\" min=\"1\" maxlength=\"3\" [(ngModel)]=\"expireDays\" /></div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'workflow-controller' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t<select type=\"text\" [(ngModel)]=\"controllerIdentity\">\n\t\t\t\t\t\t\t<option value=\"0\">{{ 'workflow-select-controller' | translate }}</option>\n\t\t\t\t\t\t\t<option *ngFor=\"let user of (generalDataObs | async)?.company.users;\" value=\"{{user.identity}}\">{{user.fullName}}</option>\n\t\t\t\t\t\t</select>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'workflow-assignto' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t<div class=\"assign-list\" >\n\t\t\t\t\t\t\t<button class=\"show-select-dialog\" (click)=\"showAssignSelect()\"><i class=\"material-icons\">playlist_add</i></button>\n\t\t\t\t\t\t\t<span *ngIf=\"hasNoAssigns\">{{ 'workflow-select-assign' | translate }}</span>\n\t\t\t\t\t\t\t<div class=\"user-item-box\" *ngFor=\"let item of assignedUsers\">\n\t\t\t\t\t\t\t\t<span>{{getAssignItemTitle(item)}} </span>\n\t\t\t\t\t\t\t\t<button (click)=\"removeAssign(item.itemIdentity, item.itemType)\"><i class=\"material-icons\">close</i></button>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'workflow-comments' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t<textarea [(ngModel)]=\"comments\"></textarea>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'workflow-files' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content file-container\">\n\t\t\t\t\t\t<div *ngFor=\"let file of fileTitles; let fileIndex = index\" class=\"file-row\">\n\t\t\t\t\t\t\t{{fileIndex + 1}}.\n\t\t\t\t\t\t\t<input type=\"text\" class=\"file-item file-title\" placeholder=\"Datei Titel\" [(ngModel)]=\"file.title\"/>\n\t\t\t\t\t\t\t<input type=\"file\" class=\"file-item file-file\" (change)=\"fileTitleProgress($event, file, fileIndex)\"/>\n\t\t\t\t\t\t\t<button class=\"file-action\" (click)=\"removeFile(fileIndex)\"><i class=\"material-icons\">delete</i></button>\n\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div style=\"margin-top: 20px;\">\n\t\t\t\t\t\t\t<button class=\"file-action\" (click)=\"addFile()\"><i class=\"material-icons\">add</i></button>\n\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\n\t\t\t\t\t<div class=\"item-content workflow-step-button-bar\">\n\t\t\t\t\t\t<button (click)=\"save()\" class=\"button-bar-button step-button button-save\">\n\t\t\t\t\t\t\t<span>{{ 'common.save' | translate }}</span>\n\t\t\t\t\t\t\t<i class=\"material-icons\">save</i>\n\t\t\t\t\t\t</button>\n\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t</div>\n\t\t\t\t\t\n\t\t\t\t</div>\n\t\t\t\t        \t\t\t\t\n\t\t\t\t<div class=\"item-row\" [innerHTML]=\"debugData\">\n\t\t\t\t</div>\n\n\t\t\t</div>\n\t\t    \n\t\t\t<app-select-user [users]=\"(generalDataObs | async)?.company.users\" [departments]=\"(generalDataObs | async)?.company.departments\" \n\t\t\t\t[showAssignModal]=\"showAssignModal\" [selectAssign]=\"selectAssign\" (onUsersSelected)=\"onUsersSelected($event)\"></app-select-user>\t\t    \t\t \t\t\n\t\t</div>");
+            /* harmony default export */ __webpack_exports__["default"] = ("\t\t<div class=\"content-container\">\n\t\t\t<div class=\"page-toolbar\">\n\t\t\t\t<div class=\"page-title\">{{ 'menu-workflow-create' | translate }}</div>\n\t\t\t\t<a class=\"toolbar-link\" [routerLink]=\"['/workflow/list']\"><i class=\"material-icons\">list</i></a>\n\t\t\t</div>\n\t\t\n\t\t\t<div class=\"workflow-content\">\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'common.expiredays' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content\"><input type=\"number\" max=\"999\" min=\"1\" maxlength=\"3\" [(ngModel)]=\"expireDays\" /></div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'workflow-controller' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t<select type=\"text\" [(ngModel)]=\"controllerIdentity\">\n\t\t\t\t\t\t\t<option value=\"0\">{{ 'workflow-select-controller' | translate }}</option>\n\t\t\t\t\t\t\t<option *ngFor=\"let user of (generalDataObs | async)?.company.users;\" value=\"{{user.identity}}\">{{user.fullName}}</option>\n\t\t\t\t\t\t</select>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'workflow-assignto' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t<div class=\"assign-list\" >\n\t\t\t\t\t\t\t<button class=\"show-select-dialog\" (click)=\"showAssignSelect()\"><i class=\"material-icons\">playlist_add</i></button>\n\t\t\t\t\t\t\t<span *ngIf=\"hasNoAssigns\">{{ 'workflow-select-assign' | translate }}</span>\n\t\t\t\t\t\t\t<div class=\"user-item-box\" *ngFor=\"let item of assignedUsers\">\n\t\t\t\t\t\t\t\t<span>{{getAssignItemTitle(item)}} </span>\n\t\t\t\t\t\t\t\t<button (click)=\"removeAssign(item.itemIdentity, item.itemType)\"><i class=\"material-icons\">close</i></button>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'workflow-comments' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t<textarea [(ngModel)]=\"comments\"></textarea>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'common.attachments' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t<app-wm-file-upload [ocrScanningEnabled]=\"false\" [editService]=\"editService\" [showHeaderTitle]=\"false\" \n\t\t\t\t\t\t(onUploadedFilesChanged)=\"onUploadedFilesChanged($event)\" [drawBorder]=\"true\" > </app-wm-file-upload>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\n\t\t\t\t\t<div class=\"item-content workflow-step-button-bar\">\n\t\t\t\t\t\t<button (click)=\"save()\" class=\"button-bar-button step-button button-save\">\n\t\t\t\t\t\t\t<span>{{ 'common.save' | translate }}</span>\n\t\t\t\t\t\t\t<i class=\"material-icons\">save</i>\n\t\t\t\t\t\t</button>\n\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t</div>\n\t\t\t\t\t\n\t\t\t\t</div>\n\t\t\t\t        \t\t\t\t\n\t\t\t\t<div class=\"item-row\" [innerHTML]=\"debugData\">\n\t\t\t\t</div>\n\n\t\t\t</div>\n\t\t    \n\t\t\t<app-select-user [users]=\"(generalDataObs | async)?.company.users\" [departments]=\"(generalDataObs | async)?.company.departments\" \n\t\t\t\t[showAssignModal]=\"showAssignModal\" [selectAssign]=\"selectAssign\" (onUsersSelected)=\"onUsersSelected($event)\"></app-select-user>\t\t    \t\t \t\t\n\t\t</div>");
             /***/ 
         }),
         /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/wm-components/create/workflow-create/workflow-create.component.html": 
@@ -1244,7 +1244,7 @@ var __spread = (this && this.__spread) || function () {
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("\r\n.panel-heading{\r\n\tfont-weight: bold;\t\r\n}\r\n\r\n.uploaded-file-item-container{\r\n\theight: 220px;\r\n    overflow-y: auto;\r\n}\r\n\r\n.uploaded-file-item {\r\n\tpadding: 5px 4px 0 10px;\r\n\tmargin-bottom: 3px;\r\n}\r\n\r\n.uploaded-file-item:hover {\r\n\tbackground-color: #feffea;\r\n}\r\n\r\n.uploaded-file-item .filename {\r\n\twidth: calc(100% - 54px);\r\n    display: inline-block;\r\n    overflow: hidden;\r\n    overflow-y: hidden;\r\n    height: 30px;\r\n}\r\n\r\n.uploaded-file-item .upload-button{\r\n    padding: 0px 4px;\r\n    margin-left: 5px;\r\n}\r\n\r\n.uploaded-file-item .upload-button .material-icons{\r\n    font-size: 16px;\r\n}\r\n\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29tcG9uZW50cy93bS1maWxlLXVwbG9hZC93bS1maWxlLXVwbG9hZC5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7QUFDQTtDQUNDLGlCQUFpQjtBQUNsQjs7QUFFQTtDQUNDLGFBQWE7SUFDVixnQkFBZ0I7QUFDcEI7O0FBRUE7Q0FDQyx1QkFBdUI7Q0FDdkIsa0JBQWtCO0FBQ25COztBQUVBO0NBQ0MseUJBQXlCO0FBQzFCOztBQUVBO0NBQ0Msd0JBQXdCO0lBQ3JCLHFCQUFxQjtJQUNyQixnQkFBZ0I7SUFDaEIsa0JBQWtCO0lBQ2xCLFlBQVk7QUFDaEI7O0FBRUE7SUFDSSxnQkFBZ0I7SUFDaEIsZ0JBQWdCO0FBQ3BCOztBQUVBO0lBQ0ksZUFBZTtBQUNuQiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvd20tZmlsZS11cGxvYWQvd20tZmlsZS11cGxvYWQuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIlxyXG4ucGFuZWwtaGVhZGluZ3tcclxuXHRmb250LXdlaWdodDogYm9sZDtcdFxyXG59XHJcblxyXG4udXBsb2FkZWQtZmlsZS1pdGVtLWNvbnRhaW5lcntcclxuXHRoZWlnaHQ6IDIyMHB4O1xyXG4gICAgb3ZlcmZsb3cteTogYXV0bztcclxufVxyXG5cclxuLnVwbG9hZGVkLWZpbGUtaXRlbSB7XHJcblx0cGFkZGluZzogNXB4IDRweCAwIDEwcHg7XHJcblx0bWFyZ2luLWJvdHRvbTogM3B4O1xyXG59XHJcblxyXG4udXBsb2FkZWQtZmlsZS1pdGVtOmhvdmVyIHtcclxuXHRiYWNrZ3JvdW5kLWNvbG9yOiAjZmVmZmVhO1xyXG59XHJcblxyXG4udXBsb2FkZWQtZmlsZS1pdGVtIC5maWxlbmFtZSB7XHJcblx0d2lkdGg6IGNhbGMoMTAwJSAtIDU0cHgpO1xyXG4gICAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xyXG4gICAgb3ZlcmZsb3c6IGhpZGRlbjtcclxuICAgIG92ZXJmbG93LXk6IGhpZGRlbjtcclxuICAgIGhlaWdodDogMzBweDtcclxufVxyXG5cclxuLnVwbG9hZGVkLWZpbGUtaXRlbSAudXBsb2FkLWJ1dHRvbntcclxuICAgIHBhZGRpbmc6IDBweCA0cHg7XHJcbiAgICBtYXJnaW4tbGVmdDogNXB4O1xyXG59XHJcblxyXG4udXBsb2FkZWQtZmlsZS1pdGVtIC51cGxvYWQtYnV0dG9uIC5tYXRlcmlhbC1pY29uc3tcclxuICAgIGZvbnQtc2l6ZTogMTZweDtcclxufVxyXG5cclxuIl19 */");
+            /* harmony default export */ __webpack_exports__["default"] = ("\r\n.panel-heading{\r\n\tfont-weight: bold;\t\r\n}\r\n\r\n.uploaded-file-item-container{\r\n\theight: 220px;\r\n    overflow-y: auto;\r\n}\r\n\r\n.uploaded-file-item-container-border{\r\n\tborder: 1px solid gray;\r\n    padding: 4px;\r\n    border-radius: 5px;\r\n}\r\n\r\n.uploaded-file-item {\r\n\tpadding: 5px 4px 0 10px;\r\n\tmargin-bottom: 3px;\r\n}\r\n\r\n.uploaded-file-item:hover {\r\n\tbackground-color: #feffea;\r\n}\r\n\r\n.uploaded-file-item .filename {\r\n\twidth: calc(100% - 54px);\r\n    display: inline-block;\r\n    overflow: hidden;\r\n    overflow-y: hidden;\r\n    height: 30px;\r\n}\r\n\r\n.uploaded-file-item .upload-button{\r\n    padding: 0px 4px;\r\n    margin-left: 5px;\r\n}\r\n\r\n.uploaded-file-item .upload-button .material-icons{\r\n    font-size: 16px;\r\n}\r\n\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29tcG9uZW50cy93bS1maWxlLXVwbG9hZC93bS1maWxlLXVwbG9hZC5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7QUFDQTtDQUNDLGlCQUFpQjtBQUNsQjs7QUFFQTtDQUNDLGFBQWE7SUFDVixnQkFBZ0I7QUFDcEI7O0FBRUE7Q0FDQyxzQkFBc0I7SUFDbkIsWUFBWTtJQUNaLGtCQUFrQjtBQUN0Qjs7QUFFQTtDQUNDLHVCQUF1QjtDQUN2QixrQkFBa0I7QUFDbkI7O0FBRUE7Q0FDQyx5QkFBeUI7QUFDMUI7O0FBRUE7Q0FDQyx3QkFBd0I7SUFDckIscUJBQXFCO0lBQ3JCLGdCQUFnQjtJQUNoQixrQkFBa0I7SUFDbEIsWUFBWTtBQUNoQjs7QUFFQTtJQUNJLGdCQUFnQjtJQUNoQixnQkFBZ0I7QUFDcEI7O0FBRUE7SUFDSSxlQUFlO0FBQ25CIiwiZmlsZSI6InNyYy9hcHAvY29tcG9uZW50cy93bS1maWxlLXVwbG9hZC93bS1maWxlLXVwbG9hZC5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiXHJcbi5wYW5lbC1oZWFkaW5ne1xyXG5cdGZvbnQtd2VpZ2h0OiBib2xkO1x0XHJcbn1cclxuXHJcbi51cGxvYWRlZC1maWxlLWl0ZW0tY29udGFpbmVye1xyXG5cdGhlaWdodDogMjIwcHg7XHJcbiAgICBvdmVyZmxvdy15OiBhdXRvO1xyXG59XHJcblxyXG4udXBsb2FkZWQtZmlsZS1pdGVtLWNvbnRhaW5lci1ib3JkZXJ7XHJcblx0Ym9yZGVyOiAxcHggc29saWQgZ3JheTtcclxuICAgIHBhZGRpbmc6IDRweDtcclxuICAgIGJvcmRlci1yYWRpdXM6IDVweDtcclxufVxyXG5cclxuLnVwbG9hZGVkLWZpbGUtaXRlbSB7XHJcblx0cGFkZGluZzogNXB4IDRweCAwIDEwcHg7XHJcblx0bWFyZ2luLWJvdHRvbTogM3B4O1xyXG59XHJcblxyXG4udXBsb2FkZWQtZmlsZS1pdGVtOmhvdmVyIHtcclxuXHRiYWNrZ3JvdW5kLWNvbG9yOiAjZmVmZmVhO1xyXG59XHJcblxyXG4udXBsb2FkZWQtZmlsZS1pdGVtIC5maWxlbmFtZSB7XHJcblx0d2lkdGg6IGNhbGMoMTAwJSAtIDU0cHgpO1xyXG4gICAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xyXG4gICAgb3ZlcmZsb3c6IGhpZGRlbjtcclxuICAgIG92ZXJmbG93LXk6IGhpZGRlbjtcclxuICAgIGhlaWdodDogMzBweDtcclxufVxyXG5cclxuLnVwbG9hZGVkLWZpbGUtaXRlbSAudXBsb2FkLWJ1dHRvbntcclxuICAgIHBhZGRpbmc6IDBweCA0cHg7XHJcbiAgICBtYXJnaW4tbGVmdDogNXB4O1xyXG59XHJcblxyXG4udXBsb2FkZWQtZmlsZS1pdGVtIC51cGxvYWQtYnV0dG9uIC5tYXRlcmlhbC1pY29uc3tcclxuICAgIGZvbnQtc2l6ZTogMTZweDtcclxufVxyXG5cclxuIl19 */");
             /***/ 
         }),
         /***/ "./src/app/components/wm-file-upload/wm-file-upload.component.ts": 
@@ -1272,6 +1272,7 @@ var __spread = (this && this.__spread) || function () {
                     this.errorService = errorService;
                     this.ocrScanningEnabled = false;
                     this.showHeaderTitle = true;
+                    this.drawBorder = false;
                     this.editService = null;
                     this.onOcrUploadedFile = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
                     this.onShowUploadedFileScannDetail = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
@@ -1388,6 +1389,9 @@ var __spread = (this && this.__spread) || function () {
             tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
                 Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])('showHeaderTitle')
             ], WmFileUploadComponent.prototype, "showHeaderTitle", void 0);
+            tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+                Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])('drawBorder')
+            ], WmFileUploadComponent.prototype, "drawBorder", void 0);
             tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
                 Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])('editService')
             ], WmFileUploadComponent.prototype, "editService", void 0);
@@ -3707,12 +3711,6 @@ var __spread = (this && this.__spread) || function () {
                     this.command = _wf_models__WEBPACK_IMPORTED_MODULE_2__["WorkflowProcessCommand"].NONE;
                     this.uploadedFiles = [];
                 }
-                InvoiceWorkflowSaveRequest.prototype.loadUploadedFiles = function (uploadedFiles) {
-                    for (var index in uploadedFiles) {
-                        var wUploadedFile = new _wf_models__WEBPACK_IMPORTED_MODULE_2__["WorkflowUploadedFile"](uploadedFiles[index]);
-                        this.uploadedFiles.push(wUploadedFile);
-                    }
-                };
                 return InvoiceWorkflowSaveRequest;
             }());
             /***/ 
@@ -3797,12 +3795,6 @@ var __spread = (this && this.__spread) || function () {
                     this.command = _wf_models__WEBPACK_IMPORTED_MODULE_1__["WorkflowProcessCommand"].NONE;
                     this.uploadedFiles = [];
                 }
-                WorkflowSaveRequest.prototype.loadUploadedFiles = function (uploadedFiles) {
-                    for (var index in uploadedFiles) {
-                        var wUploadedFile = new _wf_models__WEBPACK_IMPORTED_MODULE_1__["WorkflowUploadedFile"](uploadedFiles[index]);
-                        this.uploadedFiles.push(wUploadedFile);
-                    }
-                };
                 return WorkflowSaveRequest;
             }());
             /***/ 
@@ -4004,6 +3996,14 @@ var __spread = (this && this.__spread) || function () {
                         this.filePathHashed = uploadedFile.scanedPdfPath;
                     }
                 }
+                WorkflowUploadedFile.loadUploadedFiles = function (uploadedFiles) {
+                    var wUploadedFiles = [];
+                    for (var index in uploadedFiles) {
+                        var wUploadedFile = new WorkflowUploadedFile(uploadedFiles[index]);
+                        wUploadedFiles.push(wUploadedFile);
+                    }
+                    return wUploadedFiles;
+                };
                 return WorkflowUploadedFile;
             }());
             /***/ 
@@ -4041,7 +4041,8 @@ var __spread = (this && this.__spread) || function () {
             /* harmony import */ var _services_loading_service_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../../services/loading-service.service */ "./src/app/services/loading-service.service.ts");
             /* harmony import */ var _services_error_service_service__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../../services/error-service.service */ "./src/app/services/error-service.service.ts");
             /* harmony import */ var _invoice_base_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../invoice-base.component */ "./src/app/wm-components/invoice-base.component.ts");
-            /* harmony import */ var _helper__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../../helper */ "./src/app/helper/index.ts");
+            /* harmony import */ var _wf_models__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../../wf-models */ "./src/app/wf-models/index.ts");
+            /* harmony import */ var _helper__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../../helper */ "./src/app/helper/index.ts");
             var CreateInvoiceComponent = /** @class */ (function (_super) {
                 __extends(CreateInvoiceComponent, _super);
                 function CreateInvoiceComponent(router, global, translate, editService, loadingService, http, errorService, formBuilder, dateAdapter, _stompService) {
@@ -4098,8 +4099,8 @@ var __spread = (this && this.__spread) || function () {
                 }
                 Object.defineProperty(CreateInvoiceComponent.prototype, "debugData", {
                     get: function () {
-                        var ss = Object(_helper__WEBPACK_IMPORTED_MODULE_13__["formatDate"])(new Date(), 'dd.mm.yyyy');
-                        ss += " -- " + Object(_helper__WEBPACK_IMPORTED_MODULE_13__["parseDate"])(ss, 'dd.mm.yyyy');
+                        var ss = Object(_helper__WEBPACK_IMPORTED_MODULE_14__["formatDate"])(new Date(), 'dd.mm.yyyy');
+                        ss += " -- " + Object(_helper__WEBPACK_IMPORTED_MODULE_14__["parseDate"])(ss, 'dd.mm.yyyy');
                         return ss;
                     },
                     enumerable: true,
@@ -4180,7 +4181,7 @@ var __spread = (this && this.__spread) || function () {
                 CreateInvoiceComponent.prototype.save = function () {
                     var _this = this;
                     this.setFormControlValues();
-                    this.workflowSaveRequest.loadUploadedFiles(this.uploadedFiles);
+                    this.workflowSaveRequest.uploadedFiles = _wf_models__WEBPACK_IMPORTED_MODULE_13__["WorkflowUploadedFile"].loadUploadedFiles(this.uploadedFiles);
                     this.loadingService.showLoading();
                     this.editService.createWorkflow(this.workflowSaveRequest).subscribe(function (result) {
                         console.log("Create workflow result", result);
@@ -4198,8 +4199,8 @@ var __spread = (this && this.__spread) || function () {
                 };
                 CreateInvoiceComponent.prototype.onApplyScannedValues = function () {
                     if (this.scannedSelectedValues["invoice-invoicedate"] && this.scannedSelectedValues["invoice-invoicedate"] != "") {
-                        this.invoiceEditForm.controls["invocieDate"].setValue(Object(_helper__WEBPACK_IMPORTED_MODULE_13__["parseDate"])(this.scannedSelectedValues["invoice-invoicedate"], 'dd.mm.yyyy'));
-                        this.invoiceEditForm.controls["discountEnterDate"].setValue(Object(_helper__WEBPACK_IMPORTED_MODULE_13__["parseDate"])(this.scannedSelectedValues["invoice-invoicedate"], 'dd.mm.yyyy'));
+                        this.invoiceEditForm.controls["invocieDate"].setValue(Object(_helper__WEBPACK_IMPORTED_MODULE_14__["parseDate"])(this.scannedSelectedValues["invoice-invoicedate"], 'dd.mm.yyyy'));
+                        this.invoiceEditForm.controls["discountEnterDate"].setValue(Object(_helper__WEBPACK_IMPORTED_MODULE_14__["parseDate"])(this.scannedSelectedValues["invoice-invoicedate"], 'dd.mm.yyyy'));
                         //this.invoiceEditForm.controls["discountDate"].setValue(parseDate(this.scannedSelectedValues["invoice-invoicedate"], 'dd.mm.yyyy'));
                     }
                     if (this.scannedSelectedValues["invoice-invoicenumber"] && this.scannedSelectedValues["invoice-invoicenumber"] != "") {
@@ -4246,7 +4247,7 @@ var __spread = (this && this.__spread) || function () {
                 Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
                     selector: 'app-create-invoice',
                     template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./create-invoice.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/wm-components/create/create-invoice/create-invoice.component.html")).default,
-                    providers: [{ provide: _angular_material__WEBPACK_IMPORTED_MODULE_6__["DateAdapter"], useClass: _helper__WEBPACK_IMPORTED_MODULE_13__["GermanDateAdapter"] }, _services_workflow_invoice_invoice_workflow_edit_service__WEBPACK_IMPORTED_MODULE_9__["InvoiceWorkflowEditService"]],
+                    providers: [{ provide: _angular_material__WEBPACK_IMPORTED_MODULE_6__["DateAdapter"], useClass: _helper__WEBPACK_IMPORTED_MODULE_14__["GermanDateAdapter"] }, _services_workflow_invoice_invoice_workflow_edit_service__WEBPACK_IMPORTED_MODULE_9__["InvoiceWorkflowEditService"]],
                     styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./create-invoice.component.css */ "./src/app/wm-components/create/create-invoice/create-invoice.component.css")).default]
                 })
             ], CreateInvoiceComponent);
@@ -4428,11 +4429,9 @@ var __spread = (this && this.__spread) || function () {
                     });
                 };
                 CreateSingletaskComponent.prototype.save = function () {
-                    this.loadingService.showLoading();
-                    this.createWorkflowData();
-                };
-                CreateSingletaskComponent.prototype.createWorkflowData = function () {
                     var _this = this;
+                    this.workflowSaveRequest.uploadedFiles = _wf_models__WEBPACK_IMPORTED_MODULE_9__["WorkflowUploadedFile"].loadUploadedFiles(this.uploadedFiles);
+                    this.loadingService.showLoading();
                     this.editService.createWorkflow(this.workflowSaveRequest).subscribe(function (result) {
                         console.log("Create workflow result", result);
                         _this.router.navigate([_this.workflowListUrl]);
@@ -4552,6 +4551,7 @@ var __spread = (this && this.__spread) || function () {
                     var _this = this;
                     this.router = router;
                     this.global = global;
+                    this.translate = translate;
                     this.editService = editService;
                     this.loadingService = loadingService;
                     this.http = http;
@@ -4561,13 +4561,13 @@ var __spread = (this && this.__spread) || function () {
                     this.users = [];
                     this.departments = [];
                     this.generalDataObs = null;
-                    this.fileTitles = [];
                     this.showDebug = false;
                     this.showAssignModal = false;
                     this.selectAssign = [];
                     this.assignTypeUser = _wf_models__WEBPACK_IMPORTED_MODULE_9__["AssignType"].USER;
                     this.assignTypeDepartment = _wf_models__WEBPACK_IMPORTED_MODULE_9__["AssignType"].DEPARTMENT;
                     this.assignTypeDepartmentGroup = _wf_models__WEBPACK_IMPORTED_MODULE_9__["AssignType"].DEPARTMENTGROUP;
+                    this.uploadedFiles = [];
                     this.router.events.subscribe(function (evt) {
                         if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_2__["NavigationEnd"]) {
                             _this.loadInitialData();
@@ -4575,12 +4575,6 @@ var __spread = (this && this.__spread) || function () {
                     });
                     this.generalDataObs = this.global.currentSessionDataSubject.asObservable();
                 }
-                CreateTestthreetaskComponent.prototype.fileTitleProgress = function (fileInput, file, fileIndex) {
-                    if (fileInput.target.files && fileInput.target.files != null && file) {
-                        file.file = fileInput.target.files[0];
-                    }
-                    //this.preview();
-                };
                 Object.defineProperty(CreateTestthreetaskComponent.prototype, "expireDays", {
                     get: function () {
                         if (this.workflowSaveRequest != null) {
@@ -4647,6 +4641,9 @@ var __spread = (this && this.__spread) || function () {
                 CreateTestthreetaskComponent.prototype.ngOnInit = function () {
                     this.loadInitialData();
                 };
+                CreateTestthreetaskComponent.prototype.onUploadedFilesChanged = function (uploadedFileList) {
+                    this.uploadedFiles = uploadedFileList;
+                };
                 CreateTestthreetaskComponent.prototype.loadInitialData = function () {
                     if (this.editService.workflowSaveRequestInit !== null) {
                         this.workflowSaveRequest = this.editService.workflowSaveRequestInit.workflowSaveRequest;
@@ -4655,14 +4652,6 @@ var __spread = (this && this.__spread) || function () {
                         this.subscribeToSearchInitialData();
                         this.editService.loadCreateInitialData();
                     }
-                    /*if(this.global.loadedGeneralData !== null){
-                        this.users = this.global.loadedGeneralData.company.users;
-                        this.departments = this.global.loadedGeneralData.company.departments;
-                    }
-                    else{
-                        this.subscribeToGeneralData();
-                        this.global.loadAllSetting(null);
-                    }*/
                 };
                 CreateTestthreetaskComponent.prototype.subscribeToSearchInitialData = function () {
                     var _this = this;
@@ -4696,21 +4685,10 @@ var __spread = (this && this.__spread) || function () {
                         return value.itemIdentity != identity || value.itemType != type;
                     });
                 };
-                CreateTestthreetaskComponent.prototype.removeFile = function (index) {
-                    this.fileTitles.splice(index, 1);
-                };
-                CreateTestthreetaskComponent.prototype.addFile = function () {
-                    var ft = new _wf_models__WEBPACK_IMPORTED_MODULE_9__["FileTitle"]();
-                    ft.title = "";
-                    ft.file = null;
-                    this.fileTitles.push(ft);
-                };
                 CreateTestthreetaskComponent.prototype.save = function () {
-                    this.loadingService.showLoading();
-                    this.createWorkflowData();
-                };
-                CreateTestthreetaskComponent.prototype.createWorkflowData = function () {
                     var _this = this;
+                    this.workflowSaveRequest.uploadedFiles = _wf_models__WEBPACK_IMPORTED_MODULE_9__["WorkflowUploadedFile"].loadUploadedFiles(this.uploadedFiles);
+                    this.loadingService.showLoading();
                     this.editService.createWorkflow(this.workflowSaveRequest).subscribe(function (result) {
                         console.log("Create workflow result", result);
                         _this.router.navigate([_this.workflowListUrl]);

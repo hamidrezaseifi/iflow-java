@@ -11,13 +11,5 @@ export class WorkflowSaveRequest {
 	command :WorkflowProcessCommand = WorkflowProcessCommand.NONE;
 	uploadedFiles :WorkflowUploadedFile[] = [];
 
-	loadUploadedFiles(uploadedFiles :UploadedFile[]){
-		for(var index in uploadedFiles){
-			var wUploadedFile :WorkflowUploadedFile = new WorkflowUploadedFile(uploadedFiles[index]);
-			this.uploadedFiles.push(wUploadedFile);
-		}
-	
-	}
-
 }
 

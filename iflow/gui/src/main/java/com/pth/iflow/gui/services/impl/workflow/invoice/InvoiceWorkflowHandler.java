@@ -66,9 +66,13 @@ public class InvoiceWorkflowHandler extends WorkflowHandlerHelper<InvoiceWorkflo
 
     this.workflowAccess.validateWorkflow(createRequest, this.sessionUserInfo.getToken());
 
+    this.prepareUploadedFiles(createRequest);
+
     final List<InvoiceWorkflow> list = this.workflowAccess.createWorkflow(createRequest, this.sessionUserInfo.getToken());
 
-    return this.prepareUploadedFiles(createRequest, list);
+    return this.prepareWorkflowList(list);
+
+    // return this.prepareUploadedFiles(createRequest, list);
   }
 
   @Override

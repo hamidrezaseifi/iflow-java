@@ -67,8 +67,11 @@ public class TestThreeTaskWorkflowHandler extends WorkflowHandlerHelper<TestThre
 
     this.workflowAccess.validateWorkflow(createRequest, this.sessionUserInfo.getToken());
 
+    this.prepareUploadedFiles(createRequest);
+
     final List<TestThreeTaskWorkflow> list = this.workflowAccess.createWorkflow(createRequest, this.sessionUserInfo.getToken());
-    return this.prepareUploadedFiles(createRequest, list);
+
+    return this.prepareWorkflowList(list);
 
   }
 

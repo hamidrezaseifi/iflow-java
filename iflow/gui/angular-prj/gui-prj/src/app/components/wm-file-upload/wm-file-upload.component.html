@@ -6,7 +6,7 @@
 				    				 <label class="hide-file-label" for="inlineuploadfile"></label>
 									<div class="clear"></div>
 				    			</div>
-				    			<div class="uploaded-file-item-container">
+				    			<div class="uploaded-file-item-container" [ngClass]="{'uploaded-file-item-container-border' : drawBorder}">
 				    				<div *ngFor="let uploaded of uploadedFiles" class="uploaded-file-item list-group-item" >
 				    					<span class="filename">{{uploaded.fileName}}</span>
 				    					

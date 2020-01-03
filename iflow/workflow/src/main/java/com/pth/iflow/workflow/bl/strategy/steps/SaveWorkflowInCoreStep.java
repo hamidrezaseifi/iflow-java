@@ -1,6 +1,7 @@
 package com.pth.iflow.workflow.bl.strategy.steps;
 
 import java.net.MalformedURLException;
+
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.strategy.strategies.AbstractWorkflowSaveStrategy;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
@@ -8,9 +9,12 @@ import com.pth.iflow.workflow.models.base.IWorkflow;
 
 public class SaveWorkflowInCoreStep<W extends IWorkflow> extends AbstractWorkflowSaveStrategyStep<W> {
 
-  public SaveWorkflowInCoreStep(final AbstractWorkflowSaveStrategy<W> workflowSaveStrategy) {
-    super(workflowSaveStrategy);
+  private final boolean addToSavedWorkflowList;
 
+  public SaveWorkflowInCoreStep(final AbstractWorkflowSaveStrategy<W> workflowSaveStrategy, final boolean addToSavedWorkflowList) {
+
+    super(workflowSaveStrategy);
+    this.addToSavedWorkflowList = addToSavedWorkflowList;
   }
 
   @Override
@@ -24,10 +28,14 @@ public class SaveWorkflowInCoreStep<W extends IWorkflow> extends AbstractWorkflo
 
     this.getWorkflowSaveStrategy().setSavedSingleWorkflow(savedWorkflow);
 
+    if (this.addToSavedWorkflowList) {
+      this.getWorkflowSaveStrategy().addSavedWorkflowToList(savedWorkflow);
+    }
   }
 
   @Override
   public boolean shouldProcess() {
+
     return true;
   }
 

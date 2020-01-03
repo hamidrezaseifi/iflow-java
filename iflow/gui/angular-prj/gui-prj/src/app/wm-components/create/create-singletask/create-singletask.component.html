@@ -46,7 +46,7 @@
 					<div class="item-label">{{ 'common.attachments' | translate }}</div>
 					<div class="item-content">
 						<app-wm-file-upload [ocrScanningEnabled]="false" [editService]="editService" [showHeaderTitle]="false" 
-						(onUploadedFilesChanged)="onUploadedFilesChanged($event)" > </app-wm-file-upload>
+						(onUploadedFilesChanged)="onUploadedFilesChanged($event)" [drawBorder]="true" > </app-wm-file-upload>
 					</div>
 					<div class="clear"></div>
 					

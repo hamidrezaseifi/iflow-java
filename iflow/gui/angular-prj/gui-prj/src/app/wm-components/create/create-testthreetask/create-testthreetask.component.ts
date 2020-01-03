@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import {TranslateService} from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 import { HttpClient, HttpEventType } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -9,11 +9,11 @@ import { TestthreetaskWorkflowEditService } from '../../../services/workflow/tes
 import { LoadingServiceService } from '../../../services/loading-service.service';
 import { ErrorServiceService } from '../../../services/error-service.service';
 
-import { User, Department, DepartmentGroup, GeneralData } from '../../../ui-models';
-import { WorkflowProcessCommand, Workflow, AssignItem, FileTitle, AssignType, WorkflowUploadFileResult } from '../../../wf-models';
+import { User, Department, DepartmentGroup, GeneralData, UploadedFile, UploadedResult } from '../../../ui-models';
+import { WorkflowProcessCommand, Workflow, AssignItem, FileTitle, AssignType, WorkflowUploadFileResult, WorkflowUploadedFile } 
+	from '../../../wf-models';
 import { WorkflowSaveRequest } from '../../../wf-models/workflow-save-request';
 import { WorkflowSaveRequestInit } from '../../../wf-models/workflow-save-request-init';
-
 
 @Component({
   selector: 'app-create-testthreetask',
@@ -29,9 +29,6 @@ export class CreateTestthreetaskComponent implements OnInit {
 	users : User[] = [];
 	departments : Department[] = [];
 	generalDataObs :Observable<GeneralData> = null;
-
-	
-	fileTitles : FileTitle[] = [];
 	
 	showDebug : boolean = false;
 	
@@ -42,18 +39,9 @@ export class CreateTestthreetaskComponent implements OnInit {
 	assignTypeUser :AssignType = AssignType.USER;
 	assignTypeDepartment :AssignType = AssignType.DEPARTMENT;
 	assignTypeDepartmentGroup :AssignType = AssignType.DEPARTMENTGROUP;
-	
-	
-	
-	fileTitleProgress(fileInput: any, file :FileTitle, fileIndex) {
-		
-		if(fileInput.target.files && fileInput.target.files != null && file){
-			file.file = <File>fileInput.target.files[0];
-		}
-		
-	    //this.preview();
-	}
-	
+
+	uploadedFiles :UploadedFile[] = [];	
+
 	get expireDays() : number{
 		if(this.workflowSaveRequest != null){
 			return this.workflowSaveRequest.expireDays;
@@ -110,8 +98,8 @@ export class CreateTestthreetaskComponent implements OnInit {
 	constructor(
 		    private router: Router,
 			private global: GlobalService,
-			translate: TranslateService,
-			private editService :TestthreetaskWorkflowEditService,
+			public  translate: TranslateService,
+			public  editService :TestthreetaskWorkflowEditService,
 			private loadingService: LoadingServiceService,
 			private http: HttpClient,
 			private errorService: ErrorServiceService,
@@ -132,6 +120,11 @@ export class CreateTestthreetaskComponent implements OnInit {
 	
 	}
 	
+	onUploadedFilesChanged(uploadedFileList: UploadedFile[]) {
+		
+		this.uploadedFiles = uploadedFileList;
+	}
+	
 	private loadInitialData(){
 	 	if(this.editService.workflowSaveRequestInit !== null){
 	 		this.workflowSaveRequest = this.editService.workflowSaveRequestInit.workflowSaveRequest;
@@ -141,15 +134,6 @@ export class CreateTestthreetaskComponent implements OnInit {
 	 		this.subscribeToSearchInitialData();
 	 		this.editService.loadCreateInitialData();
 	 	}
-	
-	 	/*if(this.global.loadedGeneralData !== null){
-	 		this.users = this.global.loadedGeneralData.company.users;
-	 		this.departments = this.global.loadedGeneralData.company.departments;
-	 	}
-	 	else{
-	 		this.subscribeToGeneralData();
-	 		this.global.loadAllSetting(null);
-	 	}*/
 	 	
 	}
 	
@@ -190,27 +174,13 @@ export class CreateTestthreetaskComponent implements OnInit {
 		
 	}
 	
-	removeFile(index){
-		this.fileTitles.splice(index, 1);
-	}
-	
-	addFile(){
-		var ft :FileTitle = new FileTitle();
-		ft.title = "";
-		ft.file = null;
-		
-		this.fileTitles.push(ft);
-	}
 	
 	save(){
 		
+		this.workflowSaveRequest.uploadedFiles = WorkflowUploadedFile.loadUploadedFiles(this.uploadedFiles);
+
 		this.loadingService.showLoading();
 		
-		this.createWorkflowData();
-	
-	}
-	
-	private createWorkflowData(){
         this.editService.createWorkflow(this.workflowSaveRequest).subscribe(
 		        (result) => {		        	
 		            console.log("Create workflow result", result);

@@ -20,36 +20,21 @@ import com.pth.iflow.gui.services.IUploadFileManager;
 
 public abstract class WorkflowHandlerHelper<W extends IWorkflow> {
 
-  private static final boolean MANAGE_UPLOADFILES_IS_DISABLED = true;
+  // private static final boolean MANAGE_UPLOADFILES_IS_DISABLED = false;
 
-  protected List<W> prepareUploadedFiles(final IWorkflowSaveRequest<W> createRequest, final List<W> workflowList)
+  protected void prepareUploadedFiles(final IWorkflowSaveRequest<W> createRequest)
       throws IOException, MalformedURLException, IFlowMessageConversionFailureException {
-
-    final List<W> preparedList = this.prepareWorkflowList(workflowList);
-
-    if (createRequest.getUploadedFiles().isEmpty() || MANAGE_UPLOADFILES_IS_DISABLED) {
-      return preparedList;
-    }
 
     final List<FileSavingData> archiveList = this.getUploadFileManager().moveFromTempToArchive(createRequest.getUploadedFiles());
 
-    final List<W> finalList = new ArrayList<>();
+    for (final FileSavingData savedArchiveFile : archiveList) {
 
-    for (final W workflow : preparedList) {
-
-      for (final FileSavingData savedArchiveFile : archiveList) {
-
-        workflow
-            .addNewFile(savedArchiveFile.getFilePath(), this.getSessionUserInfo().getUser().getIdentity(),
-                savedArchiveFile.getTitle(), savedArchiveFile.getFileExtention(), "");
-      }
-
-      final W finalWorkflow = this.innerSaveWorkflow(workflow);
-
-      finalList.add(finalWorkflow);
+      createRequest
+          .getWorkflow()
+          .addNewFile(savedArchiveFile.getFilePath(), this.getSessionUserInfo().getUser().getIdentity(),
+              savedArchiveFile.getTitle(), savedArchiveFile.getFileExtention(), "");
     }
 
-    return finalList;
   }
 
   protected List<W> prepareWorkflowList(final List<W> pureWorkflowList) throws IFlowMessageConversionFailureException {

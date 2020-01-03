@@ -232,7 +232,7 @@ export class CreateInvoiceComponent extends InvoiceBaseComponent implements OnIn
 		
 		this.setFormControlValues();
 				
-		this.workflowSaveRequest.loadUploadedFiles(this.uploadedFiles);
+		this.workflowSaveRequest.uploadedFiles = WorkflowUploadedFile.loadUploadedFiles(this.uploadedFiles);
 		 
 		this.loadingService.showLoading();
 		

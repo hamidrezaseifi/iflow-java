@@ -15,4 +15,14 @@ export class WorkflowUploadedFile {
 		}
 		
 	}
+	
+	public static loadUploadedFiles(uploadedFiles :UploadedFile[]):WorkflowUploadedFile[]{
+		
+		var wUploadedFiles: WorkflowUploadedFile[] = [];
+		for(var index in uploadedFiles){
+			var wUploadedFile :WorkflowUploadedFile = new WorkflowUploadedFile(uploadedFiles[index]);
+			wUploadedFiles.push(wUploadedFile);
+		}
+		return wUploadedFiles;
+	}
 }

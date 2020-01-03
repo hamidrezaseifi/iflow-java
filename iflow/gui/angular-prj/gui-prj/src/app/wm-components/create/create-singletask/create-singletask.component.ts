@@ -10,7 +10,8 @@ import { LoadingServiceService } from '../../../services/loading-service.service
 import { ErrorServiceService } from '../../../services/error-service.service';
 
 import { User, Department, DepartmentGroup, GeneralData, UploadedFile, UploadedResult } from '../../../ui-models';
-import { WorkflowProcessCommand, Workflow, AssignItem, FileTitle, AssignType, WorkflowUploadFileResult } from '../../../wf-models';
+import { WorkflowProcessCommand, Workflow, AssignItem, FileTitle, AssignType, WorkflowUploadFileResult, WorkflowUploadedFile } 
+	from '../../../wf-models';
 import { WorkflowSaveRequest } from '../../../wf-models/workflow-save-request';
 import { WorkflowSaveRequestInit } from '../../../wf-models/workflow-save-request-init';
 
@@ -40,7 +41,6 @@ export class CreateSingletaskComponent implements OnInit {
 	assignTypeDepartmentGroup :AssignType = AssignType.DEPARTMENTGROUP;
 
 	uploadedFiles :UploadedFile[] = [];	
-
 
 	fileTitleProgress(fileInput: any, file :FileTitle, fileIndex) {
 		
@@ -188,13 +188,10 @@ export class CreateSingletaskComponent implements OnInit {
 	
 	save(){
 		
-		this.loadingService.showLoading();
-		
-		this.createWorkflowData();
+		this.workflowSaveRequest.uploadedFiles = WorkflowUploadedFile.loadUploadedFiles(this.uploadedFiles);
 
-	}
-	
-	private createWorkflowData(){
+		this.loadingService.showLoading();		
+		
         this.editService.createWorkflow(this.workflowSaveRequest).subscribe(
 		        (result) => {		        	
 		            console.log("Create workflow result", result);

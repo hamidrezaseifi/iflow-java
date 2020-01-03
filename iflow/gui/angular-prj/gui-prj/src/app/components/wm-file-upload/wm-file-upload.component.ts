@@ -18,7 +18,7 @@ export class WmFileUploadComponent implements OnInit {
 
 	@Input('ocrScanningEnabled') ocrScanningEnabled: boolean = false;
 	@Input('showHeaderTitle') showHeaderTitle: boolean = true;
-
+	@Input('drawBorder') drawBorder: boolean = false;
 	@Input('editService') editService: WorkflowEditInterfaceService = null;
 
 	@Output() onOcrUploadedFile = new EventEmitter<UploadedFile>();
