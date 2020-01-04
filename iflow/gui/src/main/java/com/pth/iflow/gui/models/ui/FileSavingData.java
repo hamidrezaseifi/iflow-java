@@ -17,37 +17,32 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.pth.iflow.common.enums.EIdentity;
-
 public class FileSavingData {
 
   public static String[] AVAILEABLE_EXTENTIONS = { "pdf", "jpg", "gif", "png", "doc", "docx" };
 
-  private String         title;
-  private String         fileExtention;
-  private String         workflowIdentity;
-  private String         actionIdentity;
-  private String         companyIdentity;
-  private String         filePath;
-  private String         tempFilePath;
+  private String title;
+  private String fileExtention;
+  private String filePath;
+  private String tempFilePath;
 
   public FileSavingData(final String fileExtention) {
+
     this.fileExtention = fileExtention;
   }
 
-  public FileSavingData(final String title, final String fileExtention, final String workflowIdentity, final String actionIdentity,
-      final String companyIdentity) {
+  public FileSavingData(final String title, final String fileExtention) {
+
     this.title = title;
     this.fileExtention = fileExtention;
-    this.workflowIdentity = workflowIdentity;
-    this.actionIdentity = actionIdentity;
-    this.companyIdentity = companyIdentity;
+
   }
 
   /**
    * @return the title
    */
   public String getTitle() {
+
     return this.title;
   }
 
@@ -55,6 +50,7 @@ public class FileSavingData {
    * @param title the title to set
    */
   public void setTitle(final String title) {
+
     this.title = title;
   }
 
@@ -62,6 +58,7 @@ public class FileSavingData {
    * @return the fileEtention
    */
   public String getFileExtention() {
+
     return this.fileExtention;
   }
 
@@ -69,43 +66,15 @@ public class FileSavingData {
    * @param fileEtention the fileEtention to set
    */
   public void setFileExtention(final String fileEtention) {
+
     this.fileExtention = fileEtention;
-  }
-
-  /**
-   * @return the workflowId
-   */
-  public String getWorkflowIdentity() {
-    return this.workflowIdentity;
-  }
-
-  /**
-   * @param workflowId the workflowId to set
-   */
-  public void setWorkflowIdentity(final String workflowIdentity) {
-    this.workflowIdentity = workflowIdentity == null ? EIdentity.NOT_SET.getIdentity() : workflowIdentity;
-  }
-
-  public String getActionIdentity() {
-    return this.actionIdentity;
-  }
-
-  public void setActionIdentity(final String actionIdentity) {
-    this.actionIdentity = actionIdentity;
-  }
-
-  public String getCompanyIdentity() {
-    return this.companyIdentity;
-  }
-
-  public void setCompanyIdentity(final String companyIdentity) {
-    this.companyIdentity = companyIdentity;
   }
 
   /**
    * @return the filePath
    */
   public String getFilePath() {
+
     return this.filePath;
   }
 
@@ -113,73 +82,64 @@ public class FileSavingData {
    * @param tempPath the filePath to set
    */
   public void setFilePath(final String filePath) {
+
     this.filePath = filePath;
   }
 
   public String getTempFilePath() {
+
     return this.tempFilePath;
   }
 
   public void setTempFilePath(final String tempFilePath) {
+
     this.tempFilePath = tempFilePath;
   }
 
   public File getFile() {
+
     return new File(this.filePath);
   }
 
   public File getTempFile() {
+
     return new File(this.tempFilePath);
   }
 
   /**
-   * @return the saving file path preffix
-   */
-  public String generateSavingFilePathPreffix() {
-    return String.format("%s/%s/%s/%s.%s", this.companyIdentity, this.workflowIdentity, this.actionIdentity, this.title,
-        this.fileExtention);
-  }
-
-  /**
    * @return the saving file temp path preffix
    */
-  public String generateSavingTempFilePathPreffix() {
+  public static String generateSavingFilePathPreffix(final String fileExtention) {
 
     final LocalDate dt = LocalDate.now();
     final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY/MM/dd");
 
-    return String.format("%s/temp_%d.%s", dt.format(formatter), System.currentTimeMillis(), this.fileExtention);
+    return String.format("%s/temp_%d.%s", dt.format(formatter), System.currentTimeMillis(), fileExtention);
   }
 
   public String generateNameExtention() {
+
     return String.format("%s.%s", this.title, this.fileExtention);
-  }
-
-  /**
-   * @return the saving file path preffix
-   */
-  public String generateSavingFileFullPath(final String basePath) {
-    String path = basePath + "/" + this.generateSavingFilePathPreffix();
-    path = this.clearFilePath(path);
-
-    return path;
   }
 
   /**
    * @return the saving file temp path preffix
    */
-  public String generateSavingTempFileFullPath(final String basePath) {
-    String path = basePath + "/" + this.generateSavingTempFilePathPreffix();
-    path = this.clearFilePath(path);
+  public static String generateSavingFileFullPath(final String basePath, final String fileExtention) {
+
+    String path = basePath + "/" + FileSavingData.generateSavingFilePathPreffix(fileExtention);
+    path = clearFilePath(path);
 
     return path;
   }
 
-  private String clearFilePath(final String path) {
+  private static String clearFilePath(final String path) {
+
     return path.replace("//", "/").replace("..", ".");
   }
 
   public MediaType getMediaType() {
+
     MediaType mediaType = MediaType.parseMediaType("application/pdf");
     if (this.isFilePdf()) {
       mediaType = MediaType.parseMediaType("application/pdf");
@@ -201,6 +161,7 @@ public class FileSavingData {
   }
 
   public String getMediaTypeString() {
+
     String mediaType = "";
     if (this.isFilePdf()) {
       mediaType = "application/pdf";
@@ -221,27 +182,38 @@ public class FileSavingData {
     return mediaType;
   }
 
-  private boolean isFilePdf() {
+  public boolean isFilePdf() {
+
     return this.fileExtention.toLowerCase().equals("pdf");
   }
 
-  private boolean isFileJpg() {
+  public boolean isFileJpg() {
+
     return this.fileExtention.toLowerCase().equals("jpg");
   }
 
-  private boolean isFileGif() {
+  public boolean isFileGif() {
+
     return this.fileExtention.toLowerCase().equals("gif");
   }
 
-  private boolean isFilePng() {
+  public boolean isFilePng() {
+
     return this.fileExtention.toLowerCase().equals("png");
   }
 
-  private boolean isFileWord() {
+  public boolean isFileWord() {
+
     return this.fileExtention.toLowerCase().equals("doc") || this.fileExtention.toLowerCase().equals("docx");
   }
 
+  public boolean isFileImage() {
+
+    return this.isFileJpg() || this.isFileGif() || this.isFilePng();
+  }
+
   public static String getExtention(final MultipartFile file) {
+
     final String fileName = file.getOriginalFilename();
     final int pointIndex = fileName.lastIndexOf(".");
     final String ext = pointIndex > 2 ? fileName.substring(pointIndex + 1) : "";
@@ -249,6 +221,7 @@ public class FileSavingData {
   }
 
   public ResponseEntity<InputStreamResource> generateFileReposneEntity(final String readFilePath) throws FileNotFoundException {
+
     final File file = new File(readFilePath);
     final HttpHeaders respHeaders = new HttpHeaders();
     respHeaders.setContentType(this.getMediaType());
@@ -260,6 +233,7 @@ public class FileSavingData {
   }
 
   public void prepareReposne(final String readFilePath, final HttpServletResponse response) throws IOException {
+
     final File file = new File(readFilePath);
 
     response.setContentType(this.getMediaTypeString());
@@ -272,4 +246,21 @@ public class FileSavingData {
     response.setHeader("Content-disposition", "attachment;filename=" + fileName);
     response.flushBuffer();
   }
+
+  public static String getExtention(final String filePath) {
+
+    final int pointIndex = filePath.lastIndexOf(".");
+    final String ext = pointIndex > 2 ? filePath.substring(pointIndex + 1) : "";
+    return ext;
+  }
+
+  public static FileSavingData generateFromFilePath(final String filePath) {
+
+    final String extention = FileSavingData.getExtention(filePath);
+    final FileSavingData fileSaveData = new FileSavingData(extention);
+    fileSaveData.setFilePath(filePath);
+
+    return fileSaveData;
+  }
+
 }

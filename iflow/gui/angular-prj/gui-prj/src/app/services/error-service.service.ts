@@ -16,6 +16,10 @@ export class ErrorServiceService {
 	
     showError(errorMessage :string, errorDetail :string){
 		
+    	if(errorDetail === undefined){
+    		errorDetail = "";	
+    	}
+    	
     	var err = new ErrorDetail(errorMessage, errorDetail);   	
     	this.errorSubject.next(err);
 	}

@@ -1,7 +1,7 @@
 ﻿
-import { Workflow } from '../wf-models';
-import { WorkflowProcessCommand } from '../wf-models';
-import { AssignItem } from '../wf-models';
+import { Workflow, WorkflowProcessCommand, AssignItem, WorkflowUploadedFile } from '../wf-models';
+import { UploadedFile } from '../ui-models';
+
 
 export class WorkflowSaveRequest {
 	
@@ -9,7 +9,7 @@ export class WorkflowSaveRequest {
 	expireDays :number = 0;
 	assigns :AssignItem[] = [];
 	command :WorkflowProcessCommand = WorkflowProcessCommand.NONE;
-	sessionKey :string = "";
+	uploadedFiles :WorkflowUploadedFile[] = [];
 
 }
 

@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.WorkflowFile;
@@ -20,16 +18,16 @@ public interface IWorkflowHandler<W extends IWorkflow, WS extends IWorkflowSaveR
   WorkflowFile readWorkflowFile(final String workflowIdentity, final String fileIdentity)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  List<W> createWorkflow(final WS createRequest, final HttpSession session)
+  List<W> createWorkflow(final WS createRequest)
       throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException;
 
-  W saveWorkflow(final W workflow, final HttpSession session)
+  W saveWorkflow(final W workflow)
       throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException;
 
-  W doneWorkflow(final WS saveRequest, final HttpSession session)
+  W doneWorkflow(final WS saveRequest)
       throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException;
 
-  W archiveWorkflow(final W workflow, final HttpSession session)
+  W archiveWorkflow(final W workflow)
       throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException;
 
   W assignWorkflow(final String workflowIdentity)

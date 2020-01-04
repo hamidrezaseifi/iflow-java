@@ -14,10 +14,12 @@ import { WorkflowSaveRequest } from '../../wf-models/workflow-save-request';
 
 import { WorkflowProcessCommand, Workflow, AssignItem, FileTitle, AssignType } from '../../wf-models';
 
+import { WorkflowEditInterfaceService } from '../../services';
+
 @Injectable({
   providedIn: 'root'
 })
-export class WorkflowEditBaseService extends HttpErrorResponseHelper {
+export class WorkflowEditBaseService extends HttpErrorResponseHelper implements WorkflowEditInterfaceService {
 
 	public workflowSaveRequestInitSubject: BehaviorSubject<WorkflowSaveRequestInit> = new BehaviorSubject<WorkflowSaveRequestInit>(null);
 
@@ -48,7 +50,10 @@ export class WorkflowEditBaseService extends HttpErrorResponseHelper {
 		return "";
 	}
 	
-	
+	getUploadOcrScanFileUrl() :string{
+		return "/general/data/uploadtempfile";
+	}
+
 	getInitEditUrl(identity :string) :string{
 		return "";
 	}
@@ -68,7 +73,19 @@ export class WorkflowEditBaseService extends HttpErrorResponseHelper {
 		
 	}
 	
-	
+	uploadTempFiles(ocrScanFile : File){
+		
+	    const formData = new FormData();
+	    formData.append('file', ocrScanFile);
+	    formData.append('wids', "0");
+	    
+    	
+        const httpFileUploadOptions = { headers: HttpHepler.generateFileUploadHeader() };
+        
+	    return this.http.post(this.getUploadOcrScanFileUrl(), formData, httpFileUploadOptions);
+		
+	}
+
 	loadCreateInitialData(){
     	this.loadingService.showLoading();
     	

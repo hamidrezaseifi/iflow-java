@@ -1,8 +1,10 @@
 package com.pth.iflow.gui.models.workflow;
 
 import java.util.List;
+
 import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 import com.pth.iflow.gui.models.AssignItem;
+import com.pth.iflow.gui.models.UploadededFile;
 
 public interface IWorkflowSaveRequest<W extends IWorkflow> {
 
@@ -29,10 +31,10 @@ public interface IWorkflowSaveRequest<W extends IWorkflow> {
 
   public boolean isSaveCommand();
 
-  public String getSessionKey();
-
-  public void setSessionKey(String sessionKey);
-
   void setAssignUser(final String userId);
+
+  public List<UploadededFile> getUploadedFiles();
+
+  public void setUploadedFiles(final List<UploadededFile> uploadedFiles);
 
 }

@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,20 +23,22 @@ import com.pth.iflow.gui.services.IWorkflowHandler;
 import com.pth.iflow.gui.services.impl.workflow.base.WorkflowHandlerHelper;
 
 @Service
-public class TestThreeTaskWorkflowHandler extends WorkflowHandlerHelper<TestThreeTaskWorkflow>
-    implements IWorkflowHandler<TestThreeTaskWorkflow, TestThreeTaskWorkflowSaveRequest> {
+public class TestThreeTaskWorkflowHandler extends WorkflowHandlerHelper<TestThreeTaskWorkflow> implements IWorkflowHandler<
+    TestThreeTaskWorkflow, TestThreeTaskWorkflowSaveRequest> {
 
-  private static final Logger                                                            logger = LoggerFactory
+  private static final Logger logger = LoggerFactory
       .getLogger(TestThreeTaskWorkflowHandler.class);
 
   private final IWorkflowAccess<TestThreeTaskWorkflow, TestThreeTaskWorkflowSaveRequest> workflowAccess;
 
-  private final SessionUserInfo                                                          sessionUserInfo;
+  private final SessionUserInfo sessionUserInfo;
 
-  private final IUploadFileManager                                                       uploadFileManager;
+  private final IUploadFileManager uploadFileManager;
 
-  public TestThreeTaskWorkflowHandler(@Autowired final IWorkflowAccess<TestThreeTaskWorkflow, TestThreeTaskWorkflowSaveRequest> workflowAccess,
+  public TestThreeTaskWorkflowHandler(
+      @Autowired final IWorkflowAccess<TestThreeTaskWorkflow, TestThreeTaskWorkflowSaveRequest> workflowAccess,
       @Autowired final SessionUserInfo sessionUserInfo, @Autowired final IUploadFileManager uploadFileManager) {
+
     this.workflowAccess = workflowAccess;
     this.sessionUserInfo = sessionUserInfo;
     this.uploadFileManager = uploadFileManager;
@@ -55,8 +55,9 @@ public class TestThreeTaskWorkflowHandler extends WorkflowHandlerHelper<TestThre
   }
 
   @Override
-  public List<TestThreeTaskWorkflow> createWorkflow(final TestThreeTaskWorkflowSaveRequest createRequest, final HttpSession session)
+  public List<TestThreeTaskWorkflow> createWorkflow(final TestThreeTaskWorkflowSaveRequest createRequest)
       throws GuiCustomizedException, IOException, IFlowMessageConversionFailureException {
+
     logger.debug("Create workflow");
 
     createRequest.setCommand(EWorkflowProcessCommand.CREATE);
@@ -66,14 +67,18 @@ public class TestThreeTaskWorkflowHandler extends WorkflowHandlerHelper<TestThre
 
     this.workflowAccess.validateWorkflow(createRequest, this.sessionUserInfo.getToken());
 
+    this.prepareUploadedFiles(createRequest);
+
     final List<TestThreeTaskWorkflow> list = this.workflowAccess.createWorkflow(createRequest, this.sessionUserInfo.getToken());
-    return this.prepareUploadedFiles(createRequest, session, list);
+
+    return this.prepareWorkflowList(list);
 
   }
 
   @Override
-  public TestThreeTaskWorkflow saveWorkflow(final TestThreeTaskWorkflow workflow, final HttpSession session)
+  public TestThreeTaskWorkflow saveWorkflow(final TestThreeTaskWorkflow workflow)
       throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
+
     logger.debug("Save workflow");
 
     if (workflow.getHasActiveAction()) {
@@ -92,11 +97,12 @@ public class TestThreeTaskWorkflowHandler extends WorkflowHandlerHelper<TestThre
   @Override
   public TestThreeTaskWorkflow assignWorkflow(final String workflowIdentity)
       throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
+
     logger.debug("Assign workflow");
 
-    final TestThreeTaskWorkflow            workflow = this.readWorkflow(workflowIdentity);
+    final TestThreeTaskWorkflow workflow = this.readWorkflow(workflowIdentity);
 
-    final TestThreeTaskWorkflowSaveRequest request  = TestThreeTaskWorkflowSaveRequest.generateNewNoExpireDays(workflow);
+    final TestThreeTaskWorkflowSaveRequest request = TestThreeTaskWorkflowSaveRequest.generateNewNoExpireDays(workflow);
     request.setCommand(EWorkflowProcessCommand.ASSIGN);
     request.setAssignUser(this.sessionUserInfo.getUser().getIdentity());
 
@@ -108,8 +114,9 @@ public class TestThreeTaskWorkflowHandler extends WorkflowHandlerHelper<TestThre
   }
 
   @Override
-  public TestThreeTaskWorkflow doneWorkflow(final TestThreeTaskWorkflowSaveRequest saveRequest, final HttpSession session)
+  public TestThreeTaskWorkflow doneWorkflow(final TestThreeTaskWorkflowSaveRequest saveRequest)
       throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
+
     logger.debug("Make workflow done");
 
     saveRequest.setCommand(EWorkflowProcessCommand.DONE);
@@ -121,8 +128,9 @@ public class TestThreeTaskWorkflowHandler extends WorkflowHandlerHelper<TestThre
   }
 
   @Override
-  public TestThreeTaskWorkflow archiveWorkflow(final TestThreeTaskWorkflow workflow, final HttpSession session)
+  public TestThreeTaskWorkflow archiveWorkflow(final TestThreeTaskWorkflow workflow)
       throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
+
     logger.debug("Make workflow archive");
 
     final TestThreeTaskWorkflowSaveRequest request = TestThreeTaskWorkflowSaveRequest.generateNewNoExpireDays(workflow);
@@ -153,6 +161,7 @@ public class TestThreeTaskWorkflowHandler extends WorkflowHandlerHelper<TestThre
 
   @Override
   protected SessionUserInfo getSessionUserInfo() {
+
     return this.sessionUserInfo;
   }
 
@@ -163,9 +172,10 @@ public class TestThreeTaskWorkflowHandler extends WorkflowHandlerHelper<TestThre
   }
 
   @Override
-  protected TestThreeTaskWorkflow innerSaveWorkflow(final TestThreeTaskWorkflow workflow, final HttpSession session)
+  protected TestThreeTaskWorkflow innerSaveWorkflow(final TestThreeTaskWorkflow workflow)
       throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
-    return this.saveWorkflow(workflow, session);
+
+    return this.saveWorkflow(workflow);
   }
 
 }

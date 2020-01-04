@@ -30,13 +30,15 @@ public class CreateOfferlAssignWorkflowStrategy<W extends IWorkflow> extends Abs
       final IGuiCachDataDataService cachDataDataService, final IWorkflowDataService<W> workflowDataService,
       final IWorkflowPrepare<W> workflowPrepare)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
-    super(workflowCreateRequest, token, departmentDataService, workflowMessageDataService, cachDataDataService, workflowDataService,
+
+    super(workflowCreateRequest,token,departmentDataService,workflowMessageDataService,cachDataDataService,workflowDataService,
         workflowPrepare);
 
   }
 
   @Override
   public void setup() {
+
     steps.add(new ValidateWorkflowDetailStrategyStep<W>(this));
     steps.add(new ValidateAssignInSaveRequestStrategyStep<W>(this));
     steps.add(new InitializeWorkflowInitialActionStrategyStep<W>(this));
@@ -44,7 +46,7 @@ public class CreateOfferlAssignWorkflowStrategy<W extends IWorkflow> extends Abs
     steps.add(new ValidateWorkflowActiveActionStrategyStep<W>(this));
     steps.add(new ValidateWorkflowTypeStepStrategyStep<W>(this));
     steps.add(new ValidateCurrentStepExistsInWorkflowTypeStrategyStep<W>(this));
-    steps.add(new SaveWorkflowInCoreStep<W>(this));
+    steps.add(new SaveWorkflowInCoreStep<W>(this, true));
     steps.add(new CollectAssignedUserIdListStep<W>(this));
     steps.add(new SaveWorkflowOfferForAssignedUseresInCoreStep<W>(this));
     steps.add(new SendWorkflowOffersToProfileStep<W>(this));

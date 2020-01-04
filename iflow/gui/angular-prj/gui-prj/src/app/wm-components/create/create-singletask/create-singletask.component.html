@@ -43,22 +43,13 @@
 					<div class="clear"></div>
 				</div>
 				<div class="item-row">
-					<div class="item-label">{{ 'workflow-files' | translate }}</div>
-					<div class="item-content file-container">
-						<div *ngFor="let file of fileTitles; let fileIndex = index" class="file-row">
-							{{fileIndex + 1}}.
-							<input type="text" class="file-item file-title" placeholder="Datei Titel" [(ngModel)]="file.title"/>
-							<input type="file" class="file-item file-file" (change)="fileTitleProgress($event, file, fileIndex)"/>
-							<button class="file-action" (click)="removeFile(fileIndex)"><i class="material-icons">delete</i></button>
-							<div class="clear"></div>
-						</div>
-						<div style="margin-top: 20px;">
-							<button class="file-action" (click)="addFile()"><i class="material-icons">add</i></button>
-							<div class="clear"></div>
-						</div>
-						
+					<div class="item-label">{{ 'common.attachments' | translate }}</div>
+					<div class="item-content">
+						<app-wm-file-upload [ocrScanningEnabled]="false" [editService]="editService" [showHeaderTitle]="false" 
+						(onUploadedFilesChanged)="onUploadedFilesChanged($event)" [drawBorder]="true" > </app-wm-file-upload>
 					</div>
 					<div class="clear"></div>
+					
 				</div>
 				<div class="item-row">
 					
@@ -77,8 +68,10 @@
 
 			</div>
 		    
-			<app-select-user [users]="(generalDataObs | async)?.company.users" [departments]="(generalDataObs | async)?.company.departments" 
-				[showAssignModal]="showAssignModal" [selectAssign]="selectAssign" (onUsersSelected)="onUsersSelected($event)"></app-select-user>		    		 		
+		</div>
+
+		<app-select-user [users]="(generalDataObs | async)?.company.users" [departments]="(generalDataObs | async)?.company.departments" 
+			[showAssignModal]="showAssignModal" [selectAssign]="selectAssign" (onUsersSelected)="onUsersSelected($event)"></app-select-user>		    		 		
 
 		    		 		
-		</div>
+		

@@ -62,6 +62,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/file-preview/file-preview.component.html":
+/*!***********************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/components/file-preview/file-preview.component.html ***!
+  \***********************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("\t\t<div class=\"modal fade\" tabindex=\"-1\" role=\"dialog\" id=\"imagepreviewdialog\" [ngClass]=\"{'show' : showDialog}\">\n\t\t\t<div class=\"modal-dialog preview-details-dialog\" role=\"document\">\n\t\t\t\t<div class=\"modal-header\">\n\t\t\t \t\t<h5 class=\"modal-title\">{{ 'common.file-preview' | translate }}</h5>\n\t\t\t\t\t<button type=\"button\" class=\"close\" (click)=\"closeDialog()\" aria-label=\"Close\">\n\t\t\t\t\t\t<span aria-hidden=\"true\">&times;</span>\n\t\t\t\t\t</button>\n\t\t\t\t</div>\t\t\t\n\t\t\t\t<div class=\"modal-body\">\n\n\t\t\t\t\t<div class=\"scanned-result-container\">\n\t\t\t\t\t\n\t\t\t\t\t\t<div class=\"scanned-item-preview-container\" #scannedItemPreviewContainer>\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t<pdf-viewer *ngIf=\"fileIsPdf\" [src]=\"fileViewUrl\" [zoom]=\"pdfZoom\"  \n\t\t\t\t\t\t\t\t></pdf-viewer>\n\t\t\t\t\t\n\t\t\t\t\t\t\t<div *ngIf=\"fileIsImage\" class=\"scanned-item-preview-image\" [style.width.px]=\"previewWidth\"\n\t\t\t\t\t\t\t\t [style.backgroundImage]=\"imageFileViewUrl\" ></div>\n\t\t\t\t\t\t\t \n\t\t\t\t\t\t</div>  \n\t\t\t\t\t\n\t\t\t\t\t</div>  \n\n\t\t\t\t</div>\t\n\t\t\t\t<div class=\"modal-footer\">\n\t\t\t\t\t<button type=\"button\" class=\"btn btn-secondary\" (click)=\"closeDialog()\">{{ 'common.close' | translate }}</button>\n\t\t\t\t</div>\t\t\t\t\t\t\n\t\t\t</div>\n\t\t</div>\n\n");
+
+/***/ }),
+
 /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/loading-dialog/loading-dialog.component.html":
 /*!***************************************************************************************************************!*\
   !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/components/loading-dialog/loading-dialog.component.html ***!
@@ -85,6 +98,19 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ("\t\t    <div class=\"modal fade\" [ngClass]=\"{'show' : showAssignModal}\" tabindex=\"-1\" id=\"assignlistdialog\" role=\"dialog\" aria-labelledby=\"exampleModalCenterTitle\">\n\t\t\t\t<div class=\"modal-dialog modal-dialog-centered\" role=\"document\">\n\t\t\t\t    <div class=\"modal-content user-select-modal-content\" >\n\t\t\t\t      <div class=\"modal-header\">\n\t\t\t\t        <h5 class=\"modal-title dialog-title\" id=\"exampleModalLongTitle\">{{ 'workflow-select-assign' | translate }}</h5>\n\t\t\t\t        <button class=\"dialog-toolbar-button close\" (click)=\"hideAssignSelect()\">\n\t\t\t\t        \t<i class=\"material-icons\">close</i>\n\t\t\t\t        </button>\n\t\t\t\t      </div>\n\t\t\t\t      <div class=\"modal-body\">\n\t\t\t\t\t\t\t<ul class=\"nav nav-tabs\">\n\t\t\t\t\t\t\t  <li class=\"active\"><a data-toggle=\"tab\" class=\"nav-link active\" href=\"#tabusers\">{{ 'common.users' | translate }}</a></li>\n\t\t\t\t\t\t\t  <li><a data-toggle=\"tab\" class=\"nav-link\" href=\"#tabdepartments\">{{ 'common.departments' | translate }}</a></li>\n\t\t\t\t\t\t\t</ul>\n\t\t\t\t\t\t\t<div class=\"tab-content tab-body user-select-tab-content\">\n\t\t\t\t\t\t\t\t<div id=\"tabusers\" class=\"tab-pane fade in active show\">\n\t\t\t\t\t\t\t\t\t<ul class=\"list-item-container\">\n\t\t\t\t\t\t\t\t\t\t<li class=\"list-item\" *ngFor=\"let item of users;\">\n\t\t\t\t\t\t\t\t\t\t\t<input [attr.data-assigntitle]=\"item.fullName\" type=\"checkbox\" #inputEl class=\"assign-checkbox\" [checked]=\"isItemAssigned(item.identity, assignTypeUser)\" (change)=\"toggleAssign(item.identity, assignTypeUser, inputEl.checked)\"  value=\"{{item.identity}}\"/> \n\t\t\t\t\t\t\t\t\t\t\t<span class=\"user-select-item-label\">{{item.fullName}}</span>\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t\t</ul>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div id=\"tabdepartments\" class=\"tab-pane fade\">\n\t\t\t\t\t\t\t\t\t<ul class=\"list-item-container\">\n\t\t\t\t\t\t\t\t\t\t<li *ngFor=\"let dep of departments;\" class=\"list-item\">\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" [attr.data-assigntitle]=\"dep.title\" #inputEl class=\"assign-checkbox\" [checked]=\"isItemAssigned(dep.identity, assignTypeDepartment)\" (change)=\"toggleAssign(dep.identity, assignTypeDepartment, inputEl.checked)\" value=\"{{dep.identity}}\"/> \n\t\t\t\t\t\t\t\t\t\t\t<span class=\"user-select-item-label\">{{dep.title}}</span>\n\t\t\t\t\t\t\t\t\t\t\t<ul class=\"list-item-container\">\n\t\t\t\t\t\t\t\t\t\t\t\t<li *ngFor=\"let depgrp of dep.departmentGroups;\" class=\"list-item\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" class=\"assign-checkbox\" #inputEl [attr.data-assigntitle]=\"depgrp.title\" [checked]=\"isItemAssigned(depgrp.identity, assignTypeDepartmentGroup)\" (change)=\"toggleAssign(depgrp.identity, assignTypeDepartmentGroup, inputEl.checked)\" value=\"{{depgrp.identity}}\"/> \t \n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"user-select-item-label\">{{depgrp.title}}</span>\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t\t\t\t</ul>\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t\t</ul>\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t      \n\t\t    \t\t\t\t\n\t\t\t\t      </div>\n\t\t\t\t      <div class=\"modal-footer\">\n\t\t\t\t        <button type=\"button\" class=\"btn btn-secondary\" (click)=\"hideAssignSelect()\"><i class=\"material-icons\">close</i></button>\n\t\t\t\t        <button type=\"button\" class=\"btn btn-primary\" (click)=\"applyUserSelect();\"><i class=\"material-icons\">check</i></button>\n\t\t\t\t      </div>\n\t\t\t\t    </div>\n\t\t\t\t  </div>\t\t    \n\t\t    \t\n\t\t    </div>\n");
+
+/***/ }),
+
+/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/wm-file-upload/wm-file-upload.component.html":
+/*!***************************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/components/wm-file-upload/wm-file-upload.component.html ***!
+  \***************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("\n\t\t\t\t\t\t\t\t<div class=\"panel-heading\" [ngClass]=\"{'opacity0' : showHeaderTitle === false}\">{{ 'common.attachments' | translate }}</div>\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t<div><input type=\"file\" class=\"hide-file-input\" id=\"inlineuploadfile\" (change)=\"uploadFile($event)\" \n\t\t\t\t    \t\t\t\t\taccept=\".pdf,.jpg, .png, .tiff, .bmp\">\n\t\t\t\t    \t\t\t\t <label class=\"hide-file-label\" for=\"inlineuploadfile\"></label>\n\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t    \t\t\t</div>\n\t\t\t\t    \t\t\t<div class=\"uploaded-file-item-container\" [ngClass]=\"{'uploaded-file-item-container-border' : drawBorder}\">\n\t\t\t\t    \t\t\t\t<div *ngFor=\"let uploaded of uploadedFiles\" class=\"uploaded-file-item list-group-item\" >\n\t\t\t\t    \t\t\t\t\t<span class=\"filename\">{{uploaded.fileName}}</span>\n\t\t\t\t    \t\t\t\t\t\n\t\t\t\t    \t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t<button class=\"btn btn-light upload-button\" style=\"float: right;\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\n\t\t\t\t\t\t\t\t\t\t\t<i class=\"material-icons\">more_horiz</i>\n\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t\t<div class=\"dropdown-menu\" aria-labelledby=\"dropdownMenuButton\">\n\t\t\t\t\t    \t\t\t\t\t<a target=\"_blank\" class=\"btn btn-primary upload-button\" \n\t\t\t\t\t    \t\t\t\t\t\thref=\"/general/data/file/view/{{uploaded.scanedPdfPath}}\"><i class=\"material-icons\">cloud_download</i></a>\n\t\t\t\t\t    \t\t\t\t\t<button class=\"btn btn-primary upload-button\" \n\t\t\t\t\t    \t\t\t\t\t\t(click)=\"showFilePreview(uploaded);\"><i class=\"material-icons\">pageview</i></button>\n\t\t\t\t\t    \t\t\t\t\t<button *ngIf=\"canshowOcrUploadButton(uploaded) && ocrScanningEnabled\" class=\"btn btn-primary upload-button\" \n\t\t\t\t\t    \t\t\t\t\t\t(click)=\"ocrUploadedFile(uploaded);\"><i class=\"material-icons\">play_for_work</i></button>\n\t\t\t\t\t    \t\t\t\t\t<button *ngIf=\"canShowScanResultsButton(uploaded) && ocrScanningEnabled\" class=\"btn btn-success upload-button\" \n\t\t\t\t\t    \t\t\t\t\t\t(click)=\"showScanResults(uploaded);\"><i class=\"material-icons\">details</i></button>\n\t\t\t\t\t    \t\t\t\t\t<button class=\"btn btn-dark upload-button\" \n\t\t\t\t\t    \t\t\t\t\t\t(click)=\"removeUploadedFile(uploaded);\"><i class=\"material-icons\">delete</i></button>\n\t\t\t\t\t\t\t\t\t\t</div>\n  \t\t\t\t    \t\t\t\t\t\n\t\t\t\t    \t\t\t\t\t\n\t\t\t\t    \t\t\t\t</div>\n\t\t\t\t    \t\t\t</div>\n\n\t\t<app-file-preview [showDialog]=\"showFilePreviewDialog\" (dialogClosed)=\"onFilePreviewDialogClosed($event)\" [fileUrl]=\"previewFile.scanedPdfPath\" \n\t\t\t[fileIsPdf]=\"previewFile.fileIsPdf\" [fileIsImage]=\"previewFile.fileIsImage\" [imageSizeX]=\"previewFile.imageSizeX\" \n\t\t\t[imageSizeY]=\"previewFile.imageSizeY\"></app-file-preview>\n\t\t\t\t    \t\t\t");
 
 /***/ }),
 
@@ -175,7 +201,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("\n\t\t<div class=\"content-container\">\n\t\t\t<div class=\"page-toolbar\">\n\t\t\t\t<div class=\"page-title\">{{ pageTitle }}</div>\n\t\t\t\t<a class=\"toolbar-link\" [routerLink]=\"['/workflow/list']\"><i class=\"material-icons\">list</i></a>\n\t\t\t\t<button class=\"toolbar-button\" (click)=\"reload();\"><i class=\"material-icons\">refresh</i></button>\n\t\t\t</div>\n\t\t\t\n\t\t\t<div class=\"workflow-content-container\">\n\t\t\t\t<div class=\"workflow-content\">\n\t\t\t\t\t<form id=\"workflow-form\" name=\"workflowForm\" [formGroup]=\"invoiceEditForm\">\n\t\t\t\t\t\t<div class=\"panel panel-default\">\n\t\t\t\t\t\t\t<div class=\"panel-heading\">{{ 'invoice-invoice' | translate }}</div>\n\t\t\t\t\t\t\t<div class=\"panel-body\">\n\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'invoice-sender' | translate }}</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-content large-content\">\n\t\t\t\t\t\t\t\t\t\t<input type=\"text\" required name=\"sender\" formControlName=\"sender\" >\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-label small-label\">{{ 'invoice-trusted' | translate }}</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-content small-content\">\n\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\"  >\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'invoice-invoicenumber' | translate }}</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-content large-content\" >\n\t\t\t\t\t\t\t\t\t\t<input type=\"text\" required name=\"registerNumber\" formControlName=\"registerNumber\" >\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div  class=\"item-label label-required small-label\">{{ 'invoice-invoicedate' | translate }}</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-content small-content\">\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t<input required class=\"select-date\" (change)=\"invoiceDateChanges()\" (dateInput)=\"invoiceDateChanges()\" matInput [matDatepicker]=\"invocieDatepicker\" placeholder=\"{{ 'invoice-invoicedate-select' | translate }}\" formControlName=\"invocieDate\" >\n\t\t\t\t\t\t\t\t\t\t<mat-datepicker-toggle matSuffix [for]=\"invocieDatepicker\"></mat-datepicker-toggle>\n\t\t\t\t\t\t\t\t\t\t<mat-datepicker #invocieDatepicker startView=\"month\" [startAt]=\"invoiceEditForm.controls.invocieDate.value\"></mat-datepicker>\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ paymentamountTitle }}</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-content large-content\" >\n\t\t\t\t\t\t\t\t\t\t<input type=\"number\" required name=\"paymentAmount\" formControlName=\"paymentAmount\" >\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required small-label\">{{ 'invoice-invoicetype' | translate }}</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-content small-content\">\n\t\t\t\t\t\t\t\t\t\t<select required name=\"invoiceType\" formControlName=\"invoiceType\" [ngClass]=\"{'ng-invalid' : invoiceEditForm.controls.invoiceType.errors}\" >\n\t\t\t\t\t\t\t\t\t\t\t<option *ngFor=\"let invoiceType of invoiceTypes;\" value=\"{{invoiceType.value}}\">{{invoiceType.title}}</option>\n\t\t\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\n\t\t\t\t\t\t<div class=\"twopannel\">\n\t\t\t\t\t\t\t<div class=\"panel panel-default panel-vendor\">\n\t\t\t\t\t\t\t\t<div class=\"panel-heading\">{{ 'invoice-vendor' | translate }}</div>\n\t\t\t\t\t\t\t\t<div class=\"panel-body\">\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'invoice-vendornumber' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content fullrowfromlabel\">\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" required name=\"vendorNumber\" formControlName=\"vendorNumber\" >\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'invoice-partnercode' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content fullrowfromlabel\">\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" required name=\"partnerCode\" formControlName=\"partnerCode\" >\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'invoice-vendorname' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content fullrowfromlabel\">\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" required name=\"vendorName\" formControlName=\"vendorName\" >\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'invoice-isdirectdebitpermission' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content fullrowfromlabel\">\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" name=\"isDirectDebitPermission\" formControlName=\"isDirectDebitPermission\" [checked]=\"forms.isDirectDebitPermission.value\" >\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\n\t\t\n\t\t\t\t\t\t\t<div class=\"panel panel-default panel-discount\" *ngIf=\"isPaymentInvoiceType() === false\">\n\t\t\t\t\t\t\t\t<div class=\"panel-heading\">{{ 'invoice-discount' | translate }}</div>\n\t\t\t\t\t\t\t\t<div class=\"panel-body\">\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required small-label\">{{ 'invoice-discountenterdate-short' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t\t\t\t\t\t<input required class=\"select-date\" matInput (change)=\"calcDiscountDate()\" (dateInput)=\"calcDiscountDate()\" [matDatepicker]=\"discountEnterDatepicker\" placeholder=\"{{ 'invoice-discountenterdate' | translate }}\" formControlName=\"discountEnterDate\" >\n\t\t\t\t\t\t\t\t\t\t\t<mat-datepicker-toggle matSuffix [for]=\"discountEnterDatepicker\"></mat-datepicker-toggle>\n\t\t\t\t\t\t\t\t\t\t\t<mat-datepicker #discountEnterDatepicker startView=\"month\" [startAt]=\"invoiceEditForm.controls.discountEnterDate.value\"></mat-datepicker>\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required small-label\">{{ 'invoice-discountrate-short' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" required name=\"discountRate\" class=\"short-input\" formControlName=\"discountRate\" > %\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required small-label\">{{ 'invoice-discountdeadline-short' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" required name=\"discountDeadline\" (change)=\"calcDiscountDate()\" class=\"short-input\" formControlName=\"discountDeadline\" > <span>{{ 'common.days' | translate }}</span>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required small-label\">{{ 'invoice-discountdate' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t\t\t\t\t\t<input required class=\"select-date\" readonly placeholder=\"{{ 'invoice-discountdate' | translate }}\" formControlName=\"discountDate\" >\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t<div class=\"clear\"></div>\t\t\t\t\t\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\n\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'workflow-controller' | translate }}</div>\n\t\t\t\t\t\t\t<div class=\"item-content fullrowfromlabel\">\n\t\t\t\t\t\t\t\t<select type=\"text\" class=\"fullrow\" formControlName=\"controllerIdentity\">\n\t\t\t\t\t\t\t\t\t<option value=\"0\">{{ 'workflow-select-controller' | translate }}</option>\n\t\t\t\t\t\t\t\t\t<option *ngFor=\"let user of users;\" value=\"{{user.identity}}\">{{user.fullName}}</option>\n\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t</div>\n\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t<div class=\"item-label label-large\">{{ 'workflow-comments' | translate }}</div>\n\t\t\t\t\t\t\t<div class=\"item-content fullrowfromlabel\">\n\t\t\t\t\t\t\t\t<textarea class=\"comments-fullrow\" formControlName=\"comments\"></textarea>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t<div class=\"item-label label-large\">{{ 'workflow-assignto' | translate }}</div>\n\t\t\t\t\t\t\t<div class=\"item-content fullrowfromlabel\">\n\t\t\t\t\t\t\t\t<div class=\"assign-list\" >\n\t\t\t\t\t\t\t\t\t<button class=\"show-select-dialog\" (click)=\"showAssignSelect()\"><i class=\"material-icons\">playlist_add</i></button>\n\t\t\t\t\t\t\t\t\t<span *ngIf=\"hasNoAssigns\">{{ 'workflow-select-assign' | translate }}</span>\n\t\t\t\t\t\t\t\t\t<div class=\"user-item-box\" *ngFor=\"let item of assignedUsers\">\n\t\t\t\t\t\t\t\t\t\t<span>{{getAssignItemTitle(item)}} </span>\n\t\t\t\t\t\t\t\t\t\t<button (click)=\"removeAssign(item.itemIdentity, item.itemType)\"><i class=\"material-icons\">close</i></button>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t</div>\n\t\n\t\n\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t<div class=\"workflow-step-button-bar\">\n\t\t\t\t\t\t\t\t<button type=\"button\" (click)=\"save()\" [disabled]=\"invoiceEditForm.invalid\" class=\"button-bar-button step-button button-save\">\n\t\t\t\t\t\t\t\t\t<span>{{ 'common.create' | translate }}</span>\n\t\t\t\t\t\t\t\t\t<i class=\"material-icons\">save</i>\n\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</form>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\n\t\t\t</div>\n\t\t    \t\t \n\t\t\t<app-select-user [users]=\"(generalDataObs | async)?.company.users\" [departments]=\"(generalDataObs | async)?.company.departments\" \n\t\t\t\t[showAssignModal]=\"showAssignModal\" [selectAssign]=\"selectAssign\" (onUsersSelected)=\"onUsersSelected($event)\"></app-select-user>\t\t    \t\t \t\t\n\n\t\t\n\t\t</div>\n\n");
+/* harmony default export */ __webpack_exports__["default"] = ("\n\t\t<div class=\"content-container\">\n\t\t\t<div class=\"page-toolbar\">\n\t\t\t\t<div class=\"page-title\">{{ pageTitle }}</div>\n\t\t\t\t<a class=\"toolbar-link\" [routerLink]=\"['/workflow/list']\"><i class=\"material-icons\">list</i></a>\n\t\t\t\t<button class=\"toolbar-button\" (click)=\"reload();\"><i class=\"material-icons\">refresh</i></button>\n\t\t\t\t\n\t\t\t</div>\n\t\t\t\n\t\t\t<div class=\"workflow-content-container\">\n\t\t\t\t<div class=\"workflow-content\">\n\t\t\t\t\t<form id=\"workflow-form\" name=\"workflowForm\" [formGroup]=\"invoiceEditForm\">\n\t\t\t\t\t\t<div class=\"panel panel-default\">\n\t\t\t\t\t\t\t<div class=\"panel-heading\">{{ 'invoice-invoice' | translate }}</div>\n\t\t\t\t\t\t\t<div class=\"panel-body\">\n\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'invoice-sender' | translate }}</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-content large-content\">\n\t\t\t\t\t\t\t\t\t\t<input type=\"text\" required name=\"sender\" formControlName=\"sender\" >\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-label small-label\">{{ 'invoice-trusted' | translate }}</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-content small-content\">\n\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\"  >\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'invoice-invoicenumber' | translate }}</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-content large-content\" >\n\t\t\t\t\t\t\t\t\t\t<input type=\"text\" required name=\"registerNumber\" formControlName=\"registerNumber\" >\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div  class=\"item-label label-required small-label\">{{ 'invoice-invoicedate' | translate }}</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-content small-content\">\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t<input required class=\"select-date\" (change)=\"invoiceDateChanges()\" (dateInput)=\"invoiceDateChanges()\" matInput [matDatepicker]=\"invocieDatepicker\" placeholder=\"{{ 'invoice-invoicedate-select' | translate }}\" formControlName=\"invocieDate\" >\n\t\t\t\t\t\t\t\t\t\t<mat-datepicker-toggle matSuffix [for]=\"invocieDatepicker\"></mat-datepicker-toggle>\n\t\t\t\t\t\t\t\t\t\t<mat-datepicker #invocieDatepicker startView=\"month\" [startAt]=\"invoiceEditForm.controls.invocieDate.value\"></mat-datepicker>\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ paymentamountTitle }}</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-content large-content\" >\n\t\t\t\t\t\t\t\t\t\t<input type=\"number\" required name=\"paymentAmount\" formControlName=\"paymentAmount\" >\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required small-label\">{{ 'invoice-invoicetype' | translate }}</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-content small-content\">\n\t\t\t\t\t\t\t\t\t\t<select required name=\"invoiceType\" formControlName=\"invoiceType\" [ngClass]=\"{'ng-invalid' : invoiceEditForm.controls.invoiceType.errors}\" >\n\t\t\t\t\t\t\t\t\t\t\t<option *ngFor=\"let invoiceType of invoiceTypes;\" value=\"{{invoiceType.value}}\">{{invoiceType.title}}</option>\n\t\t\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\n\t\t\t\t\t\t<div class=\"twopannel\">\n\t\t\t\t\t\t\t<div class=\"panel panel-1 panel-default panel-twopannelleft\">\n\t\t\t\t\t\t\t\t<div class=\"panel-heading\">{{ 'invoice-vendor' | translate }}</div>\n\t\t\t\t\t\t\t\t<div class=\"panel-body\">\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'invoice-vendornumber' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content fullrowfromlabel\">\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" required name=\"vendorNumber\" formControlName=\"vendorNumber\" >\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'invoice-partnercode' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content fullrowfromlabel\">\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" required name=\"partnerCode\" formControlName=\"partnerCode\" >\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'invoice-vendorname' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content fullrowfromlabel\">\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" required name=\"vendorName\" formControlName=\"vendorName\" >\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'invoice-isdirectdebitpermission' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content fullrowfromlabel\">\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" name=\"isDirectDebitPermission\" formControlName=\"isDirectDebitPermission\" [checked]=\"forms.isDirectDebitPermission.value\" >\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\n\t\t\n\t\t\t\t\t\t\t<div class=\"panel panel-1 panel-default panel-twopannelright\" *ngIf=\"isPaymentInvoiceType() === false\">\n\t\t\t\t\t\t\t\t<div class=\"panel-heading\">{{ 'invoice-discount' | translate }}</div>\n\t\t\t\t\t\t\t\t<div class=\"panel-body\">\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required small-label\">{{ 'invoice-discountenterdate-short' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t\t\t\t\t\t<input required class=\"select-date\" matInput (change)=\"calcDiscountDate()\" (dateInput)=\"calcDiscountDate()\" [matDatepicker]=\"discountEnterDatepicker\" placeholder=\"{{ 'invoice-discountenterdate' | translate }}\" formControlName=\"discountEnterDate\" >\n\t\t\t\t\t\t\t\t\t\t\t<mat-datepicker-toggle matSuffix [for]=\"discountEnterDatepicker\"></mat-datepicker-toggle>\n\t\t\t\t\t\t\t\t\t\t\t<mat-datepicker #discountEnterDatepicker startView=\"month\" [startAt]=\"invoiceEditForm.controls.discountEnterDate.value\"></mat-datepicker>\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required small-label\">{{ 'invoice-discountrate-short' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" required name=\"discountRate\" class=\"short-input\" formControlName=\"discountRate\" > %\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required small-label\">{{ 'invoice-discountdeadline-short' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" required name=\"discountDeadline\" (change)=\"calcDiscountDate()\" class=\"short-input\" formControlName=\"discountDeadline\" > <span>{{ 'common.days' | translate }}</span>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required small-label\">{{ 'invoice-discountdate' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t\t\t\t\t\t<input required class=\"select-date\" readonly placeholder=\"{{ 'invoice-discountdate' | translate }}\" formControlName=\"discountDate\" >\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t<div class=\"clear\"></div>\t\t\t\t\t\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\n\t\t\t\t\t\t<div class=\"twopannel\">\n\t\t\t\t\t\t\t<div class=\"panel panel-2 panel-default panel-twopannelleft\">\n\t\t\t\t\t\t\t\t<div class=\"panel-body\">\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-required label-large\">{{ 'workflow-controller' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content fullrowfromlabel\">\n\t\t\t\t\t\t\t\t\t\t\t<select type=\"text\" class=\"fullrow\" formControlName=\"controllerIdentity\">\n\t\t\t\t\t\t\t\t\t\t\t\t<option value=\"0\">{{ 'workflow-select-controller' | translate }}</option>\n\t\t\t\t\t\t\t\t\t\t\t\t<option *ngFor=\"let user of users;\" value=\"{{user.identity}}\">{{user.fullName}}</option>\n\t\t\t\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-large\">{{ 'workflow-comments' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content fullrowfromlabel\">\n\t\t\t\t\t\t\t\t\t\t\t<textarea class=\"comments-fullrow\" formControlName=\"comments\"></textarea>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-label label-large\">{{ 'workflow-assignto' | translate }}</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"item-content fullrowfromlabel\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"assign-list\" >\n\t\t\t\t\t\t\t\t\t\t\t\t<button class=\"show-select-dialog\" (click)=\"showAssignSelect()\"><i class=\"material-icons\">playlist_add</i></button>\n\t\t\t\t\t\t\t\t\t\t\t\t<span *ngIf=\"hasNoAssigns\">{{ 'workflow-select-assign' | translate }}</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"user-item-box\" *ngFor=\"let item of assignedUsers\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span>{{getAssignItemTitle(item)}} </span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<button (click)=\"removeAssign(item.itemIdentity, item.itemType)\"><i class=\"material-icons\">close</i></button>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t<div class=\"panel panel-2 panel-default panel-twopannelright\">\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t<app-wm-file-upload [ocrScanningEnabled]=\"true\" [editService]=\"editService\" \n\t\t\t\t\t\t\t\t\t(onOcrUploadedFile)=\"onOcrUploadedFile($event)\" (onUploadedFilesChanged)=\"onUploadedFilesChanged($event)\" \n\t\t\t\t\t\t\t\t\t(onShowUploadedFileScannDetail)=\"onShowUploadedFileScannDetail($event)\" ></app-wm-file-upload>\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t<div class=\"clear\"></div>\t\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\n\t\t\t\t\t\n\t\n\t\n\t\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t<div class=\"workflow-step-button-bar\">\n\t\t\t\t\t\t\t\t<button type=\"button\" (click)=\"save()\" [disabled]=\"invoiceEditForm.invalid\" class=\"button-bar-button step-button button-save\">\n\t\t\t\t\t\t\t\t\t<span>{{ 'common.create' | translate }}</span>\n\t\t\t\t\t\t\t\t\t<i class=\"material-icons\">save</i>\n\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</form>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\n\t\t\t</div>\n\t\t    \t\t \n\t\t\t<app-select-user [users]=\"(generalDataObs | async)?.company.users\" [departments]=\"(generalDataObs | async)?.company.departments\" \n\t\t\t\t[showAssignModal]=\"showAssignModal\" [selectAssign]=\"selectAssign\" (onUsersSelected)=\"onUsersSelected($event)\"></app-select-user>\t\t    \t\t \t\t\n\n\t\t\n\t\t</div>\n\n\t\t<div class=\"modal fade show\" tabindex=\"-1\" *ngIf=\"showOcrDetailsDialog\" role=\"dialog\" id=\"scanneddetailsdialog\">\n\t\t\t<div class=\"modal-dialog scanned-details-dialog\" role=\"document\">\n\t\t\t\t<div class=\"modal-header\">\n\t\t\t \t\t<h5 class=\"modal-title\">{{ 'common.scann-document-result' | translate }}</h5>\n\t\t\t\t\t<button type=\"button\" class=\"close\" (click)=\"hideOcrDetails()\" aria-label=\"Close\">\n\t\t\t\t\t\t<span aria-hidden=\"true\">&times;</span>\n\t\t\t\t\t</button>\n\t\t\t\t</div>\t\t\t\n\t\t\t\t<div class=\"modal-body\">\n\t\t\t\t\t<app-invoice-ocr-detail [foundWords]=\"scanningFile.foundWords\" [scanedPdfPath]=\"scanningFile.scanedPdfPath\" \n\t\t\t\t\t\t[scanedHocrPath]=\"scanningFile.scanedHocrPath\" [fileIsPdf]=\"scanningFile.fileIsPdf\" \n\t\t\t\t\t\t[fileIsImage]=\"scanningFile.fileIsImage\" [imageSizeX]=\"scanningFile.imageSizeX\" [imageSizeY]=\"scanningFile.imageSizeY\" \n\t\t\t\t\t\t[(editedValues)]=\"scannedSelectedValues\" >\n\t\t\t\t\t</app-invoice-ocr-detail>\n\t\t\t\t</div>\t\n\t\t\t\t<div class=\"modal-footer\">\n\t\t\t\t\t<button type=\"button\" class=\"btn btn-primary\" (click)=\"onApplyScannedValues()\">{{ 'common.apply' | translate }}</button>\n\t\t\t\t\t<button type=\"button\" class=\"btn btn-secondary\" (click)=\"hideOcrDetails()\">{{ 'common.close' | translate }}</button>\n\t\t\t\t</div>\t\t\t\t\t\t\n\t\t\t</div>\n\t\t</div>\n\n\t\t\n");
 
 /***/ }),
 
@@ -188,7 +214,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("\t\t<div class=\"content-container\">\n\t\t\t<div class=\"page-toolbar\">\n\t\t\t\t<div class=\"page-title\">{{ 'menu-workflow-create' | translate }}</div>\n\t\t\t\t<a class=\"toolbar-link\" [routerLink]=\"['/workflow/list']\"><i class=\"material-icons\">list</i></a>\n\t\t\t</div>\n\t\t\n\t\t\t<div class=\"workflow-content\">\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'common.expiredays' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content\"><input type=\"number\" max=\"999\" min=\"1\" maxlength=\"3\" [(ngModel)]=\"expireDays\" /></div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'workflow-controller' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t<select [(ngModel)]=\"controllerIdentity\">\n\t\t\t\t\t\t\t<option value=\"0\">{{ 'workflow-select-controller' | translate }}</option>\n\t\t\t\t\t\t\t<option *ngFor=\"let user of users;\" value=\"{{user.identity}}\">{{user.fullName}}</option>\n\t\t\t\t\t\t</select>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'workflow-assignto' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t<div class=\"assign-list\" >\n\t\t\t\t\t\t\t<button class=\"show-select-dialog\" (click)=\"showAssignSelect()\"><i class=\"material-icons\">playlist_add</i></button>\n\t\t\t\t\t\t\t<span *ngIf=\"hasNoAssigns\">{{ 'workflow-select-assign' | translate }}</span>\n\t\t\t\t\t\t\t<div class=\"user-item-box\" *ngFor=\"let item of assignedUsers\">\n\t\t\t\t\t\t\t\t<span>{{getAssignItemTitle(item)}} </span>\n\t\t\t\t\t\t\t\t<button (click)=\"removeAssign(item.itemIdentity, item.itemType)\"><i class=\"material-icons\">close</i></button>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'workflow-comments' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t<textarea [(ngModel)]=\"comments\"></textarea>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'workflow-files' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content file-container\">\n\t\t\t\t\t\t<div *ngFor=\"let file of fileTitles; let fileIndex = index\" class=\"file-row\">\n\t\t\t\t\t\t\t{{fileIndex + 1}}.\n\t\t\t\t\t\t\t<input type=\"text\" class=\"file-item file-title\" placeholder=\"Datei Titel\" [(ngModel)]=\"file.title\"/>\n\t\t\t\t\t\t\t<input type=\"file\" class=\"file-item file-file\" (change)=\"fileTitleProgress($event, file, fileIndex)\"/>\n\t\t\t\t\t\t\t<button class=\"file-action\" (click)=\"removeFile(fileIndex)\"><i class=\"material-icons\">delete</i></button>\n\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div style=\"margin-top: 20px;\">\n\t\t\t\t\t\t\t<button class=\"file-action\" (click)=\"addFile()\"><i class=\"material-icons\">add</i></button>\n\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\n\t\t\t\t\t<div class=\"item-content workflow-step-button-bar\">\n\t\t\t\t\t\t<button (click)=\"save()\" class=\"button-bar-button step-button button-save\">\n\t\t\t\t\t\t\t<span>{{ 'common.save' | translate }}</span>\n\t\t\t\t\t\t\t<i class=\"material-icons\">save</i>\n\t\t\t\t\t\t</button>\n\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t</div>\n\t\t\t\t\t\n\t\t\t\t</div>\n\t\t\t\t        \t\t\t\t\n\t\t\t\t<div class=\"item-row\" [innerHTML]=\"debugData\">\n\t\t\t\t</div>\n\n\t\t\t</div>\n\t\t    \n\t\t\t<app-select-user [users]=\"(generalDataObs | async)?.company.users\" [departments]=\"(generalDataObs | async)?.company.departments\" \n\t\t\t\t[showAssignModal]=\"showAssignModal\" [selectAssign]=\"selectAssign\" (onUsersSelected)=\"onUsersSelected($event)\"></app-select-user>\t\t    \t\t \t\t\n\n\t\t    \t\t \t\t\n\t\t</div>");
+/* harmony default export */ __webpack_exports__["default"] = ("\t\t<div class=\"content-container\">\n\t\t\t<div class=\"page-toolbar\">\n\t\t\t\t<div class=\"page-title\">{{ 'menu-workflow-create' | translate }}</div>\n\t\t\t\t<a class=\"toolbar-link\" [routerLink]=\"['/workflow/list']\"><i class=\"material-icons\">list</i></a>\n\t\t\t</div>\n\t\t\n\t\t\t<div class=\"workflow-content\">\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'common.expiredays' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content\"><input type=\"number\" max=\"999\" min=\"1\" maxlength=\"3\" [(ngModel)]=\"expireDays\" /></div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'workflow-controller' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t<select [(ngModel)]=\"controllerIdentity\">\n\t\t\t\t\t\t\t<option value=\"0\">{{ 'workflow-select-controller' | translate }}</option>\n\t\t\t\t\t\t\t<option *ngFor=\"let user of users;\" value=\"{{user.identity}}\">{{user.fullName}}</option>\n\t\t\t\t\t\t</select>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'workflow-assignto' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t<div class=\"assign-list\" >\n\t\t\t\t\t\t\t<button class=\"show-select-dialog\" (click)=\"showAssignSelect()\"><i class=\"material-icons\">playlist_add</i></button>\n\t\t\t\t\t\t\t<span *ngIf=\"hasNoAssigns\">{{ 'workflow-select-assign' | translate }}</span>\n\t\t\t\t\t\t\t<div class=\"user-item-box\" *ngFor=\"let item of assignedUsers\">\n\t\t\t\t\t\t\t\t<span>{{getAssignItemTitle(item)}} </span>\n\t\t\t\t\t\t\t\t<button (click)=\"removeAssign(item.itemIdentity, item.itemType)\"><i class=\"material-icons\">close</i></button>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'workflow-comments' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t<textarea [(ngModel)]=\"comments\"></textarea>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'common.attachments' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t<app-wm-file-upload [ocrScanningEnabled]=\"false\" [editService]=\"editService\" [showHeaderTitle]=\"false\" \n\t\t\t\t\t\t(onUploadedFilesChanged)=\"onUploadedFilesChanged($event)\" [drawBorder]=\"true\" > </app-wm-file-upload>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\n\t\t\t\t\t<div class=\"item-content workflow-step-button-bar\">\n\t\t\t\t\t\t<button (click)=\"save()\" class=\"button-bar-button step-button button-save\">\n\t\t\t\t\t\t\t<span>{{ 'common.save' | translate }}</span>\n\t\t\t\t\t\t\t<i class=\"material-icons\">save</i>\n\t\t\t\t\t\t</button>\n\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t</div>\n\t\t\t\t\t\n\t\t\t\t</div>\n\t\t\t\t        \t\t\t\t\n\t\t\t\t<div class=\"item-row\" [innerHTML]=\"debugData\">\n\t\t\t\t</div>\n\n\t\t\t</div>\n\t\t    \n\t\t</div>\n\n\t\t<app-select-user [users]=\"(generalDataObs | async)?.company.users\" [departments]=\"(generalDataObs | async)?.company.departments\" \n\t\t\t[showAssignModal]=\"showAssignModal\" [selectAssign]=\"selectAssign\" (onUsersSelected)=\"onUsersSelected($event)\"></app-select-user>\t\t    \t\t \t\t\n\n\t\t    \t\t \t\t\n\t\t");
 
 /***/ }),
 
@@ -201,7 +227,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("\t\t<div class=\"content-container\">\n\t\t\t<div class=\"page-toolbar\">\n\t\t\t\t<div class=\"page-title\">{{ 'menu-workflow-create' | translate }}</div>\n\t\t\t\t<a class=\"toolbar-link\" [routerLink]=\"['/workflow/list']\"><i class=\"material-icons\">list</i></a>\n\t\t\t</div>\n\t\t\n\t\t\t<div class=\"workflow-content\">\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'common.expiredays' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content\"><input type=\"number\" max=\"999\" min=\"1\" maxlength=\"3\" [(ngModel)]=\"expireDays\" /></div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'workflow-controller' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t<select type=\"text\" [(ngModel)]=\"controllerIdentity\">\n\t\t\t\t\t\t\t<option value=\"0\">{{ 'workflow-select-controller' | translate }}</option>\n\t\t\t\t\t\t\t<option *ngFor=\"let user of (generalDataObs | async)?.company.users;\" value=\"{{user.identity}}\">{{user.fullName}}</option>\n\t\t\t\t\t\t</select>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'workflow-assignto' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t<div class=\"assign-list\" >\n\t\t\t\t\t\t\t<button class=\"show-select-dialog\" (click)=\"showAssignSelect()\"><i class=\"material-icons\">playlist_add</i></button>\n\t\t\t\t\t\t\t<span *ngIf=\"hasNoAssigns\">{{ 'workflow-select-assign' | translate }}</span>\n\t\t\t\t\t\t\t<div class=\"user-item-box\" *ngFor=\"let item of assignedUsers\">\n\t\t\t\t\t\t\t\t<span>{{getAssignItemTitle(item)}} </span>\n\t\t\t\t\t\t\t\t<button (click)=\"removeAssign(item.itemIdentity, item.itemType)\"><i class=\"material-icons\">close</i></button>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'workflow-comments' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t<textarea [(ngModel)]=\"comments\"></textarea>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'workflow-files' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content file-container\">\n\t\t\t\t\t\t<div *ngFor=\"let file of fileTitles; let fileIndex = index\" class=\"file-row\">\n\t\t\t\t\t\t\t{{fileIndex + 1}}.\n\t\t\t\t\t\t\t<input type=\"text\" class=\"file-item file-title\" placeholder=\"Datei Titel\" [(ngModel)]=\"file.title\"/>\n\t\t\t\t\t\t\t<input type=\"file\" class=\"file-item file-file\" (change)=\"fileTitleProgress($event, file, fileIndex)\"/>\n\t\t\t\t\t\t\t<button class=\"file-action\" (click)=\"removeFile(fileIndex)\"><i class=\"material-icons\">delete</i></button>\n\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div style=\"margin-top: 20px;\">\n\t\t\t\t\t\t\t<button class=\"file-action\" (click)=\"addFile()\"><i class=\"material-icons\">add</i></button>\n\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\n\t\t\t\t\t<div class=\"item-content workflow-step-button-bar\">\n\t\t\t\t\t\t<button (click)=\"save()\" class=\"button-bar-button step-button button-save\">\n\t\t\t\t\t\t\t<span>{{ 'common.save' | translate }}</span>\n\t\t\t\t\t\t\t<i class=\"material-icons\">save</i>\n\t\t\t\t\t\t</button>\n\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t</div>\n\t\t\t\t\t\n\t\t\t\t</div>\n\t\t\t\t        \t\t\t\t\n\t\t\t\t<div class=\"item-row\" [innerHTML]=\"debugData\">\n\t\t\t\t</div>\n\n\t\t\t</div>\n\t\t    \n\t\t\t<app-select-user [users]=\"(generalDataObs | async)?.company.users\" [departments]=\"(generalDataObs | async)?.company.departments\" \n\t\t\t\t[showAssignModal]=\"showAssignModal\" [selectAssign]=\"selectAssign\" (onUsersSelected)=\"onUsersSelected($event)\"></app-select-user>\t\t    \t\t \t\t\n\t\t</div>");
+/* harmony default export */ __webpack_exports__["default"] = ("\t\t<div class=\"content-container\">\n\t\t\t<div class=\"page-toolbar\">\n\t\t\t\t<div class=\"page-title\">{{ 'menu-workflow-create' | translate }}</div>\n\t\t\t\t<a class=\"toolbar-link\" [routerLink]=\"['/workflow/list']\"><i class=\"material-icons\">list</i></a>\n\t\t\t</div>\n\t\t\n\t\t\t<div class=\"workflow-content\">\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'common.expiredays' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content\"><input type=\"number\" max=\"999\" min=\"1\" maxlength=\"3\" [(ngModel)]=\"expireDays\" /></div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'workflow-controller' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t<select type=\"text\" [(ngModel)]=\"controllerIdentity\">\n\t\t\t\t\t\t\t<option value=\"0\">{{ 'workflow-select-controller' | translate }}</option>\n\t\t\t\t\t\t\t<option *ngFor=\"let user of (generalDataObs | async)?.company.users;\" value=\"{{user.identity}}\">{{user.fullName}}</option>\n\t\t\t\t\t\t</select>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'workflow-assignto' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t<div class=\"assign-list\" >\n\t\t\t\t\t\t\t<button class=\"show-select-dialog\" (click)=\"showAssignSelect()\"><i class=\"material-icons\">playlist_add</i></button>\n\t\t\t\t\t\t\t<span *ngIf=\"hasNoAssigns\">{{ 'workflow-select-assign' | translate }}</span>\n\t\t\t\t\t\t\t<div class=\"user-item-box\" *ngFor=\"let item of assignedUsers\">\n\t\t\t\t\t\t\t\t<span>{{getAssignItemTitle(item)}} </span>\n\t\t\t\t\t\t\t\t<button (click)=\"removeAssign(item.itemIdentity, item.itemType)\"><i class=\"material-icons\">close</i></button>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'workflow-comments' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t<textarea [(ngModel)]=\"comments\"></textarea>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t<div class=\"item-label\">{{ 'common.attachments' | translate }}</div>\n\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t<app-wm-file-upload [ocrScanningEnabled]=\"false\" [editService]=\"editService\" [showHeaderTitle]=\"false\" \n\t\t\t\t\t\t(onUploadedFilesChanged)=\"onUploadedFilesChanged($event)\" [drawBorder]=\"true\" > </app-wm-file-upload>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\n\t\t\t\t\t<div class=\"item-content workflow-step-button-bar\">\n\t\t\t\t\t\t<button (click)=\"save()\" class=\"button-bar-button step-button button-save\">\n\t\t\t\t\t\t\t<span>{{ 'common.save' | translate }}</span>\n\t\t\t\t\t\t\t<i class=\"material-icons\">save</i>\n\t\t\t\t\t\t</button>\n\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t</div>\n\t\t\t\t\t\n\t\t\t\t</div>\n\t\t\t\t        \t\t\t\t\n\t\t\t\t<div class=\"item-row\" [innerHTML]=\"debugData\">\n\t\t\t\t</div>\n\n\t\t\t</div>\n\t\t    \n\t\t\t<app-select-user [users]=\"(generalDataObs | async)?.company.users\" [departments]=\"(generalDataObs | async)?.company.departments\" \n\t\t\t\t[showAssignModal]=\"showAssignModal\" [selectAssign]=\"selectAssign\" (onUsersSelected)=\"onUsersSelected($event)\"></app-select-user>\t\t    \t\t \t\t\n\t\t</div>");
 
 /***/ }),
 
@@ -254,6 +280,19 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ("\t\t<div class=\"content-container\">\n\t\t\t<div class=\"page-toolbar\">\n\t\t\t\t<div class=\"page-title\">{{ 'workflow-editing' | translate }}</div>\n\t\t\t\t<a class=\"toolbar-link\" [routerLink]=\"['/workflow/list']\"><i class=\"material-icons\">list</i></a>\n\t\t\t</div>\n\t\t\t\n\t\t\t<form id=\"workflow-form\" name=\"workflowForm\" [formGroup]=\"workflowEditForm\">\n\t\t\n\t\t\t\t<div class=\"workflow-content\">\n\t\t\t\t\t<div class=\"item-row\" *ngIf=\"canAssign\">\n\t\t\t\t\t\t<div class=\"item-label\">{{ 'workflow-assignto' | translate }}</div>\n\t\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t\t<div class=\"assign-list\" >\n\t\t\t\t\t\t\t\t<button class=\"show-select-dialog\" (click)=\"showAssignSelect()\"><i class=\"material-icons\">playlist_add</i></button>\n\t\t\t\t\t\t\t\t<span *ngIf=\"hasNoAssigns\">{{ 'workflow-select-assign' | translate }}</span>\n\t\t\t\t\t\t\t\t<div class=\"user-item-box\" *ngFor=\"let item of assignedUsers\">\n\t\t\t\t\t\t\t\t\t<span>{{getAssignItemTitle(item)}} </span>\n\t\t\t\t\t\t\t\t\t<button (click)=\"removeAssign(item.itemIdentity, item.itemType)\"><i class=\"material-icons\">close</i></button>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t<div class=\"item-label\">{{ 'workflow-comments' | translate }}</div>\n\t\t\t\t\t\t<div class=\"item-content\">\n\t\t\t\t\t\t\t<textarea formControlName=\"comments\"></textarea>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t<div class=\"item-label\">{{ 'workflow-files' | translate }}</div>\n\t\t\t\t\t\t<div class=\"item-content file-container\">\n\t\t\t\t\t\t\t<div *ngFor=\"let file of fileTitles; let fileIndex = index\" class=\"file-row\">\n\t\t\t\t\t\t\t\t{{fileIndex + 1}}.\n\t\t\t\t\t\t\t\t<input type=\"text\" class=\"file-item file-title\" placeholder=\"Datei Titel\" formControlName=\"file.title\"/>\n\t\t\t\t\t\t\t\t<input type=\"file\" class=\"file-item file-file\" (change)=\"fileTitleProgress($event, file, fileIndex)\"/>\n\t\t\t\t\t\t\t\t<button class=\"file-action\" (click)=\"removeFile(fileIndex)\"><i class=\"material-icons\">delete</i></button>\n\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div style=\"margin-top: 20px;\">\n\t\t\t\t\t\t\t\t<button class=\"file-action\" (click)=\"addFile()\"><i class=\"material-icons\">add</i></button>\n\t\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"item-row\">\n\t\t\t\t\t\t\n\t\t\t\t\t\t<div class=\"workflow-step-button-bar\">\n\t\t\t\t\t\t\t<button type=\"button\" (click)=\"save(false)\" *ngIf=\"canSave\" [disabled]=\"workflowEditForm.invalid\" class=\"button-bar-button step-button button-save\">\n\t\t\t\t\t\t\t\t<span>{{ 'common.save' | translate }}</span>\n\t\t\t\t\t\t\t\t<i class=\"material-icons\">save</i>\n\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t<button type=\"button\" (click)=\"save(true)\" *ngIf=\"canDone\" [disabled]=\"workflowEditForm.invalid\" class=\"button-bar-button step-button button-done\">\n\t\t\t\t\t\t\t\t<span>{{ 'common.savedone' | translate }}</span>\n\t\t\t\t\t\t\t\t<i class=\"material-icons\">save</i>\n\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t<button type=\"button\" (click)=\"archive()\" *ngIf=\"canArchive\" [disabled]=\"workflowEditForm.invalid\" class=\"button-bar-button step-button button-archive\">\n\t\t\t\t\t\t\t\t<span>{{ 'workflow-archive' | translate }}</span>\n\t\t\t\t\t\t\t\t<i class=\"material-icons\">save</i>\n\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t<span *ngIf=\"saveMessage !== ''\" class=\"alert alert-success button-bar-alert\">{{saveMessage}}</span>\n\t\t\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\n\t\t\t\t\t</div>\n\t\t\t\t\t        \t\t\t\t\n\t\t\t\t\t<div class=\"item-row\" [innerHTML]=\"debugData\"></div>\n\t\t\t\t</div>\n\t\t\t\t\n\t\t\t\t<div class=\"workflow-record\">\n\t\t\t\t\t\n\t\t\t\t\t<app-workflow-inlineview [workflow]=\"viewWorkflowModel\"></app-workflow-inlineview>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"clear\"></div>\n\t\t    </form>\n\t\t    \n\t\t    <app-select-user [users]=\"(generalDataObs | async)?.company.users\" [departments]=\"(generalDataObs | async)?.company.departments\" \n\t\t\t\t[showAssignModal]=\"showAssignModal\" [selectAssign]=\"selectAssign\" (onUsersSelected)=\"onUsersSelected($event)\"></app-select-user>\t\t    \t\t \t\t\n\n\t\t    \t\t \t\t\n\t\t</div>");
+
+/***/ }),
+
+/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/wm-components/invoice-ocr-detail/invoice-ocr-detail.component.html":
+/*!**************************************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/wm-components/invoice-ocr-detail/invoice-ocr-detail.component.html ***!
+  \**************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("\n<div class=\"row scanned-result-container\">\n\t<div class=\"scanned-item-list-container\">\n\t\t<div class=\"list-group\" id=\"list-tab\" role=\"tablist\">\n\t\t\t<div class=\"list-group-item disabled\">{{ 'invoice-scanned-properties' | translate }}</div>\n\t\t\t<div *ngFor=\"let key of keys;\" class=\"list-group-item list-group-item-action\" [ngClass]=\"{'active': selectedKey === key}\">\n\t\t\t\t<a class=\"scanned-item\" [ngClass]=\"{'active': selectedKey === key}\" (click)=\"selectDetailItem(key)\" >{{ propertyLabels[key] }}</a>\n\t\t\t\t<div class=\"item-value-container\" [ngClass]=\"{'active': selectedKey === key}\">\n\t\t\t\t\t<input type=\"text\" (blur)=\"isEditing[key] = false;\" (keyup.enter)=\"isEditing[key] = false;\" [(ngModel)]=\"editedValues[key]\" \n\t\t\t\t\t\tid=\"valueeditbox{{key}}\" autofocus [readonly]=\"isEditing[key] === false\" value=\"\" class=\"item-value \">\n\t\t\t\t\t<button class=\"inline-edit-button-edit\" *ngIf=\"isEditing[key] === false\" (click)=\"startEditKey(key)\">\n\t\t\t\t\t\t<i class=\"material-icons edit-value-icon\">edit</i>\n\t\t\t\t\t</button>\n\t\t\t\t\t<button class=\"inline-edit-button-apply\" *ngIf=\"isEditing[key] === true\" (click)=\"this.isEditing[key] = false;\">\n\t\t\t\t\t\t<i class=\"material-icons edit-value-icon\">done</i>\n\t\t\t\t\t</button>\n\t\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t</div>\n\t\t\t\t\n\t\t\t\t<div class=\"clear\"></div>\n\t\t\t</div>\n\t\t\t\n\t\t</div>\n  \t\t<div >{{debugData}}</div>\n\t</div>\n\t<div class=\"scanned-item-detail-container\">\n\t\t\n\t\t<div *ngFor=\"let wordKey of keys;\" class=\"tab-pane word-list-item fade\" [ngClass]=\"{'show': selectedKey === wordKey}\">\n\t\t\t\n\t\t\t<h3>{{ propertyLabels[wordKey] }}</h3>\n\t\t\t\n\t\t\t<div>\n\t\t\t\t<div *ngFor=\"let foundWord of foundWords[wordKey];\" class=\"list-group-item list-group-item-action scanned-item-detail-item\" \n\t\t\t\t\t[ngClass]=\"{'active': isWordSelected(foundWord)}\">\n\t\t\t\t\t<a class=\"scanned-item found-item\" (click)=\"selectFoundWord(foundWord)\" >{{ foundWord.text }} : {{ foundWord.value.text }}</a>\n\t\t\t\t\t<button class=\"inline-edit-button-use\" (click)=\"useFoundWord(foundWord)\">\n\t\t\t\t\t\t<i class=\"material-icons\">arrow_back_ios</i>\n\t\t\t\t\t</button>\n\t\t\t\t\t<div class=\"clear\"></div>\t\t\t\t\n\t\t\t\t</div>\n\t\t\t\t\n\t\t\t</div>\n\t\t\t\n\t\t</div>\n\t</div>  \n\t<div class=\"scanned-item-preview-container\" #scannedItemPreviewContainer>\n\t\t\n\t\t<pdf-viewer *ngIf=\"fileIsPdf\" [src]=\"fileViewUrl\" useBrowserLocale=\"true\" [zoom]=\"pdfZoom\" [show-all]=\"showAllPages\" \n\t\t\t[page]=\"pdfPageIndex\" height=\"99%\"></pdf-viewer>\n\n\t\t<div *ngIf=\"fileIsImage\" class=\"scanned-item-preview-image\" [style.width.px]=\"previewWidth\"\n\t\t\t [style.backgroundImage]=\"imageFileViewUrl\" ></div>\n\t\t \n\t\t<div class=\"selected-word-area\" *ngIf=\"showSelectedArea\" [style.width.px]=\"selectedAreaWidth\" [style.height.px]=\"selectedAreaHeight\" \n\t\t [style.left.px]=\"selectedAreaLeft\" [style.top.px]=\"selectedAreaTop\"></div> \n\t</div>  \n\n</div>  \n\n");
 
 /***/ }),
 
@@ -680,32 +719,36 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _stomp_ng2_stompjs__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @stomp/ng2-stompjs */ "./node_modules/@stomp/ng2-stompjs/fesm2015/stomp-ng2-stompjs.js");
 /* harmony import */ var sockjs_client__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! sockjs-client */ "./node_modules/sockjs-client/lib/entry.js");
 /* harmony import */ var sockjs_client__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(sockjs_client__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _material_module__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./material-module */ "./src/app/material-module.ts");
-/* harmony import */ var _helper__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./helper */ "./src/app/helper/index.ts");
-/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
-/* harmony import */ var _app_routing__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./app.routing */ "./src/app/app.routing.ts");
-/* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./services/global.service */ "./src/app/services/global.service.ts");
-/* harmony import */ var _services_authentication_service__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./services/authentication.service */ "./src/app/services/authentication.service.ts");
-/* harmony import */ var _services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./services/workflow/workflow-message.service */ "./src/app/services/workflow/workflow-message.service.ts");
-/* harmony import */ var _top_bar_top_bar_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./top-bar/top-bar.component */ "./src/app/top-bar/top-bar.component.ts");
-/* harmony import */ var _footer_footer_component__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./footer/footer.component */ "./src/app/footer/footer.component.ts");
-/* harmony import */ var _message_bar_message_bar_component__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./message-bar/message-bar.component */ "./src/app/message-bar/message-bar.component.ts");
-/* harmony import */ var _components_error_dialog_error_dialog_component__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./components/error-dialog/error-dialog.component */ "./src/app/components/error-dialog/error-dialog.component.ts");
-/* harmony import */ var _components_loading_dialog_loading_dialog_component__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./components/loading-dialog/loading-dialog.component */ "./src/app/components/loading-dialog/loading-dialog.component.ts");
-/* harmony import */ var _home__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./home */ "./src/app/home/index.ts");
-/* harmony import */ var _about__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./about */ "./src/app/about/index.ts");
-/* harmony import */ var _login__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./login */ "./src/app/login/index.ts");
-/* harmony import */ var _wm_components_workflow_list_workflow_list_component__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./wm-components/workflow-list/workflow-list.component */ "./src/app/wm-components/workflow-list/workflow-list.component.ts");
-/* harmony import */ var _wm_components_create_workflow_create_workflow_create_component__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./wm-components/create/workflow-create/workflow-create.component */ "./src/app/wm-components/create/workflow-create/workflow-create.component.ts");
-/* harmony import */ var _wm_components_create_create_singletask_create_singletask_component__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./wm-components/create/create-singletask/create-singletask.component */ "./src/app/wm-components/create/create-singletask/create-singletask.component.ts");
-/* harmony import */ var _wm_components_create_create_invoice_create_invoice_component__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./wm-components/create/create-invoice/create-invoice.component */ "./src/app/wm-components/create/create-invoice/create-invoice.component.ts");
-/* harmony import */ var _wm_components_create_create_testthreetask_create_testthreetask_component__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./wm-components/create/create-testthreetask/create-testthreetask.component */ "./src/app/wm-components/create/create-testthreetask/create-testthreetask.component.ts");
-/* harmony import */ var _wm_components_edit_edit_invoice_edit_invoice_component__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./wm-components/edit/edit-invoice/edit-invoice.component */ "./src/app/wm-components/edit/edit-invoice/edit-invoice.component.ts");
-/* harmony import */ var _wm_components_edit_edit_single_task_edit_single_task_component__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./wm-components/edit/edit-single-task/edit-single-task.component */ "./src/app/wm-components/edit/edit-single-task/edit-single-task.component.ts");
-/* harmony import */ var _wm_components_edit_edit_testthree_task_edit_testthree_task_component__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./wm-components/edit/edit-testthree-task/edit-testthree-task.component */ "./src/app/wm-components/edit/edit-testthree-task/edit-testthree-task.component.ts");
-/* harmony import */ var _wm_components_workflow_inlineview_workflow_inlineview_component__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./wm-components/workflow-inlineview/workflow-inlineview.component */ "./src/app/wm-components/workflow-inlineview/workflow-inlineview.component.ts");
-/* harmony import */ var _components_select_user_select_user_component__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./components/select-user/select-user.component */ "./src/app/components/select-user/select-user.component.ts");
-/* harmony import */ var _test_test_component__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ./test/test.component */ "./src/app/test/test.component.ts");
+/* harmony import */ var ng2_pdf_viewer__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ng2-pdf-viewer */ "./node_modules/ng2-pdf-viewer/fesm2015/ng2-pdf-viewer.js");
+/* harmony import */ var _material_module__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./material-module */ "./src/app/material-module.ts");
+/* harmony import */ var _helper__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./helper */ "./src/app/helper/index.ts");
+/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
+/* harmony import */ var _app_routing__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./app.routing */ "./src/app/app.routing.ts");
+/* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./services/global.service */ "./src/app/services/global.service.ts");
+/* harmony import */ var _services_authentication_service__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./services/authentication.service */ "./src/app/services/authentication.service.ts");
+/* harmony import */ var _services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./services/workflow/workflow-message.service */ "./src/app/services/workflow/workflow-message.service.ts");
+/* harmony import */ var _top_bar_top_bar_component__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./top-bar/top-bar.component */ "./src/app/top-bar/top-bar.component.ts");
+/* harmony import */ var _footer_footer_component__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./footer/footer.component */ "./src/app/footer/footer.component.ts");
+/* harmony import */ var _message_bar_message_bar_component__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./message-bar/message-bar.component */ "./src/app/message-bar/message-bar.component.ts");
+/* harmony import */ var _components_error_dialog_error_dialog_component__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./components/error-dialog/error-dialog.component */ "./src/app/components/error-dialog/error-dialog.component.ts");
+/* harmony import */ var _components_loading_dialog_loading_dialog_component__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./components/loading-dialog/loading-dialog.component */ "./src/app/components/loading-dialog/loading-dialog.component.ts");
+/* harmony import */ var _home__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./home */ "./src/app/home/index.ts");
+/* harmony import */ var _about__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./about */ "./src/app/about/index.ts");
+/* harmony import */ var _login__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./login */ "./src/app/login/index.ts");
+/* harmony import */ var _wm_components_workflow_list_workflow_list_component__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./wm-components/workflow-list/workflow-list.component */ "./src/app/wm-components/workflow-list/workflow-list.component.ts");
+/* harmony import */ var _wm_components_create_workflow_create_workflow_create_component__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./wm-components/create/workflow-create/workflow-create.component */ "./src/app/wm-components/create/workflow-create/workflow-create.component.ts");
+/* harmony import */ var _wm_components_create_create_singletask_create_singletask_component__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./wm-components/create/create-singletask/create-singletask.component */ "./src/app/wm-components/create/create-singletask/create-singletask.component.ts");
+/* harmony import */ var _wm_components_create_create_invoice_create_invoice_component__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./wm-components/create/create-invoice/create-invoice.component */ "./src/app/wm-components/create/create-invoice/create-invoice.component.ts");
+/* harmony import */ var _wm_components_create_create_testthreetask_create_testthreetask_component__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./wm-components/create/create-testthreetask/create-testthreetask.component */ "./src/app/wm-components/create/create-testthreetask/create-testthreetask.component.ts");
+/* harmony import */ var _wm_components_edit_edit_invoice_edit_invoice_component__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./wm-components/edit/edit-invoice/edit-invoice.component */ "./src/app/wm-components/edit/edit-invoice/edit-invoice.component.ts");
+/* harmony import */ var _wm_components_edit_edit_single_task_edit_single_task_component__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./wm-components/edit/edit-single-task/edit-single-task.component */ "./src/app/wm-components/edit/edit-single-task/edit-single-task.component.ts");
+/* harmony import */ var _wm_components_edit_edit_testthree_task_edit_testthree_task_component__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./wm-components/edit/edit-testthree-task/edit-testthree-task.component */ "./src/app/wm-components/edit/edit-testthree-task/edit-testthree-task.component.ts");
+/* harmony import */ var _wm_components_workflow_inlineview_workflow_inlineview_component__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./wm-components/workflow-inlineview/workflow-inlineview.component */ "./src/app/wm-components/workflow-inlineview/workflow-inlineview.component.ts");
+/* harmony import */ var _components_select_user_select_user_component__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ./components/select-user/select-user.component */ "./src/app/components/select-user/select-user.component.ts");
+/* harmony import */ var _test_test_component__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ./test/test.component */ "./src/app/test/test.component.ts");
+/* harmony import */ var _wm_components_invoice_ocr_detail_invoice_ocr_detail_component__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ./wm-components/invoice-ocr-detail/invoice-ocr-detail.component */ "./src/app/wm-components/invoice-ocr-detail/invoice-ocr-detail.component.ts");
+/* harmony import */ var _components_file_preview_file_preview_component__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ./components/file-preview/file-preview.component */ "./src/app/components/file-preview/file-preview.component.ts");
+/* harmony import */ var _components_wm_file_upload_wm_file_upload_component__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ./components/wm-file-upload/wm-file-upload.component */ "./src/app/components/wm-file-upload/wm-file-upload.component.ts");
 
 
 
@@ -716,6 +759,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+//import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 
 
 
@@ -771,13 +819,15 @@ AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
             _angular_platform_browser__WEBPACK_IMPORTED_MODULE_2__["BrowserModule"],
             _angular_forms__WEBPACK_IMPORTED_MODULE_3__["ReactiveFormsModule"],
             _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClientModule"],
-            _app_routing__WEBPACK_IMPORTED_MODULE_16__["appRoutingModule"],
+            _app_routing__WEBPACK_IMPORTED_MODULE_17__["appRoutingModule"],
             _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_5__["BrowserAnimationsModule"],
             angular_resizable_element__WEBPACK_IMPORTED_MODULE_8__["ResizableModule"],
             ng_angular8_datatable__WEBPACK_IMPORTED_MODULE_9__["DataTableModule"],
             _angular_material_core__WEBPACK_IMPORTED_MODULE_10__["MatNativeDateModule"],
-            _material_module__WEBPACK_IMPORTED_MODULE_13__["IFlowMaterialModules"],
+            _material_module__WEBPACK_IMPORTED_MODULE_14__["IFlowMaterialModules"],
             _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"],
+            //NgxExtendedPdfViewerModule,
+            ng2_pdf_viewer__WEBPACK_IMPORTED_MODULE_13__["PdfViewerModule"],
             _ngx_translate_core__WEBPACK_IMPORTED_MODULE_6__["TranslateModule"].forRoot({
                 loader: {
                     provide: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_6__["TranslateLoader"],
@@ -787,39 +837,42 @@ AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
             }),
         ],
         declarations: [
-            _app_component__WEBPACK_IMPORTED_MODULE_15__["AppComponent"],
-            _top_bar_top_bar_component__WEBPACK_IMPORTED_MODULE_20__["TopBarComponent"],
-            _footer_footer_component__WEBPACK_IMPORTED_MODULE_21__["FooterComponent"],
-            _message_bar_message_bar_component__WEBPACK_IMPORTED_MODULE_22__["MessageBarComponent"],
-            _components_error_dialog_error_dialog_component__WEBPACK_IMPORTED_MODULE_23__["ErrorDialogComponent"],
-            _components_loading_dialog_loading_dialog_component__WEBPACK_IMPORTED_MODULE_24__["LoadingDialogComponent"],
-            _home__WEBPACK_IMPORTED_MODULE_25__["HomeComponent"],
-            _about__WEBPACK_IMPORTED_MODULE_26__["AboutComponent"],
-            _login__WEBPACK_IMPORTED_MODULE_27__["LoginComponent"],
-            _wm_components_create_workflow_create_workflow_create_component__WEBPACK_IMPORTED_MODULE_29__["WorkflowCreateComponent"],
-            _wm_components_workflow_list_workflow_list_component__WEBPACK_IMPORTED_MODULE_28__["WorkflowListComponent"],
-            _wm_components_create_create_singletask_create_singletask_component__WEBPACK_IMPORTED_MODULE_30__["CreateSingletaskComponent"],
-            _wm_components_create_create_invoice_create_invoice_component__WEBPACK_IMPORTED_MODULE_31__["CreateInvoiceComponent"],
-            _wm_components_create_create_testthreetask_create_testthreetask_component__WEBPACK_IMPORTED_MODULE_32__["CreateTestthreetaskComponent"],
-            _wm_components_edit_edit_invoice_edit_invoice_component__WEBPACK_IMPORTED_MODULE_33__["EditInvoiceComponent"],
-            _wm_components_edit_edit_single_task_edit_single_task_component__WEBPACK_IMPORTED_MODULE_34__["EditSingleTaskComponent"],
-            _wm_components_edit_edit_testthree_task_edit_testthree_task_component__WEBPACK_IMPORTED_MODULE_35__["EditTestthreeTaskComponent"],
-            _wm_components_workflow_inlineview_workflow_inlineview_component__WEBPACK_IMPORTED_MODULE_36__["WorkflowInlineviewComponent"],
-            _components_select_user_select_user_component__WEBPACK_IMPORTED_MODULE_37__["SelectUserComponent"],
-            _test_test_component__WEBPACK_IMPORTED_MODULE_38__["TestComponent"],
+            _app_component__WEBPACK_IMPORTED_MODULE_16__["AppComponent"],
+            _top_bar_top_bar_component__WEBPACK_IMPORTED_MODULE_21__["TopBarComponent"],
+            _footer_footer_component__WEBPACK_IMPORTED_MODULE_22__["FooterComponent"],
+            _message_bar_message_bar_component__WEBPACK_IMPORTED_MODULE_23__["MessageBarComponent"],
+            _components_error_dialog_error_dialog_component__WEBPACK_IMPORTED_MODULE_24__["ErrorDialogComponent"],
+            _components_loading_dialog_loading_dialog_component__WEBPACK_IMPORTED_MODULE_25__["LoadingDialogComponent"],
+            _home__WEBPACK_IMPORTED_MODULE_26__["HomeComponent"],
+            _about__WEBPACK_IMPORTED_MODULE_27__["AboutComponent"],
+            _login__WEBPACK_IMPORTED_MODULE_28__["LoginComponent"],
+            _wm_components_create_workflow_create_workflow_create_component__WEBPACK_IMPORTED_MODULE_30__["WorkflowCreateComponent"],
+            _wm_components_workflow_list_workflow_list_component__WEBPACK_IMPORTED_MODULE_29__["WorkflowListComponent"],
+            _wm_components_create_create_singletask_create_singletask_component__WEBPACK_IMPORTED_MODULE_31__["CreateSingletaskComponent"],
+            _wm_components_create_create_invoice_create_invoice_component__WEBPACK_IMPORTED_MODULE_32__["CreateInvoiceComponent"],
+            _wm_components_create_create_testthreetask_create_testthreetask_component__WEBPACK_IMPORTED_MODULE_33__["CreateTestthreetaskComponent"],
+            _wm_components_edit_edit_invoice_edit_invoice_component__WEBPACK_IMPORTED_MODULE_34__["EditInvoiceComponent"],
+            _wm_components_edit_edit_single_task_edit_single_task_component__WEBPACK_IMPORTED_MODULE_35__["EditSingleTaskComponent"],
+            _wm_components_edit_edit_testthree_task_edit_testthree_task_component__WEBPACK_IMPORTED_MODULE_36__["EditTestthreeTaskComponent"],
+            _wm_components_workflow_inlineview_workflow_inlineview_component__WEBPACK_IMPORTED_MODULE_37__["WorkflowInlineviewComponent"],
+            _components_select_user_select_user_component__WEBPACK_IMPORTED_MODULE_38__["SelectUserComponent"],
+            _test_test_component__WEBPACK_IMPORTED_MODULE_39__["TestComponent"],
+            _wm_components_invoice_ocr_detail_invoice_ocr_detail_component__WEBPACK_IMPORTED_MODULE_40__["InvoiceOcrDetailComponent"],
+            _components_file_preview_file_preview_component__WEBPACK_IMPORTED_MODULE_41__["FilePreviewComponent"],
+            _components_wm_file_upload_wm_file_upload_component__WEBPACK_IMPORTED_MODULE_42__["WmFileUploadComponent"],
         ],
         providers: [
-            _services_global_service__WEBPACK_IMPORTED_MODULE_17__["GlobalService"],
-            _services_authentication_service__WEBPACK_IMPORTED_MODULE_18__["AuthenticationService"],
-            _services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_19__["WorkflowMessageService"],
-            _helper__WEBPACK_IMPORTED_MODULE_14__["fakeBackendProvider"],
+            _services_global_service__WEBPACK_IMPORTED_MODULE_18__["GlobalService"],
+            _services_authentication_service__WEBPACK_IMPORTED_MODULE_19__["AuthenticationService"],
+            _services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_20__["WorkflowMessageService"],
+            _helper__WEBPACK_IMPORTED_MODULE_15__["fakeBackendProvider"],
             _stomp_ng2_stompjs__WEBPACK_IMPORTED_MODULE_11__["StompService"],
             {
                 provide: _stomp_ng2_stompjs__WEBPACK_IMPORTED_MODULE_11__["StompConfig"],
                 useValue: stompConfig
             }
         ],
-        bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_15__["AppComponent"]]
+        bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_16__["AppComponent"]]
     })
 ], AppModule);
 
@@ -978,6 +1031,104 @@ ErrorDialogComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 
 /***/ }),
 
+/***/ "./src/app/components/file-preview/file-preview.component.css":
+/*!********************************************************************!*\
+  !*** ./src/app/components/file-preview/file-preview.component.css ***!
+  \********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("\r\n\r\n.preview-details-dialog{\r\n\twidth: 700px;\r\n    max-width: 90vw;\r\n    background-color: white;\r\n    pointer-events: all;\r\n}\r\n\r\n.scanned-result-container{\r\n\tbackground-color: white;\t\r\n\twidth: 100%;\r\n\tmargin: 0;\r\n\tdisplay: flex;\r\n}\r\n\r\n.scanned-item-preview-container {\r\n\tpadding: 10px;\r\n\tmargin: 5px auto;\r\n\tborder-radius: 5px;\r\n\theight: 80vh;\r\n\toverflow-x: hidden;\r\n\toverflow-y: auto;\r\n\tbackground-color: #e0e0e0;\r\n}\r\n\r\n.scanned-item-preview-image{\r\n\tbackground-color: white;\r\n\tbackground-image: none;\r\n\tbackground-position: 0 0;\r\n\tbackground-repeat: no-repeat;\r\n\tbackground-size: 100% 100%;\r\n\twidth: 100%;\r\n\theight: 100%;\r\n\t\r\n}\r\n\r\n\r\n\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29tcG9uZW50cy9maWxlLXByZXZpZXcvZmlsZS1wcmV2aWV3LmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFFQTtDQUNDLFlBQVk7SUFDVCxlQUFlO0lBQ2YsdUJBQXVCO0lBQ3ZCLG1CQUFtQjtBQUN2Qjs7QUFFQTtDQUNDLHVCQUF1QjtDQUN2QixXQUFXO0NBQ1gsU0FBUztDQUNULGFBQWE7QUFDZDs7QUFFQTtDQUNDLGFBQWE7Q0FDYixnQkFBZ0I7Q0FDaEIsa0JBQWtCO0NBQ2xCLFlBQVk7Q0FDWixrQkFBa0I7Q0FDbEIsZ0JBQWdCO0NBQ2hCLHlCQUF5QjtBQUMxQjs7QUFHQTtDQUNDLHVCQUF1QjtDQUN2QixzQkFBc0I7Q0FDdEIsd0JBQXdCO0NBQ3hCLDRCQUE0QjtDQUM1QiwwQkFBMEI7Q0FDMUIsV0FBVztDQUNYLFlBQVk7O0FBRWIiLCJmaWxlIjoic3JjL2FwcC9jb21wb25lbnRzL2ZpbGUtcHJldmlldy9maWxlLXByZXZpZXcuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIlxyXG5cclxuLnByZXZpZXctZGV0YWlscy1kaWFsb2d7XHJcblx0d2lkdGg6IDcwMHB4O1xyXG4gICAgbWF4LXdpZHRoOiA5MHZ3O1xyXG4gICAgYmFja2dyb3VuZC1jb2xvcjogd2hpdGU7XHJcbiAgICBwb2ludGVyLWV2ZW50czogYWxsO1xyXG59XHJcblxyXG4uc2Nhbm5lZC1yZXN1bHQtY29udGFpbmVye1xyXG5cdGJhY2tncm91bmQtY29sb3I6IHdoaXRlO1x0XHJcblx0d2lkdGg6IDEwMCU7XHJcblx0bWFyZ2luOiAwO1xyXG5cdGRpc3BsYXk6IGZsZXg7XHJcbn1cclxuXHJcbi5zY2FubmVkLWl0ZW0tcHJldmlldy1jb250YWluZXIge1xyXG5cdHBhZGRpbmc6IDEwcHg7XHJcblx0bWFyZ2luOiA1cHggYXV0bztcclxuXHRib3JkZXItcmFkaXVzOiA1cHg7XHJcblx0aGVpZ2h0OiA4MHZoO1xyXG5cdG92ZXJmbG93LXg6IGhpZGRlbjtcclxuXHRvdmVyZmxvdy15OiBhdXRvO1xyXG5cdGJhY2tncm91bmQtY29sb3I6ICNlMGUwZTA7XHJcbn1cclxuXHJcblxyXG4uc2Nhbm5lZC1pdGVtLXByZXZpZXctaW1hZ2V7XHJcblx0YmFja2dyb3VuZC1jb2xvcjogd2hpdGU7XHJcblx0YmFja2dyb3VuZC1pbWFnZTogbm9uZTtcclxuXHRiYWNrZ3JvdW5kLXBvc2l0aW9uOiAwIDA7XHJcblx0YmFja2dyb3VuZC1yZXBlYXQ6IG5vLXJlcGVhdDtcclxuXHRiYWNrZ3JvdW5kLXNpemU6IDEwMCUgMTAwJTtcclxuXHR3aWR0aDogMTAwJTtcclxuXHRoZWlnaHQ6IDEwMCU7XHJcblx0XHJcbn1cclxuXHJcblxyXG5cclxuIl19 */");
+
+/***/ }),
+
+/***/ "./src/app/components/file-preview/file-preview.component.ts":
+/*!*******************************************************************!*\
+  !*** ./src/app/components/file-preview/file-preview.component.ts ***!
+  \*******************************************************************/
+/*! exports provided: FilePreviewComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FilePreviewComponent", function() { return FilePreviewComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm2015/ngx-translate-core.js");
+
+
+
+let FilePreviewComponent = class FilePreviewComponent {
+    constructor(translate) {
+        this.translate = translate;
+        this.fileUrl = "";
+        this.imageSizeX = 300;
+        this.imageSizeY = 500;
+        this.fileIsPdf = true;
+        this.fileIsImage = false;
+        this.dialogClosed = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
+        this.showDialog = false;
+        this.previewWidth = 600;
+        this.previewHeight = 1100;
+        this.pdfZoom = 'page-fit';
+    }
+    closeDialog() {
+        this.showDialog = false;
+        this.dialogClosed.emit(false);
+    }
+    ngOnInit() {
+    }
+    ngAfterViewInit() {
+        var yScale = this.previewWidth / this.imageSizeX;
+        this.previewHeight = yScale * this.imageSizeY;
+    }
+    get imageFileViewUrl() {
+        return 'url(/general/data/file/view/' + this.fileUrl + ')';
+        //return 'url()';
+    }
+    get fileViewUrl() {
+        return '/general/data/file/view/' + this.fileUrl;
+        //return 'url()';
+    }
+};
+FilePreviewComponent.ctorParameters = () => [
+    { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_2__["TranslateService"] }
+];
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])('fileUrl')
+], FilePreviewComponent.prototype, "fileUrl", void 0);
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])('imageSizeX')
+], FilePreviewComponent.prototype, "imageSizeX", void 0);
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])('imageSizeY')
+], FilePreviewComponent.prototype, "imageSizeY", void 0);
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])('fileIsPdf')
+], FilePreviewComponent.prototype, "fileIsPdf", void 0);
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])('fileIsImage')
+], FilePreviewComponent.prototype, "fileIsImage", void 0);
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Output"])()
+], FilePreviewComponent.prototype, "dialogClosed", void 0);
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])('showDialog')
+], FilePreviewComponent.prototype, "showDialog", void 0);
+FilePreviewComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+        selector: 'app-file-preview',
+        template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./file-preview.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/file-preview/file-preview.component.html")).default,
+        styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./file-preview.component.css */ "./src/app/components/file-preview/file-preview.component.css")).default]
+    })
+], FilePreviewComponent);
+
+
+
+/***/ }),
+
 /***/ "./src/app/components/loading-dialog/loading-dialog.component.css":
 /*!************************************************************************!*\
   !*** ./src/app/components/loading-dialog/loading-dialog.component.css ***!
@@ -987,7 +1138,7 @@ ErrorDialogComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("\r\n\r\n.loading-container\r\n{\r\n  width: 100vw !important; \r\n  height: 100vh !important; \r\n  \r\n}\r\n\r\n.loading\r\n{\r\n  width: 100vw !important; \r\n  height: 100vh !important; \r\n  background-color: rgba(100, 100, 100, 0.3);\r\n  background-image: url(/assets/images/loading200.gif);\r\n  background-repeat: no-repeat;\r\n  background-position: center;\r\n}\r\n\r\n\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29tcG9uZW50cy9sb2FkaW5nLWRpYWxvZy9sb2FkaW5nLWRpYWxvZy5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBRUE7O0VBRUUsdUJBQXVCO0VBQ3ZCLHdCQUF3Qjs7QUFFMUI7O0FBRUE7O0VBRUUsdUJBQXVCO0VBQ3ZCLHdCQUF3QjtFQUN4QiwwQ0FBMEM7RUFDMUMsb0RBQW9EO0VBQ3BELDRCQUE0QjtFQUM1QiwyQkFBMkI7QUFDN0IiLCJmaWxlIjoic3JjL2FwcC9jb21wb25lbnRzL2xvYWRpbmctZGlhbG9nL2xvYWRpbmctZGlhbG9nLmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyJcclxuXHJcbi5sb2FkaW5nLWNvbnRhaW5lclxyXG57XHJcbiAgd2lkdGg6IDEwMHZ3ICFpbXBvcnRhbnQ7IFxyXG4gIGhlaWdodDogMTAwdmggIWltcG9ydGFudDsgXHJcbiAgXHJcbn1cclxuXHJcbi5sb2FkaW5nXHJcbntcclxuICB3aWR0aDogMTAwdncgIWltcG9ydGFudDsgXHJcbiAgaGVpZ2h0OiAxMDB2aCAhaW1wb3J0YW50OyBcclxuICBiYWNrZ3JvdW5kLWNvbG9yOiByZ2JhKDEwMCwgMTAwLCAxMDAsIDAuMyk7XHJcbiAgYmFja2dyb3VuZC1pbWFnZTogdXJsKC9hc3NldHMvaW1hZ2VzL2xvYWRpbmcyMDAuZ2lmKTtcclxuICBiYWNrZ3JvdW5kLXJlcGVhdDogbm8tcmVwZWF0O1xyXG4gIGJhY2tncm91bmQtcG9zaXRpb246IGNlbnRlcjtcclxufVxyXG5cclxuXHJcbiJdfQ== */");
+/* harmony default export */ __webpack_exports__["default"] = ("\r\n\r\n.loading-container\r\n{\r\n  width: 100vw !important; \r\n  height: 100vh !important; \r\n  \r\n}\r\n\r\n.loading\r\n{\r\n  width: 100vw !important; \r\n  height: 100vh !important; \r\n  background-color: rgba(100, 100, 100, 0.3);\r\n  background-image: url(/assets/images/loading200.gif);\r\n  background-repeat: no-repeat;\r\n  background-position: center;\r\n  background-size: 90px;\r\n}\r\n\r\n\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29tcG9uZW50cy9sb2FkaW5nLWRpYWxvZy9sb2FkaW5nLWRpYWxvZy5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBRUE7O0VBRUUsdUJBQXVCO0VBQ3ZCLHdCQUF3Qjs7QUFFMUI7O0FBRUE7O0VBRUUsdUJBQXVCO0VBQ3ZCLHdCQUF3QjtFQUN4QiwwQ0FBMEM7RUFDMUMsb0RBQW9EO0VBQ3BELDRCQUE0QjtFQUM1QiwyQkFBMkI7RUFDM0IscUJBQXFCO0FBQ3ZCIiwiZmlsZSI6InNyYy9hcHAvY29tcG9uZW50cy9sb2FkaW5nLWRpYWxvZy9sb2FkaW5nLWRpYWxvZy5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiXHJcblxyXG4ubG9hZGluZy1jb250YWluZXJcclxue1xyXG4gIHdpZHRoOiAxMDB2dyAhaW1wb3J0YW50OyBcclxuICBoZWlnaHQ6IDEwMHZoICFpbXBvcnRhbnQ7IFxyXG4gIFxyXG59XHJcblxyXG4ubG9hZGluZ1xyXG57XHJcbiAgd2lkdGg6IDEwMHZ3ICFpbXBvcnRhbnQ7IFxyXG4gIGhlaWdodDogMTAwdmggIWltcG9ydGFudDsgXHJcbiAgYmFja2dyb3VuZC1jb2xvcjogcmdiYSgxMDAsIDEwMCwgMTAwLCAwLjMpO1xyXG4gIGJhY2tncm91bmQtaW1hZ2U6IHVybCgvYXNzZXRzL2ltYWdlcy9sb2FkaW5nMjAwLmdpZik7XHJcbiAgYmFja2dyb3VuZC1yZXBlYXQ6IG5vLXJlcGVhdDtcclxuICBiYWNrZ3JvdW5kLXBvc2l0aW9uOiBjZW50ZXI7XHJcbiAgYmFja2dyb3VuZC1zaXplOiA5MHB4O1xyXG59XHJcblxyXG5cclxuIl19 */");
 
 /***/ }),
 
@@ -1129,6 +1280,193 @@ SelectUserComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./select-user.component.css */ "./src/app/components/select-user/select-user.component.css")).default]
     })
 ], SelectUserComponent);
+
+
+
+/***/ }),
+
+/***/ "./src/app/components/wm-file-upload/wm-file-upload.component.css":
+/*!************************************************************************!*\
+  !*** ./src/app/components/wm-file-upload/wm-file-upload.component.css ***!
+  \************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("\r\n.panel-heading{\r\n\tfont-weight: bold;\t\r\n}\r\n\r\n.uploaded-file-item-container{\r\n\theight: 220px;\r\n    overflow-y: auto;\r\n}\r\n\r\n.uploaded-file-item-container-border{\r\n\tborder: 1px solid gray;\r\n    padding: 4px;\r\n    border-radius: 5px;\r\n}\r\n\r\n.uploaded-file-item {\r\n\tpadding: 5px 4px 0 10px;\r\n\tmargin-bottom: 3px;\r\n}\r\n\r\n.uploaded-file-item:hover {\r\n\tbackground-color: #feffea;\r\n}\r\n\r\n.uploaded-file-item .filename {\r\n\twidth: calc(100% - 54px);\r\n    display: inline-block;\r\n    overflow: hidden;\r\n    overflow-y: hidden;\r\n    height: 30px;\r\n}\r\n\r\n.uploaded-file-item .upload-button{\r\n    padding: 0px 4px;\r\n    margin-left: 5px;\r\n}\r\n\r\n.uploaded-file-item .upload-button .material-icons{\r\n    font-size: 16px;\r\n}\r\n\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29tcG9uZW50cy93bS1maWxlLXVwbG9hZC93bS1maWxlLXVwbG9hZC5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7QUFDQTtDQUNDLGlCQUFpQjtBQUNsQjs7QUFFQTtDQUNDLGFBQWE7SUFDVixnQkFBZ0I7QUFDcEI7O0FBRUE7Q0FDQyxzQkFBc0I7SUFDbkIsWUFBWTtJQUNaLGtCQUFrQjtBQUN0Qjs7QUFFQTtDQUNDLHVCQUF1QjtDQUN2QixrQkFBa0I7QUFDbkI7O0FBRUE7Q0FDQyx5QkFBeUI7QUFDMUI7O0FBRUE7Q0FDQyx3QkFBd0I7SUFDckIscUJBQXFCO0lBQ3JCLGdCQUFnQjtJQUNoQixrQkFBa0I7SUFDbEIsWUFBWTtBQUNoQjs7QUFFQTtJQUNJLGdCQUFnQjtJQUNoQixnQkFBZ0I7QUFDcEI7O0FBRUE7SUFDSSxlQUFlO0FBQ25CIiwiZmlsZSI6InNyYy9hcHAvY29tcG9uZW50cy93bS1maWxlLXVwbG9hZC93bS1maWxlLXVwbG9hZC5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiXHJcbi5wYW5lbC1oZWFkaW5ne1xyXG5cdGZvbnQtd2VpZ2h0OiBib2xkO1x0XHJcbn1cclxuXHJcbi51cGxvYWRlZC1maWxlLWl0ZW0tY29udGFpbmVye1xyXG5cdGhlaWdodDogMjIwcHg7XHJcbiAgICBvdmVyZmxvdy15OiBhdXRvO1xyXG59XHJcblxyXG4udXBsb2FkZWQtZmlsZS1pdGVtLWNvbnRhaW5lci1ib3JkZXJ7XHJcblx0Ym9yZGVyOiAxcHggc29saWQgZ3JheTtcclxuICAgIHBhZGRpbmc6IDRweDtcclxuICAgIGJvcmRlci1yYWRpdXM6IDVweDtcclxufVxyXG5cclxuLnVwbG9hZGVkLWZpbGUtaXRlbSB7XHJcblx0cGFkZGluZzogNXB4IDRweCAwIDEwcHg7XHJcblx0bWFyZ2luLWJvdHRvbTogM3B4O1xyXG59XHJcblxyXG4udXBsb2FkZWQtZmlsZS1pdGVtOmhvdmVyIHtcclxuXHRiYWNrZ3JvdW5kLWNvbG9yOiAjZmVmZmVhO1xyXG59XHJcblxyXG4udXBsb2FkZWQtZmlsZS1pdGVtIC5maWxlbmFtZSB7XHJcblx0d2lkdGg6IGNhbGMoMTAwJSAtIDU0cHgpO1xyXG4gICAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xyXG4gICAgb3ZlcmZsb3c6IGhpZGRlbjtcclxuICAgIG92ZXJmbG93LXk6IGhpZGRlbjtcclxuICAgIGhlaWdodDogMzBweDtcclxufVxyXG5cclxuLnVwbG9hZGVkLWZpbGUtaXRlbSAudXBsb2FkLWJ1dHRvbntcclxuICAgIHBhZGRpbmc6IDBweCA0cHg7XHJcbiAgICBtYXJnaW4tbGVmdDogNXB4O1xyXG59XHJcblxyXG4udXBsb2FkZWQtZmlsZS1pdGVtIC51cGxvYWQtYnV0dG9uIC5tYXRlcmlhbC1pY29uc3tcclxuICAgIGZvbnQtc2l6ZTogMTZweDtcclxufVxyXG5cclxuIl19 */");
+
+/***/ }),
+
+/***/ "./src/app/components/wm-file-upload/wm-file-upload.component.ts":
+/*!***********************************************************************!*\
+  !*** ./src/app/components/wm-file-upload/wm-file-upload.component.ts ***!
+  \***********************************************************************/
+/*! exports provided: WmFileUploadComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WmFileUploadComponent", function() { return WmFileUploadComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm2015/ngx-translate-core.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _services_loading_service_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../services/loading-service.service */ "./src/app/services/loading-service.service.ts");
+/* harmony import */ var _services_error_service_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../services/error-service.service */ "./src/app/services/error-service.service.ts");
+/* harmony import */ var _ui_models__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../ui-models */ "./src/app/ui-models/index.ts");
+
+
+
+
+
+
+
+let WmFileUploadComponent = class WmFileUploadComponent {
+    constructor(translate, loadingService, errorService) {
+        this.translate = translate;
+        this.loadingService = loadingService;
+        this.errorService = errorService;
+        this.ocrScanningEnabled = false;
+        this.showHeaderTitle = true;
+        this.drawBorder = false;
+        this.editService = null;
+        this.onOcrUploadedFile = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
+        this.onShowUploadedFileScannDetail = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
+        this.onUploadedFilesChanged = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
+        this.uploadedFiles = [];
+        this.previewFile = new _ui_models__WEBPACK_IMPORTED_MODULE_6__["UploadedFile"];
+        this.showFilePreviewDialog = false;
+        this.fileExistsMessage = "common.file-exists";
+        translate.get('common.file-exists').subscribe((res) => {
+            this.fileExistsMessage = res;
+        });
+    }
+    ngOnInit() {
+    }
+    canShowScanResultsButton(uploaded) {
+        return uploaded.isScanned === true;
+    }
+    canshowOcrUploadButton(uploaded) {
+        return uploaded.isScanned === false;
+    }
+    uploadFile(fileInput) {
+        var file = fileInput.target.files[0];
+        console.log("file: ", file);
+        //alert(file.name);
+        if (this.existsUploadedByFileName(file.name)) {
+            jquery__WEBPACK_IMPORTED_MODULE_3___default()("#inlineuploadfile")[0].type = "text";
+            jquery__WEBPACK_IMPORTED_MODULE_3___default()("#inlineuploadfile")[0].type = "file";
+            this.errorService.showError(this.fileExistsMessage, "");
+            return;
+        }
+        jquery__WEBPACK_IMPORTED_MODULE_3___default()("#inlineuploadfile")[0].type = "text";
+        jquery__WEBPACK_IMPORTED_MODULE_3___default()("#inlineuploadfile")[0].type = "file";
+        this.loadingService.showLoading();
+        this.editService.uploadTempFiles(file).subscribe((result) => {
+            console.log("upload invoice file result", result);
+            this.loadingService.hideLoading();
+            if (result.status) {
+                if (result.status === "done") {
+                    var uploaded = new _ui_models__WEBPACK_IMPORTED_MODULE_6__["UploadedFile"];
+                    uploaded.fileName = result.fileName;
+                    uploaded.scanedPdfPath = result.fileHash;
+                    uploaded.scanedHocrPath = result.hocrFileHash;
+                    uploaded.fileIsPdf = result.isFilePdf;
+                    uploaded.fileIsImage = result.isFileImage;
+                    //uploaded.imageSizeX = result.imageWidth;
+                    //uploaded.imageSizeY = result.imageHeight;
+                    uploaded.uploadResult = result;
+                    this.uploadedFiles.push(uploaded);
+                    this.onUploadedFilesChanged.emit(this.uploadedFiles);
+                }
+                if (result.status === "error" && result.errorMessage) {
+                    this.errorService.showError(result.errorMessage, result.errorDetail);
+                }
+            }
+        }, response => {
+            console.log("Error in upload invoice file", response);
+            this.loadingService.hideLoading();
+        }, () => {
+        });
+    }
+    removeUploadedFile(uploaded) {
+        var index = this.uploadedFiles.indexOf(uploaded);
+        if (index > -1) {
+            this.uploadedFiles.splice(index, 1);
+            this.onUploadedFilesChanged.emit(this.uploadedFiles);
+        }
+    }
+    ocrUploadedFile(uploaded) {
+        var index = this.uploadedFiles.indexOf(uploaded);
+        if (index > -1) {
+            this.onOcrUploadedFile.emit(this.uploadedFiles[index]);
+        }
+    }
+    showScanResults(uploaded) {
+        var index = this.uploadedFiles.indexOf(uploaded);
+        if (index > -1) {
+            this.onShowUploadedFileScannDetail.emit(this.uploadedFiles[index]);
+        }
+    }
+    showFilePreview(uploaded) {
+        this.showFilePreviewDialog = false;
+        var index = this.uploadedFiles.indexOf(uploaded);
+        if (index > -1) {
+            this.previewFile = this.uploadedFiles[index];
+            this.showFilePreviewDialog = true;
+            console.log("preview file : ", this.previewFile);
+        }
+    }
+    onFilePreviewDialogClosed(closed) {
+        this.showFilePreviewDialog = false;
+    }
+    findUploadedByFileName(fileName) {
+        for (var index in this.uploadedFiles) {
+            if (this.uploadedFiles[index].fileName === fileName) {
+                return this.uploadedFiles[index];
+            }
+        }
+        return null;
+    }
+    existsUploadedByFileName(fileName) {
+        return this.findUploadedByFileName(fileName) !== null;
+    }
+};
+WmFileUploadComponent.ctorParameters = () => [
+    { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_2__["TranslateService"] },
+    { type: _services_loading_service_service__WEBPACK_IMPORTED_MODULE_4__["LoadingServiceService"] },
+    { type: _services_error_service_service__WEBPACK_IMPORTED_MODULE_5__["ErrorServiceService"] }
+];
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])('ocrScanningEnabled')
+], WmFileUploadComponent.prototype, "ocrScanningEnabled", void 0);
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])('showHeaderTitle')
+], WmFileUploadComponent.prototype, "showHeaderTitle", void 0);
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])('drawBorder')
+], WmFileUploadComponent.prototype, "drawBorder", void 0);
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])('editService')
+], WmFileUploadComponent.prototype, "editService", void 0);
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Output"])()
+], WmFileUploadComponent.prototype, "onOcrUploadedFile", void 0);
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Output"])()
+], WmFileUploadComponent.prototype, "onShowUploadedFileScannDetail", void 0);
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Output"])()
+], WmFileUploadComponent.prototype, "onUploadedFilesChanged", void 0);
+WmFileUploadComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+        selector: 'app-wm-file-upload',
+        template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./wm-file-upload.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/wm-file-upload/wm-file-upload.component.html")).default,
+        styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./wm-file-upload.component.css */ "./src/app/components/wm-file-upload/wm-file-upload.component.css")).default]
+    })
+], WmFileUploadComponent);
 
 
 
@@ -2351,6 +2689,9 @@ let ErrorServiceService = class ErrorServiceService {
         this.errorSubject = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](null);
     }
     showError(errorMessage, errorDetail) {
+        if (errorDetail === undefined) {
+            errorDetail = "";
+        }
         var err = new _ui_models__WEBPACK_IMPORTED_MODULE_3__["ErrorDetail"](errorMessage, errorDetail);
         this.errorSubject.next(err);
     }
@@ -2618,6 +2959,9 @@ let InvoiceWorkflowEditService = class InvoiceWorkflowEditService extends _helpe
     getUploadFileUrl() {
         return "/workflow/invoice/data/createfile";
     }
+    getUploadOcrScanFileUrl() {
+        return "/general/data/uploadtempfile";
+    }
     loadCreateInitialData() {
         this.loadingService.showLoading();
         const httpOptions = { headers: _helper_http_hepler__WEBPACK_IMPORTED_MODULE_7__["HttpHepler"].generateFormHeader() };
@@ -2646,6 +2990,13 @@ let InvoiceWorkflowEditService = class InvoiceWorkflowEditService extends _helpe
         }
         const httpFileUploadOptions = { headers: _helper_http_hepler__WEBPACK_IMPORTED_MODULE_7__["HttpHepler"].generateFileUploadHeader() };
         return this.http.post(this.getUploadFileUrl(), formData, httpFileUploadOptions);
+    }
+    uploadTempFiles(ocrScanFile) {
+        const formData = new FormData();
+        formData.append('file', ocrScanFile);
+        formData.append('wids', "0");
+        const httpFileUploadOptions = { headers: _helper_http_hepler__WEBPACK_IMPORTED_MODULE_7__["HttpHepler"].generateFileUploadHeader() };
+        return this.http.post(this.getUploadOcrScanFileUrl(), formData, httpFileUploadOptions);
     }
     createWorkflow(workflowSaveRequest) {
         const httpOptions = { headers: _helper_http_hepler__WEBPACK_IMPORTED_MODULE_7__["HttpHepler"].generateJsonHeader() };
@@ -2894,8 +3245,18 @@ let WorkflowEditBaseService = class WorkflowEditBaseService extends _helper_http
     getArchiveWorkflowUrl() {
         return "";
     }
+    getUploadOcrScanFileUrl() {
+        return "/general/data/uploadtempfile";
+    }
     getInitEditUrl(identity) {
         return "";
+    }
+    uploadTempFiles(ocrScanFile) {
+        const formData = new FormData();
+        formData.append('file', ocrScanFile);
+        formData.append('wids', "0");
+        const httpFileUploadOptions = { headers: _helper_http_hepler__WEBPACK_IMPORTED_MODULE_6__["HttpHepler"].generateFileUploadHeader() };
+        return this.http.post(this.getUploadOcrScanFileUrl(), formData, httpFileUploadOptions);
     }
     loadCreateInitialData() {
         this.loadingService.showLoading();
@@ -3365,7 +3726,7 @@ class GeneralData {
 /*!************************************!*\
   !*** ./src/app/ui-models/index.ts ***!
   \************************************/
-/*! exports provided: User, MenuItem, LoginResponse, GeneralData, ErrorDetail, ErrorResponse */
+/*! exports provided: User, MenuItem, LoginResponse, GeneralData, ErrorDetail, ErrorResponse, OcrWord, OcrBox, UploadedFile, UploadedResult */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3388,6 +3749,20 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony import */ var _error_response__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./error-response */ "./src/app/ui-models/error-response.ts");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ErrorResponse", function() { return _error_response__WEBPACK_IMPORTED_MODULE_6__["ErrorResponse"]; });
+
+/* harmony import */ var _ocr_word__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./ocr-word */ "./src/app/ui-models/ocr-word.ts");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "OcrWord", function() { return _ocr_word__WEBPACK_IMPORTED_MODULE_7__["OcrWord"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "OcrBox", function() { return _ocr_word__WEBPACK_IMPORTED_MODULE_7__["OcrBox"]; });
+
+/* harmony import */ var _uploaded_file__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./uploaded-file */ "./src/app/ui-models/uploaded-file.ts");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "UploadedFile", function() { return _uploaded_file__WEBPACK_IMPORTED_MODULE_8__["UploadedFile"]; });
+
+/* harmony import */ var _uploaded_result__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./uploaded-result */ "./src/app/ui-models/uploaded-result.ts");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "UploadedResult", function() { return _uploaded_result__WEBPACK_IMPORTED_MODULE_9__["UploadedResult"]; });
+
+
+
 
 
 
@@ -3433,6 +3808,87 @@ __webpack_require__.r(__webpack_exports__);
 class MenuItem {
     constructor() {
         this.children = [];
+    }
+}
+
+
+/***/ }),
+
+/***/ "./src/app/ui-models/ocr-word.ts":
+/*!***************************************!*\
+  !*** ./src/app/ui-models/ocr-word.ts ***!
+  \***************************************/
+/*! exports provided: OcrWord, OcrBox */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "OcrWord", function() { return OcrWord; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "OcrBox", function() { return OcrBox; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+
+class OcrWord {
+}
+class OcrBox {
+}
+
+
+/***/ }),
+
+/***/ "./src/app/ui-models/uploaded-file.ts":
+/*!********************************************!*\
+  !*** ./src/app/ui-models/uploaded-file.ts ***!
+  \********************************************/
+/*! exports provided: UploadedFile */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UploadedFile", function() { return UploadedFile; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+
+class UploadedFile {
+    constructor() {
+        this.fileName = "";
+        this.scanedPdfPath = "";
+        this.scanedHocrPath = "";
+        this.fileIsPdf = false;
+        this.fileIsImage = false;
+        this.imageSizeX = 0;
+        this.imageSizeY = 0;
+        this.uploadResult = null;
+        this.foundWords = [];
+        this.isScanned = false;
+    }
+}
+
+
+/***/ }),
+
+/***/ "./src/app/ui-models/uploaded-result.ts":
+/*!**********************************************!*\
+  !*** ./src/app/ui-models/uploaded-result.ts ***!
+  \**********************************************/
+/*! exports provided: UploadedResult */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UploadedResult", function() { return UploadedResult; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+
+class UploadedResult {
+    constructor() {
+        this.status = "";
+        this.fileName = "";
+        this.fileHash = "";
+        this.hocrFileHash = "";
+        this.isFilePdf = false;
+        this.isFileImage = false;
+        this.imageWidth = 0;
+        this.imageHeight = 0;
+        this.errorMessage = "";
+        this.errorDetail = "";
     }
 }
 
@@ -3520,7 +3976,7 @@ class FileTitle {
 /*!************************************!*\
   !*** ./src/app/wf-models/index.ts ***!
   \************************************/
-/*! exports provided: Workflow, WorkflowMessage, WorkflowType, WorkflowTypeStep, WorkflowAction, WorkflowFile, WorkflowFileVersion, WorkflowSearchFilter, WorkflowListInitialData, WorkflowSearchResult, AssignItem, AssignType, WorkflowProcessCommand, FileTitle, WorkflowUploadFileResult, InvoiceType */
+/*! exports provided: Workflow, WorkflowMessage, WorkflowType, WorkflowTypeStep, WorkflowAction, WorkflowFile, WorkflowFileVersion, WorkflowSearchFilter, WorkflowListInitialData, WorkflowSearchResult, AssignItem, AssignType, WorkflowProcessCommand, FileTitle, WorkflowUploadFileResult, InvoiceType, WorkflowUploadedFile */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3573,6 +4029,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony import */ var _invoice_type__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./invoice-type */ "./src/app/wf-models/invoice-type.ts");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "InvoiceType", function() { return _invoice_type__WEBPACK_IMPORTED_MODULE_16__["InvoiceType"]; });
+
+/* harmony import */ var _ws_uploaded_file__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./ws-uploaded-file */ "./src/app/wf-models/ws-uploaded-file.ts");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "WorkflowUploadedFile", function() { return _ws_uploaded_file__WEBPACK_IMPORTED_MODULE_17__["WorkflowUploadedFile"]; });
+
 
 
 
@@ -3640,7 +4100,7 @@ class InvoiceWorkflowSaveRequest {
         this.expireDays = 0;
         this.assigns = [];
         this.command = _wf_models__WEBPACK_IMPORTED_MODULE_2__["WorkflowProcessCommand"].NONE;
-        this.sessionKey = "";
+        this.uploadedFiles = [];
     }
 }
 
@@ -3736,7 +4196,7 @@ class WorkflowSaveRequest {
         this.expireDays = 0;
         this.assigns = [];
         this.command = _wf_models__WEBPACK_IMPORTED_MODULE_1__["WorkflowProcessCommand"].NONE;
-        this.sessionKey = "";
+        this.uploadedFiles = [];
     }
 }
 
@@ -3937,6 +4397,40 @@ class WorkflowTypeStep {
 
 /***/ }),
 
+/***/ "./src/app/wf-models/ws-uploaded-file.ts":
+/*!***********************************************!*\
+  !*** ./src/app/wf-models/ws-uploaded-file.ts ***!
+  \***********************************************/
+/*! exports provided: WorkflowUploadedFile */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WorkflowUploadedFile", function() { return WorkflowUploadedFile; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+
+class WorkflowUploadedFile {
+    constructor(uploadedFile) {
+        this.fileName = "";
+        this.filePathHashed = "";
+        if (uploadedFile) {
+            this.fileName = uploadedFile.fileName;
+            this.filePathHashed = uploadedFile.scanedPdfPath;
+        }
+    }
+    static loadUploadedFiles(uploadedFiles) {
+        var wUploadedFiles = [];
+        for (var index in uploadedFiles) {
+            var wUploadedFile = new WorkflowUploadedFile(uploadedFiles[index]);
+            wUploadedFiles.push(wUploadedFile);
+        }
+        return wUploadedFiles;
+    }
+}
+
+
+/***/ }),
+
 /***/ "./src/app/wm-components/create/create-invoice/create-invoice.component.css":
 /*!**********************************************************************************!*\
   !*** ./src/app/wm-components/create/create-invoice/create-invoice.component.css ***!
@@ -3946,7 +4440,7 @@ class WorkflowTypeStep {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("\r\ndiv.workflow-content-container{\r\n\tborder: 1px solid lightgray;\r\n    margin: 10px 0px 50px 0;\r\n    border-radius: 10px;\r\n    padding: 10px;\r\n    background-color: #f1f1f1;\r\n}\r\n\r\ndiv.workflow-content{\r\n    background-color: #dad9d9;\r\n    padding: 15px;\r\n    border-radius: 5px;\r\n}\r\n\r\ndiv.workflow-content-record{\r\n    padding: 15px;\r\n}\r\n\r\ndiv.workflow-record{\r\n\tfloat: right;\r\n    background-color: #dad9d9;\r\n    padding: 8px;\r\n    border-radius: 5px;\r\n    width: 25%;\r\n    min-height: 500px;\r\n}\r\n\r\n.workflow-content .panel{\r\n\tbackground-color: #f2f1f1 !important;\r\n\tpadding: 8px;\r\n    margin-bottom: 10px;\r\n}\r\n\r\n.twopannel .panel{\r\n\t\r\n\theight: 190px;\r\n}\r\n\r\n.twopannel .panel.panel-vendor{\r\n\twidth: calc(100% - 310px);\r\n\tfloat: left;\r\n}\r\n\r\n.twopannel .panel.panel-discount{\r\n\twidth: 300px;\r\n\tfloat: right;\r\n}\r\n\r\n.twopannel .panel.panel-discount input[type=text]{\r\n\twidth: 100px;\r\n}\r\n\r\n.small-content{\r\n\twidth: 120px;\r\n}\r\n\r\n.item-content select{\r\n\theight: 26px;\r\n}\r\n\r\n.item-content select:not(.fullrow), .item-content input[type=text] {\r\n\theight: 26px;\r\n\twidth: calc(100%);\r\n}\r\n\r\n.item-content select.fullrow {\r\n\theight: 26px;\r\n\twidth: calc(100%);\r\n}\r\n\r\n.item-content.larg-content{\r\n\twidth: calc(100% - 450px);\r\n}\r\n\r\n.workflow-content .panel .panel-heading{\r\n\tfont-weight: bold;\r\n}\r\n\r\ndiv.workflow-content div.item-row, div.workflow-content-record div.item-row {\r\n    margin: 5px 0 10px;\r\n}\r\n\r\ndiv.workflow-content div.workflow-step-button-bar, div.workflow-content-record div.workflow-step-button-bar{\r\n    background-color: white;\r\n    padding: 6px;\r\n    padding-right: 20px;\r\n   \r\n}\r\n\r\ndiv.workflow-content div.item-row div.item-label, \r\ndiv.workflow-content-record div.item-row div.item-label{\r\n    float: left;\r\n    padding-right: 10px;\r\n    padding-left: 2px;\r\n    line-height: 25px;\r\n    font-size: 14px;\r\n    font-weight: bold;\r\n    height: 25px;\r\n}\r\n\r\ndiv.workflow-content div.item-row .label-large, \r\ndiv.workflow-content-record div.item-row .label-large{\r\n    width: 150px;\r\n}\r\n\r\n.large-content{\r\n\twidth: calc(100% - 420px);\r\n}\r\n\r\n.large-content input[type=text],\r\n.large-content input[type=number],\r\n.large-content select, \r\n.large-content areatext{\r\n\twidth: calc(100% - 30px);\r\n}\r\n\r\ndiv.workflow-content div.item-row .small-label, \r\ndiv.workflow-content-record div.item-row .small-label{\r\n    width: 122px;\r\n}\r\n\r\ndiv.workflow-content div.item-row div.item-content, div.workflow-content-record div.item-row div.item-content {\r\n    padding-left: 0px;\r\n    float: left;\r\n}\r\n\r\n.item-content input[type=checkbox]{\r\n\twidth: 20px;\r\n\theight: 20px;\t\r\n\tmargin-top: 3px;\r\n}\r\n\r\ndiv.fullrowfromlabel{\r\n\twidth: calc(100% - 150px);\t\r\n}\r\n\r\ndiv.fullrowfromlabel input[type=text]{\r\n\twidth: calc(100% - 10px);\t\r\n}\r\n\r\ndiv.fullrowfromlabel textarea{\r\n\twidth: calc(100% );\t\r\n\theight: 100px;\t\r\n}\r\n\r\ntextarea.comments-fullrow{\r\n\twidth: calc(100% - 100px);\t\r\n}\r\n\r\ndiv.workflow-content div.item-row div.item-content input.file-title\r\n{\r\n    width: calc(50% - 170px);\r\n    height: 26px;\r\n}\r\n\r\ndiv.workflow-content div.item-row div.item-content input.file-file\r\n{\r\n    width: 50%;\r\n    height: 26px;\r\n    display: inline-block;;\r\n}\r\n\r\n.assign-list{\r\n\tborder: 1px solid lightgray;\r\n    padding: 6px;\r\n    border-radius: 4px;\r\n    width: 100%;\r\n    min-height: 100px;\r\n    max-height: 200px;\r\n    overflow-y: auto;\r\n    padding-right: 24px;\r\n}\r\n\r\ndiv.assign-list div.user-item-box {\r\n    border: 1px solid lightgray;\r\n    border-radius: 4px;\r\n    padding: 2px 4px;\r\n    float: left;\r\n    background: #e6e6e6;\r\n    margin-right: 5px;\r\n    margin-bottom: 5px;\r\n}\r\n\r\ndiv.assign-list div.user-item-box button {\r\n    border: none;\r\n    background: transparent;\r\n    padding: 0;\r\n    padding-top: 3px;\r\n    float: right;\r\n    margin-left: 5px;\r\n}\r\n\r\ndiv.assign-list div.user-item-box button i.material-icons{\r\n\tfont-size: 16px;\r\n}\r\n\r\ndiv.assign-list div.user-item-box span {\r\n    height: 20px;\r\n    display: inline-block;\r\n    float: left;\r\n}\r\n\r\nbutton.show-select-dialog {\r\n    float: right;\r\n    margin-right: -22px;\r\n    width: 22px;\r\n    border: none;\r\n    padding: 0;\r\n    padding-left: 2px;\r\n    background-color: transparent;\r\n}\r\n\r\nbutton.file-action {\r\n    float: right;\r\n    width: 22px;\r\n    border: none;\r\n    padding: 0;\r\n    padding-left: 2px;\r\n    margin-top: 4px;\r\n    background: transparent;\r\n}\r\n\r\n.invalid-request-container{\r\n\twidth: 60vw;\r\n    min-height: 100px;\r\n    text-align: center;\r\n    margin-left: auto;\r\n    margin-right: auto;\r\n    margin-top: 10vh;\r\n    padding: 10px;\r\n\t\r\n}\r\n\r\n.workflow-file-view-link, .workflow-file-view-link:active, .workflow-file-view-link:visited{\r\n\tcolor: #333;\r\n}\r\n\r\n.workflow-file-view-link:hover{\r\n\tcolor: #551113;\r\n}\r\n\r\n.workflow-file-view-link i.material-icons{\r\n\twidth: 24px;\r\n}\r\n\r\n.assign-list{\r\n\tborder: 1px solid lightgray;\r\n    padding: 6px;\r\n    border-radius: 4px;\r\n    width: 100%;\r\n    min-height: 100px;\r\n    max-height: 200px;\r\n    overflow-y: auto;\r\n    padding-right: 24px;\r\n}\r\n\r\ndiv.assign-list div.user-item-box {\r\n    border: 1px solid lightgray;\r\n    border-radius: 4px;\r\n    padding: 2px 4px;\r\n    float: left;\r\n    background: #e6e6e6;\r\n    margin-right: 5px;\r\n    margin-bottom: 5px;\r\n}\r\n\r\ndiv.assign-list div.user-item-box button {\r\n    border: none;\r\n    background: transparent;\r\n    padding: 0;\r\n    padding-top: 3px;\r\n    float: right;\r\n    margin-left: 5px;\r\n}\r\n\r\ndiv.assign-list div.user-item-box button i.material-icons{\r\n\tfont-size: 16px;\r\n}\r\n\r\ndiv.assign-list div.user-item-box span {\r\n    height: 20px;\r\n    display: inline-block;\r\n    float: left;\r\n}\r\n\r\nbutton.show-select-dialog {\r\n    float: right;\r\n    margin-right: -20px;\r\n    width: 22px;\r\n    border: none;\r\n    padding: 0;\r\n    padding-left: 2px;\r\n}\r\n\r\ninput.select-date{\r\n\twidth: 100px;\r\n\theight: 26px;\r\n}\r\n\r\ninput.short-input{\r\n\twidth: 100px;\r\n\theight: 26px;\r\n}\r\n\r\n\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvd20tY29tcG9uZW50cy9jcmVhdGUvY3JlYXRlLWludm9pY2UvY3JlYXRlLWludm9pY2UuY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiO0FBQ0E7Q0FDQywyQkFBMkI7SUFDeEIsdUJBQXVCO0lBQ3ZCLG1CQUFtQjtJQUNuQixhQUFhO0lBQ2IseUJBQXlCO0FBQzdCOztBQUVBO0lBQ0kseUJBQXlCO0lBQ3pCLGFBQWE7SUFDYixrQkFBa0I7QUFDdEI7O0FBR0E7SUFDSSxhQUFhO0FBQ2pCOztBQUVBO0NBQ0MsWUFBWTtJQUNULHlCQUF5QjtJQUN6QixZQUFZO0lBQ1osa0JBQWtCO0lBQ2xCLFVBQVU7SUFDVixpQkFBaUI7QUFDckI7O0FBRUE7Q0FDQyxvQ0FBb0M7Q0FDcEMsWUFBWTtJQUNULG1CQUFtQjtBQUN2Qjs7QUFFQTs7Q0FFQyxhQUFhO0FBQ2Q7O0FBRUE7Q0FDQyx5QkFBeUI7Q0FDekIsV0FBVztBQUNaOztBQUVBO0NBQ0MsWUFBWTtDQUNaLFlBQVk7QUFDYjs7QUFFQTtDQUNDLFlBQVk7QUFDYjs7QUFFQTtDQUNDLFlBQVk7QUFDYjs7QUFFQTtDQUNDLFlBQVk7QUFDYjs7QUFFQTtDQUNDLFlBQVk7Q0FDWixpQkFBaUI7QUFDbEI7O0FBRUE7Q0FDQyxZQUFZO0NBQ1osaUJBQWlCO0FBQ2xCOztBQUVBO0NBQ0MseUJBQXlCO0FBQzFCOztBQUVBO0NBQ0MsaUJBQWlCO0FBQ2xCOztBQUVBO0lBQ0ksa0JBQWtCO0FBQ3RCOztBQUVBO0lBQ0ksdUJBQXVCO0lBQ3ZCLFlBQVk7SUFDWixtQkFBbUI7O0FBRXZCOztBQUVBOztJQUVJLFdBQVc7SUFDWCxtQkFBbUI7SUFDbkIsaUJBQWlCO0lBQ2pCLGlCQUFpQjtJQUNqQixlQUFlO0lBQ2YsaUJBQWlCO0lBQ2pCLFlBQVk7QUFDaEI7O0FBRUE7O0lBRUksWUFBWTtBQUNoQjs7QUFFQTtDQUNDLHlCQUF5QjtBQUMxQjs7QUFFQTs7OztDQUlDLHdCQUF3QjtBQUN6Qjs7QUFHQTs7SUFFSSxZQUFZO0FBQ2hCOztBQUVBO0lBQ0ksaUJBQWlCO0lBQ2pCLFdBQVc7QUFDZjs7QUFFQTtDQUNDLFdBQVc7Q0FDWCxZQUFZO0NBQ1osZUFBZTtBQUNoQjs7QUFFQTtDQUNDLHlCQUF5QjtBQUMxQjs7QUFFQTtDQUNDLHdCQUF3QjtBQUN6Qjs7QUFFQTtDQUNDLGtCQUFrQjtDQUNsQixhQUFhO0FBQ2Q7O0FBRUE7Q0FDQyx5QkFBeUI7QUFDMUI7O0FBRUE7O0lBRUksd0JBQXdCO0lBQ3hCLFlBQVk7QUFDaEI7O0FBRUE7O0lBRUksVUFBVTtJQUNWLFlBQVk7SUFDWixxQkFBcUI7QUFDekI7O0FBRUE7Q0FDQywyQkFBMkI7SUFDeEIsWUFBWTtJQUNaLGtCQUFrQjtJQUNsQixXQUFXO0lBQ1gsaUJBQWlCO0lBQ2pCLGlCQUFpQjtJQUNqQixnQkFBZ0I7SUFDaEIsbUJBQW1CO0FBQ3ZCOztBQUVBO0lBQ0ksMkJBQTJCO0lBQzNCLGtCQUFrQjtJQUNsQixnQkFBZ0I7SUFDaEIsV0FBVztJQUNYLG1CQUFtQjtJQUNuQixpQkFBaUI7SUFDakIsa0JBQWtCO0FBQ3RCOztBQUVBO0lBQ0ksWUFBWTtJQUNaLHVCQUF1QjtJQUN2QixVQUFVO0lBQ1YsZ0JBQWdCO0lBQ2hCLFlBQVk7SUFDWixnQkFBZ0I7QUFDcEI7O0FBRUE7Q0FDQyxlQUFlO0FBQ2hCOztBQUVBO0lBQ0ksWUFBWTtJQUNaLHFCQUFxQjtJQUNyQixXQUFXO0FBQ2Y7O0FBRUE7SUFDSSxZQUFZO0lBQ1osbUJBQW1CO0lBQ25CLFdBQVc7SUFDWCxZQUFZO0lBQ1osVUFBVTtJQUNWLGlCQUFpQjtJQUNqQiw2QkFBNkI7QUFDakM7O0FBRUE7SUFDSSxZQUFZO0lBQ1osV0FBVztJQUNYLFlBQVk7SUFDWixVQUFVO0lBQ1YsaUJBQWlCO0lBQ2pCLGVBQWU7SUFDZix1QkFBdUI7QUFDM0I7O0FBRUE7Q0FDQyxXQUFXO0lBQ1IsaUJBQWlCO0lBQ2pCLGtCQUFrQjtJQUNsQixpQkFBaUI7SUFDakIsa0JBQWtCO0lBQ2xCLGdCQUFnQjtJQUNoQixhQUFhOztBQUVqQjs7QUFFQTtDQUNDLFdBQVc7QUFDWjs7QUFFQTtDQUNDLGNBQWM7QUFDZjs7QUFFQTtDQUNDLFdBQVc7QUFDWjs7QUFHQTtDQUNDLDJCQUEyQjtJQUN4QixZQUFZO0lBQ1osa0JBQWtCO0lBQ2xCLFdBQVc7SUFDWCxpQkFBaUI7SUFDakIsaUJBQWlCO0lBQ2pCLGdCQUFnQjtJQUNoQixtQkFBbUI7QUFDdkI7O0FBRUE7SUFDSSwyQkFBMkI7SUFDM0Isa0JBQWtCO0lBQ2xCLGdCQUFnQjtJQUNoQixXQUFXO0lBQ1gsbUJBQW1CO0lBQ25CLGlCQUFpQjtJQUNqQixrQkFBa0I7QUFDdEI7O0FBRUE7SUFDSSxZQUFZO0lBQ1osdUJBQXVCO0lBQ3ZCLFVBQVU7SUFDVixnQkFBZ0I7SUFDaEIsWUFBWTtJQUNaLGdCQUFnQjtBQUNwQjs7QUFFQTtDQUNDLGVBQWU7QUFDaEI7O0FBRUE7SUFDSSxZQUFZO0lBQ1oscUJBQXFCO0lBQ3JCLFdBQVc7QUFDZjs7QUFFQTtJQUNJLFlBQVk7SUFDWixtQkFBbUI7SUFDbkIsV0FBVztJQUNYLFlBQVk7SUFDWixVQUFVO0lBQ1YsaUJBQWlCO0FBQ3JCOztBQUVBO0NBQ0MsWUFBWTtDQUNaLFlBQVk7QUFDYjs7QUFFQTtDQUNDLFlBQVk7Q0FDWixZQUFZO0FBQ2IiLCJmaWxlIjoic3JjL2FwcC93bS1jb21wb25lbnRzL2NyZWF0ZS9jcmVhdGUtaW52b2ljZS9jcmVhdGUtaW52b2ljZS5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiXHJcbmRpdi53b3JrZmxvdy1jb250ZW50LWNvbnRhaW5lcntcclxuXHRib3JkZXI6IDFweCBzb2xpZCBsaWdodGdyYXk7XHJcbiAgICBtYXJnaW46IDEwcHggMHB4IDUwcHggMDtcclxuICAgIGJvcmRlci1yYWRpdXM6IDEwcHg7XHJcbiAgICBwYWRkaW5nOiAxMHB4O1xyXG4gICAgYmFja2dyb3VuZC1jb2xvcjogI2YxZjFmMTtcclxufVxyXG5cclxuZGl2LndvcmtmbG93LWNvbnRlbnR7XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjZGFkOWQ5O1xyXG4gICAgcGFkZGluZzogMTVweDtcclxuICAgIGJvcmRlci1yYWRpdXM6IDVweDtcclxufVxyXG5cclxuXHJcbmRpdi53b3JrZmxvdy1jb250ZW50LXJlY29yZHtcclxuICAgIHBhZGRpbmc6IDE1cHg7XHJcbn1cclxuXHJcbmRpdi53b3JrZmxvdy1yZWNvcmR7XHJcblx0ZmxvYXQ6IHJpZ2h0O1xyXG4gICAgYmFja2dyb3VuZC1jb2xvcjogI2RhZDlkOTtcclxuICAgIHBhZGRpbmc6IDhweDtcclxuICAgIGJvcmRlci1yYWRpdXM6IDVweDtcclxuICAgIHdpZHRoOiAyNSU7XHJcbiAgICBtaW4taGVpZ2h0OiA1MDBweDtcclxufVxyXG5cclxuLndvcmtmbG93LWNvbnRlbnQgLnBhbmVse1xyXG5cdGJhY2tncm91bmQtY29sb3I6ICNmMmYxZjEgIWltcG9ydGFudDtcclxuXHRwYWRkaW5nOiA4cHg7XHJcbiAgICBtYXJnaW4tYm90dG9tOiAxMHB4O1xyXG59XHJcblxyXG4udHdvcGFubmVsIC5wYW5lbHtcclxuXHRcclxuXHRoZWlnaHQ6IDE5MHB4O1xyXG59XHJcblxyXG4udHdvcGFubmVsIC5wYW5lbC5wYW5lbC12ZW5kb3J7XHJcblx0d2lkdGg6IGNhbGMoMTAwJSAtIDMxMHB4KTtcclxuXHRmbG9hdDogbGVmdDtcclxufVxyXG5cclxuLnR3b3Bhbm5lbCAucGFuZWwucGFuZWwtZGlzY291bnR7XHJcblx0d2lkdGg6IDMwMHB4O1xyXG5cdGZsb2F0OiByaWdodDtcclxufVxyXG5cclxuLnR3b3Bhbm5lbCAucGFuZWwucGFuZWwtZGlzY291bnQgaW5wdXRbdHlwZT10ZXh0XXtcclxuXHR3aWR0aDogMTAwcHg7XHJcbn1cclxuXHJcbi5zbWFsbC1jb250ZW50e1xyXG5cdHdpZHRoOiAxMjBweDtcclxufVxyXG5cclxuLml0ZW0tY29udGVudCBzZWxlY3R7XHJcblx0aGVpZ2h0OiAyNnB4O1xyXG59IFxyXG5cclxuLml0ZW0tY29udGVudCBzZWxlY3Q6bm90KC5mdWxscm93KSwgLml0ZW0tY29udGVudCBpbnB1dFt0eXBlPXRleHRdIHtcclxuXHRoZWlnaHQ6IDI2cHg7XHJcblx0d2lkdGg6IGNhbGMoMTAwJSk7XHJcbn0gXHJcblxyXG4uaXRlbS1jb250ZW50IHNlbGVjdC5mdWxscm93IHtcclxuXHRoZWlnaHQ6IDI2cHg7XHJcblx0d2lkdGg6IGNhbGMoMTAwJSk7XHJcbn0gXHJcblxyXG4uaXRlbS1jb250ZW50LmxhcmctY29udGVudHtcclxuXHR3aWR0aDogY2FsYygxMDAlIC0gNDUwcHgpO1xyXG59XHJcblxyXG4ud29ya2Zsb3ctY29udGVudCAucGFuZWwgLnBhbmVsLWhlYWRpbmd7XHJcblx0Zm9udC13ZWlnaHQ6IGJvbGQ7XHJcbn1cclxuXHJcbmRpdi53b3JrZmxvdy1jb250ZW50IGRpdi5pdGVtLXJvdywgZGl2LndvcmtmbG93LWNvbnRlbnQtcmVjb3JkIGRpdi5pdGVtLXJvdyB7XHJcbiAgICBtYXJnaW46IDVweCAwIDEwcHg7XHJcbn1cclxuXHJcbmRpdi53b3JrZmxvdy1jb250ZW50IGRpdi53b3JrZmxvdy1zdGVwLWJ1dHRvbi1iYXIsIGRpdi53b3JrZmxvdy1jb250ZW50LXJlY29yZCBkaXYud29ya2Zsb3ctc3RlcC1idXR0b24tYmFye1xyXG4gICAgYmFja2dyb3VuZC1jb2xvcjogd2hpdGU7XHJcbiAgICBwYWRkaW5nOiA2cHg7XHJcbiAgICBwYWRkaW5nLXJpZ2h0OiAyMHB4O1xyXG4gICBcclxufVxyXG5cclxuZGl2LndvcmtmbG93LWNvbnRlbnQgZGl2Lml0ZW0tcm93IGRpdi5pdGVtLWxhYmVsLCBcclxuZGl2LndvcmtmbG93LWNvbnRlbnQtcmVjb3JkIGRpdi5pdGVtLXJvdyBkaXYuaXRlbS1sYWJlbHtcclxuICAgIGZsb2F0OiBsZWZ0O1xyXG4gICAgcGFkZGluZy1yaWdodDogMTBweDtcclxuICAgIHBhZGRpbmctbGVmdDogMnB4O1xyXG4gICAgbGluZS1oZWlnaHQ6IDI1cHg7XHJcbiAgICBmb250LXNpemU6IDE0cHg7XHJcbiAgICBmb250LXdlaWdodDogYm9sZDtcclxuICAgIGhlaWdodDogMjVweDtcclxufVxyXG5cclxuZGl2LndvcmtmbG93LWNvbnRlbnQgZGl2Lml0ZW0tcm93IC5sYWJlbC1sYXJnZSwgXHJcbmRpdi53b3JrZmxvdy1jb250ZW50LXJlY29yZCBkaXYuaXRlbS1yb3cgLmxhYmVsLWxhcmdle1xyXG4gICAgd2lkdGg6IDE1MHB4O1xyXG59XHJcblxyXG4ubGFyZ2UtY29udGVudHtcclxuXHR3aWR0aDogY2FsYygxMDAlIC0gNDIwcHgpO1xyXG59XHJcblxyXG4ubGFyZ2UtY29udGVudCBpbnB1dFt0eXBlPXRleHRdLFxyXG4ubGFyZ2UtY29udGVudCBpbnB1dFt0eXBlPW51bWJlcl0sXHJcbi5sYXJnZS1jb250ZW50IHNlbGVjdCwgXHJcbi5sYXJnZS1jb250ZW50IGFyZWF0ZXh0e1xyXG5cdHdpZHRoOiBjYWxjKDEwMCUgLSAzMHB4KTtcclxufVxyXG5cclxuXHJcbmRpdi53b3JrZmxvdy1jb250ZW50IGRpdi5pdGVtLXJvdyAuc21hbGwtbGFiZWwsIFxyXG5kaXYud29ya2Zsb3ctY29udGVudC1yZWNvcmQgZGl2Lml0ZW0tcm93IC5zbWFsbC1sYWJlbHtcclxuICAgIHdpZHRoOiAxMjJweDtcclxufVxyXG5cclxuZGl2LndvcmtmbG93LWNvbnRlbnQgZGl2Lml0ZW0tcm93IGRpdi5pdGVtLWNvbnRlbnQsIGRpdi53b3JrZmxvdy1jb250ZW50LXJlY29yZCBkaXYuaXRlbS1yb3cgZGl2Lml0ZW0tY29udGVudCB7XHJcbiAgICBwYWRkaW5nLWxlZnQ6IDBweDtcclxuICAgIGZsb2F0OiBsZWZ0O1xyXG59XHJcblxyXG4uaXRlbS1jb250ZW50IGlucHV0W3R5cGU9Y2hlY2tib3hde1xyXG5cdHdpZHRoOiAyMHB4O1xyXG5cdGhlaWdodDogMjBweDtcdFxyXG5cdG1hcmdpbi10b3A6IDNweDtcclxufVxyXG5cclxuZGl2LmZ1bGxyb3dmcm9tbGFiZWx7XHJcblx0d2lkdGg6IGNhbGMoMTAwJSAtIDE1MHB4KTtcdFxyXG59XHJcblxyXG5kaXYuZnVsbHJvd2Zyb21sYWJlbCBpbnB1dFt0eXBlPXRleHRde1xyXG5cdHdpZHRoOiBjYWxjKDEwMCUgLSAxMHB4KTtcdFxyXG59XHJcblxyXG5kaXYuZnVsbHJvd2Zyb21sYWJlbCB0ZXh0YXJlYXtcclxuXHR3aWR0aDogY2FsYygxMDAlICk7XHRcclxuXHRoZWlnaHQ6IDEwMHB4O1x0XHJcbn1cclxuXHJcbnRleHRhcmVhLmNvbW1lbnRzLWZ1bGxyb3d7XHJcblx0d2lkdGg6IGNhbGMoMTAwJSAtIDEwMHB4KTtcdFxyXG59XHJcblxyXG5kaXYud29ya2Zsb3ctY29udGVudCBkaXYuaXRlbS1yb3cgZGl2Lml0ZW0tY29udGVudCBpbnB1dC5maWxlLXRpdGxlXHJcbntcclxuICAgIHdpZHRoOiBjYWxjKDUwJSAtIDE3MHB4KTtcclxuICAgIGhlaWdodDogMjZweDtcclxufVxyXG5cclxuZGl2LndvcmtmbG93LWNvbnRlbnQgZGl2Lml0ZW0tcm93IGRpdi5pdGVtLWNvbnRlbnQgaW5wdXQuZmlsZS1maWxlXHJcbntcclxuICAgIHdpZHRoOiA1MCU7XHJcbiAgICBoZWlnaHQ6IDI2cHg7XHJcbiAgICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7O1xyXG59XHJcblxyXG4uYXNzaWduLWxpc3R7XHJcblx0Ym9yZGVyOiAxcHggc29saWQgbGlnaHRncmF5O1xyXG4gICAgcGFkZGluZzogNnB4O1xyXG4gICAgYm9yZGVyLXJhZGl1czogNHB4O1xyXG4gICAgd2lkdGg6IDEwMCU7XHJcbiAgICBtaW4taGVpZ2h0OiAxMDBweDtcclxuICAgIG1heC1oZWlnaHQ6IDIwMHB4O1xyXG4gICAgb3ZlcmZsb3cteTogYXV0bztcclxuICAgIHBhZGRpbmctcmlnaHQ6IDI0cHg7XHJcbn1cclxuXHJcbmRpdi5hc3NpZ24tbGlzdCBkaXYudXNlci1pdGVtLWJveCB7XHJcbiAgICBib3JkZXI6IDFweCBzb2xpZCBsaWdodGdyYXk7XHJcbiAgICBib3JkZXItcmFkaXVzOiA0cHg7XHJcbiAgICBwYWRkaW5nOiAycHggNHB4O1xyXG4gICAgZmxvYXQ6IGxlZnQ7XHJcbiAgICBiYWNrZ3JvdW5kOiAjZTZlNmU2O1xyXG4gICAgbWFyZ2luLXJpZ2h0OiA1cHg7XHJcbiAgICBtYXJnaW4tYm90dG9tOiA1cHg7XHJcbn1cclxuXHJcbmRpdi5hc3NpZ24tbGlzdCBkaXYudXNlci1pdGVtLWJveCBidXR0b24ge1xyXG4gICAgYm9yZGVyOiBub25lO1xyXG4gICAgYmFja2dyb3VuZDogdHJhbnNwYXJlbnQ7XHJcbiAgICBwYWRkaW5nOiAwO1xyXG4gICAgcGFkZGluZy10b3A6IDNweDtcclxuICAgIGZsb2F0OiByaWdodDtcclxuICAgIG1hcmdpbi1sZWZ0OiA1cHg7XHJcbn1cclxuXHJcbmRpdi5hc3NpZ24tbGlzdCBkaXYudXNlci1pdGVtLWJveCBidXR0b24gaS5tYXRlcmlhbC1pY29uc3tcclxuXHRmb250LXNpemU6IDE2cHg7XHJcbn1cclxuXHJcbmRpdi5hc3NpZ24tbGlzdCBkaXYudXNlci1pdGVtLWJveCBzcGFuIHtcclxuICAgIGhlaWdodDogMjBweDtcclxuICAgIGRpc3BsYXk6IGlubGluZS1ibG9jaztcclxuICAgIGZsb2F0OiBsZWZ0O1xyXG59XHJcblxyXG5idXR0b24uc2hvdy1zZWxlY3QtZGlhbG9nIHtcclxuICAgIGZsb2F0OiByaWdodDtcclxuICAgIG1hcmdpbi1yaWdodDogLTIycHg7XHJcbiAgICB3aWR0aDogMjJweDtcclxuICAgIGJvcmRlcjogbm9uZTtcclxuICAgIHBhZGRpbmc6IDA7XHJcbiAgICBwYWRkaW5nLWxlZnQ6IDJweDtcclxuICAgIGJhY2tncm91bmQtY29sb3I6IHRyYW5zcGFyZW50O1xyXG59XHJcblxyXG5idXR0b24uZmlsZS1hY3Rpb24ge1xyXG4gICAgZmxvYXQ6IHJpZ2h0O1xyXG4gICAgd2lkdGg6IDIycHg7XHJcbiAgICBib3JkZXI6IG5vbmU7XHJcbiAgICBwYWRkaW5nOiAwO1xyXG4gICAgcGFkZGluZy1sZWZ0OiAycHg7XHJcbiAgICBtYXJnaW4tdG9wOiA0cHg7XHJcbiAgICBiYWNrZ3JvdW5kOiB0cmFuc3BhcmVudDtcclxufVxyXG5cclxuLmludmFsaWQtcmVxdWVzdC1jb250YWluZXJ7XHJcblx0d2lkdGg6IDYwdnc7XHJcbiAgICBtaW4taGVpZ2h0OiAxMDBweDtcclxuICAgIHRleHQtYWxpZ246IGNlbnRlcjtcclxuICAgIG1hcmdpbi1sZWZ0OiBhdXRvO1xyXG4gICAgbWFyZ2luLXJpZ2h0OiBhdXRvO1xyXG4gICAgbWFyZ2luLXRvcDogMTB2aDtcclxuICAgIHBhZGRpbmc6IDEwcHg7XHJcblx0XHJcbn1cclxuXHJcbi53b3JrZmxvdy1maWxlLXZpZXctbGluaywgLndvcmtmbG93LWZpbGUtdmlldy1saW5rOmFjdGl2ZSwgLndvcmtmbG93LWZpbGUtdmlldy1saW5rOnZpc2l0ZWR7XHJcblx0Y29sb3I6ICMzMzM7XHJcbn1cclxuXHJcbi53b3JrZmxvdy1maWxlLXZpZXctbGluazpob3ZlcntcclxuXHRjb2xvcjogIzU1MTExMztcclxufVxyXG5cclxuLndvcmtmbG93LWZpbGUtdmlldy1saW5rIGkubWF0ZXJpYWwtaWNvbnN7XHJcblx0d2lkdGg6IDI0cHg7XHJcbn1cclxuXHJcblxyXG4uYXNzaWduLWxpc3R7XHJcblx0Ym9yZGVyOiAxcHggc29saWQgbGlnaHRncmF5O1xyXG4gICAgcGFkZGluZzogNnB4O1xyXG4gICAgYm9yZGVyLXJhZGl1czogNHB4O1xyXG4gICAgd2lkdGg6IDEwMCU7XHJcbiAgICBtaW4taGVpZ2h0OiAxMDBweDtcclxuICAgIG1heC1oZWlnaHQ6IDIwMHB4O1xyXG4gICAgb3ZlcmZsb3cteTogYXV0bztcclxuICAgIHBhZGRpbmctcmlnaHQ6IDI0cHg7XHJcbn1cclxuXHJcbmRpdi5hc3NpZ24tbGlzdCBkaXYudXNlci1pdGVtLWJveCB7XHJcbiAgICBib3JkZXI6IDFweCBzb2xpZCBsaWdodGdyYXk7XHJcbiAgICBib3JkZXItcmFkaXVzOiA0cHg7XHJcbiAgICBwYWRkaW5nOiAycHggNHB4O1xyXG4gICAgZmxvYXQ6IGxlZnQ7XHJcbiAgICBiYWNrZ3JvdW5kOiAjZTZlNmU2O1xyXG4gICAgbWFyZ2luLXJpZ2h0OiA1cHg7XHJcbiAgICBtYXJnaW4tYm90dG9tOiA1cHg7XHJcbn1cclxuXHJcbmRpdi5hc3NpZ24tbGlzdCBkaXYudXNlci1pdGVtLWJveCBidXR0b24ge1xyXG4gICAgYm9yZGVyOiBub25lO1xyXG4gICAgYmFja2dyb3VuZDogdHJhbnNwYXJlbnQ7XHJcbiAgICBwYWRkaW5nOiAwO1xyXG4gICAgcGFkZGluZy10b3A6IDNweDtcclxuICAgIGZsb2F0OiByaWdodDtcclxuICAgIG1hcmdpbi1sZWZ0OiA1cHg7XHJcbn1cclxuXHJcbmRpdi5hc3NpZ24tbGlzdCBkaXYudXNlci1pdGVtLWJveCBidXR0b24gaS5tYXRlcmlhbC1pY29uc3tcclxuXHRmb250LXNpemU6IDE2cHg7XHJcbn1cclxuXHJcbmRpdi5hc3NpZ24tbGlzdCBkaXYudXNlci1pdGVtLWJveCBzcGFuIHtcclxuICAgIGhlaWdodDogMjBweDtcclxuICAgIGRpc3BsYXk6IGlubGluZS1ibG9jaztcclxuICAgIGZsb2F0OiBsZWZ0O1xyXG59XHJcblxyXG5idXR0b24uc2hvdy1zZWxlY3QtZGlhbG9nIHtcclxuICAgIGZsb2F0OiByaWdodDtcclxuICAgIG1hcmdpbi1yaWdodDogLTIwcHg7XHJcbiAgICB3aWR0aDogMjJweDtcclxuICAgIGJvcmRlcjogbm9uZTtcclxuICAgIHBhZGRpbmc6IDA7XHJcbiAgICBwYWRkaW5nLWxlZnQ6IDJweDtcclxufVxyXG5cclxuaW5wdXQuc2VsZWN0LWRhdGV7XHJcblx0d2lkdGg6IDEwMHB4O1xyXG5cdGhlaWdodDogMjZweDtcclxufVxyXG5cclxuaW5wdXQuc2hvcnQtaW5wdXR7XHJcblx0d2lkdGg6IDEwMHB4O1xyXG5cdGhlaWdodDogMjZweDtcclxufVxyXG5cclxuXHJcbiJdfQ== */");
+/* harmony default export */ __webpack_exports__["default"] = ("\r\ndiv.workflow-content-container{\r\n\tborder: 1px solid lightgray;\r\n    margin: 10px 0px 50px 0;\r\n    border-radius: 10px;\r\n    padding: 10px;\r\n    background-color: #f1f1f1;\r\n}\r\n\r\ndiv.workflow-content{\r\n    background-color: #dad9d9;\r\n    padding: 15px;\r\n    border-radius: 5px;\r\n}\r\n\r\ndiv.workflow-content-record{\r\n    padding: 15px;\r\n}\r\n\r\ndiv.workflow-record{\r\n\tfloat: right;\r\n    background-color: #dad9d9;\r\n    padding: 8px;\r\n    border-radius: 5px;\r\n    width: 25%;\r\n    min-height: 500px;\r\n}\r\n\r\n.workflow-content .panel{\r\n\tbackground-color: #f2f1f1 !important;\r\n\tpadding: 8px;\r\n    margin-bottom: 10px;\r\n}\r\n\r\n.twopannel .panel-1{\r\n\t\r\n\theight: 190px;\r\n}\r\n\r\n.twopannel .panel-2{\r\n\t\r\n\theight: 300px;\r\n}\r\n\r\n.twopannel .panel-twopannelleft{\r\n\twidth: calc(100% - 310px);\r\n\tfloat: left;\r\n}\r\n\r\n.twopannel .panel-twopannelright{\r\n\twidth: 300px;\r\n\tfloat: right;\r\n}\r\n\r\n.twopannel .panel-twopannelright input[type=text]{\r\n\twidth: 100px;\r\n}\r\n\r\n.small-content{\r\n\twidth: 120px;\r\n}\r\n\r\n.item-content select{\r\n\theight: 26px;\r\n}\r\n\r\n.item-content select:not(.fullrow), .item-content input[type=text] {\r\n\theight: 26px;\r\n\twidth: calc(100%);\r\n}\r\n\r\n.item-content select.fullrow {\r\n\theight: 26px;\r\n\twidth: calc(100%);\r\n}\r\n\r\n.item-content.larg-content{\r\n\twidth: calc(100% - 450px);\r\n}\r\n\r\n.workflow-content .panel .panel-heading{\r\n\tfont-weight: bold;\r\n}\r\n\r\ndiv.workflow-content div.item-row, div.workflow-content-record div.item-row {\r\n    margin: 5px 0 10px;\r\n}\r\n\r\ndiv.workflow-content div.workflow-step-button-bar, div.workflow-content-record div.workflow-step-button-bar{\r\n    background-color: white;\r\n    padding: 6px;\r\n    padding-right: 20px;\r\n   \r\n}\r\n\r\ndiv.workflow-content div.item-row div.item-label, \r\ndiv.workflow-content-record div.item-row div.item-label{\r\n    float: left;\r\n    padding-right: 10px;\r\n    padding-left: 2px;\r\n    line-height: 25px;\r\n    font-size: 14px;\r\n    font-weight: bold;\r\n    height: 25px;\r\n}\r\n\r\ndiv.workflow-content div.item-row .label-large, \r\ndiv.workflow-content-record div.item-row .label-large{\r\n    width: 150px;\r\n}\r\n\r\n.large-content{\r\n\twidth: calc(100% - 420px);\r\n}\r\n\r\n.large-content input[type=text],\r\n.large-content input[type=number],\r\n.large-content select, \r\n.large-content areatext{\r\n\twidth: calc(100% - 30px);\r\n}\r\n\r\ndiv.workflow-content div.item-row .small-label, \r\ndiv.workflow-content-record div.item-row .small-label{\r\n    width: 122px;\r\n}\r\n\r\ndiv.workflow-content div.item-row div.item-content, div.workflow-content-record div.item-row div.item-content {\r\n    padding-left: 0px;\r\n    float: left;\r\n}\r\n\r\n.item-content input[type=checkbox]{\r\n\twidth: 20px;\r\n\theight: 20px;\t\r\n\tmargin-top: 3px;\r\n}\r\n\r\ndiv.fullrowfromlabel{\r\n\twidth: calc(100% - 150px);\t\r\n}\r\n\r\ndiv.fullrowfromlabel input[type=text]{\r\n\twidth: calc(100% - 10px);\t\r\n}\r\n\r\ndiv.fullrowfromlabel textarea{\r\n\twidth: calc(100% );\t\r\n\theight: 100px;\t\r\n}\r\n\r\ntextarea.comments-fullrow{\r\n\twidth: calc(100% - 100px);\t\r\n}\r\n\r\ndiv.workflow-content div.item-row div.item-content input.file-title\r\n{\r\n    width: calc(50% - 170px);\r\n    height: 26px;\r\n}\r\n\r\ndiv.workflow-content div.item-row div.item-content input.file-file\r\n{\r\n    width: 50%;\r\n    height: 26px;\r\n    display: inline-block;;\r\n}\r\n\r\n.assign-list{\r\n\tborder: 1px solid lightgray;\r\n    padding: 6px;\r\n    border-radius: 4px;\r\n    width: 100%;\r\n    min-height: 100px;\r\n    max-height: 200px;\r\n    overflow-y: auto;\r\n    padding-right: 24px;\r\n    height: 120px;\r\n}\r\n\r\ndiv.assign-list div.user-item-box {\r\n    border: 1px solid lightgray;\r\n    border-radius: 4px;\r\n    padding: 2px 4px;\r\n    float: left;\r\n    background: #e6e6e6;\r\n    margin-right: 5px;\r\n    margin-bottom: 5px;\r\n}\r\n\r\ndiv.assign-list div.user-item-box button {\r\n    border: none;\r\n    background: transparent;\r\n    padding: 0;\r\n    padding-top: 3px;\r\n    float: right;\r\n    margin-left: 5px;\r\n}\r\n\r\ndiv.assign-list div.user-item-box button i.material-icons{\r\n\tfont-size: 16px;\r\n}\r\n\r\ndiv.assign-list div.user-item-box span {\r\n    height: 20px;\r\n    display: inline-block;\r\n    float: left;\r\n}\r\n\r\nbutton.show-select-dialog {\r\n    float: right;\r\n    margin-right: -22px;\r\n    width: 22px;\r\n    border: none;\r\n    padding: 0;\r\n    padding-left: 2px;\r\n    background-color: transparent;\r\n}\r\n\r\nbutton.file-action {\r\n    float: right;\r\n    width: 22px;\r\n    border: none;\r\n    padding: 0;\r\n    padding-left: 2px;\r\n    margin-top: 4px;\r\n    background: transparent;\r\n}\r\n\r\n.invalid-request-container{\r\n\twidth: 60vw;\r\n    min-height: 100px;\r\n    text-align: center;\r\n    margin-left: auto;\r\n    margin-right: auto;\r\n    margin-top: 10vh;\r\n    padding: 10px;\r\n\t\r\n}\r\n\r\n.workflow-file-view-link, .workflow-file-view-link:active, .workflow-file-view-link:visited{\r\n\tcolor: #333;\r\n}\r\n\r\n.workflow-file-view-link:hover{\r\n\tcolor: #551113;\r\n}\r\n\r\n.workflow-file-view-link i.material-icons{\r\n\twidth: 24px;\r\n}\r\n\r\nbutton.show-select-dialog {\r\n    float: right;\r\n    margin-right: -20px;\r\n    width: 22px;\r\n    border: none;\r\n    padding: 0;\r\n    padding-left: 2px;\r\n}\r\n\r\ninput.select-date{\r\n\twidth: 100px;\r\n\theight: 26px;\r\n}\r\n\r\ninput.short-input{\r\n\twidth: 100px;\r\n\theight: 26px;\r\n}\r\n\r\n.ocrscan-container {\r\n    width: 500px;\r\n    float: right;\r\n    padding-top: 5px;\r\n    margin-right: 10px;\r\n}\r\n\r\n.ocrscan-container .custom-file-input{\r\n    width: calc(100% - 50px);\r\n}\r\n\r\n.ocrscan-container .custom-file-label{\r\n    width: calc(100% - 50px);\r\n}\r\n\r\n.ocrscan-container .upload-button{\r\n    padding: 2px 7px;\r\n    margin-left: 5px;\r\n}\r\n\r\n.uploading-dialog {\r\n    min-height: 100px;\r\n    max-height: 100px;\r\n    padding-top: 0;\r\n    margin-top: 20%;\r\n    background-color: white;\r\n}\r\n\r\n.scanned-details-dialog{\r\n\twidth: 90vw;\r\n    max-width: 90vw;\r\n    min-width: 90vw;\r\n    background-color: white;\r\n    pointer-events: all;\r\n}\r\n\r\n.uploading-progress {\r\n    height: 30px;\r\n    margin: 0px 10px;\r\n}\r\n\r\n.uploading-progress-label {\r\n    width: 100%;\r\n    display: block;\r\n    position: absolute;\r\n    text-align: center;\r\n}\r\n\r\n.uploaded-file-item {\r\n\tpadding: 5px 4px 0 10px;\r\n\tmargin-bottom: 3px;\r\n}\r\n\r\n.uploaded-file-item:hover {\r\n\tbackground-color: #feffea;\r\n}\r\n\r\n.uploaded-file-item .filename {\r\n\twidth: 230px;\r\n    display: inline-block;\r\n    overflow: hidden;\r\n    overflow-y: hidden;\r\n    height: 30px;\r\n}\r\n\r\n.uploaded-file-item .upload-button{\r\n    padding: 0px 4px;\r\n    margin-left: 5px;\r\n}\r\n\r\n.uploaded-file-item .upload-button .material-icons{\r\n    font-size: 16px;\r\n}\r\n\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvd20tY29tcG9uZW50cy9jcmVhdGUvY3JlYXRlLWludm9pY2UvY3JlYXRlLWludm9pY2UuY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiO0FBQ0E7Q0FDQywyQkFBMkI7SUFDeEIsdUJBQXVCO0lBQ3ZCLG1CQUFtQjtJQUNuQixhQUFhO0lBQ2IseUJBQXlCO0FBQzdCOztBQUVBO0lBQ0kseUJBQXlCO0lBQ3pCLGFBQWE7SUFDYixrQkFBa0I7QUFDdEI7O0FBR0E7SUFDSSxhQUFhO0FBQ2pCOztBQUVBO0NBQ0MsWUFBWTtJQUNULHlCQUF5QjtJQUN6QixZQUFZO0lBQ1osa0JBQWtCO0lBQ2xCLFVBQVU7SUFDVixpQkFBaUI7QUFDckI7O0FBRUE7Q0FDQyxvQ0FBb0M7Q0FDcEMsWUFBWTtJQUNULG1CQUFtQjtBQUN2Qjs7QUFFQTs7Q0FFQyxhQUFhO0FBQ2Q7O0FBRUE7O0NBRUMsYUFBYTtBQUNkOztBQUVBO0NBQ0MseUJBQXlCO0NBQ3pCLFdBQVc7QUFDWjs7QUFFQTtDQUNDLFlBQVk7Q0FDWixZQUFZO0FBQ2I7O0FBRUE7Q0FDQyxZQUFZO0FBQ2I7O0FBRUE7Q0FDQyxZQUFZO0FBQ2I7O0FBRUE7Q0FDQyxZQUFZO0FBQ2I7O0FBRUE7Q0FDQyxZQUFZO0NBQ1osaUJBQWlCO0FBQ2xCOztBQUVBO0NBQ0MsWUFBWTtDQUNaLGlCQUFpQjtBQUNsQjs7QUFFQTtDQUNDLHlCQUF5QjtBQUMxQjs7QUFFQTtDQUNDLGlCQUFpQjtBQUNsQjs7QUFFQTtJQUNJLGtCQUFrQjtBQUN0Qjs7QUFFQTtJQUNJLHVCQUF1QjtJQUN2QixZQUFZO0lBQ1osbUJBQW1COztBQUV2Qjs7QUFFQTs7SUFFSSxXQUFXO0lBQ1gsbUJBQW1CO0lBQ25CLGlCQUFpQjtJQUNqQixpQkFBaUI7SUFDakIsZUFBZTtJQUNmLGlCQUFpQjtJQUNqQixZQUFZO0FBQ2hCOztBQUVBOztJQUVJLFlBQVk7QUFDaEI7O0FBRUE7Q0FDQyx5QkFBeUI7QUFDMUI7O0FBRUE7Ozs7Q0FJQyx3QkFBd0I7QUFDekI7O0FBR0E7O0lBRUksWUFBWTtBQUNoQjs7QUFFQTtJQUNJLGlCQUFpQjtJQUNqQixXQUFXO0FBQ2Y7O0FBRUE7Q0FDQyxXQUFXO0NBQ1gsWUFBWTtDQUNaLGVBQWU7QUFDaEI7O0FBRUE7Q0FDQyx5QkFBeUI7QUFDMUI7O0FBRUE7Q0FDQyx3QkFBd0I7QUFDekI7O0FBRUE7Q0FDQyxrQkFBa0I7Q0FDbEIsYUFBYTtBQUNkOztBQUVBO0NBQ0MseUJBQXlCO0FBQzFCOztBQUVBOztJQUVJLHdCQUF3QjtJQUN4QixZQUFZO0FBQ2hCOztBQUVBOztJQUVJLFVBQVU7SUFDVixZQUFZO0lBQ1oscUJBQXFCO0FBQ3pCOztBQUVBO0NBQ0MsMkJBQTJCO0lBQ3hCLFlBQVk7SUFDWixrQkFBa0I7SUFDbEIsV0FBVztJQUNYLGlCQUFpQjtJQUNqQixpQkFBaUI7SUFDakIsZ0JBQWdCO0lBQ2hCLG1CQUFtQjtJQUNuQixhQUFhO0FBQ2pCOztBQUVBO0lBQ0ksMkJBQTJCO0lBQzNCLGtCQUFrQjtJQUNsQixnQkFBZ0I7SUFDaEIsV0FBVztJQUNYLG1CQUFtQjtJQUNuQixpQkFBaUI7SUFDakIsa0JBQWtCO0FBQ3RCOztBQUVBO0lBQ0ksWUFBWTtJQUNaLHVCQUF1QjtJQUN2QixVQUFVO0lBQ1YsZ0JBQWdCO0lBQ2hCLFlBQVk7SUFDWixnQkFBZ0I7QUFDcEI7O0FBRUE7Q0FDQyxlQUFlO0FBQ2hCOztBQUVBO0lBQ0ksWUFBWTtJQUNaLHFCQUFxQjtJQUNyQixXQUFXO0FBQ2Y7O0FBRUE7SUFDSSxZQUFZO0lBQ1osbUJBQW1CO0lBQ25CLFdBQVc7SUFDWCxZQUFZO0lBQ1osVUFBVTtJQUNWLGlCQUFpQjtJQUNqQiw2QkFBNkI7QUFDakM7O0FBRUE7SUFDSSxZQUFZO0lBQ1osV0FBVztJQUNYLFlBQVk7SUFDWixVQUFVO0lBQ1YsaUJBQWlCO0lBQ2pCLGVBQWU7SUFDZix1QkFBdUI7QUFDM0I7O0FBRUE7Q0FDQyxXQUFXO0lBQ1IsaUJBQWlCO0lBQ2pCLGtCQUFrQjtJQUNsQixpQkFBaUI7SUFDakIsa0JBQWtCO0lBQ2xCLGdCQUFnQjtJQUNoQixhQUFhOztBQUVqQjs7QUFFQTtDQUNDLFdBQVc7QUFDWjs7QUFFQTtDQUNDLGNBQWM7QUFDZjs7QUFFQTtDQUNDLFdBQVc7QUFDWjs7QUFFQTtJQUNJLFlBQVk7SUFDWixtQkFBbUI7SUFDbkIsV0FBVztJQUNYLFlBQVk7SUFDWixVQUFVO0lBQ1YsaUJBQWlCO0FBQ3JCOztBQUVBO0NBQ0MsWUFBWTtDQUNaLFlBQVk7QUFDYjs7QUFFQTtDQUNDLFlBQVk7Q0FDWixZQUFZO0FBQ2I7O0FBRUE7SUFDSSxZQUFZO0lBQ1osWUFBWTtJQUNaLGdCQUFnQjtJQUNoQixrQkFBa0I7QUFDdEI7O0FBRUE7SUFDSSx3QkFBd0I7QUFDNUI7O0FBRUE7SUFDSSx3QkFBd0I7QUFDNUI7O0FBRUE7SUFDSSxnQkFBZ0I7SUFDaEIsZ0JBQWdCO0FBQ3BCOztBQUVBO0lBQ0ksaUJBQWlCO0lBQ2pCLGlCQUFpQjtJQUNqQixjQUFjO0lBQ2QsZUFBZTtJQUNmLHVCQUF1QjtBQUMzQjs7QUFFQTtDQUNDLFdBQVc7SUFDUixlQUFlO0lBQ2YsZUFBZTtJQUNmLHVCQUF1QjtJQUN2QixtQkFBbUI7QUFDdkI7O0FBRUE7SUFDSSxZQUFZO0lBQ1osZ0JBQWdCO0FBQ3BCOztBQUVBO0lBQ0ksV0FBVztJQUNYLGNBQWM7SUFDZCxrQkFBa0I7SUFDbEIsa0JBQWtCO0FBQ3RCOztBQUVBO0NBQ0MsdUJBQXVCO0NBQ3ZCLGtCQUFrQjtBQUNuQjs7QUFFQTtDQUNDLHlCQUF5QjtBQUMxQjs7QUFFQTtDQUNDLFlBQVk7SUFDVCxxQkFBcUI7SUFDckIsZ0JBQWdCO0lBQ2hCLGtCQUFrQjtJQUNsQixZQUFZO0FBQ2hCOztBQUVBO0lBQ0ksZ0JBQWdCO0lBQ2hCLGdCQUFnQjtBQUNwQjs7QUFFQTtJQUNJLGVBQWU7QUFDbkIiLCJmaWxlIjoic3JjL2FwcC93bS1jb21wb25lbnRzL2NyZWF0ZS9jcmVhdGUtaW52b2ljZS9jcmVhdGUtaW52b2ljZS5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiXHJcbmRpdi53b3JrZmxvdy1jb250ZW50LWNvbnRhaW5lcntcclxuXHRib3JkZXI6IDFweCBzb2xpZCBsaWdodGdyYXk7XHJcbiAgICBtYXJnaW46IDEwcHggMHB4IDUwcHggMDtcclxuICAgIGJvcmRlci1yYWRpdXM6IDEwcHg7XHJcbiAgICBwYWRkaW5nOiAxMHB4O1xyXG4gICAgYmFja2dyb3VuZC1jb2xvcjogI2YxZjFmMTtcclxufVxyXG5cclxuZGl2LndvcmtmbG93LWNvbnRlbnR7XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjZGFkOWQ5O1xyXG4gICAgcGFkZGluZzogMTVweDtcclxuICAgIGJvcmRlci1yYWRpdXM6IDVweDtcclxufVxyXG5cclxuXHJcbmRpdi53b3JrZmxvdy1jb250ZW50LXJlY29yZHtcclxuICAgIHBhZGRpbmc6IDE1cHg7XHJcbn1cclxuXHJcbmRpdi53b3JrZmxvdy1yZWNvcmR7XHJcblx0ZmxvYXQ6IHJpZ2h0O1xyXG4gICAgYmFja2dyb3VuZC1jb2xvcjogI2RhZDlkOTtcclxuICAgIHBhZGRpbmc6IDhweDtcclxuICAgIGJvcmRlci1yYWRpdXM6IDVweDtcclxuICAgIHdpZHRoOiAyNSU7XHJcbiAgICBtaW4taGVpZ2h0OiA1MDBweDtcclxufVxyXG5cclxuLndvcmtmbG93LWNvbnRlbnQgLnBhbmVse1xyXG5cdGJhY2tncm91bmQtY29sb3I6ICNmMmYxZjEgIWltcG9ydGFudDtcclxuXHRwYWRkaW5nOiA4cHg7XHJcbiAgICBtYXJnaW4tYm90dG9tOiAxMHB4O1xyXG59XHJcblxyXG4udHdvcGFubmVsIC5wYW5lbC0xe1xyXG5cdFxyXG5cdGhlaWdodDogMTkwcHg7XHJcbn1cclxuXHJcbi50d29wYW5uZWwgLnBhbmVsLTJ7XHJcblx0XHJcblx0aGVpZ2h0OiAzMDBweDtcclxufVxyXG5cclxuLnR3b3Bhbm5lbCAucGFuZWwtdHdvcGFubmVsbGVmdHtcclxuXHR3aWR0aDogY2FsYygxMDAlIC0gMzEwcHgpO1xyXG5cdGZsb2F0OiBsZWZ0O1xyXG59XHJcblxyXG4udHdvcGFubmVsIC5wYW5lbC10d29wYW5uZWxyaWdodHtcclxuXHR3aWR0aDogMzAwcHg7XHJcblx0ZmxvYXQ6IHJpZ2h0O1xyXG59XHJcblxyXG4udHdvcGFubmVsIC5wYW5lbC10d29wYW5uZWxyaWdodCBpbnB1dFt0eXBlPXRleHRde1xyXG5cdHdpZHRoOiAxMDBweDtcclxufVxyXG5cclxuLnNtYWxsLWNvbnRlbnR7XHJcblx0d2lkdGg6IDEyMHB4O1xyXG59XHJcblxyXG4uaXRlbS1jb250ZW50IHNlbGVjdHtcclxuXHRoZWlnaHQ6IDI2cHg7XHJcbn0gXHJcblxyXG4uaXRlbS1jb250ZW50IHNlbGVjdDpub3QoLmZ1bGxyb3cpLCAuaXRlbS1jb250ZW50IGlucHV0W3R5cGU9dGV4dF0ge1xyXG5cdGhlaWdodDogMjZweDtcclxuXHR3aWR0aDogY2FsYygxMDAlKTtcclxufSBcclxuXHJcbi5pdGVtLWNvbnRlbnQgc2VsZWN0LmZ1bGxyb3cge1xyXG5cdGhlaWdodDogMjZweDtcclxuXHR3aWR0aDogY2FsYygxMDAlKTtcclxufSBcclxuXHJcbi5pdGVtLWNvbnRlbnQubGFyZy1jb250ZW50e1xyXG5cdHdpZHRoOiBjYWxjKDEwMCUgLSA0NTBweCk7XHJcbn1cclxuXHJcbi53b3JrZmxvdy1jb250ZW50IC5wYW5lbCAucGFuZWwtaGVhZGluZ3tcclxuXHRmb250LXdlaWdodDogYm9sZDtcclxufVxyXG5cclxuZGl2LndvcmtmbG93LWNvbnRlbnQgZGl2Lml0ZW0tcm93LCBkaXYud29ya2Zsb3ctY29udGVudC1yZWNvcmQgZGl2Lml0ZW0tcm93IHtcclxuICAgIG1hcmdpbjogNXB4IDAgMTBweDtcclxufVxyXG5cclxuZGl2LndvcmtmbG93LWNvbnRlbnQgZGl2LndvcmtmbG93LXN0ZXAtYnV0dG9uLWJhciwgZGl2LndvcmtmbG93LWNvbnRlbnQtcmVjb3JkIGRpdi53b3JrZmxvdy1zdGVwLWJ1dHRvbi1iYXJ7XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiB3aGl0ZTtcclxuICAgIHBhZGRpbmc6IDZweDtcclxuICAgIHBhZGRpbmctcmlnaHQ6IDIwcHg7XHJcbiAgIFxyXG59XHJcblxyXG5kaXYud29ya2Zsb3ctY29udGVudCBkaXYuaXRlbS1yb3cgZGl2Lml0ZW0tbGFiZWwsIFxyXG5kaXYud29ya2Zsb3ctY29udGVudC1yZWNvcmQgZGl2Lml0ZW0tcm93IGRpdi5pdGVtLWxhYmVse1xyXG4gICAgZmxvYXQ6IGxlZnQ7XHJcbiAgICBwYWRkaW5nLXJpZ2h0OiAxMHB4O1xyXG4gICAgcGFkZGluZy1sZWZ0OiAycHg7XHJcbiAgICBsaW5lLWhlaWdodDogMjVweDtcclxuICAgIGZvbnQtc2l6ZTogMTRweDtcclxuICAgIGZvbnQtd2VpZ2h0OiBib2xkO1xyXG4gICAgaGVpZ2h0OiAyNXB4O1xyXG59XHJcblxyXG5kaXYud29ya2Zsb3ctY29udGVudCBkaXYuaXRlbS1yb3cgLmxhYmVsLWxhcmdlLCBcclxuZGl2LndvcmtmbG93LWNvbnRlbnQtcmVjb3JkIGRpdi5pdGVtLXJvdyAubGFiZWwtbGFyZ2V7XHJcbiAgICB3aWR0aDogMTUwcHg7XHJcbn1cclxuXHJcbi5sYXJnZS1jb250ZW50e1xyXG5cdHdpZHRoOiBjYWxjKDEwMCUgLSA0MjBweCk7XHJcbn1cclxuXHJcbi5sYXJnZS1jb250ZW50IGlucHV0W3R5cGU9dGV4dF0sXHJcbi5sYXJnZS1jb250ZW50IGlucHV0W3R5cGU9bnVtYmVyXSxcclxuLmxhcmdlLWNvbnRlbnQgc2VsZWN0LCBcclxuLmxhcmdlLWNvbnRlbnQgYXJlYXRleHR7XHJcblx0d2lkdGg6IGNhbGMoMTAwJSAtIDMwcHgpO1xyXG59XHJcblxyXG5cclxuZGl2LndvcmtmbG93LWNvbnRlbnQgZGl2Lml0ZW0tcm93IC5zbWFsbC1sYWJlbCwgXHJcbmRpdi53b3JrZmxvdy1jb250ZW50LXJlY29yZCBkaXYuaXRlbS1yb3cgLnNtYWxsLWxhYmVse1xyXG4gICAgd2lkdGg6IDEyMnB4O1xyXG59XHJcblxyXG5kaXYud29ya2Zsb3ctY29udGVudCBkaXYuaXRlbS1yb3cgZGl2Lml0ZW0tY29udGVudCwgZGl2LndvcmtmbG93LWNvbnRlbnQtcmVjb3JkIGRpdi5pdGVtLXJvdyBkaXYuaXRlbS1jb250ZW50IHtcclxuICAgIHBhZGRpbmctbGVmdDogMHB4O1xyXG4gICAgZmxvYXQ6IGxlZnQ7XHJcbn1cclxuXHJcbi5pdGVtLWNvbnRlbnQgaW5wdXRbdHlwZT1jaGVja2JveF17XHJcblx0d2lkdGg6IDIwcHg7XHJcblx0aGVpZ2h0OiAyMHB4O1x0XHJcblx0bWFyZ2luLXRvcDogM3B4O1xyXG59XHJcblxyXG5kaXYuZnVsbHJvd2Zyb21sYWJlbHtcclxuXHR3aWR0aDogY2FsYygxMDAlIC0gMTUwcHgpO1x0XHJcbn1cclxuXHJcbmRpdi5mdWxscm93ZnJvbWxhYmVsIGlucHV0W3R5cGU9dGV4dF17XHJcblx0d2lkdGg6IGNhbGMoMTAwJSAtIDEwcHgpO1x0XHJcbn1cclxuXHJcbmRpdi5mdWxscm93ZnJvbWxhYmVsIHRleHRhcmVhe1xyXG5cdHdpZHRoOiBjYWxjKDEwMCUgKTtcdFxyXG5cdGhlaWdodDogMTAwcHg7XHRcclxufVxyXG5cclxudGV4dGFyZWEuY29tbWVudHMtZnVsbHJvd3tcclxuXHR3aWR0aDogY2FsYygxMDAlIC0gMTAwcHgpO1x0XHJcbn1cclxuXHJcbmRpdi53b3JrZmxvdy1jb250ZW50IGRpdi5pdGVtLXJvdyBkaXYuaXRlbS1jb250ZW50IGlucHV0LmZpbGUtdGl0bGVcclxue1xyXG4gICAgd2lkdGg6IGNhbGMoNTAlIC0gMTcwcHgpO1xyXG4gICAgaGVpZ2h0OiAyNnB4O1xyXG59XHJcblxyXG5kaXYud29ya2Zsb3ctY29udGVudCBkaXYuaXRlbS1yb3cgZGl2Lml0ZW0tY29udGVudCBpbnB1dC5maWxlLWZpbGVcclxue1xyXG4gICAgd2lkdGg6IDUwJTtcclxuICAgIGhlaWdodDogMjZweDtcclxuICAgIGRpc3BsYXk6IGlubGluZS1ibG9jazs7XHJcbn1cclxuXHJcbi5hc3NpZ24tbGlzdHtcclxuXHRib3JkZXI6IDFweCBzb2xpZCBsaWdodGdyYXk7XHJcbiAgICBwYWRkaW5nOiA2cHg7XHJcbiAgICBib3JkZXItcmFkaXVzOiA0cHg7XHJcbiAgICB3aWR0aDogMTAwJTtcclxuICAgIG1pbi1oZWlnaHQ6IDEwMHB4O1xyXG4gICAgbWF4LWhlaWdodDogMjAwcHg7XHJcbiAgICBvdmVyZmxvdy15OiBhdXRvO1xyXG4gICAgcGFkZGluZy1yaWdodDogMjRweDtcclxuICAgIGhlaWdodDogMTIwcHg7XHJcbn1cclxuXHJcbmRpdi5hc3NpZ24tbGlzdCBkaXYudXNlci1pdGVtLWJveCB7XHJcbiAgICBib3JkZXI6IDFweCBzb2xpZCBsaWdodGdyYXk7XHJcbiAgICBib3JkZXItcmFkaXVzOiA0cHg7XHJcbiAgICBwYWRkaW5nOiAycHggNHB4O1xyXG4gICAgZmxvYXQ6IGxlZnQ7XHJcbiAgICBiYWNrZ3JvdW5kOiAjZTZlNmU2O1xyXG4gICAgbWFyZ2luLXJpZ2h0OiA1cHg7XHJcbiAgICBtYXJnaW4tYm90dG9tOiA1cHg7XHJcbn1cclxuXHJcbmRpdi5hc3NpZ24tbGlzdCBkaXYudXNlci1pdGVtLWJveCBidXR0b24ge1xyXG4gICAgYm9yZGVyOiBub25lO1xyXG4gICAgYmFja2dyb3VuZDogdHJhbnNwYXJlbnQ7XHJcbiAgICBwYWRkaW5nOiAwO1xyXG4gICAgcGFkZGluZy10b3A6IDNweDtcclxuICAgIGZsb2F0OiByaWdodDtcclxuICAgIG1hcmdpbi1sZWZ0OiA1cHg7XHJcbn1cclxuXHJcbmRpdi5hc3NpZ24tbGlzdCBkaXYudXNlci1pdGVtLWJveCBidXR0b24gaS5tYXRlcmlhbC1pY29uc3tcclxuXHRmb250LXNpemU6IDE2cHg7XHJcbn1cclxuXHJcbmRpdi5hc3NpZ24tbGlzdCBkaXYudXNlci1pdGVtLWJveCBzcGFuIHtcclxuICAgIGhlaWdodDogMjBweDtcclxuICAgIGRpc3BsYXk6IGlubGluZS1ibG9jaztcclxuICAgIGZsb2F0OiBsZWZ0O1xyXG59XHJcblxyXG5idXR0b24uc2hvdy1zZWxlY3QtZGlhbG9nIHtcclxuICAgIGZsb2F0OiByaWdodDtcclxuICAgIG1hcmdpbi1yaWdodDogLTIycHg7XHJcbiAgICB3aWR0aDogMjJweDtcclxuICAgIGJvcmRlcjogbm9uZTtcclxuICAgIHBhZGRpbmc6IDA7XHJcbiAgICBwYWRkaW5nLWxlZnQ6IDJweDtcclxuICAgIGJhY2tncm91bmQtY29sb3I6IHRyYW5zcGFyZW50O1xyXG59XHJcblxyXG5idXR0b24uZmlsZS1hY3Rpb24ge1xyXG4gICAgZmxvYXQ6IHJpZ2h0O1xyXG4gICAgd2lkdGg6IDIycHg7XHJcbiAgICBib3JkZXI6IG5vbmU7XHJcbiAgICBwYWRkaW5nOiAwO1xyXG4gICAgcGFkZGluZy1sZWZ0OiAycHg7XHJcbiAgICBtYXJnaW4tdG9wOiA0cHg7XHJcbiAgICBiYWNrZ3JvdW5kOiB0cmFuc3BhcmVudDtcclxufVxyXG5cclxuLmludmFsaWQtcmVxdWVzdC1jb250YWluZXJ7XHJcblx0d2lkdGg6IDYwdnc7XHJcbiAgICBtaW4taGVpZ2h0OiAxMDBweDtcclxuICAgIHRleHQtYWxpZ246IGNlbnRlcjtcclxuICAgIG1hcmdpbi1sZWZ0OiBhdXRvO1xyXG4gICAgbWFyZ2luLXJpZ2h0OiBhdXRvO1xyXG4gICAgbWFyZ2luLXRvcDogMTB2aDtcclxuICAgIHBhZGRpbmc6IDEwcHg7XHJcblx0XHJcbn1cclxuXHJcbi53b3JrZmxvdy1maWxlLXZpZXctbGluaywgLndvcmtmbG93LWZpbGUtdmlldy1saW5rOmFjdGl2ZSwgLndvcmtmbG93LWZpbGUtdmlldy1saW5rOnZpc2l0ZWR7XHJcblx0Y29sb3I6ICMzMzM7XHJcbn1cclxuXHJcbi53b3JrZmxvdy1maWxlLXZpZXctbGluazpob3ZlcntcclxuXHRjb2xvcjogIzU1MTExMztcclxufVxyXG5cclxuLndvcmtmbG93LWZpbGUtdmlldy1saW5rIGkubWF0ZXJpYWwtaWNvbnN7XHJcblx0d2lkdGg6IDI0cHg7XHJcbn1cclxuXHJcbmJ1dHRvbi5zaG93LXNlbGVjdC1kaWFsb2cge1xyXG4gICAgZmxvYXQ6IHJpZ2h0O1xyXG4gICAgbWFyZ2luLXJpZ2h0OiAtMjBweDtcclxuICAgIHdpZHRoOiAyMnB4O1xyXG4gICAgYm9yZGVyOiBub25lO1xyXG4gICAgcGFkZGluZzogMDtcclxuICAgIHBhZGRpbmctbGVmdDogMnB4O1xyXG59XHJcblxyXG5pbnB1dC5zZWxlY3QtZGF0ZXtcclxuXHR3aWR0aDogMTAwcHg7XHJcblx0aGVpZ2h0OiAyNnB4O1xyXG59XHJcblxyXG5pbnB1dC5zaG9ydC1pbnB1dHtcclxuXHR3aWR0aDogMTAwcHg7XHJcblx0aGVpZ2h0OiAyNnB4O1xyXG59XHJcblxyXG4ub2Nyc2Nhbi1jb250YWluZXIge1xyXG4gICAgd2lkdGg6IDUwMHB4O1xyXG4gICAgZmxvYXQ6IHJpZ2h0O1xyXG4gICAgcGFkZGluZy10b3A6IDVweDtcclxuICAgIG1hcmdpbi1yaWdodDogMTBweDtcclxufVxyXG5cclxuLm9jcnNjYW4tY29udGFpbmVyIC5jdXN0b20tZmlsZS1pbnB1dHtcclxuICAgIHdpZHRoOiBjYWxjKDEwMCUgLSA1MHB4KTtcclxufVxyXG5cclxuLm9jcnNjYW4tY29udGFpbmVyIC5jdXN0b20tZmlsZS1sYWJlbHtcclxuICAgIHdpZHRoOiBjYWxjKDEwMCUgLSA1MHB4KTtcclxufVxyXG5cclxuLm9jcnNjYW4tY29udGFpbmVyIC51cGxvYWQtYnV0dG9ue1xyXG4gICAgcGFkZGluZzogMnB4IDdweDtcclxuICAgIG1hcmdpbi1sZWZ0OiA1cHg7XHJcbn1cclxuXHJcbi51cGxvYWRpbmctZGlhbG9nIHtcclxuICAgIG1pbi1oZWlnaHQ6IDEwMHB4O1xyXG4gICAgbWF4LWhlaWdodDogMTAwcHg7XHJcbiAgICBwYWRkaW5nLXRvcDogMDtcclxuICAgIG1hcmdpbi10b3A6IDIwJTtcclxuICAgIGJhY2tncm91bmQtY29sb3I6IHdoaXRlO1xyXG59XHJcblxyXG4uc2Nhbm5lZC1kZXRhaWxzLWRpYWxvZ3tcclxuXHR3aWR0aDogOTB2dztcclxuICAgIG1heC13aWR0aDogOTB2dztcclxuICAgIG1pbi13aWR0aDogOTB2dztcclxuICAgIGJhY2tncm91bmQtY29sb3I6IHdoaXRlO1xyXG4gICAgcG9pbnRlci1ldmVudHM6IGFsbDtcclxufVxyXG5cclxuLnVwbG9hZGluZy1wcm9ncmVzcyB7XHJcbiAgICBoZWlnaHQ6IDMwcHg7XHJcbiAgICBtYXJnaW46IDBweCAxMHB4O1xyXG59XHJcblxyXG4udXBsb2FkaW5nLXByb2dyZXNzLWxhYmVsIHtcclxuICAgIHdpZHRoOiAxMDAlO1xyXG4gICAgZGlzcGxheTogYmxvY2s7XHJcbiAgICBwb3NpdGlvbjogYWJzb2x1dGU7XHJcbiAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XHJcbn1cclxuXHJcbi51cGxvYWRlZC1maWxlLWl0ZW0ge1xyXG5cdHBhZGRpbmc6IDVweCA0cHggMCAxMHB4O1xyXG5cdG1hcmdpbi1ib3R0b206IDNweDtcclxufVxyXG5cclxuLnVwbG9hZGVkLWZpbGUtaXRlbTpob3ZlciB7XHJcblx0YmFja2dyb3VuZC1jb2xvcjogI2ZlZmZlYTtcclxufVxyXG5cclxuLnVwbG9hZGVkLWZpbGUtaXRlbSAuZmlsZW5hbWUge1xyXG5cdHdpZHRoOiAyMzBweDtcclxuICAgIGRpc3BsYXk6IGlubGluZS1ibG9jaztcclxuICAgIG92ZXJmbG93OiBoaWRkZW47XHJcbiAgICBvdmVyZmxvdy15OiBoaWRkZW47XHJcbiAgICBoZWlnaHQ6IDMwcHg7XHJcbn1cclxuXHJcbi51cGxvYWRlZC1maWxlLWl0ZW0gLnVwbG9hZC1idXR0b257XHJcbiAgICBwYWRkaW5nOiAwcHggNHB4O1xyXG4gICAgbWFyZ2luLWxlZnQ6IDVweDtcclxufVxyXG5cclxuLnVwbG9hZGVkLWZpbGUtaXRlbSAudXBsb2FkLWJ1dHRvbiAubWF0ZXJpYWwtaWNvbnN7XHJcbiAgICBmb250LXNpemU6IDE2cHg7XHJcbn1cclxuXHJcbiJdfQ== */");
 
 /***/ }),
 
@@ -3967,12 +4461,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
 /* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm2015/material.js");
-/* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../services/global.service */ "./src/app/services/global.service.ts");
-/* harmony import */ var _services_workflow_invoice_invoice_workflow_edit_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../services/workflow/invoice/invoice-workflow-edit.service */ "./src/app/services/workflow/invoice/invoice-workflow-edit.service.ts");
-/* harmony import */ var _services_loading_service_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../services/loading-service.service */ "./src/app/services/loading-service.service.ts");
-/* harmony import */ var _services_error_service_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../../services/error-service.service */ "./src/app/services/error-service.service.ts");
-/* harmony import */ var _invoice_base_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../invoice-base.component */ "./src/app/wm-components/invoice-base.component.ts");
-/* harmony import */ var _helper__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../../helper */ "./src/app/helper/index.ts");
+/* harmony import */ var _stomp_ng2_stompjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @stomp/ng2-stompjs */ "./node_modules/@stomp/ng2-stompjs/fesm2015/stomp-ng2-stompjs.js");
+/* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../services/global.service */ "./src/app/services/global.service.ts");
+/* harmony import */ var _services_workflow_invoice_invoice_workflow_edit_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../services/workflow/invoice/invoice-workflow-edit.service */ "./src/app/services/workflow/invoice/invoice-workflow-edit.service.ts");
+/* harmony import */ var _services_loading_service_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../../services/loading-service.service */ "./src/app/services/loading-service.service.ts");
+/* harmony import */ var _services_error_service_service__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../../services/error-service.service */ "./src/app/services/error-service.service.ts");
+/* harmony import */ var _invoice_base_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../invoice-base.component */ "./src/app/wm-components/invoice-base.component.ts");
+/* harmony import */ var _wf_models__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../../wf-models */ "./src/app/wf-models/index.ts");
+/* harmony import */ var _helper__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../../helper */ "./src/app/helper/index.ts");
 
 
 
@@ -3986,8 +4482,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-let CreateInvoiceComponent = class CreateInvoiceComponent extends _invoice_base_component__WEBPACK_IMPORTED_MODULE_11__["InvoiceBaseComponent"] {
-    constructor(router, global, translate, editService, loadingService, http, errorService, formBuilder, dateAdapter) {
+
+
+let CreateInvoiceComponent = class CreateInvoiceComponent extends _invoice_base_component__WEBPACK_IMPORTED_MODULE_12__["InvoiceBaseComponent"] {
+    constructor(router, global, translate, editService, loadingService, http, errorService, formBuilder, dateAdapter, _stompService) {
         super(router, global, translate, editService, loadingService, http, errorService, formBuilder, dateAdapter);
         this.router = router;
         this.global = global;
@@ -3998,6 +4496,40 @@ let CreateInvoiceComponent = class CreateInvoiceComponent extends _invoice_base_
         this.errorService = errorService;
         this.formBuilder = formBuilder;
         this.dateAdapter = dateAdapter;
+        this._stompService = _stompService;
+        this.listening = false;
+        this.stompClient = null;
+        this.uploadedFiles = [];
+        this.scanningFileIndex = -1;
+        this.scanningFile = null;
+        this.showOcrDetailsDialog = false;
+        this.scannedSelectedValues = [];
+        this.onRecevieResponse = (message) => {
+            if (this.listening === false) {
+                return;
+            }
+            var uploaded = this.uploadedFiles[this.scanningFileIndex];
+            this.loadingService.hideLoading();
+            console.log("Message Received: ", message.body);
+            var parsedMessage = JSON.parse(message.body);
+            if (parsedMessage.status) {
+                if (parsedMessage.status === "done") {
+                    this.unsubscribe();
+                    if (parsedMessage.words) {
+                        this.showOcrDetailsDialog = true;
+                        this.uploadedFiles[this.scanningFileIndex].foundWords = parsedMessage.words;
+                        this.uploadedFiles[this.scanningFileIndex].isScanned = true;
+                        this.uploadedFiles[this.scanningFileIndex].imageSizeX = parsedMessage.imageWidth;
+                        this.uploadedFiles[this.scanningFileIndex].imageSizeY = parsedMessage.imageHeight;
+                        console.log("Received Words: ", this.uploadedFiles[this.scanningFileIndex].foundWords);
+                    }
+                }
+                if (parsedMessage.status === "error" && parsedMessage.errorMessage) {
+                    this.unsubscribe();
+                    this.errorService.showError(parsedMessage.errorMessage, parsedMessage.errorDetail);
+                }
+            }
+        };
         this.router.events.subscribe((evt) => {
             if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_2__["NavigationEnd"]) {
                 this.loadInitialData();
@@ -4005,12 +4537,57 @@ let CreateInvoiceComponent = class CreateInvoiceComponent extends _invoice_base_
         });
     }
     get debugData() {
-        var ss = Object(_helper__WEBPACK_IMPORTED_MODULE_12__["formatDate"])(new Date(), 'dd.mm.yyyy');
-        ss += " -- " + Object(_helper__WEBPACK_IMPORTED_MODULE_12__["parseDate"])(ss, 'dd.mm.yyyy');
+        var ss = Object(_helper__WEBPACK_IMPORTED_MODULE_14__["formatDate"])(new Date(), 'dd.mm.yyyy');
+        ss += " -- " + Object(_helper__WEBPACK_IMPORTED_MODULE_14__["parseDate"])(ss, 'dd.mm.yyyy');
         return ss;
     }
     ngOnInit() {
         super.ngOnInit();
+    }
+    onOcrUploadedFile(uploadedFile) {
+        var index = this.uploadedFiles.indexOf(uploadedFile);
+        if (index > -1) {
+            this.scanningFileIndex = index;
+            this.scanningFile = this.uploadedFiles[index];
+            this.loadingService.showLoading();
+            this.subscribe();
+            console.log("ocrUploadedFile : ", this.scanningFile);
+            this._stompService.publish('/socketapp/ocrprocess', JSON.stringify(uploadedFile.uploadResult));
+        }
+    }
+    onShowUploadedFileScannDetail(uploadedFile) {
+        var index = this.uploadedFiles.indexOf(uploadedFile);
+        if (index > -1) {
+            this.scanningFileIndex = index;
+            this.scanningFile = this.uploadedFiles[index];
+            this.showOcrDetailsDialog = true;
+            console.log("showScanResults : ", this.scanningFile);
+        }
+    }
+    onUploadedFilesChanged(uploadedFileList) {
+        this.uploadedFiles = uploadedFileList;
+    }
+    subscribe() {
+        if (this.subscribed) {
+            this.unsubscribe();
+        }
+        this.messages = this._stompService.subscribe('/user/socket/ocrprocess');
+        this.subscription = this.messages.subscribe(this.onRecevieResponse);
+        this.setConnected(true);
+        this.listening = true;
+    }
+    unsubscribe() {
+        this.listening = false;
+        if (!this.subscribed) {
+            return;
+        }
+        this.subscription.unsubscribe();
+        this.subscription = null;
+        this.messages = null;
+        this.setConnected(false);
+    }
+    setConnected(subscribed) {
+        this.subscribed = subscribed;
     }
     loadInitialData() {
         super.loadInitialData();
@@ -4026,7 +4603,6 @@ let CreateInvoiceComponent = class CreateInvoiceComponent extends _invoice_base_
     subscribeToSearchInitialData() {
         this.editService.workflowSaveRequestInitSubject.subscribe((data) => {
             console.log("set gloabl-data from workflow-create. : ", data);
-            //alert("from app-comp: \n" + JSON.stringify(data));
             if (data && data !== null) {
                 this.workflowSaveRequest = data.workflowSaveRequest;
                 this.setToControlValues();
@@ -4038,26 +4614,8 @@ let CreateInvoiceComponent = class CreateInvoiceComponent extends _invoice_base_
     }
     save() {
         this.setFormControlValues();
-        //return;
+        this.workflowSaveRequest.uploadedFiles = _wf_models__WEBPACK_IMPORTED_MODULE_13__["WorkflowUploadedFile"].loadUploadedFiles(this.uploadedFiles);
         this.loadingService.showLoading();
-        if (this.fileTitles.length > 0) {
-            this.editService.uploadFiles(this.fileTitles).subscribe((result) => {
-                console.log("Create workflow upload file result", result);
-                this.workflowSaveRequest.sessionKey = result.sessionKey;
-                this.createWorkflowData();
-            }, response => {
-                console.log("Error in create workflow upload file", response);
-                this.loadingService.hideLoading();
-                this.errorService.showErrorResponse(response);
-            }, () => {
-            });
-        }
-        else {
-            this.workflowSaveRequest.sessionKey = 'not-set';
-            this.createWorkflowData();
-        }
-    }
-    createWorkflowData() {
         this.editService.createWorkflow(this.workflowSaveRequest).subscribe((result) => {
             console.log("Create workflow result", result);
             this.router.navigate([this.workflowListUrl]);
@@ -4069,23 +4627,59 @@ let CreateInvoiceComponent = class CreateInvoiceComponent extends _invoice_base_
             this.loadingService.hideLoading();
         });
     }
+    hideOcrDetails() {
+        this.showOcrDetailsDialog = false;
+    }
+    onApplyScannedValues() {
+        if (this.scannedSelectedValues["invoice-invoicedate"] && this.scannedSelectedValues["invoice-invoicedate"] != "") {
+            this.invoiceEditForm.controls["invocieDate"].setValue(Object(_helper__WEBPACK_IMPORTED_MODULE_14__["parseDate"])(this.scannedSelectedValues["invoice-invoicedate"], 'dd.mm.yyyy'));
+            this.invoiceEditForm.controls["discountEnterDate"].setValue(Object(_helper__WEBPACK_IMPORTED_MODULE_14__["parseDate"])(this.scannedSelectedValues["invoice-invoicedate"], 'dd.mm.yyyy'));
+            //this.invoiceEditForm.controls["discountDate"].setValue(parseDate(this.scannedSelectedValues["invoice-invoicedate"], 'dd.mm.yyyy'));
+        }
+        if (this.scannedSelectedValues["invoice-invoicenumber"] && this.scannedSelectedValues["invoice-invoicenumber"] != "") {
+            this.invoiceEditForm.controls["registerNumber"].setValue(this.scannedSelectedValues["invoice-invoicenumber"]);
+        }
+        if (this.scannedSelectedValues["invoice-paymentamount"] && this.scannedSelectedValues["invoice-paymentamount"] != "") {
+            var foundPayment = this.scannedSelectedValues["invoice-paymentamount"].replace(/\./g, "").replace(",", ".");
+            if (isNaN(foundPayment) === false) {
+                var foundPaymentFloat = parseFloat(foundPayment);
+                this.invoiceEditForm.controls["paymentAmount"].setValue(foundPaymentFloat);
+            }
+        }
+        if (this.scannedSelectedValues["invoice-sender"] && this.scannedSelectedValues["invoice-sender"] != "") {
+            this.invoiceEditForm.controls["sender"].setValue(this.scannedSelectedValues["invoice-sender"]);
+        }
+        this.showOcrDetailsDialog = false;
+    }
+    findUploadedByFileName(fileName) {
+        for (var index in this.uploadedFiles) {
+            if (this.uploadedFiles[index].fileName === fileName) {
+                return this.uploadedFiles[index];
+            }
+        }
+        return null;
+    }
+    existsUploadedByFileName(fileName) {
+        return this.findUploadedByFileName(fileName) !== null;
+    }
 };
 CreateInvoiceComponent.ctorParameters = () => [
     { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] },
-    { type: _services_global_service__WEBPACK_IMPORTED_MODULE_7__["GlobalService"] },
+    { type: _services_global_service__WEBPACK_IMPORTED_MODULE_8__["GlobalService"] },
     { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_3__["TranslateService"] },
-    { type: _services_workflow_invoice_invoice_workflow_edit_service__WEBPACK_IMPORTED_MODULE_8__["InvoiceWorkflowEditService"] },
-    { type: _services_loading_service_service__WEBPACK_IMPORTED_MODULE_9__["LoadingServiceService"] },
+    { type: _services_workflow_invoice_invoice_workflow_edit_service__WEBPACK_IMPORTED_MODULE_9__["InvoiceWorkflowEditService"] },
+    { type: _services_loading_service_service__WEBPACK_IMPORTED_MODULE_10__["LoadingServiceService"] },
     { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"] },
-    { type: _services_error_service_service__WEBPACK_IMPORTED_MODULE_10__["ErrorServiceService"] },
+    { type: _services_error_service_service__WEBPACK_IMPORTED_MODULE_11__["ErrorServiceService"] },
     { type: _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormBuilder"] },
-    { type: _angular_material__WEBPACK_IMPORTED_MODULE_6__["DateAdapter"] }
+    { type: _angular_material__WEBPACK_IMPORTED_MODULE_6__["DateAdapter"] },
+    { type: _stomp_ng2_stompjs__WEBPACK_IMPORTED_MODULE_7__["StompService"] }
 ];
 CreateInvoiceComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
         selector: 'app-create-invoice',
         template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./create-invoice.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/wm-components/create/create-invoice/create-invoice.component.html")).default,
-        providers: [{ provide: _angular_material__WEBPACK_IMPORTED_MODULE_6__["DateAdapter"], useClass: _helper__WEBPACK_IMPORTED_MODULE_12__["GermanDateAdapter"] }, _services_workflow_invoice_invoice_workflow_edit_service__WEBPACK_IMPORTED_MODULE_8__["InvoiceWorkflowEditService"]],
+        providers: [{ provide: _angular_material__WEBPACK_IMPORTED_MODULE_6__["DateAdapter"], useClass: _helper__WEBPACK_IMPORTED_MODULE_14__["GermanDateAdapter"] }, _services_workflow_invoice_invoice_workflow_edit_service__WEBPACK_IMPORTED_MODULE_9__["InvoiceWorkflowEditService"]],
         styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./create-invoice.component.css */ "./src/app/wm-components/create/create-invoice/create-invoice.component.css")).default]
     })
 ], CreateInvoiceComponent);
@@ -4141,6 +4735,7 @@ let CreateSingletaskComponent = class CreateSingletaskComponent {
     constructor(router, global, translate, editService, loadingService, http, errorService) {
         this.router = router;
         this.global = global;
+        this.translate = translate;
         this.editService = editService;
         this.loadingService = loadingService;
         this.http = http;
@@ -4150,13 +4745,13 @@ let CreateSingletaskComponent = class CreateSingletaskComponent {
         this.users = [];
         this.departments = [];
         this.generalDataObs = null;
-        this.fileTitles = [];
         this.showDebug = false;
         this.showAssignModal = false;
         this.selectAssign = [];
         this.assignTypeUser = _wf_models__WEBPACK_IMPORTED_MODULE_9__["AssignType"].USER;
         this.assignTypeDepartment = _wf_models__WEBPACK_IMPORTED_MODULE_9__["AssignType"].DEPARTMENT;
         this.assignTypeDepartmentGroup = _wf_models__WEBPACK_IMPORTED_MODULE_9__["AssignType"].DEPARTMENTGROUP;
+        this.uploadedFiles = [];
         this.router.events.subscribe((evt) => {
             if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_2__["NavigationEnd"]) {
                 this.loadInitialData();
@@ -4168,7 +4763,6 @@ let CreateSingletaskComponent = class CreateSingletaskComponent {
         if (fileInput.target.files && fileInput.target.files != null && file) {
             file.file = fileInput.target.files[0];
         }
-        //this.preview();
     }
     get expireDays() {
         if (this.workflowSaveRequest != null) {
@@ -4216,6 +4810,9 @@ let CreateSingletaskComponent = class CreateSingletaskComponent {
     ngOnInit() {
         this.loadInitialData();
     }
+    onUploadedFilesChanged(uploadedFileList) {
+        this.uploadedFiles = uploadedFileList;
+    }
     loadInitialData() {
         if (this.editService.workflowSaveRequestInit !== null) {
             this.workflowSaveRequest = this.editService.workflowSaveRequestInit.workflowSaveRequest;
@@ -4252,35 +4849,9 @@ let CreateSingletaskComponent = class CreateSingletaskComponent {
             return value.itemIdentity != identity || value.itemType != type;
         });
     }
-    removeFile(index) {
-        this.fileTitles.splice(index, 1);
-    }
-    addFile() {
-        var ft = new _wf_models__WEBPACK_IMPORTED_MODULE_9__["FileTitle"]();
-        ft.title = "";
-        ft.file = null;
-        this.fileTitles.push(ft);
-    }
     save() {
+        this.workflowSaveRequest.uploadedFiles = _wf_models__WEBPACK_IMPORTED_MODULE_9__["WorkflowUploadedFile"].loadUploadedFiles(this.uploadedFiles);
         this.loadingService.showLoading();
-        if (this.fileTitles.length > 0) {
-            this.editService.uploadFiles(this.fileTitles).subscribe((result) => {
-                console.log("Create workflow upload file result", result);
-                this.workflowSaveRequest.sessionKey = result.sessionKey;
-                this.createWorkflowData();
-            }, response => {
-                console.log("Error in create workflow upload file", response);
-                this.loadingService.hideLoading();
-                this.errorService.showErrorResponse(response);
-            }, () => {
-            });
-        }
-        else {
-            this.workflowSaveRequest.sessionKey = 'not-set';
-            this.createWorkflowData();
-        }
-    }
-    createWorkflowData() {
         this.editService.createWorkflow(this.workflowSaveRequest).subscribe((result) => {
             console.log("Create workflow result", result);
             this.router.navigate([this.workflowListUrl]);
@@ -4414,6 +4985,7 @@ let CreateTestthreetaskComponent = class CreateTestthreetaskComponent {
     constructor(router, global, translate, editService, loadingService, http, errorService) {
         this.router = router;
         this.global = global;
+        this.translate = translate;
         this.editService = editService;
         this.loadingService = loadingService;
         this.http = http;
@@ -4423,25 +4995,19 @@ let CreateTestthreetaskComponent = class CreateTestthreetaskComponent {
         this.users = [];
         this.departments = [];
         this.generalDataObs = null;
-        this.fileTitles = [];
         this.showDebug = false;
         this.showAssignModal = false;
         this.selectAssign = [];
         this.assignTypeUser = _wf_models__WEBPACK_IMPORTED_MODULE_9__["AssignType"].USER;
         this.assignTypeDepartment = _wf_models__WEBPACK_IMPORTED_MODULE_9__["AssignType"].DEPARTMENT;
         this.assignTypeDepartmentGroup = _wf_models__WEBPACK_IMPORTED_MODULE_9__["AssignType"].DEPARTMENTGROUP;
+        this.uploadedFiles = [];
         this.router.events.subscribe((evt) => {
             if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_2__["NavigationEnd"]) {
                 this.loadInitialData();
             }
         });
         this.generalDataObs = this.global.currentSessionDataSubject.asObservable();
-    }
-    fileTitleProgress(fileInput, file, fileIndex) {
-        if (fileInput.target.files && fileInput.target.files != null && file) {
-            file.file = fileInput.target.files[0];
-        }
-        //this.preview();
     }
     get expireDays() {
         if (this.workflowSaveRequest != null) {
@@ -4489,6 +5055,9 @@ let CreateTestthreetaskComponent = class CreateTestthreetaskComponent {
     ngOnInit() {
         this.loadInitialData();
     }
+    onUploadedFilesChanged(uploadedFileList) {
+        this.uploadedFiles = uploadedFileList;
+    }
     loadInitialData() {
         if (this.editService.workflowSaveRequestInit !== null) {
             this.workflowSaveRequest = this.editService.workflowSaveRequestInit.workflowSaveRequest;
@@ -4497,14 +5066,6 @@ let CreateTestthreetaskComponent = class CreateTestthreetaskComponent {
             this.subscribeToSearchInitialData();
             this.editService.loadCreateInitialData();
         }
-        /*if(this.global.loadedGeneralData !== null){
-            this.users = this.global.loadedGeneralData.company.users;
-            this.departments = this.global.loadedGeneralData.company.departments;
-        }
-        else{
-            this.subscribeToGeneralData();
-            this.global.loadAllSetting(null);
-        }*/
     }
     subscribeToSearchInitialData() {
         this.editService.workflowSaveRequestInitSubject.subscribe((data) => {
@@ -4533,35 +5094,9 @@ let CreateTestthreetaskComponent = class CreateTestthreetaskComponent {
             return value.itemIdentity != identity || value.itemType != type;
         });
     }
-    removeFile(index) {
-        this.fileTitles.splice(index, 1);
-    }
-    addFile() {
-        var ft = new _wf_models__WEBPACK_IMPORTED_MODULE_9__["FileTitle"]();
-        ft.title = "";
-        ft.file = null;
-        this.fileTitles.push(ft);
-    }
     save() {
+        this.workflowSaveRequest.uploadedFiles = _wf_models__WEBPACK_IMPORTED_MODULE_9__["WorkflowUploadedFile"].loadUploadedFiles(this.uploadedFiles);
         this.loadingService.showLoading();
-        if (this.fileTitles.length > 0) {
-            this.editService.uploadFiles(this.fileTitles).subscribe((result) => {
-                console.log("Create workflow upload file result", result);
-                this.workflowSaveRequest.sessionKey = result.sessionKey;
-                this.createWorkflowData();
-            }, response => {
-                console.log("Error in create workflow upload file", response);
-                this.loadingService.hideLoading();
-                this.errorService.showErrorResponse(response);
-            }, () => {
-            });
-        }
-        else {
-            this.workflowSaveRequest.sessionKey = 'not-set';
-            this.createWorkflowData();
-        }
-    }
-    createWorkflowData() {
         this.editService.createWorkflow(this.workflowSaveRequest).subscribe((result) => {
             console.log("Create workflow result", result);
             this.router.navigate([this.workflowListUrl]);
@@ -4842,52 +5377,17 @@ let EditInvoiceComponent = class EditInvoiceComponent extends _invoice_base_comp
     save(makeDone) {
         this.setFormControlValues();
         this.loadingService.showLoading();
-        if (this.fileTitles.length > 0) {
-            this.editService.uploadFiles(this.fileTitles).subscribe((result) => {
-                console.log("Create workflow upload file result", result);
-                this.workflowSaveRequest.sessionKey = result.sessionKey;
-                if (makeDone) {
-                    this.doneWorkflowData();
-                }
-                else {
-                    this.saveWorkflowData();
-                }
-            }, response => {
-                console.log("Error in create workflow upload file", response);
-                this.loadingService.hideLoading();
-                this.errorService.showErrorResponse(response);
-            }, () => {
-            });
+        if (makeDone) {
+            this.doneWorkflowData();
         }
         else {
-            this.workflowSaveRequest.sessionKey = 'not-set';
-            if (makeDone) {
-                this.doneWorkflowData();
-            }
-            else {
-                this.saveWorkflowData();
-            }
+            this.saveWorkflowData();
         }
     }
     archive() {
         this.setFormControlValues();
         this.loadingService.showLoading();
-        if (this.fileTitles.length > 0) {
-            this.editService.uploadFiles(this.fileTitles).subscribe((result) => {
-                console.log("Create workflow upload file result", result);
-                this.workflowSaveRequest.sessionKey = result.sessionKey;
-                this.archiveWorkflowData();
-            }, response => {
-                console.log("Error in create workflow upload file", response);
-                this.loadingService.hideLoading();
-                this.errorService.showErrorResponse(response);
-            }, () => {
-            });
-        }
-        else {
-            this.workflowSaveRequest.sessionKey = 'not-set';
-            this.archiveWorkflowData();
-        }
+        this.archiveWorkflowData();
     }
     saveWorkflowData() {
         this.saveMessage = "";
@@ -5194,53 +5694,18 @@ let EditSingleTaskComponent = class EditSingleTaskComponent {
         this.setFormControlValues();
         //return;
         this.loadingService.showLoading();
-        if (this.fileTitles.length > 0) {
-            this.editService.uploadFiles(this.fileTitles).subscribe((result) => {
-                console.log("Create workflow upload file result", result);
-                this.workflowSaveRequest.sessionKey = result.sessionKey;
-                if (makeDone) {
-                    this.doneWorkflowData();
-                }
-                else {
-                    this.saveWorkflowData();
-                }
-            }, response => {
-                console.log("Error in create workflow upload file", response);
-                this.loadingService.hideLoading();
-                this.errorService.showErrorResponse(response);
-            }, () => {
-            });
+        if (makeDone) {
+            this.doneWorkflowData();
         }
         else {
-            this.workflowSaveRequest.sessionKey = 'not-set';
-            if (makeDone) {
-                this.doneWorkflowData();
-            }
-            else {
-                this.saveWorkflowData();
-            }
+            this.saveWorkflowData();
         }
     }
     archive() {
         this.setFormControlValues();
         //return;
         this.loadingService.showLoading();
-        if (this.fileTitles.length > 0) {
-            this.editService.uploadFiles(this.fileTitles).subscribe((result) => {
-                console.log("Create workflow upload file result", result);
-                this.workflowSaveRequest.sessionKey = result.sessionKey;
-                this.archiveWorkflowData();
-            }, response => {
-                console.log("Error in create workflow upload file", response);
-                this.loadingService.hideLoading();
-                this.errorService.showErrorResponse(response);
-            }, () => {
-            });
-        }
-        else {
-            this.workflowSaveRequest.sessionKey = 'not-set';
-            this.archiveWorkflowData();
-        }
+        this.archiveWorkflowData();
     }
     saveWorkflowData() {
         this.editService.saveWorkflow(this.workflowSaveRequest.workflow).subscribe((result) => {
@@ -5596,53 +6061,18 @@ let EditTestthreeTaskComponent = class EditTestthreeTaskComponent {
         this.setFormControlValues();
         //return;
         this.loadingService.showLoading();
-        if (this.fileTitles.length > 0) {
-            this.editService.uploadFiles(this.fileTitles).subscribe((result) => {
-                console.log("Create workflow upload file result", result);
-                this.workflowSaveRequest.sessionKey = result.sessionKey;
-                if (makeDone) {
-                    this.doneWorkflowData();
-                }
-                else {
-                    this.saveWorkflowData();
-                }
-            }, response => {
-                console.log("Error in create workflow upload file", response);
-                this.loadingService.hideLoading();
-                this.errorService.showErrorResponse(response);
-            }, () => {
-            });
+        if (makeDone) {
+            this.doneWorkflowData();
         }
         else {
-            this.workflowSaveRequest.sessionKey = 'not-set';
-            if (makeDone) {
-                this.doneWorkflowData();
-            }
-            else {
-                this.saveWorkflowData();
-            }
+            this.saveWorkflowData();
         }
     }
     archive() {
         this.setFormControlValues();
         //return;
         this.loadingService.showLoading();
-        if (this.fileTitles.length > 0) {
-            this.editService.uploadFiles(this.fileTitles).subscribe((result) => {
-                console.log("Create workflow upload file result", result);
-                this.workflowSaveRequest.sessionKey = result.sessionKey;
-                this.archiveWorkflowData();
-            }, response => {
-                console.log("Error in create workflow upload file", response);
-                this.loadingService.hideLoading();
-                this.errorService.showErrorResponse(response);
-            }, () => {
-            });
-        }
-        else {
-            this.workflowSaveRequest.sessionKey = 'not-set';
-            this.archiveWorkflowData();
-        }
+        this.archiveWorkflowData();
     }
     saveWorkflowData() {
         this.editService.saveWorkflow(this.workflowSaveRequest.workflow).subscribe((result) => {
@@ -6024,6 +6454,229 @@ class InvoiceBaseComponent {
 
 /***/ }),
 
+/***/ "./src/app/wm-components/invoice-ocr-detail/invoice-ocr-detail.component.css":
+/*!***********************************************************************************!*\
+  !*** ./src/app/wm-components/invoice-ocr-detail/invoice-ocr-detail.component.css ***!
+  \***********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("\r\n.scanned-result-container{\r\n\tbackground-color: white;\t\r\n\twidth: 100%;\r\n\tmargin: 0;\r\n}\r\n\r\n.scanned-item-container{\r\n\tbackground: #fff;\t\r\n}\r\n\r\n.scanned-item:not(:disabled){\r\n\tcursor: pointer;\r\n}\r\n\r\n.scanned-item-list-container .scanned-item:not(:disabled){\r\n\twidth: calc(50% - 10px);\r\n\tfloat: left;\t\r\n\tborder: none;\r\n    border-radius: 0;\r\n    display: block;\r\n    color: #495057;\r\n    height: 28px;\r\n}\r\n\r\n.scanned-item-list-container .scanned-item.active:not(:disabled){\r\n    color: #fff;\r\n}\r\n\r\n.item-value-container{\r\n\twidth: calc(50% + 8px);\r\n\tfloat: left;\r\n\tborder: none;\r\n    border-radius: 0;\r\n}\r\n\r\n.item-value {\r\n    border: 1px solid gray;\r\n    background: #ffffff;\r\n    box-shadow: none;\r\n    float: left;\r\n    width: 195px;\r\n}\r\n\r\n.item-value:-moz-read-only {\r\n    border-color: #bebebe;\r\n\tbackground: #eeeeee;\r\n}\r\n\r\n.item-value:read-only {\r\n    border-color: #bebebe;\r\n\tbackground: #eeeeee;\r\n}\r\n\r\n.edit-value-icon{\r\n\tfont-size: 18px; \r\n}\r\n\r\n.inline-edit-button-edit, .inline-edit-button-apply {\r\n    border: none;\r\n    background-color: transparent;\r\n    color: #5f5f5f;\r\n    padding: 0 3px;\r\n    padding-top: 3px;\r\n    height: 30px;\r\n    width: 24px;\r\n    float: left;\r\n}\r\n\r\n.inline-edit-button-apply i {\r\n    color: #008200;\r\n}\r\n\r\n.scanned-item-list-container, \r\n.scanned-item-detail-container,\r\n.scanned-item-preview-container {\r\n\tpadding: 10px;\r\n\tmargin: 5px;\r\n\tborder-radius: 5px;\r\n\theight: 80vh;\r\n\toverflow-x: hidden;\r\n\toverflow-y: auto;\r\n\tbackground-color: #e0e0e0;\r\n}\r\n\r\n.scanned-item-list-container {\r\n\tmax-width: calc(50% - 325px);\r\n    flex: 0 0 calc(50% - 325px);\r\n}\r\n\r\n.scanned-item-detail-container {\r\n\tmax-width: calc(50% - 325px);\r\n    flex: 0 0 calc(50% - 325px);\r\n}\r\n\r\n.scanned-item-preview-container {\r\n\tmax-width: 620px;\r\n\tflex: 0 0 620px;\r\n}\r\n\r\n.found-item {\r\n    \r\n}\r\n\r\n.word-list-item.fade:not(.show) {\r\n    display: none;\r\n}\r\n\r\n.scanned-item-preview-image{\r\n\tbackground-color: white;\r\n\tbackground-image: none;\r\n\tbackground-position: 0 0;\r\n\tbackground-repeat: no-repeat;\r\n\tbackground-size: 100% 100%;\r\n\twidth: 100%;\r\n\theight: 100%;\r\n\t\r\n}\r\n\r\n.selected-word-area{\r\n\tposition: absolute;\r\n\tbackground-color: #add5ef3d;\r\n\tborder: 1px dashed #5873bae0;\t\r\n\twidth: 300px;\r\n\theight: 100px;\r\n}\r\n\r\n.scanned-item-detail-container .scanned-item:not(:disabled){\r\n\twidth: calc(100% - 40px);\r\n\tfloat: left;\t\r\n}\r\n\r\n.edit-value-icon{\r\n\tfont-size: 18px; \r\n}\r\n\r\n.inline-edit-button-use {\r\n    border: none;\r\n    background-color: transparent;\r\n    color: #5f5f5f;\r\n    padding: 0 3px;\r\n    padding-top: 3px;\r\n    height: 30px;\r\n    width: 24px;\r\n    float: left;\r\n    width: 24px;\r\n    float: right;\r\n}\r\n\r\n.inline-edit-button-use i {\r\n\tfont-size: 30px;\r\n}\r\n\r\n\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvd20tY29tcG9uZW50cy9pbnZvaWNlLW9jci1kZXRhaWwvaW52b2ljZS1vY3ItZGV0YWlsLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IjtBQUNBO0NBQ0MsdUJBQXVCO0NBQ3ZCLFdBQVc7Q0FDWCxTQUFTO0FBQ1Y7O0FBRUE7Q0FDQyxnQkFBZ0I7QUFDakI7O0FBRUE7Q0FDQyxlQUFlO0FBQ2hCOztBQUVBO0NBQ0MsdUJBQXVCO0NBQ3ZCLFdBQVc7Q0FDWCxZQUFZO0lBQ1QsZ0JBQWdCO0lBQ2hCLGNBQWM7SUFDZCxjQUFjO0lBQ2QsWUFBWTtBQUNoQjs7QUFFQTtJQUNJLFdBQVc7QUFDZjs7QUFFQTtDQUNDLHNCQUFzQjtDQUN0QixXQUFXO0NBQ1gsWUFBWTtJQUNULGdCQUFnQjtBQUNwQjs7QUFFQTtJQUNJLHNCQUFzQjtJQUN0QixtQkFBbUI7SUFDbkIsZ0JBQWdCO0lBQ2hCLFdBQVc7SUFDWCxZQUFZO0FBQ2hCOztBQUVBO0lBQ0kscUJBQXFCO0NBQ3hCLG1CQUFtQjtBQUNwQjs7QUFIQTtJQUNJLHFCQUFxQjtDQUN4QixtQkFBbUI7QUFDcEI7O0FBRUE7Q0FDQyxlQUFlO0FBQ2hCOztBQUVBO0lBQ0ksWUFBWTtJQUNaLDZCQUE2QjtJQUM3QixjQUFjO0lBQ2QsY0FBYztJQUNkLGdCQUFnQjtJQUNoQixZQUFZO0lBQ1osV0FBVztJQUNYLFdBQVc7QUFDZjs7QUFFQTtJQUNJLGNBQWM7QUFDbEI7O0FBR0E7OztDQUdDLGFBQWE7Q0FDYixXQUFXO0NBQ1gsa0JBQWtCO0NBQ2xCLFlBQVk7Q0FDWixrQkFBa0I7Q0FDbEIsZ0JBQWdCO0NBQ2hCLHlCQUF5QjtBQUMxQjs7QUFFQTtDQUNDLDRCQUE0QjtJQUN6QiwyQkFBMkI7QUFDL0I7O0FBRUE7Q0FDQyw0QkFBNEI7SUFDekIsMkJBQTJCO0FBQy9COztBQUVBO0NBQ0MsZ0JBQWdCO0NBQ2hCLGVBQWU7QUFDaEI7O0FBRUE7O0FBRUE7O0FBRUE7SUFDSSxhQUFhO0FBQ2pCOztBQUVBO0NBQ0MsdUJBQXVCO0NBQ3ZCLHNCQUFzQjtDQUN0Qix3QkFBd0I7Q0FDeEIsNEJBQTRCO0NBQzVCLDBCQUEwQjtDQUMxQixXQUFXO0NBQ1gsWUFBWTs7QUFFYjs7QUFFQTtDQUNDLGtCQUFrQjtDQUNsQiwyQkFBMkI7Q0FDM0IsNEJBQTRCO0NBQzVCLFlBQVk7Q0FDWixhQUFhO0FBQ2Q7O0FBR0E7Q0FDQyx3QkFBd0I7Q0FDeEIsV0FBVztBQUNaOztBQUVBO0NBQ0MsZUFBZTtBQUNoQjs7QUFFQTtJQUNJLFlBQVk7SUFDWiw2QkFBNkI7SUFDN0IsY0FBYztJQUNkLGNBQWM7SUFDZCxnQkFBZ0I7SUFDaEIsWUFBWTtJQUNaLFdBQVc7SUFDWCxXQUFXO0lBQ1gsV0FBVztJQUNYLFlBQVk7QUFDaEI7O0FBRUE7Q0FDQyxlQUFlO0FBQ2hCIiwiZmlsZSI6InNyYy9hcHAvd20tY29tcG9uZW50cy9pbnZvaWNlLW9jci1kZXRhaWwvaW52b2ljZS1vY3ItZGV0YWlsLmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyJcclxuLnNjYW5uZWQtcmVzdWx0LWNvbnRhaW5lcntcclxuXHRiYWNrZ3JvdW5kLWNvbG9yOiB3aGl0ZTtcdFxyXG5cdHdpZHRoOiAxMDAlO1xyXG5cdG1hcmdpbjogMDtcclxufVxyXG5cclxuLnNjYW5uZWQtaXRlbS1jb250YWluZXJ7XHJcblx0YmFja2dyb3VuZDogI2ZmZjtcdFxyXG59XHJcblxyXG4uc2Nhbm5lZC1pdGVtOm5vdCg6ZGlzYWJsZWQpe1xyXG5cdGN1cnNvcjogcG9pbnRlcjtcclxufVxyXG5cclxuLnNjYW5uZWQtaXRlbS1saXN0LWNvbnRhaW5lciAuc2Nhbm5lZC1pdGVtOm5vdCg6ZGlzYWJsZWQpe1xyXG5cdHdpZHRoOiBjYWxjKDUwJSAtIDEwcHgpO1xyXG5cdGZsb2F0OiBsZWZ0O1x0XHJcblx0Ym9yZGVyOiBub25lO1xyXG4gICAgYm9yZGVyLXJhZGl1czogMDtcclxuICAgIGRpc3BsYXk6IGJsb2NrO1xyXG4gICAgY29sb3I6ICM0OTUwNTc7XHJcbiAgICBoZWlnaHQ6IDI4cHg7XHJcbn1cclxuXHJcbi5zY2FubmVkLWl0ZW0tbGlzdC1jb250YWluZXIgLnNjYW5uZWQtaXRlbS5hY3RpdmU6bm90KDpkaXNhYmxlZCl7XHJcbiAgICBjb2xvcjogI2ZmZjtcclxufVxyXG5cclxuLml0ZW0tdmFsdWUtY29udGFpbmVye1xyXG5cdHdpZHRoOiBjYWxjKDUwJSArIDhweCk7XHJcblx0ZmxvYXQ6IGxlZnQ7XHJcblx0Ym9yZGVyOiBub25lO1xyXG4gICAgYm9yZGVyLXJhZGl1czogMDtcclxufVxyXG5cclxuLml0ZW0tdmFsdWUge1xyXG4gICAgYm9yZGVyOiAxcHggc29saWQgZ3JheTtcclxuICAgIGJhY2tncm91bmQ6ICNmZmZmZmY7XHJcbiAgICBib3gtc2hhZG93OiBub25lO1xyXG4gICAgZmxvYXQ6IGxlZnQ7XHJcbiAgICB3aWR0aDogMTk1cHg7XHJcbn1cclxuXHJcbi5pdGVtLXZhbHVlOnJlYWQtb25seSB7XHJcbiAgICBib3JkZXItY29sb3I6ICNiZWJlYmU7XHJcblx0YmFja2dyb3VuZDogI2VlZWVlZTtcclxufVxyXG5cclxuLmVkaXQtdmFsdWUtaWNvbntcclxuXHRmb250LXNpemU6IDE4cHg7IFxyXG59XHJcblxyXG4uaW5saW5lLWVkaXQtYnV0dG9uLWVkaXQsIC5pbmxpbmUtZWRpdC1idXR0b24tYXBwbHkge1xyXG4gICAgYm9yZGVyOiBub25lO1xyXG4gICAgYmFja2dyb3VuZC1jb2xvcjogdHJhbnNwYXJlbnQ7XHJcbiAgICBjb2xvcjogIzVmNWY1ZjtcclxuICAgIHBhZGRpbmc6IDAgM3B4O1xyXG4gICAgcGFkZGluZy10b3A6IDNweDtcclxuICAgIGhlaWdodDogMzBweDtcclxuICAgIHdpZHRoOiAyNHB4O1xyXG4gICAgZmxvYXQ6IGxlZnQ7XHJcbn1cclxuXHJcbi5pbmxpbmUtZWRpdC1idXR0b24tYXBwbHkgaSB7XHJcbiAgICBjb2xvcjogIzAwODIwMDtcclxufVxyXG5cclxuXHJcbi5zY2FubmVkLWl0ZW0tbGlzdC1jb250YWluZXIsIFxyXG4uc2Nhbm5lZC1pdGVtLWRldGFpbC1jb250YWluZXIsXHJcbi5zY2FubmVkLWl0ZW0tcHJldmlldy1jb250YWluZXIge1xyXG5cdHBhZGRpbmc6IDEwcHg7XHJcblx0bWFyZ2luOiA1cHg7XHJcblx0Ym9yZGVyLXJhZGl1czogNXB4O1xyXG5cdGhlaWdodDogODB2aDtcclxuXHRvdmVyZmxvdy14OiBoaWRkZW47XHJcblx0b3ZlcmZsb3cteTogYXV0bztcclxuXHRiYWNrZ3JvdW5kLWNvbG9yOiAjZTBlMGUwO1xyXG59XHJcblxyXG4uc2Nhbm5lZC1pdGVtLWxpc3QtY29udGFpbmVyIHtcclxuXHRtYXgtd2lkdGg6IGNhbGMoNTAlIC0gMzI1cHgpO1xyXG4gICAgZmxleDogMCAwIGNhbGMoNTAlIC0gMzI1cHgpO1xyXG59XHJcblxyXG4uc2Nhbm5lZC1pdGVtLWRldGFpbC1jb250YWluZXIge1xyXG5cdG1heC13aWR0aDogY2FsYyg1MCUgLSAzMjVweCk7XHJcbiAgICBmbGV4OiAwIDAgY2FsYyg1MCUgLSAzMjVweCk7XHJcbn1cclxuXHJcbi5zY2FubmVkLWl0ZW0tcHJldmlldy1jb250YWluZXIge1xyXG5cdG1heC13aWR0aDogNjIwcHg7XHJcblx0ZmxleDogMCAwIDYyMHB4O1xyXG59XHJcblxyXG4uZm91bmQtaXRlbSB7XHJcbiAgICBcclxufVxyXG5cclxuLndvcmQtbGlzdC1pdGVtLmZhZGU6bm90KC5zaG93KSB7XHJcbiAgICBkaXNwbGF5OiBub25lO1xyXG59XHJcblxyXG4uc2Nhbm5lZC1pdGVtLXByZXZpZXctaW1hZ2V7XHJcblx0YmFja2dyb3VuZC1jb2xvcjogd2hpdGU7XHJcblx0YmFja2dyb3VuZC1pbWFnZTogbm9uZTtcclxuXHRiYWNrZ3JvdW5kLXBvc2l0aW9uOiAwIDA7XHJcblx0YmFja2dyb3VuZC1yZXBlYXQ6IG5vLXJlcGVhdDtcclxuXHRiYWNrZ3JvdW5kLXNpemU6IDEwMCUgMTAwJTtcclxuXHR3aWR0aDogMTAwJTtcclxuXHRoZWlnaHQ6IDEwMCU7XHJcblx0XHJcbn1cclxuXHJcbi5zZWxlY3RlZC13b3JkLWFyZWF7XHJcblx0cG9zaXRpb246IGFic29sdXRlO1xyXG5cdGJhY2tncm91bmQtY29sb3I6ICNhZGQ1ZWYzZDtcclxuXHRib3JkZXI6IDFweCBkYXNoZWQgIzU4NzNiYWUwO1x0XHJcblx0d2lkdGg6IDMwMHB4O1xyXG5cdGhlaWdodDogMTAwcHg7XHJcbn1cclxuXHJcblxyXG4uc2Nhbm5lZC1pdGVtLWRldGFpbC1jb250YWluZXIgLnNjYW5uZWQtaXRlbTpub3QoOmRpc2FibGVkKXtcclxuXHR3aWR0aDogY2FsYygxMDAlIC0gNDBweCk7XHJcblx0ZmxvYXQ6IGxlZnQ7XHRcclxufVxyXG5cclxuLmVkaXQtdmFsdWUtaWNvbntcclxuXHRmb250LXNpemU6IDE4cHg7IFxyXG59XHJcblxyXG4uaW5saW5lLWVkaXQtYnV0dG9uLXVzZSB7XHJcbiAgICBib3JkZXI6IG5vbmU7XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiB0cmFuc3BhcmVudDtcclxuICAgIGNvbG9yOiAjNWY1ZjVmO1xyXG4gICAgcGFkZGluZzogMCAzcHg7XHJcbiAgICBwYWRkaW5nLXRvcDogM3B4O1xyXG4gICAgaGVpZ2h0OiAzMHB4O1xyXG4gICAgd2lkdGg6IDI0cHg7XHJcbiAgICBmbG9hdDogbGVmdDtcclxuICAgIHdpZHRoOiAyNHB4O1xyXG4gICAgZmxvYXQ6IHJpZ2h0O1xyXG59XHJcblxyXG4uaW5saW5lLWVkaXQtYnV0dG9uLXVzZSBpIHtcclxuXHRmb250LXNpemU6IDMwcHg7XHJcbn1cclxuXHJcblxyXG4iXX0= */");
+
+/***/ }),
+
+/***/ "./src/app/wm-components/invoice-ocr-detail/invoice-ocr-detail.component.ts":
+/*!**********************************************************************************!*\
+  !*** ./src/app/wm-components/invoice-ocr-detail/invoice-ocr-detail.component.ts ***!
+  \**********************************************************************************/
+/*! exports provided: InvoiceOcrDetailComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InvoiceOcrDetailComponent", function() { return InvoiceOcrDetailComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm2015/ngx-translate-core.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _ui_models__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../ui-models */ "./src/app/ui-models/index.ts");
+
+
+
+
+
+let InvoiceOcrDetailComponent = class InvoiceOcrDetailComponent {
+    constructor(translate) {
+        this.translate = translate;
+        this._foundWords = [];
+        this.propertyLabels = [];
+        this.isEditing = [];
+        this.selectedKey = "";
+        this.selectedWord = null;
+        this.showOcrDetails = false;
+        this.scanedPdfPath = "";
+        this.scanedHocrPath = "";
+        this.fileIsPdf = true;
+        this.fileIsImage = false;
+        this.imageSizeX = 300;
+        this.imageSizeY = 500;
+        this.editedValues = [];
+        this.onApplyValues = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
+        this.pdfZoom = 'page-fit';
+        this.showAllPages = true;
+        this.pdfPageIndex = 1;
+        this.showSelectedArea = false;
+        this.selectedAreaWidth = 200;
+        this.selectedAreaHeight = 100;
+        this.selectedAreaLeft = 400;
+        this.selectedAreaTop = 200;
+        this.previewWidth = 600;
+        this.previewHeight = 1100;
+        this.yScale = 1;
+    }
+    set foundWords(foundWordsInput) {
+        this._foundWords = foundWordsInput;
+        this.propertyLabels = [];
+        if (this._foundWords) {
+            for (var key in this._foundWords) {
+                this.translate.get(key).subscribe((res) => {
+                    this.propertyLabels[key] = res;
+                    this.isEditing[key] = false;
+                    this.editedValues[key] = "";
+                });
+            }
+        }
+    }
+    get foundWords() {
+        return this._foundWords;
+    }
+    get keys() {
+        return Object.keys(this._foundWords);
+    }
+    get imageFileViewUrl() {
+        return 'url(/general/data/file/view/' + this.scanedPdfPath + ')';
+        //return 'url()';
+    }
+    get fileViewUrl() {
+        return '/general/data/file/view/' + this.scanedPdfPath;
+        //return 'url()';
+    }
+    isWordSelected(foundWord) {
+        if (this.selectedWord != null && foundWord != null && this.selectedWord.id === foundWord.id) {
+            return true;
+        }
+        return false;
+    }
+    get debugData() {
+        return this.editedValues;
+    }
+    ngOnInit() {
+    }
+    ngAfterViewInit() {
+        this.yScale = this.previewWidth / this.imageSizeX;
+        this.previewHeight = this.yScale * this.imageSizeY;
+        setTimeout(() => {
+        }, 100);
+    }
+    selectFoundWord(foundWord) {
+        this.selectedWord = foundWord;
+        this.pdfPageIndex = foundWord.pageIndex + 1;
+        var previewLeft = this.previewContainer.nativeElement.offsetLeft + 10;
+        var previewTop = this.previewContainer.nativeElement.offsetTop + 10;
+        var pdfPage = null;
+        var pdfPageWidth = null;
+        var pdfPageHeight = null;
+        var xscale = (this.previewContainer.nativeElement.offsetWidth - 20) / this.imageSizeX;
+        var yscale = (this.previewContainer.nativeElement.offsetHeight - 20) / this.imageSizeY;
+        if (this.fileIsPdf) {
+            pdfPage = jquery__WEBPACK_IMPORTED_MODULE_3___default()("div.scanned-item-preview-container div.page");
+            if (pdfPage.length > foundWord.pageIndex) {
+                pdfPage = pdfPage[foundWord.pageIndex];
+                pdfPageWidth = pdfPage.offsetWidth;
+                pdfPageHeight = pdfPage.offsetHeight;
+                previewLeft += pdfPage.offsetLeft;
+                //previewTop = pdfPage.offsetTop;
+                xscale = pdfPageWidth / foundWord.pageWidth;
+                yscale = pdfPageHeight / foundWord.pageHeight;
+                var scalestr = "page scale    : " + xscale + " : " + yscale + "\n";
+                scalestr += "page dimention: " + pdfPageWidth + " : " + pdfPageHeight + "\n";
+                scalestr += "page position : " + previewLeft + " : " + previewTop + "\n";
+                scalestr += "foundWord dim : " + foundWord.pageWidth + " : " + foundWord.pageHeight + "\n";
+                console.log("pdfPage found:", pdfPage);
+                console.log(scalestr);
+            }
+        }
+        var wordBox = foundWord.box;
+        var valueBox = foundWord.value.box;
+        var selectBox = this.getSelectBox(foundWord);
+        this.selectedAreaWidth = selectBox.width * xscale + 8;
+        this.selectedAreaHeight = selectBox.height * yscale + 8;
+        this.selectedAreaLeft = previewLeft + (selectBox.left * xscale) - 4;
+        this.selectedAreaTop = previewTop + (selectBox.top * yscale) - 4;
+        var scalestr = "scale         : " + xscale + " : " + yscale + "\n";
+        scalestr += "wordBox       : " + wordBox.left + " : " + wordBox.top + " : " + wordBox.width + " : " + wordBox.height + "\n";
+        scalestr += "valueBox      : " + valueBox.left + " : " + valueBox.top + " : " + valueBox.width + " : " + valueBox.height + " : " + foundWord.value.text + "\n";
+        scalestr += "selectBox     : " + selectBox.left + " : " + selectBox.top + " : " + selectBox.width + " : " + selectBox.height + "\n";
+        scalestr += "calc dimention: " + this.selectedAreaWidth + " : " + this.selectedAreaHeight + "\n";
+        scalestr += "calc position : " + this.selectedAreaLeft + " : " + this.selectedAreaTop + "\n";
+        console.log(scalestr);
+        this.showSelectedArea = true;
+    }
+    selectDetailItem(key) {
+        this.selectedKey = key;
+        this.showSelectedArea = false;
+    }
+    getSelectBox(foundWord) {
+        var wordBox = foundWord.box;
+        var valueBox = foundWord.value.box;
+        var box = new _ui_models__WEBPACK_IMPORTED_MODULE_4__["OcrBox"];
+        box.width = Math.abs(valueBox.right - wordBox.left);
+        box.height = Math.abs(valueBox.bottom - wordBox.top);
+        box.left = Math.min(wordBox.left, valueBox.left);
+        box.top = Math.min(wordBox.top, valueBox.top);
+        box.right = box.left + box.width;
+        box.bottom = box.top + box.height;
+        return box;
+    }
+    startEditKey(key) {
+        this.isEditing[key] = true;
+        document.getElementById("valueeditbox" + key).focus();
+    }
+    useFoundWord(foundWord) {
+        this.editedValues[this.selectedKey] = foundWord.value.text;
+    }
+};
+InvoiceOcrDetailComponent.ctorParameters = () => [
+    { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_2__["TranslateService"] }
+];
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])('scannedItemPreviewContainer', { static: false })
+], InvoiceOcrDetailComponent.prototype, "previewContainer", void 0);
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])('showOcrDetails')
+], InvoiceOcrDetailComponent.prototype, "showOcrDetails", void 0);
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])('scanedPdfPath')
+], InvoiceOcrDetailComponent.prototype, "scanedPdfPath", void 0);
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])('scanedHocrPath')
+], InvoiceOcrDetailComponent.prototype, "scanedHocrPath", void 0);
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])('fileIsPdf')
+], InvoiceOcrDetailComponent.prototype, "fileIsPdf", void 0);
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])('fileIsImage')
+], InvoiceOcrDetailComponent.prototype, "fileIsImage", void 0);
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])('imageSizeX')
+], InvoiceOcrDetailComponent.prototype, "imageSizeX", void 0);
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])('imageSizeY')
+], InvoiceOcrDetailComponent.prototype, "imageSizeY", void 0);
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])('foundWords')
+], InvoiceOcrDetailComponent.prototype, "foundWords", null);
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])('editedValues')
+], InvoiceOcrDetailComponent.prototype, "editedValues", void 0);
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Output"])()
+], InvoiceOcrDetailComponent.prototype, "onApplyValues", void 0);
+InvoiceOcrDetailComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+        selector: 'app-invoice-ocr-detail',
+        template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./invoice-ocr-detail.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/wm-components/invoice-ocr-detail/invoice-ocr-detail.component.html")).default,
+        styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./invoice-ocr-detail.component.css */ "./src/app/wm-components/invoice-ocr-detail/invoice-ocr-detail.component.css")).default]
+    })
+], InvoiceOcrDetailComponent);
+
+
+
+/***/ }),
+
 /***/ "./src/app/wm-components/workflow-inlineview/workflow-inlineview.component.css":
 /*!*************************************************************************************!*\
   !*** ./src/app/wm-components/workflow-inlineview/workflow-inlineview.component.css ***!
@@ -6331,6 +6984,50 @@ can be found in the LICENSE file at http://angular.io/license
 
 module.exports = __webpack_require__(/*! C:\Git\home\iflow\iflow-java\iflow\gui\angular-prj\gui-prj\src\main.ts */"./src/main.ts");
 
+
+/***/ }),
+
+/***/ 1:
+/*!**********************!*\
+  !*** zlib (ignored) ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 2:
+/*!********************!*\
+  !*** fs (ignored) ***!
+  \********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 3:
+/*!**********************!*\
+  !*** http (ignored) ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 4:
+/*!***********************!*\
+  !*** https (ignored) ***!
+  \***********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
 
 /***/ })
 

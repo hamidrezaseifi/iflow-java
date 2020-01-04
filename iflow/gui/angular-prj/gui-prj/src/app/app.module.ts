@@ -12,6 +12,8 @@ import { DataTableModule } from 'ng-angular8-datatable';
 import { MatNativeDateModule } from '@angular/material/core';
 import {StompConfig, StompService} from '@stomp/ng2-stompjs';
 import * as SockJS from 'sockjs-client';
+//import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 import {IFlowMaterialModules} from './material-module';
 
@@ -44,6 +46,9 @@ import { EditTestthreeTaskComponent } from './wm-components/edit/edit-testthree-
 import { WorkflowInlineviewComponent } from './wm-components/workflow-inlineview/workflow-inlineview.component';
 import { SelectUserComponent } from './components/select-user/select-user.component';
 import { TestComponent } from './test/test.component';
+import { InvoiceOcrDetailComponent } from './wm-components/invoice-ocr-detail/invoice-ocr-detail.component';
+import { FilePreviewComponent } from './components/file-preview/file-preview.component';
+import { WmFileUploadComponent } from './components/wm-file-upload/wm-file-upload.component';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -82,6 +87,8 @@ const stompConfig: StompConfig = {
     MatNativeDateModule,
     IFlowMaterialModules,
     FormsModule,
+    //NgxExtendedPdfViewerModule,
+    PdfViewerModule,
     TranslateModule.forRoot({
         loader: {
             provide: TranslateLoader,
@@ -111,6 +118,9 @@ const stompConfig: StompConfig = {
     WorkflowInlineviewComponent,
     SelectUserComponent,
     TestComponent,
+    InvoiceOcrDetailComponent,
+    FilePreviewComponent,
+    WmFileUploadComponent,
     
   ],
   providers: [

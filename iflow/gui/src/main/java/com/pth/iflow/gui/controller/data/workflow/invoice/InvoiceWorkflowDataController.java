@@ -15,6 +15,7 @@ public class InvoiceWorkflowDataController extends WorkflowDataControllerBase<In
 
   @Override
   protected InvoiceWorkflow generateInitialWorkflow(final String userIdentity) {
+
     final InvoiceWorkflow workflow = InvoiceWorkflow.generateInitial(userIdentity);
     workflow.setWorkflowType(this.getWorkflowTypeByEnumType(EWorkflowType.INVOICE_WORKFLOW_TYPE));
     workflow.setIsDirectDebitPermission(false);
@@ -23,6 +24,7 @@ public class InvoiceWorkflowDataController extends WorkflowDataControllerBase<In
 
   @Override
   protected InvoiceWorkflowSaveRequest generateInitialWorkflowSaveRequest(final InvoiceWorkflow workflow, final int expireDays) {
+
     return InvoiceWorkflowSaveRequest.generateNewWihExpireDays(workflow, expireDays);
   }
 

@@ -12,9 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
 
-import net.sourceforge.tess4j.Tesseract;
-import net.sourceforge.tess4j.TesseractException;
-
 @Controller
 public class MainController {
 
@@ -38,21 +35,6 @@ public class MainController {
     }
 
     return "ok";
-  }
-
-  @ResponseStatus(HttpStatus.OK)
-  @GetMapping(path = { "/testocr" })
-  @ResponseBody
-  public String testOcr() throws IllegalStateException, IOException, TesseractException {
-
-    final File file = new File("E:\\TestRechnung\\Unbenannt.png");
-    final Tesseract tesseract = new Tesseract();
-    tesseract.setDatapath("F://Softwares//Tess4J//tessdata");
-    tesseract.setLanguage("deu");
-    tesseract.setHocr(true);
-    final String res = tesseract.doOCR(file);
-
-    return res;
   }
 
 }

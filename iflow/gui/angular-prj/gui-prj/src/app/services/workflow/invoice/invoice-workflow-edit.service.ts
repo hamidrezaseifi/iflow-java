@@ -16,10 +16,14 @@ import { InvoiceWorkflow } from '../../../wf-models/invoice-workflow';
 
 import { WorkflowProcessCommand, Workflow, AssignItem, FileTitle, AssignType } from '../../../wf-models';
 
+import { WorkflowEditInterfaceService } from '../../../services';
+
+
+
 @Injectable({
   providedIn: 'root'
 })
-export class InvoiceWorkflowEditService extends HttpErrorResponseHelper {
+export class InvoiceWorkflowEditService extends HttpErrorResponseHelper implements WorkflowEditInterfaceService {
 
 	public workflowSaveRequestInitSubject: BehaviorSubject<InvoiceWorkflowSaveRequestInit> = new BehaviorSubject<InvoiceWorkflowSaveRequestInit>(null);
 
@@ -51,6 +55,10 @@ export class InvoiceWorkflowEditService extends HttpErrorResponseHelper {
 	
 	getUploadFileUrl() :string{
 		return "/workflow/invoice/data/createfile";
+	}
+	
+	getUploadOcrScanFileUrl() :string{
+		return "/general/data/uploadtempfile";
 	}
 	
 
@@ -122,6 +130,19 @@ export class InvoiceWorkflowEditService extends HttpErrorResponseHelper {
         const httpFileUploadOptions = { headers: HttpHepler.generateFileUploadHeader() };
         
 	    return this.http.post(this.getUploadFileUrl(), formData, httpFileUploadOptions);
+		
+	}
+	
+	uploadTempFiles(ocrScanFile : File){
+		
+	    const formData = new FormData();
+	    formData.append('file', ocrScanFile);
+	    formData.append('wids', "0");
+	    
+    	
+        const httpFileUploadOptions = { headers: HttpHepler.generateFileUploadHeader() };
+        
+	    return this.http.post(this.getUploadOcrScanFileUrl(), formData, httpFileUploadOptions);
 		
 	}
 	

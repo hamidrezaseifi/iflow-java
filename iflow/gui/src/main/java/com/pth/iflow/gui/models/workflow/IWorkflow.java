@@ -72,7 +72,8 @@ public interface IWorkflow {
 
   public void setCurrentUserIdentity(String currentUserIdentity);
 
-  public WorkflowFile addNewFile(String generateSavingFilePathPreffix, String identity2, String title, String fileExtention, String string);
+  public WorkflowFile addNewFile(String generateSavingFilePathPreffix, String identity2, String title, String fileExtention,
+      String comments);
 
   public String getIdentity();
 

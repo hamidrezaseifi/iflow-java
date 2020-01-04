@@ -1,6 +1,7 @@
 package com.pth.iflow.workflow.bl.strategy.strategies;
 
 import java.net.MalformedURLException;
+
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.IDepartmentDataService;
 import com.pth.iflow.workflow.bl.IGuiCachDataDataService;
@@ -30,22 +31,23 @@ import com.pth.iflow.workflow.models.base.IWorkflowSaveRequest;
 public class DoneExistingWorkflowStrategy<W extends IWorkflow> extends AbstractWorkflowSaveStrategy<W> {
 
   public DoneExistingWorkflowStrategy(final IWorkflowSaveRequest<W> workflowCreateRequest,
-                                      final String token,
-                                      final IDepartmentDataService departmentDataService,
-                                      final IWorkflowMessageDataService workflowMessageDataService,
-                                      final IGuiCachDataDataService cachDataDataService,
-                                      final IWorkflowDataService<W> workflowDataService,
-                                      final IWorkflowPrepare<W> workflowPrepare)
-                                                                                 throws WorkflowCustomizedException,
-                                                                                 MalformedURLException,
-                                                                                 IFlowMessageConversionFailureException {
+      final String token,
+      final IDepartmentDataService departmentDataService,
+      final IWorkflowMessageDataService workflowMessageDataService,
+      final IGuiCachDataDataService cachDataDataService,
+      final IWorkflowDataService<W> workflowDataService,
+      final IWorkflowPrepare<W> workflowPrepare)
+      throws WorkflowCustomizedException,
+      MalformedURLException,
+      IFlowMessageConversionFailureException {
+
     super(workflowCreateRequest,
-          token,
-          departmentDataService,
-          workflowMessageDataService,
-          cachDataDataService,
-          workflowDataService,
-          workflowPrepare);
+        token,
+        departmentDataService,
+        workflowMessageDataService,
+        cachDataDataService,
+        workflowDataService,
+        workflowPrepare);
 
   }
 
@@ -64,7 +66,7 @@ public class DoneExistingWorkflowStrategy<W extends IWorkflow> extends AbstractW
     steps.add(new SelectWorkflowStatusStrategyStep<W>(this));
     steps.add(new CollectAssignedUserIdListStep<W>(this));
     steps.add(new AssignWorkflowActiveActionStrategyStep<W>(this));
-    steps.add(new SaveWorkflowInCoreStep<W>(this));
+    steps.add(new SaveWorkflowInCoreStep<W>(this, true));
     steps.add(new ChangeWorkflowOfferStatusToCloseForWorkflowInCoreStep<W>(this));
     steps.add(new SaveWorkflowOfferForAssignedUseresInCoreStep<W>(this));
     steps.add(new SendWorkflowOffersToProfileStep<W>(this));

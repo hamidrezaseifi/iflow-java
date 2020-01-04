@@ -3,6 +3,7 @@ package com.pth.iflow.gui.models.cach;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.pth.iflow.gui.models.WorkflowMessage;
@@ -97,12 +98,28 @@ public class CompanyCachData {
   public void setWorkflowWorkflowMessages(final String workflowId, final List<WorkflowMessage> workflowMessageList,
       final ICompanyCachDataManager companyCachDataManager) {
 
+    final Set<String> messageUserIdentityList = workflowMessageList.stream().map(m -> m.getUserIdentity()).collect(Collectors.toSet());
+
     for (final UserCachData userCachData : this.userCachList.values()) {
       if (userCachData.hasWorkflowCachData(workflowId)) {
 
         final WorkflowCachData workflowCachData = userCachData.getWorkflowCachData(workflowId, false);
         workflowCachData.setWorkflowMessages(workflowMessageList);
         companyCachDataManager.sendResetMessageToSocket(userCachData.getUserIdentity());
+        // userIdentityList.add(userCachData.getUserIdentity());
+      }
+      else {
+        if (messageUserIdentityList.contains(userCachData.getUserIdentity())) {
+
+          final List<WorkflowMessage> userMessageList = workflowMessageList
+              .stream()
+              .filter(m -> m.getUserIdentity().equals(userCachData.getUserIdentity()))
+              .collect(Collectors.toList());
+
+          userCachData.setWorkflowMessageList(userMessageList);
+          companyCachDataManager.sendResetMessageToSocket(userCachData.getUserIdentity());
+        }
+
       }
     }
 

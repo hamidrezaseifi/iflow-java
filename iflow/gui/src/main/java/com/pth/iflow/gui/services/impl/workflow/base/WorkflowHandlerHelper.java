@@ -7,10 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import javax.servlet.http.HttpSession;
-
-import org.apache.commons.lang3.StringUtils;
-
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.WorkflowAction;
@@ -18,64 +14,27 @@ import com.pth.iflow.gui.models.WorkflowType;
 import com.pth.iflow.gui.models.WorkflowTypeStep;
 import com.pth.iflow.gui.models.ui.FileSavingData;
 import com.pth.iflow.gui.models.ui.SessionUserInfo;
-import com.pth.iflow.gui.models.ui.UploadFileSavingData;
 import com.pth.iflow.gui.models.workflow.IWorkflow;
 import com.pth.iflow.gui.models.workflow.IWorkflowSaveRequest;
 import com.pth.iflow.gui.services.IUploadFileManager;
 
 public abstract class WorkflowHandlerHelper<W extends IWorkflow> {
 
-  private static final boolean MANAGE_UPLOADFILES_IS_DISABLED = true;
+  // private static final boolean MANAGE_UPLOADFILES_IS_DISABLED = false;
 
-  protected List<W> prepareUploadedFiles(final IWorkflowSaveRequest<W> createRequest, final HttpSession session, final List<W> workflowList)
+  protected void prepareUploadedFiles(final IWorkflowSaveRequest<W> createRequest)
       throws IOException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    final List<W> preparedList = this.prepareWorkflowList(workflowList);
+    final List<FileSavingData> archiveList = this.getUploadFileManager().moveFromTempToArchive(createRequest.getUploadedFiles());
 
-    if (StringUtils.isEmpty(createRequest.getSessionKey()) || MANAGE_UPLOADFILES_IS_DISABLED) {
-      return preparedList;
-    }
+    for (final FileSavingData savedArchiveFile : archiveList) {
 
-    final Object oFileList = session.getAttribute(createRequest.getSessionKey());
-    if ((oFileList == null) || ((oFileList instanceof List) == false)) {
-      throw new GuiCustomizedException("Uploaded files not found!");
-
-    }
-
-    final List<UploadFileSavingData> tempFiles = (List<UploadFileSavingData>) oFileList;
-
-    final List<W>                    finalList = new ArrayList<>();
-    if (preparedList != null && tempFiles.isEmpty() == false) {
-      for (final W workflow : preparedList) {
-        final List<FileSavingData> archiveSavingFileInfoList = new ArrayList<>();
-        for (final UploadFileSavingData tempFile : tempFiles) {
-
-          final FileSavingData archiveSavingFileInfo = tempFile.toFileSavingData();
-          archiveSavingFileInfo.setWorkflowIdentity(workflow.getIdentity());
-
-          // archiveSavingFileInfo.setActionIdentity(workflow.getHasActiveAction() ? workflow.getActiveAction().getIdentity() : "no-action");
-
-          archiveSavingFileInfo.setFilePath(archiveSavingFileInfo.generateSavingFilePathPreffix());
-          archiveSavingFileInfo.setTempFilePath(tempFile.getFilePath());
-
-          archiveSavingFileInfoList.add(archiveSavingFileInfo);
-        }
-        final List<FileSavingData> savedArchiveFiles = this.getUploadFileManager().copyFromTempToArchive(archiveSavingFileInfoList);
-        for (final FileSavingData savedArchiveFile : savedArchiveFiles) {
-
-          workflow.addNewFile(savedArchiveFile.generateSavingFilePathPreffix(), this.getSessionUserInfo().getUser().getIdentity(),
+      createRequest
+          .getWorkflow()
+          .addNewFile(savedArchiveFile.getFilePath(), this.getSessionUserInfo().getUser().getIdentity(),
               savedArchiveFile.getTitle(), savedArchiveFile.getFileExtention(), "");
-        }
-
-        final W finalWorkflow = this.innerSaveWorkflow(workflow, session);
-
-        finalList.add(finalWorkflow);
-      }
     }
 
-    this.getUploadFileManager().deleteFromTemp(UploadFileSavingData.toFileSavingDataList(tempFiles));
-
-    return finalList;
   }
 
   protected List<W> prepareWorkflowList(final List<W> pureWorkflowList) throws IFlowMessageConversionFailureException {
@@ -139,7 +98,7 @@ public abstract class WorkflowHandlerHelper<W extends IWorkflow> {
 
   protected abstract IUploadFileManager getUploadFileManager();
 
-  protected abstract W innerSaveWorkflow(final W workflow, final HttpSession session)
+  protected abstract W innerSaveWorkflow(final W workflow)
       throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException;
 
 }
