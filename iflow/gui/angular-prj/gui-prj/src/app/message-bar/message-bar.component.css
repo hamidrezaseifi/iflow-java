@@ -4,7 +4,7 @@
     height: 170px;
     margin-top: 10px;
     border: 1px solid gray;
-    background-color: #fbfbe8;
+    background-color: #f0f0f0;
     position: fixed !important;
     width: 100vw;
     bottom: 30px;
@@ -34,15 +34,17 @@
 }
 
 .message-panel-items-container .message-panel-item{
-	height: 22px;
+	height: 33px;
 	line-height: 22px;
 	margin: 3px 0;
-	background-color: #cafff9;
+	background-color: #dceefa;
+	padding: 5px;
 	padding-left: 15px;
+	border: 1px solid #d0cfcf;
 }
 
 .message-panel-items-container .message-panel-item:hover{
-	background-color: #caffd3;
+	background-color: #dbfbf0;
 }
 
 .message-panel-items-container .message-panel-item a{

@@ -10,7 +10,7 @@ body
   position: relative !important;
   width: 100% !important;
   top: 0px !important;
-  background-color: #c4eafb !important;
+  background-color: white !important;
 }
 
 body:not(.overdialog)
@@ -501,7 +501,8 @@ div.notic-div, div.notic-div label, div.notic-div div
 .page-toolbar{
     padding: 5px;
 	margin: 5px 0;
-	background-color: #dadccf;
+	background-color: #bebebe;
+	border-radius: 5px;
 }
 
 .page-title{
@@ -515,7 +516,7 @@ div.notic-div, div.notic-div label, div.notic-div div
 .toolbar-button{
 	border: none;
     background-color: gray;
-    color: #f7fbc4;
+    color: white;
     padding: 0 3px;
     padding-top: 3px;
     margin-right: 10px;
@@ -527,7 +528,7 @@ div.notic-div, div.notic-div label, div.notic-div div
 	
 	border: none;
     background-color: gray;
-    color: #f7fbc4;
+    color: white;
     padding: 0 3px;
     padding-top: 3px;
     margin-right: 10px;
@@ -958,4 +959,14 @@ a.tool-link:hover{
 	opacity: 0;
 }
 
+.page-toolbar .dropdown-toggle{
+	border: 1px solid gray;
+    padding: 5px 10px;
+    width: 120px;
+    color: black;
+}
+
+.page-toolbar .dropdown-toggle::after{
+	margin-left: 50px;
+}
 

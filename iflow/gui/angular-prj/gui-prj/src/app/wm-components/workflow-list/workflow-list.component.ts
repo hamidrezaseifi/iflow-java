@@ -21,7 +21,7 @@ export class WorkflowListComponent implements OnInit {
 	resultWorlflows		:Workflow[] = [];
 	listInitialData 	:WorkflowListInitialData = new WorkflowListInitialData();
 
-	displayedColumns = ['col 1', 'col 2', 'col 3', 'col 4', 'col 5', 'col 6'];
+	displayedColumns = ['workflow-type', 'workflow-current-step', 'workflow-status', 'workflow-assignto', 'workflow-updated', 'actions'];
 
 	showDebug : boolean = false;
 	viewWorkflowModal :boolean = false;

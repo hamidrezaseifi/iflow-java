@@ -1,7 +1,60 @@
 
+table {
+  width: 100%;
+  background: #ffffff;
+  margin-top: 30px;
+}
+
+table a.tool-link {
+    color: #828282;
+    cursor: pointer;
+}
+
+.mat-header-cell {
+    color: white;
+    font-size: 16px;
+    font-weight: notmal;
+}
+
+.mat-cell, .mat-footer-cell {
+    color: #0f0f0f;
+}
+
+th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
+    border: 1px solid #d7d5d5;
+    text-align: center;
+}
+
+th.mat-header-cell {
+    border: 1px solid #acaaaa;
+    text-align: center;
+}
+
+.mat-header-row{
+	background-color: #374373;
+}
+
+.mat-row{
+	height: 40px;
+}
+
+.mat-row:nth-child(odd){	
+	background-color: #fff;
+}
+
+.mat-row:nth-child(even){	
+	background-color: #f2f2f2;
+}
+
+.mat-row:hover{	
+	background-color: #feffec;
+}
+
+
 .search-toolbar {
     width: calc(100% - 350px);
     float: right;
+    padding-top: 8px;
 }
 
 .search-toolbar .nav-item{
@@ -24,6 +77,7 @@
 .search-toolbar-item{
 	height: 100%;
     padding-top: 9px;
+    margin-left: 20px;
 }
 
 .search-toolbar .nav-item {
@@ -55,14 +109,6 @@
 
 .table-striped tbody tr{	
 	border: 2px solid #dee2e6;
-}
-
-.table-striped tbody tr:nth-child(odd){	
-	background-color: #fdffd9;
-}
-
-.table-striped tbody tr:nth-child(even){	
-	background-color: #dfe1ff;
 }
 
 .table-striped tbody tr:hove{	
