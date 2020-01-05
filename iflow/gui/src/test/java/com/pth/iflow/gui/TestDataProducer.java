@@ -220,6 +220,7 @@ public class TestDataProducer {
     model.setCurrentStep(model.getWorkflowType().getSteps().get(0));
     model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
     model.setCreatedByIdentity("createdByIdentity");
+    model.setCompanyIdentity("companyIdentity");
 
     model.setActions(this.getTestWorkflowActionListFromType(model));
 
@@ -244,6 +245,7 @@ public class TestDataProducer {
     model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
     model.setCreatedByIdentity("createdByIdentity");
     model.setWorkflowTypeIdentity(EWorkflowType.SINGLE_TASK_WORKFLOW_TYPE.getIdentity());
+    model.setCompanyIdentity("companyIdentity");
 
     model.setActions(this.getTestWorkflowActionListFromType(model));
 

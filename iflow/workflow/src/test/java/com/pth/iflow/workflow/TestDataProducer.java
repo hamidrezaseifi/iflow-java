@@ -76,6 +76,7 @@ public class TestDataProducer {
     model.setDepartments(this.getTestDepartmentIdSet());
     model.setDeputies(this.getTestDeputiyIdSet());
     model.setGroups(this.getTestUserGroupIdSet());
+    model.setCompanyIdentity("companyIdentity");
 
     return model;
   }
@@ -118,6 +119,7 @@ public class TestDataProducer {
     model.setCurrentStep(model.getWorkflowType().getSteps().get(0));
     model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
     model.setCreatedByIdentity("createdByIdentity");
+    model.setCompanyIdentity("companyIdentity");
 
     model.setActions(getTestWorkflowActionListFromType(model));
 
@@ -238,6 +240,7 @@ public class TestDataProducer {
     model.setCurrentStep(model.getWorkflowType().getSteps().get(0));
     model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
     model.setCreatedByIdentity("createdByIdentity");
+    model.setCompanyIdentity("companyIdentity");
 
     model.setActions(getTestWorkflowActionListFromType(model));
 
@@ -261,6 +264,7 @@ public class TestDataProducer {
     model.setCurrentStep(model.getWorkflowType().getSteps().get(0));
     model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
     model.setCreatedByIdentity("createdByIdentity");
+    model.setCompanyIdentity("companyIdentity");
 
     model.setActions(getTestWorkflowActionListFromType(model));
     model
@@ -283,6 +287,8 @@ public class TestDataProducer {
     model.setCurrentStep(model.getWorkflowType().getSteps().get(0));
     model.setCurrentStepIdentity(model.getCurrentStep().getIdentity());
     model.setCreatedByIdentity("createdByIdentity");
+    model.setCompanyIdentity("companyIdentity");
+    model.setWorkflowTypeIdentity("workflowTypeIdentity");
 
     model.setActions(getTestWorkflowActionListFromType(model));
     model
@@ -565,6 +571,7 @@ public class TestDataProducer {
     model.setTitle(title);
     model.setStatus(1);
     model.setVersion(1);
+    model.setCompanyIdentity("companyIdentity");
 
     return model;
   }

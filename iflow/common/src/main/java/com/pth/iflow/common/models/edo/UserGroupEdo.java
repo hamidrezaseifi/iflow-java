@@ -15,61 +15,71 @@ import com.pth.iflow.common.models.base.IFlowJaxbDefinition;
 public class UserGroupEdo {
 
   @XmlElement(name = "Identity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String  identity;
+  private String identity;
 
-  @NotNull
+  @NotNull(message = "CompanyIdentity must not be null")
   @XmlElement(name = "CompanyIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String  companyIdentity;
+  private String companyIdentity;
 
-  @NotNull
+  @NotNull(message = "Title must not be null")
   @XmlElement(name = "Title", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String  title;
+  private String title;
 
-  @NotNull
+  @NotNull(message = "Status must not be null")
   @XmlElement(name = "Status", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer status;
 
-  @NotNull
+  @NotNull(message = "Version must not be null")
   @XmlElement(name = "Version", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer version;
 
   public String getIdentity() {
+
     return this.identity;
   }
 
   public void setIdentity(final String identity) {
+
     this.identity = identity;
   }
 
   public String getCompanyIdentity() {
+
     return this.companyIdentity;
   }
 
   public void setCompanyIdentity(final String companyIdentity) {
+
     this.companyIdentity = companyIdentity;
   }
 
   public String getTitle() {
+
     return this.title;
   }
 
   public void setTitle(final String title) {
+
     this.title = title;
   }
 
   public Integer getStatus() {
+
     return this.status;
   }
 
   public void setStatus(final Integer status) {
+
     this.status = status;
   }
 
   public Integer getVersion() {
+
     return this.version;
   }
 
   public void setVersion(final Integer version) {
+
     this.version = version;
   }
 
