@@ -3,7 +3,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpClient, HttpEventType } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
-import { DateAdapter } from '@angular/material';
+import { DateAdapter } from '@angular/material/core';
 import { Observable } from 'rxjs';
 
 import { GlobalService } from '../services/global.service';
