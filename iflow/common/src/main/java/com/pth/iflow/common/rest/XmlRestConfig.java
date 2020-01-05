@@ -17,15 +17,6 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.dataformat.xml.deser.FromXmlParser;
 import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
-import com.pth.iflow.common.edo.models.workflow.invoice.InvoiceWorkflowEdo;
-import com.pth.iflow.common.edo.models.workflow.invoice.InvoiceWorkflowListEdo;
-import com.pth.iflow.common.edo.models.workflow.invoice.InvoiceWorkflowSaveRequestEdo;
-import com.pth.iflow.common.edo.models.workflow.singletask.SingleTaskWorkflowEdo;
-import com.pth.iflow.common.edo.models.workflow.singletask.SingleTaskWorkflowListEdo;
-import com.pth.iflow.common.edo.models.workflow.singletask.SingleTaskWorkflowSaveRequestEdo;
-import com.pth.iflow.common.edo.models.workflow.testthreetask.TestThreeTaskWorkflowEdo;
-import com.pth.iflow.common.edo.models.workflow.testthreetask.TestThreeTaskWorkflowListEdo;
-import com.pth.iflow.common.edo.models.workflow.testthreetask.TestThreeTaskWorkflowSaveRequestEdo;
 import com.pth.iflow.common.models.edo.AssignItemEdo;
 import com.pth.iflow.common.models.edo.AuthenticatedProfileRequestEdo;
 import com.pth.iflow.common.models.edo.CompanyEdo;
@@ -55,6 +46,15 @@ import com.pth.iflow.common.models.edo.WorkflowTypeEdo;
 import com.pth.iflow.common.models.edo.WorkflowTypeListEdo;
 import com.pth.iflow.common.models.edo.WorkflowTypeStepEdo;
 import com.pth.iflow.common.models.edo.WorkflowTypeStepListEdo;
+import com.pth.iflow.common.models.edo.workflow.invoice.InvoiceWorkflowEdo;
+import com.pth.iflow.common.models.edo.workflow.invoice.InvoiceWorkflowListEdo;
+import com.pth.iflow.common.models.edo.workflow.invoice.InvoiceWorkflowSaveRequestEdo;
+import com.pth.iflow.common.models.edo.workflow.singletask.SingleTaskWorkflowEdo;
+import com.pth.iflow.common.models.edo.workflow.singletask.SingleTaskWorkflowListEdo;
+import com.pth.iflow.common.models.edo.workflow.singletask.SingleTaskWorkflowSaveRequestEdo;
+import com.pth.iflow.common.models.edo.workflow.testthreetask.TestThreeTaskWorkflowEdo;
+import com.pth.iflow.common.models.edo.workflow.testthreetask.TestThreeTaskWorkflowListEdo;
+import com.pth.iflow.common.models.edo.workflow.testthreetask.TestThreeTaskWorkflowSaveRequestEdo;
 
 /**
  * contains configs for XML Rest-Controller

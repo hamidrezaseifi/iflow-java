@@ -25,8 +25,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.pth.iflow.common.edo.models.workflow.singletask.SingleTaskWorkflowListEdo;
-import com.pth.iflow.common.edo.models.workflow.singletask.SingleTaskWorkflowSaveRequestEdo;
+import com.pth.iflow.common.models.edo.workflow.singletask.SingleTaskWorkflowListEdo;
+import com.pth.iflow.common.models.edo.workflow.singletask.SingleTaskWorkflowSaveRequestEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
 import com.pth.iflow.workflow.TestDataProducer;

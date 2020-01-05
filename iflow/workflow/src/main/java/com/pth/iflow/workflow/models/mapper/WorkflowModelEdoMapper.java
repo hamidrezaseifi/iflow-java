@@ -8,12 +8,6 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 
-import com.pth.iflow.common.edo.models.workflow.invoice.InvoiceWorkflowEdo;
-import com.pth.iflow.common.edo.models.workflow.invoice.InvoiceWorkflowSaveRequestEdo;
-import com.pth.iflow.common.edo.models.workflow.singletask.SingleTaskWorkflowEdo;
-import com.pth.iflow.common.edo.models.workflow.singletask.SingleTaskWorkflowSaveRequestEdo;
-import com.pth.iflow.common.edo.models.workflow.testthreetask.TestThreeTaskWorkflowEdo;
-import com.pth.iflow.common.edo.models.workflow.testthreetask.TestThreeTaskWorkflowSaveRequestEdo;
 import com.pth.iflow.common.enums.EAssignType;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.enums.EWorkflowMessageType;
@@ -36,6 +30,12 @@ import com.pth.iflow.common.models.edo.WorkflowSearchFilterEdo;
 import com.pth.iflow.common.models.edo.WorkflowTypeEdo;
 import com.pth.iflow.common.models.edo.WorkflowTypeStepEdo;
 import com.pth.iflow.common.models.edo.workflow.WorkflowEdo;
+import com.pth.iflow.common.models.edo.workflow.invoice.InvoiceWorkflowEdo;
+import com.pth.iflow.common.models.edo.workflow.invoice.InvoiceWorkflowSaveRequestEdo;
+import com.pth.iflow.common.models.edo.workflow.singletask.SingleTaskWorkflowEdo;
+import com.pth.iflow.common.models.edo.workflow.singletask.SingleTaskWorkflowSaveRequestEdo;
+import com.pth.iflow.common.models.edo.workflow.testthreetask.TestThreeTaskWorkflowEdo;
+import com.pth.iflow.common.models.edo.workflow.testthreetask.TestThreeTaskWorkflowSaveRequestEdo;
 import com.pth.iflow.workflow.models.AssignItem;
 import com.pth.iflow.workflow.models.Company;
 import com.pth.iflow.workflow.models.CompanyProfile;
@@ -255,7 +255,7 @@ public class WorkflowModelEdoMapper {
     return model;
   }
 
-  public static WorkflowEdo convertIWorkflowEdo(final IWorkflow model) {
+  public static WorkflowEdo convertToIWorkflowEdo(final IWorkflow model) {
 
     final WorkflowEdo edo = new WorkflowEdo();
     edo.setComments(model.getComments());
@@ -265,6 +265,7 @@ public class WorkflowModelEdoMapper {
     edo.setCreatedByIdentity(model.getCreatedByIdentity());
     edo.setVersion(model.getVersion());
     edo.setIdentity(model.getIdentity());
+    edo.setCompanyIdentity(model.getCompanyIdentity());
 
     edo.setFiles(toWorkflowFileEdoList(model.getFiles()));
     edo.setActions(toWorkflowActionEdoList(model.getActions()));
@@ -283,6 +284,7 @@ public class WorkflowModelEdoMapper {
     edo.setVersion(model.getVersion());
     edo.setIdentity(model.getIdentity());
     edo.setWorkflowTypeIdentity(model.getWorkflowTypeIdentity());
+    edo.setCompanyIdentity(model.getCompanyIdentity());
 
     edo.setFiles(toWorkflowFileEdoList(model.getFiles()));
     edo.setActions(toWorkflowActionEdoList(model.getActions()));
@@ -292,7 +294,7 @@ public class WorkflowModelEdoMapper {
 
   public static InvoiceWorkflowEdo toEdo(final InvoiceWorkflow model) {
 
-    final WorkflowEdo workflowEdo = convertIWorkflowEdo(model);
+    final WorkflowEdo workflowEdo = convertToIWorkflowEdo(model);
     final InvoiceWorkflowEdo edo = new InvoiceWorkflowEdo();
 
     edo.setWorkflow(workflowEdo);
@@ -328,6 +330,7 @@ public class WorkflowModelEdoMapper {
     model.setCreatedByIdentity(edo.getCreatedByIdentity());
     model.setIdentity(edo.getIdentity());
     model.setWorkflowTypeIdentity(edo.getWorkflowTypeIdentity());
+    model.setCompanyIdentity(edo.getCompanyIdentity());
 
     model.setFiles(fromWorkflowFileEdoList(edo.getFiles()));
     model.setActions(fromWorkflowActionEdoList(edo.getActions()));
@@ -348,6 +351,7 @@ public class WorkflowModelEdoMapper {
     model.setCurrentStepIdentity(edo.getWorkflow().getCurrentStepIdentity());
     model.setCreatedByIdentity(edo.getWorkflow().getCreatedByIdentity());
     model.setIdentity(edo.getWorkflow().getIdentity());
+    model.setCompanyIdentity(edo.getWorkflow().getCompanyIdentity());
 
     model.setFiles(fromWorkflowFileEdoList(edo.getWorkflow().getFiles()));
     model.setActions(fromWorkflowActionEdoList(edo.getWorkflow().getActions()));
@@ -371,7 +375,7 @@ public class WorkflowModelEdoMapper {
 
   public static SingleTaskWorkflowEdo toEdo(final SingleTaskWorkflow model) {
 
-    final WorkflowEdo workflowEdo = convertIWorkflowEdo(model);
+    final WorkflowEdo workflowEdo = convertToIWorkflowEdo(model);
     final SingleTaskWorkflowEdo edo = new SingleTaskWorkflowEdo();
 
     edo.setWorkflow(workflowEdo);
@@ -392,6 +396,7 @@ public class WorkflowModelEdoMapper {
     model.setCurrentStepIdentity(edo.getWorkflow().getCurrentStepIdentity());
     model.setCreatedByIdentity(edo.getWorkflow().getCreatedByIdentity());
     model.setIdentity(edo.getWorkflow().getIdentity());
+    model.setCompanyIdentity(edo.getWorkflow().getCompanyIdentity());
 
     model.setFiles(fromWorkflowFileEdoList(edo.getWorkflow().getFiles()));
     model.setActions(fromWorkflowActionEdoList(edo.getWorkflow().getActions()));
@@ -449,7 +454,7 @@ public class WorkflowModelEdoMapper {
 
   public static TestThreeTaskWorkflowEdo toEdo(final TestThreeTaskWorkflow model) {
 
-    final WorkflowEdo workflowEdo = convertIWorkflowEdo(model);
+    final WorkflowEdo workflowEdo = convertToIWorkflowEdo(model);
     final TestThreeTaskWorkflowEdo edo = new TestThreeTaskWorkflowEdo();
     edo.setWorkflow(workflowEdo);
 
@@ -469,6 +474,7 @@ public class WorkflowModelEdoMapper {
     model.setCurrentStepIdentity(edo.getWorkflow().getCurrentStepIdentity());
     model.setCreatedByIdentity(edo.getWorkflow().getCreatedByIdentity());
     model.setIdentity(edo.getWorkflow().getIdentity());
+    model.setCompanyIdentity(edo.getWorkflow().getCompanyIdentity());
 
     model.setFiles(fromWorkflowFileEdoList(edo.getWorkflow().getFiles()));
     model.setActions(fromWorkflowActionEdoList(edo.getWorkflow().getActions()));
@@ -651,8 +657,6 @@ public class WorkflowModelEdoMapper {
     edo.setComments(model.getComments());
     edo.setStatus(model.getStatus());
     edo.setIdentity(model.getIdentity());
-    edo.setCompanyIdentity(model.getCompanyIdentity());
-    edo.setBaseTypeIdentity(model.getBaseTypeIdentity());
     edo.setSendToController(model.getSendToController());
     edo.setAssignType(model.geAssignType().getValue());
     edo.setIncreaseStepAutomatic(model.getIncreaseStepAutomatic());
@@ -672,8 +676,6 @@ public class WorkflowModelEdoMapper {
     model.setComments(edo.getComments());
     model.setStatus(edo.getStatus());
     model.setIdentity(edo.getIdentity());
-    model.setCompanyIdentity(edo.getCompanyIdentity());
-    model.setBaseTypeIdentity(edo.getBaseTypeIdentity());
     model.setSendToController(edo.getSendToController());
     model.setAssignType(EWorkflowTypeAssignType.ofValue(edo.getAssignType()));
     model.setAllowAssign(edo.getAllowAssign());

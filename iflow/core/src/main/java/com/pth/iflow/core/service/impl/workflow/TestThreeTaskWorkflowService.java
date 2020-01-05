@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.pth.iflow.common.edo.models.workflow.testthreetask.TestThreeTaskWorkflowEdo;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
+import com.pth.iflow.common.models.edo.workflow.testthreetask.TestThreeTaskWorkflowEdo;
 import com.pth.iflow.core.model.entity.workflow.TestThreeTaskWorkflowEntity;
 import com.pth.iflow.core.service.base.CoreModelEdoMapperService;
 import com.pth.iflow.core.service.interfaces.workflow.ITestThreeTaskWorkflowService;

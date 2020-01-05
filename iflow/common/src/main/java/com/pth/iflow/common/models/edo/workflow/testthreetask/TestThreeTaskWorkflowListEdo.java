@@ -1,4 +1,4 @@
-package com.pth.iflow.common.edo.models.workflow.testthreetask;
+package com.pth.iflow.common.models.edo.workflow.testthreetask;
 
 import java.util.ArrayList;
 import java.util.List;

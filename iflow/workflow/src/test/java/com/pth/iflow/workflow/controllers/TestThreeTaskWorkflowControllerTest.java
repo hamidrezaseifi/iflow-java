@@ -25,8 +25,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.pth.iflow.common.edo.models.workflow.testthreetask.TestThreeTaskWorkflowListEdo;
-import com.pth.iflow.common.edo.models.workflow.testthreetask.TestThreeTaskWorkflowSaveRequestEdo;
+import com.pth.iflow.common.models.edo.workflow.testthreetask.TestThreeTaskWorkflowListEdo;
+import com.pth.iflow.common.models.edo.workflow.testthreetask.TestThreeTaskWorkflowSaveRequestEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
 import com.pth.iflow.workflow.TestDataProducer;

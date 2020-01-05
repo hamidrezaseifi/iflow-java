@@ -19,9 +19,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.pth.iflow.common.edo.models.workflow.testthreetask.TestThreeTaskWorkflowEdo;
-import com.pth.iflow.common.edo.models.workflow.testthreetask.TestThreeTaskWorkflowListEdo;
 import com.pth.iflow.common.enums.EModule;
+import com.pth.iflow.common.models.edo.workflow.testthreetask.TestThreeTaskWorkflowEdo;
+import com.pth.iflow.common.models.edo.workflow.testthreetask.TestThreeTaskWorkflowListEdo;
 import com.pth.iflow.workflow.TestDataProducer;
 import com.pth.iflow.workflow.bl.IWorkflowDataService;
 import com.pth.iflow.workflow.bl.impl.workflowservice.testthreetask.TestThreeTaskWorkflowCoreConnectService;

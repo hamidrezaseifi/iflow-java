@@ -1,4 +1,4 @@
-package com.pth.iflow.common.edo.models.workflow.invoice;
+package com.pth.iflow.common.models.edo.workflow.invoice;
 
 import java.time.LocalDate;
 

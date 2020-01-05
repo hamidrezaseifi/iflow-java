@@ -19,6 +19,7 @@ import com.pth.iflow.core.model.entity.workflow.WorkflowFileEntity;
 import com.pth.iflow.core.model.entity.workflow.WorkflowFileVersionEntity;
 import com.pth.iflow.core.service.base.CoreModelEdoMapperService;
 import com.pth.iflow.core.service.interfaces.workflow.IWorkflowService;
+import com.pth.iflow.core.storage.dao.interfaces.ICompanyDao;
 import com.pth.iflow.core.storage.dao.interfaces.IUserDao;
 import com.pth.iflow.core.storage.dao.interfaces.IWorkflowTypeDao;
 import com.pth.iflow.core.storage.dao.interfaces.IWorkflowTypeStepDao;
@@ -27,17 +28,21 @@ import com.pth.iflow.core.storage.dao.interfaces.workflow.IWorkflowDao;
 @Service
 public class WorkflowService extends CoreModelEdoMapperService<WorkflowEntity, WorkflowEdo> implements IWorkflowService {
 
-  private final IWorkflowDao         workflowDao;
-  private final IWorkflowTypeDao     workflowTypeDao;
+  private final IWorkflowDao workflowDao;
+  private final IWorkflowTypeDao workflowTypeDao;
   private final IWorkflowTypeStepDao workflowTypeStepDao;
-  private final IUserDao             usersDao;
+  private final IUserDao usersDao;
+  private final ICompanyDao companyDao;
 
   public WorkflowService(@Autowired final IWorkflowDao workflowDao, @Autowired final IWorkflowTypeDao workflowTypeDao,
-      @Autowired final IWorkflowTypeStepDao workflowTypeStepDao, @Autowired final IUserDao usersDao) {
+      @Autowired final IWorkflowTypeStepDao workflowTypeStepDao, @Autowired final IUserDao usersDao,
+      @Autowired final ICompanyDao companyDao) {
+
     this.workflowDao = workflowDao;
     this.workflowTypeDao = workflowTypeDao;
     this.workflowTypeStepDao = workflowTypeStepDao;
     this.usersDao = usersDao;
+    this.companyDao = companyDao;
   }
 
   @Override
@@ -56,6 +61,7 @@ public class WorkflowService extends CoreModelEdoMapperService<WorkflowEntity, W
 
   @Override
   public WorkflowEntity getByIdentity(final String identity) {
+
     return this.workflowDao.getByIdentity(identity);
   }
 
@@ -73,6 +79,7 @@ public class WorkflowService extends CoreModelEdoMapperService<WorkflowEntity, W
 
   @Override
   public WorkflowEntity fromEdo(final WorkflowEdo edo) throws IFlowMessageConversionFailureException {
+
     validateCustomer(edo);
 
     final WorkflowEntity model = new WorkflowEntity();
@@ -87,6 +94,7 @@ public class WorkflowService extends CoreModelEdoMapperService<WorkflowEntity, W
     model.setCreatedById(usersDao.getByIdentity(edo.getCreatedByIdentity()).getId());
     model.setId(EIdentity.isNotSet(edo.getIdentity()) ? null : workflowDao.getByIdentity(edo.getIdentity()).getId());
     model.setWorkflowTypeId(workflowTypeDao.getByIdentity(edo.getWorkflowTypeIdentity()).getId());
+    model.setCompanyId(companyDao.getByIdentity(edo.getCompanyIdentity()).getId());
 
     model.setFiles(fromWorkflowFileEdoList(edo.getFiles()));
     model.setActions(fromWorkflowActionEdoList(edo.getActions()));
@@ -94,7 +102,9 @@ public class WorkflowService extends CoreModelEdoMapperService<WorkflowEntity, W
     return model;
   }
 
-  private List<WorkflowFileEntity> fromWorkflowFileEdoList(final List<WorkflowFileEdo> files) throws IFlowMessageConversionFailureException {
+  private List<WorkflowFileEntity> fromWorkflowFileEdoList(final List<WorkflowFileEdo> files)
+      throws IFlowMessageConversionFailureException {
+
     final List<WorkflowFileEntity> modelList = new ArrayList<>();
 
     for (final WorkflowFileEdo edo : files) {
@@ -105,6 +115,7 @@ public class WorkflowService extends CoreModelEdoMapperService<WorkflowEntity, W
   }
 
   private WorkflowFileEntity fromFileEdo(final WorkflowFileEdo edo) throws IFlowMessageConversionFailureException {
+
     validateCustomer(edo);
     final WorkflowFileEntity model = new WorkflowFileEntity();
 
@@ -123,6 +134,7 @@ public class WorkflowService extends CoreModelEdoMapperService<WorkflowEntity, W
 
   private List<WorkflowFileVersionEntity> fromWorkflowFileVersionEdoList(final List<WorkflowFileVersionEdo> fileVersions)
       throws IFlowMessageConversionFailureException {
+
     final List<WorkflowFileVersionEntity> modelList = new ArrayList<>();
 
     for (final WorkflowFileVersionEdo edo : fileVersions) {
@@ -133,6 +145,7 @@ public class WorkflowService extends CoreModelEdoMapperService<WorkflowEntity, W
   }
 
   private WorkflowFileVersionEntity fromFileVersionEdo(final WorkflowFileVersionEdo edo) throws IFlowMessageConversionFailureException {
+
     validateCustomer(edo);
 
     final WorkflowFileVersionEntity model = new WorkflowFileVersionEntity();
@@ -148,6 +161,7 @@ public class WorkflowService extends CoreModelEdoMapperService<WorkflowEntity, W
 
   private List<WorkflowActionEntity> fromWorkflowActionEdoList(final List<WorkflowActionEdo> actions)
       throws IFlowMessageConversionFailureException {
+
     final List<WorkflowActionEntity> modelList = new ArrayList<>();
 
     for (final WorkflowActionEdo edo : actions) {
@@ -158,6 +172,7 @@ public class WorkflowService extends CoreModelEdoMapperService<WorkflowEntity, W
   }
 
   private WorkflowActionEntity fromActionEdo(final WorkflowActionEdo edo) throws IFlowMessageConversionFailureException {
+
     validateCustomer(edo);
 
     final WorkflowActionEntity model = new WorkflowActionEntity();
@@ -171,11 +186,13 @@ public class WorkflowService extends CoreModelEdoMapperService<WorkflowEntity, W
   }
 
   public WorkflowActionEdo toActionEdo(final WorkflowActionEntity model) {
+
     final WorkflowActionEdo edo = new WorkflowActionEdo();
     edo.setComments(model.getComments());
     edo.setStatus(model.getStatus());
-    edo.setAssignToIdentity(
-        model.getAssignToId() > 0L ? usersDao.getById(model.getAssignToId()).getIdentity() : EIdentity.NOT_SET.getIdentity());
+    edo
+        .setAssignToIdentity(
+            model.getAssignToId() > 0L ? usersDao.getById(model.getAssignToId()).getIdentity() : EIdentity.NOT_SET.getIdentity());
     edo.setCurrentStepIdentity(workflowTypeStepDao.getById(model.getCurrentStepId()).getIdentity());
 
     return edo;
@@ -183,6 +200,7 @@ public class WorkflowService extends CoreModelEdoMapperService<WorkflowEntity, W
 
   @Override
   public WorkflowEdo toEdo(final WorkflowEntity model) {
+
     final WorkflowEdo edo = new WorkflowEdo();
     edo.setComments(model.getComments());
     edo.setStatus(model.getStatus());
@@ -193,6 +211,7 @@ public class WorkflowService extends CoreModelEdoMapperService<WorkflowEntity, W
     edo.setCurrentStepIdentity(workflowTypeStepDao.getById(model.getCurrentStepId()).getIdentity());
     edo.setCreatedByIdentity(usersDao.getById(model.getCreatedById()).getIdentity());
     edo.setWorkflowTypeIdentity(workflowTypeDao.getById(model.getWorkflowTypeId()).getIdentity());
+    edo.setCompanyIdentity(model.getCompany().getIdentity());
 
     edo.setFiles(toWorkflowFileEdoList(model.getFiles()));
     edo.setActions(toWorkflowActionEdoList(model.getActions()));
@@ -201,6 +220,7 @@ public class WorkflowService extends CoreModelEdoMapperService<WorkflowEntity, W
   }
 
   private List<WorkflowFileEdo> toWorkflowFileEdoList(final List<WorkflowFileEntity> files) {
+
     final List<WorkflowFileEdo> edoList = new ArrayList<>();
 
     for (final WorkflowFileEntity model : files) {
@@ -211,6 +231,7 @@ public class WorkflowService extends CoreModelEdoMapperService<WorkflowEntity, W
   }
 
   private WorkflowFileEdo toFileEdo(final WorkflowFileEntity model) {
+
     final WorkflowFileEdo edo = new WorkflowFileEdo();
     edo.setTitle(model.getTitle());
     edo.setExtention(model.getExtention());
@@ -227,6 +248,7 @@ public class WorkflowService extends CoreModelEdoMapperService<WorkflowEntity, W
   }
 
   private List<WorkflowFileVersionEdo> toWorkflowFileVersionEdoList(final List<WorkflowFileVersionEntity> fileVersions) {
+
     final List<WorkflowFileVersionEdo> edoList = new ArrayList<>();
 
     for (final WorkflowFileVersionEntity model : fileVersions) {
@@ -237,6 +259,7 @@ public class WorkflowService extends CoreModelEdoMapperService<WorkflowEntity, W
   }
 
   private WorkflowFileVersionEdo toFileVersionEdo(final WorkflowFileVersionEntity model) {
+
     final WorkflowFileVersionEdo edo = new WorkflowFileVersionEdo();
     edo.setComments(model.getComments());
     edo.setStatus(model.getStatus());
@@ -248,6 +271,7 @@ public class WorkflowService extends CoreModelEdoMapperService<WorkflowEntity, W
   }
 
   private List<WorkflowActionEdo> toWorkflowActionEdoList(final List<WorkflowActionEntity> actions) {
+
     final List<WorkflowActionEdo> edoList = new ArrayList<>();
 
     for (final WorkflowActionEntity model : actions) {

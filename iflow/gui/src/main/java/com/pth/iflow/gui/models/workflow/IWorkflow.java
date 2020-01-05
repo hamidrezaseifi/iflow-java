@@ -64,6 +64,8 @@ public interface IWorkflow {
 
   public String getWorkflowTypeIdentity();
 
+  public String getCompanyIdentity();
+
   public boolean getHasActiveAction();
 
   public void setCreatedByUser(User createdByUser);

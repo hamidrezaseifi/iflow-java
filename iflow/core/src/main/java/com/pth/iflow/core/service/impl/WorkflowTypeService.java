@@ -16,38 +16,43 @@ import com.pth.iflow.core.service.interfaces.IWorkflowTypeService;
 import com.pth.iflow.core.storage.dao.interfaces.IWorkflowTypeDao;
 
 @Service
-public class WorkflowTypeService extends CoreModelEdoMapperService<WorkflowTypeEntity, WorkflowTypeEdo>
-    implements IWorkflowTypeService {
+public class WorkflowTypeService extends CoreModelEdoMapperService<WorkflowTypeEntity, WorkflowTypeEdo> implements IWorkflowTypeService {
 
   private final IWorkflowTypeDao workflowTypeDao;
 
   public WorkflowTypeService(@Autowired final IWorkflowTypeDao workflowDao) {
+
     this.workflowTypeDao = workflowDao;
   }
 
   @Override
   public WorkflowTypeEntity getByIdentity(final String identity) {
+
     return this.workflowTypeDao.getByIdentity(identity);
   }
 
   @Override
   public List<WorkflowTypeStepEntity> getStepsByIdentity(final String identity) {
+
     final WorkflowTypeEntity workflow = getByIdentity(identity);
     return workflow.getSteps();
   }
 
   @Override
   public List<WorkflowTypeEntity> getListByIdCompanyId(final String identity) {
+
     return this.workflowTypeDao.getListByCompanyIdentity(identity);
   }
 
   @Override
   public List<WorkflowTypeEntity> getListByIdentityList(final Collection<String> idList) {
+
     return this.workflowTypeDao.getListByIdentityList(idList);
   }
 
   @Override
   public WorkflowTypeEntity save(final WorkflowTypeEntity model) {
+
     if (model.isNew()) {
       return workflowTypeDao.create(model);
     }
@@ -59,11 +64,13 @@ public class WorkflowTypeService extends CoreModelEdoMapperService<WorkflowTypeE
   }
 
   protected WorkflowTypeEntity prepareSavingModel(final WorkflowTypeEntity model) {
+
     return model;
   }
 
   @Override
   public WorkflowTypeEntity fromEdo(final WorkflowTypeEdo edo) throws IFlowMessageConversionFailureException {
+
     validateCustomer(edo);
 
     final WorkflowTypeStepService stepService = new WorkflowTypeStepService(null, null);
@@ -74,8 +81,6 @@ public class WorkflowTypeService extends CoreModelEdoMapperService<WorkflowTypeE
     model.setComments(edo.getComments());
     model.setStatus(edo.getStatus());
     model.setIdentity(edo.getIdentity());
-    model.getCompany().setIdentity(edo.getCompanyIdentity());
-    model.setBaseTypeIdentity(edo.getBaseTypeIdentity());
     model.setSendToController(edo.getSendToController());
     model.setAssignType(EWorkflowTypeAssignType.ofValue(edo.getAssignType()));
     model.setAllowAssign(edo.getAllowAssign());
@@ -97,8 +102,6 @@ public class WorkflowTypeService extends CoreModelEdoMapperService<WorkflowTypeE
     edo.setComments(model.getComments());
     edo.setStatus(model.getStatus());
     edo.setIdentity(model.getIdentity());
-    edo.setCompanyIdentity(model.getCompany().getIdentity());
-    edo.setBaseTypeIdentity(model.getBaseTypeIdentity());
     edo.setSendToController(model.getSendToController());
     edo.setAssignType(model.geAssignType().getValue());
     edo.setIncreaseStepAutomatic(model.getIncreaseStepAutomatic());

@@ -1,4 +1,4 @@
-package com.pth.iflow.common.edo.models.workflow.singletask;
+package com.pth.iflow.common.models.edo.workflow.testthreetask;
 
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -11,10 +11,10 @@ import com.pth.iflow.common.enums.EWorkflowType;
 import com.pth.iflow.common.models.base.IFlowJaxbDefinition;
 import com.pth.iflow.common.models.edo.workflow.WorkflowEdo;
 
-@XmlRootElement(name = "SingleTaskWorkflow", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+@XmlRootElement(name = "TestThreeTaskWorkflow", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "SingleTaskWorkflow" + IFlowJaxbDefinition.TYPE_PREFIX)
-public class SingleTaskWorkflowEdo {
+@XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "TestThreeTaskWorkflow" + IFlowJaxbDefinition.TYPE_PREFIX)
+public class TestThreeTaskWorkflowEdo {
 
   @NotNull(message = "Workflow is not allowed to be null!")
   @XmlElement(name = "Workflow", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
@@ -25,7 +25,7 @@ public class SingleTaskWorkflowEdo {
   }
 
   public void setWorkflow(final WorkflowEdo workflow) {
-    workflow.setWorkflowTypeIdentity(EWorkflowType.SINGLE_TASK_WORKFLOW_TYPE.getIdentity());
+    workflow.setWorkflowTypeIdentity(EWorkflowType.TESTTHREE_TASK_WORKFLOW_TYPE.getIdentity());
     this.workflow = workflow;
   }
 

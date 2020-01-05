@@ -17,23 +17,23 @@ import com.pth.iflow.common.models.base.IFlowJaxbDefinition;
 import com.pth.iflow.common.models.edo.AssignItemEdo;
 import com.pth.iflow.common.models.validation.AEnumNameValidator;
 
-@XmlRootElement(name = "SingleTaskWorkflowSaveRequest", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+@XmlRootElement(name = "WorkflowSaveRequest", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "SingleTaskWorkflowSaveRequest" + IFlowJaxbDefinition.TYPE_PREFIX)
+@XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "WorkflowSaveRequest" + IFlowJaxbDefinition.TYPE_PREFIX)
 public class WorkflowSaveRequestEdo {
 
   @NotNull(message = "Command is not allowed to be null!")
   @AEnumNameValidator(enumClazz = EWorkflowProcessCommand.class)
   @XmlElement(name = "Command", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String              command;
+  private String command;
 
   @NotNull(message = "Workflow must not be null")
   @XmlElement(name = "Workflow", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private WorkflowEdo         workflow;
+  private WorkflowEdo workflow;
 
   @NotNull(message = "ExpireDays must not be null")
   @XmlElement(name = "ExpireDays", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private Integer             expireDays;
+  private Integer expireDays;
 
   @NotNull(message = "AssignedList must not be null")
   @XmlElementWrapper(name = "AssignedList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
@@ -45,10 +45,12 @@ public class WorkflowSaveRequestEdo {
   }
 
   public String getCommand() {
+
     return this.command;
   }
 
   public void setCommand(final String command) {
+
     this.command = command;
   }
 
@@ -56,6 +58,7 @@ public class WorkflowSaveRequestEdo {
    * @return the workflow
    */
   public WorkflowEdo getWorkflow() {
+
     return this.workflow;
   }
 
@@ -63,18 +66,22 @@ public class WorkflowSaveRequestEdo {
    * @param workflow the workflow to set
    */
   public void setWorkflow(final WorkflowEdo workflow) {
+
     this.workflow = workflow;
   }
 
   public Integer getExpireDays() {
+
     return this.expireDays;
   }
 
   public void setExpireDays(final Integer expireDays) {
+
     this.expireDays = expireDays;
   }
 
   public List<AssignItemEdo> getAssigns() {
+
     return this.assigns;
   }
 
@@ -83,6 +90,7 @@ public class WorkflowSaveRequestEdo {
    */
   @JsonSetter
   public void setAssigns(final List<AssignItemEdo> assigns) {
+
     this.assigns = new ArrayList<>();
     if (assigns != null) {
       this.assigns.addAll(assigns);
