@@ -21,6 +21,8 @@ export class WorkflowListComponent implements OnInit {
 	resultWorlflows		:Workflow[] = [];
 	listInitialData 	:WorkflowListInitialData = new WorkflowListInitialData();
 
+	displayedColumns = ['col 1', 'col 2', 'col 3', 'col 4', 'col 5', 'col 6'];
+
 	showDebug : boolean = false;
 	viewWorkflowModal :boolean = false;
 	viewWorkflowModel :Workflow = null;
@@ -159,7 +161,7 @@ export class WorkflowListComponent implements OnInit {
 		return "";
 	}
 	
-	showWorkflow(typeIdentity: string, index: number){
+	showWorkflow(index: number){
 		
 		this.viewWorkflowModel = this.resultWorlflows[index];
 		this.viewWorkflowModal = true;

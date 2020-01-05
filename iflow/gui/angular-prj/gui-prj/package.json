@@ -25,6 +25,8 @@
     "@ngx-translate/core": "^11.0.1",
     "@ngx-translate/http-loader": "^4.0.0",
     "@stomp/ng2-stompjs": "^7.2.0",
+    "@swimlane/ngx-datatable": "^16.0.3",
+    "angular-data-table": "^0.8.1",
     "angular-resizable-element": "^3.2.6",
     "bootstrap": "^4.4.1",
     "jquery": "^3.4.1",
