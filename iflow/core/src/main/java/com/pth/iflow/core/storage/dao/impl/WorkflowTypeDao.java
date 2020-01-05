@@ -31,8 +31,6 @@ public class WorkflowTypeDao extends EntityDaoBase<WorkflowTypeEntity> implement
     final Root<WorkflowTypeEntity> root = query.from(WorkflowTypeEntity.class);
     query.select(root);
 
-    // final Join<WorkflowTypeEntity, CompanyEntity> join = root.join //("company");
-
     final Path<String> companyIdentityPath = root.get("company").get("identity");
     final Predicate predicate = criteriaBuilder.equal(companyIdentityPath, identity);
     query.where(predicate);

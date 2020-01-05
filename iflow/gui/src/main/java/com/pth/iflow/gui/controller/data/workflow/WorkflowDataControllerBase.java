@@ -82,6 +82,8 @@ public abstract class WorkflowDataControllerBase<W extends IWorkflow, WS extends
   public List<W> createWorkflow(@RequestBody final WS createRequest, final HttpSession session)
       throws GuiCustomizedException, IOException, IFlowMessageConversionFailureException {
 
+    createRequest.getWorkflow().setCompanyIdentity(this.getLoggedCompany().getIdentity());
+
     return this.workflowHandler.createWorkflow(createRequest);
 
   }
@@ -91,6 +93,8 @@ public abstract class WorkflowDataControllerBase<W extends IWorkflow, WS extends
   @ResponseBody
   public void saveWorkflow(@RequestBody final W workflow, final HttpSession session)
       throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
+
+    workflow.setCompanyIdentity(this.getLoggedCompany().getIdentity());
 
     this.workflowHandler.saveWorkflow(workflow);
 
@@ -111,6 +115,8 @@ public abstract class WorkflowDataControllerBase<W extends IWorkflow, WS extends
   @ResponseBody
   public void makeDoneWorkflow(@RequestBody final WS saveRequest, final HttpSession session)
       throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
+
+    saveRequest.getWorkflow().setCompanyIdentity(this.getLoggedCompany().getIdentity());
 
     this.workflowHandler.doneWorkflow(saveRequest);
 

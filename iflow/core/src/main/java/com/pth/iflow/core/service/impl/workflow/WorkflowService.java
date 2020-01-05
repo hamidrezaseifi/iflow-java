@@ -211,7 +211,7 @@ public class WorkflowService extends CoreModelEdoMapperService<WorkflowEntity, W
     edo.setCurrentStepIdentity(workflowTypeStepDao.getById(model.getCurrentStepId()).getIdentity());
     edo.setCreatedByIdentity(usersDao.getById(model.getCreatedById()).getIdentity());
     edo.setWorkflowTypeIdentity(workflowTypeDao.getById(model.getWorkflowTypeId()).getIdentity());
-    edo.setCompanyIdentity(model.getCompany().getIdentity());
+    edo.setCompanyIdentity(companyDao.getById(model.getCompanyId()).getIdentity());
 
     edo.setFiles(toWorkflowFileEdoList(model.getFiles()));
     edo.setActions(toWorkflowActionEdoList(model.getActions()));

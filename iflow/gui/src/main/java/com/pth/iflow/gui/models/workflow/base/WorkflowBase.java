@@ -70,6 +70,7 @@ public class WorkflowBase extends IdentityModel implements IWorkflow {
     return this.companyIdentity;
   }
 
+  @Override
   public void setCompanyIdentity(final String companyIdentity) {
 
     this.companyIdentity = companyIdentity;

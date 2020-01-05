@@ -286,6 +286,7 @@ public class GuiModelEdoMapper {
     model.setCurrentStepIdentity(edo.getWorkflow().getCurrentStepIdentity());
     model.setCreatedByIdentity(edo.getWorkflow().getCreatedByIdentity());
     model.setIdentity(edo.getWorkflow().getIdentity());
+    model.setCompanyIdentity(edo.getWorkflow().getCompanyIdentity());
 
     model.setFiles(fromWorkflowFileEdoList(edo.getWorkflow().getFiles()));
     model.setActions(fromWorkflowActionEdoList(edo.getWorkflow().getActions()));
@@ -413,6 +414,7 @@ public class GuiModelEdoMapper {
     model.setCurrentStepIdentity(edo.getWorkflow().getCurrentStepIdentity());
     model.setCreatedByIdentity(edo.getWorkflow().getCreatedByIdentity());
     model.setIdentity(edo.getWorkflow().getIdentity());
+    model.setCompanyIdentity(edo.getWorkflow().getCompanyIdentity());
 
     model.setFiles(fromWorkflowFileEdoList(edo.getWorkflow().getFiles()));
     model.setActions(fromWorkflowActionEdoList(edo.getWorkflow().getActions()));
@@ -499,6 +501,7 @@ public class GuiModelEdoMapper {
     model.setCurrentStepIdentity(edo.getWorkflow().getCurrentStepIdentity());
     model.setCreatedByIdentity(edo.getWorkflow().getCreatedByIdentity());
     model.setIdentity(edo.getWorkflow().getIdentity());
+    model.setCompanyIdentity(edo.getWorkflow().getCompanyIdentity());
 
     model.setFiles(fromWorkflowFileEdoList(edo.getWorkflow().getFiles()));
     model.setActions(fromWorkflowActionEdoList(edo.getWorkflow().getActions()));

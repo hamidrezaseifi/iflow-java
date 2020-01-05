@@ -66,6 +66,8 @@ public interface IWorkflow {
 
   public String getCompanyIdentity();
 
+  public void setCompanyIdentity(final String companyIdentity);
+
   public boolean getHasActiveAction();
 
   public void setCreatedByUser(User createdByUser);
