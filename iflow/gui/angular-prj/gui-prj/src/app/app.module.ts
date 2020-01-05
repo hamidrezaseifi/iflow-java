@@ -8,7 +8,7 @@ import { TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import { TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { ResizableModule } from 'angular-resizable-element';
 import { FormsModule } from '@angular/forms';
-import { DataTableModule } from 'ng-angular8-datatable';
+import { DataTableModule } from 'ng-seven-datatable';
 import { MatNativeDateModule } from '@angular/material/core';
 import {StompConfig, StompService} from '@stomp/ng2-stompjs';
 import * as SockJS from 'sockjs-client';

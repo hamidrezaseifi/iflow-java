@@ -31,6 +31,7 @@
     "moment": "^2.24.0",
     "net": "^1.0.2",
     "ng-angular8-datatable": "^0.9.11",
+    "ng-seven-datatable": "^0.9.0",
     "ng2-pdf-viewer": "^6.0.2",
     "ng2-stomp-service": "^1.2.2",
     "ngx-extended-pdf-viewer": "^1.8.4",
