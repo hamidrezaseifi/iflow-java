@@ -500,4 +500,3 @@ module.exports = __webpack_require__(/*! C:\Git\home\iflow\iflow-java\iflow\gui\
 /***/ })
 
 },[[7,"runtime"]]]);
-//# sourceMappingURL=styles-es2015.js.map

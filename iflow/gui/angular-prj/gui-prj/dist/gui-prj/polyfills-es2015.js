@@ -6383,4 +6383,3 @@ module.exports = __webpack_require__(/*! C:\Git\home\iflow\iflow-java\iflow\gui\
 /***/ })
 
 },[[6,"runtime"]]]);
-//# sourceMappingURL=polyfills-es2015.js.map
