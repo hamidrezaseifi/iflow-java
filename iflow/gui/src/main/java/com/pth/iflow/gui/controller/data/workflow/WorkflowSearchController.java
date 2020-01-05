@@ -36,10 +36,10 @@ public class WorkflowSearchController extends GuiDataControllerBase {
   public Map<String, Object> loadWorkflowListInitialData()
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    final Map<String, Object>      map                  = new HashMap<>();
+    final Map<String, Object> map = new HashMap<>();
 
-    final Collection<WorkflowType> workflowTypeList     = this.getAllWorkflowTypes();
-    final WorkflowSearchFilter     workflowSearchFilter = WorkflowSearchFilter.generateNew(workflowTypeList);
+    final Collection<WorkflowType> workflowTypeList = this.getAllWorkflowTypes();
+    final WorkflowSearchFilter workflowSearchFilter = WorkflowSearchFilter.generateNew(workflowTypeList);
     EWorkflowStatus.values();
 
     map.put("workflowStatusList", EWorkflowStatus.values());
@@ -58,9 +58,10 @@ public class WorkflowSearchController extends GuiDataControllerBase {
       workflowSearchFilter.addAssignedUserIdentity(this.getLoggedUser().getIdentity());
     }
 
-    final List<Workflow>      workflowList = this.workflowSearchAccess.searchWorkflow(workflowSearchFilter);
+    workflowSearchFilter.setCompanyIdentity(this.getLoggedCompany().getIdentity());
+    final List<Workflow> workflowList = this.workflowSearchAccess.searchWorkflow(workflowSearchFilter);
 
-    final Map<String, Object> mapped       = new HashMap<>();
+    final Map<String, Object> mapped = new HashMap<>();
     mapped.put("res", "ok");
     mapped.put("list", workflowList);
 

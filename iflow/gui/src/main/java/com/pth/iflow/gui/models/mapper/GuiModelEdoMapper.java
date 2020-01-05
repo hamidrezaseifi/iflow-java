@@ -749,6 +749,7 @@ public class GuiModelEdoMapper {
     edo.setStatusSet(model.getStatusList().stream().map(e -> e.getValue()).collect(Collectors.toSet()));
     edo.setWorkflowStepeIdentitySet(model.getWorkflowSteps());
     edo.setWorkflowTypeIdentitySet(model.getWorkflowTypes());
+    edo.setCompanyIdentity(model.getCompanyIdentity());
 
     return edo;
   }
@@ -762,6 +763,7 @@ public class GuiModelEdoMapper {
     model.setStatusList(edo.getStatusSet().stream().map(i -> EWorkflowStatus.ofValue(i)).collect(Collectors.toSet()));
     model.setWorkflowSteps(edo.getWorkflowStepeIdentitySet());
     model.setWorkflowTypes(edo.getWorkflowTypeIdentitySet());
+    model.setCompanyIdentity(edo.getCompanyIdentity());
 
     return model;
 

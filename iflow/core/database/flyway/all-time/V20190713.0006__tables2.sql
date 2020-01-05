@@ -67,4 +67,9 @@ CREATE TABLE `workflow_message` (
 ) ENGINE=InnoDB;
 
 
+INSERT INTO `company_workflow_type`(`company_id`,`workflow_type_id`) VALUES(1, 1);
+INSERT INTO `company_workflow_type`(`company_id`,`workflow_type_id`) VALUES(1, 2);
+INSERT INTO `company_workflow_type`(`company_id`,`workflow_type_id`) VALUES(1, 3);
+
+
 

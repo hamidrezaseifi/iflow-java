@@ -1,5 +1,7 @@
 
 
+DROP TABLE IF EXISTS `company_workflow_type`;
+
 DROP TABLE IF EXISTS `workflow_files_versions`;
 
 DROP TABLE IF EXISTS `workflow_files`;
@@ -232,8 +234,8 @@ CREATE TABLE `workflow` (
   KEY `FK_WORKFLOW_WORKFLOWTYPE_idx` (`workflow_type_id`),
   KEY `FK_WORKFLOW_WORKFLOWTYPESTEP_idx` (`current_step`),
   KEY `FK_WORKFLOW_USERS_idx` (`created_by`),
-  KEY `FK_WORKFLOW_COMPANY_idx` (`comoany_id`),
-  CONSTRAINT `FK_WORKFLOW_COMPANY` FOREIGN KEY (`comoany_id`) REFERENCES `companies` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  KEY `FK_WORKFLOW_COMPANY_idx` (`company_id`),
+  CONSTRAINT `FK_WORKFLOW_COMPANY` FOREIGN KEY (`company_id`) REFERENCES `companies` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_WORKFLOW_USERS` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `FK_WORKFLOW_WORKFLOWTYPE` FOREIGN KEY (`workflow_type_id`) REFERENCES `workflow_type` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `FK_WORKFLOW_WORKFLOWTYPESTEP` FOREIGN KEY (`current_step`) REFERENCES `workflow_type_step` (`id`) ON UPDATE CASCADE
@@ -292,4 +294,13 @@ CREATE TABLE `workflow_files_versions` (
   CONSTRAINT `FK_WORKFLOWFILEVERSION_WORKFLOWFILE` FOREIGN KEY (`workflow_file_id`) REFERENCES `workflow_files` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
+CREATE TABLE `company_workflow_type` (
+  `company_id` int(11) NOT NULL,
+  `workflow_type_id` int(11) NOT NULL,
+  `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  PRIMARY KEY (`company_id`,`workflow_type_id`),
+  KEY `FK_COMPANYWORKFLOWTYPE_WORKFLOWTYPE_idx` (`workflow_type_id`),
+  CONSTRAINT `FK_COMPANYWORKFLOWTYPE_COMPANY` FOREIGN KEY (`company_id`) REFERENCES `companies` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_COMPANYWORKFLOWTYPE_WORKFLOWTYPE` FOREIGN KEY (`workflow_type_id`) REFERENCES `workflow_type` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
 

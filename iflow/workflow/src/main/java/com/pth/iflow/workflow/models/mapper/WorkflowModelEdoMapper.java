@@ -693,6 +693,7 @@ public class WorkflowModelEdoMapper {
     edo.setStatusSet(model.getStatusSet());
     edo.setWorkflowStepeIdentitySet(model.getWorkflowStepeIdSet());
     edo.setWorkflowTypeIdentitySet(model.getWorkflowTypeIdSet());
+    edo.setCompanyIdentity(model.getCompanyIdentity());
 
     return edo;
   }
@@ -706,6 +707,7 @@ public class WorkflowModelEdoMapper {
     model.setStatusSet(edo.getStatusSet());
     model.setWorkflowStepeIdSet(edo.getWorkflowStepeIdentitySet());
     model.setWorkflowTypeIdSet(edo.getWorkflowTypeIdentitySet());
+    model.setCompanyIdentity(edo.getCompanyIdentity());
 
     return model;
 
