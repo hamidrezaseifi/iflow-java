@@ -13,6 +13,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -20,6 +22,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
+import com.pth.iflow.core.model.entity.CompanyEntity;
 import com.pth.iflow.core.storage.dao.helper.EntityIdentityHelper;
 import com.pth.iflow.core.storage.dao.helper.EntityListener;
 
@@ -71,6 +74,12 @@ public class WorkflowTypeEntity extends EntityIdentityHelper {
   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
   @JoinColumn(name = "workflow_type_id")
   private final List<WorkflowTypeStepEntity> steps = new ArrayList<>();
+
+  @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @JoinTable(
+             name = "company_workflow_type", joinColumns = { @JoinColumn(name = "workflow_type_id") }, inverseJoinColumns = { @JoinColumn(name = "company_id") }
+  )
+  private CompanyEntity company;
 
   @Override
   public Long getId() {
@@ -218,6 +227,11 @@ public class WorkflowTypeEntity extends EntityIdentityHelper {
   public void addStep(final WorkflowTypeStepEntity stepId) {
 
     this.steps.add(stepId);
+  }
+
+  public CompanyEntity getCompany() {
+
+    return company;
   }
 
   @Override
