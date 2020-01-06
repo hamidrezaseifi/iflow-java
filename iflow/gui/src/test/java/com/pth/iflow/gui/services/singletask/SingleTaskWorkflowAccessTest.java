@@ -18,10 +18,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.pth.iflow.common.edo.models.workflow.singletask.SingleTaskWorkflowEdo;
-import com.pth.iflow.common.edo.models.workflow.singletask.SingleTaskWorkflowListEdo;
-import com.pth.iflow.common.edo.models.workflow.singletask.SingleTaskWorkflowSaveRequestEdo;
 import com.pth.iflow.common.enums.EModule;
+import com.pth.iflow.common.models.edo.workflow.singletask.SingleTaskWorkflowEdo;
+import com.pth.iflow.common.models.edo.workflow.singletask.SingleTaskWorkflowListEdo;
+import com.pth.iflow.common.models.edo.workflow.singletask.SingleTaskWorkflowSaveRequestEdo;
 import com.pth.iflow.gui.TestDataProducer;
 import com.pth.iflow.gui.configurations.GuiConfiguration;
 import com.pth.iflow.gui.models.mapper.GuiModelEdoMapper;

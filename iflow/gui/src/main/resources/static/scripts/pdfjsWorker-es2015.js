@@ -56200,9 +56200,8 @@ function () {
 /***/ })
 /******/ ]);
 });
-//# sourceMappingURL=pdf.worker.js.map
+
 
 /***/ })
 
 }]);
-//# sourceMappingURL=pdfjsWorker-es2015.js.map

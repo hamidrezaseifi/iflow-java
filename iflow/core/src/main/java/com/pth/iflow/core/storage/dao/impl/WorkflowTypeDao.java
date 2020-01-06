@@ -22,15 +22,17 @@ public class WorkflowTypeDao extends EntityDaoBase<WorkflowTypeEntity> implement
 
   @Override
   public List<WorkflowTypeEntity> getListByCompanyIdentity(final String identity) throws IFlowStorageException {
-    final EntityManager                     entityManager   = dbConfiguration.getEntityManager();
 
-    final CriteriaBuilder                   criteriaBuilder = entityManager.getCriteriaBuilder();
-    final CriteriaQuery<WorkflowTypeEntity> query           = criteriaBuilder.createQuery(WorkflowTypeEntity.class);
-    final Root<WorkflowTypeEntity>          root            = query.from(WorkflowTypeEntity.class);
+    final EntityManager entityManager = dbConfiguration.getEntityManager();
+
+    final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+    final CriteriaQuery<WorkflowTypeEntity> query = criteriaBuilder.createQuery(WorkflowTypeEntity.class);
+    // final Root<CompanyEntity> companyRoot = query.from(CompanyEntity.class);
+    final Root<WorkflowTypeEntity> root = query.from(WorkflowTypeEntity.class);
     query.select(root);
 
     final Path<String> companyIdentityPath = root.get("company").get("identity");
-    final Predicate    predicate           = criteriaBuilder.equal(companyIdentityPath, identity);
+    final Predicate predicate = criteriaBuilder.equal(companyIdentityPath, identity);
     query.where(predicate);
 
     final TypedQuery<WorkflowTypeEntity> typedQuery = entityManager.createQuery(query);
@@ -39,13 +41,14 @@ public class WorkflowTypeDao extends EntityDaoBase<WorkflowTypeEntity> implement
     // typedQuery.unwrap(org.hibernate.query.Query.class).getQueryString();
     // System.out.println("search workflow query: " + qr);
 
-    final List<WorkflowTypeEntity>       list       = typedQuery.getResultList();
+    final List<WorkflowTypeEntity> list = typedQuery.getResultList();
     entityManager.close();
     return list;
   }
 
   @Override
   protected Class<WorkflowTypeEntity> entityClass() {
+
     return WorkflowTypeEntity.class;
   }
 

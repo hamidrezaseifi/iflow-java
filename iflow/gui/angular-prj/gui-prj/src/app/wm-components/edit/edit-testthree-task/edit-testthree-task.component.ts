@@ -3,7 +3,7 @@ import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpClient, HttpEventType } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
-import { DateAdapter } from '@angular/material';
+import { DateAdapter } from '@angular/material/core';
 import { Observable } from 'rxjs';
 
 import { GlobalService } from '../../../services/global.service';
@@ -11,8 +11,9 @@ import { TestthreetaskWorkflowEditService } from '../../../services/workflow/tes
 import { LoadingServiceService } from '../../../services/loading-service.service';
 import { ErrorServiceService } from '../../../services/error-service.service';
 
-import { User, Department, DepartmentGroup, GeneralData } from '../../../ui-models';
-import { WorkflowProcessCommand, Workflow, AssignItem, FileTitle, AssignType, WorkflowUploadFileResult } from '../../../wf-models';
+import { User, Department, DepartmentGroup, GeneralData, UploadedFile, UploadedResult } from '../../../ui-models';
+import { WorkflowProcessCommand, Workflow, AssignItem, FileTitle, AssignType, WorkflowUploadFileResult, WorkflowUploadedFile } 
+	from '../../../wf-models';
 import { WorkflowSaveRequest } from '../../../wf-models/workflow-save-request';
 import { WorkflowSaveRequestInit } from '../../../wf-models/workflow-save-request-init';
 import { GermanDateAdapter, parseDate, formatDate } from '../../../helper';
@@ -37,22 +38,10 @@ export class EditTestthreeTaskComponent implements OnInit {
 
 	viewWorkflowModel :Workflow = null;
 	
-	users : User[] = [];
-	departments : Department[] = [];
-	generalDataObs :Observable<GeneralData> = null;
+	generalDataObs :Observable<GeneralData> = null;		
+	
+	uploadedFiles :UploadedFile[] = [];	
 
-	fileTitles : FileTitle[] = [];
-		
-	showAssignModal :boolean = false;
-	
-	selectAssign : boolean[][] = [];
-	
-	assignTypeUser :AssignType = AssignType.USER;
-	assignTypeDepartment :AssignType = AssignType.DEPARTMENT;
-	assignTypeDepartmentGroup :AssignType = AssignType.DEPARTMENTGROUP;
-	
-	
-	
 	fileTitleProgress(fileInput: any, file :FileTitle, fileIndex) {
 		
 		if(fileInput.target.files && fileInput.target.files != null && file){
@@ -126,7 +115,7 @@ export class EditTestthreeTaskComponent implements OnInit {
 		    private router: Router,
 			private global: GlobalService,
 			private translate: TranslateService,
-			private editService :TestthreetaskWorkflowEditService,
+			public  editService :TestthreetaskWorkflowEditService,
 			private loadingService: LoadingServiceService,
 			private http: HttpClient,
 			private errorService: ErrorServiceService,
@@ -172,12 +161,6 @@ export class EditTestthreeTaskComponent implements OnInit {
 		if(this.workflowIdentity == ''){
 			return;
 		}
-		
-		this.generalDataObs.subscribe( (generalData :GeneralData) => {
-			this.users = generalData.company.users;
-			this.departments = generalData.company.departments;
-		});
-
 	
 	 	this.loadWorkflowData();
 	 	
@@ -233,6 +216,9 @@ export class EditTestthreeTaskComponent implements OnInit {
 		
 		this.workflowSaveRequest.workflow.controllerIdentity = this.workflowEditForm.controls["controllerIdentity"].value; 
 		this.workflowSaveRequest.workflow.comments = this.workflowEditForm.controls["comments"].value; 
+		
+		this.workflowSaveRequest.uploadedFiles = WorkflowUploadedFile.loadUploadedFiles(this.uploadedFiles);
+
 	}
 	
 	  
@@ -245,30 +231,10 @@ export class EditTestthreeTaskComponent implements OnInit {
 		return false;
 	}
 	
-	removeAssign(identity :string , type: AssignType){
-		this.workflowSaveRequest.assigns = this.workflowSaveRequest.assigns.filter(function(value, index, arr){
-	
-		    return value.itemIdentity != identity || value.itemType != type;
-	
-		});
-		
-	}
-	
-	removeFile(index){
-		this.fileTitles.splice(index, 1);
-	}
-	
-	addFile(){
-		var ft :FileTitle = new FileTitle();
-		ft.title = "";
-		ft.file = null;
-		
-		this.fileTitles.push(ft);
-	}
-	
 	save(makeDone :boolean){
 		
 		this.setFormControlValues();
+		
 		//return;
 		
 		this.loadingService.showLoading();
@@ -321,7 +287,8 @@ export class EditTestthreeTaskComponent implements OnInit {
 	}
 	
 	private doneWorkflowData(){
-		
+
+
 	    this.editService.doneWorkflow(this.workflowSaveRequest).subscribe(
 		        (result) => {		        	
 		            console.log("Create workflow result", result);
@@ -365,26 +332,6 @@ export class EditTestthreeTaskComponent implements OnInit {
 	}
 	
 	
-	showAssignSelect(){
-		
-		this.selectAssign = [];
-		
-		for(var index in this.workflowSaveRequest.assigns){
-			var assign :AssignItem = this.workflowSaveRequest.assigns[index];
-				
-			if(this.selectAssign[assign.itemType] === undefined){
-				this.selectAssign[assign.itemType] = [];
-			}
-			this.selectAssign[assign.itemType][assign.itemIdentity] = true;				
-		}
-		
-		this.showAssignModal = true;
-	}
-	
-	hideAssignSelect(){
-		this.showAssignModal = false;
-	}
-	
 	onUsersSelected(assigns: AssignItem[]) {
 		this.workflowSaveRequest.assigns = [];
 		
@@ -396,41 +343,12 @@ export class EditTestthreeTaskComponent implements OnInit {
 			this.workflowSaveRequest.assigns.push(assign);						
 		}
 		
-		this.hideAssignSelect();
 	}	
 		
-	
-	getAssignItemTitle(item :AssignItem){
-
-		if(item.itemType === AssignType.USER){
-			for(var index in this.users){
-				if(this.users[index].identity === item.itemIdentity){
-					return this.users[index].fullName;
-				}
-			}
-			return 'Unknown!';
-		}
+	onUploadedFilesChanged(uploadedFileList: UploadedFile[]) {
 		
-		if(item.itemType === AssignType.DEPARTMENT){
-			for(var index in this.departments){
-				if(this.departments[index].identity === item.itemIdentity){
-					return this.departments[index].title;
-				}
-			}
-			return 'Unknown!';
-		}
-		
-		if(item.itemType === AssignType.DEPARTMENTGROUP){
-			for(var index in this.departments){
-				for(var gindex in this.departments[index].departmentGroups){
-					if(this.departments[index].departmentGroups[gindex].identity === item.itemIdentity){
-						return this.departments[index].departmentGroups[gindex].title;
-					}
-				}
-			}
-			return 'Unknown!';
-		}
-		
+		this.uploadedFiles = uploadedFileList;
 	}
+
 
 }

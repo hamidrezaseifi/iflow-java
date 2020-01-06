@@ -1,6 +1,7 @@
 package com.pth.iflow.workflow.models.base;
 
 import java.util.List;
+
 import com.pth.iflow.common.enums.EWorkflowActionStatus;
 import com.pth.iflow.common.enums.EWorkflowStatus;
 import com.pth.iflow.common.enums.EWorkflowType;
@@ -14,6 +15,10 @@ public interface IWorkflow {
   public String getIdentity();
 
   public void setIdentity(final String identity);
+
+  public String getCompanyIdentity();
+
+  public void setCompanyIdentity(final String companyIdentity);
 
   public boolean isIdentityNotSet();
 

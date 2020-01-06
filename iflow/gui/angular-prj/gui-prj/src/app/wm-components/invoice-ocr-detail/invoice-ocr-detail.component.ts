@@ -11,7 +11,7 @@ import { OcrWord, OcrBox } from '../../ui-models';
 })
 export class InvoiceOcrDetailComponent implements OnInit, AfterViewInit  {
 
-	@ViewChild('scannedItemPreviewContainer', {static: false})previewContainer: ElementRef;
+	@ViewChild('scannedItemPreviewContainer')previewContainer: ElementRef;
 	
 	private _foundWords :OcrWord[] = [];
 	propertyLabels :string[] = [];

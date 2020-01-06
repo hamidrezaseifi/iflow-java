@@ -3,7 +3,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpClient, HttpEventType } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
-import { DateAdapter } from '@angular/material';
+import { DateAdapter } from '@angular/material/core';
 import { Observable, throwError , Subscription } from 'rxjs';
 import { StompService, StompState } from '@stomp/ng2-stompjs';
 import { Message } from '@stomp/stompjs';
@@ -36,8 +36,7 @@ export class CreateInvoiceComponent extends InvoiceBaseComponent implements OnIn
 	private subscription: Subscription;
 	private messages: Observable<Message>;
 	public subscribed: boolean;
-	stompClient = null;
-	
+	stompClient = null;	
 	
 	uploadedFiles :UploadedFile[] = [];
 	
@@ -199,8 +198,6 @@ export class CreateInvoiceComponent extends InvoiceBaseComponent implements OnIn
 	
 	protected loadInitialData(){
 		
-	 	super.loadInitialData();
-
 	 	if(this.editService.workflowSaveRequestInit !== null){
 	 		this.workflowSaveRequest = this.editService.workflowSaveRequestInit.workflowSaveRequest;
 	 		this.setToControlValues();
@@ -212,7 +209,12 @@ export class CreateInvoiceComponent extends InvoiceBaseComponent implements OnIn
 		 	
 	}
 
+	reload() {
+		
+		this.loadInitialData();
 	
+	}
+
 	private subscribeToSearchInitialData(){
 		this.editService.workflowSaveRequestInitSubject.subscribe((data : InvoiceWorkflowSaveRequestInit) => {
 	    	

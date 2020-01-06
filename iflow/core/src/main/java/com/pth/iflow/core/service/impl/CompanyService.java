@@ -16,7 +16,9 @@ public class CompanyService extends CoreModelEdoMapperService<CompanyEntity, Com
   private final ICompanyDao companyDao;
 
   public CompanyService(@Autowired final ICompanyDao companyDao) {
+
     this.companyDao = companyDao;
+
   }
 
   @Override
@@ -27,6 +29,7 @@ public class CompanyService extends CoreModelEdoMapperService<CompanyEntity, Com
 
   @Override
   public CompanyEntity save(final CompanyEntity model) {
+
     if (model.isNew()) {
 
       return companyDao.create(model);
@@ -39,11 +42,13 @@ public class CompanyService extends CoreModelEdoMapperService<CompanyEntity, Com
   }
 
   protected CompanyEntity prepareSavingModel(final CompanyEntity model) {
+
     return model;
   }
 
   @Override
   public CompanyEntity fromEdo(final CompanyEdo edo) throws IFlowMessageConversionFailureException {
+
     validateCustomer(edo);
 
     final CompanyEntity model = new CompanyEntity();
@@ -57,6 +62,7 @@ public class CompanyService extends CoreModelEdoMapperService<CompanyEntity, Com
 
   @Override
   public CompanyEdo toEdo(final CompanyEntity model) {
+
     final CompanyEdo edo = new CompanyEdo();
     edo.setCompanyName(model.getCompanyName());
     edo.setIdentity(model.getIdentity());

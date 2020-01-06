@@ -3,7 +3,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpClient, HttpEventType } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
-import { DateAdapter } from '@angular/material';
+import { DateAdapter } from '@angular/material/core';
 import { Observable } from 'rxjs';
 
 import { GlobalService } from '../services/global.service';
@@ -34,22 +34,14 @@ export class InvoiceBaseComponent implements OnInit {
 
 	workflowSaveRequest :InvoiceWorkflowSaveRequest = new InvoiceWorkflowSaveRequest();
 	
-	users : User[] = [];
-	departments : Department[] = [];
 	generalDataObs :Observable<GeneralData> = null;
 	
 	fileTitles : FileTitle[] = [];
-		
-	showAssignModal :boolean = false;
-	
+			
 	selectAssign : boolean[][] = [];
 
 	invoiceTypes : any[] = [];
-	
-	assignTypeUser :AssignType = AssignType.USER;
-	assignTypeDepartment :AssignType = AssignType.DEPARTMENT;
-	assignTypeDepartmentGroup :AssignType = AssignType.DEPARTMENTGROUP;
-	
+		
 	calcDiscountDate(){
 		//alert("calcDiscountDate ---");
 		
@@ -139,7 +131,6 @@ export class InvoiceBaseComponent implements OnInit {
 		this.invoiceEditForm = this.formBuilder.group({
 			expireDays: [10, Validators.required],
 
-			controllerIdentity: ['', Validators.required],
 			comments: [''],
 
 			sender: ['', Validators.required],
@@ -161,21 +152,6 @@ export class InvoiceBaseComponent implements OnInit {
         });
 
 		
-	}
-	
-	reload() {
-		
-		this.loadInitialData();
-	
-	}
-	
-	protected loadInitialData(){
-	 		
-		this.generalDataObs.subscribe( (generalData :GeneralData) => {
-			this.users = generalData.company.users;
-			this.departments = generalData.company.departments;
-		});
-	 	
 	}
 	
 	private setPageTitle(){
@@ -211,7 +187,6 @@ export class InvoiceBaseComponent implements OnInit {
 			
 			this.invoiceEditForm.controls["expireDays"].setValue(this.workflowSaveRequest.expireDays);
 			
-			this.invoiceEditForm.controls["controllerIdentity"].setValue(this.workflowSaveRequest.workflow.controllerIdentity);
 			this.invoiceEditForm.controls["comments"].setValue(this.workflowSaveRequest.workflow.comments);
 			
 			this.invoiceEditForm.controls["sender"].setValue(this.workflowSaveRequest.workflow.sender);
@@ -234,7 +209,6 @@ export class InvoiceBaseComponent implements OnInit {
 		
 		this.workflowSaveRequest.expireDays = this.invoiceEditForm.controls["expireDays"].value;
 		
-		this.workflowSaveRequest.workflow.controllerIdentity = this.invoiceEditForm.controls["controllerIdentity"].value; 
 		this.workflowSaveRequest.workflow.comments = this.invoiceEditForm.controls["comments"].value; 
 		
 		this.workflowSaveRequest.workflow.sender = this.invoiceEditForm.controls["sender"].value; 
@@ -254,43 +228,6 @@ export class InvoiceBaseComponent implements OnInit {
 	
 	  
 	get forms() { return this.invoiceEditForm.controls; }
-		
-	get hasNoAssigns() :boolean{
-		if(this.workflowSaveRequest && this.workflowSaveRequest.assigns){
-			return this.workflowSaveRequest.assigns.length == 0;
-		}
-		return false;
-	}
-	
-	removeAssign(identity :string , type: AssignType){
-		this.workflowSaveRequest.assigns = this.workflowSaveRequest.assigns.filter(function(value, index, arr){
-	
-		    return value.itemIdentity != identity || value.itemType != type;
-	
-		});
-		
-	}
-	
-	
-	showAssignSelect(){
-		
-		this.selectAssign = [];
-		
-		for(var index in this.workflowSaveRequest.assigns){
-			var assign :AssignItem = this.workflowSaveRequest.assigns[index];
-				
-			if(this.selectAssign[assign.itemType] === undefined){
-				this.selectAssign[assign.itemType] = [];
-			}
-			this.selectAssign[assign.itemType][assign.itemIdentity] = true;				
-		}
-		
-		this.showAssignModal = true;
-	}
-	
-	hideAssignSelect(){
-		this.showAssignModal = false;
-	}
 	
 	onUsersSelected(assigns: AssignItem[]) {
 		this.workflowSaveRequest.assigns = [];
@@ -303,53 +240,6 @@ export class InvoiceBaseComponent implements OnInit {
 			this.workflowSaveRequest.assigns.push(assign);						
 		}
 		
-		this.hideAssignSelect();
 	}	
-		
-	
-	getAssignItemTitle(item :AssignItem){
-
-		if(item.itemType === AssignType.USER){
-			for(var index in this.users){
-				if(this.users[index].identity === item.itemIdentity){
-					return this.users[index].fullName;
-				}
-			}
-			return 'Unknown!';
-		}
-		
-		if(item.itemType === AssignType.DEPARTMENT){
-			for(var index in this.departments){
-				if(this.departments[index].identity === item.itemIdentity){
-					return this.departments[index].title;
-				}
-			}
-			return 'Unknown!';
-		}
-		
-		if(item.itemType === AssignType.DEPARTMENTGROUP){
-			for(var index in this.departments){
-				for(var gindex in this.departments[index].departmentGroups){
-					if(this.departments[index].departmentGroups[gindex].identity === item.itemIdentity){
-						return this.departments[index].departmentGroups[gindex].title;
-					}
-				}
-			}
-			return 'Unknown!';
-		}
-		
-	}
-	
-	removeFile(index){
-		this.fileTitles.splice(index, 1);
-	}
-	
-	addFile(){
-		var ft :FileTitle = new FileTitle();
-		ft.title = "";
-		ft.file = null;
-		
-		this.fileTitles.push(ft);
-	}
 
 }

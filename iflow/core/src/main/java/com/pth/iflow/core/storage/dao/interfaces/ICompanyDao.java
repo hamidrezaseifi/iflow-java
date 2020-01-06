@@ -1,6 +1,9 @@
 package com.pth.iflow.core.storage.dao.interfaces;
 
+import java.util.List;
+
 import com.pth.iflow.core.model.entity.CompanyEntity;
+import com.pth.iflow.core.model.entity.CompanyWorkflowTypeControllerEntity;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 
 public interface ICompanyDao {
@@ -15,4 +18,5 @@ public interface ICompanyDao {
 
   void deleteById(Long id) throws IFlowStorageException;
 
+  public List<CompanyWorkflowTypeControllerEntity> readCompanyWorkflowTypeController(Long id);
 }

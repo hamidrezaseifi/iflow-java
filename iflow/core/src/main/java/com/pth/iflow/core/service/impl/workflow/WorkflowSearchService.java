@@ -20,9 +20,10 @@ import com.pth.iflow.core.storage.dao.interfaces.IWorkflowSearchDao;
 public class WorkflowSearchService extends CoreModelEdoMapperService<WorkflowEntity, WorkflowEdo> implements IWorkflowSearchService {
 
   private final IWorkflowSearchDao workflowSearchDao;
-  private final IWorkflowService   workflowService;
+  private final IWorkflowService workflowService;
 
   public WorkflowSearchService(@Autowired final IWorkflowSearchDao workflowSearchDao, @Autowired final IWorkflowService workflowService) {
+
     this.workflowSearchDao = workflowSearchDao;
     this.workflowService = workflowService;
   }
@@ -59,6 +60,7 @@ public class WorkflowSearchService extends CoreModelEdoMapperService<WorkflowEnt
     searchFilter.setAssignedUserIdentitySet(workflowSearchFilterEdo.getAssignedUserIdentitySet());
     searchFilter.setWorkflowStepIdentitySet(workflowSearchFilterEdo.getWorkflowStepeIdentitySet());
     searchFilter.setWorkflowTypeIdentitySet(workflowSearchFilterEdo.getWorkflowTypeIdentitySet());
+    searchFilter.setCompanyIdentity(workflowSearchFilterEdo.getCompanyIdentity());
 
     return searchFilter;
   }

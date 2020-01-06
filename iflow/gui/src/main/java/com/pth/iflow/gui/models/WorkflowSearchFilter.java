@@ -10,20 +10,23 @@ import com.pth.iflow.common.enums.EWorkflowStatus;
 
 public class WorkflowSearchFilter {
 
-  private boolean                    meAssigned;
+  private boolean meAssigned;
 
-  private final Set<String>          assignedUserIdSet = new HashSet<>();
+  private final Set<String> assignedUserIdSet = new HashSet<>();
 
-  private final Set<EWorkflowStatus> statusList        = new HashSet<>();
+  private final Set<EWorkflowStatus> statusList = new HashSet<>();
 
-  private final Set<String>          workflowTypes     = new HashSet<>();
+  private final Set<String> workflowTypes = new HashSet<>();
 
-  private final Set<String>          workflowSteps     = new HashSet<>();
+  private final Set<String> workflowSteps = new HashSet<>();
+
+  private String companyIdentity;
 
   /**
    * @return the meAssigned
    */
   public boolean isMeAssigned() {
+
     return this.meAssigned;
   }
 
@@ -31,14 +34,17 @@ public class WorkflowSearchFilter {
    * @param meAssigned the meAssigned to set
    */
   public void setMeAssigned(final boolean meAssigned) {
+
     this.meAssigned = meAssigned;
   }
 
   public Set<String> getAssignedUserIdSet() {
+
     return this.assignedUserIdSet;
   }
 
   public void setAssignedUserIdentitySet(final Set<String> assignedUserIdList) {
+
     this.assignedUserIdSet.clear();
     if (assignedUserIdList != null) {
       this.assignedUserIdSet.addAll(assignedUserIdList);
@@ -52,10 +58,12 @@ public class WorkflowSearchFilter {
   }
 
   public Set<EWorkflowStatus> getStatusList() {
+
     return this.statusList;
   }
 
   public void setStatusList(final Set<EWorkflowStatus> statusList) {
+
     this.statusList.clear();
     if (statusList != null) {
       this.statusList.addAll(statusList);
@@ -63,10 +71,12 @@ public class WorkflowSearchFilter {
   }
 
   public Set<String> getWorkflowTypes() {
+
     return this.workflowTypes;
   }
 
   public void setWorkflowTypes(final Set<String> workflowTypes) {
+
     this.workflowTypes.clear();
     if (workflowTypes != null) {
       this.workflowTypes.addAll(workflowTypes);
@@ -74,22 +84,36 @@ public class WorkflowSearchFilter {
   }
 
   public Set<String> getWorkflowSteps() {
+
     return this.workflowSteps;
   }
 
   public void setWorkflowSteps(final Set<String> workflowSteps) {
+
     this.workflowSteps.clear();
     if (workflowSteps != null) {
       this.workflowSteps.addAll(workflowSteps);
     }
   }
 
+  public String getCompanyIdentity() {
+
+    return this.companyIdentity;
+  }
+
+  public void setCompanyIdentity(final String companyIdentity) {
+
+    this.companyIdentity = companyIdentity;
+  }
+
   public static WorkflowSearchFilter generateNew(final Collection<WorkflowType> workflowTypes) {
+
     final WorkflowSearchFilter workflowSearchFilter = new WorkflowSearchFilter();
 
     workflowSearchFilter.setMeAssigned(true);
-    workflowSearchFilter.setStatusList(
-        Arrays.asList(EWorkflowStatus.values()).stream().filter(e -> e != EWorkflowStatus.ARCHIVED).collect(Collectors.toSet()));
+    workflowSearchFilter
+        .setStatusList(
+            Arrays.asList(EWorkflowStatus.values()).stream().filter(e -> e != EWorkflowStatus.ARCHIVED).collect(Collectors.toSet()));
 
     workflowSearchFilter.setWorkflowTypes(workflowTypes.stream().map(t -> t.getIdentity()).collect(Collectors.toSet()));
 

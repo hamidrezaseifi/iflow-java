@@ -3,7 +3,7 @@ import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpClient, HttpEventType } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
-import { DateAdapter } from '@angular/material';
+import { DateAdapter } from '@angular/material/core';
 
 import { GlobalService } from '../../../services/global.service';
 import { InvoiceWorkflowEditService } from '../../../services/workflow/invoice/invoice-workflow-edit.service';
@@ -108,8 +108,7 @@ export class EditInvoiceComponent extends InvoiceBaseComponent implements OnInit
 	
 	protected loadInitialData(){
 		
-	 	super.loadInitialData();
-		
+	 	
 		if(this.workflowIdentity == ''){
 			return;
 		}
@@ -118,6 +117,12 @@ export class EditInvoiceComponent extends InvoiceBaseComponent implements OnInit
 	 	
 	}
 	
+	reload() {
+		
+		this.loadInitialData();
+	
+	}
+
 	private loadWorkflowData(){
 		
 		this.loadingService.showLoading();	     

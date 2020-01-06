@@ -24,13 +24,13 @@ public class CompanyEntity extends EntityIdentityHelper {
   @Id
   @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long    id;
+  private Long id;
 
   @Column(name = "identity")
-  private String  identity;
+  private String identity;
 
   @Column(name = "company_name")
-  private String  companyName;
+  private String companyName;
 
   @Column(name = "status")
   private Integer status;
@@ -40,11 +40,11 @@ public class CompanyEntity extends EntityIdentityHelper {
 
   @CreationTimestamp
   @Column(name = "created_at")
-  private Date    createdAt;
+  private Date createdAt;
 
   @UpdateTimestamp
   @Column(name = "updated_at")
-  private Date    updatedAt;
+  private Date updatedAt;
 
   /**
    * @return the id
@@ -52,6 +52,7 @@ public class CompanyEntity extends EntityIdentityHelper {
 
   @Override
   public Long getId() {
+
     return this.id;
   }
 
@@ -60,16 +61,19 @@ public class CompanyEntity extends EntityIdentityHelper {
    */
 
   public void setId(final Long id) {
+
     this.id = id;
   }
 
   @Override
   public String getIdentity() {
+
     return identity;
   }
 
   @Override
   public void setIdentity(final String identity) {
+
     this.identity = identity;
   }
 
@@ -77,6 +81,7 @@ public class CompanyEntity extends EntityIdentityHelper {
    * @return the companyName
    */
   public String getCompanyName() {
+
     return this.companyName;
   }
 
@@ -84,6 +89,7 @@ public class CompanyEntity extends EntityIdentityHelper {
    * @param companyName the companyName to set
    */
   public void setCompanyName(final String companyName) {
+
     this.companyName = companyName;
   }
 
@@ -91,6 +97,7 @@ public class CompanyEntity extends EntityIdentityHelper {
    * @return the status
    */
   public Integer getStatus() {
+
     return this.status;
   }
 
@@ -98,6 +105,7 @@ public class CompanyEntity extends EntityIdentityHelper {
    * @param status the status to set
    */
   public void setStatus(final Integer status) {
+
     this.status = status;
   }
 
@@ -107,6 +115,7 @@ public class CompanyEntity extends EntityIdentityHelper {
 
   @Override
   public Integer getVersion() {
+
     return this.version;
   }
 
@@ -116,6 +125,7 @@ public class CompanyEntity extends EntityIdentityHelper {
 
   @Override
   public void setVersion(final Integer version) {
+
     this.version = version;
   }
 
@@ -123,6 +133,7 @@ public class CompanyEntity extends EntityIdentityHelper {
    * @return the createdAt
    */
   public Date getCreatedAt() {
+
     return this.createdAt;
   }
 
@@ -130,6 +141,7 @@ public class CompanyEntity extends EntityIdentityHelper {
    * @param createdAt the createdAt to set
    */
   public void setCreatedAt(final Date createdAt) {
+
     this.createdAt = createdAt;
   }
 
@@ -137,6 +149,7 @@ public class CompanyEntity extends EntityIdentityHelper {
    * @return the updatedAt
    */
   public Date getUpdatedAt() {
+
     return this.updatedAt;
   }
 
@@ -144,16 +157,19 @@ public class CompanyEntity extends EntityIdentityHelper {
    * @param updatedAt the updatedAt to set
    */
   public void setUpdatedAt(final Date updatedAt) {
+
     this.updatedAt = updatedAt;
   }
 
   @Override
   public String getIdentityPreffix() {
+
     return "c";
   }
 
   @Override
   public void increaseVersion() {
+
     version += 1;
   }
 }

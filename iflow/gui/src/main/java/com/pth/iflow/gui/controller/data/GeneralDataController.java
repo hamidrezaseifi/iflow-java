@@ -79,49 +79,7 @@ public class GeneralDataController extends GuiLogedControllerBase {
     final Map<String, Object> map = new HashMap<>();
     map.put("isLogged", "false");
 
-    if (this.isSessionValidAndLoggedIn()) {
-
-      Map<String, Object> childsMap = new HashMap<>();
-      childsMap.put("company", this.getSessionUserInfo().getCompany());
-      childsMap.put("departments", this.getSessionUserInfo().getCompanyDepartments());
-      childsMap.put("users", this.getSessionUserInfo().getCompanyUserList());
-      map.put("company", childsMap);
-
-      childsMap = new HashMap<>();
-      childsMap.put("worlflowTypes", this.getSessionUserInfo().getAllWorkflowTypes());
-      map.put("workflow", childsMap);
-
-      childsMap = new HashMap<>();
-      childsMap.put("currentUser", this.getLoggedUser());
-      map.put("user", childsMap);
-
-      childsMap = new HashMap<>();
-      childsMap.put("menus", this.getMenus());
-      map.put("app", childsMap);
-
-      map.put("isLogged", "true");
-
-    }
-    else {
-      Map<String, Object> childsMap = new HashMap<>();
-      childsMap.put("company", null);
-      childsMap.put("departments", new ArrayList<>());
-      childsMap.put("users", new ArrayList<>());
-      map.put("company", childsMap);
-
-      childsMap = new HashMap<>();
-      childsMap.put("worlflowTypes", new ArrayList<>());
-      map.put("workflow", childsMap);
-
-      childsMap = new HashMap<>();
-      childsMap.put("currentUser", null);
-      map.put("user", childsMap);
-
-      childsMap = new HashMap<>();
-      childsMap.put("menus", new ArrayList<>());
-      map.put("app", childsMap);
-
-    }
+    this.generateGeneralData(map);
 
     return map;
   }
@@ -270,4 +228,50 @@ public class GeneralDataController extends GuiLogedControllerBase {
     return res;
   }
 
+  private void generateGeneralData(final Map<String, Object> map) throws IFlowMessageConversionFailureException {
+
+    if (this.isSessionValidAndLoggedIn()) {
+
+      Map<String, Object> childsMap = new HashMap<>();
+      childsMap.put("company", this.getSessionUserInfo().getCompany());
+      childsMap.put("departments", this.getSessionUserInfo().getCompanyDepartments());
+      childsMap.put("users", this.getSessionUserInfo().getCompanyUserList());
+      map.put("company", childsMap);
+
+      childsMap = new HashMap<>();
+      childsMap.put("worlflowTypes", this.getSessionUserInfo().getAllWorkflowTypes());
+      map.put("workflow", childsMap);
+
+      childsMap = new HashMap<>();
+      childsMap.put("currentUser", this.getLoggedUser());
+      map.put("user", childsMap);
+
+      childsMap = new HashMap<>();
+      childsMap.put("menus", this.getMenus());
+      map.put("app", childsMap);
+
+      map.put("isLogged", "true");
+
+    }
+    else {
+      Map<String, Object> childsMap = new HashMap<>();
+      childsMap.put("company", null);
+      childsMap.put("departments", new ArrayList<>());
+      childsMap.put("users", new ArrayList<>());
+      map.put("company", childsMap);
+
+      childsMap = new HashMap<>();
+      childsMap.put("worlflowTypes", new ArrayList<>());
+      map.put("workflow", childsMap);
+
+      childsMap = new HashMap<>();
+      childsMap.put("currentUser", null);
+      map.put("user", childsMap);
+
+      childsMap = new HashMap<>();
+      childsMap.put("menus", new ArrayList<>());
+      map.put("app", childsMap);
+
+    }
+  }
 }

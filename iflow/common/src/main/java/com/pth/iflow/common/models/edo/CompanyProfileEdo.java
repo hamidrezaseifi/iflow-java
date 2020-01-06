@@ -21,7 +21,7 @@ public class CompanyProfileEdo {
 
   @NotNull
   @XmlElement(name = "Company", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private CompanyEdo                company;
+  private CompanyEdo company;
 
   @NotNull
   @XmlElementWrapper(name = "DepartmentList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
@@ -31,16 +31,24 @@ public class CompanyProfileEdo {
   @NotNull
   @XmlElementWrapper(name = "UserGroupList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "UserGroup", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private final List<UserGroupEdo>  userGroups  = new ArrayList<>();
+  private final List<UserGroupEdo> userGroups = new ArrayList<>();
+
+  @NotNull
+  @XmlElementWrapper(name = "WorkflowTypeControllerList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  @XmlElement(name = "WorkflowTypeController", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private final List<CompanyWorkflowTypeControllerEdo> workflowTypeControllers = new ArrayList<>();
 
   public CompanyProfileEdo() {
 
   }
 
-  public CompanyProfileEdo(final CompanyEdo company, final List<DepartmentEdo> departments, final List<UserGroupEdo> userGroups) {
+  public CompanyProfileEdo(final CompanyEdo company, final List<DepartmentEdo> departments, final List<UserGroupEdo> userGroups,
+      final List<CompanyWorkflowTypeControllerEdo> workflowTypeControllers) {
+
     this.setDepartments(departments);
     this.setUserGroups(userGroups);
     this.setCompany(company);
+    this.setWorkflowTypeControllers(workflowTypeControllers);
 
   }
 
@@ -48,6 +56,7 @@ public class CompanyProfileEdo {
    * @return the company
    */
   public CompanyEdo getCompany() {
+
     return this.company;
   }
 
@@ -55,15 +64,18 @@ public class CompanyProfileEdo {
    * @param company the company to set
    */
   public void setCompany(final CompanyEdo company) {
+
     this.company = company;
   }
 
   public List<DepartmentEdo> getDepartments() {
+
     return this.departments;
   }
 
   @JsonSetter
   public void setDepartments(final List<DepartmentEdo> departments) {
+
     this.departments.clear();
     if (departments != null) {
       this.departments.addAll(departments);
@@ -71,14 +83,30 @@ public class CompanyProfileEdo {
   }
 
   public List<UserGroupEdo> getUserGroups() {
+
     return this.userGroups;
   }
 
   @JsonSetter
   public void setUserGroups(final List<UserGroupEdo> users) {
+
     this.userGroups.clear();
     if (users != null) {
       this.userGroups.addAll(users);
+    }
+  }
+
+  public List<CompanyWorkflowTypeControllerEdo> getWorkflowTypeControllers() {
+
+    return this.workflowTypeControllers;
+  }
+
+  @JsonSetter
+  public void setWorkflowTypeControllers(final List<CompanyWorkflowTypeControllerEdo> workflowTypeController) {
+
+    this.workflowTypeControllers.clear();
+    if (workflowTypeController != null) {
+      this.workflowTypeControllers.addAll(workflowTypeController);
     }
   }
 

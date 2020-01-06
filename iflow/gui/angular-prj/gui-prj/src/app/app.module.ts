@@ -8,9 +8,10 @@ import { TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import { TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { ResizableModule } from 'angular-resizable-element';
 import { FormsModule } from '@angular/forms';
-import { DataTableModule } from 'ng-angular8-datatable';
+//import { DataTableModule } from 'ng-seven-datatable';
 import { MatNativeDateModule } from '@angular/material/core';
-import {StompConfig, StompService} from '@stomp/ng2-stompjs';
+import { MatTableModule } from '@angular/material/table';
+import { StompConfig, StompService } from '@stomp/ng2-stompjs';
 import * as SockJS from 'sockjs-client';
 //import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
@@ -49,6 +50,7 @@ import { TestComponent } from './test/test.component';
 import { InvoiceOcrDetailComponent } from './wm-components/invoice-ocr-detail/invoice-ocr-detail.component';
 import { FilePreviewComponent } from './components/file-preview/file-preview.component';
 import { WmFileUploadComponent } from './components/wm-file-upload/wm-file-upload.component';
+import { WmAssignListComponent } from './components/wm-assign-list/wm-assign-list.component';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -83,7 +85,7 @@ const stompConfig: StompConfig = {
     appRoutingModule,
     BrowserAnimationsModule,
     ResizableModule,
-    DataTableModule,
+    MatTableModule,
     MatNativeDateModule,
     IFlowMaterialModules,
     FormsModule,
@@ -121,6 +123,7 @@ const stompConfig: StompConfig = {
     InvoiceOcrDetailComponent,
     FilePreviewComponent,
     WmFileUploadComponent,
+    WmAssignListComponent,
     
   ],
   providers: [

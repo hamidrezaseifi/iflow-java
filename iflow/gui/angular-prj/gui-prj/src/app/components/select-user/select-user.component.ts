@@ -10,9 +10,6 @@ import { AssignItem, AssignType } from '../../wf-models';
 })
 export class SelectUserComponent implements OnInit {
 
-	//users : User[] = [];
-	//departments : Department[] = [];
-
 	@Input('users') users : User[];
 	@Input('departments') departments : Department[];
 	@Input('showAssignModal') showAssignModal :boolean = false;

@@ -9,12 +9,14 @@ import org.springframework.stereotype.Service;
 
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.common.models.edo.CompanyProfileEdo;
+import com.pth.iflow.common.models.edo.CompanyWorkflowTypeControllerEdo;
 import com.pth.iflow.common.models.edo.ProfileResponseEdo;
 import com.pth.iflow.common.models.edo.UserEdo;
 import com.pth.iflow.core.helper.CoreDataHelper;
 import com.pth.iflow.core.model.CompanyProfile;
 import com.pth.iflow.core.model.ProfileResponse;
 import com.pth.iflow.core.model.entity.CompanyEntity;
+import com.pth.iflow.core.model.entity.CompanyWorkflowTypeControllerEntity;
 import com.pth.iflow.core.model.entity.DepartmentEntity;
 import com.pth.iflow.core.model.entity.DepartmentGroupEntity;
 import com.pth.iflow.core.model.entity.UserEntity;
@@ -30,23 +32,29 @@ import com.pth.iflow.core.storage.dao.interfaces.IDepartmentDao;
 import com.pth.iflow.core.storage.dao.interfaces.IDepartmentGroupDao;
 import com.pth.iflow.core.storage.dao.interfaces.IUserDao;
 import com.pth.iflow.core.storage.dao.interfaces.IUserGroupDao;
+import com.pth.iflow.core.storage.dao.interfaces.IWorkflowTypeDao;
 
 @Service
 public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo> implements IUsersService {
 
-  private final ICompanyDao         companyDao;
-  private final IUserDao            userDao;
-  private final IUserGroupDao       userGroupDao;
-  private final IDepartmentDao      departmentDao;
+  private final ICompanyDao companyDao;
+  private final IUserDao userDao;
+  private final IUserGroupDao userGroupDao;
+  private final IDepartmentDao departmentDao;
   private final IDepartmentGroupDao departmentGroupDao;
+  private final IWorkflowTypeDao workflowTypeDao;
 
-  public UsersService(@Autowired final ICompanyDao companyDao, @Autowired final IUserDao userDao, @Autowired final IUserGroupDao userGroupDao,
-      @Autowired final IDepartmentDao departmentDao, @Autowired final IDepartmentGroupDao departmentGroupDao) {
+  public UsersService(@Autowired final ICompanyDao companyDao, @Autowired final IUserDao userDao,
+      @Autowired final IUserGroupDao userGroupDao,
+      @Autowired final IDepartmentDao departmentDao, @Autowired final IDepartmentGroupDao departmentGroupDao,
+      @Autowired final IWorkflowTypeDao workflowTypeDao) {
+
     this.companyDao = companyDao;
     this.userDao = userDao;
     this.userGroupDao = userGroupDao;
     this.departmentDao = departmentDao;
     this.departmentGroupDao = departmentGroupDao;
+    this.workflowTypeDao = workflowTypeDao;
 
   }
 
@@ -58,6 +66,7 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
 
   @Override
   public List<UserGroupEntity> getUserGroups(final String email) {
+
     final UserEntity user = getUserByIdentity(email);
 
     return user.getGroups().stream().collect(Collectors.toList());
@@ -65,18 +74,21 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
 
   @Override
   public List<DepartmentEntity> getUserDepartments(final String email) {
+
     final UserEntity user = getUserByIdentity(email);
     return user.getDepartments().stream().collect(Collectors.toList());
   }
 
   @Override
   public List<DepartmentGroupEntity> getUserDepartmentGroups(final String email) {
+
     final UserEntity user = getUserByIdentity(email);
     return user.getDepartmentGroups().stream().collect(Collectors.toList());
   }
 
   @Override
   public List<UserEntity> getUserDeputies(final String email) {
+
     final UserEntity user = getUserByIdentity(email);
 
     return user.getDeputies().stream().collect(Collectors.toList());
@@ -84,6 +96,7 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
 
   @Override
   public UserEntity save(final UserEntity model) {
+
     if (model.isNew()) {
 
       return userDao.create(model);
@@ -103,7 +116,8 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
 
   @Override
   public ProfileResponse getProfileResponseByEmail(final String email) {
-    final UserEntity    user    = this.getUserByIdentity(email);
+
+    final UserEntity user = this.getUserByIdentity(email);
     final CompanyEntity company = companyDao.getByIdentity(user.getCompany().getIdentity());
 
     return new ProfileResponse(user, company, user.getDepartments().stream().collect(Collectors.toList()),
@@ -123,11 +137,13 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
   }
 
   protected UserEntity prepareSavingModel(final UserEntity model) {
+
     return model;
   }
 
   @Override
   public UserEntity fromEdo(final UserEdo edo) throws IFlowMessageConversionFailureException {
+
     validateCustomer(edo);
 
     final UserEntity model = new UserEntity();
@@ -151,6 +167,7 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
 
   @Override
   public UserEdo toEdo(final UserEntity model) {
+
     final UserEdo edo = new UserEdo();
     edo.setFirstName(model.getFirstName());
     edo.setLastName(model.getLastName());
@@ -171,19 +188,39 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
 
   @Override
   public ProfileResponseEdo toProfileResponseEdo(final ProfileResponse model) {
+
     return new ProfileResponseEdo(toEdo(model.getUser()), toCompanyProfileEdo(model.getCompanyProfile()), model.getSessionid());
   }
 
   public CompanyProfileEdo toCompanyProfileEdo(final CompanyProfile model) {
 
-    final IUserGroupService  groupService      = new UserGroupService(null);
+    final IUserGroupService groupService = new UserGroupService(null);
     final IDepartmentService departmentService = new DepartmentService(null);
-    final ICompanyService    companyService    = new CompanyService(null);
 
-    final CompanyProfileEdo  edo               = new CompanyProfileEdo(companyService.toEdo(model.getCompany()),
-        departmentService.toEdoList(model.getDepartments()), groupService.toEdoList(model.getUserGroups()));
+    final ICompanyService companyService = new CompanyService(null);
+
+    final List<CompanyWorkflowTypeControllerEntity> workflowTypeControllers = companyDao
+        .readCompanyWorkflowTypeController(model.getCompany().getId());
+
+    final List<CompanyWorkflowTypeControllerEdo> workflowTypeControllerEdoList = workflowTypeControllers
+        .stream()
+        .map(wtc -> extractCompanyWorkflowTypeControllerEdo(wtc))
+        .collect(Collectors.toList());
+
+    final CompanyProfileEdo edo = new CompanyProfileEdo(companyService.toEdo(model.getCompany()),
+        departmentService.toEdoList(model.getDepartments()), groupService.toEdoList(model.getUserGroups()), workflowTypeControllerEdoList);
 
     return edo;
+  }
+
+  private CompanyWorkflowTypeControllerEdo extractCompanyWorkflowTypeControllerEdo(final CompanyWorkflowTypeControllerEntity wtc) {
+
+    final CompanyWorkflowTypeControllerEdo workflowTypeControllerEdo = new CompanyWorkflowTypeControllerEdo(
+        workflowTypeDao.getById(wtc.getId().getWorkflowTypeId()).getIdentity(),
+        userDao.getById(wtc.getId().getUserId()).getIdentity(),
+        wtc.getId().getPriority());
+
+    return workflowTypeControllerEdo;
   }
 
   @Override

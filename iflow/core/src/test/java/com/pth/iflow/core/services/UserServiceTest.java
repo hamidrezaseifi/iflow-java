@@ -34,36 +34,43 @@ import com.pth.iflow.core.storage.dao.interfaces.IDepartmentDao;
 import com.pth.iflow.core.storage.dao.interfaces.IDepartmentGroupDao;
 import com.pth.iflow.core.storage.dao.interfaces.IUserDao;
 import com.pth.iflow.core.storage.dao.interfaces.IUserGroupDao;
+import com.pth.iflow.core.storage.dao.interfaces.IWorkflowTypeDao;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 public class UserServiceTest extends TestDataProducer {
 
-  private IUsersService       userService;
+  private IUsersService userService;
 
   @MockBean
-  private ICompanyDao         companyDao;
+  private ICompanyDao companyDao;
 
   @MockBean
-  private IUserDao            userDao;
+  private IUserDao userDao;
 
   @MockBean
-  private IUserGroupDao       userGroupDao;
+  private IUserGroupDao userGroupDao;
 
   @MockBean
-  private IDepartmentDao      departmentDao;
+  private IDepartmentDao departmentDao;
 
   @MockBean
   private IDepartmentGroupDao departmentGroupDao;
 
+  @MockBean
+  private IWorkflowTypeDao workflowTypeDao;
+
   @Before
   public void setUp() throws Exception {
-    this.userService = new UsersService(this.companyDao, this.userDao, this.userGroupDao, this.departmentDao, this.departmentGroupDao);
+
+    this.userService = new UsersService(this.companyDao, this.userDao, this.userGroupDao, this.departmentDao, this.departmentGroupDao,
+        this.workflowTypeDao);
   }
 
   @After
   public void tearDown() throws Exception {
+
   }
 
   @Test
@@ -103,7 +110,7 @@ public class UserServiceTest extends TestDataProducer {
   @Test
   public void testGetUserDepartmentGroups() throws Exception {
 
-    final UserEntity                  user = getTestUser();
+    final UserEntity user = getTestUser();
     final List<DepartmentGroupEntity> list = getTestDepartmentGroupList();
 
     user.setDepartmentGroups(list);
@@ -120,7 +127,7 @@ public class UserServiceTest extends TestDataProducer {
   @Test
   public void testGetUserDepartments() throws Exception {
 
-    final UserEntity             user = getTestUser();
+    final UserEntity user = getTestUser();
     final List<DepartmentEntity> list = getTestDepartmentList();
     user.setDepartments(list);
 
@@ -136,7 +143,7 @@ public class UserServiceTest extends TestDataProducer {
   @Test
   public void testGetUserDeputies() throws Exception {
 
-    final UserEntity       user = getTestUser();
+    final UserEntity user = getTestUser();
     final List<UserEntity> list = getTestUserList();
     user.setDeputies(list);
 
@@ -153,7 +160,7 @@ public class UserServiceTest extends TestDataProducer {
   @Test
   public void testGetUserGroups() throws Exception {
 
-    final UserEntity            user = getTestUser();
+    final UserEntity user = getTestUser();
     final List<UserGroupEntity> list = getTestUserGroupList();
     user.setGroups(list);
 
@@ -170,10 +177,10 @@ public class UserServiceTest extends TestDataProducer {
   @Test
   public void testGetProfileResponseByEmail() throws Exception {
 
-    final UserEntity             user      = getTestUser();
-    final CompanyEntity          company   = this.getTestCompany();
-    final List<UserGroupEntity>  grouplist = getTestUserGroupList();
-    final List<DepartmentEntity> deplist   = getTestDepartmentList();
+    final UserEntity user = getTestUser();
+    final CompanyEntity company = this.getTestCompany();
+    final List<UserGroupEntity> grouplist = getTestUserGroupList();
+    final List<DepartmentEntity> deplist = getTestDepartmentList();
 
     user.setGroups(grouplist);
     user.setDepartments(deplist);
@@ -185,21 +192,24 @@ public class UserServiceTest extends TestDataProducer {
     final ProfileResponse result = this.userService.getProfileResponseByEmail("identity");
 
     Assert.assertNotNull("Result not null!", result);
-    Assert.assertEquals("Result company has title '" + company.getCompanyName() + "'", company.getCompanyName(),
-        result.getCompanyProfile().getCompany().getCompanyName());
+    Assert
+        .assertEquals("Result company has title '" + company.getCompanyName() + "'", company.getCompanyName(),
+            result.getCompanyProfile().getCompany().getCompanyName());
     Assert.assertEquals("Result user has fname '" + user.getFirstName() + "'", user.getFirstName(), result.getUser().getFirstName());
     Assert.assertEquals("Result user has lname '" + user.getLastName() + "'", user.getLastName(), result.getUser().getLastName());
-    Assert.assertEquals("Result user has '" + grouplist.size() + "' usergroups", grouplist.size(),
-        result.getCompanyProfile().getUserGroups().size());
-    Assert.assertEquals("Result user has '" + deplist.size() + "' departments", deplist.size(),
-        result.getCompanyProfile().getDepartments().size());
+    Assert
+        .assertEquals("Result user has '" + grouplist.size() + "' usergroups", grouplist.size(),
+            result.getCompanyProfile().getUserGroups().size());
+    Assert
+        .assertEquals("Result user has '" + deplist.size() + "' departments", deplist.size(),
+            result.getCompanyProfile().getDepartments().size());
 
   }
 
   @Test
   public void testGetAllUserIdListByDepartmentGroupId() throws Exception {
 
-    final Set<String>      list     = this.getTestUserIdSet();
+    final Set<String> list = this.getTestUserIdSet();
     final List<UserEntity> userList = this.getTestUserList();
 
     when(this.userDao.getAllUserIdentityListByDepartmentId(any(String.class))).thenReturn(userList);
@@ -215,7 +225,7 @@ public class UserServiceTest extends TestDataProducer {
   @Test
   public void testGetAllUserListByDepartmentId() throws Exception {
 
-    final Set<String>      list     = new HashSet<>(Arrays.asList("item-1", "item-2", "item-3"));
+    final Set<String> list = new HashSet<>(Arrays.asList("item-1", "item-2", "item-3"));
     final List<UserEntity> userList = this.getTestUserList();
 
     when(this.userDao.getAllUserIdentityListByDepartmentGroupId(any(String.class))).thenReturn(userList);
@@ -253,7 +263,7 @@ public class UserServiceTest extends TestDataProducer {
   @Test
   public void testSaveUpdate() throws Exception {
 
-    final UserEntity testUser  = this.getTestUser();
+    final UserEntity testUser = this.getTestUser();
 
     final UserEntity savedUser = this.getTestUser();
     when(this.userDao.update(any(UserEntity.class))).thenReturn(savedUser);

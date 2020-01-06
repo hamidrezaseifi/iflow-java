@@ -12,15 +12,18 @@ public class SingleTaskWorkflow extends WorkflowBase implements IWorkflow {
 
   @Override
   public EWorkflowType getWorkflowTypeEnum() {
+
     return EWorkflowType.SINGLE_TASK_WORKFLOW_TYPE;
   }
 
   @Override
   public String getWorkflowTypeIdentity() {
+
     return this.getWorkflowTypeEnum().getIdentity();
   }
 
   public static SingleTaskWorkflow generateInitial(final String creatorId) {
+
     final SingleTaskWorkflow newWorkflow = new SingleTaskWorkflow();
     newWorkflow.setStatus(EWorkflowStatus.INITIALIZE);
     newWorkflow.setCreatedByIdentity(creatorId);

@@ -25,6 +25,7 @@ import com.pth.iflow.core.model.entity.workflow.WorkflowTypeEntity;
 import com.pth.iflow.core.model.entity.workflow.WorkflowTypeStepEntity;
 import com.pth.iflow.core.service.impl.workflow.WorkflowService;
 import com.pth.iflow.core.service.interfaces.workflow.IWorkflowService;
+import com.pth.iflow.core.storage.dao.interfaces.ICompanyDao;
 import com.pth.iflow.core.storage.dao.interfaces.IUserDao;
 import com.pth.iflow.core.storage.dao.interfaces.IWorkflowTypeDao;
 import com.pth.iflow.core.storage.dao.interfaces.IWorkflowTypeStepDao;
@@ -35,31 +36,39 @@ import com.pth.iflow.core.storage.dao.interfaces.workflow.IWorkflowDao;
 @AutoConfigureMockMvc
 public class WorkflowServiceTest extends TestDataProducer {
 
-  private IWorkflowService     workflowService;
+  private IWorkflowService workflowService;
 
   @MockBean
-  private IWorkflowDao         workflowDao;
+  private IWorkflowDao workflowDao;
 
   @MockBean
-  private IWorkflowTypeDao     workflowTypeDao;
+  private IWorkflowTypeDao workflowTypeDao;
 
   @MockBean
   private IWorkflowTypeStepDao workflowTypeStepDao;
 
   @MockBean
-  private IUserDao             usersDao;
+  private IUserDao usersDao;
+
+  @MockBean
+  private ICompanyDao companyDao;
 
   @Before
   public void setUp() throws Exception {
-    this.workflowService = new WorkflowService(this.workflowDao, workflowTypeDao, workflowTypeStepDao, usersDao);
+
+    when(this.companyDao.getByIdentity(any(String.class))).thenReturn(getTestCompany());
+
+    this.workflowService = new WorkflowService(this.workflowDao, workflowTypeDao, workflowTypeStepDao, usersDao, companyDao);
   }
 
   @After
   public void tearDown() throws Exception {
+
   }
 
   @Test
   public void testSaveCreate() {
+
     final WorkflowEntity model = getTestNewWorkflow();
     final UserEntity testUser = getTestUser(1L, "fn", "ln", "email");
     final WorkflowTypeStepEntity testStep = getTestWorkflowTypeStep(1L, "step1");
@@ -83,6 +92,7 @@ public class WorkflowServiceTest extends TestDataProducer {
 
   @Test
   public void testSaveUpdate() {
+
     final WorkflowEntity model = getTestWorkflow(1L);
     final UserEntity testUser = getTestUser(1L, "fn", "ln", "email");
     final WorkflowTypeStepEntity testStep = getTestWorkflowTypeStep(1L, "step1");
@@ -107,6 +117,7 @@ public class WorkflowServiceTest extends TestDataProducer {
 
   @Test
   public void testGetByIdentity() {
+
     final WorkflowEntity model = getTestWorkflow(1L);
 
     when(this.workflowDao.getByIdentity(any(String.class))).thenReturn(model);
@@ -121,6 +132,7 @@ public class WorkflowServiceTest extends TestDataProducer {
 
   @Test
   public void testGetListForUser() {
+
     final List<WorkflowEntity> modelList = getTestWorkflowList();
 
     when(this.workflowDao.getListForUserIdentity(any(String.class), any(Integer.class))).thenReturn(modelList);
@@ -135,6 +147,7 @@ public class WorkflowServiceTest extends TestDataProducer {
 
   @Test
   public void testGetListByIdentityList() {
+
     final Set<String> idList = getTestWorkflowIdentityList();
     final List<WorkflowEntity> modelList = getTestWorkflowList();
 
@@ -149,12 +162,14 @@ public class WorkflowServiceTest extends TestDataProducer {
   }
 
   private void assetWorkflow(final WorkflowEntity savedModel, final WorkflowEntity result) {
+
     Assert.assertNotNull("Result is not null!", result);
     Assert.assertEquals("Result has " + result.getIdentity() + " identity.", result.getIdentity(), savedModel.getIdentity());
     Assert.assertEquals("Result has " + result.getControllerId() + " controller.", result.getControllerId(), savedModel.getControllerId());
     Assert.assertEquals("Result has " + result.getCurrentStepId() + " step.", result.getCurrentStepId(), savedModel.getCurrentStepId());
-    Assert.assertEquals("Result has " + result.getWorkflowTypeId() + " workflow-type.", result.getWorkflowTypeId(),
-        savedModel.getWorkflowTypeId());
+    Assert
+        .assertEquals("Result has " + result.getWorkflowTypeId() + " workflow-type.", result.getWorkflowTypeId(),
+            savedModel.getWorkflowTypeId());
   }
 
 }

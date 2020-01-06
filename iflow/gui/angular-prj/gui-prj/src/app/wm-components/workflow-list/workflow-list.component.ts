@@ -21,6 +21,8 @@ export class WorkflowListComponent implements OnInit {
 	resultWorlflows		:Workflow[] = [];
 	listInitialData 	:WorkflowListInitialData = new WorkflowListInitialData();
 
+	displayedColumns = ['workflow-type', 'workflow-current-step', 'workflow-status', 'workflow-assignto', 'workflow-updated', 'actions'];
+
 	showDebug : boolean = false;
 	viewWorkflowModal :boolean = false;
 	viewWorkflowModel :Workflow = null;
@@ -159,7 +161,7 @@ export class WorkflowListComponent implements OnInit {
 		return "";
 	}
 	
-	showWorkflow(typeIdentity: string, index: number){
+	showWorkflow(index: number){
 		
 		this.viewWorkflowModel = this.resultWorlflows[index];
 		this.viewWorkflowModal = true;

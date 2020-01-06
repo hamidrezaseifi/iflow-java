@@ -67,63 +67,6 @@ div.workflow-content div.item-row div.item-content input.file-file
     display: inline-block;;
 }
 
-div.workflow-content div.item-row div.item-content textarea,
-div.workflow-content-record div.item-row div.item-content textarea
-{
-    width: 100%;
-    height: 200px;
-}
-
-.assign-list{
-	border: 1px solid lightgray;
-    padding: 6px;
-    border-radius: 4px;
-    width: 100%;
-    min-height: 100px;
-    max-height: 200px;
-    overflow-y: auto;
-    padding-right: 24px;
-}
-
-div.assign-list div.user-item-box {
-    border: 1px solid lightgray;
-    border-radius: 4px;
-    padding: 2px 4px;
-    float: left;
-    background: #e6e6e6;
-    margin-right: 5px;
-    margin-bottom: 5px;
-}
-
-div.assign-list div.user-item-box button {
-    border: none;
-    background: transparent;
-    padding: 0;
-    padding-top: 3px;
-    float: right;
-    margin-left: 5px;
-}
-
-div.assign-list div.user-item-box button i.material-icons{
-	font-size: 16px;
-}
-
-div.assign-list div.user-item-box span {
-    height: 20px;
-    display: inline-block;
-    float: left;
-}
-
-button.show-select-dialog {
-    float: right;
-    margin-right: -20px;
-    width: 22px;
-    border: none;
-    padding: 0;
-    padding-left: 2px;
-    background-color: transparent;
-}
-
 button.file-action {
     float: right;
     width: 22px;
