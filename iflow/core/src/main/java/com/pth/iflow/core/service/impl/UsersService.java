@@ -9,12 +9,14 @@ import org.springframework.stereotype.Service;
 
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.common.models.edo.CompanyProfileEdo;
+import com.pth.iflow.common.models.edo.CompanyWorkflowTypeControllerEdo;
 import com.pth.iflow.common.models.edo.ProfileResponseEdo;
 import com.pth.iflow.common.models.edo.UserEdo;
 import com.pth.iflow.core.helper.CoreDataHelper;
 import com.pth.iflow.core.model.CompanyProfile;
 import com.pth.iflow.core.model.ProfileResponse;
 import com.pth.iflow.core.model.entity.CompanyEntity;
+import com.pth.iflow.core.model.entity.CompanyWorkflowTypeControllerEntity;
 import com.pth.iflow.core.model.entity.DepartmentEntity;
 import com.pth.iflow.core.model.entity.DepartmentGroupEntity;
 import com.pth.iflow.core.model.entity.UserEntity;
@@ -30,6 +32,7 @@ import com.pth.iflow.core.storage.dao.interfaces.IDepartmentDao;
 import com.pth.iflow.core.storage.dao.interfaces.IDepartmentGroupDao;
 import com.pth.iflow.core.storage.dao.interfaces.IUserDao;
 import com.pth.iflow.core.storage.dao.interfaces.IUserGroupDao;
+import com.pth.iflow.core.storage.dao.interfaces.IWorkflowTypeDao;
 
 @Service
 public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo> implements IUsersService {
@@ -39,16 +42,19 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
   private final IUserGroupDao userGroupDao;
   private final IDepartmentDao departmentDao;
   private final IDepartmentGroupDao departmentGroupDao;
+  private final IWorkflowTypeDao workflowTypeDao;
 
   public UsersService(@Autowired final ICompanyDao companyDao, @Autowired final IUserDao userDao,
       @Autowired final IUserGroupDao userGroupDao,
-      @Autowired final IDepartmentDao departmentDao, @Autowired final IDepartmentGroupDao departmentGroupDao) {
+      @Autowired final IDepartmentDao departmentDao, @Autowired final IDepartmentGroupDao departmentGroupDao,
+      @Autowired final IWorkflowTypeDao workflowTypeDao) {
 
     this.companyDao = companyDao;
     this.userDao = userDao;
     this.userGroupDao = userGroupDao;
     this.departmentDao = departmentDao;
     this.departmentGroupDao = departmentGroupDao;
+    this.workflowTypeDao = workflowTypeDao;
 
   }
 
@@ -193,10 +199,28 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
 
     final ICompanyService companyService = new CompanyService(null);
 
+    final List<CompanyWorkflowTypeControllerEntity> workflowTypeControllers = companyDao
+        .readCompanyWorkflowTypeController(model.getCompany().getId());
+
+    final List<CompanyWorkflowTypeControllerEdo> workflowTypeControllerEdoList = workflowTypeControllers
+        .stream()
+        .map(wtc -> extractCompanyWorkflowTypeControllerEdo(wtc))
+        .collect(Collectors.toList());
+
     final CompanyProfileEdo edo = new CompanyProfileEdo(companyService.toEdo(model.getCompany()),
-        departmentService.toEdoList(model.getDepartments()), groupService.toEdoList(model.getUserGroups()));
+        departmentService.toEdoList(model.getDepartments()), groupService.toEdoList(model.getUserGroups()), workflowTypeControllerEdoList);
 
     return edo;
+  }
+
+  private CompanyWorkflowTypeControllerEdo extractCompanyWorkflowTypeControllerEdo(final CompanyWorkflowTypeControllerEntity wtc) {
+
+    final CompanyWorkflowTypeControllerEdo workflowTypeControllerEdo = new CompanyWorkflowTypeControllerEdo(
+        workflowTypeDao.getById(wtc.getId().getWorkflowTypeId()).getIdentity(),
+        userDao.getById(wtc.getId().getUserId()).getIdentity(),
+        wtc.getId().getPriority());
+
+    return workflowTypeControllerEdo;
   }
 
   @Override

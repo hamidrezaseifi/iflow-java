@@ -16,6 +16,7 @@ import com.pth.iflow.common.models.edo.TokenProfileRequestEdo;
 import com.pth.iflow.common.models.edo.UserEdo;
 import com.pth.iflow.profile.model.Company;
 import com.pth.iflow.profile.model.CompanyProfile;
+import com.pth.iflow.profile.model.CompanyWorkflowTypeController;
 import com.pth.iflow.profile.model.Department;
 import com.pth.iflow.profile.model.DepartmentGroup;
 import com.pth.iflow.profile.model.ProfileResponse;
@@ -29,6 +30,7 @@ import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
 public class TestDataProducer {
 
   protected Company getTestCompany() {
+
     final Company company = new Company();
     company.setCompanyName("companyName");
     company.setIdentity("identifyid");
@@ -41,12 +43,32 @@ public class TestDataProducer {
   protected CompanyProfile getTestCompanyProfile() {
 
     final CompanyProfile companyProfile = new CompanyProfile(this.getTestCompany(), this.getTestDepartmentList(),
-        this.getTestUserGroupList());
+        this.getTestUserGroupList(), this.getTestCompanyWorkflowTypeControllerList());
 
     return companyProfile;
   }
 
+  protected List<CompanyWorkflowTypeController> getTestCompanyWorkflowTypeControllerList() {
+
+    final List<CompanyWorkflowTypeController> list = Arrays
+        .asList(this.getTestCompanyWorkflowTypeController(),
+            this.getTestCompanyWorkflowTypeController(), this.getTestCompanyWorkflowTypeController());
+
+    return list;
+  }
+
+  protected CompanyWorkflowTypeController getTestCompanyWorkflowTypeController() {
+
+    final CompanyWorkflowTypeController model = new CompanyWorkflowTypeController();
+    model.setPriority(1);
+    model.setUserIdentity("userIdentity");
+    model.setWorkflowTypeIdentity("workflowTypeIdentity");
+
+    return model;
+  }
+
   protected User getTestUser() {
+
     final User model = new User();
     model.setCompanyIdentity("companyIdentity");
     model.setEmail("email");
@@ -66,6 +88,7 @@ public class TestDataProducer {
   }
 
   protected User getTestUser(final String fname, final String lname, final String email) {
+
     final User model = new User();
     model.setCompanyIdentity("companyIdentity");
     model.setCompanyIdentity("companyIdentity");
@@ -85,13 +108,16 @@ public class TestDataProducer {
   }
 
   protected List<User> getTestUserList() {
-    final List<User> list = Arrays.asList(this.getTestUser("fname 1", "lname 1", "email 1"),
-        this.getTestUser("fname 2", "lname 2", "email 2"), this.getTestUser("fname 3", "lname 3", "email 3"));
+
+    final List<User> list = Arrays
+        .asList(this.getTestUser("fname 1", "lname 1", "email 1"),
+            this.getTestUser("fname 2", "lname 2", "email 2"), this.getTestUser("fname 3", "lname 3", "email 3"));
 
     return list;
   }
 
   protected UserGroup getTestUserGroup(final String identity, final String title) {
+
     final UserGroup model = new UserGroup();
     model.setCompanyIdentity("companyIdentity");
     model.setIdentity(identity);
@@ -103,6 +129,7 @@ public class TestDataProducer {
   }
 
   protected UserGroup getTestUserGroup() {
+
     final UserGroup model = new UserGroup();
     model.setCompanyIdentity("companyIdentity");
     model.setIdentity("identity");
@@ -114,13 +141,16 @@ public class TestDataProducer {
   }
 
   protected List<UserGroup> getTestUserGroupList() {
-    final List<UserGroup> list = Arrays.asList(this.getTestUserGroup("usergrp1", "UserGroup 1"),
-        this.getTestUserGroup("usergrp2", "UserGroup 2"), this.getTestUserGroup("usergrp3", "UserGroup 3"));
+
+    final List<UserGroup> list = Arrays
+        .asList(this.getTestUserGroup("usergrp1", "UserGroup 1"),
+            this.getTestUserGroup("usergrp2", "UserGroup 2"), this.getTestUserGroup("usergrp3", "UserGroup 3"));
 
     return list;
   }
 
   protected Department getTestDepartment(final String identity, final String title) {
+
     final Department model = new Department();
     model.setCompanyIdentity("companyIdentity");
     model.setIdentity(identity);
@@ -133,13 +163,16 @@ public class TestDataProducer {
   }
 
   protected List<DepartmentGroup> getTestDepartmentGroupList() {
-    final List<DepartmentGroup> list = Arrays.asList(this.getTestDepartmentGroup("depgrp1", "DepartmentGroup 1"),
-        this.getTestDepartmentGroup("depgrp2", "DepartmentGroup 2"), this.getTestDepartmentGroup("depgrp3", "DepartmentGroup 3"));
+
+    final List<DepartmentGroup> list = Arrays
+        .asList(this.getTestDepartmentGroup("depgrp1", "DepartmentGroup 1"),
+            this.getTestDepartmentGroup("depgrp2", "DepartmentGroup 2"), this.getTestDepartmentGroup("depgrp3", "DepartmentGroup 3"));
 
     return list;
   }
 
   protected DepartmentGroup getTestDepartmentGroup(final String identity, final String title) {
+
     final DepartmentGroup model = new DepartmentGroup();
     model.setDepartmentIdentity("departmentIdentity");
     model.setIdentity(identity);
@@ -151,6 +184,7 @@ public class TestDataProducer {
   }
 
   protected UserAuthenticationSession getTestUserAuthenticationSession() {
+
     final UserAuthenticationSession model = new UserAuthenticationSession("email", "companyidentity",
         this.getSessionMaxAgeInSeconds());
 
@@ -161,6 +195,7 @@ public class TestDataProducer {
   }
 
   protected AuthenticatedProfileRequestEdo getTestAuthenticatedProfileRequestEdo() {
+
     final AuthenticatedProfileRequestEdo model = new AuthenticatedProfileRequestEdo();
     model.setEmail("");
     model.setToken("token");
@@ -169,6 +204,7 @@ public class TestDataProducer {
   }
 
   protected TokenProfileRequestEdo getTokenProfileRequestEdo(final String email) {
+
     final TokenProfileRequestEdo model = new TokenProfileRequestEdo();
     model.setToken(email);
 
@@ -176,6 +212,7 @@ public class TestDataProducer {
   }
 
   protected ProfileResponseEdo getTestProfileResponseEdo(final String sessionid, final UserEdo user, final CompanyEdo company) {
+
     final ProfileResponseEdo model = new ProfileResponseEdo();
     model.setCompanyProfile(ProfileModelEdoMapper.toEdo(this.getTestCompanyProfile()));
     model.setSessionid(sessionid);
@@ -185,12 +222,14 @@ public class TestDataProducer {
   }
 
   protected ProfileResponse getTestProfileResponse(final String sessionid) {
+
     final ProfileResponse model = new ProfileResponse(this.getTestUser(), this.getTestCompanyProfile(), sessionid);
 
     return model;
   }
 
   protected AuthenticatedProfileRequestEdo getTestAuthenticatedProfileRequestEdo(final String email, final String token) {
+
     final AuthenticatedProfileRequestEdo model = new AuthenticatedProfileRequestEdo();
     model.setEmail(email);
     model.setToken(token);
@@ -199,6 +238,7 @@ public class TestDataProducer {
   }
 
   protected UserAuthenticationRequest getTestUserAuthenticationRequest() {
+
     final UserAuthenticationRequest model = new UserAuthenticationRequest();
     model.setCompanyIdentity("companyIdentity");
     model.setPassword("password");
@@ -208,37 +248,46 @@ public class TestDataProducer {
   }
 
   protected List<Department> getTestDepartmentList() {
-    final List<Department> list = Arrays.asList(this.getTestDepartment("dep1", "Department 1"),
-        this.getTestDepartment("dep2", "Department 2"), this.getTestDepartment("dep3", "Department 3"));
+
+    final List<Department> list = Arrays
+        .asList(this.getTestDepartment("dep1", "Department 1"),
+            this.getTestDepartment("dep2", "Department 2"), this.getTestDepartment("dep3", "Department 3"));
 
     return list;
   }
 
   protected int getSessionMaxAgeInSeconds() {
+
     return 1000;
   }
 
   protected Set<String> getTestUserGroupIdSet() {
+
     return new HashSet<>(Arrays.asList("identity1", "identity2", "identity3"));
   }
 
   protected Set<String> getTestDepartmentIdSet() {
+
     return new HashSet<>(Arrays.asList("identity1", "identity2", "identity3"));
   }
 
   protected Set<String> getTestDepartmentGroupIdSet() {
+
     return new HashSet<>(Arrays.asList("identity1", "identity2", "identity3"));
   }
 
   protected Set<String> getTestDeputiyIdSet() {
+
     return new HashSet<>(Arrays.asList("identity1", "identity2", "identity3"));
   }
 
   protected Set<String> getTestUserIdSet() {
+
     return new HashSet<>(Arrays.asList("identity1", "identity2", "identity3"));
   }
 
   protected WorkflowMessage getTestWorkflowMessage(final String userId, final String workflowIdentity) {
+
     final WorkflowMessage message = new WorkflowMessage();
     message.setCreatedAt(LocalDateTime.now());
     message.setCreatedByIdentity("createdByIdentity");
@@ -255,10 +304,12 @@ public class TestDataProducer {
   }
 
   protected List<WorkflowMessage> getTestWorkflowMessageList() {
+
     final String workflowIdentity = "workflow1";
 
-    return Arrays.asList(this.getTestWorkflowMessage("user1", workflowIdentity),
-        this.getTestWorkflowMessage("user2", workflowIdentity), this.getTestWorkflowMessage("user3", workflowIdentity));
+    return Arrays
+        .asList(this.getTestWorkflowMessage("user1", workflowIdentity),
+            this.getTestWorkflowMessage("user2", workflowIdentity), this.getTestWorkflowMessage("user3", workflowIdentity));
   }
 
 }

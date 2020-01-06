@@ -18,6 +18,7 @@ import com.pth.iflow.common.enums.EWorkflowStatus;
 import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
 import com.pth.iflow.common.models.edo.CompanyEdo;
 import com.pth.iflow.common.models.edo.CompanyProfileEdo;
+import com.pth.iflow.common.models.edo.CompanyWorkflowTypeControllerEdo;
 import com.pth.iflow.common.models.edo.DepartmentEdo;
 import com.pth.iflow.common.models.edo.DepartmentGroupEdo;
 import com.pth.iflow.common.models.edo.ProfileResponseEdo;
@@ -90,7 +91,8 @@ public class TestDataProducer {
     final CompanyEdo company = getTestCompanyEdo();
     final UserEdo user = getTestUserEdo();
 
-    final CompanyProfileEdo companyProfileEdo = new CompanyProfileEdo(company, getTestDepartmentEdoList(), getTestUserGroupEdoList());
+    final CompanyProfileEdo companyProfileEdo = new CompanyProfileEdo(company, getTestDepartmentEdoList(), getTestUserGroupEdoList(),
+        getTestCompanyWorkflowTypeControllerEdoList());
     return new ProfileResponseEdo(user, companyProfileEdo, "not-set");
   }
 
@@ -402,6 +404,16 @@ public class TestDataProducer {
     return model;
   }
 
+  protected CompanyWorkflowTypeControllerEdo getTestCompanyWorkflowTypeControllerEdo() {
+
+    final CompanyWorkflowTypeControllerEdo model = new CompanyWorkflowTypeControllerEdo();
+    model.setPriority(1);
+    model.setUserIdentity("userIdentity");
+    model.setWorkflowTypeIdentity("workflowTypeIdentity");
+
+    return model;
+  }
+
   protected UserGroupEntity getTestUserGroup(final Long id, final String title) {
 
     final UserGroupEntity model = new UserGroupEntity();
@@ -430,6 +442,15 @@ public class TestDataProducer {
     final List<UserGroupEdo> list = Arrays
         .asList(this.getTestUserGroupEdo(1L, "UserGroupEntity 1"),
             this.getTestUserGroupEdo(2L, "UserGroupEntity 2"), this.getTestUserGroupEdo(3L, "UserGroupEntity 3"));
+
+    return list;
+  }
+
+  protected List<CompanyWorkflowTypeControllerEdo> getTestCompanyWorkflowTypeControllerEdoList() {
+
+    final List<CompanyWorkflowTypeControllerEdo> list = Arrays
+        .asList(this.getTestCompanyWorkflowTypeControllerEdo(),
+            this.getTestCompanyWorkflowTypeControllerEdo(), this.getTestCompanyWorkflowTypeControllerEdo());
 
     return list;
   }

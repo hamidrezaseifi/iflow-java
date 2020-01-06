@@ -20,6 +20,7 @@ import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
 import com.pth.iflow.workflow.models.AssignItem;
 import com.pth.iflow.workflow.models.Company;
 import com.pth.iflow.workflow.models.CompanyProfile;
+import com.pth.iflow.workflow.models.CompanyWorkflowTypeController;
 import com.pth.iflow.workflow.models.Department;
 import com.pth.iflow.workflow.models.DepartmentGroup;
 import com.pth.iflow.workflow.models.User;
@@ -56,9 +57,28 @@ public class TestDataProducer {
   protected CompanyProfile getTestCompanyProfile() {
 
     final CompanyProfile companyProfile = new CompanyProfile(this.getTestCompany(), this.getTestDepartmentList(),
-        this.getTestUserGroupList());
+        this.getTestUserGroupList(), this.getTestCompanyWorkflowTypeControllerList());
 
     return companyProfile;
+  }
+
+  protected List<CompanyWorkflowTypeController> getTestCompanyWorkflowTypeControllerList() {
+
+    final List<CompanyWorkflowTypeController> list = Arrays
+        .asList(this.getTestCompanyWorkflowTypeController(),
+            this.getTestCompanyWorkflowTypeController(), this.getTestCompanyWorkflowTypeController());
+
+    return list;
+  }
+
+  protected CompanyWorkflowTypeController getTestCompanyWorkflowTypeController() {
+
+    final CompanyWorkflowTypeController model = new CompanyWorkflowTypeController();
+    model.setPriority(1);
+    model.setUserIdentity("userIdentity");
+    model.setWorkflowTypeIdentity("workflowTypeIdentity");
+
+    return model;
   }
 
   protected User getTestUser() {

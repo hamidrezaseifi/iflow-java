@@ -20,6 +20,7 @@ import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.common.models.edo.AssignItemEdo;
 import com.pth.iflow.common.models.edo.CompanyEdo;
 import com.pth.iflow.common.models.edo.CompanyProfileEdo;
+import com.pth.iflow.common.models.edo.CompanyWorkflowTypeControllerEdo;
 import com.pth.iflow.common.models.edo.DepartmentEdo;
 import com.pth.iflow.common.models.edo.DepartmentGroupEdo;
 import com.pth.iflow.common.models.edo.ProfileResponseEdo;
@@ -43,6 +44,7 @@ import com.pth.iflow.common.models.edo.workflow.testthreetask.TestThreeTaskWorkf
 import com.pth.iflow.gui.models.AssignItem;
 import com.pth.iflow.gui.models.Company;
 import com.pth.iflow.gui.models.CompanyProfile;
+import com.pth.iflow.gui.models.CompanyWorkflowTypeController;
 import com.pth.iflow.gui.models.Department;
 import com.pth.iflow.gui.models.DepartmentGroup;
 import com.pth.iflow.gui.models.ProfileResponse;
@@ -922,7 +924,7 @@ public class GuiModelEdoMapper {
     validateCustomer(edo);
 
     final CompanyProfile model = new CompanyProfile(fromEdo(edo.getCompany()), fromDepartmentEdoList(edo.getDepartments()),
-        fromUserGroupEdoList(edo.getUserGroups()));
+        fromUserGroupEdoList(edo.getUserGroups()), fromCompanyWorkflowTypeControllerEdoList(edo.getWorkflowTypeControllers()));
 
     return model;
   }
@@ -930,8 +932,45 @@ public class GuiModelEdoMapper {
   public static CompanyProfileEdo toEdo(final CompanyProfile model) {
 
     final CompanyProfileEdo edo = new CompanyProfileEdo(toEdo(model.getCompany()), toDepartmentEdoList(model.getDepartments()),
-        toUserGroupEdoList(model.getUserGroups()));
+        toUserGroupEdoList(model.getUserGroups()), toCompanyWorkflowTypeControllerEdoList(model.getWorkflowTypeControllers()));
 
+    return edo;
+  }
+
+  public static List<CompanyWorkflowTypeControllerEdo>
+      toCompanyWorkflowTypeControllerEdoList(final List<CompanyWorkflowTypeController> modelList) {
+
+    final List<CompanyWorkflowTypeControllerEdo> edoList = new ArrayList<>();
+    for (final CompanyWorkflowTypeController model : modelList) {
+      edoList.add(toEdo(model));
+    }
+
+    return edoList;
+  }
+
+  public static List<CompanyWorkflowTypeController> fromCompanyWorkflowTypeControllerEdoList(
+      final List<CompanyWorkflowTypeControllerEdo> edoList) throws IFlowMessageConversionFailureException {
+
+    final List<CompanyWorkflowTypeController> modelList = new ArrayList<>();
+    for (final CompanyWorkflowTypeControllerEdo edo : edoList) {
+      modelList.add(fromEdo(edo));
+    }
+
+    return modelList;
+  }
+
+  private static CompanyWorkflowTypeController fromEdo(final CompanyWorkflowTypeControllerEdo edo) {
+
+    final CompanyWorkflowTypeController model = new CompanyWorkflowTypeController(edo.getWorkflowTypeIdentity(), edo.getUserIdentity(),
+        edo.getPriority());
+    return model;
+  }
+
+  private static CompanyWorkflowTypeControllerEdo toEdo(final CompanyWorkflowTypeController model) {
+
+    final CompanyWorkflowTypeControllerEdo edo = new CompanyWorkflowTypeControllerEdo(model.getWorkflowTypeIdentity(),
+        model.getUserIdentity(),
+        model.getPriority());
     return edo;
   }
 
