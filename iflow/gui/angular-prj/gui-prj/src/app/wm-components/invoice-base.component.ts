@@ -131,7 +131,6 @@ export class InvoiceBaseComponent implements OnInit {
 		this.invoiceEditForm = this.formBuilder.group({
 			expireDays: [10, Validators.required],
 
-			controllerIdentity: ['', Validators.required],
 			comments: [''],
 
 			sender: ['', Validators.required],
@@ -188,7 +187,6 @@ export class InvoiceBaseComponent implements OnInit {
 			
 			this.invoiceEditForm.controls["expireDays"].setValue(this.workflowSaveRequest.expireDays);
 			
-			this.invoiceEditForm.controls["controllerIdentity"].setValue(this.workflowSaveRequest.workflow.controllerIdentity);
 			this.invoiceEditForm.controls["comments"].setValue(this.workflowSaveRequest.workflow.comments);
 			
 			this.invoiceEditForm.controls["sender"].setValue(this.workflowSaveRequest.workflow.sender);
@@ -211,7 +209,6 @@ export class InvoiceBaseComponent implements OnInit {
 		
 		this.workflowSaveRequest.expireDays = this.invoiceEditForm.controls["expireDays"].value;
 		
-		this.workflowSaveRequest.workflow.controllerIdentity = this.invoiceEditForm.controls["controllerIdentity"].value; 
 		this.workflowSaveRequest.workflow.comments = this.invoiceEditForm.controls["comments"].value; 
 		
 		this.workflowSaveRequest.workflow.sender = this.invoiceEditForm.controls["sender"].value; 

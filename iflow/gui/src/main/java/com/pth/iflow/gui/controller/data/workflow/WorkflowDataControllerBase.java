@@ -20,10 +20,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.controller.data.GuiDataControllerBase;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
+import com.pth.iflow.gui.models.CompanyWorkflowTypeController;
 import com.pth.iflow.gui.models.workflow.IWorkflow;
 import com.pth.iflow.gui.models.workflow.IWorkflowSaveRequest;
 import com.pth.iflow.gui.services.IUploadFileManager;
-import com.pth.iflow.gui.services.IUserAccess;
 import com.pth.iflow.gui.services.IWorkflowHandler;
 
 @Controller
@@ -31,9 +31,6 @@ public abstract class WorkflowDataControllerBase<W extends IWorkflow, WS extends
 
   @Autowired
   private IWorkflowHandler<W, WS> workflowHandler;
-
-  @Autowired
-  private IUserAccess userAccess;
 
   @Autowired
   protected IUploadFileManager uploadFileManager;
@@ -47,6 +44,8 @@ public abstract class WorkflowDataControllerBase<W extends IWorkflow, WS extends
     final Map<String, Object> map = new HashMap<>();
 
     final W newWorkflow = this.generateInitialWorkflow(this.getLoggedUser().getIdentity());
+
+    this.setWorkflowController(newWorkflow);
 
     final WS workflowReq = this
         .generateInitialWorkflowSaveRequest(newWorkflow,
@@ -71,6 +70,8 @@ public abstract class WorkflowDataControllerBase<W extends IWorkflow, WS extends
 
     final WS saveRequest = this.generateInitialWorkflowSaveRequest(workflow, expireDays);
 
+    this.setWorkflowController(workflow);
+
     map.put("workflowSaveRequest", saveRequest);
 
     return map;
@@ -84,6 +85,8 @@ public abstract class WorkflowDataControllerBase<W extends IWorkflow, WS extends
 
     createRequest.getWorkflow().setCompanyIdentity(this.getLoggedCompany().getIdentity());
 
+    this.setWorkflowController(createRequest.getWorkflow());
+
     return this.workflowHandler.createWorkflow(createRequest);
 
   }
@@ -96,6 +99,8 @@ public abstract class WorkflowDataControllerBase<W extends IWorkflow, WS extends
 
     workflow.setCompanyIdentity(this.getLoggedCompany().getIdentity());
 
+    this.setWorkflowController(workflow);
+
     this.workflowHandler.saveWorkflow(workflow);
 
   }
@@ -105,6 +110,8 @@ public abstract class WorkflowDataControllerBase<W extends IWorkflow, WS extends
   @ResponseBody
   public void archiveWorkflow(@RequestBody final W workflow, final HttpSession session)
       throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
+
+    this.setWorkflowController(workflow);
 
     this.workflowHandler.archiveWorkflow(workflow);
 
@@ -118,6 +125,8 @@ public abstract class WorkflowDataControllerBase<W extends IWorkflow, WS extends
 
     saveRequest.getWorkflow().setCompanyIdentity(this.getLoggedCompany().getIdentity());
 
+    this.setWorkflowController(saveRequest.getWorkflow());
+
     this.workflowHandler.doneWorkflow(saveRequest);
 
   }
@@ -130,7 +139,22 @@ public abstract class WorkflowDataControllerBase<W extends IWorkflow, WS extends
 
     final W workflow = this.workflowHandler.assignWorkflow(workflowIdentity);
 
+    this.setWorkflowController(workflow);
+
     return workflow;
+  }
+
+  private void setWorkflowController(final W newWorkflow) {
+
+    final List<CompanyWorkflowTypeController> workflowTypeControllers = this
+        .getSessionUserInfo()
+        .getControllerForWorkflowType(newWorkflow.getWorkflowTypeIdentity());
+
+    if (workflowTypeControllers.isEmpty()) {
+      throw new GuiCustomizedException("Invalid-Company-Setting:Workflow-Controller-Not-Found!");
+    }
+
+    newWorkflow.setControllerIdentity(workflowTypeControllers.get(0).getUserIdentity());
   }
 
   protected abstract W generateInitialWorkflow(String userIdentity);

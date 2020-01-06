@@ -45,19 +45,6 @@ export class CreateTestthreetaskComponent implements OnInit {
 		
 	}
 	
-	get controllerIdentity() : string{
-		if(this.workflowSaveRequest != null && this.workflowSaveRequest.workflow != null){
-			return this.workflowSaveRequest.workflow.controllerIdentity;
-		}
-		return "";
-	}
-	set controllerIdentity(value: string){
-		if(this.workflowSaveRequest != null && this.workflowSaveRequest.workflow != null){
-			this.workflowSaveRequest.workflow.controllerIdentity = value;
-		}
-		
-	}
-	
 	get assignedUsers() : AssignItem[]{
 		if(this.workflowSaveRequest != null){
 			return this.workflowSaveRequest.assigns;

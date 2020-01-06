@@ -39,7 +39,7 @@ public class CompanyDao extends EntityDaoBase<CompanyEntity> implements ICompany
     final Root<CompanyWorkflowTypeControllerEntity> root = query.from(CompanyWorkflowTypeControllerEntity.class);
     query.select(root);
 
-    final Predicate predicate = criteriaBuilder.equal(root.get("companyId"), id);
+    final Predicate predicate = criteriaBuilder.equal(root.get("id").get("companyId"), id);
     query.where(predicate);
 
     final TypedQuery<CompanyWorkflowTypeControllerEntity> typedQuery = entityManager.createQuery(query);

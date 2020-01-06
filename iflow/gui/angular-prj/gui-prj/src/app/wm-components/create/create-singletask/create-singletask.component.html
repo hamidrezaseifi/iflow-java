@@ -11,16 +11,6 @@
 					<div class="clear"></div>
 				</div>
 				<div class="item-row">
-					<div class="item-label">{{ 'workflow-controller' | translate }}</div>
-					<div class="item-content">
-						<select [(ngModel)]="controllerIdentity">
-							<option value="0">{{ 'workflow-select-controller' | translate }}</option>
-							<option *ngFor="let user of (generalDataObs | async)?.company.users;" value="{{user.identity}}">{{user.fullName}}</option>
-						</select>
-					</div>
-					<div class="clear"></div>
-				</div>
-				<div class="item-row">
 					<div class="item-label">{{ 'workflow-assignto' | translate }}</div>
 					<div class="item-content">
 						<app-wm-assign-list [users]="(generalDataObs | async)?.company.users" 
