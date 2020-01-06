@@ -10,7 +10,7 @@ body
   position: relative !important;
   width: 100% !important;
   top: 0px !important;
-  background-color: #c4eafb !important;
+  background-color: white !important;
 }
 
 body:not(.overdialog)
@@ -501,7 +501,8 @@ div.notic-div, div.notic-div label, div.notic-div div
 .page-toolbar{
     padding: 5px;
 	margin: 5px 0;
-	background-color: #dadccf;
+	background-color: #bebebe;
+	border-radius: 5px;
 }
 
 .page-title{
@@ -515,7 +516,7 @@ div.notic-div, div.notic-div label, div.notic-div div
 .toolbar-button{
 	border: none;
     background-color: gray;
-    color: #f7fbc4;
+    color: white;
     padding: 0 3px;
     padding-top: 3px;
     margin-right: 10px;
@@ -527,7 +528,7 @@ div.notic-div, div.notic-div label, div.notic-div div
 	
 	border: none;
     background-color: gray;
-    color: #f7fbc4;
+    color: white;
     padding: 0 3px;
     padding-top: 3px;
     margin-right: 10px;
@@ -913,49 +914,27 @@ a.tool-link:hover{
   background-size: 30px 30px;
 }
 
-.hide-file-input {
-    position: relative;
-    z-index: 2;
-    width: 100%;
-    height: 0;
-    margin: 0;
-    opacity: 0;
-}
-
-.hide-file-label {
-    position: relative;
-    padding: 5px;
-    margin-top: -50px;
-    top: auto;
-    left: auto;
-    right: auto;
-    float: right;
-    z-index: 1;
-    height: calc(1.5em + .75rem + 2px);
-    
-    font-weight: 400;
-    line-height: 1.5;
-    color: #495057;
-    background-color: #fff;
-    border: 1px solid #ced4da;
-    border-radius: .25rem;
-}
-
-
-.hide-file-label::after {
-	content: "";
-    display: block;
-    background-image: url(/assets/images/cloud_upload.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 24px;
-    height: 24px;
-    width: 24px;
-    
-}
-
 .opacity0{
 	opacity: 0;
 }
 
+.noDisplay{
+	display: none;
+}
+
+.page-toolbar .dropdown-toggle{
+	border: 1px solid gray;
+    padding: 5px 10px;
+    width: 120px;
+    color: black;
+}
+
+.page-toolbar .dropdown-toggle::after{
+	margin-left: 50px;
+}
+
+.wm-comments-textarea{
+	width: calc(100% );
+    height: 70px;
+}
 

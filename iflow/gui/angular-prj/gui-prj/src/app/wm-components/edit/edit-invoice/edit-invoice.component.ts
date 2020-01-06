@@ -108,8 +108,7 @@ export class EditInvoiceComponent extends InvoiceBaseComponent implements OnInit
 	
 	protected loadInitialData(){
 		
-	 	super.loadInitialData();
-		
+	 	
 		if(this.workflowIdentity == ''){
 			return;
 		}
@@ -118,6 +117,12 @@ export class EditInvoiceComponent extends InvoiceBaseComponent implements OnInit
 	 	
 	}
 	
+	reload() {
+		
+		this.loadInitialData();
+	
+	}
+
 	private loadWorkflowData(){
 		
 		this.loadingService.showLoading();	     

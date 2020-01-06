@@ -23,22 +23,17 @@
 				<div class="item-row">
 					<div class="item-label">{{ 'workflow-assignto' | translate }}</div>
 					<div class="item-content">
-						<div class="assign-list" >
-							<button class="show-select-dialog" (click)="showAssignSelect()"><i class="material-icons">playlist_add</i></button>
-							<span *ngIf="hasNoAssigns">{{ 'workflow-select-assign' | translate }}</span>
-							<div class="user-item-box" *ngFor="let item of assignedUsers">
-								<span>{{getAssignItemTitle(item)}} </span>
-								<button (click)="removeAssign(item.itemIdentity, item.itemType)"><i class="material-icons">close</i></button>
-							</div>
-							<div class="clear"></div>
-						</div>
+						<app-wm-assign-list [users]="(generalDataObs | async)?.company.users" 
+							[departments]="(generalDataObs | async)?.company.departments" [assignedUsers]="assignedUsers" 
+							(onSelectedAssignChanged)="onUsersSelected($event)">
+							</app-wm-assign-list>
 					</div>
 					<div class="clear"></div>
 				</div>
 				<div class="item-row">
 					<div class="item-label">{{ 'workflow-comments' | translate }}</div>
 					<div class="item-content">
-						<textarea [(ngModel)]="comments"></textarea>
+						<textarea [(ngModel)]="comments" class="wm-comments-textarea"></textarea>
 					</div>
 					<div class="clear"></div>
 				</div>
@@ -52,13 +47,13 @@
 				</div>
 				<div class="item-row">
 					
-					<div class="item-content workflow-step-button-bar">
-						<button (click)="save()" class="button-bar-button step-button button-save">
-							<span>{{ 'common.save' | translate }}</span>
-							<i class="material-icons">save</i>
-						</button>
-						<div class="clear"></div>
-					</div>
+				<div class="item-content workflow-step-button-bar">
+					<button (click)="save()" class="button-bar-button step-button button-save">
+						<span>{{ 'common.save' | translate }}</span>
+						<i class="material-icons">save</i>
+					</button>
+					<div class="clear"></div>
+				</div>
 					
 				</div>
 				        				
@@ -66,7 +61,5 @@
 				</div>
 
 			</div>
-		    
-			<app-select-user [users]="(generalDataObs | async)?.company.users" [departments]="(generalDataObs | async)?.company.departments" 
-				[showAssignModal]="showAssignModal" [selectAssign]="selectAssign" (onUsersSelected)="onUsersSelected($event)"></app-select-user>		    		 		
+		    	    		 		
 		</div>

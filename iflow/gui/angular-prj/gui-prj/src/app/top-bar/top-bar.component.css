@@ -16,3 +16,6 @@ button.user-toggle-button {
     height: 34px;
 }   
     
+.navbar-nav a.nav-link{
+	color: black;
+}    

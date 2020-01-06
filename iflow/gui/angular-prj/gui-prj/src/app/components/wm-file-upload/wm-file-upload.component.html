@@ -1,12 +1,13 @@
 
-								<div class="panel-heading" [ngClass]="{'opacity0' : showHeaderTitle === false}">{{ 'common.attachments' | translate }}</div>
+								<div class="panel-heading uploaded-file-header" [ngClass]="{'noDisplay' : showHeaderTitle === false}">{{ 'common.attachments' | translate }}</div>
 								
-								<div><input type="file" class="hide-file-input" id="inlineuploadfile" (change)="uploadFile($event)" 
-				    					accept=".pdf,.jpg, .png, .tiff, .bmp">
-				    				 <label class="hide-file-label" for="inlineuploadfile"></label>
-									<div class="clear"></div>
-				    			</div>
 				    			<div class="uploaded-file-item-container" [ngClass]="{'uploaded-file-item-container-border' : drawBorder}">
+									<div class="upload-file-container">
+										<input type="file" class="hide-file-input" id="inlineuploadfile" (change)="uploadFile($event)" 
+				    						accept=".pdf,.jpg, .png, .tiff, .bmp">
+				    				 	<label class="hide-file-label" for="inlineuploadfile"></label>
+										<div class="clear"></div>
+				    				</div>
 				    				<div *ngFor="let uploaded of uploadedFiles" class="uploaded-file-item list-group-item" >
 				    					<span class="filename">{{uploaded.fileName}}</span>
 				    					

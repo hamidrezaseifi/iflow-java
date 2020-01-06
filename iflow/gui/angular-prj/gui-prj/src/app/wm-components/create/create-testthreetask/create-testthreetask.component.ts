@@ -26,20 +26,10 @@ export class CreateTestthreetaskComponent implements OnInit {
 	workflowListUrl :string = "/workflow/list";
 
 	workflowSaveRequest :WorkflowSaveRequest = null;
-	users : User[] = [];
-	departments : Department[] = [];
 	generalDataObs :Observable<GeneralData> = null;
 	
 	showDebug : boolean = false;
 	
-	showAssignModal :boolean = false;
-	
-	selectAssign : boolean[][] = [];
-	
-	assignTypeUser :AssignType = AssignType.USER;
-	assignTypeDepartment :AssignType = AssignType.DEPARTMENT;
-	assignTypeDepartmentGroup :AssignType = AssignType.DEPARTMENTGROUP;
-
 	uploadedFiles :UploadedFile[] = [];	
 
 	get expireDays() : number{
@@ -91,7 +81,7 @@ export class CreateTestthreetaskComponent implements OnInit {
 	
 	get debugData() :string{
 		var ssignstr : string =  (this.workflowSaveRequest && this.workflowSaveRequest.assigns) ? JSON.stringify(this.workflowSaveRequest.assigns) : '--';
-		return ssignstr + "<hr>" + JSON.stringify(this.selectAssign);
+		return ssignstr;
 	}
 	
 	
@@ -152,29 +142,8 @@ export class CreateTestthreetaskComponent implements OnInit {
 			}
 		  });
 		
-		this.generalDataObs.subscribe( (generalData :GeneralData) => {
-			this.users = generalData.company.users;
-			this.departments = generalData.company.departments;
-		});
 	}
-		
-	get hasNoAssigns() :boolean{
-		if(this.workflowSaveRequest && this.workflowSaveRequest.assigns){
-			return this.workflowSaveRequest.assigns.length == 0;
-		}
-		return false;
-	}
-	
-	removeAssign(identity :string , type: AssignType){
-		this.workflowSaveRequest.assigns = this.workflowSaveRequest.assigns.filter(function(value, index, arr){
-	
-		    return value.itemIdentity != identity || value.itemType != type;
-	
-		});
-		
-	}
-	
-	
+			
 	save(){
 		
 		this.workflowSaveRequest.uploadedFiles = WorkflowUploadedFile.loadUploadedFiles(this.uploadedFiles);
@@ -201,25 +170,6 @@ export class CreateTestthreetaskComponent implements OnInit {
 		
 	}
 			
-	showAssignSelect(){
-		
-		this.selectAssign = [];
-		
-		for(var index in this.workflowSaveRequest.assigns){
-			var assign :AssignItem = this.workflowSaveRequest.assigns[index];
-				
-			if(this.selectAssign[assign.itemType] === undefined){
-				this.selectAssign[assign.itemType] = [];
-			}
-			this.selectAssign[assign.itemType][assign.itemIdentity] = true;				
-		}
-		
-		this.showAssignModal = true;
-	}
-	
-	hideAssignSelect(){
-		this.showAssignModal = false;
-	}
 	
 	onUsersSelected(assigns: AssignItem[]) {
 		this.workflowSaveRequest.assigns = [];
@@ -232,41 +182,6 @@ export class CreateTestthreetaskComponent implements OnInit {
 			this.workflowSaveRequest.assigns.push(assign);						
 		}
 		
-		this.hideAssignSelect();
 	}	
 		
-	
-	getAssignItemTitle(item :AssignItem){
-
-		if(item.itemType === AssignType.USER){
-			for(var index in this.users){
-				if(this.users[index].identity === item.itemIdentity){
-					return this.users[index].fullName;
-				}
-			}
-			return 'Unknown!';
-		}
-		
-		if(item.itemType === AssignType.DEPARTMENT){
-			for(var index in this.departments){
-				if(this.departments[index].identity === item.itemIdentity){
-					return this.departments[index].title;
-				}
-			}
-			return 'Unknown!';
-		}
-		
-		if(item.itemType === AssignType.DEPARTMENTGROUP){
-			for(var index in this.departments){
-				for(var gindex in this.departments[index].departmentGroups){
-					if(this.departments[index].departmentGroups[gindex].identity === item.itemIdentity){
-						return this.departments[index].departmentGroups[gindex].title;
-					}
-				}
-			}
-			return 'Unknown!';
-		}
-		
-	}
-
 }
