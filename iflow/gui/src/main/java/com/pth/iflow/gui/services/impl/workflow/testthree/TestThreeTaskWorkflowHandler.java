@@ -76,21 +76,22 @@ public class TestThreeTaskWorkflowHandler extends WorkflowHandlerHelper<TestThre
   }
 
   @Override
-  public TestThreeTaskWorkflow saveWorkflow(final TestThreeTaskWorkflow workflow)
+  public TestThreeTaskWorkflow saveWorkflow(final TestThreeTaskWorkflowSaveRequest saveRequest)
       throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
 
     logger.debug("Save workflow");
 
-    if (workflow.getHasActiveAction()) {
-      workflow.getActiveAction().setCurrentStepIdentity(workflow.getCurrentStepIdentity());
+    if (saveRequest.getWorkflow().getHasActiveAction()) {
+      saveRequest.getWorkflow().getActiveAction().setCurrentStepIdentity(saveRequest.getWorkflow().getCurrentStepIdentity());
     }
 
-    final TestThreeTaskWorkflowSaveRequest request = TestThreeTaskWorkflowSaveRequest.generateNewNoExpireDays(workflow);
-    request.setCommand(EWorkflowProcessCommand.SAVE);
+    saveRequest.setCommand(EWorkflowProcessCommand.SAVE);
 
-    this.workflowAccess.validateWorkflow(request, this.sessionUserInfo.getToken());
+    this.workflowAccess.validateWorkflow(saveRequest, this.sessionUserInfo.getToken());
 
-    final TestThreeTaskWorkflow result = this.workflowAccess.saveWorkflow(request, this.sessionUserInfo.getToken());
+    this.prepareUploadedFiles(saveRequest);
+
+    final TestThreeTaskWorkflow result = this.workflowAccess.saveWorkflow(saveRequest, this.sessionUserInfo.getToken());
     return this.prepareWorkflow(result);
   }
 
@@ -122,6 +123,8 @@ public class TestThreeTaskWorkflowHandler extends WorkflowHandlerHelper<TestThre
     saveRequest.setCommand(EWorkflowProcessCommand.DONE);
 
     this.workflowAccess.validateWorkflow(saveRequest, this.sessionUserInfo.getToken());
+
+    this.prepareUploadedFiles(saveRequest);
 
     final TestThreeTaskWorkflow result = this.workflowAccess.saveWorkflow(saveRequest, this.sessionUserInfo.getToken());
     return this.prepareWorkflow(result);
@@ -169,13 +172,6 @@ public class TestThreeTaskWorkflowHandler extends WorkflowHandlerHelper<TestThre
   protected IUploadFileManager getUploadFileManager() {
 
     return this.uploadFileManager;
-  }
-
-  @Override
-  protected TestThreeTaskWorkflow innerSaveWorkflow(final TestThreeTaskWorkflow workflow)
-      throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
-
-    return this.saveWorkflow(workflow);
   }
 
 }

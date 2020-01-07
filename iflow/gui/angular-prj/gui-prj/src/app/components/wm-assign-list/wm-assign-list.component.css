@@ -24,9 +24,9 @@ div.assign-list div.user-item-box button {
     border: none;
     background: transparent;
     padding: 0;
-    padding-top: 3px;
     float: right;
     margin-left: 5px;
+    height: 20px;
 }
 
 div.assign-list div.user-item-box button i.material-icons{
@@ -34,9 +34,10 @@ div.assign-list div.user-item-box button i.material-icons{
 }
 
 div.assign-list div.user-item-box span {
-    height: 20px;
+    height: 16px;
     display: inline-block;
     float: left;
+    font-size: 12px;
 }
 
 button.show-select-dialog {

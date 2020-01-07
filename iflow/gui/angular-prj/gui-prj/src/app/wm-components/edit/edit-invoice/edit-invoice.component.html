@@ -55,7 +55,7 @@
 						</div>
 						
 						<div class="twopannel">
-							<div class="panel panel-default panel-vendor">
+							<div class="panel panel-1 panel-default panel-twopannelleft">
 								<div class="panel-heading">{{ 'invoice-vendor' | translate }}</div>
 								<div class="panel-body">
 							
@@ -93,7 +93,7 @@
 							</div>
 		
 		
-							<div class="panel panel-default panel-discount" *ngIf="isPaymentInvoiceType() === false">
+							<div class="panel panel-1 panel-default panel-twopannelright" *ngIf="isPaymentInvoiceType() === false">
 								<div class="panel-heading">{{ 'invoice-discount' | translate }}</div>
 								<div class="panel-body">
 							
@@ -133,23 +133,41 @@
 							
 							<div class="clear"></div>					
 						</div>
-											
-						<div class="item-row">
-							<div class="item-label label-large">{{ 'workflow-comments' | translate }}</div>
-							<div class="item-content fullrowfromlabel">
-								<textarea class="comments-fullrow wm-comments-textarea" formControlName="comments"></textarea>
+					
+						<div class="twopannel">
+							<div class="panel panel-2 panel-default panel-twopannelleft">
+								<div class="panel-body">				
+									
+									<div class="item-row">
+										<div class="item-label label-large nofloat">{{ 'workflow-comments' | translate }}</div>
+										<div class="item-content fullrowfromlabel nofloat">
+											<textarea class="comments-fullrow wm-comments-textarea" formControlName="comments"></textarea>
+										</div>
+										<div class="clear"></div>
+									</div>
+									<div class="item-row">
+										<div class="item-label label-large nofloat">{{ 'workflow-assignto' | translate }}</div>
+										<div class="item-content fullrowfromlabel nofloat">
+											<app-wm-assign-list [users]="(generalDataObs | async)?.company.users" 
+												[departments]="(generalDataObs | async)?.company.departments" [assignedUsers]="assignedUsers" 
+												(onSelectedAssignChanged)="onUsersSelected($event)">
+												</app-wm-assign-list>
+										</div>
+										<div class="clear"></div>
+									</div>
+								
+								</div>
 							</div>
-							<div class="clear"></div>
-						</div>
-						<div class="item-row" *ngIf="canAssign">
-							<div class="item-label label-large">{{ 'workflow-assignto' | translate }}</div>
-							<div class="item-content fullrowfromlabel">
-								<app-wm-assign-list [users]="(generalDataObs | async)?.company.users" 
-									[departments]="(generalDataObs | async)?.company.departments" [assignedUsers]="assignedUsers" 
-									(onSelectedAssignChanged)="onUsersSelected($event)">
-									</app-wm-assign-list>
+							
+							<div class="panel panel-2 panel-default panel-twopannelright">
+							
+								<app-wm-file-upload [ocrScanningEnabled]="true" [editService]="editService" 
+									(onOcrUploadedFile)="onOcrUploadedFile($event)" (onUploadedFilesChanged)="onUploadedFilesChanged($event)" 
+									(onShowUploadedFileScannDetail)="onShowUploadedFileScannDetail($event)" ></app-wm-file-upload>
+								
 							</div>
-							<div class="clear"></div>
+							
+							<div class="clear"></div>	
 						</div>
 	
 	
@@ -186,4 +204,27 @@
 		    		 
 		
 		</div>
+
+		<div class="modal fade show" tabindex="-1" *ngIf="showOcrDetailsDialog" role="dialog" id="scanneddetailsdialog">
+			<div class="modal-dialog scanned-details-dialog" role="document">
+				<div class="modal-header">
+			 		<h5 class="modal-title">{{ 'common.scann-document-result' | translate }}</h5>
+					<button type="button" class="close" (click)="hideOcrDetails()" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>			
+				<div class="modal-body">
+					<app-invoice-ocr-detail [foundWords]="scanningFile.foundWords" [scanedPdfPath]="scanningFile.scanedPdfPath" 
+						[scanedHocrPath]="scanningFile.scanedHocrPath" [fileIsPdf]="scanningFile.fileIsPdf" 
+						[fileIsImage]="scanningFile.fileIsImage" [imageSizeX]="scanningFile.imageSizeX" [imageSizeY]="scanningFile.imageSizeY" 
+						[(editedValues)]="scannedSelectedValues" >
+					</app-invoice-ocr-detail>
+				</div>	
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" (click)="onApplyScannedValues()">{{ 'common.apply' | translate }}</button>
+					<button type="button" class="btn btn-secondary" (click)="hideOcrDetails()">{{ 'common.close' | translate }}</button>
+				</div>						
+			</div>
+		</div>
+
 

@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { HttpClient, HttpEventType } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
+import { StompService, StompState } from '@stomp/ng2-stompjs';
 
 import { GlobalService } from '../../../services/global.service';
 import { InvoiceWorkflowEditService } from '../../../services/workflow/invoice/invoice-workflow-edit.service';
@@ -21,7 +22,7 @@ import { GermanDateAdapter, parseDate, formatDate } from '../../../helper';
 @Component({
   selector: 'app-edit-invoice',
   templateUrl: './edit-invoice.component.html',
-  styleUrls: ['./edit-invoice.component.css'],
+  styleUrls: ['../wm-edit.css'],
   providers: [{provide: DateAdapter, useClass: GermanDateAdapter}, InvoiceWorkflowEditService]
 })
 export class EditInvoiceComponent extends InvoiceBaseComponent implements OnInit {
@@ -72,13 +73,14 @@ export class EditInvoiceComponent extends InvoiceBaseComponent implements OnInit
 		    protected router: Router,
 			protected global: GlobalService,
 			protected translate: TranslateService,
-			protected editService :InvoiceWorkflowEditService,
+			public    editService :InvoiceWorkflowEditService,
 			protected loadingService: LoadingServiceService,
 			protected http: HttpClient,
 			protected errorService: ErrorServiceService,
 		  	protected formBuilder: FormBuilder,
 		  	protected dateAdapter: DateAdapter<Date>,
 		  	protected route: ActivatedRoute,
+		  	protected _stompService: StompService
 	) {
 		
 		super(router,
@@ -89,7 +91,8 @@ export class EditInvoiceComponent extends InvoiceBaseComponent implements OnInit
 				http,
 				errorService,
 			  	formBuilder,
-			  	dateAdapter);
+			  	dateAdapter,
+			  	_stompService);
 		
 		this.router.events.subscribe((evt) => {
 			if (evt instanceof NavigationEnd) {
@@ -184,7 +187,7 @@ export class EditInvoiceComponent extends InvoiceBaseComponent implements OnInit
 		
 		this.saveMessage = "";
 		
-        this.editService.saveWorkflow(this.workflowSaveRequest.workflow).subscribe(
+        this.editService.saveWorkflow(this.workflowSaveRequest).subscribe(
 		        (result) => {		        	
 		            console.log("Create workflow result", result);
 		            

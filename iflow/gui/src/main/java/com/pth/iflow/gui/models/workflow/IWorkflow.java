@@ -32,6 +32,8 @@ public interface IWorkflow {
 
   public void setFiles(final List<WorkflowFile> files);
 
+  public void clearFiles();
+
   public List<WorkflowAction> getActions();
 
   public void setActions(final List<WorkflowAction> actions);

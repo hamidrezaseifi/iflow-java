@@ -57,7 +57,7 @@ public class WorkflowHandler extends WorkflowHandlerHelper<Workflow> implements 
   }
 
   @Override
-  public Workflow saveWorkflow(final Workflow workflow)
+  public Workflow saveWorkflow(final WorkflowSaveRequest saveRequest)
       throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
 
     throw new GuiCustomizedException("not implemented");
@@ -102,13 +102,6 @@ public class WorkflowHandler extends WorkflowHandlerHelper<Workflow> implements 
   protected IUploadFileManager getUploadFileManager() {
 
     return this.uploadFileManager;
-  }
-
-  @Override
-  protected Workflow innerSaveWorkflow(final Workflow workflow)
-      throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
-
-    return this.saveWorkflow(workflow);
   }
 
 }

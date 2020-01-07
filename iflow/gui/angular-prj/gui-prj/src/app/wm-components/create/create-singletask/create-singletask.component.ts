@@ -18,7 +18,7 @@ import { WorkflowSaveRequestInit } from '../../../wf-models/workflow-save-reques
 @Component({
   selector: 'app-create-singletask',
   templateUrl: './create-singletask.component.html',
-  styleUrls: ['./create-singletask.component.css'],
+  styleUrls: ['../wm-create.css'],
   providers: [SingleTaskWorkflowEditService]
 })
 export class CreateSingletaskComponent implements OnInit {
@@ -132,8 +132,6 @@ export class CreateSingletaskComponent implements OnInit {
 	
 	save(){
 		
-		this.workflowSaveRequest.uploadedFiles = WorkflowUploadedFile.loadUploadedFiles(this.uploadedFiles);
-
 		this.loadingService.showLoading();		
 		
         this.editService.createWorkflow(this.workflowSaveRequest).subscribe(

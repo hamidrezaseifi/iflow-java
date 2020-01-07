@@ -47,6 +47,8 @@ public class UploadFileManager implements IUploadFileManager {
 
       final String archiveFilePath = FileSavingData.generateSavingFileFullPath(this.arhiveBaseDir, fileSave.getFileExtention());
 
+      this.createFileAndFolders(archiveFilePath);
+
       final FileSavingData archiveSaveFile = FileSavingData.generateFromFilePath(archiveFilePath);
       archiveSaveFile.setTitle(tempUploadedFile.getFileName());
 

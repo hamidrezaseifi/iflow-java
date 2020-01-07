@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
-import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.WorkflowAction;
 import com.pth.iflow.gui.models.WorkflowType;
 import com.pth.iflow.gui.models.WorkflowTypeStep;
@@ -26,6 +25,8 @@ public abstract class WorkflowHandlerHelper<W extends IWorkflow> {
       throws IOException, MalformedURLException, IFlowMessageConversionFailureException {
 
     final List<FileSavingData> archiveList = this.getUploadFileManager().moveFromTempToArchive(createRequest.getUploadedFiles());
+
+    createRequest.getWorkflow().clearFiles();
 
     for (final FileSavingData savedArchiveFile : archiveList) {
 
@@ -97,8 +98,5 @@ public abstract class WorkflowHandlerHelper<W extends IWorkflow> {
   protected abstract SessionUserInfo getSessionUserInfo();
 
   protected abstract IUploadFileManager getUploadFileManager();
-
-  protected abstract W innerSaveWorkflow(final W workflow)
-      throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException;
 
 }

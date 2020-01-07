@@ -10,8 +10,9 @@ import { SingleTaskWorkflowEditService } from '../../../services/workflow/single
 import { LoadingServiceService } from '../../../services/loading-service.service';
 import { ErrorServiceService } from '../../../services/error-service.service';
 
-import { User, Department, DepartmentGroup, GeneralData } from '../../../ui-models';
-import { WorkflowProcessCommand, Workflow, AssignItem, FileTitle, AssignType, WorkflowUploadFileResult } from '../../../wf-models';
+import { User, Department, DepartmentGroup, GeneralData, UploadedFile, UploadedResult } from '../../../ui-models';
+import { WorkflowProcessCommand, Workflow, AssignItem, FileTitle, AssignType, WorkflowUploadFileResult, WorkflowUploadedFile, WorkflowFile } 
+	from '../../../wf-models';
 import { WorkflowSaveRequest } from '../../../wf-models/workflow-save-request';
 import { WorkflowSaveRequestInit } from '../../../wf-models/workflow-save-request-init';
 import { GermanDateAdapter, parseDate, formatDate } from '../../../helper';
@@ -19,7 +20,7 @@ import { GermanDateAdapter, parseDate, formatDate } from '../../../helper';
 @Component({
   selector: 'app-edit-single-task',
   templateUrl: './edit-single-task.component.html',
-  styleUrls: ['./edit-single-task.component.css'],
+  styleUrls: ['../wm-edit.css'],
   providers: [{provide: DateAdapter, useClass: GermanDateAdapter}, SingleTaskWorkflowEditService]
 })
 export class EditSingleTaskComponent implements OnInit {
@@ -34,41 +35,9 @@ export class EditSingleTaskComponent implements OnInit {
 
 	workflowSaveRequest :WorkflowSaveRequest = new WorkflowSaveRequest();
 
-	viewWorkflowModel :Workflow = null;
-	
-	users : User[] = [];
-	departments : Department[] = [];
-	
-	fileTitles : FileTitle[] = [];
-		
-	showAssignModal :boolean = false;
-	
-	selectAssign : boolean[][] = [];
-	
-	assignTypeUser :AssignType = AssignType.USER;
-	assignTypeDepartment :AssignType = AssignType.DEPARTMENT;
-	assignTypeDepartmentGroup :AssignType = AssignType.DEPARTMENTGROUP;
-	
-	
-	
-	fileTitleProgress(fileInput: any, file :FileTitle, fileIndex) {
-		
-		if(fileInput.target.files && fileInput.target.files != null && file){
-			file.file = <File>fileInput.target.files[0];
-		}
-		
-	    //this.preview();
-	}
-	
+	uploadedFiles :UploadedFile[] = [];		
 
-	
-	get assignedUsers() : AssignItem[]{
-		if(this.workflowSaveRequest != null){
-			return this.workflowSaveRequest.assigns;
-		}
-		return [];
-	}
-	
+	viewWorkflowModel :Workflow = null;
 	
 	get debugData() :string{
 		var ss = formatDate(new Date(), 'dd.mm.yyyy');
@@ -124,7 +93,7 @@ export class EditSingleTaskComponent implements OnInit {
 		    private router: Router,
 			private global: GlobalService,
 			private translate: TranslateService,
-			private editService :SingleTaskWorkflowEditService,
+			public  editService :SingleTaskWorkflowEditService,
 			private loadingService: LoadingServiceService,
 			private http: HttpClient,
 			private errorService: ErrorServiceService,
@@ -164,6 +133,12 @@ export class EditSingleTaskComponent implements OnInit {
 	
 	}
 	
+	onUploadedFilesChanged(uploadedFileList: UploadedFile[]) {
+		
+		this.uploadedFiles = uploadedFileList;
+		console.log("uploading data changed : ", this.uploadedFiles);
+	}
+
 	private loadInitialData(){
 		
 		if(this.workflowIdentity == ''){
@@ -171,11 +146,9 @@ export class EditSingleTaskComponent implements OnInit {
 		}
 		
 	 	if(this.global.loadedGeneralData !== null){
-	 		this.users = this.global.loadedGeneralData.company.users;
-	 		this.departments = this.global.loadedGeneralData.company.departments;
+
 	 	}
 	 	else{
-	 		this.subscribeToGeneralData();
 	 		this.global.loadAllSetting(null);
 	 	}
 	
@@ -223,7 +196,10 @@ export class EditSingleTaskComponent implements OnInit {
 			
 			this.workflowEditForm.controls["controllerIdentity"].setValue(this.workflowSaveRequest.workflow.controllerIdentity);
 			this.workflowEditForm.controls["comments"].setValue(this.workflowSaveRequest.workflow.comments);
-									
+						
+			this.uploadedFiles = [];
+			
+			this.uploadedFiles = WorkflowFile.toUploadedFileList(this.workflowSaveRequest.workflow.files);
 		}
 	}
 	
@@ -233,67 +209,15 @@ export class EditSingleTaskComponent implements OnInit {
 		
 		this.workflowSaveRequest.workflow.controllerIdentity = this.workflowEditForm.controls["controllerIdentity"].value; 
 		this.workflowSaveRequest.workflow.comments = this.workflowEditForm.controls["comments"].value; 
+		
+		this.workflowSaveRequest.uploadedFiles = WorkflowUploadedFile.loadUploadedFiles(this.uploadedFiles);
+
+		
 	}
 	
 	  
 	get forms() { return this.workflowEditForm.controls; }
 		
-	private subscribeToGeneralData(){
-		this.global.currentSessionDataSubject.subscribe((data : GeneralData) => {
-	    	
-			console.log("set gloabl-data from workflow-create. appIsLogged: ");
-			//alert("from app-comp: \n" + JSON.stringify(data));
-	    	
-			if(data && data !== null){
-				
-				var value = data.isLogged + "";
-				
-				if(value === "true" === true){
-	 	 			this.users = data.company.users;
-	 	 			this.departments = data.company.departments;
-	 	 	  		
-				}
-				else{
-					this.users = [];
-	 	 			this.departments = [];
-				}
-		 	  		
-			}
-			else{
-				this.users = [];
-		 			this.departments = [];
-			}
-		  });
-	}
-	
-	get hasNoAssigns() :boolean{
-		if(this.workflowSaveRequest && this.workflowSaveRequest.assigns){
-			return this.workflowSaveRequest.assigns.length == 0;
-		}
-		return false;
-	}
-	
-	removeAssign(identity :string , type: AssignType){
-		this.workflowSaveRequest.assigns = this.workflowSaveRequest.assigns.filter(function(value, index, arr){
-	
-		    return value.itemIdentity != identity || value.itemType != type;
-	
-		});
-		
-	}
-	
-	removeFile(index){
-		this.fileTitles.splice(index, 1);
-	}
-	
-	addFile(){
-		var ft :FileTitle = new FileTitle();
-		ft.title = "";
-		ft.file = null;
-		
-		this.fileTitles.push(ft);
-	}
-	
 	save(makeDone :boolean){
 		
 		this.setFormControlValues();
@@ -324,7 +248,9 @@ export class EditSingleTaskComponent implements OnInit {
 	
 	private saveWorkflowData(){
 		
-        this.editService.saveWorkflow(this.workflowSaveRequest.workflow).subscribe(
+		console.log("Saving workflow", this.workflowSaveRequest);
+		
+        this.editService.saveWorkflow(this.workflowSaveRequest).subscribe(
 		        (result) => {		        	
 		            console.log("Create workflow result", result);
 		            
@@ -350,6 +276,8 @@ export class EditSingleTaskComponent implements OnInit {
 	}
 	
 	private doneWorkflowData(){
+		
+		console.log("Done workflow", this.workflowSaveRequest);
 		
         this.editService.doneWorkflow(this.workflowSaveRequest).subscribe(
 		        (result) => {		        	
@@ -390,102 +318,6 @@ export class EditSingleTaskComponent implements OnInit {
 		        	this.loadingService.hideLoading();	 
 		        }
 		    );	       	
-		
-	}
-	
-	isItemAssigned(identity :string , type: AssignType){
-	
-		if(this.selectAssign[type] === undefined){
-			this.selectAssign[type] = [];
-		}
-		if(this.selectAssign[type][identity] === undefined){
-			this.selectAssign[type][identity] = false;
-		}
-	
-		return this.selectAssign[type][identity];
-	}
-	
-	applyUserSelect(){
-		this.workflowSaveRequest.assigns = [];
-		
-		for(var type in this.selectAssign){
-			for(var identity in this.selectAssign[type]){
-				
-				if(this.selectAssign[type][identity]){
-					var assign = new AssignItem;
-					assign.itemIdentity = <string>identity;
-					assign.itemType = <AssignType>type;
-					
-					this.workflowSaveRequest.assigns.push(assign);
-					
-				}
-			}			
-		}
-		
-		this.hideAssignSelect();
-	}
-	
-	showAssignSelect(){
-		
-		this.selectAssign = [];
-		
-		for(var index in this.workflowSaveRequest.assigns){
-			var assign :AssignItem = this.workflowSaveRequest.assigns[index];
-				
-			if(this.selectAssign[assign.itemType] === undefined){
-				this.selectAssign[assign.itemType] = [];
-			}
-			this.selectAssign[assign.itemType][assign.itemIdentity] = true;				
-		}
-		
-	
-		
-		this.showAssignModal = true;
-	}
-	
-	hideAssignSelect(){
-		this.showAssignModal = false;
-	}
-	
-	toggleAssign(identity :string , type: AssignType, isChecked: boolean){
-		if(this.selectAssign[type] === undefined){
-			this.selectAssign[type] = [];
-		}
-		this.selectAssign[type][identity] = isChecked;
-		
-	}
-	
-	getAssignItemTitle(item :AssignItem){
-		//assign.itemIdentity = <string>identity;
-		//assign.itemType = <AssignType>type;
-		if(item.itemType === AssignType.USER){
-			for(var index in this.users){
-				if(this.users[index].identity === item.itemIdentity){
-					return this.users[index].fullName;
-				}
-			}
-			return 'Unknown!';
-		}
-		
-		if(item.itemType === AssignType.DEPARTMENT){
-			for(var index in this.departments){
-				if(this.departments[index].identity === item.itemIdentity){
-					return this.departments[index].title;
-				}
-			}
-			return 'Unknown!';
-		}
-		
-		if(item.itemType === AssignType.DEPARTMENTGROUP){
-			for(var index in this.departments){
-				for(var gindex in this.departments[index].departmentGroups){
-					if(this.departments[index].departmentGroups[gindex].identity === item.itemIdentity){
-						return this.departments[index].departmentGroups[gindex].title;
-					}
-				}
-			}
-			return 'Unknown!';
-		}
 		
 	}
 

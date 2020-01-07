@@ -10,6 +10,7 @@ import java.time.format.DateTimeFormatter;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -212,6 +213,20 @@ public class FileSavingData {
     return this.isFileJpg() || this.isFileGif() || this.isFilePng();
   }
 
+  public static boolean isFileImage(final String filePath) {
+
+    final FileSavingData file = FileSavingData.generateFromFilePath(filePath);
+
+    return file.isFileImage();
+  }
+
+  public static boolean isFilePdf(final String filePath) {
+
+    final FileSavingData file = FileSavingData.generateFromFilePath(filePath);
+
+    return file.isFilePdf();
+  }
+
   public static String getExtention(final MultipartFile file) {
 
     final String fileName = file.getOriginalFilename();
@@ -220,13 +235,17 @@ public class FileSavingData {
     return ext;
   }
 
-  public ResponseEntity<InputStreamResource> generateFileReposneEntity(final String readFilePath) throws FileNotFoundException {
+  public ResponseEntity<InputStreamResource> generateFileReposneEntity(final String readFilePath, String fileName)
+      throws FileNotFoundException {
 
     final File file = new File(readFilePath);
     final HttpHeaders respHeaders = new HttpHeaders();
     respHeaders.setContentType(this.getMediaType());
     respHeaders.setContentLength(file.length());
-    respHeaders.setContentDispositionFormData("attachment", file.getName());
+
+    fileName = StringUtils.isEmpty(fileName) ? file.getName() : fileName;
+
+    respHeaders.setContentDispositionFormData("attachment", fileName);
     final InputStreamResource isr = new InputStreamResource(new FileInputStream(file));
     final ResponseEntity<InputStreamResource> respEntity = new ResponseEntity<>(isr, respHeaders, HttpStatus.OK);
     return respEntity;
