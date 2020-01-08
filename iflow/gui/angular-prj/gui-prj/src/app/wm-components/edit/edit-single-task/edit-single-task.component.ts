@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { HttpClient, HttpEventType } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
+import $ from "jquery";
 
 import { GlobalService } from '../../../services/global.service';
 import { SingleTaskWorkflowEditService } from '../../../services/workflow/singletask/singletask-workflow-edit.service';
@@ -20,7 +21,7 @@ import { GermanDateAdapter, parseDate, formatDate } from '../../../helper';
 @Component({
   selector: 'app-edit-single-task',
   templateUrl: './edit-single-task.component.html',
-  styleUrls: ['../wm-edit.css'],
+  styleUrls: ['../wm-edit.css' , './edit-single-task.component.css'],
   providers: [{provide: DateAdapter, useClass: GermanDateAdapter}, SingleTaskWorkflowEditService]
 })
 export class EditSingleTaskComponent implements OnInit {
@@ -319,6 +320,16 @@ export class EditSingleTaskComponent implements OnInit {
 		        }
 		    );	       	
 		
+	}
+	
+	collapseRecordPanel() {		
+		$(".workflow-content-container").removeClass("expanded").addClass("collapsed");
+		$(".workflow-inline-content-container").hide();
+	}
+	
+	expandRecordPanel() {		
+		$(".workflow-content-container").removeClass("collapsed").addClass("expanded");		
+		$(".workflow-inline-content-container").show();
 	}
 
 }

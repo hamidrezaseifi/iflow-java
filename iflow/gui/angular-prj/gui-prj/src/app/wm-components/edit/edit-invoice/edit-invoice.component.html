@@ -6,7 +6,7 @@
 				<button class="toolbar-button" (click)="reload();"><i class="material-icons">refresh</i></button>
 			</div>
 			
-			<div class="workflow-content-container">
+			<div class="workflow-content-container expanded">
 				<div class="workflow-content">
 					<form id="workflow-form" name="workflowForm" [formGroup]="invoiceEditForm">
 						<div class="panel panel-default">
@@ -169,33 +169,30 @@
 							
 							<div class="clear"></div>	
 						</div>
-	
-	
-						<div class="item-row">
-							
-							<div class="workflow-step-button-bar">
-								<button type="button" (click)="save(false)" *ngIf="canSave" [disabled]="invoiceEditForm.invalid" class="button-bar-button step-button button-save">
-									<span>{{ 'common.save' | translate }}</span>
-									<i class="material-icons">save</i>
-								</button>
-								<button type="button" (click)="save(true)" *ngIf="canDone" [disabled]="invoiceEditForm.invalid" class="button-bar-button step-button button-done">
-									<span>{{ 'common.savedone' | translate }}</span>
-									<i class="material-icons">save</i>
-								</button>
-								<button type="button" (click)="archive()" *ngIf="canArchive" [disabled]="invoiceEditForm.invalid" class="button-bar-button step-button button-archive">
-									<span>{{ 'workflow-archive' | translate }}</span>
-									<i class="material-icons">save</i>
-								</button>
-								<span *ngIf="saveMessage !== ''" class="alert alert-success button-bar-alert">{{saveMessage}}</span>
-								<div class="clear"></div>
-							</div>
-							
-							
+						<div class="workflow-step-button-bar">
+							<button type="button" (click)="save(false)" *ngIf="canSave" [disabled]="invoiceEditForm.invalid" class="button-bar-button step-button button-save">
+								<span>{{ 'common.save' | translate }}</span>
+								<i class="material-icons">save</i>
+							</button>
+							<button type="button" (click)="save(true)" *ngIf="canDone" [disabled]="invoiceEditForm.invalid" class="button-bar-button step-button button-done">
+								<span>{{ 'common.savedone' | translate }}</span>
+								<i class="material-icons">save</i>
+							</button>
+							<button type="button" (click)="archive()" *ngIf="canArchive" [disabled]="invoiceEditForm.invalid" class="button-bar-button step-button button-archive">
+								<span>{{ 'workflow-archive' | translate }}</span>
+								<i class="material-icons">save</i>
+							</button>
+							<span *ngIf="saveMessage !== ''" class="alert alert-success button-bar-alert">{{saveMessage}}</span>
+							<div class="clear"></div>
 						</div>
 					</form>
 				</div>
 				
 				<div class="workflow-record">
+					<div class="workflow-record-toolbar">
+						<button type="button" class="workflow-pannel-collapse-button" (click)="collapseRecordPanel()"><i class="material-icons">keyboard_arrow_right</i></button>
+						<button type="button" class="workflow-pannel-expand-button" (click)="expandRecordPanel()"><i class="material-icons">keyboard_arrow_left</i></button>
+					</div>
 					<app-workflow-inlineview [workflow]="viewWorkflowModel"></app-workflow-inlineview>				
 				</div>
 				<div class="clear"></div>

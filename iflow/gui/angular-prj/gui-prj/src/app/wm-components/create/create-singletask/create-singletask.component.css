@@ -1,17 +1,4 @@
 
-div.workflow-content-container{
-	border: 1px solid lightgray;
-    margin: 10px 0px;
-    border-radius: 10px;
-    padding: 10px;
-    background-color: #f1f1f1;
-}
-
-div.workflow-content{
-    background-color: #dad9d9;
-    padding: 15px;
-    border-radius: 5px;
-}
 
 div.workflow-content-record{
     padding: 15px;
@@ -21,12 +8,6 @@ div.workflow-content div.item-row, div.workflow-content-record div.item-row {
     margin: 5px 0 10px;
 }
 
-div.workflow-content div.workflow-step-button-bar, div.workflow-content-record div.workflow-step-button-bar{
-    margin-right: 20px;
-    background-color: white;
-    padding: 6px;
-    margin-left: 130px;
-}
 
 div.workflow-content div.item-row div.item-label, div.workflow-content-record div.item-row div.item-label{
     float: left;

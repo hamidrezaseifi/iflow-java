@@ -5,6 +5,7 @@ import { HttpClient, HttpEventType } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 import { Observable } from 'rxjs';
+import $ from "jquery";
 
 import { GlobalService } from '../../../services/global.service';
 import { TestthreetaskWorkflowEditService } from '../../../services/workflow/testthreetask/testthreetask-workflow-edit.service';
@@ -21,7 +22,7 @@ import { GermanDateAdapter, parseDate, formatDate } from '../../../helper';
 @Component({
   selector: 'app-edit-testthree-task',
   templateUrl: './edit-testthree-task.component.html',
-  styleUrls: ['../wm-edit.css'],
+  styleUrls: ['../wm-edit.css', './edit-testthree-task.component.css'],
   providers: [{provide: DateAdapter, useClass: GermanDateAdapter}, TestthreetaskWorkflowEditService]
 })
 export class EditTestthreeTaskComponent implements OnInit {
@@ -351,5 +352,14 @@ export class EditTestthreeTaskComponent implements OnInit {
 		this.uploadedFiles = uploadedFileList;
 	}
 
+	collapseRecordPanel() {		
+		$(".workflow-content-container").removeClass("expanded").addClass("collapsed");
+		$(".workflow-inline-content-container").hide();
+	}
+	
+	expandRecordPanel() {		
+		$(".workflow-content-container").removeClass("collapsed").addClass("expanded");		
+		$(".workflow-inline-content-container").show();
+	}
 
 }

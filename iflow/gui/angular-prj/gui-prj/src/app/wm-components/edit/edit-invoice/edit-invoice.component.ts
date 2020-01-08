@@ -5,6 +5,7 @@ import { HttpClient, HttpEventType } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 import { StompService, StompState } from '@stomp/ng2-stompjs';
+import $ from "jquery";
 
 import { GlobalService } from '../../../services/global.service';
 import { InvoiceWorkflowEditService } from '../../../services/workflow/invoice/invoice-workflow-edit.service';
@@ -22,7 +23,7 @@ import { GermanDateAdapter, parseDate, formatDate } from '../../../helper';
 @Component({
   selector: 'app-edit-invoice',
   templateUrl: './edit-invoice.component.html',
-  styleUrls: ['../wm-edit.css'],
+  styleUrls: ['../wm-edit.css' , './edit-invoice.component.css'],
   providers: [{provide: DateAdapter, useClass: GermanDateAdapter}, InvoiceWorkflowEditService]
 })
 export class EditInvoiceComponent extends InvoiceBaseComponent implements OnInit {
@@ -108,6 +109,7 @@ export class EditInvoiceComponent extends InvoiceBaseComponent implements OnInit
 		super.ngOnInit();
 		
 	}
+	
 	
 	protected loadInitialData(){
 		
@@ -255,5 +257,16 @@ export class EditInvoiceComponent extends InvoiceBaseComponent implements OnInit
 		    );	       	
 		
 	}
+	
+	collapseRecordPanel() {		
+		$(".workflow-content-container").removeClass("expanded").addClass("collapsed");
+		$(".workflow-inline-content-container").hide();
+	}
+	
+	expandRecordPanel() {		
+		$(".workflow-content-container").removeClass("collapsed").addClass("expanded");		
+		$(".workflow-inline-content-container").show();
+	}
+
 
 }

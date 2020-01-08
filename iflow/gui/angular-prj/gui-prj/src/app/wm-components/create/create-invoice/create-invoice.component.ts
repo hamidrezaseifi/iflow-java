@@ -23,7 +23,7 @@ import { GermanDateAdapter, parseDate, formatDate } from '../../../helper';
 @Component({
   selector: 'app-create-invoice',
   templateUrl: './create-invoice.component.html',
-  styleUrls: ['../wm-create.css'],
+  styleUrls: ['../wm-create.css', './create-invoice.component.css'],
   providers: [{provide: DateAdapter, useClass: GermanDateAdapter}, InvoiceWorkflowEditService]
 })
 export class CreateInvoiceComponent extends InvoiceBaseComponent implements OnInit {

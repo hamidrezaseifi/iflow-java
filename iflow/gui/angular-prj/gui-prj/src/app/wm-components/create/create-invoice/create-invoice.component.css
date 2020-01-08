@@ -1,32 +1,4 @@
 
-div.workflow-content-container{
-	border: 1px solid lightgray;
-    margin: 10px 0px 50px 0;
-    border-radius: 10px;
-    padding: 10px;
-    background-color: #f1f1f1;
-}
-
-div.workflow-content{
-    background-color: #dad9d9;
-    padding: 15px;
-    border-radius: 5px;
-}
-
-
-div.workflow-content-record{
-    padding: 15px;
-}
-
-div.workflow-record{
-	float: right;
-    background-color: #dad9d9;
-    padding: 8px;
-    border-radius: 5px;
-    width: 25%;
-    min-height: 500px;
-}
-
 .workflow-content .panel{
 	background-color: #f2f1f1 !important;
 	padding: 8px;
@@ -85,13 +57,6 @@ div.workflow-record{
 
 div.workflow-content div.item-row, div.workflow-content-record div.item-row {
     margin: 5px 0 10px;
-}
-
-div.workflow-content div.workflow-step-button-bar, div.workflow-content-record div.workflow-step-button-bar{
-    background-color: white;
-    padding: 6px;
-    padding-right: 20px;
-   
 }
 
 div.workflow-content div.item-row div.item-label, 
