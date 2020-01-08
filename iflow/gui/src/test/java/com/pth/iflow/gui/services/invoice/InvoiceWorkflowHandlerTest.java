@@ -95,15 +95,15 @@ public class InvoiceWorkflowHandlerTest extends TestDataProducer {
   @Test
   public void testSaveWorkflow() throws Exception {
 
-    final InvoiceWorkflow workflow = this.getTestInvoiceWorkflow("identity1");
+    final InvoiceWorkflowSaveRequest saveRequest = this.getTestInvoiceWorkflowSaveRequest();
 
-    when(this.workflowAccess.saveWorkflow(any(InvoiceWorkflowSaveRequest.class), any(String.class))).thenReturn(workflow);
+    when(this.workflowAccess.saveWorkflow(any(InvoiceWorkflowSaveRequest.class), any(String.class))).thenReturn(saveRequest.getWorkflow());
 
-    final InvoiceWorkflow resWorkflow = this.workflowHandler.saveWorkflow(workflow);
+    final InvoiceWorkflow resWorkflow = this.workflowHandler.saveWorkflow(saveRequest);
 
     Assert.assertNotNull("Result workflow is not null!", resWorkflow);
-    Assert.assertEquals("Result workflow has id 1!", resWorkflow.getIdentity(), workflow.getIdentity());
-    Assert.assertEquals("Result workflow has status 1!", resWorkflow.getStatus(), workflow.getStatus());
+    Assert.assertEquals("Result workflow has id 1!", resWorkflow.getIdentity(), saveRequest.getWorkflow().getIdentity());
+    Assert.assertEquals("Result workflow has status 1!", resWorkflow.getStatus(), saveRequest.getWorkflow().getStatus());
 
   }
 

@@ -253,6 +253,12 @@ public class WorkflowBase extends IdentityModel implements IWorkflow {
     }
   }
 
+  @Override
+  public void clearFiles() {
+
+    this.files.clear();
+  }
+
   public void addFile(final WorkflowFile file) {
 
     this.files.add(file);

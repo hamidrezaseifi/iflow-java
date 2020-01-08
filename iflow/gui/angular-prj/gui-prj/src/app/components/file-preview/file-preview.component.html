@@ -10,13 +10,11 @@
 
 					<div class="scanned-result-container">
 					
-						<div class="scanned-item-preview-container" #scannedItemPreviewContainer>
+						<div class="scanned-item-preview-container">
 							
-							<pdf-viewer *ngIf="fileIsPdf" [src]="fileViewUrl" [zoom]="pdfZoom"  
-								></pdf-viewer>
+							<ngx-extended-pdf-viewer *ngIf="fileIsPdf" [src]="fileViewUrl" useBrowserLocale="true" class="scanned-item-preview-image"></ngx-extended-pdf-viewer>
 					
-							<div *ngIf="fileIsImage" class="scanned-item-preview-image" [style.width.px]="previewWidth"
-								 [style.backgroundImage]="imageFileViewUrl" ></div>
+							<div *ngIf="fileIsImage" class="scanned-item-preview-image" [style.backgroundImage]="imageFileViewUrl" ></div>
 							 
 						</div>  
 					

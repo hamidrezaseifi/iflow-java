@@ -75,21 +75,22 @@ public class SingleTaskWorkflowHandler extends WorkflowHandlerHelper<SingleTaskW
   }
 
   @Override
-  public SingleTaskWorkflow saveWorkflow(final SingleTaskWorkflow workflow)
+  public SingleTaskWorkflow saveWorkflow(final SingleTaskWorkflowSaveRequest saveRequest)
       throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
 
     logger.debug("Save workflow");
 
-    if (workflow.getHasActiveAction()) {
-      workflow.getActiveAction().setCurrentStepIdentity(workflow.getCurrentStepIdentity());
+    if (saveRequest.getWorkflow().getHasActiveAction()) {
+      saveRequest.getWorkflow().getActiveAction().setCurrentStepIdentity(saveRequest.getWorkflow().getCurrentStepIdentity());
     }
 
-    final SingleTaskWorkflowSaveRequest request = SingleTaskWorkflowSaveRequest.generateNewNoExpireDays(workflow);
-    request.setCommand(EWorkflowProcessCommand.SAVE);
+    saveRequest.setCommand(EWorkflowProcessCommand.SAVE);
 
-    this.workflowAccess.validateWorkflow(request, this.sessionUserInfo.getToken());
+    this.workflowAccess.validateWorkflow(saveRequest, this.sessionUserInfo.getToken());
 
-    final SingleTaskWorkflow result = this.workflowAccess.saveWorkflow(request, this.sessionUserInfo.getToken());
+    this.prepareUploadedFiles(saveRequest);
+
+    final SingleTaskWorkflow result = this.workflowAccess.saveWorkflow(saveRequest, this.sessionUserInfo.getToken());
     return this.prepareWorkflow(result);
   }
 
@@ -122,6 +123,8 @@ public class SingleTaskWorkflowHandler extends WorkflowHandlerHelper<SingleTaskW
 
     this.workflowAccess.validateWorkflow(saveRequest, this.sessionUserInfo.getToken());
 
+    this.prepareUploadedFiles(saveRequest);
+
     final SingleTaskWorkflow result = this.workflowAccess.saveWorkflow(saveRequest, this.sessionUserInfo.getToken());
     return this.prepareWorkflow(result);
   }
@@ -136,6 +139,8 @@ public class SingleTaskWorkflowHandler extends WorkflowHandlerHelper<SingleTaskW
     request.setCommand(EWorkflowProcessCommand.ARCHIVE);
 
     this.workflowAccess.validateWorkflow(request, this.sessionUserInfo.getToken());
+
+    // this.prepareUploadedFiles(saveRequest);
 
     final SingleTaskWorkflow result = this.workflowAccess.saveWorkflow(request, this.sessionUserInfo.getToken());
     return this.prepareWorkflow(result);
@@ -168,13 +173,6 @@ public class SingleTaskWorkflowHandler extends WorkflowHandlerHelper<SingleTaskW
   protected IUploadFileManager getUploadFileManager() {
 
     return this.uploadFileManager;
-  }
-
-  @Override
-  protected SingleTaskWorkflow innerSaveWorkflow(final SingleTaskWorkflow workflow)
-      throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
-
-    return this.saveWorkflow(workflow);
   }
 
 }

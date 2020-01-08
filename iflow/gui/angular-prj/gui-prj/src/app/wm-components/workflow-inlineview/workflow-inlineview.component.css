@@ -1,9 +1,14 @@
 
-.workflow-inline-content-container{
-	
-}
 
 .workflowview-dialog-content-container{
 	background-color: white;	
 	padding: 10px;
 }
+
+.workflow-file-view-link{
+	cursor: pointer;
+}
+
+
+
+

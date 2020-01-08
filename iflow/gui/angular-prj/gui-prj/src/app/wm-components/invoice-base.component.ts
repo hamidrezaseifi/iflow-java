@@ -4,16 +4,18 @@ import { TranslateService } from '@ngx-translate/core';
 import { HttpClient, HttpEventType } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
-import { Observable } from 'rxjs';
+import { Observable, throwError , Subscription } from 'rxjs';
+import { StompService, StompState } from '@stomp/ng2-stompjs';
+import { Message } from '@stomp/stompjs';
 
 import { GlobalService } from '../services/global.service';
 import { InvoiceWorkflowEditService } from '../services/workflow/invoice/invoice-workflow-edit.service';
 import { LoadingServiceService } from '../services/loading-service.service';
 import { ErrorServiceService } from '../services/error-service.service';
 
-import { User, Department, DepartmentGroup, GeneralData } from '../ui-models';
+import { User, Department, DepartmentGroup, GeneralData, OcrWord, UploadedFile, UploadedResult } from '../ui-models';
 import { WorkflowProcessCommand, Workflow, AssignItem, FileTitle, AssignType, WorkflowUploadFileResult, 
-	InvoiceType } from '../wf-models';
+	InvoiceType, WorkflowUploadedFile, WorkflowFile } from '../wf-models';
 import { InvoiceWorkflowSaveRequest } from '../wf-models/invoice-workflow-save-request';
 import { InvoiceWorkflowSaveRequestInit } from '../wf-models/invoice-workflow-save-request-init';
 import { InvoiceTypeControllValidator } from '../custom-validators/invoice-type-controll-validator';
@@ -27,7 +29,23 @@ export class InvoiceBaseComponent implements OnInit {
 	paymentamountOtherTypesTitle :string = "";
 	paymentamountTypePaymentTitle :string = "";
 
+	private subscription: Subscription;
+	private messages: Observable<Message>;
+	public subscribed: boolean;
+	stompClient = null;	
 	
+	uploadedFiles :UploadedFile[] = [];
+	
+	listening :boolean = false;	
+	
+	scanningFileIndex :number = -1;
+	scanningFile :UploadedFile = null;
+	
+	showOcrDetailsDialog :boolean = false;
+	
+	scannedSelectedValues :string[] = [];
+	
+
 	invoiceEditForm: FormGroup;
 
 	workflowListUrl :string = "/workflow/list";
@@ -35,9 +53,7 @@ export class InvoiceBaseComponent implements OnInit {
 	workflowSaveRequest :InvoiceWorkflowSaveRequest = new InvoiceWorkflowSaveRequest();
 	
 	generalDataObs :Observable<GeneralData> = null;
-	
-	fileTitles : FileTitle[] = [];
-			
+				
 	selectAssign : boolean[][] = [];
 
 	invoiceTypes : any[] = [];
@@ -62,16 +78,6 @@ export class InvoiceBaseComponent implements OnInit {
 			this.invoiceEditForm.controls["discountEnterDate"].setValue( this.invoiceEditForm.controls["invocieDate"].value );
 		}
 	}
-	
-	fileTitleProgress(fileInput: any, file :FileTitle, fileIndex) {
-		
-		if(fileInput.target.files && fileInput.target.files != null && file){
-			file.file = <File>fileInput.target.files[0];
-		}
-		
-	}
-	
-
 	
 	get assignedUsers() : AssignItem[]{
 		if(this.workflowSaveRequest != null){
@@ -99,6 +105,7 @@ export class InvoiceBaseComponent implements OnInit {
 			protected errorService: ErrorServiceService,
 		  	protected formBuilder: FormBuilder,
 		  	protected dateAdapter: DateAdapter<Date>,
+		  	protected _stompService: StompService
 	) {
 				
 		this.dateAdapter.setLocale('de');
@@ -154,6 +161,111 @@ export class InvoiceBaseComponent implements OnInit {
 		
 	}
 	
+	onOcrUploadedFile(uploadedFile: UploadedFile) {
+		
+		var index = this.uploadedFiles.indexOf(uploadedFile);
+		if(index > -1){
+			this.scanningFileIndex = index;
+			this.scanningFile = this.uploadedFiles[index];
+			
+			this.loadingService.showLoading();
+			
+			this.subscribe();
+	        
+			console.log("ocrUploadedFile : ", this.scanningFile);
+			
+	        this._stompService.publish('/socketapp/ocrprocess', JSON.stringify(uploadedFile.uploadResult));
+		}
+	}	
+	
+	onShowUploadedFileScannDetail(uploadedFile: UploadedFile) {
+		
+		var index = this.uploadedFiles.indexOf(uploadedFile);
+		if(index > -1){
+			this.scanningFileIndex = index;
+			this.scanningFile = this.uploadedFiles[index];
+	    	this.showOcrDetailsDialog = true;
+	    	
+			console.log("showScanResults : ", this.scanningFile);
+
+		}
+	}
+
+	onUploadedFilesChanged(uploadedFileList: UploadedFile[]) {
+		
+		this.uploadedFiles = uploadedFileList;
+	}
+
+	
+	public onRecevieResponse = (message: Message) => {
+
+		if(this.listening === false){
+			return;
+		}
+
+		var uploaded = this.uploadedFiles[this.scanningFileIndex ];
+			
+		this.loadingService.hideLoading();
+		console.log("Message Received: " , message.body);
+		var parsedMessage = JSON.parse(message.body);
+		
+		if(parsedMessage.status){
+			if(parsedMessage.status === "done"){
+				this.unsubscribe();
+
+	            if(parsedMessage.words){
+
+	            	this.showOcrDetailsDialog = true;
+	            	
+	            	this.uploadedFiles[this.scanningFileIndex].foundWords = <OcrWord[]>parsedMessage.words;
+	            	this.uploadedFiles[this.scanningFileIndex].isScanned = true;
+	            	this.uploadedFiles[this.scanningFileIndex].imageSizeX = parsedMessage.imageWidth;
+	            	this.uploadedFiles[this.scanningFileIndex].imageSizeY = parsedMessage.imageHeight;
+	    			
+	            	console.log("Received Words: " , this.uploadedFiles[this.scanningFileIndex].foundWords);
+	            }
+	            
+			}
+			if(parsedMessage.status === "error" && parsedMessage.errorMessage){
+				this.unsubscribe();
+				this.errorService.showError(parsedMessage.errorMessage , parsedMessage.errorDetail);			
+			}
+		}
+				
+	}	
+	
+	subscribe() {
+		
+		if (this.subscribed) {
+		      this.unsubscribe();
+		}
+
+		this.messages = this._stompService.subscribe('/user/socket/ocrprocess');
+
+	    this.subscription = this.messages.subscribe(this.onRecevieResponse);
+
+	    this.setConnected(true);
+		this.listening = true;
+	}
+
+	unsubscribe() {
+		this.listening = false;
+	    if (!this.subscribed) {
+	      return;
+	    }
+
+	    this.subscription.unsubscribe();
+	    this.subscription = null;
+	    this.messages = null;
+
+	    this.setConnected(false);
+	}
+
+	private setConnected(subscribed) {
+		this.subscribed = subscribed;
+	
+	}	
+	
 	private setPageTitle(){
 		var pageLabelId = "invoice-assignview-title";
 		
@@ -202,11 +314,16 @@ export class InvoiceBaseComponent implements OnInit {
 			this.invoiceEditForm.controls["discountRate"].setValue(this.workflowSaveRequest.workflow.discountRate);
 			this.invoiceEditForm.controls["discountDate"].setValue(this.workflowSaveRequest.workflow.discountDate);
 			this.invoiceEditForm.controls["paymentAmount"].setValue(this.workflowSaveRequest.workflow.paymentAmount);
+			
+			this.uploadedFiles = WorkflowFile.toUploadedFileList(this.workflowSaveRequest.workflow.files);
+
 		}
 	}
 	
 	setFormControlValues(){
 		
+		this.workflowSaveRequest.uploadedFiles = WorkflowUploadedFile.loadUploadedFiles(this.uploadedFiles);
+
 		this.workflowSaveRequest.expireDays = this.invoiceEditForm.controls["expireDays"].value;
 		
 		this.workflowSaveRequest.workflow.comments = this.invoiceEditForm.controls["comments"].value; 
@@ -242,4 +359,39 @@ export class InvoiceBaseComponent implements OnInit {
 		
 	}	
 
+	
+	hideOcrDetails(){
+		this.showOcrDetailsDialog = false;
+	}
+	
+	onApplyScannedValues() {
+		
+		if(this.scannedSelectedValues["invoice-invoicedate"] && this.scannedSelectedValues["invoice-invoicedate"] != ""){
+			
+			this.invoiceEditForm.controls["invocieDate"].setValue(parseDate(this.scannedSelectedValues["invoice-invoicedate"], 'dd.mm.yyyy'));
+			this.invoiceEditForm.controls["discountEnterDate"].setValue(parseDate(this.scannedSelectedValues["invoice-invoicedate"], 'dd.mm.yyyy'));
+			//this.invoiceEditForm.controls["discountDate"].setValue(parseDate(this.scannedSelectedValues["invoice-invoicedate"], 'dd.mm.yyyy'));
+			
+		}
+		
+		if(this.scannedSelectedValues["invoice-invoicenumber"] && this.scannedSelectedValues["invoice-invoicenumber"] != ""){
+			this.invoiceEditForm.controls["registerNumber"].setValue(this.scannedSelectedValues["invoice-invoicenumber"]);
+		}
+		
+		if(this.scannedSelectedValues["invoice-paymentamount"] && this.scannedSelectedValues["invoice-paymentamount"] != ""){
+			var foundPayment = this.scannedSelectedValues["invoice-paymentamount"].replace(/\./g, "").replace(",", ".");
+			
+			if(isNaN(foundPayment) === false){
+				var foundPaymentFloat = parseFloat(foundPayment);
+				this.invoiceEditForm.controls["paymentAmount"].setValue(foundPaymentFloat);
+			}
+			
+		}
+		
+		if(this.scannedSelectedValues["invoice-sender"] && this.scannedSelectedValues["invoice-sender"] != ""){
+			this.invoiceEditForm.controls["sender"].setValue(this.scannedSelectedValues["invoice-sender"]);
+		}
+		
+		this.showOcrDetailsDialog = false;
+	}
 }

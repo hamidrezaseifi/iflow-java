@@ -36,16 +36,12 @@
 					<div class="clear"></div>
 					
 				</div>
-				<div class="item-row">
-					
-					<div class="item-content workflow-step-button-bar">
-						<button (click)="save()" class="button-bar-button step-button button-save">
-							<span>{{ 'common.save' | translate }}</span>
-							<i class="material-icons">save</i>
-						</button>
-						<div class="clear"></div>
-					</div>
-					
+				<div class="item-content workflow-step-button-bar">
+					<button (click)="save()" class="button-bar-button step-button button-save">
+						<span>{{ 'common.save' | translate }}</span>
+						<i class="material-icons">save</i>
+					</button>
+					<div class="clear"></div>
 				</div>
 				        				
 				<div class="item-row" [innerHTML]="debugData">

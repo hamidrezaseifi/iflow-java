@@ -20,12 +20,13 @@ export class WmFileUploadComponent implements OnInit {
 	@Input('showHeaderTitle') showHeaderTitle: boolean = true;
 	@Input('drawBorder') drawBorder: boolean = false;
 	@Input('editService') editService: WorkflowEditInterfaceService = null;
+	@Input('uploadedFiles') uploadedFiles :UploadedFile[] = [];	
 
 	@Output() onOcrUploadedFile = new EventEmitter<UploadedFile>();
 	@Output() onShowUploadedFileScannDetail = new EventEmitter<UploadedFile>();
 	@Output() onUploadedFilesChanged = new EventEmitter<UploadedFile[]>();
 
-	uploadedFiles :UploadedFile[] = [];	
+	
 	previewFile :UploadedFile = new UploadedFile;
 	showFilePreviewDialog :boolean = false;
 

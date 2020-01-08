@@ -21,7 +21,7 @@ public interface IWorkflowHandler<W extends IWorkflow, WS extends IWorkflowSaveR
   List<W> createWorkflow(final WS createRequest)
       throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException;
 
-  W saveWorkflow(final W workflow)
+  W saveWorkflow(final WS saveRequest)
       throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException;
 
   W doneWorkflow(final WS saveRequest)

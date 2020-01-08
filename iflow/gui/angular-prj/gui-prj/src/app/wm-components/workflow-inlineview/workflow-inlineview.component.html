@@ -1,3 +1,5 @@
+			
+			
 				<div class="workflow-inline-content-container" *ngIf="viewWorkflowModel != null">
 				
 					<div class="workflowview-dialog-content-container">
@@ -30,10 +32,10 @@
 								<div style="text-align: center; font-weight: bold;">Files</div>
 								<div class="item-row" *ngFor="let file of viewWorkflowModel.files;" style="border-bottom: 1px #9a9a9a dashed">
 									<div>
-										<a href="/workflow/file/view/{{viewWorkflowModel.identity}}/{{file.identity}}" class="workflow-file-view-link" target="_blank">
+										<a (click)="showFilePreview(file);" class="workflow-file-view-link">
 											<strong>{{file.title}}</strong> (Ver: {{file.activeFileVersion}})
 										</a>
-										<a href="/workflow/file/download/{{viewWorkflowModel.identity}}/{{file.identity}}" class="workflow-file-view-link" target="_blank">
+										<a href="/general/data/file/download/{{file.activeFilePathHash}}?filename={{file.title}}" class="workflow-file-view-link" target="_blank">
 											<i class="material-icons">save_alt</i>
 										</a>
 									</div> 
@@ -58,3 +60,10 @@
 					
 				
 				</div>
+				
+			
+			
+		<app-file-preview [showDialog]="showFilePreviewDialog" (dialogClosed)="onFilePreviewDialogClosed($event)" [fileUrl]="previewFile.scanedPdfPath" 
+			[fileIsPdf]="previewFile.fileIsPdf" [fileIsImage]="previewFile.fileIsImage" [imageSizeX]="previewFile.imageSizeX" 
+			[imageSizeY]="previewFile.imageSizeY"></app-file-preview>
+				

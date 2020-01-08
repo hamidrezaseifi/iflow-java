@@ -148,11 +148,11 @@ export class WorkflowEditBaseService extends HttpErrorResponseHelper implements 
 	}
 	
 	
-	saveWorkflow(workflow :Workflow){
+	saveWorkflow(workflowSaveRequest :WorkflowSaveRequest){
     	
         const httpOptions = { headers: HttpHepler.generateJsonHeader() };
         
-        return this.http.post(this.getSaveWorkflowUrl() , workflow, httpOptions);	       	
+        return this.http.post(this.getSaveWorkflowUrl() , workflowSaveRequest, httpOptions);	       	
 
 	}	
 	

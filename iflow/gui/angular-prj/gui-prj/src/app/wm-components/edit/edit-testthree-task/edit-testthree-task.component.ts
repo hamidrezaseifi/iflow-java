@@ -5,6 +5,7 @@ import { HttpClient, HttpEventType } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 import { Observable } from 'rxjs';
+import $ from "jquery";
 
 import { GlobalService } from '../../../services/global.service';
 import { TestthreetaskWorkflowEditService } from '../../../services/workflow/testthreetask/testthreetask-workflow-edit.service';
@@ -12,7 +13,7 @@ import { LoadingServiceService } from '../../../services/loading-service.service
 import { ErrorServiceService } from '../../../services/error-service.service';
 
 import { User, Department, DepartmentGroup, GeneralData, UploadedFile, UploadedResult } from '../../../ui-models';
-import { WorkflowProcessCommand, Workflow, AssignItem, FileTitle, AssignType, WorkflowUploadFileResult, WorkflowUploadedFile } 
+import { WorkflowProcessCommand, Workflow, AssignItem, FileTitle, AssignType, WorkflowUploadFileResult, WorkflowUploadedFile, WorkflowFile } 
 	from '../../../wf-models';
 import { WorkflowSaveRequest } from '../../../wf-models/workflow-save-request';
 import { WorkflowSaveRequestInit } from '../../../wf-models/workflow-save-request-init';
@@ -21,7 +22,7 @@ import { GermanDateAdapter, parseDate, formatDate } from '../../../helper';
 @Component({
   selector: 'app-edit-testthree-task',
   templateUrl: './edit-testthree-task.component.html',
-  styleUrls: ['./edit-testthree-task.component.css'],
+  styleUrls: ['../wm-edit.css', './edit-testthree-task.component.css'],
   providers: [{provide: DateAdapter, useClass: GermanDateAdapter}, TestthreetaskWorkflowEditService]
 })
 export class EditTestthreeTaskComponent implements OnInit {
@@ -207,6 +208,7 @@ export class EditTestthreeTaskComponent implements OnInit {
 			this.workflowEditForm.controls["controllerIdentity"].setValue(this.workflowSaveRequest.workflow.controllerIdentity);
 			this.workflowEditForm.controls["comments"].setValue(this.workflowSaveRequest.workflow.comments);
 									
+			this.uploadedFiles = WorkflowFile.toUploadedFileList(this.workflowSaveRequest.workflow.files);
 		}
 	}
 	
@@ -261,7 +263,7 @@ export class EditTestthreeTaskComponent implements OnInit {
 	}	
 	private saveWorkflowData(){
 		
-	    this.editService.saveWorkflow(this.workflowSaveRequest.workflow).subscribe(
+	    this.editService.saveWorkflow(this.workflowSaveRequest).subscribe(
 		        (result) => {		        	
 		            console.log("Create workflow result", result);
 		            
@@ -350,5 +352,14 @@ export class EditTestthreeTaskComponent implements OnInit {
 		this.uploadedFiles = uploadedFileList;
 	}
 
+	collapseRecordPanel() {		
+		$(".workflow-content-container").removeClass("expanded").addClass("collapsed");
+		$(".workflow-inline-content-container").hide();
+	}
+	
+	expandRecordPanel() {		
+		$(".workflow-content-container").removeClass("collapsed").addClass("expanded");		
+		$(".workflow-inline-content-container").show();
+	}
 
 }

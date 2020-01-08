@@ -94,14 +94,14 @@ public abstract class WorkflowDataControllerBase<W extends IWorkflow, WS extends
   @ResponseStatus(HttpStatus.CREATED)
   @PostMapping(path = { "/save" })
   @ResponseBody
-  public void saveWorkflow(@RequestBody final W workflow, final HttpSession session)
+  public void saveWorkflow(@RequestBody final WS saveRequest, final HttpSession session)
       throws GuiCustomizedException, MalformedURLException, IOException, IFlowMessageConversionFailureException {
 
-    workflow.setCompanyIdentity(this.getLoggedCompany().getIdentity());
+    saveRequest.getWorkflow().setCompanyIdentity(this.getLoggedCompany().getIdentity());
 
-    this.setWorkflowController(workflow);
+    this.setWorkflowController(saveRequest.getWorkflow());
 
-    this.workflowHandler.saveWorkflow(workflow);
+    this.workflowHandler.saveWorkflow(saveRequest);
 
   }
 

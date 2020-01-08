@@ -95,15 +95,16 @@ public class SingleTaskWorkflowHandlerTest extends TestDataProducer {
   @Test
   public void testSaveWorkflow() throws Exception {
 
-    final SingleTaskWorkflow workflow = this.getTestSingleTaskWorkflow("identity1");
+    final SingleTaskWorkflowSaveRequest saveRequest = this.getTestSingleTaskWorkflowSaveRequest();
 
-    when(this.workflowAccess.saveWorkflow(any(SingleTaskWorkflowSaveRequest.class), any(String.class))).thenReturn(workflow);
+    when(this.workflowAccess.saveWorkflow(any(SingleTaskWorkflowSaveRequest.class), any(String.class)))
+        .thenReturn(saveRequest.getWorkflow());
 
-    final SingleTaskWorkflow resWorkflow = this.workflowHandler.saveWorkflow(workflow);
+    final SingleTaskWorkflow resWorkflow = this.workflowHandler.saveWorkflow(saveRequest);
 
     Assert.assertNotNull("Result workflow is not null!", resWorkflow);
-    Assert.assertEquals("Result workflow has id 1!", resWorkflow.getIdentity(), workflow.getIdentity());
-    Assert.assertEquals("Result workflow has status 1!", resWorkflow.getStatus(), workflow.getStatus());
+    Assert.assertEquals("Result workflow has id 1!", resWorkflow.getIdentity(), saveRequest.getWorkflow().getIdentity());
+    Assert.assertEquals("Result workflow has status 1!", resWorkflow.getStatus(), saveRequest.getWorkflow().getStatus());
 
   }
 

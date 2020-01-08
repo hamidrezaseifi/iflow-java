@@ -177,7 +177,7 @@ public class GeneralDataController extends GuiLogedControllerBase {
   @GetMapping(path = { "/file/download/{hashfilepath}" })
   @ResponseBody
   public ResponseEntity<InputStreamResource> downloadUploadedFile(final Model model,
-      @PathVariable(required = true) final String hashfilepath)
+      @PathVariable(required = true) final String hashfilepath, @RequestParam(value = "filename", required = false, defaultValue = "") final String fileName)
       throws GuiCustomizedException, IOException, IFlowMessageConversionFailureException {
 
     final String readFilePath = GuiSocketMessage.decodeHashPath(hashfilepath);
@@ -185,7 +185,7 @@ public class GeneralDataController extends GuiLogedControllerBase {
 
     final FileSavingData fData = new FileSavingData(extention);
 
-    final ResponseEntity<InputStreamResource> respEntity = fData.generateFileReposneEntity(readFilePath);
+    final ResponseEntity<InputStreamResource> respEntity = fData.generateFileReposneEntity(readFilePath, fileName);
 
     return respEntity;
   }

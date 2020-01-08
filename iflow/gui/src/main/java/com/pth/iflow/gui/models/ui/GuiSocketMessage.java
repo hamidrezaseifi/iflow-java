@@ -50,7 +50,7 @@ public class GuiSocketMessage extends HashMap<String, Object> {
 
   public void setFileNotHash(final String filepath) {
 
-    final String encodedString = Base64.getEncoder().encodeToString(filepath.getBytes());
+    final String encodedString = GuiSocketMessage.encodeHashPath(filepath);
 
     this.put(ESocketCommands.FILE_HASH.getValue(), encodedString);
   }
@@ -72,7 +72,7 @@ public class GuiSocketMessage extends HashMap<String, Object> {
 
   public void setHocrFileNotHash(final String filepath) {
 
-    final String encodedString = Base64.getEncoder().encodeToString(filepath.getBytes());
+    final String encodedString = GuiSocketMessage.encodeHashPath(filepath);
 
     this.put(ESocketCommands.HOCRFILE_HASH.getValue(), encodedString);
   }
@@ -204,6 +204,13 @@ public class GuiSocketMessage extends HashMap<String, Object> {
     final String decodedString = new String(Base64.getDecoder().decode(encodedString));
 
     return decodedString;
+  }
+
+  public static String encodeHashPath(final String filepath) {
+
+    final String encodedString = Base64.getEncoder().encodeToString(filepath.getBytes());
+
+    return encodedString;
   }
 
   @Override

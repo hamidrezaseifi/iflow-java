@@ -155,11 +155,11 @@ export class InvoiceWorkflowEditService extends HttpErrorResponseHelper implemen
 
 	}	
 	
-	saveWorkflow(workflow :InvoiceWorkflow){
+	saveWorkflow(workflowSaveRequest :InvoiceWorkflowSaveRequest){
     	
         const httpOptions = { headers: HttpHepler.generateJsonHeader() };
         
-        return this.http.post(this.getSaveWorkflowUrl() , workflow, httpOptions);	       	
+        return this.http.post(this.getSaveWorkflowUrl() , workflowSaveRequest, httpOptions);	       	
 
 	}	
 	
