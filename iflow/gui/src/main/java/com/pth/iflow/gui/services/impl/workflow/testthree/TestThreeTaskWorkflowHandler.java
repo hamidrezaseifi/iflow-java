@@ -69,6 +69,7 @@ public class TestThreeTaskWorkflowHandler extends WorkflowHandlerHelper<TestThre
     if (createRequest.getWorkflow().getHasActiveAction()) {
       createRequest.getWorkflow().getActiveAction().setComments(createRequest.getComments());
     }
+
     this.workflowAccess.validateWorkflow(createRequest, this.sessionUserInfo.getToken());
 
     this.prepareUploadedFiles(createRequest);
