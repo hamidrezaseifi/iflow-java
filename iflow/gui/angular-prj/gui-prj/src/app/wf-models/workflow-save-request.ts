@@ -10,6 +10,7 @@ export class WorkflowSaveRequest {
 	assigns :AssignItem[] = [];
 	command :WorkflowProcessCommand = WorkflowProcessCommand.NONE;
 	uploadedFiles :WorkflowUploadedFile[] = [];
+	comments :string = "";
 
 }
 

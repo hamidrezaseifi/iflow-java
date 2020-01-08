@@ -53,20 +53,20 @@ export class CreateSingletaskComponent implements OnInit {
 	}
 	
 	get comments() : string{
-		if(this.workflowSaveRequest != null && this.workflowSaveRequest.workflow != null){
-			return this.workflowSaveRequest.workflow.comments;
+		if(this.workflowSaveRequest != null){
+			return this.workflowSaveRequest.comments;
 		}
 		return "";
 	}
 	set comments(value: string){
-		if(this.workflowSaveRequest != null && this.workflowSaveRequest.workflow != null){
-			this.workflowSaveRequest.workflow.comments = value;
+		if(this.workflowSaveRequest != null){
+			this.workflowSaveRequest.comments = value;
 		}
 		
 	}
 
 	get debugData() :string{
-		var ssignstr : string =  (this.workflowSaveRequest && this.workflowSaveRequest.assigns) ? JSON.stringify(this.workflowSaveRequest.assigns) : '--';
+		var ssignstr : string =  (this.workflowSaveRequest ) ? JSON.stringify(this.workflowSaveRequest) : '--';
 		return ssignstr;
 	}
 	

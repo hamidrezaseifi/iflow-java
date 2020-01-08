@@ -65,6 +65,10 @@ public class TestThreeTaskWorkflowHandler extends WorkflowHandlerHelper<TestThre
 
     }
 
+    createRequest.getWorkflow().setComments(createRequest.getComments());
+    if (createRequest.getWorkflow().getHasActiveAction()) {
+      createRequest.getWorkflow().getActiveAction().setComments(createRequest.getComments());
+    }
     this.workflowAccess.validateWorkflow(createRequest, this.sessionUserInfo.getToken());
 
     this.prepareUploadedFiles(createRequest);
@@ -86,6 +90,9 @@ public class TestThreeTaskWorkflowHandler extends WorkflowHandlerHelper<TestThre
     }
 
     saveRequest.setCommand(EWorkflowProcessCommand.SAVE);
+    if (saveRequest.getWorkflow().getHasActiveAction()) {
+      saveRequest.getWorkflow().getActiveAction().setComments(saveRequest.getComments());
+    }
 
     this.workflowAccess.validateWorkflow(saveRequest, this.sessionUserInfo.getToken());
 
@@ -121,6 +128,9 @@ public class TestThreeTaskWorkflowHandler extends WorkflowHandlerHelper<TestThre
     logger.debug("Make workflow done");
 
     saveRequest.setCommand(EWorkflowProcessCommand.DONE);
+    if (saveRequest.getWorkflow().getHasActiveAction()) {
+      saveRequest.getWorkflow().getActiveAction().setComments(saveRequest.getComments());
+    }
 
     this.workflowAccess.validateWorkflow(saveRequest, this.sessionUserInfo.getToken());
 

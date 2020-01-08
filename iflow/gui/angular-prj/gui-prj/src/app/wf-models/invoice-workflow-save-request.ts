@@ -10,6 +10,7 @@ export class InvoiceWorkflowSaveRequest {
 	assigns :AssignItem[] = [];
 	command :WorkflowProcessCommand = WorkflowProcessCommand.NONE;
 	uploadedFiles :WorkflowUploadedFile[] = [];
+	comments :string = "";
 	
 }
 

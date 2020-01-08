@@ -64,6 +64,11 @@ public class SingleTaskWorkflowHandler extends WorkflowHandlerHelper<SingleTaskW
 
     }
 
+    createRequest.getWorkflow().setComments(createRequest.getComments());
+    if (createRequest.getWorkflow().getHasActiveAction()) {
+      createRequest.getWorkflow().getActiveAction().setComments(createRequest.getComments());
+    }
+
     this.workflowAccess.validateWorkflow(createRequest, this.sessionUserInfo.getToken());
 
     this.prepareUploadedFiles(createRequest);
@@ -85,6 +90,9 @@ public class SingleTaskWorkflowHandler extends WorkflowHandlerHelper<SingleTaskW
     }
 
     saveRequest.setCommand(EWorkflowProcessCommand.SAVE);
+    if (saveRequest.getWorkflow().getHasActiveAction()) {
+      saveRequest.getWorkflow().getActiveAction().setComments(saveRequest.getComments());
+    }
 
     this.workflowAccess.validateWorkflow(saveRequest, this.sessionUserInfo.getToken());
 
@@ -120,6 +128,9 @@ public class SingleTaskWorkflowHandler extends WorkflowHandlerHelper<SingleTaskW
     logger.debug("Make workflow done");
 
     saveRequest.setCommand(EWorkflowProcessCommand.DONE);
+    if (saveRequest.getWorkflow().getHasActiveAction()) {
+      saveRequest.getWorkflow().getActiveAction().setComments(saveRequest.getComments());
+    }
 
     this.workflowAccess.validateWorkflow(saveRequest, this.sessionUserInfo.getToken());
 

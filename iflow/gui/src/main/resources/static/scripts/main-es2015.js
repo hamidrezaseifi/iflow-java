@@ -4604,6 +4604,7 @@ class InvoiceWorkflowSaveRequest {
         this.assigns = [];
         this.command = _wf_models__WEBPACK_IMPORTED_MODULE_1__["WorkflowProcessCommand"].NONE;
         this.uploadedFiles = [];
+        this.comments = "";
     }
 }
 
@@ -4692,6 +4693,7 @@ class WorkflowSaveRequest {
         this.assigns = [];
         this.command = _wf_models__WEBPACK_IMPORTED_MODULE_0__["WorkflowProcessCommand"].NONE;
         this.uploadedFiles = [];
+        this.comments = "";
     }
 }
 
@@ -5548,18 +5550,18 @@ class CreateSingletaskComponent {
         return [];
     }
     get comments() {
-        if (this.workflowSaveRequest != null && this.workflowSaveRequest.workflow != null) {
-            return this.workflowSaveRequest.workflow.comments;
+        if (this.workflowSaveRequest != null) {
+            return this.workflowSaveRequest.comments;
         }
         return "";
     }
     set comments(value) {
-        if (this.workflowSaveRequest != null && this.workflowSaveRequest.workflow != null) {
-            this.workflowSaveRequest.workflow.comments = value;
+        if (this.workflowSaveRequest != null) {
+            this.workflowSaveRequest.comments = value;
         }
     }
     get debugData() {
-        var ssignstr = (this.workflowSaveRequest && this.workflowSaveRequest.assigns) ? JSON.stringify(this.workflowSaveRequest.assigns) : '--';
+        var ssignstr = (this.workflowSaveRequest) ? JSON.stringify(this.workflowSaveRequest) : '--';
         return ssignstr;
     }
     ngOnInit() {
@@ -5815,14 +5817,14 @@ class CreateTestthreetaskComponent {
         return [];
     }
     get comments() {
-        if (this.workflowSaveRequest != null && this.workflowSaveRequest.workflow != null) {
-            return this.workflowSaveRequest.workflow.comments;
+        if (this.workflowSaveRequest != null) {
+            return this.workflowSaveRequest.comments;
         }
         return "";
     }
     set comments(value) {
-        if (this.workflowSaveRequest != null && this.workflowSaveRequest.workflow != null) {
-            this.workflowSaveRequest.workflow.comments = value;
+        if (this.workflowSaveRequest != null) {
+            this.workflowSaveRequest.comments = value;
         }
     }
     get debugData() {
@@ -7036,7 +7038,7 @@ class EditSingleTaskComponent {
         if (this.workflowSaveRequest && this.workflowSaveRequest.workflow) {
             this.workflowEditForm.controls["expireDays"].setValue(this.workflowSaveRequest.expireDays);
             this.workflowEditForm.controls["controllerIdentity"].setValue(this.workflowSaveRequest.workflow.controllerIdentity);
-            this.workflowEditForm.controls["comments"].setValue(this.workflowSaveRequest.workflow.comments);
+            this.workflowEditForm.controls["comments"].setValue(this.workflowSaveRequest.comments);
             this.uploadedFiles = [];
             this.uploadedFiles = _wf_models__WEBPACK_IMPORTED_MODULE_6__["WorkflowFile"].toUploadedFileList(this.workflowSaveRequest.workflow.files);
         }
@@ -7044,7 +7046,7 @@ class EditSingleTaskComponent {
     setFormControlValues() {
         this.workflowSaveRequest.expireDays = this.workflowEditForm.controls["expireDays"].value;
         this.workflowSaveRequest.workflow.controllerIdentity = this.workflowEditForm.controls["controllerIdentity"].value;
-        this.workflowSaveRequest.workflow.comments = this.workflowEditForm.controls["comments"].value;
+        this.workflowSaveRequest.comments = this.workflowEditForm.controls["comments"].value;
         this.workflowSaveRequest.uploadedFiles = _wf_models__WEBPACK_IMPORTED_MODULE_6__["WorkflowUploadedFile"].loadUploadedFiles(this.uploadedFiles);
     }
     get forms() { return this.workflowEditForm.controls; }
@@ -7487,14 +7489,14 @@ class EditTestthreeTaskComponent {
         if (this.workflowSaveRequest && this.workflowSaveRequest.workflow) {
             this.workflowEditForm.controls["expireDays"].setValue(this.workflowSaveRequest.expireDays);
             this.workflowEditForm.controls["controllerIdentity"].setValue(this.workflowSaveRequest.workflow.controllerIdentity);
-            this.workflowEditForm.controls["comments"].setValue(this.workflowSaveRequest.workflow.comments);
+            this.workflowEditForm.controls["comments"].setValue(this.workflowSaveRequest.comments);
             this.uploadedFiles = _wf_models__WEBPACK_IMPORTED_MODULE_6__["WorkflowFile"].toUploadedFileList(this.workflowSaveRequest.workflow.files);
         }
     }
     setFormControlValues() {
         this.workflowSaveRequest.expireDays = this.workflowEditForm.controls["expireDays"].value;
         this.workflowSaveRequest.workflow.controllerIdentity = this.workflowEditForm.controls["controllerIdentity"].value;
-        this.workflowSaveRequest.workflow.comments = this.workflowEditForm.controls["comments"].value;
+        this.workflowSaveRequest.comments = this.workflowEditForm.controls["comments"].value;
         this.workflowSaveRequest.uploadedFiles = _wf_models__WEBPACK_IMPORTED_MODULE_6__["WorkflowUploadedFile"].loadUploadedFiles(this.uploadedFiles);
     }
     get forms() { return this.workflowEditForm.controls; }
@@ -7918,7 +7920,7 @@ class InvoiceBaseComponent {
                 this.workflowSaveRequest.workflow.discountEnterDate = this.workflowSaveRequest.workflow.invocieDate;
             }
             this.invoiceEditForm.controls["expireDays"].setValue(this.workflowSaveRequest.expireDays);
-            this.invoiceEditForm.controls["comments"].setValue(this.workflowSaveRequest.workflow.comments);
+            this.invoiceEditForm.controls["comments"].setValue(this.workflowSaveRequest.comments);
             this.invoiceEditForm.controls["sender"].setValue(this.workflowSaveRequest.workflow.sender);
             this.invoiceEditForm.controls["registerNumber"].setValue(this.workflowSaveRequest.workflow.registerNumber);
             this.invoiceEditForm.controls["invocieDate"].setValue(Object(_helper__WEBPACK_IMPORTED_MODULE_4__["parseDate"])(this.workflowSaveRequest.workflow.invocieDate, 'dd.mm.yyyy'));
@@ -7938,7 +7940,7 @@ class InvoiceBaseComponent {
     setFormControlValues() {
         this.workflowSaveRequest.uploadedFiles = _wf_models__WEBPACK_IMPORTED_MODULE_1__["WorkflowUploadedFile"].loadUploadedFiles(this.uploadedFiles);
         this.workflowSaveRequest.expireDays = this.invoiceEditForm.controls["expireDays"].value;
-        this.workflowSaveRequest.workflow.comments = this.invoiceEditForm.controls["comments"].value;
+        this.workflowSaveRequest.comments = this.invoiceEditForm.controls["comments"].value;
         this.workflowSaveRequest.workflow.sender = this.invoiceEditForm.controls["sender"].value;
         this.workflowSaveRequest.workflow.registerNumber = this.invoiceEditForm.controls["registerNumber"].value;
         this.workflowSaveRequest.workflow.invocieDate = Object(_helper__WEBPACK_IMPORTED_MODULE_4__["formatDate"])(this.invoiceEditForm.controls["invocieDate"].value, 'dd.mm.yyyy');
@@ -8442,7 +8444,7 @@ function WorkflowInlineviewComponent_div_0_div_38_Template(rf, ctx) { if (rf & 1
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate2"]("(", action_r172.status, ") (", action_r172.assignToUserName, ")");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](action_r172.action);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](action_r172.comments);
 } }
 function WorkflowInlineviewComponent_div_0_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 2);

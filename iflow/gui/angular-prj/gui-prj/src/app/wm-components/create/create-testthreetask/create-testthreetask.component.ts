@@ -53,14 +53,14 @@ export class CreateTestthreetaskComponent implements OnInit {
 	}
 	
 	get comments() : string{
-		if(this.workflowSaveRequest != null && this.workflowSaveRequest.workflow != null){
-			return this.workflowSaveRequest.workflow.comments;
+		if(this.workflowSaveRequest != null){
+			return this.workflowSaveRequest.comments;
 		}
 		return "";
 	}
 	set comments(value: string){
-		if(this.workflowSaveRequest != null && this.workflowSaveRequest.workflow != null){
-			this.workflowSaveRequest.workflow.comments = value;
+		if(this.workflowSaveRequest != null){
+			this.workflowSaveRequest.comments = value;
 		}
 		
 	}

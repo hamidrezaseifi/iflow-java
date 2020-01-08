@@ -299,7 +299,7 @@ export class InvoiceBaseComponent implements OnInit {
 			
 			this.invoiceEditForm.controls["expireDays"].setValue(this.workflowSaveRequest.expireDays);
 			
-			this.invoiceEditForm.controls["comments"].setValue(this.workflowSaveRequest.workflow.comments);
+			this.invoiceEditForm.controls["comments"].setValue(this.workflowSaveRequest.comments);
 			
 			this.invoiceEditForm.controls["sender"].setValue(this.workflowSaveRequest.workflow.sender);
 			this.invoiceEditForm.controls["registerNumber"].setValue(this.workflowSaveRequest.workflow.registerNumber);
@@ -326,7 +326,7 @@ export class InvoiceBaseComponent implements OnInit {
 
 		this.workflowSaveRequest.expireDays = this.invoiceEditForm.controls["expireDays"].value;
 		
-		this.workflowSaveRequest.workflow.comments = this.invoiceEditForm.controls["comments"].value; 
+		this.workflowSaveRequest.comments = this.invoiceEditForm.controls["comments"].value; 
 		
 		this.workflowSaveRequest.workflow.sender = this.invoiceEditForm.controls["sender"].value; 
 		this.workflowSaveRequest.workflow.registerNumber = this.invoiceEditForm.controls["registerNumber"].value;  
