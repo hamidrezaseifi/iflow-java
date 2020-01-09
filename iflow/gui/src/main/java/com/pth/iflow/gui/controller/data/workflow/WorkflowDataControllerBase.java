@@ -150,7 +150,7 @@ public abstract class WorkflowDataControllerBase<W extends IWorkflow, WS extends
         .getSessionUserInfo()
         .getControllerForWorkflowType(newWorkflow.getWorkflowTypeIdentity());
 
-    if (workflowTypeControllers.isEmpty()) {
+    if (workflowTypeControllers == null || workflowTypeControllers.isEmpty()) {
       throw new GuiCustomizedException("Invalid-Company-Setting:Workflow-Controller-Not-Found!");
     }
 

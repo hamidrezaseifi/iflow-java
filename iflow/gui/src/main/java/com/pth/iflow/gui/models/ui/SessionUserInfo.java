@@ -293,6 +293,11 @@ public class SessionUserInfo {
     }
 
     final List<CompanyWorkflowTypeController> list = this.workflowTypeControllers.get(workflowTypeIdentity);
+
+    if (list == null) {
+      return null;
+    }
+
     list.sort(new Comparator<CompanyWorkflowTypeController>() {
 
       @Override
