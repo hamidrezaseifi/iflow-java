@@ -55,10 +55,10 @@ public class CompanyDataManager implements ICompanyCachDataManager {
 
   }
 
-  public void setWorkflowWorkflowMessages(final String companyId, final String workflowId,
+  public List<String> setWorkflowWorkflowMessages(final String companyId, final String workflowId,
       final List<WorkflowMessage> workflowMessageList) {
 
-    this.getCompanyCachData(companyId, true).setWorkflowWorkflowMessages(workflowId, workflowMessageList, this);
+    return this.getCompanyCachData(companyId, true).setWorkflowWorkflowMessages(workflowId, workflowMessageList, this);
 
   }
 
@@ -76,20 +76,12 @@ public class CompanyDataManager implements ICompanyCachDataManager {
         WorkflowMessage> messageList = this.workflowMessageService
             .getWorkflowMessageListByUser(userIdentity, token);
 
-    this.removeUserWorkflowMessages(companyId, userIdentity);
+    this.removeUserMessages(companyId, userIdentity);
     this.setUserWorkflowMessages(companyId, userIdentity, messageList);
 
     if (fromController) {
       this.sendResetMessageToSocket(userIdentity);
     }
-
-  }
-
-  private void removeUserWorkflowMessages(final String companyId, final String userId) {
-
-    final CompanyCachData companyCachData = this.getCompanyCachData(companyId, true);
-
-    companyCachData.removeUserCachData(userId);
 
   }
 
@@ -100,8 +92,15 @@ public class CompanyDataManager implements ICompanyCachDataManager {
     final List<WorkflowMessage> messageList = this.workflowMessageService
         .getWorkflowMessageListByWorkflow(workflowId, token);
 
-    this.setWorkflowWorkflowMessages(compnayId, workflowId, messageList);
+    final List<String> userIdentityList = this.removeWorkflowMessages(compnayId, workflowId);
 
+    final List<String> resetUserIdentityList = this.setWorkflowWorkflowMessages(compnayId, workflowId, messageList);
+
+    userIdentityList.removeAll(resetUserIdentityList);
+
+    for (final String userIdentity : userIdentityList) {
+      this.sendResetMessageToSocket(userIdentity);
+    }
   }
 
   @Override
@@ -117,6 +116,21 @@ public class CompanyDataManager implements ICompanyCachDataManager {
     }
   }
 
+  public void addCompanyCachData(final CompanyCachData companyCachData) {
+
+    this.companiesCachData.put(companyCachData.getCompanyId(), companyCachData);
+  }
+
+  @Override
+  public void sendResetMessageToSocket(final String userIdentity) {
+
+    final Map<String, Object> map = new HashMap<>();
+    map.put("command", "message-reload");
+    map.put("status", "done");
+
+    this.simpMessagingTemplate.convertAndSendToUser(userIdentity, "/socket/messages", map);
+  }
+
   private CompanyCachData getCompanyCachData(final String companyId, final boolean initialCompanyCachData) {
 
     if (this.companiesCachData.containsKey(companyId) == false && initialCompanyCachData) {
@@ -126,6 +140,22 @@ public class CompanyDataManager implements ICompanyCachDataManager {
       return this.companiesCachData.get(companyId);
     }
     return null;
+
+  }
+
+  private void removeUserMessages(final String companyId, final String userId) {
+
+    final CompanyCachData companyCachData = this.getCompanyCachData(companyId, true);
+
+    companyCachData.removeUserCachData(userId);
+
+  }
+
+  private List<String> removeWorkflowMessages(final String companyId, final String workflowId) {
+
+    final CompanyCachData companyCachData = this.getCompanyCachData(companyId, true);
+
+    return companyCachData.removeWorkflowCachData(workflowId);
 
   }
 
@@ -147,21 +177,6 @@ public class CompanyDataManager implements ICompanyCachDataManager {
       final CompanyCachData companyCachData = new CompanyCachData(companyId);
       this.addCompanyCachData(companyCachData);
     }
-  }
-
-  public void addCompanyCachData(final CompanyCachData companyCachData) {
-
-    this.companiesCachData.put(companyCachData.getCompanyId(), companyCachData);
-  }
-
-  @Override
-  public void sendResetMessageToSocket(final String userIdentity) {
-
-    final Map<String, Object> map = new HashMap<>();
-    map.put("command", "message-reload");
-    map.put("status", "done");
-
-    this.simpMessagingTemplate.convertAndSendToUser(userIdentity, "/socket/messages", map);
   }
 
 }

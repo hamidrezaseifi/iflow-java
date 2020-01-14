@@ -294,18 +294,6 @@ public class SessionUserInfo {
 
     final List<CompanyWorkflowTypeController> list = this.workflowTypeControllers.get(workflowTypeIdentity);
 
-    if (list == null) {
-      return null;
-    }
-
-    list.sort(new Comparator<CompanyWorkflowTypeController>() {
-
-      @Override
-      public int compare(final CompanyWorkflowTypeController o1, final CompanyWorkflowTypeController o2) {
-
-        return o1.getPriority() < o2.getPriority() ? -1 : o1.getPriority() > o2.getPriority() ? 1 : 0;
-      }
-    });
     return list;
   }
 
@@ -320,6 +308,18 @@ public class SessionUserInfo {
 
         this.workflowTypeControllers.get(workflowTypeController.getWorkflowTypeIdentity()).add(workflowTypeController);
       }
+
+      for (final String key : this.workflowTypeControllers.keySet()) {
+        this.workflowTypeControllers.get(key).sort(new Comparator<CompanyWorkflowTypeController>() {
+
+          @Override
+          public int compare(final CompanyWorkflowTypeController o1, final CompanyWorkflowTypeController o2) {
+
+            return o1.getPriority() < o2.getPriority() ? -1 : o1.getPriority() > o2.getPriority() ? 1 : 0;
+          }
+        });
+      }
+
     }
 
   }

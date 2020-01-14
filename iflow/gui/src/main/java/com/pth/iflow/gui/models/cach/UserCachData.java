@@ -117,4 +117,14 @@ public class UserCachData {
     return list;
   }
 
+  public boolean removeWorkflowCachData(final String workflowId) {
+
+    if (this.workflowDataList.containsKey(workflowId)) {
+      this.workflowDataList.remove(workflowId);
+      return true;
+    }
+    return false;
+
+  }
+
 }
