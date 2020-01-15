@@ -31,7 +31,7 @@ public class WorkflowSearchDao extends EntityManagerHelper implements IWorkflowS
   @Override
   public List<WorkflowEntity> search(final WorkflowSearchFilter workflowSearchFilter) {
 
-    final EntityManager entityManager = dbConfiguration.getEntityManager();
+    final EntityManager entityManager = createEntityManager();
 
     final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
     final CriteriaQuery<WorkflowEntity> query = criteriaBuilder.createQuery(WorkflowEntity.class);
@@ -101,7 +101,7 @@ public class WorkflowSearchDao extends EntityManagerHelper implements IWorkflowS
   @Override
   public List<WorkflowEntity> readByIdentityList(final Set<String> identityList) {
 
-    final EntityManager entityManager = dbConfiguration.getEntityManager();
+    final EntityManager entityManager = createEntityManager();
 
     final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
     final CriteriaQuery<WorkflowEntity> query = criteriaBuilder.createQuery(WorkflowEntity.class);

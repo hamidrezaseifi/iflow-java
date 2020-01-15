@@ -22,13 +22,14 @@ import com.pth.iflow.profile.service.IWorkflowMessageService;
 @Service
 public class WorkflowMessageService implements IWorkflowMessageService {
 
-  private static final Logger                 logger = LoggerFactory.getLogger(WorkflowMessageService.class);
+  private static final Logger logger = LoggerFactory.getLogger(WorkflowMessageService.class);
 
-  final IProfileRestTemplateCall              restTemplate;
+  final IProfileRestTemplateCall restTemplate;
   final ProfileConfiguration.CoreAccessConfig coreAccessConfig;
 
   public WorkflowMessageService(@Autowired final IProfileRestTemplateCall restTemplate,
       @Autowired final ProfileConfiguration.CoreAccessConfig coreAccessConfig) {
+
     this.restTemplate = restTemplate;
     this.coreAccessConfig = coreAccessConfig;
   }
@@ -39,9 +40,10 @@ public class WorkflowMessageService implements IWorkflowMessageService {
 
     logger.debug("Request user workflow messages");
 
-    final WorkflowMessageListEdo edo = this.restTemplate.callRestGet(
-        this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.READ_WORKFLOWMESSAGE_READ_BY_USER(userId, 0)).toString(),
-        EModule.CORE, WorkflowMessageListEdo.class, true);
+    final WorkflowMessageListEdo edo = this.restTemplate
+        .callRestGet(
+            this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.READ_WORKFLOWMESSAGE_READ_BY_USER(userId, 0)),
+            EModule.CORE, WorkflowMessageListEdo.class, true);
 
     return ProfileModelEdoMapper.fromWorkflowMessageEdoList(edo.getWorkflowMessages());
   }
@@ -49,11 +51,13 @@ public class WorkflowMessageService implements IWorkflowMessageService {
   @Override
   public List<WorkflowMessage> getWorkflowMessageListByWorkflow(final String workflowId)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+
     logger.debug("Request workflow messages");
 
-    final WorkflowMessageListEdo edo = this.restTemplate.callRestGet(
-        this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.READ_WORKFLOWMESSAGE_READ_BY_WORKFLOW(workflowId)).toString(),
-        EModule.CORE, WorkflowMessageListEdo.class, true);
+    final WorkflowMessageListEdo edo = this.restTemplate
+        .callRestGet(
+            this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.READ_WORKFLOWMESSAGE_READ_BY_WORKFLOW(workflowId)),
+            EModule.CORE, WorkflowMessageListEdo.class, true);
 
     return ProfileModelEdoMapper.fromWorkflowMessageEdoList(edo.getWorkflowMessages());
   }

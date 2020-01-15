@@ -1,19 +1,20 @@
 package com.pth.iflow.core.storage.dao.impl.base;
 
-import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceUnit;
+import javax.transaction.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.pth.iflow.core.config.JpaUnitConfiguration;
-
+@Transactional
 public class EntityManagerHelper {
 
-  @Autowired
-  protected JpaUnitConfiguration dbConfiguration;
+  @PersistenceUnit
+  private EntityManagerFactory entityManagerFactory;
 
-  @PostConstruct
-  public void init() {
+  protected EntityManager createEntityManager() {
 
+    final EntityManager entityManager = this.entityManagerFactory.createEntityManager();
+    return entityManager;
   }
 
 }

@@ -22,15 +22,16 @@ public class WorkflowTypeStepDao extends EntityDaoBase<WorkflowTypeStepEntity> i
 
   @Override
   public List<WorkflowTypeStepEntity> getListByWorkflowTypeIdentity(final String workflowTypeIdentity) throws IFlowStorageException {
-    final EntityManager                         entityManager   = dbConfiguration.getEntityManager();
 
-    final CriteriaBuilder                       criteriaBuilder = entityManager.getCriteriaBuilder();
-    final CriteriaQuery<WorkflowTypeStepEntity> query           = criteriaBuilder.createQuery(WorkflowTypeStepEntity.class);
-    final Root<WorkflowTypeStepEntity>          root            = query.from(WorkflowTypeStepEntity.class);
+    final EntityManager entityManager = createEntityManager();
+
+    final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+    final CriteriaQuery<WorkflowTypeStepEntity> query = criteriaBuilder.createQuery(WorkflowTypeStepEntity.class);
+    final Root<WorkflowTypeStepEntity> root = query.from(WorkflowTypeStepEntity.class);
     query.select(root);
 
     final Path<String> companyIdentityPath = root.get("workflowType").get("identity");
-    final Predicate    predicate           = criteriaBuilder.equal(companyIdentityPath, workflowTypeIdentity);
+    final Predicate predicate = criteriaBuilder.equal(companyIdentityPath, workflowTypeIdentity);
     query.where(predicate);
 
     final TypedQuery<WorkflowTypeStepEntity> typedQuery = entityManager.createQuery(query);
@@ -39,13 +40,14 @@ public class WorkflowTypeStepDao extends EntityDaoBase<WorkflowTypeStepEntity> i
     // typedQuery.unwrap(org.hibernate.query.Query.class).getQueryString();
     // System.out.println("search workflow query: " + qr);
 
-    final List<WorkflowTypeStepEntity>       list       = typedQuery.getResultList();
+    final List<WorkflowTypeStepEntity> list = typedQuery.getResultList();
     entityManager.close();
     return list;
   }
 
   @Override
   protected Class<WorkflowTypeStepEntity> entityClass() {
+
     return WorkflowTypeStepEntity.class;
   }
 

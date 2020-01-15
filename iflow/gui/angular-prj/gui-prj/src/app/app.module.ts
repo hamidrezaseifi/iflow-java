@@ -51,6 +51,7 @@ import { InvoiceOcrDetailComponent } from './wm-components/invoice-ocr-detail/in
 import { FilePreviewComponent } from './components/file-preview/file-preview.component';
 import { WmFileUploadComponent } from './components/wm-file-upload/wm-file-upload.component';
 import { WmAssignListComponent } from './components/wm-assign-list/wm-assign-list.component';
+import { UserListComponent } from './company-components/user-list/user-list.component';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -124,6 +125,7 @@ const stompConfig: StompConfig = {
     FilePreviewComponent,
     WmFileUploadComponent,
     WmAssignListComponent,
+    UserListComponent,
     
   ],
   providers: [

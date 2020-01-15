@@ -2,6 +2,7 @@ package com.pth.iflow.profile.service.impl;
 
 import java.net.MalformedURLException;
 import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,56 +27,60 @@ public class DepartmentService implements IDepartmentService {
 
   private static final Logger logger = LoggerFactory.getLogger(CompanyService.class);
 
-  final IProfileRestTemplateCall              restTemplate;
+  final IProfileRestTemplateCall restTemplate;
   final ProfileConfiguration.CoreAccessConfig coreAccessConfig;
 
   public DepartmentService(@Autowired final IProfileRestTemplateCall restTemplate,
-                           @Autowired final ProfileConfiguration.CoreAccessConfig coreAccessConfig) {
+      @Autowired final ProfileConfiguration.CoreAccessConfig coreAccessConfig) {
+
     this.restTemplate = restTemplate;
     this.coreAccessConfig = coreAccessConfig;
   }
 
   @Override
-  public Department getByIdentity(final String identity) throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+  public Department getByIdentity(final String identity)
+      throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+
     logger.debug("Request Department data for companyid {}", identity);
 
-    final DepartmentEdo edo = this.restTemplate.callRestGet(
-                                                            this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.READ_DEPARTMENT_BY_ID(identity))
-                                                                                 .toString(),
-                                                            EModule.CORE,
-                                                            DepartmentEdo.class,
-                                                            true,
-                                                            identity);
+    final DepartmentEdo edo = this.restTemplate
+        .callRestGet(
+            this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.READ_DEPARTMENT_BY_ID(identity)),
+            EModule.CORE,
+            DepartmentEdo.class,
+            true);
 
     return ProfileModelEdoMapper.fromEdo(edo);
   }
 
   @Override
-  public List<Department> getListByCompanyIdentity(final String identity) throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+  public List<Department> getListByCompanyIdentity(final String identity)
+      throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+
     logger.debug("Request Department list data for companyid {}", identity);
 
-    final DepartmentListEdo edo = this.restTemplate.callRestGet(
-                                                                this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.READ_DEPARTMENT_LIST_BY_COMPANY(identity))
-                                                                                     .toString(),
-                                                                EModule.CORE,
-                                                                DepartmentListEdo.class,
-                                                                true,
-                                                                identity);
+    final DepartmentListEdo edo = this.restTemplate
+        .callRestGet(
+            this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.READ_DEPARTMENT_LIST_BY_COMPANY(identity)),
+            EModule.CORE,
+            DepartmentListEdo.class,
+            true);
 
     return ProfileModelEdoMapper.fromDepartmentEdoList(edo.getDepartments());
   }
 
   @Override
-  public List<User> getAllUserListByDepartmentId(final String identity) throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+  public List<User> getAllUserListByDepartmentId(final String identity)
+      throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+
     logger.debug("Request Department list data for companyid {}", identity);
 
-    final UserListEdo edo = this.restTemplate.callRestGet(
-                                                          this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.READ_DEPARTMENT_ALLUSERLIST_BY_DEPARTMENT(identity))
-                                                                               .toString(),
-                                                          EModule.CORE,
-                                                          UserListEdo.class,
-                                                          true,
-                                                          identity);
+    final UserListEdo edo = this.restTemplate
+        .callRestGet(
+            this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.READ_DEPARTMENT_ALLUSERLIST_BY_DEPARTMENT(identity)),
+            EModule.CORE,
+            UserListEdo.class,
+            true);
 
     return ProfileModelEdoMapper.fromUserEdoList(edo.getUsers());
   }

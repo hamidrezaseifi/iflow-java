@@ -22,13 +22,14 @@ import com.pth.iflow.profile.service.IProfileRestTemplateCall;
 @Service
 public class CompanyService implements ICompanyService {
 
-  private static final Logger                 logger = LoggerFactory.getLogger(CompanyService.class);
+  private static final Logger logger = LoggerFactory.getLogger(CompanyService.class);
 
-  final IProfileRestTemplateCall              restTemplate;
+  final IProfileRestTemplateCall restTemplate;
   final ProfileConfiguration.CoreAccessConfig coreAccessConfig;
 
   public CompanyService(@Autowired final IProfileRestTemplateCall restTemplate,
       @Autowired final ProfileConfiguration.CoreAccessConfig coreAccessConfig) {
+
     this.restTemplate = restTemplate;
     this.coreAccessConfig = coreAccessConfig;
   }
@@ -39,9 +40,10 @@ public class CompanyService implements ICompanyService {
 
     logger.debug("Request company data for id {}", comapnyIdentity);
 
-    final CompanyEdo edo = this.restTemplate.callRestGet(
-        this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.READ_COMPANY_BY_ID(comapnyIdentity)).toString(), EModule.CORE,
-        CompanyEdo.class, true, comapnyIdentity);
+    final CompanyEdo edo = this.restTemplate
+        .callRestGet(
+            this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.READ_COMPANY_BY_ID(comapnyIdentity)), EModule.CORE,
+            CompanyEdo.class, true);
 
     return ProfileModelEdoMapper.fromEdo(edo);
   }

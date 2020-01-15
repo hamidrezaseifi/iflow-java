@@ -23,7 +23,7 @@ public class WorkflowTypeDao extends EntityDaoBase<WorkflowTypeEntity> implement
   @Override
   public List<WorkflowTypeEntity> getListByCompanyIdentity(final String identity) throws IFlowStorageException {
 
-    final EntityManager entityManager = dbConfiguration.getEntityManager();
+    final EntityManager entityManager = createEntityManager();
 
     final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
     final CriteriaQuery<WorkflowTypeEntity> query = criteriaBuilder.createQuery(WorkflowTypeEntity.class);

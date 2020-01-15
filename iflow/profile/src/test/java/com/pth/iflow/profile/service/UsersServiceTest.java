@@ -32,16 +32,17 @@ import com.pth.iflow.profile.service.impl.UsersService;
 @AutoConfigureMockMvc
 public class UsersServiceTest extends TestDataProducer {
 
-  private IUsersService                         usersService;
+  private IUsersService usersService;
 
   @Mock
-  private IProfileRestTemplateCall              restTemplate;
+  private IProfileRestTemplateCall restTemplate;
 
   @MockBean
   private ProfileConfiguration.CoreAccessConfig coreAccessConfig;
 
   @Before
   public void setUp() throws Exception {
+
     this.usersService = new UsersService(this.restTemplate, this.coreAccessConfig);
 
     when(this.coreAccessConfig.prepareCoreUrl(any(URI.class))).thenReturn(new URI("http://any-string"));
@@ -50,6 +51,7 @@ public class UsersServiceTest extends TestDataProducer {
 
   @After
   public void tearDown() throws Exception {
+
   }
 
   @Test
@@ -58,7 +60,7 @@ public class UsersServiceTest extends TestDataProducer {
     final User user = this.getTestUser();
     final UserEdo userEdo = ProfileModelEdoMapper.toEdo(user);
 
-    when(this.restTemplate.callRestGet(any(String.class), any(EModule.class), any(Class.class), any(boolean.class), any()))
+    when(this.restTemplate.callRestGet(any(URI.class), any(EModule.class), any(Class.class), any(boolean.class)))
         .thenReturn(userEdo);
 
     final User resUser = this.usersService.getUserByEmail(user.getEmail());
@@ -76,7 +78,7 @@ public class UsersServiceTest extends TestDataProducer {
     final List<User> list = this.getTestUserList();
     final UserListEdo listEdo = new UserListEdo(ProfileModelEdoMapper.toUserEdoList(list));
 
-    when(this.restTemplate.callRestGet(any(String.class), any(EModule.class), eq(UserListEdo.class), any(boolean.class), any()))
+    when(this.restTemplate.callRestGet(any(URI.class), any(EModule.class), eq(UserListEdo.class), any(boolean.class)))
         .thenReturn(listEdo);
 
     final List<User> resList = this.usersService.getUserListByCompanyIdentity("companyId");

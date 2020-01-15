@@ -1,0 +1,50 @@
+		<div class="content-container">
+			<div class="page-toolbar">
+				<div class="page-title">{{ 'menu-user-list' | translate }}</div>
+				<button class="toolbar-button" (click)="reload()"><i class="material-icons">refresh</i></button>
+				<button class="toolbar-button" (click)="create()"><i class="material-icons">add</i></button>
+											
+			</div>
+			
+			<table mat-table [dataSource]="users">
+			
+				<ng-container matColumnDef="workflow-type">
+			    	<th mat-header-cell *matHeaderCellDef> {{ 'workflow-type' | translate }} </th>
+			    	<td mat-cell *matCellDef="let element"> {{element.workflowType.title}} </td>
+			    </ng-container>
+			
+				<ng-container matColumnDef="workflow-current-step">
+			    	<th mat-header-cell *matHeaderCellDef> {{ 'workflow-current-step' | translate }} </th>
+			    	<td mat-cell *matCellDef="let element"> {{element.currentStep.title}} </td>
+			    </ng-container>
+			
+				<ng-container matColumnDef="workflow-status">
+			    	<th mat-header-cell *matHeaderCellDef> {{ 'workflow-status' | translate }} </th>
+			    	<td mat-cell *matCellDef="let element"> {{element.status}} </td>
+			    </ng-container>
+			
+				<ng-container matColumnDef="workflow-assignto">
+			    	<th mat-header-cell *matHeaderCellDef> {{ 'workflow-assignto' | translate }} </th>
+			    	<td mat-cell *matCellDef="let element"> {{element.assignToUserFullName}} </td>
+			    </ng-container>
+			
+				<ng-container matColumnDef="workflow-updated">
+			    	<th mat-header-cell *matHeaderCellDef> {{ 'workflow-updated' | translate }} </th>
+			    	<td mat-cell *matCellDef="let element"> {{'not impelemented!!'}} </td>
+			    </ng-container>
+			
+				<ng-container matColumnDef="actions">
+			    	<th mat-header-cell *matHeaderCellDef> ... </th>
+			    	<td mat-cell *matCellDef="let element; let idx = index" >  
+			    		<a class="tool-link" *ngIf="element.canEdit" (click)="editWorkflow(element)"><i class="material-icons">edit</i></a>
+		    			<a class="tool-link" (click)="showWorkflow(idx)"><i class="material-icons">pageview</i></a>
+			    	</td>
+			    </ng-container>
+			    
+				<tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+				<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+			    
+			</table>
+		
+		
+		</div>

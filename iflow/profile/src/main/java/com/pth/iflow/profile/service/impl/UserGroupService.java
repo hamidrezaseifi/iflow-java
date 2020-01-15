@@ -23,13 +23,14 @@ import com.pth.iflow.profile.service.IUserGroupService;
 @Service
 public class UserGroupService implements IUserGroupService {
 
-  private static final Logger                 logger = LoggerFactory.getLogger(CompanyService.class);
+  private static final Logger logger = LoggerFactory.getLogger(CompanyService.class);
 
-  final IProfileRestTemplateCall              restTemplate;
+  final IProfileRestTemplateCall restTemplate;
   final ProfileConfiguration.CoreAccessConfig coreAccessConfig;
 
   public UserGroupService(@Autowired final IProfileRestTemplateCall restTemplate,
       @Autowired final ProfileConfiguration.CoreAccessConfig coreAccessConfig) {
+
     this.restTemplate = restTemplate;
     this.coreAccessConfig = coreAccessConfig;
   }
@@ -37,11 +38,13 @@ public class UserGroupService implements IUserGroupService {
   @Override
   public UserGroup getById(final String id)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+
     logger.debug("Request UserGroup data for companyid {}", id);
 
-    final UserGroupEdo edo = this.restTemplate.callRestGet(
-        this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.READ_USERGROUP_BY_ID(id)).toString(), EModule.CORE,
-        UserGroupEdo.class, true, id);
+    final UserGroupEdo edo = this.restTemplate
+        .callRestGet(
+            this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.READ_USERGROUP_BY_ID(id)), EModule.CORE,
+            UserGroupEdo.class, true);
 
     return ProfileModelEdoMapper.fromEdo(edo);
   }
@@ -49,11 +52,13 @@ public class UserGroupService implements IUserGroupService {
   @Override
   public List<UserGroup> getListByCompanyIdentity(final String companyId)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+
     logger.debug("Request UserGroup list data for companyid {}", companyId);
 
-    final UserGroupListEdo edo = this.restTemplate.callRestGet(
-        this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.READ_USERGROUP_LIST_BY_COMPANY(companyId)).toString(),
-        EModule.CORE, UserGroupListEdo.class, true, companyId);
+    final UserGroupListEdo edo = this.restTemplate
+        .callRestGet(
+            this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.READ_USERGROUP_LIST_BY_COMPANY(companyId)),
+            EModule.CORE, UserGroupListEdo.class, true);
 
     return ProfileModelEdoMapper.fromUserGroupEdoList(edo.getUserGroups());
   }

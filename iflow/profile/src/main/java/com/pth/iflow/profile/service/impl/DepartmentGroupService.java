@@ -24,13 +24,14 @@ import com.pth.iflow.profile.service.IProfileRestTemplateCall;
 @Service
 public class DepartmentGroupService implements IDepartmentGroupService {
 
-  private static final Logger                 logger = LoggerFactory.getLogger(CompanyService.class);
+  private static final Logger logger = LoggerFactory.getLogger(CompanyService.class);
 
-  final IProfileRestTemplateCall              restTemplate;
+  final IProfileRestTemplateCall restTemplate;
   final ProfileConfiguration.CoreAccessConfig coreAccessConfig;
 
   public DepartmentGroupService(@Autowired final IProfileRestTemplateCall restTemplate,
       @Autowired final ProfileConfiguration.CoreAccessConfig coreAccessConfig) {
+
     this.restTemplate = restTemplate;
     this.coreAccessConfig = coreAccessConfig;
   }
@@ -38,11 +39,13 @@ public class DepartmentGroupService implements IDepartmentGroupService {
   @Override
   public DepartmentGroup getByIdentity(final String identity)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+
     logger.debug("Request Department data for companyid {}", identity);
 
-    final DepartmentGroupEdo edo = this.restTemplate.callRestGet(
-        this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.READ_DEPARTMENTGRPUP_BY_ID(identity)).toString(), EModule.CORE,
-        DepartmentGroupEdo.class, true, identity);
+    final DepartmentGroupEdo edo = this.restTemplate
+        .callRestGet(
+            this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.READ_DEPARTMENTGRPUP_BY_ID(identity)), EModule.CORE,
+            DepartmentGroupEdo.class, true);
 
     return ProfileModelEdoMapper.fromEdo(edo);
   }
@@ -50,13 +53,14 @@ public class DepartmentGroupService implements IDepartmentGroupService {
   @Override
   public List<User> getAllUserListByDepartmentGroupId(final String identity)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+
     logger.debug("Request Department list data for companyid {}", identity);
 
     final UserListEdo edo = this.restTemplate
         .callRestGet(
             this.coreAccessConfig
-                .prepareCoreUrl(IflowRestPaths.CoreModule.READ_DEPARTMENTGRPUP_ALLUSERLIST_BY_DEPARTMENTGROUP(identity)).toString(),
-            EModule.CORE, UserListEdo.class, true, identity);
+                .prepareCoreUrl(IflowRestPaths.CoreModule.READ_DEPARTMENTGRPUP_ALLUSERLIST_BY_DEPARTMENTGROUP(identity)),
+            EModule.CORE, UserListEdo.class, true);
 
     return ProfileModelEdoMapper.fromUserEdoList(edo.getUsers());
   }
