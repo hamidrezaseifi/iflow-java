@@ -46,6 +46,8 @@ INSERT INTO workflow_type_step(id, identity, workflow_type_id, title, step_index
 INSERT INTO workflow_type_step(id, identity, workflow_type_id, title, step_index, view_name, expire_days, commecnts, status, version) VALUES (6,'invocetasktypestep2', 3,'Rechungsprüfung',2,'workflow/invoice/invoice_testing',15,NULL,1,1);
 INSERT INTO workflow_type_step(id, identity, workflow_type_id, title, step_index, view_name, expire_days, commecnts, status, version) VALUES (7,'invocetasktypestep3', 3,'Rechungsfreigabe',3,'workflow/invoice/invoice_release',15,NULL,1,1);
 
+DROP SEQUENCE IF EXISTS  workflow_message_id_seq;
+
 CREATE SEQUENCE workflow_message_id_seq;
 
 CREATE TABLE workflow_message_id_seq (
