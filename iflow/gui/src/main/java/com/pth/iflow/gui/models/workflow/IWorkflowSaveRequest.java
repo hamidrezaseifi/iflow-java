@@ -37,4 +37,8 @@ public interface IWorkflowSaveRequest<W extends IWorkflow> {
 
   public void setUploadedFiles(final List<UploadededFile> uploadedFiles);
 
+  public String getComments();
+
+  public void setComments(String comments);
+
 }

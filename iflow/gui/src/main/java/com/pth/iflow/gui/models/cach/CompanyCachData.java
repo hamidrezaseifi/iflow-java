@@ -1,5 +1,6 @@
 package com.pth.iflow.gui.models.cach;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -95,10 +96,18 @@ public class CompanyCachData {
     }
   }
 
-  public void setWorkflowWorkflowMessages(final String workflowId, final List<WorkflowMessage> workflowMessageList,
+  public List<String> setWorkflowWorkflowMessages(final String workflowId, final List<WorkflowMessage> workflowMessageList,
       final ICompanyCachDataManager companyCachDataManager) {
 
+    final List<String> userIdentityList = new ArrayList<>();
     final Set<String> messageUserIdentityList = workflowMessageList.stream().map(m -> m.getUserIdentity()).collect(Collectors.toSet());
+
+    for (final String userIdentity : messageUserIdentityList) {
+      if (this.userCachList.containsKey(userIdentity) == false) {
+        this.initialUserCachData(userIdentity);
+      }
+
+    }
 
     for (final UserCachData userCachData : this.userCachList.values()) {
       if (userCachData.hasWorkflowCachData(workflowId)) {
@@ -106,7 +115,7 @@ public class CompanyCachData {
         final WorkflowCachData workflowCachData = userCachData.getWorkflowCachData(workflowId, false);
         workflowCachData.setWorkflowMessages(workflowMessageList);
         companyCachDataManager.sendResetMessageToSocket(userCachData.getUserIdentity());
-        // userIdentityList.add(userCachData.getUserIdentity());
+        userIdentityList.add(userCachData.getUserIdentity());
       }
       else {
         if (messageUserIdentityList.contains(userCachData.getUserIdentity())) {
@@ -118,11 +127,27 @@ public class CompanyCachData {
 
           userCachData.setWorkflowMessageList(userMessageList);
           companyCachDataManager.sendResetMessageToSocket(userCachData.getUserIdentity());
+          userIdentityList.add(userCachData.getUserIdentity());
         }
 
       }
     }
 
+    return userIdentityList;
+
+  }
+
+  public List<String> removeWorkflowCachData(final String workflowId) {
+
+    final List<String> userIdentityList = new ArrayList<>();
+
+    for (final UserCachData userCachData : this.userCachList.values()) {
+      if (userCachData.removeWorkflowCachData(workflowId)) {
+        userIdentityList.add(userCachData.getUserIdentity());
+      }
+    }
+
+    return userIdentityList;
   }
 
 }

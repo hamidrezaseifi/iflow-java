@@ -54,7 +54,9 @@
               "node_modules/ngx-extended-pdf-viewer/assets/pdf.js",
 			  "node_modules/ngx-extended-pdf-viewer/assets/viewer.js",
 			  "node_modules/ngx-extended-pdf-viewer/assets/pdf-es5.js",
-			  "node_modules/ngx-extended-pdf-viewer/assets/viewer-es5.js"
+			  "node_modules/ngx-extended-pdf-viewer/assets/viewer-es5.js",
+              "src/assets/js/sockjs.min.js",
+              "src/assets/js/stomp.min.js"
             ],
             "sourceMap": {
               "scripts": true,

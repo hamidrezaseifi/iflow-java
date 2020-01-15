@@ -16,6 +16,7 @@ public class SingleTaskWorkflowSaveRequest implements IWorkflowSaveRequest<Singl
   private List<AssignItem> assigns = new ArrayList<>();
   private EWorkflowProcessCommand command;
   private List<UploadededFile> uploadedFiles = new ArrayList<>();
+  private String comments;
 
   public SingleTaskWorkflowSaveRequest() {
 
@@ -151,4 +152,17 @@ public class SingleTaskWorkflowSaveRequest implements IWorkflowSaveRequest<Singl
     this.assigns.clear();
     this.assigns.add(new AssignItem(userId, EAssignType.USER));
   }
+
+  @Override
+  public String getComments() {
+
+    return this.comments;
+  }
+
+  @Override
+  public void setComments(final String comments) {
+
+    this.comments = comments;
+  }
+
 }

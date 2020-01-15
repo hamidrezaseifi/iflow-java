@@ -16,6 +16,7 @@ public class TestThreeTaskWorkflowSaveRequest implements IWorkflowSaveRequest<Te
   private List<AssignItem> assigns = new ArrayList<>();
   private EWorkflowProcessCommand command;
   private List<UploadededFile> uploadedFiles = new ArrayList<>();
+  private String comments;
 
   public TestThreeTaskWorkflowSaveRequest() {
 
@@ -150,6 +151,18 @@ public class TestThreeTaskWorkflowSaveRequest implements IWorkflowSaveRequest<Te
     request.setCommand(EWorkflowProcessCommand.CREATE);
 
     return request;
+  }
+
+  @Override
+  public String getComments() {
+
+    return this.comments;
+  }
+
+  @Override
+  public void setComments(final String comments) {
+
+    this.comments = comments;
   }
 
 }

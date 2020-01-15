@@ -13,8 +13,9 @@ public class GuiWebSocketConfig implements WebSocketMessageBrokerConfigurer {
   @Override
   public void configureMessageBroker(final MessageBrokerRegistry config) {
 
-    config.enableSimpleBroker("/socket");
+    config.enableSimpleBroker("/socket/");
     config.setApplicationDestinationPrefixes("/socketapp");
+    // config.setUserDestinationPrefix("/socket/user");
   }
 
   @Override

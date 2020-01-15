@@ -235,7 +235,7 @@ public abstract class AbstractWorkflowSaveStrategy<W extends IWorkflow> implemen
 
     final WorkflowAction action = new WorkflowAction();
     action.setAssignToIdentity("");
-    action.setComments("");
+    action.setComments(workflow.getComments());
     action.setCurrentStep(firstStep);
     action.setCurrentStepIdentity(firstStep.getIdentity());
     action.setStatus(EWorkflowActionStatus.INITIALIZE);
@@ -250,7 +250,7 @@ public abstract class AbstractWorkflowSaveStrategy<W extends IWorkflow> implemen
     if (nextStep != null) {
       final WorkflowAction action = new WorkflowAction();
       action.setAssignToIdentity("");
-      action.setComments("");
+      action.setComments(workflow.getComments());
       action.setCurrentStep(nextStep);
       action.setCurrentStepIdentity(nextStep.getIdentity());
       action.setStatus(EWorkflowActionStatus.INITIALIZE);

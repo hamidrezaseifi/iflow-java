@@ -4,6 +4,8 @@ import { ResizeEvent } from 'angular-resizable-element';
 import { Observable, throwError , Subscription } from 'rxjs';
 import { StompService, StompState } from '@stomp/ng2-stompjs';
 import { Message } from '@stomp/stompjs';
+import * as SockJS from 'sockjs-client';
+import * as Stomp from 'stompjs';
 
 import { Workflow } from '../wf-models';
 import { WorkflowMessage } from '../wf-models';
@@ -40,8 +42,9 @@ export class MessageBarComponent implements OnInit, OnDestroy {
 	private socketMessages: Observable<Message>;
 	private state: Observable<StompState>;
 	
-	private stompClient = null;
+	private stompClient: any = null;
 	
+
 	debugData() :string{
 		return (this.viewWorkflowModel && this.viewWorkflowModel != null) ? JSON.stringify(this.viewWorkflowModel) : 'no data';
 	}
@@ -89,7 +92,8 @@ export class MessageBarComponent implements OnInit, OnDestroy {
 	constructor(protected router: Router, 
 			private messageService :WorkflowMessageService,
 			private errorService: ErrorServiceService,
-			private _stompService: StompService,) { 
+			//private _stompService: StompService,
+			) { 
 		
 	}
 	
@@ -114,7 +118,7 @@ export class MessageBarComponent implements OnInit, OnDestroy {
 	private readMessageList(reset: boolean){
 
 		//clearTimeout(this.messageReloadTimeoutId);
-		console.log("Socket Request Read message list");
+		console.log("Start Request Read message list " + (reset ? "with reset" : "without reset"));
 		if(this._isLogged === true){
 			
 			this.isReloadingMessages = true;
@@ -200,12 +204,25 @@ export class MessageBarComponent implements OnInit, OnDestroy {
 		if (this.subscribed) {
 		      return;
 		}
-
-		this.socketMessages = this._stompService.subscribe('/user/socket/messages');
+		
+		let socket :SockJS = new SockJS('/iflow-guide-websocket');
+		this.stompClient = Stomp.over(socket);
+		
+		const _this = this;
+		
+		this.stompClient.connect({}, function (frame) {
+			_this.setConnected(true);
+			_this.stompClient.subscribe('/user/socket/messages', function (message) {
+				_this.onReceiveMessage(message);
+            });
+            //_this.stompClient.reconnect_delay = 2000;
+        }, _this.errorCallBack);
+		
+		//this.socketMessages = this._stompService.subscribe('/socket/user/socket/messages');
 
 		console.log("Subscribe Message: " , this.socketMessages);
 		
-	    this.subscription = this.socketMessages.subscribe(this.receiveMessage);
+	    //this.subscription = this.socketMessages.subscribe(this.receiveMessage);
 
 	    this.readMessageList(true);
 	    
@@ -213,7 +230,14 @@ export class MessageBarComponent implements OnInit, OnDestroy {
 		
 	}
 	
-	public receiveMessage = (message: Message) => {
+	errorCallBack(error) {
+        console.log("errorCallBack -> " + error)
+        setTimeout(() => {
+           // this._connect();
+        }, 5000);
+    }
+	
+	public onReceiveMessage = (message: Message) => {
 
 		this.requesting = false;
 		
@@ -235,11 +259,11 @@ export class MessageBarComponent implements OnInit, OnDestroy {
 	      return;
 	    }
 
-	    this.subscription.unsubscribe();
-	    this.subscription = null;
-	    this.messages = null;
-	    
-	    this.messages = [];
+	    if (this.stompClient !== null) {
+	    	this.stompClient.disconnect();
+	    }
+	    this.setConnected(false);
+	    console.log("Disconnected");
 
 	    this.setConnected(false);
 	}

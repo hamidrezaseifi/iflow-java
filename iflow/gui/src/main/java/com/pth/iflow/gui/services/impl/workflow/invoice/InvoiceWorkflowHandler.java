@@ -64,6 +64,11 @@ public class InvoiceWorkflowHandler extends WorkflowHandlerHelper<InvoiceWorkflo
 
     }
 
+    createRequest.getWorkflow().setComments(createRequest.getComments());
+    if (createRequest.getWorkflow().getHasActiveAction()) {
+      createRequest.getWorkflow().getActiveAction().setComments(createRequest.getComments());
+    }
+
     this.workflowAccess.validateWorkflow(createRequest, this.sessionUserInfo.getToken());
 
     this.prepareUploadedFiles(createRequest);
@@ -86,6 +91,9 @@ public class InvoiceWorkflowHandler extends WorkflowHandlerHelper<InvoiceWorkflo
     }
 
     saveRequest.setCommand(EWorkflowProcessCommand.SAVE);
+    if (saveRequest.getWorkflow().getHasActiveAction()) {
+      saveRequest.getWorkflow().getActiveAction().setComments(saveRequest.getComments());
+    }
 
     this.workflowAccess.validateWorkflow(saveRequest, this.sessionUserInfo.getToken());
 
@@ -121,6 +129,9 @@ public class InvoiceWorkflowHandler extends WorkflowHandlerHelper<InvoiceWorkflo
     logger.debug("Make workflow done");
 
     saveRequest.setCommand(EWorkflowProcessCommand.DONE);
+    if (saveRequest.getWorkflow().getHasActiveAction()) {
+      saveRequest.getWorkflow().getActiveAction().setComments(saveRequest.getComments());
+    }
 
     this.workflowAccess.validateWorkflow(saveRequest, this.sessionUserInfo.getToken());
 
