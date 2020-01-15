@@ -35,6 +35,16 @@ DROP TABLE IF EXISTS companies;
 DROP TABLE IF EXISTS user_roles;
 
 DROP SEQUENCE IF EXISTS companies_id_seq;
+DROP SEQUENCE IF EXISTS  workflow_files_versions_id_seq;
+DROP SEQUENCE IF EXISTS  workflow_files_id_seq ;
+DROP SEQUENCE IF EXISTS  workflow_actions_id_seq ;
+DROP SEQUENCE IF EXISTS  workflow_id_seq ;
+DROP SEQUENCE IF EXISTS  workflow_type_step_id_seq ;
+DROP SEQUENCE IF EXISTS  workflow_type_id_seq ;
+DROP SEQUENCE IF EXISTS  user_group_id_seq . users_id_seq ;
+DROP SEQUENCE IF EXISTS  iflow_roles_id_seq ;
+DROP SEQUENCE IF EXISTS  departments_group_id_seq ;
+DROP SEQUENCE IF EXISTS  departments_id_seq;
 
 CREATE SEQUENCE companies_id_seq;
   
@@ -62,14 +72,14 @@ CREATE TABLE departments (
   updated_at timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   PRIMARY KEY (id),
   KEY FK_DEPARTMENTS_COMPANY_idx (company_id),
-  UNIQUE KEY identity_UNIQUE (identity),
   CONSTRAINT FK_DEPARTMENTS_COMPANY FOREIGN KEY (company_id) REFERENCES companies (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 
+CREATE SEQUENCE departments_group_id_seq;
  
 CREATE TABLE departments_group (
-  id bigint NOT NULL AUTO_INCREMENT,
+  id bigint NOT NULL DEFAULT nextval('departments_group_id_seq'),
   identity varchar(45) DEFAULT NULL,
   department_id bigint NOT NULL,
   title varchar(200) NOT NULL,
@@ -78,14 +88,15 @@ CREATE TABLE departments_group (
   created_at timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   updated_at timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   PRIMARY KEY (id),
-  UNIQUE KEY identity_UNIQUE (identity),
   KEY FK_DEPARTMENTGROUP_DEPARTMENT_idx (department_id),
   CONSTRAINT FK_DEPARTMENTGROUP_DEPARTMENT FOREIGN KEY (department_id) REFERENCES departments (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 
+CREATE SEQUENCE iflow_roles_id_seq;
+ 
 CREATE TABLE iflow_roles (
-  id bigint NOT NULL AUTO_INCREMENT,
+  id bigint NOT NULL DEFAULT nextval('iflow_roles_id_seq'),
   title varchar(200) NOT NULL,
   status smallint NOT NULL DEFAULT '1',
   version integer NOT NULL DEFAULT '1',
@@ -95,8 +106,10 @@ CREATE TABLE iflow_roles (
 ) ;
  
 
+CREATE SEQUENCE users_id_seq;
+
 CREATE TABLE users (
-  id bigint NOT NULL AUTO_INCREMENT,
+  id bigint NOT NULL DEFAULT nextval('users_id_seq'),
   company_id bigint NOT NULL DEFAULT '1',
   email varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   birthdate date DEFAULT NULL,
@@ -114,8 +127,10 @@ CREATE TABLE users (
   CONSTRAINT FK_USERS_COMPANIES FOREIGN KEY (company_id) REFERENCES companies (id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
  
+CREATE SEQUENCE user_group_id_seq;
+ 
 CREATE TABLE user_group (
-  id bigint NOT NULL AUTO_INCREMENT,
+  id bigint NOT NULL DEFAULT nextval('user_group_id_seq'),
   identity varchar(45) DEFAULT NULL,
   title varchar(200) NOT NULL,
   company_id bigint NOT NULL DEFAULT '1',
@@ -124,10 +139,11 @@ CREATE TABLE user_group (
   created_at timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   updated_at timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   PRIMARY KEY (id),
-  UNIQUE KEY identity_UNIQUE (identity),
+  
   KEY FK_USERGROUP_COMPANY_idx (company_id),
   CONSTRAINT FK_USERGROUP_COMPANY FOREIGN KEY (company_id) REFERENCES companies (id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
+
 
 CREATE TABLE user_deputy (
   user_id bigint NOT NULL,
@@ -180,9 +196,10 @@ CREATE TABLE user_roles (
   CONSTRAINT FK_USERROLES_USERS FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
 
+CREATE SEQUENCE workflow_type_id_seq;
 
 CREATE TABLE workflow_type (
-  id bigint NOT NULL AUTO_INCREMENT,
+  id bigint NOT NULL DEFAULT nextval('workflow_type_id_seq'),
   identity varchar(45) DEFAULT NULL,
   title varchar(200) NOT NULL,
   assign_type SMALLINT(2) NOT NULL DEFAULT 1,
@@ -195,12 +212,14 @@ CREATE TABLE workflow_type (
   created_at timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   updated_at timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   PRIMARY KEY (id),
-  UNIQUE KEY identity_UNIQUE (identity)
+  
 );
 
+
+CREATE SEQUENCE workflow_type_step_id_seq;
  
 CREATE TABLE workflow_type_step (
-  id bigint NOT NULL AUTO_INCREMENT,
+  id bigint NOT NULL DEFAULT nextval('workflow_type_step_id_seq'),
   identity varchar(45) DEFAULT NULL,
   workflow_type_id bigint NOT NULL,
   title varchar(200) NOT NULL,
@@ -213,14 +232,16 @@ CREATE TABLE workflow_type_step (
   created_at timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   updated_at timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   PRIMARY KEY (id),
-  UNIQUE KEY identity_UNIQUE (identity),
+  
   KEY FK_WORKFLOWTYPESTEP_WORKFLOWTYPE_idx (workflow_type_id),
   CONSTRAINT FK_WORKFLOWTYPESTEP_WORKFLOWTYPE FOREIGN KEY (workflow_type_id) REFERENCES workflow_type (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+
+CREATE SEQUENCE workflow_id_seq;
  
 CREATE TABLE workflow (
-  id bigint NOT NULL AUTO_INCREMENT,
+  id bigint NOT NULL DEFAULT nextval('workflow_id_seq'),
   company_id bigint NOT NULL,
   identity varchar(45) DEFAULT NULL,
   workflow_type_id bigint NOT NULL,
@@ -233,7 +254,7 @@ CREATE TABLE workflow (
   created_at timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   updated_at timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   PRIMARY KEY (id),
-  UNIQUE KEY identity_UNIQUE (identity),
+  
   KEY FK_WORKFLOW_WORKFLOWTYPE_idx (workflow_type_id),
   KEY FK_WORKFLOW_WORKFLOWTYPESTEP_idx (current_step),
   KEY FK_WORKFLOW_USERS_idx (created_by),
@@ -243,9 +264,12 @@ CREATE TABLE workflow (
   CONSTRAINT FK_WORKFLOW_WORKFLOWTYPE FOREIGN KEY (workflow_type_id) REFERENCES workflow_type (id) ON UPDATE CASCADE,
   CONSTRAINT FK_WORKFLOW_WORKFLOWTYPESTEP FOREIGN KEY (current_step) REFERENCES workflow_type_step (id) ON UPDATE CASCADE
 );
+
+
+CREATE SEQUENCE workflow_actions_id_seq;
  
 CREATE TABLE workflow_actions (
-  id bigint NOT NULL AUTO_INCREMENT,
+  id bigint NOT NULL DEFAULT nextval('workflow_actions_id_seq'),
   workflow_id bigint NOT NULL,
   assign_to bigint NOT NULL DEFAULT '0',
   current_step_id bigint NOT NULL DEFAULT '0',
@@ -258,9 +282,12 @@ CREATE TABLE workflow_actions (
   CONSTRAINT FK_WORKFLOWACTION_WORKFLOW FOREIGN KEY (workflow_id) REFERENCES workflow (id) ON UPDATE CASCADE
 );
 
+
+
+CREATE SEQUENCE workflow_files_id_seq;
  
 CREATE TABLE workflow_files (
-  id bigint NOT NULL AUTO_INCREMENT,
+  id bigint NOT NULL DEFAULT nextval('workflow_files_id_seq'),
   identity varchar(45) DEFAULT NULL,
   workflow_id bigint NOT NULL,
   title varchar(200) NOT NULL,
@@ -273,7 +300,7 @@ CREATE TABLE workflow_files (
   created_at timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   updated_at timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   PRIMARY KEY (id),
-  UNIQUE KEY identity_UNIQUE (identity),
+  
   KEY FK_WORKFLOWFILE_WORKFLOW_idx (workflow_id),
   KEY FK_WORKFLOWFILE_USERS_idx (created_by),
   CONSTRAINT FK_WORKFLOWFILE_USERS FOREIGN KEY (created_by) REFERENCES users (id) ON DELETE SET NULL ON UPDATE CASCADE,
@@ -281,9 +308,11 @@ CREATE TABLE workflow_files (
 );
 
  
+ 
+CREATE SEQUENCE workflow_files_versions_id_seq;
 
 CREATE TABLE workflow_files_versions (
-  id bigint NOT NULL AUTO_INCREMENT,
+  id bigint NOT NULL DEFAULT nextval('workflow_files_versions_id_seq'),
   workflow_file_id bigint NOT NULL,
   filepath varchar(500) NOT NULL,
   comments text,
