@@ -28,50 +28,58 @@ DROP TABLE IF EXISTS departments;
 
 DROP TABLE IF EXISTS user_group;
 
+DROP TABLE IF EXISTS user_roles;
+
 DROP TABLE IF EXISTS users;
 
 DROP TABLE IF EXISTS companies;
 
-DROP TABLE IF EXISTS user_roles;
-
 DROP SEQUENCE IF EXISTS companies_id_seq;
+
 DROP SEQUENCE IF EXISTS  workflow_files_versions_id_seq;
+
 DROP SEQUENCE IF EXISTS  workflow_files_id_seq ;
+
 DROP SEQUENCE IF EXISTS  workflow_actions_id_seq ;
+
 DROP SEQUENCE IF EXISTS  workflow_id_seq ;
+
 DROP SEQUENCE IF EXISTS  workflow_type_step_id_seq ;
+
 DROP SEQUENCE IF EXISTS  workflow_type_id_seq ;
+
 DROP SEQUENCE IF EXISTS  user_group_id_seq . users_id_seq ;
+
 DROP SEQUENCE IF EXISTS  iflow_roles_id_seq ;
+
 DROP SEQUENCE IF EXISTS  departments_group_id_seq ;
+
 DROP SEQUENCE IF EXISTS  departments_id_seq;
 
 CREATE SEQUENCE companies_id_seq;
   
 CREATE TABLE companies (
-  id bigint NOT NULL DEFAULT nextval('companies_id_seq'),
+  id bigint NOT NULL PRIMARY KEY DEFAULT nextval('companies_id_seq'),
   identity varchar(45) DEFAULT NULL,
   company_name varchar(45) NOT NULL,
   status smallint NOT NULL DEFAULT 1,
   version integer NOT NULL DEFAULT 1,
-  created_at timestamp without time zone default (now() at time zone 'utc'),
-  updated_at timestamp without time zone default (now() at time zone 'utc'),
-  PRIMARY KEY (id)
+  created_at timestamp without time zone NOT NULL default (now() at time zone 'utc'),
+  updated_at timestamp without time zone NOT NULL default (now() at time zone 'utc')
 );
 
 CREATE SEQUENCE departments_id_seq;
 
 CREATE TABLE departments (
-  id bigint NOT NULL DEFAULT nextval('departments_id_seq'),
+  id bigint NOT NULL PRIMARY KEY DEFAULT nextval('departments_id_seq'),
   identity varchar(45) DEFAULT NULL,
-  company_id bigint NOT NULL DEFAULT '1',
+  company_id bigint NOT NULL DEFAULT 1,
   title varchar(200) NOT NULL,
-  status smallint NOT NULL DEFAULT '1',
-  version integer NOT NULL DEFAULT '1',
-  created_at timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-  updated_at timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-  PRIMARY KEY (id),
-  KEY FK_DEPARTMENTS_COMPANY_idx (company_id),
+  status smallint NOT NULL DEFAULT 1,
+  version integer NOT NULL DEFAULT 1,
+  created_at timestamp without time zone NOT NULL default (now() at time zone 'utc'),
+  updated_at timestamp without time zone NOT NULL default (now() at time zone 'utc'),
+  
   CONSTRAINT FK_DEPARTMENTS_COMPANY FOREIGN KEY (company_id) REFERENCES companies (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -79,16 +87,15 @@ CREATE TABLE departments (
 CREATE SEQUENCE departments_group_id_seq;
  
 CREATE TABLE departments_group (
-  id bigint NOT NULL DEFAULT nextval('departments_group_id_seq'),
+  id bigint NOT NULL PRIMARY KEY DEFAULT nextval('departments_group_id_seq'),
   identity varchar(45) DEFAULT NULL,
   department_id bigint NOT NULL,
   title varchar(200) NOT NULL,
-  status smallint NOT NULL DEFAULT '1',
-  version integer NOT NULL DEFAULT '1',
-  created_at timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-  updated_at timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-  PRIMARY KEY (id),
-  KEY FK_DEPARTMENTGROUP_DEPARTMENT_idx (department_id),
+  status smallint NOT NULL DEFAULT 1,
+  version integer NOT NULL DEFAULT 1,
+  created_at timestamp without time zone NOT NULL default (now() at time zone 'utc'),
+  updated_at timestamp without time zone NOT NULL default (now() at time zone 'utc'),
+  
   CONSTRAINT FK_DEPARTMENTGROUP_DEPARTMENT FOREIGN KEY (department_id) REFERENCES departments (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -96,51 +103,46 @@ CREATE TABLE departments_group (
 CREATE SEQUENCE iflow_roles_id_seq;
  
 CREATE TABLE iflow_roles (
-  id bigint NOT NULL DEFAULT nextval('iflow_roles_id_seq'),
+  id bigint NOT NULL PRIMARY KEY DEFAULT nextval('iflow_roles_id_seq'),
   title varchar(200) NOT NULL,
-  status smallint NOT NULL DEFAULT '1',
-  version integer NOT NULL DEFAULT '1',
-  created_at timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-  updated_at timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-  PRIMARY KEY (id)
+  status smallint NOT NULL DEFAULT 1,
+  version integer NOT NULL DEFAULT 1,
+  created_at timestamp without time zone NOT NULL default (now() at time zone 'utc'),
+  updated_at timestamp without time zone NOT NULL default (now() at time zone 'utc')
 ) ;
  
 
 CREATE SEQUENCE users_id_seq;
 
 CREATE TABLE users (
-  id bigint NOT NULL DEFAULT nextval('users_id_seq'),
-  company_id bigint NOT NULL DEFAULT '1',
-  email varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  id bigint NOT NULL PRIMARY KEY DEFAULT nextval('users_id_seq'),
+  company_id bigint NOT NULL DEFAULT 1,
+  email varchar(255)  NOT NULL UNIQUE,
   birthdate date DEFAULT NULL,
-  password varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '-',
-  firstname varchar(45) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  lastname varchar(45) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  permission smallint NOT NULL DEFAULT '1',
-  status smallint NOT NULL DEFAULT '1',
-  version integer NOT NULL DEFAULT '1',
-  created_at timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-  updated_at timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-  PRIMARY KEY (id),
-  UNIQUE KEY email (email),
-  KEY FK_USERS_COMPANIES_idx (company_id),
+  password varchar(255)  NOT NULL DEFAULT '-',
+  firstname varchar(45)  DEFAULT NULL,
+  lastname varchar(45)  DEFAULT NULL,
+  permission smallint NOT NULL DEFAULT 1,
+  status smallint NOT NULL DEFAULT 1,
+  version integer NOT NULL DEFAULT 1,
+  created_at timestamp without time zone NOT NULL default (now() at time zone 'utc'),
+  updated_at timestamp without time zone NOT NULL default (now() at time zone 'utc'),
+  
   CONSTRAINT FK_USERS_COMPANIES FOREIGN KEY (company_id) REFERENCES companies (id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
  
 CREATE SEQUENCE user_group_id_seq;
  
 CREATE TABLE user_group (
-  id bigint NOT NULL DEFAULT nextval('user_group_id_seq'),
+  id bigint NOT NULL PRIMARY KEY DEFAULT nextval('user_group_id_seq'),
   identity varchar(45) DEFAULT NULL,
   title varchar(200) NOT NULL,
-  company_id bigint NOT NULL DEFAULT '1',
-  status smallint NOT NULL DEFAULT '1',
-  version integer NOT NULL DEFAULT '1',
-  created_at timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-  updated_at timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-  PRIMARY KEY (id),
+  company_id bigint NOT NULL DEFAULT 1,
+  status smallint NOT NULL DEFAULT 1,
+  version integer NOT NULL DEFAULT 1,
+  created_at timestamp without time zone NOT NULL default (now() at time zone 'utc'),
+  updated_at timestamp without time zone NOT NULL default (now() at time zone 'utc'),
   
-  KEY FK_USERGROUP_COMPANY_idx (company_id),
   CONSTRAINT FK_USERGROUP_COMPANY FOREIGN KEY (company_id) REFERENCES companies (id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
 
@@ -148,9 +150,8 @@ CREATE TABLE user_group (
 CREATE TABLE user_deputy (
   user_id bigint NOT NULL,
   deputy_id bigint NOT NULL,
-  created_at timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  created_at timestamp without time zone NOT NULL default (now() at time zone 'utc'),
   PRIMARY KEY (user_id,deputy_id),
-  KEY FK_USERDEPUTY_DEPUTY_idx (deputy_id),
   CONSTRAINT FK_USERDEPUTY_DEPUTY FOREIGN KEY (deputy_id) REFERENCES users (id),
   CONSTRAINT FK_USERDEPUTY_USER FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
@@ -158,9 +159,8 @@ CREATE TABLE user_deputy (
 CREATE TABLE user_departments (
   user_id bigint NOT NULL,
   department_id bigint NOT NULL,
-  created_at timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  created_at timestamp without time zone NOT NULL default (now() at time zone 'utc'),
   PRIMARY KEY (user_id,department_id),
-  KEY FK_USERDEPARTMENTS_DEPARTMENTS_idx (department_id),
   CONSTRAINT FK_USERDEPARTMENTS_DEPARTMENTS FOREIGN KEY (department_id) REFERENCES departments (id),
   CONSTRAINT FK_USERDEPARTMENTS_USERS FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
@@ -168,9 +168,8 @@ CREATE TABLE user_departments (
 CREATE TABLE user_department_groups (
   user_id bigint NOT NULL,
   department_group_id bigint NOT NULL,
-  created_at timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  created_at timestamp without time zone NOT NULL default (now() at time zone 'utc'),
   PRIMARY KEY (user_id,department_group_id),
-  KEY FK_USERDEPARTMENTGROUPS_D_idx (department_group_id),
   CONSTRAINT FK_USERDEPARTMENTGROUPS_D FOREIGN KEY (department_group_id) REFERENCES departments_group (id),
   CONSTRAINT FK_USERDEPARTMENTGROUPS_USERS FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
@@ -178,9 +177,8 @@ CREATE TABLE user_department_groups (
 CREATE TABLE user_usergroup (
   user_id bigint NOT NULL,
   user_group bigint NOT NULL,
-  created_at timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  created_at timestamp without time zone NOT NULL default (now() at time zone 'utc'),
   PRIMARY KEY (user_id,user_group),
-  KEY FK_USERGROUPUSER_GROUP_idx (user_group),
   CONSTRAINT FK_USERGROUPUSER_GROUP FOREIGN KEY (user_group) REFERENCES user_group (id),
   CONSTRAINT FK_USERGROUPUSER_USER FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
@@ -189,9 +187,8 @@ CREATE TABLE user_usergroup (
 CREATE TABLE user_roles (
   user_id bigint NOT NULL,
   role bigint NOT NULL,
-  created_at timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  created_at timestamp without time zone NOT NULL default (now() at time zone 'utc'),
   PRIMARY KEY (user_id,role),
-  KEY FK_USERROLES_ROLE_idx (role),
   CONSTRAINT FK_USERROLES_ROLE FOREIGN KEY (role) REFERENCES iflow_roles (id) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT FK_USERROLES_USERS FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
@@ -199,27 +196,25 @@ CREATE TABLE user_roles (
 CREATE SEQUENCE workflow_type_id_seq;
 
 CREATE TABLE workflow_type (
-  id bigint NOT NULL DEFAULT nextval('workflow_type_id_seq'),
+  id bigint NOT NULL PRIMARY KEY DEFAULT nextval('workflow_type_id_seq'),
   identity varchar(45) DEFAULT NULL,
   title varchar(200) NOT NULL,
-  assign_type SMALLINT(2) NOT NULL DEFAULT 1,
-  send_to_controller smallint(2) NOT NULL DEFAULT '1',
-  increase_step_automatic smallint(2) DEFAULT '0',
-  allow_assign smallint(2) DEFAULT '0',
+  assign_type SMALLINT NOT NULL DEFAULT 1,
+  send_to_controller SMALLINT NOT NULL DEFAULT 1,
+  increase_step_automatic SMALLINT DEFAULT '0',
+  allow_assign SMALLINT DEFAULT '0',
   commecnts text,
-  status smallint NOT NULL DEFAULT '1',
-  version integer NOT NULL DEFAULT '1',
-  created_at timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-  updated_at timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-  PRIMARY KEY (id),
-  
+  status smallint NOT NULL DEFAULT 1,
+  version integer NOT NULL DEFAULT 1,
+  created_at timestamp without time zone NOT NULL default (now() at time zone 'utc'),
+  updated_at timestamp without time zone NOT NULL default (now() at time zone 'utc')
 );
 
 
 CREATE SEQUENCE workflow_type_step_id_seq;
  
 CREATE TABLE workflow_type_step (
-  id bigint NOT NULL DEFAULT nextval('workflow_type_step_id_seq'),
+  id bigint NOT NULL PRIMARY KEY DEFAULT nextval('workflow_type_step_id_seq'),
   identity varchar(45) DEFAULT NULL,
   workflow_type_id bigint NOT NULL,
   title varchar(200) NOT NULL,
@@ -227,13 +222,11 @@ CREATE TABLE workflow_type_step (
   view_name varchar(150) NOT NULL DEFAULT '-',
   expire_days smallint NOT NULL,
   commecnts text,
-  status smallint NOT NULL DEFAULT '1',
-  version integer NOT NULL DEFAULT '1',
-  created_at timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-  updated_at timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-  PRIMARY KEY (id),
+  status smallint NOT NULL DEFAULT 1,
+  version integer NOT NULL DEFAULT 1,
+  created_at timestamp without time zone NOT NULL default (now() at time zone 'utc'),
+  updated_at timestamp without time zone NOT NULL default (now() at time zone 'utc'),
   
-  KEY FK_WORKFLOWTYPESTEP_WORKFLOWTYPE_idx (workflow_type_id),
   CONSTRAINT FK_WORKFLOWTYPESTEP_WORKFLOWTYPE FOREIGN KEY (workflow_type_id) REFERENCES workflow_type (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -241,7 +234,7 @@ CREATE TABLE workflow_type_step (
 CREATE SEQUENCE workflow_id_seq;
  
 CREATE TABLE workflow (
-  id bigint NOT NULL DEFAULT nextval('workflow_id_seq'),
+  id bigint NOT NULL PRIMARY KEY DEFAULT nextval('workflow_id_seq'),
   company_id bigint NOT NULL,
   identity varchar(45) DEFAULT NULL,
   workflow_type_id bigint NOT NULL,
@@ -250,15 +243,10 @@ CREATE TABLE workflow (
   comments text,
   controller bigint NOT NULL,
   created_by bigint DEFAULT NULL,
-  version integer NOT NULL DEFAULT '1',
-  created_at timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-  updated_at timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-  PRIMARY KEY (id),
+  version integer NOT NULL DEFAULT 1,
+  created_at timestamp without time zone NOT NULL default (now() at time zone 'utc'),
+  updated_at timestamp without time zone NOT NULL default (now() at time zone 'utc'),
   
-  KEY FK_WORKFLOW_WORKFLOWTYPE_idx (workflow_type_id),
-  KEY FK_WORKFLOW_WORKFLOWTYPESTEP_idx (current_step),
-  KEY FK_WORKFLOW_USERS_idx (created_by),
-  KEY FK_WORKFLOW_COMPANY_idx (company_id),
   CONSTRAINT FK_WORKFLOW_COMPANY FOREIGN KEY (company_id) REFERENCES companies (id) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT FK_WORKFLOW_USERS FOREIGN KEY (created_by) REFERENCES users (id) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT FK_WORKFLOW_WORKFLOWTYPE FOREIGN KEY (workflow_type_id) REFERENCES workflow_type (id) ON UPDATE CASCADE,
@@ -269,16 +257,15 @@ CREATE TABLE workflow (
 CREATE SEQUENCE workflow_actions_id_seq;
  
 CREATE TABLE workflow_actions (
-  id bigint NOT NULL DEFAULT nextval('workflow_actions_id_seq'),
+  id bigint NOT NULL PRIMARY KEY DEFAULT nextval('workflow_actions_id_seq'),
   workflow_id bigint NOT NULL,
   assign_to bigint NOT NULL DEFAULT '0',
   current_step_id bigint NOT NULL DEFAULT '0',
   comments varchar(45) DEFAULT NULL,
-  status bigint DEFAULT '1',
-  created_at timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-  updated_at timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-  PRIMARY KEY (id),
-  KEY FK_WORKFLOWACTION_WORKFLOW_idx (workflow_id),
+  status bigint DEFAULT 1,
+  created_at timestamp without time zone NOT NULL default (now() at time zone 'utc'),
+  updated_at timestamp without time zone NOT NULL default (now() at time zone 'utc'),
+  
   CONSTRAINT FK_WORKFLOWACTION_WORKFLOW FOREIGN KEY (workflow_id) REFERENCES workflow (id) ON UPDATE CASCADE
 );
 
@@ -287,22 +274,19 @@ CREATE TABLE workflow_actions (
 CREATE SEQUENCE workflow_files_id_seq;
  
 CREATE TABLE workflow_files (
-  id bigint NOT NULL DEFAULT nextval('workflow_files_id_seq'),
+  id bigint NOT NULL PRIMARY KEY DEFAULT nextval('workflow_files_id_seq'),
   identity varchar(45) DEFAULT NULL,
   workflow_id bigint NOT NULL,
   title varchar(200) NOT NULL,
   extention varchar(10) NOT NULL,
   active_filepath varchar(500) NOT NULL,
   comments text,
-  active_version integer NOT NULL DEFAULT '1',
-  status smallint NOT NULL DEFAULT '1',
+  active_version integer NOT NULL DEFAULT 1,
+  status smallint NOT NULL DEFAULT 1,
   created_by bigint DEFAULT NULL,
-  created_at timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-  updated_at timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-  PRIMARY KEY (id),
-  
-  KEY FK_WORKFLOWFILE_WORKFLOW_idx (workflow_id),
-  KEY FK_WORKFLOWFILE_USERS_idx (created_by),
+  created_at timestamp without time zone NOT NULL default (now() at time zone 'utc'),
+  updated_at timestamp without time zone NOT NULL default (now() at time zone 'utc'),
+   
   CONSTRAINT FK_WORKFLOWFILE_USERS FOREIGN KEY (created_by) REFERENCES users (id) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT FK_WORKFLOWFILE_WORKFLOW FOREIGN KEY (workflow_id) REFERENCES workflow (id) ON UPDATE CASCADE
 );
@@ -312,26 +296,23 @@ CREATE TABLE workflow_files (
 CREATE SEQUENCE workflow_files_versions_id_seq;
 
 CREATE TABLE workflow_files_versions (
-  id bigint NOT NULL DEFAULT nextval('workflow_files_versions_id_seq'),
+  id bigint NOT NULL PRIMARY KEY DEFAULT nextval('workflow_files_versions_id_seq'),
   workflow_file_id bigint NOT NULL,
   filepath varchar(500) NOT NULL,
   comments text,
-  file_version integer NOT NULL DEFAULT '1',
-  status smallint NOT NULL DEFAULT '1',
+  file_version integer NOT NULL DEFAULT 1,
+  status smallint NOT NULL DEFAULT 1,
   created_by bigint DEFAULT NULL,
-  created_at timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-  updated_at timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-  PRIMARY KEY (id),
-  KEY FK_WORKFLOWFILEVERSION_WORKFLOWFILE_idx (workflow_file_id),
+  created_at timestamp without time zone NOT NULL default (now() at time zone 'utc'),
+  updated_at timestamp without time zone NOT NULL default (now() at time zone 'utc'),
   CONSTRAINT FK_WORKFLOWFILEVERSION_WORKFLOWFILE FOREIGN KEY (workflow_file_id) REFERENCES workflow_files (id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
 
 CREATE TABLE company_workflow_type (
   company_id bigint NOT NULL,
   workflow_type_id bigint NOT NULL,
-  created_at timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  created_at timestamp without time zone NOT NULL default (now() at time zone 'utc'),
   PRIMARY KEY (company_id,workflow_type_id),
-  KEY FK_COMPANYWORKFLOWTYPE_WORKFLOWTYPE_idx (workflow_type_id),
   CONSTRAINT FK_COMPANYWORKFLOWTYPE_COMPANY FOREIGN KEY (company_id) REFERENCES companies (id) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT FK_COMPANYWORKFLOWTYPE_WORKFLOWTYPE FOREIGN KEY (workflow_type_id) REFERENCES workflow_type (id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;

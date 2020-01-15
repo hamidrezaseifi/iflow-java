@@ -1,8 +1,8 @@
 
 
-DROP TABLE IF EXISTS user_department_groups;
-
-DROP TABLE IF EXISTS invoice_workflow;
+	DROP TABLE IF EXISTS user_department_groups;
+	
+	DROP TABLE IF EXISTS invoice_workflow;
 
 CREATE TABLE user_department_groups (
   user_id bigint NOT NULL,
@@ -14,21 +14,20 @@ CREATE TABLE user_department_groups (
 
 
 CREATE TABLE invoice_workflow (
-  workflow_id bigint NOT NULL,
+  workflow_id bigint NOT NULL PRIMARY KEY,
   sender varchar(80) NOT NULL,
   ext_reg_number varchar(45) DEFAULT NULL,
   invoce_date date DEFAULT NULL,
   partner_code varchar(45) DEFAULT NULL,
   vendor_number varchar(45) DEFAULT NULL,
   vendor_name varchar(45) DEFAULT NULL,
-  direct_debit_permission smallint NOT NULL DEFAULT '0',
-  invoice_type smallint NOT NULL DEFAULT '1',
+  direct_debit_permission smallint NOT NULL DEFAULT 0,
+  invoice_type smallint NOT NULL DEFAULT 1,
   discount_enter date NOT NULL,
-  discount_rate double NOT NULL DEFAULT '0',
-  discount_deadline bigint NOT NULL DEFAULT '0',
+  discount_rate float NOT NULL DEFAULT 0,
+  discount_deadline bigint NOT NULL DEFAULT 0,
   discount_date date NOT NULL,
-  payment_amount double NOT NULL DEFAULT '0',
-  PRIMARY KEY (workflow_id)
+  payment_amount float NOT NULL DEFAULT 0
 ) ;
 
 
@@ -50,22 +49,19 @@ DROP SEQUENCE IF EXISTS  workflow_message_id_seq;
 
 CREATE SEQUENCE workflow_message_id_seq;
 
-CREATE TABLE workflow_message_id_seq (
-  id bigint NOT NULL AUTO_INCREMENT,
+CREATE TABLE workflow_message (
+  id bigint NOT NULL PRIMARY KEY DEFAULT nextval('workflow_message_id_seq'),
   workflow_id bigint NOT NULL,
-  step_id bigint NOT NULL DEFAULT '0',
+  step_id bigint NOT NULL DEFAULT 0,
   user_id bigint NOT NULL,
   message varchar(500) NOT NULL DEFAULT 'no message',
   created_by bigint NOT NULL,
-  message_type smallint NOT NULL DEFAULT '1',
-  version bigint NOT NULL DEFAULT '1',
+  message_type smallint NOT NULL DEFAULT 1,
+  version bigint NOT NULL DEFAULT 1,
   status smallint DEFAULT NULL,
   expire_days smallint NOT NULL,
   created_at timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   updated_at timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-  PRIMARY KEY (id),
-  KEY FK_WORKFLOWOFFER_WORKFLOW_idx (workflow_id),
-  KEY FK_WORKFLOWOFFER_USER_idx (user_id),
   CONSTRAINT FK_WORKFLOWOFFER_USER FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT FK_WORKFLOWOFFER_WORKFLOW FOREIGN KEY (workflow_id) REFERENCES workflow (id) ON DELETE CASCADE ON UPDATE RESTRICT
 ) ;
