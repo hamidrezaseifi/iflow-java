@@ -132,9 +132,9 @@ public abstract class EntityDaoBase<T extends ICoreEntityVersion> extends Entity
     // typedQuery.unwrap(org.hibernate.query.Query.class).getQueryString();
     // System.out.println("search workflow query: " + qr);
 
-    final T result = typedQuery.getSingleResult();
+    final List<T> list = typedQuery.getResultList();
     entityManager.close();
-    return result;
+    return list.size() > 0 ? list.get(0) : null;
   }
 
   public List<T> getListByIdentityList(final Collection<String> identityList) {

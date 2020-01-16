@@ -24,8 +24,8 @@
 	    <ifw.module.db.root.database>iflow</ifw.module.db.root.database>
 	    <ifw.module.db.root>postgres</ifw.module.db.root>
 	    <ifw.module.db.root.pwd>7342</ifw.module.db.root.pwd>
-	    <ifw.module.db.owner>postgres</ifw.module.db.owner>
-	    <ifw.module.db.owner.password>7342</ifw.module.db.owner.password>
+	    <ifw.module.db.owner>iflow</ifw.module.db.owner>
+	    <ifw.module.db.owner.password>iflow</ifw.module.db.owner.password>
 	    <ifw.module.db.url>jdbc:postgresql://localhost:5432/</ifw.module.db.url>
 	    <ifw.module.db.driver>org.postgresql.Driver</ifw.module.db.driver>
      

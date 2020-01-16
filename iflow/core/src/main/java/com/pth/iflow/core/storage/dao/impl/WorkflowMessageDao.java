@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -161,25 +162,31 @@ public class WorkflowMessageDao extends EntityDaoBase<WorkflowMessageEntity> imp
 
     final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
     final CriteriaQuery<WorkflowMessageEntity> query = criteriaBuilder.createQuery(WorkflowMessageEntity.class);
-    final Root<WorkflowMessageEntity> userRoot = query.from(WorkflowMessageEntity.class);
+    final Root<WorkflowMessageEntity> root = query.from(WorkflowMessageEntity.class);
+
+    // final Join<WorkflowMessageEntity, WorkflowEntity> workflowJoin =
+    root.join("workflow", JoinType.INNER);
+    root.join("step", JoinType.INNER);
+    root.join("user", JoinType.INNER);
+
     // userRoot.join Arrays.asList("workflow", "step", "workflow"), JoinType.INNER);
 
     // userRoot.join("workflow", JoinType.INNER);
     // userRoot.join("step", JoinType.INNER);
 
     query
-        .select(userRoot)
+        .select(root)
         .where(criteriaBuilder
-            .and(criteriaBuilder.equal(userRoot.get("workflow").get("identity"), workflowIdentity),
-                criteriaBuilder.equal(userRoot.get("step").get("identity"), stepIdentity),
-                criteriaBuilder.equal(userRoot.get("user").get("email"), userIdentity)));
+            .and(criteriaBuilder.equal(root.get("workflow").get("identity"), workflowIdentity),
+                criteriaBuilder.equal(root.get("step").get("identity"), stepIdentity),
+                criteriaBuilder.equal(root.get("user").get("email"), userIdentity)));
     final TypedQuery<WorkflowMessageEntity> typedQuery = entityManager.createQuery(query);
     // final String qr = typedQuery.unwrap(org.hibernate.query.Query.class).getQueryString();
     // System.out.println("The query: " + qr);
 
-    final WorkflowMessageEntity result = typedQuery.getSingleResult();
+    final List<WorkflowMessageEntity> list = typedQuery.getResultList();
     entityManager.close();
-    return result;
+    return list.size() > 0 ? list.get(0) : null;
   }
 
   @Override
