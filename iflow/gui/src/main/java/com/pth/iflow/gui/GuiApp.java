@@ -13,8 +13,6 @@ import com.pth.iflow.common.controllers.helper.IflowSpringProfiles;
 import com.pth.iflow.common.rest.XmlRestConfig;
 
 @SpringBootApplication(scanBasePackageClasses = { IflowSpringProfiles.class, GuiApp.class })
-//@Configuration
-//@EnableAutoConfiguration(exclude = WebMvcAutoConfiguration.class)
 public class GuiApp implements ApplicationListener<ApplicationReadyEvent> {
 
   private static final Logger logger = LoggerFactory.getLogger(GuiApp.class);

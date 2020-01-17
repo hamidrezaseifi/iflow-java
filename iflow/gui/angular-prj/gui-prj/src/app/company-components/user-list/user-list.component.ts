@@ -36,11 +36,29 @@ export class UserListComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		
+		this.reload();
 	}
 
 	reload() {
+		this.loadingService.showLoading();
 		
+		this.editService.listUsers().subscribe(
+	        (results :User[]) => {
+	        	
+	            console.log("User list", results);
+	        	
+	            this.users = results;
+	        },
+	        response => {
+	        	console.log("Error in get user list", response);
+	        	this.loadingService.hideLoading();	 
+	        	this.errorService.showErrorResponse(response);
+	        },
+	        () => {
+	        	
+	        	this.loadingService.hideLoading();	            
+	        }
+		);	       	
 	}
 
 	create() {

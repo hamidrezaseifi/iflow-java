@@ -27,12 +27,6 @@
 		</dependency>
 		
 		<dependency>
-		    <groupId>org.springframework.boot</groupId>
-		    <artifactId>spring-boot-starter-jetty</artifactId>
-		    
-		</dependency>
-		
-		<dependency>
 		    <groupId>com.fasterxml.jackson.dataformat</groupId>
 		    <artifactId>jackson-dataformat-xml</artifactId>
 		</dependency>
@@ -128,7 +122,7 @@
 
 		<!-- dependencies for websoket start  \\//-->
 
- 		<dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-websocket</artifactId>
 		</dependency>
