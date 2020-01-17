@@ -142,7 +142,7 @@ public class ProfileModelEdoMapper {
 
     final UserAuthenticationRequestEdo edo = new UserAuthenticationRequestEdo();
     edo.setCompanyIdentity(model.getCompanyIdentity());
-    edo.setEmail(model.getEmail());
+    edo.setUserIdentity(model.getUserIdentity());
     edo.setPassword(model.getPassword());
 
     return edo;
@@ -153,7 +153,7 @@ public class ProfileModelEdoMapper {
     final UserAuthenticationRequest user = new UserAuthenticationRequest();
 
     user.setCompanyIdentity(edo.getCompanyIdentity());
-    user.setEmail(edo.getEmail());
+    user.setUserIdentity(edo.getUserIdentity());
     user.setPassword(edo.getPassword());
 
     return user;

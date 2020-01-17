@@ -65,19 +65,19 @@ public class AuthenticationController {
           EIFlowErrorType.INVALID_USERNAMEPASSWORD);
     }
 
-    UserAuthenticationSession session = this.sessionManager.findValidateByUserIdentity(authUser.getEmail(),
+    UserAuthenticationSession session = this.sessionManager.findValidateByUserIdentity(authUser.getUserIdentity(),
         authUser.getCompanyIdentity(), true);
     if (session == null) {
-      final ProfileResponse profile = this.usersService.getUserProfileByEmail(authUser.getEmail());
+      final ProfileResponse profile = this.usersService.getUserProfileByEmail(authUser.getUserIdentity());
       if (profile.getCompanyProfile().getCompany().hasSameIdentity(authUser.getCompanyIdentity()) == false) {
         throw new ProfileCustomizedException("Invalid company-identity!", "", EModule.PROFILE.getModuleName(),
             EIFlowErrorType.COMPANY_NOTFOUND);
       }
 
-      session = this.sessionManager.addSession(authUser.getEmail(), authUser.getCompanyIdentity());
+      session = this.sessionManager.addSession(authUser.getUserIdentity(), authUser.getCompanyIdentity());
     }
 
-    this.sessionManager.updateUser(authUser.getEmail(), session.getSessionid());
+    this.sessionManager.updateUser(authUser.getUserIdentity(), session.getSessionid());
 
     final UserAuthenticationResponseEdo authRespEdo = ProfileModelEdoMapper.toEdo(session);
 

@@ -80,7 +80,7 @@ public class BackendModelEdoMapper {
   public static UserAuthenticationRequestEdo toEdo(final UserAuthenticationRequest model) {
     final UserAuthenticationRequestEdo edo = new UserAuthenticationRequestEdo();
     edo.setCompanyIdentity(model.getCompanyIdentity());
-    edo.setEmail(model.getEmail());
+    edo.setUserIdentity(model.getEmail());
     edo.setPassword(model.getPassword());
 
     return edo;
@@ -90,7 +90,7 @@ public class BackendModelEdoMapper {
     final UserAuthenticationRequest user = new UserAuthenticationRequest();
 
     user.setCompanyIdentity(edo.getCompanyIdentity());
-    user.setEmail(edo.getEmail());
+    user.setEmail(edo.getUserIdentity());
     user.setPassword(edo.getPassword());
 
     return user;

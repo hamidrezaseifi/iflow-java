@@ -58,7 +58,7 @@ public class ProfileAccess implements IProfileAccess {
 
     final UserAuthenticationRequestEdo request = new UserAuthenticationRequestEdo();
     request.setCompanyIdentity(companyIdentity);
-    request.setEmail(username);
+    request.setUserIdentity(username);
     request.setPassword(password);
 
     final UserAuthenticationResponseEdo responseEdo = this.restTemplate.callRestPost(this.moduleAccessConfig.getAuthenticationUri(),
@@ -77,7 +77,7 @@ public class ProfileAccess implements IProfileAccess {
 
     final AuthenticatedProfileRequestEdo request = new AuthenticatedProfileRequestEdo();
     request.setToken(token);
-    request.setEmail(username);
+    request.setUserIdentity(username);
 
     final ProfileResponseEdo responseEdo = this.restTemplate.callRestPost(this.moduleAccessConfig.getReadAuthenticationInfoUri(),
                                                                           EModule.PROFILE,

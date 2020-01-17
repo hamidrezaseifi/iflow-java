@@ -9,8 +9,6 @@ import com.pth.iflow.gui.models.User;
 
 public interface IUserAccess {
 
-  public User readUser(final String userId) throws GuiCustomizedException, MalformedURLException;
-
   public User saveUser(final User user) throws GuiCustomizedException, MalformedURLException;
 
   public List<User> getCompanyUserList(final String companyIdentity)

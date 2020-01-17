@@ -37,7 +37,7 @@ public class UserAuthenticationRequest {
   public UserAuthenticationRequestEdo toEdo() {
     final UserAuthenticationRequestEdo edo = new UserAuthenticationRequestEdo();
     edo.setCompanyIdentity(this.companyIdentity);
-    edo.setEmail(this.email);
+    edo.setUserIdentity(this.email);
     edo.setPassword(this.password);
 
     return edo;
@@ -46,7 +46,7 @@ public class UserAuthenticationRequest {
   public static UserAuthenticationRequest fromEdo(final UserAuthenticationRequestEdo edo) {
     final UserAuthenticationRequest model = new UserAuthenticationRequest();
     model.setCompanyIdentity(edo.getCompanyIdentity());
-    model.setEmail(edo.getEmail());
+    model.setEmail(edo.getUserIdentity());
     model.setPassword(edo.getPassword());
 
     return model;

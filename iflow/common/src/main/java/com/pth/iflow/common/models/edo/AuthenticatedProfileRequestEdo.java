@@ -15,26 +15,30 @@ import com.pth.iflow.common.models.base.IFlowJaxbDefinition;
 public class AuthenticatedProfileRequestEdo {
 
   @NotNull
-  @XmlElement(name = "Email", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String email;
+  @XmlElement(name = "UserIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String userIdentity;
 
   @NotNull
   @XmlElement(name = "Token", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String token;
 
-  public String getEmail() {
-    return this.email;
+  public String getUserIdentity() {
+
+    return this.userIdentity;
   }
 
-  public void setEmail(final String email) {
-    this.email = email;
+  public void setUserIdentity(final String userIdentity) {
+
+    this.userIdentity = userIdentity;
   }
 
   public String getToken() {
+
     return this.token;
   }
 
   public void setToken(final String token) {
+
     this.token = token;
   }
 

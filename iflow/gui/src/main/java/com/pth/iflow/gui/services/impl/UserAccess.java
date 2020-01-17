@@ -22,29 +22,25 @@ import com.pth.iflow.gui.services.IUserAccess;
 @Service
 public class UserAccess implements IUserAccess {
 
-  private static final Logger                              logger = LoggerFactory.getLogger(UserAccess.class);
+  private static final Logger logger = LoggerFactory.getLogger(UserAccess.class);
 
-  private final IRestTemplateCall                          restTemplate;
+  private final IRestTemplateCall restTemplate;
   private final GuiConfiguration.ProfileModuleAccessConfig moduleAccessConfig;
 
-  private final SessionUserInfo                            sessionUserInfo;
+  private final SessionUserInfo sessionUserInfo;
 
   public UserAccess(@Autowired final IRestTemplateCall restTemplate,
       @Autowired final GuiConfiguration.ProfileModuleAccessConfig moduleAccessConfig,
       @Autowired final SessionUserInfo sessionUserInfo) {
+
     this.restTemplate = restTemplate;
     this.moduleAccessConfig = moduleAccessConfig;
     this.sessionUserInfo = sessionUserInfo;
   }
 
   @Override
-  public User readUser(final String userId) throws GuiCustomizedException, MalformedURLException {
-    // TODO Auto-generated method stub
-    return null;
-  }
-
-  @Override
   public User saveUser(final User user) throws GuiCustomizedException, MalformedURLException {
+
     // TODO Auto-generated method stub
     return null;
   }
@@ -52,10 +48,12 @@ public class UserAccess implements IUserAccess {
   @Override
   public List<User> getCompanyUserList(final String companyIdentity)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+
     logger.debug("Read user list for company id {}", companyIdentity);
 
-    final UserListEdo responseEdo = this.restTemplate.callRestGet(this.moduleAccessConfig.getReadCompanyUserListUri(companyIdentity),
-        EModule.PROFILE, UserListEdo.class, this.sessionUserInfo.isLoggedIn() ? this.sessionUserInfo.getToken() : "", true);
+    final UserListEdo responseEdo = this.restTemplate
+        .callRestGet(this.moduleAccessConfig.getReadCompanyUserListUri(companyIdentity),
+            EModule.PROFILE, UserListEdo.class, this.sessionUserInfo.isLoggedIn() ? this.sessionUserInfo.getToken() : "", true);
 
     return GuiModelEdoMapper.fromUserEdoList(responseEdo.getUsers());
   }

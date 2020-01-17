@@ -89,8 +89,6 @@ public class WorkflowMessageDao extends EntityDaoBase<WorkflowMessageEntity> imp
     entityManager.close();
     return list;
 
-//"SELECT msg FROM WorkflowMessageEntity msg inner join UserEntity ut on msg.userId=ut.id where ut.email=:uident and msg.status in :statuslist and TIMESTAMPDIFF(DAY, msg.createdAt, now()) < msg.expireDays"
-
   }
 
   @Override

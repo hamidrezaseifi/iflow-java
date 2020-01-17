@@ -541,6 +541,7 @@ public class IflowRestPaths {
     public static final String PROFILE_READ_AUTHENTOCATEDINFO = "/profile/read/authinfo";
     public static final String PROFILE_READ_TOKENINFO = "/profile/read/tokeninfo";
     public static final String PROFILE_VALIDATE_TOKEN = "/profile/validate/token";
+    public static final String PROFILE_SAVE_AUTHENTOCATION = "/profile/save";
 
     public static final String COMPANYIDENTITY_READ_BY_IDENTITY = "/company/readbyid/{companyidentity}";
     public static final String COMPANYIDENTITY_READ_USER_LIST = "/company/read/user/{companyidentity}";

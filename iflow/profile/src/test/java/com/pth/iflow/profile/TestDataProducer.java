@@ -197,7 +197,7 @@ public class TestDataProducer {
   protected AuthenticatedProfileRequestEdo getTestAuthenticatedProfileRequestEdo() {
 
     final AuthenticatedProfileRequestEdo model = new AuthenticatedProfileRequestEdo();
-    model.setEmail("");
+    model.setUserIdentity("");
     model.setToken("token");
 
     return model;
@@ -231,7 +231,7 @@ public class TestDataProducer {
   protected AuthenticatedProfileRequestEdo getTestAuthenticatedProfileRequestEdo(final String email, final String token) {
 
     final AuthenticatedProfileRequestEdo model = new AuthenticatedProfileRequestEdo();
-    model.setEmail(email);
+    model.setUserIdentity(email);
     model.setToken(token);
 
     return model;
@@ -242,7 +242,7 @@ public class TestDataProducer {
     final UserAuthenticationRequest model = new UserAuthenticationRequest();
     model.setCompanyIdentity("companyIdentity");
     model.setPassword("password");
-    model.setEmail("email");
+    model.setUserIdentity("email");
 
     return model;
   }
