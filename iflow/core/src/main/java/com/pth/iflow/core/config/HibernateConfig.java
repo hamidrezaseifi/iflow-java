@@ -77,11 +77,14 @@ public class HibernateConfig {
     configuration.setDriverClassName(this.className);
     configuration.setMinimumIdle(this.minIdleConnections);
     configuration.setJdbcUrl(this.jdbcUrl);
-    configuration.setIdleTimeout(120000L);
+    configuration.setIdleTimeout(600000);
     configuration.setMaximumPoolSize(this.maxPoolSize);
     configuration.setUsername(this.dbUserName);
     configuration.setPassword(this.password);
     configuration.setTransactionIsolation("TRANSACTION_READ_COMMITTED");
+    configuration.setMaxLifetime(30000);
+    configuration.setConnectionTimeout(30000);
+    configuration.setInitializationFailTimeout(600000);
 
     configuration.addDataSourceProperty("cachePrepStmts", this.cachePreparedStatements);
     configuration.addDataSourceProperty("prepStmtCacheSize", this.preparedStatementsCacheSize);

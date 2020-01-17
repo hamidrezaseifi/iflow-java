@@ -1,54 +1,43 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-	
-	<modelVersion>4.0.0</modelVersion>
-	
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.2.2.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
-	</parent>
-	
-	<groupId>com.pth.ifow</groupId>
-	<artifactId>iflow</artifactId>
-	<version>0.0.1</version>
-	<packaging>pom</packaging>
-	
-	<modules>
-	  	<module>common</module>
-	  	<module>core</module>
-	  	<module>profile</module>
-	  	<module>workflow</module>
-	  	<module>backend</module>
-	  	<module>gui</module>
-	</modules>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>2.1.6.RELEASE</version>
+  </parent>
+  <groupId>com.pth.ifow</groupId>
+  <artifactId>iflow</artifactId>
+  <version>0.0.1</version>
+  <packaging>pom</packaging>
+  <modules>
+  	<module>common</module>
+  	<module>core</module>
+  	<module>profile</module>
+  	<module>workflow</module>
+  	<module>backend</module>
+  	<module>gui</module>
+  </modules>
 
-	<properties>
-	    <!-- the .root props are only needed for the db-create profile --> 
-		    <ifw.module.db.database>iflow</ifw.module.db.database>
-		    <ifw.module.db.root.database>iflow</ifw.module.db.root.database>
-		    <ifw.module.db.root>postgres</ifw.module.db.root>
-		    <ifw.module.db.root.pwd>7342</ifw.module.db.root.pwd>
-		    <ifw.module.db.owner>iflow</ifw.module.db.owner>
-		    <ifw.module.db.owner.password>iflow</ifw.module.db.owner.password>
-		    <ifw.module.db.url>jdbc:postgresql://localhost:5432/</ifw.module.db.url>
-		    <ifw.module.db.driver>org.postgresql.Driver</ifw.module.db.driver>
-	     
-	    <!-- Only run SQL stuff on core and tasks projects. Default to TRUE to skip execution of db-create and/or db-clean -->
-	    <ifw.module.db.skip>true</ifw.module.db.skip>
-	    <maven.gitcommitid.skip>true</maven.gitcommitid.skip>
-	
-	    <failIfNoTests>no</failIfNoTests>
-	    
-	    <spring.boot.version>2.2.2.RELEASE</spring.boot.version>
-	
-	    <aws.sdk.version>1.11.487</aws.sdk.version>
-		
-		<java.version>1.8</java.version>
+  <properties>
+    <!-- the .root props are only needed for the db-create profile --> 
+	    <ifw.module.db.database>iflow</ifw.module.db.database>
+	    <ifw.module.db.root.database>iflow</ifw.module.db.root.database>
+	    <ifw.module.db.root>postgres</ifw.module.db.root>
+	    <ifw.module.db.root.pwd>7342</ifw.module.db.root.pwd>
+	    <ifw.module.db.owner>iflow</ifw.module.db.owner>
+	    <ifw.module.db.owner.password>iflow</ifw.module.db.owner.password>
+	    <ifw.module.db.url>jdbc:postgresql://localhost:5432/</ifw.module.db.url>
+	    <ifw.module.db.driver>org.postgresql.Driver</ifw.module.db.driver>
+     
+    <!-- Only run SQL stuff on core and tasks projects. Default to TRUE to skip execution of db-create and/or db-clean -->
+    <ifw.module.db.skip>true</ifw.module.db.skip>
+    <maven.gitcommitid.skip>true</maven.gitcommitid.skip>
 
-	</properties>
+    <failIfNoTests>no</failIfNoTests>
+    
+    <spring.boot.version>2.1.6.RELEASE</spring.boot.version>
+
+  </properties>
 
 	<profiles>
 	
@@ -255,51 +244,6 @@
       </build>
     </profile>
 	
-	
-	
-   <profile>
-      <id>m2e</id>
-      <activation>
-        <property>
-          <name>m2e.version</name>
-        </property>
-      </activation>
-      <build>
-        <pluginManagement>
-          <plugins>
-            <plugin>
-              <groupId>org.eclipse.m2e</groupId>
-              <artifactId>lifecycle-mapping</artifactId>
-              <version>1.0.0</version>
-              <configuration>
-                <lifecycleMappingMetadata>
-                  <pluginExecutions>
-                    <pluginExecution>
-                      <pluginExecutionFilter>
-	                    <groupId>org.flywaydb</groupId>
-	                    <artifactId>flyway-maven-plugin</artifactId>
-                         <versionRange>[5.0.7,)</versionRange>
-                        <goals>
-                          <goal>
-		                      <goal>info</goal>
-		                      <goal>migrate</goal>
-						  </goal>
-                        </goals>
-                      </pluginExecutionFilter>
-                      <action>
-                        <ignore />
-                      </action>
-                    </pluginExecution>
-                  </pluginExecutions>
-                </lifecycleMappingMetadata>
-              </configuration>
-            </plugin>
-          </plugins>
-        </pluginManagement>
-      </build>
-    </profile>	
-	
-	
 	</profiles>
 	<build>	
 	
@@ -317,7 +261,32 @@
 	  
     <pluginManagement>
       <plugins>
-      
+        <plugin>
+          <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself. -->
+          <groupId>org.eclipse.m2e</groupId>
+          <artifactId>lifecycle-mapping</artifactId>
+          <configuration>
+            <lifecycleMappingMetadata>
+              <pluginExecutions>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>org.flywaydb</groupId>
+                    <artifactId>flyway-maven-plugin</artifactId>
+                    <versionRange>[5.0.7,)</versionRange>
+                    <goals>
+                      <goal>info</goal>
+                      <goal>migrate</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <ignore></ignore>
+                  </action>
+                </pluginExecution>
+              </pluginExecutions>
+            </lifecycleMappingMetadata>
+          </configuration>
+        </plugin>
+
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-plugin</artifactId>
