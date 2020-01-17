@@ -26,30 +26,30 @@ import com.pth.iflow.gui.configurations.GuiConfiguration;
 import com.pth.iflow.gui.models.User;
 import com.pth.iflow.gui.models.mapper.GuiModelEdoMapper;
 import com.pth.iflow.gui.models.ui.SessionUserInfo;
-import com.pth.iflow.gui.services.impl.UserAccess;
+import com.pth.iflow.gui.services.impl.access.UserAccess;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 public class UserAccessTest extends TestDataProducer {
 
-  private IUserAccess                                 userAccess;
+  private IUserAccess userAccess;
 
   @MockBean
-  private IRestTemplateCall                           restTemplate;
+  private IRestTemplateCall restTemplate;
 
   @MockBean
   private GuiConfiguration.WorkflowModuleAccessConfig workflowModuleAccessConfig;
 
   @MockBean
-  private GuiConfiguration.ProfileModuleAccessConfig  profileModuleAccessConfig;
+  private GuiConfiguration.CoreModuleAccessConfig coreModuleAccessConfig;
 
   @MockBean
-  private SessionUserInfo                             sessionUserInfo;
+  private SessionUserInfo sessionUserInfo;
 
-  private URI                                         testUri;
+  private URI testUri;
 
-  private String                                      validTocken;
+  private String validTocken;
 
   @Before
   public void setUp() throws Exception {
@@ -58,39 +58,19 @@ public class UserAccessTest extends TestDataProducer {
 
     this.validTocken = "validTocken";
 
-    when(this.profileModuleAccessConfig.getAuthenticationUri()).thenReturn(this.testUri);
-    when(this.profileModuleAccessConfig.getReadAuthenticationInfoUri()).thenReturn(this.testUri);
-    when(this.profileModuleAccessConfig.getReadCompanyUserListUri(any(String.class))).thenReturn(this.testUri);
-    when(this.profileModuleAccessConfig.getReadTokenInfoUri()).thenReturn(this.testUri);
-    when(this.workflowModuleAccessConfig.getReadWorkflowTypeListUri(any(String.class))).thenReturn(this.testUri);
+    when(this.coreModuleAccessConfig.getUserSaveUri()).thenReturn(this.testUri);
+    when(this.coreModuleAccessConfig.getCompanyUserListUri(any(String.class))).thenReturn(this.testUri);
 
     when(this.sessionUserInfo.getToken()).thenReturn(this.validTocken);
     when(this.sessionUserInfo.getUserByIdentity(any(String.class))).thenReturn(this.getTestUser());
     when(this.sessionUserInfo.getWorkflowTypeByIdentity(any(String.class))).thenReturn(this.getTestWorkflowType());
 
-    this.userAccess = new UserAccess(this.restTemplate, this.profileModuleAccessConfig, this.sessionUserInfo);
+    this.userAccess = new UserAccess(this.restTemplate, this.coreModuleAccessConfig, this.sessionUserInfo);
 
   }
 
   @After
   public void tearDown() throws Exception {
-  }
-
-  @Test
-  @Ignore
-  public void testReadUser() throws Exception {
-
-    final User user = this.getTestUser();
-
-    when(this.restTemplate.callRestGet(any(URI.class), any(EModule.class), eq(UserEdo.class), any(String.class), any(boolean.class)))
-        .thenReturn(GuiModelEdoMapper.toEdo(user));
-
-    final User resUser = this.userAccess.readUser("useridentity");
-
-    Assert.assertNotNull("Result user is not null!", resUser);
-    Assert.assertEquals("Result user has id 1!", resUser.getIdentity(), user.getIdentity());
-    Assert.assertEquals("Result user has title '" + user.getFullName() + "'!", resUser.getFullName(), user.getFullName());
-    Assert.assertEquals("Result user has status 1!", resUser.getStatus(), user.getStatus());
 
   }
 
@@ -100,8 +80,9 @@ public class UserAccessTest extends TestDataProducer {
 
     final User user = this.getTestUser();
 
-    when(this.restTemplate.callRestPost(any(URI.class), any(EModule.class), any(UserEdo.class), eq(UserEdo.class), any(String.class),
-        any(boolean.class))).thenReturn(GuiModelEdoMapper.toEdo(user));
+    when(this.restTemplate
+        .callRestPost(any(URI.class), any(EModule.class), any(UserEdo.class), eq(UserEdo.class), any(String.class),
+            any(boolean.class))).thenReturn(GuiModelEdoMapper.toEdo(user));
 
     final User resUser = this.userAccess.saveUser(user);
 
@@ -114,11 +95,13 @@ public class UserAccessTest extends TestDataProducer {
 
   @Test
   public void testGetCompanyUserList() throws Exception {
+
     final List<User> userList = this.getTestUserList();
     final UserListEdo listEdo = new UserListEdo(GuiModelEdoMapper.toUserEdoList(userList));
 
-    when(this.restTemplate.callRestGet(any(URI.class), any(EModule.class), eq(UserListEdo.class), any(String.class),
-        any(boolean.class))).thenReturn(listEdo);
+    when(this.restTemplate
+        .callRestGet(any(URI.class), any(EModule.class), eq(UserListEdo.class), any(String.class),
+            any(boolean.class))).thenReturn(listEdo);
 
     final List<User> resUserList = this.userAccess.getCompanyUserList("test-company");
 

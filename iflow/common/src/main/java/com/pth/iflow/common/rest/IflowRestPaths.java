@@ -28,6 +28,9 @@ public class IflowRestPaths {
     public static final int PORT = 1010;
 
     public static final String USER_SAVE = "/users/save";
+
+    public static final String USER_DELETE = "/users/delete";
+
     public static final String USER_READ_BY_EMAIL = "/users/readbyemail/{email}";
     public static final String USER_USERGROUPS_LIST_BY_EMAIL = "/users/user/groups/{email}";
     public static final String USER_DEPARTMENTS_LIST_BY_EMAIL = "/users/user/departments/{email}";

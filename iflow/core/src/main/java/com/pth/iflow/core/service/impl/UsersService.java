@@ -109,6 +109,14 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
   }
 
   @Override
+  public void delete(final UserEntity model) {
+
+    final UserEntity exists = userDao.getByIdentity(model.getIdentity());
+    userDao.deleteById(exists.getId());
+
+  }
+
+  @Override
   public List<UserEntity> getCompanyUsers(final String companyIdentity) {
 
     return userDao.getListByCompanyIdentity(companyIdentity);

@@ -36,8 +36,9 @@
 				<ng-container matColumnDef="actions">
 			    	<th mat-header-cell *matHeaderCellDef> ... </th>
 			    	<td mat-cell *matCellDef="let element; let idx = index" >  
-			    		<a class="tool-link" *ngIf="element.canEdit" (click)="editWorkflow(element)"><i class="material-icons">edit</i></a>
-		    			<a class="tool-link" (click)="showWorkflow(idx)"><i class="material-icons">pageview</i></a>
+			    		<a class="tool-link" *ngIf="element.canEdit" (click)="editUser(element)"><i class="material-icons">edit</i></a>
+		    			<a class="tool-link" (click)="viewUser(idx)"><i class="material-icons">pageview</i></a>
+		    			<a class="tool-link" (click)="deleteUser(idx)"><i class="material-icons">delete</i></a>
 			    	</td>
 			    </ng-container>
 			    

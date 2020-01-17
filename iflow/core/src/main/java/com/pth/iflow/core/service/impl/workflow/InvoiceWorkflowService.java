@@ -16,14 +16,16 @@ import com.pth.iflow.core.service.interfaces.workflow.IWorkflowService;
 import com.pth.iflow.core.storage.dao.interfaces.workflow.IInvoiceWorkflowDao;
 
 @Service
-public class InvoiceWorkflowService extends CoreModelEdoMapperService<InvoiceWorkflowEntity, InvoiceWorkflowEdo>
-    implements IInvoiceWorkflowService {
+public class InvoiceWorkflowService extends CoreModelEdoMapperService<InvoiceWorkflowEntity,
+    InvoiceWorkflowEdo> implements IInvoiceWorkflowService {
 
   private final IInvoiceWorkflowDao invoiceWorkflowDao;
 
-  private final IWorkflowService    workflowService;
+  private final IWorkflowService workflowService;
 
-  public InvoiceWorkflowService(@Autowired final IInvoiceWorkflowDao singleTaskorkflowDao, @Autowired final IWorkflowService workflowService) {
+  public InvoiceWorkflowService(@Autowired final IInvoiceWorkflowDao singleTaskorkflowDao,
+      @Autowired final IWorkflowService workflowService) {
+
     this.invoiceWorkflowDao = singleTaskorkflowDao;
     this.workflowService = workflowService;
   }
@@ -46,6 +48,7 @@ public class InvoiceWorkflowService extends CoreModelEdoMapperService<InvoiceWor
 
   @Override
   public InvoiceWorkflowEntity getByIdentity(final String identity) {
+
     return this.invoiceWorkflowDao.getByIdentity(identity);
   }
 
@@ -63,6 +66,7 @@ public class InvoiceWorkflowService extends CoreModelEdoMapperService<InvoiceWor
 
   @Override
   public InvoiceWorkflowEntity fromEdo(final InvoiceWorkflowEdo edo) throws IFlowMessageConversionFailureException {
+
     validateCustomer(edo);
 
     final InvoiceWorkflowEntity model = new InvoiceWorkflowEntity();
@@ -88,6 +92,7 @@ public class InvoiceWorkflowService extends CoreModelEdoMapperService<InvoiceWor
 
   @Override
   public InvoiceWorkflowEdo toEdo(final InvoiceWorkflowEntity model) {
+
     final InvoiceWorkflowEdo edo = new InvoiceWorkflowEdo();
     edo.setWorkflow(workflowService.toEdo(model.getWorkflow()));
 

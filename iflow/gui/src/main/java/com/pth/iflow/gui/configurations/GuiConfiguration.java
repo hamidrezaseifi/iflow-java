@@ -34,7 +34,7 @@ public class GuiConfiguration {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-    @Value("${iflow.profile.urls.workflow.base}")
+    @Value("${iflow.gui.urls.workflow.base}")
     private String workflowBaseUrl;
 
     private URI baseWorkflowBaseUri;
@@ -189,7 +189,7 @@ public class GuiConfiguration {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-    @Value("${iflow.profile.urls.profile.base}")
+    @Value("${iflow.gui.urls.profile.base}")
     private String profileBaseUrl;
 
     private URI baseProfileBaseUri;
@@ -221,6 +221,42 @@ public class GuiConfiguration {
     public URI getReadCompanyUserListUri(final String companyIdentity) throws MalformedURLException {
 
       return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.READ_USERLIST_BY_COMPANYID_URIBUILDER(companyIdentity));
+    }
+
+  }
+
+  @Component
+  public static class CoreModuleAccessConfig {
+
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
+
+    @Value("${iflow.gui.urls.core.base}")
+    private String coreeBaseUrl;
+
+    private URI baseCoreBaseUri;
+
+    @PostConstruct
+    private void init() throws URISyntaxException {
+
+      this.baseCoreBaseUri = new URI(this.coreeBaseUrl);
+
+      this.log.info("PROFILE Base URI: {}", this.baseCoreBaseUri);
+
+    }
+
+    public URI getCompanyUserListUri(final String companyidentity) throws MalformedURLException {
+
+      return this.baseCoreBaseUri.resolve(IflowRestPaths.CoreModule.READ_USER_USER_LIST_BY_COMPANY(companyidentity));
+    }
+
+    public URI getUserSaveUri() throws MalformedURLException {
+
+      return this.baseCoreBaseUri.resolve(IflowRestPaths.CoreModule.USER_SAVE);
+    }
+
+    public URI getUserDeleteUri() throws MalformedURLException {
+
+      return this.baseCoreBaseUri.resolve(IflowRestPaths.CoreModule.USER_DELETE);
     }
 
   }

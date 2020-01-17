@@ -36,13 +36,14 @@ import com.pth.iflow.core.service.interfaces.IUsersService;
 @RequestMapping
 public class UserController {
 
-  final IUsersService           usersService;
-  final IUserGroupService       userGroupService;
-  final IDepartmentService      departmentService;
+  final IUsersService usersService;
+  final IUserGroupService userGroupService;
+  final IDepartmentService departmentService;
   final IDepartmentGroupService departmentGroupService;
 
   public UserController(@Autowired final IUsersService usersService, @Autowired final IUserGroupService userGroupService,
       @Autowired final IDepartmentService departmentService, @Autowired final IDepartmentGroupService departmentGroupService) {
+
     this.usersService = usersService;
     this.userGroupService = userGroupService;
     this.departmentService = departmentService;
@@ -56,6 +57,14 @@ public class UserController {
     final UserEntity user = this.usersService.save(this.usersService.fromEdo(userEdo));
 
     return ControllerHelper.createResponseEntity(request, this.usersService.toEdo(user), HttpStatus.ACCEPTED);
+  }
+
+  @ResponseStatus(HttpStatus.ACCEPTED)
+  @IflowPostRequestMapping(path = IflowRestPaths.CoreModule.USER_DELETE)
+  public void deleteUser(@PathVariable final UserEdo userEdo, final HttpServletRequest request) throws Exception {
+
+    this.usersService.delete(this.usersService.fromEdo(userEdo));
+
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -75,8 +84,9 @@ public class UserController {
 
     final List<UserGroupEntity> groups = this.usersService.getUserGroups(email);
 
-    return ControllerHelper.createResponseEntity(request, new UserGroupListEdo(this.userGroupService.toEdoList(groups)),
-        HttpStatus.OK);
+    return ControllerHelper
+        .createResponseEntity(request, new UserGroupListEdo(this.userGroupService.toEdoList(groups)),
+            HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -86,8 +96,9 @@ public class UserController {
 
     final List<DepartmentEntity> list = this.usersService.getUserDepartments(email);
 
-    return ControllerHelper.createResponseEntity(request, new DepartmentListEdo(this.departmentService.toEdoList(list)),
-        HttpStatus.OK);
+    return ControllerHelper
+        .createResponseEntity(request, new DepartmentListEdo(this.departmentService.toEdoList(list)),
+            HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -97,8 +108,9 @@ public class UserController {
 
     final List<DepartmentGroupEntity> list = this.usersService.getUserDepartmentGroups(email);
 
-    return ControllerHelper.createResponseEntity(request, new DepartmentGroupListEdo(this.departmentGroupService.toEdoList(list)),
-        HttpStatus.OK);
+    return ControllerHelper
+        .createResponseEntity(request, new DepartmentGroupListEdo(this.departmentGroupService.toEdoList(list)),
+            HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)

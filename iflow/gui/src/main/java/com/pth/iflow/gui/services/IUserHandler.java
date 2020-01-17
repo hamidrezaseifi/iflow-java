@@ -6,7 +6,7 @@ import java.util.List;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.models.User;
 
-public interface IUserAccess {
+public interface IUserHandler {
 
   public User saveUser(final User user) throws MalformedURLException, IFlowMessageConversionFailureException;
 

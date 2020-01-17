@@ -1,7 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
-import { User } from '../ui-models';
+import { GlobalService } from '../../services/global.service';
+import { UserEditService } from '../../services/company/user-edit.service';
+import { LoadingServiceService } from '../../services/loading-service.service';
+import { ErrorServiceService } from '../../services/error-service.service';
+
+import { User } from '../../ui-models';
 
 @Component({
   selector: 'app-user-list',
@@ -12,13 +18,44 @@ export class UserListComponent implements OnInit {
 
 	users :User[] = [];
 
+	displayedColumns = ['user-fullname', 'user-email', 'user-access', 'actions'];
+
+
 	constructor(
-		  translate: TranslateService,
-		  ) { 
+		    private router: Router,
+			private global: GlobalService,
+			translate: TranslateService,
+			private editService :UserEditService,
+			private loadingService: LoadingServiceService,
+			private errorService: ErrorServiceService,
+			private route :ActivatedRoute,
+			
+	) {
+		
 		
 	}
 
 	ngOnInit() {
+		
+	}
+
+	reload() {
+		
+	}
+
+	create() {
+		
+	}
+
+	editUser(user: User) {
+		
+	}
+
+	viewUser(user: User) {
+		
+	}
+
+	deleteUser(user: User) {
 		
 	}
 

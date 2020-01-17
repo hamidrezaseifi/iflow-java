@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+
 import com.pth.iflow.common.enums.EInvoiceType;
 import com.pth.iflow.core.model.entity.workflow.base.IWorkflowContainerEntity;
 
@@ -44,6 +46,7 @@ public class InvoiceWorkflowEntity implements IWorkflowContainerEntity {
   @Column(name = "vendor_name")
   private String vendorName;
 
+  @Type(type = "numeric_boolean")
   @Column(name = "direct_debit_permission")
   private Boolean isDirectDebitPermission;
 
