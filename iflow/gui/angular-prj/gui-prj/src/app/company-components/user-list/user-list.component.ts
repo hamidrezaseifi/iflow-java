@@ -52,7 +52,6 @@ export class UserListComponent implements OnInit {
 		this.userEditForm = this.formBuilder.group({
 			
 			email: ['', Validators.email],
-		    username: ['', Validators.required],
 		    password: ['', Validators.required],
 			firstName: ['', Validators.required],
 		    lastName: ['', Validators.required],
@@ -66,6 +65,16 @@ export class UserListComponent implements OnInit {
 		this.reload();
 	}
 
+	debug(){
+		var s = "";
+		for(var cnt in this.userEditForm.controls){
+			var ctl = this.userEditForm.controls[cnt];
+			//JSON.stringify(ctl.ValidationErrors)
+			s += cnt + ": " +  " \n ";
+		}
+		return s;
+	}
+	
 	reload() {
 		this.loadingService.showLoading();
 		
@@ -89,7 +98,9 @@ export class UserListComponent implements OnInit {
 	}
 
 	createUser() {
-		
+		var passwordCtrl:AbstractControl = this.userEditForm.get('password');
+		passwordCtrl.enable();
+
 		this.isCreating = true;
 		this.editingUser = new User;
 		this.setToControlValues();
@@ -99,9 +110,14 @@ export class UserListComponent implements OnInit {
 	}
 
 	editUser(user: User) {
+		
+		var passwordCtrl:AbstractControl = this.userEditForm.get('password');
+		passwordCtrl.disable();
+
 		this.isCreating = false;
 		this.editingUser = user;
 		this.setToControlValues();
+		
 		
 		this.showEditModal = true;
 	}
@@ -127,7 +143,7 @@ export class UserListComponent implements OnInit {
 			this.editService.createUser(this.editingUser).subscribe(
 			        (result) => {		        	
 			            console.log("Create user result", result);
-			            
+			            this.showEditModal = false;
 			            this.reload();
 			            
 			        },
@@ -147,7 +163,7 @@ export class UserListComponent implements OnInit {
 			this.editService.updateUser(this.editingUser).subscribe(
 			        (result) => {		        	
 			            console.log("Update user result", result);
-			            
+			            this.showEditModal = false;
 			            this.reload();
 			            
 			        },
@@ -167,16 +183,13 @@ export class UserListComponent implements OnInit {
 		
 		
 		
-		this.showEditModal = false;
+		
 	}
 
 
 	setToControlValues(){
-		
-		
 		if(this.editingUser && this.editingUser){
 			this.userEditForm.controls["email"].setValue(this.editingUser.email);
-			this.userEditForm.controls["username"].setValue(this.editingUser.username);			
 			this.userEditForm.controls["password"].setValue(this.editingUser.password);
 			this.userEditForm.controls["firstName"].setValue(this.editingUser.firstName);
 			this.userEditForm.controls["lastName"].setValue(this.editingUser.lastName);
@@ -190,7 +203,6 @@ export class UserListComponent implements OnInit {
 	setFormControlValues(){
 				
 		this.editingUser.email = this.userEditForm.controls["email"].value;
-		this.editingUser.username = this.userEditForm.controls["username"].value;			
 		this.editingUser.password = this.userEditForm.controls["password"].value;
 		this.editingUser.firstName = this.userEditForm.controls["firstName"].value;
 		this.editingUser.lastName = this.userEditForm.controls["lastName"].value;

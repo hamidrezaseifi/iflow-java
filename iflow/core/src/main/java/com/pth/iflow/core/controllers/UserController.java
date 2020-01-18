@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -52,7 +53,7 @@ public class UserController {
 
   @ResponseStatus(HttpStatus.ACCEPTED)
   @IflowPostRequestMapping(path = IflowRestPaths.CoreModule.USER_SAVE)
-  public ResponseEntity<UserEdo> saveUser(@PathVariable final UserEdo userEdo, final HttpServletRequest request) throws Exception {
+  public ResponseEntity<UserEdo> saveUser(@RequestBody final UserEdo userEdo, final HttpServletRequest request) throws Exception {
 
     final UserEntity user = this.usersService.save(this.usersService.fromEdo(userEdo));
 
@@ -61,7 +62,7 @@ public class UserController {
 
   @ResponseStatus(HttpStatus.ACCEPTED)
   @IflowPostRequestMapping(path = IflowRestPaths.CoreModule.USER_DELETE)
-  public void deleteUser(@PathVariable final UserEdo userEdo, final HttpServletRequest request) throws Exception {
+  public void deleteUser(@RequestBody final UserEdo userEdo, final HttpServletRequest request) throws Exception {
 
     this.usersService.delete(this.usersService.fromEdo(userEdo));
 

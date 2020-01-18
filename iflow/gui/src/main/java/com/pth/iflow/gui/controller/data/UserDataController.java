@@ -38,6 +38,7 @@ public class UserDataController extends GuiDataControllerBase {
   @ResponseBody
   public User createUser(@RequestBody final User requestUser) throws MalformedURLException, IFlowMessageConversionFailureException {
 
+    requestUser.setCompanyIdentity(this.getLoggedCompany().getIdentity());
     final User user = this.userHandler.saveUser(requestUser);
     return user;
   }
@@ -47,6 +48,7 @@ public class UserDataController extends GuiDataControllerBase {
   @ResponseBody
   public User saveUser(@RequestBody final User requestUser) throws MalformedURLException, IFlowMessageConversionFailureException {
 
+    requestUser.setCompanyIdentity(this.getLoggedCompany().getIdentity());
     final User user = this.userHandler.saveUser(requestUser);
     return user;
   }

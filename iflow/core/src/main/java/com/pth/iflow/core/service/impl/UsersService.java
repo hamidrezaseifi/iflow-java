@@ -163,7 +163,8 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
     model.setVersion(edo.getVersion());
     model.setEmail(edo.getEmail());
     model.setBirthDate(CoreDataHelper.fromLocalDate(edo.getBirthDate()));
-    model.getCompany().setIdentity(edo.getCompanyIdentity());
+    model.setCompany(companyDao.getByIdentity(edo.getCompanyIdentity()));
+    model.setCompanyId(model.getCompany().getId());
     model.setGroups(userGroupDao.getListByIdentityList(edo.getGroups()));
     model.setDepartments(departmentDao.getListByIdentityList(edo.getDepartments()));
     model.setDepartmentGroups(departmentGroupDao.getListByIdentityList(edo.getDepartmentGroups()));
