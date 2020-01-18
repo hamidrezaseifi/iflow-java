@@ -34,7 +34,16 @@ public class UserDataController extends GuiDataControllerBase {
   }
 
   @ResponseStatus(HttpStatus.CREATED)
-  @PostMapping(path = { "/save" }, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+  @PostMapping(path = { "/create" }, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+  @ResponseBody
+  public User createUser(@RequestBody final User requestUser) throws MalformedURLException, IFlowMessageConversionFailureException {
+
+    final User user = this.userHandler.saveUser(requestUser);
+    return user;
+  }
+
+  @ResponseStatus(HttpStatus.CREATED)
+  @PostMapping(path = { "/update" }, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   @ResponseBody
   public User saveUser(@RequestBody final User requestUser) throws MalformedURLException, IFlowMessageConversionFailureException {
 

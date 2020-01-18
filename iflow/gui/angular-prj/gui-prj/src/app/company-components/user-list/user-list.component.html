@@ -42,8 +42,8 @@
 		
 		
 	    <div class="modal fade" [ngClass]="{'show' : showEditModal}" tabindex="-1" id="edituserdialog" role="dialog" aria-labelledby="exampleModalCenterTitle">
-			<div class="modal-dialog modal-dialog-centered" role="document">
-			    <div class="modal-content user-select-modal-content" >
+			<div class="modal-dialog modal-dialog-centered modal-dialog-centered-useredit" role="document">
+			    <div class="modal-content user-edit-modal-content" >
 			      <div class="modal-header">
 			        <h5 class="modal-title dialog-title" id="exampleModalLongTitle">{{ isCreating ? ('user-create-modal-title' | translate) : ('user-edit-modal-title' | translate) }}</h5>
 			        <button class="dialog-toolbar-button close" (click)="hideUserDialog()">
@@ -52,12 +52,83 @@
 			      </div>
 			      <div class="modal-body">
 						
-			      
+					<ul class="nav nav-tabs" id="maintab" role="tablist">
+					  <li class="nav-item">
+					    <a class="nav-link active" id="general-info-tab-link" data-toggle="tab" href="#general-info-tab" role="tab" aria-controls="home" aria-selected="true">{{ 'user-personal-info' | translate }}</a>
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link" id="access-ino-tab-link" data-toggle="tab" href="#access-ino-tab" role="tab" aria-controls="profile" aria-selected="false">{{ 'user-access-info' | translate }}</a>
+					  </li>
+					</ul>
+					<div class="tab-content" id="myTabContent">
+					  	<div class="tab-pane fade show active" id="general-info-tab" role="tabpanel" aria-labelledby="general-info-tab-link">
+							
+							<form id="user-form" name="userForm" [formGroup]="userEditForm">
+							  <div class="form-group">
+							    <label for="userfirstname">{{ 'user-first-name' | translate }}</label>
+							    <input type="text" name="firstName" formControlName="firstName" required class="form-control" id="userfirstname" aria-describedby="emailHelp" placeholder="Enter email">
+							    <div class="invalid-message" *ngIf="userEditForm.controls.firstName.touched && userEditForm.controls.firstName.hasError('required')">{{ 'user-first-name-error-message' | translate }}</div>
+							  </div>
+							  <div class="form-group">
+							    <label for="userlastname">{{ 'user-last-name' | translate }}</label>
+							    <input type="text" name="lastName" formControlName="lastName" required class="form-control" id="userlastname" aria-describedby="emailHelp" placeholder="Enter email">
+							    <div class="invalid-message" *ngIf="userEditForm.controls.lastName.touched && userEditForm.controls.lastName.hasError('required')">{{ 'user-last-name-error-message' | translate }}</div>
+							  </div>
+							  <div class="form-group">
+							    <label for="useremail">{{ 'user-email' | translate }}</label>
+							    <input type="email" name="email" formControlName="email" required class="form-control" id="useremail" aria-describedby="emailHelp" placeholder="Enter email">
+							    <div class="invalid-message" *ngIf="userEditForm.controls.email.touched && userEditForm.controls.email.hasError('email')">{{ 'user-email-error-message-invalid' | translate }}</div>
+							    <div class="invalid-message" *ngIf="userEditForm.controls.email.touched && userEditForm.controls.email.hasError('required')">{{ 'user-email-error-message-required' | translate }}</div>
+							  </div>
+							  <div class="form-group">
+							    <label for="userbirthdate">{{ 'user-birthdate' | translate }}</label>
+							    <input type="text" required class="form-control" matInput [matDatepicker]="birthDateDatepicker" placeholder="{{ 'user-birthdate-placeholder' | translate }}" formControlName="birthDate" >
+								<mat-datepicker-toggle matSuffix [for]="birthDateDatepicker"></mat-datepicker-toggle>
+								<mat-datepicker #birthDateDatepicker startView="month" [startAt]="userEditForm.controls.birthDate.value"></mat-datepicker>										
+							    <div class="invalid-message" *ngIf="userEditForm.controls.birthDate.touched && userEditForm.controls.birthDate.hasError('required')">{{ 'user-birthdate-error-message' | translate }}</div>
+							    
+							  </div>
+							  <div class="form-group">
+							    <label>{{ 'user-status' | translate }}</label>
+							    
+								<div class="custom-control custom-radio custom-control-inline">
+								  <input type="radio" id="radiostatusactive" name="status" formControlName="status" class="custom-control-input" value="1">
+								  <label class="custom-control-label" for="radiostatusactive">{{ 'common.active' | translate }}</label>
+								</div>
+								<div class="custom-control custom-radio custom-control-inline">
+								  <input type="radio" id="radiostatusdeactive" name="status" formControlName="status" class="custom-control-input" value="0">
+								  <label class="custom-control-label" for="radiostatusdeactive">{{ 'common.deactive' | translate }}</label>
+								</div>							    
+							  </div>
+							  <div class="form-group">
+							    <label>{{ 'user-access' | translate }}</label>
+								<select required name="userAccess" formControlName="userAccess" class="form-control" [ngClass]="{'ng-invalid' : userEditForm.controls.userAccess.errors}" >
+									<option value="NONE">{{ 'user-access-none' | translate }}</option>
+									<option value="ADMIN">{{ 'user-access-admin' | translate }}</option>
+									<option value="AGENT">{{ 'user-access-agent' | translate }}</option>
+									<option value="VIEW">{{ 'user-access-view' | translate }}</option>
+								</select>
+							    <div class="invalid-message" *ngIf="userEditForm.controls.userAccess.touched && userEditForm.controls.userAccess.hasError('required')">{{ 'user-access-error-message' | translate }}</div>
+							    
+							  </div>
+							  <div class="form-group" *ngIf="isCreating">
+							    <label for="exampleInputPassword1">{{ 'user-password' | translate }}</label>
+							    <input type="password" name="password" formControlName="password" required class="form-control" id="exampleInputPassword1" placeholder="Password">
+							    <div class="invalid-message" *ngIf="userEditForm.controls.password.touched && userEditForm.controls.password.hasError('required')">{{ 'user-password-error-message' | translate }}</div>
+							  </div>
+							  
+							</form>							
+							
+						</div>
+					  	<div class="tab-pane fade" id="access-ino-tab" role="tabpanel" aria-labelledby="access-ino-tab-link">
+					  	
+						</div>
+					</div>			      	
 	    				
 			      </div>
 			      <div class="modal-footer">
 			        <button type="button" class="btn btn-secondary" (click)="hideUserDialog()"><i class="material-icons">close</i></button>
-			        <button type="button" class="btn btn-primary" (click)="saveUser()"><i class="material-icons">save</i></button>
+			        <button type="button" class="btn btn-primary" (click)="saveUser()"[disabled]="userEditForm.invalid"><i class="material-icons">save</i></button>
 			      </div>
 			    </div>
 			  </div>		    

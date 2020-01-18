@@ -114,3 +114,47 @@ th.mat-header-cell {
 .table-striped tbody tr:hove{	
 	background-color: #dff7ff;
 }
+
+.form-group label{
+	margin-right: 5px;
+    width: 110px;
+}
+
+.form-group input[type=text], 
+.form-group input[type=email],  
+.form-group input[type=password], 
+.form-group select, 
+.form-group textarea{
+	display: inline-block !important;
+    width: calc(100% - 140px) !important;
+}
+
+.tab-content {
+    padding: 10px;
+    border: 1px solid #e6e6e6;
+    border-top: none;
+    height: calc(100vh - 300px);
+}
+
+.modal-dialog-centered-useredit{
+	width: calc(100vw - 300px) !important;
+    max-width: 700px;
+    margin: auto;
+}
+
+.user-edit-modal-content {
+	width: 100%;
+}
+
+
+input.select-date{
+	width: calc(100% - 140px) !important;
+	height: 26px;
+}
+
+.invalid-message {
+    font-size: 12px;
+    color: red;
+    padding-left: 120px;
+}
+

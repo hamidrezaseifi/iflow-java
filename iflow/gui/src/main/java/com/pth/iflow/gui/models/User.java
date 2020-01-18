@@ -11,10 +11,15 @@ import java.util.stream.Collectors;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.pth.iflow.common.enums.EUserStatus;
 import com.pth.iflow.common.models.helper.IdentityModel;
+import com.pth.iflow.gui.helper.GuiDateDeserializer;
+import com.pth.iflow.gui.helper.GuiDateSerializer;
 import com.pth.iflow.gui.models.enums.EUserAcces;
 import com.pth.iflow.gui.models.ui.enums.EUiUserRole;
 
@@ -23,7 +28,12 @@ public class User extends IdentityModel {
 
   private String companyIdentity;
   private String email;
+
+  @JsonDeserialize(using = GuiDateDeserializer.class)
+  @JsonSerialize(using = GuiDateSerializer.class)
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
   private LocalDate birthDate;
+
   private String firstName;
   private String lastName;
   private Integer status;
@@ -39,6 +49,8 @@ public class User extends IdentityModel {
   private EUserAcces userAccess;
 
   private boolean isEnabled;
+
+  private String password;
 
   public String getCompanyIdentity() {
 
@@ -330,6 +342,16 @@ public class User extends IdentityModel {
       name += (name.isEmpty() ? "" : ", ") + role.getAuthority().toUpperCase();
     }
     return name;
+  }
+
+  public String getPassword() {
+
+    return this.password;
+  }
+
+  public void setPassword(final String password) {
+
+    this.password = password;
   }
 
   public boolean isEnabled() {

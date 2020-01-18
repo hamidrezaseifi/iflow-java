@@ -1,5 +1,5 @@
 ﻿
-export enum UserAccess {
+export enum UserAccessType {
 	NONE = "user-access-none",
 	ADMIN = "user-access-admin",
 	AGENT = "user-access-agent",

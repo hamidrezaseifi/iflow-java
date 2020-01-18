@@ -17,6 +17,8 @@ import { User } from '../../ui-models';
 export class UserEditService extends HttpErrorResponseHelper {
 
 	loadUsersUrl :string = "/users/data/list";
+	createUsersUrl :string = "/users/data/create";
+	updateUsersUrl :string = "/users/data/update";
  
 	constructor(
 			protected http: HttpClient,
@@ -35,6 +37,24 @@ export class UserEditService extends HttpErrorResponseHelper {
 
 	    
 		return this.http.get(this.loadUsersUrl, httpOptions);	    
+		
+	};
+	
+	createUser(user: User){
+		
+	    const httpOptions = { headers: HttpHepler.generateJsonHeader() };
+
+	    
+		return this.http.post(this.createUsersUrl, user, httpOptions);	    
+		
+	};
+	
+	updateUser(user: User){
+		
+	    const httpOptions = { headers: HttpHepler.generateJsonHeader() };
+
+	    
+		return this.http.post(this.updateUsersUrl, user, httpOptions);	    
 		
 	};
 }
