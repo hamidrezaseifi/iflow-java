@@ -45,7 +45,7 @@
 			<div class="modal-dialog modal-dialog-centered" role="document">
 			    <div class="modal-content user-select-modal-content" >
 			      <div class="modal-header">
-			        <h5 class="modal-title dialog-title" id="exampleModalLongTitle">{{ isCreating ? 'user-create-modal-title' : 'user-edit-modal-title' | translate }}</h5>
+			        <h5 class="modal-title dialog-title" id="exampleModalLongTitle">{{ isCreating ? ('user-create-modal-title' | translate) : ('user-edit-modal-title' | translate) }}</h5>
 			        <button class="dialog-toolbar-button close" (click)="hideUserDialog()">
 			        	<i class="material-icons">close</i>
 			        </button>
