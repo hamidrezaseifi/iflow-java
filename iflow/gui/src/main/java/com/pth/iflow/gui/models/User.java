@@ -198,6 +198,11 @@ public class User extends IdentityModel {
     return this.userAccess;
   }
 
+  public String getUserAccessLabel() {
+
+    return this.userAccess.getLabelId();
+  }
+
   public void setUserAccess(final EUserAcces userAcces) {
 
     this.userAccess = userAcces;

@@ -2,7 +2,7 @@
 			<div class="page-toolbar">
 				<div class="page-title">{{ 'menu-user-list' | translate }}</div>
 				<button class="toolbar-button" (click)="reload()"><i class="material-icons">refresh</i></button>
-				<button class="toolbar-button" (click)="create()"><i class="material-icons">add</i></button>
+				<button class="toolbar-button" (click)="createUser()"><i class="material-icons">add</i></button>
 											
 			</div>
 			
@@ -20,13 +20,13 @@
 			
 				<ng-container matColumnDef="user-access">
 			    	<th mat-header-cell *matHeaderCellDef> {{ 'user-access' | translate }} </th>
-			    	<td mat-cell *matCellDef="let element"> {{element.userAcces}} </td>
+			    	<td mat-cell *matCellDef="let element"> {{ element.userAccessLabel | translate }}</td>
 			    </ng-container>
 			
 				<ng-container matColumnDef="actions">
 			    	<th mat-header-cell *matHeaderCellDef> ... </th>
 			    	<td mat-cell *matCellDef="let element; let idx = index" >  
-			    		<a class="tool-link" *ngIf="element.canEdit" (click)="editUser(element)"><i class="material-icons">edit</i></a>
+			    		<a class="tool-link" (click)="editUser(element)"><i class="material-icons">edit</i></a>
 		    			<a class="tool-link" (click)="viewUser(idx)"><i class="material-icons">pageview</i></a>
 		    			<a class="tool-link" (click)="deleteUser(idx)"><i class="material-icons">delete</i></a>
 			    	</td>
@@ -39,3 +39,28 @@
 		
 		
 		</div>
+		
+		
+	    <div class="modal fade" [ngClass]="{'show' : showEditModal}" tabindex="-1" id="edituserdialog" role="dialog" aria-labelledby="exampleModalCenterTitle">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+			    <div class="modal-content user-select-modal-content" >
+			      <div class="modal-header">
+			        <h5 class="modal-title dialog-title" id="exampleModalLongTitle">{{ isCreating ? 'user-create-modal-title' : 'user-edit-modal-title' | translate }}</h5>
+			        <button class="dialog-toolbar-button close" (click)="hideUserDialog()">
+			        	<i class="material-icons">close</i>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+						
+			      
+	    				
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" (click)="hideUserDialog()"><i class="material-icons">close</i></button>
+			        <button type="button" class="btn btn-primary" (click)="saveUser()"><i class="material-icons">save</i></button>
+			      </div>
+			    </div>
+			  </div>		    
+	    	
+	    </div>
+		

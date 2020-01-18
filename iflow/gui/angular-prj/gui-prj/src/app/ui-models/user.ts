@@ -10,5 +10,6 @@ import { UserAccess } from './user-access';
 	fullName: string;
 	companyIdentity: string;
 	userAccess: UserAccess;
+	userAccessLabel: string;
 
 }

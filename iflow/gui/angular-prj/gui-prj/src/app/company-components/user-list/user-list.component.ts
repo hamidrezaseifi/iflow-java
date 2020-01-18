@@ -20,6 +20,9 @@ export class UserListComponent implements OnInit {
 
 	displayedColumns = ['user-fullname', 'user-email', 'user-access', 'actions'];
 
+	isCreating :boolean = false;
+	showEditModal :boolean = false;
+	editingUser :User = new User;
 
 	constructor(
 		    private router: Router,
@@ -61,12 +64,17 @@ export class UserListComponent implements OnInit {
 		);	       	
 	}
 
-	create() {
+	createUser() {
+		this.isCreating = true;
+		this.editingUser = new User;
+		this.showEditModal = true;
 		
 	}
 
 	editUser(user: User) {
-		
+		this.isCreating = false;
+		this.editingUser = user;
+		this.showEditModal = true;
 	}
 
 	viewUser(user: User) {
@@ -76,5 +84,16 @@ export class UserListComponent implements OnInit {
 	deleteUser(user: User) {
 		
 	}
+	
+	hideUserDialog(){
+		this.showEditModal = false;
+	}
+
+	saveUser() {
+		
+		
+		this.showEditModal = false;
+	}
+
 
 }

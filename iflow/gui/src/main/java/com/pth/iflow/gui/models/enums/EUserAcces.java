@@ -1,7 +1,7 @@
 package com.pth.iflow.gui.models.enums;
 
 public enum EUserAcces {
-  NONE(0, ""),
+  NONE(0, "user-access-none"),
   ADMIN(1, "user-access-admin"),
   AGENT(5, "user-access-agent"),
   VIEW(10, "user-access-view");
