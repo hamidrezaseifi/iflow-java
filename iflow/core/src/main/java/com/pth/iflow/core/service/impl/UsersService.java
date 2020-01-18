@@ -12,6 +12,7 @@ import com.pth.iflow.common.models.edo.CompanyProfileEdo;
 import com.pth.iflow.common.models.edo.CompanyWorkflowTypeControllerEdo;
 import com.pth.iflow.common.models.edo.ProfileResponseEdo;
 import com.pth.iflow.common.models.edo.UserEdo;
+import com.pth.iflow.common.models.helper.IdentityModel;
 import com.pth.iflow.core.helper.CoreDataHelper;
 import com.pth.iflow.core.model.CompanyProfile;
 import com.pth.iflow.core.model.ProfileResponse;
@@ -156,6 +157,7 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
 
     final UserEntity model = new UserEntity();
 
+    model.setId(IdentityModel.isIdentityNew(edo.getIdentity()) ? null : userDao.getByIdentity(edo.getIdentity()).getId());
     model.setFirstName(edo.getFirstName());
     model.setLastName(edo.getLastName());
     model.setPermission(edo.getPermission());

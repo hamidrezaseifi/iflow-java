@@ -23,7 +23,7 @@ export class UserListComponent implements OnInit {
 
 	users :User[] = [];
 
-	displayedColumns = ['user-fullname', 'user-email', 'user-access', 'actions'];
+	displayedColumns = ['user-fullname', 'user-email', 'user-access', 'user-status', 'actions'];
 
 	isCreating :boolean = false;
 	showEditModal :boolean = false;
