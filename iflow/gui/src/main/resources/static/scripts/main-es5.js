@@ -1050,7 +1050,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     function UserListComponent_th_13_Template(rf, ctx) {
       if (rf & 1) {
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "th", 58);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "th", 63);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
 
@@ -1068,7 +1068,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     function UserListComponent_td_14_Template(rf, ctx) {
       if (rf & 1) {
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "td", 59);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "td", 64);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
 
@@ -1086,7 +1086,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     function UserListComponent_th_16_Template(rf, ctx) {
       if (rf & 1) {
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "th", 58);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "th", 63);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
 
@@ -1104,7 +1104,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     function UserListComponent_td_17_Template(rf, ctx) {
       if (rf & 1) {
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "td", 59);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "td", 64);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
 
@@ -1122,7 +1122,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     function UserListComponent_th_19_Template(rf, ctx) {
       if (rf & 1) {
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "th", 58);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "th", 63);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
 
@@ -1140,7 +1140,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     function UserListComponent_td_20_Template(rf, ctx) {
       if (rf & 1) {
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "td", 59);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "td", 64);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
 
@@ -1160,7 +1160,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     function UserListComponent_th_22_Template(rf, ctx) {
       if (rf & 1) {
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "th", 58);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "th", 63);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
 
@@ -1178,7 +1178,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     function UserListComponent_td_23_Template(rf, ctx) {
       if (rf & 1) {
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "td", 59);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "td", 64);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
 
@@ -1200,7 +1200,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     function UserListComponent_th_25_Template(rf, ctx) {
       if (rf & 1) {
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "th", 58);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "th", 63);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, " ... ");
 
@@ -1212,9 +1212,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       if (rf & 1) {
         var _r156 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "td", 59);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "td", 64);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "a", 60);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "a", 65);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function UserListComponent_td_26_Template_a_click_1_listener($event) {
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r156);
@@ -1223,7 +1223,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
           var ctx_r155 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
 
-          return ctx_r155.editUser(element_r153);
+          return ctx_r155.showEditUser(element_r153);
         });
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "i", 4);
@@ -1234,16 +1234,16 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](4, "a", 60);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](4, "a", 65);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function UserListComponent_td_26_Template_a_click_4_listener($event) {
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r156);
 
-          var idx_r154 = ctx.index;
+          var element_r153 = ctx.$implicit;
 
           var ctx_r157 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
 
-          return ctx_r157.viewUser(idx_r154);
+          return ctx_r157.showViewUser(element_r153);
         });
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](5, "i", 4);
@@ -1254,16 +1254,16 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](7, "a", 60);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](7, "a", 65);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function UserListComponent_td_26_Template_a_click_7_listener($event) {
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r156);
 
-          var idx_r154 = ctx.index;
+          var element_r153 = ctx.$implicit;
 
           var ctx_r158 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
 
-          return ctx_r158.deleteUser(idx_r154);
+          return ctx_r158.showDeleteUser(element_r153);
         });
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](8, "i", 4);
@@ -1280,19 +1280,19 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     function UserListComponent_tr_27_Template(rf, ctx) {
       if (rf & 1) {
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](0, "tr", 61);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](0, "tr", 66);
       }
     }
 
     function UserListComponent_tr_28_Template(rf, ctx) {
       if (rf & 1) {
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](0, "tr", 62);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](0, "tr", 67);
       }
     }
 
     function UserListComponent_div_58_Template(rf, ctx) {
       if (rf & 1) {
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 63);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 68);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
 
@@ -1310,7 +1310,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     function UserListComponent_div_64_Template(rf, ctx) {
       if (rf & 1) {
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 63);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 68);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
 
@@ -1328,7 +1328,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     function UserListComponent_div_70_Template(rf, ctx) {
       if (rf & 1) {
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 63);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 68);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
 
@@ -1346,7 +1346,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     function UserListComponent_div_71_Template(rf, ctx) {
       if (rf & 1) {
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 63);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 68);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
 
@@ -1364,7 +1364,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     function UserListComponent_div_81_Template(rf, ctx) {
       if (rf & 1) {
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 63);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 68);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
 
@@ -1382,7 +1382,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     function UserListComponent_div_113_Template(rf, ctx) {
       if (rf & 1) {
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 63);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 68);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
 
@@ -1400,7 +1400,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     function UserListComponent_div_114_div_5_Template(rf, ctx) {
       if (rf & 1) {
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 63);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 68);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
 
@@ -1420,7 +1420,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 29);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "label", 64);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "label", 69);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2);
 
@@ -1428,7 +1428,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](4, "input", 65);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](4, "input", 70);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](5, UserListComponent_div_114_div_5_Template, 3, 3, "div", 32);
 
@@ -1464,6 +1464,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function UserListComponent(router, global, translate, editService, loadingService, errorService, route, formBuilder, dateAdapter) {
+        var _this3 = this;
+
         _classCallCheck(this, UserListComponent);
 
         this.router = router;
@@ -1479,7 +1481,14 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.isCreating = false;
         this.showEditModal = false;
         this.editingUser = new _ui_models__WEBPACK_IMPORTED_MODULE_5__["User"]();
+        this.deleteMessageBase = "";
+        this.deleteMessage = "";
+        this.delitingUser = new _ui_models__WEBPACK_IMPORTED_MODULE_5__["User"]();
+        this.showDeleteModal = false;
         this.dateAdapter.setLocale('de');
+        translate.get('user-delete-message').subscribe(function (res) {
+          _this3.deleteMessageBase = res;
+        });
       }
 
       _createClass(UserListComponent, [{
@@ -1504,7 +1513,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           for (var cnt in this.userEditForm.controls) {
             var ctl = this.userEditForm.controls[cnt]; //JSON.stringify(ctl.ValidationErrors)
 
-            s += cnt + ": " + " \n ";
+            s += cnt + ": " + ctl.value + " \n ";
           }
 
           return s;
@@ -1512,25 +1521,25 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "reload",
         value: function reload() {
-          var _this3 = this;
+          var _this4 = this;
 
           this.loadingService.showLoading();
           this.editService.listUsers().subscribe(function (results) {
             console.log("User list", results);
-            _this3.users = results;
+            _this4.users = results;
           }, function (response) {
             console.log("Error in get user list", response);
 
-            _this3.loadingService.hideLoading();
+            _this4.loadingService.hideLoading();
 
-            _this3.errorService.showErrorResponse(response);
+            _this4.errorService.showErrorResponse(response);
           }, function () {
-            _this3.loadingService.hideLoading();
+            _this4.loadingService.hideLoading();
           });
         }
       }, {
-        key: "createUser",
-        value: function createUser() {
+        key: "showCreateUser",
+        value: function showCreateUser() {
           var passwordCtrl = this.userEditForm.get('password');
           passwordCtrl.enable();
           this.isCreating = true;
@@ -1539,8 +1548,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           this.showEditModal = true;
         }
       }, {
-        key: "editUser",
-        value: function editUser(user) {
+        key: "showEditUser",
+        value: function showEditUser(user) {
           var passwordCtrl = this.userEditForm.get('password');
           passwordCtrl.disable();
           this.isCreating = false;
@@ -1549,20 +1558,51 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           this.showEditModal = true;
         }
       }, {
-        key: "viewUser",
-        value: function viewUser(user) {}
+        key: "showViewUser",
+        value: function showViewUser(user) {}
+      }, {
+        key: "showDeleteUser",
+        value: function showDeleteUser(user) {
+          this.delitingUser = user;
+          this.deleteMessage = this.deleteMessageBase;
+          this.deleteMessage = this.deleteMessage.replace("%", user.fullName);
+          this.showDeleteModal = true;
+        }
+      }, {
+        key: "hideDeleteUserDialog",
+        value: function hideDeleteUserDialog() {
+          this.showDeleteModal = false;
+        }
+      }, {
+        key: "hideEditUserDialog",
+        value: function hideEditUserDialog() {
+          this.showEditModal = false;
+        }
       }, {
         key: "deleteUser",
-        value: function deleteUser(user) {}
-      }, {
-        key: "hideUserDialog",
-        value: function hideUserDialog() {
-          this.showEditModal = false;
+        value: function deleteUser() {
+          var _this5 = this;
+
+          this.loadingService.showLoading();
+          this.editService.deleteUser(this.delitingUser).subscribe(function (result) {
+            console.log("Delete user result success.");
+            _this5.showDeleteModal = false;
+
+            _this5.reload();
+          }, function (response) {
+            console.log("Error in create user", response);
+
+            _this5.errorService.showErrorResponse(response);
+
+            _this5.loadingService.hideLoading();
+          }, function () {
+            _this5.loadingService.hideLoading();
+          });
         }
       }, {
         key: "saveUser",
         value: function saveUser() {
-          var _this4 = this;
+          var _this6 = this;
 
           this.setFormControlValues();
           this.loadingService.showLoading();
@@ -1570,32 +1610,32 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           if (this.isCreating) {
             this.editService.createUser(this.editingUser).subscribe(function (result) {
               console.log("Create user result", result);
-              _this4.showEditModal = false;
+              _this6.showEditModal = false;
 
-              _this4.reload();
+              _this6.reload();
             }, function (response) {
               console.log("Error in create user", response);
 
-              _this4.errorService.showErrorResponse(response);
+              _this6.errorService.showErrorResponse(response);
 
-              _this4.loadingService.hideLoading();
+              _this6.loadingService.hideLoading();
             }, function () {
-              _this4.loadingService.hideLoading();
+              _this6.loadingService.hideLoading();
             });
           } else {
             this.editService.updateUser(this.editingUser).subscribe(function (result) {
               console.log("Update user result", result);
-              _this4.showEditModal = false;
+              _this6.showEditModal = false;
 
-              _this4.reload();
+              _this6.reload();
             }, function (response) {
               console.log("Error in update user", response);
 
-              _this4.errorService.showErrorResponse(response);
+              _this6.errorService.showErrorResponse(response);
 
-              _this4.loadingService.hideLoading();
+              _this6.loadingService.hideLoading();
             }, function () {
-              _this4.loadingService.hideLoading();
+              _this6.loadingService.hideLoading();
             });
           }
         }
@@ -1639,9 +1679,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         provide: _angular_material_core__WEBPACK_IMPORTED_MODULE_2__["DateAdapter"],
         useClass: _helper__WEBPACK_IMPORTED_MODULE_3__["GermanDateAdapter"]
       }])],
-      decls: 126,
-      vars: 78,
-      consts: [[1, "content-container"], [1, "page-toolbar"], [1, "page-title"], [1, "toolbar-button", 3, "click"], [1, "material-icons"], ["mat-table", "", 3, "dataSource"], ["matColumnDef", "user-fullname"], ["mat-header-cell", "", 4, "matHeaderCellDef"], ["mat-cell", "", 4, "matCellDef"], ["matColumnDef", "user-email"], ["matColumnDef", "user-access"], ["matColumnDef", "user-status"], ["matColumnDef", "actions"], ["mat-header-row", "", 4, "matHeaderRowDef", "matHeaderRowDefSticky"], ["mat-row", "", 4, "matRowDef", "matRowDefColumns"], ["tabindex", "-1", "id", "edituserdialog", "role", "dialog", "aria-labelledby", "exampleModalCenterTitle", 1, "modal", "fade", 3, "ngClass"], ["role", "document", 1, "modal-dialog", "modal-dialog-centered", "modal-dialog-centered-useredit"], [1, "modal-content", "user-edit-modal-content"], [1, "modal-header"], ["id", "exampleModalLongTitle", 1, "modal-title", "dialog-title"], [1, "dialog-toolbar-button", "close", 3, "click"], [1, "modal-body"], ["id", "maintab", "role", "tablist", 1, "nav", "nav-tabs"], [1, "nav-item"], ["id", "general-info-tab-link", "data-toggle", "tab", "href", "#general-info-tab", "role", "tab", "aria-controls", "home", "aria-selected", "true", 1, "nav-link", "active"], ["id", "access-ino-tab-link", "data-toggle", "tab", "href", "#access-ino-tab", "role", "tab", "aria-controls", "profile", "aria-selected", "false", 1, "nav-link"], ["id", "myTabContent", 1, "tab-content"], ["id", "general-info-tab", "role", "tabpanel", "aria-labelledby", "general-info-tab-link", 1, "tab-pane", "fade", "show", "active"], ["id", "user-form", "name", "userForm", 3, "formGroup"], [1, "form-group"], ["for", "userfirstname"], ["type", "text", "name", "firstName", "formControlName", "firstName", "required", "", "id", "userfirstname", "aria-describedby", "emailHelp", "placeholder", "Enter email", 1, "form-control"], ["class", "invalid-message", 4, "ngIf"], ["for", "userlastname"], ["type", "text", "name", "lastName", "formControlName", "lastName", "required", "", "id", "userlastname", "aria-describedby", "emailHelp", "placeholder", "Enter email", 1, "form-control"], ["for", "useremail"], ["type", "email", "name", "email", "formControlName", "email", "required", "", "id", "useremail", "aria-describedby", "emailHelp", "placeholder", "Enter email", 1, "form-control"], ["for", "userbirthdate"], ["type", "text", "required", "", "matInput", "", "formControlName", "birthDate", 1, "form-control", 3, "matDatepicker", "placeholder"], ["matSuffix", "", 3, "for"], ["startView", "month", 3, "startAt"], ["birthDateDatepicker", ""], [1, "custom-control", "custom-radio", "custom-control-inline"], ["type", "radio", "id", "radiostatusactive", "name", "status", "formControlName", "status", "value", "1", 1, "custom-control-input"], ["for", "radiostatusactive", 1, "custom-control-label"], ["type", "radio", "id", "radiostatusdeactive", "name", "status", "formControlName", "status", "value", "0", 1, "custom-control-input"], ["for", "radiostatusdeactive", 1, "custom-control-label"], ["required", "", "name", "userAccess", "formControlName", "userAccess", 1, "form-control", 3, "ngClass"], ["value", "NONE"], ["value", "ADMIN"], ["value", "AGENT"], ["value", "VIEW"], ["class", "form-group", 4, "ngIf"], [2, "padding", "5px", "border", "solid gray 1px", "margin-top", "10px"], ["id", "access-ino-tab", "role", "tabpanel", "aria-labelledby", "access-ino-tab-link", 1, "tab-pane", "fade"], [1, "modal-footer"], ["type", "button", 1, "btn", "btn-secondary", 3, "click"], ["type", "button", 1, "btn", "btn-primary", 3, "disabled", "click"], ["mat-header-cell", ""], ["mat-cell", ""], [1, "tool-link", 3, "click"], ["mat-header-row", ""], ["mat-row", ""], [1, "invalid-message"], ["for", "exampleInputPassword1"], ["type", "password", "name", "password", "formControlName", "password", "required", "", "id", "exampleInputPassword1", "placeholder", "Password", 1, "form-control"]],
+      decls: 146,
+      vars: 85,
+      consts: [[1, "content-container"], [1, "page-toolbar"], [1, "page-title"], [1, "toolbar-button", 3, "click"], [1, "material-icons"], ["mat-table", "", 3, "dataSource"], ["matColumnDef", "user-fullname"], ["mat-header-cell", "", 4, "matHeaderCellDef"], ["mat-cell", "", 4, "matCellDef"], ["matColumnDef", "user-email"], ["matColumnDef", "user-access"], ["matColumnDef", "user-status"], ["matColumnDef", "actions"], ["mat-header-row", "", 4, "matHeaderRowDef", "matHeaderRowDefSticky"], ["mat-row", "", 4, "matRowDef", "matRowDefColumns"], ["tabindex", "-1", "id", "edituserdialog", "role", "dialog", "aria-labelledby", "exampleModalCenterTitle", 1, "modal", "fade", 3, "ngClass"], ["role", "document", 1, "modal-dialog", "modal-dialog-centered", "modal-dialog-centered-useredit"], [1, "modal-content", "user-edit-modal-content"], [1, "modal-header"], ["id", "exampleModalLongTitle", 1, "modal-title", "dialog-title"], [1, "dialog-toolbar-button", "close", 3, "click"], [1, "modal-body"], ["id", "maintab", "role", "tablist", 1, "nav", "nav-tabs"], [1, "nav-item"], ["id", "general-info-tab-link", "data-toggle", "tab", "href", "#general-info-tab", "role", "tab", "aria-controls", "home", "aria-selected", "true", 1, "nav-link", "active"], ["id", "access-ino-tab-link", "data-toggle", "tab", "href", "#access-ino-tab", "role", "tab", "aria-controls", "profile", "aria-selected", "false", 1, "nav-link"], ["id", "myTabContent", 1, "tab-content"], ["id", "general-info-tab", "role", "tabpanel", "aria-labelledby", "general-info-tab-link", 1, "tab-pane", "fade", "show", "active"], ["id", "user-form", "name", "userForm", 3, "formGroup"], [1, "form-group"], ["for", "userfirstname"], ["type", "text", "name", "firstName", "formControlName", "firstName", "required", "", "id", "userfirstname", "aria-describedby", "emailHelp", "placeholder", "Enter email", 1, "form-control"], ["class", "invalid-message", 4, "ngIf"], ["for", "userlastname"], ["type", "text", "name", "lastName", "formControlName", "lastName", "required", "", "id", "userlastname", "aria-describedby", "emailHelp", "placeholder", "Enter email", 1, "form-control"], ["for", "useremail"], ["type", "email", "name", "email", "formControlName", "email", "required", "", "id", "useremail", "aria-describedby", "emailHelp", "placeholder", "Enter email", 1, "form-control"], ["for", "userbirthdate"], ["type", "text", "required", "", "matInput", "", "formControlName", "birthDate", 1, "form-control", 3, "matDatepicker", "placeholder"], ["matSuffix", "", 3, "for"], ["startView", "month", 3, "startAt"], ["birthDateDatepicker", ""], [1, "custom-control", "custom-radio", "custom-control-inline"], ["type", "radio", "id", "radiostatusactive", "name", "status", "formControlName", "status", "value", "1", 1, "custom-control-input"], ["for", "radiostatusactive", 1, "custom-control-label"], ["type", "radio", "id", "radiostatusdeactive", "name", "status", "formControlName", "status", "value", "0", 1, "custom-control-input"], ["for", "radiostatusdeactive", 1, "custom-control-label"], ["required", "", "name", "userAccess", "formControlName", "userAccess", 1, "form-control", 3, "ngClass"], ["value", "NONE"], ["value", "ADMIN"], ["value", "AGENT"], ["value", "VIEW"], ["class", "form-group", 4, "ngIf"], [2, "padding", "5px", "border", "solid gray 1px", "margin-top", "10px"], ["id", "access-ino-tab", "role", "tabpanel", "aria-labelledby", "access-ino-tab-link", 1, "tab-pane", "fade"], [1, "modal-footer"], ["type", "button", 1, "btn", "btn-secondary", 3, "click"], ["type", "button", 1, "btn", "btn-primary", 3, "disabled", "click"], ["tabindex", "-1", "id", "deleteuserdialog", "role", "dialog", "aria-labelledby", "exampleModalCenterTitle", 1, "modal", "fade", 3, "ngClass"], ["role", "document", 1, "modal-dialog", "modal-dialog-centered"], [1, "modal-content"], ["role", "alert", 1, "alert", "alert-danger", "custome-ander-text"], ["type", "button", 1, "btn", "btn-danger", 3, "click"], ["mat-header-cell", ""], ["mat-cell", ""], [1, "tool-link", 3, "click"], ["mat-header-row", ""], ["mat-row", ""], [1, "invalid-message"], ["for", "exampleInputPassword1"], ["type", "password", "name", "password", "formControlName", "password", "required", "", "id", "exampleInputPassword1", "placeholder", "Password", 1, "form-control"]],
       template: function UserListComponent_Template(rf, ctx) {
         if (rf & 1) {
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
@@ -1673,7 +1713,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](8, "button", 3);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function UserListComponent_Template_button_click_8_listener($event) {
-            return ctx.createUser();
+            return ctx.showCreateUser();
           });
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](9, "i", 4);
@@ -1757,7 +1797,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](37, "button", 20);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function UserListComponent_Template_button_click_37_listener($event) {
-            return ctx.hideUserDialog();
+            return ctx.hideEditUserDialog();
           });
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](38, "i", 4);
@@ -1993,7 +2033,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](120, "button", 56);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function UserListComponent_Template_button_click_120_listener($event) {
-            return ctx.hideUserDialog();
+            return ctx.hideEditUserDialog();
           });
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](121, "i", 4);
@@ -2025,6 +2065,86 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](126, "div", 58);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](127, "div", 59);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](128, "div", 60);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](129, "div", 18);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](130, "h5", 19);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](131);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipe"](132, "translate");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](133, "button", 20);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function UserListComponent_Template_button_click_133_listener($event) {
+            return ctx.hideDeleteUserDialog();
+          });
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](134, "i", 4);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](135, "close");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](136, "div", 21);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](137, "div", 61);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](138);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](139, "div", 55);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](140, "button", 56);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function UserListComponent_Template_button_click_140_listener($event) {
+            return ctx.hideDeleteUserDialog();
+          });
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](141, "i", 4);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](142, "close");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](143, "button", 62);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function UserListComponent_Template_button_click_143_listener($event) {
+            return ctx.deleteUser();
+          });
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](144, "i", 4);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](145, "delete");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         }
 
         if (rf & 2) {
@@ -2032,7 +2152,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](4, 36, "menu-user-list"));
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](4, 39, "menu-user-list"));
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](8);
 
@@ -2048,19 +2168,19 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngClass", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction1"](74, _c0, ctx.showEditModal));
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngClass", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction1"](79, _c0, ctx.showEditModal));
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](5);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx.isCreating ? _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](35, 38, "user-create-modal-title") : _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](36, 40, "user-edit-modal-title"));
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx.isCreating ? _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](35, 41, "user-create-modal-title") : _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](36, 43, "user-edit-modal-title"));
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](10);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](45, 42, "user-personal-info"));
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](45, 45, "user-personal-info"));
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](49, 44, "user-access-info"));
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](49, 47, "user-access-info"));
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
 
@@ -2068,7 +2188,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](56, 46, "user-first-name"));
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](56, 49, "user-first-name"));
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
 
@@ -2076,7 +2196,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](62, 48, "user-last-name"));
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](62, 51, "user-last-name"));
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
 
@@ -2084,7 +2204,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](68, 50, "user-email"));
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](68, 53, "user-email"));
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
 
@@ -2096,11 +2216,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](75, 52, "user-birthdate"));
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](75, 55, "user-birthdate"));
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpropertyInterpolate"]("placeholder", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](77, 54, "user-birthdate-placeholder"));
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpropertyInterpolate"]("placeholder", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](77, 57, "user-birthdate-placeholder"));
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("matDatepicker", _r145);
 
@@ -2118,39 +2238,39 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](85, 56, "user-status"));
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](85, 59, "user-status"));
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](5);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](90, 58, "common.active"));
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](90, 61, "common.active"));
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](5);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](95, 60, "common.deactive"));
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](95, 63, "common.deactive"));
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](99, 62, "user-access"));
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](99, 65, "user-access"));
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngClass", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction1"](76, _c1, ctx.userEditForm.controls.userAccess.errors));
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngClass", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction1"](81, _c1, ctx.userEditForm.controls.userAccess.errors));
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](103, 64, "user-access-none"));
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](103, 67, "user-access-none"));
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](106, 66, "user-access-admin"));
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](106, 69, "user-access-admin"));
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](109, 68, "user-access-agent"));
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](109, 71, "user-access-agent"));
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](112, 70, "user-access-view"));
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](112, 73, "user-access-view"));
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
 
@@ -2162,11 +2282,23 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](117, 72, ctx.debug()));
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](117, 75, ctx.debug()));
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](7);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("disabled", ctx.userEditForm.invalid);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngClass", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction1"](83, _c0, ctx.showDeleteModal));
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](5);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](132, 77, "user-delete-modal-title"));
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](7);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx.deleteMessage);
         }
       },
       directives: [_angular_material_table__WEBPACK_IMPORTED_MODULE_12__["MatTable"], _angular_material_table__WEBPACK_IMPORTED_MODULE_12__["MatColumnDef"], _angular_material_table__WEBPACK_IMPORTED_MODULE_12__["MatHeaderCellDef"], _angular_material_table__WEBPACK_IMPORTED_MODULE_12__["MatCellDef"], _angular_material_table__WEBPACK_IMPORTED_MODULE_12__["MatHeaderRowDef"], _angular_material_table__WEBPACK_IMPORTED_MODULE_12__["MatRowDef"], _angular_common__WEBPACK_IMPORTED_MODULE_13__["NgClass"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["ɵangular_packages_forms_forms_y"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgControlStatusGroup"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroupDirective"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["DefaultValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgControlStatus"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControlName"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["RequiredValidator"], _angular_common__WEBPACK_IMPORTED_MODULE_13__["NgIf"], _angular_material_input__WEBPACK_IMPORTED_MODULE_14__["MatInput"], _angular_material_datepicker__WEBPACK_IMPORTED_MODULE_15__["MatDatepickerInput"], _angular_material_datepicker__WEBPACK_IMPORTED_MODULE_15__["MatDatepickerToggle"], _angular_material_form_field__WEBPACK_IMPORTED_MODULE_16__["MatSuffix"], _angular_material_datepicker__WEBPACK_IMPORTED_MODULE_15__["MatDatepicker"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["RadioControlValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["SelectControlValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgSelectOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["ɵangular_packages_forms_forms_x"], _angular_material_table__WEBPACK_IMPORTED_MODULE_12__["MatHeaderCell"], _angular_material_table__WEBPACK_IMPORTED_MODULE_12__["MatCell"], _angular_material_table__WEBPACK_IMPORTED_MODULE_12__["MatHeaderRow"], _angular_material_table__WEBPACK_IMPORTED_MODULE_12__["MatRow"]],
@@ -2442,17 +2574,17 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "subscribeErrorService",
         value: function subscribeErrorService() {
-          var _this5 = this;
+          var _this7 = this;
 
           this.errorService.errorSubject.subscribe(function (data) {
             if (data && data != null) {
-              _this5.errorMessage = data.errorMessage;
-              _this5.errorDetails = data.errorDetail;
-              _this5.showErrorDetail = false;
-              _this5.showError = true; //alert("error coms: " + this.errorMessage + " , show: " + (this.showError === true));
+              _this7.errorMessage = data.errorMessage;
+              _this7.errorDetails = data.errorDetail;
+              _this7.showErrorDetail = false;
+              _this7.showError = true; //alert("error coms: " + this.errorMessage + " , show: " + (this.showError === true));
             } else {
-              _this5.showError = false;
-              _this5.showErrorDetail = false; //alert("no error");
+              _this7.showError = false;
+              _this7.showErrorDetail = false; //alert("no error");
             } //this.subscribeErrorService();
 
           });
@@ -2879,10 +3011,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _createClass(LoadingDialogComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {
-          var _this6 = this;
+          var _this8 = this;
 
           this.loadingService.loadingSubject.subscribe(function (data) {
-            _this6.showLoading = data;
+            _this8.showLoading = data;
           });
         }
       }]);
@@ -4001,7 +4133,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function WmFileUploadComponent(translate, loadingService, errorService) {
-        var _this7 = this;
+        var _this9 = this;
 
         _classCallCheck(this, WmFileUploadComponent);
 
@@ -4020,7 +4152,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.showFilePreviewDialog = false;
         this.fileExistsMessage = "common.file-exists";
         translate.get('common.file-exists').subscribe(function (res) {
-          _this7.fileExistsMessage = res;
+          _this9.fileExistsMessage = res;
         });
       }
 
@@ -4040,7 +4172,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "uploadFile",
         value: function uploadFile(fileInput) {
-          var _this8 = this;
+          var _this10 = this;
 
           var file = fileInput.target.files[0];
           console.log("file: ", file); //alert(file.name);
@@ -4058,7 +4190,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           this.editService.uploadTempFiles(file).subscribe(function (result) {
             console.log("upload invoice file result", result);
 
-            _this8.loadingService.hideLoading();
+            _this10.loadingService.hideLoading();
 
             if (result.status) {
               if (result.status === "done") {
@@ -4072,19 +4204,19 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
                 uploaded.uploadResult = result;
 
-                _this8.uploadedFiles.push(uploaded);
+                _this10.uploadedFiles.push(uploaded);
 
-                _this8.onUploadedFilesChanged.emit(_this8.uploadedFiles);
+                _this10.onUploadedFilesChanged.emit(_this10.uploadedFiles);
               }
 
               if (result.status === "error" && result.errorMessage) {
-                _this8.errorService.showError(result.errorMessage, result.errorDetail);
+                _this10.errorService.showError(result.errorMessage, result.errorDetail);
               }
             }
           }, function (response) {
             console.log("Error in upload invoice file", response);
 
-            _this8.loadingService.hideLoading();
+            _this10.loadingService.hideLoading();
           }, function () {});
         }
       }, {
@@ -4914,13 +5046,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _inherits(GermanDateAdapter, _angular_material_cor);
 
       function GermanDateAdapter() {
-        var _this9;
+        var _this11;
 
         _classCallCheck(this, GermanDateAdapter);
 
-        _this9 = _possibleConstructorReturn(this, _getPrototypeOf(GermanDateAdapter).apply(this, arguments));
-        _this9.useUtcForDisplay = true;
-        return _this9;
+        _this11 = _possibleConstructorReturn(this, _getPrototypeOf(GermanDateAdapter).apply(this, arguments));
+        _this11.useUtcForDisplay = true;
+        return _this11;
       }
 
       _createClass(GermanDateAdapter, [{
@@ -5608,7 +5740,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function LoginComponent(formBuilder, route, router, autService, global, translate) {
-        var _this10 = this;
+        var _this12 = this;
 
         _classCallCheck(this, LoginComponent);
 
@@ -5626,7 +5758,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         translate.use('de');
         this.router.events.subscribe(function (evt) {
           if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_1__["NavigationEnd"]) {
-            _this10.global.loadAllSetting(null);
+            _this12.global.loadAllSetting(null);
           }
         });
       }
@@ -6642,7 +6774,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function MessageBarComponent(router, messageService, errorService) {
-        var _this11 = this;
+        var _this13 = this;
 
         _classCallCheck(this, MessageBarComponent);
 
@@ -6662,13 +6794,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this._isLogged = false;
 
         this.onReceiveMessage = function (message) {
-          _this11.requesting = false;
+          _this13.requesting = false;
           console.log("Socket Message: ", message.body);
           var parsedMessage = JSON.parse(message.body);
           console.log("Parsed Message: ", parsedMessage);
 
           if (parsedMessage.command && parsedMessage.command === "message-reload") {
-            _this11.readMessageList(false);
+            _this13.readMessageList(false);
           }
         };
       }
@@ -6714,7 +6846,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "readMessageList",
         value: function readMessageList(reset) {
-          var _this12 = this;
+          var _this14 = this;
 
           //clearTimeout(this.messageReloadTimeoutId);
           console.log("Start Request Read message list " + (reset ? "with reset" : "without reset"));
@@ -6723,14 +6855,14 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             this.isReloadingMessages = true;
             this.messageService.loadMessages(reset).subscribe(function (messageList) {
               console.log("Read message list", messageList);
-              _this12.messages = messageList;
+              _this14.messages = messageList;
             }, function (response) {
               console.log("Error in read message list", response);
-              _this12.messages = [];
-              _this12.isReloadingMessages = false;
+              _this14.messages = [];
+              _this14.isReloadingMessages = false;
             }, function () {
               setTimeout(function () {
-                _this12.isReloadingMessages = false;
+                _this14.isReloadingMessages = false;
               }, 500);
               /*this.messageReloadTimeoutId = setTimeout(() =>{
                   this.reloadMessages(false);
@@ -6757,16 +6889,16 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "assignWorkflowMe",
         value: function assignWorkflowMe() {
-          var _this13 = this;
+          var _this15 = this;
 
           this.messageService.assignMe(this.viewWorkflowModel.identity).subscribe(function (val) {
             console.log("Workflow assigned to me"); //this.readMessageList(true);
           }, function (response) {
             console.log("Error in assigning workflow", response);
 
-            _this13.errorService.showErrorResponse(response);
+            _this15.errorService.showErrorResponse(response);
           }, function () {
-            _this13.viewWorkflow = false;
+            _this15.viewWorkflow = false;
           });
         }
       }, {
@@ -7006,7 +7138,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _createClass(AuthenticationService, [{
         key: "login",
         value: function login(username, password, companyid, loginComponent) {
-          var _this14 = this;
+          var _this16 = this;
 
           var loginData = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpParams"]().set('username', username).set('password', password).set('companyid', companyid);
           var httpOptions = {
@@ -7015,18 +7147,18 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           this.http.post(this.authenticateUrl, loginData, httpOptions).subscribe(function (val) {
             var loginResponse = val;
 
-            _this14.currentUserSubject.next(loginResponse.user);
+            _this16.currentUserSubject.next(loginResponse.user);
 
-            _this14.currentUserSubject.complete();
+            _this16.currentUserSubject.complete();
 
-            _this14.isLoggedIn = true;
+            _this16.isLoggedIn = true;
             loginComponent.processLoginResult(val);
           }, function (response) {
-            _this14.currentUserSubject.next(null);
+            _this16.currentUserSubject.next(null);
 
-            _this14.currentUserSubject.complete();
+            _this16.currentUserSubject.complete();
 
-            _this14.isLoggedIn = false;
+            _this16.isLoggedIn = false;
             loginComponent.processFailedResult(response);
           }, function () {
             loginComponent.processEndLoading();
@@ -7035,7 +7167,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "checkLoginState",
         value: function checkLoginState(returnUrl) {
-          var _this15 = this;
+          var _this17 = this;
 
           this.loadingService.showLoading();
           this.global.loadAllSettingObserv().subscribe(function (generalData) {
@@ -7043,24 +7175,24 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             var value = generalData.isLogged + "";
 
             if (value === "true" && generalData.user) {
-              _this15.isLoggedIn = true;
+              _this17.isLoggedIn = true;
 
-              _this15.currentUserSubject.next(generalData.user.currentUser); //this.currentUserSubject.complete();
+              _this17.currentUserSubject.next(generalData.user.currentUser); //this.currentUserSubject.complete();
 
 
-              _this15.global.loadAllSetting(null); //this.global.setGeneralData(generalData);
+              _this17.global.loadAllSetting(null); //this.global.setGeneralData(generalData);
               //alert("from authentication- redirect to : " + returnUrl + ": \n" + JSON.stringify(generalData));
 
 
-              _this15.router.navigate([returnUrl]);
+              _this17.router.navigate([returnUrl]);
             } else {
-              _this15.isLoggedIn = false;
+              _this17.isLoggedIn = false;
 
-              _this15.currentUserSubject.next(null); //this.currentUserSubject.complete();
+              _this17.currentUserSubject.next(null); //this.currentUserSubject.complete();
               //alert("from authentication- redirect to login : \n" + JSON.stringify(generalData));
 
 
-              _this15.router.navigate(['auth/login'], {
+              _this17.router.navigate(['auth/login'], {
                 queryParams: {
                   returnUrl: returnUrl
                 }
@@ -7068,13 +7200,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             }
           }, function (response) {
             console.log("Error in read menu list", response);
-            _this15.isLoggedIn = false;
+            _this17.isLoggedIn = false;
 
-            _this15.currentUserSubject.next(null);
+            _this17.currentUserSubject.next(null);
 
-            _this15.currentUserSubject.complete();
+            _this17.currentUserSubject.complete();
 
-            _this15.router.navigate(['auth/login'], {
+            _this17.router.navigate(['auth/login'], {
               queryParams: {
                 returnUrl: returnUrl
               }
@@ -7098,7 +7230,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "logout",
         value: function logout(returnUrl) {
-          var _this16 = this;
+          var _this18 = this;
 
           if (!returnUrl || returnUrl === null || returnUrl === undefined) {
             returnUrl = "";
@@ -7115,31 +7247,31 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             var loginResponse = val;
             console.log("Is Logged out!");
 
-            _this16.currentUserSubject.next(null); //this.currentUserSubject.complete();
+            _this18.currentUserSubject.next(null); //this.currentUserSubject.complete();
 
 
-            _this16.isLoggedIn = false; //loginComponent.processLoginResult(<LoginResponse>val);
+            _this18.isLoggedIn = false; //loginComponent.processLoginResult(<LoginResponse>val);
 
-            _this16.global.loadAllSetting(null); //this.loadingService.hideLoading();
+            _this18.global.loadAllSetting(null); //this.loadingService.hideLoading();
 
 
-            _this16.router.navigate(['auth/login'], {
+            _this18.router.navigate(['auth/login'], {
               queryParams: {
                 returnUrl: returnUrl
               }
             });
           }, function (response) {
-            _this16.currentUserSubject.next(null);
+            _this18.currentUserSubject.next(null);
 
             console.log("Error in Logging out!", response); //this.currentUserSubject.complete();
 
-            _this16.isLoggedIn = false; //loginComponent.processFailedResult(response);
+            _this18.isLoggedIn = false; //loginComponent.processFailedResult(response);
 
-            _this16.global.loadAllSetting(null);
+            _this18.global.loadAllSetting(null);
 
-            _this16.loadingService.hideLoading();
+            _this18.loadingService.hideLoading();
 
-            _this16.router.navigate(['auth/login'], {
+            _this18.router.navigate(['auth/login'], {
               queryParams: {
                 returnUrl: returnUrl
               }
@@ -7276,20 +7408,21 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _inherits(UserEditService, _helper_http_error_re);
 
       function UserEditService(http, loadingService, router, route, autService) {
-        var _this17;
+        var _this19;
 
         _classCallCheck(this, UserEditService);
 
-        _this17 = _possibleConstructorReturn(this, _getPrototypeOf(UserEditService).call(this, router, route, autService));
-        _this17.http = http;
-        _this17.loadingService = loadingService;
-        _this17.router = router;
-        _this17.route = route;
-        _this17.autService = autService;
-        _this17.loadUsersUrl = "/users/data/list";
-        _this17.createUsersUrl = "/users/data/create";
-        _this17.updateUsersUrl = "/users/data/update";
-        return _this17;
+        _this19 = _possibleConstructorReturn(this, _getPrototypeOf(UserEditService).call(this, router, route, autService));
+        _this19.http = http;
+        _this19.loadingService = loadingService;
+        _this19.router = router;
+        _this19.route = route;
+        _this19.autService = autService;
+        _this19.loadUsersUrl = "/users/data/list";
+        _this19.createUsersUrl = "/users/data/create";
+        _this19.updateUsersUrl = "/users/data/update";
+        _this19.deleteUsersUrl = "/users/data/delete";
+        return _this19;
       }
 
       _createClass(UserEditService, [{
@@ -7315,6 +7448,14 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             headers: _helper_http_hepler__WEBPACK_IMPORTED_MODULE_1__["HttpHepler"].generateJsonHeader()
           };
           return this.http.post(this.updateUsersUrl, user, httpOptions);
+        }
+      }, {
+        key: "deleteUser",
+        value: function deleteUser(user) {
+          var httpOptions = {
+            headers: _helper_http_hepler__WEBPACK_IMPORTED_MODULE_1__["HttpHepler"].generateJsonHeader()
+          };
+          return this.http.post(this.deleteUsersUrl, user, httpOptions);
         }
       }]);
 
@@ -7521,7 +7662,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _createClass(GlobalService, [{
         key: "loadAllSetting",
         value: function loadAllSetting(login) {
-          var _this18 = this;
+          var _this20 = this;
 
           this.loadingService.showLoading();
           var httpOptions = {
@@ -7531,22 +7672,22 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             console.log("GET call successful generaldata", generalData);
             var islogged = generalData.isLogged + "";
             generalData.isLogged = islogged === "true";
-            _this18.loadedGeneralData = JSON.parse(JSON.stringify(generalData));
+            _this20.loadedGeneralData = JSON.parse(JSON.stringify(generalData));
 
-            _this18.currentSessionDataSubject.next(generalData);
+            _this20.currentSessionDataSubject.next(generalData);
 
-            _this18.loadingService.hideLoading();
+            _this20.loadingService.hideLoading();
           }, function (response) {
             console.log("Error in read general list", response);
 
-            _this18.loadingService.hideLoading();
+            _this20.loadingService.hideLoading();
           }, function () {
             if (login != null) {
               login.finishGeneralDataLoading();
             } //this.currentSessionDataSubject.complete();
 
 
-            _this18.loadingService.hideLoading();
+            _this20.loadingService.hideLoading();
           });
         }
         /*setGeneralData(generalData :GeneralData){
@@ -7901,20 +8042,20 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       //departmentAssignType = /*[[${DepartmentAssign}]]*/ '';
       //departmentGroupAssignType = /*[[${DepartmentGroupAssign}]]*/ '';
       function InvoiceWorkflowEditService(http, loadingService, errorService, router, route, autService) {
-        var _this19;
+        var _this21;
 
         _classCallCheck(this, InvoiceWorkflowEditService);
 
-        _this19 = _possibleConstructorReturn(this, _getPrototypeOf(InvoiceWorkflowEditService).call(this, router, route, autService));
-        _this19.http = http;
-        _this19.loadingService = loadingService;
-        _this19.errorService = errorService;
-        _this19.router = router;
-        _this19.route = route;
-        _this19.autService = autService;
-        _this19.workflowSaveRequestInitSubject = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](null);
-        _this19.workflowSaveRequestInit = null;
-        return _this19;
+        _this21 = _possibleConstructorReturn(this, _getPrototypeOf(InvoiceWorkflowEditService).call(this, router, route, autService));
+        _this21.http = http;
+        _this21.loadingService = loadingService;
+        _this21.errorService = errorService;
+        _this21.router = router;
+        _this21.route = route;
+        _this21.autService = autService;
+        _this21.workflowSaveRequestInitSubject = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](null);
+        _this21.workflowSaveRequestInit = null;
+        return _this21;
       }
 
       _createClass(InvoiceWorkflowEditService, [{
@@ -7960,7 +8101,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "loadCreateInitialData",
         value: function loadCreateInitialData() {
-          var _this20 = this;
+          var _this22 = this;
 
           this.loadingService.showLoading();
           var httpOptions = {
@@ -7968,17 +8109,17 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           };
           this.http.post(this.getInitCreateUrl(), new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpParams"](), httpOptions).subscribe(function (initialData) {
             console.log("GET successful edit inital data", initialData);
-            _this20.workflowSaveRequestInit = JSON.parse(JSON.stringify(initialData));
+            _this22.workflowSaveRequestInit = JSON.parse(JSON.stringify(initialData));
 
-            _this20.workflowSaveRequestInitSubject.next(initialData);
+            _this22.workflowSaveRequestInitSubject.next(initialData);
           }, function (response) {
             console.log("Error in read edit inital data", response);
 
-            _this20.errorService.showErrorResponse(response);
+            _this22.errorService.showErrorResponse(response);
           }, function () {
-            _this20.workflowSaveRequestInitSubject.complete();
+            _this22.workflowSaveRequestInitSubject.complete();
 
-            _this20.loadingService.hideLoading();
+            _this22.loadingService.hideLoading();
           });
         }
       }, {
@@ -8158,19 +8299,19 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _inherits(SingleTaskWorkflowEditService, _workflow_edit_base_s);
 
       function SingleTaskWorkflowEditService(http, loadingService, router, route, autService) {
-        var _this21;
+        var _this23;
 
         _classCallCheck(this, SingleTaskWorkflowEditService);
 
-        _this21 = _possibleConstructorReturn(this, _getPrototypeOf(SingleTaskWorkflowEditService).call(this, http, loadingService, router, route, autService));
-        _this21.http = http;
-        _this21.loadingService = loadingService;
-        _this21.router = router;
-        _this21.route = route;
-        _this21.autService = autService;
-        _this21.workflowSaveRequestInitSubject = new rxjs__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"](null);
-        _this21.workflowSaveRequestInit = null;
-        return _this21;
+        _this23 = _possibleConstructorReturn(this, _getPrototypeOf(SingleTaskWorkflowEditService).call(this, http, loadingService, router, route, autService));
+        _this23.http = http;
+        _this23.loadingService = loadingService;
+        _this23.router = router;
+        _this23.route = route;
+        _this23.autService = autService;
+        _this23.workflowSaveRequestInitSubject = new rxjs__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"](null);
+        _this23.workflowSaveRequestInit = null;
+        return _this23;
       }
 
       _createClass(SingleTaskWorkflowEditService, [{
@@ -8316,19 +8457,19 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _inherits(TestthreetaskWorkflowEditService, _workflow_edit_base_s2);
 
       function TestthreetaskWorkflowEditService(http, loadingService, router, route, autService) {
-        var _this22;
+        var _this24;
 
         _classCallCheck(this, TestthreetaskWorkflowEditService);
 
-        _this22 = _possibleConstructorReturn(this, _getPrototypeOf(TestthreetaskWorkflowEditService).call(this, http, loadingService, router, route, autService));
-        _this22.http = http;
-        _this22.loadingService = loadingService;
-        _this22.router = router;
-        _this22.route = route;
-        _this22.autService = autService;
-        _this22.workflowSaveRequestInitSubject = new rxjs__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"](null);
-        _this22.workflowSaveRequestInit = null;
-        return _this22;
+        _this24 = _possibleConstructorReturn(this, _getPrototypeOf(TestthreetaskWorkflowEditService).call(this, http, loadingService, router, route, autService));
+        _this24.http = http;
+        _this24.loadingService = loadingService;
+        _this24.router = router;
+        _this24.route = route;
+        _this24.autService = autService;
+        _this24.workflowSaveRequestInitSubject = new rxjs__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"](null);
+        _this24.workflowSaveRequestInit = null;
+        return _this24;
       }
 
       _createClass(TestthreetaskWorkflowEditService, [{
@@ -8483,19 +8624,19 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       //departmentAssignType = /*[[${DepartmentAssign}]]*/ '';
       //departmentGroupAssignType = /*[[${DepartmentGroupAssign}]]*/ '';
       function WorkflowEditBaseService(http, loadingService, router, route, autService) {
-        var _this23;
+        var _this25;
 
         _classCallCheck(this, WorkflowEditBaseService);
 
-        _this23 = _possibleConstructorReturn(this, _getPrototypeOf(WorkflowEditBaseService).call(this, router, route, autService));
-        _this23.http = http;
-        _this23.loadingService = loadingService;
-        _this23.router = router;
-        _this23.route = route;
-        _this23.autService = autService;
-        _this23.workflowSaveRequestInitSubject = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](null);
-        _this23.workflowSaveRequestInit = null;
-        return _this23;
+        _this25 = _possibleConstructorReturn(this, _getPrototypeOf(WorkflowEditBaseService).call(this, router, route, autService));
+        _this25.http = http;
+        _this25.loadingService = loadingService;
+        _this25.router = router;
+        _this25.route = route;
+        _this25.autService = autService;
+        _this25.workflowSaveRequestInitSubject = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](null);
+        _this25.workflowSaveRequestInit = null;
+        return _this25;
       }
 
       _createClass(WorkflowEditBaseService, [{
@@ -8552,7 +8693,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "loadCreateInitialData",
         value: function loadCreateInitialData() {
-          var _this24 = this;
+          var _this26 = this;
 
           this.loadingService.showLoading();
           var httpOptions = {
@@ -8560,19 +8701,19 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           };
           this.http.post(this.getInitCreateUrl(), new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpParams"](), httpOptions).subscribe(function (initialData) {
             console.log("GET successful edit inital data", initialData);
-            _this24.workflowSaveRequestInit = JSON.parse(JSON.stringify(initialData));
+            _this26.workflowSaveRequestInit = JSON.parse(JSON.stringify(initialData));
 
-            _this24.workflowSaveRequestInitSubject.next(initialData);
+            _this26.workflowSaveRequestInitSubject.next(initialData);
           }, function (response) {
             console.log("Error in read edit inital data", response);
 
-            _this24.processErrorResponse(response);
+            _this26.processErrorResponse(response);
 
-            _this24.loadingService.hideLoading();
+            _this26.loadingService.hideLoading();
           }, function () {
-            _this24.workflowSaveRequestInitSubject.complete();
+            _this26.workflowSaveRequestInitSubject.complete();
 
-            _this24.loadingService.hideLoading();
+            _this26.loadingService.hideLoading();
           });
         }
       }, {
@@ -8868,27 +9009,27 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _inherits(WorkflowSearchService, _helper_http_error_re4);
 
       function WorkflowSearchService(http, loadingService, router, route, autService) {
-        var _this25;
+        var _this27;
 
         _classCallCheck(this, WorkflowSearchService);
 
-        _this25 = _possibleConstructorReturn(this, _getPrototypeOf(WorkflowSearchService).call(this, router, route, autService));
-        _this25.http = http;
-        _this25.loadingService = loadingService;
-        _this25.router = router;
-        _this25.route = route;
-        _this25.autService = autService;
-        _this25.searchInitialDataSubject = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](null);
-        _this25.loadInitialUrl = "/workflow/general/data/initsearch";
-        _this25.searchUrl = "/workflow/general/data/search";
-        _this25.listInitialData = null;
-        return _this25;
+        _this27 = _possibleConstructorReturn(this, _getPrototypeOf(WorkflowSearchService).call(this, router, route, autService));
+        _this27.http = http;
+        _this27.loadingService = loadingService;
+        _this27.router = router;
+        _this27.route = route;
+        _this27.autService = autService;
+        _this27.searchInitialDataSubject = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](null);
+        _this27.loadInitialUrl = "/workflow/general/data/initsearch";
+        _this27.searchUrl = "/workflow/general/data/search";
+        _this27.listInitialData = null;
+        return _this27;
       }
 
       _createClass(WorkflowSearchService, [{
         key: "loadInitialData",
         value: function loadInitialData() {
-          var _this26 = this;
+          var _this28 = this;
 
           this.loadingService.showLoading();
           var httpOptions = {
@@ -8896,19 +9037,19 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           };
           this.http.post(this.loadInitialUrl, new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpParams"](), httpOptions).subscribe(function (initialData) {
             console.log("GET successful search inital data", initialData);
-            _this26.listInitialData = JSON.parse(JSON.stringify(initialData));
+            _this28.listInitialData = JSON.parse(JSON.stringify(initialData));
 
-            _this26.searchInitialDataSubject.next(initialData);
+            _this28.searchInitialDataSubject.next(initialData);
           }, function (response) {
             console.log("Error in read search inital data", response);
 
-            _this26.processErrorResponse(response);
+            _this28.processErrorResponse(response);
 
-            _this26.loadingService.hideLoading();
+            _this28.loadingService.hideLoading();
           }, function () {
-            _this26.searchInitialDataSubject.complete();
+            _this28.searchInitialDataSubject.complete();
 
-            _this26.loadingService.hideLoading();
+            _this28.loadingService.hideLoading();
           });
         }
       }, {
@@ -9025,7 +9166,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function TestComponent(_stompService) {
-        var _this27 = this;
+        var _this29 = this;
 
         _classCallCheck(this, TestComponent);
 
@@ -9040,9 +9181,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.on_next = function (message) {
           console.log("My Message: ", message.body);
 
-          _this27.messageQeue.push(message.body + '\n');
+          _this29.messageQeue.push(message.body + '\n');
 
-          _this27.sending = false;
+          _this29.sending = false;
         };
       }
 
@@ -11612,29 +11753,29 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _inherits(CreateInvoiceComponent, _invoice_base_compone);
 
       function CreateInvoiceComponent(router, global, translate, editService, loadingService, http, errorService, formBuilder, dateAdapter, _stompService) {
-        var _this28;
+        var _this30;
 
         _classCallCheck(this, CreateInvoiceComponent);
 
-        _this28 = _possibleConstructorReturn(this, _getPrototypeOf(CreateInvoiceComponent).call(this, router, global, translate, editService, loadingService, http, errorService, formBuilder, dateAdapter, _stompService));
-        _this28.router = router;
-        _this28.global = global;
-        _this28.translate = translate;
-        _this28.editService = editService;
-        _this28.loadingService = loadingService;
-        _this28.http = http;
-        _this28.errorService = errorService;
-        _this28.formBuilder = formBuilder;
-        _this28.dateAdapter = dateAdapter;
-        _this28._stompService = _stompService;
+        _this30 = _possibleConstructorReturn(this, _getPrototypeOf(CreateInvoiceComponent).call(this, router, global, translate, editService, loadingService, http, errorService, formBuilder, dateAdapter, _stompService));
+        _this30.router = router;
+        _this30.global = global;
+        _this30.translate = translate;
+        _this30.editService = editService;
+        _this30.loadingService = loadingService;
+        _this30.http = http;
+        _this30.errorService = errorService;
+        _this30.formBuilder = formBuilder;
+        _this30.dateAdapter = dateAdapter;
+        _this30._stompService = _stompService;
 
-        _this28.router.events.subscribe(function (evt) {
+        _this30.router.events.subscribe(function (evt) {
           if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_1__["NavigationEnd"]) {
-            _this28.loadInitialData();
+            _this30.loadInitialData();
           }
         });
 
-        return _this28;
+        return _this30;
       }
 
       _createClass(CreateInvoiceComponent, [{
@@ -11661,24 +11802,24 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "subscribeToSearchInitialData",
         value: function subscribeToSearchInitialData() {
-          var _this29 = this;
+          var _this31 = this;
 
           this.editService.workflowSaveRequestInitSubject.subscribe(function (data) {
             console.log("set gloabl-data from workflow-create. : ", data);
 
             if (data && data !== null) {
-              _this29.workflowSaveRequest = data.workflowSaveRequest;
+              _this31.workflowSaveRequest = data.workflowSaveRequest;
 
-              _this29.setToControlValues();
+              _this31.setToControlValues();
             } else {
-              _this29.workflowSaveRequest = null;
+              _this31.workflowSaveRequest = null;
             }
           });
         }
       }, {
         key: "save",
         value: function save() {
-          var _this30 = this;
+          var _this32 = this;
 
           this.setFormControlValues();
           this.workflowSaveRequest.uploadedFiles = _wf_models__WEBPACK_IMPORTED_MODULE_5__["WorkflowUploadedFile"].loadUploadedFiles(this.uploadedFiles);
@@ -11686,15 +11827,15 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           this.editService.createWorkflow(this.workflowSaveRequest).subscribe(function (result) {
             console.log("Create workflow result", result);
 
-            _this30.router.navigate([_this30.workflowListUrl]);
+            _this32.router.navigate([_this32.workflowListUrl]);
           }, function (response) {
             console.log("Error in create workflow", response);
 
-            _this30.errorService.showErrorResponse(response);
+            _this32.errorService.showErrorResponse(response);
 
-            _this30.loadingService.hideLoading();
+            _this32.loadingService.hideLoading();
           }, function () {
-            _this30.loadingService.hideLoading();
+            _this32.loadingService.hideLoading();
           });
         }
       }, {
@@ -12407,7 +12548,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function CreateSingletaskComponent(router, global, translate, editService, loadingService, http, errorService) {
-        var _this31 = this;
+        var _this33 = this;
 
         _classCallCheck(this, CreateSingletaskComponent);
 
@@ -12425,7 +12566,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.uploadedFiles = [];
         this.router.events.subscribe(function (evt) {
           if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_1__["NavigationEnd"]) {
-            _this31.loadInitialData();
+            _this33.loadInitialData();
           }
         });
         this.generalDataObs = this.global.currentSessionDataSubject.asObservable();
@@ -12454,36 +12595,36 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "subscribeToSearchInitialData",
         value: function subscribeToSearchInitialData() {
-          var _this32 = this;
+          var _this34 = this;
 
           this.editService.workflowSaveRequestInitSubject.subscribe(function (data) {
             console.log("set gloabl-data from workflow-create. : ", data); //alert("from app-comp: \n" + JSON.stringify(data));
 
             if (data && data !== null) {
-              _this32.workflowSaveRequest = data.workflowSaveRequest;
+              _this34.workflowSaveRequest = data.workflowSaveRequest;
             } else {
-              _this32.workflowSaveRequest = null;
+              _this34.workflowSaveRequest = null;
             }
           });
         }
       }, {
         key: "save",
         value: function save() {
-          var _this33 = this;
+          var _this35 = this;
 
           this.loadingService.showLoading();
           this.editService.createWorkflow(this.workflowSaveRequest).subscribe(function (result) {
             console.log("Create workflow result", result);
 
-            _this33.router.navigate([_this33.workflowListUrl]);
+            _this35.router.navigate([_this35.workflowListUrl]);
           }, function (response) {
             console.log("Error in create workflow", response);
 
-            _this33.errorService.showErrorResponse(response);
+            _this35.errorService.showErrorResponse(response);
 
-            _this33.loadingService.hideLoading();
+            _this35.loadingService.hideLoading();
           }, function () {
-            _this33.loadingService.hideLoading();
+            _this35.loadingService.hideLoading();
           });
         }
       }, {
@@ -12926,7 +13067,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function CreateTestthreetaskComponent(router, global, translate, editService, loadingService, http, errorService) {
-        var _this34 = this;
+        var _this36 = this;
 
         _classCallCheck(this, CreateTestthreetaskComponent);
 
@@ -12944,7 +13085,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.uploadedFiles = [];
         this.router.events.subscribe(function (evt) {
           if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_1__["NavigationEnd"]) {
-            _this34.loadInitialData();
+            _this36.loadInitialData();
           }
         });
         this.generalDataObs = this.global.currentSessionDataSubject.asObservable();
@@ -12973,37 +13114,37 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "subscribeToSearchInitialData",
         value: function subscribeToSearchInitialData() {
-          var _this35 = this;
+          var _this37 = this;
 
           this.editService.workflowSaveRequestInitSubject.subscribe(function (data) {
             console.log("set gloabl-data from workflow-create. : ", data); //alert("from app-comp: \n" + JSON.stringify(data));
 
             if (data && data !== null) {
-              _this35.workflowSaveRequest = data.workflowSaveRequest;
+              _this37.workflowSaveRequest = data.workflowSaveRequest;
             } else {
-              _this35.workflowSaveRequest = null;
+              _this37.workflowSaveRequest = null;
             }
           });
         }
       }, {
         key: "save",
         value: function save() {
-          var _this36 = this;
+          var _this38 = this;
 
           this.workflowSaveRequest.uploadedFiles = _wf_models__WEBPACK_IMPORTED_MODULE_3__["WorkflowUploadedFile"].loadUploadedFiles(this.uploadedFiles);
           this.loadingService.showLoading();
           this.editService.createWorkflow(this.workflowSaveRequest).subscribe(function (result) {
             console.log("Create workflow result", result);
 
-            _this36.router.navigate([_this36.workflowListUrl]);
+            _this38.router.navigate([_this38.workflowListUrl]);
           }, function (response) {
             console.log("Error in create workflow", response);
 
-            _this36.errorService.showErrorResponse(response);
+            _this38.errorService.showErrorResponse(response);
 
-            _this36.loadingService.hideLoading();
+            _this38.loadingService.hideLoading();
           }, function () {
-            _this36.loadingService.hideLoading();
+            _this38.loadingService.hideLoading();
           });
         }
       }, {
@@ -14200,35 +14341,35 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _inherits(EditInvoiceComponent, _invoice_base_compone2);
 
       function EditInvoiceComponent(router, global, translate, editService, loadingService, http, errorService, formBuilder, dateAdapter, route, _stompService) {
-        var _this37;
+        var _this39;
 
         _classCallCheck(this, EditInvoiceComponent);
 
-        _this37 = _possibleConstructorReturn(this, _getPrototypeOf(EditInvoiceComponent).call(this, router, global, translate, editService, loadingService, http, errorService, formBuilder, dateAdapter, _stompService));
-        _this37.router = router;
-        _this37.global = global;
-        _this37.translate = translate;
-        _this37.editService = editService;
-        _this37.loadingService = loadingService;
-        _this37.http = http;
-        _this37.errorService = errorService;
-        _this37.formBuilder = formBuilder;
-        _this37.dateAdapter = dateAdapter;
-        _this37.route = route;
-        _this37._stompService = _stompService;
-        _this37.workflowIdentity = "not-set";
-        _this37.saveMessage = "";
-        _this37.viewWorkflowModel = null;
+        _this39 = _possibleConstructorReturn(this, _getPrototypeOf(EditInvoiceComponent).call(this, router, global, translate, editService, loadingService, http, errorService, formBuilder, dateAdapter, _stompService));
+        _this39.router = router;
+        _this39.global = global;
+        _this39.translate = translate;
+        _this39.editService = editService;
+        _this39.loadingService = loadingService;
+        _this39.http = http;
+        _this39.errorService = errorService;
+        _this39.formBuilder = formBuilder;
+        _this39.dateAdapter = dateAdapter;
+        _this39.route = route;
+        _this39._stompService = _stompService;
+        _this39.workflowIdentity = "not-set";
+        _this39.saveMessage = "";
+        _this39.viewWorkflowModel = null;
 
-        _this37.router.events.subscribe(function (evt) {
+        _this39.router.events.subscribe(function (evt) {
           if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_1__["NavigationEnd"]) {
-            _this37.workflowIdentity = _this37.route.snapshot.params['identity'];
+            _this39.workflowIdentity = _this39.route.snapshot.params['identity'];
 
-            _this37.loadInitialData();
+            _this39.loadInitialData();
           }
         });
 
-        return _this37;
+        return _this39;
       }
 
       _createClass(EditInvoiceComponent, [{
@@ -14253,26 +14394,26 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "loadWorkflowData",
         value: function loadWorkflowData() {
-          var _this38 = this;
+          var _this40 = this;
 
           this.loadingService.showLoading();
           this.editService.loadEditInitialData(this.workflowIdentity).subscribe(function (initialData) {
             console.log("set inital-data from workflow-edit. : ", initialData); //alert("from app-comp: \n" + JSON.stringify(data));
 
             if (initialData && initialData !== null) {
-              _this38.workflowSaveRequest = initialData.workflowSaveRequest;
-              _this38.viewWorkflowModel = _this38.workflowSaveRequest.workflow;
+              _this40.workflowSaveRequest = initialData.workflowSaveRequest;
+              _this40.viewWorkflowModel = _this40.workflowSaveRequest.workflow;
 
-              _this38.setToControlValues();
+              _this40.setToControlValues();
             } else {
-              _this38.workflowSaveRequest = null;
+              _this40.workflowSaveRequest = null;
             }
           }, function (response) {
             console.log("Error in read edit inital data", response);
 
-            _this38.errorService.showErrorResponse(response);
+            _this40.errorService.showErrorResponse(response);
           }, function () {
-            _this38.loadingService.hideLoading();
+            _this40.loadingService.hideLoading();
           });
         }
       }, {
@@ -14297,55 +14438,17 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "saveWorkflowData",
         value: function saveWorkflowData() {
-          var _this39 = this;
+          var _this41 = this;
 
           this.saveMessage = "";
           this.editService.saveWorkflow(this.workflowSaveRequest).subscribe(function (result) {
             console.log("Create workflow result", result);
 
-            _this39.translate.get('common.saved').subscribe(function (res) {
-              _this39.saveMessage = res;
+            _this41.translate.get('common.saved').subscribe(function (res) {
+              _this41.saveMessage = res;
             });
 
-            _this39.loadWorkflowData();
-          }, function (response) {
-            console.log("Error in create workflow", response);
-
-            _this39.errorService.showErrorResponse(response);
-
-            _this39.loadingService.hideLoading();
-          }, function () {
-            _this39.loadingService.hideLoading();
-          });
-        }
-      }, {
-        key: "doneWorkflowData",
-        value: function doneWorkflowData() {
-          var _this40 = this;
-
-          this.editService.doneWorkflow(this.workflowSaveRequest).subscribe(function (result) {
-            console.log("Create workflow result", result);
-
-            _this40.router.navigate([_this40.workflowListUrl]);
-          }, function (response) {
-            console.log("Error in create workflow", response);
-
-            _this40.errorService.showErrorResponse(response);
-
-            _this40.loadingService.hideLoading();
-          }, function () {
-            _this40.loadingService.hideLoading();
-          });
-        }
-      }, {
-        key: "archiveWorkflowData",
-        value: function archiveWorkflowData() {
-          var _this41 = this;
-
-          this.editService.archiveWorkflow(this.workflowSaveRequest.workflow).subscribe(function (result) {
-            console.log("Create workflow result", result);
-
-            _this41.router.navigate([_this41.workflowListUrl]);
+            _this41.loadWorkflowData();
           }, function (response) {
             console.log("Error in create workflow", response);
 
@@ -14354,6 +14457,44 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             _this41.loadingService.hideLoading();
           }, function () {
             _this41.loadingService.hideLoading();
+          });
+        }
+      }, {
+        key: "doneWorkflowData",
+        value: function doneWorkflowData() {
+          var _this42 = this;
+
+          this.editService.doneWorkflow(this.workflowSaveRequest).subscribe(function (result) {
+            console.log("Create workflow result", result);
+
+            _this42.router.navigate([_this42.workflowListUrl]);
+          }, function (response) {
+            console.log("Error in create workflow", response);
+
+            _this42.errorService.showErrorResponse(response);
+
+            _this42.loadingService.hideLoading();
+          }, function () {
+            _this42.loadingService.hideLoading();
+          });
+        }
+      }, {
+        key: "archiveWorkflowData",
+        value: function archiveWorkflowData() {
+          var _this43 = this;
+
+          this.editService.archiveWorkflow(this.workflowSaveRequest.workflow).subscribe(function (result) {
+            console.log("Create workflow result", result);
+
+            _this43.router.navigate([_this43.workflowListUrl]);
+          }, function (response) {
+            console.log("Error in create workflow", response);
+
+            _this43.errorService.showErrorResponse(response);
+
+            _this43.loadingService.hideLoading();
+          }, function () {
+            _this43.loadingService.hideLoading();
           });
         }
       }, {
@@ -15326,7 +15467,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function EditSingleTaskComponent(router, global, translate, editService, loadingService, http, errorService, formBuilder, dateAdapter, route) {
-        var _this42 = this;
+        var _this44 = this;
 
         _classCallCheck(this, EditSingleTaskComponent);
 
@@ -15348,9 +15489,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.viewWorkflowModel = null;
         this.router.events.subscribe(function (evt) {
           if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_1__["NavigationEnd"]) {
-            _this42.workflowIdentity = _this42.route.snapshot.params['identity'];
+            _this44.workflowIdentity = _this44.route.snapshot.params['identity'];
 
-            _this42.loadInitialData();
+            _this44.loadInitialData();
           }
         });
         this.dateAdapter.setLocale('de');
@@ -15392,26 +15533,26 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "loadWorkflowData",
         value: function loadWorkflowData() {
-          var _this43 = this;
+          var _this45 = this;
 
           this.loadingService.showLoading();
           this.editService.loadEditInitialData(this.workflowIdentity).subscribe(function (initialData) {
             console.log("set inital-data from workflow-edit. : ", initialData); //alert("from app-comp: \n" + JSON.stringify(data));
 
             if (initialData && initialData !== null) {
-              _this43.workflowSaveRequest = initialData.workflowSaveRequest;
-              _this43.viewWorkflowModel = _this43.workflowSaveRequest.workflow;
+              _this45.workflowSaveRequest = initialData.workflowSaveRequest;
+              _this45.viewWorkflowModel = _this45.workflowSaveRequest.workflow;
 
-              _this43.setToControlValues();
+              _this45.setToControlValues();
             } else {
-              _this43.workflowSaveRequest = null;
+              _this45.workflowSaveRequest = null;
             }
           }, function (response) {
             console.log("Error in read edit inital data", response);
 
-            _this43.errorService.showErrorResponse(response);
+            _this45.errorService.showErrorResponse(response);
           }, function () {
-            _this43.loadingService.hideLoading();
+            _this45.loadingService.hideLoading();
           });
         }
       }, {
@@ -15457,56 +15598,17 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "saveWorkflowData",
         value: function saveWorkflowData() {
-          var _this44 = this;
+          var _this46 = this;
 
           console.log("Saving workflow", this.workflowSaveRequest);
           this.editService.saveWorkflow(this.workflowSaveRequest).subscribe(function (result) {
             console.log("Create workflow result", result);
 
-            _this44.translate.get('common.saved').subscribe(function (res) {
-              _this44.saveMessage = res;
+            _this46.translate.get('common.saved').subscribe(function (res) {
+              _this46.saveMessage = res;
             });
 
-            _this44.loadWorkflowData();
-          }, function (response) {
-            console.log("Error in create workflow", response);
-
-            _this44.errorService.showErrorResponse(response);
-
-            _this44.loadingService.hideLoading();
-          }, function () {
-            _this44.loadingService.hideLoading();
-          });
-        }
-      }, {
-        key: "doneWorkflowData",
-        value: function doneWorkflowData() {
-          var _this45 = this;
-
-          console.log("Done workflow", this.workflowSaveRequest);
-          this.editService.doneWorkflow(this.workflowSaveRequest).subscribe(function (result) {
-            console.log("Create workflow result", result);
-
-            _this45.router.navigate([_this45.workflowListUrl]);
-          }, function (response) {
-            console.log("Error in create workflow", response);
-
-            _this45.errorService.showErrorResponse(response);
-
-            _this45.loadingService.hideLoading();
-          }, function () {
-            _this45.loadingService.hideLoading();
-          });
-        }
-      }, {
-        key: "archiveWorkflowData",
-        value: function archiveWorkflowData() {
-          var _this46 = this;
-
-          this.editService.archiveWorkflow(this.workflowSaveRequest.workflow).subscribe(function (result) {
-            console.log("Create workflow result", result);
-
-            _this46.router.navigate([_this46.workflowListUrl]);
+            _this46.loadWorkflowData();
           }, function (response) {
             console.log("Error in create workflow", response);
 
@@ -15515,6 +15617,45 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             _this46.loadingService.hideLoading();
           }, function () {
             _this46.loadingService.hideLoading();
+          });
+        }
+      }, {
+        key: "doneWorkflowData",
+        value: function doneWorkflowData() {
+          var _this47 = this;
+
+          console.log("Done workflow", this.workflowSaveRequest);
+          this.editService.doneWorkflow(this.workflowSaveRequest).subscribe(function (result) {
+            console.log("Create workflow result", result);
+
+            _this47.router.navigate([_this47.workflowListUrl]);
+          }, function (response) {
+            console.log("Error in create workflow", response);
+
+            _this47.errorService.showErrorResponse(response);
+
+            _this47.loadingService.hideLoading();
+          }, function () {
+            _this47.loadingService.hideLoading();
+          });
+        }
+      }, {
+        key: "archiveWorkflowData",
+        value: function archiveWorkflowData() {
+          var _this48 = this;
+
+          this.editService.archiveWorkflow(this.workflowSaveRequest.workflow).subscribe(function (result) {
+            console.log("Create workflow result", result);
+
+            _this48.router.navigate([_this48.workflowListUrl]);
+          }, function (response) {
+            console.log("Error in create workflow", response);
+
+            _this48.errorService.showErrorResponse(response);
+
+            _this48.loadingService.hideLoading();
+          }, function () {
+            _this48.loadingService.hideLoading();
           });
         }
       }, {
@@ -16196,7 +16337,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function EditTestthreeTaskComponent(router, global, translate, editService, loadingService, http, errorService, formBuilder, dateAdapter, route) {
-        var _this47 = this;
+        var _this49 = this;
 
         _classCallCheck(this, EditTestthreeTaskComponent);
 
@@ -16219,9 +16360,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.uploadedFiles = [];
         this.router.events.subscribe(function (evt) {
           if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_1__["NavigationEnd"]) {
-            _this47.workflowIdentity = _this47.route.snapshot.params['identity'];
+            _this49.workflowIdentity = _this49.route.snapshot.params['identity'];
 
-            _this47.loadInitialData();
+            _this49.loadInitialData();
           }
         });
         this.dateAdapter.setLocale('de');
@@ -16262,26 +16403,26 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "loadWorkflowData",
         value: function loadWorkflowData() {
-          var _this48 = this;
+          var _this50 = this;
 
           this.loadingService.showLoading();
           this.editService.loadEditInitialData(this.workflowIdentity).subscribe(function (initialData) {
             console.log("set inital-data from workflow-edit. : ", initialData); //alert("from app-comp: \n" + JSON.stringify(data));
 
             if (initialData && initialData !== null) {
-              _this48.workflowSaveRequest = initialData.workflowSaveRequest;
-              _this48.viewWorkflowModel = _this48.workflowSaveRequest.workflow;
+              _this50.workflowSaveRequest = initialData.workflowSaveRequest;
+              _this50.viewWorkflowModel = _this50.workflowSaveRequest.workflow;
 
-              _this48.setToControlValues();
+              _this50.setToControlValues();
             } else {
-              _this48.workflowSaveRequest = null;
+              _this50.workflowSaveRequest = null;
             }
           }, function (response) {
             console.log("Error in read edit inital data", response);
 
-            _this48.errorService.showErrorResponse(response);
+            _this50.errorService.showErrorResponse(response);
           }, function () {
-            _this48.loadingService.hideLoading();
+            _this50.loadingService.hideLoading();
           });
         }
       }, {
@@ -16326,54 +16467,16 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "saveWorkflowData",
         value: function saveWorkflowData() {
-          var _this49 = this;
+          var _this51 = this;
 
           this.editService.saveWorkflow(this.workflowSaveRequest).subscribe(function (result) {
             console.log("Create workflow result", result);
 
-            _this49.translate.get('common.saved').subscribe(function (res) {
-              _this49.saveMessage = res;
+            _this51.translate.get('common.saved').subscribe(function (res) {
+              _this51.saveMessage = res;
             });
 
-            _this49.loadWorkflowData();
-          }, function (response) {
-            console.log("Error in create workflow", response);
-
-            _this49.errorService.showErrorResponse(response);
-
-            _this49.loadingService.hideLoading();
-          }, function () {
-            _this49.loadingService.hideLoading();
-          });
-        }
-      }, {
-        key: "doneWorkflowData",
-        value: function doneWorkflowData() {
-          var _this50 = this;
-
-          this.editService.doneWorkflow(this.workflowSaveRequest).subscribe(function (result) {
-            console.log("Create workflow result", result);
-
-            _this50.router.navigate([_this50.workflowListUrl]);
-          }, function (response) {
-            console.log("Error in create workflow", response);
-
-            _this50.errorService.showErrorResponse(response);
-
-            _this50.loadingService.hideLoading();
-          }, function () {
-            _this50.loadingService.hideLoading();
-          });
-        }
-      }, {
-        key: "archiveWorkflowData",
-        value: function archiveWorkflowData() {
-          var _this51 = this;
-
-          this.editService.archiveWorkflow(this.workflowSaveRequest.workflow).subscribe(function (result) {
-            console.log("Create workflow result", result);
-
-            _this51.router.navigate([_this51.workflowListUrl]);
+            _this51.loadWorkflowData();
           }, function (response) {
             console.log("Error in create workflow", response);
 
@@ -16382,6 +16485,44 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             _this51.loadingService.hideLoading();
           }, function () {
             _this51.loadingService.hideLoading();
+          });
+        }
+      }, {
+        key: "doneWorkflowData",
+        value: function doneWorkflowData() {
+          var _this52 = this;
+
+          this.editService.doneWorkflow(this.workflowSaveRequest).subscribe(function (result) {
+            console.log("Create workflow result", result);
+
+            _this52.router.navigate([_this52.workflowListUrl]);
+          }, function (response) {
+            console.log("Error in create workflow", response);
+
+            _this52.errorService.showErrorResponse(response);
+
+            _this52.loadingService.hideLoading();
+          }, function () {
+            _this52.loadingService.hideLoading();
+          });
+        }
+      }, {
+        key: "archiveWorkflowData",
+        value: function archiveWorkflowData() {
+          var _this53 = this;
+
+          this.editService.archiveWorkflow(this.workflowSaveRequest.workflow).subscribe(function (result) {
+            console.log("Create workflow result", result);
+
+            _this53.router.navigate([_this53.workflowListUrl]);
+          }, function (response) {
+            console.log("Error in create workflow", response);
+
+            _this53.errorService.showErrorResponse(response);
+
+            _this53.loadingService.hideLoading();
+          }, function () {
+            _this53.loadingService.hideLoading();
           });
         }
       }, {
@@ -16875,7 +17016,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function InvoiceBaseComponent(router, global, translate, editService, loadingService, http, errorService, formBuilder, dateAdapter, _stompService) {
-        var _this52 = this;
+        var _this54 = this;
 
         _classCallCheck(this, InvoiceBaseComponent);
 
@@ -16906,35 +17047,35 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.invoiceTypes = [];
 
         this.onRecevieResponse = function (message) {
-          if (_this52.listening === false) {
+          if (_this54.listening === false) {
             return;
           }
 
-          var uploaded = _this52.uploadedFiles[_this52.scanningFileIndex];
+          var uploaded = _this54.uploadedFiles[_this54.scanningFileIndex];
 
-          _this52.loadingService.hideLoading();
+          _this54.loadingService.hideLoading();
 
           console.log("Message Received: ", message.body);
           var parsedMessage = JSON.parse(message.body);
 
           if (parsedMessage.status) {
             if (parsedMessage.status === "done") {
-              _this52.unsubscribe();
+              _this54.unsubscribe();
 
               if (parsedMessage.words) {
-                _this52.showOcrDetailsDialog = true;
-                _this52.uploadedFiles[_this52.scanningFileIndex].foundWords = parsedMessage.words;
-                _this52.uploadedFiles[_this52.scanningFileIndex].isScanned = true;
-                _this52.uploadedFiles[_this52.scanningFileIndex].imageSizeX = parsedMessage.imageWidth;
-                _this52.uploadedFiles[_this52.scanningFileIndex].imageSizeY = parsedMessage.imageHeight;
-                console.log("Received Words: ", _this52.uploadedFiles[_this52.scanningFileIndex].foundWords);
+                _this54.showOcrDetailsDialog = true;
+                _this54.uploadedFiles[_this54.scanningFileIndex].foundWords = parsedMessage.words;
+                _this54.uploadedFiles[_this54.scanningFileIndex].isScanned = true;
+                _this54.uploadedFiles[_this54.scanningFileIndex].imageSizeX = parsedMessage.imageWidth;
+                _this54.uploadedFiles[_this54.scanningFileIndex].imageSizeY = parsedMessage.imageHeight;
+                console.log("Received Words: ", _this54.uploadedFiles[_this54.scanningFileIndex].foundWords);
               }
             }
 
             if (parsedMessage.status === "error" && parsedMessage.errorMessage) {
-              _this52.unsubscribe();
+              _this54.unsubscribe();
 
-              _this52.errorService.showError(parsedMessage.errorMessage, parsedMessage.errorDetail);
+              _this54.errorService.showError(parsedMessage.errorMessage, parsedMessage.errorDetail);
             }
           }
         };
@@ -16947,7 +17088,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
           if (isNaN(num)) {
             translate.get('invoice-invoicetype-' + str.toLowerCase()).subscribe(function (res) {
-              _this52.invoiceTypes.push({
+              _this54.invoiceTypes.push({
                 value: o,
                 title: res
               });
@@ -16956,10 +17097,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         }
 
         this.translate.get('invoice-paymentamount').subscribe(function (res) {
-          _this52.paymentamountOtherTypesTitle = res;
+          _this54.paymentamountOtherTypesTitle = res;
         });
         this.translate.get('invoice-paymentamount-payment').subscribe(function (res) {
-          _this52.paymentamountTypePaymentTitle = res;
+          _this54.paymentamountTypePaymentTitle = res;
         });
         this.generalDataObs = this.global.currentSessionDataSubject.asObservable();
       }
@@ -17077,7 +17218,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "setPageTitle",
         value: function setPageTitle() {
-          var _this53 = this;
+          var _this55 = this;
 
           var pageLabelId = "invoice-assignview-title";
 
@@ -17094,7 +17235,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           }
 
           this.translate.get(pageLabelId).subscribe(function (res) {
-            _this53.pageTitle = res;
+            _this55.pageTitle = res;
           });
         }
       }, {
@@ -17729,7 +17870,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "foundWords",
         set: function set(foundWordsInput) {
-          var _this54 = this;
+          var _this56 = this;
 
           this._foundWords = foundWordsInput;
           this.propertyLabels = [];
@@ -17737,9 +17878,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           if (this._foundWords) {
             for (var key in this._foundWords) {
               this.translate.get(key).subscribe(function (res) {
-                _this54.propertyLabels[key] = res;
-                _this54.isEditing[key] = false;
-                _this54.editedValues[key] = "";
+                _this56.propertyLabels[key] = res;
+                _this56.isEditing[key] = false;
+                _this56.editedValues[key] = "";
               });
             }
           }
@@ -18936,7 +19077,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function WorkflowListComponent(router, global, translate, searchService, loadingService, errorService, route) {
-        var _this55 = this;
+        var _this57 = this;
 
         _classCallCheck(this, WorkflowListComponent);
 
@@ -18955,7 +19096,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.viewWorkflowModel = null;
         this.router.events.subscribe(function (evt) {
           if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_1__["NavigationEnd"]) {
-            _this55.loadInitialData();
+            _this57.loadInitialData();
           }
         });
       }
@@ -18978,35 +19119,35 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "subscribeToSearchInitialData",
         value: function subscribeToSearchInitialData() {
-          var _this56 = this;
+          var _this58 = this;
 
           this.searchService.searchInitialDataSubject.subscribe(function (data) {
             console.log("set gloabl-data from workflow-create. : ", data); //alert("from app-comp: \n" + JSON.stringify(data));
 
             if (data && data !== null) {
-              _this56.listInitialData = data;
+              _this58.listInitialData = data;
             } else {
-              _this56.listInitialData = null;
+              _this58.listInitialData = null;
             }
           });
         }
       }, {
         key: "reload",
         value: function reload() {
-          var _this57 = this;
+          var _this59 = this;
 
           this.loadingService.showLoading();
           this.searchService.search(this.listInitialData.searchFilter).subscribe(function (result) {
             console.log("search successful workflow", result);
-            _this57.resultWorlflows = result.list;
+            _this59.resultWorlflows = result.list;
           }, function (response) {
             console.log("Error in search workflow", response);
 
-            _this57.loadingService.hideLoading();
+            _this59.loadingService.hideLoading();
 
-            _this57.errorService.showErrorResponse(response);
+            _this59.errorService.showErrorResponse(response);
           }, function () {
-            _this57.loadingService.hideLoading();
+            _this59.loadingService.hideLoading();
           });
         }
       }, {

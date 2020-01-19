@@ -94,7 +94,7 @@ public class TestDataProducer {
     model.setLastName("lastName");
     model.setStatus(1);
     model.setVersion(1);
-    model.setPermission(1);
+    model.setUserAccessFromPermission(1);
     model.setDepartmentGroups(this.getTestDepartmentGroupIdSet());
     model.setDepartments(this.getTestDepartmentIdSet());
     model.setDeputies(this.getTestDeputiyIdSet());
@@ -116,7 +116,7 @@ public class TestDataProducer {
     model.setLastName(lname);
     model.setStatus(1);
     model.setVersion(1);
-    model.setPermission(1);
+    model.setUserAccessFromPermission(1);
     model.setDepartmentGroups(this.getTestDepartmentGroupIdSet());
     model.setDepartments(this.getTestDepartmentIdSet());
     model.setDeputies(this.getTestDeputiyIdSet());

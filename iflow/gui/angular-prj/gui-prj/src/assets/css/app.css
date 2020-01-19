@@ -942,4 +942,6 @@ a.tool-link:hover{
 	z-index: 99999 !important;		
 }
 
-
+.custome-ander-text{
+	font-size: 18px;
+}

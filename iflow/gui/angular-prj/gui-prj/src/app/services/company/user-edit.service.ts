@@ -19,6 +19,7 @@ export class UserEditService extends HttpErrorResponseHelper {
 	loadUsersUrl :string = "/users/data/list";
 	createUsersUrl :string = "/users/data/create";
 	updateUsersUrl :string = "/users/data/update";
+	deleteUsersUrl :string = "/users/data/delete";
  
 	constructor(
 			protected http: HttpClient,
@@ -34,7 +35,6 @@ export class UserEditService extends HttpErrorResponseHelper {
 	listUsers(){
 		
 	    const httpOptions = { headers: HttpHepler.generateJsonHeader() };
-
 	    
 		return this.http.get(this.loadUsersUrl, httpOptions);	    
 		
@@ -43,7 +43,6 @@ export class UserEditService extends HttpErrorResponseHelper {
 	createUser(user: User){
 		
 	    const httpOptions = { headers: HttpHepler.generateJsonHeader() };
-
 	    
 		return this.http.post(this.createUsersUrl, user, httpOptions);	    
 		
@@ -52,9 +51,16 @@ export class UserEditService extends HttpErrorResponseHelper {
 	updateUser(user: User){
 		
 	    const httpOptions = { headers: HttpHepler.generateJsonHeader() };
-
 	    
 		return this.http.post(this.updateUsersUrl, user, httpOptions);	    
+		
+	};
+	
+	deleteUser(user: User){
+		
+	    const httpOptions = { headers: HttpHepler.generateJsonHeader() };
+	    
+		return this.http.post(this.deleteUsersUrl, user, httpOptions);	    
 		
 	};
 }

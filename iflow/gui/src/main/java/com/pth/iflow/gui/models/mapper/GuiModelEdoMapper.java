@@ -188,7 +188,7 @@ public class GuiModelEdoMapper {
     final UserEdo edo = new UserEdo();
     edo.setFirstName(model.getFirstName());
     edo.setLastName(model.getLastName());
-    edo.setPermission(model.getPermission());
+    edo.setPermission(model.getPermissionFromUserAccess());
     edo.setStatus(model.getStatus());
     edo.setVersion(model.getVersion());
     edo.setEmail(model.getEmail());
@@ -212,7 +212,7 @@ public class GuiModelEdoMapper {
 
     model.setFirstName(edo.getFirstName());
     model.setLastName(edo.getLastName());
-    model.setPermission(edo.getPermission());
+    model.setUserAccessFromPermission(edo.getPermission());
     model.setStatus(edo.getStatus());
     model.setVersion(edo.getVersion());
     model.setEmail(edo.getEmail());

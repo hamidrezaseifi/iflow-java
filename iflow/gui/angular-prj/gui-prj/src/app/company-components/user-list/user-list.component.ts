@@ -30,6 +30,11 @@ export class UserListComponent implements OnInit {
 	editingUser :User = new User;
 
 	userEditForm: FormGroup;
+	
+	deleteMessageBase :string = "";
+	deleteMessage :string = "";
+	delitingUser :User = new User;
+	showDeleteModal :boolean = false;
 
 	constructor(
 		    private router: Router,
@@ -45,7 +50,10 @@ export class UserListComponent implements OnInit {
 	) {
 		this.dateAdapter.setLocale('de');
 		
-		
+        translate.get('user-delete-message').subscribe((res: string) => {
+        	this.deleteMessageBase = res;
+        });
+
 	}
 
 	ngOnInit() {
@@ -70,7 +78,7 @@ export class UserListComponent implements OnInit {
 		for(var cnt in this.userEditForm.controls){
 			var ctl = this.userEditForm.controls[cnt];
 			//JSON.stringify(ctl.ValidationErrors)
-			s += cnt + ": " +  " \n ";
+			s += cnt + ": " + ctl.value +  " \n ";
 		}
 		return s;
 	}
@@ -97,7 +105,7 @@ export class UserListComponent implements OnInit {
 		);	       	
 	}
 
-	createUser() {
+	showCreateUser() {
 		var passwordCtrl:AbstractControl = this.userEditForm.get('password');
 		passwordCtrl.enable();
 
@@ -109,7 +117,7 @@ export class UserListComponent implements OnInit {
 		
 	}
 
-	editUser(user: User) {
+	showEditUser(user: User) {
 		
 		var passwordCtrl:AbstractControl = this.userEditForm.get('password');
 		passwordCtrl.disable();
@@ -122,21 +130,56 @@ export class UserListComponent implements OnInit {
 		this.showEditModal = true;
 	}
 
-	viewUser(user: User) {
+	showViewUser(user: User) {
 		
 	}
 
-	deleteUser(user: User) {
+	showDeleteUser(user: User) {
 		
+		this.delitingUser = user;
+		this.deleteMessage = this.deleteMessageBase;
+		this.deleteMessage = this.deleteMessage.replace("%" , user.fullName);
+
+		this.showDeleteModal = true;
 	}
 	
-	hideUserDialog(){
+	hideDeleteUserDialog(){
+		this.showDeleteModal = false;
+	}
+	
+	hideEditUserDialog(){
 		this.showEditModal = false;
 	}
 
+	deleteUser(){
+		this.loadingService.showLoading();
+		
+
+		this.editService.deleteUser(this.delitingUser).subscribe(
+		        (result) => {		        	
+		            console.log("Delete user result success.");
+		            this.showDeleteModal = false;
+		            this.reload();
+		            
+		        },
+		        response => {
+		        	console.log("Error in create user", response);
+		        	
+		        	this.errorService.showErrorResponse(response);
+		        	this.loadingService.hideLoading();	 
+		        },
+		        () => {
+		        	
+		        	this.loadingService.hideLoading();	 
+		        }
+		);	     
+		
+
+	}
+	
 	saveUser() {
 		this.setFormControlValues();
-		
+				
 		this.loadingService.showLoading();
 		
 		if(this.isCreating){
@@ -210,5 +253,6 @@ export class UserListComponent implements OnInit {
 		this.editingUser.status = this.userEditForm.controls["status"].value;			
 		this.editingUser.birthDate = formatDate(this.userEditForm.controls["birthDate"].value, 'dd.mm.yyyy');
 	}
+	
 	
 }

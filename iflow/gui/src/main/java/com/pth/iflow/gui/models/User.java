@@ -196,12 +196,12 @@ public class User extends IdentityModel {
     this.updatedAt = updatedAt;
   }
 
-  public Integer getPermission() {
+  public Integer getPermissionFromUserAccess() {
 
     return this.userAccess.getPermission();
   }
 
-  public void setPermission(final Integer permission) {
+  public void setUserAccessFromPermission(final Integer permission) {
 
     this.userAccess = EUserAcces.fromPermission(permission);
   }
@@ -219,6 +219,11 @@ public class User extends IdentityModel {
   public void setUserAccess(final EUserAcces userAcces) {
 
     this.userAccess = userAcces;
+  }
+
+  public void setUserAccess111(final String userAcces) {
+
+    this.userAccess = EUserAcces.valueOf(userAcces);
   }
 
   public Set<String> getGroups() {
