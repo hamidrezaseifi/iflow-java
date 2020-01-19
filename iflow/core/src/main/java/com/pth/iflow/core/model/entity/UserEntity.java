@@ -19,6 +19,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -35,6 +36,9 @@ public class UserEntity extends EntityIdentityHelper {
   @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+
+  @Column(name = "identity")
+  private String identity;
 
   @Column(name = "email")
   private String email;
@@ -104,10 +108,6 @@ public class UserEntity extends EntityIdentityHelper {
 
   }
 
-  /**
-   * @return the id
-   */
-
   @Override
   public Long getId() {
 
@@ -119,18 +119,23 @@ public class UserEntity extends EntityIdentityHelper {
     return this.id == id;
   }
 
-  /**
-   * @param id the id to set
-   */
+  @Override
+  public String getIdentity() {
+
+    return identity;
+  }
+
+  @Override
+  public void setIdentity(final String identity) {
+
+    this.identity = identity;
+  }
 
   public void setId(final Long id) {
 
     this.id = id;
   }
 
-  /**
-   * @return the companyIid
-   */
   public Long getCompanyId() {
 
     return this.companyId;
@@ -296,21 +301,9 @@ public class UserEntity extends EntityIdentityHelper {
   }
 
   @Override
-  public String getIdentity() {
-
-    return email;
-  }
-
-  @Override
   public String getIdentityPreffix() {
 
     return "u";
-  }
-
-  @Override
-  public void setIdentity(final String identity) {
-
-    this.email = identity;
   }
 
   public Set<UserGroupEntity> getGroups() {
@@ -397,4 +390,15 @@ public class UserEntity extends EntityIdentityHelper {
     version += 1;
   }
 
+  public String generateUserIdentity(final String lastIdentity) {
+
+    Long nextId = 0L;
+    if (StringUtils.isNotEmpty(lastIdentity) && lastIdentity.length() > 10) {
+      final String lastIdString = lastIdentity.substring(lastIdentity.length() - 10, lastIdentity.length());
+      nextId = Long.parseLong(lastIdString) + 1;
+    }
+
+    this.identity = this.company.getIdentity() + "-" + String.format("%010d", nextId);
+    return this.identity;
+  }
 }

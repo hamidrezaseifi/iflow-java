@@ -10,13 +10,13 @@ import com.pth.iflow.profile.model.User;
 
 public interface IUsersService {
 
-  User getUserByEmail(final String email)
+  User getUserByIdentity(final String email)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
   List<User> getUserListByCompanyIdentity(final String companyId)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  ProfileResponse getUserProfileByEmail(final String email)
+  ProfileResponse getUserProfileByIdentity(final String email)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
 }

@@ -48,37 +48,37 @@ import com.pth.iflow.profile.service.IUsersService;
 public class ProfileControllerTest extends TestDataProducer {
 
   @Autowired
-  private MockMvc                                mockMvc;
+  private MockMvc mockMvc;
 
   @Autowired
   private MappingJackson2XmlHttpMessageConverter xmlConverter;
 
   @Autowired
-  private ISessionManager                        sessionManager;
+  private ISessionManager sessionManager;
 
   @MockBean
-  private IUsersService                          usersService;
+  private IUsersService usersService;
 
   @MockBean
-  private ICompanyService                        companyService;
+  private ICompanyService companyService;
 
   @MockBean
-  private IUserGroupService                      userGroupService;
+  private IUserGroupService userGroupService;
 
   @MockBean
-  private IDepartmentService                     departmentService;
+  private IDepartmentService departmentService;
 
-  private UserAuthenticationSession              authenticatedSession = null;
+  private UserAuthenticationSession authenticatedSession = null;
 
-  private User                                   user;
+  private User user;
 
-  private Company                                company;
+  private Company company;
 
-  private List<Department>                       departmentList;
+  private List<Department> departmentList;
 
-  private List<UserGroup>                        groupList;
+  private List<UserGroup> groupList;
 
-  private ProfileResponse                        validProfileResponse;
+  private ProfileResponse validProfileResponse;
 
   @Before
   public void setUp() throws Exception {
@@ -91,8 +91,8 @@ public class ProfileControllerTest extends TestDataProducer {
     this.groupList = this.getTestUserGroupList();
     this.validProfileResponse = this.getTestProfileResponse(this.authenticatedSession.getSessionid());
 
-    when(this.usersService.getUserByEmail(any(String.class))).thenReturn(this.user);
-    when(this.usersService.getUserProfileByEmail(any(String.class))).thenReturn(this.validProfileResponse);
+    when(this.usersService.getUserByIdentity(any(String.class))).thenReturn(this.user);
+    when(this.usersService.getUserProfileByIdentity(any(String.class))).thenReturn(this.validProfileResponse);
     when(this.companyService.getByIdentity(any(String.class))).thenReturn(this.company);
     when(this.departmentService.getListByCompanyIdentity(any(String.class))).thenReturn(this.departmentList);
     when(this.userGroupService.getListByCompanyIdentity(any(String.class))).thenReturn(this.groupList);
@@ -100,6 +100,7 @@ public class ProfileControllerTest extends TestDataProducer {
 
   @After
   public void tearDown() throws Exception {
+
   }
 
   @Test
@@ -108,20 +109,24 @@ public class ProfileControllerTest extends TestDataProducer {
     final AuthenticatedProfileRequestEdo profReq = this
         .getTestAuthenticatedProfileRequestEdo(this.authenticatedSession.getUserIdentity(), this.authenticatedSession.getToken());
 
-    final ProfileResponseEdo responseEdo = this.getTestProfileResponseEdo(this.authenticatedSession.getSessionid(),
-        ProfileModelEdoMapper.toEdo(this.user), ProfileModelEdoMapper.toEdo(this.company));
+    final ProfileResponseEdo responseEdo = this
+        .getTestProfileResponseEdo(this.authenticatedSession.getSessionid(),
+            ProfileModelEdoMapper.toEdo(this.user), ProfileModelEdoMapper.toEdo(this.company));
 
     final String modelAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(profReq);
     final String responseAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(responseEdo);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.post(IflowRestPaths.ProfileModule.PROFILE_READ_AUTHENTOCATEDINFO).content(modelAsXmlString)
+        .perform(MockMvcRequestBuilders
+            .post(IflowRestPaths.ProfileModule.PROFILE_READ_AUTHENTOCATEDINFO)
+            .content(modelAsXmlString)
             .contentType(MediaType.APPLICATION_XML_VALUE)
             .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, this.authenticatedSession.getToken()))
-        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(responseAsXmlString));
 
-    verify(this.usersService, times(1)).getUserProfileByEmail(any(String.class));
+    verify(this.usersService, times(1)).getUserProfileByIdentity(any(String.class));
 
   }
 
@@ -130,20 +135,24 @@ public class ProfileControllerTest extends TestDataProducer {
 
     final TokenProfileRequestEdo tokenInoRequest = this.getTokenProfileRequestEdo(this.authenticatedSession.getToken());
 
-    final ProfileResponseEdo responseEdo = this.getTestProfileResponseEdo(this.authenticatedSession.getSessionid(),
-        ProfileModelEdoMapper.toEdo(this.user), ProfileModelEdoMapper.toEdo(this.company));
+    final ProfileResponseEdo responseEdo = this
+        .getTestProfileResponseEdo(this.authenticatedSession.getSessionid(),
+            ProfileModelEdoMapper.toEdo(this.user), ProfileModelEdoMapper.toEdo(this.company));
 
     final String modelAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(tokenInoRequest);
     final String responseAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(responseEdo);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.post(IflowRestPaths.ProfileModule.PROFILE_READ_TOKENINFO).content(modelAsXmlString)
+        .perform(MockMvcRequestBuilders
+            .post(IflowRestPaths.ProfileModule.PROFILE_READ_TOKENINFO)
+            .content(modelAsXmlString)
             .contentType(MediaType.APPLICATION_XML_VALUE)
             .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, this.authenticatedSession.getToken()))
-        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(responseAsXmlString));
 
-    verify(this.usersService, times(1)).getUserProfileByEmail(any(String.class));
+    verify(this.usersService, times(1)).getUserProfileByIdentity(any(String.class));
 
   }
 

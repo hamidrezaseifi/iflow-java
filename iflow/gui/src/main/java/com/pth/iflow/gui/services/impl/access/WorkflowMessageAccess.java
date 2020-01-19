@@ -34,14 +34,14 @@ public class WorkflowMessageAccess implements IWorkflowMessageAccess {
   }
 
   @Override
-  public List<WorkflowMessage> readUserMessages(final String companyIdentity, final String userId, final String token)
+  public List<WorkflowMessage> readUserMessages(final String companyIdentity, final String userIdentity, final String token)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     logger.debug("read messages for user");
 
     final WorkflowMessageListEdo responseListEdo = this.restTemplate
         .callRestGet(
-            this.moduleAccessConfig.getReadUserWorkflowMessageListUri(userId), EModule.WORKFLOW,
+            this.moduleAccessConfig.getReadUserWorkflowMessageListUri(userIdentity), EModule.WORKFLOW,
             WorkflowMessageListEdo.class, token, true);
 
     return GuiModelEdoMapper.fromWorkflowMessageEdoList(responseListEdo.getWorkflowMessages());

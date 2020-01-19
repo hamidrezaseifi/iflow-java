@@ -36,8 +36,8 @@ import com.pth.iflow.profile.service.IUsersService;
 public class AuthenticationController {
 
   private final IAuthenticationService authService;
-  private final ISessionManager        sessionManager;
-  private final IUsersService          usersService;
+  private final ISessionManager sessionManager;
+  private final IUsersService usersService;
 
   public AuthenticationController(@Autowired final IAuthenticationService authService, @Autowired final ISessionManager sessionManager,
       @Autowired final IUsersService usersService) {
@@ -59,16 +59,18 @@ public class AuthenticationController {
 
   private UserAuthenticationResponseEdo authenticateUser(final UserAuthenticationRequestEdo userEdo)
       throws URISyntaxException, ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+
     final UserAuthenticationRequest authUser = this.authService.authenticate(ProfileModelEdoMapper.fromEdo(userEdo));
     if (authUser == null) {
       throw new ProfileCustomizedException("Invalid Username or Password", "", EModule.PROFILE.getModuleName(),
           EIFlowErrorType.INVALID_USERNAMEPASSWORD);
     }
 
-    UserAuthenticationSession session = this.sessionManager.findValidateByUserIdentity(authUser.getUserIdentity(),
-        authUser.getCompanyIdentity(), true);
+    UserAuthenticationSession session = this.sessionManager
+        .findValidateByUserIdentity(authUser.getUserIdentity(),
+            authUser.getCompanyIdentity(), true);
     if (session == null) {
-      final ProfileResponse profile = this.usersService.getUserProfileByEmail(authUser.getUserIdentity());
+      final ProfileResponse profile = this.usersService.getUserProfileByIdentity(authUser.getUserIdentity());
       if (profile.getCompanyProfile().getCompany().hasSameIdentity(authUser.getCompanyIdentity()) == false) {
         throw new ProfileCustomizedException("Invalid company-identity!", "", EModule.PROFILE.getModuleName(),
             EIFlowErrorType.COMPANY_NOTFOUND);

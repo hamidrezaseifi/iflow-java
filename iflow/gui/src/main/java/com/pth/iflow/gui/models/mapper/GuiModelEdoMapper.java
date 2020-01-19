@@ -199,6 +199,7 @@ public class GuiModelEdoMapper {
     edo.setDepartmentGroups(model.getDepartmentGroups());
     edo.setDeputies(model.getDeputies());
     edo.setRoles(model.getRolesInt());
+    edo.setIdentity(model.getIdentity());
 
     return edo;
   }
@@ -222,6 +223,7 @@ public class GuiModelEdoMapper {
     model.setDepartmentGroups(edo.getDepartmentGroups());
     model.setDeputies(edo.getDeputies());
     model.setRoles(edo.getRoles());
+    model.setIdentity(edo.getIdentity());
 
     return model;
   }

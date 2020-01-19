@@ -100,6 +100,7 @@ public class TestDataProducer {
     model.setDeputies(this.getTestDeputiyIdSet());
     model.setGroups(this.getTestUserGroupIdSet());
     model.setCompanyIdentity("companyIdentity");
+    model.setIdentity("identity");
 
     return model;
   }
@@ -120,7 +121,7 @@ public class TestDataProducer {
     model.setDepartments(this.getTestDepartmentIdSet());
     model.setDeputies(this.getTestDeputiyIdSet());
     model.setGroups(this.getTestUserGroupIdSet());
-
+    model.setIdentity("identity" + email);
     return model;
   }
 

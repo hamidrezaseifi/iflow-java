@@ -30,6 +30,7 @@ public class SingleTaskWorkflowController {
   final ISingleTaskWorkflowService workflowService;
 
   public SingleTaskWorkflowController(@Autowired final ISingleTaskWorkflowService workflowService) {
+
     this.workflowService = workflowService;
   }
 
@@ -59,19 +60,21 @@ public class SingleTaskWorkflowController {
 
     final List<SingleTaskWorkflowEntity> modelList = this.workflowService.getListByIdentityList(idList.getIdentityList());
 
-    return ControllerHelper.createResponseEntity(request, new SingleTaskWorkflowListEdo(this.workflowService.toEdoList(modelList)),
-        HttpStatus.OK);
+    return ControllerHelper
+        .createResponseEntity(request, new SingleTaskWorkflowListEdo(this.workflowService.toEdoList(modelList)),
+            HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.SINGLETASKWORKFLOW_READ_LIST_BY_USERIDENTITY)
-  public ResponseEntity<SingleTaskWorkflowListEdo> readWorkflowListForUser(@PathVariable(name = "email") final String email,
+  public ResponseEntity<SingleTaskWorkflowListEdo> readWorkflowListForUser(@PathVariable(name = "identity") final String identity,
       @PathVariable(required = false) final int status, final HttpServletRequest request) throws Exception {
 
-    final List<SingleTaskWorkflowEntity> modelList = this.workflowService.getListForUser(email, status);
+    final List<SingleTaskWorkflowEntity> modelList = this.workflowService.getListForUser(identity, status);
 
-    return ControllerHelper.createResponseEntity(request, new SingleTaskWorkflowListEdo(this.workflowService.toEdoList(modelList)),
-        HttpStatus.OK);
+    return ControllerHelper
+        .createResponseEntity(request, new SingleTaskWorkflowListEdo(this.workflowService.toEdoList(modelList)),
+            HttpStatus.OK);
   }
 
 }

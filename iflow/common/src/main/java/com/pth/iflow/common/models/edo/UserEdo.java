@@ -31,6 +31,10 @@ public class UserEdo {
   @XmlElement(name = "CompanyIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String companyIdentity;
 
+  @NotNull(message = "Identity must not be null")
+  @XmlElement(name = "Identity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String identity;
+
   @NotNull(message = "Email must not be null")
   @XmlElement(name = "Email", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String email;
@@ -98,22 +102,21 @@ public class UserEdo {
     this.companyIdentity = companyIdentity;
   }
 
-  /**
-   * @return the email
-   */
+  public String getIdentity() {
+
+    return this.identity;
+  }
+
+  public void setIdentity(final String identity) {
+
+    this.identity = identity;
+  }
+
   public String getEmail() {
 
     return this.email;
   }
 
-  public String getIdentity() {
-
-    return this.email;
-  }
-
-  /**
-   * @param email the email to set
-   */
   public void setEmail(final String email) {
 
     this.email = email;
@@ -129,49 +132,31 @@ public class UserEdo {
     this.birthDate = birthDate;
   }
 
-  /**
-   * @return the firstName
-   */
   public String getFirstName() {
 
     return this.firstName;
   }
 
-  /**
-   * @param firstName the firstName to set
-   */
   public void setFirstName(final String firstName) {
 
     this.firstName = firstName;
   }
 
-  /**
-   * @return the lastName
-   */
   public String getLastName() {
 
     return this.lastName;
   }
 
-  /**
-   * @param lastName the lastName to set
-   */
   public void setLastName(final String lastName) {
 
     this.lastName = lastName;
   }
 
-  /**
-   * @return the status
-   */
   public Integer getStatus() {
 
     return this.status;
   }
 
-  /**
-   * @param status the status to set
-   */
   public void setStatus(final Integer status) {
 
     this.status = status;
@@ -187,17 +172,11 @@ public class UserEdo {
     this.version = version;
   }
 
-  /**
-   * @return the permission
-   */
   public Integer getPermission() {
 
     return this.permission;
   }
 
-  /**
-   * @param permission the permission to set
-   */
   public void setPermission(final Integer permission) {
 
     this.permission = permission;

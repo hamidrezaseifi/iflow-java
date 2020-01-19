@@ -31,39 +31,39 @@ import com.pth.iflow.profile.service.impl.TokenUserDataManager;
 @SpringBootTest
 public class TokenUserDataManagerTest extends TestDataProducer {
 
-  private ITokenUserDataManager     tokenUserDataManager;
+  private ITokenUserDataManager tokenUserDataManager;
 
   @Autowired
-  private ISessionManager           sessionManager;
+  private ISessionManager sessionManager;
 
   @Mock
-  private IUsersService             usersService;
+  private IUsersService usersService;
 
   @Mock
-  private ICompanyService           companyService;
+  private ICompanyService companyService;
 
   @Mock
-  private IUserGroupService         userGroupService;
+  private IUserGroupService userGroupService;
 
   @Mock
-  private IDepartmentService        departmentService;
+  private IDepartmentService departmentService;
 
   @Mock
-  private IDepartmentGroupService   departmentGroupService;
+  private IDepartmentGroupService departmentGroupService;
 
-  private String                    validToken;
+  private String validToken;
 
-  private final String              validEmail           = "valid-email";
+  private final String validEmail = "valid-email";
 
-  private final String              validCompanyIdentity = "valid-company";
+  private final String validCompanyIdentity = "valid-company";
 
   private UserAuthenticationSession validSession;
 
-  private Company                   validCompany;
+  private Company validCompany;
 
-  private User                      validUser;
+  private User validUser;
 
-  private final String              inValidToken         = "invalid-token";
+  private final String inValidToken = "invalid-token";
 
   @Before
   public void setUp() throws Exception {
@@ -81,6 +81,7 @@ public class TokenUserDataManagerTest extends TestDataProducer {
 
   @After
   public void tearDown() throws Exception {
+
   }
 
   @Test(expected = ProfileCustomizedException.class)
@@ -102,25 +103,29 @@ public class TokenUserDataManagerTest extends TestDataProducer {
 
     final ProfileResponse profile = this.getTestProfileResponse(this.validSession.getSessionid());
 
-    when(this.usersService.getUserProfileByEmail(any(String.class))).thenReturn(profile);
+    when(this.usersService.getUserProfileByIdentity(any(String.class))).thenReturn(profile);
 
     final ProfileResponse response = this.tokenUserDataManager.getProfileByToken(this.validToken);
 
-    verify(this.usersService, times(1)).getUserProfileByEmail(any(String.class));
+    verify(this.usersService, times(1)).getUserProfileByIdentity(any(String.class));
 
     Assert.assertNotNull("Result response is not null!", response);
     Assert.assertNotNull("Result user is not null!", response.getUser());
     Assert.assertNotNull("Result company is not null!", response.getCompanyProfile());
-    Assert.assertEquals("Result user has the same id as valid-user!", response.getUser().getIdentity(),
-        profile.getUser().getIdentity());
-    Assert.assertEquals("Result company has the same id as valid-company!", response.getCompanyProfile().getCompany().getIdentity(),
-        profile.getCompanyProfile().getCompany().getIdentity());
+    Assert
+        .assertEquals("Result user has the same id as valid-user!", response.getUser().getIdentity(),
+            profile.getUser().getIdentity());
+    Assert
+        .assertEquals("Result company has the same id as valid-company!", response.getCompanyProfile().getCompany().getIdentity(),
+            profile.getCompanyProfile().getCompany().getIdentity());
 
-    Assert.assertEquals("Result user has the same name as valid-user!",
-        response.getUser().getFirstName() + response.getUser().getLastName(),
-        profile.getUser().getFirstName() + profile.getUser().getLastName());
-    Assert.assertEquals("Result company has the same name as valid-company!",
-        response.getCompanyProfile().getCompany().getCompanyName(), profile.getCompanyProfile().getCompany().getCompanyName());
+    Assert
+        .assertEquals("Result user has the same name as valid-user!",
+            response.getUser().getFirstName() + response.getUser().getLastName(),
+            profile.getUser().getFirstName() + profile.getUser().getLastName());
+    Assert
+        .assertEquals("Result company has the same name as valid-company!",
+            response.getCompanyProfile().getCompany().getCompanyName(), profile.getCompanyProfile().getCompany().getCompanyName());
 
   }
 
@@ -147,8 +152,9 @@ public class TokenUserDataManagerTest extends TestDataProducer {
 
     when(this.userGroupService.getListByCompanyIdentity(any(String.class))).thenReturn(userGroups);
 
-    final List<UserGroup> resultUserGroups = this.tokenUserDataManager.getUserGroupListByToken(this.validToken,
-        this.validCompanyIdentity);
+    final List<UserGroup> resultUserGroups = this.tokenUserDataManager
+        .getUserGroupListByToken(this.validToken,
+            this.validCompanyIdentity);
 
     verify(this.userGroupService, times(1)).getListByCompanyIdentity(any(String.class));
 
@@ -159,18 +165,21 @@ public class TokenUserDataManagerTest extends TestDataProducer {
 
   @Test
   public void testGetDepartmentListByToken() throws Exception {
+
     final List<Department> departments = this.getTestDepartmentList();
 
     when(this.departmentService.getListByCompanyIdentity(any(String.class))).thenReturn(departments);
 
-    final List<Department> resultDepartments = this.tokenUserDataManager.getDepartmentListByToken(this.validToken,
-        this.validCompanyIdentity);
+    final List<Department> resultDepartments = this.tokenUserDataManager
+        .getDepartmentListByToken(this.validToken,
+            this.validCompanyIdentity);
 
     verify(this.departmentService, times(1)).getListByCompanyIdentity(any(String.class));
 
     Assert.assertNotNull("Result response list is not null!", resultDepartments);
-    Assert.assertEquals("Result response list has the " + departments.size() + " items!", resultDepartments.size(),
-        departments.size());
+    Assert
+        .assertEquals("Result response list has the " + departments.size() + " items!", resultDepartments.size(),
+            departments.size());
   }
 
 }

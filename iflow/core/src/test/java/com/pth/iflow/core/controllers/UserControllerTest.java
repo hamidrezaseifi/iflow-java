@@ -52,32 +52,34 @@ import com.pth.iflow.core.service.interfaces.IUsersService;
 public class UserControllerTest extends TestDataProducer {
 
   @Autowired
-  private MockMvc                                mockMvc;
+  private MockMvc mockMvc;
 
   @Autowired
   private MappingJackson2XmlHttpMessageConverter xmlConverter;
 
   @MockBean
-  private IUsersService                          usersService;
+  private IUsersService usersService;
 
   @MockBean
-  private IUserGroupService                      userGroupService;
+  private IUserGroupService userGroupService;
 
   @MockBean
-  private IDepartmentService                     departmentService;
+  private IDepartmentService departmentService;
 
   @MockBean
-  private IDepartmentGroupService                departmentGroupService;
+  private IDepartmentGroupService departmentGroupService;
 
   @Value("${iflow.common.rest.api.security.client-id.internal}")
-  private String                                 innerModulesRequestHeaderValue;
+  private String innerModulesRequestHeaderValue;
 
   @Before
   public void setUp() throws Exception {
+
   }
 
   @After
   public void tearDown() throws Exception {
+
   }
 
   @Test
@@ -92,9 +94,11 @@ public class UserControllerTest extends TestDataProducer {
     final String userAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(userEdo);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.USER_READ_BY_EMAIL, user.getEmail())
+        .perform(MockMvcRequestBuilders
+            .get(IflowRestPaths.CoreModule.USER_READ_BY_IDENTITY, user.getEmail())
             .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
-        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(userAsXmlString));
 
     verify(this.usersService, times(1)).getUserByIdentity(any(String.class));
@@ -112,7 +116,8 @@ public class UserControllerTest extends TestDataProducer {
     final String userAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(userEdo);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.USER_READ_BY_EMAIL, user.getEmail())
+        .perform(MockMvcRequestBuilders
+            .get(IflowRestPaths.CoreModule.USER_READ_BY_IDENTITY, user.getEmail())
             .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
         .andExpect(content().xml(userAsXmlString));
 
@@ -134,9 +139,11 @@ public class UserControllerTest extends TestDataProducer {
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.USER_DEPARTMENTS_LIST_BY_EMAIL, "email")
+        .perform(MockMvcRequestBuilders
+            .get(IflowRestPaths.CoreModule.USER_DEPARTMENTS_LIST_BY_IDENTITY, "useridentity")
             .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
-        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(listAsXmlString));
 
     verify(this.usersService, times(1)).getUserDepartments(any(String.class));
@@ -157,9 +164,11 @@ public class UserControllerTest extends TestDataProducer {
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.USER_DEPARTMENTGROUPS_LIST_BY_EMAIL, "email")
+        .perform(MockMvcRequestBuilders
+            .get(IflowRestPaths.CoreModule.USER_DEPARTMENTGROUPS_LIST_BY_IDENTITY, "useridentity")
             .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
-        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(listAsXmlString));
 
     verify(this.usersService, times(1)).getUserDepartmentGroups(any(String.class));
@@ -180,9 +189,11 @@ public class UserControllerTest extends TestDataProducer {
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.USER_USERGROUPS_LIST_BY_EMAIL, "email")
+        .perform(MockMvcRequestBuilders
+            .get(IflowRestPaths.CoreModule.USER_USERGROUPS_LIST_BY_IDENTITY, "useridentity")
             .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
-        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(listAsXmlString));
 
     verify(this.usersService, times(1)).getUserGroups(any(String.class));
@@ -204,9 +215,11 @@ public class UserControllerTest extends TestDataProducer {
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(listEdo);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.USER_DEPUTIES_LIST_BY_EMAIL, "email")
+        .perform(MockMvcRequestBuilders
+            .get(IflowRestPaths.CoreModule.USER_DEPUTIES_LIST_BY_IDENTITY, "useridentity")
             .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
-        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(listAsXmlString));
 
     verify(this.usersService, times(1)).getUserDeputies(any(String.class));
@@ -228,9 +241,11 @@ public class UserControllerTest extends TestDataProducer {
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(listEdo);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.USER_USER_LIST_BY_COMPANYIDENTITY, "companyidentity")
+        .perform(MockMvcRequestBuilders
+            .get(IflowRestPaths.CoreModule.USER_USER_LIST_BY_COMPANYIDENTITY, "companyidentity")
             .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
-        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(listAsXmlString));
 
     verify(this.usersService, times(1)).getCompanyUsers(any(String.class));
@@ -251,9 +266,11 @@ public class UserControllerTest extends TestDataProducer {
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(listEdo);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.USER_USER_LIST_BY_DEPARTMENTIDENTITY, "companyidentity")
+        .perform(MockMvcRequestBuilders
+            .get(IflowRestPaths.CoreModule.USER_USER_LIST_BY_DEPARTMENTIDENTITY, "companyidentity")
             .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
-        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(listAsXmlString));
 
     verify(this.usersService, times(1)).getAllUserIdentityListByDepartmentIdentity(any(String.class));
@@ -275,9 +292,11 @@ public class UserControllerTest extends TestDataProducer {
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(listEdo);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.USER_USER_LIST_BY_DEPARTMENTGROUPIDENTITY, "companyidentity")
+        .perform(MockMvcRequestBuilders
+            .get(IflowRestPaths.CoreModule.USER_USER_LIST_BY_DEPARTMENTGROUPIDENTITY, "companyidentity")
             .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
-        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(listAsXmlString));
 
     verify(this.usersService, times(1)).getAllUserIdentityListByDepartmentGroupIdentity(any(String.class));
@@ -296,9 +315,11 @@ public class UserControllerTest extends TestDataProducer {
     final String resultAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edo);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.USERPROFILE_READ_BY_EMAIL, "useridentity")
+        .perform(MockMvcRequestBuilders
+            .get(IflowRestPaths.CoreModule.USERPROFILE_READ_BY_EMAIL, "identity")
             .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
-        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(resultAsXmlString));
 
     verify(this.usersService, times(1)).getProfileResponseByEmail(any(String.class));

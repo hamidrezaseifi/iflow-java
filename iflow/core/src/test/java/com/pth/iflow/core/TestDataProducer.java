@@ -113,6 +113,7 @@ public class TestDataProducer {
     model.setDeputies(Arrays.asList());
     model.setGroups(Arrays.asList(getTestUserGroup(1L, "grp1"), getTestUserGroup(2L, "grp2")));
     model.setCompany(getTestCompany());
+    model.setIdentity("identity");
     // model.setCompanyIdentity("companyIdentity");
 
     return model;
@@ -133,6 +134,7 @@ public class TestDataProducer {
     edo.setDepartments(this.getTestDepartmentIdSet());
     edo.setDeputies(this.getTestDepartmentIdSet());
     edo.setGroups(this.getTestUserGroupIdSet());
+    edo.setIdentity("identity");
 
     return edo;
   }
@@ -181,6 +183,7 @@ public class TestDataProducer {
     model.setGroups(Arrays.asList(getTestUserGroup(1L, "grp1"), getTestUserGroup(2L, "grp2")));
     model.setBirthDate(getTestBirthDate());
     model.setCompany(getTestCompany());
+    model.setIdentity("identity" + id);
 
     return model;
   }
@@ -201,6 +204,7 @@ public class TestDataProducer {
     edo.setGroups(this.getTestUserGroupIdSet());
     edo.setBirthDate(LocalDate.now().minusYears(30));
     edo.setCompanyIdentity("companyIdentity");
+    edo.setIdentity("identity" + id);
 
     return edo;
   }

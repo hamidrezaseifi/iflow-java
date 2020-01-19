@@ -82,7 +82,7 @@ public abstract class EntityDaoBase<T extends ICoreEntityVersion> extends Entity
     final Subquery<Long> assignSubQuery = query.subquery(Long.class);
     final Root<WorkflowActionEntity> assignRoot = assignSubQuery.from(WorkflowActionEntity.class);
 
-    final Path<String> assignPath = assignRoot.get("assignToUser").get("email");
+    final Path<String> assignPath = assignRoot.get("assignToUser").get("identity");
     final Path<Long> workflowIdPath = assignRoot.get("workflowEntity").get("id");
 
     final Predicate assignInPredicate = assignPath.in(Arrays.asList(userIdentity));

@@ -63,7 +63,7 @@ public class UsersServiceTest extends TestDataProducer {
     when(this.restTemplate.callRestGet(any(URI.class), any(EModule.class), any(Class.class), any(boolean.class)))
         .thenReturn(userEdo);
 
-    final User resUser = this.usersService.getUserByEmail(user.getEmail());
+    final User resUser = this.usersService.getUserByIdentity(user.getIdentity());
 
     Assert.assertNotNull("Result user is not null!", resUser);
     Assert.assertEquals("Result user has id 1!", resUser.getIdentity(), user.getIdentity());

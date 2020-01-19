@@ -52,7 +52,7 @@ public class WorkflowSearchDao extends EntityManagerHelper implements IWorkflowS
       final Subquery<Long> assignSubQuery = query.subquery(Long.class);
       final Root<WorkflowActionEntity> assignRoot = assignSubQuery.from(WorkflowActionEntity.class);
 
-      final Path<Long> assignPath = assignRoot.get("assignToUser").get("email");
+      final Path<Long> assignPath = assignRoot.get("assignToUser").get("identity");
       final Path<Long> workflowIdPath = assignRoot.get("workflowEntity").get("id");
       final Path<Integer> actionStatusPath = assignRoot.get("status");
 

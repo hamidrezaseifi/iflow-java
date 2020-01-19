@@ -26,7 +26,7 @@ import com.pth.iflow.core.storage.dao.interfaces.IUserDao;
 public class UserDao extends EntityDaoBase<UserEntity> implements IUserDao {
 
   @Override
-  public UserEntity getByIdentity(final String identity) throws IFlowStorageException {
+  public UserEntity getUserByEmail(final String email) {
 
     final EntityManager entityManager = createEntityManager();
 
@@ -36,6 +36,27 @@ public class UserDao extends EntityDaoBase<UserEntity> implements IUserDao {
     query.select(root);
 
     final Path<String> identityPath = root.get("email");
+    final Predicate predicate = criteriaBuilder.equal(identityPath, email);
+    query.where(predicate);
+
+    final TypedQuery<UserEntity> typedQuery = entityManager.createQuery(query);
+
+    final List<UserEntity> list = typedQuery.getResultList();
+    entityManager.close();
+    return list.size() > 0 ? list.get(0) : null;
+  }
+
+  @Override
+  public UserEntity getByIdentity(final String identity) throws IFlowStorageException {
+
+    final EntityManager entityManager = createEntityManager();
+
+    final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+    final CriteriaQuery<UserEntity> query = criteriaBuilder.createQuery(entityClass());
+    final Root<UserEntity> root = query.from(entityClass());
+    query.select(root);
+
+    final Path<String> identityPath = root.get("identity");
     final Predicate predicate = criteriaBuilder.equal(identityPath, identity);
     query.where(predicate);
 
@@ -59,7 +80,7 @@ public class UserDao extends EntityDaoBase<UserEntity> implements IUserDao {
     final Root<UserEntity> root = query.from(entityClass());
     query.select(root);
 
-    final Path<String> identityPath = root.get("email");
+    final Path<String> identityPath = root.get("identity");
     final Predicate predicate = identityPath.in(identityList);
     query.where(predicate);
 
@@ -143,6 +164,30 @@ public class UserDao extends EntityDaoBase<UserEntity> implements IUserDao {
   protected Class<UserEntity> entityClass() {
 
     return UserEntity.class;
+  }
+
+  @Override
+  public UserEntity getLastIdentity(final Long companyId) throws IFlowStorageException {
+
+    final EntityManager entityManager = createEntityManager();
+
+    final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+    final CriteriaQuery<UserEntity> query = criteriaBuilder.createQuery(UserEntity.class);
+
+    final Root<UserEntity> userRoot = query.from(UserEntity.class);
+    final Path<String> companyIdPath = userRoot.get("companyId");
+    final Predicate predicate = criteriaBuilder.equal(companyIdPath, companyId);
+    query.where(predicate);
+
+    query.orderBy(criteriaBuilder.desc(userRoot.get("identity")));
+
+    final TypedQuery<UserEntity> typedQuery = entityManager.createQuery(query);
+    typedQuery.setMaxResults(1);
+    typedQuery.setFirstResult(0);
+
+    final List<UserEntity> list = typedQuery.getResultList();
+
+    return list.size() > 0 ? list.get(0) : null;
   }
 
 }

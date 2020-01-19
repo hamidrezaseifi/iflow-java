@@ -75,7 +75,7 @@ public class WorkflowMessageDao extends EntityDaoBase<WorkflowMessageEntity> imp
     final CriteriaQuery<WorkflowMessageEntity> query = criteriaBuilder.createQuery(WorkflowMessageEntity.class);
     final Root<WorkflowMessageEntity> root = query.from(WorkflowMessageEntity.class);
 
-    final Predicate userPredicate = criteriaBuilder.equal(root.get("user").get("email"), userIdentity);
+    final Predicate userPredicate = criteriaBuilder.equal(root.get("user").get("identity"), userIdentity);
     final Predicate statusPredicate = root.get("status").in(statusList);
 
     query.select(root).where(criteriaBuilder.and(userPredicate, statusPredicate));
@@ -177,7 +177,7 @@ public class WorkflowMessageDao extends EntityDaoBase<WorkflowMessageEntity> imp
         .where(criteriaBuilder
             .and(criteriaBuilder.equal(root.get("workflow").get("identity"), workflowIdentity),
                 criteriaBuilder.equal(root.get("step").get("identity"), stepIdentity),
-                criteriaBuilder.equal(root.get("user").get("email"), userIdentity)));
+                criteriaBuilder.equal(root.get("user").get("identity"), userIdentity)));
     final TypedQuery<WorkflowMessageEntity> typedQuery = entityManager.createQuery(query);
     // final String qr = typedQuery.unwrap(org.hibernate.query.Query.class).getQueryString();
     // System.out.println("The query: " + qr);

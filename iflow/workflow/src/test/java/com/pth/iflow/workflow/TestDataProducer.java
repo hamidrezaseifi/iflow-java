@@ -97,6 +97,7 @@ public class TestDataProducer {
     model.setDeputies(this.getTestDeputiyIdSet());
     model.setGroups(this.getTestUserGroupIdSet());
     model.setCompanyIdentity("companyIdentity");
+    model.setIdentity("user-identity");
 
     return model;
   }
@@ -114,6 +115,7 @@ public class TestDataProducer {
     model.setDepartments(this.getTestDepartmentIdSet());
     model.setDeputies(this.getTestDeputiyIdSet());
     model.setGroups(this.getTestUserGroupIdSet());
+    model.setIdentity("identity" + email);
 
     return model;
   }
@@ -715,7 +717,7 @@ public class TestDataProducer {
             new AssignItem("user3", EAssignType.USER));
   }
 
-  protected WorkflowMessage getTestWorkflowMessage(final String userId, final String workflowIdentity) {
+  protected WorkflowMessage getTestWorkflowMessage(final String userIdentity, final String workflowIdentity) {
 
     final WorkflowMessage message = new WorkflowMessage();
     message.setCreatedAt(LocalDateTime.now());
@@ -725,7 +727,7 @@ public class TestDataProducer {
     message.setMessageType(EWorkflowMessageType.OFFERING_WORKFLOW);
     message.setStatus(EWorkflowMessageStatus.OFFERING);
     message.setStepIdentity("stepIdentity");
-    message.setUserIdentity(userId);
+    message.setUserIdentity(userIdentity);
     message.setVersion(1);
     message.setWorkflowIdentity(workflowIdentity);
 

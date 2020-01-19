@@ -26,7 +26,7 @@ import com.pth.iflow.core.storage.dao.interfaces.workflow.ISingleTaskWorkflowDao
 public class SingleTaskWorkflowDaoTest extends TestDataProducer {
 
   @Autowired
-  private ISingleTaskWorkflowDao               workflowDao;
+  private ISingleTaskWorkflowDao workflowDao;
 
   private final List<SingleTaskWorkflowEntity> createdModels = new ArrayList<>();
 
@@ -50,7 +50,7 @@ public class SingleTaskWorkflowDaoTest extends TestDataProducer {
 
     createWorlflowList();
 
-    final SingleTaskWorkflowEntity workflow    = createdModels.get(0);
+    final SingleTaskWorkflowEntity workflow = createdModels.get(0);
 
     final SingleTaskWorkflowEntity resWorkflow = this.workflowDao.getById(createdModels.get(0).getWorkflowId());
 
@@ -65,10 +65,12 @@ public class SingleTaskWorkflowDaoTest extends TestDataProducer {
 
     createWorlflowList();
 
-    final List<String>                   identityList = createdModels.stream().map(w -> w.getWorkflow().getIdentity())
+    final List<String> identityList = createdModels
+        .stream()
+        .map(w -> w.getWorkflow().getIdentity())
         .collect(Collectors.toList());
 
-    final List<SingleTaskWorkflowEntity> resList      = this.workflowDao.getListByIdentityList(identityList);
+    final List<SingleTaskWorkflowEntity> resList = this.workflowDao.getListByIdentityList(identityList);
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + createdModels.size() + " items.", resList.size(), createdModels.size());
@@ -86,8 +88,9 @@ public class SingleTaskWorkflowDaoTest extends TestDataProducer {
 
     Assert.assertNotNull("Result workflow is not null!", resWorkflow);
     Assert.assertEquals("Result workflow has status 1!", resWorkflow.getWorkflow().getStatus(), workflow.getWorkflow().getStatus());
-    Assert.assertEquals("Result workflow has version " + workflow.getWorkflow().getVersion() + "!", resWorkflow.getWorkflow().getVersion(),
-        workflow.getWorkflow().getVersion());
+    Assert
+        .assertEquals("Result workflow has version " + workflow.getWorkflow().getVersion() + "!", resWorkflow.getWorkflow().getVersion(),
+            workflow.getWorkflow().getVersion());
 
   }
 
@@ -108,8 +111,9 @@ public class SingleTaskWorkflowDaoTest extends TestDataProducer {
     final SingleTaskWorkflowEntity updatedWorkflow = workflowDao.update(createdWorkflow);
 
     Assert.assertNotNull("Result workflow is not null!", updatedWorkflow);
-    Assert.assertEquals("Result workflow has the same id as created!", createdWorkflow.getWorkflow().getId(),
-        updatedWorkflow.getWorkflow().getId());
+    Assert
+        .assertEquals("Result workflow has the same id as created!", createdWorkflow.getWorkflow().getId(),
+            updatedWorkflow.getWorkflow().getId());
     Assert.assertEquals("Result workflow has status 10!", updatedWorkflow.getWorkflow().getStatus().intValue(), 10);
     Assert.assertEquals("Result workflow has version 22!", updatedWorkflow.getWorkflow().getVersion().intValue(), 23);
 
@@ -137,7 +141,7 @@ public class SingleTaskWorkflowDaoTest extends TestDataProducer {
 
     createWorlflowList();
 
-    final List<SingleTaskWorkflowEntity> resList = this.workflowDao.getListForUserIdentity("admin@iflow.de", -1);
+    final List<SingleTaskWorkflowEntity> resList = this.workflowDao.getListForUserIdentity("test-company-1-0000000001", -1);
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertThat("Result list has " + createdModels.size() + " items.", resList.size(), greaterThanOrEqualTo(createdModels.size()));
@@ -145,10 +149,11 @@ public class SingleTaskWorkflowDaoTest extends TestDataProducer {
   }
 
   private void createWorlflowList() throws Exception {
+
     for (int i = 1; i <= 3; i++) {
       final SingleTaskWorkflowEntity workflow = getTestSingleTaskWorkflowEntityForSave();
 
-      final SingleTaskWorkflowEntity res      = saveWorkflow(workflow);
+      final SingleTaskWorkflowEntity res = saveWorkflow(workflow);
 
       createdModels.add(res);
     }

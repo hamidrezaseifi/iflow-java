@@ -28,10 +28,10 @@ import com.pth.iflow.core.storage.dao.interfaces.workflow.IWorkflowDao;
 public class WorkflowDaoTest extends TestDataProducer {
 
   @Autowired
-  private IWorkflowDao               workflowDao;
+  private IWorkflowDao workflowDao;
 
   @Autowired
-  private IWorkflowService           workflowService;
+  private IWorkflowService workflowService;
 
   private final List<WorkflowEntity> createdModels = new ArrayList<>();
 
@@ -55,7 +55,7 @@ public class WorkflowDaoTest extends TestDataProducer {
 
     createWorlflowList();
 
-    final WorkflowEntity workflow    = createdModels.get(0);
+    final WorkflowEntity workflow = createdModels.get(0);
 
     final WorkflowEntity resWorkflow = this.workflowDao.getById(workflow.getId());
 
@@ -70,7 +70,7 @@ public class WorkflowDaoTest extends TestDataProducer {
 
     createWorlflowList();
 
-    final WorkflowEntity workflow    = createdModels.get(0);
+    final WorkflowEntity workflow = createdModels.get(0);
 
     final WorkflowEntity resWorkflow = this.workflowDao.getByIdentity(workflow.getIdentity());
 
@@ -85,9 +85,9 @@ public class WorkflowDaoTest extends TestDataProducer {
 
     createWorlflowList();
 
-    final Set<String>          identityList = createdModels.stream().map(w -> w.getIdentity()).collect(Collectors.toSet());
+    final Set<String> identityList = createdModels.stream().map(w -> w.getIdentity()).collect(Collectors.toSet());
 
-    final List<WorkflowEntity> resList      = this.workflowDao.getListByIdentityList(identityList);
+    final List<WorkflowEntity> resList = this.workflowDao.getListByIdentityList(identityList);
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + createdModels.size() + " items.", resList.size(), createdModels.size());
@@ -99,7 +99,7 @@ public class WorkflowDaoTest extends TestDataProducer {
 
     createWorlflowList();
 
-    final List<WorkflowEntity> resList = this.workflowDao.getListForUserIdentity("admin@iflow.de", -1);
+    final List<WorkflowEntity> resList = this.workflowDao.getListForUserIdentity("test-company-1-0000000001", -1);
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertThat("Result list has " + createdModels.size() + " items.", resList.size(), greaterThanOrEqualTo(createdModels.size()));
@@ -163,16 +163,18 @@ public class WorkflowDaoTest extends TestDataProducer {
   }
 
   private void createWorlflowList() throws Exception {
+
     for (int i = 1; i <= 3; i++) {
       final WorkflowEntity workflow = getTestNewWorkflowForSave();
 
-      final WorkflowEntity res      = saveWorkflow(workflow);
+      final WorkflowEntity res = saveWorkflow(workflow);
 
       createdModels.add(res);
     }
   }
 
   private WorkflowEntity saveWorkflow(final WorkflowEntity workflow) {
+
     final WorkflowEntity res = workflowDao.create(workflow);
     return res;
   }

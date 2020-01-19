@@ -26,6 +26,7 @@ import com.pth.iflow.gui.models.ui.enums.EUiUserRole;
 @JsonIgnoreProperties(value = { "authorities", "enabled", "roles", })
 public class User extends IdentityModel {
 
+  private String identity;
   private String companyIdentity;
   private String email;
 
@@ -378,13 +379,13 @@ public class User extends IdentityModel {
   @Override
   public String getIdentity() {
 
-    return this.email;
+    return this.identity;
   }
 
   @Override
   public void setIdentity(final String identity) {
-    // TODO Auto-generated method stub
 
+    this.identity = identity;
   }
 
 }

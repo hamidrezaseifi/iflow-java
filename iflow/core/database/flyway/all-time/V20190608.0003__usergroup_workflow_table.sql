@@ -116,6 +116,7 @@ CREATE SEQUENCE users_id_seq;
 
 CREATE TABLE users (
   id bigint NOT NULL PRIMARY KEY DEFAULT nextval('users_id_seq'),
+  identity varchar(45) DEFAULT NULL UNIQUE,
   company_id bigint NOT NULL DEFAULT 1,
   email varchar(255)  NOT NULL UNIQUE,
   birthdate date DEFAULT NULL,

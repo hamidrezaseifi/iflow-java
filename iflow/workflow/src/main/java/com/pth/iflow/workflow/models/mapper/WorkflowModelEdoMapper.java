@@ -202,6 +202,7 @@ public class WorkflowModelEdoMapper {
     edo.setDepartmentGroups(model.getDepartmentGroups());
     edo.setDeputies(model.getDeputies());
     edo.setRoles(model.getRoles());
+    edo.setIdentity(model.getIdentity());
 
     return edo;
   }
@@ -225,6 +226,7 @@ public class WorkflowModelEdoMapper {
     model.setDepartmentGroups(edo.getDepartmentGroups());
     model.setDeputies(edo.getDeputies());
     model.setRoles(edo.getRoles());
+    model.setIdentity(edo.getIdentity());
 
     return model;
   }
