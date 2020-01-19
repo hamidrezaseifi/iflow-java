@@ -166,6 +166,7 @@
 	"user-password":"Kennwort",
 	"user-birthdate-placeholder":"Bitte geben Sie das Geburtsdatum ein",
 	"user-personal-info":"Personal",
+	"user-department-info":"Abteilung",
 	"user-access-info":"Zugriff",
 	"user-first-name-error-message":"Vorname ist erforderlich",
 	"user-last-name-error-message":"Nachname ist erforderlich",

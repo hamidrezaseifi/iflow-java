@@ -3,6 +3,7 @@ import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
+import { Observable } from 'rxjs';
 
 import { GlobalService } from '../../services/global.service';
 import { UserEditService } from '../../services/company/user-edit.service';
@@ -11,7 +12,7 @@ import { ErrorServiceService } from '../../services/error-service.service';
 import { GermanDateAdapter, parseDate, formatDate } from '../../helper';
 import { UserAccessTypeControllValidator } from '../../custom-validators/user-access-type-controll-validator';
 
-import { User, UserAccessType } from '../../ui-models';
+import { User, UserAccessType, MenuItem, GeneralData } from '../../ui-models';
 
 @Component({
   selector: 'app-user-list',
@@ -36,6 +37,8 @@ export class UserListComponent implements OnInit {
 	delitingUser :User = new User;
 	showDeleteModal :boolean = false;
 
+	generalDataObs :Observable<GeneralData> = null;
+
 	constructor(
 		    private router: Router,
 			private global: GlobalService,
@@ -54,6 +57,8 @@ export class UserListComponent implements OnInit {
         	this.deleteMessageBase = res;
         });
 
+        this.generalDataObs = this.global.currentSessionDataSubject.asObservable();
+        
 	}
 
 	ngOnInit() {
@@ -69,6 +74,8 @@ export class UserListComponent implements OnInit {
 		
 			
         });
+		
+		this.global.loadAllSetting(null);
 		
 		this.reload();
 	}
