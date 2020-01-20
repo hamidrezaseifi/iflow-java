@@ -158,3 +158,43 @@ input.select-date{
     padding-left: 120px;
 }
 
+.department-item-label, .department-grp-item-label, select.dep-membertype, .dep-member{
+	float: left !important;
+	margin: 5px 10px !important;	
+	display: inline-block !important;	
+}
+
+.department-item-label, .department-grp-item-label{
+	display: inline-block;	
+	margin-left: 0;
+}
+
+.department-item-label{
+	width: 150px;
+}
+
+.department-grp-item-label{
+	width: 135px;
+}
+
+
+.dep-list{
+	padding-left: 15px;	
+}
+
+.dep-membertype.custom-checkbox label{
+	margin-top: 3px;
+}
+
+.dep-membertype.custom-checkbox .custom-control-label::before{
+	width: 20px !important;
+	height: 20px !important;
+}
+
+.dep-membertype.custom-checkbox .custom-control-label::after {
+    top: 3px !important;
+    left: -30px !important;
+    width: 30px !important;
+    height: 25px !important;
+}
+

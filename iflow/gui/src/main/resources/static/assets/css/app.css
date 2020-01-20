@@ -945,3 +945,12 @@ a.tool-link:hover{
 .custome-ander-text{
 	font-size: 18px;
 }
+
+a.nav-link[role=tab]:not(.active){
+	color: silver;
+}
+
+a.nav-link.active[role=tab]{
+	color: #495057;
+	font-weight: bold;
+}

@@ -3,6 +3,8 @@ package com.pth.iflow.common.enums;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.pth.iflow.common.exceptions.IFlowInvalidEnumValueException;
 
 public enum EUserDepartmentMemberType implements IEnumValueValidator {
@@ -18,6 +20,7 @@ public enum EUserDepartmentMemberType implements IEnumValueValidator {
     this.id = id;
   }
 
+  @JsonCreator
   public static EUserDepartmentMemberType ofValue(final int value) {
 
     for (final EUserDepartmentMemberType type : values()) {
@@ -30,6 +33,7 @@ public enum EUserDepartmentMemberType implements IEnumValueValidator {
   }
 
   @Override
+  @JsonValue
   public Integer getValue() {
 
     return this.id;

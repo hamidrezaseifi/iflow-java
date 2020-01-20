@@ -129,18 +129,44 @@
 							<div style="padding: 5px; border: solid gray 1px; margin-top: 10px;">{{ debug() | json}}</div>
 						</div>
 					  	<div class="tab-pane fade" id="department-ino-tab" role="tabpanel" aria-labelledby="department-ino-tab-link">
-							<ul class="list-item-container">
-								<li *ngFor="let dep of (generalDataObs | async).company.departments" class="list-item">
-									<input type="checkbox" /> 
-									<span class="user-select-item-label">{{dep.title}}</span>
-									<ul class="list-item-container">
-										<li *ngFor="let depgrp of dep.departmentGroups;" class="list-item">
-											<input type="checkbox"/> 	 
-											<span class="user-select-item-label">{{depgrp.title}}</span>										
-										</li>
-									</ul>									
-								</li>
-							</ul>
+							
+							<div *ngFor="let dep of (generalDataObs | async).company.departments" class="list-item">
+								
+								<span class="department-item-label">{{dep.title}}</span>
+								
+								<div class="custom-control custom-checkbox custom-control-inline dep-member">
+								  <input type="checkbox" [checked]="isMemberOfDepartment(dep.identity)" (change)="toggleMemberOfDepartment(dep.identity)" class="custom-control-input" id="dep{{dep.identity}}">
+								  <label class="custom-control-label" for="dep{{dep.identity}}"></label>
+								</div>
+								
+								<select #select [value]="meberTypeOfDepartment(dep.identity)" name="meberTypeOfDepartment" (change)="onMeberTypeOfDepartmentChange($event, dep.identity, select.value)" class="dep-membertype" *ngIf="isMemberOfDepartment(dep.identity)">
+									<option value="0">{{ 'user-department-access-no' | translate }}</option>
+									<option value="5">{{ 'user-department-access-member' | translate }}</option>
+									<option value="10">{{ 'user-department-access-deputy' | translate }}</option>
+									<option value="20">{{ 'user-department-access-manager' | translate }}</option>
+								</select>
+								<div class="clear"></div> 
+								<div class="list-item-container dep-list">
+									<div *ngFor="let depgrp of dep.departmentGroups;" class="list-item">
+										 	 
+										<span class="department-grp-item-label">{{depgrp.title}}</span>
+								
+										<div class="custom-control custom-checkbox custom-control-inline dep-member">
+										  <input type="checkbox" [checked]="isMemberOfDepartmentGroup(depgrp.identity)" (change)="toggleMemberOfDepartmentGroup(depgrp.identity)" class="custom-control-input" id="depgrp{{depgrp.identity}}">
+										  <label class="custom-control-label" for="depgrp{{depgrp.identity}}"></label>
+										</div>
+								
+										<select #select [value]="meberTypeOfDepartmentGroup(depgrp.identity)" name="meberTypeOfDepartmentGroup" (change)="onMeberTypeOfDepartmentGroupChange($event, depgrp.identity, select.value)" class="dep-membertype" *ngIf="isMemberOfDepartmentGroup(depgrp.identity)">
+											<option value="0">{{ 'user-department-access-no' | translate }}</option>
+											<option value="5">{{ 'user-department-access-member' | translate }}</option>
+											<option value="10">{{ 'user-department-access-deputy' | translate }}</option>
+											<option value="20">{{ 'user-department-access-manager' | translate }}</option>
+										</select>
+										<div class="clear"></div>										
+									</div>
+								</div>									
+							</div>
+							
 					  	
 						</div>
 					  	<div class="tab-pane fade" id="access-ino-tab" role="tabpanel" aria-labelledby="access-ino-tab-link">

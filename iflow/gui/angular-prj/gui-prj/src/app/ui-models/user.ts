@@ -1,4 +1,6 @@
 import { UserAccessType } from './user-access';
+import { UserDepartment } from './user-department';
+import { UserDepartmentGroup } from './user-department-group';
 
 ﻿export class User {
 	identity: string;
@@ -14,5 +16,12 @@ import { UserAccessType } from './user-access';
 	userAccess: UserAccessType;
 	userAccessLabel: string;
 
+	userDepartments: UserDepartment[] = [];
+	userDepartmentGroups: UserDepartmentGroup[] = [];
+
+	groups: string[] = [];
+	deputies: string[] = [];
+
 }
+
 

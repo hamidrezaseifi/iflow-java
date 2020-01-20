@@ -12,7 +12,7 @@ import { ErrorServiceService } from '../../services/error-service.service';
 import { GermanDateAdapter, parseDate, formatDate } from '../../helper';
 import { UserAccessTypeControllValidator } from '../../custom-validators/user-access-type-controll-validator';
 
-import { User, UserAccessType, MenuItem, GeneralData } from '../../ui-models';
+import { User, UserAccessType, MenuItem, GeneralData, UserDepartmentGroup, UserDepartment } from '../../ui-models';
 
 @Component({
   selector: 'app-user-list',
@@ -29,6 +29,8 @@ export class UserListComponent implements OnInit {
 	isCreating :boolean = false;
 	showEditModal :boolean = false;
 	editingUser :User = new User;
+	editingUserDepartments: UserDepartment[] = [];
+	editingUserDepartmentGroups: UserDepartmentGroup[] = [];
 
 	userEditForm: FormGroup;
 	
@@ -118,6 +120,9 @@ export class UserListComponent implements OnInit {
 
 		this.isCreating = true;
 		this.editingUser = new User;
+		this.editingUserDepartments = [];
+		this.editingUserDepartmentGroups = [];
+
 		this.setToControlValues();
 		
 		this.showEditModal = true;
@@ -131,6 +136,9 @@ export class UserListComponent implements OnInit {
 
 		this.isCreating = false;
 		this.editingUser = user;
+		this.editingUserDepartments = this.editingUser.userDepartments;
+		this.editingUserDepartmentGroups = this.editingUser.userDepartmentGroups;
+		
 		this.setToControlValues();
 		
 		
@@ -158,6 +166,124 @@ export class UserListComponent implements OnInit {
 		this.showEditModal = false;
 	}
 
+	isMemberOfDepartmentGroup(identity:string): boolean{
+		
+		if(this.editingUser == null){
+			return false;
+		}
+		
+		for(var index in this.editingUserDepartmentGroups){
+			if(this.editingUserDepartmentGroups[index].departmentGroupIdentity === identity){
+				return true;
+			}
+		}
+		
+		return false;
+	}
+
+	toggleMemberOfDepartmentGroup(identity:string){
+		
+		if(this.editingUser == null){
+			return;
+		}
+		
+		if(this.isMemberOfDepartmentGroup(identity)){
+			this.editingUserDepartmentGroups = this.editingUserDepartmentGroups.filter(function(userDepGroup){
+				return userDepGroup.departmentGroupIdentity != identity;
+			});
+		}
+		else{
+			var userDepGroup = new UserDepartmentGroup;
+			userDepGroup.departmentGroupIdentity = identity;
+			userDepGroup.memberType = 5;
+			this.editingUserDepartmentGroups.push(userDepGroup);
+		}
+		
+	}
+
+	isMemberOfDepartment(identity:string): boolean{
+		
+		if(this.editingUser == null){
+			return false;
+		}
+		
+		
+		for(var index in this.editingUserDepartments){
+			if(this.editingUserDepartments[index].departmentIdentity === identity){
+				return true;
+			}
+		}
+		
+		
+		return false;
+	}
+
+	toggleMemberOfDepartment(identity:string){
+		
+		if(this.editingUser == null){
+			return;
+		}
+		
+		if(this.isMemberOfDepartment(identity)){
+			this.editingUserDepartments = this.editingUserDepartments.filter(function(userDep){
+				return userDep.departmentIdentity != identity;
+			});
+		}
+		else{
+			var userDep = new UserDepartment;
+			userDep.departmentIdentity = identity;
+			userDep.memberType = 5;
+			this.editingUserDepartments.push(userDep);
+		}
+		
+	}
+	
+	meberTypeOfDepartment(identity:string):number{
+		
+		for(var index in this.editingUserDepartments){
+			if(this.editingUserDepartments[index].departmentIdentity === identity){
+				return this.editingUserDepartments[index].memberType;
+			}
+		}
+		
+		return 0;
+	}
+	
+	onMeberTypeOfDepartmentChange(event, identity:string, value:number){
+
+		for(var index in this.editingUserDepartments){
+			if(this.editingUserDepartments[index].departmentIdentity === identity){
+				console.log("onMeberTypeOfDepartmentChange: " + identity + " : " + value);
+				this.editingUserDepartments[index].memberType = value;
+				return;
+			}
+		}
+		
+	}
+	
+	meberTypeOfDepartmentGroup(identity:string):number{
+		
+		for(var index in this.editingUserDepartmentGroups){
+			if(this.editingUserDepartmentGroups[index].departmentGroupIdentity === identity){
+				return this.editingUserDepartmentGroups[index].memberType;
+			}
+		}
+		
+		return 0;
+	}
+	
+	onMeberTypeOfDepartmentGroupChange(event, identity:string, value:number){
+
+		for(var index in this.editingUserDepartmentGroups){
+			if(this.editingUserDepartmentGroups[index].departmentGroupIdentity === identity){
+				console.log("onMeberTypeOfDepartmentGroupChange: " + identity + " : " + value);
+				this.editingUserDepartmentGroups[index].memberType = value;
+				return;
+			}
+		}
+		
+	}
+	
 	deleteUser(){
 		this.loadingService.showLoading();
 		
@@ -259,6 +385,10 @@ export class UserListComponent implements OnInit {
 		this.editingUser.userAccess = this.userEditForm.controls["userAccess"].value;
 		this.editingUser.status = this.userEditForm.controls["status"].value;			
 		this.editingUser.birthDate = formatDate(this.userEditForm.controls["birthDate"].value, 'dd.mm.yyyy');
+		
+		this.editingUser.userDepartments = this.editingUserDepartments;
+		this.editingUser.userDepartmentGroups = this.editingUserDepartmentGroups;
+
 	}
 	
 	
