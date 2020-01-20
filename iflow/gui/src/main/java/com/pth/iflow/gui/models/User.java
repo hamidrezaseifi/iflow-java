@@ -42,8 +42,8 @@ public class User extends IdentityModel {
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
   private final Set<String> groups = new HashSet<>();
-  private final Set<String> departments = new HashSet<>();
-  private final Set<String> departmentGroups = new HashSet<>();
+  private final List<UserDepartment> userDepartments = new ArrayList<>();
+  private final List<UserDepartmentGroup> userDepartmentGroups = new ArrayList<>();
   private final Set<String> deputies = new HashSet<>();
   private final List<EUiUserRole> roles = new ArrayList<>();
 
@@ -244,40 +244,30 @@ public class User extends IdentityModel {
     this.groups.add(groupId);
   }
 
-  public Set<String> getDepartments() {
+  public List<UserDepartment> getUserDepartments() {
 
-    return this.departments;
+    return this.userDepartments;
   }
 
-  public void setDepartments(final Set<String> departments) {
+  public void setUserDepartments(final List<UserDepartment> departments) {
 
-    this.departments.clear();
+    this.userDepartments.clear();
     if (departments != null) {
-      this.departments.addAll(departments);
+      this.userDepartments.addAll(departments);
     }
   }
 
-  public void addDepartment(final String departmentId) {
+  public List<UserDepartmentGroup> getUserDepartmentGroups() {
 
-    this.departments.add(departmentId);
+    return this.userDepartmentGroups;
   }
 
-  public Set<String> getDepartmentGroups() {
+  public void setUserDepartmentGroups(final List<UserDepartmentGroup> departmentGroups) {
 
-    return this.departmentGroups;
-  }
-
-  public void setDepartmentGroups(final Set<String> departmentGroups) {
-
-    this.departmentGroups.clear();
+    this.userDepartmentGroups.clear();
     if (departmentGroups != null) {
-      this.departmentGroups.addAll(departmentGroups);
+      this.userDepartmentGroups.addAll(departmentGroups);
     }
-  }
-
-  public void addDepartmentGroup(final String departmentGroupId) {
-
-    this.departmentGroups.add(departmentGroupId);
   }
 
   public Set<String> getDeputies() {
