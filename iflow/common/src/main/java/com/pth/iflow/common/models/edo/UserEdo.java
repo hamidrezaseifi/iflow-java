@@ -72,14 +72,12 @@ public class UserEdo {
   @NotNull(message = "DepartmentList must not be null")
   @XmlElementWrapper(name = "DepartmentList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "Department", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  @JsonDeserialize(using = StringToStringCollection.class)
-  private final Set<String> departments = new HashSet<>();
+  private final Set<UserDepartmentEdo> departments = new HashSet<>();
 
   @NotNull(message = "DepartmentGroupList must not be null")
   @XmlElementWrapper(name = "DepartmentGroupList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "DepartmentGroup", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  @JsonDeserialize(using = StringToStringCollection.class)
-  private final Set<String> departmentGroups = new HashSet<>();
+  private final Set<UserDepartmentGroupEdo> departmentGroups = new HashSet<>();
 
   @NotNull(message = "DeputyList must not be null")
   @XmlElementWrapper(name = "DeputyList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
@@ -201,13 +199,13 @@ public class UserEdo {
     this.groups.add(groupId);
   }
 
-  public Set<String> getDepartments() {
+  public Set<UserDepartmentEdo> getUserDepartments() {
 
     return this.departments;
   }
 
   @JsonSetter
-  public void setDepartments(final Collection<String> departments) {
+  public void setUserDepartments(final Collection<UserDepartmentEdo> departments) {
 
     this.departments.clear();
     if (departments != null) {
@@ -215,28 +213,18 @@ public class UserEdo {
     }
   }
 
-  public void addDepartment(final String departmentId) {
-
-    this.departments.add(departmentId);
-  }
-
-  public Set<String> getDepartmentGroups() {
+  public Set<UserDepartmentGroupEdo> getUserDepartmentGroups() {
 
     return this.departmentGroups;
   }
 
   @JsonSetter
-  public void setDepartmentGroups(@Nullable final Collection<String> departmentGroups) {
+  public void setUserDepartmentGroups(@Nullable final Collection<UserDepartmentGroupEdo> departmentGroups) {
 
     this.departmentGroups.clear();
     if (departmentGroups != null) {
       this.departmentGroups.addAll(departmentGroups);
     }
-  }
-
-  public void addDepartmentGroup(final String departmentGroupId) {
-
-    this.departmentGroups.add(departmentGroupId);
   }
 
   public Set<String> getDeputies() {

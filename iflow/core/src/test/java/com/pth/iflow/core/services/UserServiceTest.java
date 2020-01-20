@@ -113,7 +113,8 @@ public class UserServiceTest extends TestDataProducer {
     final UserEntity user = getTestUser();
     final List<DepartmentGroupEntity> list = getTestDepartmentGroupList();
 
-    user.setDepartmentGroups(list);
+    user.addUserDepartmentGroup(1L, 5);
+    user.addUserDepartmentGroup(2L, 5);
 
     when(this.userDao.getByIdentity(any(String.class))).thenReturn(user);
 
@@ -129,7 +130,9 @@ public class UserServiceTest extends TestDataProducer {
 
     final UserEntity user = getTestUser();
     final List<DepartmentEntity> list = getTestDepartmentList();
-    user.setDepartments(list);
+
+    user.addUserDepartment(1L, 5);
+    user.addUserDepartment(2L, 5);
 
     when(this.userDao.getByIdentity(any(String.class))).thenReturn(user);
 
@@ -183,7 +186,8 @@ public class UserServiceTest extends TestDataProducer {
     final List<DepartmentEntity> deplist = getTestDepartmentList();
 
     user.setGroups(grouplist);
-    user.setDepartments(deplist);
+    user.addUserDepartment(1L, 5);
+    user.addUserDepartment(2L, 5);
 
     when(this.userDao.getByIdentity(any(String.class))).thenReturn(user);
     when(this.userGroupDao.getListByIdList(any(Set.class))).thenReturn(grouplist);

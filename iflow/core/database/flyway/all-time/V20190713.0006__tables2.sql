@@ -1,18 +1,4 @@
 
-
-	DROP TABLE IF EXISTS user_department_groups;
-	
-	DROP TABLE IF EXISTS invoice_workflow;
-
-CREATE TABLE user_department_groups (
-  user_id bigint NOT NULL,
-  department_group_id bigint NOT NULL,
-  created_at timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-  PRIMARY KEY (user_id,department_group_id)
-) ;
-
-
-
 CREATE TABLE invoice_workflow (
   workflow_id bigint NOT NULL PRIMARY KEY,
   sender varchar(80) NOT NULL,

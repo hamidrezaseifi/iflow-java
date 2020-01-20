@@ -16,11 +16,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.pth.iflow.common.enums.EUserAcces;
 import com.pth.iflow.common.enums.EUserStatus;
 import com.pth.iflow.common.models.helper.IdentityModel;
 import com.pth.iflow.gui.helper.GuiDateDeserializer;
 import com.pth.iflow.gui.helper.GuiDateSerializer;
-import com.pth.iflow.gui.models.enums.EUserAcces;
 import com.pth.iflow.gui.models.ui.enums.EUiUserRole;
 
 @JsonIgnoreProperties(value = { "authorities", "enabled", "roles", })

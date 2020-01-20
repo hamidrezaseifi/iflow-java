@@ -1,60 +1,5 @@
 
 
-DROP TABLE IF EXISTS company_workflow_type;
-
-DROP TABLE IF EXISTS workflow_files_versions;
-
-DROP TABLE IF EXISTS workflow_files;
-
-DROP TABLE IF EXISTS workflow_actions;
-
-DROP TABLE IF EXISTS workflow;
-
-DROP TABLE IF EXISTS workflow_type_step;
-
-DROP TABLE IF EXISTS workflow_type;
-
-DROP TABLE IF EXISTS user_usergroup;
-
-DROP TABLE IF EXISTS user_deputy;
-
-DROP TABLE IF EXISTS user_department_groups;
-
-DROP TABLE IF EXISTS user_departments;
-
-DROP TABLE IF EXISTS departments_group;
-
-DROP TABLE IF EXISTS departments;
-
-DROP TABLE IF EXISTS user_group;
-
-DROP TABLE IF EXISTS user_roles;
-
-DROP TABLE IF EXISTS users;
-
-DROP TABLE IF EXISTS companies;
-
-DROP SEQUENCE IF EXISTS companies_id_seq;
-
-DROP SEQUENCE IF EXISTS  workflow_files_versions_id_seq;
-
-DROP SEQUENCE IF EXISTS  workflow_files_id_seq ;
-
-DROP SEQUENCE IF EXISTS  workflow_actions_id_seq ;
-
-DROP SEQUENCE IF EXISTS  workflow_id_seq ;
-
-DROP SEQUENCE IF EXISTS  workflow_type_step_id_seq ;
-
-DROP SEQUENCE IF EXISTS  workflow_type_id_seq ;
-
-DROP SEQUENCE IF EXISTS  user_group_id_seq . users_id_seq ;
-
-DROP SEQUENCE IF EXISTS  iflow_roles_id_seq ;
-
-DROP SEQUENCE IF EXISTS  departments_group_id_seq ;
-
-DROP SEQUENCE IF EXISTS  departments_id_seq;
 
 CREATE SEQUENCE companies_id_seq;
   
@@ -160,6 +105,7 @@ CREATE TABLE user_deputy (
 CREATE TABLE user_departments (
   user_id bigint NOT NULL,
   department_id bigint NOT NULL,
+  member_type int NOT NULL default 5,
   created_at timestamp without time zone NOT NULL default (now() at time zone 'utc'),
   PRIMARY KEY (user_id,department_id),
   CONSTRAINT FK_USERDEPARTMENTS_DEPARTMENTS FOREIGN KEY (department_id) REFERENCES departments (id),
@@ -169,6 +115,7 @@ CREATE TABLE user_departments (
 CREATE TABLE user_department_groups (
   user_id bigint NOT NULL,
   department_group_id bigint NOT NULL,
+  member_type int NOT NULL default 5,
   created_at timestamp without time zone NOT NULL default (now() at time zone 'utc'),
   PRIMARY KEY (user_id,department_group_id),
   CONSTRAINT FK_USERDEPARTMENTGROUPS_D FOREIGN KEY (department_group_id) REFERENCES departments_group (id),

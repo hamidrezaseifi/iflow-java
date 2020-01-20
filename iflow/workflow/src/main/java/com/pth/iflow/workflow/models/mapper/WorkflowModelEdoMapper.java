@@ -198,8 +198,8 @@ public class WorkflowModelEdoMapper {
     edo.setBirthDate(model.getBirthDate());
     edo.setCompanyIdentity(model.getCompanyIdentity());
     edo.setGroups(model.getGroups());
-    edo.setDepartments(model.getDepartments());
-    edo.setDepartmentGroups(model.getDepartmentGroups());
+    edo.setUserDepartments(model.getDepartments());
+    edo.setUserDepartmentGroups(model.getDepartmentGroups());
     edo.setDeputies(model.getDeputies());
     edo.setRoles(model.getRoles());
     edo.setIdentity(model.getIdentity());
@@ -222,8 +222,8 @@ public class WorkflowModelEdoMapper {
     model.setBirthDate(edo.getBirthDate());
     model.setCompanyIdentity(edo.getCompanyIdentity());
     model.setGroups(edo.getGroups());
-    model.setDepartments(edo.getDepartments());
-    model.setDepartmentGroups(edo.getDepartmentGroups());
+    model.setUserDepartments(edo.getUserDepartments());
+    model.setUserDepartmentGroups(edo.getUserDepartmentGroups());
     model.setDeputies(edo.getDeputies());
     model.setRoles(edo.getRoles());
     model.setIdentity(edo.getIdentity());

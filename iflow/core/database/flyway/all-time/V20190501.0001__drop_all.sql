@@ -29,8 +29,6 @@ DROP TABLE IF EXISTS user_usergroup;
 
 DROP TABLE IF EXISTS user_deputy;
 
-DROP TABLE IF EXISTS user_department_groups;
-
 DROP TABLE IF EXISTS user_departments;
 
 DROP TABLE IF EXISTS departments_group;

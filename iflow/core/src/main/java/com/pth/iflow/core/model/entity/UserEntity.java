@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,6 +18,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.apache.commons.lang3.StringUtils;
@@ -84,18 +86,6 @@ public class UserEntity extends EntityIdentityHelper {
 
   @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
   @JoinTable(
-             name = "user_departments", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "department_id") }
-  )
-  private final Set<DepartmentEntity> departments = new HashSet<>();
-
-  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-  @JoinTable(
-             name = "user_department_groups", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "department_group_id") }
-  )
-  private final Set<DepartmentGroupEntity> departmentGroups = new HashSet<>();
-
-  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-  @JoinTable(
              name = "user_deputy", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "deputy_id") }
   )
   private final Set<UserEntity> deputies = new HashSet<>();
@@ -103,6 +93,16 @@ public class UserEntity extends EntityIdentityHelper {
   @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
   @JoinTable(name = "user_roles", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "role") })
   private final Set<IflowRoleEntity> roles = new HashSet<>();
+
+  @OneToMany(
+             fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true
+  )
+  private final Set<UserDepartmentEntity> userDepartments = new HashSet<>();
+
+  @OneToMany(
+             fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true
+  )
+  private final Set<UserDepartmentGroupEntity> userDepartmentGroups = new HashSet<>();
 
   public UserEntity() {
 
@@ -323,37 +323,68 @@ public class UserEntity extends EntityIdentityHelper {
 
   }
 
-  public Set<DepartmentEntity> getDepartments() {
+  public Set<UserDepartmentEntity> getUserDepartments() {
 
-    return departments;
+    return userDepartments;
   }
 
-  public void setDepartments(final Collection<DepartmentEntity> departments) {
+  public void setUserDepartments(final Set<UserDepartmentEntity> userDepartments) {
 
-    this.departments.clear();
-    for (final DepartmentEntity model : departments) {
-
-      model.getUsers().add(this);
-
-      this.departments.add(model);
+    this.userDepartments.clear();
+    for (final UserDepartmentEntity model : userDepartments) {
+      model.setUser(this);
+      this.userDepartments.add(model);
     }
 
+  }
+
+  public void addUserDepartment(final Long departmentId, final int memberType) {
+
+    final UserDepartmentEntity model = new UserDepartmentEntity();
+    model.setId(new UserDepartmentId());
+    model.getId().setDepartmentId(departmentId);
+    model.setUser(this);
+    model.setMemberType(memberType);
+
+    this.userDepartments.add(model);
+
+  }
+
+  public Set<UserDepartmentGroupEntity> getUserDepartmentGroups() {
+
+    return userDepartmentGroups;
+  }
+
+  public void setUserDepartmentGroups(final Set<UserDepartmentGroupEntity> userDepartmentGroups) {
+
+    this.userDepartmentGroups.clear();
+    for (final UserDepartmentGroupEntity model : userDepartmentGroups) {
+      model.setUser(this);
+      this.userDepartmentGroups.add(model);
+    }
+
+  }
+
+  public void addUserDepartmentGroup(final Long departmentGroupId, final int memberType) {
+
+    final UserDepartmentGroupEntity model = new UserDepartmentGroupEntity();
+    model.setId(new UserDepartmentGroupId());
+    model.getId().setDepartmentGroupId(departmentGroupId);
+    model.setUser(this);
+    model.setMemberType(memberType);
+
+    this.userDepartmentGroups.add(model);
+
+  }
+
+  public Set<DepartmentEntity> getDepartments() {
+
+    return this.userDepartments.stream().map(ud -> ud.getDepartment()).collect(Collectors.toSet());
   }
 
   public Set<DepartmentGroupEntity> getDepartmentGroups() {
 
-    return departmentGroups;
-  }
-
-  public void setDepartmentGroups(final Collection<DepartmentGroupEntity> departmentGroups) {
-
-    this.departmentGroups.clear();
-    for (final DepartmentGroupEntity model : departmentGroups) {
-
-      model.getUsers().add(this);
-
-      this.departmentGroups.add(model);
-    }
+    return this.userDepartmentGroups.stream().map(udg -> udg.getDepartmentGroup()).collect(Collectors.toSet());
   }
 
   public Set<UserEntity> getDeputies() {

@@ -11,6 +11,8 @@ import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.common.models.edo.CompanyProfileEdo;
 import com.pth.iflow.common.models.edo.CompanyWorkflowTypeControllerEdo;
 import com.pth.iflow.common.models.edo.ProfileResponseEdo;
+import com.pth.iflow.common.models.edo.UserDepartmentEdo;
+import com.pth.iflow.common.models.edo.UserDepartmentGroupEdo;
 import com.pth.iflow.common.models.edo.UserEdo;
 import com.pth.iflow.common.models.helper.IdentityModel;
 import com.pth.iflow.core.helper.CoreDataHelper;
@@ -179,10 +181,18 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
     model.setCompany(companyDao.getByIdentity(edo.getCompanyIdentity()));
     model.setCompanyId(model.getCompany().getId());
     model.setGroups(userGroupDao.getListByIdentityList(edo.getGroups()));
-    model.setDepartments(departmentDao.getListByIdentityList(edo.getDepartments()));
-    model.setDepartmentGroups(departmentGroupDao.getListByIdentityList(edo.getDepartmentGroups()));
     model.setDeputies(userDao.getListByIdentityList(edo.getDeputies()));
     model.setIdentity(edo.getIdentity());
+
+    edo
+        .getUserDepartments()
+        .forEach(ud -> model.addUserDepartment(departmentDao.getByIdentity(ud.getDepartmentIdentity()).getId(), ud.getMemberType()));
+
+    edo
+        .getUserDepartmentGroups()
+        .forEach(
+            udg -> model
+                .addUserDepartmentGroup(departmentGroupDao.getByIdentity(udg.getDepartmentGroupIdentity()).getId(), udg.getMemberType()));
 
     return model;
   }
@@ -200,8 +210,21 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
     edo.setBirthDate(model.getBirthDate().toLocalDate());
     edo.setCompanyIdentity(model.getCompany().getIdentity());
     edo.setGroups(model.getGroups().stream().map(g -> g.getIdentity()).collect(Collectors.toSet()));
-    edo.setDepartments(model.getDepartments().stream().map(g -> g.getIdentity()).collect(Collectors.toSet()));
-    edo.setDepartmentGroups(model.getDepartmentGroups().stream().map(g -> g.getIdentity()).collect(Collectors.toSet()));
+
+    edo
+        .setUserDepartments(model
+            .getUserDepartments()
+            .stream()
+            .map(g -> new UserDepartmentEdo(g.getDepartment().getIdentity(), g.getMemberType().getValue()))
+            .collect(Collectors.toSet()));
+
+    edo
+        .setUserDepartmentGroups(model
+            .getUserDepartmentGroups()
+            .stream()
+            .map(g -> new UserDepartmentGroupEdo(g.getDepartmentGroup().getIdentity(), g.getMemberType().getValue()))
+            .collect(Collectors.toSet()));
+
     edo.setDeputies(model.getDeputies().stream().map(g -> g.getIdentity()).collect(Collectors.toSet()));
     edo.setRoles(model.getRoles().stream().map(r -> r.getId().intValue()).collect(Collectors.toSet()));
     edo.setIdentity(model.getIdentity());

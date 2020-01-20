@@ -1,4 +1,4 @@
-package com.pth.iflow.gui.models.enums;
+package com.pth.iflow.common.enums;
 
 public enum EUserAcces {
   NONE(0, "user-access-none"),

@@ -70,7 +70,7 @@ public class UserController {
 
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.USER_READ_BY_IDENTITY)
-  public ResponseEntity<UserEdo> readUserByEmail(@PathVariable(name = "identity") final String identity, final HttpServletRequest request)
+  public ResponseEntity<UserEdo> readUserByIdentity(@PathVariable(name = "identity") final String identity, final HttpServletRequest request)
       throws Exception {
 
     final UserEntity user = this.usersService.getUserByIdentity(identity);

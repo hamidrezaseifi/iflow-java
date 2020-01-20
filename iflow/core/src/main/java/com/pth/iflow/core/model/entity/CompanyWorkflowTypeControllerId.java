@@ -9,9 +9,6 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class CompanyWorkflowTypeControllerId implements Serializable {
 
-  /**
-   *
-   */
   private static final long serialVersionUID = 3787293332454617877L;
 
   @Column(name = "company_id")
