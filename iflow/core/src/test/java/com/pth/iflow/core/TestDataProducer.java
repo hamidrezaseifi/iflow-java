@@ -44,6 +44,8 @@ import com.pth.iflow.core.model.entity.DepartmentEntity;
 import com.pth.iflow.core.model.entity.DepartmentGroupEntity;
 import com.pth.iflow.core.model.entity.UserDepartmentEntity;
 import com.pth.iflow.core.model.entity.UserDepartmentGroupEntity;
+import com.pth.iflow.core.model.entity.UserDepartmentGroupId;
+import com.pth.iflow.core.model.entity.UserDepartmentId;
 import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.model.entity.UserGroupEntity;
 import com.pth.iflow.core.model.entity.workflow.InvoiceWorkflowEntity;
@@ -113,11 +115,11 @@ public class TestDataProducer {
     model.setVersion(1);
     model.setPermission(1);
 
-    model.addUserDepartment(1L, 5);
-    model.addUserDepartment(2L, 5);
+    model.addUserDepartment(getTestUserDepartmentEntity());
+    model.addUserDepartment(getTestUserDepartmentEntity());
 
-    model.addUserDepartmentGroup(1L, 5);
-    model.addUserDepartmentGroup(2L, 5);
+    model.addUserDepartmentGroup(getTestUserDepartmentGroupEntity());
+    model.addUserDepartmentGroup(getTestUserDepartmentGroupEntity());
 
     model.setDeputies(Arrays.asList());
     model.setGroups(Arrays.asList(getTestUserGroup(1L, "grp1"), getTestUserGroup(2L, "grp2")));
@@ -126,6 +128,30 @@ public class TestDataProducer {
     // model.setCompanyIdentity("companyIdentity");
 
     return model;
+  }
+
+  private UserDepartmentGroupEntity getTestUserDepartmentGroupEntity() {
+
+    final UserDepartmentGroupEntity userDepartmentGroupEntity = new UserDepartmentGroupEntity();
+    userDepartmentGroupEntity.setId(new UserDepartmentGroupId());
+
+    userDepartmentGroupEntity.setDepartmentGroup(getTestDepartmentGroup());
+    userDepartmentGroupEntity.getId().setDepartmentGroupId(userDepartmentGroupEntity.getDepartmentGroup().getId());
+
+    userDepartmentGroupEntity.setMemberType(5);
+    return userDepartmentGroupEntity;
+  }
+
+  private UserDepartmentEntity getTestUserDepartmentEntity() {
+
+    final UserDepartmentEntity userDepartmentGroupEntity = new UserDepartmentEntity();
+    userDepartmentGroupEntity.setId(new UserDepartmentId());
+
+    userDepartmentGroupEntity.setDepartment(getTestDepartment());
+    userDepartmentGroupEntity.getId().setDepartmentId(userDepartmentGroupEntity.getDepartment().getId());
+
+    userDepartmentGroupEntity.setMemberType(5);
+    return userDepartmentGroupEntity;
   }
 
   protected UserEdo getTestUserEdo() {
@@ -387,7 +413,7 @@ public class TestDataProducer {
 
     final List<DepartmentGroupEntity> list = Arrays
         .asList(this.getTestDepartmentGroup(1L, "DepartmentGroup 1"),
-            this.getTestDepartmentGroup(2L, "DepartmentGroup 2"), this.getTestDepartmentGroup(3L, "DepartmentGroup 3"));
+            this.getTestDepartmentGroup(2L, "DepartmentGroup 2"));
 
     return list;
   }
@@ -396,7 +422,7 @@ public class TestDataProducer {
 
     final List<DepartmentGroupEdo> list = Arrays
         .asList(this.getTestDepartmentGroupEdo(1L, "DepartmentGroup 1"),
-            this.getTestDepartmentGroupEdo(2L, "DepartmentGroup 2"), this.getTestDepartmentGroupEdo(3L, "DepartmentGroup 3"));
+            this.getTestDepartmentGroupEdo(2L, "DepartmentGroup 2"));
 
     return list;
   }
@@ -467,7 +493,7 @@ public class TestDataProducer {
 
     final List<UserGroupEntity> list = Arrays
         .asList(this.getTestUserGroup(1L, "UserGroupEntity 1"),
-            this.getTestUserGroup(2L, "UserGroupEntity 2"), this.getTestUserGroup(3L, "UserGroupEntity 3"));
+            this.getTestUserGroup(2L, "UserGroupEntity 2"));
 
     return list;
   }
@@ -476,7 +502,7 @@ public class TestDataProducer {
 
     final List<UserGroupEdo> list = Arrays
         .asList(this.getTestUserGroupEdo(1L, "UserGroupEntity 1"),
-            this.getTestUserGroupEdo(2L, "UserGroupEntity 2"), this.getTestUserGroupEdo(3L, "UserGroupEntity 3"));
+            this.getTestUserGroupEdo(2L, "UserGroupEntity 2"));
 
     return list;
   }

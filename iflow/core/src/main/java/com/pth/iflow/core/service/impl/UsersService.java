@@ -70,7 +70,7 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
   @Override
   public UserEntity getUserByEmail(final String email) {
 
-    return userDao.getUserByEmail(email);
+    return userDao.getByEmail(email);
   }
 
   @Override

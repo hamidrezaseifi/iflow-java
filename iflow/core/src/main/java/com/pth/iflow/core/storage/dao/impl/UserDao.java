@@ -26,7 +26,7 @@ import com.pth.iflow.core.storage.dao.interfaces.IUserDao;
 public class UserDao extends EntityDaoBase<UserEntity> implements IUserDao {
 
   @Override
-  public UserEntity getUserByEmail(final String email) {
+  public UserEntity getByEmail(final String email) {
 
     final EntityManager entityManager = createEntityManager();
 

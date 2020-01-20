@@ -18,7 +18,7 @@ public interface IUserDao {
 
   public UserEntity getByIdentity(final String email) throws IFlowStorageException;
 
-  public UserEntity getUserByEmail(final String email);
+  public UserEntity getByEmail(final String email);
 
   public List<UserEntity> getListByIdentityList(Collection<String> idList) throws IFlowStorageException;
 

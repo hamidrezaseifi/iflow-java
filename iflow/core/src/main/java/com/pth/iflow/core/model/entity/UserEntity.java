@@ -350,6 +350,14 @@ public class UserEntity extends EntityIdentityHelper {
 
   }
 
+  public void addUserDepartment(final UserDepartmentEntity model) {
+
+    model.setUser(this);
+
+    this.userDepartments.add(model);
+
+  }
+
   public Set<UserDepartmentGroupEntity> getUserDepartmentGroups() {
 
     return userDepartmentGroups;
@@ -372,6 +380,14 @@ public class UserEntity extends EntityIdentityHelper {
     model.getId().setDepartmentGroupId(departmentGroupId);
     model.setUser(this);
     model.setMemberType(memberType);
+
+    this.userDepartmentGroups.add(model);
+
+  }
+
+  public void addUserDepartmentGroup(final UserDepartmentGroupEntity model) {
+
+    model.setUser(this);
 
     this.userDepartmentGroups.add(model);
 
