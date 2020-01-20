@@ -1,8 +1,10 @@
 package com.pth.iflow.common.models.edo;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.validation.constraints.NotNull;
@@ -69,15 +71,15 @@ public class UserEdo {
   @JsonDeserialize(using = StringToStringCollection.class)
   private final Set<String> groups = new HashSet<>();
 
-  @NotNull(message = "DepartmentList must not be null")
-  @XmlElementWrapper(name = "DepartmentList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  @XmlElement(name = "Department", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private final Set<UserDepartmentEdo> departments = new HashSet<>();
+  @NotNull(message = "UserDepartmentList must not be null")
+  @XmlElementWrapper(name = "UserDepartmentList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  @XmlElement(name = "UserDepartment", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private final List<UserDepartmentEdo> userDepartments = new ArrayList<>();
 
-  @NotNull(message = "DepartmentGroupList must not be null")
-  @XmlElementWrapper(name = "DepartmentGroupList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  @XmlElement(name = "DepartmentGroup", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private final Set<UserDepartmentGroupEdo> departmentGroups = new HashSet<>();
+  @NotNull(message = "UserDepartmentGroupList must not be null")
+  @XmlElementWrapper(name = "UserDepartmentGroupList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  @XmlElement(name = "UserDepartmentGroup", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private final List<UserDepartmentGroupEdo> userDepartmentGroups = new ArrayList<>();
 
   @NotNull(message = "DeputyList must not be null")
   @XmlElementWrapper(name = "DeputyList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
@@ -199,31 +201,31 @@ public class UserEdo {
     this.groups.add(groupId);
   }
 
-  public Set<UserDepartmentEdo> getUserDepartments() {
+  public List<UserDepartmentEdo> getUserDepartments() {
 
-    return this.departments;
+    return this.userDepartments;
   }
 
   @JsonSetter
   public void setUserDepartments(final Collection<UserDepartmentEdo> departments) {
 
-    this.departments.clear();
+    this.userDepartments.clear();
     if (departments != null) {
-      this.departments.addAll(departments);
+      this.userDepartments.addAll(departments);
     }
   }
 
-  public Set<UserDepartmentGroupEdo> getUserDepartmentGroups() {
+  public List<UserDepartmentGroupEdo> getUserDepartmentGroups() {
 
-    return this.departmentGroups;
+    return this.userDepartmentGroups;
   }
 
   @JsonSetter
   public void setUserDepartmentGroups(@Nullable final Collection<UserDepartmentGroupEdo> departmentGroups) {
 
-    this.departmentGroups.clear();
+    this.userDepartmentGroups.clear();
     if (departmentGroups != null) {
-      this.departmentGroups.addAll(departmentGroups);
+      this.userDepartmentGroups.addAll(departmentGroups);
     }
   }
 
