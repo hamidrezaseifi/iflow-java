@@ -124,7 +124,8 @@ th.mat-header-cell {
 .form-group input[type=email],  
 .form-group input[type=password], 
 .form-group select, 
-.form-group textarea{
+.form-group textarea,
+#viewuserdialog .form-group .datacontent {
 	display: inline-block !important;
     width: calc(100% - 140px) !important;
 }
@@ -160,7 +161,7 @@ input.select-date{
 
 .department-item-label, .department-grp-item-label, select.dep-membertype, .dep-member{
 	float: left !important;
-	margin: 5px 10px !important;	
+	margin: 5px 10px;	
 	display: inline-block !important;	
 }
 
@@ -198,3 +199,29 @@ input.select-date{
     height: 25px !important;
 }
 
+#viewuserdialog .form-group .datacontent {
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+}
+
+.view-department-membertype-item{
+	height: 34px;
+	line-height: 28px;
+	margin: 5px 0;
+	background: #e4e4e4;
+	padding: 2px 10px;
+	border: 1px solid lightgray;
+}
+
+.view-department-membertype-item .department-item-label{
+	float: none !important;
+	margin: 0 !important;
+}

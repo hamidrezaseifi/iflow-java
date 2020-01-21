@@ -13,7 +13,7 @@ import { ErrorServiceService } from '../../services/error-service.service';
 import { GermanDateAdapter, parseDate, formatDate } from '../../helper';
 import { UserAccessTypeControllValidator } from '../../custom-validators/user-access-type-controll-validator';
 
-import { User, UserAccessType, MenuItem, GeneralData, UserDepartmentGroup, UserDepartment } from '../../ui-models';
+import { User, UserAccessType, MenuItem, GeneralData, UserDepartmentGroup, UserDepartment, Department, DepartmentGroup } from '../../ui-models';
 
 @Component({
   selector: 'app-user-list',
@@ -40,9 +40,17 @@ export class UserListComponent implements OnInit {
 	delitingUser :User = new User;
 	showDeleteModal :boolean = false;
 
-	generalDataObs :Observable<GeneralData> = null;
+	viewingUser :User = new User;
+	showViewModal :boolean = false;
+	viewingDepartmentMember : Object[] = [];
 
+	generalDataObs :Observable<GeneralData> = null;
+	departments :Department[] = [];
+	
 	activeTab :string = "info";
+	
+	userDepartmentAccessType :{} = { 0 : "user-department-access-no", 5 : "user-department-access-member", 
+			15 : "user-department-access-deputy", 20 : "user-department-access-manager"};
 	
 	constructor(
 		    private router: Router,
@@ -63,7 +71,18 @@ export class UserListComponent implements OnInit {
         });
 
         this.generalDataObs = this.global.currentSessionDataSubject.asObservable();
-        
+		this.generalDataObs.subscribe(data => {
+			   
+			this.departments = data.company.departments;
+		});
+
+		for(var index in this.userDepartmentAccessType){
+			translate.get(this.userDepartmentAccessType[index]).subscribe((res: string) => {
+				this.userDepartmentAccessType[index] = res;
+	        });
+		}
+		
+		
 	}
 
 	ngOnInit() {
@@ -152,9 +171,50 @@ export class UserListComponent implements OnInit {
 	}
 
 	showViewUser(user: User) {
+		this.viewingUser = user;
+				
+		this.viewingDepartmentMember = [];
+			
+		for(var index in this.viewingUser.userDepartments){
+			var userDepartment :UserDepartment = this.viewingUser.userDepartments[index];
+			var dep = this.findDepartment(userDepartment.departmentIdentity);
+			this.viewingDepartmentMember.push({"title" : dep != null ? dep.title : "not found!" , "type":this.userDepartmentAccessType[userDepartment.memberType]});
+		}
 		
+		for(var index in this.viewingUser.userDepartmentGroups){
+			var userDepartmentGroup :UserDepartmentGroup = this.viewingUser.userDepartmentGroups[index];
+			var depgrp = this.findDepartmentGroup(userDepartmentGroup.departmentGroupIdentity);
+			this.viewingDepartmentMember.push({"title" : depgrp != null ? depgrp.title : "not found!", "type":this.userDepartmentAccessType[userDepartmentGroup.memberType]});			
+		}
+
+		this.activeTab = "info";
+		this.showViewModal = true;
 	}
 
+	findDepartment(identity: string):Department{
+		for(var index in this.departments){
+			if(this.departments[index].identity === identity){
+				return this.departments[index];
+			}
+		}
+		return null;
+	}
+
+	findDepartmentGroup(identity: string):DepartmentGroup{
+		for(var index in this.departments){
+			for(var gindex in this.departments[index].departmentGroups){
+				if(this.departments[index].departmentGroups[gindex].identity === identity){
+					return this.departments[index].departmentGroups[gindex];
+				}
+			}
+		}
+		return null;
+	}
+	
+	hideViewUserDialog(){
+		this.showViewModal = false;
+	}
+	
 	showDeleteUser(user: User) {
 		
 		this.delitingUser = user;
