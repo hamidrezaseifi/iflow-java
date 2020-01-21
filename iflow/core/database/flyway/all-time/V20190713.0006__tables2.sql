@@ -51,6 +51,7 @@ CREATE TABLE workflow_message (
   CONSTRAINT FK_WORKFLOWOFFER_USER FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT FK_WORKFLOWOFFER_WORKFLOW FOREIGN KEY (workflow_id) REFERENCES workflow (id) ON DELETE CASCADE ON UPDATE RESTRICT
 ) ;
+ALTER SEQUENCE workflow_message_id_seq OWNED BY workflow_message.id;
 
 
 INSERT INTO company_workflow_type(company_id,workflow_type_id) VALUES(1, 1);

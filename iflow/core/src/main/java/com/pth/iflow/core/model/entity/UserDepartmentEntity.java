@@ -2,84 +2,65 @@ package com.pth.iflow.core.model.entity;
 
 import java.sql.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.persistence.Table;
 
-import com.pth.iflow.common.enums.EUserDepartmentMemberType;
-import com.pth.iflow.core.storage.dao.helper.EntityListener;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Table(name = "user_departments")
-@EntityListeners(EntityListener.class)
 public class UserDepartmentEntity {
 
-  @EmbeddedId
-  private UserDepartmentId id;
+  @Id
+  @Column(name = "id")
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
   @Column(name = "member_type")
   private int memberType;
 
-  @Column(name = "created_at", insertable = false, updatable = false)
+  @CreationTimestamp
+  @Column(name = "created_at")
   private Date createdAt;
 
-  @ManyToOne(fetch = FetchType.EAGER)
-  @MapsId("department_id")
-  @JoinColumn(
-              name = "department_id", referencedColumnName = "id"
-  )
+  @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.REFRESH })
+  @JoinColumn(name = "department_id", nullable = false)
   private DepartmentEntity department;
 
-  @ManyToOne(fetch = FetchType.EAGER)
-  @MapsId("userId")
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "user_id", nullable = false)
   private UserEntity user;
-
-  // @ManyToOne
-  // @JoinColumn(name = "user_id", insertable = false, updatable = false)
-  // @JoinColumn(name = "id.user_id", insertable = false, updatable = false)
-  // @Fetch(FetchMode.JOIN)
-  // private UserEntity user;
 
   public UserDepartmentEntity() {
 
   }
 
-  public UserDepartmentEntity(final boolean createId) {
-
-    if (createId) {
-      id = new UserDepartmentId();
-    }
-  }
-
-  public UserDepartmentId getId() {
+  public Long getId() {
 
     return id;
   }
 
-  public void setId(final UserDepartmentId id) {
+  public void setId(final Long id) {
 
     this.id = id;
   }
 
-  public EUserDepartmentMemberType getMemberType() {
+  public int getMemberType() {
 
-    return EUserDepartmentMemberType.ofValue(memberType);
+    return memberType;
   }
 
   public void setMemberType(final int memberType) {
 
     this.memberType = memberType;
-  }
-
-  public void setMemberType(final EUserDepartmentMemberType memberType) {
-
-    this.memberType = memberType.getValue();
   }
 
   public Date getCreatedAt() {

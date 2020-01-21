@@ -26,6 +26,21 @@ import com.pth.iflow.core.storage.dao.interfaces.IUserDao;
 public class UserDao extends EntityDaoBase<UserEntity> implements IUserDao {
 
   @Override
+  public UserEntity create(final UserEntity model) throws IFlowStorageException {
+
+    final UserEntity savedModel = super.create(model);
+
+    return savedModel;
+  }
+
+  @Override
+  public UserEntity update(final UserEntity model) throws IFlowStorageException {
+
+    final UserEntity savedModel = super.update(model);
+    return getById(savedModel.getId());
+  }
+
+  @Override
   public UserEntity getByEmail(final String email) {
 
     final EntityManager entityManager = createEntityManager();

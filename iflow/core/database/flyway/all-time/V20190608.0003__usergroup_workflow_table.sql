@@ -12,6 +12,7 @@ CREATE TABLE companies (
   created_at timestamp without time zone NOT NULL default (now() at time zone 'utc'),
   updated_at timestamp without time zone NOT NULL default (now() at time zone 'utc')
 );
+ALTER SEQUENCE companies_id_seq OWNED BY companies.id;
 
 CREATE SEQUENCE departments_id_seq;
 
@@ -27,6 +28,7 @@ CREATE TABLE departments (
   
   CONSTRAINT FK_DEPARTMENTS_COMPANY FOREIGN KEY (company_id) REFERENCES companies (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
+ALTER SEQUENCE departments_id_seq OWNED BY departments.id;
 
 
 CREATE SEQUENCE departments_group_id_seq;
@@ -43,6 +45,7 @@ CREATE TABLE departments_group (
   
   CONSTRAINT FK_DEPARTMENTGROUP_DEPARTMENT FOREIGN KEY (department_id) REFERENCES departments (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
+ALTER SEQUENCE departments_group_id_seq OWNED BY departments_group.id;
 
 
 CREATE SEQUENCE iflow_roles_id_seq;
@@ -55,6 +58,7 @@ CREATE TABLE iflow_roles (
   created_at timestamp without time zone NOT NULL default (now() at time zone 'utc'),
   updated_at timestamp without time zone NOT NULL default (now() at time zone 'utc')
 ) ;
+ALTER SEQUENCE iflow_roles_id_seq OWNED BY iflow_roles.id;
  
 
 CREATE SEQUENCE users_id_seq;
@@ -76,6 +80,8 @@ CREATE TABLE users (
   
   CONSTRAINT FK_USERS_COMPANIES FOREIGN KEY (company_id) REFERENCES companies (id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
+ALTER SEQUENCE users_id_seq OWNED BY users.id;
+
  
 CREATE SEQUENCE user_group_id_seq;
  
@@ -91,6 +97,7 @@ CREATE TABLE user_group (
   
   CONSTRAINT FK_USERGROUP_COMPANY FOREIGN KEY (company_id) REFERENCES companies (id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
+ALTER SEQUENCE user_group_id_seq OWNED BY user_group.id;
 
 
 CREATE TABLE user_deputy (
@@ -115,6 +122,7 @@ CREATE TABLE user_departments (
   CONSTRAINT FK_USERDEPARTMENTS_DEPARTMENTS FOREIGN KEY (department_id) REFERENCES departments (id),
   CONSTRAINT FK_USERDEPARTMENTS_USERS FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
+ALTER SEQUENCE user_department_id_seq OWNED BY user_departments.id;
 
 
 CREATE SEQUENCE user_department_groups_id_seq;
@@ -128,6 +136,8 @@ CREATE TABLE user_department_groups (
   CONSTRAINT FK_USERDEPARTMENTGROUPS_D FOREIGN KEY (department_group_id) REFERENCES departments_group (id),
   CONSTRAINT FK_USERDEPARTMENTGROUPS_USERS FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
+ALTER SEQUENCE user_department_groups_id_seq OWNED BY user_department_groups.id;
+
 
 CREATE TABLE user_usergroup (
   user_id bigint NOT NULL,
@@ -164,6 +174,7 @@ CREATE TABLE workflow_type (
   created_at timestamp without time zone NOT NULL default (now() at time zone 'utc'),
   updated_at timestamp without time zone NOT NULL default (now() at time zone 'utc')
 );
+ALTER SEQUENCE workflow_type_id_seq OWNED BY workflow_type.id;
 
 
 CREATE SEQUENCE workflow_type_step_id_seq;
@@ -184,6 +195,7 @@ CREATE TABLE workflow_type_step (
   
   CONSTRAINT FK_WORKFLOWTYPESTEP_WORKFLOWTYPE FOREIGN KEY (workflow_type_id) REFERENCES workflow_type (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
+ALTER SEQUENCE workflow_type_step_id_seq OWNED BY workflow_type_step.id;
 
 
 CREATE SEQUENCE workflow_id_seq;
@@ -207,6 +219,7 @@ CREATE TABLE workflow (
   CONSTRAINT FK_WORKFLOW_WORKFLOWTYPE FOREIGN KEY (workflow_type_id) REFERENCES workflow_type (id) ON UPDATE CASCADE,
   CONSTRAINT FK_WORKFLOW_WORKFLOWTYPESTEP FOREIGN KEY (current_step) REFERENCES workflow_type_step (id) ON UPDATE CASCADE
 );
+ALTER SEQUENCE workflow_id_seq OWNED BY workflow.id;
 
 
 CREATE SEQUENCE workflow_actions_id_seq;
@@ -223,6 +236,7 @@ CREATE TABLE workflow_actions (
   
   CONSTRAINT FK_WORKFLOWACTION_WORKFLOW FOREIGN KEY (workflow_id) REFERENCES workflow (id) ON UPDATE CASCADE
 );
+ALTER SEQUENCE workflow_actions_id_seq OWNED BY workflow_actions.id;
 
 
 
@@ -245,6 +259,7 @@ CREATE TABLE workflow_files (
   CONSTRAINT FK_WORKFLOWFILE_USERS FOREIGN KEY (created_by) REFERENCES users (id) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT FK_WORKFLOWFILE_WORKFLOW FOREIGN KEY (workflow_id) REFERENCES workflow (id) ON UPDATE CASCADE
 );
+ALTER SEQUENCE workflow_files_id_seq OWNED BY workflow_files.id;
 
  
  
@@ -262,6 +277,7 @@ CREATE TABLE workflow_files_versions (
   updated_at timestamp without time zone NOT NULL default (now() at time zone 'utc'),
   CONSTRAINT FK_WORKFLOWFILEVERSION_WORKFLOWFILE FOREIGN KEY (workflow_file_id) REFERENCES workflow_files (id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
+ALTER SEQUENCE workflow_files_versions_id_seq OWNED BY workflow_files_versions.id;
 
 CREATE TABLE company_workflow_type (
   company_id bigint NOT NULL,

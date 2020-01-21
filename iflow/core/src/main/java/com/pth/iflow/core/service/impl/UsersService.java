@@ -184,15 +184,15 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
     model.setDeputies(userDao.getListByIdentityList(edo.getDeputies()));
     model.setIdentity(edo.getIdentity());
 
-    edo
-        .getUserDepartments()
-        .forEach(ud -> model.addUserDepartment(departmentDao.getByIdentity(ud.getDepartmentIdentity()).getId(), ud.getMemberType()));
+    for (final UserDepartmentEdo userDepartmentEdo : edo.getUserDepartments()) {
+      model.addUserDepartment(departmentDao.getByIdentity(userDepartmentEdo.getDepartmentIdentity()), userDepartmentEdo.getMemberType());
+    }
 
-    edo
-        .getUserDepartmentGroups()
-        .forEach(
-            udg -> model
-                .addUserDepartmentGroup(departmentGroupDao.getByIdentity(udg.getDepartmentGroupIdentity()).getId(), udg.getMemberType()));
+    for (final UserDepartmentGroupEdo userDepartmentGroupEdo : edo.getUserDepartmentGroups()) {
+      model
+          .addUserDepartmentGroup(departmentGroupDao.getByIdentity(userDepartmentGroupEdo.getDepartmentGroupIdentity()),
+              userDepartmentGroupEdo.getMemberType());
+    }
 
     return model;
   }
@@ -215,14 +215,14 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
         .setUserDepartments(model
             .getUserDepartments()
             .stream()
-            .map(g -> new UserDepartmentEdo(g.getDepartment().getIdentity(), g.getMemberType().getValue()))
+            .map(g -> new UserDepartmentEdo(g.getDepartment().getIdentity(), g.getMemberType()))
             .collect(Collectors.toSet()));
 
     edo
         .setUserDepartmentGroups(model
             .getUserDepartmentGroups()
             .stream()
-            .map(g -> new UserDepartmentGroupEdo(g.getDepartmentGroup().getIdentity(), g.getMemberType().getValue()))
+            .map(g -> new UserDepartmentGroupEdo(g.getDepartmentGroup().getIdentity(), g.getMemberType()))
             .collect(Collectors.toSet()));
 
     edo.setDeputies(model.getDeputies().stream().map(g -> g.getIdentity()).collect(Collectors.toSet()));

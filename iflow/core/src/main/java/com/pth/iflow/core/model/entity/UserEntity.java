@@ -1,8 +1,10 @@
 package com.pth.iflow.core.model.entity;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -23,6 +25,8 @@ import javax.persistence.Table;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.pth.iflow.common.enums.EUserStatus;
@@ -94,15 +98,13 @@ public class UserEntity extends EntityIdentityHelper {
   @JoinTable(name = "user_roles", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "role") })
   private final Set<IflowRoleEntity> roles = new HashSet<>();
 
-  @OneToMany(
-             fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true
-  )
-  private final Set<UserDepartmentEntity> userDepartments = new HashSet<>();
+  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user", fetch = FetchType.EAGER)
+  @Fetch(value = FetchMode.SUBSELECT)
+  private final List<UserDepartmentEntity> userDepartments = new ArrayList<>();
 
-  @OneToMany(
-             fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true
-  )
-  private final Set<UserDepartmentGroupEntity> userDepartmentGroups = new HashSet<>();
+  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user", fetch = FetchType.EAGER)
+  @Fetch(value = FetchMode.SUBSELECT)
+  private final List<UserDepartmentGroupEntity> userDepartmentGroups = new ArrayList<>();
 
   public UserEntity() {
 
@@ -323,12 +325,12 @@ public class UserEntity extends EntityIdentityHelper {
 
   }
 
-  public Set<UserDepartmentEntity> getUserDepartments() {
+  public List<UserDepartmentEntity> getUserDepartments() {
 
     return userDepartments;
   }
 
-  public void setUserDepartments(final Set<UserDepartmentEntity> userDepartments) {
+  public void setUserDepartments(final Collection<UserDepartmentEntity> userDepartments) {
 
     this.userDepartments.clear();
     for (final UserDepartmentEntity model : userDepartments) {
@@ -338,11 +340,10 @@ public class UserEntity extends EntityIdentityHelper {
 
   }
 
-  public void addUserDepartment(final Long departmentId, final int memberType) {
+  public void addUserDepartment(final DepartmentEntity department, final int memberType) {
 
     final UserDepartmentEntity model = new UserDepartmentEntity();
-    model.setId(new UserDepartmentId());
-    model.getId().setDepartmentId(departmentId);
+    model.setDepartment(department);
     model.setUser(this);
     model.setMemberType(memberType);
 
@@ -358,12 +359,12 @@ public class UserEntity extends EntityIdentityHelper {
 
   }
 
-  public Set<UserDepartmentGroupEntity> getUserDepartmentGroups() {
+  public List<UserDepartmentGroupEntity> getUserDepartmentGroups() {
 
     return userDepartmentGroups;
   }
 
-  public void setUserDepartmentGroups(final Set<UserDepartmentGroupEntity> userDepartmentGroups) {
+  public void setUserDepartmentGroups(final Collection<UserDepartmentGroupEntity> userDepartmentGroups) {
 
     this.userDepartmentGroups.clear();
     for (final UserDepartmentGroupEntity model : userDepartmentGroups) {
@@ -373,11 +374,10 @@ public class UserEntity extends EntityIdentityHelper {
 
   }
 
-  public void addUserDepartmentGroup(final Long departmentGroupId, final int memberType) {
+  public void addUserDepartmentGroup(final DepartmentGroupEntity departmentGroup, final int memberType) {
 
     final UserDepartmentGroupEntity model = new UserDepartmentGroupEntity();
-    model.setId(new UserDepartmentGroupId());
-    model.getId().setDepartmentGroupId(departmentGroupId);
+    model.setDepartmentGroup(departmentGroup);
     model.setUser(this);
     model.setMemberType(memberType);
 

@@ -44,8 +44,6 @@ import com.pth.iflow.core.model.entity.DepartmentEntity;
 import com.pth.iflow.core.model.entity.DepartmentGroupEntity;
 import com.pth.iflow.core.model.entity.UserDepartmentEntity;
 import com.pth.iflow.core.model.entity.UserDepartmentGroupEntity;
-import com.pth.iflow.core.model.entity.UserDepartmentGroupId;
-import com.pth.iflow.core.model.entity.UserDepartmentId;
 import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.model.entity.UserGroupEntity;
 import com.pth.iflow.core.model.entity.workflow.InvoiceWorkflowEntity;
@@ -133,10 +131,8 @@ public class TestDataProducer {
   private UserDepartmentGroupEntity getTestUserDepartmentGroupEntity() {
 
     final UserDepartmentGroupEntity userDepartmentGroupEntity = new UserDepartmentGroupEntity();
-    userDepartmentGroupEntity.setId(new UserDepartmentGroupId());
 
     userDepartmentGroupEntity.setDepartmentGroup(getTestDepartmentGroup());
-    userDepartmentGroupEntity.getId().setDepartmentGroupId(userDepartmentGroupEntity.getDepartmentGroup().getId());
 
     userDepartmentGroupEntity.setMemberType(5);
     return userDepartmentGroupEntity;
@@ -145,10 +141,8 @@ public class TestDataProducer {
   private UserDepartmentEntity getTestUserDepartmentEntity() {
 
     final UserDepartmentEntity userDepartmentGroupEntity = new UserDepartmentEntity();
-    userDepartmentGroupEntity.setId(new UserDepartmentId());
 
     userDepartmentGroupEntity.setDepartment(getTestDepartment());
-    userDepartmentGroupEntity.getId().setDepartmentId(userDepartmentGroupEntity.getDepartment().getId());
 
     userDepartmentGroupEntity.setMemberType(5);
     return userDepartmentGroupEntity;
@@ -211,12 +205,6 @@ public class TestDataProducer {
     model.setStatus(1);
     model.setVersion(1);
     model.setPermission(1);
-
-    model.addUserDepartment(1L, 5);
-    model.addUserDepartment(2L, 5);
-
-    model.addUserDepartmentGroup(1L, 5);
-    model.addUserDepartmentGroup(2L, 5);
 
     model.setDeputies(Arrays.asList(getTestUser()));
     model.setGroups(Arrays.asList(getTestUserGroup(1L, "grp1"), getTestUserGroup(2L, "grp2")));
@@ -376,24 +364,6 @@ public class TestDataProducer {
     model.setStatus(1);
     model.setVersion(1);
     model.setIdentity("depgroup-1");
-
-    return model;
-  }
-
-  protected UserDepartmentGroupEntity getTestUserDepartmentGroup(final Long groupid, final int memberType) {
-
-    final UserDepartmentGroupEntity model = new UserDepartmentGroupEntity(true);
-    model.setMemberType(memberType);
-    model.getId().setDepartmentGroupId(groupid);
-
-    return model;
-  }
-
-  protected UserDepartmentEntity getTestUserDepartment(final Long depid, final int memberType) {
-
-    final UserDepartmentEntity model = new UserDepartmentEntity(true);
-    model.setMemberType(memberType);
-    model.getId().setDepartmentId(depid);
 
     return model;
   }
