@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 import { Observable } from 'rxjs';
+import $ from "jquery";
 
 import { GlobalService } from '../../services/global.service';
 import { UserEditService } from '../../services/company/user-edit.service';
@@ -41,6 +42,8 @@ export class UserListComponent implements OnInit {
 
 	generalDataObs :Observable<GeneralData> = null;
 
+	activeTab :string = "info";
+	
 	constructor(
 		    private router: Router,
 			private global: GlobalService,
@@ -125,6 +128,8 @@ export class UserListComponent implements OnInit {
 
 		this.setToControlValues();
 		
+		this.activeTab = "info";
+		
 		this.showEditModal = true;
 		
 	}
@@ -142,6 +147,7 @@ export class UserListComponent implements OnInit {
 		this.setToControlValues();
 		
 		
+		this.activeTab = "info";
 		this.showEditModal = true;
 	}
 

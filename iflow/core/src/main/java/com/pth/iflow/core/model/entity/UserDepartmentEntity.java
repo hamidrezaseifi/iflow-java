@@ -31,7 +31,7 @@ public class UserDepartmentEntity {
   @Column(name = "created_at")
   private Date createdAt;
 
-  @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.REFRESH })
+  @ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.REFRESH })
   @JoinColumn(name = "department_id", nullable = false)
   private DepartmentEntity department;
 

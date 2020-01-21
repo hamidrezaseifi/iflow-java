@@ -73,3 +73,7 @@ DROP SEQUENCE IF EXISTS  user_group_id_seq;
 
 DROP SEQUENCE IF EXISTS  users_id_seq;
 
+DROP SEQUENCE IF EXISTS  user_department_groups_id_seq;
+
+DROP SEQUENCE IF EXISTS  user_department_id_seq;
+

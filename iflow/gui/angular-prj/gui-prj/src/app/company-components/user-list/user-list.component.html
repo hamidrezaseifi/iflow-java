@@ -57,19 +57,19 @@
 			      </div>
 			      <div class="modal-body">
 						
-					<ul class="nav nav-tabs" id="maintab" role="tablist">
+					<ul class="nav nav-tabs" id="tablinkcontainer" role="tablist">
 					  <li class="nav-item">
-					    <a class="nav-link active" id="general-info-tab-link" data-toggle="tab" href="#general-info-tab" role="tab" aria-selected="true">{{ 'user-personal-info' | translate }}</a>
+					    <a class="nav-link" [ngClass]="{ 'active': activeTab === 'info'}" id="general-info-tab-link" data-toggle="tab" href="#general-info-tab" role="tab" aria-selected="true">{{ 'user-personal-info' | translate }}</a>
 					  </li>
 					  <li class="nav-item">
-					    <a class="nav-link" id="department-ino-tab-link" data-toggle="tab" href="#department-ino-tab" role="tab" aria-selected="false">{{ 'user-department-info' | translate }}</a>
+					    <a class="nav-link" [ngClass]="{ 'active': activeTab === 'department'}" id="department-ino-tab-link" data-toggle="tab" href="#department-ino-tab" role="tab" aria-selected="false">{{ 'user-department-info' | translate }}</a>
 					  </li>
 					  <li class="nav-item">
-					    <a class="nav-link" id="access-ino-tab-link" data-toggle="tab" href="#access-ino-tab" role="tab" aria-selected="false">{{ 'user-access-info' | translate }}</a>
+					    <a class="nav-link" [ngClass]="{ 'active': activeTab === 'access'}" id="access-ino-tab-link" data-toggle="tab" href="#access-ino-tab" role="tab" aria-selected="false">{{ 'user-access-info' | translate }}</a>
 					  </li>
 					</ul>
 					<div class="tab-content" id="myTabContent">
-					  	<div class="tab-pane fade show active" id="general-info-tab" role="tabpanel" aria-labelledby="general-info-tab-link">
+					  	<div class="tab-pane fade" [ngClass]="{ 'active show': activeTab === 'info'}" id="general-info-tab" role="tabpanel" aria-labelledby="general-info-tab-link">
 							
 							<form id="user-form" name="userForm" [formGroup]="userEditForm">
 							  <div class="form-group">
@@ -128,7 +128,7 @@
 							</form>							
 							<div style="padding: 5px; border: solid gray 1px; margin-top: 10px;">{{ debug() | json}}</div>
 						</div>
-					  	<div class="tab-pane fade" id="department-ino-tab" role="tabpanel" aria-labelledby="department-ino-tab-link">
+					  	<div class="tab-pane fade" [ngClass]="{ 'active show': activeTab === 'department'}" id="department-ino-tab" role="tabpanel" aria-labelledby="department-ino-tab-link">
 							
 							<div *ngFor="let dep of (generalDataObs | async).company.departments" class="list-item">
 								
@@ -169,7 +169,7 @@
 							
 					  	
 						</div>
-					  	<div class="tab-pane fade" id="access-ino-tab" role="tabpanel" aria-labelledby="access-ino-tab-link">
+					  	<div class="tab-pane fade" [ngClass]="{ 'active show': activeTab === 'access'}" id="access-ino-tab" role="tabpanel" aria-labelledby="access-ino-tab-link">
 					  	
 						</div>
 					</div>			      	
