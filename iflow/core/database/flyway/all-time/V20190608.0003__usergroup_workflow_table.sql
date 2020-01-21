@@ -102,22 +102,29 @@ CREATE TABLE user_deputy (
   CONSTRAINT FK_USERDEPUTY_USER FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
 
+
+CREATE SEQUENCE user_department_id_seq;
+
+
 CREATE TABLE user_departments (
+  id bigint NOT NULL PRIMARY KEY DEFAULT nextval('user_department_id_seq'),
   user_id bigint NOT NULL,
   department_id bigint NOT NULL,
   member_type int NOT NULL default 5,
   created_at timestamp without time zone NOT NULL default (now() at time zone 'utc'),
-  PRIMARY KEY (user_id,department_id),
   CONSTRAINT FK_USERDEPARTMENTS_DEPARTMENTS FOREIGN KEY (department_id) REFERENCES departments (id),
   CONSTRAINT FK_USERDEPARTMENTS_USERS FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
 
+
+CREATE SEQUENCE user_department_groups_id_seq;
+
 CREATE TABLE user_department_groups (
+  id bigint NOT NULL PRIMARY KEY DEFAULT nextval('user_department_groups_id_seq'),
   user_id bigint NOT NULL,
   department_group_id bigint NOT NULL,
   member_type int NOT NULL default 5,
   created_at timestamp without time zone NOT NULL default (now() at time zone 'utc'),
-  PRIMARY KEY (user_id,department_group_id),
   CONSTRAINT FK_USERDEPARTMENTGROUPS_D FOREIGN KEY (department_group_id) REFERENCES departments_group (id),
   CONSTRAINT FK_USERDEPARTMENTGROUPS_USERS FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
