@@ -10,6 +10,7 @@ import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.common.models.edo.DepartmentEdo;
 import com.pth.iflow.core.model.entity.DepartmentEntity;
 import com.pth.iflow.core.model.entity.DepartmentGroupEntity;
+import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.service.base.CoreModelEdoMapperService;
 import com.pth.iflow.core.service.interfaces.IDepartmentService;
 import com.pth.iflow.core.storage.dao.interfaces.IDepartmentDao;
@@ -20,17 +21,20 @@ public class DepartmentService extends CoreModelEdoMapperService<DepartmentEntit
   private final IDepartmentDao departmentDao;
 
   public DepartmentService(@Autowired final IDepartmentDao departmentDao) {
+
     this.departmentDao = departmentDao;
 
   }
 
   @Override
   public DepartmentEntity getByIdentity(final String identity) {
+
     return this.departmentDao.getByIdentity(identity);
   }
 
   @Override
   public List<DepartmentGroupEntity> getDepartmentGroups(final String identity) {
+
     final DepartmentEntity department = this.getByIdentity(identity);
 
     return department.getDepartmentGroups();
@@ -44,11 +48,13 @@ public class DepartmentService extends CoreModelEdoMapperService<DepartmentEntit
 
   @Override
   public List<DepartmentEntity> getListByIdCompanyIdentity(final String identity) {
+
     return this.departmentDao.getListByCompanyIdentity(identity);
   }
 
   @Override
   public DepartmentEntity save(final DepartmentEntity model) {
+
     if (model.isNew()) {
       return this.departmentDao.create(model);
     }
@@ -60,11 +66,25 @@ public class DepartmentService extends CoreModelEdoMapperService<DepartmentEntit
   }
 
   protected DepartmentEntity prepareSavingModel(final DepartmentEntity model) {
+
     return model;
   }
 
   @Override
+  public UserEntity getDepartmentManager(final String identity) {
+
+    return this.departmentDao.getDepartmentManager(identity);
+  }
+
+  @Override
+  public UserEntity getDepartmentDeputy(final String identity) {
+
+    return this.departmentDao.getDepartmentDeputy(identity);
+  }
+
+  @Override
   public DepartmentEntity fromEdo(final DepartmentEdo edo) throws IFlowMessageConversionFailureException {
+
     validateCustomer(edo);
 
     final DepartmentGroupService groupService = new DepartmentGroupService(null);
@@ -94,4 +114,5 @@ public class DepartmentService extends CoreModelEdoMapperService<DepartmentEntit
 
     return edo;
   }
+
 }

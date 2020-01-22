@@ -47,10 +47,14 @@ public class IflowRestPaths {
     public static final String DEPARTMENT_READ_LIST = "/department/list";
     public static final String DEPARTMENT_READ_LIST_BY_COMPANYIDENTITY = "/department/company/list/{companyidentity}";
     public static final String DEPARTMENT_READ_ALLUSERLIST_BY_DEPARTMENTIDENTITY = "/department/alluser/list/{identity}";
+    public static final String DEPARTMENT_GET_MANAGER = "/department/manager/read/{identity}";
+    public static final String DEPARTMENT_GET_DEPUTY = "/department/deputy/read/{identity}";
 
     public static final String DEPARTMENTGRPUP_READ_BY_IDENTITY = "/departmentgroup/readbyid/{identity}";
     public static final String DEPARTMENTGRPUP_READ_LIST = "/departmentgroup/list";
     public static final String DEPARTMENTGRPUP_READ_ALLUSERLIST_BY_DEPARTMENTGROUPIDENTITY = "/departmentgroup/alluser/list/{identity}";
+    public static final String DEPARTMENTGRPUP_GET_MANAGER = "/departmentgroup/manager/read/{identity}";
+    public static final String DEPARTMENTGRPUP_GET_DEPUTY = "/departmentgroup/deputy/read/{identity}";
 
     public static final String WORKFLOWTYPE_READ_BY_IDENTITY = "/workflowtype/readbyid/{identity}";
     public static final String WORKFLOWTYPE_READ_LIST = "/workflowtype/list";
@@ -119,6 +123,18 @@ public class IflowRestPaths {
       return builder.build(identity);
     }
 
+    public static URI GET_DEPARTMENTGRPUP_MANAGER_URIBUILDER(final String identity) {
+
+      final IflowUriBuilder builder = new IflowUriBuilder(DEPARTMENTGRPUP_GET_MANAGER);
+      return builder.build(identity);
+    }
+
+    public static URI GET_DEPARTMENTGRPUP_DEPUTY_URIBUILDER(final String identity) {
+
+      final IflowUriBuilder builder = new IflowUriBuilder(DEPARTMENTGRPUP_GET_DEPUTY);
+      return builder.build(identity);
+    }
+
     public static URI READ_USER_BY_IDENTITY(final String identity) {
 
       final IflowUriBuilder builder = new IflowUriBuilder(USER_READ_BY_IDENTITY);
@@ -182,6 +198,18 @@ public class IflowRestPaths {
     public static URI READ_DEPARTMENT_ALLUSERLIST_BY_DEPARTMENT(final String identity) {
 
       final IflowUriBuilder builder = new IflowUriBuilder(DEPARTMENT_READ_ALLUSERLIST_BY_DEPARTMENTIDENTITY);
+      return builder.build(identity);
+    }
+
+    public static URI GET_DEPARTMENT_MANAGER_URIBUILDER(final String identity) {
+
+      final IflowUriBuilder builder = new IflowUriBuilder(DEPARTMENT_GET_MANAGER);
+      return builder.build(identity);
+    }
+
+    public static URI GET_DEPARTMENT_DEPUTY_URIBUILDER(final String identity) {
+
+      final IflowUriBuilder builder = new IflowUriBuilder(DEPARTMENT_GET_DEPUTY);
       return builder.build(identity);
     }
 

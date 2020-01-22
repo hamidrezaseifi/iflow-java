@@ -9,32 +9,37 @@ import org.springframework.stereotype.Service;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.common.models.edo.DepartmentGroupEdo;
 import com.pth.iflow.core.model.entity.DepartmentGroupEntity;
+import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.service.base.CoreModelEdoMapperService;
 import com.pth.iflow.core.service.interfaces.IDepartmentGroupService;
 import com.pth.iflow.core.storage.dao.interfaces.IDepartmentGroupDao;
 
 @Service
-public class DepartmentGroupService extends CoreModelEdoMapperService<DepartmentGroupEntity, DepartmentGroupEdo>
-    implements IDepartmentGroupService {
+public class DepartmentGroupService extends CoreModelEdoMapperService<DepartmentGroupEntity,
+    DepartmentGroupEdo> implements IDepartmentGroupService {
 
   private final IDepartmentGroupDao departmentGroupDao;
 
   public DepartmentGroupService(@Autowired final IDepartmentGroupDao departmentGroupDao) {
+
     this.departmentGroupDao = departmentGroupDao;
   }
 
   @Override
   public DepartmentGroupEntity getByIdentity(final String identity) {
+
     return this.departmentGroupDao.getByIdentity(identity);
   }
 
   @Override
   public List<DepartmentGroupEntity> getListByIdentityList(final Collection<String> idList) {
+
     return this.departmentGroupDao.getListByIdentityList(idList);
   }
 
   @Override
   public DepartmentGroupEntity save(final DepartmentGroupEntity model) {
+
     if (model.isNew()) {
       return departmentGroupDao.create(model);
     }
@@ -46,11 +51,13 @@ public class DepartmentGroupService extends CoreModelEdoMapperService<Department
   }
 
   protected DepartmentGroupEntity prepareSavingModel(final DepartmentGroupEntity model) {
+
     return model;
   }
 
   @Override
   public DepartmentGroupEntity fromEdo(final DepartmentGroupEdo edo) throws IFlowMessageConversionFailureException {
+
     validateCustomer(edo);
 
     final DepartmentGroupEntity model = new DepartmentGroupEntity();
@@ -65,6 +72,7 @@ public class DepartmentGroupService extends CoreModelEdoMapperService<Department
 
   @Override
   public DepartmentGroupEdo toEdo(final DepartmentGroupEntity model) {
+
     final DepartmentGroupEdo edo = new DepartmentGroupEdo();
     edo.setTitle(model.getTitle());
     edo.setStatus(model.getStatus());
@@ -72,5 +80,17 @@ public class DepartmentGroupService extends CoreModelEdoMapperService<Department
     edo.setVersion(model.getVersion());
 
     return edo;
+  }
+
+  @Override
+  public UserEntity getDepartmentGroupManager(final String identity) {
+
+    return this.departmentGroupDao.getDepartmentGroupManager(identity);
+  }
+
+  @Override
+  public UserEntity getDepartmentGroupDeputy(final String identity) {
+
+    return this.departmentGroupDao.getDepartmentGroupDeputy(identity);
   }
 }

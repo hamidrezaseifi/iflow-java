@@ -6,6 +6,7 @@ import java.util.List;
 import com.pth.iflow.common.models.edo.DepartmentEdo;
 import com.pth.iflow.core.model.entity.DepartmentEntity;
 import com.pth.iflow.core.model.entity.DepartmentGroupEntity;
+import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.service.base.ICoreModelEdoMapperService;
 
 public interface IDepartmentService extends ICoreModelEdoMapperService<DepartmentEntity, DepartmentEdo> {
@@ -19,5 +20,9 @@ public interface IDepartmentService extends ICoreModelEdoMapperService<Departmen
   List<DepartmentEntity> getListByIdCompanyIdentity(final String identity);
 
   List<DepartmentGroupEntity> getDepartmentGroups(final String identity);
+
+  UserEntity getDepartmentManager(final String identity);
+
+  UserEntity getDepartmentDeputy(final String identity);
 
 }

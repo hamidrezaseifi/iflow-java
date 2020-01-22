@@ -26,21 +26,21 @@ import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
 import com.pth.iflow.profile.exceptions.ProfileCustomizedException;
 import com.pth.iflow.profile.model.User;
 import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
-import com.pth.iflow.profile.service.access.IUsersAccessService;
 import com.pth.iflow.profile.service.handler.ITokenUserDataManager;
+import com.pth.iflow.profile.service.handler.IUsersHandlerService;
 
 @RestController
 @RequestMapping
 public class UserController {
 
   private final ITokenUserDataManager tokenUserDataManager;
-  private final IUsersAccessService usersAccessService;
+  private final IUsersHandlerService usersHandlerService;
 
   public UserController(@Autowired final ITokenUserDataManager tokenUserDataManager,
-      @Autowired final IUsersAccessService usersAccessService) {
+      @Autowired final IUsersHandlerService usersHandlerService) {
 
     this.tokenUserDataManager = tokenUserDataManager;
-    this.usersAccessService = usersAccessService;
+    this.usersHandlerService = usersHandlerService;
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -55,7 +55,7 @@ public class UserController {
 
     this.tokenUserDataManager.validateToken(headerTokenId);
 
-    final User user = this.usersAccessService.getUserByIdentity(identity);
+    final User user = this.usersHandlerService.getUserByIdentity(identity);
 
     return ControllerHelper.createResponseEntity(request, ProfileModelEdoMapper.toEdo(user), HttpStatus.OK);
   }
@@ -72,7 +72,7 @@ public class UserController {
 
     this.tokenUserDataManager.validateToken(headerTokenId);
 
-    final User user = this.usersAccessService.saveUser(ProfileModelEdoMapper.fromEdo(userEdo));
+    final User user = this.usersHandlerService.saveUser(ProfileModelEdoMapper.fromEdo(userEdo));
 
     return ControllerHelper.createResponseEntity(request, ProfileModelEdoMapper.toEdo(user), HttpStatus.CREATED);
   }
@@ -89,7 +89,7 @@ public class UserController {
 
     this.tokenUserDataManager.validateToken(headerTokenId);
 
-    this.usersAccessService.deleteUser(ProfileModelEdoMapper.fromEdo(userEdo));
+    this.usersHandlerService.deleteUser(ProfileModelEdoMapper.fromEdo(userEdo));
 
   }
 
