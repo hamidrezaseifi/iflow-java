@@ -32,6 +32,12 @@ public class CompanyEntity extends EntityIdentityHelper {
   @Column(name = "company_name")
   private String companyName;
 
+  @Column(name = "company_type")
+  private String companyType;
+
+  @Column(name = "company_type_custome")
+  private String companyTypeCustome;
+
   @Column(name = "status")
   private Integer status;
 
@@ -91,6 +97,26 @@ public class CompanyEntity extends EntityIdentityHelper {
   public void setCompanyName(final String companyName) {
 
     this.companyName = companyName;
+  }
+
+  public String getCompanyType() {
+
+    return companyType;
+  }
+
+  public void setCompanyType(final String companyType) {
+
+    this.companyType = companyType;
+  }
+
+  public String getCompanyTypeCustome() {
+
+    return companyTypeCustome;
+  }
+
+  public void setCompanyTypeCustome(final String companyTypeCustome) {
+
+    this.companyTypeCustome = companyTypeCustome;
   }
 
   /**

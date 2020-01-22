@@ -19,6 +19,7 @@
 	"menu-workflow-list" : "Workflow-Liste",
 	"menu-workflow-create" : "Workflow erstellen",
 	"menu-userlist" : "Users",
+	"menu-company-info" : "Firmeninformation",
 	"common.edit" : "Bearbeiten",
 	"common.save" : "Speichern",
 	"common.saved" : "gespeichert",

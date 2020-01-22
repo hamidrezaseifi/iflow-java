@@ -4,15 +4,18 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.pth.iflow.common.exceptions.IFlowInvalidEnumValueException;
 
-public enum EAssignType implements IEnumNameValidator {
-  NONE("None"),
-  USER("User"),
-  DEPARTMENT("Department"),
-  DEPARTMENTGROUP("DepartmentGroup");
+public enum ECompanyType implements IEnumNameValidator {
+  CUSTOME("None"),
+  EINZELUNTERNEHMEN("Einzelunternehmen"),
+  GBR("GbR"),
+  OHG("OHG"),
+  KG("KG"),
+  GMBH("GmbH"),
+  UG("UG");
 
   private String enumName;
 
-  EAssignType(final String enumName) {
+  ECompanyType(final String enumName) {
 
     this.enumName = enumName;
   }
@@ -25,15 +28,15 @@ public enum EAssignType implements IEnumNameValidator {
   }
 
   @JsonCreator
-  public static EAssignType valueFromName(final String nameString) {
+  public static ECompanyType valueFromName(final String nameString) {
 
-    for (final EAssignType item : values()) {
+    for (final ECompanyType item : values()) {
       if (item.enumName.equals(nameString)) {
         return item;
       }
     }
 
-    throw new IFlowInvalidEnumValueException("Invalid value('" + nameString + "') for EAssignType.");
+    throw new IFlowInvalidEnumValueException("Invalid value('" + nameString + "') for ECompanyType.");
   }
 
 }

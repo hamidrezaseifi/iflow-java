@@ -86,6 +86,8 @@ public class WorkflowModelEdoMapper {
     edo.setIdentity(model.getIdentity());
     edo.setStatus(model.getStatus());
     edo.setVersion(model.getVersion());
+    edo.setCompanyType(model.getCompanyType());
+    edo.setCompanyTypeCustome(model.getCompanyTypeCustome());
 
     return edo;
   }
@@ -99,6 +101,8 @@ public class WorkflowModelEdoMapper {
     model.setIdentity(edo.getIdentity());
     model.setStatus(edo.getStatus());
     model.setVersion(edo.getVersion());
+    model.setCompanyType(edo.getCompanyType());
+    model.setCompanyTypeCustome(edo.getCompanyTypeCustome());
 
     return model;
   }
