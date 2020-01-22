@@ -16,7 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class MainController {
 
   @ResponseStatus(HttpStatus.OK)
-  @GetMapping(path = { "/", "/about", "/test", "/workflow/*", "/workflow/**" })
+  @GetMapping(path = { "/", "/about", "/test", "/workflow/*", "/workflow/**", "/users/**", "/users/*", "/auth/login", "/useres/list" })
   public String index() {
 
     return "ang/index";

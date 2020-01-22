@@ -1,11 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>com.pth.ifow</groupId>
-    <artifactId>iflow</artifactId>
-    <version>0.0.1</version>
-  </parent>
-  <artifactId>common</artifactId>
+
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+	    <groupId>com.pth.ifow</groupId>
+	    <artifactId>iflow</artifactId>
+	    <version>0.0.1</version>
+	</parent>
+	<artifactId>common</artifactId>
 
 	<properties>
 	      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -111,133 +113,133 @@
 
     </dependencies>
 
-  <build>
-    <plugins>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <executions>
-          <execution>
-            <goals>
-              <goal>test-jar</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
+	<build>
+	    <plugins>
+	
+	      <plugin>
+	        <groupId>org.apache.maven.plugins</groupId>
+	        <artifactId>maven-jar-plugin</artifactId>
+	        <executions>
+	          <execution>
+	            <goals>
+	              <goal>test-jar</goal>
+	            </goals>
+	          </execution>
+	        </executions>
+	      </plugin>
+	    
+	      <plugin>
+	        <groupId>org.flywaydb</groupId>
+	        <artifactId>flyway-maven-plugin</artifactId>
+	        <configuration>
+	          <skip>true</skip>
+	        </configuration>
+	      </plugin>
+	          
+	    </plugins>
     
-      <plugin>
-        <groupId>org.flywaydb</groupId>
-        <artifactId>flyway-maven-plugin</artifactId>
-        <configuration>
-          <skip>true</skip>
-        </configuration>
-      </plugin>
-          
-    </plugins>
     
-    
-  </build>
+	</build>
   
-  <profiles>
-	<profile>
-      <id>generate-XSD</id>
-      <build>
-        <defaultGoal>process-resources</defaultGoal>
-        <plugins>
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>jaxb2-maven-plugin</artifactId>
-            <version>2.4</version>
-            <executions>
-              <execution>
-                <goals>
-                  <goal>schemagen</goal>
-                </goals>
-              </execution>
-            </executions>
-
-            <configuration>
-              <clearOutputDir>true</clearOutputDir>
-              <verbose>true</verbose>
-              <sources>
-				<source>src/main/java/com/pth/iflow/common/edo/models/AssignItemEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/AuthenticatedProfileRequestEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/CompanyEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/CompanyProfileEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/DepartmentEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/DepartmentGroupEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/DepartmentGroupListEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/DepartmentListEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/IdentityListEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/ProfileResponseEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/TokenProfileRequestEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/UserAuthenticationRequestEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/UserAuthenticationResponseEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/UserEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/UserGroupEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/UserGroupListEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/UserListEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowActionEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowActionListEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowFileEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowFileListEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowFileVersionEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowMessageEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowMessageListEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowSearchFilterEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowTypeEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowTypeListEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowTypeStepEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowTypeStepListEdo.java</source>
-				
-				<source>src/main/java/com/pth/iflow/common/edo/models/workflow/invoice/InvoiceWorkflowEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/workflow/invoice/InvoiceWorkflowListEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/workflow/invoice/InvoiceWorkflowSaveRequestEdo.java</source>
-
-				<source>src/main/java/com/pth/iflow/common/edo/models/workflow/singletask/SingleTaskWorkflowEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/workflow/singletask/SingleTaskWorkflowListEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/workflow/singletask/SingleTaskWorkflowSaveRequestEdo.java</source>
-
-				<source>src/main/java/com/pth/iflow/common/edo/models/workflow/testthreetask/TestThreeTaskWorkflowEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/workflow/testthreetask/TestThreeTaskWorkflowListEdo.java</source>
-				<source>src/main/java/com/pth/iflow/common/edo/models/workflow/testthreetask/TestThreeTaskWorkflowSaveRequestEdo.java</source>
-                                                
-              </sources>
-              <outputDirectory>${project.build.directory}/generated-resources/schemagen</outputDirectory>
-              <transformSchemas>
-                <transformSchema>
-                  <uri>http://namespace.ifow.com/edo/v1</uri>
-                  <toFile>IFlowModel.xsd</toFile>
-                </transformSchema>
-              </transformSchemas>
-            </configuration>
-          </plugin>
-          <plugin>
-            <artifactId>maven-resources-plugin</artifactId>
-            <executions>
-              <execution>
-                <!-- copy only the XSD and not the other files -->
-                <id>copy-generateed-XSDs</id>
-                <phase>process-resources</phase>
-                <goals>
-                  <goal>copy-resources</goal>
-                </goals>
-                <configuration>
-                  <outputDirectory>src/main/resources/xml-schemas</outputDirectory>
-                  <resources>
-                    <resource>
-                      <directory>${project.build.directory}/generated-resources/schemagen</directory>
-                      <include>**/*.xsd</include>
-                    </resource>
-                  </resources>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>  
-  </profiles>
+	<profiles>
+		<profile>
+	      <id>generate-XSD</id>
+	      <build>
+	        <defaultGoal>process-resources</defaultGoal>
+	        <plugins>
+	          <plugin>
+	            <groupId>org.codehaus.mojo</groupId>
+	            <artifactId>jaxb2-maven-plugin</artifactId>
+	            <version>2.4</version>
+	            <executions>
+	              <execution>
+	                <goals>
+	                  <goal>schemagen</goal>
+	                </goals>
+	              </execution>
+	            </executions>
+	
+	            <configuration>
+	              <clearOutputDir>true</clearOutputDir>
+	              <verbose>true</verbose>
+	              <sources>
+					<source>src/main/java/com/pth/iflow/common/edo/models/AssignItemEdo.java</source>
+					<source>src/main/java/com/pth/iflow/common/edo/models/AuthenticatedProfileRequestEdo.java</source>
+					<source>src/main/java/com/pth/iflow/common/edo/models/CompanyEdo.java</source>
+					<source>src/main/java/com/pth/iflow/common/edo/models/CompanyProfileEdo.java</source>
+					<source>src/main/java/com/pth/iflow/common/edo/models/DepartmentEdo.java</source>
+					<source>src/main/java/com/pth/iflow/common/edo/models/DepartmentGroupEdo.java</source>
+					<source>src/main/java/com/pth/iflow/common/edo/models/DepartmentGroupListEdo.java</source>
+					<source>src/main/java/com/pth/iflow/common/edo/models/DepartmentListEdo.java</source>
+					<source>src/main/java/com/pth/iflow/common/edo/models/IdentityListEdo.java</source>
+					<source>src/main/java/com/pth/iflow/common/edo/models/ProfileResponseEdo.java</source>
+					<source>src/main/java/com/pth/iflow/common/edo/models/TokenProfileRequestEdo.java</source>
+					<source>src/main/java/com/pth/iflow/common/edo/models/UserAuthenticationRequestEdo.java</source>
+					<source>src/main/java/com/pth/iflow/common/edo/models/UserAuthenticationResponseEdo.java</source>
+					<source>src/main/java/com/pth/iflow/common/edo/models/UserEdo.java</source>
+					<source>src/main/java/com/pth/iflow/common/edo/models/UserGroupEdo.java</source>
+					<source>src/main/java/com/pth/iflow/common/edo/models/UserGroupListEdo.java</source>
+					<source>src/main/java/com/pth/iflow/common/edo/models/UserListEdo.java</source>
+					<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowActionEdo.java</source>
+					<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowActionListEdo.java</source>
+					<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowFileEdo.java</source>
+					<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowFileListEdo.java</source>
+					<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowFileVersionEdo.java</source>
+					<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowMessageEdo.java</source>
+					<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowMessageListEdo.java</source>
+					<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowSearchFilterEdo.java</source>
+					<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowTypeEdo.java</source>
+					<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowTypeListEdo.java</source>
+					<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowTypeStepEdo.java</source>
+					<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowTypeStepListEdo.java</source>
+					
+					<source>src/main/java/com/pth/iflow/common/edo/models/workflow/invoice/InvoiceWorkflowEdo.java</source>
+					<source>src/main/java/com/pth/iflow/common/edo/models/workflow/invoice/InvoiceWorkflowListEdo.java</source>
+					<source>src/main/java/com/pth/iflow/common/edo/models/workflow/invoice/InvoiceWorkflowSaveRequestEdo.java</source>
+	
+					<source>src/main/java/com/pth/iflow/common/edo/models/workflow/singletask/SingleTaskWorkflowEdo.java</source>
+					<source>src/main/java/com/pth/iflow/common/edo/models/workflow/singletask/SingleTaskWorkflowListEdo.java</source>
+					<source>src/main/java/com/pth/iflow/common/edo/models/workflow/singletask/SingleTaskWorkflowSaveRequestEdo.java</source>
+	
+					<source>src/main/java/com/pth/iflow/common/edo/models/workflow/testthreetask/TestThreeTaskWorkflowEdo.java</source>
+					<source>src/main/java/com/pth/iflow/common/edo/models/workflow/testthreetask/TestThreeTaskWorkflowListEdo.java</source>
+					<source>src/main/java/com/pth/iflow/common/edo/models/workflow/testthreetask/TestThreeTaskWorkflowSaveRequestEdo.java</source>
+	                                                
+	              </sources>
+	              <outputDirectory>${project.build.directory}/generated-resources/schemagen</outputDirectory>
+	              <transformSchemas>
+	                <transformSchema>
+	                  <uri>http://namespace.ifow.com/edo/v1</uri>
+	                  <toFile>IFlowModel.xsd</toFile>
+	                </transformSchema>
+	              </transformSchemas>
+	            </configuration>
+	          </plugin>
+	          <plugin>
+	            <artifactId>maven-resources-plugin</artifactId>
+	            <executions>
+	              <execution>
+	                <!-- copy only the XSD and not the other files -->
+	                <id>copy-generateed-XSDs</id>
+	                <phase>process-resources</phase>
+	                <goals>
+	                  <goal>copy-resources</goal>
+	                </goals>
+	                <configuration>
+	                  <outputDirectory>src/main/resources/xml-schemas</outputDirectory>
+	                  <resources>
+	                    <resource>
+	                      <directory>${project.build.directory}/generated-resources/schemagen</directory>
+	                      <include>**/*.xsd</include>
+	                    </resource>
+	                  </resources>
+	                </configuration>
+	              </execution>
+	            </executions>
+	          </plugin>
+	        </plugins>
+	      </build>
+	    </profile>  
+	</profiles>
   
   </project>

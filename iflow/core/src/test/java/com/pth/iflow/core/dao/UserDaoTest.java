@@ -20,8 +20,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.pth.iflow.core.TestDataProducer;
+import com.pth.iflow.core.model.entity.DepartmentEntity;
+import com.pth.iflow.core.model.entity.DepartmentGroupEntity;
+import com.pth.iflow.core.model.entity.UserDepartmentEntity;
+import com.pth.iflow.core.model.entity.UserDepartmentGroupEntity;
 import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.storage.dao.interfaces.ICompanyDao;
+import com.pth.iflow.core.storage.dao.interfaces.IDepartmentDao;
+import com.pth.iflow.core.storage.dao.interfaces.IDepartmentGroupDao;
 import com.pth.iflow.core.storage.dao.interfaces.IIflowRoleDao;
 import com.pth.iflow.core.storage.dao.interfaces.IUserDao;
 import com.pth.iflow.core.storage.dao.interfaces.IUserGroupDao;
@@ -32,25 +38,41 @@ import com.pth.iflow.core.storage.dao.interfaces.IUserGroupDao;
 public class UserDaoTest extends TestDataProducer {
 
   @Autowired
-  private IUserDao               userDao;
+  private IUserDao userDao;
 
   @Autowired
-  private ICompanyDao            companyDao;
+  private ICompanyDao companyDao;
 
   @Autowired
-  private IUserGroupDao          userGroupDao;
+  private IUserGroupDao userGroupDao;
 
   @Autowired
-  private IIflowRoleDao          iflowRoleDao;
+  private IDepartmentDao departmentDao;
+
+  @Autowired
+  private IDepartmentGroupDao departmentGroupDao;
+
+  @Autowired
+  private IIflowRoleDao iflowRoleDao;
 
   private final List<UserEntity> createdModels = new ArrayList<>();
+
+  private final List<DepartmentEntity> departments = new ArrayList<>();
+  private final List<DepartmentGroupEntity> departmentGroups = new ArrayList<>();
 
   @Before
   public void setUp() throws Exception {
 
+    departments.add(departmentDao.getById(1L));
+    departments.add(departmentDao.getById(2L));
+
+    departmentGroups.add(departmentGroupDao.getById(1L));
+    departmentGroups.add(departmentGroupDao.getById(2L));
+
   }
 
   private void createUserList() throws Exception {
+
     for (int i = 1; i <= 3; i++) {
       final UserEntity user = getTestNewUser();
       user.setEmail("utest email " + i);
@@ -59,6 +81,23 @@ public class UserDaoTest extends TestDataProducer {
       user.setGroups(Arrays.asList(userGroupDao.getById(1L), userGroupDao.getById(2L)));
       user.setDeputies(Arrays.asList(userDao.getById(1L), userDao.getById(2L)));
       user.setRoles(Arrays.asList(iflowRoleDao.getById(1L), iflowRoleDao.getById(2L)));
+
+      for (final DepartmentEntity dep : departments) {
+
+        final UserDepartmentEntity userDepartmentEntity = new UserDepartmentEntity();
+        userDepartmentEntity.setDepartment(dep);
+        userDepartmentEntity.setMemberType(5);
+        user.addUserDepartment(userDepartmentEntity);
+      }
+
+      for (final DepartmentGroupEntity depGrp : departmentGroups) {
+
+        final UserDepartmentGroupEntity userDepartmentGroupEntity = new UserDepartmentGroupEntity();
+        userDepartmentGroupEntity.setDepartmentGroup(depGrp);
+        userDepartmentGroupEntity.setMemberType(5);
+        user.addUserDepartmentGroup(userDepartmentGroupEntity);
+      }
+
       final UserEntity res = userDao.create(user);
       createdModels.add(res);
     }
@@ -70,10 +109,6 @@ public class UserDaoTest extends TestDataProducer {
     for (final UserEntity model : createdModels) {
       userDao.deleteById(model.getId());
     }
-
-    // userDao.destroy();
-    // userGroupDao.destroy();
-    // iflowRoleDao.destroy();
   }
 
   @Test
@@ -81,7 +116,7 @@ public class UserDaoTest extends TestDataProducer {
 
     createUserList();
 
-    final UserEntity user    = createdModels.get(0);
+    final UserEntity user = createdModels.get(0);
 
     final UserEntity resUser = this.userDao.getById(createdModels.get(0).getId());
 
@@ -95,7 +130,7 @@ public class UserDaoTest extends TestDataProducer {
 
     createUserList();
 
-    final UserEntity user    = createdModels.get(0);
+    final UserEntity user = createdModels.get(0);
 
     final UserEntity resUser = this.userDao.getByIdentity(createdModels.get(0).getIdentity());
 
@@ -109,7 +144,7 @@ public class UserDaoTest extends TestDataProducer {
 
     createUserList();
 
-    final Set<String>      idList  = createdModels.stream().map(w -> w.getIdentity()).collect(Collectors.toSet());
+    final Set<String> idList = createdModels.stream().map(w -> w.getIdentity()).collect(Collectors.toSet());
 
     final List<UserEntity> resList = this.userDao.getListByIdentityList(idList);
 
@@ -123,8 +158,8 @@ public class UserDaoTest extends TestDataProducer {
 
     createUserList();
 
-    final String           companyIdentity = companyDao.getById(createdModels.get(0).getCompanyId()).getIdentity();
-    final List<UserEntity> resList         = this.userDao.getListByCompanyIdentity(companyIdentity);
+    final String companyIdentity = companyDao.getById(createdModels.get(0).getCompanyId()).getIdentity();
+    final List<UserEntity> resList = this.userDao.getListByCompanyIdentity(companyIdentity);
 
     Assert.assertNotNull("Result list is not null!", resList);
 
@@ -166,17 +201,19 @@ public class UserDaoTest extends TestDataProducer {
 
     Assert.assertEquals("Result user has status 10!", updatedUser.getStatus(), createdUser.getStatus());
     Assert.assertEquals("Result user has version 23!", updatedUser.getVersion().intValue(), 23);
-    Assert.assertEquals("Result user has firstname '" + createdUser.getFirstName() + "'!", updatedUser.getFirstName(),
-        createdUser.getFirstName());
-    Assert.assertEquals("Result user has lastname '" + createdUser.getFirstName() + "'!", updatedUser.getLastName(),
-        createdUser.getLastName());
+    Assert
+        .assertEquals("Result user has firstname '" + createdUser.getFirstName() + "'!", updatedUser.getFirstName(),
+            createdUser.getFirstName());
+    Assert
+        .assertEquals("Result user has lastname '" + createdUser.getFirstName() + "'!", updatedUser.getLastName(),
+            createdUser.getLastName());
 
   }
 
   @Test
   public void testDelete() throws Exception {
 
-    final UserEntity user    = getTestNewUser();
+    final UserEntity user = getTestNewUser();
     final UserEntity resUser = userDao.create(user);
 
     Assert.assertNotNull("Result user is not null!", resUser);
@@ -190,6 +227,7 @@ public class UserDaoTest extends TestDataProducer {
   }
 
   private void compareUsers(final UserEntity user, final UserEntity resUser) {
+
     Assert.assertNotNull("Result user is not null!", resUser);
 
     Assert.assertEquals("Result user has email '" + user.getEmail() + "'!", resUser.getEmail(), user.getEmail());

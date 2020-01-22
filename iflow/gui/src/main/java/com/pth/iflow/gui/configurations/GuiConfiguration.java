@@ -34,7 +34,7 @@ public class GuiConfiguration {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-    @Value("${iflow.profile.urls.workflow.base}")
+    @Value("${iflow.gui.urls.workflow.base}")
     private String workflowBaseUrl;
 
     private URI baseWorkflowBaseUri;
@@ -189,7 +189,7 @@ public class GuiConfiguration {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-    @Value("${iflow.profile.urls.profile.base}")
+    @Value("${iflow.gui.urls.profile.base}")
     private String profileBaseUrl;
 
     private URI baseProfileBaseUri;
@@ -205,22 +205,37 @@ public class GuiConfiguration {
 
     public URI getReadTokenInfoUri() throws MalformedURLException {
 
-      return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.READ_PROFILE_TOKENINFO());
+      return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.READ_PROFILE_TOKENINFO_URIBUILDER());
     }
 
     public URI getAuthenticationUri() throws MalformedURLException {
 
-      return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.AUTHENTICATE_AUTHENTICATION());
+      return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.AUTHENTICATE_AUTHENTICATION_URIBUILDER());
     }
 
     public URI getReadAuthenticationInfoUri() throws MalformedURLException {
 
-      return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.READ_PROFILE_AUTHENTOCATEDINFO());
+      return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.READ_PROFILE_AUTHENTOCATEDINFO_URIBUILDER());
     }
 
     public URI getReadCompanyUserListUri(final String companyIdentity) throws MalformedURLException {
 
       return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.READ_USERLIST_BY_COMPANYID_URIBUILDER(companyIdentity));
+    }
+
+    public URI getReadUserUri(final String identity) throws MalformedURLException {
+
+      return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.READ_USER_BY_IDENTITY_URIBUILDER(identity));
+    }
+
+    public URI getSaveUserUri() throws MalformedURLException {
+
+      return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.SAVE_USER_URIBUILDER());
+    }
+
+    public URI getDeleteUserUri() throws MalformedURLException {
+
+      return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.DELETE_USER_URIBUILDER());
     }
 
   }

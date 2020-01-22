@@ -12,7 +12,9 @@ import javax.persistence.criteria.Root;
 
 import org.springframework.stereotype.Repository;
 
+import com.pth.iflow.common.enums.EUserDepartmentMemberType;
 import com.pth.iflow.core.model.entity.DepartmentEntity;
+import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 import com.pth.iflow.core.storage.dao.impl.base.EntityDaoBase;
 import com.pth.iflow.core.storage.dao.interfaces.IDepartmentDao;
@@ -22,20 +24,22 @@ public class DepartmentDao extends EntityDaoBase<DepartmentEntity> implements ID
 
   @Override
   protected Class<DepartmentEntity> entityClass() {
+
     return DepartmentEntity.class;
   }
 
   @Override
   public List<DepartmentEntity> getListByCompanyIdentity(final String identity) throws IFlowStorageException {
-    final EntityManager                   entityManager   = dbConfiguration.getEntityManager();
 
-    final CriteriaBuilder                 criteriaBuilder = entityManager.getCriteriaBuilder();
-    final CriteriaQuery<DepartmentEntity> query           = criteriaBuilder.createQuery(DepartmentEntity.class);
-    final Root<DepartmentEntity>          root            = query.from(DepartmentEntity.class);
+    final EntityManager entityManager = createEntityManager();
+
+    final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+    final CriteriaQuery<DepartmentEntity> query = criteriaBuilder.createQuery(DepartmentEntity.class);
+    final Root<DepartmentEntity> root = query.from(DepartmentEntity.class);
     query.select(root);
 
     final Path<String> companyIdentityPath = root.get("company").get("identity");
-    final Predicate    predicate           = criteriaBuilder.equal(companyIdentityPath, identity);
+    final Predicate predicate = criteriaBuilder.equal(companyIdentityPath, identity);
     query.where(predicate);
 
     final TypedQuery<DepartmentEntity> typedQuery = entityManager.createQuery(query);
@@ -43,10 +47,40 @@ public class DepartmentDao extends EntityDaoBase<DepartmentEntity> implements ID
     // final String qr =
     // typedQuery.unwrap(org.hibernate.query.Query.class).getQueryString();
     // System.out.println("search workflow query: " + qr);
-    final List<DepartmentEntity>       list       = typedQuery.getResultList();
+    final List<DepartmentEntity> list = typedQuery.getResultList();
     entityManager.close();
     return list;
 
+  }
+
+  @Override
+  public UserEntity getDepartmentManager(final String identity) {
+
+    final EntityManager entityManager = createEntityManager();
+    final TypedQuery<UserEntity> query = entityManager.createNamedQuery("findDepartmentMember", UserEntity.class);
+    query.setParameter("identity", identity);
+    query.setParameter("memtype", EUserDepartmentMemberType.MANAGER.getValue());
+
+    final List<UserEntity> results = query.getResultList();
+
+    entityManager.close();
+
+    return results.size() > 0 ? results.get(0) : null;
+  }
+
+  @Override
+  public UserEntity getDepartmentDeputy(final String identity) {
+
+    final EntityManager entityManager = createEntityManager();
+    final TypedQuery<UserEntity> query = entityManager.createNamedQuery("findDepartmentMember", UserEntity.class);
+    query.setParameter("identity", identity);
+    query.setParameter("memtype", EUserDepartmentMemberType.DEPUTY.getValue());
+
+    final List<UserEntity> results = query.getResultList();
+
+    entityManager.close();
+
+    return results.size() > 0 ? results.get(0) : null;
   }
 
 }

@@ -12,26 +12,29 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.pth.iflow.core.model.entity.UserGroupEntity;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 import com.pth.iflow.core.storage.dao.impl.base.EntityDaoBase;
 import com.pth.iflow.core.storage.dao.interfaces.IUserGroupDao;
 
+@Transactional
 @Repository
 public class UserGroupDao extends EntityDaoBase<UserGroupEntity> implements IUserGroupDao {
 
   @Override
   public List<UserGroupEntity> getListByIdList(final Collection<Long> idList) throws IFlowStorageException {
-    final EntityManager                  entityManager   = dbConfiguration.getEntityManager();
 
-    final CriteriaBuilder                criteriaBuilder = entityManager.getCriteriaBuilder();
-    final CriteriaQuery<UserGroupEntity> query           = criteriaBuilder.createQuery(entityClass());
-    final Root<UserGroupEntity>          root            = query.from(entityClass());
+    final EntityManager entityManager = createEntityManager();
+
+    final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+    final CriteriaQuery<UserGroupEntity> query = criteriaBuilder.createQuery(entityClass());
+    final Root<UserGroupEntity> root = query.from(entityClass());
     query.select(root);
 
     final Path<Long> identityPath = root.get("id");
-    final Predicate  predicate    = identityPath.in(idList);
+    final Predicate predicate = identityPath.in(idList);
     query.where(predicate);
 
     final TypedQuery<UserGroupEntity> typedQuery = entityManager.createQuery(query);
@@ -40,22 +43,23 @@ public class UserGroupDao extends EntityDaoBase<UserGroupEntity> implements IUse
     // typedQuery.unwrap(org.hibernate.query.Query.class).getQueryString();
     // System.out.println("search workflow query: " + qr);
 
-    final List<UserGroupEntity>       list       = typedQuery.getResultList();
+    final List<UserGroupEntity> list = typedQuery.getResultList();
     entityManager.close();
     return list;
   }
 
   @Override
   public List<UserGroupEntity> getListByCompanyIdentity(final String identity) throws IFlowStorageException {
-    final EntityManager                  entityManager   = dbConfiguration.getEntityManager();
 
-    final CriteriaBuilder                criteriaBuilder = entityManager.getCriteriaBuilder();
-    final CriteriaQuery<UserGroupEntity> query           = criteriaBuilder.createQuery(UserGroupEntity.class);
-    final Root<UserGroupEntity>          root            = query.from(UserGroupEntity.class);
+    final EntityManager entityManager = createEntityManager();
+
+    final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+    final CriteriaQuery<UserGroupEntity> query = criteriaBuilder.createQuery(UserGroupEntity.class);
+    final Root<UserGroupEntity> root = query.from(UserGroupEntity.class);
     query.select(root);
 
     final Path<String> companyIdentityPath = root.get("company").get("identity");
-    final Predicate    predicate           = criteriaBuilder.equal(companyIdentityPath, identity);
+    final Predicate predicate = criteriaBuilder.equal(companyIdentityPath, identity);
     query.where(predicate);
 
     final TypedQuery<UserGroupEntity> typedQuery = entityManager.createQuery(query);
@@ -64,7 +68,7 @@ public class UserGroupDao extends EntityDaoBase<UserGroupEntity> implements IUse
     // typedQuery.unwrap(org.hibernate.query.Query.class).getQueryString();
     // System.out.println("search workflow query: " + qr);
 
-    final List<UserGroupEntity>       list       = typedQuery.getResultList();
+    final List<UserGroupEntity> list = typedQuery.getResultList();
     entityManager.close();
     return list;
 
@@ -72,6 +76,7 @@ public class UserGroupDao extends EntityDaoBase<UserGroupEntity> implements IUse
 
   @Override
   protected Class<UserGroupEntity> entityClass() {
+
     return UserGroupEntity.class;
   }
 

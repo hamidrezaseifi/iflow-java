@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,13 +37,14 @@ import com.pth.iflow.core.service.interfaces.IUsersService;
 @RequestMapping
 public class UserController {
 
-  final IUsersService           usersService;
-  final IUserGroupService       userGroupService;
-  final IDepartmentService      departmentService;
+  final IUsersService usersService;
+  final IUserGroupService userGroupService;
+  final IDepartmentService departmentService;
   final IDepartmentGroupService departmentGroupService;
 
   public UserController(@Autowired final IUsersService usersService, @Autowired final IUserGroupService userGroupService,
       @Autowired final IDepartmentService departmentService, @Autowired final IDepartmentGroupService departmentGroupService) {
+
     this.usersService = usersService;
     this.userGroupService = userGroupService;
     this.departmentService = departmentService;
@@ -51,62 +53,73 @@ public class UserController {
 
   @ResponseStatus(HttpStatus.ACCEPTED)
   @IflowPostRequestMapping(path = IflowRestPaths.CoreModule.USER_SAVE)
-  public ResponseEntity<UserEdo> saveUser(@PathVariable final UserEdo userEdo, final HttpServletRequest request) throws Exception {
+  public ResponseEntity<UserEdo> saveUser(@RequestBody final UserEdo userEdo, final HttpServletRequest request) throws Exception {
 
     final UserEntity user = this.usersService.save(this.usersService.fromEdo(userEdo));
 
     return ControllerHelper.createResponseEntity(request, this.usersService.toEdo(user), HttpStatus.ACCEPTED);
   }
 
+  @ResponseStatus(HttpStatus.ACCEPTED)
+  @IflowPostRequestMapping(path = IflowRestPaths.CoreModule.USER_DELETE)
+  public void deleteUser(@RequestBody final UserEdo userEdo, final HttpServletRequest request) throws Exception {
+
+    this.usersService.delete(this.usersService.fromEdo(userEdo));
+
+  }
+
   @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.USER_READ_BY_EMAIL)
-  public ResponseEntity<UserEdo> readUserByEmail(@PathVariable(name = "email") final String email, final HttpServletRequest request)
+  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.USER_READ_BY_IDENTITY)
+  public ResponseEntity<UserEdo> readUserByIdentity(@PathVariable(name = "identity") final String identity, final HttpServletRequest request)
       throws Exception {
 
-    final UserEntity user = this.usersService.getUserByIdentity(email);
+    final UserEntity user = this.usersService.getUserByIdentity(identity);
 
     return ControllerHelper.createResponseEntity(request, this.usersService.toEdo(user), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.USER_USERGROUPS_LIST_BY_EMAIL)
-  public ResponseEntity<UserGroupListEdo> readUserGroups(@PathVariable(name = "email") final String email,
+  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.USER_USERGROUPS_LIST_BY_IDENTITY)
+  public ResponseEntity<UserGroupListEdo> readUserGroups(@PathVariable(name = "identity") final String identity,
       final HttpServletRequest request) throws Exception {
 
-    final List<UserGroupEntity> groups = this.usersService.getUserGroups(email);
+    final List<UserGroupEntity> groups = this.usersService.getUserGroups(identity);
 
-    return ControllerHelper.createResponseEntity(request, new UserGroupListEdo(this.userGroupService.toEdoList(groups)),
-        HttpStatus.OK);
+    return ControllerHelper
+        .createResponseEntity(request, new UserGroupListEdo(this.userGroupService.toEdoList(groups)),
+            HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.USER_DEPARTMENTS_LIST_BY_EMAIL)
-  public ResponseEntity<DepartmentListEdo> readUserDepartments(@PathVariable(name = "email") final String email,
+  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.USER_DEPARTMENTS_LIST_BY_IDENTITY)
+  public ResponseEntity<DepartmentListEdo> readUserDepartments(@PathVariable(name = "identity") final String identity,
       final HttpServletRequest request) throws Exception {
 
-    final List<DepartmentEntity> list = this.usersService.getUserDepartments(email);
+    final List<DepartmentEntity> list = this.usersService.getUserDepartments(identity);
 
-    return ControllerHelper.createResponseEntity(request, new DepartmentListEdo(this.departmentService.toEdoList(list)),
-        HttpStatus.OK);
+    return ControllerHelper
+        .createResponseEntity(request, new DepartmentListEdo(this.departmentService.toEdoList(list)),
+            HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.USER_DEPARTMENTGROUPS_LIST_BY_EMAIL)
-  public ResponseEntity<DepartmentGroupListEdo> readUserDepartmentGroups(@PathVariable(name = "email") final String email,
+  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.USER_DEPARTMENTGROUPS_LIST_BY_IDENTITY)
+  public ResponseEntity<DepartmentGroupListEdo> readUserDepartmentGroups(@PathVariable(name = "identity") final String identity,
       final HttpServletRequest request) throws Exception {
 
-    final List<DepartmentGroupEntity> list = this.usersService.getUserDepartmentGroups(email);
+    final List<DepartmentGroupEntity> list = this.usersService.getUserDepartmentGroups(identity);
 
-    return ControllerHelper.createResponseEntity(request, new DepartmentGroupListEdo(this.departmentGroupService.toEdoList(list)),
-        HttpStatus.OK);
+    return ControllerHelper
+        .createResponseEntity(request, new DepartmentGroupListEdo(this.departmentGroupService.toEdoList(list)),
+            HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.USER_DEPUTIES_LIST_BY_EMAIL)
-  public ResponseEntity<UserListEdo> readUserDeputies(@PathVariable(name = "email") final String email,
+  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.USER_DEPUTIES_LIST_BY_IDENTITY)
+  public ResponseEntity<UserListEdo> readUserDeputies(@PathVariable(name = "identity") final String identity,
       final HttpServletRequest request) throws Exception {
 
-    final List<UserEntity> list = this.usersService.getUserDeputies(email);
+    final List<UserEntity> list = this.usersService.getUserDeputies(identity);
     final UserListEdo edo = new UserListEdo();
     edo.setUsers(this.usersService.toEdoList(list));
     return ControllerHelper.createResponseEntity(request, edo, HttpStatus.OK);

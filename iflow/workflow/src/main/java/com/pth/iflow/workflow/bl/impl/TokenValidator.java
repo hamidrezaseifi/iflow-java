@@ -43,7 +43,7 @@ public class TokenValidator implements ITokenValidator {
     profileRequest.setToken(token);
 
     final ProfileResponseEdo responseEdo = this.restTemplate.callRestPost(
-        this.moduleAccessConfig.generateProfileUrl(IflowRestPaths.ProfileModule.READ_PROFILE_TOKENINFO()), token, EModule.PROFILE,
+        this.moduleAccessConfig.generateProfileUrl(IflowRestPaths.ProfileModule.READ_PROFILE_TOKENINFO_URIBUILDER()), token, EModule.PROFILE,
         profileRequest, ProfileResponseEdo.class, true);
 
     return WorkflowModelEdoMapper.fromEdo(responseEdo);

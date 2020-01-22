@@ -51,30 +51,11 @@ import { InvoiceOcrDetailComponent } from './wm-components/invoice-ocr-detail/in
 import { FilePreviewComponent } from './components/file-preview/file-preview.component';
 import { WmFileUploadComponent } from './components/wm-file-upload/wm-file-upload.component';
 import { WmAssignListComponent } from './components/wm-assign-list/wm-assign-list.component';
+import { UserListComponent } from './company-components/user-list/user-list.component';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
-
-export function socketProvider() {
-	  return new SockJS('/iflow-guide-websocket');
-}
-
-const stompConfig: StompConfig = {
-	url: socketProvider, //'ws://127.0.0.1:15674/ws',
-
-	headers: {
-		login: 'guest',
-		passcode: 'guest'
-	},
-
-	heartbeat_in: 0, // Typical value 0 - disabled
-	heartbeat_out: 20000, // Typical value 20000 - every 20 seconds
-
-	reconnect_delay: 5000,
-
-	debug: true
-};
 
 
 @NgModule({
@@ -124,6 +105,7 @@ const stompConfig: StompConfig = {
     FilePreviewComponent,
     WmFileUploadComponent,
     WmAssignListComponent,
+    UserListComponent,
     
   ],
   providers: [
@@ -132,10 +114,7 @@ const stompConfig: StompConfig = {
 	  WorkflowMessageService, 
 	  fakeBackendProvider,
 	  StompService,
-	    {
-	      provide: StompConfig,
-	      useValue: stompConfig
-	    }
+	    
   ],
   bootstrap: [ AppComponent ]
 })

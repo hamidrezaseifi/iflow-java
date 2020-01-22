@@ -1,9 +1,12 @@
 package com.pth.iflow.core.model.entity;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,9 +20,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.pth.iflow.common.enums.EUserStatus;
@@ -34,99 +41,105 @@ public class UserEntity extends EntityIdentityHelper {
   @Id
   @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long                             id;
+  private Long id;
+
+  @Column(name = "identity")
+  private String identity;
 
   @Column(name = "email")
-  private String                           email;
+  private String email;
 
   @Column(name = "company_id")
-  private Long                             companyId;
+  private Long companyId;
 
   @Column(name = "birthdate")
-  private Date                             birthDate;
+  private Date birthDate;
 
   @Column(name = "firstname")
-  private String                           firstName;
+  private String firstName;
 
   @Column(name = "lastname")
-  private String                           lastName;
+  private String lastName;
 
   @Column(name = "status")
-  private Integer                          status;
+  private Integer status;
 
   @Column(name = "permission")
-  private Integer                          permission;
+  private Integer permission;
 
   @Column(name = "version")
-  private Integer                          version;
+  private Integer version;
 
   @CreationTimestamp
-  @Column(name = "created_at")
-  private Date                             createdAt;
+  @Column(name = "created_at", insertable = false, updatable = false)
+  private Date createdAt;
 
   @UpdateTimestamp
-  @Column(name = "updated_at")
-  private Date                             updatedAt;
+  @Column(name = "updated_at", insertable = false, updatable = false)
+  private Date updatedAt;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "company_id", insertable = false, updatable = false)
-  private CompanyEntity                    company;
+  private CompanyEntity company;
 
   @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
   @JoinTable(
-      name = "user_usergroup", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "user_group") }
+             name = "user_usergroup", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "user_group") }
   )
-  private final Set<UserGroupEntity>       groups           = new HashSet<>();
+  private final Set<UserGroupEntity> groups = new HashSet<>();
 
   @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
   @JoinTable(
-      name = "user_departments", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "department_id") }
+             name = "user_deputy", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "deputy_id") }
   )
-  private final Set<DepartmentEntity>      departments      = new HashSet<>();
-
-  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-  @JoinTable(
-      name = "user_department_groups", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "department_group_id") }
-  )
-  private final Set<DepartmentGroupEntity> departmentGroups = new HashSet<>();
-
-  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-  @JoinTable(name = "user_deputy", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "deputy_id") })
-  private final Set<UserEntity>            deputies         = new HashSet<>();
+  private final Set<UserEntity> deputies = new HashSet<>();
 
   @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
   @JoinTable(name = "user_roles", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "role") })
-  private final Set<IflowRoleEntity>       roles            = new HashSet<>();
+  private final Set<IflowRoleEntity> roles = new HashSet<>();
+
+  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user", fetch = FetchType.EAGER)
+  @Fetch(value = FetchMode.SUBSELECT)
+  private final List<UserDepartmentEntity> userDepartments = new ArrayList<>();
+
+  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user", fetch = FetchType.EAGER)
+  @Fetch(value = FetchMode.SUBSELECT)
+  private final List<UserDepartmentGroupEntity> userDepartmentGroups = new ArrayList<>();
 
   public UserEntity() {
 
   }
 
-  /**
-   * @return the id
-   */
-
   @Override
   public Long getId() {
+
     return this.id;
   }
 
   public boolean hasId(final Long id) {
+
     return this.id == id;
   }
 
-  /**
-   * @param id the id to set
-   */
+  @Override
+  public String getIdentity() {
+
+    return identity;
+  }
+
+  @Override
+  public void setIdentity(final String identity) {
+
+    this.identity = identity;
+  }
 
   public void setId(final Long id) {
+
     this.id = id;
   }
 
-  /**
-   * @return the companyIid
-   */
   public Long getCompanyId() {
+
     return this.companyId;
   }
 
@@ -134,22 +147,27 @@ public class UserEntity extends EntityIdentityHelper {
    * @param companyIid the companyIid to set
    */
   public void setCompanyId(final Long companyId) {
+
     this.companyId = companyId;
   }
 
   public String getEmail() {
+
     return this.email;
   }
 
   public void setEmail(final String email) {
+
     this.email = email;
   }
 
   public Date getBirthDate() {
+
     return this.birthDate;
   }
 
   public void setBirthDate(final Date birthDate) {
+
     this.birthDate = birthDate;
   }
 
@@ -157,6 +175,7 @@ public class UserEntity extends EntityIdentityHelper {
    * @return the firstName
    */
   public String getFirstName() {
+
     return this.firstName;
   }
 
@@ -164,6 +183,7 @@ public class UserEntity extends EntityIdentityHelper {
    * @param firstName the firstName to set
    */
   public void setFirstName(final String firstName) {
+
     this.firstName = firstName;
   }
 
@@ -171,6 +191,7 @@ public class UserEntity extends EntityIdentityHelper {
    * @return the lastName
    */
   public String getLastName() {
+
     return this.lastName;
   }
 
@@ -178,6 +199,7 @@ public class UserEntity extends EntityIdentityHelper {
    * @param lastName the lastName to set
    */
   public void setLastName(final String lastName) {
+
     this.lastName = lastName;
   }
 
@@ -185,6 +207,7 @@ public class UserEntity extends EntityIdentityHelper {
    * @return the status
    */
   public Integer getStatus() {
+
     return this.status;
   }
 
@@ -192,10 +215,12 @@ public class UserEntity extends EntityIdentityHelper {
    * @param status the status to set
    */
   public void setStatus(final Integer status) {
+
     this.status = status;
   }
 
   public boolean isActive() {
+
     return this.status == EUserStatus.ACTIVE.getValue().intValue();
   }
 
@@ -203,6 +228,7 @@ public class UserEntity extends EntityIdentityHelper {
    * @return the permission
    */
   public Integer getPermission() {
+
     return this.permission;
   }
 
@@ -212,6 +238,7 @@ public class UserEntity extends EntityIdentityHelper {
 
   @Override
   public Integer getVersion() {
+
     return this.version;
   }
 
@@ -221,6 +248,7 @@ public class UserEntity extends EntityIdentityHelper {
 
   @Override
   public void setVersion(final Integer version) {
+
     this.version = version;
   }
 
@@ -228,6 +256,7 @@ public class UserEntity extends EntityIdentityHelper {
    * @return the createdAt
    */
   public Date getCreatedAt() {
+
     return this.createdAt;
   }
 
@@ -235,6 +264,7 @@ public class UserEntity extends EntityIdentityHelper {
    * @param createdAt the createdAt to set
    */
   public void setCreatedAt(final Date createdAt) {
+
     this.createdAt = createdAt;
   }
 
@@ -242,6 +272,7 @@ public class UserEntity extends EntityIdentityHelper {
    * @return the updatedAt
    */
   public Date getUpdatedAt() {
+
     return this.updatedAt;
   }
 
@@ -249,6 +280,7 @@ public class UserEntity extends EntityIdentityHelper {
    * @param updatedAt the updatedAt to set
    */
   public void setUpdatedAt(final Date updatedAt) {
+
     this.updatedAt = updatedAt;
   }
 
@@ -256,37 +288,33 @@ public class UserEntity extends EntityIdentityHelper {
    * @param permission the permission to set
    */
   public void setPermission(final Integer permission) {
+
     this.permission = permission;
   }
 
   public CompanyEntity getCompany() {
+
     return company;
   }
 
   public void setCompany(final CompanyEntity company) {
+
     this.company = company;
   }
 
   @Override
-  public String getIdentity() {
-    return email;
-  }
-
-  @Override
   public String getIdentityPreffix() {
+
     return "u";
   }
 
-  @Override
-  public void setIdentity(final String identity) {
-    this.email = identity;
-  }
-
   public Set<UserGroupEntity> getGroups() {
+
     return groups;
   }
 
   public void setGroups(final Collection<UserGroupEntity> groups) {
+
     this.groups.clear();
     for (final UserGroupEntity model : groups) {
 
@@ -297,40 +325,91 @@ public class UserEntity extends EntityIdentityHelper {
 
   }
 
-  public Set<DepartmentEntity> getDepartments() {
-    return departments;
+  public List<UserDepartmentEntity> getUserDepartments() {
+
+    return userDepartments;
   }
 
-  public void setDepartments(final Collection<DepartmentEntity> departments) {
-    this.departments.clear();
-    for (final DepartmentEntity model : departments) {
+  public void setUserDepartments(final Collection<UserDepartmentEntity> userDepartments) {
 
-      model.getUsers().add(this);
-
-      this.departments.add(model);
+    this.userDepartments.clear();
+    for (final UserDepartmentEntity model : userDepartments) {
+      model.setUser(this);
+      this.userDepartments.add(model);
     }
 
+  }
+
+  public void addUserDepartment(final DepartmentEntity department, final int memberType) {
+
+    final UserDepartmentEntity model = new UserDepartmentEntity();
+    model.setDepartment(department);
+    model.setUser(this);
+    model.setMemberType(memberType);
+
+    this.userDepartments.add(model);
+
+  }
+
+  public void addUserDepartment(final UserDepartmentEntity model) {
+
+    model.setUser(this);
+
+    this.userDepartments.add(model);
+
+  }
+
+  public List<UserDepartmentGroupEntity> getUserDepartmentGroups() {
+
+    return userDepartmentGroups;
+  }
+
+  public void setUserDepartmentGroups(final Collection<UserDepartmentGroupEntity> userDepartmentGroups) {
+
+    this.userDepartmentGroups.clear();
+    for (final UserDepartmentGroupEntity model : userDepartmentGroups) {
+      model.setUser(this);
+      this.userDepartmentGroups.add(model);
+    }
+
+  }
+
+  public void addUserDepartmentGroup(final DepartmentGroupEntity departmentGroup, final int memberType) {
+
+    final UserDepartmentGroupEntity model = new UserDepartmentGroupEntity();
+    model.setDepartmentGroup(departmentGroup);
+    model.setUser(this);
+    model.setMemberType(memberType);
+
+    this.userDepartmentGroups.add(model);
+
+  }
+
+  public void addUserDepartmentGroup(final UserDepartmentGroupEntity model) {
+
+    model.setUser(this);
+
+    this.userDepartmentGroups.add(model);
+
+  }
+
+  public Set<DepartmentEntity> getDepartments() {
+
+    return this.userDepartments.stream().map(ud -> ud.getDepartment()).collect(Collectors.toSet());
   }
 
   public Set<DepartmentGroupEntity> getDepartmentGroups() {
-    return departmentGroups;
-  }
 
-  public void setDepartmentGroups(final Collection<DepartmentGroupEntity> departmentGroups) {
-    this.departmentGroups.clear();
-    for (final DepartmentGroupEntity model : departmentGroups) {
-
-      model.getUsers().add(this);
-
-      this.departmentGroups.add(model);
-    }
+    return this.userDepartmentGroups.stream().map(udg -> udg.getDepartmentGroup()).collect(Collectors.toSet());
   }
 
   public Set<UserEntity> getDeputies() {
+
     return deputies;
   }
 
   public void setDeputies(final Collection<UserEntity> deputies) {
+
     this.deputies.clear();
     for (final UserEntity model : deputies) {
 
@@ -339,10 +418,12 @@ public class UserEntity extends EntityIdentityHelper {
   }
 
   public Set<IflowRoleEntity> getRoles() {
+
     return roles;
   }
 
   public void setRoles(final Collection<IflowRoleEntity> roles) {
+
     this.roles.clear();
     for (final IflowRoleEntity model : roles) {
 
@@ -352,7 +433,19 @@ public class UserEntity extends EntityIdentityHelper {
 
   @Override
   public void increaseVersion() {
+
     version += 1;
   }
 
+  public String generateUserIdentity(final String lastIdentity) {
+
+    Long nextId = 0L;
+    if (StringUtils.isNotEmpty(lastIdentity) && lastIdentity.length() > 10) {
+      final String lastIdString = lastIdentity.substring(lastIdentity.length() - 10, lastIdentity.length());
+      nextId = Long.parseLong(lastIdString) + 1;
+    }
+
+    this.identity = this.company.getIdentity() + "-" + String.format("%010d", nextId);
+    return this.identity;
+  }
 }

@@ -9,7 +9,7 @@ import com.pth.iflow.gui.models.WorkflowMessage;
 
 public interface IWorkflowMessageAccess {
 
-  public List<WorkflowMessage> readUserMessages(final String companyIdentity, final String userId, final String token)
+  public List<WorkflowMessage> readUserMessages(final String companyIdentity, final String userIdentity, final String token)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
   public List<WorkflowMessage> getWorkflowMessageListByUser(final String userIdentity, final String token)

@@ -30,6 +30,7 @@ public class TestThreeTaskWorkflowController {
   final ITestThreeTaskWorkflowService workflowService;
 
   public TestThreeTaskWorkflowController(@Autowired final ITestThreeTaskWorkflowService workflowService) {
+
     this.workflowService = workflowService;
 
   }
@@ -60,19 +61,21 @@ public class TestThreeTaskWorkflowController {
 
     final List<TestThreeTaskWorkflowEntity> modelList = this.workflowService.getListByIdentityList(idList.getIdentityList());
 
-    return ControllerHelper.createResponseEntity(request, new TestThreeTaskWorkflowListEdo(this.workflowService.toEdoList(modelList)),
-        HttpStatus.OK);
+    return ControllerHelper
+        .createResponseEntity(request, new TestThreeTaskWorkflowListEdo(this.workflowService.toEdoList(modelList)),
+            HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.TESTTHREETASKWORKFLOW_READ_LIST_BY_USERIDENTITY)
-  public ResponseEntity<TestThreeTaskWorkflowListEdo> readWorkflowListForUser(@PathVariable(name = "email") final String email,
+  public ResponseEntity<TestThreeTaskWorkflowListEdo> readWorkflowListForUser(@PathVariable(name = "identity") final String identity,
       @PathVariable(required = false) final int status, final HttpServletRequest request) throws Exception {
 
-    final List<TestThreeTaskWorkflowEntity> modelList = this.workflowService.getListForUser(email, status);
+    final List<TestThreeTaskWorkflowEntity> modelList = this.workflowService.getListForUser(identity, status);
 
-    return ControllerHelper.createResponseEntity(request, new TestThreeTaskWorkflowListEdo(this.workflowService.toEdoList(modelList)),
-        HttpStatus.OK);
+    return ControllerHelper
+        .createResponseEntity(request, new TestThreeTaskWorkflowListEdo(this.workflowService.toEdoList(modelList)),
+            HttpStatus.OK);
   }
 
 }

@@ -36,13 +36,13 @@ public class WorkflowMessageController {
 
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(path = IflowRestPaths.WorkflowModule.WORKFLOWMESSAGE_READ_BY_USERIDENTITY)
-  public ResponseEntity<WorkflowMessageListEdo> readUserWorkflowMessageList(@PathVariable(required = true) final String email,
+  public ResponseEntity<WorkflowMessageListEdo> readUserWorkflowMessageList(@PathVariable(required = true) final String identity,
       @PathVariable(required = false) Integer status, final HttpServletRequest request,
       @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws Exception {
 
     status = status == null ? 0 : status;
 
-    final List<WorkflowMessage> messageList = this.workflowMessageDataService.getListForUser(email, status, headerTokenId);
+    final List<WorkflowMessage> messageList = this.workflowMessageDataService.getListForUser(identity, status, headerTokenId);
 
     return ControllerHelper
         .createResponseEntity(request,

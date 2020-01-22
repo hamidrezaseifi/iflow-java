@@ -17,7 +17,11 @@ public interface IUsersService extends ICoreModelEdoMapperService<UserEntity, Us
 
   UserEntity save(UserEntity model);
 
-  UserEntity getUserByIdentity(final String email);
+  void delete(UserEntity model);
+
+  UserEntity getUserByIdentity(final String identity);
+
+  UserEntity getUserByEmail(final String email);
 
   ProfileResponse getProfileResponseByEmail(final String email);
 

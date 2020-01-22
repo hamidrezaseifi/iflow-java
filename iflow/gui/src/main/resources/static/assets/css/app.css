@@ -938,3 +938,19 @@ a.tool-link:hover{
     height: 70px;
 }
 
+.cdk-overlay-container{
+	z-index: 99999 !important;		
+}
+
+.custome-ander-text{
+	font-size: 18px;
+}
+
+a.nav-link[role=tab]:not(.active){
+	color: silver;
+}
+
+a.nav-link.active[role=tab]{
+	color: #495057;
+	font-weight: bold;
+}

@@ -14,39 +14,45 @@ import com.pth.iflow.common.models.base.IFlowJaxbDefinition;
 @XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "UserAuthenticationRequest" + IFlowJaxbDefinition.TYPE_PREFIX)
 public class UserAuthenticationRequestEdo {
 
-  @NotNull
-  @XmlElement(name = "Email", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String email;
+  @NotNull(message = "UserIdentity must not be null")
+  @XmlElement(name = "UserIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String userIdentity;
 
-  @NotNull
+  @NotNull(message = "Password must not be null")
   @XmlElement(name = "Password", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String password;
 
-  @NotNull
+  @NotNull(message = "CompanyIdentity must not be null")
   @XmlElement(name = "CompanyIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String companyIdentity;
 
-  public String getEmail() {
-    return this.email;
+  public String getUserIdentity() {
+
+    return this.userIdentity;
   }
 
-  public void setEmail(final String email) {
-    this.email = email;
+  public void setUserIdentity(final String userIdentity) {
+
+    this.userIdentity = userIdentity;
   }
 
   public String getPassword() {
+
     return this.password;
   }
 
   public void setPassword(final String password) {
+
     this.password = password;
   }
 
   public String getCompanyIdentity() {
+
     return this.companyIdentity;
   }
 
   public void setCompanyIdentity(final String companyIdentity) {
+
     this.companyIdentity = companyIdentity;
   }
 

@@ -24,6 +24,8 @@ import com.pth.iflow.workflow.models.CompanyWorkflowTypeController;
 import com.pth.iflow.workflow.models.Department;
 import com.pth.iflow.workflow.models.DepartmentGroup;
 import com.pth.iflow.workflow.models.User;
+import com.pth.iflow.workflow.models.UserDepartment;
+import com.pth.iflow.workflow.models.UserDepartmentGroup;
 import com.pth.iflow.workflow.models.UserGroup;
 import com.pth.iflow.workflow.models.WorkflowAction;
 import com.pth.iflow.workflow.models.WorkflowFile;
@@ -92,11 +94,18 @@ public class TestDataProducer {
     model.setStatus(1);
     model.setVersion(1);
     model.setPermission(1);
-    model.setDepartmentGroups(this.getTestDepartmentGroupIdSet());
-    model.setDepartments(this.getTestDepartmentIdSet());
+    model
+        .setUserDepartmentGroups(Arrays
+            .asList(getTestUserDepartmentGroup("departmentgrpIdentity1"), getTestUserDepartmentGroup("departmentgrpIdentity2"),
+                getTestUserDepartmentGroup("departmentgrpIdentity3")));
+    model
+        .setUserDepartments(Arrays
+            .asList(getTestUserDepartment("departmentIdentity1"), getTestUserDepartment("departmentIdentity2"),
+                getTestUserDepartment("departmentIdentity3")));
     model.setDeputies(this.getTestDeputiyIdSet());
     model.setGroups(this.getTestUserGroupIdSet());
     model.setCompanyIdentity("companyIdentity");
+    model.setIdentity("user-identity");
 
     return model;
   }
@@ -110,12 +119,40 @@ public class TestDataProducer {
     model.setFirstName(fname);
     model.setLastName(lname);
     model.setStatus(1);
-    model.setDepartmentGroups(this.getTestDepartmentGroupIdSet());
-    model.setDepartments(this.getTestDepartmentIdSet());
+    model
+        .setUserDepartmentGroups(
+            Arrays
+                .asList(getTestUserDepartmentGroup("departmentgrpIdentity1"), getTestUserDepartmentGroup("departmentgrpIdentity2"),
+                    getTestUserDepartmentGroup("departmentgrpIdentity3")));
+    model
+        .setUserDepartments(Arrays
+            .asList(getTestUserDepartment("departmentIdentity1"), getTestUserDepartment("departmentIdentity2"),
+                getTestUserDepartment("departmentIdentity3")));
     model.setDeputies(this.getTestDeputiyIdSet());
     model.setGroups(this.getTestUserGroupIdSet());
+    model.setIdentity("identity" + email);
 
     return model;
+  }
+
+  private UserDepartmentGroup getTestUserDepartmentGroup(final String depgroupIdentity) {
+
+    final UserDepartmentGroup userDepartmentGroup = new UserDepartmentGroup();
+
+    userDepartmentGroup.setDepartmentGroupIdentity(depgroupIdentity);
+    userDepartmentGroup.setMemberType(5);
+
+    return userDepartmentGroup;
+  }
+
+  private UserDepartment getTestUserDepartment(final String depIdentity) {
+
+    final UserDepartment userDepartmentGroup = new UserDepartment();
+
+    userDepartmentGroup.setDepartmentIdentity(depIdentity);
+
+    userDepartmentGroup.setMemberType(5);
+    return userDepartmentGroup;
   }
 
   protected List<User> getTestUserList() {
@@ -715,7 +752,7 @@ public class TestDataProducer {
             new AssignItem("user3", EAssignType.USER));
   }
 
-  protected WorkflowMessage getTestWorkflowMessage(final String userId, final String workflowIdentity) {
+  protected WorkflowMessage getTestWorkflowMessage(final String userIdentity, final String workflowIdentity) {
 
     final WorkflowMessage message = new WorkflowMessage();
     message.setCreatedAt(LocalDateTime.now());
@@ -725,7 +762,7 @@ public class TestDataProducer {
     message.setMessageType(EWorkflowMessageType.OFFERING_WORKFLOW);
     message.setStatus(EWorkflowMessageStatus.OFFERING);
     message.setStepIdentity("stepIdentity");
-    message.setUserIdentity(userId);
+    message.setUserIdentity(userIdentity);
     message.setVersion(1);
     message.setWorkflowIdentity(workflowIdentity);
 

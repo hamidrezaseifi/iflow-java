@@ -3,8 +3,8 @@ package com.pth.iflow.gui.controller.exception;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.http.HttpServletRequest;
 
-import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,25 +35,27 @@ public class GlobalExceptionHandler /* implements ErrorController */ {
   private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
   @Autowired
-  private IBreadCrumbLoader   breadCrumbLoader;
+  private IBreadCrumbLoader breadCrumbLoader;
 
   @Autowired
-  private UiMenuService       menuService;
+  private UiMenuService menuService;
 
   @Autowired
-  private SessionUserInfo     sessionUserInfo;
+  private SessionUserInfo sessionUserInfo;
 
   @Autowired
-  private IMessagesHelper     messagesHelper;
+  private IMessagesHelper messagesHelper;
 
   protected List<UiMenuItem> getMenus() {
+
     return this.menuService.getAllMenus();
 
   }
 
   protected String getCurrentRelativeUrl() {
+
     ServletUriComponentsBuilder builder = ServletUriComponentsBuilder.fromCurrentContextPath();
-    final String                root    = builder.build().toUriString();
+    final String root = builder.build().toUriString();
     builder = ServletUriComponentsBuilder.fromCurrentRequestUri();
     String path = builder.build().toUriString();
     path = path.replace(root, "");
@@ -75,7 +77,8 @@ public class GlobalExceptionHandler /* implements ErrorController */ {
   @ResponseBody
   public GuiErrorRestResponse handleGuiCustomizedException(final Model model, final GuiCustomizedException ex) {
 
-    return new GuiErrorRestResponse(HttpStatus.UNAUTHORIZED, this.messagesHelper.getErrorMessage(ex.getErrorType(), ex.getModuleName()), ex);
+    return new GuiErrorRestResponse(HttpStatus.UNAUTHORIZED, this.messagesHelper.getErrorMessage(ex.getErrorType(), ex.getModuleName()),
+        ex);
   }
 
   @ExceptionHandler(GuiSessionException.class)
@@ -88,10 +91,11 @@ public class GlobalExceptionHandler /* implements ErrorController */ {
 
   // @RequestMapping("/error")
   public String handleError(final Model model, final HttpServletRequest request) {
-    final Object status   = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
-    final Object fwuri    = request.getAttribute(RequestDispatcher.FORWARD_REQUEST_URI);
 
-    String       viewName = "site/invalid-request";
+    final Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
+    final Object fwuri = request.getAttribute(RequestDispatcher.FORWARD_REQUEST_URI);
+
+    String viewName = "site/invalid-request";
     if (status != null) {
       final Integer statusCode = Integer.valueOf(status.toString());
       if (statusCode == 404) {
@@ -106,10 +110,12 @@ public class GlobalExceptionHandler /* implements ErrorController */ {
 
   // @Override
   public String getErrorPath1() {
+
     return "/error";
   }
 
   private void prepareViewModel(final Model model) {
+
     final String currentRelatedUrl = this.getCurrentRelativeUrl();
 
     model.addAttribute("pageMenuList", this.getMenus());

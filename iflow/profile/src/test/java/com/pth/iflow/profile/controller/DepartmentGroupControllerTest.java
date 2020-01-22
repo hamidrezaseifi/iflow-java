@@ -31,7 +31,7 @@ import com.pth.iflow.profile.TestDataProducer;
 import com.pth.iflow.profile.model.DepartmentGroup;
 import com.pth.iflow.profile.model.User;
 import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
-import com.pth.iflow.profile.service.ITokenUserDataManager;
+import com.pth.iflow.profile.service.handler.ITokenUserDataManager;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

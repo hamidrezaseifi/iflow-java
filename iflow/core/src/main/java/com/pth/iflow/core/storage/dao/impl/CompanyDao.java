@@ -32,7 +32,7 @@ public class CompanyDao extends EntityDaoBase<CompanyEntity> implements ICompany
   @Override
   public List<CompanyWorkflowTypeControllerEntity> readCompanyWorkflowTypeController(final Long id) {
 
-    final EntityManager entityManager = dbConfiguration.getEntityManager();
+    final EntityManager entityManager = createEntityManager();
 
     final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
     final CriteriaQuery<CompanyWorkflowTypeControllerEntity> query = criteriaBuilder.createQuery(CompanyWorkflowTypeControllerEntity.class);

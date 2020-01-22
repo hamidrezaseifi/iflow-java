@@ -19,10 +19,20 @@ import javax.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.pth.iflow.core.storage.dao.helper.EntityIdentityHelper;
 import com.pth.iflow.core.storage.dao.helper.EntityListener;
+
+@NamedQueries(
+  {
+      @NamedQuery(
+                  name = "findDepartmentGroupMember", query = "select ud.user from UserDepartmentGroupEntity ud where ud.departmentGroup.identity = :identity and ud.memberType = :memtype", fetchSize = 1, readOnly = true
+      )
+  }
+)
 
 @Entity
 @Table(name = "departments_group")
@@ -32,38 +42,38 @@ public class DepartmentGroupEntity extends EntityIdentityHelper {
   @Id
   @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long             id;
+  private Long id;
 
   @Column(name = "identity")
-  private String           identity;
+  private String identity;
 
   @Column(name = "department_id")
-  private Long             departmentId;
+  private Long departmentId;
 
   @Column(name = "title")
-  private String           title;
+  private String title;
 
   @Column(name = "status")
-  private Integer          status;
+  private Integer status;
 
   @Column(name = "version")
-  private Integer          version;
+  private Integer version;
 
   @CreationTimestamp
-  @Column(name = "created_at")
-  private Date             createdAt;
+  @Column(name = "created_at", insertable = false, updatable = false)
+  private Date createdAt;
 
   @UpdateTimestamp
-  @Column(name = "updated_at")
-  private Date             updatedAt;
+  @Column(name = "updated_at", insertable = false, updatable = false)
+  private Date updatedAt;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "department_id", insertable = false, updatable = false)
   @Fetch(FetchMode.JOIN)
   private DepartmentEntity department;
 
   @ManyToMany(mappedBy = "groups")
-  private Set<UserEntity>  users = new HashSet<>();
+  private Set<UserEntity> users = new HashSet<>();
 
   public DepartmentGroupEntity() {
 
@@ -71,88 +81,108 @@ public class DepartmentGroupEntity extends EntityIdentityHelper {
 
   @Override
   public Long getId() {
+
     return this.id;
   }
 
   public void setId(final Long id) {
+
     this.id = id;
   }
 
   public Long getDepartmentId() {
+
     return this.departmentId;
   }
 
   @Override
   public String getIdentity() {
+
     return identity;
   }
 
   @Override
   public void setIdentity(final String identity) {
+
     this.identity = identity;
   }
 
   public void setDepartmentId(final Long departmentId) {
+
     this.departmentId = departmentId;
   }
 
   public String getTitle() {
+
     return this.title;
   }
 
   public void setTitle(final String title) {
+
     this.title = title;
   }
 
   public Integer getStatus() {
+
     return this.status;
   }
 
   public void setStatus(final Integer status) {
+
     this.status = status;
   }
 
   @Override
   public Integer getVersion() {
+
     return this.version;
   }
 
   @Override
   public void setVersion(final Integer version) {
+
     this.version = version;
   }
 
   public Date getCreatedAt() {
+
     return this.createdAt;
   }
 
   public void setCreatedAt(final Date createdAt) {
+
     this.createdAt = createdAt;
   }
 
   public Date getUpdatedAt() {
+
     return this.updatedAt;
   }
 
   public void setUpdatedAt(final Date updatedAt) {
+
     this.updatedAt = updatedAt;
   }
 
   @Override
   public String getIdentityPreffix() {
+
     return "dpg";
   }
 
   @Override
   public void increaseVersion() {
+
     version += 1;
   }
 
   public Set<UserEntity> getUsers() {
+
     return users;
   }
 
   public void setUsers(final Set<UserEntity> users) {
+
     this.users = users;
   }
 

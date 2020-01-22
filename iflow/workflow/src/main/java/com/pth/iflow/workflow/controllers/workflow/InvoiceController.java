@@ -34,6 +34,7 @@ public class InvoiceController {
   final IWorkflowProcessService<InvoiceWorkflow> workflowService;
 
   public InvoiceController(@Autowired final IWorkflowProcessService<InvoiceWorkflow> invoiceWorkflowService) {
+
     this.workflowService = invoiceWorkflowService;
   }
 
@@ -53,11 +54,13 @@ public class InvoiceController {
       @RequestBody final InvoiceWorkflowSaveRequestEdo workflowCreateRequestEdo, final HttpServletRequest request,
       @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws Exception {
 
-    final List<InvoiceWorkflow> modelList = this.workflowService.create(WorkflowModelEdoMapper.fromEdo(workflowCreateRequestEdo),
-        headerTokenId);
+    final List<InvoiceWorkflow> modelList = this.workflowService
+        .create(WorkflowModelEdoMapper.fromEdo(workflowCreateRequestEdo),
+            headerTokenId);
 
-    return ControllerHelper.createResponseEntity(request,
-        new InvoiceWorkflowListEdo(WorkflowModelEdoMapper.toInvoiceWorkflowEdoList(modelList)), HttpStatus.CREATED);
+    return ControllerHelper
+        .createResponseEntity(request,
+            new InvoiceWorkflowListEdo(WorkflowModelEdoMapper.toInvoiceWorkflowEdoList(modelList)), HttpStatus.CREATED);
   }
 
   @ResponseStatus(HttpStatus.ACCEPTED)
@@ -79,20 +82,22 @@ public class InvoiceController {
 
     final List<InvoiceWorkflow> modelList = this.workflowService.getListByIdentityList(idList, headerTokenId);
 
-    return ControllerHelper.createResponseEntity(request,
-        new InvoiceWorkflowListEdo(WorkflowModelEdoMapper.toInvoiceWorkflowEdoList(modelList)), HttpStatus.OK);
+    return ControllerHelper
+        .createResponseEntity(request,
+            new InvoiceWorkflowListEdo(WorkflowModelEdoMapper.toInvoiceWorkflowEdoList(modelList)), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(path = IflowRestPaths.WorkflowModule.INVOICEWORKFLOW_READ_LIST_BY_USEREMAIL)
-  public ResponseEntity<InvoiceWorkflowListEdo> readInvoiceListForUser(@PathVariable final String email,
+  @IflowGetRequestMapping(path = IflowRestPaths.WorkflowModule.INVOICEWORKFLOW_READ_LIST_BY_USERIDENTITY)
+  public ResponseEntity<InvoiceWorkflowListEdo> readInvoiceListForUser(@PathVariable final String Identity,
       @PathVariable(required = false) final int status, final HttpServletRequest request,
       @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws Exception {
 
-    final List<InvoiceWorkflow> modelList = this.workflowService.getListForUser(email, status, headerTokenId);
+    final List<InvoiceWorkflow> modelList = this.workflowService.getListForUser(Identity, status, headerTokenId);
 
-    return ControllerHelper.createResponseEntity(request,
-        new InvoiceWorkflowListEdo(WorkflowModelEdoMapper.toInvoiceWorkflowEdoList(modelList)), HttpStatus.OK);
+    return ControllerHelper
+        .createResponseEntity(request,
+            new InvoiceWorkflowListEdo(WorkflowModelEdoMapper.toInvoiceWorkflowEdoList(modelList)), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.ACCEPTED)

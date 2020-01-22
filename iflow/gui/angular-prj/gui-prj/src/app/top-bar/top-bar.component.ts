@@ -1,11 +1,9 @@
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoadingServiceService } from '../services/loading-service.service';
-import { GlobalService } from '../services/global.service';
+import { TranslateService } from '@ngx-translate/core';
 
 import { AuthenticationService } from '../services';
 import { User, MenuItem } from '../ui-models';
-
 
 @Component({
   selector: 'app-top-bar',
@@ -14,15 +12,24 @@ import { User, MenuItem } from '../ui-models';
 })
 export class TopBarComponent implements OnInit {
   
-	@Input('menus') menus: MenuItem[] = [];
+	menus: MenuItem[] = [];
 	@Input('currentUser') currentUser: User;
 	@Input('isLogged') isLogged: boolean;
+	
+	@Input('menus')
+	set setMenus(_menus: MenuItem[]) {
+	    this.menus = _menus;
+	    
+	    for(var index in this.menus){
+			this.setMenuLabel(this.menus[index]);
+		}	    
+	}
 	
 	@Output() loggingOut = new EventEmitter<boolean>();
 
 	constructor(
 		    private router: Router,
-		    private global: GlobalService,
+		    private translate: TranslateService,
 		) { 
   		
  	}
@@ -31,6 +38,16 @@ export class TopBarComponent implements OnInit {
 
 	}
 	
+	setMenuLabel(menu:MenuItem) {
+		
+		this.translate.get(menu.id).subscribe((res: string) => {
+			menu.label = res;
+	    });
+		
+		for(var index in menu.children){
+			this.setMenuLabel(menu.children[index]);
+		}
+	}
 
 	logout(){
 		this.loggingOut.emit(true);
@@ -41,8 +58,4 @@ export class TopBarComponent implements OnInit {
 		
 	}
 	
-	test(){
-		this.global.loadAllSetting(null);
-		
-	}		
 }

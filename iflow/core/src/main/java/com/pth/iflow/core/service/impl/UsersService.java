@@ -11,7 +11,10 @@ import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.common.models.edo.CompanyProfileEdo;
 import com.pth.iflow.common.models.edo.CompanyWorkflowTypeControllerEdo;
 import com.pth.iflow.common.models.edo.ProfileResponseEdo;
+import com.pth.iflow.common.models.edo.UserDepartmentEdo;
+import com.pth.iflow.common.models.edo.UserDepartmentGroupEdo;
 import com.pth.iflow.common.models.edo.UserEdo;
+import com.pth.iflow.common.models.helper.IdentityModel;
 import com.pth.iflow.core.helper.CoreDataHelper;
 import com.pth.iflow.core.model.CompanyProfile;
 import com.pth.iflow.core.model.ProfileResponse;
@@ -59,9 +62,15 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
   }
 
   @Override
-  public UserEntity getUserByIdentity(final String email) {
+  public UserEntity getUserByIdentity(final String identity) {
 
-    return userDao.getByIdentity(email);
+    return userDao.getByIdentity(identity);
+  }
+
+  @Override
+  public UserEntity getUserByEmail(final String email) {
+
+    return userDao.getByEmail(email);
   }
 
   @Override
@@ -99,6 +108,11 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
 
     if (model.isNew()) {
 
+      final UserEntity lastUser = userDao.getLastIdentity(model.getCompanyId());
+      final String lastIdentity = lastUser != null ? lastUser.getIdentity() : "";
+
+      model.generateUserIdentity(lastIdentity);
+
       return userDao.create(model);
     }
 
@@ -106,6 +120,14 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
     model.verifyVersion(exists);
 
     return userDao.update(model);
+  }
+
+  @Override
+  public void delete(final UserEntity model) {
+
+    final UserEntity exists = userDao.getByIdentity(model.getIdentity());
+    userDao.deleteById(exists.getId());
+
   }
 
   @Override
@@ -117,7 +139,7 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
   @Override
   public ProfileResponse getProfileResponseByEmail(final String email) {
 
-    final UserEntity user = this.getUserByIdentity(email);
+    final UserEntity user = this.getUserByEmail(email);
     final CompanyEntity company = companyDao.getByIdentity(user.getCompany().getIdentity());
 
     return new ProfileResponse(user, company, user.getDepartments().stream().collect(Collectors.toList()),
@@ -148,6 +170,7 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
 
     final UserEntity model = new UserEntity();
 
+    model.setId(IdentityModel.isIdentityNew(edo.getIdentity()) ? null : userDao.getByIdentity(edo.getIdentity()).getId());
     model.setFirstName(edo.getFirstName());
     model.setLastName(edo.getLastName());
     model.setPermission(edo.getPermission());
@@ -155,12 +178,21 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
     model.setVersion(edo.getVersion());
     model.setEmail(edo.getEmail());
     model.setBirthDate(CoreDataHelper.fromLocalDate(edo.getBirthDate()));
-    model.getCompany().setIdentity(edo.getCompanyIdentity());
+    model.setCompany(companyDao.getByIdentity(edo.getCompanyIdentity()));
+    model.setCompanyId(model.getCompany().getId());
     model.setGroups(userGroupDao.getListByIdentityList(edo.getGroups()));
-    model.setDepartments(departmentDao.getListByIdentityList(edo.getDepartments()));
-    model.setDepartmentGroups(departmentGroupDao.getListByIdentityList(edo.getDepartmentGroups()));
     model.setDeputies(userDao.getListByIdentityList(edo.getDeputies()));
-    // model.setRoles(edo.getRoles());
+    model.setIdentity(edo.getIdentity());
+
+    for (final UserDepartmentEdo userDepartmentEdo : edo.getUserDepartments()) {
+      model.addUserDepartment(departmentDao.getByIdentity(userDepartmentEdo.getDepartmentIdentity()), userDepartmentEdo.getMemberType());
+    }
+
+    for (final UserDepartmentGroupEdo userDepartmentGroupEdo : edo.getUserDepartmentGroups()) {
+      model
+          .addUserDepartmentGroup(departmentGroupDao.getByIdentity(userDepartmentGroupEdo.getDepartmentGroupIdentity()),
+              userDepartmentGroupEdo.getMemberType());
+    }
 
     return model;
   }
@@ -168,6 +200,9 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
   @Override
   public UserEdo toEdo(final UserEntity model) {
 
+    if (model == null) {
+      return null;
+    }
     final UserEdo edo = new UserEdo();
     edo.setFirstName(model.getFirstName());
     edo.setLastName(model.getLastName());
@@ -178,10 +213,24 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
     edo.setBirthDate(model.getBirthDate().toLocalDate());
     edo.setCompanyIdentity(model.getCompany().getIdentity());
     edo.setGroups(model.getGroups().stream().map(g -> g.getIdentity()).collect(Collectors.toSet()));
-    edo.setDepartments(model.getDepartments().stream().map(g -> g.getIdentity()).collect(Collectors.toSet()));
-    edo.setDepartmentGroups(model.getDepartmentGroups().stream().map(g -> g.getIdentity()).collect(Collectors.toSet()));
+
+    edo
+        .setUserDepartments(model
+            .getUserDepartments()
+            .stream()
+            .map(g -> new UserDepartmentEdo(g.getDepartment().getIdentity(), g.getMemberType()))
+            .collect(Collectors.toSet()));
+
+    edo
+        .setUserDepartmentGroups(model
+            .getUserDepartmentGroups()
+            .stream()
+            .map(g -> new UserDepartmentGroupEdo(g.getDepartmentGroup().getIdentity(), g.getMemberType()))
+            .collect(Collectors.toSet()));
+
     edo.setDeputies(model.getDeputies().stream().map(g -> g.getIdentity()).collect(Collectors.toSet()));
     edo.setRoles(model.getRoles().stream().map(r -> r.getId().intValue()).collect(Collectors.toSet()));
+    edo.setIdentity(model.getIdentity());
 
     return edo;
   }

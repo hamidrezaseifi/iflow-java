@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 
 import com.pth.iflow.core.model.entity.DepartmentEntity;
+import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 
 public interface IDepartmentDao {
@@ -22,4 +23,7 @@ public interface IDepartmentDao {
 
   void deleteById(Long id) throws IFlowStorageException;
 
+  public UserEntity getDepartmentManager(final String identity);
+
+  public UserEntity getDepartmentDeputy(final String identity);
 }

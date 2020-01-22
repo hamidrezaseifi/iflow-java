@@ -25,6 +25,8 @@ import com.pth.iflow.common.models.edo.DepartmentEdo;
 import com.pth.iflow.common.models.edo.DepartmentGroupEdo;
 import com.pth.iflow.common.models.edo.ProfileResponseEdo;
 import com.pth.iflow.common.models.edo.UserAuthenticationResponseEdo;
+import com.pth.iflow.common.models.edo.UserDepartmentEdo;
+import com.pth.iflow.common.models.edo.UserDepartmentGroupEdo;
 import com.pth.iflow.common.models.edo.UserEdo;
 import com.pth.iflow.common.models.edo.UserGroupEdo;
 import com.pth.iflow.common.models.edo.WorkflowActionEdo;
@@ -50,6 +52,8 @@ import com.pth.iflow.gui.models.DepartmentGroup;
 import com.pth.iflow.gui.models.ProfileResponse;
 import com.pth.iflow.gui.models.User;
 import com.pth.iflow.gui.models.UserAuthenticationResponse;
+import com.pth.iflow.gui.models.UserDepartment;
+import com.pth.iflow.gui.models.UserDepartmentGroup;
 import com.pth.iflow.gui.models.UserGroup;
 import com.pth.iflow.gui.models.WorkflowAction;
 import com.pth.iflow.gui.models.WorkflowFile;
@@ -188,17 +192,30 @@ public class GuiModelEdoMapper {
     final UserEdo edo = new UserEdo();
     edo.setFirstName(model.getFirstName());
     edo.setLastName(model.getLastName());
-    edo.setPermission(model.getPermission());
+    edo.setPermission(model.getPermissionFromUserAccess());
     edo.setStatus(model.getStatus());
     edo.setVersion(model.getVersion());
     edo.setEmail(model.getEmail());
     edo.setBirthDate(model.getBirthDate());
     edo.setCompanyIdentity(model.getCompanyIdentity());
     edo.setGroups(model.getGroups());
-    edo.setDepartments(model.getDepartments());
-    edo.setDepartmentGroups(model.getDepartmentGroups());
+    edo
+        .setUserDepartments(
+            model
+                .getUserDepartments()
+                .stream()
+                .map(d -> new UserDepartmentEdo(d.getDepartmentIdentity(), d.getMemberType().getValue()))
+                .collect(Collectors.toList()));
+
+    edo
+        .setUserDepartmentGroups(model
+            .getUserDepartmentGroups()
+            .stream()
+            .map(d -> new UserDepartmentGroupEdo(d.getDepartmentGroupIdentity(), d.getMemberType().getValue()))
+            .collect(Collectors.toList()));
     edo.setDeputies(model.getDeputies());
     edo.setRoles(model.getRolesInt());
+    edo.setIdentity(model.getIdentity());
 
     return edo;
   }
@@ -211,17 +228,28 @@ public class GuiModelEdoMapper {
 
     model.setFirstName(edo.getFirstName());
     model.setLastName(edo.getLastName());
-    model.setPermission(edo.getPermission());
+    model.setUserAccessFromPermission(edo.getPermission());
     model.setStatus(edo.getStatus());
     model.setVersion(edo.getVersion());
     model.setEmail(edo.getEmail());
     model.setBirthDate(edo.getBirthDate());
     model.setCompanyIdentity(edo.getCompanyIdentity());
     model.setGroups(edo.getGroups());
-    model.setDepartments(edo.getDepartments());
-    model.setDepartmentGroups(edo.getDepartmentGroups());
+    model
+        .setUserDepartments(edo
+            .getUserDepartments()
+            .stream()
+            .map(d -> new UserDepartment(d.getDepartmentIdentity(), d.getMemberType()))
+            .collect(Collectors.toList()));
+    model
+        .setUserDepartmentGroups(edo
+            .getUserDepartmentGroups()
+            .stream()
+            .map(d -> new UserDepartmentGroup(d.getDepartmentGroupIdentity(), d.getMemberType()))
+            .collect(Collectors.toList()));
     model.setDeputies(edo.getDeputies());
     model.setRoles(edo.getRoles());
+    model.setIdentity(edo.getIdentity());
 
     return model;
   }

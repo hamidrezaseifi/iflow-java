@@ -3,6 +3,7 @@ package com.pth.iflow.profile.model.mapper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -19,6 +20,8 @@ import com.pth.iflow.common.models.edo.DepartmentGroupEdo;
 import com.pth.iflow.common.models.edo.ProfileResponseEdo;
 import com.pth.iflow.common.models.edo.UserAuthenticationRequestEdo;
 import com.pth.iflow.common.models.edo.UserAuthenticationResponseEdo;
+import com.pth.iflow.common.models.edo.UserDepartmentEdo;
+import com.pth.iflow.common.models.edo.UserDepartmentGroupEdo;
 import com.pth.iflow.common.models.edo.UserEdo;
 import com.pth.iflow.common.models.edo.UserGroupEdo;
 import com.pth.iflow.common.models.edo.WorkflowMessageEdo;
@@ -31,6 +34,8 @@ import com.pth.iflow.profile.model.ProfileResponse;
 import com.pth.iflow.profile.model.User;
 import com.pth.iflow.profile.model.UserAuthenticationRequest;
 import com.pth.iflow.profile.model.UserAuthenticationSession;
+import com.pth.iflow.profile.model.UserDepartment;
+import com.pth.iflow.profile.model.UserDepartmentGroup;
 import com.pth.iflow.profile.model.UserGroup;
 import com.pth.iflow.profile.model.WorkflowMessage;
 
@@ -142,7 +147,7 @@ public class ProfileModelEdoMapper {
 
     final UserAuthenticationRequestEdo edo = new UserAuthenticationRequestEdo();
     edo.setCompanyIdentity(model.getCompanyIdentity());
-    edo.setEmail(model.getEmail());
+    edo.setUserIdentity(model.getUserIdentity());
     edo.setPassword(model.getPassword());
 
     return edo;
@@ -153,7 +158,7 @@ public class ProfileModelEdoMapper {
     final UserAuthenticationRequest user = new UserAuthenticationRequest();
 
     user.setCompanyIdentity(edo.getCompanyIdentity());
-    user.setEmail(edo.getEmail());
+    user.setUserIdentity(edo.getUserIdentity());
     user.setPassword(edo.getPassword());
 
     return user;
@@ -196,10 +201,23 @@ public class ProfileModelEdoMapper {
     edo.setBirthDate(model.getBirthDate());
     edo.setCompanyIdentity(model.getCompanyIdentity());
     edo.setGroups(model.getGroups());
-    edo.setDepartments(model.getDepartments());
-    edo.setDepartmentGroups(model.getDepartmentGroups());
+    edo
+        .setUserDepartments(
+            model
+                .getUserDepartments()
+                .stream()
+                .map(d -> new UserDepartmentEdo(d.getDepartmentIdentity(), d.getMemberType().getValue()))
+                .collect(Collectors.toList()));
+
+    edo
+        .setUserDepartmentGroups(model
+            .getUserDepartmentGroups()
+            .stream()
+            .map(d -> new UserDepartmentGroupEdo(d.getDepartmentGroupIdentity(), d.getMemberType().getValue()))
+            .collect(Collectors.toList()));
     edo.setDeputies(model.getDeputies());
     edo.setRoles(model.getRoles());
+    edo.setIdentity(model.getIdentity());
 
     return edo;
   }
@@ -219,10 +237,21 @@ public class ProfileModelEdoMapper {
     model.setBirthDate(edo.getBirthDate());
     model.setCompanyIdentity(edo.getCompanyIdentity());
     model.setGroups(edo.getGroups());
-    model.setDepartments(edo.getDepartments());
-    model.setDepartmentGroups(edo.getDepartmentGroups());
+    model
+        .setUserDepartments(edo
+            .getUserDepartments()
+            .stream()
+            .map(d -> new UserDepartment(d.getDepartmentIdentity(), d.getMemberType()))
+            .collect(Collectors.toList()));
+    model
+        .setUserDepartmentGroups(edo
+            .getUserDepartmentGroups()
+            .stream()
+            .map(d -> new UserDepartmentGroup(d.getDepartmentGroupIdentity(), d.getMemberType()))
+            .collect(Collectors.toList()));
     model.setDeputies(edo.getDeputies());
     model.setRoles(edo.getRoles());
+    model.setIdentity(edo.getIdentity());
 
     return model;
   }

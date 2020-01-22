@@ -25,24 +25,27 @@ import com.pth.iflow.profile.TestDataProducer;
 import com.pth.iflow.profile.config.ProfileConfiguration;
 import com.pth.iflow.profile.model.Department;
 import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
-import com.pth.iflow.profile.service.impl.DepartmentService;
+import com.pth.iflow.profile.service.access.IDepartmentAccessService;
+import com.pth.iflow.profile.service.access.impl.DepartmentAccessService;
+import com.pth.iflow.profile.service.handler.IProfileRestTemplateCall;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 public class DepartmentServiceTest extends TestDataProducer {
 
-  private IDepartmentService                    departmentService;
+  private IDepartmentAccessService departmentService;
 
   @Mock
-  private IProfileRestTemplateCall              restTemplate;
+  private IProfileRestTemplateCall restTemplate;
 
   @MockBean
   private ProfileConfiguration.CoreAccessConfig coreAccessConfig;
 
   @Before
   public void setUp() throws Exception {
-    this.departmentService = new DepartmentService(this.restTemplate, this.coreAccessConfig);
+
+    this.departmentService = new DepartmentAccessService(this.restTemplate, this.coreAccessConfig);
 
     when(this.coreAccessConfig.prepareCoreUrl(any(URI.class))).thenReturn(new URI("http://any-string"));
 
@@ -50,6 +53,7 @@ public class DepartmentServiceTest extends TestDataProducer {
 
   @After
   public void tearDown() throws Exception {
+
   }
 
   @Test
@@ -58,15 +62,16 @@ public class DepartmentServiceTest extends TestDataProducer {
     final Department department = this.getTestDepartment("dep1", "department 1");
     final DepartmentEdo departmentEdo = ProfileModelEdoMapper.toEdo(department);
 
-    when(this.restTemplate.callRestGet(any(String.class), any(EModule.class), any(Class.class), any(boolean.class), any()))
+    when(this.restTemplate.callRestGet(any(URI.class), any(EModule.class), any(Class.class), any(boolean.class)))
         .thenReturn(departmentEdo);
 
     final Department resDepartment = this.departmentService.getByIdentity(department.getIdentity());
 
     Assert.assertNotNull("Result department is not null!", resDepartment);
     Assert.assertEquals("Result department has id 1!", resDepartment.getIdentity(), department.getIdentity());
-    Assert.assertEquals("Result department has title '" + department.getTitle() + "'!", resDepartment.getTitle(),
-        department.getTitle());
+    Assert
+        .assertEquals("Result department has title '" + department.getTitle() + "'!", resDepartment.getTitle(),
+            department.getTitle());
     Assert.assertEquals("Result department has status 1!", resDepartment.getStatus(), department.getStatus());
 
   }
@@ -77,7 +82,7 @@ public class DepartmentServiceTest extends TestDataProducer {
     final List<Department> list = this.getTestDepartmentList();
     final DepartmentListEdo listEdo = new DepartmentListEdo(ProfileModelEdoMapper.toDepartmentEdoList(list));
 
-    when(this.restTemplate.callRestGet(any(String.class), any(EModule.class), eq(DepartmentListEdo.class), any(boolean.class), any()))
+    when(this.restTemplate.callRestGet(any(URI.class), any(EModule.class), eq(DepartmentListEdo.class), any(boolean.class)))
         .thenReturn(listEdo);
 
     final List<Department> resList = this.departmentService.getListByCompanyIdentity("company1");

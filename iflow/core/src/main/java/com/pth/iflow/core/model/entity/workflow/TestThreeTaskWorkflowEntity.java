@@ -17,10 +17,10 @@ public class TestThreeTaskWorkflowEntity implements IWorkflowContainerEntity {
 
   @Id
   @Column(name = "workflow_id")
-  private Long           workflowId;
+  private Long workflowId;
 
   @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  @JoinColumn(name = "workflowId")
+  @JoinColumn(name = "workflow_id")
   private WorkflowEntity workflow;
 
   public TestThreeTaskWorkflowEntity() {
@@ -29,21 +29,25 @@ public class TestThreeTaskWorkflowEntity implements IWorkflowContainerEntity {
 
   @Override
   public Long getWorkflowId() {
+
     return workflowId;
   }
 
   @Override
   public void setWorkflowId(final Long workflowId) {
+
     this.workflowId = workflowId;
   }
 
   @Override
   public WorkflowEntity getWorkflow() {
+
     return workflow;
   }
 
   @Override
   public void setWorkflow(final WorkflowEntity workflow) {
+
     this.workflow = workflow;
   }
 
@@ -53,6 +57,7 @@ public class TestThreeTaskWorkflowEntity implements IWorkflowContainerEntity {
   }
 
   public void verifyVersion(final TestThreeTaskWorkflowEntity exists) {
+
     workflow.verifyVersion(exists.getWorkflow());
   }
 

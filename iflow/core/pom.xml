@@ -10,10 +10,10 @@
 	<properties>
 	    <ifw.module.db.database>iflow</ifw.module.db.database>
 	    <ifw.module.db.root.database>iflow</ifw.module.db.root.database>
-	    <ifw.module.db.root>root</ifw.module.db.root>
+	    <ifw.module.db.root>postgres</ifw.module.db.root>
 	    <ifw.module.db.root.pwd>7342</ifw.module.db.root.pwd>
-	    <ifw.module.db.url>jdbc:mysql://localhost:3306/</ifw.module.db.url>
-	    <ifw.module.db.driver>com.mysql.jdbc.Driver</ifw.module.db.driver>
+	    <ifw.module.db.url>jdbc:postgresql://localhost:5432/</ifw.module.db.url>
+	    <ifw.module.db.driver>org.postgresql.Driver</ifw.module.db.driver>
 	    
 	    <ifw.module.db.skip>false</ifw.module.db.skip>
 	</properties>
@@ -37,10 +37,10 @@
 		</dependency>
 
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<scope>runtime</scope>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
 		</dependency>
+	
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -50,6 +50,7 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
+			<version>5.4.10.Final</version>
 		</dependency>
 		
 		<dependency>
@@ -113,6 +114,11 @@
             <skip>false</skip>
           </configuration>
         </plugin>
+	
+		<plugin>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-maven-plugin</artifactId>
+		</plugin>
 	
 	  </plugins>
 	</build>

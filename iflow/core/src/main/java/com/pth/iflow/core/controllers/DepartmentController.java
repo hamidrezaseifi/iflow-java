@@ -20,6 +20,7 @@ import com.pth.iflow.common.controllers.helper.ControllerHelper;
 import com.pth.iflow.common.models.edo.DepartmentEdo;
 import com.pth.iflow.common.models.edo.DepartmentListEdo;
 import com.pth.iflow.common.models.edo.IdentityListEdo;
+import com.pth.iflow.common.models.edo.UserEdo;
 import com.pth.iflow.common.models.edo.UserListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.core.model.entity.DepartmentEntity;
@@ -32,9 +33,10 @@ import com.pth.iflow.core.service.interfaces.IUsersService;
 public class DepartmentController {
 
   final IDepartmentService departmentService;
-  final IUsersService      userService;
+  final IUsersService userService;
 
   public DepartmentController(@Autowired final IDepartmentService departmentService, @Autowired final IUsersService userService) {
+
     this.departmentService = departmentService;
     this.userService = userService;
   }
@@ -57,8 +59,9 @@ public class DepartmentController {
     final List<DepartmentEntity> modelList = idList.getIdentityList().isEmpty() ? new ArrayList<>()
         : this.departmentService.getListByIdentityList(idList.getIdentityList());
 
-    return ControllerHelper.createResponseEntity(request, new DepartmentListEdo(this.departmentService.toEdoList(modelList)),
-        HttpStatus.OK);
+    return ControllerHelper
+        .createResponseEntity(request, new DepartmentListEdo(this.departmentService.toEdoList(modelList)),
+            HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -68,8 +71,9 @@ public class DepartmentController {
 
     final List<DepartmentEntity> modelList = this.departmentService.getListByIdCompanyIdentity(companyidentity);
 
-    return ControllerHelper.createResponseEntity(request, new DepartmentListEdo(this.departmentService.toEdoList(modelList)),
-        HttpStatus.OK);
+    return ControllerHelper
+        .createResponseEntity(request, new DepartmentListEdo(this.departmentService.toEdoList(modelList)),
+            HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -81,4 +85,25 @@ public class DepartmentController {
 
     return ControllerHelper.createResponseEntity(request, new UserListEdo(this.userService.toEdoList(modelList)), HttpStatus.OK);
   }
+
+  @ResponseStatus(HttpStatus.OK)
+  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.DEPARTMENT_GET_MANAGER)
+  public ResponseEntity<UserEdo> getDepartmentGroupManager(@PathVariable(name = "identity") final String identity,
+      final HttpServletRequest request) throws Exception {
+
+    final UserEntity model = this.departmentService.getDepartmentManager(identity);
+
+    return ControllerHelper.createResponseEntity(request, this.userService.toEdo(model), HttpStatus.OK);
+  }
+
+  @ResponseStatus(HttpStatus.OK)
+  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.DEPARTMENT_GET_DEPUTY)
+  public ResponseEntity<UserEdo> getDepartmentGroupDeputy(@PathVariable(name = "identity") final String identity,
+      final HttpServletRequest request) throws Exception {
+
+    final UserEntity model = this.departmentService.getDepartmentDeputy(identity);
+
+    return ControllerHelper.createResponseEntity(request, this.userService.toEdo(model), HttpStatus.OK);
+  }
+
 }

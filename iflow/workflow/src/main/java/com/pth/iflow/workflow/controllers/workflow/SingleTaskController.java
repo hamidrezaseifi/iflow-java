@@ -34,6 +34,7 @@ public class SingleTaskController {
   final IWorkflowProcessService<SingleTaskWorkflow> workflowService;
 
   public SingleTaskController(@Autowired final IWorkflowProcessService<SingleTaskWorkflow> workflowService) {
+
     this.workflowService = workflowService;
   }
 
@@ -53,11 +54,13 @@ public class SingleTaskController {
       @RequestBody final SingleTaskWorkflowSaveRequestEdo workflowCreateRequestEdo, final HttpServletRequest request,
       @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws Exception {
 
-    final List<SingleTaskWorkflow> modelList = this.workflowService.create(WorkflowModelEdoMapper.fromEdo(workflowCreateRequestEdo),
-        headerTokenId);
+    final List<SingleTaskWorkflow> modelList = this.workflowService
+        .create(WorkflowModelEdoMapper.fromEdo(workflowCreateRequestEdo),
+            headerTokenId);
 
-    return ControllerHelper.createResponseEntity(request,
-        new SingleTaskWorkflowListEdo(WorkflowModelEdoMapper.toSingleTaskWorkflowEdoList(modelList)), HttpStatus.CREATED);
+    return ControllerHelper
+        .createResponseEntity(request,
+            new SingleTaskWorkflowListEdo(WorkflowModelEdoMapper.toSingleTaskWorkflowEdoList(modelList)), HttpStatus.CREATED);
   }
 
   @ResponseStatus(HttpStatus.ACCEPTED)
@@ -79,20 +82,22 @@ public class SingleTaskController {
 
     final List<SingleTaskWorkflow> modelList = this.workflowService.getListByIdentityList(idList, headerTokenId);
 
-    return ControllerHelper.createResponseEntity(request,
-        new SingleTaskWorkflowListEdo(WorkflowModelEdoMapper.toSingleTaskWorkflowEdoList(modelList)), HttpStatus.OK);
+    return ControllerHelper
+        .createResponseEntity(request,
+            new SingleTaskWorkflowListEdo(WorkflowModelEdoMapper.toSingleTaskWorkflowEdoList(modelList)), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(path = IflowRestPaths.WorkflowModule.SINGLETASKWORKFLOW_READ_LIST_BY_USEREMAIL)
-  public ResponseEntity<SingleTaskWorkflowListEdo> readWorkflowListForUser(@PathVariable final String email,
+  @IflowGetRequestMapping(path = IflowRestPaths.WorkflowModule.SINGLETASKWORKFLOW_READ_LIST_BY_USERIDENTITY)
+  public ResponseEntity<SingleTaskWorkflowListEdo> readWorkflowListForUser(@PathVariable final String Identity,
       @PathVariable(required = false) final int status, final HttpServletRequest request,
       @RequestHeader(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY) final String headerTokenId) throws Exception {
 
-    final List<SingleTaskWorkflow> modelList = this.workflowService.getListForUser(email, status, headerTokenId);
+    final List<SingleTaskWorkflow> modelList = this.workflowService.getListForUser(Identity, status, headerTokenId);
 
-    return ControllerHelper.createResponseEntity(request,
-        new SingleTaskWorkflowListEdo(WorkflowModelEdoMapper.toSingleTaskWorkflowEdoList(modelList)), HttpStatus.OK);
+    return ControllerHelper
+        .createResponseEntity(request,
+            new SingleTaskWorkflowListEdo(WorkflowModelEdoMapper.toSingleTaskWorkflowEdoList(modelList)), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.ACCEPTED)

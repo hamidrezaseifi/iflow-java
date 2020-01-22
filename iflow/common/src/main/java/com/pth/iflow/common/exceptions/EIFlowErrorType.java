@@ -27,6 +27,11 @@ public enum EIFlowErrorType implements IEnumValueValidator {
 
   GUI_INVALID_SESSION(210, ""),
 
+  PROFILE_MANAGER_FOR_DEPARTMENT_EXISTS(310, ""),
+  PROFILE_DEPUTY_FOR_DEPARTMENT_EXISTS(311, ""),
+  PROFILE_MANAGER_FOR_DEPARTMENTGROUP_EXISTS(320, ""),
+  PROFILE_DEPUTY_FOR_DEPARTMENTGROUP_EXISTS(321, ""),
+
   SERVICE_NOT_IMPLEMENTED(820, ""),
 
   RUNTIME_UNKNOWN(910, ""),
@@ -35,19 +40,22 @@ public enum EIFlowErrorType implements IEnumValueValidator {
   UNKNOWN(1000, "");
 
   private final Integer errorCode;
-  private final String  message;
+  private final String message;
 
   private EIFlowErrorType(final Integer errorCode, final String message) {
+
     this.errorCode = errorCode;
     this.message = message;
   }
 
   @Override
   public Integer getValue() {
+
     return this.errorCode;
   }
 
   public String getName() {
+
     return this.message;
   }
 

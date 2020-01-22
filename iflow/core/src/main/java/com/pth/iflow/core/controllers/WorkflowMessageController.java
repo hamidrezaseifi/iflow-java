@@ -30,19 +30,21 @@ public class WorkflowMessageController {
   final IWorkflowMessageService workflowMessageService;
 
   public WorkflowMessageController(@Autowired final IWorkflowMessageService workflowMessageService) {
+
     this.workflowMessageService = workflowMessageService;
 
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.WORKFLOWMESSAGE_READ_BY_USEREMAIL)
-  public ResponseEntity<WorkflowMessageListEdo> readWorkflowMessage(@PathVariable(name = "email") final String email,
+  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.WORKFLOWMESSAGE_READ_BY_USERIDENTITY)
+  public ResponseEntity<WorkflowMessageListEdo> readWorkflowMessage(@PathVariable(name = "identity") final String identity,
       @PathVariable(required = false) final Integer status, final HttpServletRequest request) throws Exception {
 
-    final List<WorkflowMessageEntity> messageList = this.workflowMessageService.getNotClosedNotExpiredListByUserEmail(email);
+    final List<WorkflowMessageEntity> messageList = this.workflowMessageService.getNotClosedNotExpiredListByUserEmail(identity);
 
-    return ControllerHelper.createResponseEntity(request,
-        new WorkflowMessageListEdo(this.workflowMessageService.toEdoList(messageList)), HttpStatus.OK);
+    return ControllerHelper
+        .createResponseEntity(request,
+            new WorkflowMessageListEdo(this.workflowMessageService.toEdoList(messageList)), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -52,8 +54,9 @@ public class WorkflowMessageController {
 
     final List<WorkflowMessageEntity> messageList = this.workflowMessageService.getNotClosedNotExpiredListByWorkflowId(workflowid);
 
-    return ControllerHelper.createResponseEntity(request,
-        new WorkflowMessageListEdo(this.workflowMessageService.toEdoList(messageList)), HttpStatus.OK);
+    return ControllerHelper
+        .createResponseEntity(request,
+            new WorkflowMessageListEdo(this.workflowMessageService.toEdoList(messageList)), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.CREATED)
@@ -68,11 +71,12 @@ public class WorkflowMessageController {
 
   @ResponseStatus(HttpStatus.CREATED)
   @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.WORKFLOWMESSAGE_CHANGE_WORKFLOWMESSAGE_STAUS_BY_WORKFLOWIDENTITY)
-  public void updateWorkflowMessage(@PathVariable(name = "workflowid") final String workflowid,
-      @PathVariable(name = "stepidentity") final String stepidentity, @PathVariable(name = "email") final String email,
+  public void updateWorkflowMessage(@PathVariable(name = "workflowidentity") final String workflowidentity,
+      @PathVariable(name = "stepidentity") final String stepidentity, @PathVariable(name = "useridentity") final String useridentity,
       @PathVariable(name = "status") final Integer status, final HttpServletRequest request) throws Exception {
 
-    this.workflowMessageService.updateWorkflowMessageStatus(workflowid, stepidentity, email, EWorkflowMessageStatus.ofValue(status));
+    this.workflowMessageService
+        .updateWorkflowMessageStatus(workflowidentity, stepidentity, useridentity, EWorkflowMessageStatus.ofValue(status));
 
   }
 
