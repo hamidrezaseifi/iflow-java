@@ -33,8 +33,8 @@ import com.pth.iflow.profile.exceptions.ProfileCustomizedException;
 import com.pth.iflow.profile.model.ProfileResponse;
 import com.pth.iflow.profile.model.UserAuthenticationRequest;
 import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
-import com.pth.iflow.profile.service.IAuthenticationService;
-import com.pth.iflow.profile.service.ITokenUserDataManager;
+import com.pth.iflow.profile.service.handler.IAuthenticationService;
+import com.pth.iflow.profile.service.handler.ITokenUserDataManager;
 
 @RestController
 @RequestMapping

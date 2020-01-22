@@ -1,4 +1,4 @@
-package com.pth.iflow.profile.service;
+package com.pth.iflow.profile.service.handler;
 
 import com.pth.iflow.profile.model.UserAuthenticationRequest;
 

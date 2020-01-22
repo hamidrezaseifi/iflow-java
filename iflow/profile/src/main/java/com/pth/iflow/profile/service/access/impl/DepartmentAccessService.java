@@ -1,4 +1,4 @@
-package com.pth.iflow.profile.service.impl;
+package com.pth.iflow.profile.service.access.impl;
 
 import java.net.MalformedURLException;
 import java.util.List;
@@ -19,18 +19,18 @@ import com.pth.iflow.profile.exceptions.ProfileCustomizedException;
 import com.pth.iflow.profile.model.Department;
 import com.pth.iflow.profile.model.User;
 import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
-import com.pth.iflow.profile.service.IDepartmentService;
-import com.pth.iflow.profile.service.IProfileRestTemplateCall;
+import com.pth.iflow.profile.service.access.IDepartmentAccessService;
+import com.pth.iflow.profile.service.handler.IProfileRestTemplateCall;
 
 @Service
-public class DepartmentService implements IDepartmentService {
+public class DepartmentAccessService implements IDepartmentAccessService {
 
-  private static final Logger logger = LoggerFactory.getLogger(CompanyService.class);
+  private static final Logger logger = LoggerFactory.getLogger(CompanyAccessService.class);
 
   final IProfileRestTemplateCall restTemplate;
   final ProfileConfiguration.CoreAccessConfig coreAccessConfig;
 
-  public DepartmentService(@Autowired final IProfileRestTemplateCall restTemplate,
+  public DepartmentAccessService(@Autowired final IProfileRestTemplateCall restTemplate,
       @Autowired final ProfileConfiguration.CoreAccessConfig coreAccessConfig) {
 
     this.restTemplate = restTemplate;

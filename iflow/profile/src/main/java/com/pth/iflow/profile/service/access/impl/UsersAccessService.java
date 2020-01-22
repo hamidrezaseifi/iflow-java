@@ -1,4 +1,4 @@
-package com.pth.iflow.profile.service.impl;
+package com.pth.iflow.profile.service.access.impl;
 
 import java.net.MalformedURLException;
 import java.util.List;
@@ -19,18 +19,18 @@ import com.pth.iflow.profile.exceptions.ProfileCustomizedException;
 import com.pth.iflow.profile.model.ProfileResponse;
 import com.pth.iflow.profile.model.User;
 import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
-import com.pth.iflow.profile.service.IProfileRestTemplateCall;
-import com.pth.iflow.profile.service.IUsersService;
+import com.pth.iflow.profile.service.access.IUsersAccessService;
+import com.pth.iflow.profile.service.handler.IProfileRestTemplateCall;
 
 @Service
-public class UsersService implements IUsersService {
+public class UsersAccessService implements IUsersAccessService {
 
-  private static final Logger logger = LoggerFactory.getLogger(UsersService.class);
+  private static final Logger logger = LoggerFactory.getLogger(UsersAccessService.class);
 
   final IProfileRestTemplateCall restTemplate;
   final ProfileConfiguration.CoreAccessConfig coreAccessConfig;
 
-  public UsersService(@Autowired final IProfileRestTemplateCall restTemplate,
+  public UsersAccessService(@Autowired final IProfileRestTemplateCall restTemplate,
       @Autowired final ProfileConfiguration.CoreAccessConfig coreAccessConfig) {
 
     this.restTemplate = restTemplate;
@@ -77,6 +77,31 @@ public class UsersService implements IUsersService {
             ProfileResponseEdo.class, true);
 
     return ProfileModelEdoMapper.fromEdo(edo);
+  }
+
+  @Override
+  public User saveUser(final User user) throws MalformedURLException, IFlowMessageConversionFailureException {
+
+    logger.debug("Save workflow");
+
+    final UserEdo userEdo = this.restTemplate
+        .callRestPost(
+            this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.SAVE_USER()), EModule.CORE, ProfileModelEdoMapper.toEdo(user),
+            UserEdo.class, true);
+
+    return ProfileModelEdoMapper.fromEdo(userEdo);
+  }
+
+  @Override
+  public void deleteUser(final User user) throws MalformedURLException, IFlowMessageConversionFailureException {
+
+    logger.debug("Delete workflow");
+
+    this.restTemplate
+        .callRestPost(
+            this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.SAVE_USER()), EModule.CORE, ProfileModelEdoMapper.toEdo(user),
+            Void.class, true);
+
   }
 
 }

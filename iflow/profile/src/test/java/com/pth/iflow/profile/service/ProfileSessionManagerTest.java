@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.pth.iflow.profile.TestDataProducer;
 import com.pth.iflow.profile.model.UserAuthenticationSession;
+import com.pth.iflow.profile.service.handler.ISessionManager;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

@@ -1,4 +1,4 @@
-package com.pth.iflow.profile.service.impl;
+package com.pth.iflow.profile.service.handler.impl;
 
 import java.io.IOException;
 import java.net.URI;
@@ -20,7 +20,7 @@ import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.iflow.common.response.IFlowErrorRestResponse;
 import com.pth.iflow.profile.exceptions.ProfileCustomizedException;
-import com.pth.iflow.profile.service.IProfileRestTemplateCall;
+import com.pth.iflow.profile.service.handler.IProfileRestTemplateCall;
 
 @Component
 public class ProfileRestTemplateCall implements IProfileRestTemplateCall {

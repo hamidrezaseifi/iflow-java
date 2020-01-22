@@ -205,17 +205,17 @@ public class GuiConfiguration {
 
     public URI getReadTokenInfoUri() throws MalformedURLException {
 
-      return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.READ_PROFILE_TOKENINFO());
+      return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.READ_PROFILE_TOKENINFO_URIBUILDER());
     }
 
     public URI getAuthenticationUri() throws MalformedURLException {
 
-      return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.AUTHENTICATE_AUTHENTICATION());
+      return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.AUTHENTICATE_AUTHENTICATION_URIBUILDER());
     }
 
     public URI getReadAuthenticationInfoUri() throws MalformedURLException {
 
-      return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.READ_PROFILE_AUTHENTOCATEDINFO());
+      return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.READ_PROFILE_AUTHENTOCATEDINFO_URIBUILDER());
     }
 
     public URI getReadCompanyUserListUri(final String companyIdentity) throws MalformedURLException {
@@ -223,40 +223,19 @@ public class GuiConfiguration {
       return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.READ_USERLIST_BY_COMPANYID_URIBUILDER(companyIdentity));
     }
 
-  }
+    public URI getReadUserUri(final String identity) throws MalformedURLException {
 
-  @Component
-  public static class CoreModuleAccessConfig {
-
-    private final Logger log = LoggerFactory.getLogger(this.getClass());
-
-    @Value("${iflow.gui.urls.core.base}")
-    private String coreeBaseUrl;
-
-    private URI baseCoreBaseUri;
-
-    @PostConstruct
-    private void init() throws URISyntaxException {
-
-      this.baseCoreBaseUri = new URI(this.coreeBaseUrl);
-
-      this.log.info("PROFILE Base URI: {}", this.baseCoreBaseUri);
-
+      return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.READ_USER_BY_IDENTITY_URIBUILDER(identity));
     }
 
-    public URI getCompanyUserListUri(final String companyidentity) throws MalformedURLException {
+    public URI getSaveUserUri() throws MalformedURLException {
 
-      return this.baseCoreBaseUri.resolve(IflowRestPaths.CoreModule.READ_USER_USER_LIST_BY_COMPANY(companyidentity));
+      return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.SAVE_USER_URIBUILDER());
     }
 
-    public URI getUserSaveUri() throws MalformedURLException {
+    public URI getDeleteUserUri() throws MalformedURLException {
 
-      return this.baseCoreBaseUri.resolve(IflowRestPaths.CoreModule.USER_SAVE);
-    }
-
-    public URI getUserDeleteUri() throws MalformedURLException {
-
-      return this.baseCoreBaseUri.resolve(IflowRestPaths.CoreModule.USER_DELETE);
+      return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.DELETE_USER_URIBUILDER());
     }
 
   }

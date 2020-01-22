@@ -25,16 +25,16 @@ public class UserAccess implements IUserAccess {
   private static final Logger logger = LoggerFactory.getLogger(UserAccess.class);
 
   private final IRestTemplateCall restTemplate;
-  private final GuiConfiguration.CoreModuleAccessConfig coreModuleAccessConfig;
+  private final GuiConfiguration.ProfileModuleAccessConfig profileModuleAccessConfig;
 
   private final SessionUserInfo sessionUserInfo;
 
   public UserAccess(@Autowired final IRestTemplateCall restTemplate,
-      @Autowired final GuiConfiguration.CoreModuleAccessConfig coreModuleAccessConfig,
+      @Autowired final GuiConfiguration.ProfileModuleAccessConfig profileModuleAccessConfig,
       @Autowired final SessionUserInfo sessionUserInfo) {
 
     this.restTemplate = restTemplate;
-    this.coreModuleAccessConfig = coreModuleAccessConfig;
+    this.profileModuleAccessConfig = profileModuleAccessConfig;
     this.sessionUserInfo = sessionUserInfo;
   }
 
@@ -45,7 +45,7 @@ public class UserAccess implements IUserAccess {
 
     final UserEdo userEdo = this.restTemplate
         .callRestPost(
-            this.coreModuleAccessConfig.getUserSaveUri(), EModule.CORE, GuiModelEdoMapper.toEdo(user), UserEdo.class, "", true);
+            this.profileModuleAccessConfig.getSaveUserUri(), EModule.CORE, GuiModelEdoMapper.toEdo(user), UserEdo.class, "", true);
 
     return GuiModelEdoMapper.fromEdo(userEdo);
   }
@@ -57,7 +57,7 @@ public class UserAccess implements IUserAccess {
     logger.debug("Read user list for company id from core {}", companyIdentity);
 
     final UserListEdo responseEdo = this.restTemplate
-        .callRestGet(this.coreModuleAccessConfig.getCompanyUserListUri(companyIdentity),
+        .callRestGet(this.profileModuleAccessConfig.getReadCompanyUserListUri(companyIdentity),
             EModule.CORE, UserListEdo.class, this.sessionUserInfo.isLoggedIn() ? this.sessionUserInfo.getToken() : "", true);
 
     return GuiModelEdoMapper.fromUserEdoList(responseEdo.getUsers());
@@ -70,7 +70,7 @@ public class UserAccess implements IUserAccess {
 
     this.restTemplate
         .callRestPost(
-            this.coreModuleAccessConfig.getUserDeleteUri(), EModule.CORE, GuiModelEdoMapper.toEdo(user), Void.class, "", true);
+            this.profileModuleAccessConfig.getDeleteUserUri(), EModule.CORE, GuiModelEdoMapper.toEdo(user), Void.class, "", true);
 
   }
 

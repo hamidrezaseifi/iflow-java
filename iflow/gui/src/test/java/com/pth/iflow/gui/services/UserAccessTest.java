@@ -10,7 +10,6 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -42,7 +41,7 @@ public class UserAccessTest extends TestDataProducer {
   private GuiConfiguration.WorkflowModuleAccessConfig workflowModuleAccessConfig;
 
   @MockBean
-  private GuiConfiguration.CoreModuleAccessConfig coreModuleAccessConfig;
+  private GuiConfiguration.ProfileModuleAccessConfig profileModuleAccessConfig;
 
   @MockBean
   private SessionUserInfo sessionUserInfo;
@@ -58,14 +57,14 @@ public class UserAccessTest extends TestDataProducer {
 
     this.validTocken = "validTocken";
 
-    when(this.coreModuleAccessConfig.getUserSaveUri()).thenReturn(this.testUri);
-    when(this.coreModuleAccessConfig.getCompanyUserListUri(any(String.class))).thenReturn(this.testUri);
+    when(this.profileModuleAccessConfig.getSaveUserUri()).thenReturn(this.testUri);
+    when(this.profileModuleAccessConfig.getReadCompanyUserListUri(any(String.class))).thenReturn(this.testUri);
 
     when(this.sessionUserInfo.getToken()).thenReturn(this.validTocken);
     when(this.sessionUserInfo.getUserByIdentity(any(String.class))).thenReturn(this.getTestUser());
     when(this.sessionUserInfo.getWorkflowTypeByIdentity(any(String.class))).thenReturn(this.getTestWorkflowType());
 
-    this.userAccess = new UserAccess(this.restTemplate, this.coreModuleAccessConfig, this.sessionUserInfo);
+    this.userAccess = new UserAccess(this.restTemplate, this.profileModuleAccessConfig, this.sessionUserInfo);
 
   }
 
@@ -75,7 +74,6 @@ public class UserAccessTest extends TestDataProducer {
   }
 
   @Test
-  @Ignore
   public void testSaveUser() throws Exception {
 
     final User user = this.getTestUser();
@@ -90,6 +88,19 @@ public class UserAccessTest extends TestDataProducer {
     Assert.assertEquals("Result user has id 1!", resUser.getIdentity(), user.getIdentity());
     Assert.assertEquals("Result user has title '" + user.getFullName() + "'!", resUser.getFullName(), user.getFullName());
     Assert.assertEquals("Result user has status 1!", resUser.getStatus(), user.getStatus());
+
+  }
+
+  @Test
+  public void testDeleteUser() throws Exception {
+
+    final User user = this.getTestUser();
+
+    when(this.restTemplate
+        .callRestPost(any(URI.class), any(EModule.class), any(UserEdo.class), eq(UserEdo.class), any(String.class),
+            any(boolean.class))).thenReturn(GuiModelEdoMapper.toEdo(user));
+
+    this.userAccess.deleteUser(user);
 
   }
 

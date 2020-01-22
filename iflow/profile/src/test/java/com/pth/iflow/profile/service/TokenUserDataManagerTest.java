@@ -25,7 +25,14 @@ import com.pth.iflow.profile.model.ProfileResponse;
 import com.pth.iflow.profile.model.User;
 import com.pth.iflow.profile.model.UserAuthenticationSession;
 import com.pth.iflow.profile.model.UserGroup;
-import com.pth.iflow.profile.service.impl.TokenUserDataManager;
+import com.pth.iflow.profile.service.access.ICompanyAccessService;
+import com.pth.iflow.profile.service.access.IDepartmentAccessService;
+import com.pth.iflow.profile.service.access.IDepartmentGroupAccessService;
+import com.pth.iflow.profile.service.access.IUserGroupAccessService;
+import com.pth.iflow.profile.service.access.IUsersAccessService;
+import com.pth.iflow.profile.service.handler.ISessionManager;
+import com.pth.iflow.profile.service.handler.ITokenUserDataManager;
+import com.pth.iflow.profile.service.handler.impl.TokenUserDataManager;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -37,19 +44,19 @@ public class TokenUserDataManagerTest extends TestDataProducer {
   private ISessionManager sessionManager;
 
   @Mock
-  private IUsersService usersService;
+  private IUsersAccessService usersService;
 
   @Mock
-  private ICompanyService companyService;
+  private ICompanyAccessService companyService;
 
   @Mock
-  private IUserGroupService userGroupService;
+  private IUserGroupAccessService userGroupService;
 
   @Mock
-  private IDepartmentService departmentService;
+  private IDepartmentAccessService departmentService;
 
   @Mock
-  private IDepartmentGroupService departmentGroupService;
+  private IDepartmentGroupAccessService departmentGroupService;
 
   private String validToken;
 

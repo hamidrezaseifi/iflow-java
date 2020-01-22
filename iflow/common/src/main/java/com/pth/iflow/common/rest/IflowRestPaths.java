@@ -125,6 +125,12 @@ public class IflowRestPaths {
       return builder.build(identity);
     }
 
+    public static URI SAVE_USER() {
+
+      final IflowUriBuilder builder = new IflowUriBuilder(USER_SAVE);
+      return builder.build();
+    }
+
     public static URI READ_USER_USER_LIST_BY_COMPANY(final String companyidentity) {
 
       final IflowUriBuilder builder = new IflowUriBuilder(USER_USER_LIST_BY_COMPANYIDENTITY);
@@ -558,6 +564,10 @@ public class IflowRestPaths {
     public static final String DEPARTMENTGROUP_READ_BY_IDENTITY = "/departmentgroup/readbyid/{identity}";
     public static final String DEPARTMENTGROUP_READ_USER_LIST = "/departmentgroup/read/user/{identity}";
 
+    public static final String USER_READ_BY_IDENTITY = "/users/read/identity/{identity}";
+    public static final String USER_SAVE = "/users/save";
+    public static final String USER_DELETE = "/users/delete";
+
     public static URI READ_COMPANY_BY_ID_URIBUILDER(final String companyidentity) {
 
       final IflowUriBuilder builder = new IflowUriBuilder(COMPANYIDENTITY_READ_BY_IDENTITY);
@@ -612,22 +622,40 @@ public class IflowRestPaths {
       return builder.build(identity);
     }
 
-    public static URI READ_PROFILE_TOKENINFO() {
+    public static URI READ_PROFILE_TOKENINFO_URIBUILDER() {
 
       final IflowUriBuilder builder = new IflowUriBuilder(PROFILE_READ_TOKENINFO);
       return builder.build();
     }
 
-    public static URI AUTHENTICATE_AUTHENTICATION() {
+    public static URI AUTHENTICATE_AUTHENTICATION_URIBUILDER() {
 
       final IflowUriBuilder builder = new IflowUriBuilder(AUTHENTICATION_AUTHENTICATE);
       return builder.build();
     }
 
-    public static URI READ_PROFILE_AUTHENTOCATEDINFO() {
+    public static URI READ_PROFILE_AUTHENTOCATEDINFO_URIBUILDER() {
 
       final IflowUriBuilder builder = new IflowUriBuilder(PROFILE_READ_AUTHENTOCATEDINFO);
       return builder.build();
+    }
+
+    public static URI SAVE_USER_URIBUILDER() {
+
+      final IflowUriBuilder builder = new IflowUriBuilder(USER_SAVE);
+      return builder.build();
+    }
+
+    public static URI DELETE_USER_URIBUILDER() {
+
+      final IflowUriBuilder builder = new IflowUriBuilder(USER_DELETE);
+      return builder.build();
+    }
+
+    public static URI READ_USER_BY_IDENTITY_URIBUILDER(final String identity) {
+
+      final IflowUriBuilder builder = new IflowUriBuilder(USER_READ_BY_IDENTITY);
+      return builder.build(identity);
     }
 
   }

@@ -1,4 +1,4 @@
-package com.pth.iflow.profile.service.impl;
+package com.pth.iflow.profile.service.handler.impl;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -20,12 +20,13 @@ import org.springframework.stereotype.Service;
 
 import com.pth.iflow.profile.helper.IPasswordUtils;
 import com.pth.iflow.profile.model.UserAuthenticationRequest;
-import com.pth.iflow.profile.service.IAuthenticationService;
+import com.pth.iflow.profile.service.access.impl.UsersAccessService;
+import com.pth.iflow.profile.service.handler.IAuthenticationService;
 
 @Service
 public class AuthenticationFromTextFileService implements IAuthenticationService {
 
-  private static final Logger logger = LoggerFactory.getLogger(UsersService.class);
+  private static final Logger logger = LoggerFactory.getLogger(UsersAccessService.class);
 
   @Value("${iflow.profile.password-file}")
   private String passwordFilePath;

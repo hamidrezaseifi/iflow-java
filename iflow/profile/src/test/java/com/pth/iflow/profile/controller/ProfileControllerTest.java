@@ -36,11 +36,11 @@ import com.pth.iflow.profile.model.User;
 import com.pth.iflow.profile.model.UserAuthenticationSession;
 import com.pth.iflow.profile.model.UserGroup;
 import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
-import com.pth.iflow.profile.service.ICompanyService;
-import com.pth.iflow.profile.service.IDepartmentService;
-import com.pth.iflow.profile.service.ISessionManager;
-import com.pth.iflow.profile.service.IUserGroupService;
-import com.pth.iflow.profile.service.IUsersService;
+import com.pth.iflow.profile.service.access.ICompanyAccessService;
+import com.pth.iflow.profile.service.access.IDepartmentAccessService;
+import com.pth.iflow.profile.service.access.IUserGroupAccessService;
+import com.pth.iflow.profile.service.access.IUsersAccessService;
+import com.pth.iflow.profile.service.handler.ISessionManager;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -57,16 +57,16 @@ public class ProfileControllerTest extends TestDataProducer {
   private ISessionManager sessionManager;
 
   @MockBean
-  private IUsersService usersService;
+  private IUsersAccessService usersService;
 
   @MockBean
-  private ICompanyService companyService;
+  private ICompanyAccessService companyService;
 
   @MockBean
-  private IUserGroupService userGroupService;
+  private IUserGroupAccessService userGroupService;
 
   @MockBean
-  private IDepartmentService departmentService;
+  private IDepartmentAccessService departmentService;
 
   private UserAuthenticationSession authenticatedSession = null;
 

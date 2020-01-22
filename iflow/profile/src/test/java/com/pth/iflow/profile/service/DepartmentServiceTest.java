@@ -25,14 +25,16 @@ import com.pth.iflow.profile.TestDataProducer;
 import com.pth.iflow.profile.config.ProfileConfiguration;
 import com.pth.iflow.profile.model.Department;
 import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
-import com.pth.iflow.profile.service.impl.DepartmentService;
+import com.pth.iflow.profile.service.access.IDepartmentAccessService;
+import com.pth.iflow.profile.service.access.impl.DepartmentAccessService;
+import com.pth.iflow.profile.service.handler.IProfileRestTemplateCall;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 public class DepartmentServiceTest extends TestDataProducer {
 
-  private IDepartmentService departmentService;
+  private IDepartmentAccessService departmentService;
 
   @Mock
   private IProfileRestTemplateCall restTemplate;
@@ -43,7 +45,7 @@ public class DepartmentServiceTest extends TestDataProducer {
   @Before
   public void setUp() throws Exception {
 
-    this.departmentService = new DepartmentService(this.restTemplate, this.coreAccessConfig);
+    this.departmentService = new DepartmentAccessService(this.restTemplate, this.coreAccessConfig);
 
     when(this.coreAccessConfig.prepareCoreUrl(any(URI.class))).thenReturn(new URI("http://any-string"));
 

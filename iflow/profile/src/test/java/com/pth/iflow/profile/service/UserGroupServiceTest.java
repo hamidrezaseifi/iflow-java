@@ -25,14 +25,16 @@ import com.pth.iflow.profile.TestDataProducer;
 import com.pth.iflow.profile.config.ProfileConfiguration;
 import com.pth.iflow.profile.model.UserGroup;
 import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
-import com.pth.iflow.profile.service.impl.UserGroupService;
+import com.pth.iflow.profile.service.access.IUserGroupAccessService;
+import com.pth.iflow.profile.service.access.impl.UserGroupAccessService;
+import com.pth.iflow.profile.service.handler.IProfileRestTemplateCall;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 public class UserGroupServiceTest extends TestDataProducer {
 
-  private IUserGroupService userGroupService;
+  private IUserGroupAccessService userGroupService;
 
   @Mock
   private IProfileRestTemplateCall restTemplate;
@@ -43,7 +45,7 @@ public class UserGroupServiceTest extends TestDataProducer {
   @Before
   public void setUp() throws Exception {
 
-    this.userGroupService = new UserGroupService(this.restTemplate, this.coreAccessConfig);
+    this.userGroupService = new UserGroupAccessService(this.restTemplate, this.coreAccessConfig);
 
     when(this.coreAccessConfig.prepareCoreUrl(any(URI.class))).thenReturn(new URI("http://any-string"));
 

@@ -1,4 +1,4 @@
-package com.pth.iflow.profile.service.impl;
+package com.pth.iflow.profile.service.handler.impl;
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
@@ -18,35 +18,35 @@ import com.pth.iflow.profile.model.ProfileResponse;
 import com.pth.iflow.profile.model.User;
 import com.pth.iflow.profile.model.UserAuthenticationSession;
 import com.pth.iflow.profile.model.UserGroup;
-import com.pth.iflow.profile.service.ICompanyService;
-import com.pth.iflow.profile.service.IDepartmentGroupService;
-import com.pth.iflow.profile.service.IDepartmentService;
-import com.pth.iflow.profile.service.ISessionManager;
-import com.pth.iflow.profile.service.ITokenUserDataManager;
-import com.pth.iflow.profile.service.IUserGroupService;
-import com.pth.iflow.profile.service.IUsersService;
+import com.pth.iflow.profile.service.access.ICompanyAccessService;
+import com.pth.iflow.profile.service.access.IDepartmentGroupAccessService;
+import com.pth.iflow.profile.service.access.IDepartmentAccessService;
+import com.pth.iflow.profile.service.access.IUserGroupAccessService;
+import com.pth.iflow.profile.service.access.IUsersAccessService;
+import com.pth.iflow.profile.service.handler.ISessionManager;
+import com.pth.iflow.profile.service.handler.ITokenUserDataManager;
 
 @Service
 public class TokenUserDataManager implements ITokenUserDataManager {
 
   private final ISessionManager sessionManager;
 
-  private final IUsersService usersService;
+  private final IUsersAccessService usersService;
 
-  private final ICompanyService companyService;
+  private final ICompanyAccessService companyService;
 
-  private final IUserGroupService userGroupService;
+  private final IUserGroupAccessService userGroupService;
 
-  private final IDepartmentService departmentService;
+  private final IDepartmentAccessService departmentService;
 
-  private final IDepartmentGroupService departmentGroupService;
+  private final IDepartmentGroupAccessService departmentGroupService;
 
   public TokenUserDataManager(@Autowired final ISessionManager sessionManager,
-      @Autowired final IUsersService usersService,
-      @Autowired final ICompanyService companyService,
-      @Autowired final IUserGroupService userGroupService,
-      @Autowired final IDepartmentService departmentService,
-      @Autowired final IDepartmentGroupService departmentGroupService) {
+      @Autowired final IUsersAccessService usersService,
+      @Autowired final ICompanyAccessService companyService,
+      @Autowired final IUserGroupAccessService userGroupService,
+      @Autowired final IDepartmentAccessService departmentService,
+      @Autowired final IDepartmentGroupAccessService departmentGroupService) {
 
     this.sessionManager = sessionManager;
     this.usersService = usersService;

@@ -27,8 +27,8 @@ import com.pth.iflow.profile.TestDataProducer;
 import com.pth.iflow.profile.model.UserAuthenticationRequest;
 import com.pth.iflow.profile.model.UserAuthenticationSession;
 import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
-import com.pth.iflow.profile.service.IAuthenticationService;
-import com.pth.iflow.profile.service.ISessionManager;
+import com.pth.iflow.profile.service.handler.IAuthenticationService;
+import com.pth.iflow.profile.service.handler.ISessionManager;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

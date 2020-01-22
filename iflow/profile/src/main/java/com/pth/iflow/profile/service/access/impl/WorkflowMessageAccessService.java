@@ -1,4 +1,4 @@
-package com.pth.iflow.profile.service.impl;
+package com.pth.iflow.profile.service.access.impl;
 
 import java.net.MalformedURLException;
 import java.util.List;
@@ -16,18 +16,18 @@ import com.pth.iflow.profile.config.ProfileConfiguration;
 import com.pth.iflow.profile.exceptions.ProfileCustomizedException;
 import com.pth.iflow.profile.model.WorkflowMessage;
 import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
-import com.pth.iflow.profile.service.IProfileRestTemplateCall;
-import com.pth.iflow.profile.service.IWorkflowMessageService;
+import com.pth.iflow.profile.service.access.IWorkflowMessageAccessService;
+import com.pth.iflow.profile.service.handler.IProfileRestTemplateCall;
 
 @Service
-public class WorkflowMessageService implements IWorkflowMessageService {
+public class WorkflowMessageAccessService implements IWorkflowMessageAccessService {
 
-  private static final Logger logger = LoggerFactory.getLogger(WorkflowMessageService.class);
+  private static final Logger logger = LoggerFactory.getLogger(WorkflowMessageAccessService.class);
 
   final IProfileRestTemplateCall restTemplate;
   final ProfileConfiguration.CoreAccessConfig coreAccessConfig;
 
-  public WorkflowMessageService(@Autowired final IProfileRestTemplateCall restTemplate,
+  public WorkflowMessageAccessService(@Autowired final IProfileRestTemplateCall restTemplate,
       @Autowired final ProfileConfiguration.CoreAccessConfig coreAccessConfig) {
 
     this.restTemplate = restTemplate;

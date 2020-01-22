@@ -1,4 +1,4 @@
-package com.pth.iflow.profile.service.impl;
+package com.pth.iflow.profile.service.access.impl;
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
@@ -16,18 +16,18 @@ import com.pth.iflow.profile.config.ProfileConfiguration;
 import com.pth.iflow.profile.exceptions.ProfileCustomizedException;
 import com.pth.iflow.profile.model.Company;
 import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
-import com.pth.iflow.profile.service.ICompanyService;
-import com.pth.iflow.profile.service.IProfileRestTemplateCall;
+import com.pth.iflow.profile.service.access.ICompanyAccessService;
+import com.pth.iflow.profile.service.handler.IProfileRestTemplateCall;
 
 @Service
-public class CompanyService implements ICompanyService {
+public class CompanyAccessService implements ICompanyAccessService {
 
-  private static final Logger logger = LoggerFactory.getLogger(CompanyService.class);
+  private static final Logger logger = LoggerFactory.getLogger(CompanyAccessService.class);
 
   final IProfileRestTemplateCall restTemplate;
   final ProfileConfiguration.CoreAccessConfig coreAccessConfig;
 
-  public CompanyService(@Autowired final IProfileRestTemplateCall restTemplate,
+  public CompanyAccessService(@Autowired final IProfileRestTemplateCall restTemplate,
       @Autowired final ProfileConfiguration.CoreAccessConfig coreAccessConfig) {
 
     this.restTemplate = restTemplate;

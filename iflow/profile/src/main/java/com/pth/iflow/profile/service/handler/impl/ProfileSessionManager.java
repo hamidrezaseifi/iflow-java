@@ -1,4 +1,4 @@
-package com.pth.iflow.profile.service.impl;
+package com.pth.iflow.profile.service.handler.impl;
 
 import java.nio.charset.Charset;
 import java.util.Base64;
@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.pth.iflow.profile.model.UserAuthenticationSession;
-import com.pth.iflow.profile.service.ISessionManager;
+import com.pth.iflow.profile.service.handler.ISessionManager;
 
 @Service
 public class ProfileSessionManager implements ISessionManager {

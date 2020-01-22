@@ -27,9 +27,9 @@ import com.pth.iflow.profile.model.ProfileResponse;
 import com.pth.iflow.profile.model.UserAuthenticationRequest;
 import com.pth.iflow.profile.model.UserAuthenticationSession;
 import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
-import com.pth.iflow.profile.service.IAuthenticationService;
-import com.pth.iflow.profile.service.ISessionManager;
-import com.pth.iflow.profile.service.IUsersService;
+import com.pth.iflow.profile.service.access.IUsersAccessService;
+import com.pth.iflow.profile.service.handler.IAuthenticationService;
+import com.pth.iflow.profile.service.handler.ISessionManager;
 
 @RestController
 @RequestMapping
@@ -37,10 +37,10 @@ public class AuthenticationController {
 
   private final IAuthenticationService authService;
   private final ISessionManager sessionManager;
-  private final IUsersService usersService;
+  private final IUsersAccessService usersService;
 
   public AuthenticationController(@Autowired final IAuthenticationService authService, @Autowired final ISessionManager sessionManager,
-      @Autowired final IUsersService usersService) {
+      @Autowired final IUsersAccessService usersService) {
 
     this.authService = authService;
     this.sessionManager = sessionManager;
