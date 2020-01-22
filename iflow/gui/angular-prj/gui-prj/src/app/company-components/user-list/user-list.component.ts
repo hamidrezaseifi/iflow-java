@@ -304,22 +304,23 @@ export class UserListComponent implements OnInit {
 		
 	}
 	
-	meberTypeOfDepartment(identity:string):number{
+	meberTypeOfDepartment(identity:string):string{
 		
 		for(var index in this.editingUserDepartments){
 			if(this.editingUserDepartments[index].departmentIdentity === identity){
-				return this.editingUserDepartments[index].memberType;
+				console.log("meberTypeOfDepartment: " + identity + " , " + this.editingUserDepartments[index].memberType);
+
+				return this.editingUserDepartments[index].memberType + "";
 			}
 		}
-		
-		return 0;
+		console.log("meberTypeOfDepartment: " + identity + " , 0");
+		return "0";
 	}
 	
 	onMeberTypeOfDepartmentChange(event, identity:string, value:number){
 
 		for(var index in this.editingUserDepartments){
 			if(this.editingUserDepartments[index].departmentIdentity === identity){
-				console.log("onMeberTypeOfDepartmentChange: " + identity + " : " + value);
 				this.editingUserDepartments[index].memberType = value;
 				return;
 			}
@@ -327,22 +328,22 @@ export class UserListComponent implements OnInit {
 		
 	}
 	
-	meberTypeOfDepartmentGroup(identity:string):number{
+	meberTypeOfDepartmentGroup(identity:string):string{
 		
 		for(var index in this.editingUserDepartmentGroups){
 			if(this.editingUserDepartmentGroups[index].departmentGroupIdentity === identity){
-				return this.editingUserDepartmentGroups[index].memberType;
+				console.log("meberTypeOfDepartmentGroup: " + identity + " , " + this.editingUserDepartmentGroups[index].memberType);
+				return this.editingUserDepartmentGroups[index].memberType + "";
 			}
 		}
-		
-		return 0;
+		console.log("meberTypeOfDepartmentGroup: " + identity + " , 0");
+		return "0";
 	}
 	
 	onMeberTypeOfDepartmentGroupChange(event, identity:string, value:number){
 
 		for(var index in this.editingUserDepartmentGroups){
 			if(this.editingUserDepartmentGroups[index].departmentGroupIdentity === identity){
-				console.log("onMeberTypeOfDepartmentGroupChange: " + identity + " : " + value);
 				this.editingUserDepartmentGroups[index].memberType = value;
 				return;
 			}

@@ -10,7 +10,7 @@ import com.pth.iflow.common.exceptions.IFlowInvalidEnumValueException;
 public enum EUserDepartmentMemberType implements IEnumValueValidator {
   NO_ASSIGNED(0),
   MEMBER(5), // Lieferant
-  DEPUTY(10), // Handwerk
+  DEPUTY(15), // Handwerk
   MANAGER(20); // Gutschrift
 
   private final int id;

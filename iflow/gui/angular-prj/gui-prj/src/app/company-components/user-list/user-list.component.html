@@ -139,7 +139,7 @@
 								  <label class="custom-control-label" for="dep{{dep.identity}}"></label>
 								</div>
 								
-								<select #select [value]="meberTypeOfDepartment(dep.identity)" name="meberTypeOfDepartment" (change)="onMeberTypeOfDepartmentChange($event, dep.identity, select.value)" class="dep-membertype" *ngIf="isMemberOfDepartment(dep.identity)">
+								<select #select [ngModel]="meberTypeOfDepartment(dep.identity)" name="meberTypeOfDepartment" (change)="onMeberTypeOfDepartmentChange($event, dep.identity, select.value)" class="dep-membertype" *ngIf="isMemberOfDepartment(dep.identity)">
 									<option *ngFor="let item of userDepartmentAccessType | keyvalue" value="{{item.key}}">{{ item.value }}</option>
 								</select>
 								<div class="clear"></div> 
@@ -153,7 +153,7 @@
 										  <label class="custom-control-label" for="depgrp{{depgrp.identity}}"></label>
 										</div>
 								
-										<select #select [value]="meberTypeOfDepartmentGroup(depgrp.identity)" name="meberTypeOfDepartmentGroup" (change)="onMeberTypeOfDepartmentGroupChange($event, depgrp.identity, select.value)" class="dep-membertype" *ngIf="isMemberOfDepartmentGroup(depgrp.identity)">
+										<select #select [ngModel]="meberTypeOfDepartmentGroup(depgrp.identity)" name="meberTypeOfDepartmentGroup" (change)="onMeberTypeOfDepartmentGroupChange($event, depgrp.identity, select.value)" class="dep-membertype" *ngIf="isMemberOfDepartmentGroup(depgrp.identity)">
 											<option *ngFor="let item of userDepartmentAccessType | keyvalue" value="{{item.key}}">{{ item.value }}</option>
 										</select>
 										<div class="clear"></div>										

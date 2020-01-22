@@ -45,7 +45,8 @@ public class UserAccess implements IUserAccess {
 
     final UserEdo userEdo = this.restTemplate
         .callRestPost(
-            this.profileModuleAccessConfig.getSaveUserUri(), EModule.CORE, GuiModelEdoMapper.toEdo(user), UserEdo.class, "", true);
+            this.profileModuleAccessConfig.getSaveUserUri(), EModule.CORE, GuiModelEdoMapper.toEdo(user), UserEdo.class,
+            this.sessionUserInfo.getToken(), true);
 
     return GuiModelEdoMapper.fromEdo(userEdo);
   }
@@ -58,7 +59,8 @@ public class UserAccess implements IUserAccess {
 
     final UserListEdo responseEdo = this.restTemplate
         .callRestGet(this.profileModuleAccessConfig.getReadCompanyUserListUri(companyIdentity),
-            EModule.CORE, UserListEdo.class, this.sessionUserInfo.isLoggedIn() ? this.sessionUserInfo.getToken() : "", true);
+            EModule.CORE, UserListEdo.class,
+            this.sessionUserInfo.isLoggedIn() ? this.sessionUserInfo.getToken() : this.sessionUserInfo.getToken(), true);
 
     return GuiModelEdoMapper.fromUserEdoList(responseEdo.getUsers());
   }
@@ -70,7 +72,8 @@ public class UserAccess implements IUserAccess {
 
     this.restTemplate
         .callRestPost(
-            this.profileModuleAccessConfig.getDeleteUserUri(), EModule.CORE, GuiModelEdoMapper.toEdo(user), Void.class, "", true);
+            this.profileModuleAccessConfig.getDeleteUserUri(), EModule.CORE, GuiModelEdoMapper.toEdo(user), Void.class,
+            this.sessionUserInfo.getToken(), true);
 
   }
 
