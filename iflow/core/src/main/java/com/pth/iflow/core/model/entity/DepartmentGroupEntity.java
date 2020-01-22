@@ -19,10 +19,20 @@ import javax.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.pth.iflow.core.storage.dao.helper.EntityIdentityHelper;
 import com.pth.iflow.core.storage.dao.helper.EntityListener;
+
+@NamedQueries(
+  {
+      @NamedQuery(
+                  name = "findDepartmentGroupMember", query = "select ud.user from UserDepartmentGroupEntity ud where ud.departmentGroup.identity = :identity and ud.memberType = :memtype", fetchSize = 1, readOnly = true
+      )
+  }
+)
 
 @Entity
 @Table(name = "departments_group")

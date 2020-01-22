@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
@@ -13,8 +14,8 @@ import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.iflow.common.response.IFlowErrorRestResponse;
 import com.pth.iflow.profile.exceptions.ProfileCustomizedException;
 
-//@ControllerAdvice
-public class IFlowProfileControllerExceptionHandler {
+@ControllerAdvice
+public class ProfileControllerExceptionHandler {
 
   @ExceptionHandler(ProfileCustomizedException.class)
   @ResponseStatus(HttpStatus.CONFLICT)

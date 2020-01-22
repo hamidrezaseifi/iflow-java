@@ -10,8 +10,6 @@ import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import org.hibernate.annotations.NamedQueries;
-import org.hibernate.annotations.NamedQuery;
 import org.springframework.stereotype.Repository;
 
 import com.pth.iflow.common.enums.EUserDepartmentMemberType;
@@ -20,15 +18,6 @@ import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 import com.pth.iflow.core.storage.dao.impl.base.EntityDaoBase;
 import com.pth.iflow.core.storage.dao.interfaces.IDepartmentDao;
-
-@NamedQueries(
-  {
-      @NamedQuery(
-                  name = "findDepartmentMember", query = "u from (DepartmentEntity d inner join UserDepartmentEntity ud on d.id = ud.department_id) "
-                      + "inner join UserEntity u on u.id=ud.user_id where d.identity = :identity and ud.member_type = :memtype", fetchSize = 1, readOnly = true
-      )
-  }
-)
 
 @Repository
 public class DepartmentDao extends EntityDaoBase<DepartmentEntity> implements IDepartmentDao {
@@ -68,7 +57,7 @@ public class DepartmentDao extends EntityDaoBase<DepartmentEntity> implements ID
   public UserEntity getDepartmentManager(final String identity) {
 
     final EntityManager entityManager = createEntityManager();
-    final TypedQuery<UserEntity> query = entityManager.createNamedQuery("findEmployeeByName", UserEntity.class);
+    final TypedQuery<UserEntity> query = entityManager.createNamedQuery("findDepartmentMember", UserEntity.class);
     query.setParameter("identity", identity);
     query.setParameter("memtype", EUserDepartmentMemberType.MANAGER.getValue());
 
@@ -83,7 +72,7 @@ public class DepartmentDao extends EntityDaoBase<DepartmentEntity> implements ID
   public UserEntity getDepartmentDeputy(final String identity) {
 
     final EntityManager entityManager = createEntityManager();
-    final TypedQuery<UserEntity> query = entityManager.createNamedQuery("findEmployeeByName", UserEntity.class);
+    final TypedQuery<UserEntity> query = entityManager.createNamedQuery("findDepartmentMember", UserEntity.class);
     query.setParameter("identity", identity);
     query.setParameter("memtype", EUserDepartmentMemberType.DEPUTY.getValue());
 

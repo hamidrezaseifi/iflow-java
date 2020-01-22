@@ -200,6 +200,9 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
   @Override
   public UserEdo toEdo(final UserEntity model) {
 
+    if (model == null) {
+      return null;
+    }
     final UserEdo edo = new UserEdo();
     edo.setFirstName(model.getFirstName());
     edo.setLastName(model.getLastName());

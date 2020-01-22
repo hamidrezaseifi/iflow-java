@@ -79,7 +79,7 @@ public class DepartmentGroupAccessService implements IDepartmentGroupAccessServi
             UserEdo.class,
             true);
 
-    return ProfileModelEdoMapper.fromEdo(edo);
+    return edo == null ? null : ProfileModelEdoMapper.fromEdo(edo);
   }
 
   @Override
@@ -95,7 +95,7 @@ public class DepartmentGroupAccessService implements IDepartmentGroupAccessServi
             UserEdo.class,
             true);
 
-    return ProfileModelEdoMapper.fromEdo(edo);
+    return edo == null ? null : ProfileModelEdoMapper.fromEdo(edo);
   }
 
 }
