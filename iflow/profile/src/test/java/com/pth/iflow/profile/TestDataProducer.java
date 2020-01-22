@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.pth.iflow.common.enums.ECompanyType;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.enums.EWorkflowMessageType;
 import com.pth.iflow.common.models.edo.AuthenticatedProfileRequestEdo;
@@ -38,6 +39,8 @@ public class TestDataProducer {
     company.setIdentity("identifyid");
     company.setStatus(1);
     company.setVersion(1);
+    company.setCompanyType(ECompanyType.EINZELUNTERNEHMEN.getIdentity());
+    company.setCompanyTypeCustome("companyTypeCustome");
 
     return company;
   }
