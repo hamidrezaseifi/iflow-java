@@ -141,9 +141,15 @@ public class IflowRestPaths {
       return builder.build(identity);
     }
 
-    public static URI SAVE_USER() {
+    public static URI SAVE_USER_URIBUILDER() {
 
       final IflowUriBuilder builder = new IflowUriBuilder(USER_SAVE);
+      return builder.build();
+    }
+
+    public static URI DELETE_USER_URIBUILDER() {
+
+      final IflowUriBuilder builder = new IflowUriBuilder(USER_DELETE);
       return builder.build();
     }
 

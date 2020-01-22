@@ -86,7 +86,8 @@ public class UsersAccessService implements IUsersAccessService {
 
     final UserEdo userEdo = this.restTemplate
         .callRestPost(
-            this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.SAVE_USER()), EModule.CORE, ProfileModelEdoMapper.toEdo(user),
+            this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.SAVE_USER_URIBUILDER()), EModule.CORE,
+            ProfileModelEdoMapper.toEdo(user),
             UserEdo.class, true);
 
     return ProfileModelEdoMapper.fromEdo(userEdo);
@@ -99,7 +100,8 @@ public class UsersAccessService implements IUsersAccessService {
 
     this.restTemplate
         .callRestPost(
-            this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.SAVE_USER()), EModule.CORE, ProfileModelEdoMapper.toEdo(user),
+            this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.DELETE_USER_URIBUILDER()), EModule.CORE,
+            ProfileModelEdoMapper.toEdo(user),
             Void.class, true);
 
   }
