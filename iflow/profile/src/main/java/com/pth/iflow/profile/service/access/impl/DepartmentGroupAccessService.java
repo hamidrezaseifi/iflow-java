@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.common.models.edo.DepartmentGroupEdo;
+import com.pth.iflow.common.models.edo.UserEdo;
 import com.pth.iflow.common.models.edo.UserListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.profile.config.ProfileConfiguration;
@@ -63,6 +64,38 @@ public class DepartmentGroupAccessService implements IDepartmentGroupAccessServi
             EModule.CORE, UserListEdo.class, true);
 
     return ProfileModelEdoMapper.fromUserEdoList(edo.getUsers());
+  }
+
+  @Override
+  public User getDepartmentGroupManager(final String identity)
+      throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+
+    logger.debug("Request department group manager {}", identity);
+
+    final UserEdo edo = this.restTemplate
+        .callRestGet(
+            this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.GET_DEPARTMENTGRPUP_MANAGER_URIBUILDER(identity)),
+            EModule.CORE,
+            UserEdo.class,
+            true);
+
+    return ProfileModelEdoMapper.fromEdo(edo);
+  }
+
+  @Override
+  public User getDepartmentGroupDeputy(final String identity)
+      throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+
+    logger.debug("Request department group manager {}", identity);
+
+    final UserEdo edo = this.restTemplate
+        .callRestGet(
+            this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.GET_DEPARTMENTGRPUP_DEPUTY_URIBUILDER(identity)),
+            EModule.CORE,
+            UserEdo.class,
+            true);
+
+    return ProfileModelEdoMapper.fromEdo(edo);
   }
 
 }

@@ -15,4 +15,11 @@ public interface IDepartmentGroupAccessService {
 
   List<User> getAllUserListByDepartmentGroupId(final String identity)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
+
+  User getDepartmentGroupManager(final String identity)
+      throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
+
+  User getDepartmentGroupDeputy(final String identity)
+      throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
+
 }
