@@ -7330,45 +7330,39 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony import */
 
 
-    var sockjs_client__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
-    /*! sockjs-client */
-    "./node_modules/sockjs-client/lib/entry.js");
-    /* harmony import */
-
-
-    var sockjs_client__WEBPACK_IMPORTED_MODULE_1___default =
-    /*#__PURE__*/
-    __webpack_require__.n(sockjs_client__WEBPACK_IMPORTED_MODULE_1__);
-    /* harmony import */
-
-
-    var stompjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    var stompjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
     /*! stompjs */
     "./node_modules/stompjs/index.js");
     /* harmony import */
 
 
-    var stompjs__WEBPACK_IMPORTED_MODULE_2___default =
+    var stompjs__WEBPACK_IMPORTED_MODULE_1___default =
     /*#__PURE__*/
-    __webpack_require__.n(stompjs__WEBPACK_IMPORTED_MODULE_2__);
+    __webpack_require__.n(stompjs__WEBPACK_IMPORTED_MODULE_1__);
     /* harmony import */
 
 
-    var _services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    var _services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
     /*! ../services/workflow/workflow-message.service */
     "./src/app/services/workflow/workflow-message.service.ts");
     /* harmony import */
 
 
-    var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
     /*! @angular/router */
     "./node_modules/@angular/router/__ivy_ngcc__/fesm2015/router.js");
     /* harmony import */
 
 
-    var _services_error_service_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+    var _services_error_service_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
     /*! ../services/error-service.service */
     "./src/app/services/error-service.service.ts");
+    /* harmony import */
+
+
+    var _services_global_socket__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+    /*! ../services/global-socket */
+    "./src/app/services/global-socket.ts");
     /* harmony import */
 
 
@@ -7392,7 +7386,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
     /*! @ngx-translate/core */
-    "./node_modules/@ngx-translate/core/__ivy_ngcc__/fesm2015/ngx-translate-core.js");
+    "./node_modules/@ngx-translate/core/__ivy_ngcc__/fesm2015/ngx-translate-core.js"); //import * as SockJS from 'sockjs-client';
+
 
     function MessageBarComponent_div_0_button_7_Template(rf, ctx) {
       if (rf & 1) {
@@ -7760,7 +7755,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     var MessageBarComponent =
     /*#__PURE__*/
     function () {
-      function MessageBarComponent(router, messageService, errorService) {
+      function MessageBarComponent(router, messageService, errorService, globalSocket) {
         var _this13 = this;
 
         _classCallCheck(this, MessageBarComponent);
@@ -7768,6 +7763,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.router = router;
         this.messageService = messageService;
         this.errorService = errorService;
+        this.globalSocket = globalSocket;
         this.messages = [];
         this.viewWorkflow = false;
         this.messageSearchInterval = 60000;
@@ -7905,10 +7901,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         value: function subscribe() {
           if (this.subscribed) {
             return;
-          }
+          } //let socket :SockJS = new SockJS('/iflow-guide-websocket');
 
-          var socket = new sockjs_client__WEBPACK_IMPORTED_MODULE_1__('/iflow-guide-websocket');
-          this.stompClient = stompjs__WEBPACK_IMPORTED_MODULE_2__["over"](socket);
+
+          this.stompClient = stompjs__WEBPACK_IMPORTED_MODULE_1__["over"](this.globalSocket.getGlobalSocket());
 
           var _this = this;
 
@@ -7919,10 +7915,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
               _this.onReceiveMessage(message);
             }); //_this.stompClient.reconnect_delay = 2000;
 
-          }, _this.errorCallBack); //this.socketMessages = this._stompService.subscribe('/socket/user/socket/messages');
-
-          console.log("Subscribe Message: ", this.socketMessages); //this.subscription = this.socketMessages.subscribe(this.receiveMessage);
-
+          }, _this.errorCallBack);
           this.readMessageList(true);
           this.setConnected(true);
         }
@@ -7977,7 +7970,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     }();
 
     MessageBarComponent.ɵfac = function MessageBarComponent_Factory(t) {
-      return new (t || MessageBarComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_3__["WorkflowMessageService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_error_service_service__WEBPACK_IMPORTED_MODULE_5__["ErrorServiceService"]));
+      return new (t || MessageBarComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_2__["WorkflowMessageService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_error_service_service__WEBPACK_IMPORTED_MODULE_4__["ErrorServiceService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_global_socket__WEBPACK_IMPORTED_MODULE_5__["GlobalSocket"]));
     };
 
     MessageBarComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({
@@ -7987,7 +7980,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         currentUser: "currentUser",
         isLogged: "isLogged"
       },
-      features: [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵProvidersFeature"]([_services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_3__["WorkflowMessageService"]])],
+      features: [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵProvidersFeature"]([_services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_2__["WorkflowMessageService"]])],
       decls: 2,
       vars: 2,
       consts: [["mwlResizable", "", "class", "message-panel-container", "id", "message-panel-container", 3, "enableGhostResize", "resizeEdges", "resizeEnd", 4, "ngIf"], ["class", "modal fade show", "tabindex", "-1", "id", "viewworkflowedialog", "role", "dialog", 4, "ngIf"], ["mwlResizable", "", "id", "message-panel-container", 1, "message-panel-container", 3, "enableGhostResize", "resizeEdges", "resizeEnd"], [1, "message-panel-toolbar"], [1, "title"], [3, "ngStyle"], ["class", "toolbar-button", 3, "click", 4, "ngIf"], ["class", "toolbar-image", "src", "assets/images/loading200.gif", 4, "ngIf"], [1, "message-panel-items-container"], ["class", "message-panel-item", 4, "ngFor", "ngForOf"], [1, "toolbar-button", 3, "click"], [1, "material-icons"], ["src", "assets/images/loading200.gif", 1, "toolbar-image"], [1, "message-panel-item"], ["href", "javascript:void(0);", 3, "click"], ["tabindex", "-1", "id", "viewworkflowedialog", "role", "dialog", 1, "modal", "fade", "show"], ["role", "document", 1, "modal-dialog", "modal-dialog-centered"], [1, "modal-content"], [1, "modal-header"], ["id", "errorMessagedialogTitle", 1, "modal-title", "dialog-title"], ["aria-label", "Close", 1, "dialog-toolbar-button", "close", 3, "click"], [1, "modal-body"], [3, "workflow"], [1, "modal-footer"], ["type", "button", 1, "btn", "btn-secondary", 3, "click"], ["type", "button", "class", "btn btn-success", 3, "click", 4, "ngIf"], ["type", "button", "class", "btn btn-primary", 3, "click", 4, "ngIf"], ["type", "button", 1, "btn", "btn-success", 3, "click"], ["type", "button", 1, "btn", "btn-primary", 3, "click"]],
@@ -8019,15 +8012,17 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           selector: 'app-message-bar',
           templateUrl: './message-bar.component.html',
           styleUrls: ['./message-bar.component.css'],
-          providers: [_services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_3__["WorkflowMessageService"]]
+          providers: [_services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_2__["WorkflowMessageService"]]
         }]
       }], function () {
         return [{
-          type: _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"]
+          type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]
         }, {
-          type: _services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_3__["WorkflowMessageService"]
+          type: _services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_2__["WorkflowMessageService"]
         }, {
-          type: _services_error_service_service__WEBPACK_IMPORTED_MODULE_5__["ErrorServiceService"]
+          type: _services_error_service_service__WEBPACK_IMPORTED_MODULE_4__["ErrorServiceService"]
+        }, {
+          type: _services_global_socket__WEBPACK_IMPORTED_MODULE_5__["GlobalSocket"]
         }];
       }, {
         currentUser: [{
@@ -8578,6 +8573,90 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
   },
 
   /***/
+  "./src/app/services/global-socket.ts":
+  /*!*******************************************!*\
+    !*** ./src/app/services/global-socket.ts ***!
+    \*******************************************/
+
+  /*! exports provided: GlobalSocket */
+
+  /***/
+  function srcAppServicesGlobalSocketTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "GlobalSocket", function () {
+      return GlobalSocket;
+    });
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! @angular/core */
+    "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+    /* harmony import */
+
+
+    var sockjs_client__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! sockjs-client */
+    "./node_modules/sockjs-client/lib/entry.js");
+    /* harmony import */
+
+
+    var sockjs_client__WEBPACK_IMPORTED_MODULE_1___default =
+    /*#__PURE__*/
+    __webpack_require__.n(sockjs_client__WEBPACK_IMPORTED_MODULE_1__);
+
+    var GlobalSocket =
+    /*#__PURE__*/
+    function () {
+      function GlobalSocket() {
+        _classCallCheck(this, GlobalSocket);
+
+        this.globalSocket = null;
+      }
+
+      _createClass(GlobalSocket, [{
+        key: "getGlobalSocket",
+        value: function getGlobalSocket() {
+          if (this.globalSocket === null) {
+            this.globalSocket = new sockjs_client__WEBPACK_IMPORTED_MODULE_1__('/iflow-guide-websocket');
+          }
+
+          return this.globalSocket;
+        }
+      }]);
+
+      return GlobalSocket;
+    }();
+
+    GlobalSocket.ɵfac = function GlobalSocket_Factory(t) {
+      return new (t || GlobalSocket)();
+    };
+
+    GlobalSocket.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({
+      token: GlobalSocket,
+      factory: GlobalSocket.ɵfac,
+      providedIn: 'root'
+    });
+    /*@__PURE__*/
+
+    (function () {
+      _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](GlobalSocket, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"],
+        args: [{
+          providedIn: 'root'
+        }]
+      }], null, null);
+    })();
+    /***/
+
+  },
+
+  /***/
   "./src/app/services/global.service.ts":
   /*!********************************************!*\
     !*** ./src/app/services/global.service.ts ***!
@@ -8730,7 +8809,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     !*** ./src/app/services/index.ts ***!
     \***********************************/
 
-  /*! exports provided: GlobalService, AuthenticationService, UserService */
+  /*! exports provided: GlobalService, AuthenticationService, UserService, GlobalSocket */
 
   /***/
   function srcAppServicesIndexTs(module, __webpack_exports__, __webpack_require__) {
@@ -8772,6 +8851,18 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     __webpack_require__.d(__webpack_exports__, "GlobalService", function () {
       return _global_service__WEBPACK_IMPORTED_MODULE_2__["GlobalService"];
+    });
+    /* harmony import */
+
+
+    var _global_socket__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! ./global-socket */
+    "./src/app/services/global-socket.ts");
+    /* harmony reexport (safe) */
+
+
+    __webpack_require__.d(__webpack_exports__, "GlobalSocket", function () {
+      return _global_socket__WEBPACK_IMPORTED_MODULE_3__["GlobalSocket"];
     });
     /***/
 
@@ -12431,9 +12522,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony import */
 
 
-    var _stomp_ng2_stompjs__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(
-    /*! @stomp/ng2-stompjs */
-    "./node_modules/@stomp/ng2-stompjs/__ivy_ngcc__/fesm2015/stomp-ng2-stompjs.js");
+    var _services_global_socket__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(
+    /*! ../../../services/global-socket */
+    "./src/app/services/global-socket.ts");
     /* harmony import */
 
 
@@ -12822,12 +12913,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     function (_invoice_base_compone) {
       _inherits(CreateInvoiceComponent, _invoice_base_compone);
 
-      function CreateInvoiceComponent(router, global, translate, editService, loadingService, http, errorService, formBuilder, dateAdapter, _stompService) {
+      function CreateInvoiceComponent(router, global, translate, editService, loadingService, http, errorService, formBuilder, dateAdapter, globalSocket) {
         var _this30;
 
         _classCallCheck(this, CreateInvoiceComponent);
 
-        _this30 = _possibleConstructorReturn(this, _getPrototypeOf(CreateInvoiceComponent).call(this, router, global, translate, editService, loadingService, http, errorService, formBuilder, dateAdapter, _stompService));
+        _this30 = _possibleConstructorReturn(this, _getPrototypeOf(CreateInvoiceComponent).call(this, router, global, translate, editService, loadingService, http, errorService, formBuilder, dateAdapter, globalSocket));
         _this30.router = router;
         _this30.global = global;
         _this30.translate = translate;
@@ -12837,7 +12928,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         _this30.errorService = errorService;
         _this30.formBuilder = formBuilder;
         _this30.dateAdapter = dateAdapter;
-        _this30._stompService = _stompService;
+        _this30.globalSocket = globalSocket;
 
         _this30.router.events.subscribe(function (evt) {
           if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_1__["NavigationEnd"]) {
@@ -12921,7 +13012,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     }(_invoice_base_component__WEBPACK_IMPORTED_MODULE_4__["InvoiceBaseComponent"]);
 
     CreateInvoiceComponent.ɵfac = function CreateInvoiceComponent_Factory(t) {
-      return new (t || CreateInvoiceComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_global_service__WEBPACK_IMPORTED_MODULE_7__["GlobalService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_ngx_translate_core__WEBPACK_IMPORTED_MODULE_8__["TranslateService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_workflow_invoice_invoice_workflow_edit_service__WEBPACK_IMPORTED_MODULE_3__["InvoiceWorkflowEditService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_loading_service_service__WEBPACK_IMPORTED_MODULE_9__["LoadingServiceService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_10__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_error_service_service__WEBPACK_IMPORTED_MODULE_11__["ErrorServiceService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_12__["FormBuilder"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_material_core__WEBPACK_IMPORTED_MODULE_2__["DateAdapter"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_stomp_ng2_stompjs__WEBPACK_IMPORTED_MODULE_13__["StompService"]));
+      return new (t || CreateInvoiceComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_global_service__WEBPACK_IMPORTED_MODULE_7__["GlobalService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_ngx_translate_core__WEBPACK_IMPORTED_MODULE_8__["TranslateService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_workflow_invoice_invoice_workflow_edit_service__WEBPACK_IMPORTED_MODULE_3__["InvoiceWorkflowEditService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_loading_service_service__WEBPACK_IMPORTED_MODULE_9__["LoadingServiceService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_10__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_error_service_service__WEBPACK_IMPORTED_MODULE_11__["ErrorServiceService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_12__["FormBuilder"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_material_core__WEBPACK_IMPORTED_MODULE_2__["DateAdapter"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_global_socket__WEBPACK_IMPORTED_MODULE_13__["GlobalSocket"]));
     };
 
     CreateInvoiceComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({
@@ -13504,7 +13595,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         }, {
           type: _angular_material_core__WEBPACK_IMPORTED_MODULE_2__["DateAdapter"]
         }, {
-          type: _stomp_ng2_stompjs__WEBPACK_IMPORTED_MODULE_13__["StompService"]
+          type: _services_global_socket__WEBPACK_IMPORTED_MODULE_13__["GlobalSocket"]
         }];
       }, null);
     })();
@@ -14869,9 +14960,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony import */
 
 
-    var _stomp_ng2_stompjs__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(
-    /*! @stomp/ng2-stompjs */
-    "./node_modules/@stomp/ng2-stompjs/__ivy_ngcc__/fesm2015/stomp-ng2-stompjs.js");
+    var _services_global_socket__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(
+    /*! ../../../services/global-socket */
+    "./src/app/services/global-socket.ts");
     /* harmony import */
 
 
@@ -15410,12 +15501,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     function (_invoice_base_compone2) {
       _inherits(EditInvoiceComponent, _invoice_base_compone2);
 
-      function EditInvoiceComponent(router, global, translate, editService, loadingService, http, errorService, formBuilder, dateAdapter, route, _stompService) {
+      function EditInvoiceComponent(router, global, translate, editService, loadingService, http, errorService, formBuilder, dateAdapter, route, globalSocket) {
         var _this39;
 
         _classCallCheck(this, EditInvoiceComponent);
 
-        _this39 = _possibleConstructorReturn(this, _getPrototypeOf(EditInvoiceComponent).call(this, router, global, translate, editService, loadingService, http, errorService, formBuilder, dateAdapter, _stompService));
+        _this39 = _possibleConstructorReturn(this, _getPrototypeOf(EditInvoiceComponent).call(this, router, global, translate, editService, loadingService, http, errorService, formBuilder, dateAdapter, globalSocket));
         _this39.router = router;
         _this39.global = global;
         _this39.translate = translate;
@@ -15426,7 +15517,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         _this39.formBuilder = formBuilder;
         _this39.dateAdapter = dateAdapter;
         _this39.route = route;
-        _this39._stompService = _stompService;
+        _this39.globalSocket = globalSocket;
         _this39.workflowIdentity = "not-set";
         _this39.saveMessage = "";
         _this39.viewWorkflowModel = null;
@@ -15628,7 +15719,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     }(_invoice_base_component__WEBPACK_IMPORTED_MODULE_5__["InvoiceBaseComponent"]);
 
     EditInvoiceComponent.ɵfac = function EditInvoiceComponent_Factory(t) {
-      return new (t || EditInvoiceComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_global_service__WEBPACK_IMPORTED_MODULE_7__["GlobalService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_ngx_translate_core__WEBPACK_IMPORTED_MODULE_8__["TranslateService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_workflow_invoice_invoice_workflow_edit_service__WEBPACK_IMPORTED_MODULE_4__["InvoiceWorkflowEditService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_loading_service_service__WEBPACK_IMPORTED_MODULE_9__["LoadingServiceService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_10__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_error_service_service__WEBPACK_IMPORTED_MODULE_11__["ErrorServiceService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_12__["FormBuilder"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_material_core__WEBPACK_IMPORTED_MODULE_2__["DateAdapter"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_stomp_ng2_stompjs__WEBPACK_IMPORTED_MODULE_13__["StompService"]));
+      return new (t || EditInvoiceComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_global_service__WEBPACK_IMPORTED_MODULE_7__["GlobalService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_ngx_translate_core__WEBPACK_IMPORTED_MODULE_8__["TranslateService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_workflow_invoice_invoice_workflow_edit_service__WEBPACK_IMPORTED_MODULE_4__["InvoiceWorkflowEditService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_loading_service_service__WEBPACK_IMPORTED_MODULE_9__["LoadingServiceService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_10__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_error_service_service__WEBPACK_IMPORTED_MODULE_11__["ErrorServiceService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_12__["FormBuilder"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_material_core__WEBPACK_IMPORTED_MODULE_2__["DateAdapter"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_global_socket__WEBPACK_IMPORTED_MODULE_13__["GlobalSocket"]));
     };
 
     EditInvoiceComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({
@@ -16249,7 +16340,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         }, {
           type: _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"]
         }, {
-          type: _stomp_ng2_stompjs__WEBPACK_IMPORTED_MODULE_13__["StompService"]
+          type: _services_global_socket__WEBPACK_IMPORTED_MODULE_13__["GlobalSocket"]
         }];
       }, null);
     })();
@@ -18000,92 +18091,105 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony import */
 
 
-    var _wf_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    var stompjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! stompjs */
+    "./node_modules/stompjs/index.js");
+    /* harmony import */
+
+
+    var stompjs__WEBPACK_IMPORTED_MODULE_1___default =
+    /*#__PURE__*/
+    __webpack_require__.n(stompjs__WEBPACK_IMPORTED_MODULE_1__);
+    /* harmony import */
+
+
+    var _wf_models__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
     /*! ../wf-models */
     "./src/app/wf-models/index.ts");
     /* harmony import */
 
 
-    var _wf_models_invoice_workflow_save_request__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    var _wf_models_invoice_workflow_save_request__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
     /*! ../wf-models/invoice-workflow-save-request */
     "./src/app/wf-models/invoice-workflow-save-request.ts");
     /* harmony import */
 
 
-    var _custom_validators_invoice_type_controll_validator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    var _custom_validators_invoice_type_controll_validator__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
     /*! ../custom-validators/invoice-type-controll-validator */
     "./src/app/custom-validators/invoice-type-controll-validator.ts");
     /* harmony import */
 
 
-    var _helper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    var _helper__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
     /*! ../helper */
     "./src/app/helper/index.ts");
     /* harmony import */
 
 
-    var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+    var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
     /*! @angular/core */
     "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
     /* harmony import */
 
 
-    var _angular_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+    var _angular_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
     /*! @angular/router */
     "./node_modules/@angular/router/__ivy_ngcc__/fesm2015/router.js");
     /* harmony import */
 
 
-    var _services_global_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+    var _services_global_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
     /*! ../services/global.service */
     "./src/app/services/global.service.ts");
     /* harmony import */
 
 
-    var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+    var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
     /*! @ngx-translate/core */
     "./node_modules/@ngx-translate/core/__ivy_ngcc__/fesm2015/ngx-translate-core.js");
     /* harmony import */
 
 
-    var _services_workflow_invoice_invoice_workflow_edit_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+    var _services_workflow_invoice_invoice_workflow_edit_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
     /*! ../services/workflow/invoice/invoice-workflow-edit.service */
     "./src/app/services/workflow/invoice/invoice-workflow-edit.service.ts");
     /* harmony import */
 
 
-    var _services_loading_service_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
+    var _services_loading_service_service__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
     /*! ../services/loading-service.service */
     "./src/app/services/loading-service.service.ts");
     /* harmony import */
 
 
-    var _angular_common_http__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
+    var _angular_common_http__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(
     /*! @angular/common/http */
     "./node_modules/@angular/common/__ivy_ngcc__/fesm2015/http.js");
     /* harmony import */
 
 
-    var _services_error_service_service__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(
+    var _services_error_service_service__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(
     /*! ../services/error-service.service */
     "./src/app/services/error-service.service.ts");
     /* harmony import */
 
 
-    var _angular_material_core__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(
+    var _angular_material_core__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(
     /*! @angular/material/core */
     "./node_modules/@angular/material/__ivy_ngcc__/fesm2015/core.js");
     /* harmony import */
 
 
-    var _stomp_ng2_stompjs__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(
-    /*! @stomp/ng2-stompjs */
-    "./node_modules/@stomp/ng2-stompjs/__ivy_ngcc__/fesm2015/stomp-ng2-stompjs.js");
+    var _services_global_socket__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(
+    /*! ../services/global-socket */
+    "./src/app/services/global-socket.ts"); //import * as SockJS from 'sockjs-client';
+
 
     var InvoiceBaseComponent =
     /*#__PURE__*/
     function () {
-      function InvoiceBaseComponent(router, global, translate, editService, loadingService, http, errorService, formBuilder, dateAdapter, _stompService) {
+      function InvoiceBaseComponent(router, global, translate, editService, loadingService, http, errorService, formBuilder, dateAdapter, globalSocket) {
         var _this54 = this;
 
         _classCallCheck(this, InvoiceBaseComponent);
@@ -18099,7 +18203,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.errorService = errorService;
         this.formBuilder = formBuilder;
         this.dateAdapter = dateAdapter;
-        this._stompService = _stompService;
+        this.globalSocket = globalSocket;
         this.pageTitle = "not-initialized!";
         this.paymentamountOtherTypesTitle = "";
         this.paymentamountTypePaymentTitle = "";
@@ -18111,7 +18215,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.showOcrDetailsDialog = false;
         this.scannedSelectedValues = [];
         this.workflowListUrl = "/workflow/list";
-        this.workflowSaveRequest = new _wf_models_invoice_workflow_save_request__WEBPACK_IMPORTED_MODULE_2__["InvoiceWorkflowSaveRequest"]();
+        this.workflowSaveRequest = new _wf_models_invoice_workflow_save_request__WEBPACK_IMPORTED_MODULE_3__["InvoiceWorkflowSaveRequest"]();
         this.generalDataObs = null;
         this.selectAssign = [];
         this.invoiceTypes = [];
@@ -18152,7 +18256,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
         this.dateAdapter.setLocale('de');
 
-        for (var o in _wf_models__WEBPACK_IMPORTED_MODULE_1__["InvoiceType"]) {
+        for (var o in _wf_models__WEBPACK_IMPORTED_MODULE_2__["InvoiceType"]) {
           var str = o + "";
           var num = new Number(o);
 
@@ -18184,7 +18288,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
           if (enterDate != null && deadline != null && deadline > 0) {
             var date = new Date(enterDate.getFullYear(), enterDate.getMonth(), enterDate.getDate() + deadline);
-            this.invoiceEditForm.controls["discountDate"].setValue(Object(_helper__WEBPACK_IMPORTED_MODULE_4__["formatDate"])(date, 'dd.mm.yyyy'));
+            this.invoiceEditForm.controls["discountDate"].setValue(Object(_helper__WEBPACK_IMPORTED_MODULE_5__["formatDate"])(date, 'dd.mm.yyyy'));
           }
         }
       }, {
@@ -18214,7 +18318,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             vendorNumber: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_0__["Validators"].required],
             vendorName: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_0__["Validators"].required],
             isDirectDebitPermission: [false],
-            invoiceType: [_wf_models__WEBPACK_IMPORTED_MODULE_1__["InvoiceType"].NO_TYPE, [_custom_validators_invoice_type_controll_validator__WEBPACK_IMPORTED_MODULE_3__["InvoiceTypeControllValidator"]]],
+            invoiceType: [_wf_models__WEBPACK_IMPORTED_MODULE_2__["InvoiceType"].NO_TYPE, [_custom_validators_invoice_type_controll_validator__WEBPACK_IMPORTED_MODULE_4__["InvoiceTypeControllValidator"]]],
             discountEnterDate: [new Date(), _angular_forms__WEBPACK_IMPORTED_MODULE_0__["Validators"].required],
             discountDeadline: [0, _angular_forms__WEBPACK_IMPORTED_MODULE_0__["Validators"].required],
             discountRate: [0, _angular_forms__WEBPACK_IMPORTED_MODULE_0__["Validators"].required],
@@ -18233,8 +18337,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             this.loadingService.showLoading();
             this.subscribe();
             console.log("ocrUploadedFile : ", this.scanningFile);
-
-            this._stompService.publish('/socketapp/ocrprocess', JSON.stringify(uploadedFile.uploadResult));
+            this.stompClient.send('/user/socketapp/ocrprocess', {}, JSON.stringify(uploadedFile.uploadResult));
           }
         }
       }, {
@@ -18259,12 +18362,32 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         value: function subscribe() {
           if (this.subscribed) {
             this.unsubscribe();
-          }
+          } //let socket :SockJS = new SockJS('/iflow-guide-websocket');
 
-          this.messages = this._stompService.subscribe('/user/socket/ocrprocess');
-          this.subscription = this.messages.subscribe(this.onRecevieResponse);
+
+          this.stompClient = stompjs__WEBPACK_IMPORTED_MODULE_1__["over"](this.globalSocket.getGlobalSocket());
+
+          var _this = this;
+
+          this.stompClient.connect({}, function (frame) {
+            _this.setConnected(true);
+
+            _this.stompClient.subscribe('/user/socket/ocrprocess', function (message) {
+              _this.onRecevieResponse(message);
+            }); //_this.stompClient.reconnect_delay = 2000;
+
+          }, _this.errorCallBack); //this.messages = this._stompService.subscribe('/user/socket/ocrprocess');
+          //this.subscription = this.messages.subscribe(this.onRecevieResponse);
+
           this.setConnected(true);
           this.listening = true;
+        }
+      }, {
+        key: "errorCallBack",
+        value: function errorCallBack(error) {
+          console.log("errorCallBack -> " + error);
+          setTimeout(function () {// this._connect();
+          }, 5000);
         }
       }, {
         key: "unsubscribe",
@@ -18275,10 +18398,14 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             return;
           }
 
-          this.subscription.unsubscribe();
+          if (this.stompClient !== null) {
+            this.stompClient.disconnect();
+          }
+
+          this.setConnected(false);
+          console.log("Disconnected");
           this.subscription = null;
           this.messages = null;
-          this.setConnected(false);
         }
       }, {
         key: "setConnected",
@@ -18322,35 +18449,35 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             this.invoiceEditForm.controls["comments"].setValue(this.workflowSaveRequest.comments);
             this.invoiceEditForm.controls["sender"].setValue(this.workflowSaveRequest.workflow.sender);
             this.invoiceEditForm.controls["registerNumber"].setValue(this.workflowSaveRequest.workflow.registerNumber);
-            this.invoiceEditForm.controls["invocieDate"].setValue(Object(_helper__WEBPACK_IMPORTED_MODULE_4__["parseDate"])(this.workflowSaveRequest.workflow.invocieDate, 'dd.mm.yyyy'));
+            this.invoiceEditForm.controls["invocieDate"].setValue(Object(_helper__WEBPACK_IMPORTED_MODULE_5__["parseDate"])(this.workflowSaveRequest.workflow.invocieDate, 'dd.mm.yyyy'));
             this.invoiceEditForm.controls["partnerCode"].setValue(this.workflowSaveRequest.workflow.partnerCode);
             this.invoiceEditForm.controls["vendorNumber"].setValue(this.workflowSaveRequest.workflow.vendorNumber);
             this.invoiceEditForm.controls["vendorName"].setValue(this.workflowSaveRequest.workflow.vendorName);
             this.invoiceEditForm.controls["isDirectDebitPermission"].setValue(this.workflowSaveRequest.workflow.isDirectDebitPermission);
             this.invoiceEditForm.controls["invoiceType"].setValue(this.workflowSaveRequest.workflow.invoiceType);
-            this.invoiceEditForm.controls["discountEnterDate"].setValue(Object(_helper__WEBPACK_IMPORTED_MODULE_4__["parseDate"])(this.workflowSaveRequest.workflow.discountEnterDate, 'dd.mm.yyyy'));
+            this.invoiceEditForm.controls["discountEnterDate"].setValue(Object(_helper__WEBPACK_IMPORTED_MODULE_5__["parseDate"])(this.workflowSaveRequest.workflow.discountEnterDate, 'dd.mm.yyyy'));
             this.invoiceEditForm.controls["discountDeadline"].setValue(this.workflowSaveRequest.workflow.discountDeadline);
             this.invoiceEditForm.controls["discountRate"].setValue(this.workflowSaveRequest.workflow.discountRate);
             this.invoiceEditForm.controls["discountDate"].setValue(this.workflowSaveRequest.workflow.discountDate);
             this.invoiceEditForm.controls["paymentAmount"].setValue(this.workflowSaveRequest.workflow.paymentAmount);
-            this.uploadedFiles = _wf_models__WEBPACK_IMPORTED_MODULE_1__["WorkflowFile"].toUploadedFileList(this.workflowSaveRequest.workflow.files);
+            this.uploadedFiles = _wf_models__WEBPACK_IMPORTED_MODULE_2__["WorkflowFile"].toUploadedFileList(this.workflowSaveRequest.workflow.files);
           }
         }
       }, {
         key: "setFormControlValues",
         value: function setFormControlValues() {
-          this.workflowSaveRequest.uploadedFiles = _wf_models__WEBPACK_IMPORTED_MODULE_1__["WorkflowUploadedFile"].loadUploadedFiles(this.uploadedFiles);
+          this.workflowSaveRequest.uploadedFiles = _wf_models__WEBPACK_IMPORTED_MODULE_2__["WorkflowUploadedFile"].loadUploadedFiles(this.uploadedFiles);
           this.workflowSaveRequest.expireDays = this.invoiceEditForm.controls["expireDays"].value;
           this.workflowSaveRequest.comments = this.invoiceEditForm.controls["comments"].value;
           this.workflowSaveRequest.workflow.sender = this.invoiceEditForm.controls["sender"].value;
           this.workflowSaveRequest.workflow.registerNumber = this.invoiceEditForm.controls["registerNumber"].value;
-          this.workflowSaveRequest.workflow.invocieDate = Object(_helper__WEBPACK_IMPORTED_MODULE_4__["formatDate"])(this.invoiceEditForm.controls["invocieDate"].value, 'dd.mm.yyyy');
+          this.workflowSaveRequest.workflow.invocieDate = Object(_helper__WEBPACK_IMPORTED_MODULE_5__["formatDate"])(this.invoiceEditForm.controls["invocieDate"].value, 'dd.mm.yyyy');
           this.workflowSaveRequest.workflow.partnerCode = this.invoiceEditForm.controls["partnerCode"].value;
           this.workflowSaveRequest.workflow.vendorNumber = this.invoiceEditForm.controls["vendorNumber"].value;
           this.workflowSaveRequest.workflow.vendorName = this.invoiceEditForm.controls["vendorName"].value;
           this.workflowSaveRequest.workflow.isDirectDebitPermission = this.invoiceEditForm.controls["isDirectDebitPermission"].value;
           this.workflowSaveRequest.workflow.invoiceType = this.invoiceEditForm.controls["invoiceType"].value;
-          this.workflowSaveRequest.workflow.discountEnterDate = Object(_helper__WEBPACK_IMPORTED_MODULE_4__["formatDate"])(this.invoiceEditForm.controls["discountEnterDate"].value, 'dd.mm.yyyy');
+          this.workflowSaveRequest.workflow.discountEnterDate = Object(_helper__WEBPACK_IMPORTED_MODULE_5__["formatDate"])(this.invoiceEditForm.controls["discountEnterDate"].value, 'dd.mm.yyyy');
           this.workflowSaveRequest.workflow.discountDeadline = this.invoiceEditForm.controls["discountDeadline"].value;
           this.workflowSaveRequest.workflow.discountRate = this.invoiceEditForm.controls["discountRate"].value;
           this.workflowSaveRequest.workflow.discountDate = this.invoiceEditForm.controls["discountDate"].value;
@@ -18362,7 +18489,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           this.workflowSaveRequest.assigns = [];
 
           for (var item in assigns) {
-            var assign = new _wf_models__WEBPACK_IMPORTED_MODULE_1__["AssignItem"]();
+            var assign = new _wf_models__WEBPACK_IMPORTED_MODULE_2__["AssignItem"]();
             assign.itemIdentity = assigns[item].itemIdentity;
             assign.itemType = assigns[item].itemType;
             this.workflowSaveRequest.assigns.push(assign);
@@ -18377,8 +18504,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         key: "onApplyScannedValues",
         value: function onApplyScannedValues() {
           if (this.scannedSelectedValues["invoice-invoicedate"] && this.scannedSelectedValues["invoice-invoicedate"] != "") {
-            this.invoiceEditForm.controls["invocieDate"].setValue(Object(_helper__WEBPACK_IMPORTED_MODULE_4__["parseDate"])(this.scannedSelectedValues["invoice-invoicedate"], 'dd.mm.yyyy'));
-            this.invoiceEditForm.controls["discountEnterDate"].setValue(Object(_helper__WEBPACK_IMPORTED_MODULE_4__["parseDate"])(this.scannedSelectedValues["invoice-invoicedate"], 'dd.mm.yyyy')); //this.invoiceEditForm.controls["discountDate"].setValue(parseDate(this.scannedSelectedValues["invoice-invoicedate"], 'dd.mm.yyyy'));
+            this.invoiceEditForm.controls["invocieDate"].setValue(Object(_helper__WEBPACK_IMPORTED_MODULE_5__["parseDate"])(this.scannedSelectedValues["invoice-invoicedate"], 'dd.mm.yyyy'));
+            this.invoiceEditForm.controls["discountEnterDate"].setValue(Object(_helper__WEBPACK_IMPORTED_MODULE_5__["parseDate"])(this.scannedSelectedValues["invoice-invoicedate"], 'dd.mm.yyyy')); //this.invoiceEditForm.controls["discountDate"].setValue(parseDate(this.scannedSelectedValues["invoice-invoicedate"], 'dd.mm.yyyy'));
           }
 
           if (this.scannedSelectedValues["invoice-invoicenumber"] && this.scannedSelectedValues["invoice-invoicenumber"] != "") {
@@ -18425,10 +18552,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     }();
 
     InvoiceBaseComponent.ɵfac = function InvoiceBaseComponent_Factory(t) {
-      return new (t || InvoiceBaseComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_6__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](_services_global_service__WEBPACK_IMPORTED_MODULE_7__["GlobalService"]), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](_ngx_translate_core__WEBPACK_IMPORTED_MODULE_8__["TranslateService"]), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](_services_workflow_invoice_invoice_workflow_edit_service__WEBPACK_IMPORTED_MODULE_9__["InvoiceWorkflowEditService"]), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](_services_loading_service_service__WEBPACK_IMPORTED_MODULE_10__["LoadingServiceService"]), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_11__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](_services_error_service_service__WEBPACK_IMPORTED_MODULE_12__["ErrorServiceService"]), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormBuilder"]), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](_angular_material_core__WEBPACK_IMPORTED_MODULE_13__["DateAdapter"]), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](_stomp_ng2_stompjs__WEBPACK_IMPORTED_MODULE_14__["StompService"]));
+      return new (t || InvoiceBaseComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_7__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdirectiveInject"](_services_global_service__WEBPACK_IMPORTED_MODULE_8__["GlobalService"]), _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdirectiveInject"](_ngx_translate_core__WEBPACK_IMPORTED_MODULE_9__["TranslateService"]), _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdirectiveInject"](_services_workflow_invoice_invoice_workflow_edit_service__WEBPACK_IMPORTED_MODULE_10__["InvoiceWorkflowEditService"]), _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdirectiveInject"](_services_loading_service_service__WEBPACK_IMPORTED_MODULE_11__["LoadingServiceService"]), _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdirectiveInject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_12__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdirectiveInject"](_services_error_service_service__WEBPACK_IMPORTED_MODULE_13__["ErrorServiceService"]), _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormBuilder"]), _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdirectiveInject"](_angular_material_core__WEBPACK_IMPORTED_MODULE_14__["DateAdapter"]), _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdirectiveInject"](_services_global_socket__WEBPACK_IMPORTED_MODULE_15__["GlobalSocket"]));
     };
 
-    InvoiceBaseComponent.ɵdir = _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdefineDirective"]({
+    InvoiceBaseComponent.ɵdir = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdefineDirective"]({
       type: InvoiceBaseComponent
     });
     /***/

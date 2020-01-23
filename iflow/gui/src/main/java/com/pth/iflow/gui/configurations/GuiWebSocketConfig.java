@@ -21,7 +21,7 @@ public class GuiWebSocketConfig implements WebSocketMessageBrokerConfigurer {
   @Override
   public void registerStompEndpoints(final StompEndpointRegistry registry) {
 
-    registry.addEndpoint("/iflow-guide-websocket").withSockJS();
+    registry.addEndpoint("/iflow-guide-websocket").setAllowedOrigins("*").withSockJS();
   }
 
 }

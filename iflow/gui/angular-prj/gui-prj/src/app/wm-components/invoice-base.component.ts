@@ -5,8 +5,10 @@ import { HttpClient, HttpEventType } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 import { Observable, throwError , Subscription } from 'rxjs';
-import { StompService, StompState } from '@stomp/ng2-stompjs';
 import { Message } from '@stomp/stompjs';
+//import * as SockJS from 'sockjs-client';
+import * as Stomp from 'stompjs';
+import { GlobalSocket } from '../services/global-socket';
 
 import { GlobalService } from '../services/global.service';
 import { InvoiceWorkflowEditService } from '../services/workflow/invoice/invoice-workflow-edit.service';
@@ -32,8 +34,8 @@ export class InvoiceBaseComponent implements OnInit {
 	private subscription: Subscription;
 	private messages: Observable<Message>;
 	public subscribed: boolean;
-	stompClient = null;	
-	
+	private stompClient: any = null;
+
 	uploadedFiles :UploadedFile[] = [];
 	
 	listening :boolean = false;	
@@ -105,7 +107,7 @@ export class InvoiceBaseComponent implements OnInit {
 			protected errorService: ErrorServiceService,
 		  	protected formBuilder: FormBuilder,
 		  	protected dateAdapter: DateAdapter<Date>,
-		  	protected _stompService: StompService
+		  	protected globalSocket: GlobalSocket,
 	) {
 				
 		this.dateAdapter.setLocale('de');
@@ -174,7 +176,7 @@ export class InvoiceBaseComponent implements OnInit {
 	        
 			console.log("ocrUploadedFile : ", this.scanningFile);
 			
-	        this._stompService.publish('/socketapp/ocrprocess', JSON.stringify(uploadedFile.uploadResult));
+	        this.stompClient.send('/user/socketapp/ocrprocess', {}, JSON.stringify(uploadedFile.uploadResult));
 		}
 	}	
 	
@@ -239,26 +241,50 @@ export class InvoiceBaseComponent implements OnInit {
 		if (this.subscribed) {
 		      this.unsubscribe();
 		}
+		
+		//let socket :SockJS = new SockJS('/iflow-guide-websocket');
+		this.stompClient = Stomp.over(this.globalSocket.getGlobalSocket());
 
-		this.messages = this._stompService.subscribe('/user/socket/ocrprocess');
+		const _this = this;
 
-	    this.subscription = this.messages.subscribe(this.onRecevieResponse);
+		this.stompClient.connect({}, function (frame) {
+			_this.setConnected(true);
+			_this.stompClient.subscribe('/user/socket/ocrprocess', function (message) {
+				_this.onRecevieResponse(message);
+            });
+            //_this.stompClient.reconnect_delay = 2000;
+        }, _this.errorCallBack);
+
+		//this.messages = this._stompService.subscribe('/user/socket/ocrprocess');
+
+	    //this.subscription = this.messages.subscribe(this.onRecevieResponse);
 
 	    this.setConnected(true);
 		this.listening = true;
 	}
+	
+	errorCallBack(error) {
+        console.log("errorCallBack -> " + error)
+        setTimeout(() => {
+           // this._connect();
+        }, 5000);
+    }
 
 	unsubscribe() {
 		this.listening = false;
 	    if (!this.subscribed) {
 	      return;
 	    }
+	    
+	    if (this.stompClient !== null) {
+	    	this.stompClient.disconnect();
+	    }
+	    this.setConnected(false);
+	    console.log("Disconnected");
 
-	    this.subscription.unsubscribe();
 	    this.subscription = null;
 	    this.messages = null;
 
-	    this.setConnected(false);
 	}
 
 	private setConnected(subscribed) {

@@ -4,7 +4,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { HttpClient, HttpEventType } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
-import { StompService, StompState } from '@stomp/ng2-stompjs';
 import $ from "jquery";
 
 import { GlobalService } from '../../../services/global.service';
@@ -12,6 +11,7 @@ import { InvoiceWorkflowEditService } from '../../../services/workflow/invoice/i
 import { LoadingServiceService } from '../../../services/loading-service.service';
 import { ErrorServiceService } from '../../../services/error-service.service';
 import { InvoiceBaseComponent } from '../../invoice-base.component';
+import { GlobalSocket } from '../../../services/global-socket';
 
 import { User, Department, DepartmentGroup, GeneralData } from '../../../ui-models';
 import { WorkflowProcessCommand, Workflow, AssignItem, FileTitle, AssignType, WorkflowUploadFileResult, InvoiceType } from '../../../wf-models';
@@ -81,7 +81,7 @@ export class EditInvoiceComponent extends InvoiceBaseComponent implements OnInit
 		  	protected formBuilder: FormBuilder,
 		  	protected dateAdapter: DateAdapter<Date>,
 		  	protected route: ActivatedRoute,
-		  	protected _stompService: StompService
+		  	protected globalSocket: GlobalSocket,
 	) {
 		
 		super(router,
@@ -93,7 +93,7 @@ export class EditInvoiceComponent extends InvoiceBaseComponent implements OnInit
 				errorService,
 			  	formBuilder,
 			  	dateAdapter,
-			  	_stompService);
+			  	globalSocket);
 		
 		this.router.events.subscribe((evt) => {
 			if (evt instanceof NavigationEnd) {
