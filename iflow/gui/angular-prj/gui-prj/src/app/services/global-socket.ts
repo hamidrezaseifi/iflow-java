@@ -12,5 +12,7 @@ export class GlobalSocket {
 		}
 	    return this.globalSocket;
 	}
+	
+	
   
 }

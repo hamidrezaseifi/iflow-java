@@ -113,6 +113,12 @@ public class HibernateConfig {
     return proc;
   }
 
+  /*
+   * @Bean public EntityManager entityManager(final LocalSessionFactoryBean sessionFactory) {
+   * 
+   * return sessionFactory.getObject().createEntityManager(); }
+   */
+
   Properties hibernateProperties() {
 
     return new Properties() {
@@ -126,6 +132,8 @@ public class HibernateConfig {
         this.setProperty("hibernate.hbm2ddl.auto", "none");
         this.setProperty("hibernate.show_sql", "true");
         this.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
+        this.setProperty("hibernate.temp.use_jdbc_metadata_defaults", "false");
+
       }
     };
   }

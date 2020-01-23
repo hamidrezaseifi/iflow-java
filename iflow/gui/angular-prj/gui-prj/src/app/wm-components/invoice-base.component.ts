@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpClient, HttpEventType } from '@angular/common/http';
@@ -24,7 +24,7 @@ import { InvoiceTypeControllValidator } from '../custom-validators/invoice-type-
 import { GermanDateAdapter, parseDate, formatDate } from '../helper';
 
 
-export class InvoiceBaseComponent implements OnInit {
+export class InvoiceBaseComponent implements OnInit, OnDestroy {
 
 	pageTitle :string = "not-initialized!";
 
@@ -163,6 +163,12 @@ export class InvoiceBaseComponent implements OnInit {
 		
 	}
 	
+	ngOnDestroy() {
+		this.unsubscribe();
+	}
+		
+	
+	 
 	onOcrUploadedFile(uploadedFile: UploadedFile) {
 		
 		var index = this.uploadedFiles.indexOf(uploadedFile);
@@ -176,7 +182,7 @@ export class InvoiceBaseComponent implements OnInit {
 	        
 			console.log("ocrUploadedFile : ", this.scanningFile);
 			
-	        this.stompClient.send('/user/socketapp/ocrprocess', {}, JSON.stringify(uploadedFile.uploadResult));
+	        this.stompClient.send('/socketapp/ocrprocess', {}, JSON.stringify(uploadedFile.uploadResult));
 		}
 	}	
 	
@@ -201,14 +207,11 @@ export class InvoiceBaseComponent implements OnInit {
 	
 	public onRecevieResponse = (message: Message) => {
 
-		if(this.listening === false){
-			return;
-		}
+		console.log("Message Received: " , message.body);
 
 		var uploaded = this.uploadedFiles[this.scanningFileIndex ];
 			
 		this.loadingService.hideLoading();
-		console.log("Message Received: " , message.body);
 		var parsedMessage = JSON.parse(message.body);
 		
 		if(parsedMessage.status){
@@ -248,8 +251,12 @@ export class InvoiceBaseComponent implements OnInit {
 		const _this = this;
 
 		this.stompClient.connect({}, function (frame) {
+			
+			console.log("Stomp Connected " , frame);
+			
 			_this.setConnected(true);
 			_this.stompClient.subscribe('/user/socket/ocrprocess', function (message) {
+				console.log("Message Received: " , message.body);
 				_this.onRecevieResponse(message);
             });
             //_this.stompClient.reconnect_delay = 2000;

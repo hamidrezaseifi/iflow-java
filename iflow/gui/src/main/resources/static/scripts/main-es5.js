@@ -18221,15 +18221,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.invoiceTypes = [];
 
         this.onRecevieResponse = function (message) {
-          if (_this54.listening === false) {
-            return;
-          }
-
+          console.log("Message Received: ", message.body);
           var uploaded = _this54.uploadedFiles[_this54.scanningFileIndex];
 
           _this54.loadingService.hideLoading();
 
-          console.log("Message Received: ", message.body);
           var parsedMessage = JSON.parse(message.body);
 
           if (parsedMessage.status) {
@@ -18327,6 +18323,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           });
         }
       }, {
+        key: "ngOnDestroy",
+        value: function ngOnDestroy() {
+          this.unsubscribe();
+        }
+      }, {
         key: "onOcrUploadedFile",
         value: function onOcrUploadedFile(uploadedFile) {
           var index = this.uploadedFiles.indexOf(uploadedFile);
@@ -18337,7 +18338,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             this.loadingService.showLoading();
             this.subscribe();
             console.log("ocrUploadedFile : ", this.scanningFile);
-            this.stompClient.send('/user/socketapp/ocrprocess', {}, JSON.stringify(uploadedFile.uploadResult));
+            this.stompClient.send('/socketapp/ocrprocess', {}, JSON.stringify(uploadedFile.uploadResult));
           }
         }
       }, {
@@ -18370,9 +18371,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           var _this = this;
 
           this.stompClient.connect({}, function (frame) {
+            console.log("Stomp Connected ", frame);
+
             _this.setConnected(true);
 
             _this.stompClient.subscribe('/user/socket/ocrprocess', function (message) {
+              console.log("Message Received: ", message.body);
+
               _this.onRecevieResponse(message);
             }); //_this.stompClient.reconnect_delay = 2000;
 

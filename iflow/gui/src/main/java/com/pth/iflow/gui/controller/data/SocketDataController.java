@@ -13,6 +13,7 @@ import java.util.Set;
 import javax.imageio.ImageIO;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageExceptionHandler;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
@@ -174,6 +175,12 @@ public class SocketDataController extends GuiSocketControllerBase {
     words.put("invoice-invoicedate", dateWorldList);
     words.put("test", testList);
     return words;
+  }
+
+  @MessageExceptionHandler
+  public String handleException(final Throwable exception) {
+
+    return exception.getMessage();
   }
 
 }

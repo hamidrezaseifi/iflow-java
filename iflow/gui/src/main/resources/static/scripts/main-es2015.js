@@ -9196,12 +9196,9 @@ class InvoiceBaseComponent {
         this.selectAssign = [];
         this.invoiceTypes = [];
         this.onRecevieResponse = (message) => {
-            if (this.listening === false) {
-                return;
-            }
+            console.log("Message Received: ", message.body);
             var uploaded = this.uploadedFiles[this.scanningFileIndex];
             this.loadingService.hideLoading();
-            console.log("Message Received: ", message.body);
             var parsedMessage = JSON.parse(message.body);
             if (parsedMessage.status) {
                 if (parsedMessage.status === "done") {
@@ -9285,6 +9282,9 @@ class InvoiceBaseComponent {
             paymentAmount: [0, _angular_forms__WEBPACK_IMPORTED_MODULE_0__["Validators"].required],
         });
     }
+    ngOnDestroy() {
+        this.unsubscribe();
+    }
     onOcrUploadedFile(uploadedFile) {
         var index = this.uploadedFiles.indexOf(uploadedFile);
         if (index > -1) {
@@ -9293,7 +9293,7 @@ class InvoiceBaseComponent {
             this.loadingService.showLoading();
             this.subscribe();
             console.log("ocrUploadedFile : ", this.scanningFile);
-            this.stompClient.send('/user/socketapp/ocrprocess', {}, JSON.stringify(uploadedFile.uploadResult));
+            this.stompClient.send('/socketapp/ocrprocess', {}, JSON.stringify(uploadedFile.uploadResult));
         }
     }
     onShowUploadedFileScannDetail(uploadedFile) {
@@ -9316,8 +9316,10 @@ class InvoiceBaseComponent {
         this.stompClient = stompjs__WEBPACK_IMPORTED_MODULE_1__["over"](this.globalSocket.getGlobalSocket());
         const _this = this;
         this.stompClient.connect({}, function (frame) {
+            console.log("Stomp Connected ", frame);
             _this.setConnected(true);
             _this.stompClient.subscribe('/user/socket/ocrprocess', function (message) {
+                console.log("Message Received: ", message.body);
                 _this.onRecevieResponse(message);
             });
             //_this.stompClient.reconnect_delay = 2000;
