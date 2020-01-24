@@ -42,17 +42,20 @@ public class GuiCustomAuthenticationProvider implements AuthenticationProvider {
       UserAuthenticationResponse authResponse = null;
       try {
         authResponse = this.profileValidator.authenticate(username, password, companyid);
-      } catch (final GuiCustomizedException e) {
+      }
+      catch (final GuiCustomizedException e) {
 
-      } catch (final MalformedURLException e) {
+      }
+      catch (final MalformedURLException e) {
 
-      } catch (final IFlowMessageConversionFailureException e) {
+      }
+      catch (final IFlowMessageConversionFailureException e) {
 
       }
 
       if (authResponse != null) {
 
-        return new GuiAuthenticationToken(username, companyid, authResponse.getToken(), authResponse.getSessionid());
+        return new GuiAuthenticationToken(authResponse.getUserIdentity(), companyid, authResponse.getToken(), authResponse.getSessionid());
 
       }
     }
@@ -63,6 +66,7 @@ public class GuiCustomAuthenticationProvider implements AuthenticationProvider {
 
   @Override
   public boolean supports(final Class<?> authentication) {
+
     return authentication.equals(UsernamePasswordAuthenticationToken.class);
   }
 }

@@ -1,11 +1,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>com.pth.ifow</groupId>
-    <artifactId>iflow</artifactId>
-    <version>0.0.1</version>
-  </parent>
-  <artifactId>gui</artifactId>
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+    	<groupId>com.pth.ifow</groupId>
+    	<artifactId>iflow</artifactId>
+    	<version>0.0.1</version>
+	</parent>
+	<artifactId>gui</artifactId>
+  
+ 	<properties>
+		<java.version>1.8</java.version>
+	</properties>
   
 	<dependencies>
 
@@ -123,10 +127,36 @@
 		<!-- dependencies for websoket start  \\//-->
 
 		<dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-websocket</artifactId>
-        </dependency>
-
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-websocket</artifactId>
+		</dependency>
+		
+		
+		<dependency>
+		  <groupId>org.webjars</groupId>
+		  <artifactId>webjars-locator-core</artifactId>
+		</dependency>
+		<dependency>
+		  <groupId>org.webjars</groupId>
+		  <artifactId>sockjs-client</artifactId>
+		  <version>1.0.2</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.webjars</groupId>
+		  <artifactId>stomp-websocket</artifactId>
+		  <version>2.3.3</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.webjars</groupId>
+		  <artifactId>bootstrap</artifactId>
+		  <version>3.3.7</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.webjars</groupId>
+		  <artifactId>jquery</artifactId>
+		  <version>3.1.0</version>
+		</dependency>
+		
  		<!-- dependencies for websocket end  //\\  -->
     		         
 	</dependencies>

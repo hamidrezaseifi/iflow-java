@@ -54,7 +54,7 @@ public class GuiAuthenticationSuccessHandler extends SimpleUrlAuthenticationSucc
 
       ProfileResponse profileResponse = null;
       try {
-        profileResponse = this.profileValidator.readProfile(tbToken.getUsername(), tbToken.getToken());
+        profileResponse = this.profileValidator.readProfile(tbToken.getIdentity(), tbToken.getToken());
       }
       catch (GuiCustomizedException | MalformedURLException | IFlowMessageConversionFailureException e) {
         logger.error("Error in reading user profile.", e);
@@ -79,7 +79,7 @@ public class GuiAuthenticationSuccessHandler extends SimpleUrlAuthenticationSucc
         final User user = profileResponse.getUser();
         final CompanyProfile companyProfile = profileResponse.getCompanyProfile();
 
-        final GuiAuthenticationToken newToken = new GuiAuthenticationToken(tbToken.getUsername(), tbToken.getCompanyId(),
+        final GuiAuthenticationToken newToken = new GuiAuthenticationToken(tbToken.getIdentity(), tbToken.getCompanyId(),
             tbToken.getToken(), tbToken.getSessionId(), user.getAuthorities());
 
         if (user.isEnabled() == false) {

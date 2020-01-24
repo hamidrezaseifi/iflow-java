@@ -147,6 +147,16 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
   }
 
   @Override
+  public ProfileResponse getProfileResponseByIdentity(final String identity) {
+
+    final UserEntity user = this.getUserByIdentity(identity);
+    final CompanyEntity company = companyDao.getByIdentity(user.getCompany().getIdentity());
+
+    return new ProfileResponse(user, company, user.getDepartments().stream().collect(Collectors.toList()),
+        user.getGroups().stream().collect(Collectors.toList()), "sot-set");
+  }
+
+  @Override
   public List<UserEntity> getAllUserIdentityListByDepartmentIdentity(final String identity) throws IFlowStorageException {
 
     return userDao.getAllUserIdentityListByDepartmentId(identity);
