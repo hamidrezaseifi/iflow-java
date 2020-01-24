@@ -21,6 +21,7 @@ import com.pth.iflow.core.model.entity.workflow.WorkflowActionEntity;
 import com.pth.iflow.core.model.entity.workflow.WorkflowEntity;
 import com.pth.iflow.core.model.entity.workflow.base.IWorkflowContainerEntity;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
+import com.pth.iflow.core.storage.dao.helper.EntityManagerHelper;
 
 @Transactional
 public abstract class WorkflowParentEntityDaoBase<T extends IWorkflowContainerEntity> extends EntityManagerHelper {

@@ -4,7 +4,7 @@ import { ResizeEvent } from 'angular-resizable-element';
 import { Observable, throwError , Subscription } from 'rxjs';
 import { StompService, StompState } from '@stomp/ng2-stompjs';
 import { Message } from '@stomp/stompjs';
-//import * as SockJS from 'sockjs-client';
+import * as SockJS from 'sockjs-client';
 import * as Stomp from 'stompjs';
 import { Router, NavigationEnd } from '@angular/router';
 
@@ -204,8 +204,8 @@ export class MessageBarComponent implements OnInit, OnDestroy {
 		      return;
 		}
 		
-		//let socket :SockJS = new SockJS('/iflow-guide-websocket');
-		this.stompClient = Stomp.over(this.globalSocket.getGlobalSocket());
+		let socket :SockJS = new SockJS('/iflow-guide-websocket');
+		this.stompClient = Stomp.over(socket);
 		
 		const _this = this;
 		

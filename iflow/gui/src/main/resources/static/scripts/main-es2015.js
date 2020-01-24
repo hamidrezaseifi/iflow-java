@@ -3765,18 +3765,20 @@ IFlowMaterialModules.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdef
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MessageBarComponent", function() { return MessageBarComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
-/* harmony import */ var stompjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! stompjs */ "./node_modules/stompjs/index.js");
-/* harmony import */ var stompjs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(stompjs__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/workflow/workflow-message.service */ "./src/app/services/workflow/workflow-message.service.ts");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/__ivy_ngcc__/fesm2015/router.js");
-/* harmony import */ var _services_error_service_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../services/error-service.service */ "./src/app/services/error-service.service.ts");
-/* harmony import */ var _services_global_socket__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../services/global-socket */ "./src/app/services/global-socket.ts");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/__ivy_ngcc__/fesm2015/common.js");
-/* harmony import */ var angular_resizable_element__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! angular-resizable-element */ "./node_modules/angular-resizable-element/__ivy_ngcc__/fesm2015/angular-resizable-element.js");
-/* harmony import */ var _wm_components_workflow_inlineview_workflow_inlineview_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../wm-components/workflow-inlineview/workflow-inlineview.component */ "./src/app/wm-components/workflow-inlineview/workflow-inlineview.component.ts");
-/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/__ivy_ngcc__/fesm2015/ngx-translate-core.js");
+/* harmony import */ var sockjs_client__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! sockjs-client */ "./node_modules/sockjs-client/lib/entry.js");
+/* harmony import */ var sockjs_client__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(sockjs_client__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var stompjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! stompjs */ "./node_modules/stompjs/index.js");
+/* harmony import */ var stompjs__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(stompjs__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/workflow/workflow-message.service */ "./src/app/services/workflow/workflow-message.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/__ivy_ngcc__/fesm2015/router.js");
+/* harmony import */ var _services_error_service_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../services/error-service.service */ "./src/app/services/error-service.service.ts");
+/* harmony import */ var _services_global_socket__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../services/global-socket */ "./src/app/services/global-socket.ts");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/__ivy_ngcc__/fesm2015/common.js");
+/* harmony import */ var angular_resizable_element__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! angular-resizable-element */ "./node_modules/angular-resizable-element/__ivy_ngcc__/fesm2015/angular-resizable-element.js");
+/* harmony import */ var _wm_components_workflow_inlineview_workflow_inlineview_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../wm-components/workflow-inlineview/workflow-inlineview.component */ "./src/app/wm-components/workflow-inlineview/workflow-inlineview.component.ts");
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/__ivy_ngcc__/fesm2015/ngx-translate-core.js");
 
-//import * as SockJS from 'sockjs-client';
+
 
 
 
@@ -4062,8 +4064,8 @@ class MessageBarComponent {
         if (this.subscribed) {
             return;
         }
-        //let socket :SockJS = new SockJS('/iflow-guide-websocket');
-        this.stompClient = stompjs__WEBPACK_IMPORTED_MODULE_1__["over"](this.globalSocket.getGlobalSocket());
+        let socket = new sockjs_client__WEBPACK_IMPORTED_MODULE_1__('/iflow-guide-websocket');
+        this.stompClient = stompjs__WEBPACK_IMPORTED_MODULE_2__["over"](socket);
         const _this = this;
         this.stompClient.connect({}, function (frame) {
             _this.setConnected(true);
@@ -4096,24 +4098,24 @@ class MessageBarComponent {
         this.setConnected(false);
     }
 }
-MessageBarComponent.ɵfac = function MessageBarComponent_Factory(t) { return new (t || MessageBarComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_2__["WorkflowMessageService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_error_service_service__WEBPACK_IMPORTED_MODULE_4__["ErrorServiceService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_global_socket__WEBPACK_IMPORTED_MODULE_5__["GlobalSocket"])); };
-MessageBarComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: MessageBarComponent, selectors: [["app-message-bar"]], inputs: { currentUser: "currentUser", isLogged: "isLogged" }, features: [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵProvidersFeature"]([_services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_2__["WorkflowMessageService"]])], decls: 2, vars: 2, consts: [["mwlResizable", "", "class", "message-panel-container", "id", "message-panel-container", 3, "enableGhostResize", "resizeEdges", "resizeEnd", 4, "ngIf"], ["class", "modal fade show", "tabindex", "-1", "id", "viewworkflowedialog", "role", "dialog", 4, "ngIf"], ["mwlResizable", "", "id", "message-panel-container", 1, "message-panel-container", 3, "enableGhostResize", "resizeEdges", "resizeEnd"], [1, "message-panel-toolbar"], [1, "title"], [3, "ngStyle"], ["class", "toolbar-button", 3, "click", 4, "ngIf"], ["class", "toolbar-image", "src", "assets/images/loading200.gif", 4, "ngIf"], [1, "message-panel-items-container"], ["class", "message-panel-item", 4, "ngFor", "ngForOf"], [1, "toolbar-button", 3, "click"], [1, "material-icons"], ["src", "assets/images/loading200.gif", 1, "toolbar-image"], [1, "message-panel-item"], ["href", "javascript:void(0);", 3, "click"], ["tabindex", "-1", "id", "viewworkflowedialog", "role", "dialog", 1, "modal", "fade", "show"], ["role", "document", 1, "modal-dialog", "modal-dialog-centered"], [1, "modal-content"], [1, "modal-header"], ["id", "errorMessagedialogTitle", 1, "modal-title", "dialog-title"], ["aria-label", "Close", 1, "dialog-toolbar-button", "close", 3, "click"], [1, "modal-body"], [3, "workflow"], [1, "modal-footer"], ["type", "button", 1, "btn", "btn-secondary", 3, "click"], ["type", "button", "class", "btn btn-success", 3, "click", 4, "ngIf"], ["type", "button", "class", "btn btn-primary", 3, "click", 4, "ngIf"], ["type", "button", 1, "btn", "btn-success", 3, "click"], ["type", "button", 1, "btn", "btn-primary", 3, "click"]], template: function MessageBarComponent_Template(rf, ctx) { if (rf & 1) {
+MessageBarComponent.ɵfac = function MessageBarComponent_Factory(t) { return new (t || MessageBarComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_3__["WorkflowMessageService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_error_service_service__WEBPACK_IMPORTED_MODULE_5__["ErrorServiceService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_global_socket__WEBPACK_IMPORTED_MODULE_6__["GlobalSocket"])); };
+MessageBarComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: MessageBarComponent, selectors: [["app-message-bar"]], inputs: { currentUser: "currentUser", isLogged: "isLogged" }, features: [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵProvidersFeature"]([_services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_3__["WorkflowMessageService"]])], decls: 2, vars: 2, consts: [["mwlResizable", "", "class", "message-panel-container", "id", "message-panel-container", 3, "enableGhostResize", "resizeEdges", "resizeEnd", 4, "ngIf"], ["class", "modal fade show", "tabindex", "-1", "id", "viewworkflowedialog", "role", "dialog", 4, "ngIf"], ["mwlResizable", "", "id", "message-panel-container", 1, "message-panel-container", 3, "enableGhostResize", "resizeEdges", "resizeEnd"], [1, "message-panel-toolbar"], [1, "title"], [3, "ngStyle"], ["class", "toolbar-button", 3, "click", 4, "ngIf"], ["class", "toolbar-image", "src", "assets/images/loading200.gif", 4, "ngIf"], [1, "message-panel-items-container"], ["class", "message-panel-item", 4, "ngFor", "ngForOf"], [1, "toolbar-button", 3, "click"], [1, "material-icons"], ["src", "assets/images/loading200.gif", 1, "toolbar-image"], [1, "message-panel-item"], ["href", "javascript:void(0);", 3, "click"], ["tabindex", "-1", "id", "viewworkflowedialog", "role", "dialog", 1, "modal", "fade", "show"], ["role", "document", 1, "modal-dialog", "modal-dialog-centered"], [1, "modal-content"], [1, "modal-header"], ["id", "errorMessagedialogTitle", 1, "modal-title", "dialog-title"], ["aria-label", "Close", 1, "dialog-toolbar-button", "close", 3, "click"], [1, "modal-body"], [3, "workflow"], [1, "modal-footer"], ["type", "button", 1, "btn", "btn-secondary", 3, "click"], ["type", "button", "class", "btn btn-success", 3, "click", 4, "ngIf"], ["type", "button", "class", "btn btn-primary", 3, "click", 4, "ngIf"], ["type", "button", 1, "btn", "btn-success", 3, "click"], ["type", "button", 1, "btn", "btn-primary", 3, "click"]], template: function MessageBarComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](0, MessageBarComponent_div_0_Template, 13, 12, "div", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](1, MessageBarComponent_div_1_Template, 18, 6, "div", 1);
     } if (rf & 2) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.isAppLogged);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.viewWorkflow);
-    } }, directives: [_angular_common__WEBPACK_IMPORTED_MODULE_6__["NgIf"], angular_resizable_element__WEBPACK_IMPORTED_MODULE_7__["ResizableDirective"], _angular_common__WEBPACK_IMPORTED_MODULE_6__["NgStyle"], _angular_common__WEBPACK_IMPORTED_MODULE_6__["NgForOf"], _wm_components_workflow_inlineview_workflow_inlineview_component__WEBPACK_IMPORTED_MODULE_8__["WorkflowInlineviewComponent"]], pipes: [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_9__["TranslatePipe"]], styles: ["@charset \"ISO-8859-1\";\r\n\r\n.message-panel-container[_ngcontent-%COMP%] {\r\n    height: 170px;\r\n    margin-top: 10px;\r\n    border: 1px solid gray;\r\n    background-color: #fbfbfb;\r\n    position: fixed !important;\r\n    width: 100vw;\r\n    bottom: 30px;\r\n}\r\n\r\n.message-panel-toolbar[_ngcontent-%COMP%]{\r\n\theight: 30px;\r\n\tbackground-color: #dddddd;\t\r\n\tpadding-top: 2px;\r\n\tpadding-right: 10px;\r\n}\r\n\r\n.message-panel-toolbar[_ngcontent-%COMP%]   span.title[_ngcontent-%COMP%]{\r\n\tpadding-left: 20px;\r\n\tfont-weight: bold;\r\n\tfont-size: 14px;\r\n}\r\n\r\n.message-panel-toolbar[_ngcontent-%COMP%]   .toolbar-button[_ngcontent-%COMP%]{\r\n\tfloat: right;\t\r\n}\r\n\r\n.message-panel-items-container[_ngcontent-%COMP%]{\r\n\theight: calc(100% - 30px);\r\n\tpadding: 4px 4px;\r\n\toverflow: auto;\r\n}\r\n\r\n.message-panel-items-container[_ngcontent-%COMP%]   .message-panel-item[_ngcontent-%COMP%]{\r\n\theight: 33px;\r\n\tline-height: 22px;\r\n\tmargin: 3px 0;\r\n\tbackground-color: #dceefa;\r\n\tpadding: 5px;\r\n\tpadding-left: 15px;\r\n\tborder: 1px solid #d0cfcf;\r\n}\r\n\r\n.message-panel-items-container[_ngcontent-%COMP%]   .message-panel-item[_ngcontent-%COMP%]:hover{\r\n\tbackground-color: #dbfbf0;\r\n}\r\n\r\n.message-panel-items-container[_ngcontent-%COMP%]   .message-panel-item[_ngcontent-%COMP%]   a[_ngcontent-%COMP%]{\r\n\tcolor: gray;\r\n}\r\n\r\n.message-panel-items-container[_ngcontent-%COMP%]   .message-panel-item[_ngcontent-%COMP%]   a[_ngcontent-%COMP%]:hover{\r\n\tcolor: #946b73;\r\n}\r\n\r\n.toolbar-image[_ngcontent-%COMP%] {\r\n    border: none;\r\n    margin-right: 10px;\r\n    width: 24px;\r\n    height: 24px;\r\n    float: right;\r\n}\r\n\r\ndiv.workflowview-dialog-content-container[_ngcontent-%COMP%]   div.item-row[_ngcontent-%COMP%] {\r\n    padding: 5px 0;\r\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbWVzc2FnZS1iYXIvbWVzc2FnZS1iYXIuY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxxQkFBcUI7O0FBRXJCO0lBQ0ksYUFBYTtJQUNiLGdCQUFnQjtJQUNoQixzQkFBc0I7SUFDdEIseUJBQXlCO0lBQ3pCLDBCQUEwQjtJQUMxQixZQUFZO0lBQ1osWUFBWTtBQUNoQjs7QUFFQTtDQUNDLFlBQVk7Q0FDWix5QkFBeUI7Q0FDekIsZ0JBQWdCO0NBQ2hCLG1CQUFtQjtBQUNwQjs7QUFFQTtDQUNDLGtCQUFrQjtDQUNsQixpQkFBaUI7Q0FDakIsZUFBZTtBQUNoQjs7QUFFQTtDQUNDLFlBQVk7QUFDYjs7QUFFQTtDQUNDLHlCQUF5QjtDQUN6QixnQkFBZ0I7Q0FDaEIsY0FBYztBQUNmOztBQUVBO0NBQ0MsWUFBWTtDQUNaLGlCQUFpQjtDQUNqQixhQUFhO0NBQ2IseUJBQXlCO0NBQ3pCLFlBQVk7Q0FDWixrQkFBa0I7Q0FDbEIseUJBQXlCO0FBQzFCOztBQUVBO0NBQ0MseUJBQXlCO0FBQzFCOztBQUVBO0NBQ0MsV0FBVztBQUNaOztBQUVBO0NBQ0MsY0FBYztBQUNmOztBQUVBO0lBQ0ksWUFBWTtJQUNaLGtCQUFrQjtJQUNsQixXQUFXO0lBQ1gsWUFBWTtJQUNaLFlBQVk7QUFDaEI7O0FBRUE7SUFDSSxjQUFjO0FBQ2xCIiwiZmlsZSI6InNyYy9hcHAvbWVzc2FnZS1iYXIvbWVzc2FnZS1iYXIuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIkBjaGFyc2V0IFwiSVNPLTg4NTktMVwiO1xyXG5cclxuLm1lc3NhZ2UtcGFuZWwtY29udGFpbmVyIHtcclxuICAgIGhlaWdodDogMTcwcHg7XHJcbiAgICBtYXJnaW4tdG9wOiAxMHB4O1xyXG4gICAgYm9yZGVyOiAxcHggc29saWQgZ3JheTtcclxuICAgIGJhY2tncm91bmQtY29sb3I6ICNmYmZiZmI7XHJcbiAgICBwb3NpdGlvbjogZml4ZWQgIWltcG9ydGFudDtcclxuICAgIHdpZHRoOiAxMDB2dztcclxuICAgIGJvdHRvbTogMzBweDtcclxufVxyXG5cclxuLm1lc3NhZ2UtcGFuZWwtdG9vbGJhcntcclxuXHRoZWlnaHQ6IDMwcHg7XHJcblx0YmFja2dyb3VuZC1jb2xvcjogI2RkZGRkZDtcdFxyXG5cdHBhZGRpbmctdG9wOiAycHg7XHJcblx0cGFkZGluZy1yaWdodDogMTBweDtcclxufVxyXG5cclxuLm1lc3NhZ2UtcGFuZWwtdG9vbGJhciBzcGFuLnRpdGxle1xyXG5cdHBhZGRpbmctbGVmdDogMjBweDtcclxuXHRmb250LXdlaWdodDogYm9sZDtcclxuXHRmb250LXNpemU6IDE0cHg7XHJcbn1cclxuXHJcbi5tZXNzYWdlLXBhbmVsLXRvb2xiYXIgLnRvb2xiYXItYnV0dG9ue1xyXG5cdGZsb2F0OiByaWdodDtcdFxyXG59XHJcblxyXG4ubWVzc2FnZS1wYW5lbC1pdGVtcy1jb250YWluZXJ7XHJcblx0aGVpZ2h0OiBjYWxjKDEwMCUgLSAzMHB4KTtcclxuXHRwYWRkaW5nOiA0cHggNHB4O1xyXG5cdG92ZXJmbG93OiBhdXRvO1xyXG59XHJcblxyXG4ubWVzc2FnZS1wYW5lbC1pdGVtcy1jb250YWluZXIgLm1lc3NhZ2UtcGFuZWwtaXRlbXtcclxuXHRoZWlnaHQ6IDMzcHg7XHJcblx0bGluZS1oZWlnaHQ6IDIycHg7XHJcblx0bWFyZ2luOiAzcHggMDtcclxuXHRiYWNrZ3JvdW5kLWNvbG9yOiAjZGNlZWZhO1xyXG5cdHBhZGRpbmc6IDVweDtcclxuXHRwYWRkaW5nLWxlZnQ6IDE1cHg7XHJcblx0Ym9yZGVyOiAxcHggc29saWQgI2QwY2ZjZjtcclxufVxyXG5cclxuLm1lc3NhZ2UtcGFuZWwtaXRlbXMtY29udGFpbmVyIC5tZXNzYWdlLXBhbmVsLWl0ZW06aG92ZXJ7XHJcblx0YmFja2dyb3VuZC1jb2xvcjogI2RiZmJmMDtcclxufVxyXG5cclxuLm1lc3NhZ2UtcGFuZWwtaXRlbXMtY29udGFpbmVyIC5tZXNzYWdlLXBhbmVsLWl0ZW0gYXtcclxuXHRjb2xvcjogZ3JheTtcclxufVxyXG5cclxuLm1lc3NhZ2UtcGFuZWwtaXRlbXMtY29udGFpbmVyIC5tZXNzYWdlLXBhbmVsLWl0ZW0gYTpob3ZlcntcclxuXHRjb2xvcjogIzk0NmI3MztcclxufVxyXG5cclxuLnRvb2xiYXItaW1hZ2Uge1xyXG4gICAgYm9yZGVyOiBub25lO1xyXG4gICAgbWFyZ2luLXJpZ2h0OiAxMHB4O1xyXG4gICAgd2lkdGg6IDI0cHg7XHJcbiAgICBoZWlnaHQ6IDI0cHg7XHJcbiAgICBmbG9hdDogcmlnaHQ7XHJcbn1cclxuXHJcbmRpdi53b3JrZmxvd3ZpZXctZGlhbG9nLWNvbnRlbnQtY29udGFpbmVyIGRpdi5pdGVtLXJvdyB7XHJcbiAgICBwYWRkaW5nOiA1cHggMDtcclxufVxyXG5cclxuXHJcblxyXG4iXX0= */"] });
+    } }, directives: [_angular_common__WEBPACK_IMPORTED_MODULE_7__["NgIf"], angular_resizable_element__WEBPACK_IMPORTED_MODULE_8__["ResizableDirective"], _angular_common__WEBPACK_IMPORTED_MODULE_7__["NgStyle"], _angular_common__WEBPACK_IMPORTED_MODULE_7__["NgForOf"], _wm_components_workflow_inlineview_workflow_inlineview_component__WEBPACK_IMPORTED_MODULE_9__["WorkflowInlineviewComponent"]], pipes: [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_10__["TranslatePipe"]], styles: ["@charset \"ISO-8859-1\";\r\n\r\n.message-panel-container[_ngcontent-%COMP%] {\r\n    height: 170px;\r\n    margin-top: 10px;\r\n    border: 1px solid gray;\r\n    background-color: #fbfbfb;\r\n    position: fixed !important;\r\n    width: 100vw;\r\n    bottom: 30px;\r\n}\r\n\r\n.message-panel-toolbar[_ngcontent-%COMP%]{\r\n\theight: 30px;\r\n\tbackground-color: #dddddd;\t\r\n\tpadding-top: 2px;\r\n\tpadding-right: 10px;\r\n}\r\n\r\n.message-panel-toolbar[_ngcontent-%COMP%]   span.title[_ngcontent-%COMP%]{\r\n\tpadding-left: 20px;\r\n\tfont-weight: bold;\r\n\tfont-size: 14px;\r\n}\r\n\r\n.message-panel-toolbar[_ngcontent-%COMP%]   .toolbar-button[_ngcontent-%COMP%]{\r\n\tfloat: right;\t\r\n}\r\n\r\n.message-panel-items-container[_ngcontent-%COMP%]{\r\n\theight: calc(100% - 30px);\r\n\tpadding: 4px 4px;\r\n\toverflow: auto;\r\n}\r\n\r\n.message-panel-items-container[_ngcontent-%COMP%]   .message-panel-item[_ngcontent-%COMP%]{\r\n\theight: 33px;\r\n\tline-height: 22px;\r\n\tmargin: 3px 0;\r\n\tbackground-color: #dceefa;\r\n\tpadding: 5px;\r\n\tpadding-left: 15px;\r\n\tborder: 1px solid #d0cfcf;\r\n}\r\n\r\n.message-panel-items-container[_ngcontent-%COMP%]   .message-panel-item[_ngcontent-%COMP%]:hover{\r\n\tbackground-color: #dbfbf0;\r\n}\r\n\r\n.message-panel-items-container[_ngcontent-%COMP%]   .message-panel-item[_ngcontent-%COMP%]   a[_ngcontent-%COMP%]{\r\n\tcolor: gray;\r\n}\r\n\r\n.message-panel-items-container[_ngcontent-%COMP%]   .message-panel-item[_ngcontent-%COMP%]   a[_ngcontent-%COMP%]:hover{\r\n\tcolor: #946b73;\r\n}\r\n\r\n.toolbar-image[_ngcontent-%COMP%] {\r\n    border: none;\r\n    margin-right: 10px;\r\n    width: 24px;\r\n    height: 24px;\r\n    float: right;\r\n}\r\n\r\ndiv.workflowview-dialog-content-container[_ngcontent-%COMP%]   div.item-row[_ngcontent-%COMP%] {\r\n    padding: 5px 0;\r\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbWVzc2FnZS1iYXIvbWVzc2FnZS1iYXIuY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxxQkFBcUI7O0FBRXJCO0lBQ0ksYUFBYTtJQUNiLGdCQUFnQjtJQUNoQixzQkFBc0I7SUFDdEIseUJBQXlCO0lBQ3pCLDBCQUEwQjtJQUMxQixZQUFZO0lBQ1osWUFBWTtBQUNoQjs7QUFFQTtDQUNDLFlBQVk7Q0FDWix5QkFBeUI7Q0FDekIsZ0JBQWdCO0NBQ2hCLG1CQUFtQjtBQUNwQjs7QUFFQTtDQUNDLGtCQUFrQjtDQUNsQixpQkFBaUI7Q0FDakIsZUFBZTtBQUNoQjs7QUFFQTtDQUNDLFlBQVk7QUFDYjs7QUFFQTtDQUNDLHlCQUF5QjtDQUN6QixnQkFBZ0I7Q0FDaEIsY0FBYztBQUNmOztBQUVBO0NBQ0MsWUFBWTtDQUNaLGlCQUFpQjtDQUNqQixhQUFhO0NBQ2IseUJBQXlCO0NBQ3pCLFlBQVk7Q0FDWixrQkFBa0I7Q0FDbEIseUJBQXlCO0FBQzFCOztBQUVBO0NBQ0MseUJBQXlCO0FBQzFCOztBQUVBO0NBQ0MsV0FBVztBQUNaOztBQUVBO0NBQ0MsY0FBYztBQUNmOztBQUVBO0lBQ0ksWUFBWTtJQUNaLGtCQUFrQjtJQUNsQixXQUFXO0lBQ1gsWUFBWTtJQUNaLFlBQVk7QUFDaEI7O0FBRUE7SUFDSSxjQUFjO0FBQ2xCIiwiZmlsZSI6InNyYy9hcHAvbWVzc2FnZS1iYXIvbWVzc2FnZS1iYXIuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIkBjaGFyc2V0IFwiSVNPLTg4NTktMVwiO1xyXG5cclxuLm1lc3NhZ2UtcGFuZWwtY29udGFpbmVyIHtcclxuICAgIGhlaWdodDogMTcwcHg7XHJcbiAgICBtYXJnaW4tdG9wOiAxMHB4O1xyXG4gICAgYm9yZGVyOiAxcHggc29saWQgZ3JheTtcclxuICAgIGJhY2tncm91bmQtY29sb3I6ICNmYmZiZmI7XHJcbiAgICBwb3NpdGlvbjogZml4ZWQgIWltcG9ydGFudDtcclxuICAgIHdpZHRoOiAxMDB2dztcclxuICAgIGJvdHRvbTogMzBweDtcclxufVxyXG5cclxuLm1lc3NhZ2UtcGFuZWwtdG9vbGJhcntcclxuXHRoZWlnaHQ6IDMwcHg7XHJcblx0YmFja2dyb3VuZC1jb2xvcjogI2RkZGRkZDtcdFxyXG5cdHBhZGRpbmctdG9wOiAycHg7XHJcblx0cGFkZGluZy1yaWdodDogMTBweDtcclxufVxyXG5cclxuLm1lc3NhZ2UtcGFuZWwtdG9vbGJhciBzcGFuLnRpdGxle1xyXG5cdHBhZGRpbmctbGVmdDogMjBweDtcclxuXHRmb250LXdlaWdodDogYm9sZDtcclxuXHRmb250LXNpemU6IDE0cHg7XHJcbn1cclxuXHJcbi5tZXNzYWdlLXBhbmVsLXRvb2xiYXIgLnRvb2xiYXItYnV0dG9ue1xyXG5cdGZsb2F0OiByaWdodDtcdFxyXG59XHJcblxyXG4ubWVzc2FnZS1wYW5lbC1pdGVtcy1jb250YWluZXJ7XHJcblx0aGVpZ2h0OiBjYWxjKDEwMCUgLSAzMHB4KTtcclxuXHRwYWRkaW5nOiA0cHggNHB4O1xyXG5cdG92ZXJmbG93OiBhdXRvO1xyXG59XHJcblxyXG4ubWVzc2FnZS1wYW5lbC1pdGVtcy1jb250YWluZXIgLm1lc3NhZ2UtcGFuZWwtaXRlbXtcclxuXHRoZWlnaHQ6IDMzcHg7XHJcblx0bGluZS1oZWlnaHQ6IDIycHg7XHJcblx0bWFyZ2luOiAzcHggMDtcclxuXHRiYWNrZ3JvdW5kLWNvbG9yOiAjZGNlZWZhO1xyXG5cdHBhZGRpbmc6IDVweDtcclxuXHRwYWRkaW5nLWxlZnQ6IDE1cHg7XHJcblx0Ym9yZGVyOiAxcHggc29saWQgI2QwY2ZjZjtcclxufVxyXG5cclxuLm1lc3NhZ2UtcGFuZWwtaXRlbXMtY29udGFpbmVyIC5tZXNzYWdlLXBhbmVsLWl0ZW06aG92ZXJ7XHJcblx0YmFja2dyb3VuZC1jb2xvcjogI2RiZmJmMDtcclxufVxyXG5cclxuLm1lc3NhZ2UtcGFuZWwtaXRlbXMtY29udGFpbmVyIC5tZXNzYWdlLXBhbmVsLWl0ZW0gYXtcclxuXHRjb2xvcjogZ3JheTtcclxufVxyXG5cclxuLm1lc3NhZ2UtcGFuZWwtaXRlbXMtY29udGFpbmVyIC5tZXNzYWdlLXBhbmVsLWl0ZW0gYTpob3ZlcntcclxuXHRjb2xvcjogIzk0NmI3MztcclxufVxyXG5cclxuLnRvb2xiYXItaW1hZ2Uge1xyXG4gICAgYm9yZGVyOiBub25lO1xyXG4gICAgbWFyZ2luLXJpZ2h0OiAxMHB4O1xyXG4gICAgd2lkdGg6IDI0cHg7XHJcbiAgICBoZWlnaHQ6IDI0cHg7XHJcbiAgICBmbG9hdDogcmlnaHQ7XHJcbn1cclxuXHJcbmRpdi53b3JrZmxvd3ZpZXctZGlhbG9nLWNvbnRlbnQtY29udGFpbmVyIGRpdi5pdGVtLXJvdyB7XHJcbiAgICBwYWRkaW5nOiA1cHggMDtcclxufVxyXG5cclxuXHJcblxyXG4iXX0= */"] });
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](MessageBarComponent, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
         args: [{
                 selector: 'app-message-bar',
                 templateUrl: './message-bar.component.html',
                 styleUrls: ['./message-bar.component.css'],
-                providers: [_services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_2__["WorkflowMessageService"]]
+                providers: [_services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_3__["WorkflowMessageService"]]
             }]
-    }], function () { return [{ type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"] }, { type: _services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_2__["WorkflowMessageService"] }, { type: _services_error_service_service__WEBPACK_IMPORTED_MODULE_4__["ErrorServiceService"] }, { type: _services_global_socket__WEBPACK_IMPORTED_MODULE_5__["GlobalSocket"] }]; }, { currentUser: [{
+    }], function () { return [{ type: _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"] }, { type: _services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_3__["WorkflowMessageService"] }, { type: _services_error_service_service__WEBPACK_IMPORTED_MODULE_5__["ErrorServiceService"] }, { type: _services_global_socket__WEBPACK_IMPORTED_MODULE_6__["GlobalSocket"] }]; }, { currentUser: [{
             type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"],
             args: ['currentUser']
         }], isLogged: [{
@@ -9134,24 +9136,26 @@ EditTestthreeTaskComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["�
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InvoiceBaseComponent", function() { return InvoiceBaseComponent; });
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/__ivy_ngcc__/fesm2015/forms.js");
-/* harmony import */ var stompjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! stompjs */ "./node_modules/stompjs/index.js");
-/* harmony import */ var stompjs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(stompjs__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wf_models__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../wf-models */ "./src/app/wf-models/index.ts");
-/* harmony import */ var _wf_models_invoice_workflow_save_request__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../wf-models/invoice-workflow-save-request */ "./src/app/wf-models/invoice-workflow-save-request.ts");
-/* harmony import */ var _custom_validators_invoice_type_controll_validator__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../custom-validators/invoice-type-controll-validator */ "./src/app/custom-validators/invoice-type-controll-validator.ts");
-/* harmony import */ var _helper__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../helper */ "./src/app/helper/index.ts");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/__ivy_ngcc__/fesm2015/router.js");
-/* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../services/global.service */ "./src/app/services/global.service.ts");
-/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/__ivy_ngcc__/fesm2015/ngx-translate-core.js");
-/* harmony import */ var _services_workflow_invoice_invoice_workflow_edit_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../services/workflow/invoice/invoice-workflow-edit.service */ "./src/app/services/workflow/invoice/invoice-workflow-edit.service.ts");
-/* harmony import */ var _services_loading_service_service__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../services/loading-service.service */ "./src/app/services/loading-service.service.ts");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/__ivy_ngcc__/fesm2015/http.js");
-/* harmony import */ var _services_error_service_service__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../services/error-service.service */ "./src/app/services/error-service.service.ts");
-/* harmony import */ var _angular_material_core__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/material/core */ "./node_modules/@angular/material/__ivy_ngcc__/fesm2015/core.js");
-/* harmony import */ var _services_global_socket__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../services/global-socket */ "./src/app/services/global-socket.ts");
+/* harmony import */ var sockjs_client__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! sockjs-client */ "./node_modules/sockjs-client/lib/entry.js");
+/* harmony import */ var sockjs_client__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(sockjs_client__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var stompjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! stompjs */ "./node_modules/stompjs/index.js");
+/* harmony import */ var stompjs__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(stompjs__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wf_models__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../wf-models */ "./src/app/wf-models/index.ts");
+/* harmony import */ var _wf_models_invoice_workflow_save_request__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../wf-models/invoice-workflow-save-request */ "./src/app/wf-models/invoice-workflow-save-request.ts");
+/* harmony import */ var _custom_validators_invoice_type_controll_validator__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../custom-validators/invoice-type-controll-validator */ "./src/app/custom-validators/invoice-type-controll-validator.ts");
+/* harmony import */ var _helper__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../helper */ "./src/app/helper/index.ts");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/__ivy_ngcc__/fesm2015/router.js");
+/* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../services/global.service */ "./src/app/services/global.service.ts");
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/__ivy_ngcc__/fesm2015/ngx-translate-core.js");
+/* harmony import */ var _services_workflow_invoice_invoice_workflow_edit_service__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../services/workflow/invoice/invoice-workflow-edit.service */ "./src/app/services/workflow/invoice/invoice-workflow-edit.service.ts");
+/* harmony import */ var _services_loading_service_service__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../services/loading-service.service */ "./src/app/services/loading-service.service.ts");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/__ivy_ngcc__/fesm2015/http.js");
+/* harmony import */ var _services_error_service_service__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../services/error-service.service */ "./src/app/services/error-service.service.ts");
+/* harmony import */ var _angular_material_core__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/material/core */ "./node_modules/@angular/material/__ivy_ngcc__/fesm2015/core.js");
+/* harmony import */ var _services_global_socket__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../services/global-socket */ "./src/app/services/global-socket.ts");
 
-//import * as SockJS from 'sockjs-client';
+
 
 
 
@@ -9191,7 +9195,7 @@ class InvoiceBaseComponent {
         this.showOcrDetailsDialog = false;
         this.scannedSelectedValues = [];
         this.workflowListUrl = "/workflow/list";
-        this.workflowSaveRequest = new _wf_models_invoice_workflow_save_request__WEBPACK_IMPORTED_MODULE_3__["InvoiceWorkflowSaveRequest"]();
+        this.workflowSaveRequest = new _wf_models_invoice_workflow_save_request__WEBPACK_IMPORTED_MODULE_4__["InvoiceWorkflowSaveRequest"]();
         this.generalDataObs = null;
         this.selectAssign = [];
         this.invoiceTypes = [];
@@ -9219,7 +9223,7 @@ class InvoiceBaseComponent {
             }
         };
         this.dateAdapter.setLocale('de');
-        for (var o in _wf_models__WEBPACK_IMPORTED_MODULE_2__["InvoiceType"]) {
+        for (var o in _wf_models__WEBPACK_IMPORTED_MODULE_3__["InvoiceType"]) {
             var str = o + "";
             var num = new Number(o);
             if (isNaN(num)) {
@@ -9242,7 +9246,7 @@ class InvoiceBaseComponent {
         var deadline = this.invoiceEditForm.controls["discountDeadline"].value;
         if (enterDate != null && deadline != null && deadline > 0) {
             var date = new Date(enterDate.getFullYear(), enterDate.getMonth(), enterDate.getDate() + deadline);
-            this.invoiceEditForm.controls["discountDate"].setValue(Object(_helper__WEBPACK_IMPORTED_MODULE_5__["formatDate"])(date, 'dd.mm.yyyy'));
+            this.invoiceEditForm.controls["discountDate"].setValue(Object(_helper__WEBPACK_IMPORTED_MODULE_6__["formatDate"])(date, 'dd.mm.yyyy'));
         }
     }
     invoiceDateChanges() {
@@ -9274,7 +9278,7 @@ class InvoiceBaseComponent {
             vendorNumber: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_0__["Validators"].required],
             vendorName: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_0__["Validators"].required],
             isDirectDebitPermission: [false],
-            invoiceType: [_wf_models__WEBPACK_IMPORTED_MODULE_2__["InvoiceType"].NO_TYPE, [_custom_validators_invoice_type_controll_validator__WEBPACK_IMPORTED_MODULE_4__["InvoiceTypeControllValidator"]]],
+            invoiceType: [_wf_models__WEBPACK_IMPORTED_MODULE_3__["InvoiceType"].NO_TYPE, [_custom_validators_invoice_type_controll_validator__WEBPACK_IMPORTED_MODULE_5__["InvoiceTypeControllValidator"]]],
             discountEnterDate: [new Date(), _angular_forms__WEBPACK_IMPORTED_MODULE_0__["Validators"].required],
             discountDeadline: [0, _angular_forms__WEBPACK_IMPORTED_MODULE_0__["Validators"].required],
             discountRate: [0, _angular_forms__WEBPACK_IMPORTED_MODULE_0__["Validators"].required],
@@ -9291,9 +9295,7 @@ class InvoiceBaseComponent {
             this.scanningFileIndex = index;
             this.scanningFile = this.uploadedFiles[index];
             this.loadingService.showLoading();
-            this.subscribe();
-            console.log("ocrUploadedFile : ", this.scanningFile);
-            this.stompClient.send('/socketapp/ocrprocess', {}, JSON.stringify(uploadedFile.uploadResult));
+            this.subscribe(uploadedFile);
         }
     }
     onShowUploadedFileScannDetail(uploadedFile) {
@@ -9308,12 +9310,12 @@ class InvoiceBaseComponent {
     onUploadedFilesChanged(uploadedFileList) {
         this.uploadedFiles = uploadedFileList;
     }
-    subscribe() {
+    subscribe(uploadedFile) {
         if (this.subscribed) {
             this.unsubscribe();
         }
-        //let socket :SockJS = new SockJS('/iflow-guide-websocket');
-        this.stompClient = stompjs__WEBPACK_IMPORTED_MODULE_1__["over"](this.globalSocket.getGlobalSocket());
+        let socket = new sockjs_client__WEBPACK_IMPORTED_MODULE_1__('/iflow-guide-websocket');
+        this.stompClient = stompjs__WEBPACK_IMPORTED_MODULE_2__["over"](socket);
         const _this = this;
         this.stompClient.connect({}, function (frame) {
             console.log("Stomp Connected ", frame);
@@ -9322,6 +9324,8 @@ class InvoiceBaseComponent {
                 console.log("Message Received: ", message.body);
                 _this.onRecevieResponse(message);
             });
+            console.log("ocrUploadedFile : ", _this.scanningFile);
+            _this.stompClient.send('/socketapp/ocrprocess', {}, JSON.stringify(uploadedFile.uploadResult));
             //_this.stompClient.reconnect_delay = 2000;
         }, _this.errorCallBack);
         //this.messages = this._stompService.subscribe('/user/socket/ocrprocess');
@@ -9377,33 +9381,33 @@ class InvoiceBaseComponent {
             this.invoiceEditForm.controls["comments"].setValue(this.workflowSaveRequest.comments);
             this.invoiceEditForm.controls["sender"].setValue(this.workflowSaveRequest.workflow.sender);
             this.invoiceEditForm.controls["registerNumber"].setValue(this.workflowSaveRequest.workflow.registerNumber);
-            this.invoiceEditForm.controls["invocieDate"].setValue(Object(_helper__WEBPACK_IMPORTED_MODULE_5__["parseDate"])(this.workflowSaveRequest.workflow.invocieDate, 'dd.mm.yyyy'));
+            this.invoiceEditForm.controls["invocieDate"].setValue(Object(_helper__WEBPACK_IMPORTED_MODULE_6__["parseDate"])(this.workflowSaveRequest.workflow.invocieDate, 'dd.mm.yyyy'));
             this.invoiceEditForm.controls["partnerCode"].setValue(this.workflowSaveRequest.workflow.partnerCode);
             this.invoiceEditForm.controls["vendorNumber"].setValue(this.workflowSaveRequest.workflow.vendorNumber);
             this.invoiceEditForm.controls["vendorName"].setValue(this.workflowSaveRequest.workflow.vendorName);
             this.invoiceEditForm.controls["isDirectDebitPermission"].setValue(this.workflowSaveRequest.workflow.isDirectDebitPermission);
             this.invoiceEditForm.controls["invoiceType"].setValue(this.workflowSaveRequest.workflow.invoiceType);
-            this.invoiceEditForm.controls["discountEnterDate"].setValue(Object(_helper__WEBPACK_IMPORTED_MODULE_5__["parseDate"])(this.workflowSaveRequest.workflow.discountEnterDate, 'dd.mm.yyyy'));
+            this.invoiceEditForm.controls["discountEnterDate"].setValue(Object(_helper__WEBPACK_IMPORTED_MODULE_6__["parseDate"])(this.workflowSaveRequest.workflow.discountEnterDate, 'dd.mm.yyyy'));
             this.invoiceEditForm.controls["discountDeadline"].setValue(this.workflowSaveRequest.workflow.discountDeadline);
             this.invoiceEditForm.controls["discountRate"].setValue(this.workflowSaveRequest.workflow.discountRate);
             this.invoiceEditForm.controls["discountDate"].setValue(this.workflowSaveRequest.workflow.discountDate);
             this.invoiceEditForm.controls["paymentAmount"].setValue(this.workflowSaveRequest.workflow.paymentAmount);
-            this.uploadedFiles = _wf_models__WEBPACK_IMPORTED_MODULE_2__["WorkflowFile"].toUploadedFileList(this.workflowSaveRequest.workflow.files);
+            this.uploadedFiles = _wf_models__WEBPACK_IMPORTED_MODULE_3__["WorkflowFile"].toUploadedFileList(this.workflowSaveRequest.workflow.files);
         }
     }
     setFormControlValues() {
-        this.workflowSaveRequest.uploadedFiles = _wf_models__WEBPACK_IMPORTED_MODULE_2__["WorkflowUploadedFile"].loadUploadedFiles(this.uploadedFiles);
+        this.workflowSaveRequest.uploadedFiles = _wf_models__WEBPACK_IMPORTED_MODULE_3__["WorkflowUploadedFile"].loadUploadedFiles(this.uploadedFiles);
         this.workflowSaveRequest.expireDays = this.invoiceEditForm.controls["expireDays"].value;
         this.workflowSaveRequest.comments = this.invoiceEditForm.controls["comments"].value;
         this.workflowSaveRequest.workflow.sender = this.invoiceEditForm.controls["sender"].value;
         this.workflowSaveRequest.workflow.registerNumber = this.invoiceEditForm.controls["registerNumber"].value;
-        this.workflowSaveRequest.workflow.invocieDate = Object(_helper__WEBPACK_IMPORTED_MODULE_5__["formatDate"])(this.invoiceEditForm.controls["invocieDate"].value, 'dd.mm.yyyy');
+        this.workflowSaveRequest.workflow.invocieDate = Object(_helper__WEBPACK_IMPORTED_MODULE_6__["formatDate"])(this.invoiceEditForm.controls["invocieDate"].value, 'dd.mm.yyyy');
         this.workflowSaveRequest.workflow.partnerCode = this.invoiceEditForm.controls["partnerCode"].value;
         this.workflowSaveRequest.workflow.vendorNumber = this.invoiceEditForm.controls["vendorNumber"].value;
         this.workflowSaveRequest.workflow.vendorName = this.invoiceEditForm.controls["vendorName"].value;
         this.workflowSaveRequest.workflow.isDirectDebitPermission = this.invoiceEditForm.controls["isDirectDebitPermission"].value;
         this.workflowSaveRequest.workflow.invoiceType = this.invoiceEditForm.controls["invoiceType"].value;
-        this.workflowSaveRequest.workflow.discountEnterDate = Object(_helper__WEBPACK_IMPORTED_MODULE_5__["formatDate"])(this.invoiceEditForm.controls["discountEnterDate"].value, 'dd.mm.yyyy');
+        this.workflowSaveRequest.workflow.discountEnterDate = Object(_helper__WEBPACK_IMPORTED_MODULE_6__["formatDate"])(this.invoiceEditForm.controls["discountEnterDate"].value, 'dd.mm.yyyy');
         this.workflowSaveRequest.workflow.discountDeadline = this.invoiceEditForm.controls["discountDeadline"].value;
         this.workflowSaveRequest.workflow.discountRate = this.invoiceEditForm.controls["discountRate"].value;
         this.workflowSaveRequest.workflow.discountDate = this.invoiceEditForm.controls["discountDate"].value;
@@ -9413,7 +9417,7 @@ class InvoiceBaseComponent {
     onUsersSelected(assigns) {
         this.workflowSaveRequest.assigns = [];
         for (var item in assigns) {
-            var assign = new _wf_models__WEBPACK_IMPORTED_MODULE_2__["AssignItem"];
+            var assign = new _wf_models__WEBPACK_IMPORTED_MODULE_3__["AssignItem"];
             assign.itemIdentity = assigns[item].itemIdentity;
             assign.itemType = assigns[item].itemType;
             this.workflowSaveRequest.assigns.push(assign);
@@ -9424,8 +9428,8 @@ class InvoiceBaseComponent {
     }
     onApplyScannedValues() {
         if (this.scannedSelectedValues["invoice-invoicedate"] && this.scannedSelectedValues["invoice-invoicedate"] != "") {
-            this.invoiceEditForm.controls["invocieDate"].setValue(Object(_helper__WEBPACK_IMPORTED_MODULE_5__["parseDate"])(this.scannedSelectedValues["invoice-invoicedate"], 'dd.mm.yyyy'));
-            this.invoiceEditForm.controls["discountEnterDate"].setValue(Object(_helper__WEBPACK_IMPORTED_MODULE_5__["parseDate"])(this.scannedSelectedValues["invoice-invoicedate"], 'dd.mm.yyyy'));
+            this.invoiceEditForm.controls["invocieDate"].setValue(Object(_helper__WEBPACK_IMPORTED_MODULE_6__["parseDate"])(this.scannedSelectedValues["invoice-invoicedate"], 'dd.mm.yyyy'));
+            this.invoiceEditForm.controls["discountEnterDate"].setValue(Object(_helper__WEBPACK_IMPORTED_MODULE_6__["parseDate"])(this.scannedSelectedValues["invoice-invoicedate"], 'dd.mm.yyyy'));
             //this.invoiceEditForm.controls["discountDate"].setValue(parseDate(this.scannedSelectedValues["invoice-invoicedate"], 'dd.mm.yyyy'));
         }
         if (this.scannedSelectedValues["invoice-invoicenumber"] && this.scannedSelectedValues["invoice-invoicenumber"] != "") {
@@ -9444,8 +9448,8 @@ class InvoiceBaseComponent {
         this.showOcrDetailsDialog = false;
     }
 }
-InvoiceBaseComponent.ɵfac = function InvoiceBaseComponent_Factory(t) { return new (t || InvoiceBaseComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_7__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdirectiveInject"](_services_global_service__WEBPACK_IMPORTED_MODULE_8__["GlobalService"]), _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdirectiveInject"](_ngx_translate_core__WEBPACK_IMPORTED_MODULE_9__["TranslateService"]), _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdirectiveInject"](_services_workflow_invoice_invoice_workflow_edit_service__WEBPACK_IMPORTED_MODULE_10__["InvoiceWorkflowEditService"]), _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdirectiveInject"](_services_loading_service_service__WEBPACK_IMPORTED_MODULE_11__["LoadingServiceService"]), _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdirectiveInject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_12__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdirectiveInject"](_services_error_service_service__WEBPACK_IMPORTED_MODULE_13__["ErrorServiceService"]), _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormBuilder"]), _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdirectiveInject"](_angular_material_core__WEBPACK_IMPORTED_MODULE_14__["DateAdapter"]), _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdirectiveInject"](_services_global_socket__WEBPACK_IMPORTED_MODULE_15__["GlobalSocket"])); };
-InvoiceBaseComponent.ɵdir = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdefineDirective"]({ type: InvoiceBaseComponent });
+InvoiceBaseComponent.ɵfac = function InvoiceBaseComponent_Factory(t) { return new (t || InvoiceBaseComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_8__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_services_global_service__WEBPACK_IMPORTED_MODULE_9__["GlobalService"]), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_ngx_translate_core__WEBPACK_IMPORTED_MODULE_10__["TranslateService"]), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_services_workflow_invoice_invoice_workflow_edit_service__WEBPACK_IMPORTED_MODULE_11__["InvoiceWorkflowEditService"]), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_services_loading_service_service__WEBPACK_IMPORTED_MODULE_12__["LoadingServiceService"]), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_13__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_services_error_service_service__WEBPACK_IMPORTED_MODULE_14__["ErrorServiceService"]), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormBuilder"]), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_angular_material_core__WEBPACK_IMPORTED_MODULE_15__["DateAdapter"]), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_services_global_socket__WEBPACK_IMPORTED_MODULE_16__["GlobalSocket"])); };
+InvoiceBaseComponent.ɵdir = _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdefineDirective"]({ type: InvoiceBaseComponent });
 
 
 /***/ }),

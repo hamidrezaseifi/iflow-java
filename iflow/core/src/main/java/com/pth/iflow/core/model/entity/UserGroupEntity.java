@@ -29,38 +29,40 @@ import com.pth.iflow.core.storage.dao.helper.EntityListener;
 @EntityListeners(EntityListener.class)
 public class UserGroupEntity extends EntityIdentityHelper {
 
+  private static final long serialVersionUID = -6531171990409660804L;
+
   @Id
   @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long            id;
+  private Long id;
 
   @Column(name = "identity")
-  private String          identity;
+  private String identity;
 
   @Column(name = "company_id")
-  private Long            companyId;
+  private Long companyId;
 
   @Column(name = "title")
-  private String          title;
+  private String title;
 
   @Column(name = "status")
-  private Integer         status;
+  private Integer status;
 
   @Column(name = "version")
-  private Integer         version;
+  private Integer version;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "company_id", insertable = false, updatable = false)
   @Fetch(FetchMode.JOIN)
-  private CompanyEntity   company;
+  private CompanyEntity company;
 
   @CreationTimestamp
   @Column(name = "created_at")
-  private Date            createdAt;
+  private Date createdAt;
 
   @UpdateTimestamp
   @Column(name = "updated_at")
-  private Date            updatedAt;
+  private Date updatedAt;
 
   @ManyToMany(mappedBy = "groups", fetch = FetchType.EAGER)
   private Set<UserEntity> users = new HashSet<>();
@@ -71,96 +73,118 @@ public class UserGroupEntity extends EntityIdentityHelper {
 
   @Override
   public Long getId() {
+
     return this.id;
   }
 
   public void setId(final Long id) {
+
     this.id = id;
   }
 
   @Override
   public String getIdentity() {
+
     return identity;
   }
 
   @Override
   public void setIdentity(final String identity) {
+
     this.identity = identity;
   }
 
   public Long getCompanyId() {
+
     return this.companyId;
   }
 
   public void setCompanyId(final Long companyId) {
+
     this.companyId = companyId;
   }
 
   public String getTitle() {
+
     return this.title;
   }
 
   public void setTitle(final String title) {
+
     this.title = title;
   }
 
   public Integer getStatus() {
+
     return this.status;
   }
 
   public void setStatus(final Integer status) {
+
     this.status = status;
   }
 
   @Override
   public Integer getVersion() {
+
     return this.version;
   }
 
   @Override
   public void setVersion(final Integer version) {
+
     this.version = version;
   }
 
   public CompanyEntity getCompany() {
+
     return company;
   }
 
   public void setCompany(final CompanyEntity company) {
+
     this.company = company;
   }
 
   public Date getCreatedAt() {
+
     return this.createdAt;
   }
 
   public void setCreatedAt(final Date createdAt) {
+
     this.createdAt = createdAt;
   }
 
   public Date getUpdatedAt() {
+
     return this.updatedAt;
   }
 
   public void setUpdatedAt(final Date updatedAt) {
+
     this.updatedAt = updatedAt;
   }
 
   @Override
   public String getIdentityPreffix() {
+
     return "ug";
   }
 
   @Override
   public void increaseVersion() {
+
     version += 1;
   }
 
   public Set<UserEntity> getUsers() {
+
     return users;
   }
 
   public void setUsers(final Set<UserEntity> users) {
+
     this.users = users;
   }
 

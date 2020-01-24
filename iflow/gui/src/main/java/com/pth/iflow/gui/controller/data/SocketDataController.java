@@ -19,6 +19,7 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.annotation.SendToUser;
+import org.springframework.messaging.simp.annotation.SubscribeMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -55,6 +56,7 @@ public class SocketDataController extends GuiSocketControllerBase {
 
   @MessageMapping("/resetmessage")
   @SendToUser("/socket/messages")
+  @SubscribeMapping("/messages")
   public GuiSocketMessage resetMessageSocket(final GuiSocketMessage message, final Principal principal,
       final SimpMessageHeaderAccessor headerAccessor) throws Exception {
 

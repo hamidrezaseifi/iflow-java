@@ -1,5 +1,6 @@
 package com.pth.iflow.core.storage.dao.helper;
 
+import java.io.Serializable;
 import java.util.Random;
 
 import org.apache.commons.lang3.StringUtils;
@@ -7,13 +8,16 @@ import org.apache.commons.lang3.StringUtils;
 import com.pth.iflow.common.enums.EIdentity;
 import com.pth.iflow.core.storage.dao.exception.IFlowOptimisticLockException;
 
-public abstract class EntityIdentityHelper implements ICoreEntityVersion {
+public abstract class EntityIdentityHelper implements ICoreEntityVersion, Serializable {
+
+  private static final long serialVersionUID = -969556071780903419L;
 
   public abstract String getIdentity();
 
   public abstract void setIdentity(String identity);
 
   public boolean isIdentityNew() {
+
     return EIdentity.isNotSet(getIdentity());
   }
 

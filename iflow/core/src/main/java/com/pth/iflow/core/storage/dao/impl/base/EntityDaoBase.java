@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pth.iflow.core.model.entity.workflow.WorkflowActionEntity;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
+import com.pth.iflow.core.storage.dao.helper.EntityManagerHelper;
 import com.pth.iflow.core.storage.dao.helper.ICoreEntityVersion;
 
 @Transactional

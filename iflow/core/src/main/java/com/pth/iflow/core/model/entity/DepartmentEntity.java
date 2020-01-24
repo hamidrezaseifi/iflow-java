@@ -43,6 +43,8 @@ import com.pth.iflow.core.storage.dao.helper.EntityListener;
 @EntityListeners(EntityListener.class)
 public class DepartmentEntity extends EntityIdentityHelper {
 
+  private static final long serialVersionUID = 5330442911402791281L;
+
   @Id
   @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)

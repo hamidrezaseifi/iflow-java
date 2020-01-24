@@ -115,7 +115,7 @@ public class HibernateConfig {
 
   /*
    * @Bean public EntityManager entityManager(final LocalSessionFactoryBean sessionFactory) {
-   * 
+   *
    * return sessionFactory.getObject().createEntityManager(); }
    */
 

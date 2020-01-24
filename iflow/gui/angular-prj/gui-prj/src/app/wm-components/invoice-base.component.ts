@@ -6,7 +6,7 @@ import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/fo
 import { DateAdapter } from '@angular/material/core';
 import { Observable, throwError , Subscription } from 'rxjs';
 import { Message } from '@stomp/stompjs';
-//import * as SockJS from 'sockjs-client';
+import * as SockJS from 'sockjs-client';
 import * as Stomp from 'stompjs';
 import { GlobalSocket } from '../services/global-socket';
 
@@ -178,11 +178,8 @@ export class InvoiceBaseComponent implements OnInit, OnDestroy {
 			
 			this.loadingService.showLoading();
 			
-			this.subscribe();
+			this.subscribe(uploadedFile);
 	        
-			console.log("ocrUploadedFile : ", this.scanningFile);
-			
-	        this.stompClient.send('/socketapp/ocrprocess', {}, JSON.stringify(uploadedFile.uploadResult));
 		}
 	}	
 	
@@ -239,14 +236,14 @@ export class InvoiceBaseComponent implements OnInit, OnDestroy {
 				
 	}	
 	
-	subscribe() {
+	subscribe(uploadedFile: UploadedFile) {
 		
 		if (this.subscribed) {
 		      this.unsubscribe();
 		}
 		
-		//let socket :SockJS = new SockJS('/iflow-guide-websocket');
-		this.stompClient = Stomp.over(this.globalSocket.getGlobalSocket());
+		let socket :SockJS = new SockJS('/iflow-guide-websocket');
+		this.stompClient = Stomp.over(socket);
 
 		const _this = this;
 
@@ -259,6 +256,11 @@ export class InvoiceBaseComponent implements OnInit, OnDestroy {
 				console.log("Message Received: " , message.body);
 				_this.onRecevieResponse(message);
             });
+			
+			console.log("ocrUploadedFile : ", _this.scanningFile);
+			
+			_this.stompClient.send('/socketapp/ocrprocess', {}, JSON.stringify(uploadedFile.uploadResult));
+
             //_this.stompClient.reconnect_delay = 2000;
         }, _this.errorCallBack);
 

@@ -31,6 +31,8 @@ import com.pth.iflow.core.storage.dao.helper.EntityListener;
 @EntityListeners(EntityListener.class)
 public class WorkflowTypeEntity extends EntityIdentityHelper {
 
+  private static final long serialVersionUID = -8971151977689234657L;
+
   @Id
   @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)

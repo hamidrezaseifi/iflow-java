@@ -28,6 +28,8 @@ import com.pth.iflow.core.storage.dao.helper.EntityListener;
 @Table(name = "workflow_message")
 public class WorkflowMessageEntity extends EntityIdentityHelper {
 
+  private static final long serialVersionUID = -3112387006573750725L;
+
   public static volatile SingularAttribute<WorkflowEntity, Long> workflowAttr;
   public static volatile SingularAttribute<WorkflowTypeStepEntity, Long> stepAttr;
   public static volatile SingularAttribute<UserEntity, Long> userAttr;
