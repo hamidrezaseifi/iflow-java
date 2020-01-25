@@ -238,6 +238,16 @@ public class GuiConfiguration {
       return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.DELETE_USER_URIBUILDER());
     }
 
+    public URI getResetPasswordUserUri() throws MalformedURLException {
+
+      return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.RESETPASSWORD_USER_URIBUILDER());
+    }
+
+    public URI getDeleteUserAuthenticationUri() throws MalformedURLException {
+
+      return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.DELETE_USER_AUTHENTICATION_URIBUILDER());
+    }
+
   }
 
 }

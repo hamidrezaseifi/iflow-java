@@ -1,6 +1,6 @@
 		<div class="content-container">
 			<div class="page-toolbar">
-				<div class="page-title">{{ 'menu-user-list' | translate }}</div>
+				<div class="page-title">{{ 'menu-userlist' | translate }}</div>
 				<button class="toolbar-button" (click)="reload()"><i class="material-icons">refresh</i></button>
 				<button class="toolbar-button" (click)="showCreateUser()"><i class="material-icons">add</i></button>
 											
@@ -34,6 +34,7 @@
 			    		<a class="tool-link" (click)="showEditUser(element)"><i class="material-icons">edit</i></a>
 		    			<a class="tool-link" (click)="showViewUser(element)"><i class="material-icons">pageview</i></a>
 		    			<a class="tool-link" (click)="showDeleteUser(element)"><i class="material-icons">delete</i></a>
+		    			<a class="tool-link" (click)="showUserResetPassword(element)"><i class="material-icons">lock_open</i></a>
 			    	</td>
 			    </ng-container>
 			    
@@ -119,11 +120,6 @@
 							    <div class="invalid-message" *ngIf="userEditForm.controls.userAccess.touched && userEditForm.controls.userAccess.hasError('required')">{{ 'user-access-error-message' | translate }}</div>
 							    
 							  </div>
-							  <div class="form-group" *ngIf="isCreating">
-							    <label for="exampleInputPassword1">{{ 'user-password' | translate }}</label>
-							    <input type="password" name="password" formControlName="password" required class="form-control" id="exampleInputPassword1" placeholder="Password">
-							    <div class="invalid-message" *ngIf="userEditForm.controls.password.touched && userEditForm.controls.password.hasError('required')">{{ 'user-password-error-message' | translate }}</div>
-							  </div>
 							  
 							</form>							
 							<div style="padding: 5px; border: solid gray 1px; margin-top: 10px;">{{ debug() | json}}</div>
@@ -181,7 +177,7 @@
 		
 		
 	    <div class="modal fade" [ngClass]="{'show' : showDeleteModal}" tabindex="-1" id="deleteuserdialog" role="dialog" aria-labelledby="exampleModalCenterTitle">
-			<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-dialog modal-dialog-centered user-delete-dialog" role="document">
 			    <div class="modal-content" >
 			      <div class="modal-header">
 			        <h5 class="modal-title dialog-title" id="exampleModalLongTitle">{{ 'user-delete-modal-title' | translate }}</h5>
@@ -279,4 +275,28 @@
 	    	
 	    </div>
 		
+		
+	    <div class="modal fade" [ngClass]="{'show' : showResetPasswordModal}" tabindex="-1" id="resetpassworduserdialog" role="dialog" aria-labelledby="exampleModalCenterTitle">
+			<div class="modal-dialog modal-dialog-centered resetpassword-dialog" role="document">
+			    <div class="modal-content" >
+			      <div class="modal-header">
+			        <h5 class="modal-title dialog-title">{{ 'user-resetpassword-modal-title' | translate }}</h5>
+			        <button class="dialog-toolbar-button close" (click)="hideResetPasswordUserDialog()">
+			        	<i class="material-icons">close</i>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+						
+					<div class="alert alert-success custome-ander-text" role="alert">{{resetPasswordMessage}}</div>	      	
+					<div class="alert alert-info custome-ander-text reset-result" role="alert" *ngIf="resetPasswordResultMessage != ''" [innerHTML]="resetPasswordResultMessage"></div>	      	
+	    				
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" (click)="hideResetPasswordUserDialog()"><i class="material-icons">close</i></button>
+			        <button type="button" class="btn btn-success" (click)="resetUserPassword()" ><i class="material-icons">lock_open</i></button>
+			      </div>
+			    </div>
+			  </div>		    
+	    	
+	    </div>		
 		    

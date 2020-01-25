@@ -21,6 +21,7 @@ import com.pth.iflow.common.annotations.IflowPostRequestMapping;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.common.models.edo.UserEdo;
+import com.pth.iflow.common.models.edo.UserPasswordChangeRequestEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
 import com.pth.iflow.profile.exceptions.ProfileCustomizedException;
@@ -90,6 +91,36 @@ public class UserController {
     this.tokenUserDataManager.validateToken(headerTokenId);
 
     this.usersHandlerService.deleteUser(ProfileModelEdoMapper.fromEdo(userEdo));
+
+  }
+
+  @ResponseStatus(HttpStatus.CREATED)
+  @IflowPostRequestMapping(value = IflowRestPaths.ProfileModule.USER_RESETPASSWORD)
+  @ResponseBody
+  public void resetUserPassword(@RequestBody final UserPasswordChangeRequestEdo userPasswordChangeRequestEdo,
+      final HttpServletRequest request,
+      @RequestHeader(
+        TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY
+      ) final String headerTokenId)
+      throws ProfileCustomizedException, URISyntaxException, MalformedURLException, IFlowMessageConversionFailureException {
+
+    this.tokenUserDataManager.validateToken(headerTokenId);
+    this.usersHandlerService.resetUserPassword(ProfileModelEdoMapper.fromEdo(userPasswordChangeRequestEdo));
+
+  }
+
+  @ResponseStatus(HttpStatus.CREATED)
+  @IflowPostRequestMapping(value = IflowRestPaths.ProfileModule.USER_DELETE_AUTHENTICATION)
+  @ResponseBody
+  public void deleteUserAuthentication(@RequestBody final UserPasswordChangeRequestEdo userPasswordChangeRequestEdo,
+      final HttpServletRequest request,
+      @RequestHeader(
+        TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY
+      ) final String headerTokenId)
+      throws ProfileCustomizedException, URISyntaxException, MalformedURLException, IFlowMessageConversionFailureException {
+
+    this.tokenUserDataManager.validateToken(headerTokenId);
+    this.usersHandlerService.deleteUserAuthentication(ProfileModelEdoMapper.fromEdo(userPasswordChangeRequestEdo));
 
   }
 

@@ -225,3 +225,9 @@ input.select-date{
 	float: none !important;
 	margin: 0 !important;
 }
+
+.modal-dialog.resetpassword-dialog, .modal-dialog.user-delete-dialog{
+	max-width: calc(100vw - 100px) !important;
+    width: 800px !important;
+}
+

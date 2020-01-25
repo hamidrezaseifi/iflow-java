@@ -89,6 +89,19 @@ public class AuthenticationFromTextFileService implements IAuthenticationService
     return user;
   }
 
+  @Override
+  public void deleteAuthentication(final UserAuthenticationRequest user) {
+
+    logger.debug("Delete user authentication {}", user.getUserIdentity());
+
+    this.verifyCompanyKey(user.getCompanyIdentity());
+
+    this.tempEmailPasswordList.get(user.getCompanyIdentity()).remove(user.getUserIdentity());
+
+    this.writeUserPasswordList();
+
+  }
+
   private void verifyCompanyKey(final String companyIdentity) {
 
     if (this.tempEmailPasswordList.containsKey(companyIdentity) == false) {

@@ -40,7 +40,8 @@ public class UserDataController extends GuiDataControllerBase {
 
     requestUser.setCompanyIdentity(this.getLoggedCompany().getIdentity());
     final User user = this.userHandler.saveUser(requestUser);
-    return user;
+    final User paswordSetUser = this.userHandler.saveUserPassword(user, true);
+    return paswordSetUser;
   }
 
   @ResponseStatus(HttpStatus.CREATED)
@@ -59,6 +60,15 @@ public class UserDataController extends GuiDataControllerBase {
   public void deleteUser(@RequestBody final User user) throws MalformedURLException, IFlowMessageConversionFailureException {
 
     this.userHandler.deleteUser(user);
+  }
+
+  @ResponseStatus(HttpStatus.CREATED)
+  @PostMapping(path = { "/resetpassword" }, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+  @ResponseBody
+  public User resetUserPassword(@RequestBody final User user) throws MalformedURLException, IFlowMessageConversionFailureException {
+
+    final User changedUser = this.userHandler.saveUserPassword(user, true);
+    return changedUser;
   }
 
 }

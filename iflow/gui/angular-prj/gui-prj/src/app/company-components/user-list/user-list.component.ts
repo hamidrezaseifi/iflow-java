@@ -44,6 +44,14 @@ export class UserListComponent implements OnInit {
 	showViewModal :boolean = false;
 	viewingDepartmentMember : Object[] = [];
 
+	resetPasswordMessageBase :string = "";
+	resetPasswordMessage :string = "";
+	resetPasswordResultMessage :string = "";
+	resetPasswordResultMessageBase :string = "";
+	passwordResetingUser :User = new User;
+	showResetPasswordModal :boolean = false;
+
+
 	generalDataObs :Observable<GeneralData> = null;
 	departments :Department[] = [];
 	
@@ -70,6 +78,14 @@ export class UserListComponent implements OnInit {
         	this.deleteMessageBase = res;
         });
 
+        translate.get('user-resetpassword-message').subscribe((res: string) => {
+        	this.resetPasswordMessageBase = res;
+        });
+
+        translate.get('user-resetpassword-result-message').subscribe((res: string) => {
+        	this.resetPasswordResultMessageBase = res;
+        });
+
         this.generalDataObs = this.global.currentSessionDataSubject.asObservable();
 		this.generalDataObs.subscribe(data => {
 			   
@@ -89,7 +105,6 @@ export class UserListComponent implements OnInit {
 		this.userEditForm = this.formBuilder.group({
 			
 			email: ['', Validators.email],
-		    password: ['', Validators.required],
 			firstName: ['', Validators.required],
 		    lastName: ['', Validators.required],
 		    birthDate: ['', Validators.required],
@@ -137,8 +152,6 @@ export class UserListComponent implements OnInit {
 	}
 
 	showCreateUser() {
-		var passwordCtrl:AbstractControl = this.userEditForm.get('password');
-		passwordCtrl.enable();
 
 		this.isCreating = true;
 		this.editingUser = new User;
@@ -154,9 +167,6 @@ export class UserListComponent implements OnInit {
 	}
 
 	showEditUser(user: User) {
-		
-		var passwordCtrl:AbstractControl = this.userEditForm.get('password');
-		passwordCtrl.disable();
 
 		this.isCreating = false;
 		this.editingUser = user;
@@ -232,6 +242,21 @@ export class UserListComponent implements OnInit {
 		this.showEditModal = false;
 	}
 
+
+	hideResetPasswordUserDialog(){
+		this.showResetPasswordModal = false;
+	}
+	
+	showUserResetPassword(user: User) {
+		
+		this.passwordResetingUser = user;
+		this.resetPasswordMessage = this.resetPasswordMessageBase;
+		this.resetPasswordMessage = this.resetPasswordMessage.replace("%" , user.fullName);
+		this.resetPasswordResultMessage = "";
+
+		this.showResetPasswordModal = true;
+	}
+	
 	isMemberOfDepartmentGroup(identity:string): boolean{
 		
 		if(this.editingUser == null){
@@ -352,8 +377,8 @@ export class UserListComponent implements OnInit {
 	}
 	
 	deleteUser(){
-		this.loadingService.showLoading();
 		
+		this.loadingService.showLoading();
 
 		this.editService.deleteUser(this.delitingUser).subscribe(
 		        (result) => {		        	
@@ -375,6 +400,34 @@ export class UserListComponent implements OnInit {
 		);	     
 		
 
+	}
+	
+	resetUserPassword(){
+		
+		this.loadingService.showLoading();	
+
+		this.editService.resetUserPassword(this.passwordResetingUser).subscribe(
+		        (resultUser: User) => {		        	
+		            console.log("Reset user password result success.", resultUser);
+		            //this.showDeleteModal = false;
+		            //this.reload();
+		            
+		    		this.resetPasswordResultMessage = this.resetPasswordResultMessageBase;
+		    		this.resetPasswordResultMessage = this.resetPasswordResultMessage.replace("%" , resultUser.password);
+
+		            
+		        },
+		        response => {
+		        	console.log("Error reset user password", response);
+		        	
+		        	this.errorService.showErrorResponse(response);
+		        	this.loadingService.hideLoading();	 
+		        },
+		        () => {
+		        	
+		        	this.loadingService.hideLoading();	 
+		        }
+		);	  
 	}
 	
 	saveUser() {
@@ -433,7 +486,6 @@ export class UserListComponent implements OnInit {
 	setToControlValues(){
 		if(this.editingUser && this.editingUser){
 			this.userEditForm.controls["email"].setValue(this.editingUser.email);
-			this.userEditForm.controls["password"].setValue(this.editingUser.password);
 			this.userEditForm.controls["firstName"].setValue(this.editingUser.firstName);
 			this.userEditForm.controls["lastName"].setValue(this.editingUser.lastName);
 			this.userEditForm.controls["userAccess"].setValue(this.editingUser.userAccess);
@@ -446,7 +498,6 @@ export class UserListComponent implements OnInit {
 	setFormControlValues(){
 				
 		this.editingUser.email = this.userEditForm.controls["email"].value;
-		this.editingUser.password = this.userEditForm.controls["password"].value;
 		this.editingUser.firstName = this.userEditForm.controls["firstName"].value;
 		this.editingUser.lastName = this.userEditForm.controls["lastName"].value;
 		this.editingUser.userAccess = this.userEditForm.controls["userAccess"].value;
