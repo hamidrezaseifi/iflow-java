@@ -56,6 +56,12 @@ public class CompanyService extends CoreModelEdoMapperService<CompanyEntity, Com
     model.setIdentity(edo.getIdentity());
     model.setStatus(edo.getStatus());
     model.setVersion(edo.getVersion());
+    model.setCompanyType(edo.getCompanyType());
+    model.setCompanyTypeCustome(edo.getCompanyTypeCustome());
+
+    if (model.isIdentityNew() == false) {
+      model.setId(companyDao.getByIdentity(model.getIdentity()).getId());
+    }
 
     return model;
   }
@@ -68,6 +74,8 @@ public class CompanyService extends CoreModelEdoMapperService<CompanyEntity, Com
     edo.setIdentity(model.getIdentity());
     edo.setStatus(model.getStatus());
     edo.setVersion(model.getVersion());
+    edo.setCompanyType(model.getCompanyType());
+    edo.setCompanyTypeCustome(model.getCompanyTypeCustome());
 
     return edo;
   }

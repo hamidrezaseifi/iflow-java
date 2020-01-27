@@ -7,4 +7,6 @@ public interface IAuthenticationService {
   UserAuthenticationRequest authenticate(final UserAuthenticationRequest user);
 
   UserAuthenticationRequest setAuthentication(final UserAuthenticationRequest user);
+
+  void deleteAuthentication(UserAuthenticationRequest request);
 }

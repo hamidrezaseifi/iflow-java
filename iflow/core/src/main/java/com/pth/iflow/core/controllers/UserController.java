@@ -70,8 +70,9 @@ public class UserController {
 
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.USER_READ_BY_IDENTITY)
-  public ResponseEntity<UserEdo> readUserByIdentity(@PathVariable(name = "identity") final String identity, final HttpServletRequest request)
-      throws Exception {
+  public ResponseEntity<UserEdo>
+      readUserByIdentity(@PathVariable(name = "identity") final String identity, final HttpServletRequest request)
+          throws Exception {
 
     final UserEntity user = this.usersService.getUserByIdentity(identity);
 
@@ -164,6 +165,16 @@ public class UserController {
       final HttpServletRequest request) throws Exception {
 
     final ProfileResponse profile = this.usersService.getProfileResponseByEmail(email);
+
+    return ControllerHelper.createResponseEntity(request, this.usersService.toProfileResponseEdo(profile), HttpStatus.OK);
+  }
+
+  @ResponseStatus(HttpStatus.OK)
+  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.USERPROFILE_READ_BY_USERIDENTITY)
+  public ResponseEntity<ProfileResponseEdo> readUserProfileByIdentity(@PathVariable(name = "identity") final String identity,
+      final HttpServletRequest request) throws Exception {
+
+    final ProfileResponse profile = this.usersService.getProfileResponseByIdentity(identity);
 
     return ControllerHelper.createResponseEntity(request, this.usersService.toProfileResponseEdo(profile), HttpStatus.OK);
   }

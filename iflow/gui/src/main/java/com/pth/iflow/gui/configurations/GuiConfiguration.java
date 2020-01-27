@@ -238,6 +238,26 @@ public class GuiConfiguration {
       return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.DELETE_USER_URIBUILDER());
     }
 
+    public URI getResetPasswordUserUri() throws MalformedURLException {
+
+      return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.RESETPASSWORD_USER_URIBUILDER());
+    }
+
+    public URI getDeleteUserAuthenticationUri() throws MalformedURLException {
+
+      return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.DELETE_USER_AUTHENTICATION_URIBUILDER());
+    }
+
+    public URI getReadCompanyUri(final String identity) throws MalformedURLException {
+
+      return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.READ_COMPANY_BY_ID_URIBUILDER(identity));
+    }
+
+    public URI getSaveCompanyUri() throws MalformedURLException {
+
+      return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.SAVE_COMPANY());
+    }
+
   }
 
 }

@@ -7,7 +7,6 @@ import { UserDepartmentGroup } from './user-department-group';
 	birthDate: string;
 	email: string;
     username: string;
-    password: string;
 	firstName: string;
     lastName: string;
 	fullName: string;
@@ -15,6 +14,7 @@ import { UserDepartmentGroup } from './user-department-group';
 	companyIdentity: string;
 	userAccess: UserAccessType;
 	userAccessLabel: string;
+	password: string;
 
 	userDepartments: UserDepartment[] = [];
 	userDepartmentGroups: UserDepartmentGroup[] = [];

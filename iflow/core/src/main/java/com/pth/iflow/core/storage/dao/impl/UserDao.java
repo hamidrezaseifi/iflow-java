@@ -1,6 +1,5 @@
 package com.pth.iflow.core.storage.dao.impl;
 
-import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -83,30 +82,6 @@ public class UserDao extends EntityDaoBase<UserEntity> implements IUserDao {
     final List<UserEntity> list = typedQuery.getResultList();
     entityManager.close();
     return list.size() > 0 ? list.get(0) : null;
-  }
-
-  @Override
-  public List<UserEntity> getListByIdentityList(final Collection<String> identityList) {
-
-    final EntityManager entityManager = createEntityManager();
-
-    final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-    final CriteriaQuery<UserEntity> query = criteriaBuilder.createQuery(entityClass());
-    final Root<UserEntity> root = query.from(entityClass());
-    query.select(root);
-
-    final Path<String> identityPath = root.get("identity");
-    final Predicate predicate = identityPath.in(identityList);
-    query.where(predicate);
-
-    final TypedQuery<UserEntity> typedQuery = entityManager.createQuery(query);
-
-    // final String qr =
-    // typedQuery.unwrap(org.hibernate.query.Query.class).getQueryString();
-    // System.out.println("search workflow query: " + qr);
-    final List<UserEntity> list = typedQuery.getResultList();
-    entityManager.close();
-    return list;
   }
 
   @Override

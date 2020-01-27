@@ -17,9 +17,10 @@ import { User } from '../../ui-models';
 export class UserEditService extends HttpErrorResponseHelper {
 
 	loadUsersUrl :string = "/users/data/list";
-	createUsersUrl :string = "/users/data/create";
-	updateUsersUrl :string = "/users/data/update";
-	deleteUsersUrl :string = "/users/data/delete";
+	createUserUrl :string = "/users/data/create";
+	updateUserUrl :string = "/users/data/update";
+	deleteUserUrl :string = "/users/data/delete";
+	resetUserPasswordUrl :string = "/users/data/resetpassword";
  
 	constructor(
 			protected http: HttpClient,
@@ -44,7 +45,7 @@ export class UserEditService extends HttpErrorResponseHelper {
 		
 	    const httpOptions = { headers: HttpHepler.generateJsonHeader() };
 	    
-		return this.http.post(this.createUsersUrl, user, httpOptions);	    
+		return this.http.post(this.createUserUrl, user, httpOptions);	    
 		
 	};
 	
@@ -52,7 +53,7 @@ export class UserEditService extends HttpErrorResponseHelper {
 		
 	    const httpOptions = { headers: HttpHepler.generateJsonHeader() };
 	    
-		return this.http.post(this.updateUsersUrl, user, httpOptions);	    
+		return this.http.post(this.updateUserUrl, user, httpOptions);	    
 		
 	};
 	
@@ -60,7 +61,15 @@ export class UserEditService extends HttpErrorResponseHelper {
 		
 	    const httpOptions = { headers: HttpHepler.generateJsonHeader() };
 	    
-		return this.http.post(this.deleteUsersUrl, user, httpOptions);	    
+		return this.http.post(this.deleteUserUrl, user, httpOptions);	    
+		
+	};
+	
+	resetUserPassword(user: User){
+		
+	    const httpOptions = { headers: HttpHepler.generateJsonHeader() };
+	    
+		return this.http.post(this.resetUserPasswordUrl, user, httpOptions);	    
 		
 	};
 }

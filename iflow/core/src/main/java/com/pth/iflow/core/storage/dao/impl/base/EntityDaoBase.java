@@ -1,5 +1,6 @@
 package com.pth.iflow.core.storage.dao.impl.base;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pth.iflow.core.model.entity.workflow.WorkflowActionEntity;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
+import com.pth.iflow.core.storage.dao.helper.EntityManagerHelper;
 import com.pth.iflow.core.storage.dao.helper.ICoreEntityVersion;
 
 @Transactional
@@ -139,6 +141,10 @@ public abstract class EntityDaoBase<T extends ICoreEntityVersion> extends Entity
 
   public List<T> getListByIdentityList(final Collection<String> identityList) {
 
+    if (identityList.size() == 0) {
+      return new ArrayList<>();
+    }
+
     final EntityManager entityManager = createEntityManager();
 
     final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
@@ -152,9 +158,8 @@ public abstract class EntityDaoBase<T extends ICoreEntityVersion> extends Entity
 
     final TypedQuery<T> typedQuery = entityManager.createQuery(query);
 
-    // final String qr =
-    // typedQuery.unwrap(org.hibernate.query.Query.class).getQueryString();
-    // System.out.println("search workflow query: " + qr);
+    final String qr = typedQuery.unwrap(org.hibernate.query.Query.class).getQueryString();
+    System.out.println("search workflow query: " + qr);
     final List<T> list = typedQuery.getResultList();
     entityManager.close();
     return list;

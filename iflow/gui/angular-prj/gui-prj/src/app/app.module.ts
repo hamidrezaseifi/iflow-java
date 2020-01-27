@@ -12,7 +12,6 @@ import { FormsModule } from '@angular/forms';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatTableModule } from '@angular/material/table';
 import { StompConfig, StompService } from '@stomp/ng2-stompjs';
-import * as SockJS from 'sockjs-client';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 
@@ -52,6 +51,7 @@ import { FilePreviewComponent } from './components/file-preview/file-preview.com
 import { WmFileUploadComponent } from './components/wm-file-upload/wm-file-upload.component';
 import { WmAssignListComponent } from './components/wm-assign-list/wm-assign-list.component';
 import { UserListComponent } from './company-components/user-list/user-list.component';
+import { CompanyInfoComponent } from './company-components/company-info/company-info.component';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -106,6 +106,7 @@ export function createTranslateLoader(http: HttpClient) {
     WmFileUploadComponent,
     WmAssignListComponent,
     UserListComponent,
+    CompanyInfoComponent,
     
   ],
   providers: [

@@ -28,6 +28,8 @@ import com.pth.iflow.core.storage.dao.helper.EntityListener;
 @Table(name = "workflow_message")
 public class WorkflowMessageEntity extends EntityIdentityHelper {
 
+  private static final long serialVersionUID = -3112387006573750725L;
+
   public static volatile SingularAttribute<WorkflowEntity, Long> workflowAttr;
   public static volatile SingularAttribute<WorkflowTypeStepEntity, Long> stepAttr;
   public static volatile SingularAttribute<UserEntity, Long> userAttr;
@@ -65,11 +67,11 @@ public class WorkflowMessageEntity extends EntityIdentityHelper {
   private Integer expireDays;
 
   @CreationTimestamp
-  @Column(name = "created_at")
+  @Column(name = "created_at", insertable = false, updatable = false)
   private Date createdAt;
 
   @UpdateTimestamp
-  @Column(name = "updated_at")
+  @Column(name = "updated_at", insertable = false, updatable = false)
   private Date updatedAt;
 
   @ManyToOne(fetch = FetchType.LAZY)

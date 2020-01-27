@@ -18,7 +18,7 @@ import com.pth.iflow.common.enums.EWorkflowActionStatus;
 import com.pth.iflow.core.model.WorkflowSearchFilter;
 import com.pth.iflow.core.model.entity.workflow.WorkflowActionEntity;
 import com.pth.iflow.core.model.entity.workflow.WorkflowEntity;
-import com.pth.iflow.core.storage.dao.impl.base.EntityManagerHelper;
+import com.pth.iflow.core.storage.dao.helper.EntityManagerHelper;
 import com.pth.iflow.core.storage.dao.interfaces.IWorkflowSearchDao;
 
 @Repository

@@ -7,7 +7,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,12 +24,12 @@ import org.hibernate.annotations.UpdateTimestamp;
 import com.pth.iflow.common.enums.EIdentity;
 import com.pth.iflow.core.model.entity.CompanyEntity;
 import com.pth.iflow.core.storage.dao.helper.EntityIdentityHelper;
-import com.pth.iflow.core.storage.dao.helper.EntityListener;
 
 @Entity
-@EntityListeners(EntityListener.class)
 @Table(name = "workflow")
 public class WorkflowEntity extends EntityIdentityHelper {
+
+  private static final long serialVersionUID = 6541443032441596046L;
 
   @Id
   @Column(name = "id")

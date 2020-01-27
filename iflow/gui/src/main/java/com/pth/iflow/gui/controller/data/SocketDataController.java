@@ -13,11 +13,13 @@ import java.util.Set;
 import javax.imageio.ImageIO;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageExceptionHandler;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.annotation.SendToUser;
+import org.springframework.messaging.simp.annotation.SubscribeMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -54,6 +56,7 @@ public class SocketDataController extends GuiSocketControllerBase {
 
   @MessageMapping("/resetmessage")
   @SendToUser("/socket/messages")
+  @SubscribeMapping("/messages")
   public GuiSocketMessage resetMessageSocket(final GuiSocketMessage message, final Principal principal,
       final SimpMessageHeaderAccessor headerAccessor) throws Exception {
 
@@ -174,6 +177,12 @@ public class SocketDataController extends GuiSocketControllerBase {
     words.put("invoice-invoicedate", dateWorldList);
     words.put("test", testList);
     return words;
+  }
+
+  @MessageExceptionHandler
+  public String handleException(final Throwable exception) {
+
+    return exception.getMessage();
   }
 
 }

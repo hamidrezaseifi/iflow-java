@@ -6,11 +6,12 @@ import { StompService, StompState } from '@stomp/ng2-stompjs';
 import { Message } from '@stomp/stompjs';
 import * as SockJS from 'sockjs-client';
 import * as Stomp from 'stompjs';
+import { Router, NavigationEnd } from '@angular/router';
 
 import { Workflow } from '../wf-models';
 import { WorkflowMessage } from '../wf-models';
 import { User, MenuItem } from '../ui-models';
-import { Router, NavigationEnd } from '@angular/router';
+import { GlobalSocket } from '../services/global-socket';
 
 import { WorkflowMessageService } from '../services/workflow/workflow-message.service';
 import { ErrorServiceService } from '../services/error-service.service';
@@ -39,8 +40,6 @@ export class MessageBarComponent implements OnInit, OnDestroy {
 	public status = "Not Connected";
 	public subscribed: boolean;
 	public requesting : boolean = false;
-	private socketMessages: Observable<Message>;
-	private state: Observable<StompState>;
 	
 	private stompClient: any = null;
 	
@@ -92,7 +91,7 @@ export class MessageBarComponent implements OnInit, OnDestroy {
 	constructor(protected router: Router, 
 			private messageService :WorkflowMessageService,
 			private errorService: ErrorServiceService,
-			//private _stompService: StompService,
+			private globalSocket: GlobalSocket,
 			) { 
 		
 	}
@@ -218,12 +217,6 @@ export class MessageBarComponent implements OnInit, OnDestroy {
             //_this.stompClient.reconnect_delay = 2000;
         }, _this.errorCallBack);
 		
-		//this.socketMessages = this._stompService.subscribe('/socket/user/socket/messages');
-
-		console.log("Subscribe Message: " , this.socketMessages);
-		
-	    //this.subscription = this.socketMessages.subscribe(this.receiveMessage);
-
 	    this.readMessageList(true);
 	    
 	    this.setConnected(true);

@@ -21,6 +21,8 @@ import com.pth.iflow.core.storage.dao.helper.EntityListener;
 @EntityListeners(EntityListener.class)
 public class CompanyEntity extends EntityIdentityHelper {
 
+  private static final long serialVersionUID = 2937568589389217869L;
+
   @Id
   @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +34,12 @@ public class CompanyEntity extends EntityIdentityHelper {
   @Column(name = "company_name")
   private String companyName;
 
+  @Column(name = "company_type")
+  private String companyType;
+
+  @Column(name = "company_type_custome")
+  private String companyTypeCustome;
+
   @Column(name = "status")
   private Integer status;
 
@@ -39,11 +47,11 @@ public class CompanyEntity extends EntityIdentityHelper {
   private Integer version;
 
   @CreationTimestamp
-  @Column(name = "created_at")
+  @Column(name = "created_at", insertable = false, updatable = false)
   private Date createdAt;
 
   @UpdateTimestamp
-  @Column(name = "updated_at")
+  @Column(name = "updated_at", insertable = false, updatable = false)
   private Date updatedAt;
 
   /**
@@ -91,6 +99,26 @@ public class CompanyEntity extends EntityIdentityHelper {
   public void setCompanyName(final String companyName) {
 
     this.companyName = companyName;
+  }
+
+  public String getCompanyType() {
+
+    return companyType;
+  }
+
+  public void setCompanyType(final String companyType) {
+
+    this.companyType = companyType;
+  }
+
+  public String getCompanyTypeCustome() {
+
+    return companyTypeCustome;
+  }
+
+  public void setCompanyTypeCustome(final String companyTypeCustome) {
+
+    this.companyTypeCustome = companyTypeCustome;
   }
 
   /**

@@ -14,11 +14,14 @@ import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.profile.exceptions.ProfileCustomizedException;
 import com.pth.iflow.profile.model.ProfileResponse;
 import com.pth.iflow.profile.model.User;
+import com.pth.iflow.profile.model.UserAuthenticationRequest;
 import com.pth.iflow.profile.model.UserDepartment;
 import com.pth.iflow.profile.model.UserDepartmentGroup;
+import com.pth.iflow.profile.model.UserPasswordChangeRequest;
 import com.pth.iflow.profile.service.access.IDepartmentAccessService;
 import com.pth.iflow.profile.service.access.IDepartmentGroupAccessService;
 import com.pth.iflow.profile.service.access.IUsersAccessService;
+import com.pth.iflow.profile.service.handler.IAuthenticationService;
 import com.pth.iflow.profile.service.handler.IUsersHandlerService;
 
 @Service
@@ -27,14 +30,17 @@ public class UsersHandlerService implements IUsersHandlerService {
   private final IUsersAccessService usersService;
   private final IDepartmentAccessService departmentAccessService;
   private final IDepartmentGroupAccessService departmentGroupAccessService;
+  private final IAuthenticationService authenticationService;
 
   public UsersHandlerService(@Autowired final IUsersAccessService usersService,
       @Autowired final IDepartmentAccessService departmentAccessService,
-      @Autowired final IDepartmentGroupAccessService departmentGroupAccessService) {
+      @Autowired final IDepartmentGroupAccessService departmentGroupAccessService,
+      @Autowired final IAuthenticationService authenticationService) {
 
     this.usersService = usersService;
     this.departmentAccessService = departmentAccessService;
     this.departmentGroupAccessService = departmentGroupAccessService;
+    this.authenticationService = authenticationService;
   }
 
   @Override
@@ -76,6 +82,30 @@ public class UsersHandlerService implements IUsersHandlerService {
   public void deleteUser(final User user) throws MalformedURLException, IFlowMessageConversionFailureException {
 
     this.usersService.deleteUser(user);
+
+  }
+
+  @Override
+  public void resetUserPassword(final UserPasswordChangeRequest userPasswordChangeRequest) {
+
+    final UserAuthenticationRequest request = new UserAuthenticationRequest();
+    request.setCompanyIdentity(userPasswordChangeRequest.getCompanyIdentity());
+    request.setPassword(userPasswordChangeRequest.getPassword());
+    request.setUserIdentity(userPasswordChangeRequest.getIdentity());
+
+    this.authenticationService.setAuthentication(request);
+
+  }
+
+  @Override
+  public void deleteUserAuthentication(final UserPasswordChangeRequest userPasswordChangeRequest) {
+
+    final UserAuthenticationRequest request = new UserAuthenticationRequest();
+    request.setCompanyIdentity(userPasswordChangeRequest.getCompanyIdentity());
+    request.setPassword(userPasswordChangeRequest.getPassword());
+    request.setUserIdentity(userPasswordChangeRequest.getIdentity());
+
+    this.authenticationService.deleteAuthentication(request);
 
   }
 

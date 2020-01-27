@@ -24,6 +24,7 @@ import com.pth.iflow.common.models.edo.UserDepartmentEdo;
 import com.pth.iflow.common.models.edo.UserDepartmentGroupEdo;
 import com.pth.iflow.common.models.edo.UserEdo;
 import com.pth.iflow.common.models.edo.UserGroupEdo;
+import com.pth.iflow.common.models.edo.UserPasswordChangeRequestEdo;
 import com.pth.iflow.common.models.edo.WorkflowMessageEdo;
 import com.pth.iflow.profile.model.Company;
 import com.pth.iflow.profile.model.CompanyProfile;
@@ -37,6 +38,7 @@ import com.pth.iflow.profile.model.UserAuthenticationSession;
 import com.pth.iflow.profile.model.UserDepartment;
 import com.pth.iflow.profile.model.UserDepartmentGroup;
 import com.pth.iflow.profile.model.UserGroup;
+import com.pth.iflow.profile.model.UserPasswordChangeRequest;
 import com.pth.iflow.profile.model.WorkflowMessage;
 
 public class ProfileModelEdoMapper {
@@ -50,6 +52,8 @@ public class ProfileModelEdoMapper {
     edo.setIdentity(model.getIdentity());
     edo.setStatus(model.getStatus());
     edo.setVersion(model.getVersion());
+    edo.setCompanyType(model.getCompanyType());
+    edo.setCompanyTypeCustome(model.getCompanyTypeCustome());
 
     return edo;
   }
@@ -63,6 +67,20 @@ public class ProfileModelEdoMapper {
     model.setIdentity(edo.getIdentity());
     model.setStatus(edo.getStatus());
     model.setVersion(edo.getVersion());
+    model.setCompanyType(edo.getCompanyType());
+    model.setCompanyTypeCustome(edo.getCompanyTypeCustome());
+
+    return model;
+  }
+
+  public static UserPasswordChangeRequest fromEdo(final UserPasswordChangeRequestEdo edo) throws IFlowMessageConversionFailureException {
+
+    validateCustomer(edo);
+
+    final UserPasswordChangeRequest model = new UserPasswordChangeRequest();
+    model.setIdentity(edo.getIdentity());
+    model.setPassword(edo.getPassword());
+    model.setCompanyIdentity(edo.getCompanyIdentity());
 
     return model;
   }

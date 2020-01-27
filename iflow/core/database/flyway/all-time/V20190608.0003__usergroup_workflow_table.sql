@@ -7,6 +7,8 @@ CREATE TABLE companies (
   id bigint NOT NULL PRIMARY KEY DEFAULT nextval('companies_id_seq'),
   identity varchar(45) DEFAULT NULL,
   company_name varchar(45) NOT NULL,
+  company_type varchar(45) NOT NULL,
+  company_type_custome varchar(45) NOT NULL,
   status smallint NOT NULL DEFAULT 1,
   version integer NOT NULL DEFAULT 1,
   created_at timestamp without time zone NOT NULL default (now() at time zone 'utc'),

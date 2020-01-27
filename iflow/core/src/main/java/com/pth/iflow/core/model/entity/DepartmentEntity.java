@@ -43,6 +43,8 @@ import com.pth.iflow.core.storage.dao.helper.EntityListener;
 @EntityListeners(EntityListener.class)
 public class DepartmentEntity extends EntityIdentityHelper {
 
+  private static final long serialVersionUID = 5330442911402791281L;
+
   @Id
   @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -64,11 +66,11 @@ public class DepartmentEntity extends EntityIdentityHelper {
   private Integer version;
 
   @CreationTimestamp
-  @Column(name = "created_at")
+  @Column(name = "created_at", insertable = false, updatable = false)
   private Date createdAt;
 
   @UpdateTimestamp
-  @Column(name = "updated_at")
+  @Column(name = "updated_at", insertable = false, updatable = false)
   private Date updatedAt;
 
   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)

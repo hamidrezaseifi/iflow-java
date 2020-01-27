@@ -4,11 +4,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.pth.iflow.common.exceptions.IFlowInvalidEnumValueException;
 
-/**
- * A enumeration of names for MDM used modules
- *
- * @author bjoern frohberg
- */
 public enum EAssignType implements IEnumNameValidator {
   NONE("None"),
   USER("User"),
@@ -18,17 +13,20 @@ public enum EAssignType implements IEnumNameValidator {
   private String enumName;
 
   EAssignType(final String enumName) {
+
     this.enumName = enumName;
   }
 
   @Override
   @JsonValue
   public String getIdentity() {
+
     return this.enumName;
   }
 
   @JsonCreator
   public static EAssignType valueFromName(final String nameString) {
+
     for (final EAssignType item : values()) {
       if (item.enumName.equals(nameString)) {
         return item;

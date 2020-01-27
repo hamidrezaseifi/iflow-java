@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -21,14 +22,17 @@ public class UserDepartmentEntity {
 
   @Id
   @Column(name = "id")
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "user_department_id_seq")
+  @SequenceGenerator(
+                     name = "user_department_id_seq", allocationSize = 1, initialValue = 1, sequenceName = "user_department_id_seq"
+  )
   private Long id;
 
   @Column(name = "member_type")
   private int memberType;
 
   @CreationTimestamp
-  @Column(name = "created_at")
+  @Column(name = "created_at", insertable = false, updatable = false)
   private Date createdAt;
 
   @ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.REFRESH })

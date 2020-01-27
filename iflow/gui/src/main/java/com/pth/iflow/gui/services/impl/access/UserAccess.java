@@ -12,7 +12,9 @@ import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.common.models.edo.UserEdo;
 import com.pth.iflow.common.models.edo.UserListEdo;
+import com.pth.iflow.common.models.edo.UserPasswordChangeRequestEdo;
 import com.pth.iflow.gui.configurations.GuiConfiguration;
+import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.User;
 import com.pth.iflow.gui.models.mapper.GuiModelEdoMapper;
 import com.pth.iflow.gui.models.ui.SessionUserInfo;
@@ -41,7 +43,7 @@ public class UserAccess implements IUserAccess {
   @Override
   public User saveUser(final User user) throws MalformedURLException, IFlowMessageConversionFailureException {
 
-    logger.debug("Save workflow");
+    logger.debug("Save user");
 
     final UserEdo userEdo = this.restTemplate
         .callRestPost(
@@ -68,11 +70,42 @@ public class UserAccess implements IUserAccess {
   @Override
   public void deleteUser(final User user) throws MalformedURLException, IFlowMessageConversionFailureException {
 
-    logger.debug("Delete workflow");
+    logger.debug("Delete user");
 
     this.restTemplate
         .callRestPost(
             this.profileModuleAccessConfig.getDeleteUserUri(), EModule.CORE, GuiModelEdoMapper.toEdo(user), Void.class,
+            this.sessionUserInfo.getToken(), true);
+
+  }
+
+  @Override
+  public void resetUserPassword(final User user) throws GuiCustomizedException, MalformedURLException {
+
+    logger.debug("Reset User Password");
+
+    final UserPasswordChangeRequestEdo request = new UserPasswordChangeRequestEdo();
+    request.setCompanyIdentity(user.getCompanyIdentity());
+    request.setIdentity(user.getEmail());
+    request.setPassword(user.getPassword());
+
+    this.restTemplate
+        .callRestPost(this.profileModuleAccessConfig.getResetPasswordUserUri(), EModule.CORE, request, Void.class,
+            this.sessionUserInfo.getToken(), true);
+  }
+
+  @Override
+  public void deleteAuthenticate(final User user) throws GuiCustomizedException, MalformedURLException {
+
+    logger.debug("Delete User authetication");
+
+    final UserPasswordChangeRequestEdo request = new UserPasswordChangeRequestEdo();
+    request.setCompanyIdentity(user.getCompanyIdentity());
+    request.setIdentity(user.getEmail());
+    request.setPassword("no-password");
+
+    this.restTemplate
+        .callRestPost(this.profileModuleAccessConfig.getDeleteUserAuthenticationUri(), EModule.CORE, request, Void.class,
             this.sessionUserInfo.getToken(), true);
 
   }

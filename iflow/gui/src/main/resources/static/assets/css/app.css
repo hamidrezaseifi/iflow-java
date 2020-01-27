@@ -954,3 +954,9 @@ a.nav-link.active[role=tab]{
 	color: #495057;
 	font-weight: bold;
 }
+
+.reset-result code {
+	background-color: lightgray;
+    padding: 3px 10px;
+}
+

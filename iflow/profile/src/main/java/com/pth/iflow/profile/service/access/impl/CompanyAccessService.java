@@ -1,7 +1,6 @@
 package com.pth.iflow.profile.service.access.impl;
 
 import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +35,7 @@ public class CompanyAccessService implements ICompanyAccessService {
 
   @Override
   public Company getByIdentity(final String comapnyIdentity)
-      throws ProfileCustomizedException, URISyntaxException, MalformedURLException, IFlowMessageConversionFailureException {
+      throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     logger.debug("Request company data for id {}", comapnyIdentity);
 
@@ -44,6 +43,19 @@ public class CompanyAccessService implements ICompanyAccessService {
         .callRestGet(
             this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.READ_COMPANY_BY_ID(comapnyIdentity)), EModule.CORE,
             CompanyEdo.class, true);
+
+    return ProfileModelEdoMapper.fromEdo(edo);
+  }
+
+  @Override
+  public Company saveCompany(final Company company)
+      throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+
+    logger.debug("Saving company {}", company);
+
+    final CompanyEdo edo = this.restTemplate
+        .callRestPost(this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.SAVE_COMPANY()), EModule.CORE,
+            ProfileModelEdoMapper.toEdo(company), CompanyEdo.class, true);
 
     return ProfileModelEdoMapper.fromEdo(edo);
   }

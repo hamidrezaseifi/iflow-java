@@ -70,16 +70,16 @@ public class AuthenticationController {
         .findValidateByUserIdentity(authUser.getUserIdentity(),
             authUser.getCompanyIdentity(), true);
     if (session == null) {
-      final ProfileResponse profile = this.usersService.getUserProfileByIdentity(authUser.getUserIdentity());
+      final ProfileResponse profile = this.usersService.getUserProfileByEmail(authUser.getUserIdentity());
       if (profile.getCompanyProfile().getCompany().hasSameIdentity(authUser.getCompanyIdentity()) == false) {
         throw new ProfileCustomizedException("Invalid company-identity!", "", EModule.PROFILE.getModuleName(),
             EIFlowErrorType.COMPANY_NOTFOUND);
       }
 
-      session = this.sessionManager.addSession(authUser.getUserIdentity(), authUser.getCompanyIdentity());
+      session = this.sessionManager.addSession(profile.getUser().getIdentity(), authUser.getCompanyIdentity());
     }
 
-    this.sessionManager.updateUser(authUser.getUserIdentity(), session.getSessionid());
+    this.sessionManager.updateUser(session.getUserIdentity(), session.getSessionid());
 
     final UserAuthenticationResponseEdo authRespEdo = ProfileModelEdoMapper.toEdo(session);
 

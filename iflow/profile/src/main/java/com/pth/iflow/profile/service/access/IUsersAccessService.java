@@ -16,7 +16,10 @@ public interface IUsersAccessService {
   List<User> getUserListByCompanyIdentity(final String companyId)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  ProfileResponse getUserProfileByIdentity(final String email)
+  ProfileResponse getUserProfileByEmail(final String email)
+      throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
+
+  ProfileResponse getUserProfileByIdentity(final String identity)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
   public User saveUser(final User user) throws MalformedURLException, IFlowMessageConversionFailureException;

@@ -24,7 +24,7 @@ public class CompanyWorkflowTypeControllerEntity {
   private CompanyWorkflowTypeControllerId id;
 
   @CreationTimestamp
-  @Column(name = "created_at")
+  @Column(name = "created_at", insertable = false, updatable = false)
   private Date createdAt;
 
   @ManyToOne(fetch = FetchType.LAZY)

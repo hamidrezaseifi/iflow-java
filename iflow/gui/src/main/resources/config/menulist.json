@@ -2,6 +2,7 @@
 	{"id":"menu-home", "label":"menu-home","url":"/","image":"glyphicon glyphicon-home", "status": 1, "children":[]},
 	{"id":"menu-company", "label":"menu-company","url":"#","image":"glyphicon glyphicon-tasks", "status": 1,"children":
 		[
+			{"id":"menu-company-info", "label":"menu-company-info","url":"/company/info","image":"glyphicon glyphicon-tasks", "status": 1,"children":[]},
 			{"id":"menu-userlist", "label":"menu-userlist","url":"/useres/list","image":"glyphicon glyphicon-user", "status": 1,"children":[]},
 			{"id":"menu-workflowtype-list", "label":"menu-workflowtype-list","url":"/companies/workflowtype","image":"glyphicon glyphicon-tasks", "status": 1,"children":[]}
 		]

@@ -15,6 +15,7 @@ import { EditInvoiceComponent } from './wm-components/edit/edit-invoice/edit-inv
 import { EditSingleTaskComponent } from './wm-components/edit/edit-single-task/edit-single-task.component';
 import { EditTestthreeTaskComponent } from './wm-components/edit/edit-testthree-task/edit-testthree-task.component';
 import { UserListComponent } from './company-components/user-list/user-list.component';
+import { CompanyInfoComponent } from './company-components/company-info/company-info.component';
 
 
 import { TestComponent } from './test/test.component';
@@ -35,6 +36,8 @@ const routes: Routes = [
     
     { path: 'useres/list', component: UserListComponent, canActivate: [AuthenticationService] },
     
+    { path: 'company/info', component: CompanyInfoComponent, canActivate: [AuthenticationService] },
+
     { path: 'test', component: TestComponent },
     
     { path: 'auth/login', component: LoginComponent },
