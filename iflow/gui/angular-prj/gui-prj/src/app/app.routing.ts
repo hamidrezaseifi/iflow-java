@@ -16,6 +16,7 @@ import { EditSingleTaskComponent } from './wm-components/edit/edit-single-task/e
 import { EditTestthreeTaskComponent } from './wm-components/edit/edit-testthree-task/edit-testthree-task.component';
 import { UserListComponent } from './company-components/user-list/user-list.component';
 import { CompanyInfoComponent } from './company-components/company-info/company-info.component';
+import { DepartmentsListComponent } from './company-components/departments-list/departments-list.component';
 
 
 import { TestComponent } from './test/test.component';
@@ -34,7 +35,9 @@ const routes: Routes = [
     { path: 'workflow/edit/threetaskworkflowtype/:identity', component: EditTestthreeTaskComponent, canActivate: [AuthenticationService] },
     { path: 'workflow/edit/invoiceworkflowtype/:identity', component: EditInvoiceComponent, canActivate: [AuthenticationService] },
     
-    { path: 'useres/list', component: UserListComponent, canActivate: [AuthenticationService] },
+    { path: 'users/list', component: UserListComponent, canActivate: [AuthenticationService] },
+    
+    { path: 'departments/list', component: DepartmentsListComponent, canActivate: [AuthenticationService] },
     
     { path: 'company/info', component: CompanyInfoComponent, canActivate: [AuthenticationService] },
 

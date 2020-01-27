@@ -52,6 +52,7 @@ import { WmFileUploadComponent } from './components/wm-file-upload/wm-file-uploa
 import { WmAssignListComponent } from './components/wm-assign-list/wm-assign-list.component';
 import { UserListComponent } from './company-components/user-list/user-list.component';
 import { CompanyInfoComponent } from './company-components/company-info/company-info.component';
+import { DepartmentsListComponent } from './company-components/departments-list/departments-list.component';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -107,6 +108,7 @@ export function createTranslateLoader(http: HttpClient) {
     WmAssignListComponent,
     UserListComponent,
     CompanyInfoComponent,
+    DepartmentsListComponent,
     
   ],
   providers: [
