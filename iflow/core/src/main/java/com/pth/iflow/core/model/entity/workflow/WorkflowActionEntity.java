@@ -26,27 +26,27 @@ public class WorkflowActionEntity {
   @Id
   @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long           id;
+  private Long id;
 
   @Column(name = "comments")
-  private String         comments;
+  private String comments;
 
   @Column(name = "assign_to")
-  private Long           assignToId;
+  private Long assignToId;
 
   @Column(name = "current_step_id")
-  private Long           currentStepId;
+  private Long currentStepId;
 
   @Column(name = "status")
-  private Integer        status;
+  private Integer status;
 
   @CreationTimestamp
-  @Column(name = "created_at")
-  private Date           createdAt;
+  @Column(name = "created_at", insertable = false, updatable = false)
+  private Date createdAt;
 
   @UpdateTimestamp
-  @Column(name = "updated_at")
-  private Date           updatedAt;
+  @Column(name = "updated_at", insertable = false, updatable = false)
+  private Date updatedAt;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "workflow_id", nullable = false)
@@ -55,7 +55,7 @@ public class WorkflowActionEntity {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "assign_to", nullable = true, insertable = false, updatable = false)
   @NotFound(action = NotFoundAction.IGNORE)
-  private UserEntity     assignToUser;
+  private UserEntity assignToUser;
 
   public WorkflowActionEntity() {
 
@@ -64,66 +64,82 @@ public class WorkflowActionEntity {
   }
 
   public Long getId() {
+
     return this.id;
   }
 
   public void setId(final Long id) {
+
     this.id = id;
   }
 
   public String getComments() {
+
     return this.comments;
   }
 
   public void setComments(final String comments) {
+
     this.comments = comments;
   }
 
   public Integer getStatus() {
+
     return this.status;
   }
 
   public void setStatus(final Integer status) {
+
     this.status = status;
   }
 
   public Date getCreatedAt() {
+
     return this.createdAt;
   }
 
   public void setCreatedAt(final Date createdAt) {
+
     this.createdAt = createdAt;
   }
 
   public Date getUpdatedAt() {
+
     return this.updatedAt;
   }
 
   public void setUpdatedAt(final Date updatedAt) {
+
     this.updatedAt = updatedAt;
   }
 
   public Long getCurrentStepId() {
+
     return currentStepId;
   }
 
   public void setCurrentStepId(final Long currentStepId) {
+
     this.currentStepId = currentStepId;
   }
 
   public Long getAssignToId() {
+
     return assignToId;
   }
 
   public void setAssignToId(final Long assignToId) {
+
     this.assignToId = assignToId;
   }
 
   public WorkflowEntity getWorkflowEntity() {
+
     return workflowEntity;
   }
 
   public void setWorkflowEntity(final WorkflowEntity workflowEntity) {
+
     this.workflowEntity = workflowEntity;
   }
 

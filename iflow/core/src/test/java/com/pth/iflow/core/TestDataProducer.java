@@ -68,7 +68,7 @@ public class TestDataProducer {
     company.setIdentity("identifyid");
     company.setStatus(1);
     company.setVersion(1);
-    company.setCompanyType(ECompanyType.EINZELUNTERNEHMEN.getIdentity());
+    company.setCompanyType(ECompanyType.EINZELUNTERNEHMEN.name());
     company.setCompanyTypeCustome("companyTypeCustome");
 
     return company;
@@ -81,7 +81,7 @@ public class TestDataProducer {
     edo.setIdentity("identifyid");
     edo.setStatus(1);
     edo.setVersion(1);
-    edo.setCompanyType(ECompanyType.EINZELUNTERNEHMEN.getIdentity());
+    edo.setCompanyType(ECompanyType.EINZELUNTERNEHMEN.name());
     edo.setCompanyTypeCustome("companyTypeCustome");
 
     return edo;

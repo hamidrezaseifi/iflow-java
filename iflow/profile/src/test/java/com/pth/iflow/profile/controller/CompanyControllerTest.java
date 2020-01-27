@@ -85,7 +85,7 @@ public class CompanyControllerTest extends TestDataProducer {
     final String responseAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(companyEdo);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.ProfileModule.COMPANYIDENTITY_READ_BY_IDENTITY, "ident1")
+        .perform(MockMvcRequestBuilders.get(IflowRestPaths.ProfileModule.COMPANY_READ_BY_IDENTITY, "ident1")
             .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, this.TestToken))
         .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(responseAsXmlString));
@@ -125,7 +125,7 @@ public class CompanyControllerTest extends TestDataProducer {
     final String responseAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.ProfileModule.COMPANYIDENTITY_READ_USERGROUP_LIST, "ident1")
+        .perform(MockMvcRequestBuilders.get(IflowRestPaths.ProfileModule.COMPANY_READ_USERGROUP_LIST, "ident1")
             .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, this.TestToken))
         .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(responseAsXmlString));
@@ -144,7 +144,7 @@ public class CompanyControllerTest extends TestDataProducer {
     final String responseAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.ProfileModule.COMPANYIDENTITY_READ_DEPARTMENT_LIST, "ident1")
+        .perform(MockMvcRequestBuilders.get(IflowRestPaths.ProfileModule.COMPANY_READ_DEPARTMENT_LIST, "ident1")
             .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, this.TestToken))
         .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(responseAsXmlString));

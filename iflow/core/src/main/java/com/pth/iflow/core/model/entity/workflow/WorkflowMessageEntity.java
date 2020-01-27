@@ -67,11 +67,11 @@ public class WorkflowMessageEntity extends EntityIdentityHelper {
   private Integer expireDays;
 
   @CreationTimestamp
-  @Column(name = "created_at")
+  @Column(name = "created_at", insertable = false, updatable = false)
   private Date createdAt;
 
   @UpdateTimestamp
-  @Column(name = "updated_at")
+  @Column(name = "updated_at", insertable = false, updatable = false)
   private Date updatedAt;
 
   @ManyToOne(fetch = FetchType.LAZY)

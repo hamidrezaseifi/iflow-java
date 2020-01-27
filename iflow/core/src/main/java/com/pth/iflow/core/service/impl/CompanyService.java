@@ -59,6 +59,10 @@ public class CompanyService extends CoreModelEdoMapperService<CompanyEntity, Com
     model.setCompanyType(edo.getCompanyType());
     model.setCompanyTypeCustome(edo.getCompanyTypeCustome());
 
+    if (model.isIdentityNew() == false) {
+      model.setId(companyDao.getByIdentity(model.getIdentity()).getId());
+    }
+
     return model;
   }
 

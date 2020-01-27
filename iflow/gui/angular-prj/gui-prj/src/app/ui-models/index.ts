@@ -12,4 +12,5 @@ export * from './uploaded-result';
 export * from './user-access';
 export * from './user-department-group';
 export * from './user-department';
+export * from './company';
 

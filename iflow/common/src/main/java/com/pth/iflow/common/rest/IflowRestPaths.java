@@ -43,6 +43,7 @@ public class IflowRestPaths {
     public static final String USERPROFILE_READ_BY_USERIDENTITY = "/users/readprofile/identity/{identity}";
 
     public static final String COMPANY_READ_BY_IDENTITY = "/companies/readbyid/{companyidentity}";
+    public static final String COMPANY_SAVE = "/companies/save";
 
     public static final String DEPARTMENT_READ_BY_IDENTITY = "/department/readbyid/{identity}";
     public static final String DEPARTMENT_READ_LIST = "/department/list";
@@ -188,6 +189,12 @@ public class IflowRestPaths {
 
       final IflowUriBuilder builder = new IflowUriBuilder(COMPANY_READ_BY_IDENTITY);
       return builder.build(companyidentity);
+    }
+
+    public static URI SAVE_COMPANY() {
+
+      final IflowUriBuilder builder = new IflowUriBuilder(COMPANY_SAVE);
+      return builder.build();
     }
 
     public static URI READ_DEPARTMENTGRPUP_BY_ID(final String identity) {
@@ -593,11 +600,12 @@ public class IflowRestPaths {
     public static final String PROFILE_VALIDATE_TOKEN = "/profile/validate/token";
     public static final String PROFILE_SAVE_AUTHENTOCATION = "/profile/save";
 
-    public static final String COMPANYIDENTITY_READ_BY_IDENTITY = "/company/readbyid/{companyidentity}";
-    public static final String COMPANYIDENTITY_READ_USER_LIST = "/company/read/user/{companyidentity}";
-    public static final String COMPANYIDENTITY_READ_USERGROUP_LIST = "/company/read/usergroup/{companyidentity}";
-    public static final String COMPANYIDENTITY_READ_DEPARTMENT_LIST = "/company/read/department/{companyidentity}";
-    public static final String COMPANYIDENTITY_READ_PROFILE = "/company/read/profile/{companyidentity}";
+    public static final String COMPANY_READ_BY_IDENTITY = "/company/readbyid/{companyidentity}";
+    public static final String COMPANY_READ_USER_LIST = "/company/read/user/{companyidentity}";
+    public static final String COMPANY_READ_USERGROUP_LIST = "/company/read/usergroup/{companyidentity}";
+    public static final String COMPANY_READ_DEPARTMENT_LIST = "/company/read/department/{companyidentity}";
+    public static final String COMPANY_READ_PROFILE = "/company/read/profile/{companyidentity}";
+    public static final String COMPANY_SAVE = "/company/save";
 
     public static final String DEPARTMENT_READ_BY_IDENTITY = "/department/readbyid/{identity}";
     public static final String DEPARTMENT_READ_ALLUSERS_LIST = "/department/read/allusers/{identity}";
@@ -613,31 +621,37 @@ public class IflowRestPaths {
 
     public static URI READ_COMPANY_BY_ID_URIBUILDER(final String companyidentity) {
 
-      final IflowUriBuilder builder = new IflowUriBuilder(COMPANYIDENTITY_READ_BY_IDENTITY);
+      final IflowUriBuilder builder = new IflowUriBuilder(COMPANY_READ_BY_IDENTITY);
       return builder.build(companyidentity);
+    }
+
+    public static URI SAVE_COMPANY() {
+
+      final IflowUriBuilder builder = new IflowUriBuilder(COMPANY_SAVE);
+      return builder.build();
     }
 
     public static URI READ_USERLIST_BY_COMPANYID_URIBUILDER(final String companyidentity) {
 
-      final IflowUriBuilder builder = new IflowUriBuilder(COMPANYIDENTITY_READ_USER_LIST);
+      final IflowUriBuilder builder = new IflowUriBuilder(COMPANY_READ_USER_LIST);
       return builder.build(companyidentity);
     }
 
     public static URI READ_USERGROUPLIST_BY_COMPANYID_URIBUILDER(final String companyidentity) {
 
-      final IflowUriBuilder builder = new IflowUriBuilder(COMPANYIDENTITY_READ_USERGROUP_LIST);
+      final IflowUriBuilder builder = new IflowUriBuilder(COMPANY_READ_USERGROUP_LIST);
       return builder.build(companyidentity);
     }
 
     public static URI READ_DEPARTMENTLIST_BY_COMPANYID_URIBUILDER(final String companyidentity) {
 
-      final IflowUriBuilder builder = new IflowUriBuilder(COMPANYIDENTITY_READ_DEPARTMENT_LIST);
+      final IflowUriBuilder builder = new IflowUriBuilder(COMPANY_READ_DEPARTMENT_LIST);
       return builder.build(companyidentity);
     }
 
     public static URI READ_PROFILE_BY_COMPANYID_URIBUILDER(final String companyidentity) {
 
-      final IflowUriBuilder builder = new IflowUriBuilder(COMPANYIDENTITY_READ_PROFILE);
+      final IflowUriBuilder builder = new IflowUriBuilder(COMPANY_READ_PROFILE);
       return builder.build(companyidentity);
     }
 

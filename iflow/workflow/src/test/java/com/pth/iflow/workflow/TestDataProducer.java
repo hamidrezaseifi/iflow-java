@@ -53,7 +53,7 @@ public class TestDataProducer {
     company.setIdentity("identifyid");
     company.setStatus(1);
     company.setVersion(1);
-    company.setCompanyType(ECompanyType.EINZELUNTERNEHMEN.getIdentity());
+    company.setCompanyType(ECompanyType.EINZELUNTERNEHMEN.name());
     company.setCompanyTypeCustome("companyTypeCustome");
 
     return company;

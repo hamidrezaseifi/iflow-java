@@ -60,11 +60,11 @@ public class WorkflowFileEntity extends EntityIdentityHelper {
   private Integer status;
 
   @CreationTimestamp
-  @Column(name = "created_at")
+  @Column(name = "created_at", insertable = false, updatable = false)
   private Date createdAt;
 
   @UpdateTimestamp
-  @Column(name = "updated_at")
+  @Column(name = "updated_at", insertable = false, updatable = false)
   private Date updatedAt;
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "workflowFileEntity", orphanRemoval = true, fetch = FetchType.EAGER)

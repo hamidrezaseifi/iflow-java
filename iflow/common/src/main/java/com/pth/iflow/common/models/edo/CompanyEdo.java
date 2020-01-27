@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlType;
 
 import com.pth.iflow.common.enums.ECompanyType;
 import com.pth.iflow.common.models.base.IFlowJaxbDefinition;
-import com.pth.iflow.common.models.validation.AEnumNameValidator;
+import com.pth.iflow.common.models.validation.AEnumValidator;
 
 @XmlRootElement(name = "Company", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -24,7 +24,7 @@ public class CompanyEdo {
   @XmlElement(name = "CompanyName", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String companyName;
 
-  @AEnumNameValidator(enumClazz = ECompanyType.class)
+  @AEnumValidator(enumClazz = ECompanyType.class)
   @XmlElement(name = "CompanyType", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String companyType;
 
