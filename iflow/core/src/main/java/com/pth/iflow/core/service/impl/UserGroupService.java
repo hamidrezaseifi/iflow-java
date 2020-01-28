@@ -59,6 +59,7 @@ public class UserGroupService extends CoreModelEdoMapperService<UserGroupEntity,
 
     final UserGroupEntity exists = userGroupDao.getByIdentity(model.getIdentity());
     model.verifyVersion(exists);
+    model.increaseVersion();
 
     return userGroupDao.update(model);
   }

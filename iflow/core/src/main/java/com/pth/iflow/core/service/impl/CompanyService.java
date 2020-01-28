@@ -39,6 +39,7 @@ public class CompanyService extends CoreModelEdoMapperService<CompanyEntity, Com
 
     final CompanyEntity exists = companyDao.getByIdentity(model.getIdentity());
     model.verifyVersion(exists);
+    model.increaseVersion();
 
     return companyDao.update(model);
   }

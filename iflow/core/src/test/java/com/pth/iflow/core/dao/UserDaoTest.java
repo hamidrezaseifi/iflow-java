@@ -184,23 +184,42 @@ public class UserDaoTest extends TestDataProducer {
 
     final UserEntity user = getTestNewUser();
     user.setVersion(10);
+    user.setDeputies(new ArrayList<>());
+    user.setGroups(new ArrayList<>());
+    user.setRoles(new ArrayList<>());
+    user.setUserDepartmentGroups(new ArrayList<>());
+    user.setUserDepartments(new ArrayList<>());
+
     final UserEntity createdUser = userDao.create(user);
     createdModels.add(createdUser);
 
     Assert.assertNotNull("Result created user is not null!", createdUser);
 
-    createdUser.setEmail("new updated email test");
-    createdUser.setVersion(22);
-    createdUser.setStatus(10);
-    createdUser.setFirstName("update firstName");
-    createdUser.setLastName("updated lastName");
+    final UserEntity fromCreatedUser = new UserEntity();
 
-    final UserEntity updatedUser = userDao.update(createdUser);
+    fromCreatedUser.setEmail("new updated email test");
+    fromCreatedUser.setVersion(22);
+    fromCreatedUser.setStatus(10);
+    fromCreatedUser.setFirstName("update firstName");
+    fromCreatedUser.setLastName("updated lastName");
+    fromCreatedUser.setId(createdUser.getId());
+    fromCreatedUser.setBirthDate(createdUser.getBirthDate());
+    fromCreatedUser.setCompany(null);
+    fromCreatedUser.setCompanyId(createdUser.getCompanyId());
+    fromCreatedUser.setDeputies(createdUser.getDeputies());
+    fromCreatedUser.setGroups(createdUser.getGroups());
+    fromCreatedUser.setIdentity(createdUser.getIdentity());
+    fromCreatedUser.setPermission(createdUser.getPermission());
+    fromCreatedUser.setRoles(createdUser.getRoles());
+    fromCreatedUser.setUserDepartmentGroups(createdUser.getUserDepartmentGroups());
+    fromCreatedUser.setUserDepartments(createdUser.getUserDepartments());
+
+    final UserEntity updatedUser = userDao.update(fromCreatedUser);
 
     compareUsers(createdUser, updatedUser);
 
     Assert.assertEquals("Result user has status 10!", updatedUser.getStatus(), createdUser.getStatus());
-    Assert.assertEquals("Result user has version 23!", 23, updatedUser.getVersion().intValue());
+    Assert.assertEquals("Result user has version 22!", 22, updatedUser.getVersion().intValue());
     Assert
         .assertEquals("Result user has firstname '" + createdUser.getFirstName() + "'!", updatedUser.getFirstName(),
             createdUser.getFirstName());

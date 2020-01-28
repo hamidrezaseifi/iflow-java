@@ -53,6 +53,7 @@ public class WorkflowTypeStepService extends CoreModelEdoMapperService<WorkflowT
 
     final WorkflowTypeStepEntity exists = workflowStepDao.getByIdentity(model.getIdentity());
     model.verifyVersion(exists);
+    model.increaseVersion();
 
     return workflowStepDao.update(model);
   }

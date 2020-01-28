@@ -14,6 +14,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Subquery;
 
+import org.hibernate.Session;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pth.iflow.core.model.entity.workflow.WorkflowActionEntity;
@@ -31,20 +32,27 @@ public abstract class EntityDaoBase<T extends ICoreEntityVersion> extends Entity
     final EntityManager entityManager = createEntityManager();
 
     entityManager.getTransaction().begin();
-    final T savedModel = entityManager.merge(model);
+    entityManager.persist(model);
+
+    // final T savedModel = entityManager.merge(model);
     entityManager.getTransaction().commit();
     entityManager.close();
-    return savedModel;
+    return getById(model.getId());
   }
 
   public T update(final T model) throws IFlowStorageException {
 
     final EntityManager entityManager = createEntityManager();
     entityManager.getTransaction().begin();
-    final T savedModel = entityManager.merge(model);
+
+    entityManager.unwrap(Session.class).update(model);
+
+    // entityManager.persist(model);
+
+    // entityManager.merge(model);
     entityManager.getTransaction().commit();
     entityManager.close();
-    return getById(savedModel.getId());
+    return getById(model.getId());
   }
 
   public T getById(final Long id) throws IFlowStorageException {

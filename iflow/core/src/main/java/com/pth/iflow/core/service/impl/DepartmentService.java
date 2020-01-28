@@ -63,6 +63,7 @@ public class DepartmentService extends CoreModelEdoMapperService<DepartmentEntit
 
     final DepartmentEntity exists = this.departmentDao.getByIdentity(model.getIdentity());
     model.verifyVersion(exists);
+    model.increaseVersion();
 
     return this.departmentDao.update(model);
   }

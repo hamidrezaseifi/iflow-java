@@ -61,6 +61,7 @@ public class WorkflowTypeService extends CoreModelEdoMapperService<WorkflowTypeE
 
     final WorkflowTypeEntity exists = workflowTypeDao.getByIdentity(model.getIdentity());
     model.verifyVersion(exists);
+    model.increaseVersion();
 
     return workflowTypeDao.update(model);
   }

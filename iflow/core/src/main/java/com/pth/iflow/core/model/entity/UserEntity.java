@@ -135,6 +135,7 @@ public class UserEntity extends EntityIdentityHelper {
     this.identity = identity;
   }
 
+  @Override
   public void setId(final Long id) {
 
     this.id = id;
@@ -436,7 +437,7 @@ public class UserEntity extends EntityIdentityHelper {
   @Override
   public void increaseVersion() {
 
-    version += 1;
+    this.version += 1;
   }
 
   public String generateUserIdentity(final String lastIdentity) {

@@ -49,6 +49,7 @@ public class WorkflowMessageService extends CoreModelEdoMapperService<WorkflowMe
 
     final WorkflowMessageEntity exists = this.workflowMessageDao.getById(model.getId());
     model.verifyVersion(exists);
+    model.increaseVersion();
 
     final WorkflowMessageEntity savedModel = this.workflowMessageDao.update(model);
     return savedModel;
