@@ -38,6 +38,7 @@ public class EntityManagerHelper {
     if (StreamSupport.stream(listeners.spliterator(), false).anyMatch(l -> l.getClass() == EntityListener.class) == false) {
       eventListenerRegistry.prependListeners(EventType.PRE_INSERT, EntityListener.class);
       eventListenerRegistry.prependListeners(EventType.PRE_UPDATE, EntityListener.class);
+
     }
 
   }
