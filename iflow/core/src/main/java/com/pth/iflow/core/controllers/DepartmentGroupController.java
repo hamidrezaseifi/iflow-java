@@ -52,6 +52,25 @@ public class DepartmentGroupController {
     return ControllerHelper.createResponseEntity(request, this.departmentGroupService.toEdo(model), HttpStatus.OK);
   }
 
+  @ResponseStatus(HttpStatus.CREATED)
+  @IflowPostRequestMapping(path = IflowRestPaths.CoreModule.DEPARTMENT_SAVE)
+  public ResponseEntity<DepartmentGroupEdo> saveDepartmentGroup(@RequestBody final DepartmentGroupEdo edo,
+      final HttpServletRequest request) throws Exception {
+
+    final DepartmentGroupEntity model = this.departmentGroupService.save(this.departmentGroupService.fromEdo(edo));
+
+    return ControllerHelper.createResponseEntity(request, this.departmentGroupService.toEdo(model), HttpStatus.CREATED);
+  }
+
+  @ResponseStatus(HttpStatus.CREATED)
+  @IflowPostRequestMapping(path = IflowRestPaths.CoreModule.DEPARTMENT_DELETE)
+  public void deleteDepartmentGroup(@RequestBody final DepartmentGroupEdo edo,
+      final HttpServletRequest request) throws Exception {
+
+    this.departmentGroupService.delete(this.departmentGroupService.fromEdo(edo));
+
+  }
+
   @ResponseStatus(HttpStatus.OK)
   @IflowPostRequestMapping(path = IflowRestPaths.CoreModule.DEPARTMENTGRPUP_READ_LIST)
   public ResponseEntity<DepartmentGroupListEdo> readDepartmentList(@RequestBody final IdentityListEdo idList,

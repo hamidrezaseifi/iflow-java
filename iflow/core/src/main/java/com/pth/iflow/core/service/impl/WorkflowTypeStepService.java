@@ -12,18 +12,21 @@ import com.pth.iflow.core.model.entity.workflow.WorkflowTypeEntity;
 import com.pth.iflow.core.model.entity.workflow.WorkflowTypeStepEntity;
 import com.pth.iflow.core.service.base.CoreModelEdoMapperService;
 import com.pth.iflow.core.service.interfaces.IWorkflowTypeStepService;
+import com.pth.iflow.core.storage.dao.helper.ICoreEntityVersion;
+import com.pth.iflow.core.storage.dao.impl.base.EntityDaoBase;
 import com.pth.iflow.core.storage.dao.interfaces.IWorkflowTypeDao;
 import com.pth.iflow.core.storage.dao.interfaces.IWorkflowTypeStepDao;
 
 @Service
-public class WorkflowTypeStepService extends CoreModelEdoMapperService<WorkflowTypeStepEntity, WorkflowTypeStepEdo>
-    implements IWorkflowTypeStepService {
+public class WorkflowTypeStepService extends CoreModelEdoMapperService<WorkflowTypeStepEntity,
+    WorkflowTypeStepEdo> implements IWorkflowTypeStepService {
 
   private final IWorkflowTypeStepDao workflowStepDao;
-  private final IWorkflowTypeDao     workflowTypeDao;
+  private final IWorkflowTypeDao workflowTypeDao;
 
   public WorkflowTypeStepService(@Autowired final IWorkflowTypeStepDao workflowStepDao,
       @Autowired final IWorkflowTypeDao workflowDao) {
+
     this.workflowStepDao = workflowStepDao;
     this.workflowTypeDao = workflowDao;
   }
@@ -43,6 +46,7 @@ public class WorkflowTypeStepService extends CoreModelEdoMapperService<WorkflowT
 
   @Override
   public WorkflowTypeStepEntity save(final WorkflowTypeStepEntity model) {
+
     if (model.isNew()) {
       return workflowStepDao.create(model);
     }
@@ -55,6 +59,7 @@ public class WorkflowTypeStepService extends CoreModelEdoMapperService<WorkflowT
 
   @Override
   public List<WorkflowTypeStepEntity> getListByIdentityList(final Collection<String> idList) {
+
     return this.workflowStepDao.getListByIdentityList(idList);
   }
 
@@ -65,9 +70,12 @@ public class WorkflowTypeStepService extends CoreModelEdoMapperService<WorkflowT
 
   @Override
   public WorkflowTypeStepEntity fromEdo(final WorkflowTypeStepEdo edo) throws IFlowMessageConversionFailureException {
+
     validateCustomer(edo);
 
     final WorkflowTypeStepEntity model = new WorkflowTypeStepEntity();
+
+    this.setIdFromIdentity(model, edo.getIdentity(), (EntityDaoBase<ICoreEntityVersion>) workflowStepDao);
 
     model.setStepIndex(edo.getStepIndex());
     model.setViewName(edo.getViewName());
@@ -83,6 +91,7 @@ public class WorkflowTypeStepService extends CoreModelEdoMapperService<WorkflowT
 
   @Override
   public WorkflowTypeStepEdo toEdo(final WorkflowTypeStepEntity model) {
+
     final WorkflowTypeStepEdo edo = new WorkflowTypeStepEdo();
     edo.setStepIndex(model.getStepIndex());
     edo.setViewName(model.getViewName());

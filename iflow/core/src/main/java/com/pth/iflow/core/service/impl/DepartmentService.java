@@ -13,6 +13,8 @@ import com.pth.iflow.core.model.entity.DepartmentGroupEntity;
 import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.service.base.CoreModelEdoMapperService;
 import com.pth.iflow.core.service.interfaces.IDepartmentService;
+import com.pth.iflow.core.storage.dao.helper.ICoreEntityVersion;
+import com.pth.iflow.core.storage.dao.impl.base.EntityDaoBase;
 import com.pth.iflow.core.storage.dao.interfaces.IDepartmentDao;
 
 @Service
@@ -65,6 +67,12 @@ public class DepartmentService extends CoreModelEdoMapperService<DepartmentEntit
     return this.departmentDao.update(model);
   }
 
+  @Override
+  public void delete(final DepartmentEntity model) {
+
+    this.departmentDao.deleteById(model.getId());
+  }
+
   protected DepartmentEntity prepareSavingModel(final DepartmentEntity model) {
 
     return model;
@@ -90,6 +98,8 @@ public class DepartmentService extends CoreModelEdoMapperService<DepartmentEntit
     final DepartmentGroupService groupService = new DepartmentGroupService(null);
 
     final DepartmentEntity model = new DepartmentEntity();
+
+    this.setIdFromIdentity(model, edo.getIdentity(), (EntityDaoBase<ICoreEntityVersion>) this.departmentDao);
 
     model.setTitle(edo.getTitle());
     model.setStatus(edo.getStatus());

@@ -13,6 +13,8 @@ public interface IDepartmentService extends ICoreModelEdoMapperService<Departmen
 
   DepartmentEntity save(DepartmentEntity model);
 
+  void delete(DepartmentEntity model);
+
   DepartmentEntity getByIdentity(final String identity);
 
   List<DepartmentEntity> getListByIdentityList(final Collection<String> idList);

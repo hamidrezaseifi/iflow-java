@@ -13,6 +13,8 @@ import com.pth.iflow.common.models.edo.UserGroupEdo;
 import com.pth.iflow.core.model.entity.UserGroupEntity;
 import com.pth.iflow.core.service.base.CoreModelEdoMapperService;
 import com.pth.iflow.core.service.interfaces.IUserGroupService;
+import com.pth.iflow.core.storage.dao.helper.ICoreEntityVersion;
+import com.pth.iflow.core.storage.dao.impl.base.EntityDaoBase;
 import com.pth.iflow.core.storage.dao.interfaces.IUserGroupDao;
 
 @Service
@@ -21,6 +23,7 @@ public class UserGroupService extends CoreModelEdoMapperService<UserGroupEntity,
   private final IUserGroupDao userGroupDao;
 
   public UserGroupService(@Autowired final IUserGroupDao userGroupDao) {
+
     this.userGroupDao = userGroupDao;
   }
 
@@ -49,6 +52,7 @@ public class UserGroupService extends CoreModelEdoMapperService<UserGroupEntity,
 
   @Override
   public UserGroupEntity save(final UserGroupEntity model) {
+
     if (model.isNew()) {
       return userGroupDao.create(model);
     }
@@ -60,14 +64,18 @@ public class UserGroupService extends CoreModelEdoMapperService<UserGroupEntity,
   }
 
   protected UserGroupEntity prepareSavingModel(final UserGroupEntity model) {
+
     return model;
   }
 
   @Override
   public UserGroupEntity fromEdo(final UserGroupEdo edo) throws IFlowMessageConversionFailureException {
+
     validateCustomer(edo);
 
     final UserGroupEntity model = new UserGroupEntity();
+
+    this.setIdFromIdentity(model, edo.getIdentity(), (EntityDaoBase<ICoreEntityVersion>) this.userGroupDao);
 
     model.setTitle(edo.getTitle());
     model.setStatus(edo.getStatus());
@@ -81,6 +89,7 @@ public class UserGroupService extends CoreModelEdoMapperService<UserGroupEntity,
 
   @Override
   public UserGroupEdo toEdo(final UserGroupEntity model) {
+
     final UserGroupEdo edo = new UserGroupEdo();
     edo.setTitle(model.getTitle());
     edo.setStatus(model.getStatus());

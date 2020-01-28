@@ -10,4 +10,6 @@ public interface ICoreEntityVersion {
 
   Long getId();
 
+  void setId(Long id);
+
 }

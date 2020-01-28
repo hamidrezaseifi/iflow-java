@@ -8,6 +8,8 @@ import com.pth.iflow.common.models.edo.CompanyEdo;
 import com.pth.iflow.core.model.entity.CompanyEntity;
 import com.pth.iflow.core.service.base.CoreModelEdoMapperService;
 import com.pth.iflow.core.service.interfaces.ICompanyService;
+import com.pth.iflow.core.storage.dao.helper.ICoreEntityVersion;
+import com.pth.iflow.core.storage.dao.impl.base.EntityDaoBase;
 import com.pth.iflow.core.storage.dao.interfaces.ICompanyDao;
 
 @Service
@@ -52,16 +54,15 @@ public class CompanyService extends CoreModelEdoMapperService<CompanyEntity, Com
     validateCustomer(edo);
 
     final CompanyEntity model = new CompanyEntity();
+
+    this.setIdFromIdentity(model, edo.getIdentity(), (EntityDaoBase<ICoreEntityVersion>) this.companyDao);
+
     model.setCompanyName(edo.getCompanyName());
     model.setIdentity(edo.getIdentity());
     model.setStatus(edo.getStatus());
     model.setVersion(edo.getVersion());
     model.setCompanyType(edo.getCompanyType());
     model.setCompanyTypeCustome(edo.getCompanyTypeCustome());
-
-    if (model.isIdentityNew() == false) {
-      model.setId(companyDao.getByIdentity(model.getIdentity()).getId());
-    }
 
     return model;
   }

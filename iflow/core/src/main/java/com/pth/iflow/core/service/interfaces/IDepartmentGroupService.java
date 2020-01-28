@@ -12,6 +12,8 @@ public interface IDepartmentGroupService extends ICoreModelEdoMapperService<Depa
 
   DepartmentGroupEntity save(DepartmentGroupEntity model);
 
+  void delete(DepartmentGroupEntity model);
+
   DepartmentGroupEntity getByIdentity(final String identity);
 
   List<DepartmentGroupEntity> getListByIdentityList(final Collection<String> idList);

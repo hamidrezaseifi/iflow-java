@@ -9,6 +9,9 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
+import com.pth.iflow.common.models.helper.IdentityModel;
+import com.pth.iflow.core.storage.dao.helper.ICoreEntityVersion;
+import com.pth.iflow.core.storage.dao.impl.base.EntityDaoBase;
 
 public abstract class CoreModelEdoMapperService<M, E> {
 
@@ -19,6 +22,7 @@ public abstract class CoreModelEdoMapperService<M, E> {
   public abstract E toEdo(M model);
 
   public List<E> toEdoList(final List<M> modelList) {
+
     final List<E> edoList = new ArrayList<>();
     for (final M model : modelList) {
       edoList.add(toEdo(model));
@@ -28,6 +32,7 @@ public abstract class CoreModelEdoMapperService<M, E> {
   }
 
   public List<M> fromEdoList(final List<E> edoList) throws IFlowMessageConversionFailureException {
+
     final List<M> modelList = new ArrayList<>();
     for (final E edo : edoList) {
       modelList.add(fromEdo(edo));
@@ -37,6 +42,7 @@ public abstract class CoreModelEdoMapperService<M, E> {
   }
 
   protected <V> void validateCustomer(final V model) throws IFlowMessageConversionFailureException {
+
     final Set<ConstraintViolation<V>> violations = VALIDATOR.validate(model);
     if (violations != null && violations.size() > 0) {
       final String validationErrorMessage = createValidationErrorMessage(violations);
@@ -45,6 +51,7 @@ public abstract class CoreModelEdoMapperService<M, E> {
   }
 
   protected <V> String createValidationErrorMessage(final Set<ConstraintViolation<V>> violations) {
+
     final StringBuilder builder = new StringBuilder();
     builder.append("There are errors in the received XML:");
     builder.append(System.lineSeparator());
@@ -57,5 +64,11 @@ public abstract class CoreModelEdoMapperService<M, E> {
       builder.append(System.lineSeparator());
     }
     return builder.toString();
+  }
+
+  protected void setIdFromIdentity(final ICoreEntityVersion model, final String identity, final EntityDaoBase<ICoreEntityVersion> dao) {
+
+    model.setId(IdentityModel.isIdentityNew(identity) ? null : dao.getByIdentity(identity).getId());
+
   }
 }

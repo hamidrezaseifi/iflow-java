@@ -14,7 +14,6 @@ import com.pth.iflow.common.models.edo.ProfileResponseEdo;
 import com.pth.iflow.common.models.edo.UserDepartmentEdo;
 import com.pth.iflow.common.models.edo.UserDepartmentGroupEdo;
 import com.pth.iflow.common.models.edo.UserEdo;
-import com.pth.iflow.common.models.helper.IdentityModel;
 import com.pth.iflow.core.helper.CoreDataHelper;
 import com.pth.iflow.core.model.CompanyProfile;
 import com.pth.iflow.core.model.ProfileResponse;
@@ -30,6 +29,8 @@ import com.pth.iflow.core.service.interfaces.IDepartmentService;
 import com.pth.iflow.core.service.interfaces.IUserGroupService;
 import com.pth.iflow.core.service.interfaces.IUsersService;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
+import com.pth.iflow.core.storage.dao.helper.ICoreEntityVersion;
+import com.pth.iflow.core.storage.dao.impl.base.EntityDaoBase;
 import com.pth.iflow.core.storage.dao.interfaces.ICompanyDao;
 import com.pth.iflow.core.storage.dao.interfaces.IDepartmentDao;
 import com.pth.iflow.core.storage.dao.interfaces.IDepartmentGroupDao;
@@ -180,7 +181,8 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
 
     final UserEntity model = new UserEntity();
 
-    model.setId(IdentityModel.isIdentityNew(edo.getIdentity()) ? null : userDao.getByIdentity(edo.getIdentity()).getId());
+    this.setIdFromIdentity(model, edo.getIdentity(), (EntityDaoBase<ICoreEntityVersion>) userDao);
+
     model.setFirstName(edo.getFirstName());
     model.setLastName(edo.getLastName());
     model.setPermission(edo.getPermission());

@@ -46,6 +46,8 @@ public class IflowRestPaths {
     public static final String COMPANY_SAVE = "/companies/save";
 
     public static final String DEPARTMENT_READ_BY_IDENTITY = "/department/readbyid/{identity}";
+    public static final String DEPARTMENT_SAVE = "/department/save";
+    public static final String DEPARTMENT_DELETE = "/department/delete";
     public static final String DEPARTMENT_READ_LIST = "/department/list";
     public static final String DEPARTMENT_READ_LIST_BY_COMPANYIDENTITY = "/department/company/list/{companyidentity}";
     public static final String DEPARTMENT_READ_ALLUSERLIST_BY_DEPARTMENTIDENTITY = "/department/alluser/list/{identity}";
@@ -53,6 +55,8 @@ public class IflowRestPaths {
     public static final String DEPARTMENT_GET_DEPUTY = "/department/deputy/read/{identity}";
 
     public static final String DEPARTMENTGRPUP_READ_BY_IDENTITY = "/departmentgroup/readbyid/{identity}";
+    public static final String DEPARTMENTGRPUP_SAVE = "/departmentgroup/save";
+    public static final String DEPARTMENTGRPUP_DELETE = "/departmentgroup/delete";
     public static final String DEPARTMENTGRPUP_READ_LIST = "/departmentgroup/list";
     public static final String DEPARTMENTGRPUP_READ_ALLUSERLIST_BY_DEPARTMENTGROUPIDENTITY = "/departmentgroup/alluser/list/{identity}";
     public static final String DEPARTMENTGRPUP_GET_MANAGER = "/departmentgroup/manager/read/{identity}";
