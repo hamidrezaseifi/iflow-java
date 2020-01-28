@@ -4,8 +4,10 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
 import java.util.List;
 import java.util.Set;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -15,6 +17,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
+
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.entity.DepartmentGroupEntity;
 import com.pth.iflow.core.service.impl.DepartmentGroupService;
@@ -33,11 +36,13 @@ public class DepartmentGroupServiceTest extends TestDataProducer {
 
   @Before
   public void setUp() throws Exception {
+
     this.departmentGroupService = new DepartmentGroupService(this.departmentGroupDao);
   }
 
   @After
   public void tearDown() throws Exception {
+
   }
 
   @Test
@@ -50,10 +55,67 @@ public class DepartmentGroupServiceTest extends TestDataProducer {
 
     Assert.assertNotNull("Result department group is not null!", resDepartmentGroup);
     Assert.assertEquals("Result department group has id 1!", resDepartmentGroup.getId(), departmentGroup.getId());
-    Assert.assertEquals("Result department group has title '" + departmentGroup.getTitle() + "'!",
-                        resDepartmentGroup.getTitle(),
-                        departmentGroup.getTitle());
+    Assert
+        .assertEquals("Result department group has title '" + departmentGroup.getTitle() + "'!",
+            resDepartmentGroup.getTitle(),
+            departmentGroup.getTitle());
     Assert.assertEquals("Result department group has status 1!", resDepartmentGroup.getStatus(), departmentGroup.getStatus());
+
+  }
+
+  @Test
+  public void testSaveNew() throws Exception {
+
+    final DepartmentGroupEntity department = this.getTestDepartmentGroup();
+    department.setId(null);
+    when(this.departmentGroupDao.create(any(DepartmentGroupEntity.class))).thenReturn(department);
+
+    final DepartmentGroupEntity resDepartment = this.departmentGroupService.save(department);
+
+    Assert.assertNotNull("Result department is not null!", resDepartment);
+    Assert.assertEquals("Result department has id 1!", resDepartment.getId(), department.getId());
+    Assert
+        .assertEquals("Result department has title '" + department.getTitle() + "'!",
+            resDepartment.getTitle(),
+            department.getTitle());
+    Assert.assertEquals("Result department has status 1!", resDepartment.getStatus(), department.getStatus());
+
+    verify(this.departmentGroupDao, times(1)).create(any(DepartmentGroupEntity.class));
+
+  }
+
+  @Test
+  public void testSaveExists() throws Exception {
+
+    final DepartmentGroupEntity department = this.getTestDepartmentGroup();
+    department.setId(1L);
+    when(this.departmentGroupDao.update(any(DepartmentGroupEntity.class))).thenReturn(department);
+    when(this.departmentGroupDao.getByIdentity(any(String.class))).thenReturn(department);
+
+    final DepartmentGroupEntity resDepartment = this.departmentGroupService.save(department);
+
+    Assert.assertNotNull("Result department is not null!", resDepartment);
+    Assert.assertEquals("Result department has id 1!", resDepartment.getId(), department.getId());
+    Assert
+        .assertEquals("Result department has title '" + department.getTitle() + "'!",
+            resDepartment.getTitle(),
+            department.getTitle());
+    Assert.assertEquals("Result department has status 1!", resDepartment.getStatus(), department.getStatus());
+
+    verify(this.departmentGroupDao, times(1)).getByIdentity(any(String.class));
+    verify(this.departmentGroupDao, times(1)).update(any(DepartmentGroupEntity.class));
+
+  }
+
+  @Test
+  public void testDelete() throws Exception {
+
+    final DepartmentGroupEntity department = this.getTestDepartmentGroup();
+    department.setId(1L);
+
+    this.departmentGroupService.delete(department);
+
+    verify(this.departmentGroupDao, times(1)).deleteById(any(Long.class));
 
   }
 
@@ -83,9 +145,10 @@ public class DepartmentGroupServiceTest extends TestDataProducer {
     final DepartmentGroupEntity result = this.departmentGroupService.save(departmentGroup);
 
     Assert.assertNotNull("Result department group is not null!", result);
-    Assert.assertEquals("Result department group has title '" + savedDepartmentGroup.getTitle() + "'!",
-                        result.getTitle(),
-                        savedDepartmentGroup.getTitle());
+    Assert
+        .assertEquals("Result department group has title '" + savedDepartmentGroup.getTitle() + "'!",
+            result.getTitle(),
+            savedDepartmentGroup.getTitle());
     Assert.assertEquals("Result department group has status 1!", result.getStatus(), savedDepartmentGroup.getStatus());
 
     verify(this.departmentGroupDao, times(1)).create(any(DepartmentGroupEntity.class));
@@ -105,9 +168,10 @@ public class DepartmentGroupServiceTest extends TestDataProducer {
     final DepartmentGroupEntity result = this.departmentGroupService.save(departmentGroup);
 
     Assert.assertNotNull("Result department group is not null!", result);
-    Assert.assertEquals("Result department group has title '" + savedDepartmentGroup.getTitle() + "'!",
-                        result.getTitle(),
-                        savedDepartmentGroup.getTitle());
+    Assert
+        .assertEquals("Result department group has title '" + savedDepartmentGroup.getTitle() + "'!",
+            result.getTitle(),
+            savedDepartmentGroup.getTitle());
     Assert.assertEquals("Result department group has status 1!", result.getStatus(), savedDepartmentGroup.getStatus());
 
     verify(this.departmentGroupDao, times(0)).create(any(DepartmentGroupEntity.class));

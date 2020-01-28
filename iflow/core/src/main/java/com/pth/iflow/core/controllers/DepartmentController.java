@@ -61,7 +61,7 @@ public class DepartmentController {
     return ControllerHelper.createResponseEntity(request, this.departmentService.toEdo(model), HttpStatus.CREATED);
   }
 
-  @ResponseStatus(HttpStatus.CREATED)
+  @ResponseStatus(HttpStatus.OK)
   @IflowPostRequestMapping(path = IflowRestPaths.CoreModule.DEPARTMENT_DELETE)
   public void deleteDepartment(@RequestBody final DepartmentEdo edo,
       final HttpServletRequest request) throws Exception {

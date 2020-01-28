@@ -200,7 +200,7 @@ public class UserDaoTest extends TestDataProducer {
     compareUsers(createdUser, updatedUser);
 
     Assert.assertEquals("Result user has status 10!", updatedUser.getStatus(), createdUser.getStatus());
-    Assert.assertEquals("Result user has version 23!", updatedUser.getVersion().intValue(), 23);
+    Assert.assertEquals("Result user has version 23!", 23, updatedUser.getVersion().intValue());
     Assert
         .assertEquals("Result user has firstname '" + createdUser.getFirstName() + "'!", updatedUser.getFirstName(),
             createdUser.getFirstName());

@@ -40,23 +40,25 @@ import com.pth.iflow.core.service.interfaces.IDepartmentService;
 public class DepartmentControllerTest extends TestDataProducer {
 
   @Autowired
-  private MockMvc                                mockMvc;
+  private MockMvc mockMvc;
 
   @Autowired
   private MappingJackson2XmlHttpMessageConverter xmlConverter;
 
   @MockBean
-  private IDepartmentService                     departmentService;
+  private IDepartmentService departmentService;
 
   @Value("${iflow.common.rest.api.security.client-id.internal}")
-  private String                                 innerModulesRequestHeaderValue;
+  private String innerModulesRequestHeaderValue;
 
   @Before
   public void setUp() throws Exception {
+
   }
 
   @After
   public void tearDown() throws Exception {
+
   }
 
   @Test
@@ -70,12 +72,65 @@ public class DepartmentControllerTest extends TestDataProducer {
     final String modelAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelEdo);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.DEPARTMENT_READ_BY_IDENTITY, model.getIdentity())
+        .perform(MockMvcRequestBuilders
+            .get(IflowRestPaths.CoreModule.DEPARTMENT_READ_BY_IDENTITY, model.getIdentity())
             .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
-        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(modelAsXmlString));
 
     verify(this.departmentService, times(1)).getByIdentity(any(String.class));
+
+  }
+
+  @Test
+  public void testSaveDepartment() throws Exception {
+
+    final DepartmentEntity model = this.getTestDepartment();
+    final DepartmentEdo modelEdo = this.getTestDepartmentEdo();
+    when(this.departmentService.save(any(DepartmentEntity.class))).thenReturn(model);
+    when(this.departmentService.fromEdo(any(DepartmentEdo.class))).thenReturn(model);
+    when(this.departmentService.toEdo(any(DepartmentEntity.class))).thenReturn(modelEdo);
+
+    final String conetntAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelEdo);
+    final String resultAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelEdo);
+
+    this.mockMvc
+        .perform(MockMvcRequestBuilders
+            .post(IflowRestPaths.CoreModule.DEPARTMENT_SAVE)
+            .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue)
+            .content(conetntAsXmlString)
+            .contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(status().isCreated())
+        .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(content().xml(resultAsXmlString));
+
+    verify(this.departmentService, times(1)).save(any(DepartmentEntity.class));
+    verify(this.departmentService, times(1)).fromEdo(any(DepartmentEdo.class));
+    verify(this.departmentService, times(1)).toEdo(any(DepartmentEntity.class));
+
+  }
+
+  @Test
+  public void testDeleteDepartment() throws Exception {
+
+    final DepartmentEntity model = this.getTestDepartment();
+    final DepartmentEdo modelEdo = this.getTestDepartmentEdo();
+    when(this.departmentService.fromEdo(any(DepartmentEdo.class))).thenReturn(model);
+    when(this.departmentService.toEdo(any(DepartmentEntity.class))).thenReturn(modelEdo);
+
+    final String conetntAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(modelEdo);
+
+    this.mockMvc
+        .perform(MockMvcRequestBuilders
+            .post(IflowRestPaths.CoreModule.DEPARTMENT_DELETE)
+            .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue)
+            .content(conetntAsXmlString)
+            .contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(status().isOk());
+
+    verify(this.departmentService, times(1)).delete(any(DepartmentEntity.class));
+    verify(this.departmentService, times(1)).fromEdo(any(DepartmentEdo.class));
 
   }
 
@@ -98,10 +153,13 @@ public class DepartmentControllerTest extends TestDataProducer {
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoResultList);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.post(IflowRestPaths.CoreModule.DEPARTMENT_READ_LIST).content(contentAsXmlString)
+        .perform(MockMvcRequestBuilders
+            .post(IflowRestPaths.CoreModule.DEPARTMENT_READ_LIST)
+            .content(contentAsXmlString)
             .contentType(MediaType.APPLICATION_XML_VALUE)
             .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
-        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(listAsXmlString));
 
     verify(this.departmentService, times(1)).getListByIdentityList(any(Set.class));
@@ -123,9 +181,11 @@ public class DepartmentControllerTest extends TestDataProducer {
     final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.CoreModule.DEPARTMENT_READ_LIST_BY_COMPANYIDENTITY, "companyidentity")
+        .perform(MockMvcRequestBuilders
+            .get(IflowRestPaths.CoreModule.DEPARTMENT_READ_LIST_BY_COMPANYIDENTITY, "companyidentity")
             .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
-        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(listAsXmlString));
 
     verify(this.departmentService, times(1)).getListByIdCompanyIdentity(any(String.class));
