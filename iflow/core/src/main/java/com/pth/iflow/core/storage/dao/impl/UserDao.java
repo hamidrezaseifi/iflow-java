@@ -94,9 +94,9 @@ public class UserDao extends EntityDaoBase<UserEntity> implements IUserDao {
     final CriteriaQuery<UserEntity> query = criteriaBuilder.createQuery(UserEntity.class);
     final Root<UserEntity> userRoot = query.from(UserEntity.class);
 
-    final Join<Object, Object> departmentJoin = userRoot.join("departments", JoinType.INNER);
+    final Join<Object, Object> departmentJoin = userRoot.join("userDepartments", JoinType.INNER);
 
-    query.select(userRoot).where(criteriaBuilder.equal(departmentJoin.get("identity"), identity));
+    query.select(userRoot).where(criteriaBuilder.equal(departmentJoin.get("department").get("identity"), identity));
     final TypedQuery<UserEntity> typedQuery = session.createQuery(query);
     final List<UserEntity> list = typedQuery.getResultList();
 
