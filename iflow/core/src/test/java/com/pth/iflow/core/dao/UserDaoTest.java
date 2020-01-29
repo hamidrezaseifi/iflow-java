@@ -195,26 +195,13 @@ public class UserDaoTest extends TestDataProducer {
 
     Assert.assertNotNull("Result created user is not null!", createdUser);
 
-    final UserEntity fromCreatedUser = new UserEntity();
+    createdUser.setEmail("new updated email test");
+    createdUser.setVersion(22);
+    createdUser.setStatus(10);
+    createdUser.setFirstName("update firstName");
+    createdUser.setLastName("updated lastName");
 
-    fromCreatedUser.setEmail("new updated email test");
-    fromCreatedUser.setVersion(22);
-    fromCreatedUser.setStatus(10);
-    fromCreatedUser.setFirstName("update firstName");
-    fromCreatedUser.setLastName("updated lastName");
-    fromCreatedUser.setId(createdUser.getId());
-    fromCreatedUser.setBirthDate(createdUser.getBirthDate());
-    fromCreatedUser.setCompany(null);
-    fromCreatedUser.setCompanyId(createdUser.getCompanyId());
-    fromCreatedUser.setDeputies(createdUser.getDeputies());
-    fromCreatedUser.setGroups(createdUser.getGroups());
-    fromCreatedUser.setIdentity(createdUser.getIdentity());
-    fromCreatedUser.setPermission(createdUser.getPermission());
-    fromCreatedUser.setRoles(createdUser.getRoles());
-    fromCreatedUser.setUserDepartmentGroups(createdUser.getUserDepartmentGroups());
-    fromCreatedUser.setUserDepartments(createdUser.getUserDepartments());
-
-    final UserEntity updatedUser = userDao.update(fromCreatedUser);
+    final UserEntity updatedUser = userDao.update(createdUser);
 
     compareUsers(createdUser, updatedUser);
 

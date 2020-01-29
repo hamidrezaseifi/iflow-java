@@ -6,8 +6,6 @@ DROP TABLE IF EXISTS company_workflowtype_controller;
 DROP TABLE IF EXISTS singletask_workflow;
 
 DROP TABLE IF EXISTS testthreetask_workflow;
-
-DROP TABLE IF EXISTS user_department_groups;
 	
 DROP TABLE IF EXISTS invoice_workflow;
 
@@ -30,6 +28,8 @@ DROP TABLE IF EXISTS user_usergroup;
 DROP TABLE IF EXISTS user_deputy;
 
 DROP TABLE IF EXISTS user_departments;
+
+DROP TABLE IF EXISTS user_department_groups;
 
 DROP TABLE IF EXISTS departments_group;
 

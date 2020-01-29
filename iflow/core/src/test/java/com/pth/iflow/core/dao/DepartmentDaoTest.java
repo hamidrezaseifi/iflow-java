@@ -37,7 +37,7 @@ public class DepartmentDaoTest extends TestDataProducer {
   private void createUserList() throws Exception {
 
     for (int i = 1; i <= 3; i++) {
-      final DepartmentEntity model = getTestDepartment();
+      final DepartmentEntity model = getTestDepartmentForSave();
       model.setTitle("utest department " + i);
       model.setCompanyId(1L);
       model.setIdentity("utest-department-" + i);
@@ -101,7 +101,7 @@ public class DepartmentDaoTest extends TestDataProducer {
   @Test
   public void testCreate() throws Exception {
 
-    final DepartmentEntity model = getTestDepartment();
+    final DepartmentEntity model = getTestDepartmentForSave();
     model.setVersion(10);
     final DepartmentEntity result = departmentDao.create(model);
     createdModels.add(result);
@@ -113,7 +113,7 @@ public class DepartmentDaoTest extends TestDataProducer {
   @Test
   public void testUpdate() throws Exception {
 
-    final DepartmentEntity model = getTestDepartment();
+    final DepartmentEntity model = getTestDepartmentForSave();
     model.setVersion(10);
     final DepartmentEntity created = departmentDao.create(model);
     createdModels.add(created);
@@ -129,7 +129,7 @@ public class DepartmentDaoTest extends TestDataProducer {
     compareDepartments(created, updated);
 
     Assert.assertEquals("Result model has status 10!", updated.getStatus(), created.getStatus());
-    Assert.assertEquals("Result model has version 23!", updated.getVersion().intValue(), 23);
+    Assert.assertEquals("Result model has version 22!", 22, updated.getVersion().intValue());
     Assert
         .assertEquals("Result model has title '" + created.getTitle() + "'!", updated.getTitle(),
             created.getTitle());
@@ -139,7 +139,7 @@ public class DepartmentDaoTest extends TestDataProducer {
   @Test
   public void testDelete() throws Exception {
 
-    final DepartmentEntity model = getTestDepartment();
+    final DepartmentEntity model = getTestDepartmentForSave();
     final DepartmentEntity result = departmentDao.create(model);
 
     Assert.assertNotNull("Result model is not null!", result);

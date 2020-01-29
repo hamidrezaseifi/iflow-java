@@ -2,7 +2,6 @@ package com.pth.iflow.core.storage.dao.impl;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -10,6 +9,7 @@ import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
 import com.pth.iflow.core.model.entity.workflow.WorkflowTypeStepEntity;
@@ -23,9 +23,9 @@ public class WorkflowTypeStepDao extends EntityDaoBase<WorkflowTypeStepEntity> i
   @Override
   public List<WorkflowTypeStepEntity> getListByWorkflowTypeIdentity(final String workflowTypeIdentity) throws IFlowStorageException {
 
-    final EntityManager entityManager = createEntityManager();
+    final Session session = this.createSession();
 
-    final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+    final CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
     final CriteriaQuery<WorkflowTypeStepEntity> query = criteriaBuilder.createQuery(WorkflowTypeStepEntity.class);
     final Root<WorkflowTypeStepEntity> root = query.from(WorkflowTypeStepEntity.class);
     query.select(root);
@@ -34,14 +34,14 @@ public class WorkflowTypeStepDao extends EntityDaoBase<WorkflowTypeStepEntity> i
     final Predicate predicate = criteriaBuilder.equal(companyIdentityPath, workflowTypeIdentity);
     query.where(predicate);
 
-    final TypedQuery<WorkflowTypeStepEntity> typedQuery = entityManager.createQuery(query);
+    final TypedQuery<WorkflowTypeStepEntity> typedQuery = session.createQuery(query);
 
     // final String qr =
     // typedQuery.unwrap(org.hibernate.query.Query.class).getQueryString();
     // System.out.println("search workflow query: " + qr);
 
     final List<WorkflowTypeStepEntity> list = typedQuery.getResultList();
-    entityManager.close();
+    session.close();
     return list;
   }
 

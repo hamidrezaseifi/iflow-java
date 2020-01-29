@@ -63,7 +63,7 @@ public class HibernateConfig {
 
     sessionFactory.setDataSource(this.restDataSource());
     sessionFactory.setPackagesToScan(new String[] { "com.pth.iflow.core.model.entity", "com.pth.iflow.core.model.entity.workflow" });
-    sessionFactory.setHibernateProperties(this.hibernateProperties());
+    sessionFactory.setHibernateProperties(HibernateConfig.hibernateProperties());
 
     return sessionFactory;
   }
@@ -119,7 +119,7 @@ public class HibernateConfig {
    * return sessionFactory.getObject().createEntityManager(); }
    */
 
-  Properties hibernateProperties() {
+  public static Properties hibernateProperties() {
 
     return new Properties() {
 

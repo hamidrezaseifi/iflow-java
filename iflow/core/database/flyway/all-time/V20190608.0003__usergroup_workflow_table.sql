@@ -121,7 +121,7 @@ CREATE TABLE user_departments (
   department_id bigint NOT NULL,
   member_type int NOT NULL default 5,
   created_at timestamp without time zone NOT NULL default (now() at time zone 'utc'),
-  CONSTRAINT FK_USERDEPARTMENTS_DEPARTMENTS FOREIGN KEY (department_id) REFERENCES departments (id),
+  CONSTRAINT FK_USERDEPARTMENTS_DEPARTMENTS FOREIGN KEY (department_id) REFERENCES departments (id) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT FK_USERDEPARTMENTS_USERS FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
 ALTER SEQUENCE user_department_id_seq OWNED BY user_departments.id;
@@ -135,7 +135,7 @@ CREATE TABLE user_department_groups (
   department_group_id bigint NOT NULL,
   member_type int NOT NULL default 5,
   created_at timestamp without time zone NOT NULL default (now() at time zone 'utc'),
-  CONSTRAINT FK_USERDEPARTMENTGROUPS_D FOREIGN KEY (department_group_id) REFERENCES departments_group (id),
+  CONSTRAINT FK_USERDEPARTMENTGROUPS_D FOREIGN KEY (department_group_id) REFERENCES departments_group (id) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT FK_USERDEPARTMENTGROUPS_USERS FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
 ALTER SEQUENCE user_department_groups_id_seq OWNED BY user_department_groups.id;

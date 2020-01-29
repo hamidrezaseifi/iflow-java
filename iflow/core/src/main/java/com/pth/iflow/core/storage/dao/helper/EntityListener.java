@@ -12,11 +12,6 @@ public class EntityListener implements PreInsertEventListener, PreUpdateEventLis
   @Override
   public boolean onPreUpdate(final PreUpdateEvent event) {
 
-    if (event.getEntity() instanceof EntityIdentityHelper) {
-      final EntityIdentityHelper entity = (EntityIdentityHelper) event.getEntity();
-      entity.increaseVersion();
-    }
-
     return false;
   }
 

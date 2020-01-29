@@ -2,9 +2,9 @@ package com.pth.iflow.core.storage.dao.impl;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
+import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
 import com.pth.iflow.common.enums.EUserDepartmentMemberType;
@@ -25,14 +25,14 @@ public class DepartmentGroupDao extends EntityDaoBase<DepartmentGroupEntity> imp
   @Override
   public UserEntity getDepartmentGroupManager(final String identity) {
 
-    final EntityManager entityManager = createEntityManager();
-    final TypedQuery<UserEntity> query = entityManager.createNamedQuery("findDepartmentGroupMember", UserEntity.class);
+    final Session session = this.createSession();
+    final TypedQuery<UserEntity> query = session.createNamedQuery("findDepartmentGroupMember", UserEntity.class);
     query.setParameter("identity", identity);
     query.setParameter("memtype", EUserDepartmentMemberType.MANAGER.getValue());
 
     final List<UserEntity> results = query.getResultList();
 
-    entityManager.close();
+    session.close();
 
     return results.size() > 0 ? results.get(0) : null;
   }
@@ -40,14 +40,14 @@ public class DepartmentGroupDao extends EntityDaoBase<DepartmentGroupEntity> imp
   @Override
   public UserEntity getDepartmentGroupDeputy(final String identity) {
 
-    final EntityManager entityManager = createEntityManager();
-    final TypedQuery<UserEntity> query = entityManager.createNamedQuery("findDepartmentGroupMember", UserEntity.class);
+    final Session session = this.createSession();
+    final TypedQuery<UserEntity> query = session.createNamedQuery("findDepartmentGroupMember", UserEntity.class);
     query.setParameter("identity", identity);
     query.setParameter("memtype", EUserDepartmentMemberType.DEPUTY.getValue());
 
     final List<UserEntity> results = query.getResultList();
 
-    entityManager.close();
+    session.close();
 
     return results.size() > 0 ? results.get(0) : null;
   }

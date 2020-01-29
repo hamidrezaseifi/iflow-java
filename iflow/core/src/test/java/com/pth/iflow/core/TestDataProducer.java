@@ -278,6 +278,20 @@ public class TestDataProducer {
     return model;
   }
 
+  protected DepartmentEntity getTestDepartmentForSave() {
+
+    final DepartmentEntity model = new DepartmentEntity();
+    model.setCompanyId(1L);
+    model.setId(null);
+    model.setTitle("utest title");
+    model.setStatus(1);
+    model.setVersion(1);
+    model.setDepartmentGroups(this.getTestDepartmentGroupListForSave(model));
+    model.setIdentity("dep-1");
+
+    return model;
+  }
+
   protected DepartmentEdo getTestDepartmentEdo() {
 
     final DepartmentEdo edo = new DepartmentEdo();
@@ -338,7 +352,6 @@ public class TestDataProducer {
   protected DepartmentGroupEntity getTestDepartmentGroup() {
 
     final DepartmentGroupEntity model = new DepartmentGroupEntity();
-    model.setDepartmentId(1L);
     model.setId(1L);
     model.setTitle("utest title");
     model.setStatus(1);
@@ -363,12 +376,24 @@ public class TestDataProducer {
   protected DepartmentGroupEntity getTestDepartmentGroup(final Long id, final String title) {
 
     final DepartmentGroupEntity model = new DepartmentGroupEntity();
-    model.setDepartmentId(1L);
     model.setId(id);
     model.setTitle(title);
     model.setStatus(1);
     model.setVersion(1);
-    model.setIdentity("depgroup-1");
+    model.setIdentity(title.toLowerCase().replace(" ", "-"));
+
+    return model;
+  }
+
+  protected DepartmentGroupEntity getTestDepartmentGroupForSave(final String title, final DepartmentEntity department) {
+
+    final DepartmentGroupEntity model = new DepartmentGroupEntity();
+    model.setDepartment(department);
+    model.setId(null);
+    model.setTitle(title);
+    model.setStatus(1);
+    model.setVersion(1);
+    model.setIdentity(title.toLowerCase().replace(" ", "-"));
 
     return model;
   }
@@ -379,7 +404,7 @@ public class TestDataProducer {
     edo.setTitle(title);
     edo.setStatus(1);
     edo.setVersion(1);
-    edo.setIdentity("depgroup-1");
+    edo.setIdentity(title.toLowerCase().replace(" ", "-"));
 
     return edo;
   }
@@ -389,6 +414,15 @@ public class TestDataProducer {
     final List<DepartmentGroupEntity> list = Arrays
         .asList(this.getTestDepartmentGroup(1L, "DepartmentGroup 1"),
             this.getTestDepartmentGroup(2L, "DepartmentGroup 2"));
+
+    return list;
+  }
+
+  protected List<DepartmentGroupEntity> getTestDepartmentGroupListForSave(final DepartmentEntity department) {
+
+    final List<DepartmentGroupEntity> list = Arrays
+        .asList(this.getTestDepartmentGroupForSave("DepartmentGroup 1", department),
+            this.getTestDepartmentGroupForSave("DepartmentGroup 2", department));
 
     return list;
   }

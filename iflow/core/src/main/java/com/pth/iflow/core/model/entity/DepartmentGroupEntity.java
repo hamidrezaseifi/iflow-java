@@ -49,8 +49,8 @@ public class DepartmentGroupEntity extends EntityIdentityHelper {
   @Column(name = "identity")
   private String identity;
 
-  @Column(name = "department_id")
-  private Long departmentId;
+  // @Column(name = "department_id")
+  // private Long departmentId;
 
   @Column(name = "title")
   private String title;
@@ -69,8 +69,8 @@ public class DepartmentGroupEntity extends EntityIdentityHelper {
   @Column(name = "updated_at", insertable = false, updatable = false)
   private Date updatedAt;
 
-  @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "department_id", insertable = false, updatable = false)
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "department_id", nullable = false)
   @Fetch(FetchMode.JOIN)
   private DepartmentEntity department;
 
@@ -87,15 +87,16 @@ public class DepartmentGroupEntity extends EntityIdentityHelper {
     return this.id;
   }
 
+  @Override
   public void setId(final Long id) {
 
     this.id = id;
   }
 
-  public Long getDepartmentId() {
+  // public Long getDepartmentId() {
 
-    return this.departmentId;
-  }
+  // return this.departmentId;
+  // }
 
   @Override
   public String getIdentity() {
@@ -109,10 +110,10 @@ public class DepartmentGroupEntity extends EntityIdentityHelper {
     this.identity = identity;
   }
 
-  public void setDepartmentId(final Long departmentId) {
+  // public void setDepartmentId(final Long departmentId) {
 
-    this.departmentId = departmentId;
-  }
+  // this.departmentId = departmentId;
+  // }
 
   public String getTitle() {
 
@@ -186,6 +187,16 @@ public class DepartmentGroupEntity extends EntityIdentityHelper {
   public void setUsers(final Set<UserEntity> users) {
 
     this.users = users;
+  }
+
+  public DepartmentEntity getDepartment() {
+
+    return department;
+  }
+
+  public void setDepartment(final DepartmentEntity department) {
+
+    this.department = department;
   }
 
 }

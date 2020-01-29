@@ -73,8 +73,8 @@ public class DepartmentEntity extends EntityIdentityHelper {
   @Column(name = "updated_at", insertable = false, updatable = false)
   private Date updatedAt;
 
-  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-  @JoinColumn(name = "department_id")
+  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "department", fetch = FetchType.EAGER)
+  @Fetch(value = FetchMode.SUBSELECT)
   private final List<DepartmentGroupEntity> departmentGroups = new ArrayList<>();
 
   @ManyToOne(fetch = FetchType.LAZY)
@@ -95,6 +95,7 @@ public class DepartmentEntity extends EntityIdentityHelper {
     return this.id;
   }
 
+  @Override
   public void setId(final Long id) {
 
     this.id = id;
