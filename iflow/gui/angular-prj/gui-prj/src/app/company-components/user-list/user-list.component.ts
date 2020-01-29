@@ -13,7 +13,7 @@ import { ErrorServiceService } from '../../services/error-service.service';
 import { GermanDateAdapter, parseDate, formatDate } from '../../helper';
 import { UserAccessTypeControllValidator } from '../../custom-validators/user-access-type-controll-validator';
 
-import { User, UserAccessType, MenuItem, GeneralData, UserDepartmentGroup, UserDepartment, Department, DepartmentGroup } from '../../ui-models';
+import { User, UserAccessType, MenuItem, GeneralData,  UserDepartment, Department } from '../../ui-models';
 
 @Component({
   selector: 'app-user-list',
@@ -31,7 +31,6 @@ export class UserListComponent implements OnInit {
 	showEditModal :boolean = false;
 	editingUser :User = new User;
 	editingUserDepartments: UserDepartment[] = [];
-	editingUserDepartmentGroups: UserDepartmentGroup[] = [];
 
 	userEditForm: FormGroup;
 	
@@ -156,7 +155,6 @@ export class UserListComponent implements OnInit {
 		this.isCreating = true;
 		this.editingUser = new User;
 		this.editingUserDepartments = [];
-		this.editingUserDepartmentGroups = [];
 
 		this.setToControlValues();
 		
@@ -171,7 +169,6 @@ export class UserListComponent implements OnInit {
 		this.isCreating = false;
 		this.editingUser = user;
 		this.editingUserDepartments = this.editingUser.userDepartments;
-		this.editingUserDepartmentGroups = this.editingUser.userDepartmentGroups;
 		
 		this.setToControlValues();
 		
@@ -190,12 +187,6 @@ export class UserListComponent implements OnInit {
 			var dep = this.findDepartment(userDepartment.departmentIdentity);
 			this.viewingDepartmentMember.push({"title" : dep != null ? dep.title : "not found!" , "type":this.userDepartmentAccessType[userDepartment.memberType]});
 		}
-		
-		for(var index in this.viewingUser.userDepartmentGroups){
-			var userDepartmentGroup :UserDepartmentGroup = this.viewingUser.userDepartmentGroups[index];
-			var depgrp = this.findDepartmentGroup(userDepartmentGroup.departmentGroupIdentity);
-			this.viewingDepartmentMember.push({"title" : depgrp != null ? depgrp.title : "not found!", "type":this.userDepartmentAccessType[userDepartmentGroup.memberType]});			
-		}
 
 		this.activeTab = "info";
 		this.showViewModal = true;
@@ -205,17 +196,6 @@ export class UserListComponent implements OnInit {
 		for(var index in this.departments){
 			if(this.departments[index].identity === identity){
 				return this.departments[index];
-			}
-		}
-		return null;
-	}
-
-	findDepartmentGroup(identity: string):DepartmentGroup{
-		for(var index in this.departments){
-			for(var gindex in this.departments[index].departmentGroups){
-				if(this.departments[index].departmentGroups[gindex].identity === identity){
-					return this.departments[index].departmentGroups[gindex];
-				}
 			}
 		}
 		return null;
@@ -255,41 +235,6 @@ export class UserListComponent implements OnInit {
 		this.resetPasswordResultMessage = "";
 
 		this.showResetPasswordModal = true;
-	}
-	
-	isMemberOfDepartmentGroup(identity:string): boolean{
-		
-		if(this.editingUser == null){
-			return false;
-		}
-		
-		for(var index in this.editingUserDepartmentGroups){
-			if(this.editingUserDepartmentGroups[index].departmentGroupIdentity === identity){
-				return true;
-			}
-		}
-		
-		return false;
-	}
-
-	toggleMemberOfDepartmentGroup(identity:string){
-		
-		if(this.editingUser == null){
-			return;
-		}
-		
-		if(this.isMemberOfDepartmentGroup(identity)){
-			this.editingUserDepartmentGroups = this.editingUserDepartmentGroups.filter(function(userDepGroup){
-				return userDepGroup.departmentGroupIdentity != identity;
-			});
-		}
-		else{
-			var userDepGroup = new UserDepartmentGroup;
-			userDepGroup.departmentGroupIdentity = identity;
-			userDepGroup.memberType = 5;
-			this.editingUserDepartmentGroups.push(userDepGroup);
-		}
-		
 	}
 
 	isMemberOfDepartment(identity:string): boolean{
@@ -352,30 +297,7 @@ export class UserListComponent implements OnInit {
 		}
 		
 	}
-	
-	meberTypeOfDepartmentGroup(identity:string):string{
 		
-		for(var index in this.editingUserDepartmentGroups){
-			if(this.editingUserDepartmentGroups[index].departmentGroupIdentity === identity){
-				console.log("meberTypeOfDepartmentGroup: " + identity + " , " + this.editingUserDepartmentGroups[index].memberType);
-				return this.editingUserDepartmentGroups[index].memberType + "";
-			}
-		}
-		console.log("meberTypeOfDepartmentGroup: " + identity + " , 0");
-		return "0";
-	}
-	
-	onMeberTypeOfDepartmentGroupChange(event, identity:string, value:number){
-
-		for(var index in this.editingUserDepartmentGroups){
-			if(this.editingUserDepartmentGroups[index].departmentGroupIdentity === identity){
-				this.editingUserDepartmentGroups[index].memberType = value;
-				return;
-			}
-		}
-		
-	}
-	
 	deleteUser(){
 		
 		this.loadingService.showLoading();
@@ -505,7 +427,6 @@ export class UserListComponent implements OnInit {
 		this.editingUser.birthDate = formatDate(this.userEditForm.controls["birthDate"].value, 'dd.mm.yyyy');
 		
 		this.editingUser.userDepartments = this.editingUserDepartments;
-		this.editingUser.userDepartmentGroups = this.editingUserDepartmentGroups;
 
 	}
 	

@@ -5,8 +5,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -183,7 +181,7 @@ public class UserServiceTest extends TestDataProducer {
   }
 
   @Test
-  public void testGetAllUserIdListByDepartmentGroupId() throws Exception {
+  public void testGetAllUserListByDepartmentId() throws Exception {
 
     final Set<String> list = this.getTestUserIdSet();
     final List<UserEntity> userList = this.getTestUserList();
@@ -191,22 +189,6 @@ public class UserServiceTest extends TestDataProducer {
     when(this.userDao.getAllUserIdentityListByDepartmentId(any(String.class))).thenReturn(userList);
 
     final List<UserEntity> resList = this.userService.getAllUserIdentityListByDepartmentIdentity("identity");
-
-    Assert.assertNotNull("Result list is not null!", resList);
-    Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());
-    ;
-
-  }
-
-  @Test
-  public void testGetAllUserListByDepartmentId() throws Exception {
-
-    final Set<String> list = new HashSet<>(Arrays.asList("item-1", "item-2", "item-3"));
-    final List<UserEntity> userList = this.getTestUserList();
-
-    when(this.userDao.getAllUserIdentityListByDepartmentGroupId(any(String.class))).thenReturn(userList);
-
-    final List<UserEntity> resList = this.userService.getAllUserIdentityListByDepartmentGroupIdentity("identity");
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());

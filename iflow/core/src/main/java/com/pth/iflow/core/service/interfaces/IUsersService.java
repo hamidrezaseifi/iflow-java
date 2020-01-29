@@ -36,8 +36,6 @@ public interface IUsersService extends ICoreModelEdoMapperService<UserEntity, Us
 
   List<UserEntity> getAllUserIdentityListByDepartmentIdentity(final String identity) throws IFlowStorageException;
 
-  List<UserEntity> getAllUserIdentityListByDepartmentGroupIdentity(final String identity) throws IFlowStorageException;
-
   List<UserEntity> getUserListByIdentityList(final Set<String> identityList) throws IFlowStorageException;
 
   ProfileResponseEdo toProfileResponseEdo(final ProfileResponse model);

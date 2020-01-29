@@ -152,12 +152,6 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
     return userDao.getAllUserIdentityListByDepartmentId(identity);
   }
 
-  @Override
-  public List<UserEntity> getAllUserIdentityListByDepartmentGroupIdentity(final String identity) throws IFlowStorageException {
-
-    return userDao.getAllUserIdentityListByDepartmentGroupId(identity);
-  }
-
   protected UserEntity prepareSavingModel(final UserEntity model) {
 
     return model;

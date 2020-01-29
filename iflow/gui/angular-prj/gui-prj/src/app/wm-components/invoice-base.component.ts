@@ -15,7 +15,7 @@ import { InvoiceWorkflowEditService } from '../services/workflow/invoice/invoice
 import { LoadingServiceService } from '../services/loading-service.service';
 import { ErrorServiceService } from '../services/error-service.service';
 
-import { User, Department, DepartmentGroup, GeneralData, OcrWord, UploadedFile, UploadedResult } from '../ui-models';
+import { User, Department, GeneralData, OcrWord, UploadedFile, UploadedResult } from '../ui-models';
 import { WorkflowProcessCommand, Workflow, AssignItem, FileTitle, AssignType, WorkflowUploadFileResult, 
 	InvoiceType, WorkflowUploadedFile, WorkflowFile } from '../wf-models';
 import { InvoiceWorkflowSaveRequest } from '../wf-models/invoice-workflow-save-request';

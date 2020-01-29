@@ -105,28 +105,6 @@ public class UserDao extends EntityDaoBase<UserEntity> implements IUserDao {
   }
 
   @Override
-  public List<UserEntity> getAllUserIdentityListByDepartmentGroupId(final String identity) throws IFlowStorageException {
-
-    final Session session = this.createSession();
-
-    final CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-    final CriteriaQuery<UserEntity> query = criteriaBuilder.createQuery(UserEntity.class);
-    final Root<UserEntity> userRoot = query.from(UserEntity.class);
-
-    final Join<Object, Object> departmentJoin = userRoot.join("departmentGroups", JoinType.INNER);
-
-    query.select(userRoot).where(criteriaBuilder.equal(departmentJoin.get("identity"), identity));
-    final TypedQuery<UserEntity> typedQuery = session.createQuery(query);
-
-    final String qr = DaoHelper.retreiveRawSql(typedQuery);
-
-    final List<UserEntity> list = typedQuery.getResultList();
-
-    session.close();
-    return list;
-  }
-
-  @Override
   protected Class<UserEntity> entityClass() {
 
     return UserEntity.class;

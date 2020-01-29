@@ -131,12 +131,12 @@ public class TestDataProducer {
 
   private UserDepartment getTestUserDepartment(final String depIdentity) {
 
-    final UserDepartment userDepartmentGroup = new UserDepartment();
+    final UserDepartment userDepartment = new UserDepartment();
 
-    userDepartmentGroup.setDepartmentIdentity(depIdentity);
+    userDepartment.setDepartmentIdentity(depIdentity);
 
-    userDepartmentGroup.setMemberType(5);
-    return userDepartmentGroup;
+    userDepartment.setMemberType(5);
+    return userDepartment;
   }
 
   protected List<User> getTestUserList() {
@@ -552,11 +552,6 @@ public class TestDataProducer {
   }
 
   protected Set<String> getTestDepartmentIdSet() {
-
-    return new HashSet<>(Arrays.asList("identity1", "identity2", "identity3"));
-  }
-
-  protected Set<String> getTestDepartmentGroupIdSet() {
 
     return new HashSet<>(Arrays.asList("identity1", "identity2", "identity3"));
   }

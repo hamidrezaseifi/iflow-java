@@ -26,12 +26,6 @@
 										<li *ngFor="let dep of departments;" class="list-item">
 											<input type="checkbox" [attr.data-assigntitle]="dep.title" #inputEl class="assign-checkbox" [checked]="isItemAssigned(dep.identity, assignTypeDepartment)" (change)="toggleAssign(dep.identity, assignTypeDepartment, inputEl.checked)" value="{{dep.identity}}"/> 
 											<span class="user-select-item-label">{{dep.title}}</span>
-											<ul class="list-item-container">
-												<li *ngFor="let depgrp of dep.departmentGroups;" class="list-item">
-													<input type="checkbox" class="assign-checkbox" #inputEl [attr.data-assigntitle]="depgrp.title" [checked]="isItemAssigned(depgrp.identity, assignTypeDepartmentGroup)" (change)="toggleAssign(depgrp.identity, assignTypeDepartmentGroup, inputEl.checked)" value="{{depgrp.identity}}"/> 	 
-													<span class="user-select-item-label">{{depgrp.title}}</span>										
-												</li>
-											</ul>									
 										</li>
 									</ul>
 								

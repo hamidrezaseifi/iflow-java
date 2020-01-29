@@ -2,8 +2,8 @@ import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import $ from "jquery";
 
-import { User, Department, DepartmentGroup, GeneralData } from '../../ui-models';
 import { AssignItem, AssignType } from '../../wf-models';
+import { User, Department, GeneralData, UploadedFile, UploadedResult } from '../../ui-models';
 
 @Component({
   selector: 'app-wm-assign-list',
@@ -104,16 +104,7 @@ export class WmAssignListComponent implements OnInit {
 			return 'Unknown!';
 		}
 		
-		if(item.itemType === AssignType.DEPARTMENTGROUP){
-			for(var index in this.departments){
-				for(var gindex in this.departments[index].departmentGroups){
-					if(this.departments[index].departmentGroups[gindex].identity === item.itemIdentity){
-						return this.departments[index].departmentGroups[gindex].title;
-					}
-				}
-			}
-			return 'Unknown!';
-		}
+		
 		
 	}
 

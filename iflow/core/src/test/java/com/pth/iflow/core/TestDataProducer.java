@@ -128,12 +128,12 @@ public class TestDataProducer {
 
   private UserDepartmentEntity getTestUserDepartmentEntity() {
 
-    final UserDepartmentEntity userDepartmentGroupEntity = new UserDepartmentEntity();
+    final UserDepartmentEntity userDepartmentEntity = new UserDepartmentEntity();
 
-    userDepartmentGroupEntity.setDepartment(getTestDepartment());
+    userDepartmentEntity.setDepartment(getTestDepartment());
 
-    userDepartmentGroupEntity.setMemberType(5);
-    return userDepartmentGroupEntity;
+    userDepartmentEntity.setMemberType(5);
+    return userDepartmentEntity;
   }
 
   protected UserEdo getTestUserEdo() {
@@ -1090,11 +1090,6 @@ public class TestDataProducer {
   protected Set<String> getTestDepartmentIdSet() {
 
     return new HashSet<String>(Arrays.asList("dep1", "dep2", "dep3"));
-  }
-
-  protected Set<String> getTestDepartmentGroupIdSet() {
-
-    return new HashSet<String>(Arrays.asList("depgrp11", "depgrp11", "depgrp13"));
   }
 
   protected Set<String> getTestWorkflowTypeIdSet() {

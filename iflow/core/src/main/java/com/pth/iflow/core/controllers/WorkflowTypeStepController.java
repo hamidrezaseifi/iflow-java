@@ -31,12 +31,13 @@ public class WorkflowTypeStepController {
   final IWorkflowTypeStepService workflowStepService;
 
   public WorkflowTypeStepController(@Autowired final IWorkflowTypeStepService workflowStepService) {
+
     this.workflowStepService = workflowStepService;
   }
 
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.WORKFLOWTYPESTEP_READ_BY_IDENTITY)
-  public ResponseEntity<WorkflowTypeStepEdo> readDepartmentGroup(@PathVariable(name = "identity") final String identity,
+  public ResponseEntity<WorkflowTypeStepEdo> readByIdentity(@PathVariable(name = "identity") final String identity,
       final HttpServletRequest request) throws Exception {
 
     final WorkflowTypeStepEntity model = this.workflowStepService.getByIdentity(identity);
@@ -46,25 +47,27 @@ public class WorkflowTypeStepController {
 
   @ResponseStatus(HttpStatus.OK)
   @IflowPostRequestMapping(path = IflowRestPaths.CoreModule.WORKFLOWTYPESTEP_READ_LIST)
-  public ResponseEntity<WorkflowTypeStepListEdo> readDepartmentList(@RequestBody final IdentityListEdo idList,
+  public ResponseEntity<WorkflowTypeStepListEdo> readByIdentityList(@RequestBody final IdentityListEdo idList,
       final HttpServletRequest request) throws Exception {
 
     final List<WorkflowTypeStepEntity> modelList = idList.getIdentityList().isEmpty() ? new ArrayList<>()
         : this.workflowStepService.getListByIdentityList(idList.getIdentityList());
 
-    return ControllerHelper.createResponseEntity(request, new WorkflowTypeStepListEdo(this.workflowStepService.toEdoList(modelList)),
-        HttpStatus.OK);
+    return ControllerHelper
+        .createResponseEntity(request, new WorkflowTypeStepListEdo(this.workflowStepService.toEdoList(modelList)),
+            HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.WORKFLOWTYPESTEP_READ_LIST_BY_WORKFLOWIDENTITY)
-  public ResponseEntity<WorkflowTypeStepListEdo> readDepartmentListByCompany(@PathVariable(name = "identity") final String identity,
+  public ResponseEntity<WorkflowTypeStepListEdo> readWorkflowSteps(@PathVariable(name = "identity") final String identity,
       final HttpServletRequest request) throws Exception {
 
     final List<WorkflowTypeStepEntity> modelList = this.workflowStepService.getListByWorkflowTypeIdentity(identity);
 
-    return ControllerHelper.createResponseEntity(request, new WorkflowTypeStepListEdo(this.workflowStepService.toEdoList(modelList)),
-        HttpStatus.OK);
+    return ControllerHelper
+        .createResponseEntity(request, new WorkflowTypeStepListEdo(this.workflowStepService.toEdoList(modelList)),
+            HttpStatus.OK);
   }
 
 }

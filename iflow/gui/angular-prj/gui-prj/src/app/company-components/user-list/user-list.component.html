@@ -138,23 +138,7 @@
 								<select #select [ngModel]="meberTypeOfDepartment(dep.identity)" name="meberTypeOfDepartment" (change)="onMeberTypeOfDepartmentChange($event, dep.identity, select.value)" class="dep-membertype" *ngIf="isMemberOfDepartment(dep.identity)">
 									<option *ngFor="let item of userDepartmentAccessType | keyvalue" value="{{item.key}}">{{ item.value }}</option>
 								</select>
-								<div class="clear"></div> 
-								<div class="list-item-container dep-list">
-									<div *ngFor="let depgrp of dep.departmentGroups;" class="list-item">
-										 	 
-										<span class="department-grp-item-label">{{depgrp.title}}</span>
-								
-										<div class="custom-control custom-checkbox custom-control-inline dep-member">
-										  <input type="checkbox" [checked]="isMemberOfDepartmentGroup(depgrp.identity)" (change)="toggleMemberOfDepartmentGroup(depgrp.identity)" class="custom-control-input" id="depgrp{{depgrp.identity}}">
-										  <label class="custom-control-label" for="depgrp{{depgrp.identity}}"></label>
-										</div>
-								
-										<select #select [ngModel]="meberTypeOfDepartmentGroup(depgrp.identity)" name="meberTypeOfDepartmentGroup" (change)="onMeberTypeOfDepartmentGroupChange($event, depgrp.identity, select.value)" class="dep-membertype" *ngIf="isMemberOfDepartmentGroup(depgrp.identity)">
-											<option *ngFor="let item of userDepartmentAccessType | keyvalue" value="{{item.key}}">{{ item.value }}</option>
-										</select>
-										<div class="clear"></div>										
-									</div>
-								</div>									
+								<div class="clear"></div> 								
 							</div>
 							
 					  	
