@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.common.models.edo.DepartmentEdo;
 import com.pth.iflow.core.model.entity.DepartmentEntity;
-import com.pth.iflow.core.model.entity.DepartmentGroupEntity;
 import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.service.base.CoreModelEdoMapperService;
 import com.pth.iflow.core.service.interfaces.IDepartmentService;
@@ -32,14 +31,6 @@ public class DepartmentService extends CoreModelEdoMapperService<DepartmentEntit
   public DepartmentEntity getByIdentity(final String identity) {
 
     return this.departmentDao.getByIdentity(identity);
-  }
-
-  @Override
-  public List<DepartmentGroupEntity> getDepartmentGroups(final String identity) {
-
-    final DepartmentEntity department = this.getByIdentity(identity);
-
-    return department.getDepartmentGroups();
   }
 
   @Override
@@ -96,8 +87,6 @@ public class DepartmentService extends CoreModelEdoMapperService<DepartmentEntit
 
     validateCustomer(edo);
 
-    final DepartmentGroupService groupService = new DepartmentGroupService(null);
-
     final DepartmentEntity model = new DepartmentEntity();
 
     this.setIdFromIdentity(model, edo.getIdentity(), (EntityDaoBase<ICoreEntityVersion>) this.departmentDao);
@@ -105,7 +94,6 @@ public class DepartmentService extends CoreModelEdoMapperService<DepartmentEntit
     model.setTitle(edo.getTitle());
     model.setStatus(edo.getStatus());
     model.setIdentity(edo.getIdentity());
-    model.setDepartmentGroups(groupService.fromEdoList(edo.getDepartmentGroups()));
     model.setVersion(edo.getVersion());
 
     return model;
@@ -114,13 +102,10 @@ public class DepartmentService extends CoreModelEdoMapperService<DepartmentEntit
   @Override
   public DepartmentEdo toEdo(final DepartmentEntity model) {
 
-    final DepartmentGroupService groupService = new DepartmentGroupService(null);
-
     final DepartmentEdo edo = new DepartmentEdo();
     edo.setTitle(model.getTitle());
     edo.setStatus(model.getStatus());
     edo.setIdentity(model.getIdentity());
-    edo.setDepartmentGroups(groupService.toEdoList(model.getDepartmentGroups()));
     edo.setVersion(model.getVersion());
 
     return edo;

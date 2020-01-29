@@ -7,8 +7,7 @@ import com.pth.iflow.common.exceptions.IFlowInvalidEnumValueException;
 public enum EAssignType implements IEnumNameValidator {
   NONE("None"),
   USER("User"),
-  DEPARTMENT("Department"),
-  DEPARTMENTGROUP("DepartmentGroup");
+  DEPARTMENT("Department");
 
   private String enumName;
 

@@ -24,14 +24,12 @@ import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.ProfileResponse;
 import com.pth.iflow.core.model.entity.CompanyEntity;
 import com.pth.iflow.core.model.entity.DepartmentEntity;
-import com.pth.iflow.core.model.entity.DepartmentGroupEntity;
 import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.model.entity.UserGroupEntity;
 import com.pth.iflow.core.service.impl.UsersService;
 import com.pth.iflow.core.service.interfaces.IUsersService;
 import com.pth.iflow.core.storage.dao.interfaces.ICompanyDao;
 import com.pth.iflow.core.storage.dao.interfaces.IDepartmentDao;
-import com.pth.iflow.core.storage.dao.interfaces.IDepartmentGroupDao;
 import com.pth.iflow.core.storage.dao.interfaces.IUserDao;
 import com.pth.iflow.core.storage.dao.interfaces.IUserGroupDao;
 import com.pth.iflow.core.storage.dao.interfaces.IWorkflowTypeDao;
@@ -56,16 +54,12 @@ public class UserServiceTest extends TestDataProducer {
   private IDepartmentDao departmentDao;
 
   @MockBean
-  private IDepartmentGroupDao departmentGroupDao;
-
-  @MockBean
   private IWorkflowTypeDao workflowTypeDao;
 
   @Before
   public void setUp() throws Exception {
 
-    this.userService = new UsersService(this.companyDao, this.userDao, this.userGroupDao, this.departmentDao, this.departmentGroupDao,
-        this.workflowTypeDao);
+    this.userService = new UsersService(this.companyDao, this.userDao, this.userGroupDao, this.departmentDao, this.workflowTypeDao);
   }
 
   @After
@@ -104,21 +98,6 @@ public class UserServiceTest extends TestDataProducer {
     Assert.assertEquals("Result user has lastname '" + user.getLastName() + "'!", resUser.getLastName(), user.getLastName());
     Assert.assertEquals("Result user has email '" + user.getEmail() + "'!", resUser.getEmail(), user.getEmail());
     Assert.assertEquals("Result user has status 1!", resUser.getStatus(), user.getStatus());
-
-  }
-
-  @Test
-  public void testGetUserDepartmentGroups() throws Exception {
-
-    final UserEntity user = getTestUser();
-    final List<DepartmentGroupEntity> list = getTestDepartmentGroupList();
-
-    when(this.userDao.getByIdentity(any(String.class))).thenReturn(user);
-
-    final List<DepartmentGroupEntity> resList = this.userService.getUserDepartmentGroups("identity");
-
-    Assert.assertNotNull("Result list is not null!", resList);
-    Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());
 
   }
 

@@ -25,8 +25,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.pth.iflow.common.models.edo.DepartmentEdo;
-import com.pth.iflow.common.models.edo.DepartmentGroupEdo;
-import com.pth.iflow.common.models.edo.DepartmentGroupListEdo;
 import com.pth.iflow.common.models.edo.DepartmentListEdo;
 import com.pth.iflow.common.models.edo.ProfileResponseEdo;
 import com.pth.iflow.common.models.edo.UserEdo;
@@ -38,10 +36,8 @@ import com.pth.iflow.common.rest.XmlRestConfig;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.ProfileResponse;
 import com.pth.iflow.core.model.entity.DepartmentEntity;
-import com.pth.iflow.core.model.entity.DepartmentGroupEntity;
 import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.model.entity.UserGroupEntity;
-import com.pth.iflow.core.service.interfaces.IDepartmentGroupService;
 import com.pth.iflow.core.service.interfaces.IDepartmentService;
 import com.pth.iflow.core.service.interfaces.IUserGroupService;
 import com.pth.iflow.core.service.interfaces.IUsersService;
@@ -65,9 +61,6 @@ public class UserControllerTest extends TestDataProducer {
 
   @MockBean
   private IDepartmentService departmentService;
-
-  @MockBean
-  private IDepartmentGroupService departmentGroupService;
 
   @Value("${iflow.common.rest.api.security.client-id.internal}")
   private String innerModulesRequestHeaderValue;
@@ -147,31 +140,6 @@ public class UserControllerTest extends TestDataProducer {
         .andExpect(content().xml(listAsXmlString));
 
     verify(this.usersService, times(1)).getUserDepartments(any(String.class));
-
-  }
-
-  @Test
-  public void testReadUserDepartmentGroups() throws Exception {
-
-    final List<DepartmentGroupEntity> list = this.getTestDepartmentGroupList();
-    final List<DepartmentGroupEdo> mappedEdolist = this.getTestDepartmentGroupEdoList();
-
-    when(this.usersService.getUserDepartmentGroups(any(String.class))).thenReturn(list);
-    when(this.departmentGroupService.toEdoList(any(List.class))).thenReturn(mappedEdolist);
-
-    final DepartmentGroupListEdo edoList = new DepartmentGroupListEdo(mappedEdolist);
-
-    final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
-
-    this.mockMvc
-        .perform(MockMvcRequestBuilders
-            .get(IflowRestPaths.CoreModule.USER_DEPARTMENTGROUPS_LIST_BY_IDENTITY, "useridentity")
-            .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
-        .andExpect(status().isOk())
-        .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
-        .andExpect(content().xml(listAsXmlString));
-
-    verify(this.usersService, times(1)).getUserDepartmentGroups(any(String.class));
 
   }
 
@@ -274,32 +242,6 @@ public class UserControllerTest extends TestDataProducer {
         .andExpect(content().xml(listAsXmlString));
 
     verify(this.usersService, times(1)).getAllUserIdentityListByDepartmentIdentity(any(String.class));
-
-  }
-
-  @Test
-  public void testReadDepartmentGroupUsers() throws Exception {
-
-    final List<UserEntity> list = this.getTestUserList();
-    final List<UserEdo> mappedEdolist = this.getTestUserEdoList();
-
-    when(this.usersService.getAllUserIdentityListByDepartmentGroupIdentity(any(String.class))).thenReturn(list);
-    when(this.usersService.toEdoList(any(List.class))).thenReturn(mappedEdolist);
-
-    final UserListEdo listEdo = new UserListEdo();
-    listEdo.setUsers(mappedEdolist);
-
-    final String listAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(listEdo);
-
-    this.mockMvc
-        .perform(MockMvcRequestBuilders
-            .get(IflowRestPaths.CoreModule.USER_USER_LIST_BY_DEPARTMENTGROUPIDENTITY, "companyidentity")
-            .header(XmlRestConfig.REQUEST_HEADER_IFLOW_CLIENT_ID, this.innerModulesRequestHeaderValue))
-        .andExpect(status().isOk())
-        .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
-        .andExpect(content().xml(listAsXmlString));
-
-    verify(this.usersService, times(1)).getAllUserIdentityListByDepartmentGroupIdentity(any(String.class));
 
   }
 

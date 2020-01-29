@@ -104,10 +104,6 @@ public class UserEntity extends EntityIdentityHelper {
   @Fetch(value = FetchMode.SUBSELECT)
   private final List<UserDepartmentEntity> userDepartments = new ArrayList<>();
 
-  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user", fetch = FetchType.EAGER)
-  @Fetch(value = FetchMode.SUBSELECT)
-  private final List<UserDepartmentGroupEntity> userDepartmentGroups = new ArrayList<>();
-
   public UserEntity() {
 
   }
@@ -362,48 +358,9 @@ public class UserEntity extends EntityIdentityHelper {
 
   }
 
-  public List<UserDepartmentGroupEntity> getUserDepartmentGroups() {
-
-    return userDepartmentGroups;
-  }
-
-  public void setUserDepartmentGroups(final Collection<UserDepartmentGroupEntity> userDepartmentGroups) {
-
-    this.userDepartmentGroups.clear();
-    for (final UserDepartmentGroupEntity model : userDepartmentGroups) {
-      model.setUser(this);
-      this.userDepartmentGroups.add(model);
-    }
-
-  }
-
-  public void addUserDepartmentGroup(final DepartmentGroupEntity departmentGroup, final int memberType) {
-
-    final UserDepartmentGroupEntity model = new UserDepartmentGroupEntity();
-    model.setDepartmentGroup(departmentGroup);
-    model.setUser(this);
-    model.setMemberType(memberType);
-
-    this.userDepartmentGroups.add(model);
-
-  }
-
-  public void addUserDepartmentGroup(final UserDepartmentGroupEntity model) {
-
-    model.setUser(this);
-
-    this.userDepartmentGroups.add(model);
-
-  }
-
   public Set<DepartmentEntity> getDepartments() {
 
     return this.userDepartments.stream().map(ud -> ud.getDepartment()).collect(Collectors.toSet());
-  }
-
-  public Set<DepartmentGroupEntity> getDepartmentGroups() {
-
-    return this.userDepartmentGroups.stream().map(udg -> udg.getDepartmentGroup()).collect(Collectors.toSet());
   }
 
   public Set<UserEntity> getDeputies() {

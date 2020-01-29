@@ -7,7 +7,6 @@ import com.pth.iflow.common.models.edo.ProfileResponseEdo;
 import com.pth.iflow.common.models.edo.UserEdo;
 import com.pth.iflow.core.model.ProfileResponse;
 import com.pth.iflow.core.model.entity.DepartmentEntity;
-import com.pth.iflow.core.model.entity.DepartmentGroupEntity;
 import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.model.entity.UserGroupEntity;
 import com.pth.iflow.core.service.base.ICoreModelEdoMapperService;
@@ -30,8 +29,6 @@ public interface IUsersService extends ICoreModelEdoMapperService<UserEntity, Us
   List<UserGroupEntity> getUserGroups(final String identity);
 
   List<DepartmentEntity> getUserDepartments(final String identity);
-
-  List<DepartmentGroupEntity> getUserDepartmentGroups(final String identity);
 
   List<UserEntity> getUserDeputies(final String identity);
 

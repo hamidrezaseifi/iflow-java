@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pth.iflow.common.annotations.IflowGetRequestMapping;
 import com.pth.iflow.common.annotations.IflowPostRequestMapping;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
-import com.pth.iflow.common.models.edo.DepartmentGroupListEdo;
 import com.pth.iflow.common.models.edo.DepartmentListEdo;
 import com.pth.iflow.common.models.edo.ProfileResponseEdo;
 import com.pth.iflow.common.models.edo.UserEdo;
@@ -25,10 +24,8 @@ import com.pth.iflow.common.models.edo.UserListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.core.model.ProfileResponse;
 import com.pth.iflow.core.model.entity.DepartmentEntity;
-import com.pth.iflow.core.model.entity.DepartmentGroupEntity;
 import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.model.entity.UserGroupEntity;
-import com.pth.iflow.core.service.interfaces.IDepartmentGroupService;
 import com.pth.iflow.core.service.interfaces.IDepartmentService;
 import com.pth.iflow.core.service.interfaces.IUserGroupService;
 import com.pth.iflow.core.service.interfaces.IUsersService;
@@ -40,15 +37,13 @@ public class UserController {
   final IUsersService usersService;
   final IUserGroupService userGroupService;
   final IDepartmentService departmentService;
-  final IDepartmentGroupService departmentGroupService;
 
   public UserController(@Autowired final IUsersService usersService, @Autowired final IUserGroupService userGroupService,
-      @Autowired final IDepartmentService departmentService, @Autowired final IDepartmentGroupService departmentGroupService) {
+      @Autowired final IDepartmentService departmentService) {
 
     this.usersService = usersService;
     this.userGroupService = userGroupService;
     this.departmentService = departmentService;
-    this.departmentGroupService = departmentGroupService;
   }
 
   @ResponseStatus(HttpStatus.ACCEPTED)
@@ -104,18 +99,6 @@ public class UserController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.USER_DEPARTMENTGROUPS_LIST_BY_IDENTITY)
-  public ResponseEntity<DepartmentGroupListEdo> readUserDepartmentGroups(@PathVariable(name = "identity") final String identity,
-      final HttpServletRequest request) throws Exception {
-
-    final List<DepartmentGroupEntity> list = this.usersService.getUserDepartmentGroups(identity);
-
-    return ControllerHelper
-        .createResponseEntity(request, new DepartmentGroupListEdo(this.departmentGroupService.toEdoList(list)),
-            HttpStatus.OK);
-  }
-
-  @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.USER_DEPUTIES_LIST_BY_IDENTITY)
   public ResponseEntity<UserListEdo> readUserDeputies(@PathVariable(name = "identity") final String identity,
       final HttpServletRequest request) throws Exception {
@@ -143,17 +126,6 @@ public class UserController {
       final HttpServletRequest request) throws Exception {
 
     final List<UserEntity> list = this.usersService.getAllUserIdentityListByDepartmentIdentity(identity);
-    final UserListEdo edo = new UserListEdo();
-    edo.setUsers(this.usersService.toEdoList(list));
-    return ControllerHelper.createResponseEntity(request, edo, HttpStatus.OK);
-  }
-
-  @ResponseStatus(HttpStatus.OK)
-  @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.USER_USER_LIST_BY_DEPARTMENTGROUPIDENTITY)
-  public ResponseEntity<UserListEdo> readDepartmentGroupUsers(@PathVariable(name = "identity") final String identity,
-      final HttpServletRequest request) throws Exception {
-
-    final List<UserEntity> list = this.usersService.getAllUserIdentityListByDepartmentGroupIdentity(identity);
     final UserListEdo edo = new UserListEdo();
     edo.setUsers(this.usersService.toEdoList(list));
     return ControllerHelper.createResponseEntity(request, edo, HttpStatus.OK);

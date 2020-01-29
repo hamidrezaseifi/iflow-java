@@ -27,7 +27,6 @@ import com.pth.iflow.profile.model.UserAuthenticationSession;
 import com.pth.iflow.profile.model.UserGroup;
 import com.pth.iflow.profile.service.access.ICompanyAccessService;
 import com.pth.iflow.profile.service.access.IDepartmentAccessService;
-import com.pth.iflow.profile.service.access.IDepartmentGroupAccessService;
 import com.pth.iflow.profile.service.access.IUserGroupAccessService;
 import com.pth.iflow.profile.service.access.IUsersAccessService;
 import com.pth.iflow.profile.service.handler.ISessionManager;
@@ -55,9 +54,6 @@ public class TokenUserDataManagerTest extends TestDataProducer {
   @Mock
   private IDepartmentAccessService departmentService;
 
-  @Mock
-  private IDepartmentGroupAccessService departmentGroupService;
-
   private String validToken;
 
   private final String validEmail = "valid-email";
@@ -76,7 +72,7 @@ public class TokenUserDataManagerTest extends TestDataProducer {
   public void setUp() throws Exception {
 
     this.tokenUserDataManager = new TokenUserDataManager(this.sessionManager, this.usersService, this.companyService,
-        this.userGroupService, this.departmentService, this.departmentGroupService);
+        this.userGroupService, this.departmentService);
 
     this.validSession = this.sessionManager.addSession(this.validEmail, this.validCompanyIdentity);
     this.validToken = this.validSession.getToken();

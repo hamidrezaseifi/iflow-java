@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
 import com.pth.iflow.common.enums.EAssignType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.strategy.strategies.AbstractWorkflowSaveStrategy;
@@ -17,6 +18,7 @@ import com.pth.iflow.workflow.models.base.IWorkflowSaveRequest;
 public class CollectAssignedUserIdListStep<W extends IWorkflow> extends AbstractWorkflowSaveStrategyStep<W> {
 
   public CollectAssignedUserIdListStep(final AbstractWorkflowSaveStrategy<W> workflowSaveStrategy) {
+
     super(workflowSaveStrategy);
 
   }
@@ -39,10 +41,6 @@ public class CollectAssignedUserIdListStep<W extends IWorkflow> extends Abstract
         assignedUsers.addAll(departmentUserIds.stream().map(u -> u.getIdentity()).collect(Collectors.toSet()));
       }
 
-      if (assign.getItemType() == EAssignType.DEPARTMENTGROUP) {
-        final List<User> departmentUserIds = this.getWorkflowSaveStrategy().getDepartmentGroupUserList(assign.getItemIdentity());
-        assignedUsers.addAll(departmentUserIds.stream().map(u -> u.getIdentity()).collect(Collectors.toSet()));
-      }
     }
 
     this.getWorkflowSaveStrategy().setAssignedUsers(assignedUsers);
@@ -53,7 +51,7 @@ public class CollectAssignedUserIdListStep<W extends IWorkflow> extends Abstract
   public boolean shouldProcess() {
 
     return this.getWorkflowSaveStrategy().IsWorkflowCurrectStepChanged()
-           || this.getWorkflowSaveStrategy().getProcessingWorkflowSaveRequest().isCreateCommand();
+        || this.getWorkflowSaveStrategy().getProcessingWorkflowSaveRequest().isCreateCommand();
   }
 
 }

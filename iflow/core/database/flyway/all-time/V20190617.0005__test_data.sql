@@ -6,11 +6,7 @@ INSERT INTO users VALUES (1,'test-company-1-0000000001',1,'admin@iflow.de','1977
 
 INSERT INTO departments(id, identity, company_id, title) VALUES (1, 'dep1', 1,'Dep 1'),(2,'dep2', 1,'Dep 2'),(3,'dep3', 1,'Dep 3');
 
-INSERT INTO departments_group(id, identity, department_id, title) VALUES (1,'depgrp11', 1,'Dep1 Group 1'),(2,'depgrp12', 1,'Dep1 Group 2'),(3,'depgrp13', 1,'Dep1 Group 3'),(4,'depgrp21', 2,'Dep2 Group 1'),(5,'depgrp22', 2,'Dep2 Group 2');
-
 INSERT INTO user_departments VALUES (1, 1,1,20,'2019-06-14 08:03:17.213536'),(2, 1,2,20,'2019-06-14 08:03:17.222388');
-
-INSERT INTO user_department_groups VALUES (1, 1, 1, 20,'2019-06-14 08:03:17.213536'),  (2, 1, 2, 20,'2019-06-14 08:03:17.213536') , (3, 1, 4, 20,'2019-06-14 08:03:17.213536');
 
 INSERT INTO user_deputy(user_id, deputy_id) VALUES (1,2),(1,3),(1,4);
 

@@ -13,13 +13,11 @@ import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.profile.exceptions.ProfileCustomizedException;
 import com.pth.iflow.profile.model.Department;
-import com.pth.iflow.profile.model.DepartmentGroup;
 import com.pth.iflow.profile.model.ProfileResponse;
 import com.pth.iflow.profile.model.User;
 import com.pth.iflow.profile.model.UserAuthenticationSession;
 import com.pth.iflow.profile.model.UserGroup;
 import com.pth.iflow.profile.service.access.ICompanyAccessService;
-import com.pth.iflow.profile.service.access.IDepartmentGroupAccessService;
 import com.pth.iflow.profile.service.access.IDepartmentAccessService;
 import com.pth.iflow.profile.service.access.IUserGroupAccessService;
 import com.pth.iflow.profile.service.access.IUsersAccessService;
@@ -39,21 +37,17 @@ public class TokenUserDataManager implements ITokenUserDataManager {
 
   private final IDepartmentAccessService departmentService;
 
-  private final IDepartmentGroupAccessService departmentGroupService;
-
   public TokenUserDataManager(@Autowired final ISessionManager sessionManager,
       @Autowired final IUsersAccessService usersService,
       @Autowired final ICompanyAccessService companyService,
       @Autowired final IUserGroupAccessService userGroupService,
-      @Autowired final IDepartmentAccessService departmentService,
-      @Autowired final IDepartmentGroupAccessService departmentGroupService) {
+      @Autowired final IDepartmentAccessService departmentService) {
 
     this.sessionManager = sessionManager;
     this.usersService = usersService;
     this.companyService = companyService;
     this.userGroupService = userGroupService;
     this.departmentService = departmentService;
-    this.departmentGroupService = departmentGroupService;
   }
 
   @Override
@@ -156,24 +150,6 @@ public class TokenUserDataManager implements ITokenUserDataManager {
     this.validateToken(token);
 
     return this.departmentService.getAllUserListByDepartmentId(identity);
-  }
-
-  @Override
-  public DepartmentGroup getDepartmentGroupById(final String token, final String identity)
-      throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException {
-
-    this.validateToken(token);
-
-    return this.departmentGroupService.getByIdentity(identity);
-  }
-
-  @Override
-  public List<User> getAllUserListByDepartmentGroupId(final String token, final String identity)
-      throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException {
-
-    this.validateToken(token);
-
-    return this.departmentGroupService.getAllUserListByDepartmentGroupId(identity);
   }
 
   @Override

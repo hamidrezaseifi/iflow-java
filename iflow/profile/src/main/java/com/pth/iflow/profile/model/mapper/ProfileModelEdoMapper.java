@@ -16,12 +16,10 @@ import com.pth.iflow.common.models.edo.CompanyEdo;
 import com.pth.iflow.common.models.edo.CompanyProfileEdo;
 import com.pth.iflow.common.models.edo.CompanyWorkflowTypeControllerEdo;
 import com.pth.iflow.common.models.edo.DepartmentEdo;
-import com.pth.iflow.common.models.edo.DepartmentGroupEdo;
 import com.pth.iflow.common.models.edo.ProfileResponseEdo;
 import com.pth.iflow.common.models.edo.UserAuthenticationRequestEdo;
 import com.pth.iflow.common.models.edo.UserAuthenticationResponseEdo;
 import com.pth.iflow.common.models.edo.UserDepartmentEdo;
-import com.pth.iflow.common.models.edo.UserDepartmentGroupEdo;
 import com.pth.iflow.common.models.edo.UserEdo;
 import com.pth.iflow.common.models.edo.UserGroupEdo;
 import com.pth.iflow.common.models.edo.UserPasswordChangeRequestEdo;
@@ -30,13 +28,11 @@ import com.pth.iflow.profile.model.Company;
 import com.pth.iflow.profile.model.CompanyProfile;
 import com.pth.iflow.profile.model.CompanyWorkflowTypeController;
 import com.pth.iflow.profile.model.Department;
-import com.pth.iflow.profile.model.DepartmentGroup;
 import com.pth.iflow.profile.model.ProfileResponse;
 import com.pth.iflow.profile.model.User;
 import com.pth.iflow.profile.model.UserAuthenticationRequest;
 import com.pth.iflow.profile.model.UserAuthenticationSession;
 import com.pth.iflow.profile.model.UserDepartment;
-import com.pth.iflow.profile.model.UserDepartmentGroup;
 import com.pth.iflow.profile.model.UserGroup;
 import com.pth.iflow.profile.model.UserPasswordChangeRequest;
 import com.pth.iflow.profile.model.WorkflowMessage;
@@ -127,7 +123,6 @@ public class ProfileModelEdoMapper {
     edo.setTitle(model.getTitle());
     edo.setStatus(model.getStatus());
     edo.setIdentity(model.getIdentity());
-    edo.setDepartmentGroups(toDepartmentGroupEdoList(model.getDepartmentGroups()));
     edo.setVersion(model.getVersion());
 
     return edo;
@@ -142,7 +137,6 @@ public class ProfileModelEdoMapper {
     model.setTitle(edo.getTitle());
     model.setStatus(edo.getStatus());
     model.setIdentity(edo.getIdentity());
-    model.setDepartmentGroups(fromDepartmentGroupEdoList(edo.getDepartmentGroups()));
     model.setVersion(edo.getVersion());
 
     return model;
@@ -182,31 +176,6 @@ public class ProfileModelEdoMapper {
     return user;
   }
 
-  public static DepartmentGroupEdo toEdo(final DepartmentGroup model) {
-
-    final DepartmentGroupEdo edo = new DepartmentGroupEdo();
-    edo.setTitle(model.getTitle());
-    edo.setStatus(model.getStatus());
-    edo.setIdentity(model.getIdentity());
-    edo.setVersion(model.getVersion());
-
-    return edo;
-  }
-
-  public static DepartmentGroup fromEdo(final DepartmentGroupEdo edo) throws IFlowMessageConversionFailureException {
-
-    validateCustomer(edo);
-
-    final DepartmentGroup model = new DepartmentGroup();
-
-    model.setTitle(edo.getTitle());
-    model.setStatus(edo.getStatus());
-    model.setIdentity(edo.getIdentity());
-    model.setVersion(edo.getVersion());
-
-    return model;
-  }
-
   public static UserEdo toEdo(final User model) {
 
     final UserEdo edo = new UserEdo();
@@ -227,12 +196,6 @@ public class ProfileModelEdoMapper {
                 .map(d -> new UserDepartmentEdo(d.getDepartmentIdentity(), d.getMemberType().getValue()))
                 .collect(Collectors.toList()));
 
-    edo
-        .setUserDepartmentGroups(model
-            .getUserDepartmentGroups()
-            .stream()
-            .map(d -> new UserDepartmentGroupEdo(d.getDepartmentGroupIdentity(), d.getMemberType().getValue()))
-            .collect(Collectors.toList()));
     edo.setDeputies(model.getDeputies());
     edo.setRoles(model.getRoles());
     edo.setIdentity(model.getIdentity());
@@ -261,12 +224,7 @@ public class ProfileModelEdoMapper {
             .stream()
             .map(d -> new UserDepartment(d.getDepartmentIdentity(), d.getMemberType()))
             .collect(Collectors.toList()));
-    model
-        .setUserDepartmentGroups(edo
-            .getUserDepartmentGroups()
-            .stream()
-            .map(d -> new UserDepartmentGroup(d.getDepartmentGroupIdentity(), d.getMemberType()))
-            .collect(Collectors.toList()));
+
     model.setDeputies(edo.getDeputies());
     model.setRoles(edo.getRoles());
     model.setIdentity(edo.getIdentity());
@@ -301,32 +259,6 @@ public class ProfileModelEdoMapper {
     model.setCompanyIdentity(edo.getCompanyIdentity());
 
     return model;
-  }
-
-  public static List<DepartmentGroupEdo> toDepartmentGroupEdoList(final List<DepartmentGroup> modelList) {
-
-    final List<DepartmentGroupEdo> edoList = new ArrayList<>();
-    if (modelList != null) {
-      for (final DepartmentGroup model : modelList) {
-        edoList.add(toEdo(model));
-      }
-    }
-
-    return edoList;
-
-  }
-
-  public static List<DepartmentGroup> fromDepartmentGroupEdoList(final List<DepartmentGroupEdo> edoList)
-      throws IFlowMessageConversionFailureException {
-
-    final List<DepartmentGroup> modelList = new ArrayList<>();
-    if (edoList != null) {
-      for (final DepartmentGroupEdo edo : edoList) {
-        modelList.add(fromEdo(edo));
-      }
-    }
-
-    return modelList;
   }
 
   public static List<UserGroupEdo> toUserGroupEdoList(final List<UserGroup> modelList) {

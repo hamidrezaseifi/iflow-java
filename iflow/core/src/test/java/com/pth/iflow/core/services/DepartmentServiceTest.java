@@ -20,7 +20,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.entity.DepartmentEntity;
-import com.pth.iflow.core.model.entity.DepartmentGroupEntity;
 import com.pth.iflow.core.service.impl.DepartmentService;
 import com.pth.iflow.core.service.interfaces.IDepartmentService;
 import com.pth.iflow.core.storage.dao.interfaces.IDepartmentDao;
@@ -141,21 +140,6 @@ public class DepartmentServiceTest extends TestDataProducer {
     when(this.departmentDao.getListByCompanyIdentity(any(String.class))).thenReturn(list);
 
     final List<DepartmentEntity> resList = this.departmentService.getListByIdCompanyIdentity("identity");
-
-    Assert.assertNotNull("Result list is not null!", resList);
-    Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());
-
-  }
-
-  @Test
-  public void testGetDepartmentGroups() throws Exception {
-
-    final DepartmentEntity department = this.getTestDepartment();
-
-    final List<DepartmentEntity> list = this.getTestDepartmentList();
-    when(this.departmentDao.getByIdentity(any(String.class))).thenReturn(department);
-
-    final List<DepartmentGroupEntity> resList = this.departmentService.getDepartmentGroups("identity");
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());

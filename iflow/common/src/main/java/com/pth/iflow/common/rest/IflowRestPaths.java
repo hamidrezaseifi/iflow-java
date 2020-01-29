@@ -34,11 +34,9 @@ public class IflowRestPaths {
     public static final String USER_READ_BY_IDENTITY = "/users/readbyidentity/{identity}";
     public static final String USER_USERGROUPS_LIST_BY_IDENTITY = "/users/user/groups/{identity}";
     public static final String USER_DEPARTMENTS_LIST_BY_IDENTITY = "/users/user/departments/{identity}";
-    public static final String USER_DEPARTMENTGROUPS_LIST_BY_IDENTITY = "/users/user/departmentgroups/{identity}";
     public static final String USER_DEPUTIES_LIST_BY_IDENTITY = "/users/user/deputies/{identity}";
     public static final String USER_USER_LIST_BY_COMPANYIDENTITY = "/users/company/users/{companyidentity}";
     public static final String USER_USER_LIST_BY_DEPARTMENTIDENTITY = "/users/department/users/{identity}";
-    public static final String USER_USER_LIST_BY_DEPARTMENTGROUPIDENTITY = "/users/departmentgroup/users/{identity}";
     public static final String USERPROFILE_READ_BY_EMAIL = "/users/readprofile/email/{email}";
     public static final String USERPROFILE_READ_BY_USERIDENTITY = "/users/readprofile/identity/{identity}";
 
@@ -53,14 +51,6 @@ public class IflowRestPaths {
     public static final String DEPARTMENT_READ_ALLUSERLIST_BY_DEPARTMENTIDENTITY = "/department/alluser/list/{identity}";
     public static final String DEPARTMENT_GET_MANAGER = "/department/manager/read/{identity}";
     public static final String DEPARTMENT_GET_DEPUTY = "/department/deputy/read/{identity}";
-
-    public static final String DEPARTMENTGRPUP_READ_BY_IDENTITY = "/departmentgroup/readbyid/{identity}";
-    public static final String DEPARTMENTGRPUP_SAVE = "/departmentgroup/save";
-    public static final String DEPARTMENTGRPUP_DELETE = "/departmentgroup/delete";
-    public static final String DEPARTMENTGRPUP_READ_LIST = "/departmentgroup/list";
-    public static final String DEPARTMENTGRPUP_READ_ALLUSERLIST_BY_DEPARTMENTGROUPIDENTITY = "/departmentgroup/alluser/list/{identity}";
-    public static final String DEPARTMENTGRPUP_GET_MANAGER = "/departmentgroup/manager/read/{identity}";
-    public static final String DEPARTMENTGRPUP_GET_DEPUTY = "/departmentgroup/deputy/read/{identity}";
 
     public static final String WORKFLOWTYPE_READ_BY_IDENTITY = "/workflowtype/readbyid/{identity}";
     public static final String WORKFLOWTYPE_READ_LIST = "/workflowtype/list";
@@ -123,24 +113,6 @@ public class IflowRestPaths {
       return builder.build(workflowidentity, stepidentity, identity, status);
     }
 
-    public static URI READ_DEPARTMENTGRPUP_ALLUSERLIST_BY_DEPARTMENTGROUP(final String identity) {
-
-      final IflowUriBuilder builder = new IflowUriBuilder(DEPARTMENTGRPUP_READ_ALLUSERLIST_BY_DEPARTMENTGROUPIDENTITY);
-      return builder.build(identity);
-    }
-
-    public static URI GET_DEPARTMENTGRPUP_MANAGER_URIBUILDER(final String identity) {
-
-      final IflowUriBuilder builder = new IflowUriBuilder(DEPARTMENTGRPUP_GET_MANAGER);
-      return builder.build(identity);
-    }
-
-    public static URI GET_DEPARTMENTGRPUP_DEPUTY_URIBUILDER(final String identity) {
-
-      final IflowUriBuilder builder = new IflowUriBuilder(DEPARTMENTGRPUP_GET_DEPUTY);
-      return builder.build(identity);
-    }
-
     public static URI READ_USER_BY_IDENTITY(final String identity) {
 
       final IflowUriBuilder builder = new IflowUriBuilder(USER_READ_BY_IDENTITY);
@@ -199,12 +171,6 @@ public class IflowRestPaths {
 
       final IflowUriBuilder builder = new IflowUriBuilder(COMPANY_SAVE);
       return builder.build();
-    }
-
-    public static URI READ_DEPARTMENTGRPUP_BY_ID(final String identity) {
-
-      final IflowUriBuilder builder = new IflowUriBuilder(DEPARTMENTGRPUP_READ_BY_IDENTITY);
-      return builder.build(identity);
     }
 
     public static URI READ_DEPARTMENT_BY_ID(final String identity) {
@@ -614,9 +580,6 @@ public class IflowRestPaths {
     public static final String DEPARTMENT_READ_BY_IDENTITY = "/department/readbyid/{identity}";
     public static final String DEPARTMENT_READ_ALLUSERS_LIST = "/department/read/allusers/{identity}";
 
-    public static final String DEPARTMENTGROUP_READ_BY_IDENTITY = "/departmentgroup/readbyid/{identity}";
-    public static final String DEPARTMENTGROUP_READ_USER_LIST = "/departmentgroup/read/user/{identity}";
-
     public static final String USER_READ_BY_IDENTITY = "/users/read/identity/{identity}";
     public static final String USER_SAVE = "/users/save";
     public static final String USER_DELETE = "/users/delete";
@@ -668,18 +631,6 @@ public class IflowRestPaths {
     public static URI READ_ALLUSERS_BY_DEPARTMENTID_URIBUILDER(final String identity) {
 
       final IflowUriBuilder builder = new IflowUriBuilder(DEPARTMENT_READ_ALLUSERS_LIST);
-      return builder.build(identity);
-    }
-
-    public static URI READ_DEPARTMENTGROUP_BY_ID_URIBUILDER(final String identity) {
-
-      final IflowUriBuilder builder = new IflowUriBuilder(DEPARTMENTGROUP_READ_BY_IDENTITY);
-      return builder.build(identity);
-    }
-
-    public static URI READ_ALLUSERS_BY_DEPARTMENTGROUPID_URIBUILDER(final String identity) {
-
-      final IflowUriBuilder builder = new IflowUriBuilder(DEPARTMENTGROUP_READ_USER_LIST);
       return builder.build(identity);
     }
 

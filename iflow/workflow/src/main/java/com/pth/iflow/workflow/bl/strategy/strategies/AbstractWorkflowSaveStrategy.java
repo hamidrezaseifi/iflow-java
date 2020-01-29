@@ -346,12 +346,6 @@ public abstract class AbstractWorkflowSaveStrategy<W extends IWorkflow> implemen
     return departmentDataService.getUserListByDepartmentIdentity(departmentIdentity, this.getToken());
   }
 
-  public List<User> getDepartmentGroupUserList(final String departmentGroupIdentity)
-      throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
-
-    return departmentDataService.getUserListByDepartmentGroupIdentity(departmentGroupIdentity, this.getToken());
-  }
-
   public Set<String> getAssignedUsers() {
 
     return assignedUsersIdentity;

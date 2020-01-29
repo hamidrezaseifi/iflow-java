@@ -1,12 +1,9 @@
 package com.pth.iflow.core.model.entity;
 
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -17,7 +14,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -72,10 +68,6 @@ public class DepartmentEntity extends EntityIdentityHelper {
   @UpdateTimestamp
   @Column(name = "updated_at", insertable = false, updatable = false)
   private Date updatedAt;
-
-  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "department", fetch = FetchType.EAGER)
-  @Fetch(value = FetchMode.SUBSELECT)
-  private final List<DepartmentGroupEntity> departmentGroups = new ArrayList<>();
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "company_id", insertable = false, updatable = false)
@@ -179,24 +171,6 @@ public class DepartmentEntity extends EntityIdentityHelper {
   public void setUpdatedAt(final Date updatedAt) {
 
     this.updatedAt = updatedAt;
-  }
-
-  public List<DepartmentGroupEntity> getDepartmentGroups() {
-
-    return this.departmentGroups;
-  }
-
-  public void setDepartmentGroups(final List<DepartmentGroupEntity> groups) {
-
-    this.departmentGroups.clear();
-    if (groups != null) {
-      this.departmentGroups.addAll(groups);
-    }
-  }
-
-  public void addDepartmentGroup(final DepartmentGroupEntity group) {
-
-    this.departmentGroups.add(group);
   }
 
   @Override
