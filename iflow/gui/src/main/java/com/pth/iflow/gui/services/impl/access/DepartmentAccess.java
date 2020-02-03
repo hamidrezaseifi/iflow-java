@@ -8,9 +8,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
+import com.pth.iflow.common.models.edo.DepartmentListEdo;
 import com.pth.iflow.gui.configurations.GuiConfiguration;
 import com.pth.iflow.gui.models.Department;
+import com.pth.iflow.gui.models.mapper.GuiModelEdoMapper;
 import com.pth.iflow.gui.models.ui.SessionUserInfo;
 import com.pth.iflow.gui.services.IDepartmentAccess;
 import com.pth.iflow.gui.services.IRestTemplateCall;
@@ -38,8 +41,14 @@ public class DepartmentAccess implements IDepartmentAccess {
   public List<Department> getCompanyDepartmentList(final String companyIdentity)
       throws MalformedURLException, IFlowMessageConversionFailureException {
 
-    // TODO Auto-generated method stub
-    return null;
+    logger.debug("Read department list for company id from core {}", companyIdentity);
+
+    final DepartmentListEdo responseEdo = this.restTemplate
+        .callRestGet(this.profileModuleAccessConfig.getReadCompanyDepartmentListUri(companyIdentity),
+            EModule.CORE, DepartmentListEdo.class,
+            this.sessionUserInfo.isLoggedIn() ? this.sessionUserInfo.getToken() : this.sessionUserInfo.getToken(), true);
+
+    return GuiModelEdoMapper.fromDepartmentEdoList(responseEdo.getDepartments());
   }
 
   @Override

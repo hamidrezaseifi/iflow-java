@@ -5,6 +5,7 @@ export class Company {
 	companyType: string;
 	companyTypeCustome: string;
 	status: string;
+	version: number;
   	
 }
 

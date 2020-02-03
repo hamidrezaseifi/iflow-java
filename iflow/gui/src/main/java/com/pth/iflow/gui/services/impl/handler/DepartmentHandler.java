@@ -28,7 +28,11 @@ public class DepartmentHandler implements IDepartmentHandler {
   public List<Department> getCompanyDepartmentList(final String companyIdentity)
       throws MalformedURLException, IFlowMessageConversionFailureException {
 
-    return this.departmentAccess.getCompanyDepartmentList(companyIdentity);
+    final List<Department> readDepartmentList = this.departmentAccess.getCompanyDepartmentList(companyIdentity);
+
+    readDepartmentList.forEach(d -> this.sessionUserInfo.fillDepartmentPositions(d));
+
+    return readDepartmentList;
   }
 
   @Override

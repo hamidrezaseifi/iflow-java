@@ -258,6 +258,11 @@ public class GuiConfiguration {
       return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.SAVE_COMPANY());
     }
 
+    public URI getReadCompanyDepartmentListUri(final String companyIdentity) throws MalformedURLException {
+
+      return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.READ_DEPARTMENTLIST_BY_COMPANYID_URIBUILDER(companyIdentity));
+    }
+
   }
 
 }

@@ -9,6 +9,8 @@ public class Department extends IdentityModel {
   private String title;
   private Integer status;
   private Integer version;
+  private User manager;
+  private User deputy;
 
   @Override
   public String getIdentity() {
@@ -60,6 +62,26 @@ public class Department extends IdentityModel {
   public void setVersion(final Integer version) {
 
     this.version = version;
+  }
+
+  public User getManager() {
+
+    return this.manager;
+  }
+
+  public void setManager(final User manager) {
+
+    this.manager = manager;
+  }
+
+  public User getDeputy() {
+
+    return this.deputy;
+  }
+
+  public void setDeputy(final User deputy) {
+
+    this.deputy = deputy;
   }
 
 }
