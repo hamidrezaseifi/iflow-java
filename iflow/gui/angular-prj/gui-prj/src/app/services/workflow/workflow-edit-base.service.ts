@@ -57,10 +57,6 @@ export class WorkflowEditBaseService extends HttpErrorResponseHelper implements 
 	getInitEditUrl(identity :string) :string{
 		return "";
 	}
-
-	//userAssignType = /*[[${UserAssign}]]*/ '';
-	//departmentAssignType = /*[[${DepartmentAssign}]]*/ '';
-	//departmentGroupAssignType = /*[[${DepartmentGroupAssign}]]*/ '';
 	
 	constructor(
 			protected http: HttpClient,

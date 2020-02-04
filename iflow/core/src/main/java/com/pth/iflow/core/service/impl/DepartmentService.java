@@ -9,35 +9,30 @@ import org.springframework.stereotype.Service;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.common.models.edo.DepartmentEdo;
 import com.pth.iflow.core.model.entity.DepartmentEntity;
-import com.pth.iflow.core.model.entity.DepartmentGroupEntity;
 import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.service.base.CoreModelEdoMapperService;
 import com.pth.iflow.core.service.interfaces.IDepartmentService;
+import com.pth.iflow.core.storage.dao.helper.ICoreEntityVersion;
+import com.pth.iflow.core.storage.dao.impl.base.EntityDaoBase;
+import com.pth.iflow.core.storage.dao.interfaces.ICompanyDao;
 import com.pth.iflow.core.storage.dao.interfaces.IDepartmentDao;
 
 @Service
 public class DepartmentService extends CoreModelEdoMapperService<DepartmentEntity, DepartmentEdo> implements IDepartmentService {
 
   private final IDepartmentDao departmentDao;
+  private final ICompanyDao companyDao;
 
-  public DepartmentService(@Autowired final IDepartmentDao departmentDao) {
+  public DepartmentService(@Autowired final IDepartmentDao departmentDao, @Autowired final ICompanyDao companyDao) {
 
     this.departmentDao = departmentDao;
-
+    this.companyDao = companyDao;
   }
 
   @Override
   public DepartmentEntity getByIdentity(final String identity) {
 
     return this.departmentDao.getByIdentity(identity);
-  }
-
-  @Override
-  public List<DepartmentGroupEntity> getDepartmentGroups(final String identity) {
-
-    final DepartmentEntity department = this.getByIdentity(identity);
-
-    return department.getDepartmentGroups();
   }
 
   @Override
@@ -61,8 +56,15 @@ public class DepartmentService extends CoreModelEdoMapperService<DepartmentEntit
 
     final DepartmentEntity exists = this.departmentDao.getByIdentity(model.getIdentity());
     model.verifyVersion(exists);
+    model.increaseVersion();
 
     return this.departmentDao.update(model);
+  }
+
+  @Override
+  public void delete(final DepartmentEntity model) {
+
+    this.departmentDao.deleteById(model.getId());
   }
 
   protected DepartmentEntity prepareSavingModel(final DepartmentEntity model) {
@@ -87,15 +89,15 @@ public class DepartmentService extends CoreModelEdoMapperService<DepartmentEntit
 
     validateCustomer(edo);
 
-    final DepartmentGroupService groupService = new DepartmentGroupService(null);
-
     final DepartmentEntity model = new DepartmentEntity();
+
+    this.setIdFromIdentity(model, edo.getIdentity(), (EntityDaoBase<ICoreEntityVersion>) this.departmentDao);
 
     model.setTitle(edo.getTitle());
     model.setStatus(edo.getStatus());
     model.setIdentity(edo.getIdentity());
-    model.setDepartmentGroups(groupService.fromEdoList(edo.getDepartmentGroups()));
     model.setVersion(edo.getVersion());
+    model.setCompanyId(this.companyDao.getByIdentity(edo.getCompanyIdentity()).getId());
 
     return model;
   }
@@ -103,14 +105,12 @@ public class DepartmentService extends CoreModelEdoMapperService<DepartmentEntit
   @Override
   public DepartmentEdo toEdo(final DepartmentEntity model) {
 
-    final DepartmentGroupService groupService = new DepartmentGroupService(null);
-
     final DepartmentEdo edo = new DepartmentEdo();
     edo.setTitle(model.getTitle());
     edo.setStatus(model.getStatus());
     edo.setIdentity(model.getIdentity());
-    edo.setDepartmentGroups(groupService.toEdoList(model.getDepartmentGroups()));
     edo.setVersion(model.getVersion());
+    edo.setCompanyIdentity(this.companyDao.getById(model.getCompanyId()).getIdentity());
 
     return edo;
   }

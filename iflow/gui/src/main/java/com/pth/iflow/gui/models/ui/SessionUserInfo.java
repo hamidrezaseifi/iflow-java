@@ -18,6 +18,7 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
+import com.pth.iflow.common.enums.EUserDepartmentMemberType;
 import com.pth.iflow.common.enums.EWorkflowType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
@@ -26,6 +27,7 @@ import com.pth.iflow.gui.models.CompanyProfile;
 import com.pth.iflow.gui.models.CompanyWorkflowTypeController;
 import com.pth.iflow.gui.models.Department;
 import com.pth.iflow.gui.models.User;
+import com.pth.iflow.gui.models.UserDepartment;
 import com.pth.iflow.gui.models.UserGroup;
 import com.pth.iflow.gui.models.WorkflowType;
 import com.pth.iflow.gui.models.WorkflowTypeStep;
@@ -160,26 +162,45 @@ public class SessionUserInfo {
    * @return the companyUsers
    * @throws IFlowMessageConversionFailureException
    */
-  public Map<String, User> getCompanyUsersMap() throws IFlowMessageConversionFailureException {
+  public Map<String, User> getCompanyUsersMap() {
 
     if (this.companyUsers.size() == 0) {
       try {
         final List<User> userList = this.userAccess.getCompanyUserList(this.companyProfile.getCompany().getIdentity());
         this.companyUsers.putAll(userList.stream().collect(Collectors.toMap(u -> u.getEmail(), u -> u)));
       }
-      catch (GuiCustomizedException | MalformedURLException e) {
+      catch (GuiCustomizedException | MalformedURLException | IFlowMessageConversionFailureException e) {
         logger.error("error in reading company user list: {} \n {}", e.getMessage(), e);
       }
+
     }
 
     return this.companyUsers;
   }
 
-  public List<User> getCompanyUserList() throws IFlowMessageConversionFailureException {
+  public List<User> getCompanyUserList() {
 
     final Map<String, User> map = this.getCompanyUsersMap();
 
     return map.values().stream().collect(Collectors.toList());
+  }
+
+  public void fillDepartmentPositions(final Department department) {
+
+    final List<User> users = this.getCompanyUserList();
+
+    for (final User user : users) {
+      for (final UserDepartment userDepartment : user.getUserDepartments()) {
+        if (userDepartment.getDepartmentIdentity().equals(department.getIdentity())) {
+          if (userDepartment.getMemberType() == EUserDepartmentMemberType.MANAGER) {
+            department.setManager(user);
+          }
+          if (userDepartment.getMemberType() == EUserDepartmentMemberType.DEPUTY) {
+            department.setDeputy(user);
+          }
+        }
+      }
+    }
   }
 
   /**

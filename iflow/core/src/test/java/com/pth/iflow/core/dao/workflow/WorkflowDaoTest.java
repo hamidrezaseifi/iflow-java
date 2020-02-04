@@ -140,7 +140,7 @@ public class WorkflowDaoTest extends TestDataProducer {
     Assert.assertNotNull("Result workflow is not null!", updatedWorkflow);
     Assert.assertEquals("Result workflow has the same id as created!", createdWorkflow.getId(), updatedWorkflow.getId());
     Assert.assertEquals("Result workflow has status 10!", updatedWorkflow.getStatus().intValue(), 10);
-    Assert.assertEquals("Result workflow has version 23!", updatedWorkflow.getVersion().intValue(), 23);
+    Assert.assertEquals("Result workflow has version 22!", 22, updatedWorkflow.getVersion().intValue());
     Assert.assertEquals("Result workflow has version 23!", updatedWorkflow.getComments(), newComments);
 
   }

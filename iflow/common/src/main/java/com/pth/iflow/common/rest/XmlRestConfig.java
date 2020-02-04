@@ -1,6 +1,7 @@
 package com.pth.iflow.common.rest;
 
 import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConve
 import org.springframework.http.converter.xml.MarshallingHttpMessageConverter;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.web.client.RestTemplate;
+
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.dataformat.xml.deser.FromXmlParser;
 import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
@@ -22,8 +24,6 @@ import com.pth.iflow.common.models.edo.AuthenticatedProfileRequestEdo;
 import com.pth.iflow.common.models.edo.CompanyEdo;
 import com.pth.iflow.common.models.edo.CompanyProfileEdo;
 import com.pth.iflow.common.models.edo.DepartmentEdo;
-import com.pth.iflow.common.models.edo.DepartmentGroupEdo;
-import com.pth.iflow.common.models.edo.DepartmentGroupListEdo;
 import com.pth.iflow.common.models.edo.DepartmentListEdo;
 import com.pth.iflow.common.models.edo.IdentityListEdo;
 import com.pth.iflow.common.models.edo.ProfileResponseEdo;
@@ -73,6 +73,7 @@ public class XmlRestConfig {
    */
   @Bean
   public JaxbAnnotationModule enableJaxbForJackson() {
+
     this.log.info("JAXB Annotations enabled");
     final JaxbAnnotationModule jaxbAnnotationModule = new JaxbAnnotationModule();
     return jaxbAnnotationModule;
@@ -80,51 +81,52 @@ public class XmlRestConfig {
 
   @Bean
   public MarshallingHttpMessageConverter marshallingMessageConverter() {
+
     return new MarshallingHttpMessageConverter(this.jaxb2Marshaller(), this.jaxb2Marshaller());
   }
 
   @Bean
   public Jaxb2Marshaller jaxb2Marshaller() {
+
     final Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
 
-    marshaller.setClassesToBeBound(new Class[] { AssignItemEdo.class,
-                                                 AuthenticatedProfileRequestEdo.class,
-                                                 CompanyEdo.class,
-                                                 CompanyProfileEdo.class,
-                                                 DepartmentEdo.class,
-                                                 DepartmentGroupEdo.class,
-                                                 DepartmentGroupListEdo.class,
-                                                 DepartmentListEdo.class,
-                                                 IdentityListEdo.class,
-                                                 InvoiceWorkflowEdo.class,
-                                                 InvoiceWorkflowListEdo.class,
-                                                 InvoiceWorkflowSaveRequestEdo.class,
-                                                 ProfileResponseEdo.class,
-                                                 TokenProfileRequestEdo.class,
-                                                 UserAuthenticationRequestEdo.class,
-                                                 UserAuthenticationResponseEdo.class,
-                                                 UserEdo.class,
-                                                 UserGroupEdo.class,
-                                                 UserGroupListEdo.class,
-                                                 UserListEdo.class,
-                                                 WorkflowActionEdo.class,
-                                                 WorkflowActionListEdo.class,
-                                                 WorkflowFileEdo.class,
-                                                 WorkflowFileListEdo.class,
-                                                 WorkflowFileVersionEdo.class,
-                                                 WorkflowMessageEdo.class,
-                                                 WorkflowMessageListEdo.class,
-                                                 WorkflowSearchFilterEdo.class,
-                                                 WorkflowTypeEdo.class,
-                                                 WorkflowTypeListEdo.class,
-                                                 WorkflowTypeStepEdo.class,
-                                                 WorkflowTypeStepListEdo.class,
-                                                 SingleTaskWorkflowEdo.class,
-                                                 SingleTaskWorkflowListEdo.class,
-                                                 SingleTaskWorkflowSaveRequestEdo.class,
-                                                 TestThreeTaskWorkflowEdo.class,
-                                                 TestThreeTaskWorkflowListEdo.class,
-                                                 TestThreeTaskWorkflowSaveRequestEdo.class });
+    marshaller
+        .setClassesToBeBound(new Class[] { AssignItemEdo.class,
+            AuthenticatedProfileRequestEdo.class,
+            CompanyEdo.class,
+            CompanyProfileEdo.class,
+            DepartmentEdo.class,
+            DepartmentListEdo.class,
+            IdentityListEdo.class,
+            InvoiceWorkflowEdo.class,
+            InvoiceWorkflowListEdo.class,
+            InvoiceWorkflowSaveRequestEdo.class,
+            ProfileResponseEdo.class,
+            TokenProfileRequestEdo.class,
+            UserAuthenticationRequestEdo.class,
+            UserAuthenticationResponseEdo.class,
+            UserEdo.class,
+            UserGroupEdo.class,
+            UserGroupListEdo.class,
+            UserListEdo.class,
+            WorkflowActionEdo.class,
+            WorkflowActionListEdo.class,
+            WorkflowFileEdo.class,
+            WorkflowFileListEdo.class,
+            WorkflowFileVersionEdo.class,
+            WorkflowMessageEdo.class,
+            WorkflowMessageListEdo.class,
+            WorkflowSearchFilterEdo.class,
+            WorkflowTypeEdo.class,
+            WorkflowTypeListEdo.class,
+            WorkflowTypeStepEdo.class,
+            WorkflowTypeStepListEdo.class,
+            SingleTaskWorkflowEdo.class,
+            SingleTaskWorkflowListEdo.class,
+            SingleTaskWorkflowSaveRequestEdo.class,
+            TestThreeTaskWorkflowEdo.class,
+            TestThreeTaskWorkflowListEdo.class,
+            TestThreeTaskWorkflowSaveRequestEdo.class });
 
     // marshaller.setClassesToBeBound(new Class[] { WorkflowTypeStepEdo.class, });
 
@@ -133,7 +135,10 @@ public class XmlRestConfig {
 
   @Lazy
   @Bean
-  public RestTemplate jaxbRestTemplate(final MappingJackson2XmlHttpMessageConverter converter, @Value("${iflow.common.rest.api.security.client-id.internal}") final String securityHeaderValue, @Autowired final JaxbAnnotationModule module) {
+  public RestTemplate jaxbRestTemplate(final MappingJackson2XmlHttpMessageConverter converter, @Value(
+    "${iflow.common.rest.api.security.client-id.internal}"
+  ) final String securityHeaderValue, @Autowired final JaxbAnnotationModule module) {
+
     /*
      * BETTER: there is likely a more spring way of configuring the rest template to use the JAXB stuff...| TM @ 21.07.2018
      */

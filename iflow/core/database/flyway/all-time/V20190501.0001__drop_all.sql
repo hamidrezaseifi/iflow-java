@@ -6,8 +6,6 @@ DROP TABLE IF EXISTS company_workflowtype_controller;
 DROP TABLE IF EXISTS singletask_workflow;
 
 DROP TABLE IF EXISTS testthreetask_workflow;
-
-DROP TABLE IF EXISTS user_department_groups;
 	
 DROP TABLE IF EXISTS invoice_workflow;
 
@@ -30,8 +28,6 @@ DROP TABLE IF EXISTS user_usergroup;
 DROP TABLE IF EXISTS user_deputy;
 
 DROP TABLE IF EXISTS user_departments;
-
-DROP TABLE IF EXISTS departments_group;
 
 DROP TABLE IF EXISTS departments;
 
@@ -59,11 +55,9 @@ DROP SEQUENCE IF EXISTS  workflow_type_step_id_seq ;
 
 DROP SEQUENCE IF EXISTS  workflow_type_id_seq ;
 
-DROP SEQUENCE IF EXISTS  user_group_id_seq . users_id_seq ;
+DROP SEQUENCE IF EXISTS  user_group_id_seq;
 
 DROP SEQUENCE IF EXISTS  iflow_roles_id_seq ;
-
-DROP SEQUENCE IF EXISTS  departments_group_id_seq ;
 
 DROP SEQUENCE IF EXISTS  departments_id_seq;
 
@@ -72,8 +66,6 @@ DROP SEQUENCE IF EXISTS  workflow_message_id_seq;
 DROP SEQUENCE IF EXISTS  user_group_id_seq;
 
 DROP SEQUENCE IF EXISTS  users_id_seq;
-
-DROP SEQUENCE IF EXISTS  user_department_groups_id_seq;
 
 DROP SEQUENCE IF EXISTS  user_department_id_seq;
 

@@ -2,7 +2,6 @@ package com.pth.iflow.core.storage.dao.impl;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -10,6 +9,7 @@ import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
 import com.pth.iflow.core.model.entity.workflow.WorkflowTypeEntity;
@@ -23,9 +23,9 @@ public class WorkflowTypeDao extends EntityDaoBase<WorkflowTypeEntity> implement
   @Override
   public List<WorkflowTypeEntity> getListByCompanyIdentity(final String identity) throws IFlowStorageException {
 
-    final EntityManager entityManager = createEntityManager();
+    final Session session = this.createSession();
 
-    final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+    final CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
     final CriteriaQuery<WorkflowTypeEntity> query = criteriaBuilder.createQuery(WorkflowTypeEntity.class);
     // final Root<CompanyEntity> companyRoot = query.from(CompanyEntity.class);
     final Root<WorkflowTypeEntity> root = query.from(WorkflowTypeEntity.class);
@@ -35,14 +35,14 @@ public class WorkflowTypeDao extends EntityDaoBase<WorkflowTypeEntity> implement
     final Predicate predicate = criteriaBuilder.equal(companyIdentityPath, identity);
     query.where(predicate);
 
-    final TypedQuery<WorkflowTypeEntity> typedQuery = entityManager.createQuery(query);
+    final TypedQuery<WorkflowTypeEntity> typedQuery = session.createQuery(query);
 
     // final String qr =
     // typedQuery.unwrap(org.hibernate.query.Query.class).getQueryString();
     // System.out.println("search workflow query: " + qr);
 
     final List<WorkflowTypeEntity> list = typedQuery.getResultList();
-    entityManager.close();
+    session.close();
     return list;
   }
 

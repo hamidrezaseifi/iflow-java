@@ -115,7 +115,7 @@ public class SingleTaskWorkflowDaoTest extends TestDataProducer {
         .assertEquals("Result workflow has the same id as created!", createdWorkflow.getWorkflow().getId(),
             updatedWorkflow.getWorkflow().getId());
     Assert.assertEquals("Result workflow has status 10!", updatedWorkflow.getWorkflow().getStatus().intValue(), 10);
-    Assert.assertEquals("Result workflow has version 22!", updatedWorkflow.getWorkflow().getVersion().intValue(), 23);
+    Assert.assertEquals("Result workflow has version 22!", 22, updatedWorkflow.getWorkflow().getVersion().intValue());
 
   }
 

@@ -168,8 +168,6 @@
 					<source>src/main/java/com/pth/iflow/common/edo/models/CompanyEdo.java</source>
 					<source>src/main/java/com/pth/iflow/common/edo/models/CompanyProfileEdo.java</source>
 					<source>src/main/java/com/pth/iflow/common/edo/models/DepartmentEdo.java</source>
-					<source>src/main/java/com/pth/iflow/common/edo/models/DepartmentGroupEdo.java</source>
-					<source>src/main/java/com/pth/iflow/common/edo/models/DepartmentGroupListEdo.java</source>
 					<source>src/main/java/com/pth/iflow/common/edo/models/DepartmentListEdo.java</source>
 					<source>src/main/java/com/pth/iflow/common/edo/models/IdentityListEdo.java</source>
 					<source>src/main/java/com/pth/iflow/common/edo/models/ProfileResponseEdo.java</source>

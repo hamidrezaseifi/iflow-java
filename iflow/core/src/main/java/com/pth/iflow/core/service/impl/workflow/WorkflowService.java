@@ -19,6 +19,8 @@ import com.pth.iflow.core.model.entity.workflow.WorkflowFileEntity;
 import com.pth.iflow.core.model.entity.workflow.WorkflowFileVersionEntity;
 import com.pth.iflow.core.service.base.CoreModelEdoMapperService;
 import com.pth.iflow.core.service.interfaces.workflow.IWorkflowService;
+import com.pth.iflow.core.storage.dao.helper.ICoreEntityVersion;
+import com.pth.iflow.core.storage.dao.impl.base.EntityDaoBase;
 import com.pth.iflow.core.storage.dao.interfaces.ICompanyDao;
 import com.pth.iflow.core.storage.dao.interfaces.IUserDao;
 import com.pth.iflow.core.storage.dao.interfaces.IWorkflowTypeDao;
@@ -54,6 +56,7 @@ public class WorkflowService extends CoreModelEdoMapperService<WorkflowEntity, W
 
     final WorkflowEntity exists = workflowDao.getById(model.getId());
     model.verifyVersion(exists);
+    model.increaseVersion();
 
     return workflowDao.update(model);
 
@@ -83,6 +86,8 @@ public class WorkflowService extends CoreModelEdoMapperService<WorkflowEntity, W
     validateCustomer(edo);
 
     final WorkflowEntity model = new WorkflowEntity();
+
+    this.setIdFromIdentity(model, edo.getIdentity(), (EntityDaoBase<ICoreEntityVersion>) this.workflowDao);
 
     model.setComments(edo.getComments());
     model.setStatus(edo.getStatus());

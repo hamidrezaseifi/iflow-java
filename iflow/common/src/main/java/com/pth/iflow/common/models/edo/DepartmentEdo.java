@@ -1,15 +1,12 @@
 package com.pth.iflow.common.models.edo;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-import com.fasterxml.jackson.annotation.JsonSetter;
+
 import com.pth.iflow.common.models.base.IFlowJaxbDefinition;
 
 @XmlRootElement(name = "Department", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
@@ -19,6 +16,10 @@ public class DepartmentEdo {
 
   @XmlElement(name = "Identity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String identity;
+
+  @NotNull(message = "CompanyIdentity must not be null")
+  @XmlElement(name = "CompanyIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String companyIdentity;
 
   @NotNull
   @XmlElement(name = "Title", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
@@ -32,53 +33,54 @@ public class DepartmentEdo {
   @XmlElement(name = "Version", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer version;
 
-  @NotNull
-  @XmlElementWrapper(name = "DepartmentGroupList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  @XmlElement(name = "DepartmentGroup", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private final List<DepartmentGroupEdo> departmentGroups = new ArrayList<>();
-
   public String getIdentity() {
+
     return this.identity;
   }
 
   public void setIdentity(final String identity) {
+
     this.identity = identity;
   }
 
+  public String getCompanyIdentity() {
+
+    return this.companyIdentity;
+  }
+
+  public void setCompanyIdentity(final String companyIdentity) {
+
+    this.companyIdentity = companyIdentity;
+  }
+
   public String getTitle() {
+
     return this.title;
   }
 
   public void setTitle(final String title) {
+
     this.title = title;
   }
 
   public Integer getStatus() {
+
     return this.status;
   }
 
   public void setStatus(final Integer status) {
+
     this.status = status;
   }
 
   public Integer getVersion() {
+
     return this.version;
   }
 
   public void setVersion(final Integer version) {
+
     this.version = version;
-  }
-
-  public List<DepartmentGroupEdo> getDepartmentGroups() {
-    return this.departmentGroups;
-  }
-
-  @JsonSetter
-  public void setDepartmentGroups(final List<DepartmentGroupEdo> groups) {
-    this.departmentGroups.clear();
-    if (groups != null) {
-      this.departmentGroups.addAll(groups);
-    }
   }
 
 }

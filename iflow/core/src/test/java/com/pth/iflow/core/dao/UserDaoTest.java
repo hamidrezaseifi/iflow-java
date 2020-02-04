@@ -21,13 +21,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.entity.DepartmentEntity;
-import com.pth.iflow.core.model.entity.DepartmentGroupEntity;
 import com.pth.iflow.core.model.entity.UserDepartmentEntity;
-import com.pth.iflow.core.model.entity.UserDepartmentGroupEntity;
 import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.storage.dao.interfaces.ICompanyDao;
 import com.pth.iflow.core.storage.dao.interfaces.IDepartmentDao;
-import com.pth.iflow.core.storage.dao.interfaces.IDepartmentGroupDao;
 import com.pth.iflow.core.storage.dao.interfaces.IIflowRoleDao;
 import com.pth.iflow.core.storage.dao.interfaces.IUserDao;
 import com.pth.iflow.core.storage.dao.interfaces.IUserGroupDao;
@@ -50,24 +47,17 @@ public class UserDaoTest extends TestDataProducer {
   private IDepartmentDao departmentDao;
 
   @Autowired
-  private IDepartmentGroupDao departmentGroupDao;
-
-  @Autowired
   private IIflowRoleDao iflowRoleDao;
 
   private final List<UserEntity> createdModels = new ArrayList<>();
 
   private final List<DepartmentEntity> departments = new ArrayList<>();
-  private final List<DepartmentGroupEntity> departmentGroups = new ArrayList<>();
 
   @Before
   public void setUp() throws Exception {
 
     departments.add(departmentDao.getById(1L));
     departments.add(departmentDao.getById(2L));
-
-    departmentGroups.add(departmentGroupDao.getById(1L));
-    departmentGroups.add(departmentGroupDao.getById(2L));
 
   }
 
@@ -88,14 +78,6 @@ public class UserDaoTest extends TestDataProducer {
         userDepartmentEntity.setDepartment(dep);
         userDepartmentEntity.setMemberType(5);
         user.addUserDepartment(userDepartmentEntity);
-      }
-
-      for (final DepartmentGroupEntity depGrp : departmentGroups) {
-
-        final UserDepartmentGroupEntity userDepartmentGroupEntity = new UserDepartmentGroupEntity();
-        userDepartmentGroupEntity.setDepartmentGroup(depGrp);
-        userDepartmentGroupEntity.setMemberType(5);
-        user.addUserDepartmentGroup(userDepartmentGroupEntity);
       }
 
       final UserEntity res = userDao.create(user);
@@ -184,6 +166,11 @@ public class UserDaoTest extends TestDataProducer {
 
     final UserEntity user = getTestNewUser();
     user.setVersion(10);
+    user.setDeputies(new ArrayList<>());
+    user.setGroups(new ArrayList<>());
+    user.setRoles(new ArrayList<>());
+    user.setUserDepartments(new ArrayList<>());
+
     final UserEntity createdUser = userDao.create(user);
     createdModels.add(createdUser);
 
@@ -200,7 +187,7 @@ public class UserDaoTest extends TestDataProducer {
     compareUsers(createdUser, updatedUser);
 
     Assert.assertEquals("Result user has status 10!", updatedUser.getStatus(), createdUser.getStatus());
-    Assert.assertEquals("Result user has version 23!", updatedUser.getVersion().intValue(), 23);
+    Assert.assertEquals("Result user has version 22!", 22, updatedUser.getVersion().intValue());
     Assert
         .assertEquals("Result user has firstname '" + createdUser.getFirstName() + "'!", updatedUser.getFirstName(),
             createdUser.getFirstName());

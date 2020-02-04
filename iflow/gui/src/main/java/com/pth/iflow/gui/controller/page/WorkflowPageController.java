@@ -38,7 +38,6 @@ public class WorkflowPageController extends GuiPageControllerBase {
 
     model.addAttribute("UserAssign", EAssignType.USER.getIdentity());
     model.addAttribute("DepartmentAssign", EAssignType.DEPARTMENT.getIdentity());
-    model.addAttribute("DepartmentGroupAssign", EAssignType.DEPARTMENTGROUP.getIdentity());
     model.addAttribute("WorkflowTyoeList", this.getAllWorkflowTypes());
 
     if (StringUtils.isEmpty(workflowTypeIdentity)) {
@@ -60,7 +59,7 @@ public class WorkflowPageController extends GuiPageControllerBase {
   @ResponseStatus(HttpStatus.OK)
   @GetMapping(path = { "/edit/{workflowTypeIdentity}/{workflowIdentity}/{workflowTypeStepIdentity}" })
   public String showWorkflowEdit(final Model model, @PathVariable(required = false) final String workflowIdentity, @PathVariable(
-      required = false
+                                                                                                                                 required = false
   ) final String workflowTypeIdentity, @PathVariable(required = false) final String workflowTypeStepIdentity,
       final HttpServletResponse response) throws GuiCustomizedException, IOException, IFlowMessageConversionFailureException {
 

@@ -60,14 +60,7 @@ export class InvoiceWorkflowEditService extends HttpErrorResponseHelper implemen
 	getUploadOcrScanFileUrl() :string{
 		return "/general/data/uploadtempfile";
 	}
-	
-
-	
-	
-	//userAssignType = /*[[${UserAssign}]]*/ '';
-	//departmentAssignType = /*[[${DepartmentAssign}]]*/ '';
-	//departmentGroupAssignType = /*[[${DepartmentGroupAssign}]]*/ '';
-	
+		
 	constructor(
 			protected http: HttpClient,
 			protected loadingService: LoadingServiceService,

@@ -23,10 +23,8 @@ import com.pth.iflow.gui.models.Company;
 import com.pth.iflow.gui.models.CompanyProfile;
 import com.pth.iflow.gui.models.CompanyWorkflowTypeController;
 import com.pth.iflow.gui.models.Department;
-import com.pth.iflow.gui.models.DepartmentGroup;
 import com.pth.iflow.gui.models.User;
 import com.pth.iflow.gui.models.UserDepartment;
-import com.pth.iflow.gui.models.UserDepartmentGroup;
 import com.pth.iflow.gui.models.UserGroup;
 import com.pth.iflow.gui.models.WorkflowAction;
 import com.pth.iflow.gui.models.WorkflowFile;
@@ -97,12 +95,7 @@ public class TestDataProducer {
     model.setStatus(1);
     model.setVersion(1);
     model.setUserAccessFromPermission(1);
-    model
-        .setUserDepartmentGroups(
-            Arrays
-                .asList(this.getTestUserDepartmentGroup("departmentgrpIdentity1"),
-                    this.getTestUserDepartmentGroup("departmentgrpIdentity2"),
-                    this.getTestUserDepartmentGroup("departmentgrpIdentity3")));
+
     model
         .setUserDepartments(Arrays
             .asList(this.getTestUserDepartment("departmentIdentity1"), this.getTestUserDepartment("departmentIdentity2"),
@@ -127,12 +120,7 @@ public class TestDataProducer {
     model.setStatus(1);
     model.setVersion(1);
     model.setUserAccessFromPermission(1);
-    model
-        .setUserDepartmentGroups(
-            Arrays
-                .asList(this.getTestUserDepartmentGroup("departmentgrpIdentity1"),
-                    this.getTestUserDepartmentGroup("departmentgrpIdentity2"),
-                    this.getTestUserDepartmentGroup("departmentgrpIdentity3")));
+
     model
         .setUserDepartments(Arrays
             .asList(this.getTestUserDepartment("departmentIdentity1"), this.getTestUserDepartment("departmentIdentity2"),
@@ -143,24 +131,14 @@ public class TestDataProducer {
     return model;
   }
 
-  private UserDepartmentGroup getTestUserDepartmentGroup(final String depgroupIdentity) {
-
-    final UserDepartmentGroup userDepartmentGroup = new UserDepartmentGroup();
-
-    userDepartmentGroup.setDepartmentGroupIdentity(depgroupIdentity);
-    userDepartmentGroup.setMemberType(5);
-
-    return userDepartmentGroup;
-  }
-
   private UserDepartment getTestUserDepartment(final String depIdentity) {
 
-    final UserDepartment userDepartmentGroup = new UserDepartment();
+    final UserDepartment userDepartment = new UserDepartment();
 
-    userDepartmentGroup.setDepartmentIdentity(depIdentity);
+    userDepartment.setDepartmentIdentity(depIdentity);
 
-    userDepartmentGroup.setMemberType(5);
-    return userDepartmentGroup;
+    userDepartment.setMemberType(5);
+    return userDepartment;
   }
 
   protected List<User> getTestUserList() {
@@ -592,28 +570,6 @@ public class TestDataProducer {
 
     final Department model = new Department();
     model.setCompanyIdentity("companyIdentity");
-    model.setIdentity(identity);
-    model.setTitle(title);
-    model.setStatus(1);
-    model.setVersion(1);
-    model.setDepartmentGroups(this.getTestDepartmentGroupList());
-
-    return model;
-  }
-
-  protected List<DepartmentGroup> getTestDepartmentGroupList() {
-
-    final List<DepartmentGroup> list = Arrays
-        .asList(this.getTestDepartmentGroup("depgrp1", "DepartmentGroup 1"),
-            this.getTestDepartmentGroup("depgrp2", "DepartmentGroup 2"), this.getTestDepartmentGroup("depgrp3", "DepartmentGroup 3"));
-
-    return list;
-  }
-
-  protected DepartmentGroup getTestDepartmentGroup(final String identity, final String title) {
-
-    final DepartmentGroup model = new DepartmentGroup();
-    model.setDepartmentIdentity("departmentIdentity");
     model.setIdentity(identity);
     model.setTitle(title);
     model.setStatus(1);

@@ -3,7 +3,6 @@ package com.pth.iflow.core.storage.dao.impl;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -12,6 +11,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Subquery;
 
+import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
 import com.pth.iflow.common.enums.EWorkflowActionStatus;
@@ -31,9 +31,9 @@ public class WorkflowSearchDao extends EntityManagerHelper implements IWorkflowS
   @Override
   public List<WorkflowEntity> search(final WorkflowSearchFilter workflowSearchFilter) {
 
-    final EntityManager entityManager = createEntityManager();
+    final Session session = this.createSession();
 
-    final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+    final CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
     final CriteriaQuery<WorkflowEntity> query = criteriaBuilder.createQuery(WorkflowEntity.class);
     final Root<WorkflowEntity> root = query.from(WorkflowEntity.class);
     query.select(root);
@@ -89,31 +89,31 @@ public class WorkflowSearchDao extends EntityManagerHelper implements IWorkflowS
       query.where(finalPredicate);
     }
 
-    final TypedQuery<WorkflowEntity> typedQuery = entityManager.createQuery(query);
+    final TypedQuery<WorkflowEntity> typedQuery = session.createQuery(query);
 
     // final String qr = typedQuery.unwrap(org.hibernate.query.Query.class).getQueryString();
     // System.out.println("search workflow query: " + qr);
     final List<WorkflowEntity> list = typedQuery.getResultList();
-    entityManager.close();
+    session.close();
     return list;
   }
 
   @Override
   public List<WorkflowEntity> readByIdentityList(final Set<String> identityList) {
 
-    final EntityManager entityManager = createEntityManager();
+    final Session session = this.createSession();
 
-    final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+    final CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
     final CriteriaQuery<WorkflowEntity> query = criteriaBuilder.createQuery(WorkflowEntity.class);
     final Root<WorkflowEntity> root = query.from(WorkflowEntity.class);
 
     final Predicate predicate = root.get("identity").in(identityList);
     query.select(root).where(predicate);
 
-    final TypedQuery<WorkflowEntity> typedQuery = entityManager.createQuery(query);
+    final TypedQuery<WorkflowEntity> typedQuery = session.createQuery(query);
 
     final List<WorkflowEntity> list = typedQuery.getResultList();
-    entityManager.close();
+    session.close();
     return list;
   }
 

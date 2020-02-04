@@ -65,20 +65,6 @@ public class CompanyProfile {
     }
   }
 
-  public Integer getVersion() {
-
-    return null;
-  }
-
-  public Long getId() {
-
-    return null;
-  }
-
-  public void setVersion(final Integer version) {
-
-  }
-
   public List<CompanyWorkflowTypeController> getWorkflowTypeControllers() {
 
     return this.workflowTypeControllers;

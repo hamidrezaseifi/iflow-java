@@ -36,7 +36,6 @@ public abstract class WorkflowPageControllerBase<W extends IWorkflow, WS extends
 
     model.addAttribute("UserAssign", EAssignType.USER.getIdentity());
     model.addAttribute("DepartmentAssign", EAssignType.DEPARTMENT.getIdentity());
-    model.addAttribute("DepartmentGroupAssign", EAssignType.DEPARTMENTGROUP.getIdentity());
 
     return this.getCreateView();
 
@@ -53,7 +52,6 @@ public abstract class WorkflowPageControllerBase<W extends IWorkflow, WS extends
 
     model.addAttribute("UserAssign", EAssignType.USER.getIdentity());
     model.addAttribute("DepartmentAssign", EAssignType.DEPARTMENT.getIdentity());
-    model.addAttribute("DepartmentGroupAssign", EAssignType.DEPARTMENTGROUP.getIdentity());
     model.addAttribute("workflowIdentity", workflowIdentity);
 
     return this.getWorkflowStepTypeByIdentity(workflowTypeIdentity, workflowTypeStepIdentity).getViewName();

@@ -7,7 +7,6 @@ import com.pth.iflow.common.models.edo.ProfileResponseEdo;
 import com.pth.iflow.common.models.edo.UserEdo;
 import com.pth.iflow.core.model.ProfileResponse;
 import com.pth.iflow.core.model.entity.DepartmentEntity;
-import com.pth.iflow.core.model.entity.DepartmentGroupEntity;
 import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.model.entity.UserGroupEntity;
 import com.pth.iflow.core.service.base.ICoreModelEdoMapperService;
@@ -31,15 +30,11 @@ public interface IUsersService extends ICoreModelEdoMapperService<UserEntity, Us
 
   List<DepartmentEntity> getUserDepartments(final String identity);
 
-  List<DepartmentGroupEntity> getUserDepartmentGroups(final String identity);
-
   List<UserEntity> getUserDeputies(final String identity);
 
   List<UserEntity> getCompanyUsers(final String companyIdentity);
 
   List<UserEntity> getAllUserIdentityListByDepartmentIdentity(final String identity) throws IFlowStorageException;
-
-  List<UserEntity> getAllUserIdentityListByDepartmentGroupIdentity(final String identity) throws IFlowStorageException;
 
   List<UserEntity> getUserListByIdentityList(final Set<String> identityList) throws IFlowStorageException;
 

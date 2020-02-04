@@ -12,16 +12,13 @@ import com.pth.iflow.common.models.edo.CompanyProfileEdo;
 import com.pth.iflow.common.models.edo.CompanyWorkflowTypeControllerEdo;
 import com.pth.iflow.common.models.edo.ProfileResponseEdo;
 import com.pth.iflow.common.models.edo.UserDepartmentEdo;
-import com.pth.iflow.common.models.edo.UserDepartmentGroupEdo;
 import com.pth.iflow.common.models.edo.UserEdo;
-import com.pth.iflow.common.models.helper.IdentityModel;
 import com.pth.iflow.core.helper.CoreDataHelper;
 import com.pth.iflow.core.model.CompanyProfile;
 import com.pth.iflow.core.model.ProfileResponse;
 import com.pth.iflow.core.model.entity.CompanyEntity;
 import com.pth.iflow.core.model.entity.CompanyWorkflowTypeControllerEntity;
 import com.pth.iflow.core.model.entity.DepartmentEntity;
-import com.pth.iflow.core.model.entity.DepartmentGroupEntity;
 import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.model.entity.UserGroupEntity;
 import com.pth.iflow.core.service.base.CoreModelEdoMapperService;
@@ -30,9 +27,10 @@ import com.pth.iflow.core.service.interfaces.IDepartmentService;
 import com.pth.iflow.core.service.interfaces.IUserGroupService;
 import com.pth.iflow.core.service.interfaces.IUsersService;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
+import com.pth.iflow.core.storage.dao.helper.ICoreEntityVersion;
+import com.pth.iflow.core.storage.dao.impl.base.EntityDaoBase;
 import com.pth.iflow.core.storage.dao.interfaces.ICompanyDao;
 import com.pth.iflow.core.storage.dao.interfaces.IDepartmentDao;
-import com.pth.iflow.core.storage.dao.interfaces.IDepartmentGroupDao;
 import com.pth.iflow.core.storage.dao.interfaces.IUserDao;
 import com.pth.iflow.core.storage.dao.interfaces.IUserGroupDao;
 import com.pth.iflow.core.storage.dao.interfaces.IWorkflowTypeDao;
@@ -44,19 +42,17 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
   private final IUserDao userDao;
   private final IUserGroupDao userGroupDao;
   private final IDepartmentDao departmentDao;
-  private final IDepartmentGroupDao departmentGroupDao;
   private final IWorkflowTypeDao workflowTypeDao;
 
   public UsersService(@Autowired final ICompanyDao companyDao, @Autowired final IUserDao userDao,
       @Autowired final IUserGroupDao userGroupDao,
-      @Autowired final IDepartmentDao departmentDao, @Autowired final IDepartmentGroupDao departmentGroupDao,
+      @Autowired final IDepartmentDao departmentDao,
       @Autowired final IWorkflowTypeDao workflowTypeDao) {
 
     this.companyDao = companyDao;
     this.userDao = userDao;
     this.userGroupDao = userGroupDao;
     this.departmentDao = departmentDao;
-    this.departmentGroupDao = departmentGroupDao;
     this.workflowTypeDao = workflowTypeDao;
 
   }
@@ -89,13 +85,6 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
   }
 
   @Override
-  public List<DepartmentGroupEntity> getUserDepartmentGroups(final String email) {
-
-    final UserEntity user = getUserByIdentity(email);
-    return user.getDepartmentGroups().stream().collect(Collectors.toList());
-  }
-
-  @Override
   public List<UserEntity> getUserDeputies(final String email) {
 
     final UserEntity user = getUserByIdentity(email);
@@ -118,6 +107,7 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
 
     final UserEntity exists = userDao.getByIdentity(model.getIdentity());
     model.verifyVersion(exists);
+    model.increaseVersion();
 
     return userDao.update(model);
   }
@@ -162,12 +152,6 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
     return userDao.getAllUserIdentityListByDepartmentId(identity);
   }
 
-  @Override
-  public List<UserEntity> getAllUserIdentityListByDepartmentGroupIdentity(final String identity) throws IFlowStorageException {
-
-    return userDao.getAllUserIdentityListByDepartmentGroupId(identity);
-  }
-
   protected UserEntity prepareSavingModel(final UserEntity model) {
 
     return model;
@@ -180,7 +164,8 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
 
     final UserEntity model = new UserEntity();
 
-    model.setId(IdentityModel.isIdentityNew(edo.getIdentity()) ? null : userDao.getByIdentity(edo.getIdentity()).getId());
+    this.setIdFromIdentity(model, edo.getIdentity(), (EntityDaoBase<ICoreEntityVersion>) userDao);
+
     model.setFirstName(edo.getFirstName());
     model.setLastName(edo.getLastName());
     model.setPermission(edo.getPermission());
@@ -196,12 +181,6 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
 
     for (final UserDepartmentEdo userDepartmentEdo : edo.getUserDepartments()) {
       model.addUserDepartment(departmentDao.getByIdentity(userDepartmentEdo.getDepartmentIdentity()), userDepartmentEdo.getMemberType());
-    }
-
-    for (final UserDepartmentGroupEdo userDepartmentGroupEdo : edo.getUserDepartmentGroups()) {
-      model
-          .addUserDepartmentGroup(departmentGroupDao.getByIdentity(userDepartmentGroupEdo.getDepartmentGroupIdentity()),
-              userDepartmentGroupEdo.getMemberType());
     }
 
     return model;
@@ -231,13 +210,6 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
             .map(g -> new UserDepartmentEdo(g.getDepartment().getIdentity(), g.getMemberType()))
             .collect(Collectors.toSet()));
 
-    edo
-        .setUserDepartmentGroups(model
-            .getUserDepartmentGroups()
-            .stream()
-            .map(g -> new UserDepartmentGroupEdo(g.getDepartmentGroup().getIdentity(), g.getMemberType()))
-            .collect(Collectors.toSet()));
-
     edo.setDeputies(model.getDeputies().stream().map(g -> g.getIdentity()).collect(Collectors.toSet()));
     edo.setRoles(model.getRoles().stream().map(r -> r.getId().intValue()).collect(Collectors.toSet()));
     edo.setIdentity(model.getIdentity());
@@ -254,7 +226,7 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
   public CompanyProfileEdo toCompanyProfileEdo(final CompanyProfile model) {
 
     final IUserGroupService groupService = new UserGroupService(null);
-    final IDepartmentService departmentService = new DepartmentService(null);
+    final IDepartmentService departmentService = new DepartmentService(null, companyDao);
 
     final ICompanyService companyService = new CompanyService(null);
 

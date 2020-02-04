@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 
-import { User, Department, DepartmentGroup, GeneralData } from '../../ui-models';
 import { AssignItem, AssignType } from '../../wf-models';
+import { User, Department, GeneralData, UploadedFile, UploadedResult } from '../../ui-models';
 
 @Component({
   selector: 'app-select-user',
@@ -19,7 +19,6 @@ export class SelectUserComponent implements OnInit {
 
 	assignTypeUser :AssignType = AssignType.USER;
 	assignTypeDepartment :AssignType = AssignType.DEPARTMENT;
-	assignTypeDepartmentGroup :AssignType = AssignType.DEPARTMENTGROUP;
 
 	constructor() { }
 	

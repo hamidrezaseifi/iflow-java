@@ -26,8 +26,6 @@ public interface IUserDao {
 
   public List<UserEntity> getAllUserIdentityListByDepartmentId(final String identity) throws IFlowStorageException;
 
-  public List<UserEntity> getAllUserIdentityListByDepartmentGroupId(final String identity) throws IFlowStorageException;
-
   public UserEntity getLastIdentity(Long companyId) throws IFlowStorageException;
 
 }

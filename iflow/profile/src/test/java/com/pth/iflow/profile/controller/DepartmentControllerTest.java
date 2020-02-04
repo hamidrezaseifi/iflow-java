@@ -1,12 +1,15 @@
 package com.pth.iflow.profile.controller;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,6 +32,7 @@ import com.pth.iflow.profile.TestDataProducer;
 import com.pth.iflow.profile.model.Department;
 import com.pth.iflow.profile.model.User;
 import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
+import com.pth.iflow.profile.service.handler.IDepartmentsHandlerService;
 import com.pth.iflow.profile.service.handler.ITokenUserDataManager;
 
 @RunWith(SpringRunner.class)
@@ -45,6 +49,9 @@ public class DepartmentControllerTest extends TestDataProducer {
   @MockBean
   private ITokenUserDataManager tokenUserDataManager;
 
+  @MockBean
+  private IDepartmentsHandlerService departmentsHandlerService;
+
   String TestToken = "test-roken";
 
   @Before
@@ -54,6 +61,7 @@ public class DepartmentControllerTest extends TestDataProducer {
 
   @After
   public void tearDown() throws Exception {
+
   }
 
   @Test
@@ -62,18 +70,20 @@ public class DepartmentControllerTest extends TestDataProducer {
     final Department department = this.getTestDepartment("dep1", "department 1");
     final DepartmentEdo departmentEdo = ProfileModelEdoMapper.toEdo(department);
 
-    when(this.tokenUserDataManager.getDepartmentById(any(String.class), any(String.class))).thenReturn(department);
+    when(this.departmentsHandlerService.getDepartmentByIdentity(any(String.class))).thenReturn(department);
 
     final String responseAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(departmentEdo);
 
     this.mockMvc
-                .perform(MockMvcRequestBuilders.get(IflowRestPaths.ProfileModule.READ_DEPARTMENT_BY_ID_URIBUILDER("ident1"))
-                                               .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, this.TestToken))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
-                .andExpect(content().xml(responseAsXmlString));
+        .perform(MockMvcRequestBuilders
+            .get(IflowRestPaths.ProfileModule.READ_DEPARTMENT_BY_ID_URIBUILDER("ident1"))
+            .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, this.TestToken))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(content().xml(responseAsXmlString));
 
-    verify(this.tokenUserDataManager, times(1)).getDepartmentById(any(String.class), any(String.class));
+    verify(this.departmentsHandlerService, times(1)).getDepartmentByIdentity(any(String.class));
+    verify(this.tokenUserDataManager, times(1)).validateToken(any(String.class));
   }
 
   @Test
@@ -87,13 +97,61 @@ public class DepartmentControllerTest extends TestDataProducer {
     final String responseAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(userEdoList);
 
     this.mockMvc
-                .perform(MockMvcRequestBuilders.get(IflowRestPaths.ProfileModule.READ_ALLUSERS_BY_DEPARTMENTID_URIBUILDER("identity2"))
-                                               .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, this.TestToken))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
-                .andExpect(content().xml(responseAsXmlString));
+        .perform(MockMvcRequestBuilders
+            .get(IflowRestPaths.ProfileModule.READ_ALLUSERS_BY_DEPARTMENTID_URIBUILDER("identity2"))
+            .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, this.TestToken))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(content().xml(responseAsXmlString));
 
     verify(this.tokenUserDataManager, times(1)).getAllUserListByDepartmentId(any(String.class), any(String.class));
+  }
+
+  @Test
+  public void testSaveDepartment() throws Exception {
+
+    final Department department = this.getTestDepartment("dep1", "department 1");
+    final DepartmentEdo departmentEdo = ProfileModelEdoMapper.toEdo(department);
+
+    when(this.departmentsHandlerService.saveDepartment(any(Department.class))).thenReturn(department);
+
+    final String requestAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(departmentEdo);
+
+    final String responseAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(departmentEdo);
+
+    this.mockMvc
+        .perform(MockMvcRequestBuilders
+            .post(IflowRestPaths.ProfileModule.SAVE_DEPARTMENT_URIBUILDER())
+            .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, this.TestToken)
+            .content(requestAsXmlString)
+            .contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(status().isCreated())
+        .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(content().xml(responseAsXmlString));
+
+    verify(this.tokenUserDataManager, times(1)).validateToken(any(String.class));
+    verify(this.departmentsHandlerService, times(1)).saveDepartment(any(Department.class));
+  }
+
+  @Test
+  public void testDeleteDepartment() throws Exception {
+
+    final Department department = this.getTestDepartment("dep1", "department 1");
+    final DepartmentEdo departmentEdo = ProfileModelEdoMapper.toEdo(department);
+    final String requestAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(departmentEdo);
+
+    doNothing().when(this.departmentsHandlerService).deleteDepartment(any(Department.class));
+
+    this.mockMvc
+        .perform(MockMvcRequestBuilders
+            .post(IflowRestPaths.ProfileModule.DELETE_DEPARTMENT_URIBUILDER())
+            .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, this.TestToken)
+            .content(requestAsXmlString)
+            .contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(status().isAccepted());
+
+    verify(this.tokenUserDataManager, times(1)).validateToken(any(String.class));
+    verify(this.departmentsHandlerService, times(1)).deleteDepartment(any(Department.class));
   }
 
 }

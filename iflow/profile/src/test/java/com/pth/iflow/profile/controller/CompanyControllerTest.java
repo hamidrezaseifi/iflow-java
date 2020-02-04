@@ -46,21 +46,21 @@ import com.pth.iflow.profile.service.handler.ITokenUserDataManager;
 public class CompanyControllerTest extends TestDataProducer {
 
   @Autowired
-  private MockMvc                                mockMvc;
+  private MockMvc mockMvc;
 
   @Autowired
   private MappingJackson2XmlHttpMessageConverter xmlConverter;
 
   @MockBean
-  private ITokenUserDataManager                  tokenUserDataManager;
+  private ITokenUserDataManager tokenUserDataManager;
 
-  private User                                   user;
+  private User user;
 
-  private Company                                company;
+  private Company company;
 
-  private CompanyProfile                         companyProfile;
+  private CompanyProfile companyProfile;
 
-  String                                         TestToken = "test-roken";
+  String TestToken = "test-roken";
 
   @Before
   public void setUp() throws Exception {
@@ -72,6 +72,7 @@ public class CompanyControllerTest extends TestDataProducer {
 
   @After
   public void tearDown() throws Exception {
+
   }
 
   @Test
@@ -85,9 +86,11 @@ public class CompanyControllerTest extends TestDataProducer {
     final String responseAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(companyEdo);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.ProfileModule.COMPANY_READ_BY_IDENTITY, "ident1")
+        .perform(MockMvcRequestBuilders
+            .get(IflowRestPaths.ProfileModule.COMPANY_READ_BY_IDENTITY, profile.getCompanyProfile().getCompany().getIdentity())
             .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, this.TestToken))
-        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(responseAsXmlString));
 
     verify(this.tokenUserDataManager, times(1)).getProfileByToken(any(String.class));
@@ -104,11 +107,13 @@ public class CompanyControllerTest extends TestDataProducer {
 
     final String responseAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(userEdoList);
 
-    URI uri = IflowRestPaths.ProfileModule.READ_USERLIST_BY_COMPANYID_URIBUILDER("ident1");
+    final URI uri = IflowRestPaths.ProfileModule.READ_USERLIST_BY_COMPANYID_URIBUILDER("ident1");
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(uri)
+        .perform(MockMvcRequestBuilders
+            .get(uri)
             .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, this.TestToken))
-        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(responseAsXmlString));
 
     verify(this.tokenUserDataManager, times(1)).getUserListByToken(any(String.class), any(String.class));
@@ -125,9 +130,11 @@ public class CompanyControllerTest extends TestDataProducer {
     final String responseAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.ProfileModule.COMPANY_READ_USERGROUP_LIST, "ident1")
+        .perform(MockMvcRequestBuilders
+            .get(IflowRestPaths.ProfileModule.COMPANY_READ_USERGROUP_LIST, "ident1")
             .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, this.TestToken))
-        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(responseAsXmlString));
 
     verify(this.tokenUserDataManager, times(1)).getUserGroupListByToken(any(String.class), any(String.class));
@@ -144,9 +151,11 @@ public class CompanyControllerTest extends TestDataProducer {
     final String responseAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoList);
 
     this.mockMvc
-        .perform(MockMvcRequestBuilders.get(IflowRestPaths.ProfileModule.COMPANY_READ_DEPARTMENT_LIST, "ident1")
+        .perform(MockMvcRequestBuilders
+            .get(IflowRestPaths.ProfileModule.COMPANY_READ_DEPARTMENT_LIST, "ident1")
             .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, this.TestToken))
-        .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(responseAsXmlString));
 
     verify(this.tokenUserDataManager, times(1)).getDepartmentListByToken(any(String.class), any(String.class));

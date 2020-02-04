@@ -20,17 +20,18 @@ import com.pth.iflow.core.storage.dao.interfaces.IWorkflowTypeStepDao;
 import com.pth.iflow.core.storage.dao.interfaces.workflow.IWorkflowDao;
 
 @Service
-public class WorkflowMessageService extends CoreModelEdoMapperService<WorkflowMessageEntity, WorkflowMessageEdo>
-    implements IWorkflowMessageService {
+public class WorkflowMessageService extends CoreModelEdoMapperService<WorkflowMessageEntity,
+    WorkflowMessageEdo> implements IWorkflowMessageService {
 
-  private final IWorkflowMessageDao  workflowMessageDao;
+  private final IWorkflowMessageDao workflowMessageDao;
   private final IWorkflowTypeStepDao workflowTypeStepDao;
-  private final IUserDao             usersDao;
-  private final IWorkflowDao         workflowDao;
+  private final IUserDao usersDao;
+  private final IWorkflowDao workflowDao;
 
   public WorkflowMessageService(@Autowired final IWorkflowMessageDao workflowMessageDao,
       @Autowired final IWorkflowTypeStepDao workflowTypeStepDao, @Autowired final IUserDao usersDao,
       @Autowired final IWorkflowDao workflowDao) {
+
     this.workflowMessageDao = workflowMessageDao;
     this.workflowTypeStepDao = workflowTypeStepDao;
     this.usersDao = usersDao;
@@ -48,6 +49,7 @@ public class WorkflowMessageService extends CoreModelEdoMapperService<WorkflowMe
 
     final WorkflowMessageEntity exists = this.workflowMessageDao.getById(model.getId());
     model.verifyVersion(exists);
+    model.increaseVersion();
 
     final WorkflowMessageEntity savedModel = this.workflowMessageDao.update(model);
     return savedModel;
@@ -78,13 +80,15 @@ public class WorkflowMessageService extends CoreModelEdoMapperService<WorkflowMe
 
     if (IdentityModel.isIdentityNew(email)) {
       this.workflowMessageDao.updateStatusByWorkflowIdentity(workflowIdentity, stepIdentity, status);
-    } else {
+    }
+    else {
       this.workflowMessageDao.updateStatusByWorkflowAndUser(workflowIdentity, stepIdentity, email, status);
     }
   }
 
   @Override
   public WorkflowMessageEntity fromEdo(final WorkflowMessageEdo edo) throws IFlowMessageConversionFailureException {
+
     validateCustomer(edo);
 
     final WorkflowMessageEntity model = new WorkflowMessageEntity();
@@ -104,6 +108,7 @@ public class WorkflowMessageService extends CoreModelEdoMapperService<WorkflowMe
 
   @Override
   public WorkflowMessageEdo toEdo(final WorkflowMessageEntity model) {
+
     final WorkflowMessageEdo edo = new WorkflowMessageEdo();
     edo.setStatus(model.getStatus());
     edo.setVersion(model.getVersion());

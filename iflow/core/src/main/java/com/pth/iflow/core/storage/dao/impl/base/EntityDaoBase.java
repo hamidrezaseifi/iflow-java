@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -14,6 +13,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Subquery;
 
+import org.hibernate.Session;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pth.iflow.core.model.entity.workflow.WorkflowActionEntity;
@@ -28,55 +28,57 @@ public abstract class EntityDaoBase<T extends ICoreEntityVersion> extends Entity
 
   public T create(final T model) throws IFlowStorageException {
 
-    final EntityManager entityManager = createEntityManager();
+    final Session session = this.createSession();
 
-    entityManager.getTransaction().begin();
-    final T savedModel = entityManager.merge(model);
-    entityManager.getTransaction().commit();
-    entityManager.close();
-    return savedModel;
+    session.getTransaction().begin();
+
+    final Object id = session.save(model);
+    session.getTransaction().commit();
+    session.close();
+
+    return getById((Long) id);
   }
 
   public T update(final T model) throws IFlowStorageException {
 
-    final EntityManager entityManager = createEntityManager();
-    entityManager.getTransaction().begin();
-    final T savedModel = entityManager.merge(model);
-    entityManager.getTransaction().commit();
-    entityManager.close();
-    return getById(savedModel.getId());
+    final Session session = this.createSession();
+    session.getTransaction().begin();
+
+    session.saveOrUpdate(model);
+    session.getTransaction().commit();
+    session.close();
+    return getById(model.getId());
   }
 
   public T getById(final Long id) throws IFlowStorageException {
 
-    final EntityManager entityManager = createEntityManager();
-    final T dbModel = entityManager.find(entityClass(), id);
-    entityManager.close();
+    final Session session = this.createSession();
+    final T dbModel = session.find(entityClass(), id);
+    session.close();
+
     return dbModel;
   }
 
   public void deleteById(final Long id) throws IFlowStorageException {
 
-    T entity = this.getById(id);
+    final T entity = this.getById(id);
 
-    final EntityManager entityManager = createEntityManager();
+    final Session session = this.createSession();
     if (entity != null) {
 
-      entity = entityManager.contains(entity) ? entity : entityManager.merge(entity);
-
-      entityManager.getTransaction().begin();
-      entityManager.remove(entity);
-      entityManager.getTransaction().commit();
+      session.getTransaction().begin();
+      session.remove(entity);
+      session.getTransaction().commit();
 
     }
-    entityManager.close();
+    session.close();
   }
 
   public List<T> getListForUserIdentity(final String userIdentity, final int status) throws IFlowStorageException {
 
-    final EntityManager entityManager = createEntityManager();
+    final Session session = this.createSession();
 
-    final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+    final CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
     final CriteriaQuery<T> query = criteriaBuilder.createQuery(entityClass());
     final Root<T> root = query.from(entityClass());
     query.select(root);
@@ -104,22 +106,22 @@ public abstract class EntityDaoBase<T extends ICoreEntityVersion> extends Entity
       query.where(finalPredicate);
     }
 
-    final TypedQuery<T> typedQuery = entityManager.createQuery(query);
+    final TypedQuery<T> typedQuery = session.createQuery(query);
 
     // final String qr =
     // typedQuery.unwrap(org.hibernate.query.Query.class).getQueryString();
     // System.out.println("search workflow query: " + qr);
     final List<T> list = typedQuery.getResultList();
-    entityManager.close();
+    session.close();
     return list;
 
   }
 
   public T getByIdentity(final String identity) throws IFlowStorageException {
 
-    final EntityManager entityManager = createEntityManager();
+    final Session session = this.createSession();
 
-    final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+    final CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
     final CriteriaQuery<T> query = criteriaBuilder.createQuery(entityClass());
     final Root<T> root = query.from(entityClass());
     query.select(root);
@@ -128,14 +130,14 @@ public abstract class EntityDaoBase<T extends ICoreEntityVersion> extends Entity
     final Predicate predicate = criteriaBuilder.equal(identityPath, identity);
     query.where(predicate);
 
-    final TypedQuery<T> typedQuery = entityManager.createQuery(query);
+    final TypedQuery<T> typedQuery = session.createQuery(query);
 
     // final String qr =
     // typedQuery.unwrap(org.hibernate.query.Query.class).getQueryString();
     // System.out.println("search workflow query: " + qr);
 
     final List<T> list = typedQuery.getResultList();
-    entityManager.close();
+    session.close();
     return list.size() > 0 ? list.get(0) : null;
   }
 
@@ -145,9 +147,9 @@ public abstract class EntityDaoBase<T extends ICoreEntityVersion> extends Entity
       return new ArrayList<>();
     }
 
-    final EntityManager entityManager = createEntityManager();
+    final Session session = this.createSession();
 
-    final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+    final CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
     final CriteriaQuery<T> query = criteriaBuilder.createQuery(entityClass());
     final Root<T> root = query.from(entityClass());
     query.select(root);
@@ -156,12 +158,12 @@ public abstract class EntityDaoBase<T extends ICoreEntityVersion> extends Entity
     final Predicate predicate = identityPath.in(identityList);
     query.where(predicate);
 
-    final TypedQuery<T> typedQuery = entityManager.createQuery(query);
+    final TypedQuery<T> typedQuery = session.createQuery(query);
 
     final String qr = typedQuery.unwrap(org.hibernate.query.Query.class).getQueryString();
     System.out.println("search workflow query: " + qr);
     final List<T> list = typedQuery.getResultList();
-    entityManager.close();
+    session.close();
     return list;
   }
 

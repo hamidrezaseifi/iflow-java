@@ -22,8 +22,6 @@ import com.pth.iflow.common.models.base.IFlowJaxbDefinition;
 import com.pth.iflow.common.models.helper.DateEdoAdapter;
 import com.pth.iflow.common.models.helper.StringToStringCollection;
 
-import io.micrometer.core.lang.Nullable;
-
 @XmlRootElement(name = "User", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "User" + IFlowJaxbDefinition.TYPE_PREFIX)
@@ -75,11 +73,6 @@ public class UserEdo {
   @XmlElementWrapper(name = "UserDepartmentList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "UserDepartment", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private final List<UserDepartmentEdo> userDepartments = new ArrayList<>();
-
-  @NotNull(message = "UserDepartmentGroupList must not be null")
-  @XmlElementWrapper(name = "UserDepartmentGroupList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  @XmlElement(name = "UserDepartmentGroup", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private final List<UserDepartmentGroupEdo> userDepartmentGroups = new ArrayList<>();
 
   @NotNull(message = "DeputyList must not be null")
   @XmlElementWrapper(name = "DeputyList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
@@ -212,20 +205,6 @@ public class UserEdo {
     this.userDepartments.clear();
     if (departments != null) {
       this.userDepartments.addAll(departments);
-    }
-  }
-
-  public List<UserDepartmentGroupEdo> getUserDepartmentGroups() {
-
-    return this.userDepartmentGroups;
-  }
-
-  @JsonSetter
-  public void setUserDepartmentGroups(@Nullable final Collection<UserDepartmentGroupEdo> departmentGroups) {
-
-    this.userDepartmentGroups.clear();
-    if (departmentGroups != null) {
-      this.userDepartmentGroups.addAll(departmentGroups);
     }
   }
 

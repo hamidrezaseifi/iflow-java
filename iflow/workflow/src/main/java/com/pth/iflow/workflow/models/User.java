@@ -22,7 +22,6 @@ public class User extends IdentityModel {
   private Integer version;
   private final Set<String> groups = new HashSet<>();
   private final List<UserDepartment> userDepartments = new ArrayList<>();
-  private final List<UserDepartmentGroup> userDepartmentGroups = new ArrayList<>();
   private final Set<String> deputies = new HashSet<>();
   private final Set<Integer> roles = new HashSet<>();
 
@@ -183,19 +182,6 @@ public class User extends IdentityModel {
     this.userDepartments.clear();
     if (departments != null) {
       this.userDepartments.addAll(departments);
-    }
-  }
-
-  public List<UserDepartmentGroup> getUserDepartmentGroups() {
-
-    return this.userDepartmentGroups;
-  }
-
-  public void setUserDepartmentGroups(final List<UserDepartmentGroup> departmentGroups) {
-
-    this.userDepartmentGroups.clear();
-    if (departmentGroups != null) {
-      this.userDepartmentGroups.addAll(departmentGroups);
     }
   }
 

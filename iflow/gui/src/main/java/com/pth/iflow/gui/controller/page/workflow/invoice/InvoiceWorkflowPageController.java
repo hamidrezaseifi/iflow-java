@@ -27,6 +27,7 @@ public class InvoiceWorkflowPageController extends WorkflowPageControllerBase<In
 
   @Override
   protected String getCreateView() {
+
     return "workflow/invoice/invoice_assign";
   }
 
@@ -38,7 +39,6 @@ public class InvoiceWorkflowPageController extends WorkflowPageControllerBase<In
 
     model.addAttribute("UserAssign", EAssignType.USER.getIdentity());
     model.addAttribute("DepartmentAssign", EAssignType.DEPARTMENT.getIdentity());
-    model.addAttribute("DepartmentGroupAssign", EAssignType.DEPARTMENTGROUP.getIdentity());
 
     final Map<EInvoiceType, String> invoiceTypes = new HashMap<>();// EInvoiceType.nameValueMap();
     // invoiceTypes.remove(EInvoiceType.NO_TYPE.getValue());

@@ -13,6 +13,8 @@ import com.pth.iflow.core.model.entity.workflow.WorkflowTypeEntity;
 import com.pth.iflow.core.model.entity.workflow.WorkflowTypeStepEntity;
 import com.pth.iflow.core.service.base.CoreModelEdoMapperService;
 import com.pth.iflow.core.service.interfaces.IWorkflowTypeService;
+import com.pth.iflow.core.storage.dao.helper.ICoreEntityVersion;
+import com.pth.iflow.core.storage.dao.impl.base.EntityDaoBase;
 import com.pth.iflow.core.storage.dao.interfaces.IWorkflowTypeDao;
 
 @Service
@@ -59,6 +61,7 @@ public class WorkflowTypeService extends CoreModelEdoMapperService<WorkflowTypeE
 
     final WorkflowTypeEntity exists = workflowTypeDao.getByIdentity(model.getIdentity());
     model.verifyVersion(exists);
+    model.increaseVersion();
 
     return workflowTypeDao.update(model);
   }
@@ -76,6 +79,8 @@ public class WorkflowTypeService extends CoreModelEdoMapperService<WorkflowTypeE
     final WorkflowTypeStepService stepService = new WorkflowTypeStepService(null, null);
 
     final WorkflowTypeEntity model = new WorkflowTypeEntity();
+
+    this.setIdFromIdentity(model, edo.getIdentity(), (EntityDaoBase<ICoreEntityVersion>) workflowTypeDao);
 
     model.setTitle(edo.getTitle());
     model.setComments(edo.getComments());

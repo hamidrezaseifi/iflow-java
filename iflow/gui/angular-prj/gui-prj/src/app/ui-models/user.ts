@@ -1,6 +1,5 @@
 import { UserAccessType } from './user-access';
 import { UserDepartment } from './user-department';
-import { UserDepartmentGroup } from './user-department-group';
 
 ﻿export class User {
 	identity: string;
@@ -17,7 +16,6 @@ import { UserDepartmentGroup } from './user-department-group';
 	password: string;
 
 	userDepartments: UserDepartment[] = [];
-	userDepartmentGroups: UserDepartmentGroup[] = [];
 
 	groups: string[] = [];
 	deputies: string[] = [];

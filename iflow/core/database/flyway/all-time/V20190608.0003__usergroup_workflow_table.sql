@@ -33,23 +33,6 @@ CREATE TABLE departments (
 ALTER SEQUENCE departments_id_seq OWNED BY departments.id;
 
 
-CREATE SEQUENCE departments_group_id_seq;
- 
-CREATE TABLE departments_group (
-  id bigint NOT NULL PRIMARY KEY DEFAULT nextval('departments_group_id_seq'),
-  identity varchar(45) DEFAULT NULL,
-  department_id bigint NOT NULL,
-  title varchar(200) NOT NULL,
-  status smallint NOT NULL DEFAULT 1,
-  version integer NOT NULL DEFAULT 1,
-  created_at timestamp without time zone NOT NULL default (now() at time zone 'utc'),
-  updated_at timestamp without time zone NOT NULL default (now() at time zone 'utc'),
-  
-  CONSTRAINT FK_DEPARTMENTGROUP_DEPARTMENT FOREIGN KEY (department_id) REFERENCES departments (id) ON DELETE CASCADE ON UPDATE CASCADE
-);
-ALTER SEQUENCE departments_group_id_seq OWNED BY departments_group.id;
-
-
 CREATE SEQUENCE iflow_roles_id_seq;
  
 CREATE TABLE iflow_roles (
@@ -121,24 +104,10 @@ CREATE TABLE user_departments (
   department_id bigint NOT NULL,
   member_type int NOT NULL default 5,
   created_at timestamp without time zone NOT NULL default (now() at time zone 'utc'),
-  CONSTRAINT FK_USERDEPARTMENTS_DEPARTMENTS FOREIGN KEY (department_id) REFERENCES departments (id),
+  CONSTRAINT FK_USERDEPARTMENTS_DEPARTMENTS FOREIGN KEY (department_id) REFERENCES departments (id) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT FK_USERDEPARTMENTS_USERS FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
 ALTER SEQUENCE user_department_id_seq OWNED BY user_departments.id;
-
-
-CREATE SEQUENCE user_department_groups_id_seq;
-
-CREATE TABLE user_department_groups (
-  id bigint NOT NULL PRIMARY KEY DEFAULT nextval('user_department_groups_id_seq'),
-  user_id bigint NOT NULL,
-  department_group_id bigint NOT NULL,
-  member_type int NOT NULL default 5,
-  created_at timestamp without time zone NOT NULL default (now() at time zone 'utc'),
-  CONSTRAINT FK_USERDEPARTMENTGROUPS_D FOREIGN KEY (department_group_id) REFERENCES departments_group (id),
-  CONSTRAINT FK_USERDEPARTMENTGROUPS_USERS FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE
-) ;
-ALTER SEQUENCE user_department_groups_id_seq OWNED BY user_department_groups.id;
 
 
 CREATE TABLE user_usergroup (

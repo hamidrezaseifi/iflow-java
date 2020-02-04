@@ -72,12 +72,10 @@ public class WorkflowEntity extends EntityIdentityHelper {
   private Date updatedAt;
 
   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "workflowEntity", fetch = FetchType.EAGER)
-  // @JoinColumn(name = "workflow_id")
   @Fetch(value = FetchMode.SUBSELECT)
   private final List<WorkflowFileEntity> files = new ArrayList<>();
 
   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "workflowEntity", fetch = FetchType.EAGER)
-  // @JoinColumn(name = "workflow_id")
   @Fetch(value = FetchMode.SUBSELECT)
   private final List<WorkflowActionEntity> actions = new ArrayList<>();
 
@@ -101,6 +99,7 @@ public class WorkflowEntity extends EntityIdentityHelper {
     return this.id;
   }
 
+  @Override
   public void setId(final Long id) {
 
     this.id = id;
