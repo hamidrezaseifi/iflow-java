@@ -118,4 +118,33 @@ public class DepartmentAccessService implements IDepartmentAccessService {
     return edo == null ? null : ProfileModelEdoMapper.fromEdo(edo);
   }
 
+  @Override
+  public Department saveDepartment(final Department department)
+      throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+
+    logger.debug("Save department");
+
+    final DepartmentEdo departmentEdo = this.restTemplate
+        .callRestPost(
+            this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.SAVE_DEPARTMENT_URIBUILDER()), EModule.CORE,
+            ProfileModelEdoMapper.toEdo(department),
+            DepartmentEdo.class, true);
+
+    return ProfileModelEdoMapper.fromEdo(departmentEdo);
+  }
+
+  @Override
+  public void deleteDepartment(final Department department)
+      throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+
+    logger.debug("Delete department");
+
+    this.restTemplate
+        .callRestPost(
+            this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.DELETE_DEPARTMENT_URIBUILDER()), EModule.CORE,
+            ProfileModelEdoMapper.toEdo(department),
+            Void.class, true);
+
+  }
+
 }

@@ -17,6 +17,10 @@ public class DepartmentEdo {
   @XmlElement(name = "Identity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String identity;
 
+  @NotNull(message = "CompanyIdentity must not be null")
+  @XmlElement(name = "CompanyIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String companyIdentity;
+
   @NotNull
   @XmlElement(name = "Title", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String title;
@@ -37,6 +41,16 @@ public class DepartmentEdo {
   public void setIdentity(final String identity) {
 
     this.identity = identity;
+  }
+
+  public String getCompanyIdentity() {
+
+    return this.companyIdentity;
+  }
+
+  public void setCompanyIdentity(final String companyIdentity) {
+
+    this.companyIdentity = companyIdentity;
   }
 
   public String getTitle() {

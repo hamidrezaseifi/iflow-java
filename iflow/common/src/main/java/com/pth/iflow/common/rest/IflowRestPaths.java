@@ -179,6 +179,18 @@ public class IflowRestPaths {
       return builder.build(identity);
     }
 
+    public static URI SAVE_DEPARTMENT_URIBUILDER() {
+
+      final IflowUriBuilder builder = new IflowUriBuilder(DEPARTMENT_SAVE);
+      return builder.build();
+    }
+
+    public static URI DELETE_DEPARTMENT_URIBUILDER() {
+
+      final IflowUriBuilder builder = new IflowUriBuilder(DEPARTMENT_DELETE);
+      return builder.build();
+    }
+
     public static URI READ_DEPARTMENT_LIST_BY_COMPANY(final String companyidentity) {
 
       final IflowUriBuilder builder = new IflowUriBuilder(DEPARTMENT_READ_LIST_BY_COMPANYIDENTITY);
@@ -579,6 +591,8 @@ public class IflowRestPaths {
 
     public static final String DEPARTMENT_READ_BY_IDENTITY = "/department/readbyid/{identity}";
     public static final String DEPARTMENT_READ_ALLUSERS_LIST = "/department/read/allusers/{identity}";
+    public static final String DEPARTMENT_SAVE = "/department/save";
+    public static final String DEPARTMENT_DELETE = "/department/delete";
 
     public static final String USER_READ_BY_IDENTITY = "/users/read/identity/{identity}";
     public static final String USER_SAVE = "/users/save";
@@ -626,6 +640,18 @@ public class IflowRestPaths {
 
       final IflowUriBuilder builder = new IflowUriBuilder(DEPARTMENT_READ_BY_IDENTITY);
       return builder.build(identity);
+    }
+
+    public static URI SAVE_DEPARTMENT_URIBUILDER() {
+
+      final IflowUriBuilder builder = new IflowUriBuilder(DEPARTMENT_SAVE);
+      return builder.build();
+    }
+
+    public static URI DELETE_DEPARTMENT_URIBUILDER() {
+
+      final IflowUriBuilder builder = new IflowUriBuilder(DEPARTMENT_DELETE);
+      return builder.build();
     }
 
     public static URI READ_ALLUSERS_BY_DEPARTMENTID_URIBUILDER(final String identity) {

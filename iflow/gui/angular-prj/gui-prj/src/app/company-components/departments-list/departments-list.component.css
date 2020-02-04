@@ -125,7 +125,7 @@ th.mat-header-cell {
 .form-group input[type=password], 
 .form-group select, 
 .form-group textarea,
-#viewuserdialog .form-group .datacontent {
+#viewdepartmentdialog .form-group .datacontent {
 	display: inline-block !important;
     width: calc(100% - 140px) !important;
 }
@@ -137,13 +137,13 @@ th.mat-header-cell {
     height: calc(100vh - 300px);
 }
 
-.modal-dialog-centered-useredit{
+.modal-dialog-centered-departmentedit{
 	width: calc(100vw - 300px) !important;
     max-width: 700px;
     margin: auto;
 }
 
-.user-edit-modal-content {
+.department-edit-modal-content {
 	width: 100%;
 }
 
@@ -199,7 +199,7 @@ input.select-date{
     height: 25px !important;
 }
 
-#viewuserdialog .form-group .datacontent {
+#viewdepartmentdialog .form-group .datacontent {
     height: calc(1.5em + .75rem + 2px);
     padding: .375rem .75rem;
     font-size: 1rem;
@@ -226,7 +226,7 @@ input.select-date{
 	margin: 0 !important;
 }
 
-.modal-dialog.resetpassword-dialog, .modal-dialog.user-delete-dialog{
+.modal-dialog.resetpassword-dialog, .modal-dialog.department-delete-dialog{
 	max-width: calc(100vw - 100px) !important;
     width: 800px !important;
 }
@@ -258,3 +258,8 @@ th.mat-column-department-title{
 th.mat-column-department-manager{
 	width: calc(50% - 110px);
 }
+
+.modal-dialog form label{
+	font-weight: bold;	
+}
+

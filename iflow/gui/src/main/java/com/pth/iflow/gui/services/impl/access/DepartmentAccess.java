@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
+import com.pth.iflow.common.models.edo.DepartmentEdo;
 import com.pth.iflow.common.models.edo.DepartmentListEdo;
 import com.pth.iflow.gui.configurations.GuiConfiguration;
 import com.pth.iflow.gui.models.Department;
@@ -54,14 +55,25 @@ public class DepartmentAccess implements IDepartmentAccess {
   @Override
   public Department saveDepartment(final Department department) throws MalformedURLException, IFlowMessageConversionFailureException {
 
-    // TODO Auto-generated method stub
-    return null;
+    logger.debug("Save department");
+
+    final DepartmentEdo userEdo = this.restTemplate
+        .callRestPost(
+            this.profileModuleAccessConfig.getSaveDepartmentUri(), EModule.CORE, GuiModelEdoMapper.toEdo(department), DepartmentEdo.class,
+            this.sessionUserInfo.getToken(), true);
+
+    return GuiModelEdoMapper.fromEdo(userEdo);
   }
 
   @Override
   public void deleteDepartment(final Department department) throws MalformedURLException, IFlowMessageConversionFailureException {
 
-    // TODO Auto-generated method stub
+    logger.debug("Delete department");
+
+    this.restTemplate
+        .callRestPost(
+            this.profileModuleAccessConfig.getDeleteDepartmentUri(), EModule.CORE, GuiModelEdoMapper.toEdo(department), Void.class,
+            this.sessionUserInfo.getToken(), true);
 
   }
 

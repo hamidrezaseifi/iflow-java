@@ -229,7 +229,7 @@
 							  </div>
 							  <div class="form-group">
 							    <label>{{ 'user-status' | translate }}</label>
-							    <div class="datacontent">{{viewingUser.status}}</div>							    							    
+							    <div class="datacontent">{{ viewingUser.status == 1 ? ('common.active' | translate) : ('common.deactive' | translate) }}</div>							    							    
 							  </div>
 							  <div class="form-group">
 							    <label>{{ 'user-access' | translate }}</label>

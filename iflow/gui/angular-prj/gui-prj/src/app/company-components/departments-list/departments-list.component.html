@@ -52,3 +52,105 @@
 		</div>
 
 		
+		
+	    <div class="modal fade" [ngClass]="{'show' : showEditModal}" tabindex="-1" id="editdepartmentdialog" role="dialog" aria-labelledby="exampleModalCenterTitle">
+			<div class="modal-dialog modal-dialog-centered modal-dialog-centered-departmentedit" role="document">
+			    <div class="modal-content department-edit-modal-content" >
+			      <div class="modal-header">
+			        <h5 class="modal-title dialog-title" id="exampleModalLongTitle">{{ isCreating ? ('department-create-modal-title' | translate) : ('department-edit-modal-title' | translate) }}</h5>
+			        <button class="dialog-toolbar-button close" (click)="hideEditDepartmentDialog()">
+			        	<i class="material-icons">close</i>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+													
+						<form id="department-form" name="departmentForm" [formGroup]="departmentEditForm">
+						  <div class="form-group">
+						    <label for="department-title">{{ 'department-title' | translate }}</label>
+						    <input type="text" name="title" formControlName="title" required class="form-control" id="department-title">
+						    <div class="invalid-message" *ngIf="departmentEditForm.controls.title.touched && departmentEditForm.controls.title.hasError('required')">{{ 'department-title-error-message' | translate }}</div>
+						  </div>
+						  <div class="form-group">
+						    <label>{{ 'department-status' | translate }}</label>
+						    
+							<div class="custom-control custom-radio custom-control-inline">
+							  <input type="radio" id="radiostatusactive" name="status" formControlName="status" class="custom-control-input" value="1">
+							  <label class="custom-control-label" for="radiostatusactive">{{ 'common.active' | translate }}</label>
+							</div>
+							<div class="custom-control custom-radio custom-control-inline">
+							  <input type="radio" id="radiostatusdeactive" name="status" formControlName="status" class="custom-control-input" value="0">
+							  <label class="custom-control-label" for="radiostatusdeactive">{{ 'common.deactive' | translate }}</label>
+							</div>							    
+						  </div>
+						  
+						</form>							
+						<div style="padding: 5px; border: solid gray 1px; margin-top: 10px;">{{ debug() | json}}</div>
+		      	
+	    				
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" (click)="hideEditDepartmentDialog()"><i class="material-icons">close</i></button>
+			        <button type="button" class="btn btn-primary" (click)="saveDepartment()"[disabled]="departmentEditForm.invalid"><i class="material-icons">save</i></button>
+			      </div>
+			    </div>
+			  </div>		    
+	    	
+	    </div>
+		
+
+	    <div class="modal fade" [ngClass]="{'show' : showDeleteModal}" tabindex="-1" id="deletedepartmentdialog" role="dialog" aria-labelledby="exampleModalCenterTitle">
+			<div class="modal-dialog modal-dialog-centered department-delete-dialog" role="document">
+			    <div class="modal-content" >
+			      <div class="modal-header">
+			        <h5 class="modal-title dialog-title" id="exampleModalLongTitle">{{ 'department-delete-modal-title' | translate }}</h5>
+			        <button class="dialog-toolbar-button close" (click)="hideDeleteDepartmentDialog()">
+			        	<i class="material-icons">close</i>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+						
+					<div class="alert alert-danger custome-ander-text" role="alert">{{deleteMessage}}</div>	      	
+	    				
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" (click)="hideDeleteDepartmentDialog()"><i class="material-icons">close</i></button>
+			        <button type="button" class="btn btn-danger" (click)="deleteDepartment()" ><i class="material-icons">delete</i></button>
+			      </div>
+			    </div>
+			  </div>		    
+	    	
+	    </div>		
+	    
+	    
+		
+		
+	    <div class="modal fade" [ngClass]="{'show' : showViewModal}" tabindex="-1" id="viewdepartmentdialog" role="dialog" aria-labelledby="exampleModalCenterTitle">
+			<div class="modal-dialog modal-dialog-centered modal-dialog-centered-departmentedit" role="document">
+			    <div class="modal-content department-edit-modal-content" >
+			      <div class="modal-header">
+			        <h5 class="modal-title dialog-title" id="exampleModalLongTitle">{{ 'department-view-modal-title' | translate }}</h5>
+			        <button class="dialog-toolbar-button close" (click)="hideViewDepartmentDialog()">
+			        	<i class="material-icons">close</i>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+													
+					  <div class="form-group">
+					    <label >{{ 'department-title' | translate }}</label>
+					    <div class="datacontent">{{viewingDepartment.title}}</div>
+					  </div>
+					  <div class="form-group">
+					    <label>{{ 'department-status' | translate }}</label>
+					    <div class="datacontent">{{ viewingDepartment.status == 1 ? ('common.active' | translate) : ('common.deactive' | translate) }}</div>							    							    
+					  </div>
+			      	
+	    				
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" (click)="hideViewDepartmentDialog()"><i class="material-icons">close</i></button>
+			      </div>
+			    </div>
+			  </div>		    
+	    	
+	    </div>
+		

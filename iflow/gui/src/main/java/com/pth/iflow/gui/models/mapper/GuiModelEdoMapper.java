@@ -106,6 +106,7 @@ public class GuiModelEdoMapper {
     edo.setStatus(model.getStatus());
     edo.setIdentity(model.getIdentity());
     edo.setVersion(model.getVersion());
+    edo.setCompanyIdentity(model.getCompanyIdentity());
 
     return edo;
   }
@@ -156,6 +157,7 @@ public class GuiModelEdoMapper {
     model.setStatus(edo.getStatus());
     model.setIdentity(edo.getIdentity());
     model.setVersion(edo.getVersion());
+    model.setCompanyIdentity(edo.getCompanyIdentity());
 
     return model;
   }

@@ -226,7 +226,7 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
   public CompanyProfileEdo toCompanyProfileEdo(final CompanyProfile model) {
 
     final IUserGroupService groupService = new UserGroupService(null);
-    final IDepartmentService departmentService = new DepartmentService(null);
+    final IDepartmentService departmentService = new DepartmentService(null, companyDao);
 
     final ICompanyService companyService = new CompanyService(null);
 

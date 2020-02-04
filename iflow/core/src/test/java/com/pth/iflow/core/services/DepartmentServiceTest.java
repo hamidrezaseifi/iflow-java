@@ -22,6 +22,7 @@ import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.entity.DepartmentEntity;
 import com.pth.iflow.core.service.impl.DepartmentService;
 import com.pth.iflow.core.service.interfaces.IDepartmentService;
+import com.pth.iflow.core.storage.dao.interfaces.ICompanyDao;
 import com.pth.iflow.core.storage.dao.interfaces.IDepartmentDao;
 
 @RunWith(SpringRunner.class)
@@ -32,12 +33,15 @@ public class DepartmentServiceTest extends TestDataProducer {
   private IDepartmentService departmentService;
 
   @MockBean
+  private ICompanyDao companyDao;
+
+  @MockBean
   private IDepartmentDao departmentDao;
 
   @Before
   public void setUp() throws Exception {
 
-    this.departmentService = new DepartmentService(this.departmentDao);
+    this.departmentService = new DepartmentService(this.departmentDao, this.companyDao);
   }
 
   @After

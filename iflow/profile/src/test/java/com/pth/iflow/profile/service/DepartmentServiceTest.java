@@ -2,6 +2,8 @@ package com.pth.iflow.profile.service;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.net.URI;
@@ -89,6 +91,43 @@ public class DepartmentServiceTest extends TestDataProducer {
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has " + list.size() + " items.", resList.size(), list.size());
+
+  }
+
+  @Test
+  public void testSaveDepartment() throws Exception {
+
+    final Department department = this.getTestDepartment("dep1", "department 1");
+    final DepartmentEdo departmentEdo = ProfileModelEdoMapper.toEdo(department);
+
+    when(this.restTemplate
+        .callRestPost(any(URI.class), eq(EModule.CORE), any(DepartmentEdo.class), eq(DepartmentEdo.class), any(boolean.class)))
+            .thenReturn(departmentEdo);
+
+    final Department resDepartment = this.departmentService.saveDepartment(department);
+
+    Assert.assertNotNull("Result department is not null!", resDepartment);
+    Assert.assertEquals("Result department has id 1!", resDepartment.getIdentity(), department.getIdentity());
+    Assert
+        .assertEquals("Result department has title '" + department.getTitle() + "'!", resDepartment.getTitle(),
+            department.getTitle());
+    Assert.assertEquals("Result department has status 1!", resDepartment.getStatus(), department.getStatus());
+
+  }
+
+  @Test
+  public void testDeleteDepartment() throws Exception {
+
+    final Department department = this.getTestDepartment("dep1", "department 1");
+    final DepartmentEdo departmentEdo = ProfileModelEdoMapper.toEdo(department);
+
+    when(this.restTemplate.callRestPost(any(URI.class), eq(EModule.CORE), any(DepartmentEdo.class), any(Class.class), any(boolean.class)))
+        .thenReturn(departmentEdo);
+
+    this.departmentService.deleteDepartment(department);
+
+    verify(this.restTemplate, times(1))
+        .callRestPost(any(URI.class), eq(EModule.CORE), any(DepartmentEdo.class), eq(Void.class), any(boolean.class));
 
   }
 

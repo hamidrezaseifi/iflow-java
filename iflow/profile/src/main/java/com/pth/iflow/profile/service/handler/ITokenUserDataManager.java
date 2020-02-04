@@ -37,9 +37,6 @@ public interface ITokenUserDataManager {
   List<Department> getDepartmentListByToken(String token, String companyIdentity)
       throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException;
 
-  Department getDepartmentById(String token, String identity)
-      throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException;
-
   List<User> getAllUserListByDepartmentId(String token, String identity)
       throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException;
 

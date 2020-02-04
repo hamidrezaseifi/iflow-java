@@ -13,6 +13,12 @@ public interface IDepartmentAccessService {
   Department getByIdentity(final String identity)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
+  Department saveDepartment(final Department department)
+      throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
+
+  void deleteDepartment(final Department department)
+      throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
+
   List<Department> getListByCompanyIdentity(final String identity)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 

@@ -186,5 +186,74 @@ export class DepartmentsListComponent implements OnInit {
 		return (department.deputy != null) && (department.deputy.fullName != null);
 	}
 	
+	saveDepartment(){
+		this.setFormControlValues();
+		
+		this.loadingService.showLoading();
+		
+		if(this.isCreating){
+			this.editService.createDepartment(this.editingDepartment).subscribe(
+			        (result) => {		        	
+			            console.log("Create department result", result);
+			            this.showEditModal = false;
+			            this.reload();
+			            
+			        },
+			        response => {
+			        	console.log("Error in create department", response);
+			        	
+			        	this.errorService.showErrorResponse(response);
+			        	this.loadingService.hideLoading();	 
+			        },
+			        () => {
+			        	
+			        	this.loadingService.hideLoading();	 
+			        }
+			);	     
+		}
+		else{
+			this.editService.updateDepartment(this.editingDepartment).subscribe(
+			        (result) => {		        	
+			            console.log("Update department result", result);
+			            this.showEditModal = false;
+			            this.reload();
+			            
+			        },
+			        response => {
+			        	console.log("Error in update department", response);
+			        	
+			        	this.errorService.showErrorResponse(response);
+			        	this.loadingService.hideLoading();	 
+			        },
+			        () => {
+			        	
+			        	this.loadingService.hideLoading();	 
+			        }
+			);	     
+			
+		}
+	}
 	
+	deleteDepartment(){
+		this.loadingService.showLoading();
+
+		this.editService.deleteDepartment(this.delitingDepartment).subscribe(
+		        (result) => {		        	
+		            console.log("Delete department result success.");
+		            this.showDeleteModal = false;
+		            this.reload();
+		            
+		        },
+		        response => {
+		        	console.log("Error in create department", response);
+		        	
+		        	this.errorService.showErrorResponse(response);
+		        	this.loadingService.hideLoading();	 
+		        },
+		        () => {
+		        	
+		        	this.loadingService.hideLoading();	 
+		        }
+		);	   
+	}
 }

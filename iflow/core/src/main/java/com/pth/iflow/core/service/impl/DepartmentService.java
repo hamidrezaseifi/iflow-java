@@ -14,17 +14,19 @@ import com.pth.iflow.core.service.base.CoreModelEdoMapperService;
 import com.pth.iflow.core.service.interfaces.IDepartmentService;
 import com.pth.iflow.core.storage.dao.helper.ICoreEntityVersion;
 import com.pth.iflow.core.storage.dao.impl.base.EntityDaoBase;
+import com.pth.iflow.core.storage.dao.interfaces.ICompanyDao;
 import com.pth.iflow.core.storage.dao.interfaces.IDepartmentDao;
 
 @Service
 public class DepartmentService extends CoreModelEdoMapperService<DepartmentEntity, DepartmentEdo> implements IDepartmentService {
 
   private final IDepartmentDao departmentDao;
+  private final ICompanyDao companyDao;
 
-  public DepartmentService(@Autowired final IDepartmentDao departmentDao) {
+  public DepartmentService(@Autowired final IDepartmentDao departmentDao, @Autowired final ICompanyDao companyDao) {
 
     this.departmentDao = departmentDao;
-
+    this.companyDao = companyDao;
   }
 
   @Override
@@ -95,6 +97,7 @@ public class DepartmentService extends CoreModelEdoMapperService<DepartmentEntit
     model.setStatus(edo.getStatus());
     model.setIdentity(edo.getIdentity());
     model.setVersion(edo.getVersion());
+    model.setCompanyId(this.companyDao.getByIdentity(edo.getCompanyIdentity()).getId());
 
     return model;
   }
@@ -107,6 +110,7 @@ public class DepartmentService extends CoreModelEdoMapperService<DepartmentEntit
     edo.setStatus(model.getStatus());
     edo.setIdentity(model.getIdentity());
     edo.setVersion(model.getVersion());
+    edo.setCompanyIdentity(this.companyDao.getById(model.getCompanyId()).getIdentity());
 
     return edo;
   }

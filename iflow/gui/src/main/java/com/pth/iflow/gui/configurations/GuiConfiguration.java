@@ -263,6 +263,16 @@ public class GuiConfiguration {
       return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.READ_DEPARTMENTLIST_BY_COMPANYID_URIBUILDER(companyIdentity));
     }
 
+    public URI getSaveDepartmentUri() throws MalformedURLException {
+
+      return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.SAVE_DEPARTMENT_URIBUILDER());
+    }
+
+    public URI getDeleteDepartmentUri() throws MalformedURLException {
+
+      return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.DELETE_DEPARTMENT_URIBUILDER());
+    }
+
   }
 
 }

@@ -135,15 +135,6 @@ public class TokenUserDataManager implements ITokenUserDataManager {
   }
 
   @Override
-  public Department getDepartmentById(final String token, final String identity)
-      throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException {
-
-    this.validateToken(token);
-
-    return this.departmentService.getByIdentity(identity);
-  }
-
-  @Override
   public List<User> getAllUserListByDepartmentId(final String token, final String identity)
       throws ProfileCustomizedException, MalformedURLException, URISyntaxException, IFlowMessageConversionFailureException {
 

@@ -96,7 +96,7 @@ public class UsersAccessService implements IUsersAccessService {
   @Override
   public User saveUser(final User user) throws MalformedURLException, IFlowMessageConversionFailureException {
 
-    logger.debug("Save workflow");
+    logger.debug("Save user");
 
     final UserEdo userEdo = this.restTemplate
         .callRestPost(
@@ -110,7 +110,7 @@ public class UsersAccessService implements IUsersAccessService {
   @Override
   public void deleteUser(final User user) throws MalformedURLException, IFlowMessageConversionFailureException {
 
-    logger.debug("Delete workflow");
+    logger.debug("Delete user");
 
     this.restTemplate
         .callRestPost(
