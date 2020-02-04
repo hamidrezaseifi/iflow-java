@@ -278,6 +278,7 @@ public class TestDataProducer {
     edo.setStatus(1);
     edo.setVersion(1);
     edo.setIdentity("dep-1");
+    edo.setCompanyIdentity("companyIdentity");
 
     return edo;
   }
@@ -302,6 +303,7 @@ public class TestDataProducer {
     edo.setStatus(1);
     edo.setVersion(1);
     edo.setIdentity("det-1");
+    edo.setCompanyIdentity("companyIdentity");
 
     return edo;
   }
