@@ -145,7 +145,7 @@
 										</div>
 										<div class="clear"></div>
 									</div>
-									<div class="item-row">
+									<div class="item-row" *ngIf="canAssign">
 										<div class="item-label label-large nofloat">{{ 'workflow-assignto' | translate }}</div>
 										<div class="item-content fullrowfromlabel nofloat">
 											<app-wm-assign-list [users]="(generalDataObs | async)?.company.users" 

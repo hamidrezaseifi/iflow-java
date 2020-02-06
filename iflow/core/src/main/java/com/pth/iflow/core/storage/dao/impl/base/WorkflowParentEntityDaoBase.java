@@ -17,6 +17,7 @@ import org.hibernate.Session;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pth.iflow.core.model.entity.workflow.WorkflowActionEntity;
+import com.pth.iflow.core.model.entity.workflow.WorkflowEntity;
 import com.pth.iflow.core.model.entity.workflow.base.IWorkflowContainerEntity;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 import com.pth.iflow.core.storage.dao.helper.EntityManagerHelper;
@@ -46,14 +47,17 @@ public abstract class WorkflowParentEntityDaoBase<T extends IWorkflowContainerEn
 
   public T update(final T model) throws IFlowStorageException {
 
-    final Session session = this.createSession();
+    Session session = this.createSession();
 
-    final EntityTransaction transaction = session.getTransaction();
-    if (transaction.isActive() == false) {
-      transaction.begin();
-    }
+    EntityTransaction transaction = session.getTransaction();
+    transaction.begin();
 
-    // final WorkflowEntity workflowModel = session.find(WorkflowEntity.class, model.getWorkflowId());
+    final WorkflowEntity existsModel = session.find(WorkflowEntity.class, model.getWorkflowId());
+    existsModel.getActions().clear();
+    existsModel.getFiles().clear();
+    session.saveOrUpdate(existsModel);
+    transaction.commit();
+    session.close();
 
     // workflowModel.setFiles(new ArrayList<>());
     // workflowModel.setActions(new ArrayList<>());
@@ -67,6 +71,9 @@ public abstract class WorkflowParentEntityDaoBase<T extends IWorkflowContainerEn
     // session.merge(model.getWorkflow());
     // session.saveOrUpdate(model.getWorkflow());
 
+    session = this.createSession();
+    transaction = session.getTransaction();
+    transaction.begin();
     session.saveOrUpdate(model);
     transaction.commit();
     session.close();
