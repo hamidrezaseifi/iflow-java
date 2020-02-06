@@ -92,7 +92,7 @@ public class CreateOfferlAssignWorkflowStrategyTest extends TestDataProducer {
     this.workflowStrategy.process();
 
     final TestThreeTaskWorkflow resultWorkflow = this.workflowStrategy.getSingleProceedWorkflow();
-    final List<TestThreeTaskWorkflow> resultWorkflowList = this.workflowStrategy.getSavedWorkflowList();
+    final List<TestThreeTaskWorkflow> resultWorkflowList = this.workflowStrategy.getProceedWorkflowList();
 
     Assert.assertNotNull("The Result workflow is not null!", resultWorkflow);
     Assert.assertEquals("The Result workflow has one item!", resultWorkflowList.size(), 1);

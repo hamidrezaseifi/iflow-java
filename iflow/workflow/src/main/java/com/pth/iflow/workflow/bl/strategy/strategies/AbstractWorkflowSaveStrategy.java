@@ -4,6 +4,7 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -46,7 +47,7 @@ public abstract class AbstractWorkflowSaveStrategy<W extends IWorkflow> implemen
 
   protected final List<IWorkflowSaveStrategyStep> steps = new ArrayList<>();
 
-  protected final List<W> savedWorkflowList = new ArrayList<>();
+  protected final Map<String, W> savedWorkflowList = new HashMap<>();
 
   protected W savedSingleWorkflow = null;
 
@@ -89,20 +90,24 @@ public abstract class AbstractWorkflowSaveStrategy<W extends IWorkflow> implemen
     return workflowMessageDataService;
   }
 
-  public void createWorkflowMessage(final W workflow, final String userIdentity)
+  public void createWorkflowMessage(final W workflow, final String userIdentity, final EWorkflowMessageType messageType,
+      final EWorkflowMessageStatus messageStatus)
       throws MalformedURLException, IFlowMessageConversionFailureException {
 
     final WorkflowMessage message = new WorkflowMessage();
     message.setCreatedByIdentity(workflow.getCreatedByIdentity());
     message.setExpireDays(this.processingWorkflowSaveRequest.getExpireDays());
     message.setMessage("Offering Workflow Message");
-    message.setMessageType(EWorkflowMessageType.OFFERING_WORKFLOW);
-    message.setStatus(EWorkflowMessageStatus.OFFERING);
+    message.setMessageType(messageType);
+    message.setStatus(messageStatus);
     message.setUserIdentity(userIdentity);
     message.setWorkflowIdentity(workflow.getIdentity());
     message.setStepIdentity(workflow.getCurrentStepIdentity());
     message.setVersion(1);
     getWorkflowMessageDataService().save(message, this.getToken());
+
+    // EWorkflowMessageType.OFFERING_WORKFLOW
+    // EWorkflowMessageStatus.OFFERING
   }
 
   public void updateWorkflowMessageStatus(final String workflowIdentity, final String stepIdentity, final EWorkflowMessageStatus status)
@@ -321,22 +326,14 @@ public abstract class AbstractWorkflowSaveStrategy<W extends IWorkflow> implemen
     this.savedSingleWorkflow = savedSingleWorkflow;
   }
 
-  public List<W> getSavedWorkflowList() {
+  public Map<String, W> getSavedWorkflowList() {
 
     return savedWorkflowList;
   }
 
-  public void setSavedWorkflowList(final Collection<W> savedWorkflowList) {
+  public void addSavedWorkflowToList(final String userIdentity, final W savedWorkflow) {
 
-    this.savedWorkflowList.clear();
-    if (savedWorkflowList != null) {
-      this.savedWorkflowList.addAll(savedWorkflowList);
-    }
-  }
-
-  public void addSavedWorkflowToList(final W savedWorkflow) {
-
-    this.savedWorkflowList.add(savedWorkflow);
+    this.savedWorkflowList.put(userIdentity, savedWorkflow);
 
   }
 
@@ -381,7 +378,7 @@ public abstract class AbstractWorkflowSaveStrategy<W extends IWorkflow> implemen
   @Override
   public List<W> getProceedWorkflowList() {
 
-    return getSavedWorkflowList();
+    return getSavedWorkflowList().values().stream().collect(Collectors.toList());
   }
 
   public boolean IsWorkflowCurrectStepChanged() {

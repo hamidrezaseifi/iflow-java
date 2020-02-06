@@ -19,19 +19,29 @@ public class SendWorkflowOffersToProfileStep<W extends IWorkflow> extends Abstra
   @Override
   public void process() throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
+    final WorkflowType workflowType = this.getWorkflowSaveStrategy().getProcessingWorkflowType();
+
     final String companyIdentity = this.getWorkflowSaveStrategy().getProcessingWorkflow().getCompanyIdentity();
-    final W processingWorkflow = this.getWorkflowSaveStrategy().getSavedSingleWorkflow();
 
-    this.getWorkflowSaveStrategy().resetWorkflowtCachData(companyIdentity, processingWorkflow.getIdentity());
+    if (workflowType.isAssignTypeOffering()) {
+      final W processingWorkflow = this.getWorkflowSaveStrategy().getSavedSingleWorkflow();
 
+      this.getWorkflowSaveStrategy().resetWorkflowtCachData(companyIdentity, processingWorkflow.getIdentity());
+    }
+    else {
+      for (final String userIdentity : this.getWorkflowSaveStrategy().getSavedWorkflowList().keySet()) {
+        final W workflow = this.getWorkflowSaveStrategy().getSavedWorkflowList().get(userIdentity);
+        this.getWorkflowSaveStrategy().resetWorkflowtCachData(companyIdentity, workflow.getIdentity());
+      }
+    }
   }
 
   @Override
   public boolean shouldProcess() {
 
-    final WorkflowType processingWorkflowType = this.getWorkflowSaveStrategy().getProcessingWorkflowType();
+    // final WorkflowType processingWorkflowType = this.getWorkflowSaveStrategy().getProcessingWorkflowType();
 
-    return processingWorkflowType.isAssignTypeOffering();
+    return this.getWorkflowSaveStrategy().getAssignedUsers().isEmpty() == false; // processingWorkflowType.isAssignTypeOffering();
   }
 
 }
