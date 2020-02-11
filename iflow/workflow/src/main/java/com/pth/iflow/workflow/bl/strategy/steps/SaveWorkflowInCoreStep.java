@@ -29,7 +29,7 @@ public class SaveWorkflowInCoreStep<W extends IWorkflow> extends AbstractWorkflo
     this.getWorkflowSaveStrategy().setSavedSingleWorkflow(savedWorkflow);
 
     if (this.addToSavedWorkflowList) {
-      this.getWorkflowSaveStrategy().addSavedWorkflowToList(savedWorkflow);
+      this.getWorkflowSaveStrategy().addSavedWorkflowToList("not-set", savedWorkflow);
     }
   }
 

@@ -12,6 +12,7 @@ import com.pth.iflow.workflow.bl.strategy.steps.CollectAssignedUserIdListStep;
 import com.pth.iflow.workflow.bl.strategy.steps.InitializeWorkflowActiveActionStrategyStep;
 import com.pth.iflow.workflow.bl.strategy.steps.InitializeWorkflowInitialActionStrategyStep;
 import com.pth.iflow.workflow.bl.strategy.steps.SaveWorkflowForAssignedUseresInCoreStep;
+import com.pth.iflow.workflow.bl.strategy.steps.SaveWorkflowOfferForAssignedUseresInCoreStep;
 import com.pth.iflow.workflow.bl.strategy.steps.SendWorkflowOffersToProfileStep;
 import com.pth.iflow.workflow.bl.strategy.steps.ValidateAssignInSaveRequestStrategyStep;
 import com.pth.iflow.workflow.bl.strategy.steps.ValidateCurrentStepExistsInWorkflowTypeStrategyStep;
@@ -29,13 +30,15 @@ public class CreateManualAssignWorkflowStrategy<W extends IWorkflow> extends Abs
       final IGuiCachDataDataService cachDataDataService, final IWorkflowDataService<W> workflowDataService,
       final IWorkflowPrepare<W> workflowPrepare)
       throws WorkflowCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
-    super(workflowCreateRequest, token, departmentDataService, workflowMessageDataService, cachDataDataService, workflowDataService,
+
+    super(workflowCreateRequest,token,departmentDataService,workflowMessageDataService,cachDataDataService,workflowDataService,
         workflowPrepare);
 
   }
 
   @Override
   public void setup() {
+
     steps.add(new ValidateWorkflowDetailStrategyStep<W>(this));
     steps.add(new ValidateAssignInSaveRequestStrategyStep<W>(this));
     steps.add(new CollectAssignedUserIdListStep<W>(this));
@@ -46,6 +49,7 @@ public class CreateManualAssignWorkflowStrategy<W extends IWorkflow> extends Abs
     steps.add(new ValidateWorkflowActiveActionStrategyStep<W>(this));
     steps.add(new CollectAssignedUserIdListStep<W>(this));
     steps.add(new SaveWorkflowForAssignedUseresInCoreStep<W>(this));
+    steps.add(new SaveWorkflowOfferForAssignedUseresInCoreStep<W>(this));
     steps.add(new SendWorkflowOffersToProfileStep<W>(this));
 
   }

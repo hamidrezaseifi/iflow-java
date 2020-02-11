@@ -2,8 +2,10 @@ package com.pth.iflow.workflow.services.testthreetask.strategy.strategies;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+
 import java.util.Arrays;
 import java.util.List;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -13,6 +15,7 @@ import org.mockito.Mock;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
 import com.pth.iflow.common.enums.EWorkflowProcessCommand;
 import com.pth.iflow.workflow.TestDataProducer;
 import com.pth.iflow.workflow.bl.IDepartmentDataService;
@@ -61,6 +64,7 @@ public class CreateManualAssignWorkflowStrategyTest extends TestDataProducer {
 
   @After
   public void tearDown() throws Exception {
+
   }
 
   @Test
@@ -77,17 +81,17 @@ public class CreateManualAssignWorkflowStrategyTest extends TestDataProducer {
     when(this.departmentDataService.getUserListByDepartmentIdentity(any(String.class), any(String.class))).thenReturn(userList);
 
     this.workflowStrategy = new CreateManualAssignWorkflowStrategy<TestThreeTaskWorkflow>(request,
-                                                                                          this.validTocken,
-                                                                                          this.departmentDataService,
-                                                                                          this.workflowMessageDataService,
-                                                                                          this.cachDataDataService,
-                                                                                          this.workflowDataService,
-                                                                                          this.workflowPrepare);
+        this.validTocken,
+        this.departmentDataService,
+        this.workflowMessageDataService,
+        this.cachDataDataService,
+        this.workflowDataService,
+        this.workflowPrepare);
 
     this.workflowStrategy.process();
 
     final TestThreeTaskWorkflow resultWorkflow = this.workflowStrategy.getSingleProceedWorkflow();
-    final List<TestThreeTaskWorkflow> resultWorkflowList = this.workflowStrategy.getSavedWorkflowList();
+    final List<TestThreeTaskWorkflow> resultWorkflowList = this.workflowStrategy.getProceedWorkflowList();
 
     Assert.assertNull("SingleProceedWorkflow is null!", resultWorkflow);
     Assert.assertNotNull("SingleProceedWorkflow is null!", resultWorkflowList);
@@ -105,12 +109,12 @@ public class CreateManualAssignWorkflowStrategyTest extends TestDataProducer {
     when(this.workflowDataService.save(any(TestThreeTaskWorkflow.class), any(String.class))).thenReturn(request.getWorkflow());
 
     this.workflowStrategy = new CreateManualAssignWorkflowStrategy<TestThreeTaskWorkflow>(request,
-                                                                                          this.validTocken,
-                                                                                          this.departmentDataService,
-                                                                                          this.workflowMessageDataService,
-                                                                                          this.cachDataDataService,
-                                                                                          this.workflowDataService,
-                                                                                          this.workflowPrepare);
+        this.validTocken,
+        this.departmentDataService,
+        this.workflowMessageDataService,
+        this.cachDataDataService,
+        this.workflowDataService,
+        this.workflowPrepare);
 
     this.workflowStrategy.process();
 

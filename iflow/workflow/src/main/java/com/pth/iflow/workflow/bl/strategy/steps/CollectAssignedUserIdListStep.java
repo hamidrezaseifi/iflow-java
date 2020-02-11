@@ -43,6 +43,11 @@ public class CollectAssignedUserIdListStep<W extends IWorkflow> extends Abstract
 
     }
 
+    if (processingWorkflowSaveRequest.isDoneCommand()) {
+
+      assignedUsers.add(this.getWorkflowSaveStrategy().getProcessingWorkflow().getLastAction().getAssignToIdentity());
+    }
+
     this.getWorkflowSaveStrategy().setAssignedUsers(assignedUsers);
 
   }
@@ -50,8 +55,7 @@ public class CollectAssignedUserIdListStep<W extends IWorkflow> extends Abstract
   @Override
   public boolean shouldProcess() {
 
-    return this.getWorkflowSaveStrategy().IsWorkflowCurrectStepChanged()
-        || this.getWorkflowSaveStrategy().getProcessingWorkflowSaveRequest().isCreateCommand();
+    return true;
   }
 
 }
