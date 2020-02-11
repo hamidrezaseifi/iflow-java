@@ -99,13 +99,18 @@ export class MessageBarComponent implements OnInit, OnDestroy {
 
 	ngOnInit() {		
 		
+		console.log("Initialize Messagebar. isLogge: "+ this._isLogged );
+		
 		if(this._isLogged === true){
+			
+			this.readMessageList(true);
 			this.subscribe();
 			
 	    }
 	}
 	
 	ngOnDestroy() {
+		console.log("Destroy Messagebar. " );
 	    this.unsubscribe();
 	}
 	
@@ -217,8 +222,6 @@ export class MessageBarComponent implements OnInit, OnDestroy {
             //_this.stompClient.reconnect_delay = 2000;
         }, _this.errorCallBack);
 		
-	    this.readMessageList(true);
-	    
 	    this.setConnected(true);
 		
 	}
