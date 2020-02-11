@@ -2,6 +2,8 @@ package com.pth.iflow.workflow.bl.strategy.steps;
 
 import java.net.MalformedURLException;
 
+import com.pth.iflow.common.enums.EWorkflowActionStatus;
+import com.pth.iflow.common.enums.EWorkflowStatus;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.workflow.bl.strategy.strategies.AbstractWorkflowSaveStrategy;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
@@ -24,6 +26,8 @@ public class SaveWorkflowForAssignedUseresInCoreStep<W extends IWorkflow> extend
 
     for (final String userIdentity : this.getWorkflowSaveStrategy().getAssignedUsers()) {
       processingWorkflow.setActiveActionAssignTo(userIdentity);
+      processingWorkflow.setActiveActionStatus(EWorkflowActionStatus.OPEN);
+      processingWorkflow.setStatus(EWorkflowStatus.ASSIGNED);
 
       final W savedWorkflow = this.getWorkflowSaveStrategy().saveWorkflow(processingWorkflow);
       this.getWorkflowSaveStrategy().addSavedWorkflowToList(userIdentity, savedWorkflow);

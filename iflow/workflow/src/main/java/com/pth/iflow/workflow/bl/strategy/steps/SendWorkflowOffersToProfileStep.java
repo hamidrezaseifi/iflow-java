@@ -39,8 +39,6 @@ public class SendWorkflowOffersToProfileStep<W extends IWorkflow> extends Abstra
   @Override
   public boolean shouldProcess() {
 
-    // final WorkflowType processingWorkflowType = this.getWorkflowSaveStrategy().getProcessingWorkflowType();
-
     return this.getWorkflowSaveStrategy().getAssignedUsers().isEmpty() == false; // processingWorkflowType.isAssignTypeOffering();
   }
 
