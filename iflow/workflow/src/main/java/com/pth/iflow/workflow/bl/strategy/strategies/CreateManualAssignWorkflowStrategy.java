@@ -13,7 +13,7 @@ import com.pth.iflow.workflow.bl.strategy.steps.InitializeWorkflowActiveActionSt
 import com.pth.iflow.workflow.bl.strategy.steps.InitializeWorkflowInitialActionStrategyStep;
 import com.pth.iflow.workflow.bl.strategy.steps.SaveWorkflowForAssignedUseresInCoreStep;
 import com.pth.iflow.workflow.bl.strategy.steps.SaveWorkflowOfferForAssignedUseresInCoreStep;
-import com.pth.iflow.workflow.bl.strategy.steps.SendWorkflowOffersToProfileStep;
+import com.pth.iflow.workflow.bl.strategy.steps.SendWorkflowOffersForUsersToProfileStep;
 import com.pth.iflow.workflow.bl.strategy.steps.ValidateAssignInSaveRequestStrategyStep;
 import com.pth.iflow.workflow.bl.strategy.steps.ValidateCurrentStepExistsInWorkflowTypeStrategyStep;
 import com.pth.iflow.workflow.bl.strategy.steps.ValidateWorkflowActiveActionStrategyStep;
@@ -50,7 +50,7 @@ public class CreateManualAssignWorkflowStrategy<W extends IWorkflow> extends Abs
     steps.add(new CollectAssignedUserIdListStep<W>(this));
     steps.add(new SaveWorkflowForAssignedUseresInCoreStep<W>(this));
     steps.add(new SaveWorkflowOfferForAssignedUseresInCoreStep<W>(this));
-    steps.add(new SendWorkflowOffersToProfileStep<W>(this));
+    steps.add(new SendWorkflowOffersForUsersToProfileStep<W>(this));
 
   }
 

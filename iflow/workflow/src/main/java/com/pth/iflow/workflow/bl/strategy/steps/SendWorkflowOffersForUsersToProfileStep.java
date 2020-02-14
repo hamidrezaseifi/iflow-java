@@ -8,9 +8,9 @@ import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.WorkflowType;
 import com.pth.iflow.workflow.models.base.IWorkflow;
 
-public class SendWorkflowOffersToProfileStep<W extends IWorkflow> extends AbstractWorkflowSaveStrategyStep<W> {
+public class SendWorkflowOffersForUsersToProfileStep<W extends IWorkflow> extends AbstractWorkflowSaveStrategyStep<W> {
 
-  public SendWorkflowOffersToProfileStep(final AbstractWorkflowSaveStrategy<W> workflowSaveStrategy) {
+  public SendWorkflowOffersForUsersToProfileStep(final AbstractWorkflowSaveStrategy<W> workflowSaveStrategy) {
 
     super(workflowSaveStrategy);
 
@@ -39,7 +39,17 @@ public class SendWorkflowOffersToProfileStep<W extends IWorkflow> extends Abstra
   @Override
   public boolean shouldProcess() {
 
-    return this.getWorkflowSaveStrategy().getAssignedUsers().isEmpty() == false; // processingWorkflowType.isAssignTypeOffering();
+    final WorkflowType workflowType = this.getWorkflowSaveStrategy().getProcessingWorkflowType();
+
+    if (workflowType.isAssignTypeOffering()) {
+      return true;
+    }
+    else {
+      return this.getWorkflowSaveStrategy().getAssignedUsers().isEmpty() == false;
+
+    }
+    // return true; // this.getWorkflowSaveStrategy().getAssignedUsers().isEmpty() == false; //
+    // processingWorkflowType.isAssignTypeOffering();
   }
 
 }
