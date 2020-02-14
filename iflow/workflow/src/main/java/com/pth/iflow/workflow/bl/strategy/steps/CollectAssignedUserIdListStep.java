@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import com.pth.iflow.common.enums.EAssignType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
+import com.pth.iflow.common.models.helper.IdentityModel;
 import com.pth.iflow.workflow.bl.strategy.strategies.AbstractWorkflowSaveStrategy;
 import com.pth.iflow.workflow.exceptions.WorkflowCustomizedException;
 import com.pth.iflow.workflow.models.AssignItem;
@@ -45,7 +46,11 @@ public class CollectAssignedUserIdListStep<W extends IWorkflow> extends Abstract
 
     if (processingWorkflowSaveRequest.isDoneCommand()) {
 
-      assignedUsers.add(this.getWorkflowSaveStrategy().getProcessingWorkflow().getLastAction().getAssignToIdentity());
+      final String assignToIdentity = this.getWorkflowSaveStrategy().getProcessingWorkflow().getLastAction().getAssignToIdentity();
+      if (IdentityModel.isIdentityNew(assignToIdentity) == false) {
+        assignedUsers.add(assignToIdentity);
+      }
+
     }
 
     this.getWorkflowSaveStrategy().setAssignedUsers(assignedUsers);

@@ -167,7 +167,7 @@ public class SessionUserInfo {
     if (this.companyUsers.size() == 0) {
       try {
         final List<User> userList = this.userAccess.getCompanyUserList(this.companyProfile.getCompany().getIdentity());
-        this.companyUsers.putAll(userList.stream().collect(Collectors.toMap(u -> u.getEmail(), u -> u)));
+        this.companyUsers.putAll(userList.stream().collect(Collectors.toMap(u -> u.getIdentity(), u -> u)));
       }
       catch (GuiCustomizedException | MalformedURLException | IFlowMessageConversionFailureException e) {
         logger.error("error in reading company user list: {} \n {}", e.getMessage(), e);
