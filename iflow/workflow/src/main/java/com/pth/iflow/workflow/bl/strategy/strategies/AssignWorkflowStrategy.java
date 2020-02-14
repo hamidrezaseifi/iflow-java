@@ -15,7 +15,7 @@ import com.pth.iflow.workflow.bl.strategy.steps.InitializeWorkflowActiveActionSt
 import com.pth.iflow.workflow.bl.strategy.steps.InitializeWorkflowInitialActionStrategyStep;
 import com.pth.iflow.workflow.bl.strategy.steps.PrepareAssigningWorkflowStep;
 import com.pth.iflow.workflow.bl.strategy.steps.SaveWorkflowInCoreStep;
-import com.pth.iflow.workflow.bl.strategy.steps.SendWorkflowOffersToProfileStep;
+import com.pth.iflow.workflow.bl.strategy.steps.SendWorkflowOffersForUsersToProfileStep;
 import com.pth.iflow.workflow.bl.strategy.steps.ValidateCurrentStepExistsInWorkflowTypeStrategyStep;
 import com.pth.iflow.workflow.bl.strategy.steps.ValidateSingleUserAssignInSaveRequestStrategyStep;
 import com.pth.iflow.workflow.bl.strategy.steps.ValidateWorkflowActiveActionStrategyStep;
@@ -63,7 +63,7 @@ public class AssignWorkflowStrategy<W extends IWorkflow> extends AbstractWorkflo
     steps.add(new SaveWorkflowInCoreStep<W>(this, true));
     steps.add(new ChangeWorkflowOfferStatusToCloseForWorkflowInCoreStep<W>(this));
     steps.add(new ChangeWorkflowOfferStatusToAssignForUserAndWorkflowInCoreStep<W>(this));
-    steps.add(new SendWorkflowOffersToProfileStep<W>(this));
+    steps.add(new SendWorkflowOffersForUsersToProfileStep<W>(this));
 
   }
 
