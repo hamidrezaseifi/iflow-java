@@ -11,7 +11,6 @@ import { FormsModule } from '@angular/forms';
 //import { DataTableModule } from 'ng-seven-datatable';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatTableModule } from '@angular/material/table';
-import { StompConfig, StompService } from '@stomp/ng2-stompjs';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 
@@ -45,7 +44,6 @@ import { EditSingleTaskComponent } from './wm-components/edit/edit-single-task/e
 import { EditTestthreeTaskComponent } from './wm-components/edit/edit-testthree-task/edit-testthree-task.component';
 import { WorkflowInlineviewComponent } from './wm-components/workflow-inlineview/workflow-inlineview.component';
 import { SelectUserComponent } from './components/select-user/select-user.component';
-import { TestComponent } from './test/test.component';
 import { InvoiceOcrDetailComponent } from './wm-components/invoice-ocr-detail/invoice-ocr-detail.component';
 import { FilePreviewComponent } from './components/file-preview/file-preview.component';
 import { WmFileUploadComponent } from './components/wm-file-upload/wm-file-upload.component';
@@ -101,7 +99,6 @@ export function createTranslateLoader(http: HttpClient) {
     EditTestthreeTaskComponent,
     WorkflowInlineviewComponent,
     SelectUserComponent,
-    TestComponent,
     InvoiceOcrDetailComponent,
     FilePreviewComponent,
     WmFileUploadComponent,
@@ -116,7 +113,6 @@ export function createTranslateLoader(http: HttpClient) {
 	  AuthenticationService, 
 	  WorkflowMessageService, 
 	  fakeBackendProvider,
-	  StompService,
 	    
   ],
   bootstrap: [ AppComponent ]

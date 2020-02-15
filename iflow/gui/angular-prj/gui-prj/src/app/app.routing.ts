@@ -19,8 +19,6 @@ import { CompanyInfoComponent } from './company-components/company-info/company-
 import { DepartmentsListComponent } from './company-components/departments-list/departments-list.component';
 
 
-import { TestComponent } from './test/test.component';
-
 
 const routes: Routes = [
     { path: '', component: HomeComponent, canActivate: [AuthenticationService] },
@@ -40,8 +38,6 @@ const routes: Routes = [
     { path: 'departments/list', component: DepartmentsListComponent, canActivate: [AuthenticationService] },
     
     { path: 'company/info', component: CompanyInfoComponent, canActivate: [AuthenticationService] },
-
-    { path: 'test', component: TestComponent },
     
     { path: 'auth/login', component: LoginComponent },
 

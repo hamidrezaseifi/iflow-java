@@ -2,7 +2,6 @@ import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import * as moment from 'moment'; 
 import { ResizeEvent } from 'angular-resizable-element';
 import { Observable, throwError , Subscription } from 'rxjs';
-import { StompService, StompState } from '@stomp/ng2-stompjs';
 import { Message } from '@stomp/stompjs';
 import * as SockJS from 'sockjs-client';
 import * as Stomp from 'stompjs';

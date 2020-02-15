@@ -129,6 +129,7 @@ public class GuiSecurityConfigurations extends WebSecurityConfigurerAdapter impl
 
     http.logout().logoutUrl(LOGOUT_URL).logoutSuccessHandler(this.guiLogoutSuccessHandler);
 
+    http.headers().frameOptions().disable();
   }
 
   @Override
