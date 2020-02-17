@@ -13,7 +13,6 @@ CREATE TABLE company_workflowtype_items_ocr_settings
     status smallint NOT NULL DEFAULT 1,
     version integer NOT NULL DEFAULT 1,
     created_at timestamp without time zone NOT NULL default (now() at time zone 'utc'),
-  	updated_at timestamp without time zone NOT NULL default (now() at time zone 'utc'),
     CONSTRAINT company_workflowtype_items_ocr_settings_pkey PRIMARY KEY (id)
         USING INDEX TABLESPACE iflow_tablespace,
     CONSTRAINT "FK_COMPANY_WORKFLOWTYPE_ITEMS_OCR_SETTINGS_COMPANY" FOREIGN KEY (id)

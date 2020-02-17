@@ -12,6 +12,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.pth.iflow.common.models.base.IFlowJaxbDefinition;
 
 @XmlRootElement(name = "CompanyProfile", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
@@ -38,17 +39,23 @@ public class CompanyProfileEdo {
   @XmlElement(name = "WorkflowTypeController", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private final List<CompanyWorkflowTypeControllerEdo> workflowTypeControllers = new ArrayList<>();
 
+  @XmlElementWrapper(name = "WorkflowtypeItemOcrSettingList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  @XmlElement(name = "WorkflowtypeItemOcrSetting", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private final List<CompanyWorkflowtypeItemOcrSettingEdo> workflowtypeItemOcrSettings = new ArrayList<>();
+
   public CompanyProfileEdo() {
 
   }
 
   public CompanyProfileEdo(final CompanyEdo company, final List<DepartmentEdo> departments, final List<UserGroupEdo> userGroups,
-      final List<CompanyWorkflowTypeControllerEdo> workflowTypeControllers) {
+      final List<CompanyWorkflowTypeControllerEdo> workflowTypeControllers,
+      final List<CompanyWorkflowtypeItemOcrSettingEdo> workflowtypeItemOcrSettings) {
 
     this.setDepartments(departments);
     this.setUserGroups(userGroups);
     this.setCompany(company);
     this.setWorkflowTypeControllers(workflowTypeControllers);
+    this.setWorkflowtypeItemOcrSettings(workflowtypeItemOcrSettings);
 
   }
 
@@ -110,4 +117,18 @@ public class CompanyProfileEdo {
     }
   }
 
+  public List<CompanyWorkflowtypeItemOcrSettingEdo> getWorkflowtypeItemOcrSettings() {
+
+    return this.workflowtypeItemOcrSettings;
+  }
+
+  @JsonSetter(contentNulls = Nulls.AS_EMPTY)
+  public void setWorkflowtypeItemOcrSettings(final List<CompanyWorkflowtypeItemOcrSettingEdo> workflowtypeItemOcrSettings) {
+
+    this.workflowtypeItemOcrSettings.clear();
+    if (workflowtypeItemOcrSettings != null) {
+      this.workflowtypeItemOcrSettings.addAll(workflowtypeItemOcrSettings);
+    }
+
+  }
 }

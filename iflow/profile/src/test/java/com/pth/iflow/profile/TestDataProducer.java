@@ -12,12 +12,14 @@ import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.enums.EWorkflowMessageType;
 import com.pth.iflow.common.models.edo.AuthenticatedProfileRequestEdo;
 import com.pth.iflow.common.models.edo.CompanyEdo;
+import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingEdo;
 import com.pth.iflow.common.models.edo.ProfileResponseEdo;
 import com.pth.iflow.common.models.edo.TokenProfileRequestEdo;
 import com.pth.iflow.common.models.edo.UserEdo;
 import com.pth.iflow.profile.model.Company;
 import com.pth.iflow.profile.model.CompanyProfile;
 import com.pth.iflow.profile.model.CompanyWorkflowTypeController;
+import com.pth.iflow.profile.model.CompanyWorkflowtypeItemOcrSetting;
 import com.pth.iflow.profile.model.Department;
 import com.pth.iflow.profile.model.ProfileResponse;
 import com.pth.iflow.profile.model.User;
@@ -46,7 +48,9 @@ public class TestDataProducer {
   protected CompanyProfile getTestCompanyProfile() {
 
     final CompanyProfile companyProfile = new CompanyProfile(this.getTestCompany(), this.getTestDepartmentList(),
-        this.getTestUserGroupList(), this.getTestCompanyWorkflowTypeControllerList());
+        this.getTestUserGroupList(), this.getTestCompanyWorkflowTypeControllerList(), Arrays
+            .asList(this.getTestCompanyWorkflowtypeItemOcrSetting("prop1"), this.getTestCompanyWorkflowtypeItemOcrSetting("prop2"),
+                this.getTestCompanyWorkflowtypeItemOcrSetting("prop3")));
 
     return companyProfile;
   }
@@ -58,6 +62,30 @@ public class TestDataProducer {
             this.getTestCompanyWorkflowTypeController(), this.getTestCompanyWorkflowTypeController());
 
     return list;
+  }
+
+  protected CompanyWorkflowtypeItemOcrSettingEdo getTestCompanyWorkflowtypeItemOcrSettingEdo(final String propName) {
+
+    final CompanyWorkflowtypeItemOcrSettingEdo edo = new CompanyWorkflowtypeItemOcrSettingEdo();
+    edo.setPropertyName(propName);
+    edo.setStatus(1);
+    edo.setValue("value");
+    edo.setVersion(1);
+    edo.setWorkflowIdentity("workflowIdentity");
+
+    return edo;
+  }
+
+  protected CompanyWorkflowtypeItemOcrSetting getTestCompanyWorkflowtypeItemOcrSetting(final String propName) {
+
+    final CompanyWorkflowtypeItemOcrSetting edo = new CompanyWorkflowtypeItemOcrSetting();
+    edo.setPropertyName(propName);
+    edo.setStatus(1);
+    edo.setValue("value");
+    edo.setVersion(1);
+    edo.setWorkflowIdentity("workflowIdentity");
+
+    return edo;
   }
 
   protected CompanyWorkflowTypeController getTestCompanyWorkflowTypeController() {

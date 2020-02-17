@@ -20,6 +20,7 @@ import com.pth.iflow.common.enums.EWorkflowTypeAssignType;
 import com.pth.iflow.common.models.edo.CompanyEdo;
 import com.pth.iflow.common.models.edo.CompanyProfileEdo;
 import com.pth.iflow.common.models.edo.CompanyWorkflowTypeControllerEdo;
+import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingEdo;
 import com.pth.iflow.common.models.edo.DepartmentEdo;
 import com.pth.iflow.common.models.edo.ProfileResponseEdo;
 import com.pth.iflow.common.models.edo.UserDepartmentEdo;
@@ -39,6 +40,7 @@ import com.pth.iflow.common.models.edo.workflow.testthreetask.TestThreeTaskWorkf
 import com.pth.iflow.core.model.ProfileResponse;
 import com.pth.iflow.core.model.WorkflowSearchFilter;
 import com.pth.iflow.core.model.entity.CompanyEntity;
+import com.pth.iflow.core.model.entity.CompanyWorkflowtypeItemOcrSettingEntity;
 import com.pth.iflow.core.model.entity.DepartmentEntity;
 import com.pth.iflow.core.model.entity.UserDepartmentEntity;
 import com.pth.iflow.core.model.entity.UserEntity;
@@ -88,7 +90,11 @@ public class TestDataProducer {
     final CompanyEntity company = getTestCompany();
     final UserEntity user = getTestUser();
 
-    return new ProfileResponse(user, company, getTestDepartmentList(), getTestUserGroupList(), "not-set");
+    return new ProfileResponse(user, company, getTestDepartmentList(), getTestUserGroupList(),
+        Arrays
+            .asList(getTestCompanyWorkflowtypeItemOcrSettingEntity("prop1"), getTestCompanyWorkflowtypeItemOcrSettingEntity("prop2"),
+                getTestCompanyWorkflowtypeItemOcrSettingEntity("prop3")),
+        "not-set");
   }
 
   protected ProfileResponseEdo getTestProfileResponseEdo() {
@@ -97,8 +103,35 @@ public class TestDataProducer {
     final UserEdo user = getTestUserEdo();
 
     final CompanyProfileEdo companyProfileEdo = new CompanyProfileEdo(company, getTestDepartmentEdoList(), getTestUserGroupEdoList(),
-        getTestCompanyWorkflowTypeControllerEdoList());
+        getTestCompanyWorkflowTypeControllerEdoList(),
+        Arrays
+            .asList(getTestCompanyWorkflowtypeItemOcrSettingEdo("prop1"), getTestCompanyWorkflowtypeItemOcrSettingEdo("prop2"),
+                getTestCompanyWorkflowtypeItemOcrSettingEdo("prop3")));
     return new ProfileResponseEdo(user, companyProfileEdo, "not-set");
+  }
+
+  protected CompanyWorkflowtypeItemOcrSettingEdo getTestCompanyWorkflowtypeItemOcrSettingEdo(final String propName) {
+
+    final CompanyWorkflowtypeItemOcrSettingEdo edo = new CompanyWorkflowtypeItemOcrSettingEdo();
+    edo.setPropertyName(propName);
+    edo.setStatus(1);
+    edo.setValue("value");
+    edo.setVersion(1);
+    edo.setWorkflowIdentity("workflowIdentity");
+
+    return edo;
+  }
+
+  protected CompanyWorkflowtypeItemOcrSettingEntity getTestCompanyWorkflowtypeItemOcrSettingEntity(final String propName) {
+
+    final CompanyWorkflowtypeItemOcrSettingEntity edo = new CompanyWorkflowtypeItemOcrSettingEntity();
+    edo.setPropertyName(propName);
+    edo.setStatus(1);
+    edo.setValue("value");
+    edo.setVersion(1);
+    edo.setWorkflowType(getTestWorkflowType());
+
+    return edo;
   }
 
   protected UserEntity getTestUser() {
