@@ -284,4 +284,25 @@ public class WorkflowEntity extends EntityIdentityHelper {
     version += 1;
 
   }
+
+  public void makeAllSubEntityNew() {
+
+    for (final WorkflowActionEntity action : actions) {
+      action.setId(null);
+    }
+
+    for (final WorkflowFileEntity file : files) {
+
+      for (final WorkflowFileVersionEntity fileVersion : file.getFileVersions()) {
+        fileVersion.setId(null);
+        fileVersion.getWorkflowFileEntity().setId(null);
+        fileVersion.getWorkflowFileEntity().setIdentity("");
+
+      }
+
+      file.setId(null);
+      file.setIdentity("");
+    }
+
+  }
 }
