@@ -2,6 +2,8 @@ package com.pth.iflow.gui.models;
 
 public class CompanyWorkflowtypeItemOcrSetting {
 
+  private String companyIdentity;
+
   private String workflowIdentity;
 
   private String propertyName;
@@ -12,9 +14,19 @@ public class CompanyWorkflowtypeItemOcrSetting {
 
   private Integer version;
 
+  public String getCompanyIdentity() {
+
+    return this.companyIdentity;
+  }
+
+  public void setCompanyIdentity(final String companyIdentity) {
+
+    this.companyIdentity = companyIdentity;
+  }
+
   public String getWorkflowIdentity() {
 
-    return workflowIdentity;
+    return this.workflowIdentity;
   }
 
   public void setWorkflowIdentity(final String workflowIdentity) {
@@ -24,7 +36,7 @@ public class CompanyWorkflowtypeItemOcrSetting {
 
   public String getPropertyName() {
 
-    return propertyName;
+    return this.propertyName;
   }
 
   public void setPropertyName(final String propertyName) {
@@ -34,7 +46,7 @@ public class CompanyWorkflowtypeItemOcrSetting {
 
   public String getValue() {
 
-    return value;
+    return this.value;
   }
 
   public void setValue(final String value) {

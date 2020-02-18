@@ -2,6 +2,8 @@ package com.pth.iflow.workflow.models;
 
 public class CompanyWorkflowtypeItemOcrSetting {
 
+  private String companyIdentity;
+
   private String workflowIdentity;
 
   private String propertyName;
@@ -11,6 +13,16 @@ public class CompanyWorkflowtypeItemOcrSetting {
   private Integer status;
 
   private Integer version;
+
+  public String getCompanyIdentity() {
+
+    return companyIdentity;
+  }
+
+  public void setCompanyIdentity(final String companyIdentity) {
+
+    this.companyIdentity = companyIdentity;
+  }
 
   public String getWorkflowIdentity() {
 

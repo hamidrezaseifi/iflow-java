@@ -2,7 +2,9 @@ package com.pth.iflow.profile.model;
 
 public class CompanyWorkflowtypeItemOcrSetting {
 
-  private String workflowIdentity;
+  private String companyIdentity;
+
+  private String workflowTypeIdentity;
 
   private String propertyName;
 
@@ -12,19 +14,29 @@ public class CompanyWorkflowtypeItemOcrSetting {
 
   private Integer version;
 
-  public String getWorkflowIdentity() {
+  public String getCompanyIdentity() {
 
-    return workflowIdentity;
+    return this.companyIdentity;
   }
 
-  public void setWorkflowIdentity(final String workflowIdentity) {
+  public void setCompanyIdentity(final String companyIdentity) {
 
-    this.workflowIdentity = workflowIdentity;
+    this.companyIdentity = companyIdentity;
+  }
+
+  public String getWorkflowTypeIdentity() {
+
+    return this.workflowTypeIdentity;
+  }
+
+  public void setWorkflowTypeIdentity(final String workflowIdentity) {
+
+    this.workflowTypeIdentity = workflowIdentity;
   }
 
   public String getPropertyName() {
 
-    return propertyName;
+    return this.propertyName;
   }
 
   public void setPropertyName(final String propertyName) {
@@ -34,7 +46,7 @@ public class CompanyWorkflowtypeItemOcrSetting {
 
   public String getValue() {
 
-    return value;
+    return this.value;
   }
 
   public void setValue(final String value) {

@@ -602,6 +602,8 @@ public class IflowRestPaths {
     public static final String COMPANY_READ_DEPARTMENT_LIST = "/company/read/department/{companyidentity}";
     public static final String COMPANY_READ_PROFILE = "/company/read/profile/{companyidentity}";
     public static final String COMPANY_SAVE = "/company/save";
+    public static final String COMPANY_READ_WORKFLOWTYPE_ITEMS_OCR_SETTINGS_BY_IDENTITY = "/company/readwtoctsettings/{companyidentity}";
+    public static final String COMPANY_SAVE_WORKFLOWTYPE_ITEMS_OCR_SETTINGS = "/company/savewtoctsettings";
 
     public static final String DEPARTMENT_READ_BY_IDENTITY = "/department/readbyid/{identity}";
     public static final String DEPARTMENT_READ_ALLUSERS_LIST = "/department/read/allusers/{identity}";
@@ -623,6 +625,18 @@ public class IflowRestPaths {
     public static URI SAVE_COMPANY() {
 
       final IflowUriBuilder builder = new IflowUriBuilder(COMPANY_SAVE);
+      return builder.build();
+    }
+
+    public static URI READ_COMPANY_WORKFLOWTYPE_ITEMS_OCR_SETTINGS_BY_IDENTITY(final String companyidentity) {
+
+      final IflowUriBuilder builder = new IflowUriBuilder(COMPANY_READ_WORKFLOWTYPE_ITEMS_OCR_SETTINGS_BY_IDENTITY);
+      return builder.build(companyidentity);
+    }
+
+    public static URI SAVE_COMPANY_WORKFLOWTYPE_ITEMS_OCR_SETTINGS() {
+
+      final IflowUriBuilder builder = new IflowUriBuilder(COMPANY_SAVE_WORKFLOWTYPE_ITEMS_OCR_SETTINGS);
       return builder.build();
     }
 

@@ -920,6 +920,7 @@ public class GuiModelEdoMapper {
     edo.setVersion(model.getVersion());
     edo.setValue(model.getValue());
     edo.setWorkflowTypeIdentity(model.getWorkflowIdentity());
+    edo.setCompanyIdentity(model.getCompanyIdentity());
 
     return edo;
   }
@@ -932,6 +933,7 @@ public class GuiModelEdoMapper {
     model.setVersion(edo.getVersion());
     model.setValue(edo.getValue());
     model.setWorkflowIdentity(edo.getWorkflowTypeIdentity());
+    model.setCompanyIdentity(edo.getCompanyIdentity());
 
     return model;
   }

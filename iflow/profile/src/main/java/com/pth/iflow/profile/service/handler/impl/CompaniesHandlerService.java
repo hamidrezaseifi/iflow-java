@@ -1,6 +1,7 @@
 package com.pth.iflow.profile.service.handler.impl;
 
 import java.net.MalformedURLException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.profile.exceptions.ProfileCustomizedException;
 import com.pth.iflow.profile.model.Company;
+import com.pth.iflow.profile.model.CompanyWorkflowtypeItemOcrSetting;
 import com.pth.iflow.profile.service.access.ICompanyAccessService;
 import com.pth.iflow.profile.service.handler.ICompaniesHandlerService;
 
@@ -33,6 +35,21 @@ public class CompaniesHandlerService implements ICompaniesHandlerService {
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     return this.CompanyAccessService.saveCompany(company);
+  }
+
+  @Override
+  public List<CompanyWorkflowtypeItemOcrSetting> readCompanyWorkflowtypeItemOcrSettingsByCompanyIdentity(final String companyidentity)
+      throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+
+    return this.CompanyAccessService.readCompanyWorkflowtypeItemOcrSettingsByCompanyIdentity(companyidentity);
+  }
+
+  @Override
+  public List<CompanyWorkflowtypeItemOcrSetting>
+      saveCompanyWorkflowtypeItemOcrSettings(final List<CompanyWorkflowtypeItemOcrSetting> modelInputList)
+          throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+
+    return this.CompanyAccessService.saveCompanyWorkflowtypeItemOcrSettings(modelInputList);
   }
 
 }

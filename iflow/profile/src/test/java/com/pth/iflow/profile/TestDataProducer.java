@@ -72,6 +72,7 @@ public class TestDataProducer {
     edo.setValue("value");
     edo.setVersion(1);
     edo.setWorkflowTypeIdentity("workflowIdentity");
+    edo.setCompanyIdentity("companyIdentity");
 
     return edo;
   }
@@ -83,7 +84,8 @@ public class TestDataProducer {
     edo.setStatus(1);
     edo.setValue("value");
     edo.setVersion(1);
-    edo.setWorkflowIdentity("workflowIdentity");
+    edo.setWorkflowTypeIdentity("workflowIdentity");
+    edo.setCompanyIdentity("companyIdentity");
 
     return edo;
   }
