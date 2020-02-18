@@ -82,8 +82,33 @@ public class CompanyDao extends EntityDaoBase<CompanyEntity> implements ICompany
   }
 
   @Override
+  public List<CompanyWorkflowtypeItemOcrSettingEntity> readCompanyWorkflowtypeItemOcrSettingsByCompanyIdentity(final String identity) {
+
+    final Session session = this.createSession();
+
+    final CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+    final CriteriaQuery<
+        CompanyWorkflowtypeItemOcrSettingEntity> query = criteriaBuilder.createQuery(CompanyWorkflowtypeItemOcrSettingEntity.class);
+    final Root<CompanyWorkflowtypeItemOcrSettingEntity> root = query.from(CompanyWorkflowtypeItemOcrSettingEntity.class);
+    query.select(root);
+
+    final Predicate predicate = criteriaBuilder.equal(root.get("company").get("identity"), identity);
+    query.where(predicate);
+
+    final TypedQuery<CompanyWorkflowtypeItemOcrSettingEntity> typedQuery = session.createQuery(query);
+
+    // final String qr =
+    // typedQuery.unwrap(org.hibernate.query.Query.class).getQueryString();
+    // System.out.println("search workflow query: " + qr);
+
+    final List<CompanyWorkflowtypeItemOcrSettingEntity> results = typedQuery.getResultList();
+    session.close();
+    return results;
+  }
+
+  @Override
   @Transactional
-  public List<CompanyWorkflowtypeItemOcrSettingEntity> saveCompanyWorkflowtypeItemOcrSettings(final CompanyEntity company,
+  public List<CompanyWorkflowtypeItemOcrSettingEntity> saveCompanyWorkflowtypeItemOcrSettings(
       final List<CompanyWorkflowtypeItemOcrSettingEntity> list) {
 
     final Session session = this.createSession();
@@ -92,7 +117,7 @@ public class CompanyDao extends EntityDaoBase<CompanyEntity> implements ICompany
 
     for (final CompanyWorkflowtypeItemOcrSettingEntity model : list) {
       session.getTransaction().begin();
-      model.setCompany(company);
+
       session.persist(model);
       session.getTransaction().commit();
       savedList.add(model);

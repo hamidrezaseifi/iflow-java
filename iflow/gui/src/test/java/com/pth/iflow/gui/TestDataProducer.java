@@ -76,7 +76,7 @@ public class TestDataProducer {
     edo.setStatus(1);
     edo.setValue("value");
     edo.setVersion(1);
-    edo.setWorkflowIdentity("workflowIdentity");
+    edo.setWorkflowTypeIdentity("workflowIdentity");
 
     return edo;
   }

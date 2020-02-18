@@ -14,9 +14,13 @@ import com.pth.iflow.common.models.base.IFlowJaxbDefinition;
 @XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "CompanyWorkflowtypeItemOcrSetting" + IFlowJaxbDefinition.TYPE_PREFIX)
 public class CompanyWorkflowtypeItemOcrSettingEdo {
 
-  @NotNull(message = "WorkflowIdentity must not be null")
-  @XmlElement(name = "WorkflowIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String workflowIdentity;
+  @NotNull(message = "CompanyIdentity must not be null")
+  @XmlElement(name = "CompanyIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String companyIdentity;
+
+  @NotNull(message = "WorkflowTypeIdentity must not be null")
+  @XmlElement(name = "WorkflowTypeIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String workflowTypeIdentity;
 
   @NotNull(message = "PropertyName must not be null")
   @XmlElement(name = "PropertyName", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
@@ -33,14 +37,24 @@ public class CompanyWorkflowtypeItemOcrSettingEdo {
   @XmlElement(name = "Version", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer version;
 
-  public String getWorkflowIdentity() {
+  public String getCompanyIdentity() {
 
-    return this.workflowIdentity;
+    return this.companyIdentity;
   }
 
-  public void setWorkflowIdentity(final String workflowIdentity) {
+  public void setCompanyIdentity(final String companyIdentity) {
 
-    this.workflowIdentity = workflowIdentity;
+    this.companyIdentity = companyIdentity;
+  }
+
+  public String getWorkflowTypeIdentity() {
+
+    return this.workflowTypeIdentity;
+  }
+
+  public void setWorkflowTypeIdentity(final String workflowIdentity) {
+
+    this.workflowTypeIdentity = workflowIdentity;
   }
 
   public String getPropertyName() {

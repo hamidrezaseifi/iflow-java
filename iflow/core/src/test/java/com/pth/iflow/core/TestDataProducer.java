@@ -117,7 +117,8 @@ public class TestDataProducer {
     edo.setStatus(1);
     edo.setValue("value");
     edo.setVersion(1);
-    edo.setWorkflowIdentity("workflowIdentity");
+    edo.setWorkflowTypeIdentity("workflowIdentity");
+    edo.setCompanyIdentity(getTestCompany().getIdentity());
 
     return edo;
   }
@@ -136,7 +137,8 @@ public class TestDataProducer {
 
   protected CompanyWorkflowtypeItemOcrSettingEntity getTestCompanyWorkflowtypeItemOcrSettingEntity(final String propName,
       final String value,
-      final WorkflowTypeEntity workflowType) {
+      final WorkflowTypeEntity workflowType,
+      final CompanyEntity company) {
 
     final CompanyWorkflowtypeItemOcrSettingEntity edo = new CompanyWorkflowtypeItemOcrSettingEntity();
     edo.setPropertyName(propName);
@@ -144,6 +146,7 @@ public class TestDataProducer {
     edo.setValue(value);
     edo.setVersion(1);
     edo.setWorkflowType(workflowType);
+    edo.setCompany(company);
 
     return edo;
   }

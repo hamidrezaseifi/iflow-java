@@ -190,10 +190,10 @@ public class CompanyDaoTest extends TestDataProducer {
     comapny.setStatus(1);
     comapny.setVersion(1);
 
-    final CompanyEntity resUser = companyDao.create(comapny);
-    createdModels.add(resUser);
+    final CompanyEntity resCompany = companyDao.create(comapny);
+    createdModels.add(resCompany);
 
-    compareCompanies(comapny, resUser);
+    compareCompanies(comapny, resCompany);
 
     final List<CompanyWorkflowtypeItemOcrSettingEntity> list = new ArrayList<>();
 
@@ -201,11 +201,11 @@ public class CompanyDaoTest extends TestDataProducer {
 
     final WorkflowTypeEntity workflowType = workflowTypeDao.getByIdentity(EWorkflowType.INVOICE_WORKFLOW_TYPE.getIdentity());
 
-    list.add(getTestCompanyWorkflowtypeItemOcrSettingEntity("propName1", "value1", workflowType));
-    list.add(getTestCompanyWorkflowtypeItemOcrSettingEntity("propName2", "value2", workflowType));
-    list.add(getTestCompanyWorkflowtypeItemOcrSettingEntity("propName3", "value3", workflowType));
+    list.add(getTestCompanyWorkflowtypeItemOcrSettingEntity("propName1", "value1", workflowType, resCompany));
+    list.add(getTestCompanyWorkflowtypeItemOcrSettingEntity("propName2", "value2", workflowType, resCompany));
+    list.add(getTestCompanyWorkflowtypeItemOcrSettingEntity("propName3", "value3", workflowType, resCompany));
 
-    List<CompanyWorkflowtypeItemOcrSettingEntity> resList = companyDao.saveCompanyWorkflowtypeItemOcrSettings(comapny, list);
+    List<CompanyWorkflowtypeItemOcrSettingEntity> resList = companyDao.saveCompanyWorkflowtypeItemOcrSettings(list);
 
     Assert.assertNotNull("Result List is not null!", resList);
     Assert.assertEquals("Result list has 3 items", 3, resList.size());

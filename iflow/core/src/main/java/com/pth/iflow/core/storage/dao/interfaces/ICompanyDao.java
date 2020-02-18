@@ -23,7 +23,9 @@ public interface ICompanyDao {
 
   public List<CompanyWorkflowtypeItemOcrSettingEntity> readCompanyWorkflowtypeItemOcrSettings(Long id);
 
-  public List<CompanyWorkflowtypeItemOcrSettingEntity> saveCompanyWorkflowtypeItemOcrSettings(CompanyEntity company,
+  public List<CompanyWorkflowtypeItemOcrSettingEntity> readCompanyWorkflowtypeItemOcrSettingsByCompanyIdentity(String identity);
+
+  public List<CompanyWorkflowtypeItemOcrSettingEntity> saveCompanyWorkflowtypeItemOcrSettings(
       final List<CompanyWorkflowtypeItemOcrSettingEntity> list);
 
 }

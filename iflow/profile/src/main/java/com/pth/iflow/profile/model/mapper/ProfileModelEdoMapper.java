@@ -397,7 +397,7 @@ public class ProfileModelEdoMapper {
     edo.setStatus(model.getStatus());
     edo.setVersion(model.getVersion());
     edo.setValue(model.getValue());
-    edo.setWorkflowIdentity(model.getWorkflowIdentity());
+    edo.setWorkflowTypeIdentity(model.getWorkflowIdentity());
 
     return edo;
   }
@@ -409,7 +409,7 @@ public class ProfileModelEdoMapper {
     model.setStatus(edo.getStatus());
     model.setVersion(edo.getVersion());
     model.setValue(edo.getValue());
-    model.setWorkflowIdentity(edo.getWorkflowIdentity());
+    model.setWorkflowIdentity(edo.getWorkflowTypeIdentity());
 
     return model;
   }

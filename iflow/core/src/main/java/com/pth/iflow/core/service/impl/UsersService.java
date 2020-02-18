@@ -235,7 +235,7 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
     final IUserGroupService groupService = new UserGroupService(null);
     final IDepartmentService departmentService = new DepartmentService(null, companyDao);
 
-    final ICompanyService companyService = new CompanyService(null);
+    final ICompanyService companyService = new CompanyService(null, null);
 
     final List<CompanyWorkflowTypeControllerEntity> workflowTypeControllers = companyDao
         .readCompanyWorkflowTypeController(model.getCompany().getId());
@@ -259,7 +259,7 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
     edo.setStatus(model.getStatus());
     edo.setVersion(model.getVersion());
     edo.setValue(model.getValue());
-    edo.setWorkflowIdentity(model.getWorkflowType().getIdentity());
+    edo.setWorkflowTypeIdentity(model.getWorkflowType().getIdentity());
 
     return edo;
   }
