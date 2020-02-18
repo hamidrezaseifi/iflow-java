@@ -4,39 +4,38 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.pth.iflow.core.model.entity.workflow.WorkflowTypeEntity;
 import com.pth.iflow.core.storage.dao.helper.EntityHelper;
-import com.pth.iflow.core.storage.dao.helper.EntityListener;
 
 @Entity
 @Table(name = "company_workflowtype_items_ocr_settings")
-@EntityListeners(EntityListener.class)
 public class CompanyWorkflowtypeItemOcrSettingEntity extends EntityHelper {
 
   private static final long serialVersionUID = 2937568589389217869L;
 
   @Id
   @Column(name = "id")
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "company_workflowtype_settings_generator")
+  @SequenceGenerator(name = "company_workflowtype_settings_generator", sequenceName = "company_workflowtype_items_ocr_settings_seq")
   private Long id;
 
-  @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "company_id", insertable = false, updatable = false)
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "company_id", nullable = false)
   private CompanyEntity company;
 
-  @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "workflow_type_id", insertable = false, updatable = false)
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "workflow_type_id", nullable = false)
   private WorkflowTypeEntity workflowType;
 
   @Column(name = "property_name")

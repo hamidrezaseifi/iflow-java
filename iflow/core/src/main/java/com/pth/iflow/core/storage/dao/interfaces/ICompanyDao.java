@@ -23,7 +23,7 @@ public interface ICompanyDao {
 
   public List<CompanyWorkflowtypeItemOcrSettingEntity> readCompanyWorkflowtypeItemOcrSettings(Long id);
 
-  public List<CompanyWorkflowtypeItemOcrSettingEntity> saveCompanyWorkflowtypeItemOcrSettings(Long id,
+  public List<CompanyWorkflowtypeItemOcrSettingEntity> saveCompanyWorkflowtypeItemOcrSettings(CompanyEntity company,
       final List<CompanyWorkflowtypeItemOcrSettingEntity> list);
 
 }

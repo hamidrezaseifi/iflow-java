@@ -1,5 +1,6 @@
 package com.pth.iflow.core.storage.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.TypedQuery;
@@ -10,6 +11,7 @@ import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.pth.iflow.core.model.entity.CompanyEntity;
 import com.pth.iflow.core.model.entity.CompanyWorkflowTypeControllerEntity;
@@ -80,11 +82,23 @@ public class CompanyDao extends EntityDaoBase<CompanyEntity> implements ICompany
   }
 
   @Override
-  public List<CompanyWorkflowtypeItemOcrSettingEntity> saveCompanyWorkflowtypeItemOcrSettings(final Long id,
+  @Transactional
+  public List<CompanyWorkflowtypeItemOcrSettingEntity> saveCompanyWorkflowtypeItemOcrSettings(final CompanyEntity company,
       final List<CompanyWorkflowtypeItemOcrSettingEntity> list) {
 
-    // TODO Auto-generated method stub
-    return null;
+    final Session session = this.createSession();
+
+    final List<CompanyWorkflowtypeItemOcrSettingEntity> savedList = new ArrayList<>();
+
+    for (final CompanyWorkflowtypeItemOcrSettingEntity model : list) {
+      session.getTransaction().begin();
+      model.setCompany(company);
+      session.persist(model);
+      session.getTransaction().commit();
+      savedList.add(model);
+    }
+
+    return savedList;
   }
 
 }

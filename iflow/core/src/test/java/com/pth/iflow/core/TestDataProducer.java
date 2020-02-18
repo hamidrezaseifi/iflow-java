@@ -134,6 +134,20 @@ public class TestDataProducer {
     return edo;
   }
 
+  protected CompanyWorkflowtypeItemOcrSettingEntity getTestCompanyWorkflowtypeItemOcrSettingEntity(final String propName,
+      final String value,
+      final WorkflowTypeEntity workflowType) {
+
+    final CompanyWorkflowtypeItemOcrSettingEntity edo = new CompanyWorkflowtypeItemOcrSettingEntity();
+    edo.setPropertyName(propName);
+    edo.setStatus(1);
+    edo.setValue(value);
+    edo.setVersion(1);
+    edo.setWorkflowType(workflowType);
+
+    return edo;
+  }
+
   protected UserEntity getTestUser() {
 
     final UserEntity model = new UserEntity();

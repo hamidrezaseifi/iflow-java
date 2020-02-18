@@ -1,6 +1,4 @@
 
---company_workflowtype_items_ocr_settings_seq
-
 CREATE SEQUENCE company_workflowtype_items_ocr_settings_seq;
 
 CREATE TABLE company_workflowtype_items_ocr_settings
@@ -15,11 +13,11 @@ CREATE TABLE company_workflowtype_items_ocr_settings
     created_at timestamp without time zone NOT NULL default (now() at time zone 'utc'),
     CONSTRAINT company_workflowtype_items_ocr_settings_pkey PRIMARY KEY (id)
         USING INDEX TABLESPACE iflow_tablespace,
-    CONSTRAINT "FK_COMPANY_WORKFLOWTYPE_ITEMS_OCR_SETTINGS_COMPANY" FOREIGN KEY (id)
+    CONSTRAINT "FK_COMPANY_WORKFLOWTYPE_ITEMS_OCR_SETTINGS_COMPANY" FOREIGN KEY (company_id)
         REFERENCES public.companies (id) MATCH SIMPLE
         ON UPDATE CASCADE
         ON DELETE CASCADE,
-    CONSTRAINT "FK_COMPANY_WORKFLOWTYPE_ITEMS_OCR_SETTINGS_WORKFLOWTYPE" FOREIGN KEY (id)
+    CONSTRAINT "FK_COMPANY_WORKFLOWTYPE_ITEMS_OCR_SETTINGS_WORKFLOWTYPE" FOREIGN KEY (workflow_type_id)
         REFERENCES public.workflow_type (id) MATCH SIMPLE
         ON UPDATE CASCADE
         ON DELETE CASCADE
