@@ -273,6 +273,18 @@ public class GuiConfiguration {
       return this.baseProfileBaseUri.resolve(IflowRestPaths.ProfileModule.DELETE_DEPARTMENT_URIBUILDER());
     }
 
+    public URI getReadCompanyWorkflowTypeItemOcrSettingsUri(final String identity) throws MalformedURLException {
+
+      return this.baseProfileBaseUri
+          .resolve(IflowRestPaths.ProfileModule.READ_COMPANY_WORKFLOWTYPE_ITEMS_OCR_SETTINGS_BY_IDENTITY(identity));
+    }
+
+    public URI getSaveCompanyWorkflowTypeItemOcrSettingsUri() throws MalformedURLException {
+
+      return this.baseProfileBaseUri
+          .resolve(IflowRestPaths.ProfileModule.SAVE_COMPANY_WORKFLOWTYPE_ITEMS_OCR_SETTINGS());
+    }
+
   }
 
 }
