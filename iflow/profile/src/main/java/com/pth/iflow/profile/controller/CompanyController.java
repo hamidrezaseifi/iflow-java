@@ -166,7 +166,12 @@ public class CompanyController {
   @IflowGetRequestMapping(path = IflowRestPaths.ProfileModule.COMPANY_READ_WORKFLOWTYPE_ITEMS_OCR_SETTINGS_BY_IDENTITY)
   public ResponseEntity<CompanyWorkflowtypeItemOcrSettingListEdo>
       readCompanyWorkflowtypeItemOcrSettings(@PathVariable(name = "companyidentity") final String companyidentity,
-          final HttpServletRequest request) throws Exception {
+          final HttpServletRequest request,
+          @RequestHeader(
+            TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY
+          ) final String headerTokenId) throws Exception {
+
+    this.tokenUserDataManager.validateToken(headerTokenId);
 
     final List<CompanyWorkflowtypeItemOcrSetting> modelList = this.companiesHandlerService
         .readCompanyWorkflowtypeItemOcrSettingsByCompanyIdentity(companyidentity);
@@ -181,7 +186,12 @@ public class CompanyController {
   @IflowPostRequestMapping(path = IflowRestPaths.ProfileModule.COMPANY_SAVE_WORKFLOWTYPE_ITEMS_OCR_SETTINGS)
   public ResponseEntity<CompanyWorkflowtypeItemOcrSettingListEdo>
       saveCompanyWorkflowtypeItemOcrSettings(@RequestBody final CompanyWorkflowtypeItemOcrSettingListEdo workflowtypeItemOcrSettingListEdo,
-          final HttpServletRequest request) throws Exception {
+          final HttpServletRequest request,
+          @RequestHeader(
+            TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY
+          ) final String headerTokenId) throws Exception {
+
+    this.tokenUserDataManager.validateToken(headerTokenId);
 
     final List<CompanyWorkflowtypeItemOcrSetting> modelInputList = ProfileModelEdoMapper
         .fromCompanyWorkflowtypeItemOcrSettingEdoList(workflowtypeItemOcrSettingListEdo.getCompanyWorkflowtypeItemOcrSettings());

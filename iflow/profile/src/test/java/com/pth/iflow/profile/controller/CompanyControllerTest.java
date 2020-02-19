@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.net.URI;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.After;
@@ -25,6 +26,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.pth.iflow.common.models.edo.CompanyEdo;
+import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingEdo;
+import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingListEdo;
 import com.pth.iflow.common.models.edo.DepartmentListEdo;
 import com.pth.iflow.common.models.edo.UserGroupListEdo;
 import com.pth.iflow.common.models.edo.UserListEdo;
@@ -33,11 +36,13 @@ import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
 import com.pth.iflow.profile.TestDataProducer;
 import com.pth.iflow.profile.model.Company;
 import com.pth.iflow.profile.model.CompanyProfile;
+import com.pth.iflow.profile.model.CompanyWorkflowtypeItemOcrSetting;
 import com.pth.iflow.profile.model.Department;
 import com.pth.iflow.profile.model.ProfileResponse;
 import com.pth.iflow.profile.model.User;
 import com.pth.iflow.profile.model.UserGroup;
 import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
+import com.pth.iflow.profile.service.handler.ICompaniesHandlerService;
 import com.pth.iflow.profile.service.handler.ITokenUserDataManager;
 
 @RunWith(SpringRunner.class)
@@ -54,6 +59,9 @@ public class CompanyControllerTest extends TestDataProducer {
   @MockBean
   private ITokenUserDataManager tokenUserDataManager;
 
+  @MockBean
+  private ICompaniesHandlerService companiesHandlerService;
+
   private User user;
 
   private Company company;
@@ -68,6 +76,7 @@ public class CompanyControllerTest extends TestDataProducer {
     this.user = this.getTestUser();
     this.company = this.getTestCompany();
     this.companyProfile = this.getTestCompanyProfile();
+
   }
 
   @After
@@ -159,6 +168,93 @@ public class CompanyControllerTest extends TestDataProducer {
         .andExpect(content().xml(responseAsXmlString));
 
     verify(this.tokenUserDataManager, times(1)).getDepartmentListByToken(any(String.class), any(String.class));
+  }
+
+  @Test
+  public void testSaveCompany() throws Exception {
+
+    final CompanyEdo companyEdo = ProfileModelEdoMapper.toEdo(this.company);
+
+    when(this.companiesHandlerService.saveCompany(any(Company.class))).thenReturn(this.company);
+
+    final String requestAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(companyEdo);
+
+    final String responseAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(companyEdo);
+
+    this.mockMvc
+        .perform(MockMvcRequestBuilders
+            .post(IflowRestPaths.ProfileModule.COMPANY_SAVE)
+            .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, this.TestToken)
+            .content(requestAsXmlString)
+            .contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(status().isCreated())
+        .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(content().xml(responseAsXmlString));
+
+    verify(this.tokenUserDataManager, times(1)).validateToken(any(String.class));
+    verify(this.companiesHandlerService, times(1)).saveCompany(any(Company.class));
+  }
+
+  @Test
+  public void testReadCompanyWorkflowtypeItemOcrSettings() throws Exception {
+
+    final List<CompanyWorkflowtypeItemOcrSetting> listSettings = Arrays
+        .asList(this.getTestCompanyWorkflowtypeItemOcrSetting("prop1"), this.getTestCompanyWorkflowtypeItemOcrSetting("prop2"),
+            this.getTestCompanyWorkflowtypeItemOcrSetting("prop3"));
+
+    final List<CompanyWorkflowtypeItemOcrSettingEdo> listEdoSettings = Arrays
+        .asList(this.getTestCompanyWorkflowtypeItemOcrSettingEdo("prop1"), this.getTestCompanyWorkflowtypeItemOcrSettingEdo("prop2"),
+            this.getTestCompanyWorkflowtypeItemOcrSettingEdo("prop3"));
+
+    final CompanyWorkflowtypeItemOcrSettingListEdo edoListSettings = new CompanyWorkflowtypeItemOcrSettingListEdo(listEdoSettings);
+
+    when(this.companiesHandlerService.readCompanyWorkflowtypeItemOcrSettingsByCompanyIdentity(any(String.class))).thenReturn(listSettings);
+
+    final String responseAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoListSettings);
+
+    this.mockMvc
+        .perform(MockMvcRequestBuilders
+            .get(IflowRestPaths.ProfileModule.COMPANY_READ_WORKFLOWTYPE_ITEMS_OCR_SETTINGS_BY_IDENTITY, "ident1")
+            .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, this.TestToken))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(content().xml(responseAsXmlString));
+
+    verify(this.tokenUserDataManager, times(1)).validateToken(any(String.class));
+    verify(this.companiesHandlerService, times(1)).readCompanyWorkflowtypeItemOcrSettingsByCompanyIdentity(any(String.class));
+  }
+
+  @Test
+  public void testSaveCompanyWorkflowtypeItemOcrSettings() throws Exception {
+
+    final List<CompanyWorkflowtypeItemOcrSetting> listSettings = Arrays
+        .asList(this.getTestCompanyWorkflowtypeItemOcrSetting("prop1"), this.getTestCompanyWorkflowtypeItemOcrSetting("prop2"),
+            this.getTestCompanyWorkflowtypeItemOcrSetting("prop3"));
+
+    final List<CompanyWorkflowtypeItemOcrSettingEdo> listEdoSettings = Arrays
+        .asList(this.getTestCompanyWorkflowtypeItemOcrSettingEdo("prop1"), this.getTestCompanyWorkflowtypeItemOcrSettingEdo("prop2"),
+            this.getTestCompanyWorkflowtypeItemOcrSettingEdo("prop3"));
+
+    final CompanyWorkflowtypeItemOcrSettingListEdo edoListSettings = new CompanyWorkflowtypeItemOcrSettingListEdo(listEdoSettings);
+
+    when(this.companiesHandlerService.saveCompanyWorkflowtypeItemOcrSettings(any(List.class))).thenReturn(listSettings);
+
+    final String requestAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoListSettings);
+
+    final String responseAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoListSettings);
+
+    this.mockMvc
+        .perform(MockMvcRequestBuilders
+            .post(IflowRestPaths.ProfileModule.COMPANY_SAVE_WORKFLOWTYPE_ITEMS_OCR_SETTINGS)
+            .header(TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY, this.TestToken)
+            .content(requestAsXmlString)
+            .contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(status().isCreated())
+        .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+        .andExpect(content().xml(responseAsXmlString));
+
+    verify(this.tokenUserDataManager, times(1)).validateToken(any(String.class));
+    verify(this.companiesHandlerService, times(1)).saveCompanyWorkflowtypeItemOcrSettings(any(List.class));
   }
 
 }
