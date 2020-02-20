@@ -6,7 +6,7 @@ CREATE TABLE company_workflowtype_items_ocr_settings
     id bigint NOT NULL DEFAULT nextval('company_workflowtype_items_ocr_settings_seq'::regclass),
     company_id bigint NOT NULL,
     workflow_type_id bigint NOT NULL,
-    property_name character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    property_name character varying(200) COLLATE pg_catalog."default" NOT NULL,
     value character varying(4000) COLLATE pg_catalog."default",
     status smallint NOT NULL DEFAULT 1,
     version integer NOT NULL DEFAULT 1,

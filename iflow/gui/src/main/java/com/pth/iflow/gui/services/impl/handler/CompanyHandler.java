@@ -103,7 +103,12 @@ public class CompanyHandler implements ICompanyHandler {
 
     newList.addAll(settingList);
 
-    return this.companyAccess.saveCompanyWorkflowtypeItemOcrSettings(newList);
+    final List<CompanyWorkflowtypeItemOcrSetting> finallList = newList
+        .stream()
+        .filter(i -> i.hasValue())
+        .collect(Collectors.toList());
+
+    return this.companyAccess.saveCompanyWorkflowtypeItemOcrSettings(finallList);
 
   }
 

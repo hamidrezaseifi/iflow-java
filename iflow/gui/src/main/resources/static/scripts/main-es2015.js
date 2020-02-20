@@ -2782,10 +2782,21 @@ class WorkflowtypePropertySettingComponent {
         this.selectedWorlflowTypeChanged = true;
     }
     saveWorkflowType() {
-        this.showList = true;
-        this.showDetail = false;
-        this.selectedWorlflowTypeChanged = false;
-        this.reload();
+        this.loadingService.showLoading();
+        this.editService.updateWorkflowTypes(this.workflowtypeItemOcrSettings[this.selectedWorlflowType.identity], this.selectedWorlflowType.identity).subscribe((results) => {
+            console.log("Update CompanyWorkflowtypeItemOcrSetting result list", results);
+            this.workflowtypeItemOcrSettings = results;
+            this.showList = true;
+            this.showDetail = false;
+            this.selectedWorlflowTypeChanged = false;
+        }, response => {
+            console.log("Error in Update CompanyWorkflowtypeItemOcrSetting list", response);
+            this.loadingService.hideLoading();
+            this.errorService.showErrorResponse(response);
+        }, () => {
+            this.loadingService.hideLoading();
+        });
+        //this.reload();
     }
 }
 WorkflowtypePropertySettingComponent.ɵfac = function WorkflowtypePropertySettingComponent_Factory(t) { return new (t || WorkflowtypePropertySettingComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_global_service__WEBPACK_IMPORTED_MODULE_2__["GlobalService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_ngx_translate_core__WEBPACK_IMPORTED_MODULE_3__["TranslateService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_company_workflowtype_property_setting_service__WEBPACK_IMPORTED_MODULE_4__["WorkflowtypePropertySettingService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_loading_service_service__WEBPACK_IMPORTED_MODULE_5__["LoadingServiceService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_error_service_service__WEBPACK_IMPORTED_MODULE_6__["ErrorServiceService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_7__["FormBuilder"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_material_core__WEBPACK_IMPORTED_MODULE_8__["DateAdapter"])); };
@@ -5616,9 +5627,14 @@ class WorkflowtypePropertySettingService extends _helper_http_error_response_hel
         return this.http.get(this.listWorkflowTypesUrl, httpOptions);
     }
     ;
-    listWorkflowTypePtoperties(identity) {
+    listWorkflowTypePtoperties(workflowTypeIdentity) {
         const httpOptions = { headers: _helper_http_hepler__WEBPACK_IMPORTED_MODULE_1__["HttpHepler"].generateJsonHeader() };
-        return this.http.get(this.listWorkflowTypePtopertiesUrl + identity, httpOptions);
+        return this.http.get(this.listWorkflowTypePtopertiesUrl + workflowTypeIdentity, httpOptions);
+    }
+    ;
+    updateWorkflowTypes(properties, workflowTypeIdentity) {
+        const httpOptions = { headers: _helper_http_hepler__WEBPACK_IMPORTED_MODULE_1__["HttpHepler"].generateJsonHeader() };
+        return this.http.post(this.updateWorkflowTypesUrl + workflowTypeIdentity, properties, httpOptions);
     }
     ;
 }

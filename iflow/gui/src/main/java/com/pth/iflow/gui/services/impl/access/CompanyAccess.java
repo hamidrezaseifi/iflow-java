@@ -87,10 +87,12 @@ public class CompanyAccess implements ICompanyAccess {
 
     logger.debug("Save company workflowtype item ocr settings");
 
+    final CompanyWorkflowtypeItemOcrSettingListEdo workflowtypeItemOcrSettingListEdo = new CompanyWorkflowtypeItemOcrSettingListEdo(
+        GuiModelEdoMapper.toCompanyWorkflowtypeItemOcrSettingEdoList(newList));
     final CompanyWorkflowtypeItemOcrSettingListEdo listEdo = this.restTemplate
         .callRestPost(
             this.profileModuleAccessConfig.getSaveCompanyWorkflowTypeItemOcrSettingsUri(), EModule.PROFILE,
-            GuiModelEdoMapper.toCompanyWorkflowtypeItemOcrSettingEdoList(newList),
+            workflowtypeItemOcrSettingListEdo,
             CompanyWorkflowtypeItemOcrSettingListEdo.class,
             this.sessionUserInfo.getToken(), true);
 

@@ -194,10 +194,35 @@ export class WorkflowtypePropertySettingComponent implements OnInit {
 	
 	saveWorkflowType(){
 		
-		this.showList = true;
-		this.showDetail = false;
-		this.selectedWorlflowTypeChanged = false;
-		this.reload();
+		
+		this.loadingService.showLoading();
+		
+		this.editService.updateWorkflowTypes(this.workflowtypeItemOcrSettings[this.selectedWorlflowType.identity], 
+				this.selectedWorlflowType.identity).subscribe(
+	        (results :CompanyWorkflowtypeItemOcrSetting[][]) => {
+	        	
+	            console.log("Update CompanyWorkflowtypeItemOcrSetting result list", results);
+	        	
+	            this.workflowtypeItemOcrSettings = results;
+	            
+	            this.showList = true;
+	    		this.showDetail = false;
+	    		this.selectedWorlflowTypeChanged = false;
+	    		
+	        },
+	        response => {
+	        	console.log("Error in Update CompanyWorkflowtypeItemOcrSetting list", response);
+	        	this.loadingService.hideLoading();	 
+	        	this.errorService.showErrorResponse(response);
+	        },
+	        () => {
+	        	
+	        	this.loadingService.hideLoading();	            
+	        }
+		);	   
+		
+		
+		//this.reload();
 	}
 	
 }

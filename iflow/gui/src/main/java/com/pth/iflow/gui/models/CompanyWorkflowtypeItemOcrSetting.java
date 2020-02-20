@@ -1,5 +1,7 @@
 package com.pth.iflow.gui.models;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class CompanyWorkflowtypeItemOcrSetting {
 
   private String companyIdentity;
@@ -52,6 +54,11 @@ public class CompanyWorkflowtypeItemOcrSetting {
   public void setValue(final String value) {
 
     this.value = value;
+  }
+
+  public boolean hasValue() {
+
+    return StringUtils.isNotEmpty(this.value);
   }
 
   /**

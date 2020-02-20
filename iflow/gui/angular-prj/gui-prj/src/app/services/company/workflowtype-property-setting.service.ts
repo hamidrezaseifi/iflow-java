@@ -9,6 +9,8 @@ import { HttpHepler } from '../../helper/http-hepler';
 import { HttpErrorResponseHelper } from '../../helper/http-error-response-helper';
 import { AuthenticationService } from '../../services';
 
+import { CompanyWorkflowtypeItemOcrSetting, GeneralData } from '../../ui-models';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -36,13 +38,21 @@ export class WorkflowtypePropertySettingService extends HttpErrorResponseHelper 
 		
 	};
 	
-	listWorkflowTypePtoperties(identity:string){
+	listWorkflowTypePtoperties(workflowTypeIdentity:string){
 		
 	    const httpOptions = { headers: HttpHepler.generateJsonHeader() };
 	    
-		return this.http.get(this.listWorkflowTypePtopertiesUrl + identity, httpOptions);	    
+		return this.http.get(this.listWorkflowTypePtopertiesUrl + workflowTypeIdentity, httpOptions);	    
 		
 	};
 
 
+	updateWorkflowTypes(properties: CompanyWorkflowtypeItemOcrSetting[], workflowTypeIdentity:string){
+		
+	    const httpOptions = { headers: HttpHepler.generateJsonHeader() };
+	    
+		return this.http.post(this.updateWorkflowTypesUrl + workflowTypeIdentity, properties, httpOptions);	    
+		
+	};
+	
 }
