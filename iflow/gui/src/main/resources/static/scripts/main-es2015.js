@@ -2546,17 +2546,15 @@ UserListComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefine
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WorkflowtypePropertySettingComponent", function() { return WorkflowtypePropertySettingComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
-/* harmony import */ var _ui_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../ui-models */ "./src/app/ui-models/index.ts");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/__ivy_ngcc__/fesm2015/router.js");
-/* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../services/global.service */ "./src/app/services/global.service.ts");
-/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/__ivy_ngcc__/fesm2015/ngx-translate-core.js");
-/* harmony import */ var _services_company_workflowtype_property_setting_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../services/company/workflowtype-property-setting.service */ "./src/app/services/company/workflowtype-property-setting.service.ts");
-/* harmony import */ var _services_loading_service_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../services/loading-service.service */ "./src/app/services/loading-service.service.ts");
-/* harmony import */ var _services_error_service_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../services/error-service.service */ "./src/app/services/error-service.service.ts");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/__ivy_ngcc__/fesm2015/forms.js");
-/* harmony import */ var _angular_material_core__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/material/core */ "./node_modules/@angular/material/__ivy_ngcc__/fesm2015/core.js");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/__ivy_ngcc__/fesm2015/common.js");
-
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/__ivy_ngcc__/fesm2015/router.js");
+/* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/global.service */ "./src/app/services/global.service.ts");
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/__ivy_ngcc__/fesm2015/ngx-translate-core.js");
+/* harmony import */ var _services_company_workflowtype_property_setting_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../services/company/workflowtype-property-setting.service */ "./src/app/services/company/workflowtype-property-setting.service.ts");
+/* harmony import */ var _services_loading_service_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../services/loading-service.service */ "./src/app/services/loading-service.service.ts");
+/* harmony import */ var _services_error_service_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../services/error-service.service */ "./src/app/services/error-service.service.ts");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/__ivy_ngcc__/fesm2015/forms.js");
+/* harmony import */ var _angular_material_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/material/core */ "./node_modules/@angular/material/__ivy_ngcc__/fesm2015/core.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/__ivy_ngcc__/fesm2015/common.js");
 
 
 
@@ -2613,19 +2611,17 @@ function WorkflowtypePropertySettingComponent_div_6_div_11_Template(rf, ctx) { i
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 17);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "label", 18);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipe"](3, "translate");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](4, "input", 19);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("ngModelChange", function WorkflowtypePropertySettingComponent_div_6_div_11_Template_input_ngModelChange_4_listener($event) { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r231); const name_r229 = ctx.$implicit; const ctx_r230 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2); return ctx_r230.setWorkflowtypeItemOcrSettings(ctx_r230.selectedWorlflowType.identity, name_r229, $event); });
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](3, "input", 19);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("ngModelChange", function WorkflowtypePropertySettingComponent_div_6_div_11_Template_input_ngModelChange_3_listener($event) { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r231); const prop_r229 = ctx.$implicit; const ctx_r230 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2); return ctx_r230.setWorkflowtypeItemOcrSettings(ctx_r230.selectedWorlflowType.identity, prop_r229.propertyName, $event); });
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 } if (rf & 2) {
-    const name_r229 = ctx.$implicit;
-    const ctx_r226 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
+    const prop_r229 = ctx.$implicit;
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](3, 2, name_r229));
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngModel", ctx_r226.workflowtypeItemOcrSettings[ctx_r226.selectedWorlflowType.identity][name_r229].value);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](prop_r229.propertyName);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngModel", prop_r229.value);
 } }
 function WorkflowtypePropertySettingComponent_div_6_Template(rf, ctx) { if (rf & 1) {
     const _r233 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
@@ -2645,7 +2641,7 @@ function WorkflowtypePropertySettingComponent_div_6_Template(rf, ctx) { if (rf &
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](8, "div", 6);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](9, "div", 7);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](10, "div", 8);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](11, WorkflowtypePropertySettingComponent_div_6_div_11_Template, 5, 4, "div", 16);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](11, WorkflowtypePropertySettingComponent_div_6_div_11_Template, 4, 2, "div", 16);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](12, "div", 11);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -2658,7 +2654,7 @@ function WorkflowtypePropertySettingComponent_div_6_Template(rf, ctx) { if (rf &
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r220.selectedWorlflowTypeChanged);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx_r220.workflowtypeItemNames[ctx_r220.selectedWorlflowType.identity]);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx_r220.workflowtypeItemOcrSettings[ctx_r220.selectedWorlflowType.identity]);
 } }
 class WorkflowtypePropertySettingComponent {
     constructor(router, global, translate, editService, loadingService, errorService, route, formBuilder, dateAdapter) {
@@ -2671,7 +2667,7 @@ class WorkflowtypePropertySettingComponent {
         this.formBuilder = formBuilder;
         this.dateAdapter = dateAdapter;
         this.workflowtypeItemOcrSettings = [];
-        this.workflowtypeItemNames = [];
+        //workflowtypeItemNames :string[][] = [];
         this.worlflowTypes = [];
         this.selectedWorlflowType = null;
         this.selectedWorlflowTypeChanged = false;
@@ -2687,7 +2683,7 @@ class WorkflowtypePropertySettingComponent {
             this.worlflowTypes = data.workflow.worlflowTypes;
             for (var id in this.worlflowTypes) {
                 var type = this.worlflowTypes[id];
-                this.workflowtypeItemNames[type.identity] = null;
+                //this.workflowtypeItemNames[type.identity] = null;
                 if (this.workflowtypeItemOcrSettings[type.identity] === undefined) {
                     this.workflowtypeItemOcrSettings[type.identity] = [];
                 }
@@ -2719,40 +2715,56 @@ class WorkflowtypePropertySettingComponent {
         if (this.workflowtypeItemOcrSettings[type.identity] === undefined) {
             this.workflowtypeItemOcrSettings[type.identity] = [];
         }
-        if (this.workflowtypeItemNames[type.identity] === null) {
+        /*if(this.workflowtypeItemNames[type.identity] === null){
+            
             this.reloadSelectedWorkflowTypeProprties();
-        }
+        }*/
         this.showList = false;
         this.showDetail = true;
         this.selectedWorlflowTypeChanged = false;
     }
-    reloadSelectedWorkflowTypeProprties() {
+    /*reloadSelectedWorkflowTypeProprties(){
+        
         this.loadingService.showLoading();
-        this.editService.listWorkflowTypePtoperties(this.selectedWorlflowType.identity).subscribe((results) => {
-            console.log("WorkflowtypeItemName list", results);
-            this.workflowtypeItemNames[this.selectedWorlflowType.identity] = results;
-            for (var id in results) {
-                var name = results[id];
-                if (this.workflowtypeItemOcrSettings[this.selectedWorlflowType.identity][name] === undefined) {
-                    var prop = new _ui_models__WEBPACK_IMPORTED_MODULE_1__["CompanyWorkflowtypeItemOcrSetting"]();
-                    prop.workflowIdentity = this.selectedWorlflowType.identity;
-                    prop.propertyName = name;
-                    prop.value = "";
-                    prop.status = 1;
-                    prop.version = 1;
-                    this.workflowtypeItemOcrSettings[this.selectedWorlflowType.identity][name] = prop;
-                    alert(name + " created :" + JSON.stringify(prop));
-                    alert(name + " created :" + JSON.stringify(this.workflowtypeItemOcrSettings[this.selectedWorlflowType.identity][name]));
+        
+        this.editService.listWorkflowTypePtoperties(this.selectedWorlflowType.identity).subscribe(
+            (results :string[]) => {
+                
+                console.log("WorkflowtypeItemName list", results);
+                
+                this.workflowtypeItemNames[this.selectedWorlflowType.identity] = results;
+                
+                for(var id in results){
+                    var name = results[id];
+                    
+                    if(this.workflowtypeItemOcrSettings[this.selectedWorlflowType.identity][name] === undefined){
+                        var prop:CompanyWorkflowtypeItemOcrSetting = new CompanyWorkflowtypeItemOcrSetting();
+                        prop.workflowIdentity = this.selectedWorlflowType.identity;
+                        prop.propertyName = name;
+                        prop.value = "";
+                        prop.status = 1;
+                        prop.version = 1;
+                        
+                        this.workflowtypeItemOcrSettings[this.selectedWorlflowType.identity][name] = prop;
+                        
+                        //alert(name + " created :" + JSON.stringify(prop));
+                        //alert(name + " created :" + JSON.stringify(this.workflowtypeItemOcrSettings[this.selectedWorlflowType.identity][name]));
+                    }
+                    
                 }
+                
+            },
+            response => {
+                console.log("Error in get WorkflowtypeItemName list", response);
+                this.loadingService.hideLoading();
+                this.errorService.showErrorResponse(response);
+            },
+            () => {
+                
+                this.loadingService.hideLoading();
             }
-        }, response => {
-            console.log("Error in get WorkflowtypeItemName list", response);
-            this.loadingService.hideLoading();
-            this.errorService.showErrorResponse(response);
-        }, () => {
-            this.loadingService.hideLoading();
-        });
-    }
+        );
+    }*/
     closeWorkflowType() {
         this.showList = true;
         this.showDetail = false;
@@ -2760,7 +2772,13 @@ class WorkflowtypePropertySettingComponent {
         this.reload();
     }
     setWorkflowtypeItemOcrSettings(identity, name, newVal) {
-        this.workflowtypeItemOcrSettings[identity][name].value = newVal;
+        for (var id in this.workflowtypeItemOcrSettings[identity]) {
+            var prop = this.workflowtypeItemOcrSettings[identity][id];
+            if (prop.propertyName === name) {
+                prop.value = newVal;
+            }
+        }
+        //this.workflowtypeItemOcrSettings[identity][name].value = newVal;
         this.selectedWorlflowTypeChanged = true;
     }
     saveWorkflowType() {
@@ -2770,7 +2788,7 @@ class WorkflowtypePropertySettingComponent {
         this.reload();
     }
 }
-WorkflowtypePropertySettingComponent.ɵfac = function WorkflowtypePropertySettingComponent_Factory(t) { return new (t || WorkflowtypePropertySettingComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_global_service__WEBPACK_IMPORTED_MODULE_3__["GlobalService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_ngx_translate_core__WEBPACK_IMPORTED_MODULE_4__["TranslateService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_company_workflowtype_property_setting_service__WEBPACK_IMPORTED_MODULE_5__["WorkflowtypePropertySettingService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_loading_service_service__WEBPACK_IMPORTED_MODULE_6__["LoadingServiceService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_error_service_service__WEBPACK_IMPORTED_MODULE_7__["ErrorServiceService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_8__["FormBuilder"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_material_core__WEBPACK_IMPORTED_MODULE_9__["DateAdapter"])); };
+WorkflowtypePropertySettingComponent.ɵfac = function WorkflowtypePropertySettingComponent_Factory(t) { return new (t || WorkflowtypePropertySettingComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_global_service__WEBPACK_IMPORTED_MODULE_2__["GlobalService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_ngx_translate_core__WEBPACK_IMPORTED_MODULE_3__["TranslateService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_company_workflowtype_property_setting_service__WEBPACK_IMPORTED_MODULE_4__["WorkflowtypePropertySettingService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_loading_service_service__WEBPACK_IMPORTED_MODULE_5__["LoadingServiceService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_error_service_service__WEBPACK_IMPORTED_MODULE_6__["ErrorServiceService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_7__["FormBuilder"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_material_core__WEBPACK_IMPORTED_MODULE_8__["DateAdapter"])); };
 WorkflowtypePropertySettingComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: WorkflowtypePropertySettingComponent, selectors: [["app-workflowtype-property-setting"]], decls: 9, vars: 6, consts: [[1, "content-container"], [1, "page-toolbar"], [1, "page-title"], ["class", "workflow-content", 4, "ngIf"], ["class", "content-container", 4, "ngIf"], [2, "margin-top", "10px", "border", "gray 1px solid", "padding", "10px"], [1, "workflow-content"], [1, "item-row"], [1, "list-group"], [1, "list-group-item", "list-group-item-action", "list-group-item-title"], ["class", "list-group-item list-group-item-action link-out", 3, "click", 4, "ngFor", "ngForOf"], [1, "clear"], [1, "list-group-item", "list-group-item-action", "link-out", 3, "click"], [1, "toolbar-link", 3, "click"], [1, "material-icons"], ["class", "toolbar-link", 3, "click", 4, "ngIf"], ["class", "list-group-item list-group-item-action link-out", 4, "ngFor", "ngForOf"], [1, "list-group-item", "list-group-item-action", "link-out"], [1, "property-label"], ["type", "text", 1, "property-value", 3, "ngModel", "ngModelChange"]], template: function WorkflowtypePropertySettingComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 1);
@@ -2794,7 +2812,7 @@ WorkflowtypePropertySettingComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MOD
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.showDetail);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx.debug());
-    } }, directives: [_angular_common__WEBPACK_IMPORTED_MODULE_10__["NgIf"], _angular_common__WEBPACK_IMPORTED_MODULE_10__["NgForOf"], _angular_forms__WEBPACK_IMPORTED_MODULE_8__["DefaultValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_8__["NgControlStatus"], _angular_forms__WEBPACK_IMPORTED_MODULE_8__["NgModel"]], pipes: [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_4__["TranslatePipe"]], styles: ["a.toolbar-link[_ngcontent-%COMP%], a.list-group-item-action[_ngcontent-%COMP%]{\r\n\tcursor: pointer;\r\n}\r\n\r\nlabel.property-label[_ngcontent-%COMP%]{\r\n\twidth: 200px;\r\n\tfont-weight: bold;\r\n}\r\n\r\ninput.property-value[_ngcontent-%COMP%]{\r\n\twidth: 400px;\r\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29tcGFueS1jb21wb25lbnRzL3dvcmtmbG93dHlwZS1wcm9wZXJ0eS1zZXR0aW5nL3dvcmtmbG93dHlwZS1wcm9wZXJ0eS1zZXR0aW5nLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IjtBQUNBO0NBQ0MsZUFBZTtBQUNoQjs7QUFFQTtDQUNDLFlBQVk7Q0FDWixpQkFBaUI7QUFDbEI7O0FBR0E7Q0FDQyxZQUFZO0FBQ2IiLCJmaWxlIjoic3JjL2FwcC9jb21wYW55LWNvbXBvbmVudHMvd29ya2Zsb3d0eXBlLXByb3BlcnR5LXNldHRpbmcvd29ya2Zsb3d0eXBlLXByb3BlcnR5LXNldHRpbmcuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIlxyXG5hLnRvb2xiYXItbGluaywgYS5saXN0LWdyb3VwLWl0ZW0tYWN0aW9ue1xyXG5cdGN1cnNvcjogcG9pbnRlcjtcclxufVxyXG5cclxubGFiZWwucHJvcGVydHktbGFiZWx7XHJcblx0d2lkdGg6IDIwMHB4O1xyXG5cdGZvbnQtd2VpZ2h0OiBib2xkO1xyXG59XHJcblxyXG5cclxuaW5wdXQucHJvcGVydHktdmFsdWV7XHJcblx0d2lkdGg6IDQwMHB4O1xyXG59XHJcblxyXG4iXX0= */"] });
+    } }, directives: [_angular_common__WEBPACK_IMPORTED_MODULE_9__["NgIf"], _angular_common__WEBPACK_IMPORTED_MODULE_9__["NgForOf"], _angular_forms__WEBPACK_IMPORTED_MODULE_7__["DefaultValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_7__["NgControlStatus"], _angular_forms__WEBPACK_IMPORTED_MODULE_7__["NgModel"]], pipes: [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_3__["TranslatePipe"]], styles: ["a.toolbar-link[_ngcontent-%COMP%], a.list-group-item-action[_ngcontent-%COMP%]{\r\n\tcursor: pointer;\r\n}\r\n\r\nlabel.property-label[_ngcontent-%COMP%]{\r\n\twidth: 200px;\r\n\tfont-weight: bold;\r\n}\r\n\r\ninput.property-value[_ngcontent-%COMP%]{\r\n\twidth: 400px;\r\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29tcGFueS1jb21wb25lbnRzL3dvcmtmbG93dHlwZS1wcm9wZXJ0eS1zZXR0aW5nL3dvcmtmbG93dHlwZS1wcm9wZXJ0eS1zZXR0aW5nLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IjtBQUNBO0NBQ0MsZUFBZTtBQUNoQjs7QUFFQTtDQUNDLFlBQVk7Q0FDWixpQkFBaUI7QUFDbEI7O0FBR0E7Q0FDQyxZQUFZO0FBQ2IiLCJmaWxlIjoic3JjL2FwcC9jb21wYW55LWNvbXBvbmVudHMvd29ya2Zsb3d0eXBlLXByb3BlcnR5LXNldHRpbmcvd29ya2Zsb3d0eXBlLXByb3BlcnR5LXNldHRpbmcuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIlxyXG5hLnRvb2xiYXItbGluaywgYS5saXN0LWdyb3VwLWl0ZW0tYWN0aW9ue1xyXG5cdGN1cnNvcjogcG9pbnRlcjtcclxufVxyXG5cclxubGFiZWwucHJvcGVydHktbGFiZWx7XHJcblx0d2lkdGg6IDIwMHB4O1xyXG5cdGZvbnQtd2VpZ2h0OiBib2xkO1xyXG59XHJcblxyXG5cclxuaW5wdXQucHJvcGVydHktdmFsdWV7XHJcblx0d2lkdGg6IDQwMHB4O1xyXG59XHJcblxyXG4iXX0= */"] });
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](WorkflowtypePropertySettingComponent, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
         args: [{
@@ -2802,7 +2820,7 @@ WorkflowtypePropertySettingComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MOD
                 templateUrl: './workflowtype-property-setting.component.html',
                 styleUrls: ['./workflowtype-property-setting.component.css']
             }]
-    }], function () { return [{ type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] }, { type: _services_global_service__WEBPACK_IMPORTED_MODULE_3__["GlobalService"] }, { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_4__["TranslateService"] }, { type: _services_company_workflowtype_property_setting_service__WEBPACK_IMPORTED_MODULE_5__["WorkflowtypePropertySettingService"] }, { type: _services_loading_service_service__WEBPACK_IMPORTED_MODULE_6__["LoadingServiceService"] }, { type: _services_error_service_service__WEBPACK_IMPORTED_MODULE_7__["ErrorServiceService"] }, { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"] }, { type: _angular_forms__WEBPACK_IMPORTED_MODULE_8__["FormBuilder"] }, { type: _angular_material_core__WEBPACK_IMPORTED_MODULE_9__["DateAdapter"] }]; }, null); })();
+    }], function () { return [{ type: _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"] }, { type: _services_global_service__WEBPACK_IMPORTED_MODULE_2__["GlobalService"] }, { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_3__["TranslateService"] }, { type: _services_company_workflowtype_property_setting_service__WEBPACK_IMPORTED_MODULE_4__["WorkflowtypePropertySettingService"] }, { type: _services_loading_service_service__WEBPACK_IMPORTED_MODULE_5__["LoadingServiceService"] }, { type: _services_error_service_service__WEBPACK_IMPORTED_MODULE_6__["ErrorServiceService"] }, { type: _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"] }, { type: _angular_forms__WEBPACK_IMPORTED_MODULE_7__["FormBuilder"] }, { type: _angular_material_core__WEBPACK_IMPORTED_MODULE_8__["DateAdapter"] }]; }, null); })();
 
 
 /***/ }),

@@ -5045,61 +5045,55 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony import */
 
 
-    var _ui_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
-    /*! ../../ui-models */
-    "./src/app/ui-models/index.ts");
-    /* harmony import */
-
-
-    var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
     /*! @angular/router */
     "./node_modules/@angular/router/__ivy_ngcc__/fesm2015/router.js");
     /* harmony import */
 
 
-    var _services_global_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    var _services_global_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
     /*! ../../services/global.service */
     "./src/app/services/global.service.ts");
     /* harmony import */
 
 
-    var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
     /*! @ngx-translate/core */
     "./node_modules/@ngx-translate/core/__ivy_ngcc__/fesm2015/ngx-translate-core.js");
     /* harmony import */
 
 
-    var _services_company_workflowtype_property_setting_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+    var _services_company_workflowtype_property_setting_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
     /*! ../../services/company/workflowtype-property-setting.service */
     "./src/app/services/company/workflowtype-property-setting.service.ts");
     /* harmony import */
 
 
-    var _services_loading_service_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+    var _services_loading_service_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
     /*! ../../services/loading-service.service */
     "./src/app/services/loading-service.service.ts");
     /* harmony import */
 
 
-    var _services_error_service_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+    var _services_error_service_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
     /*! ../../services/error-service.service */
     "./src/app/services/error-service.service.ts");
     /* harmony import */
 
 
-    var _angular_forms__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+    var _angular_forms__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
     /*! @angular/forms */
     "./node_modules/@angular/forms/__ivy_ngcc__/fesm2015/forms.js");
     /* harmony import */
 
 
-    var _angular_material_core__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+    var _angular_material_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
     /*! @angular/material/core */
     "./node_modules/@angular/material/__ivy_ngcc__/fesm2015/core.js");
     /* harmony import */
 
 
-    var _angular_common__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
+    var _angular_common__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
     /*! @angular/common */
     "./node_modules/@angular/common/__ivy_ngcc__/fesm2015/common.js");
 
@@ -5207,20 +5201,18 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipe"](3, "translate");
-
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](4, "input", 19);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](3, "input", 19);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("ngModelChange", function WorkflowtypePropertySettingComponent_div_6_div_11_Template_input_ngModelChange_4_listener($event) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("ngModelChange", function WorkflowtypePropertySettingComponent_div_6_div_11_Template_input_ngModelChange_3_listener($event) {
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r231);
 
-          var name_r229 = ctx.$implicit;
+          var prop_r229 = ctx.$implicit;
 
           var ctx_r230 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
 
-          return ctx_r230.setWorkflowtypeItemOcrSettings(ctx_r230.selectedWorlflowType.identity, name_r229, $event);
+          return ctx_r230.setWorkflowtypeItemOcrSettings(ctx_r230.selectedWorlflowType.identity, prop_r229.propertyName, $event);
         });
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -5229,17 +5221,15 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }
 
       if (rf & 2) {
-        var name_r229 = ctx.$implicit;
-
-        var ctx_r226 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
+        var prop_r229 = ctx.$implicit;
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](3, 2, name_r229));
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](prop_r229.propertyName);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngModel", ctx_r226.workflowtypeItemOcrSettings[ctx_r226.selectedWorlflowType.identity][name_r229].value);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngModel", prop_r229.value);
       }
     }
 
@@ -5285,7 +5275,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](10, "div", 8);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](11, WorkflowtypePropertySettingComponent_div_6_div_11_Template, 5, 4, "div", 16);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](11, WorkflowtypePropertySettingComponent_div_6_div_11_Template, 4, 2, "div", 16);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
@@ -5311,7 +5301,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx_r220.workflowtypeItemNames[ctx_r220.selectedWorlflowType.identity]);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx_r220.workflowtypeItemOcrSettings[ctx_r220.selectedWorlflowType.identity]);
       }
     }
 
@@ -5331,8 +5321,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.route = route;
         this.formBuilder = formBuilder;
         this.dateAdapter = dateAdapter;
-        this.workflowtypeItemOcrSettings = [];
-        this.workflowtypeItemNames = [];
+        this.workflowtypeItemOcrSettings = []; //workflowtypeItemNames :string[][] = [];
+
         this.worlflowTypes = [];
         this.selectedWorlflowType = null;
         this.selectedWorlflowTypeChanged = false;
@@ -5349,8 +5339,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           _this15.worlflowTypes = data.workflow.worlflowTypes;
 
           for (var id in _this15.worlflowTypes) {
-            var type = _this15.worlflowTypes[id];
-            _this15.workflowtypeItemNames[type.identity] = null;
+            var type = _this15.worlflowTypes[id]; //this.workflowtypeItemNames[type.identity] = null;
 
             if (_this15.workflowtypeItemOcrSettings[type.identity] === undefined) {
               _this15.workflowtypeItemOcrSettings[type.identity] = [];
@@ -5397,50 +5386,59 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           if (this.workflowtypeItemOcrSettings[type.identity] === undefined) {
             this.workflowtypeItemOcrSettings[type.identity] = [];
           }
+          /*if(this.workflowtypeItemNames[type.identity] === null){
+              
+              this.reloadSelectedWorkflowTypeProprties();
+          }*/
 
-          if (this.workflowtypeItemNames[type.identity] === null) {
-            this.reloadSelectedWorkflowTypeProprties();
-          }
 
           this.showList = false;
           this.showDetail = true;
           this.selectedWorlflowTypeChanged = false;
         }
-      }, {
-        key: "reloadSelectedWorkflowTypeProprties",
-        value: function reloadSelectedWorkflowTypeProprties() {
-          var _this17 = this;
+        /*reloadSelectedWorkflowTypeProprties(){
+            
+            this.loadingService.showLoading();
+            
+            this.editService.listWorkflowTypePtoperties(this.selectedWorlflowType.identity).subscribe(
+                (results :string[]) => {
+                    
+                    console.log("WorkflowtypeItemName list", results);
+                    
+                    this.workflowtypeItemNames[this.selectedWorlflowType.identity] = results;
+                    
+                    for(var id in results){
+                        var name = results[id];
+                        
+                        if(this.workflowtypeItemOcrSettings[this.selectedWorlflowType.identity][name] === undefined){
+                            var prop:CompanyWorkflowtypeItemOcrSetting = new CompanyWorkflowtypeItemOcrSetting();
+                            prop.workflowIdentity = this.selectedWorlflowType.identity;
+                            prop.propertyName = name;
+                            prop.value = "";
+                            prop.status = 1;
+                            prop.version = 1;
+                            
+                            this.workflowtypeItemOcrSettings[this.selectedWorlflowType.identity][name] = prop;
+                            
+                            //alert(name + " created :" + JSON.stringify(prop));
+                            //alert(name + " created :" + JSON.stringify(this.workflowtypeItemOcrSettings[this.selectedWorlflowType.identity][name]));
+                        }
+                        
+                    }
+                    
+                },
+                response => {
+                    console.log("Error in get WorkflowtypeItemName list", response);
+                    this.loadingService.hideLoading();
+                    this.errorService.showErrorResponse(response);
+                },
+                () => {
+                    
+                    this.loadingService.hideLoading();
+                }
+            );
+        }*/
 
-          this.loadingService.showLoading();
-          this.editService.listWorkflowTypePtoperties(this.selectedWorlflowType.identity).subscribe(function (results) {
-            console.log("WorkflowtypeItemName list", results);
-            _this17.workflowtypeItemNames[_this17.selectedWorlflowType.identity] = results;
-
-            for (var id in results) {
-              var name = results[id];
-
-              if (_this17.workflowtypeItemOcrSettings[_this17.selectedWorlflowType.identity][name] === undefined) {
-                var prop = new _ui_models__WEBPACK_IMPORTED_MODULE_1__["CompanyWorkflowtypeItemOcrSetting"]();
-                prop.workflowIdentity = _this17.selectedWorlflowType.identity;
-                prop.propertyName = name;
-                prop.value = "";
-                prop.status = 1;
-                prop.version = 1;
-                _this17.workflowtypeItemOcrSettings[_this17.selectedWorlflowType.identity][name] = prop;
-                alert(name + " created :" + JSON.stringify(prop));
-                alert(name + " created :" + JSON.stringify(_this17.workflowtypeItemOcrSettings[_this17.selectedWorlflowType.identity][name]));
-              }
-            }
-          }, function (response) {
-            console.log("Error in get WorkflowtypeItemName list", response);
-
-            _this17.loadingService.hideLoading();
-
-            _this17.errorService.showErrorResponse(response);
-          }, function () {
-            _this17.loadingService.hideLoading();
-          });
-        }
       }, {
         key: "closeWorkflowType",
         value: function closeWorkflowType() {
@@ -5452,7 +5450,15 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "setWorkflowtypeItemOcrSettings",
         value: function setWorkflowtypeItemOcrSettings(identity, name, newVal) {
-          this.workflowtypeItemOcrSettings[identity][name].value = newVal;
+          for (var id in this.workflowtypeItemOcrSettings[identity]) {
+            var prop = this.workflowtypeItemOcrSettings[identity][id];
+
+            if (prop.propertyName === name) {
+              prop.value = newVal;
+            }
+          } //this.workflowtypeItemOcrSettings[identity][name].value = newVal;
+
+
           this.selectedWorlflowTypeChanged = true;
         }
       }, {
@@ -5469,7 +5475,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     }();
 
     WorkflowtypePropertySettingComponent.ɵfac = function WorkflowtypePropertySettingComponent_Factory(t) {
-      return new (t || WorkflowtypePropertySettingComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_global_service__WEBPACK_IMPORTED_MODULE_3__["GlobalService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_ngx_translate_core__WEBPACK_IMPORTED_MODULE_4__["TranslateService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_company_workflowtype_property_setting_service__WEBPACK_IMPORTED_MODULE_5__["WorkflowtypePropertySettingService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_loading_service_service__WEBPACK_IMPORTED_MODULE_6__["LoadingServiceService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_error_service_service__WEBPACK_IMPORTED_MODULE_7__["ErrorServiceService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_8__["FormBuilder"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_material_core__WEBPACK_IMPORTED_MODULE_9__["DateAdapter"]));
+      return new (t || WorkflowtypePropertySettingComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_global_service__WEBPACK_IMPORTED_MODULE_2__["GlobalService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_ngx_translate_core__WEBPACK_IMPORTED_MODULE_3__["TranslateService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_company_workflowtype_property_setting_service__WEBPACK_IMPORTED_MODULE_4__["WorkflowtypePropertySettingService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_loading_service_service__WEBPACK_IMPORTED_MODULE_5__["LoadingServiceService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_error_service_service__WEBPACK_IMPORTED_MODULE_6__["ErrorServiceService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_7__["FormBuilder"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_material_core__WEBPACK_IMPORTED_MODULE_8__["DateAdapter"]));
     };
 
     WorkflowtypePropertySettingComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({
@@ -5525,8 +5531,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx.debug());
         }
       },
-      directives: [_angular_common__WEBPACK_IMPORTED_MODULE_10__["NgIf"], _angular_common__WEBPACK_IMPORTED_MODULE_10__["NgForOf"], _angular_forms__WEBPACK_IMPORTED_MODULE_8__["DefaultValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_8__["NgControlStatus"], _angular_forms__WEBPACK_IMPORTED_MODULE_8__["NgModel"]],
-      pipes: [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_4__["TranslatePipe"]],
+      directives: [_angular_common__WEBPACK_IMPORTED_MODULE_9__["NgIf"], _angular_common__WEBPACK_IMPORTED_MODULE_9__["NgForOf"], _angular_forms__WEBPACK_IMPORTED_MODULE_7__["DefaultValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_7__["NgControlStatus"], _angular_forms__WEBPACK_IMPORTED_MODULE_7__["NgModel"]],
+      pipes: [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_3__["TranslatePipe"]],
       styles: ["a.toolbar-link[_ngcontent-%COMP%], a.list-group-item-action[_ngcontent-%COMP%]{\r\n\tcursor: pointer;\r\n}\r\n\r\nlabel.property-label[_ngcontent-%COMP%]{\r\n\twidth: 200px;\r\n\tfont-weight: bold;\r\n}\r\n\r\ninput.property-value[_ngcontent-%COMP%]{\r\n\twidth: 400px;\r\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29tcGFueS1jb21wb25lbnRzL3dvcmtmbG93dHlwZS1wcm9wZXJ0eS1zZXR0aW5nL3dvcmtmbG93dHlwZS1wcm9wZXJ0eS1zZXR0aW5nLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IjtBQUNBO0NBQ0MsZUFBZTtBQUNoQjs7QUFFQTtDQUNDLFlBQVk7Q0FDWixpQkFBaUI7QUFDbEI7O0FBR0E7Q0FDQyxZQUFZO0FBQ2IiLCJmaWxlIjoic3JjL2FwcC9jb21wYW55LWNvbXBvbmVudHMvd29ya2Zsb3d0eXBlLXByb3BlcnR5LXNldHRpbmcvd29ya2Zsb3d0eXBlLXByb3BlcnR5LXNldHRpbmcuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIlxyXG5hLnRvb2xiYXItbGluaywgYS5saXN0LWdyb3VwLWl0ZW0tYWN0aW9ue1xyXG5cdGN1cnNvcjogcG9pbnRlcjtcclxufVxyXG5cclxubGFiZWwucHJvcGVydHktbGFiZWx7XHJcblx0d2lkdGg6IDIwMHB4O1xyXG5cdGZvbnQtd2VpZ2h0OiBib2xkO1xyXG59XHJcblxyXG5cclxuaW5wdXQucHJvcGVydHktdmFsdWV7XHJcblx0d2lkdGg6IDQwMHB4O1xyXG59XHJcblxyXG4iXX0= */"]
     });
     /*@__PURE__*/
@@ -5541,23 +5547,23 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         }]
       }], function () {
         return [{
-          type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]
+          type: _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]
         }, {
-          type: _services_global_service__WEBPACK_IMPORTED_MODULE_3__["GlobalService"]
+          type: _services_global_service__WEBPACK_IMPORTED_MODULE_2__["GlobalService"]
         }, {
-          type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_4__["TranslateService"]
+          type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_3__["TranslateService"]
         }, {
-          type: _services_company_workflowtype_property_setting_service__WEBPACK_IMPORTED_MODULE_5__["WorkflowtypePropertySettingService"]
+          type: _services_company_workflowtype_property_setting_service__WEBPACK_IMPORTED_MODULE_4__["WorkflowtypePropertySettingService"]
         }, {
-          type: _services_loading_service_service__WEBPACK_IMPORTED_MODULE_6__["LoadingServiceService"]
+          type: _services_loading_service_service__WEBPACK_IMPORTED_MODULE_5__["LoadingServiceService"]
         }, {
-          type: _services_error_service_service__WEBPACK_IMPORTED_MODULE_7__["ErrorServiceService"]
+          type: _services_error_service_service__WEBPACK_IMPORTED_MODULE_6__["ErrorServiceService"]
         }, {
-          type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"]
+          type: _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"]
         }, {
-          type: _angular_forms__WEBPACK_IMPORTED_MODULE_8__["FormBuilder"]
+          type: _angular_forms__WEBPACK_IMPORTED_MODULE_7__["FormBuilder"]
         }, {
-          type: _angular_material_core__WEBPACK_IMPORTED_MODULE_9__["DateAdapter"]
+          type: _angular_material_core__WEBPACK_IMPORTED_MODULE_8__["DateAdapter"]
         }];
       }, null);
     })();
@@ -5794,17 +5800,17 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "subscribeErrorService",
         value: function subscribeErrorService() {
-          var _this18 = this;
+          var _this17 = this;
 
           this.errorService.errorSubject.subscribe(function (data) {
             if (data && data != null) {
-              _this18.errorMessage = data.errorMessage;
-              _this18.errorDetails = data.errorDetail;
-              _this18.showErrorDetail = false;
-              _this18.showError = true; //alert("error coms: " + this.errorMessage + " , show: " + (this.showError === true));
+              _this17.errorMessage = data.errorMessage;
+              _this17.errorDetails = data.errorDetail;
+              _this17.showErrorDetail = false;
+              _this17.showError = true; //alert("error coms: " + this.errorMessage + " , show: " + (this.showError === true));
             } else {
-              _this18.showError = false;
-              _this18.showErrorDetail = false; //alert("no error");
+              _this17.showError = false;
+              _this17.showErrorDetail = false; //alert("no error");
             } //this.subscribeErrorService();
 
           });
@@ -6231,10 +6237,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _createClass(LoadingDialogComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {
-          var _this19 = this;
+          var _this18 = this;
 
           this.loadingService.loadingSubject.subscribe(function (data) {
-            _this19.showLoading = data;
+            _this18.showLoading = data;
           });
         }
       }]);
@@ -7280,7 +7286,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function WmFileUploadComponent(translate, loadingService, errorService) {
-        var _this20 = this;
+        var _this19 = this;
 
         _classCallCheck(this, WmFileUploadComponent);
 
@@ -7299,7 +7305,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.showFilePreviewDialog = false;
         this.fileExistsMessage = "common.file-exists";
         translate.get('common.file-exists').subscribe(function (res) {
-          _this20.fileExistsMessage = res;
+          _this19.fileExistsMessage = res;
         });
       }
 
@@ -7319,7 +7325,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "uploadFile",
         value: function uploadFile(fileInput) {
-          var _this21 = this;
+          var _this20 = this;
 
           var file = fileInput.target.files[0];
           console.log("file: ", file); //alert(file.name);
@@ -7337,7 +7343,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           this.editService.uploadTempFiles(file).subscribe(function (result) {
             console.log("upload invoice file result", result);
 
-            _this21.loadingService.hideLoading();
+            _this20.loadingService.hideLoading();
 
             if (result.status) {
               if (result.status === "done") {
@@ -7351,19 +7357,19 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
                 uploaded.uploadResult = result;
 
-                _this21.uploadedFiles.push(uploaded);
+                _this20.uploadedFiles.push(uploaded);
 
-                _this21.onUploadedFilesChanged.emit(_this21.uploadedFiles);
+                _this20.onUploadedFilesChanged.emit(_this20.uploadedFiles);
               }
 
               if (result.status === "error" && result.errorMessage) {
-                _this21.errorService.showError(result.errorMessage, result.errorDetail);
+                _this20.errorService.showError(result.errorMessage, result.errorDetail);
               }
             }
           }, function (response) {
             console.log("Error in upload invoice file", response);
 
-            _this21.loadingService.hideLoading();
+            _this20.loadingService.hideLoading();
           }, function () {});
         }
       }, {
@@ -8193,13 +8199,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _inherits(GermanDateAdapter, _angular_material_cor);
 
       function GermanDateAdapter() {
-        var _this22;
+        var _this21;
 
         _classCallCheck(this, GermanDateAdapter);
 
-        _this22 = _possibleConstructorReturn(this, _getPrototypeOf(GermanDateAdapter).apply(this, arguments));
-        _this22.useUtcForDisplay = true;
-        return _this22;
+        _this21 = _possibleConstructorReturn(this, _getPrototypeOf(GermanDateAdapter).apply(this, arguments));
+        _this21.useUtcForDisplay = true;
+        return _this21;
       }
 
       _createClass(GermanDateAdapter, [{
@@ -8887,7 +8893,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function LoginComponent(formBuilder, route, router, autService, global, translate) {
-        var _this23 = this;
+        var _this22 = this;
 
         _classCallCheck(this, LoginComponent);
 
@@ -8905,7 +8911,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         translate.use('de');
         this.router.events.subscribe(function (evt) {
           if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_1__["NavigationEnd"]) {
-            _this23.global.loadAllSetting(null);
+            _this22.global.loadAllSetting(null);
           }
         });
       }
@@ -9927,7 +9933,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function MessageBarComponent(router, messageService, errorService, globalSocket) {
-        var _this24 = this;
+        var _this23 = this;
 
         _classCallCheck(this, MessageBarComponent);
 
@@ -9948,13 +9954,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this._isLogged = false;
 
         this.onReceiveMessage = function (message) {
-          _this24.requesting = false;
+          _this23.requesting = false;
           console.log("Socket Message: ", message.body);
           var parsedMessage = JSON.parse(message.body);
           console.log("Parsed Message: ", parsedMessage);
 
           if (parsedMessage.command && parsedMessage.command === "message-reload") {
-            _this24.readMessageList(false);
+            _this23.readMessageList(false);
           }
         };
       }
@@ -10004,7 +10010,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "readMessageList",
         value: function readMessageList(reset) {
-          var _this25 = this;
+          var _this24 = this;
 
           //clearTimeout(this.messageReloadTimeoutId);
           console.log("Start Request Read message list " + (reset ? "with reset" : "without reset"));
@@ -10013,14 +10019,14 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             this.isReloadingMessages = true;
             this.messageService.loadMessages(reset).subscribe(function (messageList) {
               console.log("Read message list", messageList);
-              _this25.messages = messageList;
+              _this24.messages = messageList;
             }, function (response) {
               console.log("Error in read message list", response);
-              _this25.messages = [];
-              _this25.isReloadingMessages = false;
+              _this24.messages = [];
+              _this24.isReloadingMessages = false;
             }, function () {
               setTimeout(function () {
-                _this25.isReloadingMessages = false;
+                _this24.isReloadingMessages = false;
               }, 500);
               /*this.messageReloadTimeoutId = setTimeout(() =>{
                   this.reloadMessages(false);
@@ -10047,16 +10053,16 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "assignWorkflowMe",
         value: function assignWorkflowMe() {
-          var _this26 = this;
+          var _this25 = this;
 
           this.messageService.assignMe(this.viewWorkflowModel.identity).subscribe(function (val) {
             console.log("Workflow assigned to me"); //this.readMessageList(true);
           }, function (response) {
             console.log("Error in assigning workflow", response);
 
-            _this26.errorService.showErrorResponse(response);
+            _this25.errorService.showErrorResponse(response);
           }, function () {
-            _this26.viewWorkflow = false;
+            _this25.viewWorkflow = false;
           });
         }
       }, {
@@ -10294,7 +10300,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _createClass(AuthenticationService, [{
         key: "login",
         value: function login(username, password, companyid, loginComponent) {
-          var _this27 = this;
+          var _this26 = this;
 
           var loginData = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpParams"]().set('username', username).set('password', password).set('companyid', companyid);
           var httpOptions = {
@@ -10303,18 +10309,18 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           this.http.post(this.authenticateUrl, loginData, httpOptions).subscribe(function (val) {
             var loginResponse = val;
 
-            _this27.currentUserSubject.next(loginResponse.user);
+            _this26.currentUserSubject.next(loginResponse.user);
 
-            _this27.currentUserSubject.complete();
+            _this26.currentUserSubject.complete();
 
-            _this27.isLoggedIn = true;
+            _this26.isLoggedIn = true;
             loginComponent.processLoginResult(val);
           }, function (response) {
-            _this27.currentUserSubject.next(null);
+            _this26.currentUserSubject.next(null);
 
-            _this27.currentUserSubject.complete();
+            _this26.currentUserSubject.complete();
 
-            _this27.isLoggedIn = false;
+            _this26.isLoggedIn = false;
             loginComponent.processFailedResult(response);
           }, function () {
             loginComponent.processEndLoading();
@@ -10323,7 +10329,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "checkLoginState",
         value: function checkLoginState(returnUrl) {
-          var _this28 = this;
+          var _this27 = this;
 
           this.loadingService.showLoading();
           this.global.loadAllSettingObserv().subscribe(function (generalData) {
@@ -10331,24 +10337,24 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             var value = generalData.isLogged + "";
 
             if (value === "true" && generalData.user) {
-              _this28.isLoggedIn = true;
+              _this27.isLoggedIn = true;
 
-              _this28.currentUserSubject.next(generalData.user.currentUser); //this.currentUserSubject.complete();
+              _this27.currentUserSubject.next(generalData.user.currentUser); //this.currentUserSubject.complete();
 
 
-              _this28.global.loadAllSetting(null); //this.global.setGeneralData(generalData);
+              _this27.global.loadAllSetting(null); //this.global.setGeneralData(generalData);
               //alert("from authentication- redirect to : " + returnUrl + ": \n" + JSON.stringify(generalData));
 
 
-              _this28.router.navigate([returnUrl]);
+              _this27.router.navigate([returnUrl]);
             } else {
-              _this28.isLoggedIn = false;
+              _this27.isLoggedIn = false;
 
-              _this28.currentUserSubject.next(null); //this.currentUserSubject.complete();
+              _this27.currentUserSubject.next(null); //this.currentUserSubject.complete();
               //alert("from authentication- redirect to login : \n" + JSON.stringify(generalData));
 
 
-              _this28.router.navigate(['auth/login'], {
+              _this27.router.navigate(['auth/login'], {
                 queryParams: {
                   returnUrl: returnUrl
                 }
@@ -10356,13 +10362,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             }
           }, function (response) {
             console.log("Error in read menu list", response);
-            _this28.isLoggedIn = false;
+            _this27.isLoggedIn = false;
 
-            _this28.currentUserSubject.next(null);
+            _this27.currentUserSubject.next(null);
 
-            _this28.currentUserSubject.complete();
+            _this27.currentUserSubject.complete();
 
-            _this28.router.navigate(['auth/login'], {
+            _this27.router.navigate(['auth/login'], {
               queryParams: {
                 returnUrl: returnUrl
               }
@@ -10386,7 +10392,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "logout",
         value: function logout(returnUrl) {
-          var _this29 = this;
+          var _this28 = this;
 
           if (!returnUrl || returnUrl === null || returnUrl === undefined) {
             returnUrl = "";
@@ -10403,31 +10409,31 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             var loginResponse = val;
             console.log("Is Logged out!");
 
-            _this29.currentUserSubject.next(null); //this.currentUserSubject.complete();
+            _this28.currentUserSubject.next(null); //this.currentUserSubject.complete();
 
 
-            _this29.isLoggedIn = false; //loginComponent.processLoginResult(<LoginResponse>val);
+            _this28.isLoggedIn = false; //loginComponent.processLoginResult(<LoginResponse>val);
 
-            _this29.global.loadAllSetting(null); //this.loadingService.hideLoading();
+            _this28.global.loadAllSetting(null); //this.loadingService.hideLoading();
 
 
-            _this29.router.navigate(['auth/login'], {
+            _this28.router.navigate(['auth/login'], {
               queryParams: {
                 returnUrl: returnUrl
               }
             });
           }, function (response) {
-            _this29.currentUserSubject.next(null);
+            _this28.currentUserSubject.next(null);
 
             console.log("Error in Logging out!", response); //this.currentUserSubject.complete();
 
-            _this29.isLoggedIn = false; //loginComponent.processFailedResult(response);
+            _this28.isLoggedIn = false; //loginComponent.processFailedResult(response);
 
-            _this29.global.loadAllSetting(null);
+            _this28.global.loadAllSetting(null);
 
-            _this29.loadingService.hideLoading();
+            _this28.loadingService.hideLoading();
 
-            _this29.router.navigate(['auth/login'], {
+            _this28.router.navigate(['auth/login'], {
               queryParams: {
                 returnUrl: returnUrl
               }
@@ -10564,19 +10570,19 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _inherits(CompanyEditService, _helper_http_error_re);
 
       function CompanyEditService(http, loadingService, router, route, autService) {
-        var _this30;
+        var _this29;
 
         _classCallCheck(this, CompanyEditService);
 
-        _this30 = _possibleConstructorReturn(this, _getPrototypeOf(CompanyEditService).call(this, router, route, autService));
-        _this30.http = http;
-        _this30.loadingService = loadingService;
-        _this30.router = router;
-        _this30.route = route;
-        _this30.autService = autService;
-        _this30.loadDataUrl = "/company/data/info";
-        _this30.updateDataUrl = "/company/data/update";
-        return _this30;
+        _this29 = _possibleConstructorReturn(this, _getPrototypeOf(CompanyEditService).call(this, router, route, autService));
+        _this29.http = http;
+        _this29.loadingService = loadingService;
+        _this29.router = router;
+        _this29.route = route;
+        _this29.autService = autService;
+        _this29.loadDataUrl = "/company/data/info";
+        _this29.updateDataUrl = "/company/data/update";
+        return _this29;
       }
 
       _createClass(CompanyEditService, [{
@@ -10703,21 +10709,21 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _inherits(DepartmentEditService, _helper_http_error_re2);
 
       function DepartmentEditService(http, loadingService, router, route, autService) {
-        var _this31;
+        var _this30;
 
         _classCallCheck(this, DepartmentEditService);
 
-        _this31 = _possibleConstructorReturn(this, _getPrototypeOf(DepartmentEditService).call(this, router, route, autService));
-        _this31.http = http;
-        _this31.loadingService = loadingService;
-        _this31.router = router;
-        _this31.route = route;
-        _this31.autService = autService;
-        _this31.loadDepartmentsUrl = "/departments/data/list";
-        _this31.createDepartmentUrl = "/departments/data/create";
-        _this31.updateDepartmentUrl = "/departments/data/update";
-        _this31.deleteDepartmentUrl = "/departments/data/delete";
-        return _this31;
+        _this30 = _possibleConstructorReturn(this, _getPrototypeOf(DepartmentEditService).call(this, router, route, autService));
+        _this30.http = http;
+        _this30.loadingService = loadingService;
+        _this30.router = router;
+        _this30.route = route;
+        _this30.autService = autService;
+        _this30.loadDepartmentsUrl = "/departments/data/list";
+        _this30.createDepartmentUrl = "/departments/data/create";
+        _this30.updateDepartmentUrl = "/departments/data/update";
+        _this30.deleteDepartmentUrl = "/departments/data/delete";
+        return _this30;
       }
 
       _createClass(DepartmentEditService, [{
@@ -10860,22 +10866,22 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _inherits(UserEditService, _helper_http_error_re3);
 
       function UserEditService(http, loadingService, router, route, autService) {
-        var _this32;
+        var _this31;
 
         _classCallCheck(this, UserEditService);
 
-        _this32 = _possibleConstructorReturn(this, _getPrototypeOf(UserEditService).call(this, router, route, autService));
-        _this32.http = http;
-        _this32.loadingService = loadingService;
-        _this32.router = router;
-        _this32.route = route;
-        _this32.autService = autService;
-        _this32.loadUsersUrl = "/users/data/list";
-        _this32.createUserUrl = "/users/data/create";
-        _this32.updateUserUrl = "/users/data/update";
-        _this32.deleteUserUrl = "/users/data/delete";
-        _this32.resetUserPasswordUrl = "/users/data/resetpassword";
-        return _this32;
+        _this31 = _possibleConstructorReturn(this, _getPrototypeOf(UserEditService).call(this, router, route, autService));
+        _this31.http = http;
+        _this31.loadingService = loadingService;
+        _this31.router = router;
+        _this31.route = route;
+        _this31.autService = autService;
+        _this31.loadUsersUrl = "/users/data/list";
+        _this31.createUserUrl = "/users/data/create";
+        _this31.updateUserUrl = "/users/data/update";
+        _this31.deleteUserUrl = "/users/data/delete";
+        _this31.resetUserPasswordUrl = "/users/data/resetpassword";
+        return _this31;
       }
 
       _createClass(UserEditService, [{
@@ -11026,20 +11032,20 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _inherits(WorkflowtypePropertySettingService, _helper_http_error_re4);
 
       function WorkflowtypePropertySettingService(http, loadingService, router, route, autService) {
-        var _this33;
+        var _this32;
 
         _classCallCheck(this, WorkflowtypePropertySettingService);
 
-        _this33 = _possibleConstructorReturn(this, _getPrototypeOf(WorkflowtypePropertySettingService).call(this, router, route, autService));
-        _this33.http = http;
-        _this33.loadingService = loadingService;
-        _this33.router = router;
-        _this33.route = route;
-        _this33.autService = autService;
-        _this33.listWorkflowTypesUrl = "/company/data/readworkflowtypeitemocrsettings";
-        _this33.updateWorkflowTypesUrl = "/company/data/saveworkflowtypeitemocrsettings/";
-        _this33.listWorkflowTypePtopertiesUrl = "/company/data/readworkflowtypeitems/";
-        return _this33;
+        _this32 = _possibleConstructorReturn(this, _getPrototypeOf(WorkflowtypePropertySettingService).call(this, router, route, autService));
+        _this32.http = http;
+        _this32.loadingService = loadingService;
+        _this32.router = router;
+        _this32.route = route;
+        _this32.autService = autService;
+        _this32.listWorkflowTypesUrl = "/company/data/readworkflowtypeitemocrsettings";
+        _this32.updateWorkflowTypesUrl = "/company/data/saveworkflowtypeitemocrsettings/";
+        _this32.listWorkflowTypePtopertiesUrl = "/company/data/readworkflowtypeitems/";
+        return _this32;
       }
 
       _createClass(WorkflowtypePropertySettingService, [{
@@ -11347,7 +11353,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _createClass(GlobalService, [{
         key: "loadAllSetting",
         value: function loadAllSetting(login) {
-          var _this34 = this;
+          var _this33 = this;
 
           this.loadingService.showLoading();
           var httpOptions = {
@@ -11357,22 +11363,22 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             console.log("GET call successful generaldata", generalData);
             var islogged = generalData.isLogged + "";
             generalData.isLogged = islogged === "true";
-            _this34.loadedGeneralData = JSON.parse(JSON.stringify(generalData));
+            _this33.loadedGeneralData = JSON.parse(JSON.stringify(generalData));
 
-            _this34.currentSessionDataSubject.next(generalData);
+            _this33.currentSessionDataSubject.next(generalData);
 
-            _this34.loadingService.hideLoading();
+            _this33.loadingService.hideLoading();
           }, function (response) {
             console.log("Error in read general list", response);
 
-            _this34.loadingService.hideLoading();
+            _this33.loadingService.hideLoading();
           }, function () {
             if (login != null) {
               login.finishGeneralDataLoading();
             } //this.currentSessionDataSubject.complete();
 
 
-            _this34.loadingService.hideLoading();
+            _this33.loadingService.hideLoading();
           });
         }
         /*setGeneralData(generalData :GeneralData){
@@ -11736,20 +11742,20 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _inherits(InvoiceWorkflowEditService, _helper_http_error_re5);
 
       function InvoiceWorkflowEditService(http, loadingService, errorService, router, route, autService) {
-        var _this35;
+        var _this34;
 
         _classCallCheck(this, InvoiceWorkflowEditService);
 
-        _this35 = _possibleConstructorReturn(this, _getPrototypeOf(InvoiceWorkflowEditService).call(this, router, route, autService));
-        _this35.http = http;
-        _this35.loadingService = loadingService;
-        _this35.errorService = errorService;
-        _this35.router = router;
-        _this35.route = route;
-        _this35.autService = autService;
-        _this35.workflowSaveRequestInitSubject = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](null);
-        _this35.workflowSaveRequestInit = null;
-        return _this35;
+        _this34 = _possibleConstructorReturn(this, _getPrototypeOf(InvoiceWorkflowEditService).call(this, router, route, autService));
+        _this34.http = http;
+        _this34.loadingService = loadingService;
+        _this34.errorService = errorService;
+        _this34.router = router;
+        _this34.route = route;
+        _this34.autService = autService;
+        _this34.workflowSaveRequestInitSubject = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](null);
+        _this34.workflowSaveRequestInit = null;
+        return _this34;
       }
 
       _createClass(InvoiceWorkflowEditService, [{
@@ -11795,7 +11801,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "loadCreateInitialData",
         value: function loadCreateInitialData() {
-          var _this36 = this;
+          var _this35 = this;
 
           this.loadingService.showLoading();
           var httpOptions = {
@@ -11803,17 +11809,17 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           };
           this.http.post(this.getInitCreateUrl(), new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpParams"](), httpOptions).subscribe(function (initialData) {
             console.log("GET successful edit inital data", initialData);
-            _this36.workflowSaveRequestInit = JSON.parse(JSON.stringify(initialData));
+            _this35.workflowSaveRequestInit = JSON.parse(JSON.stringify(initialData));
 
-            _this36.workflowSaveRequestInitSubject.next(initialData);
+            _this35.workflowSaveRequestInitSubject.next(initialData);
           }, function (response) {
             console.log("Error in read edit inital data", response);
 
-            _this36.errorService.showErrorResponse(response);
+            _this35.errorService.showErrorResponse(response);
           }, function () {
-            _this36.workflowSaveRequestInitSubject.complete();
+            _this35.workflowSaveRequestInitSubject.complete();
 
-            _this36.loadingService.hideLoading();
+            _this35.loadingService.hideLoading();
           });
         }
       }, {
@@ -11993,19 +11999,19 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _inherits(SingleTaskWorkflowEditService, _workflow_edit_base_s);
 
       function SingleTaskWorkflowEditService(http, loadingService, router, route, autService) {
-        var _this37;
+        var _this36;
 
         _classCallCheck(this, SingleTaskWorkflowEditService);
 
-        _this37 = _possibleConstructorReturn(this, _getPrototypeOf(SingleTaskWorkflowEditService).call(this, http, loadingService, router, route, autService));
-        _this37.http = http;
-        _this37.loadingService = loadingService;
-        _this37.router = router;
-        _this37.route = route;
-        _this37.autService = autService;
-        _this37.workflowSaveRequestInitSubject = new rxjs__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"](null);
-        _this37.workflowSaveRequestInit = null;
-        return _this37;
+        _this36 = _possibleConstructorReturn(this, _getPrototypeOf(SingleTaskWorkflowEditService).call(this, http, loadingService, router, route, autService));
+        _this36.http = http;
+        _this36.loadingService = loadingService;
+        _this36.router = router;
+        _this36.route = route;
+        _this36.autService = autService;
+        _this36.workflowSaveRequestInitSubject = new rxjs__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"](null);
+        _this36.workflowSaveRequestInit = null;
+        return _this36;
       }
 
       _createClass(SingleTaskWorkflowEditService, [{
@@ -12151,19 +12157,19 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _inherits(TestthreetaskWorkflowEditService, _workflow_edit_base_s2);
 
       function TestthreetaskWorkflowEditService(http, loadingService, router, route, autService) {
-        var _this38;
+        var _this37;
 
         _classCallCheck(this, TestthreetaskWorkflowEditService);
 
-        _this38 = _possibleConstructorReturn(this, _getPrototypeOf(TestthreetaskWorkflowEditService).call(this, http, loadingService, router, route, autService));
-        _this38.http = http;
-        _this38.loadingService = loadingService;
-        _this38.router = router;
-        _this38.route = route;
-        _this38.autService = autService;
-        _this38.workflowSaveRequestInitSubject = new rxjs__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"](null);
-        _this38.workflowSaveRequestInit = null;
-        return _this38;
+        _this37 = _possibleConstructorReturn(this, _getPrototypeOf(TestthreetaskWorkflowEditService).call(this, http, loadingService, router, route, autService));
+        _this37.http = http;
+        _this37.loadingService = loadingService;
+        _this37.router = router;
+        _this37.route = route;
+        _this37.autService = autService;
+        _this37.workflowSaveRequestInitSubject = new rxjs__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"](null);
+        _this37.workflowSaveRequestInit = null;
+        return _this37;
       }
 
       _createClass(TestthreetaskWorkflowEditService, [{
@@ -12315,19 +12321,19 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _inherits(WorkflowEditBaseService, _helper_http_error_re6);
 
       function WorkflowEditBaseService(http, loadingService, router, route, autService) {
-        var _this39;
+        var _this38;
 
         _classCallCheck(this, WorkflowEditBaseService);
 
-        _this39 = _possibleConstructorReturn(this, _getPrototypeOf(WorkflowEditBaseService).call(this, router, route, autService));
-        _this39.http = http;
-        _this39.loadingService = loadingService;
-        _this39.router = router;
-        _this39.route = route;
-        _this39.autService = autService;
-        _this39.workflowSaveRequestInitSubject = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](null);
-        _this39.workflowSaveRequestInit = null;
-        return _this39;
+        _this38 = _possibleConstructorReturn(this, _getPrototypeOf(WorkflowEditBaseService).call(this, router, route, autService));
+        _this38.http = http;
+        _this38.loadingService = loadingService;
+        _this38.router = router;
+        _this38.route = route;
+        _this38.autService = autService;
+        _this38.workflowSaveRequestInitSubject = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](null);
+        _this38.workflowSaveRequestInit = null;
+        return _this38;
       }
 
       _createClass(WorkflowEditBaseService, [{
@@ -12384,7 +12390,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "loadCreateInitialData",
         value: function loadCreateInitialData() {
-          var _this40 = this;
+          var _this39 = this;
 
           this.loadingService.showLoading();
           var httpOptions = {
@@ -12392,19 +12398,19 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           };
           this.http.post(this.getInitCreateUrl(), new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpParams"](), httpOptions).subscribe(function (initialData) {
             console.log("GET successful edit inital data", initialData);
-            _this40.workflowSaveRequestInit = JSON.parse(JSON.stringify(initialData));
+            _this39.workflowSaveRequestInit = JSON.parse(JSON.stringify(initialData));
 
-            _this40.workflowSaveRequestInitSubject.next(initialData);
+            _this39.workflowSaveRequestInitSubject.next(initialData);
           }, function (response) {
             console.log("Error in read edit inital data", response);
 
-            _this40.processErrorResponse(response);
+            _this39.processErrorResponse(response);
 
-            _this40.loadingService.hideLoading();
+            _this39.loadingService.hideLoading();
           }, function () {
-            _this40.workflowSaveRequestInitSubject.complete();
+            _this39.workflowSaveRequestInitSubject.complete();
 
-            _this40.loadingService.hideLoading();
+            _this39.loadingService.hideLoading();
           });
         }
       }, {
@@ -12700,27 +12706,27 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _inherits(WorkflowSearchService, _helper_http_error_re7);
 
       function WorkflowSearchService(http, loadingService, router, route, autService) {
-        var _this41;
+        var _this40;
 
         _classCallCheck(this, WorkflowSearchService);
 
-        _this41 = _possibleConstructorReturn(this, _getPrototypeOf(WorkflowSearchService).call(this, router, route, autService));
-        _this41.http = http;
-        _this41.loadingService = loadingService;
-        _this41.router = router;
-        _this41.route = route;
-        _this41.autService = autService;
-        _this41.searchInitialDataSubject = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](null);
-        _this41.loadInitialUrl = "/workflow/general/data/initsearch";
-        _this41.searchUrl = "/workflow/general/data/search";
-        _this41.listInitialData = null;
-        return _this41;
+        _this40 = _possibleConstructorReturn(this, _getPrototypeOf(WorkflowSearchService).call(this, router, route, autService));
+        _this40.http = http;
+        _this40.loadingService = loadingService;
+        _this40.router = router;
+        _this40.route = route;
+        _this40.autService = autService;
+        _this40.searchInitialDataSubject = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](null);
+        _this40.loadInitialUrl = "/workflow/general/data/initsearch";
+        _this40.searchUrl = "/workflow/general/data/search";
+        _this40.listInitialData = null;
+        return _this40;
       }
 
       _createClass(WorkflowSearchService, [{
         key: "loadInitialData",
         value: function loadInitialData() {
-          var _this42 = this;
+          var _this41 = this;
 
           this.loadingService.showLoading();
           var httpOptions = {
@@ -12728,19 +12734,19 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           };
           this.http.post(this.loadInitialUrl, new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpParams"](), httpOptions).subscribe(function (initialData) {
             console.log("GET successful search inital data", initialData);
-            _this42.listInitialData = JSON.parse(JSON.stringify(initialData));
+            _this41.listInitialData = JSON.parse(JSON.stringify(initialData));
 
-            _this42.searchInitialDataSubject.next(initialData);
+            _this41.searchInitialDataSubject.next(initialData);
           }, function (response) {
             console.log("Error in read search inital data", response);
 
-            _this42.processErrorResponse(response);
+            _this41.processErrorResponse(response);
 
-            _this42.loadingService.hideLoading();
+            _this41.loadingService.hideLoading();
           }, function () {
-            _this42.searchInitialDataSubject.complete();
+            _this41.searchInitialDataSubject.complete();
 
-            _this42.loadingService.hideLoading();
+            _this41.loadingService.hideLoading();
           });
         }
       }, {
@@ -15302,29 +15308,29 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _inherits(CreateInvoiceComponent, _invoice_base_compone);
 
       function CreateInvoiceComponent(router, global, translate, editService, loadingService, http, errorService, formBuilder, dateAdapter, globalSocket) {
-        var _this43;
+        var _this42;
 
         _classCallCheck(this, CreateInvoiceComponent);
 
-        _this43 = _possibleConstructorReturn(this, _getPrototypeOf(CreateInvoiceComponent).call(this, router, global, translate, editService, loadingService, http, errorService, formBuilder, dateAdapter, globalSocket));
-        _this43.router = router;
-        _this43.global = global;
-        _this43.translate = translate;
-        _this43.editService = editService;
-        _this43.loadingService = loadingService;
-        _this43.http = http;
-        _this43.errorService = errorService;
-        _this43.formBuilder = formBuilder;
-        _this43.dateAdapter = dateAdapter;
-        _this43.globalSocket = globalSocket;
+        _this42 = _possibleConstructorReturn(this, _getPrototypeOf(CreateInvoiceComponent).call(this, router, global, translate, editService, loadingService, http, errorService, formBuilder, dateAdapter, globalSocket));
+        _this42.router = router;
+        _this42.global = global;
+        _this42.translate = translate;
+        _this42.editService = editService;
+        _this42.loadingService = loadingService;
+        _this42.http = http;
+        _this42.errorService = errorService;
+        _this42.formBuilder = formBuilder;
+        _this42.dateAdapter = dateAdapter;
+        _this42.globalSocket = globalSocket;
 
-        _this43.router.events.subscribe(function (evt) {
+        _this42.router.events.subscribe(function (evt) {
           if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_1__["NavigationEnd"]) {
-            _this43.loadInitialData();
+            _this42.loadInitialData();
           }
         });
 
-        return _this43;
+        return _this42;
       }
 
       _createClass(CreateInvoiceComponent, [{
@@ -15351,24 +15357,24 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "subscribeToSearchInitialData",
         value: function subscribeToSearchInitialData() {
-          var _this44 = this;
+          var _this43 = this;
 
           this.editService.workflowSaveRequestInitSubject.subscribe(function (data) {
             console.log("set gloabl-data from workflow-create. : ", data);
 
             if (data && data !== null) {
-              _this44.workflowSaveRequest = data.workflowSaveRequest;
+              _this43.workflowSaveRequest = data.workflowSaveRequest;
 
-              _this44.setToControlValues();
+              _this43.setToControlValues();
             } else {
-              _this44.workflowSaveRequest = null;
+              _this43.workflowSaveRequest = null;
             }
           });
         }
       }, {
         key: "save",
         value: function save() {
-          var _this45 = this;
+          var _this44 = this;
 
           this.setFormControlValues();
           this.workflowSaveRequest.uploadedFiles = _wf_models__WEBPACK_IMPORTED_MODULE_5__["WorkflowUploadedFile"].loadUploadedFiles(this.uploadedFiles);
@@ -15376,15 +15382,15 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           this.editService.createWorkflow(this.workflowSaveRequest).subscribe(function (result) {
             console.log("Create workflow result", result);
 
-            _this45.router.navigate([_this45.workflowListUrl]);
+            _this44.router.navigate([_this44.workflowListUrl]);
           }, function (response) {
             console.log("Error in create workflow", response);
 
-            _this45.errorService.showErrorResponse(response);
+            _this44.errorService.showErrorResponse(response);
 
-            _this45.loadingService.hideLoading();
+            _this44.loadingService.hideLoading();
           }, function () {
-            _this45.loadingService.hideLoading();
+            _this44.loadingService.hideLoading();
           });
         }
       }, {
@@ -16097,7 +16103,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function CreateSingletaskComponent(router, global, translate, editService, loadingService, http, errorService) {
-        var _this46 = this;
+        var _this45 = this;
 
         _classCallCheck(this, CreateSingletaskComponent);
 
@@ -16115,7 +16121,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.uploadedFiles = [];
         this.router.events.subscribe(function (evt) {
           if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_1__["NavigationEnd"]) {
-            _this46.loadInitialData();
+            _this45.loadInitialData();
           }
         });
         this.generalDataObs = this.global.currentSessionDataSubject.asObservable();
@@ -16144,36 +16150,36 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "subscribeToSearchInitialData",
         value: function subscribeToSearchInitialData() {
-          var _this47 = this;
+          var _this46 = this;
 
           this.editService.workflowSaveRequestInitSubject.subscribe(function (data) {
             console.log("set gloabl-data from workflow-create. : ", data); //alert("from app-comp: \n" + JSON.stringify(data));
 
             if (data && data !== null) {
-              _this47.workflowSaveRequest = data.workflowSaveRequest;
+              _this46.workflowSaveRequest = data.workflowSaveRequest;
             } else {
-              _this47.workflowSaveRequest = null;
+              _this46.workflowSaveRequest = null;
             }
           });
         }
       }, {
         key: "save",
         value: function save() {
-          var _this48 = this;
+          var _this47 = this;
 
           this.loadingService.showLoading();
           this.editService.createWorkflow(this.workflowSaveRequest).subscribe(function (result) {
             console.log("Create workflow result", result);
 
-            _this48.router.navigate([_this48.workflowListUrl]);
+            _this47.router.navigate([_this47.workflowListUrl]);
           }, function (response) {
             console.log("Error in create workflow", response);
 
-            _this48.errorService.showErrorResponse(response);
+            _this47.errorService.showErrorResponse(response);
 
-            _this48.loadingService.hideLoading();
+            _this47.loadingService.hideLoading();
           }, function () {
-            _this48.loadingService.hideLoading();
+            _this47.loadingService.hideLoading();
           });
         }
       }, {
@@ -16616,7 +16622,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function CreateTestthreetaskComponent(router, global, translate, editService, loadingService, http, errorService) {
-        var _this49 = this;
+        var _this48 = this;
 
         _classCallCheck(this, CreateTestthreetaskComponent);
 
@@ -16634,7 +16640,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.uploadedFiles = [];
         this.router.events.subscribe(function (evt) {
           if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_1__["NavigationEnd"]) {
-            _this49.loadInitialData();
+            _this48.loadInitialData();
           }
         });
         this.generalDataObs = this.global.currentSessionDataSubject.asObservable();
@@ -16663,37 +16669,37 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "subscribeToSearchInitialData",
         value: function subscribeToSearchInitialData() {
-          var _this50 = this;
+          var _this49 = this;
 
           this.editService.workflowSaveRequestInitSubject.subscribe(function (data) {
             console.log("set gloabl-data from workflow-create. : ", data); //alert("from app-comp: \n" + JSON.stringify(data));
 
             if (data && data !== null) {
-              _this50.workflowSaveRequest = data.workflowSaveRequest;
+              _this49.workflowSaveRequest = data.workflowSaveRequest;
             } else {
-              _this50.workflowSaveRequest = null;
+              _this49.workflowSaveRequest = null;
             }
           });
         }
       }, {
         key: "save",
         value: function save() {
-          var _this51 = this;
+          var _this50 = this;
 
           this.workflowSaveRequest.uploadedFiles = _wf_models__WEBPACK_IMPORTED_MODULE_3__["WorkflowUploadedFile"].loadUploadedFiles(this.uploadedFiles);
           this.loadingService.showLoading();
           this.editService.createWorkflow(this.workflowSaveRequest).subscribe(function (result) {
             console.log("Create workflow result", result);
 
-            _this51.router.navigate([_this51.workflowListUrl]);
+            _this50.router.navigate([_this50.workflowListUrl]);
           }, function (response) {
             console.log("Error in create workflow", response);
 
-            _this51.errorService.showErrorResponse(response);
+            _this50.errorService.showErrorResponse(response);
 
-            _this51.loadingService.hideLoading();
+            _this50.loadingService.hideLoading();
           }, function () {
-            _this51.loadingService.hideLoading();
+            _this50.loadingService.hideLoading();
           });
         }
       }, {
@@ -17116,7 +17122,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function WorkflowCreateComponent(router, global, translate) {
-        var _this52 = this;
+        var _this51 = this;
 
         _classCallCheck(this, WorkflowCreateComponent);
 
@@ -17126,7 +17132,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.generalDataObs = null;
         this.generalDataObs = this.global.currentSessionDataSubject.asObservable();
         this.generalDataObs.subscribe(function (data) {
-          _this52.worlflowTypes = data.workflow.worlflowTypes;
+          _this51.worlflowTypes = data.workflow.worlflowTypes;
         });
       }
 
@@ -17954,35 +17960,35 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _inherits(EditInvoiceComponent, _invoice_base_compone2);
 
       function EditInvoiceComponent(router, global, translate, editService, loadingService, http, errorService, formBuilder, dateAdapter, route, globalSocket) {
-        var _this53;
+        var _this52;
 
         _classCallCheck(this, EditInvoiceComponent);
 
-        _this53 = _possibleConstructorReturn(this, _getPrototypeOf(EditInvoiceComponent).call(this, router, global, translate, editService, loadingService, http, errorService, formBuilder, dateAdapter, globalSocket));
-        _this53.router = router;
-        _this53.global = global;
-        _this53.translate = translate;
-        _this53.editService = editService;
-        _this53.loadingService = loadingService;
-        _this53.http = http;
-        _this53.errorService = errorService;
-        _this53.formBuilder = formBuilder;
-        _this53.dateAdapter = dateAdapter;
-        _this53.route = route;
-        _this53.globalSocket = globalSocket;
-        _this53.workflowIdentity = "not-set";
-        _this53.saveMessage = "";
-        _this53.viewWorkflowModel = null;
+        _this52 = _possibleConstructorReturn(this, _getPrototypeOf(EditInvoiceComponent).call(this, router, global, translate, editService, loadingService, http, errorService, formBuilder, dateAdapter, globalSocket));
+        _this52.router = router;
+        _this52.global = global;
+        _this52.translate = translate;
+        _this52.editService = editService;
+        _this52.loadingService = loadingService;
+        _this52.http = http;
+        _this52.errorService = errorService;
+        _this52.formBuilder = formBuilder;
+        _this52.dateAdapter = dateAdapter;
+        _this52.route = route;
+        _this52.globalSocket = globalSocket;
+        _this52.workflowIdentity = "not-set";
+        _this52.saveMessage = "";
+        _this52.viewWorkflowModel = null;
 
-        _this53.router.events.subscribe(function (evt) {
+        _this52.router.events.subscribe(function (evt) {
           if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_1__["NavigationEnd"]) {
-            _this53.workflowIdentity = _this53.route.snapshot.params['identity'];
+            _this52.workflowIdentity = _this52.route.snapshot.params['identity'];
 
-            _this53.loadInitialData();
+            _this52.loadInitialData();
           }
         });
 
-        return _this53;
+        return _this52;
       }
 
       _createClass(EditInvoiceComponent, [{
@@ -18007,26 +18013,26 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "loadWorkflowData",
         value: function loadWorkflowData() {
-          var _this54 = this;
+          var _this53 = this;
 
           this.loadingService.showLoading();
           this.editService.loadEditInitialData(this.workflowIdentity).subscribe(function (initialData) {
             console.log("set inital-data from workflow-edit. : ", initialData); //alert("from app-comp: \n" + JSON.stringify(data));
 
             if (initialData && initialData !== null) {
-              _this54.workflowSaveRequest = initialData.workflowSaveRequest;
-              _this54.viewWorkflowModel = _this54.workflowSaveRequest.workflow;
+              _this53.workflowSaveRequest = initialData.workflowSaveRequest;
+              _this53.viewWorkflowModel = _this53.workflowSaveRequest.workflow;
 
-              _this54.setToControlValues();
+              _this53.setToControlValues();
             } else {
-              _this54.workflowSaveRequest = null;
+              _this53.workflowSaveRequest = null;
             }
           }, function (response) {
             console.log("Error in read edit inital data", response);
 
-            _this54.errorService.showErrorResponse(response);
+            _this53.errorService.showErrorResponse(response);
           }, function () {
-            _this54.loadingService.hideLoading();
+            _this53.loadingService.hideLoading();
           });
         }
       }, {
@@ -18051,17 +18057,36 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "saveWorkflowData",
         value: function saveWorkflowData() {
-          var _this55 = this;
+          var _this54 = this;
 
           this.saveMessage = "";
           this.editService.saveWorkflow(this.workflowSaveRequest).subscribe(function (result) {
             console.log("Create workflow result", result);
 
-            _this55.translate.get('common.saved').subscribe(function (res) {
-              _this55.saveMessage = res;
+            _this54.translate.get('common.saved').subscribe(function (res) {
+              _this54.saveMessage = res;
             });
 
-            _this55.loadWorkflowData();
+            _this54.loadWorkflowData();
+          }, function (response) {
+            console.log("Error in create workflow", response);
+
+            _this54.errorService.showErrorResponse(response);
+
+            _this54.loadingService.hideLoading();
+          }, function () {
+            _this54.loadingService.hideLoading();
+          });
+        }
+      }, {
+        key: "doneWorkflowData",
+        value: function doneWorkflowData() {
+          var _this55 = this;
+
+          this.editService.doneWorkflow(this.workflowSaveRequest).subscribe(function (result) {
+            console.log("Create workflow result", result);
+
+            _this55.router.navigate([_this55.workflowListUrl]);
           }, function (response) {
             console.log("Error in create workflow", response);
 
@@ -18073,11 +18098,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           });
         }
       }, {
-        key: "doneWorkflowData",
-        value: function doneWorkflowData() {
+        key: "archiveWorkflowData",
+        value: function archiveWorkflowData() {
           var _this56 = this;
 
-          this.editService.doneWorkflow(this.workflowSaveRequest).subscribe(function (result) {
+          this.editService.archiveWorkflow(this.workflowSaveRequest.workflow).subscribe(function (result) {
             console.log("Create workflow result", result);
 
             _this56.router.navigate([_this56.workflowListUrl]);
@@ -18089,25 +18114,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             _this56.loadingService.hideLoading();
           }, function () {
             _this56.loadingService.hideLoading();
-          });
-        }
-      }, {
-        key: "archiveWorkflowData",
-        value: function archiveWorkflowData() {
-          var _this57 = this;
-
-          this.editService.archiveWorkflow(this.workflowSaveRequest.workflow).subscribe(function (result) {
-            console.log("Create workflow result", result);
-
-            _this57.router.navigate([_this57.workflowListUrl]);
-          }, function (response) {
-            console.log("Error in create workflow", response);
-
-            _this57.errorService.showErrorResponse(response);
-
-            _this57.loadingService.hideLoading();
-          }, function () {
-            _this57.loadingService.hideLoading();
           });
         }
       }, {
@@ -19043,7 +19049,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function EditSingleTaskComponent(router, global, translate, editService, loadingService, http, errorService, formBuilder, dateAdapter, route) {
-        var _this58 = this;
+        var _this57 = this;
 
         _classCallCheck(this, EditSingleTaskComponent);
 
@@ -19065,9 +19071,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.viewWorkflowModel = null;
         this.router.events.subscribe(function (evt) {
           if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_1__["NavigationEnd"]) {
-            _this58.workflowIdentity = _this58.route.snapshot.params['identity'];
+            _this57.workflowIdentity = _this57.route.snapshot.params['identity'];
 
-            _this58.loadInitialData();
+            _this57.loadInitialData();
           }
         });
         this.dateAdapter.setLocale('de');
@@ -19109,26 +19115,26 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "loadWorkflowData",
         value: function loadWorkflowData() {
-          var _this59 = this;
+          var _this58 = this;
 
           this.loadingService.showLoading();
           this.editService.loadEditInitialData(this.workflowIdentity).subscribe(function (initialData) {
             console.log("set inital-data from workflow-edit. : ", initialData); //alert("from app-comp: \n" + JSON.stringify(data));
 
             if (initialData && initialData !== null) {
-              _this59.workflowSaveRequest = initialData.workflowSaveRequest;
-              _this59.viewWorkflowModel = _this59.workflowSaveRequest.workflow;
+              _this58.workflowSaveRequest = initialData.workflowSaveRequest;
+              _this58.viewWorkflowModel = _this58.workflowSaveRequest.workflow;
 
-              _this59.setToControlValues();
+              _this58.setToControlValues();
             } else {
-              _this59.workflowSaveRequest = null;
+              _this58.workflowSaveRequest = null;
             }
           }, function (response) {
             console.log("Error in read edit inital data", response);
 
-            _this59.errorService.showErrorResponse(response);
+            _this58.errorService.showErrorResponse(response);
           }, function () {
-            _this59.loadingService.hideLoading();
+            _this58.loadingService.hideLoading();
           });
         }
       }, {
@@ -19174,17 +19180,37 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "saveWorkflowData",
         value: function saveWorkflowData() {
-          var _this60 = this;
+          var _this59 = this;
 
           console.log("Saving workflow", this.workflowSaveRequest);
           this.editService.saveWorkflow(this.workflowSaveRequest).subscribe(function (result) {
             console.log("Create workflow result", result);
 
-            _this60.translate.get('common.saved').subscribe(function (res) {
-              _this60.saveMessage = res;
+            _this59.translate.get('common.saved').subscribe(function (res) {
+              _this59.saveMessage = res;
             });
 
-            _this60.loadWorkflowData();
+            _this59.loadWorkflowData();
+          }, function (response) {
+            console.log("Error in create workflow", response);
+
+            _this59.errorService.showErrorResponse(response);
+
+            _this59.loadingService.hideLoading();
+          }, function () {
+            _this59.loadingService.hideLoading();
+          });
+        }
+      }, {
+        key: "doneWorkflowData",
+        value: function doneWorkflowData() {
+          var _this60 = this;
+
+          console.log("Done workflow", this.workflowSaveRequest);
+          this.editService.doneWorkflow(this.workflowSaveRequest).subscribe(function (result) {
+            console.log("Create workflow result", result);
+
+            _this60.router.navigate([_this60.workflowListUrl]);
           }, function (response) {
             console.log("Error in create workflow", response);
 
@@ -19196,12 +19222,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           });
         }
       }, {
-        key: "doneWorkflowData",
-        value: function doneWorkflowData() {
+        key: "archiveWorkflowData",
+        value: function archiveWorkflowData() {
           var _this61 = this;
 
-          console.log("Done workflow", this.workflowSaveRequest);
-          this.editService.doneWorkflow(this.workflowSaveRequest).subscribe(function (result) {
+          this.editService.archiveWorkflow(this.workflowSaveRequest.workflow).subscribe(function (result) {
             console.log("Create workflow result", result);
 
             _this61.router.navigate([_this61.workflowListUrl]);
@@ -19213,25 +19238,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             _this61.loadingService.hideLoading();
           }, function () {
             _this61.loadingService.hideLoading();
-          });
-        }
-      }, {
-        key: "archiveWorkflowData",
-        value: function archiveWorkflowData() {
-          var _this62 = this;
-
-          this.editService.archiveWorkflow(this.workflowSaveRequest.workflow).subscribe(function (result) {
-            console.log("Create workflow result", result);
-
-            _this62.router.navigate([_this62.workflowListUrl]);
-          }, function (response) {
-            console.log("Error in create workflow", response);
-
-            _this62.errorService.showErrorResponse(response);
-
-            _this62.loadingService.hideLoading();
-          }, function () {
-            _this62.loadingService.hideLoading();
           });
         }
       }, {
@@ -19913,7 +19919,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function EditTestthreeTaskComponent(router, global, translate, editService, loadingService, http, errorService, formBuilder, dateAdapter, route) {
-        var _this63 = this;
+        var _this62 = this;
 
         _classCallCheck(this, EditTestthreeTaskComponent);
 
@@ -19936,9 +19942,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.uploadedFiles = [];
         this.router.events.subscribe(function (evt) {
           if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_1__["NavigationEnd"]) {
-            _this63.workflowIdentity = _this63.route.snapshot.params['identity'];
+            _this62.workflowIdentity = _this62.route.snapshot.params['identity'];
 
-            _this63.loadInitialData();
+            _this62.loadInitialData();
           }
         });
         this.dateAdapter.setLocale('de');
@@ -19979,26 +19985,26 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "loadWorkflowData",
         value: function loadWorkflowData() {
-          var _this64 = this;
+          var _this63 = this;
 
           this.loadingService.showLoading();
           this.editService.loadEditInitialData(this.workflowIdentity).subscribe(function (initialData) {
             console.log("set inital-data from workflow-edit. : ", initialData); //alert("from app-comp: \n" + JSON.stringify(data));
 
             if (initialData && initialData !== null) {
-              _this64.workflowSaveRequest = initialData.workflowSaveRequest;
-              _this64.viewWorkflowModel = _this64.workflowSaveRequest.workflow;
+              _this63.workflowSaveRequest = initialData.workflowSaveRequest;
+              _this63.viewWorkflowModel = _this63.workflowSaveRequest.workflow;
 
-              _this64.setToControlValues();
+              _this63.setToControlValues();
             } else {
-              _this64.workflowSaveRequest = null;
+              _this63.workflowSaveRequest = null;
             }
           }, function (response) {
             console.log("Error in read edit inital data", response);
 
-            _this64.errorService.showErrorResponse(response);
+            _this63.errorService.showErrorResponse(response);
           }, function () {
-            _this64.loadingService.hideLoading();
+            _this63.loadingService.hideLoading();
           });
         }
       }, {
@@ -20043,16 +20049,35 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "saveWorkflowData",
         value: function saveWorkflowData() {
-          var _this65 = this;
+          var _this64 = this;
 
           this.editService.saveWorkflow(this.workflowSaveRequest).subscribe(function (result) {
             console.log("Create workflow result", result);
 
-            _this65.translate.get('common.saved').subscribe(function (res) {
-              _this65.saveMessage = res;
+            _this64.translate.get('common.saved').subscribe(function (res) {
+              _this64.saveMessage = res;
             });
 
-            _this65.loadWorkflowData();
+            _this64.loadWorkflowData();
+          }, function (response) {
+            console.log("Error in create workflow", response);
+
+            _this64.errorService.showErrorResponse(response);
+
+            _this64.loadingService.hideLoading();
+          }, function () {
+            _this64.loadingService.hideLoading();
+          });
+        }
+      }, {
+        key: "doneWorkflowData",
+        value: function doneWorkflowData() {
+          var _this65 = this;
+
+          this.editService.doneWorkflow(this.workflowSaveRequest).subscribe(function (result) {
+            console.log("Create workflow result", result);
+
+            _this65.router.navigate([_this65.workflowListUrl]);
           }, function (response) {
             console.log("Error in create workflow", response);
 
@@ -20064,11 +20089,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           });
         }
       }, {
-        key: "doneWorkflowData",
-        value: function doneWorkflowData() {
+        key: "archiveWorkflowData",
+        value: function archiveWorkflowData() {
           var _this66 = this;
 
-          this.editService.doneWorkflow(this.workflowSaveRequest).subscribe(function (result) {
+          this.editService.archiveWorkflow(this.workflowSaveRequest.workflow).subscribe(function (result) {
             console.log("Create workflow result", result);
 
             _this66.router.navigate([_this66.workflowListUrl]);
@@ -20080,25 +20105,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             _this66.loadingService.hideLoading();
           }, function () {
             _this66.loadingService.hideLoading();
-          });
-        }
-      }, {
-        key: "archiveWorkflowData",
-        value: function archiveWorkflowData() {
-          var _this67 = this;
-
-          this.editService.archiveWorkflow(this.workflowSaveRequest.workflow).subscribe(function (result) {
-            console.log("Create workflow result", result);
-
-            _this67.router.navigate([_this67.workflowListUrl]);
-          }, function (response) {
-            console.log("Error in create workflow", response);
-
-            _this67.errorService.showErrorResponse(response);
-
-            _this67.loadingService.hideLoading();
-          }, function () {
-            _this67.loadingService.hideLoading();
           });
         }
       }, {
@@ -20616,7 +20622,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function InvoiceBaseComponent(router, global, translate, editService, loadingService, http, errorService, formBuilder, dateAdapter, globalSocket) {
-        var _this68 = this;
+        var _this67 = this;
 
         _classCallCheck(this, InvoiceBaseComponent);
 
@@ -20648,30 +20654,30 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
         this.onRecevieResponse = function (message) {
           console.log("Message Received: ", message.body);
-          var uploaded = _this68.uploadedFiles[_this68.scanningFileIndex];
+          var uploaded = _this67.uploadedFiles[_this67.scanningFileIndex];
 
-          _this68.loadingService.hideLoading();
+          _this67.loadingService.hideLoading();
 
           var parsedMessage = JSON.parse(message.body);
 
           if (parsedMessage.status) {
             if (parsedMessage.status === "done") {
-              _this68.unsubscribe();
+              _this67.unsubscribe();
 
               if (parsedMessage.words) {
-                _this68.showOcrDetailsDialog = true;
-                _this68.uploadedFiles[_this68.scanningFileIndex].foundWords = parsedMessage.words;
-                _this68.uploadedFiles[_this68.scanningFileIndex].isScanned = true;
-                _this68.uploadedFiles[_this68.scanningFileIndex].imageSizeX = parsedMessage.imageWidth;
-                _this68.uploadedFiles[_this68.scanningFileIndex].imageSizeY = parsedMessage.imageHeight;
-                console.log("Received Words: ", _this68.uploadedFiles[_this68.scanningFileIndex].foundWords);
+                _this67.showOcrDetailsDialog = true;
+                _this67.uploadedFiles[_this67.scanningFileIndex].foundWords = parsedMessage.words;
+                _this67.uploadedFiles[_this67.scanningFileIndex].isScanned = true;
+                _this67.uploadedFiles[_this67.scanningFileIndex].imageSizeX = parsedMessage.imageWidth;
+                _this67.uploadedFiles[_this67.scanningFileIndex].imageSizeY = parsedMessage.imageHeight;
+                console.log("Received Words: ", _this67.uploadedFiles[_this67.scanningFileIndex].foundWords);
               }
             }
 
             if (parsedMessage.status === "error" && parsedMessage.errorMessage) {
-              _this68.unsubscribe();
+              _this67.unsubscribe();
 
-              _this68.errorService.showError(parsedMessage.errorMessage, parsedMessage.errorDetail);
+              _this67.errorService.showError(parsedMessage.errorMessage, parsedMessage.errorDetail);
             }
           }
         };
@@ -20684,7 +20690,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
           if (isNaN(num)) {
             translate.get('invoice-invoicetype-' + str.toLowerCase()).subscribe(function (res) {
-              _this68.invoiceTypes.push({
+              _this67.invoiceTypes.push({
                 value: o,
                 title: res
               });
@@ -20693,10 +20699,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         }
 
         this.translate.get('invoice-paymentamount').subscribe(function (res) {
-          _this68.paymentamountOtherTypesTitle = res;
+          _this67.paymentamountOtherTypesTitle = res;
         });
         this.translate.get('invoice-paymentamount-payment').subscribe(function (res) {
-          _this68.paymentamountTypePaymentTitle = res;
+          _this67.paymentamountTypePaymentTitle = res;
         });
         this.generalDataObs = this.global.currentSessionDataSubject.asObservable();
       }
@@ -20848,7 +20854,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "setPageTitle",
         value: function setPageTitle() {
-          var _this69 = this;
+          var _this68 = this;
 
           var pageLabelId = "invoice-assignview-title";
 
@@ -20865,7 +20871,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           }
 
           this.translate.get(pageLabelId).subscribe(function (res) {
-            _this69.pageTitle = res;
+            _this68.pageTitle = res;
           });
         }
       }, {
@@ -21500,7 +21506,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "foundWords",
         set: function set(foundWordsInput) {
-          var _this70 = this;
+          var _this69 = this;
 
           this._foundWords = foundWordsInput;
           this.propertyLabels = [];
@@ -21508,9 +21514,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           if (this._foundWords) {
             for (var key in this._foundWords) {
               this.translate.get(key).subscribe(function (res) {
-                _this70.propertyLabels[key] = res;
-                _this70.isEditing[key] = false;
-                _this70.editedValues[key] = "";
+                _this69.propertyLabels[key] = res;
+                _this69.isEditing[key] = false;
+                _this69.editedValues[key] = "";
               });
             }
           }
@@ -22707,7 +22713,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function WorkflowListComponent(router, global, translate, searchService, loadingService, errorService, route) {
-        var _this71 = this;
+        var _this70 = this;
 
         _classCallCheck(this, WorkflowListComponent);
 
@@ -22726,7 +22732,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.viewWorkflowModel = null;
         this.router.events.subscribe(function (evt) {
           if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_1__["NavigationEnd"]) {
-            _this71.loadInitialData();
+            _this70.loadInitialData();
           }
         });
       }
@@ -22749,35 +22755,35 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "subscribeToSearchInitialData",
         value: function subscribeToSearchInitialData() {
-          var _this72 = this;
+          var _this71 = this;
 
           this.searchService.searchInitialDataSubject.subscribe(function (data) {
             console.log("set gloabl-data from workflow-create. : ", data); //alert("from app-comp: \n" + JSON.stringify(data));
 
             if (data && data !== null) {
-              _this72.listInitialData = data;
+              _this71.listInitialData = data;
             } else {
-              _this72.listInitialData = null;
+              _this71.listInitialData = null;
             }
           });
         }
       }, {
         key: "reload",
         value: function reload() {
-          var _this73 = this;
+          var _this72 = this;
 
           this.loadingService.showLoading();
           this.searchService.search(this.listInitialData.searchFilter).subscribe(function (result) {
             console.log("search successful workflow", result);
-            _this73.resultWorlflows = result.list;
+            _this72.resultWorlflows = result.list;
           }, function (response) {
             console.log("Error in search workflow", response);
 
-            _this73.loadingService.hideLoading();
+            _this72.loadingService.hideLoading();
 
-            _this73.errorService.showErrorResponse(response);
+            _this72.errorService.showErrorResponse(response);
           }, function () {
-            _this73.loadingService.hideLoading();
+            _this72.loadingService.hideLoading();
           });
         }
       }, {

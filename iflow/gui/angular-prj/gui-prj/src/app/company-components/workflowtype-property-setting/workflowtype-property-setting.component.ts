@@ -24,7 +24,7 @@ import { WorkflowType } from '../../wf-models/workflowtype';
 export class WorkflowtypePropertySettingComponent implements OnInit {
 
 	workflowtypeItemOcrSettings :CompanyWorkflowtypeItemOcrSetting[][] = [];
-	workflowtypeItemNames :string[][] = [];
+	//workflowtypeItemNames :string[][] = [];
 	
 	worlflowTypes: WorkflowType[] = [];
 
@@ -64,7 +64,7 @@ export class WorkflowtypePropertySettingComponent implements OnInit {
 			
 			for(var id in this.worlflowTypes){
 				var type:WorkflowType = this.worlflowTypes[id];
-				this.workflowtypeItemNames[type.identity] = null;
+				//this.workflowtypeItemNames[type.identity] = null;
 				
 				if(this.workflowtypeItemOcrSettings[type.identity] === undefined){
 					this.workflowtypeItemOcrSettings[type.identity] = [];
@@ -116,17 +116,17 @@ export class WorkflowtypePropertySettingComponent implements OnInit {
 			this.workflowtypeItemOcrSettings[type.identity] = [];
 		}
 		
-		if(this.workflowtypeItemNames[type.identity] === null){
+		/*if(this.workflowtypeItemNames[type.identity] === null){
 			
 			this.reloadSelectedWorkflowTypeProprties();
-		}
+		}*/
 		
 		this.showList = false;
 		this.showDetail = true;
 		this.selectedWorlflowTypeChanged = false;
 	}
 	
-	reloadSelectedWorkflowTypeProprties(){
+	/*reloadSelectedWorkflowTypeProprties(){
 		
 		this.loadingService.showLoading();
 		
@@ -167,7 +167,7 @@ export class WorkflowtypePropertySettingComponent implements OnInit {
 	        	this.loadingService.hideLoading();	            
 	        }
 		);	 					
-	}
+	}*/
 	
 	closeWorkflowType(){
 
@@ -178,8 +178,17 @@ export class WorkflowtypePropertySettingComponent implements OnInit {
 	}
 	
 	setWorkflowtypeItemOcrSettings(identity:string, name:string, newVal:string){
-				
-		this.workflowtypeItemOcrSettings[identity][name].value = newVal;
+		
+		for(var id in this.workflowtypeItemOcrSettings[identity]){
+			
+			var prop:CompanyWorkflowtypeItemOcrSetting = this.workflowtypeItemOcrSettings[identity][id];
+		
+			if(prop.propertyName === name){
+				prop.value = newVal;
+			}
+		}
+		
+		//this.workflowtypeItemOcrSettings[identity][name].value = newVal;
 		this.selectedWorlflowTypeChanged = true;
 	}
 	

@@ -24,11 +24,11 @@
 			<div class="workflow-content">
 				<div class="item-row">
 					<div class="list-group">
-					  <div *ngFor="let name of workflowtypeItemNames[selectedWorlflowType.identity];" class="list-group-item list-group-item-action link-out" >
-					  	<label class="property-label">{{ name | translate }}</label>
+					  <div *ngFor="let prop of workflowtypeItemOcrSettings[selectedWorlflowType.identity];" class="list-group-item list-group-item-action link-out" >
+					  	<label class="property-label">{{ prop.propertyName }}</label>
 					  	<input type="text"class="property-value" 
-					  		(ngModelChange)="setWorkflowtypeItemOcrSettings(selectedWorlflowType.identity, name, $event)" 
-					  		[ngModel]="workflowtypeItemOcrSettings[selectedWorlflowType.identity][name].value"/>
+					  		(ngModelChange)="setWorkflowtypeItemOcrSettings(selectedWorlflowType.identity, prop.propertyName, $event)" 
+					  		[ngModel]="prop.value"/>
 					  </div>
 					</div>
 					<div class="clear"></div>

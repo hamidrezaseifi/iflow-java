@@ -2,6 +2,7 @@ package com.pth.iflow.gui.services.impl.handler;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,9 +11,13 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pth.iflow.common.enums.EInvoiceWorkflowTypeItems;
+import com.pth.iflow.common.enums.EWorkflowType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.models.Company;
 import com.pth.iflow.gui.models.CompanyWorkflowtypeItemOcrSetting;
+import com.pth.iflow.gui.models.WorkflowType;
+import com.pth.iflow.gui.models.ui.SessionUserInfo;
 import com.pth.iflow.gui.services.ICompanyAccess;
 import com.pth.iflow.gui.services.ICompanyHandler;
 
@@ -21,9 +26,12 @@ public class CompanyHandler implements ICompanyHandler {
 
   private final ICompanyAccess companyAccess;
 
-  public CompanyHandler(@Autowired final ICompanyAccess companyAccess) {
+  private final SessionUserInfo sessionUserInfo;
+
+  public CompanyHandler(@Autowired final ICompanyAccess companyAccess, @Autowired final SessionUserInfo sessionUserInfo) {
 
     this.companyAccess = companyAccess;
+    this.sessionUserInfo = sessionUserInfo;
 
   }
 
@@ -54,6 +62,29 @@ public class CompanyHandler implements ICompanyHandler {
       map.get(item.getWorkflowIdentity()).add(item);
     }
 
+    final Collection<WorkflowType> allWorkflowTypes = this.sessionUserInfo.getAllWorkflowTypes();
+    for (final WorkflowType type : allWorkflowTypes) {
+      if (map.containsKey(type.getIdentity()) == false) {
+        map.put(type.getIdentity(), new ArrayList<>());
+      }
+
+      if (map.get(type.getIdentity()).isEmpty()) {
+        final List<String> items = this.readWorkflowtypeItems(type.getIdentity());
+        for (final String item : items) {
+          final CompanyWorkflowtypeItemOcrSetting prop = new CompanyWorkflowtypeItemOcrSetting();
+          prop.setWorkflowIdentity(type.getIdentity());
+          prop.setPropertyName(item);
+          prop.setValue("");
+          prop.setStatus(1);
+          prop.setVersion(1);
+          prop.setCompanyIdentity(this.sessionUserInfo.getCompany().getIdentity());
+
+          map.get(type.getIdentity()).add(prop);
+        }
+      }
+
+    }
+
     return map;
   }
 
@@ -74,6 +105,19 @@ public class CompanyHandler implements ICompanyHandler {
 
     return this.companyAccess.saveCompanyWorkflowtypeItemOcrSettings(newList);
 
+  }
+
+  @Override
+  public List<String> readWorkflowtypeItems(final String workflowtypeidentity) {
+
+    final List<String> items = new ArrayList<>();
+
+    if (EWorkflowType.INVOICE_WORKFLOW_TYPE.getIdentity().equals(workflowtypeidentity)) {
+      items.addAll(EInvoiceWorkflowTypeItems.toIdentityList());
+
+    }
+
+    return items;
   }
 
 }
