@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
+import { Observable } from 'rxjs';
 
 import { GlobalService } from '../../../services/global.service';
 
@@ -13,7 +14,9 @@ import { User, GeneralData } from '../../../ui-models';
   styleUrls: ['./workflow-create.component.css']
 })
 export class WorkflowCreateComponent implements OnInit {
+	
 	worlflowTypes: WorkflowType[] = [];
+	generalDataObs :Observable<GeneralData> = null;
 
 	constructor(
 		    private router: Router,
@@ -22,11 +25,16 @@ export class WorkflowCreateComponent implements OnInit {
 			
 	) {
 		
+		this.generalDataObs = this.global.currentSessionDataSubject.asObservable();
+		this.generalDataObs.subscribe(data => {
+			   
+			this.worlflowTypes = data.workflow.worlflowTypes;
+		});
 	}
 	  
 	ngOnInit() {
 					
-		this.worlflowTypes = this.global.loadedGeneralData.workflow.worlflowTypes;
+		this.global.loadAllSetting(null);
 	}
 	
 	

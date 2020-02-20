@@ -1,7 +1,9 @@
 package com.pth.iflow.gui.controller.data;
 
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.pth.iflow.common.enums.EInvoiceWorkflowTypeItems;
+import com.pth.iflow.common.enums.EWorkflowType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.models.Company;
 import com.pth.iflow.gui.models.CompanyWorkflowtypeItemOcrSetting;
@@ -49,7 +53,7 @@ public class CompanyDataController extends GuiDataControllerBase {
   @ResponseStatus(HttpStatus.OK)
   @GetMapping(path = { "/readworkflowtypeitemocrsettings" }, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   @ResponseBody
-  public List<CompanyWorkflowtypeItemOcrSetting> readCompanyWorkflowtypeItemOcrSettings()
+  public Map<String, List<CompanyWorkflowtypeItemOcrSetting>> readCompanyWorkflowtypeItemOcrSettings()
       throws MalformedURLException, IFlowMessageConversionFailureException {
 
     return this.companyHandler.readCompanyWorkflowtypeItemOcrSettings(this.getLoggedCompany().getIdentity());
@@ -67,6 +71,22 @@ public class CompanyDataController extends GuiDataControllerBase {
         .saveCompanyWorkflowtypeItemOcrSettings(settingList, this.getLoggedCompany().getIdentity(), workflowtypeidentity);
 
     return savedList;
+  }
+
+  @ResponseStatus(HttpStatus.OK)
+  @GetMapping(path = { "/readworkflowtypeitems/{workflowtypeidentity}" }, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+  @ResponseBody
+  public List<String> readWorkflowtypeItems(@PathVariable final String workflowtypeidentity)
+      throws MalformedURLException, IFlowMessageConversionFailureException {
+
+    final List<String> items = new ArrayList<>();
+
+    if (EWorkflowType.INVOICE_WORKFLOW_TYPE.getIdentity().equals(workflowtypeidentity)) {
+      items.addAll(EInvoiceWorkflowTypeItems.toIdentityList());
+
+    }
+
+    return items;
   }
 
 }

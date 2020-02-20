@@ -1,7 +1,10 @@
 package com.pth.iflow.gui.services.impl.handler;
 
 import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,10 +40,21 @@ public class CompanyHandler implements ICompanyHandler {
   }
 
   @Override
-  public List<CompanyWorkflowtypeItemOcrSetting> readCompanyWorkflowtypeItemOcrSettings(final String identity)
+  public Map<String, List<CompanyWorkflowtypeItemOcrSetting>> readCompanyWorkflowtypeItemOcrSettings(final String identity)
       throws MalformedURLException, IFlowMessageConversionFailureException {
 
-    return this.companyAccess.readCompanyWorkflowtypeItemOcrSettings(identity);
+    final List<CompanyWorkflowtypeItemOcrSetting> list = this.companyAccess.readCompanyWorkflowtypeItemOcrSettings(identity);
+
+    final Map<String, List<CompanyWorkflowtypeItemOcrSetting>> map = new HashMap<>();
+
+    for (final CompanyWorkflowtypeItemOcrSetting item : list) {
+      if (map.containsKey(item.getWorkflowIdentity()) == false) {
+        map.put(item.getWorkflowIdentity(), new ArrayList<>());
+      }
+      map.get(item.getWorkflowIdentity()).add(item);
+    }
+
+    return map;
   }
 
   @Override

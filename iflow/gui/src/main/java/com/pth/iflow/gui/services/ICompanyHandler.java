@@ -2,6 +2,7 @@ package com.pth.iflow.gui.services;
 
 import java.net.MalformedURLException;
 import java.util.List;
+import java.util.Map;
 
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.models.Company;
@@ -13,7 +14,7 @@ public interface ICompanyHandler {
 
   public Company saveCompany(final Company company) throws MalformedURLException, IFlowMessageConversionFailureException;
 
-  public List<CompanyWorkflowtypeItemOcrSetting> readCompanyWorkflowtypeItemOcrSettings(String identity)
+  public Map<String, List<CompanyWorkflowtypeItemOcrSetting>> readCompanyWorkflowtypeItemOcrSettings(String identity)
       throws MalformedURLException, IFlowMessageConversionFailureException;
 
   public List<CompanyWorkflowtypeItemOcrSetting> saveCompanyWorkflowtypeItemOcrSettings(List<CompanyWorkflowtypeItemOcrSetting> settingList,

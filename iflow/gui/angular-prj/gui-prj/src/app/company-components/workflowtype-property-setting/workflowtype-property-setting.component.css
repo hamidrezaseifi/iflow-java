@@ -1,0 +1,15 @@
+
+a.toolbar-link, a.list-group-item-action{
+	cursor: pointer;
+}
+
+label.property-label{
+	width: 200px;
+	font-weight: bold;
+}
+
+
+input.property-value{
+	width: 400px;
+}
+

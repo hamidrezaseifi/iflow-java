@@ -1,0 +1,43 @@
+
+	<div class="content-container">
+		<div class="page-toolbar">
+			<div class="page-title">{{ 'menu-workflow-list' | translate }}</div>
+		</div>
+	
+		<div class="workflow-content" *ngIf="showList">
+			<div class="item-row">
+				<div class="list-group">
+				  <a class="list-group-item list-group-item-action list-group-item-title">{{ 'workflow-type' | translate }}</a>
+				  <a *ngFor="let type of worlflowTypes;" (click)="showWorkflowType(type)" class="list-group-item list-group-item-action link-out" >{{type.title}}</a>
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+
+		<div class="content-container" *ngIf="showDetail">
+			<div class="page-toolbar">
+				<div class="page-title">{{ selectedWorlflowType.title }}</div>
+				<a class="toolbar-link" (click)="closeWorkflowType()"><i class="material-icons">close</i></a>
+				<a class="toolbar-link" (click)="saveWorkflowType()" *ngIf="selectedWorlflowTypeChanged"><i class="material-icons">save</i></a>
+			</div>
+		
+			<div class="workflow-content">
+				<div class="item-row">
+					<div class="list-group">
+					  <div *ngFor="let name of workflowtypeItemNames[selectedWorlflowType.identity];" class="list-group-item list-group-item-action link-out" >
+					  	<label class="property-label">{{ name | translate }}</label>
+					  	<input type="text"class="property-value" 
+					  		(ngModelChange)="setWorkflowtypeItemOcrSettings(selectedWorlflowType.identity, name, $event)" 
+					  		[ngModel]="workflowtypeItemOcrSettings[selectedWorlflowType.identity][name].value"/>
+					  </div>
+					</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+		
+		</div>
+	
+		<div style="margin-top: 10px; border: gray 1px solid; padding: 10px;">{{ debug() }}</div>
+	</div>
+
+		
