@@ -22,4 +22,9 @@ public interface ICompanyHandler {
       String companyidentity, String workflowtypeidentity) throws MalformedURLException, IFlowMessageConversionFailureException;
 
   public List<String> readWorkflowtypeItems(final String workflowtypeidentity);
+
+  public Map<String, List<CompanyWorkflowtypeItemOcrSetting>>
+      extractMappedCompanyWorkflowtypeItemOcrSettings(final List<CompanyWorkflowtypeItemOcrSetting> list)
+          throws IFlowMessageConversionFailureException;
+
 }

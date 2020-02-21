@@ -25,6 +25,7 @@ import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.Company;
 import com.pth.iflow.gui.models.CompanyProfile;
 import com.pth.iflow.gui.models.CompanyWorkflowTypeController;
+import com.pth.iflow.gui.models.CompanyWorkflowtypeItemOcrSetting;
 import com.pth.iflow.gui.models.Department;
 import com.pth.iflow.gui.models.User;
 import com.pth.iflow.gui.models.UserDepartment;
@@ -56,6 +57,8 @@ public class SessionUserInfo {
   private final Map<String, WorkflowType> comapnyWorkflowTypes = new HashMap<>();
 
   private Map<String, List<CompanyWorkflowTypeController>> workflowTypeControllers;
+
+  private Map<String, List<CompanyWorkflowtypeItemOcrSetting>> workflowtypeItemOcrSettings = null;
 
   @Value("${server.session.timeout}")
   private int sessionTimeOut;
@@ -359,4 +362,49 @@ public class SessionUserInfo {
     }
   }
 
+  public Map<String, List<CompanyWorkflowtypeItemOcrSetting>> getWorkflowtypeItemOcrSettings()
+      throws IFlowMessageConversionFailureException {
+
+    if (this.workflowtypeItemOcrSettings == null) {
+      this.resetWorkflowtypeItemOcrSettings();
+    }
+
+    return this.workflowtypeItemOcrSettings;
+  }
+
+  public void resetWorkflowtypeItemOcrSettings() throws IFlowMessageConversionFailureException {
+
+    this.workflowtypeItemOcrSettings = this
+        .extractMappedCompanyWorkflowtypeItemOcrSettings(this.companyProfile.getWorkflowtypeItemOcrSettings());
+  }
+
+  private Map<String, List<CompanyWorkflowtypeItemOcrSetting>>
+      extractMappedCompanyWorkflowtypeItemOcrSettings(final List<CompanyWorkflowtypeItemOcrSetting> list)
+          throws IFlowMessageConversionFailureException {
+
+    final Map<String, List<CompanyWorkflowtypeItemOcrSetting>> map = new HashMap<>();
+
+    for (final CompanyWorkflowtypeItemOcrSetting item : list) {
+      if (map.containsKey(item.getWorkflowIdentity()) == false) {
+        map.put(item.getWorkflowIdentity(), new ArrayList<>());
+      }
+      map.get(item.getWorkflowIdentity()).add(item);
+    }
+
+    final Collection<WorkflowType> allWorkflowTypes = this.getAllWorkflowTypes();
+    for (final WorkflowType type : allWorkflowTypes) {
+      if (map.containsKey(type.getIdentity()) == false) {
+        map.put(type.getIdentity(), new ArrayList<>());
+      }
+
+      final List<CompanyWorkflowtypeItemOcrSetting> propertyList = map.get(type.getIdentity());
+
+      final Map<String,
+          CompanyWorkflowtypeItemOcrSetting> propertyMap = propertyList
+              .stream()
+              .collect(Collectors.toMap(p -> p.getPropertyName(), p -> p));
+
+    }
+    return map;
+  }
 }

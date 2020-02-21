@@ -80,6 +80,9 @@ public class CompanyHandler implements ICompanyHandler {
 
     final List<CompanyWorkflowtypeItemOcrSetting> resultlList = this.companyAccess.saveCompanyWorkflowtypeItemOcrSettings(finallList);
 
+    this.sessionUserInfo.getCompanyProfile().setWorkflowtypeItemOcrSettings(resultlList);
+    this.sessionUserInfo.resetWorkflowtypeItemOcrSettings();
+
     return this.extractMappedCompanyWorkflowtypeItemOcrSettings(resultlList);
   }
 
@@ -96,7 +99,8 @@ public class CompanyHandler implements ICompanyHandler {
     return items;
   }
 
-  private Map<String, List<CompanyWorkflowtypeItemOcrSetting>>
+  @Override
+  public Map<String, List<CompanyWorkflowtypeItemOcrSetting>>
       extractMappedCompanyWorkflowtypeItemOcrSettings(final List<CompanyWorkflowtypeItemOcrSetting> list)
           throws IFlowMessageConversionFailureException {
 
