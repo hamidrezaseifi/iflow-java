@@ -59,12 +59,12 @@ public class CompanyDataController extends GuiDataControllerBase {
   @ResponseStatus(HttpStatus.CREATED)
   @PostMapping(path = { "/saveworkflowtypeitemocrsettings/{workflowtypeidentity}" }, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   @ResponseBody
-  public List<CompanyWorkflowtypeItemOcrSetting>
+  public Map<String, List<CompanyWorkflowtypeItemOcrSetting>>
       saveCompanyWorkflowtypeItemOcrSettings(@RequestBody final List<CompanyWorkflowtypeItemOcrSetting> settingList,
           @PathVariable final String workflowtypeidentity)
           throws MalformedURLException, IFlowMessageConversionFailureException {
 
-    final List<CompanyWorkflowtypeItemOcrSetting> savedList = this.companyHandler
+    final Map<String, List<CompanyWorkflowtypeItemOcrSetting>> savedList = this.companyHandler
         .saveCompanyWorkflowtypeItemOcrSettings(settingList, this.getLoggedCompany().getIdentity(), workflowtypeidentity);
 
     return savedList;

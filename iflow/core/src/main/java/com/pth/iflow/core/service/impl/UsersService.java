@@ -260,6 +260,7 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
     edo.setVersion(model.getVersion());
     edo.setValue(model.getValue());
     edo.setWorkflowTypeIdentity(model.getWorkflowType().getIdentity());
+    edo.setCompanyIdentity(model.getCompany().getIdentity());
 
     return edo;
   }

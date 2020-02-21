@@ -5473,6 +5473,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             _this17.showList = true;
             _this17.showDetail = false;
             _this17.selectedWorlflowTypeChanged = false;
+
+            _this17.reload();
           }, function (response) {
             console.log("Error in Update CompanyWorkflowtypeItemOcrSetting list", response);
 

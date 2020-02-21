@@ -30,11 +30,11 @@ public class CompanyWorkflowtypeItemOcrSettingEntity extends EntityHelper {
   @SequenceGenerator(name = "company_workflowtype_settings_generator", sequenceName = "company_workflowtype_items_ocr_settings_seq")
   private Long id;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "company_id", nullable = false)
   private CompanyEntity company;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "workflow_type_id", nullable = false)
   private WorkflowTypeEntity workflowType;
 

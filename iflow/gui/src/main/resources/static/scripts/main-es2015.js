@@ -2789,6 +2789,7 @@ class WorkflowtypePropertySettingComponent {
             this.showList = true;
             this.showDetail = false;
             this.selectedWorlflowTypeChanged = false;
+            this.reload();
         }, response => {
             console.log("Error in Update CompanyWorkflowtypeItemOcrSetting list", response);
             this.loadingService.hideLoading();

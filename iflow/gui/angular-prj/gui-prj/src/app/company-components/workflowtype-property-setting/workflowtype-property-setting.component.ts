@@ -209,6 +209,8 @@ export class WorkflowtypePropertySettingComponent implements OnInit {
 	    		this.showDetail = false;
 	    		this.selectedWorlflowTypeChanged = false;
 	    		
+	    		this.reload();
+	    		
 	        },
 	        response => {
 	        	console.log("Error in Update CompanyWorkflowtypeItemOcrSetting list", response);
