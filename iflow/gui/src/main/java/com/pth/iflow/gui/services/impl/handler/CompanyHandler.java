@@ -53,7 +53,19 @@ public class CompanyHandler implements ICompanyHandler {
 
     final List<CompanyWorkflowtypeItemOcrSetting> list = this.companyAccess.readCompanyWorkflowtypeItemOcrSettings(identity);
 
-    final Map<String, List<CompanyWorkflowtypeItemOcrSetting>> map = this.extractMappedCompanyWorkflowtypeItemOcrSettings(list);
+    final Map<String, List<CompanyWorkflowtypeItemOcrSetting>> map = this.extractMappedCompanyWorkflowtypeItemOcrSettings(list, true);
+
+    return map;
+  }
+
+  @Override
+  public Map<String, List<CompanyWorkflowtypeItemOcrSetting>> readCompanyWorkflowtypeItemOcrSettings(final String identity,
+      final String token)
+      throws MalformedURLException, IFlowMessageConversionFailureException {
+
+    final List<CompanyWorkflowtypeItemOcrSetting> list = this.companyAccess.readCompanyWorkflowtypeItemOcrSettings(identity, token);
+
+    final Map<String, List<CompanyWorkflowtypeItemOcrSetting>> map = this.extractMappedCompanyWorkflowtypeItemOcrSettings(list, false);
 
     return map;
   }
@@ -83,7 +95,7 @@ public class CompanyHandler implements ICompanyHandler {
     this.sessionUserInfo.getCompanyProfile().setWorkflowtypeItemOcrSettings(resultlList);
     this.sessionUserInfo.resetWorkflowtypeItemOcrSettings();
 
-    return this.extractMappedCompanyWorkflowtypeItemOcrSettings(resultlList);
+    return this.extractMappedCompanyWorkflowtypeItemOcrSettings(resultlList, true);
   }
 
   @Override
@@ -101,7 +113,7 @@ public class CompanyHandler implements ICompanyHandler {
 
   @Override
   public Map<String, List<CompanyWorkflowtypeItemOcrSetting>>
-      extractMappedCompanyWorkflowtypeItemOcrSettings(final List<CompanyWorkflowtypeItemOcrSetting> list)
+      extractMappedCompanyWorkflowtypeItemOcrSettings(final List<CompanyWorkflowtypeItemOcrSetting> list, final boolean fillBlanks)
           throws IFlowMessageConversionFailureException {
 
     final Map<String, List<CompanyWorkflowtypeItemOcrSetting>> map = new HashMap<>();
@@ -113,35 +125,38 @@ public class CompanyHandler implements ICompanyHandler {
       map.get(item.getWorkflowIdentity()).add(item);
     }
 
-    final Collection<WorkflowType> allWorkflowTypes = this.sessionUserInfo.getAllWorkflowTypes();
-    for (final WorkflowType type : allWorkflowTypes) {
-      if (map.containsKey(type.getIdentity()) == false) {
-        map.put(type.getIdentity(), new ArrayList<>());
-      }
-
-      final List<CompanyWorkflowtypeItemOcrSetting> propertyList = map.get(type.getIdentity());
-
-      final Map<String,
-          CompanyWorkflowtypeItemOcrSetting> propertyMap = propertyList
-              .stream()
-              .collect(Collectors.toMap(p -> p.getPropertyName(), p -> p));
-
-      final List<String> items = this.readWorkflowtypeItems(type.getIdentity());
-      for (final String item : items) {
-        if (propertyMap.containsKey(item) == false) {
-          final CompanyWorkflowtypeItemOcrSetting prop = new CompanyWorkflowtypeItemOcrSetting();
-          prop.setWorkflowIdentity(type.getIdentity());
-          prop.setPropertyName(item);
-          prop.setValue("");
-          prop.setStatus(1);
-          prop.setVersion(1);
-          prop.setCompanyIdentity(this.sessionUserInfo.getCompany().getIdentity());
-
-          map.get(type.getIdentity()).add(prop);
+    if (fillBlanks) {
+      final Collection<WorkflowType> allWorkflowTypes = this.sessionUserInfo.getAllWorkflowTypes();
+      for (final WorkflowType type : allWorkflowTypes) {
+        if (map.containsKey(type.getIdentity()) == false) {
+          map.put(type.getIdentity(), new ArrayList<>());
         }
-      }
 
+        final List<CompanyWorkflowtypeItemOcrSetting> propertyList = map.get(type.getIdentity());
+
+        final Map<String,
+            CompanyWorkflowtypeItemOcrSetting> propertyMap = propertyList
+                .stream()
+                .collect(Collectors.toMap(p -> p.getPropertyName(), p -> p));
+
+        final List<String> items = this.readWorkflowtypeItems(type.getIdentity());
+        for (final String item : items) {
+          if (propertyMap.containsKey(item) == false) {
+            final CompanyWorkflowtypeItemOcrSetting prop = new CompanyWorkflowtypeItemOcrSetting();
+            prop.setWorkflowIdentity(type.getIdentity());
+            prop.setPropertyName(item);
+            prop.setValue("");
+            prop.setStatus(1);
+            prop.setVersion(1);
+            prop.setCompanyIdentity(this.sessionUserInfo.getCompany().getIdentity());
+
+            map.get(type.getIdentity()).add(prop);
+          }
+        }
+
+      }
     }
     return map;
   }
+
 }

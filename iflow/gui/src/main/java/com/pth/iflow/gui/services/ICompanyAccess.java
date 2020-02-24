@@ -16,6 +16,9 @@ public interface ICompanyAccess {
   public List<CompanyWorkflowtypeItemOcrSetting> readCompanyWorkflowtypeItemOcrSettings(String identity)
       throws MalformedURLException, IFlowMessageConversionFailureException;
 
+  public List<CompanyWorkflowtypeItemOcrSetting> readCompanyWorkflowtypeItemOcrSettings(String identity, String token)
+      throws MalformedURLException, IFlowMessageConversionFailureException;
+
   public List<CompanyWorkflowtypeItemOcrSetting> saveCompanyWorkflowtypeItemOcrSettings(List<CompanyWorkflowtypeItemOcrSetting> newList)
       throws MalformedURLException, IFlowMessageConversionFailureException;
 

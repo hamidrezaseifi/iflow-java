@@ -81,6 +81,19 @@ public class CompanyAccess implements ICompanyAccess {
   }
 
   @Override
+  public List<CompanyWorkflowtypeItemOcrSetting> readCompanyWorkflowtypeItemOcrSettings(final String identity, final String token)
+      throws MalformedURLException, IFlowMessageConversionFailureException {
+
+    logger.debug("Read company workflowtype item ocr settings from core {}", identity);
+
+    final CompanyWorkflowtypeItemOcrSettingListEdo listEdo = this.restTemplate
+        .callRestGet(this.profileModuleAccessConfig.getReadCompanyWorkflowTypeItemOcrSettingsUri(identity),
+            EModule.PROFILE, CompanyWorkflowtypeItemOcrSettingListEdo.class, token, true);
+
+    return GuiModelEdoMapper.fromCompanyWorkflowtypeItemOcrSettingEdoList(listEdo.getCompanyWorkflowtypeItemOcrSettings());
+  }
+
+  @Override
   public List<CompanyWorkflowtypeItemOcrSetting>
       saveCompanyWorkflowtypeItemOcrSettings(final List<CompanyWorkflowtypeItemOcrSetting> newList)
           throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {

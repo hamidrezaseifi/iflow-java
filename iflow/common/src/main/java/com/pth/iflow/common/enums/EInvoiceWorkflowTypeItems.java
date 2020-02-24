@@ -6,6 +6,10 @@ import java.util.stream.Collectors;
 
 public enum EInvoiceWorkflowTypeItems implements IEnumNameValidator {
 
+  INVOCIE_SENDER("invoice-sender"),
+
+  INVOCIE_NUMBER("invoice-invoicenumber"),
+
   INVOCIE_DATE("invocie-date"),
 
   PARTNER_CODE("partner-code"),
@@ -26,7 +30,7 @@ public enum EInvoiceWorkflowTypeItems implements IEnumNameValidator {
 
   DISCOUNT_DATE("discount-date"),
 
-  PAYMENT_AMOUNT("payment-amount");
+  PAYMENT_AMOUNT("invoice-paymentamount");
 
   EInvoiceWorkflowTypeItems(final String itemIdentity) {
 
