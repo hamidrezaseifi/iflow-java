@@ -99,6 +99,7 @@
 	"common.file-preview" : "Dateivorschau",
 	"common.active" : "Aktiv",
 	"common.deactive" : "Inaktiv",
+	"text.text-list" : "Text-Liste",
 	"workflow-title" : "Titel",
 	"workflow-type" : "Workflow-Typ",
 	"workflow-comments" : "Kommentar",

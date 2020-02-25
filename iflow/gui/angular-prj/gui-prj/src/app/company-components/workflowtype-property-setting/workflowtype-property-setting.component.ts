@@ -37,6 +37,12 @@ export class WorkflowtypePropertySettingComponent implements OnInit {
 	showList: boolean = true;
 
 	showDetail: boolean = false;
+	
+	showTextListDialog :boolean = false;
+	
+	textSeparator :string = ";";
+	selectedTextToMakeList :string = "";
+	selectedPropertyName :string= "";
 
 	constructor(
 		    private router: Router,
@@ -225,6 +231,36 @@ export class WorkflowtypePropertySettingComponent implements OnInit {
 		
 		
 		//this.reload();
+	}
+	
+	selectValueList(prop:CompanyWorkflowtypeItemOcrSetting){
+		this.selectedTextToMakeList = prop.value;
+		this.selectedPropertyName = prop.propertyName;
+		
+		this.showTextListDialog = true;
+	}
+	
+	selectedTextChanged(text:string){
+
+		this.selectedTextToMakeList = text;
+	}
+	
+	applySelectexTextChanged(){
+
+		for(var id in this.workflowtypeItemOcrSettings[this.selectedWorlflowType.identity]){
+			
+			var prop:CompanyWorkflowtypeItemOcrSetting = this.workflowtypeItemOcrSettings[this.selectedWorlflowType.identity][id];
+			if(prop.propertyName === this.selectedPropertyName){
+				prop.value = this.selectedTextToMakeList;
+				break;
+			}
+		}
+
+		this.showTextListDialog = false;
+	}
+	
+	hideTextListDialog(){
+		this.showTextListDialog = false;
 	}
 	
 }

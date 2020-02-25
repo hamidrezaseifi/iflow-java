@@ -10,25 +10,25 @@ public enum EInvoiceWorkflowTypeItems implements IEnumNameValidator {
 
   INVOCIE_NUMBER("invoice-invoicenumber"),
 
-  INVOCIE_DATE("invocie-date"),
+  INVOCIE_DATE("invoice-invoicedate"),
 
-  PARTNER_CODE("partner-code"),
+  PARTNER_CODE("invoice-partnercode"),
 
-  VENDOR_NUMBER("vendor-number"),
+  VENDOR_NUMBER("invoice-vendornumber"),
 
-  VENDOR_NAME("vendor-name"),
+  VENDOR_NAME("invoice-vendorname"),
 
-  IS_DIRECT_DEBIT_PERMISSION("is-direct-debit-permission"),
+  IS_DIRECT_DEBIT_PERMISSION("invoice-isdirectdebitpermission"),
 
-  INVOICE_TYPE("invoice-type"),
+  INVOICE_TYPE("invoice-invoicetype"),
 
-  DISCOUNT_ENTERDATE("discount-enterdate"),
+  DISCOUNT_ENTERDATE("invoice-discountenterdate"),
 
-  DISCOUNT_DEADLINE("discount-deadline"),
+  DISCOUNT_DEADLINE("invoice-discountdeadline"),
 
-  DISCOUNT_RATE("discount-rate"),
+  DISCOUNT_RATE("invoice-discountrate"),
 
-  DISCOUNT_DATE("discount-date"),
+  DISCOUNT_DATE("invoice-discountdate"),
 
   PAYMENT_AMOUNT("invoice-paymentamount");
 
