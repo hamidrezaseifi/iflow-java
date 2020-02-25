@@ -1,5 +1,6 @@
 package com.pth.iflow.core.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.common.models.edo.CompanyProfileEdo;
 import com.pth.iflow.common.models.edo.CompanyWorkflowTypeControllerEdo;
+import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingEdo;
 import com.pth.iflow.common.models.edo.ProfileResponseEdo;
 import com.pth.iflow.common.models.edo.UserDepartmentEdo;
 import com.pth.iflow.common.models.edo.UserEdo;
@@ -18,6 +20,7 @@ import com.pth.iflow.core.model.CompanyProfile;
 import com.pth.iflow.core.model.ProfileResponse;
 import com.pth.iflow.core.model.entity.CompanyEntity;
 import com.pth.iflow.core.model.entity.CompanyWorkflowTypeControllerEntity;
+import com.pth.iflow.core.model.entity.CompanyWorkflowtypeItemOcrSettingEntity;
 import com.pth.iflow.core.model.entity.DepartmentEntity;
 import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.model.entity.UserGroupEntity;
@@ -131,9 +134,11 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
 
     final UserEntity user = this.getUserByEmail(email);
     final CompanyEntity company = companyDao.getByIdentity(user.getCompany().getIdentity());
+    final List<CompanyWorkflowtypeItemOcrSettingEntity> workflowtypeItemOcrSettings = companyDao
+        .readCompanyWorkflowtypeItemOcrSettings(company.getId());
 
     return new ProfileResponse(user, company, user.getDepartments().stream().collect(Collectors.toList()),
-        user.getGroups().stream().collect(Collectors.toList()), "sot-set");
+        user.getGroups().stream().collect(Collectors.toList()), workflowtypeItemOcrSettings, "sot-set");
   }
 
   @Override
@@ -141,9 +146,11 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
 
     final UserEntity user = this.getUserByIdentity(identity);
     final CompanyEntity company = companyDao.getByIdentity(user.getCompany().getIdentity());
+    final List<CompanyWorkflowtypeItemOcrSettingEntity> workflowtypeItemOcrSettings = companyDao
+        .readCompanyWorkflowtypeItemOcrSettings(company.getId());
 
     return new ProfileResponse(user, company, user.getDepartments().stream().collect(Collectors.toList()),
-        user.getGroups().stream().collect(Collectors.toList()), "sot-set");
+        user.getGroups().stream().collect(Collectors.toList()), workflowtypeItemOcrSettings, "sot-set");
   }
 
   @Override
@@ -228,7 +235,7 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
     final IUserGroupService groupService = new UserGroupService(null);
     final IDepartmentService departmentService = new DepartmentService(null, companyDao);
 
-    final ICompanyService companyService = new CompanyService(null);
+    final ICompanyService companyService = new CompanyService(null, null);
 
     final List<CompanyWorkflowTypeControllerEntity> workflowTypeControllers = companyDao
         .readCompanyWorkflowTypeController(model.getCompany().getId());
@@ -239,9 +246,35 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
         .collect(Collectors.toList());
 
     final CompanyProfileEdo edo = new CompanyProfileEdo(companyService.toEdo(model.getCompany()),
-        departmentService.toEdoList(model.getDepartments()), groupService.toEdoList(model.getUserGroups()), workflowTypeControllerEdoList);
+        departmentService.toEdoList(model.getDepartments()), groupService.toEdoList(model.getUserGroups()), workflowTypeControllerEdoList,
+        toCompanyWorkflowtypeItemOcrSettingEdoList(model.getWorkflowtypeItemOcrSettings()));
 
     return edo;
+  }
+
+  public CompanyWorkflowtypeItemOcrSettingEdo toCompanyWorkflowtypeItemOcrSettingEdo(final CompanyWorkflowtypeItemOcrSettingEntity model) {
+
+    final CompanyWorkflowtypeItemOcrSettingEdo edo = new CompanyWorkflowtypeItemOcrSettingEdo();
+    edo.setPropertyName(model.getPropertyName());
+    edo.setStatus(model.getStatus());
+    edo.setVersion(model.getVersion());
+    edo.setValue(model.getValue());
+    edo.setWorkflowTypeIdentity(model.getWorkflowType().getIdentity());
+    edo.setCompanyIdentity(model.getCompany().getIdentity());
+
+    return edo;
+  }
+
+  public List<CompanyWorkflowtypeItemOcrSettingEdo>
+      toCompanyWorkflowtypeItemOcrSettingEdoList(final List<CompanyWorkflowtypeItemOcrSettingEntity> modelList) {
+
+    final List<CompanyWorkflowtypeItemOcrSettingEdo> edoList = new ArrayList<>();
+
+    for (final CompanyWorkflowtypeItemOcrSettingEntity model : modelList) {
+      edoList.add(toCompanyWorkflowtypeItemOcrSettingEdo(model));
+    }
+
+    return edoList;
   }
 
   private CompanyWorkflowTypeControllerEdo extractCompanyWorkflowTypeControllerEdo(final CompanyWorkflowTypeControllerEntity wtc) {

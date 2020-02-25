@@ -27,19 +27,16 @@ public abstract class WorkflowParentEntityDaoBase<T extends IWorkflowContainerEn
 
   protected abstract Class<T> entityClass();
 
-  // private EntityManager session = null;
-
   public T create(final T model) throws IFlowStorageException {
 
     final Session session = this.createSession();
 
     session.getTransaction().begin();
     final Object id = session.save(model.getWorkflow());
-    // final WorkflowEntity workflow = session.save(model.getWorkflow());
-    // model.setWorkflow(workflow);
+
     model.setWorkflowId((Long) id);
     session.save(model);
-    // final T savedModel = session.merge(model);
+
     session.getTransaction().commit();
     session.close();
     return getById((Long) id);
@@ -59,17 +56,7 @@ public abstract class WorkflowParentEntityDaoBase<T extends IWorkflowContainerEn
     transaction.commit();
     session.close();
 
-    // workflowModel.setFiles(new ArrayList<>());
-    // workflowModel.setActions(new ArrayList<>());
-    // session.saveOrUpdate(workflowModel);
-
-    // transaction.commit();
-
-    // if (transaction.isActive() == false) {
-    // transaction.begin();
-    // }
-    // session.merge(model.getWorkflow());
-    // session.saveOrUpdate(model.getWorkflow());
+    model.getWorkflow().makeAllSubEntityNew();
 
     session = this.createSession();
     transaction = session.getTransaction();

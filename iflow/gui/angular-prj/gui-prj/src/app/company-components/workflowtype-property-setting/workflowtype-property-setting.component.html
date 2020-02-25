@@ -1,0 +1,63 @@
+
+	<div class="content-container">
+		<div class="page-toolbar">
+			<div class="page-title">{{ 'menu-workflow-list' | translate }}</div>
+		</div>
+	
+		<div class="workflow-content" *ngIf="showList">
+			<div class="item-row">
+				<div class="list-group">
+				  <a class="list-group-item list-group-item-action list-group-item-title">{{ 'workflow-type' | translate }}</a>
+				  <a *ngFor="let type of worlflowTypes;" (click)="showWorkflowType(type)" class="list-group-item list-group-item-action link-out" >{{type.title}}</a>
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+
+		<div class="content-container" *ngIf="showDetail">
+			<div class="page-toolbar">
+				<div class="page-title">{{ selectedWorlflowType.title }}</div>
+				<a class="toolbar-link" (click)="closeWorkflowType()"><i class="material-icons">close</i></a>
+				<a class="toolbar-link" (click)="saveWorkflowType()" *ngIf="selectedWorlflowTypeChanged"><i class="material-icons">save</i></a>
+			</div>
+		
+			<div class="workflow-content">
+				<div class="item-row">
+					<div class="list-group">
+					  <div *ngFor="let prop of workflowtypeItemOcrSettings[selectedWorlflowType.identity];" class="list-group-item list-group-item-action link-out" >
+					  	<label class="property-label">{{ prop.propertyName | translate  }}</label>
+					  	<input type="text"class="property-value" readonly
+					  		(ngModelChange)="setWorkflowtypeItemOcrSettings(selectedWorlflowType.identity, prop.propertyName, $event)" 
+					  		[ngModel]="prop.value"/>
+					  	<a (click)="selectValueList(prop)" class="toolbar-link selectlist-button" ><i class="material-icons">list</i></a>
+					  </div>
+					</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+		
+		</div>
+	
+	</div>
+	
+	
+
+	
+		<div class="modal fade show" tabindex="-1" *ngIf="showTextListDialog" role="dialog">
+			<div class="modal-dialog text-list-dialog" role="document">
+				<div class="modal-header">
+			 		<h5 class="modal-title">{{ 'text.text-list' | translate }}</h5>
+					<button type="button" class="close" (click)="hideTextListDialog()" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>			
+				<div class="modal-body">
+					<app-text-list [separator]="textSeparator" [text]="selectedTextToMakeList" (textChanged)="selectedTextChanged($event)"></app-text-list>
+				</div>	
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" (click)="applySelectexTextChanged()">{{ 'common.apply' | translate }}</button>
+					<button type="button" class="btn btn-secondary" (click)="hideTextListDialog()">{{ 'common.close' | translate }}</button>
+				</div>						
+			</div>
+		</div>
+		

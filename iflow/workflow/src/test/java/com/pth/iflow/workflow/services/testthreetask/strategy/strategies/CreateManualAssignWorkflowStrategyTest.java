@@ -77,6 +77,7 @@ public class CreateManualAssignWorkflowStrategyTest extends TestDataProducer {
     final List<User> userList = getTestUserList();
 
     when(this.workflowDataService.save(any(TestThreeTaskWorkflow.class), any(String.class))).thenReturn(request.getWorkflow());
+    when(this.workflowPrepare.prepareWorkflow(any(String.class), any(TestThreeTaskWorkflow.class))).thenReturn(request.getWorkflow());
 
     when(this.departmentDataService.getUserListByDepartmentIdentity(any(String.class), any(String.class))).thenReturn(userList);
 

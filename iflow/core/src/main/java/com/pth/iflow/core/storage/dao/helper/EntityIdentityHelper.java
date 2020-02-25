@@ -6,9 +6,8 @@ import java.util.Random;
 import org.apache.commons.lang3.StringUtils;
 
 import com.pth.iflow.common.enums.EIdentity;
-import com.pth.iflow.core.storage.dao.exception.IFlowOptimisticLockException;
 
-public abstract class EntityIdentityHelper implements ICoreEntityVersion, Serializable {
+public abstract class EntityIdentityHelper extends EntityHelper implements ICoreEntityVersion, Serializable {
 
   private static final long serialVersionUID = -969556071780903419L;
 
@@ -32,18 +31,6 @@ public abstract class EntityIdentityHelper implements ICoreEntityVersion, Serial
   public boolean hasTheSameIdentity(final String identity) {
 
     return StringUtils.isEmpty(this.getIdentity()) == false && this.getIdentity().equals(identity);
-  }
-
-  public boolean isNew() {
-
-    return getId() == null || getId() <= 0;
-  }
-
-  public void verifyVersion(final EntityIdentityHelper exists) {
-
-    if (exists.getVersion() > getVersion()) {
-      throw new IFlowOptimisticLockException(this.getClass().getTypeName() + " with id " + getId() + " is old!");
-    }
   }
 
 }

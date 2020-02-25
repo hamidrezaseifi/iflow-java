@@ -27,38 +27,46 @@ public class ProfileResponseEdo {
   private String sessionid;
 
   public ProfileResponseEdo() {
+
     this.user = null;
     this.companyProfile = null;
     this.sessionid = "";
   }
 
   public ProfileResponseEdo(final UserEdo user, final CompanyProfileEdo company, final String sessionid) {
+
     this.user = user;
     this.companyProfile = company;
     this.sessionid = sessionid;
   }
 
   public UserEdo getUser() {
+
     return this.user;
   }
 
   public void setUser(final UserEdo user) {
+
     this.user = user;
   }
 
   public CompanyProfileEdo getCompanyProfile() {
+
     return this.companyProfile;
   }
 
   public void setCompanyProfile(final CompanyProfileEdo company) {
+
     this.companyProfile = company;
   }
 
   public String getSessionid() {
+
     return this.sessionid;
   }
 
   public void setSessionid(final String sessionid) {
+
     this.sessionid = sessionid;
   }
 

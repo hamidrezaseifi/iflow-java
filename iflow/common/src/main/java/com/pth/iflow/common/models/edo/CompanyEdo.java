@@ -16,7 +16,7 @@ import com.pth.iflow.common.models.validation.AEnumValidator;
 @XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "Company" + IFlowJaxbDefinition.TYPE_PREFIX)
 public class CompanyEdo {
 
-  @NotNull
+  @NotNull(message = "Identity must not be null")
   @XmlElement(name = "Identity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String identity;
 

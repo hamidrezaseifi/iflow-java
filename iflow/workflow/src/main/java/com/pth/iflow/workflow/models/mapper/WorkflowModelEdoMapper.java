@@ -19,6 +19,7 @@ import com.pth.iflow.common.models.edo.AssignItemEdo;
 import com.pth.iflow.common.models.edo.CompanyEdo;
 import com.pth.iflow.common.models.edo.CompanyProfileEdo;
 import com.pth.iflow.common.models.edo.CompanyWorkflowTypeControllerEdo;
+import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingEdo;
 import com.pth.iflow.common.models.edo.DepartmentEdo;
 import com.pth.iflow.common.models.edo.ProfileResponseEdo;
 import com.pth.iflow.common.models.edo.UserDepartmentEdo;
@@ -42,6 +43,7 @@ import com.pth.iflow.workflow.models.AssignItem;
 import com.pth.iflow.workflow.models.Company;
 import com.pth.iflow.workflow.models.CompanyProfile;
 import com.pth.iflow.workflow.models.CompanyWorkflowTypeController;
+import com.pth.iflow.workflow.models.CompanyWorkflowtypeItemOcrSetting;
 import com.pth.iflow.workflow.models.Department;
 import com.pth.iflow.workflow.models.ProfileResponse;
 import com.pth.iflow.workflow.models.User;
@@ -70,7 +72,8 @@ public class WorkflowModelEdoMapper {
   public static CompanyProfileEdo toEdo(final CompanyProfile model) {
 
     final CompanyProfileEdo edo = new CompanyProfileEdo(toEdo(model.getCompany()), toDepartmentEdoList(model.getDepartments()),
-        toUserGroupEdoList(model.getUserGroups()), toCompanyWorkflowTypeControllerEdoList(model.getWorkflowTypeControllers()));
+        toUserGroupEdoList(model.getUserGroups()), toCompanyWorkflowTypeControllerEdoList(model.getWorkflowTypeControllers()),
+        toCompanyWorkflowtypeItemOcrSettingEdoList(model.getWorkflowtypeItemOcrSettings()));
 
     return edo;
   }
@@ -101,6 +104,56 @@ public class WorkflowModelEdoMapper {
     model.setCompanyTypeCustome(edo.getCompanyTypeCustome());
 
     return model;
+  }
+
+  public static CompanyWorkflowtypeItemOcrSettingEdo toCompanyWorkflowtypeItemOcrSettingEdo(final CompanyWorkflowtypeItemOcrSetting model) {
+
+    final CompanyWorkflowtypeItemOcrSettingEdo edo = new CompanyWorkflowtypeItemOcrSettingEdo();
+    edo.setPropertyName(model.getPropertyName());
+    edo.setStatus(model.getStatus());
+    edo.setVersion(model.getVersion());
+    edo.setValue(model.getValue());
+    edo.setWorkflowTypeIdentity(model.getWorkflowIdentity());
+    edo.setCompanyIdentity(model.getCompanyIdentity());
+
+    return edo;
+  }
+
+  public static CompanyWorkflowtypeItemOcrSetting fromCompanyWorkflowtypeItemOcrSettingEdo(final CompanyWorkflowtypeItemOcrSettingEdo edo) {
+
+    final CompanyWorkflowtypeItemOcrSetting model = new CompanyWorkflowtypeItemOcrSetting();
+    model.setPropertyName(edo.getPropertyName());
+    model.setStatus(edo.getStatus());
+    model.setVersion(edo.getVersion());
+    model.setValue(edo.getValue());
+    model.setWorkflowIdentity(edo.getWorkflowTypeIdentity());
+    model.setCompanyIdentity(edo.getCompanyIdentity());
+
+    return model;
+  }
+
+  public static List<CompanyWorkflowtypeItemOcrSettingEdo>
+      toCompanyWorkflowtypeItemOcrSettingEdoList(final List<CompanyWorkflowtypeItemOcrSetting> modelList) {
+
+    final List<CompanyWorkflowtypeItemOcrSettingEdo> edoList = new ArrayList<>();
+
+    for (final CompanyWorkflowtypeItemOcrSetting model : modelList) {
+      edoList.add(toCompanyWorkflowtypeItemOcrSettingEdo(model));
+    }
+
+    return edoList;
+  }
+
+  public static List<CompanyWorkflowtypeItemOcrSetting>
+      fromCompanyWorkflowtypeItemOcrSettingEdoList(final List<CompanyWorkflowtypeItemOcrSettingEdo> edoList) {
+
+    final List<CompanyWorkflowtypeItemOcrSetting> modelList = new ArrayList<>();
+
+    for (final CompanyWorkflowtypeItemOcrSettingEdo edo : edoList) {
+      modelList.add(fromCompanyWorkflowtypeItemOcrSettingEdo(edo));
+    }
+
+    return modelList;
   }
 
   public static WorkflowMessage fromEdo(final WorkflowMessageEdo edo) throws IFlowMessageConversionFailureException {
@@ -888,7 +941,8 @@ public class WorkflowModelEdoMapper {
     validateCustomer(edo);
 
     final CompanyProfile model = new CompanyProfile(fromEdo(edo.getCompany()), fromDepartmentEdoList(edo.getDepartments()),
-        fromUserGroupEdoList(edo.getUserGroups()), fromCompanyWorkflowTypeControllerEdoList(edo.getWorkflowTypeControllers()));
+        fromUserGroupEdoList(edo.getUserGroups()), fromCompanyWorkflowTypeControllerEdoList(edo.getWorkflowTypeControllers()),
+        fromCompanyWorkflowtypeItemOcrSettingEdoList(edo.getWorkflowtypeItemOcrSettings()));
 
     return model;
   }

@@ -25,6 +25,8 @@ import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.common.models.edo.CompanyEdo;
 import com.pth.iflow.common.models.edo.CompanyProfileEdo;
+import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingEdo;
+import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingListEdo;
 import com.pth.iflow.common.models.edo.DepartmentListEdo;
 import com.pth.iflow.common.models.edo.UserGroupListEdo;
 import com.pth.iflow.common.models.edo.UserListEdo;
@@ -32,6 +34,7 @@ import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
 import com.pth.iflow.profile.exceptions.ProfileCustomizedException;
 import com.pth.iflow.profile.model.Company;
+import com.pth.iflow.profile.model.CompanyWorkflowtypeItemOcrSetting;
 import com.pth.iflow.profile.model.Department;
 import com.pth.iflow.profile.model.ProfileResponse;
 import com.pth.iflow.profile.model.User;
@@ -157,6 +160,49 @@ public class CompanyController {
     final ProfileResponse profile = this.tokenUserDataManager.getProfileByToken(headerTokenId);
 
     return ControllerHelper.createResponseEntity(request, ProfileModelEdoMapper.toEdo(profile.getCompanyProfile()), HttpStatus.OK);
+  }
+
+  @ResponseStatus(HttpStatus.OK)
+  @IflowGetRequestMapping(path = IflowRestPaths.ProfileModule.COMPANY_READ_WORKFLOWTYPE_ITEMS_OCR_SETTINGS_BY_IDENTITY)
+  public ResponseEntity<CompanyWorkflowtypeItemOcrSettingListEdo>
+      readCompanyWorkflowtypeItemOcrSettings(@PathVariable(name = "companyidentity") final String companyidentity,
+          final HttpServletRequest request,
+          @RequestHeader(
+            TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY
+          ) final String headerTokenId) throws Exception {
+
+    this.tokenUserDataManager.validateToken(headerTokenId);
+
+    final List<CompanyWorkflowtypeItemOcrSetting> modelList = this.companiesHandlerService
+        .readCompanyWorkflowtypeItemOcrSettingsByCompanyIdentity(companyidentity);
+
+    final List<
+        CompanyWorkflowtypeItemOcrSettingEdo> edoList = ProfileModelEdoMapper.toCompanyWorkflowtypeItemOcrSettingEdoList(modelList);
+
+    return ControllerHelper.createResponseEntity(request, new CompanyWorkflowtypeItemOcrSettingListEdo(edoList), HttpStatus.OK);
+  }
+
+  @ResponseStatus(HttpStatus.CREATED)
+  @IflowPostRequestMapping(path = IflowRestPaths.ProfileModule.COMPANY_SAVE_WORKFLOWTYPE_ITEMS_OCR_SETTINGS)
+  public ResponseEntity<CompanyWorkflowtypeItemOcrSettingListEdo>
+      saveCompanyWorkflowtypeItemOcrSettings(@RequestBody final CompanyWorkflowtypeItemOcrSettingListEdo workflowtypeItemOcrSettingListEdo,
+          final HttpServletRequest request,
+          @RequestHeader(
+            TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY
+          ) final String headerTokenId) throws Exception {
+
+    this.tokenUserDataManager.validateToken(headerTokenId);
+
+    final List<CompanyWorkflowtypeItemOcrSetting> modelInputList = ProfileModelEdoMapper
+        .fromCompanyWorkflowtypeItemOcrSettingEdoList(workflowtypeItemOcrSettingListEdo.getCompanyWorkflowtypeItemOcrSettings());
+
+    final List<CompanyWorkflowtypeItemOcrSetting> modelList = this.companiesHandlerService
+        .saveCompanyWorkflowtypeItemOcrSettings(modelInputList);
+
+    final List<
+        CompanyWorkflowtypeItemOcrSettingEdo> edoList = ProfileModelEdoMapper.toCompanyWorkflowtypeItemOcrSettingEdoList(modelList);
+
+    return ControllerHelper.createResponseEntity(request, new CompanyWorkflowtypeItemOcrSettingListEdo(edoList), HttpStatus.CREATED);
   }
 
 }

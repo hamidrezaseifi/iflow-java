@@ -50,8 +50,6 @@ export class InvoiceOcrDetailComponent implements OnInit, AfterViewInit  {
 	
 	@Input('editedValues') editedValues :string[] = [];
 
-	@Output() onApplyValues = new EventEmitter<string[]>();
-
 	
 	pdfZoom :any = 'page-fit';
 	showAllPages :boolean = true;

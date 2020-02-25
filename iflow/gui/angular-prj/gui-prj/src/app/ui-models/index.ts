@@ -11,4 +11,5 @@ export * from './uploaded-result';
 export * from './user-access';
 export * from './user-department';
 export * from './company';
+export * from './company-workflowtyp-eitem-ocr-setting';
 
