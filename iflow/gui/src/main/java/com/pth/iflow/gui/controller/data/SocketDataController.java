@@ -205,9 +205,9 @@ public class SocketDataController extends GuiSocketControllerBase {
     }
 
     results = this
-        .extractSearchItems(ocrResults, list, EInvoiceWorkflowTypeItems.INVOCIE_SENDER.getIdentity(), OcrResultValueType.DATE);
+        .extractSearchItems(ocrResults, list, EInvoiceWorkflowTypeItems.INVOCIE_DATE.getIdentity(), OcrResultValueType.DATE);
     if (results != null) {
-      words.put(EInvoiceWorkflowTypeItems.INVOCIE_SENDER.getIdentity(), results);
+      words.put(EInvoiceWorkflowTypeItems.INVOCIE_DATE.getIdentity(), results);
     }
 
     results = this
@@ -292,6 +292,7 @@ public class SocketDataController extends GuiSocketControllerBase {
     if (property.isPresent()) {
       final String[] searchWords = property.get().getValue().split(";");
       results = ocrResults.findWords(searchWords, false, false, valueType);
+      results = results.isEmpty() ? null : results;
     }
 
     return results;
