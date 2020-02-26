@@ -32,7 +32,7 @@ public class CompanyWorkflowtypeItemOcrSettingPresetItemEntity extends EntityHel
   private Long id;
 
   @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "company_id", nullable = false)
+  @JoinColumn(name = "preset_id", nullable = false)
   private CompanyWorkflowtypeItemOcrSettingPresetEntity preset;
 
   @Column(name = "property_name")

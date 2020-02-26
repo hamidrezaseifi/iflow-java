@@ -127,7 +127,7 @@ public class CompanyControllerTest extends TestDataProducer {
             getTestCompanyWorkflowtypeItemOcrSettingEdo("propName3"));
 
     when(this.companyService.readCompanyWorkflowtypeItemOcrSettingsByCompanyIdentity(any(String.class))).thenReturn(modelList);
-    when(this.companyService.toCompanyWorkflowtypeItemOcrSettingEdoList(any(List.class))).thenReturn(edoList);
+    when(this.companyService.toCompanyWorkflowtypeItemOcrSettingPresetEdoList(any(List.class))).thenReturn(edoList);
 
     final String resultAsXmlString = this.xmlConverter
         .getObjectMapper()
@@ -142,7 +142,7 @@ public class CompanyControllerTest extends TestDataProducer {
         .andExpect(content().xml(resultAsXmlString));
 
     verify(this.companyService, times(1)).readCompanyWorkflowtypeItemOcrSettingsByCompanyIdentity(any(String.class));
-    verify(this.companyService, times(1)).toCompanyWorkflowtypeItemOcrSettingEdoList(any(List.class));
+    verify(this.companyService, times(1)).toCompanyWorkflowtypeItemOcrSettingPresetEdoList(any(List.class));
 
   }
 
@@ -160,8 +160,8 @@ public class CompanyControllerTest extends TestDataProducer {
     final CompanyWorkflowtypeItemOcrSettingPresetListEdo listEdo = new CompanyWorkflowtypeItemOcrSettingPresetListEdo(edoList);
 
     when(this.companyService.saveCompanyWorkflowtypeItemOcrSettings(any(List.class))).thenReturn(modelList);
-    when(this.companyService.toCompanyWorkflowtypeItemOcrSettingEdoList(any(List.class))).thenReturn(edoList);
-    when(this.companyService.fromCompanyWorkflowtypeItemOcrSettingEdoList(any(List.class))).thenReturn(modelList);
+    when(this.companyService.toCompanyWorkflowtypeItemOcrSettingPresetEdoList(any(List.class))).thenReturn(edoList);
+    when(this.companyService.fromCompanyWorkflowtypeItemOcrSettingPresetEdoList(any(List.class))).thenReturn(modelList);
 
     final String resultAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(listEdo);
 
@@ -178,8 +178,8 @@ public class CompanyControllerTest extends TestDataProducer {
         .andExpect(content().xml(resultAsXmlString));
 
     verify(this.companyService, times(1)).saveCompanyWorkflowtypeItemOcrSettings(any(List.class));
-    verify(this.companyService, times(1)).toCompanyWorkflowtypeItemOcrSettingEdoList(any(List.class));
-    verify(this.companyService, times(1)).fromCompanyWorkflowtypeItemOcrSettingEdoList(any(List.class));
+    verify(this.companyService, times(1)).toCompanyWorkflowtypeItemOcrSettingPresetEdoList(any(List.class));
+    verify(this.companyService, times(1)).fromCompanyWorkflowtypeItemOcrSettingPresetEdoList(any(List.class));
 
   }
 

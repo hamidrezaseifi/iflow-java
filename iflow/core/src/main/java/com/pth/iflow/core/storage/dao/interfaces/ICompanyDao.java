@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.pth.iflow.core.model.entity.CompanyEntity;
 import com.pth.iflow.core.model.entity.CompanyWorkflowTypeControllerEntity;
-import com.pth.iflow.core.model.entity.CompanyWorkflowtypeItemOcrSettingPresetItemEntity;
+import com.pth.iflow.core.model.entity.CompanyWorkflowtypeItemOcrSettingPresetEntity;
 import com.pth.iflow.core.storage.dao.exception.IFlowStorageException;
 
 public interface ICompanyDao {
@@ -21,11 +21,11 @@ public interface ICompanyDao {
 
   public List<CompanyWorkflowTypeControllerEntity> readCompanyWorkflowTypeController(Long id);
 
-  public List<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> readCompanyWorkflowtypeItemOcrSettings(Long id);
+  public List<CompanyWorkflowtypeItemOcrSettingPresetEntity> readCompanyWorkflowtypeItemOcrSettings(Long id);
 
-  public List<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> readCompanyWorkflowtypeItemOcrSettingsByCompanyIdentity(String identity);
+  public List<CompanyWorkflowtypeItemOcrSettingPresetEntity> readCompanyWorkflowtypeItemOcrSettingsByCompanyIdentity(String identity);
 
-  public List<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> saveCompanyWorkflowtypeItemOcrSettings(
-      final List<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> list);
+  public List<CompanyWorkflowtypeItemOcrSettingPresetEntity> saveCompanyWorkflowtypeItemOcrSettings(
+      final List<CompanyWorkflowtypeItemOcrSettingPresetEntity> list);
 
 }

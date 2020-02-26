@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pth.iflow.core.model.entity.CompanyEntity;
 import com.pth.iflow.core.model.entity.CompanyWorkflowTypeControllerEntity;
+import com.pth.iflow.core.model.entity.CompanyWorkflowtypeItemOcrSettingPresetEntity;
 import com.pth.iflow.core.model.entity.CompanyWorkflowtypeItemOcrSettingPresetItemEntity;
 import com.pth.iflow.core.storage.dao.impl.base.EntityDaoBase;
 import com.pth.iflow.core.storage.dao.interfaces.ICompanyDao;
@@ -59,86 +60,93 @@ public class CompanyDao extends EntityDaoBase<CompanyEntity> implements ICompany
   }
 
   @Override
-  public List<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> readCompanyWorkflowtypeItemOcrSettings(final Long id) {
+  public List<CompanyWorkflowtypeItemOcrSettingPresetEntity> readCompanyWorkflowtypeItemOcrSettings(final Long id) {
 
     final Session session = this.createSession();
 
     final CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
     final CriteriaQuery<
-        CompanyWorkflowtypeItemOcrSettingPresetItemEntity> query = criteriaBuilder.createQuery(CompanyWorkflowtypeItemOcrSettingPresetItemEntity.class);
-    final Root<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> root = query.from(CompanyWorkflowtypeItemOcrSettingPresetItemEntity.class);
+        CompanyWorkflowtypeItemOcrSettingPresetEntity> query = criteriaBuilder
+            .createQuery(CompanyWorkflowtypeItemOcrSettingPresetEntity.class);
+    final Root<
+        CompanyWorkflowtypeItemOcrSettingPresetEntity> root = query.from(CompanyWorkflowtypeItemOcrSettingPresetEntity.class);
     query.select(root);
 
     final Predicate predicate = criteriaBuilder.equal(root.get("company").get("id"), id);
     query.where(predicate);
 
-    final TypedQuery<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> typedQuery = session.createQuery(query);
+    final TypedQuery<CompanyWorkflowtypeItemOcrSettingPresetEntity> typedQuery = session.createQuery(query);
 
     // final String qr =
     // typedQuery.unwrap(org.hibernate.query.Query.class).getQueryString();
     // System.out.println("search workflow query: " + qr);
 
-    final List<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> results = typedQuery.getResultList();
+    final List<CompanyWorkflowtypeItemOcrSettingPresetEntity> results = typedQuery.getResultList();
     session.close();
     return results;
   }
 
   @Override
-  public List<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> readCompanyWorkflowtypeItemOcrSettingsByCompanyIdentity(final String identity) {
+  public List<CompanyWorkflowtypeItemOcrSettingPresetEntity>
+      readCompanyWorkflowtypeItemOcrSettingsByCompanyIdentity(final String identity) {
 
     final Session session = this.createSession();
 
     final CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
     final CriteriaQuery<
-        CompanyWorkflowtypeItemOcrSettingPresetItemEntity> query = criteriaBuilder.createQuery(CompanyWorkflowtypeItemOcrSettingPresetItemEntity.class);
-    final Root<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> root = query.from(CompanyWorkflowtypeItemOcrSettingPresetItemEntity.class);
+        CompanyWorkflowtypeItemOcrSettingPresetEntity> query = criteriaBuilder
+            .createQuery(CompanyWorkflowtypeItemOcrSettingPresetEntity.class);
+    final Root<
+        CompanyWorkflowtypeItemOcrSettingPresetEntity> root = query.from(CompanyWorkflowtypeItemOcrSettingPresetEntity.class);
     query.select(root);
 
     final Predicate predicate = criteriaBuilder.equal(root.get("company").get("identity"), identity);
     query.where(predicate);
 
-    final TypedQuery<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> typedQuery = session.createQuery(query);
+    final TypedQuery<CompanyWorkflowtypeItemOcrSettingPresetEntity> typedQuery = session.createQuery(query);
 
     // final String qr =
     // typedQuery.unwrap(org.hibernate.query.Query.class).getQueryString();
     // System.out.println("search workflow query: " + qr);
 
-    final List<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> results = typedQuery.getResultList();
+    final List<CompanyWorkflowtypeItemOcrSettingPresetEntity> results = typedQuery.getResultList();
     session.close();
     return results;
   }
 
   @Override
   @Transactional
-  public List<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> saveCompanyWorkflowtypeItemOcrSettings(
-      final List<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> list) {
+  public List<CompanyWorkflowtypeItemOcrSettingPresetEntity> saveCompanyWorkflowtypeItemOcrSettings(
+      final List<CompanyWorkflowtypeItemOcrSettingPresetEntity> list) {
 
     final Session session = this.createSession();
 
-    final List<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> savedList = new ArrayList<>();
+    final List<CompanyWorkflowtypeItemOcrSettingPresetEntity> savedList = new ArrayList<>();
 
-    for (final CompanyWorkflowtypeItemOcrSettingPresetItemEntity model : list) {
-      session.getTransaction().begin();
+    for (final CompanyWorkflowtypeItemOcrSettingPresetEntity model : list) {
+      if (model.isNew() == false) {
+        for (final CompanyWorkflowtypeItemOcrSettingPresetItemEntity itemEntity : model.getItems()) {
+          session.getTransaction().begin();
 
-      final CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-      final CriteriaDelete<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> criteriaDelete = criteriaBuilder
-          .createCriteriaDelete(CompanyWorkflowtypeItemOcrSettingPresetItemEntity.class);
+          final CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+          final CriteriaDelete<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> criteriaDelete = criteriaBuilder
+              .createCriteriaDelete(CompanyWorkflowtypeItemOcrSettingPresetItemEntity.class);
 
-      final Root<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> root = criteriaDelete.from(CompanyWorkflowtypeItemOcrSettingPresetItemEntity.class);
+          final Root<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> root = criteriaDelete
+              .from(CompanyWorkflowtypeItemOcrSettingPresetItemEntity.class);
 
-      final Predicate pPropertyName = criteriaBuilder.equal(root.get("propertyName"), model.getPropertyName());
-      final Predicate pCompany = criteriaBuilder.equal(root.get("company").get("id"), model.getCompany().getId());
-      final Predicate pWorkflowType = criteriaBuilder.equal(root.get("workflowType").get("id"), model.getWorkflowType().getId());
+          final Predicate pPropertyName = criteriaBuilder.equal(root.get("propertyName"), itemEntity.getPropertyName());
+          final Predicate pCompany = criteriaBuilder.equal(root.get("preset").get("id"), model.getId());
 
-      final Query<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> query = session
-          .createQuery(criteriaDelete.where(criteriaBuilder.and(pPropertyName, pCompany, pWorkflowType)));
+          final Query<?> query = session.createQuery(criteriaDelete.where(criteriaBuilder.and(pPropertyName, pCompany)));
 
-      query.executeUpdate();
-      session.getTransaction().commit();
-
+          query.executeUpdate();
+          session.getTransaction().commit();
+        }
+      }
     }
 
-    for (final CompanyWorkflowtypeItemOcrSettingPresetItemEntity model : list) {
+    for (final CompanyWorkflowtypeItemOcrSettingPresetEntity model : list) {
       session.getTransaction().begin();
 
       session.persist(model);

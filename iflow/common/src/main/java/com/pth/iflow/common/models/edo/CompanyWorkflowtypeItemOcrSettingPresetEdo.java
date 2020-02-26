@@ -31,9 +31,6 @@ public class CompanyWorkflowtypeItemOcrSettingPresetEdo {
   @XmlElement(name = "PresetName", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String presetName;
 
-  @XmlElement(name = "Value", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private String value;
-
   @NotNull(message = "Status must not be null")
   @XmlElement(name = "Status", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer status;
@@ -42,10 +39,10 @@ public class CompanyWorkflowtypeItemOcrSettingPresetEdo {
   @XmlElement(name = "Version", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer version;
 
-  @NotNull(message = "UserDepartmentList must not be null")
-  @XmlElementWrapper(name = "UserDepartmentList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  @XmlElement(name = "UserDepartment", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private List<UserDepartmentEdo> items = new ArrayList<>();
+  @NotNull(message = "CompanyWorkflowtypeItemOcrSettingPresetItemList must not be null")
+  @XmlElementWrapper(name = "CompanyWorkflowtypeItemOcrSettingPresetItemList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  @XmlElement(name = "CompanyWorkflowtypeItemOcrSettingPresetItem", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private List<CompanyWorkflowtypeItemOcrSettingPresetItemEdo> items = new ArrayList<>();
 
   public String getCompanyIdentity() {
 
@@ -77,16 +74,6 @@ public class CompanyWorkflowtypeItemOcrSettingPresetEdo {
     this.presetName = presetName;
   }
 
-  public String getValue() {
-
-    return this.value;
-  }
-
-  public void setValue(final String value) {
-
-    this.value = value;
-  }
-
   public Integer getStatus() {
 
     return this.status;
@@ -107,13 +94,13 @@ public class CompanyWorkflowtypeItemOcrSettingPresetEdo {
     this.version = version;
   }
 
-  public List<UserDepartmentEdo> getItems() {
+  public List<CompanyWorkflowtypeItemOcrSettingPresetItemEdo> getItems() {
 
     return this.items;
   }
 
   @JsonSetter
-  public void setItems(final List<UserDepartmentEdo> items) {
+  public void setItems(final List<CompanyWorkflowtypeItemOcrSettingPresetItemEdo> items) {
 
     this.items = new ArrayList<>();
     if (items != null) {

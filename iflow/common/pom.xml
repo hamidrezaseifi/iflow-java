@@ -192,6 +192,7 @@
 					<source>src/main/java/com/pth/iflow/common/edo/models/WorkflowTypeStepListEdo.java</source>
 
 					<source>src/main/java/com/pth/iflow/common/edo/models/CompanyWorkflowtypeItemOcrSettingPresetEdo.java</source>
+					<source>src/main/java/com/pth/iflow/common/edo/models/CompanyWorkflowtypeItemOcrSettingPresetListEdo.java</source>
 					<source>src/main/java/com/pth/iflow/common/edo/models/CompanyWorkflowtypeItemOcrSettingPresetItemEdo.java</source>
 					
 					<source>src/main/java/com/pth/iflow/common/edo/models/workflow/invoice/InvoiceWorkflowEdo.java</source>
