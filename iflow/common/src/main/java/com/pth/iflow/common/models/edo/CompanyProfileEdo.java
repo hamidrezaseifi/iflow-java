@@ -41,7 +41,7 @@ public class CompanyProfileEdo {
 
   @XmlElementWrapper(name = "WorkflowtypeItemOcrSettingList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "WorkflowtypeItemOcrSetting", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private final List<CompanyWorkflowtypeItemOcrSettingEdo> workflowtypeItemOcrSettings = new ArrayList<>();
+  private final List<CompanyWorkflowtypeItemOcrSettingPresetEdo> workflowtypeItemOcrSettings = new ArrayList<>();
 
   public CompanyProfileEdo() {
 
@@ -49,7 +49,7 @@ public class CompanyProfileEdo {
 
   public CompanyProfileEdo(final CompanyEdo company, final List<DepartmentEdo> departments, final List<UserGroupEdo> userGroups,
       final List<CompanyWorkflowTypeControllerEdo> workflowTypeControllers,
-      final List<CompanyWorkflowtypeItemOcrSettingEdo> workflowtypeItemOcrSettings) {
+      final List<CompanyWorkflowtypeItemOcrSettingPresetEdo> workflowtypeItemOcrSettings) {
 
     this.setDepartments(departments);
     this.setUserGroups(userGroups);
@@ -117,13 +117,13 @@ public class CompanyProfileEdo {
     }
   }
 
-  public List<CompanyWorkflowtypeItemOcrSettingEdo> getWorkflowtypeItemOcrSettings() {
+  public List<CompanyWorkflowtypeItemOcrSettingPresetEdo> getWorkflowtypeItemOcrSettings() {
 
     return this.workflowtypeItemOcrSettings;
   }
 
   @JsonSetter(contentNulls = Nulls.AS_EMPTY)
-  public void setWorkflowtypeItemOcrSettings(final List<CompanyWorkflowtypeItemOcrSettingEdo> workflowtypeItemOcrSettings) {
+  public void setWorkflowtypeItemOcrSettings(final List<CompanyWorkflowtypeItemOcrSettingPresetEdo> workflowtypeItemOcrSettings) {
 
     this.workflowtypeItemOcrSettings.clear();
     if (workflowtypeItemOcrSettings != null) {

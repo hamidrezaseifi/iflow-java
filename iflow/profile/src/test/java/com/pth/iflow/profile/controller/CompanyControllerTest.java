@@ -26,8 +26,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.pth.iflow.common.models.edo.CompanyEdo;
-import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingEdo;
-import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingListEdo;
+import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingPresetItemEdo;
+import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingPresetListEdo;
 import com.pth.iflow.common.models.edo.DepartmentListEdo;
 import com.pth.iflow.common.models.edo.UserGroupListEdo;
 import com.pth.iflow.common.models.edo.UserListEdo;
@@ -202,11 +202,11 @@ public class CompanyControllerTest extends TestDataProducer {
         .asList(this.getTestCompanyWorkflowtypeItemOcrSetting("prop1"), this.getTestCompanyWorkflowtypeItemOcrSetting("prop2"),
             this.getTestCompanyWorkflowtypeItemOcrSetting("prop3"));
 
-    final List<CompanyWorkflowtypeItemOcrSettingEdo> listEdoSettings = Arrays
+    final List<CompanyWorkflowtypeItemOcrSettingPresetItemEdo> listEdoSettings = Arrays
         .asList(this.getTestCompanyWorkflowtypeItemOcrSettingEdo("prop1"), this.getTestCompanyWorkflowtypeItemOcrSettingEdo("prop2"),
             this.getTestCompanyWorkflowtypeItemOcrSettingEdo("prop3"));
 
-    final CompanyWorkflowtypeItemOcrSettingListEdo edoListSettings = new CompanyWorkflowtypeItemOcrSettingListEdo(listEdoSettings);
+    final CompanyWorkflowtypeItemOcrSettingPresetListEdo edoListSettings = new CompanyWorkflowtypeItemOcrSettingPresetListEdo(listEdoSettings);
 
     when(this.companiesHandlerService.readCompanyWorkflowtypeItemOcrSettingsByCompanyIdentity(any(String.class))).thenReturn(listSettings);
 
@@ -231,11 +231,11 @@ public class CompanyControllerTest extends TestDataProducer {
         .asList(this.getTestCompanyWorkflowtypeItemOcrSetting("prop1"), this.getTestCompanyWorkflowtypeItemOcrSetting("prop2"),
             this.getTestCompanyWorkflowtypeItemOcrSetting("prop3"));
 
-    final List<CompanyWorkflowtypeItemOcrSettingEdo> listEdoSettings = Arrays
+    final List<CompanyWorkflowtypeItemOcrSettingPresetItemEdo> listEdoSettings = Arrays
         .asList(this.getTestCompanyWorkflowtypeItemOcrSettingEdo("prop1"), this.getTestCompanyWorkflowtypeItemOcrSettingEdo("prop2"),
             this.getTestCompanyWorkflowtypeItemOcrSettingEdo("prop3"));
 
-    final CompanyWorkflowtypeItemOcrSettingListEdo edoListSettings = new CompanyWorkflowtypeItemOcrSettingListEdo(listEdoSettings);
+    final CompanyWorkflowtypeItemOcrSettingPresetListEdo edoListSettings = new CompanyWorkflowtypeItemOcrSettingPresetListEdo(listEdoSettings);
 
     when(this.companiesHandlerService.saveCompanyWorkflowtypeItemOcrSettings(any(List.class))).thenReturn(listSettings);
 

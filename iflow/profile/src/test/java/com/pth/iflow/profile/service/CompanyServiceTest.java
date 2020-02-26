@@ -21,8 +21,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.models.edo.CompanyEdo;
-import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingEdo;
-import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingListEdo;
+import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingPresetItemEdo;
+import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingPresetListEdo;
 import com.pth.iflow.profile.TestDataProducer;
 import com.pth.iflow.profile.config.ProfileConfiguration;
 import com.pth.iflow.profile.model.Company;
@@ -106,14 +106,14 @@ public class CompanyServiceTest extends TestDataProducer {
         .asList(this.getTestCompanyWorkflowtypeItemOcrSetting("prop1"), this.getTestCompanyWorkflowtypeItemOcrSetting("prop2"),
             this.getTestCompanyWorkflowtypeItemOcrSetting("prop3"));
 
-    final List<CompanyWorkflowtypeItemOcrSettingEdo> listEdoSettings = Arrays
+    final List<CompanyWorkflowtypeItemOcrSettingPresetItemEdo> listEdoSettings = Arrays
         .asList(this.getTestCompanyWorkflowtypeItemOcrSettingEdo("prop1"), this.getTestCompanyWorkflowtypeItemOcrSettingEdo("prop2"),
             this.getTestCompanyWorkflowtypeItemOcrSettingEdo("prop3"));
 
-    final CompanyWorkflowtypeItemOcrSettingListEdo edoListSettings = new CompanyWorkflowtypeItemOcrSettingListEdo(listEdoSettings);
+    final CompanyWorkflowtypeItemOcrSettingPresetListEdo edoListSettings = new CompanyWorkflowtypeItemOcrSettingPresetListEdo(listEdoSettings);
 
     when(this.restTemplate
-        .callRestGet(any(URI.class), any(EModule.class), eq(CompanyWorkflowtypeItemOcrSettingListEdo.class), any(boolean.class)))
+        .callRestGet(any(URI.class), any(EModule.class), eq(CompanyWorkflowtypeItemOcrSettingPresetListEdo.class), any(boolean.class)))
             .thenReturn(edoListSettings);
 
     final List<CompanyWorkflowtypeItemOcrSetting> resList = this.companyService
@@ -132,15 +132,15 @@ public class CompanyServiceTest extends TestDataProducer {
         .asList(this.getTestCompanyWorkflowtypeItemOcrSetting("prop1"), this.getTestCompanyWorkflowtypeItemOcrSetting("prop2"),
             this.getTestCompanyWorkflowtypeItemOcrSetting("prop3"));
 
-    final List<CompanyWorkflowtypeItemOcrSettingEdo> listEdoSettings = Arrays
+    final List<CompanyWorkflowtypeItemOcrSettingPresetItemEdo> listEdoSettings = Arrays
         .asList(this.getTestCompanyWorkflowtypeItemOcrSettingEdo("prop1"), this.getTestCompanyWorkflowtypeItemOcrSettingEdo("prop2"),
             this.getTestCompanyWorkflowtypeItemOcrSettingEdo("prop3"));
 
-    final CompanyWorkflowtypeItemOcrSettingListEdo edoListSettings = new CompanyWorkflowtypeItemOcrSettingListEdo(listEdoSettings);
+    final CompanyWorkflowtypeItemOcrSettingPresetListEdo edoListSettings = new CompanyWorkflowtypeItemOcrSettingPresetListEdo(listEdoSettings);
 
     when(this.restTemplate
-        .callRestPost(any(URI.class), eq(EModule.CORE), any(CompanyWorkflowtypeItemOcrSettingListEdo.class),
-            eq(CompanyWorkflowtypeItemOcrSettingListEdo.class), any(boolean.class)))
+        .callRestPost(any(URI.class), eq(EModule.CORE), any(CompanyWorkflowtypeItemOcrSettingPresetListEdo.class),
+            eq(CompanyWorkflowtypeItemOcrSettingPresetListEdo.class), any(boolean.class)))
                 .thenReturn(edoListSettings);
 
     final List<CompanyWorkflowtypeItemOcrSetting> resList = this.companyService.saveCompanyWorkflowtypeItemOcrSettings(listSettings);

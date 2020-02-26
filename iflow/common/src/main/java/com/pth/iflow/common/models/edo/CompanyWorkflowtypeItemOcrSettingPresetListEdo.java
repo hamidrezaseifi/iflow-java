@@ -17,29 +17,31 @@ import com.pth.iflow.common.models.base.IFlowJaxbDefinition;
 @XmlRootElement(name = "CompanyWorkflowtypeItemOcrSettingList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "CompanyWorkflowtypeItemOcrSettingList" + IFlowJaxbDefinition.TYPE_PREFIX)
-public class CompanyWorkflowtypeItemOcrSettingListEdo {
+public class CompanyWorkflowtypeItemOcrSettingPresetListEdo {
 
   @NotNull
   @XmlElementWrapper(name = "CompanyWorkflowtypeItemOcrSettingList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "CompanyWorkflowtypeItemOcrSetting", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private final List<CompanyWorkflowtypeItemOcrSettingEdo> companyWorkflowtypeItemOcrSettings = new ArrayList<>();
+  private final List<CompanyWorkflowtypeItemOcrSettingPresetEdo> companyWorkflowtypeItemOcrSettings = new ArrayList<>();
 
-  public CompanyWorkflowtypeItemOcrSettingListEdo() {
+  public CompanyWorkflowtypeItemOcrSettingPresetListEdo() {
 
   }
 
-  public CompanyWorkflowtypeItemOcrSettingListEdo(final List<CompanyWorkflowtypeItemOcrSettingEdo> companyWorkflowtypeItemOcrSettings) {
+  public CompanyWorkflowtypeItemOcrSettingPresetListEdo(
+      final List<CompanyWorkflowtypeItemOcrSettingPresetEdo> companyWorkflowtypeItemOcrSettings) {
 
     this.setCompanyWorkflowtypeItemOcrSettings(companyWorkflowtypeItemOcrSettings);
   }
 
-  public List<CompanyWorkflowtypeItemOcrSettingEdo> getCompanyWorkflowtypeItemOcrSettings() {
+  public List<CompanyWorkflowtypeItemOcrSettingPresetEdo> getCompanyWorkflowtypeItemOcrSettings() {
 
     return this.companyWorkflowtypeItemOcrSettings;
   }
 
   @JsonSetter
-  public void setCompanyWorkflowtypeItemOcrSettings(final List<CompanyWorkflowtypeItemOcrSettingEdo> companyWorkflowtypeItemOcrSettings) {
+  public void
+      setCompanyWorkflowtypeItemOcrSettings(final List<CompanyWorkflowtypeItemOcrSettingPresetEdo> companyWorkflowtypeItemOcrSettings) {
 
     this.companyWorkflowtypeItemOcrSettings.clear();
     if (companyWorkflowtypeItemOcrSettings != null) {

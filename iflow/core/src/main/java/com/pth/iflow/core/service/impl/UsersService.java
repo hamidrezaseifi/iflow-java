@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.common.models.edo.CompanyProfileEdo;
 import com.pth.iflow.common.models.edo.CompanyWorkflowTypeControllerEdo;
-import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingEdo;
+import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingPresetItemEdo;
 import com.pth.iflow.common.models.edo.ProfileResponseEdo;
 import com.pth.iflow.common.models.edo.UserDepartmentEdo;
 import com.pth.iflow.common.models.edo.UserEdo;
@@ -252,9 +252,9 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
     return edo;
   }
 
-  public CompanyWorkflowtypeItemOcrSettingEdo toCompanyWorkflowtypeItemOcrSettingEdo(final CompanyWorkflowtypeItemOcrSettingPresetItemEntity model) {
+  public CompanyWorkflowtypeItemOcrSettingPresetItemEdo toCompanyWorkflowtypeItemOcrSettingEdo(final CompanyWorkflowtypeItemOcrSettingPresetItemEntity model) {
 
-    final CompanyWorkflowtypeItemOcrSettingEdo edo = new CompanyWorkflowtypeItemOcrSettingEdo();
+    final CompanyWorkflowtypeItemOcrSettingPresetItemEdo edo = new CompanyWorkflowtypeItemOcrSettingPresetItemEdo();
     edo.setPropertyName(model.getPropertyName());
     edo.setStatus(model.getStatus());
     edo.setVersion(model.getVersion());
@@ -265,10 +265,10 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
     return edo;
   }
 
-  public List<CompanyWorkflowtypeItemOcrSettingEdo>
+  public List<CompanyWorkflowtypeItemOcrSettingPresetItemEdo>
       toCompanyWorkflowtypeItemOcrSettingEdoList(final List<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> modelList) {
 
-    final List<CompanyWorkflowtypeItemOcrSettingEdo> edoList = new ArrayList<>();
+    final List<CompanyWorkflowtypeItemOcrSettingPresetItemEdo> edoList = new ArrayList<>();
 
     for (final CompanyWorkflowtypeItemOcrSettingPresetItemEntity model : modelList) {
       edoList.add(toCompanyWorkflowtypeItemOcrSettingEdo(model));

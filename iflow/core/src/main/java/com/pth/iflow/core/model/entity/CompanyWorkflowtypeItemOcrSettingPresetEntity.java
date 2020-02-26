@@ -1,7 +1,10 @@
 package com.pth.iflow.core.model.entity;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,12 +13,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.pth.iflow.core.model.entity.workflow.WorkflowTypeEntity;
 import com.pth.iflow.core.storage.dao.helper.EntityHelper;
 
 @Entity
@@ -34,6 +41,10 @@ public class CompanyWorkflowtypeItemOcrSettingPresetEntity extends EntityHelper 
   @JoinColumn(name = "company_id", nullable = false)
   private CompanyEntity company;
 
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "workflow_type_id", nullable = false)
+  private WorkflowTypeEntity workflowType;
+
   @Column(name = "preset_name")
   private String presetName;
 
@@ -50,6 +61,10 @@ public class CompanyWorkflowtypeItemOcrSettingPresetEntity extends EntityHelper 
   @UpdateTimestamp
   @Column(name = "updated_at", insertable = false, updatable = false)
   private Date updatedAt;
+
+  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "preset", fetch = FetchType.EAGER)
+  @Fetch(value = FetchMode.SUBSELECT)
+  private final List<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> items = new ArrayList<>();
 
   /**
    * @return the id
@@ -79,6 +94,16 @@ public class CompanyWorkflowtypeItemOcrSettingPresetEntity extends EntityHelper 
   public void setCompany(final CompanyEntity company) {
 
     this.company = company;
+  }
+
+  public WorkflowTypeEntity getWorkflowType() {
+
+    return workflowType;
+  }
+
+  public void setWorkflowType(final WorkflowTypeEntity workflowType) {
+
+    this.workflowType = workflowType;
   }
 
   public String getPresetName() {
@@ -151,6 +176,24 @@ public class CompanyWorkflowtypeItemOcrSettingPresetEntity extends EntityHelper 
   public void setCreatedAt(final Date createdAt) {
 
     this.createdAt = createdAt;
+  }
+
+  public List<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> getItems() {
+
+    return items;
+  }
+
+  public void setItems(final List<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> items) {
+
+    this.items.clear();
+    if (items != null) {
+      for (final CompanyWorkflowtypeItemOcrSettingPresetItemEntity item : items) {
+        item.setPreset(this);
+        this.items.add(item);
+      }
+
+    }
+
   }
 
   @Override

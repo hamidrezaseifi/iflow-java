@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.common.models.edo.CompanyEdo;
-import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingListEdo;
+import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingPresetListEdo;
 import com.pth.iflow.gui.configurations.GuiConfiguration;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.Company;
@@ -72,9 +72,9 @@ public class CompanyAccess implements ICompanyAccess {
 
     logger.debug("Read company workflowtype item ocr settings from core {}", identity);
 
-    final CompanyWorkflowtypeItemOcrSettingListEdo listEdo = this.restTemplate
+    final CompanyWorkflowtypeItemOcrSettingPresetListEdo listEdo = this.restTemplate
         .callRestGet(this.profileModuleAccessConfig.getReadCompanyWorkflowTypeItemOcrSettingsUri(identity),
-            EModule.PROFILE, CompanyWorkflowtypeItemOcrSettingListEdo.class,
+            EModule.PROFILE, CompanyWorkflowtypeItemOcrSettingPresetListEdo.class,
             this.sessionUserInfo.isLoggedIn() ? this.sessionUserInfo.getToken() : this.sessionUserInfo.getToken(), true);
 
     return GuiModelEdoMapper.fromCompanyWorkflowtypeItemOcrSettingEdoList(listEdo.getCompanyWorkflowtypeItemOcrSettings());
@@ -86,9 +86,9 @@ public class CompanyAccess implements ICompanyAccess {
 
     logger.debug("Read company workflowtype item ocr settings from core {}", identity);
 
-    final CompanyWorkflowtypeItemOcrSettingListEdo listEdo = this.restTemplate
+    final CompanyWorkflowtypeItemOcrSettingPresetListEdo listEdo = this.restTemplate
         .callRestGet(this.profileModuleAccessConfig.getReadCompanyWorkflowTypeItemOcrSettingsUri(identity),
-            EModule.PROFILE, CompanyWorkflowtypeItemOcrSettingListEdo.class, token, true);
+            EModule.PROFILE, CompanyWorkflowtypeItemOcrSettingPresetListEdo.class, token, true);
 
     return GuiModelEdoMapper.fromCompanyWorkflowtypeItemOcrSettingEdoList(listEdo.getCompanyWorkflowtypeItemOcrSettings());
   }
@@ -100,13 +100,13 @@ public class CompanyAccess implements ICompanyAccess {
 
     logger.debug("Save company workflowtype item ocr settings");
 
-    final CompanyWorkflowtypeItemOcrSettingListEdo workflowtypeItemOcrSettingListEdo = new CompanyWorkflowtypeItemOcrSettingListEdo(
+    final CompanyWorkflowtypeItemOcrSettingPresetListEdo workflowtypeItemOcrSettingListEdo = new CompanyWorkflowtypeItemOcrSettingPresetListEdo(
         GuiModelEdoMapper.toCompanyWorkflowtypeItemOcrSettingEdoList(newList));
-    final CompanyWorkflowtypeItemOcrSettingListEdo listEdo = this.restTemplate
+    final CompanyWorkflowtypeItemOcrSettingPresetListEdo listEdo = this.restTemplate
         .callRestPost(
             this.profileModuleAccessConfig.getSaveCompanyWorkflowTypeItemOcrSettingsUri(), EModule.PROFILE,
             workflowtypeItemOcrSettingListEdo,
-            CompanyWorkflowtypeItemOcrSettingListEdo.class,
+            CompanyWorkflowtypeItemOcrSettingPresetListEdo.class,
             this.sessionUserInfo.getToken(), true);
 
     return GuiModelEdoMapper.fromCompanyWorkflowtypeItemOcrSettingEdoList(listEdo.getCompanyWorkflowtypeItemOcrSettings());

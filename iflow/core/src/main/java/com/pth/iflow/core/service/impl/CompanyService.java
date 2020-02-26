@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.common.models.edo.CompanyEdo;
-import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingEdo;
+import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingPresetItemEdo;
 import com.pth.iflow.core.model.entity.CompanyEntity;
 import com.pth.iflow.core.model.entity.CompanyWorkflowtypeItemOcrSettingPresetItemEntity;
 import com.pth.iflow.core.service.base.CoreModelEdoMapperService;
@@ -111,10 +111,10 @@ public class CompanyService extends CoreModelEdoMapperService<CompanyEntity, Com
 
   @Override
   public List<CompanyWorkflowtypeItemOcrSettingPresetItemEntity>
-      fromCompanyWorkflowtypeItemOcrSettingEdoList(final List<CompanyWorkflowtypeItemOcrSettingEdo> edoList) {
+      fromCompanyWorkflowtypeItemOcrSettingEdoList(final List<CompanyWorkflowtypeItemOcrSettingPresetItemEdo> edoList) {
 
     final List<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> modelList = new ArrayList<>();
-    for (final CompanyWorkflowtypeItemOcrSettingEdo edo : edoList) {
+    for (final CompanyWorkflowtypeItemOcrSettingPresetItemEdo edo : edoList) {
       modelList.add(fromCompanyWorkflowtypeItemOcrSettingEdo(edo));
     }
 
@@ -122,10 +122,10 @@ public class CompanyService extends CoreModelEdoMapperService<CompanyEntity, Com
   }
 
   @Override
-  public List<CompanyWorkflowtypeItemOcrSettingEdo>
+  public List<CompanyWorkflowtypeItemOcrSettingPresetItemEdo>
       toCompanyWorkflowtypeItemOcrSettingEdoList(final List<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> modelList) {
 
-    final List<CompanyWorkflowtypeItemOcrSettingEdo> edoList = new ArrayList<>();
+    final List<CompanyWorkflowtypeItemOcrSettingPresetItemEdo> edoList = new ArrayList<>();
     for (final CompanyWorkflowtypeItemOcrSettingPresetItemEntity model : modelList) {
       edoList.add(toCompanyWorkflowtypeItemOcrSettingEdo(model));
     }
@@ -133,7 +133,7 @@ public class CompanyService extends CoreModelEdoMapperService<CompanyEntity, Com
     return edoList;
   }
 
-  private CompanyWorkflowtypeItemOcrSettingPresetItemEntity fromCompanyWorkflowtypeItemOcrSettingEdo(final CompanyWorkflowtypeItemOcrSettingEdo edo) {
+  private CompanyWorkflowtypeItemOcrSettingPresetItemEntity fromCompanyWorkflowtypeItemOcrSettingEdo(final CompanyWorkflowtypeItemOcrSettingPresetItemEdo edo) {
 
     final CompanyWorkflowtypeItemOcrSettingPresetItemEntity model = new CompanyWorkflowtypeItemOcrSettingPresetItemEntity();
     model.setCompany(this.companyDao.getByIdentity(edo.getCompanyIdentity()));
@@ -146,9 +146,9 @@ public class CompanyService extends CoreModelEdoMapperService<CompanyEntity, Com
     return model;
   }
 
-  private CompanyWorkflowtypeItemOcrSettingEdo toCompanyWorkflowtypeItemOcrSettingEdo(final CompanyWorkflowtypeItemOcrSettingPresetItemEntity model) {
+  private CompanyWorkflowtypeItemOcrSettingPresetItemEdo toCompanyWorkflowtypeItemOcrSettingEdo(final CompanyWorkflowtypeItemOcrSettingPresetItemEntity model) {
 
-    final CompanyWorkflowtypeItemOcrSettingEdo edo = new CompanyWorkflowtypeItemOcrSettingEdo();
+    final CompanyWorkflowtypeItemOcrSettingPresetItemEdo edo = new CompanyWorkflowtypeItemOcrSettingPresetItemEdo();
     edo.setCompanyIdentity(model.getCompany().getIdentity());
     edo.setPropertyName(model.getPropertyName());
     edo.setStatus(model.getStatus());

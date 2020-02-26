@@ -26,8 +26,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.pth.iflow.common.models.edo.CompanyEdo;
-import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingEdo;
-import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingListEdo;
+import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingPresetItemEdo;
+import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingPresetListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.XmlRestConfig;
 import com.pth.iflow.core.TestDataProducer;
@@ -122,7 +122,7 @@ public class CompanyControllerTest extends TestDataProducer {
         .asList(getTestCompanyWorkflowtypeItemOcrSettingEntity("propName1"), getTestCompanyWorkflowtypeItemOcrSettingEntity("propName2"),
             getTestCompanyWorkflowtypeItemOcrSettingEntity("propName3"));
 
-    final List<CompanyWorkflowtypeItemOcrSettingEdo> edoList = Arrays
+    final List<CompanyWorkflowtypeItemOcrSettingPresetItemEdo> edoList = Arrays
         .asList(getTestCompanyWorkflowtypeItemOcrSettingEdo("propName1"), getTestCompanyWorkflowtypeItemOcrSettingEdo("propName2"),
             getTestCompanyWorkflowtypeItemOcrSettingEdo("propName3"));
 
@@ -131,7 +131,7 @@ public class CompanyControllerTest extends TestDataProducer {
 
     final String resultAsXmlString = this.xmlConverter
         .getObjectMapper()
-        .writeValueAsString(new CompanyWorkflowtypeItemOcrSettingListEdo(edoList));
+        .writeValueAsString(new CompanyWorkflowtypeItemOcrSettingPresetListEdo(edoList));
 
     this.mockMvc
         .perform(MockMvcRequestBuilders
@@ -153,11 +153,11 @@ public class CompanyControllerTest extends TestDataProducer {
         .asList(getTestCompanyWorkflowtypeItemOcrSettingEntity("propName1"), getTestCompanyWorkflowtypeItemOcrSettingEntity("propName2"),
             getTestCompanyWorkflowtypeItemOcrSettingEntity("propName3"));
 
-    final List<CompanyWorkflowtypeItemOcrSettingEdo> edoList = Arrays
+    final List<CompanyWorkflowtypeItemOcrSettingPresetItemEdo> edoList = Arrays
         .asList(getTestCompanyWorkflowtypeItemOcrSettingEdo("propName1"), getTestCompanyWorkflowtypeItemOcrSettingEdo("propName2"),
             getTestCompanyWorkflowtypeItemOcrSettingEdo("propName3"));
 
-    final CompanyWorkflowtypeItemOcrSettingListEdo listEdo = new CompanyWorkflowtypeItemOcrSettingListEdo(edoList);
+    final CompanyWorkflowtypeItemOcrSettingPresetListEdo listEdo = new CompanyWorkflowtypeItemOcrSettingPresetListEdo(edoList);
 
     when(this.companyService.saveCompanyWorkflowtypeItemOcrSettings(any(List.class))).thenReturn(modelList);
     when(this.companyService.toCompanyWorkflowtypeItemOcrSettingEdoList(any(List.class))).thenReturn(edoList);

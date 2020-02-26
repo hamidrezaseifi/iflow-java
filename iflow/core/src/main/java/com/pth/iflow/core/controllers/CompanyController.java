@@ -18,8 +18,8 @@ import com.pth.iflow.common.annotations.IflowGetRequestMapping;
 import com.pth.iflow.common.annotations.IflowPostRequestMapping;
 import com.pth.iflow.common.controllers.helper.ControllerHelper;
 import com.pth.iflow.common.models.edo.CompanyEdo;
-import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingEdo;
-import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingListEdo;
+import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingPresetItemEdo;
+import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingPresetListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.core.model.entity.CompanyEntity;
 import com.pth.iflow.core.model.entity.CompanyWorkflowtypeItemOcrSettingPresetItemEntity;
@@ -59,22 +59,22 @@ public class CompanyController {
 
   @ResponseStatus(HttpStatus.OK)
   @IflowGetRequestMapping(path = IflowRestPaths.CoreModule.COMPANY_READ_WORKFLOWTYPE_ITEMS_OCR_SETTINGS_BY_IDENTITY)
-  public ResponseEntity<CompanyWorkflowtypeItemOcrSettingListEdo>
+  public ResponseEntity<CompanyWorkflowtypeItemOcrSettingPresetListEdo>
       readCompanyWorkflowtypeItemOcrSettings(@PathVariable(name = "companyidentity") final String companyidentity,
           final HttpServletRequest request) throws Exception {
 
     final List<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> modelList = this.companyService
         .readCompanyWorkflowtypeItemOcrSettingsByCompanyIdentity(companyidentity);
 
-    final List<CompanyWorkflowtypeItemOcrSettingEdo> edoList = this.companyService.toCompanyWorkflowtypeItemOcrSettingEdoList(modelList);
+    final List<CompanyWorkflowtypeItemOcrSettingPresetItemEdo> edoList = this.companyService.toCompanyWorkflowtypeItemOcrSettingEdoList(modelList);
 
-    return ControllerHelper.createResponseEntity(request, new CompanyWorkflowtypeItemOcrSettingListEdo(edoList), HttpStatus.OK);
+    return ControllerHelper.createResponseEntity(request, new CompanyWorkflowtypeItemOcrSettingPresetListEdo(edoList), HttpStatus.OK);
   }
 
   @ResponseStatus(HttpStatus.CREATED)
   @IflowPostRequestMapping(path = IflowRestPaths.CoreModule.COMPANY_SAVE_WORKFLOWTYPE_ITEMS_OCR_SETTINGS)
-  public ResponseEntity<CompanyWorkflowtypeItemOcrSettingListEdo>
-      saveCompanyWorkflowtypeItemOcrSettings(@RequestBody final CompanyWorkflowtypeItemOcrSettingListEdo workflowtypeItemOcrSettingListEdo,
+  public ResponseEntity<CompanyWorkflowtypeItemOcrSettingPresetListEdo>
+      saveCompanyWorkflowtypeItemOcrSettings(@RequestBody final CompanyWorkflowtypeItemOcrSettingPresetListEdo workflowtypeItemOcrSettingListEdo,
           final HttpServletRequest request) throws Exception {
 
     final List<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> modelInputList = this.companyService
@@ -83,9 +83,9 @@ public class CompanyController {
     final List<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> modelList = this.companyService
         .saveCompanyWorkflowtypeItemOcrSettings(modelInputList);
 
-    final List<CompanyWorkflowtypeItemOcrSettingEdo> edoList = this.companyService.toCompanyWorkflowtypeItemOcrSettingEdoList(modelList);
+    final List<CompanyWorkflowtypeItemOcrSettingPresetItemEdo> edoList = this.companyService.toCompanyWorkflowtypeItemOcrSettingEdoList(modelList);
 
-    return ControllerHelper.createResponseEntity(request, new CompanyWorkflowtypeItemOcrSettingListEdo(edoList), HttpStatus.CREATED);
+    return ControllerHelper.createResponseEntity(request, new CompanyWorkflowtypeItemOcrSettingPresetListEdo(edoList), HttpStatus.CREATED);
   }
 
 }

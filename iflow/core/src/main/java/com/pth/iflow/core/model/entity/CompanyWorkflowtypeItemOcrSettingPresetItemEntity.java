@@ -15,7 +15,6 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import com.pth.iflow.core.model.entity.workflow.WorkflowTypeEntity;
 import com.pth.iflow.core.storage.dao.helper.EntityHelper;
 
 @Entity
@@ -36,10 +35,6 @@ public class CompanyWorkflowtypeItemOcrSettingPresetItemEntity extends EntityHel
   @JoinColumn(name = "company_id", nullable = false)
   private CompanyWorkflowtypeItemOcrSettingPresetEntity preset;
 
-  @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "workflow_type_id", nullable = false)
-  private WorkflowTypeEntity workflowType;
-
   @Column(name = "property_name")
   private String propertyName;
 
@@ -47,7 +42,7 @@ public class CompanyWorkflowtypeItemOcrSettingPresetItemEntity extends EntityHel
   private String value;
 
   @Column(name = "ocr_type")
-  private Integer ocr_type;
+  private Integer ocrType;
 
   @Column(name = "status")
   private Integer status;
@@ -89,16 +84,6 @@ public class CompanyWorkflowtypeItemOcrSettingPresetItemEntity extends EntityHel
     this.preset = preset;
   }
 
-  public WorkflowTypeEntity getWorkflowType() {
-
-    return workflowType;
-  }
-
-  public void setWorkflowType(final WorkflowTypeEntity workflowType) {
-
-    this.workflowType = workflowType;
-  }
-
   public String getPropertyName() {
 
     return propertyName;
@@ -119,14 +104,14 @@ public class CompanyWorkflowtypeItemOcrSettingPresetItemEntity extends EntityHel
     this.value = value;
   }
 
-  public Integer getOcr_type() {
+  public Integer getOcrType() {
 
-    return ocr_type;
+    return ocrType;
   }
 
-  public void setOcr_type(final Integer ocr_type) {
+  public void setOcrType(final Integer ocrType) {
 
-    this.ocr_type = ocr_type;
+    this.ocrType = ocrType;
   }
 
   /**
