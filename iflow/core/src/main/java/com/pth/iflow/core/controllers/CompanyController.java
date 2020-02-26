@@ -22,7 +22,7 @@ import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingEdo;
 import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.core.model.entity.CompanyEntity;
-import com.pth.iflow.core.model.entity.CompanyWorkflowtypeItemOcrSettingEntity;
+import com.pth.iflow.core.model.entity.CompanyWorkflowtypeItemOcrSettingPresetItemEntity;
 import com.pth.iflow.core.service.interfaces.ICompanyService;
 
 @RestController
@@ -63,7 +63,7 @@ public class CompanyController {
       readCompanyWorkflowtypeItemOcrSettings(@PathVariable(name = "companyidentity") final String companyidentity,
           final HttpServletRequest request) throws Exception {
 
-    final List<CompanyWorkflowtypeItemOcrSettingEntity> modelList = this.companyService
+    final List<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> modelList = this.companyService
         .readCompanyWorkflowtypeItemOcrSettingsByCompanyIdentity(companyidentity);
 
     final List<CompanyWorkflowtypeItemOcrSettingEdo> edoList = this.companyService.toCompanyWorkflowtypeItemOcrSettingEdoList(modelList);
@@ -77,10 +77,10 @@ public class CompanyController {
       saveCompanyWorkflowtypeItemOcrSettings(@RequestBody final CompanyWorkflowtypeItemOcrSettingListEdo workflowtypeItemOcrSettingListEdo,
           final HttpServletRequest request) throws Exception {
 
-    final List<CompanyWorkflowtypeItemOcrSettingEntity> modelInputList = this.companyService
+    final List<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> modelInputList = this.companyService
         .fromCompanyWorkflowtypeItemOcrSettingEdoList(workflowtypeItemOcrSettingListEdo.getCompanyWorkflowtypeItemOcrSettings());
 
-    final List<CompanyWorkflowtypeItemOcrSettingEntity> modelList = this.companyService
+    final List<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> modelList = this.companyService
         .saveCompanyWorkflowtypeItemOcrSettings(modelInputList);
 
     final List<CompanyWorkflowtypeItemOcrSettingEdo> edoList = this.companyService.toCompanyWorkflowtypeItemOcrSettingEdoList(modelList);

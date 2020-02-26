@@ -19,20 +19,22 @@ import com.pth.iflow.core.model.entity.workflow.WorkflowTypeEntity;
 import com.pth.iflow.core.storage.dao.helper.EntityHelper;
 
 @Entity
-@Table(name = "company_workflowtype_items_ocr_settings")
-public class CompanyWorkflowtypeItemOcrSettingEntity extends EntityHelper {
+@Table(name = "company_workflowtype_items_ocr_preset_items")
+public class CompanyWorkflowtypeItemOcrSettingPresetItemEntity extends EntityHelper {
 
   private static final long serialVersionUID = 2937568589389217869L;
 
   @Id
   @Column(name = "id")
-  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "company_workflowtype_settings_generator")
-  @SequenceGenerator(name = "company_workflowtype_settings_generator", sequenceName = "company_workflowtype_items_ocr_settings_seq")
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "company_workflowtype_items_ocr_preset_items_generator")
+  @SequenceGenerator(
+                     name = "company_workflowtype_items_ocr_preset_items_generator", sequenceName = "company_workflowtype_items_ocr_preset_items_seq"
+  )
   private Long id;
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "company_id", nullable = false)
-  private CompanyEntity company;
+  private CompanyWorkflowtypeItemOcrSettingPresetEntity preset;
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "workflow_type_id", nullable = false)
@@ -43,6 +45,9 @@ public class CompanyWorkflowtypeItemOcrSettingEntity extends EntityHelper {
 
   @Column(name = "value")
   private String value;
+
+  @Column(name = "ocr_type")
+  private Integer ocr_type;
 
   @Column(name = "status")
   private Integer status;
@@ -74,14 +79,14 @@ public class CompanyWorkflowtypeItemOcrSettingEntity extends EntityHelper {
     this.id = id;
   }
 
-  public CompanyEntity getCompany() {
+  public CompanyWorkflowtypeItemOcrSettingPresetEntity getPreset() {
 
-    return company;
+    return preset;
   }
 
-  public void setCompany(final CompanyEntity company) {
+  public void setPreset(final CompanyWorkflowtypeItemOcrSettingPresetEntity preset) {
 
-    this.company = company;
+    this.preset = preset;
   }
 
   public WorkflowTypeEntity getWorkflowType() {
@@ -112,6 +117,16 @@ public class CompanyWorkflowtypeItemOcrSettingEntity extends EntityHelper {
   public void setValue(final String value) {
 
     this.value = value;
+  }
+
+  public Integer getOcr_type() {
+
+    return ocr_type;
+  }
+
+  public void setOcr_type(final Integer ocr_type) {
+
+    this.ocr_type = ocr_type;
   }
 
   /**

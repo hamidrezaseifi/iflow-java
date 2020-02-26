@@ -18,7 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.entity.CompanyEntity;
-import com.pth.iflow.core.model.entity.CompanyWorkflowtypeItemOcrSettingEntity;
+import com.pth.iflow.core.model.entity.CompanyWorkflowtypeItemOcrSettingPresetItemEntity;
 import com.pth.iflow.core.service.impl.CompanyService;
 import com.pth.iflow.core.service.interfaces.ICompanyService;
 import com.pth.iflow.core.storage.dao.interfaces.ICompanyDao;
@@ -105,13 +105,13 @@ public class CompanyServiceTest extends TestDataProducer {
   @Test
   public void testReadCompanyWorkflowtypeItemOcrSettings() throws Exception {
 
-    final List<CompanyWorkflowtypeItemOcrSettingEntity> list = Arrays
+    final List<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> list = Arrays
         .asList(getTestCompanyWorkflowtypeItemOcrSettingEntity("prop1"), getTestCompanyWorkflowtypeItemOcrSettingEntity("prop2"),
             getTestCompanyWorkflowtypeItemOcrSettingEntity("prop3"));
 
     when(this.companyDao.readCompanyWorkflowtypeItemOcrSettings(any(Long.class))).thenReturn(list);
 
-    final List<CompanyWorkflowtypeItemOcrSettingEntity> resList = this.companyService.readCompanyWorkflowtypeItemOcrSettings(1L);
+    final List<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> resList = this.companyService.readCompanyWorkflowtypeItemOcrSettings(1L);
 
     Assert.assertNotNull("Result company is not null!", resList);
     Assert.assertEquals("Result list has 3 items", 3, resList.size());
@@ -122,13 +122,13 @@ public class CompanyServiceTest extends TestDataProducer {
   @Test
   public void testReadCompanyWorkflowtypeItemOcrSettingsByCompanyIdentity() throws Exception {
 
-    final List<CompanyWorkflowtypeItemOcrSettingEntity> list = Arrays
+    final List<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> list = Arrays
         .asList(getTestCompanyWorkflowtypeItemOcrSettingEntity("prop1"), getTestCompanyWorkflowtypeItemOcrSettingEntity("prop2"),
             getTestCompanyWorkflowtypeItemOcrSettingEntity("prop3"));
 
     when(this.companyDao.readCompanyWorkflowtypeItemOcrSettingsByCompanyIdentity(any(String.class))).thenReturn(list);
 
-    final List<CompanyWorkflowtypeItemOcrSettingEntity> resList = this.companyService
+    final List<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> resList = this.companyService
         .readCompanyWorkflowtypeItemOcrSettingsByCompanyIdentity("identity");
 
     Assert.assertNotNull("Result company is not null!", resList);
@@ -140,13 +140,13 @@ public class CompanyServiceTest extends TestDataProducer {
   @Test
   public void testSaveCompanyWorkflowtypeItemOcrSettings() throws Exception {
 
-    final List<CompanyWorkflowtypeItemOcrSettingEntity> list = Arrays
+    final List<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> list = Arrays
         .asList(getTestCompanyWorkflowtypeItemOcrSettingEntity("prop1"), getTestCompanyWorkflowtypeItemOcrSettingEntity("prop2"),
             getTestCompanyWorkflowtypeItemOcrSettingEntity("prop3"));
 
     when(this.companyDao.saveCompanyWorkflowtypeItemOcrSettings(any(List.class))).thenReturn(list);
 
-    final List<CompanyWorkflowtypeItemOcrSettingEntity> resList = this.companyService.saveCompanyWorkflowtypeItemOcrSettings(list);
+    final List<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> resList = this.companyService.saveCompanyWorkflowtypeItemOcrSettings(list);
 
     Assert.assertNotNull("Result company is not null!", resList);
     Assert.assertEquals("Result list has 3 items", 3, resList.size());

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.pth.iflow.core.model.entity.CompanyEntity;
-import com.pth.iflow.core.model.entity.CompanyWorkflowtypeItemOcrSettingEntity;
+import com.pth.iflow.core.model.entity.CompanyWorkflowtypeItemOcrSettingPresetItemEntity;
 import com.pth.iflow.core.model.entity.DepartmentEntity;
 import com.pth.iflow.core.model.entity.UserGroupEntity;
 
@@ -13,7 +13,7 @@ public class CompanyProfile {
   private CompanyEntity company;
   private final List<DepartmentEntity> departments = new ArrayList<>();
   private final List<UserGroupEntity> userGroups = new ArrayList<>();
-  private final List<CompanyWorkflowtypeItemOcrSettingEntity> workflowtypeItemOcrSettings = new ArrayList<>();
+  private final List<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> workflowtypeItemOcrSettings = new ArrayList<>();
 
   // CompanyWorkflowtypeItemOcrSettingEntity
   public CompanyProfile() {
@@ -21,7 +21,7 @@ public class CompanyProfile {
   }
 
   public CompanyProfile(final CompanyEntity company, final List<DepartmentEntity> departments,
-      final List<UserGroupEntity> userGroups, final List<CompanyWorkflowtypeItemOcrSettingEntity> workflowtypeItemOcrSettings) {
+      final List<UserGroupEntity> userGroups, final List<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> workflowtypeItemOcrSettings) {
 
     this.setDepartments(departments);
     this.setUserGroups(userGroups);
@@ -71,12 +71,12 @@ public class CompanyProfile {
     }
   }
 
-  public List<CompanyWorkflowtypeItemOcrSettingEntity> getWorkflowtypeItemOcrSettings() {
+  public List<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> getWorkflowtypeItemOcrSettings() {
 
     return workflowtypeItemOcrSettings;
   }
 
-  public void setWorkflowtypeItemOcrSettings(final List<CompanyWorkflowtypeItemOcrSettingEntity> workflowtypeItemOcrSettings) {
+  public void setWorkflowtypeItemOcrSettings(final List<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> workflowtypeItemOcrSettings) {
 
     this.workflowtypeItemOcrSettings.clear();
     if (workflowtypeItemOcrSettings != null) {

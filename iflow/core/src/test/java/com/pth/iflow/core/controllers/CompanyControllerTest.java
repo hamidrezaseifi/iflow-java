@@ -32,7 +32,7 @@ import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.XmlRestConfig;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.entity.CompanyEntity;
-import com.pth.iflow.core.model.entity.CompanyWorkflowtypeItemOcrSettingEntity;
+import com.pth.iflow.core.model.entity.CompanyWorkflowtypeItemOcrSettingPresetItemEntity;
 import com.pth.iflow.core.service.interfaces.ICompanyService;
 
 @RunWith(SpringRunner.class)
@@ -118,7 +118,7 @@ public class CompanyControllerTest extends TestDataProducer {
   @Test
   public void testReadCompanyWorkflowtypeItemOcrSettings() throws Exception {
 
-    final List<CompanyWorkflowtypeItemOcrSettingEntity> modelList = Arrays
+    final List<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> modelList = Arrays
         .asList(getTestCompanyWorkflowtypeItemOcrSettingEntity("propName1"), getTestCompanyWorkflowtypeItemOcrSettingEntity("propName2"),
             getTestCompanyWorkflowtypeItemOcrSettingEntity("propName3"));
 
@@ -149,7 +149,7 @@ public class CompanyControllerTest extends TestDataProducer {
   @Test
   public void testSaveCompanyWorkflowtypeItemOcrSettings() throws Exception {
 
-    final List<CompanyWorkflowtypeItemOcrSettingEntity> modelList = Arrays
+    final List<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> modelList = Arrays
         .asList(getTestCompanyWorkflowtypeItemOcrSettingEntity("propName1"), getTestCompanyWorkflowtypeItemOcrSettingEntity("propName2"),
             getTestCompanyWorkflowtypeItemOcrSettingEntity("propName3"));
 

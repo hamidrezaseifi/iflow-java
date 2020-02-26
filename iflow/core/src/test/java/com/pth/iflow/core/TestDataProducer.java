@@ -40,7 +40,7 @@ import com.pth.iflow.common.models.edo.workflow.testthreetask.TestThreeTaskWorkf
 import com.pth.iflow.core.model.ProfileResponse;
 import com.pth.iflow.core.model.WorkflowSearchFilter;
 import com.pth.iflow.core.model.entity.CompanyEntity;
-import com.pth.iflow.core.model.entity.CompanyWorkflowtypeItemOcrSettingEntity;
+import com.pth.iflow.core.model.entity.CompanyWorkflowtypeItemOcrSettingPresetItemEntity;
 import com.pth.iflow.core.model.entity.DepartmentEntity;
 import com.pth.iflow.core.model.entity.UserDepartmentEntity;
 import com.pth.iflow.core.model.entity.UserEntity;
@@ -123,9 +123,9 @@ public class TestDataProducer {
     return edo;
   }
 
-  protected CompanyWorkflowtypeItemOcrSettingEntity getTestCompanyWorkflowtypeItemOcrSettingEntity(final String propName) {
+  protected CompanyWorkflowtypeItemOcrSettingPresetItemEntity getTestCompanyWorkflowtypeItemOcrSettingEntity(final String propName) {
 
-    final CompanyWorkflowtypeItemOcrSettingEntity edo = new CompanyWorkflowtypeItemOcrSettingEntity();
+    final CompanyWorkflowtypeItemOcrSettingPresetItemEntity edo = new CompanyWorkflowtypeItemOcrSettingPresetItemEntity();
     edo.setPropertyName(propName);
     edo.setStatus(1);
     edo.setValue("value");
@@ -135,12 +135,12 @@ public class TestDataProducer {
     return edo;
   }
 
-  protected CompanyWorkflowtypeItemOcrSettingEntity getTestCompanyWorkflowtypeItemOcrSettingEntity(final String propName,
+  protected CompanyWorkflowtypeItemOcrSettingPresetItemEntity getTestCompanyWorkflowtypeItemOcrSettingEntity(final String propName,
       final String value,
       final WorkflowTypeEntity workflowType,
       final CompanyEntity company) {
 
-    final CompanyWorkflowtypeItemOcrSettingEntity edo = new CompanyWorkflowtypeItemOcrSettingEntity();
+    final CompanyWorkflowtypeItemOcrSettingPresetItemEntity edo = new CompanyWorkflowtypeItemOcrSettingPresetItemEntity();
     edo.setPropertyName(propName);
     edo.setStatus(1);
     edo.setValue(value);

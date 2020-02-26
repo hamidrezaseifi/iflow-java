@@ -18,7 +18,7 @@ import com.pth.iflow.common.enums.EWorkflowType;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.entity.CompanyEntity;
 import com.pth.iflow.core.model.entity.CompanyWorkflowTypeControllerEntity;
-import com.pth.iflow.core.model.entity.CompanyWorkflowtypeItemOcrSettingEntity;
+import com.pth.iflow.core.model.entity.CompanyWorkflowtypeItemOcrSettingPresetItemEntity;
 import com.pth.iflow.core.model.entity.workflow.WorkflowTypeEntity;
 import com.pth.iflow.core.storage.dao.interfaces.ICompanyDao;
 import com.pth.iflow.core.storage.dao.interfaces.IWorkflowTypeDao;
@@ -195,7 +195,7 @@ public class CompanyDaoTest extends TestDataProducer {
 
     compareCompanies(comapny, resCompany);
 
-    final List<CompanyWorkflowtypeItemOcrSettingEntity> list = new ArrayList<>();
+    final List<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> list = new ArrayList<>();
 
     EWorkflowType.INVOICE_WORKFLOW_TYPE.getIdentity();
 
@@ -205,7 +205,7 @@ public class CompanyDaoTest extends TestDataProducer {
     list.add(getTestCompanyWorkflowtypeItemOcrSettingEntity("propName2", "value2", workflowType, resCompany));
     list.add(getTestCompanyWorkflowtypeItemOcrSettingEntity("propName3", "value3", workflowType, resCompany));
 
-    List<CompanyWorkflowtypeItemOcrSettingEntity> resList = companyDao.saveCompanyWorkflowtypeItemOcrSettings(list);
+    List<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> resList = companyDao.saveCompanyWorkflowtypeItemOcrSettings(list);
 
     Assert.assertNotNull("Result List is not null!", resList);
     Assert.assertEquals("Result list has 3 items", 3, resList.size());
