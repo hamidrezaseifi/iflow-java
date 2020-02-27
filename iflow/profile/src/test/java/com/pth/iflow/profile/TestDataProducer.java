@@ -8,10 +8,12 @@ import java.util.List;
 import java.util.Set;
 
 import com.pth.iflow.common.enums.ECompanyType;
+import com.pth.iflow.common.enums.EOcrType;
 import com.pth.iflow.common.enums.EWorkflowMessageStatus;
 import com.pth.iflow.common.enums.EWorkflowMessageType;
 import com.pth.iflow.common.models.edo.AuthenticatedProfileRequestEdo;
 import com.pth.iflow.common.models.edo.CompanyEdo;
+import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingPresetEdo;
 import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingPresetItemEdo;
 import com.pth.iflow.common.models.edo.ProfileResponseEdo;
 import com.pth.iflow.common.models.edo.TokenProfileRequestEdo;
@@ -19,7 +21,8 @@ import com.pth.iflow.common.models.edo.UserEdo;
 import com.pth.iflow.profile.model.Company;
 import com.pth.iflow.profile.model.CompanyProfile;
 import com.pth.iflow.profile.model.CompanyWorkflowTypeController;
-import com.pth.iflow.profile.model.CompanyWorkflowtypeItemOcrSetting;
+import com.pth.iflow.profile.model.CompanyWorkflowtypeItemOcrSettingPreset;
+import com.pth.iflow.profile.model.CompanyWorkflowtypeItemOcrSettingPresetItem;
 import com.pth.iflow.profile.model.Department;
 import com.pth.iflow.profile.model.ProfileResponse;
 import com.pth.iflow.profile.model.User;
@@ -48,9 +51,8 @@ public class TestDataProducer {
   protected CompanyProfile getTestCompanyProfile() {
 
     final CompanyProfile companyProfile = new CompanyProfile(this.getTestCompany(), this.getTestDepartmentList(),
-        this.getTestUserGroupList(), this.getTestCompanyWorkflowTypeControllerList(), Arrays
-            .asList(this.getTestCompanyWorkflowtypeItemOcrSetting("prop1"), this.getTestCompanyWorkflowtypeItemOcrSetting("prop2"),
-                this.getTestCompanyWorkflowtypeItemOcrSetting("prop3")));
+        this.getTestUserGroupList(), this.getTestCompanyWorkflowTypeControllerList(),
+        this.getTestCompanyWorkflowtypeItemOcrSettingPresetList());
 
     return companyProfile;
   }
@@ -64,28 +66,77 @@ public class TestDataProducer {
     return list;
   }
 
-  protected CompanyWorkflowtypeItemOcrSettingPresetItemEdo getTestCompanyWorkflowtypeItemOcrSettingEdo(final String propName) {
+  protected List<CompanyWorkflowtypeItemOcrSettingPreset> getTestCompanyWorkflowtypeItemOcrSettingPresetList() {
+
+    return Arrays
+        .asList(this.getTestCompanyWorkflowtypeItemOcrSettingPresetEntity("prop1"),
+            this.getTestCompanyWorkflowtypeItemOcrSettingPresetEntity("prop2"),
+            this.getTestCompanyWorkflowtypeItemOcrSettingPresetEntity("prop3"));
+  }
+
+  protected List<CompanyWorkflowtypeItemOcrSettingPresetEdo> getTestCompanyWorkflowtypeItemOcrSettingPresetEdoList() {
+
+    return Arrays
+        .asList(this.getTestCompanyWorkflowtypeItemOcrSettingPresetEdo("prop1"),
+            this.getTestCompanyWorkflowtypeItemOcrSettingPresetEdo("prop2"),
+            this.getTestCompanyWorkflowtypeItemOcrSettingPresetEdo("prop3"));
+  }
+
+  protected CompanyWorkflowtypeItemOcrSettingPresetEdo getTestCompanyWorkflowtypeItemOcrSettingPresetEdo(final String presetName) {
+
+    final CompanyWorkflowtypeItemOcrSettingPresetEdo edo = new CompanyWorkflowtypeItemOcrSettingPresetEdo();
+    edo.setCompanyIdentity("companyIdentity");
+    edo.setStatus(1);
+    edo.setPresetName(presetName);
+    edo.setVersion(1);
+    edo.setWorkflowTypeIdentity("workflowIdentity");
+    edo
+        .setItems(Arrays
+            .asList(this.getTestCompanyWorkflowtypeItemOcrSettingPresetItemEdo("prop-1"),
+                this.getTestCompanyWorkflowtypeItemOcrSettingPresetItemEdo("prop-2"),
+                this.getTestCompanyWorkflowtypeItemOcrSettingPresetItemEdo("prop-3")));
+
+    return edo;
+  }
+
+  protected CompanyWorkflowtypeItemOcrSettingPresetItemEdo getTestCompanyWorkflowtypeItemOcrSettingPresetItemEdo(final String propName) {
 
     final CompanyWorkflowtypeItemOcrSettingPresetItemEdo edo = new CompanyWorkflowtypeItemOcrSettingPresetItemEdo();
     edo.setPropertyName(propName);
     edo.setStatus(1);
     edo.setValue("value");
     edo.setVersion(1);
-    edo.setWorkflowTypeIdentity("workflowIdentity");
-    edo.setCompanyIdentity("companyIdentity");
+    edo.setOcrType(EOcrType.SEARCH_WORD.getValue());
 
     return edo;
   }
 
-  protected CompanyWorkflowtypeItemOcrSetting getTestCompanyWorkflowtypeItemOcrSetting(final String propName) {
+  protected CompanyWorkflowtypeItemOcrSettingPreset getTestCompanyWorkflowtypeItemOcrSettingPresetEntity(final String presetName) {
 
-    final CompanyWorkflowtypeItemOcrSetting edo = new CompanyWorkflowtypeItemOcrSetting();
+    final CompanyWorkflowtypeItemOcrSettingPreset model = new CompanyWorkflowtypeItemOcrSettingPreset();
+    model.setPresetName(presetName);
+    model.setStatus(1);
+    model.setVersion(1);
+    model.setWorkflowTypeIdentity("workflowIdentity");
+    model.setCompanyIdentity("companyIdentity");
+    model
+        .setItems(Arrays
+            .asList(this.getTestCompanyWorkflowtypeItemOcrSettingPresetItem("prop-1"),
+                this.getTestCompanyWorkflowtypeItemOcrSettingPresetItem("prop-2"),
+                this.getTestCompanyWorkflowtypeItemOcrSettingPresetItem("prop-3")));
+
+    return model;
+  }
+
+  protected CompanyWorkflowtypeItemOcrSettingPresetItem
+      getTestCompanyWorkflowtypeItemOcrSettingPresetItem(final String propName) {
+
+    final CompanyWorkflowtypeItemOcrSettingPresetItem edo = new CompanyWorkflowtypeItemOcrSettingPresetItem();
     edo.setPropertyName(propName);
     edo.setStatus(1);
     edo.setValue("value");
     edo.setVersion(1);
-    edo.setWorkflowTypeIdentity("workflowIdentity");
-    edo.setCompanyIdentity("companyIdentity");
+    edo.setOcrType(EOcrType.SEARCH_WORD.getValue());
 
     return edo;
   }

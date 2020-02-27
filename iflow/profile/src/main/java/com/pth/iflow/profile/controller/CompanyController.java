@@ -25,7 +25,7 @@ import com.pth.iflow.common.exceptions.EIFlowErrorType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.common.models.edo.CompanyEdo;
 import com.pth.iflow.common.models.edo.CompanyProfileEdo;
-import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingPresetItemEdo;
+import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingPresetEdo;
 import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingPresetListEdo;
 import com.pth.iflow.common.models.edo.DepartmentListEdo;
 import com.pth.iflow.common.models.edo.UserGroupListEdo;
@@ -34,7 +34,7 @@ import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
 import com.pth.iflow.profile.exceptions.ProfileCustomizedException;
 import com.pth.iflow.profile.model.Company;
-import com.pth.iflow.profile.model.CompanyWorkflowtypeItemOcrSetting;
+import com.pth.iflow.profile.model.CompanyWorkflowtypeItemOcrSettingPreset;
 import com.pth.iflow.profile.model.Department;
 import com.pth.iflow.profile.model.ProfileResponse;
 import com.pth.iflow.profile.model.User;
@@ -173,11 +173,12 @@ public class CompanyController {
 
     this.tokenUserDataManager.validateToken(headerTokenId);
 
-    final List<CompanyWorkflowtypeItemOcrSetting> modelList = this.companiesHandlerService
+    final List<CompanyWorkflowtypeItemOcrSettingPreset> modelList = this.companiesHandlerService
         .readCompanyWorkflowtypeItemOcrSettingsByCompanyIdentity(companyidentity);
 
     final List<
-        CompanyWorkflowtypeItemOcrSettingPresetItemEdo> edoList = ProfileModelEdoMapper.toCompanyWorkflowtypeItemOcrSettingEdoList(modelList);
+        CompanyWorkflowtypeItemOcrSettingPresetEdo> edoList = ProfileModelEdoMapper
+            .toCompanyWorkflowtypeItemOcrSettingPresetEdoList(modelList);
 
     return ControllerHelper.createResponseEntity(request, new CompanyWorkflowtypeItemOcrSettingPresetListEdo(edoList), HttpStatus.OK);
   }
@@ -185,7 +186,8 @@ public class CompanyController {
   @ResponseStatus(HttpStatus.CREATED)
   @IflowPostRequestMapping(path = IflowRestPaths.ProfileModule.COMPANY_SAVE_WORKFLOWTYPE_ITEMS_OCR_SETTINGS)
   public ResponseEntity<CompanyWorkflowtypeItemOcrSettingPresetListEdo>
-      saveCompanyWorkflowtypeItemOcrSettings(@RequestBody final CompanyWorkflowtypeItemOcrSettingPresetListEdo workflowtypeItemOcrSettingListEdo,
+      saveCompanyWorkflowtypeItemOcrSettings(
+          @RequestBody final CompanyWorkflowtypeItemOcrSettingPresetListEdo workflowtypeItemOcrSettingListEdo,
           final HttpServletRequest request,
           @RequestHeader(
             TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY
@@ -193,14 +195,15 @@ public class CompanyController {
 
     this.tokenUserDataManager.validateToken(headerTokenId);
 
-    final List<CompanyWorkflowtypeItemOcrSetting> modelInputList = ProfileModelEdoMapper
-        .fromCompanyWorkflowtypeItemOcrSettingEdoList(workflowtypeItemOcrSettingListEdo.getCompanyWorkflowtypeItemOcrSettings());
+    final List<CompanyWorkflowtypeItemOcrSettingPreset> modelInputList = ProfileModelEdoMapper
+        .fromCompanyWorkflowtypeItemOcrSettingPresetEdoList(workflowtypeItemOcrSettingListEdo.getCompanyWorkflowtypeItemOcrSettings());
 
-    final List<CompanyWorkflowtypeItemOcrSetting> modelList = this.companiesHandlerService
+    final List<CompanyWorkflowtypeItemOcrSettingPreset> modelList = this.companiesHandlerService
         .saveCompanyWorkflowtypeItemOcrSettings(modelInputList);
 
     final List<
-        CompanyWorkflowtypeItemOcrSettingPresetItemEdo> edoList = ProfileModelEdoMapper.toCompanyWorkflowtypeItemOcrSettingEdoList(modelList);
+        CompanyWorkflowtypeItemOcrSettingPresetEdo> edoList = ProfileModelEdoMapper
+            .toCompanyWorkflowtypeItemOcrSettingPresetEdoList(modelList);
 
     return ControllerHelper.createResponseEntity(request, new CompanyWorkflowtypeItemOcrSettingPresetListEdo(edoList), HttpStatus.CREATED);
   }

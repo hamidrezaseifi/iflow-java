@@ -16,7 +16,7 @@ import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.profile.config.ProfileConfiguration;
 import com.pth.iflow.profile.exceptions.ProfileCustomizedException;
 import com.pth.iflow.profile.model.Company;
-import com.pth.iflow.profile.model.CompanyWorkflowtypeItemOcrSetting;
+import com.pth.iflow.profile.model.CompanyWorkflowtypeItemOcrSettingPreset;
 import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
 import com.pth.iflow.profile.service.access.ICompanyAccessService;
 import com.pth.iflow.profile.service.handler.IProfileRestTemplateCall;
@@ -64,7 +64,7 @@ public class CompanyAccessService implements ICompanyAccessService {
   }
 
   @Override
-  public List<CompanyWorkflowtypeItemOcrSetting> readCompanyWorkflowtypeItemOcrSettingsByCompanyIdentity(final String companyidentity)
+  public List<CompanyWorkflowtypeItemOcrSettingPreset> readCompanyWorkflowtypeItemOcrSettingsByCompanyIdentity(final String companyidentity)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     logger.debug("Request company Workflowtype Item Ocr Settings for identity {}", companyidentity);
@@ -76,19 +76,19 @@ public class CompanyAccessService implements ICompanyAccessService {
             EModule.CORE,
             CompanyWorkflowtypeItemOcrSettingPresetListEdo.class, true);
 
-    return ProfileModelEdoMapper.fromCompanyWorkflowtypeItemOcrSettingEdoList(listEdo.getCompanyWorkflowtypeItemOcrSettings());
+    return ProfileModelEdoMapper.fromCompanyWorkflowtypeItemOcrSettingPresetEdoList(listEdo.getCompanyWorkflowtypeItemOcrSettings());
 
   }
 
   @Override
-  public List<CompanyWorkflowtypeItemOcrSetting>
-      saveCompanyWorkflowtypeItemOcrSettings(final List<CompanyWorkflowtypeItemOcrSetting> modelInputList)
+  public List<CompanyWorkflowtypeItemOcrSettingPreset>
+      saveCompanyWorkflowtypeItemOcrSettings(final List<CompanyWorkflowtypeItemOcrSettingPreset> modelInputList)
           throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     logger.debug("Saving company Workflowtype Item Ocr Settings");
 
     final CompanyWorkflowtypeItemOcrSettingPresetListEdo requestListEdo = new CompanyWorkflowtypeItemOcrSettingPresetListEdo(
-        ProfileModelEdoMapper.toCompanyWorkflowtypeItemOcrSettingEdoList(modelInputList));
+        ProfileModelEdoMapper.toCompanyWorkflowtypeItemOcrSettingPresetEdoList(modelInputList));
 
     final CompanyWorkflowtypeItemOcrSettingPresetListEdo listEdo = this.restTemplate
         .callRestPost(this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.SAVE_COMPANY_WORKFLOWTYPE_ITEMS_OCR_SETTINGS()),
@@ -96,7 +96,7 @@ public class CompanyAccessService implements ICompanyAccessService {
             requestListEdo,
             CompanyWorkflowtypeItemOcrSettingPresetListEdo.class, true);
 
-    return ProfileModelEdoMapper.fromCompanyWorkflowtypeItemOcrSettingEdoList(listEdo.getCompanyWorkflowtypeItemOcrSettings());
+    return ProfileModelEdoMapper.fromCompanyWorkflowtypeItemOcrSettingPresetEdoList(listEdo.getCompanyWorkflowtypeItemOcrSettings());
 
   }
 

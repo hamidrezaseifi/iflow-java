@@ -6,7 +6,7 @@ import java.util.List;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.profile.exceptions.ProfileCustomizedException;
 import com.pth.iflow.profile.model.Company;
-import com.pth.iflow.profile.model.CompanyWorkflowtypeItemOcrSetting;
+import com.pth.iflow.profile.model.CompanyWorkflowtypeItemOcrSettingPreset;
 
 public interface ICompanyAccessService {
 
@@ -15,10 +15,11 @@ public interface ICompanyAccessService {
 
   Company saveCompany(Company company) throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  List<CompanyWorkflowtypeItemOcrSetting> readCompanyWorkflowtypeItemOcrSettingsByCompanyIdentity(String companyidentity)
+  List<CompanyWorkflowtypeItemOcrSettingPreset> readCompanyWorkflowtypeItemOcrSettingsByCompanyIdentity(String companyidentity)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  List<CompanyWorkflowtypeItemOcrSetting> saveCompanyWorkflowtypeItemOcrSettings(List<CompanyWorkflowtypeItemOcrSetting> modelInputList)
-      throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
+  List<CompanyWorkflowtypeItemOcrSettingPreset>
+      saveCompanyWorkflowtypeItemOcrSettings(List<CompanyWorkflowtypeItemOcrSettingPreset> modelInputList)
+          throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
 }
