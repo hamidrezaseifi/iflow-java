@@ -14,9 +14,12 @@ import javax.xml.bind.annotation.XmlType;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.pth.iflow.common.models.base.IFlowJaxbDefinition;
 
-@XmlRootElement(name = "CompanyWorkflowtypeItemOcrSettingList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+@XmlRootElement(name = "CompanyWorkflowtypeItemOcrSettingPresetList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "CompanyWorkflowtypeItemOcrSettingList" + IFlowJaxbDefinition.TYPE_PREFIX)
+@XmlType(
+         namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "CompanyWorkflowtypeItemOcrSettingPresetList"
+             + IFlowJaxbDefinition.TYPE_PREFIX
+)
 public class CompanyWorkflowtypeItemOcrSettingPresetListEdo {
 
   @NotNull

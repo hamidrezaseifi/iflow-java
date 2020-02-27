@@ -1,4 +1,4 @@
-package com.pth.iflow.common.models.edo;
+package com.pth.iflow.profile.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,37 +14,19 @@ import javax.xml.bind.annotation.XmlType;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.pth.iflow.common.models.base.IFlowJaxbDefinition;
 
-@XmlRootElement(name = "CompanyWorkflowtypeItemOcrSettingPreset", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(
-         namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "CompanyWorkflowtypeItemOcrSettingPreset" + IFlowJaxbDefinition.TYPE_PREFIX
-)
-public class CompanyWorkflowtypeItemOcrSettingPresetEdo {
+public class CompanyWorkflowtypeItemOcrSettingPreset {
 
-  @NotNull(message = "CompanyIdentity must not be null")
-  @XmlElement(name = "CompanyIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String companyIdentity;
 
-  @NotNull(message = "WorkflowTypeIdentity must not be null")
-  @XmlElement(name = "WorkflowTypeIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String workflowTypeIdentity;
 
-  @NotNull(message = "PresetName must not be null")
-  @XmlElement(name = "PresetName", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String presetName;
 
-  @NotNull(message = "Status must not be null")
-  @XmlElement(name = "Status", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer status;
 
-  @NotNull(message = "Version must not be null")
-  @XmlElement(name = "Version", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private Integer version;
 
-  @NotNull(message = "CompanyWorkflowtypeItemOcrSettingPresetItemList must not be null")
-  @XmlElementWrapper(name = "CompanyWorkflowtypeItemOcrSettingPresetItemList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  @XmlElement(name = "CompanyWorkflowtypeItemOcrSettingPresetItem", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private List<CompanyWorkflowtypeItemOcrSettingPresetItemEdo> items = new ArrayList<>();
+  private List<CompanyWorkflowtypeItemOcrSettingPresetItem> items = new ArrayList<>();
 
   public String getCompanyIdentity() {
 
@@ -96,13 +78,12 @@ public class CompanyWorkflowtypeItemOcrSettingPresetEdo {
     this.version = version;
   }
 
-  public List<CompanyWorkflowtypeItemOcrSettingPresetItemEdo> getItems() {
+  public List<CompanyWorkflowtypeItemOcrSettingPresetItem> getItems() {
 
     return this.items;
   }
 
-  @JsonSetter
-  public void setItems(final List<CompanyWorkflowtypeItemOcrSettingPresetItemEdo> items) {
+  public void setItems(final List<CompanyWorkflowtypeItemOcrSettingPresetItem> items) {
 
     this.items = new ArrayList<>();
     if (items != null) {

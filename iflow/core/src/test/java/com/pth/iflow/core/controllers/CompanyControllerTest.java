@@ -7,7 +7,6 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.After;
@@ -26,13 +25,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.pth.iflow.common.models.edo.CompanyEdo;
-import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingPresetItemEdo;
+import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingPresetEdo;
 import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingPresetListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.XmlRestConfig;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.entity.CompanyEntity;
-import com.pth.iflow.core.model.entity.CompanyWorkflowtypeItemOcrSettingPresetItemEntity;
+import com.pth.iflow.core.model.entity.CompanyWorkflowtypeItemOcrSettingPresetEntity;
 import com.pth.iflow.core.service.interfaces.ICompanyService;
 
 @RunWith(SpringRunner.class)
@@ -118,13 +117,9 @@ public class CompanyControllerTest extends TestDataProducer {
   @Test
   public void testReadCompanyWorkflowtypeItemOcrSettings() throws Exception {
 
-    final List<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> modelList = Arrays
-        .asList(getTestCompanyWorkflowtypeItemOcrSettingEntity("propName1"), getTestCompanyWorkflowtypeItemOcrSettingEntity("propName2"),
-            getTestCompanyWorkflowtypeItemOcrSettingEntity("propName3"));
+    final List<CompanyWorkflowtypeItemOcrSettingPresetEntity> modelList = getTestCompanyWorkflowtypeItemOcrSettingPresetEntityList();
 
-    final List<CompanyWorkflowtypeItemOcrSettingPresetItemEdo> edoList = Arrays
-        .asList(getTestCompanyWorkflowtypeItemOcrSettingEdo("propName1"), getTestCompanyWorkflowtypeItemOcrSettingEdo("propName2"),
-            getTestCompanyWorkflowtypeItemOcrSettingEdo("propName3"));
+    final List<CompanyWorkflowtypeItemOcrSettingPresetEdo> edoList = getTestCompanyWorkflowtypeItemOcrSettingPresetEdoList();
 
     when(this.companyService.readCompanyWorkflowtypeItemOcrSettingsByCompanyIdentity(any(String.class))).thenReturn(modelList);
     when(this.companyService.toCompanyWorkflowtypeItemOcrSettingPresetEdoList(any(List.class))).thenReturn(edoList);
@@ -149,13 +144,9 @@ public class CompanyControllerTest extends TestDataProducer {
   @Test
   public void testSaveCompanyWorkflowtypeItemOcrSettings() throws Exception {
 
-    final List<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> modelList = Arrays
-        .asList(getTestCompanyWorkflowtypeItemOcrSettingEntity("propName1"), getTestCompanyWorkflowtypeItemOcrSettingEntity("propName2"),
-            getTestCompanyWorkflowtypeItemOcrSettingEntity("propName3"));
+    final List<CompanyWorkflowtypeItemOcrSettingPresetEntity> modelList = getTestCompanyWorkflowtypeItemOcrSettingPresetEntityList();
 
-    final List<CompanyWorkflowtypeItemOcrSettingPresetItemEdo> edoList = Arrays
-        .asList(getTestCompanyWorkflowtypeItemOcrSettingEdo("propName1"), getTestCompanyWorkflowtypeItemOcrSettingEdo("propName2"),
-            getTestCompanyWorkflowtypeItemOcrSettingEdo("propName3"));
+    final List<CompanyWorkflowtypeItemOcrSettingPresetEdo> edoList = getTestCompanyWorkflowtypeItemOcrSettingPresetEdoList();
 
     final CompanyWorkflowtypeItemOcrSettingPresetListEdo listEdo = new CompanyWorkflowtypeItemOcrSettingPresetListEdo(edoList);
 

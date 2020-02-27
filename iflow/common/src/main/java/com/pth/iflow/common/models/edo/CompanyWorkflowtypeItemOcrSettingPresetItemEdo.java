@@ -13,7 +13,10 @@ import com.pth.iflow.common.models.validation.AEnumValueValidator;
 
 @XmlRootElement(name = "CompanyWorkflowtypeItemOcrSettingPresetItem", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "CompanyWorkflowtypeItemOcrSetting" + IFlowJaxbDefinition.TYPE_PREFIX)
+@XmlType(
+         namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "CompanyWorkflowtypeItemOcrSettingPresetItem"
+             + IFlowJaxbDefinition.TYPE_PREFIX
+)
 public class CompanyWorkflowtypeItemOcrSettingPresetItemEdo {
 
   @NotNull(message = "PropertyName must not be null")

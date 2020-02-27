@@ -1,38 +1,27 @@
 package com.pth.iflow.profile.model;
 
-public class CompanyWorkflowtypeItemOcrSetting {
+import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
-  private String companyIdentity;
+import com.pth.iflow.common.enums.EOcrType;
+import com.pth.iflow.common.models.base.IFlowJaxbDefinition;
+import com.pth.iflow.common.models.validation.AEnumValueValidator;
 
-  private String workflowTypeIdentity;
+public class CompanyWorkflowtypeItemOcrSettingPresetItem {
 
   private String propertyName;
 
   private String value;
 
+  private Integer ocrType;
+
   private Integer status;
 
   private Integer version;
-
-  public String getCompanyIdentity() {
-
-    return this.companyIdentity;
-  }
-
-  public void setCompanyIdentity(final String companyIdentity) {
-
-    this.companyIdentity = companyIdentity;
-  }
-
-  public String getWorkflowTypeIdentity() {
-
-    return this.workflowTypeIdentity;
-  }
-
-  public void setWorkflowTypeIdentity(final String workflowIdentity) {
-
-    this.workflowTypeIdentity = workflowIdentity;
-  }
 
   public String getPropertyName() {
 
@@ -54,34 +43,30 @@ public class CompanyWorkflowtypeItemOcrSetting {
     this.value = value;
   }
 
-  /**
-   * @return the status
-   */
+  public Integer getOcrType() {
+
+    return this.ocrType;
+  }
+
+  public void setOcrType(final Integer ocrType) {
+
+    this.ocrType = ocrType;
+  }
+
   public Integer getStatus() {
 
     return this.status;
   }
 
-  /**
-   * @param status the status to set
-   */
   public void setStatus(final Integer status) {
 
     this.status = status;
   }
 
-  /**
-   * @return the version
-   */
-
   public Integer getVersion() {
 
     return this.version;
   }
-
-  /**
-   * @param version the version to set
-   */
 
   public void setVersion(final Integer version) {
 

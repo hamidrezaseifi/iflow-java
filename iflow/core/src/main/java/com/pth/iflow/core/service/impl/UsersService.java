@@ -45,20 +45,16 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
   private final IDepartmentDao departmentDao;
   private final IWorkflowTypeDao workflowTypeDao;
 
-  private final ICompanyService companyService;
-
   public UsersService(@Autowired final ICompanyDao companyDao, @Autowired final IUserDao userDao,
       @Autowired final IUserGroupDao userGroupDao,
       @Autowired final IDepartmentDao departmentDao,
-      @Autowired final IWorkflowTypeDao workflowTypeDao,
-      @Autowired final ICompanyService companyService) {
+      @Autowired final IWorkflowTypeDao workflowTypeDao) {
 
     this.companyDao = companyDao;
     this.userDao = userDao;
     this.userGroupDao = userGroupDao;
     this.departmentDao = departmentDao;
     this.workflowTypeDao = workflowTypeDao;
-    this.companyService = companyService;
 
   }
 
