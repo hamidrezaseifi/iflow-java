@@ -5,7 +5,6 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 import java.net.URI;
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.After;
@@ -21,12 +20,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.models.edo.CompanyEdo;
-import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingPresetItemEdo;
+import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingPresetEdo;
 import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingPresetListEdo;
 import com.pth.iflow.profile.TestDataProducer;
 import com.pth.iflow.profile.config.ProfileConfiguration;
 import com.pth.iflow.profile.model.Company;
-import com.pth.iflow.profile.model.CompanyWorkflowtypeItemOcrSetting;
+import com.pth.iflow.profile.model.CompanyWorkflowtypeItemOcrSettingPreset;
 import com.pth.iflow.profile.model.mapper.ProfileModelEdoMapper;
 import com.pth.iflow.profile.service.access.ICompanyAccessService;
 import com.pth.iflow.profile.service.access.impl.CompanyAccessService;
@@ -102,52 +101,50 @@ public class CompanyServiceTest extends TestDataProducer {
   @Test
   public void testReadCompanyWorkflowtypeItemOcrSettingsByCompanyIdentity() throws Exception {
 
-    final List<CompanyWorkflowtypeItemOcrSetting> listSettings = Arrays
-        .asList(this.getTestCompanyWorkflowtypeItemOcrSetting("prop1"), this.getTestCompanyWorkflowtypeItemOcrSetting("prop2"),
-            this.getTestCompanyWorkflowtypeItemOcrSetting("prop3"));
+    final List<
+        CompanyWorkflowtypeItemOcrSettingPresetEdo> listEdoSettings = this.getTestCompanyWorkflowtypeItemOcrSettingPresetEdoList();
 
-    final List<CompanyWorkflowtypeItemOcrSettingPresetItemEdo> listEdoSettings = Arrays
-        .asList(this.getTestCompanyWorkflowtypeItemOcrSettingEdo("prop1"), this.getTestCompanyWorkflowtypeItemOcrSettingEdo("prop2"),
-            this.getTestCompanyWorkflowtypeItemOcrSettingEdo("prop3"));
-
-    final CompanyWorkflowtypeItemOcrSettingPresetListEdo edoListSettings = new CompanyWorkflowtypeItemOcrSettingPresetListEdo(listEdoSettings);
+    final CompanyWorkflowtypeItemOcrSettingPresetListEdo edoListSettings = new CompanyWorkflowtypeItemOcrSettingPresetListEdo(
+        listEdoSettings);
 
     when(this.restTemplate
         .callRestGet(any(URI.class), any(EModule.class), eq(CompanyWorkflowtypeItemOcrSettingPresetListEdo.class), any(boolean.class)))
             .thenReturn(edoListSettings);
 
-    final List<CompanyWorkflowtypeItemOcrSetting> resList = this.companyService
+    final List<CompanyWorkflowtypeItemOcrSettingPreset> resList = this.companyService
         .readCompanyWorkflowtypeItemOcrSettingsByCompanyIdentity("identity");
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has size 3!", 3, resList.size());
-    Assert.assertEquals("Result company has id 1!", "prop3", listEdoSettings.get(2).getPropertyName());
+    Assert
+        .assertEquals("The third item from result list has " + listEdoSettings.get(2).getItems().size() + " items!",
+            listEdoSettings.get(2).getItems().size(), resList.get(2).getItems().size());
 
   }
 
   @Test
   public void testSaveCompanyWorkflowtypeItemOcrSettings() throws Exception {
 
-    final List<CompanyWorkflowtypeItemOcrSetting> listSettings = Arrays
-        .asList(this.getTestCompanyWorkflowtypeItemOcrSetting("prop1"), this.getTestCompanyWorkflowtypeItemOcrSetting("prop2"),
-            this.getTestCompanyWorkflowtypeItemOcrSetting("prop3"));
+    final List<CompanyWorkflowtypeItemOcrSettingPreset> listSettings = this.getTestCompanyWorkflowtypeItemOcrSettingPresetList();
 
-    final List<CompanyWorkflowtypeItemOcrSettingPresetItemEdo> listEdoSettings = Arrays
-        .asList(this.getTestCompanyWorkflowtypeItemOcrSettingEdo("prop1"), this.getTestCompanyWorkflowtypeItemOcrSettingEdo("prop2"),
-            this.getTestCompanyWorkflowtypeItemOcrSettingEdo("prop3"));
+    final List<
+        CompanyWorkflowtypeItemOcrSettingPresetEdo> listEdoSettings = this.getTestCompanyWorkflowtypeItemOcrSettingPresetEdoList();
 
-    final CompanyWorkflowtypeItemOcrSettingPresetListEdo edoListSettings = new CompanyWorkflowtypeItemOcrSettingPresetListEdo(listEdoSettings);
+    final CompanyWorkflowtypeItemOcrSettingPresetListEdo edoListSettings = new CompanyWorkflowtypeItemOcrSettingPresetListEdo(
+        listEdoSettings);
 
     when(this.restTemplate
         .callRestPost(any(URI.class), eq(EModule.CORE), any(CompanyWorkflowtypeItemOcrSettingPresetListEdo.class),
             eq(CompanyWorkflowtypeItemOcrSettingPresetListEdo.class), any(boolean.class)))
                 .thenReturn(edoListSettings);
 
-    final List<CompanyWorkflowtypeItemOcrSetting> resList = this.companyService.saveCompanyWorkflowtypeItemOcrSettings(listSettings);
+    final List<CompanyWorkflowtypeItemOcrSettingPreset> resList = this.companyService.saveCompanyWorkflowtypeItemOcrSettings(listSettings);
 
     Assert.assertNotNull("Result list is not null!", resList);
     Assert.assertEquals("Result list has size 3!", 3, resList.size());
-    Assert.assertEquals("Result company has id 1!", "prop3", listEdoSettings.get(2).getPropertyName());
+    Assert
+        .assertEquals("The third item from result list has " + listEdoSettings.get(2).getItems().size() + " items!",
+            listEdoSettings.get(2).getItems().size(), resList.get(2).getItems().size());
   }
 
 }
