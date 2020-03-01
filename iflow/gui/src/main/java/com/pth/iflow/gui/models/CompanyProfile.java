@@ -13,7 +13,7 @@ public class CompanyProfile {
 
   private final List<CompanyWorkflowTypeController> workflowTypeControllers = new ArrayList<>();
 
-  private final List<CompanyWorkflowtypeItemOcrSetting> workflowtypeItemOcrSettings = new ArrayList<>();
+  private final List<CompanyWorkflowtypeItemOcrSettingPreset> ocrPresets = new ArrayList<>();
 
   public CompanyProfile() {
 
@@ -21,14 +21,13 @@ public class CompanyProfile {
 
   public CompanyProfile(final Company company, final List<Department> departments, final List<UserGroup> userGroups,
       final List<CompanyWorkflowTypeController> workflowTypeControllers,
-      final List<CompanyWorkflowtypeItemOcrSetting> workflowtypeItemOcrSettings) {
+      final List<CompanyWorkflowtypeItemOcrSettingPreset> workflowtypeItemOcrSettings) {
 
     this.setDepartments(departments);
     this.setUserGroups(userGroups);
     this.setCompany(company);
     this.setWorkflowTypeControllers(workflowTypeControllers);
-    this.setWorkflowtypeItemOcrSettings(workflowtypeItemOcrSettings);
-
+    this.setOcrPresets(workflowtypeItemOcrSettings);
   }
 
   /**
@@ -86,16 +85,16 @@ public class CompanyProfile {
     }
   }
 
-  public List<CompanyWorkflowtypeItemOcrSetting> getWorkflowtypeItemOcrSettings() {
+  public List<CompanyWorkflowtypeItemOcrSettingPreset> getOcrPresets() {
 
-    return this.workflowtypeItemOcrSettings;
+    return this.ocrPresets;
   }
 
-  public void setWorkflowtypeItemOcrSettings(final List<CompanyWorkflowtypeItemOcrSetting> workflowtypeItemOcrSettings) {
+  public void setOcrPresets(final List<CompanyWorkflowtypeItemOcrSettingPreset> ocrPresets) {
 
-    this.workflowtypeItemOcrSettings.clear();
-    if (workflowtypeItemOcrSettings != null) {
-      this.workflowtypeItemOcrSettings.addAll(workflowtypeItemOcrSettings);
+    this.ocrPresets.clear();
+    if (ocrPresets != null) {
+      this.ocrPresets.addAll(ocrPresets);
     }
   }
 }

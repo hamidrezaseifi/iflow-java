@@ -31,7 +31,6 @@ import com.pth.iflow.common.enums.EWorkflowType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.authentication.GuiAuthenticationToken;
 import com.pth.iflow.gui.controller.GuiSocketControllerBase;
-import com.pth.iflow.gui.models.CompanyWorkflowtypeItemOcrSetting;
 import com.pth.iflow.gui.models.ui.GuiSocketMessage;
 import com.pth.iflow.gui.models.ui.enums.ESocketCommands;
 import com.pth.iflow.gui.models.ui.ocr.OcrResultValueType;

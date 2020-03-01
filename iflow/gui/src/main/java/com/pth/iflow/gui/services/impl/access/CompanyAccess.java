@@ -15,7 +15,7 @@ import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingPresetLi
 import com.pth.iflow.gui.configurations.GuiConfiguration;
 import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.Company;
-import com.pth.iflow.gui.models.CompanyWorkflowtypeItemOcrSetting;
+import com.pth.iflow.gui.models.CompanyWorkflowtypeItemOcrSettingPreset;
 import com.pth.iflow.gui.models.mapper.GuiModelEdoMapper;
 import com.pth.iflow.gui.models.ui.SessionUserInfo;
 import com.pth.iflow.gui.services.ICompanyAccess;
@@ -67,7 +67,7 @@ public class CompanyAccess implements ICompanyAccess {
   }
 
   @Override
-  public List<CompanyWorkflowtypeItemOcrSetting> readCompanyWorkflowtypeItemOcrSettings(final String identity)
+  public List<CompanyWorkflowtypeItemOcrSettingPreset> readCompanyWorkflowtypeItemOcrSettings(final String identity)
       throws MalformedURLException, IFlowMessageConversionFailureException {
 
     logger.debug("Read company workflowtype item ocr settings from core {}", identity);
@@ -77,11 +77,11 @@ public class CompanyAccess implements ICompanyAccess {
             EModule.PROFILE, CompanyWorkflowtypeItemOcrSettingPresetListEdo.class,
             this.sessionUserInfo.isLoggedIn() ? this.sessionUserInfo.getToken() : this.sessionUserInfo.getToken(), true);
 
-    return GuiModelEdoMapper.fromCompanyWorkflowtypeItemOcrSettingEdoList(listEdo.getCompanyWorkflowtypeItemOcrSettings());
+    return GuiModelEdoMapper.fromCompanyWorkflowtypeItemOcrSettingPresetEdoList(listEdo.getCompanyWorkflowtypeItemOcrSettings());
   }
 
   @Override
-  public List<CompanyWorkflowtypeItemOcrSetting> readCompanyWorkflowtypeItemOcrSettings(final String identity, final String token)
+  public List<CompanyWorkflowtypeItemOcrSettingPreset> readCompanyWorkflowtypeItemOcrSettings(final String identity, final String token)
       throws MalformedURLException, IFlowMessageConversionFailureException {
 
     logger.debug("Read company workflowtype item ocr settings from core {}", identity);
@@ -90,18 +90,18 @@ public class CompanyAccess implements ICompanyAccess {
         .callRestGet(this.profileModuleAccessConfig.getReadCompanyWorkflowTypeItemOcrSettingsUri(identity),
             EModule.PROFILE, CompanyWorkflowtypeItemOcrSettingPresetListEdo.class, token, true);
 
-    return GuiModelEdoMapper.fromCompanyWorkflowtypeItemOcrSettingEdoList(listEdo.getCompanyWorkflowtypeItemOcrSettings());
+    return GuiModelEdoMapper.fromCompanyWorkflowtypeItemOcrSettingPresetEdoList(listEdo.getCompanyWorkflowtypeItemOcrSettings());
   }
 
   @Override
-  public List<CompanyWorkflowtypeItemOcrSetting>
-      saveCompanyWorkflowtypeItemOcrSettings(final List<CompanyWorkflowtypeItemOcrSetting> newList)
+  public List<CompanyWorkflowtypeItemOcrSettingPreset>
+      saveCompanyWorkflowtypeItemOcrSettings(final List<CompanyWorkflowtypeItemOcrSettingPreset> newList)
           throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     logger.debug("Save company workflowtype item ocr settings");
 
     final CompanyWorkflowtypeItemOcrSettingPresetListEdo workflowtypeItemOcrSettingListEdo = new CompanyWorkflowtypeItemOcrSettingPresetListEdo(
-        GuiModelEdoMapper.toCompanyWorkflowtypeItemOcrSettingEdoList(newList));
+        GuiModelEdoMapper.toCompanyWorkflowtypeItemOcrSettingPresetEdoList(newList));
     final CompanyWorkflowtypeItemOcrSettingPresetListEdo listEdo = this.restTemplate
         .callRestPost(
             this.profileModuleAccessConfig.getSaveCompanyWorkflowTypeItemOcrSettingsUri(), EModule.PROFILE,
@@ -109,7 +109,7 @@ public class CompanyAccess implements ICompanyAccess {
             CompanyWorkflowtypeItemOcrSettingPresetListEdo.class,
             this.sessionUserInfo.getToken(), true);
 
-    return GuiModelEdoMapper.fromCompanyWorkflowtypeItemOcrSettingEdoList(listEdo.getCompanyWorkflowtypeItemOcrSettings());
+    return GuiModelEdoMapper.fromCompanyWorkflowtypeItemOcrSettingPresetEdoList(listEdo.getCompanyWorkflowtypeItemOcrSettings());
   }
 
 }

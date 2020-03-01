@@ -18,7 +18,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.models.Company;
-import com.pth.iflow.gui.models.CompanyWorkflowtypeItemOcrSetting;
+import com.pth.iflow.gui.models.CompanyWorkflowtypeItemOcrSettingPreset;
+import com.pth.iflow.gui.models.CompanyWorkflowtypeItemOcrSettingPresetItem;
 import com.pth.iflow.gui.services.ICompanyHandler;
 
 @Controller
@@ -50,7 +51,7 @@ public class CompanyDataController extends GuiDataControllerBase {
   @ResponseStatus(HttpStatus.OK)
   @GetMapping(path = { "/readworkflowtypeitemocrsettings" }, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   @ResponseBody
-  public Map<String, List<CompanyWorkflowtypeItemOcrSetting>> readCompanyWorkflowtypeItemOcrSettings()
+  public List<CompanyWorkflowtypeItemOcrSettingPreset> readCompanyWorkflowtypeItemOcrSettings()
       throws MalformedURLException, IFlowMessageConversionFailureException {
 
     return this.companyHandler.readCompanyWorkflowtypeItemOcrSettings(this.getLoggedCompany().getIdentity());
@@ -59,13 +60,13 @@ public class CompanyDataController extends GuiDataControllerBase {
   @ResponseStatus(HttpStatus.CREATED)
   @PostMapping(path = { "/saveworkflowtypeitemocrsettings/{workflowtypeidentity}" }, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   @ResponseBody
-  public Map<String, List<CompanyWorkflowtypeItemOcrSetting>>
-      saveCompanyWorkflowtypeItemOcrSettings(@RequestBody final List<CompanyWorkflowtypeItemOcrSetting> settingList,
+  public List<CompanyWorkflowtypeItemOcrSettingPreset>
+      saveCompanyWorkflowtypeItemOcrSettings(@RequestBody final CompanyWorkflowtypeItemOcrSettingPreset preset,
           @PathVariable final String workflowtypeidentity)
           throws MalformedURLException, IFlowMessageConversionFailureException {
 
-    final Map<String, List<CompanyWorkflowtypeItemOcrSetting>> savedList = this.companyHandler
-        .saveCompanyWorkflowtypeItemOcrSettings(settingList, this.getLoggedCompany().getIdentity(), workflowtypeidentity);
+    final List<CompanyWorkflowtypeItemOcrSettingPreset> savedList = this.companyHandler
+        .saveCompanyWorkflowtypeItemOcrSettings(preset, this.getLoggedCompany().getIdentity());
 
     return savedList;
   }
@@ -77,6 +78,15 @@ public class CompanyDataController extends GuiDataControllerBase {
       throws MalformedURLException, IFlowMessageConversionFailureException {
 
     return this.companyHandler.readWorkflowtypeItems(workflowtypeidentity);
+  }
+
+  @ResponseStatus(HttpStatus.OK)
+  @GetMapping(path = { "/readpresetallitems/{presetName}" }, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+  @ResponseBody
+  public Map<String, CompanyWorkflowtypeItemOcrSettingPresetItem> readPresetAllItems(@PathVariable final String presetName)
+      throws MalformedURLException, IFlowMessageConversionFailureException {
+
+    return this.companyHandler.readPresetAllItems(presetName);
   }
 
 }

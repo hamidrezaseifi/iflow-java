@@ -2,21 +2,21 @@ package com.pth.iflow.gui.services.impl.handler;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pth.iflow.common.enums.EInvoiceWorkflowTypeItems;
+import com.pth.iflow.common.enums.EOcrType;
 import com.pth.iflow.common.enums.EWorkflowType;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.gui.models.Company;
-import com.pth.iflow.gui.models.CompanyWorkflowtypeItemOcrSetting;
-import com.pth.iflow.gui.models.WorkflowType;
+import com.pth.iflow.gui.models.CompanyWorkflowtypeItemOcrSettingPreset;
+import com.pth.iflow.gui.models.CompanyWorkflowtypeItemOcrSettingPresetItem;
 import com.pth.iflow.gui.models.ui.SessionUserInfo;
 import com.pth.iflow.gui.services.ICompanyAccess;
 import com.pth.iflow.gui.services.ICompanyHandler;
@@ -48,54 +48,48 @@ public class CompanyHandler implements ICompanyHandler {
   }
 
   @Override
-  public Map<String, List<CompanyWorkflowtypeItemOcrSetting>> readCompanyWorkflowtypeItemOcrSettings(final String identity)
+  public List<CompanyWorkflowtypeItemOcrSettingPreset> readCompanyWorkflowtypeItemOcrSettings(final String identity)
       throws MalformedURLException, IFlowMessageConversionFailureException {
 
-    final List<CompanyWorkflowtypeItemOcrSetting> list = this.companyAccess.readCompanyWorkflowtypeItemOcrSettings(identity);
+    final List<CompanyWorkflowtypeItemOcrSettingPreset> list = this.companyAccess.readCompanyWorkflowtypeItemOcrSettings(identity);
 
-    final Map<String, List<CompanyWorkflowtypeItemOcrSetting>> map = this.extractMappedCompanyWorkflowtypeItemOcrSettings(list, true);
-
-    return map;
+    return list;
   }
 
   @Override
-  public Map<String, List<CompanyWorkflowtypeItemOcrSetting>> readCompanyWorkflowtypeItemOcrSettings(final String identity,
+  public List<CompanyWorkflowtypeItemOcrSettingPreset> readCompanyWorkflowtypeItemOcrSettings(final String identity,
       final String token)
       throws MalformedURLException, IFlowMessageConversionFailureException {
 
-    final List<CompanyWorkflowtypeItemOcrSetting> list = this.companyAccess.readCompanyWorkflowtypeItemOcrSettings(identity, token);
+    final List<CompanyWorkflowtypeItemOcrSettingPreset> list = this.companyAccess.readCompanyWorkflowtypeItemOcrSettings(identity, token);
 
-    final Map<String, List<CompanyWorkflowtypeItemOcrSetting>> map = this.extractMappedCompanyWorkflowtypeItemOcrSettings(list, false);
-
-    return map;
+    return list;
   }
 
   @Override
-  public Map<String, List<CompanyWorkflowtypeItemOcrSetting>> saveCompanyWorkflowtypeItemOcrSettings(
-      final List<CompanyWorkflowtypeItemOcrSetting> settingList,
-      final String companyidentity, final String workflowtypeidentity)
+  public List<CompanyWorkflowtypeItemOcrSettingPreset> saveCompanyWorkflowtypeItemOcrSettings(
+      final CompanyWorkflowtypeItemOcrSettingPreset preset,
+      final String companyidentity)
       throws MalformedURLException, IFlowMessageConversionFailureException {
 
-    final List<CompanyWorkflowtypeItemOcrSetting> readList = this.companyAccess.readCompanyWorkflowtypeItemOcrSettings(companyidentity);
+    preset.removeEmptyItems();
 
-    final List<CompanyWorkflowtypeItemOcrSetting> newList = readList
+    final List<
+        CompanyWorkflowtypeItemOcrSettingPreset> readList = this.companyAccess.readCompanyWorkflowtypeItemOcrSettings(companyidentity);
+
+    final List<CompanyWorkflowtypeItemOcrSettingPreset> newList = readList
         .stream()
-        .filter(item -> item.getWorkflowIdentity().equals(workflowtypeidentity) == false)
+        .filter(item -> item.getPresetName().equals(preset.getPresetName()) == false)
         .collect(Collectors.toList());
 
-    newList.addAll(settingList);
+    newList.add(preset);
 
-    final List<CompanyWorkflowtypeItemOcrSetting> finallList = newList
-        .stream()
-        .filter(i -> i.hasValue())
-        .collect(Collectors.toList());
+    final List<CompanyWorkflowtypeItemOcrSettingPreset> resultlList = this.companyAccess.saveCompanyWorkflowtypeItemOcrSettings(newList);
 
-    final List<CompanyWorkflowtypeItemOcrSetting> resultlList = this.companyAccess.saveCompanyWorkflowtypeItemOcrSettings(finallList);
-
-    this.sessionUserInfo.getCompanyProfile().setWorkflowtypeItemOcrSettings(resultlList);
+    this.sessionUserInfo.getCompanyProfile().setOcrPresets(resultlList);
     this.sessionUserInfo.resetWorkflowtypeItemOcrSettings();
 
-    return this.extractMappedCompanyWorkflowtypeItemOcrSettings(resultlList, true);
+    return resultlList;
   }
 
   @Override
@@ -112,50 +106,47 @@ public class CompanyHandler implements ICompanyHandler {
   }
 
   @Override
-  public Map<String, List<CompanyWorkflowtypeItemOcrSetting>>
-      extractMappedCompanyWorkflowtypeItemOcrSettings(final List<CompanyWorkflowtypeItemOcrSetting> list, final boolean fillBlanks)
-          throws IFlowMessageConversionFailureException {
+  public Map<String, CompanyWorkflowtypeItemOcrSettingPresetItem> readPresetAllItems(final String presetName)
+      throws IFlowMessageConversionFailureException {
 
-    final Map<String, List<CompanyWorkflowtypeItemOcrSetting>> map = new HashMap<>();
+    final List<CompanyWorkflowtypeItemOcrSettingPreset> presetList = this.sessionUserInfo.getWorkflowtypeItemOcrSettings();
+    final Optional<CompanyWorkflowtypeItemOcrSettingPreset> optionalPreset = presetList
+        .stream()
+        .filter(p -> p.getPresetName().equals(presetName))
+        .findAny();
 
-    for (final CompanyWorkflowtypeItemOcrSetting item : list) {
-      if (map.containsKey(item.getWorkflowIdentity()) == false) {
-        map.put(item.getWorkflowIdentity(), new ArrayList<>());
-      }
-      map.get(item.getWorkflowIdentity()).add(item);
+    if (optionalPreset.isPresent() == false) {
+      return null;
     }
 
-    if (fillBlanks) {
-      final Collection<WorkflowType> allWorkflowTypes = this.sessionUserInfo.getAllWorkflowTypes();
-      for (final WorkflowType type : allWorkflowTypes) {
-        if (map.containsKey(type.getIdentity()) == false) {
-          map.put(type.getIdentity(), new ArrayList<>());
-        }
+    return this.extractMappedCompanyWorkflowtypeItemsFromOcrPreset(optionalPreset.get());
+  }
 
-        final List<CompanyWorkflowtypeItemOcrSetting> propertyList = map.get(type.getIdentity());
+  @Override
+  public Map<String, CompanyWorkflowtypeItemOcrSettingPresetItem> extractMappedCompanyWorkflowtypeItemsFromOcrPreset(
+      final CompanyWorkflowtypeItemOcrSettingPreset preset) throws IFlowMessageConversionFailureException {
 
-        final Map<String,
-            CompanyWorkflowtypeItemOcrSetting> propertyMap = propertyList
-                .stream()
-                .collect(Collectors.toMap(p -> p.getPropertyName(), p -> p));
+    final Map<String,
+        CompanyWorkflowtypeItemOcrSettingPresetItem> map = preset
+            .getItems()
+            .stream()
+            .collect(Collectors.toMap(i -> i.getPropertyName(), i -> i));
 
-        final List<String> items = this.readWorkflowtypeItems(type.getIdentity());
-        for (final String item : items) {
-          if (propertyMap.containsKey(item) == false) {
-            final CompanyWorkflowtypeItemOcrSetting prop = new CompanyWorkflowtypeItemOcrSetting();
-            prop.setWorkflowIdentity(type.getIdentity());
-            prop.setPropertyName(item);
-            prop.setValue("");
-            prop.setStatus(1);
-            prop.setVersion(1);
-            prop.setCompanyIdentity(this.sessionUserInfo.getCompany().getIdentity());
+    final List<String> items = this.readWorkflowtypeItems(preset.getWorkflowTypeIdentity());
 
-            map.get(type.getIdentity()).add(prop);
-          }
-        }
+    for (final String itemName : items) {
+      if (map.containsKey(itemName) == false) {
+        final CompanyWorkflowtypeItemOcrSettingPresetItem prop = new CompanyWorkflowtypeItemOcrSettingPresetItem();
+        prop.setOcrType(EOcrType.SEARCH_WORD.getValue());
+        prop.setPropertyName(itemName);
+        prop.setValue("");
+        prop.setStatus(1);
+        prop.setVersion(1);
 
+        map.put(itemName, prop);
       }
     }
+
     return map;
   }
 
