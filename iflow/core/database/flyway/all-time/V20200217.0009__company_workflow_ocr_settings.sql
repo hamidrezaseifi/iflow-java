@@ -22,7 +22,8 @@ CREATE TABLE company_workflowtype_items_ocr_preset
         REFERENCES public.companies (id) MATCH SIMPLE
         ON UPDATE CASCADE
         ON DELETE CASCADE
-        NOT VALID
+        NOT VALID,
+    CONSTRAINT "UQ_COMPANY_WORKFLOWTYPE_ITEMS_OCR_PRESET_NAME" UNIQUE (company_id, preset_name)
 );
 
 ALTER SEQUENCE company_workflowtype_items_ocr_preset_seq OWNED BY company_workflowtype_items_ocr_preset.id;
