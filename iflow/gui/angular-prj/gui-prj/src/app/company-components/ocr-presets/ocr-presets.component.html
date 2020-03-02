@@ -41,10 +41,10 @@
 				  	<select (ngModelChange)="setPresetItemOcrType(prop.propertyName, $event)" [ngModel]="prop.ocrType" class="property-ocrtype">
 				  		<option *ngFor="let ocrType of ocrTypeList;" value="{{ocrType.value}}">{{ocrType.title}}</option>
 				  	</select>
-			  		<input type="text" class="property-value" readonly
+			  		<input type="text" class="property-value" readonly *ngIf="prop.ocrType !== 0"
 				  		(ngModelChange)="setPresetItemValue(prop.propertyName, $event)" 
 				  		[ngModel]="prop.value"/>
-			  		<a (click)="selectValueList(prop)" class="toolbar-link selectlist-button" ><i class="material-icons">list</i></a>
+			  		<a (click)="selectValueList(prop)" *ngIf="prop.ocrType !== 0" class="toolbar-link selectlist-button" ><i class="material-icons">list</i></a>
 			  	</div>
 			  	<div *ngIf="selectedPresetItems.length === 0" class="row-item" >
 			  		<span>{{ 'ocr-preset.no-items' | translate  }}</span>
