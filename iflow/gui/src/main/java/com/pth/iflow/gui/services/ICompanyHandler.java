@@ -11,23 +11,26 @@ import com.pth.iflow.gui.models.CompanyWorkflowtypeItemOcrSettingPresetItem;
 
 public interface ICompanyHandler {
 
-  public Company readCompany(final String identity) throws MalformedURLException, IFlowMessageConversionFailureException;
-
-  public Company saveCompany(final Company company) throws MalformedURLException, IFlowMessageConversionFailureException;
-
-  public List<CompanyWorkflowtypeItemOcrSettingPreset> readCompanyWorkflowtypeItemOcrSettings(String identity)
+  public Company readCompany(final String companyIdentity, final String token)
       throws MalformedURLException, IFlowMessageConversionFailureException;
 
-  public List<CompanyWorkflowtypeItemOcrSettingPreset> readCompanyWorkflowtypeItemOcrSettings(String identity, String token)
+  public Company saveCompany(final Company company, final String token)
+      throws MalformedURLException, IFlowMessageConversionFailureException;
+
+  public List<CompanyWorkflowtypeItemOcrSettingPreset> readCompanyWorkflowtypeItemOcrSettings(String companyIdentity, final String token)
       throws MalformedURLException, IFlowMessageConversionFailureException;
 
   public List<CompanyWorkflowtypeItemOcrSettingPreset> saveCompanyWorkflowtypeItemOcrSettings(
-      CompanyWorkflowtypeItemOcrSettingPreset preset, String companyidentity)
+      CompanyWorkflowtypeItemOcrSettingPreset preset, String companyidentity, final String token)
       throws MalformedURLException, IFlowMessageConversionFailureException;
 
   public List<String> readWorkflowtypeItems(final String workflowtypeidentity);
 
-  public Map<String, CompanyWorkflowtypeItemOcrSettingPresetItem> readPresetAllItems(final String presetName)
+  public Map<String, CompanyWorkflowtypeItemOcrSettingPresetItem> readPresetAllItems(final String presetName, String CompanyIdentity,
+      final String token)
+      throws IFlowMessageConversionFailureException, MalformedURLException;
+
+  public Map<String, CompanyWorkflowtypeItemOcrSettingPresetItem> readPresetAllItemsFromSession(final String presetName)
       throws IFlowMessageConversionFailureException;
 
   public Map<String, CompanyWorkflowtypeItemOcrSettingPresetItem> extractMappedCompanyWorkflowtypeItemsFromOcrPreset(

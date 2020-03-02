@@ -8,7 +8,7 @@ label.property-label{
 	font-weight: bold;
 }
 
-input.property-value{
+.property-value{
 	width: calc(100% - 240px);
     padding: 0 5px;
 }
