@@ -18,7 +18,7 @@ public class MainController {
   @ResponseStatus(HttpStatus.OK)
   @GetMapping(
               path = { "/", "/about", "/test", "/workflow/*", "/workflow/**", "/users/**", "/users/*", "/auth/login", "/useres/list",
-                  "company/info", "/departments/list", "/company/workflowtypes" }
+                  "company/info", "/departments/list", "/company/workflowtypes", "/company/ocrpresets" }
   )
   public String index() {
 
