@@ -19,8 +19,7 @@ public interface ICompaniesHandlerService {
   List<CompanyWorkflowtypeItemOcrSettingPreset> readCompanyWorkflowtypeItemOcrSettingsByCompanyIdentity(String companyidentity)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  List<CompanyWorkflowtypeItemOcrSettingPreset>
-      saveCompanyWorkflowtypeItemOcrSettings(List<CompanyWorkflowtypeItemOcrSettingPreset> modelInputList)
-          throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
+  CompanyWorkflowtypeItemOcrSettingPreset saveCompanyWorkflowtypeItemOcrSettings(CompanyWorkflowtypeItemOcrSettingPreset modelInput)
+      throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
 }

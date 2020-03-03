@@ -17,7 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.entity.CompanyEntity;
-import com.pth.iflow.core.model.entity.CompanyWorkflowtypeItemOcrSettingPresetEntity;
+import com.pth.iflow.core.model.entity.CompanyWorkflowTypeOcrSettingPresetEntity;
 import com.pth.iflow.core.service.impl.CompanyService;
 import com.pth.iflow.core.service.interfaces.ICompanyService;
 import com.pth.iflow.core.storage.dao.interfaces.ICompanyDao;
@@ -104,11 +104,11 @@ public class CompanyServiceTest extends TestDataProducer {
   @Test
   public void testReadCompanyWorkflowtypeItemOcrSettings() throws Exception {
 
-    final List<CompanyWorkflowtypeItemOcrSettingPresetEntity> list = getTestCompanyWorkflowtypeItemOcrSettingPresetEntityList();
+    final List<CompanyWorkflowTypeOcrSettingPresetEntity> list = getTestCompanyWorkflowtypeItemOcrSettingPresetEntityList();
 
     when(this.companyDao.readCompanyWorkflowtypeItemOcrSettings(any(Long.class))).thenReturn(list);
 
-    final List<CompanyWorkflowtypeItemOcrSettingPresetEntity> resList = this.companyService.readCompanyWorkflowtypeItemOcrSettings(1L);
+    final List<CompanyWorkflowTypeOcrSettingPresetEntity> resList = this.companyService.readCompanyWorkflowtypeItemOcrSettings(1L);
 
     Assert.assertNotNull("Result company is not null!", resList);
     Assert.assertEquals("Result list has 3 items", 3, resList.size());
@@ -124,11 +124,11 @@ public class CompanyServiceTest extends TestDataProducer {
   @Test
   public void testReadCompanyWorkflowtypeItemOcrSettingsByCompanyIdentity() throws Exception {
 
-    final List<CompanyWorkflowtypeItemOcrSettingPresetEntity> list = getTestCompanyWorkflowtypeItemOcrSettingPresetEntityList();
+    final List<CompanyWorkflowTypeOcrSettingPresetEntity> list = getTestCompanyWorkflowtypeItemOcrSettingPresetEntityList();
 
     when(this.companyDao.readCompanyWorkflowtypeItemOcrSettingsByCompanyIdentity(any(String.class))).thenReturn(list);
 
-    final List<CompanyWorkflowtypeItemOcrSettingPresetEntity> resList = this.companyService
+    final List<CompanyWorkflowTypeOcrSettingPresetEntity> resList = this.companyService
         .readCompanyWorkflowtypeItemOcrSettingsByCompanyIdentity("identity");
 
     Assert.assertNotNull("Result company is not null!", resList);
@@ -143,24 +143,23 @@ public class CompanyServiceTest extends TestDataProducer {
   }
 
   @Test
-  public void testSaveCompanyWorkflowtypeItemOcrSettings() throws Exception {
+  public void testSaveCompanyWorkflowtypeItemOcrSetting() throws Exception {
 
-    final List<CompanyWorkflowtypeItemOcrSettingPresetEntity> list = getTestCompanyWorkflowtypeItemOcrSettingPresetEntityList();
+    final CompanyWorkflowTypeOcrSettingPresetEntity preset = getTestCompanyWorkflowtypeItemOcrSettingPresetEntity("presetName",
+        getTestWorkflowType(), getTestCompany());
 
-    when(this.companyDao.saveCompanyWorkflowtypeItemOcrSettings(any(List.class))).thenReturn(list);
+    when(this.companyDao.saveCompanyWorkflowtypeItemOcrSetting(any(CompanyWorkflowTypeOcrSettingPresetEntity.class))).thenReturn(preset);
 
-    final List<
-        CompanyWorkflowtypeItemOcrSettingPresetEntity> resList = this.companyService.saveCompanyWorkflowtypeItemOcrSettings(list);
+    final CompanyWorkflowTypeOcrSettingPresetEntity resultPreset = this.companyService.saveCompanyWorkflowtypeItemOcrSetting(preset);
 
-    Assert.assertNotNull("Result company is not null!", resList);
-    Assert.assertEquals("Result list has 3 items", 3, resList.size());
+    Assert.assertNotNull("Result company is not null!", resultPreset);
     Assert
-        .assertEquals("Result item 3 has propertyname '" + list.get(2).getPresetName() + "'", list.get(2).getPresetName(),
-            resList.get(2).getPresetName());
+        .assertEquals("Result item 3 has propertyname '" + preset.getPresetName() + "'", preset.getPresetName(),
+            resultPreset.getPresetName());
     Assert
-        .assertEquals("Result second item from second preset has value '" + list.get(1).getItems().get(1).getValue() + "'",
-            list.get(1).getItems().get(1).getValue(),
-            resList.get(1).getItems().get(1).getValue());
+        .assertEquals("Result preset has the same items count '" + preset.getItems().size() + "'",
+            preset.getItems().size(),
+            resultPreset.getItems().size());
 
   }
 

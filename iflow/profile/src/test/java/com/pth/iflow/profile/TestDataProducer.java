@@ -69,9 +69,9 @@ public class TestDataProducer {
   protected List<CompanyWorkflowtypeItemOcrSettingPreset> getTestCompanyWorkflowtypeItemOcrSettingPresetList() {
 
     return Arrays
-        .asList(this.getTestCompanyWorkflowtypeItemOcrSettingPresetEntity("prop1"),
-            this.getTestCompanyWorkflowtypeItemOcrSettingPresetEntity("prop2"),
-            this.getTestCompanyWorkflowtypeItemOcrSettingPresetEntity("prop3"));
+        .asList(this.getTestCompanyWorkflowtypeItemOcrSettingPreset("prop1"),
+            this.getTestCompanyWorkflowtypeItemOcrSettingPreset("prop2"),
+            this.getTestCompanyWorkflowtypeItemOcrSettingPreset("prop3"));
   }
 
   protected List<CompanyWorkflowtypeItemOcrSettingPresetEdo> getTestCompanyWorkflowtypeItemOcrSettingPresetEdoList() {
@@ -111,7 +111,7 @@ public class TestDataProducer {
     return edo;
   }
 
-  protected CompanyWorkflowtypeItemOcrSettingPreset getTestCompanyWorkflowtypeItemOcrSettingPresetEntity(final String presetName) {
+  protected CompanyWorkflowtypeItemOcrSettingPreset getTestCompanyWorkflowtypeItemOcrSettingPreset(final String presetName) {
 
     final CompanyWorkflowtypeItemOcrSettingPreset model = new CompanyWorkflowtypeItemOcrSettingPreset();
     model.setPresetName(presetName);
@@ -119,6 +119,7 @@ public class TestDataProducer {
     model.setVersion(1);
     model.setWorkflowTypeIdentity("workflowIdentity");
     model.setCompanyIdentity("companyIdentity");
+    model.setIdentity("identity-" + presetName);
     model
         .setItems(Arrays
             .asList(this.getTestCompanyWorkflowtypeItemOcrSettingPresetItem("prop-1"),

@@ -21,6 +21,10 @@ import com.pth.iflow.common.models.base.IFlowJaxbDefinition;
 )
 public class CompanyWorkflowtypeItemOcrSettingPresetEdo {
 
+  @NotNull(message = "Identity must not be null")
+  @XmlElement(name = "Identity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
+  private String identity;
+
   @NotNull(message = "CompanyIdentity must not be null")
   @XmlElement(name = "CompanyIdentity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String companyIdentity;
@@ -45,6 +49,16 @@ public class CompanyWorkflowtypeItemOcrSettingPresetEdo {
   @XmlElementWrapper(name = "CompanyWorkflowtypeItemOcrSettingPresetItemList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "CompanyWorkflowtypeItemOcrSettingPresetItem", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private List<CompanyWorkflowtypeItemOcrSettingPresetItemEdo> items = new ArrayList<>();
+
+  public String getIdentity() {
+
+    return this.identity;
+  }
+
+  public void setIdentity(final String identity) {
+
+    this.identity = identity;
+  }
 
   public String getCompanyIdentity() {
 

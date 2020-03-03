@@ -125,26 +125,25 @@ public class CompanyServiceTest extends TestDataProducer {
   @Test
   public void testSaveCompanyWorkflowtypeItemOcrSettings() throws Exception {
 
-    final List<CompanyWorkflowtypeItemOcrSettingPreset> listSettings = this.getTestCompanyWorkflowtypeItemOcrSettingPresetList();
+    final CompanyWorkflowtypeItemOcrSettingPreset preset = this.getTestCompanyWorkflowtypeItemOcrSettingPreset("presetName");
 
-    final List<
-        CompanyWorkflowtypeItemOcrSettingPresetEdo> listEdoSettings = this.getTestCompanyWorkflowtypeItemOcrSettingPresetEdoList();
-
-    final CompanyWorkflowtypeItemOcrSettingPresetListEdo edoListSettings = new CompanyWorkflowtypeItemOcrSettingPresetListEdo(
-        listEdoSettings);
+    final CompanyWorkflowtypeItemOcrSettingPresetEdo edoSettings = this.getTestCompanyWorkflowtypeItemOcrSettingPresetEdo("presetName");
 
     when(this.restTemplate
-        .callRestPost(any(URI.class), eq(EModule.CORE), any(CompanyWorkflowtypeItemOcrSettingPresetListEdo.class),
-            eq(CompanyWorkflowtypeItemOcrSettingPresetListEdo.class), any(boolean.class)))
-                .thenReturn(edoListSettings);
+        .callRestPost(any(URI.class), eq(EModule.CORE), any(CompanyWorkflowtypeItemOcrSettingPresetEdo.class),
+            eq(CompanyWorkflowtypeItemOcrSettingPresetEdo.class), any(boolean.class)))
+                .thenReturn(edoSettings);
 
-    final List<CompanyWorkflowtypeItemOcrSettingPreset> resList = this.companyService.saveCompanyWorkflowtypeItemOcrSettings(listSettings);
+    final CompanyWorkflowtypeItemOcrSettingPreset resultPreset = this.companyService.saveCompanyWorkflowtypeItemOcrSettings(preset);
 
-    Assert.assertNotNull("Result list is not null!", resList);
-    Assert.assertEquals("Result list has size 3!", 3, resList.size());
+    Assert.assertNotNull("Result company is not null!", resultPreset);
     Assert
-        .assertEquals("The third item from result list has " + listEdoSettings.get(2).getItems().size() + " items!",
-            listEdoSettings.get(2).getItems().size(), resList.get(2).getItems().size());
+        .assertEquals("Result item 3 has propertyname '" + preset.getPresetName() + "'", preset.getPresetName(),
+            resultPreset.getPresetName());
+    Assert
+        .assertEquals("Result preset has the same items count '" + preset.getItems().size() + "'",
+            preset.getItems().size(),
+            resultPreset.getItems().size());
   }
 
 }

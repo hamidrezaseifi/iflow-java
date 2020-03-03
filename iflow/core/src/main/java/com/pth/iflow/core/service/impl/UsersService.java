@@ -18,7 +18,7 @@ import com.pth.iflow.core.model.CompanyProfile;
 import com.pth.iflow.core.model.ProfileResponse;
 import com.pth.iflow.core.model.entity.CompanyEntity;
 import com.pth.iflow.core.model.entity.CompanyWorkflowTypeControllerEntity;
-import com.pth.iflow.core.model.entity.CompanyWorkflowtypeItemOcrSettingPresetEntity;
+import com.pth.iflow.core.model.entity.CompanyWorkflowTypeOcrSettingPresetEntity;
 import com.pth.iflow.core.model.entity.DepartmentEntity;
 import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.model.entity.UserGroupEntity;
@@ -132,7 +132,7 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
 
     final UserEntity user = this.getUserByEmail(email);
     final CompanyEntity company = companyDao.getByIdentity(user.getCompany().getIdentity());
-    final List<CompanyWorkflowtypeItemOcrSettingPresetEntity> workflowtypeItemOcrSettings = companyDao
+    final List<CompanyWorkflowTypeOcrSettingPresetEntity> workflowtypeItemOcrSettings = companyDao
         .readCompanyWorkflowtypeItemOcrSettings(company.getId());
 
     return new ProfileResponse(user, company, user.getDepartments().stream().collect(Collectors.toList()),
@@ -144,7 +144,7 @@ public class UsersService extends CoreModelEdoMapperService<UserEntity, UserEdo>
 
     final UserEntity user = this.getUserByIdentity(identity);
     final CompanyEntity company = companyDao.getByIdentity(user.getCompany().getIdentity());
-    final List<CompanyWorkflowtypeItemOcrSettingPresetEntity> workflowtypeItemOcrSettings = companyDao
+    final List<CompanyWorkflowTypeOcrSettingPresetEntity> workflowtypeItemOcrSettings = companyDao
         .readCompanyWorkflowtypeItemOcrSettings(company.getId());
 
     return new ProfileResponse(user, company, user.getDepartments().stream().collect(Collectors.toList()),

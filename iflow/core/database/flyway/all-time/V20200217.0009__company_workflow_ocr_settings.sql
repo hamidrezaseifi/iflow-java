@@ -5,6 +5,7 @@ CREATE SEQUENCE company_workflowtype_items_ocr_preset_seq;
 CREATE TABLE company_workflowtype_items_ocr_preset
 (
     id bigint NOT NULL DEFAULT nextval('company_workflowtype_items_ocr_preset_seq'),
+    identity varchar(45) DEFAULT NULL,
     company_id bigint NOT NULL,
     workflow_type_id bigint NOT NULL,
     preset_name character varying(200) NOT NULL,

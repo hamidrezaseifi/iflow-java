@@ -19,7 +19,7 @@ import com.pth.iflow.core.storage.dao.helper.EntityHelper;
 
 @Entity
 @Table(name = "company_workflowtype_items_ocr_preset_items")
-public class CompanyWorkflowtypeItemOcrSettingPresetItemEntity extends EntityHelper {
+public class CompanyWorkflowTypeOcrSettingPresetItemEntity extends EntityHelper {
 
   private static final long serialVersionUID = 2937568589389217869L;
 
@@ -33,7 +33,7 @@ public class CompanyWorkflowtypeItemOcrSettingPresetItemEntity extends EntityHel
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "preset_id", nullable = false)
-  private CompanyWorkflowtypeItemOcrSettingPresetEntity preset;
+  private CompanyWorkflowTypeOcrSettingPresetEntity preset;
 
   @Column(name = "property_name")
   private String propertyName;
@@ -74,12 +74,12 @@ public class CompanyWorkflowtypeItemOcrSettingPresetItemEntity extends EntityHel
     this.id = id;
   }
 
-  public CompanyWorkflowtypeItemOcrSettingPresetEntity getPreset() {
+  public CompanyWorkflowTypeOcrSettingPresetEntity getPreset() {
 
     return preset;
   }
 
-  public void setPreset(final CompanyWorkflowtypeItemOcrSettingPresetEntity preset) {
+  public void setPreset(final CompanyWorkflowTypeOcrSettingPresetEntity preset) {
 
     this.preset = preset;
   }

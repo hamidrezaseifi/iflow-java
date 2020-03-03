@@ -3,18 +3,9 @@ package com.pth.iflow.workflow.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
-
-import com.fasterxml.jackson.annotation.JsonSetter;
-import com.pth.iflow.common.models.base.IFlowJaxbDefinition;
-
 public class CompanyWorkflowtypeItemOcrSettingPreset {
+
+  private String identity;
 
   private String companyIdentity;
 
@@ -27,6 +18,16 @@ public class CompanyWorkflowtypeItemOcrSettingPreset {
   private Integer version;
 
   private List<CompanyWorkflowtypeItemOcrSettingPresetItem> items = new ArrayList<>();
+
+  public String getIdentity() {
+
+    return identity;
+  }
+
+  public void setIdentity(final String identity) {
+
+    this.identity = identity;
+  }
 
   public String getCompanyIdentity() {
 

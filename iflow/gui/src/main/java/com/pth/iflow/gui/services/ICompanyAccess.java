@@ -17,8 +17,8 @@ public interface ICompanyAccess {
   public List<CompanyWorkflowtypeItemOcrSettingPreset> readCompanyWorkflowtypeItemOcrSettings(String companyIdentity, String token)
       throws MalformedURLException, IFlowMessageConversionFailureException;
 
-  public List<CompanyWorkflowtypeItemOcrSettingPreset>
-      saveCompanyWorkflowtypeItemOcrSettings(List<CompanyWorkflowtypeItemOcrSettingPreset> newList, String token)
-          throws MalformedURLException, IFlowMessageConversionFailureException;
+  public CompanyWorkflowtypeItemOcrSettingPreset saveCompanyWorkflowtypeItemOcrSettings(CompanyWorkflowtypeItemOcrSettingPreset model,
+      String token)
+      throws MalformedURLException, IFlowMessageConversionFailureException;
 
 }

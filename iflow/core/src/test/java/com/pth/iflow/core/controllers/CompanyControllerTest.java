@@ -31,7 +31,7 @@ import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.common.rest.XmlRestConfig;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.entity.CompanyEntity;
-import com.pth.iflow.core.model.entity.CompanyWorkflowtypeItemOcrSettingPresetEntity;
+import com.pth.iflow.core.model.entity.CompanyWorkflowTypeOcrSettingPresetEntity;
 import com.pth.iflow.core.service.interfaces.ICompanyService;
 
 @RunWith(SpringRunner.class)
@@ -117,7 +117,7 @@ public class CompanyControllerTest extends TestDataProducer {
   @Test
   public void testReadCompanyWorkflowtypeItemOcrSettings() throws Exception {
 
-    final List<CompanyWorkflowtypeItemOcrSettingPresetEntity> modelList = getTestCompanyWorkflowtypeItemOcrSettingPresetEntityList();
+    final List<CompanyWorkflowTypeOcrSettingPresetEntity> modelList = getTestCompanyWorkflowtypeItemOcrSettingPresetEntityList();
 
     final List<CompanyWorkflowtypeItemOcrSettingPresetEdo> edoList = getTestCompanyWorkflowtypeItemOcrSettingPresetEdoList();
 
@@ -144,19 +144,21 @@ public class CompanyControllerTest extends TestDataProducer {
   @Test
   public void testSaveCompanyWorkflowtypeItemOcrSettings() throws Exception {
 
-    final List<CompanyWorkflowtypeItemOcrSettingPresetEntity> modelList = getTestCompanyWorkflowtypeItemOcrSettingPresetEntityList();
+    final CompanyWorkflowTypeOcrSettingPresetEntity preset = getTestCompanyWorkflowtypeItemOcrSettingPresetEntity("presetName",
+        getTestWorkflowType(), getTestCompany());
 
-    final List<CompanyWorkflowtypeItemOcrSettingPresetEdo> edoList = getTestCompanyWorkflowtypeItemOcrSettingPresetEdoList();
+    final CompanyWorkflowtypeItemOcrSettingPresetEdo edo = getTestCompanyWorkflowtypeItemOcrSettingPresetEdo("presetName");
 
-    final CompanyWorkflowtypeItemOcrSettingPresetListEdo listEdo = new CompanyWorkflowtypeItemOcrSettingPresetListEdo(edoList);
+    when(this.companyService.saveCompanyWorkflowtypeItemOcrSetting(any(CompanyWorkflowTypeOcrSettingPresetEntity.class)))
+        .thenReturn(preset);
+    when(this.companyService.toCompanyWorkflowtypeItemOcrSettingPresetEdo(any(CompanyWorkflowTypeOcrSettingPresetEntity.class)))
+        .thenReturn(edo);
+    when(this.companyService.fromCompanyWorkflowtypeItemOcrSettingPresetEdo(any(CompanyWorkflowtypeItemOcrSettingPresetEdo.class)))
+        .thenReturn(preset);
 
-    when(this.companyService.saveCompanyWorkflowtypeItemOcrSettings(any(List.class))).thenReturn(modelList);
-    when(this.companyService.toCompanyWorkflowtypeItemOcrSettingPresetEdoList(any(List.class))).thenReturn(edoList);
-    when(this.companyService.fromCompanyWorkflowtypeItemOcrSettingPresetEdoList(any(List.class))).thenReturn(modelList);
+    final String resultAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edo);
 
-    final String resultAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(listEdo);
-
-    final String conetntAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(listEdo);
+    final String conetntAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edo);
 
     this.mockMvc
         .perform(MockMvcRequestBuilders
@@ -168,9 +170,11 @@ public class CompanyControllerTest extends TestDataProducer {
         .andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
         .andExpect(content().xml(resultAsXmlString));
 
-    verify(this.companyService, times(1)).saveCompanyWorkflowtypeItemOcrSettings(any(List.class));
-    verify(this.companyService, times(1)).toCompanyWorkflowtypeItemOcrSettingPresetEdoList(any(List.class));
-    verify(this.companyService, times(1)).fromCompanyWorkflowtypeItemOcrSettingPresetEdoList(any(List.class));
+    verify(this.companyService, times(1)).saveCompanyWorkflowtypeItemOcrSetting(any(CompanyWorkflowTypeOcrSettingPresetEntity.class));
+    verify(this.companyService, times(1))
+        .toCompanyWorkflowtypeItemOcrSettingPresetEdo(any(CompanyWorkflowTypeOcrSettingPresetEntity.class));
+    verify(this.companyService, times(1))
+        .fromCompanyWorkflowtypeItemOcrSettingPresetEdo(any(CompanyWorkflowtypeItemOcrSettingPresetEdo.class));
 
   }
 

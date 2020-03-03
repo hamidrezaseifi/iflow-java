@@ -23,11 +23,11 @@ import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.pth.iflow.core.model.entity.workflow.WorkflowTypeEntity;
-import com.pth.iflow.core.storage.dao.helper.EntityHelper;
+import com.pth.iflow.core.storage.dao.helper.EntityIdentityHelper;
 
 @Entity
 @Table(name = "company_workflowtype_items_ocr_preset")
-public class CompanyWorkflowtypeItemOcrSettingPresetEntity extends EntityHelper {
+public class CompanyWorkflowTypeOcrSettingPresetEntity extends EntityIdentityHelper {
 
   private static final long serialVersionUID = 2937568589389217869L;
 
@@ -44,6 +44,9 @@ public class CompanyWorkflowtypeItemOcrSettingPresetEntity extends EntityHelper 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "workflow_type_id", nullable = false)
   private WorkflowTypeEntity workflowType;
+
+  @Column(name = "identity")
+  private String identity;
 
   @Column(name = "preset_name")
   private String presetName;
@@ -64,7 +67,7 @@ public class CompanyWorkflowtypeItemOcrSettingPresetEntity extends EntityHelper 
 
   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "preset", fetch = FetchType.EAGER)
   @Fetch(value = FetchMode.SUBSELECT)
-  private final List<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> items = new ArrayList<>();
+  private final List<CompanyWorkflowTypeOcrSettingPresetItemEntity> items = new ArrayList<>();
 
   /**
    * @return the id
@@ -178,16 +181,16 @@ public class CompanyWorkflowtypeItemOcrSettingPresetEntity extends EntityHelper 
     this.createdAt = createdAt;
   }
 
-  public List<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> getItems() {
+  public List<CompanyWorkflowTypeOcrSettingPresetItemEntity> getItems() {
 
     return items;
   }
 
-  public void setItems(final List<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> items) {
+  public void setItems(final List<CompanyWorkflowTypeOcrSettingPresetItemEntity> items) {
 
     this.items.clear();
     if (items != null) {
-      for (final CompanyWorkflowtypeItemOcrSettingPresetItemEntity item : items) {
+      for (final CompanyWorkflowTypeOcrSettingPresetItemEntity item : items) {
         item.setPreset(this);
         this.items.add(item);
       }
@@ -196,9 +199,33 @@ public class CompanyWorkflowtypeItemOcrSettingPresetEntity extends EntityHelper 
 
   }
 
+  public void clearItems() {
+
+    this.items.clear();
+
+  }
+
   @Override
   public void increaseVersion() {
 
     version += 1;
+  }
+
+  @Override
+  public String getIdentity() {
+
+    return this.identity;
+  }
+
+  @Override
+  public void setIdentity(final String identity) {
+
+    this.identity = identity;
+  }
+
+  @Override
+  public String getIdentityPreffix() {
+
+    return "cwtosp";
   }
 }

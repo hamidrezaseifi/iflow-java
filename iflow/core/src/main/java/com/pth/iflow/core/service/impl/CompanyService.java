@@ -12,8 +12,8 @@ import com.pth.iflow.common.models.edo.CompanyEdo;
 import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingPresetEdo;
 import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingPresetItemEdo;
 import com.pth.iflow.core.model.entity.CompanyEntity;
-import com.pth.iflow.core.model.entity.CompanyWorkflowtypeItemOcrSettingPresetEntity;
-import com.pth.iflow.core.model.entity.CompanyWorkflowtypeItemOcrSettingPresetItemEntity;
+import com.pth.iflow.core.model.entity.CompanyWorkflowTypeOcrSettingPresetEntity;
+import com.pth.iflow.core.model.entity.CompanyWorkflowTypeOcrSettingPresetItemEntity;
 import com.pth.iflow.core.service.base.CoreModelEdoMapperService;
 import com.pth.iflow.core.service.interfaces.ICompanyService;
 import com.pth.iflow.core.storage.dao.helper.ICoreEntityVersion;
@@ -56,23 +56,23 @@ public class CompanyService extends CoreModelEdoMapperService<CompanyEntity, Com
   }
 
   @Override
-  public List<CompanyWorkflowtypeItemOcrSettingPresetEntity> readCompanyWorkflowtypeItemOcrSettings(final Long id) {
+  public List<CompanyWorkflowTypeOcrSettingPresetEntity> readCompanyWorkflowtypeItemOcrSettings(final Long id) {
 
     return companyDao.readCompanyWorkflowtypeItemOcrSettings(id);
   }
 
   @Override
-  public List<CompanyWorkflowtypeItemOcrSettingPresetEntity>
+  public List<CompanyWorkflowTypeOcrSettingPresetEntity>
       readCompanyWorkflowtypeItemOcrSettingsByCompanyIdentity(final String identity) {
 
     return companyDao.readCompanyWorkflowtypeItemOcrSettingsByCompanyIdentity(identity);
   }
 
   @Override
-  public List<CompanyWorkflowtypeItemOcrSettingPresetEntity> saveCompanyWorkflowtypeItemOcrSettings(
-      final List<CompanyWorkflowtypeItemOcrSettingPresetEntity> list) {
+  public CompanyWorkflowTypeOcrSettingPresetEntity saveCompanyWorkflowtypeItemOcrSetting(
+      final CompanyWorkflowTypeOcrSettingPresetEntity preset) {
 
-    return companyDao.saveCompanyWorkflowtypeItemOcrSettings(list);
+    return companyDao.saveCompanyWorkflowtypeItemOcrSetting(preset);
   }
 
   protected CompanyEntity prepareSavingModel(final CompanyEntity model) {
@@ -114,10 +114,10 @@ public class CompanyService extends CoreModelEdoMapperService<CompanyEntity, Com
   }
 
   @Override
-  public List<CompanyWorkflowtypeItemOcrSettingPresetEntity>
+  public List<CompanyWorkflowTypeOcrSettingPresetEntity>
       fromCompanyWorkflowtypeItemOcrSettingPresetEdoList(final List<CompanyWorkflowtypeItemOcrSettingPresetEdo> edoList) {
 
-    final List<CompanyWorkflowtypeItemOcrSettingPresetEntity> modelList = new ArrayList<>();
+    final List<CompanyWorkflowTypeOcrSettingPresetEntity> modelList = new ArrayList<>();
     for (final CompanyWorkflowtypeItemOcrSettingPresetEdo edo : edoList) {
       modelList.add(fromCompanyWorkflowtypeItemOcrSettingPresetEdo(edo));
     }
@@ -127,27 +127,33 @@ public class CompanyService extends CoreModelEdoMapperService<CompanyEntity, Com
 
   @Override
   public List<CompanyWorkflowtypeItemOcrSettingPresetEdo>
-      toCompanyWorkflowtypeItemOcrSettingPresetEdoList(final List<CompanyWorkflowtypeItemOcrSettingPresetEntity> modelList) {
+      toCompanyWorkflowtypeItemOcrSettingPresetEdoList(final List<CompanyWorkflowTypeOcrSettingPresetEntity> modelList) {
 
     final List<CompanyWorkflowtypeItemOcrSettingPresetEdo> edoList = new ArrayList<>();
-    for (final CompanyWorkflowtypeItemOcrSettingPresetEntity model : modelList) {
+    for (final CompanyWorkflowTypeOcrSettingPresetEntity model : modelList) {
       edoList.add(toCompanyWorkflowtypeItemOcrSettingPresetEdo(model));
     }
 
     return edoList;
   }
 
-  private CompanyWorkflowtypeItemOcrSettingPresetEntity
+  @Override
+  public CompanyWorkflowTypeOcrSettingPresetEntity
       fromCompanyWorkflowtypeItemOcrSettingPresetEdo(final CompanyWorkflowtypeItemOcrSettingPresetEdo edo) {
 
-    final CompanyWorkflowtypeItemOcrSettingPresetEntity model = new CompanyWorkflowtypeItemOcrSettingPresetEntity();
+    final CompanyWorkflowTypeOcrSettingPresetEntity model = new CompanyWorkflowTypeOcrSettingPresetEntity();
     model.setCompany(this.companyDao.getByIdentity(edo.getCompanyIdentity()));
     model.setPresetName(edo.getPresetName());
     model.setStatus(edo.getStatus());
     model.setVersion(edo.getVersion());
     model.setWorkflowType(workflowTypeDao.getByIdentity(edo.getWorkflowTypeIdentity()));
+    model.setIdentity(edo.getIdentity());
 
-    final List<CompanyWorkflowtypeItemOcrSettingPresetItemEntity> itemList = edo
+    if (model.isIdentityNew() == false) {
+      model.setId(companyDao.readOcrSettingsByIdentity(model.getIdentity()).getId());
+    }
+
+    final List<CompanyWorkflowTypeOcrSettingPresetItemEntity> itemList = edo
         .getItems()
         .stream()
         .map(i -> fromCompanyWorkflowtypeItemOcrSettingPresetItemEdo(i))
@@ -158,8 +164,9 @@ public class CompanyService extends CoreModelEdoMapperService<CompanyEntity, Com
     return model;
   }
 
-  private CompanyWorkflowtypeItemOcrSettingPresetEdo
-      toCompanyWorkflowtypeItemOcrSettingPresetEdo(final CompanyWorkflowtypeItemOcrSettingPresetEntity model) {
+  @Override
+  public CompanyWorkflowtypeItemOcrSettingPresetEdo
+      toCompanyWorkflowtypeItemOcrSettingPresetEdo(final CompanyWorkflowTypeOcrSettingPresetEntity model) {
 
     final CompanyWorkflowtypeItemOcrSettingPresetEdo edo = new CompanyWorkflowtypeItemOcrSettingPresetEdo();
     edo.setCompanyIdentity(model.getCompany().getIdentity());
@@ -167,6 +174,7 @@ public class CompanyService extends CoreModelEdoMapperService<CompanyEntity, Com
     edo.setStatus(model.getStatus());
     edo.setVersion(model.getVersion());
     edo.setWorkflowTypeIdentity(model.getWorkflowType().getIdentity());
+    edo.setIdentity(model.getIdentity());
 
     final List<CompanyWorkflowtypeItemOcrSettingPresetItemEdo> itemEdoList = model
         .getItems()
@@ -179,10 +187,10 @@ public class CompanyService extends CoreModelEdoMapperService<CompanyEntity, Com
     return edo;
   }
 
-  private CompanyWorkflowtypeItemOcrSettingPresetItemEntity
+  private CompanyWorkflowTypeOcrSettingPresetItemEntity
       fromCompanyWorkflowtypeItemOcrSettingPresetItemEdo(final CompanyWorkflowtypeItemOcrSettingPresetItemEdo edo) {
 
-    final CompanyWorkflowtypeItemOcrSettingPresetItemEntity model = new CompanyWorkflowtypeItemOcrSettingPresetItemEntity();
+    final CompanyWorkflowTypeOcrSettingPresetItemEntity model = new CompanyWorkflowTypeOcrSettingPresetItemEntity();
     model.setOcrType(edo.getOcrType());
     model.setPropertyName(edo.getPropertyName());
     model.setStatus(edo.getStatus());
@@ -193,7 +201,7 @@ public class CompanyService extends CoreModelEdoMapperService<CompanyEntity, Com
   }
 
   private CompanyWorkflowtypeItemOcrSettingPresetItemEdo
-      toCompanyWorkflowtypeItemOcrSettingPresetItemEdo(final CompanyWorkflowtypeItemOcrSettingPresetItemEntity model) {
+      toCompanyWorkflowtypeItemOcrSettingPresetItemEdo(final CompanyWorkflowTypeOcrSettingPresetItemEntity model) {
 
     final CompanyWorkflowtypeItemOcrSettingPresetItemEdo edo = new CompanyWorkflowtypeItemOcrSettingPresetItemEdo();
     edo.setOcrType(model.getOcrType());

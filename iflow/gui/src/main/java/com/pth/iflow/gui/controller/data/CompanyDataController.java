@@ -66,10 +66,10 @@ public class CompanyDataController extends GuiDataControllerBase {
 
     preset.setCompanyIdentity(this.getLoggedCompany().getIdentity());
 
-    final List<CompanyWorkflowtypeItemOcrSettingPreset> savedList = this.companyHandler
-        .saveCompanyWorkflowtypeItemOcrSettings(preset, this.getLoggedCompany().getIdentity(), this.getLoggedToken());
+    final CompanyWorkflowtypeItemOcrSettingPreset saved = this.companyHandler
+        .saveCompanyWorkflowtypeItemOcrSetting(preset, this.getLoggedCompany().getIdentity(), this.getLoggedToken());
 
-    return savedList;
+    return this.readCompanyWorkflowtypeItemOcrSettings();
   }
 
   @ResponseStatus(HttpStatus.OK)

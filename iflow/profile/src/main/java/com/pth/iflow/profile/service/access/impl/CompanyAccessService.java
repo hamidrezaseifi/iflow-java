@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.pth.iflow.common.enums.EModule;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.common.models.edo.CompanyEdo;
+import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingPresetEdo;
 import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingPresetListEdo;
 import com.pth.iflow.common.rest.IflowRestPaths;
 import com.pth.iflow.profile.config.ProfileConfiguration;
@@ -81,22 +82,22 @@ public class CompanyAccessService implements ICompanyAccessService {
   }
 
   @Override
-  public List<CompanyWorkflowtypeItemOcrSettingPreset>
-      saveCompanyWorkflowtypeItemOcrSettings(final List<CompanyWorkflowtypeItemOcrSettingPreset> modelInputList)
+  public CompanyWorkflowtypeItemOcrSettingPreset
+      saveCompanyWorkflowtypeItemOcrSettings(final CompanyWorkflowtypeItemOcrSettingPreset modelInput)
           throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     logger.debug("Saving company Workflowtype Item Ocr Settings");
 
-    final CompanyWorkflowtypeItemOcrSettingPresetListEdo requestListEdo = new CompanyWorkflowtypeItemOcrSettingPresetListEdo(
-        ProfileModelEdoMapper.toCompanyWorkflowtypeItemOcrSettingPresetEdoList(modelInputList));
+    final CompanyWorkflowtypeItemOcrSettingPresetEdo requestEdo = ProfileModelEdoMapper
+        .toCompanyWorkflowtypeItemOcrSettingPresetEdo(modelInput);
 
-    final CompanyWorkflowtypeItemOcrSettingPresetListEdo listEdo = this.restTemplate
+    final CompanyWorkflowtypeItemOcrSettingPresetEdo resultEdo = this.restTemplate
         .callRestPost(this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.SAVE_COMPANY_WORKFLOWTYPE_ITEMS_OCR_SETTINGS()),
             EModule.CORE,
-            requestListEdo,
-            CompanyWorkflowtypeItemOcrSettingPresetListEdo.class, true);
+            requestEdo,
+            CompanyWorkflowtypeItemOcrSettingPresetEdo.class, true);
 
-    return ProfileModelEdoMapper.fromCompanyWorkflowtypeItemOcrSettingPresetEdoList(listEdo.getCompanyWorkflowtypeItemOcrSettings());
+    return ProfileModelEdoMapper.fromCompanyWorkflowtypeItemOcrSettingPresetEdo(resultEdo);
 
   }
 

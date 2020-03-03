@@ -42,8 +42,8 @@ import com.pth.iflow.common.models.edo.workflow.testthreetask.TestThreeTaskWorkf
 import com.pth.iflow.core.model.ProfileResponse;
 import com.pth.iflow.core.model.WorkflowSearchFilter;
 import com.pth.iflow.core.model.entity.CompanyEntity;
-import com.pth.iflow.core.model.entity.CompanyWorkflowtypeItemOcrSettingPresetEntity;
-import com.pth.iflow.core.model.entity.CompanyWorkflowtypeItemOcrSettingPresetItemEntity;
+import com.pth.iflow.core.model.entity.CompanyWorkflowTypeOcrSettingPresetEntity;
+import com.pth.iflow.core.model.entity.CompanyWorkflowTypeOcrSettingPresetItemEntity;
 import com.pth.iflow.core.model.entity.DepartmentEntity;
 import com.pth.iflow.core.model.entity.UserDepartmentEntity;
 import com.pth.iflow.core.model.entity.UserEntity;
@@ -98,7 +98,7 @@ public class TestDataProducer {
         "not-set");
   }
 
-  protected List<CompanyWorkflowtypeItemOcrSettingPresetEntity> getTestCompanyWorkflowtypeItemOcrSettingPresetEntityList() {
+  protected List<CompanyWorkflowTypeOcrSettingPresetEntity> getTestCompanyWorkflowtypeItemOcrSettingPresetEntityList() {
 
     return Arrays
         .asList(getTestCompanyWorkflowtypeItemOcrSettingPresetEntity("prop1", getTestWorkflowType(), getTestCompany()),
@@ -156,10 +156,10 @@ public class TestDataProducer {
     return edo;
   }
 
-  protected CompanyWorkflowtypeItemOcrSettingPresetItemEntity
+  protected CompanyWorkflowTypeOcrSettingPresetItemEntity
       getTestCompanyWorkflowtypeItemOcrSettingPresetItemEntity(final String propName) {
 
-    final CompanyWorkflowtypeItemOcrSettingPresetItemEntity edo = new CompanyWorkflowtypeItemOcrSettingPresetItemEntity();
+    final CompanyWorkflowTypeOcrSettingPresetItemEntity edo = new CompanyWorkflowTypeOcrSettingPresetItemEntity();
     edo.setPropertyName(propName);
     edo.setStatus(1);
     edo.setValue("value");
@@ -169,11 +169,11 @@ public class TestDataProducer {
     return edo;
   }
 
-  protected CompanyWorkflowtypeItemOcrSettingPresetEntity getTestCompanyWorkflowtypeItemOcrSettingPresetEntity(final String presetName,
+  protected CompanyWorkflowTypeOcrSettingPresetEntity getTestCompanyWorkflowtypeItemOcrSettingPresetEntity(final String presetName,
       final WorkflowTypeEntity workflowType,
       final CompanyEntity company) {
 
-    final CompanyWorkflowtypeItemOcrSettingPresetEntity model = new CompanyWorkflowtypeItemOcrSettingPresetEntity();
+    final CompanyWorkflowTypeOcrSettingPresetEntity model = new CompanyWorkflowTypeOcrSettingPresetEntity();
     model.setPresetName(presetName);
     model.setStatus(1);
     model.setVersion(1);

@@ -20,7 +20,7 @@ public interface ICompanyHandler {
   public List<CompanyWorkflowtypeItemOcrSettingPreset> readCompanyWorkflowtypeItemOcrSettings(String companyIdentity, final String token)
       throws MalformedURLException, IFlowMessageConversionFailureException;
 
-  public List<CompanyWorkflowtypeItemOcrSettingPreset> saveCompanyWorkflowtypeItemOcrSettings(
+  public CompanyWorkflowtypeItemOcrSettingPreset saveCompanyWorkflowtypeItemOcrSetting(
       CompanyWorkflowtypeItemOcrSettingPreset preset, String companyidentity, final String token)
       throws MalformedURLException, IFlowMessageConversionFailureException;
 

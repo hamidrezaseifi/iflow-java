@@ -224,19 +224,16 @@ public class CompanyControllerTest extends TestDataProducer {
   @Test
   public void testSaveCompanyWorkflowtypeItemOcrSettings() throws Exception {
 
-    final List<CompanyWorkflowtypeItemOcrSettingPreset> listSettings = this.getTestCompanyWorkflowtypeItemOcrSettingPresetList();
+    final CompanyWorkflowtypeItemOcrSettingPreset preset = this.getTestCompanyWorkflowtypeItemOcrSettingPreset("presetName");
 
-    final List<
-        CompanyWorkflowtypeItemOcrSettingPresetEdo> listEdoSettings = this.getTestCompanyWorkflowtypeItemOcrSettingPresetEdoList();
+    final CompanyWorkflowtypeItemOcrSettingPresetEdo edoSettings = this.getTestCompanyWorkflowtypeItemOcrSettingPresetEdo("presetName");
 
-    final CompanyWorkflowtypeItemOcrSettingPresetListEdo edoListSettings = new CompanyWorkflowtypeItemOcrSettingPresetListEdo(
-        listEdoSettings);
+    when(this.companiesHandlerService.saveCompanyWorkflowtypeItemOcrSettings(any(CompanyWorkflowtypeItemOcrSettingPreset.class)))
+        .thenReturn(preset);
 
-    when(this.companiesHandlerService.saveCompanyWorkflowtypeItemOcrSettings(any(List.class))).thenReturn(listSettings);
+    final String requestAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoSettings);
 
-    final String requestAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoListSettings);
-
-    final String responseAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoListSettings);
+    final String responseAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoSettings);
 
     this.mockMvc
         .perform(MockMvcRequestBuilders
@@ -249,7 +246,8 @@ public class CompanyControllerTest extends TestDataProducer {
         .andExpect(content().xml(responseAsXmlString));
 
     verify(this.tokenUserDataManager, times(1)).validateToken(any(String.class));
-    verify(this.companiesHandlerService, times(1)).saveCompanyWorkflowtypeItemOcrSettings(any(List.class));
+    verify(this.companiesHandlerService, times(1))
+        .saveCompanyWorkflowtypeItemOcrSettings(any(CompanyWorkflowtypeItemOcrSettingPreset.class));
   }
 
 }

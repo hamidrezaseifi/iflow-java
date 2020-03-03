@@ -5,7 +5,7 @@ import java.util.List;
 import com.pth.iflow.common.models.edo.CompanyEdo;
 import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingPresetEdo;
 import com.pth.iflow.core.model.entity.CompanyEntity;
-import com.pth.iflow.core.model.entity.CompanyWorkflowtypeItemOcrSettingPresetEntity;
+import com.pth.iflow.core.model.entity.CompanyWorkflowTypeOcrSettingPresetEntity;
 import com.pth.iflow.core.service.base.ICoreModelEdoMapperService;
 
 public interface ICompanyService extends ICoreModelEdoMapperService<CompanyEntity, CompanyEdo> {
@@ -14,16 +14,22 @@ public interface ICompanyService extends ICoreModelEdoMapperService<CompanyEntit
 
   CompanyEntity getByIdentity(final String identifyId);
 
-  List<CompanyWorkflowtypeItemOcrSettingPresetEntity> readCompanyWorkflowtypeItemOcrSettings(Long id);
+  List<CompanyWorkflowTypeOcrSettingPresetEntity> readCompanyWorkflowtypeItemOcrSettings(Long id);
 
-  List<CompanyWorkflowtypeItemOcrSettingPresetEntity> readCompanyWorkflowtypeItemOcrSettingsByCompanyIdentity(String identity);
+  List<CompanyWorkflowTypeOcrSettingPresetEntity> readCompanyWorkflowtypeItemOcrSettingsByCompanyIdentity(String identity);
 
-  List<CompanyWorkflowtypeItemOcrSettingPresetEntity> saveCompanyWorkflowtypeItemOcrSettings(
-      final List<CompanyWorkflowtypeItemOcrSettingPresetEntity> list);
+  CompanyWorkflowTypeOcrSettingPresetEntity saveCompanyWorkflowtypeItemOcrSetting(
+      final CompanyWorkflowTypeOcrSettingPresetEntity preset);
 
-  List<CompanyWorkflowtypeItemOcrSettingPresetEntity>
+  CompanyWorkflowTypeOcrSettingPresetEntity
+      fromCompanyWorkflowtypeItemOcrSettingPresetEdo(final CompanyWorkflowtypeItemOcrSettingPresetEdo edo);
+
+  List<CompanyWorkflowTypeOcrSettingPresetEntity>
       fromCompanyWorkflowtypeItemOcrSettingPresetEdoList(List<CompanyWorkflowtypeItemOcrSettingPresetEdo> edoList);
 
   List<CompanyWorkflowtypeItemOcrSettingPresetEdo>
-      toCompanyWorkflowtypeItemOcrSettingPresetEdoList(List<CompanyWorkflowtypeItemOcrSettingPresetEntity> modelList);
+      toCompanyWorkflowtypeItemOcrSettingPresetEdoList(List<CompanyWorkflowTypeOcrSettingPresetEntity> modelList);
+
+  CompanyWorkflowtypeItemOcrSettingPresetEdo
+      toCompanyWorkflowtypeItemOcrSettingPresetEdo(CompanyWorkflowTypeOcrSettingPresetEntity modelSaved);
 }

@@ -61,31 +61,19 @@ public class CompanyHandler implements ICompanyHandler {
   }
 
   @Override
-  public List<CompanyWorkflowtypeItemOcrSettingPreset> saveCompanyWorkflowtypeItemOcrSettings(
+  public CompanyWorkflowtypeItemOcrSettingPreset saveCompanyWorkflowtypeItemOcrSetting(
       final CompanyWorkflowtypeItemOcrSettingPreset preset,
       final String companyidentity, final String token)
       throws MalformedURLException, IFlowMessageConversionFailureException {
 
     preset.prepareItems();
 
-    final List<
-        CompanyWorkflowtypeItemOcrSettingPreset> readList = this.companyAccess
-            .readCompanyWorkflowtypeItemOcrSettings(companyidentity, token);
+    final CompanyWorkflowtypeItemOcrSettingPreset result = this.companyAccess.saveCompanyWorkflowtypeItemOcrSettings(preset, token);
 
-    final List<CompanyWorkflowtypeItemOcrSettingPreset> newList = readList
-        .stream()
-        .filter(item -> item.getPresetName().equals(preset.getPresetName()) == false)
-        .collect(Collectors.toList());
-
-    newList.add(preset);
-
-    final List<
-        CompanyWorkflowtypeItemOcrSettingPreset> resultlList = this.companyAccess.saveCompanyWorkflowtypeItemOcrSettings(newList, token);
-
-    this.sessionUserInfo.getCompanyProfile().setOcrPresets(resultlList);
+    this.sessionUserInfo.getCompanyProfile().setOcrPreset(result);
     this.sessionUserInfo.resetWorkflowtypeItemOcrSettings();
 
-    return resultlList;
+    return result;
   }
 
   @Override

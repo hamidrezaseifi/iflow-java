@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.pth.iflow.core.model.entity.CompanyEntity;
-import com.pth.iflow.core.model.entity.CompanyWorkflowtypeItemOcrSettingPresetEntity;
+import com.pth.iflow.core.model.entity.CompanyWorkflowTypeOcrSettingPresetEntity;
 import com.pth.iflow.core.model.entity.DepartmentEntity;
 import com.pth.iflow.core.model.entity.UserGroupEntity;
 
@@ -13,7 +13,7 @@ public class CompanyProfile {
   private CompanyEntity company;
   private final List<DepartmentEntity> departments = new ArrayList<>();
   private final List<UserGroupEntity> userGroups = new ArrayList<>();
-  private final List<CompanyWorkflowtypeItemOcrSettingPresetEntity> ocrPresetSettings = new ArrayList<>();
+  private final List<CompanyWorkflowTypeOcrSettingPresetEntity> ocrPresetSettings = new ArrayList<>();
 
   // CompanyWorkflowtypeItemOcrSettingEntity
   public CompanyProfile() {
@@ -21,7 +21,7 @@ public class CompanyProfile {
   }
 
   public CompanyProfile(final CompanyEntity company, final List<DepartmentEntity> departments,
-      final List<UserGroupEntity> userGroups, final List<CompanyWorkflowtypeItemOcrSettingPresetEntity> ocrPresetSettings) {
+      final List<UserGroupEntity> userGroups, final List<CompanyWorkflowTypeOcrSettingPresetEntity> ocrPresetSettings) {
 
     this.setDepartments(departments);
     this.setUserGroups(userGroups);
@@ -71,12 +71,12 @@ public class CompanyProfile {
     }
   }
 
-  public List<CompanyWorkflowtypeItemOcrSettingPresetEntity> getOcrPresetSettings() {
+  public List<CompanyWorkflowTypeOcrSettingPresetEntity> getOcrPresetSettings() {
 
     return ocrPresetSettings;
   }
 
-  public void setOcrPresetSettings(final List<CompanyWorkflowtypeItemOcrSettingPresetEntity> ocrPresetSettings) {
+  public void setOcrPresetSettings(final List<CompanyWorkflowTypeOcrSettingPresetEntity> ocrPresetSettings) {
 
     this.ocrPresetSettings.clear();
     if (ocrPresetSettings != null) {

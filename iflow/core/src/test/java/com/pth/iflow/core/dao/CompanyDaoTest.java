@@ -18,7 +18,7 @@ import com.pth.iflow.common.enums.EWorkflowType;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.entity.CompanyEntity;
 import com.pth.iflow.core.model.entity.CompanyWorkflowTypeControllerEntity;
-import com.pth.iflow.core.model.entity.CompanyWorkflowtypeItemOcrSettingPresetEntity;
+import com.pth.iflow.core.model.entity.CompanyWorkflowTypeOcrSettingPresetEntity;
 import com.pth.iflow.core.model.entity.workflow.WorkflowTypeEntity;
 import com.pth.iflow.core.storage.dao.interfaces.ICompanyDao;
 import com.pth.iflow.core.storage.dao.interfaces.IWorkflowTypeDao;
@@ -195,39 +195,35 @@ public class CompanyDaoTest extends TestDataProducer {
 
     compareCompanies(comapny, resCompany);
 
-    final List<CompanyWorkflowtypeItemOcrSettingPresetEntity> list = new ArrayList<>();
-
     EWorkflowType.INVOICE_WORKFLOW_TYPE.getIdentity();
 
     final WorkflowTypeEntity workflowType = workflowTypeDao.getByIdentity(EWorkflowType.INVOICE_WORKFLOW_TYPE.getIdentity());
 
-    list.add(getTestCompanyWorkflowtypeItemOcrSettingPresetEntity("preset-1", workflowType, resCompany));
-    list.add(getTestCompanyWorkflowtypeItemOcrSettingPresetEntity("preset-2", workflowType, resCompany));
-    list.add(getTestCompanyWorkflowtypeItemOcrSettingPresetEntity("preset-3", workflowType, resCompany));
+    final CompanyWorkflowTypeOcrSettingPresetEntity preset = getTestCompanyWorkflowtypeItemOcrSettingPresetEntity("preset-1", workflowType,
+        resCompany);
 
-    List<CompanyWorkflowtypeItemOcrSettingPresetEntity> resList = companyDao.saveCompanyWorkflowtypeItemOcrSettings(list);
+    final CompanyWorkflowTypeOcrSettingPresetEntity resPreset = companyDao.saveCompanyWorkflowtypeItemOcrSetting(preset);
 
-    Assert.assertNotNull("Result company is not null!", resList);
-    Assert.assertEquals("Result list has 3 items", 3, resList.size());
+    Assert.assertNotNull("Result company is not null!", resPreset);
     Assert
-        .assertEquals("Result item 3 has propertyname '" + list.get(2).getPresetName() + "'", list.get(2).getPresetName(),
-            resList.get(2).getPresetName());
+        .assertEquals("Result item 3 has propertyname '" + preset.getPresetName() + "'", preset.getPresetName(),
+            resPreset.getPresetName());
     Assert
-        .assertEquals("Result second item from second preset has value '" + list.get(1).getItems().get(1).getValue() + "'",
-            list.get(1).getItems().get(1).getValue(),
-            resList.get(1).getItems().get(1).getValue());
+        .assertEquals("Result preset has the same items count '" + preset.getItems().size() + "'",
+            preset.getItems().size(),
+            resPreset.getItems().size());
 
-    resList = companyDao.readCompanyWorkflowtypeItemOcrSettings(comapny.getId());
+    final List<CompanyWorkflowTypeOcrSettingPresetEntity> resList = companyDao.readCompanyWorkflowtypeItemOcrSettings(comapny.getId());
 
     Assert.assertNotNull("Result company is not null!", resList);
-    Assert.assertEquals("Result list has 3 items", 3, resList.size());
+    Assert.assertEquals("Result list has 3 items", 1, resList.size());
     Assert
-        .assertEquals("Result item 3 has propertyname '" + list.get(2).getPresetName() + "'", list.get(2).getPresetName(),
-            resList.get(2).getPresetName());
+        .assertEquals("Result item 3 has propertyname '" + resPreset.getPresetName() + "'", resPreset.getPresetName(),
+            resList.get(0).getPresetName());
     Assert
-        .assertEquals("Result second item from second preset has value '" + list.get(1).getItems().get(1).getValue() + "'",
-            list.get(1).getItems().get(1).getValue(),
-            resList.get(1).getItems().get(1).getValue());
+        .assertEquals("Result second item from second preset has value '" + resPreset.getItems().get(0).getValue() + "'",
+            resPreset.getItems().get(1).getValue(),
+            resList.get(0).getItems().get(1).getValue());
 
   }
 

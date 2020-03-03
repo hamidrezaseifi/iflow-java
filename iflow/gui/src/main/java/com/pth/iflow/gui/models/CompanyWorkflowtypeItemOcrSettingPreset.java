@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 
 public class CompanyWorkflowtypeItemOcrSettingPreset {
 
+  private String identity;
+
   private String companyIdentity;
 
   private String workflowTypeIdentity;
@@ -17,6 +19,16 @@ public class CompanyWorkflowtypeItemOcrSettingPreset {
   private Integer version;
 
   private List<CompanyWorkflowtypeItemOcrSettingPresetItem> items = new ArrayList<>();
+
+  public String getIdentity() {
+
+    return this.identity;
+  }
+
+  public void setIdentity(final String identity) {
+
+    this.identity = identity;
+  }
 
   public String getCompanyIdentity() {
 

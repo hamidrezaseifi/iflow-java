@@ -185,9 +185,9 @@ public class CompanyController {
 
   @ResponseStatus(HttpStatus.CREATED)
   @IflowPostRequestMapping(path = IflowRestPaths.ProfileModule.COMPANY_SAVE_WORKFLOWTYPE_ITEMS_OCR_SETTINGS)
-  public ResponseEntity<CompanyWorkflowtypeItemOcrSettingPresetListEdo>
+  public ResponseEntity<CompanyWorkflowtypeItemOcrSettingPresetEdo>
       saveCompanyWorkflowtypeItemOcrSettings(
-          @RequestBody final CompanyWorkflowtypeItemOcrSettingPresetListEdo workflowtypeItemOcrSettingListEdo,
+          @RequestBody final CompanyWorkflowtypeItemOcrSettingPresetEdo ocrSettingEdo,
           final HttpServletRequest request,
           @RequestHeader(
             TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY
@@ -195,17 +195,16 @@ public class CompanyController {
 
     this.tokenUserDataManager.validateToken(headerTokenId);
 
-    final List<CompanyWorkflowtypeItemOcrSettingPreset> modelInputList = ProfileModelEdoMapper
-        .fromCompanyWorkflowtypeItemOcrSettingPresetEdoList(workflowtypeItemOcrSettingListEdo.getCompanyWorkflowtypeItemOcrSettings());
+    final CompanyWorkflowtypeItemOcrSettingPreset modelInput = ProfileModelEdoMapper
+        .fromCompanyWorkflowtypeItemOcrSettingPresetEdo(ocrSettingEdo);
 
-    final List<CompanyWorkflowtypeItemOcrSettingPreset> modelList = this.companiesHandlerService
-        .saveCompanyWorkflowtypeItemOcrSettings(modelInputList);
+    final CompanyWorkflowtypeItemOcrSettingPreset resultModel = this.companiesHandlerService
+        .saveCompanyWorkflowtypeItemOcrSettings(modelInput);
 
-    final List<
-        CompanyWorkflowtypeItemOcrSettingPresetEdo> edoList = ProfileModelEdoMapper
-            .toCompanyWorkflowtypeItemOcrSettingPresetEdoList(modelList);
+    final CompanyWorkflowtypeItemOcrSettingPresetEdo edo = ProfileModelEdoMapper
+        .toCompanyWorkflowtypeItemOcrSettingPresetEdo(resultModel);
 
-    return ControllerHelper.createResponseEntity(request, new CompanyWorkflowtypeItemOcrSettingPresetListEdo(edoList), HttpStatus.CREATED);
+    return ControllerHelper.createResponseEntity(request, edo, HttpStatus.CREATED);
   }
 
 }

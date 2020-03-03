@@ -18,8 +18,8 @@ public interface ICompanyAccessService {
   List<CompanyWorkflowtypeItemOcrSettingPreset> readCompanyWorkflowtypeItemOcrSettingsByCompanyIdentity(String companyidentity)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
-  List<CompanyWorkflowtypeItemOcrSettingPreset>
-      saveCompanyWorkflowtypeItemOcrSettings(List<CompanyWorkflowtypeItemOcrSettingPreset> modelInputList)
+  CompanyWorkflowtypeItemOcrSettingPreset
+      saveCompanyWorkflowtypeItemOcrSettings(CompanyWorkflowtypeItemOcrSettingPreset modelInput)
           throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
 }

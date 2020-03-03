@@ -45,11 +45,11 @@ public class CompaniesHandlerService implements ICompaniesHandlerService {
   }
 
   @Override
-  public List<CompanyWorkflowtypeItemOcrSettingPreset>
-      saveCompanyWorkflowtypeItemOcrSettings(final List<CompanyWorkflowtypeItemOcrSettingPreset> modelInputList)
+  public CompanyWorkflowtypeItemOcrSettingPreset
+      saveCompanyWorkflowtypeItemOcrSettings(final CompanyWorkflowtypeItemOcrSettingPreset modelInput)
           throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    return this.CompanyAccessService.saveCompanyWorkflowtypeItemOcrSettings(modelInputList);
+    return this.CompanyAccessService.saveCompanyWorkflowtypeItemOcrSettings(modelInput);
   }
 
 }
