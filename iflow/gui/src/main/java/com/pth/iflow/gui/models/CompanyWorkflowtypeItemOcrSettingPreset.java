@@ -81,6 +81,13 @@ public class CompanyWorkflowtypeItemOcrSettingPreset {
     }
   }
 
+  public void prepareItems() {
+
+    this.removeEmptyItems();
+    this.items.forEach(i -> i.prepare());
+
+  }
+
   public void removeEmptyItems() {
 
     final List<CompanyWorkflowtypeItemOcrSettingPresetItem> valuedItems = this.items

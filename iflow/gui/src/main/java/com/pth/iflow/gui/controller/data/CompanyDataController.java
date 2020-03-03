@@ -64,6 +64,8 @@ public class CompanyDataController extends GuiDataControllerBase {
       saveCompanyWorkflowtypeItemOcrSettings(@RequestBody final CompanyWorkflowtypeItemOcrSettingPreset preset)
           throws MalformedURLException, IFlowMessageConversionFailureException {
 
+    preset.setCompanyIdentity(this.getLoggedCompany().getIdentity());
+
     final List<CompanyWorkflowtypeItemOcrSettingPreset> savedList = this.companyHandler
         .saveCompanyWorkflowtypeItemOcrSettings(preset, this.getLoggedCompany().getIdentity(), this.getLoggedToken());
 

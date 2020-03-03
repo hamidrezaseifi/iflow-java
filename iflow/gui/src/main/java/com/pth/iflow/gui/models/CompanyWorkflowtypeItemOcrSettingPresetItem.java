@@ -69,4 +69,10 @@ public class CompanyWorkflowtypeItemOcrSettingPresetItem {
     return StringUtils.isNotEmpty(this.value);
   }
 
+  public void prepare() {
+
+    this.status = this.status == null ? 1 : this.status;
+    this.version = this.version == null ? 1 : this.version;
+  }
+
 }

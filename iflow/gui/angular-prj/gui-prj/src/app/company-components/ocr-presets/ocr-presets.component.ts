@@ -20,6 +20,8 @@ import { WorkflowType } from '../../wf-models/workflowtype';
 })
 export class OcrPresetsComponent implements OnInit {
 
+	displayedColumns = ['preset-name', 'workflow-type', 'preset-status', 'actions'];
+
 	ocrSettingPresets : CompanyWorkflowtypeItemOcrSettingPreset[] = [];
 
 	ocrTypeList :any[] = [];
@@ -27,20 +29,17 @@ export class OcrPresetsComponent implements OnInit {
 	worlflowTypes: WorkflowType[] = [];
 	worlflowTypeItems: string[][] = [];
 
-  selectedPreset :CompanyWorkflowtypeItemOcrSettingPreset = null;
+  selectedPreset :CompanyWorkflowtypeItemOcrSettingPreset = new CompanyWorkflowtypeItemOcrSettingPreset();
   selectedPresetItems :CompanyWorkflowtypeItemOcrSettingPresetItem[] = [];
 	
 	selectedPresetChanged :boolean = false;
 
 	generalDataObs :Observable<GeneralData> = null;
 	
-  showList: boolean = true;
+  showEditDialog: boolean = false;
 
   createNewPreset: boolean = false;
 	newPresetTitle :string = "";
-
-
-	showDetail: boolean = false;
 	
 	showTextListDialog :boolean = false;
 	
@@ -131,36 +130,54 @@ export class OcrPresetsComponent implements OnInit {
 	  
 		this.selectedPresetItems = this.selectedPreset.items;
 		
-		this.showList = false;
-		this.showDetail = true;
+		this.showEditDialog = true;
 		this.selectedPresetChanged = true;
 	  this.createNewPreset = true;
+	}
+	
+	editPreset(preset :CompanyWorkflowtypeItemOcrSettingPreset){
+	  
+	  this.selectedPreset = JSON.parse(JSON.stringify(preset))
+
+	  this.verifyWorlflowTypeItems(this.selectedPreset.workflowTypeIdentity);
+	  
+		this.selectedPresetItems = preset.items;
+		
+		this.showEditDialog = true;
+		this.selectedPresetChanged = false;
+		this.createNewPreset = false;
 	}
 	
 	showPreset(preset :CompanyWorkflowtypeItemOcrSettingPreset){
 	  
 	  this.selectedPreset = JSON.parse(JSON.stringify(preset))
 
-	  this.verifyWorlflowTypeItems(this.selectedPreset.workflowIdentity);
+	  this.verifyWorlflowTypeItems(this.selectedPreset.workflowTypeIdentity);
 	  
 		this.selectedPresetItems = preset.items;
 		
-		this.showList = false;
-		this.showDetail = true;
+		this.showEditDialog = false;
 		this.selectedPresetChanged = false;
 		this.createNewPreset = false;
 	}
 	
-	getSelectedPresetName(): string{
-	  return this.createNewPreset ? this.newPresetTitle : this.selectedPreset.presetName;
+	deletePreset(preset :CompanyWorkflowtypeItemOcrSettingPreset){
+	  
+	  this.selectedPreset = JSON.parse(JSON.stringify(preset))
+
+	  this.verifyWorlflowTypeItems(this.selectedPreset.workflowTypeIdentity);
+	  
+		this.selectedPresetItems = preset.items;
+		
+		this.showEditDialog = false;
+		this.selectedPresetChanged = false;
+		this.createNewPreset = false;
 	}
 	
-	closePreset(){
+	hideEditPresetDialog(){
 
-		this.showList = true;
-		this.showDetail = false;
+		this.showEditDialog = false;
 		this.selectedPresetChanged = false;
-		this.reload();
 	}
 	
 	setPresetName(newVal:string){
@@ -168,27 +185,27 @@ export class OcrPresetsComponent implements OnInit {
 	}
 	
 	setPresetWorkflowIdentity(newVal:string){
-	  this.selectedPreset.workflowIdentity = newVal;
+	  this.selectedPreset.workflowTypeIdentity = newVal;
 	  
 	  this.verifyWorlflowTypeItems(newVal);
 	}
 	
-	verifyWorlflowTypeItems(workflowIdentity: string){
-		if(this.worlflowTypeItems[workflowIdentity] === undefined){
+	verifyWorlflowTypeItems(workflowTypeIdentity: string){
+		if(this.worlflowTypeItems[workflowTypeIdentity] === undefined){
 	    
 	    this.loadingService.showLoading();
 			
-			this.editService.listWorkflowTypeItems(workflowIdentity).subscribe(
+			this.editService.listWorkflowTypeItems(workflowTypeIdentity).subscribe(
 		        (results :string[]) => {
 		        	
-		            console.log("Workflowtype Items for " + workflowIdentity, results);
+		            console.log("Workflowtype Items for " + workflowTypeIdentity, results);
 		        	
-		            this.worlflowTypeItems[workflowIdentity] = results;
+		            this.worlflowTypeItems[workflowTypeIdentity] = results;
 		                
 		            this.selectedPresetItems = this.resetPresetItems(this.selectedPreset);
 		        },
 		        response => {
-		        	console.log("Error in get Workflowtype Items for " + workflowIdentity, response);
+		        	console.log("Error in get Workflowtype Items for " + workflowTypeIdentity, response);
 		        	this.loadingService.hideLoading();	 
 		        	this.errorService.showErrorResponse(response);
 		        },
@@ -206,8 +223,8 @@ export class OcrPresetsComponent implements OnInit {
 	  
 	  var items: CompanyWorkflowtypeItemOcrSettingPresetItem[] = [];
 	  
-	  for(var index in this.worlflowTypeItems[preset.workflowIdentity]){
-	  	var itemName = this.worlflowTypeItems[preset.workflowIdentity][index];  
+	  for(var index in this.worlflowTypeItems[preset.workflowTypeIdentity]){
+	  	var itemName = this.worlflowTypeItems[preset.workflowTypeIdentity][index];  
 	  	var item :CompanyWorkflowtypeItemOcrSettingPresetItem = this.findItemByName(preset, itemName);
 	  	if(item === null){
 	  	  item = new CompanyWorkflowtypeItemOcrSettingPresetItem();
@@ -261,7 +278,8 @@ export class OcrPresetsComponent implements OnInit {
 	
 	savePreset(){
 		
-		
+	  this.selectedPreset.items = this.selectedPresetItems;
+	  
 		this.loadingService.showLoading();
 		
 		this.editService.updatePreset(this.selectedPreset).subscribe(
@@ -271,11 +289,10 @@ export class OcrPresetsComponent implements OnInit {
 	        	
 	            this.ocrSettingPresets = results;
 	            
-	            this.showList = true;
-	    		this.showDetail = false;
-	    		this.selectedPresetChanged = false;
-	    		
-	    		this.reload();
+	            this.showEditDialog = false;
+    	    		this.selectedPresetChanged = false;
+    	    		
+    	    		this.reload();
 	    		
 	        },
 	        response => {
@@ -321,4 +338,25 @@ export class OcrPresetsComponent implements OnInit {
 	hideTextListDialog(){
 		this.showTextListDialog = false;
 	}
+	
+	getWorkflowTypeTitle(identity:string):string{
+	  
+	  for(var index in this.worlflowTypes){
+	    if(this.worlflowTypes[index].identity === identity){
+	      return this.worlflowTypes[index].title;
+	    }
+	  }
+	  return "";
+	}
+	
+	getSelectedPresetName(): string{
+	  return this.createNewPreset ? this.newPresetTitle : this.selectedPreset.presetName;
+	}
+
+	isSelectedPresetValid():boolean{
+	  return this.selectedPreset.presetName !== "" && this.selectedPreset.workflowTypeIdentity !== "";
+	}
+	
+	
+
 }

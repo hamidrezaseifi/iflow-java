@@ -148,27 +148,27 @@ export class WorkflowtypePropertySettingComponent implements OnInit {
 	}
 	
 	setPresetWorkflowIdentity(newVal:string){
-	  this.selectedPreset.workflowIdentity = newVal;
+	  this.selectedPreset.workflowTypeIdentity = newVal;
 	  
 	  this.verifyWorlflowTypeItems(newVal);
 	}
 	
-	verifyWorlflowTypeItems(workflowIdentity: string){
-		if(this.worlflowTypeItems[workflowIdentity] === undefined){
+	verifyWorlflowTypeItems(workflowTypeIdentity: string){
+		if(this.worlflowTypeItems[workflowTypeIdentity] === undefined){
 	    
 	    this.loadingService.showLoading();
 			
-			this.editService.listWorkflowTypeItems(workflowIdentity).subscribe(
+			this.editService.listWorkflowTypeItems(workflowTypeIdentity).subscribe(
 		        (results :string[]) => {
 		        	
-		            console.log("Workflowtype Items for " + workflowIdentity, results);
+		            console.log("Workflowtype Items for " + workflowTypeIdentity, results);
 		        	
-		            this.worlflowTypeItems[workflowIdentity] = results;
+		            this.worlflowTypeItems[workflowTypeIdentity] = results;
 		                
 		            this.selectedPresetItems = this.resetPresetItems(this.selectedPreset);
 		        },
 		        response => {
-		        	console.log("Error in get Workflowtype Items for " + workflowIdentity, response);
+		        	console.log("Error in get Workflowtype Items for " + workflowTypeIdentity, response);
 		        	this.loadingService.hideLoading();	 
 		        	this.errorService.showErrorResponse(response);
 		        },
@@ -186,8 +186,8 @@ export class WorkflowtypePropertySettingComponent implements OnInit {
 	  
 	  var items: CompanyWorkflowtypeItemOcrSettingPresetItem[] = [];
 	  
-	  for(var index in this.worlflowTypeItems[preset.workflowIdentity]){
-	  	var itemName = this.worlflowTypeItems[preset.workflowIdentity][index];  
+	  for(var index in this.worlflowTypeItems[preset.workflowTypeIdentity]){
+	  	var itemName = this.worlflowTypeItems[preset.workflowTypeIdentity][index];  
 	  	var item :CompanyWorkflowtypeItemOcrSettingPresetItem = this.findItemByName(preset, itemName);
 	  	if(item === null){
 	  	  item = new CompanyWorkflowtypeItemOcrSettingPresetItem();

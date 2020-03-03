@@ -66,7 +66,7 @@ public class CompanyHandler implements ICompanyHandler {
       final String companyidentity, final String token)
       throws MalformedURLException, IFlowMessageConversionFailureException {
 
-    preset.removeEmptyItems();
+    preset.prepareItems();
 
     final List<
         CompanyWorkflowtypeItemOcrSettingPreset> readList = this.companyAccess
