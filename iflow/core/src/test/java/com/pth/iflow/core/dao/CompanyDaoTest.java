@@ -179,7 +179,7 @@ public class CompanyDaoTest extends TestDataProducer {
   }
 
   @Test
-  public void testSaveAndReadCompanyWorkflowtypeItemOcrSettings() throws Exception {
+  public void testSaveAndReadAndDeleteCompanyWorkflowtypeItemOcrSettings() throws Exception {
 
     final CompanyEntity comapny = getTestCompany();
     comapny.setCompanyName("Test CompanyName");
@@ -213,10 +213,10 @@ public class CompanyDaoTest extends TestDataProducer {
             preset.getItems().size(),
             resPreset.getItems().size());
 
-    final List<CompanyWorkflowTypeOcrSettingPresetEntity> resList = companyDao.readCompanyWorkflowtypeItemOcrSettings(comapny.getId());
+    List<CompanyWorkflowTypeOcrSettingPresetEntity> resList = companyDao.readCompanyWorkflowtypeItemOcrSettings(comapny.getId());
 
     Assert.assertNotNull("Result company is not null!", resList);
-    Assert.assertEquals("Result list has 3 items", 1, resList.size());
+    Assert.assertEquals("Result list has 1 items", 1, resList.size());
     Assert
         .assertEquals("Result item 3 has propertyname '" + resPreset.getPresetName() + "'", resPreset.getPresetName(),
             resList.get(0).getPresetName());
@@ -224,6 +224,12 @@ public class CompanyDaoTest extends TestDataProducer {
         .assertEquals("Result second item from second preset has value '" + resPreset.getItems().get(0).getValue() + "'",
             resPreset.getItems().get(1).getValue(),
             resList.get(0).getItems().get(1).getValue());
+
+    companyDao.deleteCompanyWorkflowtypeItemOcrSetting(resList.get(0));
+    resList = companyDao.readCompanyWorkflowtypeItemOcrSettings(comapny.getId());
+
+    Assert.assertNotNull("Result company is not null!", resList);
+    Assert.assertEquals("Result list has 0 items", 0, resList.size());
 
   }
 
