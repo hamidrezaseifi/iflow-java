@@ -122,5 +122,22 @@
 	    </div>		
 
 
+		<div class="modal fade show" tabindex="-1" *ngIf="showTextListDialog" role="dialog">
+			<div class="modal-dialog text-list-dialog" role="document">
+				<div class="modal-header">
+			 		<h5 class="modal-title">{{ 'text.text-list' | translate }}</h5>
+					<button type="button" class="close" (click)="hideTextListDialog()" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>			
+				<div class="modal-body">
+					<app-text-list [separator]="textSeparator" [text]="selectedTextToMakeList" (textChanged)="selectedTextChanged($event)"></app-text-list>
+				</div>	
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" (click)="applySelectexTextChanged()">{{ 'common.apply' | translate }}</button>
+					<button type="button" class="btn btn-secondary" (click)="hideTextListDialog()">{{ 'common.close' | translate }}</button>
+				</div>						
+			</div>
+		</div>
 
 
