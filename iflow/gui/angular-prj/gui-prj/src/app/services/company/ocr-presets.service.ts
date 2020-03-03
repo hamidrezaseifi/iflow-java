@@ -16,7 +16,8 @@ import { CompanyWorkflowtypeItemOcrSettingPreset, GeneralData } from '../../ui-m
 })
 export class OcrPresetsService extends HttpErrorResponseHelper {
   listPresetsUrl :string = "/ocrpreset/data/list";
-	updatePresetUrl :string = "/ocrpreset/data/save";
+  updatePresetUrl :string = "/ocrpreset/data/save";
+  deletePresetUrl :string = "/ocrpreset/data/delete";
   listPresetItemsUrl :string = "/ocrpreset/data/read/";
 	pageInitUrl :string = "/ocrpreset/data/initpage";
 
@@ -55,7 +56,6 @@ export class OcrPresetsService extends HttpErrorResponseHelper {
 		
 	};
 
-
 	updatePreset(presetToSave: CompanyWorkflowtypeItemOcrSettingPreset){
 		
 			const httpOptions = { headers: HttpHepler.generateJsonHeader() };
@@ -63,4 +63,13 @@ export class OcrPresetsService extends HttpErrorResponseHelper {
 			return this.http.post(this.updatePresetUrl, presetToSave, httpOptions);	    
 		
 	};
+
+	deletePreset(presetToDelete: CompanyWorkflowtypeItemOcrSettingPreset){
+		
+			const httpOptions = { headers: HttpHepler.generateJsonHeader() };
+	    
+			return this.http.post(this.deletePresetUrl, presetToDelete, httpOptions);	    
+		
+	};
+
 }

@@ -265,18 +265,18 @@ export class OcrPresetsComponent implements OnInit {
 		this.editService.updatePreset(this.selectedPreset).subscribe(
 	        (results :CompanyWorkflowtypeItemOcrSettingPreset[]) => {
 	        	
-	            console.log("Update CompanyWorkflowtypeItemOcrSetting result list", results);
+	            console.log("Update CompanyWorkflowtypeItemOcrSetting", results);
 	        	
 	            this.ocrSettingPresets = results;
 	            
 	            this.showEditDialog = false;
     	    		this.selectedPresetChanged = false;
     	    		
-    	    		this.reload();
+    	    		//this.reload();
 	    		
 	        },
 	        response => {
-	        	console.log("Error in Update CompanyWorkflowtypeItemOcrSetting list", response);
+	        	console.log("Error in Update CompanyWorkflowtypeItemOcrSetting", response);
 	        	this.loadingService.hideLoading();	 
 	        	this.errorService.showErrorResponse(response);
 	        },
@@ -292,7 +292,33 @@ export class OcrPresetsComponent implements OnInit {
 	
 	deletePreset(){
 	 
-	  this.hideDeletePresetDialog();
+		this.loadingService.showLoading();
+		
+		this.editService.deletePreset(this.selectedPreset).subscribe(
+	        (results :CompanyWorkflowtypeItemOcrSettingPreset[]) => {
+	        	
+	            console.log("Delete CompanyWorkflowtypeItemOcrSetting", results);
+	        	
+	            this.ocrSettingPresets = results;
+	            
+	            this.hideDeletePresetDialog();
+    	    		
+    	    		//this.reload();
+	    		
+	        },
+	        response => {
+	        	console.log("Error in delete CompanyWorkflowtypeItemOcrSetting", response);
+	        	this.loadingService.hideLoading();	 
+	        	this.errorService.showErrorResponse(response);
+	        },
+	        () => {
+	        	
+	        	this.loadingService.hideLoading();	            
+	        }
+		);	   
+
+		
+	  
 	}
 	
 	selectValueList(prop:CompanyWorkflowtypeItemOcrSettingPresetItem){

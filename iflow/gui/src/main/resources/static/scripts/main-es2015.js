@@ -1787,13 +1787,13 @@ class OcrPresetsComponent {
         this.selectedPreset.items = this.selectedPresetItems;
         this.loadingService.showLoading();
         this.editService.updatePreset(this.selectedPreset).subscribe((results) => {
-            console.log("Update CompanyWorkflowtypeItemOcrSetting result list", results);
+            console.log("Update CompanyWorkflowtypeItemOcrSetting", results);
             this.ocrSettingPresets = results;
             this.showEditDialog = false;
             this.selectedPresetChanged = false;
-            this.reload();
+            //this.reload();
         }, response => {
-            console.log("Error in Update CompanyWorkflowtypeItemOcrSetting list", response);
+            console.log("Error in Update CompanyWorkflowtypeItemOcrSetting", response);
             this.loadingService.hideLoading();
             this.errorService.showErrorResponse(response);
         }, () => {
@@ -1802,7 +1802,19 @@ class OcrPresetsComponent {
         //this.reload();
     }
     deletePreset() {
-        this.hideDeletePresetDialog();
+        this.loadingService.showLoading();
+        this.editService.deletePreset(this.selectedPreset).subscribe((results) => {
+            console.log("Delete CompanyWorkflowtypeItemOcrSetting", results);
+            this.ocrSettingPresets = results;
+            this.hideDeletePresetDialog();
+            //this.reload();
+        }, response => {
+            console.log("Error in delete CompanyWorkflowtypeItemOcrSetting", response);
+            this.loadingService.hideLoading();
+            this.errorService.showErrorResponse(response);
+        }, () => {
+            this.loadingService.hideLoading();
+        });
     }
     selectValueList(prop) {
         this.selectedTextToMakeList = prop.value;
@@ -6420,6 +6432,7 @@ class OcrPresetsService extends _helper_http_error_response_helper__WEBPACK_IMPO
         this.autService = autService;
         this.listPresetsUrl = "/ocrpreset/data/list";
         this.updatePresetUrl = "/ocrpreset/data/save";
+        this.deletePresetUrl = "/ocrpreset/data/delete";
         this.listPresetItemsUrl = "/ocrpreset/data/read/";
         this.pageInitUrl = "/ocrpreset/data/initpage";
     }
@@ -6441,6 +6454,11 @@ class OcrPresetsService extends _helper_http_error_response_helper__WEBPACK_IMPO
     updatePreset(presetToSave) {
         const httpOptions = { headers: _helper_http_hepler__WEBPACK_IMPORTED_MODULE_1__["HttpHepler"].generateJsonHeader() };
         return this.http.post(this.updatePresetUrl, presetToSave, httpOptions);
+    }
+    ;
+    deletePreset(presetToDelete) {
+        const httpOptions = { headers: _helper_http_hepler__WEBPACK_IMPORTED_MODULE_1__["HttpHepler"].generateJsonHeader() };
+        return this.http.post(this.deletePresetUrl, presetToDelete, httpOptions);
     }
     ;
 }
