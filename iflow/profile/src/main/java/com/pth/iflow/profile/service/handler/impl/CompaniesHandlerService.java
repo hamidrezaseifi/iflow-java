@@ -52,4 +52,11 @@ public class CompaniesHandlerService implements ICompaniesHandlerService {
     return this.CompanyAccessService.saveCompanyWorkflowtypeItemOcrSettings(modelInput);
   }
 
+  @Override
+  public void deleteCompanyWorkflowtypeItemOcrSettings(final CompanyWorkflowtypeItemOcrSettingPreset modelInput)
+      throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+
+    this.CompanyAccessService.deleteCompanyWorkflowtypeItemOcrSettings(modelInput);
+  }
+
 }

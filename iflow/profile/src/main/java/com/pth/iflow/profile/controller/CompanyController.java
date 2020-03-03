@@ -207,4 +207,22 @@ public class CompanyController {
     return ControllerHelper.createResponseEntity(request, edo, HttpStatus.CREATED);
   }
 
+  @ResponseStatus(HttpStatus.ACCEPTED)
+  @IflowPostRequestMapping(path = IflowRestPaths.ProfileModule.COMPANY_DELETE_WORKFLOWTYPE_ITEMS_OCR_SETTINGS)
+  public void deleteCompanyWorkflowtypeItemOcrSettings(
+      @RequestBody final CompanyWorkflowtypeItemOcrSettingPresetEdo ocrSettingEdo,
+      final HttpServletRequest request,
+      @RequestHeader(
+        TokenVerficationHandlerInterceptor.IFLOW_TOKENID_HEADER_KEY
+      ) final String headerTokenId) throws Exception {
+
+    this.tokenUserDataManager.validateToken(headerTokenId);
+
+    final CompanyWorkflowtypeItemOcrSettingPreset modelInput = ProfileModelEdoMapper
+        .fromCompanyWorkflowtypeItemOcrSettingPresetEdo(ocrSettingEdo);
+
+    this.companiesHandlerService.deleteCompanyWorkflowtypeItemOcrSettings(modelInput);
+
+  }
+
 }

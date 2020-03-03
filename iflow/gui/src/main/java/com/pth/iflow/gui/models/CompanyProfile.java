@@ -109,4 +109,15 @@ public class CompanyProfile {
     this.ocrPresets.add(ocrPreset);
 
   }
+
+  public void deleteOcrPreset(final CompanyWorkflowtypeItemOcrSettingPreset ocrPreset) {
+
+    for (final CompanyWorkflowtypeItemOcrSettingPreset preset : this.ocrPresets) {
+      if (preset.getIdentity().equals(ocrPreset.getIdentity())) {
+        this.ocrPresets.remove(preset);
+        break;
+      }
+    }
+
+  }
 }

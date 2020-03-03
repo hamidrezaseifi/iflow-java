@@ -101,4 +101,21 @@ public class CompanyAccessService implements ICompanyAccessService {
 
   }
 
+  @Override
+  public void deleteCompanyWorkflowtypeItemOcrSettings(final CompanyWorkflowtypeItemOcrSettingPreset modelInput)
+      throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+
+    logger.debug("Delete company Workflowtype Item Ocr Settings");
+
+    final CompanyWorkflowtypeItemOcrSettingPresetEdo requestEdo = ProfileModelEdoMapper
+        .toCompanyWorkflowtypeItemOcrSettingPresetEdo(modelInput);
+
+    this.restTemplate
+        .callRestPost(this.coreAccessConfig.prepareCoreUrl(IflowRestPaths.CoreModule.DELETE_COMPANY_WORKFLOWTYPE_ITEMS_OCR_SETTINGS()),
+            EModule.CORE,
+            requestEdo,
+            Void.class, true);
+
+  }
+
 }

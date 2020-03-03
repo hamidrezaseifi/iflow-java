@@ -22,4 +22,7 @@ public interface ICompanyAccessService {
       saveCompanyWorkflowtypeItemOcrSettings(CompanyWorkflowtypeItemOcrSettingPreset modelInput)
           throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;
 
+  void deleteCompanyWorkflowtypeItemOcrSettings(CompanyWorkflowtypeItemOcrSettingPreset modelInput)
+      throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException;;
+
 }

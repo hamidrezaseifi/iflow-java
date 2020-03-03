@@ -20,8 +20,8 @@ public interface ICompanyHandler {
   public List<CompanyWorkflowtypeItemOcrSettingPreset> readCompanyWorkflowtypeItemOcrSettings(String companyIdentity, final String token)
       throws MalformedURLException, IFlowMessageConversionFailureException;
 
-  public CompanyWorkflowtypeItemOcrSettingPreset saveCompanyWorkflowtypeItemOcrSetting(
-      CompanyWorkflowtypeItemOcrSettingPreset preset, String companyidentity, final String token)
+  public CompanyWorkflowtypeItemOcrSettingPreset saveCompanyWorkflowtypeItemOcrSetting(CompanyWorkflowtypeItemOcrSettingPreset preset,
+      final String token)
       throws MalformedURLException, IFlowMessageConversionFailureException;
 
   public List<String> readWorkflowtypeItems(final String workflowtypeidentity);
@@ -35,5 +35,8 @@ public interface ICompanyHandler {
 
   public Map<String, CompanyWorkflowtypeItemOcrSettingPresetItem> extractMappedCompanyWorkflowtypeItemsFromOcrPreset(
       final CompanyWorkflowtypeItemOcrSettingPreset preset) throws IFlowMessageConversionFailureException;
+
+  public void deleteCompanyWorkflowtypeItemOcrSetting(CompanyWorkflowtypeItemOcrSettingPreset preset, String token)
+      throws MalformedURLException, IFlowMessageConversionFailureException;
 
 }

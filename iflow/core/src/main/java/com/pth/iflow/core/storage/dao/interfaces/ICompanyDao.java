@@ -30,4 +30,6 @@ public interface ICompanyDao {
   public CompanyWorkflowTypeOcrSettingPresetEntity
       saveCompanyWorkflowtypeItemOcrSetting(final CompanyWorkflowTypeOcrSettingPresetEntity preset);
 
+  public void deleteCompanyWorkflowtypeItemOcrSetting(CompanyWorkflowTypeOcrSettingPresetEntity preset);
+
 }

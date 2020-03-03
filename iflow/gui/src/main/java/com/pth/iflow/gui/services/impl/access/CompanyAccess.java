@@ -66,7 +66,7 @@ public class CompanyAccess implements ICompanyAccess {
   public List<CompanyWorkflowtypeItemOcrSettingPreset> readCompanyWorkflowtypeItemOcrSettings(final String identity, final String token)
       throws MalformedURLException, IFlowMessageConversionFailureException {
 
-    logger.debug("Read company workflowtype item ocr settings from core {}", identity);
+    logger.debug("Read company ocr settings from core {}", identity);
 
     final CompanyWorkflowtypeItemOcrSettingPresetListEdo listEdo = this.restTemplate
         .callRestGet(this.profileModuleAccessConfig.getReadCompanyWorkflowTypeItemOcrSettingsUri(identity),
@@ -80,7 +80,7 @@ public class CompanyAccess implements ICompanyAccess {
       final String token)
       throws GuiCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    logger.debug("Save company workflowtype item ocr settings");
+    logger.debug("Save company ocr settings");
 
     final CompanyWorkflowtypeItemOcrSettingPresetEdo ocrSettingEdo = GuiModelEdoMapper.toCompanyWorkflowtypeItemOcrSettingPresetEdo(model);
     final CompanyWorkflowtypeItemOcrSettingPresetEdo resultEdo = this.restTemplate
@@ -89,6 +89,20 @@ public class CompanyAccess implements ICompanyAccess {
             ocrSettingEdo, CompanyWorkflowtypeItemOcrSettingPresetEdo.class, token, true);
 
     return GuiModelEdoMapper.fromCompanyWorkflowtypeItemOcrSettingPresetEdo(resultEdo);
+  }
+
+  @Override
+  public void deleteCompanyWorkflowtypeItemOcrSettings(final CompanyWorkflowtypeItemOcrSettingPreset model, final String token)
+      throws GuiCustomizedException, MalformedURLException {
+
+    logger.debug("Delete company ocr settings");
+
+    final CompanyWorkflowtypeItemOcrSettingPresetEdo ocrSettingEdo = GuiModelEdoMapper.toCompanyWorkflowtypeItemOcrSettingPresetEdo(model);
+    this.restTemplate
+        .callRestPost(
+            this.profileModuleAccessConfig.getDeleteCompanyWorkflowTypeItemOcrSettingsUri(), EModule.PROFILE,
+            ocrSettingEdo, Void.class, token, true);
+
   }
 
 }

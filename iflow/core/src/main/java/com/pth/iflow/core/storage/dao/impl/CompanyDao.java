@@ -145,6 +145,28 @@ public class CompanyDao extends EntityDaoBase<CompanyEntity> implements ICompany
   }
 
   @Override
+  @Transactional
+  public void deleteCompanyWorkflowtypeItemOcrSetting(final CompanyWorkflowTypeOcrSettingPresetEntity model) {
+
+    if (model.isNew() == false) {
+      final Session session = this.createSession();
+
+      final CompanyWorkflowTypeOcrSettingPresetEntity entity = session
+          .get(CompanyWorkflowTypeOcrSettingPresetEntity.class, model.getId());
+
+      if (entity != null) {
+
+        session.getTransaction().begin();
+        session.remove(entity);
+        session.getTransaction().commit();
+
+      }
+      session.close();
+    }
+
+  }
+
+  @Override
   public CompanyWorkflowTypeOcrSettingPresetEntity readOcrSettingsByIdentity(final String identity) {
 
     final Session session = this.createSession();

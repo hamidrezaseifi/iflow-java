@@ -91,4 +91,17 @@ public class CompanyController {
     return ControllerHelper.createResponseEntity(request, savedEdo, HttpStatus.CREATED);
   }
 
+  @ResponseStatus(HttpStatus.ACCEPTED)
+  @IflowPostRequestMapping(path = IflowRestPaths.CoreModule.COMPANY_DELETE_WORKFLOWTYPE_ITEMS_OCR_SETTINGS)
+  public void deleteCompanyWorkflowtypeItemOcrSettings(
+      @RequestBody final CompanyWorkflowtypeItemOcrSettingPresetEdo presetEdo,
+      final HttpServletRequest request) throws Exception {
+
+    final CompanyWorkflowTypeOcrSettingPresetEntity modelInput = this.companyService
+        .fromCompanyWorkflowtypeItemOcrSettingPresetEdo(presetEdo);
+
+    this.companyService.deleteCompanyWorkflowtypeItemOcrSetting(modelInput);
+
+  }
+
 }

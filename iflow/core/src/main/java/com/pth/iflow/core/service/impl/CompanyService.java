@@ -75,6 +75,13 @@ public class CompanyService extends CoreModelEdoMapperService<CompanyEntity, Com
     return companyDao.saveCompanyWorkflowtypeItemOcrSetting(preset);
   }
 
+  @Override
+  public void deleteCompanyWorkflowtypeItemOcrSetting(
+      final CompanyWorkflowTypeOcrSettingPresetEntity preset) {
+
+    companyDao.deleteCompanyWorkflowtypeItemOcrSetting(preset);
+  }
+
   protected CompanyEntity prepareSavingModel(final CompanyEntity model) {
 
     return model;

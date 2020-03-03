@@ -4,6 +4,7 @@ import java.net.MalformedURLException;
 import java.util.List;
 
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
+import com.pth.iflow.gui.exceptions.GuiCustomizedException;
 import com.pth.iflow.gui.models.Company;
 import com.pth.iflow.gui.models.CompanyWorkflowtypeItemOcrSettingPreset;
 
@@ -20,5 +21,8 @@ public interface ICompanyAccess {
   public CompanyWorkflowtypeItemOcrSettingPreset saveCompanyWorkflowtypeItemOcrSettings(CompanyWorkflowtypeItemOcrSettingPreset model,
       String token)
       throws MalformedURLException, IFlowMessageConversionFailureException;
+
+  public void deleteCompanyWorkflowtypeItemOcrSettings(CompanyWorkflowtypeItemOcrSettingPreset preset, String token)
+      throws GuiCustomizedException, MalformedURLException;
 
 }

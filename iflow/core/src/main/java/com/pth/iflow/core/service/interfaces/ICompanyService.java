@@ -21,6 +21,8 @@ public interface ICompanyService extends ICoreModelEdoMapperService<CompanyEntit
   CompanyWorkflowTypeOcrSettingPresetEntity saveCompanyWorkflowtypeItemOcrSetting(
       final CompanyWorkflowTypeOcrSettingPresetEntity preset);
 
+  void deleteCompanyWorkflowtypeItemOcrSetting(final CompanyWorkflowTypeOcrSettingPresetEntity preset);
+
   CompanyWorkflowTypeOcrSettingPresetEntity
       fromCompanyWorkflowtypeItemOcrSettingPresetEdo(final CompanyWorkflowtypeItemOcrSettingPresetEdo edo);
 

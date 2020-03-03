@@ -68,7 +68,21 @@ public class OcrPresetDataController extends GuiDataControllerBase {
     preset.setCompanyIdentity(this.getLoggedCompany().getIdentity());
 
     final CompanyWorkflowtypeItemOcrSettingPreset saved = this.companyHandler
-        .saveCompanyWorkflowtypeItemOcrSetting(preset, this.getLoggedCompany().getIdentity(), this.getLoggedToken());
+        .saveCompanyWorkflowtypeItemOcrSetting(preset, this.getLoggedToken());
+
+    return this.readCompanyWorkflowtypeItemOcrSettings();
+  }
+
+  @ResponseStatus(HttpStatus.ACCEPTED)
+  @PostMapping(path = { "/delete" })
+  @ResponseBody
+  public List<CompanyWorkflowtypeItemOcrSettingPreset>
+      deleteCompanyWorkflowtypeItemOcrSettings(@RequestBody final CompanyWorkflowtypeItemOcrSettingPreset preset)
+          throws MalformedURLException, IFlowMessageConversionFailureException {
+
+    preset.setCompanyIdentity(this.getLoggedCompany().getIdentity());
+
+    this.companyHandler.deleteCompanyWorkflowtypeItemOcrSetting(preset, this.getLoggedToken());
 
     return this.readCompanyWorkflowtypeItemOcrSettings();
   }
