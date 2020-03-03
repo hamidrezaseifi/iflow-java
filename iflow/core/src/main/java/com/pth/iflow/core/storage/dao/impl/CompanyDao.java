@@ -128,16 +128,18 @@ public class CompanyDao extends EntityDaoBase<CompanyEntity> implements ICompany
 
       session.getTransaction().begin();
       existsModel.clearItems();
-      session.persist(existsModel);
+      session.saveOrUpdate(existsModel);
       session.getTransaction().commit();
+      session.close();
     }
 
     final Session session = this.createSession();
 
     session.getTransaction().begin();
 
-    session.persist(model);
+    session.saveOrUpdate(model);
     session.getTransaction().commit();
+    session.close();
 
     return model;
   }
