@@ -155,3 +155,12 @@ select.property-ocrtype{
     width: 100%;
     left: 0;
 }
+
+.modal-dialog.preset-delete-dialog{
+	max-width: calc(100vw - 100px) !important;
+    width: 800px !important;
+}
+
+.modal-dialog.preset-delete-dialog .modal-body{
+	height: 170px;
+}

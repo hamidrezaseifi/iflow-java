@@ -15,10 +15,10 @@ import { CompanyWorkflowtypeItemOcrSettingPreset, GeneralData } from '../../ui-m
   providedIn: 'root'
 })
 export class OcrPresetsService extends HttpErrorResponseHelper {
-  listPresetsUrl :string = "/company/data/readocrpresets";
-	updatePresetUrl :string = "/company/data/savereadocrpreset";
-  listPresetItemsUrl :string = "/company/data/readpresetallitems/";
-	listWorkflowTypeItemsUrl :string = "/company/data/readworkflowtypeitems/";
+  listPresetsUrl :string = "/ocrpreset/data/list";
+	updatePresetUrl :string = "/ocrpreset/data/save";
+  listPresetItemsUrl :string = "/ocrpreset/data/read/";
+	pageInitUrl :string = "/ocrpreset/data/initpage";
 
 	constructor(
 			protected http: HttpClient,
@@ -47,11 +47,11 @@ export class OcrPresetsService extends HttpErrorResponseHelper {
 		
 	};
 	
-	listWorkflowTypeItems(presetName:string){
+	pageInitData(){
 		
 	    const httpOptions = { headers: HttpHepler.generateJsonHeader() };
 	    
-			return this.http.get(this.listWorkflowTypeItemsUrl + presetName, httpOptions);	    
+			return this.http.get(this.pageInitUrl, httpOptions);	    
 		
 	};
 

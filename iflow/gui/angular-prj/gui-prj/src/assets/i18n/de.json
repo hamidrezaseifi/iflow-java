@@ -133,6 +133,7 @@
 	"ocr-preset-edit-modal-title":"voreingestellt Einstellung Bearbeiten",
 	"ocr-preset-create-modal-title":"voreingestellt Einstellung Erstellen",
 	"ocr-preset-delete-modal-title":"voreingestellt Einstellung löschen",
+	"ocr-preset-delete-message":"Möchten Sie diese voreingestellt Einstellung (%) löschen?",
 	"invoice-assignview-title" : "Rechnung Verteilung",
 	"invoice-testingview-title" : "Rechnungsprüfung",
 	"invoice-releaseview-title" : "Rechnung Freigabe",
