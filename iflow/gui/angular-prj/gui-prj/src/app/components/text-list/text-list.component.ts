@@ -10,8 +10,14 @@ export class TextListComponent implements OnInit {
 	_text :string = "";
 	@Input('text')
 	set text(_value:string) {
-	    this._text = _value;
-	    this.textList = _value.split(this.separator);
+	    this._text = _value.trim();
+	    if(this._text === "" || this._text === null){
+	      this.textList = [];
+	    }
+	    else{
+	      this.textList = this._text.split(this.separator);
+	    }
+	    
 	}
 	
 	@Output("textChanged") onTextChanged = new EventEmitter<string>();

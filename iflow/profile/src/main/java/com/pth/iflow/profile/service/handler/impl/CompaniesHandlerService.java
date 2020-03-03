@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
 import com.pth.iflow.profile.exceptions.ProfileCustomizedException;
 import com.pth.iflow.profile.model.Company;
-import com.pth.iflow.profile.model.CompanyWorkflowtypeItemOcrSetting;
+import com.pth.iflow.profile.model.CompanyWorkflowtypeItemOcrSettingPreset;
 import com.pth.iflow.profile.service.access.ICompanyAccessService;
 import com.pth.iflow.profile.service.handler.ICompaniesHandlerService;
 
@@ -38,18 +38,25 @@ public class CompaniesHandlerService implements ICompaniesHandlerService {
   }
 
   @Override
-  public List<CompanyWorkflowtypeItemOcrSetting> readCompanyWorkflowtypeItemOcrSettingsByCompanyIdentity(final String companyidentity)
+  public List<CompanyWorkflowtypeItemOcrSettingPreset> readCompanyWorkflowtypeItemOcrSettingsByCompanyIdentity(final String companyidentity)
       throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
     return this.CompanyAccessService.readCompanyWorkflowtypeItemOcrSettingsByCompanyIdentity(companyidentity);
   }
 
   @Override
-  public List<CompanyWorkflowtypeItemOcrSetting>
-      saveCompanyWorkflowtypeItemOcrSettings(final List<CompanyWorkflowtypeItemOcrSetting> modelInputList)
+  public CompanyWorkflowtypeItemOcrSettingPreset
+      saveCompanyWorkflowtypeItemOcrSettings(final CompanyWorkflowtypeItemOcrSettingPreset modelInput)
           throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
 
-    return this.CompanyAccessService.saveCompanyWorkflowtypeItemOcrSettings(modelInputList);
+    return this.CompanyAccessService.saveCompanyWorkflowtypeItemOcrSettings(modelInput);
+  }
+
+  @Override
+  public void deleteCompanyWorkflowtypeItemOcrSettings(final CompanyWorkflowtypeItemOcrSettingPreset modelInput)
+      throws ProfileCustomizedException, MalformedURLException, IFlowMessageConversionFailureException {
+
+    this.CompanyAccessService.deleteCompanyWorkflowtypeItemOcrSettings(modelInput);
   }
 
 }

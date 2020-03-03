@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.pth.iflow.core.model.entity.CompanyEntity;
-import com.pth.iflow.core.model.entity.CompanyWorkflowtypeItemOcrSettingEntity;
+import com.pth.iflow.core.model.entity.CompanyWorkflowTypeOcrSettingPresetEntity;
 import com.pth.iflow.core.model.entity.DepartmentEntity;
 import com.pth.iflow.core.model.entity.UserGroupEntity;
 
@@ -13,7 +13,7 @@ public class CompanyProfile {
   private CompanyEntity company;
   private final List<DepartmentEntity> departments = new ArrayList<>();
   private final List<UserGroupEntity> userGroups = new ArrayList<>();
-  private final List<CompanyWorkflowtypeItemOcrSettingEntity> workflowtypeItemOcrSettings = new ArrayList<>();
+  private final List<CompanyWorkflowTypeOcrSettingPresetEntity> ocrPresetSettings = new ArrayList<>();
 
   // CompanyWorkflowtypeItemOcrSettingEntity
   public CompanyProfile() {
@@ -21,12 +21,12 @@ public class CompanyProfile {
   }
 
   public CompanyProfile(final CompanyEntity company, final List<DepartmentEntity> departments,
-      final List<UserGroupEntity> userGroups, final List<CompanyWorkflowtypeItemOcrSettingEntity> workflowtypeItemOcrSettings) {
+      final List<UserGroupEntity> userGroups, final List<CompanyWorkflowTypeOcrSettingPresetEntity> ocrPresetSettings) {
 
     this.setDepartments(departments);
     this.setUserGroups(userGroups);
     this.setCompany(company);
-    this.setWorkflowtypeItemOcrSettings(workflowtypeItemOcrSettings);
+    this.setOcrPresetSettings(ocrPresetSettings);
   }
 
   /**
@@ -71,16 +71,16 @@ public class CompanyProfile {
     }
   }
 
-  public List<CompanyWorkflowtypeItemOcrSettingEntity> getWorkflowtypeItemOcrSettings() {
+  public List<CompanyWorkflowTypeOcrSettingPresetEntity> getOcrPresetSettings() {
 
-    return workflowtypeItemOcrSettings;
+    return ocrPresetSettings;
   }
 
-  public void setWorkflowtypeItemOcrSettings(final List<CompanyWorkflowtypeItemOcrSettingEntity> workflowtypeItemOcrSettings) {
+  public void setOcrPresetSettings(final List<CompanyWorkflowTypeOcrSettingPresetEntity> ocrPresetSettings) {
 
-    this.workflowtypeItemOcrSettings.clear();
-    if (workflowtypeItemOcrSettings != null) {
-      this.workflowtypeItemOcrSettings.addAll(workflowtypeItemOcrSettings);
+    this.ocrPresetSettings.clear();
+    if (ocrPresetSettings != null) {
+      this.ocrPresetSettings.addAll(ocrPresetSettings);
     }
   }
 

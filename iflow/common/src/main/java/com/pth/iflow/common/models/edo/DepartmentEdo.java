@@ -14,6 +14,7 @@ import com.pth.iflow.common.models.base.IFlowJaxbDefinition;
 @XmlType(namespace = IFlowJaxbDefinition.IFlow.NAMESPACE, name = "Department" + IFlowJaxbDefinition.TYPE_PREFIX)
 public class DepartmentEdo {
 
+  @NotNull(message = "Identity must not be null")
   @XmlElement(name = "Identity", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   private String identity;
 

@@ -1,7 +1,10 @@
 package com.pth.iflow.core.model.entity;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,24 +13,28 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import com.pth.iflow.core.model.entity.workflow.WorkflowTypeEntity;
-import com.pth.iflow.core.storage.dao.helper.EntityHelper;
+import com.pth.iflow.core.storage.dao.helper.EntityIdentityHelper;
 
 @Entity
-@Table(name = "company_workflowtype_items_ocr_settings")
-public class CompanyWorkflowtypeItemOcrSettingEntity extends EntityHelper {
+@Table(name = "company_workflowtype_items_ocr_preset")
+public class CompanyWorkflowTypeOcrSettingPresetEntity extends EntityIdentityHelper {
 
   private static final long serialVersionUID = 2937568589389217869L;
 
   @Id
   @Column(name = "id")
-  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "company_workflowtype_settings_generator")
-  @SequenceGenerator(name = "company_workflowtype_settings_generator", sequenceName = "company_workflowtype_items_ocr_settings_seq")
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "company_workflowtype_items_ocr_preset_generator")
+  @SequenceGenerator(name = "company_workflowtype_items_ocr_preset_generator", sequenceName = "company_workflowtype_items_ocr_preset_seq")
   private Long id;
 
   @ManyToOne(fetch = FetchType.EAGER)
@@ -38,11 +45,11 @@ public class CompanyWorkflowtypeItemOcrSettingEntity extends EntityHelper {
   @JoinColumn(name = "workflow_type_id", nullable = false)
   private WorkflowTypeEntity workflowType;
 
-  @Column(name = "property_name")
-  private String propertyName;
+  @Column(name = "identity")
+  private String identity;
 
-  @Column(name = "value")
-  private String value;
+  @Column(name = "preset_name")
+  private String presetName;
 
   @Column(name = "status")
   private Integer status;
@@ -53,6 +60,14 @@ public class CompanyWorkflowtypeItemOcrSettingEntity extends EntityHelper {
   @CreationTimestamp
   @Column(name = "created_at", insertable = false, updatable = false)
   private Date createdAt;
+
+  @UpdateTimestamp
+  @Column(name = "updated_at", insertable = false, updatable = false)
+  private Date updatedAt;
+
+  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "preset", fetch = FetchType.EAGER)
+  @Fetch(value = FetchMode.SUBSELECT)
+  private final List<CompanyWorkflowTypeOcrSettingPresetItemEntity> items = new ArrayList<>();
 
   /**
    * @return the id
@@ -94,24 +109,24 @@ public class CompanyWorkflowtypeItemOcrSettingEntity extends EntityHelper {
     this.workflowType = workflowType;
   }
 
-  public String getPropertyName() {
+  public String getPresetName() {
 
-    return propertyName;
+    return presetName;
   }
 
-  public void setPropertyName(final String propertyName) {
+  public void setPresetName(final String presetName) {
 
-    this.propertyName = propertyName;
+    this.presetName = presetName;
   }
 
-  public String getValue() {
+  public Date getUpdatedAt() {
 
-    return value;
+    return updatedAt;
   }
 
-  public void setValue(final String value) {
+  public void setUpdatedAt(final Date updatedAt) {
 
-    this.value = value;
+    this.updatedAt = updatedAt;
   }
 
   /**
@@ -166,9 +181,51 @@ public class CompanyWorkflowtypeItemOcrSettingEntity extends EntityHelper {
     this.createdAt = createdAt;
   }
 
+  public List<CompanyWorkflowTypeOcrSettingPresetItemEntity> getItems() {
+
+    return items;
+  }
+
+  public void setItems(final List<CompanyWorkflowTypeOcrSettingPresetItemEntity> items) {
+
+    this.items.clear();
+    if (items != null) {
+      for (final CompanyWorkflowTypeOcrSettingPresetItemEntity item : items) {
+        item.setPreset(this);
+        this.items.add(item);
+      }
+
+    }
+
+  }
+
+  public void clearItems() {
+
+    this.items.clear();
+
+  }
+
   @Override
   public void increaseVersion() {
 
     version += 1;
+  }
+
+  @Override
+  public String getIdentity() {
+
+    return this.identity;
+  }
+
+  @Override
+  public void setIdentity(final String identity) {
+
+    this.identity = identity;
+  }
+
+  @Override
+  public String getIdentityPreffix() {
+
+    return "cwtosp";
   }
 }

@@ -21,7 +21,8 @@ import com.pth.iflow.common.models.edo.AssignItemEdo;
 import com.pth.iflow.common.models.edo.CompanyEdo;
 import com.pth.iflow.common.models.edo.CompanyProfileEdo;
 import com.pth.iflow.common.models.edo.CompanyWorkflowTypeControllerEdo;
-import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingEdo;
+import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingPresetEdo;
+import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingPresetItemEdo;
 import com.pth.iflow.common.models.edo.DepartmentEdo;
 import com.pth.iflow.common.models.edo.ProfileResponseEdo;
 import com.pth.iflow.common.models.edo.UserAuthenticationResponseEdo;
@@ -46,7 +47,8 @@ import com.pth.iflow.gui.models.AssignItem;
 import com.pth.iflow.gui.models.Company;
 import com.pth.iflow.gui.models.CompanyProfile;
 import com.pth.iflow.gui.models.CompanyWorkflowTypeController;
-import com.pth.iflow.gui.models.CompanyWorkflowtypeItemOcrSetting;
+import com.pth.iflow.gui.models.CompanyWorkflowtypeItemOcrSettingPreset;
+import com.pth.iflow.gui.models.CompanyWorkflowtypeItemOcrSettingPresetItem;
 import com.pth.iflow.gui.models.Department;
 import com.pth.iflow.gui.models.ProfileResponse;
 import com.pth.iflow.gui.models.User;
@@ -898,7 +900,7 @@ public class GuiModelEdoMapper {
 
     final CompanyProfile model = new CompanyProfile(fromEdo(edo.getCompany()), fromDepartmentEdoList(edo.getDepartments()),
         fromUserGroupEdoList(edo.getUserGroups()), fromCompanyWorkflowTypeControllerEdoList(edo.getWorkflowTypeControllers()),
-        fromCompanyWorkflowtypeItemOcrSettingEdoList(edo.getWorkflowtypeItemOcrSettings()));
+        fromCompanyWorkflowtypeItemOcrSettingPresetEdoList(edo.getOcrPresets()));
 
     return model;
   }
@@ -907,56 +909,110 @@ public class GuiModelEdoMapper {
 
     final CompanyProfileEdo edo = new CompanyProfileEdo(toEdo(model.getCompany()), toDepartmentEdoList(model.getDepartments()),
         toUserGroupEdoList(model.getUserGroups()), toCompanyWorkflowTypeControllerEdoList(model.getWorkflowTypeControllers()),
-        toCompanyWorkflowtypeItemOcrSettingEdoList(model.getWorkflowtypeItemOcrSettings()));
+        toCompanyWorkflowtypeItemOcrSettingPresetEdoList(model.getOcrPresets()));
 
     return edo;
   }
 
-  public static CompanyWorkflowtypeItemOcrSettingEdo toCompanyWorkflowtypeItemOcrSettingEdo(final CompanyWorkflowtypeItemOcrSetting model) {
+  public static CompanyWorkflowtypeItemOcrSettingPresetEdo
+      toCompanyWorkflowtypeItemOcrSettingPresetEdo(final CompanyWorkflowtypeItemOcrSettingPreset model) {
 
-    final CompanyWorkflowtypeItemOcrSettingEdo edo = new CompanyWorkflowtypeItemOcrSettingEdo();
+    final CompanyWorkflowtypeItemOcrSettingPresetEdo edo = new CompanyWorkflowtypeItemOcrSettingPresetEdo();
+    edo.setPresetName(model.getPresetName());
+    edo.setStatus(model.getStatus());
+    edo.setVersion(model.getVersion());
+    edo.setWorkflowTypeIdentity(model.getWorkflowTypeIdentity());
+    edo.setCompanyIdentity(model.getCompanyIdentity());
+    edo.setItems(toCompanyWorkflowtypeItemOcrSettingPresetItemEdoList(model.getItems()));
+    edo.setIdentity(model.getIdentity());
+
+    return edo;
+  }
+
+  public static CompanyWorkflowtypeItemOcrSettingPresetItemEdo
+      toCompanyWorkflowtypeItemOcrSettingPresetItemEdo(final CompanyWorkflowtypeItemOcrSettingPresetItem model) {
+
+    final CompanyWorkflowtypeItemOcrSettingPresetItemEdo edo = new CompanyWorkflowtypeItemOcrSettingPresetItemEdo();
     edo.setPropertyName(model.getPropertyName());
     edo.setStatus(model.getStatus());
     edo.setVersion(model.getVersion());
     edo.setValue(model.getValue());
-    edo.setWorkflowTypeIdentity(model.getWorkflowIdentity());
-    edo.setCompanyIdentity(model.getCompanyIdentity());
+    edo.setOcrType(model.getOcrType());
 
     return edo;
   }
 
-  public static CompanyWorkflowtypeItemOcrSetting fromCompanyWorkflowtypeItemOcrSettingEdo(final CompanyWorkflowtypeItemOcrSettingEdo edo) {
+  public static CompanyWorkflowtypeItemOcrSettingPresetItem
+      fromCompanyWorkflowtypeItemOcrSettingPresetItemEdo(final CompanyWorkflowtypeItemOcrSettingPresetItemEdo edo) {
 
-    final CompanyWorkflowtypeItemOcrSetting model = new CompanyWorkflowtypeItemOcrSetting();
+    final CompanyWorkflowtypeItemOcrSettingPresetItem model = new CompanyWorkflowtypeItemOcrSettingPresetItem();
     model.setPropertyName(edo.getPropertyName());
     model.setStatus(edo.getStatus());
     model.setVersion(edo.getVersion());
     model.setValue(edo.getValue());
-    model.setWorkflowIdentity(edo.getWorkflowTypeIdentity());
-    model.setCompanyIdentity(edo.getCompanyIdentity());
+    model.setOcrType(edo.getOcrType());
 
     return model;
   }
 
-  public static List<CompanyWorkflowtypeItemOcrSettingEdo>
-      toCompanyWorkflowtypeItemOcrSettingEdoList(final List<CompanyWorkflowtypeItemOcrSetting> modelList) {
+  public static CompanyWorkflowtypeItemOcrSettingPreset
+      fromCompanyWorkflowtypeItemOcrSettingPresetEdo(final CompanyWorkflowtypeItemOcrSettingPresetEdo edo) {
 
-    final List<CompanyWorkflowtypeItemOcrSettingEdo> edoList = new ArrayList<>();
+    final CompanyWorkflowtypeItemOcrSettingPreset model = new CompanyWorkflowtypeItemOcrSettingPreset();
+    model.setPresetName(edo.getPresetName());
+    model.setStatus(edo.getStatus());
+    model.setVersion(edo.getVersion());
+    model.setWorkflowTypeIdentity(edo.getWorkflowTypeIdentity());
+    model.setCompanyIdentity(edo.getCompanyIdentity());
+    model.setItems(fromCompanyWorkflowtypeItemOcrSettingPresetItemEdoList(edo.getItems()));
+    model.setIdentity(edo.getIdentity());
 
-    for (final CompanyWorkflowtypeItemOcrSetting model : modelList) {
-      edoList.add(toCompanyWorkflowtypeItemOcrSettingEdo(model));
+    return model;
+  }
+
+  public static List<CompanyWorkflowtypeItemOcrSettingPresetItemEdo>
+      toCompanyWorkflowtypeItemOcrSettingPresetItemEdoList(final List<CompanyWorkflowtypeItemOcrSettingPresetItem> modelList) {
+
+    final List<CompanyWorkflowtypeItemOcrSettingPresetItemEdo> edoList = new ArrayList<>();
+
+    for (final CompanyWorkflowtypeItemOcrSettingPresetItem model : modelList) {
+      edoList.add(toCompanyWorkflowtypeItemOcrSettingPresetItemEdo(model));
     }
 
     return edoList;
   }
 
-  public static List<CompanyWorkflowtypeItemOcrSetting>
-      fromCompanyWorkflowtypeItemOcrSettingEdoList(final List<CompanyWorkflowtypeItemOcrSettingEdo> edoList) {
+  public static List<CompanyWorkflowtypeItemOcrSettingPresetItem>
+      fromCompanyWorkflowtypeItemOcrSettingPresetItemEdoList(final List<CompanyWorkflowtypeItemOcrSettingPresetItemEdo> edoList) {
 
-    final List<CompanyWorkflowtypeItemOcrSetting> modelList = new ArrayList<>();
+    final List<CompanyWorkflowtypeItemOcrSettingPresetItem> modelList = new ArrayList<>();
 
-    for (final CompanyWorkflowtypeItemOcrSettingEdo edo : edoList) {
-      modelList.add(fromCompanyWorkflowtypeItemOcrSettingEdo(edo));
+    for (final CompanyWorkflowtypeItemOcrSettingPresetItemEdo edo : edoList) {
+      modelList.add(fromCompanyWorkflowtypeItemOcrSettingPresetItemEdo(edo));
+    }
+
+    return modelList;
+  }
+
+  public static List<CompanyWorkflowtypeItemOcrSettingPresetEdo>
+      toCompanyWorkflowtypeItemOcrSettingPresetEdoList(final List<CompanyWorkflowtypeItemOcrSettingPreset> modelList) {
+
+    final List<CompanyWorkflowtypeItemOcrSettingPresetEdo> edoList = new ArrayList<>();
+
+    for (final CompanyWorkflowtypeItemOcrSettingPreset model : modelList) {
+      edoList.add(toCompanyWorkflowtypeItemOcrSettingPresetEdo(model));
+    }
+
+    return edoList;
+  }
+
+  public static List<CompanyWorkflowtypeItemOcrSettingPreset>
+      fromCompanyWorkflowtypeItemOcrSettingPresetEdoList(final List<CompanyWorkflowtypeItemOcrSettingPresetEdo> edoList) {
+
+    final List<CompanyWorkflowtypeItemOcrSettingPreset> modelList = new ArrayList<>();
+
+    for (final CompanyWorkflowtypeItemOcrSettingPresetEdo edo : edoList) {
+      modelList.add(fromCompanyWorkflowtypeItemOcrSettingPresetEdo(edo));
     }
 
     return modelList;

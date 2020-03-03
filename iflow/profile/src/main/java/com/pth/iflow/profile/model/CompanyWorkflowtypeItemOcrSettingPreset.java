@@ -1,18 +1,33 @@
 package com.pth.iflow.profile.model;
 
-public class CompanyWorkflowtypeItemOcrSetting {
+import java.util.ArrayList;
+import java.util.List;
+
+public class CompanyWorkflowtypeItemOcrSettingPreset {
+
+  private String identity;
 
   private String companyIdentity;
 
   private String workflowTypeIdentity;
 
-  private String propertyName;
-
-  private String value;
+  private String presetName;
 
   private Integer status;
 
   private Integer version;
+
+  private List<CompanyWorkflowtypeItemOcrSettingPresetItem> items = new ArrayList<>();
+
+  public String getIdentity() {
+
+    return this.identity;
+  }
+
+  public void setIdentity(final String identity) {
+
+    this.identity = identity;
+  }
 
   public String getCompanyIdentity() {
 
@@ -34,58 +49,47 @@ public class CompanyWorkflowtypeItemOcrSetting {
     this.workflowTypeIdentity = workflowIdentity;
   }
 
-  public String getPropertyName() {
+  public String getPresetName() {
 
-    return this.propertyName;
+    return this.presetName;
   }
 
-  public void setPropertyName(final String propertyName) {
+  public void setPresetName(final String presetName) {
 
-    this.propertyName = propertyName;
+    this.presetName = presetName;
   }
 
-  public String getValue() {
-
-    return this.value;
-  }
-
-  public void setValue(final String value) {
-
-    this.value = value;
-  }
-
-  /**
-   * @return the status
-   */
   public Integer getStatus() {
 
     return this.status;
   }
 
-  /**
-   * @param status the status to set
-   */
   public void setStatus(final Integer status) {
 
     this.status = status;
   }
-
-  /**
-   * @return the version
-   */
 
   public Integer getVersion() {
 
     return this.version;
   }
 
-  /**
-   * @param version the version to set
-   */
-
   public void setVersion(final Integer version) {
 
     this.version = version;
+  }
+
+  public List<CompanyWorkflowtypeItemOcrSettingPresetItem> getItems() {
+
+    return this.items;
+  }
+
+  public void setItems(final List<CompanyWorkflowtypeItemOcrSettingPresetItem> items) {
+
+    this.items = new ArrayList<>();
+    if (items != null) {
+      this.items.addAll(items);
+    }
   }
 
 }

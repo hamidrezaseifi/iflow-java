@@ -18,7 +18,7 @@ import com.pth.iflow.common.enums.EWorkflowType;
 import com.pth.iflow.core.TestDataProducer;
 import com.pth.iflow.core.model.entity.CompanyEntity;
 import com.pth.iflow.core.model.entity.CompanyWorkflowTypeControllerEntity;
-import com.pth.iflow.core.model.entity.CompanyWorkflowtypeItemOcrSettingEntity;
+import com.pth.iflow.core.model.entity.CompanyWorkflowTypeOcrSettingPresetEntity;
 import com.pth.iflow.core.model.entity.workflow.WorkflowTypeEntity;
 import com.pth.iflow.core.storage.dao.interfaces.ICompanyDao;
 import com.pth.iflow.core.storage.dao.interfaces.IWorkflowTypeDao;
@@ -179,7 +179,7 @@ public class CompanyDaoTest extends TestDataProducer {
   }
 
   @Test
-  public void testSaveAndReadCompanyWorkflowtypeItemOcrSettings() throws Exception {
+  public void testSaveAndReadAndDeleteCompanyWorkflowtypeItemOcrSettings() throws Exception {
 
     final CompanyEntity comapny = getTestCompany();
     comapny.setCompanyName("Test CompanyName");
@@ -195,29 +195,41 @@ public class CompanyDaoTest extends TestDataProducer {
 
     compareCompanies(comapny, resCompany);
 
-    final List<CompanyWorkflowtypeItemOcrSettingEntity> list = new ArrayList<>();
-
     EWorkflowType.INVOICE_WORKFLOW_TYPE.getIdentity();
 
     final WorkflowTypeEntity workflowType = workflowTypeDao.getByIdentity(EWorkflowType.INVOICE_WORKFLOW_TYPE.getIdentity());
 
-    list.add(getTestCompanyWorkflowtypeItemOcrSettingEntity("propName1", "value1", workflowType, resCompany));
-    list.add(getTestCompanyWorkflowtypeItemOcrSettingEntity("propName2", "value2", workflowType, resCompany));
-    list.add(getTestCompanyWorkflowtypeItemOcrSettingEntity("propName3", "value3", workflowType, resCompany));
+    final CompanyWorkflowTypeOcrSettingPresetEntity preset = getTestCompanyWorkflowtypeItemOcrSettingPresetEntity("preset-1", workflowType,
+        resCompany);
 
-    List<CompanyWorkflowtypeItemOcrSettingEntity> resList = companyDao.saveCompanyWorkflowtypeItemOcrSettings(list);
+    final CompanyWorkflowTypeOcrSettingPresetEntity resPreset = companyDao.saveCompanyWorkflowtypeItemOcrSetting(preset);
 
-    Assert.assertNotNull("Result List is not null!", resList);
-    Assert.assertEquals("Result list has 3 items", 3, resList.size());
-    Assert.assertEquals("Result item 3 has propertyname 'propName3'", "propName3", resList.get(2).getPropertyName());
-    Assert.assertEquals("Result item 2 has value 'value2'", "value2", resList.get(1).getValue());
+    Assert.assertNotNull("Result company is not null!", resPreset);
+    Assert
+        .assertEquals("Result item 3 has propertyname '" + preset.getPresetName() + "'", preset.getPresetName(),
+            resPreset.getPresetName());
+    Assert
+        .assertEquals("Result preset has the same items count '" + preset.getItems().size() + "'",
+            preset.getItems().size(),
+            resPreset.getItems().size());
 
+    List<CompanyWorkflowTypeOcrSettingPresetEntity> resList = companyDao.readCompanyWorkflowtypeItemOcrSettings(comapny.getId());
+
+    Assert.assertNotNull("Result company is not null!", resList);
+    Assert.assertEquals("Result list has 1 items", 1, resList.size());
+    Assert
+        .assertEquals("Result item 3 has propertyname '" + resPreset.getPresetName() + "'", resPreset.getPresetName(),
+            resList.get(0).getPresetName());
+    Assert
+        .assertEquals("Result second item from second preset has value '" + resPreset.getItems().get(0).getValue() + "'",
+            resPreset.getItems().get(1).getValue(),
+            resList.get(0).getItems().get(1).getValue());
+
+    companyDao.deleteCompanyWorkflowtypeItemOcrSetting(resList.get(0));
     resList = companyDao.readCompanyWorkflowtypeItemOcrSettings(comapny.getId());
 
-    Assert.assertNotNull("Result List is not null!", resList);
-    Assert.assertEquals("Result list has 3 items", 3, resList.size());
-    Assert.assertEquals("Result item 3 has propertyname 'propName3'", "propName3", resList.get(2).getPropertyName());
-    Assert.assertEquals("Result item 2 has value 'value2'", "value2", resList.get(1).getValue());
+    Assert.assertNotNull("Result company is not null!", resList);
+    Assert.assertEquals("Result list has 0 items", 0, resList.size());
 
   }
 

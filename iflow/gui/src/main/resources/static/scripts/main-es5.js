@@ -722,7 +722,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony import */
 
 
-    var _angular_router__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(
+    var _company_components_ocr_presets_ocr_presets_component__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(
+    /*! ./company-components/ocr-presets/ocr-presets.component */
+    "./src/app/company-components/ocr-presets/ocr-presets.component.ts");
+    /* harmony import */
+
+
+    var _angular_router__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(
     /*! @angular/router */
     "./node_modules/@angular/router/__ivy_ngcc__/fesm2015/router.js"); //import { DataTableModule } from 'ng-seven-datatable';
 
@@ -755,8 +761,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     (function () {
       (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsetNgModuleScope"](AppModule, {
-        declarations: [_app_component__WEBPACK_IMPORTED_MODULE_14__["AppComponent"], _top_bar_top_bar_component__WEBPACK_IMPORTED_MODULE_19__["TopBarComponent"], _footer_footer_component__WEBPACK_IMPORTED_MODULE_20__["FooterComponent"], _message_bar_message_bar_component__WEBPACK_IMPORTED_MODULE_21__["MessageBarComponent"], _components_error_dialog_error_dialog_component__WEBPACK_IMPORTED_MODULE_22__["ErrorDialogComponent"], _components_loading_dialog_loading_dialog_component__WEBPACK_IMPORTED_MODULE_23__["LoadingDialogComponent"], _home__WEBPACK_IMPORTED_MODULE_24__["HomeComponent"], _about__WEBPACK_IMPORTED_MODULE_25__["AboutComponent"], _login__WEBPACK_IMPORTED_MODULE_26__["LoginComponent"], _wm_components_create_workflow_create_workflow_create_component__WEBPACK_IMPORTED_MODULE_28__["WorkflowCreateComponent"], _wm_components_workflow_list_workflow_list_component__WEBPACK_IMPORTED_MODULE_27__["WorkflowListComponent"], _wm_components_create_create_singletask_create_singletask_component__WEBPACK_IMPORTED_MODULE_29__["CreateSingletaskComponent"], _wm_components_create_create_invoice_create_invoice_component__WEBPACK_IMPORTED_MODULE_30__["CreateInvoiceComponent"], _wm_components_create_create_testthreetask_create_testthreetask_component__WEBPACK_IMPORTED_MODULE_31__["CreateTestthreetaskComponent"], _wm_components_edit_edit_invoice_edit_invoice_component__WEBPACK_IMPORTED_MODULE_32__["EditInvoiceComponent"], _wm_components_edit_edit_single_task_edit_single_task_component__WEBPACK_IMPORTED_MODULE_33__["EditSingleTaskComponent"], _wm_components_edit_edit_testthree_task_edit_testthree_task_component__WEBPACK_IMPORTED_MODULE_34__["EditTestthreeTaskComponent"], _wm_components_workflow_inlineview_workflow_inlineview_component__WEBPACK_IMPORTED_MODULE_35__["WorkflowInlineviewComponent"], _components_select_user_select_user_component__WEBPACK_IMPORTED_MODULE_36__["SelectUserComponent"], _wm_components_invoice_ocr_detail_invoice_ocr_detail_component__WEBPACK_IMPORTED_MODULE_37__["InvoiceOcrDetailComponent"], _components_file_preview_file_preview_component__WEBPACK_IMPORTED_MODULE_38__["FilePreviewComponent"], _components_wm_file_upload_wm_file_upload_component__WEBPACK_IMPORTED_MODULE_39__["WmFileUploadComponent"], _components_wm_assign_list_wm_assign_list_component__WEBPACK_IMPORTED_MODULE_40__["WmAssignListComponent"], _company_components_user_list_user_list_component__WEBPACK_IMPORTED_MODULE_41__["UserListComponent"], _company_components_company_info_company_info_component__WEBPACK_IMPORTED_MODULE_42__["CompanyInfoComponent"], _company_components_departments_list_departments_list_component__WEBPACK_IMPORTED_MODULE_43__["DepartmentsListComponent"], _company_components_workflowtype_property_setting_workflowtype_property_setting_component__WEBPACK_IMPORTED_MODULE_44__["WorkflowtypePropertySettingComponent"], _components_text_list_text_list_component__WEBPACK_IMPORTED_MODULE_45__["TextListComponent"]],
-        imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["BrowserModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["ReactiveFormsModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClientModule"], _angular_router__WEBPACK_IMPORTED_MODULE_46__["RouterModule"], _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_4__["BrowserAnimationsModule"], angular_resizable_element__WEBPACK_IMPORTED_MODULE_7__["ResizableModule"], _angular_material_table__WEBPACK_IMPORTED_MODULE_9__["MatTableModule"], _angular_material_core__WEBPACK_IMPORTED_MODULE_8__["MatNativeDateModule"], _material_module__WEBPACK_IMPORTED_MODULE_12__["IFlowMaterialModules"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormsModule"], ngx_extended_pdf_viewer__WEBPACK_IMPORTED_MODULE_10__["NgxExtendedPdfViewerModule"], ng2_pdf_viewer__WEBPACK_IMPORTED_MODULE_11__["PdfViewerModule"], _ngx_translate_core__WEBPACK_IMPORTED_MODULE_5__["TranslateModule"]]
+        declarations: [_app_component__WEBPACK_IMPORTED_MODULE_14__["AppComponent"], _top_bar_top_bar_component__WEBPACK_IMPORTED_MODULE_19__["TopBarComponent"], _footer_footer_component__WEBPACK_IMPORTED_MODULE_20__["FooterComponent"], _message_bar_message_bar_component__WEBPACK_IMPORTED_MODULE_21__["MessageBarComponent"], _components_error_dialog_error_dialog_component__WEBPACK_IMPORTED_MODULE_22__["ErrorDialogComponent"], _components_loading_dialog_loading_dialog_component__WEBPACK_IMPORTED_MODULE_23__["LoadingDialogComponent"], _home__WEBPACK_IMPORTED_MODULE_24__["HomeComponent"], _about__WEBPACK_IMPORTED_MODULE_25__["AboutComponent"], _login__WEBPACK_IMPORTED_MODULE_26__["LoginComponent"], _wm_components_create_workflow_create_workflow_create_component__WEBPACK_IMPORTED_MODULE_28__["WorkflowCreateComponent"], _wm_components_workflow_list_workflow_list_component__WEBPACK_IMPORTED_MODULE_27__["WorkflowListComponent"], _wm_components_create_create_singletask_create_singletask_component__WEBPACK_IMPORTED_MODULE_29__["CreateSingletaskComponent"], _wm_components_create_create_invoice_create_invoice_component__WEBPACK_IMPORTED_MODULE_30__["CreateInvoiceComponent"], _wm_components_create_create_testthreetask_create_testthreetask_component__WEBPACK_IMPORTED_MODULE_31__["CreateTestthreetaskComponent"], _wm_components_edit_edit_invoice_edit_invoice_component__WEBPACK_IMPORTED_MODULE_32__["EditInvoiceComponent"], _wm_components_edit_edit_single_task_edit_single_task_component__WEBPACK_IMPORTED_MODULE_33__["EditSingleTaskComponent"], _wm_components_edit_edit_testthree_task_edit_testthree_task_component__WEBPACK_IMPORTED_MODULE_34__["EditTestthreeTaskComponent"], _wm_components_workflow_inlineview_workflow_inlineview_component__WEBPACK_IMPORTED_MODULE_35__["WorkflowInlineviewComponent"], _components_select_user_select_user_component__WEBPACK_IMPORTED_MODULE_36__["SelectUserComponent"], _wm_components_invoice_ocr_detail_invoice_ocr_detail_component__WEBPACK_IMPORTED_MODULE_37__["InvoiceOcrDetailComponent"], _components_file_preview_file_preview_component__WEBPACK_IMPORTED_MODULE_38__["FilePreviewComponent"], _components_wm_file_upload_wm_file_upload_component__WEBPACK_IMPORTED_MODULE_39__["WmFileUploadComponent"], _components_wm_assign_list_wm_assign_list_component__WEBPACK_IMPORTED_MODULE_40__["WmAssignListComponent"], _company_components_user_list_user_list_component__WEBPACK_IMPORTED_MODULE_41__["UserListComponent"], _company_components_company_info_company_info_component__WEBPACK_IMPORTED_MODULE_42__["CompanyInfoComponent"], _company_components_departments_list_departments_list_component__WEBPACK_IMPORTED_MODULE_43__["DepartmentsListComponent"], _company_components_workflowtype_property_setting_workflowtype_property_setting_component__WEBPACK_IMPORTED_MODULE_44__["WorkflowtypePropertySettingComponent"], _components_text_list_text_list_component__WEBPACK_IMPORTED_MODULE_45__["TextListComponent"], _company_components_ocr_presets_ocr_presets_component__WEBPACK_IMPORTED_MODULE_46__["OcrPresetsComponent"]],
+        imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["BrowserModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["ReactiveFormsModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClientModule"], _angular_router__WEBPACK_IMPORTED_MODULE_47__["RouterModule"], _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_4__["BrowserAnimationsModule"], angular_resizable_element__WEBPACK_IMPORTED_MODULE_7__["ResizableModule"], _angular_material_table__WEBPACK_IMPORTED_MODULE_9__["MatTableModule"], _angular_material_core__WEBPACK_IMPORTED_MODULE_8__["MatNativeDateModule"], _material_module__WEBPACK_IMPORTED_MODULE_12__["IFlowMaterialModules"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormsModule"], ngx_extended_pdf_viewer__WEBPACK_IMPORTED_MODULE_10__["NgxExtendedPdfViewerModule"], ng2_pdf_viewer__WEBPACK_IMPORTED_MODULE_11__["PdfViewerModule"], _ngx_translate_core__WEBPACK_IMPORTED_MODULE_5__["TranslateModule"]]
       });
     })();
     /*@__PURE__*/
@@ -773,7 +779,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
               deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"]]
             }
           })],
-          declarations: [_app_component__WEBPACK_IMPORTED_MODULE_14__["AppComponent"], _top_bar_top_bar_component__WEBPACK_IMPORTED_MODULE_19__["TopBarComponent"], _footer_footer_component__WEBPACK_IMPORTED_MODULE_20__["FooterComponent"], _message_bar_message_bar_component__WEBPACK_IMPORTED_MODULE_21__["MessageBarComponent"], _components_error_dialog_error_dialog_component__WEBPACK_IMPORTED_MODULE_22__["ErrorDialogComponent"], _components_loading_dialog_loading_dialog_component__WEBPACK_IMPORTED_MODULE_23__["LoadingDialogComponent"], _home__WEBPACK_IMPORTED_MODULE_24__["HomeComponent"], _about__WEBPACK_IMPORTED_MODULE_25__["AboutComponent"], _login__WEBPACK_IMPORTED_MODULE_26__["LoginComponent"], _wm_components_create_workflow_create_workflow_create_component__WEBPACK_IMPORTED_MODULE_28__["WorkflowCreateComponent"], _wm_components_workflow_list_workflow_list_component__WEBPACK_IMPORTED_MODULE_27__["WorkflowListComponent"], _wm_components_create_create_singletask_create_singletask_component__WEBPACK_IMPORTED_MODULE_29__["CreateSingletaskComponent"], _wm_components_create_create_invoice_create_invoice_component__WEBPACK_IMPORTED_MODULE_30__["CreateInvoiceComponent"], _wm_components_create_create_testthreetask_create_testthreetask_component__WEBPACK_IMPORTED_MODULE_31__["CreateTestthreetaskComponent"], _wm_components_edit_edit_invoice_edit_invoice_component__WEBPACK_IMPORTED_MODULE_32__["EditInvoiceComponent"], _wm_components_edit_edit_single_task_edit_single_task_component__WEBPACK_IMPORTED_MODULE_33__["EditSingleTaskComponent"], _wm_components_edit_edit_testthree_task_edit_testthree_task_component__WEBPACK_IMPORTED_MODULE_34__["EditTestthreeTaskComponent"], _wm_components_workflow_inlineview_workflow_inlineview_component__WEBPACK_IMPORTED_MODULE_35__["WorkflowInlineviewComponent"], _components_select_user_select_user_component__WEBPACK_IMPORTED_MODULE_36__["SelectUserComponent"], _wm_components_invoice_ocr_detail_invoice_ocr_detail_component__WEBPACK_IMPORTED_MODULE_37__["InvoiceOcrDetailComponent"], _components_file_preview_file_preview_component__WEBPACK_IMPORTED_MODULE_38__["FilePreviewComponent"], _components_wm_file_upload_wm_file_upload_component__WEBPACK_IMPORTED_MODULE_39__["WmFileUploadComponent"], _components_wm_assign_list_wm_assign_list_component__WEBPACK_IMPORTED_MODULE_40__["WmAssignListComponent"], _company_components_user_list_user_list_component__WEBPACK_IMPORTED_MODULE_41__["UserListComponent"], _company_components_company_info_company_info_component__WEBPACK_IMPORTED_MODULE_42__["CompanyInfoComponent"], _company_components_departments_list_departments_list_component__WEBPACK_IMPORTED_MODULE_43__["DepartmentsListComponent"], _company_components_workflowtype_property_setting_workflowtype_property_setting_component__WEBPACK_IMPORTED_MODULE_44__["WorkflowtypePropertySettingComponent"], _components_text_list_text_list_component__WEBPACK_IMPORTED_MODULE_45__["TextListComponent"]],
+          declarations: [_app_component__WEBPACK_IMPORTED_MODULE_14__["AppComponent"], _top_bar_top_bar_component__WEBPACK_IMPORTED_MODULE_19__["TopBarComponent"], _footer_footer_component__WEBPACK_IMPORTED_MODULE_20__["FooterComponent"], _message_bar_message_bar_component__WEBPACK_IMPORTED_MODULE_21__["MessageBarComponent"], _components_error_dialog_error_dialog_component__WEBPACK_IMPORTED_MODULE_22__["ErrorDialogComponent"], _components_loading_dialog_loading_dialog_component__WEBPACK_IMPORTED_MODULE_23__["LoadingDialogComponent"], _home__WEBPACK_IMPORTED_MODULE_24__["HomeComponent"], _about__WEBPACK_IMPORTED_MODULE_25__["AboutComponent"], _login__WEBPACK_IMPORTED_MODULE_26__["LoginComponent"], _wm_components_create_workflow_create_workflow_create_component__WEBPACK_IMPORTED_MODULE_28__["WorkflowCreateComponent"], _wm_components_workflow_list_workflow_list_component__WEBPACK_IMPORTED_MODULE_27__["WorkflowListComponent"], _wm_components_create_create_singletask_create_singletask_component__WEBPACK_IMPORTED_MODULE_29__["CreateSingletaskComponent"], _wm_components_create_create_invoice_create_invoice_component__WEBPACK_IMPORTED_MODULE_30__["CreateInvoiceComponent"], _wm_components_create_create_testthreetask_create_testthreetask_component__WEBPACK_IMPORTED_MODULE_31__["CreateTestthreetaskComponent"], _wm_components_edit_edit_invoice_edit_invoice_component__WEBPACK_IMPORTED_MODULE_32__["EditInvoiceComponent"], _wm_components_edit_edit_single_task_edit_single_task_component__WEBPACK_IMPORTED_MODULE_33__["EditSingleTaskComponent"], _wm_components_edit_edit_testthree_task_edit_testthree_task_component__WEBPACK_IMPORTED_MODULE_34__["EditTestthreeTaskComponent"], _wm_components_workflow_inlineview_workflow_inlineview_component__WEBPACK_IMPORTED_MODULE_35__["WorkflowInlineviewComponent"], _components_select_user_select_user_component__WEBPACK_IMPORTED_MODULE_36__["SelectUserComponent"], _wm_components_invoice_ocr_detail_invoice_ocr_detail_component__WEBPACK_IMPORTED_MODULE_37__["InvoiceOcrDetailComponent"], _components_file_preview_file_preview_component__WEBPACK_IMPORTED_MODULE_38__["FilePreviewComponent"], _components_wm_file_upload_wm_file_upload_component__WEBPACK_IMPORTED_MODULE_39__["WmFileUploadComponent"], _components_wm_assign_list_wm_assign_list_component__WEBPACK_IMPORTED_MODULE_40__["WmAssignListComponent"], _company_components_user_list_user_list_component__WEBPACK_IMPORTED_MODULE_41__["UserListComponent"], _company_components_company_info_company_info_component__WEBPACK_IMPORTED_MODULE_42__["CompanyInfoComponent"], _company_components_departments_list_departments_list_component__WEBPACK_IMPORTED_MODULE_43__["DepartmentsListComponent"], _company_components_workflowtype_property_setting_workflowtype_property_setting_component__WEBPACK_IMPORTED_MODULE_44__["WorkflowtypePropertySettingComponent"], _components_text_list_text_list_component__WEBPACK_IMPORTED_MODULE_45__["TextListComponent"], _company_components_ocr_presets_ocr_presets_component__WEBPACK_IMPORTED_MODULE_46__["OcrPresetsComponent"]],
           providers: [_services_global_service__WEBPACK_IMPORTED_MODULE_16__["GlobalService"], _services_authentication_service__WEBPACK_IMPORTED_MODULE_17__["AuthenticationService"], _services_workflow_workflow_message_service__WEBPACK_IMPORTED_MODULE_18__["WorkflowMessageService"], _helper__WEBPACK_IMPORTED_MODULE_13__["fakeBackendProvider"]],
           bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_14__["AppComponent"]]
         }]
@@ -901,9 +907,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony import */
 
 
-    var _company_components_workflowtype_property_setting_workflowtype_property_setting_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(
-    /*! ./company-components/workflowtype-property-setting/workflowtype-property-setting.component */
-    "./src/app/company-components/workflowtype-property-setting/workflowtype-property-setting.component.ts");
+    var _company_components_ocr_presets_ocr_presets_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(
+    /*! ./company-components/ocr-presets/ocr-presets.component */
+    "./src/app/company-components/ocr-presets/ocr-presets.component.ts");
 
     var routes = [{
       path: '',
@@ -958,8 +964,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       component: _company_components_company_info_company_info_component__WEBPACK_IMPORTED_MODULE_14__["CompanyInfoComponent"],
       canActivate: [_services_authentication_service__WEBPACK_IMPORTED_MODULE_1__["AuthenticationService"]]
     }, {
-      path: 'company/workflowtypes',
-      component: _company_components_workflowtype_property_setting_workflowtype_property_setting_component__WEBPACK_IMPORTED_MODULE_16__["WorkflowtypePropertySettingComponent"],
+      path: 'company/ocrpresets',
+      component: _company_components_ocr_presets_ocr_presets_component__WEBPACK_IMPORTED_MODULE_16__["OcrPresetsComponent"],
       canActivate: [_services_authentication_service__WEBPACK_IMPORTED_MODULE_1__["AuthenticationService"]]
     }, {
       path: 'auth/login',
@@ -2808,6 +2814,1347 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
   },
 
   /***/
+  "./src/app/company-components/ocr-presets/ocr-presets.component.ts":
+  /*!*************************************************************************!*\
+    !*** ./src/app/company-components/ocr-presets/ocr-presets.component.ts ***!
+    \*************************************************************************/
+
+  /*! exports provided: OcrPresetsComponent */
+
+  /***/
+  function srcAppCompanyComponentsOcrPresetsOcrPresetsComponentTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "OcrPresetsComponent", function () {
+      return OcrPresetsComponent;
+    });
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! @angular/core */
+    "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+    /* harmony import */
+
+
+    var _ui_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! ../../ui-models */
+    "./src/app/ui-models/index.ts");
+    /* harmony import */
+
+
+    var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! @angular/router */
+    "./node_modules/@angular/router/__ivy_ngcc__/fesm2015/router.js");
+    /* harmony import */
+
+
+    var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! @ngx-translate/core */
+    "./node_modules/@ngx-translate/core/__ivy_ngcc__/fesm2015/ngx-translate-core.js");
+    /* harmony import */
+
+
+    var _services_company_ocr_presets_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! ../../services/company/ocr-presets.service */
+    "./src/app/services/company/ocr-presets.service.ts");
+    /* harmony import */
+
+
+    var _services_loading_service_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+    /*! ../../services/loading-service.service */
+    "./src/app/services/loading-service.service.ts");
+    /* harmony import */
+
+
+    var _services_error_service_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+    /*! ../../services/error-service.service */
+    "./src/app/services/error-service.service.ts");
+    /* harmony import */
+
+
+    var _angular_forms__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+    /*! @angular/forms */
+    "./node_modules/@angular/forms/__ivy_ngcc__/fesm2015/forms.js");
+    /* harmony import */
+
+
+    var _angular_material_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+    /*! @angular/material/core */
+    "./node_modules/@angular/material/__ivy_ngcc__/fesm2015/core.js");
+    /* harmony import */
+
+
+    var _angular_material_table__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+    /*! @angular/material/table */
+    "./node_modules/@angular/material/__ivy_ngcc__/fesm2015/table.js");
+    /* harmony import */
+
+
+    var _angular_common__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
+    /*! @angular/common */
+    "./node_modules/@angular/common/__ivy_ngcc__/fesm2015/common.js");
+    /* harmony import */
+
+
+    var _components_text_list_text_list_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
+    /*! ../../components/text-list/text-list.component */
+    "./src/app/components/text-list/text-list.component.ts");
+
+    function OcrPresetsComponent_th_13_Template(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "th", 42);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipe"](2, "translate");
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+      }
+
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](2, 1, "ocr-preset.name"), " ");
+      }
+    }
+
+    function OcrPresetsComponent_td_14_Template(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "td", 43);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+      }
+
+      if (rf & 2) {
+        var element_r259 = ctx.$implicit;
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", element_r259.presetName, " ");
+      }
+    }
+
+    function OcrPresetsComponent_th_16_Template(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "th", 44);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipe"](2, "translate");
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+      }
+
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](2, 1, "workflow-type"), " ");
+      }
+    }
+
+    function OcrPresetsComponent_td_17_Template(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "td", 43);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+      }
+
+      if (rf & 2) {
+        var element_r260 = ctx.$implicit;
+
+        var ctx_r248 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", ctx_r248.getWorkflowTypeTitle(element_r260.workflowTypeIdentity), " ");
+      }
+    }
+
+    function OcrPresetsComponent_th_19_Template(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "th", 45);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipe"](2, "translate");
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+      }
+
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](2, 1, "user-status"), " ");
+      }
+    }
+
+    function OcrPresetsComponent_td_20_Template(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "td", 43);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipe"](2, "translate");
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipe"](3, "translate");
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+      }
+
+      if (rf & 2) {
+        var element_r261 = ctx.$implicit;
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", element_r261.status == 1 ? _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](2, 1, "common.active") : _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](3, 3, "common.deactive"), "");
+      }
+    }
+
+    function OcrPresetsComponent_th_22_Template(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "th", 46);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, " ... ");
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+      }
+    }
+
+    function OcrPresetsComponent_td_23_Template(rf, ctx) {
+      if (rf & 1) {
+        var _r265 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "td", 43);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "a", 47);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function OcrPresetsComponent_td_23_Template_a_click_1_listener($event) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r265);
+
+          var element_r262 = ctx.$implicit;
+
+          var ctx_r264 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+
+          return ctx_r264.showEditPreset(element_r262);
+        });
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "i", 4);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](3, "edit");
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](4, "a", 47);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function OcrPresetsComponent_td_23_Template_a_click_4_listener($event) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r265);
+
+          var element_r262 = ctx.$implicit;
+
+          var ctx_r266 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+
+          return ctx_r266.showPreset(element_r262);
+        });
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](5, "i", 4);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](6, "pageview");
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](7, "a", 47);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function OcrPresetsComponent_td_23_Template_a_click_7_listener($event) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r265);
+
+          var element_r262 = ctx.$implicit;
+
+          var ctx_r267 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+
+          return ctx_r267.showDeletePreset(element_r262);
+        });
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](8, "i", 4);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](9, "delete");
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+      }
+    }
+
+    function OcrPresetsComponent_tr_24_Template(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](0, "tr", 48);
+      }
+    }
+
+    function OcrPresetsComponent_tr_25_Template(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](0, "tr", 49);
+      }
+    }
+
+    function OcrPresetsComponent_option_43_Template(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "option", 50);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+      }
+
+      if (rf & 2) {
+        var worlflowType_r269 = ctx.$implicit;
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpropertyInterpolate"]("value", worlflowType_r269.identity);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](worlflowType_r269.title);
+      }
+    }
+
+    function OcrPresetsComponent_div_54_option_5_Template(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "option", 50);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+      }
+
+      if (rf & 2) {
+        var ocrType_r274 = ctx.$implicit;
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpropertyInterpolate"]("value", ocrType_r274.value);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ocrType_r274.title);
+      }
+    }
+
+    function OcrPresetsComponent_div_54_input_6_Template(rf, ctx) {
+      if (rf & 1) {
+        var _r277 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "input", 54);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("ngModelChange", function OcrPresetsComponent_div_54_input_6_Template_input_ngModelChange_0_listener($event) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r277);
+
+          var prop_r270 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]().$implicit;
+
+          var ctx_r275 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+
+          return ctx_r275.setPresetItemValue(prop_r270.propertyName, $event);
+        });
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+      }
+
+      if (rf & 2) {
+        var prop_r270 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]().$implicit;
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngModel", prop_r270.value);
+      }
+    }
+
+    function OcrPresetsComponent_div_54_a_7_Template(rf, ctx) {
+      if (rf & 1) {
+        var _r281 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "a", 55);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function OcrPresetsComponent_div_54_a_7_Template_a_click_0_listener($event) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r281);
+
+          var prop_r270 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]().$implicit;
+
+          var ctx_r279 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+
+          return ctx_r279.selectValueList(prop_r270);
+        });
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "i", 4);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2, "list");
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+      }
+    }
+
+    function OcrPresetsComponent_div_54_Template(rf, ctx) {
+      if (rf & 1) {
+        var _r283 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 24);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "label", 25);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipe"](3, "translate");
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](4, "select", 51);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("ngModelChange", function OcrPresetsComponent_div_54_Template_select_ngModelChange_4_listener($event) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r283);
+
+          var prop_r270 = ctx.$implicit;
+
+          var ctx_r282 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+
+          return ctx_r282.setPresetItemOcrType(prop_r270.propertyName, $event);
+        });
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](5, OcrPresetsComponent_div_54_option_5_Template, 2, 2, "option", 27);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](6, OcrPresetsComponent_div_54_input_6_Template, 1, 1, "input", 52);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](7, OcrPresetsComponent_div_54_a_7_Template, 3, 0, "a", 53);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+      }
+
+      if (rf & 2) {
+        var prop_r270 = ctx.$implicit;
+
+        var ctx_r256 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](3, 5, prop_r270.propertyName));
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngModel", prop_r270.ocrType);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx_r256.ocrTypeList);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", prop_r270.ocrType !== 0);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", prop_r270.ocrType !== 0);
+      }
+    }
+
+    function OcrPresetsComponent_div_55_Template(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 24);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "span");
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipe"](3, "translate");
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+      }
+
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](3, 1, "ocr-preset.no-items"));
+      }
+    }
+
+    function OcrPresetsComponent_div_83_Template(rf, ctx) {
+      if (rf & 1) {
+        var _r285 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 56);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 57);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "div", 20);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](3, "h5", 58);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](4);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipe"](5, "translate");
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](6, "button", 59);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function OcrPresetsComponent_div_83_Template_button_click_6_listener($event) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r285);
+
+          var ctx_r284 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+
+          return ctx_r284.hideTextListDialog();
+        });
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](7, "span", 60);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](8, "\xD7");
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](9, "div", 23);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](10, "app-text-list", 61);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("textChanged", function OcrPresetsComponent_div_83_Template_app_text_list_textChanged_10_listener($event) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r285);
+
+          var ctx_r286 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+
+          return ctx_r286.selectedTextChanged($event);
+        });
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](11, "div", 33);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](12, "button", 62);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function OcrPresetsComponent_div_83_Template_button_click_12_listener($event) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r285);
+
+          var ctx_r287 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+
+          return ctx_r287.applySelectexTextChanged();
+        });
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](13);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipe"](14, "translate");
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](15, "button", 34);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function OcrPresetsComponent_div_83_Template_button_click_15_listener($event) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r285);
+
+          var ctx_r288 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+
+          return ctx_r288.hideTextListDialog();
+        });
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](16);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipe"](17, "translate");
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+      }
+
+      if (rf & 2) {
+        var ctx_r258 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](5, 5, "text.text-list"));
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](6);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("separator", ctx_r258.textSeparator)("text", ctx_r258.selectedTextToMakeList);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](14, 7, "common.apply"));
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](17, 9, "common.close"));
+      }
+    }
+
+    var _c0 = function _c0(a0) {
+      return {
+        "show": a0
+      };
+    };
+
+    var OcrPresetsComponent =
+    /*#__PURE__*/
+    function () {
+      function OcrPresetsComponent(router, translate, editService, loadingService, errorService, route, formBuilder, dateAdapter) {
+        var _this10 = this;
+
+        _classCallCheck(this, OcrPresetsComponent);
+
+        this.router = router;
+        this.editService = editService;
+        this.loadingService = loadingService;
+        this.errorService = errorService;
+        this.route = route;
+        this.formBuilder = formBuilder;
+        this.dateAdapter = dateAdapter;
+        this.displayedColumns = ['preset-name', 'workflow-type', 'preset-status', 'actions'];
+        this.ocrSettingPresets = [];
+        this.ocrTypeList = [];
+        this.worlflowTypes = [];
+        this.worlflowTypeItems = [];
+        this.selectedPreset = new _ui_models__WEBPACK_IMPORTED_MODULE_1__["CompanyWorkflowtypeItemOcrSettingPreset"]();
+        this.selectedPresetItems = [];
+        this.selectedPresetChanged = false;
+        this.showEditDialog = false;
+        this.showDeleteDialog = false;
+        this.deleteMessage = "";
+        this.deleteMessageBase = "";
+        this.createNewPreset = false;
+        this.newPresetTitle = "";
+        this.showTextListDialog = false;
+        this.textSeparator = ";";
+        this.selectedTextToMakeList = "";
+        this.selectedPropertyName = "";
+        this.dateAdapter.setLocale('de');
+        translate.get('ocr-preset.new-preset').subscribe(function (res) {
+          _this10.newPresetTitle = res;
+        });
+
+        for (var type = 0; type < 3; type++) {
+          translate.get('ocr-preset.ocrtype-' + type).subscribe(function (res) {
+            _this10.ocrTypeList.push({
+              value: type,
+              title: res
+            });
+          });
+        }
+
+        translate.get('ocr-preset-delete-message').subscribe(function (res) {
+          _this10.deleteMessageBase = res;
+        });
+      }
+
+      _createClass(OcrPresetsComponent, [{
+        key: "ngOnInit",
+        value: function ngOnInit() {
+          var _this11 = this;
+
+          this.editService.pageInitData().subscribe(function (results) {
+            console.log("OcrSetting init data", results);
+            _this11.worlflowTypes = results.worlflowTypes;
+            _this11.worlflowTypeItems = results.worlflowTypeItems;
+            console.log("worlflowTypes", _this11.worlflowTypes);
+            console.log("worlflowTypeItems", _this11.worlflowTypeItems);
+          }, function (response) {
+            console.log("Error in get OcrSetting init data", response);
+
+            _this11.loadingService.hideLoading();
+
+            _this11.errorService.showErrorResponse(response);
+          }, function () {
+            _this11.loadingService.hideLoading();
+          });
+          this.reload();
+        }
+      }, {
+        key: "debug",
+        value: function debug() {
+          return JSON.stringify(this.ocrSettingPresets);
+        }
+      }, {
+        key: "reload",
+        value: function reload() {
+          var _this12 = this;
+
+          this.loadingService.showLoading();
+          this.editService.listPresets().subscribe(function (results) {
+            console.log("CompanyWorkflowtypeItemOcrSetting list", results);
+            _this12.ocrSettingPresets = results;
+          }, function (response) {
+            console.log("Error in get CompanyWorkflowtypeItemOcrSetting list", response);
+
+            _this12.loadingService.hideLoading();
+
+            _this12.errorService.showErrorResponse(response);
+          }, function () {
+            _this12.loadingService.hideLoading();
+          });
+        }
+      }, {
+        key: "showAddPreset",
+        value: function showAddPreset() {
+          this.selectedPreset = new _ui_models__WEBPACK_IMPORTED_MODULE_1__["CompanyWorkflowtypeItemOcrSettingPreset"]();
+          this.selectedPreset.presetName = this.newPresetTitle;
+          this.selectedPresetItems = this.selectedPreset.items;
+          this.showEditDialog = true;
+          this.selectedPresetChanged = true;
+          this.createNewPreset = true;
+        }
+      }, {
+        key: "showEditPreset",
+        value: function showEditPreset(preset) {
+          this.selectedPreset = JSON.parse(JSON.stringify(preset));
+          this.selectedPresetItems = this.resetPresetItems(this.selectedPreset);
+          this.showEditDialog = true;
+          this.selectedPresetChanged = false;
+          this.createNewPreset = false;
+        }
+      }, {
+        key: "showPreset",
+        value: function showPreset(preset) {
+          this.selectedPreset = JSON.parse(JSON.stringify(preset));
+          this.selectedPresetItems = this.resetPresetItems(this.selectedPreset);
+          this.showEditDialog = false;
+          this.selectedPresetChanged = false;
+          this.createNewPreset = false;
+        }
+      }, {
+        key: "showDeletePreset",
+        value: function showDeletePreset(preset) {
+          this.selectedPreset = JSON.parse(JSON.stringify(preset));
+          this.deleteMessage = this.deleteMessageBase;
+          this.deleteMessage = this.deleteMessage.replace("%", preset.presetName);
+          this.showDeleteDialog = true;
+        }
+      }, {
+        key: "hideEditPresetDialog",
+        value: function hideEditPresetDialog() {
+          this.showEditDialog = false;
+          this.selectedPresetChanged = false;
+        }
+      }, {
+        key: "hideDeletePresetDialog",
+        value: function hideDeletePresetDialog() {
+          this.showDeleteDialog = false;
+        }
+      }, {
+        key: "setPresetName",
+        value: function setPresetName(newVal) {
+          this.selectedPreset.presetName = newVal;
+        }
+      }, {
+        key: "setPresetWorkflowIdentity",
+        value: function setPresetWorkflowIdentity(newVal) {
+          this.selectedPreset.workflowTypeIdentity = newVal;
+          this.selectedPresetItems = this.resetPresetItems(this.selectedPreset);
+        }
+      }, {
+        key: "resetPresetItems",
+        value: function resetPresetItems(preset) {
+          var items = []; //preset.items
+
+          for (var index in this.worlflowTypeItems[preset.workflowTypeIdentity]) {
+            var itemName = this.worlflowTypeItems[preset.workflowTypeIdentity][index];
+            var item = this.findItemByName(preset, itemName);
+
+            if (item === null) {
+              item = new _ui_models__WEBPACK_IMPORTED_MODULE_1__["CompanyWorkflowtypeItemOcrSettingPresetItem"]();
+              item.propertyName = itemName;
+              item.value = "";
+              item.ocrType = 0;
+            }
+
+            items.push(item);
+          }
+
+          return items; //this.selectedPresetItems = this.selectedPreset.items;
+        }
+      }, {
+        key: "findItemByName",
+        value: function findItemByName(preset, propertyName) {
+          for (var index in preset.items) {
+            if (preset.items[index].propertyName === propertyName) {
+              return preset.items[index];
+            }
+          }
+
+          return null;
+        }
+      }, {
+        key: "setPresetItemValue",
+        value: function setPresetItemValue(name, newVal) {
+          for (var index in this.selectedPresetItems) {
+            if (this.selectedPresetItems[index].propertyName === name) {
+              this.selectedPresetItems[index].value = newVal;
+              this.selectedPresetChanged = true;
+              break;
+            }
+          }
+        }
+      }, {
+        key: "setPresetItemOcrType",
+        value: function setPresetItemOcrType(name, newVal) {
+          for (var index in this.selectedPresetItems) {
+            if (this.selectedPresetItems[index].propertyName === name) {
+              this.selectedPresetItems[index].ocrType = newVal;
+              this.selectedPresetChanged = true;
+              break;
+            }
+          }
+        }
+      }, {
+        key: "savePreset",
+        value: function savePreset() {
+          var _this13 = this;
+
+          this.selectedPreset.items = this.selectedPresetItems;
+          this.loadingService.showLoading();
+          this.editService.updatePreset(this.selectedPreset).subscribe(function (results) {
+            console.log("Update CompanyWorkflowtypeItemOcrSetting", results);
+            _this13.ocrSettingPresets = results;
+            _this13.showEditDialog = false;
+            _this13.selectedPresetChanged = false; //this.reload();
+          }, function (response) {
+            console.log("Error in Update CompanyWorkflowtypeItemOcrSetting", response);
+
+            _this13.loadingService.hideLoading();
+
+            _this13.errorService.showErrorResponse(response);
+          }, function () {
+            _this13.loadingService.hideLoading();
+          }); //this.reload();
+        }
+      }, {
+        key: "deletePreset",
+        value: function deletePreset() {
+          var _this14 = this;
+
+          this.loadingService.showLoading();
+          this.editService.deletePreset(this.selectedPreset).subscribe(function (results) {
+            console.log("Delete CompanyWorkflowtypeItemOcrSetting", results);
+            _this14.ocrSettingPresets = results;
+
+            _this14.hideDeletePresetDialog(); //this.reload();
+
+          }, function (response) {
+            console.log("Error in delete CompanyWorkflowtypeItemOcrSetting", response);
+
+            _this14.loadingService.hideLoading();
+
+            _this14.errorService.showErrorResponse(response);
+          }, function () {
+            _this14.loadingService.hideLoading();
+          });
+        }
+      }, {
+        key: "selectValueList",
+        value: function selectValueList(prop) {
+          this.selectedTextToMakeList = prop.value;
+          this.selectedPropertyName = prop.propertyName;
+          this.showTextListDialog = true;
+        }
+      }, {
+        key: "selectedTextChanged",
+        value: function selectedTextChanged(text) {
+          this.selectedTextToMakeList = text;
+        }
+      }, {
+        key: "applySelectexTextChanged",
+        value: function applySelectexTextChanged() {
+          for (var index in this.selectedPresetItems) {
+            if (this.selectedPresetItems[index].propertyName === this.selectedPropertyName) {
+              this.selectedPresetItems[index].value = this.selectedTextToMakeList;
+              this.selectedPresetChanged = true;
+              break;
+            }
+          }
+
+          this.showTextListDialog = false;
+        }
+      }, {
+        key: "hideTextListDialog",
+        value: function hideTextListDialog() {
+          this.showTextListDialog = false;
+        }
+      }, {
+        key: "getWorkflowTypeTitle",
+        value: function getWorkflowTypeTitle(identity) {
+          for (var index in this.worlflowTypes) {
+            if (this.worlflowTypes[index].identity === identity) {
+              return this.worlflowTypes[index].title;
+            }
+          }
+
+          return "";
+        }
+      }, {
+        key: "getSelectedPresetName",
+        value: function getSelectedPresetName() {
+          return this.createNewPreset ? this.newPresetTitle : this.selectedPreset.presetName;
+        }
+      }, {
+        key: "isSelectedPresetValid",
+        value: function isSelectedPresetValid() {
+          return this.selectedPreset.presetName !== "" && this.selectedPreset.workflowTypeIdentity !== "";
+        }
+      }]);
+
+      return OcrPresetsComponent;
+    }();
+
+    OcrPresetsComponent.ɵfac = function OcrPresetsComponent_Factory(t) {
+      return new (t || OcrPresetsComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_ngx_translate_core__WEBPACK_IMPORTED_MODULE_3__["TranslateService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_company_ocr_presets_service__WEBPACK_IMPORTED_MODULE_4__["OcrPresetsService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_loading_service_service__WEBPACK_IMPORTED_MODULE_5__["LoadingServiceService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_error_service_service__WEBPACK_IMPORTED_MODULE_6__["ErrorServiceService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_7__["FormBuilder"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_material_core__WEBPACK_IMPORTED_MODULE_8__["DateAdapter"]));
+    };
+
+    OcrPresetsComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({
+      type: OcrPresetsComponent,
+      selectors: [["app-ocr-presets"]],
+      decls: 84,
+      vars: 38,
+      consts: [[1, "content-container"], [1, "page-toolbar"], [1, "page-title"], [1, "toolbar-button", 3, "click"], [1, "material-icons"], ["mat-table", "", 3, "dataSource"], ["matColumnDef", "preset-name"], ["mat-header-cell", "", 4, "matHeaderCellDef"], ["mat-cell", "", 4, "matCellDef"], ["matColumnDef", "workflow-type"], ["class", "wt-header", "mat-header-cell", "", 4, "matHeaderCellDef"], ["matColumnDef", "preset-status"], ["class", "status-header", "mat-header-cell", "", 4, "matHeaderCellDef"], ["matColumnDef", "actions"], ["class", "action-header", "mat-header-cell", "", 4, "matHeaderCellDef"], ["mat-header-row", "", 4, "matHeaderRowDef", "matHeaderRowDefSticky"], ["mat-row", "", 4, "matRowDef", "matRowDefColumns"], ["tabindex", "-1", "id", "editpresetdialog", "role", "dialog", "aria-labelledby", "exampleModalCenterTitle", 1, "modal", "fade", 3, "ngClass"], ["role", "document", 1, "modal-dialog", "modal-dialog-centered", "modal-dialog-centered-presetedit"], [1, "modal-content", "preset-edit-modal-content"], [1, "modal-header"], ["id", "exampleModalLongTitle", 1, "modal-title", "dialog-title"], [1, "dialog-toolbar-button", "close", 3, "click"], [1, "modal-body"], [1, "row-item"], [1, "property-label"], [1, "property-value", 3, "ngModel", "ngModelChange"], [3, "value", 4, "ngFor", "ngForOf"], ["type", "text", 1, "property-value", 3, "ngModel", "ngModelChange"], [1, "row-item", "padd-top-40"], [1, "preset-items-container"], ["class", "row-item", 4, "ngFor", "ngForOf"], ["class", "row-item", 4, "ngIf"], [1, "modal-footer"], ["type", "button", 1, "btn", "btn-secondary", 3, "click"], ["type", "button", 1, "btn", "btn-primary", 3, "disabled", "click"], ["tabindex", "-1", "id", "deletepresetdialog", "role", "dialog", "aria-labelledby", "exampleModalCenterTitle", 1, "modal", "fade", 3, "ngClass"], ["role", "document", 1, "modal-dialog", "modal-dialog-centered", "preset-delete-dialog"], [1, "modal-content"], ["role", "alert", 1, "alert", "alert-danger", "custome-ander-text"], ["type", "button", 1, "btn", "btn-danger", 3, "click"], ["class", "modal fade show", "tabindex", "-1", "role", "dialog", 4, "ngIf"], ["mat-header-cell", ""], ["mat-cell", ""], ["mat-header-cell", "", 1, "wt-header"], ["mat-header-cell", "", 1, "status-header"], ["mat-header-cell", "", 1, "action-header"], [1, "tool-link", 3, "click"], ["mat-header-row", ""], ["mat-row", ""], [3, "value"], [1, "property-ocrtype", 3, "ngModel", "ngModelChange"], ["type", "text", "class", "property-value", "readonly", "", 3, "ngModel", "ngModelChange", 4, "ngIf"], ["class", "toolbar-link selectlist-button", 3, "click", 4, "ngIf"], ["type", "text", "readonly", "", 1, "property-value", 3, "ngModel", "ngModelChange"], [1, "toolbar-link", "selectlist-button", 3, "click"], ["tabindex", "-1", "role", "dialog", 1, "modal", "fade", "show"], ["role", "document", 1, "modal-dialog", "text-list-dialog"], [1, "modal-title"], ["type", "button", "aria-label", "Close", 1, "close", 3, "click"], ["aria-hidden", "true"], [3, "separator", "text", "textChanged"], ["type", "button", 1, "btn", "btn-primary", 3, "click"]],
+      template: function OcrPresetsComponent_Template(rf, ctx) {
+        if (rf & 1) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "div", 2);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](3);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipe"](4, "translate");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](5, "button", 3);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function OcrPresetsComponent_Template_button_click_5_listener($event) {
+            return ctx.reload();
+          });
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](6, "i", 4);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](7, "refresh");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](8, "button", 3);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function OcrPresetsComponent_Template_button_click_8_listener($event) {
+            return ctx.showAddPreset();
+          });
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](9, "i", 4);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](10, "add");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](11, "table", 5);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementContainerStart"](12, 6);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](13, OcrPresetsComponent_th_13_Template, 3, 3, "th", 7);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](14, OcrPresetsComponent_td_14_Template, 2, 1, "td", 8);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementContainerEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementContainerStart"](15, 9);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](16, OcrPresetsComponent_th_16_Template, 3, 3, "th", 10);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](17, OcrPresetsComponent_td_17_Template, 2, 1, "td", 8);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementContainerEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementContainerStart"](18, 11);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](19, OcrPresetsComponent_th_19_Template, 3, 3, "th", 12);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](20, OcrPresetsComponent_td_20_Template, 4, 5, "td", 8);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementContainerEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementContainerStart"](21, 13);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](22, OcrPresetsComponent_th_22_Template, 2, 0, "th", 14);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](23, OcrPresetsComponent_td_23_Template, 10, 0, "td", 8);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementContainerEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](24, OcrPresetsComponent_tr_24_Template, 1, 0, "tr", 15);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](25, OcrPresetsComponent_tr_25_Template, 1, 0, "tr", 16);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](26, "div", 17);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](27, "div", 18);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](28, "div", 19);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](29, "div", 20);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](30, "h5", 21);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](31);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipe"](32, "translate");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipe"](33, "translate");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](34, "button", 22);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function OcrPresetsComponent_Template_button_click_34_listener($event) {
+            return ctx.hideEditPresetDialog();
+          });
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](35, "i", 4);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](36, "close");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](37, "div", 23);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](38, "div", 24);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](39, "label", 25);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](40);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipe"](41, "translate");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](42, "select", 26);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("ngModelChange", function OcrPresetsComponent_Template_select_ngModelChange_42_listener($event) {
+            return ctx.setPresetWorkflowIdentity($event);
+          });
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](43, OcrPresetsComponent_option_43_Template, 2, 2, "option", 27);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](44, "div", 24);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](45, "label", 25);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](46);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipe"](47, "translate");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](48, "input", 28);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("ngModelChange", function OcrPresetsComponent_Template_input_ngModelChange_48_listener($event) {
+            return ctx.setPresetName($event);
+          });
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](49, "div", 29);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](50, "h3");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](51);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipe"](52, "translate");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](53, "div", 30);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](54, OcrPresetsComponent_div_54_Template, 8, 7, "div", 31);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](55, OcrPresetsComponent_div_55_Template, 4, 3, "div", 32);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](56, "div", 33);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](57, "button", 34);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function OcrPresetsComponent_Template_button_click_57_listener($event) {
+            return ctx.hideEditPresetDialog();
+          });
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](58, "i", 4);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](59, "close");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](60, "button", 35);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function OcrPresetsComponent_Template_button_click_60_listener($event) {
+            return ctx.savePreset();
+          });
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](61, "i", 4);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](62, "save");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](63, "div", 36);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](64, "div", 37);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](65, "div", 38);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](66, "div", 20);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](67, "h5", 21);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](68);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipe"](69, "translate");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](70, "button", 22);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function OcrPresetsComponent_Template_button_click_70_listener($event) {
+            return ctx.hideDeletePresetDialog();
+          });
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](71, "i", 4);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](72, "close");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](73, "div", 23);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](74, "div", 39);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](75);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](76, "div", 33);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](77, "button", 34);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function OcrPresetsComponent_Template_button_click_77_listener($event) {
+            return ctx.hideDeletePresetDialog();
+          });
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](78, "i", 4);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](79, "close");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](80, "button", 40);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function OcrPresetsComponent_Template_button_click_80_listener($event) {
+            return ctx.deletePreset();
+          });
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](81, "i", 4);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](82, "delete");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](83, OcrPresetsComponent_div_83_Template, 18, 11, "div", 41);
+        }
+
+        if (rf & 2) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](4, 20, "ocr-preset.title"));
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](8);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("dataSource", ctx.ocrSettingPresets);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](13);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("matHeaderRowDef", ctx.displayedColumns)("matHeaderRowDefSticky", true);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("matRowDefColumns", ctx.displayedColumns);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngClass", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction1"](34, _c0, ctx.showEditDialog));
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](5);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx.createNewPreset ? _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](32, 22, "ocr-preset-create-modal-title") : _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](33, 24, "ocr-preset-edit-modal-title"));
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](9);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](41, 26, "workflow-type"));
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngModel", ctx.selectedPreset.workflowTypeIdentity);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx.worlflowTypes);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](47, 28, "ocr-preset.name"));
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngModel", ctx.selectedPreset.presetName);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](52, 30, "ocr-preset.items"));
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx.selectedPresetItems);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.selectedPresetItems.length === 0);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](5);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("disabled", ctx.isSelectedPresetValid() === false);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngClass", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction1"](36, _c0, ctx.showDeleteDialog));
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](5);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](69, 32, "ocr-preset-delete-modal-title"));
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](7);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx.deleteMessage);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](8);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.showTextListDialog);
+        }
+      },
+      directives: [_angular_material_table__WEBPACK_IMPORTED_MODULE_9__["MatTable"], _angular_material_table__WEBPACK_IMPORTED_MODULE_9__["MatColumnDef"], _angular_material_table__WEBPACK_IMPORTED_MODULE_9__["MatHeaderCellDef"], _angular_material_table__WEBPACK_IMPORTED_MODULE_9__["MatCellDef"], _angular_material_table__WEBPACK_IMPORTED_MODULE_9__["MatHeaderRowDef"], _angular_material_table__WEBPACK_IMPORTED_MODULE_9__["MatRowDef"], _angular_common__WEBPACK_IMPORTED_MODULE_10__["NgClass"], _angular_forms__WEBPACK_IMPORTED_MODULE_7__["SelectControlValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_7__["NgControlStatus"], _angular_forms__WEBPACK_IMPORTED_MODULE_7__["NgModel"], _angular_common__WEBPACK_IMPORTED_MODULE_10__["NgForOf"], _angular_forms__WEBPACK_IMPORTED_MODULE_7__["DefaultValueAccessor"], _angular_common__WEBPACK_IMPORTED_MODULE_10__["NgIf"], _angular_material_table__WEBPACK_IMPORTED_MODULE_9__["MatHeaderCell"], _angular_material_table__WEBPACK_IMPORTED_MODULE_9__["MatCell"], _angular_material_table__WEBPACK_IMPORTED_MODULE_9__["MatHeaderRow"], _angular_material_table__WEBPACK_IMPORTED_MODULE_9__["MatRow"], _angular_forms__WEBPACK_IMPORTED_MODULE_7__["NgSelectOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_7__["ɵangular_packages_forms_forms_x"], _components_text_list_text_list_component__WEBPACK_IMPORTED_MODULE_11__["TextListComponent"]],
+      pipes: [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_3__["TranslatePipe"]],
+      styles: ["table[_ngcontent-%COMP%] {\r\n  width: 100%;\r\n  background: #ffffff;\r\n  margin-top: 30px;\r\n}\r\n\r\ntable[_ngcontent-%COMP%]   a.tool-link[_ngcontent-%COMP%] {\r\n    color: #828282;\r\n    cursor: pointer;\r\n}\r\n\r\n.mat-header-cell[_ngcontent-%COMP%] {\r\n    color: white;\r\n    font-size: 16px;\r\n    font-weight: notmal;\r\n}\r\n\r\n.mat-cell[_ngcontent-%COMP%], .mat-footer-cell[_ngcontent-%COMP%] {\r\n    color: #0f0f0f;\r\n}\r\n\r\nth.mat-header-cell[_ngcontent-%COMP%], td.mat-cell[_ngcontent-%COMP%], td.mat-footer-cell[_ngcontent-%COMP%] {\r\n    border: 1px solid #d7d5d5;\r\n    text-align: center;\r\n}\r\n\r\nth.mat-header-cell[_ngcontent-%COMP%] {\r\n    border: 1px solid #acaaaa;\r\n    text-align: center;\r\n}\r\n\r\n.mat-header-row[_ngcontent-%COMP%]{\r\n\tbackground-color: #374373;\r\n}\r\n\r\n.mat-row[_ngcontent-%COMP%]{\r\n\theight: 40px;\r\n}\r\n\r\n.mat-row[_ngcontent-%COMP%]:nth-child(odd){\t\r\n\tbackground-color: #fff;\r\n}\r\n\r\n.mat-row[_ngcontent-%COMP%]:nth-child(even){\t\r\n\tbackground-color: #f2f2f2;\r\n}\r\n\r\n.mat-row[_ngcontent-%COMP%]:hover{\t\r\n\tbackground-color: #feffec;\r\n}\r\n\r\nth.action-header[_ngcontent-%COMP%]{\r\n\twidth: 100px;\r\n}\r\n\r\nth.status-header[_ngcontent-%COMP%]{\r\n\twidth: 120px;\r\n}\r\n\r\nth.wt-header[_ngcontent-%COMP%]{\r\n\twidth: 250px;\r\n}\r\n\r\n.modal-dialog-centered-presetedit[_ngcontent-%COMP%]{\r\n\twidth: calc(100vw - 300px) !important;\r\n    max-width: calc(100vw - 300px);\r\n    margin: auto;\r\n    height: 100vh;\r\n    max-height: 100vh;\r\n    margin-top: 0;\r\n}\r\n\r\n.preset-edit-modal-content[_ngcontent-%COMP%] {\r\n\twidth: 100%;\r\n\theight: calc(100vh - 40px);\r\n}\r\n\r\na.toolbar-link[_ngcontent-%COMP%], a.list-group-item-action[_ngcontent-%COMP%]{\r\n\tcursor: pointer;\r\n}\r\n\r\nlabel.property-label[_ngcontent-%COMP%]{\r\n\twidth: 200px;\r\n\tfont-weight: bold;\r\n}\r\n\r\n.row-item[_ngcontent-%COMP%] {\r\n    position: relative;\r\n    display: block;\r\n    padding: .25rem 1.25rem;\r\n    background-color: #fff;\r\n}\r\n\r\n.padd-top-40[_ngcontent-%COMP%]{\r\n\tpadding-top: 40px;\t\r\n}\r\n\r\n.preset-items-container[_ngcontent-%COMP%]{\r\n\tpadding: 5px 0;\r\n    padding-left: 20px;\r\n    border: 1px solid #cdcdcd;\r\n    border-radius: 5px;\r\n    height: calc(100% - 220px);\r\n    overflow: auto;\r\n}\r\n\r\n.property-value[_ngcontent-%COMP%]{\r\n\twidth: calc(100% - 440px);\r\n\theight: 28px;\r\n    padding: 0 5px;\r\n}\r\n\r\nselect.property-ocrtype[_ngcontent-%COMP%]{\r\n\twidth: 190px;\r\n\theight: 28px;\r\n    padding: 0 5px;\r\n    margin: 0 5px;\r\n}\r\n\r\n.toolbar-link.selectlist-button[_ngcontent-%COMP%] {\r\n    background: lightgrey;\r\n    height: 29px;\r\n    margin-left: 3px;\r\n    width: 25px;\r\n}\r\n\r\n.toolbar-link.selectlist-button[_ngcontent-%COMP%] {\r\n    background: lightgrey;\r\n    height: 29px;\r\n    margin-left: 3px;\r\n    width: 25px;\r\n}\r\n\r\n.toolbar-link.selectlist-button[_ngcontent-%COMP%]   i.material-icons[_ngcontent-%COMP%] {\r\n    font-size: 18px;\r\n}\r\n\r\n.text-list-dialog[_ngcontent-%COMP%]{\r\n\tpointer-events: all;\t\r\n    background-color: white;\r\n\twidth: 500px;\r\n    max-width: 500px;\r\n    min-width: 500px;\r\n    min-height: 90vh;\r\n    max-height: 90vh;\r\n}\r\n\r\n.modal-footer[_ngcontent-%COMP%]{\r\n\tbottom: 0;\r\n    position: absolute;\r\n    width: 100%;\r\n    left: 0;\r\n}\r\n\r\n.modal-dialog.preset-delete-dialog[_ngcontent-%COMP%]{\r\n\tmax-width: calc(100vw - 100px) !important;\r\n    width: 800px !important;\r\n}\r\n\r\n.modal-dialog.preset-delete-dialog[_ngcontent-%COMP%]   .modal-body[_ngcontent-%COMP%]{\r\n\theight: 170px;\r\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29tcGFueS1jb21wb25lbnRzL29jci1wcmVzZXRzL29jci1wcmVzZXRzLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IjtBQUNBO0VBQ0UsV0FBVztFQUNYLG1CQUFtQjtFQUNuQixnQkFBZ0I7QUFDbEI7O0FBRUE7SUFDSSxjQUFjO0lBQ2QsZUFBZTtBQUNuQjs7QUFFQTtJQUNJLFlBQVk7SUFDWixlQUFlO0lBQ2YsbUJBQW1CO0FBQ3ZCOztBQUVBO0lBQ0ksY0FBYztBQUNsQjs7QUFFQTtJQUNJLHlCQUF5QjtJQUN6QixrQkFBa0I7QUFDdEI7O0FBRUE7SUFDSSx5QkFBeUI7SUFDekIsa0JBQWtCO0FBQ3RCOztBQUVBO0NBQ0MseUJBQXlCO0FBQzFCOztBQUVBO0NBQ0MsWUFBWTtBQUNiOztBQUVBO0NBQ0Msc0JBQXNCO0FBQ3ZCOztBQUVBO0NBQ0MseUJBQXlCO0FBQzFCOztBQUVBO0NBQ0MseUJBQXlCO0FBQzFCOztBQUVBO0NBQ0MsWUFBWTtBQUNiOztBQUVBO0NBQ0MsWUFBWTtBQUNiOztBQUVBO0NBQ0MsWUFBWTtBQUNiOztBQUlBO0NBQ0MscUNBQXFDO0lBQ2xDLDhCQUE4QjtJQUM5QixZQUFZO0lBQ1osYUFBYTtJQUNiLGlCQUFpQjtJQUNqQixhQUFhO0FBQ2pCOztBQUVBO0NBQ0MsV0FBVztDQUNYLDBCQUEwQjtBQUMzQjs7QUFHQTtDQUNDLGVBQWU7QUFDaEI7O0FBRUE7Q0FDQyxZQUFZO0NBQ1osaUJBQWlCO0FBQ2xCOztBQUVBO0lBQ0ksa0JBQWtCO0lBQ2xCLGNBQWM7SUFDZCx1QkFBdUI7SUFDdkIsc0JBQXNCO0FBQzFCOztBQUVBO0NBQ0MsaUJBQWlCO0FBQ2xCOztBQUVBO0NBQ0MsY0FBYztJQUNYLGtCQUFrQjtJQUNsQix5QkFBeUI7SUFDekIsa0JBQWtCO0lBQ2xCLDBCQUEwQjtJQUMxQixjQUFjO0FBQ2xCOztBQUVBO0NBQ0MseUJBQXlCO0NBQ3pCLFlBQVk7SUFDVCxjQUFjO0FBQ2xCOztBQUVBO0NBQ0MsWUFBWTtDQUNaLFlBQVk7SUFDVCxjQUFjO0lBQ2QsYUFBYTtBQUNqQjs7QUFFQTtJQUNJLHFCQUFxQjtJQUNyQixZQUFZO0lBQ1osZ0JBQWdCO0lBQ2hCLFdBQVc7QUFDZjs7QUFFQTtJQUNJLHFCQUFxQjtJQUNyQixZQUFZO0lBQ1osZ0JBQWdCO0lBQ2hCLFdBQVc7QUFDZjs7QUFFQTtJQUNJLGVBQWU7QUFDbkI7O0FBRUE7Q0FDQyxtQkFBbUI7SUFDaEIsdUJBQXVCO0NBQzFCLFlBQVk7SUFDVCxnQkFBZ0I7SUFDaEIsZ0JBQWdCO0lBQ2hCLGdCQUFnQjtJQUNoQixnQkFBZ0I7QUFDcEI7O0FBRUE7Q0FDQyxTQUFTO0lBQ04sa0JBQWtCO0lBQ2xCLFdBQVc7SUFDWCxPQUFPO0FBQ1g7O0FBRUE7Q0FDQyx5Q0FBeUM7SUFDdEMsdUJBQXVCO0FBQzNCOztBQUVBO0NBQ0MsYUFBYTtBQUNkIiwiZmlsZSI6InNyYy9hcHAvY29tcGFueS1jb21wb25lbnRzL29jci1wcmVzZXRzL29jci1wcmVzZXRzLmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyJcclxudGFibGUge1xyXG4gIHdpZHRoOiAxMDAlO1xyXG4gIGJhY2tncm91bmQ6ICNmZmZmZmY7XHJcbiAgbWFyZ2luLXRvcDogMzBweDtcclxufVxyXG5cclxudGFibGUgYS50b29sLWxpbmsge1xyXG4gICAgY29sb3I6ICM4MjgyODI7XHJcbiAgICBjdXJzb3I6IHBvaW50ZXI7XHJcbn1cclxuXHJcbi5tYXQtaGVhZGVyLWNlbGwge1xyXG4gICAgY29sb3I6IHdoaXRlO1xyXG4gICAgZm9udC1zaXplOiAxNnB4O1xyXG4gICAgZm9udC13ZWlnaHQ6IG5vdG1hbDtcclxufVxyXG5cclxuLm1hdC1jZWxsLCAubWF0LWZvb3Rlci1jZWxsIHtcclxuICAgIGNvbG9yOiAjMGYwZjBmO1xyXG59XHJcblxyXG50aC5tYXQtaGVhZGVyLWNlbGwsIHRkLm1hdC1jZWxsLCB0ZC5tYXQtZm9vdGVyLWNlbGwge1xyXG4gICAgYm9yZGVyOiAxcHggc29saWQgI2Q3ZDVkNTtcclxuICAgIHRleHQtYWxpZ246IGNlbnRlcjtcclxufVxyXG5cclxudGgubWF0LWhlYWRlci1jZWxsIHtcclxuICAgIGJvcmRlcjogMXB4IHNvbGlkICNhY2FhYWE7XHJcbiAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XHJcbn1cclxuXHJcbi5tYXQtaGVhZGVyLXJvd3tcclxuXHRiYWNrZ3JvdW5kLWNvbG9yOiAjMzc0MzczO1xyXG59XHJcblxyXG4ubWF0LXJvd3tcclxuXHRoZWlnaHQ6IDQwcHg7XHJcbn1cclxuXHJcbi5tYXQtcm93Om50aC1jaGlsZChvZGQpe1x0XHJcblx0YmFja2dyb3VuZC1jb2xvcjogI2ZmZjtcclxufVxyXG5cclxuLm1hdC1yb3c6bnRoLWNoaWxkKGV2ZW4pe1x0XHJcblx0YmFja2dyb3VuZC1jb2xvcjogI2YyZjJmMjtcclxufVxyXG5cclxuLm1hdC1yb3c6aG92ZXJ7XHRcclxuXHRiYWNrZ3JvdW5kLWNvbG9yOiAjZmVmZmVjO1xyXG59XHJcblxyXG50aC5hY3Rpb24taGVhZGVye1xyXG5cdHdpZHRoOiAxMDBweDtcclxufVxyXG5cclxudGguc3RhdHVzLWhlYWRlcntcclxuXHR3aWR0aDogMTIwcHg7XHJcbn1cclxuXHJcbnRoLnd0LWhlYWRlcntcclxuXHR3aWR0aDogMjUwcHg7XHJcbn1cclxuXHJcblxyXG5cclxuLm1vZGFsLWRpYWxvZy1jZW50ZXJlZC1wcmVzZXRlZGl0e1xyXG5cdHdpZHRoOiBjYWxjKDEwMHZ3IC0gMzAwcHgpICFpbXBvcnRhbnQ7XHJcbiAgICBtYXgtd2lkdGg6IGNhbGMoMTAwdncgLSAzMDBweCk7XHJcbiAgICBtYXJnaW46IGF1dG87XHJcbiAgICBoZWlnaHQ6IDEwMHZoO1xyXG4gICAgbWF4LWhlaWdodDogMTAwdmg7XHJcbiAgICBtYXJnaW4tdG9wOiAwO1xyXG59XHJcblxyXG4ucHJlc2V0LWVkaXQtbW9kYWwtY29udGVudCB7XHJcblx0d2lkdGg6IDEwMCU7XHJcblx0aGVpZ2h0OiBjYWxjKDEwMHZoIC0gNDBweCk7XHJcbn1cclxuXHJcblxyXG5hLnRvb2xiYXItbGluaywgYS5saXN0LWdyb3VwLWl0ZW0tYWN0aW9ue1xyXG5cdGN1cnNvcjogcG9pbnRlcjtcclxufVxyXG5cclxubGFiZWwucHJvcGVydHktbGFiZWx7XHJcblx0d2lkdGg6IDIwMHB4O1xyXG5cdGZvbnQtd2VpZ2h0OiBib2xkO1xyXG59XHJcblxyXG4ucm93LWl0ZW0ge1xyXG4gICAgcG9zaXRpb246IHJlbGF0aXZlO1xyXG4gICAgZGlzcGxheTogYmxvY2s7XHJcbiAgICBwYWRkaW5nOiAuMjVyZW0gMS4yNXJlbTtcclxuICAgIGJhY2tncm91bmQtY29sb3I6ICNmZmY7XHJcbn1cclxuXHJcbi5wYWRkLXRvcC00MHtcclxuXHRwYWRkaW5nLXRvcDogNDBweDtcdFxyXG59XHJcblxyXG4ucHJlc2V0LWl0ZW1zLWNvbnRhaW5lcntcclxuXHRwYWRkaW5nOiA1cHggMDtcclxuICAgIHBhZGRpbmctbGVmdDogMjBweDtcclxuICAgIGJvcmRlcjogMXB4IHNvbGlkICNjZGNkY2Q7XHJcbiAgICBib3JkZXItcmFkaXVzOiA1cHg7XHJcbiAgICBoZWlnaHQ6IGNhbGMoMTAwJSAtIDIyMHB4KTtcclxuICAgIG92ZXJmbG93OiBhdXRvO1xyXG59XHJcblxyXG4ucHJvcGVydHktdmFsdWV7XHJcblx0d2lkdGg6IGNhbGMoMTAwJSAtIDQ0MHB4KTtcclxuXHRoZWlnaHQ6IDI4cHg7XHJcbiAgICBwYWRkaW5nOiAwIDVweDtcclxufVxyXG5cclxuc2VsZWN0LnByb3BlcnR5LW9jcnR5cGV7XHJcblx0d2lkdGg6IDE5MHB4O1xyXG5cdGhlaWdodDogMjhweDtcclxuICAgIHBhZGRpbmc6IDAgNXB4O1xyXG4gICAgbWFyZ2luOiAwIDVweDtcclxufVxyXG5cclxuLnRvb2xiYXItbGluay5zZWxlY3RsaXN0LWJ1dHRvbiB7XHJcbiAgICBiYWNrZ3JvdW5kOiBsaWdodGdyZXk7XHJcbiAgICBoZWlnaHQ6IDI5cHg7XHJcbiAgICBtYXJnaW4tbGVmdDogM3B4O1xyXG4gICAgd2lkdGg6IDI1cHg7XHJcbn1cclxuXHJcbi50b29sYmFyLWxpbmsuc2VsZWN0bGlzdC1idXR0b24ge1xyXG4gICAgYmFja2dyb3VuZDogbGlnaHRncmV5O1xyXG4gICAgaGVpZ2h0OiAyOXB4O1xyXG4gICAgbWFyZ2luLWxlZnQ6IDNweDtcclxuICAgIHdpZHRoOiAyNXB4O1xyXG59XHJcblxyXG4udG9vbGJhci1saW5rLnNlbGVjdGxpc3QtYnV0dG9uIGkubWF0ZXJpYWwtaWNvbnMge1xyXG4gICAgZm9udC1zaXplOiAxOHB4O1xyXG59XHJcblxyXG4udGV4dC1saXN0LWRpYWxvZ3tcclxuXHRwb2ludGVyLWV2ZW50czogYWxsO1x0XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiB3aGl0ZTtcclxuXHR3aWR0aDogNTAwcHg7XHJcbiAgICBtYXgtd2lkdGg6IDUwMHB4O1xyXG4gICAgbWluLXdpZHRoOiA1MDBweDtcclxuICAgIG1pbi1oZWlnaHQ6IDkwdmg7XHJcbiAgICBtYXgtaGVpZ2h0OiA5MHZoO1xyXG59XHJcblxyXG4ubW9kYWwtZm9vdGVye1xyXG5cdGJvdHRvbTogMDtcclxuICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcclxuICAgIHdpZHRoOiAxMDAlO1xyXG4gICAgbGVmdDogMDtcclxufVxyXG5cclxuLm1vZGFsLWRpYWxvZy5wcmVzZXQtZGVsZXRlLWRpYWxvZ3tcclxuXHRtYXgtd2lkdGg6IGNhbGMoMTAwdncgLSAxMDBweCkgIWltcG9ydGFudDtcclxuICAgIHdpZHRoOiA4MDBweCAhaW1wb3J0YW50O1xyXG59XHJcblxyXG4ubW9kYWwtZGlhbG9nLnByZXNldC1kZWxldGUtZGlhbG9nIC5tb2RhbC1ib2R5e1xyXG5cdGhlaWdodDogMTcwcHg7XHJcbn1cclxuIl19 */"]
+    });
+    /*@__PURE__*/
+
+    (function () {
+      _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](OcrPresetsComponent, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
+        args: [{
+          selector: 'app-ocr-presets',
+          templateUrl: './ocr-presets.component.html',
+          styleUrls: ['./ocr-presets.component.css']
+        }]
+      }], function () {
+        return [{
+          type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]
+        }, {
+          type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_3__["TranslateService"]
+        }, {
+          type: _services_company_ocr_presets_service__WEBPACK_IMPORTED_MODULE_4__["OcrPresetsService"]
+        }, {
+          type: _services_loading_service_service__WEBPACK_IMPORTED_MODULE_5__["LoadingServiceService"]
+        }, {
+          type: _services_error_service_service__WEBPACK_IMPORTED_MODULE_6__["ErrorServiceService"]
+        }, {
+          type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"]
+        }, {
+          type: _angular_forms__WEBPACK_IMPORTED_MODULE_7__["FormBuilder"]
+        }, {
+          type: _angular_material_core__WEBPACK_IMPORTED_MODULE_8__["DateAdapter"]
+        }];
+      }, null);
+    })();
+    /***/
+
+  },
+
+  /***/
   "./src/app/company-components/user-list/user-list.component.ts":
   /*!*********************************************************************!*\
     !*** ./src/app/company-components/user-list/user-list.component.ts ***!
@@ -3495,7 +4842,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function UserListComponent(router, global, translate, editService, loadingService, errorService, route, formBuilder, dateAdapter) {
-        var _this10 = this;
+        var _this15 = this;
 
         _classCallCheck(this, UserListComponent);
 
@@ -3537,22 +4884,22 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         };
         this.dateAdapter.setLocale('de');
         translate.get('user-delete-message').subscribe(function (res) {
-          _this10.deleteMessageBase = res;
+          _this15.deleteMessageBase = res;
         });
         translate.get('user-resetpassword-message').subscribe(function (res) {
-          _this10.resetPasswordMessageBase = res;
+          _this15.resetPasswordMessageBase = res;
         });
         translate.get('user-resetpassword-result-message').subscribe(function (res) {
-          _this10.resetPasswordResultMessageBase = res;
+          _this15.resetPasswordResultMessageBase = res;
         });
         this.generalDataObs = this.global.currentSessionDataSubject.asObservable();
         this.generalDataObs.subscribe(function (data) {
-          _this10.departments = data.company.departments;
+          _this15.departments = data.company.departments;
         });
 
         for (var index in this.userDepartmentAccessType) {
           translate.get(this.userDepartmentAccessType[index]).subscribe(function (res) {
-            _this10.userDepartmentAccessType[index] = res;
+            _this15.userDepartmentAccessType[index] = res;
           });
         }
       }
@@ -3587,20 +4934,20 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "reload",
         value: function reload() {
-          var _this11 = this;
+          var _this16 = this;
 
           this.loadingService.showLoading();
           this.editService.listUsers().subscribe(function (results) {
             console.log("User list", results);
-            _this11.users = results;
+            _this16.users = results;
           }, function (response) {
             console.log("Error in get user list", response);
 
-            _this11.loadingService.hideLoading();
+            _this16.loadingService.hideLoading();
 
-            _this11.errorService.showErrorResponse(response);
+            _this16.errorService.showErrorResponse(response);
           }, function () {
-            _this11.loadingService.hideLoading();
+            _this16.loadingService.hideLoading();
           });
         }
       }, {
@@ -3748,50 +5095,50 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "deleteUser",
         value: function deleteUser() {
-          var _this12 = this;
+          var _this17 = this;
 
           this.loadingService.showLoading();
           this.editService.deleteUser(this.delitingUser).subscribe(function (result) {
             console.log("Delete user result success.");
-            _this12.showDeleteModal = false;
+            _this17.showDeleteModal = false;
 
-            _this12.reload();
+            _this17.reload();
           }, function (response) {
             console.log("Error in create user", response);
 
-            _this12.errorService.showErrorResponse(response);
+            _this17.errorService.showErrorResponse(response);
 
-            _this12.loadingService.hideLoading();
+            _this17.loadingService.hideLoading();
           }, function () {
-            _this12.loadingService.hideLoading();
+            _this17.loadingService.hideLoading();
           });
         }
       }, {
         key: "resetUserPassword",
         value: function resetUserPassword() {
-          var _this13 = this;
+          var _this18 = this;
 
           this.loadingService.showLoading();
           this.editService.resetUserPassword(this.passwordResetingUser).subscribe(function (resultUser) {
             console.log("Reset user password result success.", resultUser); //this.showDeleteModal = false;
             //this.reload();
 
-            _this13.resetPasswordResultMessage = _this13.resetPasswordResultMessageBase;
-            _this13.resetPasswordResultMessage = _this13.resetPasswordResultMessage.replace("%", resultUser.password);
+            _this18.resetPasswordResultMessage = _this18.resetPasswordResultMessageBase;
+            _this18.resetPasswordResultMessage = _this18.resetPasswordResultMessage.replace("%", resultUser.password);
           }, function (response) {
             console.log("Error reset user password", response);
 
-            _this13.errorService.showErrorResponse(response);
+            _this18.errorService.showErrorResponse(response);
 
-            _this13.loadingService.hideLoading();
+            _this18.loadingService.hideLoading();
           }, function () {
-            _this13.loadingService.hideLoading();
+            _this18.loadingService.hideLoading();
           });
         }
       }, {
         key: "saveUser",
         value: function saveUser() {
-          var _this14 = this;
+          var _this19 = this;
 
           this.setFormControlValues();
           this.loadingService.showLoading();
@@ -3799,32 +5146,32 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           if (this.isCreating) {
             this.editService.createUser(this.editingUser).subscribe(function (result) {
               console.log("Create user result", result);
-              _this14.showEditModal = false;
+              _this19.showEditModal = false;
 
-              _this14.reload();
+              _this19.reload();
             }, function (response) {
               console.log("Error in create user", response);
 
-              _this14.errorService.showErrorResponse(response);
+              _this19.errorService.showErrorResponse(response);
 
-              _this14.loadingService.hideLoading();
+              _this19.loadingService.hideLoading();
             }, function () {
-              _this14.loadingService.hideLoading();
+              _this19.loadingService.hideLoading();
             });
           } else {
             this.editService.updateUser(this.editingUser).subscribe(function (result) {
               console.log("Update user result", result);
-              _this14.showEditModal = false;
+              _this19.showEditModal = false;
 
-              _this14.reload();
+              _this19.reload();
             }, function (response) {
               console.log("Error in update user", response);
 
-              _this14.errorService.showErrorResponse(response);
+              _this19.errorService.showErrorResponse(response);
 
-              _this14.loadingService.hideLoading();
+              _this19.loadingService.hideLoading();
             }, function () {
-              _this14.loadingService.hideLoading();
+              _this19.loadingService.hideLoading();
             });
           }
         }
@@ -5051,78 +6398,84 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony import */
 
 
-    var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    var _ui_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! ../../ui-models */
+    "./src/app/ui-models/index.ts");
+    /* harmony import */
+
+
+    var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
     /*! @angular/router */
     "./node_modules/@angular/router/__ivy_ngcc__/fesm2015/router.js");
     /* harmony import */
 
 
-    var _services_global_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    var _services_global_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
     /*! ../../services/global.service */
     "./src/app/services/global.service.ts");
     /* harmony import */
 
 
-    var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
     /*! @ngx-translate/core */
     "./node_modules/@ngx-translate/core/__ivy_ngcc__/fesm2015/ngx-translate-core.js");
     /* harmony import */
 
 
-    var _services_company_workflowtype_property_setting_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    var _services_company_workflowtype_property_setting_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
     /*! ../../services/company/workflowtype-property-setting.service */
     "./src/app/services/company/workflowtype-property-setting.service.ts");
     /* harmony import */
 
 
-    var _services_loading_service_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+    var _services_loading_service_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
     /*! ../../services/loading-service.service */
     "./src/app/services/loading-service.service.ts");
     /* harmony import */
 
 
-    var _services_error_service_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+    var _services_error_service_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
     /*! ../../services/error-service.service */
     "./src/app/services/error-service.service.ts");
     /* harmony import */
 
 
-    var _angular_forms__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+    var _angular_forms__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
     /*! @angular/forms */
     "./node_modules/@angular/forms/__ivy_ngcc__/fesm2015/forms.js");
     /* harmony import */
 
 
-    var _angular_material_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+    var _angular_material_core__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
     /*! @angular/material/core */
     "./node_modules/@angular/material/__ivy_ngcc__/fesm2015/core.js");
     /* harmony import */
 
 
-    var _angular_common__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+    var _angular_common__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
     /*! @angular/common */
     "./node_modules/@angular/common/__ivy_ngcc__/fesm2015/common.js");
     /* harmony import */
 
 
-    var _components_text_list_text_list_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
+    var _components_text_list_text_list_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
     /*! ../../components/text-list/text-list.component */
     "./src/app/components/text-list/text-list.component.ts");
 
-    function WorkflowtypePropertySettingComponent_div_5_a_6_Template(rf, ctx) {
+    function WorkflowtypePropertySettingComponent_div_11_a_6_Template(rf, ctx) {
       if (rf & 1) {
         var _r225 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "a", 12);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "a", 14);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function WorkflowtypePropertySettingComponent_div_5_a_6_Template_a_click_0_listener($event) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function WorkflowtypePropertySettingComponent_div_11_a_6_Template_a_click_0_listener($event) {
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r225);
 
-          var type_r223 = ctx.$implicit;
+          var preset_r223 = ctx.$implicit;
 
           var ctx_r224 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
 
-          return ctx_r224.showWorkflowType(type_r223);
+          return ctx_r224.showPreset(preset_r223);
         });
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
@@ -5131,23 +6484,23 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }
 
       if (rf & 2) {
-        var type_r223 = ctx.$implicit;
+        var preset_r223 = ctx.$implicit;
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](type_r223.title);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](preset_r223.presetName);
       }
     }
 
-    function WorkflowtypePropertySettingComponent_div_5_Template(rf, ctx) {
+    function WorkflowtypePropertySettingComponent_div_11_Template(rf, ctx) {
       if (rf & 1) {
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 6);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 8);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 7);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 9);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "div", 8);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "div", 10);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](3, "a", 9);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](3, "a", 11);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](4);
 
@@ -5155,11 +6508,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](6, WorkflowtypePropertySettingComponent_div_5_a_6_Template, 2, 1, "a", 10);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](6, WorkflowtypePropertySettingComponent_div_11_a_6_Template, 2, 1, "a", 12);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](7, "div", 11);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](7, "div", 13);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
@@ -5175,25 +6528,25 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx_r219.worlflowTypes);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx_r219.ocrSettingPresets);
       }
     }
 
-    function WorkflowtypePropertySettingComponent_div_6_a_7_Template(rf, ctx) {
+    function WorkflowtypePropertySettingComponent_div_12_a_7_Template(rf, ctx) {
       if (rf & 1) {
-        var _r229 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
+        var _r230 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "a", 13);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "a", 3);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function WorkflowtypePropertySettingComponent_div_6_a_7_Template_a_click_0_listener($event) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r229);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function WorkflowtypePropertySettingComponent_div_12_a_7_Template_a_click_0_listener($event) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r230);
 
-          var ctx_r228 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
+          var ctx_r229 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
 
-          return ctx_r228.saveWorkflowType();
+          return ctx_r229.savePreset();
         });
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "i", 14);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "i", 4);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2, "save");
 
@@ -5203,13 +6556,33 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }
     }
 
-    function WorkflowtypePropertySettingComponent_div_6_div_11_Template(rf, ctx) {
+    function WorkflowtypePropertySettingComponent_div_12_option_12_Template(rf, ctx) {
       if (rf & 1) {
-        var _r232 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "option", 21);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 17);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "label", 18);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+      }
+
+      if (rf & 2) {
+        var worlflowType_r231 = ctx.$implicit;
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpropertyInterpolate"]("value", worlflowType_r231.identity);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](worlflowType_r231.title);
+      }
+    }
+
+    function WorkflowtypePropertySettingComponent_div_12_div_20_Template(rf, ctx) {
+      if (rf & 1) {
+        var _r234 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 22);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "label", 16);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2);
 
@@ -5217,33 +6590,33 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](4, "input", 19);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](4, "input", 23);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("ngModelChange", function WorkflowtypePropertySettingComponent_div_6_div_11_Template_input_ngModelChange_4_listener($event) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r232);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("ngModelChange", function WorkflowtypePropertySettingComponent_div_12_div_20_Template_input_ngModelChange_4_listener($event) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r234);
 
-          var prop_r230 = ctx.$implicit;
+          var prop_r232 = ctx.$implicit;
 
-          var ctx_r231 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
+          var ctx_r233 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
 
-          return ctx_r231.setWorkflowtypeItemOcrSettings(ctx_r231.selectedWorlflowType.identity, prop_r230.propertyName, $event);
+          return ctx_r233.setPresetItemValue(prop_r232.propertyName, $event);
         });
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](5, "a", 20);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](5, "a", 24);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function WorkflowtypePropertySettingComponent_div_6_div_11_Template_a_click_5_listener($event) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r232);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function WorkflowtypePropertySettingComponent_div_12_div_20_Template_a_click_5_listener($event) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r234);
 
-          var prop_r230 = ctx.$implicit;
+          var prop_r232 = ctx.$implicit;
 
-          var ctx_r233 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
+          var ctx_r235 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
 
-          return ctx_r233.selectValueList(prop_r230);
+          return ctx_r235.selectValueList(prop_r232);
         });
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](6, "i", 14);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](6, "i", 4);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](7, "list");
 
@@ -5255,21 +6628,21 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }
 
       if (rf & 2) {
-        var prop_r230 = ctx.$implicit;
+        var prop_r232 = ctx.$implicit;
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](3, 2, prop_r230.propertyName));
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](3, 2, prop_r232.propertyName));
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngModel", prop_r230.value);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngModel", prop_r232.value);
       }
     }
 
-    function WorkflowtypePropertySettingComponent_div_6_Template(rf, ctx) {
+    function WorkflowtypePropertySettingComponent_div_12_Template(rf, ctx) {
       if (rf & 1) {
-        var _r235 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
+        var _r237 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
 
@@ -5281,17 +6654,17 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](4, "a", 13);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](4, "a", 3);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function WorkflowtypePropertySettingComponent_div_6_Template_a_click_4_listener($event) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r235);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function WorkflowtypePropertySettingComponent_div_12_Template_a_click_4_listener($event) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r237);
 
-          var ctx_r234 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+          var ctx_r236 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
 
-          return ctx_r234.closeWorkflowType();
+          return ctx_r236.closePreset();
         });
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](5, "i", 14);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](5, "i", 4);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](6, "close");
 
@@ -5299,21 +6672,67 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](7, WorkflowtypePropertySettingComponent_div_6_a_7_Template, 3, 0, "a", 15);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](7, WorkflowtypePropertySettingComponent_div_12_a_7_Template, 3, 0, "a", 15);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](8, "div", 6);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](8, "div");
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](9, "div", 7);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](9, "label", 16);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](10, "div", 8);
-
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](11, WorkflowtypePropertySettingComponent_div_6_div_11_Template, 8, 4, "div", 16);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](10, "WorkflowType");
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](12, "div", 11);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](11, "select", 17);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("ngModelChange", function WorkflowtypePropertySettingComponent_div_12_Template_select_ngModelChange_11_listener($event) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r237);
+
+          var ctx_r238 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+
+          return ctx_r238.setPresetWorkflowIdentity($event);
+        });
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](12, WorkflowtypePropertySettingComponent_div_12_option_12_Template, 2, 2, "option", 18);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](13, "div");
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](14, "label", 16);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](15, "Preset Name");
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](16, "input", 19);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("ngModelChange", function WorkflowtypePropertySettingComponent_div_12_Template_input_ngModelChange_16_listener($event) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r237);
+
+          var ctx_r239 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+
+          return ctx_r239.setPresetName($event);
+        });
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](17, "div", 8);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](18, "div", 9);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](19, "div", 10);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](20, WorkflowtypePropertySettingComponent_div_12_div_20_Template, 8, 4, "div", 20);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](21, "div", 13);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
@@ -5327,29 +6746,41 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx_r220.selectedWorlflowType.title);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx_r220.selectedPreset.presetName);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r220.selectedWorlflowTypeChanged);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r220.selectedPresetChanged);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx_r220.workflowtypeItemOcrSettings[ctx_r220.selectedWorlflowType.identity]);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngModel", ctx_r220.selectedPreset.workflowTypeIdentity);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx_r220.worlflowTypes);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngModel", ctx_r220.selectedPreset.presetName);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx_r220.selectedPresetItems);
       }
     }
 
-    function WorkflowtypePropertySettingComponent_div_7_Template(rf, ctx) {
+    function WorkflowtypePropertySettingComponent_div_13_Template(rf, ctx) {
       if (rf & 1) {
-        var _r237 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
+        var _r241 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 21);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 25);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 22);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 26);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "div", 23);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "div", 27);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](3, "h5", 24);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](3, "h5", 28);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](4);
 
@@ -5357,17 +6788,17 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](6, "button", 25);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](6, "button", 29);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function WorkflowtypePropertySettingComponent_div_7_Template_button_click_6_listener($event) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r237);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function WorkflowtypePropertySettingComponent_div_13_Template_button_click_6_listener($event) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r241);
 
-          var ctx_r236 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+          var ctx_r240 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
 
-          return ctx_r236.hideTextListDialog();
+          return ctx_r240.hideTextListDialog();
         });
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](7, "span", 26);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](7, "span", 30);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](8, "\xD7");
 
@@ -5377,32 +6808,32 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](9, "div", 27);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](9, "div", 31);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](10, "app-text-list", 28);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](10, "app-text-list", 32);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("textChanged", function WorkflowtypePropertySettingComponent_div_7_Template_app_text_list_textChanged_10_listener($event) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r237);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("textChanged", function WorkflowtypePropertySettingComponent_div_13_Template_app_text_list_textChanged_10_listener($event) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r241);
 
-          var ctx_r238 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+          var ctx_r242 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
 
-          return ctx_r238.selectedTextChanged($event);
+          return ctx_r242.selectedTextChanged($event);
         });
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](11, "div", 29);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](11, "div", 33);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](12, "button", 30);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](12, "button", 34);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function WorkflowtypePropertySettingComponent_div_7_Template_button_click_12_listener($event) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r237);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function WorkflowtypePropertySettingComponent_div_13_Template_button_click_12_listener($event) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r241);
 
-          var ctx_r239 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+          var ctx_r243 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
 
-          return ctx_r239.applySelectexTextChanged();
+          return ctx_r243.applySelectexTextChanged();
         });
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](13);
@@ -5411,14 +6842,14 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](15, "button", 31);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](15, "button", 35);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function WorkflowtypePropertySettingComponent_div_7_Template_button_click_15_listener($event) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r237);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function WorkflowtypePropertySettingComponent_div_13_Template_button_click_15_listener($event) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r241);
 
-          var ctx_r240 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+          var ctx_r244 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
 
-          return ctx_r240.hideTextListDialog();
+          return ctx_r244.hideTextListDialog();
         });
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](16);
@@ -5459,7 +6890,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function WorkflowtypePropertySettingComponent(router, global, translate, editService, loadingService, errorService, route, formBuilder, dateAdapter) {
-        var _this15 = this;
+        var _this20 = this;
 
         _classCallCheck(this, WorkflowtypePropertySettingComponent);
 
@@ -5471,11 +6902,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.route = route;
         this.formBuilder = formBuilder;
         this.dateAdapter = dateAdapter;
-        this.workflowtypeItemOcrSettings = []; //workflowtypeItemNames :string[][] = [];
-
+        this.ocrSettingPresets = [];
         this.worlflowTypes = [];
-        this.selectedWorlflowType = null;
-        this.selectedWorlflowTypeChanged = false;
+        this.worlflowTypeItems = [];
+        this.selectedPreset = null;
+        this.selectedPresetItems = [];
+        this.selectedPresetChanged = false;
         this.generalDataObs = null;
         this.showList = true;
         this.showDetail = false;
@@ -5490,13 +6922,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
         this.generalDataObs = this.global.currentSessionDataSubject.asObservable();
         this.generalDataObs.subscribe(function (data) {
-          _this15.worlflowTypes = data.workflow.worlflowTypes;
+          _this20.worlflowTypes = data.workflow.worlflowTypes;
 
-          for (var id in _this15.worlflowTypes) {
-            var type = _this15.worlflowTypes[id]; //this.workflowtypeItemNames[type.identity] = null;
+          for (var id in _this20.worlflowTypes) {
+            var type = _this20.worlflowTypes[id]; //this.workflowtypeItemNames[type.identity] = null;
 
-            if (_this15.workflowtypeItemOcrSettings[type.identity] === undefined) {
-              _this15.workflowtypeItemOcrSettings[type.identity] = [];
+            if (_this20.ocrSettingPresets[type.identity] === undefined) {
+              _this20.ocrSettingPresets[type.identity] = [];
             }
           }
         });
@@ -5511,132 +6943,146 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "debug",
         value: function debug() {
-          return JSON.stringify(this.workflowtypeItemOcrSettings);
+          return JSON.stringify(this.ocrSettingPresets);
         }
       }, {
         key: "reload",
         value: function reload() {
-          var _this16 = this;
+          var _this21 = this;
 
           this.loadingService.showLoading();
-          this.editService.listWorkflowTypes().subscribe(function (results) {
+          this.editService.listPresets().subscribe(function (results) {
             console.log("CompanyWorkflowtypeItemOcrSetting list", results);
-            _this16.workflowtypeItemOcrSettings = results;
+            _this21.ocrSettingPresets = results;
           }, function (response) {
             console.log("Error in get CompanyWorkflowtypeItemOcrSetting list", response);
 
-            _this16.loadingService.hideLoading();
+            _this21.loadingService.hideLoading();
 
-            _this16.errorService.showErrorResponse(response);
+            _this21.errorService.showErrorResponse(response);
           }, function () {
-            _this16.loadingService.hideLoading();
+            _this21.loadingService.hideLoading();
           });
         }
       }, {
-        key: "showWorkflowType",
-        value: function showWorkflowType(type) {
-          this.selectedWorlflowType = type;
-
-          if (this.workflowtypeItemOcrSettings[type.identity] === undefined) {
-            this.workflowtypeItemOcrSettings[type.identity] = [];
-          }
-          /*if(this.workflowtypeItemNames[type.identity] === null){
-              
-              this.reloadSelectedWorkflowTypeProprties();
-          }*/
-
-
+        key: "addPreset",
+        value: function addPreset() {
+          this.selectedPreset = new _ui_models__WEBPACK_IMPORTED_MODULE_1__["CompanyWorkflowtypeItemOcrSettingPreset"]();
+          this.selectedPresetItems = this.selectedPreset.items;
           this.showList = false;
           this.showDetail = true;
-          this.selectedWorlflowTypeChanged = false;
+          this.selectedPresetChanged = false;
         }
-        /*reloadSelectedWorkflowTypeProprties(){
-            
-            this.loadingService.showLoading();
-            
-            this.editService.listWorkflowTypePtoperties(this.selectedWorlflowType.identity).subscribe(
-                (results :string[]) => {
-                    
-                    console.log("WorkflowtypeItemName list", results);
-                    
-                    this.workflowtypeItemNames[this.selectedWorlflowType.identity] = results;
-                    
-                    for(var id in results){
-                        var name = results[id];
-                        
-                        if(this.workflowtypeItemOcrSettings[this.selectedWorlflowType.identity][name] === undefined){
-                            var prop:CompanyWorkflowtypeItemOcrSetting = new CompanyWorkflowtypeItemOcrSetting();
-                            prop.workflowIdentity = this.selectedWorlflowType.identity;
-                            prop.propertyName = name;
-                            prop.value = "";
-                            prop.status = 1;
-                            prop.version = 1;
-                            
-                            this.workflowtypeItemOcrSettings[this.selectedWorlflowType.identity][name] = prop;
-                            
-                            //alert(name + " created :" + JSON.stringify(prop));
-                            //alert(name + " created :" + JSON.stringify(this.workflowtypeItemOcrSettings[this.selectedWorlflowType.identity][name]));
-                        }
-                        
-                    }
-                    
-                },
-                response => {
-                    console.log("Error in get WorkflowtypeItemName list", response);
-                    this.loadingService.hideLoading();
-                    this.errorService.showErrorResponse(response);
-                },
-                () => {
-                    
-                    this.loadingService.hideLoading();
-                }
-            );
-        }*/
-
       }, {
-        key: "closeWorkflowType",
-        value: function closeWorkflowType() {
+        key: "showPreset",
+        value: function showPreset(preset) {
+          this.selectedPreset = JSON.parse(JSON.stringify(preset));
+          this.selectedPresetItems = preset.items;
+          this.showList = false;
+          this.showDetail = true;
+          this.selectedPresetChanged = false;
+        }
+      }, {
+        key: "closePreset",
+        value: function closePreset() {
           this.showList = true;
           this.showDetail = false;
-          this.selectedWorlflowTypeChanged = false;
+          this.selectedPresetChanged = false;
           this.reload();
         }
       }, {
-        key: "setWorkflowtypeItemOcrSettings",
-        value: function setWorkflowtypeItemOcrSettings(identity, name, newVal) {
-          for (var id in this.workflowtypeItemOcrSettings[identity]) {
-            var prop = this.workflowtypeItemOcrSettings[identity][id];
-
-            if (prop.propertyName === name) {
-              prop.value = newVal;
-            }
-          } //this.workflowtypeItemOcrSettings[identity][name].value = newVal;
-
-
-          this.selectedWorlflowTypeChanged = true;
+        key: "setPresetName",
+        value: function setPresetName(newVal) {
+          this.selectedPreset.presetName = newVal;
         }
       }, {
-        key: "saveWorkflowType",
-        value: function saveWorkflowType() {
-          var _this17 = this;
+        key: "setPresetWorkflowIdentity",
+        value: function setPresetWorkflowIdentity(newVal) {
+          this.selectedPreset.workflowTypeIdentity = newVal;
+          this.verifyWorlflowTypeItems(newVal);
+        }
+      }, {
+        key: "verifyWorlflowTypeItems",
+        value: function verifyWorlflowTypeItems(workflowTypeIdentity) {
+          var _this22 = this;
+
+          if (this.worlflowTypeItems[workflowTypeIdentity] === undefined) {
+            this.loadingService.showLoading();
+            this.editService.listWorkflowTypeItems(workflowTypeIdentity).subscribe(function (results) {
+              console.log("Workflowtype Items for " + workflowTypeIdentity, results);
+              _this22.worlflowTypeItems[workflowTypeIdentity] = results;
+              _this22.selectedPresetItems = _this22.resetPresetItems(_this22.selectedPreset);
+            }, function (response) {
+              console.log("Error in get Workflowtype Items for " + workflowTypeIdentity, response);
+
+              _this22.loadingService.hideLoading();
+
+              _this22.errorService.showErrorResponse(response);
+            }, function () {
+              _this22.loadingService.hideLoading();
+            });
+          }
+        }
+      }, {
+        key: "resetPresetItems",
+        value: function resetPresetItems(preset) {
+          //this.selectedPreset = new CompanyWorkflowtypeItemOcrSettingPreset();
+          var items = [];
+
+          for (var index in this.worlflowTypeItems[preset.workflowTypeIdentity]) {
+            var itemName = this.worlflowTypeItems[preset.workflowTypeIdentity][index];
+            var item = this.findItemByName(preset, itemName);
+
+            if (item === null) {
+              item = new _ui_models__WEBPACK_IMPORTED_MODULE_1__["CompanyWorkflowtypeItemOcrSettingPresetItem"]();
+              item.propertyName = itemName;
+              item.value = "";
+            }
+
+            items.push(item);
+          }
+
+          return items; //this.selectedPresetItems = this.selectedPreset.items;
+        }
+      }, {
+        key: "findItemByName",
+        value: function findItemByName(preset, propertyName) {
+          for (var index in preset.items) {
+            if (this.selectedPreset.items[index].propertyName === propertyName) {
+              return this.selectedPreset.items[index];
+            }
+          }
+
+          return null;
+        }
+      }, {
+        key: "setPresetItemValue",
+        value: function setPresetItemValue(name, newVal) {
+          this.selectedPresetItems[name].value = newVal;
+          this.selectedPresetChanged = true;
+        }
+      }, {
+        key: "savePreset",
+        value: function savePreset() {
+          var _this23 = this;
 
           this.loadingService.showLoading();
-          this.editService.updateWorkflowTypes(this.workflowtypeItemOcrSettings[this.selectedWorlflowType.identity], this.selectedWorlflowType.identity).subscribe(function (results) {
+          this.editService.updatePreset(this.selectedPreset).subscribe(function (results) {
             console.log("Update CompanyWorkflowtypeItemOcrSetting result list", results);
-            _this17.workflowtypeItemOcrSettings = results;
-            _this17.showList = true;
-            _this17.showDetail = false;
-            _this17.selectedWorlflowTypeChanged = false;
+            _this23.ocrSettingPresets = results;
+            _this23.showList = true;
+            _this23.showDetail = false;
+            _this23.selectedPresetChanged = false;
 
-            _this17.reload();
+            _this23.reload();
           }, function (response) {
             console.log("Error in Update CompanyWorkflowtypeItemOcrSetting list", response);
 
-            _this17.loadingService.hideLoading();
+            _this23.loadingService.hideLoading();
 
-            _this17.errorService.showErrorResponse(response);
+            _this23.errorService.showErrorResponse(response);
           }, function () {
-            _this17.loadingService.hideLoading();
+            _this23.loadingService.hideLoading();
           }); //this.reload();
         }
       }, {
@@ -5654,15 +7100,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "applySelectexTextChanged",
         value: function applySelectexTextChanged() {
-          for (var id in this.workflowtypeItemOcrSettings[this.selectedWorlflowType.identity]) {
-            var prop = this.workflowtypeItemOcrSettings[this.selectedWorlflowType.identity][id];
-
-            if (prop.propertyName === this.selectedPropertyName) {
-              prop.value = this.selectedTextToMakeList;
-              break;
-            }
-          }
-
+          this.selectedPresetItems[this.selectedPropertyName].value = this.selectedTextToMakeList;
+          this.selectedPresetChanged = true;
           this.showTextListDialog = false;
         }
       }, {
@@ -5676,15 +7115,15 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     }();
 
     WorkflowtypePropertySettingComponent.ɵfac = function WorkflowtypePropertySettingComponent_Factory(t) {
-      return new (t || WorkflowtypePropertySettingComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_global_service__WEBPACK_IMPORTED_MODULE_2__["GlobalService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_ngx_translate_core__WEBPACK_IMPORTED_MODULE_3__["TranslateService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_company_workflowtype_property_setting_service__WEBPACK_IMPORTED_MODULE_4__["WorkflowtypePropertySettingService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_loading_service_service__WEBPACK_IMPORTED_MODULE_5__["LoadingServiceService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_error_service_service__WEBPACK_IMPORTED_MODULE_6__["ErrorServiceService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_7__["FormBuilder"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_material_core__WEBPACK_IMPORTED_MODULE_8__["DateAdapter"]));
+      return new (t || WorkflowtypePropertySettingComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_global_service__WEBPACK_IMPORTED_MODULE_3__["GlobalService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_ngx_translate_core__WEBPACK_IMPORTED_MODULE_4__["TranslateService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_company_workflowtype_property_setting_service__WEBPACK_IMPORTED_MODULE_5__["WorkflowtypePropertySettingService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_loading_service_service__WEBPACK_IMPORTED_MODULE_6__["LoadingServiceService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_error_service_service__WEBPACK_IMPORTED_MODULE_7__["ErrorServiceService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_8__["FormBuilder"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_material_core__WEBPACK_IMPORTED_MODULE_9__["DateAdapter"]));
     };
 
     WorkflowtypePropertySettingComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({
       type: WorkflowtypePropertySettingComponent,
       selectors: [["app-workflowtype-property-setting"]],
-      decls: 8,
+      decls: 14,
       vars: 6,
-      consts: [[1, "content-container"], [1, "page-toolbar"], [1, "page-title"], ["class", "workflow-content", 4, "ngIf"], ["class", "content-container", 4, "ngIf"], ["class", "modal fade show", "tabindex", "-1", "role", "dialog", 4, "ngIf"], [1, "workflow-content"], [1, "item-row"], [1, "list-group"], [1, "list-group-item", "list-group-item-action", "list-group-item-title"], ["class", "list-group-item list-group-item-action link-out", 3, "click", 4, "ngFor", "ngForOf"], [1, "clear"], [1, "list-group-item", "list-group-item-action", "link-out", 3, "click"], [1, "toolbar-link", 3, "click"], [1, "material-icons"], ["class", "toolbar-link", 3, "click", 4, "ngIf"], ["class", "list-group-item list-group-item-action link-out", 4, "ngFor", "ngForOf"], [1, "list-group-item", "list-group-item-action", "link-out"], [1, "property-label"], ["type", "text", "readonly", "", 1, "property-value", 3, "ngModel", "ngModelChange"], [1, "toolbar-link", "selectlist-button", 3, "click"], ["tabindex", "-1", "role", "dialog", 1, "modal", "fade", "show"], ["role", "document", 1, "modal-dialog", "text-list-dialog"], [1, "modal-header"], [1, "modal-title"], ["type", "button", "aria-label", "Close", 1, "close", 3, "click"], ["aria-hidden", "true"], [1, "modal-body"], [3, "separator", "text", "textChanged"], [1, "modal-footer"], ["type", "button", 1, "btn", "btn-primary", 3, "click"], ["type", "button", 1, "btn", "btn-secondary", 3, "click"]],
+      consts: [[1, "content-container"], [1, "page-toolbar"], [1, "page-title"], [1, "toolbar-link", 3, "click"], [1, "material-icons"], ["class", "workflow-content", 4, "ngIf"], ["class", "content-container", 4, "ngIf"], ["class", "modal fade show", "tabindex", "-1", "role", "dialog", 4, "ngIf"], [1, "workflow-content"], [1, "item-row"], [1, "list-group"], [1, "list-group-item", "list-group-item-action", "list-group-item-title"], ["class", "list-group-item list-group-item-action link-out", 3, "click", 4, "ngFor", "ngForOf"], [1, "clear"], [1, "list-group-item", "list-group-item-action", "link-out", 3, "click"], ["class", "toolbar-link", 3, "click", 4, "ngIf"], [1, "property-label"], [1, "property-value", 3, "ngModel", "ngModelChange"], [3, "value", 4, "ngFor", "ngForOf"], ["type", "text", 1, "property-value", 3, "ngModel", "ngModelChange"], ["class", "list-group-item list-group-item-action link-out", 4, "ngFor", "ngForOf"], [3, "value"], [1, "list-group-item", "list-group-item-action", "link-out"], ["type", "text", "readonly", "", 1, "property-value", 3, "ngModel", "ngModelChange"], [1, "toolbar-link", "selectlist-button", 3, "click"], ["tabindex", "-1", "role", "dialog", 1, "modal", "fade", "show"], ["role", "document", 1, "modal-dialog", "text-list-dialog"], [1, "modal-header"], [1, "modal-title"], ["type", "button", "aria-label", "Close", 1, "close", 3, "click"], ["aria-hidden", "true"], [1, "modal-body"], [3, "separator", "text", "textChanged"], [1, "modal-footer"], ["type", "button", 1, "btn", "btn-primary", 3, "click"], ["type", "button", 1, "btn", "btn-secondary", 3, "click"]],
       template: function WorkflowtypePropertySettingComponent_Template(rf, ctx) {
         if (rf & 1) {
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
@@ -5699,23 +7138,51 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](5, "a", 3);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function WorkflowtypePropertySettingComponent_Template_a_click_5_listener($event) {
+            return ctx.reload();
+          });
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](6, "i", 4);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](7, "refresh");
+
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](5, WorkflowtypePropertySettingComponent_div_5_Template, 8, 4, "div", 3);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](6, WorkflowtypePropertySettingComponent_div_6_Template, 13, 3, "div", 4);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](8, "a", 3);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function WorkflowtypePropertySettingComponent_Template_a_click_8_listener($event) {
+            return ctx.addPreset();
+          });
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](9, "i", 4);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](10, "add");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](7, WorkflowtypePropertySettingComponent_div_7_Template, 18, 11, "div", 5);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](11, WorkflowtypePropertySettingComponent_div_11_Template, 8, 4, "div", 5);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](12, WorkflowtypePropertySettingComponent_div_12_Template, 22, 6, "div", 6);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](13, WorkflowtypePropertySettingComponent_div_13_Template, 18, 11, "div", 7);
         }
 
         if (rf & 2) {
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](4, 4, "menu-workflow-list"));
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](4, 4, "ocr-preset-title"));
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](8);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.showList);
 
@@ -5728,9 +7195,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.showTextListDialog);
         }
       },
-      directives: [_angular_common__WEBPACK_IMPORTED_MODULE_9__["NgIf"], _angular_common__WEBPACK_IMPORTED_MODULE_9__["NgForOf"], _angular_forms__WEBPACK_IMPORTED_MODULE_7__["DefaultValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_7__["NgControlStatus"], _angular_forms__WEBPACK_IMPORTED_MODULE_7__["NgModel"], _components_text_list_text_list_component__WEBPACK_IMPORTED_MODULE_10__["TextListComponent"]],
-      pipes: [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_3__["TranslatePipe"]],
-      styles: ["a.toolbar-link[_ngcontent-%COMP%], a.list-group-item-action[_ngcontent-%COMP%]{\r\n\tcursor: pointer;\r\n}\r\n\r\nlabel.property-label[_ngcontent-%COMP%]{\r\n\twidth: 200px;\r\n\tfont-weight: bold;\r\n}\r\n\r\ninput.property-value[_ngcontent-%COMP%]{\r\n\twidth: calc(100% - 240px);\r\n    padding: 0 5px;\r\n}\r\n\r\n.toolbar-link.selectlist-button[_ngcontent-%COMP%] {\r\n    background: lightgrey;\r\n    height: 29px;\r\n    margin-left: 3px;\r\n    width: 25px;\r\n}\r\n\r\n.toolbar-link.selectlist-button[_ngcontent-%COMP%] {\r\n    background: lightgrey;\r\n    height: 29px;\r\n    margin-left: 3px;\r\n    width: 25px;\r\n}\r\n\r\n.toolbar-link.selectlist-button[_ngcontent-%COMP%]   i.material-icons[_ngcontent-%COMP%] {\r\n    font-size: 18px;\r\n}\r\n\r\n.text-list-dialog[_ngcontent-%COMP%]{\r\n\tpointer-events: all;\t\r\n    background-color: white;\r\n\twidth: 500px;\r\n    max-width: 500px;\r\n    min-width: 500px;\r\n    min-height: 90vh;\r\n    max-height: 90vh;\r\n}\r\n\r\n.modal-footer[_ngcontent-%COMP%]{\r\n\tbottom: 0;\r\n    position: absolute;\r\n    width: 100%;\r\n    left: 0;\r\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29tcGFueS1jb21wb25lbnRzL3dvcmtmbG93dHlwZS1wcm9wZXJ0eS1zZXR0aW5nL3dvcmtmbG93dHlwZS1wcm9wZXJ0eS1zZXR0aW5nLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IjtBQUNBO0NBQ0MsZUFBZTtBQUNoQjs7QUFFQTtDQUNDLFlBQVk7Q0FDWixpQkFBaUI7QUFDbEI7O0FBRUE7Q0FDQyx5QkFBeUI7SUFDdEIsY0FBYztBQUNsQjs7QUFFQTtJQUNJLHFCQUFxQjtJQUNyQixZQUFZO0lBQ1osZ0JBQWdCO0lBQ2hCLFdBQVc7QUFDZjs7QUFFQTtJQUNJLHFCQUFxQjtJQUNyQixZQUFZO0lBQ1osZ0JBQWdCO0lBQ2hCLFdBQVc7QUFDZjs7QUFFQTtJQUNJLGVBQWU7QUFDbkI7O0FBRUE7Q0FDQyxtQkFBbUI7SUFDaEIsdUJBQXVCO0NBQzFCLFlBQVk7SUFDVCxnQkFBZ0I7SUFDaEIsZ0JBQWdCO0lBQ2hCLGdCQUFnQjtJQUNoQixnQkFBZ0I7QUFDcEI7O0FBRUE7Q0FDQyxTQUFTO0lBQ04sa0JBQWtCO0lBQ2xCLFdBQVc7SUFDWCxPQUFPO0FBQ1giLCJmaWxlIjoic3JjL2FwcC9jb21wYW55LWNvbXBvbmVudHMvd29ya2Zsb3d0eXBlLXByb3BlcnR5LXNldHRpbmcvd29ya2Zsb3d0eXBlLXByb3BlcnR5LXNldHRpbmcuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIlxyXG5hLnRvb2xiYXItbGluaywgYS5saXN0LWdyb3VwLWl0ZW0tYWN0aW9ue1xyXG5cdGN1cnNvcjogcG9pbnRlcjtcclxufVxyXG5cclxubGFiZWwucHJvcGVydHktbGFiZWx7XHJcblx0d2lkdGg6IDIwMHB4O1xyXG5cdGZvbnQtd2VpZ2h0OiBib2xkO1xyXG59XHJcblxyXG5pbnB1dC5wcm9wZXJ0eS12YWx1ZXtcclxuXHR3aWR0aDogY2FsYygxMDAlIC0gMjQwcHgpO1xyXG4gICAgcGFkZGluZzogMCA1cHg7XHJcbn1cclxuXHJcbi50b29sYmFyLWxpbmsuc2VsZWN0bGlzdC1idXR0b24ge1xyXG4gICAgYmFja2dyb3VuZDogbGlnaHRncmV5O1xyXG4gICAgaGVpZ2h0OiAyOXB4O1xyXG4gICAgbWFyZ2luLWxlZnQ6IDNweDtcclxuICAgIHdpZHRoOiAyNXB4O1xyXG59XHJcblxyXG4udG9vbGJhci1saW5rLnNlbGVjdGxpc3QtYnV0dG9uIHtcclxuICAgIGJhY2tncm91bmQ6IGxpZ2h0Z3JleTtcclxuICAgIGhlaWdodDogMjlweDtcclxuICAgIG1hcmdpbi1sZWZ0OiAzcHg7XHJcbiAgICB3aWR0aDogMjVweDtcclxufVxyXG5cclxuLnRvb2xiYXItbGluay5zZWxlY3RsaXN0LWJ1dHRvbiBpLm1hdGVyaWFsLWljb25zIHtcclxuICAgIGZvbnQtc2l6ZTogMThweDtcclxufVxyXG5cclxuLnRleHQtbGlzdC1kaWFsb2d7XHJcblx0cG9pbnRlci1ldmVudHM6IGFsbDtcdFxyXG4gICAgYmFja2dyb3VuZC1jb2xvcjogd2hpdGU7XHJcblx0d2lkdGg6IDUwMHB4O1xyXG4gICAgbWF4LXdpZHRoOiA1MDBweDtcclxuICAgIG1pbi13aWR0aDogNTAwcHg7XHJcbiAgICBtaW4taGVpZ2h0OiA5MHZoO1xyXG4gICAgbWF4LWhlaWdodDogOTB2aDtcclxufVxyXG5cclxuLm1vZGFsLWZvb3RlcntcclxuXHRib3R0b206IDA7XHJcbiAgICBwb3NpdGlvbjogYWJzb2x1dGU7XHJcbiAgICB3aWR0aDogMTAwJTtcclxuICAgIGxlZnQ6IDA7XHJcbn1cclxuIl19 */"]
+      directives: [_angular_common__WEBPACK_IMPORTED_MODULE_10__["NgIf"], _angular_common__WEBPACK_IMPORTED_MODULE_10__["NgForOf"], _angular_forms__WEBPACK_IMPORTED_MODULE_8__["SelectControlValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_8__["NgControlStatus"], _angular_forms__WEBPACK_IMPORTED_MODULE_8__["NgModel"], _angular_forms__WEBPACK_IMPORTED_MODULE_8__["DefaultValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_8__["NgSelectOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_8__["ɵangular_packages_forms_forms_x"], _components_text_list_text_list_component__WEBPACK_IMPORTED_MODULE_11__["TextListComponent"]],
+      pipes: [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_4__["TranslatePipe"]],
+      styles: ["a.toolbar-link[_ngcontent-%COMP%], a.list-group-item-action[_ngcontent-%COMP%]{\r\n\tcursor: pointer;\r\n}\r\n\r\nlabel.property-label[_ngcontent-%COMP%]{\r\n\twidth: 200px;\r\n\tfont-weight: bold;\r\n}\r\n\r\n.property-value[_ngcontent-%COMP%]{\r\n\twidth: calc(100% - 240px);\r\n    padding: 0 5px;\r\n}\r\n\r\n.toolbar-link.selectlist-button[_ngcontent-%COMP%] {\r\n    background: lightgrey;\r\n    height: 29px;\r\n    margin-left: 3px;\r\n    width: 25px;\r\n}\r\n\r\n.toolbar-link.selectlist-button[_ngcontent-%COMP%] {\r\n    background: lightgrey;\r\n    height: 29px;\r\n    margin-left: 3px;\r\n    width: 25px;\r\n}\r\n\r\n.toolbar-link.selectlist-button[_ngcontent-%COMP%]   i.material-icons[_ngcontent-%COMP%] {\r\n    font-size: 18px;\r\n}\r\n\r\n.text-list-dialog[_ngcontent-%COMP%]{\r\n\tpointer-events: all;\t\r\n    background-color: white;\r\n\twidth: 500px;\r\n    max-width: 500px;\r\n    min-width: 500px;\r\n    min-height: 90vh;\r\n    max-height: 90vh;\r\n}\r\n\r\n.modal-footer[_ngcontent-%COMP%]{\r\n\tbottom: 0;\r\n    position: absolute;\r\n    width: 100%;\r\n    left: 0;\r\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY29tcGFueS1jb21wb25lbnRzL3dvcmtmbG93dHlwZS1wcm9wZXJ0eS1zZXR0aW5nL3dvcmtmbG93dHlwZS1wcm9wZXJ0eS1zZXR0aW5nLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IjtBQUNBO0NBQ0MsZUFBZTtBQUNoQjs7QUFFQTtDQUNDLFlBQVk7Q0FDWixpQkFBaUI7QUFDbEI7O0FBRUE7Q0FDQyx5QkFBeUI7SUFDdEIsY0FBYztBQUNsQjs7QUFFQTtJQUNJLHFCQUFxQjtJQUNyQixZQUFZO0lBQ1osZ0JBQWdCO0lBQ2hCLFdBQVc7QUFDZjs7QUFFQTtJQUNJLHFCQUFxQjtJQUNyQixZQUFZO0lBQ1osZ0JBQWdCO0lBQ2hCLFdBQVc7QUFDZjs7QUFFQTtJQUNJLGVBQWU7QUFDbkI7O0FBRUE7Q0FDQyxtQkFBbUI7SUFDaEIsdUJBQXVCO0NBQzFCLFlBQVk7SUFDVCxnQkFBZ0I7SUFDaEIsZ0JBQWdCO0lBQ2hCLGdCQUFnQjtJQUNoQixnQkFBZ0I7QUFDcEI7O0FBRUE7Q0FDQyxTQUFTO0lBQ04sa0JBQWtCO0lBQ2xCLFdBQVc7SUFDWCxPQUFPO0FBQ1giLCJmaWxlIjoic3JjL2FwcC9jb21wYW55LWNvbXBvbmVudHMvd29ya2Zsb3d0eXBlLXByb3BlcnR5LXNldHRpbmcvd29ya2Zsb3d0eXBlLXByb3BlcnR5LXNldHRpbmcuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIlxyXG5hLnRvb2xiYXItbGluaywgYS5saXN0LWdyb3VwLWl0ZW0tYWN0aW9ue1xyXG5cdGN1cnNvcjogcG9pbnRlcjtcclxufVxyXG5cclxubGFiZWwucHJvcGVydHktbGFiZWx7XHJcblx0d2lkdGg6IDIwMHB4O1xyXG5cdGZvbnQtd2VpZ2h0OiBib2xkO1xyXG59XHJcblxyXG4ucHJvcGVydHktdmFsdWV7XHJcblx0d2lkdGg6IGNhbGMoMTAwJSAtIDI0MHB4KTtcclxuICAgIHBhZGRpbmc6IDAgNXB4O1xyXG59XHJcblxyXG4udG9vbGJhci1saW5rLnNlbGVjdGxpc3QtYnV0dG9uIHtcclxuICAgIGJhY2tncm91bmQ6IGxpZ2h0Z3JleTtcclxuICAgIGhlaWdodDogMjlweDtcclxuICAgIG1hcmdpbi1sZWZ0OiAzcHg7XHJcbiAgICB3aWR0aDogMjVweDtcclxufVxyXG5cclxuLnRvb2xiYXItbGluay5zZWxlY3RsaXN0LWJ1dHRvbiB7XHJcbiAgICBiYWNrZ3JvdW5kOiBsaWdodGdyZXk7XHJcbiAgICBoZWlnaHQ6IDI5cHg7XHJcbiAgICBtYXJnaW4tbGVmdDogM3B4O1xyXG4gICAgd2lkdGg6IDI1cHg7XHJcbn1cclxuXHJcbi50b29sYmFyLWxpbmsuc2VsZWN0bGlzdC1idXR0b24gaS5tYXRlcmlhbC1pY29ucyB7XHJcbiAgICBmb250LXNpemU6IDE4cHg7XHJcbn1cclxuXHJcbi50ZXh0LWxpc3QtZGlhbG9ne1xyXG5cdHBvaW50ZXItZXZlbnRzOiBhbGw7XHRcclxuICAgIGJhY2tncm91bmQtY29sb3I6IHdoaXRlO1xyXG5cdHdpZHRoOiA1MDBweDtcclxuICAgIG1heC13aWR0aDogNTAwcHg7XHJcbiAgICBtaW4td2lkdGg6IDUwMHB4O1xyXG4gICAgbWluLWhlaWdodDogOTB2aDtcclxuICAgIG1heC1oZWlnaHQ6IDkwdmg7XHJcbn1cclxuXHJcbi5tb2RhbC1mb290ZXJ7XHJcblx0Ym90dG9tOiAwO1xyXG4gICAgcG9zaXRpb246IGFic29sdXRlO1xyXG4gICAgd2lkdGg6IDEwMCU7XHJcbiAgICBsZWZ0OiAwO1xyXG59XHJcbiJdfQ== */"]
     });
     /*@__PURE__*/
 
@@ -5744,23 +7211,23 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         }]
       }], function () {
         return [{
-          type: _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]
+          type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]
         }, {
-          type: _services_global_service__WEBPACK_IMPORTED_MODULE_2__["GlobalService"]
+          type: _services_global_service__WEBPACK_IMPORTED_MODULE_3__["GlobalService"]
         }, {
-          type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_3__["TranslateService"]
+          type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_4__["TranslateService"]
         }, {
-          type: _services_company_workflowtype_property_setting_service__WEBPACK_IMPORTED_MODULE_4__["WorkflowtypePropertySettingService"]
+          type: _services_company_workflowtype_property_setting_service__WEBPACK_IMPORTED_MODULE_5__["WorkflowtypePropertySettingService"]
         }, {
-          type: _services_loading_service_service__WEBPACK_IMPORTED_MODULE_5__["LoadingServiceService"]
+          type: _services_loading_service_service__WEBPACK_IMPORTED_MODULE_6__["LoadingServiceService"]
         }, {
-          type: _services_error_service_service__WEBPACK_IMPORTED_MODULE_6__["ErrorServiceService"]
+          type: _services_error_service_service__WEBPACK_IMPORTED_MODULE_7__["ErrorServiceService"]
         }, {
-          type: _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"]
+          type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"]
         }, {
-          type: _angular_forms__WEBPACK_IMPORTED_MODULE_7__["FormBuilder"]
+          type: _angular_forms__WEBPACK_IMPORTED_MODULE_8__["FormBuilder"]
         }, {
-          type: _angular_material_core__WEBPACK_IMPORTED_MODULE_8__["DateAdapter"]
+          type: _angular_material_core__WEBPACK_IMPORTED_MODULE_9__["DateAdapter"]
         }];
       }, null);
     })();
@@ -5826,7 +7293,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     function ErrorDialogComponent_div_0_Template(rf, ctx) {
       if (rf & 1) {
-        var _r270 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
+        var _r318 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 1);
 
@@ -5847,11 +7314,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](7, "button", 6);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function ErrorDialogComponent_div_0_Template_button_click_7_listener($event) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r270);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r318);
 
-          var ctx_r269 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+          var ctx_r317 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
 
-          return ctx_r269.hideModal();
+          return ctx_r317.hideModal();
         });
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](8, "i", 7);
@@ -5875,11 +7342,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](14, "input", 12);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("ngModelChange", function ErrorDialogComponent_div_0_Template_input_ngModelChange_14_listener($event) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r270);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r318);
 
-          var ctx_r271 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+          var ctx_r319 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
 
-          return ctx_r271.showErrorDetail = $event;
+          return ctx_r319.showErrorDetail = $event;
         });
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -5915,11 +7382,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](23, "button", 19);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function ErrorDialogComponent_div_0_Template_button_click_23_listener($event) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r270);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r318);
 
-          var ctx_r272 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+          var ctx_r320 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
 
-          return ctx_r272.hideModal();
+          return ctx_r320.hideModal();
         });
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](24, "i", 7);
@@ -5940,9 +7407,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }
 
       if (rf & 2) {
-        var ctx_r268 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+        var ctx_r316 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngClass", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction1"](12, _c0, ctx_r268.showError));
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngClass", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction1"](12, _c0, ctx_r316.showError));
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](5);
 
@@ -5950,15 +7417,15 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](7);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("innerHTML", ctx_r268.errorMessage, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsanitizeHtml"]);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("innerHTML", ctx_r316.errorMessage, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsanitizeHtml"]);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("hidden", ctx_r268.hasErrorDetail === false);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("hidden", ctx_r316.hasErrorDetail === false);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngModel", ctx_r268.showErrorDetail);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngModel", ctx_r316.showErrorDetail);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
 
@@ -5966,11 +7433,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("hidden", ctx_r268.showErrorDetail === false);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("hidden", ctx_r316.showErrorDetail === false);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("innerHTML", ctx_r268.errorDetails, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsanitizeHtml"]);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("innerHTML", ctx_r316.errorDetails, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsanitizeHtml"]);
       }
     }
 
@@ -5997,17 +7464,17 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "subscribeErrorService",
         value: function subscribeErrorService() {
-          var _this18 = this;
+          var _this24 = this;
 
           this.errorService.errorSubject.subscribe(function (data) {
             if (data && data != null) {
-              _this18.errorMessage = data.errorMessage;
-              _this18.errorDetails = data.errorDetail;
-              _this18.showErrorDetail = false;
-              _this18.showError = true; //alert("error coms: " + this.errorMessage + " , show: " + (this.showError === true));
+              _this24.errorMessage = data.errorMessage;
+              _this24.errorDetails = data.errorDetail;
+              _this24.showErrorDetail = false;
+              _this24.showError = true; //alert("error coms: " + this.errorMessage + " , show: " + (this.showError === true));
             } else {
-              _this18.showError = false;
-              _this18.showErrorDetail = false; //alert("no error");
+              _this24.showError = false;
+              _this24.showErrorDetail = false; //alert("no error");
             } //this.subscribeErrorService();
 
           });
@@ -6123,9 +7590,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }
 
       if (rf & 2) {
-        var ctx_r317 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+        var ctx_r365 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("src", ctx_r317.fileViewUrl);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("src", ctx_r365.fileViewUrl);
       }
     }
 
@@ -6135,11 +7602,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }
 
       if (rf & 2) {
-        var ctx_r318 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+        var ctx_r366 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵstyleSanitizer"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefaultStyleSanitizer"]);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵstyleProp"]("background-image", ctx_r318.imageFileViewUrl);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵstyleProp"]("background-image", ctx_r366.imageFileViewUrl);
       }
     }
 
@@ -6414,9 +7881,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }
 
       if (rf & 2) {
-        var ctx_r273 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+        var ctx_r321 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngClass", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction1"](1, _c0, ctx_r273.showLoading));
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngClass", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction1"](1, _c0, ctx_r321.showLoading));
       }
     }
 
@@ -6434,10 +7901,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _createClass(LoadingDialogComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {
-          var _this19 = this;
+          var _this25 = this;
 
           this.loadingService.loadingSubject.subscribe(function (data) {
-            _this19.showLoading = data;
+            _this25.showLoading = data;
           });
         }
       }]);
@@ -6533,22 +8000,22 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     function SelectUserComponent_li_23_Template(rf, ctx) {
       if (rf & 1) {
-        var _r286 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
+        var _r334 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "li", 20);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "input", 21, 22);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("change", function SelectUserComponent_li_23_Template_input_change_1_listener($event) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r286);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r334);
 
-          var item_r283 = ctx.$implicit;
+          var item_r331 = ctx.$implicit;
 
-          var _r284 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵreference"](2);
+          var _r332 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵreference"](2);
 
-          var ctx_r285 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+          var ctx_r333 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
 
-          return ctx_r285.toggleAssign(item_r283.identity, ctx_r285.assignTypeUser, _r284.checked);
+          return ctx_r333.toggleAssign(item_r331.identity, ctx_r333.assignTypeUser, _r332.checked);
         });
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -6563,42 +8030,42 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }
 
       if (rf & 2) {
-        var item_r283 = ctx.$implicit;
+        var item_r331 = ctx.$implicit;
 
-        var ctx_r281 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+        var ctx_r329 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpropertyInterpolate"]("value", item_r283.identity);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpropertyInterpolate"]("value", item_r331.identity);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("checked", ctx_r281.isItemAssigned(item_r283.identity, ctx_r281.assignTypeUser));
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("checked", ctx_r329.isItemAssigned(item_r331.identity, ctx_r329.assignTypeUser));
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵattribute"]("data-assigntitle", item_r283.fullName);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵattribute"]("data-assigntitle", item_r331.fullName);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](item_r283.fullName);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](item_r331.fullName);
       }
     }
 
     function SelectUserComponent_li_26_Template(rf, ctx) {
       if (rf & 1) {
-        var _r290 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
+        var _r338 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "li", 20);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "input", 21, 22);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("change", function SelectUserComponent_li_26_Template_input_change_1_listener($event) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r290);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r338);
 
-          var dep_r287 = ctx.$implicit;
+          var dep_r335 = ctx.$implicit;
 
-          var _r288 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵreference"](2);
+          var _r336 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵreference"](2);
 
-          var ctx_r289 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+          var ctx_r337 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
 
-          return ctx_r289.toggleAssign(dep_r287.identity, ctx_r289.assignTypeDepartment, _r288.checked);
+          return ctx_r337.toggleAssign(dep_r335.identity, ctx_r337.assignTypeDepartment, _r336.checked);
         });
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -6613,21 +8080,21 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }
 
       if (rf & 2) {
-        var dep_r287 = ctx.$implicit;
+        var dep_r335 = ctx.$implicit;
 
-        var ctx_r282 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+        var ctx_r330 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpropertyInterpolate"]("value", dep_r287.identity);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpropertyInterpolate"]("value", dep_r335.identity);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("checked", ctx_r282.isItemAssigned(dep_r287.identity, ctx_r282.assignTypeDepartment));
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("checked", ctx_r330.isItemAssigned(dep_r335.identity, ctx_r330.assignTypeDepartment));
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵattribute"]("data-assigntitle", dep_r287.title);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵattribute"]("data-assigntitle", dep_r335.title);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](dep_r287.title);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](dep_r335.title);
       }
     }
 
@@ -6963,7 +8430,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     function TextListComponent_div_13_Template(rf, ctx) {
       if (rf & 1) {
-        var _r340 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
+        var _r388 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 6);
 
@@ -6976,13 +8443,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](3, "a", 8);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function TextListComponent_div_13_Template_a_click_3_listener($event) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r340);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r388);
 
-          var txt_r338 = ctx.$implicit;
+          var txt_r386 = ctx.$implicit;
 
-          var ctx_r339 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+          var ctx_r387 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
 
-          return ctx_r339.deleteText(txt_r338);
+          return ctx_r387.deleteText(txt_r386);
         });
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](4, "i", 9);
@@ -6997,11 +8464,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }
 
       if (rf & 2) {
-        var txt_r338 = ctx.$implicit;
+        var txt_r386 = ctx.$implicit;
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](txt_r338);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](txt_r386);
       }
     }
 
@@ -7067,8 +8534,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "text",
         set: function set(_value) {
-          this._text = _value;
-          this.textList = _value.split(this.separator);
+          this._text = _value.trim();
+
+          if (this._text === "" || this._text === null) {
+            this.textList = [];
+          } else {
+            this.textList = this._text.split(this.separator);
+          }
         }
       }]);
 
@@ -7272,7 +8744,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     function WmAssignListComponent_div_5_Template(rf, ctx) {
       if (rf & 1) {
-        var _r336 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
+        var _r384 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 7);
 
@@ -7285,13 +8757,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](3, "button", 8);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function WmAssignListComponent_div_5_Template_button_click_3_listener($event) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r336);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r384);
 
-          var item_r334 = ctx.$implicit;
+          var item_r382 = ctx.$implicit;
 
-          var ctx_r335 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+          var ctx_r383 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
 
-          return ctx_r335.removeAssign(item_r334.itemIdentity, item_r334.itemType);
+          return ctx_r383.removeAssign(item_r382.itemIdentity, item_r382.itemType);
         });
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](4, "i", 2);
@@ -7306,13 +8778,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }
 
       if (rf & 2) {
-        var item_r334 = ctx.$implicit;
+        var item_r382 = ctx.$implicit;
 
-        var ctx_r333 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+        var ctx_r381 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"]("", ctx_r333.getAssignItemTitle(item_r334), " ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"]("", ctx_r381.getAssignItemTitle(item_r382), " ");
       }
     }
 
@@ -7596,18 +9068,18 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     function WmFileUploadComponent_div_8_button_13_Template(rf, ctx) {
       if (rf & 1) {
-        var _r325 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
+        var _r373 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "button", 14);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function WmFileUploadComponent_div_8_button_13_Template_button_click_0_listener($event) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r325);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r373);
 
-          var uploaded_r320 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]().$implicit;
+          var uploaded_r368 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]().$implicit;
 
-          var ctx_r323 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+          var ctx_r371 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
 
-          return ctx_r323.ocrUploadedFile(uploaded_r320);
+          return ctx_r371.ocrUploadedFile(uploaded_r368);
         });
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "i", 11);
@@ -7622,18 +9094,18 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     function WmFileUploadComponent_div_8_button_14_Template(rf, ctx) {
       if (rf & 1) {
-        var _r328 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
+        var _r376 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "button", 18);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function WmFileUploadComponent_div_8_button_14_Template_button_click_0_listener($event) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r328);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r376);
 
-          var uploaded_r320 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]().$implicit;
+          var uploaded_r368 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]().$implicit;
 
-          var ctx_r326 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+          var ctx_r374 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
 
-          return ctx_r326.showScanResults(uploaded_r320);
+          return ctx_r374.showScanResults(uploaded_r368);
         });
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "i", 11);
@@ -7648,7 +9120,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     function WmFileUploadComponent_div_8_Template(rf, ctx) {
       if (rf & 1) {
-        var _r330 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
+        var _r378 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 8);
 
@@ -7683,13 +9155,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](10, "button", 14);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function WmFileUploadComponent_div_8_Template_button_click_10_listener($event) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r330);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r378);
 
-          var uploaded_r320 = ctx.$implicit;
+          var uploaded_r368 = ctx.$implicit;
 
-          var ctx_r329 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+          var ctx_r377 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
 
-          return ctx_r329.showFilePreview(uploaded_r320);
+          return ctx_r377.showFilePreview(uploaded_r368);
         });
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](11, "i", 11);
@@ -7707,13 +9179,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](15, "button", 17);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function WmFileUploadComponent_div_8_Template_button_click_15_listener($event) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r330);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r378);
 
-          var uploaded_r320 = ctx.$implicit;
+          var uploaded_r368 = ctx.$implicit;
 
-          var ctx_r331 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+          var ctx_r379 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
 
-          return ctx_r331.removeUploadedFile(uploaded_r320);
+          return ctx_r379.removeUploadedFile(uploaded_r368);
         });
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](16, "i", 11);
@@ -7730,25 +9202,25 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }
 
       if (rf & 2) {
-        var uploaded_r320 = ctx.$implicit;
+        var uploaded_r368 = ctx.$implicit;
 
-        var ctx_r319 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+        var ctx_r367 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](uploaded_r320.fileName);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](uploaded_r368.fileName);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](5);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpropertyInterpolate1"]("href", "/general/data/file/view/", uploaded_r320.scanedPdfPath, "", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsanitizeUrl"]);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpropertyInterpolate1"]("href", "/general/data/file/view/", uploaded_r368.scanedPdfPath, "", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsanitizeUrl"]);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](6);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r319.canshowOcrUploadButton(uploaded_r320) && ctx_r319.ocrScanningEnabled);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r367.canshowOcrUploadButton(uploaded_r368) && ctx_r367.ocrScanningEnabled);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r319.canShowScanResultsButton(uploaded_r320) && ctx_r319.ocrScanningEnabled);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r367.canShowScanResultsButton(uploaded_r368) && ctx_r367.ocrScanningEnabled);
       }
     }
 
@@ -7768,7 +9240,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function WmFileUploadComponent(translate, loadingService, errorService) {
-        var _this20 = this;
+        var _this26 = this;
 
         _classCallCheck(this, WmFileUploadComponent);
 
@@ -7787,7 +9259,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.showFilePreviewDialog = false;
         this.fileExistsMessage = "common.file-exists";
         translate.get('common.file-exists').subscribe(function (res) {
-          _this20.fileExistsMessage = res;
+          _this26.fileExistsMessage = res;
         });
       }
 
@@ -7807,7 +9279,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "uploadFile",
         value: function uploadFile(fileInput) {
-          var _this21 = this;
+          var _this27 = this;
 
           var file = fileInput.target.files[0];
           console.log("file: ", file); //alert(file.name);
@@ -7825,7 +9297,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           this.editService.uploadTempFiles(file).subscribe(function (result) {
             console.log("upload invoice file result", result);
 
-            _this21.loadingService.hideLoading();
+            _this27.loadingService.hideLoading();
 
             if (result.status) {
               if (result.status === "done") {
@@ -7839,19 +9311,19 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
                 uploaded.uploadResult = result;
 
-                _this21.uploadedFiles.push(uploaded);
+                _this27.uploadedFiles.push(uploaded);
 
-                _this21.onUploadedFilesChanged.emit(_this21.uploadedFiles);
+                _this27.onUploadedFilesChanged.emit(_this27.uploadedFiles);
               }
 
               if (result.status === "error" && result.errorMessage) {
-                _this21.errorService.showError(result.errorMessage, result.errorDetail);
+                _this27.errorService.showError(result.errorMessage, result.errorDetail);
               }
             }
           }, function (response) {
             console.log("Error in upload invoice file", response);
 
-            _this21.loadingService.hideLoading();
+            _this27.loadingService.hideLoading();
           }, function () {});
         }
       }, {
@@ -8681,13 +10153,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _inherits(GermanDateAdapter, _angular_material_cor);
 
       function GermanDateAdapter() {
-        var _this22;
+        var _this28;
 
         _classCallCheck(this, GermanDateAdapter);
 
-        _this22 = _possibleConstructorReturn(this, _getPrototypeOf(GermanDateAdapter).apply(this, arguments));
-        _this22.useUtcForDisplay = true;
-        return _this22;
+        _this28 = _possibleConstructorReturn(this, _getPrototypeOf(GermanDateAdapter).apply(this, arguments));
+        _this28.useUtcForDisplay = true;
+        return _this28;
       }
 
       _createClass(GermanDateAdapter, [{
@@ -9375,7 +10847,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function LoginComponent(formBuilder, route, router, autService, global, translate) {
-        var _this23 = this;
+        var _this29 = this;
 
         _classCallCheck(this, LoginComponent);
 
@@ -9393,7 +10865,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         translate.use('de');
         this.router.events.subscribe(function (evt) {
           if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_1__["NavigationEnd"]) {
-            _this23.global.loadAllSetting(null);
+            _this29.global.loadAllSetting(null);
           }
         });
       }
@@ -10050,16 +11522,16 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     function MessageBarComponent_div_0_button_7_Template(rf, ctx) {
       if (rf & 1) {
-        var _r249 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
+        var _r297 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "button", 10);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function MessageBarComponent_div_0_button_7_Template_button_click_0_listener($event) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r249);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r297);
 
-          var ctx_r248 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
+          var ctx_r296 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
 
-          return ctx_r248.closeMessages();
+          return ctx_r296.closeMessages();
         });
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "i", 11);
@@ -10074,16 +11546,16 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     function MessageBarComponent_div_0_button_8_Template(rf, ctx) {
       if (rf & 1) {
-        var _r251 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
+        var _r299 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "button", 10);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function MessageBarComponent_div_0_button_8_Template_button_click_0_listener($event) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r251);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r299);
 
-          var ctx_r250 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
+          var ctx_r298 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
 
-          return ctx_r250.showMessages();
+          return ctx_r298.showMessages();
         });
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "i", 11);
@@ -10098,16 +11570,16 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     function MessageBarComponent_div_0_button_9_Template(rf, ctx) {
       if (rf & 1) {
-        var _r253 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
+        var _r301 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "button", 10);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function MessageBarComponent_div_0_button_9_Template_button_click_0_listener($event) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r253);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r301);
 
-          var ctx_r252 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
+          var ctx_r300 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
 
-          return ctx_r252.reloadMessages();
+          return ctx_r300.reloadMessages();
         });
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "i", 11);
@@ -10128,20 +11600,20 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     function MessageBarComponent_div_0_div_12_Template(rf, ctx) {
       if (rf & 1) {
-        var _r256 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
+        var _r304 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 13);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "a", 14);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function MessageBarComponent_div_0_div_12_Template_a_click_1_listener($event) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r256);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r304);
 
-          var message_r254 = ctx.$implicit;
+          var message_r302 = ctx.$implicit;
 
-          var ctx_r255 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
+          var ctx_r303 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
 
-          return ctx_r255.showWorkflowView(message_r254.workflowIdentity);
+          return ctx_r303.showWorkflowView(message_r302.workflowIdentity);
         });
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "div");
@@ -10156,11 +11628,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }
 
       if (rf & 2) {
-        var message_r254 = ctx.$implicit;
+        var message_r302 = ctx.$implicit;
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate5"]("", message_r254.message, " (", message_r254.workflow.workflowType.title, ") (", message_r254.createdAtString, ") (", message_r254.remainingDays, ") (", message_r254.status, ")");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate5"]("", message_r302.message, " (", message_r302.workflow.workflowType.title, ") (", message_r302.createdAtString, ") (", message_r302.remainingDays, ") (", message_r302.status, ")");
       }
     }
 
@@ -10181,16 +11653,16 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     function MessageBarComponent_div_0_Template(rf, ctx) {
       if (rf & 1) {
-        var _r258 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
+        var _r306 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 2);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("resizeEnd", function MessageBarComponent_div_0_Template_div_resizeEnd_0_listener($event) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r258);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r306);
 
-          var ctx_r257 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+          var ctx_r305 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
 
-          return ctx_r257.onResizeEnd($event);
+          return ctx_r305.onResizeEnd($event);
         });
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 3);
@@ -10229,52 +11701,52 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }
 
       if (rf & 2) {
-        var ctx_r241 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+        var ctx_r289 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("enableGhostResize", true)("resizeEdges", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction0"](9, _c0));
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](5);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngStyle", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction1"](10, _c1, ctx_r241.subscribed ? "green" : "red"));
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngStyle", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction1"](10, _c1, ctx_r289.subscribed ? "green" : "red"));
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx_r241.status);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx_r289.status);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r241.messagePanelShowed);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r289.messagePanelShowed);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r241.messagePanelShowed == false);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r289.messagePanelShowed == false);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r241.messagePanelShowed);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r289.messagePanelShowed);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r241.isReloadingMessages);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r289.isReloadingMessages);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx_r241.messages);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx_r289.messages);
       }
     }
 
     function MessageBarComponent_div_1_button_16_Template(rf, ctx) {
       if (rf & 1) {
-        var _r262 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
+        var _r310 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "button", 27);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function MessageBarComponent_div_1_button_16_Template_button_click_0_listener($event) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r262);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r310);
 
-          var ctx_r261 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
+          var ctx_r309 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
 
-          return ctx_r261.assignWorkflowMe();
+          return ctx_r309.assignWorkflowMe();
         });
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "i", 11);
@@ -10289,16 +11761,16 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     function MessageBarComponent_div_1_button_17_Template(rf, ctx) {
       if (rf & 1) {
-        var _r264 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
+        var _r312 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "button", 28);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function MessageBarComponent_div_1_button_17_Template_button_click_0_listener($event) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r264);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r312);
 
-          var ctx_r263 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
+          var ctx_r311 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
 
-          return ctx_r263.editWorkflow();
+          return ctx_r311.editWorkflow();
         });
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "i", 11);
@@ -10313,7 +11785,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     function MessageBarComponent_div_1_Template(rf, ctx) {
       if (rf & 1) {
-        var _r266 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
+        var _r314 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 15);
 
@@ -10334,11 +11806,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](7, "button", 20);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function MessageBarComponent_div_1_Template_button_click_7_listener($event) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r266);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r314);
 
-          var ctx_r265 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+          var ctx_r313 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
 
-          return ctx_r265.hideViewModal();
+          return ctx_r313.hideViewModal();
         });
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](8, "i", 11);
@@ -10362,11 +11834,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](13, "button", 24);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function MessageBarComponent_div_1_Template_button_click_13_listener($event) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r266);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r314);
 
-          var ctx_r267 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+          var ctx_r315 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
 
-          return ctx_r267.hideViewModal();
+          return ctx_r315.hideViewModal();
         });
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](14, "i", 11);
@@ -10391,7 +11863,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }
 
       if (rf & 2) {
-        var ctx_r242 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+        var ctx_r290 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](5);
 
@@ -10399,15 +11871,15 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](6);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("workflow", ctx_r242.viewWorkflowModel);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("workflow", ctx_r290.viewWorkflowModel);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](5);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r242.viewWorkflowModel.notAssigned);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r290.viewWorkflowModel.notAssigned);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r242.viewWorkflowModel.meAssigned);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r290.viewWorkflowModel.meAssigned);
       }
     }
 
@@ -10415,7 +11887,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function MessageBarComponent(router, messageService, errorService, globalSocket) {
-        var _this24 = this;
+        var _this30 = this;
 
         _classCallCheck(this, MessageBarComponent);
 
@@ -10436,13 +11908,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this._isLogged = false;
 
         this.onReceiveMessage = function (message) {
-          _this24.requesting = false;
+          _this30.requesting = false;
           console.log("Socket Message: ", message.body);
           var parsedMessage = JSON.parse(message.body);
           console.log("Parsed Message: ", parsedMessage);
 
           if (parsedMessage.command && parsedMessage.command === "message-reload") {
-            _this24.readMessageList(false);
+            _this30.readMessageList(false);
           }
         };
       }
@@ -10492,7 +11964,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "readMessageList",
         value: function readMessageList(reset) {
-          var _this25 = this;
+          var _this31 = this;
 
           //clearTimeout(this.messageReloadTimeoutId);
           console.log("Start Request Read message list " + (reset ? "with reset" : "without reset"));
@@ -10501,14 +11973,14 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             this.isReloadingMessages = true;
             this.messageService.loadMessages(reset).subscribe(function (messageList) {
               console.log("Read message list", messageList);
-              _this25.messages = messageList;
+              _this31.messages = messageList;
             }, function (response) {
               console.log("Error in read message list", response);
-              _this25.messages = [];
-              _this25.isReloadingMessages = false;
+              _this31.messages = [];
+              _this31.isReloadingMessages = false;
             }, function () {
               setTimeout(function () {
-                _this25.isReloadingMessages = false;
+                _this31.isReloadingMessages = false;
               }, 500);
               /*this.messageReloadTimeoutId = setTimeout(() =>{
                   this.reloadMessages(false);
@@ -10535,16 +12007,16 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "assignWorkflowMe",
         value: function assignWorkflowMe() {
-          var _this26 = this;
+          var _this32 = this;
 
           this.messageService.assignMe(this.viewWorkflowModel.identity).subscribe(function (val) {
             console.log("Workflow assigned to me"); //this.readMessageList(true);
           }, function (response) {
             console.log("Error in assigning workflow", response);
 
-            _this26.errorService.showErrorResponse(response);
+            _this32.errorService.showErrorResponse(response);
           }, function () {
-            _this26.viewWorkflow = false;
+            _this32.viewWorkflow = false;
           });
         }
       }, {
@@ -10782,7 +12254,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _createClass(AuthenticationService, [{
         key: "login",
         value: function login(username, password, companyid, loginComponent) {
-          var _this27 = this;
+          var _this33 = this;
 
           var loginData = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpParams"]().set('username', username).set('password', password).set('companyid', companyid);
           var httpOptions = {
@@ -10791,18 +12263,18 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           this.http.post(this.authenticateUrl, loginData, httpOptions).subscribe(function (val) {
             var loginResponse = val;
 
-            _this27.currentUserSubject.next(loginResponse.user);
+            _this33.currentUserSubject.next(loginResponse.user);
 
-            _this27.currentUserSubject.complete();
+            _this33.currentUserSubject.complete();
 
-            _this27.isLoggedIn = true;
+            _this33.isLoggedIn = true;
             loginComponent.processLoginResult(val);
           }, function (response) {
-            _this27.currentUserSubject.next(null);
+            _this33.currentUserSubject.next(null);
 
-            _this27.currentUserSubject.complete();
+            _this33.currentUserSubject.complete();
 
-            _this27.isLoggedIn = false;
+            _this33.isLoggedIn = false;
             loginComponent.processFailedResult(response);
           }, function () {
             loginComponent.processEndLoading();
@@ -10811,7 +12283,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "checkLoginState",
         value: function checkLoginState(returnUrl) {
-          var _this28 = this;
+          var _this34 = this;
 
           this.loadingService.showLoading();
           this.global.loadAllSettingObserv().subscribe(function (generalData) {
@@ -10819,24 +12291,24 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             var value = generalData.isLogged + "";
 
             if (value === "true" && generalData.user) {
-              _this28.isLoggedIn = true;
+              _this34.isLoggedIn = true;
 
-              _this28.currentUserSubject.next(generalData.user.currentUser); //this.currentUserSubject.complete();
+              _this34.currentUserSubject.next(generalData.user.currentUser); //this.currentUserSubject.complete();
 
 
-              _this28.global.loadAllSetting(null); //this.global.setGeneralData(generalData);
+              _this34.global.loadAllSetting(null); //this.global.setGeneralData(generalData);
               //alert("from authentication- redirect to : " + returnUrl + ": \n" + JSON.stringify(generalData));
 
 
-              _this28.router.navigate([returnUrl]);
+              _this34.router.navigate([returnUrl]);
             } else {
-              _this28.isLoggedIn = false;
+              _this34.isLoggedIn = false;
 
-              _this28.currentUserSubject.next(null); //this.currentUserSubject.complete();
+              _this34.currentUserSubject.next(null); //this.currentUserSubject.complete();
               //alert("from authentication- redirect to login : \n" + JSON.stringify(generalData));
 
 
-              _this28.router.navigate(['auth/login'], {
+              _this34.router.navigate(['auth/login'], {
                 queryParams: {
                   returnUrl: returnUrl
                 }
@@ -10844,13 +12316,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             }
           }, function (response) {
             console.log("Error in read menu list", response);
-            _this28.isLoggedIn = false;
+            _this34.isLoggedIn = false;
 
-            _this28.currentUserSubject.next(null);
+            _this34.currentUserSubject.next(null);
 
-            _this28.currentUserSubject.complete();
+            _this34.currentUserSubject.complete();
 
-            _this28.router.navigate(['auth/login'], {
+            _this34.router.navigate(['auth/login'], {
               queryParams: {
                 returnUrl: returnUrl
               }
@@ -10874,7 +12346,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "logout",
         value: function logout(returnUrl) {
-          var _this29 = this;
+          var _this35 = this;
 
           if (!returnUrl || returnUrl === null || returnUrl === undefined) {
             returnUrl = "";
@@ -10891,31 +12363,31 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             var loginResponse = val;
             console.log("Is Logged out!");
 
-            _this29.currentUserSubject.next(null); //this.currentUserSubject.complete();
+            _this35.currentUserSubject.next(null); //this.currentUserSubject.complete();
 
 
-            _this29.isLoggedIn = false; //loginComponent.processLoginResult(<LoginResponse>val);
+            _this35.isLoggedIn = false; //loginComponent.processLoginResult(<LoginResponse>val);
 
-            _this29.global.loadAllSetting(null); //this.loadingService.hideLoading();
+            _this35.global.loadAllSetting(null); //this.loadingService.hideLoading();
 
 
-            _this29.router.navigate(['auth/login'], {
+            _this35.router.navigate(['auth/login'], {
               queryParams: {
                 returnUrl: returnUrl
               }
             });
           }, function (response) {
-            _this29.currentUserSubject.next(null);
+            _this35.currentUserSubject.next(null);
 
             console.log("Error in Logging out!", response); //this.currentUserSubject.complete();
 
-            _this29.isLoggedIn = false; //loginComponent.processFailedResult(response);
+            _this35.isLoggedIn = false; //loginComponent.processFailedResult(response);
 
-            _this29.global.loadAllSetting(null);
+            _this35.global.loadAllSetting(null);
 
-            _this29.loadingService.hideLoading();
+            _this35.loadingService.hideLoading();
 
-            _this29.router.navigate(['auth/login'], {
+            _this35.router.navigate(['auth/login'], {
               queryParams: {
                 returnUrl: returnUrl
               }
@@ -11052,19 +12524,19 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _inherits(CompanyEditService, _helper_http_error_re);
 
       function CompanyEditService(http, loadingService, router, route, autService) {
-        var _this30;
+        var _this36;
 
         _classCallCheck(this, CompanyEditService);
 
-        _this30 = _possibleConstructorReturn(this, _getPrototypeOf(CompanyEditService).call(this, router, route, autService));
-        _this30.http = http;
-        _this30.loadingService = loadingService;
-        _this30.router = router;
-        _this30.route = route;
-        _this30.autService = autService;
-        _this30.loadDataUrl = "/company/data/info";
-        _this30.updateDataUrl = "/company/data/update";
-        return _this30;
+        _this36 = _possibleConstructorReturn(this, _getPrototypeOf(CompanyEditService).call(this, router, route, autService));
+        _this36.http = http;
+        _this36.loadingService = loadingService;
+        _this36.router = router;
+        _this36.route = route;
+        _this36.autService = autService;
+        _this36.loadDataUrl = "/company/data/info";
+        _this36.updateDataUrl = "/company/data/update";
+        return _this36;
       }
 
       _createClass(CompanyEditService, [{
@@ -11191,21 +12663,21 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _inherits(DepartmentEditService, _helper_http_error_re2);
 
       function DepartmentEditService(http, loadingService, router, route, autService) {
-        var _this31;
+        var _this37;
 
         _classCallCheck(this, DepartmentEditService);
 
-        _this31 = _possibleConstructorReturn(this, _getPrototypeOf(DepartmentEditService).call(this, router, route, autService));
-        _this31.http = http;
-        _this31.loadingService = loadingService;
-        _this31.router = router;
-        _this31.route = route;
-        _this31.autService = autService;
-        _this31.loadDepartmentsUrl = "/departments/data/list";
-        _this31.createDepartmentUrl = "/departments/data/create";
-        _this31.updateDepartmentUrl = "/departments/data/update";
-        _this31.deleteDepartmentUrl = "/departments/data/delete";
-        return _this31;
+        _this37 = _possibleConstructorReturn(this, _getPrototypeOf(DepartmentEditService).call(this, router, route, autService));
+        _this37.http = http;
+        _this37.loadingService = loadingService;
+        _this37.router = router;
+        _this37.route = route;
+        _this37.autService = autService;
+        _this37.loadDepartmentsUrl = "/departments/data/list";
+        _this37.createDepartmentUrl = "/departments/data/create";
+        _this37.updateDepartmentUrl = "/departments/data/update";
+        _this37.deleteDepartmentUrl = "/departments/data/delete";
+        return _this37;
       }
 
       _createClass(DepartmentEditService, [{
@@ -11258,6 +12730,172 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     (function () {
       _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](DepartmentEditService, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"],
+        args: [{
+          providedIn: 'root'
+        }]
+      }], function () {
+        return [{
+          type: _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"]
+        }, {
+          type: _loading_service_service__WEBPACK_IMPORTED_MODULE_4__["LoadingServiceService"]
+        }, {
+          type: _angular_router__WEBPACK_IMPORTED_MODULE_5__["Router"]
+        }, {
+          type: _angular_router__WEBPACK_IMPORTED_MODULE_5__["ActivatedRoute"]
+        }, {
+          type: _services__WEBPACK_IMPORTED_MODULE_6__["AuthenticationService"]
+        }];
+      }, null);
+    })();
+    /***/
+
+  },
+
+  /***/
+  "./src/app/services/company/ocr-presets.service.ts":
+  /*!*********************************************************!*\
+    !*** ./src/app/services/company/ocr-presets.service.ts ***!
+    \*********************************************************/
+
+  /*! exports provided: OcrPresetsService */
+
+  /***/
+  function srcAppServicesCompanyOcrPresetsServiceTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "OcrPresetsService", function () {
+      return OcrPresetsService;
+    });
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! @angular/core */
+    "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+    /* harmony import */
+
+
+    var _helper_http_hepler__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! ../../helper/http-hepler */
+    "./src/app/helper/http-hepler.ts");
+    /* harmony import */
+
+
+    var _helper_http_error_response_helper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! ../../helper/http-error-response-helper */
+    "./src/app/helper/http-error-response-helper.ts");
+    /* harmony import */
+
+
+    var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! @angular/common/http */
+    "./node_modules/@angular/common/__ivy_ngcc__/fesm2015/http.js");
+    /* harmony import */
+
+
+    var _loading_service_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! ../loading-service.service */
+    "./src/app/services/loading-service.service.ts");
+    /* harmony import */
+
+
+    var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+    /*! @angular/router */
+    "./node_modules/@angular/router/__ivy_ngcc__/fesm2015/router.js");
+    /* harmony import */
+
+
+    var _services__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+    /*! ../../services */
+    "./src/app/services/index.ts");
+
+    var OcrPresetsService =
+    /*#__PURE__*/
+    function (_helper_http_error_re3) {
+      _inherits(OcrPresetsService, _helper_http_error_re3);
+
+      function OcrPresetsService(http, loadingService, router, route, autService) {
+        var _this38;
+
+        _classCallCheck(this, OcrPresetsService);
+
+        _this38 = _possibleConstructorReturn(this, _getPrototypeOf(OcrPresetsService).call(this, router, route, autService));
+        _this38.http = http;
+        _this38.loadingService = loadingService;
+        _this38.router = router;
+        _this38.route = route;
+        _this38.autService = autService;
+        _this38.listPresetsUrl = "/ocrpreset/data/list";
+        _this38.updatePresetUrl = "/ocrpreset/data/save";
+        _this38.deletePresetUrl = "/ocrpreset/data/delete";
+        _this38.listPresetItemsUrl = "/ocrpreset/data/read/";
+        _this38.pageInitUrl = "/ocrpreset/data/initpage";
+        return _this38;
+      }
+
+      _createClass(OcrPresetsService, [{
+        key: "listPresets",
+        value: function listPresets() {
+          var httpOptions = {
+            headers: _helper_http_hepler__WEBPACK_IMPORTED_MODULE_1__["HttpHepler"].generateJsonHeader()
+          };
+          return this.http.get(this.listPresetsUrl, httpOptions);
+        }
+      }, {
+        key: "listPresetItems",
+        value: function listPresetItems(presetName) {
+          var httpOptions = {
+            headers: _helper_http_hepler__WEBPACK_IMPORTED_MODULE_1__["HttpHepler"].generateJsonHeader()
+          };
+          return this.http.get(this.listPresetItemsUrl + presetName, httpOptions);
+        }
+      }, {
+        key: "pageInitData",
+        value: function pageInitData() {
+          var httpOptions = {
+            headers: _helper_http_hepler__WEBPACK_IMPORTED_MODULE_1__["HttpHepler"].generateJsonHeader()
+          };
+          return this.http.get(this.pageInitUrl, httpOptions);
+        }
+      }, {
+        key: "updatePreset",
+        value: function updatePreset(presetToSave) {
+          var httpOptions = {
+            headers: _helper_http_hepler__WEBPACK_IMPORTED_MODULE_1__["HttpHepler"].generateJsonHeader()
+          };
+          return this.http.post(this.updatePresetUrl, presetToSave, httpOptions);
+        }
+      }, {
+        key: "deletePreset",
+        value: function deletePreset(presetToDelete) {
+          var httpOptions = {
+            headers: _helper_http_hepler__WEBPACK_IMPORTED_MODULE_1__["HttpHepler"].generateJsonHeader()
+          };
+          return this.http.post(this.deletePresetUrl, presetToDelete, httpOptions);
+        }
+      }]);
+
+      return OcrPresetsService;
+    }(_helper_http_error_response_helper__WEBPACK_IMPORTED_MODULE_2__["HttpErrorResponseHelper"]);
+
+    OcrPresetsService.ɵfac = function OcrPresetsService_Factory(t) {
+      return new (t || OcrPresetsService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_loading_service_service__WEBPACK_IMPORTED_MODULE_4__["LoadingServiceService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_router__WEBPACK_IMPORTED_MODULE_5__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_router__WEBPACK_IMPORTED_MODULE_5__["ActivatedRoute"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_services__WEBPACK_IMPORTED_MODULE_6__["AuthenticationService"]));
+    };
+
+    OcrPresetsService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({
+      token: OcrPresetsService,
+      factory: OcrPresetsService.ɵfac,
+      providedIn: 'root'
+    });
+    /*@__PURE__*/
+
+    (function () {
+      _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](OcrPresetsService, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"],
         args: [{
           providedIn: 'root'
@@ -11344,26 +12982,26 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     var UserEditService =
     /*#__PURE__*/
-    function (_helper_http_error_re3) {
-      _inherits(UserEditService, _helper_http_error_re3);
+    function (_helper_http_error_re4) {
+      _inherits(UserEditService, _helper_http_error_re4);
 
       function UserEditService(http, loadingService, router, route, autService) {
-        var _this32;
+        var _this39;
 
         _classCallCheck(this, UserEditService);
 
-        _this32 = _possibleConstructorReturn(this, _getPrototypeOf(UserEditService).call(this, router, route, autService));
-        _this32.http = http;
-        _this32.loadingService = loadingService;
-        _this32.router = router;
-        _this32.route = route;
-        _this32.autService = autService;
-        _this32.loadUsersUrl = "/users/data/list";
-        _this32.createUserUrl = "/users/data/create";
-        _this32.updateUserUrl = "/users/data/update";
-        _this32.deleteUserUrl = "/users/data/delete";
-        _this32.resetUserPasswordUrl = "/users/data/resetpassword";
-        return _this32;
+        _this39 = _possibleConstructorReturn(this, _getPrototypeOf(UserEditService).call(this, router, route, autService));
+        _this39.http = http;
+        _this39.loadingService = loadingService;
+        _this39.router = router;
+        _this39.route = route;
+        _this39.autService = autService;
+        _this39.loadUsersUrl = "/users/data/list";
+        _this39.createUserUrl = "/users/data/create";
+        _this39.updateUserUrl = "/users/data/update";
+        _this39.deleteUserUrl = "/users/data/delete";
+        _this39.resetUserPasswordUrl = "/users/data/resetpassword";
+        return _this39;
       }
 
       _createClass(UserEditService, [{
@@ -11510,49 +13148,58 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     var WorkflowtypePropertySettingService =
     /*#__PURE__*/
-    function (_helper_http_error_re4) {
-      _inherits(WorkflowtypePropertySettingService, _helper_http_error_re4);
+    function (_helper_http_error_re5) {
+      _inherits(WorkflowtypePropertySettingService, _helper_http_error_re5);
 
       function WorkflowtypePropertySettingService(http, loadingService, router, route, autService) {
-        var _this33;
+        var _this40;
 
         _classCallCheck(this, WorkflowtypePropertySettingService);
 
-        _this33 = _possibleConstructorReturn(this, _getPrototypeOf(WorkflowtypePropertySettingService).call(this, router, route, autService));
-        _this33.http = http;
-        _this33.loadingService = loadingService;
-        _this33.router = router;
-        _this33.route = route;
-        _this33.autService = autService;
-        _this33.listWorkflowTypesUrl = "/company/data/readworkflowtypeitemocrsettings";
-        _this33.updateWorkflowTypesUrl = "/company/data/saveworkflowtypeitemocrsettings/";
-        _this33.listWorkflowTypePtopertiesUrl = "/company/data/readworkflowtypeitems/";
-        return _this33;
+        _this40 = _possibleConstructorReturn(this, _getPrototypeOf(WorkflowtypePropertySettingService).call(this, router, route, autService));
+        _this40.http = http;
+        _this40.loadingService = loadingService;
+        _this40.router = router;
+        _this40.route = route;
+        _this40.autService = autService;
+        _this40.listPresetsUrl = "/company/data/readocrpresets";
+        _this40.updatePresetUrl = "/company/data/savereadocrpreset";
+        _this40.listPresetItemsUrl = "/company/data/readpresetallitems/";
+        _this40.listWorkflowTypeItemsUrl = "/company/data/readworkflowtypeitems/";
+        return _this40;
       }
 
       _createClass(WorkflowtypePropertySettingService, [{
-        key: "listWorkflowTypes",
-        value: function listWorkflowTypes() {
+        key: "listPresets",
+        value: function listPresets() {
           var httpOptions = {
             headers: _helper_http_hepler__WEBPACK_IMPORTED_MODULE_1__["HttpHepler"].generateJsonHeader()
           };
-          return this.http.get(this.listWorkflowTypesUrl, httpOptions);
+          return this.http.get(this.listPresetsUrl, httpOptions);
         }
       }, {
-        key: "listWorkflowTypePtoperties",
-        value: function listWorkflowTypePtoperties(workflowTypeIdentity) {
+        key: "listPresetItems",
+        value: function listPresetItems(presetName) {
           var httpOptions = {
             headers: _helper_http_hepler__WEBPACK_IMPORTED_MODULE_1__["HttpHepler"].generateJsonHeader()
           };
-          return this.http.get(this.listWorkflowTypePtopertiesUrl + workflowTypeIdentity, httpOptions);
+          return this.http.get(this.listPresetItemsUrl + presetName, httpOptions);
         }
       }, {
-        key: "updateWorkflowTypes",
-        value: function updateWorkflowTypes(properties, workflowTypeIdentity) {
+        key: "listWorkflowTypeItems",
+        value: function listWorkflowTypeItems(presetName) {
           var httpOptions = {
             headers: _helper_http_hepler__WEBPACK_IMPORTED_MODULE_1__["HttpHepler"].generateJsonHeader()
           };
-          return this.http.post(this.updateWorkflowTypesUrl + workflowTypeIdentity, properties, httpOptions);
+          return this.http.get(this.listWorkflowTypeItemsUrl + presetName, httpOptions);
+        }
+      }, {
+        key: "updatePreset",
+        value: function updatePreset(presetToSave) {
+          var httpOptions = {
+            headers: _helper_http_hepler__WEBPACK_IMPORTED_MODULE_1__["HttpHepler"].generateJsonHeader()
+          };
+          return this.http.post(this.updatePresetUrl, presetToSave, httpOptions);
         }
       }]);
 
@@ -11843,7 +13490,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _createClass(GlobalService, [{
         key: "loadAllSetting",
         value: function loadAllSetting(login) {
-          var _this34 = this;
+          var _this41 = this;
 
           this.loadingService.showLoading();
           var httpOptions = {
@@ -11853,22 +13500,22 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             console.log("GET call successful generaldata", generalData);
             var islogged = generalData.isLogged + "";
             generalData.isLogged = islogged === "true";
-            _this34.loadedGeneralData = JSON.parse(JSON.stringify(generalData));
+            _this41.loadedGeneralData = JSON.parse(JSON.stringify(generalData));
 
-            _this34.currentSessionDataSubject.next(generalData);
+            _this41.currentSessionDataSubject.next(generalData);
 
-            _this34.loadingService.hideLoading();
+            _this41.loadingService.hideLoading();
           }, function (response) {
             console.log("Error in read general list", response);
 
-            _this34.loadingService.hideLoading();
+            _this41.loadingService.hideLoading();
           }, function () {
             if (login != null) {
               login.finishGeneralDataLoading();
             } //this.currentSessionDataSubject.complete();
 
 
-            _this34.loadingService.hideLoading();
+            _this41.loadingService.hideLoading();
           });
         }
         /*setGeneralData(generalData :GeneralData){
@@ -12228,24 +13875,24 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     var InvoiceWorkflowEditService =
     /*#__PURE__*/
-    function (_helper_http_error_re5) {
-      _inherits(InvoiceWorkflowEditService, _helper_http_error_re5);
+    function (_helper_http_error_re6) {
+      _inherits(InvoiceWorkflowEditService, _helper_http_error_re6);
 
       function InvoiceWorkflowEditService(http, loadingService, errorService, router, route, autService) {
-        var _this35;
+        var _this42;
 
         _classCallCheck(this, InvoiceWorkflowEditService);
 
-        _this35 = _possibleConstructorReturn(this, _getPrototypeOf(InvoiceWorkflowEditService).call(this, router, route, autService));
-        _this35.http = http;
-        _this35.loadingService = loadingService;
-        _this35.errorService = errorService;
-        _this35.router = router;
-        _this35.route = route;
-        _this35.autService = autService;
-        _this35.workflowSaveRequestInitSubject = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](null);
-        _this35.workflowSaveRequestInit = null;
-        return _this35;
+        _this42 = _possibleConstructorReturn(this, _getPrototypeOf(InvoiceWorkflowEditService).call(this, router, route, autService));
+        _this42.http = http;
+        _this42.loadingService = loadingService;
+        _this42.errorService = errorService;
+        _this42.router = router;
+        _this42.route = route;
+        _this42.autService = autService;
+        _this42.workflowSaveRequestInitSubject = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](null);
+        _this42.workflowSaveRequestInit = null;
+        return _this42;
       }
 
       _createClass(InvoiceWorkflowEditService, [{
@@ -12291,7 +13938,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "loadCreateInitialData",
         value: function loadCreateInitialData() {
-          var _this36 = this;
+          var _this43 = this;
 
           this.loadingService.showLoading();
           var httpOptions = {
@@ -12299,17 +13946,17 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           };
           this.http.post(this.getInitCreateUrl(), new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpParams"](), httpOptions).subscribe(function (initialData) {
             console.log("GET successful edit inital data", initialData);
-            _this36.workflowSaveRequestInit = JSON.parse(JSON.stringify(initialData));
+            _this43.workflowSaveRequestInit = JSON.parse(JSON.stringify(initialData));
 
-            _this36.workflowSaveRequestInitSubject.next(initialData);
+            _this43.workflowSaveRequestInitSubject.next(initialData);
           }, function (response) {
             console.log("Error in read edit inital data", response);
 
-            _this36.errorService.showErrorResponse(response);
+            _this43.errorService.showErrorResponse(response);
           }, function () {
-            _this36.workflowSaveRequestInitSubject.complete();
+            _this43.workflowSaveRequestInitSubject.complete();
 
-            _this36.loadingService.hideLoading();
+            _this43.loadingService.hideLoading();
           });
         }
       }, {
@@ -12489,19 +14136,19 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _inherits(SingleTaskWorkflowEditService, _workflow_edit_base_s);
 
       function SingleTaskWorkflowEditService(http, loadingService, router, route, autService) {
-        var _this37;
+        var _this44;
 
         _classCallCheck(this, SingleTaskWorkflowEditService);
 
-        _this37 = _possibleConstructorReturn(this, _getPrototypeOf(SingleTaskWorkflowEditService).call(this, http, loadingService, router, route, autService));
-        _this37.http = http;
-        _this37.loadingService = loadingService;
-        _this37.router = router;
-        _this37.route = route;
-        _this37.autService = autService;
-        _this37.workflowSaveRequestInitSubject = new rxjs__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"](null);
-        _this37.workflowSaveRequestInit = null;
-        return _this37;
+        _this44 = _possibleConstructorReturn(this, _getPrototypeOf(SingleTaskWorkflowEditService).call(this, http, loadingService, router, route, autService));
+        _this44.http = http;
+        _this44.loadingService = loadingService;
+        _this44.router = router;
+        _this44.route = route;
+        _this44.autService = autService;
+        _this44.workflowSaveRequestInitSubject = new rxjs__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"](null);
+        _this44.workflowSaveRequestInit = null;
+        return _this44;
       }
 
       _createClass(SingleTaskWorkflowEditService, [{
@@ -12647,19 +14294,19 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _inherits(TestthreetaskWorkflowEditService, _workflow_edit_base_s2);
 
       function TestthreetaskWorkflowEditService(http, loadingService, router, route, autService) {
-        var _this38;
+        var _this45;
 
         _classCallCheck(this, TestthreetaskWorkflowEditService);
 
-        _this38 = _possibleConstructorReturn(this, _getPrototypeOf(TestthreetaskWorkflowEditService).call(this, http, loadingService, router, route, autService));
-        _this38.http = http;
-        _this38.loadingService = loadingService;
-        _this38.router = router;
-        _this38.route = route;
-        _this38.autService = autService;
-        _this38.workflowSaveRequestInitSubject = new rxjs__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"](null);
-        _this38.workflowSaveRequestInit = null;
-        return _this38;
+        _this45 = _possibleConstructorReturn(this, _getPrototypeOf(TestthreetaskWorkflowEditService).call(this, http, loadingService, router, route, autService));
+        _this45.http = http;
+        _this45.loadingService = loadingService;
+        _this45.router = router;
+        _this45.route = route;
+        _this45.autService = autService;
+        _this45.workflowSaveRequestInitSubject = new rxjs__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"](null);
+        _this45.workflowSaveRequestInit = null;
+        return _this45;
       }
 
       _createClass(TestthreetaskWorkflowEditService, [{
@@ -12807,23 +14454,23 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     var WorkflowEditBaseService =
     /*#__PURE__*/
-    function (_helper_http_error_re6) {
-      _inherits(WorkflowEditBaseService, _helper_http_error_re6);
+    function (_helper_http_error_re7) {
+      _inherits(WorkflowEditBaseService, _helper_http_error_re7);
 
       function WorkflowEditBaseService(http, loadingService, router, route, autService) {
-        var _this39;
+        var _this46;
 
         _classCallCheck(this, WorkflowEditBaseService);
 
-        _this39 = _possibleConstructorReturn(this, _getPrototypeOf(WorkflowEditBaseService).call(this, router, route, autService));
-        _this39.http = http;
-        _this39.loadingService = loadingService;
-        _this39.router = router;
-        _this39.route = route;
-        _this39.autService = autService;
-        _this39.workflowSaveRequestInitSubject = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](null);
-        _this39.workflowSaveRequestInit = null;
-        return _this39;
+        _this46 = _possibleConstructorReturn(this, _getPrototypeOf(WorkflowEditBaseService).call(this, router, route, autService));
+        _this46.http = http;
+        _this46.loadingService = loadingService;
+        _this46.router = router;
+        _this46.route = route;
+        _this46.autService = autService;
+        _this46.workflowSaveRequestInitSubject = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](null);
+        _this46.workflowSaveRequestInit = null;
+        return _this46;
       }
 
       _createClass(WorkflowEditBaseService, [{
@@ -12880,7 +14527,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "loadCreateInitialData",
         value: function loadCreateInitialData() {
-          var _this40 = this;
+          var _this47 = this;
 
           this.loadingService.showLoading();
           var httpOptions = {
@@ -12888,19 +14535,19 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           };
           this.http.post(this.getInitCreateUrl(), new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpParams"](), httpOptions).subscribe(function (initialData) {
             console.log("GET successful edit inital data", initialData);
-            _this40.workflowSaveRequestInit = JSON.parse(JSON.stringify(initialData));
+            _this47.workflowSaveRequestInit = JSON.parse(JSON.stringify(initialData));
 
-            _this40.workflowSaveRequestInitSubject.next(initialData);
+            _this47.workflowSaveRequestInitSubject.next(initialData);
           }, function (response) {
             console.log("Error in read edit inital data", response);
 
-            _this40.processErrorResponse(response);
+            _this47.processErrorResponse(response);
 
-            _this40.loadingService.hideLoading();
+            _this47.loadingService.hideLoading();
           }, function () {
-            _this40.workflowSaveRequestInitSubject.complete();
+            _this47.workflowSaveRequestInitSubject.complete();
 
-            _this40.loadingService.hideLoading();
+            _this47.loadingService.hideLoading();
           });
         }
       }, {
@@ -13192,31 +14839,31 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     var WorkflowSearchService =
     /*#__PURE__*/
-    function (_helper_http_error_re7) {
-      _inherits(WorkflowSearchService, _helper_http_error_re7);
+    function (_helper_http_error_re8) {
+      _inherits(WorkflowSearchService, _helper_http_error_re8);
 
       function WorkflowSearchService(http, loadingService, router, route, autService) {
-        var _this41;
+        var _this48;
 
         _classCallCheck(this, WorkflowSearchService);
 
-        _this41 = _possibleConstructorReturn(this, _getPrototypeOf(WorkflowSearchService).call(this, router, route, autService));
-        _this41.http = http;
-        _this41.loadingService = loadingService;
-        _this41.router = router;
-        _this41.route = route;
-        _this41.autService = autService;
-        _this41.searchInitialDataSubject = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](null);
-        _this41.loadInitialUrl = "/workflow/general/data/initsearch";
-        _this41.searchUrl = "/workflow/general/data/search";
-        _this41.listInitialData = null;
-        return _this41;
+        _this48 = _possibleConstructorReturn(this, _getPrototypeOf(WorkflowSearchService).call(this, router, route, autService));
+        _this48.http = http;
+        _this48.loadingService = loadingService;
+        _this48.router = router;
+        _this48.route = route;
+        _this48.autService = autService;
+        _this48.searchInitialDataSubject = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](null);
+        _this48.loadInitialUrl = "/workflow/general/data/initsearch";
+        _this48.searchUrl = "/workflow/general/data/search";
+        _this48.listInitialData = null;
+        return _this48;
       }
 
       _createClass(WorkflowSearchService, [{
         key: "loadInitialData",
         value: function loadInitialData() {
-          var _this42 = this;
+          var _this49 = this;
 
           this.loadingService.showLoading();
           var httpOptions = {
@@ -13224,19 +14871,19 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           };
           this.http.post(this.loadInitialUrl, new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpParams"](), httpOptions).subscribe(function (initialData) {
             console.log("GET successful search inital data", initialData);
-            _this42.listInitialData = JSON.parse(JSON.stringify(initialData));
+            _this49.listInitialData = JSON.parse(JSON.stringify(initialData));
 
-            _this42.searchInitialDataSubject.next(initialData);
+            _this49.searchInitialDataSubject.next(initialData);
           }, function (response) {
             console.log("Error in read search inital data", response);
 
-            _this42.processErrorResponse(response);
+            _this49.processErrorResponse(response);
 
-            _this42.loadingService.hideLoading();
+            _this49.loadingService.hideLoading();
           }, function () {
-            _this42.searchInitialDataSubject.complete();
+            _this49.searchInitialDataSubject.complete();
 
-            _this42.loadingService.hideLoading();
+            _this49.loadingService.hideLoading();
           });
         }
       }, {
@@ -13744,27 +15391,61 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
   },
 
   /***/
-  "./src/app/ui-models/company-workflowtyp-eitem-ocr-setting.ts":
-  /*!********************************************************************!*\
-    !*** ./src/app/ui-models/company-workflowtyp-eitem-ocr-setting.ts ***!
-    \********************************************************************/
+  "./src/app/ui-models/company-workflowtyp-eitem-ocr-setting-preset-item.ts":
+  /*!********************************************************************************!*\
+    !*** ./src/app/ui-models/company-workflowtyp-eitem-ocr-setting-preset-item.ts ***!
+    \********************************************************************************/
 
-  /*! exports provided: CompanyWorkflowtypeItemOcrSetting */
+  /*! exports provided: CompanyWorkflowtypeItemOcrSettingPresetItem */
 
   /***/
-  function srcAppUiModelsCompanyWorkflowtypEitemOcrSettingTs(module, __webpack_exports__, __webpack_require__) {
+  function srcAppUiModelsCompanyWorkflowtypEitemOcrSettingPresetItemTs(module, __webpack_exports__, __webpack_require__) {
     "use strict";
 
     __webpack_require__.r(__webpack_exports__);
     /* harmony export (binding) */
 
 
-    __webpack_require__.d(__webpack_exports__, "CompanyWorkflowtypeItemOcrSetting", function () {
-      return CompanyWorkflowtypeItemOcrSetting;
+    __webpack_require__.d(__webpack_exports__, "CompanyWorkflowtypeItemOcrSettingPresetItem", function () {
+      return CompanyWorkflowtypeItemOcrSettingPresetItem;
     });
 
-    var CompanyWorkflowtypeItemOcrSetting = function CompanyWorkflowtypeItemOcrSetting() {
-      _classCallCheck(this, CompanyWorkflowtypeItemOcrSetting);
+    var CompanyWorkflowtypeItemOcrSettingPresetItem = function CompanyWorkflowtypeItemOcrSettingPresetItem() {
+      _classCallCheck(this, CompanyWorkflowtypeItemOcrSettingPresetItem);
+    };
+    /***/
+
+  },
+
+  /***/
+  "./src/app/ui-models/company-workflowtyp-eitem-ocr-setting-preset.ts":
+  /*!***************************************************************************!*\
+    !*** ./src/app/ui-models/company-workflowtyp-eitem-ocr-setting-preset.ts ***!
+    \***************************************************************************/
+
+  /*! exports provided: CompanyWorkflowtypeItemOcrSettingPreset */
+
+  /***/
+  function srcAppUiModelsCompanyWorkflowtypEitemOcrSettingPresetTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "CompanyWorkflowtypeItemOcrSettingPreset", function () {
+      return CompanyWorkflowtypeItemOcrSettingPreset;
+    });
+
+    var CompanyWorkflowtypeItemOcrSettingPreset = function CompanyWorkflowtypeItemOcrSettingPreset() {
+      _classCallCheck(this, CompanyWorkflowtypeItemOcrSettingPreset);
+
+      this.companyIdentity = "";
+      this.workflowTypeIdentity = "";
+      this.presetName = "";
+      this.status = 1;
+      this.version = 1;
+      this.items = [];
     };
     /***/
 
@@ -13951,7 +15632,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     !*** ./src/app/ui-models/index.ts ***!
     \************************************/
 
-  /*! exports provided: User, MenuItem, Department, LoginResponse, GeneralData, ErrorDetail, ErrorResponse, OcrWord, OcrBox, UploadedFile, UploadedResult, UserAccessType, UserDepartment, Company, CompanyWorkflowtypeItemOcrSetting */
+  /*! exports provided: User, MenuItem, Department, LoginResponse, GeneralData, ErrorDetail, ErrorResponse, OcrWord, OcrBox, UploadedFile, UploadedResult, UserAccessType, UserDepartment, Company, CompanyWorkflowtypeItemOcrSettingPreset, CompanyWorkflowtypeItemOcrSettingPresetItem */
 
   /***/
   function srcAppUiModelsIndexTs(module, __webpack_exports__, __webpack_require__) {
@@ -14123,14 +15804,26 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony import */
 
 
-    var _company_workflowtyp_eitem_ocr_setting__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(
-    /*! ./company-workflowtyp-eitem-ocr-setting */
-    "./src/app/ui-models/company-workflowtyp-eitem-ocr-setting.ts");
+    var _company_workflowtyp_eitem_ocr_setting_preset__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(
+    /*! ./company-workflowtyp-eitem-ocr-setting-preset */
+    "./src/app/ui-models/company-workflowtyp-eitem-ocr-setting-preset.ts");
     /* harmony reexport (safe) */
 
 
-    __webpack_require__.d(__webpack_exports__, "CompanyWorkflowtypeItemOcrSetting", function () {
-      return _company_workflowtyp_eitem_ocr_setting__WEBPACK_IMPORTED_MODULE_13__["CompanyWorkflowtypeItemOcrSetting"];
+    __webpack_require__.d(__webpack_exports__, "CompanyWorkflowtypeItemOcrSettingPreset", function () {
+      return _company_workflowtyp_eitem_ocr_setting_preset__WEBPACK_IMPORTED_MODULE_13__["CompanyWorkflowtypeItemOcrSettingPreset"];
+    });
+    /* harmony import */
+
+
+    var _company_workflowtyp_eitem_ocr_setting_preset_item__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(
+    /*! ./company-workflowtyp-eitem-ocr-setting-preset-item */
+    "./src/app/ui-models/company-workflowtyp-eitem-ocr-setting-preset-item.ts");
+    /* harmony reexport (safe) */
+
+
+    __webpack_require__.d(__webpack_exports__, "CompanyWorkflowtypeItemOcrSettingPresetItem", function () {
+      return _company_workflowtyp_eitem_ocr_setting_preset_item__WEBPACK_IMPORTED_MODULE_14__["CompanyWorkflowtypeItemOcrSettingPresetItem"];
     });
     /***/
 
@@ -15798,29 +17491,29 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _inherits(CreateInvoiceComponent, _invoice_base_compone);
 
       function CreateInvoiceComponent(router, global, translate, editService, loadingService, http, errorService, formBuilder, dateAdapter, globalSocket) {
-        var _this43;
+        var _this50;
 
         _classCallCheck(this, CreateInvoiceComponent);
 
-        _this43 = _possibleConstructorReturn(this, _getPrototypeOf(CreateInvoiceComponent).call(this, router, global, translate, editService, loadingService, http, errorService, formBuilder, dateAdapter, globalSocket));
-        _this43.router = router;
-        _this43.global = global;
-        _this43.translate = translate;
-        _this43.editService = editService;
-        _this43.loadingService = loadingService;
-        _this43.http = http;
-        _this43.errorService = errorService;
-        _this43.formBuilder = formBuilder;
-        _this43.dateAdapter = dateAdapter;
-        _this43.globalSocket = globalSocket;
+        _this50 = _possibleConstructorReturn(this, _getPrototypeOf(CreateInvoiceComponent).call(this, router, global, translate, editService, loadingService, http, errorService, formBuilder, dateAdapter, globalSocket));
+        _this50.router = router;
+        _this50.global = global;
+        _this50.translate = translate;
+        _this50.editService = editService;
+        _this50.loadingService = loadingService;
+        _this50.http = http;
+        _this50.errorService = errorService;
+        _this50.formBuilder = formBuilder;
+        _this50.dateAdapter = dateAdapter;
+        _this50.globalSocket = globalSocket;
 
-        _this43.router.events.subscribe(function (evt) {
+        _this50.router.events.subscribe(function (evt) {
           if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_1__["NavigationEnd"]) {
-            _this43.loadInitialData();
+            _this50.loadInitialData();
           }
         });
 
-        return _this43;
+        return _this50;
       }
 
       _createClass(CreateInvoiceComponent, [{
@@ -15847,24 +17540,24 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "subscribeToSearchInitialData",
         value: function subscribeToSearchInitialData() {
-          var _this44 = this;
+          var _this51 = this;
 
           this.editService.workflowSaveRequestInitSubject.subscribe(function (data) {
             console.log("set gloabl-data from workflow-create. : ", data);
 
             if (data && data !== null) {
-              _this44.workflowSaveRequest = data.workflowSaveRequest;
+              _this51.workflowSaveRequest = data.workflowSaveRequest;
 
-              _this44.setToControlValues();
+              _this51.setToControlValues();
             } else {
-              _this44.workflowSaveRequest = null;
+              _this51.workflowSaveRequest = null;
             }
           });
         }
       }, {
         key: "save",
         value: function save() {
-          var _this45 = this;
+          var _this52 = this;
 
           this.setFormControlValues();
           this.workflowSaveRequest.uploadedFiles = _wf_models__WEBPACK_IMPORTED_MODULE_5__["WorkflowUploadedFile"].loadUploadedFiles(this.uploadedFiles);
@@ -15872,15 +17565,15 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           this.editService.createWorkflow(this.workflowSaveRequest).subscribe(function (result) {
             console.log("Create workflow result", result);
 
-            _this45.router.navigate([_this45.workflowListUrl]);
+            _this52.router.navigate([_this52.workflowListUrl]);
           }, function (response) {
             console.log("Error in create workflow", response);
 
-            _this45.errorService.showErrorResponse(response);
+            _this52.errorService.showErrorResponse(response);
 
-            _this45.loadingService.hideLoading();
+            _this52.loadingService.hideLoading();
           }, function () {
-            _this45.loadingService.hideLoading();
+            _this52.loadingService.hideLoading();
           });
         }
       }, {
@@ -16593,7 +18286,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function CreateSingletaskComponent(router, global, translate, editService, loadingService, http, errorService) {
-        var _this46 = this;
+        var _this53 = this;
 
         _classCallCheck(this, CreateSingletaskComponent);
 
@@ -16611,7 +18304,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.uploadedFiles = [];
         this.router.events.subscribe(function (evt) {
           if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_1__["NavigationEnd"]) {
-            _this46.loadInitialData();
+            _this53.loadInitialData();
           }
         });
         this.generalDataObs = this.global.currentSessionDataSubject.asObservable();
@@ -16640,36 +18333,36 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "subscribeToSearchInitialData",
         value: function subscribeToSearchInitialData() {
-          var _this47 = this;
+          var _this54 = this;
 
           this.editService.workflowSaveRequestInitSubject.subscribe(function (data) {
             console.log("set gloabl-data from workflow-create. : ", data); //alert("from app-comp: \n" + JSON.stringify(data));
 
             if (data && data !== null) {
-              _this47.workflowSaveRequest = data.workflowSaveRequest;
+              _this54.workflowSaveRequest = data.workflowSaveRequest;
             } else {
-              _this47.workflowSaveRequest = null;
+              _this54.workflowSaveRequest = null;
             }
           });
         }
       }, {
         key: "save",
         value: function save() {
-          var _this48 = this;
+          var _this55 = this;
 
           this.loadingService.showLoading();
           this.editService.createWorkflow(this.workflowSaveRequest).subscribe(function (result) {
             console.log("Create workflow result", result);
 
-            _this48.router.navigate([_this48.workflowListUrl]);
+            _this55.router.navigate([_this55.workflowListUrl]);
           }, function (response) {
             console.log("Error in create workflow", response);
 
-            _this48.errorService.showErrorResponse(response);
+            _this55.errorService.showErrorResponse(response);
 
-            _this48.loadingService.hideLoading();
+            _this55.loadingService.hideLoading();
           }, function () {
-            _this48.loadingService.hideLoading();
+            _this55.loadingService.hideLoading();
           });
         }
       }, {
@@ -17112,7 +18805,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function CreateTestthreetaskComponent(router, global, translate, editService, loadingService, http, errorService) {
-        var _this49 = this;
+        var _this56 = this;
 
         _classCallCheck(this, CreateTestthreetaskComponent);
 
@@ -17130,7 +18823,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.uploadedFiles = [];
         this.router.events.subscribe(function (evt) {
           if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_1__["NavigationEnd"]) {
-            _this49.loadInitialData();
+            _this56.loadInitialData();
           }
         });
         this.generalDataObs = this.global.currentSessionDataSubject.asObservable();
@@ -17159,37 +18852,37 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "subscribeToSearchInitialData",
         value: function subscribeToSearchInitialData() {
-          var _this50 = this;
+          var _this57 = this;
 
           this.editService.workflowSaveRequestInitSubject.subscribe(function (data) {
             console.log("set gloabl-data from workflow-create. : ", data); //alert("from app-comp: \n" + JSON.stringify(data));
 
             if (data && data !== null) {
-              _this50.workflowSaveRequest = data.workflowSaveRequest;
+              _this57.workflowSaveRequest = data.workflowSaveRequest;
             } else {
-              _this50.workflowSaveRequest = null;
+              _this57.workflowSaveRequest = null;
             }
           });
         }
       }, {
         key: "save",
         value: function save() {
-          var _this51 = this;
+          var _this58 = this;
 
           this.workflowSaveRequest.uploadedFiles = _wf_models__WEBPACK_IMPORTED_MODULE_3__["WorkflowUploadedFile"].loadUploadedFiles(this.uploadedFiles);
           this.loadingService.showLoading();
           this.editService.createWorkflow(this.workflowSaveRequest).subscribe(function (result) {
             console.log("Create workflow result", result);
 
-            _this51.router.navigate([_this51.workflowListUrl]);
+            _this58.router.navigate([_this58.workflowListUrl]);
           }, function (response) {
             console.log("Error in create workflow", response);
 
-            _this51.errorService.showErrorResponse(response);
+            _this58.errorService.showErrorResponse(response);
 
-            _this51.loadingService.hideLoading();
+            _this58.loadingService.hideLoading();
           }, function () {
-            _this51.loadingService.hideLoading();
+            _this58.loadingService.hideLoading();
           });
         }
       }, {
@@ -17612,7 +19305,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function WorkflowCreateComponent(router, global, translate) {
-        var _this52 = this;
+        var _this59 = this;
 
         _classCallCheck(this, WorkflowCreateComponent);
 
@@ -17622,7 +19315,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.generalDataObs = null;
         this.generalDataObs = this.global.currentSessionDataSubject.asObservable();
         this.generalDataObs.subscribe(function (data) {
-          _this52.worlflowTypes = data.workflow.worlflowTypes;
+          _this59.worlflowTypes = data.workflow.worlflowTypes;
         });
       }
 
@@ -18450,35 +20143,35 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _inherits(EditInvoiceComponent, _invoice_base_compone2);
 
       function EditInvoiceComponent(router, global, translate, editService, loadingService, http, errorService, formBuilder, dateAdapter, route, globalSocket) {
-        var _this53;
+        var _this60;
 
         _classCallCheck(this, EditInvoiceComponent);
 
-        _this53 = _possibleConstructorReturn(this, _getPrototypeOf(EditInvoiceComponent).call(this, router, global, translate, editService, loadingService, http, errorService, formBuilder, dateAdapter, globalSocket));
-        _this53.router = router;
-        _this53.global = global;
-        _this53.translate = translate;
-        _this53.editService = editService;
-        _this53.loadingService = loadingService;
-        _this53.http = http;
-        _this53.errorService = errorService;
-        _this53.formBuilder = formBuilder;
-        _this53.dateAdapter = dateAdapter;
-        _this53.route = route;
-        _this53.globalSocket = globalSocket;
-        _this53.workflowIdentity = "not-set";
-        _this53.saveMessage = "";
-        _this53.viewWorkflowModel = null;
+        _this60 = _possibleConstructorReturn(this, _getPrototypeOf(EditInvoiceComponent).call(this, router, global, translate, editService, loadingService, http, errorService, formBuilder, dateAdapter, globalSocket));
+        _this60.router = router;
+        _this60.global = global;
+        _this60.translate = translate;
+        _this60.editService = editService;
+        _this60.loadingService = loadingService;
+        _this60.http = http;
+        _this60.errorService = errorService;
+        _this60.formBuilder = formBuilder;
+        _this60.dateAdapter = dateAdapter;
+        _this60.route = route;
+        _this60.globalSocket = globalSocket;
+        _this60.workflowIdentity = "not-set";
+        _this60.saveMessage = "";
+        _this60.viewWorkflowModel = null;
 
-        _this53.router.events.subscribe(function (evt) {
+        _this60.router.events.subscribe(function (evt) {
           if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_1__["NavigationEnd"]) {
-            _this53.workflowIdentity = _this53.route.snapshot.params['identity'];
+            _this60.workflowIdentity = _this60.route.snapshot.params['identity'];
 
-            _this53.loadInitialData();
+            _this60.loadInitialData();
           }
         });
 
-        return _this53;
+        return _this60;
       }
 
       _createClass(EditInvoiceComponent, [{
@@ -18503,26 +20196,26 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "loadWorkflowData",
         value: function loadWorkflowData() {
-          var _this54 = this;
+          var _this61 = this;
 
           this.loadingService.showLoading();
           this.editService.loadEditInitialData(this.workflowIdentity).subscribe(function (initialData) {
             console.log("set inital-data from workflow-edit. : ", initialData); //alert("from app-comp: \n" + JSON.stringify(data));
 
             if (initialData && initialData !== null) {
-              _this54.workflowSaveRequest = initialData.workflowSaveRequest;
-              _this54.viewWorkflowModel = _this54.workflowSaveRequest.workflow;
+              _this61.workflowSaveRequest = initialData.workflowSaveRequest;
+              _this61.viewWorkflowModel = _this61.workflowSaveRequest.workflow;
 
-              _this54.setToControlValues();
+              _this61.setToControlValues();
             } else {
-              _this54.workflowSaveRequest = null;
+              _this61.workflowSaveRequest = null;
             }
           }, function (response) {
             console.log("Error in read edit inital data", response);
 
-            _this54.errorService.showErrorResponse(response);
+            _this61.errorService.showErrorResponse(response);
           }, function () {
-            _this54.loadingService.hideLoading();
+            _this61.loadingService.hideLoading();
           });
         }
       }, {
@@ -18547,63 +20240,63 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "saveWorkflowData",
         value: function saveWorkflowData() {
-          var _this55 = this;
+          var _this62 = this;
 
           this.saveMessage = "";
           this.editService.saveWorkflow(this.workflowSaveRequest).subscribe(function (result) {
             console.log("Create workflow result", result);
 
-            _this55.translate.get('common.saved').subscribe(function (res) {
-              _this55.saveMessage = res;
+            _this62.translate.get('common.saved').subscribe(function (res) {
+              _this62.saveMessage = res;
             });
 
-            _this55.loadWorkflowData();
+            _this62.loadWorkflowData();
           }, function (response) {
             console.log("Error in create workflow", response);
 
-            _this55.errorService.showErrorResponse(response);
+            _this62.errorService.showErrorResponse(response);
 
-            _this55.loadingService.hideLoading();
+            _this62.loadingService.hideLoading();
           }, function () {
-            _this55.loadingService.hideLoading();
+            _this62.loadingService.hideLoading();
           });
         }
       }, {
         key: "doneWorkflowData",
         value: function doneWorkflowData() {
-          var _this56 = this;
+          var _this63 = this;
 
           this.editService.doneWorkflow(this.workflowSaveRequest).subscribe(function (result) {
             console.log("Create workflow result", result);
 
-            _this56.router.navigate([_this56.workflowListUrl]);
+            _this63.router.navigate([_this63.workflowListUrl]);
           }, function (response) {
             console.log("Error in create workflow", response);
 
-            _this56.errorService.showErrorResponse(response);
+            _this63.errorService.showErrorResponse(response);
 
-            _this56.loadingService.hideLoading();
+            _this63.loadingService.hideLoading();
           }, function () {
-            _this56.loadingService.hideLoading();
+            _this63.loadingService.hideLoading();
           });
         }
       }, {
         key: "archiveWorkflowData",
         value: function archiveWorkflowData() {
-          var _this57 = this;
+          var _this64 = this;
 
           this.editService.archiveWorkflow(this.workflowSaveRequest.workflow).subscribe(function (result) {
             console.log("Create workflow result", result);
 
-            _this57.router.navigate([_this57.workflowListUrl]);
+            _this64.router.navigate([_this64.workflowListUrl]);
           }, function (response) {
             console.log("Error in create workflow", response);
 
-            _this57.errorService.showErrorResponse(response);
+            _this64.errorService.showErrorResponse(response);
 
-            _this57.loadingService.hideLoading();
+            _this64.loadingService.hideLoading();
           }, function () {
-            _this57.loadingService.hideLoading();
+            _this64.loadingService.hideLoading();
           });
         }
       }, {
@@ -19539,7 +21232,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function EditSingleTaskComponent(router, global, translate, editService, loadingService, http, errorService, formBuilder, dateAdapter, route) {
-        var _this58 = this;
+        var _this65 = this;
 
         _classCallCheck(this, EditSingleTaskComponent);
 
@@ -19561,9 +21254,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.viewWorkflowModel = null;
         this.router.events.subscribe(function (evt) {
           if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_1__["NavigationEnd"]) {
-            _this58.workflowIdentity = _this58.route.snapshot.params['identity'];
+            _this65.workflowIdentity = _this65.route.snapshot.params['identity'];
 
-            _this58.loadInitialData();
+            _this65.loadInitialData();
           }
         });
         this.dateAdapter.setLocale('de');
@@ -19605,26 +21298,26 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "loadWorkflowData",
         value: function loadWorkflowData() {
-          var _this59 = this;
+          var _this66 = this;
 
           this.loadingService.showLoading();
           this.editService.loadEditInitialData(this.workflowIdentity).subscribe(function (initialData) {
             console.log("set inital-data from workflow-edit. : ", initialData); //alert("from app-comp: \n" + JSON.stringify(data));
 
             if (initialData && initialData !== null) {
-              _this59.workflowSaveRequest = initialData.workflowSaveRequest;
-              _this59.viewWorkflowModel = _this59.workflowSaveRequest.workflow;
+              _this66.workflowSaveRequest = initialData.workflowSaveRequest;
+              _this66.viewWorkflowModel = _this66.workflowSaveRequest.workflow;
 
-              _this59.setToControlValues();
+              _this66.setToControlValues();
             } else {
-              _this59.workflowSaveRequest = null;
+              _this66.workflowSaveRequest = null;
             }
           }, function (response) {
             console.log("Error in read edit inital data", response);
 
-            _this59.errorService.showErrorResponse(response);
+            _this66.errorService.showErrorResponse(response);
           }, function () {
-            _this59.loadingService.hideLoading();
+            _this66.loadingService.hideLoading();
           });
         }
       }, {
@@ -19670,64 +21363,64 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "saveWorkflowData",
         value: function saveWorkflowData() {
-          var _this60 = this;
+          var _this67 = this;
 
           console.log("Saving workflow", this.workflowSaveRequest);
           this.editService.saveWorkflow(this.workflowSaveRequest).subscribe(function (result) {
             console.log("Create workflow result", result);
 
-            _this60.translate.get('common.saved').subscribe(function (res) {
-              _this60.saveMessage = res;
+            _this67.translate.get('common.saved').subscribe(function (res) {
+              _this67.saveMessage = res;
             });
 
-            _this60.loadWorkflowData();
+            _this67.loadWorkflowData();
           }, function (response) {
             console.log("Error in create workflow", response);
 
-            _this60.errorService.showErrorResponse(response);
+            _this67.errorService.showErrorResponse(response);
 
-            _this60.loadingService.hideLoading();
+            _this67.loadingService.hideLoading();
           }, function () {
-            _this60.loadingService.hideLoading();
+            _this67.loadingService.hideLoading();
           });
         }
       }, {
         key: "doneWorkflowData",
         value: function doneWorkflowData() {
-          var _this61 = this;
+          var _this68 = this;
 
           console.log("Done workflow", this.workflowSaveRequest);
           this.editService.doneWorkflow(this.workflowSaveRequest).subscribe(function (result) {
             console.log("Create workflow result", result);
 
-            _this61.router.navigate([_this61.workflowListUrl]);
+            _this68.router.navigate([_this68.workflowListUrl]);
           }, function (response) {
             console.log("Error in create workflow", response);
 
-            _this61.errorService.showErrorResponse(response);
+            _this68.errorService.showErrorResponse(response);
 
-            _this61.loadingService.hideLoading();
+            _this68.loadingService.hideLoading();
           }, function () {
-            _this61.loadingService.hideLoading();
+            _this68.loadingService.hideLoading();
           });
         }
       }, {
         key: "archiveWorkflowData",
         value: function archiveWorkflowData() {
-          var _this62 = this;
+          var _this69 = this;
 
           this.editService.archiveWorkflow(this.workflowSaveRequest.workflow).subscribe(function (result) {
             console.log("Create workflow result", result);
 
-            _this62.router.navigate([_this62.workflowListUrl]);
+            _this69.router.navigate([_this69.workflowListUrl]);
           }, function (response) {
             console.log("Error in create workflow", response);
 
-            _this62.errorService.showErrorResponse(response);
+            _this69.errorService.showErrorResponse(response);
 
-            _this62.loadingService.hideLoading();
+            _this69.loadingService.hideLoading();
           }, function () {
-            _this62.loadingService.hideLoading();
+            _this69.loadingService.hideLoading();
           });
         }
       }, {
@@ -20409,7 +22102,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function EditTestthreeTaskComponent(router, global, translate, editService, loadingService, http, errorService, formBuilder, dateAdapter, route) {
-        var _this63 = this;
+        var _this70 = this;
 
         _classCallCheck(this, EditTestthreeTaskComponent);
 
@@ -20432,9 +22125,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.uploadedFiles = [];
         this.router.events.subscribe(function (evt) {
           if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_1__["NavigationEnd"]) {
-            _this63.workflowIdentity = _this63.route.snapshot.params['identity'];
+            _this70.workflowIdentity = _this70.route.snapshot.params['identity'];
 
-            _this63.loadInitialData();
+            _this70.loadInitialData();
           }
         });
         this.dateAdapter.setLocale('de');
@@ -20475,26 +22168,26 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "loadWorkflowData",
         value: function loadWorkflowData() {
-          var _this64 = this;
+          var _this71 = this;
 
           this.loadingService.showLoading();
           this.editService.loadEditInitialData(this.workflowIdentity).subscribe(function (initialData) {
             console.log("set inital-data from workflow-edit. : ", initialData); //alert("from app-comp: \n" + JSON.stringify(data));
 
             if (initialData && initialData !== null) {
-              _this64.workflowSaveRequest = initialData.workflowSaveRequest;
-              _this64.viewWorkflowModel = _this64.workflowSaveRequest.workflow;
+              _this71.workflowSaveRequest = initialData.workflowSaveRequest;
+              _this71.viewWorkflowModel = _this71.workflowSaveRequest.workflow;
 
-              _this64.setToControlValues();
+              _this71.setToControlValues();
             } else {
-              _this64.workflowSaveRequest = null;
+              _this71.workflowSaveRequest = null;
             }
           }, function (response) {
             console.log("Error in read edit inital data", response);
 
-            _this64.errorService.showErrorResponse(response);
+            _this71.errorService.showErrorResponse(response);
           }, function () {
-            _this64.loadingService.hideLoading();
+            _this71.loadingService.hideLoading();
           });
         }
       }, {
@@ -20539,62 +22232,62 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "saveWorkflowData",
         value: function saveWorkflowData() {
-          var _this65 = this;
+          var _this72 = this;
 
           this.editService.saveWorkflow(this.workflowSaveRequest).subscribe(function (result) {
             console.log("Create workflow result", result);
 
-            _this65.translate.get('common.saved').subscribe(function (res) {
-              _this65.saveMessage = res;
+            _this72.translate.get('common.saved').subscribe(function (res) {
+              _this72.saveMessage = res;
             });
 
-            _this65.loadWorkflowData();
+            _this72.loadWorkflowData();
           }, function (response) {
             console.log("Error in create workflow", response);
 
-            _this65.errorService.showErrorResponse(response);
+            _this72.errorService.showErrorResponse(response);
 
-            _this65.loadingService.hideLoading();
+            _this72.loadingService.hideLoading();
           }, function () {
-            _this65.loadingService.hideLoading();
+            _this72.loadingService.hideLoading();
           });
         }
       }, {
         key: "doneWorkflowData",
         value: function doneWorkflowData() {
-          var _this66 = this;
+          var _this73 = this;
 
           this.editService.doneWorkflow(this.workflowSaveRequest).subscribe(function (result) {
             console.log("Create workflow result", result);
 
-            _this66.router.navigate([_this66.workflowListUrl]);
+            _this73.router.navigate([_this73.workflowListUrl]);
           }, function (response) {
             console.log("Error in create workflow", response);
 
-            _this66.errorService.showErrorResponse(response);
+            _this73.errorService.showErrorResponse(response);
 
-            _this66.loadingService.hideLoading();
+            _this73.loadingService.hideLoading();
           }, function () {
-            _this66.loadingService.hideLoading();
+            _this73.loadingService.hideLoading();
           });
         }
       }, {
         key: "archiveWorkflowData",
         value: function archiveWorkflowData() {
-          var _this67 = this;
+          var _this74 = this;
 
           this.editService.archiveWorkflow(this.workflowSaveRequest.workflow).subscribe(function (result) {
             console.log("Create workflow result", result);
 
-            _this67.router.navigate([_this67.workflowListUrl]);
+            _this74.router.navigate([_this74.workflowListUrl]);
           }, function (response) {
             console.log("Error in create workflow", response);
 
-            _this67.errorService.showErrorResponse(response);
+            _this74.errorService.showErrorResponse(response);
 
-            _this67.loadingService.hideLoading();
+            _this74.loadingService.hideLoading();
           }, function () {
-            _this67.loadingService.hideLoading();
+            _this74.loadingService.hideLoading();
           });
         }
       }, {
@@ -21112,7 +22805,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function InvoiceBaseComponent(router, global, translate, editService, loadingService, http, errorService, formBuilder, dateAdapter, globalSocket) {
-        var _this68 = this;
+        var _this75 = this;
 
         _classCallCheck(this, InvoiceBaseComponent);
 
@@ -21144,30 +22837,30 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
         this.onRecevieResponse = function (message) {
           console.log("Message Received: ", message.body);
-          var uploaded = _this68.uploadedFiles[_this68.scanningFileIndex];
+          var uploaded = _this75.uploadedFiles[_this75.scanningFileIndex];
 
-          _this68.loadingService.hideLoading();
+          _this75.loadingService.hideLoading();
 
           var parsedMessage = JSON.parse(message.body);
 
           if (parsedMessage.status) {
             if (parsedMessage.status === "done") {
-              _this68.unsubscribe();
+              _this75.unsubscribe();
 
               if (parsedMessage.words) {
-                _this68.showOcrDetailsDialog = true;
-                _this68.uploadedFiles[_this68.scanningFileIndex].foundWords = parsedMessage.words;
-                _this68.uploadedFiles[_this68.scanningFileIndex].isScanned = true;
-                _this68.uploadedFiles[_this68.scanningFileIndex].imageSizeX = parsedMessage.imageWidth;
-                _this68.uploadedFiles[_this68.scanningFileIndex].imageSizeY = parsedMessage.imageHeight;
-                console.log("Received Words: ", _this68.uploadedFiles[_this68.scanningFileIndex].foundWords);
+                _this75.showOcrDetailsDialog = true;
+                _this75.uploadedFiles[_this75.scanningFileIndex].foundWords = parsedMessage.words;
+                _this75.uploadedFiles[_this75.scanningFileIndex].isScanned = true;
+                _this75.uploadedFiles[_this75.scanningFileIndex].imageSizeX = parsedMessage.imageWidth;
+                _this75.uploadedFiles[_this75.scanningFileIndex].imageSizeY = parsedMessage.imageHeight;
+                console.log("Received Words: ", _this75.uploadedFiles[_this75.scanningFileIndex].foundWords);
               }
             }
 
             if (parsedMessage.status === "error" && parsedMessage.errorMessage) {
-              _this68.unsubscribe();
+              _this75.unsubscribe();
 
-              _this68.errorService.showError(parsedMessage.errorMessage, parsedMessage.errorDetail);
+              _this75.errorService.showError(parsedMessage.errorMessage, parsedMessage.errorDetail);
             }
           }
         };
@@ -21180,7 +22873,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
           if (isNaN(num)) {
             translate.get('invoice-invoicetype-' + str.toLowerCase()).subscribe(function (res) {
-              _this68.invoiceTypes.push({
+              _this75.invoiceTypes.push({
                 value: o,
                 title: res
               });
@@ -21189,10 +22882,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         }
 
         this.translate.get('invoice-paymentamount').subscribe(function (res) {
-          _this68.paymentamountOtherTypesTitle = res;
+          _this75.paymentamountOtherTypesTitle = res;
         });
         this.translate.get('invoice-paymentamount-payment').subscribe(function (res) {
-          _this68.paymentamountTypePaymentTitle = res;
+          _this75.paymentamountTypePaymentTitle = res;
         });
         this.generalDataObs = this.global.currentSessionDataSubject.asObservable();
       }
@@ -21344,7 +23037,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "setPageTitle",
         value: function setPageTitle() {
-          var _this69 = this;
+          var _this76 = this;
 
           var pageLabelId = "invoice-assignview-title";
 
@@ -21361,7 +23054,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           }
 
           this.translate.get(pageLabelId).subscribe(function (res) {
-            _this69.pageTitle = res;
+            _this76.pageTitle = res;
           });
         }
       }, {
@@ -21562,18 +23255,18 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     function InvoiceOcrDetailComponent_div_6_button_5_Template(rf, ctx) {
       if (rf & 1) {
-        var _r302 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
+        var _r350 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "button", 19);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function InvoiceOcrDetailComponent_div_6_button_5_Template_button_click_0_listener($event) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r302);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r350);
 
-          var key_r297 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]().$implicit;
+          var key_r345 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]().$implicit;
 
-          var ctx_r300 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+          var ctx_r348 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
 
-          return ctx_r300.startEditKey(key_r297);
+          return ctx_r348.startEditKey(key_r345);
         });
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "i", 20);
@@ -21588,18 +23281,18 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     function InvoiceOcrDetailComponent_div_6_button_6_Template(rf, ctx) {
       if (rf & 1) {
-        var _r304 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
+        var _r352 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "button", 21);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function InvoiceOcrDetailComponent_div_6_button_6_Template_button_click_0_listener($event) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r304);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r352);
 
-          var key_r297 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]().$implicit;
+          var key_r345 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]().$implicit;
 
-          var ctx_r303 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+          var ctx_r351 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
 
-          return ctx_r303.isEditing[key_r297] = false;
+          return ctx_r351.isEditing[key_r345] = false;
         });
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "i", 20);
@@ -21620,20 +23313,20 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     function InvoiceOcrDetailComponent_div_6_Template(rf, ctx) {
       if (rf & 1) {
-        var _r307 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
+        var _r355 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 12);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "a", 13);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function InvoiceOcrDetailComponent_div_6_Template_a_click_1_listener($event) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r307);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r355);
 
-          var key_r297 = ctx.$implicit;
+          var key_r345 = ctx.$implicit;
 
-          var ctx_r306 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+          var ctx_r354 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
 
-          return ctx_r306.selectDetailItem(key_r297);
+          return ctx_r354.selectDetailItem(key_r345);
         });
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2);
@@ -21645,29 +23338,29 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](4, "input", 15);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("blur", function InvoiceOcrDetailComponent_div_6_Template_input_blur_4_listener($event) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r307);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r355);
 
-          var key_r297 = ctx.$implicit;
+          var key_r345 = ctx.$implicit;
 
-          var ctx_r308 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+          var ctx_r356 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
 
-          return ctx_r308.isEditing[key_r297] = false;
+          return ctx_r356.isEditing[key_r345] = false;
         })("keyup.enter", function InvoiceOcrDetailComponent_div_6_Template_input_keyup_enter_4_listener($event) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r307);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r355);
 
-          var key_r297 = ctx.$implicit;
+          var key_r345 = ctx.$implicit;
 
-          var ctx_r309 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+          var ctx_r357 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
 
-          return ctx_r309.isEditing[key_r297] = false;
+          return ctx_r357.isEditing[key_r345] = false;
         })("ngModelChange", function InvoiceOcrDetailComponent_div_6_Template_input_ngModelChange_4_listener($event) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r307);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r355);
 
-          var key_r297 = ctx.$implicit;
+          var key_r345 = ctx.$implicit;
 
-          var ctx_r310 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+          var ctx_r358 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
 
-          return ctx_r310.editedValues[key_r297] = $event;
+          return ctx_r358.editedValues[key_r345] = $event;
         });
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -21686,56 +23379,56 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }
 
       if (rf & 2) {
-        var key_r297 = ctx.$implicit;
+        var key_r345 = ctx.$implicit;
 
-        var ctx_r291 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+        var ctx_r339 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngClass", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction1"](9, _c1, ctx_r291.selectedKey === key_r297));
-
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngClass", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction1"](11, _c1, ctx_r291.selectedKey === key_r297));
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngClass", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction1"](9, _c1, ctx_r339.selectedKey === key_r345));
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx_r291.propertyLabels[key_r297]);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngClass", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction1"](11, _c1, ctx_r339.selectedKey === key_r345));
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngClass", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction1"](13, _c1, ctx_r291.selectedKey === key_r297));
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx_r339.propertyLabels[key_r345]);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpropertyInterpolate1"]("id", "valueeditbox", key_r297, "");
-
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngModel", ctx_r291.editedValues[key_r297])("readonly", ctx_r291.isEditing[key_r297] === false);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngClass", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction1"](13, _c1, ctx_r339.selectedKey === key_r345));
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r291.isEditing[key_r297] === false);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpropertyInterpolate1"]("id", "valueeditbox", key_r345, "");
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngModel", ctx_r339.editedValues[key_r345])("readonly", ctx_r339.isEditing[key_r345] === false);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r291.isEditing[key_r297] === true);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r339.isEditing[key_r345] === false);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r339.isEditing[key_r345] === true);
       }
     }
 
     function InvoiceOcrDetailComponent_div_10_div_4_Template(rf, ctx) {
       if (rf & 1) {
-        var _r315 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
+        var _r363 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 24);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "a", 25);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function InvoiceOcrDetailComponent_div_10_div_4_Template_a_click_1_listener($event) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r315);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r363);
 
-          var foundWord_r313 = ctx.$implicit;
+          var foundWord_r361 = ctx.$implicit;
 
-          var ctx_r314 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
+          var ctx_r362 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
 
-          return ctx_r314.selectFoundWord(foundWord_r313);
+          return ctx_r362.selectFoundWord(foundWord_r361);
         });
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2);
@@ -21745,13 +23438,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](3, "button", 26);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function InvoiceOcrDetailComponent_div_10_div_4_Template_button_click_3_listener($event) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r315);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r363);
 
-          var foundWord_r313 = ctx.$implicit;
+          var foundWord_r361 = ctx.$implicit;
 
-          var ctx_r316 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
+          var ctx_r364 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
 
-          return ctx_r316.useFoundWord(foundWord_r313);
+          return ctx_r364.useFoundWord(foundWord_r361);
         });
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](4, "i", 27);
@@ -21768,15 +23461,15 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }
 
       if (rf & 2) {
-        var foundWord_r313 = ctx.$implicit;
+        var foundWord_r361 = ctx.$implicit;
 
-        var ctx_r312 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
+        var ctx_r360 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngClass", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction1"](3, _c1, ctx_r312.isWordSelected(foundWord_r313)));
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngClass", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction1"](3, _c1, ctx_r360.isWordSelected(foundWord_r361)));
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate2"]("", foundWord_r313.text, " : ", foundWord_r313.value.text, "");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate2"]("", foundWord_r361.text, " : ", foundWord_r361.value.text, "");
       }
     }
 
@@ -21806,19 +23499,19 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }
 
       if (rf & 2) {
-        var wordKey_r311 = ctx.$implicit;
+        var wordKey_r359 = ctx.$implicit;
 
-        var ctx_r292 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+        var ctx_r340 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngClass", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction1"](3, _c2, ctx_r292.selectedKey === wordKey_r311));
-
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
-
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx_r292.propertyLabels[wordKey_r311]);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngClass", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction1"](3, _c2, ctx_r340.selectedKey === wordKey_r359));
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx_r292.foundWords[wordKey_r311]);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx_r340.propertyLabels[wordKey_r359]);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
+
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx_r340.foundWords[wordKey_r359]);
       }
     }
 
@@ -21828,9 +23521,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }
 
       if (rf & 2) {
-        var ctx_r294 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+        var ctx_r342 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("src", ctx_r294.fileViewUrl)("zoom", ctx_r294.pdfZoom)("show-all", ctx_r294.showAllPages)("page", ctx_r294.pdfPageIndex);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("src", ctx_r342.fileViewUrl)("zoom", ctx_r342.pdfZoom)("show-all", ctx_r342.showAllPages)("page", ctx_r342.pdfPageIndex);
       }
     }
 
@@ -21840,11 +23533,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }
 
       if (rf & 2) {
-        var ctx_r295 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+        var ctx_r343 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵstyleSanitizer"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefaultStyleSanitizer"]);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵstyleProp"]("width", ctx_r295.previewWidth, "px")("background-image", ctx_r295.imageFileViewUrl);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵstyleProp"]("width", ctx_r343.previewWidth, "px")("background-image", ctx_r343.imageFileViewUrl);
       }
     }
 
@@ -21854,9 +23547,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }
 
       if (rf & 2) {
-        var ctx_r296 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+        var ctx_r344 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵstyleProp"]("width", ctx_r296.selectedAreaWidth, "px")("height", ctx_r296.selectedAreaHeight, "px")("left", ctx_r296.selectedAreaLeft, "px")("top", ctx_r296.selectedAreaTop, "px");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵstyleProp"]("width", ctx_r344.selectedAreaWidth, "px")("height", ctx_r344.selectedAreaHeight, "px")("left", ctx_r344.selectedAreaLeft, "px")("top", ctx_r344.selectedAreaTop, "px");
       }
     }
 
@@ -21995,7 +23688,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "foundWords",
         set: function set(foundWordsInput) {
-          var _this70 = this;
+          var _this77 = this;
 
           this._foundWords = foundWordsInput;
           this.propertyLabels = [];
@@ -22003,9 +23696,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           if (this._foundWords) {
             for (var key in this._foundWords) {
               this.translate.get(key).subscribe(function (res) {
-                _this70.propertyLabels[key] = res;
-                _this70.isEditing[key] = false;
-                _this70.editedValues[key] = "";
+                _this77.propertyLabels[key] = res;
+                _this77.isEditing[key] = false;
+                _this77.editedValues[key] = "";
               });
             }
           }
@@ -22270,7 +23963,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     function WorkflowInlineviewComponent_div_0_div_34_Template(rf, ctx) {
       if (rf & 1) {
-        var _r279 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
+        var _r327 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 11);
 
@@ -22279,13 +23972,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "a", 12);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function WorkflowInlineviewComponent_div_0_div_34_Template_a_click_2_listener($event) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r279);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r327);
 
-          var file_r277 = ctx.$implicit;
+          var file_r325 = ctx.$implicit;
 
-          var ctx_r278 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
+          var ctx_r326 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
 
-          return ctx_r278.showFilePreview(file_r277);
+          return ctx_r326.showFilePreview(file_r325);
         });
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](3, "strong");
@@ -22314,19 +24007,19 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }
 
       if (rf & 2) {
-        var file_r277 = ctx.$implicit;
+        var file_r325 = ctx.$implicit;
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](file_r277.title);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](file_r325.title);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" (Ver: ", file_r277.activeFileVersion, ") ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" (Ver: ", file_r325.activeFileVersion, ") ");
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpropertyInterpolate2"]("href", "/general/data/file/download/", file_r277.activeFilePathHash, "?filename=", file_r277.title, "", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsanitizeUrl"]);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpropertyInterpolate2"]("href", "/general/data/file/download/", file_r325.activeFilePathHash, "?filename=", file_r325.title, "", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsanitizeUrl"]);
       }
     }
 
@@ -22372,19 +24065,19 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }
 
       if (rf & 2) {
-        var action_r280 = ctx.$implicit;
+        var action_r328 = ctx.$implicit;
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](5);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](action_r280.currentStep.title);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](action_r328.currentStep.title);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate2"]("(", action_r280.status, ") (", action_r280.assignToUserName, ")");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate2"]("(", action_r328.status, ") (", action_r328.assignToUserName, ")");
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](action_r280.comments);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](action_r328.comments);
       }
     }
 
@@ -22508,7 +24201,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }
 
       if (rf & 2) {
-        var ctx_r274 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+        var ctx_r322 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](5);
 
@@ -22516,7 +24209,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx_r274.viewWorkflowModel.workflowType.title);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx_r322.viewWorkflowModel.workflowType.title);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
 
@@ -22524,7 +24217,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx_r274.viewWorkflowModel.comments);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx_r322.viewWorkflowModel.comments);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
 
@@ -22532,7 +24225,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", ctx_r274.viewWorkflowModel.currentStep.title, " ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", ctx_r322.viewWorkflowModel.currentStep.title, " ");
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
 
@@ -22540,15 +24233,15 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", ctx_r274.viewWorkflowModel.status, " ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", ctx_r322.viewWorkflowModel.status, " ");
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](5);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx_r274.viewWorkflowModel.files);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx_r322.viewWorkflowModel.files);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx_r274.viewWorkflowModel.actions);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx_r322.viewWorkflowModel.actions);
       }
     }
 
@@ -23196,7 +24889,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*#__PURE__*/
     function () {
       function WorkflowListComponent(router, global, translate, searchService, loadingService, errorService, route) {
-        var _this71 = this;
+        var _this78 = this;
 
         _classCallCheck(this, WorkflowListComponent);
 
@@ -23215,7 +24908,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.viewWorkflowModel = null;
         this.router.events.subscribe(function (evt) {
           if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_1__["NavigationEnd"]) {
-            _this71.loadInitialData();
+            _this78.loadInitialData();
           }
         });
       }
@@ -23238,35 +24931,35 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "subscribeToSearchInitialData",
         value: function subscribeToSearchInitialData() {
-          var _this72 = this;
+          var _this79 = this;
 
           this.searchService.searchInitialDataSubject.subscribe(function (data) {
             console.log("set gloabl-data from workflow-create. : ", data); //alert("from app-comp: \n" + JSON.stringify(data));
 
             if (data && data !== null) {
-              _this72.listInitialData = data;
+              _this79.listInitialData = data;
             } else {
-              _this72.listInitialData = null;
+              _this79.listInitialData = null;
             }
           });
         }
       }, {
         key: "reload",
         value: function reload() {
-          var _this73 = this;
+          var _this80 = this;
 
           this.loadingService.showLoading();
           this.searchService.search(this.listInitialData.searchFilter).subscribe(function (result) {
             console.log("search successful workflow", result);
-            _this73.resultWorlflows = result.list;
+            _this80.resultWorlflows = result.list;
           }, function (response) {
             console.log("Error in search workflow", response);
 
-            _this73.loadingService.hideLoading();
+            _this80.loadingService.hideLoading();
 
-            _this73.errorService.showErrorResponse(response);
+            _this80.errorService.showErrorResponse(response);
           }, function () {
-            _this73.loadingService.hideLoading();
+            _this80.loadingService.hideLoading();
           });
         }
       }, {

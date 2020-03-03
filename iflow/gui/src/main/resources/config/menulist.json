@@ -5,7 +5,7 @@
 			{"id":"menu-company-info", "label":"menu-company-info","url":"/company/info","image":"glyphicon glyphicon-tasks", "status": 1,"children":[]},
 			{"id":"menu-userlist", "label":"menu-userlist","url":"/users/list","image":"glyphicon glyphicon-user", "status": 1,"children":[]},
 			{"id":"menu-department", "label":"menu-department","url":"/departments/list","image":"glyphicon glyphicon-user", "status": 1,"children":[]},
-			{"id":"menu-workflowtype-list", "label":"menu-workflowtype-list","url":"/company/workflowtypes","image":"glyphicon glyphicon-tasks", "status": 1,"children":[]}
+			{"id":"menu-ocr-preset", "label":"menu-ocr-preset","url":"/company/ocrpresets","image":"glyphicon glyphicon-tasks", "status": 1,"children":[]}
 		]
 	},
 	{"id":"menu-workflow", "label":"menu-workflow","url":"#","image":"glyphicon glyphicon-tasks", "status": 1,"children":

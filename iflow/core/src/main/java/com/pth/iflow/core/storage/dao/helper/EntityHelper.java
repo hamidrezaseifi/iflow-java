@@ -10,7 +10,7 @@ public abstract class EntityHelper implements ICoreEntityVersion, Serializable {
 
   public boolean isNew() {
 
-    return getId() == null || getId() <= 0;
+    return getId() == null || getId() == 0;
   }
 
   public void verifyVersion(final EntityHelper exists) {

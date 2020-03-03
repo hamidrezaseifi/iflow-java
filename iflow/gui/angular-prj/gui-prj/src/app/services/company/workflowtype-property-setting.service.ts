@@ -9,15 +9,16 @@ import { HttpHepler } from '../../helper/http-hepler';
 import { HttpErrorResponseHelper } from '../../helper/http-error-response-helper';
 import { AuthenticationService } from '../../services';
 
-import { CompanyWorkflowtypeItemOcrSetting, GeneralData } from '../../ui-models';
+import { CompanyWorkflowtypeItemOcrSettingPreset, GeneralData } from '../../ui-models';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WorkflowtypePropertySettingService extends HttpErrorResponseHelper {
-	listWorkflowTypesUrl :string = "/company/data/readworkflowtypeitemocrsettings";
-	updateWorkflowTypesUrl :string = "/company/data/saveworkflowtypeitemocrsettings/";
-	listWorkflowTypePtopertiesUrl :string = "/company/data/readworkflowtypeitems/";
+  listPresetsUrl :string = "/company/data/readocrpresets";
+	updatePresetUrl :string = "/company/data/savereadocrpreset";
+  listPresetItemsUrl :string = "/company/data/readpresetallitems/";
+	listWorkflowTypeItemsUrl :string = "/company/data/readworkflowtypeitems/";
 
 	constructor(
 			protected http: HttpClient,
@@ -30,28 +31,36 @@ export class WorkflowtypePropertySettingService extends HttpErrorResponseHelper 
 		
 	}
 	
-	listWorkflowTypes(){
+	listPresets(){
 		
 	    const httpOptions = { headers: HttpHepler.generateJsonHeader() };
 	    
-		return this.http.get(this.listWorkflowTypesUrl, httpOptions);	    
+			return this.http.get(this.listPresetsUrl, httpOptions);	    
 		
 	};
 	
-	listWorkflowTypePtoperties(workflowTypeIdentity:string){
+	listPresetItems(presetName:string){
 		
 	    const httpOptions = { headers: HttpHepler.generateJsonHeader() };
 	    
-		return this.http.get(this.listWorkflowTypePtopertiesUrl + workflowTypeIdentity, httpOptions);	    
+			return this.http.get(this.listPresetItemsUrl + presetName, httpOptions);	    
+		
+	};
+	
+	listWorkflowTypeItems(presetName:string){
+		
+	    const httpOptions = { headers: HttpHepler.generateJsonHeader() };
+	    
+			return this.http.get(this.listWorkflowTypeItemsUrl + presetName, httpOptions);	    
 		
 	};
 
 
-	updateWorkflowTypes(properties: CompanyWorkflowtypeItemOcrSetting[], workflowTypeIdentity:string){
+	updatePreset(presetToSave: CompanyWorkflowtypeItemOcrSettingPreset){
 		
-	    const httpOptions = { headers: HttpHepler.generateJsonHeader() };
+			const httpOptions = { headers: HttpHepler.generateJsonHeader() };
 	    
-		return this.http.post(this.updateWorkflowTypesUrl + workflowTypeIdentity, properties, httpOptions);	    
+			return this.http.post(this.updatePresetUrl, presetToSave, httpOptions);	    
 		
 	};
 	

@@ -1,4 +1,9 @@
 
+
+DROP TABLE IF EXISTS company_workflowtype_items_ocr_preset_items;
+
+DROP TABLE IF EXISTS company_workflowtype_items_ocr_preset;
+
 DROP TABLE IF EXISTS workflow_message;
 
 DROP TABLE IF EXISTS company_workflowtype_items_ocr_settings;
@@ -72,4 +77,8 @@ DROP SEQUENCE IF EXISTS  users_id_seq;
 DROP SEQUENCE IF EXISTS  user_department_id_seq;
 
 DROP SEQUENCE IF EXISTS company_workflowtype_items_ocr_settings_seq;
+
+DROP SEQUENCE IF EXISTS company_workflowtype_items_ocr_preset_seq;
+
+DROP SEQUENCE IF EXISTS company_workflowtype_items_ocr_preset_items_seq;
 

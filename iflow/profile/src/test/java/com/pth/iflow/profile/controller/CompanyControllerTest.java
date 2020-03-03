@@ -8,7 +8,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.net.URI;
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.After;
@@ -26,8 +25,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.pth.iflow.common.models.edo.CompanyEdo;
-import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingEdo;
-import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingListEdo;
+import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingPresetEdo;
+import com.pth.iflow.common.models.edo.CompanyWorkflowtypeItemOcrSettingPresetListEdo;
 import com.pth.iflow.common.models.edo.DepartmentListEdo;
 import com.pth.iflow.common.models.edo.UserGroupListEdo;
 import com.pth.iflow.common.models.edo.UserListEdo;
@@ -36,7 +35,7 @@ import com.pth.iflow.common.rest.TokenVerficationHandlerInterceptor;
 import com.pth.iflow.profile.TestDataProducer;
 import com.pth.iflow.profile.model.Company;
 import com.pth.iflow.profile.model.CompanyProfile;
-import com.pth.iflow.profile.model.CompanyWorkflowtypeItemOcrSetting;
+import com.pth.iflow.profile.model.CompanyWorkflowtypeItemOcrSettingPreset;
 import com.pth.iflow.profile.model.Department;
 import com.pth.iflow.profile.model.ProfileResponse;
 import com.pth.iflow.profile.model.User;
@@ -198,15 +197,13 @@ public class CompanyControllerTest extends TestDataProducer {
   @Test
   public void testReadCompanyWorkflowtypeItemOcrSettings() throws Exception {
 
-    final List<CompanyWorkflowtypeItemOcrSetting> listSettings = Arrays
-        .asList(this.getTestCompanyWorkflowtypeItemOcrSetting("prop1"), this.getTestCompanyWorkflowtypeItemOcrSetting("prop2"),
-            this.getTestCompanyWorkflowtypeItemOcrSetting("prop3"));
+    final List<CompanyWorkflowtypeItemOcrSettingPreset> listSettings = this.getTestCompanyWorkflowtypeItemOcrSettingPresetList();
 
-    final List<CompanyWorkflowtypeItemOcrSettingEdo> listEdoSettings = Arrays
-        .asList(this.getTestCompanyWorkflowtypeItemOcrSettingEdo("prop1"), this.getTestCompanyWorkflowtypeItemOcrSettingEdo("prop2"),
-            this.getTestCompanyWorkflowtypeItemOcrSettingEdo("prop3"));
+    final List<
+        CompanyWorkflowtypeItemOcrSettingPresetEdo> listEdoSettings = this.getTestCompanyWorkflowtypeItemOcrSettingPresetEdoList();
 
-    final CompanyWorkflowtypeItemOcrSettingListEdo edoListSettings = new CompanyWorkflowtypeItemOcrSettingListEdo(listEdoSettings);
+    final CompanyWorkflowtypeItemOcrSettingPresetListEdo edoListSettings = new CompanyWorkflowtypeItemOcrSettingPresetListEdo(
+        listEdoSettings);
 
     when(this.companiesHandlerService.readCompanyWorkflowtypeItemOcrSettingsByCompanyIdentity(any(String.class))).thenReturn(listSettings);
 
@@ -227,21 +224,16 @@ public class CompanyControllerTest extends TestDataProducer {
   @Test
   public void testSaveCompanyWorkflowtypeItemOcrSettings() throws Exception {
 
-    final List<CompanyWorkflowtypeItemOcrSetting> listSettings = Arrays
-        .asList(this.getTestCompanyWorkflowtypeItemOcrSetting("prop1"), this.getTestCompanyWorkflowtypeItemOcrSetting("prop2"),
-            this.getTestCompanyWorkflowtypeItemOcrSetting("prop3"));
+    final CompanyWorkflowtypeItemOcrSettingPreset preset = this.getTestCompanyWorkflowtypeItemOcrSettingPreset("presetName");
 
-    final List<CompanyWorkflowtypeItemOcrSettingEdo> listEdoSettings = Arrays
-        .asList(this.getTestCompanyWorkflowtypeItemOcrSettingEdo("prop1"), this.getTestCompanyWorkflowtypeItemOcrSettingEdo("prop2"),
-            this.getTestCompanyWorkflowtypeItemOcrSettingEdo("prop3"));
+    final CompanyWorkflowtypeItemOcrSettingPresetEdo edoSettings = this.getTestCompanyWorkflowtypeItemOcrSettingPresetEdo("presetName");
 
-    final CompanyWorkflowtypeItemOcrSettingListEdo edoListSettings = new CompanyWorkflowtypeItemOcrSettingListEdo(listEdoSettings);
+    when(this.companiesHandlerService.saveCompanyWorkflowtypeItemOcrSettings(any(CompanyWorkflowtypeItemOcrSettingPreset.class)))
+        .thenReturn(preset);
 
-    when(this.companiesHandlerService.saveCompanyWorkflowtypeItemOcrSettings(any(List.class))).thenReturn(listSettings);
+    final String requestAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoSettings);
 
-    final String requestAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoListSettings);
-
-    final String responseAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoListSettings);
+    final String responseAsXmlString = this.xmlConverter.getObjectMapper().writeValueAsString(edoSettings);
 
     this.mockMvc
         .perform(MockMvcRequestBuilders
@@ -254,7 +246,8 @@ public class CompanyControllerTest extends TestDataProducer {
         .andExpect(content().xml(responseAsXmlString));
 
     verify(this.tokenUserDataManager, times(1)).validateToken(any(String.class));
-    verify(this.companiesHandlerService, times(1)).saveCompanyWorkflowtypeItemOcrSettings(any(List.class));
+    verify(this.companiesHandlerService, times(1))
+        .saveCompanyWorkflowtypeItemOcrSettings(any(CompanyWorkflowtypeItemOcrSettingPreset.class));
   }
 
 }

@@ -44,6 +44,7 @@ public class IflowRestPaths {
     public static final String COMPANY_SAVE = "/companies/save";
     public static final String COMPANY_READ_WORKFLOWTYPE_ITEMS_OCR_SETTINGS_BY_IDENTITY = "/companies/readwtoctsettings/{companyidentity}";
     public static final String COMPANY_SAVE_WORKFLOWTYPE_ITEMS_OCR_SETTINGS = "/companies/savewtoctsettings";
+    public static final String COMPANY_DELETE_WORKFLOWTYPE_ITEMS_OCR_SETTINGS = "/companies/deletewtoctsettings";
 
     public static final String DEPARTMENT_READ_BY_IDENTITY = "/department/readbyid/{identity}";
     public static final String DEPARTMENT_SAVE = "/department/save";
@@ -184,6 +185,12 @@ public class IflowRestPaths {
     public static URI SAVE_COMPANY_WORKFLOWTYPE_ITEMS_OCR_SETTINGS() {
 
       final IflowUriBuilder builder = new IflowUriBuilder(COMPANY_SAVE_WORKFLOWTYPE_ITEMS_OCR_SETTINGS);
+      return builder.build();
+    }
+
+    public static URI DELETE_COMPANY_WORKFLOWTYPE_ITEMS_OCR_SETTINGS() {
+
+      final IflowUriBuilder builder = new IflowUriBuilder(COMPANY_DELETE_WORKFLOWTYPE_ITEMS_OCR_SETTINGS);
       return builder.build();
     }
 
@@ -604,6 +611,7 @@ public class IflowRestPaths {
     public static final String COMPANY_SAVE = "/company/save";
     public static final String COMPANY_READ_WORKFLOWTYPE_ITEMS_OCR_SETTINGS_BY_IDENTITY = "/company/readwtoctsettings/{companyidentity}";
     public static final String COMPANY_SAVE_WORKFLOWTYPE_ITEMS_OCR_SETTINGS = "/company/savewtoctsettings";
+    public static final String COMPANY_DELETE_WORKFLOWTYPE_ITEMS_OCR_SETTINGS = "/company/deletewtoctsettings";
 
     public static final String DEPARTMENT_READ_BY_IDENTITY = "/department/readbyid/{identity}";
     public static final String DEPARTMENT_READ_ALLUSERS_LIST = "/department/read/allusers/{identity}";
@@ -637,6 +645,12 @@ public class IflowRestPaths {
     public static URI SAVE_COMPANY_WORKFLOWTYPE_ITEMS_OCR_SETTINGS() {
 
       final IflowUriBuilder builder = new IflowUriBuilder(COMPANY_SAVE_WORKFLOWTYPE_ITEMS_OCR_SETTINGS);
+      return builder.build();
+    }
+
+    public static URI DELETE_COMPANY_WORKFLOWTYPE_ITEMS_OCR_SETTINGS() {
+
+      final IflowUriBuilder builder = new IflowUriBuilder(COMPANY_DELETE_WORKFLOWTYPE_ITEMS_OCR_SETTINGS);
       return builder.build();
     }
 

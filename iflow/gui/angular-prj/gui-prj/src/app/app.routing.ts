@@ -18,6 +18,7 @@ import { UserListComponent } from './company-components/user-list/user-list.comp
 import { CompanyInfoComponent } from './company-components/company-info/company-info.component';
 import { DepartmentsListComponent } from './company-components/departments-list/departments-list.component';
 import { WorkflowtypePropertySettingComponent } from './company-components/workflowtype-property-setting/workflowtype-property-setting.component';
+import { OcrPresetsComponent } from './company-components/ocr-presets/ocr-presets.component';
 
 
 
@@ -39,7 +40,7 @@ const routes: Routes = [
     { path: 'departments/list', component: DepartmentsListComponent, canActivate: [AuthenticationService] },
     
     { path: 'company/info', component: CompanyInfoComponent, canActivate: [AuthenticationService] },
-    { path: 'company/workflowtypes', component: WorkflowtypePropertySettingComponent, canActivate: [AuthenticationService] },
+    { path: 'company/ocrpresets', component: OcrPresetsComponent, canActivate: [AuthenticationService] },
     
     { path: 'auth/login', component: LoginComponent },
 

@@ -41,7 +41,7 @@ public class CompanyProfileEdo {
 
   @XmlElementWrapper(name = "WorkflowtypeItemOcrSettingList", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
   @XmlElement(name = "WorkflowtypeItemOcrSetting", namespace = IFlowJaxbDefinition.IFlow.NAMESPACE)
-  private final List<CompanyWorkflowtypeItemOcrSettingEdo> workflowtypeItemOcrSettings = new ArrayList<>();
+  private final List<CompanyWorkflowtypeItemOcrSettingPresetEdo> ocrPresets = new ArrayList<>();
 
   public CompanyProfileEdo() {
 
@@ -49,13 +49,13 @@ public class CompanyProfileEdo {
 
   public CompanyProfileEdo(final CompanyEdo company, final List<DepartmentEdo> departments, final List<UserGroupEdo> userGroups,
       final List<CompanyWorkflowTypeControllerEdo> workflowTypeControllers,
-      final List<CompanyWorkflowtypeItemOcrSettingEdo> workflowtypeItemOcrSettings) {
+      final List<CompanyWorkflowtypeItemOcrSettingPresetEdo> workflowtypeItemOcrSettingPresets) {
 
     this.setDepartments(departments);
     this.setUserGroups(userGroups);
     this.setCompany(company);
     this.setWorkflowTypeControllers(workflowTypeControllers);
-    this.setWorkflowtypeItemOcrSettings(workflowtypeItemOcrSettings);
+    this.setOcrPresets(workflowtypeItemOcrSettingPresets);
 
   }
 
@@ -117,18 +117,20 @@ public class CompanyProfileEdo {
     }
   }
 
-  public List<CompanyWorkflowtypeItemOcrSettingEdo> getWorkflowtypeItemOcrSettings() {
+  public List<CompanyWorkflowtypeItemOcrSettingPresetEdo> getOcrPresets() {
 
-    return this.workflowtypeItemOcrSettings;
+    return this.ocrPresets;
   }
 
   @JsonSetter(contentNulls = Nulls.AS_EMPTY)
-  public void setWorkflowtypeItemOcrSettings(final List<CompanyWorkflowtypeItemOcrSettingEdo> workflowtypeItemOcrSettings) {
+  public void
+      setOcrPresets(final List<CompanyWorkflowtypeItemOcrSettingPresetEdo> ocrPresets) {
 
-    this.workflowtypeItemOcrSettings.clear();
-    if (workflowtypeItemOcrSettings != null) {
-      this.workflowtypeItemOcrSettings.addAll(workflowtypeItemOcrSettings);
+    this.ocrPresets.clear();
+    if (ocrPresets != null) {
+      this.ocrPresets.addAll(ocrPresets);
     }
 
   }
+
 }

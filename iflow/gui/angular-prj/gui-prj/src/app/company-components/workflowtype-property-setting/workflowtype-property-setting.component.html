@@ -1,14 +1,16 @@
 
 	<div class="content-container">
 		<div class="page-toolbar">
-			<div class="page-title">{{ 'menu-workflow-list' | translate }}</div>
+			<div class="page-title">{{ 'ocr-preset-title' | translate }}</div>
+			<a class="toolbar-link" (click)="reload()"><i class="material-icons">refresh</i></a>
+			<a class="toolbar-link" (click)="addPreset()"><i class="material-icons">add</i></a>
 		</div>
 	
 		<div class="workflow-content" *ngIf="showList">
 			<div class="item-row">
 				<div class="list-group">
 				  <a class="list-group-item list-group-item-action list-group-item-title">{{ 'workflow-type' | translate }}</a>
-				  <a *ngFor="let type of worlflowTypes;" (click)="showWorkflowType(type)" class="list-group-item list-group-item-action link-out" >{{type.title}}</a>
+				  <a *ngFor="let preset of ocrSettingPresets;" (click)="showPreset(preset)" class="list-group-item list-group-item-action link-out" >{{preset.presetName}}</a>
 				</div>
 				<div class="clear"></div>
 			</div>
@@ -16,18 +18,28 @@
 
 		<div class="content-container" *ngIf="showDetail">
 			<div class="page-toolbar">
-				<div class="page-title">{{ selectedWorlflowType.title }}</div>
-				<a class="toolbar-link" (click)="closeWorkflowType()"><i class="material-icons">close</i></a>
-				<a class="toolbar-link" (click)="saveWorkflowType()" *ngIf="selectedWorlflowTypeChanged"><i class="material-icons">save</i></a>
+				<div class="page-title">{{ selectedPreset.presetName }}</div>
+				<a class="toolbar-link" (click)="closePreset()"><i class="material-icons">close</i></a>
+				<a class="toolbar-link" (click)="savePreset()" *ngIf="selectedPresetChanged"><i class="material-icons">save</i></a>
 			</div>
 		
+			<div>
+				<label class="property-label">WorkflowType</label>
+				<select class="property-value" (ngModelChange)="setPresetWorkflowIdentity($event)" [ngModel]="selectedPreset.workflowTypeIdentity">
+					<option *ngFor="let worlflowType of worlflowTypes;" value="{{worlflowType.identity}}">{{worlflowType.title}}</option>
+				</select>
+			</div>
+			<div>
+				<label class="property-label">Preset Name</label>
+				<input type="text" class="property-value" (ngModelChange)="setPresetName($event)" [ngModel]="selectedPreset.presetName"/>
+			</div>
 			<div class="workflow-content">
 				<div class="item-row">
 					<div class="list-group">
-					  <div *ngFor="let prop of workflowtypeItemOcrSettings[selectedWorlflowType.identity];" class="list-group-item list-group-item-action link-out" >
+					  <div *ngFor="let prop of selectedPresetItems;" class="list-group-item list-group-item-action link-out" >
 					  	<label class="property-label">{{ prop.propertyName | translate  }}</label>
-					  	<input type="text"class="property-value" readonly
-					  		(ngModelChange)="setWorkflowtypeItemOcrSettings(selectedWorlflowType.identity, prop.propertyName, $event)" 
+					  	<input type="text" class="property-value" readonly
+					  		(ngModelChange)="setPresetItemValue(prop.propertyName, $event)" 
 					  		[ngModel]="prop.value"/>
 					  	<a (click)="selectValueList(prop)" class="toolbar-link selectlist-button" ><i class="material-icons">list</i></a>
 					  </div>

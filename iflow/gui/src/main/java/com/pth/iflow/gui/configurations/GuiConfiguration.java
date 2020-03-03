@@ -285,6 +285,12 @@ public class GuiConfiguration {
           .resolve(IflowRestPaths.ProfileModule.SAVE_COMPANY_WORKFLOWTYPE_ITEMS_OCR_SETTINGS());
     }
 
+    public URI getDeleteCompanyWorkflowTypeItemOcrSettingsUri() throws MalformedURLException {
+
+      return this.baseProfileBaseUri
+          .resolve(IflowRestPaths.ProfileModule.DELETE_COMPANY_WORKFLOWTYPE_ITEMS_OCR_SETTINGS());
+    }
+
   }
 
 }

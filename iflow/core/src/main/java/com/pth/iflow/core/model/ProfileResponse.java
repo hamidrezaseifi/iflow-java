@@ -3,7 +3,7 @@ package com.pth.iflow.core.model;
 import java.util.List;
 
 import com.pth.iflow.core.model.entity.CompanyEntity;
-import com.pth.iflow.core.model.entity.CompanyWorkflowtypeItemOcrSettingEntity;
+import com.pth.iflow.core.model.entity.CompanyWorkflowTypeOcrSettingPresetEntity;
 import com.pth.iflow.core.model.entity.DepartmentEntity;
 import com.pth.iflow.core.model.entity.UserEntity;
 import com.pth.iflow.core.model.entity.UserGroupEntity;
@@ -29,11 +29,11 @@ public class ProfileResponse {
   }
 
   public ProfileResponse(final UserEntity user, final CompanyEntity company, final List<DepartmentEntity> departments,
-      final List<UserGroupEntity> userGroups, final List<CompanyWorkflowtypeItemOcrSettingEntity> workflowtypeItemOcrSettings,
+      final List<UserGroupEntity> userGroups, final List<CompanyWorkflowTypeOcrSettingPresetEntity> ocrPresetSettings,
       final String sessionid) {
 
     this.user = user;
-    this.companyProfile = new CompanyProfile(company, departments, userGroups, workflowtypeItemOcrSettings);
+    this.companyProfile = new CompanyProfile(company, departments, userGroups, ocrPresetSettings);
     this.sessionid = sessionid;
   }
 

@@ -112,6 +112,16 @@ public class GuiSocketMessage extends HashMap<String, Object> {
     this.put(ESocketCommands.COMMAND.getValue(), command);
   }
 
+  public String getSelectedOcrPreset() {
+
+    return this.get(ESocketCommands.SELECTED_OCR_PRESET.getValue()).toString();
+  }
+
+  public void setSelectedOcrPreset(final String value) {
+
+    this.put(ESocketCommands.SELECTED_OCR_PRESET.getValue(), value);
+  }
+
   public void setWords(final Map<String, Set<OcrResultWord>> words) {
 
     this.put(ESocketCommands.WORDS.getValue(), words);
