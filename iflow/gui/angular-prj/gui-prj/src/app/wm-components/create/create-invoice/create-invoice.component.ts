@@ -78,6 +78,7 @@ export class CreateInvoiceComponent extends InvoiceBaseComponent implements OnIn
 		
 	 	if(this.editService.workflowSaveRequestInit !== null){
 	 		this.workflowSaveRequest = this.editService.workflowSaveRequestInit.workflowSaveRequest;
+	 		this.ocrSettingPresets = this.editService.workflowSaveRequestInit.ocrPresetList;
 	 		this.setToControlValues();
 	 	}
 	 	else{
@@ -96,10 +97,11 @@ export class CreateInvoiceComponent extends InvoiceBaseComponent implements OnIn
 	private subscribeToSearchInitialData(){
 		this.editService.workflowSaveRequestInitSubject.subscribe((data : InvoiceWorkflowSaveRequestInit) => {
 	    	
-			console.log("set gloabl-data from workflow-create. : ", data);
+			console.log("Load initial workflow-create data", data);
 	 		
 			if(data && data !== null){
 				this.workflowSaveRequest = data.workflowSaveRequest;
+				this.ocrSettingPresets = data.ocrPresetList;
 				this.setToControlValues();
 			}
 			else{
@@ -107,6 +109,7 @@ export class CreateInvoiceComponent extends InvoiceBaseComponent implements OnIn
 			}
 		  });
 	}
+	
 
 	save(){
 		

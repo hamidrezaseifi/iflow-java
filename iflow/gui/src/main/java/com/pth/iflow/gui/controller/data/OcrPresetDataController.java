@@ -67,8 +67,7 @@ public class OcrPresetDataController extends GuiDataControllerBase {
 
     preset.setCompanyIdentity(this.getLoggedCompany().getIdentity());
 
-    final CompanyWorkflowtypeItemOcrSettingPreset saved = this.companyHandler
-        .saveCompanyWorkflowtypeItemOcrSetting(preset, this.getLoggedToken());
+    this.companyHandler.saveCompanyWorkflowtypeItemOcrSetting(preset, this.getLoggedToken());
 
     return this.readCompanyWorkflowtypeItemOcrSettings();
   }

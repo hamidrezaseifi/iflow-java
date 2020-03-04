@@ -139,6 +139,7 @@ export class EditInvoiceComponent extends InvoiceBaseComponent implements OnInit
 		 		
 				if(initialData && initialData !== null){
 					this.workflowSaveRequest = initialData.workflowSaveRequest;
+			 		this.ocrSettingPresets = initialData.ocrPresetList;
 					this.viewWorkflowModel = this.workflowSaveRequest.workflow;
 					this.setToControlValues();
 					

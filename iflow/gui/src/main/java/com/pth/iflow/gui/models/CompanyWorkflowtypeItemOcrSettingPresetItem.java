@@ -2,6 +2,8 @@ package com.pth.iflow.gui.models;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.pth.iflow.common.enums.EOcrType;
+
 public class CompanyWorkflowtypeItemOcrSettingPresetItem {
 
   private String propertyName;
@@ -37,6 +39,11 @@ public class CompanyWorkflowtypeItemOcrSettingPresetItem {
   public Integer getOcrType() {
 
     return this.ocrType;
+  }
+
+  public EOcrType getOcrTypeEnum() {
+
+    return EOcrType.valueFromInteger(this.ocrType);
   }
 
   public void setOcrType(final Integer ocrType) {

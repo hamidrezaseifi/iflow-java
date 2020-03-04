@@ -194,10 +194,11 @@
 					</button>
 				</div>			
 				<div class="modal-body">
-					<app-invoice-ocr-detail [foundWords]="scanningFile.foundWords" [scanedPdfPath]="scanningFile.scanedPdfPath" 
+					<app-invoice-ocr-detail [foundWords]="getOcrWords()" [scanedPdfPath]="scanningFile.scanedPdfPath" 
 						[scanedHocrPath]="scanningFile.scanedHocrPath" [fileIsPdf]="scanningFile.fileIsPdf" 
 						[fileIsImage]="scanningFile.fileIsImage" [imageSizeX]="scanningFile.imageSizeX" [imageSizeY]="scanningFile.imageSizeY" 
-						[(editedValues)]="scannedSelectedValues" >
+						[(editedValues)]="scannedSelectedValues" [ocrPresetList]="ocrSettingPresets" 
+						(selectedOcrPresetChanged)="selectedOcrPresetChanged($event)" >
 					</app-invoice-ocr-detail>
 				</div>	
 				<div class="modal-footer">

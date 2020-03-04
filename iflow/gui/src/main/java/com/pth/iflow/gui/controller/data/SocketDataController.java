@@ -5,15 +5,12 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.security.Principal;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
 import javax.imageio.ImageIO;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageExceptionHandler;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -25,14 +22,9 @@ import org.springframework.messaging.simp.annotation.SubscribeMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.pth.iflow.common.enums.EInvoiceWorkflowTypeItems;
-import com.pth.iflow.common.exceptions.IFlowMessageConversionFailureException;
-import com.pth.iflow.gui.authentication.GuiAuthenticationToken;
 import com.pth.iflow.gui.controller.GuiSocketControllerBase;
-import com.pth.iflow.gui.models.CompanyWorkflowtypeItemOcrSettingPresetItem;
 import com.pth.iflow.gui.models.ui.GuiSocketMessage;
 import com.pth.iflow.gui.models.ui.enums.ESocketCommands;
-import com.pth.iflow.gui.models.ui.ocr.OcrResultValueType;
 import com.pth.iflow.gui.models.ui.ocr.OcrResultWord;
 import com.pth.iflow.gui.models.ui.ocr.OcrResults;
 import com.pth.iflow.gui.services.ICompanyHandler;
@@ -94,14 +86,6 @@ public class SocketDataController extends GuiSocketControllerBase {
     final GuiSocketMessage result = message.clone();
     result.setStatus("processing");
 
-    final String selectedPreset = message.getSelectedOcrPreset();
-    if (StringUtils.isEmpty(selectedPreset)) {
-      result.setStatus("error");
-      result.setErrorMessage("Invalid Preset!");
-
-      return result;
-    }
-
     if (this.isPrincipalValidAndLoggedIn(principal) && message.hasFileHash() && message.hasHocrFileHash()) {
 
       final String filePath = message.getFileNotHash();
@@ -122,13 +106,11 @@ public class SocketDataController extends GuiSocketControllerBase {
 
           writer.close();
 
-          // final OcrResults results = OcrResults.loadFromHocrFile(hocrPath);
+          result.setStatus("done");
+
           final OcrResults ocrResults = OcrResults.loadFromHocrText(hocrResult);
 
-          final Map<String,
-              Set<OcrResultWord>> words = this.retreiveInvoiceDetailWords(ocrResults, (GuiAuthenticationToken) principal, selectedPreset);
-
-          result.setWords(words);
+          result.setWords(new HashMap<String, Set<OcrResultWord>>());
           result.setPageCount(ocrResults.getPages().size());
 
           result.setImageWidth(300);
@@ -180,126 +162,6 @@ public class SocketDataController extends GuiSocketControllerBase {
     }
 
     return result;
-  }
-
-  private Map<String, Set<OcrResultWord>> retreiveInvoiceDetailWords(final OcrResults ocrResults,
-      final GuiAuthenticationToken authenticationToken,
-      final String selectedPreset)
-      throws MalformedURLException, IFlowMessageConversionFailureException {
-
-    final Map<String, CompanyWorkflowtypeItemOcrSettingPresetItem> presetItems = this.companyHandler
-        .readPresetAllItems(selectedPreset, authenticationToken.getCompanyId(), authenticationToken.getToken());
-
-    final Map<String, Set<OcrResultWord>> words = new HashMap<>();
-
-    Set<OcrResultWord> results = this
-        .extractSearchItems(ocrResults, presetItems, EInvoiceWorkflowTypeItems.PAYMENT_AMOUNT.getIdentity(), OcrResultValueType.FLOAT);
-    if (results != null) {
-      words.put(EInvoiceWorkflowTypeItems.PAYMENT_AMOUNT.getIdentity(), results);
-    }
-
-    results = this
-        .extractSearchItems(ocrResults, presetItems, EInvoiceWorkflowTypeItems.INVOCIE_SENDER.getIdentity(), OcrResultValueType.TEXT);
-    if (results != null) {
-      words.put(EInvoiceWorkflowTypeItems.INVOCIE_SENDER.getIdentity(), results);
-    }
-
-    results = this
-        .extractSearchItems(ocrResults, presetItems, EInvoiceWorkflowTypeItems.INVOCIE_NUMBER.getIdentity(), OcrResultValueType.TEXT);
-    if (results != null) {
-      words.put(EInvoiceWorkflowTypeItems.INVOCIE_NUMBER.getIdentity(), results);
-    }
-
-    results = this
-        .extractSearchItems(ocrResults, presetItems, EInvoiceWorkflowTypeItems.INVOCIE_DATE.getIdentity(), OcrResultValueType.DATE);
-    if (results != null) {
-      words.put(EInvoiceWorkflowTypeItems.INVOCIE_DATE.getIdentity(), results);
-    }
-
-    results = this
-        .extractSearchItems(ocrResults, presetItems, EInvoiceWorkflowTypeItems.PARTNER_CODE.getIdentity(), OcrResultValueType.TEXT);
-    if (results != null) {
-      words.put(EInvoiceWorkflowTypeItems.PARTNER_CODE.getIdentity(), results);
-    }
-
-    results = this
-        .extractSearchItems(ocrResults, presetItems, EInvoiceWorkflowTypeItems.VENDOR_NUMBER.getIdentity(), OcrResultValueType.TEXT);
-    if (results != null) {
-      words.put(EInvoiceWorkflowTypeItems.VENDOR_NUMBER.getIdentity(), results);
-    }
-
-    results = this
-        .extractSearchItems(ocrResults, presetItems, EInvoiceWorkflowTypeItems.VENDOR_NAME.getIdentity(), OcrResultValueType.TEXT);
-    if (results != null) {
-      words.put(EInvoiceWorkflowTypeItems.VENDOR_NAME.getIdentity(), results);
-    }
-
-    results = this
-        .extractSearchItems(ocrResults, presetItems, EInvoiceWorkflowTypeItems.IS_DIRECT_DEBIT_PERMISSION.getIdentity(),
-            OcrResultValueType.TEXT);
-    if (results != null) {
-      words.put(EInvoiceWorkflowTypeItems.IS_DIRECT_DEBIT_PERMISSION.getIdentity(), results);
-    }
-
-    results = this
-        .extractSearchItems(ocrResults, presetItems, EInvoiceWorkflowTypeItems.INVOICE_TYPE.getIdentity(), OcrResultValueType.TEXT);
-    if (results != null) {
-      words.put(EInvoiceWorkflowTypeItems.INVOICE_TYPE.getIdentity(), results);
-    }
-
-    results = this
-        .extractSearchItems(ocrResults, presetItems, EInvoiceWorkflowTypeItems.DISCOUNT_ENTERDATE.getIdentity(), OcrResultValueType.DATE);
-    if (results != null) {
-      words.put(EInvoiceWorkflowTypeItems.DISCOUNT_ENTERDATE.getIdentity(), results);
-    }
-
-    results = this
-        .extractSearchItems(ocrResults, presetItems, EInvoiceWorkflowTypeItems.DISCOUNT_DEADLINE.getIdentity(), OcrResultValueType.TEXT);
-    if (results != null) {
-      words.put(EInvoiceWorkflowTypeItems.DISCOUNT_DEADLINE.getIdentity(), results);
-    }
-
-    results = this
-        .extractSearchItems(ocrResults, presetItems, EInvoiceWorkflowTypeItems.DISCOUNT_RATE.getIdentity(), OcrResultValueType.FLOAT);
-    if (results != null) {
-      words.put(EInvoiceWorkflowTypeItems.DISCOUNT_RATE.getIdentity(), results);
-    }
-
-    results = this
-        .extractSearchItems(ocrResults, presetItems, EInvoiceWorkflowTypeItems.DISCOUNT_DATE.getIdentity(), OcrResultValueType.DATE);
-    if (results != null) {
-      words.put(EInvoiceWorkflowTypeItems.DISCOUNT_DATE.getIdentity(), results);
-    }
-
-    final Set<OcrResultWord> amountWorldList = ocrResults.findWord("betrag", false, false, OcrResultValueType.FLOAT);
-    final Set<OcrResultWord> senderWorldList = ocrResults.findWord("sender", false, false, OcrResultValueType.TEXT);
-    final Set<OcrResultWord> numberWorldList = ocrResults
-        .findWords(new String[] { "R.-Nr.", "Rg-Nr", "R. Nummer", "Rg-Nummer", "Rechnungsnummer", "nr." }, false,
-            false,
-            OcrResultValueType.TEXT);
-    final Set<OcrResultWord> dateWorldList = ocrResults.findWord("Datum", false, false, OcrResultValueType.DATE);
-    final Set<OcrResultWord> testList = ocrResults.findWords(new String[] { "ident", "heinstadt" }, false, false, OcrResultValueType.TEXT);
-
-    /*
-     * words.put("invoice-paymentamount", amountWorldList); words.put("invoice-sender", senderWorldList); words.put("invoice-invoicenumber",
-     * numberWorldList); words.put("invoice-invoicedate", dateWorldList); words.put("test", testList);
-     */
-    return words;
-  }
-
-  private Set<OcrResultWord> extractSearchItems(final OcrResults ocrResults,
-      final Map<String, CompanyWorkflowtypeItemOcrSettingPresetItem> presetItems,
-      final String propertyName, final OcrResultValueType valueType) {
-
-    Set<OcrResultWord> results = null;
-    if (presetItems.containsKey(propertyName)) {
-      final CompanyWorkflowtypeItemOcrSettingPresetItem property = presetItems.get(propertyName);
-      final String[] searchWords = property.getValue().split(";");
-      results = ocrResults.findWords(searchWords, false, false, valueType);
-      results = results.isEmpty() ? null : results;
-    }
-
-    return results;
   }
 
   @MessageExceptionHandler

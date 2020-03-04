@@ -56,12 +56,18 @@ public class OcrResults {
 
     final Set<OcrResultWord> words = new HashSet<>();
 
-    for (final String searchWord : searchWords) {
+    if (searchWords.length > 0) {
+      for (final String searchWord : searchWords) {
 
-      final Set<OcrResultWord> foundWords = this.findWord(searchWord.trim(), exact, caseSensitive, valueType);
-      words.addAll(foundWords);
+        if (searchWord.trim().isEmpty() == false) {
+          final Set<OcrResultWord> foundWords = this.findWord(searchWord.trim(), exact, caseSensitive, valueType);
+          words.addAll(foundWords);
 
+        }
+
+      }
     }
+
     return words;
   }
 

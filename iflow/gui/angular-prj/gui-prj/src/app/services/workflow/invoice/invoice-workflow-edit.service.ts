@@ -60,6 +60,10 @@ export class InvoiceWorkflowEditService extends HttpErrorResponseHelper implemen
 	getUploadOcrScanFileUrl() :string{
 		return "/general/data/uploadtempfile";
 	}
+	
+	getProcessDocumentWordsUrl() :string{
+		return "/workflow/invoice/data/processdoc";
+	}
 		
 	constructor(
 			protected http: HttpClient,
@@ -169,6 +173,14 @@ export class InvoiceWorkflowEditService extends HttpErrorResponseHelper implemen
         const httpOptions = { headers: HttpHepler.generateJsonHeader() };
         
         return this.http.post(this.getArchiveWorkflowUrl() , workflowSaveRequest, httpOptions);	       	
+
+	}	
+	
+	processDocumentWords(message :any){
+    	
+        const httpOptions = { headers: HttpHepler.generateJsonHeader() };
+        
+        return this.http.post(this.getProcessDocumentWordsUrl() , message, httpOptions);	       	
 
 	}	
 	
