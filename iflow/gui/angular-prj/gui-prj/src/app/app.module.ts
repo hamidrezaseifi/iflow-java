@@ -33,7 +33,6 @@ import { LoadingDialogComponent } from './components/loading-dialog/loading-dial
 
 import { HomeComponent } from './home';
 import { AboutComponent } from './about';
-import { LoginComponent } from './login';
 import { WorkflowListComponent } from './wm-components/workflow-list/workflow-list.component';
 import { WorkflowCreateComponent } from './wm-components/create/workflow-create/workflow-create.component';
 import { CreateSingletaskComponent } from './wm-components/create/create-singletask/create-singletask.component';
@@ -91,7 +90,6 @@ export function createTranslateLoader(http: HttpClient) {
     LoadingDialogComponent,
     HomeComponent,
     AboutComponent,
-    LoginComponent,
     WorkflowCreateComponent,
     WorkflowListComponent,
     CreateSingletaskComponent,

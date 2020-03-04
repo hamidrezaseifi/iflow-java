@@ -6,7 +6,6 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
 import { User, LoginResponse, GeneralData } from '../ui-models';
-import { ILoginComponent } from '../components';
 
 import { GlobalService } from '../services/global.service';
 import { LoadingServiceService } from './loading-service.service';
@@ -37,38 +36,6 @@ export class AuthenticationService implements CanActivate{
         return this.currentUserSubject.value != null;
     }
 
-    login(username, password, companyid, loginComponent: ILoginComponent) {
-    	
-    	const loginData = new HttpParams()
-        .set('username', username)
-        .set('password', password)
-        .set('companyid', companyid);
-        
-        const httpOptions = { headers: HttpHepler.generateFormHeader() };
-        
-    	this.http.post(this.authenticateUrl, loginData, httpOptions).subscribe(
-		        val => {
-		        	var loginResponse :LoginResponse = <LoginResponse>val;
-		        	
-		        	this.currentUserSubject.next(loginResponse.user);
-		        	this.currentUserSubject.complete();
-		        	this.isLoggedIn = true;
-		        	loginComponent.processLoginResult(<LoginResponse>val);
-		            
-		        },
-		        response => {
-		        	this.currentUserSubject.next(null);
-		        	this.currentUserSubject.complete();
-		        	this.isLoggedIn = false;
-		        	loginComponent.processFailedResult(response);
-		        },
-		        () => {
-		        	loginComponent.processEndLoading();		            
-		        }
-		    );	       	
-    	
-    }
-
     checkLoginState(returnUrl :string, ) {
     	
     	this.loadingService.showLoading();
@@ -82,22 +49,14 @@ export class AuthenticationService implements CanActivate{
 		            	
 		            	this.isLoggedIn = true;
 		            	this.currentUserSubject.next(generalData.user.currentUser);
-			        	//this.currentUserSubject.complete();
 			        	
-			        	this.global.loadAllSetting(null);
-			        	
-			        	//this.global.setGeneralData(generalData);
-			        	
-			        	//alert("from authentication- redirect to : " + returnUrl + ": \n" + JSON.stringify(generalData));
+			        	this.global.loadAllSetting();
 			        	
 		            	this.router.navigate([returnUrl]);
 		            }
 		            else{
 		            	this.isLoggedIn = false;
 		            	this.currentUserSubject.next(null);
-			        	//this.currentUserSubject.complete();
-			        	
-		            	//alert("from authentication- redirect to login : \n" + JSON.stringify(generalData));
 		            	
 			        	this.router.navigate(['auth/login'], { queryParams: { returnUrl: returnUrl } });
 		            }
@@ -119,59 +78,9 @@ export class AuthenticationService implements CanActivate{
     	
     }
 
-    /*clearSessionData() {
-        
-        this.global.loadAllSetting(null);
-        this.currentUserSubject.next(null);
-        //this.currentUserSubject.complete();
-    }
-
-    resetGeneralSettings() {
-        
-    	this.currentUserSubject.next(null);
-        
-        //this.global.loadAllSetting(null);
-    }*/
-
     logout(returnUrl :string) {
         
-    	if(!returnUrl || returnUrl === null || returnUrl === undefined){
-    		returnUrl = "";
-    	}
-        //this.clearSessionData();
-        //window.location.assign("/logout");
-        //this.router.navigate(['auth/login']);
-        
-        this.loadingService.showLoading();
-        const httpOptions = { headers: HttpHepler.generateFormHeader() };
-        
-        this.http.get(this.logoutUrl, httpOptions).subscribe(
-		        val => {
-		        	var loginResponse :LoginResponse = <LoginResponse>val;
-		        	console.log("Is Logged out!");
-		        	this.currentUserSubject.next(null);
-		        	//this.currentUserSubject.complete();
-		        	this.isLoggedIn = false;
-		        	//loginComponent.processLoginResult(<LoginResponse>val);
-		        	this.global.loadAllSetting(null);
-		        	//this.loadingService.hideLoading();
-		        	this.router.navigate(['auth/login'], { queryParams: { returnUrl: returnUrl } });
-		        	
-		        },
-		        response => {
-		        	this.currentUserSubject.next(null);
-		        	console.log("Error in Logging out!" , response);
-		        	//this.currentUserSubject.complete();
-		        	this.isLoggedIn = false;
-		        	//loginComponent.processFailedResult(response);
-		        	this.global.loadAllSetting(null);
-		        	this.loadingService.hideLoading();
-		        	this.router.navigate(['auth/login'], { queryParams: { returnUrl: returnUrl } });
-		        },
-		        () => {
-		        	//loginComponent.processEndLoading();		            
-		        }
-		    );	 
+      window.location.assign("/auth/logout"); 
     }
     
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
@@ -185,8 +94,6 @@ export class AuthenticationService implements CanActivate{
 
         this.checkLoginState(state.url);
         
-        // not logged in so redirect to login page with the return url
-        //this.router.navigate(['auth/login'], { queryParams: { returnUrl: state.url } });
         return false;
     }    
 

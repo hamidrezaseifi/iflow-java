@@ -4,7 +4,6 @@ import { AuthenticationService } from './services/authentication.service';
 
 import { HomeComponent } from './home';
 import { AboutComponent } from './about';
-import { LoginComponent } from './login';
 
 import { WorkflowListComponent } from './wm-components/workflow-list/workflow-list.component';
 import { WorkflowCreateComponent } from './wm-components/create/workflow-create/workflow-create.component';
@@ -42,8 +41,6 @@ const routes: Routes = [
     { path: 'company/info', component: CompanyInfoComponent, canActivate: [AuthenticationService] },
     { path: 'company/ocrpresets', component: OcrPresetsComponent, canActivate: [AuthenticationService] },
     
-    { path: 'auth/login', component: LoginComponent },
-
     // otherwise redirect to home
     { path: '**', redirectTo: '', canActivate: [AuthenticationService] }
 ];

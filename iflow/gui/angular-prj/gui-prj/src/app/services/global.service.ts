@@ -4,7 +4,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 import { User, MenuItem, GeneralData } from '../ui-models';
 import { TopBarComponent } from '../top-bar/top-bar.component';
-import { ILoginComponent } from '../components';
 import { LoadingServiceService } from './loading-service.service';
 import { HttpHepler } from '../helper/http-hepler';
 
@@ -26,13 +25,13 @@ export class GlobalService {
         return this.currentSessionDataSubject.value;
     }*/
 	
-	loadAllSetting(login: ILoginComponent, ){
+	loadAllSetting(){
 		this.loadingService.showLoading();
 		
         const httpOptions = { headers: HttpHepler.generateFormHeader() };
 
-		this.http.get(this.loadGeneralDataUrl, httpOptions).subscribe(
-				(generalData :GeneralData) => {
+				this.http.get(this.loadGeneralDataUrl, httpOptions).subscribe(
+						(generalData :GeneralData) => {
 		            console.log("GET call successful generaldata", generalData);
 		            
 		            var islogged = generalData.isLogged + "";
@@ -49,11 +48,6 @@ export class GlobalService {
 		            this.loadingService.hideLoading();
 		        },
 		        () => {
-		            if(login != null){
-		            	login.finishGeneralDataLoading();
-		            }
-		            
-		            //this.currentSessionDataSubject.complete();
 		            
 		            this.loadingService.hideLoading();
 		        }

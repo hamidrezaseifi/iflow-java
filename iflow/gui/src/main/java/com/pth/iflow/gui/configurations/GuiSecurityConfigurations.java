@@ -127,7 +127,7 @@ public class GuiSecurityConfigurations extends WebSecurityConfigurerAdapter impl
         .failureHandler(this.authenticationFailureHandler)
         .permitAll();
 
-    http.logout().logoutUrl(LOGOUT_URL).logoutSuccessHandler(this.guiLogoutSuccessHandler);
+    http.logout().logoutUrl(LOGOUT_URL);
 
     http.headers().frameOptions().disable();
   }

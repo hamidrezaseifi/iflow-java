@@ -81,7 +81,7 @@ export class WorkflowtypePropertySettingComponent implements OnInit {
 	ngOnInit() {
 		
 		
-		this.global.loadAllSetting(null);
+		this.global.loadAllSetting();
 		
 		this.reload();
 	}

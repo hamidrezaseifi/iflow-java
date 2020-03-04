@@ -34,7 +34,7 @@ export class WorkflowCreateComponent implements OnInit {
 	  
 	ngOnInit() {
 					
-		this.global.loadAllSetting(null);
+		this.global.loadAllSetting();
 	}
 	
 	

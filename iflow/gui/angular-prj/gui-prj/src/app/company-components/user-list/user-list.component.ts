@@ -113,7 +113,7 @@ export class UserListComponent implements OnInit {
 			
         });
 		
-		this.global.loadAllSetting(null);
+		this.global.loadAllSetting();
 		
 		this.reload();
 	}

@@ -150,7 +150,7 @@ export class EditSingleTaskComponent implements OnInit {
 
 	 	}
 	 	else{
-	 		this.global.loadAllSetting(null);
+	 		this.global.loadAllSetting();
 	 	}
 	
 	 	this.loadWorkflowData();
