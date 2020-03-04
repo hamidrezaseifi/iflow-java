@@ -15,14 +15,13 @@ import { InvoiceWorkflowEditService } from '../services/workflow/invoice/invoice
 import { LoadingServiceService } from '../services/loading-service.service';
 import { ErrorServiceService } from '../services/error-service.service';
 
-import { User, Department, GeneralData, OcrWord, UploadedFile, UploadedResult } from '../ui-models';
+import { User, Department, GeneralData, OcrWord, UploadedFile, UploadedResult, CompanyWorkflowtypeItemOcrSettingPreset } from '../ui-models';
 import { WorkflowProcessCommand, Workflow, AssignItem, FileTitle, AssignType, WorkflowUploadFileResult, 
 	InvoiceType, WorkflowUploadedFile, WorkflowFile } from '../wf-models';
 import { InvoiceWorkflowSaveRequest } from '../wf-models/invoice-workflow-save-request';
 import { InvoiceWorkflowSaveRequestInit } from '../wf-models/invoice-workflow-save-request-init';
 import { InvoiceTypeControllValidator } from '../custom-validators/invoice-type-controll-validator';
 import { GermanDateAdapter, parseDate, formatDate } from '../helper';
-
 
 export class InvoiceBaseComponent implements OnInit, OnDestroy {
 
@@ -42,10 +41,13 @@ export class InvoiceBaseComponent implements OnInit, OnDestroy {
 	
 	scanningFileIndex :number = -1;
 	scanningFile :UploadedFile = null;
+  scanedWordes : OcrWord[] = [];
 	
 	showOcrDetailsDialog :boolean = false;
 	
 	scannedSelectedValues :string[] = [];
+
+	ocrResultMessage : any = null;
 	
 
 	invoiceEditForm: FormGroup;
@@ -54,6 +56,9 @@ export class InvoiceBaseComponent implements OnInit, OnDestroy {
 
 	workflowSaveRequest :InvoiceWorkflowSaveRequest = new InvoiceWorkflowSaveRequest();
 	
+  ocrSettingPresets : CompanyWorkflowtypeItemOcrSettingPreset[] = [];
+  selectedOcrSettingPreset : CompanyWorkflowtypeItemOcrSettingPreset = null;
+
 	generalDataObs :Observable<GeneralData> = null;
 				
 	selectAssign : boolean[][] = [];
@@ -71,6 +76,37 @@ export class InvoiceBaseComponent implements OnInit, OnDestroy {
 			this.invoiceEditForm.controls["discountDate"].setValue( formatDate(date, 'dd.mm.yyyy') );
 		}
 
+	}
+	
+	selectedOcrPresetChanged(preset : CompanyWorkflowtypeItemOcrSettingPreset){
+	  this.selectedOcrSettingPreset = preset;
+	  //alert(this.selectedOcrSettingPreset.presetName);
+	  
+	  //this.scanedWordes
+	  var message = this.ocrResultMessage;
+	  
+	  message.selectedPreset = this.selectedOcrSettingPreset.presetName;
+	  
+	  this.loadingService.showLoading();	  
+	  
+		this.editService.processDocumentWords(message).subscribe(
+	        (data :any) => {
+	        	
+						console.log("Document Process with preset " + this.selectedOcrSettingPreset.presetName + " Result. : ", data); 
+				
+						this.scanedWordes = data.words;
+	        },
+	        response => {
+	        	console.log("Error in document Process", response);
+	        	this.errorService.showErrorResponse(response);
+	        },
+	        () => {
+	        	
+	        	this.loadingService.hideLoading();	            
+	        }
+	    );	 
+		
+	  
 	}
 	
 	invoiceDateChanges(){
@@ -183,13 +219,17 @@ export class InvoiceBaseComponent implements OnInit, OnDestroy {
 		}
 	}	
 	
+	getOcrWords() :OcrWord[]{
+	  return this.scanedWordes;
+	}
+	
 	onShowUploadedFileScannDetail(uploadedFile: UploadedFile) {
 		
 		var index = this.uploadedFiles.indexOf(uploadedFile);
 		if(index > -1){
 			this.scanningFileIndex = index;
 			this.scanningFile = this.uploadedFiles[index];
-	    	this.showOcrDetailsDialog = true;
+	    this.showOcrDetailsDialog = true;
 	    	
 			console.log("showScanResults : ", this.scanningFile);
 
@@ -209,28 +249,28 @@ export class InvoiceBaseComponent implements OnInit, OnDestroy {
 		var uploaded = this.uploadedFiles[this.scanningFileIndex ];
 			
 		this.loadingService.hideLoading();
-		var parsedMessage = JSON.parse(message.body);
+		this.ocrResultMessage = JSON.parse(message.body);
 		
-		if(parsedMessage.status){
-			if(parsedMessage.status === "done"){
+		if(this.ocrResultMessage.status){
+			if(this.ocrResultMessage.status === "done"){
 				this.unsubscribe();
 
-	            if(parsedMessage.words){
+	            if(this.ocrResultMessage.words){
 
 	            	this.showOcrDetailsDialog = true;
 	            	
-	            	this.uploadedFiles[this.scanningFileIndex].foundWords = <OcrWord[]>parsedMessage.words;
+	            	this.uploadedFiles[this.scanningFileIndex].foundWords = <OcrWord[]>this.ocrResultMessage.words;
 	            	this.uploadedFiles[this.scanningFileIndex].isScanned = true;
-	            	this.uploadedFiles[this.scanningFileIndex].imageSizeX = parsedMessage.imageWidth;
-	            	this.uploadedFiles[this.scanningFileIndex].imageSizeY = parsedMessage.imageHeight;
+	            	this.uploadedFiles[this.scanningFileIndex].imageSizeX = this.ocrResultMessage.imageWidth;
+	            	this.uploadedFiles[this.scanningFileIndex].imageSizeY = this.ocrResultMessage.imageHeight;
 	    			
 	            	console.log("Received Words: " , this.uploadedFiles[this.scanningFileIndex].foundWords);
 	            }
 	            
 			}
-			if(parsedMessage.status === "error" && parsedMessage.errorMessage){
+			if(this.ocrResultMessage.status === "error" && this.ocrResultMessage.errorMessage){
 				this.unsubscribe();
-				this.errorService.showError(parsedMessage.errorMessage , parsedMessage.errorDetail);			
+				this.errorService.showError(this.ocrResultMessage.errorMessage , this.ocrResultMessage.errorDetail);			
 			}
 		}
 				
@@ -253,16 +293,16 @@ export class InvoiceBaseComponent implements OnInit, OnDestroy {
 			
 			_this.setConnected(true);
 			_this.stompClient.subscribe('/user/socket/ocrprocess', function (message) {
-				console.log("Message Received: " , message.body);
-				_this.onRecevieResponse(message);
-            });
+					console.log("Message Received: " , message.body);
+					_this.onRecevieResponse(message);
+      });
 			
 			console.log("ocrUploadedFile : ", _this.scanningFile);
 			
 			_this.stompClient.send('/socketapp/ocrprocess', {}, JSON.stringify(uploadedFile.uploadResult));
 
             //_this.stompClient.reconnect_delay = 2000;
-        }, _this.errorCallBack);
+    }, _this.errorCallBack);
 
 		//this.messages = this._stompService.subscribe('/user/socket/ocrprocess');
 

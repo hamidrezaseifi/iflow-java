@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output, OnInit, ViewChild, ElementRef, 
 import { TranslateService } from '@ngx-translate/core';
 import $ from "jquery";
 
-import { OcrWord, OcrBox } from '../../ui-models';
+import { OcrWord, OcrBox, CompanyWorkflowtypeItemOcrSettingPreset } from '../../ui-models';
 
 @Component({
   selector: 'app-invoice-ocr-detail',
@@ -20,12 +20,31 @@ export class InvoiceOcrDetailComponent implements OnInit, AfterViewInit  {
 	selectedKey :string = "";
 	selectedWord :OcrWord = null;
 	
+	selectedOcrPreset : CompanyWorkflowtypeItemOcrSettingPreset = null;
+	
 	@Input('showOcrDetails') showOcrDetails :boolean = false;
 	@Input('scanedPdfPath') scanedPdfPath :string = "";
 	@Input('scanedHocrPath') scanedHocrPath :string = "";
 	@Input('fileIsPdf') fileIsPdf: boolean = true;
 	@Input('fileIsImage') fileIsImage: boolean = false;
 	
+	ocrPresetList: CompanyWorkflowtypeItemOcrSettingPreset[] = [];
+	
+	@Input('ocrPresetList')
+	set setOcrPresetList(_value:CompanyWorkflowtypeItemOcrSettingPreset[]) {
+	    this.ocrPresetList = _value;
+	    if(this.ocrPresetList !== null || this.ocrPresetList.length > 0){
+	      this.selectedOcrPreset = this.ocrPresetList[0];
+	      this.selectedOcrPresetChanged.emit(this.selectedOcrPreset);
+	    }
+	    else{
+	      this.selectedOcrPreset = null;
+	    }
+	    
+	}
+	
+	@Output() selectedOcrPresetChanged = new EventEmitter();
+
 	
 	@Input('imageSizeX') imageSizeX :number = 300;
 	@Input('imageSizeY') imageSizeY :number = 500;
@@ -92,6 +111,22 @@ export class InvoiceOcrDetailComponent implements OnInit, AfterViewInit  {
 	
 	get debugData():string[]{
 		return this.editedValues;
+	}
+	
+	setSelectedPresetIdentity(identity: string){
+	  if(this.ocrPresetList != null){
+	    for(var index in this.ocrPresetList){
+	      if(this.ocrPresetList[index].identity === identity){
+	        this.selectedOcrPreset = this.ocrPresetList[index];
+	        this.selectedOcrPresetChanged.emit(this.selectedOcrPreset);
+	        return;
+	      }
+	    }
+	  }
+	}
+	
+	getSelectedPresetIdentity(): string{
+	  return this.selectedOcrPreset != null ? this.selectedOcrPreset.identity : "";
 	}
 	
 	constructor(protected translate: TranslateService,) { 
