@@ -55,7 +55,7 @@ footer.footer
   width: 400px;
   background: #dadada;
   border: 1px solid gray;
-  border-radius: 6px;
+  box-shadow: 0px 0px 30px #807e7e;
   margin: auto auto;
 }
 
@@ -65,11 +65,12 @@ footer.footer
 
 .login-container .login-photo
 {
-  background-image: url(../images/login-photo.png);
+  background-image: url(../images/login-photo.jpg);
   background-repeat: no-repeat;
   background-size: 100%;
   background-position: left top;
-  height: 217px;
+  height: 253px;
+  width: 100%;
 }
 
 .login-container label
@@ -77,6 +78,7 @@ footer.footer
   font-size: 14px;
   font-weight: normal;
   color: #706e6e;
+  padding-left: 7px;
 }
 
 .login-container .message
