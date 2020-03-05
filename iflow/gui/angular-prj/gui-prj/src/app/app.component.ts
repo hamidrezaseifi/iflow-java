@@ -22,7 +22,9 @@ export class AppComponent implements OnInit  {
 	
 	generalDataObs :Observable<GeneralData> = null;
 		
-	appShowLoading: boolean = false;
+  appShowLoading: boolean = false;
+
+	isPresent: boolean = true;
 	
 
 	constructor(
@@ -42,9 +44,9 @@ export class AppComponent implements OnInit  {
         	this.titleService.setTitle( res );
         });
                 		
-		this.router.routeReuseStrategy.shouldReuseRoute = function(){
+			this.router.routeReuseStrategy.shouldReuseRoute = function(){
  	        return false;
-		}
+			}
 
 		this.router.events.subscribe((evt) => {
  	        if (evt instanceof NavigationEnd) {
@@ -75,6 +77,13 @@ export class AppComponent implements OnInit  {
 	
 	onLoggingOut(data: boolean) {
 		this.autService.logout("");
+	}	
+	
+	onTogglingPresens(data: boolean) {
+		this.isPresent = !this.isPresent;
+		
+		this.global.presensSubject.next(this.isPresent);
+		
 	}	
 	
 }

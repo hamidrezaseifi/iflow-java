@@ -1,21 +1,84 @@
 
-.navbar-user-detail {
+.navbar-item {
     float: right;
     margin-right: 30px;
 }
 
 button.user-toggle-button {
-    background-color: #cecece;
     border: none;
-    background-image: url(/assets/images/md-contact.svg);
-    background-position: 140px center;
-    background-repeat: no-repeat;
-    background-size: 24px;
     width: 170px;
     text-align: left;
     height: 34px;
+    color: white;
+    position: relative;
 }   
     
+
+button.user-toggle-button i.material-icons {
+    font-size: 22px;
+    margin-right: 5px;
+    float: left;
+}
+    
 .navbar-nav a.nav-link{
-	color: black;
+	color: white;
 }    
+    
+.navbar-nav a.nav-link:hover{
+	color: #ffffd7;
+}    
+
+.navbar {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+ul.navbar-nav{
+	display: block !important;
+	float: left;
+	width: calc(100% - 380px);
+	padding-left: 10px;
+}
+
+ul.navbar-nav li.nav-item {
+    display: block !important;
+    float: left;
+    margin: 0 10px;
+}
+
+div.iflow-navbar-bar{
+	background: #0169be;
+	color: white;
+}
+
+
+.navbar-logo
+{
+  height: 36px;
+  float: left;
+  margin-left: 20px;
+}
+
+a.navbar-brand{
+	color: black;
+}
+
+a.navbar-brand:hover{
+	color: black;
+}
+
+span.logo-title{
+	font-size: 22px;
+	float: left;
+	margin-left: 20px;
+	
+}
+
+.dropdown-menu{
+	top: auto;
+    right: auto;
+}
+

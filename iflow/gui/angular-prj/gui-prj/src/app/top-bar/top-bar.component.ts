@@ -15,6 +15,7 @@ export class TopBarComponent implements OnInit {
 	menus: MenuItem[] = [];
 	@Input('currentUser') currentUser: User;
 	@Input('isLogged') isLogged: boolean;
+	@Input('isPresent') isPresent : boolean;
 	
 	@Input('menus')
 	set setMenus(_menus: MenuItem[]) {
@@ -26,6 +27,7 @@ export class TopBarComponent implements OnInit {
 	}
 	
 	@Output() loggingOut = new EventEmitter<boolean>();
+	@Output() togglingPresens = new EventEmitter<boolean>();
 
 	constructor(
 		    private router: Router,
@@ -53,6 +55,10 @@ export class TopBarComponent implements OnInit {
 		this.loggingOut.emit(true);
 		
 	}		
+	
+	togglePresens(){
+	  this.togglingPresens.emit(true);
+	}
 
 	showProfile(){
 		

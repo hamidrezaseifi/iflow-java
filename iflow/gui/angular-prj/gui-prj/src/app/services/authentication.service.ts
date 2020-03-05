@@ -43,14 +43,15 @@ export class AuthenticationService implements CanActivate{
 		        (generalData :GeneralData) => {
 		            console.log("GET call successful generaldata", generalData);
 		            
-					var value = generalData.isLogged + "";
+								var value = generalData.isLogged + "";
 					
 		            if(value === "true" && generalData.user){
 		            	
 		            	this.isLoggedIn = true;
 		            	this.currentUserSubject.next(generalData.user.currentUser);
 			        	
-			        	this.global.loadAllSetting();
+			        		this.global.loadAllSetting();
+			        		this.global.presensSubject.next(true);
 			        	
 		            	this.router.navigate([returnUrl]);
 		            }
@@ -58,7 +59,10 @@ export class AuthenticationService implements CanActivate{
 		            	this.isLoggedIn = false;
 		            	this.currentUserSubject.next(null);
 		            	
-			        	this.router.navigate(['auth/login'], { queryParams: { returnUrl: returnUrl } });
+			        		//this.router.navigate(['auth/login'], { queryParams: { returnUrl: returnUrl } });
+			        	
+			        		window.location.assign("/auth/login?returnUrl=" + returnUrl); 
+			        	
 		            }
 		        	
 		        },

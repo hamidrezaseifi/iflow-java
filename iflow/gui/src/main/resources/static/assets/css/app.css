@@ -24,7 +24,7 @@ body.overdialog
 }
 
 .container{
-	min-height: calc(100vh - 140px);
+	min-height: calc(100vh - 170px);
 	max-width: 1600px !important;
 	margin-bottom: 70px;
 }
@@ -37,11 +37,6 @@ body.overdialog
 {
   padding-top: 5px !important;
   padding-bottom: 5px !important;
-}
-
-.logo
-{
-  height: 30px;
 }
 
 .loading-toolbar
@@ -779,11 +774,6 @@ ul.navbar-nav{
 	width: 100%;
 }
 
-ul.navbar-nav li.nav-item{
-	disolay: block !important;	
-	float: left;
-}
-
 .navbar-default {
     background-color: #f8f8f8;
     border-color: #e7e7e7;
@@ -961,4 +951,76 @@ a.nav-link.active[role=tab]{
 	background-color: lightgray;
     padding: 3px 10px;
 }
+
+
+
+
+.iflow-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+  margin-right: 5px;
+}
+
+.iflow-switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.iflow-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.iflow-slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 3px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .iflow-slider {
+  background-color: #2196F3;
+}
+
+input:focus + .iflow-slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .iflow-slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+   
+}
+
+/* Rounded sliders */
+.iflow-slider.iflow-round {
+  border-radius: 34px;
+}
+
+.iflow-slider.iflow-round:before {
+  border-radius: 50%;
+}
+
+.padding-top-7{
+	padding-top: 7px;
+}
+
+
 

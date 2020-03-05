@@ -14,16 +14,14 @@ export class GlobalService {
 	public currentSessionDataSubject: BehaviorSubject<GeneralData> = new BehaviorSubject<GeneralData>(null);
 	//public currentSessionDataObs :Observable<GeneralData>;		
 
+	public presensSubject :BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);		
+
 	public loadedGeneralData : GeneralData = null;
 	
 	constructor(private http:HttpClient, private loadingService: LoadingServiceService,) { 
-		//this.currentSessionDataSubject = new BehaviorSubject<GeneralData>(null);
-        //this.currentSessionDataObs = this.currentSessionDataSubject.asObservable();		
+		
 	}
-	
-   /* public get currentSessionDataValue(): GeneralData {
-        return this.currentSessionDataSubject.value;
-    }*/
+   
 	
 	loadAllSetting(){
 		this.loadingService.showLoading();
@@ -40,6 +38,7 @@ export class GlobalService {
 		            this.loadedGeneralData = <GeneralData> JSON.parse(JSON.stringify(generalData));
 		            
 		        	this.currentSessionDataSubject.next(generalData);
+		        	this.presensSubject.next(true);
 		        	
 		        	this.loadingService.hideLoading();
 		        },
