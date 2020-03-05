@@ -22,6 +22,7 @@ button.user-toggle-button i.material-icons {
     
 .navbar-nav a.nav-link{
 	color: white;
+	font-size: 14px;
 }    
     
 .navbar-nav a.nav-link:hover{
@@ -80,5 +81,10 @@ span.logo-title{
 .dropdown-menu{
 	top: auto;
     right: auto;
+}
+
+.navbar-image{
+	height: 20px;
+	margin-left: 5px;
 }
 

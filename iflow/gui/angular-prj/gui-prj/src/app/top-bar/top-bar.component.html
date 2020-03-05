@@ -13,18 +13,18 @@
 					<ul class="navbar-nav" *ngIf="isLogged">
 						<li class="nav-item" *ngFor="let menu of menus;" [ngClass]="{'dropdown' : menu.children.length > 0}">
 							<a class="nav-link" [routerLink]="[menu.url]" *ngIf="menu.children.length == 0">
-								<span class="{{menu.image}}"></span>
 								<span>{{menu.label}}</span>
+								<img src="{{menu.image}}" class="navbar-image" />
 							</a>
 							<a class="nav-link dropdown-toggle" *ngIf="menu.children.length > 0" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-								<span class="{{menu.image}}"></span>
 								<span>{{menu.label}}</span>
+								<img src="{{menu.image}}" class="navbar-image" />
 								<span class="caret"></span>
 							</a>
 							<div class="dropdown-menu" *ngIf="menu.children.length > 0">
 								<a [routerLink]="[submenu.url]" *ngFor="let submenu of menu.children;" class="dropdown-item">
-									<span class="{{submenu.image}}"></span>
 									<span>{{submenu.label}}</span>
+									<img src="{{submenu.image}}" class="navbar-image" />
 								</a>
 							</div>
 						</li>
@@ -48,7 +48,7 @@
 							<span class="iflow-slider iflow-round"></span>
 							
 						</label>
-						<label>Anwesend</label>
+						<label>{{ 'common.present' | translate }}</label>
 					</div>
 
 					
