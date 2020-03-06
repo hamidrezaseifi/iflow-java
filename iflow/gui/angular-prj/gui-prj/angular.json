@@ -44,7 +44,8 @@
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/assets/css/angular-resizable.css",
               "src/assets/css/app.css",
-              "src/assets/css/table.css"
+              "src/assets/css/table.css",
+              "src/assets/css/bootstrap-treeview.min.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
@@ -56,7 +57,8 @@
 			  "node_modules/ngx-extended-pdf-viewer/assets/pdf-es5.js",
 			  "node_modules/ngx-extended-pdf-viewer/assets/viewer-es5.js",
               "src/assets/js/sockjs.min.js",
-              "src/assets/js/stomp.min.js"
+              "src/assets/js/stomp.min.js",
+              "src/assets/js/bootstrap-treeview.min.js"
             ],
             "sourceMap": {
               "scripts": true,

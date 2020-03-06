@@ -13,4 +13,4 @@ export * from './user-department';
 export * from './company';
 export * from './company-workflowtyp-eitem-ocr-setting-preset';
 export * from './company-workflowtyp-eitem-ocr-setting-preset-item';
-
+export * from './dashboard-cube';

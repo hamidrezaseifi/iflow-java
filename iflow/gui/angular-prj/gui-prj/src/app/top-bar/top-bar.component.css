@@ -25,6 +25,26 @@ button.user-toggle-button i.material-icons {
 	font-size: 14px;
 }    
     
+.iflow-navbar .dropdown-menu{
+	background: #0169be;
+    color: white;
+}
+    
+.iflow-navbar .dropdown-menu:hover{
+	background: #0169be;
+    color: #ffffd7;
+}
+
+.iflow-navbar .dropdown-item{
+	color: white;
+	width: 220px !important;	
+}
+
+.iflow-navbar .dropdown-item:hover{
+	background: #0169be;
+	color: #ffffd7;
+}
+
 .navbar-nav a.nav-link:hover{
 	color: #ffffd7;
 }    
@@ -86,5 +106,10 @@ span.logo-title{
 .navbar-image{
 	height: 20px;
 	margin-left: 5px;
+	float: right;
+}
+
+.navbar-item-text{
+	float: left;
 }
 

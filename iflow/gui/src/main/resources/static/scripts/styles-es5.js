@@ -56,6 +56,20 @@
   },
 
   /***/
+  "./node_modules/@angular-devkit/build-angular/src/angular-cli-files/plugins/raw-css-loader.js!./node_modules/postcss-loader/src/index.js?!./src/assets/css/bootstrap-treeview.min.css":
+  /*!********************************************************************************************************************************************************************************************!*\
+    !*** ./node_modules/@angular-devkit/build-angular/src/angular-cli-files/plugins/raw-css-loader.js!./node_modules/postcss-loader/src??embedded!./src/assets/css/bootstrap-treeview.min.css ***!
+    \********************************************************************************************************************************************************************************************/
+
+  /*! no static exports found */
+
+  /***/
+  function node_modulesAngularDevkitBuildAngularSrcAngularCliFilesPluginsRawCssLoaderJsNode_modulesPostcssLoaderSrcIndexJsSrcAssetsCssBootstrapTreeviewMinCss(module, exports) {
+    module.exports = [[module.i, ".treeview .list-group-item{cursor:pointer}.treeview span.indent{margin-left:10px;margin-right:10px}.treeview span.icon{width:12px;margin-right:5px}.treeview .node-disabled{color:silver;cursor:not-allowed}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hc3NldHMvY3NzL2Jvb3RzdHJhcC10cmVldmlldy5taW4uY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLDJCQUEyQixjQUFjLENBQUMsc0JBQXNCLGdCQUFnQixDQUFDLGlCQUFpQixDQUFDLG9CQUFvQixVQUFVLENBQUMsZ0JBQWdCLENBQUMseUJBQXlCLFlBQVksQ0FBQyxrQkFBa0IiLCJmaWxlIjoic3JjL2Fzc2V0cy9jc3MvYm9vdHN0cmFwLXRyZWV2aWV3Lm1pbi5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIudHJlZXZpZXcgLmxpc3QtZ3JvdXAtaXRlbXtjdXJzb3I6cG9pbnRlcn0udHJlZXZpZXcgc3Bhbi5pbmRlbnR7bWFyZ2luLWxlZnQ6MTBweDttYXJnaW4tcmlnaHQ6MTBweH0udHJlZXZpZXcgc3Bhbi5pY29ue3dpZHRoOjEycHg7bWFyZ2luLXJpZ2h0OjVweH0udHJlZXZpZXcgLm5vZGUtZGlzYWJsZWR7Y29sb3I6c2lsdmVyO2N1cnNvcjpub3QtYWxsb3dlZH0iXX0= */", '', '']];
+    /***/
+  },
+
+  /***/
   "./node_modules/@angular-devkit/build-angular/src/angular-cli-files/plugins/raw-css-loader.js!./node_modules/postcss-loader/src/index.js?!./src/assets/css/table.css":
   /*!***************************************************************************************************************************************************************************!*\
     !*** ./node_modules/@angular-devkit/build-angular/src/angular-cli-files/plugins/raw-css-loader.js!./node_modules/postcss-loader/src??embedded!./src/assets/css/table.css ***!
@@ -498,6 +512,39 @@
   },
 
   /***/
+  "./src/assets/css/bootstrap-treeview.min.css":
+  /*!***************************************************!*\
+    !*** ./src/assets/css/bootstrap-treeview.min.css ***!
+    \***************************************************/
+
+  /*! no static exports found */
+
+  /***/
+  function srcAssetsCssBootstrapTreeviewMinCss(module, exports, __webpack_require__) {
+    var content = __webpack_require__(
+    /*! !../../../node_modules/@angular-devkit/build-angular/src/angular-cli-files/plugins/raw-css-loader.js!../../../node_modules/postcss-loader/src??embedded!./bootstrap-treeview.min.css */
+    "./node_modules/@angular-devkit/build-angular/src/angular-cli-files/plugins/raw-css-loader.js!./node_modules/postcss-loader/src/index.js?!./src/assets/css/bootstrap-treeview.min.css");
+
+    if (typeof content === 'string') {
+      content = [[module.i, content, '']];
+    }
+
+    var options = {};
+    options.insert = "head";
+    options.singleton = false;
+
+    var update = __webpack_require__(
+    /*! ../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */
+    "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js")(content, options);
+
+    if (content.locals) {
+      module.exports = content.locals;
+    }
+    /***/
+
+  },
+
+  /***/
   "./src/assets/css/table.css":
   /*!**********************************!*\
     !*** ./src/assets/css/table.css ***!
@@ -532,9 +579,9 @@
 
   /***/
   7:
-  /*!*******************************************************************************************************************************************************************************************************************************!*\
-    !*** multi ./node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css ./node_modules/bootstrap/dist/css/bootstrap.min.css ./src/assets/css/angular-resizable.css ./src/assets/css/app.css ./src/assets/css/table.css ***!
-    \*******************************************************************************************************************************************************************************************************************************/
+  /*!***************************************************************************************************************************************************************************************************************************************************************************!*\
+    !*** multi ./node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css ./node_modules/bootstrap/dist/css/bootstrap.min.css ./src/assets/css/angular-resizable.css ./src/assets/css/app.css ./src/assets/css/table.css ./src/assets/css/bootstrap-treeview.min.css ***!
+    \***************************************************************************************************************************************************************************************************************************************************************************/
 
   /*! no static exports found */
 
@@ -556,9 +603,13 @@
     /*! C:\Git\home\iflow\iflow-java\iflow\gui\angular-prj\gui-prj\src\assets\css\app.css */
     "./src/assets/css/app.css");
 
-    module.exports = __webpack_require__(
+    __webpack_require__(
     /*! C:\Git\home\iflow\iflow-java\iflow\gui\angular-prj\gui-prj\src\assets\css\table.css */
     "./src/assets/css/table.css");
+
+    module.exports = __webpack_require__(
+    /*! C:\Git\home\iflow\iflow-java\iflow\gui\angular-prj\gui-prj\src\assets\css\bootstrap-treeview.min.css */
+    "./src/assets/css/bootstrap-treeview.min.css");
     /***/
   }
 }, [[7, "runtime"]]]);

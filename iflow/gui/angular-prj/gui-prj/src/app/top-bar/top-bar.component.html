@@ -13,18 +13,19 @@
 					<ul class="navbar-nav" *ngIf="isLogged">
 						<li class="nav-item" *ngFor="let menu of menus;" [ngClass]="{'dropdown' : menu.children.length > 0}">
 							<a class="nav-link" [routerLink]="[menu.url]" *ngIf="menu.children.length == 0">
-								<span>{{menu.label}}</span>
+								<span class="navbar-item-text">{{menu.label}}</span>
 								<img src="{{menu.image}}" class="navbar-image" />
 							</a>
 							<a class="nav-link dropdown-toggle" *ngIf="menu.children.length > 0" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-								<span>{{menu.label}}</span>
+								<span class="navbar-item-text">{{menu.label}}</span>
 								<img src="{{menu.image}}" class="navbar-image" />
-								<span class="caret"></span>
+								<span class="navbar-item-text" class="caret"></span>
 							</a>
 							<div class="dropdown-menu" *ngIf="menu.children.length > 0">
 								<a [routerLink]="[submenu.url]" *ngFor="let submenu of menu.children;" class="dropdown-item">
-									<span>{{submenu.label}}</span>
+									<span class="navbar-item-text">{{submenu.label}}</span>
 									<img src="{{submenu.image}}" class="navbar-image" />
+									<div class="clear"></div>
 								</a>
 							</div>
 						</li>

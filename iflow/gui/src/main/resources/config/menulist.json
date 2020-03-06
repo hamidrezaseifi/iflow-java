@@ -21,6 +21,9 @@
 			{"id":"menu-changepassword", "label":"menu-changepassword","url":"/user/changepassword","image":"/assets/images/lock.png", "status": 1,"children":[]}
 		]
 	},
+	{"id":"menu-planing", "label":"menu-planing","url":"/","image":"/assets/images/create.png", "status": 1, "children":[]},
+	{"id":"menu-reports", "label":"menu-reports","url":"/","image":"/assets/images/show_chart.png", "status": 1, "children":[]},
+	{"id":"menu-contacts", "label":"menu-contacts","url":"/","image":"/assets/images/import_contacts.png", "status": 1, "children":[]},
 	{"id":"menu-options", "label":"menu-options","url":"#","image":"/assets/images/settings.png", "status": 1,"children":
 		[
 			{"id":"menu-urlsettings", "label":"menu-urlsettings","url":"/","image":"/assets/images/settings.png", "status": 1,"children":[]},

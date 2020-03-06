@@ -36,17 +36,17 @@ export class AppComponent implements OnInit  {
 		
 	) {
 		
-        translate.setDefaultLang('de');
+		translate.setDefaultLang('de');
 
-        translate.use('de');
+		translate.use('de');
         
-        translate.get('site.title').subscribe((res: string) => {
-        	this.titleService.setTitle( res );
-        });
+		translate.get('site.title').subscribe((res: string) => {
+    	this.titleService.setTitle( res );
+		});
                 		
-			this.router.routeReuseStrategy.shouldReuseRoute = function(){
- 	        return false;
-			}
+		this.router.routeReuseStrategy.shouldReuseRoute = function(){
+ 	  	return false;
+		}
 
 		this.router.events.subscribe((evt) => {
  	        if (evt instanceof NavigationEnd) {
